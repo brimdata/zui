@@ -5,6 +5,7 @@ import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpace} from "../reducers/spaces"
 import {getTimeWindow} from "./timeWindow"
 import {getCountByTimeProc} from "./analytics"
+import {getCurrentSpaceName} from "../reducers/spaces"
 import Log from "../models/Log"
 
 export const getMainSearchQuery = createSelector(
@@ -45,11 +46,12 @@ export const getMainSearchBroLogs = createSelector(
 export const getLogs = createSelector(
   getMainSearchEvents,
   getSchemas,
-  (tuples, descriptors) => {
+  getCurrentSpaceName,
+  (tuples, descriptors, spaceName) => {
     const logs = []
     for (let i = 0; i < tuples.length; ++i) {
       const tuple = tuples[i]
-      const descriptor = descriptors[tuple[0]]
+      const descriptor = descriptors[spaceName + "." + tuple[0]]
       if (descriptor) {
         logs.push(new Log(tuple, descriptor))
       }

@@ -9,7 +9,7 @@ import statsReceiver from "../receivers/statsReceiver"
 export function fetchMainSearch({saveToHistory = true} = {}) {
   return (dispatch, getState, api) => {
     const query = selectors.getMainSearchQuery(getState())
-
+    console.log(query)
     if (!query.isValid()) {
       console.warn("invalide query", query.toString())
       return

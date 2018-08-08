@@ -7,18 +7,18 @@ import AdminTitle from "./AdminTitle"
 class Connect extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {...props.credentials, redirect: false}
+    this.state = {...props.credentials}
 
     this.onSubmit = e => {
       e.preventDefault()
       this.props.setBoomdCredentials(this.state)
-      this.props.connectBoomd().then(() => this.setState({redirect: true}))
+      this.props.connectBoomd()
     }
   }
 
   render() {
-    const {error} = this.props
-    if (this.state.redirect) return <Redirect to="/search" />
+    const {error, isConnected} = this.props
+    if (isConnected) return <Redirect to="/search" />
 
     return (
       <main className="admin-page boomd-connect">
@@ -65,9 +65,7 @@ class Connect extends React.Component {
                   onChange={e => this.setState({pass: e.currentTarget.value})}
                 />
               </div>
-              {error ? (
-                <p className="form-error">Error connecting to boomd.</p>
-              ) : null}
+              {error ? <p className="form-error">{error}</p> : null}
               <button type="submit" className="button">
                 Connect
               </button>

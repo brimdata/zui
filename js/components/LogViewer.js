@@ -7,6 +7,7 @@ export default class LogViewer extends React.PureComponent {
   render() {
     const {logs, appendToQuery, showDetail} = this.props
     const rowRenderer = ({key, index, style}) => {
+      console.log(logs, index, logs[index])
       const log = logs[index]
       const prevLog = logs[index - 1]
       const logRow = (
@@ -26,7 +27,8 @@ export default class LogViewer extends React.PureComponent {
         return logRow
       }
     }
-
+    console.log(logs.length)
+    console.log(logs)
     return (
       <AutoSizer>
         {({height, width}) => (

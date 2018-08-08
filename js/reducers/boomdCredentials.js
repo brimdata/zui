@@ -1,7 +1,7 @@
 import createReducer from "./createReducer"
 
 const initialState = {
-  host: "localhost",
+  host: "localhostttt",
   port: 9867,
   user: "james",
   pass: "kerr"

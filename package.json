@@ -4,25 +4,34 @@
   "repository": "https://github.com/looky/looky-desktop",
   "license": "None",
   "version": "1.0.0",
-  "main": "init.js",
+  "main": "main.js",
+  "author": "Looky Labs, Inc.",
   "scripts": {
-    "start": "electron ."
+    "start": "npm  ."
   },
   "jest": {
     "notify": true,
     "notifyMode": "change",
-    "setupTestFrameworkScriptFile": "./js/test/setup.js"
+    "setupTestFrameworkScriptFile": "./js/test/setup.js",
+    "testURL": "http://localhost"
   },
   "prettier": {
     "semi": false,
     "bracketSpacing": false
   },
+  "build": {
+    "appId": "cloud.looky.app",
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
+  },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-inline-react-svg": "^0.5.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2017-node7": "^0.5.2",
     "babel-preset-react": "^6.24.1",
-    "electron-compilers": "^5.9.0",
+    "electron-prebuilt-compile": "^2.0.6",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.3.0",
@@ -33,6 +42,7 @@
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-standard": "^3.1.0",
     "jest": "^23.4.2",
+    "jest-fetch-mock": "^1.6.5",
     "prettier": "^1.14.0",
     "prettier-eslint": "^8.8.2",
     "react-hot-loader": "^4.0.0",
@@ -43,8 +53,6 @@
     "base64-js": "^1.3.0",
     "classnames": "^2.2.6",
     "d3": "^5.5.0",
-    "electron": "^2.0.6",
-    "electron-compile": "^6.4.3",
     "lodash": "^4.17.10",
     "lookytalk": "git+https://77518fb4e02160c61bd2281151f07007c3a162ad:x-oauth-basic@github.com/looky-cloud/lookytalk.git#a3acfeba6f36bf8076706188f0e50abd8b6362d9",
     "moment": "^2.22.2",

@@ -14,8 +14,8 @@ export default class Client {
     this.port = port
     this.user = user
     this.pass = pass
-    this.isConnected = true
-    this.connected()
+
+    return fetch(`http:${this.host}:${this.port}`)
   }
 
   send({method, path, payload}) {
@@ -24,7 +24,6 @@ export default class Client {
     setTimeout(() => {
       let promise
       if (method === "GET") {
-        console.log("sending a get request")
         promise = fetch(`http://${this.host}:${this.port}` + path, {
           credentials: "include",
           headers: {

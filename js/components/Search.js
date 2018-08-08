@@ -9,6 +9,10 @@ import Header from "./Header"
 import NotConnected from "./NotConnected"
 
 export default class Search extends React.Component {
+  componentDidMount() {
+    this.props.fetchAllSpaces()
+  }
+
   render() {
     const {
       eventsPresent,

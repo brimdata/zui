@@ -2,25 +2,25 @@ import createReducer from "./createReducer"
 
 const initialState = {
   isConnected: false,
-  isConnecting: true,
-  error: false
+  isConnecting: false,
+  error: null
 }
 
 export default createReducer(initialState, {
   BOOMD_CONNECTING: state => ({
     ...state,
     isConnecting: true,
-    error: false
+    error: null
   }),
   BOOMD_CONNECTED: () => ({
     isConnecting: false,
     isConnected: true,
-    error: false
+    error: null
   }),
-  BOOMD_ERROR_SET: () => ({
+  BOOMD_ERROR_SET: (state, {error}) => ({
     isConnecting: false,
     isConnected: false,
-    error: true
+    error
   })
 })
 

@@ -1,8 +1,8 @@
 import Ast from "./Ast"
 
 export default class Query {
-  constructor({filter = "*", space, timeWindow, procs = []}) {
-    this.string = filter
+  constructor({filter = "", space, timeWindow, procs = []}) {
+    this.string = /^\s*$/.test(filter) ? "*" : filter
     ;(this.space = space), (this.timeWindow = timeWindow)
     this.procs = procs
   }

@@ -62,9 +62,10 @@ export function discoverSchemas(events = []) {
   }
 }
 
-export function setSchema(id, descriptor) {
+export function setSchema(spaceName, id, descriptor) {
   return {
     type: "NEW_BRO_SCHEMA",
+    spaceName,
     id,
     descriptor
   }
@@ -75,7 +76,7 @@ export function schemaFetch(id) {
     const space = getCurrentSpace(getState())
 
     api.send(outMessages.fetchSchema(space, id)).done(descriptor => {
-      dispatch(setSchema(id, descriptor))
+      dispatch(setSchema(space.name, id, descriptor))
     })
   }
 }

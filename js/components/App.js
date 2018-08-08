@@ -10,7 +10,6 @@ class App extends React.Component {
   }
   componentDidMount() {
     this.props.connectBoomd()
-    this.props.fetchAllSpaces()
   }
 
   render() {

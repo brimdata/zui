@@ -3,9 +3,9 @@ import createReducer from "./createReducer"
 export default createReducer(
   {},
   {
-    NEW_BRO_SCHEMA: (state, {id, descriptor}) => ({
+    NEW_BRO_SCHEMA: (state, {spaceName, id, descriptor}) => ({
       ...state,
-      [id]: descriptor
+      [spaceName + "." + id]: descriptor
     })
   }
 )
