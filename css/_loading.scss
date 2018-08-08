@@ -1,0 +1,12 @@
+$squareWidth: 5.33333px;
+.loader {
+  height: $squareWidth * 3;
+  width: $squareWidth * 3;
+  margin-top: -$squareWidth;
+
+  .square {
+    float: left;
+    width: $squareWidth;
+    height: $squareWidth;
+  }
+}

@@ -1,0 +1,27 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 2rem;
+  transition: background-color 1s;
+  z-index: 1;
+}
+
+.modal-wrapper {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 10px 35px 10px fade-out($gray-3, 0.8);
+  border-radius: 3px;
+  width: 100%;
+  max-width: 1008px;
+  padding: 1rem;
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" data-icon="bold" data-container-transform="translate(1)" viewBox="0 0 16 16">
+  <path d="M3 15" transform="translate(1)" />
+  <path d="M11.199 7.337c1.084-.716 1.801-1.941 1.801-3.337 0-2.209-1.791-4-4-4h-9v1h1c.552 0 1 .448 1 1v12c0 .552-.448 1-1 1h-1v1h9.5c2.485 0 4.5-2.015 4.5-4.5 0-1.883-1.159-3.492-2.801-4.163zm-4.199-6.337c1.657 0 3 1.343 3 3s-1.343 3-3 3h-2v-6h2zm.5 14h-2.5v-7h2.5c1.933 0 3.5 1.567 3.5 3.5s-1.567 3.5-3.5 3.5z"
+  transform="translate(1)" />
+</svg>

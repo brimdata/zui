@@ -1,0 +1,10 @@
+.panel {
+  border-radius: 3px;
+  padding: $base-space;
+}
+
+.panel-heading {
+  @extend .small-heading;
+  font-weight: 100;
+  color: $gray-3;
+}

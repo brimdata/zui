@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="128" height="128" data-icon="spreadsheet" data-container-transform="translate(0 12)" viewBox="0 0 128 128">
+  <path d="M3 0c-1.657 0-3 1.343-3 3v98c0 1.657 1.343 3 3 3h122c1.657 0 3-1.343 3-3v-98c0-1.657-1.343-3-3-3h-122zm5 8h16v16h-16v-16zm18 0h46v16h-46v-16zm48 0h46v16h-46v-16zm-66 18h16v16h-16v-16zm18 0h46v16h-46v-16zm48 0h46v16h-46v-16zm-66 18h16v16h-16v-16zm18 0h46v16h-46v-16zm48 0h46v16h-46v-16zm-66 18h16v16h-16v-16zm18 0h46v16h-46v-16zm48 0h46v16h-46v-16zm-66 18h16v16h-16v-16zm18 0h46v16h-46v-16zm48 0h46v16h-46v-16z"
+  transform="translate(0 12)" />
+</svg>

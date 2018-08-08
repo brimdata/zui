@@ -1,0 +1,47 @@
+.uid-waterfall {
+  width: 100%;
+
+  .waterfall-row {
+    display: flex;
+    align-items: center;
+    padding-bottom: 3px;
+  }
+
+  .ts-label,
+  .duration {
+    @extend .mono-body-text;
+    font-size: 9px;
+    color: $light-gray-2;
+    padding-right: $base-space;
+  }
+
+  .slider {
+    flex: 1;
+    position: relative;
+    padding-right: 58px; // size of the path-tags
+  }
+
+  .line {
+    display: block;
+    position: absolute;
+    border-top: 1px solid $light-gray;
+    width: 100%;
+    top: 50%;
+  }
+
+  .path-tag {
+    position: relative;
+    left: 0%;
+  }
+
+  .path-tag.current {
+    outline: 3px solid $light-gray;
+  }
+
+  .duration {
+    font-size: 10px;
+    margin: $base-space 0 0 0;
+    padding: 0;
+    text-align: right;
+  }
+}

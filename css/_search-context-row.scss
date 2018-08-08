@@ -1,0 +1,118 @@
+.search-context-row {
+  color: $light-gray;
+  margin: 0 auto;
+  margin-top: 12px;
+  min-height: 35px;
+  position: relative;
+  cursor: pointer;
+  border-left: 3px solid $teal;
+
+  &.active {
+    border-left: 3px solid $yellow;
+  }
+
+  svg {
+    fill: $light-gray;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  p {
+    margin: 0;
+    font-family: $mono-font;
+  }
+
+  .base-filter {
+    background: $gray-2;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    border-top: 1px solid $dark-gray;
+
+    p {
+      padding: 6px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    svg {
+      margin-left: 6px;
+      fill: $light-gray;
+    }
+  }
+
+  .time-window {
+    background: $gray-2;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    // border-radius: 0 7px 7px 0;
+    border-bottom: 1px solid $dark-gray;
+    border-top: 1px dotted $dark-gray;
+    margin-top: 0;
+    position: relative;
+
+    p {
+      display: inline-block;
+      padding: 3px;
+      font-size: 10px;
+    }
+
+    svg {
+      width: 12px;
+      fill: $light-gray;
+      margin-right: 6px;
+    }
+
+    &:after {
+      // content: "";
+      position: absolute;
+      width: 0;
+      height: 12px;
+      border-left: 1px solid $dark-gray;
+      left: 12px;
+      top: -13px;
+    }
+  }
+}
+
+.search-query-row {
+  font-family: $mono-font;
+  font-size: 12px;
+  color: $light-gray;
+  padding: 6px;
+  margin: 0;
+  margin-left: 24px;
+  border-bottom: 1px solid $gray-3;
+  position: relative;
+  cursor: pointer;
+
+  &.active:before {
+    border-bottom: 2px solid $yellow;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: calc(100% + 1px);
+    border-left: 1px solid $dark-gray;
+    left: -12px;
+    top: -1px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 0;
+    border-bottom: 1px solid $dark-gray;
+    left: -12px;
+    top: 12px;
+  }
+
+  &:last-child:after {
+    height: 13px;
+  }
+}

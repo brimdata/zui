@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="128" height="128" data-icon="barcode" data-container-transform="translate(0 24)" viewBox="0 0 128 128">
+  <path d="M0 0v80h2v-80h-2zm4 0v80h10v-80h-10zm12 0v80h4v-80h-4zm6 0v80h6v-80h-6zm8 0v80h2v-80h-2zm4 0v80h6v-80h-6zm8 0v80h2v-80h-2zm4 0v80h2v-80h-2zm4 0v80h2v-80h-2zm4 0v80h4v-80h-4zm6 0v80h2v-80h-2zm4 0v80h8v-80h-8zm10 0v80h2v-80h-2zm4 0v80h4v-80h-4zm6 0v80h12v-80h-12zm14 0v80h2v-80h-2zm4 0v80h4v-80h-4zm6 0v80h2v-80h-2zm4 0v80h8v-80h-8zm10 0v80h2v-80h-2zm4 0v80h2v-80h-2z"
+  transform="translate(0 24)" />
+</svg>

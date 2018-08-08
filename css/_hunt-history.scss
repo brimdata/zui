@@ -1,0 +1,67 @@
+.hunt-history {
+  width: 100%;
+
+  & > .history-node {
+    margin: 0;
+  }
+}
+
+.history-node {
+  margin-left: 12px;
+
+  .children {
+    position: relative;
+
+    &:after {
+      // content: "";
+      height: calc(100% - 12px);
+      border-left: 1px solid $gray;
+      border-bottom: 1px solid $gray;
+      width: 6px;
+      position: absolute;
+      top: 0;
+      left: 5px;
+      border-radius: 0 0 0 3px;
+    }
+
+    &:empty:after {
+      display: none;
+    }
+  }
+
+  .query {
+    background-color: $gray-2;
+    margin: 0;
+    margin-bottom: 1px;
+    position: relative;
+
+    &:after {
+      // content: "";
+      border-bottom: 1px solid $gray;
+      width: 6px;
+      position: absolute;
+      bottom: 11px;
+      left: -6px;
+    }
+
+    &:hover {
+      background-color: lighten($gray-2, 10%);
+    }
+
+    &.context {
+      background-color: $blue;
+    }
+  }
+
+  &:last-child .query:after {
+    display: none;
+  }
+
+  .program {
+    @extend .mono-body-text;
+    font-size: 9px;
+    padding: 8px $base-space;
+    margin: 0;
+    @include clickable;
+  }
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" data-icon="image-portrait" width="128" height="128" data-container-transform="translate(16 0 ) scale(1 1 )" viewBox="0 0 128 128">
+  <title>Image Portrait</title>
+  <path d="M0 0v128h96v-128h-96zm4 4h88v120h-88v-120zm19.938 32.75c-.35 0-.688.138-.938.438l-17 21.281v63.531h84v-3.563l-65.094-81.25c-.25-.3-.619-.438-.969-.438zm48 12c-.35 0-.688.138-.938.438l-16.219 20.281 35.219 44.031v-42.969l-17.094-21.344c-.25-.3-.619-.438-.969-.438z"
+  transform="translate(16)" />
+</svg>

@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: $body-font;
+  color: $gray-2;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $heading-font;
+  margin-top: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  @include clickable;
+  @extend .body-text;
+  // text-decoration: underline;
+  color: $blue;
+  cursor: pointer;
+
+  &:hover {
+    color: darken($blue, 20%);
+  }
+}
+
+label {
+  font-weight: bold;
+}
+
+pre {
+  background-color: $gray-3;
+  border-radius: 3px;
+  color: $light-gray;
+  font-family: $mono-font;
+  padding: 3px 6px;
+
+  &.light {
+    background-color: $off-white;
+    color: $gray;
+  }
+}
+
+.form-field {
+  margin-bottom: 12px;
+}
+
+.wrap {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 96%;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+input {
+  color: $gray-3;
+  font-size: 14px;
+  border: none;
+}
+
+input[type="range"] {
+  @include range-input;
+}

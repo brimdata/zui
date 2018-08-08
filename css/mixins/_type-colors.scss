@@ -1,0 +1,26 @@
+@mixin type-colors {
+  &.addr,
+  &.set\[addr\] {
+    color: $blue;
+  }
+
+  &.port,
+  &.set\[port\] {
+    color: $orange;
+  }
+
+  &.interval,
+  &.set\[interval\] {
+    color: $purple;
+  }
+
+  &.count,
+  &.set\[count\] {
+    color: $red;
+  }
+
+  &.bool,
+  &.set\[bool\] {
+    color: $light-blue;
+  }
+}

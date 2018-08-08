@@ -1,0 +1,44 @@
+.DayPickerInput {
+  font-size: 14px;
+
+  .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    &.DayPicker-Day--selected {
+      border-radius: 0;
+      color: inherit;
+      background: transparentize($blue, 0.9);
+    }
+
+    &.DayPicker-Day--from {
+      background: $blue;
+      border-radius: 50% 0 0 50%;
+      color: white;
+    }
+
+    &.DayPicker-Day--to {
+      background: $blue;
+      border-radius: 0 50% 50% 0;
+      color: white;
+    }
+
+    &.DayPicker-Day--to.DayPicker-Day--from {
+      border-radius: 50%;
+    }
+  }
+}
+
+.DayPickerInput-OverlayWrapper {
+  top: $base-space;
+}
+
+.DayPickerInput-Overlay {
+  box-shadow: $box-shadow;
+}
+
+.DayPicker-Footer {
+  text-align: center;
+}
+
+.DayPicker-TodayButton {
+  @extend .button;
+  padding: 3px 6px;
+}

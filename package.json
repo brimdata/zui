@@ -1,0 +1,61 @@
+{
+  "name": "looky-desktop",
+  "description": "Looky Desktop App",
+  "repository": "https://github.com/looky/looky-desktop",
+  "license": "None",
+  "version": "1.0.0",
+  "main": "init.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "jest": {
+    "notify": true,
+    "notifyMode": "change",
+    "setupTestFrameworkScriptFile": "./js/test/setup.js"
+  },
+  "prettier": {
+    "semi": false,
+    "bracketSpacing": false
+  },
+  "devDependencies": {
+    "babel-plugin-inline-react-svg": "^0.5.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2017-node7": "^0.5.2",
+    "babel-preset-react": "^6.24.1",
+    "electron-compilers": "^5.9.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^5.3.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^23.4.2",
+    "prettier": "^1.14.0",
+    "prettier-eslint": "^8.8.2",
+    "react-hot-loader": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
+    "web-streams-polyfill": "^1.3.2"
+  },
+  "dependencies": {
+    "base64-js": "^1.3.0",
+    "classnames": "^2.2.6",
+    "d3": "^5.5.0",
+    "electron": "^2.0.6",
+    "electron-compile": "^6.4.3",
+    "lodash": "^4.17.10",
+    "lookytalk": "git+https://77518fb4e02160c61bd2281151f07007c3a162ad:x-oauth-basic@github.com/looky-cloud/lookytalk.git#a3acfeba6f36bf8076706188f0e50abd8b6362d9",
+    "moment": "^2.22.2",
+    "react": "^16.4.2",
+    "react-day-picker": "^7.1.10",
+    "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-virtualized": "^9.20.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1"
+  }
+}

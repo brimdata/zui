@@ -1,0 +1,10 @@
+@mixin path-tag {
+  display: inline-block;
+  border-radius: 3px;
+  width: 58px;
+  line-height: 18px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  vertical-align: text-bottom;
+}

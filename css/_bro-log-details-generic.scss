@@ -1,0 +1,33 @@
+.bro-log-details.generic {
+  .panel {
+    background-color: white;
+  }
+
+  .originator-responder {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $base-space;
+  }
+
+  .ip-address-originator {
+    @include ip-address-originator;
+  }
+
+  .ip-address-responder {
+    @include ip-address-responder;
+  }
+
+  .arrow-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: $base-space;
+    hr {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid $gray;
+      margin: 0;
+    }
+  }
+}

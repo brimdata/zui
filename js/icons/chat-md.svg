@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" data-icon="chat" data-container-transform="translate(0 3)" viewBox="0 0 32 32">
+  <path d="M.5 0c-.276 0-.5.224-.5.5v18c0 .276.148.352.344.156l3.313-3.313c.195-.195.568-.344.844-.344h6.5v-9h9v-5.5c0-.276-.224-.5-.5-.5h-19zm12 7c-.276 0-.5.224-.5.5v14c0 .276.224.5.5.5h15c.276 0 .648.148.844.344l3.313 3.313c.195.195.344.12.344-.156v-18c0-.276-.224-.5-.5-.5h-19z"
+  transform="translate(0 3)" />
+</svg>

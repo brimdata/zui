@@ -1,0 +1,25 @@
+.text-input-wrapper {
+  position: relative;
+
+  input {
+    color: $gray-3;
+    font-size: 14px;
+    font-family: $mono-font;
+    outline: none;
+    width: 100%;
+    padding: 8px;
+    box-shadow: $box-shadow;
+    border-radius: 3px;
+
+    &::placeholder {
+      color: $gray;
+    }
+  }
+
+  .spin-loader-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translate(0, -50%);
+  }
+}

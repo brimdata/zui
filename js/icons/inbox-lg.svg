@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="128" height="128" data-icon="inbox" data-container-transform="translate(6)" viewBox="0 0 128 128">
+  <path d="M8 0c-4.418 0-8 3.582-8 8v112c0 4.418 3.582 8 8 8h100c4.418 0 8-3.582 8-8v-112c0-4.418-3.582-8-8-8h-100zm0 16h100v84h-32l-8 12h-20l-8-12h-32v-84z" transform="translate(6)" />
+</svg>

@@ -1,0 +1,77 @@
+/* This file is for your main application css. */
+
+@import "colors";
+@import "bro-log-colors";
+
+$heading-font: "Lato", sans-serif;
+$body-font: "Lato", sans-serif;
+$mono-font: "PT Mono", monospace;
+$box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
+$base-space: 12px;
+$high-box-shadow: 0 2px 15px 0px rgba(0, 0, 0, 0.3);
+$bro-log-row-height: 25px;
+$filter-node-background: $gray-1;
+$filter-node-foreground: white;
+
+/* Mixins */
+@import "mixins/range-input";
+@import "mixins/clearfix";
+@import "mixins/table";
+@import "mixins/ip-address";
+@import "mixins/tags";
+@import "mixins/clickable";
+@import "mixins/type-colors";
+
+/* Styles */
+@import "global";
+@import "typography";
+@import "panel";
+@import "icons";
+@import "layout";
+@import "modal";
+@import "date-time-picker";
+@import "alerts";
+@import "bro-log-viewer";
+@import "bro-log-row";
+@import "bro-log-details";
+@import "ip-address-pair";
+@import "conn-versation";
+@import "bro-log-details-generic";
+@import "bro-log-details-conn";
+@import "buttons";
+@import "side-bar";
+@import "hunt-history";
+@import "uid-waterfall";
+@import "bro-log-detail-modal";
+@import "loading";
+@import "context-menu";
+@import "context-menu-button";
+@import "count-by-time";
+@import "search-context-row";
+@import "no-events-found";
+@import "welcome-message";
+@import "form-inputs";
+@import "search-bar";
+@import "time-window-picker";
+@import "time-picker";
+@import "day-picker";
+@import "fields-table";
+@import "filter-node";
+@import "filter-tree";
+@import "time-controls";
+@import "spin-loader";
+@import "bar-loader";
+@import "analysis-table";
+@import "space-switcher";
+@import "history-aside";
+@import "select-options";
+@import "arrows";
+@import "log-row";
+@import "log-viewer";
+@import "log-detail";
+@import "results-section";
+@import "header";
+@import "admin-page";
+@import "input";
+@import "spaces";
+@import "not-connected";

@@ -1,0 +1,24 @@
+.bro-log-details.conn {
+  .top-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .identification-fields {
+    margin-right: $base-space;
+  }
+
+  .conn-versation-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .detail-fields {
+    display: flex;
+    flex-wrap: wrap;
+
+    dl {
+      width: 25%;
+    }
+  }
+}

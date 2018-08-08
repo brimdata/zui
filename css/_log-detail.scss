@@ -1,0 +1,69 @@
+.log-detail {
+  background: transparentize($gray-2, 0);
+  height: 100%;
+  box-shadow: $high-box-shadow;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.log-detail-header {
+  box-shadow: $high-box-shadow;
+  color: white;
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 3px 3px 0 0;
+  z-index: 1;
+
+  .small-heading {
+    margin: 0;
+  }
+
+  .close-button {
+    cursor: pointer;
+    svg {
+      fill: white;
+      height: 12px;
+      width: 12px;
+    }
+
+    &:hover {
+      svg {
+        fill: $gray;
+      }
+    }
+  }
+}
+
+.log-detail-body {
+  overflow-y: scroll;
+  padding: 12px;
+
+  .fields-table {
+    margin-bottom: 18px;
+  }
+  .path-tag {
+    @include path-tag;
+  }
+}
+
+.correlated-logs-panel {
+  background: white;
+  margin-bottom: 18px;
+  border-radius: 3px;
+  padding: 12px;
+}
+
+.conn-versation-panel {
+  margin-bottom: 18px;
+}
+
+.fields-table-panel {
+  background: white;
+  border-radius: 3px;
+  padding: 12px;
+}

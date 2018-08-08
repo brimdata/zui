@@ -1,0 +1,22 @@
+.time-window-picker {
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 3px;
+  white-space: nowrap;
+  box-shadow: $box-shadow;
+  background: white;
+
+  .divider {
+    margin: 0 6px;
+  }
+
+  input {
+    display: inline-block;
+    box-shadow: none;
+    // color: $teal;
+  }
+
+  .text-input-wrapper {
+    display: inline-block;
+  }
+}

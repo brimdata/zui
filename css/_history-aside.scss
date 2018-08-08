@@ -1,0 +1,29 @@
+.history-aside {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: $base-space;
+  }
+
+  .tiny-heading {
+    margin: 0;
+  }
+
+  .clear-button {
+    cursor: pointer;
+    font-size: 9px;
+    line-height: 9px;
+    color: white;
+    font-weight: 100;
+    text-transform: uppercase;
+    border-radius: 3px;
+    padding: 2px 6px;
+    background: $gray-2;
+    transition: all 50ms;
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: $box-shadow;
+    }
+  }
+}

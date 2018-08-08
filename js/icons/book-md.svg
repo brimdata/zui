@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" data-icon="book" data-container-transform="translate(1)" viewBox="0 0 32 32">
+  <path d="M3 0v24h27v-22.5c0-.828-.672-1.5-1.5-1.5h-1.5v13l-2-2-2 2v-13h-20zm-1 .063c-1.141.232-2 1.228-2 2.438v22.406c.527-.508 1.227-.815 2-.875v-23.969zm.25 24.938c-1.241 0-2.25 1.009-2.25 2.25v2.25c0 1.381 1.119 2.5 2.5 2.5h27.5v-2h-26.5c-.829 0-1.5-.671-1.5-1.5s.671-1.5 1.5-1.5h26.5v-2h-27.75z"
+  transform="translate(1)" />
+</svg>

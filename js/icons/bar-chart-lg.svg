@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="128" height="128" data-icon="bar-chart" data-container-transform="translate(0 8)" viewBox="0 0 128 128">
+  <path d="M0 0v112h128v-2h-126v-8h2v-2h-2v-8h4v-2h-4v-8h2v-2h-2v-8h4v-2h-4v-8h2v-2h-2v-8h4v-2h-4v-8h2v-2h-2v-8h4v-2h-4v-8h2v-2h-2v-8h4v-2h-4v-8h2v-2h-4zm62 8v100h12v-100h-12zm24 18v82h12v-82h-12zm24 10v72h12v-72h-12zm-72 10v62h12v-62h-12zm-24 12v50h12v-50h-12z"
+  transform="translate(0 8)" />
+</svg>

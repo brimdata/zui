@@ -1,0 +1,55 @@
+.filter-tree {
+  padding-right: 12px;
+}
+
+.filter-tree-node {
+  margin-left: 12px;
+  border-left: 1px solid $gray-1;
+
+  .filter-node {
+    background: transparent;
+    position: relative;
+    margin-left: 6px;
+    p {
+      color: $light-gray-2;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      background: $gray-1;
+      width: 6px;
+      height: 1px;
+      right: 100%;
+    }
+
+    &:hover {
+      background: $gray-2;
+      p {
+        color: white;
+      }
+    }
+  }
+
+  &.active > .filter-node {
+    background: $filter-node-background;
+    p {
+      color: $filter-node-foreground;
+    }
+  }
+}
+
+.filter-tree > .filter-tree-node:last-child,
+.filter-tree-node > .filter-tree-node:last-child {
+  border-color: transparent;
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    background: $gray-1;
+    height: 14px;
+    width: 1px;
+    left: -1px;
+    top: 0;
+  }
+}

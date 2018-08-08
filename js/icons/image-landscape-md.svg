@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" data-icon="image-landscape" width="32" height="32" data-container-transform="scale(1 1 ) translate(0 4 )" viewBox="0 0 32 32">
+  <title>Image Landscape</title>
+  <path d="M0 0v24h32v-24h-32zm2 2h28v20h-2.594l-10.094-12.594c-.1-.1-.231-.156-.344-.156-.113 0-.231.056-.281.156l-2.875 3.594 7.188 9h-2.5c.3 0 .387-.206.188-.406l-11.375-14.188c-.1-.1-.231-.156-.344-.156-.112 0-.231.056-.281.156l-4.688 5.844v-11.25zm22 7c-1.43 0-2.668.747-3.375 1.875l4.688 5.875c1.562-.544 2.688-2.002 2.688-3.75 0-2.209-1.791-4-4-4z"
+  transform="translate(0 4)" />
+</svg>

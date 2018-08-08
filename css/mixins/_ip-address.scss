@@ -1,0 +1,67 @@
+@mixin ip-address {
+  border: 1px solid $light-gray;
+  border-radius: 3px;
+  line-height: 23px;
+  text-align: center;
+  display: flex;
+
+  .ip-address-host {
+    min-width: 138px;
+    padding: 0 6px;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .ip-address-port {
+    width: 54px;
+    border-left: 1px solid lighten($gray-3, 50%);
+    border-radius: 0 8px 8px 0;
+  }
+}
+
+@mixin ip-address-originator {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  line-height: 23px;
+  text-align: center;
+  display: flex;
+  color: white;
+  font-family: $mono-font;
+  font-size: 14px;
+
+  .host {
+    min-width: 138px;
+    padding: 0 6px;
+    border-radius: 3px 0 0 3px;
+    background: $blue;
+  }
+
+  .port {
+    width: 54px;
+    border-radius: 0 3px 3px 0;
+    background-color: $gray;
+  }
+}
+
+@mixin ip-address-responder {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  line-height: 23px;
+  text-align: center;
+  display: flex;
+  color: white;
+  font-family: $mono-font;
+  font-size: 14px;
+
+  .host {
+    min-width: 138px;
+    padding: 0 6px;
+    border-radius: 3px 0 0 3px;
+    background: $red;
+  }
+
+  .port {
+    width: 54px;
+    border-radius: 0 3px 3px 0;
+    background-color: $gray;
+  }
+}

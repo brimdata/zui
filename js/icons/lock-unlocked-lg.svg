@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" data-icon="lock-unlocked" width="128" height="128" data-container-transform="translate(17 ) scale(1 1 )" viewBox="0 0 128 128">
+  <path d="M47 0c-15.964 0-29 13.036-29 29v15a4 4 0 0 0 0 .406 4.005 4.005 0 1 0 8-.406v-2.563c-1.185-.696-2-1.971-2-3.438s.815-2.741 2-3.438v-5.563c0-11.636 9.364-21 21-21s21 9.364 21 21v33h-68v6h94v-6h-18v-33c0-15.964-13.036-29-29-29zm-45 70v40h90v-40h-90zm-2 42v16h94v-16h-94z"
+  transform="translate(17)" />
+</svg>

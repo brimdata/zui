@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" data-icon="share-social" data-container-transform="translate(0 6)" viewBox="0 0 32 32">
+  <path d="M15.5 0c-4.697 0-8.437 3.509-9.188 8h-6.313v3h9v-1.5c0-3.607 2.893-6.5 6.5-6.5h.5v-3h-.5zm0 6c-1.933 0-3.5 1.567-3.5 3.5s1.567 3.5 3.5 3.5 3.5-1.567 3.5-3.5-1.567-3.5-3.5-3.5zm6.5 2v1.5c0 3.607-2.893 6.5-6.5 6.5h-.5v3h.5c4.697 0 8.437-3.509 9.188-8h6.313v-3h-9z"
+  transform="translate(0 6)" />
+</svg>

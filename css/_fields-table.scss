@@ -1,0 +1,35 @@
+.fields-table {
+  border-collapse: collapse;
+  width: 100%;
+
+  tr {
+    vertical-align: baseline;
+  }
+
+  th,
+  td {
+    padding: 2px 0;
+    padding-right: $base-space;
+    word-break: break-word;
+  }
+
+  th {
+    font-size: 9px;
+    color: $light-gray-2;
+    text-align: left;
+    padding-left: $base-space;
+    white-space: nowrap;
+  }
+
+  td {
+    font-size: 12px;
+    font-family: $mono-font;
+    color: $gray-3;
+    @include type-colors;
+  }
+
+  tr:hover {
+    background: $light-gray;
+    border-radius: 3px;
+  }
+}

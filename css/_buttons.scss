@@ -1,0 +1,64 @@
+.button {
+  color: white;
+  background: $blue-3;
+  border: none;
+  border-radius: 3px;
+  padding: 3px;
+  display: inline-block;
+  box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.25);
+  transition: all 100ms;
+  cursor: pointer;
+
+  svg {
+    fill: white;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.button:hover {
+  background: $blue-4;
+  transform: scale(1.03);
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:active {
+  background: $blue-5;
+  box-shadow: none;
+  outline: none;
+  transform: scale(1);
+}
+
+.button-circle {
+  background: $green-3;
+  fill: white;
+  stroke: white;
+  height: 36px;
+  width: 36px;
+  border: none;
+  box-shadow: $high-box-shadow;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 150ms;
+  outline: none;
+
+  svg {
+    height: 17px;
+    width: 17px;
+    stroke-width: 0;
+  }
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}

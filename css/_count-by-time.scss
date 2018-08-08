@@ -1,0 +1,27 @@
+.count-by-time {
+  display: block;
+
+  .data-point {
+    stroke-width: 1px;
+    fill: $light-green;
+  }
+
+  .tick line {
+    stroke: $light-gray;
+  }
+
+  .domain {
+    stroke: $light-gray;
+  }
+
+  text {
+    font-family: $body-font;
+    fill: $gray;
+    font-size: 9px;
+  }
+}
+
+.chart-tooltip {
+  font-family: $mono-font;
+  opacity: 0;
+}

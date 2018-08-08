@@ -1,0 +1,72 @@
+.time-controls {
+  position: relative;
+  margin-top: $base-space * 4;
+
+  .time-window-picker-wrapper {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 0;
+
+    input {
+      font-size: 12px;
+      font-family: $body-font;
+      padding: 5px;
+      text-align: center;
+    }
+  }
+
+  .time-controls-footer {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 0;
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  .duration-label {
+    margin: 0;
+    color: $gray-3;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .chart-proc {
+    border-radius: 3px;
+    background: $filter-node-background;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 6px;
+
+    svg {
+      width: 9px;
+      height: 9px;
+      fill: $filter-node-foreground;
+      margin-right: $base-space/2;
+    }
+
+    p {
+      color: $filter-node-foreground;
+      font-size: 9px;
+      font-family: $mono-font;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .zoom-buttons-wrapper {
+    text-align: right;
+    button {
+      margin-left: 6px;
+      @extend .button;
+
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}

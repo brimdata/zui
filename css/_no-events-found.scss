@@ -1,0 +1,33 @@
+.no-events-found-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: $base-space * 8;
+}
+
+.no-events-found {
+  display: inline-block;
+  padding: 12px;
+  h3 {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  table {
+    font-size: 12px;
+    color: $gray;
+    display: inline-block;
+  }
+
+  pre {
+    display: inline-block;
+    margin: 0;
+  }
+
+  td:first-child {
+    text-align: right;
+    padding-right: 12px;
+  }
+  td {
+    text-align: left;
+  }
+}

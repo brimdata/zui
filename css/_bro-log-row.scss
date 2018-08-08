@@ -1,0 +1,181 @@
+.bro-log-row-wrapper {
+  display: flex;
+  flex-direction: column;
+  background: white;
+
+  &.expanded {
+    transition: all 100ms;
+  }
+}
+
+.collapsed .bro-log-row:hover {
+  background-color: $off-white;
+}
+
+.bro-log-row .expand-button {
+  cursor: pointer;
+  width: $bro-log-row-height;
+  text-align: center;
+  opacity: 0;
+  svg {
+    fill: $gray;
+    width: 8px;
+    height: 8px;
+    transition-duration: 150ms;
+    .collapsed & {
+      transform: rotate(-90deg);
+    }
+    .expanded & {
+      transform: rotate(0);
+    }
+  }
+}
+
+.bro-log-row {
+  display: flex;
+  width: 100%;
+  white-space: nowrap;
+
+  & > * {
+    flex-shrink: 0;
+  }
+
+  &:hover,
+  .expanded & {
+    .expand-button {
+      opacity: 1;
+    }
+  }
+
+  .cell {
+    font-size: 14px;
+    padding: 0 6px;
+    position: relative;
+    font-family: $mono-font;
+
+    p {
+      line-height: $bro-log-row-height;
+      margin: 0;
+      display: inline;
+    }
+
+    .context-menu {
+      left: calc(100% + #{$bro-log-row-height/2});
+      top: calc(100% - #{$bro-log-row-height/2} + 3px);
+    }
+
+    &.path {
+      padding-left: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    &.addr {
+      color: $blue;
+    }
+
+    &.port {
+      color: $orange;
+    }
+
+    &.interval {
+      color: $purple;
+    }
+
+    &.count {
+      color: $red;
+    }
+
+    &.bool {
+      color: $light-blue;
+    }
+  }
+
+  .cell:hover,
+  .cell.active {
+    background: white;
+    border-radius: 3px 0 0 3px;
+
+    &:after {
+      position: absolute;
+      box-shadow: $high-box-shadow;
+      content: "";
+      width: calc(100% + #{$bro-log-row-height});
+      height: $bro-log-row-height;
+      background: none;
+      border-radius: 3px;
+      top: 0;
+      left: 0;
+    }
+
+    .field-name,
+    .cell-options-button {
+      display: block;
+    }
+  }
+
+  .cell.active .cell-options-button {
+    svg {
+      transition-duration: 150ms;
+      transform: rotate(-90deg);
+    }
+  }
+
+  .field-name {
+    z-index: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    font-family: $body-font;
+    font-weight: bold;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    font-size: 10px;
+    padding: 3px;
+    border-radius: 3px 3px 0 0;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .cell-options-button {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 1;
+    height: $bro-log-row-height;
+    width: $bro-log-row-height;
+    background: white;
+    border: none;
+    border-left: 1px solid $light-gray;
+    outline: none;
+    cursor: pointer;
+    border-radius: 0 3px 3px 0;
+
+    svg {
+      width: 8px;
+      height: 8px;
+      fill: $gray;
+    }
+
+    &:hover {
+      background: $off-white;
+
+      svg {
+        transition-duration: 150ms;
+      }
+    }
+  }
+
+  .cell._path {
+    display: flex;
+    align-items: center;
+    p {
+      @include path-tag;
+    }
+  }
+}

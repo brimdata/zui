@@ -1,0 +1,28 @@
+@mixin arrow($color) {
+  border-left: 2px solid $color;
+  border-bottom: 2px solid $color;
+  display: inline-block;
+  border-radius: 0 0 0 1px;
+  padding: 2px;
+  margin: 0 $base-space;
+}
+
+.left-arrow {
+  @include arrow(white);
+  transform: rotate(45deg);
+}
+
+.up-arrow {
+  @include arrow(white);
+  transform: rotate(135deg);
+}
+
+.right-arrow {
+  @include arrow(white);
+  transform: rotate(225deg);
+}
+
+.down-arrow {
+  @include arrow(white);
+  transform: rotate(315deg);
+}

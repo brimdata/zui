@@ -1,0 +1,47 @@
+.spaces-page-wrapper {
+  max-width: 570px;
+  margin: 0 auto;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.no-spaces {
+  margin: 120px auto;
+  width: 240px;
+
+  p {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .button {
+    margin-top: 60px;
+  }
+}
+
+.spaces-list {
+  padding: 0;
+  margin: 0;
+}
+
+.space-info {
+  width: 100%;
+  margin-bottom: 48px;
+  cursor: pointer;
+  h3 {
+    color: $yellow-3;
+  }
+  transition: all 100ms;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}

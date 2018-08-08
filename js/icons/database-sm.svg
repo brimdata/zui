@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" data-icon="database" data-container-transform="translate(4)" viewBox="0 0 16 16">
+  <path d="M4 0c-2.209 0-4 1.791-4 4 0 2.206 1.794 4 4 4s4-1.794 4-4c0-2.209-1.791-4-4-4zm-4 6.969v1.031c0 2.206 1.794 4 4 4s4-1.794 4-4v-1.031c-.912 1.225-2.359 2.031-4 2.031s-3.088-.806-4-2.031zm0 4v1.031c0 2.209 1.791 4 4 4s4-1.791 4-4v-1.031c-.912 1.225-2.359 2.031-4 2.031s-3.088-.806-4-2.031z"
+  transform="translate(4)" />
+</svg>

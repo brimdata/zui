@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" data-icon="laptop" data-container-transform="translate(0 3)" viewBox="0 0 16 16">
+  <path d="M2.25 0c-.138 0-.25.112-.25.25v7.75h-2v1.75c0 .138.112.25.25.25h15.5c.138 0 .25-.112.25-.25v-1.75h-2v-7.75c0-.138-.112-.25-.25-.25h-11.5zm.75 1h10v6h-10v-6zm3 7h4v.5c0 .276-.224.5-.5.5h-3c-.069 0-.128-.006-.188-.031-.179-.076-.313-.262-.313-.469v-.5z"
+  transform="translate(0 3)" />
+</svg>

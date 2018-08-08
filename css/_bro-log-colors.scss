@@ -1,0 +1,131 @@
+$conn-color: $green-1;
+.conn-bg-color {
+  background-color: $conn-color;
+  fill: $conn-color;
+}
+
+$dhcp-color: #00578a;
+.dhcp-bg-color {
+  background-color: $dhcp-color;
+  fill: $dhcp-color;
+}
+
+$dns-color: $blue-3;
+.dns-bg-color {
+  background-color: $dns-color;
+  fill: $dns-color;
+}
+
+$ftp-color: #392277;
+.ftp-bg-color {
+  background-color: $ftp-color;
+  fill: $ftp-color;
+}
+
+$http-color: $yellow-4;
+.http-bg-color {
+  background-color: $http-color;
+  fill: $http-color;
+}
+
+$files-color: $pink;
+.files-bg-color {
+  background-color: $files-color;
+  fill: $files-color;
+}
+
+$mysql-color: #d28204;
+.mysql-bg-color {
+  background-color: $mysql-color;
+  fill: $mysql-color;
+}
+$irc-color: #00d1a6;
+.irc-bg-color {
+  background-color: $irc-color;
+  fill: $irc-color;
+}
+$radius-color: #ffd901;
+.radius-bg-color {
+  background-color: $radius-color;
+  fill: $radius-color;
+}
+$kerberos-color: #fbf758;
+.kerberos-bg-color {
+  background-color: $kerberos-color;
+  fill: $kerberos-color;
+}
+$sip-color: #006c7b;
+.sip-bg-color {
+  background-color: $sip-color;
+  fill: $sip-color;
+}
+$smtp-color: #e2e317;
+.smtp-bg-color {
+  background-color: $smtp-color;
+  fill: $smtp-color;
+}
+$ssl-color: $gray-5;
+.ssl-bg-color {
+  background-color: $ssl-color;
+  fill: $ssl-color;
+}
+$ssh-color: $gray-5;
+.ssh-bg-color {
+  background-color: $ssh-color;
+  fill: $ssh-color;
+}
+$syslog-color: #ddb81d;
+.syslog-bg-color {
+  background-color: $syslog-color;
+  fill: $syslog-color;
+}
+$tunnel-color: #007249;
+.tunnel-bg-color {
+  background-color: $tunnel-color;
+  fill: $tunnel-color;
+}
+$dce_rpc-color: #929292;
+.dce_rpc-bg-color {
+  background-color: $dce_rpc-color;
+  fill: $dce_rpc-color;
+}
+$ntlm-color: #6284a4;
+.ntlm-bg-color {
+  background-color: $ntlm-color;
+  fill: $ntlm-color;
+}
+$rdp-color: #081d5b;
+.rdp-bg-color {
+  background-color: $rdp-color;
+  fill: $rdp-color;
+}
+$smb_files-color: #27eeff;
+.smb_files-bg-color {
+  background-color: $smb_files-color;
+  fill: $smb_files-color;
+}
+$smb_mapping-color: #0511d4;
+.smb_mapping-bg-color {
+  background-color: $smb_mapping-color;
+  fill: $smb_mapping-color;
+}
+$weird-color: $gray-1;
+.weird-bg-color {
+  background-color: $weird-color;
+  fill: $weird-color;
+}
+$x509-color: $orange;
+.x509-bg-color {
+  background-color: $x509-color;
+  fill: $x509-color;
+}
+$pe-color: $red;
+.pe-bg-color {
+  background-color: $pe-color;
+  fill: $pe-color;
+}
+$dpd-color: $green-5;
+.dpd-bg-color {
+  background-color: $dpd-color;
+  fill: $dpd-color;
+}
