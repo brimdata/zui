@@ -1,17 +1,14 @@
-import {enableLiveReload} from "electron-compile"
 const {app, BrowserWindow} = require("electron")
-
-enableLiveReload()
 
 let win
 
 const createWindow = () => {
-  enableLiveReload()
   win = new BrowserWindow({
     width: 1000,
     height: 1200,
     backgroundColor: "#ffffff"
   })
+  win.openDevTools()
   win.loadFile("index.html")
   win.setMenu(null)
   win.on("closed", () => {
