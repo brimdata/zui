@@ -1,6 +1,6 @@
 import * as actions from "."
 import * as selectors from "../selectors/index"
-import outMessages from "../treehouse/outMessages"
+import outMessages from "../boom/outMessages"
 import eventsReceiver from "../receivers/eventsReceiver"
 
 export function fetchMainSearchPage() {

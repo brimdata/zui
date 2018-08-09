@@ -3,7 +3,6 @@ import isNumber from "lodash/isNumber"
 import trim from "lodash/trim"
 import {changeProgramTimeWindow} from "../changeProgramTimeWindow"
 import {createSelector} from "reselect"
-import compact from "lodash/compact"
 
 export const initialState = {
   current: "",

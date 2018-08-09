@@ -21,7 +21,7 @@ export const connectBoomd = () => (dispatch, getState, api) => {
         dispatch(setBoomdError("Incorrect user and pass combination."))
       else dispatch(connectedBoomd())
     })
-    .catch(res => {
+    .catch(_res => {
       dispatch(setBoomdError("No server running at that host and port."))
     })
 }

@@ -1,5 +1,5 @@
 import * as actions from "."
-import * as outMessages from "../treehouse/outMessages"
+import * as outMessages from "../boom/outMessages"
 import {getCurrentSpace} from "../reducers/spaces"
 import * as selectors from "../selectors"
 

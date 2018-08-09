@@ -8,7 +8,8 @@
   "author": "Looky Labs, Inc.",
   "scripts": {
     "start": "npm-run-all -p electron watch:*",
-    "test": "jest src/js",
+    "test": "jest --roots src/js",
+    "pretest": "npm run lint",
     "electron": "electron .",
     "release": "electron-packager . Looky --out releases --overwrite --icon dist/static/looky.smaller.icns",
     "prerelease": "npm run build",
@@ -20,7 +21,9 @@
     "watch:js": "npm run build:js -- --watch",
     "watch:css": "npm run build:css -- --watch",
     "watch:static": "npm run build:static -- --watch",
-    "watch:reload": "livereload dist"
+    "watch:reload": "livereload dist",
+    "lint": "eslint src",
+    "format": "prettier"
   },
   "jest": {
     "notify": true,

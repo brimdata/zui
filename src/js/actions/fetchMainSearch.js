@@ -1,6 +1,6 @@
 import * as actions from "."
 import * as selectors from "../selectors"
-import * as outMessages from "../treehouse/outMessages"
+import * as outMessages from "../boom/outMessages"
 import eventsReceiver from "../receivers/eventsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
 import analyticsReceiver from "../receivers/analyticsReceiver"

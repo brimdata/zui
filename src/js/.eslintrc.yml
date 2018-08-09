@@ -1,11 +1,11 @@
 parserOptions:
-  ecmaVersion: 6
+  ecmaVersion: 2018
   ecmaFeatures:
     jsx: true
-    experimentalObjectRestSpread: true
   sourceType: "module"
 
 env:
+  node: true
   browser: true
   jest: true
   es6: true

@@ -37,6 +37,24 @@ npx jest --watch
 
 
 
+## Code Style
+
+This project uses eslint and prettier for style consistency. 
+
+Run the linter:
+
+```
+npm run lint
+```
+
+Run the code formatter:
+
+```
+npm run format
+```
+
+
+
 ## Release
 
 ```

@@ -1,4 +1,4 @@
-import * as outMessages from "../treehouse/outMessages"
+import * as outMessages from "../boom/outMessages"
 
 export function fetchSpaceInfo(name) {
   return (dispatch, getState, api) => {

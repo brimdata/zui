@@ -1,5 +1,5 @@
 import {getCurrentSpace} from "../reducers/spaces"
-import * as outMessages from "../treehouse/outMessages"
+import * as outMessages from "../boom/outMessages"
 import uniq from "lodash/uniq"
 
 export function requestMainSearch({saveToHistory, query}) {
