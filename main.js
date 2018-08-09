@@ -8,7 +8,6 @@ const createWindow = () => {
     height: 1200,
     backgroundColor: "#ffffff"
   })
-  win.openDevTools()
   win.loadFile("index.html")
   win.setMenu(null)
   win.on("closed", () => {
