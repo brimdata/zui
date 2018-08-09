@@ -8,6 +8,7 @@
   "author": "Looky Labs, Inc.",
   "scripts": {
     "start": "npm-run-all -p electron watch:*",
+    "test": "jest src/js",
     "electron": "electron .",
     "release": "electron-packager . Looky --out releases --overwrite --icon dist/static/looky.smaller.icns",
     "prerelease": "npm run build",
@@ -24,7 +25,7 @@
   "jest": {
     "notify": true,
     "notifyMode": "change",
-    "setupTestFrameworkScriptFile": "./js/test/setup.js",
+    "setupTestFrameworkScriptFile": "./src/js/test/setup.js",
     "testURL": "http://localhost"
   },
   "prettier": {
