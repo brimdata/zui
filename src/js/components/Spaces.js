@@ -35,7 +35,9 @@ class Spaces extends React.Component {
           </header>
 
           <ul className="spaces-list">
-            {names.map(name => <SpaceInfo key={name} space={spaces[name]} />)}
+            {names.map(name => (
+              <SpaceInfo key={name} space={spaces[name]} />
+            ))}
           </ul>
         </div>
       </div>

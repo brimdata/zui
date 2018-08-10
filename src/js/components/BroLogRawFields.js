@@ -15,14 +15,12 @@ export default class BroLogRawFields extends React.PureComponent {
       <section className="raw-fields-section" style={{position: "relative"}}>
         <table className="fields-table">
           <tbody>
-            {this.props.broLog
-              .fieldNames()
-              .map(fieldName => (
-                <RawFieldTableRow
-                  key={fieldName}
-                  field={this.props.broLog.getField(fieldName)}
-                />
-              ))}
+            {this.props.broLog.fieldNames().map(fieldName => (
+              <RawFieldTableRow
+                key={fieldName}
+                field={this.props.broLog.getField(fieldName)}
+              />
+            ))}
           </tbody>
         </table>
       </section>

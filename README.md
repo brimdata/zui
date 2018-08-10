@@ -37,7 +37,7 @@ npx jest --watch
 
 
 
-## Code Style
+## Style
 
 This project uses eslint and prettier for style consistency. 
 
