@@ -1,0 +1,44 @@
+podTemplate(label: "default", cloud: "local-cluster") {
+    node("default") {
+        def buildName     = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+    	def projectID = "quixotic-strand-159502"
+        def imageTag = "gcr.io/${projectID}/cluso:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+        def slackBuildUrl = "<${env.BUILD_URL}|looky-desktop: ${buildName}>"
+
+        try {
+            stage("checkout source") {
+                slackSend message: "Building...\n${slackBuildUrl}"
+                checkout scm
+            }
+
+            stage("build") {
+				        sh "docker build -t ${imageTag} ."
+            }
+
+            stage("unit tests") {
+                sh "docker run --rm -i ${imageTag} /bin/sh -c \"npm test\""
+            }
+
+			stage("push image") {
+				sh "gcloud docker -- push ${imageTag}"
+
+				if (env.BRANCH_NAME == "master") {
+					def latestTag = "gcr.io/${projectID}/cluso:latest"
+					sh("docker tag ${imageTag} ${latestTag}")
+					sh("gcloud docker -- push ${latestTag}")
+				}
+
+			}
+
+            stage("notify") {
+                slackSend color: "good", message: "Build Succeeded!\n${slackBuildUrl}"
+            }
+
+        }
+
+        catch (error) {
+            slackSend color: "danger", message: "Build Failed!\n${slackBuildUrl}"
+            throw error
+        }
+    }
+}
