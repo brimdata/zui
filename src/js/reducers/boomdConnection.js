@@ -17,6 +17,10 @@ export default createReducer(initialState, {
     isConnected: true,
     error: null
   }),
+  BOOMD_DISCONNECTED: state => ({
+    ...state,
+    isConnected: false
+  }),
   BOOMD_ERROR_SET: (state, {error}) => ({
     isConnecting: false,
     isConnected: false,

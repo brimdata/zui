@@ -12,3 +12,6 @@ export default createReducer(initialState, {
 })
 
 export const getCredentials = state => state.boomdCredentials
+export const getBoomHost = state => state.boomdCredentials.host
+export const getBoomPort = state => state.boomdCredentials.port
+export const getBoomUser = state => state.boomdCredentials.user

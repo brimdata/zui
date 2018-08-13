@@ -1,0 +1,18 @@
+.title-bar {
+  -webkit-app-region: drag;
+  width: 100%;
+  text-align: center;
+  color: $light-gray-2;
+  display: flex;
+  justify-content: center;
+
+  a {
+    color: $light-gray-2;
+    padding: 0 12px;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

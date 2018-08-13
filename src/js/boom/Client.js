@@ -15,7 +15,13 @@ export default class Client {
     this.user = user
     this.pass = pass
 
-    return fetch(`http:${this.host}:${this.port}`)
+    const options = {
+      headers: {
+        Authorization: `Basic ${base64.encode(`${this.user}:${this.pass}`)}`
+      }
+    }
+
+    return fetch(`http:${this.host}:${this.port}/space`, options)
   }
 
   send({method, path, payload}) {

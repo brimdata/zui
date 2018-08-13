@@ -4,6 +4,7 @@ import AdminTitle from "./AdminTitle"
 import Plus from "../icons/plus-lg.svg"
 import * as fmt from "../fmt"
 import {toMoment} from "../cast"
+import {Link} from "react-router-dom"
 
 class Spaces extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Spaces extends React.Component {
 
   render() {
     if (this.firstRender) return null
-    const {spaces} = this.props
+    const {spaces, setCurrentSpaceName} = this.props
     const names = Object.keys(spaces)
 
     if (names.length === 0) return <NoSpaces />
@@ -36,7 +37,12 @@ class Spaces extends React.Component {
 
           <ul className="spaces-list">
             {names.map(name => (
-              <SpaceInfo key={name} space={spaces[name]} />
+              <Link to="/search" key={name}>
+                <SpaceInfo
+                  space={spaces[name]}
+                  onClick={() => setCurrentSpaceName(name)}
+                />
+              </Link>
             ))}
           </ul>
         </div>
@@ -59,9 +65,10 @@ const NoSpaces = () => (
 )
 
 const SpaceInfo = ({
-  space: {name, size, compression, min_time, max_time, path}
+  space: {name, size, compression, min_time, max_time, path},
+  onClick
 }) => (
-  <div className="space-info admin-panel">
+  <div className="space-info admin-panel" onClick={onClick}>
     <h3>{name}</h3>
     <table className="admin-table">
       <tbody>

@@ -9,7 +9,7 @@ body {
   margin: 0;
   height: 100%;
   width: 100%;
-  background-color: white;
+  background-color: $light-gray-1;
 }
 
 h1,
@@ -24,18 +24,6 @@ h6 {
 
 p {
   margin: 0;
-}
-
-a {
-  @include clickable;
-  @extend .body-text;
-  // text-decoration: underline;
-  color: $blue;
-  cursor: pointer;
-
-  &:hover {
-    color: darken($blue, 20%);
-  }
 }
 
 label {

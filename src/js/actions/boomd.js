@@ -5,6 +5,10 @@ export const setBoomdCredentials = credentials => ({
   credentials
 })
 
+export const disconnectBoomd = () => ({
+  type: "BOOMD_DISCONNECTED"
+})
+
 export const connectedBoomd = () => ({type: "BOOMD_CONNECTED"})
 
 export const setBoomdError = error => ({type: "BOOMD_ERROR_SET", error})
@@ -17,9 +21,11 @@ export const connectBoomd = () => (dispatch, getState, api) => {
   return api
     .connect(getCredentials(getState()))
     .then(res => {
-      if (res.status === 401)
+      if (res.status === 401) {
         dispatch(setBoomdError("Incorrect user and pass combination."))
-      else dispatch(connectedBoomd())
+      } else {
+        dispatch(connectedBoomd())
+      }
     })
     .catch(_res => {
       dispatch(setBoomdError("No server running at that host and port."))
