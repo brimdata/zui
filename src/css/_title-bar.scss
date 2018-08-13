@@ -6,11 +6,10 @@
   display: flex;
   justify-content: center;
 
-  a {
+  p {
     color: $light-gray-2;
     padding: 0 12px;
     cursor: pointer;
-    text-decoration: none;
     &:hover {
       text-decoration: underline;
     }

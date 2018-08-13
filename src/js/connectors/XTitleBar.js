@@ -3,8 +3,8 @@ import {bindActionCreators} from "redux"
 import TitleBar from "../components/TitleBar"
 import {getBoomHost, getBoomPort} from "../reducers/boomdCredentials"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import * as actions from "../actions/boomd"
-
+import * as boomdActions from "../actions/boomd"
+import * as spaceActions from "../actions/spaces"
 const stateToProps = state => ({
   host: getBoomHost(state),
   port: getBoomPort(state),
@@ -13,5 +13,5 @@ const stateToProps = state => ({
 
 export default connect(
   stateToProps,
-  dispatch => bindActionCreators(actions, dispatch)
+  dispatch => bindActionCreators({...boomdActions, ...spaceActions}, dispatch)
 )(TitleBar)

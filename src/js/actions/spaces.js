@@ -41,3 +41,9 @@ export function setCurrentSpaceName(name) {
     name
   }
 }
+
+export function unselectSpace() {
+  return {
+    type: "SPACE_UNSELECT"
+  }
+}
