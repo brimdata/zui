@@ -1,6 +1,4 @@
 import React from "react"
-import TextInput from "./TextInput"
-import mapJoin from "../mapJoin"
 import isEmpty from "lodash/isEmpty"
 import trim from "lodash/trim"
 import FilterNode from "./FilterNode"
@@ -8,6 +6,9 @@ import History from "../models/History"
 import isEqual from "lodash/isEqual"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import Pin from "../icons/pin-md.svg"
+import XTimeWindowInput from "../connectors/XTimeWindowInput"
+import XSearchBarInput from "../connectors/XSearchBarInput"
+import XPins from "../connectors/XPins"
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -23,27 +24,18 @@ export default class SearchBar extends React.Component {
       this.props.changeSearchBarInput(e.currentTarget.value)
   }
 
-  onPinClick() {
-    this.filterManager.pin()
-    this.dispatchFilters()
-    this.textInput.focus()
-  }
-
   onEditFilterClick(index) {
     this.props.editSearchBarPin(index)
-    this.textInput.focus()
   }
 
   onRemoveFilterClick(e, index) {
     e.stopPropagation()
     this.props.removeSearchBarPin(index)
-    this.textInput.focus()
   }
 
   onSearchButtonClick() {
     this.saveHistory(this.props.inputValue)
     this.props.fetch()
-    this.textInput.focus()
   }
 
   onInputKeyDown(e) {
@@ -109,36 +101,16 @@ export default class SearchBar extends React.Component {
   }
 
   render() {
-    const {inputValue, previousValue, pins, isFetching} = this.props
-    const hasStagedFilter = !/^\s*$/.test(previousValue)
-    const hasCommittedFilter = pins.length > 0
-
     return (
       <div className="search-bar">
         <div className="input-wrapper">
-          <TextInput
-            ref={node => (this.textInput = node)}
-            label="Search"
-            value={inputValue}
-            onChange={this.onInputChange}
-            onKeyDown={this.onInputKeyDown}
-            spellCheck={false}
-            autoFocus="true"
-            autoComplete="off"
-            isFetching={isFetching}
-          />
+          <XSearchBarInput />
+          <XTimeWindowInput />
           <button className="button" onClick={this.onSearchButtonClick}>
             <MagGlass />
           </button>
         </div>
-        {(hasStagedFilter || hasCommittedFilter) && (
-          <div className="filter-nodes-wrapper">
-            {mapJoin(pins, this.renderFilter, this.renderJoinOperator)}
-            {hasStagedFilter && hasCommittedFilter && this.renderJoinOperator()}
-            {hasStagedFilter && this.renderFilter(previousValue, null)}
-            {hasStagedFilter && this.renderPinButton()}
-          </div>
-        )}
+        <XPins />
       </div>
     )
   }
