@@ -43,6 +43,7 @@
     "babel-preset-react": "^6.24.1",
     "cpx": "^1.5.0",
     "electron": "^2.0.7",
+    "electron-devtools-installer": "^2.2.4",
     "electron-packager": "^12.1.0",
     "electron-prebuilt": "^1.4.13",
     "enzyme": "^3.3.0",
