@@ -1,8 +1,15 @@
 import React from "react"
+import TimeWindowPicker from "./TimeWindowPicker"
 
 class TimeWindowInput extends React.Component {
   render() {
-    return <div>hi</div>
+    const {timeWindow, setTimeWindow} = this.props
+
+    return (
+      <div className="time-window-input">
+        <TimeWindowPicker onChange={setTimeWindow} timeWindow={timeWindow} />
+      </div>
+    )
   }
 }
 

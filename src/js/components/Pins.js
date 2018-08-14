@@ -53,7 +53,7 @@ class Pins extends React.Component {
     if (!hasStagedFilter && !hasCommittedFilter) return null
 
     return (
-      <div className="filter-nodes-wrapper">
+      <div className="pins">
         {mapJoin(pins, this.renderFilter, this.renderJoinOperator)}
         {hasStagedFilter && hasCommittedFilter && this.renderJoinOperator()}
         {hasStagedFilter && this.renderFilter(previousValue, null)}

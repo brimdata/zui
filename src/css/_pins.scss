@@ -1,0 +1,33 @@
+.pins {
+  margin-top: $base-space;
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+}
+
+.pins .join-operator {
+  font-family: $mono-font;
+  font-size: 9px;
+  padding: 3px 6px;
+  color: $gray;
+  margin: 0;
+}
+
+.pins .button.pin-filter {
+  height: 20px;
+  width: 20px;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-left: 6px;
+  align-self: flex-start;
+}
+
+.pins .button.pin-filter svg {
+  transform: rotate(45deg);
+  width: 12px;
+  height: 12px;
+}
