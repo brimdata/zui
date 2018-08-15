@@ -57,7 +57,7 @@ export default class UidWaterfall extends React.Component {
 
     return (
       <div className="uid-waterfall panel">
-        <h4 className="panel-heading">Correlated Logs</h4>
+        <h4 className="small-heading">Correlated Logs</h4>
         {this.props.broLogs.map((log, i) => this.row(log, i, xScale))}
         <p className="duration">Duration: {duration}s</p>
 

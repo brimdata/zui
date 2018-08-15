@@ -29,7 +29,6 @@ $filter-node-foreground: white;
 /* Styles */
 @import "global";
 @import "typography";
-@import "panel";
 @import "icons";
 @import "layout";
 @import "modal";
@@ -43,7 +42,6 @@ $filter-node-foreground: white;
 @import "bro-log-details-generic";
 @import "bro-log-details-conn";
 @import "buttons";
-@import "side-bar";
 @import "hunt-history";
 @import "uid-waterfall";
 @import "bro-log-detail-modal";

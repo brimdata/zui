@@ -6,6 +6,8 @@ import XControlBar from "../connectors/XControlBar"
 import XLogViewer from "../connectors/XLogViewer"
 import XSearchStats from "../connectors/XSearchStats"
 import XCountByTime from "../connectors/XCountByTime"
+import XFilterTree from "../connectors/XFilterTree"
+import XLogDetail from "../connectors/XLogDetail"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -19,11 +21,21 @@ export default class Search extends React.Component {
 
     return (
       <div className="search-page">
-        <XTitleBar />
-        <XControlBar />
-        <XCountByTime />
+        <div className="search-page-header">
+          <XTitleBar />
+          <XControlBar />
+          <XCountByTime />
+        </div>
         <div className="search-page-body">
-          <XLogViewer />
+          <div className="search-page-sidebar-left">
+            <XFilterTree />
+          </div>
+          <div className="search-page-main">
+            <XLogViewer />
+          </div>
+          <div className="search-page-sidebar-right">
+            <XLogDetail />
+          </div>
         </div>
         <div className="search-page-footer">
           <XSearchStats />

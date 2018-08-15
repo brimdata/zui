@@ -2,7 +2,7 @@
   display: inline-block;
   font-size: 14px;
   white-space: nowrap;
-  background: $light-gray-3;
+  background: $light-gray-2;
   border-radius: 0 3px 3px 0;
 
   .divider {
@@ -15,6 +15,7 @@
     box-shadow: none;
     background: transparent;
     border-radius: 0px;
+    text-align: center;
   }
 
   .text-input-wrapper {
@@ -22,10 +23,10 @@
   }
 
   .DayPickerInput input {
-    color: $green-3;
+    color: $blue-3;
   }
 
   .time-picker input {
-    color: $blue-3;
+    color: $green-3;
   }
 }

@@ -10,7 +10,7 @@ export default class OriginatorResponder extends React.Component {
         ref={r => (this.node = r)}
       >
         <div className="panel originator">
-          <h4 className="panel-heading">Originator</h4>
+          <h4>Originator</h4>
           <div className="ip-address-originator">
             <span className="host">{broLog.get("id.orig_h")}</span>
             <span className="port">{broLog.get("id.orig_p")}</span>
@@ -23,7 +23,7 @@ export default class OriginatorResponder extends React.Component {
           </svg>
         </div>
         <div className="panel responder">
-          <h4 className="panel-heading">Responder</h4>
+          <h4>Responder</h4>
           <div className="ip-address-responder">
             <span className="host">{broLog.get("id.resp_h")}</span>
             <span className="port">{broLog.get("id.resp_p")}</span>
