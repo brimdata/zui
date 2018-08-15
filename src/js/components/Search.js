@@ -4,6 +4,7 @@ import {Redirect} from "react-router-dom"
 import XTitleBar from "../connectors/XTitleBar"
 import XControlBar from "../connectors/XControlBar"
 import XLogViewer from "../connectors/XLogViewer"
+import XSearchStats from "../connectors/XSearchStats"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -21,6 +22,9 @@ export default class Search extends React.Component {
         <XControlBar />
         <div className="search-page-body">
           <XLogViewer />
+        </div>
+        <div className="search-page-footer">
+          <XSearchStats />
         </div>
       </div>
     )

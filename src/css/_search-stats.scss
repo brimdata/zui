@@ -1,8 +1,6 @@
 .search-stats {
   display: flex;
-  position: absolute;
-  top: -25px - 12px;
-  left: 24px;
+  flex-flow: row-reverse;
 
   p {
     margin-right: 24px;
@@ -13,7 +11,6 @@
 
   .label {
     text-transform: uppercase;
-    font-weight: 100;
     font-size: 9px;
     margin-right: 6px;
   }

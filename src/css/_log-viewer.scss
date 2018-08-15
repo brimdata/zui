@@ -3,7 +3,7 @@
   outline: none;
   overflow-x: auto !important;
   padding-top: $base-space;
-  box-shadow: inset $box-shadow;
+  box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.3);
 
   .ReactVirtualized__Grid__innerScrollContainer {
     overflow: initial !important;

@@ -13,7 +13,6 @@ export default class ControlBar extends React.Component {
       toggleRightSidebar,
       toggleLeftSidebar
     } = this.props
-    console.log(rightSidebarIsOpen)
 
     return (
       <div className="control-bar">
