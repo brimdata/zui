@@ -6,11 +6,11 @@ import XSearchStats from "../connectors/XSearchStats"
 export default class LogViewer extends React.PureComponent {
   render() {
     const {logs, appendToQuery, showDetail} = this.props
+
     const rowRenderer = ({key, index, style}) => {
-      console.log(logs, index, logs[index])
       const log = logs[index]
       const prevLog = logs[index - 1]
-      const logRow = (
+      return (
         <LogRow
           key={key}
           log={log}
@@ -20,15 +20,8 @@ export default class LogViewer extends React.PureComponent {
           appendToQuery={appendToQuery}
         />
       )
-
-      if (index === 0) {
-        return [<XSearchStats key="search-stats" />, logRow]
-      } else {
-        return logRow
-      }
     }
-    console.log(logs.length)
-    console.log(logs)
+
     return (
       <AutoSizer>
         {({height, width}) => (

@@ -7,8 +7,7 @@
   line-height: 25px;
   align-items: center;
   opacity: 1;
-  margin-left: 24px;
-  background: white;
+  margin-left: $base-space;
 
   &:hover {
     background: $off-white;

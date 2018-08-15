@@ -64,3 +64,13 @@ $closed-side-bar-width: 30px;
   justify-content: center;
   margin-top: 60px;
 }
+
+.search-page {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.search-page-body {
+  flex: 1 1 auto;
+}

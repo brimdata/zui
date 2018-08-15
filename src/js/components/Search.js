@@ -3,6 +3,7 @@ import {Redirect} from "react-router-dom"
 
 import XTitleBar from "../connectors/XTitleBar"
 import XControlBar from "../connectors/XControlBar"
+import XLogViewer from "../connectors/XLogViewer"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -15,9 +16,12 @@ export default class Search extends React.Component {
     if (!currentSpaceName) return <Redirect to="/spaces" />
 
     return (
-      <div>
+      <div className="search-page">
         <XTitleBar />
         <XControlBar />
+        <div className="search-page-body">
+          <XLogViewer />
+        </div>
       </div>
     )
   }
