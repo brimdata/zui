@@ -5,6 +5,7 @@ import XTitleBar from "../connectors/XTitleBar"
 import XControlBar from "../connectors/XControlBar"
 import XLogViewer from "../connectors/XLogViewer"
 import XSearchStats from "../connectors/XSearchStats"
+import XCountByTime from "../connectors/XCountByTime"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ export default class Search extends React.Component {
       <div className="search-page">
         <XTitleBar />
         <XControlBar />
+        <XCountByTime />
         <div className="search-page-body">
           <XLogViewer />
         </div>

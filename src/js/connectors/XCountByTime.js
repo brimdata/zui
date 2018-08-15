@@ -1,5 +1,7 @@
 import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
 import CountByTime from "../components/CountByTime"
+import * as actions from "../actions/searchBar"
 import * as selectors from "../selectors"
 
 function stateToProps(state) {
@@ -10,11 +12,7 @@ function stateToProps(state) {
   }
 }
 
-function dispatchToProps(_dispatch) {
-  return {}
-}
-
 export default connect(
   stateToProps,
-  dispatchToProps
+  dispatch => bindActionCreators(actions, dispatch)
 )(CountByTime)

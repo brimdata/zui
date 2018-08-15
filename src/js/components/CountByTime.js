@@ -13,14 +13,14 @@ export default class CountByTime extends React.Component {
 
     this.margin = {
       left: 48,
-      top: 48,
+      top: 12,
       bottom: 24,
       right: 6
     }
 
     this.state = {
       width: 0,
-      height: 120
+      height: 80
     }
   }
 
@@ -123,7 +123,7 @@ export default class CountByTime extends React.Component {
       ])
     const onBrushEnd = () => {
       if (d3.event.selection) {
-        this.props.onBrush(d3.event.selection.map(timeScale.invert))
+        this.props.setTimeWindow(d3.event.selection.map(timeScale.invert))
         brush.move(d3.select(".brush"), null)
       }
     }
@@ -171,6 +171,7 @@ export default class CountByTime extends React.Component {
   }
 
   render() {
+    console.log(this.props.data)
     return (
       <div className="count-by-time-wrapper">
         <svg

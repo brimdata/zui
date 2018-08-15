@@ -16,12 +16,6 @@ export default class ControlBar extends React.Component {
 
     return (
       <div className="control-bar">
-        <img
-          src="dist/static/looky-face.png"
-          width="34"
-          height="34"
-          className="looky-face"
-        />
         <XSearchBar />
 
         <ControlButton>
