@@ -51,9 +51,13 @@ export function nextPage() {
 
 export function discoverSchemas(events = []) {
   return (dispatch, getState, _api) => {
-    const schemas = getState().broSchemas
+    const state = getState()
+    const schemas = state.broSchemas
+    const space = state.currentSpaceName
     const unknownSchemas = uniq(
-      events.map(([descriptorId]) => descriptorId).filter(id => !schemas[id])
+      events
+        .map(([descriptorId]) => descriptorId)
+        .filter(id => !schemas[space + "." + id])
     )
 
     unknownSchemas.forEach(id => {
