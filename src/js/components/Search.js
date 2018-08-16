@@ -15,7 +15,13 @@ export default class Search extends React.Component {
   }
 
   render() {
-    const {isConnected, currentSpaceName} = this.props
+    const {
+      isConnected,
+      currentSpaceName,
+      leftSidebarIsOpen,
+      rightSidebarIsOpen
+    } = this.props
+
     if (!isConnected) return <Redirect to="/connect" />
     if (!currentSpaceName) return <Redirect to="/spaces" />
 
@@ -27,15 +33,19 @@ export default class Search extends React.Component {
           <XCountByTime />
         </div>
         <div className="search-page-body">
-          <div className="search-page-sidebar-left">
-            <XFilterTree />
-          </div>
+          {leftSidebarIsOpen && (
+            <div className="search-page-sidebar-left">
+              <XFilterTree />
+            </div>
+          )}
           <div className="search-page-main">
             <XLogViewer />
           </div>
-          <div className="search-page-sidebar-right">
-            <XLogDetail />
-          </div>
+          {rightSidebarIsOpen && (
+            <div className="search-page-sidebar-right">
+              <XLogDetail />
+            </div>
+          )}
         </div>
         <div className="search-page-footer">
           <XSearchStats />
