@@ -9,7 +9,8 @@ const PERSIST = [
   "timeWindow",
   "currentSpaceName",
   "boomdCredentials",
-  "boomdConnection"
+  "boomdConnection",
+  "view"
 ]
 
 export function saveState(state) {

@@ -1,3 +1,27 @@
+.count-by-time-wrapper {
+  position: relative;
+
+  .loading-message {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    p {
+      animation: pulsing 700ms linear infinite alternate;
+    }
+  }
+}
+
+@keyframes pulsing {
+  from {
+    opactiy: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
 .count-by-time {
   display: block;
 

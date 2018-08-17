@@ -8,6 +8,7 @@ import XSearchStats from "../connectors/XSearchStats"
 import XCountByTime from "../connectors/XCountByTime"
 import XFilterTree from "../connectors/XFilterTree"
 import XLogDetail from "../connectors/XLogDetail"
+import XSearchWelcome from "../connectors/XSearchWelcome"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -19,7 +20,8 @@ export default class Search extends React.Component {
       isConnected,
       currentSpaceName,
       leftSidebarIsOpen,
-      rightSidebarIsOpen
+      rightSidebarIsOpen,
+      initialLoad
     } = this.props
 
     if (!isConnected) return <Redirect to="/connect" />
@@ -38,13 +40,18 @@ export default class Search extends React.Component {
           <div className="search-page-main">
             <div className="search-page-header">
               <XControlBar />
-              <XCountByTime />
+              {!initialLoad && <XCountByTime />}
             </div>
 
             <div className="search-page-body">
-              <div className="search-page-results">
-                <XLogViewer />
-              </div>
+              {initialLoad && (
+                <XSearchWelcome currentSpaceName={currentSpaceName} />
+              )}
+              {!initialLoad && (
+                <div className="search-page-results">
+                  <XLogViewer />
+                </div>
+              )}
               {rightSidebarIsOpen && (
                 <div className="search-page-sidebar-right">
                   <XLogDetail />

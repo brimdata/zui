@@ -171,8 +171,16 @@ export default class CountByTime extends React.Component {
   }
 
   render() {
+    const {isFetching} = this.props
+
     return (
       <div className="count-by-time-wrapper">
+        {isFetching && (
+          <div className="loading-message">
+            <p>Graph data loading...</p>
+          </div>
+        )}
+
         <svg
           className="count-by-time"
           height={this.state.height}

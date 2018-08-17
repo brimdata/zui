@@ -28,6 +28,8 @@ class SearchButton extends React.Component {
           <ContextMenu onOutsideClick={this.closeMenu}>
             <MenuItem>Save query</MenuItem>
             <MenuItem>Load query</MenuItem>
+            <MenuItem>Debug query</MenuItem>
+            <MenuItem>Copy for CLI</MenuItem>
           </ContextMenu>
         )}
       </div>

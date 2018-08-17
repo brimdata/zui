@@ -1,8 +1,8 @@
 import createReducer from "./createReducer"
 
 const initalState = {
-  leftSidebarIsOpen: true,
-  rightSidebarIsOpen: true
+  leftSidebarIsOpen: false,
+  rightSidebarIsOpen: false
 }
 
 export default createReducer(initalState, {
