@@ -1,4 +1,5 @@
 $page-background-color: $light-gray-2;
+$page-border-color: $light-gray-3;
 
 .search-page {
   display: flex;
@@ -15,6 +16,7 @@ $page-background-color: $light-gray-2;
   overflow: scroll;
   background-color: $page-background-color;
   flex: 0 0 300px;
+  border-right: 1px solid $page-border-color;
 }
 
 .search-page-main {
@@ -25,6 +27,7 @@ $page-background-color: $light-gray-2;
 
 .search-page-header {
   background-color: $page-background-color;
+  border-bottom: 1px solid $page-border-color;
 }
 
 .search-page-body {
@@ -40,8 +43,10 @@ $page-background-color: $light-gray-2;
   flex: 0 0 380px;
   background-color: $page-background-color;
   overflow-y: scroll;
+  border-left: 1px solid $page-border-color;
 }
 
 .search-page-footer {
   background-color: $page-background-color;
+  border-top: 1px solid $page-border-color;
 }
