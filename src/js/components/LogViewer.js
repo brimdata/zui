@@ -1,7 +1,6 @@
 import React from "react"
 import {List, AutoSizer} from "react-virtualized"
 import LogRow from "./LogRow"
-import XSearchStats from "../connectors/XSearchStats"
 
 export default class LogViewer extends React.PureComponent {
   render() {
@@ -32,7 +31,7 @@ export default class LogViewer extends React.PureComponent {
             rowCount={logs.length}
             rowHeight={25}
             rowRenderer={rowRenderer}
-            overscanRowCount={10}
+            overscanRowCount={2}
           />
         )}
       </AutoSizer>

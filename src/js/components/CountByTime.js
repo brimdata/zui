@@ -171,7 +171,6 @@ export default class CountByTime extends React.Component {
   }
 
   render() {
-    console.log(this.props.data)
     return (
       <div className="count-by-time-wrapper">
         <svg

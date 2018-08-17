@@ -1,0 +1,47 @@
+$page-background-color: $light-gray-2;
+
+.search-page {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.search-page-window {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.search-page-sidebar-left {
+  overflow: scroll;
+  background-color: $page-background-color;
+  flex: 0 0 300px;
+}
+
+.search-page-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: column;
+}
+
+.search-page-header {
+  background-color: $page-background-color;
+}
+
+.search-page-body {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.search-page-results {
+  flex: 1 1 auto;
+}
+
+.search-page-sidebar-right {
+  flex: 0 0 380px;
+  background-color: $page-background-color;
+  overflow-y: scroll;
+}
+
+.search-page-footer {
+  background-color: $page-background-color;
+}

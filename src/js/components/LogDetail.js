@@ -2,12 +2,19 @@ import React from "react"
 import FieldsTable from "./FieldsTable"
 import UidTimeline from "./UidTimeline"
 import ConnVersation from "./ConnVersation"
-import X from "../icons/x-md.svg"
 
 export default class LogDetail extends React.Component {
   render() {
     const {log, correlatedLogs} = this.props
-    if (!log) return null
+    if (!log)
+      return (
+        <div className="log-detail">
+          <div className="empty-message">
+            <p>No Log Selected</p>
+            <p>Click the timestamp of a log to view details.</p>
+          </div>
+        </div>
+      )
 
     return (
       <div className="log-detail">

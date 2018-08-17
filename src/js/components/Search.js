@@ -27,30 +27,53 @@ export default class Search extends React.Component {
 
     return (
       <div className="search-page">
-        <div className="search-page-header">
-          <XTitleBar />
-          <XControlBar />
-          <XCountByTime />
-        </div>
-        <div className="search-page-body">
+        <XTitleBar />
+
+        <div className="search-page-window">
           {leftSidebarIsOpen && (
             <div className="search-page-sidebar-left">
               <XFilterTree />
             </div>
           )}
           <div className="search-page-main">
-            <XLogViewer />
-          </div>
-          {rightSidebarIsOpen && (
-            <div className="search-page-sidebar-right">
-              <XLogDetail />
+            <div className="search-page-header">
+              <XControlBar />
+              <XCountByTime />
             </div>
-          )}
-        </div>
-        <div className="search-page-footer">
-          <XSearchStats />
+
+            <div className="search-page-body">
+              <div className="search-page-results">
+                <XLogViewer />
+              </div>
+              {rightSidebarIsOpen && (
+                <div className="search-page-sidebar-right">
+                  <XLogDetail />
+                </div>
+              )}
+            </div>
+
+            <div className="search-page-footer">
+              <XSearchStats />
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 }
+
+// <div className="search-page-main">
+
+//       <XControlBar />
+//       <XCountByTime />
+//     </div>
+//     <div className="search-page-body">
+//       <XLogViewer />
+//       {rightSidebarIsOpen && (
+//         <div className="search-page-sidebar-right">
+//           <XLogDetail />
+//         </div>
+//       )}
+//     </div>
+
+//   </div>

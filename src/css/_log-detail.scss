@@ -1,3 +1,11 @@
+.log-detail {
+  .empty-message {
+    margin-top: $base-space * 4;
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .log-detail-header {
   padding: 12px 18px;
   display: flex;

@@ -4,6 +4,8 @@
   text-align: center;
   display: flex;
   justify-content: center;
+  flex: 0 0 30px;
+  background-color: $light-gray-2;
 
   p {
     font-size: 14px;
