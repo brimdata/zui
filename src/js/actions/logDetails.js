@@ -2,6 +2,7 @@ import * as actions from "."
 import * as outMessages from "../boom/outMessages"
 import {getCurrentSpace} from "../reducers/spaces"
 import * as selectors from "../selectors"
+import {showRightSidebar} from "./view"
 
 export function logDetailsReceived({uid, correlatedEvents}) {
   return {
@@ -27,6 +28,7 @@ export function logDetailsRequested(uid) {
             })
           )
           dispatch(actions.discoverSchemas(payload.results.tuples))
+          dispatch(showRightSidebar())
         }
       })
   }
