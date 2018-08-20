@@ -4,7 +4,7 @@ const initialState = {
   host: "",
   port: "",
   user: "",
-  pass: " "
+  pass: ""
 }
 
 export default createReducer(initialState, {
