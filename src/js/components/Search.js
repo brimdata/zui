@@ -6,7 +6,7 @@ import XControlBar from "../connectors/XControlBar"
 import XLogViewer from "../connectors/XLogViewer"
 import XSearchStats from "../connectors/XSearchStats"
 import XCountByTime from "../connectors/XCountByTime"
-import XFilterTree from "../connectors/XFilterTree"
+import XHistoryAside from "../connectors/XHistoryAside"
 import XLogDetail from "../connectors/XLogDetail"
 import XSearchWelcome from "../connectors/XSearchWelcome"
 
@@ -34,7 +34,7 @@ export default class Search extends React.Component {
         <div className="search-page-window">
           {leftSidebarIsOpen && (
             <div className="search-page-sidebar-left">
-              <XFilterTree />
+              <XHistoryAside />
             </div>
           )}
           <div className="search-page-main">
