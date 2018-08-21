@@ -1,4 +1,5 @@
 import base64js from "base64-js"
+import {TextEncoder} from "text-encoding"
 
 export default {
   encode(str, encoding = "utf-8") {

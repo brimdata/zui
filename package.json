@@ -56,16 +56,15 @@
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-standard": "^3.1.0",
     "jest": "^23.4.2",
-    "jest-fetch-mock": "^1.6.5",
     "livereload": "^0.7.0",
     "node-sass": "^4.9.3",
     "npm-run-all": "^4.1.3",
     "prettier": "^1.14.0",
     "prettier-eslint": "^8.8.2",
+    "text-encoding": "^0.6.4",
     "web-streams-polyfill": "^1.3.2"
   },
   "dependencies": {
-    "redux-devtools-extension": "^2.13.5",
     "base64-js": "^1.3.0",
     "classnames": "^2.2.6",
     "d3": "^5.5.0",
@@ -79,6 +78,7 @@
     "react-router-dom": "^4.3.1",
     "react-virtualized": "^9.20.1",
     "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1"
   }

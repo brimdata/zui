@@ -49,7 +49,7 @@ export function unselectSpace() {
 }
 
 export const fetchSpaceStats = name => {
-  return (dispatch, getState) => {
+  return (dispatch, _getState) => {
     dispatch(requestSpaceStats(name))
   }
 }
@@ -59,6 +59,6 @@ export const requestSpaceStats = name => ({
   name
 })
 
-export const receiveSpaceStats = name => {}
+export const receiveSpaceStats = name => ({type: "SPACE_STATS_RECEIVE", name})
 
-export const errorSpaceStats = name => {}
+export const errorSpaceStats = name => ({type: "SPACE_STATS_ERROR", name})

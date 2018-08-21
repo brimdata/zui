@@ -1,7 +1,6 @@
 export * from "./searchHistory"
 export * from "./mainSearch"
 export * from "./logDetails"
-export * from "./appliedFilters"
 export * from "./spaces"
 export * from "./countByTime"
 export * from "./fetchMainSearch"

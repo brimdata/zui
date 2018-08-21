@@ -1,7 +1,7 @@
 import Client from "./Client"
 
-test("test connection", () => {
-  let client = new Client()
+let client = new Client()
+beforeAll(() => {
   client.connect({
     host: "localhost",
     port: 9867,
@@ -10,6 +10,8 @@ test("test connection", () => {
   })
 })
 
-test("connect when no server is up", () => {})
-
-test("connect when the password is not correct", () => {})
+test("send", done => {
+  client.send({method: "GET", path: "/space"}).done(_data => {
+    done()
+  })
+})

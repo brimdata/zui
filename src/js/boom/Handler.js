@@ -1,7 +1,5 @@
-export default class ApiMessageHandler {
-  constructor(request) {
-    this.request = request
-    this.pending = 0
+export default class Handler {
+  constructor() {
     this.channelCallbacks = {}
     this.doneCallbacks = []
     this.eachCallbacks = []
@@ -15,7 +13,6 @@ export default class ApiMessageHandler {
 
   channel(id, callback) {
     this.channelCallbacks[id] = callback
-    this.pending += 1
     return this
   }
 
@@ -24,22 +21,24 @@ export default class ApiMessageHandler {
     return this
   }
 
-  isDone() {
-    return this.pending === 0
+  error(callback) {
+    this.errorCallbacks.push(callback)
+    return this
+  }
+
+  onError(error) {
+    this.errorCallbacks.forEach(cb => cb(error))
+  }
+
+  onDone(payload) {
+    this.doneCallbacks.forEach(cb => cb(payload))
   }
 
   receive(payload) {
     this.eachCallbacks.forEach(cb => cb(payload))
 
     if ("channel_id" in payload) {
-      if (payload.type === "SearchEnd") {
-        this.pending -= 1
-      }
       this.channelCallback(payload.channel_id, payload)
-    }
-
-    if (this.isDone()) {
-      this.doneCallbacks.forEach(cb => cb(payload))
     }
   }
 

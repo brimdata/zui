@@ -1,7 +1,4 @@
-import jsonStream from "./jsonStream"
-import textStream from "./textStream"
-import base64 from "../base64"
-import ApiMessageHandler from "./ApiMessageHander"
+import request from "./request"
 
 export default class Client {
   constructor() {
@@ -10,60 +7,33 @@ export default class Client {
   }
 
   connect({host, port, user, pass}) {
-    this.host = host
-    this.port = port
-    this.user = user
-    this.pass = pass
+    this.credentials = {host, port, user, pass}
 
-    const options = {
-      headers: {
-        Authorization: `Basic ${base64.encode(`${this.user}:${this.pass}`)}`
-      }
-    }
-
-    return fetch(`http:${this.host}:${this.port}/space`, options)
+    return new Promise((resolve, reject) =>
+      this.spaces()
+        .done(resolve)
+        .error(reject)
+    )
   }
 
-  send({method, path, payload}) {
-    const handler = new ApiMessageHandler(payload)
-
-    setTimeout(() => {
-      let promise
-      if (method === "GET") {
-        promise = fetch(`http://${this.host}:${this.port}` + path, {
-          credentials: "include",
-          headers: {
-            Authorization: `Basic ${base64.encode(`${this.user}:${this.pass}`)}`
-          }
-        })
-      } else {
-        promise = fetch(`http://${this.host}:${this.port}` + path, {
-          credentials: "include",
-          headers: {
-            Authorization: `Basic ${base64.encode(`${this.user}:${this.pass}`)}`
-          },
-          method,
-          body: JSON.stringify(payload)
-        })
-      }
-      promise.then(response => {
-        if (response.ok) {
-          const byteReader = response.body.getReader()
-          const textReader = textStream(byteReader).getReader()
-          const jsonReader = jsonStream(textReader).getReader()
-
-          jsonReader.read().then(function processStream({value, done}) {
-            if (done) return
-            handler.receive(value)
-            jsonReader.read().then(processStream)
-          })
-        } else {
-          console.error(response)
-        }
-      })
+  spaces() {
+    return this.send({
+      stream: false,
+      method: "GET",
+      path: "/space"
     })
+  }
 
-    return handler
+  space({name}) {
+    return this.send({
+      stream: false,
+      method: "GET",
+      path: `/space/${name}`
+    })
+  }
+
+  send(options) {
+    return request({...this.credentials, ...options})
   }
 
   onConnect(callback) {
