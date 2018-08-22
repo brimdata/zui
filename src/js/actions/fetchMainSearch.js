@@ -39,10 +39,3 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
     }
   }
 }
-// Get the type of search we are performing
-// If it has analytics
-//   Add the analytics handler
-// If it has events
-//   Add the events handler
-//   Add the analytics
-//   Add the count by time
