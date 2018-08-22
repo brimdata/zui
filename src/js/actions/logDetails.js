@@ -27,7 +27,7 @@ export function logDetailsRequested(uid) {
               correlatedEvents: payload.results.tuples || []
             })
           )
-          dispatch(actions.discoverSchemas(payload.results.tuples))
+          dispatch(actions.discoverDescriptors(payload.results.tuples))
           dispatch(showRightSidebar())
         }
       })

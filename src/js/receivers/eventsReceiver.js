@@ -7,7 +7,7 @@ export default function(dispatch) {
   const dispatchEvents = throttle(() => {
     if (buffer.lenth == 0) return
     dispatch(actions.mainSearchEvents(buffer))
-    dispatch(actions.discoverSchemas(buffer))
+    dispatch(actions.discoverDescriptors(buffer))
     buffer = []
   }, 200)
 

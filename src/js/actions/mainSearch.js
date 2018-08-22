@@ -49,7 +49,7 @@ export function nextPage() {
   }
 }
 
-export function discoverSchemas(events = []) {
+export function discoverDescriptors(events = []) {
   return (dispatch, getState, _api) => {
     const state = getState()
     const schemas = state.broSchemas
