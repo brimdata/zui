@@ -30,6 +30,10 @@ $page-border-color: $light-gray-3;
   border-bottom: 1px solid $page-border-color;
 }
 
+.search-page-header-charts {
+  height: 80px;
+}
+
 .search-page-body {
   flex: 1 1 auto;
   display: flex;

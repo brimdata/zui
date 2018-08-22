@@ -1,5 +1,6 @@
 import React from "react"
 import {Redirect} from "react-router-dom"
+import {AutoSizer} from "react-virtualized"
 
 import XTitleBar from "../connectors/XTitleBar"
 import XControlBar from "../connectors/XControlBar"
@@ -40,7 +41,13 @@ export default class Search extends React.Component {
           <div className="search-page-main">
             <div className="search-page-header">
               <XControlBar />
-              {!initialLoad && <XCountByTime />}
+              {!initialLoad && (
+                <div className="search-page-header-charts">
+                  <AutoSizer disableHeight>
+                    {({width}) => <XCountByTime height={80} width={width} />}
+                  </AutoSizer>
+                </div>
+              )}
             </div>
 
             <div className="search-page-body">
