@@ -2,7 +2,7 @@ import * as outMessages from "../boom/outMessages"
 
 export function fetchSpaceInfo(name) {
   return (dispatch, getState, api) => {
-    api.send(outMessages.fetchSpaceInfo(name)).done(space => {
+    api.space({name}).done(space => {
       dispatch(setSpaceInfo(space))
     })
   }
@@ -10,9 +10,12 @@ export function fetchSpaceInfo(name) {
 
 export const fetchAllSpaces = () => (dispatch, _getState, api) => {
   dispatch(requestAllSpaces())
-  api.send(outMessages.fetchSpaces()).done(spaces => {
-    if (!spaces.error) spaces.forEach(name => dispatch(fetchSpaceInfo(name)))
-  })
+  api
+    .spaces()
+    .done(spaces => {
+      spaces.forEach(name => dispatch(fetchSpaceInfo(name)))
+    })
+    .error(e => console.log(e))
 }
 
 export const requestAllSpaces = () => {

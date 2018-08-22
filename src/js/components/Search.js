@@ -68,19 +68,3 @@ export default class Search extends React.Component {
     )
   }
 }
-
-// <div className="search-page-main">
-
-//       <XControlBar />
-//       <XCountByTime />
-//     </div>
-//     <div className="search-page-body">
-//       <XLogViewer />
-//       {rightSidebarIsOpen && (
-//         <div className="search-page-sidebar-right">
-//           <XLogDetail />
-//         </div>
-//       )}
-//     </div>
-
-//   </div>

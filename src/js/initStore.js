@@ -6,14 +6,19 @@ import reduxThunk from "redux-thunk"
 import {loadState, saveState} from "./persistance"
 import throttle from "lodash/throttle"
 import Client from "./boom/Client"
+import {getCredentials} from "./reducers/boomdCredentials"
 
 export default function() {
+  const state = loadState()
+
   const store = createStore(
     reducer,
-    loadState(),
+    state,
     composeWithDevTools(
       applyMiddleware(
-        reduxThunk.withExtraArgument(new Client()),
+        reduxThunk.withExtraArgument(
+          new Client(state && getCredentials(state))
+        ),
         browserHistoryMiddleware
       )
     )

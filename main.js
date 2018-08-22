@@ -1,4 +1,4 @@
-const {app, BrowserWindow, dialog, autoUpdater} = require("electron")
+const {app, BrowserWindow, dialog, autoUpdater, Menu} = require("electron")
 const menu = require("./menu")
 const server = "http://desktop-release.looky.cloud"
 const feed = `${server}/update/${process.platform}/${app.getVersion()}`
