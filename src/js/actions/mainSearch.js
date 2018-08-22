@@ -61,7 +61,7 @@ export function discoverSchemas(events = []) {
     )
 
     unknownSchemas.forEach(id => {
-      dispatch(schemaFetch(id))
+      dispatch(fetchDescriptor(id))
     })
   }
 }
@@ -75,7 +75,7 @@ export function setSchema(spaceName, id, descriptor) {
   }
 }
 
-export function schemaFetch(id) {
+export function fetchDescriptor(id) {
   return (dispatch, getState, api) => {
     const space = getCurrentSpace(getState())
 
