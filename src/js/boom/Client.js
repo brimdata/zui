@@ -17,17 +17,25 @@ export default class Client {
 
   spaces() {
     return this.send({
-      stream: false,
       method: "GET",
-      path: "/space"
+      path: "/space",
+      stream: false
     })
   }
 
   space({name}) {
     return this.send({
-      stream: false,
       method: "GET",
-      path: `/space/${name}`
+      path: `/space/${name}`,
+      stream: false
+    })
+  }
+
+  descriptor({space, id}) {
+    return this.send({
+      method: "GET",
+      path: `/space/${space}/descriptor/${id}`,
+      stream: false
     })
   }
 

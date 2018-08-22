@@ -1,8 +1,8 @@
-import * as actions from "."
 import * as outMessages from "../boom/outMessages"
 import {getCurrentSpace} from "../reducers/spaces"
 import * as selectors from "../selectors"
 import {showRightSidebar} from "./view"
+import {discoverDescriptors} from "./descriptors"
 
 export function logDetailsReceived({uid, correlatedEvents}) {
   return {
@@ -27,7 +27,7 @@ export function logDetailsRequested(uid) {
               correlatedEvents: payload.results.tuples || []
             })
           )
-          dispatch(actions.discoverDescriptors(payload.results.tuples))
+          dispatch(discoverDescriptors(payload.results.tuples))
           dispatch(showRightSidebar())
         }
       })
