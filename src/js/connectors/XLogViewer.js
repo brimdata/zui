@@ -2,7 +2,7 @@ import {connect} from "react-redux"
 import LogViewer from "../components/LogViewer"
 import {setLogDetail, logDetailsRequested} from "../actions/logDetails"
 import {appendMainSearchQueryProgram} from "../actions/mainSearch"
-import {fetchMainSearch} from "../actions/fetchMainSearch"
+import {fetchMainSearch} from "../actions/mainSearch"
 import {getLogs} from "../selectors/mainSearch"
 
 const stateToProps = state => ({

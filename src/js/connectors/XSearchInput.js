@@ -3,7 +3,7 @@ import {bindActionCreators} from "redux"
 import SearchInput from "../components/SearchInput"
 import {getSearchBarInputValue} from "../reducers/searchBar"
 import * as searchActions from "../actions/searchBar"
-import * as fetchActions from "../actions/fetchMainSearch"
+import * as fetchActions from "../actions/mainSearch"
 
 const actions = {...fetchActions, ...searchActions}
 
