@@ -1,0 +1,13 @@
+@keyframes pulsing-keyframes {
+  from {
+    opactiy: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+@mixin pulsing {
+  animation: pulsing-keyframes 700ms linear infinite alternate;
+}

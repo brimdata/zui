@@ -3,7 +3,12 @@ import {bindActionCreators} from "redux"
 import * as actions from "../actions/spaces"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getBoomdIsConnected} from "../reducers/boomdConnection"
-import {getLeftSidebarIsOpen, getRightSidebarIsOpen} from "../reducers/view"
+import {
+  getLeftSidebarIsOpen,
+  getRightSidebarIsOpen,
+  getShowLogsTab,
+  getShowAnalyticsTab
+} from "../reducers/view"
 import {getInitialLoad} from "../reducers/initialLoad"
 import Search from "../components/Search"
 
@@ -13,7 +18,9 @@ function stateToProps(state) {
     leftSidebarIsOpen: getLeftSidebarIsOpen(state),
     rightSidebarIsOpen: getRightSidebarIsOpen(state),
     isConnected: getBoomdIsConnected(state),
-    currentSpaceName: getCurrentSpaceName(state)
+    currentSpaceName: getCurrentSpaceName(state),
+    showLogsTab: getShowLogsTab(state),
+    showAnalyticsTab: getShowAnalyticsTab(state)
   }
 }
 

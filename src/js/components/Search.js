@@ -10,6 +10,7 @@ import XCountByTime from "../connectors/XCountByTime"
 import XHistoryAside from "../connectors/XHistoryAside"
 import XLogDetail from "../connectors/XLogDetail"
 import XSearchWelcome from "../connectors/XSearchWelcome"
+import XAnalysisViewer from "../connectors/XAnalysisViewer"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -22,7 +23,9 @@ export default class Search extends React.Component {
       currentSpaceName,
       leftSidebarIsOpen,
       rightSidebarIsOpen,
-      initialLoad
+      initialLoad,
+      showLogsTab,
+      showAnalyticsTab
     } = this.props
 
     if (!isConnected) return <Redirect to="/connect" />
@@ -41,13 +44,14 @@ export default class Search extends React.Component {
           <div className="search-page-main">
             <div className="search-page-header">
               <XControlBar />
-              {!initialLoad && (
-                <div className="search-page-header-charts">
-                  <AutoSizer disableHeight>
-                    {({width}) => <XCountByTime height={80} width={width} />}
-                  </AutoSizer>
-                </div>
-              )}
+              {!initialLoad &&
+                showLogsTab && (
+                  <div className="search-page-header-charts">
+                    <AutoSizer disableHeight>
+                      {({width}) => <XCountByTime height={80} width={width} />}
+                    </AutoSizer>
+                  </div>
+                )}
             </div>
 
             <div className="search-page-body">
@@ -56,7 +60,8 @@ export default class Search extends React.Component {
               )}
               {!initialLoad && (
                 <div className="search-page-results">
-                  <XLogViewer />
+                  {showLogsTab && <XLogViewer />}
+                  {showAnalyticsTab && <XAnalysisViewer />}
                 </div>
               )}
               {rightSidebarIsOpen && (

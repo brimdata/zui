@@ -66,6 +66,7 @@ export default class AnalysisTable extends React.Component {
         {({height, width}) => (
           <MultiGrid
             classNameTopRightGrid="analysis-table"
+            classNameBottomRightGrid="analysis-table"
             cellRenderer={cellRenderer}
             columnCount={descriptor.length}
             columnWidth={this.cache.columnWidth}

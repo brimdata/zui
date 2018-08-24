@@ -5,6 +5,7 @@ import eventsReceiver from "../receivers/eventsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
 import analyticsReceiver from "../receivers/analyticsReceiver"
 import statsReceiver from "../receivers/statsReceiver"
+import {showLogsTab, showAnalyticsTab} from "../actions/view"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
   return (dispatch, getState, api) => {
@@ -22,12 +23,14 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
     dispatch(requestMainSearch({saveToHistory}))
 
     if (query.hasAnalytics()) {
+      dispatch(showAnalyticsTab())
       api
         .send(outMessages.fetchMainSearch(query))
         .each(statsReceiver(dispatch))
         .channel(0, analyticsReceiver(dispatch, 0))
         .done(() => dispatch(completeMainSearch()))
     } else {
+      dispatch(showLogsTab())
       api
         .send(outMessages.fetchMainSearch(query))
         .each(statsReceiver(dispatch))

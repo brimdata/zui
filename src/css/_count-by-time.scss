@@ -5,18 +5,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     p {
-      animation: pulsing 700ms linear infinite alternate;
+      @include pulsing;
     }
-  }
-}
-
-@keyframes pulsing {
-  from {
-    opactiy: 1;
-  }
-
-  to {
-    opacity: 0.5;
   }
 }
 

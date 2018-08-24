@@ -25,6 +25,7 @@ $filter-node-foreground: white;
 @import "mixins/tags";
 @import "mixins/clickable";
 @import "mixins/type-colors";
+@import "mixins/pulsing";
 
 /* Styles */
 @import "global";
@@ -86,3 +87,4 @@ $filter-node-foreground: white;
 @import "search-stats";
 @import "search-page";
 @import "search-welcome";
+@import "analysis-viewer";
