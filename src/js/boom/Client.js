@@ -1,4 +1,6 @@
 import request from "./request"
+import toAst from "./toAst"
+import toTs from "./toTs"
 
 export default class Client {
   constructor(credentials = {}) {
@@ -36,6 +38,21 @@ export default class Client {
       method: "GET",
       path: `/space/${space}/descriptor/${id}`,
       stream: false
+    })
+  }
+
+  search({space, string, timeWindow: [from, to]}) {
+    const {search, proc} = toAst(string)
+    return this.send({
+      method: "POST",
+      path: "/search",
+      payload: {
+        space,
+        search,
+        proc,
+        from: toTs(from),
+        to: toTs(to)
+      }
     })
   }
 

@@ -1,15 +1,19 @@
 import * as selectors from "../selectors"
 import {pushSearchHistory} from "./searchHistory"
-import * as outMessages from "../boom/outMessages"
 import eventsReceiver from "../receivers/eventsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
 import analyticsReceiver from "../receivers/analyticsReceiver"
 import statsReceiver from "../receivers/statsReceiver"
 import {showLogsTab, showAnalyticsTab} from "../actions/view"
+import {hasAnalytics, isBlank} from "../models/Query"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
   return (dispatch, getState, api) => {
     const query = selectors.getMainSearchQuery(getState())
+    const space = query.space.name
+    const timeWindow = query.timeWindow
+    const procs = query.procs.join(";")
+    let string = isBlank(query.string) ? "*" : query.string
 
     if (!query.isValid()) {
       console.warn("invalide query", query.toString())
@@ -22,17 +26,18 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
 
     dispatch(requestMainSearch({saveToHistory}))
 
-    if (query.hasAnalytics()) {
+    if (hasAnalytics(string)) {
       dispatch(showAnalyticsTab())
       api
-        .send(outMessages.fetchMainSearch(query))
+        .search({space, string, timeWindow})
         .each(statsReceiver(dispatch))
         .channel(0, analyticsReceiver(dispatch, 0))
         .done(() => dispatch(completeMainSearch()))
     } else {
       dispatch(showLogsTab())
+      string += " | " + procs
       api
-        .send(outMessages.fetchMainSearch(query))
+        .search({space, string, timeWindow})
         .each(statsReceiver(dispatch))
         .channel(1, eventsReceiver(dispatch))
         .channel(0, countByTimeReceiver(dispatch))

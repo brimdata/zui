@@ -25,6 +25,12 @@ export default class Query {
   }
 
   hasAnalytics() {
-    return !!new Ast(this.string).toJSON().proc
+    return hasAnalytics(this.string)
   }
 }
+
+export const isBlank = string => /^\s*$/.test(string)
+
+export const isValidQuery = string => !!new Ast(string).toJSON()
+
+export const hasAnalytics = string => !!new Ast(string).toJSON().proc
