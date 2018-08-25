@@ -1,9 +1,9 @@
 export default class Log {
-  static buildAll(tuples, descriptors) {
+  static buildAll(tuples, descriptors, space) {
     const logs = []
     for (let index in tuples) {
       const tuple = tuples[index]
-      const descriptor = descriptors[tuple[0]]
+      const descriptor = descriptors[space + "." + tuple[0]]
       if (descriptor) logs.push(new Log(tuple, descriptor))
     }
     return logs

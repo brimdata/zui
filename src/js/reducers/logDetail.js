@@ -2,6 +2,7 @@ import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import {getTuplesByUid} from "./eventsByUid"
 import {getDescriptors} from "./broSchemas"
+import {getCurrentSpaceName} from "./spaces"
 import Log from "../models/Log"
 
 const initialState = null
@@ -25,14 +26,16 @@ export const buildCorrelatedLogs = createSelector(
   buildLogDetail,
   getTuplesByUid,
   getDescriptors,
-  (log, tuplesByUid, descriptors) => {
+  getCurrentSpaceName,
+  (log, tuplesByUid, descriptors, space) => {
+    console.log(log, tuplesByUid, descriptors)
     if (!log) return []
 
     const uid = log.cast("uid")
     if (!uid) return []
 
     const tuples = tuplesByUid[uid] || []
-    const logs = Log.buildAll(tuples, descriptors).sort(
+    const logs = Log.buildAll(tuples, descriptors, space).sort(
       (a, b) => (a.get("ts") > b.get("ts") ? 1 : -1)
     )
     const connIndex = logs.findIndex(l => l.get("_path") === "conn")
