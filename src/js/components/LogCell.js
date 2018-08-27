@@ -1,6 +1,5 @@
 import React from "react"
 import DownArrow from "../icons/chevron-bottom-md.svg"
-import FieldFilter from "../models/FieldFilter"
 import {ContextMenu, MenuItem} from "./ContextMenu"
 
 export default class LogCell extends React.PureComponent {
@@ -9,31 +8,23 @@ export default class LogCell extends React.PureComponent {
     this.state = {showMenu: false}
     this.include = this.include.bind(this)
     this.exclude = this.exclude.bind(this)
+    this.countBy = this.countBy.bind(this)
     this.toggleMenu = () => this.setState({showMenu: !this.state.showMenu})
   }
 
   include(_e) {
-    const filter = new FieldFilter({
-      name: this.props.name,
-      value: this.props.value,
-      operator: "="
-    })
-
-    this.props.appendToQuery(filter.toProgramFragment())
+    this.props.appendQueryInclude(this.props.name, this.props.value)
+    this.props.fetchMainSearch()
   }
 
   exclude(_e) {
-    const filter = new FieldFilter({
-      name: this.props.name,
-      value: this.props.value,
-      operator: "!="
-    })
-
-    this.props.appendToQuery(filter.toProgramFragment())
+    this.props.appendQueryExclude(this.props.name, this.props.value)
+    this.props.fetchMainSearch()
   }
 
   countBy() {
-    this.props.appendToQuery(`| count() by ${this.props.name}`)
+    this.props.appendQueryCountBy(this.props.name)
+    this.props.fetchMainSearch()
   }
 
   render() {
