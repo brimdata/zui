@@ -9,6 +9,5 @@ export function eventsByUid(state) {
 export * from "./mainSearch"
 export * from "./countByTime"
 export * from "./timeWindow"
-export * from "./analytics"
 export * from "./filterTree"
 export * from "./searchHistory"

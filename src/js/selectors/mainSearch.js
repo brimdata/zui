@@ -4,9 +4,19 @@ import BroLog from "../models/BroLog"
 import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpace} from "../reducers/spaces"
 import {getTimeWindow} from "./timeWindow"
-import {getCountByTimeProc} from "./analytics"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import Log from "../models/Log"
+import {isTimeWindow} from "../models/TimeWindow"
+import countByTimeInterval from "../countByTimeInterval"
+
+const BOOM_INTERVALS = {
+  millisecond: "ms",
+  second: "sec",
+  minute: "min",
+  hour: "hr",
+  day: "day",
+  month: "month"
+}
 
 export const getMainSearchQuery = createSelector(
   getSearchProgram,
@@ -59,3 +69,10 @@ export const getLogs = createSelector(
     return logs
   }
 )
+
+export const getCountByTimeProc = createSelector(getTimeWindow, timeWindow => {
+  if (isTimeWindow(timeWindow)) {
+    const {number, unit} = countByTimeInterval(timeWindow)
+    return `every ${number}${BOOM_INTERVALS[unit]} count() by _path `
+  }
+})
