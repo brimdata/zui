@@ -8,7 +8,6 @@ export function eventsByUid(state) {
 
 export * from "./mainSearch"
 export * from "./countByTime"
-export * from "./browserHistory"
 export * from "./timeWindow"
 export * from "./analytics"
 export * from "./filterTree"

@@ -1,7 +1,6 @@
 import {createStore, applyMiddleware} from "redux"
 import {composeWithDevTools} from "redux-devtools-extension"
 import reducer from "./reducers"
-import browserHistoryMiddleware from "./browserHistoryMiddleware"
 import reduxThunk from "redux-thunk"
 import {loadState, saveState} from "./persistance"
 import throttle from "lodash/throttle"
@@ -16,10 +15,7 @@ export default function() {
     state,
     composeWithDevTools(
       applyMiddleware(
-        reduxThunk.withExtraArgument(
-          new Client(state && getCredentials(state))
-        ),
-        browserHistoryMiddleware
+        reduxThunk.withExtraArgument(new Client(state && getCredentials(state)))
       )
     )
   )
@@ -32,8 +28,4 @@ export default function() {
   )
 
   return store
-}
-
-export function initTestStore(...middleware) {
-  return createStore(reducer, applyMiddleware(...middleware))
 }
