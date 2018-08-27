@@ -1,5 +1,3 @@
-import * as outMessages from "../boom/outMessages"
-
 export function fetchSpaceInfo(name) {
   return (dispatch, getState, api) => {
     api.space({name}).done(space => {
