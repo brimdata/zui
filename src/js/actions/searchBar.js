@@ -26,3 +26,20 @@ export const setTimeWindow = timeWindow => ({
   type: "TIME_WINDOW_SET",
   timeWindow
 })
+
+export const appendQueryInclude = (name, value) => ({
+  type: "QUERY_INCLUDE_APPEND",
+  name,
+  value
+})
+
+export const appendQueryExclude = (name, value) => ({
+  type: "QUERY_EXCLUDE_APPEND",
+  name,
+  value
+})
+
+export const appendQueryCountBy = name => ({
+  type: "QUERY_COUNT_BY_APPEND",
+  name
+})

@@ -12,6 +12,24 @@ export const initialState = {
 }
 
 export default createReducer(initialState, {
+  QUERY_INCLUDE_APPEND: (state, {name, value}) => ({
+    ...state,
+    current: trim(state.current + ` ${name}=${value}`)
+  }),
+
+  QUERY_EXCLUDE_APPEND: (state, {name, value}) => ({
+    ...state,
+    current: trim(state.current + ` ${name}!=${value}`)
+  }),
+
+  QUERY_COUNT_BY_APPEND: (state, {name}) => {
+    const current = onlyWhitespace(state.current) ? "*" : state.current
+    return {
+      ...state,
+      current: trim(current + ` | count() by ${name}`)
+    }
+  },
+
   SEARCH_BAR_INPUT_CHANGE: (state, {value}) => {
     if (state.editing === null) {
       return {

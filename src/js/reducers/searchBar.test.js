@@ -84,3 +84,36 @@ test("search bar submit after editing resets editing", () => {
   expect(state.current).toBe("")
   expect(state.pinned[0]).toBe("https")
 })
+
+test("append an include field", () => {
+  let state = reducer(initialState, actions.appendQueryInclude("_path", "conn"))
+  expect(state.current).toBe("_path=conn")
+})
+
+test("append an include field when some text already exists", () => {
+  let state = reducer(initialState, actions.changeSearchBarInput("text"))
+  state = reducer(state, actions.appendQueryInclude("_path", "conn"))
+  expect(state.current).toBe("text _path=conn")
+})
+
+test("append an exclude field", () => {
+  let state = reducer(initialState, actions.appendQueryExclude("_path", "conn"))
+  expect(state.current).toBe("_path!=conn")
+})
+
+test("append an exclude field when some text already exists", () => {
+  let state = reducer(initialState, actions.changeSearchBarInput("text"))
+  state = reducer(state, actions.appendQueryExclude("_path", "conn"))
+  expect(state.current).toBe("text _path!=conn")
+})
+
+test("append a count by field", () => {
+  let state = reducer(initialState, actions.appendQueryCountBy("_path"))
+  expect(state.current).toBe("* | count() by _path")
+})
+
+test("append a count to an existing query", () => {
+  let state = reducer(initialState, actions.changeSearchBarInput("dns"))
+  state = reducer(state, actions.appendQueryCountBy("query"))
+  expect(state.current).toBe("dns | count() by query")
+})
