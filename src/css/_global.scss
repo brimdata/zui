@@ -5,7 +5,7 @@
 html,
 body {
   font-family: $body-font;
-  color: $gray-2;
+  color: $light-gray-4;
   margin: 0;
   height: 100%;
   width: 100%;
@@ -26,18 +26,6 @@ p {
   margin: 0;
 }
 
-a {
-  @include clickable;
-  @extend .body-text;
-  // text-decoration: underline;
-  color: $blue;
-  cursor: pointer;
-
-  &:hover {
-    color: darken($blue, 20%);
-  }
-}
-
 label {
   font-weight: bold;
 }
@@ -48,37 +36,4 @@ pre {
   color: $light-gray;
   font-family: $mono-font;
   padding: 3px 6px;
-
-  &.light {
-    background-color: $off-white;
-    color: $gray;
-  }
-}
-
-.form-field {
-  margin-bottom: 12px;
-}
-
-.wrap {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 96%;
-}
-
-body.no-scroll {
-  overflow: hidden;
-}
-
-.hidden {
-  display: none;
-}
-
-input {
-  color: $gray-3;
-  font-size: 14px;
-  border: none;
-}
-
-input[type="range"] {
-  @include range-input;
 }

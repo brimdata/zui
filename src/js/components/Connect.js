@@ -8,8 +8,10 @@ class Connect extends React.Component {
   constructor(props) {
     super(props)
     this.state = {...props.credentials}
+    this.isSubmitting = false
 
     this.onSubmit = e => {
+      this.isSubmitting = true
       e.preventDefault()
       this.props.setBoomdCredentials(this.state)
       this.props.connectBoomd()
@@ -18,7 +20,9 @@ class Connect extends React.Component {
 
   render() {
     const {error, isConnected} = this.props
-    if (isConnected) return <Redirect to="/search" />
+    const {isSubmitting} = this
+
+    if (isSubmitting && isConnected) return <Redirect to="/search" />
 
     return (
       <main className="admin-page boomd-connect">

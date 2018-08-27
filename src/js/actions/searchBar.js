@@ -21,3 +21,8 @@ export const setSearchBarPins = pinned => ({
   type: "SEARCH_BAR_PINS_SET",
   pinned
 })
+
+export const setTimeWindow = timeWindow => ({
+  type: "TIME_WINDOW_SET",
+  timeWindow
+})

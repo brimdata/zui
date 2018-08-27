@@ -1,3 +1,15 @@
+.count-by-time-wrapper {
+  .loading-message {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    p {
+      @include pulsing;
+    }
+  }
+}
+
 .count-by-time {
   display: block;
 

@@ -1,0 +1,31 @@
+.control-bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  margin: 8px;
+
+  .search-bar {
+    flex: 1;
+  }
+
+  .looky-face {
+    margin-right: $base-space;
+  }
+
+  .control-button {
+    cursor: pointer;
+    margin-left: $base-space;
+    height: 34px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: $light-gray-4;
+      height: 22px;
+    }
+
+    &.active svg {
+      fill: $blue-3;
+    }
+  }
+}

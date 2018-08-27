@@ -6,7 +6,7 @@ class History extends React.Component {
     return (
       <div className="history-aside">
         <header>
-          <h3 className="tiny-heading">Search History</h3>
+          <h3 className="small-heading">Search History</h3>
           <div onClick={this.props.clearFilterTree} className="clear-button">
             Clear
           </div>

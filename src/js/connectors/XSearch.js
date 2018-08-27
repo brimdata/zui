@@ -1,21 +1,26 @@
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import Search from "../components/Search"
 import * as actions from "../actions/spaces"
-import * as selectors from "../selectors"
+import {getCurrentSpaceName} from "../reducers/spaces"
 import {getBoomdIsConnected} from "../reducers/boomdConnection"
+import {
+  getLeftSidebarIsOpen,
+  getRightSidebarIsOpen,
+  getShowLogsTab,
+  getShowAnalyticsTab
+} from "../reducers/view"
+import {getInitialLoad} from "../reducers/initialLoad"
+import Search from "../components/Search"
 
 function stateToProps(state) {
   return {
+    initialLoad: getInitialLoad(state),
+    leftSidebarIsOpen: getLeftSidebarIsOpen(state),
+    rightSidebarIsOpen: getRightSidebarIsOpen(state),
     isConnected: getBoomdIsConnected(state),
-    initialLoad: state.initialLoad,
-    eventsPresent: selectors.mainSearchEvents(state).length > 0,
-    analysisPresent: Object.keys(state.analysis).length > 0,
-    query: selectors.getMainSearchQuery(state),
-    isFetching: state.mainSearch.isFetching,
-    timeWindow: selectors.getTimeWindow(state),
-    analysis: state.analysis,
-    sideBarIsOpen: state.sideBar.isOpen
+    currentSpaceName: getCurrentSpaceName(state),
+    showLogsTab: getShowLogsTab(state),
+    showAnalyticsTab: getShowAnalyticsTab(state)
   }
 }
 

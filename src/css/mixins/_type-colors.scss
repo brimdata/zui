@@ -1,4 +1,8 @@
 @mixin type-colors {
+  &.string,
+  &.set\[string\] {
+    color: $gray-3;
+  }
   &.addr,
   &.set\[addr\] {
     color: $blue;

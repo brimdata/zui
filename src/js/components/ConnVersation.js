@@ -45,7 +45,7 @@ const ConnHistory = ({history = ""}) => (
 
 const Host = ({className, title = "", ip = "", port = "", fieldNames, log}) => (
   <div className={`host ${className}`}>
-    <h4 className="panel-heading">{title}</h4>
+    <h4 className="small-heading">{title}</h4>
     <p className={`ip ${ip.length > 16 ? "small" : ""}`}>{ip}</p>
     <p className="port">{port}</p>
     <FieldsTable log={log} only={fieldNames} />

@@ -1,4 +1,5 @@
-import * as actions from "../actions"
+import * as actions from "../actions/"
+import {discoverDescriptors} from "../actions/descriptors"
 import throttle from "lodash/throttle"
 
 export default function(dispatch) {
@@ -7,7 +8,7 @@ export default function(dispatch) {
   const dispatchEvents = throttle(() => {
     if (buffer.lenth == 0) return
     dispatch(actions.mainSearchEvents(buffer))
-    dispatch(actions.discoverSchemas(buffer))
+    dispatch(discoverDescriptors(buffer))
     buffer = []
   }, 200)
 

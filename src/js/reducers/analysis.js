@@ -22,3 +22,5 @@ const mergeTuples = (state, id, tuples) => {
     return tuples
   }
 }
+
+export const getAnalysis = state => state.analysis

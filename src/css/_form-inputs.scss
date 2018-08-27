@@ -1,3 +1,13 @@
+.form-field {
+  margin-bottom: $base-space;
+}
+
+input {
+  color: $gray-3;
+  font-size: 14px;
+  border: none;
+}
+
 .text-input-wrapper {
   position: relative;
 

@@ -8,15 +8,17 @@ class App extends React.Component {
   constructor(props) {
     super(props)
   }
+
   componentDidMount() {
     this.props.connectBoomd()
   }
 
   render() {
+    const {isConnected} = this.props
     return (
       <Switch>
-        <Route path="/search" component={XSearch} />
-        <Route path="/spaces" component={XSpaces} />
+        {isConnected && <Route path="/search" component={XSearch} />}
+        {isConnected && <Route path="/spaces" component={XSpaces} />}
         <Route path="/connect" component={XConnect} />
         <Redirect to="/connect" />
       </Switch>

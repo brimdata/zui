@@ -8,7 +8,9 @@ const PERSIST = [
   "searchBar",
   "timeWindow",
   "currentSpaceName",
-  "boomdCredentials"
+  "boomdCredentials",
+  "boomdConnection",
+  "view"
 ]
 
 export function saveState(state) {

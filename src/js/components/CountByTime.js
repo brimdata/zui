@@ -9,50 +9,31 @@ import every from "lodash/every"
 export default class CountByTime extends React.Component {
   constructor(props) {
     super(props)
-    this.setDimentions = this.setDimentions.bind(this)
 
     this.margin = {
       left: 48,
-      top: 48,
+      top: 12,
       bottom: 24,
       right: 6
-    }
-
-    this.state = {
-      width: 0,
-      height: 120
     }
   }
 
   innerWidth() {
-    let innerWidth = this.state.width - this.margin.left - this.margin.right
+    let innerWidth = this.props.width - this.margin.left - this.margin.right
     return innerWidth >= 0 ? innerWidth : 0
   }
 
   innerHeight() {
-    return this.state.height - this.margin.top - this.margin.bottom
+    return this.props.height - this.margin.top - this.margin.bottom
   }
 
   componentDidMount() {
-    this.setDimentions()
     this.initChart()
     this.draw()
-
-    window.addEventListener("resize", this.setDimentions, false)
   }
 
   componentDidUpdate() {
     this.draw()
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.setDimentions, false)
-  }
-
-  setDimentions() {
-    this.setState({
-      width: this.svg.parentNode.getBoundingClientRect().width
-    })
   }
 
   initChart() {
@@ -66,7 +47,7 @@ export default class CountByTime extends React.Component {
       .attr("class", "x-axis")
       .attr(
         "transform",
-        `translate(${this.margin.left}, ${this.state.height -
+        `translate(${this.margin.left}, ${this.props.height -
           this.margin.bottom})`
       )
 
@@ -123,7 +104,7 @@ export default class CountByTime extends React.Component {
       ])
     const onBrushEnd = () => {
       if (d3.event.selection) {
-        this.props.onBrush(d3.event.selection.map(timeScale.invert))
+        this.props.setTimeWindow(d3.event.selection.map(timeScale.invert))
         brush.move(d3.select(".brush"), null)
       }
     }
@@ -171,12 +152,19 @@ export default class CountByTime extends React.Component {
   }
 
   render() {
+    const {isFetching, height, width} = this.props
     return (
       <div className="count-by-time-wrapper">
+        {isFetching && (
+          <div className="loading-message">
+            <p>Graph data loading...</p>
+          </div>
+        )}
+
         <svg
           className="count-by-time"
-          height={this.state.height}
-          width={this.state.width}
+          height={height}
+          width={width}
           ref={r => (this.svg = r)}
         />
       </div>

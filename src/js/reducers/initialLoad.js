@@ -7,3 +7,5 @@ export default createReducer(initalState, {
     return false
   }
 })
+
+export const getInitialLoad = state => state.initialLoad

@@ -16,7 +16,7 @@ export default class LogRow extends React.Component {
   render() {
     const {log, style, showDetail, appendToQuery, prevLog} = this.props
     const ts = moment(log.cast("ts"))
-    let tsHighlight = true
+    let tsHighlight = false
     if (prevLog) {
       const prevTs = moment(prevLog.cast("ts"))
       tsHighlight = !ts

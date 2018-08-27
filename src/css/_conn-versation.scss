@@ -4,8 +4,9 @@
   justify-content: space-between;
 
   .host {
+    border: 1px solid $light-gray-3;
     border-radius: 3px;
-    background: white;
+
     width: 135px;
 
     .fields-table {
@@ -13,7 +14,7 @@
     }
   }
 
-  .panel-heading {
+  .small-heading {
     margin: 6px 0;
     text-align: center;
   }
@@ -58,7 +59,6 @@
     line-height: 18px;
 
     span {
-      color: white;
       font-weight: bold;
       font-family: $mono-font;
       text-transform: uppercase;

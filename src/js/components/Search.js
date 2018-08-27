@@ -1,12 +1,16 @@
 import React from "react"
+import {Redirect} from "react-router-dom"
+import {AutoSizer} from "react-virtualized"
+
+import XTitleBar from "../connectors/XTitleBar"
+import XControlBar from "../connectors/XControlBar"
 import XLogViewer from "../connectors/XLogViewer"
-import NoEventsFound from "./NoEventsFound"
-import WelcomeMessage from "./WelcomeMessage"
-import AnalysisTable from "./AnalysisTable"
-import XSideBar from "../connectors/XSideBar"
+import XSearchStats from "../connectors/XSearchStats"
+import XCountByTime from "../connectors/XCountByTime"
+import XHistoryAside from "../connectors/XHistoryAside"
 import XLogDetail from "../connectors/XLogDetail"
-import Header from "./Header"
-import NotConnected from "./NotConnected"
+import XSearchWelcome from "../connectors/XSearchWelcome"
+import XAnalysisViewer from "../connectors/XAnalysisViewer"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -15,52 +19,64 @@ export default class Search extends React.Component {
 
   render() {
     const {
-      eventsPresent,
-      isFetching,
+      isConnected,
+      currentSpaceName,
+      leftSidebarIsOpen,
+      rightSidebarIsOpen,
       initialLoad,
-      analysisPresent,
-      isConnected
+      showLogsTab,
+      showAnalyticsTab
     } = this.props
 
-    const noEventsFound = !isFetching && !eventsPresent
-    const noAnalysisFound = !isFetching && !analysisPresent
+    if (!isConnected) return <Redirect to="/connect" />
+    if (!currentSpaceName) return <Redirect to="/spaces" />
 
     return (
-      <div className={className(this.props)}>
-        <main className="main-content">
-          <Header initialLoad={initialLoad} />
+      <div className="search-page">
+        <XTitleBar />
 
-          {!initialLoad &&
-            eventsPresent && (
-              <section className="results-section">
-                <XLogViewer />
-                <XLogDetail />
-              </section>
-            )}
+        <div className="search-page-window">
+          {leftSidebarIsOpen && (
+            <div className="search-page-sidebar-left">
+              <XHistoryAside />
+            </div>
+          )}
+          <div className="search-page-main">
+            <div className="search-page-header">
+              <XControlBar />
+              {!initialLoad &&
+                showLogsTab && (
+                  <div className="search-page-header-charts">
+                    <AutoSizer disableHeight>
+                      {({width}) => <XCountByTime height={80} width={width} />}
+                    </AutoSizer>
+                  </div>
+                )}
+            </div>
 
-          {!initialLoad &&
-            analysisPresent && (
-              <div className="results-section">
-                <AnalysisTable data={this.props.analysis[0]} />
-              </div>
-            )}
+            <div className="search-page-body">
+              {initialLoad && (
+                <XSearchWelcome currentSpaceName={currentSpaceName} />
+              )}
+              {!initialLoad && (
+                <div className="search-page-results">
+                  {showLogsTab && <XLogViewer />}
+                  {showAnalyticsTab && <XAnalysisViewer />}
+                </div>
+              )}
+              {rightSidebarIsOpen && (
+                <div className="search-page-sidebar-right">
+                  <XLogDetail />
+                </div>
+              )}
+            </div>
 
-          {!initialLoad &&
-            noEventsFound &&
-            noAnalysisFound && <NoEventsFound query={this.props.query} />}
-
-          {initialLoad && <WelcomeMessage />}
-        </main>
-
-        <XSideBar />
-
-        {!isConnected && <NotConnected />}
+            <div className="search-page-footer">
+              <XSearchStats />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
-}
-
-function className(props) {
-  if (props.sideBarIsOpen) return "app-wrapper side-bar-is-open"
-  else return "app-wrapper"
 }

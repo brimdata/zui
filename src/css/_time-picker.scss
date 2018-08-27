@@ -2,10 +2,15 @@
   display: inline-block;
   position: relative;
 
+  .time-input {
+    padding: 0;
+    text-align: center;
+  }
+
   .times-list {
     position: absolute;
     top: calc(100% + #{$base-space});
-    left: 0;
+    left: -20px;
     background: white;
     border-radius: 3px;
     box-shadow: $box-shadow;

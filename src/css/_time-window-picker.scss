@@ -1,22 +1,32 @@
 .time-window-picker {
   display: inline-block;
   font-size: 14px;
-  border-radius: 3px;
   white-space: nowrap;
-  box-shadow: $box-shadow;
-  background: white;
+  background: $light-gray-2;
+  border-radius: 0 3px 3px 0;
 
   .divider {
-    margin: 0 6px;
+    text-align: center;
+    padding: 0 3px;
   }
 
   input {
     display: inline-block;
     box-shadow: none;
-    // color: $teal;
+    background: transparent;
+    border-radius: 0px;
+    text-align: center;
   }
 
   .text-input-wrapper {
     display: inline-block;
+  }
+
+  .DayPickerInput input {
+    color: $blue-3;
+  }
+
+  .time-picker input {
+    color: $green-3;
   }
 }

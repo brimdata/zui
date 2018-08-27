@@ -30,7 +30,7 @@ export default class DayPicker extends React.Component {
             modifiers: {from, to}
           }}
           inputProps={{
-            size: 12
+            size: 11
           }}
         />
       </div>

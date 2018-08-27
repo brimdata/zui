@@ -1,47 +1,11 @@
 .log-viewer {
+  background-color: white;
   outline: none;
-  padding-top: 50px;
   overflow-x: auto !important;
-
-  .search-stats {
-    display: flex;
-    position: absolute;
-    top: -25px - 12px;
-    left: 24px;
-
-    p {
-      margin-right: 24px;
-      min-width: 100px;
-      color: $gray-1;
-      line-height: 25px;
-    }
-
-    .label {
-      text-transform: uppercase;
-      font-weight: 100;
-      font-size: 9px;
-      margin-right: 6px;
-    }
-
-    .number {
-      margin-right: 6px;
-      font-size: 12px;
-      color: $green-5;
-    }
-
-    .secondary-number {
-      font-size: 9px;
-    }
-
-    .number,
-    .secondary-number {
-      font-family: $mono-font;
-    }
-  }
+  color: $gray-3;
 
   .ReactVirtualized__Grid__innerScrollContainer {
     overflow: initial !important;
     overflow-x: visible !important;
-    background-image: url("../static/images/loading-row-placeholder.png");
   }
 }

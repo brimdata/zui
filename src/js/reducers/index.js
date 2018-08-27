@@ -16,8 +16,10 @@ import searchStats from "./searchStats"
 import boomdCredentials from "./boomdCredentials"
 import boomdConnection from "./boomdConnection"
 import searchBar from "./searchBar"
+import view from "./view"
 
 export default combineReducers({
+  view,
   searchBar,
   initialLoad,
   broSchemas,

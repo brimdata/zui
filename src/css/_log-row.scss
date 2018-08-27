@@ -1,14 +1,12 @@
 .log-row {
   display: flex;
   font-family: $mono-font;
-  font-size: 14px;
+  font-size: 12px;
   white-space: nowrap;
   min-height: 25px;
   line-height: 25px;
   align-items: center;
   opacity: 1;
-  margin-left: 24px;
-  background: white;
 
   &:hover {
     background: $off-white;
@@ -108,16 +106,24 @@
   height: $bro-log-row-height;
   display: flex;
   align-items: center;
-  min-width: 190px;
-  margin-right: 12px;
+  text-align: center;
+  min-width: 235px;
+  cursor: pointer;
 
   p {
-    font-size: 11px;
     line-height: $bro-log-row-height;
-    color: $gray-5;
 
     letter-spacing: 2;
     width: 100%;
+    .date {
+      color: $blue-3;
+    }
+    .time {
+      color: $green-3;
+    }
+    .seconds {
+      color: $gray-3;
+    }
     .time,
     .seconds {
       margin-left: 12px;
@@ -125,6 +131,6 @@
   }
 
   &.highlight {
-    border-top: 1px solid $gray-5;
+    border-top: 1px dashed $light-gray-4;
   }
 }

@@ -1,8 +1,8 @@
 .admin-page {
-  background: radial-gradient($blue-3, $blue-5);
+  background: $light-gray-1;
+  // radial-gradient($blue-3, $blue-5);
   min-height: 100%;
   width: 100%;
-  color: white;
 
   h1 {
     font-size: 24px;
@@ -69,6 +69,7 @@
   position: relative;
   display: inline-block;
   z-index: 0;
+  color: white;
 
   &:before {
     content: "";
