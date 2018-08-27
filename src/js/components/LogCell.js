@@ -32,8 +32,12 @@ export default class LogCell extends React.PureComponent {
     this.props.appendToQuery(filter.toProgramFragment())
   }
 
+  countBy() {
+    this.props.appendToQuery(`| count() by ${this.props.name}`)
+  }
+
   render() {
-    const {name, type, value} = this.props
+    const {name, type, value, appendQueryInclude} = this.props
     let cellClass = `log-cell ${type}`
     if (this.state.showMenu) cellClass += " active"
 
@@ -53,7 +57,10 @@ export default class LogCell extends React.PureComponent {
         {this.state.showMenu && (
           <ContextMenu onOutsideClick={this.toggleMenu}>
             <MenuItem onClick={this.exclude}>Filter out these values</MenuItem>
-            <MenuItem onClick={this.include}>Only show these values</MenuItem>
+            <MenuItem onClick={() => appendQueryInclude(name, value)}>
+              Only show these values
+            </MenuItem>
+            <MenuItem onClick={this.countBy}>Count by this field</MenuItem>
           </ContextMenu>
         )}
       </div>

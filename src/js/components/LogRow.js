@@ -1,6 +1,7 @@
 import React from "react"
 import moment from "moment"
 import LogCell, {TsCell} from "./LogCell"
+import XLogCell from "../connectors/XLogCell"
 
 const exclude = {
   uid: true,
@@ -38,7 +39,7 @@ export default class LogRow extends React.Component {
       const {name, value, type} = log.getFieldAt(index)
       if (exclude[name]) continue
       cells.push(
-        <LogCell
+        <XLogCell
           key={index}
           appendToQuery={appendToQuery}
           name={name}
