@@ -1,6 +1,6 @@
 import React from "react"
 import moment from "moment"
-import LogCell, {TsCell} from "./LogCell"
+import {TsCell} from "./LogCell"
 import XLogCell from "../connectors/XLogCell"
 
 const exclude = {
