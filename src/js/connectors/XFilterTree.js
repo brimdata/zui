@@ -1,13 +1,13 @@
 import {connect} from "react-redux"
 import FilterTree from "../components/FilterTree"
-import * as selectors from "../selectors"
+import {getFilterTree} from "../reducers/filterTree"
 import * as actions from "../actions"
 import {getSearchBarPins} from "../reducers/searchBar"
 import {setSearchBarPins} from "../actions/searchBar"
 
 function stateToProps(state) {
   return {
-    filterTree: selectors.getFilterTree(state),
+    filterTree: getFilterTree(state),
     pinnedFilters: getSearchBarPins(state)
   }
 }

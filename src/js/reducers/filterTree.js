@@ -34,3 +34,5 @@ function combine(searchBar) {
 
   return filters
 }
+
+export const getFilterTree = state => state.filterTree
