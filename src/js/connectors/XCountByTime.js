@@ -2,15 +2,15 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import CountByTime from "../components/CountByTime"
 import * as actions from "../actions/searchBar"
-import * as selectors from "../selectors"
+import {getMainSearchCountByTime} from "../reducers/countByTime"
 import {getMainSearchIsFetching} from "../selectors/mainSearch"
+import {getTimeWindow} from "../reducers/timeWindow"
 
 function stateToProps(state) {
   return {
     isFetching: getMainSearchIsFetching(state),
-    ...selectors.getMainSearchCountByTime(state),
-    timeWindow: selectors.getTimeWindow(state),
-    interval: selectors.getMainSearchCountByTimeInterval(state)
+    ...getMainSearchCountByTime(state),
+    timeWindow: getTimeWindow(state)
   }
 }
 

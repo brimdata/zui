@@ -1,5 +1,5 @@
 import {getCurrentSpace} from "../reducers/spaces"
-import * as selectors from "../selectors"
+import {getTimeWindow} from "../reducers/timeWindow"
 import {showRightSidebar} from "./view"
 import {discoverDescriptors} from "./descriptors"
 import moment from "moment"
@@ -16,7 +16,7 @@ export function logDetailsReceived({uid, correlatedEvents}) {
 export function logDetailsRequested(uid) {
   return (dispatch, getState, api) => {
     const space = getCurrentSpace(getState())
-    const timeWindow = selectors.getTimeWindow(getState())
+    const timeWindow = getTimeWindow(getState())
 
     api.send(fetchUid(space, uid, timeWindow)).channel(0, payload => {
       if (payload.type === "SearchResult") {
