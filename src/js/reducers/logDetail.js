@@ -28,7 +28,6 @@ export const buildCorrelatedLogs = createSelector(
   getDescriptors,
   getCurrentSpaceName,
   (log, tuplesByUid, descriptors, space) => {
-    console.log(log, tuplesByUid, descriptors)
     if (!log) return []
 
     const uid = log.cast("uid")

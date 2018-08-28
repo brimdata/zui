@@ -2,7 +2,8 @@ import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
 import SearchBar from "../components/SearchBar"
 import * as actions from "../actions"
-import * as selectors from "../selectors"
+import {getMainSearchIsFetching} from "../reducers/mainSearch"
+
 import {
   getSearchBarInputValue,
   getSearchBarPins,
@@ -17,7 +18,7 @@ function stateToProps(state) {
     pins: getSearchBarPins(state),
     previousValue: getSearchBarPreviousInputValue(state),
     editing: getSearchBarEditingIndex(state),
-    isFetching: selectors.getMainSearchIsFetching(state)
+    isFetching: getMainSearchIsFetching(state)
   }
 }
 

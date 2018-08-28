@@ -2,7 +2,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import * as actions from "../actions/searchBar"
 import TimeWindowInput from "../components/TimeWindowInput"
-import {getTimeWindow} from "../selectors/timeWindow"
+import {getTimeWindow} from "../reducers/timeWindow"
 
 const stateToProps = state => ({
   timeWindow: getTimeWindow(state)

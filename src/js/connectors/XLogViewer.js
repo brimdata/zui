@@ -3,7 +3,7 @@ import LogViewer from "../components/LogViewer"
 import {setLogDetail, logDetailsRequested} from "../actions/logDetails"
 import {appendMainSearchQueryProgram} from "../actions/mainSearch"
 import {fetchMainSearch} from "../actions/mainSearch"
-import {getLogs} from "../selectors/mainSearch"
+import {getLogs} from "../reducers/mainSearch"
 
 const stateToProps = state => ({
   logs: getLogs(state)

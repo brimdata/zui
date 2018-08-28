@@ -1,4 +1,3 @@
-import * as selectors from "../selectors"
 import {pushSearchHistory} from "./searchHistory"
 import eventsReceiver from "../receivers/eventsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
@@ -6,10 +5,12 @@ import analyticsReceiver from "../receivers/analyticsReceiver"
 import statsReceiver from "../receivers/statsReceiver"
 import {showLogsTab, showAnalyticsTab} from "../actions/view"
 import {hasAnalytics, isBlank} from "../models/Query"
+import {getMainSearchQuery} from "../reducers/mainSearch"
+import {getSearchHistoryEntry} from "../reducers/searchHistory"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
   return (dispatch, getState, api) => {
-    const query = selectors.getMainSearchQuery(getState())
+    const query = getMainSearchQuery(getState())
     const space = query.space.name
     const timeWindow = query.timeWindow
     const procs = query.procs.join(";")
@@ -21,7 +22,7 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
     }
 
     if (saveToHistory) {
-      dispatch(pushSearchHistory(selectors.getSearchHistoryEntry(getState())))
+      dispatch(pushSearchHistory(getSearchHistoryEntry(getState())))
     }
 
     dispatch(requestMainSearch({saveToHistory}))
