@@ -1,5 +1,5 @@
 const {app, BrowserWindow, dialog, autoUpdater, Menu} = require("electron")
-const menu = require("./menu")
+const {createMenu} = require("./menu")
 const server = "http://desktop-release.looky.cloud"
 const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 autoUpdater.setFeedURL(feed)
@@ -17,15 +17,12 @@ const createWindow = () => {
   win.on("closed", () => {
     win = null
   })
+  const menu = createMenu(win)
+  Menu.setApplicationMenu(menu)
 }
 
 app.on("ready", () => {
   createWindow()
-  autoUpdater.checkForUpdates()
-  Menu.setApplicationMenu(menu)
-  // setInterval(() => {
-  //   autoUpdater.checkForUpdates()
-  // }, 15 * 1000)
 })
 
 app.on("window-all-closed", () => {

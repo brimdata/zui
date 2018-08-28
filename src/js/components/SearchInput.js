@@ -12,10 +12,6 @@ class SearchInput extends React.Component {
     if (e.key === "Enter") {
       this.props.fetchMainSearch()
     }
-
-    if (e.metaKey && e.key === "k") {
-      this.props.pinSearchBar()
-    }
   }
 
   render() {

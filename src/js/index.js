@@ -4,6 +4,7 @@ import {Provider} from "react-redux"
 import initStore from "./initStore"
 import {HashRouter} from "react-router-dom"
 import XApp from "./connectors/XApp"
+import initShortcuts from "./initShortcuts"
 
 const {
   default: installExtension,
@@ -11,15 +12,16 @@ const {
   REDUX_DEVTOOLS
 } = require("electron-devtools-installer")
 
-installExtension(REACT_DEVELOPER_TOOLS)
-  .then(name => console.log(`Added Extension:  ${name}`))
-  .catch(err => console.log("An error occurred: ", err))
+installExtension(REACT_DEVELOPER_TOOLS).catch(err =>
+  console.log("An error occurred: ", err)
+)
 
-installExtension(REDUX_DEVTOOLS)
-  .then(name => console.log(`Added Extension:  ${name}`))
-  .catch(err => console.log("An error occurred: ", err))
+installExtension(REDUX_DEVTOOLS).catch(err =>
+  console.log("An error occurred: ", err)
+)
 
 const store = initStore()
+initShortcuts(store)
 
 ReactDOM.render(
   <Provider store={store}>
