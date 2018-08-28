@@ -1,4 +1,4 @@
-import reducer, {initialState} from "./searchBar"
+import reducer, {initialState, getSearchProgram} from "./searchBar"
 import {requestMainSearch} from "../actions/mainSearch"
 import * as actions from "../actions/searchBar"
 
@@ -116,4 +116,15 @@ test("append a count to an existing query", () => {
   let state = reducer(initialState, actions.changeSearchBarInput("dns"))
   state = reducer(state, actions.appendQueryCountBy("query"))
   expect(state.current).toBe("dns | count() by query")
+})
+
+test("get search program", () => {
+  let state = reducer(initialState, actions.changeSearchBarInput("http"))
+  state = reducer(state, actions.pinSearchBar())
+  state = reducer(state, actions.changeSearchBarInput("GET"))
+  state = reducer(state, actions.pinSearchBar())
+  state = reducer(state, actions.changeSearchBarInput("| count() by host"))
+  expect(getSearchProgram({searchBar: state})).toBe(
+    "http GET | count() by host"
+  )
 })

@@ -1,9 +1,11 @@
 import {connect} from "react-redux"
-import FilterTree from "../components/FilterTree"
-import {getFilterTree} from "../reducers/filterTree"
-import * as actions from "../actions"
+import {bindActionCreators} from "redux"
 import {getSearchBarPins} from "../reducers/searchBar"
-import {setSearchBarPins} from "../actions/searchBar"
+import {getFilterTree} from "../reducers/filterTree"
+import * as mainSearchActions from "../actions/mainSearch"
+import * as filterTreeActions from "../actions/filterTree"
+import * as searchBarActions from "../actions/searchBar"
+import FilterTree from "../components/FilterTree"
 
 function stateToProps(state) {
   return {
@@ -12,14 +14,15 @@ function stateToProps(state) {
   }
 }
 
-function dispatchToProps(dispatch) {
-  return {
-    setSearchBarPins: pinned => dispatch(setSearchBarPins(pinned)),
-    fetch: () => dispatch(actions.fetchMainSearch({saveToHistory: false}))
-  }
-}
-
 export default connect(
   stateToProps,
-  dispatchToProps
+  dispatch =>
+    bindActionCreators(
+      {
+        ...mainSearchActions,
+        ...filterTreeActions,
+        ...searchBarActions
+      },
+      dispatch
+    )
 )(FilterTree)

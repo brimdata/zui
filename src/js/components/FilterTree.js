@@ -2,6 +2,7 @@ import React from "react"
 import Tree from "../models/Tree"
 import FilterNode from "./FilterNode"
 import isEqual from "lodash/isEqual"
+import CloseSVG from "../icons/circle-x-md.svg"
 
 export default class FilterTree extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class FilterTree extends React.Component {
   onNodeClick(node) {
     this.props.setSearchBarPins(getPinnedFilters(node))
 
-    setTimeout(this.props.fetch, 150)
+    setTimeout(this.props.fetchMainSearch({saveToHistory: false}), 150)
   }
 
   renderNode(node, i) {
@@ -24,8 +25,24 @@ export default class FilterTree extends React.Component {
 
     return (
       <div key={i} className={classNames.join(" ")}>
-        <FilterNode filter={node.data} onClick={() => this.onNodeClick(node)} />
-        {node.children.map(this.renderNode)}
+        <div
+          className="filter-tree-parent"
+          onClick={() => this.onNodeClick(node)}
+        >
+          <FilterNode filter={node.data} />
+          <a
+            className="close-button"
+            onClick={e => {
+              e.stopPropagation()
+              this.props.removeFilterTreeNode(node)
+            }}
+          >
+            <CloseSVG />
+          </a>
+        </div>
+        <div className="filter-tree-children">
+          {node.children.map(this.renderNode)}
+        </div>
       </div>
     )
   }

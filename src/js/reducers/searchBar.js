@@ -142,5 +142,5 @@ export const getSearchBarEditingIndex = state => state.searchBar.editing
 export const getSearchProgram = createSelector(
   getSearchBarPins,
   getSearchBarInputValue,
-  (pinned, current) => [pinned, current].map(trim).join(" ")
+  (pinned, current) => [...pinned, current].map(trim).join(" ")
 )

@@ -3,6 +3,7 @@
   font-size: 14px;
   white-space: nowrap;
   background: $light-gray-2;
+  border-left: 1px solid $light-gray-3;
   border-radius: 0 3px 3px 0;
 
   .divider {
@@ -23,10 +24,8 @@
   }
 
   .DayPickerInput input {
-    color: $blue-3;
   }
 
   .time-picker input {
-    color: $green-3;
   }
 }

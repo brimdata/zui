@@ -7,7 +7,15 @@ export const initialState = new Tree({data: "ROOT"}).toJSON()
 export default createReducer(initialState, {
   SEARCH_HISTORY_PUSH: (state, {entry}) =>
     insertAppliedFilters(state, entry.searchBar),
-  FILTER_TREE_CLEAR: () => initialState
+
+  FILTER_TREE_CLEAR: () => initialState,
+
+  FILTER_TREE_NODE_REMOVE: (state, {node}) => {
+    const tree = new Tree(state)
+    const treeNode = tree.getNodeAt(node.getIndexPath())
+    tree.remove(treeNode)
+    return tree.toJSON()
+  }
 })
 
 export function insertAppliedFilters(treeData, searchBar) {

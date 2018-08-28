@@ -1,4 +1,6 @@
-import {insertAppliedFilters, initialState} from "./filterTree"
+import reducer, {insertAppliedFilters, initialState} from "./filterTree"
+import * as actions from "../actions/filterTree"
+import Tree from "../models/Tree"
 
 test("insertAppliedFilters in a variety of cases", () => {
   // From initial state
@@ -189,6 +191,54 @@ test("insertAppliedFilters in a variety of cases", () => {
       {
         data: "e",
         children: []
+      }
+    ]
+  })
+})
+
+test("remove a node", () => {
+  let state = insertAppliedFilters(initialState, {
+    pinned: ["a", "b"],
+    current: "c"
+  })
+
+  expect(state).toEqual({
+    data: "ROOT",
+    children: [
+      {
+        data: "a",
+        children: [
+          {
+            data: "b",
+            children: [
+              {
+                data: "c",
+                children: []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  })
+
+  const tree = new Tree(state)
+  const node = tree.getNodeAt([0, 0, 0])
+  expect(node.data).toBe("c")
+
+  state = reducer(state, actions.removeFilterTreeNode(node))
+
+  expect(state).toEqual({
+    data: "ROOT",
+    children: [
+      {
+        data: "a",
+        children: [
+          {
+            data: "b",
+            children: []
+          }
+        ]
       }
     ]
   })

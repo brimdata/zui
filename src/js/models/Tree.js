@@ -25,6 +25,24 @@ export default class Tree {
     return node
   }
 
+  contains(node) {
+    while (node.parent) {
+      node = node.parent
+    }
+    return node === this.root
+  }
+
+  remove(node) {
+    if (!this.contains(node)) return
+
+    if (node.isRoot()) {
+      this.root = null
+    } else {
+      node.parent.children.splice(node.childIndex(), 1)
+      node.parent = null
+    }
+  }
+
   find(data) {
     let node = null
     this.bfSearch(n => {
@@ -118,7 +136,7 @@ class Node {
     return !this.parent
   }
 
-  siblingIndex() {
+  childIndex() {
     if (this.isRoot()) return null
 
     return this.parent.children.indexOf(this)
@@ -127,14 +145,14 @@ class Node {
   isLastChild() {
     if (this.isRoot()) return true
 
-    return this.siblingIndex() === this.parent.children.length - 1
+    return this.childIndex() === this.parent.children.length - 1
   }
 
   getIndexPath() {
     let indexPath = []
     let node = this
     while (!node.isRoot()) {
-      indexPath.unshift(node.siblingIndex())
+      indexPath.unshift(node.childIndex())
       node = node.parent
     }
     return indexPath

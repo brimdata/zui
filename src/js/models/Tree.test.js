@@ -248,3 +248,35 @@ test("isLastChild when root", () => {
 
   expect(node.isLastChild()).toBe(true)
 })
+
+test("remove node", () => {
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([1])
+
+  expect(tree.root.children.length).toBe(4)
+  expect(tree.contains(node)).toBe(true)
+  tree.remove(node)
+  expect(tree.contains(node)).toBe(false)
+  expect(tree.root.children.length).toBe(3)
+})
+
+test("removing the root node", () => {
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([])
+  tree.remove(node)
+  expect(tree.root).toBe(null)
+})
+
+test("removing a node that does not exist in the tree", () => {
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([1])
+
+  expect(tree.root.children.length).toBe(4)
+  expect(tree.contains(node)).toBe(true)
+
+  tree.remove(node)
+  tree.remove(node)
+
+  expect(tree.contains(node)).toBe(false)
+  expect(tree.root.children.length).toBe(3)
+})
