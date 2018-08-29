@@ -4,23 +4,43 @@ import {getTuplesByUid} from "./eventsByUid"
 import {getDescriptors} from "./broSchemas"
 import {getCurrentSpaceName} from "./spaces"
 import Log from "../models/Log"
+import History from "../models/History"
 
-const initialState = null
+const initialState = {
+  logs: [],
+  position: 0
+}
+
+const toHistory = ({logs, position}) => new History(logs, position)
+const toState = ({entries, position}) => ({logs: entries, position})
 
 export default createReducer(initialState, {
-  LOG_DETAIL_SET: (state, {tuple, descriptor}) => ({tuple, descriptor}),
-  LOG_DETAIL_UNSET: () => null
-})
-
-export const getLogDetail = state => state.logDetail
-
-export const buildLogDetail = createSelector(getLogDetail, logDetail => {
-  if (logDetail) {
-    return new Log(logDetail.tuple, logDetail.descriptor)
-  } else {
-    return null
+  LOG_DETAIL_VIEW: (state, {tuple, descriptor}) => {
+    const history = toHistory(state)
+    history.save({tuple, descriptor})
+    return toState(history)
+  },
+  LOG_DETAIL_BACK: state => {
+    const history = toHistory(state)
+    history.getPrev()
+    return toState(history)
+  },
+  LOG_DETAIL_FORWARD: state => {
+    const history = toHistory(state)
+    history.getNext()
+    return toState(history)
   }
 })
+
+export const getLogDetail = state => {
+  const {logs, position} = state.logDetails
+  return new History(logs, position).getCurrent()
+}
+
+export const buildLogDetail = createSelector(
+  getLogDetail,
+  log => (log ? new Log(log.tuple, log.descriptor) : null)
+)
 
 export const buildCorrelatedLogs = createSelector(
   buildLogDetail,

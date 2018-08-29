@@ -1,6 +1,6 @@
 import {connect} from "react-redux"
 import LogViewer from "../components/LogViewer"
-import {setLogDetail, logDetailsRequested} from "../actions/logDetails"
+import {viewLogDetail, fetchCorrelatedLogs} from "../actions/logDetails"
 import {appendMainSearchQueryProgram} from "../actions/mainSearch"
 import {fetchMainSearch} from "../actions/mainSearch"
 import {getLogs} from "../reducers/mainSearch"
@@ -11,9 +11,9 @@ const stateToProps = state => ({
 
 const dispatchToProps = dispatch => ({
   showDetail(log) {
-    dispatch(setLogDetail(log))
+    dispatch(viewLogDetail(log))
     const uid = log.cast("uid")
-    if (uid) dispatch(logDetailsRequested(uid))
+    if (uid) dispatch(fetchCorrelatedLogs(uid))
   },
 
   appendToQuery(fragment) {

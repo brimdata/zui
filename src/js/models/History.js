@@ -1,7 +1,7 @@
 export default class History {
-  constructor(entries = []) {
+  constructor(entries = [], position = 0) {
     this.entries = entries
-    this.position = 0
+    this.position = position
   }
 
   clear() {

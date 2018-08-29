@@ -2,7 +2,6 @@ import {combineReducers} from "redux"
 import broSchemas from "./broSchemas"
 import mainSearch from "./mainSearch"
 import eventsByUid from "./eventsByUid"
-import logDetailModal from "./logDetailModal"
 import initialLoad from "./initialLoad"
 import spaces from "./spaces"
 import currentSpaceName from "./currentSpaceName"
@@ -11,7 +10,7 @@ import filterTree from "./filterTree"
 import countByTime from "./countByTime"
 import analysis from "./analysis"
 import sideBar from "./sideBar"
-import logDetail from "./logDetail"
+import logDetails from "./logDetails"
 import searchStats from "./searchStats"
 import boomdCredentials from "./boomdCredentials"
 import boomdConnection from "./boomdConnection"
@@ -25,7 +24,6 @@ export default combineReducers({
   broSchemas,
   mainSearch,
   eventsByUid,
-  logDetailModal,
   spaces,
   currentSpaceName,
   timeWindow,
@@ -33,7 +31,7 @@ export default combineReducers({
   countByTime,
   analysis,
   sideBar,
-  logDetail,
+  logDetails,
   searchStats,
   boomdCredentials,
   boomdConnection

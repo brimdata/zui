@@ -1,20 +1,15 @@
 import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
 import LogDetail from "../components/LogDetail"
-import {unsetLogDetail} from "../actions/logDetails"
-import {buildLogDetail, buildCorrelatedLogs} from "../reducers/logDetail"
+import {buildLogDetail, buildCorrelatedLogs} from "../reducers/logDetails"
+import * as actions from "../actions/logDetails"
 
 const stateToProps = state => ({
   log: buildLogDetail(state),
   correlatedLogs: buildCorrelatedLogs(state)
 })
 
-const dispatchToProps = dispatch => ({
-  close() {
-    dispatch(unsetLogDetail())
-  }
-})
-
 export default connect(
   stateToProps,
-  dispatchToProps
+  dispatch => bindActionCreators(actions, dispatch)
 )(LogDetail)

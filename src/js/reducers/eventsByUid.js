@@ -1,26 +1,19 @@
+import createReducer from "./createReducer"
 import get from "lodash/get"
 import uniqBy from "lodash/uniqBy"
 
-const tsPath = ([_descriptor, path, ts]) => path + ts
+const initialState = {}
 
-export default function eventsByUid(state = {}, action) {
-  switch (action.type) {
-    case "LOG_DETAILS_RECEIVED":
-      var {uid, correlatedEvents} = action
-      var currentCorrelatedEvents = get(state, uid, [])
-
-      var events = uniqBy(
-        currentCorrelatedEvents.concat(correlatedEvents),
-        tsPath
-      )
-
-      return {
-        ...state,
-        [uid]: events
-      }
-    default:
-      return state
+export default createReducer(initialState, {
+  CORRELATED_LOGS_RECEIVE: (state, {uid, tuples}) => {
+    const allTuples = uniqBy(get(state, uid, []).concat(tuples), tsPath)
+    return {
+      ...state,
+      [uid]: allTuples
+    }
   }
-}
+})
+
+const tsPath = ([_descriptor, path, ts]) => path + ts
 
 export const getTuplesByUid = state => state.eventsByUid

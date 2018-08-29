@@ -8,7 +8,7 @@ import Forward from "../icons/forward-arrow.svg"
 
 export default class LogDetail extends React.Component {
   render() {
-    const {log, correlatedLogs} = this.props
+    const {log, correlatedLogs, backLogDetail, forwardLogDetail} = this.props
     if (!log)
       return (
         <div className="log-detail">
@@ -24,10 +24,10 @@ export default class LogDetail extends React.Component {
         <header>
           <div className="actions">
             <div className="history-buttons">
-              <div className="back-button">
+              <div className="back-button" onClick={backLogDetail}>
                 <Back />
               </div>
-              <div className="forward-button">
+              <div className="forward-button" onClick={forwardLogDetail}>
                 <Forward />
               </div>
             </div>
