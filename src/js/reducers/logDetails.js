@@ -32,6 +32,9 @@ export default createReducer(initialState, {
   }
 })
 
+export const getNextExists = state => toHistory(state.logDetails).nextExists()
+export const getPrevExists = state => toHistory(state.logDetails).prevExists()
+
 export const getLogDetail = state => {
   const {logs, position} = state.logDetails
   return new History(logs, position).getCurrent()

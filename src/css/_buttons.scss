@@ -62,3 +62,47 @@
     transform: scale(1);
   }
 }
+
+.panel-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  height: 28px;
+  width: 28px;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+
+  svg {
+    fill: $light-gray-4;
+    stroke: $light-gray-4;
+    height: 100%;
+    width: 100%;
+  }
+
+  &:hover,
+  &:focus {
+    transition: background-color 100ms;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &:disabled {
+    svg {
+      fill: $light-gray-3;
+      stroke: $light-gray-3;
+    }
+    &:hover {
+      background: none;
+    }
+    &:active {
+      box-shadow: none;
+    }
+  }
+}

@@ -14,6 +14,14 @@ export default class History {
     this.position = 0
   }
 
+  nextExists() {
+    return this.position > 0
+  }
+
+  prevExists() {
+    return this.position + 1 < this.entries.length
+  }
+
   getMostRecent() {
     if (!this.entries.length) return null
     return this.entries[this.entries.length - 1]
@@ -26,21 +34,15 @@ export default class History {
   }
 
   getPrev() {
-    if (this.position + 1 == this.entries.length) {
-      return null
-    } else {
-      this.position += 1
-      return this.getCurrent()
-    }
+    if (!this.prevExists()) return null
+    this.position += 1
+    return this.getCurrent()
   }
 
   getNext() {
-    if (this.position === 0) {
-      return null
-    } else {
-      this.position -= 1
-      return this.getCurrent()
-    }
+    if (!this.nextExists()) return null
+    this.position -= 1
+    return this.getCurrent()
   }
 
   toArray() {

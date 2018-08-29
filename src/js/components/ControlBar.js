@@ -18,26 +18,23 @@ export default class ControlBar extends React.Component {
       <div className="control-bar">
         <XSearchBar />
 
-        <ControlButton>
+        <PanelButton>
           <Settings />
-        </ControlButton>
+        </PanelButton>
 
-        <ControlButton isActive={leftSidebarIsOpen} onClick={toggleLeftSidebar}>
+        <PanelButton isActive={leftSidebarIsOpen} onClick={toggleLeftSidebar}>
           <SidebarLeft />
-        </ControlButton>
+        </PanelButton>
 
-        <ControlButton
-          isActive={rightSidebarIsOpen}
-          onClick={toggleRightSidebar}
-        >
+        <PanelButton isActive={rightSidebarIsOpen} onClick={toggleRightSidebar}>
           <SidebarRight />
-        </ControlButton>
+        </PanelButton>
       </div>
     )
   }
 }
 
-const ControlButton = ({isActive, children, ...rest}) => (
+const PanelButton = ({isActive, children, ...rest}) => (
   <div className={classNames("control-button", {active: isActive})} {...rest}>
     {children}
   </div>

@@ -8,7 +8,14 @@ import Forward from "../icons/forward-arrow.svg"
 
 export default class LogDetail extends React.Component {
   render() {
-    const {log, correlatedLogs, backLogDetail, forwardLogDetail} = this.props
+    const {
+      log,
+      correlatedLogs,
+      backLogDetail,
+      forwardLogDetail,
+      prevExists,
+      nextExists
+    } = this.props
     if (!log)
       return (
         <div className="log-detail">
@@ -22,20 +29,26 @@ export default class LogDetail extends React.Component {
     return (
       <div className="log-detail">
         <header>
-          <div className="actions">
-            <div className="history-buttons">
-              <div className="back-button" onClick={backLogDetail}>
-                <Back />
-              </div>
-              <div className="forward-button" onClick={forwardLogDetail}>
-                <Forward />
-              </div>
-            </div>
-            <h4 className="medium-heading">Log Details</h4>
-            <a className="star-button">
-              <Star />
-            </a>
+          <div className="history-buttons">
+            <button
+              className="panel-button back-button"
+              disabled={!prevExists}
+              onClick={backLogDetail}
+            >
+              <Back />
+            </button>
+            <button
+              className="panel-button forward-button"
+              onClick={forwardLogDetail}
+              disabled={!nextExists}
+            >
+              <Forward />
+            </button>
           </div>
+          <h4 className="medium-heading">Log Details</h4>
+          <button className="panel-button star-button">
+            <Star />
+          </button>
         </header>
         <div className="log-detail-body">
           <div className="correlated-logs-panel">
