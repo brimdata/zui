@@ -1,3 +1,63 @@
+.log-detail header {
+  .medium-heading {
+    text-align: center;
+    margin: 6px;
+  }
+
+  .actions {
+    padding: 6px $base-space * 2;
+    svg {
+      stroke: $light-gray-4;
+      fill: $light-gray-4;
+    }
+  }
+}
+
+.log-detail header .actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  svg {
+    fill: $light-gray-4;
+    stroke: $light-gray-4;
+    height: 18px;
+    width: 18px;
+  }
+
+  .medium-heading {
+    flex: 1;
+    margin: 0;
+  }
+
+  .history-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 48px;
+  }
+
+  .star-button {
+    width: 48px;
+  }
+
+  .back-button,
+  .forward-button,
+  .star-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .star-button {
+    justify-content: flex-end;
+  }
+
+  .star-button svg {
+    fill: none;
+  }
+}
+
 .log-detail {
   .empty-message {
     margin-top: $base-space * 4;
