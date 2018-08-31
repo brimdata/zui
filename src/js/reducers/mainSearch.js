@@ -24,8 +24,7 @@ export default createReducer(initialState, {
   MAIN_SEARCH_COMPLETE: state => ({
     ...state,
     isFetching: false
-  }),
-  MAIN_SEARCH_PAGE_REQUEST: state => ({...state, isFetchingPage: true})
+  })
 })
 
 export const getMainSearchIsFetching = state => state.mainSearch.isFetching
