@@ -9,11 +9,7 @@ const exclude = {
   fuid: true
 }
 
-export default class LogRow extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    return nextProps.style.top !== this.props.style.top
-  }
-
+export default class LogRow extends React.PureComponent {
   render() {
     const {log, style, showDetail, appendToQuery, prevLog} = this.props
     const ts = moment(log.cast("ts"))

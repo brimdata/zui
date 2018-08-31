@@ -5,21 +5,16 @@ import LogRow from "./LogRow"
 export default class LogViewer extends React.PureComponent {
   render() {
     const {logs, appendToQuery, showDetail} = this.props
-
-    const rowRenderer = ({key, index, style}) => {
-      const log = logs[index]
-      const prevLog = logs[index - 1]
-      return (
-        <LogRow
-          key={key}
-          log={log}
-          prevLog={prevLog}
-          style={style}
-          showDetail={showDetail}
-          appendToQuery={appendToQuery}
-        />
-      )
-    }
+    const rowRenderer = ({key, index, style}) => (
+      <LogRow
+        key={key}
+        log={logs[index]}
+        prevLog={logs[index - 1]}
+        style={style}
+        showDetail={showDetail}
+        appendToQuery={appendToQuery}
+      />
+    )
 
     return (
       <AutoSizer>
@@ -32,6 +27,7 @@ export default class LogViewer extends React.PureComponent {
             rowHeight={25}
             rowRenderer={rowRenderer}
             overscanRowCount={2}
+            isScrollingOptOut={true}
           />
         )}
       </AutoSizer>
