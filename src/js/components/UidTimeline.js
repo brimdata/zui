@@ -8,7 +8,7 @@ export default class UidWaterfall extends React.Component {
     const position = xScale(log.cast("ts"))
     const isCurrent = log === this.props.log
     return (
-      <div key={index} className="waterfall-row">
+      <div key={index} className="waterfall-row" onClick={() => this.props.viewLogDetail(log)}>
         <div className="ts-label">
           {moment(log.cast("ts"))
             .utc()

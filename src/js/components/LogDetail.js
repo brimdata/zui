@@ -14,7 +14,8 @@ export default class LogDetail extends React.Component {
       backLogDetail,
       forwardLogDetail,
       prevExists,
-      nextExists
+      nextExists,
+      viewLogDetail
     } = this.props
     if (!log)
       return (
@@ -53,7 +54,7 @@ export default class LogDetail extends React.Component {
         <div className="log-detail-body">
           <div className="correlated-logs-panel">
             <h4 className="small-heading">Correlated Logs</h4>
-            <UidTimeline currentLog={log} logs={correlatedLogs} />
+            <UidTimeline currentLog={log} logs={correlatedLogs} viewLogDetail={viewLogDetail} />
           </div>
 
           <div className="conn-versation-panel">
