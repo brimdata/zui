@@ -1,6 +1,22 @@
 const {app, BrowserWindow, dialog, Menu} = require("electron")
 const {createMenu} = require("./menu")
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} = require("electron-devtools-installer")
+
 let win
+
+const installExtensions = () => {
+  installExtension(REACT_DEVELOPER_TOOLS).catch(err =>
+    console.log("An error occurred: ", err)
+  )
+
+  installExtension(REDUX_DEVTOOLS).catch(err =>
+    console.log("An error occurred: ", err)
+  )
+}
 
 const createWindow = () => {
   win = new BrowserWindow({
@@ -20,6 +36,7 @@ const createWindow = () => {
 
 app.on("ready", () => {
   createWindow()
+  installExtensions()
 })
 
 app.on("window-all-closed", () => {
@@ -33,17 +50,3 @@ app.on("activate", () => {
     createWindow()
   }
 })
-
-const {
-  default: installExtension,
-  REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS
-} = require("electron-devtools-installer")
-
-installExtension(REACT_DEVELOPER_TOOLS).catch(err =>
-  console.log("An error occurred: ", err)
-)
-
-installExtension(REDUX_DEVTOOLS).catch(err =>
-  console.log("An error occurred: ", err)
-)
