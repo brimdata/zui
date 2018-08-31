@@ -23,7 +23,6 @@ export const fetchDescriptor = id => {
     return api
       .descriptor({space, id})
       .done(descriptor => {
-        console.log(descriptor)
         dispatch(receiveDescriptor(space, id, descriptor))
       })
       .error(error => dispatch(errorDescriptor(error)))

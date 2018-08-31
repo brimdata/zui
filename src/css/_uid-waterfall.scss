@@ -29,8 +29,12 @@
   }
 
   .path-tag {
+    cursor: pointer;
     position: relative;
     left: 0%;
+    &:active {
+      transform: translateY(2px)
+    }
   }
 
   .path-tag.current {
