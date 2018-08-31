@@ -17,6 +17,7 @@ export default class LogDetail extends React.Component {
       prevExists,
       nextExists,
       starLog,
+      unstarLog,
       isStarred,
       viewLogDetail
     } = this.props
@@ -55,7 +56,9 @@ export default class LogDetail extends React.Component {
             className={classNames("panel-button", "star-button", {
               starred: isStarred
             })}
-            onClick={() => starLog(log.tuple)}
+            onClick={() =>
+              isStarred ? unstarLog(log.tuple) : starLog(log.tuple)
+            }
           >
             <Star />
           </button>

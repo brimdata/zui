@@ -16,12 +16,19 @@
     align-items: center;
   }
 
-  .star-button svg {
-    fill: none;
+  .star-button {
+    transition: background-color 0ms;
+    svg {
+      fill: none;
+    }
   }
 
-  .star-button.starred svg {
-    fill: $yellow-5;
+  .star-button.starred {
+    background-color: $yellow-3;
+    svg {
+      stroke: $light-gray-4;
+      fill: $yellow-3;
+    }
   }
 }
 
