@@ -1,8 +1,5 @@
-const {app, BrowserWindow, dialog, autoUpdater, Menu} = require("electron")
+const {app, BrowserWindow, dialog, Menu} = require("electron")
 const {createMenu} = require("./menu")
-const server = "http://desktop-release.looky.cloud"
-const feed = `${server}/update/${process.platform}/${app.getVersion()}`
-autoUpdater.setFeedURL(feed)
 let win
 
 const createWindow = () => {
@@ -37,33 +34,16 @@ app.on("activate", () => {
   }
 })
 
-autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: "info",
-    buttons: ["Restart", "Later"],
-    title: "Application Update",
-    message: process.platform === "win32" ? releaseNotes : releaseName,
-    detail:
-      "A new version has been downloaded. Restart the application to apply the updates."
-  }
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} = require("electron-devtools-installer")
 
-  dialog.showMessageBox(dialogOpts, response => {
-    if (response === 0) autoUpdater.quitAndInstall()
-  })
-})
+installExtension(REACT_DEVELOPER_TOOLS).catch(err =>
+  console.log("An error occurred: ", err)
+)
 
-autoUpdater.on("error", message => {
-  console.error("Pblem updating the app:", message)
-})
-
-autoUpdater.on("update-available", () => {
-  console.log("update available")
-})
-
-autoUpdater.on("update-not-available", () => {
-  console.log("Up to date!")
-})
-
-autoUpdater.on("checking-for-update", () => {
-  console.log("checking for update")
-})
+installExtension(REDUX_DEVTOOLS).catch(err =>
+  console.log("An error occurred: ", err)
+)
