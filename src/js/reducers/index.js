@@ -16,6 +16,7 @@ import boomdCredentials from "./boomdCredentials"
 import boomdConnection from "./boomdConnection"
 import searchBar from "./searchBar"
 import view from "./view"
+import starredLogs from "./starredLogs"
 
 export default combineReducers({
   view,
@@ -34,5 +35,6 @@ export default combineReducers({
   logDetails,
   searchStats,
   boomdCredentials,
-  boomdConnection
+  boomdConnection,
+  starredLogs
 })

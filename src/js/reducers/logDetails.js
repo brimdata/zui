@@ -3,8 +3,10 @@ import {createSelector} from "reselect"
 import {getTuplesByUid} from "./eventsByUid"
 import {getDescriptors} from "./broSchemas"
 import {getCurrentSpaceName} from "./spaces"
+import {getStarredLogs} from "./starredLogs"
 import Log from "../models/Log"
 import History from "../models/History"
+import * as Tuple from "../lib/Tuple"
 
 const initialState = {
   logs: [],
@@ -43,6 +45,12 @@ export const getLogDetail = state => {
 export const buildLogDetail = createSelector(
   getLogDetail,
   log => (log ? new Log(log.tuple, log.descriptor) : null)
+)
+
+export const getLogDetailIsStarred = createSelector(
+  getLogDetail,
+  getStarredLogs,
+  (log, starred) => (log ? Tuple.contains(starred, log.tuple) : false)
 )
 
 export const buildCorrelatedLogs = createSelector(

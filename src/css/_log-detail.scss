@@ -19,6 +19,10 @@
   .star-button svg {
     fill: none;
   }
+
+  .star-button.starred svg {
+    fill: $yellow-5;
+  }
 }
 
 .log-detail {

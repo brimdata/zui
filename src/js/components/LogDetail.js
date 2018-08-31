@@ -5,6 +5,7 @@ import ConnVersation from "./ConnVersation"
 import Star from "../icons/star-sm.svg"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
+import classNames from "classnames"
 
 export default class LogDetail extends React.Component {
   render() {
@@ -15,6 +16,8 @@ export default class LogDetail extends React.Component {
       forwardLogDetail,
       prevExists,
       nextExists,
+      starLog,
+      isStarred,
       viewLogDetail
     } = this.props
     if (!log)
@@ -31,13 +34,14 @@ export default class LogDetail extends React.Component {
       <div className="log-detail">
         <header>
           <div className="history-buttons">
-            <button
+            <a
+              tabIndex={0}
               className="panel-button back-button"
               disabled={!prevExists}
               onClick={backLogDetail}
             >
               <Back />
-            </button>
+            </a>
             <button
               className="panel-button forward-button"
               onClick={forwardLogDetail}
@@ -47,14 +51,23 @@ export default class LogDetail extends React.Component {
             </button>
           </div>
           <h4 className="medium-heading">Log Details</h4>
-          <button className="panel-button star-button">
+          <button
+            className={classNames("panel-button", "star-button", {
+              starred: isStarred
+            })}
+            onClick={() => starLog(log.tuple)}
+          >
             <Star />
           </button>
         </header>
         <div className="log-detail-body">
           <div className="correlated-logs-panel">
             <h4 className="small-heading">Correlated Logs</h4>
-            <UidTimeline currentLog={log} logs={correlatedLogs} viewLogDetail={viewLogDetail} />
+            <UidTimeline
+              currentLog={log}
+              logs={correlatedLogs}
+              viewLogDetail={viewLogDetail}
+            />
           </div>
 
           <div className="conn-versation-panel">

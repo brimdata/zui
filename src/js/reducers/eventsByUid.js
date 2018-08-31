@@ -1,19 +1,14 @@
 import createReducer from "./createReducer"
 import get from "lodash/get"
-import uniqBy from "lodash/uniqBy"
+import {uniq} from "../lib/Tuple"
 
 const initialState = {}
 
 export default createReducer(initialState, {
-  CORRELATED_LOGS_RECEIVE: (state, {uid, tuples}) => {
-    const allTuples = uniqBy(get(state, uid, []).concat(tuples), tsPath)
-    return {
-      ...state,
-      [uid]: allTuples
-    }
-  }
+  CORRELATED_LOGS_RECEIVE: (state, {uid, tuples}) => ({
+    ...state,
+    [uid]: uniq(get(state, uid, []).concat(tuples))
+  })
 })
-
-const tsPath = ([_descriptor, path, ts]) => path + ts
 
 export const getTuplesByUid = state => state.eventsByUid
