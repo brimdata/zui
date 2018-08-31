@@ -3,12 +3,6 @@ import {getTimeWindow} from "../reducers/timeWindow"
 import {showRightSidebar} from "./view"
 import {discoverDescriptors} from "./descriptors"
 
-export const setLogDetail = ({tuple, descriptor}) => ({
-  type: "LOG_DETAIL_SET",
-  tuple,
-  descriptor
-})
-
 export const viewLogDetail = ({tuple, descriptor}) => ({
   type: "LOG_DETAIL_VIEW",
   tuple,
