@@ -48,7 +48,7 @@ export default class LogCell extends React.PureComponent {
         {this.state.showMenu && (
           <ContextMenu onOutsideClick={this.toggleMenu}>
             <MenuItem onClick={this.exclude}>Filter out these values</MenuItem>
-            <MenuItem onClick={() => appendQueryInclude(name, value)}>
+            <MenuItem onClick={this.include}>
               Only show these values
             </MenuItem>
             <MenuItem onClick={this.countBy}>Count by this field</MenuItem>

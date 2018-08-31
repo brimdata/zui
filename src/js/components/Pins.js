@@ -39,7 +39,7 @@ class Pins extends React.Component {
       <button
         className="button pin-filter"
         title="⌘K"
-        onClick={this.onPinClick}
+        onClick={this.props.pinSearchBar}
       >
         <Pin />
       </button>
