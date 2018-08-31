@@ -7,6 +7,7 @@ import {showLogsTab, showAnalyticsTab} from "../actions/view"
 import {hasAnalytics, isBlank} from "../models/Query"
 import {getMainSearchQuery} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
+import {getStarredLogs} from "../reducers/starredLogs"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
   return (dispatch, getState, api) => {
@@ -15,6 +16,16 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
     const timeWindow = query.timeWindow
     const procs = query.procs.join(";")
     let string = isBlank(query.string) ? "*" : query.string
+
+    if (string === ":starred") {
+      const starredLogs = getStarredLogs(getState())
+      dispatch(requestMainSearch({saveToHistory: false}))
+      setTimeout(() => {
+        dispatch(mainSearchEvents([...starredLogs]))
+        dispatch(completeMainSearch())
+      })
+      return
+    }
 
     if (!query.isValid()) {
       console.warn("invalide query", query.toString())
