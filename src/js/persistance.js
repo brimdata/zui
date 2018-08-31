@@ -10,7 +10,8 @@ const PERSIST = [
   "currentSpaceName",
   "boomdCredentials",
   "boomdConnection",
-  "view"
+  "view",
+  "starredLogs"
 ]
 
 export function saveState(state) {
