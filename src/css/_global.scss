@@ -31,9 +31,10 @@ label {
 }
 
 pre {
-  background-color: $gray-3;
+  background-color: $light-gray-2;
   border-radius: 3px;
-  color: $light-gray;
+  color: $gray-2;
   font-family: $mono-font;
-  padding: 3px 6px;
+  padding: 1em;
+  margin: 0.5em 0;
 }
