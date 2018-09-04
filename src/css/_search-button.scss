@@ -35,3 +35,15 @@
     width: 9px;
   }
 }
+
+.debug-query-modal {
+  .small-heading {
+    margin: 0;
+  }
+  pre {
+    margin-bottom: 2em;
+  }
+  pre:last-child {
+    margin-bottom: 0;
+  }
+}

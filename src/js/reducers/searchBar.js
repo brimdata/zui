@@ -1,6 +1,7 @@
 import createReducer from "./createReducer"
 import isNumber from "lodash/isNumber"
 import trim from "lodash/trim"
+import Ast from "../models/Ast"
 import {changeProgramTimeWindow} from "../changeProgramTimeWindow"
 import {createSelector} from "reselect"
 
@@ -144,3 +145,8 @@ export const getSearchProgram = createSelector(
   getSearchBarInputValue,
   (pinned, current) => [...pinned, current].map(trim).join(" ")
 )
+
+export const getAst = createSelector(getSearchProgram, searchProgram => {
+  const ast = new Ast(searchProgram).toJSON()
+  return JSON.stringify(ast, null, 2)
+})
