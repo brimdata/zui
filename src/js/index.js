@@ -5,6 +5,7 @@ import initStore from "./initStore"
 import {HashRouter} from "react-router-dom"
 import XApp from "./connectors/XApp"
 import initShortcuts from "./initShortcuts"
+import "./globals"
 
 const store = initStore()
 initShortcuts(store)
