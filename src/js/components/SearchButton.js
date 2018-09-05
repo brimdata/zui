@@ -9,7 +9,7 @@ import {SmallHeading, LargeHeading} from "./Headings"
 class SearchButton extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {menuIsOpen: false, showAstModal: true}
+    this.state = {menuIsOpen: false, showAstModal: false}
     this.openMenu = () => this.setState({menuIsOpen: true})
     this.closeMenu = () => this.setState({menuIsOpen: false})
   }

@@ -20,6 +20,8 @@
   font-size: 14px;
   font-family: $mono-font;
   white-space: nowrap;
+  max-width: 700px;
+  overflow: hidden;
   @include type-colors;
 
   &:hover {
