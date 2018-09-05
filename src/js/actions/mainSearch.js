@@ -8,6 +8,7 @@ import {hasAnalytics, isBlank} from "../models/Query"
 import {getMainSearchQuery} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
 import {getStarredLogs} from "../reducers/starredLogs"
+import * as logsActions from "./logs"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
   return (dispatch, getState, api) => {

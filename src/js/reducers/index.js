@@ -17,8 +17,10 @@ import boomdConnection from "./boomdConnection"
 import searchBar from "./searchBar"
 import view from "./view"
 import starredLogs from "./starredLogs"
+import logs from "./logs"
 
 export default combineReducers({
+  logs,
   view,
   searchBar,
   initialLoad,
