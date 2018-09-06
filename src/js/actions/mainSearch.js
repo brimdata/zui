@@ -9,6 +9,7 @@ import {getMainSearchQuery} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
 import {getStarredLogs} from "../reducers/starredLogs"
 import * as logsActions from "./logs"
+import {requestCountByTime, successCountByTime} from "./countByTime"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
   return (dispatch, getState, api) => {
@@ -48,13 +49,17 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
         .done(() => dispatch(completeMainSearch()))
     } else {
       dispatch(showLogsTab())
+      dispatch(requestCountByTime())
       string += " | " + procs
       api
         .search({space, string, timeWindow})
         .each(statsReceiver(dispatch))
         .channel(1, eventsReceiver(dispatch))
         .channel(0, countByTimeReceiver(dispatch))
-        .done(() => dispatch(completeMainSearch()))
+        .done(() => {
+          dispatch(completeMainSearch())
+          dispatch(successCountByTime())
+        })
     }
   }
 }

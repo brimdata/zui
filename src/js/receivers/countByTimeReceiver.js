@@ -1,14 +1,7 @@
-import * as actions from "../actions"
+import {receiveCountByTime} from "../actions/countByTime"
 
-export default function(dispatch) {
-  return payload => {
-    if (payload.type === "SearchResult") {
-      dispatch(
-        actions.updateCountByTime(
-          payload.results.descriptor,
-          payload.results.tuples
-        )
-      )
-    }
+export default dispatch => ({type, results}) => {
+  if (type === "SearchResult") {
+    dispatch(receiveCountByTime(results))
   }
 }

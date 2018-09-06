@@ -34,7 +34,8 @@ export const isBlank = string => /^\s*$/.test(string)
 export const isValidQuery = string => !!new Ast(string).toJSON()
 
 export const hasAnalytics = string => {
-    const ast = new Ast(string).toJSON()
-    if (!ast) return false
-    if (ast.proc) return true
+  const ast = new Ast(string).toJSON()
+  if (!ast) return false
+  if (ast.proc) return true
+  else return false
 }
