@@ -1,7 +1,8 @@
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import CountByTime from "../components/CountByTime"
-import * as actions from "../actions/searchBar"
+import * as actions from "../actions/timeWindow"
+import {fetchMainSearch} from "../actions/mainSearch"
 import {
   getMainSearchCountByTime,
   getCountByTimeIsFetching
@@ -19,5 +20,5 @@ function stateToProps(state) {
 
 export default connect(
   stateToProps,
-  dispatch => bindActionCreators(actions, dispatch)
+  dispatch => bindActionCreators({...actions, fetchMainSearch}, dispatch)
 )(CountByTime)

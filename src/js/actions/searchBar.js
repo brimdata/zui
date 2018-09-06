@@ -22,11 +22,6 @@ export const setSearchBarPins = pinned => ({
   pinned
 })
 
-export const setTimeWindow = timeWindow => ({
-  type: "TIME_WINDOW_SET",
-  timeWindow
-})
-
 export const appendQueryInclude = (name, value) => ({
   type: "QUERY_INCLUDE_APPEND",
   name,

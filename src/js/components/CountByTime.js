@@ -104,8 +104,11 @@ export default class CountByTime extends React.Component {
       ])
     const onBrushEnd = () => {
       if (d3.event.selection) {
-        this.props.setTimeWindow(d3.event.selection.map(timeScale.invert))
-        brush.move(d3.select(".brush"), null)
+        this.props.setInnerTimeWindow(d3.event.selection.map(timeScale.invert))
+        this.props.fetchMainSearch()
+      } else {
+        this.props.setInnerTimeWindow(null)
+        this.props.fetchMainSearch()
       }
     }
     brush.on("end", onBrushEnd)

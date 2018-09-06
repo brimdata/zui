@@ -90,13 +90,6 @@ export default createReducer(initialState, {
     }
   },
 
-  TIME_WINDOW_SET: (state, {timeWindow}) => {
-    return {
-      ...state,
-      current: changeProgramTimeWindow(state.current, timeWindow)
-    }
-  },
-
   MAIN_SEARCH_QUERY_PROGRAM_APPEND: (state, {fragment}) => {
     return {
       ...state,
