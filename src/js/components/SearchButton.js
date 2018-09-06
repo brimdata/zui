@@ -15,11 +15,11 @@ class SearchButton extends React.Component {
   }
 
   render() {
-    const {fetchMainSearch, ast, searchProgram} = this.props
+    const {submitSearchBar, ast, searchProgram} = this.props
 
     return (
       <div className="search-button-wrapper">
-        <button className="button search-button" onClick={fetchMainSearch}>
+        <button className="button search-button" onClick={submitSearchBar}>
           <MagGlass />
         </button>
 
