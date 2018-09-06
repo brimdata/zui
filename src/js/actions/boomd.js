@@ -17,9 +17,9 @@ export const connectingBoomd = () => ({type: "BOOMD_CONNECTING"})
 
 export const connectBoomd = () => (dispatch, getState, api) => {
   dispatch(connectingBoomd())
-
+  const credentials = getCredentials(getState())
   return api
-    .connect(getCredentials(getState()))
+    .connect(credentials)
     .then(res => {
       if (res.status === 401) {
         dispatch(setBoomdError("Incorrect user and pass combination."))
@@ -27,7 +27,22 @@ export const connectBoomd = () => (dispatch, getState, api) => {
         dispatch(connectedBoomd())
       }
     })
-    .catch(_res => {
-      dispatch(setBoomdError("No server running at that host and port."))
+    .catch(res => {
+      if (typeof res === "string") {
+        if (res.match(/ECONNREFUSED/)) {
+          const {host, port} = credentials
+          dispatch(setBoomdError(`No server running at ${host}:${port}`))
+        }
+      } else if (
+        res &&
+        res.message &&
+        typeof res.message === "string" &&
+        res.message.match(/boom credentials/)
+      ) {
+        dispatch(setBoomdError("Host and port are required"))
+      } else {
+        dispatch(setBoomdError("Unknown error, view console for details"))
+        console.error(res)
+      }
     })
 }

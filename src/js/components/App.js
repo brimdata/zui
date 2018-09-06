@@ -5,14 +5,6 @@ import XConnect from "../connectors/XConnect"
 import XSpaces from "../connectors/XSpaces"
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidMount() {
-    this.props.connectBoomd()
-  }
-
   render() {
     const {isConnected} = this.props
     return (
