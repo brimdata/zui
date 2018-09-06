@@ -2,7 +2,7 @@
   "name": "looky-desktop",
   "description": "Looky Desktop App",
   "repository": "https://github.com/looky/looky-desktop",
-  "license": "None",
+  "license": "ISC",
   "version": "0.1.1",
   "main": "main.js",
   "author": "Looky Labs, Inc.",
