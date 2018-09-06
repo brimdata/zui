@@ -18,6 +18,13 @@ export default class CountByTime extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.rawData !== this.props.rawData ||
+      nextProps.isFetching !== this.props.isFetching
+    )
+  }
+
   innerWidth() {
     let innerWidth = this.props.width - this.margin.left - this.margin.right
     return innerWidth >= 0 ? innerWidth : 0
