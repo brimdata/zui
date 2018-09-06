@@ -1,3 +1,6 @@
+import {fetchMainSearch} from "./mainSearch"
+import {setInnerTimeWindow} from "./timeWindow"
+
 export const changeSearchBarInput = value => ({
   type: "SEARCH_BAR_INPUT_CHANGE",
   value
@@ -38,3 +41,8 @@ export const appendQueryCountBy = name => ({
   type: "QUERY_COUNT_BY_APPEND",
   name
 })
+
+export const submitSearchBar = () => dispatch => {
+  dispatch(setInnerTimeWindow(null))
+  dispatch(fetchMainSearch())
+}
