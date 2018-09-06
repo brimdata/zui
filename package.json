@@ -25,7 +25,7 @@
     "format": "prettier 'src/**/*.{js,scss}' --write --loglevel warn"
   },
   "jest": {
-    "notify": true,
+    "notify": false,
     "notifyMode": "change",
     "setupTestFrameworkScriptFile": "./src/js/test/setup.js",
     "testURL": "http://localhost",
