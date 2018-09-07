@@ -4,7 +4,7 @@ import {ContextMenu, MenuItem} from "./ContextMenu"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import Arrow from "../icons/caret-bottom-sm.svg"
 import Modal from "./Modal"
-import {SmallHeading, LargeHeading} from "./Headings"
+import {SmallHeading} from "./Headings"
 
 class SearchButton extends React.Component {
   constructor(props) {
@@ -15,11 +15,11 @@ class SearchButton extends React.Component {
   }
 
   render() {
-    const {fetchMainSearch, ast, searchProgram} = this.props
+    const {submitSearchBar, ast, searchProgram} = this.props
 
     return (
       <div className="search-button-wrapper">
-        <button className="button search-button" onClick={fetchMainSearch}>
+        <button className="button search-button" onClick={submitSearchBar}>
           <MagGlass />
         </button>
 
@@ -53,7 +53,7 @@ class SearchButton extends React.Component {
           <SmallHeading>Abstract Syntax Tree</SmallHeading>
           <pre>
             <code
-              class="language-js"
+              className="language-js"
               dangerouslySetInnerHTML={{
                 __html: Prism.highlight(ast, Prism.languages.js, "JSON")
               }}

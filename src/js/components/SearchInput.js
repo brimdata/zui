@@ -10,7 +10,7 @@ class SearchInput extends React.Component {
 
   onKeyDown(e) {
     if (e.key === "Enter") {
-      this.props.fetchMainSearch()
+      this.props.submitSearchBar()
     }
   }
 

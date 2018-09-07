@@ -28,7 +28,7 @@ export default class LogCell extends React.PureComponent {
   }
 
   render() {
-    const {name, type, value, appendQueryInclude} = this.props
+    const {name, type, value} = this.props
     let cellClass = `log-cell ${type}`
     if (this.state.showMenu) cellClass += " active"
 
@@ -48,9 +48,7 @@ export default class LogCell extends React.PureComponent {
         {this.state.showMenu && (
           <ContextMenu onOutsideClick={this.toggleMenu}>
             <MenuItem onClick={this.exclude}>Filter out these values</MenuItem>
-            <MenuItem onClick={this.include}>
-              Only show these values
-            </MenuItem>
+            <MenuItem onClick={this.include}>Only show these values</MenuItem>
             <MenuItem onClick={this.countBy}>Count by this field</MenuItem>
           </ContextMenu>
         )}

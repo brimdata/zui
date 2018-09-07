@@ -20,12 +20,8 @@ export const connectBoomd = () => (dispatch, getState, api) => {
   const credentials = getCredentials(getState())
   return api
     .connect(credentials)
-    .then(res => {
-      if (res.status === 401) {
-        dispatch(setBoomdError("Incorrect user and pass combination."))
-      } else {
-        dispatch(connectedBoomd())
-      }
+    .then(_res => {
+      dispatch(connectedBoomd())
     })
     .catch(res => {
       if (typeof res === "string") {
@@ -33,6 +29,8 @@ export const connectBoomd = () => (dispatch, getState, api) => {
           const {host, port} = credentials
           dispatch(setBoomdError(`No server running at ${host}:${port}`))
         }
+        if (res.match(/permission denied/))
+          dispatch(setBoomdError("Incorrect user and pass combination."))
       } else if (
         res &&
         res.message &&

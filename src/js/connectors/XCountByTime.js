@@ -1,20 +1,24 @@
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import CountByTime from "../components/CountByTime"
-import * as actions from "../actions/searchBar"
-import {getMainSearchCountByTime} from "../reducers/countByTime"
-import {getMainSearchIsFetching} from "../reducers/mainSearch"
-import {getTimeWindow} from "../reducers/timeWindow"
+import * as actions from "../actions/timeWindow"
+import {fetchMainSearch} from "../actions/mainSearch"
+import {
+  getMainSearchCountByTime,
+  getCountByTimeIsFetching,
+  getCountByTimeData
+} from "../reducers/countByTime"
+import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 
-function stateToProps(state) {
-  return {
-    isFetching: getMainSearchIsFetching(state),
-    ...getMainSearchCountByTime(state),
-    timeWindow: getTimeWindow(state)
-  }
-}
+const stateToProps = state => ({
+  rawData: getCountByTimeData(state),
+  isFetching: getCountByTimeIsFetching(state),
+  ...getMainSearchCountByTime(state),
+  timeWindow: getTimeWindow(state),
+  innerTimeWindow: getInnerTimeWindow(state)
+})
 
 export default connect(
   stateToProps,
-  dispatch => bindActionCreators(actions, dispatch)
+  dispatch => bindActionCreators({...actions, fetchMainSearch}, dispatch)
 )(CountByTime)

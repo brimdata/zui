@@ -8,15 +8,20 @@ import {hasAnalytics, isBlank} from "../models/Query"
 import {getMainSearchQuery} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
 import {getStarredLogs} from "../reducers/starredLogs"
-import * as logsActions from "./logs"
+import {getInnerTimeWindow} from "../reducers/timeWindow"
+import {requestCountByTime, successCountByTime} from "./countByTime"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
+  // Please show me show me some love soon
   return (dispatch, getState, api) => {
+    const state = getState()
     const query = getMainSearchQuery(getState())
     const space = query.space.name
     const timeWindow = query.timeWindow
     const procs = query.procs.join(";")
     let string = isBlank(query.string) ? "*" : query.string
+
+    const innerTimeWindow = getInnerTimeWindow(state)
 
     if (string === ":starred") {
       const starredLogs = getStarredLogs(getState())
@@ -48,13 +53,30 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
         .done(() => dispatch(completeMainSearch()))
     } else {
       dispatch(showLogsTab())
-      string += " | " + procs
-      api
-        .search({space, string, timeWindow})
-        .each(statsReceiver(dispatch))
-        .channel(1, eventsReceiver(dispatch))
-        .channel(0, countByTimeReceiver(dispatch))
-        .done(() => dispatch(completeMainSearch()))
+
+      if (innerTimeWindow) {
+        // only logs
+        string += " | head 1000"
+        api
+          .search({space, string, timeWindow: innerTimeWindow})
+          .each(statsReceiver(dispatch))
+          .channel(0, eventsReceiver(dispatch))
+          .done(() => {
+            dispatch(completeMainSearch())
+          })
+      } else {
+        dispatch(requestCountByTime())
+        string += " | " + procs
+        api
+          .search({space, string, timeWindow})
+          .each(statsReceiver(dispatch))
+          .channel(1, eventsReceiver(dispatch))
+          .channel(0, countByTimeReceiver(dispatch))
+          .done(() => {
+            dispatch(completeMainSearch())
+            dispatch(successCountByTime())
+          })
+      }
     }
   }
 }

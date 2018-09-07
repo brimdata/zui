@@ -2,7 +2,6 @@ import createReducer from "./createReducer"
 import isNumber from "lodash/isNumber"
 import trim from "lodash/trim"
 import Ast from "../models/Ast"
-import {changeProgramTimeWindow} from "../changeProgramTimeWindow"
 import {createSelector} from "reselect"
 
 export const initialState = {
@@ -87,13 +86,6 @@ export default createReducer(initialState, {
       }
     } else {
       throw new Error(`Trying to remove a pin that does not exist: ${index}`)
-    }
-  },
-
-  TIME_WINDOW_SET: (state, {timeWindow}) => {
-    return {
-      ...state,
-      current: changeProgramTimeWindow(state.current, timeWindow)
     }
   },
 

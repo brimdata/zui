@@ -9,20 +9,39 @@ import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
 
 const initialState = {
-  descriptor: [],
-  tuples: []
+  isFetching: false,
+  data: {
+    tuples: [],
+    descriptor: []
+  },
+  error: null
 }
 
 export default createReducer(initialState, {
-  MAIN_SEARCH_REQUEST: () => ({...initialState}),
-  COUNT_BY_TIME_UPDATE: (state, {descriptor, tuples}) => ({
-    descriptor,
-    tuples: [...state.tuples, ...tuples]
+  COUNT_BY_TIME_REQUEST: () => ({
+    ...initialState,
+    isFetching: true
+  }),
+  COUNT_BY_TIME_RECEIVE: (state, {data: {descriptor, tuples}}) => ({
+    ...state,
+    data: {
+      descriptor,
+      tuples: [...state.data.tuples, ...tuples]
+    }
+  }),
+  COUNT_BY_TIME_ERROR: (state, {error}) => ({
+    ...state,
+    isFetching: false,
+    error
+  }),
+  COUNT_BY_TIME_SUCCESS: state => ({
+    ...state,
+    isFetching: false
   })
 })
 
-export const getCountByTimeData = state => state.countByTime
-
+export const getCountByTimeData = state => state.countByTime.data
+export const getCountByTimeError = state => state.countByTime.error
 export const getMainSearchCountByTime = createSelector(
   getTimeWindow,
   getCountByTimeData,

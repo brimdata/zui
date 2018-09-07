@@ -1,19 +1,21 @@
-export function requestCountByTime() {
-  return {
-    type: "COUNT_BY_TIME_REQUEST"
-  }
-}
+export const requestCountByTime = () => ({
+  type: "COUNT_BY_TIME_REQUEST"
+})
 
-export function completeCountByTime() {
-  return {
-    type: "COUNT_BY_TIME_COMPLETE"
-  }
-}
+export const completeCountByTime = () => ({
+  type: "COUNT_BY_TIME_COMPLETE"
+})
 
-export function updateCountByTime(descriptor, tuples) {
-  return {
-    type: "COUNT_BY_TIME_UPDATE",
-    descriptor,
-    tuples
-  }
-}
+export const receiveCountByTime = data => ({
+  type: "COUNT_BY_TIME_RECEIVE",
+  data
+})
+
+export const errorCountByTime = error => ({
+  type: "COUNT_BY_TIME_ERROR",
+  error
+})
+
+export const successCountByTime = () => ({
+  type: "COUNT_BY_TIME_SUCCESS"
+})
