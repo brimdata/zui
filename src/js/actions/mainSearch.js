@@ -8,11 +8,11 @@ import {hasAnalytics, isBlank} from "../models/Query"
 import {getMainSearchQuery} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
 import {getStarredLogs} from "../reducers/starredLogs"
-import * as logsActions from "./logs"
-import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
+import {getInnerTimeWindow} from "../reducers/timeWindow"
 import {requestCountByTime, successCountByTime} from "./countByTime"
 
 export function fetchMainSearch({saveToHistory = true} = {}) {
+  // Please show me show me some love soon
   return (dispatch, getState, api) => {
     const state = getState()
     const query = getMainSearchQuery(getState())
@@ -22,7 +22,6 @@ export function fetchMainSearch({saveToHistory = true} = {}) {
     let string = isBlank(query.string) ? "*" : query.string
 
     const innerTimeWindow = getInnerTimeWindow(state)
-    const outerTimeWindow = getOuterTimeWindow(state)
 
     if (string === ":starred") {
       const starredLogs = getStarredLogs(getState())
