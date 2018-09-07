@@ -1,9 +1,9 @@
 import createReducer from "./createReducer"
-import {extractLastTimeWindow} from "../changeProgramTimeWindow"
 import {createSelector} from "reselect"
 import {getCurrentSpaceTimeWindow} from "./spaces"
-import {toDate} from "../cast"
 import {isTimeWindow} from "../models/TimeWindow"
+import isArray from "lodash/isArray"
+import isDate from "lodash/isDate"
 
 const initialState = {
   inner: null,
@@ -21,11 +21,22 @@ export default createReducer(initialState, {
   })
 })
 
-export const getOuterTimeWindow = state => state.timeWindow.outer
-export const getInnerTimeWindow = state => state.timeWindow.inner
+export const getRawOuterTimeWindow = state => state.timeWindow.outer
+export const getRawInnerTimeWindow = state => state.timeWindow.inner
+export const getOuterTimeWindow = createSelector(getRawOuterTimeWindow, value =>
+  makeDates(value)
+)
+export const getInnerTimeWindow = createSelector(getRawInnerTimeWindow, value =>
+  makeDates(value)
+)
 export const getTimeWindow = createSelector(
   getOuterTimeWindow,
   getCurrentSpaceTimeWindow,
   (userTimeWindow, spaceTimeWindow) =>
     isTimeWindow(userTimeWindow) ? userTimeWindow : spaceTimeWindow
 )
+
+const makeDates = value =>
+  isArray(value)
+    ? value.map(item => (isDate(item) ? item : new Date(item)))
+    : value
