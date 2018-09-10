@@ -35,7 +35,7 @@ const BOOM_INTERVALS = {
   minute: "min",
   hour: "hr",
   day: "day",
-  month: "month"
+  month: "day"
 }
 
 export const getMainSearchQuery = createSelector(

@@ -1,15 +1,29 @@
 import React from "react"
 import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
+import xAxisDrag from "./xAxisDrag"
+import moment from "moment"
 
 const margin = {
-  left: 48,
+  left: 0,
   top: 12,
   bottom: 24,
-  right: 6
+  right: 0
 }
 
 export default class CountByTime extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = CountByTime.getDerivedStateFromProps(props)
+  }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      innerWidth: Math.max(props.width - margin.left - margin.right, 0),
+      innerHeight: Math.max(props.height - margin.top - margin.bottom, 0)
+    }
+  }
+
   shouldComponentUpdate(nextProps) {
     const {rawData, isFetching, width, height} = this.props
     return (
@@ -27,16 +41,6 @@ export default class CountByTime extends React.Component {
 
     d3.select(svg)
       .append("g")
-      .attr("class", "y-axis")
-      .attr("transform", `translate(${left}, ${top})`)
-
-    d3.select(svg)
-      .append("g")
-      .attr("class", "x-axis")
-      .attr("transform", `translate(${left}, ${height - bottom})`)
-
-    d3.select(svg)
-      .append("g")
       .attr("class", "chart")
       .attr("transform", `translate(${left}, ${top})`)
 
@@ -45,6 +49,55 @@ export default class CountByTime extends React.Component {
       .attr("class", "brush")
       .attr("transform", `translate(${left}, 0)`)
 
+    const xAxis = d3
+      .select(svg)
+      .append("g")
+      .attr("class", "x-axis")
+      .attr("transform", `translate(${left}, ${height - bottom})`)
+
+    const xAxisHandlers = xAxisDrag({
+      parent: xAxis.node(),
+      onDrag: (pos, startPos) => {
+        const start = moment(this.scales.time.invert(startPos))
+        const current = moment(this.scales.time.invert(pos))
+        const ms = start.diff(current)
+        const outerTimeWindow = this.props.timeWindow.map(d =>
+          moment(d)
+            .add(ms, "ms")
+            .toDate()
+        )
+        this.draw(outerTimeWindow)
+      },
+      onDragEnd: (pos, startPos) => {
+        const start = moment(this.scales.time.invert(startPos))
+        const current = moment(this.scales.time.invert(pos))
+        const ms = start.diff(current)
+        const outerTimeWindow = this.props.timeWindow.map(d =>
+          moment(d)
+            .add(ms, "ms")
+            .toDate()
+        )
+        this.props.setOuterTimeWindow(outerTimeWindow)
+        this.props.fetchMainSearch()
+      }
+    })
+
+    d3.select("body")
+      .on("mousemove", xAxisHandlers.mouseMove)
+      .on("mouseup", xAxisHandlers.mouseUp)
+
+    xAxis
+      .append("rect")
+      .attr("class", "x-axis-drag")
+      .attr("fill", "transparent")
+      .attr("height", bottom)
+      .on("mousedown", xAxisHandlers.mouseDown)
+
+    d3.select(svg)
+      .append("g")
+      .attr("class", "y-axis")
+      .attr("transform", `translate(${left}, ${top})`)
+
     this.draw()
   }
 
@@ -52,9 +105,9 @@ export default class CountByTime extends React.Component {
     this.draw()
   }
 
-  setScales() {
-    const {innerWidth, innerHeight, props} = this
-    const {data, timeWindow} = props
+  setScales(timeWindow) {
+    const {innerWidth, innerHeight} = this.state
+    const {data} = this.props
 
     this.scales = {
       x: d3
@@ -74,25 +127,19 @@ export default class CountByTime extends React.Component {
   }
 
   drawAxes() {
-    const {scales, transition} = this
-
-    d3.select(".x-axis")
-      .transition(transition)
-      .call(d3.axisBottom(scales.time))
-
-    d3.select(".y-axis")
-      .transition(transition)
-      .call(
-        d3
-          .axisLeft(scales.y)
-          .ticks(1)
-          .tickValues(scales.y.domain().map(d3.format("d")))
-      )
+    const {scales} = this
+    d3.select(".x-axis").call(d3.axisBottom(scales.time))
+    d3.select(".x-axis-drag").attr("width", this.state.innerWidth)
+    d3.select(".y-axis").call(
+      d3
+        .axisRight(scales.y)
+        .ticks(1)
+        .tickValues(scales.y.domain().map(d3.format("d")))
+    )
   }
 
   drawBrush() {
     const {props, scales} = this
-    const {top} = margin
     const {
       setInnerTimeWindow,
       setOuterTimeWindow,
@@ -110,35 +157,29 @@ export default class CountByTime extends React.Component {
 
     function onBrushEnd() {
       const {selection, sourceEvent} = d3.event
-
       if (!sourceEvent) {
         return
       }
-
       if (!selection) {
         setInnerTimeWindow(null)
         fetchMainSearch()
         return
       }
-
       if (!isEqual(selection, prevSelection)) {
         setInnerTimeWindow(selection.map(scales.time.invert))
         fetchMainSearch()
         return
       }
-
       const [x] = d3.mouse(this)
       const [start, end] = selection
       const withinSelection = x >= start && x <= end
       const singleClickedSelection = withinSelection && !justClicked
       const doubleClickedSelection = withinSelection && justClicked
-
       if (singleClickedSelection) {
         justClicked = true
         timeout = setTimeout(() => (justClicked = false), 400)
         return
       }
-
       if (doubleClickedSelection) {
         setOuterTimeWindow(selection.map(scales.time.invert))
         setInnerTimeWindow(null)
@@ -152,7 +193,10 @@ export default class CountByTime extends React.Component {
     const element = d3.select(".brush")
     const brush = d3
       .brushX()
-      .extent([[0, 0], [this.innerWidth, this.innerHeight + margin.top]])
+      .extent([
+        [0, 0],
+        [this.state.innerWidth, this.state.innerHeight + margin.top]
+      ])
     element.call(brush)
 
     innerTimeWindow
@@ -164,9 +208,9 @@ export default class CountByTime extends React.Component {
   }
 
   drawChart() {
-    const {props, t, scales} = this
+    const {props, scales} = this
     const {data, keys} = props
-    const {x, y} = scales
+    const {x, y, time} = scales
 
     const series = d3.stack().keys(keys)(data)
     const barGroups = d3
@@ -191,7 +235,6 @@ export default class CountByTime extends React.Component {
     bars
       .exit()
       .attr("opacity", 1)
-      .transition(t)
       .attr("y", innerHeight)
       .attr("opacity", 0)
       .remove()
@@ -203,21 +246,13 @@ export default class CountByTime extends React.Component {
       .attr("height", 0)
       .merge(bars)
       .attr("width", x.bandwidth())
-      .attr("x", d => x(d.data.ts))
-      .transition(t)
+      .attr("x", d => time(d.data.ts))
       .attr("y", d => y(d[1]))
       .attr("height", d => y(d[0]) - y(d[1]))
   }
 
-  draw() {
-    const {height, width} = this.props
-    const {left, right, top, bottom} = margin
-
-    this.innerWidth = Math.max(width - left - right, 0)
-    this.innerHeight = Math.max(height - top - bottom, 0)
-    this.transition = d3.transition().duration(300)
-
-    this.setScales()
+  draw(timeWindow = this.props.timeWindow) {
+    this.setScales(timeWindow)
     this.drawAxes()
     this.drawBrush()
     this.drawChart()

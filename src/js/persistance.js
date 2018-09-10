@@ -16,7 +16,7 @@ const PERSIST = [
 
 export function saveState(state) {
   try {
-    const serializedState = JSON.stringify(pick(state, ...PERSIST))
+    const serializedState = JSON.stringify(state)
     localStorage.setItem(KEY, serializedState)
   } catch (_err) {
     console.error("Unable to save the state")

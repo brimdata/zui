@@ -22,6 +22,15 @@
     stroke: $light-gray;
   }
 
+  .tick text {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .x-axis-drag {
+    cursor: ew-resize;
+  }
+
   .domain {
     stroke: $light-gray;
   }
@@ -30,6 +39,15 @@
     font-family: $body-font;
     fill: $gray;
     font-size: 9px;
+  }
+
+  .y-axis .tick,
+  .y-axis .domain {
+    display: none;
+  }
+
+  .y-axis .tick:last-child {
+    display: block;
   }
 }
 
