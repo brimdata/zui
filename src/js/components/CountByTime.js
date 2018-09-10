@@ -150,7 +150,9 @@ export default class CountByTime extends React.Component {
     }
 
     const element = d3.select(".brush")
-    const brush = d3.brushX().extent([[0, 12], [innerWidth, innerHeight + top]])
+    const brush = d3
+      .brushX()
+      .extent([[0, 0], [this.innerWidth, this.innerHeight + margin.top]])
     element.call(brush)
 
     innerTimeWindow
