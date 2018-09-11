@@ -19,3 +19,8 @@ export const errorCountByTime = error => ({
 export const successCountByTime = () => ({
   type: "COUNT_BY_TIME_SUCCESS"
 })
+
+export const setTimeCursor = date => ({
+  type: "TIME_CURSOR_SET",
+  date
+})

@@ -14,6 +14,7 @@ const initialState = {
     tuples: [],
     descriptor: []
   },
+  timeCursor: null,
   error: null
 }
 
@@ -37,9 +38,14 @@ export default createReducer(initialState, {
   COUNT_BY_TIME_SUCCESS: state => ({
     ...state,
     isFetching: false
+  }),
+  TIME_CURSOR_SET: (state, {date}) => ({
+    ...state,
+    timeCursor: date.toString()
   })
 })
 
+export const getTimeCursor = state => new Date(state.countByTime.timeCursor)
 export const getCountByTimeData = state => state.countByTime.data
 export const getCountByTimeError = state => state.countByTime.error
 export const getMainSearchCountByTime = createSelector(

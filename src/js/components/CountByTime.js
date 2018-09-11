@@ -30,7 +30,8 @@ export default class CountByTime extends React.Component {
       nextProps.rawData !== rawData ||
       nextProps.isFetching !== isFetching ||
       nextProps.width !== width ||
-      nextProps.height !== height
+      nextProps.height !== height ||
+      nextProps.timeCursor !== this.props.timeCursor
     )
   }
 
@@ -97,6 +98,10 @@ export default class CountByTime extends React.Component {
       .append("g")
       .attr("class", "y-axis")
       .attr("transform", `translate(${left}, ${top})`)
+
+    d3.select(svg)
+      .append("line")
+      .attr("class", "time-cursor")
 
     this.draw()
   }
@@ -251,11 +256,33 @@ export default class CountByTime extends React.Component {
       .attr("height", d => y(d[0]) - y(d[1]))
   }
 
+  drawTimeCursor() {
+    const {height, timeCursor} = this.props
+    if (timeCursor) {
+      const x = this.scales.time(timeCursor)
+      d3.select(".time-cursor")
+        .style("display", "block")
+        .attr("y2", height)
+        .attr("y1", 0)
+        .transition(
+          d3
+            .transition()
+            .duration(100)
+            .ease(d3.easeLinear)
+        )
+        .attr("x1", x)
+        .attr("x2", x)
+    } else {
+      d3.select(".time-cursor").style("display", "none")
+    }
+  }
+
   draw(timeWindow = this.props.timeWindow) {
     this.setScales(timeWindow)
     this.drawAxes()
     this.drawBrush()
     this.drawChart()
+    this.drawTimeCursor()
   }
 
   render() {

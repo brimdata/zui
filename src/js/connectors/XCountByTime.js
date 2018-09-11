@@ -6,7 +6,8 @@ import {fetchMainSearch} from "../actions/mainSearch"
 import {
   getMainSearchCountByTime,
   getCountByTimeIsFetching,
-  getCountByTimeData
+  getCountByTimeData,
+  getTimeCursor
 } from "../reducers/countByTime"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 
@@ -15,7 +16,8 @@ const stateToProps = state => ({
   isFetching: getCountByTimeIsFetching(state),
   ...getMainSearchCountByTime(state),
   timeWindow: getTimeWindow(state),
-  innerTimeWindow: getInnerTimeWindow(state)
+  innerTimeWindow: getInnerTimeWindow(state),
+  timeCursor: getTimeCursor(state)
 })
 
 export default connect(

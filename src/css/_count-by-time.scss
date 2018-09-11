@@ -49,6 +49,11 @@
   .y-axis .tick:last-child {
     display: block;
   }
+
+  .time-cursor {
+    stroke-width: 1px;
+    stroke: $gray-5;
+  }
 }
 
 .chart-tooltip {
