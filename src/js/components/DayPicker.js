@@ -1,5 +1,5 @@
 import React from "react"
-import Time, {LocalTime} from "../lib/Time"
+import * as Time from "../lib/Time"
 import DayPickerInput from "react-day-picker/DayPickerInput"
 
 export default class DayPicker extends React.Component {
@@ -21,7 +21,7 @@ export default class DayPicker extends React.Component {
       <div className="text-input-wrapper">
         <DayPickerInput
           ref={r => (this.daypicker = r)}
-          value={Time(day).format(FORMAT)}
+          value={Time.parse(day).format(FORMAT)}
           formatDate={formatDate}
           parseDate={parseDate}
           placeholder={FORMAT}
@@ -43,15 +43,16 @@ export default class DayPicker extends React.Component {
 const FORMAT = "MMM D, YYYY"
 
 function parseDate(string) {
-  const date = Time(string, FORMAT, true)
+  const date = Time.parse(string, FORMAT, true)
   if (date.isValid()) return convertToLocalDay(date.toDate())
   else return null
 }
 
 function formatDate(date) {
-  return Time(date).format(FORMAT)
+  return Time.parse(date).format(FORMAT)
 }
 
 const convertToLocalDay = date => {
-  return LocalTime(date.toISOString().split("T")[0]).toDate()
+  const t = Time.parse(date)
+  return new Date(t.get("year"), t.get("month"), t.get("date"))
 }

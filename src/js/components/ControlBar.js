@@ -19,7 +19,8 @@ export default class ControlBar extends React.Component {
       leftSidebarIsOpen,
       toggleRightSidebar,
       toggleLeftSidebar,
-      setTimeZone
+      setTimeZone,
+      timeZone
     } = this.props
 
     return (
@@ -36,7 +37,10 @@ export default class ControlBar extends React.Component {
         >
           <h1>Settings</h1>
           <p>Time Zone:</p>
-          <select onChange={e => setTimeZone(e.currentTarget.value)}>
+          <select
+            onChange={e => setTimeZone(e.currentTarget.value)}
+            value={timeZone}
+          >
             {zones().map(name => (
               <option key={name} value={name}>
                 {name}
