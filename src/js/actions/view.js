@@ -29,3 +29,8 @@ export const showAnalyticsTab = () => ({
 export const showLogsTab = () => ({
   type: "SHOW_LOGS_TAB"
 })
+
+export const setTimeZone = timeZone => ({
+  type: "TIME_ZONE_SET",
+  timeZone
+})
