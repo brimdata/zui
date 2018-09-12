@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import Time, {LocalTime} from "../lib/Time"
 import DayPickerInput from "react-day-picker/DayPickerInput"
 
 export default class DayPicker extends React.Component {
@@ -13,19 +13,21 @@ export default class DayPicker extends React.Component {
   }
 
   render() {
-    const {from, to} = this.props
-
+    let {from, to, day} = this.props
+    from = convertToLocalDay(from)
+    to = convertToLocalDay(to)
+    day = convertToLocalDay(day)
     return (
       <div className="text-input-wrapper">
         <DayPickerInput
           ref={r => (this.daypicker = r)}
-          value={moment.utc(this.props.day).format(FORMAT)}
+          value={Time(day).format(FORMAT)}
           formatDate={formatDate}
           parseDate={parseDate}
           placeholder={FORMAT}
           onDayChange={this.onDayChange}
           dayPickerProps={{
-            selectedDays: [this.props.day, {from, to}],
+            selectedDays: [day, {from, to}],
             todayButton: "TODAY",
             modifiers: {from, to}
           }}
@@ -41,11 +43,15 @@ export default class DayPicker extends React.Component {
 const FORMAT = "MMM D, YYYY"
 
 function parseDate(string) {
-  const date = moment(string, FORMAT, true)
-  if (date.isValid()) return date.toDate()
+  const date = Time(string, FORMAT, true)
+  if (date.isValid()) return convertToLocalDay(date.toDate())
   else return null
 }
 
 function formatDate(date) {
-  return moment.utc(date).format(FORMAT)
+  return Time(date).format(FORMAT)
+}
+
+const convertToLocalDay = date => {
+  return LocalTime(date.toISOString().split("T")[0]).toDate()
 }

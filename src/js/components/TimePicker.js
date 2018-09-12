@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import Time, {LocalTime} from "../lib/Time"
 import {shortTime} from "../timeWindowFormatter"
 import * as d3 from "d3"
 
@@ -8,7 +8,7 @@ const FORMAT = "HH:mm"
 const times = d3.timeMinute
   .every(30)
   .range(new Date(1990, 9, 16, 0, 0, 0), new Date(1990, 9, 17, 0, 0, 0))
-  .map(d => moment(d).format(FORMAT))
+  .map(d => LocalTime(d).format(FORMAT))
 
 export default class TimePicker extends React.Component {
   constructor(props) {
@@ -58,7 +58,7 @@ export default class TimePicker extends React.Component {
     const intervalInMinutes = 30
     const heightOfItem = 40
 
-    const start = moment.utc(this.props.time)
+    const start = Time(this.props.time)
     const remainder = intervalInMinutes - (start.minute() % intervalInMinutes)
     const roundedTime = shortTime(start.add(remainder, "minutes").toDate())
     const index = times.indexOf(roundedTime) - 2
@@ -129,5 +129,5 @@ export default class TimePicker extends React.Component {
   }
 }
 
-const formatTime = date => moment.utc(date).format(FORMAT)
-const parseTime = string => moment.utc(string, FORMAT)
+const formatTime = date => Time(date).format(FORMAT)
+const parseTime = string => Time(string, FORMAT)
