@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import * as Time from "../lib/Time"
 import {extractLastTimeWindow} from "../changeProgramTimeWindow"
 import {shortDateTime} from "../timeWindowFormatter"
 import X from "../icons/x-md.svg"
@@ -29,8 +29,8 @@ const TIME_WINDOW_REGEX = /\(ts\s*>=\s*\d{10}\.\d{6}\s+and\s+ts\s*<\s*\s*\d{10}\
 export function shortenTimeWindow(program) {
   const timeWindow = extractLastTimeWindow(program)
   if (timeWindow) {
-    const [from, to] = timeWindow.map(d => moment(d))
-    const duration = moment.duration(moment(from).diff(to)).humanize()
+    const [from, to] = timeWindow.map(d => Time.parse(d))
+    const duration = Time.parse.duration(Time.parse(from).diff(to)).humanize()
     const match = program.match(TIME_WINDOW_REGEX)
     const beginning = program.substring(0, match.index)
     const ending = program.substring(match.index + match[0].length)

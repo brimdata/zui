@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import * as Time from "../lib/Time"
 import {toMoment} from "../cast"
 import * as fmt from "../fmt"
 
@@ -36,7 +36,7 @@ const SearchStats = ({
 const fmtDiff = (startTime, updateTime) => {
   if (!startTime || !updateTime) return "0s"
   return (
-    moment
+    Time.parse
       .duration(toMoment(updateTime).diff(toMoment(startTime)))
       .asSeconds() + " s"
   )
@@ -44,7 +44,7 @@ const fmtDiff = (startTime, updateTime) => {
 
 const elapsedSeconds = (startTime, updateTime) => {
   if (!startTime || !updateTime) return 0
-  return moment
+  return Time.parse
     .duration(toMoment(updateTime).diff(toMoment(startTime)))
     .asSeconds()
 }

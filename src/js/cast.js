@@ -1,9 +1,8 @@
-import moment from "moment"
-
+import * as Time from "./lib/Time"
 const BRO_TS_FORMAT = "X.SSSSSS"
 
 export function toDate(string) {
-  return moment.utc(string, BRO_TS_FORMAT).toDate()
+  return Time.parse(string, BRO_TS_FORMAT).toDate()
 }
 
 export function toInt(string) {
@@ -11,17 +10,17 @@ export function toInt(string) {
 }
 
 export function toTs(date) {
-  return moment.utc(date).format(BRO_TS_FORMAT)
+  return Time.parse(date).format(BRO_TS_FORMAT)
 }
 
 export function toSec(date) {
-  return moment.utc(date).unix()
+  return Time.parse(date).unix()
 }
 
 export const toMoment = ({sec, ns}) => {
-  return moment.utc(sec + "." + ns, BRO_TS_FORMAT)
+  return Time.parse(sec + "." + ns, BRO_TS_FORMAT)
 }
 
 export const fromNanoTsToDate = ts => new Date(ts / 1000000.0)
 
-export const fromNanoTsToMoment = ts => moment.utc(fromNanoTsToDate(ts))
+export const fromNanoTsToMoment = ts => Time.parse(fromNanoTsToDate(ts))

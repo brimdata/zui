@@ -12,7 +12,6 @@ export const bytes = (bytes = 0) => {
 export const withCommas = (int = 0) =>
   int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
-export const monthDayYear = obj => obj.utc().format("MMM D, YYYY")
+export const monthDayYear = obj => obj.format("MMM D, YYYY")
 
-export const monthDayYearHourMinute = obj =>
-  obj.utc().format("MMM D, YYYY HH:mm")
+export const monthDayYearHourMinute = obj => obj.format("MMM D, YYYY HH:mm")

@@ -3,7 +3,7 @@
   [new Date(), new Date()]
 */
 import * as d3 from "d3"
-import moment from "moment"
+import * as Time from "../lib/Time"
 import isArray from "lodash/isArray"
 import isDate from "lodash/isDate"
 
@@ -33,12 +33,10 @@ export function splitOnEvery(timeWindow, {number, unit}) {
 
 export function round([start, end], unit) {
   return [
-    moment
-      .utc(start)
+    Time.parse(start)
       .startOf(unit)
       .toDate(),
-    moment
-      .utc(end)
+    Time.parse(end)
       .endOf(unit)
       .toDate()
   ]

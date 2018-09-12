@@ -1,7 +1,7 @@
-import moment from "moment"
+import * as Time from "./lib/Time"
 
 export default function([start, end]) {
-  const duration = moment.duration(moment(end).diff(moment(start)))
+  const duration = Time.parse.duration(Time.parse(end).diff(Time.parse(start)))
 
   if (duration.asMinutes() <= 5)
     return {number: 1, unit: "second", roundingUnit: "second"}

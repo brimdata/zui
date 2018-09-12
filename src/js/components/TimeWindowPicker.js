@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import * as Time from "../lib/Time"
 import TimePicker from "./TimePicker"
 import DayPicker from "./DayPicker"
 
@@ -29,8 +29,7 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onFromDayChange(day) {
-    const fromDate = moment
-      .utc(this.state.fromDate)
+    const fromDate = Time.parse(this.state.fromDate)
       .set({
         month: day.getMonth(),
         date: day.getDate(),
@@ -39,8 +38,7 @@ export default class TimeWindowPicker extends React.Component {
       .toDate()
 
     if (fromDate > this.state.toDate) {
-      const toDate = moment
-        .utc(fromDate)
+      const toDate = Time.parse(fromDate)
         .add(30, "minutes")
         .toDate()
       this.setState({fromDate, toDate})
@@ -52,14 +50,12 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onFromTimeChange(time) {
-    const fromDate = moment
-      .utc(this.state.fromDate)
+    const fromDate = Time.parse(this.state.fromDate)
       .set(time)
       .toDate()
 
     if (fromDate > this.state.toDate) {
-      const toDate = moment
-        .utc(fromDate)
+      const toDate = Time.parse(fromDate)
         .add(30, "minutes")
         .toDate()
       this.setState({fromDate, toDate})
@@ -71,16 +67,14 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onToTimeChange(time) {
-    const toDate = moment
-      .utc(this.state.toDate)
+    const toDate = Time.parse(this.state.toDate)
       .set(time)
       .toDate()
     this.setState({toDate})
     this.props.onChange([this.state.fromDate, toDate])
 
     if (toDate < this.state.fromDate) {
-      const fromDate = moment
-        .utc(toDate)
+      const fromDate = Time.parse(toDate)
         .subtract(30, "minutes")
         .toDate()
       this.setState({fromDate, toDate})
@@ -92,8 +86,7 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onToDayChange(day) {
-    const toDate = moment
-      .utc(this.state.toDate)
+    const toDate = Time.parse(this.state.toDate)
       .set({
         month: day.getMonth(),
         date: day.getDate(),
@@ -102,8 +95,7 @@ export default class TimeWindowPicker extends React.Component {
       .toDate()
 
     if (toDate < this.state.fromDate) {
-      const fromDate = moment
-        .utc(toDate)
+      const fromDate = Time.parse(toDate)
         .subtract(30, "minutes")
         .toDate()
       this.setState({fromDate, toDate})

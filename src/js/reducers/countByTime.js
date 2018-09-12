@@ -3,7 +3,7 @@ import {createSelector} from "reselect"
 import countByTimeInterval from "../countByTimeInterval"
 import {splitOnEvery, round} from "../models/TimeWindow"
 import {toInt} from "../cast"
-import moment from "moment"
+import * as Time from "../lib/Time"
 import {getTimeWindow} from "./timeWindow"
 import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
@@ -96,8 +96,5 @@ export function getCountByTimeIsFetching(state) {
 }
 
 function toDate(string) {
-  return moment
-    .unix(string / 1e9)
-    .utc()
-    .toDate()
+  return Time.parse.unix(string / 1e9).toDate()
 }
