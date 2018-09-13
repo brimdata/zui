@@ -1,5 +1,6 @@
 import moment from "moment"
 import isEqual from "lodash/isEqual"
+import * as Time from "./Time"
 
 export const duration = ([from, to], unit = "ms") =>
   moment.duration(moment(to).diff(moment(from))).as(unit)
@@ -25,3 +26,6 @@ export const floorAndCeil = ([from, to], unit) => [
     .endOf(unit)
     .toDate()
 ]
+
+export const shift = (timeWindow, amount, unit = "ms") =>
+  timeWindow.map(date => Time.add(date, amount, unit))

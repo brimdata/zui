@@ -3,6 +3,7 @@ import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 import xAxisDrag from "./xAxisDrag"
 import * as Time from "../lib/Time"
+import * as TimeWindow from "../lib/TimeWindow"
 
 const margin = {
   left: 0,
@@ -15,6 +16,8 @@ export default class CountByTime extends React.Component {
   constructor(props) {
     super(props)
     this.state = CountByTime.getDerivedStateFromProps(props)
+    this.onDrag = this.onDrag.bind(this)
+    this.onDragEnd = this.onDragEnd.bind(this)
   }
 
   static getDerivedStateFromProps(props) {
@@ -58,29 +61,8 @@ export default class CountByTime extends React.Component {
 
     const xAxisHandlers = xAxisDrag({
       parent: xAxis.node(),
-      onDrag: (pos, startPos) => {
-        const start = Time.moment(this.scales.time.invert(startPos))
-        const current = Time.moment(this.scales.time.invert(pos))
-        const ms = start.diff(current)
-        const outerTimeWindow = this.props.timeWindow.map(d =>
-          Time.moment(d)
-            .add(ms, "ms")
-            .toDate()
-        )
-        this.draw(outerTimeWindow)
-      },
-      onDragEnd: (pos, startPos) => {
-        const start = Time.moment(this.scales.time.invert(startPos))
-        const current = Time.moment(this.scales.time.invert(pos))
-        const ms = start.diff(current)
-        const outerTimeWindow = this.props.timeWindow.map(d =>
-          Time.moment(d)
-            .add(ms, "ms")
-            .toDate()
-        )
-        this.props.setOuterTimeWindow(outerTimeWindow)
-        this.props.fetchMainSearch()
-      }
+      onDrag: this.onDrag,
+      onDragEnd: this.onDragEnd
     })
 
     d3.select("body")
@@ -110,10 +92,24 @@ export default class CountByTime extends React.Component {
     this.draw()
   }
 
+  onDrag(pos, startPos) {
+    const diff = TimeWindow.duration(
+      [pos, startPos].map(this.scales.time.invert)
+    )
+    this.draw(TimeWindow.shift(this.props.timeWindow, diff))
+  }
+
+  onDragEnd(pos, startPos) {
+    const diff = TimeWindow.duration(
+      [pos, startPos].map(this.scales.time.invert)
+    )
+    this.props.setOuterTimeWindow(TimeWindow.shift(this.props.timeWindow, diff))
+    this.props.fetchMainSearch()
+  }
+
   setScales(timeWindow) {
     const {innerWidth, innerHeight} = this.state
     const {data} = this.props
-
     this.scales = {
       x: d3
         .scaleBand()
@@ -272,8 +268,6 @@ export default class CountByTime extends React.Component {
         )
         .attr("x1", x)
         .attr("x2", x)
-    } else {
-      d3.select(".time-cursor").style("display", "none")
     }
   }
 

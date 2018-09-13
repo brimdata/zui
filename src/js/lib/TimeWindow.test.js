@@ -63,3 +63,31 @@ test("floorAndCeil", () => {
     new Date(2000, 1, 15, 13, 30, 59, 999)
   ])
 })
+
+test("shift forward", () => {
+  const window = [
+    new Date(2000, 1, 15, 12, 30, 0, 0),
+    new Date(2000, 1, 15, 13, 30, 45, 0)
+  ]
+
+  const newWindow = TimeWindow.shift(window, 1000)
+
+  expect(newWindow).toEqual([
+    new Date(2000, 1, 15, 12, 30, 1, 0),
+    new Date(2000, 1, 15, 13, 30, 46, 0)
+  ])
+})
+
+test("shift backwards", () => {
+  const window = [
+    new Date(2000, 1, 15, 12, 30, 0, 0),
+    new Date(2000, 1, 15, 13, 30, 45, 0)
+  ]
+
+  const newWindow = TimeWindow.shift(window, -1, "seconds")
+
+  expect(newWindow).toEqual([
+    new Date(2000, 1, 15, 12, 29, 59, 0),
+    new Date(2000, 1, 15, 13, 30, 44, 0)
+  ])
+})
