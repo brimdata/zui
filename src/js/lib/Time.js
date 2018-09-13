@@ -34,9 +34,15 @@ export const setZone = zone => Moment.tz.setDefault(zone)
 
 export const toString = date => Moment.utc(date).format(STORAGE_FORMAT)
 
-export const format = (date, code) => Moment(date).format(code)
+export const format = (date, format) => Moment(date).format(format)
 
 export const parse = string => Moment.utc(string, STORAGE_FORMAT, true).toDate()
+
+export const parseFromSpace = ({sec, ns}) => {
+  const nanos = parseFloat(sec + "." + padZeros(ns.toString(), 9))
+  const millis = parseInt(nanos * 1e3)
+  return new Date(millis)
+}
 
 export const set = (date, object) =>
   Moment(date)
@@ -67,3 +73,8 @@ export const fakeZone = date => {
 }
 
 export const toObject = date => Moment(date).toObject()
+
+const padZeros = (string, desiredLength) => {
+  while (string.length < desiredLength) string += "0"
+  return string
+}

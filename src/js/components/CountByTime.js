@@ -2,7 +2,6 @@ import React from "react"
 import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 import xAxisDrag from "./xAxisDrag"
-import * as Time from "../lib/Time"
 import * as TimeWindow from "../lib/TimeWindow"
 
 const margin = {

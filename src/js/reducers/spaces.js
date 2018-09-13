@@ -1,20 +1,41 @@
 import {createSelector} from "reselect"
-import {toDate} from "../cast"
 import createReducer from "./createReducer"
+import * as Time from "../lib/Time"
 
 const initialState = {}
 
 export default createReducer(initialState, {
-  SPACE_INFO_SET: (state, {spaceInfo}) => {
-    return {
-      ...state,
-      [spaceInfo.name]: spaceInfo
-    }
+  SPACE_INFO_SET: (state, {spaceInfo}) => ({
+    ...state,
+    ...normalize(spaceInfo)
+  })
+})
+
+const normalize = space => ({
+  [space.name]: {
+    ...space,
+    minTime: Time.toString(Time.parseFromSpace(space.min_time)),
+    maxTime: Time.toString(Time.parseFromSpace(space.max_time))
   }
 })
 
+const parse = space => ({
+  ...space,
+  minTime: Time.parse(space.minTime),
+  maxTime: Time.parse(space.maxTime)
+})
+
 export const getCurrentSpaceName = state => state.currentSpaceName
-export const getSpaces = state => state.spaces
+export const getRawSpaces = state => state.spaces
+export const getSpaces = createSelector(getRawSpaces, rawSpaces =>
+  Object.keys(rawSpaces).reduce(
+    (spaces, name) => ({
+      ...spaces,
+      [name]: parse(spaces[name])
+    }),
+    rawSpaces
+  )
+)
 export const getCurrentSpace = createSelector(
   getSpaces,
   getCurrentSpaceName,
@@ -22,10 +43,5 @@ export const getCurrentSpace = createSelector(
 )
 export const getCurrentSpaceTimeWindow = createSelector(
   getCurrentSpace,
-  space => {
-    if (!space) return []
-    const to = toDate(space.max_time.sec + "." + space.max_time.ns)
-    const from = toDate(space.min_time.sec + "." + space.min_time.ns)
-    return [from, to]
-  }
+  space => (space ? [space.minTime, space.maxTime] : [])
 )
