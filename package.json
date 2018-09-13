@@ -8,7 +8,7 @@
   "author": "Looky Labs, Inc.",
   "scripts": {
     "start": "npm-run-all -s build:* -p electron watch:*",
-    "test": "jest",
+    "test": "TZ=US/Pacific jest",
     "electron": "electron .",
     "release": "electron-packager . Looky --out=releases --overwrite --icon=dist/static/looky.smaller.icns",
     "prerelease": "npm run build",
