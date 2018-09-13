@@ -1,6 +1,4 @@
-/*
-
-Date functions that are aware of the global timezone
+/* Date functions that are aware of the global timezone
 
 There are three important timeones:
   1. Host Timezone
@@ -16,12 +14,9 @@ Internally it uses the moment library, but does not expose moment
 objects.
 
 Set the user supplied timezone globally with:
-
     Time.setZone("US/Pacific")
-
 When we store dates in the store, always use the UTC version of the
 date.
-
     Time.toString(date) => going into the store
     Time.parse(string) => coming out of the store
 */
