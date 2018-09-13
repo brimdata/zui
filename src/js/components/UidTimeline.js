@@ -14,7 +14,7 @@ export default class UidWaterfall extends React.Component {
         onClick={() => this.props.viewLogDetail(log)}
       >
         <div className="ts-label">
-          {Time.parse(log.cast("ts")).format(config.TIME_MOMENT_FORMAT)}
+          {Time.moment(log.cast("ts")).format(config.TIME_MOMENT_FORMAT)}
         </div>
         <div className="slider">
           <div className="line" />
@@ -40,8 +40,8 @@ export default class UidWaterfall extends React.Component {
       .domain(extent)
       .range([0, 100])
 
-    const duration = Time.parse(extent[1]).diff(
-      Time.parse(extent[0]),
+    const duration = Time.moment(extent[1]).diff(
+      Time.moment(extent[0]),
       "seconds",
       true
     )

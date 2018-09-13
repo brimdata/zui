@@ -59,22 +59,22 @@ export default class CountByTime extends React.Component {
     const xAxisHandlers = xAxisDrag({
       parent: xAxis.node(),
       onDrag: (pos, startPos) => {
-        const start = Time.parse(this.scales.time.invert(startPos))
-        const current = Time.parse(this.scales.time.invert(pos))
+        const start = Time.moment(this.scales.time.invert(startPos))
+        const current = Time.moment(this.scales.time.invert(pos))
         const ms = start.diff(current)
         const outerTimeWindow = this.props.timeWindow.map(d =>
-          Time.parse(d)
+          Time.moment(d)
             .add(ms, "ms")
             .toDate()
         )
         this.draw(outerTimeWindow)
       },
       onDragEnd: (pos, startPos) => {
-        const start = Time.parse(this.scales.time.invert(startPos))
-        const current = Time.parse(this.scales.time.invert(pos))
+        const start = Time.moment(this.scales.time.invert(startPos))
+        const current = Time.moment(this.scales.time.invert(pos))
         const ms = start.diff(current)
         const outerTimeWindow = this.props.timeWindow.map(d =>
-          Time.parse(d)
+          Time.moment(d)
             .add(ms, "ms")
             .toDate()
         )

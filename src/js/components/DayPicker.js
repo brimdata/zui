@@ -21,7 +21,7 @@ export default class DayPicker extends React.Component {
       <div className="text-input-wrapper">
         <DayPickerInput
           ref={r => (this.daypicker = r)}
-          value={Time.parse(day).format(FORMAT)}
+          value={Time.moment(day).format(FORMAT)}
           formatDate={formatDate}
           parseDate={parseDate}
           placeholder={FORMAT}
@@ -43,16 +43,16 @@ export default class DayPicker extends React.Component {
 const FORMAT = "MMM D, YYYY"
 
 function parseDate(string) {
-  const date = Time.parse(string, FORMAT, true)
+  const date = Time.moment(string, FORMAT, true)
   if (date.isValid()) return convertToLocalDay(date.toDate())
   else return null
 }
 
 function formatDate(date) {
-  return Time.parse(date).format(FORMAT)
+  return Time.moment(date).format(FORMAT)
 }
 
 const convertToLocalDay = date => {
-  const t = Time.parse(date)
+  const t = Time.moment(date)
   return new Date(t.get("year"), t.get("month"), t.get("date"))
 }

@@ -12,10 +12,10 @@ const exclude = {
 export default class LogRow extends React.PureComponent {
   render() {
     const {log, style, showDetail, appendToQuery, prevLog} = this.props
-    const ts = Time.parse(log.cast("ts"))
+    const ts = Time.moment(log.cast("ts"))
     let tsHighlight = false
     if (prevLog) {
-      const prevTs = Time.parse(prevLog.cast("ts"))
+      const prevTs = Time.moment(prevLog.cast("ts"))
       tsHighlight = !ts
         .clone()
         .endOf("minute")

@@ -33,10 +33,10 @@ export function splitOnEvery(timeWindow, {number, unit}) {
 
 export function round([start, end], unit) {
   return [
-    Time.parse(start)
+    Time.moment(start)
       .startOf(unit)
       .toDate(),
-    Time.parse(end)
+    Time.moment(end)
       .endOf(unit)
       .toDate()
   ]

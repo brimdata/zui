@@ -1,7 +1,7 @@
 import countByTimeInterval from "./countByTimeInterval"
 import * as Time from "./lib/Time"
 
-const start = Time.parse()
+const start = Time.moment()
 
 test("returns the proper format", () => {
   const end = start.clone().add(5, "minutes")

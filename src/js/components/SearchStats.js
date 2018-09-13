@@ -36,7 +36,7 @@ const SearchStats = ({
 const fmtDiff = (startTime, updateTime) => {
   if (!startTime || !updateTime) return "0s"
   return (
-    Time.parse
+    Time.moment
       .duration(toMoment(updateTime).diff(toMoment(startTime)))
       .asSeconds() + " s"
   )
@@ -44,7 +44,7 @@ const fmtDiff = (startTime, updateTime) => {
 
 const elapsedSeconds = (startTime, updateTime) => {
   if (!startTime || !updateTime) return 0
-  return Time.parse
+  return Time.moment
     .duration(toMoment(updateTime).diff(toMoment(startTime)))
     .asSeconds()
 }

@@ -96,5 +96,5 @@ export function getCountByTimeIsFetching(state) {
 }
 
 function toDate(string) {
-  return Time.parse.unix(string / 1e9).toDate()
+  return Time.moment.unix(string / 1e9).toDate()
 }
