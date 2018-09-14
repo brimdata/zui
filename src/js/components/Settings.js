@@ -3,14 +3,14 @@ import * as Time from "../lib/Time"
 
 class Settings extends React.Component {
   render() {
-    const {timeZone, setTimeZone} = this.props
+    const {timeZone, setTimeZone, onSave} = this.props
 
     return (
       <div className="settings">
-        <h1>Settings</h1>
+        <h1 className="large-heading">Settings</h1>
         <form>
           <div>
-            <label>Time Zone:</label>
+            <label>Timezone</label>
             <select
               onChange={e => setTimeZone(e.currentTarget.value)}
               value={timeZone}
@@ -21,6 +21,11 @@ class Settings extends React.Component {
                 </option>
               ))}
             </select>
+          </div>
+          <div>
+            <button onClick={onSave} type="submit">
+              Save
+            </button>
           </div>
         </form>
       </div>

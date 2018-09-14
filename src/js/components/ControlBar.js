@@ -11,6 +11,7 @@ export default class ControlBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {settingsIsOpen: true}
+    this.closeSettings = () => this.setState({settingsIsOpen: false})
   }
 
   render() {
@@ -30,10 +31,11 @@ export default class ControlBar extends React.Component {
         </PanelButton>
 
         <Modal
+          className="settings-modal"
           isOpen={this.state.settingsIsOpen}
-          onClose={() => this.setState({settingsIsOpen: false})}
+          onClose={this.closeSettings}
         >
-          <XSettings />
+          <XSettings onSave={this.closeSettings} />
         </Modal>
 
         <PanelButton isActive={leftSidebarIsOpen} onClick={toggleLeftSidebar}>
