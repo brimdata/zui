@@ -29,18 +29,14 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onFromDayChange(day) {
-    const fromDate = Time.moment(this.state.fromDate)
-      .set({
-        month: day.getMonth(),
-        date: day.getDate(),
-        year: day.getFullYear()
-      })
-      .toDate()
+    const fromDate = Time.set(this.state.fromDate, {
+      month: day.getMonth(),
+      date: day.getDate(),
+      year: day.getFullYear()
+    })
 
     if (fromDate > this.state.toDate) {
-      const toDate = Time.moment(fromDate)
-        .add(30, "minutes")
-        .toDate()
+      const toDate = Time.add(fromDate, 30, "minutes")
       this.setState({fromDate, toDate})
       this.props.onChange([fromDate, toDate])
     } else {
@@ -50,14 +46,10 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onFromTimeChange(time) {
-    const fromDate = Time.moment(this.state.fromDate)
-      .set(time)
-      .toDate()
+    const fromDate = Time.set(this.state.fromDate, time)
 
     if (fromDate > this.state.toDate) {
-      const toDate = Time.moment(fromDate)
-        .add(30, "minutes")
-        .toDate()
+      const toDate = Time.add(fromDate, 30, "minutes")
       this.setState({fromDate, toDate})
       this.props.onChange([fromDate, toDate])
     } else {
@@ -67,16 +59,12 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onToTimeChange(time) {
-    const toDate = Time.moment(this.state.toDate)
-      .set(time)
-      .toDate()
+    const toDate = Time.set(this.state.toDate, time)
     this.setState({toDate})
     this.props.onChange([this.state.fromDate, toDate])
 
     if (toDate < this.state.fromDate) {
-      const fromDate = Time.moment(toDate)
-        .subtract(30, "minutes")
-        .toDate()
+      const fromDate = Time.subtract(toDate, 30, "minutes")
       this.setState({fromDate, toDate})
       this.props.onChange([fromDate, toDate])
     } else {
@@ -86,18 +74,14 @@ export default class TimeWindowPicker extends React.Component {
   }
 
   onToDayChange(day) {
-    const toDate = Time.moment(this.state.toDate)
-      .set({
-        month: day.getMonth(),
-        date: day.getDate(),
-        year: day.getFullYear()
-      })
-      .toDate()
+    const toDate = Time.set(this.state.toDate, {
+      month: day.getMonth(),
+      date: day.getDate(),
+      year: day.getFullYear()
+    })
 
     if (toDate < this.state.fromDate) {
-      const fromDate = Time.moment(toDate)
-        .subtract(30, "minutes")
-        .toDate()
+      const fromDate = Time.subtract(toDate, 30, "minutes")
       this.setState({fromDate, toDate})
       this.props.onChange([fromDate, toDate])
     } else {

@@ -1,6 +1,5 @@
 import React from "react"
 import * as Time from "../lib/Time"
-import {shortTime} from "../timeWindowFormatter"
 import * as d3 from "d3"
 
 const FORMAT = "HH:mm"
@@ -8,7 +7,7 @@ const FORMAT = "HH:mm"
 const times = d3.timeMinute
   .every(30)
   .range(new Date(1990, 9, 16, 0, 0, 0), new Date(1990, 9, 17, 0, 0, 0))
-  .map(d => Time.moment(d).format(FORMAT))
+  .map(d => Time.format(d, FORMAT))
 
 export default class TimePicker extends React.Component {
   constructor(props) {
@@ -57,11 +56,14 @@ export default class TimePicker extends React.Component {
   scrollToSelectedTime() {
     const intervalInMinutes = 30
     const heightOfItem = 40
-
-    const start = Time.moment(this.props.time)
-    const remainder = intervalInMinutes - (start.minute() % intervalInMinutes)
-    const roundedTime = shortTime(start.add(remainder, "minutes").toDate())
-    const index = times.indexOf(roundedTime) - 2
+    const {time} = this.props
+    const {minutes} = Time.toObject(time)
+    const remainder = intervalInMinutes - (minutes % intervalInMinutes)
+    const roundTime =
+      remainder !== intervalInMinutes
+        ? Time.add(time, remainder, "minutes")
+        : time
+    const index = times.indexOf(Time.format(roundTime, FORMAT)) - 2
 
     if (this.state.isOpen && index >= 0) {
       this.timesList.scrollTop = heightOfItem * index
@@ -71,7 +73,7 @@ export default class TimePicker extends React.Component {
   attemptCallback(selectedValue) {
     const newTime = parseTime(selectedValue)
 
-    if (!newTime.isValid()) {
+    if (!newTime) {
       this.setState({value: formatTime(this.props.time)})
       return
     }
@@ -82,9 +84,10 @@ export default class TimePicker extends React.Component {
     this.setState({value: newValue})
 
     if (newValue !== oldValue) {
+      const {hours, minutes} = Time.toObject(newTime)
       this.props.onTimeChange({
-        hours: newTime.hours(),
-        minutes: newTime.minutes()
+        hours,
+        minutes
       })
     }
   }
@@ -129,5 +132,5 @@ export default class TimePicker extends React.Component {
   }
 }
 
-const formatTime = date => Time.moment(date).format(FORMAT)
-const parseTime = string => Time.moment(string, FORMAT)
+const formatTime = date => Time.format(date, FORMAT)
+const parseTime = string => Time.parse(string, FORMAT)

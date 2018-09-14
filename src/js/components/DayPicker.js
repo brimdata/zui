@@ -2,6 +2,8 @@ import React from "react"
 import * as Time from "../lib/Time"
 import DayPickerInput from "react-day-picker/DayPickerInput"
 
+const FORMAT = "MMM D, YYYY"
+
 export default class DayPicker extends React.Component {
   constructor(props) {
     super(props)
@@ -14,15 +16,15 @@ export default class DayPicker extends React.Component {
 
   render() {
     let {from, to, day} = this.props
-    from = convertToLocalDay(from)
-    to = convertToLocalDay(to)
-    day = convertToLocalDay(day)
+    from = Time.fakeZone(from)
+    to = Time.fakeZone(to)
+    day = Time.fakeZone(day)
     return (
       <div className="text-input-wrapper">
         <DayPickerInput
           ref={r => (this.daypicker = r)}
           value={Time.format(day, FORMAT)}
-          formatDate={formatDate}
+          formatDate={date => Time.format(date, FORMAT)}
           parseDate={parseDate}
           placeholder={FORMAT}
           onDayChange={this.onDayChange}
@@ -40,19 +42,7 @@ export default class DayPicker extends React.Component {
   }
 }
 
-const FORMAT = "MMM D, YYYY"
-
-function parseDate(string) {
-  const date = Time.moment(string, FORMAT, true)
-  if (date.isValid()) return convertToLocalDay(date.toDate())
-  else return null
-}
-
-function formatDate(date) {
-  return Time.moment(date).format(FORMAT)
-}
-
-const convertToLocalDay = date => {
-  const t = Time.moment(date)
-  return new Date(t.get("year"), t.get("month"), t.get("date"))
+const parseDate = string => {
+  const date = Time.parse(string, FORMAT, true)
+  return date ? Time.fakeZone(date) : null
 }

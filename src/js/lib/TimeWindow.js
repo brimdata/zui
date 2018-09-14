@@ -2,8 +2,8 @@ import moment from "moment"
 import isEqual from "lodash/isEqual"
 import * as Time from "./Time"
 
-export const duration = ([from, to], unit = "ms") =>
-  moment.duration(moment(to).diff(moment(from))).as(unit)
+export const duration = ([from, to], unit = "ms", integer = false) =>
+  moment.duration(moment(to).diff(moment(from)), integer).as(unit)
 
 export const humanDuration = ([from, to]) =>
   moment.duration(moment(to).diff(moment(from))).humanize()

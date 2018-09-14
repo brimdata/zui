@@ -39,10 +39,12 @@ export const toString = date => Moment.utc(date).format(STORAGE_FORMAT)
 
 export const format = (date, format) => Moment(date).format(format)
 
-export const parse = (string, format, strict = true) =>
-  Moment(string, format, strict).toDate()
+export const parse = (string, format, strict = true) => {
+  const m = Moment(string, format, strict)
+  return m.isValid() ? m.toDate() : false
+}
 
-export const parseFromSpace = ({sec, ns}) => {
+export const parseFromBoom = ({sec, ns}) => {
   const nanos = parseFloat(sec + "." + padZeros(ns.toString(), 9))
   const millis = parseInt(nanos * 1e3)
   return new Date(millis)

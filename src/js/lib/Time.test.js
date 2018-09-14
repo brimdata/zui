@@ -129,23 +129,23 @@ test("toObject in US/Easter", () => {
   expect(hours).toBe(2)
 })
 
-test("parseFromSpace", () => {
+test("parseFromBoom", () => {
   const timeObj = {
     sec: 1428917793,
     ns: 750000000
   }
-  const date = Time.parseFromSpace(timeObj)
+  const date = Time.parseFromBoom(timeObj)
 
   expect(date).toEqual(new Date("2015-04-13T09:36:33.750Z"))
   expect(date.getTime()).toEqual(1428917793750)
 })
 
-test("parseFromSpace", () => {
+test("parseFromBoom", () => {
   const timeObj = {
     sec: 1428917793,
     ns: 0
   }
-  const date = Time.parseFromSpace(timeObj)
+  const date = Time.parseFromBoom(timeObj)
 
   expect(date).toEqual(new Date("2015-04-13T09:36:33.000Z"))
   expect(date.getTime()).toEqual(1428917793000)

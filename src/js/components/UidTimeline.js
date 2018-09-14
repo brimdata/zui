@@ -2,6 +2,7 @@ import React from "react"
 import * as d3 from "d3"
 import config from "../config"
 import * as Time from "../lib/Time"
+import * as TimeWindow from "../lib/TimeWindow"
 
 export default class UidWaterfall extends React.Component {
   row(log, index, xScale) {
@@ -14,7 +15,7 @@ export default class UidWaterfall extends React.Component {
         onClick={() => this.props.viewLogDetail(log)}
       >
         <div className="ts-label">
-          {Time.moment(log.cast("ts")).format(config.TIME_MOMENT_FORMAT)}
+          {Time.format(log.cast("ts"), config.TIME_MOMENT_FORMAT)}
         </div>
         <div className="slider">
           <div className="line" />
@@ -40,11 +41,7 @@ export default class UidWaterfall extends React.Component {
       .domain(extent)
       .range([0, 100])
 
-    const duration = Time.moment(extent[1]).diff(
-      Time.moment(extent[0]),
-      "seconds",
-      true
-    )
+    const duration = TimeWindow.duration(extent, "seconds")
 
     return (
       <div className="uid-waterfall">

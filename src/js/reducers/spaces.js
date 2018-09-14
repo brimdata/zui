@@ -14,8 +14,8 @@ export default createReducer(initialState, {
 const normalize = space => ({
   [space.name]: {
     ...space,
-    minTime: Time.toStore(Time.parseFromSpace(space.min_time)),
-    maxTime: Time.toStore(Time.parseFromSpace(space.max_time))
+    minTime: Time.toStore(Time.parseFromBoom(space.min_time)),
+    maxTime: Time.toStore(Time.parseFromBoom(space.max_time))
   }
 })
 

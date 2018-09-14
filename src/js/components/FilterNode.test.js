@@ -6,6 +6,7 @@ test("shortenTimeWindow with a time window", () => {
   )
   expect(result).toEqual(expect.any(Array))
   expect(result.length).toBe(3)
+  expect(result[1].props.title).toEqual("Dec 9, 06:26 - Dec 12, 03:53")
 })
 
 test("shortenTimeWindow without a time window", () => {

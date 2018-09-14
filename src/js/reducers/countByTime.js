@@ -1,9 +1,9 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import countByTimeInterval from "../countByTimeInterval"
-import {splitOnEvery, round} from "../models/TimeWindow"
+import {splitOnEvery} from "../models/TimeWindow"
 import {toInt} from "../cast"
-import * as Time from "../lib/Time"
+import * as TimeWindow from "../lib/TimeWindow"
 import {getTimeWindow} from "./timeWindow"
 import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
@@ -54,7 +54,10 @@ export const getMainSearchCountByTime = createSelector(
   (timeWindow, data) => {
     const tuples = data.tuples || []
     const interval = countByTimeInterval(timeWindow)
-    const roundedTimeWindow = round(timeWindow, interval.roundingUnit)
+    const roundedTimeWindow = TimeWindow.floorAndCeil(
+      timeWindow,
+      interval.roundingUnit
+    )
     const buckets = splitOnEvery(roundedTimeWindow, interval)
 
     let table = new MergeHash()
@@ -94,7 +97,4 @@ export function getMainSearchCountByTimeInterval(state) {
 export function getCountByTimeIsFetching(state) {
   return state.countByTime.isFetching
 }
-
-function toDate(string) {
-  return Time.moment.unix(string / 1e9).toDate()
-}
+const toDate = string => new Date(string / 1e6)
