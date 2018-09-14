@@ -21,7 +21,7 @@ export default class DayPicker extends React.Component {
       <div className="text-input-wrapper">
         <DayPickerInput
           ref={r => (this.daypicker = r)}
-          value={Time.moment(day).format(FORMAT)}
+          value={Time.format(day, FORMAT)}
           formatDate={formatDate}
           parseDate={parseDate}
           placeholder={FORMAT}

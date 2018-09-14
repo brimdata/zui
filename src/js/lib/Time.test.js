@@ -39,20 +39,20 @@ beforeEach(() => {
 })
 
 test("parse a string to a date", () => {
-  const date = Time.parse(mockString)
+  const date = Time.fromStore(mockString)
 
   expect(date).toEqual(mockDate)
 })
 
 test("store a string", () => {
-  const string = Time.toString(mockDate)
+  const string = Time.toStore(mockDate)
 
   expect(string).toBe(mockString)
 })
 
 test("set the time", () => {
   Time.setZone("US/Pacific")
-  const date = Time.parse(mockString)
+  const date = Time.fromStore(mockString)
   const newDate = Time.set(date, {
     hours: 0,
     minutes: 0
@@ -76,7 +76,7 @@ test("subtract some time", () => {
 
 test("format a date in a timezone", () => {
   Time.setZone("US/Pacific")
-  const date = Time.parse(mockString)
+  const date = Time.fromStore(mockString)
   const string = Time.format(date, "MMM D, YYYY hh:mma")
 
   expect(string).toBe("Sep 17, 2009 11:45pm")
@@ -85,7 +85,7 @@ test("format a date in a timezone", () => {
 test("format a date in a new timeZone", () => {
   Time.setZone("US/Eastern")
 
-  const date = Time.parse(mockString)
+  const date = Time.fromStore(mockString)
   const string = Time.format(date, "MMM D, YYYY hh:mma")
   expect(string).toBe("Sep 18, 2009 02:45am")
 })
@@ -93,7 +93,7 @@ test("format a date in a new timeZone", () => {
 test("format a date in a different time zone", () => {
   Time.setZone("UTC")
 
-  const date = Time.parse(mockString)
+  const date = Time.fromStore(mockString)
   const string = Time.format(date, "MMM D, YYYY hh:mma")
   expect(string).toBe("Sep 18, 2009 06:45am")
 })
@@ -105,7 +105,7 @@ test("fakeZone", () => {
   // host is running in. This is to spoof libraries that do not
   // support timezones
   Time.setZone("US/Eastern")
-  const date = Time.parse(mockString)
+  const date = Time.fromStore(mockString)
   const fake = Time.fakeZone(date)
 
   expect(fake).toEqual(Time.add(date, 3, "hours"))
@@ -113,7 +113,7 @@ test("fakeZone", () => {
 
 test("toObject in US/Pacific", () => {
   Time.setZone("US/Pacific")
-  const localDate = Time.parse(mockString)
+  const localDate = Time.fromStore(mockString)
   const {date, hours} = Time.toObject(localDate)
 
   expect(date).toBe(17)
@@ -122,7 +122,7 @@ test("toObject in US/Pacific", () => {
 
 test("toObject in US/Easter", () => {
   Time.setZone("US/Eastern")
-  const localDate = Time.parse(mockString)
+  const localDate = Time.fromStore(mockString)
   const {date, hours} = Time.toObject(localDate)
 
   expect(date).toBe(18)

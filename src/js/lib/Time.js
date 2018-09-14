@@ -17,14 +17,17 @@ Set the user supplied timezone globally with:
     Time.setZone("US/Pacific")
 When we store dates in the store, always use the UTC version of the
 date.
-    Time.toString(date) => going into the store
-    Time.parse(string) => coming out of the store
+    Time.toStore(date)
+    Time.fromStore(string)
 */
 
 import Moment from "moment"
 import "moment-timezone"
 
 const STORAGE_FORMAT = "YYYY-MM-DD HH:mm:ss.SSS"
+export const toStore = date => Moment.utc(date).format(STORAGE_FORMAT)
+export const fromStore = string =>
+  Moment.utc(string, STORAGE_FORMAT, true).toDate()
 
 export const moment = Moment
 
@@ -36,7 +39,8 @@ export const toString = date => Moment.utc(date).format(STORAGE_FORMAT)
 
 export const format = (date, format) => Moment(date).format(format)
 
-export const parse = string => Moment.utc(string, STORAGE_FORMAT, true).toDate()
+export const parse = (string, format, strict = true) =>
+  Moment(string, format, strict).toDate()
 
 export const parseFromSpace = ({sec, ns}) => {
   const nanos = parseFloat(sec + "." + padZeros(ns.toString(), 9))
