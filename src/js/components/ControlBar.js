@@ -2,15 +2,15 @@ import React from "react"
 import XSearchBar from "../connectors/XSearchBar"
 import SidebarLeft from "../icons/sidebar-left.svg"
 import SidebarRight from "../icons/sidebar-right.svg"
-import Settings from "../icons/settings-sm.svg"
+import SettingsIcon from "../icons/settings-sm.svg"
 import Modal from "./Modal"
 import classNames from "classnames"
-import {zones} from "../lib/Time"
+import XSettings from "../connectors/XSettings"
 
 export default class ControlBar extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {settingsIsOpen: false}
+    this.state = {settingsIsOpen: true}
   }
 
   render() {
@@ -18,9 +18,7 @@ export default class ControlBar extends React.Component {
       rightSidebarIsOpen,
       leftSidebarIsOpen,
       toggleRightSidebar,
-      toggleLeftSidebar,
-      setTimeZone,
-      timeZone
+      toggleLeftSidebar
     } = this.props
 
     return (
@@ -28,25 +26,14 @@ export default class ControlBar extends React.Component {
         <XSearchBar />
 
         <PanelButton onClick={() => this.setState({settingsIsOpen: true})}>
-          <Settings />
+          <SettingsIcon />
         </PanelButton>
 
         <Modal
           isOpen={this.state.settingsIsOpen}
           onClose={() => this.setState({settingsIsOpen: false})}
         >
-          <h1>Settings</h1>
-          <p>Time Zone:</p>
-          <select
-            onChange={e => setTimeZone(e.currentTarget.value)}
-            value={timeZone}
-          >
-            {zones().map(name => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
+          <XSettings />
         </Modal>
 
         <PanelButton isActive={leftSidebarIsOpen} onClick={toggleLeftSidebar}>
