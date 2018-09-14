@@ -9,7 +9,7 @@
 
   .search-inputs {
     display: flex;
-    flex: 1;
+    flex-basis: 100%;
     box-shadow: $box-shadow;
     border-radius: 3px;
 
@@ -22,6 +22,25 @@
     margin-left: $base-space;
   }
 
+  .error-message {
+    display: flex;
+    align-items: center;
+    color: white;
+    background: $green-3;
+    font-size: 11px;
+    padding: 6px 12px;
+    margin: 0 12px;
+    box-shadow: $box-shadow;
+    border-radius: 0 0 3px 3px;
+    font-family: $mono-font;
+
+    svg {
+      fill: white;
+      height: 16px;
+      width: 16px;
+      margin-right: 12px;
+    }
+  }
   .pins {
     flex-basis: 100%;
   }

@@ -8,7 +8,8 @@ export const initialState = {
   current: "",
   previous: "",
   pinned: [],
-  editing: null
+  editing: null,
+  error: null
 }
 
 export default createReducer(initialState, {
@@ -100,7 +101,8 @@ export default createReducer(initialState, {
     if (state.editing === null) {
       return {
         ...state,
-        previous: state.current
+        previous: state.current,
+        error: null
       }
     } else {
       return {
@@ -120,7 +122,11 @@ export default createReducer(initialState, {
       editing: null,
       current: ""
     }
-  }
+  },
+  SEARCH_BAR_PARSE_ERROR: (state, {error}) => ({
+    ...state,
+    error
+  })
 })
 
 const onlyWhitespace = string => /^\s*$/.test(string)

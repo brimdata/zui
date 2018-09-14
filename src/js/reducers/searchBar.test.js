@@ -1,4 +1,8 @@
-import reducer, {initialState, getSearchProgram} from "./searchBar"
+import reducer, {
+  initialState,
+  getSearchProgram,
+  getSearchBarError
+} from "./searchBar"
 import {requestMainSearch} from "../actions/mainSearch"
 import * as actions from "../actions/searchBar"
 
@@ -127,4 +131,15 @@ test("get search program", () => {
   expect(getSearchProgram({searchBar: state})).toBe(
     "http GET | count() by host"
   )
+})
+
+test("get search program returns star when empty", () => {
+  expect(getSearchProgram({searchBar: initialState})).toBe("*")
+})
+
+test("a search bar error", () => {
+  const steps = [actions.errorSearchBarParse("not a valid shin dig")]
+  const state = {searchBar: steps.reduce(reducer, initialState)}
+
+  expect(getSearchBarError(state)).toBe("not a valid shin dig")
 })
