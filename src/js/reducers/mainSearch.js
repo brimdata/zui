@@ -1,7 +1,6 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import Query from "../models/Query"
-import BroLog from "../models/BroLog"
 import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpace} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
@@ -62,12 +61,6 @@ export function mainSearchEvents(state) {
 export const getMainSearchEvents = state => state.mainSearch.events
 
 export const getSchemas = state => state.broSchemas
-
-export const getMainSearchBroLogs = createSelector(
-  getMainSearchEvents,
-  getSchemas,
-  (events, schemas) => BroLog.buildFrom({events, schemas})
-)
 
 export const getLogs = createSelector(
   getMainSearchEvents,

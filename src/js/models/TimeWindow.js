@@ -1,9 +1,10 @@
 /*
   A time window is an array with two dates in it.
   [new Date(), new Date()]
+
+  Delete this file in favor of lib/TimeWindow
 */
 import * as d3 from "d3"
-import moment from "moment"
 import isArray from "lodash/isArray"
 import isDate from "lodash/isDate"
 
@@ -29,17 +30,4 @@ export function splitOnEvery(timeWindow, {number, unit}) {
     case "month":
       return d3.utcMonth.range(...timeWindow, number)
   }
-}
-
-export function round([start, end], unit) {
-  return [
-    moment
-      .utc(start)
-      .startOf(unit)
-      .toDate(),
-    moment
-      .utc(end)
-      .endOf(unit)
-      .toDate()
-  ]
 }

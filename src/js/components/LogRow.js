@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import * as TimeWindow from "../lib/TimeWindow"
 import {TsCell} from "./LogCell"
 import XLogCell from "../connectors/XLogCell"
 
@@ -12,14 +12,12 @@ const exclude = {
 export default class LogRow extends React.PureComponent {
   render() {
     const {log, style, showDetail, appendToQuery, prevLog} = this.props
-    const ts = moment(log.cast("ts"))
+    const ts = log.cast("ts")
+
     let tsHighlight = false
     if (prevLog) {
-      const prevTs = moment(prevLog.cast("ts"))
-      tsHighlight = !ts
-        .clone()
-        .endOf("minute")
-        .isSame(prevTs.endOf("minute"))
+      const prevTs = prevLog.cast("ts")
+      tsHighlight = !TimeWindow.inSameUnit([ts, prevTs], "minute")
     }
 
     const cells = [

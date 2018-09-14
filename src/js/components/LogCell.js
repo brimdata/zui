@@ -1,6 +1,7 @@
 import React from "react"
 import DownArrow from "../icons/chevron-bottom-md.svg"
 import {ContextMenu, MenuItem} from "./ContextMenu"
+import * as Time from "../lib/Time"
 
 export default class LogCell extends React.PureComponent {
   constructor(props) {
@@ -64,9 +65,9 @@ export const TsCell = ({ts, highlight, onClick}) => {
       onClick={onClick}
     >
       <p>
-        <span className="date">{ts.format("MMM DD, YYYY")}</span>
-        <span className="time">{ts.format("HH:mm")}</span>
-        <span className="seconds">{ts.format("ss.SSSS[s]")}</span>
+        <span className="date">{Time.format(ts, "MMM DD, YYYY")}</span>
+        <span className="time">{Time.format(ts, "HH:mm")}</span>
+        <span className="seconds">{Time.format(ts, "ss.SSSS[s]")}</span>
       </p>
     </div>
   )

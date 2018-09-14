@@ -6,7 +6,8 @@ const LOGS = "logs"
 const initalState = {
   leftSidebarIsOpen: false,
   rightSidebarIsOpen: false,
-  resultsTab: null // can be "ANALYTICS" or "LOGS"
+  resultsTab: null, // can be "ANALYTICS" or "LOGS",
+  timeZone: "UTC"
 }
 
 export default createReducer(initalState, {
@@ -41,6 +42,10 @@ export default createReducer(initalState, {
   SHOW_ANALYTICS_TAB: state => ({
     ...state,
     resultsTab: ANALYTICS
+  }),
+  TIME_ZONE_SET: (state, {timeZone}) => ({
+    ...state,
+    timeZone
   })
 })
 
@@ -48,3 +53,4 @@ export const getLeftSidebarIsOpen = state => state.view.leftSidebarIsOpen
 export const getRightSidebarIsOpen = state => state.view.rightSidebarIsOpen
 export const getShowAnalyticsTab = state => state.view.resultsTab === ANALYTICS
 export const getShowLogsTab = state => state.view.resultsTab === LOGS
+export const getTimeZone = state => state.view.timeZone

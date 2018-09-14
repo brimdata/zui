@@ -1,11 +1,11 @@
-import moment from "moment"
 import countByTimeInterval from "./countByTimeInterval"
+import * as Time from "./lib/Time"
 
-const start = moment()
+const start = new Date()
 
 test("returns the proper format", () => {
-  const end = start.clone().add(5, "minutes")
-  const timeWindow = [start.toDate(), end.toDate()]
+  const end = Time.add(start, 5, "minutes")
+  const timeWindow = [start, end]
 
   expect(countByTimeInterval(timeWindow)).toEqual({
     number: 1,

@@ -1,6 +1,5 @@
 import React from "react"
-import moment from "moment"
-import {toMoment} from "../cast"
+import * as TimeWindow from "../lib/TimeWindow"
 import * as fmt from "../fmt"
 
 const SearchStats = ({
@@ -35,18 +34,12 @@ const SearchStats = ({
 
 const fmtDiff = (startTime, updateTime) => {
   if (!startTime || !updateTime) return "0s"
-  return (
-    moment
-      .duration(toMoment(updateTime).diff(toMoment(startTime)))
-      .asSeconds() + " s"
-  )
+  return TimeWindow.duration([startTime, updateTime], "seconds") + " s"
 }
 
 const elapsedSeconds = (startTime, updateTime) => {
   if (!startTime || !updateTime) return 0
-  return moment
-    .duration(toMoment(updateTime).diff(toMoment(startTime)))
-    .asSeconds()
+  return TimeWindow.duration([startTime, updateTime], "seconds")
 }
 
 const fmtSpeed = (startTime, updateTime, bytesRead) => {

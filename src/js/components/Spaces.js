@@ -3,8 +3,8 @@ import LookyHeader from "./LookyHeader"
 import AdminTitle from "./AdminTitle"
 import Plus from "../icons/plus-lg.svg"
 import * as fmt from "../fmt"
-import {toMoment} from "../cast"
 import {Redirect} from "react-router-dom"
+import * as Time from "../lib/Time"
 
 class Spaces extends React.Component {
   constructor(props) {
@@ -71,35 +71,38 @@ const NoSpaces = () => (
 )
 
 const SpaceInfo = ({
-  space: {name, size, compression, min_time, max_time, path},
+  space: {name, size, compression, minTime, maxTime, path},
   onClick
-}) => (
-  <div className="space-info admin-panel" onClick={onClick}>
-    <h3>{name}</h3>
-    <table className="admin-table">
-      <tbody>
-        <tr>
-          <th>Size</th>
-          <td>{fmt.bytes(size)}</td>
-        </tr>
-        <tr>
-          <th>Compression</th>
-          <td>{compression}</td>
-        </tr>
-        <tr>
-          <th>Time Span</th>
-          <td>
-            {fmt.monthDayYear(toMoment(min_time))} -{" "}
-            {fmt.monthDayYear(toMoment(max_time))}
-          </td>
-        </tr>
-        <tr>
-          <th>Path</th>
-          <td>{path}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-)
+}) => {
+  const dateFormat = "MMM DD, YYYY"
+  return (
+    <div className="space-info admin-panel" onClick={onClick}>
+      <h3>{name}</h3>
+      <table className="admin-table">
+        <tbody>
+          <tr>
+            <th>Size</th>
+            <td>{fmt.bytes(size)}</td>
+          </tr>
+          <tr>
+            <th>Compression</th>
+            <td>{compression}</td>
+          </tr>
+          <tr>
+            <th>Time Span</th>
+            <td>
+              {Time.format(minTime, dateFormat)} -{" "}
+              {Time.format(maxTime, dateFormat)}
+            </td>
+          </tr>
+          <tr>
+            <th>Path</th>
+            <td>{path}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )
+}
 
 export default Spaces
