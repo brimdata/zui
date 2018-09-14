@@ -42,6 +42,11 @@ export const appendQueryCountBy = name => ({
   name
 })
 
+export const errorSearchBarParse = error => ({
+  type: "SEARCH_BAR_PARSE_ERROR",
+  error
+})
+
 export const submitSearchBar = () => dispatch => {
   dispatch(setInnerTimeWindow(null))
   dispatch(fetchMainSearch())

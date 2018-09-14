@@ -1,8 +1,5 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
-import Query from "../models/Query"
-import {getSearchProgram} from "../reducers/searchBar"
-import {getCurrentSpace} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import Log from "../models/Log"
@@ -37,17 +34,9 @@ const BOOM_INTERVALS = {
   month: "day"
 }
 
-export const getMainSearchQuery = createSelector(
-  getSearchProgram,
-  getCurrentSpace,
-  getTimeWindow,
-  getProcs,
-  (filter, space, timeWindow, procs) =>
-    new Query({filter, space, timeWindow, procs})
-)
-
+export const getHeadProc = () => "head 1000"
 export function getProcs(state) {
-  return ["head 1000", getCountByTimeProc(state)]
+  return [getHeadProc(), getCountByTimeProc(state)]
 }
 
 export function getPage(state) {
@@ -82,6 +71,6 @@ export const getLogs = createSelector(
 export const getCountByTimeProc = createSelector(getTimeWindow, timeWindow => {
   if (isTimeWindow(timeWindow)) {
     const {number, unit} = countByTimeInterval(timeWindow)
-    return `every ${number}${BOOM_INTERVALS[unit]} count() by _path `
+    return `every ${number}${BOOM_INTERVALS[unit]} count() by _path`
   }
 })
