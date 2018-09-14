@@ -7,7 +7,6 @@ export default class Ast {
     try {
       this.tree = lookytalk.parse(isEmpty(program) ? "*" : program)
     } catch (e) {
-      console.error("Bad Query", program, e)
       this.tree = null
     }
   }

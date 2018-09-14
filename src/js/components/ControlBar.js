@@ -10,7 +10,7 @@ import XSettings from "../connectors/XSettings"
 export default class ControlBar extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {settingsIsOpen: true}
+    this.state = {settingsIsOpen: false}
     this.closeSettings = () => this.setState({settingsIsOpen: false})
   }
 
