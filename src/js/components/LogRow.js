@@ -2,6 +2,7 @@ import React from "react"
 import * as TimeWindow from "../lib/TimeWindow"
 import {TsCell} from "./LogCell"
 import XLogCell from "../connectors/XLogCell"
+import classNames from "classnames"
 
 const exclude = {
   uid: true,
@@ -11,7 +12,14 @@ const exclude = {
 
 export default class LogRow extends React.PureComponent {
   render() {
-    const {log, style, showDetail, appendToQuery, prevLog} = this.props
+    const {
+      log,
+      style,
+      showDetail,
+      appendToQuery,
+      prevLog,
+      highlight
+    } = this.props
     const ts = log.cast("ts")
 
     let tsHighlight = false
@@ -44,7 +52,7 @@ export default class LogRow extends React.PureComponent {
     }
 
     return (
-      <div className="log-row" style={style}>
+      <div className={classNames("log-row", {highlight})} style={style}>
         {cells}
       </div>
     )
