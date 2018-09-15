@@ -1,4 +1,6 @@
-export default class Log {
+import isEqual from "lodash/isEqual"
+
+class Log {
   static buildAll(tuples, descriptors, space) {
     const logs = []
     for (let index in tuples) {
@@ -61,3 +63,11 @@ export default class Log {
     }
   }
 }
+
+Log.isSame = (a, b) => {
+  if (!a || a.constructor !== Log) return false
+  if (!b || b.constructor !== Log) return false
+  return isEqual(a.tuple, b.tuple) && isEqual(a.descriptor, b.descriptor)
+}
+
+export default Log

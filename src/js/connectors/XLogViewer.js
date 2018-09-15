@@ -5,9 +5,13 @@ import {appendMainSearchQueryProgram} from "../actions/mainSearch"
 import {fetchMainSearch} from "../actions/mainSearch"
 import {getLogs} from "../reducers/mainSearch"
 import {setTimeCursor} from "../actions/countByTime"
+import {buildLogDetail} from "../reducers/logDetails"
+import {getTimeZone} from "../reducers/view"
 
 const stateToProps = state => ({
-  logs: getLogs(state)
+  logs: getLogs(state),
+  logDetail: buildLogDetail(state),
+  timeZone: getTimeZone(state)
 })
 
 const dispatchToProps = dispatch => ({

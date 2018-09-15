@@ -11,6 +11,10 @@
   &:hover {
     background: $off-white;
   }
+
+  &.highlight {
+    background: $light-gray-3;
+  }
 }
 
 .log-cell {
