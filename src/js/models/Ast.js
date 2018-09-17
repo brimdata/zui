@@ -1,11 +1,11 @@
-import lookytalk from "lookytalk"
+import {LookyTalk} from "boom-js-client"
 import isEmpty from "lodash/isEmpty"
 
 export default class Ast {
   constructor(program) {
     this.program = program
     try {
-      this.tree = lookytalk.parse(isEmpty(program) ? "*" : program)
+      this.tree = LookyTalk.parse(isEmpty(program) ? "*" : program)
     } catch (e) {
       this.tree = null
     }

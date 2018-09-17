@@ -12,7 +12,7 @@ import {requestCountByTime, successCountByTime} from "./countByTime"
 import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import Ast from "../models/Ast"
-import lookytalk from "lookytalk"
+import {LookyTalk} from "boom-js-client"
 import {errorSearchBarParse} from "./searchBar"
 
 export const fetchMainSearch = ({saveToHistory = true} = {}) => (
@@ -133,7 +133,7 @@ const parse = string => {
   let error = null
   let ast = null
   try {
-    ast = lookytalk.parse(string)
+    ast = LookyTalk.parse(string)
   } catch (e) {
     error = e
   }
