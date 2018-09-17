@@ -1,52 +1,56 @@
 import reducer, {
   initialState,
   getSearchProgram,
-  getSearchBarError
+  getSearchBarError,
+  getSearchBarInputValue,
+  getSearchBarPins,
+  getSearchBarEditingIndex,
+  getSearchBarPreviousInputValue
 } from "./searchBar"
-import {requestMainSearch} from "../actions/mainSearch"
 import * as actions from "../actions/searchBar"
 
-test("input value changed", () => {
-  const state = reducer(
-    initialState,
-    actions.changeSearchBarInput("duration > 10")
-  )
+const reduce = actions => ({searchBar: actions.reduce(reducer, initialState)})
 
-  expect(state.current).toBe("duration > 10")
+test("input value changed", () => {
+  const state = reduce([actions.changeSearchBarInput("duration > 10")])
+
+  expect(getSearchBarInputValue(state)).toBe("duration > 10")
 })
 
 test("search pinned", () => {
-  let state = reducer(
-    initialState,
-    actions.changeSearchBarInput("_path = http")
-  )
+  let state = reduce([
+    actions.changeSearchBarInput("_path = http"),
+    actions.pinSearchBar()
+  ])
 
-  state = reducer(state, actions.pinSearchBar())
-
-  expect(state.current).toBe("")
-  expect(state.pinned).toEqual(["_path = http"])
+  expect(getSearchBarInputValue(state)).toBe("")
+  expect(getSearchBarPins(state)).toEqual(["_path = http"])
 })
 
 test("search pin does not work if current is empty", () => {
-  let state = reducer(initialState, actions.pinSearchBar())
+  let state = reduce([actions.pinSearchBar()])
 
-  expect(state.pinned).toEqual([])
+  expect(getSearchBarPins(state)).toEqual([])
 })
 
 test("search pin does not work if current is a bunch of white space", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("     "))
-  state = reducer(state, actions.pinSearchBar())
-  expect(state.pinned).toEqual([])
+  let state = reduce([
+    actions.changeSearchBarInput("     "),
+    actions.pinSearchBar()
+  ])
+  expect(getSearchBarPins(state)).toEqual([])
 })
 
 test("search pin edit sets the editing index", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("first pin"))
-  state = reducer(state, actions.pinSearchBar())
-  state = reducer(state, actions.changeSearchBarInput("second pin"))
-  state = reducer(state, actions.pinSearchBar())
-  state = reducer(state, actions.editSearchBarPin(1))
+  let state = reduce([
+    actions.changeSearchBarInput("first pin"),
+    actions.pinSearchBar(),
+    actions.changeSearchBarInput("second pin"),
+    actions.pinSearchBar(),
+    actions.editSearchBarPin(1)
+  ])
 
-  expect(state.editing).toBe(1)
+  expect(getSearchBarEditingIndex(state)).toBe(1)
 })
 
 test("search pin edit does not set index if out of bounds", () => {
@@ -56,11 +60,13 @@ test("search pin edit does not set index if out of bounds", () => {
 })
 
 test("search bar pin remove", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("first pin"))
-  state = reducer(state, actions.pinSearchBar())
-  state = reducer(state, actions.removeSearchBarPin(0))
+  const state = reduce([
+    actions.changeSearchBarInput("first pin"),
+    actions.pinSearchBar(),
+    actions.removeSearchBarPin(0)
+  ])
 
-  expect(state.pinned).toEqual([])
+  expect(getSearchBarPins(state)).toEqual([])
 })
 
 test("search bar pin remove when out of bounds", () => {
@@ -70,76 +76,87 @@ test("search bar pin remove when out of bounds", () => {
 })
 
 test("search bar submit", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("conn"))
-  state = reducer(state, requestMainSearch({}))
+  let state = reduce([
+    actions.changeSearchBarInput("conn"),
+    actions.submittingSearchBar()
+  ])
 
-  expect(state.current).toBe("conn")
-  expect(state.previous).toBe("conn")
-  expect(state.editing).toBe(null)
+  expect(getSearchBarInputValue(state)).toBe("conn")
+  expect(getSearchBarPreviousInputValue(state)).toBe("conn")
+  expect(getSearchBarEditingIndex(state)).toBe(null)
 })
 
 test("search bar submit after editing resets editing", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("http"))
-  state = reducer(state, actions.pinSearchBar())
-  state = reducer(state, actions.editSearchBarPin(0))
-  state = reducer(state, actions.changeSearchBarInput("https"))
-  state = reducer(state, requestMainSearch({}))
+  let state = reduce([
+    actions.changeSearchBarInput("http"),
+    actions.pinSearchBar(),
+    actions.editSearchBarPin(0),
+    actions.changeSearchBarInput("https"),
+    actions.submittingSearchBar()
+  ])
 
-  expect(state.current).toBe("")
-  expect(state.pinned[0]).toBe("https")
+  expect(getSearchBarInputValue(state)).toBe("")
+  expect(getSearchBarPins(state)[0]).toBe("https")
 })
 
 test("append an include field", () => {
-  let state = reducer(initialState, actions.appendQueryInclude("_path", "conn"))
-  expect(state.current).toBe("_path=conn")
+  const state = reduce([actions.appendQueryInclude("_path", "conn")])
+
+  expect(getSearchBarInputValue(state)).toBe("_path=conn")
 })
 
 test("append an include field when some text already exists", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("text"))
-  state = reducer(state, actions.appendQueryInclude("_path", "conn"))
-  expect(state.current).toBe("text _path=conn")
+  let state = reduce([
+    actions.changeSearchBarInput("text"),
+    actions.appendQueryInclude("_path", "conn")
+  ])
+  expect(getSearchBarInputValue(state)).toBe("text _path=conn")
 })
 
 test("append an exclude field", () => {
-  let state = reducer(initialState, actions.appendQueryExclude("_path", "conn"))
-  expect(state.current).toBe("_path!=conn")
+  let state = reduce([actions.appendQueryExclude("_path", "conn")])
+  expect(getSearchBarInputValue(state)).toBe("_path!=conn")
 })
 
 test("append an exclude field when some text already exists", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("text"))
-  state = reducer(state, actions.appendQueryExclude("_path", "conn"))
-  expect(state.current).toBe("text _path!=conn")
+  let state = reduce([
+    actions.changeSearchBarInput("text"),
+    actions.appendQueryExclude("_path", "conn")
+  ])
+  expect(getSearchBarInputValue(state)).toBe("text _path!=conn")
 })
 
 test("append a count by field", () => {
-  let state = reducer(initialState, actions.appendQueryCountBy("_path"))
-  expect(state.current).toBe("* | count() by _path")
+  let state = reduce([actions.appendQueryCountBy("_path")])
+  expect(getSearchBarInputValue(state)).toBe("* | count() by _path")
 })
 
 test("append a count to an existing query", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("dns"))
-  state = reducer(state, actions.appendQueryCountBy("query"))
-  expect(state.current).toBe("dns | count() by query")
+  let state = reduce([
+    actions.changeSearchBarInput("dns"),
+    actions.appendQueryCountBy("query")
+  ])
+  expect(getSearchBarInputValue(state)).toBe("dns | count() by query")
 })
 
 test("get search program", () => {
-  let state = reducer(initialState, actions.changeSearchBarInput("http"))
-  state = reducer(state, actions.pinSearchBar())
-  state = reducer(state, actions.changeSearchBarInput("GET"))
-  state = reducer(state, actions.pinSearchBar())
-  state = reducer(state, actions.changeSearchBarInput("| count() by host"))
-  expect(getSearchProgram({searchBar: state})).toBe(
-    "http GET | count() by host"
-  )
+  let state = reduce([
+    actions.changeSearchBarInput("http"),
+    actions.pinSearchBar(),
+    actions.changeSearchBarInput("GET"),
+    actions.pinSearchBar(),
+    actions.changeSearchBarInput("| count() by host")
+  ])
+  expect(getSearchProgram(state)).toBe("http GET | count() by host")
 })
 
 test("get search program returns star when empty", () => {
-  expect(getSearchProgram({searchBar: initialState})).toBe("*")
+  const state = reduce([{}])
+  expect(getSearchProgram(state)).toBe("*")
 })
 
 test("a search bar error", () => {
-  const steps = [actions.errorSearchBarParse("not a valid shin dig")]
-  const state = {searchBar: steps.reduce(reducer, initialState)}
+  const state = reduce([actions.errorSearchBarParse("not a valid shin dig")])
 
   expect(getSearchBarError(state)).toBe("not a valid shin dig")
 })

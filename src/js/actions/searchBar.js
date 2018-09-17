@@ -47,8 +47,12 @@ export const errorSearchBarParse = error => ({
   error
 })
 
+export const submittingSearchBar = () => ({
+  type: "SEARCH_BAR_SUBMIT"
+})
+
 export const submitSearchBar = () => dispatch => {
-  dispatch({type: "SEARCH_BAR_SUBMIT"})
+  dispatch(submittingSearchBar())
   dispatch(setInnerTimeWindow(null))
   dispatch(fetchMainSearch())
 }
