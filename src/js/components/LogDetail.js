@@ -8,6 +8,11 @@ import Forward from "../icons/forward-arrow.svg"
 import classNames from "classnames"
 
 export default class LogDetail extends React.Component {
+  componentDidUpdate() {
+    // Do this in a different "React" way
+    document.querySelector(".search-page-sidebar-right").scrollTop = 0
+  }
+
   render() {
     const {
       log,
@@ -32,7 +37,7 @@ export default class LogDetail extends React.Component {
       )
 
     return (
-      <div className="log-detail">
+      <div className="log-detail" ref={r => (this.el = r)}>
         <header>
           <div className="history-buttons">
             <a
@@ -63,24 +68,28 @@ export default class LogDetail extends React.Component {
             <Star />
           </button>
         </header>
+        <div className="fields-table-panel">
+          <h4 className="small-heading">Fields</h4>
+          <FieldsTable log={log} />
+        </div>
+
         <div className="log-detail-body">
-          <div className="correlated-logs-panel">
-            <h4 className="small-heading">Correlated Logs</h4>
-            <UidTimeline
-              currentLog={log}
-              logs={correlatedLogs}
-              viewLogDetail={viewLogDetail}
-            />
-          </div>
+          {correlatedLogs.length > 0 && (
+            <div className="correlated-logs-panel">
+              <h4 className="small-heading">Correlated Logs</h4>
+              <UidTimeline
+                currentLog={log}
+                logs={correlatedLogs}
+                viewLogDetail={viewLogDetail}
+              />
+            </div>
+          )}
 
-          <div className="conn-versation-panel">
-            <ConnVersation log={log} />
-          </div>
-
-          <div className="fields-table-panel">
-            <h4 className="small-heading">Fields</h4>
-            <FieldsTable log={log} />
-          </div>
+          {ConnVersation.shouldShow(log) && (
+            <div className="conn-versation-panel">
+              <ConnVersation log={log} />
+            </div>
+          )}
         </div>
       </div>
     )

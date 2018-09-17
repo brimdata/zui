@@ -97,7 +97,7 @@ export default createReducer(initialState, {
     }
   },
 
-  MAIN_SEARCH_REQUEST: state => {
+  SEARCH_BAR_SUBMIT: state => {
     if (state.editing === null) {
       return {
         ...state,
@@ -109,7 +109,8 @@ export default createReducer(initialState, {
         ...state,
         current: "",
         previous: "",
-        editing: null
+        editing: null,
+        error: null
       }
     }
   },
