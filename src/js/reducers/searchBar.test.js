@@ -160,3 +160,19 @@ test("a search bar error", () => {
 
   expect(getSearchBarError(state)).toBe("not a valid shin dig")
 })
+
+test("remove all pins", () => {
+  let state = reduce([
+    actions.changeSearchBarInput("hello"),
+    actions.pinSearchBar(),
+    actions.changeSearchBarInput("world"),
+    actions.pinSearchBar(),
+    actions.changeSearchBarInput("keep me"),
+    actions.submittingSearchBar(),
+    actions.removeAllSearchBarPins()
+  ])
+
+  expect(getSearchBarInputValue(state)).toBe("keep me")
+  expect(getSearchBarPreviousInputValue(state)).toBe("")
+  expect(getSearchBarPins(state)).toEqual([])
+})
