@@ -1,6 +1,7 @@
 import React from "react"
 import connHistoryView from "../connHistoryView"
 import FieldsTable from "./FieldsTable"
+import every from "lodash/every"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
 const RESP_FIELDS = ["resp_bytes", "resp_pkts", "resp_ip_bytes", "local_resp"]
@@ -51,5 +52,7 @@ const Host = ({className, title = "", ip = "", port = "", fieldNames, log}) => (
     <FieldsTable log={log} only={fieldNames} />
   </div>
 )
+
+ConnVersation.shouldShow = log => every(ORIG_FIELDS, field => log.get(field))
 
 export default ConnVersation

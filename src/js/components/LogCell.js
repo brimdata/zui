@@ -15,17 +15,17 @@ export default class LogCell extends React.PureComponent {
 
   include(_e) {
     this.props.appendQueryInclude(this.props.name, this.props.value)
-    this.props.fetchMainSearch()
+    this.props.submitSearchBar()
   }
 
   exclude(_e) {
     this.props.appendQueryExclude(this.props.name, this.props.value)
-    this.props.fetchMainSearch()
+    this.props.submitSearchBar()
   }
 
   countBy() {
     this.props.appendQueryCountBy(this.props.name)
-    this.props.fetchMainSearch()
+    this.props.submitSearchBar()
   }
 
   render() {
