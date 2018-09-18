@@ -24,6 +24,16 @@ module.exports = {
             label: "Pin Search",
             accelerator: "CmdOrCtrl+K",
             click: () => browserWindow.webContents.send("pinSearch")
+          },
+          {
+            label: "Clear Pins",
+            accelerator: "CmdOrCtrl+Shift+K",
+            click: () => browserWindow.webContents.send("clearPins")
+          },
+          {
+            label: "Focus Search Bar",
+            accelerator: "CmdOrCtrl+L",
+            click: () => browserWindow.webContents.send("focusSearchBar")
           }
         ]
       },

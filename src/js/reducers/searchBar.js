@@ -90,6 +90,13 @@ export default createReducer(initialState, {
     }
   },
 
+  SEARCH_BAR_PIN_REMOVE_ALL: state => ({
+    ...state,
+    editing: null,
+    pinned: [],
+    previous: ""
+  }),
+
   MAIN_SEARCH_QUERY_PROGRAM_APPEND: (state, {fragment}) => {
     return {
       ...state,

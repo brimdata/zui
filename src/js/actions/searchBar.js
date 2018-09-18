@@ -20,6 +20,10 @@ export const removeSearchBarPin = index => ({
   index
 })
 
+export const removeAllSearchBarPins = () => ({
+  type: "SEARCH_BAR_PIN_REMOVE_ALL"
+})
+
 export const setSearchBarPins = pinned => ({
   type: "SEARCH_BAR_PINS_SET",
   pinned

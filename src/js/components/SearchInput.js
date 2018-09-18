@@ -20,6 +20,7 @@ class SearchInput extends React.Component {
       <div className="search-input">
         <div className="text-input-wrapper">
           <input
+            id="main-search-input"
             type="text"
             value={inputValue}
             placeholder="Search"
