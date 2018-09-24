@@ -43,10 +43,15 @@ $page-border-color: $light-gray-3;
   flex: 1 1 auto;
 }
 
+.pane {
+  position: relative;
+}
+
 .search-page-sidebar-right {
-  flex: 0 0 420px;
+  width: 420px;
   background-color: $page-background-color;
   overflow-y: scroll;
+  height: 100%;
   border-left: 1px solid $page-border-color;
 }
 

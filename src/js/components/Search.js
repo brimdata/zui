@@ -11,10 +11,30 @@ import XHistoryAside from "../connectors/XHistoryAside"
 import XLogDetail from "../connectors/XLogDetail"
 import XSearchWelcome from "../connectors/XSearchWelcome"
 import XAnalysisViewer from "../connectors/XAnalysisViewer"
+import DragAnchor from "./DragAnchor"
 
 export default class Search extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {rightWidth: 100, leftWidth: 100}
+    this.onDragRight = this.onDragRight.bind(this)
+    this.onDragLeft = this.onDragLeft.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchAllSpaces()
+  }
+
+  onDragRight(e) {
+    const width = window.innerWidth - e.clientX
+    const max = window.innerWidth - this.state.leftWidth
+    this.setState({rightWidth: Math.min(width, max)})
+  }
+
+  onDragLeft(e) {
+    const width = e.clientX
+    const max = window.innerWidth - this.state.rightWidth
+    this.setState({leftWidth: Math.min(width, max)})
   }
 
   render() {
@@ -30,15 +50,20 @@ export default class Search extends React.Component {
 
     if (!isConnected) return <Redirect to="/connect" />
     if (!currentSpaceName) return <Redirect to="/spaces" />
-
     return (
       <div className="search-page">
         <XTitleBar />
 
         <div className="search-page-window">
           {leftSidebarIsOpen && (
-            <div className="search-page-sidebar-left">
-              <XHistoryAside />
+            <div className="pane">
+              <div
+                className="search-page-sidebar-left"
+                style={{width: this.state.leftWidth}}
+              >
+                <XHistoryAside />
+              </div>
+              <DragAnchor onDrag={this.onDragLeft} position="right" />
             </div>
           )}
           <div className="search-page-main">
@@ -65,8 +90,14 @@ export default class Search extends React.Component {
                 </div>
               )}
               {rightSidebarIsOpen && (
-                <div className="search-page-sidebar-right">
-                  <XLogDetail />
+                <div className="pane">
+                  <div
+                    className="search-page-sidebar-right"
+                    style={{width: this.state.rightWidth}}
+                  >
+                    <DragAnchor onDrag={this.onDragRight} position="left" />
+                    <XLogDetail />
+                  </div>
                 </div>
               )}
             </div>

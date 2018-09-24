@@ -1,0 +1,16 @@
+.drag-anchor {
+  width: 9px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: transparent;
+  cursor: col-resize;
+}
+
+.drag-anchor-left {
+  left: -4px;
+}
+
+.drag-anchor-right {
+  right: -4px;
+}
