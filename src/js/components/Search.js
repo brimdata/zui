@@ -16,7 +16,6 @@ import DragAnchor from "./DragAnchor"
 export default class Search extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {rightWidth: 100, leftWidth: 100}
     this.onDragRight = this.onDragRight.bind(this)
     this.onDragLeft = this.onDragLeft.bind(this)
   }
@@ -27,14 +26,14 @@ export default class Search extends React.Component {
 
   onDragRight(e) {
     const width = window.innerWidth - e.clientX
-    const max = window.innerWidth - this.state.leftWidth
-    this.setState({rightWidth: Math.min(width, max)})
+    const max = window.innerWidth - this.props.leftSidebarWidth
+    this.props.setRightSidebarWidth(Math.min(width, max))
   }
 
   onDragLeft(e) {
     const width = e.clientX
-    const max = window.innerWidth - this.state.rightWidth
-    this.setState({leftWidth: Math.min(width, max)})
+    const max = window.innerWidth - this.props.leftSidebarWidth
+    this.props.setLeftSidebarWidth(Math.min(width, max))
   }
 
   render() {
@@ -59,7 +58,7 @@ export default class Search extends React.Component {
             <div className="pane">
               <div
                 className="search-page-sidebar-left"
-                style={{width: this.state.leftWidth}}
+                style={{width: this.props.leftSidebarWidth}}
               >
                 <XHistoryAside />
               </div>
@@ -93,7 +92,7 @@ export default class Search extends React.Component {
                 <div className="pane">
                   <div
                     className="search-page-sidebar-right"
-                    style={{width: this.state.rightWidth}}
+                    style={{width: this.props.rightSidebarWidth}}
                   >
                     <DragAnchor onDrag={this.onDragRight} position="left" />
                     <XLogDetail />

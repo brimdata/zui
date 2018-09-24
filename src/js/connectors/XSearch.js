@@ -1,32 +1,26 @@
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import * as actions from "../actions/spaces"
-import {getCurrentSpaceName} from "../reducers/spaces"
-import {getBoomdIsConnected} from "../reducers/boomdConnection"
-import {
-  getLeftSidebarIsOpen,
-  getRightSidebarIsOpen,
-  getShowLogsTab,
-  getShowAnalyticsTab
-} from "../reducers/view"
-import {getInitialLoad} from "../reducers/initialLoad"
+import * as spaceActions from "../actions/spaces"
+import * as viewActions from "../actions/view"
+import * as spaces from "../reducers/spaces"
+import * as boomdConnection from "../reducers/boomdConnection"
+import * as view from "../reducers/view"
+import * as initialLoad from "../reducers/initialLoad"
 import Search from "../components/Search"
 
-function stateToProps(state) {
-  return {
-    initialLoad: getInitialLoad(state),
-    leftSidebarIsOpen: getLeftSidebarIsOpen(state),
-    rightSidebarIsOpen: getRightSidebarIsOpen(state),
-    isConnected: getBoomdIsConnected(state),
-    currentSpaceName: getCurrentSpaceName(state),
-    showLogsTab: getShowLogsTab(state),
-    showAnalyticsTab: getShowAnalyticsTab(state)
-  }
-}
-
-const dispatchToProps = dispatch => bindActionCreators(actions, dispatch)
+const stateToProps = state => ({
+  initialLoad: initialLoad.getInitialLoad(state),
+  leftSidebarIsOpen: view.getLeftSidebarIsOpen(state),
+  rightSidebarIsOpen: view.getRightSidebarIsOpen(state),
+  leftSidebarWidth: view.getLeftSidebarWidth(state),
+  rightSidebarWidth: view.getRightSidebarWidth(state),
+  isConnected: boomdConnection.getBoomdIsConnected(state),
+  currentSpaceName: spaces.getCurrentSpaceName(state),
+  showLogsTab: view.getShowLogsTab(state),
+  showAnalyticsTab: view.getShowAnalyticsTab(state)
+})
 
 export default connect(
   stateToProps,
-  dispatchToProps
+  dispatch => bindActionCreators({...spaceActions, ...viewActions}, dispatch)
 )(Search)
