@@ -3,9 +3,11 @@ import createReducer from "./createReducer"
 const ANALYTICS = "analytics"
 const LOGS = "logs"
 
-const initalState = {
+export const initalState = {
   leftSidebarIsOpen: false,
   rightSidebarIsOpen: false,
+  leftSidebarWidth: 350,
+  rightSidebarWidth: 350,
   resultsTab: null, // can be "ANALYTICS" or "LOGS",
   timeZone: "UTC"
 }
@@ -46,9 +48,19 @@ export default createReducer(initalState, {
   TIME_ZONE_SET: (state, {timeZone}) => ({
     ...state,
     timeZone
+  }),
+  RIGHT_SIDEBAR_WIDTH_SET: (state, {width}) => ({
+    ...state,
+    rightSidebarWidth: width
+  }),
+  LEFT_SIDEBAR_WIDTH_SET: (state, {width}) => ({
+    ...state,
+    leftSidebarWidth: width
   })
 })
 
+export const getRightSidebarWidth = state => state.view.rightSidebarWidth
+export const getLeftSidebarWidth = state => state.view.leftSidebarWidth
 export const getLeftSidebarIsOpen = state => state.view.leftSidebarIsOpen
 export const getRightSidebarIsOpen = state => state.view.rightSidebarIsOpen
 export const getShowAnalyticsTab = state => state.view.resultsTab === ANALYTICS
