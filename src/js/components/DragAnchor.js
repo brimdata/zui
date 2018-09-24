@@ -13,6 +13,7 @@ export default class DragAnchor extends React.Component {
   }
 
   down() {
+    document.body.classList.add("dragging")
     document.addEventListener("mousemove", this.move)
     document.addEventListener("mouseup", this.up)
   }
@@ -22,6 +23,7 @@ export default class DragAnchor extends React.Component {
   }
 
   up() {
+    document.body.classList.remove("dragging")
     document.removeEventListener("mousemove", this.move)
     document.removeEventListener("mouseup", this.up)
   }
