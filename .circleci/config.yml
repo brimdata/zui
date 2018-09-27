@@ -1,0 +1,22 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.11.0-jessie-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install --no-audit
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Lint
+          command: npm run lint
+      - run:
+          name: Test
+          command: npm test
