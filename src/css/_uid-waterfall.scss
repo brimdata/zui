@@ -5,12 +5,14 @@
     display: flex;
     align-items: center;
     padding-bottom: 3px;
+    padding-left: 12px;
   }
 
   .ts-label,
   .duration {
-    @extend .mono-body-text;
     font-size: 9px;
+    font-weight: bold;
+    font-family: $mono-font;
     padding-right: $base-space;
   }
 
@@ -32,9 +34,13 @@
     cursor: pointer;
     position: relative;
     left: 0%;
+
     &:active {
-      transform: translateY(2px)
+      transform: translateY(2px);
     }
+  }
+  .path-tag.conn-bg-color {
+    width: calc(100% + 58px);
   }
 
   .path-tag.current {
@@ -42,7 +48,7 @@
   }
 
   .duration {
-    font-size: 10px;
+    font-family: $body-font;
     margin: $base-space 0 0 0;
     padding: 0;
     text-align: right;

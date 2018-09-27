@@ -1,5 +1,6 @@
 import {ipcRenderer} from "electron"
 import {pinSearchBar, removeAllSearchBarPins} from "./actions/searchBar"
+import {toggleLeftSidebar, toggleRightSidebar} from "./actions/view"
 
 export default store => {
   ipcRenderer.on("pinSearch", () => store.dispatch(pinSearchBar()))
@@ -9,4 +10,8 @@ export default store => {
     el && el.select()
   })
   ipcRenderer.on("clearPins", () => store.dispatch(removeAllSearchBarPins()))
+  ipcRenderer.on("toggleLeftSidebar", () => store.dispatch(toggleLeftSidebar()))
+  ipcRenderer.on("toggleRightSidebar", () =>
+    store.dispatch(toggleRightSidebar())
+  )
 }

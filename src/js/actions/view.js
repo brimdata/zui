@@ -34,3 +34,13 @@ export const setTimeZone = timeZone => ({
   type: "TIME_ZONE_SET",
   timeZone
 })
+
+export const setRightSidebarWidth = width => ({
+  type: "RIGHT_SIDEBAR_WIDTH_SET",
+  width
+})
+
+export const setLeftSidebarWidth = width => ({
+  type: "LEFT_SIDEBAR_WIDTH_SET",
+  width
+})

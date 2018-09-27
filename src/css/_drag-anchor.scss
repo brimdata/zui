@@ -1,0 +1,22 @@
+.drag-anchor {
+  width: 9px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: transparent;
+  pointer-events: all !important;
+  cursor: col-resize;
+}
+
+.drag-anchor-left {
+  left: -4px;
+}
+
+.drag-anchor-right {
+  right: -4px;
+}
+
+body.dragging {
+  user-select: none;
+  pointer-events: none;
+}

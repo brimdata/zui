@@ -30,12 +30,20 @@ label {
   font-weight: bold;
 }
 
-pre {
+pre,
+code {
   background-color: $light-gray-2;
   border-radius: 3px;
   color: $gray-2;
   font-family: $mono-font;
-  padding: 1em;
+}
+
+pre {
   margin: 0.5em 0;
+  padding: 1em;
   overflow-x: scroll;
+}
+
+code {
+  padding: 2px 3px;
 }

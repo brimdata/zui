@@ -7,10 +7,10 @@ import XControlBar from "../connectors/XControlBar"
 import XLogViewer from "../connectors/XLogViewer"
 import XSearchStats from "../connectors/XSearchStats"
 import XCountByTime from "../connectors/XCountByTime"
-import XHistoryAside from "../connectors/XHistoryAside"
-import XLogDetail from "../connectors/XLogDetail"
 import XSearchWelcome from "../connectors/XSearchWelcome"
 import XAnalysisViewer from "../connectors/XAnalysisViewer"
+import XLeftPane from "../connectors/XLeftPane"
+import XRightPane from "../connectors/XRightPAne"
 
 export default class Search extends React.Component {
   componentDidMount() {
@@ -21,61 +21,42 @@ export default class Search extends React.Component {
     const {
       isConnected,
       currentSpaceName,
-      leftSidebarIsOpen,
-      rightSidebarIsOpen,
       initialLoad,
-      showLogsTab,
-      showAnalyticsTab
+      logsTab,
+      analyticsTab
     } = this.props
 
     if (!isConnected) return <Redirect to="/connect" />
     if (!currentSpaceName) return <Redirect to="/spaces" />
 
     return (
-      <div className="search-page">
-        <XTitleBar />
-
-        <div className="search-page-window">
-          {leftSidebarIsOpen && (
-            <div className="search-page-sidebar-left">
-              <XHistoryAside />
-            </div>
-          )}
-          <div className="search-page-main">
-            <div className="search-page-header">
-              <XControlBar />
-              {!initialLoad &&
-                showLogsTab && (
-                  <div className="search-page-header-charts">
-                    <AutoSizer disableHeight>
-                      {({width}) => <XCountByTime height={80} width={width} />}
-                    </AutoSizer>
-                  </div>
-                )}
-            </div>
-
-            <div className="search-page-body">
-              {initialLoad && (
-                <XSearchWelcome currentSpaceName={currentSpaceName} />
-              )}
-              {!initialLoad && (
-                <div className="search-page-results">
-                  {showLogsTab && <XLogViewer />}
-                  {showAnalyticsTab && <XAnalysisViewer />}
+      <div className="search-page-window">
+        <XLeftPane />
+        <div className="search-page-main">
+          <XTitleBar />
+          <div className="search-page-header">
+            <XControlBar />
+            {!initialLoad &&
+              logsTab && (
+                <div className="search-page-header-charts">
+                  <AutoSizer disableHeight>
+                    {({width}) => <XCountByTime height={80} width={width} />}
+                  </AutoSizer>
                 </div>
               )}
-              {rightSidebarIsOpen && (
-                <div className="search-page-sidebar-right">
-                  <XLogDetail />
-                </div>
-              )}
-            </div>
-
-            <div className="search-page-footer">
-              <XSearchStats />
-            </div>
+          </div>
+          <div className="search-page-body">
+            {initialLoad && (
+              <XSearchWelcome currentSpaceName={currentSpaceName} />
+            )}
+            {!initialLoad && logsTab && <XLogViewer />}
+            {!initialLoad && analyticsTab && <XAnalysisViewer />}
+          </div>
+          <div className="search-page-footer">
+            <XSearchStats />
           </div>
         </div>
+        <XRightPane />
       </div>
     )
   }

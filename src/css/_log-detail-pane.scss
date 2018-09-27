@@ -1,0 +1,29 @@
+.log-detail-pane {
+  background: white;
+  min-width: 200px;
+
+  .pane-header {
+    background: $light-gray-2;
+    border-bottom: 1px solid $light-gray-3;
+  }
+
+  .history-buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  .star-button {
+    transition: background-color 0ms;
+    svg {
+      fill: none;
+    }
+  }
+
+  .star-button.starred {
+    background-color: $yellow-3;
+    svg {
+      stroke: $light-gray-4;
+      fill: $yellow-3;
+    }
+  }
+}

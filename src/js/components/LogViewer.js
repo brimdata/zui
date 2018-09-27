@@ -29,22 +29,24 @@ export default class LogViewer extends React.PureComponent {
       />
     )
     return (
-      <AutoSizer>
-        {({height, width}) => {
-          return (
-            <List
-              onRowsRendered={this.onRowsRendered}
-              className="log-viewer"
-              width={width}
-              height={height}
-              rowCount={logs.length}
-              rowHeight={25}
-              rowRenderer={rowRenderer}
-              overscanRowCount={2}
-            />
-          )
-        }}
-      </AutoSizer>
+      <div className="log-viewer-wrapper">
+        <AutoSizer>
+          {({height, width}) => {
+            return (
+              <List
+                onRowsRendered={this.onRowsRendered}
+                className="log-viewer"
+                width={width}
+                height={height}
+                rowCount={logs.length}
+                rowHeight={25}
+                rowRenderer={rowRenderer}
+                overscanRowCount={2}
+              />
+            )
+          }}
+        </AutoSizer>
+      </div>
     )
   }
 }

@@ -4,7 +4,7 @@ The desktop client for the Boom backend built with Electron and React.
 
 ## Setup
 
-It's expected that `node` and `git` are installed.
+It's expected that `node 10.11.0` and `git` are installed.
 
 ```
 git clone https://github.com/looky-cloud/desktop.git

@@ -1,4 +1,5 @@
 import React from "react"
+import {PaneHeader, Center, Left, Right, PaneTitle} from "./Pane"
 
 export default class TitleBar extends React.Component {
   constructor(props) {
@@ -19,10 +20,18 @@ export default class TitleBar extends React.Component {
 
     return (
       <div className="title-bar">
-        <p onClick={this.onHostClick}>
-          {host}:{port}
-        </p>
-        <p onClick={this.onSpaceClick}>{space}</p>
+        <PaneHeader>
+          <Left />
+          <Center>
+            <PaneTitle>
+              <span onClick={this.onHostClick}>
+                {host}:{port}
+              </span>{" "}
+              <span onClick={this.onSpaceClick}>{space}</span>
+            </PaneTitle>
+          </Center>
+          <Right />
+        </PaneHeader>
       </div>
     )
   }
