@@ -3,6 +3,11 @@
   display: flex;
   justify-content: space-between;
 
+  td,
+  th {
+    white-space: nowrap;
+  }
+
   .host {
     border: 1px solid $light-gray-3;
     border-radius: 3px;

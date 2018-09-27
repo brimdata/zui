@@ -10,14 +10,10 @@ import Search from "../components/Search"
 
 const stateToProps = state => ({
   initialLoad: initialLoad.getInitialLoad(state),
-  leftSidebarIsOpen: view.getLeftSidebarIsOpen(state),
-  rightSidebarIsOpen: view.getRightSidebarIsOpen(state),
-  leftSidebarWidth: view.getLeftSidebarWidth(state),
-  rightSidebarWidth: view.getRightSidebarWidth(state),
   isConnected: boomdConnection.getBoomdIsConnected(state),
   currentSpaceName: spaces.getCurrentSpaceName(state),
-  showLogsTab: view.getShowLogsTab(state),
-  showAnalyticsTab: view.getShowAnalyticsTab(state)
+  logsTab: view.getShowLogsTab(state),
+  analyticsTab: view.getShowAnalyticsTab(state)
 })
 
 export default connect(

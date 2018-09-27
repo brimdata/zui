@@ -1,0 +1,21 @@
+.history-pane {
+  background: $gray-3;
+
+  .pane-header {
+    background: $gray-4;
+    border-bottom: 1px solid $gray-2;
+
+    .pane-title {
+      color: white;
+    }
+  }
+  .clear-button {
+    width: auto;
+    cursor: pointer;
+    color: white;
+    &:hover {
+      background: $red;
+      color: white;
+    }
+  }
+}

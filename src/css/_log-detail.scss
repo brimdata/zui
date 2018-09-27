@@ -1,61 +1,21 @@
-.log-detail header {
-  padding: 6px $base-space * 2;
+.log-detail {
+  color: $light-gray-4;
+}
+
+.empty-message-wrapper {
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 12px;
+  justify-content: center;
 
-  .medium-heading {
-    flex: 1;
+  .empty-message {
     text-align: center;
-    margin: 0;
-  }
-
-  .history-buttons {
-    display: flex;
-    align-items: center;
-  }
-
-  .star-button {
-    transition: background-color 0ms;
-    svg {
-      fill: none;
-    }
-  }
-
-  .star-button.starred {
-    background-color: $yellow-3;
-    svg {
-      stroke: $light-gray-4;
-      fill: $yellow-3;
-    }
+    color: $gray-3;
+    font-size: 12px;
   }
 }
 
 .log-detail {
-  color: $light-gray-4;
-  .empty-message {
-    margin-top: $base-space * 4;
-    width: 100%;
-    text-align: center;
-  }
-}
-
-.log-detail-header {
-  padding: 12px 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 3px 3px 0 0;
-  z-index: 1;
-
-  .small-heading {
-    margin: 0;
-  }
-}
-
-.log-detail-body {
-  overflow-y: scroll;
   padding: 12px;
 
   .fields-table {
@@ -70,13 +30,19 @@
   margin-bottom: 18px;
   border-radius: 3px;
   padding: 12px;
+  max-width: 600px;
 }
 
 .conn-versation-panel {
   margin-bottom: 18px;
+  padding: 12px;
+  max-width: 600px;
 }
 
 .fields-table-panel {
   border-radius: 3px;
   padding: 12px;
+  th {
+    min-width: 120px;
+  }
 }

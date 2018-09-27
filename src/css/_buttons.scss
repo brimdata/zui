@@ -77,8 +77,8 @@
   outline: none;
 
   svg {
-    fill: $light-gray-4;
-    stroke: $light-gray-4;
+    fill: $gray-1;
+    stroke: $gray-1;
     height: 100%;
     width: 100%;
   }
@@ -95,8 +95,8 @@
 
   &:disabled {
     svg {
-      fill: $light-gray-3;
-      stroke: $light-gray-3;
+      fill: lighten($gray-1, 35%);
+      stroke: lighten($gray-1, 35%);
     }
     &:hover {
       background: none;

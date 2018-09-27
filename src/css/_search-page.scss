@@ -1,28 +1,43 @@
 $page-background-color: $light-gray-2;
 $page-border-color: $light-gray-3;
 
-.search-page {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
+.title-bar .pane-header {
+  background: $light-gray-2;
+  border-color: transparent;
 }
 
 .search-page-window {
-  flex: 1 1 auto;
   display: flex;
+  height: 100%;
 }
 
-.search-page-sidebar-left {
-  overflow: scroll;
-  background-color: $page-background-color;
-  flex: 0 0 300px;
-  border-right: 1px solid $page-border-color;
+.pane-left,
+.pane-right {
+  min-width: 240px;
+  flex-shrink: 0;
 }
 
 .search-page-main {
-  flex: 1 1 auto;
+  flex-grow: 1;
+  overflow-x: scroll;
   display: flex;
   flex-flow: column;
+}
+
+.search-page-header,
+.search-page-body,
+.search-page-footer {
+  min-width: 500px;
+}
+
+.search-page-body {
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+
+  & > * {
+    flex: 1;
+  }
 }
 
 .search-page-header {
@@ -32,27 +47,6 @@ $page-border-color: $light-gray-3;
 
 .search-page-header-charts {
   height: 80px;
-}
-
-.search-page-body {
-  flex: 1 1 auto;
-  display: flex;
-}
-
-.search-page-results {
-  flex: 1 1 auto;
-}
-
-.pane {
-  position: relative;
-}
-
-.search-page-sidebar-right {
-  width: 420px;
-  background-color: $page-background-color;
-  overflow-y: scroll;
-  height: 100%;
-  border-left: 1px solid $page-border-color;
 }
 
 .search-page-footer {

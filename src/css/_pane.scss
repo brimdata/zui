@@ -1,4 +1,53 @@
+$pane-background-color: $light-gray-2;
+$pane-border-color: $light-gray-3;
+$pane-header-height: 36px;
+$pane-header-background-color: $light-gray-3;
+
 .pane {
   position: relative;
+  background: $pane-background-color;
+  display: flex;
+  flex-direction: column;
+}
+
+.pane-header {
+  -webkit-app-region: drag;
+  position: relative;
+  border-bottom: 1px solid $pane-border-color;
+  svg {
+    fill: $gray-3;
+    stroke: $gray-3;
+  }
+  flex-shrink: 0;
+  height: $pane-header-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+
+.pane-title {
+  font-weight: normal;
+  font-size: 12px;
+  text-align: center;
+  margin: 0;
+}
+
+.pane-body {
   overflow-y: scroll;
+  height: 100%;
+}
+
+.pane-left {
+  border-right: 1px solid $pane-border-color;
+}
+
+.pane-right {
+  border-left: 1px solid $pane-border-color;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }

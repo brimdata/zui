@@ -14,7 +14,7 @@ $box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
 $base-space: 12px;
 $high-box-shadow: 0 2px 15px 0px rgba(0, 0, 0, 0.3);
 $bro-log-row-height: 25px;
-$filter-node-background: $gray-1;
+$filter-node-background: $green-3;
 $filter-node-foreground: white;
 
 /* Mixins */
@@ -92,3 +92,5 @@ $filter-node-foreground: white;
 @import "settings";
 @import "drag-anchor";
 @import "pane";
+@import "log-detail-pane";
+@import "history-pane";

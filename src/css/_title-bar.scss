@@ -1,16 +1,9 @@
 .title-bar {
-  -webkit-app-region: drag;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex: 0 0 30px;
-  background-color: $light-gray-2;
-
-  p {
-    font-size: 14px;
-    margin-top: 6px;
-    padding: 0 12px;
+  .pane-title {
+    user-select: none;
+  }
+  .pane-title span {
+    padding: 0 6px;
     cursor: pointer;
     &:hover {
       text-decoration: underline;

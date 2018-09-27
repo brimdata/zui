@@ -48,6 +48,17 @@ module.exports = {
           {role: "zoomin"},
           {role: "zoomout"},
           {type: "separator"},
+          {
+            label: "Toggle Search History",
+            accelerator: "CmdOrCtrl+[",
+            click: () => browserWindow.webContents.send("toggleLeftSidebar")
+          },
+          {
+            label: "Toggle Log Details",
+            accelerator: "CmdOrCtrl+]",
+            click: () => browserWindow.webContents.send("toggleRightSidebar")
+          },
+          {type: "separator"},
           {role: "togglefullscreen"}
         ]
       },

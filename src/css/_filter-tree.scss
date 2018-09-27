@@ -1,7 +1,7 @@
-$filter-tree-line-color: $light-gray-3;
+$filter-tree-line-color: $gray-1;
 
 .filter-tree {
-  color: $gray-3;
+  color: $light-gray-3;
 
   .close-button {
     position: absolute;
@@ -19,14 +19,18 @@ $filter-tree-line-color: $light-gray-3;
 
     &:hover {
       svg {
-        fill: $gray-3;
+        fill: white;
       }
+    }
+
+    &:active {
+      transform: translateY(2px);
     }
   }
 }
 
 .filter-tree-parent:hover {
-  background: $light-gray-3;
+  background: $gray-2;
   cursor: pointer;
   .close-button {
     opacity: 1;
