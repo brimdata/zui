@@ -24,6 +24,16 @@ $pane-header-background-color: $light-gray-3;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
+
+  .center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .right {
+    display: flex;
+  }
 }
 
 .pane-title {
@@ -44,10 +54,4 @@ $pane-header-background-color: $light-gray-3;
 
 .pane-right {
   border-left: 1px solid $pane-border-color;
-}
-
-.center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
 }

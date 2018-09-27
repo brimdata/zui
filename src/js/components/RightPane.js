@@ -12,6 +12,7 @@ import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import classNames from "classnames"
 import XLogDetail from "../connectors/XLogDetail"
+import {launchWireshark} from "../lib/System"
 
 export default class RightPane extends React.Component {
   constructor(props) {
@@ -72,6 +73,12 @@ export default class RightPane extends React.Component {
               <PaneTitle>Log Details</PaneTitle>
             </Center>
             <Right>
+              <button
+                className="panel-button text"
+                onClick={() => launchWireshark()}
+              >
+                PCAPS
+              </button>
               <button
                 className={classNames("panel-button", "star-button", {
                   starred: isStarred
