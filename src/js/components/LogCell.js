@@ -10,7 +10,10 @@ export default class LogCell extends React.PureComponent {
     this.include = this.include.bind(this)
     this.exclude = this.exclude.bind(this)
     this.countBy = this.countBy.bind(this)
-    this.toggleMenu = () => this.setState({showMenu: !this.state.showMenu})
+    this.toggleMenu = e => {
+      e.stopPropagation()
+      this.setState({showMenu: !this.state.showMenu})
+    }
   }
 
   include(_e) {

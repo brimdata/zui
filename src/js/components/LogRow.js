@@ -28,14 +28,7 @@ export default class LogRow extends React.PureComponent {
       tsHighlight = !TimeWindow.inSameUnit([ts, prevTs], "minute")
     }
 
-    const cells = [
-      <TsCell
-        key="ts"
-        ts={ts}
-        highlight={tsHighlight}
-        onClick={() => showDetail(log)}
-      />
-    ]
+    const cells = [<TsCell key="ts" ts={ts} highlight={tsHighlight} />]
 
     for (let index = 1; index < log.tuple.length; index++) {
       const {name, value, type} = log.getFieldAt(index)
@@ -52,7 +45,11 @@ export default class LogRow extends React.PureComponent {
     }
 
     return (
-      <div className={classNames("log-row", {highlight})} style={style}>
+      <div
+        className={classNames("log-row", {highlight})}
+        style={style}
+        onClick={() => showDetail(log)}
+      >
         {cells}
       </div>
     )
