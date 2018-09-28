@@ -23,7 +23,7 @@
     "watch:reload": "livereload dist",
     "lint": "eslint src",
     "format": "prettier 'src/**/*.{js,scss}' --write --loglevel warn",
-    "flow": "flow"
+    "flow": "flow src/js"
   },
   "jest": {
     "notify": false,

@@ -1,3 +1,5 @@
+/* @flow */
+
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import {getTuplesByUid} from "./eventsByUid"
@@ -34,10 +36,13 @@ export default createReducer(initialState, {
   }
 })
 
-export const getNextExists = state => toHistory(state.logDetails).nextExists()
-export const getPrevExists = state => toHistory(state.logDetails).prevExists()
+export const getNextExists = (state: Object) =>
+  toHistory(state.logDetails).nextExists()
 
-export const getLogDetail = state => {
+export const getPrevExists = (state: Object) =>
+  toHistory(state.logDetails).prevExists()
+
+export const getLogDetail = (state: Object) => {
   const {logs, position} = state.logDetails
   return new History(logs, position).getCurrent()
 }

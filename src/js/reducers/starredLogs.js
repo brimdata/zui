@@ -1,3 +1,5 @@
+/* @flow */
+
 import createReducer from "./createReducer"
 import * as Tuple from "../lib/Tuple"
 
@@ -8,4 +10,4 @@ export default createReducer(initialState, {
   LOG_UNSTAR: (state, {tuple}) => Tuple.removeFrom(state, tuple)
 })
 
-export const getStarredLogs = state => state.starredLogs
+export const getStarredLogs = (state: Object) => state.starredLogs

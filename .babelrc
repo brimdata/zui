@@ -1,4 +1,5 @@
 {
   "presets": ["env", "react", "flow"],
-  "plugins": ["transform-object-rest-spread", "inline-react-svg"]
+  "plugins": ["transform-object-rest-spread", "inline-react-svg"],
+  "ignore": ["src/js/flow-typed"]
 }
