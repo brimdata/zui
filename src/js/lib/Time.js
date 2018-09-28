@@ -1,3 +1,5 @@
+/* @flow */
+
 /* Date functions that are aware of the global timezone
 
 There are three important timeones:
@@ -21,51 +23,75 @@ date.
     Time.fromStore(string)
 */
 
-import Moment from "moment"
-import "moment-timezone"
+import Moment from "moment-timezone"
+
+export type TimeUnit =
+  | "years"
+  | "y"
+  | "months"
+  | "M"
+  | "weeks"
+  | "w"
+  | "days"
+  | "d"
+  | "hours"
+  | "h"
+  | "minutes"
+  | "m"
+  | "seconds"
+  | "s"
+  | "milliseconds"
+  | "ms"
+
+export type EpochObj = {sec: number, ns: number}
 
 const STORAGE_FORMAT = "YYYY-MM-DD HH:mm:ss.SSS"
-export const toStore = date => Moment.utc(date).format(STORAGE_FORMAT)
-export const fromStore = string =>
+export const toStore = (date: Date) => Moment.utc(date).format(STORAGE_FORMAT)
+export const fromStore = (string: string) =>
   Moment.utc(string, STORAGE_FORMAT, true).toDate()
 
 export const moment = Moment
 
 export const zones = Moment.tz.names
 
-export const setZone = zone => Moment.tz.setDefault(zone)
+export const setZone = (zone: string) => Moment.tz.setDefault(zone)
 
-export const toString = date => Moment.utc(date).format(STORAGE_FORMAT)
+export const toString = (date: Date) => Moment.utc(date).format(STORAGE_FORMAT)
 
-export const format = (date, format) => Moment(date).format(format)
+export const format = (date: Date, format: string) =>
+  Moment(date).format(format)
 
-export const parse = (string, format, strict = true) => {
+export const parse = (
+  string: string,
+  format: string,
+  strict: boolean = true
+): boolean => {
   const m = Moment(string, format, strict)
   return m.isValid() ? m.toDate() : false
 }
 
-export const parseFromBoom = ({sec, ns}) => {
+export const parseFromBoom = ({sec, ns}: EpochObj): Date => {
   const nanos = parseFloat(sec + "." + padZeros(ns.toString(), 9))
   const millis = parseInt(nanos * 1e3)
   return new Date(millis)
 }
 
-export const set = (date, object) =>
+export const set = (date: Date, object: Object) =>
   Moment(date)
     .set(object)
     .toDate()
 
-export const add = (date, amount, unit) =>
+export const add = (date: Date, amount: number, unit: TimeUnit) =>
   Moment(date)
     .add(amount, unit)
     .toDate()
 
-export const subtract = (date, amount, unit) =>
+export const subtract = (date: Date, amount: number, unit: TimeUnit) =>
   Moment(date)
     .subtract(amount, unit)
     .toDate()
 
-export const fakeZone = date => {
+export const fakeZone = (date: Date) => {
   const obj = Moment(date).toObject()
   return new Date(
     obj.years,
@@ -78,9 +104,9 @@ export const fakeZone = date => {
   )
 }
 
-export const toObject = date => Moment(date).toObject()
+export const toObject = (date: Date) => Moment(date).toObject()
 
-const padZeros = (string, desiredLength) => {
+const padZeros = (string: string, desiredLength: number) => {
   while (string.length < desiredLength) string += "0"
   return string
 }

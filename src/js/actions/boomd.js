@@ -1,6 +1,15 @@
+/* @flow */
+
 import {getCredentials} from "../reducers/boomdCredentials"
 
-export const setBoomdCredentials = credentials => ({
+type Credentials = {
+  user: string,
+  host: string,
+  pass: string,
+  port: string
+}
+
+export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",
   credentials
 })
@@ -11,11 +20,18 @@ export const disconnectBoomd = () => ({
 
 export const connectedBoomd = () => ({type: "BOOMD_CONNECTED"})
 
-export const setBoomdError = error => ({type: "BOOMD_ERROR_SET", error})
+export const setBoomdError = (error: string) => ({
+  type: "BOOMD_ERROR_SET",
+  error
+})
 
 export const connectingBoomd = () => ({type: "BOOMD_CONNECTING"})
 
-export const connectBoomd = () => (dispatch, getState, api) => {
+export const connectBoomd = () => (
+  dispatch: Function,
+  getState: Function,
+  api: Object
+) => {
   dispatch(connectingBoomd())
   const credentials = getCredentials(getState())
   return api

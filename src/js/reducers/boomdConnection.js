@@ -1,3 +1,5 @@
+/* @flow */
+
 import createReducer from "./createReducer"
 
 const initialState = {
@@ -28,6 +30,8 @@ export default createReducer(initialState, {
   })
 })
 
-export const getBoomdError = state => state.boomdConnection.error
-export const getBoomdIsConnected = state => state.boomdConnection.isConnected
-export const getBoomdIsConnecting = state => state.boomdConnection.isConnecting
+export const getBoomdError = (state: Object) => state.boomdConnection.error
+export const getBoomdIsConnected = (state: Object) =>
+  state.boomdConnection.isConnected
+export const getBoomdIsConnecting = (state: Object) =>
+  state.boomdConnection.isConnecting

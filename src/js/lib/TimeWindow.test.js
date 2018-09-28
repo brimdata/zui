@@ -1,3 +1,5 @@
+/* @flow */
+
 import * as TimeWindow from "./TimeWindow"
 
 test("duration as seconds", () => {
@@ -35,7 +37,7 @@ test("inSameUnit", () => {
     new Date(2000, 1, 15, 12, 30, 0, 0),
     new Date(2000, 1, 15, 15, 30, 45, 0)
   ]
-  const duration = TimeWindow.inSameUnit(window, "second")
+  const duration = TimeWindow.inSameUnit(window, "seconds")
 
   expect(duration).toBe(false)
 })
@@ -45,7 +47,7 @@ test("inSameUnit", () => {
     new Date(2000, 1, 15, 12, 30, 0, 0),
     new Date(2000, 1, 15, 15, 30, 45, 0)
   ]
-  const duration = TimeWindow.inSameUnit(window, "month")
+  const duration = TimeWindow.inSameUnit(window, "months")
 
   expect(duration).toBe(true)
 })
@@ -56,7 +58,7 @@ test("floorAndCeil", () => {
     new Date(2000, 1, 15, 13, 30, 45, 0)
   ]
 
-  const newWindow = TimeWindow.floorAndCeil(window, "minute")
+  const newWindow = TimeWindow.floorAndCeil(window, "minutes")
 
   expect(newWindow).toEqual([
     new Date(2000, 1, 15, 12, 30, 0, 0),

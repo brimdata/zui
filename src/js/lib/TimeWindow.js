@@ -1,14 +1,22 @@
+/* @flow */
+
 import moment from "moment"
 import isEqual from "lodash/isEqual"
 import * as Time from "./Time"
+import type {TimeUnit} from "./Time"
 
-export const duration = ([from, to], unit = "ms", integer = false) =>
-  moment.duration(moment(to).diff(moment(from)), integer).as(unit)
+type TimeWindow = [Date, Date]
 
-export const humanDuration = ([from, to]) =>
+export const duration = (
+  [from, to]: TimeWindow,
+  unit: TimeUnit = "ms",
+  integer: boolean = false
+) => moment.duration(moment(to).diff(moment(from), "sec", integer)).as(unit)
+
+export const humanDuration = ([from, to]: TimeWindow) =>
   moment.duration(moment(to).diff(moment(from))).humanize()
 
-export const inSameUnit = ([from, to], unit) =>
+export const inSameUnit = ([from, to]: TimeWindow, unit: TimeUnit) =>
   isEqual(
     moment(from)
       .startOf(unit)
@@ -18,7 +26,7 @@ export const inSameUnit = ([from, to], unit) =>
       .toDate()
   )
 
-export const floorAndCeil = ([from, to], unit) => [
+export const floorAndCeil = ([from, to]: TimeWindow, unit: TimeUnit) => [
   moment(from)
     .startOf(unit)
     .toDate(),
@@ -27,5 +35,8 @@ export const floorAndCeil = ([from, to], unit) => [
     .toDate()
 ]
 
-export const shift = (timeWindow, amount, unit = "ms") =>
-  timeWindow.map(date => Time.add(date, amount, unit))
+export const shift = (
+  timeWindow: TimeWindow,
+  amount: number,
+  unit: TimeUnit = "ms"
+) => timeWindow.map(date => Time.add(date, amount, unit))

@@ -1,3 +1,5 @@
+/* @flow */
+
 import * as Time from "./Time"
 import random from "lodash/random"
 
@@ -63,13 +65,13 @@ test("set the time", () => {
 })
 
 test("add some time", () => {
-  const date = Time.add(mockDate, 1, "hour")
+  const date = Time.add(mockDate, 1, "hours")
 
   expect(date).toEqual(new Date(2009, 8, 18, 0, 45))
 })
 
 test("subtract some time", () => {
-  const date = Time.subtract(mockDate, 1, "hour")
+  const date = Time.subtract(mockDate, 1, "hours")
 
   expect(date).toEqual(new Date(2009, 8, 17, 22, 45))
 })
@@ -146,7 +148,6 @@ test("parseFromBoom", () => {
     ns: 0
   }
   const date = Time.parseFromBoom(timeObj)
-
   expect(date).toEqual(new Date("2015-04-13T09:36:33.000Z"))
   expect(date.getTime()).toEqual(1428917793000)
 })
