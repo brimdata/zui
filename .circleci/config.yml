@@ -18,5 +18,8 @@ jobs:
           name: Lint
           command: npm run lint
       - run:
+          name: Flow
+          command: npm run flow
+      - run:
           name: Test
           command: npm test
