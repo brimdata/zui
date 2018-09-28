@@ -25,11 +25,11 @@ export const connectBoomd = () => (dispatch, getState, api) => {
     })
     .catch(res => {
       if (typeof res === "string") {
-        if (res.match(/ECONNREFUSED/)) {
+        if (res.match(/ENOTFOUND/)) {
           const {host, port} = credentials
           dispatch(setBoomdError(`No server running at ${host}:${port}`))
         }
-        if (res.match(/permission denied/))
+        if (res.match(/UNAUTHORIZED/))
           dispatch(setBoomdError("Incorrect user and pass combination."))
       } else if (
         res &&
