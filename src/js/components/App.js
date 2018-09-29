@@ -1,11 +1,18 @@
-import React from "react"
+/* @flow */
+
+import React, {Component} from "react"
 import {Route, Switch, Redirect} from "react-router-dom"
 import XSearch from "../connectors/XSearch"
 import XConnect from "../connectors/XConnect"
 import XSpaces from "../connectors/XSpaces"
 import * as Time from "../lib/Time"
 
-class App extends React.Component {
+type Props = {
+  isConnected: boolean,
+  timeZone: string
+}
+
+class App extends Component<Props> {
   render() {
     const {isConnected, timeZone} = this.props
     Time.setZone(timeZone)

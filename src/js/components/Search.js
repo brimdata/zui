@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from "react"
 import {Redirect} from "react-router-dom"
 import {AutoSizer} from "react-virtualized"
@@ -12,7 +14,16 @@ import XAnalysisViewer from "../connectors/XAnalysisViewer"
 import XLeftPane from "../connectors/XLeftPane"
 import XRightPane from "../connectors/XRightPAne"
 
-export default class Search extends React.Component {
+type Props = {
+  fetchAllSpaces: Function,
+  isConnected: boolean,
+  currentSpaceName: string,
+  initialLoad: boolean,
+  logsTab: boolean,
+  analyticsTab: boolean
+}
+
+export default class Search extends React.Component<Props> {
   componentDidMount() {
     this.props.fetchAllSpaces()
   }
