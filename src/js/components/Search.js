@@ -12,7 +12,7 @@ import XCountByTime from "../connectors/XCountByTime"
 import XSearchWelcome from "../connectors/XSearchWelcome"
 import XAnalysisViewer from "../connectors/XAnalysisViewer"
 import XLeftPane from "../connectors/XLeftPane"
-import XRightPane from "../connectors/XRightPAne"
+import XRightPane from "../connectors/XRightPane"
 
 type Props = {
   fetchAllSpaces: Function,
