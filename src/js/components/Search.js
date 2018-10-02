@@ -41,7 +41,7 @@ export default class Search extends React.Component<Props> {
     if (!currentSpaceName) return <Redirect to="/spaces" />
 
     return (
-      <div className="search-page-window">
+      <div className="search-page">
         <XLeftPane />
         <div className="search-page-main">
           <XTitleBar />
