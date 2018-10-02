@@ -13,6 +13,7 @@ import XSearchWelcome from "../connectors/XSearchWelcome"
 import XAnalysisViewer from "../connectors/XAnalysisViewer"
 import XLeftPane from "../connectors/XLeftPane"
 import XRightPane from "../connectors/XRightPane"
+import XDownloadProgress from "../connectors/XDownloadProgress"
 
 type Props = {
   fetchAllSpaces: Function,
@@ -41,33 +42,36 @@ export default class Search extends React.Component<Props> {
     if (!currentSpaceName) return <Redirect to="/spaces" />
 
     return (
-      <div className="search-page">
-        <XLeftPane />
-        <div className="search-page-main">
-          <XTitleBar />
-          <div className="search-page-header">
-            <XControlBar />
-            {!initialLoad &&
-              logsTab && (
-                <div className="search-page-header-charts">
-                  <AutoSizer disableHeight>
-                    {({width}) => <XCountByTime height={80} width={width} />}
-                  </AutoSizer>
-                </div>
+      <div className="search-page-wrapper">
+        <div className="search-page">
+          <XLeftPane />
+          <div className="search-page-main">
+            <XTitleBar />
+            <div className="search-page-header">
+              <XControlBar />
+              {!initialLoad &&
+                logsTab && (
+                  <div className="search-page-header-charts">
+                    <AutoSizer disableHeight>
+                      {({width}) => <XCountByTime height={80} width={width} />}
+                    </AutoSizer>
+                  </div>
+                )}
+            </div>
+            <div className="search-page-body">
+              {initialLoad && (
+                <XSearchWelcome currentSpaceName={currentSpaceName} />
               )}
+              {!initialLoad && logsTab && <XLogViewer />}
+              {!initialLoad && analyticsTab && <XAnalysisViewer />}
+            </div>
+            <div className="search-page-footer">
+              <XSearchStats />
+            </div>
           </div>
-          <div className="search-page-body">
-            {initialLoad && (
-              <XSearchWelcome currentSpaceName={currentSpaceName} />
-            )}
-            {!initialLoad && logsTab && <XLogViewer />}
-            {!initialLoad && analyticsTab && <XAnalysisViewer />}
-          </div>
-          <div className="search-page-footer">
-            <XSearchStats />
-          </div>
+          <XRightPane />
         </div>
-        <XRightPane />
+        <XDownloadProgress />
       </div>
     )
   }

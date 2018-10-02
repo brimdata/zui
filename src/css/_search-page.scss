@@ -1,6 +1,12 @@
 $page-background-color: $light-gray-2;
 $page-border-color: $light-gray-3;
 
+.search-page-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .title-bar .pane-header {
   background: $light-gray-2;
   border-color: transparent;

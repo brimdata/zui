@@ -1,0 +1,58 @@
+.download-progress {
+  position: relative;
+  background: $gray-3;
+  border-top: 2px solid $gray-4;
+
+  &.complete .progress-value {
+    background-color: $green-3;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 5px;
+  }
+
+  .progress-value {
+    background-color: $yellow-3;
+    height: 100%;
+    border-radius: 0 8px 8px 0;
+    width: 0%;
+    transition: width 200ms linear;
+  }
+
+  .message-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &.progress {
+    }
+
+    &.complete {
+    }
+  }
+
+  .message {
+    font-size: 12px;
+    padding: 12px;
+    white-space: nowrap;
+    color: white;
+  }
+
+  .panel-button {
+    color: white;
+    margin-right: 12px;
+
+    &.open {
+      background: $green-3;
+    }
+
+    &.open:hover {
+      background: $gray-4;
+    }
+
+    &.cancel:hover {
+      background: $red;
+    }
+  }
+}
