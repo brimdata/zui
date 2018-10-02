@@ -12,7 +12,6 @@ import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import classNames from "classnames"
 import XLogDetail from "../connectors/XLogDetail"
-import {launchWireshark} from "../lib/System"
 
 export default class RightPane extends React.Component {
   constructor(props) {
@@ -39,7 +38,8 @@ export default class RightPane extends React.Component {
       isOpen,
       width,
       isStarred,
-      currentLog
+      currentLog,
+      fetchPackets
     } = this.props
     return (
       <Pane
@@ -75,7 +75,7 @@ export default class RightPane extends React.Component {
             <Right>
               <button
                 className="panel-button text"
-                onClick={() => launchWireshark()}
+                onClick={() => fetchPackets(currentLog.get("uid"))}
               >
                 PCAPS
               </button>
