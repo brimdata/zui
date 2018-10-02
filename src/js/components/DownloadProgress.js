@@ -3,8 +3,13 @@ import classNames from "classnames"
 
 class DownloadProgress extends React.Component {
   render() {
-    const {percent, fileName} = this.props
-    const complete = percent >= 100
+    const {downloads} = this.props
+    const item = downloads[0]
+    if (!item) return null
+
+    const {percentComplete, fileName} = downloads[0]
+    console.log(percentComplete)
+    const complete = percentComplete >= 1
 
     return (
       <div
@@ -30,7 +35,10 @@ class DownloadProgress extends React.Component {
         )}
 
         <div className="progress-bar">
-          <div className="progress-value" style={{width: percent + "%"}} />
+          <div
+            className="progress-value"
+            style={{width: percentComplete * 100 + "%"}}
+          />
         </div>
       </div>
     )

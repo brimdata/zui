@@ -18,6 +18,7 @@ import searchBar from "./searchBar"
 import view from "./view"
 import starredLogs from "./starredLogs"
 import logs from "./logs"
+import packets from "./packets"
 
 export default combineReducers({
   logs,
@@ -38,5 +39,6 @@ export default combineReducers({
   searchStats,
   boomdCredentials,
   boomdConnection,
-  starredLogs
+  starredLogs,
+  packets
 })

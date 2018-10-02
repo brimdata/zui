@@ -25,14 +25,18 @@ function unix() {
   let dir
   try {
     dir = execSync("xdg-user-dir DOWNLOAD", {stdio: [0, 3, 3]})
-  } catch (_) {}
+  } catch (e) {
+    console.error(e)
+  }
   if (dir) return dir
 
   let stat
   const homeDownloads = `${process.env.HOME}/Downloads`
   try {
     stat = statSync(homeDownloads)
-  } catch (_) {}
+  } catch (e) {
+    console.error(e)
+  }
   if (stat) return homeDownloads
 
   return "/tmp/"

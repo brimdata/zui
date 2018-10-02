@@ -17,7 +17,8 @@ export const receivePackets = (uid: string, fileName: string) => ({
 
 export const errorPackets = (uid: string, error: string) => ({
   type: "PACKETS_ERROR",
-  error
+  error,
+  uid
 })
 
 export const fetchPackets = (uid: string) => (
@@ -31,6 +32,6 @@ export const fetchPackets = (uid: string) => (
   const destDir = downloadsFolder()
   api
     .packets({uid, space, destDir})
-    .then(fileName => receivePackets(uid, fileName))
-    .catch(error => errorPackets(uid, error))
+    .then(fileName => dispatch(receivePackets(uid, fileName)))
+    .catch(error => dispatch(errorPackets(uid, error)))
 }
