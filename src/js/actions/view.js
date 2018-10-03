@@ -44,3 +44,11 @@ export const setLeftSidebarWidth = width => ({
   type: "LEFT_SIDEBAR_WIDTH_SET",
   width
 })
+
+export const showDownloads = () => ({
+  type: "DOWNLOADS_SHOW"
+})
+
+export const hideDownloads = () => ({
+  type: "DOWNLOADS_HIDE"
+})

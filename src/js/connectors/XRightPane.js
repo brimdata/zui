@@ -4,11 +4,12 @@ import RightPane from "../components/RightPane"
 import * as viewActions from "../actions/view"
 import * as starActions from "../actions/starredLogs"
 import * as detailActions from "../actions/logDetails"
+import * as packetActions from "../actions/packets"
 import * as view from "../reducers/view"
 import * as logDetails from "../reducers/logDetails"
 
 const stateToProps = state => ({
-  isOpen: view.getRightSidebarIsOpen(state),
+  isOpen: view.getRightSidebarIsOpen(state) && logDetails.buildLogDetail(state),
   width: view.getRightSidebarWidth(state),
   prevExists: logDetails.getPrevExists(state),
   nextExists: logDetails.getNextExists(state),
@@ -20,7 +21,7 @@ export default connect(
   stateToProps,
   dispatch =>
     bindActionCreators(
-      {...viewActions, ...starActions, ...detailActions},
+      {...viewActions, ...starActions, ...detailActions, ...packetActions},
       dispatch
     )
 )(RightPane)
