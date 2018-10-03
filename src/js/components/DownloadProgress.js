@@ -3,12 +3,10 @@ import classNames from "classnames"
 
 class DownloadProgress extends React.Component {
   render() {
-    const {downloads} = this.props
-    const item = downloads[0]
-    if (!item) return null
+    const {downloads, downloadsIsOpen} = this.props
+    if (!downloadsIsOpen || downloads.length === 0) return null
 
-    const {percentComplete, fileName} = downloads[0]
-    console.log(percentComplete)
+    const {percentComplete} = downloads[0]
     const complete = percentComplete >= 1
 
     return (
@@ -19,18 +17,12 @@ class DownloadProgress extends React.Component {
       >
         {!complete && (
           <div className="message-wrapper">
-            <p className="message">
-              Downloading <b>{fileName}</b>
-            </p>
-            <button className="panel-button text cancel">CANCEL</button>
+            <p className="message">Downloading</p>
           </div>
         )}
         {complete && (
           <div className="message-wrapper">
-            <p className="message">
-              Download Complete: <b>{fileName}</b>
-            </p>
-            <button className="panel-button text open">OPEN</button>
+            <p className="message">Download Complete</p>
           </div>
         )}
 

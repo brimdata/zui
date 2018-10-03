@@ -9,7 +9,7 @@ import * as view from "../reducers/view"
 import * as logDetails from "../reducers/logDetails"
 
 const stateToProps = state => ({
-  isOpen: view.getRightSidebarIsOpen(state),
+  isOpen: view.getRightSidebarIsOpen(state) && logDetails.buildLogDetail(state),
   width: view.getRightSidebarWidth(state),
   prevExists: logDetails.getPrevExists(state),
   nextExists: logDetails.getNextExists(state),

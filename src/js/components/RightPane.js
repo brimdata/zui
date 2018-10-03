@@ -17,6 +17,7 @@ export default class RightPane extends React.Component {
   constructor(props) {
     super(props)
     this.onDrag = this.onDrag.bind(this)
+    this.onPacketsClick = this.onPacketsClick.bind(this)
     this.toggleStar = () =>
       this.props.isStarred
         ? this.props.unstarLog(this.props.currentLog.tuple)
@@ -27,6 +28,10 @@ export default class RightPane extends React.Component {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
     this.props.setRightSidebarWidth(Math.min(width, max))
+  }
+
+  onPacketsClick() {
+    this.props.fetchPackets(this.props.currentLog.get("uid"))
   }
 
   render() {
@@ -41,6 +46,7 @@ export default class RightPane extends React.Component {
       currentLog,
       fetchPackets
     } = this.props
+
     return (
       <Pane
         isOpen={isOpen}
@@ -75,7 +81,7 @@ export default class RightPane extends React.Component {
             <Right>
               <button
                 className="panel-button text"
-                onClick={() => fetchPackets(currentLog.get("uid"))}
+                onClick={this.onPacketsClick}
               >
                 PCAPS
               </button>

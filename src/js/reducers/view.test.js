@@ -27,3 +27,15 @@ test("setting left side bar width", () => {
 
   expect(view.getLeftSidebarWidth(state)).toBe(1299)
 })
+
+test("showing the downloads bar", () => {
+  const state = reduce([a.showDownloads()])
+
+  expect(view.getDownloadsIsOpen(state)).toBe(true)
+})
+
+test("hiding the downloads bar", () => {
+  const state = reduce([a.showDownloads(), a.hideDownloads()])
+
+  expect(view.getDownloadsIsOpen(state)).toBe(false)
+})
