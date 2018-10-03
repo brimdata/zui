@@ -31,7 +31,7 @@ export default class RightPane extends React.Component {
   }
 
   onPacketsClick() {
-    this.props.fetchPackets(this.props.currentLog.get("uid"))
+    this.props.fetchPackets(this.props.currentLog)
   }
 
   render() {

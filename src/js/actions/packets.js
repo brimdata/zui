@@ -5,6 +5,7 @@ import * as spaces from "../reducers/spaces"
 import downloadsFolder from "../lib/downloadsFolder"
 import * as System from "../lib/System"
 import {showDownloads, hideDownloads} from "./view"
+import Log from "../models/Log"
 
 export const requestPackets = (uid: string) => ({
   type: "PACKETS_REQUEST",
@@ -23,22 +24,36 @@ export const errorPackets = (uid: string, error: string) => ({
   uid
 })
 
-export const fetchPackets = (uid: string) => (
+export const fetchPackets = (log: Log) => (
   dispatch: Function,
   getState: Function,
   api: Client
 ) => {
-  dispatch(requestPackets(uid))
+  dispatch(requestPackets(log.get("uid")))
   dispatch(showDownloads())
   const state = getState()
   const space = spaces.getCurrentSpaceName(state)
   const destDir = downloadsFolder()
   return api
-    .packets({uid, space, destDir})
-    .then(fileName => {
-      dispatch(receivePackets(uid, fileName))
-      System.open(fileName.path)
+    .packets({
+      ts_sec: log.getSec("ts"),
+      ts_ns: log.getNs("ts"),
+      duration_sec: log.getSec("duration"),
+      duration_ns: log.getNs("duration"),
+      proto: log.get("proto"),
+      src_host: log.get("id.orig_h"),
+      src_port: log.get("id.orig_p"),
+      dst_host: log.get("id.resp_h"),
+      dst_port: log.get("id.resp_p"),
+      space,
+      destDir
+    })
+    .then(file => {
+      dispatch(receivePackets(log.get("uid"), file))
+      System.open(file.path).catch(e => console.log(e))
       setTimeout(() => dispatch(hideDownloads()), 5000)
     })
-    .catch(error => dispatch(errorPackets(uid, error)))
+    .catch(error => {
+      dispatch(errorPackets(log.get("uid"), error))
+    })
 }

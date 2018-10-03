@@ -1,12 +1,6 @@
+/* @flow */
+
 import Log from "./Log"
-
-test("isSame when one is null", () => {
-  expect(Log.isSame(null, null)).toBe(false)
-})
-
-test("isSame when one is different object", () => {
-  expect(Log.isSame(new Date(), new Date())).toBe(false)
-})
 
 test("isSame when they are the same", () => {
   const a = new Log(

@@ -7,6 +7,4 @@ export const launchWireshark = () => {
   exec("wireshark ~/Desktop/pcaps")
 }
 
-export const open = (path: string) => {
-  opn(path)
-}
+export const open = (path: string) => opn(path)

@@ -1,44 +1,85 @@
+/* @flow */
+
 import isEqual from "lodash/isEqual"
 
-class Log {
-  static buildAll(tuples, descriptors, space) {
+type Tuple = string[]
+
+type Field = {
+  type: string,
+  name: string,
+  value: string
+}
+
+type Descriptor = {type: string, name: string}[]
+
+export default class Log {
+  tuple: Tuple
+  descriptor: Descriptor
+
+  static buildAll(
+    tuples: Tuple[],
+    descriptors: {[string]: Descriptor},
+    space: string
+  ) {
     const logs = []
-    for (let index in tuples) {
-      const tuple = tuples[index]
+    tuples.forEach(tuple => {
       const descriptor = descriptors[space + "." + tuple[0]]
       if (descriptor) logs.push(new Log(tuple, descriptor))
-    }
+    })
     return logs
   }
 
-  constructor(tuple, descriptor) {
+  static isSame(a: Log, b: Log) {
+    if (!a || !b) return false
+    return isEqual(a.tuple, b.tuple) && isEqual(a.descriptor, b.descriptor)
+  }
+
+  constructor(tuple: Tuple, descriptor: Descriptor) {
     this.tuple = tuple
     this.descriptor = descriptor
   }
 
-  getIndex(name) {
+  getIndex(name: string) {
     return this.descriptor.findIndex(field => field.name === name)
   }
 
-  get(name) {
+  get(name: string) {
     return this.tuple[this.getIndex(name)]
   }
 
-  getField(fieldName) {
+  getField(fieldName: string): Field {
     return this.getFieldAt(this.getIndex(fieldName))
   }
 
-  getFieldAt(index) {
-    if (index !== -1) {
+  getFieldAt(index: number): Field {
+    if (index !== -1 && index < this.tuple.length) {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
       return {value, name, type}
     } else {
-      return null
+      throw new Error(`No field at index ${index}`)
     }
   }
 
-  cast(name) {
+  getSec(fieldName: string): number {
+    const {name, type, value} = this.getField(fieldName)
+    if (type === "time" || type === "interval") {
+      return parseInt(value.split(".")[0])
+    } else {
+      throw new Error(`${name} is not a time type`)
+    }
+  }
+
+  getNs(fieldName: string): number {
+    const {name, type, value} = this.getField(fieldName)
+    if (type === "time" || type === "interval") {
+      return parseInt(value.split(".")[1] + "000")
+    } else {
+      throw new Error(`${name} is not a time type`)
+    }
+  }
+
+  cast(name: string) {
     const field = this.getField(name)
     if (!field) return null
 
@@ -63,11 +104,3 @@ class Log {
     }
   }
 }
-
-Log.isSame = (a, b) => {
-  if (!a || a.constructor !== Log) return false
-  if (!b || b.constructor !== Log) return false
-  return isEqual(a.tuple, b.tuple) && isEqual(a.descriptor, b.descriptor)
-}
-
-export default Log
