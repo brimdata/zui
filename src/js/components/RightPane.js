@@ -43,8 +43,7 @@ export default class RightPane extends React.Component {
       isOpen,
       width,
       isStarred,
-      currentLog,
-      fetchPackets
+      currentLog
     } = this.props
 
     return (
