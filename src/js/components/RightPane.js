@@ -31,7 +31,7 @@ export default class RightPane extends React.Component {
   }
 
   onPacketsClick() {
-    this.props.fetchPackets(this.props.currentLog.get("uid"))
+    this.props.fetchPackets(this.props.currentLog)
   }
 
   render() {
@@ -78,12 +78,14 @@ export default class RightPane extends React.Component {
               <PaneTitle>Log Details</PaneTitle>
             </Center>
             <Right>
-              <button
-                className="panel-button text"
-                onClick={this.onPacketsClick}
-              >
-                PCAPS
-              </button>
+              {currentLog.get("_path") === "conn" && (
+                <button
+                  className="panel-button text"
+                  onClick={this.onPacketsClick}
+                >
+                  PCAPS
+                </button>
+              )}
               <button
                 className={classNames("panel-button", "star-button", {
                   starred: isStarred

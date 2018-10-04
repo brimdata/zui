@@ -1,6 +1,5 @@
 // Code from https://github.com/juliangruber/downloads-folder
-const os = require("os")
-const execSync = require("child_process").execSync
+import os from "os"
 const statSync = require("fs").statSync
 
 module.exports = () => {
@@ -22,20 +21,12 @@ function darwin() {
 }
 
 function unix() {
-  let dir
-  try {
-    dir = execSync("xdg-user-dir DOWNLOAD", {stdio: [0, 3, 3]})
-  } catch (e) {
-    console.error(e)
-  }
-  if (dir) return dir
-
   let stat
   const homeDownloads = `${process.env.HOME}/Downloads`
   try {
     stat = statSync(homeDownloads)
   } catch (e) {
-    console.error(e)
+    e
   }
   if (stat) return homeDownloads
 

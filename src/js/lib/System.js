@@ -1,12 +1,7 @@
 /* @flow */
 
-const {exec} = require("child_process")
 import opn from "opn"
+import downloads from "./downloadsDir"
 
-export const launchWireshark = () => {
-  exec("wireshark ~/Desktop/pcaps")
-}
-
-export const open = (path: string) => {
-  opn(path)
-}
+export const open = (path: string) => opn(path)
+export const downloadsDir = () => downloads()
