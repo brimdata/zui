@@ -35,7 +35,8 @@
     ],
     "collectCoverageFrom": [
       "**/*.js",
-      "!**/flow-typed/**"
+      "!**/flow-typed/**",
+      "!**/test/**"
     ]
   },
   "prettier": {
