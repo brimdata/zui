@@ -23,7 +23,8 @@
     "watch:reload": "livereload dist",
     "lint": "eslint src",
     "format": "prettier 'src/**/*.{js,scss}' --write --loglevel warn",
-    "flow": "flow src/js"
+    "flow": "flow src/js",
+    "check": "npm-run-all -p lint flow test"
   },
   "jest": {
     "notify": false,
