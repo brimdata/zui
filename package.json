@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "base64-js": "^1.3.0",
-    "boom-js-client": "1.3.2",
+    "boom-js-client": "1.3.3",
     "classnames": "^2.2.6",
     "d3": "^5.5.0",
     "electron-dl": "^1.12.0",
