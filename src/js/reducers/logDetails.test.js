@@ -55,7 +55,3 @@ test("going back and then forward", () => {
   const log = r.buildLogDetail(state)
   expect(log.get("letter")).toBe("b")
 })
-
-test("buildCorrelatedLogs", () => {
-  const state = reduce([])
-})
