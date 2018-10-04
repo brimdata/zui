@@ -47,35 +47,39 @@ export default class Log {
     return this.tuple[this.getIndex(name)]
   }
 
-  getField(fieldName: string): Field {
+  getField(fieldName: string): Field | void {
     return this.getFieldAt(this.getIndex(fieldName))
   }
 
-  getFieldAt(index: number): Field {
+  getFieldAt(index: number): Field | void {
     if (index !== -1 && index < this.tuple.length) {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
       return {value, name, type}
-    } else {
-      throw new Error(`No field at index ${index}`)
     }
   }
 
-  getSec(fieldName: string): number {
-    const {name, type, value} = this.getField(fieldName)
-    if (type === "time" || type === "interval") {
-      return parseInt(value.split(".")[0])
-    } else {
-      throw new Error(`${name} is not a time type`)
+  getSec(fieldName: string): number | void {
+    const field = this.getField(fieldName)
+    if (field) {
+      const {type, name, value} = field
+      if (type === "time" || type === "interval") {
+        return parseInt(value.split(".")[0])
+      } else {
+        throw new Error(`${name} is not a time type`)
+      }
     }
   }
 
-  getNs(fieldName: string): number {
-    const {name, type, value} = this.getField(fieldName)
-    if (type === "time" || type === "interval") {
-      return parseInt(value.split(".")[1] + "000")
-    } else {
-      throw new Error(`${name} is not a time type`)
+  getNs(fieldName: string): number | void {
+    const field = this.getField(fieldName)
+    if (field) {
+      const {name, type, value} = field
+      if (type === "time" || type === "interval") {
+        return parseInt(value.split(".")[1] + "000")
+      } else {
+        throw new Error(`${name} is not a time type`)
+      }
     }
   }
 
