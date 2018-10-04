@@ -2,7 +2,6 @@
 
 import Client from "boom-js-client"
 import * as spaces from "../reducers/spaces"
-import downloadsFolder from "../lib/downloadsFolder"
 import * as System from "../lib/System"
 import {showDownloads, hideDownloads} from "./view"
 import Log from "../models/Log"
@@ -33,7 +32,7 @@ export const fetchPackets = (log: Log) => (
   dispatch(showDownloads())
   const state = getState()
   const space = spaces.getCurrentSpaceName(state)
-  const destDir = downloadsFolder()
+  const destDir = System.downloadsDir()
   return api
     .packets({
       ts_sec: log.getSec("ts"),
