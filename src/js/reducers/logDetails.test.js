@@ -1,8 +1,5 @@
 import * as r from "./logDetails"
 import * as a from "../actions/logDetails"
-import * as mockLogs from "../test/mockLogs"
-
-const logs = Object.keys(mockLogs).map(log => mockLogs[log]())
 
 const tuple = ["1", "a"]
 const descriptor = [
