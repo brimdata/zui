@@ -1,14 +1,14 @@
 /* @flow */
 
 import * as actions from "./packets"
-import mockConnLog from "../test/mockConnLog"
+import {conn} from "../test/mockLogs"
 import reducers from "../reducers"
 import {setCurrentSpaceName} from "./spaces"
 
 test("fetching packets is a success", done => {
   const state = [setCurrentSpaceName("trump-tower")].reduce(reducers, undefined)
 
-  const log = mockConnLog()
+  const log = conn()
   const dispatch = jest.fn()
   const getState = jest.fn(() => state)
   const packetsFn = jest.fn(() => new Promise(res => res({path: "file.pcap"})))
@@ -44,7 +44,7 @@ test("fetching packets is a success", done => {
 test("fetching packets is a failure", done => {
   const state = [setCurrentSpaceName("trump-tower")].reduce(reducers, undefined)
 
-  const log = mockConnLog()
+  const log = conn()
   const dispatch = jest.fn()
   const getState = jest.fn(() => state)
   const packetsFn = jest.fn(() => new Promise((res, rej) => rej()))
