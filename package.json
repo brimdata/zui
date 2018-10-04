@@ -32,6 +32,10 @@
     "testURL": "http://localhost",
     "roots": [
       "./src/js"
+    ],
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/flow-typed/**"
     ]
   },
   "prettier": {
