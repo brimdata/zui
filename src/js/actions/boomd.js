@@ -1,13 +1,7 @@
 /* @flow */
 
 import {getCredentials} from "../reducers/boomdCredentials"
-
-type Credentials = {
-  user: string,
-  host: string,
-  pass: string,
-  port: string
-}
+import type {Credentials} from "../lib/Credentials"
 
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",

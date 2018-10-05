@@ -1,21 +1,39 @@
+/* @flow */
+
 import React from "react"
-import Prism from "prismjs"
 import {ContextMenu, MenuItem} from "./ContextMenu"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import Arrow from "../icons/caret-bottom-sm.svg"
-import Modal from "./Modal"
-import {SmallHeading} from "./Headings"
+import XDebugModal from "../connectors/XDebugModal"
+import XCurlModal from "../connectors/XCurlModal"
 
-class SearchButton extends React.Component {
-  constructor(props) {
+type State = {
+  menuIsOpen: boolean,
+  showDebugModal: boolean,
+  showCurlModal: boolean
+}
+
+type Props = {
+  submitSearchBar: Function
+}
+
+class SearchButton extends React.Component<Props, State> {
+  openMenu: Function
+  closeMenu: Function
+
+  constructor(props: Props) {
     super(props)
-    this.state = {menuIsOpen: false, showAstModal: false}
+    this.state = {
+      menuIsOpen: false,
+      showDebugModal: false,
+      showCurlModal: false
+    }
     this.openMenu = () => this.setState({menuIsOpen: true})
     this.closeMenu = () => this.setState({menuIsOpen: false})
   }
 
   render() {
-    const {submitSearchBar, ast, searchProgram} = this.props
+    const {submitSearchBar} = this.props
 
     return (
       <div className="search-button-wrapper">
@@ -33,33 +51,25 @@ class SearchButton extends React.Component {
             <MenuItem>Load query (coming soon)</MenuItem>
             <MenuItem
               onClick={() =>
-                this.setState({showAstModal: true, menuIsOpen: false})
+                this.setState({showDebugModal: true, menuIsOpen: false})
               }
             >
               Debug query
             </MenuItem>
+            <MenuItem onClick={() => this.setState({showCurlModal: true})}>
+              Copy for curl
+            </MenuItem>
             <MenuItem>Copy for CLI (coming soon)</MenuItem>
           </ContextMenu>
         )}
-        <Modal
-          isOpen={this.state.showAstModal}
-          onClose={() => {
-            this.setState({showAstModal: false})
-          }}
-          className="debug-query-modal"
-        >
-          <SmallHeading>Search Program</SmallHeading>
-          <pre>{searchProgram}</pre>
-          <SmallHeading>Abstract Syntax Tree</SmallHeading>
-          <pre>
-            <code
-              className="language-js"
-              dangerouslySetInnerHTML={{
-                __html: Prism.highlight(ast, Prism.languages.js, "JSON")
-              }}
-            />
-          </pre>
-        </Modal>
+        <XDebugModal
+          isOpen={this.state.showDebugModal}
+          onClose={() => this.setState({showDebugModal: false})}
+        />
+        <XCurlModal
+          isOpen={this.state.showCurlModal}
+          onClose={() => this.setState({showCurlModal: false})}
+        />
       </div>
     )
   }

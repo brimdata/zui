@@ -5,7 +5,7 @@ import isEqual from "lodash/isEqual"
 import * as Time from "./Time"
 import type {TimeUnit} from "./Time"
 
-type TimeWindow = [Date, Date]
+export type TimeWindow = [Date, Date]
 
 export const duration = (
   [from, to]: TimeWindow,

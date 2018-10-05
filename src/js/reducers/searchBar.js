@@ -1,3 +1,5 @@
+/* @flow */
+
 import createReducer from "./createReducer"
 import isNumber from "lodash/isNumber"
 import trim from "lodash/trim"
@@ -11,6 +13,9 @@ export const initialState = {
   editing: null,
   error: null
 }
+
+type Slice = typeof initialState
+type State = {searchBar: Slice}
 
 export default createReducer(initialState, {
   QUERY_INCLUDE_APPEND: (state, {name, value}) => ({
@@ -138,19 +143,27 @@ export default createReducer(initialState, {
 })
 
 const onlyWhitespace = string => /^\s*$/.test(string)
+
 const indexInBounds = (index, array) =>
   isNumber(index) && index >= 0 && index < array.length
 
-export const getSearchBarInputValue = state => state.searchBar.current
-export const getSearchBarPins = state => state.searchBar.pinned
-export const getSearchBarPreviousInputValue = state => state.searchBar.previous
-export const getSearchBarEditingIndex = state => state.searchBar.editing
-export const getSearchBarError = state => state.searchBar.error
+export const getSearchBarInputValue = (state: State) => state.searchBar.current
+
+export const getSearchBarPins = (state: State) => state.searchBar.pinned
+
+export const getSearchBarPreviousInputValue = (state: State) =>
+  state.searchBar.previous
+
+export const getSearchBarEditingIndex = (state: State) =>
+  state.searchBar.editing
+
+export const getSearchBarError = (state: State) => state.searchBar.error
+
 export const getSearchProgram = createSelector(
   getSearchBarPins,
   getSearchBarInputValue,
   (pinned, current) => {
-    const program = [...pinned, current].map(trim).join(" ")
+    const program = [...pinned, current].map(s => trim(s)).join(" ")
     return program.length === 0 ? "*" : program
   }
 )

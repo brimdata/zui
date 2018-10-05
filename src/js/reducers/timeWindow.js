@@ -1,3 +1,5 @@
+/* @flow */
+
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import {getCurrentSpaceTimeWindow} from "./spaces"
@@ -10,6 +12,9 @@ const initialState = {
   outer: null
 }
 
+type StateSlice = typeof initialState
+type State = {timeWindow: StateSlice}
+
 export default createReducer(initialState, {
   OUTER_TIME_WINDOW_SET: (state, {timeWindow}) => ({
     ...state,
@@ -21,8 +26,8 @@ export default createReducer(initialState, {
   })
 })
 
-export const getRawOuterTimeWindow = state => state.timeWindow.outer
-export const getRawInnerTimeWindow = state => state.timeWindow.inner
+export const getRawOuterTimeWindow = (state: State) => state.timeWindow.outer
+export const getRawInnerTimeWindow = (state: State) => state.timeWindow.inner
 export const getOuterTimeWindow = createSelector(getRawOuterTimeWindow, value =>
   makeDates(value)
 )
