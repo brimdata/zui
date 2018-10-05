@@ -137,28 +137,9 @@ export function completeMainSearch() {
   }
 }
 
-export function appendMainSearchQueryProgram(fragment) {
+export function appendMainSearchQueryProgram(fragment: string) {
   return {
     type: "MAIN_SEARCH_QUERY_PROGRAM_APPEND",
     fragment
   }
-}
-
-// This should be it's own module
-export const hasAnalytics = string => {
-  const ast = new Ast(string).toJSON()
-  if (!ast) return false
-  if (ast.proc) return true
-  else return false
-}
-
-const parse = string => {
-  let error = null
-  let ast = null
-  try {
-    ast = LookyTalk.parse(string)
-  } catch (e) {
-    error = e
-  }
-  return [ast, error]
 }
