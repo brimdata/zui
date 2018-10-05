@@ -5,6 +5,7 @@ import {ContextMenu, MenuItem} from "./ContextMenu"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import Arrow from "../icons/caret-bottom-sm.svg"
 import XDebugModal from "../connectors/XDebugModal"
+import XCurlModal from "../connectors/XCurlModal"
 
 type State = {
   menuIsOpen: boolean,
@@ -13,9 +14,7 @@ type State = {
 }
 
 type Props = {
-  submitSearchBar: Function,
-  ast: Object,
-  searchProgram: string
+  submitSearchBar: Function
 }
 
 class SearchButton extends React.Component<Props, State> {
@@ -66,6 +65,10 @@ class SearchButton extends React.Component<Props, State> {
         <XDebugModal
           isOpen={this.state.showDebugModal}
           onClose={() => this.setState({showDebugModal: false})}
+        />
+        <XCurlModal
+          isOpen={this.state.showCurlModal}
+          onClose={() => this.setState({showCurlModal: false})}
         />
       </div>
     )

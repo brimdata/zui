@@ -13,7 +13,6 @@ export const hasAnalytics = (string: Program) => {
 }
 
 export const parse = (string: Program) => {
-  console.log(string)
   let error = null
   let ast = null
   try {
