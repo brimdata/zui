@@ -1,3 +1,5 @@
+/* @flow */
+
 import {pushSearchHistory} from "./searchHistory"
 import eventsReceiver from "../receivers/eventsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
@@ -11,24 +13,45 @@ import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import {requestCountByTime, successCountByTime} from "./countByTime"
 import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import Ast from "../models/Ast"
-import {LookyTalk} from "boom-js-client"
+import Client from "boom-js-client"
 import {errorSearchBarParse} from "./searchBar"
+import * as Program from "../lib/Program"
 
-export const fetchMainSearch = ({saveToHistory = true} = {}) => (
-  dispatch,
-  getState,
-  api
+type Options = {
+  saveToHistory: boolean
+}
+
+export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
+  dispatch: Function,
+  getState: Function,
+  api: Client
 ) => {
   const state = getState()
   let string = getSearchProgram(state)
-  const [, error] = parse(string)
-  if (error) return dispatch(errorSearchBarParse(error.message))
+  const [, error] = Program.parse(string)
+
+  if (error) {
+    return dispatch(errorSearchBarParse(error.message))
+  }
+
   dispatch(requestMainSearch({saveToHistory}))
-  if (saveToHistory) dispatch(pushSearchHistory(getSearchHistoryEntry(state)))
-  if (hasAnalytics(string)) return fetchAnalytics(state, dispatch, api)
-  if (string === ":starred") return fetchStarred(state, dispatch, api)
-  if (getInnerTimeWindow(state)) return fetchLogSubset(state, dispatch, api)
+
+  if (saveToHistory) {
+    dispatch(pushSearchHistory(getSearchHistoryEntry(state)))
+  }
+
+  if (Program.hasAnalytics(string)) {
+    return fetchAnalytics(state, dispatch, api)
+  }
+
+  if (string === ":starred") {
+    return fetchStarred(state, dispatch)
+  }
+
+  if (getInnerTimeWindow(state)) {
+    return fetchLogSubset(state, dispatch, api)
+  }
+
   return fetchAllLogs(state, dispatch, api)
 }
 
@@ -94,14 +117,14 @@ const fetchAllLogs = (state, dispatch, api) => {
     })
 }
 
-export function requestMainSearch({saveToHistory}) {
+export function requestMainSearch({saveToHistory}: {saveToHistory: boolean}) {
   return {
     type: "MAIN_SEARCH_REQUEST",
     saveToHistory
   }
 }
 
-export function mainSearchEvents(events = []) {
+export function mainSearchEvents(events: [] = []) {
   return {
     type: "MAIN_SEARCH_EVENTS",
     events
