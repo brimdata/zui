@@ -64,7 +64,14 @@ module.exports = {
       },
       {
         role: "window",
-        submenu: [{role: "minimize"}, {role: "close"}]
+        submenu: [
+          {role: "minimize"},
+          {role: "close"},
+          {
+            label: "Reset State",
+            click: () => browserWindow.webContents.send("resetState")
+          }
+        ]
       },
       {
         role: "help",
@@ -105,13 +112,13 @@ module.exports = {
       )
 
       // Window menu
-      template[4].submenu = [
+      template[4].submenu.concat([
         {role: "close"},
         {role: "minimize"},
         {role: "zoom"},
         {type: "separator"},
         {role: "front"}
-      ]
+      ])
     }
     return Menu.buildFromTemplate(template)
   }
