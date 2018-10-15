@@ -46,4 +46,9 @@
   pre:last-child {
     margin-bottom: 0;
   }
+
+  .debug-modal-input {
+    @extend pre;
+    outline: none;
+  }
 }
