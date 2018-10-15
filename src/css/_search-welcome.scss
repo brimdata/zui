@@ -1,9 +1,4 @@
 .search-welcome {
-  padding: $base-space * 2;
   flex: 1;
   overflow-y: scroll;
-
-  p {
-    margin-bottom: $base-space;
-  }
 }

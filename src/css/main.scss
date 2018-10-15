@@ -29,6 +29,7 @@ $filter-node-foreground: white;
 
 /* Styles */
 @import "global";
+@import "body-content";
 @import "prism";
 @import "typography";
 @import "icons";
@@ -53,7 +54,6 @@ $filter-node-foreground: white;
 @import "count-by-time";
 @import "search-context-row";
 @import "no-events-found";
-@import "welcome-message";
 @import "form-inputs";
 @import "search-bar";
 @import "time-window-picker";
