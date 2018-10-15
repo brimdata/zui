@@ -8,8 +8,12 @@
   align-items: center;
   opacity: 1;
 
+  &.even {
+    background: darken(white, 3%);
+  }
+
   &:hover {
-    background: $off-white;
+    background: darken(white, 8%);
   }
 
   &.highlight {
@@ -116,18 +120,8 @@
 
   p {
     line-height: $bro-log-row-height;
-
     letter-spacing: 2;
     width: 100%;
-    .date {
-      color: $blue-3;
-    }
-    .time {
-      color: $green-3;
-    }
-    .seconds {
-      color: $gray-3;
-    }
     .time,
     .seconds {
       margin-left: 12px;

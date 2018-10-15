@@ -18,11 +18,13 @@ export default class LogRow extends React.PureComponent {
       showDetail,
       appendToQuery,
       prevLog,
-      highlight
+      highlight,
+      index
     } = this.props
     const ts = log.cast("ts")
-
     let tsHighlight = false
+    const even = index % 2 == 0
+
     if (prevLog) {
       const prevTs = prevLog.cast("ts")
       tsHighlight = !TimeWindow.inSameUnit([ts, prevTs], "minute")
@@ -46,7 +48,7 @@ export default class LogRow extends React.PureComponent {
 
     return (
       <div
-        className={classNames("log-row", {highlight})}
+        className={classNames("log-row", {highlight, even})}
         style={style}
         onClick={() => showDetail(log)}
       >
