@@ -4,7 +4,7 @@ import uniq from "lodash/uniq"
 export const discoverDescriptors = (events = []) => {
   return (dispatch, getState) => {
     const state = getState()
-    const schemas = state.broSchemas
+    const schemas = state.descriptors
     const space = state.currentSpaceName
     const unknownSchemas = uniq(
       events

@@ -49,7 +49,7 @@ export function mainSearchEvents(state) {
 
 export const getMainSearchEvents = state => state.mainSearch.events
 
-export const getSchemas = state => state.broSchemas
+export const getSchemas = state => state.descriptors
 
 export const getLogs = createSelector(
   getMainSearchEvents,

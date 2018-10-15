@@ -4,7 +4,7 @@ const KEY = "LOOKY_STATE"
 const PERSIST = [
   "filterTree",
   "sideBar",
-  "broSchemas",
+  "descriptors",
   "searchBar",
   "timeWindow",
   "currentSpaceName",

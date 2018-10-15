@@ -1,0 +1,17 @@
+.viewer-error-boundary {
+  overflow: scroll;
+
+  h1 {
+    display: flex;
+    align-items: center;
+    color: $red;
+
+    svg {
+      fill: $red;
+      margin: 0;
+      height: 30px * 1.5;
+      width: 30px * 1.5;
+      margin-right: $leading;
+    }
+  }
+}
