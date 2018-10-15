@@ -15,7 +15,7 @@ const write = (path, contents) => {
 
 const append = (path, contents) => {
   fs.appendFileSync(path, contents)
-  console.log(`Appended: ${path} => ${contents}`)
+  console.log(`Appended: ${path}`)
 }
 
 const component = name => (
@@ -34,8 +34,13 @@ export default class ${name} extends React.Component<Props> {
     )
   }
 }
-`
-)
+`)
+
+const style = name => (
+`.${name} {
+
+}
+`)
 
 /*
   CLI parsing
@@ -49,8 +54,8 @@ program
   .command("style <name>")
   .action(name => {
     name = _.kebabCase(name)
-    write(`src/css/_${name}.scss`, `/* Styles for ${name} component */`)
-    append(`src/css/main.scss`, `@import "${name}";`)
+    write(`src/css/_${name}.scss`, style(name))
+    append(`src/css/main.scss`, `@import "${name}";\n`)
   })
 
 program.parse(process.argv)
