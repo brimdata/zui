@@ -52,6 +52,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
+    "commander": "^2.19.0",
     "cpx": "^1.5.0",
     "electron": "2.0.7",
     "electron-devtools-installer": "^2.2.4",
