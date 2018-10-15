@@ -1,5 +1,5 @@
 import {combineReducers} from "redux"
-import broSchemas from "./broSchemas"
+import descriptors from "./descriptors"
 import mainSearch from "./mainSearch"
 import eventsByUid from "./eventsByUid"
 import initialLoad from "./initialLoad"
@@ -25,7 +25,7 @@ export default combineReducers({
   view,
   searchBar,
   initialLoad,
-  broSchemas,
+  descriptors,
   mainSearch,
   eventsByUid,
   spaces,
