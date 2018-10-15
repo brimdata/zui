@@ -14,6 +14,7 @@ import XAnalysisViewer from "../connectors/XAnalysisViewer"
 import XLeftPane from "../connectors/XLeftPane"
 import XRightPane from "../connectors/XRightPane"
 import XDownloadProgress from "../connectors/XDownloadProgress"
+import ViewerErrorBoundary from "./ViewerErrorBoundary"
 
 type Props = {
   fetchAllSpaces: Function,
@@ -59,11 +60,13 @@ export default class Search extends React.Component<Props> {
                 )}
             </div>
             <div className="search-page-body">
-              {initialLoad && (
-                <XSearchWelcome currentSpaceName={currentSpaceName} />
-              )}
-              {!initialLoad && logsTab && <XLogViewer />}
-              {!initialLoad && analyticsTab && <XAnalysisViewer />}
+              <ViewerErrorBoundary>
+                {initialLoad && (
+                  <XSearchWelcome currentSpaceName={currentSpaceName} />
+                )}
+                {!initialLoad && logsTab && <XLogViewer />}
+                {!initialLoad && analyticsTab && <XAnalysisViewer />}
+              </ViewerErrorBoundary>
             </div>
             <div className="search-page-footer">
               <XSearchStats />
