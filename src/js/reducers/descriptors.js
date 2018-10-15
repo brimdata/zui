@@ -4,9 +4,8 @@ import createReducer from "./createReducer"
 
 const initialState = {}
 
-type Slice = {
-  [string]: string[]
-}
+type Descriptor = {type: string, name: string}
+type Slice = {[string]: Descriptor[]}
 type State = {descriptors: Slice}
 
 export default createReducer(initialState, {
