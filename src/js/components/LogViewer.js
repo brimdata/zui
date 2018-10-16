@@ -26,6 +26,7 @@ export default class LogViewer extends React.PureComponent {
         style={style}
         showDetail={showDetail}
         appendToQuery={appendToQuery}
+        index={index}
       />
     )
     return (
