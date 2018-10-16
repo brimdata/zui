@@ -9,7 +9,6 @@ import timeWindow from "./timeWindow"
 import filterTree from "./filterTree"
 import countByTime from "./countByTime"
 import analysis from "./analysis"
-import sideBar from "./sideBar"
 import logDetails from "./logDetails"
 import searchStats from "./searchStats"
 import boomdCredentials from "./boomdCredentials"
@@ -34,7 +33,6 @@ export default combineReducers({
   filterTree,
   countByTime,
   analysis,
-  sideBar,
   logDetails,
   searchStats,
   boomdCredentials,

@@ -12,6 +12,7 @@ type Slice = {
 type State = {spaces: Slice, currentSpaceName: string}
 
 export default createReducer(initialState, {
+  ALL_SPACES_REQUEST: () => initialState,
   SPACE_INFO_SET: (state, {spaceInfo}) => ({
     ...state,
     ...normalize(spaceInfo)

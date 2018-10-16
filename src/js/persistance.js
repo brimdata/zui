@@ -3,11 +3,8 @@ import pick from "lodash/pick"
 const KEY = "LOOKY_STATE"
 const PERSIST = [
   "filterTree",
-  "sideBar",
-  "descriptors",
   "searchBar",
   "timeWindow",
-  "currentSpaceName",
   "boomdCredentials",
   "boomdConnection",
   "view",
