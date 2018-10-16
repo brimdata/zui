@@ -1,4 +1,4 @@
-import {setAnalysis} from "../actions"
+import {setAnalysis} from "../actions/analysis"
 import throttle from "lodash/throttle"
 
 export default (dispatch, id) => {
