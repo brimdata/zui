@@ -35,12 +35,14 @@ export const connectBoomd = () => (
     })
     .catch(res => {
       if (typeof res === "string") {
-        if (res.match(/ENOTFOUND/)) {
+        if (res.match(/ENOTFOUND|ECONNREFUSED/)) {
           const {host, port} = credentials
           dispatch(setBoomdError(`No server running at ${host}:${port}`))
-        }
-        if (res.match(/UNAUTHORIZED/))
+        } else if (res.match(/UNAUTHORIZED/))
           dispatch(setBoomdError("Incorrect user and pass combination."))
+        else {
+          dispatch(setBoomdError("Unknown error, view console for details"))
+        }
       } else if (
         res &&
         res.message &&
