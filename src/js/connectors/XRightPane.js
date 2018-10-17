@@ -7,6 +7,7 @@ import * as detailActions from "../actions/logDetails"
 import * as packetActions from "../actions/packets"
 import * as view from "../reducers/view"
 import * as logDetails from "../reducers/logDetails"
+import * as spaces from "../reducers/spaces"
 
 const stateToProps = state => ({
   isOpen: view.getRightSidebarIsOpen(state) && logDetails.buildLogDetail(state),
@@ -14,7 +15,8 @@ const stateToProps = state => ({
   prevExists: logDetails.getPrevExists(state),
   nextExists: logDetails.getNextExists(state),
   isStarred: logDetails.getLogDetailIsStarred(state),
-  currentLog: logDetails.buildLogDetail(state)
+  currentLog: logDetails.buildLogDetail(state),
+  space: spaces.getCurrentSpace(state)
 })
 
 export default connect(

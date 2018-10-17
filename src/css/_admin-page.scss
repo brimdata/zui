@@ -42,6 +42,7 @@
 .looky-header {
   display: flex;
   align-items: center;
+  -webkit-app-region: drag;
 
   img {
     width: 36px;

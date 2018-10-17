@@ -50,9 +50,11 @@ export const fetchPackets = (log: Log) => (
     .then(file => {
       dispatch(receivePackets(log.get("uid"), file))
       System.open(file.path).catch(e => console.log(e))
-      setTimeout(() => dispatch(hideDownloads()), 5000)
     })
     .catch(error => {
       dispatch(errorPackets(log.get("uid"), error))
+    })
+    .finally(() => {
+      setTimeout(() => dispatch(hideDownloads()), 5000)
     })
 }

@@ -6,25 +6,19 @@ class DownloadProgress extends React.Component {
     const {downloads, downloadsIsOpen} = this.props
     if (!downloadsIsOpen || downloads.length === 0) return null
 
-    const {percentComplete} = downloads[0]
+    const {percentComplete, error} = downloads[0]
     const complete = percentComplete >= 1
 
     return (
       <div
         className={classNames("download-progress", {
-          complete
+          complete,
+          error: error
         })}
       >
-        {!complete && (
-          <div className="message-wrapper">
-            <p className="message">Downloading</p>
-          </div>
-        )}
-        {complete && (
-          <div className="message-wrapper">
-            <p className="message">Download Complete</p>
-          </div>
-        )}
+        <div className="message-wrapper">
+          <p className="message">{message({complete, error})}</p>
+        </div>
 
         <div className="progress-bar">
           <div
@@ -36,5 +30,12 @@ class DownloadProgress extends React.Component {
     )
   }
 }
+
+const message = ({complete, error}) =>
+  error
+    ? `Download error: ${error}`
+    : complete
+      ? "Download Complete"
+      : "Downloading"
 
 export default DownloadProgress

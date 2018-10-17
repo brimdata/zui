@@ -1,12 +1,21 @@
-export function fetchSpaceInfo(name) {
-  return (dispatch, getState, api) => {
+/* @flow */
+
+import Client from "boom-js-client"
+import type {Space} from "../lib/Space"
+
+export function fetchSpaceInfo(name: string) {
+  return (dispatch: *, getState: *, api: Client) => {
     api.space({name}).done(space => {
       dispatch(setSpaceInfo(space))
     })
   }
 }
 
-export const fetchAllSpaces = () => (dispatch, _getState, api) => {
+export const fetchAllSpaces = () => (
+  dispatch: *,
+  _getState: *,
+  api: Client
+) => {
   dispatch(requestAllSpaces())
   api
     .spaces()
@@ -22,21 +31,21 @@ export const requestAllSpaces = () => {
   }
 }
 
-export function setSpaceInfo(spaceInfo) {
+export function setSpaceInfo(spaceInfo: Space) {
   return {
     type: "SPACE_INFO_SET",
     spaceInfo
   }
 }
 
-export function requestSpaceInfo(name) {
+export function requestSpaceInfo(name: string) {
   return {
     type: "SPACE_INFO_REQUEST",
     name
   }
 }
 
-export function setCurrentSpaceName(name) {
+export function setCurrentSpaceName(name: string) {
   return {
     type: "CURRENT_SPACE_NAME_SET",
     name
@@ -49,17 +58,23 @@ export function unselectSpace() {
   }
 }
 
-export const fetchSpaceStats = name => {
-  return (dispatch, _getState) => {
+export const fetchSpaceStats = (name: string) => {
+  return (dispatch: *, _getState: *) => {
     dispatch(requestSpaceStats(name))
   }
 }
 
-export const requestSpaceStats = name => ({
+export const requestSpaceStats = (name: string) => ({
   type: "SPACE_STATS_REQUEST",
   name
 })
 
-export const receiveSpaceStats = name => ({type: "SPACE_STATS_RECEIVE", name})
+export const receiveSpaceStats = (name: string) => ({
+  type: "SPACE_STATS_RECEIVE",
+  name
+})
 
-export const errorSpaceStats = name => ({type: "SPACE_STATS_ERROR", name})
+export const errorSpaceStats = (name: string): Object => ({
+  type: "SPACE_STATS_ERROR",
+  name
+})
