@@ -18,7 +18,7 @@ export default class DayPicker extends React.Component {
     let {from, to, day} = this.props
     from = Time.fakeZone(from)
     to = Time.fakeZone(to)
-    day = Time.fakeZone(day)
+    let fakeDay = Time.fakeZone(day)
     return (
       <div className="text-input-wrapper">
         <DayPickerInput
@@ -29,7 +29,7 @@ export default class DayPicker extends React.Component {
           placeholder={FORMAT}
           onDayChange={this.onDayChange}
           dayPickerProps={{
-            selectedDays: [day, {from, to}],
+            selectedDays: [fakeDay, {from, to}],
             todayButton: "TODAY",
             modifiers: {from, to}
           }}
