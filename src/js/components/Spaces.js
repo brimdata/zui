@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from "react"
 import LookyHeader from "./LookyHeader"
 import AdminTitle from "./AdminTitle"
@@ -5,9 +7,23 @@ import Plus from "../icons/plus-lg.svg"
 import * as fmt from "../fmt"
 import {Redirect} from "react-router-dom"
 import * as Time from "../lib/Time"
+import type {Space} from "../lib/Space"
 
-class Spaces extends React.Component {
-  constructor(props) {
+type Props = {
+  setCurrentSpaceName: Function,
+  fetchAllSpaces: Function,
+  spaces: {[string]: Space}
+}
+
+type State = {
+  redirect: boolean
+}
+
+class Spaces extends React.Component<Props, State> {
+  firstRender: boolean
+  onSpaceClick: Function
+
+  constructor(props: Props) {
     super(props)
     this.state = {redirect: false}
     this.firstRender = true
@@ -70,11 +86,9 @@ const NoSpaces = () => (
   </div>
 )
 
-const SpaceInfo = ({
-  space: {name, size, compression, minTime, maxTime, path},
-  onClick
-}) => {
+const SpaceInfo = ({space, onClick}) => {
   const dateFormat = "MMM DD, YYYY"
+  const {name, size, compression, minTime, maxTime, path} = space
   return (
     <div className="space-info admin-panel" onClick={onClick}>
       <h3>{name}</h3>
