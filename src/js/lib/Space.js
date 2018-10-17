@@ -1,5 +1,7 @@
 /* @flow */
 
+import type {EpochObj} from "./Time"
+
 export type Space = {
   name: string,
   flush_timeout: number,
@@ -7,10 +9,12 @@ export type Space = {
   slab_threshold: number,
   slab_fanout: number,
   max_writers: number,
-  min_time: string,
-  max_time: string,
+  min_time: EpochObj,
+  max_time: EpochObj,
   size: number,
   packet_support: boolean,
   minTime: string,
-  maxTime: string
+  maxTime: string,
+  compression: string,
+  path: string
 }

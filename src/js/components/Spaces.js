@@ -88,7 +88,9 @@ const NoSpaces = () => (
 
 const SpaceInfo = ({space, onClick}) => {
   const dateFormat = "MMM DD, YYYY"
-  const {name, size, compression, minTime, maxTime, path} = space
+  const {name, size, compression, min_time, max_time, path} = space
+  const minTime = Time.parseFromBoom(min_time)
+  const maxTime = Time.parseFromBoom(max_time)
   return (
     <div className="space-info admin-panel" onClick={onClick}>
       <h3>{name}</h3>
@@ -112,6 +114,10 @@ const SpaceInfo = ({space, onClick}) => {
           <tr>
             <th>Path</th>
             <td>{path}</td>
+          </tr>
+          <tr>
+            <th>Packet Support</th>
+            <td>{space.packet_support ? "true" : "false"}</td>
           </tr>
         </tbody>
       </table>
