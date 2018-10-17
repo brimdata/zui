@@ -43,8 +43,15 @@ export default class RightPane extends React.Component {
       isOpen,
       width,
       isStarred,
-      currentLog
+      currentLog,
+      space
     } = this.props
+
+    const packetsAvailable =
+      currentLog &&
+      currentLog.get("_path") === "conn" &&
+      space &&
+      space.packet_support
 
     return (
       <Pane
@@ -78,7 +85,7 @@ export default class RightPane extends React.Component {
               <PaneTitle>Log Details</PaneTitle>
             </Center>
             <Right>
-              {currentLog.get("_path") === "conn" && (
+              {packetsAvailable && (
                 <button
                   className="panel-button text"
                   onClick={this.onPacketsClick}
