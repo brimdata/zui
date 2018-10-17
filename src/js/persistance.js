@@ -7,6 +7,7 @@ const PERSIST = [
   "timeWindow",
   "boomdCredentials",
   "boomdConnection",
+  "currentSpaceName",
   "view",
   "starredLogs"
 ]
