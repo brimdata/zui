@@ -1,14 +1,19 @@
 /* @flow */
 
-import Ast from "./models/Ast"
+import Ast from "../models/Ast"
 import trim from "lodash/trim"
-import * as Time from "./lib/Time"
-import type {TimeWindow} from "./lib/TimeWindow"
+import * as Time from "../lib/Time"
+import type {TimeWindow} from "../lib/TimeWindow"
 
-export const extractLastTimeWindow = (program: string) => {
-  if (containsTimeWindow(program))
-    return getTimeWindowNodes(program).map(node => toDate(node.value.value))
-  else return null
+export const extractLastTimeWindow = (program: string): ?TimeWindow => {
+  if (containsTimeWindow(program)) {
+    const [from, to] = getTimeWindowNodes(program).map(node =>
+      toDate(node.value.value)
+    )
+    return [from, to]
+  } else {
+    return null
+  }
 }
 
 export function changeProgramTimeWindow(
@@ -80,6 +85,10 @@ function toTs(date) {
   return Time.format(date, BRO_TS_FORMAT)
 }
 
-function toDate(string) {
-  return Time.parse(string, BRO_TS_FORMAT, false)
+function toDate(string): Date {
+  const date = Time.parse(string, BRO_TS_FORMAT, false)
+  if (!date) {
+    throw new Error(`Can't parse this date: ${string}`)
+  }
+  return date
 }

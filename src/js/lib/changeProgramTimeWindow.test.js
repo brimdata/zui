@@ -5,7 +5,7 @@ import {
   changeProgramTimeWindow,
   extractLastTimeWindow
 } from "./changeProgramTimeWindow"
-import * as Time from "./lib/Time"
+import * as Time from "../lib/Time"
 
 test("changeProgramTimeWindow", () => {
   const program = "ts >= 1260815710.426274 AND ts < 1260815710.426274"
