@@ -1,6 +1,5 @@
 import React from "react"
 import * as d3 from "d3"
-import config from "../config"
 import * as Time from "../lib/Time"
 import * as TimeWindow from "../lib/TimeWindow"
 
@@ -15,7 +14,7 @@ export default class UidWaterfall extends React.Component {
         onClick={() => this.props.viewLogDetail(log)}
       >
         <div className="ts-label">
-          {Time.format(log.cast("ts"), config.TIME_MOMENT_FORMAT)}
+          {Time.format(log.cast("ts"), "HH:mm:ss.SSS")}
         </div>
         <div className="slider">
           <div className="line" />
