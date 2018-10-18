@@ -8,7 +8,6 @@ import XApp from "./connectors/XApp"
 import initStore from "./initializers/store"
 import initShortcuts from "./initializers/shortcuts"
 import initRoot from "./initializers/root"
-import "./globals"
 
 const store = initStore()
 initShortcuts(store)
