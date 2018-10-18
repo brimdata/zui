@@ -1,14 +1,14 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import {Provider} from "react-redux"
-import initStore from "./initStore"
 import {HashRouter} from "react-router-dom"
 import XApp from "./connectors/XApp"
-import shortcuts from "./initializers/shortcuts"
+import initStore from "./initializers/store"
+import initShortcuts from "./initializers/shortcuts"
 import "./globals"
 
 const store = initStore()
-shortcuts(store)
+initShortcuts(store)
 
 ReactDOM.render(
   <Provider store={store}>
