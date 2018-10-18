@@ -1,3 +1,5 @@
+/* @flow */
+
 import connHistoryView from "./connHistoryView"
 
 test("capital S goes to the right", () => {
