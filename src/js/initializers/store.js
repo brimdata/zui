@@ -1,3 +1,5 @@
+/* @flow */
+
 import {createStore, applyMiddleware} from "redux"
 import {composeWithDevTools} from "redux-devtools-extension"
 import reducer from "../reducers"
@@ -23,8 +25,7 @@ export default function() {
   store.subscribe(
     throttle(() => {
       saveState(store.getState())
-    }),
-    1000
+    }, 1000)
   )
 
   return store
