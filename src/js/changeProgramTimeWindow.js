@@ -1,14 +1,20 @@
+/* @flow */
+
 import Ast from "./models/Ast"
 import trim from "lodash/trim"
 import * as Time from "./lib/Time"
+import type {TimeWindow} from "./lib/TimeWindow"
 
-export const extractLastTimeWindow = program => {
+export const extractLastTimeWindow = (program: string) => {
   if (containsTimeWindow(program))
     return getTimeWindowNodes(program).map(node => toDate(node.value.value))
   else return null
 }
 
-export function changeProgramTimeWindow(program, [from, to]) {
+export function changeProgramTimeWindow(
+  program: string,
+  [from, to]: TimeWindow
+) {
   if (containsTimeWindow(program)) {
     program = replaceTsValue(program, getTimeWindowNodes(program)[0], from)
     program = replaceTsValue(program, getTimeWindowNodes(program)[1], to)
@@ -18,7 +24,7 @@ export function changeProgramTimeWindow(program, [from, to]) {
   return program
 }
 
-export function getTimeWindowNodes(program) {
+export function getTimeWindowNodes(program: string) {
   const ast = new Ast(program)
   if (ast) {
     return [
@@ -30,7 +36,7 @@ export function getTimeWindowNodes(program) {
   }
 }
 
-export function containsTimeWindow(program) {
+export function containsTimeWindow(program: string) {
   const [fromNode, toNode] = getTimeWindowNodes(program)
 
   return !!(fromNode && toNode)

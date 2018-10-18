@@ -1,3 +1,5 @@
+/* @flow */
+
 import {
   containsTimeWindow,
   changeProgramTimeWindow,
