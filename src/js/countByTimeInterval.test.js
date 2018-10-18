@@ -1,3 +1,5 @@
+/* @flow */
+
 import countByTimeInterval from "./countByTimeInterval"
 import * as Time from "./lib/Time"
 

@@ -1,6 +1,9 @@
-import moment from "moment"
+/* @flow */
 
-export default function([start, end]) {
+import moment from "moment"
+import type {TimeWindow} from "./lib/TimeWindow"
+
+export default function([start, end]: TimeWindow) {
   const duration = moment.duration(moment(end).diff(moment(start)))
 
   if (duration.asMinutes() <= 5)
