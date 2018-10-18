@@ -1,16 +1,30 @@
+/* @flow */
+
 import React from "react"
-import mapJoin from "../mapJoin"
+import mapJoin from "../lib/mapJoin"
 import Pin from "../icons/pin-md.svg"
 import FilterNode from "./FilterNode"
 
-class Pins extends React.Component {
-  constructor(props) {
+type Props = {
+  editing: number,
+  editSearchBarPin: Function,
+  removeSearchBarPin: Function,
+  pinSearchBar: Function,
+  previousValue: string,
+  pins: string[]
+}
+
+class Pins extends React.Component<Props> {
+  renderFilter: Function
+  renderJoinOperator: Function
+
+  constructor(props: Props) {
     super(props)
     this.renderFilter = this.renderFilter.bind(this)
     this.renderJoinOperator = this.renderJoinOperator.bind(this)
   }
 
-  renderFilter(filter, index) {
+  renderFilter(filter: string, index: number) {
     return (
       <FilterNode
         key={index}
@@ -26,7 +40,7 @@ class Pins extends React.Component {
     )
   }
 
-  renderJoinOperator(index) {
+  renderJoinOperator(index: number) {
     return (
       <p className="join-operator" key={index + "-operator"}>
         AND
