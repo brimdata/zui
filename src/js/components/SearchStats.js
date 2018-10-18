@@ -1,6 +1,6 @@
 import React from "react"
 import * as TimeWindow from "../lib/TimeWindow"
-import * as fmt from "../fmt"
+import * as fmt from "../lib/fmt"
 
 const SearchStats = ({
   tuplesMatched,

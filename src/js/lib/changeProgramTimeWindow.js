@@ -1,14 +1,25 @@
-import Ast from "./models/Ast"
-import {toTs, toDate} from "./cast"
-import trim from "lodash/trim"
+/* @flow */
 
-export const extractLastTimeWindow = program => {
-  if (containsTimeWindow(program))
-    return getTimeWindowNodes(program).map(node => toDate(node.value.value))
-  else return null
+import Ast from "../models/Ast"
+import trim from "lodash/trim"
+import * as Time from "../lib/Time"
+import type {TimeWindow} from "../lib/TimeWindow"
+
+export const extractLastTimeWindow = (program: string): ?TimeWindow => {
+  if (containsTimeWindow(program)) {
+    const [from, to] = getTimeWindowNodes(program).map(node =>
+      toDate(node.value.value)
+    )
+    return [from, to]
+  } else {
+    return null
+  }
 }
 
-export function changeProgramTimeWindow(program, [from, to]) {
+export function changeProgramTimeWindow(
+  program: string,
+  [from, to]: TimeWindow
+) {
   if (containsTimeWindow(program)) {
     program = replaceTsValue(program, getTimeWindowNodes(program)[0], from)
     program = replaceTsValue(program, getTimeWindowNodes(program)[1], to)
@@ -18,7 +29,7 @@ export function changeProgramTimeWindow(program, [from, to]) {
   return program
 }
 
-export function getTimeWindowNodes(program) {
+export function getTimeWindowNodes(program: string) {
   const ast = new Ast(program)
   if (ast) {
     return [
@@ -30,7 +41,7 @@ export function getTimeWindowNodes(program) {
   }
 }
 
-export function containsTimeWindow(program) {
+export function containsTimeWindow(program: string) {
   const [fromNode, toNode] = getTimeWindowNodes(program)
 
   return !!(fromNode && toNode)
@@ -67,4 +78,17 @@ function replaceTsValue(program, astNode, newDate) {
 
 function splice(string, start, end, replacement) {
   return string.slice(0, start) + replacement + string.slice(end)
+}
+
+const BRO_TS_FORMAT = "X.SSSSSS"
+function toTs(date) {
+  return Time.format(date, BRO_TS_FORMAT)
+}
+
+function toDate(string): Date {
+  const date = Time.parse(string, BRO_TS_FORMAT, false)
+  if (!date) {
+    throw new Error(`Can't parse this date: ${string}`)
+  }
+  return date
 }

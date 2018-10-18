@@ -46,7 +46,9 @@ export type TimeUnit =
 export type EpochObj = {sec: number, ns: number}
 
 const STORAGE_FORMAT = "YYYY-MM-DD HH:mm:ss.SSS"
+
 export const toStore = (date: Date) => Moment.utc(date).format(STORAGE_FORMAT)
+
 export const fromStore = (string: string) =>
   Moment.utc(string, STORAGE_FORMAT, true).toDate()
 
@@ -65,9 +67,9 @@ export const parse = (
   string: string,
   format: string,
   strict: boolean = true
-): boolean => {
+): ?Date => {
   const m = Moment(string, format, strict)
-  return m.isValid() ? m.toDate() : false
+  return m.isValid() ? m.toDate() : null
 }
 
 export const parseFromBoom = ({sec, ns}: EpochObj): Date => {

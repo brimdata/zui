@@ -1,4 +1,6 @@
-export const bytes = (bytes = 0) => {
+/* @flow */
+
+export const bytes = (bytes: number = 0) => {
   const int = parseInt(bytes)
   const string = int.toString()
 
@@ -9,9 +11,5 @@ export const bytes = (bytes = 0) => {
   return int + " B"
 }
 
-export const withCommas = (int = 0) =>
+export const withCommas = (int: number = 0) =>
   int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
-export const monthDayYear = obj => obj.format("MMM D, YYYY")
-
-export const monthDayYearHourMinute = obj => obj.format("MMM D, YYYY HH:mm")

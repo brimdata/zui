@@ -1,5 +1,7 @@
+/* @flow */
+
 import countByTimeInterval from "./countByTimeInterval"
-import * as Time from "./lib/Time"
+import * as Time from "../lib/Time"
 
 const start = new Date()
 

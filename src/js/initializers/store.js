@@ -1,11 +1,13 @@
+/* @flow */
+
 import {createStore, applyMiddleware} from "redux"
 import {composeWithDevTools} from "redux-devtools-extension"
-import reducer from "./reducers"
+import reducer from "../reducers"
 import reduxThunk from "redux-thunk"
 import {loadState, saveState} from "./persistance"
 import throttle from "lodash/throttle"
 import Client from "boom-js-client"
-import {getCredentials} from "./reducers/boomdCredentials"
+import {getCredentials} from "../reducers/boomdCredentials"
 
 export default function() {
   const state = loadState()
@@ -23,8 +25,7 @@ export default function() {
   store.subscribe(
     throttle(() => {
       saveState(store.getState())
-    }),
-    1000
+    }, 1000)
   )
 
   return store

@@ -1,12 +1,19 @@
+/* @flow */
+
 import React from "react"
-import connHistoryView from "../connHistoryView"
+import connHistoryView from "../lib/connHistoryView"
 import FieldsTable from "./FieldsTable"
 import every from "lodash/every"
+import Log from "../models/Log"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
 const RESP_FIELDS = ["resp_bytes", "resp_pkts", "resp_ip_bytes", "local_resp"]
 
-const ConnVersation = ({log}) => {
+type Props = {
+  log: Log
+}
+
+const ConnVersation = ({log}: Props) => {
   return (
     <div className="conn-versation">
       <Host

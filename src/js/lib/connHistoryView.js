@@ -1,3 +1,5 @@
+/* @flow */
+
 /*
 
   Records the state history of connections as a string of letters.
@@ -36,7 +38,12 @@ const TEXT_MAP = {
   s: "syn"
 }
 
-export default function connHistoryView(historyString) {
+type Flag = {
+  text: string,
+  direction: string
+}
+
+export default function connHistoryView(historyString: string): Flag[] {
   return historyString
     .split("")
     .filter(hasView)

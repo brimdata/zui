@@ -5,8 +5,7 @@ import {
   CellMeasurerCache,
   MultiGrid
 } from "react-virtualized"
-import * as cast from "../cast"
-import * as fmt from "../fmt"
+import * as Time from "../lib/Time"
 
 export default class AnalysisTable extends React.Component {
   constructor(props) {
@@ -85,7 +84,7 @@ export default class AnalysisTable extends React.Component {
 
 const format = (value, type) => {
   if (type === "time") {
-    return fmt.monthDayYearHourMinute(cast.fromNanoTsToMoment(value))
+    return Time.format(new Date(value / 1000000.0), "MMM D, YYYY HH:mm")
   } else {
     return value
   }

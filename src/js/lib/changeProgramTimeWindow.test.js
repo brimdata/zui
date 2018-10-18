@@ -1,9 +1,11 @@
+/* @flow */
+
 import {
   containsTimeWindow,
   changeProgramTimeWindow,
   extractLastTimeWindow
 } from "./changeProgramTimeWindow"
-import {toDate} from "./cast"
+import * as Time from "../lib/Time"
 
 test("changeProgramTimeWindow", () => {
   const program = "ts >= 1260815710.426274 AND ts < 1260815710.426274"
@@ -100,3 +102,7 @@ test("extractLastTimeWindow when none", () => {
 
   expect(extractLastTimeWindow(program)).toBe(null)
 })
+
+function toDate(string) {
+  return Time.parse(string, "X.SSSSSS", false)
+}

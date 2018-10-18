@@ -1,11 +1,13 @@
+/* @flow */
+
 import React from "react"
 import ReactDOM from "react-dom"
 import {Provider} from "react-redux"
-import initStore from "./initStore"
 import {HashRouter} from "react-router-dom"
 import XApp from "./connectors/XApp"
-import initShortcuts from "./initShortcuts"
-import "./globals"
+import initStore from "./initializers/store"
+import initShortcuts from "./initializers/shortcuts"
+import initRoot from "./initializers/root"
 
 const store = initStore()
 initShortcuts(store)
@@ -16,5 +18,5 @@ ReactDOM.render(
       <XApp />
     </HashRouter>
   </Provider>,
-  document.getElementById("app-root")
+  initRoot()
 )

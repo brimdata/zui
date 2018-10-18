@@ -1,6 +1,6 @@
 import {ipcRenderer} from "electron"
-import {pinSearchBar, removeAllSearchBarPins} from "./actions/searchBar"
-import {toggleLeftSidebar, toggleRightSidebar} from "./actions/view"
+import {pinSearchBar, removeAllSearchBarPins} from "../actions/searchBar"
+import {toggleLeftSidebar, toggleRightSidebar} from "../actions/view"
 import {clearState} from "./persistance"
 
 export default store => {

@@ -1,4 +1,4 @@
-import initStore from "./initStore"
+import initStore from "./store"
 
 test("initStore runs", () => {
   const store = initStore()

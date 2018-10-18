@@ -1,8 +1,7 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
-import countByTimeInterval from "../countByTimeInterval"
+import countByTimeInterval from "../lib/countByTimeInterval"
 import {splitOnEvery} from "../models/TimeWindow"
-import {toInt} from "../cast"
 import * as TimeWindow from "../lib/TimeWindow"
 import {getTimeWindow} from "./timeWindow"
 import MergeHash from "../models/MergeHash"
@@ -65,7 +64,7 @@ export const getMainSearchCountByTime = createSelector(
     tuples.forEach(d => {
       let ts = toDate(d[0])
       let path = d[1]
-      let count = toInt(d[2])
+      let count = parseInt(d[2])
       table.merge(ts, {[path]: count})
       keys.push(path)
     })
