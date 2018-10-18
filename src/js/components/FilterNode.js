@@ -4,7 +4,6 @@ import React from "react"
 import * as Time from "../lib/Time"
 import * as TimeWindow from "../lib/TimeWindow"
 import {extractLastTimeWindow} from "../lib/changeProgramTimeWindow"
-import {shortDateTime} from "../timeWindowFormatter"
 import X from "../icons/x-md.svg"
 
 type Props = {
@@ -53,7 +52,7 @@ export function shortenTimeWindow(program: string) {
       return [
         beginning,
         <span className="short-time-window" key={1} title={title}>
-          {shortDateTime(from)} + {duration}
+          {Time.format(from, "MMM D, HH:mm")} + {duration}
         </span>,
         ending
       ]
