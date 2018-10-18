@@ -1,6 +1,6 @@
 import Ast from "./models/Ast"
-import {toTs, toDate} from "./cast"
 import trim from "lodash/trim"
+import * as Time from "./lib/Time"
 
 export const extractLastTimeWindow = program => {
   if (containsTimeWindow(program))
@@ -67,4 +67,13 @@ function replaceTsValue(program, astNode, newDate) {
 
 function splice(string, start, end, replacement) {
   return string.slice(0, start) + replacement + string.slice(end)
+}
+
+const BRO_TS_FORMAT = "X.SSSSSS"
+function toTs(date) {
+  return Time.format(date, BRO_TS_FORMAT)
+}
+
+function toDate(string) {
+  return Time.parse(string, BRO_TS_FORMAT, false)
 }
