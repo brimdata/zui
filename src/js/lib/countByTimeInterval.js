@@ -1,7 +1,7 @@
 /* @flow */
 
 import moment from "moment"
-import type {TimeWindow} from "./lib/TimeWindow"
+import type {TimeWindow} from "../lib/TimeWindow"
 
 export default function([start, end]: TimeWindow) {
   const duration = moment.duration(moment(end).diff(moment(start)))

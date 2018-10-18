@@ -1,6 +1,6 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
-import countByTimeInterval from "../countByTimeInterval"
+import countByTimeInterval from "../lib/countByTimeInterval"
 import {splitOnEvery} from "../models/TimeWindow"
 import * as TimeWindow from "../lib/TimeWindow"
 import {getTimeWindow} from "./timeWindow"

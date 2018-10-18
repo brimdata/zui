@@ -4,7 +4,7 @@ import {getTimeWindow} from "../reducers/timeWindow"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import Log from "../models/Log"
 import {isTimeWindow} from "../models/TimeWindow"
-import countByTimeInterval from "../countByTimeInterval"
+import countByTimeInterval from "../lib/countByTimeInterval"
 
 const initialState = {
   isFetching: false,
