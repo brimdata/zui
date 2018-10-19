@@ -1,5 +1,6 @@
 /* @flow */
 
+import serially from "../lib/serially"
 import {pushSearchHistory} from "./searchHistory"
 import eventsReceiver from "../receivers/eventsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
@@ -55,67 +56,79 @@ export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
   return fetchAllLogs(state, dispatch, api)
 }
 
-const fetchAnalytics = (state, dispatch, api) => {
-  dispatch(showAnalyticsTab())
-  return api
-    .search({
-      space: getCurrentSpaceName(state),
-      string: getSearchProgram(state),
-      timeWindow: getTimeWindow(state)
-    })
-    .each(statsReceiver(dispatch))
-    .channel(0, analyticsReceiver(dispatch, 0))
-    .done(() => dispatch(completeMainSearch()))
-}
+const fetchAnalytics = serially(
+  (state, dispatch, api) => {
+    dispatch(showAnalyticsTab())
+    return api
+      .search({
+        space: getCurrentSpaceName(state),
+        string: getSearchProgram(state),
+        timeWindow: getTimeWindow(state)
+      })
+      .each(statsReceiver(dispatch))
+      .channel(0, analyticsReceiver(dispatch, 0))
+      .done(() => dispatch(completeMainSearch()))
+  },
+  handler => handler.abortRequest()
+)
 
-const fetchStarred = (state, dispatch) => {
-  const starredLogs = getStarredLogs(state)
-  dispatch(showLogsTab())
-  return setTimeout(() => {
-    dispatch(mainSearchEvents([...starredLogs]))
-    dispatch(completeMainSearch())
-  })
-}
-
-const fetchLogSubset = (state, dispatch, api) => {
-  dispatch(showLogsTab())
-  return api
-    .search({
-      space: getCurrentSpaceName(state),
-      string: getSearchProgram(state) + " | " + getHeadProc(state),
-      timeWindow: getInnerTimeWindow(state)
-    })
-    .each(statsReceiver(dispatch))
-    .channel(0, eventsReceiver(dispatch))
-    .done(() => {
+const fetchStarred = serially(
+  (state, dispatch) => {
+    const starredLogs = getStarredLogs(state)
+    dispatch(showLogsTab())
+    return setTimeout(() => {
+      dispatch(mainSearchEvents([...starredLogs]))
       dispatch(completeMainSearch())
     })
-}
+  },
+  id => clearTimeout(id)
+)
 
-const fetchAllLogs = (state, dispatch, api) => {
-  const string =
-    getSearchProgram(state) +
-    " | " +
-    getHeadProc(state) +
-    "; " +
-    getCountByTimeProc(state)
+const fetchLogSubset = serially(
+  (state, dispatch, api) => {
+    dispatch(showLogsTab())
+    return api
+      .search({
+        space: getCurrentSpaceName(state),
+        string: getSearchProgram(state) + " | " + getHeadProc(state),
+        timeWindow: getInnerTimeWindow(state)
+      })
+      .each(statsReceiver(dispatch))
+      .channel(0, eventsReceiver(dispatch))
+      .done(() => {
+        dispatch(completeMainSearch())
+      })
+  },
+  handler => handler.abortRequest()
+)
 
-  dispatch(showLogsTab())
-  dispatch(requestCountByTime())
-  return api
-    .search({
-      string,
-      space: getCurrentSpaceName(state),
-      timeWindow: getTimeWindow(state)
-    })
-    .each(statsReceiver(dispatch))
-    .channel(1, eventsReceiver(dispatch))
-    .channel(0, countByTimeReceiver(dispatch))
-    .done(() => {
-      dispatch(completeMainSearch())
-      dispatch(successCountByTime())
-    })
-}
+const fetchAllLogs = serially(
+  (state, dispatch, api) => {
+    const string =
+      getSearchProgram(state) +
+      " | " +
+      getHeadProc(state) +
+      "; " +
+      getCountByTimeProc(state)
+
+    dispatch(showLogsTab())
+    dispatch(requestCountByTime())
+    return api
+      .search({
+        string,
+        space: getCurrentSpaceName(state),
+        timeWindow: getTimeWindow(state)
+      })
+      .each(statsReceiver(dispatch))
+      .channel(1, eventsReceiver(dispatch))
+      .channel(0, countByTimeReceiver(dispatch))
+      .done(() => {
+        dispatch(completeMainSearch())
+        dispatch(successCountByTime())
+      })
+  },
+  handler => handler.abortRequest()
+)
 
 export function requestMainSearch({saveToHistory}: {saveToHistory: boolean}) {
   return {
