@@ -68,7 +68,6 @@ const fetchAnalytics = serially(
       .each(statsReceiver(dispatch))
       .channel(0, analyticsReceiver(dispatch, 0))
       .done(() => dispatch(completeMainSearch()))
-      .abort(() => console.log("aborted analytics"))
   },
   handler => handler.abortRequest()
 )

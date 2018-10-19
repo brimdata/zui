@@ -23,6 +23,10 @@ class MockClient {
   done() {
     return this
   }
+  abort() {
+    return this
+  }
+  abortRequest() {}
 }
 
 test("fetching an analytics search", () => {
