@@ -1,0 +1,47 @@
+$ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1); /* easeOutCirc */
+
+.notice {
+  position: fixed;
+  top: -10%;
+  left: 50%;
+  background: $red;
+  color: white;
+  padding: 12px 30px;
+  z-index: 2;
+  border-radius: 3px;
+  transform: translateX(-50%);
+  animation: notice 300ms;
+  animation-timing-function: $ease-out-circ;
+  animation-fill-mode: forwards;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  p {
+    padding-right: 12px;
+  }
+
+  .close-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    border-radius: 50%;
+    padding: 6px;
+    svg {
+      fill: white;
+      height: $scale--2;
+      width: $scale--2;
+    }
+  }
+}
+
+@keyframes notice {
+  from {
+    top: -100%;
+  }
+  to {
+    top: 6px;
+  }
+}

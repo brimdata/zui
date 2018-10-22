@@ -1,3 +1,5 @@
+/* @flow */
+
 import {combineReducers} from "redux"
 import descriptors from "./descriptors"
 import mainSearch from "./mainSearch"
@@ -18,6 +20,7 @@ import view from "./view"
 import starredLogs from "./starredLogs"
 import logs from "./logs"
 import packets from "./packets"
+import notices from "./notices"
 
 export default combineReducers({
   logs,
@@ -38,5 +41,6 @@ export default combineReducers({
   boomdCredentials,
   boomdConnection,
   starredLogs,
-  packets
+  packets,
+  notices
 })
