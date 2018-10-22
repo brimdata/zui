@@ -17,6 +17,7 @@ import {getCurrentSpaceName} from "../reducers/spaces"
 import Client from "boom-js-client"
 import {errorSearchBarParse} from "./searchBar"
 import * as Program from "../lib/Program"
+import {setNoticeError} from "./notices"
 
 type Options = {
   saveToHistory: boolean
@@ -125,6 +126,9 @@ const fetchAllLogs = serially(
       .done(() => {
         dispatch(completeMainSearch())
         dispatch(successCountByTime())
+      })
+      .error(_e => {
+        dispatch(setNoticeError("There was an error on the server."))
       })
   },
   handler => handler.abortRequest()

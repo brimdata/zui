@@ -1,4 +1,4 @@
-const {app, BrowserWindow, dialog, Menu} = require("electron")
+const {app, BrowserWindow, Menu} = require("electron")
 const {createMenu} = require("./menu")
 const {
   default: installExtension,

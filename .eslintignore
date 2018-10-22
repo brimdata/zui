@@ -1,1 +1,4 @@
-/src/js/flow-typed
+/flow-typed
+/dist
+/node_modules
+/coverage

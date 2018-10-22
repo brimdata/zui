@@ -26,6 +26,9 @@ class MockClient {
   abort() {
     return this
   }
+  error() {
+    return this
+  }
   abortRequest() {}
 }
 
