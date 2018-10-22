@@ -8,15 +8,18 @@ import XApp from "./connectors/XApp"
 import initStore from "./initializers/store"
 import initShortcuts from "./initializers/shortcuts"
 import initRoot from "./initializers/root"
+import AppErrorBoundary from "./components/AppErrorBoundary"
 
 const store = initStore()
 initShortcuts(store)
 
 ReactDOM.render(
-  <Provider store={store}>
-    <HashRouter>
-      <XApp />
-    </HashRouter>
-  </Provider>,
+  <AppErrorBoundary>
+    <Provider store={store}>
+      <HashRouter>
+        <XApp />
+      </HashRouter>
+    </Provider>
+  </AppErrorBoundary>,
   initRoot()
 )
