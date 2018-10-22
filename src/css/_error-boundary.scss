@@ -1,0 +1,29 @@
+.error-boundary {
+  overflow: scroll;
+  background: $light-gray-2;
+  height: 100%;
+  -webkit-app-region: drag;
+
+  .body-content {
+    background: white;
+    border-radius: 3px;
+    box-shadow: $high-box-shadow;
+    margin-top: $leading;
+    margin-bottom: $leading;
+  }
+
+  h1 {
+    padding-top: $leading;
+    display: flex;
+    align-items: center;
+    color: $red;
+
+    svg {
+      fill: $red;
+      margin: 0;
+      height: 30px * 1.5;
+      width: 30px * 1.5;
+      margin-right: $leading;
+    }
+  }
+}

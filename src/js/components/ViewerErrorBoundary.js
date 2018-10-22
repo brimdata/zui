@@ -21,7 +21,7 @@ export default class ViewerErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.error) {
       return (
-        <div className="viewer-error-boundary">
+        <div className="error-boundary">
           <div className="body-content">
             <h1>
               <Warn />
