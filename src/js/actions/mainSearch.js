@@ -11,7 +11,11 @@ import {getCountByTimeProc, getHeadProc} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
 import {getStarredLogs} from "../reducers/starredLogs"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-import {requestCountByTime, successCountByTime} from "./countByTime"
+import {
+  requestCountByTime,
+  successCountByTime,
+  errorCountByTime
+} from "./countByTime"
 import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import Client from "boom-js-client"
@@ -69,6 +73,10 @@ const fetchAnalytics = serially(
       .each(statsReceiver(dispatch))
       .channel(0, analyticsReceiver(dispatch, 0))
       .done(() => dispatch(completeMainSearch()))
+      .error(_e => {
+        dispatch(completeMainSearch())
+        dispatch(setNoticeError("There's a problem talking with the server."))
+      })
   },
   handler => handler.abortRequest()
 )
@@ -99,6 +107,10 @@ const fetchLogSubset = serially(
       .done(() => {
         dispatch(completeMainSearch())
       })
+      .error(_e => {
+        dispatch(completeMainSearch())
+        dispatch(setNoticeError("There's a problem talking with the server."))
+      })
   },
   handler => handler.abortRequest()
 )
@@ -128,7 +140,10 @@ const fetchAllLogs = serially(
         dispatch(successCountByTime())
       })
       .error(_e => {
-        dispatch(setNoticeError("There was an error on the server."))
+        dispatch(completeMainSearch())
+        dispatch(successCountByTime())
+        dispatch(errorCountByTime("There's a problem talking with the server."))
+        dispatch(setNoticeError("There's a problem talking with the server."))
       })
   },
   handler => handler.abortRequest()

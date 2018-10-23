@@ -39,7 +39,7 @@ export default class Notice extends React.Component<Props> {
         classNames="notice"
       >
         <div className="notice">
-          <p>There was a problem with the server</p>
+          <p>{this.props.message}</p>
           <button className="close-button" onClick={this.dismiss}>
             <X />
           </button>
