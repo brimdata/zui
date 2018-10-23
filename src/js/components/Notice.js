@@ -3,22 +3,48 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import X from "../icons/x-md.svg"
+import {CSSTransition} from "react-transition-group"
 
 type Props = {message: string, dismissNotice: Function}
 
 export default class Notice extends React.Component<Props> {
-  render() {
-    if (!this.props.message) {
-      return null
+  timeout: ?TimeoutID
+  dismiss: Function
+
+  constructor(props: Props) {
+    super(props)
+    this.timeout = null
+
+    this.dismiss = () => {
+      if (this.timeout) clearTimeout(this.timeout)
+      this.props.dismissNotice()
     }
-    setTimeout(this.props.dismissNotice, 6000)
+  }
+
+  dismiss() {
+    this.props.dismissNotice
+  }
+
+  render() {
+    if (this.props.message) {
+      this.timeout = setTimeout(this.props.dismissNotice, 6000)
+    }
+
     return ReactDOM.createPortal(
-      <div className="notice">
-        <p>There was a problem with the server</p>
-        <button className="close-button" onClick={this.props.dismissNotice}>
-          <X />
-        </button>
-      </div>,
+      <CSSTransition
+        timeout={300}
+        in={!!this.props.message}
+        unmountOnExit
+        mountOnEnter
+        classNames="notice"
+      >
+        <div className="notice">
+          <p>There was a problem with the server</p>
+          <button className="close-button" onClick={this.dismiss}>
+            <X />
+          </button>
+        </div>
+      </CSSTransition>,
       id("notification-root")
     )
   }

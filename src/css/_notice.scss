@@ -2,20 +2,19 @@ $ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1); /* easeOutCirc */
 
 .notice {
   position: fixed;
-  top: -10%;
+  top: 6px;
   left: 50%;
   background: $red;
   color: white;
   padding: 12px 30px;
   z-index: 2;
   border-radius: 3px;
-  transform: translateX(-50%);
-  animation: notice 300ms;
-  animation-timing-function: $ease-out-circ;
-  animation-fill-mode: forwards;
+  transform: translateX(-50%) translateY(0);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  transition: all 300ms;
+  opacity: 1;
 
   p {
     padding-right: 12px;
@@ -37,11 +36,12 @@ $ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1); /* easeOutCirc */
   }
 }
 
-@keyframes notice {
-  from {
-    top: -100%;
-  }
-  to {
-    top: 6px;
-  }
+.notice-enter {
+  opacity: 0;
+  top: 0;
+}
+
+.notice-exit-active {
+  opacity: 1;
+  top: -100%;
 }
