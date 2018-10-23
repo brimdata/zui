@@ -13,7 +13,7 @@ npm install
 npm start
 ```
 
-Newer version of Node are probably ok, too. For instance, the version installing on macOS via `brew` as of October, 2018 is `10.12.0` and seems to run the desktop client fine.
+Newer versions of Node are probably ok, too. For instance, the version installing on macOS via `brew` as of October, 2018 is `10.12.0` and seems to run the desktop client fine.
 
 Running `npm start` will compile files in `./src` to `./dist` and open the app. When a file is changed, it will recompile it and reload the app.
 
