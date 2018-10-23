@@ -15,6 +15,7 @@ import XLeftPane from "../connectors/XLeftPane"
 import XRightPane from "../connectors/XRightPane"
 import XDownloadProgress from "../connectors/XDownloadProgress"
 import ViewerErrorBoundary from "./ViewerErrorBoundary"
+import XNotice from "../connectors/XNotice"
 
 type Props = {
   fetchAllSpaces: Function,
@@ -44,6 +45,7 @@ export default class Search extends React.Component<Props> {
 
     return (
       <div className="search-page-wrapper">
+        <XNotice />
         <div className="search-page">
           <XLeftPane />
           <div className="search-page-main">

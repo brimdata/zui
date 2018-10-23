@@ -21,9 +21,9 @@
     "watch:css": "npm run build:css -- --watch --skip-initial",
     "watch:static": "npm run build:static -- --watch",
     "watch:reload": "livereload dist",
-    "lint": "eslint src",
+    "lint": "eslint .",
     "format": "prettier 'src/**/*.{js,scss}' --write --loglevel warn",
-    "flow": "flow src/js",
+    "flow": "flow",
     "check": "npm-run-all -p lint flow test"
   },
   "jest": {
@@ -93,6 +93,7 @@
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
+    "react-transition-group": "^2.5.0",
     "react-virtualized": "^9.20.1",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
