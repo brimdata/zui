@@ -257,8 +257,8 @@ export default class CountByTime extends React.Component {
       const x = this.scales.time(timeCursor)
       d3.select(".time-cursor")
         .style("display", "block")
+        .attr("y1", this.state.innerHeight + margin.top)
         .attr("y2", height)
-        .attr("y1", 0)
         .transition(
           d3
             .transition()
