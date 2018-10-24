@@ -30,8 +30,7 @@ const BOOM_INTERVALS = {
   second: "sec",
   minute: "min",
   hour: "hr",
-  day: "day",
-  month: "day"
+  day: "day"
 }
 
 export const getHeadProc = () => "head 1000"

@@ -4,8 +4,9 @@ import React from "react"
 import {ContextMenu, MenuItem} from "./ContextMenu"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import Arrow from "../icons/caret-bottom-sm.svg"
-import XDebugModal from "../connectors/XDebugModal"
+import Modal from "./Modal"
 import XCurlModal from "../connectors/XCurlModal"
+import XDebugModal from "../connectors/XDebugModal"
 
 type State = {
   menuIsOpen: boolean,
@@ -62,10 +63,13 @@ class SearchButton extends React.Component<Props, State> {
             <MenuItem>Copy for CLI (coming soon)</MenuItem>
           </ContextMenu>
         )}
-        <XDebugModal
+        <Modal
           isOpen={this.state.showDebugModal}
           onClose={() => this.setState({showDebugModal: false})}
-        />
+        >
+          <XDebugModal />
+        </Modal>
+
         <XCurlModal
           isOpen={this.state.showCurlModal}
           onClose={() => this.setState({showCurlModal: false})}

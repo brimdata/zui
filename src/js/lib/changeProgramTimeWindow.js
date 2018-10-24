@@ -3,9 +3,9 @@
 import Ast from "../models/Ast"
 import trim from "lodash/trim"
 import * as Time from "../lib/Time"
-import type {TimeWindow} from "../lib/TimeWindow"
+import type {DateTuple} from "../lib/TimeWindow"
 
-export const extractLastTimeWindow = (program: string): ?TimeWindow => {
+export const extractLastTimeWindow = (program: string): ?DateTuple => {
   if (containsTimeWindow(program)) {
     const [from, to] = getTimeWindowNodes(program).map(node =>
       toDate(node.value.value)
@@ -18,7 +18,7 @@ export const extractLastTimeWindow = (program: string): ?TimeWindow => {
 
 export function changeProgramTimeWindow(
   program: string,
-  [from, to]: TimeWindow
+  [from, to]: DateTuple
 ) {
   if (containsTimeWindow(program)) {
     program = replaceTsValue(program, getTimeWindowNodes(program)[0], from)

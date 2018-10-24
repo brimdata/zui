@@ -4,14 +4,14 @@ import React from "react"
 import {SmallHeading} from "./Headings"
 import Modal from "./Modal"
 import * as Program from "../lib/Program"
-import type {TimeWindow} from "../lib/TimeWindow"
+import type {DateTuple} from "../lib/TimeWindow"
 import type {Credentials} from "../lib/Credentials"
 
 type Props = {
   isOpen: boolean,
   onClose: Function,
   program: string,
-  timeWindow: TimeWindow,
+  timeWindow: DateTuple,
   credentials: Credentials,
   space: string
 }

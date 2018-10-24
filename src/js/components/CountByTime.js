@@ -1,8 +1,11 @@
+/* @flow */
+
 import React from "react"
 import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 import xAxisDrag from "./xAxisDrag"
 import * as TimeWindow from "../lib/TimeWindow"
+import type {DateTuple} from "../lib/TimeWindow"
 
 const margin = {
   left: 0,
@@ -11,29 +14,57 @@ const margin = {
   right: 0
 }
 
-export default class CountByTime extends React.Component {
-  constructor(props) {
+type Props = {
+  rawData: any,
+  data: {}[],
+  timeBinCount: number,
+  width: number,
+  height: number,
+  isFetching: boolean,
+  timeWindow: DateTuple,
+  innerTimeWindow: DateTuple,
+  keys: string[],
+  setOuterTimeWindow: Function,
+  setInnerTimeWindow: Function,
+  fetchMainSearch: Function
+}
+
+type State = {
+  innerWidth: number,
+  innerHeight: number
+}
+
+export default class CountByTime extends React.Component<Props, State> {
+  onDrag: Function
+  onDragEnd: Function
+  svg: any
+  scales: {
+    x: any,
+    y: any,
+    time: any
+  }
+
+  constructor(props: Props) {
     super(props)
     this.state = CountByTime.getDerivedStateFromProps(props)
     this.onDrag = this.onDrag.bind(this)
     this.onDragEnd = this.onDragEnd.bind(this)
   }
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props: Props) {
     return {
       innerWidth: Math.max(props.width - margin.left - margin.right, 0),
       innerHeight: Math.max(props.height - margin.top - margin.bottom, 0)
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: Props) {
     const {rawData, isFetching, width, height} = this.props
     return (
       nextProps.rawData !== rawData ||
       nextProps.isFetching !== isFetching ||
       nextProps.width !== width ||
-      nextProps.height !== height ||
-      nextProps.timeCursor !== this.props.timeCursor
+      nextProps.height !== height
     )
   }
 
@@ -91,34 +122,37 @@ export default class CountByTime extends React.Component {
     this.draw()
   }
 
-  onDrag(pos, startPos) {
-    const diff = TimeWindow.duration(
-      [pos, startPos].map(this.scales.time.invert)
-    )
-    this.draw(TimeWindow.shift(this.props.timeWindow, diff))
+  onDrag(pos: number, startPos: number) {
+    const [from, to] = [pos, startPos].map(num => this.scales.time.invert(num))
+    const diff = TimeWindow.duration([from, to])
+    const [nextFrom, nextTo] = TimeWindow.shift(this.props.timeWindow, diff)
+    this.draw([nextFrom, nextTo])
   }
 
-  onDragEnd(pos, startPos) {
-    const diff = TimeWindow.duration(
-      [pos, startPos].map(this.scales.time.invert)
-    )
+  onDragEnd(pos: number, startPos: number) {
+    const [from, to] = [pos, startPos].map(this.scales.time.invert)
+    const diff = TimeWindow.duration([from, to])
     this.props.setOuterTimeWindow(TimeWindow.shift(this.props.timeWindow, diff))
     this.props.fetchMainSearch()
   }
 
-  setScales(timeWindow) {
+  setScales(timeWindow: DateTuple) {
     const {innerWidth, innerHeight} = this.state
-    const {data} = this.props
+    const {data, timeBinCount} = this.props
+    const max = d3.max(data, d => d.count) || 0
+    const xDomain = [] // Filled with fake values
+    for (let i = 0; i < timeBinCount; ++i) xDomain.push(i)
+
     this.scales = {
       x: d3
         .scaleBand()
         .rangeRound([0, innerWidth])
-        .domain(data.map(d => d.ts))
+        .domain(xDomain)
         .padding(0.05),
       y: d3
         .scaleLinear()
         .range([innerHeight, 0])
-        .domain([0, d3.max(data, d => d.count)]),
+        .domain([0, max]),
       time: d3
         .scaleUtc()
         .range([0, innerWidth])
@@ -211,13 +245,13 @@ export default class CountByTime extends React.Component {
     const {props, scales} = this
     const {data, keys} = props
     const {x, y, time} = scales
-
     const series = d3.stack().keys(keys)(data)
     const barGroups = d3
       .select(this.svg)
       .select(".chart")
       .selectAll("g")
       .data(series, d => d.key)
+    const t = d3.transition().duration(100)
 
     barGroups
       .exit()
@@ -235,47 +269,28 @@ export default class CountByTime extends React.Component {
     bars
       .exit()
       .attr("opacity", 1)
-      .attr("y", innerHeight)
+      .attr("y", this.state.innerHeight)
       .attr("opacity", 0)
       .remove()
 
     bars
       .enter()
       .append("rect")
-      .attr("y", innerHeight)
+      .attr("y", this.state.innerHeight)
       .attr("height", 0)
       .merge(bars)
       .attr("width", x.bandwidth())
       .attr("x", d => time(d.data.ts))
+      .transition(t)
       .attr("y", d => y(d[1]))
       .attr("height", d => y(d[0]) - y(d[1]))
   }
 
-  drawTimeCursor() {
-    const {height, timeCursor} = this.props
-    if (timeCursor) {
-      const x = this.scales.time(timeCursor)
-      d3.select(".time-cursor")
-        .style("display", "block")
-        .attr("y2", height)
-        .attr("y1", 0)
-        .transition(
-          d3
-            .transition()
-            .duration(100)
-            .ease(d3.easeLinear)
-        )
-        .attr("x1", x)
-        .attr("x2", x)
-    }
-  }
-
-  draw(timeWindow = this.props.timeWindow) {
+  draw(timeWindow: DateTuple = this.props.timeWindow) {
     this.setScales(timeWindow)
     this.drawAxes()
     this.drawBrush()
     this.drawChart()
-    this.drawTimeCursor()
   }
 
   render() {

@@ -1,16 +1,12 @@
 /* @flow */
 
 import React from "react"
-import Modal from "./Modal"
 import {SmallHeading} from "./Headings"
 import Prism from "prismjs"
 import * as Program from "../lib/Program"
 
 type Props = {
-  isOpen: boolean,
-  onClose: Function,
-  searchProgram: string,
-  ast: ?Object
+  searchProgram: string
 }
 
 type State = {
@@ -26,11 +22,7 @@ export default class DebugModal extends React.Component<Props, State> {
   render() {
     const [ast, _error] = Program.parse(this.state.program)
     return (
-      <Modal
-        isOpen={this.props.isOpen}
-        onClose={this.props.onClose}
-        className="debug-query-modal"
-      >
+      <div className="debug-query-modal">
         <SmallHeading>Search Program</SmallHeading>
 
         <input
@@ -53,7 +45,7 @@ export default class DebugModal extends React.Component<Props, State> {
             }}
           />
         </pre>
-      </Modal>
+      </div>
     )
   }
 }
