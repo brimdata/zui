@@ -6,7 +6,7 @@ export default function(dispatch) {
   let buffer = []
 
   const dispatchEvents = throttle(() => {
-    if (buffer.lenth == 0) return
+    if (buffer.length === 0) return
     dispatch(actions.mainSearchEvents(buffer))
     dispatch(discoverDescriptors(buffer))
     buffer = []
