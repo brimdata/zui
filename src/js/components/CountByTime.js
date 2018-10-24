@@ -32,8 +32,7 @@ export default class CountByTime extends React.Component {
       nextProps.rawData !== rawData ||
       nextProps.isFetching !== isFetching ||
       nextProps.width !== width ||
-      nextProps.height !== height ||
-      nextProps.timeCursor !== this.props.timeCursor
+      nextProps.height !== height
     )
   }
 
@@ -108,17 +107,21 @@ export default class CountByTime extends React.Component {
 
   setScales(timeWindow) {
     const {innerWidth, innerHeight} = this.state
-    const {data} = this.props
+    const {data, timeBinCount} = this.props
+    const max = d3.max(data, d => d.count) || 0
+    const xDomain = [] // Filled with fake values
+    for (let i = 0; i < timeBinCount; ++i) xDomain.push(i)
+
     this.scales = {
       x: d3
         .scaleBand()
         .rangeRound([0, innerWidth])
-        .domain(data.map(d => d.ts))
+        .domain(xDomain)
         .padding(0.05),
       y: d3
         .scaleLinear()
         .range([innerHeight, 0])
-        .domain([0, d3.max(data, d => d.count)]),
+        .domain([0, max]),
       time: d3
         .scaleUtc()
         .range([0, innerWidth])
@@ -211,7 +214,6 @@ export default class CountByTime extends React.Component {
     const {props, scales} = this
     const {data, keys} = props
     const {x, y, time} = scales
-
     const series = d3.stack().keys(keys)(data)
     const barGroups = d3
       .select(this.svg)
@@ -247,27 +249,10 @@ export default class CountByTime extends React.Component {
       .merge(bars)
       .attr("width", x.bandwidth())
       .attr("x", d => time(d.data.ts))
-      .attr("y", d => y(d[1]))
+      .attr("y", d => {
+        return y(d[1])
+      })
       .attr("height", d => y(d[0]) - y(d[1]))
-  }
-
-  drawTimeCursor() {
-    const {height, timeCursor} = this.props
-    if (timeCursor) {
-      const x = this.scales.time(timeCursor)
-      d3.select(".time-cursor")
-        .style("display", "block")
-        .attr("y1", this.state.innerHeight + margin.top)
-        .attr("y2", height)
-        .transition(
-          d3
-            .transition()
-            .duration(100)
-            .ease(d3.easeLinear)
-        )
-        .attr("x1", x)
-        .attr("x2", x)
-    }
   }
 
   draw(timeWindow = this.props.timeWindow) {
@@ -275,7 +260,6 @@ export default class CountByTime extends React.Component {
     this.drawAxes()
     this.drawBrush()
     this.drawChart()
-    this.drawTimeCursor()
   }
 
   render() {

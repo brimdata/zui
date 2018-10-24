@@ -50,43 +50,45 @@ export const getCountByTimeError = state => state.countByTime.error
 export const getMainSearchCountByTime = createSelector(
   getTimeWindow,
   getCountByTimeData,
-  (timeWindow, data) => {
-    const tuples = data.tuples || []
-    const interval = countByTimeInterval(timeWindow)
-    const roundedTimeWindow = TimeWindow.floorAndCeil(
-      timeWindow,
-      interval.roundingUnit
-    )
-    const buckets = splitOnEvery(roundedTimeWindow, interval)
-
-    let table = new MergeHash()
-    let keys = new UniqArray()
-    tuples.forEach(d => {
-      let ts = toDate(d[0])
-      let path = d[1]
-      let count = parseInt(d[2])
-      table.merge(ts, {[path]: count})
-      keys.push(path)
-    })
-
-    const defaults = keys.toArray().reduce((accum, current) => {
-      accum[current] = 0
-      return accum
-    }, {})
-
-    return {
-      data: buckets.map(ts => {
-        const subCounts = {...defaults, ...table.get(ts)}
-        const count = Object.values(subCounts).reduce(
-          (total, count) => total + count,
-          0
-        )
-        return {ts, ...defaults, ...table.get(ts), count}
-      }),
-      keys: keys.toArray()
-    }
-  }
+  (t, d) => formatHistogram(t, d)
 )
+
+export const formatHistogram = (timeWindow, data) => {
+  const tuples = data.tuples || []
+  const interval = countByTimeInterval(timeWindow)
+  const roundedTimeWindow = TimeWindow.floorAndCeil(
+    timeWindow,
+    interval.roundingUnit
+  )
+  const buckets = splitOnEvery(roundedTimeWindow, interval)
+  const keys = new UniqArray()
+  const hash = new MergeHash()
+  tuples.forEach(d => {
+    const ts = toDate(d[0])
+    const path = d[1]
+    const count = parseInt(d[2])
+    keys.push(path)
+    hash.merge(ts, {[path]: count})
+  })
+  const defaults = keys
+    .toArray()
+    .reduce((obj, path) => ({...obj, [path]: 0}), {})
+  const table = hash.toJSON()
+  const bins = Object.keys(table).map(ts => {
+    return {
+      ts: new Date(ts),
+      ...defaults,
+      ...table[ts],
+      count: Object.values(table[ts]).reduce((c, sum) => sum + c, 0)
+    }
+  })
+
+  return {
+    data: bins,
+    keys: keys.toArray(),
+    timeBinCount: buckets.length
+  }
+}
 
 export function getMainSearchCountByTimeInterval(state) {
   const timeWindow = getTimeWindow(state)
