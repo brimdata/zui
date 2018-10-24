@@ -33,5 +33,5 @@ export default function([start, end]: DateTuple) {
   if (duration.asMonths() <= 12)
     return {number: 7, unit: "day", roundingUnit: "day"}
 
-  return {number: 1, unit: "month", roundingUnit: "day"}
+  return {number: 30, unit: "day", roundingUnit: "day"}
 }
