@@ -251,6 +251,7 @@ export default class CountByTime extends React.Component<Props, State> {
       .select(".chart")
       .selectAll("g")
       .data(series, d => d.key)
+    const t = d3.transition().duration(100)
 
     barGroups
       .exit()
@@ -280,9 +281,8 @@ export default class CountByTime extends React.Component<Props, State> {
       .merge(bars)
       .attr("width", x.bandwidth())
       .attr("x", d => time(d.data.ts))
-      .attr("y", d => {
-        return y(d[1])
-      })
+      .transition(t)
+      .attr("y", d => y(d[1]))
       .attr("height", d => y(d[0]) - y(d[1]))
   }
 
