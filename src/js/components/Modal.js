@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import ReactDOM from "react-dom"
 import ModalContents from "./ModalContents"
+import * as Doc from "../lib/Doc"
 
 class Modal extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Modal extends Component {
           {children}
         </ModalContents>
       </div>,
-      document.getElementById("modal-root")
+      Doc.id("modal-root")
     )
   }
 }

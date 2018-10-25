@@ -9,126 +9,14 @@
   opacity: 1;
 
   &.even {
-    background: darken(white, 3%);
+    background: darken(white, 2%);
   }
 
   &:hover {
-    background: darken(white, 8%);
+    background: darken(white, 6%);
   }
 
   &.highlight {
     background: $light-gray-3;
-  }
-}
-
-.log-cell {
-  padding: 0 6px;
-  position: relative;
-  border: 1px solid transparent;
-  @include type-colors;
-
-  ._path {
-    @include path-tag;
-  }
-
-  .context-menu {
-    left: calc(100% + 12px);
-    top: calc(100% + -6px);
-  }
-
-  &:hover,
-  &.active {
-    background: white;
-    border-radius: 3px 0 0 3px;
-
-    &:after {
-      position: absolute;
-      box-shadow: $high-box-shadow;
-      content: "";
-      width: calc(100% + #{$bro-log-row-height});
-      height: $bro-log-row-height;
-      background: none;
-      border-radius: 3px;
-      top: 0;
-      left: 0;
-    }
-
-    .field-name,
-    .cell-options-button {
-      display: block;
-    }
-  }
-
-  .field-name {
-    display: none;
-    position: absolute;
-    background: $gray-5;
-    color: white;
-    font-size: 12px;
-    font-family: $body-font;
-    top: -18px - 3px;
-    left: 0;
-    line-height: 18px;
-    padding: 0 3px;
-    border-radius: 3px;
-    z-index: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .cell-options-button {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    z-index: 1;
-    height: $bro-log-row-height;
-    width: $bro-log-row-height;
-    background: white;
-    border: none;
-    border-left: 1px solid $light-gray;
-    outline: none;
-    cursor: pointer;
-    border-radius: 0 3px 3px 0;
-
-    svg {
-      width: 8px;
-      height: 8px;
-      fill: $gray;
-      transition-duration: 150ms;
-    }
-
-    &:hover {
-      background: $off-white;
-    }
-  }
-
-  &.active .cell-options-button {
-    svg {
-      transform: rotate(-90deg);
-    }
-  }
-}
-
-.ts-cell {
-  height: $bro-log-row-height;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  min-width: 235px;
-  cursor: pointer;
-
-  p {
-    line-height: $bro-log-row-height;
-    letter-spacing: 2;
-    width: 100%;
-    .time,
-    .seconds {
-      margin-left: 12px;
-    }
-  }
-
-  &.highlight {
-    border-top: 1px dashed $light-gray-4;
   }
 }

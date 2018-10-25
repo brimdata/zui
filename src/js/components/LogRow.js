@@ -19,7 +19,8 @@ export default class LogRow extends React.PureComponent {
       appendToQuery,
       prevLog,
       highlight,
-      index
+      index,
+      isScrolling
     } = this.props
     const ts = log.cast("ts")
     let tsHighlight = false
@@ -42,6 +43,7 @@ export default class LogRow extends React.PureComponent {
           name={name}
           type={type}
           value={value}
+          isScrolling={isScrolling}
         />
       )
     }

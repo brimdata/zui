@@ -1,0 +1,73 @@
+.log-cell {
+  padding: 0 6px;
+  position: relative;
+  border: 1px solid transparent;
+  @include type-colors;
+
+  ._path {
+    @include path-tag;
+  }
+
+  &.hover,
+  &.active {
+    position: relative;
+    z-index: 1;
+    border: 1px dashed $gray-5;
+    background: white;
+  }
+
+  .cell-options-button {
+    display: none;
+    left: calc(100%);
+    top: 0;
+    position: absolute;
+    height: $bro-log-row-height;
+    width: $bro-log-row-height;
+    box-shadow: $box-shadow;
+    background: $gray-5;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+
+    svg {
+      width: 8px;
+      height: 8px;
+      fill: white;
+      transition-duration: 150ms;
+    }
+
+    &:hover {
+      background: $gray-3;
+    }
+  }
+
+  &.active .cell-options-button {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+.ts-cell {
+  height: $bro-log-row-height;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  min-width: 235px;
+  cursor: pointer;
+
+  p {
+    line-height: $bro-log-row-height;
+    letter-spacing: 2;
+    width: 100%;
+    .time,
+    .seconds {
+      margin-left: 12px;
+    }
+  }
+
+  &.highlight {
+    border-top: 1px dashed $light-gray-4;
+  }
+}

@@ -1,14 +1,30 @@
-import React from "react"
-import WithOutsideClick from "./WithOutsideClick"
+/* @flow */
 
-class ContextMenuBase extends React.PureComponent {
+import React from "react"
+import ReactDOM from "react-dom"
+import * as Doc from "../lib/Doc"
+import type {FixedPos} from "../lib/Doc"
+
+type Props = {
+  children: any,
+  style: FixedPos,
+  onOutsideClick: Function
+}
+
+export class ContextMenu extends React.PureComponent<Props> {
   render() {
-    return <ul className="context-menu">{this.props.children}</ul>
+    return ReactDOM.createPortal(
+      <div className="context-menu-overlay" onClick={this.props.onOutsideClick}>
+        <ul className="context-menu" style={this.props.style}>
+          {this.props.children}
+        </ul>
+      </div>,
+      Doc.id("context-menu-root")
+    )
   }
 }
 
-export const MenuItem = ({onClick, children}) => (
+type ItemProps = {onClick: Function, children: any}
+export const MenuItem = ({onClick, children}: ItemProps) => (
   <li onClick={onClick}>{children}</li>
 )
-
-export const ContextMenu = WithOutsideClick(ContextMenuBase)

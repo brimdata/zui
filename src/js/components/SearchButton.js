@@ -7,11 +7,14 @@ import Arrow from "../icons/caret-bottom-sm.svg"
 import Modal from "./Modal"
 import XCurlModal from "../connectors/XCurlModal"
 import XDebugModal from "../connectors/XDebugModal"
+import * as Doc from "../lib/Doc"
+import type {FixedPos} from "../lib/Doc"
 
 type State = {
   menuIsOpen: boolean,
   showDebugModal: boolean,
-  showCurlModal: boolean
+  showCurlModal: boolean,
+  menuStyle: FixedPos
 }
 
 type Props = {
@@ -27,9 +30,17 @@ class SearchButton extends React.Component<Props, State> {
     this.state = {
       menuIsOpen: false,
       showDebugModal: false,
-      showCurlModal: false
+      showCurlModal: false,
+      menuStyle: {top: 0, right: 0}
     }
-    this.openMenu = () => this.setState({menuIsOpen: true})
+    this.openMenu = e => {
+      const {left, bottom, width} = e.currentTarget.getBoundingClientRect()
+      console.log(e.currentTarget.getBoundingClientRect())
+      this.setState({
+        menuIsOpen: true,
+        menuStyle: {top: bottom + 6, right: Doc.getWidth() - left - width}
+      })
+    }
     this.closeMenu = () => this.setState({menuIsOpen: false})
   }
 
@@ -47,9 +58,12 @@ class SearchButton extends React.Component<Props, State> {
         </button>
 
         {this.state.menuIsOpen && (
-          <ContextMenu onOutsideClick={this.closeMenu}>
-            <MenuItem>Save query (coming soon)</MenuItem>
-            <MenuItem>Load query (coming soon)</MenuItem>
+          <ContextMenu
+            style={this.state.menuStyle}
+            onOutsideClick={this.closeMenu}
+          >
+            <MenuItem onClick={() => {}}>Save query (coming soon)</MenuItem>
+            <MenuItem onClick={() => {}}>Load query (coming soon)</MenuItem>
             <MenuItem
               onClick={() =>
                 this.setState({showDebugModal: true, menuIsOpen: false})
@@ -60,7 +74,7 @@ class SearchButton extends React.Component<Props, State> {
             <MenuItem onClick={() => this.setState({showCurlModal: true})}>
               Copy for curl
             </MenuItem>
-            <MenuItem>Copy for CLI (coming soon)</MenuItem>
+            <MenuItem onClick={() => {}}>Copy for CLI (coming soon)</MenuItem>
           </ContextMenu>
         )}
         <Modal
