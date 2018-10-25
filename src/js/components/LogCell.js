@@ -12,7 +12,11 @@ export default class LogCell extends React.PureComponent {
     this.countBy = this.countBy.bind(this)
     this.toggleMenu = e => {
       e.stopPropagation()
-      this.setState({showMenu: !this.state.showMenu})
+      const {top, left} = e.currentTarget.getBoundingClientRect()
+      this.setState({
+        showMenu: !this.state.showMenu,
+        menuStyle: {top: top + 12, left: left + 12}
+      })
     }
   }
 
@@ -53,7 +57,10 @@ export default class LogCell extends React.PureComponent {
           <DownArrow />
         </button>
         {this.state.showMenu && (
-          <ContextMenu onOutsideClick={this.toggleMenu}>
+          <ContextMenu
+            onOutsideClick={this.toggleMenu}
+            style={this.state.menuStyle}
+          >
             <MenuItem onClick={this.exclude}>Filter out these values</MenuItem>
             <MenuItem onClick={this.include}>Only show these values</MenuItem>
             <MenuItem onClick={this.countBy}>Count by this field</MenuItem>

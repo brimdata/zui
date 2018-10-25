@@ -31,11 +31,6 @@
     @include path-tag;
   }
 
-  .context-menu {
-    left: calc(100% + 12px);
-    top: calc(100% + -6px);
-  }
-
   &:hover,
   &.active {
     background: white;

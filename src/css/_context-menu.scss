@@ -12,12 +12,12 @@ $br: 8px;
 }
 
 .context-menu {
+  position: fixed;
   padding: 0;
   margin: 0;
   text-align: left;
   background-color: white;
   box-shadow: $high-box-shadow;
-  position: absolute;
   max-width: 300px;
   z-index: 1;
   transition: top 150ms, opacity 150ms;
