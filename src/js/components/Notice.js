@@ -4,6 +4,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import X from "../icons/x-md.svg"
 import {CSSTransition} from "react-transition-group"
+import * as Doc from "../lib/Doc"
 
 type Props = {message: string, dismissNotice: Function}
 
@@ -45,13 +46,7 @@ export default class Notice extends React.Component<Props> {
           </button>
         </div>
       </CSSTransition>,
-      id("notification-root")
+      Doc.id("notification-root")
     )
   }
-}
-
-const id = (name: string) => {
-  const el = document.getElementById(name)
-  if (el) return el
-  else throw new Error(`Could not find DOM node with id: ${name}`)
 }
