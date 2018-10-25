@@ -15,11 +15,10 @@ export default class LogCell extends React.PureComponent {
     this.toggleMenu = e => {
       Doc.clearTextSelection()
       e.stopPropagation()
-      const {top, left, height} = e.currentTarget.getBoundingClientRect()
       this.setState({
         hover: !this.state.showMenu,
         showMenu: !this.state.showMenu,
-        menuStyle: {top: top + height + 6, left: left}
+        menuStyle: {top: e.pageY, left: e.pageX}
       })
     }
   }

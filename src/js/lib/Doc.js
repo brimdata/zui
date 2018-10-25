@@ -1,5 +1,12 @@
 /* @flow */
 
+export type FixedPos = {
+  top?: number,
+  right?: number,
+  left?: number,
+  bottom?: number
+}
+
 export const id = (name: string) => {
   const el = document.getElementById(name)
   if (el) return el
@@ -16,4 +23,9 @@ export const selectText = (node: HTMLElement) => {
 
 export const clearTextSelection = () => {
   window.getSelection().empty()
+}
+
+export const getWidth = () => {
+  if (!document.body) return 0
+  return document.body.scrollWidth
 }
