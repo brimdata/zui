@@ -1,0 +1,14 @@
+.tool-tip {
+  position: fixed;
+  background: $gray-5;
+  font-family: $body-font;
+  color: white;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 0 3px;
+  border-radius: 3px;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: $box-shadow;
+}

@@ -16,7 +16,7 @@ export default class LogViewer extends React.PureComponent {
 
   render() {
     const {logs, appendToQuery, showDetail, logDetail, timeZone} = this.props
-    const rowRenderer = ({key, index, style}) => (
+    const rowRenderer = ({key, index, style, isScrolling}) => (
       <LogRow
         key={key}
         log={logs[index]}
@@ -26,6 +26,7 @@ export default class LogViewer extends React.PureComponent {
         style={style}
         showDetail={showDetail}
         appendToQuery={appendToQuery}
+        isScrolling={isScrolling}
         index={index}
       />
     )
