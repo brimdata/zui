@@ -1,131 +1,38 @@
-$conn-color: $green-1;
-.conn-bg-color {
-  background-color: $conn-color;
-  fill: $conn-color;
+@mixin zeek-bg-color($log-type, $color) {
+  .#{$log-type}-bg-color {
+    background-color: $color;
+    fill: $color;
+  }
 }
 
-$dhcp-color: #00578a;
-.dhcp-bg-color {
-  background-color: $dhcp-color;
-  fill: $dhcp-color;
+$unknown-type-color: #afafaf;
+[class$="-bg-color"] {
+  background: $unknown-type-color;
+  fill: $unknown-type-color;
 }
 
-$dns-color: $blue-3;
-.dns-bg-color {
-  background-color: $dns-color;
-  fill: $dns-color;
-}
-
-$ftp-color: #392277;
-.ftp-bg-color {
-  background-color: $ftp-color;
-  fill: $ftp-color;
-}
-
-$http-color: $yellow-4;
-.http-bg-color {
-  background-color: $http-color;
-  fill: $http-color;
-}
-
-$files-color: $pink;
-.files-bg-color {
-  background-color: $files-color;
-  fill: $files-color;
-}
-
-$mysql-color: #d28204;
-.mysql-bg-color {
-  background-color: $mysql-color;
-  fill: $mysql-color;
-}
-$irc-color: #00d1a6;
-.irc-bg-color {
-  background-color: $irc-color;
-  fill: $irc-color;
-}
-$radius-color: #ffd901;
-.radius-bg-color {
-  background-color: $radius-color;
-  fill: $radius-color;
-}
-$kerberos-color: #fbf758;
-.kerberos-bg-color {
-  background-color: $kerberos-color;
-  fill: $kerberos-color;
-}
-$sip-color: #006c7b;
-.sip-bg-color {
-  background-color: $sip-color;
-  fill: $sip-color;
-}
-$smtp-color: #e2e317;
-.smtp-bg-color {
-  background-color: $smtp-color;
-  fill: $smtp-color;
-}
-$ssl-color: $gray-5;
-.ssl-bg-color {
-  background-color: $ssl-color;
-  fill: $ssl-color;
-}
-$ssh-color: $gray-5;
-.ssh-bg-color {
-  background-color: $ssh-color;
-  fill: $ssh-color;
-}
-$syslog-color: #ddb81d;
-.syslog-bg-color {
-  background-color: $syslog-color;
-  fill: $syslog-color;
-}
-$tunnel-color: #007249;
-.tunnel-bg-color {
-  background-color: $tunnel-color;
-  fill: $tunnel-color;
-}
-$dce_rpc-color: #929292;
-.dce_rpc-bg-color {
-  background-color: $dce_rpc-color;
-  fill: $dce_rpc-color;
-}
-$ntlm-color: #6284a4;
-.ntlm-bg-color {
-  background-color: $ntlm-color;
-  fill: $ntlm-color;
-}
-$rdp-color: #081d5b;
-.rdp-bg-color {
-  background-color: $rdp-color;
-  fill: $rdp-color;
-}
-$smb_files-color: #27eeff;
-.smb_files-bg-color {
-  background-color: $smb_files-color;
-  fill: $smb_files-color;
-}
-$smb_mapping-color: #0511d4;
-.smb_mapping-bg-color {
-  background-color: $smb_mapping-color;
-  fill: $smb_mapping-color;
-}
-$weird-color: $gray-1;
-.weird-bg-color {
-  background-color: $weird-color;
-  fill: $weird-color;
-}
-$x509-color: $orange;
-.x509-bg-color {
-  background-color: $x509-color;
-  fill: $x509-color;
-}
-$pe-color: $red;
-.pe-bg-color {
-  background-color: $pe-color;
-  fill: $pe-color;
-}
-$dpd-color: $green-5;
-.dpd-bg-color {
-  background-color: $dpd-color;
-  fill: $dpd-color;
-}
+@include zeek-bg-color("conn", $green-1);
+@include zeek-bg-color("dhcp", #00578a);
+@include zeek-bg-color("dns", $blue-3);
+@include zeek-bg-color("ftp", #392277);
+@include zeek-bg-color("http", $yellow-4);
+@include zeek-bg-color("files", $pink);
+@include zeek-bg-color("mysql", #d28204);
+@include zeek-bg-color("irc", #00d1a6);
+@include zeek-bg-color("radius", #ffd901);
+@include zeek-bg-color("kerberos", #fbf758);
+@include zeek-bg-color("sip", #006c7b);
+@include zeek-bg-color("smtp", #e2e317);
+@include zeek-bg-color("ssl", $gray-5);
+@include zeek-bg-color("ssh", $gray-5);
+@include zeek-bg-color("syslog", #ddb81d);
+@include zeek-bg-color("tunnel", #007249);
+@include zeek-bg-color("dce_rpc", #929292);
+@include zeek-bg-color("ntlm", #6284a4);
+@include zeek-bg-color("rdp", #081d5b);
+@include zeek-bg-color("smb_files", #27eeff);
+@include zeek-bg-color("smb_mapping", #0511d4);
+@include zeek-bg-color("weird", $gray-1);
+@include zeek-bg-color("x509", $orange);
+@include zeek-bg-color("pe", $red);
+@include zeek-bg-color("dpd", $green-5);
