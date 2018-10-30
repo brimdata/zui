@@ -162,14 +162,52 @@ export default class CountByTime extends React.Component<Props, State> {
 
   drawAxes() {
     const {scales} = this
+    const {innerWidth} = this.state
     d3.select(".x-axis").call(d3.axisBottom(scales.time))
     d3.select(".x-axis-drag").attr("width", this.state.innerWidth)
-    d3.select(".y-axis").call(
-      d3
-        .axisRight(scales.y)
-        .ticks(1)
-        .tickValues(scales.y.domain().map(d3.format("d")))
-    )
+    d3.select(".y-axis")
+      .call(
+        d3
+          .axisRight(scales.y)
+          .ticks(1)
+          .tickValues(scales.y.domain().map(d3.format("d")))
+      )
+      .selectAll(".tick")
+      .each(function() {
+        // This is all just to put a little background on the y axis number.
+        // There very well might be a better way to do this when you re-write
+        // this component.
+        let {width, height, x, y} = this.querySelector("text").getBBox()
+        const arrow = 5
+        width += x + 5
+        height += 4
+        y -= 2
+
+        d3.select(this)
+          .selectAll("polygon")
+          .remove()
+
+        d3.select(this)
+          .selectAll("line")
+          .attr("x2", innerWidth)
+
+        d3.select(this)
+          .insert("polygon", "text")
+          .attr("class", "tick-bg")
+          .attr("transform", `translate(0, ${y})`)
+          .attr(
+            "points",
+            [
+              [0, 0],
+              [width, 0],
+              [width + arrow, height / 2],
+              [width, height],
+              [0, height]
+            ]
+              .map(a => a.join(","))
+              .join(" ")
+          )
+      })
   }
 
   drawBrush() {
