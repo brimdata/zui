@@ -50,6 +50,15 @@
     display: block;
   }
 
+  .y-axis text {
+    fill: white;
+  }
+
+  .y-axis .tick-bg {
+    opacity: 0.85;
+    fill: $gray-2;
+  }
+
   .time-cursor {
     stroke-width: 1px;
     stroke: $gray-5;
