@@ -25,13 +25,19 @@ export default class LogCell extends React.PureComponent {
 
   include(e) {
     e.stopPropagation()
-    this.props.appendQueryInclude(this.props.name, this.props.value)
+    this.props.appendQueryInclude(
+      this.props.name,
+      escapeSpaces(this.props.value)
+    )
     this.props.submitSearchBar()
   }
 
   exclude(e) {
     e.stopPropagation()
-    this.props.appendQueryExclude(this.props.name, this.props.value)
+    this.props.appendQueryExclude(
+      this.props.name,
+      escapeSpaces(this.props.value)
+    )
     this.props.submitSearchBar()
   }
 
@@ -117,4 +123,12 @@ export const TsCell = ({ts, highlight, onClick}) => {
 const getTooltipStyle = e => {
   const {top, left} = e.currentTarget.getBoundingClientRect()
   return {top: top - 21, left}
+}
+
+const escapeSpaces = value => {
+  if (/\s+/.test(value)) {
+    return `"${value}"`
+  } else {
+    return value
+  }
 }
