@@ -129,7 +129,7 @@ test("search with inner time does not ask for count by every", () => {
 
   expect(search).toBeCalledWith(
     expect.objectContaining({
-      string: "_path = conn | head 1000"
+      string: "_path = conn | head 1000; count()"
     })
   )
 })
