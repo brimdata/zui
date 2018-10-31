@@ -10,7 +10,7 @@ test("fetching packets is a success", done => {
   const log = conn()
   const dispatch = jest.fn()
   const getState = jest.fn(() => state)
-  const packetsFn = jest.fn(() => new Promise(res => res({path: "file.pcap"})))
+  const packetsFn = jest.fn(() => new Promise(res => res("file.pcap")))
 
   actions
     .fetchPackets(log)(dispatch, getState, {packets: packetsFn})
