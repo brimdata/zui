@@ -99,11 +99,12 @@ const fetchLogSubset = serially(
     return api
       .search({
         space: getCurrentSpaceName(state),
-        string: getSearchProgram(state) + " | " + getHeadProc(state),
+        string:
+          getSearchProgram(state) + " | " + getHeadProc(state) + "; count()",
         timeWindow: getInnerTimeWindow(state)
       })
       .each(statsReceiver(dispatch))
-      .channel(0, eventsReceiver(dispatch))
+      .channel(1, eventsReceiver(dispatch))
       .done(() => {
         dispatch(completeMainSearch())
       })
