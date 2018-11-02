@@ -20,7 +20,6 @@ type Props = {
   timeBinCount: number,
   width: number,
   height: number,
-  isFetching: boolean,
   timeWindow: DateTuple,
   innerTimeWindow: DateTuple,
   keys: string[],
@@ -59,10 +58,9 @@ export default class CountByTime extends React.Component<Props, State> {
   }
 
   shouldComponentUpdate(nextProps: Props) {
-    const {rawData, isFetching, width, height} = this.props
+    const {rawData, width, height} = this.props
     return (
       nextProps.rawData !== rawData ||
-      nextProps.isFetching !== isFetching ||
       nextProps.width !== width ||
       nextProps.height !== height
     )

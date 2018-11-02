@@ -5,19 +5,15 @@ import * as actions from "../actions/timeWindow"
 import {fetchMainSearch} from "../actions/mainSearch"
 import {
   getMainSearchCountByTime,
-  getCountByTimeIsFetching,
-  getCountByTimeData,
-  getTimeCursor
+  getCountByTimeData
 } from "../reducers/countByTime"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 
 const stateToProps = state => ({
   rawData: getCountByTimeData(state),
-  isFetching: getCountByTimeIsFetching(state),
   ...getMainSearchCountByTime(state),
   timeWindow: getTimeWindow(state),
-  innerTimeWindow: getInnerTimeWindow(state),
-  timeCursor: getTimeCursor(state)
+  innerTimeWindow: getInnerTimeWindow(state)
 })
 
 export default connect(
