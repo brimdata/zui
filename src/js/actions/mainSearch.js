@@ -11,7 +11,6 @@ import {getCountByTimeProc, getHeadProc} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
 import {getStarredLogs} from "../reducers/starredLogs"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-import {errorCountByTime} from "./countByTime"
 import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import Client from "boom-js-client"
@@ -136,7 +135,6 @@ const fetchAllLogs = serially(
       })
       .error(_e => {
         dispatch(completeMainSearch())
-        dispatch(errorCountByTime("There's a problem talking with the server."))
         dispatch(setNoticeError("There's a problem talking with the server."))
       })
   },
