@@ -3,13 +3,14 @@
 import {createSelector} from "reselect"
 import createReducer from "./createReducer"
 import * as Time from "../lib/Time"
+import type {State} from "./types"
 
 const initialState = {}
+
 type Space = Object
-type Slice = {
+export type Spaces = {
   [string]: Space
 }
-type State = {spaces: Slice, currentSpaceName: string}
 
 export default createReducer(initialState, {
   ALL_SPACES_REQUEST: () => initialState,

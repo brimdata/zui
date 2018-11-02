@@ -5,6 +5,7 @@ import isNumber from "lodash/isNumber"
 import trim from "lodash/trim"
 import Ast from "../models/Ast"
 import {createSelector} from "reselect"
+import type {State} from "./types"
 
 export const initialState = {
   current: "",
@@ -14,8 +15,7 @@ export const initialState = {
   error: null
 }
 
-type Slice = typeof initialState
-type State = {searchBar: Slice}
+export type SearchBar = typeof initialState
 
 export default createReducer(initialState, {
   QUERY_INCLUDE_APPEND: (state, {name, value}) => ({

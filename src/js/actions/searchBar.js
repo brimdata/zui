@@ -1,5 +1,7 @@
 import {fetchMainSearch} from "./mainSearch"
 import {setInnerTimeWindow} from "./timeWindow"
+import {getSearchProgram} from "../reducers/searchBar"
+import * as Program from "../lib/Program"
 
 export const changeSearchBarInput = value => ({
   type: "SEARCH_BAR_INPUT_CHANGE",
@@ -59,4 +61,14 @@ export const submitSearchBar = () => dispatch => {
   dispatch(submittingSearchBar())
   dispatch(setInnerTimeWindow(null))
   dispatch(fetchMainSearch())
+}
+
+export const validateProgram = () => (dispatch, getState) => {
+  const [, error] = Program.parse(getSearchProgram(getState()))
+  if (error) {
+    dispatch(errorSearchBarParse(error.message))
+    return false
+  } else {
+    return true
+  }
 }
