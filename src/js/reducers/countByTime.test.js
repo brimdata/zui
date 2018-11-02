@@ -14,7 +14,7 @@ test("receive data", () => {
     tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   }
-  const state = reduce([a.requestCountByTime(), a.receiveCountByTime(data)])
+  const state = reduce([a.receiveCountByTime(data)])
 
   expect(getCountByTimeData(state)).toEqual(data)
 })
@@ -24,11 +24,7 @@ test("receive data twice", () => {
     tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   }
-  const state = reduce([
-    a.requestCountByTime(),
-    a.receiveCountByTime(data),
-    a.receiveCountByTime(data)
-  ])
+  const state = reduce([a.receiveCountByTime(data), a.receiveCountByTime(data)])
 
   expect(getCountByTimeData(state)).toEqual({
     tuples: [["1"], ["2"], ["1"], ["2"]],

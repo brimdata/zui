@@ -1,7 +1,3 @@
-export const requestCountByTime = () => ({
-  type: "COUNT_BY_TIME_REQUEST"
-})
-
 export const completeCountByTime = () => ({
   type: "COUNT_BY_TIME_COMPLETE"
 })

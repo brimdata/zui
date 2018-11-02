@@ -202,8 +202,7 @@ test("fetching a regular search", () => {
     expect.arrayContaining([
       "SEARCH_HISTORY_PUSH",
       "MAIN_SEARCH_REQUEST",
-      "SHOW_LOGS_TAB",
-      "COUNT_BY_TIME_REQUEST"
+      "SHOW_LOGS_TAB"
     ])
   )
 })

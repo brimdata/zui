@@ -11,11 +11,7 @@ import {getCountByTimeProc, getHeadProc} from "../reducers/mainSearch"
 import {getSearchHistoryEntry} from "../reducers/searchHistory"
 import {getStarredLogs} from "../reducers/starredLogs"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-import {
-  requestCountByTime,
-  successCountByTime,
-  errorCountByTime
-} from "./countByTime"
+import {successCountByTime, errorCountByTime} from "./countByTime"
 import {getSearchProgram} from "../reducers/searchBar"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import Client from "boom-js-client"
@@ -126,7 +122,6 @@ const fetchAllLogs = serially(
       getCountByTimeProc(state)
 
     dispatch(showLogsTab())
-    dispatch(requestCountByTime())
     return api
       .search({
         string,
