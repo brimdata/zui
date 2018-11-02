@@ -2,8 +2,15 @@
 
 import moment from "moment"
 import type {DateTuple} from "../lib/TimeWindow"
+import type {TimeUnit} from "../lib/Time"
 
-export default function([start, end]: DateTuple) {
+type Interval = {
+  number: number,
+  unit: TimeUnit,
+  roundingUnit: TimeUnit
+}
+
+export default function([start, end]: DateTuple): Interval {
   const duration = moment.duration(moment(end).diff(moment(start)))
 
   if (duration.asMinutes() <= 5)

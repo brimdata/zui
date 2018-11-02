@@ -1,3 +1,5 @@
+/* @flow */
+
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import countByTimeInterval from "../lib/countByTimeInterval"
@@ -6,6 +8,19 @@ import * as TimeWindow from "../lib/TimeWindow"
 import {getTimeWindow} from "./timeWindow"
 import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
+import type {State} from "./types"
+import type {DateTuple} from "../lib/TimeWindow"
+
+type Results = {
+  tuples: [],
+  descriptor: []
+}
+
+type Histogram = {
+  data: {ts: Date, [string]: number}[],
+  keys: string[],
+  timeBinCount: number
+}
 
 const initialState = {
   data: {
@@ -14,6 +29,8 @@ const initialState = {
   },
   error: null
 }
+
+export type CountByTime = typeof initialState
 
 export default createReducer(initialState, {
   COUNT_BY_TIME_REQUEST: () => ({
@@ -35,7 +52,10 @@ export const getMainSearchCountByTime = createSelector(
   (t, d) => formatHistogram(t, d)
 )
 
-export const formatHistogram = (timeWindow, data) => {
+export const formatHistogram = (
+  timeWindow: DateTuple,
+  data: Results
+): Histogram => {
   const tuples = data.tuples || []
   const interval = countByTimeInterval(timeWindow)
   const roundedTimeWindow = TimeWindow.floorAndCeil(
@@ -61,7 +81,7 @@ export const formatHistogram = (timeWindow, data) => {
       ts: new Date(ts),
       ...defaults,
       ...table[ts],
-      count: Object.values(table[ts]).reduce((c, sum) => sum + c, 0)
+      count: Object.values(table[ts]).reduce((c, sum) => parseInt(sum) + c, 0)
     }
   })
 
@@ -72,7 +92,7 @@ export const formatHistogram = (timeWindow, data) => {
   }
 }
 
-export function getMainSearchCountByTimeInterval(state) {
+export function getMainSearchCountByTimeInterval(state: State) {
   const timeWindow = getTimeWindow(state)
   return countByTimeInterval(timeWindow).unit
 }

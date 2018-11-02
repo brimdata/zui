@@ -1,7 +1,9 @@
 /* @flow */
 
 import type {Notices} from "./notices"
+import type {CountByTime} from "./countByTime"
 
 export type State = {
-  notices: Notices
+  notices: Notices,
+  countByTime: CountByTime
 }
