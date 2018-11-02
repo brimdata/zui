@@ -124,6 +124,25 @@ test("search with inner time does not ask for count by every", () => {
   )
 })
 
+test("search with a provided head proc", () => {
+  const state = setupState([
+    setSpaceInfo(spaceInfo),
+    setCurrentSpaceName("ranch-logs"),
+    changeSearchBarInput("_path = conn | head 45")
+  ])
+  const api = new MockClient()
+  const search = jest.spyOn(api, "search")
+  const store = mockStore(state, api)
+
+  store.dispatch(fetchMainSearch())
+
+  expect(search).toBeCalledWith(
+    expect.objectContaining({
+      string: "_path = conn | head 45; every 12hr count() by _path"
+    })
+  )
+})
+
 test("search with outerTimeWindow if no inner", () => {
   const state = setupState([
     setSpaceInfo(spaceInfo),

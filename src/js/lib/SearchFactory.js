@@ -42,9 +42,7 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
       return new Search(state, dispatch, api, {
         space: getCurrentSpaceName(state),
         program:
-          getSearchProgram(state) +
-          " | " +
-          getHeadProc(state) +
+          headProc(getSearchProgram(state), 1000) +
           "; " +
           getCountByTimeProc(state),
         timeWindow: getTimeWindow(state),
@@ -55,4 +53,10 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
       })
   }
   throw new Error("Unknown search type")
+}
+
+const headProc = (program, number) => {
+  const [ast] = Program.parse(program)
+  if (ast.proc && ast.proc.op === "HeadProc") return program
+  else return program + ` | head ${number}`
 }
