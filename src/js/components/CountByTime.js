@@ -109,10 +109,6 @@ export default class CountByTime extends React.Component<Props, State> {
       .attr("class", "y-axis")
       .attr("transform", `translate(${left}, ${top})`)
 
-    d3.select(svg)
-      .append("line")
-      .attr("class", "time-cursor")
-
     this.draw()
   }
 
