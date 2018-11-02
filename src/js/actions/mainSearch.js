@@ -49,12 +49,20 @@ export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
     return fetchStarred(state, dispatch)
   }
 
-  if (getInnerTimeWindow(state)) {
-    return fetchLogSubset(state, dispatch, api)
-  }
-
   return fetchAllLogs(state, dispatch, api)
 }
+
+const fetchStarred = serially(
+  (state, dispatch) => {
+    const starredLogs = getStarredLogs(state)
+    dispatch(showLogsTab())
+    return setTimeout(() => {
+      dispatch(mainSearchEvents([...starredLogs]))
+      dispatch(completeMainSearch())
+    })
+  },
+  id => clearTimeout(id)
+)
 
 const fetchAnalytics = serially(
   (state, dispatch, api) => {
@@ -76,70 +84,57 @@ const fetchAnalytics = serially(
   handler => handler.abortRequest()
 )
 
-const fetchStarred = serially(
-  (state, dispatch) => {
-    const starredLogs = getStarredLogs(state)
-    dispatch(showLogsTab())
-    return setTimeout(() => {
-      dispatch(mainSearchEvents([...starredLogs]))
-      dispatch(completeMainSearch())
-    })
-  },
-  id => clearTimeout(id)
-)
-
-const fetchLogSubset = serially(
+const fetchAllLogs = serially(
   (state, dispatch, api) => {
     dispatch(showLogsTab())
-    return api
+    const request = api
       .search({
         space: getCurrentSpaceName(state),
-        string:
-          getSearchProgram(state) + " | " + getHeadProc(state) + "; count()",
-        timeWindow: getInnerTimeWindow(state)
+        string: decorateProgram(state),
+        timeWindow: timeWindow(state)
       })
       .each(statsReceiver(dispatch))
-      .channel(1, eventsReceiver(dispatch))
-      .done(() => {
-        dispatch(completeMainSearch())
-      })
+      .done(() => dispatch(completeMainSearch()))
       .error(_e => {
         dispatch(completeMainSearch())
         dispatch(setNoticeError("There's a problem talking with the server."))
       })
+    channels(request, state, dispatch)
+    return request
   },
   handler => handler.abortRequest()
 )
 
-const fetchAllLogs = serially(
-  (state, dispatch, api) => {
-    const string =
+function decorateProgram(state) {
+  if (getInnerTimeWindow(state)) {
+    return getSearchProgram(state) + " | " + getHeadProc(state) + "; count()"
+  } else {
+    return (
       getSearchProgram(state) +
       " | " +
       getHeadProc(state) +
       "; " +
       getCountByTimeProc(state)
+    )
+  }
+}
 
-    dispatch(showLogsTab())
-    return api
-      .search({
-        string,
-        space: getCurrentSpaceName(state),
-        timeWindow: getTimeWindow(state)
-      })
-      .each(statsReceiver(dispatch))
-      .channel(1, eventsReceiver(dispatch))
-      .channel(0, countByTimeReceiver(dispatch))
-      .done(() => {
-        dispatch(completeMainSearch())
-      })
-      .error(_e => {
-        dispatch(completeMainSearch())
-        dispatch(setNoticeError("There's a problem talking with the server."))
-      })
-  },
-  handler => handler.abortRequest()
-)
+function timeWindow(state) {
+  if (getInnerTimeWindow(state)) {
+    return getInnerTimeWindow(state)
+  } else {
+    return getTimeWindow(state)
+  }
+}
+
+function channels(request, state, dispatch) {
+  if (getInnerTimeWindow(state)) {
+    request.channel(1, eventsReceiver(dispatch))
+  }
+  request
+    .channel(1, eventsReceiver(dispatch))
+    .channel(0, countByTimeReceiver(dispatch))
+}
 
 export function requestMainSearch({saveToHistory}: {saveToHistory: boolean}) {
   return {
