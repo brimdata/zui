@@ -9,17 +9,15 @@ import throttle from "lodash/throttle"
 import Client from "boom-js-client"
 import {getCredentials} from "../reducers/boomdCredentials"
 
-export default function() {
-  const state = loadState()
+const state = loadState()
 
+export default function(
+  api: Client = new Client(state && getCredentials(state))
+) {
   const store = createStore(
     reducer,
     state,
-    composeWithDevTools(
-      applyMiddleware(
-        reduxThunk.withExtraArgument(new Client(state && getCredentials(state)))
-      )
-    )
+    composeWithDevTools(applyMiddleware(reduxThunk.withExtraArgument(api)))
   )
 
   store.subscribe(

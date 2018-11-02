@@ -1,3 +1,5 @@
+import * as SearchFactory from "../lib/SearchFactory"
+
 export const showRightSidebar = () => ({
   type: "RIGHT_SIDEBAR_SHOW"
 })
@@ -52,3 +54,8 @@ export const showDownloads = () => ({
 export const hideDownloads = () => ({
   type: "DOWNLOADS_HIDE"
 })
+
+export const updateTab = state =>
+  SearchFactory.getType(state) === "ANALYTICS"
+    ? showAnalyticsTab()
+    : showLogsTab()

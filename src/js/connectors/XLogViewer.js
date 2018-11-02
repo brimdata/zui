@@ -4,7 +4,6 @@ import {viewLogDetail, fetchCorrelatedLogs} from "../actions/logDetails"
 import {appendMainSearchQueryProgram} from "../actions/mainSearch"
 import {fetchMainSearch} from "../actions/mainSearch"
 import {getLogs} from "../reducers/mainSearch"
-import {setTimeCursor} from "../actions/countByTime"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
 
@@ -24,9 +23,7 @@ const dispatchToProps = dispatch => ({
   appendToQuery(fragment) {
     dispatch(appendMainSearchQueryProgram(fragment))
     dispatch(fetchMainSearch())
-  },
-
-  setTimeCursor: date => dispatch(setTimeCursor(date))
+  }
 })
 
 export default connect(

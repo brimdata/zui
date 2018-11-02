@@ -2,7 +2,18 @@ import {fetchMainSearch} from "./mainSearch"
 import {changeSearchBarInput} from "./searchBar"
 import {setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
 import {setSpaceInfo, setCurrentSpaceName} from "./spaces"
-import reducer from "../reducers"
+import configureMockStore from "redux-mock-store"
+import thunk from "redux-thunk"
+import rootReducer from "../reducers"
+
+const mockStore = (initialState, api = new MockClient()) => {
+  const middleware = [thunk.withExtraArgument(api)]
+  return configureMockStore(middleware)(initialState)
+}
+
+const setupState = actions => {
+  return actions.reduce(rootReducer, undefined)
+}
 
 const spaceInfo = {
   name: "ranch-logs",
@@ -33,19 +44,16 @@ class MockClient {
 }
 
 test("fetching an analytics search", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("* | count()")
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
-  const api = new MockClient()
+  ])
 
-  fetchMainSearch()(dispatch, getState, api)
+  const store = mockStore(state)
+  store.dispatch(fetchMainSearch())
 
-  const dispatched = dispatch.mock.calls.map(([action]) => action.type)
+  const dispatched = store.getActions().map(action => action.type)
   expect(dispatched).toEqual(
     expect.arrayContaining([
       "SEARCH_HISTORY_PUSH",
@@ -56,26 +64,20 @@ test("fetching an analytics search", () => {
 })
 
 test("analytics always use the outer time window", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("* | count() | sort -r count"),
     setInnerTimeWindow([new Date(2015, 2, 10), new Date(2015, 2, 11)]),
     setOuterTimeWindow([new Date(2000, 0, 1), new Date(3000, 0, 1)])
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
+  ])
   const api = new MockClient()
-  const search = jest.fn()
-  api.search = (...args) => {
-    search(...args)
-    return api
-  }
+  const spy = jest.spyOn(api, "search")
 
-  fetchMainSearch()(dispatch, getState, api)
+  const store = mockStore(state, api)
+  store.dispatch(fetchMainSearch())
 
-  expect(search).toBeCalledWith(
+  expect(spy).toBeCalledWith(
     expect.objectContaining({
       timeWindow: [new Date(2000, 0, 1), new Date(3000, 0, 1)]
     })
@@ -83,23 +85,17 @@ test("analytics always use the outer time window", () => {
 })
 
 test("search with inner time window if set", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_path = conn"),
     setInnerTimeWindow([new Date(2015, 2, 10), new Date(2015, 2, 11)])
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
+  ])
   const api = new MockClient()
-  const search = jest.fn()
-  api.search = (...args) => {
-    search(...args)
-    return api
-  }
+  const search = jest.spyOn(api, "search")
+  const store = mockStore(state, api)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
   expect(search).toBeCalledWith(
     expect.objectContaining({
@@ -109,23 +105,17 @@ test("search with inner time window if set", () => {
 })
 
 test("search with inner time does not ask for count by every", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_path = conn"),
     setInnerTimeWindow([new Date(2015, 2, 10), new Date(2015, 2, 11)])
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
+  ])
   const api = new MockClient()
-  const search = jest.fn()
-  api.search = (...args) => {
-    search(...args)
-    return api
-  }
+  const search = jest.spyOn(api, "search")
+  const store = mockStore(state, api)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
   expect(search).toBeCalledWith(
     expect.objectContaining({
@@ -134,25 +124,38 @@ test("search with inner time does not ask for count by every", () => {
   )
 })
 
+test("search with a provided head proc", () => {
+  const state = setupState([
+    setSpaceInfo(spaceInfo),
+    setCurrentSpaceName("ranch-logs"),
+    changeSearchBarInput("_path = conn | head 45")
+  ])
+  const api = new MockClient()
+  const search = jest.spyOn(api, "search")
+  const store = mockStore(state, api)
+
+  store.dispatch(fetchMainSearch())
+
+  expect(search).toBeCalledWith(
+    expect.objectContaining({
+      string: "_path = conn | head 45; every 12hr count() by _path"
+    })
+  )
+})
+
 test("search with outerTimeWindow if no inner", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_path = conn"),
     setOuterTimeWindow([new Date(2000, 0, 1), new Date(3000, 0, 1)]),
     setInnerTimeWindow(null)
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
+  ])
   const api = new MockClient()
-  const search = jest.fn()
-  api.search = (...args) => {
-    search(...args)
-    return api
-  }
+  const search = jest.spyOn(api, "search")
+  const store = mockStore(state, api)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
   expect(search).toBeCalledWith(
     expect.objectContaining({
@@ -162,22 +165,16 @@ test("search with outerTimeWindow if no inner", () => {
 })
 
 test("fetching an analytics does not put any procs on the query", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("* | count()")
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
+  ])
   const api = new MockClient()
-  const search = jest.fn()
-  api.search = (...args) => {
-    search(...args)
-    return api
-  }
+  const search = jest.spyOn(api, "search")
+  const store = mockStore(state, api)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
   expect(search).toBeCalledWith(
     expect.objectContaining({string: "* | count()"})
@@ -185,46 +182,35 @@ test("fetching an analytics does not put any procs on the query", () => {
 })
 
 test("fetching a regular search", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_path=conn")
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
-  const api = new MockClient()
+  ])
+  const store = mockStore(state)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
-  const dispatched = dispatch.mock.calls.map(([action]) => action.type)
-  expect(dispatched).toEqual(
+  expect(store.getActions().map(action => action.type)).toEqual(
     expect.arrayContaining([
       "SEARCH_HISTORY_PUSH",
       "MAIN_SEARCH_REQUEST",
-      "SHOW_LOGS_TAB",
-      "COUNT_BY_TIME_REQUEST"
+      "SHOW_LOGS_TAB"
     ])
   )
 })
 
 test("fetching a regular search puts procs on the end", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("")
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
+  ])
   const api = new MockClient()
-  const search = jest.fn()
-  api.search = (...args) => {
-    search(...args)
-    return api
-  }
+  const search = jest.spyOn(api, "search")
+  const store = mockStore(state, api)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
   expect(search).toBeCalledWith(
     expect.objectContaining({
@@ -234,53 +220,44 @@ test("fetching a regular search puts procs on the end", () => {
 })
 
 test("not saving a search to history", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_path=conn")
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
-  const api = new MockClient()
+  ])
+  const store = mockStore(state)
 
-  fetchMainSearch({saveToHistory: false})(dispatch, getState, api)
+  store.dispatch(fetchMainSearch({saveToHistory: false}))
 
-  const dispatched = dispatch.mock.calls.map(([action]) => action.type)
+  const dispatched = store.getActions().map(action => action.type)
   expect(dispatched).not.toContain("SEARCH_HISTORY_PUSH")
 })
 
 test("a bad search query", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_ath=")
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
-  const api = new MockClient()
+  ])
+  const store = mockStore(state)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
-  const dispatched = dispatch.mock.calls.map(([action]) => action.type)
+  const dispatched = store.getActions().map(action => action.type)
   expect(dispatched).toEqual(expect.arrayContaining(["SEARCH_BAR_PARSE_ERROR"]))
 })
 
 test("starred querys", () => {
-  const actions = [
+  const state = setupState([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput(":starred")
-  ]
-  const state = actions.reduce(reducer, {})
-  const getState = () => state
-  const dispatch = jest.fn()
-  const api = new MockClient()
+  ])
+  const store = mockStore(state)
 
-  fetchMainSearch()(dispatch, getState, api)
+  store.dispatch(fetchMainSearch())
 
-  const dispatched = dispatch.mock.calls.map(([action]) => action.type)
+  const dispatched = store.getActions().map(action => action.type)
   expect(dispatched).toEqual(
     expect.arrayContaining(["MAIN_SEARCH_REQUEST", "SHOW_LOGS_TAB"])
   )
