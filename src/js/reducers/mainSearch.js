@@ -33,11 +33,6 @@ const BOOM_INTERVALS = {
   day: "day"
 }
 
-export const getHeadProc = () => "head 1000"
-export function getProcs(state) {
-  return [getHeadProc(), getCountByTimeProc(state)]
-}
-
 export function getPage(state) {
   return state.mainSearch.page
 }

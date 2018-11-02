@@ -5,7 +5,7 @@ import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import analyticsReceiver from "../receivers/analyticsReceiver"
 import eventsReceiver from "../receivers/eventsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
-import {getCountByTimeProc, getHeadProc} from "../reducers/mainSearch"
+import {getCountByTimeProc} from "../reducers/mainSearch"
 import * as Program from "../lib/Program"
 import Search from "../models/Search"
 import {getCurrentSpaceName} from "../reducers/spaces"
@@ -34,7 +34,7 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
       return new Search(state, dispatch, api, {
         space: getCurrentSpaceName(state),
         program:
-          getSearchProgram(state) + " | " + getHeadProc(state) + "; count()",
+          Program.addHeadProc(getSearchProgram(state), 1000) + "; count()",
         timeWindow: getInnerTimeWindow(state),
         callbacks: request => request.channel(1, eventsReceiver(dispatch))
       })
@@ -42,7 +42,7 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
       return new Search(state, dispatch, api, {
         space: getCurrentSpaceName(state),
         program:
-          headProc(getSearchProgram(state), 1000) +
+          Program.addHeadProc(getSearchProgram(state), 1000) +
           "; " +
           getCountByTimeProc(state),
         timeWindow: getTimeWindow(state),
@@ -53,10 +53,4 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
       })
   }
   throw new Error("Unknown search type")
-}
-
-const headProc = (program, number) => {
-  const [ast] = Program.parse(program)
-  if (ast.proc && ast.proc.op === "HeadProc") return program
-  else return program + ` | head ${number}`
 }

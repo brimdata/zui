@@ -37,3 +37,25 @@ test("#hasAnalytics for sequential proc", () => {
     false
   )
 })
+
+test("#addHeadProc when no head exists", () => {
+  expect(Program.addHeadProc("_path=dns", 300)).toBe("_path=dns | head 300")
+})
+
+test("#addHeadProc when head exists", () => {
+  expect(Program.addHeadProc("_path=dns | head 45", 300)).toBe(
+    "_path=dns | head 45"
+  )
+})
+
+test("#addHeadProc when sort exists", () => {
+  expect(Program.addHeadProc("_path=dns | sort ts", 300)).toBe(
+    "_path=dns | sort ts | head 300"
+  )
+})
+
+test("#addHeadProc when sort and head exists", () => {
+  expect(Program.addHeadProc("_path=dns | head 23 | sort ts", 300)).toBe(
+    "_path=dns | head 23 | sort ts"
+  )
+})
