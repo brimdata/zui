@@ -6,12 +6,6 @@ import Log from "../models/Log"
 export default class LogViewer extends React.PureComponent {
   constructor(props) {
     super(props)
-    this.onRowsRendered = this.onRowsRendered.bind(this)
-  }
-
-  onRowsRendered({startIndex}) {
-    const {logs, setTimeCursor} = this.props
-    setTimeCursor(logs[startIndex].cast("ts"))
   }
 
   render() {
@@ -36,7 +30,6 @@ export default class LogViewer extends React.PureComponent {
           {({height, width}) => {
             return (
               <List
-                onRowsRendered={this.onRowsRendered}
                 className="log-viewer"
                 width={width}
                 height={height}

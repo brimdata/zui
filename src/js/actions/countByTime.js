@@ -13,8 +13,3 @@ export const errorCountByTime = (error: string) => ({
   type: "COUNT_BY_TIME_ERROR",
   error
 })
-
-export const setTimeCursor = (date: Date) => ({
-  type: "TIME_CURSOR_SET",
-  date
-})
