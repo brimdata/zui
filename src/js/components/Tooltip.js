@@ -2,9 +2,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import * as Doc from "../lib/Doc"
+import type {FixedPos} from "../lib/Doc"
 
 type Props = {
-  style: {top: number, left: number},
+  style: FixedPos,
   children: any
 }
 

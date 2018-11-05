@@ -1,14 +1,45 @@
+/* @flow */
+
 import React from "react"
 import DownArrow from "../icons/chevron-bottom-md.svg"
 import {ContextMenu, MenuItem} from "./ContextMenu"
 import Tooltip from "./Tooltip"
 import * as Time from "../lib/Time"
 import * as Doc from "../lib/Doc"
+import type {FixedPos} from "../lib/Doc"
 
-export default class LogCell extends React.PureComponent {
-  constructor(props) {
+type Props = {
+  appendQueryInclude: Function,
+  submitSearchBar: Function,
+  appendQueryExclude: Function,
+  appendQueryCountBy: Function,
+  name: string,
+  value: string,
+  type: string,
+  isScrolling: boolean
+}
+
+type State = {
+  showMenu: boolean,
+  hover: boolean,
+  menuStyle: FixedPos,
+  tooltipStyle: FixedPos
+}
+
+export default class LogCell extends React.PureComponent<Props, State> {
+  include: Function
+  exclude: Function
+  countBy: Function
+  toggleMenu: Function
+
+  constructor(props: Props) {
     super(props)
-    this.state = {showMenu: false}
+    this.state = {
+      showMenu: false,
+      hover: false,
+      menuStyle: {top: 0, left: 0},
+      tooltipStyle: {top: 0, left: 0}
+    }
     this.include = this.include.bind(this)
     this.exclude = this.exclude.bind(this)
     this.countBy = this.countBy.bind(this)
@@ -23,7 +54,7 @@ export default class LogCell extends React.PureComponent {
     }
   }
 
-  include(e) {
+  include(e: Event) {
     e.stopPropagation()
     this.props.appendQueryInclude(
       this.props.name,
@@ -32,7 +63,7 @@ export default class LogCell extends React.PureComponent {
     this.props.submitSearchBar()
   }
 
-  exclude(e) {
+  exclude(e: Event) {
     e.stopPropagation()
     this.props.appendQueryExclude(
       this.props.name,
@@ -41,7 +72,7 @@ export default class LogCell extends React.PureComponent {
     this.props.submitSearchBar()
   }
 
-  countBy(e) {
+  countBy(e: Event) {
     e.stopPropagation()
     this.props.appendQueryCountBy(this.props.name)
     this.props.submitSearchBar()
@@ -51,7 +82,7 @@ export default class LogCell extends React.PureComponent {
     const {name, type, value} = this.props
     let cellClass = `log-cell ${type}`
     if (this.state.showMenu) cellClass += " active"
-    if (!this.state.isScrolling && this.state.hover) cellClass += " hover"
+    if (!this.props.isScrolling && this.state.hover) cellClass += " hover"
     let valueClass = ""
 
     if (name === "_path") {
@@ -105,7 +136,8 @@ export default class LogCell extends React.PureComponent {
   }
 }
 
-export const TsCell = ({ts, highlight, onClick}) => {
+type TsCellArgs = {ts: Date, highlight: boolean, onClick: Function}
+export const TsCell = ({ts, highlight, onClick}: TsCellArgs) => {
   return (
     <div
       className={`ts-cell ${highlight ? "highlight" : ""}`}
@@ -120,7 +152,7 @@ export const TsCell = ({ts, highlight, onClick}) => {
   )
 }
 
-const getTooltipStyle = e => {
+const getTooltipStyle = (e): FixedPos => {
   const {top, left} = e.currentTarget.getBoundingClientRect()
   return {top: top - 21, left}
 }
