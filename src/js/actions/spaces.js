@@ -17,7 +17,7 @@ export const fetchAllSpaces = () => (
   api: Client
 ) => {
   dispatch(requestAllSpaces())
-  api
+  return api
     .spaces()
     .done(spaces => {
       spaces.forEach(name => dispatch(fetchSpaceInfo(name)))

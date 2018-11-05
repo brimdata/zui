@@ -25,9 +25,7 @@ class Spaces extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    this.state = {redirect: false}
-    this.firstRender = true
-
+    this.state = {redirect: false, isFetching: true}
     this.onSpaceClick = name => {
       props.setCurrentSpaceName(name)
       this.setState({redirect: true})
@@ -35,12 +33,13 @@ class Spaces extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.fetchAllSpaces()
-    this.firstRender = false
+    this.props.fetchAllSpaces().done(() => {
+      this.setState({isFetching: false})
+    })
   }
 
   render() {
-    if (this.firstRender) return null
+    if (this.state.isFetching) return null
     if (this.state.redirect) return <Redirect to="/search" />
     const {spaces} = this.props
     const names = Object.keys(spaces)
