@@ -10,7 +10,7 @@ class SearchWelcome extends React.Component {
     return (
       <div className="search-welcome body-content">
         <h1>Space: {space.name}</h1>
-        <p>Type a search above to explore the bro logs.</p>
+        <p>Type a search above to explore the Zeek logs.</p>
         <p>Example searches:</p>
         <ul>
           <li>
