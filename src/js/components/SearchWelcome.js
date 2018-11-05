@@ -1,9 +1,7 @@
 import React from "react"
 
 class SearchWelcome extends React.Component {
-  componentDidMount() {
-    this.props.fetchSpaceStats(this.props.currentSpaceName)
-  }
+  componentDidMount() {}
 
   render() {
     const {space} = this.props
