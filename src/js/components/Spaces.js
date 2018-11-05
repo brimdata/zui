@@ -16,7 +16,8 @@ type Props = {
 }
 
 type State = {
-  redirect: boolean
+  redirect: boolean,
+  isFetching: boolean
 }
 
 class Spaces extends React.Component<Props, State> {
