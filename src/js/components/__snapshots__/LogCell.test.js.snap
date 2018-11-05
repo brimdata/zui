@@ -1,0 +1,1023 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shapshot 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <span
+          className=""
+        />,
+        false,
+        false,
+        false,
+      ],
+      "className": "log-cell undefined",
+      "onClick": [Function],
+      "onContextMenu": [Function],
+      "onMouseEnter": [Function],
+      "onMouseLeave": [Function],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": undefined,
+          "className": "",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "span",
+      },
+      false,
+      false,
+      false,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <span
+            className=""
+          />,
+          false,
+          false,
+          false,
+        ],
+        "className": "log-cell undefined",
+        "onClick": [Function],
+        "onContextMenu": [Function],
+        "onMouseEnter": [Function],
+        "onMouseLeave": [Function],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": undefined,
+            "className": "",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "span",
+        },
+        false,
+        false,
+        false,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`shapshot after clicking 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <span
+          className=""
+        />,
+        false,
+        false,
+        false,
+      ],
+      "className": "log-cell undefined",
+      "onClick": [Function],
+      "onContextMenu": [Function],
+      "onMouseEnter": [Function],
+      "onMouseLeave": [Function],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": undefined,
+          "className": "",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "span",
+      },
+      false,
+      false,
+      false,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <span
+            className=""
+          />,
+          false,
+          false,
+          false,
+        ],
+        "className": "log-cell undefined",
+        "onClick": [Function],
+        "onContextMenu": [Function],
+        "onMouseEnter": [Function],
+        "onMouseLeave": [Function],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": undefined,
+            "className": "",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "span",
+        },
+        false,
+        false,
+        false,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`shapshot after hovering 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <span
+          className=""
+        />,
+        <button
+          className="cell-options-button"
+        >
+          <DownArrow
+            data-container-transform="translate(0 1)"
+            data-icon="chevron-bottom"
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          />
+        </button>,
+        <Tooltip
+          style={
+            Object {
+              "left": 100,
+              "top": 79,
+            }
+          }
+        >
+          <span
+            className="field-name"
+          />
+        </Tooltip>,
+        false,
+      ],
+      "className": "log-cell undefined hover",
+      "onClick": [Function],
+      "onContextMenu": [Function],
+      "onMouseEnter": [Function],
+      "onMouseLeave": [Function],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": undefined,
+          "className": "",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "span",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <DownArrow
+            data-container-transform="translate(0 1)"
+            data-icon="chevron-bottom"
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          />,
+          "className": "cell-options-button",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "data-container-transform": "translate(0 1)",
+            "data-icon": "chevron-bottom",
+            "height": "32",
+            "viewBox": "0 0 32 32",
+            "width": "32",
+            "xmlns": "http://www.w3.org/2000/svg",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        "type": "button",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": <span
+            className="field-name"
+          />,
+          "style": Object {
+            "left": 100,
+            "top": 79,
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": undefined,
+            "className": "field-name",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "span",
+        },
+        "type": [Function],
+      },
+      false,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <span
+            className=""
+          />,
+          <button
+            className="cell-options-button"
+          >
+            <DownArrow
+              data-container-transform="translate(0 1)"
+              data-icon="chevron-bottom"
+              height="32"
+              viewBox="0 0 32 32"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            />
+          </button>,
+          <Tooltip
+            style={
+              Object {
+                "left": 100,
+                "top": 79,
+              }
+            }
+          >
+            <span
+              className="field-name"
+            />
+          </Tooltip>,
+          false,
+        ],
+        "className": "log-cell undefined hover",
+        "onClick": [Function],
+        "onContextMenu": [Function],
+        "onMouseEnter": [Function],
+        "onMouseLeave": [Function],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": undefined,
+            "className": "",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "span",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <DownArrow
+              data-container-transform="translate(0 1)"
+              data-icon="chevron-bottom"
+              height="32"
+              viewBox="0 0 32 32"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            />,
+            "className": "cell-options-button",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "data-container-transform": "translate(0 1)",
+              "data-icon": "chevron-bottom",
+              "height": "32",
+              "viewBox": "0 0 32 32",
+              "width": "32",
+              "xmlns": "http://www.w3.org/2000/svg",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": "button",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": <span
+              className="field-name"
+            />,
+            "style": Object {
+              "left": 100,
+              "top": 79,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": undefined,
+              "className": "field-name",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "span",
+          },
+          "type": [Function],
+        },
+        false,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`shapshot after hovering 2`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <span
+          className=""
+        />,
+        false,
+        false,
+        false,
+      ],
+      "className": "log-cell undefined",
+      "onClick": [Function],
+      "onContextMenu": [Function],
+      "onMouseEnter": [Function],
+      "onMouseLeave": [Function],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": undefined,
+          "className": "",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "span",
+      },
+      false,
+      false,
+      false,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <span
+            className=""
+          />,
+          false,
+          false,
+          false,
+        ],
+        "className": "log-cell undefined",
+        "onClick": [Function],
+        "onContextMenu": [Function],
+        "onMouseEnter": [Function],
+        "onMouseLeave": [Function],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": undefined,
+            "className": "",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "span",
+        },
+        false,
+        false,
+        false,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`shapshot after right-clicking 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <span
+          className=""
+        />,
+        <button
+          className="cell-options-button"
+        >
+          <DownArrow
+            data-container-transform="translate(0 1)"
+            data-icon="chevron-bottom"
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          />
+        </button>,
+        <Tooltip
+          style={
+            Object {
+              "left": 0,
+              "top": 0,
+            }
+          }
+        >
+          <span
+            className="field-name"
+          />
+        </Tooltip>,
+        <ContextMenu
+          onOutsideClick={[Function]}
+          style={
+            Object {
+              "left": undefined,
+              "top": undefined,
+            }
+          }
+        >
+          <MenuItem
+            onClick={[Function]}
+          >
+            Filter out these values
+          </MenuItem>
+          <MenuItem
+            onClick={[Function]}
+          >
+            Only show these values
+          </MenuItem>
+          <MenuItem
+            onClick={[Function]}
+          >
+            Count by this field
+          </MenuItem>
+        </ContextMenu>,
+      ],
+      "className": "log-cell undefined active hover",
+      "onClick": [Function],
+      "onContextMenu": [Function],
+      "onMouseEnter": [Function],
+      "onMouseLeave": [Function],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": undefined,
+          "className": "",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "span",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <DownArrow
+            data-container-transform="translate(0 1)"
+            data-icon="chevron-bottom"
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          />,
+          "className": "cell-options-button",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "data-container-transform": "translate(0 1)",
+            "data-icon": "chevron-bottom",
+            "height": "32",
+            "viewBox": "0 0 32 32",
+            "width": "32",
+            "xmlns": "http://www.w3.org/2000/svg",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        "type": "button",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": <span
+            className="field-name"
+          />,
+          "style": Object {
+            "left": 0,
+            "top": 0,
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": undefined,
+            "className": "field-name",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "span",
+        },
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": Array [
+            <MenuItem
+              onClick={[Function]}
+            >
+              Filter out these values
+            </MenuItem>,
+            <MenuItem
+              onClick={[Function]}
+            >
+              Only show these values
+            </MenuItem>,
+            <MenuItem
+              onClick={[Function]}
+            >
+              Count by this field
+            </MenuItem>,
+          ],
+          "onOutsideClick": [Function],
+          "style": Object {
+            "left": undefined,
+            "top": undefined,
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "Filter out these values",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": "Filter out these values",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "Only show these values",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": "Only show these values",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "Count by this field",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": "Count by this field",
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <span
+            className=""
+          />,
+          <button
+            className="cell-options-button"
+          >
+            <DownArrow
+              data-container-transform="translate(0 1)"
+              data-icon="chevron-bottom"
+              height="32"
+              viewBox="0 0 32 32"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            />
+          </button>,
+          <Tooltip
+            style={
+              Object {
+                "left": 0,
+                "top": 0,
+              }
+            }
+          >
+            <span
+              className="field-name"
+            />
+          </Tooltip>,
+          <ContextMenu
+            onOutsideClick={[Function]}
+            style={
+              Object {
+                "left": undefined,
+                "top": undefined,
+              }
+            }
+          >
+            <MenuItem
+              onClick={[Function]}
+            >
+              Filter out these values
+            </MenuItem>
+            <MenuItem
+              onClick={[Function]}
+            >
+              Only show these values
+            </MenuItem>
+            <MenuItem
+              onClick={[Function]}
+            >
+              Count by this field
+            </MenuItem>
+          </ContextMenu>,
+        ],
+        "className": "log-cell undefined active hover",
+        "onClick": [Function],
+        "onContextMenu": [Function],
+        "onMouseEnter": [Function],
+        "onMouseLeave": [Function],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": undefined,
+            "className": "",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "span",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <DownArrow
+              data-container-transform="translate(0 1)"
+              data-icon="chevron-bottom"
+              height="32"
+              viewBox="0 0 32 32"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            />,
+            "className": "cell-options-button",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "data-container-transform": "translate(0 1)",
+              "data-icon": "chevron-bottom",
+              "height": "32",
+              "viewBox": "0 0 32 32",
+              "width": "32",
+              "xmlns": "http://www.w3.org/2000/svg",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": "button",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": <span
+              className="field-name"
+            />,
+            "style": Object {
+              "left": 0,
+              "top": 0,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": undefined,
+              "className": "field-name",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "span",
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": Array [
+              <MenuItem
+                onClick={[Function]}
+              >
+                Filter out these values
+              </MenuItem>,
+              <MenuItem
+                onClick={[Function]}
+              >
+                Only show these values
+              </MenuItem>,
+              <MenuItem
+                onClick={[Function]}
+              >
+                Count by this field
+              </MenuItem>,
+            ],
+            "onOutsideClick": [Function],
+            "style": Object {
+              "left": undefined,
+              "top": undefined,
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Filter out these values",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": "Filter out these values",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Only show these values",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": "Only show these values",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Count by this field",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": "Count by this field",
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
