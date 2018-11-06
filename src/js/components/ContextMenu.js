@@ -11,11 +11,41 @@ type Props = {
   onOutsideClick: Function
 }
 
-export class ContextMenu extends React.PureComponent<Props> {
+type State = FixedPos
+
+export class ContextMenu extends React.Component<Props, State> {
+  ref: any
+
+  constructor(props: Props) {
+    super(props)
+    this.ref = React.createRef()
+    this.state = {...props.style}
+  }
+
+  componentDidMount() {
+    this.ensureVisiblePosition()
+  }
+
+  ensureVisiblePosition() {
+    const {left, top, width, height} = this.ref.getBoundingClientRect()
+
+    if (top + height > Doc.getHeight()) {
+      this.setState({top: top - height})
+    }
+
+    if (left + width > Doc.getWidth()) {
+      this.setState({left: left - width})
+    }
+  }
+
   render() {
     return ReactDOM.createPortal(
       <div className="context-menu-overlay" onClick={this.props.onOutsideClick}>
-        <ul className="context-menu" style={this.props.style}>
+        <ul
+          className="context-menu"
+          ref={r => (this.ref = r)}
+          style={{...this.state}}
+        >
           {this.props.children}
         </ul>
       </div>,

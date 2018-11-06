@@ -796,6 +796,7 @@ ShallowWrapper {
             "type": "string",
             "value": "weird",
           },
+          "log": undefined,
           "onClose": [Function],
           "style": Object {
             "left": undefined,
@@ -958,6 +959,7 @@ ShallowWrapper {
               "type": "string",
               "value": "weird",
             },
+            "log": undefined,
             "onClose": [Function],
             "style": Object {
               "left": undefined,

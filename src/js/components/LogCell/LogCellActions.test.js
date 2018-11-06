@@ -1,13 +1,20 @@
+/* @flow */
+
 import React from "react"
 import {shallow} from "enzyme"
 import LogCellActions from "./LogCellActions"
-import Field from "../models/Field"
+import * as mockLogs from "../../test/mockLogs"
+import mockSpace from "../../test/mockSpace"
 
 test("basic snapshot", () => {
-  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const log = mockLogs.conn()
+  const space = mockSpace({packet_support: true})
   const wrapper = shallow(
     <LogCellActions
-      field={field}
+      dispatch={jest.fn()}
+      log={log}
+      field={log.getField("_path")}
+      space={space}
       onClose={() => {}}
       style={{top: 1, left: 1}}
     />

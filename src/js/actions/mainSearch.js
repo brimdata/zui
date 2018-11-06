@@ -72,3 +72,7 @@ export function appendMainSearchQueryProgram(fragment: string) {
     fragment
   }
 }
+
+export const resetMainSearch = () => ({
+  type: "MAIN_SEARCH_RESET"
+})

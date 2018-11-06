@@ -31,3 +31,8 @@ export const getWidth = () => {
   if (!document.body) return 0
   return document.body.scrollWidth
 }
+
+export const getHeight = () => {
+  if (!document.body) return 0
+  return document.body.scrollHeight
+}

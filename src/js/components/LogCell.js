@@ -7,10 +7,12 @@ import * as Time from "../lib/Time"
 import * as Doc from "../lib/Doc"
 import type {FixedPos} from "../lib/Doc"
 import Field from "../models/Field"
+import Log from "../models/Log"
 import XLogCellActions from "../connectors/XLogCellActions"
 
 type Props = {
   field: Field,
+  log: Log,
   isScrolling: boolean
 }
 
@@ -88,6 +90,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
 
         {this.state.showMenu && (
           <XLogCellActions
+            log={this.props.log}
             field={this.props.field}
             style={this.state.menuStyle}
             onClose={this.toggleMenu}

@@ -1,12 +1,14 @@
 /* @flow */
 
 import {connect} from "react-redux"
-import type {Dispatch} from "redux"
-import LogCellActions from "../components/LogCellActions"
+import LogCellActions from "../components/LogCell/LogCellActions"
+import * as spaces from "../reducers/spaces"
 
-const dispatchToProps = (dispatch: Dispatch<any>) => ({dispatch})
+const stateToProps = state => ({
+  space: spaces.getCurrentSpace(state)
+})
 
 export default connect(
-  null,
-  dispatchToProps
+  stateToProps,
+  (dispatch: *) => ({dispatch})
 )(LogCellActions)

@@ -13,10 +13,17 @@ const stateToProps = state => ({
   isConnected: boomdConnection.getBoomdIsConnected(state),
   currentSpaceName: spaces.getCurrentSpaceName(state),
   logsTab: view.getShowLogsTab(state),
-  analyticsTab: view.getShowAnalyticsTab(state)
+  analyticsTab: view.getShowAnalyticsTab(state),
+  space: spaces.getCurrentSpace(state)
 })
 
 export default connect(
   stateToProps,
-  dispatch => bindActionCreators({...spaceActions, ...viewActions}, dispatch)
+  dispatch => ({
+    ...bindActionCreators(
+      {...spaceActions, ...viewActions, dispatch},
+      dispatch
+    ),
+    dispatch
+  })
 )(Search)
