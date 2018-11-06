@@ -1,7 +1,8 @@
-import {receiveCountByTime} from "../actions/countByTime"
+import {receiveCountByTime, resetCountByTime} from "../actions/countByTime"
 import throttle from "lodash/throttle"
 
 export default dispatch => {
+  dispatch(resetCountByTime())
   let descriptor
   let tuples = []
 
