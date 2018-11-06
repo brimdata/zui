@@ -28,6 +28,10 @@ export default class Log {
     return isEqual(a.tuple, b.tuple) && isEqual(a.descriptor, b.descriptor)
   }
 
+  isPath(pathName: string) {
+    return this.get("_path") === pathName
+  }
+
   constructor(tuple: Tuple, descriptor: Descriptor) {
     this.tuple = tuple
     this.descriptor = descriptor

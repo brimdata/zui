@@ -41,6 +41,7 @@ export default class LogRow extends React.PureComponent {
           key={index}
           appendToQuery={appendToQuery}
           field={field}
+          log={log}
           isScrolling={isScrolling}
         />
       )

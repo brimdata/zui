@@ -1,13 +1,16 @@
 import React from "react"
 import {shallow} from "enzyme"
 import LogCellActions from "./LogCellActions"
-import Field from "../models/Field"
+import * as mockLogs from "../test/mockLogs"
 
 test("basic snapshot", () => {
-  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const log = mockLogs.conn()
+  const space = {packet_support: true}
   const wrapper = shallow(
     <LogCellActions
-      field={field}
+      log={log}
+      field={log.getField("_path")}
+      space={space}
       onClose={() => {}}
       style={{top: 1, left: 1}}
     />

@@ -12,7 +12,135 @@ ShallowWrapper {
         "value": "conn",
       }
     }
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
     onClose={[Function]}
+    space={
+      Object {
+        "packet_support": true,
+      }
+    }
     style={
       Object {
         "left": 1,
@@ -46,7 +174,13 @@ ShallowWrapper {
         <MenuItem
           onClick={[Function]}
         >
-          Count by this field
+          Count by _path
+        </MenuItem>,
+        <hr />,
+        <MenuItem
+          onClick={[Function]}
+        >
+          Download PCAPS
         </MenuItem>,
       ],
       "onOutsideClick": [Function],
@@ -59,7 +193,7 @@ ShallowWrapper {
     "rendered": Array [
       Object {
         "instance": null,
-        "key": "Filter out these values",
+        "key": "0",
         "nodeType": "function",
         "props": Object {
           "children": "Filter out these values",
@@ -71,7 +205,7 @@ ShallowWrapper {
       },
       Object {
         "instance": null,
-        "key": "Only show these values",
+        "key": "1",
         "nodeType": "function",
         "props": Object {
           "children": "Only show these values",
@@ -83,14 +217,35 @@ ShallowWrapper {
       },
       Object {
         "instance": null,
-        "key": "Count by this field",
+        "key": "2",
         "nodeType": "function",
         "props": Object {
-          "children": "Count by this field",
+          "children": "Count by _path",
           "onClick": [Function],
         },
         "ref": null,
-        "rendered": "Count by this field",
+        "rendered": "Count by _path",
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "3",
+        "nodeType": "host",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": "hr",
+      },
+      Object {
+        "instance": null,
+        "key": "4",
+        "nodeType": "function",
+        "props": Object {
+          "children": "Download PCAPS",
+          "onClick": [Function],
+        },
+        "ref": null,
+        "rendered": "Download PCAPS",
         "type": [Function],
       },
     ],
@@ -116,7 +271,13 @@ ShallowWrapper {
           <MenuItem
             onClick={[Function]}
           >
-            Count by this field
+            Count by _path
+          </MenuItem>,
+          <hr />,
+          <MenuItem
+            onClick={[Function]}
+          >
+            Download PCAPS
           </MenuItem>,
         ],
         "onOutsideClick": [Function],
@@ -129,7 +290,7 @@ ShallowWrapper {
       "rendered": Array [
         Object {
           "instance": null,
-          "key": "Filter out these values",
+          "key": "0",
           "nodeType": "function",
           "props": Object {
             "children": "Filter out these values",
@@ -141,7 +302,7 @@ ShallowWrapper {
         },
         Object {
           "instance": null,
-          "key": "Only show these values",
+          "key": "1",
           "nodeType": "function",
           "props": Object {
             "children": "Only show these values",
@@ -153,14 +314,35 @@ ShallowWrapper {
         },
         Object {
           "instance": null,
-          "key": "Count by this field",
+          "key": "2",
           "nodeType": "function",
           "props": Object {
-            "children": "Count by this field",
+            "children": "Count by _path",
             "onClick": [Function],
           },
           "ref": null,
-          "rendered": "Count by this field",
+          "rendered": "Count by _path",
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "3",
+          "nodeType": "host",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": "hr",
+        },
+        Object {
+          "instance": null,
+          "key": "4",
+          "nodeType": "function",
+          "props": Object {
+            "children": "Download PCAPS",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": "Download PCAPS",
           "type": [Function],
         },
       ],

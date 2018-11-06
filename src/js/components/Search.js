@@ -16,14 +16,19 @@ import XRightPane from "../connectors/XRightPane"
 import XDownloadProgress from "../connectors/XDownloadProgress"
 import ViewerErrorBoundary from "./ViewerErrorBoundary"
 import XNotice from "../connectors/XNotice"
+import * as searchBar from "../actions/searchBar"
+import * as mainSearch from "../actions/mainSearch"
+import * as countByTime from "../actions/countByTime"
 
 type Props = {
+  dispatch: Function,
   fetchAllSpaces: Function,
   isConnected: boolean,
   currentSpaceName: string,
   initialLoad: boolean,
   logsTab: boolean,
-  analyticsTab: boolean
+  analyticsTab: boolean,
+  space?: any
 }
 
 export default class Search extends React.Component<Props> {
