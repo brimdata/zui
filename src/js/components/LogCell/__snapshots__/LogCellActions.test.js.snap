@@ -5,6 +5,7 @@ ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <LogCellActions
+    dispatch={[MockFunction]}
     field={
       Field {
         "name": "_path",
@@ -138,7 +139,25 @@ ShallowWrapper {
     onClose={[Function]}
     space={
       Object {
+        "close_timeout": 5000,
+        "compression": "none",
+        "flush_timeout": 500,
+        "maxTime": "2015-04-13 09:36:33.750",
+        "max_time": Object {
+          "ns": 750000000,
+          "sec": 1428917793,
+        },
+        "max_writers": 150,
+        "minTime": "2015-03-05 14:15:00.000",
+        "min_time": Object {
+          "ns": 0,
+          "sec": 1425564900,
+        },
+        "name": "default",
         "packet_support": true,
+        "size": 4580591172,
+        "slab_fanout": 8,
+        "slab_threshold": 131072,
       }
     }
     style={

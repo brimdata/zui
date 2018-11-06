@@ -1,7 +1,7 @@
 /* @flow */
 
 import {connect} from "react-redux"
-import LogCellActions from "../components/LogCellActions"
+import LogCellActions from "../components/LogCell/LogCellActions"
 import * as spaces from "../reducers/spaces"
 
 const stateToProps = state => ({
