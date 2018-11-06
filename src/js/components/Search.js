@@ -36,6 +36,17 @@ export default class Search extends React.Component<Props> {
     this.props.fetchAllSpaces()
   }
 
+  componentDidUpdate(prev: Props) {
+    if (this.props.space && this.props.space !== prev.space) {
+      this.props.dispatch(searchBar.submitSearchBar())
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(mainSearch.resetMainSearch())
+    this.props.dispatch(countByTime.resetCountByTime())
+  }
+
   render() {
     const {
       isConnected,
