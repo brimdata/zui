@@ -1,15 +1,9 @@
 /* @flow */
 
+import Field from "./Field"
 import isEqual from "lodash/isEqual"
 
 type Tuple = string[]
-
-type Field = {
-  type: string,
-  name: string,
-  value: string
-}
-
 type Descriptor = {type: string, name: string}[]
 
 export default class Log {
@@ -55,7 +49,7 @@ export default class Log {
     if (index !== -1 && index < this.tuple.length) {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
-      return {value, name, type}
+      return new Field({value, name, type})
     }
   }
 

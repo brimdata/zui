@@ -1,20 +1,23 @@
 import React from "react"
 import {shallow} from "enzyme"
 import LogCell from "./LogCell"
+import Field from "../models/Field"
+
+const field = new Field({name: "_path", type: "string", value: "weird"})
 
 test("shapshot", () => {
-  const logCell = shallow(<LogCell />)
+  const logCell = shallow(<LogCell field={field} />)
   expect(logCell).toMatchSnapshot()
 })
 
 test("shapshot after right-clicking", () => {
-  const logCell = shallow(<LogCell />)
+  const logCell = shallow(<LogCell field={field} />)
   logCell.simulate("ContextMenu", new Event("ContextMenu"))
   expect(logCell).toMatchSnapshot()
 })
 
 test("shapshot after hovering", () => {
-  const logCell = shallow(<LogCell />)
+  const logCell = shallow(<LogCell field={field} />)
   logCell.simulate("MouseEnter", {
     currentTarget: {getBoundingClientRect: () => ({top: 100, left: 100})}
   })
@@ -24,7 +27,7 @@ test("shapshot after hovering", () => {
 })
 
 test("shapshot after clicking", () => {
-  const logCell = shallow(<LogCell />)
+  const logCell = shallow(<LogCell field={field} />)
   logCell.simulate("Click", {})
   expect(logCell).toMatchSnapshot()
 })

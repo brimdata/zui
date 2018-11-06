@@ -4,7 +4,15 @@ exports[`shapshot 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__unrendered__): <LogCell
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "weird",
+      }
+    }
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -19,13 +27,15 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=""
-        />,
+          className=" _path weird-bg-color"
+        >
+          weird
+        </span>,
         false,
         false,
         false,
       ],
-      "className": "log-cell undefined",
+      "className": "log-cell string",
       "onClick": [Function],
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
@@ -38,11 +48,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": undefined,
-          "className": "",
+          "children": "weird",
+          "className": " _path weird-bg-color",
         },
         "ref": null,
-        "rendered": null,
+        "rendered": "weird",
         "type": "span",
       },
       false,
@@ -59,13 +69,15 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=""
-          />,
+            className=" _path weird-bg-color"
+          >
+            weird
+          </span>,
           false,
           false,
           false,
         ],
-        "className": "log-cell undefined",
+        "className": "log-cell string",
         "onClick": [Function],
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
@@ -78,11 +90,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": undefined,
-            "className": "",
+            "children": "weird",
+            "className": " _path weird-bg-color",
           },
           "ref": null,
-          "rendered": null,
+          "rendered": "weird",
           "type": "span",
         },
         false,
@@ -106,7 +118,15 @@ exports[`shapshot after clicking 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__unrendered__): <LogCell
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "weird",
+      }
+    }
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -121,13 +141,15 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=""
-        />,
+          className=" _path weird-bg-color"
+        >
+          weird
+        </span>,
         false,
         false,
         false,
       ],
-      "className": "log-cell undefined",
+      "className": "log-cell string",
       "onClick": [Function],
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
@@ -140,11 +162,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": undefined,
-          "className": "",
+          "children": "weird",
+          "className": " _path weird-bg-color",
         },
         "ref": null,
-        "rendered": null,
+        "rendered": "weird",
         "type": "span",
       },
       false,
@@ -161,13 +183,15 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=""
-          />,
+            className=" _path weird-bg-color"
+          >
+            weird
+          </span>,
           false,
           false,
           false,
         ],
-        "className": "log-cell undefined",
+        "className": "log-cell string",
         "onClick": [Function],
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
@@ -180,11 +204,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": undefined,
-            "className": "",
+            "children": "weird",
+            "className": " _path weird-bg-color",
           },
           "ref": null,
-          "rendered": null,
+          "rendered": "weird",
           "type": "span",
         },
         false,
@@ -208,7 +232,15 @@ exports[`shapshot after hovering 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__unrendered__): <LogCell
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "weird",
+      }
+    }
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -223,8 +255,10 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=""
-        />,
+          className=" _path weird-bg-color"
+        >
+          weird
+        </span>,
         <button
           className="cell-options-button"
         >
@@ -247,11 +281,13 @@ ShallowWrapper {
         >
           <span
             className="field-name"
-          />
+          >
+            _path
+          </span>
         </Tooltip>,
         false,
       ],
-      "className": "log-cell undefined hover",
+      "className": "log-cell string hover",
       "onClick": [Function],
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
@@ -264,11 +300,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": undefined,
-          "className": "",
+          "children": "weird",
+          "className": " _path weird-bg-color",
         },
         "ref": null,
-        "rendered": null,
+        "rendered": "weird",
         "type": "span",
       },
       Object {
@@ -312,7 +348,9 @@ ShallowWrapper {
         "props": Object {
           "children": <span
             className="field-name"
-          />,
+          >
+            _path
+          </span>,
           "style": Object {
             "left": 100,
             "top": 79,
@@ -324,11 +362,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": undefined,
+            "children": "_path",
             "className": "field-name",
           },
           "ref": null,
-          "rendered": null,
+          "rendered": "_path",
           "type": "span",
         },
         "type": [Function],
@@ -345,8 +383,10 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=""
-          />,
+            className=" _path weird-bg-color"
+          >
+            weird
+          </span>,
           <button
             className="cell-options-button"
           >
@@ -369,11 +409,13 @@ ShallowWrapper {
           >
             <span
               className="field-name"
-            />
+            >
+              _path
+            </span>
           </Tooltip>,
           false,
         ],
-        "className": "log-cell undefined hover",
+        "className": "log-cell string hover",
         "onClick": [Function],
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
@@ -386,11 +428,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": undefined,
-            "className": "",
+            "children": "weird",
+            "className": " _path weird-bg-color",
           },
           "ref": null,
-          "rendered": null,
+          "rendered": "weird",
           "type": "span",
         },
         Object {
@@ -434,7 +476,9 @@ ShallowWrapper {
           "props": Object {
             "children": <span
               className="field-name"
-            />,
+            >
+              _path
+            </span>,
             "style": Object {
               "left": 100,
               "top": 79,
@@ -446,11 +490,11 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "host",
             "props": Object {
-              "children": undefined,
+              "children": "_path",
               "className": "field-name",
             },
             "ref": null,
-            "rendered": null,
+            "rendered": "_path",
             "type": "span",
           },
           "type": [Function],
@@ -474,7 +518,15 @@ exports[`shapshot after hovering 2`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__unrendered__): <LogCell
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "weird",
+      }
+    }
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -489,13 +541,15 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=""
-        />,
+          className=" _path weird-bg-color"
+        >
+          weird
+        </span>,
         false,
         false,
         false,
       ],
-      "className": "log-cell undefined",
+      "className": "log-cell string",
       "onClick": [Function],
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
@@ -508,11 +562,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": undefined,
-          "className": "",
+          "children": "weird",
+          "className": " _path weird-bg-color",
         },
         "ref": null,
-        "rendered": null,
+        "rendered": "weird",
         "type": "span",
       },
       false,
@@ -529,13 +583,15 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=""
-          />,
+            className=" _path weird-bg-color"
+          >
+            weird
+          </span>,
           false,
           false,
           false,
         ],
-        "className": "log-cell undefined",
+        "className": "log-cell string",
         "onClick": [Function],
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
@@ -548,11 +604,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": undefined,
-            "className": "",
+            "children": "weird",
+            "className": " _path weird-bg-color",
           },
           "ref": null,
-          "rendered": null,
+          "rendered": "weird",
           "type": "span",
         },
         false,
@@ -576,7 +632,15 @@ exports[`shapshot after right-clicking 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <LogCell />,
+  Symbol(enzyme.__unrendered__): <LogCell
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "weird",
+      }
+    }
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -591,8 +655,10 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=""
-        />,
+          className=" _path weird-bg-color"
+        >
+          weird
+        </span>,
         <button
           className="cell-options-button"
         >
@@ -615,35 +681,28 @@ ShallowWrapper {
         >
           <span
             className="field-name"
-          />
+          >
+            _path
+          </span>
         </Tooltip>,
-        <ContextMenu
-          onOutsideClick={[Function]}
+        <Connect(LogCellActions)
+          field={
+            Field {
+              "name": "_path",
+              "type": "string",
+              "value": "weird",
+            }
+          }
+          onClose={[Function]}
           style={
             Object {
               "left": undefined,
               "top": undefined,
             }
           }
-        >
-          <MenuItem
-            onClick={[Function]}
-          >
-            Filter out these values
-          </MenuItem>
-          <MenuItem
-            onClick={[Function]}
-          >
-            Only show these values
-          </MenuItem>
-          <MenuItem
-            onClick={[Function]}
-          >
-            Count by this field
-          </MenuItem>
-        </ContextMenu>,
+        />,
       ],
-      "className": "log-cell undefined active hover",
+      "className": "log-cell string active hover",
       "onClick": [Function],
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
@@ -656,11 +715,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": undefined,
-          "className": "",
+          "children": "weird",
+          "className": " _path weird-bg-color",
         },
         "ref": null,
-        "rendered": null,
+        "rendered": "weird",
         "type": "span",
       },
       Object {
@@ -704,7 +763,9 @@ ShallowWrapper {
         "props": Object {
           "children": <span
             className="field-name"
-          />,
+          >
+            _path
+          </span>,
           "style": Object {
             "left": 0,
             "top": 0,
@@ -716,11 +777,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": undefined,
+            "children": "_path",
             "className": "field-name",
           },
           "ref": null,
-          "rendered": null,
+          "rendered": "_path",
           "type": "span",
         },
         "type": [Function],
@@ -730,68 +791,19 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "class",
         "props": Object {
-          "children": Array [
-            <MenuItem
-              onClick={[Function]}
-            >
-              Filter out these values
-            </MenuItem>,
-            <MenuItem
-              onClick={[Function]}
-            >
-              Only show these values
-            </MenuItem>,
-            <MenuItem
-              onClick={[Function]}
-            >
-              Count by this field
-            </MenuItem>,
-          ],
-          "onOutsideClick": [Function],
+          "field": Field {
+            "name": "_path",
+            "type": "string",
+            "value": "weird",
+          },
+          "onClose": [Function],
           "style": Object {
             "left": undefined,
             "top": undefined,
           },
         },
         "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Filter out these values",
-              "onClick": [Function],
-            },
-            "ref": null,
-            "rendered": "Filter out these values",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Only show these values",
-              "onClick": [Function],
-            },
-            "ref": null,
-            "rendered": "Only show these values",
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": "Count by this field",
-              "onClick": [Function],
-            },
-            "ref": null,
-            "rendered": "Count by this field",
-            "type": [Function],
-          },
-        ],
+        "rendered": null,
         "type": [Function],
       },
     ],
@@ -805,8 +817,10 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=""
-          />,
+            className=" _path weird-bg-color"
+          >
+            weird
+          </span>,
           <button
             className="cell-options-button"
           >
@@ -829,35 +843,28 @@ ShallowWrapper {
           >
             <span
               className="field-name"
-            />
+            >
+              _path
+            </span>
           </Tooltip>,
-          <ContextMenu
-            onOutsideClick={[Function]}
+          <Connect(LogCellActions)
+            field={
+              Field {
+                "name": "_path",
+                "type": "string",
+                "value": "weird",
+              }
+            }
+            onClose={[Function]}
             style={
               Object {
                 "left": undefined,
                 "top": undefined,
               }
             }
-          >
-            <MenuItem
-              onClick={[Function]}
-            >
-              Filter out these values
-            </MenuItem>
-            <MenuItem
-              onClick={[Function]}
-            >
-              Only show these values
-            </MenuItem>
-            <MenuItem
-              onClick={[Function]}
-            >
-              Count by this field
-            </MenuItem>
-          </ContextMenu>,
+          />,
         ],
-        "className": "log-cell undefined active hover",
+        "className": "log-cell string active hover",
         "onClick": [Function],
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
@@ -870,11 +877,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": undefined,
-            "className": "",
+            "children": "weird",
+            "className": " _path weird-bg-color",
           },
           "ref": null,
-          "rendered": null,
+          "rendered": "weird",
           "type": "span",
         },
         Object {
@@ -918,7 +925,9 @@ ShallowWrapper {
           "props": Object {
             "children": <span
               className="field-name"
-            />,
+            >
+              _path
+            </span>,
             "style": Object {
               "left": 0,
               "top": 0,
@@ -930,11 +939,11 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "host",
             "props": Object {
-              "children": undefined,
+              "children": "_path",
               "className": "field-name",
             },
             "ref": null,
-            "rendered": null,
+            "rendered": "_path",
             "type": "span",
           },
           "type": [Function],
@@ -944,68 +953,19 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "class",
           "props": Object {
-            "children": Array [
-              <MenuItem
-                onClick={[Function]}
-              >
-                Filter out these values
-              </MenuItem>,
-              <MenuItem
-                onClick={[Function]}
-              >
-                Only show these values
-              </MenuItem>,
-              <MenuItem
-                onClick={[Function]}
-              >
-                Count by this field
-              </MenuItem>,
-            ],
-            "onOutsideClick": [Function],
+            "field": Field {
+              "name": "_path",
+              "type": "string",
+              "value": "weird",
+            },
+            "onClose": [Function],
             "style": Object {
               "left": undefined,
               "top": undefined,
             },
           },
           "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Filter out these values",
-                "onClick": [Function],
-              },
-              "ref": null,
-              "rendered": "Filter out these values",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Only show these values",
-                "onClick": [Function],
-              },
-              "ref": null,
-              "rendered": "Only show these values",
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "children": "Count by this field",
-                "onClick": [Function],
-              },
-              "ref": null,
-              "rendered": "Count by this field",
-              "type": [Function],
-            },
-          ],
+          "rendered": null,
           "type": [Function],
         },
       ],

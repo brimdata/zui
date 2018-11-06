@@ -34,15 +34,13 @@ export default class LogRow extends React.PureComponent {
     const cells = [<TsCell key="ts" ts={ts} highlight={tsHighlight} />]
 
     for (let index = 1; index < log.tuple.length; index++) {
-      const {name, value, type} = log.getFieldAt(index)
-      if (exclude[name]) continue
+      const field = log.getFieldAt(index)
+      if (exclude[field.name]) continue
       cells.push(
         <XLogCell
           key={index}
           appendToQuery={appendToQuery}
-          name={name}
-          type={type}
-          value={value}
+          field={field}
           isScrolling={isScrolling}
         />
       )
