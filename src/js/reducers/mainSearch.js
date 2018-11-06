@@ -12,7 +12,11 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  MAIN_SEARCH_REQUEST: state => ({...state, isFetching: true, events: []}),
+  MAIN_SEARCH_RESET: () => ({...initialState}),
+  MAIN_SEARCH_REQUEST: () => ({
+    ...initialState,
+    isFetching: true
+  }),
   MAIN_SEARCH_EVENTS: (state, {events}) => ({
     ...state,
     events: [...state.events, ...events]
