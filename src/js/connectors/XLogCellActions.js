@@ -1,13 +1,10 @@
 /* @flow */
 
-import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
-import LogCellActions from "../components/LogCellActions"
 import type {Dispatch} from "redux"
-import * as actions from "../actions/searchBar"
+import LogCellActions from "../components/LogCellActions"
 
-const dispatchToProps = (dispatch: Dispatch<any>) =>
-  bindActionCreators(actions, dispatch)
+const dispatchToProps = (dispatch: Dispatch<any>) => ({dispatch})
 
 export default connect(
   null,

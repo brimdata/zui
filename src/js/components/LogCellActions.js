@@ -3,68 +3,62 @@
 import React from "react"
 import Field from "../models/Field"
 import {ContextMenu, MenuItem} from "./ContextMenu"
+import * as searchBar from "../actions/searchBar"
 
 type Props = {
   field: Field,
-  appendQueryCountBy: Function,
-  appendQueryExclude: Function,
-  appendQueryInclude: Function,
-  submitSearchBar: Function,
+  style: Object,
   onClose: Function,
-  style: Object
+  dispatch: Function
 }
 
 export default class LogCellActions extends React.Component<Props> {
   include: Function
   exclude: Function
   countBy: Function
+  menuItems: {text: string, onClick: Function}[]
 
   constructor(props: Props) {
     super(props)
-    this.include = this.include.bind(this)
-    this.exclude = this.exclude.bind(this)
-    this.countBy = this.countBy.bind(this)
-  }
+    const {dispatch, field} = props
 
-  include(e: Event) {
-    e.stopPropagation()
-    this.props.appendQueryInclude(
-      this.props.field.name,
-      escapeSpaces(this.props.field.value)
-    )
-    this.props.submitSearchBar()
-  }
-
-  exclude(e: Event) {
-    e.stopPropagation()
-    this.props.appendQueryExclude(
-      this.props.field.name,
-      escapeSpaces(this.props.field.value)
-    )
-    this.props.submitSearchBar()
-  }
-
-  countBy(e: Event) {
-    e.stopPropagation()
-    this.props.appendQueryCountBy(this.props.field.name)
-    this.props.submitSearchBar()
+    this.menuItems = [
+      {
+        text: "Filter out these values",
+        onClick: (e: Event) => {
+          e.stopPropagation()
+          dispatch(searchBar.appendQueryExclude(field))
+          dispatch(searchBar.submitSearchBar())
+        }
+      },
+      {
+        text: "Only show these values",
+        onClick: (e: Event) => {
+          e.stopPropagation()
+          dispatch(searchBar.appendQueryInclude(field))
+          dispatch(searchBar.submitSearchBar())
+        }
+      },
+      {
+        text: "Count by this field",
+        onClick: (e: Event) => {
+          e.stopPropagation()
+          dispatch(searchBar.appendQueryCountBy(field))
+          dispatch(searchBar.submitSearchBar())
+        }
+      }
+    ]
   }
 
   render() {
     return (
       <ContextMenu onOutsideClick={this.props.onClose} style={this.props.style}>
-        <MenuItem onClick={this.exclude}>Filter out these values</MenuItem>
-        <MenuItem onClick={this.include}>Only show these values</MenuItem>
-        <MenuItem onClick={this.countBy}>Count by this field</MenuItem>
+        {this.menuItems.map(item => (
+          <MenuItem key={item.text} onClick={item.onClick}>
+            {item.text}
+          </MenuItem>
+        ))}
       </ContextMenu>
     )
-  }
-}
-
-const escapeSpaces = value => {
-  if (/\s+/.test(value)) {
-    return `"${value}"`
-  } else {
-    return value
   }
 }
