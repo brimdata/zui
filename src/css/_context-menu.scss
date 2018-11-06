@@ -8,7 +8,7 @@ $br: 8px;
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .context-menu {
@@ -20,7 +20,6 @@ $br: 8px;
   box-shadow: $high-box-shadow;
   max-width: 300px;
   z-index: 1;
-  transition: top 150ms, opacity 150ms;
   padding: 8px 0;
 
   a,
@@ -37,5 +36,11 @@ $br: 8px;
     &:hover {
       background-color: $off-white;
     }
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid $light-gray-3;
+    margin: 8px 0;
   }
 }
