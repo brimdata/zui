@@ -14,15 +14,17 @@ export const id = (name: string) => {
 }
 
 export const selectText = (node: HTMLElement) => {
-  const selection = window.getSelection()
-  const range = document.createRange()
-  range.selectNodeContents(node)
-  selection.removeAllRanges()
-  selection.addRange(range)
+  if (window.getSelection) {
+    const selection = window.getSelection()
+    const range = document.createRange()
+    range.selectNodeContents(node)
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }
 }
 
 export const clearTextSelection = () => {
-  window.getSelection().empty()
+  window.getSelection && window.getSelection().empty()
 }
 
 export const getWidth = () => {

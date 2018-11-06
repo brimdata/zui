@@ -1,3 +1,5 @@
+/* @flow */
+
 import reducer, {
   initialState,
   getSearchProgram,
@@ -8,8 +10,12 @@ import reducer, {
   getSearchBarPreviousInputValue
 } from "./searchBar"
 import * as actions from "../actions/searchBar"
+import rootReducer from "./index"
+import type {State} from "./types"
+import Field from "../models/Field"
 
-const reduce = actions => ({searchBar: actions.reduce(reducer, initialState)})
+const reduce = (actions): State =>
+  actions.reduce(rootReducer, rootReducer(undefined, {type: "@@INIT"}))
 
 test("input value changed", () => {
   const state = reduce([actions.changeSearchBarInput("duration > 10")])
@@ -100,41 +106,47 @@ test("search bar submit after editing resets editing", () => {
 })
 
 test("append an include field", () => {
-  const state = reduce([actions.appendQueryInclude("_path", "conn")])
+  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const state = reduce([actions.appendQueryInclude(field)])
 
   expect(getSearchBarInputValue(state)).toBe("_path=conn")
 })
 
 test("append an include field when some text already exists", () => {
+  const field = new Field({name: "_path", type: "string", value: "conn"})
   let state = reduce([
     actions.changeSearchBarInput("text"),
-    actions.appendQueryInclude("_path", "conn")
+    actions.appendQueryInclude(field)
   ])
   expect(getSearchBarInputValue(state)).toBe("text _path=conn")
 })
 
 test("append an exclude field", () => {
-  let state = reduce([actions.appendQueryExclude("_path", "conn")])
+  const field = new Field({name: "_path", type: "string", value: "conn"})
+  let state = reduce([actions.appendQueryExclude(field)])
   expect(getSearchBarInputValue(state)).toBe("_path!=conn")
 })
 
 test("append an exclude field when some text already exists", () => {
+  const field = new Field({name: "_path", type: "string", value: "conn"})
   let state = reduce([
     actions.changeSearchBarInput("text"),
-    actions.appendQueryExclude("_path", "conn")
+    actions.appendQueryExclude(field)
   ])
   expect(getSearchBarInputValue(state)).toBe("text _path!=conn")
 })
 
 test("append a count by field", () => {
-  let state = reduce([actions.appendQueryCountBy("_path")])
+  const field = new Field({name: "_path", type: "string", value: "conn"})
+  let state = reduce([actions.appendQueryCountBy(field)])
   expect(getSearchBarInputValue(state)).toBe("* | count() by _path")
 })
 
 test("append a count to an existing query", () => {
+  const field = new Field({name: "query", type: "string", value: "heyyo"})
   let state = reduce([
     actions.changeSearchBarInput("dns"),
-    actions.appendQueryCountBy("query")
+    actions.appendQueryCountBy(field)
   ])
   expect(getSearchBarInputValue(state)).toBe("dns | count() by query")
 })

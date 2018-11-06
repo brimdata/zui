@@ -18,21 +18,23 @@ export const initialState = {
 export type SearchBar = typeof initialState
 
 export default createReducer(initialState, {
-  QUERY_INCLUDE_APPEND: (state, {name, value}) => ({
+  QUERY_INCLUDE_APPEND: (state, {field}) => ({
     ...state,
-    current: trim(state.current + ` ${name}=${value}`)
+    current: trim(state.current + ` ${field.name}=${escapeSpaces(field.value)}`)
   }),
 
-  QUERY_EXCLUDE_APPEND: (state, {name, value}) => ({
+  QUERY_EXCLUDE_APPEND: (state, {field}) => ({
     ...state,
-    current: trim(state.current + ` ${name}!=${value}`)
+    current: trim(
+      state.current + ` ${field.name}!=${escapeSpaces(field.value)}`
+    )
   }),
 
-  QUERY_COUNT_BY_APPEND: (state, {name}) => {
+  QUERY_COUNT_BY_APPEND: (state, {field}) => {
     const current = onlyWhitespace(state.current) ? "*" : state.current
     return {
       ...state,
-      current: trim(current + ` | count() by ${name}`)
+      current: trim(current + ` | count() by ${field.name}`)
     }
   },
 
@@ -143,6 +145,14 @@ export default createReducer(initialState, {
 })
 
 const onlyWhitespace = string => /^\s*$/.test(string)
+
+const escapeSpaces = value => {
+  if (/\s+/.test(value)) {
+    return `"${value}"`
+  } else {
+    return value
+  }
+}
 
 const indexInBounds = (index, array) =>
   isNumber(index) && index >= 0 && index < array.length
