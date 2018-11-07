@@ -9,7 +9,131 @@ ShallowWrapper {
       Field {
         "name": "_path",
         "type": "string",
-        "value": "weird",
+        "value": "conn",
+      }
+    }
+    isScrolling={false}
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
       }
     }
   />,
@@ -27,9 +151,9 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=" _path weird-bg-color"
+          className="_path conn-bg-color "
         >
-          weird
+          conn
         </span>,
         false,
         false,
@@ -48,11 +172,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": "weird",
-          "className": " _path weird-bg-color",
+          "children": "conn",
+          "className": "_path conn-bg-color ",
         },
         "ref": null,
-        "rendered": "weird",
+        "rendered": "conn",
         "type": "span",
       },
       false,
@@ -69,9 +193,9 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=" _path weird-bg-color"
+            className="_path conn-bg-color "
           >
-            weird
+            conn
           </span>,
           false,
           false,
@@ -90,11 +214,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": "weird",
-            "className": " _path weird-bg-color",
+            "children": "conn",
+            "className": "_path conn-bg-color ",
           },
           "ref": null,
-          "rendered": "weird",
+          "rendered": "conn",
           "type": "span",
         },
         false,
@@ -123,7 +247,131 @@ ShallowWrapper {
       Field {
         "name": "_path",
         "type": "string",
-        "value": "weird",
+        "value": "conn",
+      }
+    }
+    isScrolling={false}
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
       }
     }
   />,
@@ -141,9 +389,9 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=" _path weird-bg-color"
+          className="_path conn-bg-color "
         >
-          weird
+          conn
         </span>,
         false,
         false,
@@ -162,11 +410,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": "weird",
-          "className": " _path weird-bg-color",
+          "children": "conn",
+          "className": "_path conn-bg-color ",
         },
         "ref": null,
-        "rendered": "weird",
+        "rendered": "conn",
         "type": "span",
       },
       false,
@@ -183,9 +431,9 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=" _path weird-bg-color"
+            className="_path conn-bg-color "
           >
-            weird
+            conn
           </span>,
           false,
           false,
@@ -204,11 +452,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": "weird",
-            "className": " _path weird-bg-color",
+            "children": "conn",
+            "className": "_path conn-bg-color ",
           },
           "ref": null,
-          "rendered": "weird",
+          "rendered": "conn",
           "type": "span",
         },
         false,
@@ -237,7 +485,131 @@ ShallowWrapper {
       Field {
         "name": "_path",
         "type": "string",
-        "value": "weird",
+        "value": "conn",
+      }
+    }
+    isScrolling={false}
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
       }
     }
   />,
@@ -255,9 +627,9 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=" _path weird-bg-color"
+          className="_path conn-bg-color "
         >
-          weird
+          conn
         </span>,
         <button
           className="cell-options-button"
@@ -300,11 +672,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": "weird",
-          "className": " _path weird-bg-color",
+          "children": "conn",
+          "className": "_path conn-bg-color ",
         },
         "ref": null,
-        "rendered": "weird",
+        "rendered": "conn",
         "type": "span",
       },
       Object {
@@ -383,9 +755,9 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=" _path weird-bg-color"
+            className="_path conn-bg-color "
           >
-            weird
+            conn
           </span>,
           <button
             className="cell-options-button"
@@ -428,11 +800,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": "weird",
-            "className": " _path weird-bg-color",
+            "children": "conn",
+            "className": "_path conn-bg-color ",
           },
           "ref": null,
-          "rendered": "weird",
+          "rendered": "conn",
           "type": "span",
         },
         Object {
@@ -523,7 +895,131 @@ ShallowWrapper {
       Field {
         "name": "_path",
         "type": "string",
-        "value": "weird",
+        "value": "conn",
+      }
+    }
+    isScrolling={false}
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
       }
     }
   />,
@@ -541,9 +1037,9 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=" _path weird-bg-color"
+          className="_path conn-bg-color "
         >
-          weird
+          conn
         </span>,
         false,
         false,
@@ -562,11 +1058,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": "weird",
-          "className": " _path weird-bg-color",
+          "children": "conn",
+          "className": "_path conn-bg-color ",
         },
         "ref": null,
-        "rendered": "weird",
+        "rendered": "conn",
         "type": "span",
       },
       false,
@@ -583,9 +1079,9 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=" _path weird-bg-color"
+            className="_path conn-bg-color "
           >
-            weird
+            conn
           </span>,
           false,
           false,
@@ -604,11 +1100,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": "weird",
-            "className": " _path weird-bg-color",
+            "children": "conn",
+            "className": "_path conn-bg-color ",
           },
           "ref": null,
-          "rendered": "weird",
+          "rendered": "conn",
           "type": "span",
         },
         false,
@@ -637,7 +1133,131 @@ ShallowWrapper {
       Field {
         "name": "_path",
         "type": "string",
-        "value": "weird",
+        "value": "conn",
+      }
+    }
+    isScrolling={false}
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
       }
     }
   />,
@@ -655,9 +1275,9 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <span
-          className=" _path weird-bg-color"
+          className="_path conn-bg-color "
         >
-          weird
+          conn
         </span>,
         <button
           className="cell-options-button"
@@ -690,7 +1310,130 @@ ShallowWrapper {
             Field {
               "name": "_path",
               "type": "string",
-              "value": "weird",
+              "value": "conn",
+            }
+          }
+          log={
+            Log {
+              "descriptor": Array [
+                Object {
+                  "name": "_td",
+                  "type": "int",
+                },
+                Object {
+                  "name": "_path",
+                  "type": "string",
+                },
+                Object {
+                  "name": "ts",
+                  "type": "time",
+                },
+                Object {
+                  "name": "uid",
+                  "type": "string",
+                },
+                Object {
+                  "name": "id.orig_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.orig_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "id.resp_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.resp_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "proto",
+                  "type": "enum",
+                },
+                Object {
+                  "name": "service",
+                  "type": "string",
+                },
+                Object {
+                  "name": "duration",
+                  "type": "interval",
+                },
+                Object {
+                  "name": "orig_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "conn_state",
+                  "type": "string",
+                },
+                Object {
+                  "name": "local_orig",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "local_resp",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "missed_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "history",
+                  "type": "string",
+                },
+                Object {
+                  "name": "orig_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "orig_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "tunnel_parents",
+                  "type": "set[string]",
+                },
+              ],
+              "tuple": Array [
+                "0",
+                "conn",
+                "1425612054.369843",
+                "Cynwae4qh1GxM82hQ2",
+                "192.168.0.50",
+                "1900",
+                "239.255.255.250",
+                "1900",
+                "udp",
+                "-",
+                "2.000293",
+                "282",
+                "0",
+                "S0",
+                "-",
+                "-",
+                "0",
+                "D",
+                "3",
+                "366",
+                "0",
+                "0",
+                "(empty)",
+              ],
             }
           }
           onClose={[Function]}
@@ -715,11 +1458,11 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": "weird",
-          "className": " _path weird-bg-color",
+          "children": "conn",
+          "className": "_path conn-bg-color ",
         },
         "ref": null,
-        "rendered": "weird",
+        "rendered": "conn",
         "type": "span",
       },
       Object {
@@ -794,9 +1537,129 @@ ShallowWrapper {
           "field": Field {
             "name": "_path",
             "type": "string",
-            "value": "weird",
+            "value": "conn",
           },
-          "log": undefined,
+          "log": Log {
+            "descriptor": Array [
+              Object {
+                "name": "_td",
+                "type": "int",
+              },
+              Object {
+                "name": "_path",
+                "type": "string",
+              },
+              Object {
+                "name": "ts",
+                "type": "time",
+              },
+              Object {
+                "name": "uid",
+                "type": "string",
+              },
+              Object {
+                "name": "id.orig_h",
+                "type": "addr",
+              },
+              Object {
+                "name": "id.orig_p",
+                "type": "port",
+              },
+              Object {
+                "name": "id.resp_h",
+                "type": "addr",
+              },
+              Object {
+                "name": "id.resp_p",
+                "type": "port",
+              },
+              Object {
+                "name": "proto",
+                "type": "enum",
+              },
+              Object {
+                "name": "service",
+                "type": "string",
+              },
+              Object {
+                "name": "duration",
+                "type": "interval",
+              },
+              Object {
+                "name": "orig_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "resp_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "conn_state",
+                "type": "string",
+              },
+              Object {
+                "name": "local_orig",
+                "type": "bool",
+              },
+              Object {
+                "name": "local_resp",
+                "type": "bool",
+              },
+              Object {
+                "name": "missed_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "history",
+                "type": "string",
+              },
+              Object {
+                "name": "orig_pkts",
+                "type": "count",
+              },
+              Object {
+                "name": "orig_ip_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "resp_pkts",
+                "type": "count",
+              },
+              Object {
+                "name": "resp_ip_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "tunnel_parents",
+                "type": "set[string]",
+              },
+            ],
+            "tuple": Array [
+              "0",
+              "conn",
+              "1425612054.369843",
+              "Cynwae4qh1GxM82hQ2",
+              "192.168.0.50",
+              "1900",
+              "239.255.255.250",
+              "1900",
+              "udp",
+              "-",
+              "2.000293",
+              "282",
+              "0",
+              "S0",
+              "-",
+              "-",
+              "0",
+              "D",
+              "3",
+              "366",
+              "0",
+              "0",
+              "(empty)",
+            ],
+          },
           "onClose": [Function],
           "style": Object {
             "left": undefined,
@@ -818,9 +1681,9 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <span
-            className=" _path weird-bg-color"
+            className="_path conn-bg-color "
           >
-            weird
+            conn
           </span>,
           <button
             className="cell-options-button"
@@ -853,7 +1716,130 @@ ShallowWrapper {
               Field {
                 "name": "_path",
                 "type": "string",
-                "value": "weird",
+                "value": "conn",
+              }
+            }
+            log={
+              Log {
+                "descriptor": Array [
+                  Object {
+                    "name": "_td",
+                    "type": "int",
+                  },
+                  Object {
+                    "name": "_path",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "ts",
+                    "type": "time",
+                  },
+                  Object {
+                    "name": "uid",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "id.orig_h",
+                    "type": "addr",
+                  },
+                  Object {
+                    "name": "id.orig_p",
+                    "type": "port",
+                  },
+                  Object {
+                    "name": "id.resp_h",
+                    "type": "addr",
+                  },
+                  Object {
+                    "name": "id.resp_p",
+                    "type": "port",
+                  },
+                  Object {
+                    "name": "proto",
+                    "type": "enum",
+                  },
+                  Object {
+                    "name": "service",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "duration",
+                    "type": "interval",
+                  },
+                  Object {
+                    "name": "orig_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "resp_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "conn_state",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "local_orig",
+                    "type": "bool",
+                  },
+                  Object {
+                    "name": "local_resp",
+                    "type": "bool",
+                  },
+                  Object {
+                    "name": "missed_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "history",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "orig_pkts",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "orig_ip_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "resp_pkts",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "resp_ip_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "tunnel_parents",
+                    "type": "set[string]",
+                  },
+                ],
+                "tuple": Array [
+                  "0",
+                  "conn",
+                  "1425612054.369843",
+                  "Cynwae4qh1GxM82hQ2",
+                  "192.168.0.50",
+                  "1900",
+                  "239.255.255.250",
+                  "1900",
+                  "udp",
+                  "-",
+                  "2.000293",
+                  "282",
+                  "0",
+                  "S0",
+                  "-",
+                  "-",
+                  "0",
+                  "D",
+                  "3",
+                  "366",
+                  "0",
+                  "0",
+                  "(empty)",
+                ],
               }
             }
             onClose={[Function]}
@@ -878,11 +1864,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": "weird",
-            "className": " _path weird-bg-color",
+            "children": "conn",
+            "className": "_path conn-bg-color ",
           },
           "ref": null,
-          "rendered": "weird",
+          "rendered": "conn",
           "type": "span",
         },
         Object {
@@ -957,9 +1943,1223 @@ ShallowWrapper {
             "field": Field {
               "name": "_path",
               "type": "string",
-              "value": "weird",
+              "value": "conn",
             },
-            "log": undefined,
+            "log": Log {
+              "descriptor": Array [
+                Object {
+                  "name": "_td",
+                  "type": "int",
+                },
+                Object {
+                  "name": "_path",
+                  "type": "string",
+                },
+                Object {
+                  "name": "ts",
+                  "type": "time",
+                },
+                Object {
+                  "name": "uid",
+                  "type": "string",
+                },
+                Object {
+                  "name": "id.orig_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.orig_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "id.resp_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.resp_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "proto",
+                  "type": "enum",
+                },
+                Object {
+                  "name": "service",
+                  "type": "string",
+                },
+                Object {
+                  "name": "duration",
+                  "type": "interval",
+                },
+                Object {
+                  "name": "orig_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "conn_state",
+                  "type": "string",
+                },
+                Object {
+                  "name": "local_orig",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "local_resp",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "missed_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "history",
+                  "type": "string",
+                },
+                Object {
+                  "name": "orig_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "orig_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "tunnel_parents",
+                  "type": "set[string]",
+                },
+              ],
+              "tuple": Array [
+                "0",
+                "conn",
+                "1425612054.369843",
+                "Cynwae4qh1GxM82hQ2",
+                "192.168.0.50",
+                "1900",
+                "239.255.255.250",
+                "1900",
+                "udp",
+                "-",
+                "2.000293",
+                "282",
+                "0",
+                "S0",
+                "-",
+                "-",
+                "0",
+                "D",
+                "3",
+                "366",
+                "0",
+                "0",
+                "(empty)",
+              ],
+            },
+            "onClose": [Function],
+            "style": Object {
+              "left": undefined,
+              "top": undefined,
+            },
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`shapshot right clicking a time cell 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <LogCell
+    field={
+      TimeField {
+        "name": "ts",
+        "type": "time",
+        "value": "1425612054.369843",
+      }
+    }
+    isScrolling={false}
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <p>
+          <span
+            className="date"
+          >
+            03/05/15
+          </span>
+          <span
+            className="time"
+          >
+            19:20
+          </span>
+          <span
+            className="seconds"
+          >
+            54.3690
+          </span>
+        </p>,
+        <button
+          className="cell-options-button"
+        >
+          <DownArrow
+            data-container-transform="translate(0 1)"
+            data-icon="chevron-bottom"
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          />
+        </button>,
+        <Tooltip
+          style={
+            Object {
+              "left": 0,
+              "top": 0,
+            }
+          }
+        >
+          <span
+            className="field-name"
+          >
+            ts
+          </span>
+        </Tooltip>,
+        <Connect(LogCellActions)
+          field={
+            TimeField {
+              "name": "ts",
+              "type": "time",
+              "value": "1425612054.369843",
+            }
+          }
+          log={
+            Log {
+              "descriptor": Array [
+                Object {
+                  "name": "_td",
+                  "type": "int",
+                },
+                Object {
+                  "name": "_path",
+                  "type": "string",
+                },
+                Object {
+                  "name": "ts",
+                  "type": "time",
+                },
+                Object {
+                  "name": "uid",
+                  "type": "string",
+                },
+                Object {
+                  "name": "id.orig_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.orig_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "id.resp_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.resp_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "proto",
+                  "type": "enum",
+                },
+                Object {
+                  "name": "service",
+                  "type": "string",
+                },
+                Object {
+                  "name": "duration",
+                  "type": "interval",
+                },
+                Object {
+                  "name": "orig_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "conn_state",
+                  "type": "string",
+                },
+                Object {
+                  "name": "local_orig",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "local_resp",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "missed_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "history",
+                  "type": "string",
+                },
+                Object {
+                  "name": "orig_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "orig_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "tunnel_parents",
+                  "type": "set[string]",
+                },
+              ],
+              "tuple": Array [
+                "0",
+                "conn",
+                "1425612054.369843",
+                "Cynwae4qh1GxM82hQ2",
+                "192.168.0.50",
+                "1900",
+                "239.255.255.250",
+                "1900",
+                "udp",
+                "-",
+                "2.000293",
+                "282",
+                "0",
+                "S0",
+                "-",
+                "-",
+                "0",
+                "D",
+                "3",
+                "366",
+                "0",
+                "0",
+                "(empty)",
+              ],
+            }
+          }
+          onClose={[Function]}
+          style={
+            Object {
+              "left": undefined,
+              "top": undefined,
+            }
+          }
+        />,
+      ],
+      "className": "log-cell time active hover",
+      "onClick": [Function],
+      "onContextMenu": [Function],
+      "onMouseEnter": [Function],
+      "onMouseLeave": [Function],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <span
+              className="date"
+            >
+              03/05/15
+            </span>,
+            <span
+              className="time"
+            >
+              19:20
+            </span>,
+            <span
+              className="seconds"
+            >
+              54.3690
+            </span>,
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "03/05/15",
+              "className": "date",
+            },
+            "ref": null,
+            "rendered": "03/05/15",
+            "type": "span",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "19:20",
+              "className": "time",
+            },
+            "ref": null,
+            "rendered": "19:20",
+            "type": "span",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "54.3690",
+              "className": "seconds",
+            },
+            "ref": null,
+            "rendered": "54.3690",
+            "type": "span",
+          },
+        ],
+        "type": "p",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <DownArrow
+            data-container-transform="translate(0 1)"
+            data-icon="chevron-bottom"
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          />,
+          "className": "cell-options-button",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "data-container-transform": "translate(0 1)",
+            "data-icon": "chevron-bottom",
+            "height": "32",
+            "viewBox": "0 0 32 32",
+            "width": "32",
+            "xmlns": "http://www.w3.org/2000/svg",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        "type": "button",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": <span
+            className="field-name"
+          >
+            ts
+          </span>,
+          "style": Object {
+            "left": 0,
+            "top": 0,
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "ts",
+            "className": "field-name",
+          },
+          "ref": null,
+          "rendered": "ts",
+          "type": "span",
+        },
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "field": TimeField {
+            "name": "ts",
+            "type": "time",
+            "value": "1425612054.369843",
+          },
+          "log": Log {
+            "descriptor": Array [
+              Object {
+                "name": "_td",
+                "type": "int",
+              },
+              Object {
+                "name": "_path",
+                "type": "string",
+              },
+              Object {
+                "name": "ts",
+                "type": "time",
+              },
+              Object {
+                "name": "uid",
+                "type": "string",
+              },
+              Object {
+                "name": "id.orig_h",
+                "type": "addr",
+              },
+              Object {
+                "name": "id.orig_p",
+                "type": "port",
+              },
+              Object {
+                "name": "id.resp_h",
+                "type": "addr",
+              },
+              Object {
+                "name": "id.resp_p",
+                "type": "port",
+              },
+              Object {
+                "name": "proto",
+                "type": "enum",
+              },
+              Object {
+                "name": "service",
+                "type": "string",
+              },
+              Object {
+                "name": "duration",
+                "type": "interval",
+              },
+              Object {
+                "name": "orig_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "resp_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "conn_state",
+                "type": "string",
+              },
+              Object {
+                "name": "local_orig",
+                "type": "bool",
+              },
+              Object {
+                "name": "local_resp",
+                "type": "bool",
+              },
+              Object {
+                "name": "missed_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "history",
+                "type": "string",
+              },
+              Object {
+                "name": "orig_pkts",
+                "type": "count",
+              },
+              Object {
+                "name": "orig_ip_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "resp_pkts",
+                "type": "count",
+              },
+              Object {
+                "name": "resp_ip_bytes",
+                "type": "count",
+              },
+              Object {
+                "name": "tunnel_parents",
+                "type": "set[string]",
+              },
+            ],
+            "tuple": Array [
+              "0",
+              "conn",
+              "1425612054.369843",
+              "Cynwae4qh1GxM82hQ2",
+              "192.168.0.50",
+              "1900",
+              "239.255.255.250",
+              "1900",
+              "udp",
+              "-",
+              "2.000293",
+              "282",
+              "0",
+              "S0",
+              "-",
+              "-",
+              "0",
+              "D",
+              "3",
+              "366",
+              "0",
+              "0",
+              "(empty)",
+            ],
+          },
+          "onClose": [Function],
+          "style": Object {
+            "left": undefined,
+            "top": undefined,
+          },
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <p>
+            <span
+              className="date"
+            >
+              03/05/15
+            </span>
+            <span
+              className="time"
+            >
+              19:20
+            </span>
+            <span
+              className="seconds"
+            >
+              54.3690
+            </span>
+          </p>,
+          <button
+            className="cell-options-button"
+          >
+            <DownArrow
+              data-container-transform="translate(0 1)"
+              data-icon="chevron-bottom"
+              height="32"
+              viewBox="0 0 32 32"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            />
+          </button>,
+          <Tooltip
+            style={
+              Object {
+                "left": 0,
+                "top": 0,
+              }
+            }
+          >
+            <span
+              className="field-name"
+            >
+              ts
+            </span>
+          </Tooltip>,
+          <Connect(LogCellActions)
+            field={
+              TimeField {
+                "name": "ts",
+                "type": "time",
+                "value": "1425612054.369843",
+              }
+            }
+            log={
+              Log {
+                "descriptor": Array [
+                  Object {
+                    "name": "_td",
+                    "type": "int",
+                  },
+                  Object {
+                    "name": "_path",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "ts",
+                    "type": "time",
+                  },
+                  Object {
+                    "name": "uid",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "id.orig_h",
+                    "type": "addr",
+                  },
+                  Object {
+                    "name": "id.orig_p",
+                    "type": "port",
+                  },
+                  Object {
+                    "name": "id.resp_h",
+                    "type": "addr",
+                  },
+                  Object {
+                    "name": "id.resp_p",
+                    "type": "port",
+                  },
+                  Object {
+                    "name": "proto",
+                    "type": "enum",
+                  },
+                  Object {
+                    "name": "service",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "duration",
+                    "type": "interval",
+                  },
+                  Object {
+                    "name": "orig_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "resp_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "conn_state",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "local_orig",
+                    "type": "bool",
+                  },
+                  Object {
+                    "name": "local_resp",
+                    "type": "bool",
+                  },
+                  Object {
+                    "name": "missed_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "history",
+                    "type": "string",
+                  },
+                  Object {
+                    "name": "orig_pkts",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "orig_ip_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "resp_pkts",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "resp_ip_bytes",
+                    "type": "count",
+                  },
+                  Object {
+                    "name": "tunnel_parents",
+                    "type": "set[string]",
+                  },
+                ],
+                "tuple": Array [
+                  "0",
+                  "conn",
+                  "1425612054.369843",
+                  "Cynwae4qh1GxM82hQ2",
+                  "192.168.0.50",
+                  "1900",
+                  "239.255.255.250",
+                  "1900",
+                  "udp",
+                  "-",
+                  "2.000293",
+                  "282",
+                  "0",
+                  "S0",
+                  "-",
+                  "-",
+                  "0",
+                  "D",
+                  "3",
+                  "366",
+                  "0",
+                  "0",
+                  "(empty)",
+                ],
+              }
+            }
+            onClose={[Function]}
+            style={
+              Object {
+                "left": undefined,
+                "top": undefined,
+              }
+            }
+          />,
+        ],
+        "className": "log-cell time active hover",
+        "onClick": [Function],
+        "onContextMenu": [Function],
+        "onMouseEnter": [Function],
+        "onMouseLeave": [Function],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <span
+                className="date"
+              >
+                03/05/15
+              </span>,
+              <span
+                className="time"
+              >
+                19:20
+              </span>,
+              <span
+                className="seconds"
+              >
+                54.3690
+              </span>,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "03/05/15",
+                "className": "date",
+              },
+              "ref": null,
+              "rendered": "03/05/15",
+              "type": "span",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "19:20",
+                "className": "time",
+              },
+              "ref": null,
+              "rendered": "19:20",
+              "type": "span",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "54.3690",
+                "className": "seconds",
+              },
+              "ref": null,
+              "rendered": "54.3690",
+              "type": "span",
+            },
+          ],
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <DownArrow
+              data-container-transform="translate(0 1)"
+              data-icon="chevron-bottom"
+              height="32"
+              viewBox="0 0 32 32"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            />,
+            "className": "cell-options-button",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "data-container-transform": "translate(0 1)",
+              "data-icon": "chevron-bottom",
+              "height": "32",
+              "viewBox": "0 0 32 32",
+              "width": "32",
+              "xmlns": "http://www.w3.org/2000/svg",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": "button",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": <span
+              className="field-name"
+            >
+              ts
+            </span>,
+            "style": Object {
+              "left": 0,
+              "top": 0,
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "ts",
+              "className": "field-name",
+            },
+            "ref": null,
+            "rendered": "ts",
+            "type": "span",
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "field": TimeField {
+              "name": "ts",
+              "type": "time",
+              "value": "1425612054.369843",
+            },
+            "log": Log {
+              "descriptor": Array [
+                Object {
+                  "name": "_td",
+                  "type": "int",
+                },
+                Object {
+                  "name": "_path",
+                  "type": "string",
+                },
+                Object {
+                  "name": "ts",
+                  "type": "time",
+                },
+                Object {
+                  "name": "uid",
+                  "type": "string",
+                },
+                Object {
+                  "name": "id.orig_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.orig_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "id.resp_h",
+                  "type": "addr",
+                },
+                Object {
+                  "name": "id.resp_p",
+                  "type": "port",
+                },
+                Object {
+                  "name": "proto",
+                  "type": "enum",
+                },
+                Object {
+                  "name": "service",
+                  "type": "string",
+                },
+                Object {
+                  "name": "duration",
+                  "type": "interval",
+                },
+                Object {
+                  "name": "orig_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "conn_state",
+                  "type": "string",
+                },
+                Object {
+                  "name": "local_orig",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "local_resp",
+                  "type": "bool",
+                },
+                Object {
+                  "name": "missed_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "history",
+                  "type": "string",
+                },
+                Object {
+                  "name": "orig_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "orig_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_pkts",
+                  "type": "count",
+                },
+                Object {
+                  "name": "resp_ip_bytes",
+                  "type": "count",
+                },
+                Object {
+                  "name": "tunnel_parents",
+                  "type": "set[string]",
+                },
+              ],
+              "tuple": Array [
+                "0",
+                "conn",
+                "1425612054.369843",
+                "Cynwae4qh1GxM82hQ2",
+                "192.168.0.50",
+                "1900",
+                "239.255.255.250",
+                "1900",
+                "udp",
+                "-",
+                "2.000293",
+                "282",
+                "0",
+                "S0",
+                "-",
+                "-",
+                "0",
+                "D",
+                "3",
+                "366",
+                "0",
+                "0",
+                "(empty)",
+              ],
+            },
             "onClose": [Function],
             "style": Object {
               "left": undefined,

@@ -199,6 +199,11 @@ ShallowWrapper {
         <MenuItem
           onClick={[Function]}
         >
+          View log details
+        </MenuItem>,
+        <MenuItem
+          onClick={[Function]}
+        >
           Download PCAPS
         </MenuItem>,
       ],
@@ -260,6 +265,18 @@ ShallowWrapper {
         "key": "4",
         "nodeType": "function",
         "props": Object {
+          "children": "View log details",
+          "onClick": [Function],
+        },
+        "ref": null,
+        "rendered": "View log details",
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "5",
+        "nodeType": "function",
+        "props": Object {
           "children": "Download PCAPS",
           "onClick": [Function],
         },
@@ -293,6 +310,11 @@ ShallowWrapper {
             Count by _path
           </MenuItem>,
           <hr />,
+          <MenuItem
+            onClick={[Function]}
+          >
+            View log details
+          </MenuItem>,
           <MenuItem
             onClick={[Function]}
           >
@@ -355,6 +377,18 @@ ShallowWrapper {
         Object {
           "instance": null,
           "key": "4",
+          "nodeType": "function",
+          "props": Object {
+            "children": "View log details",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": "View log details",
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "5",
           "nodeType": "function",
           "props": Object {
             "children": "Download PCAPS",

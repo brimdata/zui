@@ -1,59 +1,33 @@
 import React from "react"
-import * as TimeWindow from "../lib/TimeWindow"
-import {TsCell} from "./LogCell"
-import XLogCell from "../connectors/XLogCell"
+import LogCell from "./LogCell"
 import classNames from "classnames"
 
-const exclude = {
-  uid: true,
-  ts: true,
-  fuid: true
-}
-
 export default class LogRow extends React.PureComponent {
+  fieldIndexes() {
+    // Add tests
+    const log = this.props.log
+    let indexes = log.descriptor.map((d, i) => i)
+    const tsIndex = log.getIndex("ts")
+    indexes = indexes.filter(i => i !== tsIndex && i !== log.getIndex("_td"))
+    indexes.unshift(tsIndex)
+    return indexes
+  }
+
   render() {
-    const {
-      log,
-      style,
-      showDetail,
-      appendToQuery,
-      prevLog,
-      highlight,
-      index,
-      isScrolling
-    } = this.props
-    const ts = log.cast("ts")
-    let tsHighlight = false
-    const even = index % 2 == 0
-
-    if (prevLog) {
-      const prevTs = prevLog.cast("ts")
-      tsHighlight = !TimeWindow.inSameUnit([ts, prevTs], "minute")
-    }
-
-    const cells = [<TsCell key="ts" ts={ts} highlight={tsHighlight} />]
-
-    for (let index = 1; index < log.tuple.length; index++) {
-      const field = log.getFieldAt(index)
-      if (exclude[field.name]) continue
-      cells.push(
-        <XLogCell
-          key={index}
-          appendToQuery={appendToQuery}
-          field={field}
-          log={log}
-          isScrolling={isScrolling}
-        />
-      )
-    }
-
+    const {log, style, highlight, index, isScrolling} = this.props
     return (
       <div
-        className={classNames("log-row", {highlight, even})}
+        className={classNames("log-row", {highlight, even: index % 2 == 0})}
         style={style}
-        onClick={() => showDetail(log)}
       >
-        {cells}
+        {this.fieldIndexes().map(index => (
+          <LogCell
+            key={index}
+            field={log.getFieldAt(index)}
+            log={log}
+            isScrolling={isScrolling}
+          />
+        ))}
       </div>
     )
   }

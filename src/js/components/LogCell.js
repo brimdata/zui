@@ -6,9 +6,10 @@ import Tooltip from "./Tooltip"
 import * as Time from "../lib/Time"
 import * as Doc from "../lib/Doc"
 import type {FixedPos} from "../lib/Doc"
-import Field from "../models/Field"
+import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import XLogCellActions from "../connectors/XLogCellActions"
+import classNames from "classnames"
 
 type Props = {
   field: Field,
@@ -45,24 +46,37 @@ export default class LogCell extends React.PureComponent<Props, State> {
     }
   }
 
+  renderValue(field: Field) {
+    if (field.name === "_path")
+      return (
+        <span className={`${field.name} ${field.value}-bg-color `}>
+          {field.value}
+        </span>
+      )
+    if (field instanceof TimeField)
+      return (
+        <p>
+          <span className="date">
+            {Time.format(field.toDate(), "MM/DD/YY")}
+          </span>
+          <span className="time">{Time.format(field.toDate(), "HH:mm")}</span>
+          <span className="seconds">
+            {Time.format(field.toDate(), "ss.SSSS")}
+          </span>
+        </p>
+      )
+    return <span>{field.value}</span>
+  }
+
   render() {
-    const {name, type, value} = this.props.field
-    let cellClass = `log-cell ${type}`
-    if (this.state.showMenu) cellClass += " active"
-    if (!this.props.isScrolling && this.state.hover) cellClass += " hover"
-    let valueClass = ""
-
-    if (name === "_path") {
-      valueClass += ` ${name} ${value}-bg-color`
-    }
-
-    const mouseEnter = e => {
+    const {name, type} = this.props.field
+    const cellClass = classNames(`log-cell ${type}`, {
+      active: this.state.showMenu,
+      hover: !this.props.isScrolling && this.state.hover
+    })
+    const mouseEnter = e =>
       this.setState({hover: true, tooltipStyle: getTooltipStyle(e)})
-    }
-
-    const mouseLeave = _e => {
-      this.setState({hover: false})
-    }
+    const mouseLeave = _e => this.setState({hover: false})
 
     return (
       <div
@@ -72,7 +86,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
         onContextMenu={this.toggleMenu}
         onClick={e => Doc.selectText(e.currentTarget)}
       >
-        <span className={valueClass}>{value}</span>
+        {this.renderValue(this.props.field)}
 
         {this.state.hover &&
           !this.props.isScrolling && (
@@ -99,22 +113,6 @@ export default class LogCell extends React.PureComponent<Props, State> {
       </div>
     )
   }
-}
-
-type TsCellArgs = {ts: Date, highlight: boolean, onClick: Function}
-export const TsCell = ({ts, highlight, onClick}: TsCellArgs) => {
-  return (
-    <div
-      className={`ts-cell ${highlight ? "highlight" : ""}`}
-      onClick={onClick}
-    >
-      <p>
-        <span className="date">{Time.format(ts, "MMM DD, YYYY")}</span>
-        <span className="time">{Time.format(ts, "HH:mm")}</span>
-        <span className="seconds">{Time.format(ts, "ss.SSSS[s]")}</span>
-      </p>
-    </div>
-  )
 }
 
 const getTooltipStyle = (e): FixedPos => {
