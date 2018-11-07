@@ -19,7 +19,7 @@ const toHistory = ({logs, position}) => new History(logs, position)
 const toState = ({entries, position}) => ({logs: entries, position})
 
 export default createReducer(initialState, {
-  LOG_DETAIL_VIEW: (state, {tuple, descriptor}) => {
+  LOG_DETAIL_PUSH: (state, {tuple, descriptor}) => {
     const history = toHistory(state)
     history.save({tuple, descriptor})
     return toState(history)

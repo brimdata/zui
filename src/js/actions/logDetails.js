@@ -3,8 +3,15 @@ import {getTimeWindow} from "../reducers/timeWindow"
 import {showRightSidebar} from "./view"
 import {discoverDescriptors} from "./descriptors"
 
-export const viewLogDetail = ({tuple, descriptor}) => ({
-  type: "LOG_DETAIL_VIEW",
+export const viewLogDetail = log => dispatch => {
+  dispatch(pushLogDetail(log))
+  const uid = log.cast("uid")
+  if (uid) dispatch(fetchCorrelatedLogs(uid))
+  dispatch(showRightSidebar())
+}
+
+export const pushLogDetail = ({tuple, descriptor}) => ({
+  type: "LOG_DETAIL_PUSH",
   tuple,
   descriptor
 })
@@ -52,7 +59,6 @@ export const fetchCorrelatedLogs = uid => (dispatch, getState, api) => {
         const {tuples} = results
         dispatch(receiveCorrelatedLogs(uid, tuples))
         dispatch(discoverDescriptors(tuples))
-        dispatch(showRightSidebar())
       }
     })
     .error(e => dispatch(errorCorrelatedLogs(uid, e)))
