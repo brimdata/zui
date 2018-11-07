@@ -1,5 +1,6 @@
 /* @flow */
 
+import FieldFactory from "./FieldFactory"
 import Field from "./Field"
 import isEqual from "lodash/isEqual"
 
@@ -53,7 +54,7 @@ export default class Log {
     if (index !== -1 && index < this.tuple.length) {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
-      return new Field({value, name, type})
+      return FieldFactory.create({value, name, type})
     }
   }
 
@@ -83,26 +84,8 @@ export default class Log {
 
   cast(name: string) {
     const field = this.getField(name)
-    if (!field) return null
-
-    const {value, type} = field
-
-    if (value === "-") return null
-
-    switch (type) {
-      case "time":
-        return new Date(+value * 1000)
-      case "interval":
-        return parseFloat(value)
-      case "string":
-      case "addr":
-      case "port":
-      case "enum":
-      case "count":
-      case "bool":
-      case "set[string]":
-      default:
-        return value
+    if (field) {
+      return field.cast()
     }
   }
 }
