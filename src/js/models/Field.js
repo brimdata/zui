@@ -20,6 +20,10 @@ export class TimeField extends Field {
   toDate() {
     return new Date(+this.value * 1000)
   }
+
+  cast() {
+    this.toDate()
+  }
 }
 
 export class IntervalField extends Field {

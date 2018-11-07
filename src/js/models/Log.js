@@ -46,11 +46,11 @@ export default class Log {
     return this.tuple[this.getIndex(name)]
   }
 
-  getField(fieldName: string): Field | void {
+  getField(fieldName: string) {
     return this.getFieldAt(this.getIndex(fieldName))
   }
 
-  getFieldAt(index: number): Field | void {
+  getFieldAt(index: number) {
     if (index !== -1 && index < this.tuple.length) {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
