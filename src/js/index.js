@@ -5,13 +5,11 @@ import ReactDOM from "react-dom"
 import {Provider} from "react-redux"
 import {HashRouter} from "react-router-dom"
 import XApp from "./connectors/XApp"
-import initStore from "./initializers/store"
-import initShortcuts from "./initializers/shortcuts"
-import initRoot from "./initializers/root"
 import AppErrorBoundary from "./components/AppErrorBoundary"
+import * as Doc from "./lib/Doc"
+import init from "./initializers"
 
-const store = initStore()
-initShortcuts(store)
+const store = init()
 
 ReactDOM.render(
   <AppErrorBoundary>
@@ -21,5 +19,5 @@ ReactDOM.render(
       </HashRouter>
     </Provider>
   </AppErrorBoundary>,
-  initRoot()
+  Doc.id("app-root")
 )
