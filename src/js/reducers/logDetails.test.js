@@ -11,7 +11,7 @@ const reduce = actions => ({
 })
 
 test("viewing a log detail", () => {
-  let state = reduce([a.viewLogDetail({tuple, descriptor})])
+  let state = reduce([a.pushLogDetail({tuple, descriptor})])
   const log = r.buildLogDetail(state)
 
   expect(log.get("letter")).toEqual("a")
@@ -20,8 +20,8 @@ test("viewing a log detail", () => {
 test("viewing 2 logs", () => {
   const tuple2 = ["1", "b"]
   let state = reduce([
-    a.viewLogDetail({tuple, descriptor}),
-    a.viewLogDetail({tuple: tuple2, descriptor})
+    a.pushLogDetail({tuple, descriptor}),
+    a.pushLogDetail({tuple: tuple2, descriptor})
   ])
 
   const log = r.buildLogDetail(state)
@@ -31,8 +31,8 @@ test("viewing 2 logs", () => {
 test("going back to the first log", () => {
   const tuple2 = ["1", "b"]
   let state = reduce([
-    a.viewLogDetail({tuple, descriptor}),
-    a.viewLogDetail({tuple: tuple2, descriptor}),
+    a.pushLogDetail({tuple, descriptor}),
+    a.pushLogDetail({tuple: tuple2, descriptor}),
     a.backLogDetail()
   ])
 
@@ -43,8 +43,8 @@ test("going back to the first log", () => {
 test("going back and then forward", () => {
   const tuple2 = ["1", "b"]
   const state = reduce([
-    a.viewLogDetail({tuple, descriptor}),
-    a.viewLogDetail({tuple: tuple2, descriptor}),
+    a.pushLogDetail({tuple, descriptor}),
+    a.pushLogDetail({tuple: tuple2, descriptor}),
     a.backLogDetail(),
     a.forwardLogDetail()
   ])

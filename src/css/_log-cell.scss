@@ -49,21 +49,21 @@
   }
 }
 
-.ts-cell {
+.log-cell.time {
   height: $bro-log-row-height;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  min-width: 235px;
   cursor: pointer;
-
+  font-family: $body-font;
   p {
-    line-height: $bro-log-row-height;
-    letter-spacing: 2;
-    width: 100%;
-    .time,
+    span {
+      display: inline-block;
+      padding: 0 6px;
+    }
+
+    .date {
+    }
+    .time {
+    }
     .seconds {
-      margin-left: 12px;
     }
   }
 

@@ -1,4 +1,8 @@
+/* @flow */
+
 import pick from "lodash/pick"
+import throttle from "lodash/throttle"
+import type {State} from "../reducers/types"
 
 const KEY = "LOOKY_STATE"
 const PERSIST = [
@@ -12,7 +16,7 @@ const PERSIST = [
   "starredLogs"
 ]
 
-export function saveState(state) {
+export const saveState = (state: State) => {
   try {
     const serializedState = JSON.stringify(pick(state, ...PERSIST))
     localStorage.setItem(KEY, serializedState)
@@ -21,22 +25,31 @@ export function saveState(state) {
   }
 }
 
-export function loadState() {
+export const loadState = () => {
   try {
     const serializedState = localStorage.getItem(KEY)
-    if (serializedState === null) {
+    if (typeof serializedState === "string") {
+      return JSON.parse(serializedState)
+    } else {
       return undefined
     }
-    return JSON.parse(serializedState)
   } catch (_err) {
     return undefined
   }
 }
 
-export function clearState() {
+export const clearState = () => {
   try {
-    localStorage.setItem(KEY, undefined)
+    localStorage.setItem(KEY, "")
   } catch (_err) {
     console.error("Unable to clear the state")
   }
+}
+
+export default (store: *) => {
+  store.subscribe(
+    throttle(() => {
+      saveState(store.getState())
+    }, 1000)
+  )
 }

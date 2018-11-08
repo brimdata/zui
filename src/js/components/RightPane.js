@@ -46,7 +46,6 @@ export default class RightPane extends React.Component {
       currentLog,
       space
     } = this.props
-
     const packetsAvailable =
       currentLog && currentLog.isPath("conn") && space && space.packet_support
 

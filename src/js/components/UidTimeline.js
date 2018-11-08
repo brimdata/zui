@@ -1,11 +1,22 @@
+/* @flow */
+
 import React from "react"
+import Log from "../models/Log"
+import * as TimeField from "../lib/TimeField"
 import * as d3 from "d3"
 import * as Time from "../lib/Time"
 import * as TimeWindow from "../lib/TimeWindow"
 
-export default class UidWaterfall extends React.Component {
-  row(log, index, xScale) {
-    const position = xScale(log.cast("ts"))
+type Props = {
+  viewLogDetail: Function,
+  logs: Log[],
+  log: Log
+}
+
+export default class UidWaterfall extends React.Component<Props> {
+  row(log: Log, index: number, xScale) {
+    const ts = TimeField.toDate(log.get("ts"))
+    const position = xScale(ts)
     const isCurrent = log === this.props.log
     return (
       <div
@@ -13,9 +24,7 @@ export default class UidWaterfall extends React.Component {
         className="waterfall-row"
         onClick={() => this.props.viewLogDetail(log)}
       >
-        <div className="ts-label">
-          {Time.format(log.cast("ts"), "HH:mm:ss.SSS")}
-        </div>
+        <div className="ts-label">{Time.format(ts, "HH:mm:ss.SSS")}</div>
         <div className="slider">
           <div className="line" />
           <span
