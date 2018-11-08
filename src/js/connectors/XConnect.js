@@ -11,7 +11,10 @@ const stateToProps = state => ({
   isConnected: getBoomdIsConnected(state)
 })
 
-const dispatchToProps = dispatch => bindActionCreators(actions, dispatch)
+const dispatchToProps = dispatch => ({
+  ...bindActionCreators(actions, dispatch),
+  dispatch
+})
 
 export default connect(
   stateToProps,
