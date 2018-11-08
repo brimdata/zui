@@ -62,6 +62,20 @@ const style = name =>
 }
 `
 
+const componentTest = name =>
+  `/* @flow */
+
+import React from "react"
+import {shallow} from "enzyme"
+import ${name} from "./${name}"
+
+test("snapshot", () => {
+  const wrapper = shallow(<${name} />)
+
+  expect(wrapper).toMatchSnapshot()
+})
+`
+
 /*
   CLI parsing
 */
@@ -79,5 +93,11 @@ program.command("style <name>").action(name => {
 program
   .command("connector <name>")
   .action(name => write(`src/js/connectors/X${name}.js`, connector(name)))
+
+program
+  .command("component-test <name>")
+  .action(name =>
+    write(`src/js/components/${name}.test.js`, componentTest(name))
+  )
 
 program.parse(process.argv)
