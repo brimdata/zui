@@ -56,6 +56,8 @@ export default class Search extends React.Component<Props, State> {
     if (!isConnected) return <Redirect to="/connect" />
     if (this.state.error === "NoSpaces") return <Redirect to="/spaces" />
     if (!this.state.ready) return null
+    if (!currentSpaceName) return <Redirect to="/spaces" />
+
     return (
       <div className="search-page-wrapper">
         <XNotice />
