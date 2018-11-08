@@ -19,10 +19,11 @@ import XNotice from "../connectors/XNotice"
 import * as searchBar from "../actions/searchBar"
 import * as mainSearch from "../actions/mainSearch"
 import * as countByTime from "../actions/countByTime"
+import * as timeWindow from "../actions/timeWindow"
 
 type Props = {
   dispatch: Function,
-  fetchAllSpaces: Function,
+  fetchSpaceInfo: Function,
   isConnected: boolean,
   currentSpaceName: string,
   initialLoad: boolean,
@@ -33,18 +34,16 @@ type Props = {
 
 export default class Search extends React.Component<Props> {
   componentDidMount() {
-    this.props.fetchAllSpaces()
-  }
-
-  componentDidUpdate(prev: Props) {
-    if (this.props.space && this.props.space !== prev.space) {
+    this.props.fetchSpaceInfo(this.props.currentSpaceName).done(() => {
+      this.props.dispatch(timeWindow.init())
       this.props.dispatch(searchBar.submitSearchBar())
-    }
+    })
   }
 
   componentWillUnmount() {
-    this.props.dispatch(mainSearch.resetMainSearch())
-    this.props.dispatch(countByTime.resetCountByTime())
+    this.props.dispatch(mainSearch.reset())
+    this.props.dispatch(countByTime.reset())
+    this.props.dispatch(timeWindow.reset())
   }
 
   render() {
