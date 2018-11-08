@@ -32,11 +32,18 @@ type Props = {
   space?: any
 }
 
-export default class Search extends React.Component<Props> {
-  componentDidMount() {
-    this.props.fetchSpaceInfo(this.props.currentSpaceName).done(() => {
-      this.props.dispatch(timeWindow.init())
-      this.props.dispatch(searchBar.submitSearchBar())
+type State = {
+  ready: boolean
+}
+
+export default class Search extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {ready: false}
+    props.fetchSpaceInfo(this.props.currentSpaceName).done(() => {
+      props.dispatch(timeWindow.init())
+      props.dispatch(searchBar.submitSearchBar())
+      this.setState({ready: true})
     })
   }
 
@@ -57,6 +64,8 @@ export default class Search extends React.Component<Props> {
 
     if (!isConnected) return <Redirect to="/connect" />
     if (!currentSpaceName) return <Redirect to="/spaces" />
+
+    if (!this.state.ready) return null
 
     return (
       <div className="search-page-wrapper">
