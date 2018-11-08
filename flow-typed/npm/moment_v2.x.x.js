@@ -1,5 +1,5 @@
-// flow-typed signature: 3de8ec6025b5e8cba3a77f71f4495008
-// flow-typed version: b349492ee1/moment_v2.x.x/flow_>=v0.25.x
+// flow-typed signature: b8d2d85f70b82d72377cf60c3606a2d9
+// flow-typed version: 0cd8e983b3/moment_v2.x.x/flow_>=v0.25.x
 
 type moment$MomentOptions = {
   y?: number | string,
@@ -121,23 +121,35 @@ declare class moment$MomentDuration {
 }
 declare class moment$Moment {
   static ISO_8601: string;
-  static (): moment$Moment;
+  static (string?: ?string): moment$Moment;
   static (
-    initDate: moment$MomentOptions | number | Date | Array<number> | moment$Moment | string
+    initDate:
+      | moment$MomentOptions
+      | number
+      | Date
+      | Array<number>
+      | moment$Moment
+      | string
+      | null
+      | void
+      | []
+      | {}
   ): moment$Moment;
-  static (string: string, format: string | Array<string>): moment$Moment;
+  static (array: []): moment$Moment;
+  static (object: {}): moment$Moment;
+  static (string: ?string, format: string | Array<string>): moment$Moment;
   static (
-    string: string,
+    string: ?string,
     format: string | Array<string>,
     strict: boolean
   ): moment$Moment;
   static (
-    string: string,
+    string: ?string,
     format: string | Array<string>,
     locale: string
   ): moment$Moment;
   static (
-    string: string,
+    string: ?string,
     format: string | Array<string>,
     locale: string,
     strict: boolean
@@ -145,7 +157,15 @@ declare class moment$Moment {
   static unix(seconds: number): moment$Moment;
   static utc(): moment$Moment;
   static utc(
-    initDate: moment$MomentOptions | number | Date | Array<number> | moment$Moment | string
+    initDate:
+      | moment$MomentOptions
+      | number
+      | Date
+      | Array<number>
+      | moment$Moment
+      | string
+      | null
+      | void
   ): moment$Moment;
   static utc(string: string, format: string | Array<string>): moment$Moment;
   static utc(
@@ -165,7 +185,7 @@ declare class moment$Moment {
     strict: boolean
   ): moment$Moment;
   static parseZone(): moment$Moment;
-  static parseZone(rawDate: string): moment$Moment;
+  static parseZone(rawDate: string | null | void): moment$Moment;
   static parseZone(
     rawDate: string,
     format: string | Array<string>
