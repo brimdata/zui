@@ -1,0 +1,1432 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shapshot 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <UidWaterfall
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    logs={
+      Array [
+        Log {
+          "descriptor": Array [
+            Object {
+              "name": "_td",
+              "type": "int",
+            },
+            Object {
+              "name": "_path",
+              "type": "string",
+            },
+            Object {
+              "name": "ts",
+              "type": "time",
+            },
+            Object {
+              "name": "uid",
+              "type": "string",
+            },
+            Object {
+              "name": "id.orig_h",
+              "type": "addr",
+            },
+            Object {
+              "name": "id.orig_p",
+              "type": "port",
+            },
+            Object {
+              "name": "id.resp_h",
+              "type": "addr",
+            },
+            Object {
+              "name": "id.resp_p",
+              "type": "port",
+            },
+            Object {
+              "name": "proto",
+              "type": "enum",
+            },
+            Object {
+              "name": "service",
+              "type": "string",
+            },
+            Object {
+              "name": "duration",
+              "type": "interval",
+            },
+            Object {
+              "name": "orig_bytes",
+              "type": "count",
+            },
+            Object {
+              "name": "resp_bytes",
+              "type": "count",
+            },
+            Object {
+              "name": "conn_state",
+              "type": "string",
+            },
+            Object {
+              "name": "local_orig",
+              "type": "bool",
+            },
+            Object {
+              "name": "local_resp",
+              "type": "bool",
+            },
+            Object {
+              "name": "missed_bytes",
+              "type": "count",
+            },
+            Object {
+              "name": "history",
+              "type": "string",
+            },
+            Object {
+              "name": "orig_pkts",
+              "type": "count",
+            },
+            Object {
+              "name": "orig_ip_bytes",
+              "type": "count",
+            },
+            Object {
+              "name": "resp_pkts",
+              "type": "count",
+            },
+            Object {
+              "name": "resp_ip_bytes",
+              "type": "count",
+            },
+            Object {
+              "name": "tunnel_parents",
+              "type": "set[string]",
+            },
+          ],
+          "tuple": Array [
+            "0",
+            "conn",
+            "1425612054.369843",
+            "Cynwae4qh1GxM82hQ2",
+            "192.168.0.50",
+            "1900",
+            "239.255.255.250",
+            "1900",
+            "udp",
+            "-",
+            "2.000293",
+            "282",
+            "0",
+            "S0",
+            "-",
+            "-",
+            "0",
+            "D",
+            "3",
+            "366",
+            "0",
+            "0",
+            "(empty)",
+          ],
+        },
+        Log {
+          "descriptor": Array [
+            Object {
+              "name": "_td",
+              "type": "int",
+            },
+            Object {
+              "name": "_path",
+              "type": "string",
+            },
+            Object {
+              "name": "ts",
+              "type": "time",
+            },
+            Object {
+              "name": "uid",
+              "type": "string",
+            },
+            Object {
+              "name": "id.orig_h",
+              "type": "addr",
+            },
+            Object {
+              "name": "id.orig_p",
+              "type": "port",
+            },
+            Object {
+              "name": "id.resp_h",
+              "type": "addr",
+            },
+            Object {
+              "name": "id.resp_p",
+              "type": "port",
+            },
+            Object {
+              "name": "proto",
+              "type": "enum",
+            },
+            Object {
+              "name": "trans_id",
+              "type": "count",
+            },
+            Object {
+              "name": "rtt",
+              "type": "interval",
+            },
+            Object {
+              "name": "query",
+              "type": "string",
+            },
+            Object {
+              "name": "qclass",
+              "type": "count",
+            },
+            Object {
+              "name": "qclass_name",
+              "type": "string",
+            },
+            Object {
+              "name": "qtype",
+              "type": "count",
+            },
+            Object {
+              "name": "qtype_name",
+              "type": "string",
+            },
+            Object {
+              "name": "rcode",
+              "type": "count",
+            },
+            Object {
+              "name": "rcode_name",
+              "type": "string",
+            },
+            Object {
+              "name": "AA",
+              "type": "bool",
+            },
+            Object {
+              "name": "TC",
+              "type": "bool",
+            },
+            Object {
+              "name": "RD",
+              "type": "bool",
+            },
+            Object {
+              "name": "RA",
+              "type": "bool",
+            },
+            Object {
+              "name": "Z",
+              "type": "count",
+            },
+            Object {
+              "name": "answers",
+              "type": "vector[string]",
+            },
+            Object {
+              "name": "TTLs",
+              "type": "vector[interval]",
+            },
+            Object {
+              "name": "rejected",
+              "type": "bool",
+            },
+          ],
+          "tuple": Array [
+            "8",
+            "dns",
+            "1425565514.419939",
+            "Cum4LVba3W3KNG6qa",
+            "fe80::eef4:bbff:fe51:89ec",
+            "5353",
+            "ff02::fb",
+            "5353",
+            "udp",
+            "0",
+            "0.119484",
+            "_ipp._tcp.local",
+            "1",
+            "C_INTERNET",
+            "12",
+            "PTR",
+            "0",
+            "NOERROR",
+            "T",
+            "F",
+            "F",
+            "F",
+            "0",
+            "_workstation._tcp.local,sniffer [ec:f4:bb:51:89:ec]._workstation._tcp.local",
+            "4500.000000,4500.000000",
+            "F",
+          ],
+        },
+        Log {
+          "descriptor": Array [
+            Object {
+              "name": "_td",
+              "type": "int",
+            },
+            Object {
+              "name": "_path",
+              "type": "string",
+            },
+            Object {
+              "name": "ts",
+              "type": "time",
+            },
+            Object {
+              "name": "uid",
+              "type": "string",
+            },
+            Object {
+              "name": "id.orig_h",
+              "type": "addr",
+            },
+            Object {
+              "name": "id.orig_p",
+              "type": "port",
+            },
+            Object {
+              "name": "id.resp_h",
+              "type": "addr",
+            },
+            Object {
+              "name": "id.resp_p",
+              "type": "port",
+            },
+            Object {
+              "name": "trans_depth",
+              "type": "count",
+            },
+            Object {
+              "name": "method",
+              "type": "string",
+            },
+            Object {
+              "name": "host",
+              "type": "string",
+            },
+            Object {
+              "name": "uri",
+              "type": "string",
+            },
+            Object {
+              "name": "referrer",
+              "type": "string",
+            },
+            Object {
+              "name": "version",
+              "type": "string",
+            },
+            Object {
+              "name": "user_agent",
+              "type": "string",
+            },
+            Object {
+              "name": "request_body_len",
+              "type": "count",
+            },
+            Object {
+              "name": "response_body_len",
+              "type": "count",
+            },
+            Object {
+              "name": "status_code",
+              "type": "count",
+            },
+            Object {
+              "name": "status_msg",
+              "type": "string",
+            },
+            Object {
+              "name": "info_code",
+              "type": "count",
+            },
+            Object {
+              "name": "info_msg",
+              "type": "string",
+            },
+            Object {
+              "name": "tags",
+              "type": "set[enum]",
+            },
+            Object {
+              "name": "username",
+              "type": "string",
+            },
+            Object {
+              "name": "password",
+              "type": "string",
+            },
+            Object {
+              "name": "proxied",
+              "type": "set[string]",
+            },
+            Object {
+              "name": "orig_fuids",
+              "type": "vector[string]",
+            },
+            Object {
+              "name": "orig_filenames",
+              "type": "vector[string]",
+            },
+            Object {
+              "name": "orig_mime_types",
+              "type": "vector[string]",
+            },
+            Object {
+              "name": "resp_fuids",
+              "type": "vector[string]",
+            },
+            Object {
+              "name": "resp_filenames",
+              "type": "vector[string]",
+            },
+            Object {
+              "name": "resp_mime_types",
+              "type": "vector[string]",
+            },
+          ],
+          "tuple": Array [
+            "10",
+            "http",
+            "1425567042.047800",
+            "CBQjjR1ZrY6LmUfzX5",
+            "192.168.0.51",
+            "60677",
+            "91.189.89.240",
+            "80",
+            "1",
+            "GET",
+            "start.ubuntu.com",
+            "/14.10/Google/?sourceid=hp",
+            "-",
+            "1.0",
+            "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0",
+            "0",
+            "6005",
+            "200",
+            "OK",
+            "-",
+            "-",
+            "(empty)",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "FUPWLQXTNsTNvf33",
+            "-",
+            "text/html",
+          ],
+        },
+      ]
+    }
+    viewLogDetail={[MockFunction]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        Array [
+          <div
+            className="waterfall-row"
+            onClick={[Function]}
+          >
+            <div
+              className="ts-label"
+            >
+              19:20:54.369
+            </div>
+            <div
+              className="slider"
+            >
+              <div
+                className="line"
+              />
+              <span
+                className="path-tag conn-bg-color "
+                style={
+                  Object {
+                    "left": "100%",
+                  }
+                }
+              >
+                conn
+              </span>
+            </div>
+          </div>,
+          <div
+            className="waterfall-row"
+            onClick={[Function]}
+          >
+            <div
+              className="ts-label"
+            >
+              06:25:14.419
+            </div>
+            <div
+              className="slider"
+            >
+              <div
+                className="line"
+              />
+              <span
+                className="path-tag dns-bg-color "
+                style={
+                  Object {
+                    "left": "0%",
+                  }
+                }
+              >
+                dns
+              </span>
+            </div>
+          </div>,
+          <div
+            className="waterfall-row"
+            onClick={[Function]}
+          >
+            <div
+              className="ts-label"
+            >
+              06:50:42.047
+            </div>
+            <div
+              className="slider"
+            >
+              <div
+                className="line"
+              />
+              <span
+                className="path-tag http-bg-color "
+                style={
+                  Object {
+                    "left": "3.2824014636887235%",
+                  }
+                }
+              >
+                http
+              </span>
+            </div>
+          </div>,
+        ],
+        <p
+          className="duration"
+        >
+          Duration: 
+          46539.95
+          s
+        </p>,
+      ],
+      "className": "uid-waterfall",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": "0",
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="ts-label"
+            >
+              19:20:54.369
+            </div>,
+            <div
+              className="slider"
+            >
+              <div
+                className="line"
+              />
+              <span
+                className="path-tag conn-bg-color "
+                style={
+                  Object {
+                    "left": "100%",
+                  }
+                }
+              >
+                conn
+              </span>
+            </div>,
+          ],
+          "className": "waterfall-row",
+          "onClick": [Function],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "19:20:54.369",
+              "className": "ts-label",
+            },
+            "ref": null,
+            "rendered": "19:20:54.369",
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="line"
+                />,
+                <span
+                  className="path-tag conn-bg-color "
+                  style={
+                    Object {
+                      "left": "100%",
+                    }
+                  }
+                >
+                  conn
+                </span>,
+              ],
+              "className": "slider",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "line",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "conn",
+                  "className": "path-tag conn-bg-color ",
+                  "style": Object {
+                    "left": "100%",
+                  },
+                },
+                "ref": null,
+                "rendered": "conn",
+                "type": "span",
+              },
+            ],
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": "1",
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="ts-label"
+            >
+              06:25:14.419
+            </div>,
+            <div
+              className="slider"
+            >
+              <div
+                className="line"
+              />
+              <span
+                className="path-tag dns-bg-color "
+                style={
+                  Object {
+                    "left": "0%",
+                  }
+                }
+              >
+                dns
+              </span>
+            </div>,
+          ],
+          "className": "waterfall-row",
+          "onClick": [Function],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "06:25:14.419",
+              "className": "ts-label",
+            },
+            "ref": null,
+            "rendered": "06:25:14.419",
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="line"
+                />,
+                <span
+                  className="path-tag dns-bg-color "
+                  style={
+                    Object {
+                      "left": "0%",
+                    }
+                  }
+                >
+                  dns
+                </span>,
+              ],
+              "className": "slider",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "line",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "dns",
+                  "className": "path-tag dns-bg-color ",
+                  "style": Object {
+                    "left": "0%",
+                  },
+                },
+                "ref": null,
+                "rendered": "dns",
+                "type": "span",
+              },
+            ],
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": "2",
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="ts-label"
+            >
+              06:50:42.047
+            </div>,
+            <div
+              className="slider"
+            >
+              <div
+                className="line"
+              />
+              <span
+                className="path-tag http-bg-color "
+                style={
+                  Object {
+                    "left": "3.2824014636887235%",
+                  }
+                }
+              >
+                http
+              </span>
+            </div>,
+          ],
+          "className": "waterfall-row",
+          "onClick": [Function],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "06:50:42.047",
+              "className": "ts-label",
+            },
+            "ref": null,
+            "rendered": "06:50:42.047",
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="line"
+                />,
+                <span
+                  className="path-tag http-bg-color "
+                  style={
+                    Object {
+                      "left": "3.2824014636887235%",
+                    }
+                  }
+                >
+                  http
+                </span>,
+              ],
+              "className": "slider",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "line",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "http",
+                  "className": "path-tag http-bg-color ",
+                  "style": Object {
+                    "left": "3.2824014636887235%",
+                  },
+                },
+                "ref": null,
+                "rendered": "http",
+                "type": "span",
+              },
+            ],
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            "Duration: ",
+            46539.95,
+            "s",
+          ],
+          "className": "duration",
+        },
+        "ref": null,
+        "rendered": Array [
+          "Duration: ",
+          46539.95,
+          "s",
+        ],
+        "type": "p",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          Array [
+            <div
+              className="waterfall-row"
+              onClick={[Function]}
+            >
+              <div
+                className="ts-label"
+              >
+                19:20:54.369
+              </div>
+              <div
+                className="slider"
+              >
+                <div
+                  className="line"
+                />
+                <span
+                  className="path-tag conn-bg-color "
+                  style={
+                    Object {
+                      "left": "100%",
+                    }
+                  }
+                >
+                  conn
+                </span>
+              </div>
+            </div>,
+            <div
+              className="waterfall-row"
+              onClick={[Function]}
+            >
+              <div
+                className="ts-label"
+              >
+                06:25:14.419
+              </div>
+              <div
+                className="slider"
+              >
+                <div
+                  className="line"
+                />
+                <span
+                  className="path-tag dns-bg-color "
+                  style={
+                    Object {
+                      "left": "0%",
+                    }
+                  }
+                >
+                  dns
+                </span>
+              </div>
+            </div>,
+            <div
+              className="waterfall-row"
+              onClick={[Function]}
+            >
+              <div
+                className="ts-label"
+              >
+                06:50:42.047
+              </div>
+              <div
+                className="slider"
+              >
+                <div
+                  className="line"
+                />
+                <span
+                  className="path-tag http-bg-color "
+                  style={
+                    Object {
+                      "left": "3.2824014636887235%",
+                    }
+                  }
+                >
+                  http
+                </span>
+              </div>
+            </div>,
+          ],
+          <p
+            className="duration"
+          >
+            Duration: 
+            46539.95
+            s
+          </p>,
+        ],
+        "className": "uid-waterfall",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": "0",
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="ts-label"
+              >
+                19:20:54.369
+              </div>,
+              <div
+                className="slider"
+              >
+                <div
+                  className="line"
+                />
+                <span
+                  className="path-tag conn-bg-color "
+                  style={
+                    Object {
+                      "left": "100%",
+                    }
+                  }
+                >
+                  conn
+                </span>
+              </div>,
+            ],
+            "className": "waterfall-row",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "19:20:54.369",
+                "className": "ts-label",
+              },
+              "ref": null,
+              "rendered": "19:20:54.369",
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <div
+                    className="line"
+                  />,
+                  <span
+                    className="path-tag conn-bg-color "
+                    style={
+                      Object {
+                        "left": "100%",
+                      }
+                    }
+                  >
+                    conn
+                  </span>,
+                ],
+                "className": "slider",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "line",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "div",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "conn",
+                    "className": "path-tag conn-bg-color ",
+                    "style": Object {
+                      "left": "100%",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "conn",
+                  "type": "span",
+                },
+              ],
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": "1",
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="ts-label"
+              >
+                06:25:14.419
+              </div>,
+              <div
+                className="slider"
+              >
+                <div
+                  className="line"
+                />
+                <span
+                  className="path-tag dns-bg-color "
+                  style={
+                    Object {
+                      "left": "0%",
+                    }
+                  }
+                >
+                  dns
+                </span>
+              </div>,
+            ],
+            "className": "waterfall-row",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "06:25:14.419",
+                "className": "ts-label",
+              },
+              "ref": null,
+              "rendered": "06:25:14.419",
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <div
+                    className="line"
+                  />,
+                  <span
+                    className="path-tag dns-bg-color "
+                    style={
+                      Object {
+                        "left": "0%",
+                      }
+                    }
+                  >
+                    dns
+                  </span>,
+                ],
+                "className": "slider",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "line",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "div",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "dns",
+                    "className": "path-tag dns-bg-color ",
+                    "style": Object {
+                      "left": "0%",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "dns",
+                  "type": "span",
+                },
+              ],
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": "2",
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="ts-label"
+              >
+                06:50:42.047
+              </div>,
+              <div
+                className="slider"
+              >
+                <div
+                  className="line"
+                />
+                <span
+                  className="path-tag http-bg-color "
+                  style={
+                    Object {
+                      "left": "3.2824014636887235%",
+                    }
+                  }
+                >
+                  http
+                </span>
+              </div>,
+            ],
+            "className": "waterfall-row",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "06:50:42.047",
+                "className": "ts-label",
+              },
+              "ref": null,
+              "rendered": "06:50:42.047",
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <div
+                    className="line"
+                  />,
+                  <span
+                    className="path-tag http-bg-color "
+                    style={
+                      Object {
+                        "left": "3.2824014636887235%",
+                      }
+                    }
+                  >
+                    http
+                  </span>,
+                ],
+                "className": "slider",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "line",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "div",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "http",
+                    "className": "path-tag http-bg-color ",
+                    "style": Object {
+                      "left": "3.2824014636887235%",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "http",
+                  "type": "span",
+                },
+              ],
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              "Duration: ",
+              46539.95,
+              "s",
+            ],
+            "className": "duration",
+          },
+          "ref": null,
+          "rendered": Array [
+            "Duration: ",
+            46539.95,
+            "s",
+          ],
+          "type": "p",
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

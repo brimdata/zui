@@ -22,7 +22,7 @@ export class TimeField extends Field {
   }
 
   cast() {
-    this.toDate()
+    return this.toDate()
   }
 }
 
