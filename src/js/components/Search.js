@@ -16,10 +16,7 @@ import XRightPane from "../connectors/XRightPane"
 import XDownloadProgress from "../connectors/XDownloadProgress"
 import ViewerErrorBoundary from "./ViewerErrorBoundary"
 import XNotice from "../connectors/XNotice"
-import * as searchBar from "../actions/searchBar"
-import * as mainSearch from "../actions/mainSearch"
-import * as countByTime from "../actions/countByTime"
-import * as timeWindow from "../actions/timeWindow"
+import * as searchPage from "../actions/searchPage"
 
 type Props = {
   dispatch: Function,
@@ -33,24 +30,18 @@ type Props = {
 }
 
 type State = {
-  ready: boolean
+  ready: boolean,
+  error: ?string
 }
 
 export default class Search extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
-    this.state = {ready: false}
-    props.fetchSpaceInfo(this.props.currentSpaceName).done(() => {
-      props.dispatch(timeWindow.init())
-      props.dispatch(searchBar.submitSearchBar())
-      this.setState({ready: true})
-    })
-  }
-
-  componentWillUnmount() {
-    this.props.dispatch(mainSearch.reset())
-    this.props.dispatch(countByTime.reset())
-    this.props.dispatch(timeWindow.reset())
+    this.state = {ready: false, error: null}
+    props
+      .dispatch(searchPage.init())
+      .then(() => this.setState({ready: true}))
+      .catch(e => this.setState({error: e}))
   }
 
   render() {
@@ -63,10 +54,8 @@ export default class Search extends React.Component<Props, State> {
     } = this.props
 
     if (!isConnected) return <Redirect to="/connect" />
-    if (!currentSpaceName) return <Redirect to="/spaces" />
-
+    if (this.state.error === "NoSpaces") return <Redirect to="/spaces" />
     if (!this.state.ready) return null
-
     return (
       <div className="search-page-wrapper">
         <XNotice />

@@ -76,12 +76,9 @@ class Spaces extends React.Component<Props, State> {
 const NoSpaces = () => (
   <div className="admin-page">
     <LookyHeader />
-    <div className="no-spaces">
-      <p>There are no spaces in this boom instance.</p>
-      <button className="button">
-        <Plus />
-        Create New Space
-      </button>
+    <div className="no-spaces body-content">
+      <h3>There are no spaces in this boom instance.</h3>
+      <p>Use the CLI to create one.</p>
     </div>
   </div>
 )

@@ -3,7 +3,6 @@ import {Redirect} from "react-router-dom"
 import Input from "./Input"
 import LookyHeader from "./LookyHeader"
 import AdminTitle from "./AdminTitle"
-import * as searchPage from "../actions/searchPage"
 
 class Connect extends React.Component {
   constructor(props) {
@@ -16,7 +15,6 @@ class Connect extends React.Component {
       e.preventDefault()
       this.props.setBoomdCredentials(this.state)
       this.props.connectBoomd()
-      props.dispatch(searchPage.init())
     }
   }
 
