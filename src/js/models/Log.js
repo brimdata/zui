@@ -1,7 +1,6 @@
 /* @flow */
 
 import FieldFactory from "./FieldFactory"
-import Field from "./Field"
 import isEqual from "lodash/isEqual"
 
 type Tuple = string[]
