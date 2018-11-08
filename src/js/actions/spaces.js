@@ -5,7 +5,7 @@ import type {Space} from "../lib/Space"
 
 export function fetchSpaceInfo(name: string) {
   return (dispatch: *, getState: *, api: Client) => {
-    api.space({name}).done(space => {
+    return api.space({name}).done(space => {
       dispatch(setSpaceInfo(space))
     })
   }
