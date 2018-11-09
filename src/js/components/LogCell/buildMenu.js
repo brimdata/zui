@@ -4,8 +4,10 @@ import * as searchBar from "../../actions/searchBar"
 import * as packets from "../../actions/packets"
 import * as logDetails from "../../actions/logDetails"
 import * as timeWindow from "../../actions/timeWindow"
-import type {Props} from "./LogCellActions"
 import {TimeField} from "../../models/Field"
+import type {Space} from "../../lib/Space"
+import Log from "../../models/Log"
+import Field from "../../models/Field"
 
 type Action = {
   type: "action",
@@ -17,36 +19,38 @@ type Seperator = {
   type: "seperator"
 }
 
+type Args = {
+  dispatch: Function,
+  field: Field,
+  log: Log,
+  space: Space
+}
+
 export type MenuItemData = Seperator | Action
 
-export default ({dispatch, field, space, log}: Props): MenuItemData[] => {
-  if (log.isPath("conn") && space.packet_support) {
+export default (args: Args): MenuItemData[] => [
+  ...fieldActions(args),
+  seperator(),
+  ...logActionsFunc(args)
+]
+
+const fieldActions = ({field, dispatch}) => {
+  if (field instanceof TimeField)
+    return [fromTime(field, dispatch), toTime(field, dispatch)]
+  else
     return [
       exclude(field, dispatch),
       include(field, dispatch),
-      countBy(field, dispatch),
-      seperator(),
-      detail(log, dispatch),
-      pcaps(log, dispatch)
+      countBy(field, dispatch)
     ]
-  }
+}
 
-  if (field instanceof TimeField) {
-    return [
-      fromTime(field, dispatch),
-      toTime(field, dispatch),
-      seperator(),
-      detail(log, dispatch)
-    ]
+const logActionsFunc = ({log, space, dispatch}) => {
+  if (log.isPath("conn") && space.packet_support) {
+    return [pcaps(log, dispatch), detail(log, dispatch)]
+  } else {
+    return [detail(log, dispatch)]
   }
-
-  return [
-    exclude(field, dispatch),
-    include(field, dispatch),
-    countBy(field, dispatch),
-    seperator(),
-    detail(log, dispatch)
-  ]
 }
 
 const exclude = (field, dispatch) => ({
