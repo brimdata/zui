@@ -2,7 +2,7 @@
 
 import type {Space} from "../lib/Space"
 
-export default (props: $Shape<Space>): Space => ({
+export default (props: $Shape<Space> = {}): Space => ({
   name: "default",
   compression: "none",
   flush_timeout: 500,

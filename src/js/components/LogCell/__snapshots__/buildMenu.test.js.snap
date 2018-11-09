@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conn log with pcap support 1`] = `
+Array [
+  Object {
+    "onClick": [Function],
+    "text": "Filter out these values",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Only show these values",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Count by id.orig_h",
+    "type": "action",
+  },
+  Object {
+    "type": "seperator",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Download PCAPS",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "View log details",
+    "type": "action",
+  },
+]
+`;
+
+exports[`dns log 1`] = `
+Array [
+  Object {
+    "onClick": [Function],
+    "text": "Filter out these values",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Only show these values",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Count by query",
+    "type": "action",
+  },
+  Object {
+    "type": "seperator",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "View log details",
+    "type": "action",
+  },
+]
+`;
+
+exports[`time field for conn log 1`] = `
+Array [
+  Object {
+    "onClick": [Function],
+    "text": "Use as \\"start\\" time",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Use as \\"end\\" time",
+    "type": "action",
+  },
+  Object {
+    "type": "seperator",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Download PCAPS",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "View log details",
+    "type": "action",
+  },
+]
+`;
+
+exports[`time field for weird log 1`] = `
+Array [
+  Object {
+    "onClick": [Function],
+    "text": "Use as \\"start\\" time",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Use as \\"end\\" time",
+    "type": "action",
+  },
+  Object {
+    "type": "seperator",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "View log details",
+    "type": "action",
+  },
+]
+`;

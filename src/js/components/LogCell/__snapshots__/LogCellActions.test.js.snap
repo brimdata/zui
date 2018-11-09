@@ -199,12 +199,12 @@ ShallowWrapper {
         <MenuItem
           onClick={[Function]}
         >
-          View log details
+          Download PCAPS
         </MenuItem>,
         <MenuItem
           onClick={[Function]}
         >
-          Download PCAPS
+          View log details
         </MenuItem>,
       ],
       "onOutsideClick": [Function],
@@ -265,11 +265,11 @@ ShallowWrapper {
         "key": "4",
         "nodeType": "function",
         "props": Object {
-          "children": "View log details",
+          "children": "Download PCAPS",
           "onClick": [Function],
         },
         "ref": null,
-        "rendered": "View log details",
+        "rendered": "Download PCAPS",
         "type": [Function],
       },
       Object {
@@ -277,11 +277,11 @@ ShallowWrapper {
         "key": "5",
         "nodeType": "function",
         "props": Object {
-          "children": "Download PCAPS",
+          "children": "View log details",
           "onClick": [Function],
         },
         "ref": null,
-        "rendered": "Download PCAPS",
+        "rendered": "View log details",
         "type": [Function],
       },
     ],
@@ -313,12 +313,12 @@ ShallowWrapper {
           <MenuItem
             onClick={[Function]}
           >
-            View log details
+            Download PCAPS
           </MenuItem>,
           <MenuItem
             onClick={[Function]}
           >
-            Download PCAPS
+            View log details
           </MenuItem>,
         ],
         "onOutsideClick": [Function],
@@ -379,11 +379,11 @@ ShallowWrapper {
           "key": "4",
           "nodeType": "function",
           "props": Object {
-            "children": "View log details",
+            "children": "Download PCAPS",
             "onClick": [Function],
           },
           "ref": null,
-          "rendered": "View log details",
+          "rendered": "Download PCAPS",
           "type": [Function],
         },
         Object {
@@ -391,11 +391,11 @@ ShallowWrapper {
           "key": "5",
           "nodeType": "function",
           "props": Object {
-            "children": "Download PCAPS",
+            "children": "View log details",
             "onClick": [Function],
           },
           "ref": null,
-          "rendered": "Download PCAPS",
+          "rendered": "View log details",
           "type": [Function],
         },
       ],
