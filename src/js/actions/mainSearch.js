@@ -8,6 +8,7 @@ import {getSearchProgram} from "../reducers/searchBar"
 import {validateProgram} from "./searchBar"
 import Client from "boom-js-client"
 import * as SearchFactory from "../lib/SearchFactory"
+import type {Tuple} from "../models/Log"
 
 type Options = {
   saveToHistory: boolean
@@ -53,7 +54,7 @@ export function requestMainSearch() {
   }
 }
 
-export function mainSearchEvents(events: [] = []) {
+export function mainSearchEvents(events: Tuple[] = []) {
   return {
     type: "MAIN_SEARCH_EVENTS",
     events

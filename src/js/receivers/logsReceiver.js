@@ -1,8 +1,19 @@
+/* @flow */
+
 import * as actions from "../actions/mainSearch"
 import {discoverDescriptors} from "../actions/descriptors"
 import throttle from "lodash/throttle"
+import type {Tuple, Descriptor} from "../models/Log"
 
-export default function(dispatch) {
+type Payload = {
+  type: string,
+  results: {
+    tuples: Tuple[],
+    descriptor: Descriptor
+  }
+}
+
+export default function(dispatch: Function) {
   let buffer = []
 
   const dispatchEvents = throttle(() => {
@@ -12,7 +23,7 @@ export default function(dispatch) {
     buffer = []
   }, 200)
 
-  return payload => {
+  return (payload: Payload) => {
     if (payload.type === "SearchResult") {
       const tuples = payload.results.tuples
       if (tuples.length) {
