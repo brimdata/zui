@@ -59,3 +59,15 @@ test("#addHeadProc when sort and head exists", () => {
     "_path=dns | head 23 | sort ts"
   )
 })
+
+test("#getHeadCount with one head proc", () => {
+  expect(Program.getHeadCount("* | head 1000")).toBe(1000)
+})
+
+test("#getHeadCount with many procs", () => {
+  expect(Program.getHeadCount("* | head 1000; count()")).toBe(1000)
+})
+
+test("#getHeadCount with no head", () => {
+  expect(Program.getHeadCount("*")).toBe(0)
+})
