@@ -24,14 +24,14 @@ export const getType = (state: State) => {
 export const create = (dispatch: Dispatch, state: State, api: Api) => {
   switch (getType(state)) {
     case "ANALYTICS":
-      return new Search(state, dispatch, api, {
+      return new Search(dispatch, api, {
         space: getCurrentSpaceName(state),
         program: getSearchProgram(state),
         timeWindow: getTimeWindow(state),
         callbacks: request => request.channel(0, analyticsReceiver(dispatch, 0))
       })
     case "LOGS_SUBSET":
-      return new Search(state, dispatch, api, {
+      return new Search(dispatch, api, {
         space: getCurrentSpaceName(state),
         program:
           Program.addHeadProc(getSearchProgram(state), 1000) + "; count()",
@@ -39,7 +39,7 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
         callbacks: request => request.channel(1, eventsReceiver(dispatch))
       })
     case "LOGS":
-      return new Search(state, dispatch, api, {
+      return new Search(dispatch, api, {
         space: getCurrentSpaceName(state),
         program:
           Program.addHeadProc(getSearchProgram(state), 1000) +

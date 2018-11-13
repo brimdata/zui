@@ -3,7 +3,6 @@
 import statsReceiver from "../receivers/statsReceiver"
 import {completeMainSearch, requestMainSearch} from "../actions/mainSearch"
 import {setNoticeError} from "../actions/notices"
-import type {State} from "../reducers/types"
 import type {DateTuple} from "../lib/TimeWindow"
 import Client, {Handler} from "boom-js-client"
 
@@ -15,13 +14,11 @@ type Options = {
 }
 
 export default class Search {
-  state: State
   dispatch: Function
   api: Client
   options: Options
 
-  constructor(state: State, dispatch: Function, api: Client, options: Options) {
-    this.state = state
+  constructor(dispatch: Function, api: Client, options: Options) {
     this.dispatch = dispatch
     this.api = api
     this.options = options
