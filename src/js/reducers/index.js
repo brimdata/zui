@@ -21,6 +21,7 @@ import starredLogs from "./starredLogs"
 import logs from "./logs"
 import packets from "./packets"
 import notices from "./notices"
+import logViewer from "./logViewer"
 
 export default combineReducers({
   logs,
@@ -42,5 +43,6 @@ export default combineReducers({
   boomdConnection,
   starredLogs,
   packets,
-  notices
+  notices,
+  logViewer
 })
