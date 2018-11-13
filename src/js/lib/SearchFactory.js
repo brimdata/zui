@@ -3,7 +3,7 @@
 import {getSearchProgram} from "../reducers/searchBar"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import analyticsReceiver from "../receivers/analyticsReceiver"
-import eventsReceiver from "../receivers/eventsReceiver"
+import logsReceiver from "../receivers/logsReceiver"
 import countByTimeReceiver from "../receivers/countByTimeReceiver"
 import {getCountByTimeProc} from "../reducers/mainSearch"
 import * as Program from "../lib/Program"
@@ -36,7 +36,7 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
         program:
           Program.addHeadProc(getSearchProgram(state), 1000) + "; count()",
         timeWindow: getInnerTimeWindow(state),
-        callbacks: request => request.channel(1, eventsReceiver(dispatch))
+        callbacks: request => request.channel(1, logsReceiver(dispatch))
       })
     case "LOGS":
       return new Search(dispatch, api, {
@@ -48,7 +48,7 @@ export const create = (dispatch: Dispatch, state: State, api: Api) => {
         timeWindow: getTimeWindow(state),
         callbacks: request =>
           request
-            .channel(1, eventsReceiver(dispatch))
+            .channel(1, logsReceiver(dispatch))
             .channel(0, countByTimeReceiver(dispatch))
       })
   }
