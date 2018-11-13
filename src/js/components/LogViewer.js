@@ -17,12 +17,19 @@ export default class LogViewer extends React.PureComponent {
         index={index}
       />
     )
+
+    const onRowsRendered = ({stopIndex}) => {
+      if (logs.length - 1 === stopIndex) {
+        console.log("more request")
+      }
+    }
     return (
       <div className="log-viewer-wrapper">
         <AutoSizer>
           {({height, width}) => {
             return (
               <List
+                onRowsRendered={onRowsRendered}
                 className="log-viewer"
                 width={width}
                 height={height}
