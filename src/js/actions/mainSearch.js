@@ -60,6 +60,13 @@ export function mainSearchEvents(events: [] = []) {
   }
 }
 
+export function spliceMainSearchEvents(index: number) {
+  return {
+    type: "MAIN_SEARCH_EVENTS_SPLICE",
+    index
+  }
+}
+
 export function completeMainSearch() {
   return {
     type: "MAIN_SEARCH_COMPLETE"
