@@ -8,20 +8,28 @@ import {getLogs} from "../reducers/mainSearch"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
 import {connect} from "react-redux"
+import * as actions from "../actions/logViewer"
+import * as logViewer from "../reducers/logViewer"
+import type {Dispatch} from "redux"
 
 type Props = {
   logs: Log[],
   logDetail: Log,
-  timeZone: string
+  timeZone: string,
+  moreAhead: boolean,
+  isFetchingAhead: boolean,
+  dispatch: Dispatch<*>
 }
 
-const stateToProps = state => ({
+const stateToProps = (state): $Shape<Props> => ({
   logs: getLogs(state),
   logDetail: buildLogDetail(state),
-  timeZone: getTimeZone(state)
+  timeZone: getTimeZone(state),
+  moreAhead: logViewer.moreAhead(state),
+  isFetchingAhead: logViewer.isFetchingAhead(state)
 })
 
-export default class LogViewer extends React.PureComponent<Props> {
+export default class LogViewer extends React.Component<Props> {
   render() {
     const {logs, logDetail, timeZone} = this.props
     const rowRenderer = ({key, index, style, isScrolling}) => (
@@ -37,10 +45,13 @@ export default class LogViewer extends React.PureComponent<Props> {
     )
 
     const onRowsRendered = ({stopIndex}) => {
-      if (logs.length - 1 === stopIndex) {
-        console.log("more request")
+      const reachedEnd = logs.length - 1 === stopIndex
+
+      if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
+        this.props.dispatch(actions.fetchAhead())
       }
     }
+
     return (
       <div className="log-viewer-wrapper">
         <AutoSizer>
@@ -64,4 +75,7 @@ export default class LogViewer extends React.PureComponent<Props> {
   }
 }
 
-export const XLogViewer = connect(stateToProps)(LogViewer)
+export const XLogViewer = connect(
+  stateToProps,
+  (dispatch: Dispatch<*>): Object => ({dispatch})
+)(LogViewer)
