@@ -1,9 +1,27 @@
+/* @flow */
+
 import React from "react"
 import {List, AutoSizer} from "react-virtualized"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
+import {getLogs} from "../reducers/mainSearch"
+import {buildLogDetail} from "../reducers/logDetails"
+import {getTimeZone} from "../reducers/view"
+import {connect} from "react-redux"
 
-export default class LogViewer extends React.PureComponent {
+type Props = {
+  logs: Log[],
+  logDetail: Log,
+  timeZone: string
+}
+
+const stateToProps = state => ({
+  logs: getLogs(state),
+  logDetail: buildLogDetail(state),
+  timeZone: getTimeZone(state)
+})
+
+export default class LogViewer extends React.PureComponent<Props> {
   render() {
     const {logs, logDetail, timeZone} = this.props
     const rowRenderer = ({key, index, style, isScrolling}) => (
@@ -45,3 +63,5 @@ export default class LogViewer extends React.PureComponent {
     )
   }
 }
+
+export const XLogViewer = connect(stateToProps)(LogViewer)
