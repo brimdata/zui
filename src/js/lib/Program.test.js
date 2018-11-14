@@ -71,3 +71,11 @@ test("#getHeadCount with many procs", () => {
 test("#getHeadCount with no head", () => {
   expect(Program.getHeadCount("*")).toBe(0)
 })
+
+test("#hasHeadCount when false", () => {
+  expect(Program.hasHeadProc("*")).toBe(false)
+})
+
+test("#hasHeadCount when true", () => {
+  expect(Program.hasHeadProc("* | head 1")).toBe(true)
+})
