@@ -40,10 +40,12 @@ export const fetchAhead = (): Thunk => (dispatch, getState, api) => {
   let spliceIndex = 0
   if (!Arr.isEmpty(logs)) {
     const index = Arr.indexOfLastChange(logs, log => log.get("ts"))
-    const from = Time.add(logs[index].getField("ts").toDate(), 1, "ms")
-    const [_, to] = getTimeWindow(state)
-    timeWindow = [from, to]
-    spliceIndex = index + 1
+    if (index >= 0) {
+      const from = Time.add(logs[index].getField("ts").toDate(), 1, "ms")
+      const [_, to] = getTimeWindow(state)
+      timeWindow = [from, to]
+      spliceIndex = index + 1
+    }
   }
   const space = spaces.getCurrentSpaceName(state)
   const program = searchBar.getPrevSearchProgram(state)

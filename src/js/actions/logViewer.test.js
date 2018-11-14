@@ -91,3 +91,14 @@ test("#fetchAhead adds 1ms to ts of last change", () => {
     })
   )
 })
+
+test("#fetchAhead when there is only 1 event", () => {
+  store.dispatch(mainSearch.spliceMainSearchEvents(1))
+  store.dispatch(logViewer.fetchAhead())
+
+  expect(api.search).toBeCalledWith(
+    expect.objectContaining({
+      timeWindow: [new Date(0), new Date(10 * 1000)]
+    })
+  )
+})
