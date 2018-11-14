@@ -13,6 +13,7 @@ const initialState = {
 export type LogViewer = typeof initialState
 
 export default createReducer(initialState, {
+  SEARCH_BAR_SUBMIT: () => ({...initialState}),
   LOG_VIEWER_MORE_AHEAD_SET: (state, {value}) => ({
     ...state,
     moreAhead: value

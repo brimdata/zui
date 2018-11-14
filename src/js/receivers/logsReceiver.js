@@ -1,28 +1,12 @@
 /* @flow */
 
 import * as actions from "../actions/mainSearch"
-import * as logViewer from "../actions/logViewer"
 import {discoverDescriptors} from "../actions/descriptors"
 import throttle from "lodash/throttle"
-import type {Tuple, Descriptor} from "../models/Log"
+import type {Payload} from "./types"
 
-type SearchResult = {
-  type: "SearchResult",
-  results: {
-    tuples: Tuple[],
-    descriptor: Descriptor
-  }
-}
-
-type SearchEnd = {
-  type: "SearchEnd"
-}
-
-type Payload = SearchResult | SearchEnd
-
-export default function(dispatch: Function, expectedCount: number) {
+export default function(dispatch: Function) {
   let buffer = []
-  let count = 0
 
   const dispatchEvents = throttle(() => {
     if (buffer.length === 0) return
@@ -35,14 +19,17 @@ export default function(dispatch: Function, expectedCount: number) {
     if (payload.type === "SearchResult") {
       const tuples = payload.results.tuples
       if (tuples.length) {
-        count += tuples.length
         buffer = [...buffer, ...tuples]
         dispatchEvents()
       }
     }
-
-    if (payload.type === "SearchEnd") {
-      dispatch(logViewer.setMoreAhead(count >= expectedCount))
-    }
   }
 }
+
+/*
+if there is already a head count, wait until you get exactly that much then set
+no more to true
+
+if there is not a head count, start paging, add 1000 and keep going until you get a
+result that is less than 1000
+*/

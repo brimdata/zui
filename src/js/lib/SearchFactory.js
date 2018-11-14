@@ -10,47 +10,93 @@ import * as Program from "../lib/Program"
 import Search from "../models/Search"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import type {State, Dispatch, Api} from "../reducers/types"
+import pageReceiver from "../receivers/pageReceiver"
+
+export const create = (dispatch: Dispatch, state: State, api: Api) => {
+  return new Search(dispatch, api, getArgs(dispatch, state))
+}
 
 export const getType = (state: State) => {
   if (Program.hasAnalytics(getSearchProgram(state))) {
     return "ANALYTICS"
   } else if (getInnerTimeWindow(state)) {
     return "LOGS_SUBSET"
+  } else if (Program.hasHeadProc(getSearchProgram(state))) {
+    return "LOGS_HEAD"
   } else {
-    return "LOGS"
+    return "LOGS_PAGED"
   }
 }
 
-export const create = (dispatch: Dispatch, state: State, api: Api) => {
+export const getArgs = (dispatch: Dispatch, state: State) => {
   switch (getType(state)) {
     case "ANALYTICS":
-      return new Search(dispatch, api, {
-        space: getCurrentSpaceName(state),
-        program: getSearchProgram(state),
-        timeWindow: getTimeWindow(state),
-        callbacks: request => request.channel(0, analyticsReceiver(dispatch, 0))
-      })
+      return analyticsArgs(dispatch, state)
     case "LOGS_SUBSET":
-      return new Search(dispatch, api, {
-        space: getCurrentSpaceName(state),
-        program:
-          Program.addHeadProc(getSearchProgram(state), 1000) + "; count()",
-        timeWindow: getInnerTimeWindow(state),
-        callbacks: request => request.channel(1, logsReceiver(dispatch))
-      })
-    case "LOGS":
-      return new Search(dispatch, api, {
-        space: getCurrentSpaceName(state),
-        program:
-          Program.addHeadProc(getSearchProgram(state), 1000) +
-          "; " +
-          getCountByTimeProc(state),
-        timeWindow: getTimeWindow(state),
-        callbacks: request =>
-          request
-            .channel(1, logsReceiver(dispatch))
-            .channel(0, countByTimeReceiver(dispatch))
-      })
+      return logsSubsetArgs(dispatch, state)
+    case "LOGS_HEAD":
+      return logsHeadArgs(dispatch, state)
+    case "LOGS_PAGED":
+      return logsPagedArgs(dispatch, state)
+    default:
+      throw new Error("Unknown search type")
   }
-  throw new Error("Unknown search type")
+}
+
+export const analyticsArgs = (dispatch: Dispatch, state: State) => {
+  return {
+    space: getCurrentSpaceName(state),
+    program: getSearchProgram(state),
+    timeWindow: getTimeWindow(state),
+    callbacks: (request: *) =>
+      request.channel(0, analyticsReceiver(dispatch, 0))
+  }
+}
+
+export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
+  const program =
+    Program.addHeadProc(getSearchProgram(state), 1000) + "; count()"
+
+  return {
+    space: getCurrentSpaceName(state),
+    program,
+    timeWindow: getInnerTimeWindow(state),
+    callbacks: (request: *) => request.channel(1, logsReceiver(dispatch))
+  }
+}
+
+export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
+  const program =
+    Program.addHeadProc(getSearchProgram(state), 1000) +
+    "; " +
+    getCountByTimeProc(state)
+
+  return {
+    space: getCurrentSpaceName(state),
+    program,
+    timeWindow: getTimeWindow(state),
+    callbacks: (request: *) =>
+      request
+        .channel(1, logsReceiver(dispatch))
+        .channel(0, countByTimeReceiver(dispatch))
+  }
+}
+
+export const logsPagedArgs = (dispatch: Dispatch, state: State) => {
+  const PER_PAGE = 1000
+  const program =
+    Program.addHeadProc(getSearchProgram(state), PER_PAGE) +
+    "; " +
+    getCountByTimeProc(state)
+
+  return {
+    space: getCurrentSpaceName(state),
+    program,
+    timeWindow: getTimeWindow(state),
+    callbacks: (request: *) =>
+      request
+        .channel(1, pageReceiver(dispatch, PER_PAGE))
+        .channel(1, logsReceiver(dispatch))
+        .channel(0, countByTimeReceiver(dispatch))
+  }
 }
