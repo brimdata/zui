@@ -3,15 +3,18 @@
 import isEqual from "lodash/isEqual"
 
 export const indexOfLastChange = (
-  list: *[],
+  array: *[],
   accessor: (*) => * = item => item
 ) => {
-  let index = list.length - 1
-  const last = accessor(list[index])
-  while (index > 0) {
-    index -= 1
-    const current = accessor(list[index])
-    if (!isEqual(current, last)) break
+  if (array.length === 0) return -1
+  const lastIndex = array.length - 1
+  const lastItem = accessor(array[lastIndex])
+  for (let i = lastIndex; i >= 0; i--) {
+    if (!isEqual(accessor(array[i]), lastItem)) return i
   }
-  return index
+  return -1
+}
+
+export const isEmpty = (array: *[]) => {
+  return array.length === 0
 }
