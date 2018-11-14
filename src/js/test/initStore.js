@@ -17,16 +17,24 @@ export default (api: *) =>
 const actionHistory = createStore => (...args) => {
   const store = createStore(...args)
   let actions = []
+  const getActions = () => actions
+  const clearActions = () => (actions = [])
 
   const dispatch = action => {
     actions.push(action)
     store.dispatch(action)
   }
-  const getActions = () => actions
+
+  const dispatchAll = (actions: Object[]) => {
+    actions.forEach(store.dispatch)
+    return store.getState()
+  }
 
   return {
     ...store,
     dispatch,
-    getActions
+    dispatchAll,
+    getActions,
+    clearActions
   }
 }
