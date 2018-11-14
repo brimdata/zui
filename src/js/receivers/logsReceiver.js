@@ -25,11 +25,3 @@ export default function(dispatch: Function) {
     }
   }
 }
-
-/*
-if there is already a head count, wait until you get exactly that much then set
-no more to true
-
-if there is not a head count, start paging, add 1000 and keep going until you get a
-result that is less than 1000
-*/
