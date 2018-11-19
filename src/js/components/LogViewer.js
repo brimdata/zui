@@ -1,3 +1,5 @@
+/* @flow */
+
 import {connect} from "react-redux"
 import React from "react"
 import {List} from "react-virtualized"
@@ -20,7 +22,19 @@ type Props = {
   dispatch: Dispatch<*>
 }
 
+<<<<<<< HEAD
 const stateToProps = (state): $Shape<Props> => ({
+=======
+type Props = {
+  logs: Log[],
+  logDetail: Log,
+  timeZone: string,
+  width: number,
+  height: number
+}
+
+const stateToProps = state => ({
+>>>>>>> Flow the LogViewer
   logs: getLogs(state),
   logDetail: buildLogDetail(state),
   timeZone: getTimeZone(state),
@@ -28,7 +42,11 @@ const stateToProps = (state): $Shape<Props> => ({
   isFetchingAhead: logViewer.isFetchingAhead(state)
 })
 
+<<<<<<< HEAD
 export default class LogViewer extends React.Component<Props> {
+=======
+export default class LogViewer extends React.PureComponent<Props> {
+>>>>>>> Flow the LogViewer
   render() {
     const {width, height, logs, logDetail, timeZone} = this.props
     const rowRenderer = ({key, index, style, isScrolling}) => (
