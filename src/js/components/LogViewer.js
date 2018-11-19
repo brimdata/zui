@@ -1,5 +1,4 @@
-/* @flow */
-
+import {connect} from "react-redux"
 import React from "react"
 import {List} from "react-virtualized"
 import LogRow from "./LogRow"
@@ -66,7 +65,4 @@ export default class LogViewer extends React.Component<Props> {
   }
 }
 
-export const XLogViewer = connect(
-  stateToProps,
-  (dispatch: Dispatch<*>): Object => ({dispatch})
-)(LogViewer)
+export const XLogViewer = connect(stateToProps)(LogViewer)
