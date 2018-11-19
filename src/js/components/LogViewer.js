@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from "react"
-import {List, AutoSizer} from "react-virtualized"
+import {List} from "react-virtualized"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
 import {getLogs} from "../reducers/mainSearch"
@@ -31,7 +31,7 @@ const stateToProps = (state): $Shape<Props> => ({
 
 export default class LogViewer extends React.Component<Props> {
   render() {
-    const {logs, logDetail, timeZone} = this.props
+    const {width, height, logs, logDetail, timeZone} = this.props
     const rowRenderer = ({key, index, style, isScrolling}) => (
       <LogRow
         key={key}
@@ -53,24 +53,15 @@ export default class LogViewer extends React.Component<Props> {
     }
 
     return (
-      <div className="log-viewer-wrapper">
-        <AutoSizer>
-          {({height, width}) => {
-            return (
-              <List
-                onRowsRendered={onRowsRendered}
-                className="log-viewer"
-                width={width}
-                height={height}
-                rowCount={logs.length}
-                rowHeight={25}
-                rowRenderer={rowRenderer}
-                overscanRowCount={2}
-              />
-            )
-          }}
-        </AutoSizer>
-      </div>
+      <List
+        className="log-viewer"
+        width={width}
+        height={height}
+        rowCount={logs.length}
+        rowHeight={25}
+        rowRenderer={rowRenderer}
+        overscanRowCount={2}
+      />
     )
   }
 }

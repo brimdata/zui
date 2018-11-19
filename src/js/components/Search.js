@@ -81,7 +81,17 @@ export default class Search extends React.Component<Props, State> {
                 {initialLoad && (
                   <XSearchWelcome currentSpaceName={currentSpaceName} />
                 )}
-                {!initialLoad && logsTab && <XLogViewer />}
+                {!initialLoad &&
+                  logsTab && (
+                    <div className="log-viewer-wrapper">
+                      <AutoSizer>
+                        {({height, width}) => (
+                          <XLogViewer height={height} width={width} />
+                        )}
+                      </AutoSizer>
+                    </div>
+                  )}
+
                 {!initialLoad && analyticsTab && <XAnalysisViewer />}
               </ViewerErrorBoundary>
             </div>
