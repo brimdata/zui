@@ -164,6 +164,7 @@ ShallowWrapper {
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
       "onMouseLeave": [Function],
+      "style": undefined,
     },
     "ref": null,
     "rendered": Array [
@@ -206,6 +207,7 @@ ShallowWrapper {
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
         "onMouseLeave": [Function],
+        "style": undefined,
       },
       "ref": null,
       "rendered": Array [
@@ -402,6 +404,7 @@ ShallowWrapper {
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
       "onMouseLeave": [Function],
+      "style": undefined,
     },
     "ref": null,
     "rendered": Array [
@@ -444,6 +447,7 @@ ShallowWrapper {
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
         "onMouseLeave": [Function],
+        "style": undefined,
       },
       "ref": null,
       "rendered": Array [
@@ -664,6 +668,7 @@ ShallowWrapper {
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
       "onMouseLeave": [Function],
+      "style": undefined,
     },
     "ref": null,
     "rendered": Array [
@@ -792,6 +797,7 @@ ShallowWrapper {
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
         "onMouseLeave": [Function],
+        "style": undefined,
       },
       "ref": null,
       "rendered": Array [
@@ -1050,6 +1056,7 @@ ShallowWrapper {
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
       "onMouseLeave": [Function],
+      "style": undefined,
     },
     "ref": null,
     "rendered": Array [
@@ -1092,6 +1099,7 @@ ShallowWrapper {
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
         "onMouseLeave": [Function],
+        "style": undefined,
       },
       "ref": null,
       "rendered": Array [
@@ -1450,6 +1458,7 @@ ShallowWrapper {
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
       "onMouseLeave": [Function],
+      "style": undefined,
     },
     "ref": null,
     "rendered": Array [
@@ -1856,6 +1865,7 @@ ShallowWrapper {
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
         "onMouseLeave": [Function],
+        "style": undefined,
       },
       "ref": null,
       "rendered": Array [
@@ -2428,6 +2438,7 @@ ShallowWrapper {
       "onContextMenu": [Function],
       "onMouseEnter": [Function],
       "onMouseLeave": [Function],
+      "style": undefined,
     },
     "ref": null,
     "rendered": Array [
@@ -2898,6 +2909,7 @@ ShallowWrapper {
         "onContextMenu": [Function],
         "onMouseEnter": [Function],
         "onMouseLeave": [Function],
+        "style": undefined,
       },
       "ref": null,
       "rendered": Array [
