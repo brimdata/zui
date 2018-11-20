@@ -35,7 +35,7 @@ export default class Viewer extends PureComponent {
   }
 
   render() {
-    const {layout, chunker, rowRenderer} = this.props
+    const {layout, chunker, rowRenderer, onRowsRendered} = this.props
     const {scrollLeft, chunks} = this.state
     return (
       <div className="viewer" style={Styler.viewer(layout)}>
@@ -54,6 +54,7 @@ export default class Viewer extends PureComponent {
                 chunker={chunker}
                 isScrolling={this.state.isScrolling}
                 rowRenderer={rowRenderer}
+                onRowsRendered={onRowsRendered}
               />
             ))}
           </div>

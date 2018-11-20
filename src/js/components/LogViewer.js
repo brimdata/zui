@@ -4,31 +4,26 @@ import {connect} from "react-redux"
 import React from "react"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
+import Layout from "./Viewer/Layout"
+import Chunker from "./Viewer/Chunker"
+import Viewer from "./Viewer/Viewer"
 import {getLogs} from "../reducers/mainSearch"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
-import {connect} from "react-redux"
 import * as actions from "../actions/logViewer"
 import * as logViewer from "../reducers/logViewer"
-import type {Dispatch} from "redux"
-import * as columnWidths from "../reducers/columnWidths"
-import Layout from "./Viewer/Layout"
-import Chunker from "./Viewer/Chunker"
-import Viewer from "./Viewer/Viewer"
-import AutoColumns from "./Viewer/AutoColumns"
-import FixedColumns from "./Viewer/FixedColumns"
 import * as columns from "../reducers/columns"
-import Layout from "./Viewer/Layout"
-import Chunker from "./Viewer/Chunker"
-import Viewer from "./Viewer/Viewer"
 
 type Props = {
+  height: number,
+  width: number,
   logs: Log[],
   logDetail: Log,
   timeZone: string,
   moreAhead: boolean,
   isFetchingAhead: boolean,
-  dispatch: Dispatch<*>
+  dispatch: Function,
+  columnManager: Object
 }
 
 const stateToProps = (state): $Shape<Props> => ({
@@ -42,11 +37,20 @@ const stateToProps = (state): $Shape<Props> => ({
 
 export default class LogViewer extends React.Component<Props> {
   render() {
+    const onRowsRendered = ({stopIndex}) => {
+      const reachedEnd = this.props.logs.length - 1 === stopIndex
+
+      if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
+        this.props.dispatch(actions.fetchAhead())
+      }
+    }
+
     const layout = buildLayout(this.props)
     return (
       <Viewer
         layout={layout}
         chunker={buildChunker(this.props)}
+        onRowsRendered={onRowsRendered}
         rowRenderer={({index, isScrolling}) => (
           <LogRow
             key={index}
@@ -59,18 +63,6 @@ export default class LogViewer extends React.Component<Props> {
           />
         )}
       />
-    )
-
-    const onRowsRendered = ({stopIndex}) => {
-      const reachedEnd = logs.length - 1 === stopIndex
-
-      if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
-        this.props.dispatch(actions.fetchAhead())
-      }
-    }
-
-    return (
-      <Viewer layout={layout} chunker={chunker} rowRenderer={rowRenderer} />
     )
   }
 }
