@@ -85,6 +85,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
         onMouseLeave={mouseLeave}
         onContextMenu={this.toggleMenu}
         onClick={e => Doc.selectText(e.currentTarget)}
+        style={this.props.style}
       >
         {this.renderValue(this.props.field)}
 

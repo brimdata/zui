@@ -2,16 +2,23 @@
 
 import {connect} from "react-redux"
 import React from "react"
-import {List} from "react-virtualized"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
 import {getLogs} from "../reducers/mainSearch"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
+<<<<<<< HEAD
 import {connect} from "react-redux"
 import * as actions from "../actions/logViewer"
 import * as logViewer from "../reducers/logViewer"
 import type {Dispatch} from "redux"
+=======
+import Layout from "./Viewer/Layout"
+import Chunker from "./Viewer/Chunker"
+import Viewer from "./Viewer/Viewer"
+import AutoColumns from "./Viewer/AutoColumns"
+import FixedColumns from "./Viewer/FixedColumns"
+>>>>>>> Drop in new Viewer components
 
 type Props = {
   logs: Log[],
@@ -49,15 +56,42 @@ export default class LogViewer extends React.PureComponent<Props> {
 >>>>>>> Flow the LogViewer
   render() {
     const {width, height, logs, logDetail, timeZone} = this.props
-    const rowRenderer = ({key, index, style, isScrolling}) => (
+
+    const layout = new Layout({
+      width,
+      height,
+      rowHeight: 25,
+      size: logs.length,
+      columnManager: new FixedColumns(
+        [
+          "ts",
+          "_path",
+          "uid",
+          "id.orig_h",
+          "id.orig_p",
+          "id.resp_h",
+          "id.resp_p"
+        ],
+        {default: 200}
+      )
+    })
+
+    const chunker = new Chunker({
+      size: logs.length,
+      height: height,
+      rowHeight: 25,
+      chunkSize: 5
+    })
+
+    const rowRenderer = index => (
       <LogRow
-        key={key}
+        key={index}
+        index={index}
         log={logs[index]}
         timeZone={timeZone}
         highlight={Log.isSame(logs[index], logDetail)}
-        style={style}
-        isScrolling={isScrolling}
-        index={index}
+        isScrolling={false}
+        layout={layout}
       />
     )
 
@@ -70,15 +104,7 @@ export default class LogViewer extends React.PureComponent<Props> {
     }
 
     return (
-      <List
-        className="log-viewer"
-        width={width}
-        height={height}
-        rowCount={logs.length}
-        rowHeight={25}
-        rowRenderer={rowRenderer}
-        overscanRowCount={2}
-      />
+      <Viewer layout={layout} chunker={chunker} rowRenderer={rowRenderer} />
     )
   }
 }

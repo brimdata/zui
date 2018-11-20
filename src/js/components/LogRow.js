@@ -1,33 +1,42 @@
 import React from "react"
 import LogCell from "./LogCell"
 import classNames from "classnames"
+import * as Styler from "./Viewer/Styler"
 
 export default class LogRow extends React.PureComponent {
-  fieldIndexes() {
-    // Add tests
-    const log = this.props.log
-    let indexes = log.descriptor.map((d, i) => i)
-    const tsIndex = log.getIndex("ts")
-    indexes = indexes.filter(i => i !== tsIndex && i !== log.getIndex("_td"))
-    indexes.unshift(tsIndex)
-    return indexes
+  constructor(props) {
+    super(props)
+    this.renderCell = this.renderCell.bind(this)
+  }
+
+  renderCell(col) {
+    const {log, layout, index, isScrolling} = this.props
+    const field = log.getField(col)
+    const style = Styler.cell(layout, col)
+
+    if (field) {
+      return (
+        <LogCell
+          key={`${index}-${col}`}
+          field={log.getField(col)}
+          log={log}
+          isScrolling={isScrolling}
+          style={style}
+        />
+      )
+    } else {
+      return <div className="log-cell" style={style} />
+    }
   }
 
   render() {
-    const {log, style, highlight, index, isScrolling} = this.props
+    const {log, layout, highlight, index} = this.props
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={style}
+        style={Styler.row(layout, index)}
       >
-        {this.fieldIndexes().map(index => (
-          <LogCell
-            key={index}
-            field={log.getFieldAt(index)}
-            log={log}
-            isScrolling={isScrolling}
-          />
-        ))}
+        {layout.columns(log).map(this.renderCell)}
       </div>
     )
   }

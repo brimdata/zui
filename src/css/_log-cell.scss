@@ -2,6 +2,10 @@
   padding: 0 6px;
   position: relative;
   border: 1px solid transparent;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
   @include type-colors;
 
   ._path {
