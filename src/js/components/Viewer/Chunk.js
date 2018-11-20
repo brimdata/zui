@@ -1,6 +1,16 @@
+/* @flow */
 import React from "react"
+import Chunker from "./Chunker"
 
-export default class Chunk extends React.PureComponent {
+type Props = {
+  onRowsRendered: ({startIndex: number, stopIndex: number}) => void,
+  rowRenderer: ({index: number, isScrolling: boolean}) => *,
+  chunker: Chunker,
+  isScrolling: boolean,
+  chunk: number
+}
+
+export default class Chunk extends React.PureComponent<Props> {
   componentDidMount() {
     this.onRendered()
   }
