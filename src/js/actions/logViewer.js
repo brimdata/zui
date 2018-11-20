@@ -49,9 +49,9 @@ export const fetchAhead = (): Thunk => (dispatch, getState, api) => {
   }
   const space = spaces.getCurrentSpaceName(state)
   const program = searchBar.getPrevSearchProgram(state)
-  const string = Program.addHeadProc(program, PER_PAGE)
+  const programWithHead = Program.addHeadProc(program, PER_PAGE)
   api
-    .search({string, timeWindow, space})
+    .search({string: programWithHead, timeWindow, space})
     .channel(0, pageReceiver(dispatch, PER_PAGE, spliceIndex))
     .channel(0, logsReceiver(dispatch))
     .done(() => dispatch(setIsFetchingAhead(false)))
