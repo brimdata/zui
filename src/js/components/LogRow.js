@@ -13,11 +13,11 @@ export default class LogRow extends React.PureComponent {
     const {log, layout, index, isScrolling} = this.props
     const field = log.getField(col)
     const style = Styler.cell(layout, col)
-
+    const key = `${index}-${col}`
     if (field) {
       return (
         <LogCell
-          key={`${index}-${col}`}
+          key={key}
           field={log.getField(col)}
           log={log}
           isScrolling={isScrolling}
@@ -25,7 +25,7 @@ export default class LogRow extends React.PureComponent {
         />
       )
     } else {
-      return <div className="log-cell" style={style} />
+      return <div className="log-cell" key={key} style={style} />
     }
   }
 
