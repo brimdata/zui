@@ -21,11 +21,9 @@ import starredLogs from "./starredLogs"
 import logs from "./logs"
 import packets from "./packets"
 import notices from "./notices"
-<<<<<<< HEAD
 import logViewer from "./logViewer"
-=======
 import columnWidths from "./columnWidths"
->>>>>>> Resize columns and save that state
+import columns from "./columns"
 
 export default combineReducers({
   logs,
@@ -48,9 +46,7 @@ export default combineReducers({
   starredLogs,
   packets,
   notices,
-<<<<<<< HEAD
-  logViewer
-=======
-  columnWidths
->>>>>>> Resize columns and save that state
+  logViewer,
+  columnWidths,
+  columns
 })
