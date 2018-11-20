@@ -4,7 +4,7 @@ import FixedColumns from "./FixedColumns"
 import * as mockLogs from "../../test/mockLogs"
 
 test("#viewHeight", () => {
-  const layout = new Layout({height: 500})
+  const layout = new Layout({height: 500, columnManager: new AutoColumns()})
 
   expect(layout.viewHeight()).toBe(500)
 })
@@ -32,7 +32,7 @@ test("#listWidth when fixed columns", () => {
   const cols = ["a", "b", "c"]
   const colWidths = {a: 100, b: 100, default: 50}
   const fixed = new FixedColumns(cols, colWidths)
-  const layout = new Layout({columnManager: fixed})
+  const layout = new Layout({columnManager: fixed, width: 100})
 
   expect(layout.listWidth()).toBe(250)
 })
@@ -47,7 +47,7 @@ test("#rowWidth is same as listWidth", () => {
   const cols = ["a", "b", "c"]
   const colWidths = {a: 100, b: 100, default: 50}
   const fixed = new FixedColumns(cols, colWidths)
-  const layout = new Layout({columnManager: fixed})
+  const layout = new Layout({columnManager: fixed, width: 100})
 
   expect(layout.rowWidth()).toBe(250)
 })

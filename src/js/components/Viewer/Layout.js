@@ -32,7 +32,12 @@ export default class Layout {
   }
 
   listWidth() {
-    return Math.max(this.columnManager.totalWidth(), this.viewWidth())
+    const columnResult = this.columnManager.totalWidth()
+    if (typeof columnResult === "string") {
+      return columnResult
+    } else {
+      return Math.max(columnResult, this.viewWidth())
+    }
   }
 
   rowHeight() {
