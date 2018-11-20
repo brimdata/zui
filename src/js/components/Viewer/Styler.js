@@ -27,6 +27,7 @@ export const list = layout => {
 
 export const row = (layout, index) => {
   return {
+    width: layout.rowWidth(),
     transform: `translateY(${index * layout.rowHeight()}px)`,
     height: layout.rowHeight()
   }

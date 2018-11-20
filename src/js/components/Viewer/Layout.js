@@ -32,7 +32,7 @@ export default class Layout {
   }
 
   listWidth() {
-    return this.columnManager.totalWidth()
+    return Math.max(this.columnManager.totalWidth(), this.viewWidth())
   }
 
   rowHeight() {
@@ -40,7 +40,7 @@ export default class Layout {
   }
 
   rowWidth() {
-    return this.columnManager.totalWidth()
+    return this.listWidth()
   }
 
   cellHeight() {

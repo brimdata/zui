@@ -16,10 +16,11 @@
     height: $bro-log-row-height;
     display: flex;
     align-items: center;
+    background: $gray-3;
+
     .cell {
       height: $bro-log-row-height;
       line-height: $bro-log-row-height;
-      background: $gray-3;
       color: white;
       font-size: 14px;
       font-weight: normal;
@@ -46,6 +47,7 @@
 
     &:hover {
       background: darken(white, 6%);
+      z-index: 1;
     }
 
     &.highlight {
