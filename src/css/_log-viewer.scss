@@ -18,7 +18,7 @@
     align-items: center;
     background: $gray-3;
 
-    .cell {
+    div {
       height: $bro-log-row-height;
       line-height: $bro-log-row-height;
       color: white;
@@ -53,14 +53,6 @@
     &.highlight {
       background: $light-gray-3;
     }
-  }
-
-  .cell {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: relative;
   }
 
   .col-resizer {
