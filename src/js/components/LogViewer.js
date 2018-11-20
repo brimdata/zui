@@ -1,9 +1,35 @@
+/* @flow */
+
 import React from "react"
 import {List, AutoSizer} from "react-virtualized"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
+import {getLogs} from "../reducers/mainSearch"
+import {buildLogDetail} from "../reducers/logDetails"
+import {getTimeZone} from "../reducers/view"
+import {connect} from "react-redux"
+import * as actions from "../actions/logViewer"
+import * as logViewer from "../reducers/logViewer"
+import type {Dispatch} from "redux"
 
-export default class LogViewer extends React.PureComponent {
+type Props = {
+  logs: Log[],
+  logDetail: Log,
+  timeZone: string,
+  moreAhead: boolean,
+  isFetchingAhead: boolean,
+  dispatch: Dispatch<*>
+}
+
+const stateToProps = (state): $Shape<Props> => ({
+  logs: getLogs(state),
+  logDetail: buildLogDetail(state),
+  timeZone: getTimeZone(state),
+  moreAhead: logViewer.moreAhead(state),
+  isFetchingAhead: logViewer.isFetchingAhead(state)
+})
+
+export default class LogViewer extends React.Component<Props> {
   render() {
     const {logs, logDetail, timeZone} = this.props
     const rowRenderer = ({key, index, style, isScrolling}) => (
@@ -17,12 +43,22 @@ export default class LogViewer extends React.PureComponent {
         index={index}
       />
     )
+
+    const onRowsRendered = ({stopIndex}) => {
+      const reachedEnd = logs.length - 1 === stopIndex
+
+      if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
+        this.props.dispatch(actions.fetchAhead())
+      }
+    }
+
     return (
       <div className="log-viewer-wrapper">
         <AutoSizer>
           {({height, width}) => {
             return (
               <List
+                onRowsRendered={onRowsRendered}
                 className="log-viewer"
                 width={width}
                 height={height}
@@ -38,3 +74,8 @@ export default class LogViewer extends React.PureComponent {
     )
   }
 }
+
+export const XLogViewer = connect(
+  stateToProps,
+  (dispatch: Dispatch<*>): Object => ({dispatch})
+)(LogViewer)

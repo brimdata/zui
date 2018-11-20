@@ -3,8 +3,8 @@
 import FieldFactory from "./FieldFactory"
 import isEqual from "lodash/isEqual"
 
-type Tuple = string[]
-type Descriptor = {type: string, name: string}[]
+export type Tuple = string[]
+export type Descriptor = {type: string, name: string}[]
 
 export default class Log {
   tuple: Tuple

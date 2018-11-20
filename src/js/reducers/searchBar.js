@@ -178,6 +178,15 @@ export const getSearchProgram = createSelector(
   }
 )
 
+export const getPrevSearchProgram = createSelector(
+  getSearchBarPins,
+  getSearchBarPreviousInputValue,
+  (pinned, prev) => {
+    const program = [...pinned, prev].map(s => trim(s)).join(" ")
+    return program.length === 0 ? "*" : program
+  }
+)
+
 export const getAst = createSelector(getSearchProgram, searchProgram => {
   const ast = new Ast(searchProgram).toJSON()
   return JSON.stringify(ast, null, 2)

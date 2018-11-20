@@ -6,7 +6,7 @@ import {AutoSizer} from "react-virtualized"
 
 import XTitleBar from "../connectors/XTitleBar"
 import XControlBar from "../connectors/XControlBar"
-import XLogViewer from "../connectors/XLogViewer"
+import {XLogViewer} from "../components/LogViewer"
 import XSearchStats from "../connectors/XSearchStats"
 import XCountByTime from "../connectors/XCountByTime"
 import XSearchWelcome from "../connectors/XSearchWelcome"

@@ -21,6 +21,14 @@ export default createReducer(initialState, {
     ...state,
     events: [...state.events, ...events]
   }),
+  MAIN_SEARCH_EVENTS_SPLICE: (state, {index}) => {
+    const events = [...state.events]
+    events.splice(index)
+    return {
+      ...state,
+      events
+    }
+  },
   MAIN_SEARCH_COMPLETE: state => ({
     ...state,
     isFetching: false

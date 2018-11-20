@@ -32,3 +32,13 @@ test("MAIN_SEARCH_EVENTS", () => {
 
   expect(state.events).toEqual(["item1", "item2"])
 })
+
+test("MAIN_SEARCH_EVENTS_SPLICE", () => {
+  const a = [
+    actions.mainSearchEvents(["a", "b", "c", "d"]),
+    actions.spliceMainSearchEvents(1)
+  ]
+  const state = a.reduce(reducer)
+
+  expect(state.events).toEqual(["a"])
+})

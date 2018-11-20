@@ -7,6 +7,7 @@ import type {SearchBar} from "./searchBar"
 import type {TimeWindow} from "./timeWindow"
 import type {Spaces} from "./spaces"
 import type {BoomdCredentials} from "./boomdCredentials"
+import type {LogViewer} from "./logViewer"
 
 export type State = {
   notices: Notices,
@@ -15,7 +16,8 @@ export type State = {
   timeWindow: TimeWindow,
   spaces: Spaces,
   currentSpaceName: string,
-  boomdCredentials: BoomdCredentials
+  boomdCredentials: BoomdCredentials,
+  logViewer: LogViewer
 }
 
 export type Dispatch = Function
