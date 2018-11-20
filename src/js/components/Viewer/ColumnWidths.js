@@ -1,18 +1,14 @@
-export default class FixedColumns {
+export default class ColumnWidths {
   constructor(cols, colWidths) {
     this.cols = cols
     this.colWidths = colWidths
   }
 
-  showHeader() {
-    return true
+  total() {
+    return this.cols.reduce((sum, col) => (sum += this.get(col)), 0)
   }
 
-  totalWidth() {
-    return this.cols.reduce((sum, col) => (sum += this.colWidth(col)), 0)
-  }
-
-  colWidth(col) {
+  get(col) {
     if (col in this.colWidths) {
       return this.colWidths[col]
     } else {
@@ -20,7 +16,7 @@ export default class FixedColumns {
     }
   }
 
-  columns(_log) {
+  columns() {
     return this.cols
   }
 }

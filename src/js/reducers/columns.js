@@ -1,8 +1,7 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import * as columnWidths from "./columnWidths"
-import AutoColumns from "../components/Viewer/AutoColumns"
-import FixedColumns from "../components/Viewer/FixedColumns"
+import ColumnWidths from "../components/Viewer/ColumnWidths"
 
 const initialState = []
 
@@ -20,10 +19,8 @@ export const getManager = createSelector(
   getAll,
   columnWidths.getAll,
   (columns, columnWidths) => {
-    if (columns.length === 0) {
-      return new AutoColumns()
-    } else {
-      return new FixedColumns(columns.map(c => c.name), columnWidths)
+    if (columns.length > 0) {
+      return new ColumnWidths(columns.map(c => c.name), columnWidths)
     }
   }
 )

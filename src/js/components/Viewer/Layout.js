@@ -1,26 +1,26 @@
+const EXCLUDED = ["ts", "_td"]
+
 export default class Layout {
-  constructor({width, height, size, rowHeight, columnManager}) {
+  constructor({width, height, size, rowHeight}) {
     this.width = width
     this.height = height
     this.size = size
     this.rowH = rowHeight
-    this.columnManager = columnManager
   }
 
   showHeader() {
-    return this.columnManager.showHeader()
+    return false
   }
 
   columns(log) {
-    return this.columnManager.columns(log)
+    return [
+      "ts",
+      ...log.descriptor.map(d => d.name).filter(col => !EXCLUDED.includes(col))
+    ]
   }
 
   viewHeight() {
-    if (this.showHeader()) {
-      return this.height - this.rowH
-    } else {
-      return this.height
-    }
+    return this.height
   }
 
   viewWidth() {
@@ -32,12 +32,7 @@ export default class Layout {
   }
 
   listWidth() {
-    const columnResult = this.columnManager.totalWidth()
-    if (typeof columnResult === "string") {
-      return columnResult
-    } else {
-      return Math.max(columnResult, this.viewWidth())
-    }
+    return "auto"
   }
 
   rowHeight() {
@@ -52,7 +47,7 @@ export default class Layout {
     return this.rowH
   }
 
-  cellWidth(col) {
-    return this.columnManager.colWidth(col)
+  cellWidth(_) {
+    return "auto"
   }
 }

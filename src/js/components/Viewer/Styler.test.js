@@ -1,12 +1,17 @@
 import * as Styler from "./Styler"
-import Layout from "./Layout"
-import FixedColumns from "./FixedColumns"
+import FixedLayout from "./FixedLayout"
+import ColumnWidths from "./ColumnWidths"
 
-const fixed = new FixedColumns(["a", "b", "c"], {a: 100, b: 200, default: 10})
-const layout = new Layout({
+const columnWidths = new ColumnWidths(["a", "b", "c"], {
+  a: 100,
+  b: 200,
+  default: 10
+})
+
+const layout = new FixedLayout({
   size: 20,
   rowHeight: 10,
-  columnManager: fixed,
+  columnManager: columnWidths,
   height: 300,
   width: 400
 })
