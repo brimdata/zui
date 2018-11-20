@@ -6,9 +6,13 @@ import * as Styler from "./Styler"
 export default class Viewer extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {scrollLeft: 0, chunks: props.chunker.visibleChunks(0)}
+    this.id = null
     this.onScroll = this.onScroll.bind(this)
-    console.log("chunks", this.state)
+    this.state = {
+      scrollLeft: 0,
+      chunks: props.chunker.visibleChunks(0),
+      isScrolling: false
+    }
   }
 
   componentDidUpdate() {
@@ -16,8 +20,10 @@ export default class Viewer extends PureComponent {
   }
 
   onScroll() {
+    clearTimeout(this.id)
     this.updateChunks(this.view.scrollTop)
-    this.setState({scrollLeft: this.view.scrollLeft})
+    this.setState({scrollLeft: this.view.scrollLeft, isScrolling: true})
+    this.id = setTimeout(() => this.setState({isScrolling: false}), 150)
   }
 
   updateChunks(scrollTop) {
@@ -46,6 +52,7 @@ export default class Viewer extends PureComponent {
                 key={chunk}
                 chunk={chunk}
                 chunker={chunker}
+                isScrolling={this.state.isScrolling}
                 rowRenderer={rowRenderer}
               />
             ))}

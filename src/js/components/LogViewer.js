@@ -80,17 +80,18 @@ export default class LogViewer extends React.PureComponent<Props> {
       size: logs.length,
       height: height,
       rowHeight: 25,
-      chunkSize: 5
+      chunkSize: 5,
+      overScan: 2
     })
 
-    const rowRenderer = index => (
+    const rowRenderer = ({index, isScrolling}) => (
       <LogRow
         key={index}
         index={index}
         log={logs[index]}
         timeZone={timeZone}
         highlight={Log.isSame(logs[index], logDetail)}
-        isScrolling={false}
+        isScrolling={isScrolling}
         layout={layout}
       />
     )
