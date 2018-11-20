@@ -6,6 +6,11 @@ import LogCell from "./LogCell"
 import * as mockLogs from "../test/mockLogs"
 
 const log = mockLogs.conn()
+const props = {
+  log: log,
+  field: log.getField("_path"),
+  isScrolling: false
+}
 
 test("shapshot", () => {
   const logCell = shallow(

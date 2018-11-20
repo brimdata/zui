@@ -15,25 +15,26 @@ test("#viewer", () => {
   expect(Styler.viewer(layout)).toEqual({width: 400})
 })
 
-test("#view", () => {
-  expect(Styler.view(layout)).toEqual({width: 400, height: 300})
+test("#view when fixed subtracts for header", () => {
+  expect(Styler.view(layout)).toEqual({width: 400, height: 290})
 })
 
 test("#header", () => {
   expect(Styler.header(layout, 20)).toEqual({
     transform: "translateX(-20px)",
-    width: 310
+    width: 400
   })
 })
 
 test("#list", () => {
-  expect(Styler.list(layout)).toEqual({height: 200, width: 310})
+  expect(Styler.list(layout)).toEqual({height: 200, width: 400})
 })
 
 test("#row", () => {
   expect(Styler.row(layout, 4)).toEqual({
     height: 10,
-    transform: "translateY(40px)"
+    transform: "translateY(40px)",
+    width: 400
   })
 })
 
