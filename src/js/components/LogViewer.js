@@ -8,11 +8,15 @@ import {getLogs} from "../reducers/mainSearch"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {connect} from "react-redux"
 import * as actions from "../actions/logViewer"
 import * as logViewer from "../reducers/logViewer"
 import type {Dispatch} from "redux"
 =======
+=======
+import * as columnWidths from "../reducers/columnWidths"
+>>>>>>> Resize columns and save that state
 import Layout from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
@@ -37,7 +41,8 @@ type Props = {
   logDetail: Log,
   timeZone: string,
   width: number,
-  height: number
+  height: number,
+  columnWidths: {[string]: number, default: number}
 }
 
 const stateToProps = state => ({
@@ -45,8 +50,12 @@ const stateToProps = state => ({
   logs: getLogs(state),
   logDetail: buildLogDetail(state),
   timeZone: getTimeZone(state),
+<<<<<<< HEAD
   moreAhead: logViewer.moreAhead(state),
   isFetchingAhead: logViewer.isFetchingAhead(state)
+=======
+  columnWidths: columnWidths.getAll(state)
+>>>>>>> Resize columns and save that state
 })
 
 <<<<<<< HEAD
@@ -72,7 +81,7 @@ export default class LogViewer extends React.PureComponent<Props> {
           "id.resp_h",
           "id.resp_p"
         ],
-        {default: 200}
+        this.props.columnWidths
       )
     })
 

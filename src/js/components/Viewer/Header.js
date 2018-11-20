@@ -1,6 +1,6 @@
 import React from "react"
 import Cell from "./Cell"
-import ColResizer from "./ColResizer"
+import {XColResizer} from "./ColResizer"
 import * as Styler from "./Styler"
 
 export default class Header extends React.PureComponent {
@@ -13,7 +13,7 @@ export default class Header extends React.PureComponent {
         {layout.columns().map(col => (
           <Cell key={col} style={Styler.cell(layout, col)}>
             {col}
-            <ColResizer col={col} width={layout.cellWidth(col)} />
+            <XColResizer col={col} width={layout.cellWidth(col)} />
           </Cell>
         ))}
       </header>

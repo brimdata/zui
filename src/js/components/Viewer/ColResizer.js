@@ -1,4 +1,6 @@
 import React from "react"
+import {connect} from "react-redux"
+import * as columnWidths from "../../actions/columnWidths"
 
 let oldWidth = null
 let start = null
@@ -16,8 +18,7 @@ export default class ColResizer extends React.PureComponent {
     const moved = e.clientX - start
 
     const newWidth = oldWidth + moved
-
-    // window.updateApp("RESIZE_COL", {[col]: newWidth})
+    this.props.dispatch(columnWidths.setWidths({[col]: newWidth}))
   }
 
   up() {
@@ -26,7 +27,6 @@ export default class ColResizer extends React.PureComponent {
   }
 
   down(e) {
-    console.log("DOWN")
     oldWidth = this.props.width
     start = e.clientX
     add("mousemove", this.move)
@@ -45,3 +45,5 @@ const add = (...args) => {
 const remove = (...args) => {
   document.removeEventListener(...args)
 }
+
+export const XColResizer = connect()(ColResizer)
