@@ -22,8 +22,8 @@ type Props = {
   timeZone: string,
   moreAhead: boolean,
   isFetchingAhead: boolean,
-  dispatch: Function,
-  columnManager: Object
+  columnManager: Object,
+  dispatch: Function
 }
 
 const stateToProps = (state): $Shape<Props> => ({
@@ -85,4 +85,7 @@ const buildLayout = ({height, width, logs, columnManager}) =>
     columnManager
   })
 
-export const XLogViewer = connect(stateToProps)(LogViewer)
+export const XLogViewer = connect(
+  stateToProps,
+  (dispatch: *) => ({dispatch})
+)(LogViewer)
