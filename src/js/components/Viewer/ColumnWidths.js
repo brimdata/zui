@@ -1,5 +1,14 @@
+/* @flow */
+
+type ColWidthMap = {
+  [string]: number,
+  default: number
+}
 export default class ColumnWidths {
-  constructor(cols, colWidths) {
+  cols: string[]
+  colWidths: ColWidthMap
+
+  constructor(cols: string[], colWidths: ColWidthMap) {
     this.cols = cols
     this.colWidths = colWidths
   }
@@ -8,7 +17,7 @@ export default class ColumnWidths {
     return this.cols.reduce((sum, col) => (sum += this.get(col)), 0)
   }
 
-  get(col) {
+  get(col: string) {
     if (col in this.colWidths) {
       return this.colWidths[col]
     } else {
