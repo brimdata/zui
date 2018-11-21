@@ -1,18 +1,29 @@
+/* @flow */
+
+import Log from "../../models/Log"
+
 const EXCLUDED = ["ts", "_td"]
 
+type Opts = {width: number, height: number, size: number, rowHeight: number}
+
 export default class Layout {
-  constructor({width, height, size, rowHeight}) {
-    this.width = width
-    this.height = height
-    this.size = size
-    this.rowH = rowHeight
+  width: number
+  height: number
+  size: number
+  rowH: number
+
+  constructor(opts: Opts) {
+    this.width = opts.width
+    this.height = opts.height
+    this.size = opts.size
+    this.rowH = opts.rowHeight
   }
 
   showHeader() {
     return false
   }
 
-  columns(log) {
+  columns(log: Log) {
     return [
       "ts",
       ...log.descriptor.map(d => d.name).filter(col => !EXCLUDED.includes(col))
@@ -47,7 +58,7 @@ export default class Layout {
     return this.rowH
   }
 
-  cellWidth(_) {
+  cellWidth(_: string) {
     return "auto"
   }
 }
