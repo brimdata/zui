@@ -1,26 +1,34 @@
+/* @flow */
+
 export default class Chunker {
-  constructor({size, height, rowHeight, chunkSize, overScan = 0}) {
-    this.size = size
-    this.rowHeight = rowHeight
-    this.height = height
-    this.chunkSize = chunkSize
-    this.overScan = overScan
+  size: number
+  rowHeight: number
+  height: number
+  chunkSize: number
+  overScan: number
+
+  constructor(opts: $ReadOnly<Chunker>) {
+    this.size = opts.size
+    this.rowHeight = opts.rowHeight
+    this.height = opts.height
+    this.chunkSize = opts.chunkSize
+    this.overScan = opts.overScan
   }
 
-  rows(chunk) {
+  rows(chunk: number) {
     const start = chunk * this.chunkSize
-    const end = Math.min(this.size - 1, start + this.chunkSize - 1)
-    return range(start, end)
+    const end = min(this.size - 1, start + this.chunkSize - 1)
+    const rows = []
+    for (let i = start; i <= end; i++) rows.push(i)
+    return rows
   }
 
-  visibleChunks(scrollTop) {
+  visibleChunks(scrollTop: number) {
     const chunkHeight = this.rowHeight * this.chunkSize
     const chunksAbove = max(down(scrollTop / chunkHeight), 0)
     const totalHeight = this.size * this.rowHeight
-
     const viewEnd = this.height + scrollTop + chunkHeight * this.overScan
     const maxChunk = totalHeight / chunkHeight
-
     const startChunk = max(chunksAbove - this.overScan, 0)
     const chunks = []
     for (
@@ -34,11 +42,6 @@ export default class Chunker {
   }
 }
 
-const range = (start, end) => {
-  const arr = []
-  for (let i = start; i <= end; i++) arr.push(i)
-  return arr
-}
-
 const down = Math.floor
 const max = Math.max
+const min = Math.min

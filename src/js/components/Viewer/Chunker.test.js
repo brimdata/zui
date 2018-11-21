@@ -1,123 +1,61 @@
+/* @flow */
+
 import Chunker from "./Chunker"
 
-test("#visibleChunks height = 1", () => {
-  const chunker = new Chunker({
+let chunker
+beforeEach(() => {
+  chunker = new Chunker({
     size: 1000,
-    height: 1,
+    height: 50,
     rowHeight: 10,
-    chunkSize: 5
+    chunkSize: 5,
+    overScan: 0
   })
-  const scrollTop = 0
+})
 
-  expect(chunker.visibleChunks(scrollTop)).toEqual([0])
+test("#visibleChunks height = 1", () => {
+  chunker.height = 1
+  expect(chunker.visibleChunks(0)).toEqual([0])
 })
 
 test("#visibleChunks height = 50", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 50,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = 0
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([0, 1])
+  expect(chunker.visibleChunks(0)).toEqual([0, 1])
 })
 
 test("#visibleChunks height = 51", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 51,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = 0
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([0, 1])
+  chunker.height = 51
+  expect(chunker.visibleChunks(0)).toEqual([0, 1])
 })
 
 test("#visibleChunks height = 50, scrollTop = 50", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 50,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = 50
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([1, 2])
+  expect(chunker.visibleChunks(50)).toEqual([1, 2])
 })
 
 test("#visibleChunks height = 58, scrollTop = 50", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 58,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = 50
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([1, 2])
+  chunker.height = 58
+  expect(chunker.visibleChunks(50)).toEqual([1, 2])
 })
 
 test("#visibleChunks height = 50, scrollTop = 51", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 50,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = 51
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([1, 2])
+  expect(chunker.visibleChunks(51)).toEqual([1, 2])
 })
 
 test("#visibleChunks height = 50, scrollTop = 9950", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 50,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = 9950
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([199])
+  expect(chunker.visibleChunks(9950)).toEqual([199])
 })
 
 test("#visibleChunks when scrolled past the bottom", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 50,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = 9999
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([199])
+  expect(chunker.visibleChunks(9999)).toEqual([199])
 })
 
 test("#visibleChunks when scrolled past the beginning", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 50,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-  const scrollTop = -1
-
-  expect(chunker.visibleChunks(scrollTop)).toEqual([0])
+  expect(chunker.visibleChunks(-1)).toEqual([0])
 })
 
 test("#visibleChunks when in the middle", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 50,
-    rowHeight: 10,
-    chunkSize: 2
-  })
-  const scrollTop = 444
+  chunker.chunkSize = 2
 
-  expect(chunker.visibleChunks(scrollTop)).toEqual([22, 23, 24])
+  expect(chunker.visibleChunks(444)).toEqual([22, 23, 24])
   expect([
     ...chunker.rows(22),
     ...chunker.rows(23),
@@ -126,12 +64,7 @@ test("#visibleChunks when in the middle", () => {
 })
 
 test("#visibleChunks always changes together", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 5
-  })
+  chunker.height = 100
   expect(chunker.visibleChunks(0)).toEqual([0, 1, 2])
   expect(chunker.visibleChunks(1)).toEqual([0, 1, 2])
   expect(chunker.visibleChunks(49)).toEqual([0, 1, 2])
@@ -143,88 +76,48 @@ test("#visibleChunks always changes together", () => {
 })
 
 test("#visibleChunks overScan = 2", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 5,
-    overScan: 2
-  })
+  chunker.height = 100
+  chunker.overScan = 2
   expect(chunker.visibleChunks(0)).toEqual([0, 1, 2, 3, 4])
 })
 
 test("#visibleChunks overScan = 1", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 5,
-    overScan: 1
-  })
+  chunker.height = 100
+  chunker.overScan = 1
   expect(chunker.visibleChunks(0)).toEqual([0, 1, 2, 3])
 })
 
 test("#visibleChunks overScan = 2 in the middle", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 5,
-    overScan: 2
-  })
-
+  chunker.height = 100
+  chunker.overScan = 2
   expect(chunker.visibleChunks(525)).toEqual([8, 9, 10, 11, 12, 13, 14])
 })
 
 test("#visibleChunks overScan = 2 at the end", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 5,
-    overScan: 2
-  })
+  chunker.height = 100
+  chunker.overScan = 2
 
   expect(chunker.visibleChunks(9950)).toEqual([197, 198, 199])
 })
 
 test("#rows for first chunk", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-
+  chunker.height = 100
   expect(chunker.rows(0)).toEqual([0, 1, 2, 3, 4])
 })
 test("#rows for last chunk", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 5
-  })
-
+  chunker.height = 100
   expect(chunker.rows(199)).toEqual([995, 996, 997, 998, 999])
 })
 test("#rows for last chunk odd numbers", () => {
-  const chunker = new Chunker({
-    size: 1000,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 7
-  })
+  chunker.height = 100
+  chunker.chunkSize = 7
   expect(chunker.rows(141)).toEqual([987, 988, 989, 990, 991, 992, 993])
   expect(chunker.rows(142)).toEqual([994, 995, 996, 997, 998, 999])
 })
 
 test("#rows for first chunk size less than chunk size", () => {
-  const chunker = new Chunker({
-    size: 3,
-    height: 100,
-    rowHeight: 10,
-    chunkSize: 7
-  })
+  chunker.size = 3
+  chunker.height = 100
+  chunker.chunkSize = 7
   expect(chunker.rows(0)).toEqual([0, 1, 2])
 })
