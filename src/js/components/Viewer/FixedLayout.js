@@ -1,7 +1,12 @@
+/* @flow */
+
 import Layout from "./Layout"
+import ColumnWidths from "./ColumnWidths"
 
 export default class FixedLayout extends Layout {
-  constructor(props) {
+  columnWidths: ColumnWidths
+
+  constructor(props: *) {
     super(props)
     this.columnWidths = props.columnManager
   }
@@ -10,7 +15,7 @@ export default class FixedLayout extends Layout {
     return true
   }
 
-  columns(_) {
+  columns(_: *) {
     return this.columnWidths.columns()
   }
 
@@ -22,7 +27,7 @@ export default class FixedLayout extends Layout {
     return Math.max(this.columnWidths.total(), this.viewWidth())
   }
 
-  cellWidth(col) {
+  cellWidth(col: string) {
     return this.columnWidths.get(col)
   }
 }

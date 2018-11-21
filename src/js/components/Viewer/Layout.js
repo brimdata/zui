@@ -42,7 +42,7 @@ export default class Layout {
     return this.size * this.rowHeight()
   }
 
-  listWidth() {
+  listWidth(): number | string {
     return "auto"
   }
 
@@ -58,7 +58,7 @@ export default class Layout {
     return this.rowH
   }
 
-  cellWidth(_: string) {
+  cellWidth(_: string): number | string {
     return "auto"
   }
 }
