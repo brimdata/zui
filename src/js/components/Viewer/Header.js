@@ -1,8 +1,16 @@
+/* @flow */
+
 import React from "react"
 import {XColResizer} from "./ColResizer"
 import * as Styler from "./Styler"
+import FixedLayout from "./FixedLayout"
 
-export default class Header extends React.PureComponent {
+type Props = {
+  layout: FixedLayout,
+  scrollLeft: number
+}
+
+export default class Header extends React.PureComponent<Props> {
   render() {
     const {layout, scrollLeft} = this.props
 
