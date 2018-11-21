@@ -1,3 +1,5 @@
+/* @flow */
+
 import Layout from "./Layout"
 import ColumnWidths from "./ColumnWidths"
 import * as mockLogs from "../../test/mockLogs"
