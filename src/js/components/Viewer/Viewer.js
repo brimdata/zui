@@ -1,12 +1,33 @@
+/* @flow */
+
 import React, {PureComponent} from "react"
 import Header from "./Header"
 import Chunk from "./Chunk"
 import * as Styler from "./Styler"
+import Chunker from "./Chunker"
+import type {Layout} from "./Layout"
+import type {RowRenderer, OnRowsRendered} from "./types"
 
-export default class Viewer extends PureComponent {
-  constructor(props) {
+type Props = {
+  chunker: Chunker,
+  layout: Layout,
+  rowRenderer: RowRenderer,
+  onRowsRendered: OnRowsRendered
+}
+
+type State = {
+  scrollLeft: number,
+  chunks: number[],
+  isScrolling: boolean
+}
+
+export default class Viewer extends PureComponent<Props, State> {
+  id: TimeoutID
+  onScroll: () => *
+  view: ?HTMLDivElement
+
+  constructor(props: Props) {
     super(props)
-    this.id = null
     this.onScroll = this.onScroll.bind(this)
     this.state = {
       scrollLeft: 0,
@@ -16,20 +37,23 @@ export default class Viewer extends PureComponent {
   }
 
   componentDidUpdate() {
-    this.updateChunks(this.view.scrollTop)
+    if (this.view) this.updateChunks(this.view.scrollTop)
   }
 
   onScroll() {
-    clearTimeout(this.id)
-    this.updateChunks(this.view.scrollTop)
-    this.setState({scrollLeft: this.view.scrollLeft, isScrolling: true})
-    this.id = setTimeout(() => this.setState({isScrolling: false}), 150)
+    const {view, id} = this
+    if (view) {
+      clearTimeout(id)
+      this.updateChunks(view.scrollTop)
+      this.setState({scrollLeft: view.scrollLeft, isScrolling: true})
+      this.id = setTimeout(() => this.setState({isScrolling: false}), 150)
+    }
   }
 
-  updateChunks(scrollTop) {
+  updateChunks(scrollTop: number) {
     const next = this.props.chunker.visibleChunks(scrollTop)
     const current = this.state.chunks
-    if (!sameChunks(next, current)) {
+    if (!Chunker.isEqual(next, current)) {
       this.setState({chunks: next})
     }
   }
@@ -55,6 +79,7 @@ export default class Viewer extends PureComponent {
                 isScrolling={this.state.isScrolling}
                 rowRenderer={rowRenderer}
                 onRowsRendered={onRowsRendered}
+                layout={layout}
               />
             ))}
           </div>
@@ -62,8 +87,4 @@ export default class Viewer extends PureComponent {
       </div>
     )
   }
-}
-
-const sameChunks = (a, b) => {
-  return a[0] === b[0] && a[a.length - 1] === b[b.length - 1]
 }

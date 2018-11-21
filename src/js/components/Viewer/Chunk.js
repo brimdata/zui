@@ -1,13 +1,16 @@
 /* @flow */
 import React from "react"
 import Chunker from "./Chunker"
+import type {Layout} from "./Layout"
+import type {OnRowsRendered, RowRenderer} from "./types"
 
 type Props = {
-  onRowsRendered: ({startIndex: number, stopIndex: number}) => void,
-  rowRenderer: ({index: number, isScrolling: boolean}) => *,
+  onRowsRendered: OnRowsRendered,
+  rowRenderer: RowRenderer,
   chunker: Chunker,
   isScrolling: boolean,
-  chunk: number
+  chunk: number,
+  layout: Layout
 }
 
 export default class Chunk extends React.PureComponent<Props> {
@@ -21,10 +24,7 @@ export default class Chunk extends React.PureComponent<Props> {
 
   onRendered() {
     const rows = this.getRows()
-    this.props.onRowsRendered({
-      startIndex: rows[0],
-      stopIndex: rows[rows.length - 1]
-    })
+    this.props.onRowsRendered(rows[rows.length - 1])
   }
 
   getRows() {
@@ -32,10 +32,10 @@ export default class Chunk extends React.PureComponent<Props> {
   }
 
   render() {
-    const {rowRenderer, isScrolling} = this.props
+    const {rowRenderer, isScrolling, layout} = this.props
     return (
       <div>
-        {this.getRows().map(index => rowRenderer({index, isScrolling}))}
+        {this.getRows().map(index => rowRenderer(index, isScrolling, layout))}
       </div>
     )
   }

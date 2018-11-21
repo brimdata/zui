@@ -1,64 +1,35 @@
 /* @flow */
 
+import ColumnWidths from "./ColumnWidths"
+import AutoLayout from "./AutoLayout"
+import FixedLayout from "./FixedLayout"
 import Log from "../../models/Log"
 
-const EXCLUDED = ["ts", "_td"]
+export type Width = number | "auto"
 
-type Opts = {width: number, height: number, size: number, rowHeight: number}
+export interface Layout {
+  width: number;
+  height: number;
+  size: number;
+  rowH: number;
+  columnWidths?: ColumnWidths;
 
-export default class Layout {
-  width: number
-  height: number
-  size: number
-  rowH: number
+  columns(Log): string[];
+  viewHeight(): number;
+  viewWidth(): number;
+  listHeight(): number;
+  listWidth(): Width;
+  rowHeight(): number;
+  rowWidth(): Width;
+  cellHeight(): number;
+  cellWidth(string): Width;
+}
 
-  constructor(opts: Opts) {
-    this.width = opts.width
-    this.height = opts.height
-    this.size = opts.size
-    this.rowH = opts.rowHeight
-  }
-
-  showHeader() {
-    return false
-  }
-
-  columns(log: Log) {
-    return [
-      "ts",
-      ...log.descriptor.map(d => d.name).filter(col => !EXCLUDED.includes(col))
-    ]
-  }
-
-  viewHeight() {
-    return this.height
-  }
-
-  viewWidth() {
-    return this.width
-  }
-
-  listHeight() {
-    return this.size * this.rowHeight()
-  }
-
-  listWidth(): number | string {
-    return "auto"
-  }
-
-  rowHeight() {
-    return this.rowH
-  }
-
-  rowWidth() {
-    return this.listWidth()
-  }
-
-  cellHeight() {
-    return this.rowH
-  }
-
-  cellWidth(_: string): number | string {
-    return "auto"
+export const create = (args: $ReadOnly<Layout>) => {
+  const {columnWidths} = args
+  if (columnWidths) {
+    return new FixedLayout({columnWidths, ...args})
+  } else {
+    return new AutoLayout(args)
   }
 }

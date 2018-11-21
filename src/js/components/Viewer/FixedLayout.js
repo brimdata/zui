@@ -1,21 +1,17 @@
 /* @flow */
 
-import Layout from "./Layout"
+import AutoLayout from "./AutoLayout"
 import ColumnWidths from "./ColumnWidths"
 
-export default class FixedLayout extends Layout {
+export default class LayoutFixed extends AutoLayout {
   columnWidths: ColumnWidths
 
-  constructor(props: *) {
-    super(props)
-    this.columnWidths = props.columnManager
+  constructor(opts: $ReadOnly<LayoutFixed>) {
+    super(opts)
+    this.columnWidths = opts.columnWidths
   }
 
-  showHeader() {
-    return true
-  }
-
-  columns(_: *) {
+  columns() {
     return this.columnWidths.columns()
   }
 

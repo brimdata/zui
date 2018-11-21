@@ -1,4 +1,5 @@
 /* @flow */
+type Chunk = number[]
 
 export default class Chunker {
   size: number
@@ -6,6 +7,10 @@ export default class Chunker {
   height: number
   chunkSize: number
   overScan: number
+
+  static isEqual(a: Chunk, b: Chunk) {
+    return a[0] === b[0] && a[a.length - 1] === b[b.length - 1]
+  }
 
   constructor(opts: $ReadOnly<Chunker>) {
     this.size = opts.size

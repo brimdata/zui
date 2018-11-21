@@ -12,10 +12,10 @@ const columnWidths = new ColumnWidths(["a", "b", "c"], {
 
 const layout = new FixedLayout({
   size: 20,
-  rowHeight: 10,
-  columnManager: columnWidths,
+  rowH: 10,
   height: 300,
-  width: 400
+  width: 400,
+  columnWidths
 })
 
 test("#viewer", () => {

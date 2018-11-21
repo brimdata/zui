@@ -15,7 +15,7 @@ export const getAll = state => {
   return state.columns
 }
 
-export const getManager = createSelector(
+export const getWidths = createSelector(
   getAll,
   columnWidths.getAll,
   (columns, columnWidths) => {

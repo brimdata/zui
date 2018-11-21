@@ -1,14 +1,14 @@
 /* @flow */
 
-import Layout from "./Layout"
+import AutoLayout from "./AutoLayout"
 import ColumnWidths from "./ColumnWidths"
 import * as mockLogs from "../../test/mockLogs"
 
 describe("AutoLayout", () => {
-  const autoLayout = new Layout({
+  const autoLayout = new AutoLayout({
     height: 500,
     width: 960,
-    rowHeight: 10,
+    rowH: 10,
     size: 200
   })
 
@@ -38,10 +38,6 @@ describe("AutoLayout", () => {
 
   test("#cellWidth", () => {
     expect(autoLayout.cellWidth("a")).toBe("auto")
-  })
-
-  test("#showHeader when auto", () => {
-    expect(autoLayout.showHeader()).toBe(false)
   })
 
   test("#columns", () => {
@@ -77,7 +73,7 @@ describe("AutoLayout", () => {
 import FixedLayout from "./FixedLayout"
 
 describe("FixedLayout", () => {
-  const columnManager = new ColumnWidths(["a", "b", "c"], {
+  const columnWidths = new ColumnWidths(["a", "b", "c"], {
     a: 100,
     b: 100,
     default: 50
@@ -86,8 +82,9 @@ describe("FixedLayout", () => {
   const fixedLayout = new FixedLayout({
     height: 500,
     width: 100,
-    rowHeight: 10,
-    columnManager
+    rowH: 10,
+    size: 200,
+    columnWidths
   })
 
   test("#viewHeight", () => {
@@ -115,12 +112,7 @@ describe("FixedLayout", () => {
     expect(fixedLayout.cellWidth("b")).toBe(100)
   })
 
-  test("#showHeader", () => {
-    expect(fixedLayout.showHeader()).toBe(true)
-  })
-
   test("#columns", () => {
-    const log = mockLogs.conn()
-    expect(fixedLayout.columns(log)).toEqual(["a", "b", "c"])
+    expect(fixedLayout.columns()).toEqual(["a", "b", "c"])
   })
 })

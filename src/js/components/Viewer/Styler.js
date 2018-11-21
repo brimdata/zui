@@ -1,5 +1,5 @@
 /* @flow */
-import Layout from "./Layout"
+import type {Layout} from "./Layout"
 
 export const viewer = (layout: Layout) => {
   return {

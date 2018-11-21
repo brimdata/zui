@@ -1,18 +1,14 @@
 /* @flow */
 
-import {connect} from "react-redux"
 import React from "react"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
-import Layout from "./Viewer/Layout"
+import * as Layout from "./Viewer/Layout"
+import type {Layout as LayoutInterface} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
-import {getLogs} from "../reducers/mainSearch"
-import {buildLogDetail} from "../reducers/logDetails"
-import {getTimeZone} from "../reducers/view"
+import ColumnWidths from "./Viewer/ColumnWidths"
 import * as actions from "../actions/logViewer"
-import * as logViewer from "../reducers/logViewer"
-import * as columns from "../reducers/columns"
 
 type Props = {
   height: number,
@@ -22,9 +18,71 @@ type Props = {
   timeZone: string,
   moreAhead: boolean,
   isFetchingAhead: boolean,
-  columnManager: Object,
+  columnWidths?: ColumnWidths,
   dispatch: Function
 }
+
+export default class LogViewer extends React.Component<Props> {
+  createLayout() {
+    return Layout.create({
+      height: this.props.height,
+      width: this.props.width,
+      size: this.props.logs.length,
+      rowH: 25,
+      columnWidths: this.props.columnWidths
+    })
+  }
+
+  createChunker() {
+    return new Chunker({
+      size: this.props.logs.length,
+      height: this.props.height,
+      rowHeight: 25,
+      chunkSize: 5,
+      overScan: 2
+    })
+  }
+
+  onRowsRendered(stopIndex: number) {
+    const reachedEnd = this.props.logs.length - 1 === stopIndex
+
+    if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
+      this.props.dispatch(actions.fetchAhead())
+    }
+  }
+
+  renderRow(index: number, isScrolling: boolean, layout: LayoutInterface) {
+    return (
+      <LogRow
+        key={index}
+        index={index}
+        log={this.props.logs[index]}
+        timeZone={this.props.timeZone}
+        highlight={Log.isSame(this.props.logs[index], this.props.logDetail)}
+        isScrolling={isScrolling}
+        layout={layout}
+      />
+    )
+  }
+
+  render() {
+    return (
+      <Viewer
+        layout={this.createLayout()}
+        chunker={this.createChunker()}
+        onRowsRendered={this.onRowsRendered.bind(this)}
+        rowRenderer={this.renderRow.bind(this)}
+      />
+    )
+  }
+}
+
+import {getLogs} from "../reducers/mainSearch"
+import {buildLogDetail} from "../reducers/logDetails"
+import {getTimeZone} from "../reducers/view"
+import * as logViewer from "../reducers/logViewer"
+import * as columns from "../reducers/columns"
+import {connect} from "react-redux"
 
 const stateToProps = (state): $Shape<Props> => ({
   logs: getLogs(state),
@@ -32,58 +90,8 @@ const stateToProps = (state): $Shape<Props> => ({
   timeZone: getTimeZone(state),
   moreAhead: logViewer.moreAhead(state),
   isFetchingAhead: logViewer.isFetchingAhead(state),
-  columnManager: columns.getManager(state)
+  columnWidths: columns.getWidths(state)
 })
-
-export default class LogViewer extends React.Component<Props> {
-  render() {
-    const onRowsRendered = ({stopIndex}) => {
-      const reachedEnd = this.props.logs.length - 1 === stopIndex
-
-      if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
-        this.props.dispatch(actions.fetchAhead())
-      }
-    }
-
-    const layout = buildLayout(this.props)
-    return (
-      <Viewer
-        layout={layout}
-        chunker={buildChunker(this.props)}
-        onRowsRendered={onRowsRendered}
-        rowRenderer={({index, isScrolling}) => (
-          <LogRow
-            key={index}
-            index={index}
-            log={this.props.logs[index]}
-            timeZone={this.props.timeZone}
-            highlight={Log.isSame(this.props.logs[index], this.props.logDetail)}
-            isScrolling={isScrolling}
-            layout={layout}
-          />
-        )}
-      />
-    )
-  }
-}
-
-const buildChunker = ({logs, height}) =>
-  new Chunker({
-    size: logs.length,
-    height: height,
-    rowHeight: 25,
-    chunkSize: 5,
-    overScan: 2
-  })
-
-const buildLayout = ({height, width, logs, columnManager}) =>
-  new Layout({
-    width,
-    height,
-    rowHeight: 25,
-    size: logs.length,
-    columnManager
-  })
 
 export const XLogViewer = connect(
   stateToProps,
