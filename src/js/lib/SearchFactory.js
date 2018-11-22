@@ -11,6 +11,7 @@ import Search from "../models/Search"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import type {State, Dispatch, Api} from "../reducers/types"
 import pageReceiver from "../receivers/pageReceiver"
+import columnsReceiver from "../receivers/columnsReceiver"
 
 export const create = (dispatch: Dispatch, state: State, api: Api) => {
   return new Search(dispatch, api, getArgs(dispatch, state))
@@ -70,7 +71,6 @@ export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
     Program.addHeadProc(getSearchProgram(state), 1000) +
     "; " +
     getCountByTimeProc(state)
-
   return {
     space: getCurrentSpaceName(state),
     program,
@@ -95,6 +95,7 @@ export const logsPagedArgs = (dispatch: Dispatch, state: State) => {
     timeWindow: getTimeWindow(state),
     callbacks: (request: *) =>
       request
+        .channel(1, columnsReceiver(dispatch, state))
         .channel(1, pageReceiver(dispatch, PER_PAGE))
         .channel(1, logsReceiver(dispatch))
         .channel(0, countByTimeReceiver(dispatch))
