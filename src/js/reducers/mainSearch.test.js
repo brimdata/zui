@@ -1,44 +1,61 @@
 import * as actions from "../actions/mainSearch"
-import reducer from "./mainSearch"
+import initStore from "../test/initStore"
+import * as mainSearch from "./mainSearch"
 
-const initialState = {
-  isFetching: false,
-  events: [],
-  query: {
-    program: "path=conn",
-    timeWindow: [new Date("2018-01-01"), new Date("2018-01-02")],
-    ts: new Date("2018-04-21")
-  },
-  historyTree: {
-    data: "__root__"
-  },
-  contextIndices: []
-}
+test("REQUEST resets the data", () => {
+  const store = initStore()
+  const state = store.dispatchAll([
+    actions.mainSearchEvents(["hiii"]),
+    actions.requestMainSearch()
+  ])
 
-test("MAIN_SEARCH_REQUEST", () => {
-  const state = reducer(
-    {...initialState, events: ["hiii"]},
-    {type: "MAIN_SEARCH_REQUEST"}
-  )
-
-  expect(state.isFetching).toBe(true)
-  expect(state.events).toEqual([])
+  expect(mainSearch.getMainSearchEvents(state)).toEqual([])
 })
 
-test("MAIN_SEARCH_EVENTS", () => {
-  const prevState = {events: ["item1"]}
-  const action = actions.mainSearchEvents(["item2"])
-  const state = reducer({...initialState, ...prevState}, action)
+test("request resets the stats to fetching", () => {
+  const store = initStore()
+  const state = store.dispatchAll([actions.requestMainSearch()])
 
-  expect(state.events).toEqual(["item1", "item2"])
+  expect(mainSearch.getMainSearchIsFetching(state)).toBe(true)
 })
 
-test("MAIN_SEARCH_EVENTS_SPLICE", () => {
-  const a = [
+test("MAIN_SEARCH_EVENTS appents items to the state", () => {
+  const store = initStore()
+  const state2 = store.dispatchAll([actions.mainSearchEvents(["item1"])])
+
+  expect(mainSearch.getMainSearchEvents(state2)).toEqual(["item1"])
+})
+
+test("MAIN_SEARCH_EVENTS appents items to the state when called many times", () => {
+  const store = initStore()
+  const state = store.dispatchAll([
+    actions.mainSearchEvents(["item1"]),
+    actions.mainSearchEvents(["item2", "item3"])
+  ])
+
+  expect(mainSearch.getMainSearchEvents(state)).toEqual([
+    "item1",
+    "item2",
+    "item3"
+  ])
+})
+
+test("MAIN_SEARCH_COMPLETE sets is fetching to false", () => {
+  const store = initStore()
+  const state = store.dispatchAll([
+    actions.requestMainSearch(),
+    actions.completeMainSearch()
+  ])
+
+  expect(mainSearch.getMainSearchIsFetching(state)).toBe(false)
+})
+
+test("MAIN_SEARCH_EVENTS_SPLICE chomps off the events at an index", () => {
+  const store = initStore()
+  const state2 = store.dispatchAll([
     actions.mainSearchEvents(["a", "b", "c", "d"]),
     actions.spliceMainSearchEvents(1)
-  ]
-  const state = a.reduce(reducer)
+  ])
 
-  expect(state.events).toEqual(["a"])
+  expect(mainSearch.getMainSearchEvents(state2)).toEqual(["a"])
 })

@@ -7,7 +7,7 @@ import {isTimeWindow} from "../models/TimeWindow"
 import countByTimeInterval from "../lib/countByTimeInterval"
 
 const initialState = {
-  isFetching: false,
+  status: "INIT",
   events: []
 }
 
@@ -15,7 +15,7 @@ export default createReducer(initialState, {
   MAIN_SEARCH_RESET: () => ({...initialState}),
   MAIN_SEARCH_REQUEST: () => ({
     ...initialState,
-    isFetching: true
+    status: "FETCHING"
   }),
   MAIN_SEARCH_EVENTS: (state, {events}) => ({
     ...state,
@@ -31,11 +31,9 @@ export default createReducer(initialState, {
   },
   MAIN_SEARCH_COMPLETE: state => ({
     ...state,
-    isFetching: false
+    status: "COMPLETE"
   })
 })
-
-export const getMainSearchIsFetching = state => state.mainSearch.isFetching
 
 const BOOM_INTERVALS = {
   millisecond: "ms",
@@ -45,8 +43,16 @@ const BOOM_INTERVALS = {
   day: "day"
 }
 
-export function getPage(state) {
-  return state.mainSearch.page
+export const getMainSearchIsFetching = state => {
+  return getMainSearchStatus(state) === "FETCHING"
+}
+
+export const getMainSearchIsComplete = state => {
+  return getMainSearchStatus(state) === "COMPLETE"
+}
+
+export const getMainSearchStatus = state => {
+  return state.mainSearch.status
 }
 
 export function mainSearchEvents(state) {
