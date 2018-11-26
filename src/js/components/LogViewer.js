@@ -1,6 +1,7 @@
 /* @flow */
 
 import React from "react"
+import ReactDOM from "react-dom"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
 import * as Layout from "./Viewer/Layout"
@@ -8,6 +9,8 @@ import type {Layout as LayoutInterface} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
 import ColumnWidths from "./Viewer/ColumnWidths"
+import PhonyViewer from "./Viewer/PhonyViewer"
+import * as columnWidths from "../actions/columnWidths"
 
 type Props = {
   height: number,
@@ -68,13 +71,29 @@ export default class LogViewer extends React.Component<Props> {
   render() {
     const empty = this.props.logs.length === 0
     if (empty && !this.props.isFetching) return <h1>No Results</h1>
+
     return (
-      <Viewer
-        layout={this.createLayout()}
-        chunker={this.createChunker()}
-        onRowsRendered={this.onRowsRendered.bind(this)}
-        rowRenderer={this.renderRow.bind(this)}
-      />
+      <div>
+        <PhonyViewer
+          data={this.props.logs}
+          layout={this.createLayout()}
+          onRender={ref => {
+            const el = ReactDOM.findDOMNode(ref)
+            let colWidths = {}
+            el.querySelectorAll("th").forEach(th => {
+              colWidths[th.innerHTML] = th.getBoundingClientRect().width
+            })
+            console.log(colWidths)
+            this.props.dispatch(columnWidths.setWidths(colWidths))
+          }}
+        />
+        <Viewer
+          layout={this.createLayout()}
+          chunker={this.createChunker()}
+          onRowsRendered={this.onRowsRendered.bind(this)}
+          rowRenderer={this.renderRow.bind(this)}
+        />
+      </div>
     )
   }
 }

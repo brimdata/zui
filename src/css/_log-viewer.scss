@@ -1,77 +1,86 @@
 .viewer {
   overflow: hidden;
+}
 
-  .view {
-    overflow: scroll;
+.viewer .view {
+  overflow: scroll;
+}
+
+.viewer .list {
+  position: relative;
+}
+
+.viewer .col-resizer {
+  width: 3px;
+  height: 100%;
+  background: $gray-1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: col-resize;
+}
+
+.viewer header,
+.phony-viewer thead {
+  white-space: nowrap;
+  height: $bro-log-row-height;
+  display: flex;
+  align-items: center;
+  background: $gray-3;
+}
+
+.viewer .log-row,
+.phony-viewer tbody tr {
+  white-space: nowrap;
+  position: absolute;
+  contain: layout style;
+  display: flex;
+  font-family: $mono-font;
+  font-size: 12px;
+  white-space: nowrap;
+  min-height: 25px;
+  line-height: 25px;
+  align-items: center;
+  opacity: 1;
+
+  &.even {
+    background: darken(white, 2%);
   }
 
-  .list {
-    position: relative;
+  &:hover {
+    background: darken(white, 6%);
+    z-index: 1;
   }
 
-  header {
-    white-space: nowrap;
-    height: $bro-log-row-height;
-    display: flex;
-    align-items: center;
-    background: $gray-3;
-  }
-
-  .header-cell {
-    height: $bro-log-row-height;
-    line-height: $bro-log-row-height;
-    color: white;
-    font-size: 14px;
-    font-weight: normal;
-    padding: 0 12px;
-    position: relative;
-  }
-
-  .log-row {
-    white-space: nowrap;
-    position: absolute;
-    contain: layout style;
-    display: flex;
-    font-family: $mono-font;
-    font-size: 12px;
-    white-space: nowrap;
-    min-height: 25px;
-    line-height: 25px;
-    align-items: center;
-    opacity: 1;
-
-    &.even {
-      background: darken(white, 2%);
-    }
-
-    &:hover {
-      background: darken(white, 6%);
-      z-index: 1;
-    }
-
-    &.highlight {
-      background: $light-gray-3;
-    }
-  }
-
-  .col-resizer {
-    width: 3px;
-    height: 100%;
-    background: $gray-1;
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: col-resize;
+  &.highlight {
+    background: $light-gray-3;
   }
 }
 
-/* Test Table */
+.viewer .header-cell,
+.phony-viewer th {
+  height: $bro-log-row-height;
+  line-height: $bro-log-row-height;
+  color: white;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 0 12px;
+  position: relative;
+}
 
-.test-table td,
-.test-table th {
-  padding: 0;
-  margin: 0;
-  outline: 1px solid green;
-  white-space: nowrap;
-  padding: 3px;
+/* Phony Viewer Overrides */
+
+.phony-viewer {
+  border-collapse: collapse;
+  thead {
+    display: table-header-group;
+    text-align: left;
+  }
+  th {
+    border-right: 3px solid white;
+  }
+  tbody tr {
+    position: static;
+    display: table-row;
+  }
 }
