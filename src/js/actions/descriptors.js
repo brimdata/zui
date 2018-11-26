@@ -1,6 +1,6 @@
 /* @flow */
 
-import {getCurrentSpace} from "../reducers/spaces"
+import {getCurrentSpaceName} from "../reducers/spaces"
 import uniq from "lodash/uniq"
 import type {Thunk} from "redux-thunk"
 import type {Tuple, Descriptor} from "../models/Log"
@@ -21,7 +21,7 @@ export const discoverDescriptors = (events: Tuple[] = []): Thunk => {
 
 export const fetchDescriptor = (id: string): Thunk => {
   return (dispatch, getState, api) => {
-    const {name: space} = getCurrentSpace(getState())
+    const space = getCurrentSpaceName(getState())
 
     dispatch(requestDescriptor(space, id))
     return api
