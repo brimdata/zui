@@ -1,7 +1,6 @@
 /* @flow */
 
 import React from "react"
-import ReactDOM from "react-dom"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
 import * as Layout from "./Viewer/Layout"

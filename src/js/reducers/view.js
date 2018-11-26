@@ -4,6 +4,7 @@ import createReducer from "./createReducer"
 
 const ANALYTICS = "analytics"
 const LOGS = "logs"
+export type ResultsTabEnum = "analytics" | "logs" | null
 
 type StateSlice = {
   leftSidebarIsOpen: boolean,
@@ -11,7 +12,7 @@ type StateSlice = {
   downloadsIsOpen: boolean,
   leftSidebarWidth: number,
   rightSidebarWidth: number,
-  resultsTab: "analytics" | "logs" | null,
+  resultsTab: ResultsTabEnum,
   timeZone: string
 }
 type State = {view: StateSlice}
@@ -100,3 +101,5 @@ export const getShowAnalyticsTab = (state: State) =>
 export const getShowLogsTab = (state: State) => state.view.resultsTab === LOGS
 
 export const getTimeZone = (state: State) => state.view.timeZone
+
+export const getResultsTab = (state: State) => state.view.resultsTab
