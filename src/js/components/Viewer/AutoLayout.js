@@ -3,7 +3,7 @@
 import Log from "../../models/Log"
 import type {Width, Layout} from "./Layout"
 
-const EXCLUDED = ["ts"]
+const EXCLUDED = ["ts", "_td"]
 export default class AutoLayout implements Layout {
   width: number
   height: number
