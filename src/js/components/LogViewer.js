@@ -44,11 +44,11 @@ export default class LogViewer extends React.Component<Props> {
   }
 
   onRowsRendered(stopIndex: number) {
-    const reachedEnd = this.props.logs.length - 1 === stopIndex
-
-    if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
-      this.props.dispatch(actions.fetchAhead())
-    }
+    // const {isFetching, isFetchingAhead, moreAhead} = this.props
+    // const reachedEnd = this.props.logs.length - 1 === stopIndex
+    // if (!isFetching && reachedEnd & !isFetchingAhead && moreAhead) {
+    // this.props.dispatch(actions.fetchAhead())
+    // }
   }
 
   renderRow(index: number, isScrolling: boolean, layout: LayoutInterface) {
