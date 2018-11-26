@@ -8,7 +8,6 @@ import type {Layout as LayoutInterface} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
 import ColumnWidths from "./Viewer/ColumnWidths"
-import * as actions from "../actions/logViewer"
 
 type Props = {
   height: number,
@@ -19,6 +18,7 @@ type Props = {
   moreAhead: boolean,
   isFetchingAhead: boolean,
   columnWidths?: ColumnWidths,
+  isFetching: boolean,
   dispatch: Function
 }
 
@@ -66,6 +66,8 @@ export default class LogViewer extends React.Component<Props> {
   }
 
   render() {
+    const empty = this.props.logs.length === 0
+    if (empty && !this.props.isFetching) return <h1>No Results</h1>
     return (
       <Viewer
         layout={this.createLayout()}
@@ -77,7 +79,7 @@ export default class LogViewer extends React.Component<Props> {
   }
 }
 
-import {getLogs} from "../reducers/mainSearch"
+import * as mainSearch from "../reducers/mainSearch"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
 import * as logViewer from "../reducers/logViewer"
@@ -85,12 +87,13 @@ import * as columns from "../reducers/columns"
 import {connect} from "react-redux"
 
 const stateToProps = (state): $Shape<Props> => ({
-  logs: getLogs(state),
+  logs: mainSearch.getLogs(state),
   logDetail: buildLogDetail(state),
   timeZone: getTimeZone(state),
   moreAhead: logViewer.moreAhead(state),
   isFetchingAhead: logViewer.isFetchingAhead(state),
-  columnWidths: columns.getWidths(state)
+  columnWidths: columns.getWidths(state),
+  isFetching: mainSearch.getMainSearchIsFetching(state)
 })
 
 export const XLogViewer = connect(
