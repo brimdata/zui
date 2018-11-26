@@ -11,7 +11,7 @@ export default class PhonyViewer extends React.Component {
 
   componentDidUpdate(_, _prevState) {
     if (this.state.isSampling && this.ref) {
-      this.props.onRender(this.ref)
+      this.props.onRender(ReactDOM.findDOMNode(this.ref))
       this.setState({isSampling: false})
     }
   }

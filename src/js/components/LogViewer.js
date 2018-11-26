@@ -68,6 +68,14 @@ export default class LogViewer extends React.Component<Props> {
     )
   }
 
+  measureColWidths(ref: HTMLTableElement) {
+    let colWidths = {}
+    ref.querySelectorAll("th").forEach(th => {
+      colWidths[th.innerHTML] = th.getBoundingClientRect().width
+    })
+    this.props.dispatch(columnWidths.setWidths(colWidths))
+  }
+
   render() {
     const empty = this.props.logs.length === 0
     if (empty && !this.props.isFetching) return <h1>No Results</h1>
@@ -77,15 +85,7 @@ export default class LogViewer extends React.Component<Props> {
         <PhonyViewer
           data={this.props.logs}
           layout={this.createLayout()}
-          onRender={ref => {
-            const el = ReactDOM.findDOMNode(ref)
-            let colWidths = {}
-            el.querySelectorAll("th").forEach(th => {
-              colWidths[th.innerHTML] = th.getBoundingClientRect().width
-            })
-            console.log(colWidths)
-            this.props.dispatch(columnWidths.setWidths(colWidths))
-          }}
+          onRender={this.measureColWidths.bind(this)}
         />
         <Viewer
           layout={this.createLayout()}
