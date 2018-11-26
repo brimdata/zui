@@ -19,7 +19,11 @@ export default class Header extends React.PureComponent<Props> {
       return (
         <header style={Styler.header(layout, scrollLeft)}>
           {layout.columns().map(col => (
-            <div key={col} style={Styler.cell(layout, col)}>
+            <div
+              className="header-cell"
+              key={col}
+              style={Styler.cell(layout, col)}
+            >
               {col}
               <XColResizer col={col} width={layout.cellWidth(col)} />
             </div>

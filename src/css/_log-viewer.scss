@@ -1,9 +1,7 @@
 .viewer {
-  outline: 1px solid blue;
   overflow: hidden;
 
   .view {
-    outline: 1px solid red;
     overflow: scroll;
   }
 
@@ -17,15 +15,16 @@
     display: flex;
     align-items: center;
     background: $gray-3;
+  }
 
-    div {
-      height: $bro-log-row-height;
-      line-height: $bro-log-row-height;
-      color: white;
-      font-size: 14px;
-      font-weight: normal;
-      padding: 0 12px;
-    }
+  .header-cell {
+    height: $bro-log-row-height;
+    line-height: $bro-log-row-height;
+    color: white;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 12px;
+    position: relative;
   }
 
   .log-row {
