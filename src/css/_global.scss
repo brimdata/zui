@@ -47,3 +47,8 @@ pre {
 code {
   padding: 2px 3px;
 }
+
+#measure-layer {
+  position: absolute;
+  z-index: -1;
+}
