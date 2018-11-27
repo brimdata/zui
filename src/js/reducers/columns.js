@@ -7,6 +7,7 @@ import * as descriptors from "./descriptors"
 import * as spaces from "./spaces"
 import UniqArray from "../models/UniqArray"
 import isEqual from "lodash/isEqual"
+import Columns from "../models/Columns"
 
 const initialState = []
 
@@ -44,10 +45,25 @@ export const getColumnsFromTds = createSelector(
   spaces.getCurrentSpaceName,
   (tds, descriptors, space) => {
     const columns = new UniqArray(isEqual)
-    tds.toArray().forEach(td => {
+    tds.forEach(td => {
       const desc = descriptors[space + "." + td]
       if (desc) desc.forEach(d => columns.push(d))
     })
     return columns.toArray()
   }
 )
+
+export const getColumns = createSelector(
+  mainSearch.getTds,
+  getColumnsFromTds,
+  getAll,
+  (tds, all, visible) => createColumns(tds, all, visible)
+)
+
+export const createColumns = (tds, all, visible) => {
+  if (visible.length === 0) {
+    return new Columns({tds, all, visible: all})
+  } else {
+    return new Columns({tds, all, visible})
+  }
+}

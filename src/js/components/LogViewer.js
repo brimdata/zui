@@ -11,6 +11,7 @@ import ColumnWidths from "./Viewer/ColumnWidths"
 import PhonyViewer from "./Viewer/PhonyViewer"
 import * as columnWidths from "../actions/columnWidths"
 import * as actions from "../actions/logViewer"
+import Columns from "../models/Columns"
 
 type Props = {
   height: number,
@@ -23,6 +24,7 @@ type Props = {
   columnWidths?: ColumnWidths,
   isFetching: boolean,
   isComplete: boolean,
+  columns: Columns,
   dispatch: Function
 }
 
@@ -42,7 +44,8 @@ export default class LogViewer extends React.Component<Props> {
       width: this.props.width,
       size: this.props.logs.length,
       rowH: 25,
-      columnWidths: this.props.columnWidths
+      columnWidths: this.props.columnWidths,
+      columnsRename: this.props.columns
     })
   }
 
@@ -131,7 +134,8 @@ const stateToProps = (state): $Shape<Props> => ({
   isFetchingAhead: logViewer.isFetchingAhead(state),
   columnWidths: columns.getWidths(state),
   isFetching: mainSearch.getMainSearchIsFetching(state),
-  isComplete: mainSearch.getMainSearchIsComplete(state)
+  isComplete: mainSearch.getMainSearchIsComplete(state),
+  columns: columns.getColumns(state)
 })
 
 export const XLogViewer = connect(

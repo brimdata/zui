@@ -33,3 +33,24 @@ const state = store.dispatchAll([
 ])
 
 expect(columns.getAll(state)).toEqual([])
+
+test("#createColumns builds Columns object", () => {
+  const tds = ["1"]
+  const all = [{name: "a", type: "string"}, {name: "b", type: "number"}]
+  const visible = [{name: "b", type: "number"}]
+  const cols = columns.createColumns(tds, all, visible)
+
+  expect(cols.getTds()).toEqual(tds)
+  expect(cols.getAll()).toEqual(all)
+  expect(cols.getVisible()).toEqual(visible)
+})
+
+test("#createColumns sets visible to all if visible is empty", () => {
+  const tds = ["1"]
+  const all = [{name: "a", type: "string"}, {name: "b", type: "number"}]
+  const visible = []
+  const cols = columns.createColumns(tds, all, visible)
+
+  expect(cols.getAll()).toEqual(all)
+  expect(cols.getVisible()).toEqual(all)
+})

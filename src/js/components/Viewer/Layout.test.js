@@ -3,13 +3,41 @@
 import AutoLayout from "./AutoLayout"
 import ColumnWidths from "./ColumnWidths"
 import * as mockLogs from "../../test/mockLogs"
+import Columns from "../../models/Columns"
+import uniqWith from "lodash/uniqWith"
+import isEqual from "lodash/isEqual"
 
 describe("AutoLayout", () => {
+  const conn = mockLogs.conn()
+  const dns = mockLogs.dns()
+  const tds = [conn.get("_td"), dns.get("_td")]
+  const all = uniqWith([...conn.descriptor, ...dns.descriptor], isEqual)
+  const visible = [
+    {name: "query", type: "string"},
+    {name: "duration", type: "interval"},
+    {name: "_path", type: "string"}
+  ]
+  const columns = new Columns({tds, all, visible})
   const autoLayout = new AutoLayout({
     height: 500,
     width: 960,
     rowH: 10,
-    size: 200
+    size: 200,
+    columnsRename: columns
+  })
+
+  test("#visibleColumns keeps original ordering", () => {
+    expect(autoLayout.visibleColumns(conn)).toEqual([
+      {name: "_path", type: "string"},
+      {name: "duration", type: "interval"}
+    ])
+  })
+
+  test("#visibleColumns only picks from the logs descriptor", () => {
+    expect(autoLayout.visibleColumns(dns)).toEqual([
+      {name: "_path", type: "string"},
+      {name: "query", type: "string"}
+    ])
   })
 
   test("#viewHeight ", () => {
@@ -73,6 +101,11 @@ describe("AutoLayout", () => {
 import FixedLayout from "./FixedLayout"
 
 describe("FixedLayout", () => {
+  const conn = mockLogs.conn()
+  const tds = [conn.get("_td")]
+  const all = conn.descriptor
+  const visible = [{name: "ts", type: "time"}]
+  const columns = new Columns({tds, all, visible})
   const columnWidths = new ColumnWidths(["a", "b", "c"], {
     a: 100,
     b: 100,
@@ -84,7 +117,8 @@ describe("FixedLayout", () => {
     width: 100,
     rowH: 10,
     size: 200,
-    columnWidths
+    columnWidths,
+    columnsRename: columns
   })
 
   test("#viewHeight", () => {
@@ -114,5 +148,11 @@ describe("FixedLayout", () => {
 
   test("#columns", () => {
     expect(fixedLayout.columns()).toEqual(["a", "b", "c"])
+  })
+
+  test("#visibleColumns", () => {
+    expect(fixedLayout.visibleColumns(conn)).toEqual([
+      {name: "ts", type: "time"}
+    ])
   })
 })

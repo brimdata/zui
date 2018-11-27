@@ -3,18 +3,21 @@
 import Log from "../../models/Log"
 import type {Width, Layout} from "./Layout"
 import columnOrder from "../../lib/columnOrder"
+import Columns from "../../models/Columns"
 
 export default class AutoLayout implements Layout {
   width: number
   height: number
   size: number
   rowH: number
+  columnsRename: Columns
 
-  constructor(opts: $ReadOnly<Layout>) {
-    this.width = opts.width
-    this.height = opts.height
-    this.size = opts.size
-    this.rowH = opts.rowH
+  constructor(args: $ReadOnly<Layout>) {
+    this.width = args.width
+    this.height = args.height
+    this.size = args.size
+    this.rowH = args.rowH
+    this.columnsRename = args.columnsRename
   }
 
   columns(log: Log) {

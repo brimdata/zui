@@ -3,6 +3,10 @@
 import * as Styler from "./Styler"
 import FixedLayout from "./FixedLayout"
 import ColumnWidths from "./ColumnWidths"
+import * as mockLogs from "../../test/mockLogs"
+import uniqWith from "lodash/uniqWith"
+import isEqual from "lodash/isEqual"
+import Columns from "../../models/Columns"
 
 const columnWidths = new ColumnWidths(["a", "b", "c"], {
   a: 100,
@@ -10,12 +14,25 @@ const columnWidths = new ColumnWidths(["a", "b", "c"], {
   default: 10
 })
 
+const conn = mockLogs.conn()
+const dns = mockLogs.dns()
+const tds = [conn.get("_td"), dns.get("_td")]
+const all = uniqWith([...conn.descriptor, ...dns.descriptor], isEqual)
+const visible = [
+  {name: "query", type: "string"},
+  {name: "duration", type: "interval"},
+  {name: "_path", type: "string"}
+]
+
+const columns = new Columns({tds, all, visible})
+
 const layout = new FixedLayout({
   size: 20,
   rowH: 10,
   height: 300,
   width: 400,
-  columnWidths
+  columnWidths,
+  columnsRename: columns
 })
 
 test("#viewer", () => {
