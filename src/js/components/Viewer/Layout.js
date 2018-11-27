@@ -13,7 +13,7 @@ export interface Layout {
   size: number;
   rowH: number;
   columnWidths?: ColumnWidths;
-  columnsRename: Columns;
+  columns: Columns;
 
   viewHeight(): number;
   viewWidth(): number;

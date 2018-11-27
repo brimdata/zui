@@ -9,24 +9,24 @@ export default class AutoLayout implements Layout {
   height: number
   size: number
   rowH: number
-  columnsRename: Columns
+  columns: Columns
 
   constructor(args: $ReadOnly<Layout>) {
     this.width = args.width
     this.height = args.height
     this.size = args.size
     this.rowH = args.rowH
-    this.columnsRename = args.columnsRename
+    this.columns = args.columns
   }
 
   allColumns() {
-    return this.columnsRename.getAll()
+    return this.columns.getAll()
   }
 
   pickVisibleColumns(descriptor: Descriptor) {
     return descriptor.filter(
       field =>
-        !!this.columnsRename
+        !!this.columns
           .getVisible()
           .find(({name, type}) => field.name === name && field.type === type)
     )

@@ -45,7 +45,7 @@ export default class LogViewer extends React.Component<Props> {
       size: this.props.logs.length,
       rowH: 25,
       columnWidths: this.props.columnWidths,
-      columnsRename: this.props.columns
+      columns: this.props.columns
     })
   }
 

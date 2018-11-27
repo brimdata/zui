@@ -23,7 +23,7 @@ describe("AutoLayout", () => {
     width: 960,
     rowH: 10,
     size: 200,
-    columnsRename: columns
+    columns: columns
   })
 
   test("#pickVisibleColumns keeps original ordering", () => {
@@ -67,35 +67,6 @@ describe("AutoLayout", () => {
   test("#cellWidth", () => {
     expect(autoLayout.cellWidth("a")).toBe("auto")
   })
-
-  test("#columns", () => {
-    const log = mockLogs.conn()
-
-    expect(autoLayout.columns(log)).toEqual([
-      "ts",
-      "_path",
-      "uid",
-      "id.orig_h",
-      "id.orig_p",
-      "id.resp_h",
-      "id.resp_p",
-      "proto",
-      "service",
-      "duration",
-      "orig_bytes",
-      "resp_bytes",
-      "conn_state",
-      "local_orig",
-      "local_resp",
-      "missed_bytes",
-      "history",
-      "orig_pkts",
-      "orig_ip_bytes",
-      "resp_pkts",
-      "resp_ip_bytes",
-      "tunnel_parents"
-    ])
-  })
 })
 
 import FixedLayout from "./FixedLayout"
@@ -118,7 +89,7 @@ describe("FixedLayout", () => {
     rowH: 10,
     size: 200,
     columnWidths,
-    columnsRename: columns
+    columns: columns
   })
 
   test("#viewHeight", () => {
@@ -144,10 +115,6 @@ describe("FixedLayout", () => {
 
   test("#cellWidth", () => {
     expect(fixedLayout.cellWidth("b")).toBe(100)
-  })
-
-  test("#columns", () => {
-    expect(fixedLayout.columns()).toEqual(["a", "b", "c"])
   })
 
   test("#pickVisibleColumns", () => {

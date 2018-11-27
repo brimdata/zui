@@ -32,7 +32,7 @@ const layout = new FixedLayout({
   height: 300,
   width: 400,
   columnWidths,
-  columnsRename: columns
+  columns: columns
 })
 
 test("#viewer", () => {
