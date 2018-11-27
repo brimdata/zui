@@ -5,22 +5,17 @@ import LogCell from "../LogCell"
 export default class PhonyViewer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {isSampling: false}
-    setTimeout(() => this.setState({isSampling: true}))
+    this.state = {mounted: false}
   }
 
-  componentDidUpdate(_, _prevState) {
-    if (this.state.isSampling && this.ref) {
-      this.props.onRender(ReactDOM.findDOMNode(this.ref))
-      this.setState({isSampling: false})
-    }
+  componentDidMount() {
+    this.props.onMount(ReactDOM.findDOMNode(this.ref))
+    this.setState({mounted: true})
   }
 
   render() {
-    if (this.props.data.length === 0) return null
-    if (this.state.isSampling)
-      return <Table ref={r => (this.ref = r)} {...this.props} />
-    else return null
+    if (this.state.mounted) return null
+    return <Table ref={r => (this.ref = r)} {...this.props} />
   }
 }
 

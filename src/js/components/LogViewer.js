@@ -21,10 +21,18 @@ type Props = {
   isFetchingAhead: boolean,
   columnWidths?: ColumnWidths,
   isFetching: boolean,
+  isComplete: boolean,
   dispatch: Function
 }
 
 export default class LogViewer extends React.Component<Props> {
+  measured: boolean
+
+  constructor(props: Props) {
+    super(props)
+    this.measured = false
+  }
+
   createLayout() {
     return Layout.create({
       height: this.props.height,
@@ -73,19 +81,28 @@ export default class LogViewer extends React.Component<Props> {
       colWidths[th.innerHTML] = th.getBoundingClientRect().width
     })
     this.props.dispatch(columnWidths.setWidths(colWidths))
+    this.measured = true
+  }
+
+  shouldRenderPhony() {
+    if (this.measured) return false
+    if (!this.props.columnWidths) return false
+    if (this.props.isComplete) return true
+    if (this.props.logs.length >= 10) return true
   }
 
   render() {
-    const empty = this.props.logs.length === 0
-    if (empty && !this.props.isFetching) return <h1>No Results</h1>
+    if (this.props.logs === 0) return null
 
     return (
       <div>
-        <PhonyViewer
-          data={this.props.logs}
-          layout={this.createLayout()}
-          onRender={this.measureColWidths.bind(this)}
-        />
+        {this.shouldRenderPhony() && (
+          <PhonyViewer
+            data={this.props.logs}
+            layout={this.createLayout()}
+            onMount={this.measureColWidths.bind(this)}
+          />
+        )}
         <Viewer
           layout={this.createLayout()}
           chunker={this.createChunker()}
@@ -111,7 +128,8 @@ const stateToProps = (state): $Shape<Props> => ({
   moreAhead: logViewer.moreAhead(state),
   isFetchingAhead: logViewer.isFetchingAhead(state),
   columnWidths: columns.getWidths(state),
-  isFetching: mainSearch.getMainSearchIsFetching(state)
+  isFetching: mainSearch.getMainSearchIsFetching(state),
+  isComplete: mainSearch.getMainSearchIsComplete(state)
 })
 
 export const XLogViewer = connect(
