@@ -6,5 +6,3 @@ export type RowRenderer = (
   isScrolling: boolean,
   layout: Layout
 ) => *
-
-export type OnRowsRendered = (stopIndex: number) => *

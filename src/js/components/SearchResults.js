@@ -13,7 +13,6 @@ type Props = {
 
 export default class SearchResults extends React.Component<Props> {
   chooseTab() {
-    console.log(this.props)
     switch (this.props.tab) {
       case "analytics":
         return <XAnalysisViewer />

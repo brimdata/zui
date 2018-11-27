@@ -10,6 +10,8 @@ import Viewer from "./Viewer/Viewer"
 import ColumnWidths from "./Viewer/ColumnWidths"
 import PhonyViewer from "./Viewer/PhonyViewer"
 import * as columnWidths from "../actions/columnWidths"
+import * as actions from "../actions/logViewer"
+import debounce from "lodash/debounce"
 
 type Props = {
   height: number,
@@ -27,10 +29,12 @@ type Props = {
 
 export default class LogViewer extends React.Component<Props> {
   measured: boolean
+  onLastChunk: Function
 
   constructor(props: Props) {
     super(props)
     this.measured = false
+    this.onLastChunk = debounce(this.onLastChunk, 20)
   }
 
   createLayout() {
@@ -53,12 +57,11 @@ export default class LogViewer extends React.Component<Props> {
     })
   }
 
-  onRowsRendered(_stopIndex: number) {
-    // const {isFetching, isFetchingAhead, moreAhead} = this.props
-    // const reachedEnd = this.props.logs.length - 1 === stopIndex
-    // if (!isFetching && reachedEnd & !isFetchingAhead && moreAhead) {
-    // this.props.dispatch(actions.fetchAhead())
-    // }
+  onLastChunk() {
+    const {isFetching, isFetchingAhead, moreAhead} = this.props
+    if (!isFetching && !isFetchingAhead && moreAhead) {
+      this.props.dispatch(actions.fetchAhead())
+    }
   }
 
   renderRow(index: number, isScrolling: boolean, layout: LayoutInterface) {
@@ -106,7 +109,7 @@ export default class LogViewer extends React.Component<Props> {
         <Viewer
           layout={this.createLayout()}
           chunker={this.createChunker()}
-          onRowsRendered={this.onRowsRendered.bind(this)}
+          onLastChunk={this.onLastChunk.bind(this)}
           rowRenderer={this.renderRow.bind(this)}
         />
       </div>

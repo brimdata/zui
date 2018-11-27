@@ -12,13 +12,13 @@ beforeEach(() => {
 test("#logsArgs", () => {
   const args = SearchFactory.logsPagedArgs(jest.fn(), store.getState())
 
-  expect(args.program).toBe("* | head 1000; every 5min count() by _path")
+  expect(args.program).toBe("* | head 200; every 5min count() by _path")
 })
 
 test("#logsSubsetArgs", () => {
   const args = SearchFactory.logsSubsetArgs(jest.fn(), store.getState())
 
-  expect(args.program).toBe("* | head 1000; count()")
+  expect(args.program).toBe("* | head 200; count()")
 })
 
 test("#analyticsArgs", () => {

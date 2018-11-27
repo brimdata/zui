@@ -28,17 +28,23 @@ export default class Chunker {
     return rows
   }
 
+  lastChunk() {
+    const totalHeight = this.size * this.rowHeight
+    const chunkHeight = this.rowHeight * this.chunkSize
+    return up(totalHeight / chunkHeight) - 1
+  }
+
   visibleChunks(scrollTop: number) {
     const chunkHeight = this.rowHeight * this.chunkSize
     const chunksAbove = max(down(scrollTop / chunkHeight), 0)
-    const totalHeight = this.size * this.rowHeight
     const viewEnd = this.height + scrollTop + chunkHeight * this.overScan
-    const maxChunk = totalHeight / chunkHeight
+
+    const lastChunk = this.lastChunk()
     const startChunk = max(chunksAbove - this.overScan, 0)
     const chunks = []
     for (
       let chunk = startChunk;
-      chunkHeight * chunk < viewEnd + 1 && chunk < maxChunk;
+      chunkHeight * chunk < viewEnd + 1 && chunk <= lastChunk;
       chunk++
     ) {
       chunks.push(chunk)
@@ -47,6 +53,7 @@ export default class Chunker {
   }
 }
 
+const up = Math.ceil
 const down = Math.floor
 const max = Math.max
 const min = Math.min

@@ -32,7 +32,7 @@ export const setIsFetchingAhead = (value: boolean) => ({
 })
 
 export const fetchAhead = (): Thunk => (dispatch, getState, api) => {
-  const PER_PAGE = 1000
+  const PER_PAGE = 200
   dispatch(setIsFetchingAhead(true))
   const state = getState()
   const logs = mainSearch.getLogs(state)
