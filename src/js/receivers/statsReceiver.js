@@ -1,4 +1,3 @@
-import * as Time from "../lib/Time"
 import {setSearchStats} from "../actions/searchStats"
 
 function boomTime({sec, ns}) {

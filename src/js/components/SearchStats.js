@@ -1,5 +1,4 @@
 import React from "react"
-import * as TimeWindow from "../lib/TimeWindow"
 import * as fmt from "../lib/fmt"
 
 const SearchStats = ({

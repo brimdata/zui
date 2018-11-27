@@ -1,6 +1,5 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
-import * as Time from "../lib/Time"
 
 const initialState = {}
 

@@ -114,8 +114,3 @@ export const fakeZone = (date: Date) => {
 }
 
 export const toObject = (date: Date) => Moment(date).toObject()
-
-const padZeros = (string: string, desiredLength: number) => {
-  while (string.length < desiredLength) string += "0"
-  return string
-}
