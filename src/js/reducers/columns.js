@@ -39,18 +39,15 @@ export const getWidths = createSelector(
 )
 
 export const getColumnsFromTds = createSelector(
-  mainSearch.getMainSearchEvents,
+  mainSearch.getTds,
   descriptors.getDescriptors,
   spaces.getCurrentSpaceName,
-  (tuples, descriptors, space) => {
-    const tds = new UniqArray()
-    tuples.forEach(([td]) => tds.push(td))
+  (tds, descriptors, space) => {
     const columns = new UniqArray(isEqual)
     tds.toArray().forEach(td => {
       const desc = descriptors[space + "." + td]
       if (desc) desc.forEach(d => columns.push(d))
     })
-
     return columns.toArray()
   }
 )

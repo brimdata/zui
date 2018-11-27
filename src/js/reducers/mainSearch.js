@@ -5,6 +5,7 @@ import {getCurrentSpaceName} from "../reducers/spaces"
 import Log from "../models/Log"
 import {isTimeWindow} from "../models/TimeWindow"
 import countByTimeInterval from "../lib/countByTimeInterval"
+import UniqArray from "../models/UniqArray"
 
 const initialState = {
   status: "INIT",
@@ -62,6 +63,12 @@ export function mainSearchEvents(state) {
 export const getMainSearchEvents = state => state.mainSearch.events
 
 export const getSchemas = state => state.descriptors
+
+export const getTds = createSelector(getMainSearchEvents, tuples => {
+  const uniq = new UniqArray()
+  tuples.forEach(([td]) => uniq.push(td))
+  return uniq.toArray()
+})
 
 export const getLogs = createSelector(
   getMainSearchEvents,

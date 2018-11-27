@@ -21,9 +21,9 @@ test("request resets the stats to fetching", () => {
 
 test("MAIN_SEARCH_EVENTS appents items to the state", () => {
   const store = initStore()
-  const state2 = store.dispatchAll([actions.mainSearchEvents(["item1"])])
+  const state = store.dispatchAll([actions.mainSearchEvents(["item1"])])
 
-  expect(mainSearch.getMainSearchEvents(state2)).toEqual(["item1"])
+  expect(mainSearch.getMainSearchEvents(state)).toEqual(["item1"])
 })
 
 test("MAIN_SEARCH_EVENTS appents items to the state when called many times", () => {
@@ -58,4 +58,18 @@ test("MAIN_SEARCH_EVENTS_SPLICE chomps off the events at an index", () => {
   ])
 
   expect(mainSearch.getMainSearchEvents(state2)).toEqual(["a"])
+})
+
+test("#getTds", () => {
+  const store = initStore()
+  const state = store.dispatchAll([
+    actions.mainSearchEvents([
+      ["1", "conn"],
+      ["1", "conn"],
+      ["2", "dns"],
+      ["3", "dhcp"]
+    ])
+  ])
+
+  expect(mainSearch.getTds(state)).toEqual(["1", "2", "3"])
 })
