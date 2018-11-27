@@ -4,6 +4,7 @@ import Log from "../../models/Log"
 import type {Width, Layout} from "./Layout"
 import columnOrder from "../../lib/columnOrder"
 import Columns from "../../models/Columns"
+import type {Descriptor} from "../../Models/Log"
 
 export default class AutoLayout implements Layout {
   width: number
@@ -22,6 +23,15 @@ export default class AutoLayout implements Layout {
 
   columns(log: Log) {
     return columnOrder(log.descriptor.map(d => d.name))
+  }
+
+  pickVisibleColumns(descriptor: Descriptor) {
+    return descriptor.filter(
+      field =>
+        !!this.columnsRename
+          .getVisible()
+          .find(({name, type}) => field.name === name && field.type === type)
+    )
   }
 
   viewHeight() {

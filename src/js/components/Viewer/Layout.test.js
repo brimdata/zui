@@ -26,15 +26,15 @@ describe("AutoLayout", () => {
     columnsRename: columns
   })
 
-  test("#visibleColumns keeps original ordering", () => {
-    expect(autoLayout.visibleColumns(conn)).toEqual([
+  test("#pickVisibleColumns keeps original ordering", () => {
+    expect(autoLayout.pickVisibleColumns(conn.descriptor)).toEqual([
       {name: "_path", type: "string"},
       {name: "duration", type: "interval"}
     ])
   })
 
-  test("#visibleColumns only picks from the logs descriptor", () => {
-    expect(autoLayout.visibleColumns(dns)).toEqual([
+  test("#pickVisibleColumns only picks from the logs descriptor", () => {
+    expect(autoLayout.pickVisibleColumns(dns.descriptor)).toEqual([
       {name: "_path", type: "string"},
       {name: "query", type: "string"}
     ])
@@ -150,8 +150,8 @@ describe("FixedLayout", () => {
     expect(fixedLayout.columns()).toEqual(["a", "b", "c"])
   })
 
-  test("#visibleColumns", () => {
-    expect(fixedLayout.visibleColumns(conn)).toEqual([
+  test("#pickVisibleColumns", () => {
+    expect(fixedLayout.pickVisibleColumns(conn.descriptor)).toEqual([
       {name: "ts", type: "time"}
     ])
   })
