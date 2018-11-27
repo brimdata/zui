@@ -1,10 +1,15 @@
 export default class UniqArray {
-  constructor(array = []) {
-    this.array = array
+  constructor(compareFn = (a, b) => a === b) {
+    this.compareFn = compareFn
+    this.array = []
   }
 
   push(item) {
-    if (this.array.indexOf(item) === -1) this.array.push(item)
+    if (!this.exists(item)) this.array.push(item)
+  }
+
+  exists(item) {
+    return !!this.array.find(i => this.compareFn(i, item))
   }
 
   toArray() {
