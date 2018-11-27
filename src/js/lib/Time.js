@@ -81,8 +81,7 @@ export const parse = (
 }
 
 export const parseFromBoom = ({sec, ns}: EpochObj): Date => {
-  const nanos = parseFloat(sec + "." + padZeros(ns.toString(), 9))
-  const millis = parseInt(nanos * 1e3)
+  const millis = (sec + ns / 1e9) * 1e3
   return new Date(millis)
 }
 
