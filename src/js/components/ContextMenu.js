@@ -30,7 +30,11 @@ export class ContextMenu extends React.Component<Props, State> {
     const {left, top, width, height} = this.ref.getBoundingClientRect()
 
     if (top + height > Doc.getHeight()) {
-      this.setState({top: top - height})
+      if (top - height >= 0) {
+        this.setState({top: top - height})
+      } else {
+        this.setState({height: Doc.getHeight() - top - 6})
+      }
     }
 
     if (left + width > Doc.getWidth()) {
