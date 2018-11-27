@@ -54,5 +54,5 @@ export const fetchAhead = (): Thunk => (dispatch, getState, api) => {
     .search({string: programWithHead, timeWindow, space})
     .channel(0, pageReceiver(dispatch, PER_PAGE, spliceIndex))
     .channel(0, logsReceiver(dispatch))
-    .done(() => dispatch(setIsFetchingAhead(false)))
+    .done(() => setTimeout(() => dispatch(setIsFetchingAhead(false)), 500))
 }

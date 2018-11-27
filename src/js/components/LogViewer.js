@@ -11,7 +11,6 @@ import ColumnWidths from "./Viewer/ColumnWidths"
 import PhonyViewer from "./Viewer/PhonyViewer"
 import * as columnWidths from "../actions/columnWidths"
 import * as actions from "../actions/logViewer"
-import debounce from "lodash/debounce"
 
 type Props = {
   height: number,
@@ -34,7 +33,7 @@ export default class LogViewer extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
     this.measured = false
-    this.onLastChunk = debounce(this.onLastChunk, 20)
+    this.onLastChunk = this.onLastChunk.bind(this)
   }
 
   createLayout() {
@@ -109,7 +108,7 @@ export default class LogViewer extends React.Component<Props> {
         <Viewer
           layout={this.createLayout()}
           chunker={this.createChunker()}
-          onLastChunk={this.onLastChunk.bind(this)}
+          onLastChunk={this.onLastChunk}
           rowRenderer={this.renderRow.bind(this)}
         />
       </div>
