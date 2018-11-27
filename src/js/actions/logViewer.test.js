@@ -65,7 +65,7 @@ test("#fetchAhead sets more ahead to false if tuple count < per page", () => {
   ])
 })
 
-test("#fetchAhead sets isFetching to false when done", () => {
+test("#fetchAhead sets isFetching to false when done", done => {
   store.dispatch(logViewer.fetchAhead())
   handler.channelCallback(0, {
     type: "SearchResult",
@@ -75,10 +75,12 @@ test("#fetchAhead sets isFetching to false when done", () => {
   store.clearActions()
 
   handler.onDone()
-
-  expect(store.getActions()).toEqual([
-    {type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET", value: false}
-  ])
+  setTimeout(() => {
+    expect(store.getActions()).toEqual([
+      {type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET", value: false}
+    ])
+    done()
+  }, 501)
 })
 
 test("#fetchAhead adds 1ms to ts of last change", () => {
