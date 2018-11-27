@@ -2,8 +2,8 @@
 
 import Log from "../../models/Log"
 import type {Width, Layout} from "./Layout"
+import columnOrder from "../../lib/columnOrder"
 
-const EXCLUDED = ["ts", "_td"]
 export default class AutoLayout implements Layout {
   width: number
   height: number
@@ -18,10 +18,7 @@ export default class AutoLayout implements Layout {
   }
 
   columns(log: Log) {
-    const cols = log.descriptor
-      .map(d => d.name)
-      .filter(col => !EXCLUDED.includes(col))
-    return ["ts", ...cols]
+    return columnOrder(log.descriptor.map(d => d.name))
   }
 
   viewHeight() {

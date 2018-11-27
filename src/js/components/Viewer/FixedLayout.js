@@ -2,6 +2,7 @@
 
 import AutoLayout from "./AutoLayout"
 import ColumnWidths from "./ColumnWidths"
+import columnOrder from "../../lib/columnOrder"
 
 export default class LayoutFixed extends AutoLayout {
   columnWidths: ColumnWidths
@@ -12,7 +13,7 @@ export default class LayoutFixed extends AutoLayout {
   }
 
   columns() {
-    return this.columnWidths.columns()
+    return columnOrder(this.columnWidths.columns())
   }
 
   viewHeight() {
