@@ -3,7 +3,6 @@
 import ColumnWidths from "./ColumnWidths"
 import AutoLayout from "./AutoLayout"
 import FixedLayout from "./FixedLayout"
-import Log from "../../models/Log"
 import Columns from "../../models/Columns"
 
 export type Width = number | "auto"
@@ -16,7 +15,6 @@ export interface Layout {
   columnWidths?: ColumnWidths;
   columnsRename: Columns;
 
-  columns(Log): string[];
   viewHeight(): number;
   viewWidth(): number;
   listHeight(): number;

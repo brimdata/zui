@@ -22,9 +22,10 @@ export default class PhonyViewer extends React.Component {
 class Table extends React.Component {
   render() {
     const {layout, data} = this.props
+    const columns = layout.pickVisibleColumns(data[0].descriptor)
     const headers = (
       <tr>
-        {layout.columns(data[0]).map(col => (
+        {columns.map(({name: col}) => (
           <th key={col}>{col}</th>
         ))}
       </tr>
@@ -34,7 +35,7 @@ class Table extends React.Component {
     for (let i = 0; i < 10 && i < data.length; i++) {
       rows.push(
         <tr key={i}>
-          {layout.columns(data[0]).map(col => (
+          {columns.map(({name: col}) => (
             <td key={`${i}-${col}`}>
               <LogCell field={data[i].getField(col)} log={data[i]} />
             </td>

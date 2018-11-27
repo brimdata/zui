@@ -1,8 +1,6 @@
 /* @flow */
 
-import Log from "../../models/Log"
 import type {Width, Layout} from "./Layout"
-import columnOrder from "../../lib/columnOrder"
 import Columns from "../../models/Columns"
 import type {Descriptor} from "../../Models/Log"
 
@@ -21,8 +19,8 @@ export default class AutoLayout implements Layout {
     this.columnsRename = args.columnsRename
   }
 
-  columns(log: Log) {
-    return columnOrder(log.descriptor.map(d => d.name))
+  allColumns() {
+    return this.columnsRename.getAll()
   }
 
   pickVisibleColumns(descriptor: Descriptor) {

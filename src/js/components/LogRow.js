@@ -9,7 +9,7 @@ export default class LogRow extends React.PureComponent {
     this.renderCell = this.renderCell.bind(this)
   }
 
-  renderCell(col) {
+  renderCell({name: col}) {
     const {log, layout, index, isScrolling} = this.props
     const field = log.getField(col)
     const style = Styler.cell(layout, col)
@@ -36,7 +36,7 @@ export default class LogRow extends React.PureComponent {
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
         style={Styler.row(layout, index)}
       >
-        {layout.columns(log).map(this.renderCell)}
+        {layout.pickVisibleColumns(log.descriptor).map(this.renderCell)}
       </div>
     )
   }
