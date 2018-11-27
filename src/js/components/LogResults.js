@@ -3,13 +3,16 @@
 import React from "react"
 import {AutoSizer} from "react-virtualized"
 import {XLogViewer} from "../components/LogViewer"
+import NoResults from "./NoResults"
 
 type Props = {
-  hasData: boolean
+  hasData: boolean,
+  isComplete: boolean
 }
 
 export default class LogResults extends React.Component<Props> {
   render() {
+    if (!this.props.hasData && this.props.isComplete) return <NoResults />
     if (!this.props.hasData) return null
 
     return (
@@ -26,7 +29,8 @@ import {connect} from "react-redux"
 import * as mainSearch from "../reducers/mainSearch"
 
 const stateToProps = state => ({
-  hasData: mainSearch.getMainSearchEvents(state).length > 0
+  hasData: mainSearch.getMainSearchEvents(state).length > 0,
+  isComplete: mainSearch.getMainSearchIsComplete(state)
 })
 
 export const XLogResults = connect(stateToProps)(LogResults)
