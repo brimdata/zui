@@ -7,11 +7,20 @@ import * as descriptors from "./descriptors"
 import * as spaces from "./spaces"
 import UniqArray from "../models/UniqArray"
 import isEqual from "lodash/isEqual"
+
 const initialState = []
 
 export default createReducer(initialState, {
   COLUMNS_SET: (state, {columns}) => {
     return columns
+  },
+  COLUMNS_TOGGLE: (state, {column}) => {
+    const exists = state.find(c => isEqual(c, column))
+    if (exists) {
+      return state.filter(c => c !== exists)
+    } else {
+      return [column, ...state]
+    }
   }
 })
 
