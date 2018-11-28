@@ -1,29 +1,25 @@
 /* @flow */
 
 import AutoLayout from "./AutoLayout"
-import ColumnWidths from "./ColumnWidths"
 import * as mockLogs from "../../test/mockLogs"
 import Columns from "../../models/Columns"
-import uniqWith from "lodash/uniqWith"
-import isEqual from "lodash/isEqual"
 
 describe("AutoLayout", () => {
   const conn = mockLogs.conn()
   const dns = mockLogs.dns()
-  const tds = [conn.get("_td"), dns.get("_td")]
-  const all = uniqWith([...conn.descriptor, ...dns.descriptor], isEqual)
-  const visible = [
-    {name: "query", type: "string"},
-    {name: "duration", type: "interval"},
-    {name: "_path", type: "string"}
-  ]
-  const columns = new Columns({tds, all, visible})
+
+  const columns = new Columns([
+    {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
+    {td: "1", name: "duration", type: "interval", width: 44, isVisible: true},
+    {td: "1", name: "query", type: "string", width: 55, isVisible: true}
+  ])
+
   const autoLayout = new AutoLayout({
     height: 500,
     width: 960,
     rowH: 10,
     size: 200,
-    columns: columns
+    columns
   })
 
   test("#pickVisibleColumns keeps original ordering", () => {
@@ -73,23 +69,19 @@ import FixedLayout from "./FixedLayout"
 
 describe("FixedLayout", () => {
   const conn = mockLogs.conn()
-  const tds = [conn.get("_td")]
-  const all = conn.descriptor
-  const visible = [{name: "ts", type: "time"}]
-  const columns = new Columns({tds, all, visible})
-  const columnWidths = new ColumnWidths(["a", "b", "c"], {
-    a: 100,
-    b: 100,
-    default: 50
-  })
+
+  const columns = new Columns([
+    {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
+    {td: "1", name: "duration", type: "interval", width: 44, isVisible: true},
+    {td: "1", name: "history", type: "string", width: 55, isVisible: true}
+  ])
 
   const fixedLayout = new FixedLayout({
     height: 500,
     width: 100,
     rowH: 10,
     size: 200,
-    columnWidths,
-    columns: columns
+    columns
   })
 
   test("#viewHeight", () => {
@@ -98,8 +90,8 @@ describe("FixedLayout", () => {
 
   test("#listWidth when sum of column widths > width", () => {
     fixedLayout.width = 10
-    expect(fixedLayout.listWidth()).toBe(250)
-    expect(fixedLayout.rowWidth()).toBe(250)
+    expect(fixedLayout.listWidth()).toBe(121)
+    expect(fixedLayout.rowWidth()).toBe(121)
   })
 
   test("#listWidth ", () => {
@@ -110,16 +102,16 @@ describe("FixedLayout", () => {
 
   test("#rowWidth is same as listWidth", () => {
     fixedLayout.width = 100
-    expect(fixedLayout.rowWidth()).toBe(250)
+    expect(fixedLayout.rowWidth()).toBe(121)
   })
 
   test("#cellWidth", () => {
-    expect(fixedLayout.cellWidth("b")).toBe(100)
+    expect(fixedLayout.cellWidth("_path")).toBe(22)
   })
 
   test("#pickVisibleColumns", () => {
-    expect(fixedLayout.pickVisibleColumns(conn.descriptor)).toEqual([
-      {name: "ts", type: "time"}
-    ])
+    expect(
+      fixedLayout.pickVisibleColumns(conn.descriptor).map(c => c.name)
+    ).toEqual(["_path", "duration", "history"])
   })
 })
