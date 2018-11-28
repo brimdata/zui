@@ -33,9 +33,7 @@ export const getWidths = createSelector(
   getAll,
   columnWidths.getAll,
   (columns, columnWidths) => {
-    if (columns.length > 0) {
-      return new ColumnWidths(columns.map(c => c.name), columnWidths)
-    }
+    return new ColumnWidths(columns.map(c => c.name), columnWidths)
   }
 )
 
@@ -57,13 +55,19 @@ export const getColumns = createSelector(
   mainSearch.getTds,
   getColumnsFromTds,
   getAll,
-  (tds, all, visible) => createColumns(tds, all, visible)
+  columnWidths.getAll,
+  (tds, all, visible, widths) => createColumns(tds, all, visible, widths)
 )
 
-export const createColumns = (tds, all, visible) => {
-  if (visible.length === 0) {
-    return new Columns({tds, all, visible: all})
-  } else {
-    return new Columns({tds, all, visible})
-  }
+export const createColumns = (tds, all, visible, widths) => {
+  visible = visible.length === 0 ? all : visible
+
+  return new Columns(
+    all.map(({name, type}) => ({
+      name,
+      type,
+      isVisible: !!visible.find(vis => vis.name === name && vis.type === type),
+      width: name in widths ? widths[name] : widths.default
+    }))
+  )
 }

@@ -1,27 +1,19 @@
 /* @flow */
 
-type Column = {name: string, type: string}
+type Column = {name: string, type: string, isVisible: boolean}
 
 export default class Columns {
-  tds: string[]
-  all: Column[]
-  visible: Column[]
+  cols: Column[]
 
-  constructor(args: $ReadOnly<Columns>) {
-    this.tds = args.tds
-    this.all = args.all
-    this.visible = args.visible
-  }
-
-  getTds() {
-    return this.tds
+  constructor(cols: $ReadOnly<Columns>) {
+    this.cols = cols
   }
 
   getAll() {
-    return this.all
+    return this.cols
   }
 
   getVisible(): Column[] {
-    return this.visible
+    return this.cols.filter(col => col.isVisible)
   }
 }
