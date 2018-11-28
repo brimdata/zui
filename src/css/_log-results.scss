@@ -1,0 +1,51 @@
+.log-results {
+  background-color: $light-gray-2;
+  display: flex;
+  flex-direction: column;
+
+  .column-chooser-anchor {
+    margin-left: $leading;
+    padding: 3px 0;
+    outline: 1px solid green;
+    align-self: flex-end;
+  }
+}
+
+.column-chooser {
+  &.all-visible {
+    li.visible {
+      font-weight: normal;
+      background: inherit;
+      color: $gray-3;
+      &:hover {
+        background: $light-gray-2;
+      }
+    }
+  }
+
+  li {
+    color: $gray-1;
+  }
+
+  li.show-all {
+    background: none;
+    color: $gray-5;
+
+    &:hover {
+      background: $light-gray-2;
+    }
+  }
+
+  li.visible {
+    background: $blue-3;
+    color: white;
+
+    &:hover {
+      background: $blue-2;
+    }
+  }
+}
+
+.log-viewer-wrapper {
+  flex: 1;
+}
