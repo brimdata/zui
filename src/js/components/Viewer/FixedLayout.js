@@ -1,25 +1,24 @@
 /* @flow */
 
 import AutoLayout from "./AutoLayout"
-import ColumnWidths from "./ColumnWidths"
 
 export default class LayoutFixed extends AutoLayout {
-  columnWidths: ColumnWidths
-
-  constructor(opts: $ReadOnly<LayoutFixed>) {
-    super(opts)
-    this.columnWidths = opts.columnWidths
-  }
-
   viewHeight() {
     return this.height - this.rowH
   }
 
   listWidth() {
-    return Math.max(this.columnWidths.total(), this.viewWidth())
+    const total = this.columns
+      .getVisible()
+      .reduce((sum, col) => sum + col.width, 0)
+
+    return Math.max(total, this.viewWidth())
   }
 
-  cellWidth(col: string) {
-    return this.columnWidths.get(col)
+  cellWidth(columnName: string) {
+    // FIX
+    const col = this.columns.cols.find(({name}) => name === columnName)
+    if (col) return col.width
+    else return "auto"
   }
 }

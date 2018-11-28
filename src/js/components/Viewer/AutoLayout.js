@@ -23,6 +23,10 @@ export default class AutoLayout implements Layout {
     return this.columns.getAll()
   }
 
+  visibleColumns() {
+    return this.columns.getVisible()
+  }
+
   pickVisibleColumns(descriptor: Descriptor) {
     return descriptor.filter(
       field =>
