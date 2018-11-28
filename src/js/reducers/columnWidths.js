@@ -1,7 +1,15 @@
+/* @flow */
+
 import createReducer from "./createReducer"
+import type {State} from "./types"
 
 const initialState = {
   default: 75
+}
+
+export type ColumnWidths = {
+  default: number,
+  [string]: number
 }
 
 export default createReducer(initialState, {
@@ -13,6 +21,6 @@ export default createReducer(initialState, {
   }
 })
 
-export const getAll = state => {
+export const getAll = (state: State) => {
   return state.columnWidths
 }
