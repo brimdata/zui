@@ -1,6 +1,5 @@
 /* @flow */
 
-import ColumnWidths from "./ColumnWidths"
 import AutoLayout from "./AutoLayout"
 import FixedLayout from "./FixedLayout"
 import Columns from "../../models/Columns"
@@ -12,7 +11,6 @@ export interface Layout {
   height: number;
   size: number;
   rowH: number;
-  columnWidths?: ColumnWidths;
   columns: Columns;
 
   viewHeight(): number;
@@ -26,9 +24,12 @@ export interface Layout {
 }
 
 export const create = (args: $ReadOnly<Layout>) => {
-  const {columnWidths} = args
-  if (columnWidths) {
-    return new FixedLayout({columnWidths, ...args})
+  const {columns} = args
+  if (
+    columns.getTds().length === 1 ||
+    columns.getVisible().length < columns.getAll().length
+  ) {
+    return new FixedLayout(args)
   } else {
     return new AutoLayout(args)
   }
