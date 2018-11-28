@@ -14,7 +14,7 @@ import type {ColumnWidths} from "./columnWidths"
 
 const initialState = []
 
-export type SelectedColumns = typeof initialState
+export type SelectedColumns = {name: string, type: string}[]
 
 export default createReducer(initialState, {
   COLUMNS_SET: (state, {columns}) => {
@@ -36,18 +36,21 @@ export const getAll = (state: State) => {
   return state.selectedColumns
 }
 
+type TdColumns = {name: string, type: string, td: string}[]
+
 export const getColumnsFromTds = createSelector(
   mainSearch.getTds,
   descriptors.getDescriptors,
   spaces.getCurrentSpaceName,
-  (tds, descriptors, space) => {
-    const compareFn = (a, b) => a.name === b.name && a.type === b.type
-    const columns = new UniqArray(compareFn)
+  (tds, descriptors, space): TdColumns => {
+    const uniq = new UniqArray(isSame)
     tds.forEach(td => {
       const desc = descriptors[space + "." + td]
-      if (desc) desc.forEach(field => columns.push({td, ...field}))
+      if (desc) {
+        desc.forEach(field => uniq.push({td, ...field}))
+      }
     })
-    return columns.toArray()
+    return uniq.toArray()
   }
 )
 
@@ -55,23 +58,27 @@ export const getColumns = createSelector(
   getColumnsFromTds,
   getAll,
   columnWidths.getAll,
-  (all, visible, widths) => createColumns(all, visible, widths)
+  (all, selected, widths) => createColumns(all, selected, widths)
 )
 
-export const createColumns = (all: *[], visible: *[], widths: ColumnWidths) => {
-  visible = visible.length === 0 ? all : visible
+export const createColumns = (
+  all: TdColumns,
+  selected: SelectedColumns,
+  widths: ColumnWidths
+) => {
+  const noSelection = selected.length === 0
+  const ordered = columnOrder(all)
+  const columns = ordered.map(col => ({
+    name: col.name,
+    type: col.type,
+    td: col.td,
+    isVisible: noSelection || !!selected.find(c => isSame(c, col)),
+    width: col.name in widths ? widths[col.name] : widths.default
+  }))
 
-  return new Columns(
-    columnOrder(
-      all.map(({name, type, td}) => ({
-        name,
-        type,
-        td,
-        isVisible: !!visible.find(
-          vis => vis.name === name && vis.type === type
-        ),
-        width: name in widths ? widths[name] : widths.default
-      }))
-    )
-  )
+  return new Columns(columns)
+}
+
+const isSame = (a, b) => {
+  return a.name === b.name && a.type === b.type
 }
