@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import LogCell from "../LogCell"
+import * as Arr from "../../lib/Array"
 
 export default class PhonyViewer extends React.Component {
   constructor(props) {
@@ -20,34 +21,38 @@ export default class PhonyViewer extends React.Component {
 }
 
 class Table extends React.Component {
+  renderHeaderCell({name}) {
+    return <th key={name}>{name}</th>
+  }
+
+  renderCell(datum, column, index) {
+    const field = datum.getField(column.name)
+    if (field) {
+      return (
+        <td key={`${index}-${column.name}`}>
+          <LogCell field={field} log={datum} />
+        </td>
+      )
+    } else {
+      return null
+    }
+  }
+
   render() {
     const {layout, data} = this.props
-    const columns = layout.pickVisibleColumns(data[0].descriptor)
-    const headers = (
-      <tr>
-        {columns.map(({name: col}) => (
-          <th key={col}>{col}</th>
-        ))}
+    const columns = layout.visibleColumns()
+    const headers = <tr>{columns.map(this.renderHeaderCell)}</tr>
+
+    const renderRow = (datum, i) => (
+      <tr key={i}>
+        {columns.map(column => this.renderCell(datum, column, i))}
       </tr>
     )
-
-    const rows = []
-    for (let i = 0; i < 10 && i < data.length; i++) {
-      rows.push(
-        <tr key={i}>
-          {columns.map(({name: col}) => (
-            <td key={`${i}-${col}`}>
-              <LogCell field={data[i].getField(col)} log={data[i]} />
-            </td>
-          ))}
-        </tr>
-      )
-    }
 
     return ReactDOM.createPortal(
       <table className="phony-viewer" ref={r => (this.table = r)}>
         <thead>{headers}</thead>
-        <tbody>{rows}</tbody>
+        <tbody>{Arr.head(data, 10).map(renderRow)}</tbody>
       </table>,
 
       document.getElementById("measure-layer")
