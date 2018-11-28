@@ -8,6 +8,7 @@ import {ContextMenu, MenuItem} from "./ContextMenu"
 import * as actions from "../actions/columns"
 import classNames from "classnames"
 import Columns from "../models/Columns"
+import Down from "../icons/caret-bottom-sm.svg"
 
 type Props = {
   hasData: boolean,
@@ -58,10 +59,12 @@ export default class LogResults extends React.Component<Props, State> {
     return (
       <div className="log-results">
         <a
-          className="column-chooser-anchor"
+          className={classNames("column-chooser-anchor", {
+            open: this.state.showColumnChooser
+          })}
           onClick={this.onChooserClick.bind(this)}
         >
-          Columns
+          Columns <Down />
         </a>
 
         {this.state.showColumnChooser && (
