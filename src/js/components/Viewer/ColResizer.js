@@ -4,13 +4,14 @@ import React from "react"
 import type {Dispatch} from "redux"
 import {connect} from "react-redux"
 import * as columnWidths from "../../actions/columnWidths"
+import type {Width} from "./Layout"
 
 let oldWidth = null
 let start = null
 
 type Props = {
   col: string,
-  width: number,
+  width: Width,
   dispatch: Dispatch<*>
 }
 
