@@ -6,6 +6,7 @@ import * as descriptors from "./descriptors"
 import * as spaces from "./spaces"
 import UniqArray from "../models/UniqArray"
 import Columns from "../models/Columns"
+import columnOrder from "../lib/columnOrder"
 
 const initialState = []
 
@@ -55,12 +56,16 @@ export const createColumns = (all, visible, widths) => {
   visible = visible.length === 0 ? all : visible
 
   return new Columns(
-    all.map(({name, type, td}) => ({
-      name,
-      type,
-      td,
-      isVisible: !!visible.find(vis => vis.name === name && vis.type === type),
-      width: name in widths ? widths[name] : widths.default
-    }))
+    columnOrder(
+      all.map(({name, type, td}) => ({
+        name,
+        type,
+        td,
+        isVisible: !!visible.find(
+          vis => vis.name === name && vis.type === type
+        ),
+        width: name in widths ? widths[name] : widths.default
+      }))
+    )
   )
 }
