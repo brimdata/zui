@@ -30,13 +30,13 @@ export default class LogRow extends React.PureComponent {
   }
 
   render() {
-    const {log, layout, highlight, index} = this.props
+    const {layout, highlight, index} = this.props
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
         style={Styler.row(layout, index)}
       >
-        {layout.pickVisibleColumns(log.descriptor).map(this.renderCell)}
+        {layout.visibleColumns().map(this.renderCell)}
       </div>
     )
   }
