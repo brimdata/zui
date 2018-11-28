@@ -119,7 +119,7 @@ import * as mainSearch from "../reducers/mainSearch"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
 import * as logViewer from "../reducers/logViewer"
-import * as columns from "../reducers/columns"
+import * as selectedColumns from "../reducers/selectedColumns"
 import {connect} from "react-redux"
 
 const stateToProps = (state): $Shape<Props> => ({
@@ -130,7 +130,7 @@ const stateToProps = (state): $Shape<Props> => ({
   isFetchingAhead: logViewer.isFetchingAhead(state),
   isFetching: mainSearch.getMainSearchIsFetching(state),
   isComplete: mainSearch.getMainSearchIsComplete(state),
-  columns: columns.getColumns(state)
+  columns: selectedColumns.getColumns(state)
 })
 
 export const XLogViewer = connect(

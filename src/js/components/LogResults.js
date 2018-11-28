@@ -107,12 +107,12 @@ export default class LogResults extends React.Component<Props, State> {
 
 import {connect} from "react-redux"
 import * as mainSearch from "../reducers/mainSearch"
-import * as columns from "../reducers/columns"
+import * as selectedColumns from "../reducers/selectedColumns"
 
 const stateToProps = state => ({
   hasData: mainSearch.getMainSearchEvents(state).length > 0,
   isComplete: mainSearch.getMainSearchIsComplete(state),
-  columns: columns.getColumns(state)
+  columns: selectedColumns.getColumns(state)
 })
 
 export const XLogResults = connect(stateToProps)(LogResults)

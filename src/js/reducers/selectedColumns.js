@@ -27,7 +27,7 @@ export default createReducer(initialState, {
 })
 
 export const getAll = state => {
-  return state.columns
+  return state.selectedColumns
 }
 
 export const getColumnsFromTds = createSelector(

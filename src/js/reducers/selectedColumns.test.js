@@ -1,21 +1,23 @@
 /* @flow */
 
 import initStore from "../test/initStore"
-import * as columns from "./columns"
+import * as selectedColumns from "./selectedColumns"
 import * as actions from "../actions/columns"
 
 test("initialState getAll", () => {
   const store = initStore()
   const state = store.getState()
 
-  expect(columns.getAll(state)).toEqual([])
+  expect(selectedColumns.getAll(state)).toEqual([])
 })
 
-test("set columns", () => {
+test("set selectedColumns", () => {
   const store = initStore()
   store.dispatch(actions.setColumns([{name: "_path", type: "string"}]))
   const state = store.getState()
-  expect(columns.getAll(state)).toEqual([{name: "_path", type: "string"}])
+  expect(selectedColumns.getAll(state)).toEqual([
+    {name: "_path", type: "string"}
+  ])
 })
 
 test("toggle column adds column if it doesn't exist", () => {
@@ -24,16 +26,18 @@ test("toggle column adds column if it doesn't exist", () => {
     actions.toggleColumn({name: "duration", type: "number"})
   ])
 
-  expect(columns.getAll(state)).toEqual([{name: "duration", type: "number"}])
+  expect(selectedColumns.getAll(state)).toEqual([
+    {name: "duration", type: "number"}
+  ])
 })
 
-test("toggle column removes column if exists", () => {
+test.only("toggle column removes column if exists", () => {
   const store = initStore()
   const state = store.dispatchAll([
     actions.toggleColumn({name: "duration", type: "number"}),
     actions.toggleColumn({name: "duration", type: "number"})
   ])
-  expect(columns.getAll(state)).toEqual([])
+  expect(selectedColumns.getAll(state)).toEqual([])
 })
 
 describe("#createColumns", () => {
@@ -45,32 +49,32 @@ describe("#createColumns", () => {
   let visible = [{name: "b", type: "number"}]
 
   test("sets the td", () => {
-    const cols = columns.createColumns(all, visible, widths)
+    const cols = selectedColumns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.td)).toEqual(["1", "1"])
   })
 
-  test("sets all columns", () => {
-    const cols = columns.createColumns(all, visible, widths)
+  test("sets all selectedColumns", () => {
+    const cols = selectedColumns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.name)).toEqual(["a", "b"])
   })
 
   test("sets visibility", () => {
-    const cols = columns.createColumns(all, visible, widths)
+    const cols = selectedColumns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.isVisible)).toEqual([false, true])
   })
 
   test("sets widths", () => {
-    const cols = columns.createColumns(all, visible, widths)
+    const cols = selectedColumns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.width)).toEqual([22, 100])
   })
 
   test("sets visible to all if visible is empty", () => {
     visible = []
-    const cols = columns.createColumns(all, visible, widths)
+    const cols = selectedColumns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.isVisible)).toEqual([true, true])
   })

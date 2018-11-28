@@ -23,7 +23,7 @@ import packets from "./packets"
 import notices from "./notices"
 import logViewer from "./logViewer"
 import columnWidths from "./columnWidths"
-import columns from "./columns"
+import selectedColumns from "./selectedColumns"
 
 export default combineReducers({
   logs,
@@ -48,5 +48,5 @@ export default combineReducers({
   notices,
   logViewer,
   columnWidths,
-  columns
+  selectedColumns
 })
