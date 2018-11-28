@@ -18,7 +18,7 @@ export default class Header extends React.PureComponent<Props> {
     if (layout instanceof FixedLayout) {
       return (
         <header style={Styler.header(layout, scrollLeft)}>
-          {layout.pickVisibleColumns(layout.allColumns()).map(({name: col}) => (
+          {layout.visibleColumns().map(({name: col}) => (
             <div
               className="header-cell"
               key={col}
