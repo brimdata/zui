@@ -38,31 +38,39 @@ test("toggle column removes column if exists", () => {
 
 describe("#createColumns", () => {
   let widths = {a: 22, default: 100}
-  let tds = ["1"]
-  let all = [{name: "a", type: "string"}, {name: "b", type: "number"}]
+  let all = [
+    {name: "a", type: "string", td: "1"},
+    {name: "b", type: "number", td: "1"}
+  ]
   let visible = [{name: "b", type: "number"}]
 
+  test("sets the td", () => {
+    const cols = columns.createColumns(all, visible, widths)
+
+    expect(cols.getAll().map(c => c.td)).toEqual(["1", "1"])
+  })
+
   test("sets all columns", () => {
-    const cols = columns.createColumns(tds, all, visible, widths)
+    const cols = columns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.name)).toEqual(["a", "b"])
   })
 
   test("sets visibility", () => {
-    const cols = columns.createColumns(tds, all, visible, widths)
+    const cols = columns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.isVisible)).toEqual([false, true])
   })
 
   test("sets widths", () => {
-    const cols = columns.createColumns(tds, all, visible, widths)
+    const cols = columns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.width)).toEqual([22, 100])
   })
 
   test("sets visible to all if visible is empty", () => {
     visible = []
-    const cols = columns.createColumns(tds, all, visible, widths)
+    const cols = columns.createColumns(all, visible, widths)
 
     expect(cols.getAll().map(c => c.isVisible)).toEqual([true, true])
   })

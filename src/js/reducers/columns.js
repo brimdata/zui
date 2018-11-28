@@ -6,7 +6,6 @@ import * as mainSearch from "./mainSearch"
 import * as descriptors from "./descriptors"
 import * as spaces from "./spaces"
 import UniqArray from "../models/UniqArray"
-import isEqual from "lodash/isEqual"
 import Columns from "../models/Columns"
 
 const initialState = []
@@ -16,7 +15,9 @@ export default createReducer(initialState, {
     return columns
   },
   COLUMNS_TOGGLE: (state, {column}) => {
-    const exists = state.find(c => isEqual(c, column))
+    const exists = state.find(
+      c => c.name === column.name && c.type === column.type
+    )
     if (exists) {
       return state.filter(c => c !== exists)
     } else {
@@ -42,30 +43,31 @@ export const getColumnsFromTds = createSelector(
   descriptors.getDescriptors,
   spaces.getCurrentSpaceName,
   (tds, descriptors, space) => {
-    const columns = new UniqArray(isEqual)
+    const compareFn = (a, b) => (a.name === b.name) & (a.type === b.type)
+    const columns = new UniqArray(compareFn)
     tds.forEach(td => {
       const desc = descriptors[space + "." + td]
-      if (desc) desc.forEach(d => columns.push(d))
+      if (desc) desc.forEach(field => columns.push({td, ...field}))
     })
     return columns.toArray()
   }
 )
 
 export const getColumns = createSelector(
-  mainSearch.getTds,
   getColumnsFromTds,
   getAll,
   columnWidths.getAll,
-  (tds, all, visible, widths) => createColumns(tds, all, visible, widths)
+  (all, visible, widths) => createColumns(all, visible, widths)
 )
 
-export const createColumns = (tds, all, visible, widths) => {
+export const createColumns = (all, visible, widths) => {
   visible = visible.length === 0 ? all : visible
 
   return new Columns(
-    all.map(({name, type}) => ({
+    all.map(({name, type, td}) => ({
       name,
       type,
+      td,
       isVisible: !!visible.find(vis => vis.name === name && vis.type === type),
       width: name in widths ? widths[name] : widths.default
     }))
