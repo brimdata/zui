@@ -7,7 +7,6 @@ import * as Layout from "./Viewer/Layout"
 import type {Layout as LayoutInterface} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
-import ColumnWidths from "./Viewer/ColumnWidths"
 import PhonyViewer from "./Viewer/PhonyViewer"
 import * as columnWidths from "../actions/columnWidths"
 import * as actions from "../actions/logViewer"
@@ -21,7 +20,6 @@ type Props = {
   timeZone: string,
   moreAhead: boolean,
   isFetchingAhead: boolean,
-  columnWidths?: ColumnWidths,
   isFetching: boolean,
   isComplete: boolean,
   columns: Columns,
@@ -44,7 +42,6 @@ export default class LogViewer extends React.Component<Props> {
       width: this.props.width,
       size: this.props.logs.length,
       rowH: 25,
-      columnWidths: this.props.columnWidths,
       columns: this.props.columns
     })
   }
@@ -91,14 +88,13 @@ export default class LogViewer extends React.Component<Props> {
 
   shouldRenderPhony() {
     if (this.measured) return false
-    if (!this.props.columnWidths) return false
+    // Fix if layout is not fixed return false
     if (this.props.isComplete) return true
     if (this.props.logs.length >= 10) return true
   }
 
   render() {
     if (this.props.logs === 0) return null
-
     return (
       <div>
         {this.shouldRenderPhony() && (
@@ -132,7 +128,6 @@ const stateToProps = (state): $Shape<Props> => ({
   timeZone: getTimeZone(state),
   moreAhead: logViewer.moreAhead(state),
   isFetchingAhead: logViewer.isFetchingAhead(state),
-  columnWidths: columns.getWidths(state),
   isFetching: mainSearch.getMainSearchIsFetching(state),
   isComplete: mainSearch.getMainSearchIsComplete(state),
   columns: columns.getColumns(state)

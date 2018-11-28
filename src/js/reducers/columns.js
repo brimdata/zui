@@ -1,7 +1,6 @@
 import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import * as columnWidths from "./columnWidths"
-import ColumnWidths from "../components/Viewer/ColumnWidths"
 import * as mainSearch from "./mainSearch"
 import * as descriptors from "./descriptors"
 import * as spaces from "./spaces"
@@ -29,14 +28,6 @@ export default createReducer(initialState, {
 export const getAll = state => {
   return state.columns
 }
-
-export const getWidths = createSelector(
-  getAll,
-  columnWidths.getAll,
-  (columns, columnWidths) => {
-    return new ColumnWidths(columns.map(c => c.name), columnWidths)
-  }
-)
 
 export const getColumnsFromTds = createSelector(
   mainSearch.getTds,
