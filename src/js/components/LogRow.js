@@ -2,6 +2,7 @@ import React from "react"
 import LogCell from "./LogCell"
 import classNames from "classnames"
 import * as Styler from "./Viewer/Styler"
+import FixedLayout from "./Viewer/FixedLayout"
 
 export default class LogRow extends React.PureComponent {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class LogRow extends React.PureComponent {
           style={style}
         />
       )
-    } else {
+    } else if (layout instanceof FixedLayout) {
       return <div className="log-cell" key={key} style={style} />
     }
   }
