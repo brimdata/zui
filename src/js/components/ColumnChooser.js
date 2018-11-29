@@ -6,6 +6,7 @@ import Down from "../icons/caret-bottom-sm.svg"
 import {ContextMenu, MenuItem} from "./ContextMenu"
 import Columns from "../models/Columns"
 import * as actions from "../actions/columns"
+import * as Doc from "../lib/Doc"
 
 type Props = {
   columns: Columns,
@@ -29,12 +30,12 @@ export default class ColumnChooser extends React.Component<Props, State> {
   }
 
   onChooserClick(e: *) {
-    const {top, height, left, width} = e.currentTarget.getBoundingClientRect()
+    const {top, height, width, left} = e.currentTarget.getBoundingClientRect()
     this.setState({
       showColumnChooser: true,
       columnChooserStyle: {
         top: top + height + 6,
-        left: left + width
+        right: Doc.getWidth() - (left + width)
       }
     })
   }
