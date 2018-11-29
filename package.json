@@ -81,7 +81,6 @@
     "d3": "^5.5.0",
     "electron-dl": "^1.12.0",
     "lodash": "^4.17.10",
-    "memoize-one": "^4.0.3",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "opn": "^5.4.0",
