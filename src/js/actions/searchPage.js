@@ -11,15 +11,20 @@ export const init = () => (dispatch: Function, getState: Function, api: *) =>
     api.spaces().done(names => {
       let name = chooseSpaceName(names, getState())
       if (name) {
-        api.space({name}).done(info => {
-          dispatch(spaces.setSpaceInfo(info))
-          dispatch(spaces.setCurrentSpaceName(info.name))
-          dispatch(
-            timeWindow.setOuterTimeWindow(getCurrentSpaceTimeWindow(getState()))
-          )
-          dispatch(searchBar.submitSearchBar())
-          resolve()
-        })
+        api
+          .space({name})
+          .done(info => {
+            dispatch(spaces.setSpaceInfo(info))
+            dispatch(spaces.setCurrentSpaceName(info.name))
+            dispatch(
+              timeWindow.setOuterTimeWindow(
+                getCurrentSpaceTimeWindow(getState())
+              )
+            )
+            dispatch(searchBar.submitSearchBar())
+            resolve()
+          })
+          .error(reject)
       } else {
         reject("NoSpaces")
       }
