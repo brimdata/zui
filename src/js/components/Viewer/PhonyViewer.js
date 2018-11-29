@@ -4,23 +4,6 @@ import LogCell from "../LogCell"
 import * as Arr from "../../lib/Array"
 
 export default class PhonyViewer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {mounted: false}
-  }
-
-  componentDidMount() {
-    this.props.onMount(ReactDOM.findDOMNode(this.ref))
-    this.setState({mounted: true})
-  }
-
-  render() {
-    if (this.state.mounted) return null
-    return <Table ref={r => (this.ref = r)} {...this.props} />
-  }
-}
-
-class Table extends React.Component {
   renderHeaderCell({name}) {
     return <th key={name}>{name}</th>
   }
@@ -39,14 +22,12 @@ class Table extends React.Component {
   }
 
   render() {
-    const {layout, data} = this.props
-    const columns = layout.visibleColumns()
-    const headers = <tr>{columns.map(this.renderHeaderCell)}</tr>
+    const {columns, data} = this.props
+    const cols = columns.getVisible()
+    const headers = <tr>{cols.map(this.renderHeaderCell)}</tr>
 
     const renderRow = (datum, i) => (
-      <tr key={i}>
-        {columns.map(column => this.renderCell(datum, column, i))}
-      </tr>
+      <tr key={i}>{cols.map(column => this.renderCell(datum, column, i))}</tr>
     )
 
     return ReactDOM.createPortal(
@@ -59,3 +40,14 @@ class Table extends React.Component {
     )
   }
 }
+
+import {connect} from "react-redux"
+import * as selectedColumns from "../../reducers/selectedColumns"
+import * as mainSearch from "../../reducers/mainSearch"
+
+const stateToProps = state => ({
+  columns: selectedColumns.getColumns(state),
+  data: mainSearch.getLogs(state)
+})
+
+export const XPhonyViewer = connect(stateToProps)(PhonyViewer)

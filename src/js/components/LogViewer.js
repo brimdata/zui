@@ -7,7 +7,7 @@ import * as Layout from "./Viewer/Layout"
 import type {Layout as LayoutInterface} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
-import PhonyViewer from "./Viewer/PhonyViewer"
+import {XPhonyViewer} from "./Viewer/PhonyViewer"
 import * as columnWidths from "../actions/columnWidths"
 import * as actions from "../actions/logViewer"
 import Columns from "../models/Columns"
@@ -86,24 +86,11 @@ export default class LogViewer extends React.Component<Props> {
     this.measured = true
   }
 
-  shouldRenderPhony() {
-    if (this.measured) return false
-    // Fix if layout is not fixed return false
-    if (this.props.isComplete) return true
-    if (this.props.logs.length >= 10) return true
-  }
-
   render() {
     if (this.props.logs === 0) return null
     return (
       <div>
-        {this.shouldRenderPhony() && (
-          <PhonyViewer
-            data={this.props.logs}
-            layout={this.createLayout()}
-            onMount={this.measureColWidths.bind(this)}
-          />
-        )}
+        <XPhonyViewer />
         <Viewer
           layout={this.createLayout()}
           chunker={this.createChunker()}
