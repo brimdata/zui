@@ -1,13 +1,9 @@
 /* @flow */
 
 import AutoLayout from "./AutoLayout"
-import * as mockLogs from "../../test/mockLogs"
 import Columns from "../../models/Columns"
 
 describe("AutoLayout", () => {
-  const conn = mockLogs.conn()
-  const dns = mockLogs.dns()
-
   const columns = new Columns([
     {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
     {td: "1", name: "duration", type: "interval", width: 44, isVisible: true},
@@ -20,20 +16,6 @@ describe("AutoLayout", () => {
     rowH: 10,
     size: 200,
     columns
-  })
-
-  test("#pickVisibleColumns keeps original ordering", () => {
-    expect(autoLayout.pickVisibleColumns(conn.descriptor)).toEqual([
-      {name: "_path", type: "string"},
-      {name: "duration", type: "interval"}
-    ])
-  })
-
-  test("#pickVisibleColumns only picks from the logs descriptor", () => {
-    expect(autoLayout.pickVisibleColumns(dns.descriptor)).toEqual([
-      {name: "_path", type: "string"},
-      {name: "query", type: "string"}
-    ])
   })
 
   test("#viewHeight ", () => {
@@ -68,8 +50,6 @@ describe("AutoLayout", () => {
 import FixedLayout from "./FixedLayout"
 
 describe("FixedLayout", () => {
-  const conn = mockLogs.conn()
-
   const columns = new Columns([
     {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
     {td: "1", name: "duration", type: "interval", width: 44, isVisible: true},
@@ -107,11 +87,5 @@ describe("FixedLayout", () => {
 
   test("#cellWidth", () => {
     expect(fixedLayout.cellWidth("_path")).toBe(22)
-  })
-
-  test("#pickVisibleColumns", () => {
-    expect(
-      fixedLayout.pickVisibleColumns(conn.descriptor).map(c => c.name)
-    ).toEqual(["_path", "duration", "history"])
   })
 })

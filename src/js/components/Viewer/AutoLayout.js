@@ -2,7 +2,6 @@
 
 import type {Width, Layout} from "./Layout"
 import Columns from "../../models/Columns"
-import type {Descriptor} from "../../Models/Log"
 
 export default class AutoLayout implements Layout {
   width: number
@@ -25,15 +24,6 @@ export default class AutoLayout implements Layout {
 
   visibleColumns() {
     return this.columns.getVisible()
-  }
-
-  pickVisibleColumns(descriptor: Descriptor) {
-    return descriptor.filter(
-      field =>
-        !!this.columns
-          .getVisible()
-          .find(({name, type}) => field.name === name && field.type === type)
-    )
   }
 
   viewHeight() {
