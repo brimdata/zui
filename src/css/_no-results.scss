@@ -1,0 +1,11 @@
+.no-results {
+  text-align: center;
+  margin: $leading * 2;
+
+  h3 {
+    padding: $leading/2 $leading;
+    display: inline-block;
+    border-top: 1px solid $light-gray-3;
+    border-bottom: 1px solid $light-gray-3;
+  }
+}

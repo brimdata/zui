@@ -4,6 +4,7 @@ import * as searchBar from "../../actions/searchBar"
 import * as packets from "../../actions/packets"
 import * as logDetails from "../../actions/logDetails"
 import * as timeWindow from "../../actions/timeWindow"
+import * as view from "../../actions/view"
 import {TimeField} from "../../models/Field"
 import type {Space} from "../../lib/Space"
 import Log from "../../models/Log"
@@ -96,6 +97,7 @@ const detail = (log, dispatch) => ({
   text: "View log details",
   onClick: () => {
     dispatch(logDetails.viewLogDetail(log))
+    dispatch(view.showRightSidebar())
   }
 })
 

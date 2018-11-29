@@ -2,6 +2,10 @@
   padding: 0 6px;
   position: relative;
   border: 1px solid transparent;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
   @include type-colors;
 
   ._path {
@@ -13,7 +17,6 @@
     position: relative;
     z-index: 1;
     border: 1px dashed $gray-5;
-    background: white;
   }
 
   .cell-options-button {

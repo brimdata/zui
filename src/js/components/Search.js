@@ -6,17 +6,15 @@ import {AutoSizer} from "react-virtualized"
 
 import XTitleBar from "../connectors/XTitleBar"
 import XControlBar from "../connectors/XControlBar"
-import {XLogViewer} from "../components/LogViewer"
 import XSearchStats from "../connectors/XSearchStats"
 import XCountByTime from "../connectors/XCountByTime"
-import XSearchWelcome from "../connectors/XSearchWelcome"
-import XAnalysisViewer from "../connectors/XAnalysisViewer"
 import XLeftPane from "../connectors/XLeftPane"
 import XRightPane from "../connectors/XRightPane"
 import XDownloadProgress from "../connectors/XDownloadProgress"
-import ViewerErrorBoundary from "./ViewerErrorBoundary"
 import XNotice from "../connectors/XNotice"
 import * as searchPage from "../actions/searchPage"
+import {XSearchResults} from "./SearchResults"
+import {XColumnChooser} from "./ColumnChooser"
 
 type Props = {
   dispatch: Function,
@@ -45,13 +43,7 @@ export default class Search extends React.Component<Props, State> {
   }
 
   render() {
-    const {
-      isConnected,
-      currentSpaceName,
-      initialLoad,
-      logsTab,
-      analyticsTab
-    } = this.props
+    const {isConnected, currentSpaceName, logsTab, analyticsTab} = this.props
 
     if (!isConnected) return <Redirect to="/connect" />
     if (this.state.error === "NoSpaces") return <Redirect to="/spaces" />
@@ -67,24 +59,16 @@ export default class Search extends React.Component<Props, State> {
             <XTitleBar />
             <div className="search-page-header">
               <XControlBar />
-              {!initialLoad &&
-                logsTab && (
-                  <div className="search-page-header-charts">
-                    <AutoSizer disableHeight>
-                      {({width}) => <XCountByTime height={80} width={width} />}
-                    </AutoSizer>
-                  </div>
-                )}
+              {logsTab && (
+                <div className="search-page-header-charts">
+                  <AutoSizer disableHeight>
+                    {({width}) => <XCountByTime height={80} width={width} />}
+                  </AutoSizer>
+                </div>
+              )}
+              <XColumnChooser />
             </div>
-            <div className="search-page-body">
-              <ViewerErrorBoundary>
-                {initialLoad && (
-                  <XSearchWelcome currentSpaceName={currentSpaceName} />
-                )}
-                {!initialLoad && logsTab && <XLogViewer />}
-                {!initialLoad && analyticsTab && <XAnalysisViewer />}
-              </ViewerErrorBoundary>
-            </div>
+            <XSearchResults logsTab={logsTab} analyticsTab={analyticsTab} />
             <div className="search-page-footer">
               <XSearchStats />
             </div>

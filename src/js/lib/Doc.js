@@ -4,7 +4,9 @@ export type FixedPos = {
   top?: number,
   right?: number,
   left?: number,
-  bottom?: number
+  bottom?: number,
+  height?: number,
+  width?: number
 }
 
 export const id = (name: string) => {

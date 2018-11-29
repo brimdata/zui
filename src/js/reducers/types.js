@@ -8,6 +8,8 @@ import type {TimeWindow} from "./timeWindow"
 import type {Spaces} from "./spaces"
 import type {BoomdCredentials} from "./boomdCredentials"
 import type {LogViewer} from "./logViewer"
+import type {SelectedColumns} from "./selectedColumns"
+import type {ColumnWidths} from "./columnWidths"
 
 export type State = {
   notices: Notices,
@@ -17,7 +19,9 @@ export type State = {
   spaces: Spaces,
   currentSpaceName: string,
   boomdCredentials: BoomdCredentials,
-  logViewer: LogViewer
+  logViewer: LogViewer,
+  selectedColumns: SelectedColumns,
+  columnWidths: ColumnWidths
 }
 
 export type Dispatch = Function

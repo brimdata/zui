@@ -55,22 +55,24 @@ export const analyticsArgs = (dispatch: Dispatch, state: State) => {
 
 export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
   const program =
-    Program.addHeadProc(getSearchProgram(state), 1000) + "; count()"
+    Program.addHeadProc(getSearchProgram(state), 200) + "; count()"
 
   return {
     space: getCurrentSpaceName(state),
     program,
     timeWindow: getInnerTimeWindow(state),
-    callbacks: (request: *) => request.channel(1, logsReceiver(dispatch))
+    callbacks: (request: *) =>
+      request
+        .channel(1, logsReceiver(dispatch))
+        .channel(1, pageReceiver(dispatch, 200))
   }
 }
 
 export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
   const program =
-    Program.addHeadProc(getSearchProgram(state), 1000) +
+    Program.addHeadProc(getSearchProgram(state), 200) +
     "; " +
     getCountByTimeProc(state)
-
   return {
     space: getCurrentSpaceName(state),
     program,
@@ -83,7 +85,7 @@ export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
 }
 
 export const logsPagedArgs = (dispatch: Dispatch, state: State) => {
-  const PER_PAGE = 1000
+  const PER_PAGE = 200
   const program =
     Program.addHeadProc(getSearchProgram(state), PER_PAGE) +
     "; " +

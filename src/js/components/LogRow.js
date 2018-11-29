@@ -1,33 +1,44 @@
 import React from "react"
 import LogCell from "./LogCell"
 import classNames from "classnames"
+import * as Styler from "./Viewer/Styler"
+import FixedLayout from "./Viewer/FixedLayout"
 
 export default class LogRow extends React.PureComponent {
-  fieldIndexes() {
-    // Add tests
-    const log = this.props.log
-    let indexes = log.descriptor.map((d, i) => i)
-    const tsIndex = log.getIndex("ts")
-    indexes = indexes.filter(i => i !== tsIndex && i !== log.getIndex("_td"))
-    indexes.unshift(tsIndex)
-    return indexes
+  constructor(props) {
+    super(props)
+    this.renderCell = this.renderCell.bind(this)
+  }
+
+  renderCell({name: col}) {
+    const {log, layout, index, isScrolling} = this.props
+    const field = log.getField(col)
+    const style = Styler.cell(layout, col)
+    const key = `${index}-${col}`
+    if (field) {
+      return (
+        <LogCell
+          key={key}
+          field={log.getField(col)}
+          log={log}
+          isScrolling={isScrolling}
+          style={style}
+        />
+      )
+    } else if (layout instanceof FixedLayout) {
+      return <div className="log-cell" key={key} style={style} />
+    }
   }
 
   render() {
-    const {log, style, highlight, index, isScrolling} = this.props
+    const {layout, highlight, index} = this.props
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={style}
+        style={Styler.row(layout, index)}
+        onClick={this.props.onClick}
       >
-        {this.fieldIndexes().map(index => (
-          <LogCell
-            key={index}
-            field={log.getFieldAt(index)}
-            log={log}
-            isScrolling={isScrolling}
-          />
-        ))}
+        {layout.visibleColumns().map(this.renderCell)}
       </div>
     )
   }

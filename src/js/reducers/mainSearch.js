@@ -5,9 +5,10 @@ import {getCurrentSpaceName} from "../reducers/spaces"
 import Log from "../models/Log"
 import {isTimeWindow} from "../models/TimeWindow"
 import countByTimeInterval from "../lib/countByTimeInterval"
+import UniqArray from "../models/UniqArray"
 
 const initialState = {
-  isFetching: false,
+  status: "INIT",
   events: []
 }
 
@@ -15,7 +16,7 @@ export default createReducer(initialState, {
   MAIN_SEARCH_RESET: () => ({...initialState}),
   MAIN_SEARCH_REQUEST: () => ({
     ...initialState,
-    isFetching: true
+    status: "FETCHING"
   }),
   MAIN_SEARCH_EVENTS: (state, {events}) => ({
     ...state,
@@ -31,11 +32,9 @@ export default createReducer(initialState, {
   },
   MAIN_SEARCH_COMPLETE: state => ({
     ...state,
-    isFetching: false
+    status: "COMPLETE"
   })
 })
-
-export const getMainSearchIsFetching = state => state.mainSearch.isFetching
 
 const BOOM_INTERVALS = {
   millisecond: "ms",
@@ -45,8 +44,16 @@ const BOOM_INTERVALS = {
   day: "day"
 }
 
-export function getPage(state) {
-  return state.mainSearch.page
+export const getMainSearchIsFetching = state => {
+  return getMainSearchStatus(state) === "FETCHING"
+}
+
+export const getMainSearchIsComplete = state => {
+  return getMainSearchStatus(state) === "COMPLETE"
+}
+
+export const getMainSearchStatus = state => {
+  return state.mainSearch.status
 }
 
 export function mainSearchEvents(state) {
@@ -56,6 +63,12 @@ export function mainSearchEvents(state) {
 export const getMainSearchEvents = state => state.mainSearch.events
 
 export const getSchemas = state => state.descriptors
+
+export const getTds = createSelector(getMainSearchEvents, tuples => {
+  const uniq = new UniqArray()
+  tuples.forEach(([td]) => uniq.push(td))
+  return uniq.toArray()
+})
 
 export const getLogs = createSelector(
   getMainSearchEvents,

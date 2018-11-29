@@ -14,7 +14,8 @@ import classNames from "classnames"
 type Props = {
   field: Field,
   log: Log,
-  isScrolling: boolean
+  isScrolling: boolean,
+  style?: Object
 }
 
 type State = {
@@ -85,6 +86,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
         onMouseLeave={mouseLeave}
         onContextMenu={this.toggleMenu}
         onClick={e => Doc.selectText(e.currentTarget)}
+        style={this.props.style}
       >
         {this.renderValue(this.props.field)}
 

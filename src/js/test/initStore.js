@@ -4,7 +4,16 @@ import {createStore, compose, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 import reducer from "../reducers"
 
-export default (api: *) =>
+type TestStore = {
+  dispatch: Function,
+  dispatchAll: Function,
+  getActions: Function,
+  clearActions: Function,
+  getState: Function
+}
+
+export default (api: *): TestStore =>
+  // $FlowFixMe
   createStore(
     reducer,
     undefined,

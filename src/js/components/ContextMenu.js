@@ -4,10 +4,12 @@ import React from "react"
 import ReactDOM from "react-dom"
 import * as Doc from "../lib/Doc"
 import type {FixedPos} from "../lib/Doc"
+import classNames from "classnames"
 
 type Props = {
   children: any,
   style: FixedPos,
+  className?: string,
   onOutsideClick: Function
 }
 
@@ -30,7 +32,11 @@ export class ContextMenu extends React.Component<Props, State> {
     const {left, top, width, height} = this.ref.getBoundingClientRect()
 
     if (top + height > Doc.getHeight()) {
-      this.setState({top: top - height})
+      if (top - height >= 0) {
+        this.setState({top: top - height})
+      } else {
+        this.setState({height: Doc.getHeight() - top - 6})
+      }
     }
 
     if (left + width > Doc.getWidth()) {
@@ -42,7 +48,7 @@ export class ContextMenu extends React.Component<Props, State> {
     return ReactDOM.createPortal(
       <div className="context-menu-overlay" onClick={this.props.onOutsideClick}>
         <ul
-          className="context-menu"
+          className={classNames("context-menu", this.props.className)}
           ref={r => (this.ref = r)}
           style={{...this.state}}
         >
@@ -54,7 +60,9 @@ export class ContextMenu extends React.Component<Props, State> {
   }
 }
 
-type ItemProps = {onClick: Function, children: any}
-export const MenuItem = ({onClick, children}: ItemProps) => (
-  <li onClick={onClick}>{children}</li>
+type ItemProps = {onClick: Function, children: any, className?: string}
+export const MenuItem = ({onClick, children, className}: ItemProps) => (
+  <li onClick={onClick} className={className}>
+    {children}
+  </li>
 )

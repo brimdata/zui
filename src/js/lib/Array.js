@@ -18,3 +18,11 @@ export const indexOfLastChange = (
 export const isEmpty = (array: *[]) => {
   return array.length === 0
 }
+
+export const head = (array: *[], n: number) => {
+  const newArray = []
+  for (let i = 0; i <= n && i < array.length; ++i) {
+    newArray.push(array[i])
+  }
+  return newArray
+}

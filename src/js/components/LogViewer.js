@@ -1,81 +1,120 @@
 /* @flow */
 
 import React from "react"
-import {List, AutoSizer} from "react-virtualized"
 import LogRow from "./LogRow"
 import Log from "../models/Log"
-import {getLogs} from "../reducers/mainSearch"
-import {buildLogDetail} from "../reducers/logDetails"
-import {getTimeZone} from "../reducers/view"
-import {connect} from "react-redux"
+import * as Layout from "./Viewer/Layout"
+import type {Layout as LayoutInterface} from "./Viewer/Layout"
+import Chunker from "./Viewer/Chunker"
+import Viewer from "./Viewer/Viewer"
+import {XPhonyViewer} from "./Viewer/PhonyViewer"
 import * as actions from "../actions/logViewer"
-import * as logViewer from "../reducers/logViewer"
-import type {Dispatch} from "redux"
+import Columns from "../models/Columns"
+import * as logDetails from "../actions/logDetails"
 
 type Props = {
+  height: number,
+  width: number,
   logs: Log[],
   logDetail: Log,
   timeZone: string,
   moreAhead: boolean,
   isFetchingAhead: boolean,
-  dispatch: Dispatch<*>
+  isFetching: boolean,
+  isComplete: boolean,
+  columns: Columns,
+  dispatch: Function
 }
 
-const stateToProps = (state): $Shape<Props> => ({
-  logs: getLogs(state),
-  logDetail: buildLogDetail(state),
-  timeZone: getTimeZone(state),
-  moreAhead: logViewer.moreAhead(state),
-  isFetchingAhead: logViewer.isFetchingAhead(state)
-})
-
 export default class LogViewer extends React.Component<Props> {
-  render() {
-    const {logs, logDetail, timeZone} = this.props
-    const rowRenderer = ({key, index, style, isScrolling}) => (
+  measured: boolean
+  onLastChunk: Function
+
+  constructor(props: Props) {
+    super(props)
+    this.measured = false
+    this.onLastChunk = this.onLastChunk.bind(this)
+  }
+
+  createLayout() {
+    return Layout.create({
+      height: this.props.height,
+      width: this.props.width,
+      size: this.props.logs.length,
+      rowH: 25,
+      columns: this.props.columns
+    })
+  }
+
+  createChunker() {
+    return new Chunker({
+      size: this.props.logs.length,
+      height: this.props.height,
+      rowHeight: 25,
+      chunkSize: 5,
+      overScan: 2
+    })
+  }
+
+  onLastChunk() {
+    const {isFetching, isFetchingAhead, moreAhead} = this.props
+    if (!isFetching && !isFetchingAhead && moreAhead) {
+      this.props.dispatch(actions.fetchAhead())
+    }
+  }
+
+  renderRow(index: number, isScrolling: boolean, layout: LayoutInterface) {
+    return (
       <LogRow
-        key={key}
-        log={logs[index]}
-        timeZone={timeZone}
-        highlight={Log.isSame(logs[index], logDetail)}
-        style={style}
-        isScrolling={isScrolling}
+        key={index}
         index={index}
+        log={this.props.logs[index]}
+        timeZone={this.props.timeZone}
+        highlight={Log.isSame(this.props.logs[index], this.props.logDetail)}
+        isScrolling={isScrolling}
+        layout={layout}
+        onClick={() => {
+          this.props.dispatch(logDetails.viewLogDetail(this.props.logs[index]))
+        }}
       />
     )
+  }
 
-    const onRowsRendered = ({stopIndex}) => {
-      const reachedEnd = logs.length - 1 === stopIndex
-
-      if (reachedEnd && this.props.moreAhead && !this.props.isFetchingAhead) {
-        this.props.dispatch(actions.fetchAhead())
-      }
-    }
-
+  render() {
+    if (this.props.logs === 0) return null
     return (
-      <div className="log-viewer-wrapper">
-        <AutoSizer>
-          {({height, width}) => {
-            return (
-              <List
-                onRowsRendered={onRowsRendered}
-                className="log-viewer"
-                width={width}
-                height={height}
-                rowCount={logs.length}
-                rowHeight={25}
-                rowRenderer={rowRenderer}
-                overscanRowCount={2}
-              />
-            )
-          }}
-        </AutoSizer>
+      <div>
+        <XPhonyViewer />
+        <Viewer
+          layout={this.createLayout()}
+          chunker={this.createChunker()}
+          onLastChunk={this.onLastChunk}
+          rowRenderer={this.renderRow.bind(this)}
+        />
       </div>
     )
   }
 }
 
+import * as mainSearch from "../reducers/mainSearch"
+import {buildLogDetail} from "../reducers/logDetails"
+import {getTimeZone} from "../reducers/view"
+import * as logViewer from "../reducers/logViewer"
+import * as selectedColumns from "../reducers/selectedColumns"
+import {connect} from "react-redux"
+
+const stateToProps = (state): $Shape<Props> => ({
+  logs: mainSearch.getLogs(state),
+  logDetail: buildLogDetail(state),
+  timeZone: getTimeZone(state),
+  moreAhead: logViewer.moreAhead(state),
+  isFetchingAhead: logViewer.isFetchingAhead(state),
+  isFetching: mainSearch.getMainSearchIsFetching(state),
+  isComplete: mainSearch.getMainSearchIsComplete(state),
+  columns: selectedColumns.getColumns(state)
+})
+
 export const XLogViewer = connect(
   stateToProps,
-  (dispatch: Dispatch<*>): Object => ({dispatch})
+  (dispatch: *) => ({dispatch})
 )(LogViewer)

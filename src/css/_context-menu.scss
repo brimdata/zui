@@ -12,6 +12,7 @@ $br: 8px;
 }
 
 .context-menu {
+  overflow: scroll;
   position: fixed;
   padding: 0;
   margin: 0;

@@ -90,7 +90,7 @@ test("search with inner time does not ask for count by every", () => {
 
   expect(search).toBeCalledWith(
     expect.objectContaining({
-      string: "_path = conn | head 1000; count()"
+      string: "_path = conn | head 200; count()"
     })
   )
 })
@@ -191,7 +191,7 @@ test("fetching a regular search puts procs on the end", () => {
 
   expect(search).toBeCalledWith(
     expect.objectContaining({
-      string: "* | head 1000; every 12hr count() by _path"
+      string: "* | head 200; every 12hr count() by _path"
     })
   )
 })

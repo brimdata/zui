@@ -32,7 +32,7 @@ export const setIsFetchingAhead = (value: boolean) => ({
 })
 
 export const fetchAhead = (): Thunk => (dispatch, getState, api) => {
-  const PER_PAGE = 1000
+  const PER_PAGE = 200
   dispatch(setIsFetchingAhead(true))
   const state = getState()
   const logs = mainSearch.getLogs(state)
@@ -54,5 +54,5 @@ export const fetchAhead = (): Thunk => (dispatch, getState, api) => {
     .search({string: programWithHead, timeWindow, space})
     .channel(0, pageReceiver(dispatch, PER_PAGE, spliceIndex))
     .channel(0, logsReceiver(dispatch))
-    .done(() => dispatch(setIsFetchingAhead(false)))
+    .done(() => setTimeout(() => dispatch(setIsFetchingAhead(false)), 500))
 }

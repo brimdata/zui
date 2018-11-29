@@ -1,0 +1,10 @@
+.log-results {
+  background-color: $light-gray-2;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+.log-viewer-wrapper {
+  flex: 1;
+}
