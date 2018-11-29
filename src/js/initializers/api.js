@@ -6,5 +6,5 @@ import type {State} from "../reducers/types"
 
 export default (state: ?State) => {
   const creds = state && getCredentials(state)
-  return new Client(creds)
+  return new Client({...creds, timeout: 60000})
 }
