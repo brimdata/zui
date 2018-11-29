@@ -2,7 +2,7 @@
 
 import uniq from "lodash/uniq"
 
-type Column = {
+export type Column = {
   name: string,
   type: string,
   td: string,
@@ -27,5 +27,12 @@ export default class Columns {
 
   getVisible(): Column[] {
     return this.cols.filter(col => col.isVisible)
+  }
+
+  showHeader() {
+    return (
+      this.getTds().length === 1 ||
+      this.getVisible().length < this.getAll().length
+    )
   }
 }

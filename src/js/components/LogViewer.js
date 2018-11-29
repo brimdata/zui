@@ -8,7 +8,6 @@ import type {Layout as LayoutInterface} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
 import {XPhonyViewer} from "./Viewer/PhonyViewer"
-import * as columnWidths from "../actions/columnWidths"
 import * as actions from "../actions/logViewer"
 import Columns from "../models/Columns"
 import * as logDetails from "../actions/logDetails"
@@ -79,15 +78,6 @@ export default class LogViewer extends React.Component<Props> {
         }}
       />
     )
-  }
-
-  measureColWidths(ref: HTMLTableElement) {
-    let colWidths = {}
-    ref.querySelectorAll("th").forEach(th => {
-      colWidths[th.innerHTML] = th.getBoundingClientRect().width
-    })
-    this.props.dispatch(columnWidths.setWidths(colWidths))
-    this.measured = true
   }
 
   render() {

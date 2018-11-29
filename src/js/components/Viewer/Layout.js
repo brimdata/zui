@@ -25,10 +25,7 @@ export interface Layout {
 
 export const create = (args: $ReadOnly<Layout>) => {
   const {columns} = args
-  if (
-    columns.getTds().length === 1 ||
-    columns.getVisible().length < columns.getAll().length
-  ) {
+  if (columns.showHeader()) {
     return new FixedLayout(args)
   } else {
     return new AutoLayout(args)
