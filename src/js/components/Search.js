@@ -14,6 +14,7 @@ import XDownloadProgress from "../connectors/XDownloadProgress"
 import XNotice from "../connectors/XNotice"
 import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
+import {XColumnChooser} from "./ColumnChooser"
 
 type Props = {
   dispatch: Function,
@@ -65,6 +66,7 @@ export default class Search extends React.Component<Props, State> {
                   </AutoSizer>
                 </div>
               )}
+              <XColumnChooser />
             </div>
             <XSearchResults logsTab={logsTab} analyticsTab={analyticsTab} />
             <div className="search-page-footer">
