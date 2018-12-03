@@ -32,7 +32,7 @@ const SearchStats = ({
 )
 
 function duration(start, update) {
-    return update-start
+  return update - start
 }
 
 const fmtDiff = (startTime, updateTime) => {

@@ -1,8 +1,8 @@
 import {setSearchStats} from "../actions/searchStats"
 
 function boomTime({sec, ns}) {
-    let flt = sec + ns / 1e9
-    return flt
+  let flt = sec + ns / 1e9
+  return flt
 }
 
 export default dispatch => payload => {
