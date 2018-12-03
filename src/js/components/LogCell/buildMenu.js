@@ -103,7 +103,7 @@ const detail = (log, dispatch) => ({
 
 const fromTime = (field, dispatch) => ({
   type: "action",
-  text: 'Use as "start" time',
+  text: "Use as \"start\" time",
   onClick: () => {
     dispatch(timeWindow.setOuterFromTime(field.toDate()))
     dispatch(searchBar.submitSearchBar())
@@ -112,7 +112,7 @@ const fromTime = (field, dispatch) => ({
 
 const toTime = (field, dispatch) => ({
   type: "action",
-  text: 'Use as "end" time',
+  text: "Use as \"end\" time",
   onClick: () => {
     dispatch(timeWindow.setOuterToTime(field.toDate()))
     dispatch(searchBar.submitSearchBar())
