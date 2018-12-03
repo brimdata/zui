@@ -1,10 +1,8 @@
-import reducer, {initialState, getSearchStats} from "./searchStats"
-import * as a from "../actions/searchStats"
+/* @flow */
 
-const reduce = actions =>
-  JSON.parse(
-    JSON.stringify({searchStats: actions.reduce(reducer, initialState)})
-  )
+import {getSearchStats} from "./searchStats"
+import * as a from "../actions/searchStats"
+import initStore from "../test/initStore"
 
 test("setting search stats", () => {
   const stats = {
@@ -15,8 +13,9 @@ test("setting search stats", () => {
     tuplesMatched: 548741,
     tuplesRead: 548741
   }
-
-  const state = reduce([a.setSearchStats(stats)])
+  const store = initStore()
+  store.dispatch(a.setSearchStats(stats))
+  const state = store.getState()
 
   expect(getSearchStats(state)).toEqual(stats)
 })
