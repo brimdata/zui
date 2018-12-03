@@ -1,8 +1,4 @@
-import reducer, {
-  initialState,
-  getSearchStats,
-  getRawSearchStats
-} from "./searchStats"
+import reducer, {initialState, getSearchStats} from "./searchStats"
 import * as a from "../actions/searchStats"
 
 const reduce = actions =>
@@ -23,5 +19,4 @@ test("setting search stats", () => {
   const state = reduce([a.setSearchStats(stats)])
 
   expect(getSearchStats(state)).toEqual(stats)
-  expect(getRawSearchStats(state).startTime).toBe(1536886114918)
 })
