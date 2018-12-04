@@ -1,26 +1,23 @@
-import createReducer from "./createReducer"
-import {createSelector} from "reselect"
-import * as Time from "../lib/Time"
+/* @flow */
 
-const initialState = {}
+import createReducer from "./createReducer"
+import type {State} from "./types"
+
+export const initialState = {
+  startTime: 0,
+  updateTime: 0,
+  bytesMatched: 0,
+  bytesRead: 0,
+  tuplesMatched: 0,
+  tuplesRead: 0
+}
+
+export type SearchStats = typeof initialState
 
 export default createReducer(initialState, {
-  SEARCH_STATS_SET: (state, {stats}) => normalize(stats)
+  SEARCH_STATS_SET: (state, {stats}) => stats
 })
 
-const normalize = stats => ({
-  ...stats,
-  updateTime: Time.toStore(stats.updateTime),
-  startTime: Time.toStore(stats.startTime)
-})
-
-const parse = stats => ({
-  ...stats,
-  updateTime: Time.fromStore(stats.updateTime),
-  startTime: Time.fromStore(stats.startTime)
-})
-
-export const getRawSearchStats = state => state.searchStats
-export const getSearchStats = createSelector(getRawSearchStats, stats =>
-  parse(stats)
-)
+export const getSearchStats = (state: State) => {
+  return state.searchStats
+}

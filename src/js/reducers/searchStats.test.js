@@ -1,27 +1,21 @@
-import reducer, {
-  initialState,
-  getSearchStats,
-  getRawSearchStats
-} from "./searchStats"
-import * as a from "../actions/searchStats"
+/* @flow */
 
-const reduce = actions =>
-  JSON.parse(
-    JSON.stringify({searchStats: actions.reduce(reducer, initialState)})
-  )
+import {getSearchStats} from "./searchStats"
+import * as a from "../actions/searchStats"
+import initStore from "../test/initStore"
 
 test("setting search stats", () => {
   const stats = {
-    startTime: new Date(1536886114918),
-    updateTime: new Date(1536886114598),
+    startTime: 1536886114918,
+    updateTime: 1536886114598,
     bytesMatched: 105478381,
     bytesRead: 105539067,
     tuplesMatched: 548741,
     tuplesRead: 548741
   }
-
-  const state = reduce([a.setSearchStats(stats)])
+  const store = initStore()
+  store.dispatch(a.setSearchStats(stats))
+  const state = store.getState()
 
   expect(getSearchStats(state)).toEqual(stats)
-  expect(getRawSearchStats(state).startTime).toBe("2018-09-14 00:48:34.918")
 })

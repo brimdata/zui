@@ -1,5 +1,4 @@
 import React from "react"
-import * as TimeWindow from "../lib/TimeWindow"
 import * as fmt from "../lib/fmt"
 
 const SearchStats = ({
@@ -32,14 +31,18 @@ const SearchStats = ({
   </div>
 )
 
+function duration(start, update) {
+  return update - start
+}
+
 const fmtDiff = (startTime, updateTime) => {
   if (!startTime || !updateTime) return "0s"
-  return TimeWindow.duration([startTime, updateTime], "seconds") + " s"
+  return duration(startTime, updateTime).toFixed(3) + " s"
 }
 
 const elapsedSeconds = (startTime, updateTime) => {
   if (!startTime || !updateTime) return 0
-  return TimeWindow.duration([startTime, updateTime], "seconds")
+  return duration(startTime, updateTime)
 }
 
 const fmtSpeed = (startTime, updateTime, bytesRead) => {

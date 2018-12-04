@@ -10,6 +10,7 @@ import type {BoomdCredentials} from "./boomdCredentials"
 import type {LogViewer} from "./logViewer"
 import type {SelectedColumns} from "./selectedColumns"
 import type {ColumnWidths} from "./columnWidths"
+import type {SearchStats} from "./searchStats"
 
 export type State = {
   notices: Notices,
@@ -21,7 +22,8 @@ export type State = {
   boomdCredentials: BoomdCredentials,
   logViewer: LogViewer,
   selectedColumns: SelectedColumns,
-  columnWidths: ColumnWidths
+  columnWidths: ColumnWidths,
+  searchStats: SearchStats
 }
 
 export type Dispatch = Function
