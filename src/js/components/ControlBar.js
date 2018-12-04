@@ -2,6 +2,7 @@ import React from "react"
 import XSearchBar from "../connectors/XSearchBar"
 import Modal from "./Modal"
 import XSettings from "../connectors/XSettings"
+import HistoryStepper from "./HistoryStepper"
 
 export default class ControlBar extends React.Component {
   constructor(props) {
@@ -13,8 +14,8 @@ export default class ControlBar extends React.Component {
   render() {
     return (
       <div className="control-bar">
+        <HistoryStepper />
         <XSearchBar />
-
         <Modal
           className="settings-modal"
           isOpen={this.state.settingsIsOpen}

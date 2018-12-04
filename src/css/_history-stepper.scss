@@ -1,0 +1,13 @@
+.history-stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 6px;
+  height: 34px;
+
+  svg {
+    fill: #c5c7d1;
+    height: 16px;
+    width: 16px;
+  }
+}
