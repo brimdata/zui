@@ -1,5 +1,6 @@
 /* @flow */
 import defaultArg from "../lib/defaultArg"
+import isEqual from "lodash/isEqual"
 
 export default class NavHistory<T> {
   entries: T[]
@@ -15,8 +16,10 @@ export default class NavHistory<T> {
   }
 
   push(entry: T) {
-    this.entries.splice(this.position + 1, this.entries.length, entry)
-    this.position = this.entries.length - 1
+    if (!isEqual(entry, this.getCurrentEntry())) {
+      this.entries.splice(this.position + 1, this.entries.length, entry)
+      this.position = this.entries.length - 1
+    }
   }
 
   goBack() {

@@ -18,6 +18,12 @@ export const initialState = {
 export type SearchBar = typeof initialState
 
 export default createReducer(initialState, {
+  SEARCH_BAR_RESTORE: (state, {value}) => {
+    return {
+      ...state,
+      ...value
+    }
+  },
   QUERY_INCLUDE_APPEND: (state, {field}) => ({
     ...state,
     current: trim(state.current + ` ${field.name}=${escapeSpaces(field.value)}`)

@@ -58,3 +58,11 @@ export const pickEntryOffState = (state: State) => {
     timeWindow: state.timeWindow
   }
 }
+
+export const canGoBack = createSelector(buildSearchHistory, history => {
+  return history.canGoBack()
+})
+
+export const canGoForward = createSelector(buildSearchHistory, history => {
+  return history.canGoForward()
+})

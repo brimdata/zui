@@ -1,7 +1,7 @@
 /* @flow */
 
 export default class MockApi {
-  constructor(obj: Object) {
+  constructor(obj: Object = {}) {
     Object.assign(this, obj)
   }
 

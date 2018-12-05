@@ -7,10 +7,22 @@ beforeEach(() => {
   history = new NavHistory<string>({entries: []})
 })
 
+test("#constructor throws error if position is out of bounds", () => {
+  expect(() => {
+    new NavHistory<string>({entries: ["a"], position: 999})
+  }).toThrow("Position out of bounds")
+})
+
 test("#push", () => {
   history.push("a")
   history.push("b")
   expect(history.getEntries()).toEqual(["a", "b"])
+})
+
+test("#push checks for equality of the currentEntry", () => {
+  history.push("a")
+  history.push("a")
+  expect(history.getEntries()).toEqual(["a"])
 })
 
 test("#goBack", () => {
@@ -119,10 +131,4 @@ test("#goForward can be called many times", () => {
   history.goForward()
   history.goForward()
   expect(history.getCurrentEntry()).toBe("a")
-})
-
-test("#constructor throws error if position is out of bounds", () => {
-  expect(() => {
-    new NavHistory<string>({entries: ["a"], position: 999})
-  }).toThrow("Position out of bounds")
 })
