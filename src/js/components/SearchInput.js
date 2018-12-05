@@ -1,8 +1,10 @@
 import React from "react"
+import InputHistory from "../models/InputHistory"
 
 class SearchInput extends React.Component {
   constructor(props) {
     super(props)
+    this.history = new InputHistory()
 
     this.onChange = e => props.changeSearchBarInput(e.currentTarget.value)
     this.onKeyDown = this.onKeyDown.bind(this)
@@ -11,6 +13,15 @@ class SearchInput extends React.Component {
   onKeyDown(e) {
     if (e.key === "Enter") {
       this.props.submitSearchBar()
+      this.history.push(e.target.value)
+    }
+    if (e.key === "ArrowUp") {
+      this.history.goBack()
+      this.props.changeSearchBarInput(this.history.getCurrentEntry())
+    }
+    if (e.key === "ArrowDown") {
+      this.history.goForward()
+      this.props.changeSearchBarInput(this.history.getCurrentEntry())
     }
   }
 
