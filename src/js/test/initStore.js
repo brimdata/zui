@@ -18,32 +18,51 @@ export default (api: *): TestStore =>
     reducer,
     undefined,
     compose(
+      applyDispatchAll(),
       applyMiddleware(reduxThunk.withExtraArgument(api)),
-      actionHistory
+      applyActionHistory()
     )
   )
 
-const actionHistory = createStore => (...args) => {
-  const store = createStore(...args)
+function applyDispatchAll() {
+  return createStore => (...args) => {
+    const store = createStore(...args)
+
+    const dispatchAll = actions => {
+      actions.forEach(store.dispatch)
+      return store.getState()
+    }
+
+    return {
+      ...store,
+      dispatchAll
+    }
+  }
+}
+
+function applyActionHistory() {
   let actions = []
-  const getActions = () => actions
-  const clearActions = () => (actions = [])
+  return createStore => (...args) => {
+    const store = createStore(...args)
 
-  const dispatch = action => {
-    actions.push(action)
-    store.dispatch(action)
-  }
+    const dispatch = (...args) => {
+      actions.push(args[0])
+      return store.dispatch(...args)
+    }
 
-  const dispatchAll = (actions: Object[]) => {
-    actions.forEach(store.dispatch)
-    return store.getState()
-  }
+    const getActions = () => {
+      return actions
+    }
 
-  return {
-    ...store,
-    dispatch,
-    dispatchAll,
-    getActions,
-    clearActions
+    const clearActions = () => {
+      actions = []
+    }
+
+    return {
+      ...store,
+      dispatch,
+      getActions,
+      clearActions
+    }
   }
 }
