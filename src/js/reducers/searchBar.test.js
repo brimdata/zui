@@ -188,3 +188,57 @@ test("remove all pins", () => {
   expect(getSearchBarPreviousInputValue(state)).toBe("")
   expect(getSearchBarPins(state)).toEqual([])
 })
+
+import initStore from "../test/initStore"
+import MockApi from "../test/MockApi"
+
+test("restore", () => {
+  const store = initStore()
+  const slice = {
+    current: "restore",
+    previous: "me",
+    pinned: ["real", "quick"],
+    editing: null,
+    error: null
+  }
+  const state = store.dispatchAll([actions.restoreSearchBar(slice)])
+
+  expect(getSearchBarInputValue(state)).toBe("restore")
+  expect(getSearchBarPreviousInputValue(state)).toBe("me")
+  expect(getSearchBarPins(state)).toEqual(["real", "quick"])
+  expect(getSearchBarError(state)).toBe(null)
+  expect(getSearchBarEditingIndex(state)).toBe(null)
+})
+
+test("goBack", () => {
+  const store = initStore(new MockApi())
+  const state = store.dispatchAll([
+    actions.changeSearchBarInput("hello"),
+    actions.submitSearchBar(),
+    actions.changeSearchBarInput("goodbye"),
+    actions.submitSearchBar(),
+    actions.goBack()
+  ])
+
+  expect(getSearchBarInputValue(state)).toBe("hello")
+})
+
+test("goBack", () => {
+  const store = initStore(new MockApi())
+  const state = store.dispatchAll([
+    actions.changeSearchBarInput("hello"),
+    actions.submitSearchBar(),
+    actions.changeSearchBarInput("goodbye"),
+    actions.submitSearchBar(),
+    actions.changeSearchBarInput("hello again"),
+    actions.submitSearchBar(),
+    actions.goBack(),
+    actions.goBack(),
+    actions.goBack(),
+    actions.goBack(),
+    actions.goBack(),
+    actions.goForward()
+  ])
+
+  expect(getSearchBarInputValue(state)).toBe("goodbye")
+})

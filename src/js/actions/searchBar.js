@@ -3,8 +3,16 @@
 import {fetchMainSearch} from "./mainSearch"
 import {setInnerTimeWindow} from "./timeWindow"
 import {getSearchProgram} from "../reducers/searchBar"
+import * as searchHistory from "./searchHistory"
 import * as Program from "../lib/Program"
 import Field from "../models/Field"
+import type {SearchBar} from "../reducers/searchBar"
+import {getCurrentEntry} from "../reducers/searchHistory"
+
+export const restoreSearchBar = (value: SearchBar) => ({
+  type: "SEARCH_BAR_RESTORE",
+  value
+})
 
 export const changeSearchBarInput = (value: string) => ({
   type: "SEARCH_BAR_INPUT_CHANGE",
@@ -57,6 +65,20 @@ export const errorSearchBarParse = (error: string) => ({
 export const submittingSearchBar = () => ({
   type: "SEARCH_BAR_SUBMIT"
 })
+
+export const goBack = () => (dispatch: Function, getState: Function) => {
+  dispatch(searchHistory.backSearchHistory())
+  const entry = getCurrentEntry(getState())
+  dispatch(restoreSearchBar(entry.searchBar))
+  dispatch(fetchMainSearch({saveToHistory: false}))
+}
+
+export const goForward = () => (dispatch: Function, getState: Function) => {
+  dispatch(searchHistory.forwardSearchHistory())
+  const entry = getCurrentEntry(getState())
+  dispatch(restoreSearchBar(entry.searchBar))
+  dispatch(fetchMainSearch({saveToHistory: false}))
+}
 
 export const submitSearchBar = () => (dispatch: Function) => {
   dispatch(submittingSearchBar())

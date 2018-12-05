@@ -24,6 +24,7 @@ import notices from "./notices"
 import logViewer from "./logViewer"
 import columnWidths from "./columnWidths"
 import selectedColumns from "./selectedColumns"
+import searchHistory from "./searchHistory"
 
 export default combineReducers({
   logs,
@@ -48,5 +49,6 @@ export default combineReducers({
   notices,
   logViewer,
   columnWidths,
-  selectedColumns
+  selectedColumns,
+  searchHistory
 })
