@@ -9,7 +9,9 @@ import reducer, {
   getSearchBarEditingIndex,
   getSearchBarPreviousInputValue
 } from "./searchBar"
+import {getOuterTimeWindow} from "./timeWindow"
 import * as actions from "../actions/searchBar"
+import {setOuterTimeWindow} from "../actions/timeWindow"
 import rootReducer from "./index"
 import type {State} from "./types"
 import Field from "../models/Field"
@@ -214,23 +216,29 @@ test("goBack", () => {
   const store = initStore(new MockApi())
   const state = store.dispatchAll([
     actions.changeSearchBarInput("hello"),
+    setOuterTimeWindow([new Date(1), new Date(2)]),
     actions.submitSearchBar(),
     actions.changeSearchBarInput("goodbye"),
+    setOuterTimeWindow([new Date(3), new Date(4)]),
     actions.submitSearchBar(),
     actions.goBack()
   ])
 
+  expect(getOuterTimeWindow(state)).toEqual([new Date(1), new Date(2)])
   expect(getSearchBarInputValue(state)).toBe("hello")
 })
 
-test("goBack", () => {
+test("goForward", () => {
   const store = initStore(new MockApi())
   const state = store.dispatchAll([
     actions.changeSearchBarInput("hello"),
+    setOuterTimeWindow([new Date(1), new Date(2)]),
     actions.submitSearchBar(),
     actions.changeSearchBarInput("goodbye"),
+    setOuterTimeWindow([new Date(3), new Date(4)]),
     actions.submitSearchBar(),
     actions.changeSearchBarInput("hello again"),
+    setOuterTimeWindow([new Date(5), new Date(6)]),
     actions.submitSearchBar(),
     actions.goBack(),
     actions.goBack(),
@@ -241,4 +249,5 @@ test("goBack", () => {
   ])
 
   expect(getSearchBarInputValue(state)).toBe("goodbye")
+  expect(getOuterTimeWindow(state)).toEqual([new Date(3), new Date(4)])
 })

@@ -52,5 +52,5 @@ export const getCurrentSpace = createSelector(
 )
 export const getCurrentSpaceTimeWindow = createSelector(
   getCurrentSpace,
-  space => (space ? [space.minTime, space.maxTime] : [])
+  space => [space.minTime, space.maxTime]
 )

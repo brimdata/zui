@@ -228,12 +228,12 @@ export default class CountByTime extends React.Component<Props, State> {
       }
       if (!selection) {
         setInnerTimeWindow(null)
-        fetchMainSearch()
+        fetchMainSearch({saveToHistory: false})
         return
       }
       if (!isEqual(selection, prevSelection)) {
         setInnerTimeWindow(selection.map(scales.time.invert))
-        fetchMainSearch()
+        fetchMainSearch({saveToHistory: false})
         return
       }
       const [x] = d3.mouse(this)
