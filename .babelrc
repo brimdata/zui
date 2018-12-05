@@ -1,5 +1,14 @@
 {
-  "presets": ["env", "react", "flow"],
-  "plugins": ["transform-object-rest-spread", "inline-react-svg"],
-  "ignore": ["src/js/flow-typed"]
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-flow"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "inline-react-svg"
+  ],
+  "ignore": [
+    "src/js/flow-typed"
+  ]
 }
