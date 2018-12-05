@@ -9,7 +9,7 @@ import reducer, {
   getSearchBarEditingIndex,
   getSearchBarPreviousInputValue
 } from "./searchBar"
-import {getOuterTimeWindow} from "./timewindow"
+import {getOuterTimeWindow} from "./timeWindow"
 import * as actions from "../actions/searchBar"
 import {setOuterTimeWindow} from "../actions/timeWindow"
 import rootReducer from "./index"
