@@ -18,6 +18,12 @@ export type TimeWindow = typeof initialState
 
 export default createReducer(initialState, {
   TIME_WINDOWS_RESET: () => ({...initialState}),
+  TIME_WINDOW_RESTORE: (state, {value}) => {
+    return {
+      ...state,
+      ...value
+    }
+  },
   OUTER_TIME_WINDOW_SET: (state, {timeWindow}) => ({
     ...state,
     outer: timeWindow
