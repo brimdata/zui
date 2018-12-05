@@ -11,6 +11,7 @@ import type {LogViewer} from "./logViewer"
 import type {SelectedColumns} from "./selectedColumns"
 import type {ColumnWidths} from "./columnWidths"
 import type {SearchStats} from "./searchStats"
+import type {SearchHistory} from "./searchHistory"
 
 export type State = {
   notices: Notices,
@@ -23,7 +24,8 @@ export type State = {
   logViewer: LogViewer,
   selectedColumns: SelectedColumns,
   columnWidths: ColumnWidths,
-  searchStats: SearchStats
+  searchStats: SearchStats,
+  searchHistory: SearchHistory
 }
 
 export type Dispatch = Function

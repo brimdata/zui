@@ -54,4 +54,11 @@ export default class NavHistory<T> {
       return false
     }
   }
+
+  toJSON() {
+    return {
+      entries: this.entries,
+      position: this.position
+    }
+  }
 }
