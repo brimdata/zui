@@ -36,14 +36,16 @@ const parse = space => ({
 
 export const getCurrentSpaceName = (state: State) => state.currentSpaceName
 export const getRawSpaces = (state: State) => state.spaces
-export const getSpaces = createSelector(getRawSpaces, rawSpaces =>
-  Object.keys(rawSpaces).reduce(
-    (spaces, name) => ({
-      ...spaces,
-      [name]: parse(spaces[name])
-    }),
-    rawSpaces
-  )
+export const getSpaces = createSelector(
+  getRawSpaces,
+  rawSpaces =>
+    Object.keys(rawSpaces).reduce(
+      (spaces, name) => ({
+        ...spaces,
+        [name]: parse(spaces[name])
+      }),
+      rawSpaces
+    )
 )
 export const getCurrentSpace = createSelector(
   getSpaces,

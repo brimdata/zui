@@ -64,11 +64,14 @@ export const getMainSearchEvents = state => state.mainSearch.events
 
 export const getSchemas = state => state.descriptors
 
-export const getTds = createSelector(getMainSearchEvents, tuples => {
-  const uniq = new UniqArray()
-  tuples.forEach(([td]) => uniq.push(td))
-  return uniq.toArray()
-})
+export const getTds = createSelector(
+  getMainSearchEvents,
+  tuples => {
+    const uniq = new UniqArray()
+    tuples.forEach(([td]) => uniq.push(td))
+    return uniq.toArray()
+  }
+)
 
 export const getLogs = createSelector(
   getMainSearchEvents,
@@ -87,9 +90,12 @@ export const getLogs = createSelector(
   }
 )
 
-export const getCountByTimeProc = createSelector(getTimeWindow, timeWindow => {
-  if (isTimeWindow(timeWindow)) {
-    const {number, unit} = countByTimeInterval(timeWindow)
-    return `every ${number}${BOOM_INTERVALS[unit]} count() by _path`
+export const getCountByTimeProc = createSelector(
+  getTimeWindow,
+  timeWindow => {
+    if (isTimeWindow(timeWindow)) {
+      const {number, unit} = countByTimeInterval(timeWindow)
+      return `every ${number}${BOOM_INTERVALS[unit]} count() by _path`
+    }
   }
-})
+)

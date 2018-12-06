@@ -70,8 +70,8 @@ export const buildCorrelatedLogs = createSelector(
     if (!uid) return []
 
     const tuples = tuplesByUid[uid] || []
-    const logs = Log.buildAll(tuples, descriptors, space).sort(
-      (a, b) => (a.get("ts") > b.get("ts") ? 1 : -1)
+    const logs = Log.buildAll(tuples, descriptors, space).sort((a, b) =>
+      a.get("ts") > b.get("ts") ? 1 : -1
     )
     const connIndex = logs.findIndex(l => l.get("_path") === "conn")
     if (connIndex > 0) {

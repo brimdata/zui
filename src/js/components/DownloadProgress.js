@@ -35,7 +35,7 @@ const message = ({complete, error}) =>
   error
     ? `Download error: ${error}`
     : complete
-      ? "Download Complete"
-      : "Downloading"
+    ? "Download Complete"
+    : "Downloading"
 
 export default DownloadProgress

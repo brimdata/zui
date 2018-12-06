@@ -626,7 +626,7 @@ export const smtp = () =>
       "ned.pwned.se@gmx.com",
       "homer.pwned.se@gmx.com",
       "Mon, 9 Mar 2015 11:03:58 +0100",
-      "\"Password Ned\" <ned.pwned.se@gmx.com>",
+      '"Password Ned" <ned.pwned.se@gmx.com>',
       "<homer.pwned.se@gmx.com>",
       "-",
       "-",
