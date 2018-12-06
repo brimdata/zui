@@ -44,13 +44,19 @@ export const getSearchHistory = (state: State) => {
   return state.searchHistory
 }
 
-export const buildSearchHistory = createSelector(getSearchHistory, state => {
-  return new NavHistory(state)
-})
+export const buildSearchHistory = createSelector(
+  getSearchHistory,
+  state => {
+    return new NavHistory(state)
+  }
+)
 
-export const getCurrentEntry = createSelector(buildSearchHistory, history => {
-  return history.getCurrentEntry()
-})
+export const getCurrentEntry = createSelector(
+  buildSearchHistory,
+  history => {
+    return history.getCurrentEntry()
+  }
+)
 
 export const pickEntryOffState = (state: State) => {
   return {
@@ -59,10 +65,16 @@ export const pickEntryOffState = (state: State) => {
   }
 }
 
-export const canGoBack = createSelector(buildSearchHistory, history => {
-  return history.canGoBack()
-})
+export const canGoBack = createSelector(
+  buildSearchHistory,
+  history => {
+    return history.canGoBack()
+  }
+)
 
-export const canGoForward = createSelector(buildSearchHistory, history => {
-  return history.canGoForward()
-})
+export const canGoForward = createSelector(
+  buildSearchHistory,
+  history => {
+    return history.canGoForward()
+  }
+)

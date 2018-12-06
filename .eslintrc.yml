@@ -36,6 +36,7 @@ rules:
   quotes:
     - error
     - double
+    - avoidEscape: true
   react/no-find-dom-node:
     - off
   no-debugger:

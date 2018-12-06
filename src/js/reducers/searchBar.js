@@ -193,7 +193,10 @@ export const getPrevSearchProgram = createSelector(
   }
 )
 
-export const getAst = createSelector(getSearchProgram, searchProgram => {
-  const ast = new Ast(searchProgram).toJSON()
-  return JSON.stringify(ast, null, 2)
-})
+export const getAst = createSelector(
+  getSearchProgram,
+  searchProgram => {
+    const ast = new Ast(searchProgram).toJSON()
+    return JSON.stringify(ast, null, 2)
+  }
+)

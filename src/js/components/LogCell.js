@@ -90,19 +90,17 @@ export default class LogCell extends React.PureComponent<Props, State> {
       >
         {this.renderValue(this.props.field)}
 
-        {this.state.hover &&
-          !this.props.isScrolling && (
-            <button className="cell-options-button">
-              <DownArrow />
-            </button>
-          )}
+        {this.state.hover && !this.props.isScrolling && (
+          <button className="cell-options-button">
+            <DownArrow />
+          </button>
+        )}
 
-        {this.state.hover &&
-          !this.props.isScrolling && (
-            <Tooltip style={this.state.tooltipStyle}>
-              <span className="field-name">{name}</span>
-            </Tooltip>
-          )}
+        {this.state.hover && !this.props.isScrolling && (
+          <Tooltip style={this.state.tooltipStyle}>
+            <span className="field-name">{name}</span>
+          </Tooltip>
+        )}
 
         {this.state.showMenu && (
           <XLogCellActions
