@@ -18,7 +18,7 @@ class App extends Component<Props> {
     Time.setZone(timeZone)
     return (
       <Switch>
-        {isConnected && <Route path='/search' component={XSearch} />}
+        {isConnected && <Route path="/search" component={XSearch} />}
         {isConnected && <Route path="/spaces" component={XSpaces} />}
         <Route path="/connect" component={XConnect} />
         <Redirect to="/connect" />
