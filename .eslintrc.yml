@@ -1,4 +1,4 @@
-parser: babel-eslint
+# parser: babel-eslint
 
 parserOptions:
   ecmaVersion: 2018
@@ -14,8 +14,8 @@ env:
 
 extends:
   - eslint:recommended
-  - plugin:react/recommended
-  - plugin:flowtype/recommended
+  # - plugin:react/recommended
+  # - plugin:flowtype/recommended
 
 rules:
   no-unused-vars:
