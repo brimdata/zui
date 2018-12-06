@@ -80,7 +80,7 @@
     "prettier-eslint": "^8.8.2"
   },
   "dependencies": {
-    "boom-js-client": "git+https://github.com/looky-cloud/boom-js-client.git#v1.3.11",
+    "boom-js-client": "git+https://github.com/looky-cloud/boom-js-client.git",
     "classnames": "^2.2.6",
     "d3": "^5.5.0",
     "electron-devtools-installer": "^2.2.4",
