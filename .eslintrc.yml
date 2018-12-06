@@ -1,21 +1,25 @@
 parser: babel-eslint
 
 parserOptions:
-  ecmaVersion: 2018
   ecmaFeatures:
     jsx: true
-  sourceType: "module"
+    ecmaVersion: 2018
+    sourceType: module
 
 env:
-  node: true
   browser: true
-  jest: true
   es6: true
+  node: true
+  jest: true
 
 extends:
   - eslint:recommended
   - plugin:react/recommended
   - plugin:flowtype/recommended
+
+settings:
+  react:
+    version: 16.4.2
 
 rules:
   no-unused-vars:
@@ -28,11 +32,11 @@ rules:
   no-console:
     - off
   react/prop-types:
-    - ignore
+    - off
   quotes:
     - error
     - double
   react/no-find-dom-node:
-    - ignore
+    - off
   no-debugger:
     - off
