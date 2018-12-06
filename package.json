@@ -58,6 +58,7 @@
     "babel-plugin-inline-react-svg": "^0.5.4",
     "commander": "^2.19.0",
     "cpx": "^1.5.0",
+    "eslint": "^5.9.0",
     "electron": "^3.0.10",
     "electron-packager": "^12.1.0",
     "enzyme": "^3.3.0",
