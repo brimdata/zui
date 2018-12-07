@@ -1,28 +1,28 @@
+/* @flow */
+
 import React from "react"
 import XSearchBar from "../connectors/XSearchBar"
-import Modal from "./Modal"
-import XSettings from "../connectors/XSettings"
 import {XHistoryStepper} from "./HistoryStepper"
+import {XSpanPickers} from "./SpanPickers"
+import {ThinButton, ThinPicker, ButtonGroup} from "./Buttons"
 
-export default class ControlBar extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {settingsIsOpen: false}
-    this.closeSettings = () => this.setState({settingsIsOpen: false})
-  }
+type Props = {}
 
+export default class ControlBar extends React.Component<Props> {
   render() {
     return (
       <div className="control-bar">
-        <XHistoryStepper />
-        <XSearchBar />
-        <Modal
-          className="settings-modal"
-          isOpen={this.state.settingsIsOpen}
-          onClose={this.closeSettings}
-        >
-          <XSettings onSave={this.closeSettings} />
-        </Modal>
+        <div className="row-1">
+          <ButtonGroup>
+            <ThinButton>default</ThinButton>
+            <ThinPicker />
+          </ButtonGroup>
+          <XSpanPickers />
+        </div>
+        <div className="row-2">
+          <XHistoryStepper />
+          <XSearchBar />
+        </div>
       </div>
     )
   }

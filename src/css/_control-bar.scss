@@ -1,8 +1,24 @@
 .control-bar {
   position: relative;
   z-index: 1;
-  display: flex;
   margin-bottom: 8px;
+
+  .row-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 68px;
+    margin-right: 80px;
+    margin-bottom: 3px;
+
+    .thin-picker {
+      margin-left: 1px;
+    }
+  }
+
+  .row-2 {
+    display: flex;
+  }
 
   .search-bar {
     flex: 1;
