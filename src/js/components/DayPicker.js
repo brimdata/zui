@@ -20,24 +20,22 @@ export default class DayPicker extends React.Component {
     to = Time.fakeZone(to)
     let fakeDay = Time.fakeZone(day)
     return (
-      <div className="text-input-wrapper">
-        <DayPickerInput
-          ref={r => (this.daypicker = r)}
-          value={Time.format(day, FORMAT)}
-          formatDate={date => Time.format(date, FORMAT)}
-          parseDate={parseDate}
-          placeholder={FORMAT}
-          onDayChange={this.onDayChange}
-          dayPickerProps={{
-            selectedDays: [fakeDay, {from, to}],
-            todayButton: "TODAY",
-            modifiers: {from, to}
-          }}
-          inputProps={{
-            size: 11
-          }}
-        />
-      </div>
+      <DayPickerInput
+        ref={r => (this.daypicker = r)}
+        value={Time.format(day, FORMAT)}
+        formatDate={date => Time.format(date, FORMAT)}
+        parseDate={parseDate}
+        placeholder={FORMAT}
+        onDayChange={this.onDayChange}
+        dayPickerProps={{
+          selectedDays: [fakeDay, {from, to}],
+          todayButton: "TODAY",
+          modifiers: {from, to}
+        }}
+        inputProps={{
+          size: 11
+        }}
+      />
     )
   }
 }
