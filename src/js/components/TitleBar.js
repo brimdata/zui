@@ -17,7 +17,6 @@ export default class TitleBar extends React.Component {
 
   render() {
     const {host, port, space} = this.props
-
     return (
       <div className="title-bar">
         <PaneHeader>

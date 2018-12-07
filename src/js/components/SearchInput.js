@@ -38,7 +38,7 @@ class SearchInput extends React.Component {
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             spellCheck={false}
-            autoFocus="true"
+            autoFocus={true}
             autoComplete="off"
           />
         </div>
