@@ -94,16 +94,16 @@ export default class TimePicker extends React.Component {
 
   renderTimes() {
     const timeItems = times.map(time => (
-      <p key={time} onClick={() => this.onTimeClick(time)}>
+      <li key={time} onClick={() => this.onTimeClick(time)}>
         {time}
-      </p>
+      </li>
     ))
 
     return (
       <div
         onMouseDown={e => e.preventDefault()}
         ref={r => (this.timesList = r)}
-        className="times-list"
+        className="context-menu"
       >
         {timeItems}
       </div>
@@ -113,19 +113,17 @@ export default class TimePicker extends React.Component {
   render() {
     return (
       <div className="time-picker">
-        <div className="text-input-wrapper">
-          <input
-            className="time-input"
-            type="text"
-            size="5"
-            ref={r => (this.input = r)}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            value={this.state.value}
-            onChange={this.onInputChange}
-            onClick={this.onInputClick}
-          />
-        </div>
+        <input
+          className="time-input"
+          type="text"
+          size="5"
+          ref={r => (this.input = r)}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          value={this.state.value}
+          onChange={this.onInputChange}
+          onClick={this.onInputClick}
+        />
         {this.state.isOpen && this.renderTimes()}
       </div>
     )
