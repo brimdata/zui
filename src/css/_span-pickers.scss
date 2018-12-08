@@ -1,0 +1,35 @@
+.span-pickers {
+  input {
+    background: none;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+  .DayPickerInput {
+    margin-right: 10px;
+    height: 14px;
+    input {
+      width: 60px;
+    }
+  }
+
+  .span-duration {
+    display: flex;
+    align-items: center;
+
+    p {
+      font-size: 10px;
+      color: #545866;
+      padding: 0 3px;
+    }
+
+    hr {
+      margin: 0;
+      width: 10px;
+      border: none;
+      border-top: 1px solid #dcdcdc;
+    }
+  }
+}
