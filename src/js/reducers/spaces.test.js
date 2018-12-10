@@ -1,4 +1,5 @@
-import reducer, {initialState, getSpaces} from "./spaces"
+import initStore from "../test/initStore"
+import reducer, {initialState, getSpaces, getAllSpaceNames} from "./spaces"
 import * as a from "../actions/spaces"
 
 const reduce = actions => ({spaces: actions.reduce(reducer, initialState)})
@@ -45,4 +46,11 @@ test("setting space information", () => {
       size: 199913776
     }
   })
+})
+
+test("setting space names", () => {
+  const store = initStore()
+  store.dispatch(a.setSpaceNames(["a", "b", "c"]))
+
+  expect(getAllSpaceNames(store.getState())).toEqual(["a", "b", "c"])
 })
