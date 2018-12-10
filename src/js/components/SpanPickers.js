@@ -124,7 +124,48 @@ export default class SpanPickers extends React.Component {
             onTimeChange={this.onToTimeChange}
           />
         </div>
-        <ThinPicker />
+        <ThinPicker>
+          <li
+            onClick={() => this.props.setOuterTimeWindow(this.props.spaceSpan)}
+          >
+            Whole Space
+          </li>
+          <li
+            onClick={() =>
+              this.props.setOuterTimeWindow(TimeWindow.last(30, "minutes"))
+            }
+          >
+            Last 30 minutes
+          </li>
+          <li
+            onClick={() =>
+              this.props.setOuterTimeWindow(TimeWindow.last(24, "hours"))
+            }
+          >
+            Last 24 hours
+          </li>
+          <li
+            onClick={() =>
+              this.props.setOuterTimeWindow(TimeWindow.last(7, "days"))
+            }
+          >
+            Last 7 days
+          </li>
+          <li
+            onClick={() =>
+              this.props.setOuterTimeWindow(TimeWindow.last(30, "days"))
+            }
+          >
+            Last 30 days
+          </li>
+          <li
+            onClick={() =>
+              this.props.setOuterTimeWindow(TimeWindow.last(90, "days"))
+            }
+          >
+            Last 90 days
+          </li>
+        </ThinPicker>
       </div>
     )
   }
@@ -136,10 +177,12 @@ import * as actions from "../actions/timeWindow"
 import {submitSearchBar} from "../actions/searchBar"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {getTimeZone} from "../reducers/view"
+import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
 
 const stateToProps = state => ({
   timeWindow: getTimeWindow(state),
-  timeZone: getTimeZone(state)
+  timeZone: getTimeZone(state),
+  spaceSpan: getCurrentSpaceTimeWindow(state)
 })
 
 export const XSpanPickers = connect(
