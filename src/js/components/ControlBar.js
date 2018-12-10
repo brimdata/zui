@@ -6,6 +6,7 @@ import {XHistoryStepper} from "./HistoryStepper"
 import {XSpanPickers} from "./SpanPickers"
 import {ThinButton, ThinPicker, ButtonGroup} from "./Buttons"
 import {fetchAndSetCurrentSpace} from "../actions/spaces"
+import {fetchMainSearch} from "../actions/mainSearch"
 
 type Props = {
   spaces: string[],
@@ -24,9 +25,13 @@ export default class ControlBar extends React.Component<Props> {
               {this.props.spaces.map((name, i) => (
                 <li
                   key={i}
-                  onClick={() =>
-                    this.props.dispatch(fetchAndSetCurrentSpace(name))
-                  }
+                  onClick={() => {
+                    this.props
+                      .dispatch(fetchAndSetCurrentSpace(name))
+                      .done(() => {
+                        this.props.dispatch(fetchMainSearch())
+                      })
+                  }}
                 >
                   {name}
                 </li>
