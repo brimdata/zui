@@ -5,7 +5,7 @@ import {Redirect} from "react-router-dom"
 import {AutoSizer} from "react-virtualized"
 
 import XTitleBar from "../connectors/XTitleBar"
-import XControlBar from "../connectors/XControlBar"
+import {XControlBar} from "./ControlBar"
 import XSearchStats from "../connectors/XSearchStats"
 import XCountByTime from "../connectors/XCountByTime"
 import XLeftPane from "../connectors/XLeftPane"

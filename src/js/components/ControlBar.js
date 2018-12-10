@@ -5,8 +5,13 @@ import XSearchBar from "../connectors/XSearchBar"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSpanPickers} from "./SpanPickers"
 import {ThinButton, ThinPicker, ButtonGroup} from "./Buttons"
+import {fetchAndSetCurrentSpace} from "../actions/spaces"
 
-type Props = {}
+type Props = {
+  spaces: string[],
+  currentSpace: string,
+  dispatch: Function
+}
 
 export default class ControlBar extends React.Component<Props> {
   render() {
@@ -14,8 +19,19 @@ export default class ControlBar extends React.Component<Props> {
       <div className="control-bar">
         <div className="row-1">
           <ButtonGroup>
-            <ThinButton>default</ThinButton>
-            <ThinPicker />
+            <ThinButton>{this.props.currentSpace}</ThinButton>
+            <ThinPicker align="left">
+              {this.props.spaces.map((name, i) => (
+                <li
+                  key={i}
+                  onClick={() =>
+                    this.props.dispatch(fetchAndSetCurrentSpace(name))
+                  }
+                >
+                  {name}
+                </li>
+              ))}
+            </ThinPicker>
           </ButtonGroup>
           <XSpanPickers />
         </div>
@@ -27,3 +43,14 @@ export default class ControlBar extends React.Component<Props> {
     )
   }
 }
+
+import {connect} from "react-redux"
+import type {State} from "../reducers/types"
+import * as spaces from "../reducers/spaces"
+
+const stateToProps = (state: State) => ({
+  spaces: spaces.getAllSpaceNames(state),
+  currentSpace: spaces.getCurrentSpaceName(state)
+})
+
+export const XControlBar = connect(stateToProps)(ControlBar)
