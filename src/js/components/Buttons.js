@@ -17,7 +17,7 @@ export const ThinButton = ({children}: Children) => (
   <button className="thin-button">{children}</button>
 )
 
-type Props = {children: React.Node}
+type Props = {children: React.Node, align: "left" | "right"}
 type State = {isOpen: boolean, style: Object}
 
 export class ThinPicker extends React.Component<Props, State> {
@@ -27,14 +27,19 @@ export class ThinPicker extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {isOpen: false, style: {}}
-    this.open = e =>
-      this.setState({
-        isOpen: true,
-        style: MenuStyler.belowRight(e.currentTarget)
-      })
+    this.open = e => this.setState({isOpen: true, style: this.getStyle(e)})
     this.close = e => {
       e.stopPropagation()
       this.setState({isOpen: false})
+    }
+  }
+
+  getStyle(e: MouseEvent) {
+    switch (this.props.align) {
+      case "left":
+        return MenuStyler.belowLeft(e.currentTarget)
+      case "right":
+        return MenuStyler.belowRight(e.currentTarget)
     }
   }
 
