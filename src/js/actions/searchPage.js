@@ -9,6 +9,7 @@ export const init = () => (dispatch: Function, getState: Function, api: *) =>
   // $FlowFixMe
   new Promise((resolve, reject) => {
     api.spaces().done(names => {
+      dispatch(spaces.setSpaceNames(names))
       let name = chooseSpaceName(names, getState())
       if (name) {
         api
