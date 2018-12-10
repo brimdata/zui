@@ -8,10 +8,20 @@
   }
 
   .DayPickerInput {
-    margin-right: 10px;
+    margin-right: 5px;
     height: 14px;
-    input {
-      width: 60px;
+  }
+
+  .DayPickerInput input,
+  .time-input {
+    outline: none;
+    padding: 0 5px;
+    transition: all 100ms;
+    &:hover {
+      background-color: darken(#dcdcdc, 5%);
+    }
+    &:focus {
+      background-color: darken(#dcdcdc, 10%);
     }
   }
 

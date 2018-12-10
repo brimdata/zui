@@ -127,7 +127,8 @@
 }
 
 .thin-button {
-  @include button-reset height: 14px;
+  @include button-reset;
+  height: 14px;
   background: #dcdcdc;
   border-radius: 3px;
   display: inline-flex;
@@ -138,17 +139,28 @@
   font-size: 11px;
   line-height: 12px;
   font-weight: bold;
-  color: #4a4a4a;
 }
 
 .thin-picker {
-  width: 14px;
+  cursor: pointer;
+  width: 22px;
   padding: 0;
+  transition: all 100ms;
 
   svg {
     fill: #4a4a4a;
     width: 8px;
     padding: 0;
     margin: 0;
+  }
+
+  &:hover {
+    background: darken(#dcdcdc, 5%);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    background: darken(#dcdcdc, 10%);
+    transform: scale(1);
   }
 }
