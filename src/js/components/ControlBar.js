@@ -5,8 +5,7 @@ import XSearchBar from "../connectors/XSearchBar"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSpanPickers} from "./SpanPickers"
 import {ThinButton, ThinPicker, ButtonGroup} from "./Buttons"
-import {fetchAndSetCurrentSpace} from "../actions/spaces"
-import {submitSearchBar} from "../actions/searchBar"
+import {init} from "../actions/searchPage"
 
 type Props = {
   spaces: string[],
@@ -26,11 +25,7 @@ export default class ControlBar extends React.Component<Props> {
                 <li
                   key={i}
                   onClick={() => {
-                    this.props
-                      .dispatch(fetchAndSetCurrentSpace(name))
-                      .done(() => {
-                        this.props.dispatch(submitSearchBar())
-                      })
+                    this.props.dispatch(init(name))
                   }}
                 >
                   {name}

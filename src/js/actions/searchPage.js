@@ -5,12 +5,20 @@ import * as timeWindow from "./timeWindow"
 import * as searchBar from "./searchBar"
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
 
-export const init = () => (dispatch: Function, getState: Function, api: *) =>
+export const init = (spaceName: ?string = null) => (
+  dispatch: Function,
+  getState: Function,
+  api: *
+) =>
   // $FlowFixMe
   new Promise((resolve, reject) => {
     api.spaces().done(names => {
       dispatch(spaces.setSpaceNames(names))
-      let name = chooseSpaceName(names, getState())
+
+      let name
+      if (spaceName) name = spaceName
+      else name = chooseSpaceName(names, getState())
+
       if (name) {
         api
           .space({name})
