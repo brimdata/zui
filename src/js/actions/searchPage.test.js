@@ -4,6 +4,7 @@ import initStore from "../test/initStore"
 import * as spaces from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
 import MockApi from "../test/MockApi"
+import {Handler} from "boom-js-client"
 
 const defaultSpace = {
   name: "default",
@@ -17,13 +18,21 @@ const alternateSpace = {
   max_time: {sec: 1428917794, ns: 750000000}
 }
 
-test("init with several spaces", done => {
-  const api = new MockApi({
-    spaces: () => ({done: cb => cb(["default", "ranch-logs"])}),
-    space: () => ({done: cb => cb(defaultSpace)})
-  })
+let spacesEndpoint
+let spaceEndpoint
+let store
+beforeEach(() => {
+  spacesEndpoint = new Handler()
+  spaceEndpoint = new Handler()
+  store = initStore(
+    new MockApi({
+      spaces: jest.fn(() => spacesEndpoint),
+      space: jest.fn(() => spaceEndpoint)
+    })
+  )
+})
 
-  const store = initStore(api)
+test("init with several spaces", done => {
   store
     .dispatch(searchPage.init())
     .then(() => {
@@ -38,38 +47,33 @@ test("init with several spaces", done => {
       done()
     })
     .catch(e => done("failed with: " + e))
+
+  spacesEndpoint.onDone(["default", "ranch-logs"])
+  spaceEndpoint.onDone(defaultSpace)
 })
 
 test("init with no spaces", done => {
-  const api = new MockApi({
-    spaces: () => ({done: cb => cb([])})
-  })
-
-  const store = initStore(api)
   store
     .dispatch(searchPage.init())
-    .then(() => {
-      done("Expected to fail with NoSpaces")
-    })
+    .then(() => done("Expected to fail with NoSpaces"))
     .catch(e => {
       expect(e).toBe("NoSpaces")
       done()
     })
+
+  spacesEndpoint.onDone([])
 })
 
 test("init with a space already selected", done => {
-  const api = new MockApi({
-    spaces: jest.fn(() => ({done: cb => cb(["default", "alternate"])})),
-    space: jest.fn(() => ({done: cb => cb(alternateSpace)}))
-  })
-  const store = initStore(api)
   store.dispatch(setCurrentSpaceName("alternate"))
   store
     .dispatch(searchPage.init())
     .then(() => {
-      expect(api.spaces).toBeCalled()
-      expect(api.space).toBeCalledWith({name: "alternate"})
+      expect(spaces.getCurrentSpaceName(store.getState())).toBe("alternate")
       done()
     })
     .catch(e => done(e))
+
+  spacesEndpoint.onDone([alternateSpace.name])
+  spaceEndpoint.onDone(alternateSpace)
 })
