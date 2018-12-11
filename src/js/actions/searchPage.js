@@ -4,41 +4,36 @@ import {getCurrentSpaceName} from "../reducers/spaces"
 import * as timeWindow from "./timeWindow"
 import * as searchBar from "./searchBar"
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
+import type {Thunk} from "redux-thunk"
 
-export const init = (spaceName: ?string = null) => (
-  dispatch: Function,
-  getState: Function,
-  api: *
-) =>
+export const init = (): Thunk => (dispatch, getState, api) =>
   // $FlowFixMe
   new Promise((resolve, reject) => {
     api.spaces().done(names => {
       dispatch(spaces.setSpaceNames(names))
-
-      let name
-      if (spaceName) name = spaceName
-      else name = chooseSpaceName(names, getState())
-
+      const name = chooseSpaceName(names, getState())
       if (name) {
-        api
-          .space({name})
-          .done(info => {
-            dispatch(spaces.setSpaceInfo(info))
-            dispatch(spaces.setCurrentSpaceName(info.name))
-            dispatch(
-              timeWindow.setOuterTimeWindow(
-                getCurrentSpaceTimeWindow(getState())
-              )
-            )
-            dispatch(searchBar.submitSearchBar())
-            resolve()
-          })
+        dispatch(switchSpace(name))
+          .done(resolve)
           .error(reject)
       } else {
         reject("NoSpaces")
       }
     })
   })
+
+export const switchSpace = (name: string): Thunk => {
+  return (dispatch, getState, api) => {
+    return api.space({name}).done(info => {
+      dispatch(spaces.setSpaceInfo(info))
+      dispatch(spaces.setCurrentSpaceName(info.name))
+      dispatch(
+        timeWindow.setOuterTimeWindow(getCurrentSpaceTimeWindow(getState()))
+      )
+      dispatch(searchBar.submitSearchBar())
+    })
+  }
+}
 
 const chooseSpaceName = (names, state) => {
   const DEFAULT = "default"

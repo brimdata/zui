@@ -5,7 +5,7 @@ import XSearchBar from "../connectors/XSearchBar"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSpanPickers} from "./SpanPickers"
 import {ThinButton, ThinPicker, ButtonGroup} from "./Buttons"
-import {init} from "../actions/searchPage"
+import {switchSpace} from "../actions/searchPage"
 
 type Props = {
   spaces: string[],
@@ -25,7 +25,7 @@ export default class ControlBar extends React.Component<Props> {
                 <li
                   key={i}
                   onClick={() => {
-                    this.props.dispatch(init(name))
+                    this.props.dispatch(switchSpace(name))
                   }}
                 >
                   {name}
