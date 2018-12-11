@@ -12,7 +12,8 @@ import type {TimeObj} from "../lib/Time"
 type Props = {
   timeWindow: DateTuple,
   spaceSpan: DateTuple,
-  setOuterTimeWindow: Function
+  setOuterTimeWindow: Function,
+  submitSearchBar: Function
 }
 
 type State = {
@@ -25,12 +26,14 @@ export default class SpanPickers extends React.Component<Props, State> {
   onToDayChange: Function
   onFromTimeChange: Function
   onToTimeChange: Function
+  fromTime: TimePicker
+  toTime: TimePicker
+  toDate: DayPicker
+  blurTimeout: TimeoutID
 
   constructor(props: Props) {
     super(props)
-    this.state = {
-      ...SpanPickers.getDerivedStateFromProps(props)
-    }
+    this.state = SpanPickers.getDerivedStateFromProps(props)
     this.onFromDayChange = this.onFromDayChange.bind(this)
     this.onToDayChange = this.onToDayChange.bind(this)
     this.onFromTimeChange = this.onFromTimeChange.bind(this)
@@ -59,6 +62,8 @@ export default class SpanPickers extends React.Component<Props, State> {
       this.setState({fromDate})
       this.props.setOuterTimeWindow([fromDate, this.state.toDate])
     }
+
+    this.fromTime.focus()
   }
 
   onFromTimeChange(time: TimeObj) {
@@ -72,22 +77,8 @@ export default class SpanPickers extends React.Component<Props, State> {
       this.setState({fromDate})
       this.props.setOuterTimeWindow([fromDate, this.state.toDate])
     }
-  }
 
-  onToTimeChange(time: TimeObj) {
-    console.log(time)
-    const toDate = Time.set(this.state.toDate, time)
-    this.setState({toDate})
-    this.props.setOuterTimeWindow([this.state.fromDate, toDate])
-
-    if (toDate < this.state.fromDate) {
-      const fromDate = Time.subtract(toDate, 30, "minutes")
-      this.setState({fromDate, toDate})
-      this.props.setOuterTimeWindow([fromDate, toDate])
-    } else {
-      this.setState({toDate})
-      this.props.setOuterTimeWindow([this.state.fromDate, toDate])
-    }
+    this.toDate.focus()
   }
 
   onToDayChange(day: Date) {
@@ -105,11 +96,37 @@ export default class SpanPickers extends React.Component<Props, State> {
       this.setState({toDate})
       this.props.setOuterTimeWindow([this.state.fromDate, toDate])
     }
+
+    this.toTime.focus()
+  }
+
+  onToTimeChange(time: TimeObj) {
+    const toDate = Time.set(this.state.toDate, time)
+    this.setState({toDate})
+    this.props.setOuterTimeWindow([this.state.fromDate, toDate])
+
+    if (toDate < this.state.fromDate) {
+      const fromDate = Time.subtract(toDate, 30, "minutes")
+      this.setState({fromDate, toDate})
+      this.props.setOuterTimeWindow([fromDate, toDate])
+    } else {
+      this.setState({toDate})
+      this.props.setOuterTimeWindow([this.state.fromDate, toDate])
+    }
+
+    this.toTime.blur()
   }
 
   render() {
     return (
-      <div className="button-group span-pickers">
+      <div
+        className="button-group span-pickers"
+        onFocus={() => clearTimeout(this.blurTimeout)}
+        onBlur={() => {
+          clearTimeout(this.blurTimeout)
+          this.blurTimeout = setTimeout(this.props.submitSearchBar, 100)
+        }}
+      >
         <div className="thin-button">
           <DayPicker
             from={this.state.fromDate}
@@ -118,6 +135,7 @@ export default class SpanPickers extends React.Component<Props, State> {
             onDayChange={this.onFromDayChange}
           />
           <TimePicker
+            ref={r => (this.fromTime = r)}
             time={this.state.fromDate}
             onTimeChange={this.onFromTimeChange}
           />
@@ -133,10 +151,12 @@ export default class SpanPickers extends React.Component<Props, State> {
             to={this.state.toDate}
             day={this.state.toDate}
             onDayChange={this.onToDayChange}
+            ref={r => (this.toDate = r)}
           />
           <TimePicker
             time={this.state.toDate}
             onTimeChange={this.onToTimeChange}
+            ref={r => (this.toTime = r)}
           />
         </div>
         <ThinPicker align="right">
@@ -191,6 +211,7 @@ import * as actions from "../actions/timeWindow"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {getTimeZone} from "../reducers/view"
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
+import * as searchBar from "../actions/searchBar"
 
 const stateToProps = state => ({
   timeWindow: getTimeWindow(state),
@@ -201,6 +222,9 @@ const stateToProps = state => ({
 const dispatchToProps = (dispatch: Function) => ({
   setOuterTimeWindow: (span: DateTuple) => {
     return dispatch(actions.setOuterTimeWindow(span))
+  },
+  submitSearchBar: () => {
+    dispatch(searchBar.submitSearchBar())
   }
 })
 

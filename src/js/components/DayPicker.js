@@ -12,6 +12,12 @@ export default class DayPicker extends React.Component {
     this.state = {inputWidth: 70}
   }
 
+  focus() {
+    if (this.daypicker) {
+      this.daypicker.input.focus()
+    }
+  }
+
   componentDidMount() {
     this.measureInput()
   }

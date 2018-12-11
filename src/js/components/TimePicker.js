@@ -23,6 +23,14 @@ export default class TimePicker extends React.Component {
     this.onInputChange = this.onInputChange.bind(this)
   }
 
+  focus() {
+    this.input.focus()
+  }
+
+  blur() {
+    this.input.blur()
+  }
+
   UNSAFE_componentWillReceiveProps(props) {
     this.setState({value: formatTime(props.time)})
   }
