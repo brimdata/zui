@@ -30,7 +30,6 @@ export default class Search {
     const request = this.api
       .search({space, string: program, timeWindow})
       .each(statsReceiver(this.dispatch))
-      .done(() => this.dispatch(completeMainSearch()))
       .error(_e => {
         this.dispatch(completeMainSearch())
         this.dispatch(

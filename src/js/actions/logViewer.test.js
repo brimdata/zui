@@ -72,13 +72,13 @@ test("#fetchAhead sets isFetching to false when done", done => {
     results: {tuples: [["1", "300"], ["1", "400"], ["1", "500"]]}
   })
   handler.channelCallback(0, {type: "SearchEnd"})
-  store.clearActions()
 
   handler.onDone()
   setTimeout(() => {
-    expect(store.getActions()).toEqual([
-      {type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET", value: false}
-    ])
+    expect(store.getActions()).toContainEqual({
+      type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET",
+      value: false
+    })
     done()
   }, 501)
 })
