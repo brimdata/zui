@@ -1,12 +1,32 @@
+/* @flow */
+
 import React from "react"
 import * as Time from "../lib/Time"
 import TimePicker from "./TimePicker"
 import DayPicker from "./DayPicker"
 import * as TimeWindow from "../lib/TimeWindow"
 import {ThinPicker} from "./Buttons"
+import type {DateTuple} from "../lib/TimeWindow"
+import type {TimeObj} from "../lib/Time"
 
-export default class SpanPickers extends React.Component {
-  constructor(props) {
+type Props = {
+  timeWindow: DateTuple,
+  spaceSpan: DateTuple,
+  setOuterTimeWindow: Function
+}
+
+type State = {
+  fromDate: Date,
+  toDate: Date
+}
+
+export default class SpanPickers extends React.Component<Props, State> {
+  onFromDayChange: Function
+  onToDayChange: Function
+  onFromTimeChange: Function
+  onToTimeChange: Function
+
+  constructor(props: Props) {
     super(props)
     this.state = {
       ...SpanPickers.getDerivedStateFromProps(props)
@@ -17,14 +37,14 @@ export default class SpanPickers extends React.Component {
     this.onToTimeChange = this.onToTimeChange.bind(this)
   }
 
-  static getDerivedStateFromProps(nextProps) {
+  static getDerivedStateFromProps(nextProps: Props) {
     return {
       fromDate: nextProps.timeWindow[0],
       toDate: nextProps.timeWindow[1]
     }
   }
 
-  onFromDayChange(day) {
+  onFromDayChange(day: Date) {
     const fromDate = Time.set(this.state.fromDate, {
       month: day.getMonth(),
       date: day.getDate(),
@@ -41,7 +61,7 @@ export default class SpanPickers extends React.Component {
     }
   }
 
-  onFromTimeChange(time) {
+  onFromTimeChange(time: TimeObj) {
     const fromDate = Time.set(this.state.fromDate, time)
 
     if (fromDate > this.state.toDate) {
@@ -54,7 +74,8 @@ export default class SpanPickers extends React.Component {
     }
   }
 
-  onToTimeChange(time) {
+  onToTimeChange(time: TimeObj) {
+    console.log(time)
     const toDate = Time.set(this.state.toDate, time)
     this.setState({toDate})
     this.props.setOuterTimeWindow([this.state.fromDate, toDate])
@@ -69,7 +90,7 @@ export default class SpanPickers extends React.Component {
     }
   }
 
-  onToDayChange(day) {
+  onToDayChange(day: Date) {
     const toDate = Time.set(this.state.toDate, {
       month: day.getMonth(),
       date: day.getDate(),
@@ -88,7 +109,7 @@ export default class SpanPickers extends React.Component {
 
   render() {
     return (
-      <div ref={r => (this.el = r)} className="button-group span-pickers">
+      <div className="button-group span-pickers">
         <div className="thin-button">
           <DayPicker
             from={this.state.fromDate}
@@ -166,9 +187,7 @@ export default class SpanPickers extends React.Component {
 }
 
 import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
 import * as actions from "../actions/timeWindow"
-import {submitSearchBar} from "../actions/searchBar"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {getTimeZone} from "../reducers/view"
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
@@ -179,7 +198,13 @@ const stateToProps = state => ({
   spaceSpan: getCurrentSpaceTimeWindow(state)
 })
 
+const dispatchToProps = (dispatch: Function) => ({
+  setOuterTimeWindow: (span: DateTuple) => {
+    return dispatch(actions.setOuterTimeWindow(span))
+  }
+})
+
 export const XSpanPickers = connect(
   stateToProps,
-  dispatch => bindActionCreators({...actions, submitSearchBar}, dispatch)
+  dispatchToProps
 )(SpanPickers)
