@@ -8,25 +8,19 @@ import {ThinPicker} from "./Buttons"
 export default class SpanPickers extends React.Component {
   constructor(props) {
     super(props)
-    this.state = this.extractState(props)
+    this.state = {
+      ...SpanPickers.getDerivedStateFromProps(props)
+    }
     this.onFromDayChange = this.onFromDayChange.bind(this)
     this.onToDayChange = this.onToDayChange.bind(this)
     this.onFromTimeChange = this.onFromTimeChange.bind(this)
     this.onToTimeChange = this.onToTimeChange.bind(this)
   }
 
-  UNSAFE_componentWillReceiveProps(props) {
-    this.setState(this.extractState(props))
-  }
-
-  extractState(props) {
-    this.selectedDays = {
-      from: props.timeWindow[0],
-      to: props.timeWindow[1]
-    }
+  static getDerivedStateFromProps(nextProps) {
     return {
-      fromDate: props.timeWindow[0],
-      toDate: props.timeWindow[1]
+      fromDate: nextProps.timeWindow[0],
+      toDate: nextProps.timeWindow[1]
     }
   }
 
