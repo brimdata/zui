@@ -1,32 +1,19 @@
 .time-picker {
-  display: inline-block;
   position: relative;
+  font-weight: normal;
 
-  .time-input {
+  .context-menu {
+    height: 40px * 5;
     padding: 0;
-    text-align: center;
-  }
-
-  .times-list {
+    margin: 0;
     position: absolute;
     top: calc(100% + #{$base-space});
     left: -20px;
-    background: white;
-    border-radius: 3px;
-    box-shadow: $box-shadow;
-    height: 40px * 5;
-    overflow-y: scroll;
 
-    p {
-      margin: 0;
-      padding: 0;
-      line-height: 40px;
+    li {
       padding: 0 24px;
+      line-height: 40px;
       min-width: 150px;
-
-      &:hover {
-        background: $light-gray-1;
-      }
     }
   }
 }

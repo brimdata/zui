@@ -39,4 +39,11 @@ export const shift = (
   timeWindow: DateTuple,
   amount: number,
   unit: TimeUnit = "ms"
-) => timeWindow.map(date => Time.add(date, amount, unit))
+) => {
+  return timeWindow.map(date => Time.add(date, amount, unit))
+}
+
+export const last = (number: number, unit: TimeUnit) => {
+  const now = new Date()
+  return [Time.subtract(now, number, unit), now]
+}

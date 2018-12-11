@@ -1,0 +1,43 @@
+.span-pickers {
+  .DayPickerInput {
+    height: 14px;
+  }
+  .time-input {
+    padding: 0 5px;
+  }
+  .day-input,
+  .time-input {
+    background: none;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    outline: none;
+    transition: all 100ms;
+    text-align: center;
+    &:hover {
+      background-color: darken(#dcdcdc, 5%);
+    }
+    &:focus {
+      background-color: darken(#dcdcdc, 10%);
+    }
+  }
+
+  .span-duration {
+    display: flex;
+    align-items: center;
+
+    p {
+      font-size: 10px;
+      color: #545866;
+      padding: 0 3px;
+    }
+
+    hr {
+      margin: 0;
+      width: 10px;
+      border: none;
+      border-top: 1px solid #dcdcdc;
+    }
+  }
+}

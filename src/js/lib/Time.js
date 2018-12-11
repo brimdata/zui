@@ -51,6 +51,8 @@ export type TimeUnit =
   | "millisecond"
   | "ms"
 
+export type TimeObj = {minutes: number, hours: number}
+
 export type EpochObj = {sec: number, ns: number}
 
 const STORAGE_FORMAT = "YYYY-MM-DD HH:mm:ss.SSS"

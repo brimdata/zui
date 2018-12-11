@@ -1,4 +1,5 @@
 import React from "react"
+import * as Doc from "../lib/Doc"
 import * as Time from "../lib/Time"
 import DayPickerInput from "react-day-picker/DayPickerInput"
 
@@ -8,6 +9,38 @@ export default class DayPicker extends React.Component {
   constructor(props) {
     super(props)
     this.onDayChange = this.onDayChange.bind(this)
+    this.state = {inputWidth: 70}
+  }
+
+  focus() {
+    if (this.daypicker) {
+      this.daypicker.input.focus()
+    }
+  }
+
+  componentDidMount() {
+    this.measureInput()
+  }
+
+  componentDidUpdate() {
+    this.measureInput()
+  }
+
+  measureInput() {
+    if (this.daypicker) {
+      const parent = Doc.id("measure-layer")
+      const span = document.createElement("span")
+      span.innerHTML = this.daypicker.input.value
+      span.className = "thin-button"
+      span.style.padding = "0 5px"
+      parent.append(span)
+      const {width} = span.getBoundingClientRect()
+      span.remove()
+      const inputWidth = Math.floor(width)
+      if (this.state.inputWidth !== inputWidth) {
+        this.setState({inputWidth: Math.floor(width)})
+      }
+    }
   }
 
   onDayChange(day) {
@@ -19,25 +52,25 @@ export default class DayPicker extends React.Component {
     from = Time.fakeZone(from)
     to = Time.fakeZone(to)
     let fakeDay = Time.fakeZone(day)
+
     return (
-      <div className="text-input-wrapper">
-        <DayPickerInput
-          ref={r => (this.daypicker = r)}
-          value={Time.format(day, FORMAT)}
-          formatDate={date => Time.format(date, FORMAT)}
-          parseDate={parseDate}
-          placeholder={FORMAT}
-          onDayChange={this.onDayChange}
-          dayPickerProps={{
-            selectedDays: [fakeDay, {from, to}],
-            todayButton: "TODAY",
-            modifiers: {from, to}
-          }}
-          inputProps={{
-            size: 11
-          }}
-        />
-      </div>
+      <DayPickerInput
+        ref={r => (this.daypicker = r)}
+        value={Time.format(day, FORMAT)}
+        formatDate={date => Time.format(date, FORMAT)}
+        parseDate={parseDate}
+        placeholder={FORMAT}
+        onDayChange={this.onDayChange}
+        dayPickerProps={{
+          selectedDays: [fakeDay, {from, to}],
+          todayButton: "TODAY",
+          modifiers: {from, to}
+        }}
+        inputProps={{
+          style: {width: this.state.inputWidth},
+          className: "day-input"
+        }}
+      />
     )
   }
 }

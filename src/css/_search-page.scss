@@ -57,6 +57,7 @@ $page-border-color: $light-gray-3;
 .search-page-header {
   background-color: $page-background-color;
   border-bottom: 1px solid $page-border-color;
+  z-index: 2;
 }
 
 .search-page-header-charts {

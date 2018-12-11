@@ -1,7 +1,22 @@
+@mixin button-reset {
+  border: none;
+  outline: none;
+  font-family: $body-font;
+}
+
+@mixin button-shadow {
+  box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.25);
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+}
+
 .button {
+  @include button-reset;
   color: white;
   background: $blue-3;
-  border: none;
   border-radius: 3px;
   padding: 3px;
   display: inline-block;
@@ -108,5 +123,44 @@
 
   &.text {
     width: auto;
+  }
+}
+
+.thin-button {
+  @include button-reset;
+  height: 14px;
+  background: #dcdcdc;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: bold;
+}
+
+.thin-picker {
+  cursor: pointer;
+  width: 22px;
+  padding: 0;
+  transition: all 100ms;
+
+  svg {
+    fill: #4a4a4a;
+    width: 8px;
+    padding: 0;
+    margin: 0;
+  }
+
+  &:hover {
+    background: darken(#dcdcdc, 5%);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    background: darken(#dcdcdc, 10%);
+    transform: scale(1);
   }
 }

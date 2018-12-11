@@ -11,6 +11,14 @@ export function fetchSpaceInfo(name: string) {
   }
 }
 
+export const fetchAndSetCurrentSpace = (name: string) => {
+  return (dispatch: Function) => {
+    return dispatch(fetchSpaceInfo(name)).done(() => {
+      dispatch(setCurrentSpaceName(name))
+    })
+  }
+}
+
 export const fetchAllSpaces = () => (
   dispatch: *,
   _getState: *,
@@ -49,6 +57,13 @@ export function setCurrentSpaceName(name: string) {
   return {
     type: "CURRENT_SPACE_NAME_SET",
     name
+  }
+}
+
+export function setSpaceNames(names: string[]) {
+  return {
+    type: "SPACE_NAMES_SET",
+    names
   }
 }
 

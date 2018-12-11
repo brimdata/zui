@@ -1,5 +1,4 @@
 import React from "react"
-import XTimeWindowInput from "../connectors/XTimeWindowInput"
 import XSearchInput from "../connectors/XSearchInput"
 import XSearchButton from "../connectors/XSearchButton"
 import XPins from "../connectors/XPins"
@@ -12,7 +11,6 @@ export default class SearchBar extends React.Component {
         <div className="search-builder">
           <div className="search-inputs">
             <XSearchInput />
-            <XTimeWindowInput />
           </div>
           {this.props.error && <ErrorMessage error={this.props.error} />}
           <XPins />

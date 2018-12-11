@@ -7,17 +7,11 @@ export default class TitleBar extends React.Component {
 
     this.onHostClick = () => {
       props.disconnectBoomd()
-      props.unselectSpace()
-    }
-
-    this.onSpaceClick = () => {
-      props.unselectSpace()
     }
   }
 
   render() {
-    const {host, port, space} = this.props
-
+    const {host, port} = this.props
     return (
       <div className="title-bar">
         <PaneHeader>
@@ -27,7 +21,6 @@ export default class TitleBar extends React.Component {
               <span onClick={this.onHostClick}>
                 {host}:{port}
               </span>{" "}
-              <span onClick={this.onSpaceClick}>{space}</span>
             </PaneTitle>
           </Center>
           <Right />

@@ -4,14 +4,13 @@ import createReducer from "./createReducer"
 import {createSelector} from "reselect"
 import isArray from "lodash/isArray"
 import isDate from "lodash/isDate"
-import * as Time from "../lib/Time"
+import {last} from "../lib/TimeWindow"
 import type {State} from "./types"
 import type {DateTuple} from "../lib/TimeWindow"
 
-const now = new Date()
 const initialState = {
   inner: null,
-  outer: [Time.subtract(now, 30, "minutes"), now]
+  outer: last(30, "minutes")
 }
 
 export type TimeWindow = typeof initialState
