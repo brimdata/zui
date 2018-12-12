@@ -1,6 +1,5 @@
 import React from "react"
 import {Redirect} from "react-router-dom"
-import Input from "./Input"
 import LookyHeader from "./LookyHeader"
 import AdminTitle from "./AdminTitle"
 
@@ -34,7 +33,7 @@ class Connect extends React.Component {
             <form className="admin-form" onSubmit={this.onSubmit}>
               <div className="form-field">
                 <label>Host</label>
-                <Input
+                <input
                   autoFocus
                   type="text"
                   name="host"
@@ -44,7 +43,7 @@ class Connect extends React.Component {
               </div>
               <div className="form-field">
                 <label>Port</label>
-                <Input
+                <input
                   type="text"
                   name="port"
                   value={this.state.port || ""}
@@ -53,7 +52,7 @@ class Connect extends React.Component {
               </div>
               <div className="form-field">
                 <label>User</label>
-                <Input
+                <input
                   type="text"
                   name="user"
                   value={this.state.user || ""}
@@ -62,7 +61,7 @@ class Connect extends React.Component {
               </div>
               <div className="form-field">
                 <label>Pass</label>
-                <Input
+                <input
                   type="password"
                   name="pass"
                   value={this.state.pass || ""}
