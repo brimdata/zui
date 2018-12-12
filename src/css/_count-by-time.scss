@@ -1,4 +1,6 @@
 .count-by-time-wrapper {
+  position: relative;
+
   .loading-message {
     position: absolute;
     top: 30%;
@@ -6,6 +8,31 @@
     transform: translate(-50%, -50%);
     p {
       @include pulsing;
+    }
+  }
+
+  .tooltip {
+    opacity: 0;
+    position: absolute;
+    height: 30px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    padding: 0 10px;
+    background: white;
+    box-shadow: $box-shadow;
+    pointer-events: none;
+    transition: all 100ms;
+    font-family: $mono-font;
+
+    span.path {
+      display: inline-block;
+      text-align: center;
+      color: white;
+      padding: 0 6px;
+      border-radius: 3px;
+      font-weight: bold;
     }
   }
 }

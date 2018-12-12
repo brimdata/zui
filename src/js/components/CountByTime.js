@@ -73,13 +73,13 @@ export default class CountByTime extends React.Component<Props, State> {
 
     d3.select(svg)
       .append("g")
-      .attr("class", "chart")
-      .attr("transform", `translate(${left}, ${top})`)
+      .attr("class", "brush")
+      .attr("transform", `translate(${left}, 0)`)
 
     d3.select(svg)
       .append("g")
-      .attr("class", "brush")
-      .attr("transform", `translate(${left}, 0)`)
+      .attr("class", "chart")
+      .attr("transform", `translate(${left}, ${top})`)
 
     const xAxis = d3
       .select(svg)
@@ -305,11 +305,46 @@ export default class CountByTime extends React.Component<Props, State> {
       .attr("opacity", 0)
       .remove()
 
+    const dis = this
+    function mouseover(d) {
+      const key = d3.select(this.parentNode).datum().key
+      const className = `path ${key}-bg-color`
+      dis.tooltip.innerHTML = `<span class="${className}"> ${key} </span>: ${
+        d.data[key]
+      }`
+      let [left, top] = d3.mouse(dis.wrapper)
+
+      const height = 30
+      const padding = 10
+      left += padding
+      top -= height
+      top -= padding
+
+      dis.tooltip.style = `opacity: 1; left: ${left}px; top: ${top}px`
+    }
+
+    function mousemove() {
+      let [left, top] = d3.mouse(dis.wrapper)
+      const height = 30
+      const padding = 10
+      left += padding
+      top -= height
+
+      dis.tooltip.style = `opacity: 1; left: ${left}px; top: ${top}px`
+    }
+
+    function mouseleave() {
+      dis.tooltip.style.opacity = " 0"
+    }
+
     bars
       .enter()
       .append("rect")
       .attr("y", this.state.innerHeight)
       .attr("height", 0)
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave)
       .merge(bars)
       .attr("width", x.bandwidth())
       .attr("x", d => time(d.data.ts))
@@ -328,7 +363,8 @@ export default class CountByTime extends React.Component<Props, State> {
   render() {
     const {height, width} = this.props
     return (
-      <div className="count-by-time-wrapper">
+      <div className="count-by-time-wrapper" ref={r => (this.wrapper = r)}>
+        <div className="tooltip" ref={r => (this.tooltip = r)} />
         <svg
           className="count-by-time"
           height={height}
@@ -339,3 +375,5 @@ export default class CountByTime extends React.Component<Props, State> {
     )
   }
 }
+
+<div className="tooltip" />
