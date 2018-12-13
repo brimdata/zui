@@ -3,9 +3,9 @@
 import React from "react"
 import * as d3 from "d3"
 import type {DateTuple} from "../lib/TimeWindow"
-import XAxis from "../charts/XAxis"
-import YAxis from "../charts/YAxis"
-import Brush from "../charts/Brush"
+import TimeSpanXAxis from "../charts/TimeSpanXAxis"
+import SingleTickYAxis from "../charts/SingleTickYAxis"
+import HistogramBrush from "../charts/HistogramBrush"
 import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
 
@@ -36,10 +36,10 @@ export default class CountByTime extends React.Component<Props> {
         scales: buildScales
       },
       elements: [
-        new XAxis(props.dispatch),
-        new YAxis(props.dispatch),
+        new TimeSpanXAxis(props.dispatch),
+        new SingleTickYAxis(props.dispatch),
         new StackedPathBars(props.dispatch),
-        new Brush(props.dispatch)
+        new HistogramBrush(props.dispatch)
       ]
     })
   }

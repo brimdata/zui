@@ -7,7 +7,7 @@ import {setOuterTimeWindow} from "../actions/timeWindow"
 import {fetchMainSearch} from "../actions/mainSearch"
 import Chart from "../models/Chart"
 
-export default class XAxis implements ChartElement {
+export default class TimeSpanXAxis implements ChartElement {
   dispatch: Function
 
   constructor(dispatch: Function) {

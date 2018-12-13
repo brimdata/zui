@@ -7,7 +7,7 @@ import isEqual from "lodash/isEqual"
 import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
 import {fetchMainSearch} from "../actions/mainSearch"
 
-export default class Brush implements ChartElement {
+export default class HistogramBrush implements ChartElement {
   dispatch: Function
 
   constructor(dispatch: Function) {
