@@ -1,7 +1,7 @@
 /* @flow */
 
 import * as d3 from "d3"
-import type {ChartElement} from "../models/ChartElements"
+import type {ChartElement} from "../models/Chart"
 import Chart from "../models/Chart"
 import isEqual from "lodash/isEqual"
 import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
