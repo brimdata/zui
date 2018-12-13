@@ -18,5 +18,8 @@ const stateToProps = state => ({
 
 export default connect(
   stateToProps,
-  dispatch => bindActionCreators({...actions, fetchMainSearch}, dispatch)
+  dispatch => ({
+    dispatch: dispatch,
+    ...bindActionCreators({...actions, fetchMainSearch}, dispatch)
+  })
 )(CountByTime)
