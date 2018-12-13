@@ -25,15 +25,25 @@ type Props = {
 export default class CountByTime extends React.Component<Props> {
   svg: any
   elements: ChartElements
+  chart: Chart
 
   constructor(props: Props) {
     super(props)
-    this.elements = new ChartElements([
-      new XAxis(props.dispatch),
-      new YAxis(props.dispatch),
-      new Points(props.dispatch),
-      new Brush(props.dispatch)
-    ])
+    this.chart = new Chart({
+      props: this.props,
+      builders: {
+        data: buildData,
+        margins: buildMargins,
+        dimens: buildDimens,
+        scales: buildScales
+      },
+      elements: [
+        new XAxis(props.dispatch),
+        new YAxis(props.dispatch),
+        new Points(props.dispatch),
+        new Brush(props.dispatch)
+      ]
+    })
   }
 
   shouldComponentUpdate(nextProps: Props) {
@@ -45,25 +55,12 @@ export default class CountByTime extends React.Component<Props> {
     )
   }
 
-  buildChart() {
-    return new Chart({
-      props: this.props,
-      buildData,
-      buildMargins,
-      buildDimens,
-      buildScales
-    })
-  }
-
   componentDidMount() {
-    this.elements.updateChart(this.buildChart())
-    this.elements.mount(this.svg)
-    this.elements.draw()
+    this.chart.mount(this.svg).draw()
   }
 
   componentDidUpdate() {
-    this.elements.updateChart(this.buildChart())
-    this.elements.draw()
+    this.chart.update(this.props).draw()
   }
 
   render() {

@@ -14,14 +14,14 @@ export default class Brush implements ChartElement {
     this.dispatch = dispatch
   }
 
-  mount(chart: Chart, svg: HTMLElement) {
-    d3.select(svg)
+  mount(chart: Chart) {
+    d3.select(chart.svg)
       .append("g")
       .attr("class", "brush")
       .attr("transform", `translate(${chart.margins.left}, 0)`)
   }
 
-  draw(chart: Chart, svg: HTMLElement) {
+  draw(chart: Chart) {
     let prevSelection = null
     let justClicked = false
     let timeout
@@ -30,7 +30,7 @@ export default class Brush implements ChartElement {
     function onBrushStart() {
       prevSelection = d3.brushSelection(
         d3
-          .select(svg)
+          .select(chart.svg)
           .select(".brush")
           .node()
       )

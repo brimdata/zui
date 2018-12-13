@@ -11,8 +11,8 @@ export default class YAxis implements ChartElement {
     this.dispatch = dispatch
   }
 
-  mount(chart: Chart, svg: HTMLElement) {
-    d3.select(svg)
+  mount(chart: Chart) {
+    d3.select(chart.svg)
       .append("g")
       .attr("class", "y-axis")
       .attr(
@@ -21,8 +21,8 @@ export default class YAxis implements ChartElement {
       )
   }
 
-  draw(chart: Chart, svg: HTMLElement) {
-    d3.select(svg)
+  draw(chart: Chart) {
+    d3.select(chart.svg)
       .select(".y-axis")
       .call(
         d3

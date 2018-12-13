@@ -15,9 +15,9 @@ export default class XAxis implements ChartElement {
     this.dispatch = dispatch
   }
 
-  mount(chart: Chart, svg: HTMLElement) {
+  mount(chart: Chart) {
     const xAxis = d3
-      .select(svg)
+      .select(chart.svg)
       .append("g")
       .attr("class", "x-axis")
       .attr(
@@ -26,10 +26,29 @@ export default class XAxis implements ChartElement {
           chart.margins.bottom})`
       )
 
+    let prevSpan
     const xAxisHandlers = xAxisDrag({
       parent: xAxis.node(),
-      onDrag: this.onDrag.bind(chart),
-      onDragEnd: this.onDragEnd.bind(this)
+
+      onDragStart: () => {
+        prevSpan = chart.data.timeWindow
+      },
+
+      onDrag: (pos, startPos) => {
+        const [from, to] = [pos, startPos].map(num =>
+          chart.scales.timeScale.invert(num)
+        )
+        const diff = TimeWindow.duration([from, to])
+        const [nextFrom, nextTo] = TimeWindow.shift(prevSpan, diff)
+        chart.update({timeWindow: [nextFrom, nextTo]}).draw()
+      },
+
+      onDragEnd: (pos, startPos) => {
+        const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
+        const diff = TimeWindow.duration([from, to])
+        this.dispatch(setOuterTimeWindow(TimeWindow.shift(prevSpan, diff)))
+        this.dispatch(fetchMainSearch())
+      }
     })
 
     d3.select("body")
@@ -46,31 +65,13 @@ export default class XAxis implements ChartElement {
     return xAxis
   }
 
-  draw(chart: Chart, svg: HTMLElement) {
-    d3.select(svg)
+  draw(chart: Chart) {
+    d3.select(chart.svg)
       .select(".x-axis")
       .call(d3.axisBottom(chart.scales.timeScale))
 
-    d3.select(svg)
+    d3.select(chart.svg)
       .select(".x-axis-drag")
       .attr("width", chart.dimens.innerWidth)
-  }
-
-  onDrag(chart: Chart, pos: number, startPos: number) {
-    const [from, to] = [pos, startPos].map(num =>
-      chart.scales.timeScale.invert(num)
-    )
-    const diff = TimeWindow.duration([from, to])
-    const [nextFrom, nextTo] = TimeWindow.shift(chart.scales.timeWindow, diff)
-    console.log("Finish me", [nextFrom, nextTo])
-  }
-
-  onDragEnd(chart: Chart, pos: number, startPos: number) {
-    const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
-    const diff = TimeWindow.duration([from, to])
-    this.dispatch(
-      setOuterTimeWindow(TimeWindow.shift(chart.data.timeWindow, diff))
-    )
-    this.dispatch(fetchMainSearch())
   }
 }

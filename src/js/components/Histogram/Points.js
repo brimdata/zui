@@ -11,8 +11,8 @@ export default class Points implements ChartElement {
     this.dispatch = dispatch
   }
 
-  mount(chart: Chart, svg: HTMLElement) {
-    d3.select(svg)
+  mount(chart: Chart) {
+    d3.select(chart.svg)
       .append("g")
       .attr("class", "chart")
       .attr(
@@ -21,10 +21,10 @@ export default class Points implements ChartElement {
       )
   }
 
-  draw(chart: Chart, svg: HTMLElement) {
+  draw(chart: Chart) {
     const series = d3.stack().keys(chart.data.keys)(chart.data.data)
     const barGroups = d3
-      .select(svg)
+      .select(chart.svg)
       .select(".chart")
       .selectAll("g")
       .data(series, d => d.key)
