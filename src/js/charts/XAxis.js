@@ -1,11 +1,11 @@
 /* @flow */
 
 import * as d3 from "d3"
-import type {ChartElement} from "../../models/ChartElements"
-import * as TimeWindow from "../../lib/TimeWindow"
-import {setOuterTimeWindow} from "../../actions/timeWindow"
-import {fetchMainSearch} from "../../actions/mainSearch"
-import Chart from "../../models/Chart"
+import type {ChartElement} from "../models/ChartElements"
+import * as TimeWindow from "../lib/TimeWindow"
+import {setOuterTimeWindow} from "../actions/timeWindow"
+import {fetchMainSearch} from "../actions/mainSearch"
+import Chart from "../models/Chart"
 
 export default class XAxis implements ChartElement {
   dispatch: Function

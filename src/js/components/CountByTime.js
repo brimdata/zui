@@ -3,11 +3,10 @@
 import React from "react"
 import * as d3 from "d3"
 import type {DateTuple} from "../lib/TimeWindow"
-import XAxis from "./Histogram/XAxis"
-import YAxis from "./Histogram/YAxis"
-import Brush from "./Histogram/Brush"
-import Points from "./Histogram/Points"
-import ChartElements from "../models/ChartElements"
+import XAxis from "../charts/XAxis"
+import YAxis from "../charts/YAxis"
+import Brush from "../charts/Brush"
+import Points from "../charts/Points"
 import Chart from "../models/Chart"
 
 type Props = {
@@ -24,7 +23,6 @@ type Props = {
 
 export default class CountByTime extends React.Component<Props> {
   svg: any
-  elements: ChartElements
   chart: Chart
 
   constructor(props: Props) {

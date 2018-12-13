@@ -1,11 +1,11 @@
 /* @flow */
 
 import * as d3 from "d3"
-import type {ChartElement} from "../../models/ChartElements"
-import Chart from "../../models/Chart"
+import type {ChartElement} from "../models/ChartElements"
+import Chart from "../models/Chart"
 import isEqual from "lodash/isEqual"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../../actions/timeWindow"
-import {fetchMainSearch} from "../../actions/mainSearch"
+import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
+import {fetchMainSearch} from "../actions/mainSearch"
 
 export default class Brush implements ChartElement {
   dispatch: Function

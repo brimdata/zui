@@ -1,8 +1,8 @@
 /* @flow */
 
 import * as d3 from "d3"
-import type {ChartElement} from "../../models/ChartElements"
-import Chart from "../../models/Chart"
+import type {ChartElement} from "../models/ChartElements"
+import Chart from "../models/Chart"
 
 export default class YAxis implements ChartElement {
   dispatch: Function
