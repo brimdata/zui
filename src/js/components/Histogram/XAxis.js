@@ -2,7 +2,6 @@
 
 import * as d3 from "d3"
 import type {ChartElement} from "../../models/ChartElements"
-import xAxisDrag from "../xAxisDrag"
 import * as TimeWindow from "../../lib/TimeWindow"
 import {setOuterTimeWindow} from "../../actions/timeWindow"
 import {fetchMainSearch} from "../../actions/mainSearch"
@@ -26,43 +25,47 @@ export default class XAxis implements ChartElement {
           chart.margins.bottom})`
       )
 
-    let prevSpan
-    const xAxisHandlers = xAxisDrag({
-      parent: xAxis.node(),
+    const parent = xAxis.node()
+    let startSpan = null
+    let startPos = null
 
-      onDragStart: () => {
-        prevSpan = chart.data.timeWindow
-      },
+    const dragStart = () => {
+      startPos = d3.mouse(parent)[0]
+      startSpan = chart.data.timeWindow
+    }
 
-      onDrag: (pos, startPos) => {
-        const [from, to] = [pos, startPos].map(num =>
-          chart.scales.timeScale.invert(num)
-        )
-        const diff = TimeWindow.duration([from, to])
-        const [nextFrom, nextTo] = TimeWindow.shift(prevSpan, diff)
-        chart.update({timeWindow: [nextFrom, nextTo]}).draw()
-      },
+    const drag = () => {
+      if (startPos === null || startSpan === null) return
+      const pos = d3.mouse(parent)[0]
+      const [from, to] = [pos, startPos].map(num =>
+        chart.scales.timeScale.invert(num)
+      )
+      const diff = TimeWindow.duration([from, to])
+      const [nextFrom, nextTo] = TimeWindow.shift(startSpan, diff)
+      chart.update({timeWindow: [nextFrom, nextTo]})
+    }
 
-      onDragEnd: (pos, startPos) => {
-        const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
-        const diff = TimeWindow.duration([from, to])
-        this.dispatch(setOuterTimeWindow(TimeWindow.shift(prevSpan, diff)))
-        this.dispatch(fetchMainSearch())
-      }
-    })
+    const dragEnd = () => {
+      if (startPos === null || startSpan === null) return
+      const pos = d3.mouse(parent)[0]
+      const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
+      const diff = TimeWindow.duration([from, to])
+      this.dispatch(setOuterTimeWindow(TimeWindow.shift(startSpan, diff)))
+      this.dispatch(fetchMainSearch())
+      startPos = null
+      startSpan = null
+    }
 
     d3.select("body")
-      .on("mousemove", xAxisHandlers.mouseMove)
-      .on("mouseup", xAxisHandlers.mouseUp)
+      .on("mousemove", drag)
+      .on("mouseup", dragEnd)
 
     xAxis
       .append("rect")
       .attr("class", "x-axis-drag")
       .attr("fill", "transparent")
       .attr("height", chart.margins.bottom)
-      .on("mousedown", xAxisHandlers.mouseDown)
-
-    return xAxis
+      .on("mousedown", dragStart)
   }
 
   draw(chart: Chart) {

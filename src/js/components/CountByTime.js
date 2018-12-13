@@ -56,11 +56,11 @@ export default class CountByTime extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.chart.mount(this.svg).draw()
+    this.chart.mount(this.svg)
   }
 
   componentDidUpdate() {
-    this.chart.update(this.props).draw()
+    this.chart.update(this.props)
   }
 
   render() {
