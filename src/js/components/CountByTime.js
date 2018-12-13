@@ -6,7 +6,7 @@ import type {DateTuple} from "../lib/TimeWindow"
 import XAxis from "../charts/XAxis"
 import YAxis from "../charts/YAxis"
 import Brush from "../charts/Brush"
-import Points from "../charts/Points"
+import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
 
 type Props = {
@@ -38,7 +38,7 @@ export default class CountByTime extends React.Component<Props> {
       elements: [
         new XAxis(props.dispatch),
         new YAxis(props.dispatch),
-        new Points(props.dispatch),
+        new StackedPathBars(props.dispatch),
         new Brush(props.dispatch)
       ]
     })
