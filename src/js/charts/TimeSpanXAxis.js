@@ -43,6 +43,7 @@ export default class TimeSpanXAxis implements ChartElement {
       const diff = TimeWindow.duration([from, to])
       const [nextFrom, nextTo] = TimeWindow.shift(startSpan, diff)
       chart.update({timeWindow: [nextFrom, nextTo]})
+      chart.draw()
     }
 
     const dragEnd = () => {

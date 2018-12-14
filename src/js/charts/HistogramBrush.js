@@ -27,6 +27,23 @@ export default class HistogramBrush implements ChartElement {
     let timeout
     const dispatch = this.dispatch
 
+    d3.select(chart.svg).on("mousemove", function() {
+      const [left, top] = d3.mouse(this)
+      const ts = chart.scales.timeScale.invert(left)
+      const bisect = d3.bisector(d => d.ts).left
+      const index = bisect(chart.data.data, ts)
+
+      const tooltip = {}
+      for (let key in chart.data.data[index]) {
+        const value = chart.data.data[index][key]
+        if (value !== 0) {
+          tooltip[key] = value
+        }
+      }
+
+      console.log(tooltip)
+    })
+
     function onBrushStart() {
       prevSelection = d3.brushSelection(
         d3

@@ -37,13 +37,11 @@ export default class Chart {
     this.margins = this.builders.margins(this)
     this.dimens = this.builders.dimens(this)
     this.scales = this.builders.scales(this)
-    this.draw()
   }
 
   mount(svg: HTMLElement) {
     this.svg = svg
     this.elements.forEach(el => el.mount(this))
-    this.draw()
   }
 
   draw() {
