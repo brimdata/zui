@@ -8,6 +8,7 @@ import SingleTickYAxis from "../charts/SingleTickYAxis"
 import HistogramBrush from "../charts/HistogramBrush"
 import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
+import HistogramTooltip from "./HistogramTooltip"
 
 type Props = {
   rawData: any,
@@ -66,6 +67,8 @@ export default class CountByTime extends React.Component<Props> {
   render() {
     return (
       <div className="count-by-time-wrapper">
+        <div id="histogram-tooltip" />
+
         <svg
           className="count-by-time"
           height={this.props.height}

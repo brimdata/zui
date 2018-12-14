@@ -1,0 +1,43 @@
+#histogram-tooltip {
+  position: absolute;
+  top: 0px;
+  pointer-events: none;
+  transition: opacity 200ms 50ms;
+}
+
+.histogram-tooltip {
+  pointer-events: none;
+  color: white;
+  background: transparentize($gray-5, 0.1);
+  font-size: 11px;
+  border-radius: 8px;
+
+  table {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .count {
+    text-align: right;
+  }
+
+  .title {
+    white-space: nowrap;
+    height: 22px;
+    line-height: 22px;
+    background: $gray-5;
+    border-radius: 8px 8px 0 0;
+    padding: 0 10px;
+  }
+
+  .total-row {
+    border-top: 1px solid white;
+    text-align: right;
+    font-weight: bold;
+  }
+
+  .path-tag {
+    border-radius: 3px;
+    padding: 0 6px;
+  }
+}
