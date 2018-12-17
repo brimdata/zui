@@ -9,6 +9,7 @@ import XAxisBrush from "../charts/XAxisBrush"
 import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
 import XPositionTooltip from "../charts/XPositionTooltip"
+import HoverLine from "../charts/HoverLine"
 
 type Props = {
   rawData: any,
@@ -41,6 +42,7 @@ export default class Histogram extends React.Component<Props> {
         new StackedPathBars(props.dispatch),
         new SingleTickYAxis(props.dispatch),
         new XAxisBrush(props.dispatch),
+        new HoverLine(),
         new XPositionTooltip()
       ]
     })
