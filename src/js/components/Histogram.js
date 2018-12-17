@@ -38,8 +38,8 @@ export default class Histogram extends React.Component<Props> {
       },
       elements: [
         new TimeSpanXAxis(props.dispatch),
-        new SingleTickYAxis(props.dispatch),
         new StackedPathBars(props.dispatch),
+        new SingleTickYAxis(props.dispatch),
         new XAxisBrush(props.dispatch),
         new XPositionTooltip()
       ]
