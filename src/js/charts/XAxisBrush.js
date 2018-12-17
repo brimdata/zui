@@ -18,7 +18,10 @@ export default class HistogramBrush implements ChartElement {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "brush")
-      .attr("transform", `translate(${chart.margins.left}, 0)`)
+      .attr(
+        "transform",
+        `translate(${chart.margins.left}, ${chart.margins.top})`
+      )
   }
 
   draw(chart: Chart) {
@@ -80,7 +83,10 @@ export default class HistogramBrush implements ChartElement {
       .brushX()
       .extent([
         [0, 0],
-        [chart.dimens.innerWidth, chart.dimens.innerHeight + chart.margins.top]
+        [
+          chart.dimens.innerWidth,
+          chart.dimens.innerHeight + chart.margins.bottom
+        ]
       ])
     element.call(brush)
 
