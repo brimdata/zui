@@ -1,15 +1,11 @@
 /* @flow */
 
 import * as d3 from "d3"
-import React from "react"
 import type {ChartElement} from "../models/Chart"
 import Chart from "../models/Chart"
 import isEqual from "lodash/isEqual"
 import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
 import {fetchMainSearch} from "../actions/mainSearch"
-import * as Doc from "../lib/Doc"
-import {renderToString} from "react-dom/server"
-import HistogramTooltip from "../components/HistogramTooltip"
 
 export default class HistogramBrush implements ChartElement {
   dispatch: Function
@@ -29,50 +25,9 @@ export default class HistogramBrush implements ChartElement {
     let prevSelection = null
     let justClicked = false
     let timeout
-    let prevDataIndex = null
-
     const dispatch = this.dispatch
-    const tooltip = Doc.id("histogram-tooltip")
-
-    d3.select(chart.svg)
-      .on("mouseout", () => {
-        tooltip.style.opacity = "0"
-        prevDataIndex = null
-      })
-      .on("mousemove", function() {
-        const [left] = d3.mouse(this)
-        const ts = chart.scales.timeScale.invert(left)
-        const bisect = d3.bisector(d => d.ts).left
-        const index = bisect(chart.data.data, ts)
-
-        const segments = []
-        for (let key in chart.data.data[index]) {
-          if (["ts", "count"].includes(key)) continue
-          const value = chart.data.data[index][key]
-          if (value !== 0) segments.push([key, value])
-        }
-        if (!segments.length) return
-        requestAnimationFrame(() => {
-          tooltip.style.opacity = "1"
-          tooltip.style.left = left + 30 + "px"
-        })
-
-        if (prevDataIndex === index) {
-          return
-        }
-
-        prevDataIndex = index
-        tooltip.innerHTML = renderToString(
-          <HistogramTooltip
-            style={{left}}
-            segments={segments}
-            ts={chart.data.data[index].ts}
-          />
-        )
-      })
 
     function onBrushStart() {
-      tooltip.style.opacity = "0"
       prevSelection = d3.brushSelection(
         d3
           .select(chart.svg)

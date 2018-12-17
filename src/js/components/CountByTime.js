@@ -5,10 +5,10 @@ import * as d3 from "d3"
 import type {DateTuple} from "../lib/TimeWindow"
 import TimeSpanXAxis from "../charts/TimeSpanXAxis"
 import SingleTickYAxis from "../charts/SingleTickYAxis"
-import HistogramBrush from "../charts/HistogramBrush"
+import XAxisBrush from "../charts/XAxisBrush"
 import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
-import HistogramTooltip from "./HistogramTooltip"
+import XPositionTooltip from "../charts/XPositionTooltip"
 
 type Props = {
   rawData: any,
@@ -40,7 +40,8 @@ export default class CountByTime extends React.Component<Props> {
         new TimeSpanXAxis(props.dispatch),
         new SingleTickYAxis(props.dispatch),
         new StackedPathBars(props.dispatch),
-        new HistogramBrush(props.dispatch)
+        new XAxisBrush(props.dispatch),
+        new XPositionTooltip()
       ]
     })
   }
