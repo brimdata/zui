@@ -22,7 +22,7 @@ type Props = {
   dispatch: Function
 }
 
-export default class CountByTime extends React.Component<Props> {
+export default class Histogram extends React.Component<Props> {
   svg: any
   chart: Chart
 
@@ -124,3 +124,28 @@ const buildScales = ({data, dimens}) => {
       .domain(data.timeWindow)
   }
 }
+
+import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
+import * as actions from "../actions/timeWindow"
+import {fetchMainSearch} from "../actions/mainSearch"
+import {
+  getMainSearchCountByTime,
+  getCountByTimeData
+} from "../reducers/countByTime"
+import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
+
+const stateToProps = state => ({
+  rawData: getCountByTimeData(state),
+  ...getMainSearchCountByTime(state),
+  timeWindow: getTimeWindow(state),
+  innerTimeWindow: getInnerTimeWindow(state)
+})
+
+export const XHistogram = connect(
+  stateToProps,
+  (dispatch: Function) => ({
+    dispatch: dispatch,
+    ...bindActionCreators({...actions, fetchMainSearch}, dispatch)
+  })
+)(Histogram)
