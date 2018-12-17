@@ -25,6 +25,7 @@ export default class HistogramTooltip {
         const ts = chart.scales.timeScale.invert(left)
         const bisect = d3.bisector(d => d.ts).left
         const index = bisect(chart.data.data, ts) - 1
+
         const point = chart.data.data[index]
         const segments = []
         for (let key in point) {
@@ -35,9 +36,15 @@ export default class HistogramTooltip {
         if (!segments.length) return
 
         requestAnimationFrame(() => {
+          if (index / chart.data.data.length > 0.65) {
+            tooltip.style.right = -1 * left + 30 + "px"
+            tooltip.style.left = ""
+          } else {
+            tooltip.style.right = ""
+            tooltip.style.left = left + 30 + "px"
+          }
           tooltip.style.display = "block"
           tooltip.style.opacity = "1"
-          tooltip.style.left = left + 30 + "px"
         })
 
         if (prevDataIndex === index) return
