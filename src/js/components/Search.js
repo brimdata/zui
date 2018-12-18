@@ -15,6 +15,7 @@ import XNotice from "../connectors/XNotice"
 import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
 import {XColumnChooser} from "./ColumnChooser"
+import {XWhoisModal} from "./WhoisModal"
 
 type Props = {
   dispatch: Function,
@@ -77,6 +78,7 @@ export default class Search extends React.Component<Props, State> {
           <XRightPane />
         </div>
         <XDownloadProgress />
+        <XWhoisModal />
       </div>
     )
   }
