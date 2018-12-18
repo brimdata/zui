@@ -10,6 +10,7 @@ import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
 import type {State} from "./types"
 import type {DateTuple} from "../lib/TimeWindow"
+import type {Interval} from "../lib/countByTimeInterval"
 
 type Results = {
   tuples: [],
@@ -19,7 +20,8 @@ type Results = {
 type Histogram = {
   data: {ts: Date, [string]: number}[],
   keys: string[],
-  timeBinCount: number
+  timeBinCount: number,
+  interval: Interval
 }
 
 const initialState = {
@@ -86,6 +88,7 @@ export const formatHistogram = (
   })
 
   return {
+    interval,
     data: bins,
     keys: keys.toArray(),
     timeBinCount: buckets.length
