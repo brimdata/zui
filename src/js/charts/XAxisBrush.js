@@ -81,13 +81,7 @@ export default class HistogramBrush implements ChartElement {
     const element = d3.select(".brush")
     const brush = d3
       .brushX()
-      .extent([
-        [0, 0],
-        [
-          chart.dimens.innerWidth,
-          chart.dimens.innerHeight + chart.margins.bottom
-        ]
-      ])
+      .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
     element.call(brush)
 
     chart.data.innerTimeWindow

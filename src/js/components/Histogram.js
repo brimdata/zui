@@ -10,6 +10,7 @@ import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
 import XPositionTooltip from "../charts/XPositionTooltip"
 import HoverLine from "../charts/HoverLine"
+import countByTimeInterval from "../lib/countByTimeInterval"
 
 type Props = {
   rawData: any,
@@ -84,11 +85,7 @@ export default class Histogram extends React.Component<Props> {
 }
 
 const buildData = ({props}) => ({
-  timeWindow: props.timeWindow,
-  innerTimeWindow: props.innerTimeWindow,
-  data: props.data,
-  keys: props.keys,
-  timeBinCount: props.timeBinCount
+  ...props
 })
 
 const buildMargins = _ => ({
@@ -114,8 +111,7 @@ const buildScales = ({data, dimens}) => {
     xScale: d3
       .scaleBand()
       .rangeRound([0, dimens.innerWidth])
-      .domain(xDomain)
-      .padding(0.05),
+      .domain(xDomain),
     yScale: d3
       .scaleLinear()
       .range([dimens.innerHeight, 0])

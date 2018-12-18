@@ -3,6 +3,7 @@
 import * as d3 from "d3"
 import type {ChartElement} from "../models/Chart"
 import Chart from "../models/Chart"
+import * as Time from "../lib/Time"
 
 export default class StackedPathBars implements ChartElement {
   dispatch: Function
@@ -28,6 +29,7 @@ export default class StackedPathBars implements ChartElement {
       .select(".chart")
       .selectAll("g")
       .data(series, d => d.key)
+
     const t = d3.transition().duration(100)
 
     barGroups
@@ -50,13 +52,22 @@ export default class StackedPathBars implements ChartElement {
       .attr("opacity", 0)
       .remove()
 
+    let width = 0
+    if (chart.data.data[0]) {
+      const ts = chart.data.data[0].ts
+      const {number, unit} = chart.data.interval
+      const a = chart.scales.timeScale(ts)
+      const b = chart.scales.timeScale(Time.add(ts, number, unit))
+      width = Math.max(Math.floor(b - a) - 2, 2)
+    }
+
     bars
       .enter()
       .append("rect")
       .attr("y", chart.dimens.innerHeight)
       .attr("height", 0)
       .merge(bars)
-      .attr("width", chart.scales.xScale.bandwidth())
+      .attr("width", width)
       .attr("x", d => chart.scales.timeScale(d.data.ts))
       .transition(t)
       .attr("y", d => chart.scales.yScale(d[1]))
