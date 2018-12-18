@@ -12,6 +12,7 @@ import type {SelectedColumns} from "./selectedColumns"
 import type {ColumnWidths} from "./columnWidths"
 import type {SearchStats} from "./searchStats"
 import type {SearchHistory} from "./searchHistory"
+import type {Whois} from "./whois"
 
 export type State = {
   notices: Notices,
@@ -25,7 +26,8 @@ export type State = {
   selectedColumns: SelectedColumns,
   columnWidths: ColumnWidths,
   searchStats: SearchStats,
-  searchHistory: SearchHistory
+  searchHistory: SearchHistory,
+  whois: Whois
 }
 
 export type Dispatch = Function

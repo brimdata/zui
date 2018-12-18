@@ -5,6 +5,7 @@ import * as packets from "../../actions/packets"
 import * as logDetails from "../../actions/logDetails"
 import * as timeWindow from "../../actions/timeWindow"
 import * as view from "../../actions/view"
+import * as whoisActions from "../../actions/whois"
 import {TimeField} from "../../models/Field"
 import type {Space} from "../../lib/Space"
 import Log from "../../models/Log"
@@ -36,14 +37,22 @@ export default (args: Args): MenuItemData[] => [
 ]
 
 const fieldActions = ({field, dispatch}) => {
-  if (field instanceof TimeField)
-    return [fromTime(field, dispatch), toTime(field, dispatch)]
-  else
-    return [
-      exclude(field, dispatch),
-      include(field, dispatch),
-      countBy(field, dispatch)
-    ]
+  const actions = []
+  if (field instanceof TimeField) {
+    actions.push(fromTime(field, dispatch))
+    actions.push(toTime(field, dispatch))
+  } else {
+    actions.push(exclude(field, dispatch))
+    actions.push(include(field, dispatch))
+    actions.push(countBy(field, dispatch))
+  }
+
+  if (field.type === "addr" || field.name === "host") {
+    actions.push(seperator())
+    actions.push(whois(field, dispatch))
+  }
+
+  return actions
 }
 
 const logActionsFunc = ({log, space, dispatch}) => {
@@ -116,6 +125,14 @@ const toTime = (field, dispatch) => ({
   onClick: () => {
     dispatch(timeWindow.setOuterToTime(field.toDate()))
     dispatch(searchBar.submitSearchBar())
+  }
+})
+
+const whois = (field, dispatch) => ({
+  type: "action",
+  text: "Whois Lookup",
+  onClick: () => {
+    dispatch(whoisActions.fetchWhois(field.value))
   }
 })
 

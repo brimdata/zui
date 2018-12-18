@@ -2,7 +2,7 @@
 
 import React, {Component} from "react"
 import {Route, Switch, Redirect} from "react-router-dom"
-import XSearch from "../connectors/XSearch"
+import {XSearch} from "./Search"
 import XConnect from "../connectors/XConnect"
 import XSpaces from "../connectors/XSpaces"
 import * as Time from "../lib/Time"
