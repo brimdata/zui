@@ -10,7 +10,6 @@ import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
 import XPositionTooltip from "../charts/XPositionTooltip"
 import HoverLine from "../charts/HoverLine"
-import countByTimeInterval from "../lib/countByTimeInterval"
 
 type Props = {
   rawData: any,
