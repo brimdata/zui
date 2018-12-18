@@ -17,12 +17,11 @@ export default class WhoisModal extends React.Component<Props> {
       <Modal
         isOpen={this.props.isOpen}
         onClose={() => this.props.dispatch(closeWhois())}
+        className="whois-modal"
       >
-        <div className="whois-modal">
-          <h3>Whois Lookup</h3>
-          {this.props.isFetching && <p>Loading...</p>}
-          {!this.props.isFetching && <pre>{this.props.text}</pre>}
-        </div>
+        <h3>Whois Lookup</h3>
+        {this.props.isFetching && <p>Loading...</p>}
+        {!this.props.isFetching && <pre>{this.props.text}</pre>}
       </Modal>
     )
   }
