@@ -14,9 +14,9 @@ export default (
   return (payload: Payload) => {
     switch (payload.type) {
       case "SearchResult":
-        if (count === 0) {
+        if (count === 0)
           dispatch(mainSearch.spliceMainSearchEvents(spliceIndex))
-        }
+
         count += payload.results.tuples.length
         break
       case "SearchEnd":

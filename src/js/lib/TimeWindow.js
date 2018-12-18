@@ -36,11 +36,11 @@ export const floorAndCeil = ([from, to]: DateTuple, unit: TimeUnit) => [
 ]
 
 export const shift = (
-  timeWindow: DateTuple,
+  [from, to]: DateTuple,
   amount: number,
   unit: TimeUnit = "ms"
 ) => {
-  return timeWindow.map(date => Time.add(date, amount, unit))
+  return [Time.add(from, amount, unit), Time.add(to, amount, unit)]
 }
 
 export const last = (number: number, unit: TimeUnit) => {

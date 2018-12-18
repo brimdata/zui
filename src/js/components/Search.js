@@ -7,7 +7,7 @@ import {AutoSizer} from "react-virtualized"
 import XTitleBar from "../connectors/XTitleBar"
 import {XControlBar} from "./ControlBar"
 import XSearchStats from "../connectors/XSearchStats"
-import XCountByTime from "../connectors/XCountByTime"
+import {XHistogram} from "./Histogram"
 import XLeftPane from "../connectors/XLeftPane"
 import XRightPane from "../connectors/XRightPane"
 import XDownloadProgress from "../connectors/XDownloadProgress"
@@ -63,7 +63,7 @@ export default class Search extends React.Component<Props, State> {
               {logsTab && (
                 <div className="search-page-header-charts">
                   <AutoSizer disableHeight>
-                    {({width}) => <XCountByTime height={80} width={width} />}
+                    {({width}) => <XHistogram height={80} width={width} />}
                   </AutoSizer>
                 </div>
               )}

@@ -63,8 +63,8 @@ export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
     timeWindow: getInnerTimeWindow(state),
     callbacks: (request: *) =>
       request
-        .channel(1, logsReceiver(dispatch))
         .channel(1, pageReceiver(dispatch, 200))
+        .channel(1, logsReceiver(dispatch))
   }
 }
 
