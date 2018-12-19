@@ -16,7 +16,7 @@ export const whois = (addr: string) => {
   return new Promise<string>((resolve, reject) => {
     exec(`whois ${addr}`, (error, stdout, _stderr) => {
       if (error) {
-        reject(error)
+        reject(error.toString())
       } else {
         resolve(stdout)
       }
