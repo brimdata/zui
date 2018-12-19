@@ -1,6 +1,6 @@
 import initStore from "../test/initStore"
 import * as actions from "../actions/whois"
-import {getWhoisText, getWhoisIsOpen} from "./whois"
+import {getWhoisText, getWhoisIsOpen, getWhoisAddr} from "./whois"
 
 let store
 beforeEach(() => {
@@ -15,6 +15,7 @@ test("whois lookup success", done => {
 
   store.dispatch(action).then(() => {
     expect(getWhoisText(store.getState())).toEqual("i am")
+    expect(getWhoisAddr(store.getState())).toEqual("www.example.com")
     expect(getWhoisIsOpen(store.getState())).toEqual(true)
     done()
   })

@@ -4,6 +4,7 @@ import createReducer from "./createReducer"
 import type {State} from "./types"
 
 const initialState = {
+  addr: "",
   text: "",
   isOpen: false,
   isFetching: false
@@ -12,8 +13,9 @@ const initialState = {
 export type Whois = typeof initialState
 
 export default createReducer(initialState, {
-  WHOIS_REQUEST: state => ({
+  WHOIS_REQUEST: (state, {addr}) => ({
     ...state,
+    addr,
     isFetching: true,
     text: ""
   }),
@@ -47,4 +49,8 @@ export const getWhoisIsOpen = (state: State) => {
 
 export const getWhoisIsFetching = (state: State) => {
   return state.whois.isFetching
+}
+
+export const getWhoisAddr = (state: State) => {
+  return state.whois.addr
 }
