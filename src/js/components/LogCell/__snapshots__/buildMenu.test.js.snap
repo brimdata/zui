@@ -63,14 +63,6 @@ Array [
   },
   Object {
     "onClick": [Function],
-    "text": "Whois Lookup",
-    "type": "action",
-  },
-  Object {
-    "type": "seperator",
-  },
-  Object {
-    "onClick": [Function],
     "text": "View log details",
     "type": "action",
   },
