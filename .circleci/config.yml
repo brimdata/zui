@@ -28,4 +28,4 @@ jobs:
           command: npm run flow
       - run:
           name: Test
-          command: npm test
+          command: npm test -- --maxWorkers=2 --ci
