@@ -5,6 +5,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  height: 25px;
 
   @include type-colors;
 
@@ -15,7 +16,6 @@
   &.hover,
   &.active {
     position: relative;
-    z-index: 1;
     border: 1px dashed $gray-5;
   }
 
