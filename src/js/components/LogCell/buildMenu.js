@@ -10,7 +10,6 @@ import {TimeField} from "../../models/Field"
 import type {Space} from "../../lib/Space"
 import Log from "../../models/Log"
 import Field from "../../models/Field"
-import * as Url from "../../lib/Url"
 
 type Action = {
   type: "action",
@@ -48,10 +47,7 @@ const fieldActions = ({field, dispatch}) => {
     actions.push(countBy(field, dispatch))
   }
 
-  if (
-    ["addr", "set[addr]"].includes(field.type) ||
-    (field.type === "string" && Url.isValid(field.value))
-  ) {
+  if (["addr", "set[addr]"].includes(field.type)) {
     actions.push(seperator())
     actions.push(whois(field, dispatch))
   }
