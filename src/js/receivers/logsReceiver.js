@@ -17,10 +17,6 @@ export default function(dispatch: Function) {
       dispatch(actions.mainSearchEvents(buffer))
       buffer = []
     }
-
-    if (done) {
-      dispatch(actions.completeMainSearch())
-    }
   }, THROTTLE_DELAY)
 
   return (payload: Payload) => {

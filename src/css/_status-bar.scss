@@ -6,7 +6,13 @@
   border-top: 1px solid $page-border-color;
 }
 
+.loading-animation.visible {
+  opacity: 1;
+}
+
 .loading-animation {
+  transition: opacity 500ms;
+  opacity: 0;
   margin-left: 10px;
   height: 15px;
   width: 15px;

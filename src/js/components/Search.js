@@ -15,7 +15,7 @@ import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
 import {XColumnChooser} from "./ColumnChooser"
 import {XWhoisModal} from "./WhoisModal"
-import StatusBar from "./StatusBar"
+import {XStatusBar} from "./StatusBar"
 
 type Props = {
   dispatch: Function,
@@ -71,7 +71,7 @@ export default class Search extends React.Component<Props, State> {
               <XColumnChooser />
             </div>
             <XSearchResults logsTab={logsTab} analyticsTab={analyticsTab} />
-            <StatusBar />
+            <XStatusBar />
           </div>
           <XRightPane />
         </div>
