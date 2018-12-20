@@ -6,7 +6,6 @@ import {AutoSizer} from "react-virtualized"
 
 import XTitleBar from "../connectors/XTitleBar"
 import {XControlBar} from "./ControlBar"
-import XSearchStats from "../connectors/XSearchStats"
 import {XHistogram} from "./Histogram"
 import XLeftPane from "../connectors/XLeftPane"
 import XRightPane from "../connectors/XRightPane"
@@ -16,6 +15,7 @@ import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
 import {XColumnChooser} from "./ColumnChooser"
 import {XWhoisModal} from "./WhoisModal"
+import StatusBar from "./StatusBar"
 
 type Props = {
   dispatch: Function,
@@ -71,9 +71,7 @@ export default class Search extends React.Component<Props, State> {
               <XColumnChooser />
             </div>
             <XSearchResults logsTab={logsTab} analyticsTab={analyticsTab} />
-            <div className="search-page-footer">
-              <XSearchStats />
-            </div>
+            <StatusBar />
           </div>
           <XRightPane />
         </div>
