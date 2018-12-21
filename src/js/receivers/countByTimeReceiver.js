@@ -1,26 +1,33 @@
+/* @flow */
+
 import {receiveCountByTime, reset} from "../actions/countByTime"
 import throttle from "lodash/throttle"
+import type {Payload} from "./types"
 
-export default dispatch => {
+export default (dispatch: Function) => {
   dispatch(reset())
   let descriptor
   let tuples = []
 
-  const throttledDispatch = throttle(
-    () => {
-      if (tuples.length === 0) return
-      dispatch(receiveCountByTime({descriptor, tuples}))
-      tuples = []
-    },
-    50,
-    {leading: false}
-  )
+  const dispatchNow = () => {
+    if (tuples.length === 0) return
+    dispatch(receiveCountByTime({descriptor, tuples}))
+    tuples = []
+  }
 
-  return ({type, results}) => {
-    if (type === "SearchResult") {
-      descriptor = results.descriptor
-      tuples = [...tuples, ...results.tuples]
-      throttledDispatch()
+  const dispatchSteady = throttle(dispatchNow, 50, {leading: false})
+
+  return (payload: Payload) => {
+    switch (payload.type) {
+      case "SearchResult":
+        descriptor = payload.results.descriptor
+        tuples = [...tuples, ...payload.results.tuples]
+        dispatchSteady()
+        break
+      case "SearchEnd":
+        dispatchSteady.cancel()
+        dispatchNow()
+        break
     }
   }
 }

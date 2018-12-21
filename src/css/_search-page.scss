@@ -32,7 +32,7 @@ $page-border-color: $light-gray-3;
 
 .search-page-header,
 .search-results,
-.search-page-footer {
+.status-bar {
   min-width: 500px;
 }
 
@@ -62,9 +62,4 @@ $page-border-color: $light-gray-3;
 
 .search-page-header-charts {
   height: 80px;
-}
-
-.search-page-footer {
-  background-color: $page-background-color;
-  border-top: 1px solid $page-border-color;
 }

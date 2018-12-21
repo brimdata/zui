@@ -9,30 +9,27 @@ const THROTTLE_DELAY = 200
 
 export default function(dispatch: Function) {
   let buffer = []
-  let done = false
 
-  const runDispatch = throttle(() => {
+  const dispatchNow = () => {
     if (buffer.length !== 0) {
       dispatch(discoverDescriptors(buffer))
       dispatch(actions.mainSearchEvents(buffer))
       buffer = []
     }
+  }
 
-    if (done) {
-      dispatch(actions.completeMainSearch())
-    }
-  }, THROTTLE_DELAY)
+  const dispatchSteady = throttle(dispatchNow, THROTTLE_DELAY)
 
   return (payload: Payload) => {
     switch (payload.type) {
       case "SearchEnd":
-        done = true
-        runDispatch()
+        dispatchSteady.cancel()
+        dispatchNow()
         break
       case "SearchResult":
         if (payload.results.tuples.length) {
           buffer = [...buffer, ...payload.results.tuples]
-          runDispatch()
+          dispatchSteady()
         }
         break
     }
