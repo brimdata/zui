@@ -6,6 +6,7 @@ import * as columnWidths from "./columnWidths"
 import * as mainSearch from "./mainSearch"
 import * as descriptors from "./descriptors"
 import * as spaces from "./spaces"
+import * as analysis from "./analysis"
 import UniqArray from "../models/UniqArray"
 import Columns from "../models/Columns"
 import columnOrder from "../lib/columnOrder"
@@ -52,6 +53,20 @@ export const getColumnsFromTds = createSelector(
     })
     return uniq.toArray()
   }
+)
+
+export const getAnalysisColumns = createSelector(
+  analysis.getAnalysis,
+  ({descriptor}) => {
+    return descriptor.map(field => ({...field, td: null}))
+  }
+)
+
+export const buildAnalysisColumns = createSelector(
+  getAnalysisColumns,
+  getSelected,
+  columnWidths.getAll,
+  (all, selected, widths) => createColumns(all, selected, widths)
 )
 
 export const getColumns = createSelector(

@@ -7,25 +7,18 @@ import type {Descriptor, Tuple} from "../models/Log"
 import type {State} from "./types"
 
 export type Analysis = {
-  [number]: {
-    descriptor: Descriptor,
-    tuples: Tuple[]
-  }
+  descriptor: Descriptor,
+  tuples: Tuple[]
 }
 
 const initialState = {}
 
 export default createReducer(initialState, {
-  MAIN_SEARCH_REQUEST: () => ({}),
-  ANALYSIS_SET: (state, {id, descriptor, tuples}) => {
-    return {
-      ...state,
-      [id]: {
-        descriptor,
-        tuples: mergeTuples(state, id, tuples)
-      }
-    }
-  }
+  MAIN_SEARCH_REQUEST: () => initialState,
+  ANALYSIS_SET: (state, {id, descriptor, tuples}) => ({
+    descriptor,
+    tuples: mergeTuples(state, id, tuples)
+  })
 })
 
 const mergeTuples = (state, id, tuples) => {

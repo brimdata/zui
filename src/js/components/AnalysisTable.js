@@ -26,6 +26,8 @@ export default class AnalysisTable extends React.Component {
       data: {tuples, descriptor}
     } = this.props
 
+    if (!descriptor) return null
+
     const cellRenderer = ({columnIndex, rowIndex, parent, key, style}) => {
       if (rowIndex === 0) {
         return (
