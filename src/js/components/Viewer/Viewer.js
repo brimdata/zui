@@ -12,7 +12,7 @@ type Props = {
   chunker: Chunker,
   layout: Layout,
   rowRenderer: RowRenderer,
-  onLastChunk: Function
+  onLastChunk?: Function
 }
 
 type State = {
@@ -43,7 +43,7 @@ export default class Viewer extends PureComponent<Props, State> {
         this.props.chunker.lastChunk() ==
         this.state.chunks[this.state.chunks.length - 1]
       ) {
-        this.props.onLastChunk()
+        this.props.onLastChunk && this.props.onLastChunk()
       }
     }
   }

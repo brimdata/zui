@@ -2,25 +2,56 @@
 
 import React from "react"
 import {AutoSizer} from "react-virtualized"
-import {XLogViewer} from "../components/LogViewer"
+import LogViewer from "../components/LogViewer"
 import NoResults from "./NoResults"
+import Log from "../models/Log"
+import Columns from "../models/Columns"
+import {fetchAhead} from "../actions/logViewer"
+import * as logDetails from "../actions/logDetails"
 
 type Props = {
-  hasData: boolean,
+  logs: Log[],
   isComplete: boolean,
+  selectedLog: Log,
+  timeZone: string,
+  moreAhead: boolean,
+  isFetchingAhead: boolean,
+  isFetching: boolean,
+  isComplete: boolean,
+  columns: Columns,
   dispatch: Function
 }
 
 export default class LogResults extends React.Component<Props> {
   render() {
-    if (!this.props.hasData && this.props.isComplete) return <NoResults />
-    if (!this.props.hasData) return null
+    if (!this.props.logs.length && this.props.isComplete) return <NoResults />
+    if (!this.props.logs.length) return null
+
+    const onLastChunk = () => {
+      const {isFetching, isFetchingAhead, moreAhead} = this.props
+      if (!isFetching && !isFetchingAhead && moreAhead) {
+        this.props.dispatch(fetchAhead())
+      }
+    }
 
     return (
       <div className="log-results">
         <div className="log-viewer-wrapper">
           <AutoSizer>
-            {({height, width}) => <XLogViewer height={height} width={width} />}
+            {({height, width}) => (
+              <LogViewer
+                height={height}
+                width={width}
+                logs={this.props.logs}
+                selectedLog={this.props.selectedLog}
+                timeZone={this.props.timeZone}
+                columns={this.props.columns}
+                onLastChunk={onLastChunk}
+                onRowClick={log =>
+                  this.props.dispatch(logDetails.viewLogDetail(log))
+                }
+              />
+            )}
           </AutoSizer>
         </div>
       </div>
@@ -30,10 +61,20 @@ export default class LogResults extends React.Component<Props> {
 
 import {connect} from "react-redux"
 import * as mainSearch from "../reducers/mainSearch"
+import {buildLogDetail} from "../reducers/logDetails"
+import {getTimeZone} from "../reducers/view"
+import * as logViewer from "../reducers/logViewer"
+import * as selectedColumns from "../reducers/selectedColumns"
 
 const stateToProps = state => ({
-  hasData: mainSearch.getMainSearchEvents(state).length > 0,
-  isComplete: mainSearch.getMainSearchIsComplete(state)
+  isFetchingAhead: logViewer.isFetchingAhead(state),
+  isFetching: mainSearch.getMainSearchIsFetching(state),
+  isComplete: mainSearch.getMainSearchIsComplete(state),
+  moreAhead: logViewer.moreAhead(state),
+  columns: selectedColumns.getColumns(state),
+  timeZone: getTimeZone(state),
+  selectedLog: buildLogDetail(state),
+  logs: mainSearch.getLogs(state)
 })
 
 export const XLogResults = connect(stateToProps)(LogResults)
