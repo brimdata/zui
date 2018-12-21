@@ -35,7 +35,7 @@ class SearchButton extends React.Component<Props, State> {
     }
     this.openMenu = e => {
       const {left, bottom, width} = e.currentTarget.getBoundingClientRect()
-      console.log(e.currentTarget.getBoundingClientRect())
+
       this.setState({
         menuIsOpen: true,
         menuStyle: {top: bottom + 6, right: Doc.getWidth() - left - width}

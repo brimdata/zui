@@ -10,6 +10,7 @@ export default class HoverLine {
       .insert("rect")
       .attr("class", "hover-line")
       .style("pointer-events", "none")
+      .style("display", "none")
       .attr("width", "1px")
       .attr("height", chart.dimens.innerHeight + overflow * 2)
 

@@ -22,8 +22,16 @@ export default class SingleTickYAxis implements ChartElement {
   }
 
   draw(chart: Chart) {
+    if (chart.data.data.length === 0) {
+      d3.select(chart.svg)
+        .select(".y-axis")
+        .style("opacity", "0")
+      return
+    }
+
     d3.select(chart.svg)
       .select(".y-axis")
+      .style("opacity", "1")
       .call(
         d3
           .axisRight(chart.scales.yScale)

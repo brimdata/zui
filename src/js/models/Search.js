@@ -25,7 +25,6 @@ export default class Search {
   }
 
   send() {
-    console.log("dispatching request")
     this.dispatch(requestMainSearch())
     const {space, program, timeWindow, callbacks} = this.options
     const request = this.api.search({space, string: program, timeWindow})
