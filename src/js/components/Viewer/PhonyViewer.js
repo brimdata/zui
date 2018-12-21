@@ -86,7 +86,7 @@ import * as mainSearch from "../../reducers/mainSearch"
 
 const stateToProps = state => ({
   columns: selectedColumns.getColumns(state),
-  selected: selectedColumns.getAll(state),
+  selected: selectedColumns.getSelected(state),
   data: mainSearch.getLogs(state)
 })
 
