@@ -25,18 +25,19 @@ export default class Search {
   }
 
   send() {
-    const {space, program, timeWindow, callbacks} = this.options
+    console.log("dispatching request")
     this.dispatch(requestMainSearch())
-    const request = this.api
-      .search({space, string: program, timeWindow})
+    const {space, program, timeWindow, callbacks} = this.options
+    const request = this.api.search({space, string: program, timeWindow})
+    callbacks(request)
+    return request
       .each(statsReceiver(this.dispatch))
+      .done(() => this.dispatch(completeMainSearch()))
       .error(_e => {
         this.dispatch(completeMainSearch())
         this.dispatch(
           setNoticeError("There's a problem talking with the server.")
         )
       })
-    callbacks(request)
-    return request
   }
 }

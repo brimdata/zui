@@ -11,7 +11,6 @@ import Search from "../models/Search"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import type {State, Dispatch, Api} from "../reducers/types"
 import pageReceiver from "../receivers/pageReceiver"
-import {completeMainSearch} from "../actions/mainSearch"
 
 export const create = (dispatch: Dispatch, state: State, api: Api) => {
   return new Search(dispatch, api, getArgs(dispatch, state))
@@ -66,9 +65,6 @@ export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
       request
         .channel(1, pageReceiver(dispatch, 200))
         .channel(1, logsReceiver(dispatch))
-        .done(() => {
-          dispatch(completeMainSearch())
-        })
   }
 }
 
@@ -85,10 +81,6 @@ export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
       request
         .channel(1, logsReceiver(dispatch))
         .channel(0, countByTimeReceiver(dispatch))
-        .done(() => {
-          console.log("hi")
-          dispatch(completeMainSearch())
-        })
   }
 }
 
@@ -108,8 +100,5 @@ export const logsPagedArgs = (dispatch: Dispatch, state: State) => {
         .channel(1, pageReceiver(dispatch, PER_PAGE))
         .channel(1, logsReceiver(dispatch))
         .channel(0, countByTimeReceiver(dispatch))
-        .done(() => {
-          dispatch(completeMainSearch())
-        })
   }
 }
