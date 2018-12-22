@@ -63,18 +63,21 @@ import {connect} from "react-redux"
 import * as mainSearch from "../reducers/mainSearch"
 import {buildLogDetail} from "../reducers/logDetails"
 import {getTimeZone} from "../reducers/view"
+import * as view from "../reducers/view"
 import * as logViewer from "../reducers/logViewer"
-import * as selectedColumns from "../reducers/selectedColumns"
+import * as columns from "../selectors/columns"
+import * as logs from "../selectors/logs"
 
 const stateToProps = state => ({
+  tab: view.getResultsTab(state),
   isFetchingAhead: logViewer.isFetchingAhead(state),
   isFetching: mainSearch.getMainSearchIsFetching(state),
   isComplete: mainSearch.getMainSearchIsComplete(state),
   moreAhead: logViewer.moreAhead(state),
-  columns: selectedColumns.getColumns(state),
+  columns: columns.getColumns(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
-  logs: mainSearch.getLogs(state)
+  logs: logs.getLogs(state)
 })
 
 export const XLogResults = connect(stateToProps)(LogResults)

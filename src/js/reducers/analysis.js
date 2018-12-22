@@ -1,8 +1,6 @@
 /* @flow */
 
 import createReducer from "./createReducer"
-import {createSelector} from "reselect"
-import Log from "../models/Log"
 import type {Descriptor, Tuple} from "../models/Log"
 import type {State} from "./types"
 
@@ -11,36 +9,19 @@ export type Analysis = {
   tuples: Tuple[]
 }
 
-const initialState = {}
+const initialState = {
+  descriptor: [],
+  tuples: []
+}
 
 export default createReducer(initialState, {
   MAIN_SEARCH_REQUEST: () => initialState,
-  ANALYSIS_SET: (state, {id, descriptor, tuples}) => ({
+  ANALYSIS_SET: (state, {_id, descriptor, tuples}) => ({
     descriptor,
-    tuples: mergeTuples(state, id, tuples)
+    tuples: [...state.tuples, ...tuples]
   })
 })
-
-const mergeTuples = (state, id, tuples) => {
-  if (state[id]) {
-    return [...state[id].tuples, ...tuples]
-  } else {
-    return tuples
-  }
-}
 
 export const getAnalysis = (state: State) => {
   return state.analysis
 }
-
-export const getLogs = createSelector(
-  getAnalysis,
-  data => {
-    if (data && data[0]) {
-      const {descriptor, tuples} = data[0]
-      return tuples.map(t => new Log(t, descriptor))
-    } else {
-      return []
-    }
-  }
-)

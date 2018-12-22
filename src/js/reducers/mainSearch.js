@@ -73,7 +73,7 @@ export const getTds = createSelector(
   }
 )
 
-export const getLogs = createSelector(
+export const getEventLogs = createSelector(
   getMainSearchEvents,
   getSchemas,
   getCurrentSpaceName,
@@ -88,6 +88,11 @@ export const getLogs = createSelector(
     }
     return logs
   }
+)
+
+export const getLogs = createSelector(
+  getEventLogs,
+  logs => logs
 )
 
 export const getCountByTimeProc = createSelector(
