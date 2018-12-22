@@ -10,6 +10,7 @@ import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import XLogCellActions from "../connectors/XLogCellActions"
 import classNames from "classnames"
+import * as fmt from "../lib/fmt"
 
 type Props = {
   field: Field,
@@ -66,6 +67,9 @@ export default class LogCell extends React.PureComponent<Props, State> {
           </span>
         </p>
       )
+    if (field.type === "count") {
+      return <span>{fmt.withCommas(field.value)}</span>
+    }
     return <span>{field.value}</span>
   }
 
