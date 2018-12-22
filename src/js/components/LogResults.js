@@ -19,6 +19,7 @@ type Props = {
   isFetching: boolean,
   isComplete: boolean,
   columns: Columns,
+  tab: string,
   dispatch: Function
 }
 
@@ -28,6 +29,7 @@ export default class LogResults extends React.Component<Props> {
     if (!this.props.logs.length) return null
 
     const onLastChunk = () => {
+      if (this.props.tab === "analytics") return
       const {isFetching, isFetchingAhead, moreAhead} = this.props
       if (!isFetching && !isFetchingAhead && moreAhead) {
         this.props.dispatch(fetchAhead())
