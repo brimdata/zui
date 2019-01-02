@@ -13,7 +13,7 @@ import Star from "../icons/star-sm.svg"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import classNames from "classnames"
-import XLogDetail from "../connectors/XLogDetail"
+import {XLogDetail} from "../components/LogDetail"
 import Log from "../models/Log"
 import type {Space} from "../lib/Space"
 
