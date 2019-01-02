@@ -8,7 +8,7 @@ import * as mockLogs from "../test/mockLogs"
 test("shapshot", () => {
   const wrapper = shallow(
     <UidTimeline
-      log={mockLogs.conn()}
+      currentLog={mockLogs.conn()}
       logs={[mockLogs.conn(), mockLogs.dns(), mockLogs.http()]}
       viewLogDetail={jest.fn()}
     />

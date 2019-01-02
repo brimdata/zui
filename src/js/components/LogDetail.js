@@ -1,9 +1,20 @@
+/* @flow */
+
 import React from "react"
 import FieldsTable from "./FieldsTable"
 import UidTimeline from "./UidTimeline"
 import ConnVersation from "./ConnVersation"
+import Log from "../models/Log"
 
-export default class LogDetail extends React.Component {
+type Props = {
+  log: Log,
+  correlatedLogs: Log[],
+  viewLogDetail: Function
+}
+
+export default class LogDetail extends React.Component<Props> {
+  el: ?HTMLElement
+
   render() {
     const {log, correlatedLogs, viewLogDetail} = this.props
     if (!log)
@@ -69,5 +80,6 @@ const stateToProps = state => ({
 
 export const XLogDetail = connect(
   stateToProps,
-  dispatch => bindActionCreators({...actions, ...starActions}, dispatch)
+  (dispatch: Function) =>
+    bindActionCreators({...actions, ...starActions}, dispatch)
 )(LogDetail)
