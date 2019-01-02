@@ -11,7 +11,7 @@ export default class LogDetail extends React.Component {
         <div className="empty-message-wrapper">
           <div className="empty-message">
             <h3>No Log Selected</h3>
-            <p>Click the timestamp of a log to view details.</p>
+            <p>Click a log line to view details.</p>
             <p>
               Toggle this pane with <code>Cmd + ]</code>.
             </p>

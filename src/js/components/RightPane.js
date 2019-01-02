@@ -143,7 +143,7 @@ import * as logDetails from "../reducers/logDetails"
 import * as spaces from "../reducers/spaces"
 
 const stateToProps = state => ({
-  isOpen: view.getRightSidebarIsOpen(state) && logDetails.buildLogDetail(state),
+  isOpen: view.getRightSidebarIsOpen(state),
   width: view.getRightSidebarWidth(state),
   prevExists: logDetails.getPrevExists(state),
   nextExists: logDetails.getNextExists(state),
