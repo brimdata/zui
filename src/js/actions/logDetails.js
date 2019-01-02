@@ -4,8 +4,7 @@ import {discoverDescriptors} from "./descriptors"
 
 export const viewLogDetail = log => dispatch => {
   dispatch(pushLogDetail(log))
-  const uid = log.cast("uid")
-  if (uid) dispatch(fetchCorrelatedLogs(uid))
+  dispatch(fetchCorrelatedLogs(log))
 }
 
 export const pushLogDetail = ({tuple, descriptor}) => ({
@@ -39,7 +38,9 @@ export const errorCorrelatedLogs = (uid, error) => ({
   error
 })
 
-export const fetchCorrelatedLogs = uid => (dispatch, getState, api) => {
+export const fetchCorrelatedLogs = log => (dispatch, getState, api) => {
+  let uid = log.correlationId()
+  if (!uid) return
   const state = getState()
   const timeWindow = getTimeWindow(state)
   const space = getCurrentSpaceName(state)

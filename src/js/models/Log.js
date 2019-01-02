@@ -87,4 +87,12 @@ export default class Log {
       return field.cast()
     }
   }
+
+  correlationId() {
+    if (this.get("_path") === "files") {
+      return this.get("conn_uids")
+    } else {
+      return this.get("uid")
+    }
+  }
 }
