@@ -1,9 +1,20 @@
+/* @flow */
+
 import React from "react"
 import FieldsTable from "./FieldsTable"
 import UidTimeline from "./UidTimeline"
 import ConnVersation from "./ConnVersation"
+import Log from "../models/Log"
 
-export default class LogDetail extends React.Component {
+type Props = {
+  log: Log,
+  correlatedLogs: Log[],
+  viewLogDetail: Function
+}
+
+export default class LogDetail extends React.Component<Props> {
+  el: ?HTMLElement
+
   render() {
     const {log, correlatedLogs, viewLogDetail} = this.props
     if (!log)
@@ -11,7 +22,7 @@ export default class LogDetail extends React.Component {
         <div className="empty-message-wrapper">
           <div className="empty-message">
             <h3>No Log Selected</h3>
-            <p>Click the timestamp of a log to view details.</p>
+            <p>Click a log line to view details.</p>
             <p>
               Toggle this pane with <code>Cmd + ]</code>.
             </p>
@@ -46,3 +57,29 @@ export default class LogDetail extends React.Component {
     )
   }
 }
+
+import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
+import {
+  buildLogDetail,
+  buildCorrelatedLogs,
+  getNextExists,
+  getPrevExists,
+  getLogDetailIsStarred
+} from "../reducers/logDetails"
+import * as actions from "../actions/logDetails"
+import * as starActions from "../actions/starredLogs"
+
+const stateToProps = state => ({
+  log: buildLogDetail(state),
+  correlatedLogs: buildCorrelatedLogs(state),
+  prevExists: getPrevExists(state),
+  nextExists: getNextExists(state),
+  isStarred: getLogDetailIsStarred(state)
+})
+
+export const XLogDetail = connect(
+  stateToProps,
+  (dispatch: Function) =>
+    bindActionCreators({...actions, ...starActions}, dispatch)
+)(LogDetail)

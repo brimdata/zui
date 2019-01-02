@@ -6,18 +6,19 @@ import * as TimeField from "../lib/TimeField"
 import * as d3 from "d3"
 import * as Time from "../lib/Time"
 import * as TimeWindow from "../lib/TimeWindow"
+import isEqual from "lodash/isEqual"
 
 type Props = {
   viewLogDetail: Function,
   logs: Log[],
-  log: Log
+  currentLog: Log
 }
 
 export default class UidWaterfall extends React.Component<Props> {
   row(log: Log, index: number, xScale) {
     const ts = TimeField.toDate(log.get("ts"))
     const position = xScale(ts)
-    const isCurrent = log === this.props.log
+    const isCurrent = isEqual(log, this.props.currentLog)
     return (
       <div
         key={index}

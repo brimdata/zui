@@ -4,7 +4,7 @@ exports[`shapshot 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <UidWaterfall
-    log={
+    currentLog={
       Log {
         "descriptor": Array [
           Object {
@@ -582,7 +582,7 @@ ShallowWrapper {
                 className="line"
               />
               <span
-                className="path-tag conn-bg-color "
+                className="path-tag conn-bg-color current"
                 style={
                   Object {
                     "left": "100%",
@@ -678,7 +678,7 @@ ShallowWrapper {
                 className="line"
               />
               <span
-                className="path-tag conn-bg-color "
+                className="path-tag conn-bg-color current"
                 style={
                   Object {
                     "left": "100%",
@@ -716,7 +716,7 @@ ShallowWrapper {
                   className="line"
                 />,
                 <span
-                  className="path-tag conn-bg-color "
+                  className="path-tag conn-bg-color current"
                   style={
                     Object {
                       "left": "100%",
@@ -747,7 +747,7 @@ ShallowWrapper {
                 "nodeType": "host",
                 "props": Object {
                   "children": "conn",
-                  "className": "path-tag conn-bg-color ",
+                  "className": "path-tag conn-bg-color current",
                   "style": Object {
                     "left": "100%",
                   },
@@ -1013,7 +1013,7 @@ ShallowWrapper {
                   className="line"
                 />
                 <span
-                  className="path-tag conn-bg-color "
+                  className="path-tag conn-bg-color current"
                   style={
                     Object {
                       "left": "100%",
@@ -1109,7 +1109,7 @@ ShallowWrapper {
                   className="line"
                 />
                 <span
-                  className="path-tag conn-bg-color "
+                  className="path-tag conn-bg-color current"
                   style={
                     Object {
                       "left": "100%",
@@ -1147,7 +1147,7 @@ ShallowWrapper {
                     className="line"
                   />,
                   <span
-                    className="path-tag conn-bg-color "
+                    className="path-tag conn-bg-color current"
                     style={
                       Object {
                         "left": "100%",
@@ -1178,7 +1178,7 @@ ShallowWrapper {
                   "nodeType": "host",
                   "props": Object {
                     "children": "conn",
-                    "className": "path-tag conn-bg-color ",
+                    "className": "path-tag conn-bg-color current",
                     "style": Object {
                       "left": "100%",
                     },
