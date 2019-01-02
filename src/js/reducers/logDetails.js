@@ -66,7 +66,7 @@ export const buildCorrelatedLogs = createSelector(
   (log, tuplesByUid, descriptors, space) => {
     if (!log) return []
 
-    const uid = log.cast("uid")
+    const uid = log.correlationId()
     if (!uid) return []
 
     const tuples = tuplesByUid[uid] || []
