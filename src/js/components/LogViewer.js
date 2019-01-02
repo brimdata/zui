@@ -60,7 +60,7 @@ export default class LogViewer extends React.Component<Props> {
   }
 
   render() {
-    if (this.props.logs === 0) return null
+    if (this.props.logs.length === 0) return null
     return (
       <div>
         <XPhonyViewer data={this.props.logs} columns={this.props.columns} />
