@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from "react"
 import Pane, {
   PaneHeader,
@@ -12,9 +14,31 @@ import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import classNames from "classnames"
 import XLogDetail from "../connectors/XLogDetail"
+import Log from "../models/Log"
+import type {Space} from "../lib/Space"
 
-export default class RightPane extends React.Component {
-  constructor(props) {
+type Props = {
+  isStarred: boolean,
+  currentLog: Log,
+  prevExists: boolean,
+  nextExists: boolean,
+  isOpen: boolean,
+  width: number,
+  space: Space,
+  forwardLogDetail: Function,
+  backLogDetail: Function,
+  unstarLog: Function,
+  starLog: Function,
+  setRightSidebarWidth: Function,
+  fetchPackets: Function
+}
+
+export default class RightPane extends React.Component<Props> {
+  onDrag: Function
+  onPacketsClick: Function
+  toggleStar: Function
+
+  constructor(props: Props) {
     super(props)
     this.onDrag = this.onDrag.bind(this)
     this.onPacketsClick = this.onPacketsClick.bind(this)
@@ -24,7 +48,7 @@ export default class RightPane extends React.Component {
         : this.props.starLog(this.props.currentLog.tuple)
   }
 
-  onDrag(e) {
+  onDrag(e: MouseEvent) {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
     this.props.setRightSidebarWidth(Math.min(width, max))
@@ -130,7 +154,7 @@ const stateToProps = state => ({
 
 export const XRightPane = connect(
   stateToProps,
-  dispatch =>
+  (dispatch: Function) =>
     bindActionCreators(
       {...viewActions, ...starActions, ...detailActions, ...packetActions},
       dispatch
