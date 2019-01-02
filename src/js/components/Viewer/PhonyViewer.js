@@ -81,13 +81,14 @@ export default class PhonyViewer extends React.Component<Props> {
 }
 
 import {connect} from "react-redux"
-import * as selectedColumns from "../../reducers/selectedColumns"
-import * as mainSearch from "../../reducers/mainSearch"
+import {getSelected} from "../../reducers/selectedColumns"
+import {getColumns} from "../../selectors/columns"
+import {getLogs} from "../../selectors/logs"
 
 const stateToProps = state => ({
-  columns: selectedColumns.getColumns(state),
-  selected: selectedColumns.getAll(state),
-  data: mainSearch.getLogs(state)
+  columns: getColumns(state),
+  selected: getSelected(state),
+  data: getLogs(state)
 })
 
 export const XPhonyViewer = connect(stateToProps)(PhonyViewer)

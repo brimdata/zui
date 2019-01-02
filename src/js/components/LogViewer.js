@@ -8,34 +8,20 @@ import type {Layout as LayoutInterface} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Viewer from "./Viewer/Viewer"
 import {XPhonyViewer} from "./Viewer/PhonyViewer"
-import * as actions from "../actions/logViewer"
 import Columns from "../models/Columns"
-import * as logDetails from "../actions/logDetails"
 
 type Props = {
   height: number,
   width: number,
   logs: Log[],
-  logDetail: Log,
+  selectedLog: Log,
   timeZone: string,
-  moreAhead: boolean,
-  isFetchingAhead: boolean,
-  isFetching: boolean,
-  isComplete: boolean,
   columns: Columns,
-  dispatch: Function
+  onLastChunk?: Function,
+  onRowClick?: Function
 }
 
 export default class LogViewer extends React.Component<Props> {
-  measured: boolean
-  onLastChunk: Function
-
-  constructor(props: Props) {
-    super(props)
-    this.measured = false
-    this.onLastChunk = this.onLastChunk.bind(this)
-  }
-
   createLayout() {
     return Layout.create({
       height: this.props.height,
@@ -56,13 +42,6 @@ export default class LogViewer extends React.Component<Props> {
     })
   }
 
-  onLastChunk() {
-    const {isFetching, isFetchingAhead, moreAhead} = this.props
-    if (!isFetching && !isFetchingAhead && moreAhead) {
-      this.props.dispatch(actions.fetchAhead())
-    }
-  }
-
   renderRow(index: number, isScrolling: boolean, layout: LayoutInterface) {
     return (
       <LogRow
@@ -70,12 +49,12 @@ export default class LogViewer extends React.Component<Props> {
         index={index}
         log={this.props.logs[index]}
         timeZone={this.props.timeZone}
-        highlight={Log.isSame(this.props.logs[index], this.props.logDetail)}
+        highlight={Log.isSame(this.props.logs[index], this.props.selectedLog)}
         isScrolling={isScrolling}
         layout={layout}
-        onClick={() => {
-          this.props.dispatch(logDetails.viewLogDetail(this.props.logs[index]))
-        }}
+        onClick={() =>
+          this.props.onRowClick && this.props.onRowClick(this.props.logs[index])
+        }
       />
     )
   }
@@ -84,37 +63,14 @@ export default class LogViewer extends React.Component<Props> {
     if (this.props.logs === 0) return null
     return (
       <div>
-        <XPhonyViewer />
+        <XPhonyViewer data={this.props.logs} columns={this.props.columns} />
         <Viewer
           layout={this.createLayout()}
           chunker={this.createChunker()}
-          onLastChunk={this.onLastChunk}
+          onLastChunk={this.props.onLastChunk}
           rowRenderer={this.renderRow.bind(this)}
         />
       </div>
     )
   }
 }
-
-import * as mainSearch from "../reducers/mainSearch"
-import {buildLogDetail} from "../reducers/logDetails"
-import {getTimeZone} from "../reducers/view"
-import * as logViewer from "../reducers/logViewer"
-import * as selectedColumns from "../reducers/selectedColumns"
-import {connect} from "react-redux"
-
-const stateToProps = (state): $Shape<Props> => ({
-  logs: mainSearch.getLogs(state),
-  logDetail: buildLogDetail(state),
-  timeZone: getTimeZone(state),
-  moreAhead: logViewer.moreAhead(state),
-  isFetchingAhead: logViewer.isFetchingAhead(state),
-  isFetching: mainSearch.getMainSearchIsFetching(state),
-  isComplete: mainSearch.getMainSearchIsComplete(state),
-  columns: selectedColumns.getColumns(state)
-})
-
-export const XLogViewer = connect(
-  stateToProps,
-  (dispatch: *) => ({dispatch})
-)(LogViewer)

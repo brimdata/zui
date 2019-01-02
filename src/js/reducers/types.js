@@ -13,8 +13,10 @@ import type {ColumnWidths} from "./columnWidths"
 import type {SearchStats} from "./searchStats"
 import type {SearchHistory} from "./searchHistory"
 import type {Whois} from "./whois"
+import type {Analysis} from "./analysis"
 
 export type State = {
+  analysis: Analysis,
   notices: Notices,
   countByTime: CountByTime,
   searchBar: SearchBar,

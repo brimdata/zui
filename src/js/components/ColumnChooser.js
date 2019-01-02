@@ -97,11 +97,11 @@ export default class ColumnChooser extends React.Component<Props, State> {
 }
 
 import {connect} from "react-redux"
-import * as selectedColumns from "../reducers/selectedColumns"
+import * as columns from "../selectors/columns"
 import * as view from "../reducers/view"
 
 const stateToProps = state => ({
-  columns: selectedColumns.getColumns(state),
+  columns: columns.getColumns(state),
   logsTab: view.getShowLogsTab(state)
 })
 

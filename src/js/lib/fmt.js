@@ -11,5 +11,5 @@ export const bytes = (bytes: number = 0) => {
   return int + " B"
 }
 
-export const withCommas = (int: number = 0) =>
+export const withCommas = (int: number | string = 0) =>
   int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")

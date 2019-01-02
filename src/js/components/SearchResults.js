@@ -17,7 +17,7 @@ export default class SearchResults extends React.Component<Props> {
       case "analytics":
         return <XAnalysisViewer />
       case "logs":
-        return <XLogResults />
+        return
       default:
         return null
     }
@@ -26,7 +26,7 @@ export default class SearchResults extends React.Component<Props> {
   render() {
     return (
       <div className="search-results">
-        <ViewerErrorBoundary>{this.chooseTab()}</ViewerErrorBoundary>
+        <ViewerErrorBoundary>{<XLogResults />}</ViewerErrorBoundary>
       </div>
     )
   }
