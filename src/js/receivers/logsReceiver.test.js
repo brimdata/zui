@@ -2,7 +2,7 @@
 
 import logsReceiver from "./logsReceiver"
 
-test("SearchResult", () => {
+test("SearchResult", done => {
   const dispatch = jest.fn()
   const receiver = logsReceiver(dispatch)
   const payload = {
@@ -13,8 +13,11 @@ test("SearchResult", () => {
     }
   }
   receiver(payload)
-  expect(dispatch.mock.calls.length).toBe(2)
-  expect(actionTypes(dispatch)).toContain("MAIN_SEARCH_EVENTS")
+  setTimeout(() => {
+    expect(dispatch.mock.calls.length).toBe(2)
+    expect(actionTypes(dispatch)).toContain("MAIN_SEARCH_EVENTS")
+    done()
+  }, 100)
 })
 
 const actionTypes = fn => {

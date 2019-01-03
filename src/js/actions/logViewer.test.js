@@ -34,20 +34,21 @@ test("#fetchAhead dispatches is fetching true", () => {
 
 test("#fetchAhead dispatches splice and new logs", () => {
   store.dispatch(logViewer.fetchAhead())
-  store.clearActions()
-
   handler.channelCallback(0, {
     type: "SearchResult",
     results: {tuples: [["1", "300"], ["1", "400"], ["1", "500"]]}
   })
+  handler.channelCallback(0, {type: "SearchEnd"})
 
-  expect(store.getActions()).toEqual([
-    {type: "MAIN_SEARCH_EVENTS_SPLICE", index: 2},
-    {
-      type: "MAIN_SEARCH_EVENTS",
-      events: [["1", "300"], ["1", "400"], ["1", "500"]]
-    }
-  ])
+  expect(store.getActions()).toEqual(
+    expect.arrayContaining([
+      {type: "MAIN_SEARCH_EVENTS_SPLICE", index: 2},
+      {
+        type: "MAIN_SEARCH_EVENTS",
+        events: [["1", "300"], ["1", "400"], ["1", "500"]]
+      }
+    ])
+  )
 })
 
 test("#fetchAhead sets more ahead to false if tuple count < per page", () => {
@@ -56,13 +57,11 @@ test("#fetchAhead sets more ahead to false if tuple count < per page", () => {
     type: "SearchResult",
     results: {tuples: [["1", "300"], ["1", "400"], ["1", "500"]]}
   })
-  store.clearActions()
-
   handler.channelCallback(0, {type: "SearchEnd"})
 
-  expect(store.getActions()).toEqual([
-    {type: "LOG_VIEWER_MORE_AHEAD_SET", value: false}
-  ])
+  expect(store.getActions()).toEqual(
+    expect.arrayContaining([{type: "LOG_VIEWER_MORE_AHEAD_SET", value: false}])
+  )
 })
 
 test("#fetchAhead sets isFetching to false when done", done => {
