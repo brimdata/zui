@@ -5,7 +5,7 @@ import {discoverDescriptors} from "../actions/descriptors"
 import throttle from "lodash/throttle"
 import type {Payload} from "./types"
 
-const THROTTLE_DELAY = 200
+const THROTTLE_DELAY = 100
 
 export default function(dispatch: Function) {
   let buffer = []
@@ -18,7 +18,7 @@ export default function(dispatch: Function) {
     }
   }
 
-  const dispatchSteady = throttle(dispatchNow, THROTTLE_DELAY)
+  const dispatchSteady = throttle(dispatchNow, THROTTLE_DELAY, {leading: false})
 
   return (payload: Payload) => {
     switch (payload.type) {
