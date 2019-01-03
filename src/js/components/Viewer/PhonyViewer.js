@@ -27,6 +27,10 @@ export default class PhonyViewer extends React.Component<Props> {
     )
   }
 
+  componentDidMount() {
+    this.measureColWidths()
+  }
+
   componentDidUpdate() {
     this.measureColWidths()
   }
