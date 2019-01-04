@@ -7,7 +7,6 @@ import type {RowRenderer} from "./types"
 type Props = {
   rowRenderer: RowRenderer,
   chunker: Chunker,
-  isScrolling: boolean,
   chunk: number,
   layout: Layout
 }
@@ -18,11 +17,7 @@ export default class Chunk extends React.PureComponent<Props> {
   }
 
   render() {
-    const {rowRenderer, isScrolling, layout} = this.props
-    return (
-      <div>
-        {this.getRows().map(index => rowRenderer(index, isScrolling, layout))}
-      </div>
-    )
+    const {rowRenderer, layout} = this.props
+    return <div>{this.getRows().map(index => rowRenderer(index, layout))}</div>
   }
 }

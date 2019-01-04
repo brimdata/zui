@@ -42,7 +42,7 @@ export default class LogViewer extends React.Component<Props> {
     })
   }
 
-  renderRow(index: number, isScrolling: boolean, layout: LayoutInterface) {
+  renderRow(index: number, layout: LayoutInterface) {
     return (
       <LogRow
         key={index}
@@ -50,7 +50,6 @@ export default class LogViewer extends React.Component<Props> {
         log={this.props.logs[index]}
         timeZone={this.props.timeZone}
         highlight={Log.isSame(this.props.logs[index], this.props.selectedLog)}
-        isScrolling={isScrolling}
         layout={layout}
         onClick={() =>
           this.props.onRowClick && this.props.onRowClick(this.props.logs[index])
