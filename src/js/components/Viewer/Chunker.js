@@ -6,6 +6,7 @@ export default class Chunker {
   rowHeight: number
   height: number
   chunkSize: number
+  overScan: number
 
   static isEqual(a: Chunk, b: Chunk) {
     return a[0] === b[0] && a[a.length - 1] === b[b.length - 1]
@@ -16,6 +17,17 @@ export default class Chunker {
     this.rowHeight = opts.rowHeight
     this.height = opts.height
     this.chunkSize = opts.chunkSize
+    this.overScan = opts.overScan
+  }
+
+  isEqual(other: Chunker) {
+    return (
+      this.size === other.size &&
+      this.rowHeight === other.rowHeight &&
+      this.height === other.height &&
+      this.chunkSize === other.chunkSize &&
+      this.overScan === other.overScan
+    )
   }
 
   rows(chunk: number) {

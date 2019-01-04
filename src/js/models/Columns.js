@@ -17,6 +17,10 @@ export default class Columns {
     this.cols = cols
   }
 
+  isEqual(other: Columns) {
+    return isEqual(this.cols, other.cols)
+  }
+
   getTds() {
     return uniq(this.cols.map(c => c.td))
   }

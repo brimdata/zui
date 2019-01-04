@@ -13,6 +13,7 @@ export interface Layout {
   rowH: number;
   columns: Columns;
 
+  isEqual(Layout): boolean;
   viewHeight(): number;
   viewWidth(): number;
   listHeight(): number;
