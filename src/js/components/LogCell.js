@@ -26,25 +26,55 @@ type State = {
 }
 
 export default class LogCell extends React.PureComponent<Props, State> {
-  toggleMenu: Function
+  onRightClick: Function
+  onMouseEnter: Function
+  onMouseLeave: Function
+  onMenuDismiss: Function
+  el: ?HTMLElement
 
   constructor(props: Props) {
     super(props)
+    this.onMouseEnter = this.onMouseEnter.bind(this)
+    this.onMouseLeave = this.onMouseLeave.bind(this)
+    this.onRightClick = this.onRightClick.bind(this)
+    this.onMenuDismiss = this.onMenuDismiss.bind(this)
     this.state = {
       showMenu: false,
       hover: false,
       menuStyle: {top: 0, left: 0},
       tooltipStyle: {top: 0, left: 0}
     }
-    this.toggleMenu = e => {
-      Doc.clearTextSelection()
-      e.stopPropagation()
-      this.setState({
-        hover: !this.state.showMenu,
-        showMenu: !this.state.showMenu,
-        menuStyle: {top: e.pageY, left: e.pageX}
-      })
-    }
+  }
+
+  onRightClick(e: MouseEvent) {
+    Doc.clearTextSelection()
+    e.stopPropagation()
+    this.setState({
+      hover: true,
+      tooltipStyle: getTooltipStyle(this.el),
+      showMenu: true,
+      menuStyle: {top: e.pageY, left: e.pageX}
+    })
+  }
+
+  onMenuDismiss(e: MouseEvent) {
+    Doc.clearTextSelection()
+    e.stopPropagation()
+    this.setState({
+      hover: false,
+      showMenu: false
+    })
+  }
+
+  onMouseEnter() {
+    this.setState({
+      hover: true,
+      tooltipStyle: getTooltipStyle(this.el)
+    })
+  }
+
+  onMouseLeave() {
+    this.setState({hover: false})
   }
 
   renderValue(field: Field) {
@@ -78,18 +108,16 @@ export default class LogCell extends React.PureComponent<Props, State> {
       active: this.state.showMenu,
       hover: this.state.hover
     })
-    const mouseEnter = e =>
-      this.setState({hover: true, tooltipStyle: getTooltipStyle(e)})
-    const mouseLeave = _e => this.setState({hover: false})
 
     return (
       <div
         className={cellClass}
-        onMouseEnter={mouseEnter}
-        onMouseLeave={mouseLeave}
-        onContextMenu={this.toggleMenu}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+        onContextMenu={this.onRightClick}
         onClick={e => Doc.selectText(e.currentTarget)}
         style={this.props.style}
+        ref={r => (this.el = r)}
       >
         {this.renderValue(this.props.field)}
 
@@ -110,7 +138,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
             log={this.props.log}
             field={this.props.field}
             style={this.state.menuStyle}
-            onClose={this.toggleMenu}
+            onClose={this.onMenuDismiss}
           />
         )}
       </div>
@@ -118,7 +146,8 @@ export default class LogCell extends React.PureComponent<Props, State> {
   }
 }
 
-const getTooltipStyle = (e): FixedPos => {
-  const {top, left} = e.currentTarget.getBoundingClientRect()
+const getTooltipStyle = (el): FixedPos => {
+  if (!el) return {}
+  const {top, left} = el.getBoundingClientRect()
   return {top: top - 21, left}
 }
