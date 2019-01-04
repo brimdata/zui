@@ -22,6 +22,13 @@ type Props = {
 }
 
 export default class LogViewer extends React.Component<Props> {
+  renderRow: Function
+
+  constructor(props: Props) {
+    super(props)
+    this.renderRow = this.renderRow.bind(this)
+  }
+
   createLayout() {
     return Layout.create({
       height: this.props.height,
@@ -67,7 +74,7 @@ export default class LogViewer extends React.Component<Props> {
           layout={this.createLayout()}
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
-          rowRenderer={this.renderRow.bind(this)}
+          rowRenderer={this.renderRow}
         />
       </div>
     )
