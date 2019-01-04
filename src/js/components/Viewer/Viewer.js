@@ -76,9 +76,8 @@ export default class Viewer extends PureComponent<Props, State> {
           <div className="list" style={Styler.list(layout)}>
             {chunks.map(chunk => (
               <Chunk
+                rows={chunker.rows(chunk)}
                 key={chunk}
-                chunk={chunk}
-                chunker={chunker}
                 rowRenderer={rowRenderer}
                 layout={layout}
               />
