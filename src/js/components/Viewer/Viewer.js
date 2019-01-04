@@ -1,12 +1,13 @@
 /* @flow */
 
-import React, {PureComponent} from "react"
+import React from "react"
 import Header from "./Header"
 import Chunk from "./Chunk"
 import * as Styler from "./Styler"
 import Chunker from "./Chunker"
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
+import shallowCompare from "../../lib/shallowCompare"
 
 type Props = {
   chunker: Chunker,
@@ -20,7 +21,7 @@ type State = {
   chunks: number[]
 }
 
-export default class Viewer extends PureComponent<Props, State> {
+export default class Viewer extends React.Component<Props, State> {
   onScroll: () => *
   view: ?HTMLDivElement
 
@@ -31,6 +32,14 @@ export default class Viewer extends PureComponent<Props, State> {
       scrollLeft: 0,
       chunks: props.chunker.visibleChunks(0)
     }
+  }
+
+  shouldComponentUpdate(nextProps: Props, nextState: State) {
+    return (
+      !this.props.layout.isEqual(nextProps.layout) ||
+      !this.props.chunker.isEqual(nextProps.chunker) ||
+      !shallowCompare(this.state, nextState)
+    )
   }
 
   componentDidUpdate() {

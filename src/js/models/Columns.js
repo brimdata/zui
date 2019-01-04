@@ -1,6 +1,7 @@
 /* @flow */
 
 import uniq from "lodash/uniq"
+import isEqual from "lodash/isEqual"
 
 export type Column = {
   name: string,
