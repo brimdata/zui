@@ -48,20 +48,14 @@ export default class Chunker {
   }
 
   visibleChunks(scrollTop: number) {
-    const chunkHeight = this.chunkHeight()
-    const chunksAbove = max(down(scrollTop / chunkHeight), 0)
+    const numAbove = max(down(scrollTop / this.chunkHeight()), 0)
+    const numCanFit = up(this.height / this.chunkHeight())
+    const begin = max(numAbove - this.overScan, 0)
+    const end = min(numAbove + numCanFit + this.overScan, this.lastChunk() + 1)
 
-    const lastChunk = this.lastChunk()
-    const startChunk = max(chunksAbove, 0)
-    const chunks = []
-
-    const length = up(this.height / chunkHeight) + 1
-
-    let chunk = startChunk
-    for (let i = 0; i < length && chunk <= lastChunk; ++i) {
-      chunks.push(chunk++)
-    }
-    return chunks
+    const nums = []
+    for (let i = begin; i < end; ++i) nums.push(i)
+    return nums
   }
 }
 
