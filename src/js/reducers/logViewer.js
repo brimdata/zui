@@ -10,6 +10,8 @@ const initialState = {
   isFetchingBehind: false
 }
 
+export const PER_PAGE = 800
+
 export type LogViewer = typeof initialState
 
 export default createReducer(initialState, {
