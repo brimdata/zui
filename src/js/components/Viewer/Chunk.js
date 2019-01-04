@@ -1,23 +1,26 @@
 /* @flow */
+
 import React from "react"
-import Chunker from "./Chunker"
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
+import isEqual from "lodash/isEqual"
 
 type Props = {
   rowRenderer: RowRenderer,
-  chunker: Chunker,
-  chunk: number,
-  layout: Layout
+  layout: Layout,
+  rows: number[]
 }
 
-export default class Chunk extends React.PureComponent<Props> {
-  getRows() {
-    return this.props.chunker.rows(this.props.chunk)
+export default class Chunk extends React.Component<Props> {
+  shouldComponentUpdate(nextProps: Props) {
+    return (
+      !this.props.layout.isEqual(nextProps.layout) ||
+      !isEqual(this.props.rows, nextProps.rows)
+    )
   }
 
   render() {
     const {rowRenderer, layout} = this.props
-    return <div>{this.getRows().map(index => rowRenderer(index, layout))}</div>
+    return <div>{this.props.rows.map(index => rowRenderer(index, layout))}</div>
   }
 }
