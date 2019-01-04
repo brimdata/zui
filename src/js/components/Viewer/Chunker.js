@@ -6,7 +6,6 @@ export default class Chunker {
   rowHeight: number
   height: number
   chunkSize: number
-  overScan: number
 
   static isEqual(a: Chunk, b: Chunk) {
     return a[0] === b[0] && a[a.length - 1] === b[b.length - 1]
@@ -17,7 +16,6 @@ export default class Chunker {
     this.rowHeight = opts.rowHeight
     this.height = opts.height
     this.chunkSize = opts.chunkSize
-    this.overScan = opts.overScan
   }
 
   rows(chunk: number) {
@@ -28,26 +26,28 @@ export default class Chunker {
     return rows
   }
 
+  chunkHeight() {
+    return this.rowHeight * this.chunkSize
+  }
+
   lastChunk() {
     const totalHeight = this.size * this.rowHeight
-    const chunkHeight = this.rowHeight * this.chunkSize
-    return up(totalHeight / chunkHeight) - 1
+    return up(totalHeight / this.chunkHeight()) - 1
   }
 
   visibleChunks(scrollTop: number) {
-    const chunkHeight = this.rowHeight * this.chunkSize
+    const chunkHeight = this.chunkHeight()
     const chunksAbove = max(down(scrollTop / chunkHeight), 0)
-    const viewEnd = this.height + scrollTop + chunkHeight * this.overScan
 
     const lastChunk = this.lastChunk()
-    const startChunk = max(chunksAbove - this.overScan, 0)
+    const startChunk = max(chunksAbove, 0)
     const chunks = []
-    for (
-      let chunk = startChunk;
-      chunkHeight * chunk < viewEnd + 1 && chunk <= lastChunk;
-      chunk++
-    ) {
-      chunks.push(chunk)
+
+    const length = up(this.height / chunkHeight) + 1
+
+    let chunk = startChunk
+    for (let i = 0; i < length && chunk <= lastChunk; ++i) {
+      chunks.push(chunk++)
     }
     return chunks
   }
