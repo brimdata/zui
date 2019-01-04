@@ -15,7 +15,6 @@ import * as fmt from "../lib/fmt"
 type Props = {
   field: Field,
   log: Log,
-  isScrolling: boolean,
   style?: Object
 }
 
@@ -77,7 +76,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
     const {name, type} = this.props.field
     const cellClass = classNames(`log-cell ${type}`, {
       active: this.state.showMenu,
-      hover: !this.props.isScrolling && this.state.hover
+      hover: this.state.hover
     })
     const mouseEnter = e =>
       this.setState({hover: true, tooltipStyle: getTooltipStyle(e)})
@@ -94,13 +93,13 @@ export default class LogCell extends React.PureComponent<Props, State> {
       >
         {this.renderValue(this.props.field)}
 
-        {this.state.hover && !this.props.isScrolling && (
+        {this.state.hover && (
           <button className="cell-options-button">
             <DownArrow />
           </button>
         )}
 
-        {this.state.hover && !this.props.isScrolling && (
+        {this.state.hover && (
           <Tooltip style={this.state.tooltipStyle}>
             <span className="field-name">{name}</span>
           </Tooltip>

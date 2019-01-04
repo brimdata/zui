@@ -3,6 +3,7 @@ const keys = Object.keys
 
 export default function shallowDiff(objA, objB) {
   if (is(objA, objB)) {
+    console.log("no diff")
     return
   }
 
@@ -31,7 +32,9 @@ export default function shallowDiff(objA, objB) {
       !hasOwnProperty.call(objB, keysA[i]) ||
       !is(objA[keysA[i]], objB[keysA[i]])
     ) {
-      console.log(keysA[i], objA[keysA[i]], objB[keysA[i]])
+      console.log("------" + keysA[i] + "-------")
+      console.log(objA[keysA[i]])
+      console.log(objB[keysA[i]])
     }
   }
   console.groupEnd()

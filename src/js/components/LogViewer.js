@@ -22,6 +22,13 @@ type Props = {
 }
 
 export default class LogViewer extends React.Component<Props> {
+  renderRow: Function
+
+  constructor(props: Props) {
+    super(props)
+    this.renderRow = this.renderRow.bind(this)
+  }
+
   createLayout() {
     return Layout.create({
       height: this.props.height,
@@ -38,11 +45,11 @@ export default class LogViewer extends React.Component<Props> {
       height: this.props.height,
       rowHeight: 25,
       chunkSize: 5,
-      overScan: 2
+      overScan: 8
     })
   }
 
-  renderRow(index: number, isScrolling: boolean, layout: LayoutInterface) {
+  renderRow(index: number, layout: LayoutInterface) {
     return (
       <LogRow
         key={index}
@@ -50,7 +57,6 @@ export default class LogViewer extends React.Component<Props> {
         log={this.props.logs[index]}
         timeZone={this.props.timeZone}
         highlight={Log.isSame(this.props.logs[index], this.props.selectedLog)}
-        isScrolling={isScrolling}
         layout={layout}
         onClick={() =>
           this.props.onRowClick && this.props.onRowClick(this.props.logs[index])
@@ -68,7 +74,7 @@ export default class LogViewer extends React.Component<Props> {
           layout={this.createLayout()}
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
-          rowRenderer={this.renderRow.bind(this)}
+          rowRenderer={this.renderRow}
         />
       </div>
     )

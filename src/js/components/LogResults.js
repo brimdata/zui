@@ -24,17 +24,30 @@ type Props = {
 }
 
 export default class LogResults extends React.Component<Props> {
+  onLastChunk: Function
+  onRowClick: Function
+
+  constructor(props: Props) {
+    super(props)
+    this.onLastChunk = this.onLastChunk.bind(this)
+    this.onRowClick = this.onRowClick.bind(this)
+  }
+
+  onLastChunk() {
+    if (this.props.tab === "analytics") return
+    const {isFetching, isFetchingAhead, moreAhead} = this.props
+    if (!isFetching && !isFetchingAhead && moreAhead) {
+      this.props.dispatch(fetchAhead())
+    }
+  }
+
+  onRowClick(log: Log) {
+    this.props.dispatch(logDetails.viewLogDetail(log))
+  }
+
   render() {
     if (!this.props.logs.length && this.props.isComplete) return <NoResults />
     if (!this.props.logs.length) return null
-
-    const onLastChunk = () => {
-      if (this.props.tab === "analytics") return
-      const {isFetching, isFetchingAhead, moreAhead} = this.props
-      if (!isFetching && !isFetchingAhead && moreAhead) {
-        this.props.dispatch(fetchAhead())
-      }
-    }
 
     return (
       <div className="log-results">
@@ -48,10 +61,8 @@ export default class LogResults extends React.Component<Props> {
                 selectedLog={this.props.selectedLog}
                 timeZone={this.props.timeZone}
                 columns={this.props.columns}
-                onLastChunk={onLastChunk}
-                onRowClick={log =>
-                  this.props.dispatch(logDetails.viewLogDetail(log))
-                }
+                onLastChunk={this.onLastChunk}
+                onRowClick={this.onRowClick}
               />
             )}
           </AutoSizer>

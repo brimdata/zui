@@ -11,6 +11,7 @@ import Search from "../models/Search"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import type {State, Dispatch, Api} from "../reducers/types"
 import pageReceiver from "../receivers/pageReceiver"
+import {PER_PAGE} from "../reducers/logViewer"
 
 export const create = (dispatch: Dispatch, state: State, api: Api) => {
   return new Search(dispatch, api, getArgs(dispatch, state))
@@ -55,7 +56,7 @@ export const analyticsArgs = (dispatch: Dispatch, state: State) => {
 
 export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
   const program =
-    Program.addHeadProc(getSearchProgram(state), 200) + "; count()"
+    Program.addHeadProc(getSearchProgram(state), PER_PAGE) + "; count()"
 
   return {
     space: getCurrentSpaceName(state),
@@ -63,14 +64,14 @@ export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
     timeWindow: getInnerTimeWindow(state),
     callbacks: (request: *) =>
       request
-        .channel(1, pageReceiver(dispatch, 200))
+        .channel(1, pageReceiver(dispatch, PER_PAGE))
         .channel(1, logsReceiver(dispatch))
   }
 }
 
 export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
   const program =
-    Program.addHeadProc(getSearchProgram(state), 200) +
+    Program.addHeadProc(getSearchProgram(state), PER_PAGE) +
     "; " +
     getCountByTimeProc(state)
   return {
@@ -85,7 +86,6 @@ export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
 }
 
 export const logsPagedArgs = (dispatch: Dispatch, state: State) => {
-  const PER_PAGE = 200
   const program =
     Program.addHeadProc(getSearchProgram(state), PER_PAGE) +
     "; " +

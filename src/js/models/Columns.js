@@ -1,6 +1,7 @@
 /* @flow */
 
 import uniq from "lodash/uniq"
+import isEqual from "lodash/isEqual"
 
 export type Column = {
   name: string,
@@ -15,6 +16,10 @@ export default class Columns {
 
   constructor(cols: Column[]) {
     this.cols = cols
+  }
+
+  isEqual(other: Columns) {
+    return isEqual(this.cols, other.cols)
   }
 
   getTds() {

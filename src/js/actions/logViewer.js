@@ -10,6 +10,7 @@ import * as searchBar from "../reducers/searchBar"
 import * as Program from "../lib/Program"
 import logsReceiver from "../receivers/logsReceiver"
 import pageReceiver from "../receivers/pageReceiver"
+import {PER_PAGE} from "../reducers/logViewer"
 
 export const setMoreBehind = (value: boolean) => ({
   type: "LOG_VIEWER_MORE_BEHIND_SET",
@@ -32,7 +33,6 @@ export const setIsFetchingAhead = (value: boolean) => ({
 })
 
 export const fetchAhead = (): Thunk => (dispatch, getState, api) => {
-  const PER_PAGE = 200
   dispatch(setIsFetchingAhead(true))
   const state = getState()
   const logs = mainSearch.getLogs(state)

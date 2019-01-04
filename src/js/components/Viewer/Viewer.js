@@ -1,12 +1,13 @@
 /* @flow */
 
-import React, {PureComponent} from "react"
+import React from "react"
 import Header from "./Header"
 import Chunk from "./Chunk"
 import * as Styler from "./Styler"
 import Chunker from "./Chunker"
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
+import shallowCompare from "../../lib/shallowCompare"
 
 type Props = {
   chunker: Chunker,
@@ -17,12 +18,10 @@ type Props = {
 
 type State = {
   scrollLeft: number,
-  chunks: number[],
-  isScrolling: boolean
+  chunks: number[]
 }
 
-export default class Viewer extends PureComponent<Props, State> {
-  id: TimeoutID
+export default class Viewer extends React.Component<Props, State> {
   onScroll: () => *
   view: ?HTMLDivElement
 
@@ -31,9 +30,16 @@ export default class Viewer extends PureComponent<Props, State> {
     this.onScroll = this.onScroll.bind(this)
     this.state = {
       scrollLeft: 0,
-      chunks: props.chunker.visibleChunks(0),
-      isScrolling: false
+      chunks: props.chunker.visibleChunks(0)
     }
+  }
+
+  shouldComponentUpdate(nextProps: Props, nextState: State) {
+    return (
+      !this.props.layout.isEqual(nextProps.layout) ||
+      !this.props.chunker.isEqual(nextProps.chunker) ||
+      !shallowCompare(this.state, nextState)
+    )
   }
 
   componentDidUpdate() {
@@ -49,12 +55,10 @@ export default class Viewer extends PureComponent<Props, State> {
   }
 
   onScroll() {
-    const {view, id} = this
+    const view = this.view
     if (view) {
-      clearTimeout(id)
       this.updateChunks(view.scrollTop)
-      this.setState({scrollLeft: view.scrollLeft, isScrolling: true})
-      this.id = setTimeout(() => this.setState({isScrolling: false}), 150)
+      this.setState({scrollLeft: view.scrollLeft})
     }
   }
 
@@ -81,10 +85,8 @@ export default class Viewer extends PureComponent<Props, State> {
           <div className="list" style={Styler.list(layout)}>
             {chunks.map(chunk => (
               <Chunk
+                rows={chunker.rows(chunk)}
                 key={chunk}
-                chunk={chunk}
-                chunker={chunker}
-                isScrolling={this.state.isScrolling}
                 rowRenderer={rowRenderer}
                 layout={layout}
               />
