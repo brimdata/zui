@@ -41,3 +41,11 @@ export const cell = (layout: Layout, col: string) => {
     width: layout.cellWidth(col)
   }
 }
+
+export const endMessage = (layout: Layout) => {
+  return {
+    height: layout.rowHeight() * 4,
+    transform: `translateY(${layout.listHeight()}px)`,
+    width: layout.viewWidth()
+  }
+}

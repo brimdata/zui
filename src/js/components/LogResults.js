@@ -63,6 +63,11 @@ export default class LogResults extends React.Component<Props> {
                 columns={this.props.columns}
                 onLastChunk={this.onLastChunk}
                 onRowClick={this.onRowClick}
+                atEnd={
+                  !this.props.moreAhead &&
+                  !this.props.isFetching &&
+                  !this.props.isFetchingAhead
+                }
               />
             )}
           </AutoSizer>

@@ -67,6 +67,13 @@
   position: relative;
 }
 
+.viewer .end-message {
+  text-align: center;
+  font-size: 12px;
+  color: $light-gray-4;
+  line-height: 100px;
+}
+
 /* Phony Viewer Overrides */
 
 .phony-viewer {

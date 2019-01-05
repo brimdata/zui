@@ -15,6 +15,7 @@ type Props = {
   chunker: Chunker,
   layout: Layout,
   rowRenderer: RowRenderer,
+  atEnd: boolean,
   onLastChunk?: Function
 }
 
@@ -42,6 +43,7 @@ export default class Viewer extends React.Component<Props, State> {
     return (
       !this.props.layout.isEqual(nextProps.layout) ||
       !this.props.chunker.isEqual(nextProps.chunker) ||
+      this.props.atEnd !== nextProps.atEnd ||
       !shallowCompare(this.state, nextState)
     )
   }
@@ -103,6 +105,11 @@ export default class Viewer extends React.Component<Props, State> {
                 layout={layout}
               />
             ))}
+            {this.props.atEnd && (
+              <p className="end-message" style={Styler.endMessage(layout)}>
+                End of Results 🎉
+              </p>
+            )}
           </div>
         </div>
       </div>

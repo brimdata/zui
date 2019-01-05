@@ -17,6 +17,7 @@ type Props = {
   selectedLog: Log,
   timeZone: string,
   columns: Columns,
+  atEnd: boolean,
   onLastChunk?: Function,
   onRowClick?: Function
 }
@@ -75,6 +76,7 @@ export default class LogViewer extends React.Component<Props> {
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
           rowRenderer={this.renderRow}
+          atEnd={this.props.atEnd}
         />
       </div>
     )
