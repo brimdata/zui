@@ -29,9 +29,10 @@ export default class StatusBar extends React.Component<Props> {
 
 import {connect} from "react-redux"
 import {getMainSearchIsFetching} from "../reducers/mainSearch"
+import {isFetchingAhead} from "../reducers/logViewer"
 
 const stateToProps = state => ({
-  isFetching: getMainSearchIsFetching(state)
+  isFetching: getMainSearchIsFetching(state) || isFetchingAhead(state)
 })
 
 export const XStatusBar = connect(stateToProps)(StatusBar)
