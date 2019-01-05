@@ -8,6 +8,8 @@ import Chunker from "./Chunker"
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
 import shallowCompare from "../../lib/shallowCompare"
+import * as Doc from "../../lib/Doc"
+import ScrollHooks from "../../lib/ScrollHooks"
 
 type Props = {
   chunker: Chunker,
@@ -23,6 +25,7 @@ type State = {
 
 export default class Viewer extends React.Component<Props, State> {
   onScroll: () => *
+  scrollHooks: Function
   view: ?HTMLDivElement
 
   constructor(props: Props) {
@@ -32,6 +35,7 @@ export default class Viewer extends React.Component<Props, State> {
       scrollLeft: 0,
       chunks: props.chunker.visibleChunks(0)
     }
+    this.scrollHooks = ScrollHooks.create(this.onScrollStart, this.onScrollStop)
   }
 
   shouldComponentUpdate(nextProps: Props, nextState: State) {
@@ -43,18 +47,26 @@ export default class Viewer extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
-    if (this.view) {
-      this.updateChunks(this.view.scrollTop)
-      if (
-        this.props.chunker.lastChunk() ==
-        this.state.chunks[this.state.chunks.length - 1]
-      ) {
-        this.props.onLastChunk && this.props.onLastChunk()
-      }
+    if (!this.view) return
+    this.updateChunks(this.view.scrollTop)
+    if (
+      this.props.chunker.lastChunk() ==
+      this.state.chunks[this.state.chunks.length - 1]
+    ) {
+      this.props.onLastChunk && this.props.onLastChunk()
     }
   }
 
+  onScrollStart() {
+    Doc.id("tooltip-root").style.display = "none"
+  }
+
+  onScrollStop() {
+    Doc.id("tooltip-root").style.display = "block"
+  }
+
   onScroll() {
+    this.scrollHooks()
     const view = this.view
     if (view) {
       this.updateChunks(view.scrollTop)
