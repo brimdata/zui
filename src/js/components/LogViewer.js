@@ -46,7 +46,7 @@ export default class LogViewer extends React.Component<Props> {
       height: this.props.height,
       rowHeight: 25,
       chunkSize: 5,
-      overScan: 8
+      overScan: 3
     })
   }
 
