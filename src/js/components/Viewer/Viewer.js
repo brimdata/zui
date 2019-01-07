@@ -10,12 +10,14 @@ import type {RowRenderer} from "./types"
 import shallowCompare from "../../lib/shallowCompare"
 import * as Doc from "../../lib/Doc"
 import ScrollHooks from "../../lib/ScrollHooks"
+import Log from "../../models/Log"
 
 type Props = {
   chunker: Chunker,
   layout: Layout,
   rowRenderer: RowRenderer,
   atEnd: boolean,
+  logs: Log[],
   onLastChunk?: Function
 }
 
@@ -85,7 +87,7 @@ export default class Viewer extends React.Component<Props, State> {
   }
 
   render() {
-    const {layout, chunker, rowRenderer} = this.props
+    const {layout, chunker, rowRenderer, logs} = this.props
     const {scrollLeft, chunks} = this.state
     return (
       <div className="viewer" style={Styler.viewer(layout)}>
@@ -99,6 +101,7 @@ export default class Viewer extends React.Component<Props, State> {
           <div className="list" style={Styler.list(layout)}>
             {chunks.map(chunk => (
               <Chunk
+                logs={logs}
                 rows={chunker.rows(chunk)}
                 key={chunk}
                 rowRenderer={rowRenderer}

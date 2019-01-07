@@ -72,6 +72,7 @@ export default class LogViewer extends React.Component<Props> {
       <div>
         <XPhonyViewer data={this.props.logs} columns={this.props.columns} />
         <Viewer
+          logs={this.props.logs}
           layout={this.createLayout()}
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
