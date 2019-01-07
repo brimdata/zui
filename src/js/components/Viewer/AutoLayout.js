@@ -18,17 +18,6 @@ export default class AutoLayout {
     this.columns = args.columns
   }
 
-  isEqual(other: Layout) {
-    return (
-      this.constructor.name === other.constructor.name &&
-      this.width === other.width &&
-      this.height === other.height &&
-      this.size === other.size &&
-      this.rowH === other.rowH &&
-      this.columns.isEqual(other.columns)
-    )
-  }
-
   allColumns() {
     return this.columns.getAll()
   }
