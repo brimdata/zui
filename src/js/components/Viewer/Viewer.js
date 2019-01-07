@@ -17,6 +17,7 @@ type Props = {
   rowRenderer: RowRenderer,
   atEnd: boolean,
   logs: Log[],
+  selectedIndex: ?number,
   onLastChunk?: Function
 }
 
