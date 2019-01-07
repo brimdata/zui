@@ -3,7 +3,7 @@
 import type {Width, Layout} from "./Layout"
 import Columns from "../../models/Columns"
 
-export default class AutoLayout implements Layout {
+export default class AutoLayout {
   width: number
   height: number
   size: number
