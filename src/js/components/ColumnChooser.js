@@ -83,7 +83,7 @@ export default class ColumnChooser extends React.Component<Props, State> {
             {this.props.columns.getAll().map(c => (
               <MenuItem
                 className={classNames({visible: c.isVisible})}
-                key={c.name}
+                key={`${c.name}-${c.type}`}
                 onClick={e => toggleColumn(e, c)}
               >
                 {c.name}
