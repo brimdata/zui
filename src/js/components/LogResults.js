@@ -41,7 +41,8 @@ export default class LogResults extends React.Component<Props> {
     }
   }
 
-  onRowClick(log: Log) {
+  onRowClick(index: number) {
+    const log = this.props.logs[index]
     this.props.dispatch(logDetails.viewLogDetail(log))
   }
 

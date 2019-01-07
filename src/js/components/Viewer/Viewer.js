@@ -7,7 +7,6 @@ import * as Styler from "./Styler"
 import Chunker from "./Chunker"
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
-import shallowCompare from "../../lib/shallowCompare"
 import * as Doc from "../../lib/Doc"
 import ScrollHooks from "../../lib/ScrollHooks"
 import Log from "../../models/Log"
@@ -26,7 +25,7 @@ type State = {
   chunks: number[]
 }
 
-export default class Viewer extends React.Component<Props, State> {
+export default class Viewer extends React.PureComponent<Props, State> {
   onScroll: () => *
   scrollHooks: Function
   view: ?HTMLDivElement
@@ -39,15 +38,6 @@ export default class Viewer extends React.Component<Props, State> {
       chunks: props.chunker.visibleChunks(0)
     }
     this.scrollHooks = ScrollHooks.create(this.onScrollStart, this.onScrollStop)
-  }
-
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
-    return (
-      !this.props.layout.isEqual(nextProps.layout) ||
-      !this.props.chunker.isEqual(nextProps.chunker) ||
-      this.props.atEnd !== nextProps.atEnd ||
-      !shallowCompare(this.state, nextState)
-    )
   }
 
   componentDidUpdate() {
@@ -101,6 +91,7 @@ export default class Viewer extends React.Component<Props, State> {
           <div className="list" style={Styler.list(layout)}>
             {chunks.map(chunk => (
               <Chunk
+                selectedIndex={this.props.selectedIndex}
                 logs={logs}
                 rows={chunker.rows(chunk)}
                 key={chunk}
