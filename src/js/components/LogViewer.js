@@ -17,15 +17,21 @@ type Props = {
   selectedLog: Log,
   timeZone: string,
   columns: Columns,
+  atEnd: boolean,
   onLastChunk?: Function,
   onRowClick?: Function
 }
 
-export default class LogViewer extends React.Component<Props> {
+type State = {
+  selectedIndex: ?number
+}
+
+export default class LogViewer extends React.Component<Props, State> {
   renderRow: Function
 
   constructor(props: Props) {
     super(props)
+    this.state = {selectedIndex: null}
     this.renderRow = this.renderRow.bind(this)
   }
 
@@ -45,7 +51,7 @@ export default class LogViewer extends React.Component<Props> {
       height: this.props.height,
       rowHeight: 25,
       chunkSize: 5,
-      overScan: 8
+      overScan: 3
     })
   }
 
@@ -58,9 +64,10 @@ export default class LogViewer extends React.Component<Props> {
         timeZone={this.props.timeZone}
         highlight={Log.isSame(this.props.logs[index], this.props.selectedLog)}
         layout={layout}
-        onClick={() =>
-          this.props.onRowClick && this.props.onRowClick(this.props.logs[index])
-        }
+        onClick={() => {
+          this.props.onRowClick && this.props.onRowClick(index)
+          this.setState({selectedIndex: index})
+        }}
       />
     )
   }
@@ -71,10 +78,13 @@ export default class LogViewer extends React.Component<Props> {
       <div>
         <XPhonyViewer data={this.props.logs} columns={this.props.columns} />
         <Viewer
+          logs={this.props.logs}
           layout={this.createLayout()}
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
           rowRenderer={this.renderRow}
+          selectedIndex={this.state.selectedIndex}
+          atEnd={this.props.atEnd}
         />
       </div>
     )

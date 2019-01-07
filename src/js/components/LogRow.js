@@ -29,7 +29,7 @@ export default class LogRow extends React.PureComponent {
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={Styler.row(layout, index)}
+        style={Styler.row(layout)}
         onClick={this.props.onClick}
       >
         {layout.visibleColumns().map(this.renderCell)}

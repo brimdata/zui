@@ -166,7 +166,7 @@ ShallowWrapper {
       "onMouseLeave": [Function],
       "style": undefined,
     },
-    "ref": null,
+    "ref": [Function],
     "rendered": Array [
       Object {
         "instance": null,
@@ -209,7 +209,7 @@ ShallowWrapper {
         "onMouseLeave": [Function],
         "style": undefined,
       },
-      "ref": null,
+      "ref": [Function],
       "rendered": Array [
         Object {
           "instance": null,
@@ -416,7 +416,7 @@ ShallowWrapper {
       "onMouseLeave": [Function],
       "style": undefined,
     },
-    "ref": null,
+    "ref": [Function],
     "rendered": Array [
       Object {
         "instance": null,
@@ -459,7 +459,7 @@ ShallowWrapper {
         "onMouseLeave": [Function],
         "style": undefined,
       },
-      "ref": null,
+      "ref": [Function],
       "rendered": Array [
         Object {
           "instance": null,
@@ -668,12 +668,7 @@ ShallowWrapper {
           />
         </button>,
         <Tooltip
-          style={
-            Object {
-              "left": 100,
-              "top": 79,
-            }
-          }
+          style={Object {}}
         >
           <span
             className="field-name"
@@ -690,7 +685,7 @@ ShallowWrapper {
       "onMouseLeave": [Function],
       "style": undefined,
     },
-    "ref": null,
+    "ref": [Function],
     "rendered": Array [
       Object {
         "instance": null,
@@ -748,10 +743,7 @@ ShallowWrapper {
           >
             _path
           </span>,
-          "style": Object {
-            "left": 100,
-            "top": 79,
-          },
+          "style": Object {},
         },
         "ref": null,
         "rendered": Object {
@@ -797,12 +789,7 @@ ShallowWrapper {
             />
           </button>,
           <Tooltip
-            style={
-              Object {
-                "left": 100,
-                "top": 79,
-              }
-            }
+            style={Object {}}
           >
             <span
               className="field-name"
@@ -819,7 +806,7 @@ ShallowWrapper {
         "onMouseLeave": [Function],
         "style": undefined,
       },
-      "ref": null,
+      "ref": [Function],
       "rendered": Array [
         Object {
           "instance": null,
@@ -877,10 +864,7 @@ ShallowWrapper {
             >
               _path
             </span>,
-            "style": Object {
-              "left": 100,
-              "top": 79,
-            },
+            "style": Object {},
           },
           "ref": null,
           "rendered": Object {
@@ -1088,7 +1072,7 @@ ShallowWrapper {
       "onMouseLeave": [Function],
       "style": undefined,
     },
-    "ref": null,
+    "ref": [Function],
     "rendered": Array [
       Object {
         "instance": null,
@@ -1131,7 +1115,7 @@ ShallowWrapper {
         "onMouseLeave": [Function],
         "style": undefined,
       },
-      "ref": null,
+      "ref": [Function],
       "rendered": Array [
         Object {
           "instance": null,
@@ -1340,12 +1324,7 @@ ShallowWrapper {
           />
         </button>,
         <Tooltip
-          style={
-            Object {
-              "left": 0,
-              "top": 0,
-            }
-          }
+          style={Object {}}
         >
           <span
             className="field-name"
@@ -1500,7 +1479,7 @@ ShallowWrapper {
       "onMouseLeave": [Function],
       "style": undefined,
     },
-    "ref": null,
+    "ref": [Function],
     "rendered": Array [
       Object {
         "instance": null,
@@ -1558,10 +1537,7 @@ ShallowWrapper {
           >
             _path
           </span>,
-          "style": Object {
-            "left": 0,
-            "top": 0,
-          },
+          "style": Object {},
         },
         "ref": null,
         "rendered": Object {
@@ -1747,12 +1723,7 @@ ShallowWrapper {
             />
           </button>,
           <Tooltip
-            style={
-              Object {
-                "left": 0,
-                "top": 0,
-              }
-            }
+            style={Object {}}
           >
             <span
               className="field-name"
@@ -1907,7 +1878,7 @@ ShallowWrapper {
         "onMouseLeave": [Function],
         "style": undefined,
       },
-      "ref": null,
+      "ref": [Function],
       "rendered": Array [
         Object {
           "instance": null,
@@ -1965,10 +1936,7 @@ ShallowWrapper {
             >
               _path
             </span>,
-            "style": Object {
-              "left": 0,
-              "top": 0,
-            },
+            "style": Object {},
           },
           "ref": null,
           "rendered": Object {
@@ -2330,12 +2298,7 @@ ShallowWrapper {
           />
         </button>,
         <Tooltip
-          style={
-            Object {
-              "left": 0,
-              "top": 0,
-            }
-          }
+          style={Object {}}
         >
           <span
             className="field-name"
@@ -2490,7 +2453,7 @@ ShallowWrapper {
       "onMouseLeave": [Function],
       "style": undefined,
     },
-    "ref": null,
+    "ref": [Function],
     "rendered": Array [
       Object {
         "instance": null,
@@ -2600,10 +2563,7 @@ ShallowWrapper {
           >
             ts
           </span>,
-          "style": Object {
-            "left": 0,
-            "top": 0,
-          },
+          "style": Object {},
         },
         "ref": null,
         "rendered": Object {
@@ -2801,12 +2761,7 @@ ShallowWrapper {
             />
           </button>,
           <Tooltip
-            style={
-              Object {
-                "left": 0,
-                "top": 0,
-              }
-            }
+            style={Object {}}
           >
             <span
               className="field-name"
@@ -2961,7 +2916,7 @@ ShallowWrapper {
         "onMouseLeave": [Function],
         "style": undefined,
       },
-      "ref": null,
+      "ref": [Function],
       "rendered": Array [
         Object {
           "instance": null,
@@ -3071,10 +3026,7 @@ ShallowWrapper {
             >
               ts
             </span>,
-            "style": Object {
-              "left": 0,
-              "top": 0,
-            },
+            "style": Object {},
           },
           "ref": null,
           "rendered": Object {

@@ -3,7 +3,7 @@
 import type {Width, Layout} from "./Layout"
 import Columns from "../../models/Columns"
 
-export default class AutoLayout implements Layout {
+export default class AutoLayout {
   width: number
   height: number
   size: number
@@ -16,17 +16,6 @@ export default class AutoLayout implements Layout {
     this.size = args.size
     this.rowH = args.rowH
     this.columns = args.columns
-  }
-
-  isEqual(other: Layout) {
-    return (
-      this.constructor.name === other.constructor.name &&
-      this.width === other.width &&
-      this.height === other.height &&
-      this.size === other.size &&
-      this.rowH === other.rowH &&
-      this.columns.isEqual(other.columns)
-    )
   }
 
   allColumns() {

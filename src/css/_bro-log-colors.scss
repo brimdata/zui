@@ -6,7 +6,7 @@
 }
 
 $unknown-type-color: #afafaf;
-[class$="-bg-color"] {
+[class*="-bg-color"] {
   background: $unknown-type-color;
   fill: $unknown-type-color;
 }

@@ -10,6 +10,10 @@
   position: relative;
 }
 
+.viewer .chunk {
+  position: absolute;
+}
+
 .viewer .col-resizer {
   width: 3px;
   height: 100%;
@@ -32,7 +36,6 @@
 .viewer .log-row,
 .phony-viewer tbody tr {
   white-space: nowrap;
-  position: absolute;
   contain: layout style;
   display: flex;
   font-family: $mono-font;
@@ -65,6 +68,13 @@
   font-weight: normal;
   padding: 0 12px;
   position: relative;
+}
+
+.viewer .end-message {
+  text-align: center;
+  font-size: 12px;
+  color: $light-gray-4;
+  line-height: 100px;
 }
 
 /* Phony Viewer Overrides */

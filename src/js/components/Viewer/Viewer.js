@@ -7,12 +7,17 @@ import * as Styler from "./Styler"
 import Chunker from "./Chunker"
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
-import shallowCompare from "../../lib/shallowCompare"
+import * as Doc from "../../lib/Doc"
+import ScrollHooks from "../../lib/ScrollHooks"
+import Log from "../../models/Log"
 
 type Props = {
   chunker: Chunker,
   layout: Layout,
   rowRenderer: RowRenderer,
+  atEnd: boolean,
+  logs: Log[],
+  selectedIndex: ?number,
   onLastChunk?: Function
 }
 
@@ -21,8 +26,9 @@ type State = {
   chunks: number[]
 }
 
-export default class Viewer extends React.Component<Props, State> {
+export default class Viewer extends React.PureComponent<Props, State> {
   onScroll: () => *
+  scrollHooks: Function
   view: ?HTMLDivElement
 
   constructor(props: Props) {
@@ -32,29 +38,30 @@ export default class Viewer extends React.Component<Props, State> {
       scrollLeft: 0,
       chunks: props.chunker.visibleChunks(0)
     }
-  }
-
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
-    return (
-      !this.props.layout.isEqual(nextProps.layout) ||
-      !this.props.chunker.isEqual(nextProps.chunker) ||
-      !shallowCompare(this.state, nextState)
-    )
+    this.scrollHooks = ScrollHooks.create(this.onScrollStart, this.onScrollStop)
   }
 
   componentDidUpdate() {
-    if (this.view) {
-      this.updateChunks(this.view.scrollTop)
-      if (
-        this.props.chunker.lastChunk() ==
-        this.state.chunks[this.state.chunks.length - 1]
-      ) {
-        this.props.onLastChunk && this.props.onLastChunk()
-      }
+    if (!this.view) return
+    this.updateChunks(this.view.scrollTop)
+    if (
+      this.props.chunker.lastChunk() ==
+      this.state.chunks[this.state.chunks.length - 1]
+    ) {
+      this.props.onLastChunk && this.props.onLastChunk()
     }
   }
 
+  onScrollStart() {
+    Doc.id("tooltip-root").style.display = "none"
+  }
+
+  onScrollStop() {
+    Doc.id("tooltip-root").style.display = "block"
+  }
+
   onScroll() {
+    this.scrollHooks()
     const view = this.view
     if (view) {
       this.updateChunks(view.scrollTop)
@@ -71,7 +78,7 @@ export default class Viewer extends React.Component<Props, State> {
   }
 
   render() {
-    const {layout, chunker, rowRenderer} = this.props
+    const {layout, chunker, rowRenderer, logs} = this.props
     const {scrollLeft, chunks} = this.state
     return (
       <div className="viewer" style={Styler.viewer(layout)}>
@@ -85,12 +92,19 @@ export default class Viewer extends React.Component<Props, State> {
           <div className="list" style={Styler.list(layout)}>
             {chunks.map(chunk => (
               <Chunk
+                selectedIndex={this.props.selectedIndex}
+                logs={logs}
                 rows={chunker.rows(chunk)}
                 key={chunk}
                 rowRenderer={rowRenderer}
                 layout={layout}
               />
             ))}
+            {this.props.atEnd && (
+              <p className="end-message" style={Styler.endMessage(layout)}>
+                End of Results 🎉
+              </p>
+            )}
           </div>
         </div>
       </div>

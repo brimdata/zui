@@ -37,9 +37,8 @@ test("#list", () => {
 })
 
 test("#row", () => {
-  expect(Styler.row(layout, 4)).toEqual({
+  expect(Styler.row(layout)).toEqual({
     height: 10,
-    transform: "translateY(40px)",
     width: 400
   })
 })
