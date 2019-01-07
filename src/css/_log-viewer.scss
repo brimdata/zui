@@ -10,6 +10,10 @@
   position: relative;
 }
 
+.viewer .chunk {
+  position: absolute;
+}
+
 .viewer .col-resizer {
   width: 3px;
   height: 100%;
@@ -32,7 +36,6 @@
 .viewer .log-row,
 .phony-viewer tbody tr {
   white-space: nowrap;
-  position: absolute;
   contain: layout style;
   display: flex;
   font-family: $mono-font;

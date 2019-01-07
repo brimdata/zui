@@ -28,10 +28,17 @@ export const list = (layout: Layout) => {
   }
 }
 
-export const row = (layout: Layout, index: number) => {
+export const chunk = (layout: Layout, index: number, chunkSize: number) => {
   return {
     width: layout.rowWidth(),
     transform: `translateY(${index * layout.rowHeight()}px)`,
+    height: layout.rowHeight() * chunkSize
+  }
+}
+
+export const row = (layout: Layout) => {
+  return {
+    width: layout.rowWidth(),
     height: layout.rowHeight()
   }
 }

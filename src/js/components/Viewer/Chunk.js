@@ -5,6 +5,7 @@ import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
 import isEqual from "lodash/isEqual"
 import Log from "../../models/Log"
+import * as Styler from "./Styler"
 
 type Props = {
   rowRenderer: RowRenderer,
@@ -32,7 +33,11 @@ export default class Chunk extends React.Component<Props> {
   }
 
   render() {
-    const {rowRenderer, layout} = this.props
-    return <div>{this.props.rows.map(index => rowRenderer(index, layout))}</div>
+    const {rowRenderer, layout, rows, chunker} = this.props
+    return (
+      <div className="chunk" style={Styler.chunk(layout, rows[0], rows.length)}>
+        {rows.map(index => rowRenderer(index, layout))}
+      </div>
+    )
   }
 }
