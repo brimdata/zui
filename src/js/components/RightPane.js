@@ -13,7 +13,7 @@ import Star from "../icons/star-sm.svg"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import classNames from "classnames"
-import {XLogDetail} from "../components/LogDetail"
+import {XLogDetailPane} from "./LogDetailPane"
 import Log from "../models/Log"
 import type {Space} from "../lib/Space"
 
@@ -125,7 +125,7 @@ export default class RightPane extends React.Component<Props> {
           </PaneHeader>
         )}
         <PaneBody>
-          <XLogDetail />
+          <XLogDetailPane />
         </PaneBody>
       </Pane>
     )
@@ -139,14 +139,14 @@ import * as starActions from "../actions/starredLogs"
 import * as detailActions from "../actions/logDetails"
 import * as packetActions from "../actions/packets"
 import * as view from "../reducers/view"
-import * as logDetails from "../reducers/logDetails"
+import * as logDetails from "../selectors/logDetails"
 import * as spaces from "../reducers/spaces"
 
 const stateToProps = state => ({
   isOpen: view.getRightSidebarIsOpen(state),
   width: view.getRightSidebarWidth(state),
-  prevExists: logDetails.getPrevExists(state),
-  nextExists: logDetails.getNextExists(state),
+  prevExists: logDetails.getLogDetailHistory(state).prevExists(),
+  nextExists: logDetails.getLogDetailHistory(state).nextExists(),
   isStarred: logDetails.getLogDetailIsStarred(state),
   currentLog: logDetails.buildLogDetail(state),
   space: spaces.getCurrentSpace(state)

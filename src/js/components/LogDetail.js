@@ -17,21 +17,8 @@ export default class LogDetail extends React.Component<Props> {
 
   render() {
     const {log, correlatedLogs, viewLogDetail} = this.props
-    if (!log)
-      return (
-        <div className="empty-message-wrapper">
-          <div className="empty-message">
-            <h3>No Log Selected</h3>
-            <p>Click a log line to view details.</p>
-            <p>
-              Toggle this pane with <code>Cmd + ]</code>.
-            </p>
-          </div>
-        </div>
-      )
-
     return (
-      <div className="log-detail" ref={r => (this.el = r)}>
+      <div className="log-detail">
         <div className="fields-table-panel">
           <h4 className="small-heading">Fields</h4>
           <FieldsTable log={log} />
@@ -57,29 +44,3 @@ export default class LogDetail extends React.Component<Props> {
     )
   }
 }
-
-import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
-import {
-  buildLogDetail,
-  buildCorrelatedLogs,
-  getNextExists,
-  getPrevExists,
-  getLogDetailIsStarred
-} from "../reducers/logDetails"
-import * as actions from "../actions/logDetails"
-import * as starActions from "../actions/starredLogs"
-
-const stateToProps = state => ({
-  log: buildLogDetail(state),
-  correlatedLogs: buildCorrelatedLogs(state),
-  prevExists: getPrevExists(state),
-  nextExists: getNextExists(state),
-  isStarred: getLogDetailIsStarred(state)
-})
-
-export const XLogDetail = connect(
-  stateToProps,
-  (dispatch: Function) =>
-    bindActionCreators({...actions, ...starActions}, dispatch)
-)(LogDetail)
