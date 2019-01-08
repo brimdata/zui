@@ -1,6 +1,49 @@
+.log-detail-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.log-detail {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow-y: scroll;
+}
+
+.log-detail-enter {
+  transform: translate(100%, 0);
+}
+
+.log-detail-enter-active {
+  transition: transform 250ms;
+  transform: translate(0, 0);
+}
+
+.log-detail-exit-active {
+  transform: translate(-100%, 0);
+  transition: transform 250ms;
+}
+
+.prev .log-detail-exit-active {
+  transform: translate(100%, 0);
+  transition: transform 250ms;
+}
+
+.prev .log-detail-enter {
+  transform: translate(-100%, 0);
+}
+
+.prev .log-detail-enter-active {
+  transition: transform 250ms;
+  transform: translate(0, 0);
+}
+
 .log-detail-pane {
   background: white;
-  min-width: 200px;
+  min-width: 280px;
 
   .pane-header {
     background: $light-gray-2;
