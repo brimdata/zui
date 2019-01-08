@@ -1,84 +1,63 @@
 /* @flow */
 
 import createReducer from "./createReducer"
-import {createSelector} from "reselect"
-import {getTuplesByUid} from "./eventsByUid"
-import {getDescriptors} from "./descriptors"
-import {getCurrentSpaceName} from "./spaces"
-import {getStarredLogs} from "./starredLogs"
-import Log from "../models/Log"
 import History from "../models/History"
-import * as Tuple from "../lib/Tuple"
+import type {State} from "./types"
 
 const initialState = {
   logs: [],
-  position: 0
+  position: 0,
+  prevPosition: -1
 }
 
-const toHistory = ({logs, position}) => new History(logs, position)
-const toState = ({entries, position}) => ({logs: entries, position})
+export type LogDetails = typeof initialState
 
 export default createReducer(initialState, {
   LOG_DETAIL_PUSH: (state, {tuple, descriptor}) => {
     const history = toHistory(state)
     history.save({tuple, descriptor})
-    return toState(history)
+    return {
+      logs: history.entries,
+      position: history.position,
+      prevPosition: state.position
+    }
   },
   LOG_DETAIL_BACK: state => {
     const history = toHistory(state)
-    history.getPrev()
-    return toState(history)
+    history.goBack()
+    return {
+      logs: history.entries,
+      position: history.position,
+      prevPosition: state.position
+    }
   },
   LOG_DETAIL_FORWARD: state => {
     const history = toHistory(state)
-    history.getNext()
-    return toState(history)
+    history.goForward()
+    return {
+      logs: history.entries,
+      position: history.position,
+      prevPosition: state.position
+    }
   }
 })
 
-export const getNextExists = (state: Object) =>
-  toHistory(state.logDetails).nextExists()
-
-export const getPrevExists = (state: Object) =>
-  toHistory(state.logDetails).prevExists()
-
-export const getLogDetail = (state: Object) => {
-  const {logs, position} = state.logDetails
-  return new History(logs, position).getCurrent()
+export const getLogDetails = (state: State) => {
+  return state.logDetails
 }
 
-export const buildLogDetail = createSelector(
-  getLogDetail,
-  log => (log ? new Log(log.tuple, log.descriptor) : null)
-)
+export const getPosition = (state: State) => {
+  return state.logDetails.position
+}
 
-export const getLogDetailIsStarred = createSelector(
-  getLogDetail,
-  getStarredLogs,
-  (log, starred) => (log ? Tuple.contains(starred, log.tuple) : false)
-)
+export const getPrevPosition = (state: State) => {
+  return state.logDetails.prevPosition
+}
 
-export const buildCorrelatedLogs = createSelector(
-  buildLogDetail,
-  getTuplesByUid,
-  getDescriptors,
-  getCurrentSpaceName,
-  (log, tuplesByUid, descriptors, space) => {
-    if (!log) return []
+export const toHistory = ({logs, position}: LogDetails) => {
+  return new History(logs, position)
+}
 
-    const uid = log.correlationId()
-    if (!uid) return []
-
-    const tuples = tuplesByUid[uid] || []
-    const logs = Log.buildAll(tuples, descriptors, space).sort((a, b) =>
-      a.get("ts") > b.get("ts") ? 1 : -1
-    )
-    const connIndex = logs.findIndex(l => l.get("_path") === "conn")
-    if (connIndex > 0) {
-      const conn = logs[connIndex]
-      logs.splice(connIndex, 1)
-      logs.unshift(conn)
-    }
-    return logs
-  }
-)
+export const toState = ({entries, position}: History) => {
+  return {logs: entries, position}
+}

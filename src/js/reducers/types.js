@@ -14,6 +14,7 @@ import type {SearchStats} from "./searchStats"
 import type {SearchHistory} from "./searchHistory"
 import type {Whois} from "./whois"
 import type {Analysis} from "./analysis"
+import type {LogDetails} from "../actions/logDetails"
 
 export type State = {
   analysis: Analysis,
@@ -29,7 +30,8 @@ export type State = {
   columnWidths: ColumnWidths,
   searchStats: SearchStats,
   searchHistory: SearchHistory,
-  whois: Whois
+  whois: Whois,
+  logDetails: LogDetails
 }
 
 export type Dispatch = Function

@@ -22,6 +22,11 @@ export default class History {
     return this.position + 1 < this.entries.length
   }
 
+  get(position) {
+    const index = this.entries.length - 1 - position
+    return this.entries[index]
+  }
+
   getMostRecent() {
     if (!this.entries.length) return null
     return this.entries[this.entries.length - 1]
@@ -33,16 +38,26 @@ export default class History {
     return this.entries[index]
   }
 
+  goBack() {
+    if (this.prevExists()) {
+      this.position += 1
+    }
+  }
+
+  goForward() {
+    if (this.nextExists()) {
+      this.position -= 1
+    }
+  }
+
   getPrev() {
     if (!this.prevExists()) return null
-    this.position += 1
-    return this.getCurrent()
+    return this.get(this.position + 1)
   }
 
   getNext() {
     if (!this.nextExists()) return null
-    this.position -= 1
-    return this.getCurrent()
+    return this.get(this.position - 1)
   }
 
   toArray() {

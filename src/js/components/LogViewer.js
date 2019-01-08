@@ -66,7 +66,6 @@ export default class LogViewer extends React.Component<Props, State> {
         layout={layout}
         onClick={() => {
           this.props.onRowClick && this.props.onRowClick(index)
-          this.setState({selectedIndex: index})
         }}
       />
     )
@@ -83,7 +82,7 @@ export default class LogViewer extends React.Component<Props, State> {
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
           rowRenderer={this.renderRow}
-          selectedIndex={this.state.selectedIndex}
+          selectedLog={this.props.selectedLog}
           atEnd={this.props.atEnd}
         />
       </div>

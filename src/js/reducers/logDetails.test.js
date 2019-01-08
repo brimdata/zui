@@ -1,5 +1,6 @@
 import * as r from "./logDetails"
 import * as a from "../actions/logDetails"
+import {buildLogDetail} from "../selectors/logDetails"
 
 const tuple = ["1", "a"]
 const descriptor = [
@@ -12,7 +13,7 @@ const reduce = actions => ({
 
 test("viewing a log detail", () => {
   let state = reduce([a.pushLogDetail({tuple, descriptor})])
-  const log = r.buildLogDetail(state)
+  const log = buildLogDetail(state)
 
   expect(log.get("letter")).toEqual("a")
 })
@@ -24,7 +25,7 @@ test("viewing 2 logs", () => {
     a.pushLogDetail({tuple: tuple2, descriptor})
   ])
 
-  const log = r.buildLogDetail(state)
+  const log = buildLogDetail(state)
   expect(log.get("letter")).toBe("b")
 })
 
@@ -36,7 +37,7 @@ test("going back to the first log", () => {
     a.backLogDetail()
   ])
 
-  const log = r.buildLogDetail(state)
+  const log = buildLogDetail(state)
   expect(log.get("letter")).toBe("a")
 })
 
@@ -49,6 +50,6 @@ test("going back and then forward", () => {
     a.forwardLogDetail()
   ])
 
-  const log = r.buildLogDetail(state)
+  const log = buildLogDetail(state)
   expect(log.get("letter")).toBe("b")
 })

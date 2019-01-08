@@ -80,7 +80,7 @@ export default class LogResults extends React.Component<Props> {
 
 import {connect} from "react-redux"
 import * as mainSearch from "../reducers/mainSearch"
-import {buildLogDetail} from "../reducers/logDetails"
+import {buildLogDetail} from "../selectors/logDetails"
 import {getTimeZone} from "../reducers/view"
 import * as view from "../reducers/view"
 import * as logViewer from "../reducers/logViewer"
