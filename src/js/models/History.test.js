@@ -56,10 +56,16 @@ test("getNext with one item going back and forth", () => {
 
 test("getNext after going back", () => {
   const history = new History(["james", "kerr"])
-
-  history.getPrev()
-
+  history.goBack()
   expect(history.getNext()).toBe("kerr")
+})
+
+test("getPrev after going forward", () => {
+  const history = new History(["james", "andrew", "kerr"])
+  history.goBack()
+  history.goBack()
+  history.goForward()
+  expect(history.getPrev()).toBe("james")
 })
 
 test("getMostRecent when empty", () => {
