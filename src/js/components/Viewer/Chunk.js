@@ -8,7 +8,7 @@ import Log from "../../models/Log"
 import * as Styler from "./Styler"
 
 type Props = {
-  selectedLog: ?number,
+  selectedLog: ?Log,
   rowRenderer: RowRenderer,
   layout: Layout,
   rows: number[],
