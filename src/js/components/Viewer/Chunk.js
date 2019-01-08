@@ -8,7 +8,7 @@ import Log from "../../models/Log"
 import * as Styler from "./Styler"
 
 type Props = {
-  selectedIndex: ?number,
+  selectedLog: ?number,
   rowRenderer: RowRenderer,
   layout: Layout,
   rows: number[],
@@ -25,7 +25,7 @@ export default class Chunk extends React.Component<Props> {
       return true
     }
 
-    if (this.props.selectedIndex !== nextProps.selectedIndex) {
+    if (this.props.selectedLog !== nextProps.selectedLog) {
       return true
     }
 

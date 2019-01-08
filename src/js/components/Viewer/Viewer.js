@@ -17,7 +17,7 @@ type Props = {
   rowRenderer: RowRenderer,
   atEnd: boolean,
   logs: Log[],
-  selectedIndex: ?number,
+  selectedLog: ?Log,
   onLastChunk?: Function
 }
 
@@ -92,7 +92,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
           <div className="list" style={Styler.list(layout)}>
             {chunks.map(chunk => (
               <Chunk
-                selectedIndex={this.props.selectedIndex}
+                selectedLog={this.props.selectedLog}
                 logs={logs}
                 rows={chunker.rows(chunk)}
                 key={chunk}
