@@ -100,4 +100,4 @@ export function getMainSearchCountByTimeInterval(state: State) {
   return countByTimeInterval(timeWindow).unit
 }
 
-const toDate = string => new Date(string / 1e6)
+const toDate = string => new Date(+string * 1000)
