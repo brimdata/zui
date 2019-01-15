@@ -11,6 +11,9 @@ const initialState = {}
 export type TuplesByUid = {[string]: Tuple[]}
 
 export default createReducer(initialState, {
+  CORRELATED_LOGS_CLEAR: () => ({
+    ...initialState
+  }),
   CORRELATED_LOGS_RECEIVE: (state, {uid, tuples}) => ({
     ...state,
     [uid]: uniq(get(state, uid, []).concat(tuples))

@@ -4,15 +4,20 @@ import {getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {discoverDescriptors} from "./descriptors"
 import Log from "../models/Log"
+import type {Tuple} from "../models/Log"
 import type {Thunk} from "redux-thunk"
 
-const receiveCorrelatedLogs = (uid, tuples) => ({
+export const clearCorrelatedLogs = () => ({
+  type: "CORRELATED_LOGS_CLEAR"
+})
+
+export const receiveCorrelatedLogs = (uid: string, tuples: Tuple[]) => ({
   type: "CORRELATED_LOGS_RECEIVE",
   uid,
   tuples
 })
 
-const requestCorrelatedLogs = uid => ({
+export const requestCorrelatedLogs = (uid: string) => ({
   type: "CORRELATED_LOGS_REQUEST",
   uid
 })
