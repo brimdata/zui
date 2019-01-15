@@ -7,28 +7,22 @@ import Log from "../models/Log"
 import type {Tuple} from "../models/Log"
 import type {Thunk} from "redux-thunk"
 
-export const clearCorrelatedLogs = () => ({
-  type: "CORRELATED_LOGS_CLEAR"
+export const clearTuplesByUid = () => ({
+  type: "TUPLES_BY_UID_CLEAR"
 })
 
-export const receiveCorrelatedLogs = (uid: string, tuples: Tuple[]) => ({
-  type: "CORRELATED_LOGS_RECEIVE",
+export const addTuplesByUid = (uid: string, tuples: Tuple[]) => ({
+  type: "TUPLES_BY_UID_RECEIVE",
   uid,
   tuples
 })
 
-export const requestCorrelatedLogs = (uid: string) => ({
-  type: "CORRELATED_LOGS_REQUEST",
+export const requestTuplesByUid = (uid: string) => ({
+  type: "TUPLES_BY_UID_REQUEST",
   uid
 })
 
-export const errorCorrelatedLogs = (uid: string, error: string) => ({
-  type: "CORRELATED_LOGS_ERROR",
-  uid,
-  error
-})
-
-export const fetchCorrelatedLogs = (log: Log): Thunk => (
+export const fetchTuplesByUid = (log: Log): Thunk => (
   dispatch,
   getState,
   api
@@ -40,7 +34,7 @@ export const fetchCorrelatedLogs = (log: Log): Thunk => (
   const space = getCurrentSpaceName(state)
   const string = `${uid} | head 500`
 
-  dispatch(requestCorrelatedLogs(uid))
+  dispatch(requestTuplesByUid(uid))
   api
     .search({
       space,
@@ -50,9 +44,9 @@ export const fetchCorrelatedLogs = (log: Log): Thunk => (
     .channel(0, ({type, results}) => {
       if (type === "SearchResult") {
         const {tuples} = results
-        dispatch(receiveCorrelatedLogs(uid, tuples))
+        dispatch(addTuplesByUid(uid, tuples))
         dispatch(discoverDescriptors(tuples))
       }
     })
-    .error(e => dispatch(errorCorrelatedLogs(uid, e)))
+    .error(e => e)
 }

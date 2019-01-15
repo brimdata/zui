@@ -8,14 +8,14 @@ beforeEach(() => {
 })
 
 test("receiving tuples", () => {
-  store.dispatch(actions.receiveCorrelatedLogs("abc", [["1", "conn"]]))
+  store.dispatch(actions.addTuplesByUid("abc", [["1", "conn"]]))
   expect(getTuplesByUid(store.getState())).toEqual({abc: [["1", "conn"]]})
 })
 
 test("clearing tuples", () => {
   const state = store.dispatchAll([
-    actions.receiveCorrelatedLogs("abc", [["1", "conn"]]),
-    actions.clearCorrelatedLogs()
+    actions.addTuplesByUid("abc", [["1", "conn"]]),
+    actions.clearTuplesByUid()
   ])
 
   expect(getTuplesByUid(state)).toEqual({})

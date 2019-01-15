@@ -1,13 +1,13 @@
 /* @flow */
 
-import {fetchCorrelatedLogs} from "./tuplesByUid"
+import {fetchTuplesByUid} from "./tuplesByUid"
 import type {Tuple, Descriptor} from "../models/Log"
 import Log from "../models/log"
 import type {Thunk} from "redux-thunk"
 
 export const viewLogDetail = (log: Log): Thunk => dispatch => {
   dispatch(pushLogDetail(log))
-  dispatch(fetchCorrelatedLogs(log))
+  dispatch(fetchTuplesByUid(log))
 }
 
 export const pushLogDetail = ({
