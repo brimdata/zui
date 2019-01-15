@@ -17,6 +17,9 @@ export type Spaces = {
 }
 
 export default createReducer(initialState, {
+  SPACES_CLEAR: () => ({
+    ...initialState
+  }),
   ALL_SPACES_REQUEST: () => initialState,
   SPACE_INFO_SET: (state, {spaceInfo}) => ({
     ...state,

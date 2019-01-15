@@ -72,3 +72,9 @@ export function unselectSpace() {
     type: "SPACE_UNSELECT"
   }
 }
+
+export function clearSpaces() {
+  return {
+    type: "SPACES_CLEAR"
+  }
+}
