@@ -1,6 +1,7 @@
 /* @flow */
 
 import isEqual from "lodash/isEqual"
+import isNumber from "lodash/isNumber"
 
 export const indexOfLastChange = (
   array: *[],
@@ -25,4 +26,8 @@ export const head = (array: *[], n: number) => {
     newArray.push(array[i])
   }
   return newArray
+}
+
+export const indexInBounds = (index: number, array: *[]) => {
+  return isNumber(index) && index >= 0 && index < array.length
 }
