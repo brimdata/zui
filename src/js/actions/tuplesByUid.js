@@ -12,7 +12,7 @@ export const clearTuplesByUid = () => ({
 })
 
 export const addTuplesByUid = (uid: string, tuples: Tuple[]) => ({
-  type: "TUPLES_BY_UID_RECEIVE",
+  type: "TUPLES_BY_UID_ADD",
   uid,
   tuples
 })

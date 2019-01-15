@@ -14,7 +14,7 @@ export default createReducer(initialState, {
   TUPLES_BY_UID_CLEAR: () => ({
     ...initialState
   }),
-  TUPLES_BY_UID_RECEIVE: (state, {uid, tuples}) => ({
+  TUPLES_BY_UID_ADD: (state, {uid, tuples}) => ({
     ...state,
     [uid]: uniq(get(state, uid, []).concat(tuples))
   })
