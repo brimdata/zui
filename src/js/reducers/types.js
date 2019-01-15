@@ -15,6 +15,7 @@ import type {SearchHistory} from "./searchHistory"
 import type {Whois} from "./whois"
 import type {Analysis} from "./analysis"
 import type {LogDetails} from "../actions/logDetails"
+import type {EventsByUid} from "./eventsByUid"
 
 export type State = {
   analysis: Analysis,
@@ -31,9 +32,8 @@ export type State = {
   searchStats: SearchStats,
   searchHistory: SearchHistory,
   whois: Whois,
-  logDetails: LogDetails
+  logDetails: LogDetails,
+  eventsByUid: EventsByUid
 }
-
 export type Dispatch = Function
-
 export type Api = Client
