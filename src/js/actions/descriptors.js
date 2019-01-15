@@ -54,3 +54,7 @@ export const errorDescriptor = (error: string) => ({
   type: "DESCRIPTOR_ERROR",
   error
 })
+
+export const clearDescriptors = () => ({
+  type: "DESCRIPTORS_CLEAR"
+})
