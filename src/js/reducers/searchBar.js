@@ -18,6 +18,7 @@ export const initialState = {
 export type SearchBar = typeof initialState
 
 export default createReducer(initialState, {
+  SEARCH_BAR_CLEAR: () => ({...initialState}),
   SEARCH_BAR_RESTORE: (state, {value}) => {
     return {
       ...state,
@@ -162,6 +163,10 @@ const escapeSpaces = value => {
 
 const indexInBounds = (index, array) =>
   isNumber(index) && index >= 0 && index < array.length
+
+export const getSearchBar = (state: State) => {
+  return state.searchBar
+}
 
 export const getSearchBarInputValue = (state: State) => state.searchBar.current
 

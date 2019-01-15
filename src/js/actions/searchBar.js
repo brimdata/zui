@@ -9,6 +9,10 @@ import Field from "../models/Field"
 import type {SearchBar} from "../reducers/searchBar"
 import {getCurrentEntry} from "../reducers/searchHistory"
 
+export const clearSearchBar = () => ({
+  type: "SEARCH_BAR_CLEAR"
+})
+
 export const restoreSearchBar = (value: SearchBar) => ({
   type: "SEARCH_BAR_RESTORE",
   value
