@@ -1,7 +1,6 @@
 /* @flow */
 
-import reducer, {
-  initialState,
+import {
   getSearchProgram,
   getSearchBarError,
   getSearchBarInputValue,
@@ -9,7 +8,8 @@ import reducer, {
   getSearchBarEditingIndex,
   getSearchBarPreviousInputValue,
   getSearchBar
-} from "./searchBar"
+} from "../selectors/searchBar"
+import {initialState} from "./searchBar"
 import {getOuterTimeWindow} from "./timeWindow"
 import * as actions from "../actions/searchBar"
 import {setOuterTimeWindow} from "../actions/timeWindow"
@@ -68,7 +68,7 @@ test("search pin edit sets the editing index", () => {
 
 test("search pin edit does not set index if out of bounds", () => {
   expect(() => {
-    reducer(initialState, actions.editSearchBarPin(100))
+    store.dispatch(actions.editSearchBarPin(100))
   }).toThrow("Trying to edit a pin that does not exist: 100")
 })
 
@@ -83,7 +83,7 @@ test("search bar pin remove", () => {
 })
 
 test("search bar pin remove when out of bounds", () => {
-  expect(() => reducer(initialState, actions.removeSearchBarPin(100))).toThrow(
+  expect(() => store.dispatch(actions.removeSearchBarPin(100))).toThrow(
     "Trying to remove a pin that does not exist: 100"
   )
 })

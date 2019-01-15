@@ -2,7 +2,7 @@
 
 import {fetchMainSearch} from "./mainSearch"
 import {setInnerTimeWindow, restoreTimeWindow} from "./timeWindow"
-import {getSearchProgram} from "../reducers/searchBar"
+import {getSearchProgram} from "../selectors/searchBar"
 import * as searchHistory from "./searchHistory"
 import * as Program from "../lib/Program"
 import Field from "../models/Field"

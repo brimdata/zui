@@ -1,3 +1,5 @@
+/* @flow */
+
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import * as actions from "../actions/searchBar"
@@ -5,7 +7,7 @@ import {
   getSearchBarPins,
   getSearchBarPreviousInputValue,
   getSearchBarEditingIndex
-} from "../reducers/searchBar"
+} from "../selectors/searchBar"
 import Pins from "../components/Pins"
 
 const stateToProps = state => ({
@@ -16,5 +18,6 @@ const stateToProps = state => ({
 
 export default connect(
   stateToProps,
-  dispatch => bindActionCreators(actions, dispatch)
+  // $FlowFixMe
+  (dispatch: Function) => bindActionCreators(actions, dispatch)
 )(Pins)

@@ -1,7 +1,7 @@
 /* @flow */
 
 import {connect} from "react-redux"
-import * as searchBar from "../reducers/searchBar"
+import * as searchBar from "../selectors/searchBar"
 import * as timeWindow from "../reducers/timeWindow"
 import * as spaces from "../reducers/spaces"
 import * as boomd from "../reducers/boomdCredentials"
