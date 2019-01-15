@@ -1,8 +1,13 @@
+/* @flow */
+
 import initStore from "../test/initStore"
-import reducer, {initialState, getSpaces, getAllSpaceNames} from "./spaces"
+import {getSpaces, getAllSpaceNames} from "./spaces"
 import * as a from "../actions/spaces"
 
-const reduce = actions => ({spaces: actions.reduce(reducer, initialState)})
+let store
+beforeEach(() => {
+  store = initStore()
+})
 
 test("setting space information", () => {
   const spaceInfo = {
@@ -23,7 +28,7 @@ test("setting space information", () => {
     size: 199913776
   }
 
-  const state = reduce([a.setSpaceInfo(spaceInfo)])
+  const state = store.dispatchAll([a.setSpaceInfo(spaceInfo)])
 
   expect(getSpaces(state)).toEqual({
     "ranch-logs": {
@@ -49,8 +54,6 @@ test("setting space information", () => {
 })
 
 test("setting space names", () => {
-  const store = initStore()
   store.dispatch(a.setSpaceNames(["a", "b", "c"]))
-
   expect(getAllSpaceNames(store.getState())).toEqual(["a", "b", "c"])
 })
