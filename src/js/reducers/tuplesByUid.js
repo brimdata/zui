@@ -8,7 +8,7 @@ import type {Tuple} from "../models/Log"
 
 const initialState = {}
 
-export type EventsByUid = {[string]: Tuple[]}
+export type TuplesByUid = {[string]: Tuple[]}
 
 export default createReducer(initialState, {
   CORRELATED_LOGS_RECEIVE: (state, {uid, tuples}) => ({
@@ -18,5 +18,5 @@ export default createReducer(initialState, {
 })
 
 export const getTuplesByUid = (state: State) => {
-  return state.eventsByUid
+  return state.tuplesByUid
 }

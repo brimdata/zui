@@ -1,7 +1,7 @@
 /* @flow */
 
 import {createSelector} from "reselect"
-import {getTuplesByUid} from "../reducers/eventsByUid"
+import {getTuplesByUid} from "../reducers/tuplesByUid"
 import {getDescriptors} from "../reducers/descriptors"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getStarredLogs} from "../reducers/starredLogs"

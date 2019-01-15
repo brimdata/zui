@@ -3,7 +3,7 @@
 import {combineReducers} from "redux"
 import descriptors from "./descriptors"
 import mainSearch from "./mainSearch"
-import eventsByUid from "./eventsByUid"
+import tuplesByUid from "./tuplesByUid"
 import initialLoad from "./initialLoad"
 import spaces from "./spaces"
 import currentSpaceName from "./currentSpaceName"
@@ -34,7 +34,7 @@ export default combineReducers({
   initialLoad,
   descriptors,
   mainSearch,
-  eventsByUid,
+  tuplesByUid,
   spaces,
   currentSpaceName,
   timeWindow,
