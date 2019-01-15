@@ -14,7 +14,7 @@ import type {SearchStats} from "./searchStats"
 import type {SearchHistory} from "./searchHistory"
 import type {Whois} from "./whois"
 import type {Analysis} from "./analysis"
-import type {LogDetails} from "../actions/logDetails"
+import type {LogDetails} from "./logDetails"
 import type {TuplesByUid} from "./tuplesByUid"
 
 export type State = {
