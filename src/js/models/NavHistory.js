@@ -7,7 +7,7 @@ export default class NavHistory<T> {
   position: number
 
   constructor(args: $Shape<NavHistory<T>>) {
-    this.entries = defaultArg(args.entries, [])
+    this.entries = defaultArg([...args.entries], [])
     this.position = defaultArg(args.position, -1)
 
     if (this.position < -1 || this.position >= this.entries.length) {
