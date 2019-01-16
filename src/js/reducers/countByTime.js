@@ -11,10 +11,11 @@ import UniqArray from "../models/UniqArray"
 import type {State} from "./types"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {Interval} from "../lib/countByTimeInterval"
+import type {Tuple, Descriptor} from "../models/Log"
 
 type Results = {
-  tuples: [],
-  descriptor: []
+  tuples: Tuple[],
+  descriptor: Descriptor
 }
 
 type Histogram = {
