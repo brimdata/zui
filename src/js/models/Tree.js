@@ -106,7 +106,7 @@ export default class Tree {
   }
 }
 
-class Node {
+export class Node {
   data: *
   parent: ?Node
   children: Node[]
