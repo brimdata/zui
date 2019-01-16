@@ -2,7 +2,7 @@
 
 import isEqual from "lodash/isEqual"
 
-type NodeAttrs = {
+export type NodeAttrs = {
   data: *,
   parent: ?Node,
   children: Node[]

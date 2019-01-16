@@ -1,8 +1,19 @@
+/* @flow */
+
 import createReducer from "./createReducer"
 import Tree from "../models/Tree"
 import isEqual from "lodash/isEqual"
+import type {State} from "./types"
+import type {NodeAttrs} from "../models/Tree"
+import type {SearchBar} from "./searchBar"
 
-export const initialState = new Tree({data: "ROOT"}).toJSON()
+export const initialState = new Tree({
+  data: "ROOT",
+  children: [],
+  parent: null
+}).toJSON()
+
+export type FilterTree = typeof initialState
 
 export default createReducer(initialState, {
   SEARCH_HISTORY_PUSH: (state, {entry}) =>
@@ -13,16 +24,20 @@ export default createReducer(initialState, {
   FILTER_TREE_NODE_REMOVE: (state, {node}) => {
     const tree = new Tree(state)
     const treeNode = tree.getNodeAt(node.getIndexPath())
-    tree.remove(treeNode)
+    if (treeNode) tree.remove(treeNode)
     return tree.toJSON()
   }
 })
 
-export function insertAppliedFilters(treeData, searchBar) {
+export function insertAppliedFilters(
+  treeData: NodeAttrs,
+  searchBar: SearchBar
+) {
   let tree = new Tree(treeData)
   let node = tree.getRoot()
 
   combine(searchBar).forEach(filter => {
+    if (!node) return
     let nextNode = node.children.find(child => isEqual(child.data, filter))
     if (nextNode) {
       node = nextNode
@@ -39,8 +54,9 @@ function combine(searchBar) {
   const filters = [...pinned]
 
   if (!/^\s*$/.test(current)) filters.push(current)
-
   return filters
 }
 
-export const getFilterTree = state => state.filterTree
+export const getFilterTree = (state: State) => {
+  return state.filterTree
+}
