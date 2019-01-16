@@ -24,8 +24,8 @@ export const setOuterToTime = (date: Date) => ({
   date
 })
 
-export const reset = () => ({
-  type: "TIME_WINDOWS_RESET"
+export const clearTimeWindows = () => ({
+  type: "TIME_WINDOWS_CLEAR"
 })
 
 export const restoreTimeWindow = (value: TimeWindow) => ({

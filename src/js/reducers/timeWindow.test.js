@@ -38,3 +38,18 @@ test("restoring the time window", () => {
   expect(getInnerTimeWindow(state)).toEqual([new Date("1"), new Date("2")])
   expect(getOuterTimeWindow(state)).toEqual([new Date("0"), new Date("3")])
 })
+
+test("clearing the time window", () => {
+  const store = initStore()
+
+  const state = store.dispatchAll([
+    actions.restoreTimeWindow({
+      inner: [new Date("1"), new Date("2")],
+      outer: [new Date("0"), new Date("3")]
+    }),
+    actions.clearTimeWindows()
+  ])
+
+  expect(getInnerTimeWindow(state)).toBe(null)
+  expect(getOuterTimeWindow(state)).not.toEqual([new Date("0"), new Date("3")])
+})
