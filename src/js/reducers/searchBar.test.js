@@ -1,32 +1,37 @@
 /* @flow */
 
-import reducer, {
-  initialState,
+import {
   getSearchProgram,
   getSearchBarError,
   getSearchBarInputValue,
   getSearchBarPins,
   getSearchBarEditingIndex,
-  getSearchBarPreviousInputValue
-} from "./searchBar"
+  getSearchBarPreviousInputValue,
+  getSearchBar
+} from "../selectors/searchBar"
+import {initialState} from "./searchBar"
 import {getOuterTimeWindow} from "./timeWindow"
 import * as actions from "../actions/searchBar"
 import {setOuterTimeWindow} from "../actions/timeWindow"
-import rootReducer from "./index"
-import type {State} from "./types"
 import Field from "../models/Field"
+import initStore from "../test/initStore"
+import MockApi from "../test/MockApi"
 
-const reduce = (actions): State =>
-  actions.reduce(rootReducer, rootReducer(undefined, {type: "@@INIT"}))
+let store
+beforeEach(() => {
+  store = initStore()
+})
 
 test("input value changed", () => {
-  const state = reduce([actions.changeSearchBarInput("duration > 10")])
+  const state = store.dispatchAll([
+    actions.changeSearchBarInput("duration > 10")
+  ])
 
   expect(getSearchBarInputValue(state)).toBe("duration > 10")
 })
 
 test("search pinned", () => {
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("_path = http"),
     actions.pinSearchBar()
   ])
@@ -36,13 +41,13 @@ test("search pinned", () => {
 })
 
 test("search pin does not work if current is empty", () => {
-  let state = reduce([actions.pinSearchBar()])
+  let state = store.dispatchAll([actions.pinSearchBar()])
 
   expect(getSearchBarPins(state)).toEqual([])
 })
 
 test("search pin does not work if current is a bunch of white space", () => {
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("     "),
     actions.pinSearchBar()
   ])
@@ -50,7 +55,7 @@ test("search pin does not work if current is a bunch of white space", () => {
 })
 
 test("search pin edit sets the editing index", () => {
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("first pin"),
     actions.pinSearchBar(),
     actions.changeSearchBarInput("second pin"),
@@ -63,12 +68,12 @@ test("search pin edit sets the editing index", () => {
 
 test("search pin edit does not set index if out of bounds", () => {
   expect(() => {
-    reducer(initialState, actions.editSearchBarPin(100))
+    store.dispatch(actions.editSearchBarPin(100))
   }).toThrow("Trying to edit a pin that does not exist: 100")
 })
 
 test("search bar pin remove", () => {
-  const state = reduce([
+  const state = store.dispatchAll([
     actions.changeSearchBarInput("first pin"),
     actions.pinSearchBar(),
     actions.removeSearchBarPin(0)
@@ -78,13 +83,13 @@ test("search bar pin remove", () => {
 })
 
 test("search bar pin remove when out of bounds", () => {
-  expect(() => reducer(initialState, actions.removeSearchBarPin(100))).toThrow(
+  expect(() => store.dispatch(actions.removeSearchBarPin(100))).toThrow(
     "Trying to remove a pin that does not exist: 100"
   )
 })
 
 test("search bar submit", () => {
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("conn"),
     actions.submittingSearchBar()
   ])
@@ -95,7 +100,7 @@ test("search bar submit", () => {
 })
 
 test("search bar submit after editing resets editing", () => {
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("http"),
     actions.pinSearchBar(),
     actions.editSearchBarPin(0),
@@ -109,14 +114,14 @@ test("search bar submit after editing resets editing", () => {
 
 test("append an include field", () => {
   const field = new Field({name: "_path", type: "string", value: "conn"})
-  const state = reduce([actions.appendQueryInclude(field)])
+  const state = store.dispatchAll([actions.appendQueryInclude(field)])
 
   expect(getSearchBarInputValue(state)).toBe("_path=conn")
 })
 
 test("append an include field when some text already exists", () => {
   const field = new Field({name: "_path", type: "string", value: "conn"})
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("text"),
     actions.appendQueryInclude(field)
   ])
@@ -125,13 +130,13 @@ test("append an include field when some text already exists", () => {
 
 test("append an exclude field", () => {
   const field = new Field({name: "_path", type: "string", value: "conn"})
-  let state = reduce([actions.appendQueryExclude(field)])
+  let state = store.dispatchAll([actions.appendQueryExclude(field)])
   expect(getSearchBarInputValue(state)).toBe("_path!=conn")
 })
 
 test("append an exclude field when some text already exists", () => {
   const field = new Field({name: "_path", type: "string", value: "conn"})
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("text"),
     actions.appendQueryExclude(field)
   ])
@@ -140,13 +145,13 @@ test("append an exclude field when some text already exists", () => {
 
 test("append a count by field", () => {
   const field = new Field({name: "_path", type: "string", value: "conn"})
-  let state = reduce([actions.appendQueryCountBy(field)])
+  let state = store.dispatchAll([actions.appendQueryCountBy(field)])
   expect(getSearchBarInputValue(state)).toBe("* | count() by _path")
 })
 
 test("append a count to an existing query", () => {
   const field = new Field({name: "query", type: "string", value: "heyyo"})
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("dns"),
     actions.appendQueryCountBy(field)
   ])
@@ -154,7 +159,7 @@ test("append a count to an existing query", () => {
 })
 
 test("get search program", () => {
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("http"),
     actions.pinSearchBar(),
     actions.changeSearchBarInput("GET"),
@@ -165,18 +170,20 @@ test("get search program", () => {
 })
 
 test("get search program returns star when empty", () => {
-  const state = reduce([{}])
+  const state = store.getState()
   expect(getSearchProgram(state)).toBe("*")
 })
 
 test("a search bar error", () => {
-  const state = reduce([actions.errorSearchBarParse("not a valid shin dig")])
+  const state = store.dispatchAll([
+    actions.errorSearchBarParse("not a valid shin dig")
+  ])
 
   expect(getSearchBarError(state)).toBe("not a valid shin dig")
 })
 
 test("remove all pins", () => {
-  let state = reduce([
+  let state = store.dispatchAll([
     actions.changeSearchBarInput("hello"),
     actions.pinSearchBar(),
     actions.changeSearchBarInput("world"),
@@ -190,9 +197,6 @@ test("remove all pins", () => {
   expect(getSearchBarPreviousInputValue(state)).toBe("")
   expect(getSearchBarPins(state)).toEqual([])
 })
-
-import initStore from "../test/initStore"
-import MockApi from "../test/MockApi"
 
 test("restore", () => {
   const store = initStore()
@@ -250,4 +254,14 @@ test("goForward", () => {
 
   expect(getSearchBarInputValue(state)).toBe("goodbye")
   expect(getOuterTimeWindow(state)).toEqual([new Date(3), new Date(4)])
+})
+
+test("clearSearchBar", () => {
+  const store = initStore()
+  const state = store.dispatchAll([
+    actions.changeSearchBarInput("hello"),
+    actions.clearSearchBar()
+  ])
+
+  expect(getSearchBar(state)).toEqual(initialState)
 })

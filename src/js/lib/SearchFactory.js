@@ -1,6 +1,6 @@
 /* @flow */
 
-import {getSearchProgram} from "../reducers/searchBar"
+import {getSearchProgram} from "../selectors/searchBar"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import analyticsReceiver from "../receivers/analyticsReceiver"
 import logsReceiver from "../receivers/logsReceiver"

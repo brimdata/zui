@@ -17,12 +17,15 @@ export type SearchHistory = {
   entries: Entry[]
 }
 
-const initialState: SearchHistory = {
+const initialState: SearchHistory = Object.freeze({
   position: -1,
   entries: []
-}
+})
 
 export default createReducer(initialState, {
+  SEARCH_HISTORY_CLEAR: () => ({
+    ...initialState
+  }),
   SEARCH_HISTORY_PUSH: (state, {entry}) => {
     const history = new NavHistory(state)
     history.push(entry)

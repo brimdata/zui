@@ -11,10 +11,11 @@ import UniqArray from "../models/UniqArray"
 import type {State} from "./types"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {Interval} from "../lib/countByTimeInterval"
+import type {Tuple, Descriptor} from "../models/Log"
 
 type Results = {
-  tuples: [],
-  descriptor: []
+  tuples: Tuple[],
+  descriptor: Descriptor
 }
 
 type Histogram = {
@@ -35,7 +36,7 @@ const initialState = {
 export type CountByTime = typeof initialState
 
 export default createReducer(initialState, {
-  COUNT_BY_TIME_RESET: () => ({
+  COUNT_BY_TIME_CLEAR: () => ({
     ...initialState
   }),
   COUNT_BY_TIME_RECEIVE: (state, {data: {descriptor, tuples}}) => ({

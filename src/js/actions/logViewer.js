@@ -6,11 +6,15 @@ import * as Time from "../lib/Time"
 import * as mainSearch from "../reducers/mainSearch"
 import {getTimeWindow} from "../reducers/timeWindow"
 import * as spaces from "../reducers/spaces"
-import * as searchBar from "../reducers/searchBar"
+import * as searchBar from "../selectors/searchBar"
 import * as Program from "../lib/Program"
 import logsReceiver from "../receivers/logsReceiver"
 import pageReceiver from "../receivers/pageReceiver"
 import {PER_PAGE} from "../reducers/logViewer"
+
+export const clearLogViewer = () => ({
+  type: "LOG_VIEWER_CLEAR"
+})
 
 export const setMoreBehind = (value: boolean) => ({
   type: "LOG_VIEWER_MORE_BEHIND_SET",

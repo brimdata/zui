@@ -1,12 +1,12 @@
-import reducer, {
-  initialState,
-  getCountByTimeData,
-  formatHistogram
-} from "./countByTime"
-import * as a from "../actions/countByTime"
+/* @flow */
 
-const reduce = actions => ({
-  countByTime: actions.reduce(reducer, initialState)
+import {getCountByTimeData, formatHistogram} from "./countByTime"
+import * as a from "../actions/countByTime"
+import initStore from "../test/initStore"
+
+let store
+beforeEach(() => {
+  store = initStore()
 })
 
 test("receive data", () => {
@@ -14,7 +14,7 @@ test("receive data", () => {
     tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   }
-  const state = reduce([a.receiveCountByTime(data)])
+  const state = store.dispatchAll([a.receiveCountByTime(data)])
 
   expect(getCountByTimeData(state)).toEqual(data)
 })
@@ -24,7 +24,10 @@ test("receive data twice", () => {
     tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   }
-  const state = reduce([a.receiveCountByTime(data), a.receiveCountByTime(data)])
+  const state = store.dispatchAll([
+    a.receiveCountByTime(data),
+    a.receiveCountByTime(data)
+  ])
 
   expect(getCountByTimeData(state)).toEqual({
     tuples: [["1"], ["2"], ["1"], ["2"]],
@@ -49,4 +52,17 @@ test("#formatHistogram", () => {
   const sum = result.data.reduce((sum, d) => (sum += d.count), 0)
   expect(sum).toBe(37179)
   expect(result.keys).toEqual(["conn"])
+})
+
+test("clearing the count by time data", () => {
+  const data = {
+    tuples: [["1"], ["2"]],
+    descriptor: [{type: "integer", name: "count"}]
+  }
+  const state = store.dispatchAll([
+    a.receiveCountByTime(data),
+    a.clearCountByTime()
+  ])
+
+  expect(getCountByTimeData(state)).toEqual({tuples: [], descriptor: []})
 })

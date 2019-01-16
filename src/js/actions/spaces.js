@@ -39,7 +39,7 @@ export const requestAllSpaces = () => {
   }
 }
 
-export function setSpaceInfo(spaceInfo: Space) {
+export function setSpaceInfo(spaceInfo: $Shape<Space>) {
   return {
     type: "SPACE_INFO_SET",
     spaceInfo
@@ -67,8 +67,8 @@ export function setSpaceNames(names: string[]) {
   }
 }
 
-export function unselectSpace() {
+export function clearSpaces() {
   return {
-    type: "SPACE_UNSELECT"
+    type: "SPACES_CLEAR"
   }
 }

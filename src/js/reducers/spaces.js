@@ -7,17 +7,24 @@ import type {State} from "./types"
 
 const initialState = {
   details: {},
-  names: []
+  names: [],
+  current: null
 }
 
 type Space = Object
 export type Spaces = {
   details: {[string]: Space},
-  names: string[]
+  names: string[],
+  current: string
 }
 
 export default createReducer(initialState, {
-  ALL_SPACES_REQUEST: () => initialState,
+  SPACES_CLEAR: () => ({
+    ...initialState
+  }),
+  ALL_SPACES_REQUEST: () => ({
+    ...initialState
+  }),
   SPACE_INFO_SET: (state, {spaceInfo}) => ({
     ...state,
     details: {
@@ -28,6 +35,10 @@ export default createReducer(initialState, {
   SPACE_NAMES_SET: (state, {names}) => ({
     ...state,
     names
+  }),
+  CURRENT_SPACE_NAME_SET: (state, {name}) => ({
+    ...state,
+    current: name
   })
 })
 
@@ -50,7 +61,7 @@ export const getAllSpaceNames = (state: State): string[] => {
 }
 
 export const getCurrentSpaceName = (state: State) => {
-  return state.currentSpaceName
+  return state.spaces.current
 }
 
 export const getRawSpaces = (state: State) => {

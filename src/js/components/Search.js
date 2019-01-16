@@ -4,7 +4,7 @@ import React from "react"
 import {Redirect} from "react-router-dom"
 import {AutoSizer} from "react-virtualized"
 
-import XTitleBar from "../connectors/XTitleBar"
+import {XTitleBar} from "./TitleBar"
 import {XControlBar} from "./ControlBar"
 import {XHistogram} from "./Histogram"
 import XLeftPane from "../connectors/XLeftPane"

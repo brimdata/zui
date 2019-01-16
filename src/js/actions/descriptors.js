@@ -9,7 +9,7 @@ export const discoverDescriptors = (events: Tuple[] = []): Thunk => {
   return (dispatch, getState) => {
     const state = getState()
     const schemas = state.descriptors
-    const space = state.currentSpaceName
+    const space = getCurrentSpaceName(state)
     const unknownSchemas = uniq(
       events
         .map(([descriptorId]) => descriptorId)
@@ -53,4 +53,8 @@ export const receiveDescriptor = (
 export const errorDescriptor = (error: string) => ({
   type: "DESCRIPTOR_ERROR",
   error
+})
+
+export const clearDescriptors = () => ({
+  type: "DESCRIPTORS_CLEAR"
 })

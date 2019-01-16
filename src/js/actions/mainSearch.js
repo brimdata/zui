@@ -4,7 +4,7 @@ import serially from "../lib/serially"
 import {pushSearchHistory} from "./searchHistory"
 import {updateTab} from "../actions/view"
 import {getStarredLogs} from "../reducers/starredLogs"
-import {getSearchProgram} from "../reducers/searchBar"
+import {getSearchProgram} from "../selectors/searchBar"
 import {validateProgram} from "./searchBar"
 import Client from "boom-js-client"
 import * as SearchFactory from "../lib/SearchFactory"
@@ -81,6 +81,6 @@ export function appendMainSearchQueryProgram(fragment: string) {
   }
 }
 
-export const reset = () => ({
-  type: "MAIN_SEARCH_RESET"
+export const clearMainSearch = () => ({
+  type: "MAIN_SEARCH_CLEAR"
 })

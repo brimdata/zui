@@ -2,7 +2,7 @@
 import initStore from "../test/initStore"
 import * as searchHistory from "../actions/searchHistory"
 import * as searchBar from "../actions/searchBar"
-import {getCurrentEntry} from "./searchHistory"
+import {getCurrentEntry, getSearchHistory} from "./searchHistory"
 
 let store
 beforeEach(() => {
@@ -60,4 +60,9 @@ test("back, back, push, back", () => {
   ])
   const entry = getCurrentEntry(state)
   expect(entry.searchBar.current).toEqual("first")
+})
+
+test("clearing history", () => {
+  let state = store.dispatchAll([searchHistory.clearSearchHistory()])
+  expect(getSearchHistory(state)).toEqual({position: -1, entries: []})
 })

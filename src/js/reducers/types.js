@@ -14,7 +14,9 @@ import type {SearchStats} from "./searchStats"
 import type {SearchHistory} from "./searchHistory"
 import type {Whois} from "./whois"
 import type {Analysis} from "./analysis"
-import type {LogDetails} from "../actions/logDetails"
+import type {LogDetails} from "./logDetails"
+import type {TuplesByUid} from "./tuplesByUid"
+import type {FilterTree} from "./filterTree"
 
 export type State = {
   analysis: Analysis,
@@ -23,7 +25,6 @@ export type State = {
   searchBar: SearchBar,
   timeWindow: TimeWindow,
   spaces: Spaces,
-  currentSpaceName: string,
   boomdCredentials: BoomdCredentials,
   logViewer: LogViewer,
   selectedColumns: SelectedColumns,
@@ -31,9 +32,9 @@ export type State = {
   searchStats: SearchStats,
   searchHistory: SearchHistory,
   whois: Whois,
-  logDetails: LogDetails
+  logDetails: LogDetails,
+  tuplesByUid: TuplesByUid,
+  filterTree: FilterTree
 }
-
 export type Dispatch = Function
-
 export type Api = Client

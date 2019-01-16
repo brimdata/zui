@@ -1,6 +1,8 @@
+/* @flow */
+
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {getSearchBarPins} from "../reducers/searchBar"
+import {getSearchBarPins} from "../selectors/searchBar"
 import {getFilterTree} from "../reducers/filterTree"
 import * as mainSearchActions from "../actions/mainSearch"
 import * as filterTreeActions from "../actions/filterTree"
@@ -16,7 +18,7 @@ function stateToProps(state) {
 
 export default connect(
   stateToProps,
-  dispatch =>
+  (dispatch: Function) =>
     bindActionCreators(
       {
         ...mainSearchActions,

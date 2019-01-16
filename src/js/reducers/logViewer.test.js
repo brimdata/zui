@@ -37,3 +37,9 @@ test("#setIsFetchingAhead", () => {
   const state = dispatchAll(store, [a.setIsFetchingAhead(true)])
   expect(logViewer.isFetchingAhead(state)).toBe(true)
 })
+
+test("clearing the log viewer", () => {
+  store.dispatchAll([a.setMoreAhead(true), a.clearLogViewer()])
+
+  expect(logViewer.moreAhead(store.getState())).toBe(false)
+})

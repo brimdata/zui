@@ -13,7 +13,9 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  MAIN_SEARCH_RESET: () => ({...initialState}),
+  MAIN_SEARCH_CLEAR: () => ({
+    ...initialState
+  }),
   MAIN_SEARCH_REQUEST: () => ({
     ...initialState,
     status: "FETCHING"

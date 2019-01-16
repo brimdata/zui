@@ -1,11 +1,8 @@
 /* @flow */
 
 import createReducer from "./createReducer"
-import isNumber from "lodash/isNumber"
-import trim from "lodash/trim"
-import Ast from "../models/Ast"
-import {createSelector} from "reselect"
-import type {State} from "./types"
+import * as Str from "../lib/Str"
+import * as Arr from "../lib/Array"
 
 export const initialState = {
   current: "",
@@ -18,6 +15,7 @@ export const initialState = {
 export type SearchBar = typeof initialState
 
 export default createReducer(initialState, {
+  SEARCH_BAR_CLEAR: () => ({...initialState}),
   SEARCH_BAR_RESTORE: (state, {value}) => {
     return {
       ...state,
@@ -26,21 +24,23 @@ export default createReducer(initialState, {
   },
   QUERY_INCLUDE_APPEND: (state, {field}) => ({
     ...state,
-    current: trim(state.current + ` ${field.name}=${escapeSpaces(field.value)}`)
+    current: Str.trim(
+      state.current + ` ${field.name}=${Str.escapeSpaces(field.value)}`
+    )
   }),
 
   QUERY_EXCLUDE_APPEND: (state, {field}) => ({
     ...state,
-    current: trim(
-      state.current + ` ${field.name}!=${escapeSpaces(field.value)}`
+    current: Str.trim(
+      state.current + ` ${field.name}!=${Str.escapeSpaces(field.value)}`
     )
   }),
 
   QUERY_COUNT_BY_APPEND: (state, {field}) => {
-    const current = onlyWhitespace(state.current) ? "*" : state.current
+    const current = Str.onlyWhitespace(state.current) ? "*" : state.current
     return {
       ...state,
-      current: trim(current + ` | count() by ${field.name}`)
+      current: Str.trim(current + ` | count() by ${field.name}`)
     }
   },
 
@@ -61,7 +61,7 @@ export default createReducer(initialState, {
   },
 
   SEARCH_BAR_PIN: state => {
-    if (onlyWhitespace(state.current)) return state
+    if (Str.onlyWhitespace(state.current)) return state
     else
       return {
         ...state,
@@ -73,7 +73,7 @@ export default createReducer(initialState, {
   },
 
   SEARCH_BAR_PIN_EDIT: (state, {index}) => {
-    if (indexInBounds(index, state.pinned)) {
+    if (Arr.indexInBounds(index, state.pinned)) {
       return {
         ...state,
         current: state.pinned[index],
@@ -85,7 +85,7 @@ export default createReducer(initialState, {
   },
 
   SEARCH_BAR_PIN_REMOVE: (state, {index}) => {
-    if (indexInBounds(index, state.pinned)) {
+    if (Arr.indexInBounds(index, state.pinned)) {
       return {
         ...state,
         pinned: state.pinned.filter((_e, i) => i != index),
@@ -113,7 +113,7 @@ export default createReducer(initialState, {
   MAIN_SEARCH_QUERY_PROGRAM_APPEND: (state, {fragment}) => {
     return {
       ...state,
-      current: trim(state.current + " " + fragment)
+      current: Str.trim(state.current + " " + fragment)
     }
   },
 
@@ -149,54 +149,3 @@ export default createReducer(initialState, {
     error
   })
 })
-
-const onlyWhitespace = string => /^\s*$/.test(string)
-
-const escapeSpaces = value => {
-  if (/\s+/.test(value)) {
-    return `"${value}"`
-  } else {
-    return value
-  }
-}
-
-const indexInBounds = (index, array) =>
-  isNumber(index) && index >= 0 && index < array.length
-
-export const getSearchBarInputValue = (state: State) => state.searchBar.current
-
-export const getSearchBarPins = (state: State) => state.searchBar.pinned
-
-export const getSearchBarPreviousInputValue = (state: State) =>
-  state.searchBar.previous
-
-export const getSearchBarEditingIndex = (state: State) =>
-  state.searchBar.editing
-
-export const getSearchBarError = (state: State) => state.searchBar.error
-
-export const getSearchProgram = createSelector(
-  getSearchBarPins,
-  getSearchBarInputValue,
-  (pinned, current) => {
-    const program = [...pinned, current].map(s => trim(s)).join(" ")
-    return program.length === 0 ? "*" : program
-  }
-)
-
-export const getPrevSearchProgram = createSelector(
-  getSearchBarPins,
-  getSearchBarPreviousInputValue,
-  (pinned, prev) => {
-    const program = [...pinned, prev].map(s => trim(s)).join(" ")
-    return program.length === 0 ? "*" : program
-  }
-)
-
-export const getAst = createSelector(
-  getSearchProgram,
-  searchProgram => {
-    const ast = new Ast(searchProgram).toJSON()
-    return JSON.stringify(ast, null, 2)
-  }
-)

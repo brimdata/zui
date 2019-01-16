@@ -1,0 +1,60 @@
+import {disconnect} from "./connect"
+
+import initStore from "../test/initStore"
+
+describe("#disconnect", () => {
+  let store, actionTypes
+  beforeEach(() => {
+    store = initStore()
+    store.dispatch(disconnect())
+    actionTypes = store.getActions().map(a => a.type)
+  })
+
+  test("dispatches BOOMD_DISCONNECT", () => {
+    expect(actionTypes).toContain("BOOMD_DISCONNECTED")
+  })
+
+  test("dispatches MAIN_SEARCH_CLEAR", () => {
+    expect(actionTypes).toContain("MAIN_SEARCH_CLEAR")
+  })
+
+  test("dispatches DESCRIPTORS_CLEAR", () => {
+    expect(actionTypes).toContain("DESCRIPTORS_CLEAR")
+  })
+
+  test("dispatches SEARCH_BAR_CLEAR", () => {
+    expect(actionTypes).toContain("SEARCH_BAR_CLEAR")
+  })
+
+  test("dispatches TUPLES_BY_UID_CLEAR", () => {
+    expect(actionTypes).toContain("TUPLES_BY_UID_CLEAR")
+  })
+
+  test("dispatches SPACES_CLEAR", () => {
+    expect(actionTypes).toContain("SPACES_CLEAR")
+  })
+
+  test("dispatches TIME_WINDOWS_CLEAR", () => {
+    expect(actionTypes).toContain("TIME_WINDOWS_CLEAR")
+  })
+
+  test("dispatches FILTER_TREE_CLEAR", () => {
+    expect(actionTypes).toContain("FILTER_TREE_CLEAR")
+  })
+
+  test("dispatches STARRED_LOGS_CLEAR", () => {
+    expect(actionTypes).toContain("STARRED_LOGS_CLEAR")
+  })
+
+  test("dispatches SEARCH_HISTORY_CLEAR", () => {
+    expect(actionTypes).toContain("SEARCH_HISTORY_CLEAR")
+  })
+
+  test("dispatches LOG_VIEWER_CLEAR", () => {
+    expect(actionTypes).toContain("LOG_VIEWER_CLEAR")
+  })
+
+  test("dispatches COUNT_BY_TIME_CLEAR", () => {
+    expect(actionTypes).toContain("COUNT_BY_TIME_CLEAR")
+  })
+})

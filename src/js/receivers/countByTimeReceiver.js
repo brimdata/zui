@@ -1,11 +1,11 @@
 /* @flow */
 
-import {receiveCountByTime, reset} from "../actions/countByTime"
+import {receiveCountByTime, clearCountByTime} from "../actions/countByTime"
 import throttle from "lodash/throttle"
 import type {Payload} from "./types"
 
 export default (dispatch: Function) => {
-  dispatch(reset())
+  dispatch(clearCountByTime())
   let descriptor
   let tuples = []
 

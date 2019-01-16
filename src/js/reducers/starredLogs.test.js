@@ -1,18 +1,30 @@
-import reducer, {initialState} from "./starredLogs"
-import {starLog, unstarLog} from "../actions/starredLogs"
+/* @flow */
+
+import {starLog, unstarLog, clearStarredLogs} from "../actions/starredLogs"
+import {getStarredLogs} from "./starredLogs"
+import initStore from "../test/initStore"
+
+let store
+beforeEach(() => {
+  store = initStore()
+})
 
 const tuple = ["1", "2", "3", "4"]
 
 test("starring a log", () => {
-  const actions = [starLog(tuple)]
-  const state = actions.reduce(reducer, initialState)
+  const state = store.dispatchAll([starLog(tuple)])
 
-  expect(state).toEqual([tuple])
+  expect(getStarredLogs(state)).toEqual([tuple])
 })
 
 test("unstarring a log", () => {
-  const actions = [starLog(tuple), unstarLog(tuple)]
-  const state = actions.reduce(reducer, initialState)
+  const state = store.dispatchAll([starLog(tuple), unstarLog(tuple)])
 
-  expect(state).toEqual([])
+  expect(getStarredLogs(state)).toEqual([])
+})
+
+test("clearing the starred logs", () => {
+  const state = store.dispatchAll([starLog(tuple), clearStarredLogs()])
+
+  expect(getStarredLogs(state)).toEqual([])
 })
