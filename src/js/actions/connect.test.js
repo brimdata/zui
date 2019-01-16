@@ -10,6 +10,10 @@ describe("#disconnect", () => {
     actionTypes = store.getActions().map(a => a.type)
   })
 
+  test("dispatches BOOMD_DISCONNECT", () => {
+    expect(actionTypes).toContain("BOOMD_DISCONNECTED")
+  })
+
   test("dispatches MAIN_SEARCH_CLEAR", () => {
     expect(actionTypes).toContain("MAIN_SEARCH_CLEAR")
   })
