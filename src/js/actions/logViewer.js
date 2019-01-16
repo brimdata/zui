@@ -12,6 +12,10 @@ import logsReceiver from "../receivers/logsReceiver"
 import pageReceiver from "../receivers/pageReceiver"
 import {PER_PAGE} from "../reducers/logViewer"
 
+export const clearLogViewer = () => ({
+  type: "LOG_VIEWER_CLEAR"
+})
+
 export const setMoreBehind = (value: boolean) => ({
   type: "LOG_VIEWER_MORE_BEHIND_SET",
   value
