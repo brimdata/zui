@@ -6,7 +6,6 @@ import mainSearch from "./mainSearch"
 import tuplesByUid from "./tuplesByUid"
 import initialLoad from "./initialLoad"
 import spaces from "./spaces"
-import currentSpaceName from "./currentSpaceName"
 import timeWindow from "./timeWindow"
 import filterTree from "./filterTree"
 import countByTime from "./countByTime"
@@ -36,7 +35,6 @@ export default combineReducers({
   mainSearch,
   tuplesByUid,
   spaces,
-  currentSpaceName,
   timeWindow,
   filterTree,
   countByTime,
