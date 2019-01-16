@@ -24,7 +24,6 @@ export type State = {
   searchBar: SearchBar,
   timeWindow: TimeWindow,
   spaces: Spaces,
-  currentSpaceName: string,
   boomdCredentials: BoomdCredentials,
   logViewer: LogViewer,
   selectedColumns: SelectedColumns,
