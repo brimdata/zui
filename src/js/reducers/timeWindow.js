@@ -13,7 +13,10 @@ const initialState = {
   outer: last(30, "minutes")
 }
 
-export type TimeWindow = typeof initialState
+export type TimeWindow = {
+  inner: ?DateTuple,
+  outer: DateTuple
+}
 
 export default createReducer(initialState, {
   TIME_WINDOWS_CLEAR: () => ({
