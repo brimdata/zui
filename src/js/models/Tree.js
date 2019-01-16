@@ -1,7 +1,17 @@
+/* @flow */
+
 import isEqual from "lodash/isEqual"
 
+type NodeAttrs = {
+  data: *,
+  parent: ?Node,
+  children: Node[]
+}
+
 export default class Tree {
-  constructor(nodeData) {
+  root: ?Node
+
+  constructor(nodeData: NodeAttrs) {
     this.root = nodeData ? new Node(nodeData) : null
   }
 
@@ -14,44 +24,50 @@ export default class Tree {
   }
 
   toJSON() {
-    return this.root.toJSON()
+    if (this.root) {
+      return this.root.toJSON()
+    } else {
+      return null
+    }
   }
 
-  getNodeAt(indexPath) {
+  getNodeAt(indexPath: number[]) {
     let node = this.getRoot()
-    for (var index of indexPath) {
-      node = node.children[index]
+    if (node) {
+      for (var index of indexPath) node = node.children[index]
     }
     return node
   }
 
-  contains(node) {
+  contains(node: Node) {
     while (node.parent) {
       node = node.parent
     }
     return node === this.root
   }
 
-  remove(node) {
+  remove(node: Node) {
     if (!this.contains(node)) return
 
     if (node.isRoot()) {
       this.root = null
     } else {
-      node.parent.children.splice(node.childIndex(), 1)
+      if (node.parent) {
+        node.parent.children.splice(node.childIndex(), 1)
+      }
       node.parent = null
     }
   }
 
-  find(data) {
+  find(data: *) {
     let node = null
     this.bfSearch(n => {
-      if (n.data === data) node = n
+      if (n && n.data === data) node = n
     })
     return node
   }
 
-  dfSearch(callback) {
+  dfSearch(callback: Function) {
     this.recursiveDfSearch(this.root, callback)
   }
 
@@ -63,17 +79,21 @@ export default class Tree {
     return array
   }
 
-  recursiveDfSearch(node, callback) {
-    callback(node)
-    node.children.forEach(c => this.recursiveDfSearch(c, callback))
+  recursiveDfSearch(node: ?Node, callback: Function) {
+    if (node) {
+      callback(node)
+      node.children.forEach(c => this.recursiveDfSearch(c, callback))
+    }
   }
 
-  bfSearch(callback) {
+  bfSearch(callback: Function) {
     let queue = [this.getRoot()]
     while (queue.length != 0) {
       let node = queue.shift()
-      callback(node)
-      node.children.forEach(c => queue.push(c))
+      if (node) {
+        callback(node)
+        node.children.forEach(c => queue.push(c))
+      }
     }
   }
 
@@ -87,13 +107,19 @@ export default class Tree {
 }
 
 class Node {
-  constructor({data, parent = null, children = []}) {
+  data: *
+  parent: ?Node
+  children: Node[]
+
+  constructor({data, parent, children = []}: NodeAttrs) {
     this.data = data
     this.parent = parent
-    this.children = children.map(child => new Node({...child, parent: this}))
+    this.children = children.map(
+      ({data, children}) => new Node({data, children, parent: this})
+    )
   }
 
-  addChild(data) {
+  addChild(data: *) {
     const child = new Node({
       data,
       parent: this,
@@ -117,14 +143,14 @@ class Node {
     return count
   }
 
-  toJSON() {
+  toJSON(): Object {
     return {
       data: this.data,
       children: this.children.map(c => c.toJSON())
     }
   }
 
-  isInPath(indexPath) {
+  isInPath(indexPath: number[]) {
     const ownPath = this.getIndexPath()
     if (ownPath.length > indexPath.length) return false
     if (indexPath.length === 0) return false
@@ -137,21 +163,26 @@ class Node {
   }
 
   childIndex() {
-    if (this.isRoot()) return null
-
-    return this.parent.children.indexOf(this)
+    if (this.parent) {
+      return this.parent.children.indexOf(this)
+    } else {
+      return -1
+    }
   }
 
   isLastChild() {
-    if (this.isRoot()) return true
-
-    return this.childIndex() === this.parent.children.length - 1
+    const {parent} = this
+    if (parent) {
+      return this.childIndex() === parent.children.length - 1
+    } else {
+      return true
+    }
   }
 
   getIndexPath() {
     let indexPath = []
     let node = this
-    while (!node.isRoot()) {
+    while (node && !node.isRoot()) {
       indexPath.unshift(node.childIndex())
       node = node.parent
     }
