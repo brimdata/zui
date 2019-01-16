@@ -2,7 +2,7 @@
 
 import {fetchTuplesByUid} from "./tuplesByUid"
 import type {Tuple, Descriptor} from "../models/Log"
-import Log from "../models/log"
+import Log from "../models/Log"
 import type {Thunk} from "redux-thunk"
 
 export const viewLogDetail = (log: Log): Thunk => dispatch => {
