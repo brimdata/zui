@@ -36,7 +36,7 @@ const initialState = {
 export type CountByTime = typeof initialState
 
 export default createReducer(initialState, {
-  COUNT_BY_TIME_RESET: () => ({
+  COUNT_BY_TIME_CLEAR: () => ({
     ...initialState
   }),
   COUNT_BY_TIME_RECEIVE: (state, {data: {descriptor, tuples}}) => ({

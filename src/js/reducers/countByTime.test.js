@@ -53,3 +53,16 @@ test("#formatHistogram", () => {
   expect(sum).toBe(37179)
   expect(result.keys).toEqual(["conn"])
 })
+
+test("clearing the count by time data", () => {
+  const data = {
+    tuples: [["1"], ["2"]],
+    descriptor: [{type: "integer", name: "count"}]
+  }
+  const state = store.dispatchAll([
+    a.receiveCountByTime(data),
+    a.clearCountByTime()
+  ])
+
+  expect(getCountByTimeData(state)).toEqual({tuples: [], descriptor: []})
+})

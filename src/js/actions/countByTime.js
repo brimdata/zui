@@ -5,6 +5,6 @@ export const receiveCountByTime = (data: Object) => ({
   data
 })
 
-export const reset = () => ({
-  type: "COUNT_BY_TIME_RESET"
+export const clearCountByTime = () => ({
+  type: "COUNT_BY_TIME_CLEAR"
 })
