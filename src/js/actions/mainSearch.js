@@ -81,6 +81,6 @@ export function appendMainSearchQueryProgram(fragment: string) {
   }
 }
 
-export const reset = () => ({
-  type: "MAIN_SEARCH_RESET"
+export const clearMainSearch = () => ({
+  type: "MAIN_SEARCH_CLEAR"
 })
