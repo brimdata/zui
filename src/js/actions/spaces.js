@@ -67,12 +67,6 @@ export function setSpaceNames(names: string[]) {
   }
 }
 
-export function unselectSpace() {
-  return {
-    type: "SPACE_UNSELECT"
-  }
-}
-
 export function clearSpaces() {
   return {
     type: "SPACES_CLEAR"
