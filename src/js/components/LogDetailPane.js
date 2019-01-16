@@ -60,5 +60,6 @@ const stateToProps = state => ({
 export const XLogDetailPane = connect(
   stateToProps,
   (dispatch: Function) =>
+    // $FlowFixMe
     bindActionCreators({...actions, ...starActions}, dispatch)
 )(LogDetailPane)

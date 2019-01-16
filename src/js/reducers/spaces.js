@@ -8,7 +8,7 @@ import type {State} from "./types"
 const initialState = {
   details: {},
   names: [],
-  current: ""
+  current: null
 }
 
 type Space = Object
