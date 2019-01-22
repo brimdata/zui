@@ -13,7 +13,7 @@ import XDownloadProgress from "../connectors/XDownloadProgress"
 import XNotice from "../connectors/XNotice"
 import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
-import {XColumnChooser} from "./ColumnChooser"
+import ColumnChooser from "./ColumnChooser"
 import {XWhoisModal} from "./WhoisModal"
 import {XStatusBar} from "./StatusBar"
 
@@ -68,7 +68,7 @@ export default class Search extends React.Component<Props, State> {
                   </AutoSizer>
                 </div>
               )}
-              <XColumnChooser />
+              <ColumnChooser />
             </div>
             <XSearchResults logsTab={logsTab} analyticsTab={analyticsTab} />
             <XStatusBar />

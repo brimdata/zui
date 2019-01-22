@@ -159,6 +159,7 @@ export default class SpanPickers extends React.Component<Props, State> {
             ref={r => (this.toTime = r)}
           />
         </div>
+
         <ThinPicker align="right">
           <li
             onClick={() => this.props.setOuterTimeWindow(this.props.spaceSpan)}
