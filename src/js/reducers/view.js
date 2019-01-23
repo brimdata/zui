@@ -13,7 +13,8 @@ type StateSlice = {
   leftSidebarWidth: number,
   rightSidebarWidth: number,
   resultsTab: ResultsTabEnum,
-  timeZone: string
+  timeZone: string,
+  modal: ?string
 }
 type State = {view: StateSlice}
 
@@ -24,10 +25,19 @@ export const initalState: StateSlice = {
   leftSidebarWidth: 350,
   rightSidebarWidth: 350,
   resultsTab: null,
-  timeZone: "UTC"
+  timeZone: "UTC",
+  modal: null
 }
 
 export default createReducer(initalState, {
+  MODAL_SHOW: (state, {modal}) => ({
+    ...state,
+    modal
+  }),
+  MODAL_HIDE: state => ({
+    ...state,
+    modal: null
+  }),
   LEFT_SIDEBAR_SHOW: state => ({
     ...state,
     leftSidebarIsOpen: true
@@ -103,3 +113,7 @@ export const getShowLogsTab = (state: State) => state.view.resultsTab === LOGS
 export const getTimeZone = (state: State) => state.view.timeZone
 
 export const getResultsTab = (state: State) => state.view.resultsTab
+
+export const getDebugModalIsOpen = (state: State) => getModal(state) === "debug"
+
+export const getModal = (state: State) => state.view.modal
