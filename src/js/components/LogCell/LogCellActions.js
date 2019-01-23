@@ -3,10 +3,11 @@
 import React from "react"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
-import {ContextMenu, MenuItem} from "../ContextMenu"
 import buildMenu from "../LogCell/buildMenu"
 import type {Space} from "../../lib/Space"
 import type {MenuItemData} from "../LogCell/buildMenu"
+import MenuList from "../MenuList"
+import Portal from "../Portal"
 
 export type Props = {
   field: Field,
@@ -29,9 +30,9 @@ export default class LogCellActions extends React.Component<Props> {
     switch (item.type) {
       case "action":
         return (
-          <MenuItem key={index} onClick={item.onClick}>
+          <li key={index} onClick={item.onClick}>
             {item.text}
-          </MenuItem>
+          </li>
         )
       case "seperator":
         return <hr key={index} />
@@ -40,9 +41,13 @@ export default class LogCellActions extends React.Component<Props> {
 
   render() {
     return (
-      <ContextMenu onOutsideClick={this.props.onClose} style={this.props.style}>
-        {this.menu.map(this.renderItem)}
-      </ContextMenu>
+      <Portal
+        isOpen={true}
+        onClose={this.props.onClose}
+        style={this.props.style}
+      >
+        <MenuList>{this.menu.map(this.renderItem)}</MenuList>
+      </Portal>
     )
   }
 }
