@@ -155,6 +155,7 @@ const stateToProps = state => ({
 export const XRightPane = connect(
   stateToProps,
   (dispatch: Function) =>
+    // $FlowFixMe
     bindActionCreators(
       {...viewActions, ...starActions, ...detailActions, ...packetActions},
       dispatch
