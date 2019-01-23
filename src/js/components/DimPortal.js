@@ -19,7 +19,7 @@ export default class DimPortal extends React.Component<Props> {
       <CSSTransition
         in={this.props.isOpen}
         classNames="dim-portal-overlay"
-        timeout={{enter: 300}}
+        timeout={{enter: 200}}
         onClick={this.props.onClose}
         appear
       >

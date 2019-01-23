@@ -40,7 +40,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
     return (
       <CSSTransition
         classNames="slide-in-right"
-        timeout={{enter: 300, exit: 300}}
+        timeout={{enter: 150}}
         in={true}
         appear
       >

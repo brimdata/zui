@@ -17,6 +17,18 @@
 
 .dim-portal-overlay-appear-active,
 .dim-portal-overlay-enter-done {
-  transition: background-color 300ms;
+  transition: background-color 200ms;
   background-color: rgba(0, 0, 0, 0.35);
+}
+
+.portal-item-appear {
+  transform: translate(0, -24px);
+  opacity: 0;
+}
+
+.portal-item-appear-active,
+.portal-item-enter-done {
+  transition: all 150ms;
+  transform: translate(0, 0);
+  opacity: 1;
 }
