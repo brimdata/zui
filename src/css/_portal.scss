@@ -28,7 +28,7 @@
 
 .portal-item-appear-active,
 .portal-item-enter-done {
-  transition: all 150ms;
+  transition: transform 150ms, opacity 150ms;
   transform: translate(0, 0);
   opacity: 1;
 }
