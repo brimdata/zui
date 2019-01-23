@@ -4,8 +4,13 @@ import React from "react"
 
 type Props = {children: *} // Expected to be <li> tags
 
-export default class MenuList extends React.Component<Props> {
-  render() {
-    return <ul className="menu-list">{this.props.children}</ul>
-  }
-}
+// $FlowFixMe
+const MenuList = React.forwardRef((props: Props, ref: *) => {
+  return (
+    <ul ref={ref} className="menu-list">
+      {props.children}
+    </ul>
+  )
+})
+
+export default MenuList

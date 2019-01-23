@@ -8,6 +8,8 @@ import type {Space} from "../../lib/Space"
 import type {MenuItemData} from "../LogCell/buildMenu"
 import MenuList from "../MenuList"
 import Portal from "../Portal"
+import * as MenuStyler from "../../lib/MenuStyler"
+import Measure from "react-measure"
 
 export type Props = {
   field: Field,
@@ -41,13 +43,24 @@ export default class LogCellActions extends React.Component<Props> {
 
   render() {
     return (
-      <Portal
-        isOpen={true}
-        onClose={this.props.onClose}
-        style={this.props.style}
-      >
-        <MenuList>{this.menu.map(this.renderItem)}</MenuList>
-      </Portal>
+      <Measure bounds>
+        {({measureRef, contentRect}) => {
+          return (
+            <Portal
+              isOpen={true}
+              onClose={this.props.onClose}
+              style={MenuStyler.ensureVisible(
+                contentRect.bounds,
+                this.props.style
+              )}
+            >
+              <MenuList ref={measureRef}>
+                {this.menu.map(this.renderItem)}
+              </MenuList>
+            </Portal>
+          )
+        }}
+      </Measure>
     )
   }
 }
