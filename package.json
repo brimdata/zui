@@ -88,6 +88,7 @@
     "react": "^16.4.2",
     "react-day-picker": "^7.1.10",
     "react-dom": "^16.4.2",
+    "react-measure": "^2.2.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.5.0",
