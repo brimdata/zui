@@ -1,6 +1,6 @@
 import React from "react"
 import XSearchInput from "../connectors/XSearchInput"
-import XSearchButton from "../connectors/XSearchButton"
+import {XSearchButton} from "../components/SearchButton"
 import XPins from "../connectors/XPins"
 import Warning from "../icons/warning-sm.svg"
 

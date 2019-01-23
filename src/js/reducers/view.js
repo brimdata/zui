@@ -114,6 +114,8 @@ export const getTimeZone = (state: State) => state.view.timeZone
 
 export const getResultsTab = (state: State) => state.view.resultsTab
 
+export const getModal = (state: State) => state.view.modal
+
 export const getDebugModalIsOpen = (state: State) => getModal(state) === "debug"
 
-export const getModal = (state: State) => state.view.modal
+export const getCurlModalIsOpen = (state: State) => getModal(state) === "curl"
