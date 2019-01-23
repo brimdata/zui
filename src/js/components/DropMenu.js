@@ -1,0 +1,74 @@
+/* @flow */
+
+import React from "react"
+import Portal from "./Portal"
+import DimPortal from "./DimPortal"
+import * as MenuStyler from "../lib/MenuStyler"
+
+type State = {
+  isOpen: boolean,
+  style: Object
+}
+
+type Props = {
+  position: string,
+  className?: string,
+  children: *,
+  dim?: boolean,
+  menu: *
+}
+
+export default class DropMenu extends React.Component<Props, State> {
+  open: Function
+  close: Function
+
+  constructor(props: Props) {
+    super(props)
+    this.state = {isOpen: false, style: {}}
+
+    this.open = e => {
+      this.setState({
+        isOpen: true,
+        style: MenuStyler.getStyle(e.currentTarget, this.props.position)
+      })
+    }
+
+    this.close = e => {
+      e.stopPropagation()
+      this.setState({isOpen: false})
+    }
+  }
+
+  getMenu() {
+    if (this.props.dim) {
+      return (
+        <DimPortal
+          style={this.state.style}
+          isOpen={this.state.isOpen}
+          onClose={this.close}
+        >
+          {this.props.menu}
+        </DimPortal>
+      )
+    } else {
+      return (
+        <Portal
+          style={this.state.style}
+          isOpen={this.state.isOpen}
+          onClose={this.close}
+        >
+          {this.props.menu}
+        </Portal>
+      )
+    }
+  }
+
+  render() {
+    return (
+      <div className={this.props.className} onClick={this.open}>
+        {this.props.children}
+        {this.getMenu()}
+      </div>
+    )
+  }
+}

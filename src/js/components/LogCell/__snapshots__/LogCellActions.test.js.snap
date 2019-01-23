@@ -179,112 +179,11 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "class",
     "props": Object {
-      "children": Array [
-        <MenuItem
-          onClick={[Function]}
-        >
-          Filter out these values
-        </MenuItem>,
-        <MenuItem
-          onClick={[Function]}
-        >
-          Only show these values
-        </MenuItem>,
-        <MenuItem
-          onClick={[Function]}
-        >
-          Count by _path
-        </MenuItem>,
-        <hr />,
-        <MenuItem
-          onClick={[Function]}
-        >
-          Download PCAPS
-        </MenuItem>,
-        <MenuItem
-          onClick={[Function]}
-        >
-          View log details
-        </MenuItem>,
-      ],
-      "onOutsideClick": [Function],
-      "style": Object {
-        "left": 1,
-        "top": 1,
-      },
+      "bounds": true,
+      "children": [Function],
     },
     "ref": null,
-    "rendered": Array [
-      Object {
-        "instance": null,
-        "key": "0",
-        "nodeType": "function",
-        "props": Object {
-          "children": "Filter out these values",
-          "onClick": [Function],
-        },
-        "ref": null,
-        "rendered": "Filter out these values",
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "1",
-        "nodeType": "function",
-        "props": Object {
-          "children": "Only show these values",
-          "onClick": [Function],
-        },
-        "ref": null,
-        "rendered": "Only show these values",
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "2",
-        "nodeType": "function",
-        "props": Object {
-          "children": "Count by _path",
-          "onClick": [Function],
-        },
-        "ref": null,
-        "rendered": "Count by _path",
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "3",
-        "nodeType": "host",
-        "props": Object {},
-        "ref": null,
-        "rendered": null,
-        "type": "hr",
-      },
-      Object {
-        "instance": null,
-        "key": "4",
-        "nodeType": "function",
-        "props": Object {
-          "children": "Download PCAPS",
-          "onClick": [Function],
-        },
-        "ref": null,
-        "rendered": "Download PCAPS",
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "5",
-        "nodeType": "function",
-        "props": Object {
-          "children": "View log details",
-          "onClick": [Function],
-        },
-        "ref": null,
-        "rendered": "View log details",
-        "type": [Function],
-      },
-    ],
+    "rendered": [Function],
     "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
@@ -293,112 +192,11 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "class",
       "props": Object {
-        "children": Array [
-          <MenuItem
-            onClick={[Function]}
-          >
-            Filter out these values
-          </MenuItem>,
-          <MenuItem
-            onClick={[Function]}
-          >
-            Only show these values
-          </MenuItem>,
-          <MenuItem
-            onClick={[Function]}
-          >
-            Count by _path
-          </MenuItem>,
-          <hr />,
-          <MenuItem
-            onClick={[Function]}
-          >
-            Download PCAPS
-          </MenuItem>,
-          <MenuItem
-            onClick={[Function]}
-          >
-            View log details
-          </MenuItem>,
-        ],
-        "onOutsideClick": [Function],
-        "style": Object {
-          "left": 1,
-          "top": 1,
-        },
+        "bounds": true,
+        "children": [Function],
       },
       "ref": null,
-      "rendered": Array [
-        Object {
-          "instance": null,
-          "key": "0",
-          "nodeType": "function",
-          "props": Object {
-            "children": "Filter out these values",
-            "onClick": [Function],
-          },
-          "ref": null,
-          "rendered": "Filter out these values",
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "1",
-          "nodeType": "function",
-          "props": Object {
-            "children": "Only show these values",
-            "onClick": [Function],
-          },
-          "ref": null,
-          "rendered": "Only show these values",
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "2",
-          "nodeType": "function",
-          "props": Object {
-            "children": "Count by _path",
-            "onClick": [Function],
-          },
-          "ref": null,
-          "rendered": "Count by _path",
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "3",
-          "nodeType": "host",
-          "props": Object {},
-          "ref": null,
-          "rendered": null,
-          "type": "hr",
-        },
-        Object {
-          "instance": null,
-          "key": "4",
-          "nodeType": "function",
-          "props": Object {
-            "children": "Download PCAPS",
-            "onClick": [Function],
-          },
-          "ref": null,
-          "rendered": "Download PCAPS",
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "5",
-          "nodeType": "function",
-          "props": Object {
-            "children": "View log details",
-            "onClick": [Function],
-          },
-          "ref": null,
-          "rendered": "View log details",
-          "type": [Function],
-        },
-      ],
+      "rendered": [Function],
       "type": [Function],
     },
   ],

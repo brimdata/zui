@@ -1,4 +1,8 @@
 .span-pickers {
+  .thin-button:hover {
+    background: #dcdcdc;
+  }
+
   .DayPickerInput {
     height: 14px;
   }
@@ -39,5 +43,9 @@
       border: none;
       border-top: 1px solid #dcdcdc;
     }
+  }
+
+  .span-drop-menu {
+    display: flex;
   }
 }

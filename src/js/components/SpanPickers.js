@@ -8,6 +8,14 @@ import * as TimeWindow from "../lib/TimeWindow"
 import {ThinPicker} from "./Buttons"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {TimeObj} from "../lib/Time"
+import DropMenu from "./DropMenu"
+import {XSpanPickerMenu} from "./SpanPickerMenu"
+import {connect} from "react-redux"
+import * as actions from "../actions/timeWindow"
+import {getTimeWindow} from "../reducers/timeWindow"
+import {getTimeZone} from "../reducers/view"
+import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
+import * as searchBar from "../actions/searchBar"
 
 type Props = {
   timeWindow: DateTuple,
@@ -159,59 +167,18 @@ export default class SpanPickers extends React.Component<Props, State> {
             ref={r => (this.toTime = r)}
           />
         </div>
-        <ThinPicker align="right">
-          <li
-            onClick={() => this.props.setOuterTimeWindow(this.props.spaceSpan)}
-          >
-            Whole Space
-          </li>
-          <li
-            onClick={() =>
-              this.props.setOuterTimeWindow(TimeWindow.last(30, "minutes"))
-            }
-          >
-            Last 30 minutes
-          </li>
-          <li
-            onClick={() =>
-              this.props.setOuterTimeWindow(TimeWindow.last(24, "hours"))
-            }
-          >
-            Last 24 hours
-          </li>
-          <li
-            onClick={() =>
-              this.props.setOuterTimeWindow(TimeWindow.last(7, "days"))
-            }
-          >
-            Last 7 days
-          </li>
-          <li
-            onClick={() =>
-              this.props.setOuterTimeWindow(TimeWindow.last(30, "days"))
-            }
-          >
-            Last 30 days
-          </li>
-          <li
-            onClick={() =>
-              this.props.setOuterTimeWindow(TimeWindow.last(90, "days"))
-            }
-          >
-            Last 90 days
-          </li>
-        </ThinPicker>
+
+        <DropMenu
+          menu={<XSpanPickerMenu />}
+          className="span-drop-menu"
+          position="right"
+        >
+          <ThinPicker />
+        </DropMenu>
       </div>
     )
   }
 }
-
-import {connect} from "react-redux"
-import * as actions from "../actions/timeWindow"
-import {getTimeWindow} from "../reducers/timeWindow"
-import {getTimeZone} from "../reducers/view"
-import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
-import * as searchBar from "../actions/searchBar"
 
 const stateToProps = state => ({
   timeWindow: getTimeWindow(state),

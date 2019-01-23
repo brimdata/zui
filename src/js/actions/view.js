@@ -1,4 +1,16 @@
+/* @flow */
+
 import * as SearchFactory from "../lib/SearchFactory"
+import {type State} from "../reducers/types"
+
+export const showModal = (modal: string) => ({
+  type: "MODAL_SHOW",
+  modal
+})
+
+export const hideModal = () => ({
+  type: "MODAL_HIDE"
+})
 
 export const showRightSidebar = () => ({
   type: "RIGHT_SIDEBAR_SHOW"
@@ -32,17 +44,17 @@ export const showLogsTab = () => ({
   type: "SHOW_LOGS_TAB"
 })
 
-export const setTimeZone = timeZone => ({
+export const setTimeZone = (timeZone: string) => ({
   type: "TIME_ZONE_SET",
   timeZone
 })
 
-export const setRightSidebarWidth = width => ({
+export const setRightSidebarWidth = (width: number) => ({
   type: "RIGHT_SIDEBAR_WIDTH_SET",
   width
 })
 
-export const setLeftSidebarWidth = width => ({
+export const setLeftSidebarWidth = (width: number) => ({
   type: "LEFT_SIDEBAR_WIDTH_SET",
   width
 })
@@ -55,7 +67,7 @@ export const hideDownloads = () => ({
   type: "DOWNLOADS_HIDE"
 })
 
-export const updateTab = state =>
+export const updateTab = (state: State) =>
   SearchFactory.getType(state) === "ANALYTICS"
     ? showAnalyticsTab()
     : showLogsTab()

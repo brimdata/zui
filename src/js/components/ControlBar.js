@@ -4,8 +4,10 @@ import React from "react"
 import XSearchBar from "../connectors/XSearchBar"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSpanPickers} from "./SpanPickers"
-import {ThinButton, ThinPicker, ButtonGroup} from "./Buttons"
+import {ThinButton} from "./Buttons"
 import {switchSpace} from "../actions/searchPage"
+import DropMenu from "./DropMenu"
+import MenuList from "./MenuList"
 
 type Props = {
   spaces: string[],
@@ -18,21 +20,17 @@ export default class ControlBar extends React.Component<Props> {
     return (
       <div className="control-bar">
         <div className="row-1">
-          <ButtonGroup>
-            <ThinButton>{this.props.currentSpace}</ThinButton>
-            <ThinPicker align="left">
-              {this.props.spaces.map((name, i) => (
-                <li
-                  key={i}
-                  onClick={() => {
-                    this.props.dispatch(switchSpace(name))
-                  }}
-                >
-                  {name}
-                </li>
-              ))}
-            </ThinPicker>
-          </ButtonGroup>
+          <DropMenu
+            position="left"
+            menu={
+              <SpacesMenu
+                spaces={this.props.spaces}
+                dispatch={this.props.dispatch}
+              />
+            }
+          >
+            {<ThinButton>{this.props.currentSpace}</ThinButton>}
+          </DropMenu>
           <XSpanPickers />
         </div>
         <div className="row-2">
@@ -42,6 +40,24 @@ export default class ControlBar extends React.Component<Props> {
       </div>
     )
   }
+}
+
+export const SpacesMenu = ({
+  spaces,
+  dispatch
+}: {
+  spaces: string[],
+  dispatch: Function
+}) => {
+  return (
+    <MenuList>
+      {spaces.map((name, i) => (
+        <li key={i} onClick={() => dispatch(switchSpace(name))}>
+          {name}
+        </li>
+      ))}
+    </MenuList>
+  )
 }
 
 import {connect} from "react-redux"

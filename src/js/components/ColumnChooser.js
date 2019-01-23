@@ -1,108 +1,25 @@
 /* @flow */
 
 import React from "react"
-import classNames from "classnames"
-import Down from "../icons/caret-bottom-sm.svg"
-import {ContextMenu, MenuItem} from "./ContextMenu"
-import Columns from "../models/Columns"
-import * as actions from "../actions/columns"
-import * as Doc from "../lib/Doc"
+import DropMenu from "./DropMenu"
+import {ThinButton} from "./Buttons"
+import {XColumnChooserMenu} from "./ColumnChooserMenu"
 
-type Props = {
-  columns: Columns,
-  logsTab: boolean,
-  dispatch: Function
-}
+type Props = {}
 
-type State = {
-  showColumnChooser: boolean,
-  columnChooserStyle: Object
-}
-
-export default class ColumnChooser extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-
-    this.state = {
-      showColumnChooser: false,
-      columnChooserStyle: {}
-    }
-  }
-
-  onChooserClick(e: *) {
-    const {top, height, width, left} = e.currentTarget.getBoundingClientRect()
-    this.setState({
-      showColumnChooser: true,
-      columnChooserStyle: {
-        top: top + height + 6,
-        right: Doc.getWidth() - (left + width)
-      }
-    })
-  }
-
+export default class ColumnChooser extends React.Component<Props> {
   render() {
-    if (!this.props.logsTab) return null
-
-    const allVisible =
-      this.props.columns.getAll().length ===
-      this.props.columns.getVisible().length
-
-    const toggleColumn = (e, column) => {
-      e.stopPropagation()
-      this.props.dispatch(actions.toggleColumn(column))
-    }
-
     return (
       <div className="column-chooser-wrapper">
-        <a
-          className={classNames("column-chooser-anchor", {
-            open: this.state.showColumnChooser
-          })}
-          onClick={this.onChooserClick.bind(this)}
+        <DropMenu
+          position="right-wall"
+          value="columns"
+          menu={<XColumnChooserMenu />}
+          dim={true}
         >
-          Columns <Down />
-        </a>
-
-        {this.state.showColumnChooser && (
-          <ContextMenu
-            className={classNames("column-chooser", {
-              "all-visible": allVisible
-            })}
-            onOutsideClick={() => this.setState({showColumnChooser: false})}
-            style={this.state.columnChooserStyle}
-          >
-            <MenuItem
-              className="show-all"
-              onClick={e => {
-                e.stopPropagation()
-                this.props.dispatch(actions.setColumns([]))
-              }}
-            >
-              Show All
-            </MenuItem>
-            {this.props.columns.getAll().map(c => (
-              <MenuItem
-                className={classNames({visible: c.isVisible})}
-                key={`${c.name}-${c.type}`}
-                onClick={e => toggleColumn(e, c)}
-              >
-                {c.name}
-              </MenuItem>
-            ))}
-          </ContextMenu>
-        )}
+          <ThinButton>Columns</ThinButton>
+        </DropMenu>
       </div>
     )
   }
 }
-
-import {connect} from "react-redux"
-import * as columns from "../selectors/columns"
-import * as view from "../reducers/view"
-
-const stateToProps = state => ({
-  columns: columns.getColumns(state),
-  logsTab: view.getShowLogsTab(state)
-})
-
-export const XColumnChooser = connect(stateToProps)(ColumnChooser)

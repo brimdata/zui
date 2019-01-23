@@ -1,0 +1,34 @@
+.portal-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.portal-item {
+  position: absolute; // Style added in JS
+}
+
+.dim-portal-overlay-appear {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.dim-portal-overlay-appear-active,
+.dim-portal-overlay-enter-done {
+  transition: background-color 200ms;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.portal-item-appear {
+  transform: translate(0, -24px);
+  opacity: 0;
+}
+
+.portal-item-appear-active,
+.portal-item-enter-done {
+  transition: transform 150ms, opacity 150ms;
+  transform: translate(0, 0);
+  opacity: 1;
+}

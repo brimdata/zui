@@ -23,7 +23,10 @@ const createWindow = () => {
     width: 1000,
     height: 1200,
     backgroundColor: "#ffffff",
-    titleBarStyle: "hidden"
+    titleBarStyle: "hidden",
+    webPreferences: {
+      experimentalFeatures: true
+    }
   })
   win.loadFile("index.html")
   win.setMenu(null)

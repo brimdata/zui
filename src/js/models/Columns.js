@@ -40,4 +40,8 @@ export default class Columns {
       this.getVisible().length < this.getAll().length
     )
   }
+
+  allVisible() {
+    return this.getAll().length === this.getVisible().length
+  }
 }

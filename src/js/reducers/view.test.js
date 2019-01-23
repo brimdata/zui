@@ -1,5 +1,6 @@
 import * as view from "./view"
 import * as a from "../actions/view"
+import initStore from "../test/initStore"
 
 const reduce = actionList => ({
   view: actionList.reduce(view.default, view.initialState)
@@ -38,4 +39,18 @@ test("hiding the downloads bar", () => {
   const state = reduce([a.showDownloads(), a.hideDownloads()])
 
   expect(view.getDownloadsIsOpen(state)).toBe(false)
+})
+
+test("set the active modal", () => {
+  const store = initStore()
+  const state = store.dispatchAll([a.showModal("debug")])
+
+  expect(view.getDebugModalIsOpen(state)).toBe(true)
+})
+
+test("hide a modal", () => {
+  const store = initStore()
+  const state = store.dispatchAll([a.showModal("debug"), a.hideModal()])
+
+  expect(view.getModal(state)).toBe(null)
 })
