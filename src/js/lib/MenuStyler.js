@@ -38,3 +38,27 @@ export const rightWall = _node => {
     height: Doc.getHeight()
   }
 }
+
+export const ensureVisible = (bounds, style) => {
+  const {width, height} = bounds
+  const {top, left, right} = style
+  const newStyle = {...style}
+
+  if ("right" in style) {
+    if (right + width > Doc.getWidth()) {
+      newStyle.right = right - width
+    }
+  }
+
+  if ("left" in style) {
+    if (left + width > Doc.getWidth()) {
+      newStyle.left = left - width
+    }
+  }
+
+  if (top + height > Doc.getHeight()) {
+    newStyle.top = top - height
+  }
+
+  return newStyle
+}
