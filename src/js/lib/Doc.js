@@ -30,11 +30,9 @@ export const clearTextSelection = () => {
 }
 
 export const getWidth = () => {
-  if (!document.body) return 0
-  return document.body.scrollWidth
+  return window.innerWidth
 }
 
 export const getHeight = () => {
-  if (!document.body) return 0
-  return document.body.scrollHeight
+  return window.innerHeight
 }
