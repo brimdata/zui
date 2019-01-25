@@ -8,9 +8,9 @@ import * as Doc from "../lib/Doc"
 import type {FixedPos} from "../lib/Doc"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
-import XLogCellActions from "../connectors/XLogCellActions"
 import classNames from "classnames"
 import * as fmt from "../lib/fmt"
+import {XLogCellActions} from "./LogCell/LogCellActions"
 
 type Props = {
   field: Field,
@@ -26,27 +26,15 @@ type State = {
 }
 
 export default class LogCell extends React.PureComponent<Props, State> {
-  onRightClick: Function
-  onMouseEnter: Function
-  onMouseLeave: Function
-  onMenuDismiss: Function
   el: ?HTMLElement
-
-  constructor(props: Props) {
-    super(props)
-    this.onMouseEnter = this.onMouseEnter.bind(this)
-    this.onMouseLeave = this.onMouseLeave.bind(this)
-    this.onRightClick = this.onRightClick.bind(this)
-    this.onMenuDismiss = this.onMenuDismiss.bind(this)
-    this.state = {
-      showMenu: false,
-      hover: false,
-      menuStyle: {top: 0, left: 0},
-      tooltipStyle: {top: 0, left: 0}
-    }
+  state = {
+    showMenu: false,
+    hover: false,
+    menuStyle: {top: 0, left: 0},
+    tooltipStyle: {top: 0, left: 0}
   }
 
-  onRightClick(e: MouseEvent) {
+  onRightClick = (e: MouseEvent) => {
     Doc.clearTextSelection()
     e.stopPropagation()
     this.setState({
@@ -57,7 +45,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
     })
   }
 
-  onMenuDismiss(e: MouseEvent) {
+  onMenuDismiss = (e: MouseEvent) => {
     Doc.clearTextSelection()
     e.stopPropagation()
     this.setState({
@@ -66,14 +54,14 @@ export default class LogCell extends React.PureComponent<Props, State> {
     })
   }
 
-  onMouseEnter() {
+  onMouseEnter = () => {
     this.setState({
       hover: true,
       tooltipStyle: getTooltipStyle(this.el)
     })
   }
 
-  onMouseLeave() {
+  onMouseLeave = () => {
     this.setState({hover: false})
   }
 

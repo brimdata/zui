@@ -22,7 +22,7 @@ export default class Columns {
     return isEqual(this.cols, other.cols)
   }
 
-  getTds() {
+  getTds(): string[] {
     return uniq(this.cols.map(c => c.td))
   }
 

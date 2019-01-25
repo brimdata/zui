@@ -1,19 +1,25 @@
 /* @flow */
 
 import React from "react"
-import XSearchBar from "../connectors/XSearchBar"
+import {XSearchBar} from "./SearchBar"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSpanPickers} from "./SpanPickers"
 import {ThinButton} from "./Buttons"
 import {switchSpace} from "../actions/searchPage"
 import DropMenu from "./DropMenu"
 import MenuList from "./MenuList"
+import {connect} from "react-redux"
+import type {State} from "../reducers/types"
+import * as spaces from "../reducers/spaces"
+import {type DispatchProps} from "../reducers/types"
+import dispatchToProps from "../lib/dispatchToProps"
 
-type Props = {
+type StateProps = {|
   spaces: string[],
-  currentSpace: string,
-  dispatch: Function
-}
+  currentSpace: string
+|}
+
+type Props = {|...StateProps, ...DispatchProps|}
 
 export default class ControlBar extends React.Component<Props> {
   render() {
@@ -60,13 +66,12 @@ export const SpacesMenu = ({
   )
 }
 
-import {connect} from "react-redux"
-import type {State} from "../reducers/types"
-import * as spaces from "../reducers/spaces"
-
 const stateToProps = (state: State) => ({
   spaces: spaces.getAllSpaceNames(state),
   currentSpace: spaces.getCurrentSpaceName(state)
 })
 
-export const XControlBar = connect(stateToProps)(ControlBar)
+export const XControlBar = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(ControlBar)

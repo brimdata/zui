@@ -12,10 +12,11 @@ import Columns from "../models/Columns"
 import columnOrder from "../lib/columnOrder"
 import type {ColumnWidths} from "../reducers/columnWidths"
 import type {SelectedColumns} from "../reducers/selectedColumns"
+import type {State} from "../reducers/types"
 
-type TdColumns = {name: string, type: string, td: string}[]
+type TdColumns = {name: string, type: string, td: ?string}[]
 
-export const getColumnsFromTds = createSelector(
+export const getColumnsFromTds = createSelector<State, void, *, *, *, *>(
   mainSearch.getTds,
   descriptors.getDescriptors,
   spaces.getCurrentSpaceName,
@@ -31,7 +32,7 @@ export const getColumnsFromTds = createSelector(
   }
 )
 
-export const getAnalysisColumns = createSelector(
+export const getAnalysisColumns = createSelector<State, void, *, *>(
   analysis.getAnalysis,
   ({descriptor}) => {
     if (descriptor) return descriptor.map(field => ({...field, td: null}))
@@ -39,7 +40,7 @@ export const getAnalysisColumns = createSelector(
   }
 )
 
-export const getAllColumns = createSelector(
+export const getAllColumns = createSelector<State, void, *, *, *, *>(
   view.getResultsTab,
   getColumnsFromTds,
   getAnalysisColumns,
@@ -55,7 +56,7 @@ export const getAllColumns = createSelector(
   }
 )
 
-export const getColumns = createSelector(
+export const getColumns = createSelector<State, void, *, *, *, *>(
   getAllColumns,
   selectedColumns.getSelected,
   columnWidths.getAll,

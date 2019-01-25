@@ -49,7 +49,7 @@ export default createReducer(initialState, {
 })
 
 export const getCountByTimeData = (state: State) => state.countByTime.data
-export const getMainSearchCountByTime = createSelector(
+export const getMainSearchCountByTime = createSelector<State, void, *, *, *>(
   getTimeWindow,
   getCountByTimeData,
   (t, d) => formatHistogram(t, d)

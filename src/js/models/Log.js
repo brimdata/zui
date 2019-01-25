@@ -23,7 +23,7 @@ export default class Log {
     return logs
   }
 
-  static isSame(a: Log, b: Log) {
+  static isSame(a: ?Log, b: ?Log) {
     if (!a || !b) return false
     return isEqual(a.tuple, b.tuple)
   }

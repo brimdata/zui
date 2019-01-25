@@ -5,30 +5,34 @@ import ReactDOM from "react-dom"
 import X from "../icons/x-md.svg"
 import {CSSTransition} from "react-transition-group"
 import * as Doc from "../lib/Doc"
+import type {State} from "../reducers/types"
+import type {Dispatch} from "../reducers/types"
+import {connect} from "react-redux"
+import * as notices from "../reducers/notices"
+import {dismissNotice} from "../actions/notices"
 
-type Props = {message: string, dismissNotice: Function}
+type OwnProps = {||}
+type StateProps = {|message: ?string|}
+type DispatchProps = {|dispatch: Dispatch|}
+type AllProps = {|...OwnProps, ...StateProps, ...DispatchProps|}
 
-export default class Notice extends React.Component<Props> {
+export default class Notice extends React.Component<AllProps> {
   timeout: ?TimeoutID
   dismiss: Function
 
-  constructor(props: Props) {
+  constructor(props: AllProps) {
     super(props)
     this.timeout = null
 
     this.dismiss = () => {
       if (this.timeout) clearTimeout(this.timeout)
-      this.props.dismissNotice()
+      this.props.dispatch(dismissNotice())
     }
-  }
-
-  dismiss() {
-    this.props.dismissNotice
   }
 
   render() {
     if (this.props.message) {
-      this.timeout = setTimeout(this.props.dismissNotice, 6000)
+      this.timeout = setTimeout(() => this.dismiss(), 6000)
     }
 
     return ReactDOM.createPortal(
@@ -50,3 +54,12 @@ export default class Notice extends React.Component<Props> {
     )
   }
 }
+
+const stateToProps = (state: State) => ({
+  message: notices.getError(state)
+})
+
+export const XNotice = connect<AllProps, OwnProps, _, _, _, _>(
+  stateToProps,
+  (dispatch: Dispatch) => ({dispatch})
+)(Notice)

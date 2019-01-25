@@ -3,9 +3,11 @@
 import {connect} from "react-redux"
 import SearchWelcome from "../components/SearchWelcome"
 import {getCurrentSpace} from "../reducers/spaces"
+import {type State} from "../reducers/types"
 
-const stateToProps = state => ({
+type SP = {|space: string|}
+const stateToProps = (state: State): SP => ({
   space: getCurrentSpace(state)
 })
 
-export default connect(stateToProps)(SearchWelcome)
+export default connect<SP, {}, _, _, _, _>(stateToProps)(SearchWelcome)

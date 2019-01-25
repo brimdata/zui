@@ -16,13 +16,24 @@ import {getTimeWindow} from "../reducers/timeWindow"
 import {getTimeZone} from "../reducers/view"
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
 import * as searchBar from "../actions/searchBar"
+import type {Dispatch} from "../reducers/types"
+import type {State as S} from "../reducers/types"
 
-type Props = {
+type StateProps = {|
   timeWindow: DateTuple,
   spaceSpan: DateTuple,
+  timeZone: string
+|}
+
+type DispatchProps = {|
   setOuterTimeWindow: Function,
   submitSearchBar: Function
-}
+|}
+
+type Props = {|
+  ...StateProps,
+  ...DispatchProps
+|}
 
 type State = {
   fromDate: Date,
@@ -30,10 +41,6 @@ type State = {
 }
 
 export default class SpanPickers extends React.Component<Props, State> {
-  onFromDayChange: Function
-  onToDayChange: Function
-  onFromTimeChange: Function
-  onToTimeChange: Function
   fromTime: TimePicker
   toTime: TimePicker
   toDate: DayPicker
@@ -42,10 +49,6 @@ export default class SpanPickers extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = SpanPickers.getDerivedStateFromProps(props)
-    this.onFromDayChange = this.onFromDayChange.bind(this)
-    this.onToDayChange = this.onToDayChange.bind(this)
-    this.onFromTimeChange = this.onFromTimeChange.bind(this)
-    this.onToTimeChange = this.onToTimeChange.bind(this)
   }
 
   static getDerivedStateFromProps(nextProps: Props) {
@@ -55,7 +58,7 @@ export default class SpanPickers extends React.Component<Props, State> {
     }
   }
 
-  onFromDayChange(day: Date) {
+  onFromDayChange = (day: Date) => {
     const fromDate = Time.set(this.state.fromDate, {
       month: day.getMonth(),
       date: day.getDate(),
@@ -74,7 +77,7 @@ export default class SpanPickers extends React.Component<Props, State> {
     this.fromTime.focus()
   }
 
-  onFromTimeChange(time: TimeObj) {
+  onFromTimeChange = (time: TimeObj) => {
     const fromDate = Time.set(this.state.fromDate, time)
 
     if (fromDate > this.state.toDate) {
@@ -89,7 +92,7 @@ export default class SpanPickers extends React.Component<Props, State> {
     this.toDate.focus()
   }
 
-  onToDayChange(day: Date) {
+  onToDayChange = (day: Date) => {
     const toDate = Time.set(this.state.toDate, {
       month: day.getMonth(),
       date: day.getDate(),
@@ -108,7 +111,7 @@ export default class SpanPickers extends React.Component<Props, State> {
     this.toTime.focus()
   }
 
-  onToTimeChange(time: TimeObj) {
+  onToTimeChange = (time: TimeObj) => {
     const toDate = Time.set(this.state.toDate, time)
     this.setState({toDate})
     this.props.setOuterTimeWindow([this.state.fromDate, toDate])
@@ -180,13 +183,13 @@ export default class SpanPickers extends React.Component<Props, State> {
   }
 }
 
-const stateToProps = state => ({
+const stateToProps = (state: S): StateProps => ({
   timeWindow: getTimeWindow(state),
   timeZone: getTimeZone(state),
   spaceSpan: getCurrentSpaceTimeWindow(state)
 })
 
-const dispatchToProps = (dispatch: Function) => ({
+const dispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   setOuterTimeWindow: (span: DateTuple) => {
     return dispatch(actions.setOuterTimeWindow(span))
   },
@@ -195,7 +198,7 @@ const dispatchToProps = (dispatch: Function) => ({
   }
 })
 
-export const XSpanPickers = connect(
+export const XSpanPickers = connect<Props, {||}, _, _, _, _>(
   stateToProps,
   dispatchToProps
 )(SpanPickers)

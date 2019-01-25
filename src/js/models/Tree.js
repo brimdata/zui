@@ -9,10 +9,10 @@ export type NodeAttrs = {
 }
 
 export default class Tree {
-  root: ?Node
+  root: Node
 
   constructor(nodeData: NodeAttrs) {
-    this.root = nodeData ? new Node(nodeData) : null
+    this.root = new Node(nodeData)
   }
 
   getRoot() {
@@ -50,7 +50,7 @@ export default class Tree {
     if (!this.contains(node)) return
 
     if (node.isRoot()) {
-      this.root = null
+      throw new Error("Not able to remove the root node")
     } else {
       if (node.parent) {
         node.parent.children.splice(node.childIndex(), 1)

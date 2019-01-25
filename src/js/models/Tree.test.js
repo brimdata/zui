@@ -260,11 +260,10 @@ test("remove node", () => {
   expect(tree.root.children.length).toBe(3)
 })
 
-test("removing the root node", () => {
+test("removing the root node throws an error", () => {
   const tree = new Tree(exampleTree)
   const node = tree.getNodeAt([])
-  tree.remove(node)
-  expect(tree.root).toBe(null)
+  expect(() => tree.remove(node)).toThrow("Not able to remove the root node")
 })
 
 test("removing a node that does not exist in the tree", () => {

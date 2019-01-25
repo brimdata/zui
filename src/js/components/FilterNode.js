@@ -4,14 +4,11 @@ import React from "react"
 import * as Time from "../lib/Time"
 import * as TimeWindow from "../lib/TimeWindow"
 import {extractLastTimeWindow} from "../lib/changeProgramTimeWindow"
-import X from "../icons/x-md.svg"
 
 type Props = {
-  focused: boolean,
-  pending: boolean,
-  filter: string,
-  onClick: Function,
-  onRemoveClick: Function
+  focused?: boolean,
+  pending?: boolean,
+  filter: string
 }
 
 export default class FilterNode extends React.PureComponent<Props> {
@@ -22,13 +19,8 @@ export default class FilterNode extends React.PureComponent<Props> {
     if (this.props.pending) classNames.push("pending")
 
     return (
-      <div className={classNames.join(" ")} onClick={this.props.onClick}>
+      <div className={classNames.join(" ")}>
         <p>{shortenTimeWindow(this.props.filter)}</p>
-        {this.props.onRemoveClick && (
-          <button className="remove-button" onClick={this.props.onRemoveClick}>
-            <X />
-          </button>
-        )}
       </div>
     )
   }

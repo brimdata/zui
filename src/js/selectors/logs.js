@@ -6,8 +6,9 @@ import * as mainSearch from "../reducers/mainSearch"
 import * as spaces from "../reducers/spaces"
 import * as view from "../reducers/view"
 import * as analysis from "../reducers/analysis"
+import {type State} from "../reducers/types"
 
-export const getEventLogs = createSelector(
+export const getEventLogs = createSelector<State, void, *, *, *, *>(
   mainSearch.getMainSearchEvents,
   mainSearch.getSchemas,
   spaces.getCurrentSpaceName,
@@ -24,7 +25,7 @@ export const getEventLogs = createSelector(
   }
 )
 
-export const getAnalysisLogs = createSelector(
+export const getAnalysisLogs = createSelector<State, void, *, *>(
   analysis.getAnalysis,
   data => {
     const {descriptor, tuples} = data
@@ -32,7 +33,7 @@ export const getAnalysisLogs = createSelector(
   }
 )
 
-export const getLogs = createSelector(
+export const getLogs = createSelector<State, void, *, *, *, *>(
   view.getResultsTab,
   getEventLogs,
   getAnalysisLogs,
@@ -42,6 +43,8 @@ export const getLogs = createSelector(
         return eventLogs
       case "analytics":
         return analysisLogs
+      default:
+        return []
     }
   }
 )

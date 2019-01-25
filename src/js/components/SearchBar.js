@@ -1,10 +1,21 @@
-import React from "react"
-import XSearchInput from "../connectors/XSearchInput"
-import {XSearchButton} from "../components/SearchButton"
-import XPins from "../connectors/XPins"
-import Warning from "../icons/warning-sm.svg"
+/* @flow */
 
-export default class SearchBar extends React.Component {
+import React from "react"
+import {XSearchInput} from "./SearchInput"
+import {XSearchButton} from "../components/SearchButton"
+import {XPins} from "./Pins"
+import Warning from "../icons/warning-sm.svg"
+import {connect} from "react-redux"
+import {getSearchBarError} from "../selectors/searchBar"
+import {type State} from "../reducers/types"
+
+type StateProps = {|
+  error: ?string
+|}
+
+type Props = {|...StateProps|}
+
+export default class SearchBar extends React.Component<Props> {
   render() {
     return (
       <div className="search-bar">
@@ -28,4 +39,12 @@ const ErrorMessage = ({error}) => (
     </div>
     <p>{error}</p>
   </div>
+)
+
+const stateToProps = (state: State) => ({
+  error: getSearchBarError(state)
+})
+
+export const XSearchBar = connect<Props, {||}, _, _, _, _>(stateToProps)(
+  SearchBar
 )

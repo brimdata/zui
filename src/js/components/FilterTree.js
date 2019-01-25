@@ -1,24 +1,48 @@
+/* @flow */
+
 import React from "react"
-import Tree from "../models/Tree"
+import Tree, {Node} from "../models/Tree"
 import FilterNode from "./FilterNode"
 import isEqual from "lodash/isEqual"
 import CloseSVG from "../icons/circle-x-md.svg"
+import {connect} from "react-redux"
+import {getSearchBarPins} from "../selectors/searchBar"
+import {getFilterTree} from "../reducers/filterTree"
+import type {State} from "../reducers/types"
+import type {Dispatch} from "../reducers/types"
+import {setSearchBarPins} from "../actions/searchBar"
+import {fetchMainSearch} from "../actions/mainSearch"
+import {removeFilterTreeNode} from "../actions/filterTree"
+import type {FilterTree as FilterTreeType} from "../reducers/filterTree"
 
-export default class FilterTree extends React.Component {
-  constructor(props) {
-    super(props)
+type OwnProps = {||}
 
-    this.renderNode = this.renderNode.bind(this)
-    this.onNodeClick = this.onNodeClick.bind(this)
+type DispatchProps = {|
+  dispatch: Dispatch
+|}
+
+type StateProps = {|
+  filterTree: FilterTreeType,
+  pinnedFilters: string[]
+|}
+
+type AllProps = {
+  ...DispatchProps,
+  ...OwnProps,
+  ...StateProps
+}
+
+export default class FilterTree extends React.Component<AllProps> {
+  onNodeClick = (node: Node) => {
+    this.props.dispatch(setSearchBarPins(getPinnedFilters(node)))
+
+    setTimeout(
+      () => this.props.dispatch(fetchMainSearch({saveToHistory: false})),
+      150
+    )
   }
 
-  onNodeClick(node) {
-    this.props.setSearchBarPins(getPinnedFilters(node))
-
-    setTimeout(this.props.fetchMainSearch({saveToHistory: false}), 150)
-  }
-
-  renderNode(node, i) {
+  renderNode = (node: Node, i: number) => {
     const classNames = ["filter-tree-node"]
 
     if (nodeIsPinned(this.props.pinnedFilters, node)) classNames.push("active")
@@ -34,7 +58,7 @@ export default class FilterTree extends React.Component {
             className="close-button"
             onClick={e => {
               e.stopPropagation()
-              this.props.removeFilterTreeNode(node)
+              this.props.dispatch(removeFilterTreeNode(node))
             }}
           >
             <CloseSVG />
@@ -48,7 +72,8 @@ export default class FilterTree extends React.Component {
   }
 
   render() {
-    const tree = new Tree(this.props.filterTree)
+    const {children, data} = this.props.filterTree
+    const tree = new Tree({children, data, parent: null})
     return (
       <div className="filter-tree">
         {tree.getRoot().children.map(this.renderNode)}
@@ -57,7 +82,7 @@ export default class FilterTree extends React.Component {
   }
 }
 
-export function getPinnedFilters(node) {
+export function getPinnedFilters(node: ?Node) {
   const pinnedFilters = []
 
   while (node) {
@@ -69,8 +94,8 @@ export function getPinnedFilters(node) {
   return pinnedFilters
 }
 
-export function nodeIsPinned(pinnedFilters, node) {
-  while (!node.isRoot()) {
+export function nodeIsPinned(pinnedFilters: string[], node: ?Node) {
+  while (node && !node.isRoot()) {
     const index = node.parentCount() - 1
     const pinned = pinnedFilters[index]
 
@@ -81,3 +106,19 @@ export function nodeIsPinned(pinnedFilters, node) {
 
   return true
 }
+
+function stateToProps(state: State) {
+  return {
+    filterTree: getFilterTree(state),
+    pinnedFilters: getSearchBarPins(state)
+  }
+}
+
+const dispatchToProps = (dispatch: Dispatch) => ({
+  dispatch
+})
+
+export const XFilterTree = connect<AllProps, OwnProps, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(FilterTree)

@@ -6,17 +6,24 @@ import {TransitionGroup, CSSTransition} from "react-transition-group"
 import EmptyLogDetail from "./EmptyLogDetail"
 import LogDetail from "./LogDetail"
 import classNames from "classnames"
+import {connect} from "react-redux"
+import * as selector from "../selectors/logDetails"
+import dispatchToProps from "../lib/dispatchToProps"
+import {type DispatchProps} from "../reducers/types"
+import {type State} from "../reducers/types"
+import {viewLogDetail} from "../actions/logDetails"
 
-type Props = {
-  log: Log,
+type StateProps = {|
+  log: ?Log,
   correlatedLogs: Log[],
-  viewLogDetail: Function,
   isGoingBack: boolean
-}
+|}
+
+type Props = {|...StateProps, ...DispatchProps|}
 
 export default class LogDetailPane extends React.Component<Props> {
   render() {
-    const {log, correlatedLogs, viewLogDetail, isGoingBack} = this.props
+    const {log, correlatedLogs, isGoingBack} = this.props
 
     if (!log) return <EmptyLogDetail />
 
@@ -37,7 +44,7 @@ export default class LogDetailPane extends React.Component<Props> {
           <LogDetail
             log={log}
             correlatedLogs={correlatedLogs}
-            viewLogDetail={viewLogDetail}
+            viewLogDetail={log => this.props.dispatch(viewLogDetail(log))}
           />
         </CSSTransition>
       </TransitionGroup>
@@ -45,21 +52,13 @@ export default class LogDetailPane extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
-import * as selector from "../selectors/logDetails"
-import * as actions from "../actions/logDetails"
-import * as starActions from "../actions/starredLogs"
-
-const stateToProps = state => ({
+const stateToProps = (state: State) => ({
   log: selector.buildLogDetail(state),
   correlatedLogs: selector.buildCorrelatedLogs(state),
   isGoingBack: selector.getIsGoingBack(state)
 })
 
-export const XLogDetailPane = connect(
+export const XLogDetailPane = connect<Props, {||}, _, _, _, _>(
   stateToProps,
-  (dispatch: Function) =>
-    // $FlowFixMe
-    bindActionCreators({...actions, ...starActions}, dispatch)
+  dispatchToProps
 )(LogDetailPane)

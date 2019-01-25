@@ -67,7 +67,7 @@ export const getCurrentSpaceName = (state: State) => {
 export const getRawSpaces = (state: State) => {
   return state.spaces.details
 }
-export const getSpaces = createSelector(
+export const getSpaces = createSelector<State, void, *, *>(
   getRawSpaces,
   rawSpaces => {
     return Object.keys(rawSpaces).reduce(
@@ -80,13 +80,13 @@ export const getSpaces = createSelector(
   }
 )
 
-export const getCurrentSpace = createSelector(
+export const getCurrentSpace = createSelector<State, void, *, *, *>(
   getSpaces,
   getCurrentSpaceName,
   (spaces, name) => spaces[name]
 )
 
-export const getCurrentSpaceTimeWindow = createSelector(
+export const getCurrentSpaceTimeWindow = createSelector<State, void, *, *>(
   getCurrentSpace,
   space => [space.minTime, space.maxTime]
 )

@@ -26,7 +26,7 @@ import selectedColumns from "./selectedColumns"
 import searchHistory from "./searchHistory"
 import whois from "./whois"
 
-export default combineReducers({
+export default combineReducers<*, *>({
   logs,
   view,
   searchBar,

@@ -15,7 +15,7 @@ type Props = {
 }
 
 export default class UidWaterfall extends React.Component<Props> {
-  row(log: Log, index: number, xScale) {
+  row(log: Log, index: number, xScale: *) {
     const ts = TimeField.toDate(log.get("ts"))
     const position = xScale(ts)
     const isCurrent = isEqual(log, this.props.currentLog)

@@ -16,54 +16,52 @@ import classNames from "classnames"
 import {XLogDetailPane} from "./LogDetailPane"
 import Log from "../models/Log"
 import type {Space} from "../lib/Space"
+import {connect} from "react-redux"
+import * as view from "../reducers/view"
+import * as logDetails from "../selectors/logDetails"
+import * as spaces from "../reducers/spaces"
+import dispatchToProps from "../lib/dispatchToProps"
+import {type DispatchProps} from "../reducers/types"
+import {unstarLog} from "../actions/starredLogs"
+import {starLog} from "../actions/starredLogs"
+import {setRightSidebarWidth} from "../actions/view"
+import {fetchPackets} from "../actions/packets"
+import {backLogDetail} from "../actions/logDetails"
+import {forwardLogDetail} from "../actions/logDetails"
 
-type Props = {
+type StateProps = {|
   isStarred: boolean,
   currentLog: Log,
   prevExists: boolean,
   nextExists: boolean,
   isOpen: boolean,
   width: number,
-  space: Space,
-  forwardLogDetail: Function,
-  backLogDetail: Function,
-  unstarLog: Function,
-  starLog: Function,
-  setRightSidebarWidth: Function,
-  fetchPackets: Function
-}
+  space: Space
+|}
+
+type Props = {|...StateProps, ...DispatchProps|}
 
 export default class RightPane extends React.Component<Props> {
-  onDrag: Function
-  onPacketsClick: Function
-  toggleStar: Function
-
-  constructor(props: Props) {
-    super(props)
-    this.onDrag = this.onDrag.bind(this)
-    this.onPacketsClick = this.onPacketsClick.bind(this)
-    this.toggleStar = () =>
-      this.props.isStarred
-        ? this.props.unstarLog(this.props.currentLog.tuple)
-        : this.props.starLog(this.props.currentLog.tuple)
+  toggleStar = () => {
+    this.props.isStarred
+      ? this.props.dispatch(unstarLog(this.props.currentLog.tuple))
+      : this.props.dispatch(starLog(this.props.currentLog.tuple))
   }
 
-  onDrag(e: MouseEvent) {
+  onDrag = (e: MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
-    this.props.setRightSidebarWidth(Math.min(width, max))
+    this.props.dispatch(setRightSidebarWidth(Math.min(width, max)))
   }
 
-  onPacketsClick() {
-    this.props.fetchPackets(this.props.currentLog)
+  onPacketsClick = () => {
+    this.props.dispatch(fetchPackets(this.props.currentLog))
   }
 
   render() {
     const {
       prevExists,
-      backLogDetail,
       nextExists,
-      forwardLogDetail,
       isOpen,
       width,
       isStarred,
@@ -88,13 +86,13 @@ export default class RightPane extends React.Component<Props> {
                 <button
                   className="panel-button back-button"
                   disabled={!prevExists}
-                  onClick={backLogDetail}
+                  onClick={() => this.props.dispatch(backLogDetail())}
                 >
                   <Back />
                 </button>
                 <button
                   className="panel-button forward-button"
-                  onClick={forwardLogDetail}
+                  onClick={() => this.props.dispatch(forwardLogDetail())}
                   disabled={!nextExists}
                 >
                   <Forward />
@@ -132,16 +130,6 @@ export default class RightPane extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
-import * as viewActions from "../actions/view"
-import * as starActions from "../actions/starredLogs"
-import * as detailActions from "../actions/logDetails"
-import * as packetActions from "../actions/packets"
-import * as view from "../reducers/view"
-import * as logDetails from "../selectors/logDetails"
-import * as spaces from "../reducers/spaces"
-
 const stateToProps = state => ({
   isOpen: view.getRightSidebarIsOpen(state),
   width: view.getRightSidebarWidth(state),
@@ -152,12 +140,7 @@ const stateToProps = state => ({
   space: spaces.getCurrentSpace(state)
 })
 
-export const XRightPane = connect(
+export const XRightPane = connect<Props, {||}, _, _, _, _>(
   stateToProps,
-  (dispatch: Function) =>
-    // $FlowFixMe
-    bindActionCreators(
-      {...viewActions, ...starActions, ...detailActions, ...packetActions},
-      dispatch
-    )
+  dispatchToProps
 )(RightPane)

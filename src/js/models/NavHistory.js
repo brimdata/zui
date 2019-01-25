@@ -38,7 +38,7 @@ export default class NavHistory<T> {
     return this.entries
   }
 
-  getCurrentEntry() {
+  getCurrentEntry(): T {
     return this.entries[this.position]
   }
 

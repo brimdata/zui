@@ -1,12 +1,12 @@
 /* @flow */
 
 import createReducer from "./createReducer"
-
+import {type State} from "./types"
 const ANALYTICS = "analytics"
 const LOGS = "logs"
 export type ResultsTabEnum = "analytics" | "logs" | null
 
-type StateSlice = {
+export type View = {
   leftSidebarIsOpen: boolean,
   rightSidebarIsOpen: boolean,
   downloadsIsOpen: boolean,
@@ -16,9 +16,8 @@ type StateSlice = {
   timeZone: string,
   modal: ?string
 }
-type State = {view: StateSlice}
 
-export const initalState: StateSlice = {
+export const initalState: View = {
   leftSidebarIsOpen: false,
   rightSidebarIsOpen: false,
   downloadsIsOpen: false,

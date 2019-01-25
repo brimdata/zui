@@ -1,33 +1,27 @@
 /* @flow */
 
 import React from "react"
-import type {Dispatch} from "redux"
 import {connect} from "react-redux"
 import * as columnWidths from "../../actions/columnWidths"
 import type {Width} from "./Layout"
+import {type DispatchProps} from "../../reducers/types"
+import dispatchToProps from "../../lib/dispatchToProps"
 
 let oldWidth = null
 let start = null
 
-type Props = {
+type OwnProps = {|
   col: string,
-  width: Width,
-  dispatch: Dispatch<*>
-}
+  width: Width
+|}
+
+type Props = {|
+  ...DispatchProps,
+  ...OwnProps
+|}
 
 export default class ColResizer extends React.PureComponent<Props> {
-  move: MouseEvent => void
-  up: MouseEvent => void
-  down: MouseEvent => void
-
-  constructor(props: Props) {
-    super(props)
-    this.move = this.move.bind(this)
-    this.up = this.up.bind(this)
-    this.down = this.down.bind(this)
-  }
-
-  move(e: MouseEvent) {
+  move = (e: MouseEvent) => {
     if (start !== null) {
       const {col} = this.props
       const moved = e.clientX - start
@@ -36,12 +30,12 @@ export default class ColResizer extends React.PureComponent<Props> {
     }
   }
 
-  up(_e: MouseEvent) {
+  up = (_e: MouseEvent) => {
     remove("mousemove", this.move)
     remove("mouseup", this.up)
   }
 
-  down(e: MouseEvent) {
+  down = (e: MouseEvent) => {
     oldWidth = this.props.width
     start = e.clientX
     add("mousemove", this.move)
@@ -56,4 +50,7 @@ export default class ColResizer extends React.PureComponent<Props> {
 const add = document.addEventListener
 const remove = document.removeEventListener
 
-export const XColResizer = connect()(ColResizer)
+export const XColResizer = connect<Props, OwnProps, _, _, _, _>(
+  null,
+  dispatchToProps
+)(ColResizer)

@@ -6,10 +6,13 @@ import ViewerErrorBoundary from "./ViewerErrorBoundary"
 import XAnalysisViewer from "../connectors/XAnalysisViewer"
 import {XLogResults} from "./LogResults"
 import type {ResultsTabEnum} from "../reducers/view"
+import type {State} from "../reducers/types"
 
-type Props = {
+type StateProps = {|
   tab: ResultsTabEnum
-}
+|}
+
+type Props = {|...StateProps|}
 
 export default class SearchResults extends React.Component<Props> {
   chooseTab() {
@@ -35,8 +38,10 @@ export default class SearchResults extends React.Component<Props> {
 import {connect} from "react-redux"
 import * as view from "../reducers/view"
 
-const stateToProps = state => ({
+const stateToProps = (state: State) => ({
   tab: view.getResultsTab(state)
 })
 
-export const XSearchResults = connect(stateToProps)(SearchResults)
+export const XSearchResults = connect<Props, {||}, _, _, _, _>(stateToProps)(
+  SearchResults
+)
