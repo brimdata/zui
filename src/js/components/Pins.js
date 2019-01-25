@@ -36,8 +36,10 @@ export default class Pins extends React.Component<Props> {
         key={index}
         filter={filter}
         focused={this.props.editing === index}
-        pending={index === null}
-        onClick={() => this.props.dispatch(actions.editSearchBarPin(index))}
+        pending={index === -1}
+        onClick={() => {
+          this.props.dispatch(actions.editSearchBarPin(index))
+        }}
         onRemoveClick={e => {
           e.stopPropagation()
           this.props.dispatch(actions.removeSearchBarPin(index))
@@ -75,8 +77,10 @@ export default class Pins extends React.Component<Props> {
     return (
       <div className="pins">
         {mapJoin(pins, this.renderFilter, this.renderJoinOperator)}
-        {hasStagedFilter && hasCommittedFilter && this.renderJoinOperator(0)}
-        {hasStagedFilter && this.renderFilter(previousValue, 0)}
+        {hasStagedFilter &&
+          hasCommittedFilter &&
+          this.renderJoinOperator(pins.length)}
+        {hasStagedFilter && this.renderFilter(previousValue, -1)}
         {hasStagedFilter && this.renderPinButton()}
       </div>
     )
