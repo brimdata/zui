@@ -4,28 +4,24 @@ import React from "react"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import {goBack, goForward} from "../actions/searchBar"
+import {connect} from "react-redux"
+import * as searchHistory from "../reducers/searchHistory"
+import {type DispatchProps} from "../reducers/types"
+import dispatchToProps from "../lib/dispatchToProps"
 
-type Props = {
-  dispatch: Function,
+type StateProps = {
   canGoBack: boolean,
   canGoForward: boolean
 }
 
+type Props = {...StateProps, ...DispatchProps}
+
 export default class HistoryStepper extends React.Component<Props> {
-  back: Function
-  forward: Function
-
-  constructor(props: Props) {
-    super(props)
-    this.back = this.back.bind(this)
-    this.forward = this.forward.bind(this)
-  }
-
-  back() {
+  back = () => {
     this.props.dispatch(goBack())
   }
 
-  forward() {
+  forward = () => {
     this.props.dispatch(goForward())
   }
 
@@ -51,12 +47,12 @@ export default class HistoryStepper extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import * as searchHistory from "../reducers/searchHistory"
-
 const stateToProps = state => ({
   canGoBack: searchHistory.canGoBack(state),
   canGoForward: searchHistory.canGoForward(state)
 })
 
-export const XHistoryStepper = connect(stateToProps)(HistoryStepper)
+export const XHistoryStepper = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(HistoryStepper)

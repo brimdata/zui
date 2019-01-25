@@ -20,7 +20,7 @@ export const getSearchBarEditingIndex = (state: State) =>
 
 export const getSearchBarError = (state: State) => state.searchBar.error
 
-export const getSearchProgram = createSelector(
+export const getSearchProgram = createSelector<State, void, *, *, *>(
   getSearchBarPins,
   getSearchBarInputValue,
   (pinned, current) => {
@@ -29,7 +29,7 @@ export const getSearchProgram = createSelector(
   }
 )
 
-export const getPrevSearchProgram = createSelector(
+export const getPrevSearchProgram = createSelector<State, void, *, *, *>(
   getSearchBarPins,
   getSearchBarPreviousInputValue,
   (pinned, prev) => {
@@ -38,7 +38,7 @@ export const getPrevSearchProgram = createSelector(
   }
 )
 
-export const getAst = createSelector(
+export const getAst = createSelector<State, void, *, *>(
   getSearchProgram,
   searchProgram => {
     const ast = new Ast(searchProgram).toJSON()

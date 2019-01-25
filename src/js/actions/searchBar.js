@@ -8,6 +8,7 @@ import * as Program from "../lib/Program"
 import Field from "../models/Field"
 import type {SearchBar} from "../reducers/searchBar"
 import {getCurrentEntry} from "../reducers/searchHistory"
+import {type Thunk} from "../reducers/types"
 
 export const clearSearchBar = () => ({
   type: "SEARCH_BAR_CLEAR"
@@ -70,7 +71,7 @@ export const submittingSearchBar = () => ({
   type: "SEARCH_BAR_SUBMIT"
 })
 
-export const goBack = () => (dispatch: Function, getState: Function) => {
+export const goBack = (): Thunk => (dispatch, getState) => {
   dispatch(searchHistory.backSearchHistory())
   const entry = getCurrentEntry(getState())
   dispatch(restoreSearchBar(entry.searchBar))
@@ -78,7 +79,7 @@ export const goBack = () => (dispatch: Function, getState: Function) => {
   dispatch(fetchMainSearch({saveToHistory: false}))
 }
 
-export const goForward = () => (dispatch: Function, getState: Function) => {
+export const goForward = (): Thunk => (dispatch, getState) => {
   dispatch(searchHistory.forwardSearchHistory())
   const entry = getCurrentEntry(getState())
   dispatch(restoreSearchBar(entry.searchBar))
@@ -86,16 +87,13 @@ export const goForward = () => (dispatch: Function, getState: Function) => {
   dispatch(fetchMainSearch({saveToHistory: false}))
 }
 
-export const submitSearchBar = () => (dispatch: Function) => {
+export const submitSearchBar = (): Thunk => dispatch => {
   dispatch(submittingSearchBar())
   dispatch(setInnerTimeWindow(null))
   dispatch(fetchMainSearch())
 }
 
-export const validateProgram = () => (
-  dispatch: Function,
-  getState: Function
-) => {
+export const validateProgram = (): Thunk => (dispatch, getState) => {
   const [, error] = Program.parse(getSearchProgram(getState()))
   if (error) {
     dispatch(errorSearchBarParse(error.message))

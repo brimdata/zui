@@ -9,24 +9,34 @@ import {XControlBar} from "./ControlBar"
 import {XHistogram} from "./Histogram"
 import XLeftPane from "../connectors/XLeftPane"
 import {XRightPane} from "../components/RightPane"
-import XDownloadProgress from "../connectors/XDownloadProgress"
-import XNotice from "../connectors/XNotice"
+import {XDownloadProgress} from "./DownloadProgress"
+import {XNotice} from "./Notice"
 import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
 import ColumnChooser from "./ColumnChooser"
 import {XWhoisModal} from "./WhoisModal"
 import {XStatusBar} from "./StatusBar"
+import {connect} from "react-redux"
+import * as spaces from "../reducers/spaces"
+import * as boomdConnection from "../reducers/boomdConnection"
+import * as view from "../reducers/view"
+import * as initialLoad from "../reducers/initialLoad"
+import {type DispatchProps} from "../reducers/types"
+import dispatchToProps from "../lib/dispatchToProps"
+import {type State as S} from "../reducers/types"
 
-type Props = {
-  dispatch: Function,
-  fetchSpaceInfo: Function,
+type StateProps = {|
   isConnected: boolean,
   currentSpaceName: string,
   initialLoad: boolean,
   logsTab: boolean,
-  analyticsTab: boolean,
   space?: any
-}
+|}
+
+type Props = {|
+  ...StateProps,
+  ...DispatchProps
+|}
 
 type State = {
   ready: boolean,
@@ -44,7 +54,7 @@ export default class Search extends React.Component<Props, State> {
   }
 
   render() {
-    const {isConnected, currentSpaceName, logsTab, analyticsTab} = this.props
+    const {isConnected, currentSpaceName, logsTab} = this.props
 
     if (!isConnected) return <Redirect to="/connect" />
     if (this.state.error === "NoSpaces") return <Redirect to="/spaces" />
@@ -70,7 +80,7 @@ export default class Search extends React.Component<Props, State> {
               )}
               <ColumnChooser />
             </div>
-            <XSearchResults logsTab={logsTab} analyticsTab={analyticsTab} />
+            <XSearchResults />
             <XStatusBar />
           </div>
           <XRightPane />
@@ -82,31 +92,15 @@ export default class Search extends React.Component<Props, State> {
   }
 }
 
-import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
-import * as spaceActions from "../actions/spaces"
-import * as viewActions from "../actions/view"
-import * as spaces from "../reducers/spaces"
-import * as boomdConnection from "../reducers/boomdConnection"
-import * as view from "../reducers/view"
-import * as initialLoad from "../reducers/initialLoad"
-
-const stateToProps = state => ({
+const stateToProps = (state: S): StateProps => ({
   initialLoad: initialLoad.getInitialLoad(state),
   isConnected: boomdConnection.getBoomdIsConnected(state),
   currentSpaceName: spaces.getCurrentSpaceName(state),
   logsTab: view.getShowLogsTab(state),
-  analyticsTab: view.getShowAnalyticsTab(state),
   space: spaces.getCurrentSpace(state)
 })
 
-export const XSearch = connect(
+export const XSearch = connect<Props, {||}, _, _, _, _>(
   stateToProps,
-  (dispatch: Function) => ({
-    ...bindActionCreators(
-      {...spaceActions, ...viewActions, dispatch},
-      dispatch
-    ),
-    dispatch
-  })
+  dispatchToProps
 )(Search)

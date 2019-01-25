@@ -1,10 +1,10 @@
-export default class InputHistory {
-  constructor() {
-    this.entries = []
-    this.position = 0
-  }
+/* @flow */
 
-  push(newVal) {
+export default class InputHistory<Entry> {
+  entries: Entry[] = []
+  position = 0
+
+  push(newVal: Entry) {
     if (newVal !== this.entries[this.entries.length - 1]) {
       this.position = this.entries.length
       this.entries.push(newVal)
@@ -15,7 +15,7 @@ export default class InputHistory {
     return this.entries
   }
 
-  getCurrentEntry() {
+  getCurrentEntry(): Entry {
     return this.entries[this.position]
   }
 

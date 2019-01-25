@@ -3,14 +3,20 @@
 import React from "react"
 import Modal from "./Modal"
 import {closeWhois} from "../actions/whois"
+import {connect} from "react-redux"
+import * as whois from "../reducers/whois"
+import dispatchToProps from "../lib/dispatchToProps"
+import type {State} from "../reducers/types"
+import {type DispatchProps} from "../reducers/types"
 
-type Props = {
+type StateProps = {|
   isOpen: boolean,
   text: string,
   isFetching: boolean,
-  addr: string,
-  dispatch: Function
-}
+  addr: string
+|}
+
+type Props = {...DispatchProps, ...StateProps}
 
 export default class WhoisModal extends React.Component<Props> {
   render() {
@@ -28,14 +34,14 @@ export default class WhoisModal extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import * as whois from "../reducers/whois"
-
-const stateToProps = state => ({
+const stateToProps = (state: State) => ({
   text: whois.getWhoisText(state),
   isOpen: whois.getWhoisIsOpen(state),
   isFetching: whois.getWhoisIsFetching(state),
   addr: whois.getWhoisAddr(state)
 })
 
-export const XWhoisModal = connect(stateToProps)(WhoisModal)
+export const XWhoisModal = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(WhoisModal)

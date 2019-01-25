@@ -17,27 +17,27 @@ export type SearchHistory = {
   entries: Entry[]
 }
 
-const initialState: SearchHistory = Object.freeze({
+const initialState: SearchHistory = {
   position: -1,
   entries: []
-})
+}
 
 export default createReducer(initialState, {
   SEARCH_HISTORY_CLEAR: () => ({
     ...initialState
   }),
   SEARCH_HISTORY_PUSH: (state, {entry}) => {
-    const history = new NavHistory(state)
+    const history = new NavHistory<Entry>(state)
     history.push(entry)
     return history.toJSON()
   },
   SEARCH_HISTORY_BACK: state => {
-    const history = new NavHistory(state)
+    const history = new NavHistory<Entry>(state)
     history.goBack()
     return history.toJSON()
   },
   SEARCH_HISTORY_FORWARD: state => {
-    const history = new NavHistory(state)
+    const history = new NavHistory<Entry>(state)
     history.goForward()
     return history.toJSON()
   }
@@ -47,14 +47,14 @@ export const getSearchHistory = (state: State) => {
   return state.searchHistory
 }
 
-export const buildSearchHistory = createSelector(
+export const buildSearchHistory = createSelector<State, void, *, *>(
   getSearchHistory,
   state => {
-    return new NavHistory(state)
+    return new NavHistory<Entry>(state)
   }
 )
 
-export const getCurrentEntry = createSelector(
+export const getCurrentEntry = createSelector<State, void, *, *>(
   buildSearchHistory,
   history => {
     return history.getCurrentEntry()
@@ -68,14 +68,14 @@ export const pickEntryOffState = (state: State) => {
   }
 }
 
-export const canGoBack = createSelector(
+export const canGoBack = createSelector<State, void, *, *>(
   buildSearchHistory,
   history => {
     return history.canGoBack()
   }
 )
 
-export const canGoForward = createSelector(
+export const canGoForward = createSelector<State, void, *, *>(
   buildSearchHistory,
   history => {
     return history.canGoForward()

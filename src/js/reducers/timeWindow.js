@@ -49,12 +49,12 @@ export default createReducer(initialState, {
 export const getRawOuterTimeWindow = (state: State) => state.timeWindow.outer
 export const getRawInnerTimeWindow = (state: State) => state.timeWindow.inner
 
-export const getOuterTimeWindow = createSelector(
+export const getOuterTimeWindow = createSelector<State, void, *, *>(
   getRawOuterTimeWindow,
   value => makeDates(value)
 )
 
-export const getInnerTimeWindow = createSelector(
+export const getInnerTimeWindow = createSelector<State, void, *, *>(
   getRawInnerTimeWindow,
   value => makeDates(value)
 )

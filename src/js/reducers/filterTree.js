@@ -13,7 +13,7 @@ export const initialState = new Tree({
   parent: null
 }).toJSON()
 
-export type FilterTree = typeof initialState
+export type FilterTree = {data: *, children: *[]}
 
 export default createReducer(initialState, {
   SEARCH_HISTORY_PUSH: (state, {entry}) =>

@@ -9,13 +9,28 @@ import type {Column} from "../../models/Columns"
 import Log from "../../models/Log"
 import * as Doc from "../../lib/Doc"
 import * as columnWidths from "../../actions/columnWidths"
+import type {Dispatch} from "../../reducers/types"
+import {connect} from "react-redux"
+import {getSelected} from "../../reducers/selectedColumns"
+import {getColumns} from "../../selectors/columns"
+import {getLogs} from "../../selectors/logs"
+import type {State} from "../../reducers/types"
+import dispatchToProps from "../../lib/dispatchToProps"
 
-type Props = {
+type StateProps = {|
   columns: Columns,
   selected: *,
-  data: Log[],
-  dispatch: Function
-}
+  data: Log[]
+|}
+
+type DispatchProps = {|
+  dispatch: Dispatch
+|}
+
+type Props = {|
+  ...StateProps,
+  ...DispatchProps
+|}
 
 export default class PhonyViewer extends React.Component<Props> {
   table: *
@@ -84,15 +99,13 @@ export default class PhonyViewer extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import {getSelected} from "../../reducers/selectedColumns"
-import {getColumns} from "../../selectors/columns"
-import {getLogs} from "../../selectors/logs"
-
-const stateToProps = state => ({
+const stateToProps = (state: State) => ({
   columns: getColumns(state),
   selected: getSelected(state),
   data: getLogs(state)
 })
 
-export const XPhonyViewer = connect(stateToProps)(PhonyViewer)
+export const XPhonyViewer = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(PhonyViewer)

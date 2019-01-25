@@ -8,7 +8,7 @@ export const id = ([td, path, ts, uid]: Tuple) => {
   return [td, path, ts, uid].join("_")
 }
 
-export const uniq = (list: Tuple[]) => {
+export const uniq = (list: Tuple[]): Tuple[] => {
   return uniqBy(list, id)
 }
 

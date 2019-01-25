@@ -10,18 +10,33 @@ import StackedPathBars from "../charts/StackedPathBars"
 import Chart from "../models/Chart"
 import XPositionTooltip from "../charts/XPositionTooltip"
 import HoverLine from "../charts/HoverLine"
+import {connect} from "react-redux"
+import {
+  getMainSearchCountByTime,
+  getCountByTimeData
+} from "../reducers/countByTime"
+import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
+import {type DispatchProps} from "../reducers/types"
+import {type State} from "../reducers/types"
+import dispatchToProps from "../lib/dispatchToProps"
+import {type Interval} from "../lib/countByTimeInterval"
 
-type Props = {
-  rawData: any,
-  data: {}[],
-  timeBinCount: number,
+type OwnProps = {|
   width: number,
-  height: number,
+  height: number
+|}
+
+type StateProps = {|
+  rawData: any,
+  data: {ts: Date, [string]: number}[],
+  timeBinCount: number,
   timeWindow: DateTuple,
   innerTimeWindow: DateTuple,
-  keys: string[],
-  dispatch: Function
-}
+  interval: Interval,
+  keys: string[]
+|}
+
+type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default class Histogram extends React.Component<Props> {
   svg: any
@@ -122,27 +137,14 @@ const buildScales = ({data, dimens}) => {
   }
 }
 
-import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
-import * as actions from "../actions/timeWindow"
-import {fetchMainSearch} from "../actions/mainSearch"
-import {
-  getMainSearchCountByTime,
-  getCountByTimeData
-} from "../reducers/countByTime"
-import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-
-const stateToProps = state => ({
+const stateToProps = (state: State) => ({
   rawData: getCountByTimeData(state),
   ...getMainSearchCountByTime(state),
   timeWindow: getTimeWindow(state),
   innerTimeWindow: getInnerTimeWindow(state)
 })
 
-export const XHistogram = connect(
+export const XHistogram = connect<Props, OwnProps, _, _, _, _>(
   stateToProps,
-  (dispatch: Function) => ({
-    dispatch: dispatch,
-    ...bindActionCreators({...actions, fetchMainSearch}, dispatch)
-  })
+  dispatchToProps
 )(Histogram)

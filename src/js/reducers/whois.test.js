@@ -8,10 +8,8 @@ beforeEach(() => {
 })
 
 test("whois lookup success", done => {
-  const FakeSystem = {
-    whois: () => new Promise(resolve => resolve("i am"))
-  }
-  const action = actions.fetchWhois("www.example.com", FakeSystem)
+  const fakeClientFunc = () => new Promise(resolve => resolve("i am"))
+  const action = actions.fetchWhois("www.example.com", fakeClientFunc)
 
   store.dispatch(action).then(() => {
     expect(getWhoisText(store.getState())).toEqual("i am")
@@ -22,10 +20,8 @@ test("whois lookup success", done => {
 })
 
 test("whois lookup error", done => {
-  const FakeSystem = {
-    whois: () => new Promise((_, reject) => reject("error here"))
-  }
-  const action = actions.fetchWhois("www.example.com", FakeSystem)
+  const fakeClientFunc = () => new Promise((_, reject) => reject("error here"))
+  const action = actions.fetchWhois("www.example.com", fakeClientFunc)
 
   store.dispatch(action).then(() => {
     expect(getWhoisText(store.getState())).toEqual("error here")

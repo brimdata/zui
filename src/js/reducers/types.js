@@ -17,6 +17,8 @@ import type {Analysis} from "./analysis"
 import type {LogDetails} from "./logDetails"
 import type {TuplesByUid} from "./tuplesByUid"
 import type {FilterTree} from "./filterTree"
+import type {Descriptors} from "./descriptors"
+import type {View} from "./view"
 
 export type State = {
   analysis: Analysis,
@@ -34,7 +36,13 @@ export type State = {
   whois: Whois,
   logDetails: LogDetails,
   tuplesByUid: TuplesByUid,
-  filterTree: FilterTree
+  filterTree: FilterTree,
+  descriptors: Descriptors,
+  view: View
 }
-export type Dispatch = Function
+
+export type Thunk = (Dispatch, () => State) => *
+export type Action = {type: string}
+export type Dispatch = (Action | Thunk) => *
 export type Api = Client
+export type DispatchProps = {|dispatch: Dispatch|}

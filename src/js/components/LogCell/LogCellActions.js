@@ -10,15 +10,28 @@ import MenuList from "../MenuList"
 import Portal from "../Portal"
 import * as MenuStyler from "../../lib/MenuStyler"
 import Measure from "react-measure"
+import {connect} from "react-redux"
+import * as spaces from "../../reducers/spaces"
+import type {State} from "../../reducers/types"
+import {type DispatchProps} from "../../reducers/types"
+import dispatchToProps from "../../lib/dispatchToProps"
 
-export type Props = {
-  field: Field,
+type OwnProps = {|
   log: Log,
-  style: Object,
-  space: Space,
+  field: Field,
   onClose: Function,
-  dispatch: Function
-}
+  style: Object
+|}
+
+type StateProps = {|
+  space: Space
+|}
+
+type Props = {|
+  ...OwnProps,
+  ...StateProps,
+  ...DispatchProps
+|}
 
 export default class LogCellActions extends React.Component<Props> {
   menu: MenuItemData[]
@@ -64,3 +77,12 @@ export default class LogCellActions extends React.Component<Props> {
     )
   }
 }
+
+const stateToProps = (state: State): StateProps => ({
+  space: spaces.getCurrentSpace(state)
+})
+
+export const XLogCellActions = connect<Props, OwnProps, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(LogCellActions)

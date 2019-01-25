@@ -3,12 +3,15 @@
 import React from "react"
 import {PaneHeader, Center, Left, Right, PaneTitle} from "./Pane"
 import {disconnect} from "../actions/connect"
+import {connect} from "react-redux"
+import {getBoomHost, getBoomPort} from "../reducers/boomdCredentials"
+import dispatchToProps from "../lib/dispatchToProps"
 
-type Props = {
+type Props = {|
   host: string,
-  port: number,
+  port: string,
   dispatch: Function
-}
+|}
 
 export default class TitleBar extends React.Component<Props> {
   onHostClick: Function
@@ -38,12 +41,12 @@ export default class TitleBar extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import {getBoomHost, getBoomPort} from "../reducers/boomdCredentials"
-
 const stateToProps = state => ({
   host: getBoomHost(state),
   port: getBoomPort(state)
 })
 
-export const XTitleBar = connect(stateToProps)(TitleBar)
+export const XTitleBar = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(TitleBar)

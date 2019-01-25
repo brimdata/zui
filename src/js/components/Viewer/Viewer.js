@@ -27,13 +27,11 @@ type State = {
 }
 
 export default class Viewer extends React.PureComponent<Props, State> {
-  onScroll: () => *
   scrollHooks: Function
   view: ?HTMLDivElement
 
   constructor(props: Props) {
     super(props)
-    this.onScroll = this.onScroll.bind(this)
     this.state = {
       scrollLeft: 0,
       chunks: props.chunker.visibleChunks(0)
@@ -60,7 +58,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
     Doc.id("tooltip-root").style.display = "block"
   }
 
-  onScroll() {
+  onScroll = () => {
     this.scrollHooks()
     const view = this.view
     if (view) {

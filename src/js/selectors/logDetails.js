@@ -13,29 +13,30 @@ import {
 } from "../reducers/logDetails"
 import Log from "../models/Log"
 import * as Tuple from "../lib/Tuple"
+import type {State} from "../reducers/types"
 
-export const getLogDetailHistory = createSelector(
+export const getLogDetailHistory = createSelector<State, void, *, *>(
   getLogDetails,
   logDetails => toHistory(logDetails)
 )
 
-export const getPrevExists = createSelector(
+export const getPrevExists = createSelector<State, void, *, *>(
   getLogDetailHistory,
   history => history.prevExists()
 )
 
-export const getNextExists = createSelector(
+export const getNextExists = createSelector<State, void, *, *>(
   getLogDetailHistory,
   history => history.nextExists()
 )
 
-export const getIsGoingBack = createSelector(
+export const getIsGoingBack = createSelector<State, void, *, *, *>(
   getPosition,
   getPrevPosition,
   (position, prevPosition) => prevPosition - position < 0
 )
 
-export const buildLogDetail = createSelector(
+export const buildLogDetail = createSelector<State, void, *, *>(
   getLogDetailHistory,
   history => {
     const log = history.getCurrent()
@@ -43,7 +44,7 @@ export const buildLogDetail = createSelector(
   }
 )
 
-export const getLogDetailIsStarred = createSelector(
+export const getLogDetailIsStarred = createSelector<State, void, *, *, *>(
   buildLogDetail,
   getStarredLogs,
   (log, starred) => {
@@ -51,7 +52,7 @@ export const getLogDetailIsStarred = createSelector(
   }
 )
 
-export const buildCorrelatedLogs = createSelector(
+export const buildCorrelatedLogs = createSelector<State, void, *, *, *, *, *>(
   buildLogDetail,
   getTuplesByUid,
   getDescriptors,

@@ -6,11 +6,20 @@ import classNames from "classnames"
 import * as actions from "../actions/columns"
 import Columns from "../models/Columns"
 import {CSSTransition} from "react-transition-group"
+import {connect} from "react-redux"
+import * as columns from "../selectors/columns"
+import {type DispatchProps} from "../reducers/types"
+import dispatchToProps from "../lib/dispatchToProps"
+import type {State} from "../reducers/types"
 
-type Props = {
-  dispatch: Function,
+type StateProps = {|
   columns: Columns
-}
+|}
+
+type Props = {|
+  ...StateProps,
+  ...DispatchProps
+|}
 
 export default class ColumnChooserMenu extends React.Component<Props> {
   showAll: Function
@@ -65,11 +74,11 @@ export default class ColumnChooserMenu extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import * as columns from "../selectors/columns"
-
-const stateToProps = state => ({
+const stateToProps = (state: State) => ({
   columns: columns.getColumns(state)
 })
 
-export const XColumnChooserMenu = connect(stateToProps)(ColumnChooserMenu)
+export const XColumnChooserMenu = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(ColumnChooserMenu)

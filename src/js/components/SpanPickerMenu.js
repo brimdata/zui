@@ -7,14 +7,20 @@ import {setOuterTimeWindow} from "../actions/timeWindow"
 import type {DateTuple} from "../lib/TimeWindow"
 import MenuList from "./MenuList"
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
+import {type DispatchProps} from "../reducers/types"
+import dispatchToProps from "../lib/dispatchToProps"
 
-type Props = {
-  dispatch: Function,
+type StateProps = {|
   spaceSpan: DateTuple
-}
+|}
+
+type Props = {|
+  ...StateProps,
+  ...DispatchProps
+|}
 
 export default class SpanPickerMenu extends React.Component<Props> {
-  setSpan(span) {
+  setSpan(span: DateTuple) {
     this.props.dispatch(setOuterTimeWindow(span))
   }
 
@@ -42,6 +48,9 @@ export default class SpanPickerMenu extends React.Component<Props> {
   }
 }
 
-export const XSpanPickerMenu = connect(state => ({
-  spaceSpan: getCurrentSpaceTimeWindow(state)
-}))(SpanPickerMenu)
+export const XSpanPickerMenu = connect<Props, {||}, _, _, _, _>(
+  state => ({
+    spaceSpan: getCurrentSpaceTimeWindow(state)
+  }),
+  dispatchToProps
+)(SpanPickerMenu)

@@ -4,6 +4,7 @@ import React from "react"
 import MenuList from "./MenuList"
 import {connect} from "react-redux"
 import {showModal} from "../actions/view"
+import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {dispatch: Function}
 
@@ -25,4 +26,7 @@ export default class SearchButtonMenu extends React.Component<Props> {
   }
 }
 
-export const XSearchButtonMenu = connect()(SearchButtonMenu)
+export const XSearchButtonMenu = connect<Props, {||}, _, _, _, _>(
+  null,
+  dispatchToProps
+)(SearchButtonMenu)

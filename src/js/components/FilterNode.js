@@ -7,11 +7,11 @@ import {extractLastTimeWindow} from "../lib/changeProgramTimeWindow"
 import X from "../icons/x-md.svg"
 
 type Props = {
-  focused: boolean,
-  pending: boolean,
   filter: string,
-  onClick: Function,
-  onRemoveClick: Function
+  focused?: boolean,
+  pending?: boolean,
+  onClick?: Function,
+  onRemoveClick?: Function
 }
 
 export default class FilterNode extends React.PureComponent<Props> {

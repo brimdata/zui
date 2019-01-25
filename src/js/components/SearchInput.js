@@ -1,28 +1,53 @@
+/* @flow */
+
 import React from "react"
 import InputHistory from "../models/InputHistory"
+import {type Dispatch} from "../reducers/types"
+import * as actions from "../actions/searchBar"
+import {connect} from "react-redux"
+import {getSearchBarInputValue, getSearchBarError} from "../selectors/searchBar"
+import {type State} from "../reducers/types"
 
-class SearchInput extends React.Component {
-  constructor(props) {
-    super(props)
-    this.history = new InputHistory()
+type StateProps = {|
+  inputValue: string,
+  error: ?string,
+  dispatch: Dispatch
+|}
 
-    this.onChange = e => props.changeSearchBarInput(e.currentTarget.value)
-    this.onKeyDown = this.onKeyDown.bind(this)
+type DispatchProps = {|
+  dispatch: Dispatch
+|}
+
+type Props = {|...StateProps, ...DispatchProps|}
+
+export default class SearchInput extends React.Component<Props> {
+  history = new InputHistory<string>()
+
+  onChange = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
+    this.changeTo(e.currentTarget.value)
   }
 
-  onKeyDown(e) {
+  onKeyDown = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      this.props.submitSearchBar()
-      this.history.push(e.target.value)
+      this.submit()
+      this.history.push(e.currentTarget.value)
     }
     if (e.key === "ArrowUp") {
       this.history.goBack()
-      this.props.changeSearchBarInput(this.history.getCurrentEntry())
+      this.changeTo(this.history.getCurrentEntry())
     }
     if (e.key === "ArrowDown") {
       this.history.goForward()
-      this.props.changeSearchBarInput(this.history.getCurrentEntry())
+      this.changeTo(this.history.getCurrentEntry())
     }
+  }
+
+  changeTo(value: string) {
+    this.props.dispatch(actions.changeSearchBarInput(value))
+  }
+
+  submit() {
+    this.props.dispatch(actions.submitSearchBar())
   }
 
   render() {
@@ -47,4 +72,12 @@ class SearchInput extends React.Component {
   }
 }
 
-export default SearchInput
+const stateToProps = (state: State) => ({
+  inputValue: getSearchBarInputValue(state),
+  error: getSearchBarError(state)
+})
+
+export const XSearchInput = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  (dispatch: Dispatch) => ({dispatch})
+)(SearchInput)

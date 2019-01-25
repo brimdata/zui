@@ -1,5 +1,5 @@
 import React from "react"
-import XFilterTree from "../connectors/XFilterTree"
+import {XFilterTree} from "./FilterTree"
 
 class History extends React.Component {
   render() {

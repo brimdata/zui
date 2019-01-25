@@ -8,32 +8,36 @@ import Log from "../models/Log"
 import Columns from "../models/Columns"
 import {fetchAhead} from "../actions/logViewer"
 import * as logDetails from "../actions/logDetails"
+import {connect} from "react-redux"
+import * as mainSearch from "../reducers/mainSearch"
+import {buildLogDetail} from "../selectors/logDetails"
+import {getTimeZone} from "../reducers/view"
+import * as view from "../reducers/view"
+import * as logViewer from "../reducers/logViewer"
+import * as columns from "../selectors/columns"
+import * as logs from "../selectors/logs"
+import {type DispatchProps} from "../reducers/types"
+import {type State} from "../reducers/types"
+import dispatchToProps from "../lib/dispatchToProps"
+import {type ResultsTabEnum} from "../reducers/view"
 
-type Props = {
+type StateProps = {|
   logs: Log[],
   isComplete: boolean,
-  selectedLog: Log,
+  selectedLog: ?Log,
   timeZone: string,
   moreAhead: boolean,
   isFetchingAhead: boolean,
   isFetching: boolean,
   isComplete: boolean,
   columns: Columns,
-  tab: string,
-  dispatch: Function
-}
+  tab: ResultsTabEnum
+|}
+
+type Props = {|...StateProps, ...DispatchProps|}
 
 export default class LogResults extends React.Component<Props> {
-  onLastChunk: Function
-  onRowClick: Function
-
-  constructor(props: Props) {
-    super(props)
-    this.onLastChunk = this.onLastChunk.bind(this)
-    this.onRowClick = this.onRowClick.bind(this)
-  }
-
-  onLastChunk() {
+  onLastChunk = () => {
     if (this.props.tab === "analytics") return
     const {isFetching, isFetchingAhead, moreAhead} = this.props
     if (!isFetching && !isFetchingAhead && moreAhead) {
@@ -41,7 +45,7 @@ export default class LogResults extends React.Component<Props> {
     }
   }
 
-  onRowClick(index: number) {
+  onRowClick = (index: number) => {
     const log = this.props.logs[index]
     this.props.dispatch(logDetails.viewLogDetail(log))
   }
@@ -78,16 +82,7 @@ export default class LogResults extends React.Component<Props> {
   }
 }
 
-import {connect} from "react-redux"
-import * as mainSearch from "../reducers/mainSearch"
-import {buildLogDetail} from "../selectors/logDetails"
-import {getTimeZone} from "../reducers/view"
-import * as view from "../reducers/view"
-import * as logViewer from "../reducers/logViewer"
-import * as columns from "../selectors/columns"
-import * as logs from "../selectors/logs"
-
-const stateToProps = state => ({
+const stateToProps = (state: State) => ({
   tab: view.getResultsTab(state),
   isFetchingAhead: logViewer.isFetchingAhead(state),
   isFetching: mainSearch.getMainSearchIsFetching(state),
@@ -99,4 +94,7 @@ const stateToProps = state => ({
   logs: logs.getLogs(state)
 })
 
-export const XLogResults = connect(stateToProps)(LogResults)
+export const XLogResults = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(LogResults)

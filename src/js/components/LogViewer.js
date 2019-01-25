@@ -14,7 +14,7 @@ type Props = {
   height: number,
   width: number,
   logs: Log[],
-  selectedLog: Log,
+  selectedLog: ?Log,
   timeZone: string,
   columns: Columns,
   atEnd: boolean,
@@ -27,13 +27,7 @@ type State = {
 }
 
 export default class LogViewer extends React.Component<Props, State> {
-  renderRow: Function
-
-  constructor(props: Props) {
-    super(props)
-    this.state = {selectedIndex: null}
-    this.renderRow = this.renderRow.bind(this)
-  }
+  state = {selectedIndex: null}
 
   createLayout() {
     return Layout.create({
@@ -55,7 +49,7 @@ export default class LogViewer extends React.Component<Props, State> {
     })
   }
 
-  renderRow(index: number, layout: LayoutInterface) {
+  renderRow = (index: number, layout: LayoutInterface) => {
     return (
       <LogRow
         key={index}
@@ -75,7 +69,7 @@ export default class LogViewer extends React.Component<Props, State> {
     if (this.props.logs.length === 0) return null
     return (
       <div>
-        <XPhonyViewer data={this.props.logs} columns={this.props.columns} />
+        <XPhonyViewer />
         <Viewer
           logs={this.props.logs}
           layout={this.createLayout()}
