@@ -1,0 +1,37 @@
+.message-box {
+  position: fixed;
+  z-index: 1;
+  color: white;
+  padding: 12px 24px 24px 24px;
+  overflow: hidden;
+  border-radius: 3px;
+  @include fills-transparent-dark;
+  @include shadow-medium;
+
+  &::after {
+    width: 120px;
+    height: 120px;
+    content: "";
+    @include fills-accent-red;
+    position: absolute;
+    top: -80px;
+    left: -80px;
+    border-radius: 50%;
+  }
+
+  .header {
+    margin-left: 24px;
+    margin-bottom: 24px;
+  }
+
+  .code {
+    margin-top: 12px;
+    @include fills-transparent-black-20;
+  }
+
+  .close-button {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+  }
+}
