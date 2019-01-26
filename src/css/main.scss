@@ -17,6 +17,8 @@ $bro-log-row-height: 25px;
 $filter-node-background: $green-3;
 $filter-node-foreground: white;
 
+@import "style-guide";
+
 /* Mixins */
 @import "mixins/range-input";
 @import "mixins/clearfix";
