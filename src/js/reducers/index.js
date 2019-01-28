@@ -25,6 +25,7 @@ import columnWidths from "./columnWidths"
 import selectedColumns from "./selectedColumns"
 import searchHistory from "./searchHistory"
 import whois from "./whois"
+import notifications from "./notifications"
 
 export default combineReducers<*, *>({
   logs,
@@ -50,5 +51,6 @@ export default combineReducers<*, *>({
   columnWidths,
   selectedColumns,
   searchHistory,
-  whois
+  whois,
+  notifications
 })

@@ -6,6 +6,7 @@ import {XSearch} from "./Search"
 import XConnect from "../connectors/XConnect"
 import XSpaces from "../connectors/XSpaces"
 import * as Time from "../lib/Time"
+import {XNotifications} from "./Notifications"
 
 type Props = {
   isConnected: boolean,
@@ -18,20 +19,7 @@ class App extends Component<Props> {
     Time.setZone(timeZone)
     return (
       <div className="app-wrapper">
-        {/* <MessageBox
-          title="Lookytalk Version Error"
-          style={{right: 12, bottom: 12}}
-        >
-          <Paragraph>
-            The server and client lookytalk versions do not match.
-          </Paragraph>
-          <Code>
-            Server: 1.2.0
-            <br />
-            Client: 1.2.3
-          </Code>
-        </MessageBox> */}
-
+        <XNotifications />
         <Switch>
           {isConnected && <Route path="/search" component={XSearch} />}
           {isConnected && <Route path="/spaces" component={XSpaces} />}
