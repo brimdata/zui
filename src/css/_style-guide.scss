@@ -1,0 +1,55 @@
+/* Typeography */
+
+@mixin fills-transparent-dark {
+  background-color: transparentize(#545866, 0.03);
+}
+
+@mixin fills-accent-red {
+  background-color: #d93347;
+}
+
+@mixin shadow-medium {
+  box-shadow: 0 1px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+@mixin fills-transparent-black-20 {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+@mixin fills-transparent-white-20 {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.title {
+  font-family: $heading-font;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 29px;
+  margin: 0;
+}
+
+.header {
+  font-family: $heading-font;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  margin: 0;
+}
+
+.paragraph {
+  font-family: $body-font;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.code {
+  display: inline-block;
+  font-family: $mono-font;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 3px 6px;
+  margin: 0;
+}

@@ -2,6 +2,8 @@
 
 import {getCredentials} from "../reducers/boomdCredentials"
 import type {Credentials} from "../lib/Credentials"
+import {notifyLookytalkVersionError} from "./notifications"
+import type {Thunk} from "../reducers/types"
 
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",
@@ -30,8 +32,11 @@ export const connectBoomd = () => (
   const credentials = getCredentials(getState())
   return api
     .connect(credentials)
-    .then(_res => {
+    .then(serverInfo => {
       dispatch(connectedBoomd())
+      setTimeout(() => {
+        dispatch(checkLookytalkVersion(serverInfo.lookytalk))
+      }, 5000)
     })
     .catch(res => {
       if (typeof res === "string") {
@@ -55,4 +60,15 @@ export const connectBoomd = () => (
         console.error(res)
       }
     })
+}
+
+export const checkLookytalkVersion = (serverVersion: string): Thunk => (
+  dispatch,
+  _getState,
+  api
+) => {
+  const clientVersion = api.info().lookytalk
+  if (clientVersion !== serverVersion) {
+    dispatch(notifyLookytalkVersionError(clientVersion, serverVersion))
+  }
 }

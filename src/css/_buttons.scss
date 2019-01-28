@@ -173,3 +173,41 @@
     transform: scale(1);
   }
 }
+
+.close-button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  svg {
+    fill: white;
+    height: 12px;
+    width: 12px;
+  }
+
+  &:hover:before {
+    transform: scale(1.5);
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    transition: transform 100ms;
+    transform: scale(0);
+    @include fills-transparent-white-20;
+  }
+
+  &:active:before {
+    opacity: 0.75;
+  }
+}

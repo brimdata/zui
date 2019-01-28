@@ -6,6 +6,7 @@ import {XSearch} from "./Search"
 import XConnect from "../connectors/XConnect"
 import XSpaces from "../connectors/XSpaces"
 import * as Time from "../lib/Time"
+import {XNotifications} from "./Notifications"
 
 type Props = {
   isConnected: boolean,
@@ -17,12 +18,15 @@ class App extends Component<Props> {
     const {isConnected, timeZone} = this.props
     Time.setZone(timeZone)
     return (
-      <Switch>
-        {isConnected && <Route path="/search" component={XSearch} />}
-        {isConnected && <Route path="/spaces" component={XSpaces} />}
-        <Route path="/connect" component={XConnect} />
-        <Redirect to="/connect" />
-      </Switch>
+      <div className="app-wrapper">
+        <XNotifications />
+        <Switch>
+          {isConnected && <Route path="/search" component={XSearch} />}
+          {isConnected && <Route path="/spaces" component={XSpaces} />}
+          <Route path="/connect" component={XConnect} />
+          <Redirect to="/connect" />
+        </Switch>
+      </div>
     )
   }
 }

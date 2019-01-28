@@ -3,13 +3,14 @@
 import {createStore, compose, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 import reducer from "../reducers"
+import type {State, Action} from "../reducers/types"
 
 type TestStore = {
   dispatch: Function,
   dispatchAll: Function,
   getActions: Function,
   clearActions: Function,
-  getState: Function
+  getState: () => State
 }
 
 export default (api: *): TestStore =>
@@ -28,7 +29,7 @@ function applyDispatchAll() {
   return createStore => (...args) => {
     const store = createStore(...args)
 
-    const dispatchAll = actions => {
+    const dispatchAll = (actions: Action[]): State => {
       actions.forEach(store.dispatch)
       return store.getState()
     }
