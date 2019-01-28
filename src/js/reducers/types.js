@@ -43,7 +43,7 @@ export type State = {
   notifications: Notifications
 }
 
-export type Thunk = (Dispatch, () => State) => *
+export type Thunk = (Dispatch, () => State, Client) => *
 export type Action = {type: string}
 export type Dispatch = (Action | Thunk) => *
 export type Api = Client

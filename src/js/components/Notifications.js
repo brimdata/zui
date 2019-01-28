@@ -7,12 +7,16 @@ import * as Doc from "../lib/Doc"
 import {CSSTransition, TransitionGroup} from "react-transition-group"
 import {type ErrorMessage} from "../types"
 import errorMessageFactory from "./ErrorMessageFactory"
+import type {State, Dispatch} from "../reducers/types"
+import {getNotifications} from "../selectors/notifications"
+import dispatchToProps from "../lib/dispatchToProps"
+import {removeNotification} from "../actions/notifications"
 
-type Props = {messages: ErrorMessage[]}
+type Props = {messages: ErrorMessage[], dispatch: Dispatch}
 
 export default class Notifications extends React.Component<Props> {
-  removeMessage(_index: number) {
-    // Dispatch to the reducer
+  removeMessage(index: number) {
+    this.props.dispatch(removeNotification(index))
   }
 
   renderErrorMessage = (message: ErrorMessage, index: number) => {
@@ -38,10 +42,11 @@ export default class Notifications extends React.Component<Props> {
   }
 }
 
-const stateToProps = () => ({
-  messages: []
+const stateToProps = (state: State) => ({
+  messages: getNotifications(state)
 })
 
-export const XNotifications = connect<Props, {||}, _, _, _, _>(stateToProps)(
-  Notifications
-)
+export const XNotifications = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(Notifications)
