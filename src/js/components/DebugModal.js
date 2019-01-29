@@ -7,6 +7,7 @@ import * as Program from "../lib/Program"
 import {connect} from "react-redux"
 import * as searchBar from "../selectors/searchBar"
 import type {State as S} from "../reducers/types"
+import {Code} from "./Typography"
 
 type Props = {
   searchProgram: string
@@ -27,16 +28,17 @@ export default class DebugModal extends React.Component<Props, State> {
     return (
       <div className="debug-query-modal">
         <SmallHeading>Search Program</SmallHeading>
-
-        <input
-          className="debug-modal-input"
-          type="text"
-          value={this.state.program}
-          onChange={e => this.setState({program: e.currentTarget.value})}
-        />
+        <div className="text-input-wrapper">
+          <input
+            className="debug-modal-input"
+            type="text"
+            value={this.state.program}
+            onChange={e => this.setState({program: e.currentTarget.value})}
+          />
+        </div>
 
         <SmallHeading>Abstract Syntax Tree</SmallHeading>
-        <pre>
+        <Code full light>
           <code
             className="language-js"
             dangerouslySetInnerHTML={{
@@ -47,7 +49,7 @@ export default class DebugModal extends React.Component<Props, State> {
               )
             }}
           />
-        </pre>
+        </Code>
       </div>
     )
   }

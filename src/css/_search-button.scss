@@ -41,16 +41,15 @@
   .small-heading {
     margin: 0;
   }
-  pre {
-    margin-bottom: 2em;
-  }
-  pre:last-child {
+
+  .code {
     margin-bottom: 0;
+    margin-top: 12px;
   }
 
   .debug-modal-input {
-    @extend pre;
-    outline: none;
+    margin-top: 12px;
+    margin-bottom: 24px;
     width: 100%;
   }
 }
