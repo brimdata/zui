@@ -186,6 +186,7 @@
   outline: none;
   cursor: pointer;
   background: none;
+
   svg {
     fill: white;
     height: 12px;
@@ -209,6 +210,10 @@
 
   &.light:before {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &.light svg {
+    fill: $gray-warm-5;
   }
 
   &:active:before {
