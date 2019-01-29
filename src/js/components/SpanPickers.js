@@ -172,7 +172,7 @@ export default class SpanPickers extends React.Component<Props, State> {
         </div>
 
         <DropMenu
-          menu={<XSpanPickerMenu />}
+          menu={XSpanPickerMenu}
           className="span-drop-menu"
           position="right"
         >

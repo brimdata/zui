@@ -14,7 +14,7 @@ export default class ColumnChooser extends React.Component<Props> {
         <DropMenu
           position="right-wall"
           value="columns"
-          menu={<XColumnChooserMenu />}
+          menu={XColumnChooserMenu}
           dim={true}
         >
           <ThinButton>Columns</ThinButton>

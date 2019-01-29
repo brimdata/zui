@@ -38,7 +38,7 @@ export default class SearchButton extends React.Component<Props> {
           <MagGlass />
         </button>
 
-        <DropMenu menu={<XSearchButtonMenu />} position="right">
+        <DropMenu menu={XSearchButtonMenu} position="right">
           <button className="button options-button">
             <Arrow />
           </button>

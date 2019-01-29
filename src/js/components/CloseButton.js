@@ -4,7 +4,11 @@ import React from "react"
 import X from "../icons/x-md.svg"
 import classNames from "classnames"
 
-const CloseButton = (props: *) => (
+type Props = {
+  light?: boolean
+}
+
+const CloseButton = (props: Props) => (
   <button
     className={classNames("close-button", {light: props.light})}
     {...props}

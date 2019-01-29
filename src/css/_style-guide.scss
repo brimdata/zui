@@ -1,11 +1,17 @@
 /* Typeography */
 
+$gray-warm-5: #dfe0e6;
+
 @mixin fills-transparent-dark {
   background-color: transparentize(#545866, 0.03);
 }
 
 @mixin fills-accent-red {
   background-color: #d93347;
+}
+
+@mixin fills-accent-blue {
+  background-color: $blue-3;
 }
 
 @mixin shadow-medium {
@@ -24,6 +30,22 @@
   background-color: rgba(0, 0, 0, 0.04);
   box-shadow: inset 0px 0px 2px 0 rgba(0, 0, 0, 0.1);
   padding: 12px 24px;
+}
+
+@mixin fills-gray-warm-5 {
+  background-color: #dfe0e6;
+}
+
+@mixin fills-gray-cold-5 {
+  background-color: #f5f5f7;
+}
+
+@mixin color-light-cold {
+  color: #c5c7d1;
+}
+
+@mixin color-dark-cold {
+  color: #545866;
 }
 
 .title {
@@ -66,4 +88,39 @@
   &.light {
     @include fills-light-inset;
   }
+}
+
+.fieldset {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: 15px;
+  margin: 0;
+  font-family: $body-font;
+}
+
+.subscript {
+  font-family: $body-font;
+  font-size: 9px;
+  font-weight: normal;
+  line-height: 11px;
+  margin: 0;
+}
+
+.label {
+  font-family: $body-font;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: normal;
+  margin: 0;
+}
+
+// Variations
+
+.bold {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
 }

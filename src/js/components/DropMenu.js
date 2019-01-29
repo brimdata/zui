@@ -40,6 +40,7 @@ export default class DropMenu extends React.Component<Props, State> {
   }
 
   getMenu() {
+    const Menu = this.props.menu
     if (this.props.dim) {
       return (
         <DimPortal
@@ -47,7 +48,7 @@ export default class DropMenu extends React.Component<Props, State> {
           isOpen={this.state.isOpen}
           onClose={this.close}
         >
-          {this.props.menu}
+          <Menu onClose={this.close} />
         </DimPortal>
       )
     } else {
@@ -57,7 +58,7 @@ export default class DropMenu extends React.Component<Props, State> {
           isOpen={this.state.isOpen}
           onClose={this.close}
         >
-          {this.props.menu}
+          <Menu onClose={this.close} />
         </Portal>
       )
     }
