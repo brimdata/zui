@@ -1,5 +1,6 @@
 /* @flow */
 import * as React from "react"
+import classNames from "classnames"
 
 type Props = {
   children?: React.Node
@@ -17,8 +18,17 @@ export const Paragraph = ({children, ...props}: Props) => (
   </h2>
 )
 
-export const Code = ({children, ...props}: Props) => (
-  <pre {...props} className="code">
+type CodeProps = {
+  children?: React.Node,
+  light?: boolean,
+  full?: boolean
+}
+
+export const Code = ({children, ...props}: CodeProps) => (
+  <pre
+    {...props}
+    className={classNames("code", {full: props.full, light: props.light})}
+  >
     {children}
   </pre>
 )

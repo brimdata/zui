@@ -12,6 +12,7 @@ import * as timeWindow from "../reducers/timeWindow"
 import * as spaces from "../reducers/spaces"
 import * as boomd from "../reducers/boomdCredentials"
 import {type State} from "../reducers/types"
+import {Code} from "./Typography"
 
 type OwnProps = {|
   isOpen: boolean,
@@ -47,11 +48,11 @@ export default class CurlModal extends React.Component<Props> {
         className="curl-modal"
       >
         <SmallHeading>Curl Command</SmallHeading>
-        <pre>
+        <Code full light>
           curl -X POST -u {user}:{pass} -d &apos;
           {JSON.stringify(payload, null, 4)}
           &apos; {url}
-        </pre>
+        </Code>
       </Modal>
     )
   }

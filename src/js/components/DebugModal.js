@@ -38,7 +38,7 @@ export default class DebugModal extends React.Component<Props, State> {
         </div>
 
         <SmallHeading>Abstract Syntax Tree</SmallHeading>
-        <Code>
+        <Code full light>
           <code
             className="language-js"
             dangerouslySetInnerHTML={{

@@ -20,6 +20,12 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+@mixin fills-light-inset {
+  background-color: rgba(0, 0, 0, 0.04);
+  box-shadow: inset 0px 0px 2px 0 rgba(0, 0, 0, 0.1);
+  padding: 12px 24px;
+}
+
 .title {
   font-family: $heading-font;
   text-transform: uppercase;
@@ -52,4 +58,12 @@
   line-height: 14px;
   padding: 3px 6px;
   margin: 0;
+
+  &.full {
+    width: 100%;
+  }
+
+  &.light {
+    @include fills-light-inset;
+  }
 }
