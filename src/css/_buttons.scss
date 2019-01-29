@@ -207,6 +207,10 @@
     @include fills-transparent-white-20;
   }
 
+  &.light:before {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
   &:active:before {
     opacity: 0.75;
   }
