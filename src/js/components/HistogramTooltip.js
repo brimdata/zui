@@ -16,7 +16,7 @@ const HistogramTooltip = ({segments, ts}) => {
     ))
   return (
     <div className="histogram-tooltip">
-      <p className="title">{Time.format(ts, "MMM D, YYYY • HH:mm")}</p>
+      <p className="ts">{Time.format(ts, "MMM D, YYYY • HH:mm")}</p>
       <table>
         <tbody>
           {rows}
