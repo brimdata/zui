@@ -15,9 +15,10 @@ const FieldsTable = ({log, only}) => {
       }
     })
   } else {
-    for (let index = 1; index < tuple.length; index++) {
+    for (let index = 0; index < tuple.length; index++) {
       const value = tuple[index]
       const {name, type} = descriptor[index]
+      if (name === "_td") continue
       rows.push(
         <FieldsTableRow key={name} name={name} value={value} type={type} />
       )
