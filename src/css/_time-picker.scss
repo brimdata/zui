@@ -9,6 +9,7 @@
     position: absolute;
     top: calc(100% + #{$base-space});
     left: -20px;
+    overflow: scroll;
 
     li {
       padding: 0 24px;
