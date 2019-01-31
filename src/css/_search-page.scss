@@ -28,6 +28,7 @@ $page-border-color: $light-gray-3;
   overflow-x: scroll;
   display: flex;
   flex-flow: column;
+  position: relative;
 }
 
 .search-page-header,

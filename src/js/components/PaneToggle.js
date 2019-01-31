@@ -27,11 +27,13 @@ export default class PaneToggle extends React.Component<Props> {
     )
 
     return (
-      <div className={classNames("pane-toggle", classes)}>
+      <button
+        className={classNames("pane-toggle", this.props.className, classes)}
+      >
         <div className="circle">
           <Arrow />
         </div>
-      </div>
+      </button>
     )
   }
 }
