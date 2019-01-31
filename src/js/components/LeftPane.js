@@ -16,7 +16,7 @@ import dispatchToProps from "../lib/dispatchToProps"
 import type {Dispatch, State} from "../reducers/types"
 import {clearFilterTree} from "../actions/filterTree"
 import {setLeftSidebarWidth} from "../actions/view"
-import {XLeftPaneExpandButton} from "./LeftPaneExpandButton"
+import {XLeftPaneExpander} from "./LeftPaneExpander"
 
 type Props = {|
   isOpen: boolean,
@@ -35,7 +35,7 @@ export default class LeftPane extends React.Component<Props> {
     const {isOpen, width} = this.props
 
     if (!isOpen) {
-      return <XLeftPaneExpandButton />
+      return <XLeftPaneExpander />
     }
 
     return (

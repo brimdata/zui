@@ -14,10 +14,7 @@ import {CSSTransition} from "react-transition-group"
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}
 
-export default class LeftPaneExpandButton extends React.Component<
-  Props,
-  State
-> {
+export default class LeftPaneExpander extends React.Component<Props, State> {
   watcher = new MouseoverWatch()
   state = {show: false}
 
@@ -56,7 +53,7 @@ export default class LeftPaneExpandButton extends React.Component<
   }
 }
 
-export const XLeftPaneExpandButton = connect<Props, {||}, _, _, _, _>(
+export const XLeftPaneExpander = connect<Props, {||}, _, _, _, _>(
   null,
   dispatchToProps
-)(LeftPaneExpandButton)
+)(LeftPaneExpander)
