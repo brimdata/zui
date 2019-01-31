@@ -41,6 +41,7 @@ export default class MouseoverWatch {
           break
         case "EXITING":
           clearTimeout(this.tid)
+          this.state = "IN"
           break
       }
     } else {

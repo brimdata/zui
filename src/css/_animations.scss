@@ -1,0 +1,17 @@
+.slide-in-from-left-enter {
+  transform: translateX(-100%);
+}
+
+.slide-in-from-left-enter-active {
+  transition: transform 150ms;
+  transform: translateX(0);
+}
+
+.slide-in-from-left-exit {
+  transform: translateX(0);
+}
+
+.slide-in-from-left-exit-active {
+  transition: transform 150ms;
+  transform: translateX(-100%);
+}
