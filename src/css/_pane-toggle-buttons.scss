@@ -1,0 +1,35 @@
+.left-pane-expand-button {
+  z-index: 2;
+  position: fixed;
+  top: calc(50% - 36px / 2);
+  left: -13px;
+}
+
+.right-pane-expand-button {
+  z-index: 2;
+  position: fixed;
+  top: calc(50% - 36px / 2);
+  right: -13px;
+}
+
+.right-pane-collapser,
+.left-pane-collapser {
+  z-index: 2;
+  position: absolute;
+  top: calc(50% - 36px / 2);
+  opacity: 0;
+  transition: opacity 150ms 500ms;
+
+  &.show {
+    transition: opacity 150ms;
+    opacity: 1;
+  }
+}
+
+.right-pane-collapser {
+  left: -18px;
+}
+
+.left-pane-collapser {
+  right: -18px;
+}

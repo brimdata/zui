@@ -28,6 +28,8 @@ import {setRightSidebarWidth} from "../actions/view"
 import {fetchPackets} from "../actions/packets"
 import {backLogDetail} from "../actions/logDetails"
 import {forwardLogDetail} from "../actions/logDetails"
+import {XRightPaneExpander} from "./RightPaneExpander"
+import {XRightPaneCollapser} from "./RightPaneCollapser"
 
 type StateProps = {|
   isStarred: boolean,
@@ -41,7 +43,13 @@ type StateProps = {|
 
 type Props = {|...StateProps, ...DispatchProps|}
 
-export default class RightPane extends React.Component<Props> {
+type S = {
+  showCollapse: boolean
+}
+
+export default class RightPane extends React.Component<Props, S> {
+  state = {showCollapse: true}
+
   toggleStar = () => {
     this.props.isStarred
       ? this.props.dispatch(unstarLog(this.props.currentLog.tuple))
@@ -71,6 +79,8 @@ export default class RightPane extends React.Component<Props> {
     const packetsAvailable =
       currentLog && currentLog.isPath("conn") && space && space.packet_support
 
+    if (!isOpen) return <XRightPaneExpander />
+
     return (
       <Pane
         isOpen={isOpen}
@@ -78,6 +88,12 @@ export default class RightPane extends React.Component<Props> {
         position="right"
         width={width}
         className="log-detail-pane"
+        onMouseEnter={() => {
+          this.setState({showCollapse: true})
+        }}
+        onMouseLeave={() => {
+          this.setState({showCollapse: false})
+        }}
       >
         {currentLog && (
           <PaneHeader>
@@ -125,6 +141,7 @@ export default class RightPane extends React.Component<Props> {
         <PaneBody>
           <XLogDetailPane />
         </PaneBody>
+        <XRightPaneCollapser show={this.state.showCollapse} />
       </Pane>
     )
   }

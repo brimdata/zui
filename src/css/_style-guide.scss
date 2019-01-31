@@ -1,6 +1,8 @@
 /* Typeography */
 
 $gray-warm-5: #dfe0e6;
+$gray-cold-2: #545866;
+$gray-cold-1: #282a33;
 
 @mixin fills-transparent-dark {
   background-color: transparentize(#545866, 0.03);
@@ -16,6 +18,10 @@ $gray-warm-5: #dfe0e6;
 
 @mixin shadow-medium {
   box-shadow: 0 1px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+@mixin shadow-flat {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 @mixin fills-transparent-black-20 {
@@ -38,6 +44,10 @@ $gray-warm-5: #dfe0e6;
 
 @mixin fills-gray-cold-5 {
   background-color: #f5f5f7;
+}
+
+@mixin fills-gray-cold-2 {
+  background-color: #545866;
 }
 
 @mixin color-light-cold {

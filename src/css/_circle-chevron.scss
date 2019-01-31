@@ -1,0 +1,93 @@
+.circle-chevron {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+
+  .circle {
+    @include shadow-flat;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 150ms, box-shadow 150ms, background-color 150ms;
+  }
+
+  svg {
+    width: 11px;
+    margin-left: 11px;
+    transition: transform 150ms;
+  }
+
+  &:hover {
+    .circle {
+      transform: scale(1.05);
+      @include shadow-medium;
+    }
+
+    svg {
+      transform: translateX(-2px);
+    }
+  }
+
+  &:active {
+    .circle {
+      transform: scale(1);
+      @include shadow-flat;
+    }
+  }
+
+  // &.dark (default)
+  .circle {
+    background-color: $gray-cold-2;
+
+    &:hover {
+      background-color: lighten($gray-cold-2, 2%);
+    }
+
+    &:active {
+      background-color: $gray-cold-1;
+    }
+
+    svg {
+      fill: white;
+      stroke: white;
+    }
+  }
+
+  &.light {
+    .circle {
+      background-color: white;
+
+      &:hover {
+        background-color: darken(white, 3%);
+      }
+
+      &:active {
+        background-color: white;
+      }
+    }
+
+    svg {
+      fill: $gray-cold-2;
+      stroke: $gray-cold-2;
+    }
+  }
+
+  &.left {
+    transform: rotateY(0);
+  }
+
+  &.right {
+    transform: rotateY(180deg);
+  }
+
+  &.expand {
+    svg {
+      margin-left: 8px;
+    }
+  }
+}
