@@ -15,3 +15,21 @@
   transition: transform 150ms;
   transform: translateX(-100%);
 }
+
+.slide-in-from-right-enter {
+  transform: translateX(100%);
+}
+
+.slide-in-from-right-enter-active {
+  transition: transform 150ms;
+  transform: translateX(0);
+}
+
+.slide-in-from-right-exit {
+  transform: translateX(0);
+}
+
+.slide-in-from-right-exit-active {
+  transition: transform 150ms;
+  transform: translateX(100%);
+}

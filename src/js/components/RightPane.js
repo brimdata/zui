@@ -28,6 +28,7 @@ import {setRightSidebarWidth} from "../actions/view"
 import {fetchPackets} from "../actions/packets"
 import {backLogDetail} from "../actions/logDetails"
 import {forwardLogDetail} from "../actions/logDetails"
+import {XRightPaneExpander} from "./RightPaneExpander"
 
 type StateProps = {|
   isStarred: boolean,
@@ -70,6 +71,8 @@ export default class RightPane extends React.Component<Props> {
     } = this.props
     const packetsAvailable =
       currentLog && currentLog.isPath("conn") && space && space.packet_support
+
+    if (!isOpen) return <XRightPaneExpander />
 
     return (
       <Pane
