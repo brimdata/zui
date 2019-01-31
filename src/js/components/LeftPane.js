@@ -17,6 +17,7 @@ import type {Dispatch, State} from "../reducers/types"
 import {clearFilterTree} from "../actions/filterTree"
 import {setLeftSidebarWidth} from "../actions/view"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
+import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 
 type Props = {|
   isOpen: boolean,
@@ -24,7 +25,13 @@ type Props = {|
   dispatch: Dispatch
 |}
 
-export default class LeftPane extends React.Component<Props> {
+type S = {
+  showCollapse: boolean
+}
+
+export default class LeftPane extends React.Component<Props, S> {
+  state = {showCollapse: true}
+
   onDrag = (e: MouseEvent) => {
     const width = e.clientX
     const max = window.innerWidth
@@ -44,7 +51,9 @@ export default class LeftPane extends React.Component<Props> {
         position="left"
         width={width}
         onDrag={this.onDrag}
-        className="history-pane "
+        className="history-pane"
+        onMouseEnter={() => this.setState({showCollapse: true})}
+        onMouseLeave={() => this.setState({showCollapse: false})}
       >
         <PaneHeader>
           <Left />
@@ -63,6 +72,7 @@ export default class LeftPane extends React.Component<Props> {
         <PaneBody>
           <XHistoryAside />
         </PaneBody>
+        <XLeftPaneCollapser show={this.state.showCollapse} />
       </Pane>
     )
   }
