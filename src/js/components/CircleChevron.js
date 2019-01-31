@@ -27,7 +27,7 @@ export default class PaneToggle extends React.Component<Props> {
     )
 
     return (
-      <button className={classNames("pane-toggle", classes)}>
+      <button className={classNames("circle-chevron", classes)}>
         <div className="circle">
           <Arrow />
         </div>
