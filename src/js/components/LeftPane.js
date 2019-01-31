@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from "react"
 import Pane, {
   PaneHeader,
@@ -9,13 +11,15 @@ import Pane, {
 } from "./Pane"
 import XHistoryAside from "../connectors/XHistoryAside"
 
-export default class LeftPane extends React.Component {
-  constructor(props) {
-    super(props)
-    this.onDrag = this.onDrag.bind(this)
-  }
+type Props = {|
+  setLeftSidebarWidth: Function,
+  clearFilterTree: Function,
+  isOpen: boolean,
+  width: number
+|}
 
-  onDrag(e) {
+export default class LeftPane extends React.Component<Props> {
+  onDrag = (e: MouseEvent) => {
     const width = e.clientX
     const max = window.innerWidth
     this.props.setLeftSidebarWidth(Math.min(width, max))
