@@ -10,23 +10,28 @@ import Pane, {
   PaneBody
 } from "./Pane"
 import XHistoryAside from "../connectors/XHistoryAside"
+import {connect} from "react-redux"
+import * as view from "../reducers/view"
+import dispatchToProps from "../lib/dispatchToProps"
+import type {Dispatch, State} from "../reducers/types"
+import {clearFilterTree} from "../actions/filterTree"
+import {setLeftSidebarWidth} from "../actions/view"
 
 type Props = {|
-  setLeftSidebarWidth: Function,
-  clearFilterTree: Function,
   isOpen: boolean,
-  width: number
+  width: number,
+  dispatch: Dispatch
 |}
 
 export default class LeftPane extends React.Component<Props> {
   onDrag = (e: MouseEvent) => {
     const width = e.clientX
     const max = window.innerWidth
-    this.props.setLeftSidebarWidth(Math.min(width, max))
+    this.props.dispatch(setLeftSidebarWidth(Math.min(width, max)))
   }
 
   render() {
-    const {isOpen, width, clearFilterTree} = this.props
+    const {isOpen, width} = this.props
 
     return (
       <Pane
@@ -43,7 +48,7 @@ export default class LeftPane extends React.Component<Props> {
           </Center>
           <Right>
             <button
-              onClick={clearFilterTree}
+              onClick={() => this.props.dispatch(clearFilterTree())}
               className="panel-button clear-button"
             >
               CLEAR
@@ -57,3 +62,13 @@ export default class LeftPane extends React.Component<Props> {
     )
   }
 }
+
+const stateToProps = (state: State) => ({
+  isOpen: view.getLeftSidebarIsOpen(state),
+  width: view.getLeftSidebarWidth(state)
+})
+
+export const XLeftPane = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(LeftPane)
