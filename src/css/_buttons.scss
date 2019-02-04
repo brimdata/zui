@@ -2,6 +2,7 @@
   border: none;
   outline: none;
   font-family: $body-font;
+  cursor: pointer;
 }
 
 @mixin button-shadow {
@@ -175,8 +176,8 @@
 }
 
 .close-button {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -191,29 +192,27 @@
     fill: white;
     height: 12px;
     width: 12px;
+    transition: fill 150ms;
   }
 
-  &:hover:before {
-    transform: scale(1.5);
-  }
-
-  &:before {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    transition: transform 100ms;
-    transform: scale(0);
-    @include fills-transparent-white-20;
-  }
+  @include background-burst($white-20);
 
   &.light:before {
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  &.light svg {
-    fill: $gray-warm-5;
+  &.light {
+    svg {
+      fill: $gray-cold-2;
+      stroke: $gray-cold-2;
+    }
+  }
+
+  &.light:hover {
+    svg {
+      fill: $gray-cold-1;
+      stroke: $gray-cold-1;
+    }
   }
 
   &:active:before {
