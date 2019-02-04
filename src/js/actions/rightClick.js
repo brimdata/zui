@@ -70,6 +70,15 @@ export const detail = (log: Log, dispatch: Dispatch) => ({
   }
 })
 
+export const analyticDetail = (log: Log, dispatch: Dispatch) => ({
+  type: "action",
+  text: "View analytic details",
+  onClick: () => {
+    dispatch(logDetails.viewLogDetail(log))
+    dispatch(view.showRightSidebar())
+  }
+})
+
 export const fromTime = (field: TimeField, dispatch: Dispatch) => ({
   type: "action",
   text: 'Use as "start" time',

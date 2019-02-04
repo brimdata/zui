@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`conn log with pcap support 1`] = `
+exports[`Log Right Click conn log with pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
@@ -41,7 +41,7 @@ Array [
 ]
 `;
 
-exports[`dns log 1`] = `
+exports[`Log Right Click dns log 1`] = `
 Array [
   Object {
     "onClick": [Function],
@@ -69,7 +69,7 @@ Array [
 ]
 `;
 
-exports[`time field for conn log 1`] = `
+exports[`Log Right Click time field for conn log 1`] = `
 Array [
   Object {
     "onClick": [Function],
@@ -97,7 +97,7 @@ Array [
 ]
 `;
 
-exports[`time field for weird log 1`] = `
+exports[`Log Right Click time field for weird log 1`] = `
 Array [
   Object {
     "onClick": [Function],
