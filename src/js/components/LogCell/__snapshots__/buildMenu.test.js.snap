@@ -4,12 +4,12 @@ exports[`conn log with pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Filter out these values",
+    "text": "Filter out this id.orig_h",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Only show these values",
+    "text": "Only show this id.orig_h",
     "type": "action",
   },
   Object {
@@ -45,12 +45,12 @@ exports[`dns log 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Filter out these values",
+    "text": "Filter out this query",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Only show these values",
+    "text": "Only show this query",
     "type": "action",
   },
   Object {

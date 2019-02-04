@@ -65,7 +65,7 @@ const logActionsFunc = ({log, space, dispatch}) => {
 
 const exclude = (field, dispatch) => ({
   type: "action",
-  text: "Filter out these values",
+  text: `Filter out this ${field.name}`,
   onClick: (e: Event) => {
     e.stopPropagation()
     dispatch(searchBar.appendQueryExclude(field))
@@ -75,7 +75,7 @@ const exclude = (field, dispatch) => ({
 
 const include = (field, dispatch) => ({
   type: "action",
-  text: "Only show these values",
+  text: `Only show this ${field.name}`,
   onClick: (e: Event) => {
     e.stopPropagation()
     dispatch(searchBar.appendQueryInclude(field))
