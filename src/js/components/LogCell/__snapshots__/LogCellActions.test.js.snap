@@ -136,6 +136,7 @@ ShallowWrapper {
       }
     }
     onClose={[Function]}
+    resultType="logs"
     space={
       Object {
         "close_timeout": 5000,

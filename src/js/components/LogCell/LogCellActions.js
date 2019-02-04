@@ -3,9 +3,9 @@
 import React from "react"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
-import buildMenu from "../LogCell/buildMenu"
+import buildMenu from "../../lib/buildMenu"
 import type {Space} from "../../lib/Space"
-import type {MenuItemData} from "../LogCell/buildMenu"
+import type {MenuItemData} from "../../actions/rightClick"
 import MenuList from "../MenuList"
 import Portal from "../Portal"
 import * as MenuStyler from "../../lib/MenuStyler"
@@ -15,6 +15,8 @@ import * as spaces from "../../reducers/spaces"
 import type {State} from "../../reducers/types"
 import {type DispatchProps} from "../../reducers/types"
 import dispatchToProps from "../../lib/dispatchToProps"
+import {getResultsTab} from "../../reducers/view"
+import type {ResultsTabEnum} from "../../reducers/view"
 
 type OwnProps = {|
   log: Log,
@@ -24,7 +26,8 @@ type OwnProps = {|
 |}
 
 type StateProps = {|
-  space: Space
+  space: Space,
+  resultType: ResultsTabEnum
 |}
 
 type Props = {|
@@ -79,7 +82,8 @@ export default class LogCellActions extends React.Component<Props> {
 }
 
 const stateToProps = (state: State): StateProps => ({
-  space: spaces.getCurrentSpace(state)
+  space: spaces.getCurrentSpace(state),
+  resultType: getResultsTab(state)
 })
 
 export const XLogCellActions = connect<Props, OwnProps, _, _, _, _>(
