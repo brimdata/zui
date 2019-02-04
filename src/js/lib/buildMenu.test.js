@@ -1,8 +1,8 @@
 /* @flow */
 
 import buildMenu from "./buildMenu"
-import * as mockLogs from "../../test/mockLogs"
-import mockSpace from "../../test/mockSpace"
+import * as mockLogs from "../test/mockLogs"
+import mockSpace from "../test/mockSpace"
 
 test("conn log with pcap support", () => {
   const log = mockLogs.conn()

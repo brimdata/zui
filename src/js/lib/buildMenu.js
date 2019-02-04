@@ -1,15 +1,15 @@
 /* @flow */
 
-import * as searchBar from "../../actions/searchBar"
-import * as packets from "../../actions/packets"
-import * as logDetails from "../../actions/logDetails"
-import * as timeWindow from "../../actions/timeWindow"
-import * as view from "../../actions/view"
-import * as whoisActions from "../../actions/whois"
-import {TimeField} from "../../models/Field"
-import type {Space} from "../../lib/Space"
-import Log from "../../models/Log"
-import Field from "../../models/Field"
+import * as searchBar from "../actions/searchBar"
+import * as packets from "../actions/packets"
+import * as logDetails from "../actions/logDetails"
+import * as timeWindow from "../actions/timeWindow"
+import * as view from "../actions/view"
+import * as whoisActions from "../actions/whois"
+import {TimeField} from "../models/Field"
+import type {Space} from "../lib/Space"
+import Log from "../models/Log"
+import Field from "../models/Field"
 
 type Action = {
   type: "action",
