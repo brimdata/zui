@@ -158,6 +158,16 @@ test("append a count to an existing query", () => {
   expect(getSearchBarInputValue(state)).toBe("dns | count() by query")
 })
 
+test("append a count to an existing query with a pin", () => {
+  const field = new Field({name: "query", type: "string", value: "heyyo"})
+  let state = store.dispatchAll([
+    actions.changeSearchBarInput("dns"),
+    actions.pinSearchBar(),
+    actions.appendQueryCountBy(field)
+  ])
+  expect(getSearchBarInputValue(state)).toBe("| count() by query")
+})
+
 test("get search program", () => {
   let state = store.dispatchAll([
     actions.changeSearchBarInput("http"),

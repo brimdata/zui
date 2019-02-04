@@ -37,7 +37,8 @@ export default createReducer(initialState, {
   }),
 
   QUERY_COUNT_BY_APPEND: (state, {field}) => {
-    const current = Str.onlyWhitespace(state.current) ? "*" : state.current
+    const query = [...state.pinned, state.current].join(" ")
+    const current = Str.onlyWhitespace(query) ? "*" : state.current
     return {
       ...state,
       current: Str.trim(current + ` | count() by ${field.name}`)

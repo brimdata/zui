@@ -1,0 +1,20 @@
+@mixin background-burst($color) {
+  &:hover:before {
+    transform: scale(1);
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 100ms;
+    transform: scale(0);
+    background-color: $color;
+  }
+}

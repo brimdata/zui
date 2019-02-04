@@ -3,7 +3,7 @@ $filter-tree-line-color: $gray-1;
 .filter-tree {
   color: $light-gray-3;
 
-  .close-button {
+  .delete-button {
     position: absolute;
     top: 5px;
     right: 12px;
@@ -32,7 +32,7 @@ $filter-tree-line-color: $gray-1;
 .filter-tree-parent:hover {
   background: $gray-2;
   cursor: pointer;
-  .close-button {
+  .delete-button {
     opacity: 1;
   }
 }
