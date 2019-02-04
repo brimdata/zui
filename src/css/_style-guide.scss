@@ -4,6 +4,9 @@ $gray-warm-5: #dfe0e6;
 $gray-cold-2: #545866;
 $gray-cold-1: #282a33;
 
+$white-20: rgba(255, 255, 255, 0.2);
+$black-20: rgba(0, 0, 0, 0.2);
+
 @mixin fills-transparent-dark {
   background-color: transparentize(#545866, 0.03);
 }
@@ -56,6 +59,18 @@ $gray-cold-1: #282a33;
 
 @mixin color-dark-cold {
   color: #545866;
+}
+
+@mixin input-secondary {
+  background-color: #dcdcdc;
+  &:hover {
+    background: darken(#dcdcdc, 5%);
+  }
+
+  &:active,
+  .active {
+    background: darken(#dcdcdc, 10%);
+  }
 }
 
 .title {

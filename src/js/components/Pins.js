@@ -1,7 +1,6 @@
 /* @flow */
 
 import React from "react"
-import mapJoin from "../lib/mapJoin"
 import Pin from "../icons/pin-md.svg"
 import FilterNode from "./FilterNode"
 import {connect} from "react-redux"
@@ -48,23 +47,18 @@ export default class Pins extends React.Component<Props> {
     )
   }
 
-  renderJoinOperator = (index: number) => {
-    return (
-      <p className="join-operator" key={index + "-operator"}>
-        AND
-      </p>
-    )
-  }
-
   renderPinButton() {
     return (
-      <button
-        className="button pin-filter"
-        title="⌘K"
-        onClick={() => this.props.dispatch(actions.pinSearchBar())}
-      >
-        <Pin />
-      </button>
+      <div className="pin-button-wrapper">
+        <p>{this.props.previousValue}</p>
+        <button
+          className="pin-button"
+          title="⌘K"
+          onClick={() => this.props.dispatch(actions.pinSearchBar())}
+        >
+          <Pin />
+        </button>
+      </div>
     )
   }
 
@@ -76,11 +70,7 @@ export default class Pins extends React.Component<Props> {
 
     return (
       <div className="pins">
-        {mapJoin(pins, this.renderFilter, this.renderJoinOperator)}
-        {hasStagedFilter &&
-          hasCommittedFilter &&
-          this.renderJoinOperator(pins.length)}
-        {hasStagedFilter && this.renderFilter(previousValue, -1)}
+        {pins.map(this.renderFilter)}
         {hasStagedFilter && this.renderPinButton()}
       </div>
     )
