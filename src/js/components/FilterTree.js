@@ -55,7 +55,7 @@ export default class FilterTree extends React.Component<AllProps> {
         >
           <FilterNode filter={node.data} />
           <a
-            className="close-button"
+            className="delete-button"
             onClick={e => {
               e.stopPropagation()
               this.props.dispatch(removeFilterTreeNode(node))
