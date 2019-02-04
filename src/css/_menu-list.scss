@@ -18,6 +18,8 @@
     display: block;
     white-space: nowrap;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
       background-color: $off-white;
