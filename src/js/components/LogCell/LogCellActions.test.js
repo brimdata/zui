@@ -11,6 +11,7 @@ test("basic snapshot", () => {
   const space = mockSpace({packet_support: true})
   const wrapper = shallow(
     <LogCellActions
+      resultType="logs"
       dispatch={jest.fn()}
       log={log}
       field={log.getField("_path")}
