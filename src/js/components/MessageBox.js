@@ -7,7 +7,7 @@ import {Header} from "./Typography"
 type Props = {|
   title: string,
   children: *,
-  onClose: () => *
+  onClose?: () => *
 |}
 
 export default class MessageBox extends React.Component<Props> {
@@ -16,7 +16,7 @@ export default class MessageBox extends React.Component<Props> {
       <div className="message-box">
         <Header>{this.props.title}</Header>
         {this.props.children}
-        <CloseButton onClick={this.props.onClose} />
+        {this.props.onClose && <CloseButton onClick={this.props.onClose} />}
       </div>
     )
   }
