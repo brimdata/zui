@@ -53,3 +53,15 @@ export const Label = ({children, ...props}: Props) => (
     {children}
   </label>
 )
+
+export const Title = ({children, className, ...props}: Props) => (
+  <h1 className={classNames("title", className)} {...props}>
+    {children}
+  </h1>
+)
+
+export const Link = ({children, className, ...props}: Props) => (
+  <a className={classNames("link", className)} {...props}>
+    {children}
+  </a>
+)
