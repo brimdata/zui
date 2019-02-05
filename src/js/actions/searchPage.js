@@ -7,19 +7,21 @@ import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
 import type {Thunk} from "redux-thunk"
 
 export const init = (): Thunk => (dispatch, getState, api) =>
-  // $FlowFixMe
-  new Promise((resolve, reject) => {
-    api.spaces().done(names => {
-      dispatch(spaces.setSpaceNames(names))
-      const name = chooseSpaceName(names, getState())
-      if (name) {
-        dispatch(switchSpace(name))
-          .done(resolve)
-          .error(reject)
-      } else {
-        reject("NoSpaces")
-      }
-    })
+  new Promise<string>((resolve, reject) => {
+    api
+      .spaces()
+      .done(names => {
+        dispatch(spaces.setSpaceNames(names))
+        const name = chooseSpaceName(names, getState())
+        if (name) {
+          dispatch(switchSpace(name))
+            .done(resolve)
+            .error(reject)
+        } else {
+          reject("NoSpaces")
+        }
+      })
+      .error(reject)
   })
 
 export const switchSpace = (name: string): Thunk => {

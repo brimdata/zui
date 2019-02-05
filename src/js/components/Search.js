@@ -24,6 +24,9 @@ import * as initialLoad from "../reducers/initialLoad"
 import {type DispatchProps} from "../reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
 import {type State as S} from "../reducers/types"
+import ErrorFactory from "../models/ErrorFactory"
+import {AppError} from "../models/Errors"
+import StartupError from "./StartupError"
 
 type StateProps = {|
   isConnected: boolean,
@@ -40,7 +43,7 @@ type Props = {|
 
 type State = {
   ready: boolean,
-  error: ?string
+  error: ?AppError
 }
 
 export default class Search extends React.Component<Props, State> {
@@ -50,15 +53,17 @@ export default class Search extends React.Component<Props, State> {
     props
       .dispatch(searchPage.init())
       .then(() => this.setState({ready: true}))
-      .catch(e => this.setState({error: e}))
+      .catch(e => this.setState({error: ErrorFactory.create(e)}))
   }
 
   render() {
+    console.log(this.state.error)
     const {isConnected, currentSpaceName, logsTab} = this.props
-
     if (!isConnected) return <Redirect to="/connect" />
     if (this.state.error === "NoSpaces") return <Redirect to="/spaces" />
-    if (this.state.error) throw new Error(this.state.error)
+    if (this.state.error) {
+      return <StartupError error={this.state.error} />
+    }
     if (!this.state.ready) return null
     if (!currentSpaceName) return <Redirect to="/spaces" />
 
