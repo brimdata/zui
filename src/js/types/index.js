@@ -1,13 +1,11 @@
 /* @flow */
 
-export type ErrorMessage = {
-  type: string,
-  data: Object,
-  key: string
-}
+import {AppError} from "../models/Errors"
 
-export type Notification = {
-  type: string,
-  data: Object,
-  key: string
-}
+export type Notification =
+  | AppError
+  | {
+      type: string,
+      data: Object,
+      key: string
+    }

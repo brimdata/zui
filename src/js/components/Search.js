@@ -57,7 +57,6 @@ export default class Search extends React.Component<Props, State> {
   }
 
   render() {
-    console.log(this.state.error)
     const {isConnected, currentSpaceName, logsTab} = this.props
     if (!isConnected) return <Redirect to="/connect" />
     if (this.state.error === "NoSpaces") return <Redirect to="/spaces" />

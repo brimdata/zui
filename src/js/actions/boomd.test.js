@@ -2,6 +2,7 @@
 
 import initStore from "../test/initStore"
 import {checkLookytalkVersion} from "./boomd"
+import {LookytalkVersionError} from "../models/Errors"
 
 test("#checkLookytalkVersion when they are the same", () => {
   const store = initStore({
@@ -25,5 +26,5 @@ test("#checkLookytalkVersion when they are different", () => {
   const action = store.getActions()[0]
 
   expect(action.type).toBe("NOTIFICATIONS_ADD")
-  expect(action.notification.type).toBe("LookytalkVersionError")
+  expect(action.notification).toBeInstanceOf(LookytalkVersionError)
 })

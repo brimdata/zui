@@ -5,15 +5,21 @@ import upperFirst from "lodash/upperFirst"
 
 export type RawError = string
 
+export type ErrorContext = *
+
 export class AppError {
   raw: RawError
+  ts: Date
+  context: ErrorContext
 
   static is(_e: RawError) {
     return false
   }
 
-  constructor(e: RawError) {
+  constructor(e: RawError, context: ErrorContext = {}) {
     this.raw = e
+    this.context = context
+    this.ts = new Date()
   }
 
   title() {
@@ -43,6 +49,10 @@ export class InternalServerError extends AppError {
       return false
     }
   }
+
+  message() {
+    return upperFirst(JSON.parse(this.raw).error) + "."
+  }
 }
 
 export class NetworkError extends AppError {
@@ -67,14 +77,37 @@ export class NotFoundError extends AppError {
   }
 
   message() {
-    return upperFirst(JSON.parse(this.raw).error)
+    return upperFirst(JSON.parse(this.raw).error) + "."
   }
 }
 
+export class SpaceNotFoundError extends AppError {
+  static is(e: RawError) {
+    try {
+      const {code, error} = JSON.parse(e)
+      return code === "INTERNAL_ERROR" && error === "space not found"
+    } catch (e) {
+      return false
+    }
+  }
+
+  message() {
+    if (this.context.space)
+      return `Could not find space "${this.context.space}".`
+    else {
+      return "Could not find space."
+    }
+  }
+}
+
+export class LookytalkVersionError extends AppError {}
+
 export const KNOWN_ERRORS = [
+  LookytalkVersionError,
   UnauthorizedError,
-  InternalServerError,
   NetworkError,
   NoSpacesError,
-  NotFoundError
+  SpaceNotFoundError,
+  NotFoundError,
+  InternalServerError
 ]

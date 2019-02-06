@@ -2,8 +2,9 @@
 
 import {getCredentials} from "../reducers/boomdCredentials"
 import type {Credentials} from "../lib/Credentials"
-import {notifyLookytalkVersionError} from "./notifications"
 import type {Thunk} from "../reducers/types"
+import {addNotification} from "./notifications"
+import {LookytalkVersionError} from "../models/Errors"
 
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",
@@ -69,6 +70,13 @@ export const checkLookytalkVersion = (serverVersion: string): Thunk => (
 ) => {
   const clientVersion = api.info().lookytalk
   if (clientVersion !== serverVersion) {
-    dispatch(notifyLookytalkVersionError(clientVersion, serverVersion))
+    dispatch(
+      addNotification(
+        new LookytalkVersionError("", {
+          clientVersion,
+          serverVersion
+        })
+      )
+    )
   }
 }
