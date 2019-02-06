@@ -13,7 +13,6 @@ import analysis from "./analysis"
 import logDetails from "./logDetails"
 import searchStats from "./searchStats"
 import boomdCredentials from "./boomdCredentials"
-import boomdConnection from "./boomdConnection"
 import searchBar from "./searchBar"
 import view from "./view"
 import starredLogs from "./starredLogs"
@@ -43,7 +42,6 @@ export default combineReducers<*, *>({
   logDetails,
   searchStats,
   boomdCredentials,
-  boomdConnection,
   starredLogs,
   packets,
   notices,

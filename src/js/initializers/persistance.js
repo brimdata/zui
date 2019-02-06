@@ -10,7 +10,6 @@ const PERSIST = [
   "searchBar",
   "timeWindow",
   "boomdCredentials",
-  "boomdConnection",
   "currentSpaceName",
   "view",
   "starredLogs"
