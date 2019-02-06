@@ -17,10 +17,8 @@ import ColumnChooser from "./ColumnChooser"
 import {XWhoisModal} from "./WhoisModal"
 import {XStatusBar} from "./StatusBar"
 import {connect} from "react-redux"
-import * as spaces from "../reducers/spaces"
 import * as boomdConnection from "../reducers/boomdConnection"
 import * as view from "../reducers/view"
-import * as initialLoad from "../reducers/initialLoad"
 import {type DispatchProps} from "../reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
 import {type State as S} from "../reducers/types"
@@ -30,10 +28,7 @@ import StartupError from "./StartupError"
 
 type StateProps = {|
   isConnected: boolean,
-  currentSpaceName: string,
-  initialLoad: boolean,
-  logsTab: boolean,
-  space?: any
+  logsTab: boolean
 |}
 
 type Props = {|
@@ -57,14 +52,9 @@ export default class Search extends React.Component<Props, State> {
   }
 
   render() {
-    const {isConnected, currentSpaceName, logsTab} = this.props
-    if (!isConnected) return <Redirect to="/connect" />
-    if (this.state.error === "NoSpaces") return <Redirect to="/spaces" />
-    if (this.state.error) {
-      return <StartupError error={this.state.error} />
-    }
+    if (!this.props.isConnected) return <Redirect to="/connect" />
+    if (this.state.error) return <StartupError error={this.state.error} />
     if (!this.state.ready) return null
-    if (!currentSpaceName) return <Redirect to="/spaces" />
 
     return (
       <div className="search-page-wrapper">
@@ -75,7 +65,7 @@ export default class Search extends React.Component<Props, State> {
             <XTitleBar />
             <div className="search-page-header">
               <XControlBar />
-              {logsTab && (
+              {this.props.logsTab && (
                 <div className="search-page-header-charts">
                   <AutoSizer disableHeight>
                     {({width}) => <XHistogram height={80} width={width} />}
@@ -96,12 +86,9 @@ export default class Search extends React.Component<Props, State> {
   }
 }
 
-const stateToProps = (state: S): StateProps => ({
-  initialLoad: initialLoad.getInitialLoad(state),
+export const stateToProps = (state: S): StateProps => ({
   isConnected: boomdConnection.getBoomdIsConnected(state),
-  currentSpaceName: spaces.getCurrentSpaceName(state),
-  logsTab: view.getShowLogsTab(state),
-  space: spaces.getCurrentSpace(state)
+  logsTab: view.getShowLogsTab(state)
 })
 
 export const XSearch = connect<Props, {||}, _, _, _, _>(
