@@ -8,4 +8,13 @@ export default class MockApi extends Client {
     Object.assign(this, obj)
     this.send = jest.fn(() => new Handler(() => {}))
   }
+
+  stub(method: string, returnVal: *) {
+    const handler = new Handler(() => {})
+    this[method] = () => {
+      setTimeout(() => handler.onDone(returnVal))
+      return handler
+    }
+    return this
+  }
 }
