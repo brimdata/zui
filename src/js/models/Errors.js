@@ -39,6 +39,10 @@ export class UnauthorizedError extends AppError {
       return false
     }
   }
+
+  message() {
+    return "Your credentials are not authorized to connect to this server."
+  }
 }
 
 export class InternalServerError extends AppError {
@@ -59,11 +63,19 @@ export class NetworkError extends AppError {
   static is(e: RawError) {
     return e === "Failed to fetch"
   }
+
+  message() {
+    return "Either the server is not running or you do not have internet access."
+  }
 }
 
 export class NoSpacesError extends AppError {
   static is(e: RawError) {
     return e === "NoSpaces"
+  }
+
+  message() {
+    return "This host has no spaces to search. Use the command line to create a space, then reload this page."
   }
 }
 

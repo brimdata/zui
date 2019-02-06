@@ -39,19 +39,15 @@ const DefaultErrorTemplate = ({error, onClose}: Props) => (
   </MessageBox>
 )
 
-const NetworkErrorTemplate = ({onClose}: Props) => (
-  <MessageBox title="Network Error" onClose={onClose}>
-    <Paragraph>
-      Either this client does not have internet access or the server is down.
-    </Paragraph>
+const NetworkErrorTemplate = ({error, onClose}: Props) => (
+  <MessageBox title={error.title()} onClose={onClose}>
+    <Paragraph>{error.message()}</Paragraph>
   </MessageBox>
 )
 
-const UnauthorizedErrorTemplate = ({onClose}: Props) => (
-  <MessageBox title="Unauthorized Error" onClose={onClose}>
-    <Paragraph>
-      Your credentials are not authorized to connect to this server.
-    </Paragraph>
+const UnauthorizedErrorTemplate = ({error, onClose}: Props) => (
+  <MessageBox title={error.title()} onClose={onClose}>
+    <Paragraph>{error.message()}</Paragraph>
     <br />
     <LinkTo to="/connect" onClick={onClose} className="link yellow">
       Return to Login
@@ -59,12 +55,9 @@ const UnauthorizedErrorTemplate = ({onClose}: Props) => (
   </MessageBox>
 )
 
-const NoSpacesErrorTemplate = ({onClose}: Props) => (
+const NoSpacesErrorTemplate = ({error, onClose}: Props) => (
   <MessageBox title="No Spaces on Host" onClose={onClose}>
-    <Paragraph>
-      This host has no spaces to search. Use the command line to create a space,
-      then reload this page.
-    </Paragraph>
+    <Paragraph>{error.message()}</Paragraph>
     <br />
     <Paragraph>For example, to create a space called {'"default"'}:</Paragraph>
     <Code>{"boom -execute 'new default'"}</Code>
