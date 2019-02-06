@@ -6,6 +6,7 @@ import {disconnect} from "../actions/connect"
 import {connect} from "react-redux"
 import {getBoomHost, getBoomPort} from "../reducers/boomdCredentials"
 import dispatchToProps from "../lib/dispatchToProps"
+import {Link} from "react-router-dom"
 
 type Props = {|
   host: string,
@@ -14,12 +15,7 @@ type Props = {|
 |}
 
 export default class TitleBar extends React.Component<Props> {
-  onHostClick: Function
-
-  constructor(props: Props) {
-    super(props)
-    this.onHostClick = () => props.dispatch(disconnect())
-  }
+  onHostClick = () => this.props.dispatch(disconnect())
 
   render() {
     const {host, port} = this.props
@@ -29,9 +25,9 @@ export default class TitleBar extends React.Component<Props> {
           <Left />
           <Center>
             <PaneTitle>
-              <span onClick={this.onHostClick}>
+              <Link to="/connect" className="link" onClick={this.onHostClick}>
                 {host}:{port}
-              </span>{" "}
+              </Link>
             </PaneTitle>
           </Center>
           <Right />
