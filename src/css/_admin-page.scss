@@ -25,6 +25,10 @@
     align-items: center;
     justify-content: center;
 
+    &:disabled {
+      opacity: 0.5;
+    }
+
     svg {
       width: 9px;
       height: 9px;

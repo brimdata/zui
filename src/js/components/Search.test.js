@@ -10,20 +10,8 @@ let props
 beforeEach(() => {
   props = {
     dispatch: () => new Promise(res => res()),
-    isConnected: true,
     logsTab: true
   }
-})
-
-test("redirects to /connect if connected is false", () => {
-  props.isConnected = false
-  const comp = shallow(<Search {...props} />)
-  expect(comp.find("Redirect")).toHaveLength(1)
-})
-
-test("does not redirect if connected", () => {
-  const comp = shallow(<Search {...props} />)
-  expect(comp.find("Redirect")).toHaveLength(0)
 })
 
 test("renders null if not ready", () => {
@@ -62,7 +50,6 @@ test("stateToProps", () => {
   const props = stateToProps(store.getState())
 
   expect(props).toEqual({
-    isConnected: false,
     logsTab: false
   })
 })

@@ -1,9 +1,7 @@
 /* @flow */
 
 import React from "react"
-import {Redirect} from "react-router-dom"
 import {AutoSizer} from "react-virtualized"
-
 import {XTitleBar} from "./TitleBar"
 import {XControlBar} from "./ControlBar"
 import {XHistogram} from "./Histogram"
@@ -17,7 +15,6 @@ import ColumnChooser from "./ColumnChooser"
 import {XWhoisModal} from "./WhoisModal"
 import {XStatusBar} from "./StatusBar"
 import {connect} from "react-redux"
-import * as boomdConnection from "../reducers/boomdConnection"
 import * as view from "../reducers/view"
 import {type DispatchProps} from "../reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
@@ -27,7 +24,6 @@ import {AppError} from "../models/Errors"
 import StartupError from "./StartupError"
 
 type StateProps = {|
-  isConnected: boolean,
   logsTab: boolean
 |}
 
@@ -52,7 +48,6 @@ export default class Search extends React.Component<Props, State> {
   }
 
   render() {
-    if (!this.props.isConnected) return <Redirect to="/connect" />
     if (this.state.error) return <StartupError error={this.state.error} />
     if (!this.state.ready) return null
 
@@ -87,7 +82,6 @@ export default class Search extends React.Component<Props, State> {
 }
 
 export const stateToProps = (state: S): StateProps => ({
-  isConnected: boomdConnection.getBoomdIsConnected(state),
   logsTab: view.getShowLogsTab(state)
 })
 

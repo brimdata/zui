@@ -11,11 +11,9 @@ import {clearStarredLogs} from "./starredLogs"
 import {clearSearchHistory} from "./searchHistory"
 import {clearLogViewer} from "./logViewer"
 import {clearCountByTime} from "./countByTime"
-import {disconnectBoomd} from "./boomd"
 import type {Thunk} from "redux-thunk"
 
 export const disconnect = (): Thunk => (dispatch, _getState, _api) => {
-  dispatch(disconnectBoomd())
   dispatch(clearMainSearch())
   dispatch(clearDescriptors())
   dispatch(clearSearchBar())
