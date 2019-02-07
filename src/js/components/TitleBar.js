@@ -2,7 +2,7 @@
 
 import React from "react"
 import {PaneHeader, Center, Left, Right, PaneTitle} from "./Pane"
-import {disconnect} from "../actions/connect"
+import {disconnect} from "../actions/disconnect"
 import {connect} from "react-redux"
 import {getBoomHost, getBoomPort} from "../reducers/boomdCredentials"
 import dispatchToProps from "../lib/dispatchToProps"

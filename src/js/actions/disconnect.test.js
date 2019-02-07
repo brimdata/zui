@@ -1,5 +1,4 @@
-import {disconnect} from "./connect"
-
+import {disconnect} from "./disconnect"
 import initStore from "../test/initStore"
 
 describe("#disconnect", () => {
