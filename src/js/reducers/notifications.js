@@ -1,10 +1,10 @@
 /* @flow */
 
 import createReducer from "./createReducer"
-import {type Notification} from "../types"
+import AppError from "../models/AppError"
 
 const initialState = []
-export type Notifications = Notification[]
+export type Notifications = AppError[]
 
 export default createReducer(initialState, {
   NOTIFICATIONS_ADD: (state, {notification}) => [...state, notification],

@@ -1,8 +1,15 @@
 /* Typeography */
-
+$gray-warm-1: #332d28;
+$gray-warm-2: #665d54;
+$gray-warm-3: #948b82;
+$gray-warm-4: #bfbab4;
 $gray-warm-5: #dfe0e6;
-$gray-cold-2: #545866;
+
 $gray-cold-1: #282a33;
+$gray-cold-2: #545866;
+$gray-cold-3: #828694;
+$gray-cold-5: #f5f5f7;
+$gray-cold-4: #c5c7d1;
 
 $white-20: rgba(255, 255, 255, 0.2);
 $black-20: rgba(0, 0, 0, 0.2);
@@ -138,6 +145,37 @@ $black-20: rgba(0, 0, 0, 0.2);
   line-height: 15px;
   font-weight: normal;
   margin: 0;
+}
+
+.link {
+  font-family: $body-font;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+  text-decoration: underline;
+  cursor: pointer;
+
+  color: $blue;
+
+  &:hover {
+    color: darken($blue, 20%);
+  }
+
+  &:active {
+    color: darken($blue, 30%);
+  }
+
+  &.yellow {
+    color: $yellow-3;
+
+    &:hover {
+      color: $yellow-4;
+    }
+    &:active {
+      color: $yellow-5;
+    }
+  }
 }
 
 // Variations

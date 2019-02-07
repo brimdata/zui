@@ -4,7 +4,6 @@ import React, {Component} from "react"
 import {Route, Switch, Redirect} from "react-router-dom"
 import {XSearch} from "./Search"
 import XConnect from "../connectors/XConnect"
-import XSpaces from "../connectors/XSpaces"
 import * as Time from "../lib/Time"
 import {XNotifications} from "./Notifications"
 
@@ -13,16 +12,15 @@ type Props = {
   timeZone: string
 }
 
-class App extends Component<Props> {
+export default class App extends Component<Props> {
   render() {
-    const {isConnected, timeZone} = this.props
+    const {timeZone} = this.props
     Time.setZone(timeZone)
     return (
       <div className="app-wrapper">
         <XNotifications />
         <Switch>
-          {isConnected && <Route path="/search" component={XSearch} />}
-          {isConnected && <Route path="/spaces" component={XSpaces} />}
+          <Route path="/search" component={XSearch} />
           <Route path="/connect" component={XConnect} />
           <Redirect to="/connect" />
         </Switch>
@@ -30,5 +28,3 @@ class App extends Component<Props> {
     )
   }
 }
-
-export default App

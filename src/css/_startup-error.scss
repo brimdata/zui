@@ -1,0 +1,13 @@
+.startup-error-wrapper {
+  padding-top: 120px;
+  display: flex;
+  justify-content: center;
+
+  .actions {
+    text-decoration: underline;
+    a {
+      display: block;
+      margin: 24px;
+    }
+  }
+}

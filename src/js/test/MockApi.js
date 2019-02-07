@@ -1,27 +1,20 @@
 /* @flow */
 
-export default class MockApi {
+import Client, {Handler} from "boom-js-client"
+
+export default class MockApi extends Client {
   constructor(obj: Object = {}) {
+    super()
     Object.assign(this, obj)
+    this.send = jest.fn(() => new Handler(() => {}))
   }
 
-  search() {
+  stub(method: string, returnVal: *) {
+    const handler = new Handler(() => {})
+    this[method] = () => {
+      setTimeout(() => handler.onDone(returnVal))
+      return handler
+    }
     return this
   }
-  each() {
-    return this
-  }
-  channel() {
-    return this
-  }
-  done() {
-    return this
-  }
-  abort() {
-    return this
-  }
-  error() {
-    return this
-  }
-  abortRequest() {}
 }

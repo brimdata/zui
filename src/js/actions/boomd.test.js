@@ -2,28 +2,29 @@
 
 import initStore from "../test/initStore"
 import {checkLookytalkVersion} from "./boomd"
+import {LookytalkVersionError} from "../models/Errors"
+import MockApi from "../test/MockApi"
 
-test("#checkLookytalkVersion when they are the same", () => {
-  const store = initStore({
-    info: () => ({
-      lookytalk: "1.1.1"
-    })
+test("#checkLookytalkVersion when they are the same", done => {
+  const api = new MockApi()
+  const {lookytalk} = api.info()
+  api.stub("serverInfo", {lookytalk})
+  const store = initStore(api)
+
+  store.dispatch(checkLookytalkVersion()).done(() => {
+    expect(store.getActions()).toEqual([])
+    done()
   })
-  store.dispatch(checkLookytalkVersion("1.1.1"))
-
-  expect(store.getActions()).toEqual([])
 })
 
-test("#checkLookytalkVersion when they are different", () => {
-  const store = initStore({
-    info: () => ({
-      lookytalk: "2.2.2"
-    })
+test("#checkLookytalkVersion when they are different", done => {
+  const api = new MockApi().stub("serverInfo", {lookytalk: "1.1.1"})
+  const store = initStore(api)
+
+  store.dispatch(checkLookytalkVersion()).done(() => {
+    const action = store.getActions()[0]
+    expect(action.type).toBe("NOTIFICATIONS_ADD")
+    expect(action.notification).toBeInstanceOf(LookytalkVersionError)
+    done()
   })
-  store.dispatch(checkLookytalkVersion("1.1.1"))
-
-  const action = store.getActions()[0]
-
-  expect(action.type).toBe("NOTIFICATIONS_ADD")
-  expect(action.notification.type).toBe("LookytalkVersionError")
 })

@@ -1,8 +1,6 @@
 .title-bar {
-  .pane-title {
-    user-select: none;
-  }
-  .pane-title span {
+  .link {
+    color: $gray-warm-1;
     padding: 0 6px;
     cursor: pointer;
     &:hover {

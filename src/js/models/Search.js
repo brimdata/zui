@@ -2,9 +2,10 @@
 
 import statsReceiver from "../receivers/statsReceiver"
 import {completeMainSearch, requestMainSearch} from "../actions/mainSearch"
-import {setNoticeError} from "../actions/notices"
 import type {DateTuple} from "../lib/TimeWindow"
 import Client, {Handler} from "boom-js-client"
+import {addNotification} from "../actions/notifications"
+import ErrorFactory from "./ErrorFactory"
 
 type Options = {
   space: string,
@@ -32,11 +33,10 @@ export default class Search {
     return request
       .each(statsReceiver(this.dispatch))
       .done(() => this.dispatch(completeMainSearch()))
-      .error(_e => {
+      .error(error => {
+        const context = {space, program, timeWindow}
         this.dispatch(completeMainSearch())
-        this.dispatch(
-          setNoticeError("There's a problem talking with the server.")
-        )
+        this.dispatch(addNotification(ErrorFactory.create(error, context)))
       })
   }
 }

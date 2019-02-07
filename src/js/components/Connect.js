@@ -2,26 +2,41 @@ import React from "react"
 import {Redirect} from "react-router-dom"
 import LookyHeader from "./LookyHeader"
 import AdminTitle from "./AdminTitle"
+import ErrorFactory from "../models/ErrorFactory"
+import delay from "../lib/delay"
 
 class Connect extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {...props.credentials}
-    this.isSubmitting = false
-
+    this.state = {
+      ...props.credentials,
+      error: null,
+      isConnecting: false,
+      isConnected: false
+    }
     this.onSubmit = e => {
-      this.isSubmitting = true
+      this.setState({isConnecting: true, error: null})
       e.preventDefault()
       this.props.setBoomdCredentials(this.state)
-      this.props.connectBoomd()
+      this.props
+        .connectBoomd()
+        .done(() => delay(300, () => this.setState({isConnected: true})))
+        .error(e => {
+          delay(300, () =>
+            this.setState({
+              isConnecting: false,
+              error: ErrorFactory.create(e)
+            })
+          )
+        })
     }
   }
 
   render() {
-    const {error, isConnected} = this.props
-    const {isSubmitting} = this
-
-    if (isSubmitting && isConnected) return <Redirect to="/search" />
+    if (this.state.isConnected) {
+      console.log("redirecting")
+      return <Redirect to="/search" />
+    }
 
     return (
       <main className="admin-page boomd-connect">
@@ -68,10 +83,16 @@ class Connect extends React.Component {
                   onChange={e => this.setState({pass: e.currentTarget.value})}
                 />
               </div>
-              {error ? <p className="form-error">{error}</p> : null}
-              <button type="submit" className="button">
-                Connect
+              <button
+                disabled={this.state.isConnecting}
+                type="submit"
+                className="button"
+              >
+                {this.state.isConnecting ? "Connecting..." : "Connect"}
               </button>
+              {this.state.error ? (
+                <p className="form-error">{this.state.error.message()}</p>
+              ) : null}
             </form>
           </div>
         </div>
