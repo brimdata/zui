@@ -1,7 +1,6 @@
 /* @flow */
 
 import {Client} from "boom-js-client"
-import type {Notices} from "./notices"
 import type {CountByTime} from "./countByTime"
 import type {SearchBar} from "./searchBar"
 import type {TimeWindow} from "./timeWindow"
@@ -23,7 +22,6 @@ import type {Notifications} from "./notifications"
 
 export type State = {
   analysis: Analysis,
-  notices: Notices,
   countByTime: CountByTime,
   searchBar: SearchBar,
   timeWindow: TimeWindow,
