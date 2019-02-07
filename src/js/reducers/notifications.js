@@ -1,7 +1,7 @@
 /* @flow */
 
 import createReducer from "./createReducer"
-import {AppError} from "../models/Errors"
+import AppError from "../models/AppError"
 
 const initialState = []
 export type Notifications = AppError[]

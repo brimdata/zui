@@ -20,7 +20,7 @@ import {type DispatchProps} from "../reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
 import {type State as S} from "../reducers/types"
 import ErrorFactory from "../models/ErrorFactory"
-import {AppError} from "../models/Errors"
+import AppError from "../models/AppError"
 import StartupError from "./StartupError"
 
 type StateProps = {|

@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from "react"
-import {AppError} from "../models/Errors"
+import AppError from "../models/AppError"
 import {clearState} from "../initializers/persistance"
 import {Link} from "./Typography"
 import ErrorTemplate from "./ErrorTemplate"

@@ -3,7 +3,7 @@
 import React from "react"
 import {shallow} from "enzyme"
 import Search, {stateToProps} from "./Search"
-import {AppError} from "../models/Errors"
+import AppError from "../models/AppError"
 import initStore from "../test/initStore"
 
 let props

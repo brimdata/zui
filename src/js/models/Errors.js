@@ -1,35 +1,9 @@
 /* @flow */
 
-import startCase from "lodash/startCase"
 import upperFirst from "lodash/upperFirst"
-
-export type RawError = string
-
-export type ErrorContext = *
-
-export class AppError {
-  raw: RawError
-  ts: Date
-  context: ErrorContext
-
-  static is(_e: RawError) {
-    return false
-  }
-
-  constructor(e: RawError, context: ErrorContext = {}) {
-    this.raw = e
-    this.context = context
-    this.ts = new Date()
-  }
-
-  title() {
-    return startCase(this.constructor.name)
-  }
-
-  message() {
-    return "An error occurred."
-  }
-}
+import isString from "lodash/isString"
+import AppError from "./AppError"
+import {type RawError} from "./AppError"
 
 export class UnauthorizedError extends AppError {
   static is(e: RawError) {

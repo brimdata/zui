@@ -1,7 +1,8 @@
 /* @flow */
 
-import {KNOWN_ERRORS, AppError} from "./Errors"
-import type {RawError, ErrorContext} from "./Errors"
+import AppError from "./AppError"
+import {KNOWN_ERRORS} from "./Errors"
+import type {RawError, ErrorContext} from "./AppError"
 
 export default class ErrorFactory {
   static create(error: RawError, context?: ErrorContext) {

@@ -2,7 +2,7 @@
 
 import React from "react"
 import {Paragraph, Code} from "./Typography"
-import {AppError} from "../models/Errors"
+import AppError from "../models/AppError"
 import MessageBox from "./MessageBox"
 import {isObject} from "lodash"
 import {Link as LinkTo} from "react-router-dom"

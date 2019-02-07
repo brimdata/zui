@@ -1,6 +1,6 @@
 /* @flow */
 
-import {AppError} from "../models/Errors"
+import AppError from "../models/AppError"
 
 export type Notification =
   | AppError
