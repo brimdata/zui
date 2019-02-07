@@ -18,7 +18,6 @@ import view from "./view"
 import starredLogs from "./starredLogs"
 import logs from "./logs"
 import packets from "./packets"
-import notices from "./notices"
 import logViewer from "./logViewer"
 import columnWidths from "./columnWidths"
 import selectedColumns from "./selectedColumns"
@@ -44,7 +43,6 @@ export default combineReducers<*, *>({
   boomdCredentials,
   starredLogs,
   packets,
-  notices,
   logViewer,
   columnWidths,
   selectedColumns,

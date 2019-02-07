@@ -8,7 +8,6 @@ import {XHistogram} from "./Histogram"
 import {XLeftPane} from "./LeftPane"
 import {XRightPane} from "../components/RightPane"
 import {XDownloadProgress} from "./DownloadProgress"
-import {XNotice} from "./Notice"
 import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
 import ColumnChooser from "./ColumnChooser"
@@ -53,7 +52,6 @@ export default class Search extends React.Component<Props, State> {
 
     return (
       <div className="search-page-wrapper">
-        <XNotice />
         <div className="search-page">
           <XLeftPane />
           <div className="search-page-main">
