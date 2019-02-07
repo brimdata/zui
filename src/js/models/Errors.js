@@ -1,8 +1,8 @@
 /* @flow */
 
 import upperFirst from "lodash/upperFirst"
-import isString from "lodash/isString"
 import AppError from "./AppError"
+import isString from "lodash/isString"
 import {type RawError} from "./AppError"
 
 export class UnauthorizedError extends AppError {
@@ -86,9 +86,20 @@ export class SpaceNotFoundError extends AppError {
   }
 }
 
+export class InvalidUrlError extends AppError {
+  static is(e: RawError) {
+    return isString(e) && e.match(/Failed to parse URL/)
+  }
+
+  message() {
+    return "The host and/or port are not valid in this URL."
+  }
+}
+
 export class LookytalkVersionError extends AppError {}
 
 export const KNOWN_ERRORS = [
+  InvalidUrlError,
   LookytalkVersionError,
   UnauthorizedError,
   NetworkError,
