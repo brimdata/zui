@@ -4,7 +4,6 @@ import {getCurrentSpaceName} from "../reducers/spaces"
 import uniq from "lodash/uniq"
 import type {Thunk} from "redux-thunk"
 import type {Tuple, Descriptor} from "../models/Log"
-import {setColumnsFromDescriptor} from "./columnGroups"
 
 export const discoverDescriptors = (events: Tuple[] = []): Thunk => {
   return (dispatch, getState) => {
@@ -28,7 +27,6 @@ export const fetchDescriptor = (id: string): Thunk => {
     return api
       .descriptor({space, id})
       .done(descriptor => {
-        dispatch(setColumnsFromDescriptor(id, descriptor))
         dispatch(receiveDescriptor(space, id, descriptor))
       })
       .error(error => dispatch(errorDescriptor(error)))

@@ -1,5 +1,5 @@
 /* @flow */
-import type {Column} from "../reducers/columnGroups"
+import type {Column} from "../reducers/columnSettings"
 
 export default class ColumnGroup {
   name: string

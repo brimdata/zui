@@ -4,12 +4,12 @@ import {createSelector} from "reselect"
 import {getLogs} from "./logs"
 import ColumnGroup from "../models/ColumnGroup"
 
-export const getColumnGroups = (state: State) => {
-  return state.columnGroups
+export const getColumnSettings = (state: State) => {
+  return state.columnSettings
 }
 
 export const getColumnGroup = (state: State, group: string) => {
-  return getColumnGroups(state)[group]
+  return getColumnSettings(state)[group]
 }
 
 export const getCurrentColumnGroupName = createSelector<State, void, *, *>(
@@ -23,7 +23,7 @@ export const getCurrentColumnGroupName = createSelector<State, void, *, *>(
 )
 
 export const getCurrentColumnGroup = createSelector<State, void, *, *, *>(
-  getColumnGroups,
+  getColumnSettings,
   getCurrentColumnGroupName,
   (groups, name) => new ColumnGroup(name, groups[name])
 )

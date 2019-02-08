@@ -8,7 +8,7 @@ export type Column = {
   width: ?number
 }
 
-export type ColumnGroups = {
+export type ColumnSettings = {
   [string]: Column[]
 }
 

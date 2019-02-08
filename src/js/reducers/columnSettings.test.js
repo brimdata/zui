@@ -2,8 +2,8 @@
 
 import initStore from "../test/initStore"
 import {conn} from "../test/mockLogs"
-import * as actions from "../actions/columnGroups"
-import {getColumnGroup} from "../selectors/columnGroups"
+import * as actions from "../actions/columnSettings"
+import {getColumnGroup} from "../selectors/columnSettings"
 
 let store, descriptor
 beforeEach(() => {

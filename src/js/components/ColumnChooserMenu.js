@@ -12,7 +12,7 @@ import dispatchToProps from "../lib/dispatchToProps"
 import type {State} from "../reducers/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
 import CloseButton from "./CloseButton"
-import {getCurrentColumnGroup} from "../selectors/columnGroups"
+import {getCurrentColumnGroup} from "../selectors/columnSettings"
 import ColumnGroup from "../models/ColumnGroup"
 
 type OwnProps = {|

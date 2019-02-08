@@ -19,7 +19,7 @@ import type {FilterTree} from "./filterTree"
 import type {Descriptors} from "./descriptors"
 import type {View} from "./view"
 import type {Notifications} from "./notifications"
-import type {ColumnGroups} from "./columnGroups"
+import type {ColumnSettings} from "./columnSettings"
 
 export type State = {
   analysis: Analysis,
@@ -40,7 +40,7 @@ export type State = {
   descriptors: Descriptors,
   view: View,
   notifications: Notifications,
-  columnGroups: ColumnGroups
+  columnSettings: ColumnSettings
 }
 
 export type Thunk = (Dispatch, () => State, Client) => *
