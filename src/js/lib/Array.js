@@ -22,7 +22,7 @@ export const isEmpty = (array: *[]) => {
 
 export const head = (array: *[], n: number) => {
   const newArray = []
-  for (let i = 0; i <= n && i < array.length; ++i) {
+  for (let i = 0; i <= n - 1 && i < array.length; ++i) {
     newArray.push(array[i])
   }
   return newArray
