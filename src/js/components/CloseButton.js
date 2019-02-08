@@ -8,11 +8,8 @@ type Props = {
   light?: boolean
 }
 
-const CloseButton = (props: Props) => (
-  <button
-    className={classNames("close-button", {light: props.light})}
-    {...props}
-  >
+const CloseButton = ({light, ...rest}: Props) => (
+  <button className={classNames("close-button", {light})} {...rest}>
     <X />
   </button>
 )
