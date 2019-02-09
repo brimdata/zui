@@ -1,17 +1,19 @@
 /* @flow */
 
 import {createSelector} from "reselect"
-import Log from "../models/Log"
-import * as mainSearch from "../reducers/mainSearch"
-import * as spaces from "../reducers/spaces"
-import * as view from "../reducers/view"
-import * as analysis from "../reducers/analysis"
+
 import {type State} from "../reducers/types"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getDescriptors} from "../reducers/descriptors"
+import {getMainSearchEvents} from "../reducers/mainSearch"
+import {getResultsTab} from "../reducers/view"
+import Log from "../models/Log"
+import * as analysis from "../reducers/analysis"
 
 export const getEventLogs = createSelector<State, void, *, *, *, *>(
-  mainSearch.getMainSearchEvents,
-  mainSearch.getSchemas,
-  spaces.getCurrentSpaceName,
+  getMainSearchEvents,
+  getDescriptors,
+  getCurrentSpaceName,
   (tuples, descriptors, spaceName) => {
     const logs = []
     for (let i = 0; i < tuples.length; ++i) {
@@ -34,7 +36,7 @@ export const getAnalysisLogs = createSelector<State, void, *, *>(
 )
 
 export const getLogs = createSelector<State, void, *, *, *, *>(
-  view.getResultsTab,
+  getResultsTab,
   getEventLogs,
   getAnalysisLogs,
   (tab, eventLogs, analysisLogs) => {
@@ -44,7 +46,7 @@ export const getLogs = createSelector<State, void, *, *, *, *>(
       case "analytics":
         return analysisLogs
       default:
-        return []
+        return eventLogs
     }
   }
 )

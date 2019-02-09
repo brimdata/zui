@@ -1,11 +1,12 @@
 /* @flow */
 
-import createReducer from "./createReducer"
+import type {Column} from "../types"
 import {type State} from "./types"
+import createReducer from "./createReducer"
+
 const initialState = {}
 
-type Descriptor = {type: string, name: string}
-export type Descriptors = {[string]: Descriptor[]}
+export type Descriptors = {[string]: Column[]}
 
 export default createReducer(initialState, {
   DESCRIPTORS_CLEAR: () => ({...initialState}),

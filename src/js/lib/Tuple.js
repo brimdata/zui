@@ -2,7 +2,8 @@
 
 import {uniqBy} from "lodash"
 import isEqual from "lodash/isEqual"
-import type {Tuple} from "../models/Log"
+
+import type {Tuple} from "../types"
 
 export const id = ([td, path, ts, uid]: Tuple) => {
   return [td, path, ts, uid].join("_")

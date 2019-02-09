@@ -1,11 +1,13 @@
-import createReducer from "./createReducer"
 import {createSelector} from "reselect"
-import {getTimeWindow} from "../reducers/timeWindow"
+
 import {getCurrentSpaceName} from "../reducers/spaces"
-import Log from "../models/Log"
+import {getDescriptors} from "./descriptors"
+import {getTimeWindow} from "../reducers/timeWindow"
 import {isTimeWindow} from "../models/TimeWindow"
-import countByTimeInterval from "../lib/countByTimeInterval"
+import Log from "../models/Log"
 import UniqArray from "../models/UniqArray"
+import countByTimeInterval from "../lib/countByTimeInterval"
+import createReducer from "./createReducer"
 
 const initialState = {
   status: "INIT",
@@ -64,8 +66,6 @@ export function mainSearchEvents(state) {
 
 export const getMainSearchEvents = state => state.mainSearch.events
 
-export const getSchemas = state => state.descriptors
-
 export const getTds = createSelector(
   getMainSearchEvents,
   tuples => {
@@ -77,7 +77,7 @@ export const getTds = createSelector(
 
 export const getEventLogs = createSelector(
   getMainSearchEvents,
-  getSchemas,
+  getDescriptors,
   getCurrentSpaceName,
   (tuples, descriptors, spaceName) => {
     const logs = []

@@ -1,27 +1,24 @@
 /* @flow */
 
-import React from "react"
-import classNames from "classnames"
-import * as actions from "../actions/columns"
-import Columns from "../models/Columns"
 import {CSSTransition} from "react-transition-group"
 import {connect} from "react-redux"
-import * as columns from "../selectors/columns"
-import {type DispatchProps} from "../reducers/types"
-import dispatchToProps from "../lib/dispatchToProps"
-import type {State} from "../reducers/types"
+import React from "react"
+import classNames from "classnames"
+
+import {type DispatchProps, type State} from "../reducers/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
 import CloseButton from "./CloseButton"
-import {getCurrentColumnGroup} from "../selectors/columnSettings"
-import ColumnGroup from "../models/ColumnGroup"
+import Columns from "../models/Columns"
+import * as actions from "../actions/columns"
+import * as columns from "../selectors/columns"
+import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {|
   onClose: () => *
 |}
 
 type StateProps = {|
-  DEPRECATED_columns: Columns,
-  columnGroup: ColumnGroup
+  DEPRECATED_columns: Columns
 |}
 
 type Props = {|
@@ -50,13 +47,13 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 
   className() {
     return classNames("column-chooser-menu", {
-      "all-visible": this.props.columnGroup.allVisible()
+      "all-visible": this.props.DEPRECATED_columns.allVisible()
     })
   }
 
   render() {
-    const count = this.props.columnGroup.getVisible().length
-    const allVisible = this.props.columnGroup.allVisible()
+    const count = this.props.DEPRECATED_columns.getVisible().length
+    const allVisible = this.props.DEPRECATED_columns.allVisible()
     return (
       <CSSTransition
         classNames="slide-in-right"
@@ -77,7 +74,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
             <li className="show-all" onClick={this.showAll}>
               <Paragraph>Show All</Paragraph>
             </li>
-            {this.props.columnGroup.getAll().map(c => (
+            {this.props.DEPRECATED_columns.getAll().map(c => (
               <li
                 className={classNames({visible: c.isVisible})}
                 key={`${c.name}-${c.type}`}
@@ -95,8 +92,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  DEPRECATED_columns: columns.getColumns(state),
-  columnGroup: getCurrentColumnGroup(state)
+  DEPRECATED_columns: columns.getColumns(state)
 })
 
 export const XColumnChooserMenu = connect<Props, OwnProps, _, _, _, _>(

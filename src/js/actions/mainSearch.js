@@ -1,14 +1,15 @@
 /* @flow */
 
-import serially from "../lib/serially"
+import Client from "boom-js-client"
+
+import type {Tuple} from "../types"
+import {getSearchProgram} from "../selectors/searchBar"
+import {getStarredLogs} from "../reducers/starredLogs"
 import {pushSearchHistory} from "./searchHistory"
 import {updateTab} from "../actions/view"
-import {getStarredLogs} from "../reducers/starredLogs"
-import {getSearchProgram} from "../selectors/searchBar"
 import {validateProgram} from "./searchBar"
-import Client from "boom-js-client"
 import * as SearchFactory from "../lib/SearchFactory"
-import type {Tuple} from "../models/Log"
+import serially from "../lib/serially"
 
 type Options = {
   saveToHistory: boolean

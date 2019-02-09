@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Tuple} from "../models/Log"
+import type {Tuple} from "../types"
 
 export const starLog = (tuple: Tuple) => ({
   type: "LOG_STAR",

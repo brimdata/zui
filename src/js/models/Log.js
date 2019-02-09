@@ -1,10 +1,9 @@
 /* @flow */
 
-import FieldFactory from "./FieldFactory"
 import isEqual from "lodash/isEqual"
 
-export type Tuple = string[]
-export type Descriptor = {type: string, name: string}[]
+import type {Descriptor, Tuple} from "../types"
+import FieldFactory from "./FieldFactory"
 
 export default class Log {
   tuple: Tuple

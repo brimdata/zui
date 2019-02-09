@@ -1,14 +1,16 @@
 /* @flow */
 
-import {getCurrentSpaceName} from "../reducers/spaces"
-import uniq from "lodash/uniq"
 import type {Thunk} from "redux-thunk"
-import type {Tuple, Descriptor} from "../models/Log"
+import uniq from "lodash/uniq"
+
+import type {Tuple} from "../types"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getDescriptors} from "../reducers/descriptors"
 
 export const discoverDescriptors = (events: Tuple[] = []): Thunk => {
   return (dispatch, getState) => {
     const state = getState()
-    const schemas = state.descriptors
+    const schemas = getDescriptors(state)
     const space = getCurrentSpaceName(state)
     const unknownSchemas = uniq(
       events
@@ -42,7 +44,7 @@ export const requestDescriptor = (space: string, id: string) => ({
 export const receiveDescriptor = (
   space: string,
   id: string,
-  descriptor: Descriptor
+  descriptor: {name: string, type: string}[]
 ) => ({
   type: "DESCRIPTOR_RECEIVE",
   space,

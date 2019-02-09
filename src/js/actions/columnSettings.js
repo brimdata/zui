@@ -1,29 +1,13 @@
 /* @flow */
-import {type Descriptor} from "../models/Log"
-type ColWidths = {[string]: number}
+import type {ColumnSetting} from "../types"
 
-export const setColumnsFromDescriptor = (
-  group: string,
-  descriptor: Descriptor
+export const updateColumnSetting = (
+  tableKey: string,
+  columnKey: string,
+  setting: ColumnSetting
 ) => ({
-  type: "COLUMNS_SET_FROM_DESCRIPTOR",
-  group,
-  descriptor
-})
-
-export const setColumnWidths = (group: string, widths: ColWidths) => ({
-  type: "COLUMN_WIDTHS_SET",
-  group,
-  widths
-})
-
-export const setColumnVisibility = (
-  group: string,
-  index: number,
-  isVisible: boolean
-) => ({
-  type: "COLUMN_VISIBILITY_SET",
-  group,
-  index,
-  isVisible
+  type: "COLUMN_SETTING_UPDATE",
+  tableKey,
+  columnKey,
+  setting
 })
