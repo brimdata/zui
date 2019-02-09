@@ -6,7 +6,7 @@ import {uniqBy} from "lodash"
 import type {Column} from "../types"
 import type {State} from "../reducers/types"
 import {TableColumns} from "../models/TableColumns"
-import {getColumnSettings} from "./columnSettings"
+import {getTableSettings} from "./tableSettings"
 import {getLogs} from "./logs"
 import columnKey from "../lib/columnKey"
 
@@ -37,8 +37,8 @@ export const getCurrentUniqColumns = createSelector<State, void, *, *>(
 export const getTableColumns = createSelector<State, void, *, *, *, *>(
   getCurrentTableKey,
   getCurrentUniqColumns,
-  getColumnSettings,
-  (tableKey, columns, columnSettings) => {
-    return new TableColumns(tableKey, columns, columnSettings[tableKey])
+  getTableSettings,
+  (tableKey, columns, tableSettings) => {
+    return new TableColumns(tableKey, columns, tableSettings[tableKey])
   }
 )

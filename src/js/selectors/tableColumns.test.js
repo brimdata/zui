@@ -70,7 +70,7 @@ describe("#getTableColumns", () => {
     expect(getTableColumns(state)).toBeInstanceOf(TableColumns)
   })
 
-  test("merges columns and columnSettings", () => {
+  test("merges columns and tableSettings", () => {
     const state = store.dispatchAll([
       setCurrentSpaceName("default"),
       receiveDescriptor("default", connLog.tuple[0], connLog.descriptor),

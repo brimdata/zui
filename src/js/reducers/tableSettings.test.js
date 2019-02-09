@@ -1,8 +1,8 @@
 /* @flow */
 
-import * as actions from "../actions/columnSettings"
+import * as actions from "../actions/tableSettings"
 import initStore from "../test/initStore"
-import * as selector from "../selectors/columnSettings"
+import * as selector from "../selectors/tableSettings"
 
 let store
 beforeEach(() => {
@@ -11,7 +11,7 @@ beforeEach(() => {
 
 test("get initial state", () => {
   const state = store.getState()
-  expect(selector.getColumnSettings(state)).toEqual({})
+  expect(selector.getTableSettings(state)).toEqual({})
 })
 
 test("Update a column setting", () => {
@@ -28,7 +28,7 @@ test("Update a column setting", () => {
     })
   ])
 
-  expect(selector.getColumnSettings(state)["conn"]).toEqual({
+  expect(selector.getTableSettings(state)["conn"]).toEqual({
     "_path:string": {
       width: 22,
       isVisible: true,
