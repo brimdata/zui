@@ -16,15 +16,17 @@ test("get initial state", () => {
 
 test("Update a column setting", () => {
   const state = store.dispatchAll([
-    actions.updateColumnSetting("conn", "_path:string", {
-      width: 22,
-      isVisible: true,
-      position: 0
-    }),
-    actions.updateColumnSetting("conn", "ts:time", {
-      width: 200,
-      isVisible: false,
-      position: 1
+    actions.updateTableSettings("conn", {
+      "_path:string": {
+        width: 22,
+        isVisible: true,
+        position: 0
+      },
+      "ts:time": {
+        width: 200,
+        isVisible: false,
+        position: 1
+      }
     })
   ])
 

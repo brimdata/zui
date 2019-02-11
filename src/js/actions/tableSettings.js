@@ -1,13 +1,11 @@
 /* @flow */
 import type {ColumnSetting} from "../types"
 
-export const updateColumnSetting = (
+export const updateTableSettings = (
   tableKey: string,
-  columnKey: string,
-  setting: ColumnSetting
+  updates: {[string]: ColumnSetting}
 ) => ({
-  type: "COLUMN_SETTING_UPDATE",
+  type: "TABLE_SETTINGS_UPDATE",
   tableKey,
-  columnKey,
-  setting
+  updates
 })

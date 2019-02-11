@@ -11,10 +11,18 @@ export type TableSettings = {
 const initialState = {}
 
 export default createReducer(initialState, {
-  COLUMN_SETTING_UPDATE: (state, {tableKey, columnKey, setting}) => {
-    const newState = Object.assign(state, {})
-    newState[tableKey] = newState[tableKey] || {}
-    newState[tableKey][columnKey] = setting
+  TABLE_SETTINGS_UPDATE: (state, {tableKey, updates}) => {
+    const table = Object.assign(state[tableKey] || {}, {})
+    for (const column in updates) {
+      table[column] = {
+        ...table[column],
+        ...updates[column]
+      }
+    }
+    const newState = {
+      ...state,
+      [tableKey]: table
+    }
     return newState
   }
 })
