@@ -11,18 +11,44 @@ export type TableLayouts = {
 const initialState = {}
 
 export default createReducer(initialState, {
-  TABLE_LAYOUT_UPDATE: (state, {tableKey, updates}) => {
-    const table = Object.assign(state[tableKey] || {}, {})
-    for (const column in updates) {
-      table[column] = {
-        ...table[column],
-        ...updates[column]
-      }
-    }
-    const newState = {
+  TABLE_LAYOUT_UPDATE: (state, {tableId, updates}) => {
+    const table = getTable(state, tableId)
+    return {
       ...state,
-      [tableKey]: table
+      [tableId]: mergeInto(table, updates, colKey => updates[colKey])
     }
-    return newState
+  },
+  TABLE_LAYOUT_SHOW_ALL: (state, {tableId}) => {
+    const table = getTable(state, tableId)
+
+    return {
+      ...state,
+      [tableId]: mergeInto(table, table, _col => ({isVisible: true}))
+    }
+  },
+  TABLE_LAYOUT_HIDE_ALL: (state, {tableId}) => {
+    const table = getTable(state, tableId)
+
+    return {
+      ...state,
+      [tableId]: mergeInto(table, table, _col => ({isVisible: false}))
+    }
   }
 })
+
+const mergeInto = (origTable, newTable, eachUpdateFn) => {
+  return Object.keys(newTable).reduce(
+    (table, colKey) => ({
+      ...table,
+      [colKey]: {
+        ...table[colKey],
+        ...eachUpdateFn(colKey)
+      }
+    }),
+    origTable
+  )
+}
+
+const getTable = (state, id) => {
+  return Object.assign(state[id] || {}, {})
+}

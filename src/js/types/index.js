@@ -11,9 +11,9 @@ export type Notification =
     }
 
 export type ColumnSetting = {
-  width: number,
-  isVisible: boolean,
-  position: number
+  width?: number,
+  isVisible?: boolean,
+  position?: number
 }
 
 export type TableColumn = {
