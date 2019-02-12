@@ -2,7 +2,7 @@
 import type {ColumnSetting} from "../types"
 import createReducer from "./createReducer"
 
-export type TableSettings = {
+export type TableLayouts = {
   [string]: {
     [string]: ColumnSetting
   }
@@ -11,7 +11,7 @@ export type TableSettings = {
 const initialState = {}
 
 export default createReducer(initialState, {
-  TABLE_SETTINGS_UPDATE: (state, {tableKey, updates}) => {
+  TABLE_LAYOUT_UPDATE: (state, {tableKey, updates}) => {
     const table = Object.assign(state[tableKey] || {}, {})
     for (const column in updates) {
       table[column] = {

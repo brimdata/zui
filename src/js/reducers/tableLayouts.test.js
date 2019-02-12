@@ -1,8 +1,8 @@
 /* @flow */
 
-import * as actions from "../actions/tableSettings"
+import {getTableLayouts} from "../selectors/tableLayouts"
+import {updateTableLayout} from "../actions/tableLayouts"
 import initStore from "../test/initStore"
-import * as selector from "../selectors/tableSettings"
 
 let store
 beforeEach(() => {
@@ -11,12 +11,12 @@ beforeEach(() => {
 
 test("get initial state", () => {
   const state = store.getState()
-  expect(selector.getTableSettings(state)).toEqual({})
+  expect(getTableLayouts(state)).toEqual({})
 })
 
 test("Update a column setting", () => {
   const state = store.dispatchAll([
-    actions.updateTableSettings("conn", {
+    updateTableLayout("conn", {
       "_path:string": {
         width: 22,
         isVisible: true,
@@ -30,7 +30,7 @@ test("Update a column setting", () => {
     })
   ])
 
-  expect(selector.getTableSettings(state)["conn"]).toEqual({
+  expect(getTableLayouts(state)["conn"]).toEqual({
     "_path:string": {
       width: 22,
       isVisible: true,

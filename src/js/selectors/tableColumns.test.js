@@ -1,9 +1,9 @@
 import {TableColumns} from "../models/TableColumns"
 import {conn, dns} from "../test/mockLogs"
 import {
-  getCurrentTableKey,
+  getCurrentTableLayoutId,
   getCurrentUniqColumns,
-  getTableColumns
+  getCurrentTableLayout
 } from "./tableColumns"
 import {mainSearchEvents} from "../actions/mainSearch"
 import {receiveDescriptor} from "../actions/descriptors"
@@ -18,7 +18,7 @@ beforeEach(() => {
   store = initStore()
 })
 
-describe("#getCurrentTableKey", () => {
+describe("#getCurrentTableLayoutId", () => {
   test("logs with one td", () => {
     const state = store.dispatchAll([
       setCurrentSpaceName("default"),
@@ -26,7 +26,7 @@ describe("#getCurrentTableKey", () => {
       mainSearchEvents([connLog.tuple])
     ])
 
-    expect(getCurrentTableKey(state)).toBe(connLog.tuple[0])
+    expect(getCurrentTableLayoutId(state)).toBe(connLog.tuple[0])
   })
 
   test("logs with multiple tds", () => {
@@ -37,13 +37,13 @@ describe("#getCurrentTableKey", () => {
       mainSearchEvents([connLog.tuple, dnsLog.tuple])
     ])
 
-    expect(getCurrentTableKey(state)).toBe("temp")
+    expect(getCurrentTableLayoutId(state)).toBe("temp")
   })
 
   test("no logs", () => {
     const state = store.getState()
 
-    expect(getCurrentTableKey(state)).toBe("none")
+    expect(getCurrentTableLayoutId(state)).toBe("none")
   })
 })
 
@@ -64,10 +64,10 @@ describe("#getCurrentUniqColumns", () => {
   })
 })
 
-describe("#getTableColumns", () => {
+describe("#getCurrentTableLayout", () => {
   test("returns the class", () => {
     const state = store.getState()
-    expect(getTableColumns(state)).toBeInstanceOf(TableColumns)
+    expect(getCurrentTableLayout(state)).toBeInstanceOf(TableColumns)
   })
 
   test("merges columns and tableSettings", () => {
@@ -78,7 +78,7 @@ describe("#getTableColumns", () => {
       mainSearchEvents([connLog.tuple, dnsLog.tuple])
     ])
 
-    const tableColumns = getTableColumns(state)
+    const tableColumns = getCurrentTableLayout(state)
     expect(tableColumns.toArray()).toHaveLength(40)
   })
 })

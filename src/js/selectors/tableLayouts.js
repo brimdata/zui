@@ -2,6 +2,6 @@
 
 import type {State} from "../reducers/types"
 
-export const getTableSettings = (state: State) => {
-  return state.tableSettings
+export const getTableLayouts = (state: State) => {
+  return state.tableLayouts
 }
