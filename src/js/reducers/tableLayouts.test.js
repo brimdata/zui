@@ -8,6 +8,7 @@ import {
   showColumn,
   updateTableLayout
 } from "../actions/tableLayouts"
+import TableLayout from "../models/TableLayout"
 import initStore from "../test/initStore"
 
 const tableId = "test"
@@ -76,12 +77,21 @@ test("show one column", () => {
 })
 
 test("show all columns", () => {
-  const state = store.dispatchAll([
-    hideColumn(tableId, {name: "a", type: "string"}),
-    hideColumn(tableId, {name: "b", type: "string"}),
-    hideColumn(tableId, {name: "c", type: "string"}),
-    showAllColumns(tableId)
-  ])
+  const tableLayout = new TableLayout(
+    tableId,
+    [
+      {name: "a", type: "string"},
+      {name: "b", type: "string"},
+      {name: "c", type: "string"}
+    ],
+    {
+      "a:string": {isVisible: false},
+      "b:string": {isVisible: false},
+      "c:string": {isVisible: false}
+    }
+  )
+
+  const state = store.dispatchAll([showAllColumns(tableLayout)])
 
   const table = getTableLayouts(state)[tableId]
 
@@ -91,14 +101,21 @@ test("show all columns", () => {
 })
 
 test("hide all columns", () => {
-  const tableId = "test"
+  const tableLayout = new TableLayout(
+    tableId,
+    [
+      {name: "a", type: "string"},
+      {name: "b", type: "string"},
+      {name: "c", type: "string"}
+    ],
+    {
+      "a:string": {isVisible: true},
+      "b:string": {isVisible: true},
+      "c:string": {isVisible: true}
+    }
+  )
 
-  const state = store.dispatchAll([
-    showColumn(tableId, {name: "a", type: "string"}),
-    showColumn(tableId, {name: "b", type: "string"}),
-    showColumn(tableId, {name: "c", type: "string"}),
-    hideAllColumns(tableId)
-  ])
+  const state = store.dispatchAll([hideAllColumns(tableLayout)])
 
   const table = getTableLayouts(state)[tableId]
 

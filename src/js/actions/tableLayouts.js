@@ -1,5 +1,6 @@
 /* @flow */
 import type {Column, ColumnSetting} from "../types"
+import TableLayout from "../models/TableLayout"
 import columnKey from "../lib/columnKey"
 
 type Updates = {[string]: ColumnSetting}
@@ -24,12 +25,28 @@ export const showColumn = (tableId: string, column: Column) =>
     }
   })
 
-export const showAllColumns = (tableId: string) => ({
-  type: "TABLE_LAYOUT_SHOW_ALL",
-  tableId
-})
+export const showAllColumns = (table: TableLayout) => {
+  return updateTableLayout(
+    table.id,
+    table.getColumns().reduce(
+      (updates, col) => ({
+        ...updates,
+        [columnKey(col)]: {isVisible: true}
+      }),
+      {}
+    )
+  )
+}
 
-export const hideAllColumns = (tableId: string) => ({
-  type: "TABLE_LAYOUT_HIDE_ALL",
-  tableId
-})
+export const hideAllColumns = (table: TableLayout) => {
+  return updateTableLayout(
+    table.id,
+    table.getColumns().reduce(
+      (updates, col) => ({
+        ...updates,
+        [columnKey(col)]: {isVisible: false}
+      }),
+      {}
+    )
+  )
+}

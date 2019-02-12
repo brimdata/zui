@@ -7,11 +7,17 @@ import classNames from "classnames"
 
 import {type DispatchProps, type State} from "../reducers/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
+import type {TableColumn} from "../types"
 import {getCurrentTableLayout} from "../selectors/tableLayouts"
+import {
+  hideAllColumns,
+  hideColumn,
+  showAllColumns,
+  showColumn
+} from "../actions/tableLayouts"
 import CloseButton from "./CloseButton"
 import Columns from "../models/Columns"
 import TableLayout from "../models/TableLayout"
-import * as actions from "../actions/columns"
 import * as columns from "../selectors/columns"
 import dispatchToProps from "../lib/dispatchToProps"
 
