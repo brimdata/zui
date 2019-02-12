@@ -7,8 +7,10 @@ import classNames from "classnames"
 
 import {type DispatchProps, type State} from "../reducers/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
+import {getCurrentTableLayout} from "../selectors/tableLayouts"
 import CloseButton from "./CloseButton"
 import Columns from "../models/Columns"
+import TableLayout from "../models/TableLayout"
 import * as actions from "../actions/columns"
 import * as columns from "../selectors/columns"
 import dispatchToProps from "../lib/dispatchToProps"
@@ -18,7 +20,8 @@ type OwnProps = {|
 |}
 
 type StateProps = {|
-  DEPRECATED_columns: Columns
+  DEPRECATED_columns: Columns,
+  tableLayout: TableLayout
 |}
 
 type Props = {|
@@ -92,7 +95,8 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  DEPRECATED_columns: columns.getColumns(state)
+  DEPRECATED_columns: columns.getColumns(state),
+  tableLayout: getCurrentTableLayout(state)
 })
 
 export const XColumnChooserMenu = connect<Props, OwnProps, _, _, _, _>(

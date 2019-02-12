@@ -3,7 +3,7 @@
 import type {Column, TableColumn, TableSetting} from "../types"
 import columnKey from "../lib/columnKey"
 
-export class TableColumns {
+export default class TableLayout {
   cols: TableColumn[]
   tableKey: string
 

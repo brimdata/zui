@@ -1,13 +1,15 @@
-import {TableColumns} from "../models/TableColumns"
+/* @flow */
+
 import {conn, dns} from "../test/mockLogs"
 import {
+  getCurrentTableLayout,
   getCurrentTableLayoutId,
-  getCurrentUniqColumns,
-  getCurrentTableLayout
-} from "./tableColumns"
+  getCurrentUniqColumns
+} from "./tableLayouts"
 import {mainSearchEvents} from "../actions/mainSearch"
 import {receiveDescriptor} from "../actions/descriptors"
 import {setCurrentSpaceName} from "../actions/spaces"
+import TableLayout from "../models/TableLayout"
 import initStore from "../test/initStore"
 
 const connLog = conn()
@@ -67,7 +69,7 @@ describe("#getCurrentUniqColumns", () => {
 describe("#getCurrentTableLayout", () => {
   test("returns the class", () => {
     const state = store.getState()
-    expect(getCurrentTableLayout(state)).toBeInstanceOf(TableColumns)
+    expect(getCurrentTableLayout(state)).toBeInstanceOf(TableLayout)
   })
 
   test("merges columns and tableSettings", () => {
