@@ -3,7 +3,7 @@
 import {create} from "./Layout"
 import * as Styler from "./Styler"
 
-const layout = create({
+const dimens = create({
   type: "fixed",
   size: 20,
   rowHeight: 10,
@@ -13,26 +13,26 @@ const layout = create({
 })
 
 test("#viewer", () => {
-  expect(Styler.viewer(layout)).toEqual({width: 400})
+  expect(Styler.viewer(dimens)).toEqual({width: 400})
 })
 
 test("#view when fixed subtracts for header", () => {
-  expect(Styler.view(layout)).toEqual({width: 400, height: 290})
+  expect(Styler.view(dimens)).toEqual({width: 400, height: 290})
 })
 
 test("#header", () => {
-  expect(Styler.header(layout, 20)).toEqual({
+  expect(Styler.header(dimens, 20)).toEqual({
     transform: "translateX(-20px)",
     width: 400
   })
 })
 
 test("#list", () => {
-  expect(Styler.list(layout)).toEqual({height: 200, width: 400})
+  expect(Styler.list(dimens)).toEqual({height: 200, width: 400})
 })
 
 test("#row", () => {
-  expect(Styler.row(layout)).toEqual({
+  expect(Styler.row(dimens)).toEqual({
     height: 10,
     width: 400
   })

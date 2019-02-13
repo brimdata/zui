@@ -42,3 +42,5 @@ export type ViewerDimens = {
   listHeight: number,
   listWidth: number | "auto"
 }
+
+export type RowRenderer = (index: number, dimens: ViewerDimens) => *

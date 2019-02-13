@@ -2,7 +2,6 @@
 
 import type {ViewerDimens} from "../../types"
 export type Width = number | "auto"
-export type Layout = ViewerDimens
 
 type Args = {
   sumColumnWidths: number,

@@ -2,8 +2,7 @@
 
 import React from "react"
 
-import type {Layout} from "./Layout"
-import type {RowRenderer} from "./types"
+import type {RowRenderer, ViewerDimens} from "../../types"
 import Chunk from "./Chunk"
 import Chunker from "./Chunker"
 import * as Doc from "../../lib/Doc"
@@ -15,7 +14,7 @@ import TableColumns from "../../models/TableColumns"
 
 type Props = {
   chunker: Chunker,
-  layout: Layout,
+  dimens: ViewerDimens,
   tableColumns: TableColumns,
   rowRenderer: RowRenderer,
   atEnd: boolean,
@@ -79,22 +78,22 @@ export default class Viewer extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {layout, chunker, rowRenderer, logs, tableColumns} = this.props
+    const {dimens, chunker, rowRenderer, logs, tableColumns} = this.props
     const {scrollLeft, chunks} = this.state
     return (
-      <div className="viewer" style={{width: layout.viewWidth}}>
+      <div className="viewer" style={{width: dimens.viewWidth}}>
         <Header
           columns={tableColumns}
-          layout={layout}
+          dimens={dimens}
           scrollLeft={scrollLeft}
         />
         <div
           className="view"
           onScroll={this.onScroll}
-          style={{width: layout.viewWidth, height: layout.viewHeight}}
+          style={{width: dimens.viewWidth, height: dimens.viewHeight}}
           ref={r => (this.view = r)}
         >
-          <div className="list" style={Styler.list(layout)}>
+          <div className="list" style={Styler.list(dimens)}>
             {chunks.map(chunk => (
               <Chunk
                 columns={this.props.tableColumns}
@@ -103,11 +102,11 @@ export default class Viewer extends React.PureComponent<Props, State> {
                 rows={chunker.rows(chunk)}
                 key={chunk}
                 rowRenderer={rowRenderer}
-                layout={layout}
+                dimens={dimens}
               />
             ))}
             {this.props.atEnd && (
-              <p className="end-message" style={Styler.endMessage(layout)}>
+              <p className="end-message" style={Styler.endMessage(dimens)}>
                 End of Results 🎉
               </p>
             )}

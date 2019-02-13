@@ -3,8 +3,7 @@
 import React from "react"
 import isEqual from "lodash/isEqual"
 
-import type {Layout} from "./Layout"
-import type {RowRenderer} from "./types"
+import type {RowRenderer, ViewerDimens} from "../../types"
 import Log from "../../models/Log"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
@@ -13,7 +12,7 @@ type Props = {
   selectedLog: ?Log,
   rowRenderer: RowRenderer,
   columns: TableColumns,
-  layout: Layout,
+  dimens: ViewerDimens,
   rows: number[],
   logs: Log[]
 }
@@ -41,10 +40,10 @@ export default class Chunk extends React.Component<Props> {
   }
 
   render() {
-    const {rowRenderer, layout, rows} = this.props
+    const {rowRenderer, dimens, rows} = this.props
     return (
-      <div className="chunk" style={Styler.chunk(layout, rows[0], rows.length)}>
-        {rows.map(index => rowRenderer(index, layout))}
+      <div className="chunk" style={Styler.chunk(dimens, rows[0], rows.length)}>
+        {rows.map(index => rowRenderer(index, dimens))}
       </div>
     )
   }

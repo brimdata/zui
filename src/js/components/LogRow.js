@@ -5,12 +5,12 @@ import * as Styler from "./Viewer/Styler"
 
 export default class LogRow extends React.PureComponent {
   renderAutoLayout() {
-    const {layout, highlight, index, log} = this.props
+    const {dimens, highlight, index, log} = this.props
     const columns = log.descriptor
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={Styler.row(layout)}
+        style={Styler.row(dimens)}
         onClick={this.props.onClick}
       >
         {columns.map((column, colIndex) => (
@@ -26,7 +26,7 @@ export default class LogRow extends React.PureComponent {
   }
 
   renderFixedLayout() {
-    const {highlight, columns, log, layout, index} = this.props
+    const {highlight, columns, log, dimens, index} = this.props
     const renderCell = (column, colIndex) => {
       const field = log.getField(column.name)
       const style = {width: column.width || 300}
@@ -51,7 +51,7 @@ export default class LogRow extends React.PureComponent {
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={Styler.row(layout)}
+        style={Styler.row(dimens)}
         onClick={this.props.onClick}
       >
         {columns.filter(c => c.isVisible).map(renderCell)}
@@ -60,7 +60,7 @@ export default class LogRow extends React.PureComponent {
   }
 
   render() {
-    return this.props.layout.rowWidth !== "auto"
+    return this.props.dimens.rowWidth !== "auto"
       ? this.renderFixedLayout()
       : this.renderAutoLayout()
   }

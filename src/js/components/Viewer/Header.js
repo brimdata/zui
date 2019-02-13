@@ -2,25 +2,25 @@
 
 import React from "react"
 
-import type {Layout} from "./Layout"
+import type {ViewerDimens} from "../../types"
 import {XColResizer} from "./ColResizer"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
 
 type Props = {
-  layout: Layout,
+  dimens: ViewerDimens,
   scrollLeft: number,
   columns: TableColumns
 }
 
 export default class Header extends React.PureComponent<Props> {
   render() {
-    const {layout, scrollLeft} = this.props
+    const {dimens, scrollLeft} = this.props
 
-    if (layout.rowWidth !== "auto") {
+    if (dimens.rowWidth !== "auto") {
       return (
-        <header style={Styler.header(layout, scrollLeft)}>
+        <header style={Styler.header(dimens, scrollLeft)}>
           {this.props.columns.getVisible().map(column => (
             <div
               className="header-cell"
