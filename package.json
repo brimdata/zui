@@ -44,8 +44,8 @@
   },
   "prettier": {
     "semi": false,
-    "bracketSpacing": false,
-    "parser": "babel"
+    "bracketSpacing": false
+
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
