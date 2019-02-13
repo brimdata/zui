@@ -9,8 +9,8 @@ import {getLogs} from "./logs"
 import TableColumns from "../models/TableColumns"
 import columnKey from "../lib/columnKey"
 
-export const getTableColumnss = (state: State) => {
-  return state.tableColumns
+export const getTableColumnSets = (state: State) => {
+  return state.tableColumnSets
 }
 
 export const getCurrentTableColumnsId = createSelector<State, void, *, *>(
@@ -40,7 +40,7 @@ export const getCurrentUniqColumns = createSelector<State, void, *, *>(
 export const getCurrentTableColumns = createSelector<State, void, *, *, *, *>(
   getCurrentTableColumnsId,
   getCurrentUniqColumns,
-  getTableColumnss,
+  getTableColumnSets,
   (tableKey, columns, tableSettings) => {
     return new TableColumns(tableKey, columns, tableSettings[tableKey])
   }

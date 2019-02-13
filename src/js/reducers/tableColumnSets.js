@@ -2,7 +2,7 @@
 import type {ColumnSetting} from "../types"
 import createReducer from "./createReducer"
 
-export type TableColumnss = {
+export type TableColumnSets = {
   [string]: {
     [string]: ColumnSetting
   }

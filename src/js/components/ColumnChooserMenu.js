@@ -8,13 +8,13 @@ import classNames from "classnames"
 import {type DispatchProps, type State} from "../reducers/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
 import type {TableColumn} from "../types"
-import {getCurrentTableColumns} from "../selectors/tableColumns"
+import {getCurrentTableColumns} from "../selectors/tableColumnSets"
 import {
   hideAllColumns,
   hideColumn,
   showAllColumns,
   showColumn
-} from "../actions/tableColumns"
+} from "../actions/tableColumnSets"
 import CloseButton from "./CloseButton"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"

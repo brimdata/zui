@@ -16,7 +16,7 @@ import type {SearchHistory} from "./searchHistory"
 import type {SearchStats} from "./searchStats"
 import type {SelectedColumns} from "./selectedColumns"
 import type {Spaces} from "./spaces"
-import type {TableColumnss} from "./tableColumns"
+import type {TableColumnSets} from "./tableColumnSets"
 import type {TimeWindow} from "./timeWindow"
 import type {TuplesByUid} from "./tuplesByUid"
 import type {View} from "./view"
@@ -41,7 +41,7 @@ export type State = {
   descriptors: Descriptors,
   view: View,
   notifications: Notifications,
-  tableColumns: TableColumnss
+  tableColumnSets: TableColumnSets
 }
 
 export type Thunk = (Dispatch, () => State, Client) => *

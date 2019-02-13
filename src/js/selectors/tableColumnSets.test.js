@@ -5,7 +5,7 @@ import {
   getCurrentTableColumns,
   getCurrentTableColumnsId,
   getCurrentUniqColumns
-} from "./tableColumns"
+} from "./tableColumnSets"
 import {mainSearchEvents} from "../actions/mainSearch"
 import {receiveDescriptor} from "../actions/descriptors"
 import {setCurrentSpaceName} from "../actions/spaces"

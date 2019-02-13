@@ -8,7 +8,7 @@ import {type DispatchProps, type State} from "../reducers/types"
 import {type ResultsTabEnum, getResultsTab, getTimeZone} from "../reducers/view"
 import {buildLogDetail} from "../selectors/logDetails"
 import {fetchAhead} from "../actions/logViewer"
-import {getCurrentTableColumns} from "../selectors/tableColumns"
+import {getCurrentTableColumns} from "../selectors/tableColumnSets"
 import {getLogs} from "../selectors/logs"
 import {
   getMainSearchIsComplete,
