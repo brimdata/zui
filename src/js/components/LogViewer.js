@@ -54,7 +54,7 @@ export default class LogViewer extends React.Component<Props, State> {
   renderRow = (index: number, dimens: ViewerDimens) => {
     return (
       <LogRow
-        columns={this.props.tableColumns.getColumns()}
+        columns={this.props.tableColumns}
         key={index}
         index={index}
         log={this.props.logs[index]}
