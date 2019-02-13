@@ -16,7 +16,7 @@ type Props = {
   logs: Log[],
   selectedLog: ?Log,
   timeZone: string,
-  columns: TableColumns,
+  tableColumns: TableColumns,
   atEnd: boolean,
   onLastChunk?: Function,
   onRowClick?: Function
@@ -35,7 +35,7 @@ export default class LogViewer extends React.Component<Props, State> {
       width: this.props.width,
       size: this.props.logs.length,
       rowH: 25,
-      columns: this.props.columns
+      columns: this.props.tableColumns
     })
   }
 
@@ -52,7 +52,7 @@ export default class LogViewer extends React.Component<Props, State> {
   renderRow = (index: number, layout: LayoutInterface) => {
     return (
       <LogRow
-        columns={this.props.columns.getColumns()}
+        columns={this.props.tableColumns.getColumns()}
         key={index}
         index={index}
         log={this.props.logs[index]}
@@ -72,7 +72,7 @@ export default class LogViewer extends React.Component<Props, State> {
       <div>
         <XPhonyViewer />
         <Viewer
-          columns={this.props.columns.getColumns()}
+          columns={this.props.tableColumns.getColumns()}
           logs={this.props.logs}
           layout={this.createLayout()}
           chunker={this.createChunker()}

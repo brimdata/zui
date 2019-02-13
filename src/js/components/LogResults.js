@@ -31,7 +31,7 @@ type StateProps = {|
   isFetchingAhead: boolean,
   isFetching: boolean,
   isComplete: boolean,
-  columns: TableColumns,
+  tableColumns: TableColumns,
   tab: ResultsTabEnum
 |}
 
@@ -66,7 +66,7 @@ export default class LogResults extends React.Component<Props> {
                 logs={this.props.logs}
                 selectedLog={this.props.selectedLog}
                 timeZone={this.props.timeZone}
-                columns={this.props.columns}
+                tableColumns={this.props.tableColumns}
                 onLastChunk={this.onLastChunk}
                 onRowClick={this.onRowClick}
                 atEnd={
@@ -89,7 +89,7 @@ const stateToProps = (state: State) => ({
   isFetching: getMainSearchIsFetching(state),
   isComplete: getMainSearchIsComplete(state),
   moreAhead: moreAhead(state),
-  columns: getCurrentTableColumns(state),
+  tableColumns: getCurrentTableColumns(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
   logs: getLogs(state)
