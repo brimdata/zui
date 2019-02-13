@@ -2,14 +2,14 @@
 
 import {conn, dns} from "../test/mockLogs"
 import {
-  getCurrentTableLayout,
-  getCurrentTableLayoutId,
+  getCurrentTableColumns,
+  getCurrentTableColumnsId,
   getCurrentUniqColumns
-} from "./tableLayouts"
+} from "./tableColumns"
 import {mainSearchEvents} from "../actions/mainSearch"
 import {receiveDescriptor} from "../actions/descriptors"
 import {setCurrentSpaceName} from "../actions/spaces"
-import TableLayout from "../models/TableLayout"
+import TableColumns from "../models/TableColumns"
 import initStore from "../test/initStore"
 
 const connLog = conn()
@@ -20,7 +20,7 @@ beforeEach(() => {
   store = initStore()
 })
 
-describe("#getCurrentTableLayoutId", () => {
+describe("#getCurrentTableColumnsId", () => {
   test("logs with one td", () => {
     const state = store.dispatchAll([
       setCurrentSpaceName("default"),
@@ -28,7 +28,7 @@ describe("#getCurrentTableLayoutId", () => {
       mainSearchEvents([connLog.tuple])
     ])
 
-    expect(getCurrentTableLayoutId(state)).toBe(connLog.tuple[0])
+    expect(getCurrentTableColumnsId(state)).toBe(connLog.tuple[0])
   })
 
   test("logs with multiple tds", () => {
@@ -39,13 +39,13 @@ describe("#getCurrentTableLayoutId", () => {
       mainSearchEvents([connLog.tuple, dnsLog.tuple])
     ])
 
-    expect(getCurrentTableLayoutId(state)).toBe("temp")
+    expect(getCurrentTableColumnsId(state)).toBe("temp")
   })
 
   test("no logs", () => {
     const state = store.getState()
 
-    expect(getCurrentTableLayoutId(state)).toBe("none")
+    expect(getCurrentTableColumnsId(state)).toBe("none")
   })
 })
 
@@ -66,10 +66,10 @@ describe("#getCurrentUniqColumns", () => {
   })
 })
 
-describe("#getCurrentTableLayout", () => {
+describe("#getCurrentTableColumns", () => {
   test("returns the class", () => {
     const state = store.getState()
-    expect(getCurrentTableLayout(state)).toBeInstanceOf(TableLayout)
+    expect(getCurrentTableColumns(state)).toBeInstanceOf(TableColumns)
   })
 
   test("merges columns and tableSettings", () => {
@@ -80,7 +80,7 @@ describe("#getCurrentTableLayout", () => {
       mainSearchEvents([connLog.tuple, dnsLog.tuple])
     ])
 
-    const tableColumns = getCurrentTableLayout(state)
+    const tableColumns = getCurrentTableColumns(state)
     expect(tableColumns.toArray()).toHaveLength(40)
   })
 })

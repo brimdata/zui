@@ -7,19 +7,19 @@ import ReactDOM from "react-dom"
 
 import type {Dispatch, State} from "../../reducers/types"
 import type {TableColumn} from "../../types"
-import {getCurrentTableLayout} from "../../selectors/tableLayouts"
+import {getCurrentTableColumns} from "../../selectors/tableColumns"
 import {getLogs} from "../../selectors/logs"
-import {updateTableLayout} from "../../actions/tableLayouts"
+import {updateTableColumns} from "../../actions/tableColumns"
 import * as Arr from "../../lib/Array"
 import * as Doc from "../../lib/Doc"
 import Log from "../../models/Log"
 import LogCell from "../LogCell"
-import TableLayout from "../../models/TableLayout"
+import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
 import dispatchToProps from "../../lib/dispatchToProps"
 
 type StateProps = {|
-  tableLayout: TableLayout,
+  tableColumns: TableColumns,
   data: Log[]
 |}
 
@@ -38,8 +38,8 @@ export default class PhonyViewer extends React.Component<Props> {
   shouldComponentUpdate(nextProps: Props) {
     return (
       !isEqual(
-        this.props.tableLayout.getVisible().map(c => c.name),
-        nextProps.tableLayout.getVisible().map(c => c.name)
+        this.props.tableColumns.getVisible().map(c => c.name),
+        nextProps.tableColumns.getVisible().map(c => c.name)
       ) || this.props.data !== nextProps.data
     )
   }
@@ -66,7 +66,7 @@ export default class PhonyViewer extends React.Component<Props> {
         {}
       )
 
-      this.props.dispatch(updateTableLayout(this.props.tableLayout.id, updates))
+      this.props.dispatch(updateTableColumns(this.props.tableColumns.id, updates))
     }
   }
 
@@ -95,9 +95,9 @@ export default class PhonyViewer extends React.Component<Props> {
   render() {
     this.table = null
     const {data} = this.props
-    if (!this.props.tableLayout.showHeader()) return null
+    if (!this.props.tableColumns.showHeader()) return null
 
-    const cols = this.props.tableLayout.getVisible()
+    const cols = this.props.tableColumns.getVisible()
     const headers = <tr>{cols.map(this.renderHeaderCell)}</tr>
 
     const renderRow = (datum, i) => (
@@ -115,7 +115,7 @@ export default class PhonyViewer extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  tableLayout: getCurrentTableLayout(state),
+  tableColumns: getCurrentTableColumns(state),
   data: getLogs(state)
 })
 

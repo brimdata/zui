@@ -21,7 +21,7 @@ import searchStats from "./searchStats"
 import selectedColumns from "./selectedColumns"
 import spaces from "./spaces"
 import starredLogs from "./starredLogs"
-import tableLayouts from "./tableLayouts"
+import tableColumns from "./tableColumns"
 import timeWindow from "./timeWindow"
 import tuplesByUid from "./tuplesByUid"
 import view from "./view"
@@ -51,5 +51,5 @@ export default combineReducers<*, *>({
   searchHistory,
   whois,
   notifications,
-  tableLayouts
+  tableColumns
 })

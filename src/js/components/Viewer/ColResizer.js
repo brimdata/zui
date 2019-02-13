@@ -5,7 +5,7 @@ import React from "react"
 
 import {type DispatchProps} from "../../reducers/types"
 import type {TableColumn} from "../../types"
-import {updateTableLayout} from "../../actions/tableLayouts"
+import {updateTableColumns} from "../../actions/tableColumns"
 import columnKey from "../../lib/columnKey"
 import dispatchToProps from "../../lib/dispatchToProps"
 
@@ -28,7 +28,7 @@ export default class ColResizer extends React.PureComponent<Props> {
       const {column} = this.props
       const moved = e.clientX - start
       const update = {[columnKey(column)]: {width: oldWidth + moved}}
-      this.props.dispatch(updateTableLayout(this.props.tableId, update))
+      this.props.dispatch(updateTableColumns(this.props.tableId, update))
     }
   }
 

@@ -3,7 +3,7 @@
 import type {Column, TableColumn, ColumnSettingsMap} from "../types"
 import columnKey from "../lib/columnKey"
 
-export default class TableLayout {
+export default class TableColumns {
   cols: TableColumn[]
   id: string
 
@@ -16,7 +16,7 @@ export default class TableLayout {
     this.cols = columns
       .map((col, index) => ({
         ...col,
-        ...TableLayout.columnDefaults(tableSetting, index),
+        ...TableColumns.columnDefaults(tableSetting, index),
         ...tableSetting[columnKey(col)]
       }))
       .sort((a, b) => a.position - b.position)

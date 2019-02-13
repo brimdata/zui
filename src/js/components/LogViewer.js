@@ -7,7 +7,7 @@ import Chunker from "./Viewer/Chunker"
 import {type Layout as LayoutInterface, create} from "./Viewer/Layout"
 import Log from "../models/Log"
 import LogRow from "./LogRow"
-import TableLayout from "../models/TableLayout"
+import TableColumns from "../models/TableColumns"
 import Viewer from "./Viewer/Viewer"
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
   logs: Log[],
   selectedLog: ?Log,
   timeZone: string,
-  columns: TableLayout,
+  columns: TableColumns,
   atEnd: boolean,
   onLastChunk?: Function,
   onRowClick?: Function

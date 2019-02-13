@@ -6,14 +6,14 @@ import {uniqBy} from "lodash"
 import type {Column} from "../types"
 import type {State} from "../reducers/types"
 import {getLogs} from "./logs"
-import TableLayout from "../models/TableLayout"
+import TableColumns from "../models/TableColumns"
 import columnKey from "../lib/columnKey"
 
-export const getTableLayouts = (state: State) => {
-  return state.tableLayouts
+export const getTableColumnss = (state: State) => {
+  return state.tableColumns
 }
 
-export const getCurrentTableLayoutId = createSelector<State, void, *, *>(
+export const getCurrentTableColumnsId = createSelector<State, void, *, *>(
   getLogs,
   logs => {
     if (logs.length === 0) return "none"
@@ -37,11 +37,11 @@ export const getCurrentUniqColumns = createSelector<State, void, *, *>(
   }
 )
 
-export const getCurrentTableLayout = createSelector<State, void, *, *, *, *>(
-  getCurrentTableLayoutId,
+export const getCurrentTableColumns = createSelector<State, void, *, *, *, *>(
+  getCurrentTableColumnsId,
   getCurrentUniqColumns,
-  getTableLayouts,
+  getTableColumnss,
   (tableKey, columns, tableSettings) => {
-    return new TableLayout(tableKey, columns, tableSettings[tableKey])
+    return new TableColumns(tableKey, columns, tableSettings[tableKey])
   }
 )

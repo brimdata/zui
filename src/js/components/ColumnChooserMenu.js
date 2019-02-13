@@ -8,15 +8,15 @@ import classNames from "classnames"
 import {type DispatchProps, type State} from "../reducers/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
 import type {TableColumn} from "../types"
-import {getCurrentTableLayout} from "../selectors/tableLayouts"
+import {getCurrentTableColumns} from "../selectors/tableColumns"
 import {
   hideAllColumns,
   hideColumn,
   showAllColumns,
   showColumn
-} from "../actions/tableLayouts"
+} from "../actions/tableColumns"
 import CloseButton from "./CloseButton"
-import TableLayout from "../models/TableLayout"
+import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {|
@@ -24,7 +24,7 @@ type OwnProps = {|
 |}
 
 type StateProps = {|
-  tableLayout: TableLayout
+  tableColumns: TableColumns
 |}
 
 type Props = {|
@@ -35,26 +35,26 @@ type Props = {|
 
 export default class ColumnChooserMenu extends React.Component<Props> {
   tableId() {
-    return this.props.tableLayout.id
+    return this.props.tableColumns.id
   }
 
   allVisible() {
-    return this.props.tableLayout.allVisible()
+    return this.props.tableColumns.allVisible()
   }
 
   showAllColumns = (e: Event) => {
     e.stopPropagation()
-    this.props.dispatch(showAllColumns(this.props.tableLayout))
+    this.props.dispatch(showAllColumns(this.props.tableColumns))
   }
 
   onColumnClick(e: Event, column: TableColumn) {
     e.stopPropagation()
     if (column.isVisible) {
       if (this.allVisible()) {
-        this.props.dispatch(hideAllColumns(this.props.tableLayout))
+        this.props.dispatch(hideAllColumns(this.props.tableColumns))
         this.props.dispatch(showColumn(this.tableId(), column))
-      } else if (this.props.tableLayout.visibleCount() === 1) {
-        this.props.dispatch(showAllColumns(this.props.tableLayout))
+      } else if (this.props.tableColumns.visibleCount() === 1) {
+        this.props.dispatch(showAllColumns(this.props.tableColumns))
       } else {
         this.props.dispatch(hideColumn(this.tableId(), column))
       }
@@ -65,14 +65,14 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 
   className() {
     return classNames("column-chooser-menu", {
-      "all-visible": this.props.tableLayout.allVisible()
+      "all-visible": this.props.tableColumns.allVisible()
     })
   }
 
   render() {
-    const columns = this.props.tableLayout.getColumns()
-    const count = this.props.tableLayout.visibleCount()
-    const allVisible = this.props.tableLayout.allVisible()
+    const columns = this.props.tableColumns.getColumns()
+    const count = this.props.tableColumns.visibleCount()
+    const allVisible = this.props.tableColumns.allVisible()
     return (
       <CSSTransition
         classNames="slide-in-right"
@@ -111,7 +111,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  tableLayout: getCurrentTableLayout(state)
+  tableColumns: getCurrentTableColumns(state)
 })
 
 export const XColumnChooserMenu = connect<Props, OwnProps, _, _, _, _>(

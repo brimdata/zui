@@ -8,7 +8,7 @@ import {type DispatchProps, type State} from "../reducers/types"
 import {type ResultsTabEnum, getResultsTab, getTimeZone} from "../reducers/view"
 import {buildLogDetail} from "../selectors/logDetails"
 import {fetchAhead} from "../actions/logViewer"
-import {getCurrentTableLayout} from "../selectors/tableLayouts"
+import {getCurrentTableColumns} from "../selectors/tableColumns"
 import {getLogs} from "../selectors/logs"
 import {
   getMainSearchIsComplete,
@@ -18,7 +18,7 @@ import {isFetchingAhead, moreAhead} from "../reducers/logViewer"
 import Log from "../models/Log"
 import LogViewer from "../components/LogViewer"
 import NoResults from "./NoResults"
-import TableLayout from "../models/TableLayout"
+import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as logDetails from "../actions/logDetails"
 
@@ -31,7 +31,7 @@ type StateProps = {|
   isFetchingAhead: boolean,
   isFetching: boolean,
   isComplete: boolean,
-  columns: TableLayout,
+  columns: TableColumns,
   tab: ResultsTabEnum
 |}
 
@@ -89,7 +89,7 @@ const stateToProps = (state: State) => ({
   isFetching: getMainSearchIsFetching(state),
   isComplete: getMainSearchIsComplete(state),
   moreAhead: moreAhead(state),
-  columns: getCurrentTableLayout(state),
+  columns: getCurrentTableColumns(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
   logs: getLogs(state)

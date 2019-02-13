@@ -1,32 +1,32 @@
 /* @flow */
 import type {Column, ColumnSetting} from "../types"
-import TableLayout from "../models/TableLayout"
+import TableColumns from "../models/TableColumns"
 import columnKey from "../lib/columnKey"
 
 type Updates = {[string]: ColumnSetting}
 
-export const updateTableLayout = (tableId: string, updates: Updates) => ({
+export const updateTableColumns = (tableId: string, updates: Updates) => ({
   type: "TABLE_LAYOUT_UPDATE",
   tableId,
   updates
 })
 
 export const hideColumn = (tableId: string, column: Column) =>
-  updateTableLayout(tableId, {
+  updateTableColumns(tableId, {
     [columnKey(column)]: {
       isVisible: false
     }
   })
 
 export const showColumn = (tableId: string, column: Column) =>
-  updateTableLayout(tableId, {
+  updateTableColumns(tableId, {
     [columnKey(column)]: {
       isVisible: true
     }
   })
 
-export const showAllColumns = (table: TableLayout) => {
-  return updateTableLayout(
+export const showAllColumns = (table: TableColumns) => {
+  return updateTableColumns(
     table.id,
     table.getColumns().reduce(
       (updates, col) => ({
@@ -38,8 +38,8 @@ export const showAllColumns = (table: TableLayout) => {
   )
 }
 
-export const hideAllColumns = (table: TableLayout) => {
-  return updateTableLayout(
+export const hideAllColumns = (table: TableColumns) => {
+  return updateTableColumns(
     table.id,
     table.getColumns().reduce(
       (updates, col) => ({

@@ -2,14 +2,14 @@
 
 import type {TableColumn} from "../../types"
 import type {Width, Layout} from "./Layout"
-import TableLayout from "../../models/TableLayout"
+import TableColumns from "../../models/TableColumns"
 
 export default class AutoLayout {
   width: number
   height: number
   size: number
   rowH: number
-  columns: TableLayout
+  columns: TableColumns
 
   constructor(args: $ReadOnly<Layout>) {
     this.width = args.width

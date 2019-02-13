@@ -1,10 +1,10 @@
 /* @flow */
 
 import AutoLayout from "./AutoLayout"
-import TableLayout from "../../models/TableLayout"
+import TableColumns from "../../models/TableColumns"
 
 describe("AutoLayout", () => {
-  const columns = new TableLayout(
+  const columns = new TableColumns(
     "temp",
     [
       {name: "_path", type: "string"},
@@ -67,7 +67,7 @@ describe("AutoLayout", () => {
 import FixedLayout from "./FixedLayout"
 
 describe("FixedLayout", () => {
-  const columns = new TableLayout(
+  const columns = new TableColumns(
     "temp",
     [
       {name: "_path", type: "string"},

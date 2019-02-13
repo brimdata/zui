@@ -2,14 +2,14 @@
 
 import FixedLayout from "./FixedLayout"
 import * as Styler from "./Styler"
-import TableLayout from "../../models/TableLayout"
+import TableColumns from "../../models/TableColumns"
 
 const layout = new FixedLayout({
   size: 20,
   rowH: 10,
   height: 300,
   width: 400,
-  columns: new TableLayout("temp", [
+  columns: new TableColumns("temp", [
     {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
     {td: "2", name: "ts", type: "time", width: 33, isVisible: true},
     {td: "1", name: "duration", type: "interval", width: 44, isVisible: false},

@@ -1,14 +1,14 @@
 /* @flow */
 
-import {getTableLayouts} from "../selectors/tableLayouts"
+import {getTableColumnss} from "../selectors/tableColumns"
 import {
   hideAllColumns,
   hideColumn,
   showAllColumns,
   showColumn,
-  updateTableLayout
-} from "../actions/tableLayouts"
-import TableLayout from "../models/TableLayout"
+  updateTableColumns
+} from "../actions/tableColumns"
+import TableColumns from "../models/TableColumns"
 import initStore from "../test/initStore"
 
 const tableId = "test"
@@ -19,12 +19,12 @@ beforeEach(() => {
 
 test("get initial state", () => {
   const state = store.getState()
-  expect(getTableLayouts(state)).toEqual({})
+  expect(getTableColumnss(state)).toEqual({})
 })
 
 test("Bulk update column settings", () => {
   const state = store.dispatchAll([
-    updateTableLayout(tableId, {
+    updateTableColumns(tableId, {
       "_path:string": {
         width: 22,
         isVisible: true,
@@ -36,12 +36,12 @@ test("Bulk update column settings", () => {
         position: 1
       }
     }),
-    updateTableLayout(tableId, {
+    updateTableColumns(tableId, {
       "_path:string": {width: 100}
     })
   ])
 
-  expect(getTableLayouts(state)[tableId]).toEqual({
+  expect(getTableColumnss(state)[tableId]).toEqual({
     "_path:string": {
       width: 100,
       isVisible: true,
@@ -60,7 +60,7 @@ test("hide one column", () => {
     hideColumn(tableId, {name: "a", type: "string"})
   ])
 
-  const table = getTableLayouts(state)[tableId]
+  const table = getTableColumnss(state)[tableId]
 
   expect(table["a:string"]).toEqual({isVisible: false})
 })
@@ -71,13 +71,13 @@ test("show one column", () => {
     showColumn(tableId, {name: "a", type: "string"})
   ])
 
-  const table = getTableLayouts(state)[tableId]
+  const table = getTableColumnss(state)[tableId]
 
   expect(table["a:string"]).toEqual({isVisible: true})
 })
 
 test("show all columns", () => {
-  const tableLayout = new TableLayout(
+  const tableColumns = new TableColumns(
     tableId,
     [
       {name: "a", type: "string"},
@@ -91,9 +91,9 @@ test("show all columns", () => {
     }
   )
 
-  const state = store.dispatchAll([showAllColumns(tableLayout)])
+  const state = store.dispatchAll([showAllColumns(tableColumns)])
 
-  const table = getTableLayouts(state)[tableId]
+  const table = getTableColumnss(state)[tableId]
 
   expect(table["a:string"]).toEqual({isVisible: true})
   expect(table["b:string"]).toEqual({isVisible: true})
@@ -101,7 +101,7 @@ test("show all columns", () => {
 })
 
 test("hide all columns", () => {
-  const tableLayout = new TableLayout(
+  const tableColumns = new TableColumns(
     tableId,
     [
       {name: "a", type: "string"},
@@ -115,9 +115,9 @@ test("hide all columns", () => {
     }
   )
 
-  const state = store.dispatchAll([hideAllColumns(tableLayout)])
+  const state = store.dispatchAll([hideAllColumns(tableColumns)])
 
-  const table = getTableLayouts(state)[tableId]
+  const table = getTableColumnss(state)[tableId]
 
   expect(table["a:string"]).toEqual({isVisible: false})
   expect(table["b:string"]).toEqual({isVisible: false})
