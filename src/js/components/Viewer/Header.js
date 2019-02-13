@@ -1,14 +1,18 @@
 /* @flow */
 
 import React from "react"
-import {XColResizer} from "./ColResizer"
-import * as Styler from "./Styler"
+
 import type {Layout} from "./Layout"
+import type {TableColumn} from "../../types"
+import {XColResizer} from "./ColResizer"
 import FixedLayout from "./FixedLayout"
+import * as Styler from "./Styler"
+import columnKey from "../../lib/columnKey"
 
 type Props = {
   layout: Layout,
-  scrollLeft: number
+  scrollLeft: number,
+  columns: TableColumn[]
 }
 
 export default class Header extends React.PureComponent<Props> {
@@ -18,16 +22,21 @@ export default class Header extends React.PureComponent<Props> {
     if (layout instanceof FixedLayout) {
       return (
         <header style={Styler.header(layout, scrollLeft)}>
-          {layout.visibleColumns().map(({name: col}) => (
-            <div
-              className="header-cell"
-              key={col}
-              style={Styler.cell(layout, col)}
-            >
-              {col}
-              <XColResizer col={col} width={layout.cellWidth(col)} />
-            </div>
-          ))}
+          {this.props.columns
+            .filter(c => c.isVisible)
+            .map(column => (
+              <div
+                className="header-cell"
+                key={columnKey(column)}
+                style={{width: column.width || 300}}
+              >
+                {column.name}
+                <XColResizer
+                  column={column}
+                  tableId={this.props.layout.columns.id}
+                />
+              </div>
+            ))}
         </header>
       )
     } else {

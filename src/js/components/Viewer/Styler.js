@@ -1,5 +1,6 @@
 /* @flow */
 import type {Layout} from "./Layout"
+import type {TableColumn} from "../../types"
 
 export const viewer = (layout: Layout) => {
   return {
@@ -43,9 +44,9 @@ export const row = (layout: Layout) => {
   }
 }
 
-export const cell = (layout: Layout, col: string) => {
+export const cell = (layout: Layout, column: TableColumn) => {
   return {
-    width: layout.cellWidth(col)
+    width: layout.cellWidth(column)
   }
 }
 

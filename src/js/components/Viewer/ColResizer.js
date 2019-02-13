@@ -1,18 +1,20 @@
 /* @flow */
 
-import React from "react"
 import {connect} from "react-redux"
-import * as columnWidths from "../../actions/columnWidths"
-import type {Width} from "./Layout"
+import React from "react"
+
 import {type DispatchProps} from "../../reducers/types"
+import type {TableColumn} from "../../types"
+import {updateTableLayout} from "../../actions/tableLayouts"
+import columnKey from "../../lib/columnKey"
 import dispatchToProps from "../../lib/dispatchToProps"
 
 let oldWidth = null
 let start = null
 
 type OwnProps = {|
-  col: string,
-  width: Width
+  column: TableColumn,
+  tableId: string
 |}
 
 type Props = {|
@@ -23,10 +25,10 @@ type Props = {|
 export default class ColResizer extends React.PureComponent<Props> {
   move = (e: MouseEvent) => {
     if (start !== null) {
-      const {col} = this.props
+      const {column} = this.props
       const moved = e.clientX - start
-      const newWidth = oldWidth + moved
-      this.props.dispatch(columnWidths.setWidths({[col]: newWidth}))
+      const update = {[columnKey(column)]: {width: oldWidth + moved}}
+      this.props.dispatch(updateTableLayout(this.props.tableId, update))
     }
   }
 
@@ -36,7 +38,7 @@ export default class ColResizer extends React.PureComponent<Props> {
   }
 
   down = (e: MouseEvent) => {
-    oldWidth = this.props.width
+    oldWidth = this.props.column.width
     start = e.clientX
     add("mousemove", this.move)
     add("mouseup", this.up)

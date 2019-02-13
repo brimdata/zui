@@ -1,14 +1,15 @@
 /* @flow */
 
+import type {TableColumn} from "../../types"
 import type {Width, Layout} from "./Layout"
-import Columns from "../../models/Columns"
+import TableLayout from "../../models/TableLayout"
 
 export default class AutoLayout {
   width: number
   height: number
   size: number
   rowH: number
-  columns: Columns
+  columns: TableLayout
 
   constructor(args: $ReadOnly<Layout>) {
     this.width = args.width
@@ -19,7 +20,7 @@ export default class AutoLayout {
   }
 
   allColumns() {
-    return this.columns.getAll()
+    return this.columns.toArray()
   }
 
   visibleColumns() {
@@ -54,7 +55,7 @@ export default class AutoLayout {
     return this.rowH
   }
 
-  cellWidth(_: string): Width {
+  cellWidth(_: TableColumn): Width {
     return "auto"
   }
 }

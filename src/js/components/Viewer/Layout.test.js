@@ -1,14 +1,31 @@
 /* @flow */
 
 import AutoLayout from "./AutoLayout"
-import Columns from "../../models/Columns"
+import TableLayout from "../../models/TableLayout"
 
 describe("AutoLayout", () => {
-  const columns = new Columns([
-    {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
-    {td: "1", name: "duration", type: "interval", width: 44, isVisible: true},
-    {td: "1", name: "query", type: "string", width: 55, isVisible: true}
-  ])
+  const columns = new TableLayout(
+    "temp",
+    [
+      {name: "_path", type: "string"},
+      {name: "duration", type: "interval"},
+      {name: "query", type: "string"}
+    ],
+    {
+      "_path:string": {
+        width: 22,
+        isVisible: true
+      },
+      "duration:interval": {
+        width: 44,
+        isVisible: true
+      },
+      "query:string": {
+        width: 55,
+        isVisible: true
+      }
+    }
+  )
 
   const autoLayout = new AutoLayout({
     height: 500,
@@ -50,11 +67,28 @@ describe("AutoLayout", () => {
 import FixedLayout from "./FixedLayout"
 
 describe("FixedLayout", () => {
-  const columns = new Columns([
-    {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
-    {td: "1", name: "duration", type: "interval", width: 44, isVisible: true},
-    {td: "1", name: "history", type: "string", width: 55, isVisible: true}
-  ])
+  const columns = new TableLayout(
+    "temp",
+    [
+      {name: "_path", type: "string"},
+      {name: "duration", type: "interval"},
+      {name: "history", type: "string"}
+    ],
+    {
+      "_path:string": {
+        width: 22,
+        isVisible: true
+      },
+      "duration:interval": {
+        width: 44,
+        isVisible: true
+      },
+      "history:string": {
+        width: 55,
+        isVisible: true
+      }
+    }
+  )
 
   const fixedLayout = new FixedLayout({
     height: 500,
@@ -83,9 +117,5 @@ describe("FixedLayout", () => {
   test("#rowWidth is same as listWidth", () => {
     fixedLayout.width = 100
     expect(fixedLayout.rowWidth()).toBe(121)
-  })
-
-  test("#cellWidth", () => {
-    expect(fixedLayout.cellWidth("_path")).toBe(22)
   })
 })

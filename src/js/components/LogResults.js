@@ -1,25 +1,26 @@
 /* @flow */
 
-import React from "react"
 import {AutoSizer} from "react-virtualized"
+import {connect} from "react-redux"
+import React from "react"
+
+import {type DispatchProps, type State} from "../reducers/types"
+import {type ResultsTabEnum, getResultsTab, getTimeZone} from "../reducers/view"
+import {buildLogDetail} from "../selectors/logDetails"
+import {fetchAhead} from "../actions/logViewer"
+import {getCurrentTableLayout} from "../selectors/tableLayouts"
+import {getLogs} from "../selectors/logs"
+import {
+  getMainSearchIsComplete,
+  getMainSearchIsFetching
+} from "../reducers/mainSearch"
+import {isFetchingAhead, moreAhead} from "../reducers/logViewer"
+import Log from "../models/Log"
 import LogViewer from "../components/LogViewer"
 import NoResults from "./NoResults"
-import Log from "../models/Log"
-import Columns from "../models/Columns"
-import {fetchAhead} from "../actions/logViewer"
-import * as logDetails from "../actions/logDetails"
-import {connect} from "react-redux"
-import * as mainSearch from "../reducers/mainSearch"
-import {buildLogDetail} from "../selectors/logDetails"
-import {getTimeZone} from "../reducers/view"
-import * as view from "../reducers/view"
-import * as logViewer from "../reducers/logViewer"
-import * as columns from "../selectors/columns"
-import * as logs from "../selectors/logs"
-import {type DispatchProps} from "../reducers/types"
-import {type State} from "../reducers/types"
+import TableLayout from "../models/TableLayout"
 import dispatchToProps from "../lib/dispatchToProps"
-import {type ResultsTabEnum} from "../reducers/view"
+import * as logDetails from "../actions/logDetails"
 
 type StateProps = {|
   logs: Log[],
@@ -30,7 +31,7 @@ type StateProps = {|
   isFetchingAhead: boolean,
   isFetching: boolean,
   isComplete: boolean,
-  columns: Columns,
+  columns: TableLayout,
   tab: ResultsTabEnum
 |}
 
@@ -83,15 +84,15 @@ export default class LogResults extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  tab: view.getResultsTab(state),
-  isFetchingAhead: logViewer.isFetchingAhead(state),
-  isFetching: mainSearch.getMainSearchIsFetching(state),
-  isComplete: mainSearch.getMainSearchIsComplete(state),
-  moreAhead: logViewer.moreAhead(state),
-  columns: columns.getColumns(state),
+  tab: getResultsTab(state),
+  isFetchingAhead: isFetchingAhead(state),
+  isFetching: getMainSearchIsFetching(state),
+  isComplete: getMainSearchIsComplete(state),
+  moreAhead: moreAhead(state),
+  columns: getCurrentTableLayout(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
-  logs: logs.getLogs(state)
+  logs: getLogs(state)
 })
 
 export const XLogResults = connect<Props, {||}, _, _, _, _>(

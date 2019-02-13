@@ -1,14 +1,14 @@
 /* @flow */
 
 import React from "react"
-import LogRow from "./LogRow"
-import Log from "../models/Log"
-import * as Layout from "./Viewer/Layout"
-import type {Layout as LayoutInterface} from "./Viewer/Layout"
-import Chunker from "./Viewer/Chunker"
-import Viewer from "./Viewer/Viewer"
+
 import {XPhonyViewer} from "./Viewer/PhonyViewer"
-import Columns from "../models/Columns"
+import Chunker from "./Viewer/Chunker"
+import {type Layout as LayoutInterface, create} from "./Viewer/Layout"
+import Log from "../models/Log"
+import LogRow from "./LogRow"
+import TableLayout from "../models/TableLayout"
+import Viewer from "./Viewer/Viewer"
 
 type Props = {
   height: number,
@@ -16,7 +16,7 @@ type Props = {
   logs: Log[],
   selectedLog: ?Log,
   timeZone: string,
-  columns: Columns,
+  columns: TableLayout,
   atEnd: boolean,
   onLastChunk?: Function,
   onRowClick?: Function
@@ -30,7 +30,7 @@ export default class LogViewer extends React.Component<Props, State> {
   state = {selectedIndex: null}
 
   createLayout() {
-    return Layout.create({
+    return create({
       height: this.props.height,
       width: this.props.width,
       size: this.props.logs.length,
@@ -52,6 +52,7 @@ export default class LogViewer extends React.Component<Props, State> {
   renderRow = (index: number, layout: LayoutInterface) => {
     return (
       <LogRow
+        columns={this.props.columns.getColumns()}
         key={index}
         index={index}
         log={this.props.logs[index]}
@@ -71,6 +72,7 @@ export default class LogViewer extends React.Component<Props, State> {
       <div>
         <XPhonyViewer />
         <Viewer
+          columns={this.props.columns.getColumns()}
           logs={this.props.logs}
           layout={this.createLayout()}
           chunker={this.createChunker()}

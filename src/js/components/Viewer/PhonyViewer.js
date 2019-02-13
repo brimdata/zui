@@ -1,25 +1,25 @@
 /* @flow */
 
+import {connect} from "react-redux"
+import {isEqual} from "lodash"
 import React from "react"
 import ReactDOM from "react-dom"
-import LogCell from "../LogCell"
-import * as Arr from "../../lib/Array"
-import Columns from "../../models/Columns"
-import type {Column} from "../../models/Columns"
-import Log from "../../models/Log"
-import * as Doc from "../../lib/Doc"
-import * as columnWidths from "../../actions/columnWidths"
-import type {Dispatch} from "../../reducers/types"
-import {connect} from "react-redux"
-import {getSelected} from "../../reducers/selectedColumns"
-import {getColumns} from "../../selectors/columns"
+
+import type {Dispatch, State} from "../../reducers/types"
+import type {TableColumn} from "../../types"
+import {getCurrentTableLayout} from "../../selectors/tableLayouts"
 import {getLogs} from "../../selectors/logs"
-import type {State} from "../../reducers/types"
+import {updateTableLayout} from "../../actions/tableLayouts"
+import * as Arr from "../../lib/Array"
+import * as Doc from "../../lib/Doc"
+import Log from "../../models/Log"
+import LogCell from "../LogCell"
+import TableLayout from "../../models/TableLayout"
+import columnKey from "../../lib/columnKey"
 import dispatchToProps from "../../lib/dispatchToProps"
 
 type StateProps = {|
-  columns: Columns,
-  selected: *,
+  tableLayout: TableLayout,
   data: Log[]
 |}
 
@@ -37,8 +37,10 @@ export default class PhonyViewer extends React.Component<Props> {
 
   shouldComponentUpdate(nextProps: Props) {
     return (
-      this.props.selected !== nextProps.selected ||
-      this.props.data !== nextProps.data
+      !isEqual(
+        this.props.tableLayout.getVisible().map(c => c.name),
+        nextProps.tableLayout.getVisible().map(c => c.name)
+      ) || this.props.data !== nextProps.data
     )
   }
 
@@ -51,20 +53,33 @@ export default class PhonyViewer extends React.Component<Props> {
   }
 
   measureColWidths() {
-    let colWidths = {}
     if (this.table) {
-      this.table.querySelectorAll("th").forEach(th => {
-        colWidths[th.innerHTML] = th.getBoundingClientRect().width
-      })
-      this.props.dispatch(columnWidths.setWidths(colWidths))
+      const cols = [].slice.call(
+        this.table.querySelectorAll("th[data-width-set='false']")
+      )
+
+      const updates = cols.reduce(
+        (updates, el) => ({
+          ...updates,
+          [el.dataset.colKey]: {width: el.getBoundingClientRect().width}
+        }),
+        {}
+      )
+
+      this.props.dispatch(updateTableLayout(this.props.tableLayout.id, updates))
     }
   }
 
-  renderHeaderCell({name}: Column) {
-    return <th key={name}>{name}</th>
+  renderHeaderCell(column: TableColumn) {
+    const key = columnKey(column)
+    return (
+      <th key={key} data-col-key={key} data-width-set={!!column.width}>
+        {column.name}
+      </th>
+    )
   }
 
-  renderCell(datum: Log, column: Column, index: number) {
+  renderCell(datum: Log, column: TableColumn, index: number) {
     const field = datum.getField(column.name)
     if (field) {
       return (
@@ -79,10 +94,10 @@ export default class PhonyViewer extends React.Component<Props> {
 
   render() {
     this.table = null
-    const {columns, data} = this.props
-    if (!columns.showHeader()) return null
+    const {data} = this.props
+    if (!this.props.tableLayout.showHeader()) return null
 
-    const cols = columns.getVisible()
+    const cols = this.props.tableLayout.getVisible()
     const headers = <tr>{cols.map(this.renderHeaderCell)}</tr>
 
     const renderRow = (datum, i) => (
@@ -100,8 +115,7 @@ export default class PhonyViewer extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  columns: getColumns(state),
-  selected: getSelected(state),
+  tableLayout: getCurrentTableLayout(state),
   data: getLogs(state)
 })
 

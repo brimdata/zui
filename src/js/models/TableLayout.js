@@ -16,10 +16,23 @@ export default class TableLayout {
     this.cols = columns
       .map((col, index) => ({
         ...col,
-        ...{width: undefined, isVisible: true, position: index},
+        ...TableLayout.columnDefaults(tableSetting, index),
         ...tableSetting[columnKey(col)]
       }))
       .sort((a, b) => a.position - b.position)
+  }
+
+  static columnDefaults(settings: TableSetting, index: number) {
+    return {
+      width: undefined,
+      // $FlowFixMe https://github.com/facebook/flow/issues/2221
+      isVisible: Object.values(settings).every(c => c.isVisible),
+      position: index
+    }
+  }
+
+  getVisible(): TableColumn[] {
+    return this.cols.filter(c => c.isVisible)
   }
 
   showHeader() {
