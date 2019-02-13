@@ -1,15 +1,15 @@
 /* @flow */
 
-import FixedLayout from "./FixedLayout"
+import {create} from "./Layout"
 import * as Styler from "./Styler"
 
-const layout = new FixedLayout({
+const layout = create({
   type: "fixed",
   size: 20,
-  rowH: 10,
+  rowHeight: 10,
   height: 300,
   width: 400,
-  rowW: 22 + 33 + 44 + 44
+  sumColumnWidths: 22 + 33 + 44 + 44
 })
 
 test("#viewer", () => {

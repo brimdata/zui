@@ -2,7 +2,6 @@ import React from "react"
 import LogCell from "./LogCell"
 import classNames from "classnames"
 import * as Styler from "./Viewer/Styler"
-import FixedLayout from "./Viewer/FixedLayout"
 
 export default class LogRow extends React.PureComponent {
   renderAutoLayout() {
@@ -61,7 +60,7 @@ export default class LogRow extends React.PureComponent {
   }
 
   render() {
-    return this.props.layout instanceof FixedLayout
+    return this.props.layout.rowWidth !== "auto"
       ? this.renderFixedLayout()
       : this.renderAutoLayout()
   }

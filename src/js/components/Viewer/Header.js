@@ -4,7 +4,6 @@ import React from "react"
 
 import type {Layout} from "./Layout"
 import {XColResizer} from "./ColResizer"
-import FixedLayout from "./FixedLayout"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
@@ -19,7 +18,7 @@ export default class Header extends React.PureComponent<Props> {
   render() {
     const {layout, scrollLeft} = this.props
 
-    if (layout instanceof FixedLayout) {
+    if (layout.rowWidth !== "auto") {
       return (
         <header style={Styler.header(layout, scrollLeft)}>
           {this.props.columns.getVisible().map(column => (

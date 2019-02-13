@@ -1,10 +1,8 @@
 /* @flow */
 
-import AutoLayout from "./AutoLayout"
-import FixedLayout from "./FixedLayout"
-
+import type {ViewerDimens} from "../../types"
 export type Width = number | "auto"
-export type Layout = AutoLayout | FixedLayout
+export type Layout = ViewerDimens
 
 type Args = {
   sumColumnWidths: number,
@@ -22,24 +20,24 @@ export const create = ({
   height,
   rowHeight,
   size
-}: Args) => {
+}: Args): ViewerDimens => {
   if (type === "fixed") {
-    return new FixedLayout({
-      type,
-      width,
-      height,
-      size,
-      rowH: rowHeight,
-      rowW: Math.max(sumColumnWidths, width)
-    })
+    return {
+      viewWidth: width,
+      viewHeight: height - rowHeight,
+      listWidth: Math.max(sumColumnWidths, width),
+      listHeight: rowHeight * size,
+      rowWidth: Math.max(sumColumnWidths, width),
+      rowHeight
+    }
   } else {
-    return new AutoLayout({
-      type,
-      width,
-      height,
-      size,
-      rowH: rowHeight,
-      rowW: "auto"
-    })
+    return {
+      viewWidth: width,
+      viewHeight: height,
+      listWidth: "auto",
+      listHeight: rowHeight * size,
+      rowWidth: "auto",
+      rowHeight
+    }
   }
 }

@@ -33,3 +33,12 @@ export type Column = {type: string, name: string}
 export type Descriptor = Column[]
 
 export type Tuple = string[]
+
+export type ViewerDimens = {
+  rowHeight: number,
+  rowWidth: number | "auto",
+  viewHeight: number,
+  viewWidth: number,
+  listHeight: number,
+  listWidth: number | "auto"
+}

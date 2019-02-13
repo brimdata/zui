@@ -82,7 +82,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
     const {layout, chunker, rowRenderer, logs, tableColumns} = this.props
     const {scrollLeft, chunks} = this.state
     return (
-      <div className="viewer" style={{width: layout.viewWidth()}}>
+      <div className="viewer" style={{width: layout.viewWidth}}>
         <Header
           columns={tableColumns}
           layout={layout}
@@ -91,7 +91,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
         <div
           className="view"
           onScroll={this.onScroll}
-          style={{width: layout.viewWidth(), height: layout.viewHeight()}}
+          style={{width: layout.viewWidth, height: layout.viewHeight}}
           ref={r => (this.view = r)}
         >
           <div className="list" style={Styler.list(layout)}>

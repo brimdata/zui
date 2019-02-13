@@ -1,7 +1,6 @@
 /* @flow */
 
 import {create} from "./Layout"
-import FixedLayout from "./FixedLayout"
 
 describe("AutoLayout", () => {
   const autoLayout = create({
@@ -14,27 +13,23 @@ describe("AutoLayout", () => {
   })
 
   test("#viewHeight ", () => {
-    expect(autoLayout.viewHeight()).toBe(500)
+    expect(autoLayout.viewHeight).toBe(500)
   })
 
   test("#viewWidth", () => {
-    expect(autoLayout.viewWidth()).toBe(960)
+    expect(autoLayout.viewWidth).toBe(960)
   })
 
   test("#listHeight", () => {
-    expect(autoLayout.listHeight()).toBe(2000)
+    expect(autoLayout.listHeight).toBe(2000)
   })
 
   test("#listWidth", () => {
-    expect(autoLayout.listWidth()).toBe("auto")
+    expect(autoLayout.listWidth).toBe("auto")
   })
 
   test("#rowHeight", () => {
-    expect(autoLayout.rowHeight()).toBe(10)
-  })
-
-  test("#cellHeight ", () => {
-    expect(autoLayout.cellHeight()).toBe(10)
+    expect(autoLayout.rowHeight).toBe(10)
   })
 })
 
@@ -49,23 +44,44 @@ describe("FixedLayout", () => {
   })
 
   test("#viewHeight", () => {
-    expect(fixedLayout.viewHeight()).toBe(490)
+    expect(fixedLayout.viewHeight).toBe(490)
   })
 
   test("#listWidth when sum of column widths > width", () => {
-    fixedLayout.width = 10
-    expect(fixedLayout.listWidth()).toBe(121)
-    expect(fixedLayout.rowWidth()).toBe(121)
+    const fixedLayout = create({
+      type: "fixed",
+      height: 500,
+      width: 10,
+      rowHeight: 10,
+      sumColumnWidths: 22 + 44 + 55,
+      size: 200
+    })
+    expect(fixedLayout.listWidth).toBe(121)
+    expect(fixedLayout.rowWidth).toBe(121)
   })
 
   test("#listWidth ", () => {
-    fixedLayout.width = 500
-    expect(fixedLayout.listWidth()).toBe(500)
-    expect(fixedLayout.rowWidth()).toBe(500)
+    const fixedLayout = create({
+      type: "fixed",
+      height: 500,
+      width: 500,
+      rowHeight: 10,
+      sumColumnWidths: 22 + 44 + 55,
+      size: 200
+    })
+    expect(fixedLayout.listWidth).toBe(500)
+    expect(fixedLayout.rowWidth).toBe(500)
   })
 
   test("#rowWidth is same as listWidth", () => {
-    fixedLayout.width = 100
-    expect(fixedLayout.rowWidth()).toBe(121)
+    const fixedLayout = create({
+      type: "fixed",
+      height: 500,
+      width: 100,
+      rowHeight: 10,
+      sumColumnWidths: 22 + 44 + 55,
+      size: 200
+    })
+    expect(fixedLayout.rowWidth).toBe(121)
   })
 })
