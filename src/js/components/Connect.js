@@ -34,7 +34,6 @@ class Connect extends React.Component {
 
   render() {
     if (this.state.isConnected) {
-      console.log("redirecting")
       return <Redirect to="/search" />
     }
 
