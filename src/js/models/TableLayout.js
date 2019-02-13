@@ -22,6 +22,10 @@ export default class TableLayout {
       .sort((a, b) => a.position - b.position)
   }
 
+  showHeader() {
+    return !(this.id === "temp" && this.allVisible())
+  }
+
   toArray() {
     return this.cols
   }
