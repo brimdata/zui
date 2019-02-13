@@ -53,6 +53,9 @@ export default class PhonyViewer extends React.Component<Props> {
   }
 
   measureColWidths() {
+    if (this.props.tableColumns.getVisible() === 0) {
+      console.log("NO COLUMNS!")
+    }
     if (this.table) {
       const cols = [].slice.call(
         this.table.querySelectorAll("th[data-width-set='false']")
@@ -66,7 +69,9 @@ export default class PhonyViewer extends React.Component<Props> {
         {}
       )
 
-      this.props.dispatch(updateTableColumns(this.props.tableColumns.id, updates))
+      this.props.dispatch(
+        updateTableColumns(this.props.tableColumns.id, updates)
+      )
     }
   }
 

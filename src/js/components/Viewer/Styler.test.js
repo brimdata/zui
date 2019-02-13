@@ -1,9 +1,9 @@
 /* @flow */
 
-import {create} from "./Layout"
 import * as Styler from "./Styler"
+import buildViewerDimens from "./buildViewerDimens"
 
-const dimens = create({
+const dimens = buildViewerDimens({
   type: "fixed",
   size: 20,
   rowHeight: 10,

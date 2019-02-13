@@ -4,12 +4,12 @@ import React from "react"
 
 import type {ViewerDimens} from "../types"
 import {XPhonyViewer} from "./Viewer/PhonyViewer"
-import {create} from "./Viewer/Layout"
 import Chunker from "./Viewer/Chunker"
 import Log from "../models/Log"
 import LogRow from "./LogRow"
 import TableColumns from "../models/TableColumns"
 import Viewer from "./Viewer/Viewer"
+import buildViewerDimens from "./Viewer/buildViewerDimens"
 
 type Props = {
   height: number,
@@ -30,8 +30,8 @@ type State = {
 export default class LogViewer extends React.Component<Props, State> {
   state = {selectedIndex: null}
 
-  createLayout() {
-    return create({
+  createDimens() {
+    return buildViewerDimens({
       type: this.props.tableColumns.showHeader() ? "fixed" : "auto",
       height: this.props.height,
       width: this.props.width,
@@ -76,7 +76,7 @@ export default class LogViewer extends React.Component<Props, State> {
         <Viewer
           tableColumns={this.props.tableColumns}
           logs={this.props.logs}
-          dimens={this.createLayout()}
+          dimens={this.createDimens()}
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
           rowRenderer={this.renderRow}

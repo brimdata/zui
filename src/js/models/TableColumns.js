@@ -25,12 +25,15 @@ export default class TableColumns {
   static columnDefaults(settings: ColumnSettingsMap, index: number) {
     return {
       width: undefined,
-      isVisible:
-        Object.keys(settings).length === 0 ||
-        // $FlowFixMe https://github.com/facebook/flow/issues/2221
-        Object.values(settings).every(c => c.isVisible),
+      isVisible: TableColumns.visibilityDefault(settings),
       position: index
     }
+  }
+
+  static visibilityDefault(settings: ColumnSettingsMap) {
+    const values = Object.values(settings)
+    // $FlowFixMe
+    return values.every(v => v.isVisible) || values.every(v => !v.isVisible)
   }
 
   sumWidths() {

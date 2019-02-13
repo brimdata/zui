@@ -1,7 +1,6 @@
 /* @flow */
 
 import type {ViewerDimens} from "../../types"
-export type Width = number | "auto"
 
 type Args = {
   sumColumnWidths: number,
@@ -12,7 +11,7 @@ type Args = {
   type: "fixed" | "auto"
 }
 
-export const create = ({
+export default ({
   width,
   type,
   sumColumnWidths,

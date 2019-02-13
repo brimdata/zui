@@ -1,9 +1,9 @@
 /* @flow */
 
-import {create} from "./Layout"
+import buildViewerDimens from "./buildViewerDimens"
 
 describe("AutoLayout", () => {
-  const autoLayout = create({
+  const autoLayout = buildViewerDimens({
     height: 500,
     width: 960,
     size: 200,
@@ -34,7 +34,7 @@ describe("AutoLayout", () => {
 })
 
 describe("FixedLayout", () => {
-  const fixedLayout = create({
+  const fixedLayout = buildViewerDimens({
     type: "fixed",
     height: 500,
     width: 100,
@@ -48,7 +48,7 @@ describe("FixedLayout", () => {
   })
 
   test("#listWidth when sum of column widths > width", () => {
-    const fixedLayout = create({
+    const fixedLayout = buildViewerDimens({
       type: "fixed",
       height: 500,
       width: 10,
@@ -61,7 +61,7 @@ describe("FixedLayout", () => {
   })
 
   test("#listWidth ", () => {
-    const fixedLayout = create({
+    const fixedLayout = buildViewerDimens({
       type: "fixed",
       height: 500,
       width: 500,
@@ -74,7 +74,7 @@ describe("FixedLayout", () => {
   })
 
   test("#rowWidth is same as listWidth", () => {
-    const fixedLayout = create({
+    const fixedLayout = buildViewerDimens({
       type: "fixed",
       height: 500,
       width: 100,

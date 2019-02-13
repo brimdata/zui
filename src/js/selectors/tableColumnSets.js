@@ -13,12 +13,13 @@ export const getTableColumnSets = (state: State) => {
   return state.tableColumnSets
 }
 
-export const getCurrentTableColumnsId = createSelector<State, void, *, *>(
+export const getCurrentTableColumnsId = createSelector<State, void, string, *>(
   getLogs,
   logs => {
     if (logs.length === 0) return "none"
 
     const td = logs[0].get("_td")
+    if (!td) return "analysis"
 
     for (const log of logs) {
       if (log.get("_td") !== td) return "temp"
@@ -42,6 +43,8 @@ export const getCurrentTableColumns = createSelector<State, void, *, *, *, *>(
   getCurrentUniqColumns,
   getTableColumnSets,
   (tableKey, columns, tableSettings) => {
-    return new TableColumns(tableKey, columns, tableSettings[tableKey])
+    const t = new TableColumns(tableKey, columns, tableSettings[tableKey])
+    console.log(t)
+    return t
   }
 )
