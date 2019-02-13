@@ -2,6 +2,7 @@
 
 import type {Column, TableColumn, ColumnSettingsMap} from "../types"
 import columnKey from "../lib/columnKey"
+import columnOrder from "../lib/columnOrder"
 
 export default class TableColumns {
   cols: TableColumn[]
@@ -13,16 +14,20 @@ export default class TableColumns {
     tableSetting: ColumnSettingsMap = {}
   ) {
     this.id = id
-    this.cols = columns
+    this.cols = columnOrder(columns)
       .map((col, index) => ({
         ...col,
-        ...TableColumns.columnDefaults(tableSetting, index),
+        ...TableColumns.columnDefaults(col, tableSetting, index),
         ...tableSetting[columnKey(col)]
       }))
-      .sort((a, b) => a.position - b.position)
+      .sort((a, b) => (a.position > b.position ? 1 : -1))
   }
 
-  static columnDefaults(settings: ColumnSettingsMap, index: number) {
+  static columnDefaults(
+    col: Column,
+    settings: ColumnSettingsMap,
+    index: number
+  ) {
     return {
       width: undefined,
       isVisible: TableColumns.visibilityDefault(settings),

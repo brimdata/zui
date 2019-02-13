@@ -31,6 +31,10 @@ export default class Chunk extends React.Component<Props> {
       return true
     }
 
+    if (this.props.dimens.rowWidth !== nextProps.dimens.rowWidth) {
+      return true
+    }
+
     for (let index of this.props.rows) {
       if (!Log.isSame(this.props.logs[index], nextProps.logs[index]))
         return true

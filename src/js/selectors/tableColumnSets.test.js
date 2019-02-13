@@ -81,6 +81,6 @@ describe("#getCurrentTableColumns", () => {
     ])
 
     const tableColumns = getCurrentTableColumns(state)
-    expect(tableColumns.toArray()).toHaveLength(40)
+    expect(tableColumns.toArray()).toHaveLength(39)
   })
 })

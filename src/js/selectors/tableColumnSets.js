@@ -43,8 +43,6 @@ export const getCurrentTableColumns = createSelector<State, void, *, *, *, *>(
   getCurrentUniqColumns,
   getTableColumnSets,
   (tableKey, columns, tableSettings) => {
-    const t = new TableColumns(tableKey, columns, tableSettings[tableKey])
-    console.log(t)
-    return t
+    return new TableColumns(tableKey, columns, tableSettings[tableKey])
   }
 )

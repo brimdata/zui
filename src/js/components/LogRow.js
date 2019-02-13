@@ -8,6 +8,7 @@ import Log from "../models/Log"
 import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
 import TableColumns from "../models/TableColumns"
+import columnOrder from "../lib/columnOrder"
 
 type Props = {
   dimens: ViewerDimens,
@@ -21,17 +22,19 @@ type Props = {
 export default class LogRow extends React.PureComponent<Props> {
   renderAutoLayout() {
     const {dimens, highlight, index, log} = this.props
-    const columns = log.descriptor
-
+    const columns = columnOrder(log.descriptor)
+    console.log()
     const renderCell = (column, colIndex) => {
       const field = log.getField(column.name)
       if (field) {
-        <LogCell
-          key={`${index}-${colIndex}`}
-          field={field}
-          log={log}
-          style={{width: "auto"}}
-        />
+        return (
+          <LogCell
+            key={`${index}-${colIndex}`}
+            field={field}
+            log={log}
+            style={{width: "auto"}}
+          />
+        )
       }
     }
     return (
@@ -55,9 +58,7 @@ export default class LogRow extends React.PureComponent<Props> {
       if (field) {
         return <LogCell key={key} field={field} log={log} style={style} />
       } else {
-        return (
-          <div className="log-cell" key={key} style={{width: column.width}} />
-        )
+        return <div className="log-cell" key={key} style={style} />
       }
     }
 
