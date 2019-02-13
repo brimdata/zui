@@ -72,7 +72,7 @@ export default class LogViewer extends React.Component<Props, State> {
       <div>
         <XPhonyViewer />
         <Viewer
-          columns={this.props.tableColumns.getColumns()}
+          tableColumns={this.props.tableColumns}
           logs={this.props.logs}
           layout={this.createLayout()}
           chunker={this.createChunker()}

@@ -1,6 +1,5 @@
 /* @flow */
 
-import type {TableColumn} from "../../types"
 import type {Width, Layout} from "./Layout"
 import TableColumns from "../../models/TableColumns"
 
@@ -17,14 +16,6 @@ export default class AutoLayout {
     this.size = args.size
     this.rowH = args.rowH
     this.columns = args.columns
-  }
-
-  allColumns() {
-    return this.columns.toArray()
-  }
-
-  visibleColumns() {
-    return this.columns.getVisible()
   }
 
   viewHeight() {
@@ -53,9 +44,5 @@ export default class AutoLayout {
 
   cellHeight() {
     return this.rowH
-  }
-
-  cellWidth(_: TableColumn): Width {
-    return "auto"
   }
 }

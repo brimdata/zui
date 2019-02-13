@@ -58,10 +58,6 @@ describe("AutoLayout", () => {
   test("#cellHeight ", () => {
     expect(autoLayout.cellHeight()).toBe(10)
   })
-
-  test("#cellWidth", () => {
-    expect(autoLayout.cellWidth("a")).toBe("auto")
-  })
 })
 
 import FixedLayout from "./FixedLayout"

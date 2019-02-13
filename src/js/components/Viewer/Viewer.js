@@ -4,7 +4,6 @@ import React from "react"
 
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
-import type {TableColumn} from "../../types"
 import Chunk from "./Chunk"
 import Chunker from "./Chunker"
 import * as Doc from "../../lib/Doc"
@@ -12,11 +11,12 @@ import Header from "./Header"
 import Log from "../../models/Log"
 import ScrollHooks from "../../lib/ScrollHooks"
 import * as Styler from "./Styler"
+import TableColumns from "../../models/TableColumns"
 
 type Props = {
   chunker: Chunker,
   layout: Layout,
-  columns: TableColumn[],
+  tableColumns: TableColumns,
   rowRenderer: RowRenderer,
   atEnd: boolean,
   logs: Log[],
@@ -79,19 +79,19 @@ export default class Viewer extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {layout, chunker, rowRenderer, logs} = this.props
+    const {layout, chunker, rowRenderer, logs, tableColumns} = this.props
     const {scrollLeft, chunks} = this.state
     return (
-      <div className="viewer" style={Styler.viewer(layout)}>
+      <div className="viewer" style={{width: layout.viewWidth()}}>
         <Header
-          columns={this.props.columns}
+          columns={tableColumns.getColumns()}
           layout={layout}
           scrollLeft={scrollLeft}
         />
         <div
           className="view"
           onScroll={this.onScroll}
-          style={Styler.view(layout)}
+          style={{width: layout.viewWidth(), height: layout.viewHeight()}}
           ref={r => (this.view = r)}
         >
           <div className="list" style={Styler.list(layout)}>
