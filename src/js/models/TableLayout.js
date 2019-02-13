@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Column, TableColumn, TableSetting} from "../types"
+import type {Column, TableColumn, ColumnSettingsMap} from "../types"
 import columnKey from "../lib/columnKey"
 
 export default class TableLayout {
@@ -10,7 +10,7 @@ export default class TableLayout {
   constructor(
     id: string,
     columns: Column[] = [],
-    tableSetting: TableSetting = {}
+    tableSetting: ColumnSettingsMap = {}
   ) {
     this.id = id
     this.cols = columns
@@ -22,7 +22,7 @@ export default class TableLayout {
       .sort((a, b) => a.position - b.position)
   }
 
-  static columnDefaults(settings: TableSetting, index: number) {
+  static columnDefaults(settings: ColumnSettingsMap, index: number) {
     return {
       width: undefined,
       // $FlowFixMe https://github.com/facebook/flow/issues/2221

@@ -24,7 +24,7 @@ export type TableColumn = {
   position: number
 }
 
-export type TableSetting = {
+export type ColumnSettingsMap = {
   [string]: ColumnSetting
 }
 
