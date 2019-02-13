@@ -5,14 +5,14 @@ import columnKey from "../lib/columnKey"
 
 export default class TableLayout {
   cols: TableColumn[]
-  tableKey: string
+  id: string
 
   constructor(
-    tableKey: string,
+    id: string,
     columns: Column[] = [],
     tableSetting: TableSetting = {}
   ) {
-    this.tableKey = tableKey
+    this.id = id
     this.cols = columns
       .map((col, index) => ({
         ...col,
@@ -24,5 +24,17 @@ export default class TableLayout {
 
   toArray() {
     return this.cols
+  }
+
+  getColumns() {
+    return this.cols
+  }
+
+  visibleCount() {
+    return this.cols.filter(c => c.isVisible).length
+  }
+
+  allVisible() {
+    return this.cols.every(c => c.isVisible)
   }
 }

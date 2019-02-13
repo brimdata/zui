@@ -16,9 +16,7 @@ import {
   showColumn
 } from "../actions/tableLayouts"
 import CloseButton from "./CloseButton"
-import Columns from "../models/Columns"
 import TableLayout from "../models/TableLayout"
-import * as columns from "../selectors/columns"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {|
@@ -26,7 +24,6 @@ type OwnProps = {|
 |}
 
 type StateProps = {|
-  DEPRECATED_columns: Columns,
   tableLayout: TableLayout
 |}
 
@@ -37,32 +34,45 @@ type Props = {|
 |}
 
 export default class ColumnChooserMenu extends React.Component<Props> {
-  showAll: Function
-  toggle: Function
+  tableId() {
+    return this.props.tableLayout.id
+  }
 
-  constructor(props: Props) {
-    super(props)
+  allVisible() {
+    return this.props.tableLayout.allVisible()
+  }
 
-    this.showAll = e => {
-      e.stopPropagation()
-      props.dispatch(actions.setColumns([]))
-    }
+  showAllColumns = (e: Event) => {
+    e.stopPropagation()
+    this.props.dispatch(showAllColumns(this.props.tableLayout))
+  }
 
-    this.toggle = (e, column) => {
-      e.stopPropagation()
-      props.dispatch(actions.toggleColumn(column))
+  onColumnClick(e: Event, column: TableColumn) {
+    e.stopPropagation()
+    if (column.isVisible) {
+      if (this.allVisible()) {
+        this.props.dispatch(hideAllColumns(this.props.tableLayout))
+        this.props.dispatch(showColumn(this.tableId(), column))
+      } else if (this.props.tableLayout.visibleCount() === 1) {
+        this.props.dispatch(showAllColumns(this.props.tableLayout))
+      } else {
+        this.props.dispatch(hideColumn(this.tableId(), column))
+      }
+    } else {
+      this.props.dispatch(showColumn(this.tableId(), column))
     }
   }
 
   className() {
     return classNames("column-chooser-menu", {
-      "all-visible": this.props.DEPRECATED_columns.allVisible()
+      "all-visible": this.props.tableLayout.allVisible()
     })
   }
 
   render() {
-    const count = this.props.DEPRECATED_columns.getVisible().length
-    const allVisible = this.props.DEPRECATED_columns.allVisible()
+    const columns = this.props.tableLayout.getColumns()
+    const count = this.props.tableLayout.visibleCount()
+    const allVisible = this.props.tableLayout.allVisible()
     return (
       <CSSTransition
         classNames="slide-in-right"
@@ -75,19 +85,19 @@ export default class ColumnChooserMenu extends React.Component<Props> {
           <hr />
           <CloseButton light onClick={this.props.onClose} />
           {!allVisible && (
-            <div className="count" onClick={this.showAll}>
+            <div className="count" onClick={this.showAllColumns}>
               <Label>{count}</Label>
             </div>
           )}
           <ul>
-            <li className="show-all" onClick={this.showAll}>
+            <li className="show-all" onClick={this.showAllColumns}>
               <Paragraph>Show All</Paragraph>
             </li>
-            {this.props.DEPRECATED_columns.getAll().map(c => (
+            {columns.map(c => (
               <li
                 className={classNames({visible: c.isVisible})}
                 key={`${c.name}-${c.type}`}
-                onClick={e => this.toggle(e, c)}
+                onClick={e => this.onColumnClick(e, c)}
               >
                 <Paragraph>{c.name}</Paragraph>
                 <Subscript>{c.type}</Subscript>
@@ -101,7 +111,6 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  DEPRECATED_columns: columns.getColumns(state),
   tableLayout: getCurrentTableLayout(state)
 })
 
