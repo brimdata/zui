@@ -31,11 +31,12 @@ export default class LogViewer extends React.Component<Props, State> {
 
   createLayout() {
     return create({
+      type: this.props.tableColumns.showHeader() ? "fixed" : "auto",
       height: this.props.height,
       width: this.props.width,
       size: this.props.logs.length,
-      rowH: 25,
-      columns: this.props.tableColumns
+      rowHeight: 25,
+      sumColumnWidths: this.props.tableColumns.sumWidths()
     })
   }
 

@@ -25,10 +25,19 @@ export default class TableColumns {
   static columnDefaults(settings: ColumnSettingsMap, index: number) {
     return {
       width: undefined,
-      // $FlowFixMe https://github.com/facebook/flow/issues/2221
-      isVisible: Object.values(settings).every(c => c.isVisible),
+      isVisible:
+        Object.keys(settings).length === 0 ||
+        // $FlowFixMe https://github.com/facebook/flow/issues/2221
+        Object.values(settings).every(c => c.isVisible),
       position: index
     }
+  }
+
+  sumWidths() {
+    return this.getVisible().reduce(
+      (sum, column) => (sum += column.width || 0),
+      0
+    )
   }
 
   getVisible(): TableColumn[] {

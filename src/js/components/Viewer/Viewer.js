@@ -84,7 +84,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
     return (
       <div className="viewer" style={{width: layout.viewWidth()}}>
         <Header
-          columns={tableColumns.getColumns()}
+          columns={tableColumns}
           layout={layout}
           scrollLeft={scrollLeft}
         />
@@ -97,6 +97,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
           <div className="list" style={Styler.list(layout)}>
             {chunks.map(chunk => (
               <Chunk
+                columns={this.props.tableColumns}
                 selectedLog={this.props.selectedLog}
                 logs={logs}
                 rows={chunker.rows(chunk)}

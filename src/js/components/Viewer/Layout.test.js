@@ -1,38 +1,16 @@
 /* @flow */
 
-import AutoLayout from "./AutoLayout"
-import TableColumns from "../../models/TableColumns"
+import {create} from "./Layout"
+import FixedLayout from "./FixedLayout"
 
 describe("AutoLayout", () => {
-  const columns = new TableColumns(
-    "temp",
-    [
-      {name: "_path", type: "string"},
-      {name: "duration", type: "interval"},
-      {name: "query", type: "string"}
-    ],
-    {
-      "_path:string": {
-        width: 22,
-        isVisible: true
-      },
-      "duration:interval": {
-        width: 44,
-        isVisible: true
-      },
-      "query:string": {
-        width: 55,
-        isVisible: true
-      }
-    }
-  )
-
-  const autoLayout = new AutoLayout({
+  const autoLayout = create({
     height: 500,
     width: 960,
-    rowH: 10,
     size: 200,
-    columns
+    rowHeight: 10,
+    type: "auto",
+    sumColumnWidths: 0
   })
 
   test("#viewHeight ", () => {
@@ -60,38 +38,14 @@ describe("AutoLayout", () => {
   })
 })
 
-import FixedLayout from "./FixedLayout"
-
 describe("FixedLayout", () => {
-  const columns = new TableColumns(
-    "temp",
-    [
-      {name: "_path", type: "string"},
-      {name: "duration", type: "interval"},
-      {name: "history", type: "string"}
-    ],
-    {
-      "_path:string": {
-        width: 22,
-        isVisible: true
-      },
-      "duration:interval": {
-        width: 44,
-        isVisible: true
-      },
-      "history:string": {
-        width: 55,
-        isVisible: true
-      }
-    }
-  )
-
-  const fixedLayout = new FixedLayout({
+  const fixedLayout = create({
+    type: "fixed",
     height: 500,
     width: 100,
-    rowH: 10,
-    size: 200,
-    columns
+    rowHeight: 10,
+    sumColumnWidths: 22 + 44 + 55,
+    size: 200
   })
 
   test("#viewHeight", () => {

@@ -1,15 +1,18 @@
 /* @flow */
 
 import React from "react"
+import isEqual from "lodash/isEqual"
+
 import type {Layout} from "./Layout"
 import type {RowRenderer} from "./types"
-import isEqual from "lodash/isEqual"
 import Log from "../../models/Log"
 import * as Styler from "./Styler"
+import TableColumns from "../../models/TableColumns"
 
 type Props = {
   selectedLog: ?Log,
   rowRenderer: RowRenderer,
+  columns: TableColumns,
   layout: Layout,
   rows: number[],
   logs: Log[]
@@ -21,7 +24,7 @@ export default class Chunk extends React.Component<Props> {
       return true
     }
 
-    if (!isEqual(this.props.layout.columns, nextProps.layout.columns)) {
+    if (!isEqual(this.props.columns, nextProps.columns)) {
       return true
     }
 

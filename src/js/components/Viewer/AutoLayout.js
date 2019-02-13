@@ -1,21 +1,21 @@
 /* @flow */
 
 import type {Width, Layout} from "./Layout"
-import TableColumns from "../../models/TableColumns"
 
 export default class AutoLayout {
+  type: "auto" | "fixed"
   width: number
   height: number
   size: number
   rowH: number
-  columns: TableColumns
+  rowW: number | "auto"
 
   constructor(args: $ReadOnly<Layout>) {
     this.width = args.width
     this.height = args.height
     this.size = args.size
     this.rowH = args.rowH
-    this.columns = args.columns
+    this.rowW = args.rowW
   }
 
   viewHeight() {
@@ -31,7 +31,7 @@ export default class AutoLayout {
   }
 
   listWidth(): Width {
-    return "auto"
+    return this.rowW
   }
 
   rowHeight() {
