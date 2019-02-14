@@ -42,7 +42,6 @@ test("#formatHistogram", () => {
   ]
   const data = {
     descriptor: [
-      {name: "ts", type: "time"},
       {name: "_path", type: "string"},
       {name: "count", type: "count"}
     ],

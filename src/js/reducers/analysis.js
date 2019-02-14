@@ -1,8 +1,8 @@
 /* @flow */
 
-import createReducer from "./createReducer"
-import type {Descriptor, Tuple} from "../models/Log"
+import type {Descriptor, Tuple} from "../types"
 import type {State} from "./types"
+import createReducer from "./createReducer"
 
 export type Analysis = {
   descriptor: Descriptor,

@@ -1,48 +1,39 @@
 /* @flow */
 
 import * as Styler from "./Styler"
-import FixedLayout from "./FixedLayout"
-import Columns from "../../models/Columns"
+import buildViewerDimens from "./buildViewerDimens"
 
-const layout = new FixedLayout({
+const dimens = buildViewerDimens({
+  type: "fixed",
   size: 20,
-  rowH: 10,
+  rowHeight: 10,
   height: 300,
   width: 400,
-  columns: new Columns([
-    {td: "1", name: "_path", type: "string", width: 22, isVisible: true},
-    {td: "2", name: "ts", type: "time", width: 33, isVisible: true},
-    {td: "1", name: "duration", type: "interval", width: 44, isVisible: false},
-    {td: "1", name: "duration", type: "interval", width: 44, isVisible: false}
-  ])
+  sumColumnWidths: 22 + 33 + 44 + 44
 })
 
 test("#viewer", () => {
-  expect(Styler.viewer(layout)).toEqual({width: 400})
+  expect(Styler.viewer(dimens)).toEqual({width: 400})
 })
 
 test("#view when fixed subtracts for header", () => {
-  expect(Styler.view(layout)).toEqual({width: 400, height: 290})
+  expect(Styler.view(dimens)).toEqual({width: 400, height: 290})
 })
 
 test("#header", () => {
-  expect(Styler.header(layout, 20)).toEqual({
+  expect(Styler.header(dimens, 20)).toEqual({
     transform: "translateX(-20px)",
     width: 400
   })
 })
 
 test("#list", () => {
-  expect(Styler.list(layout)).toEqual({height: 200, width: 400})
+  expect(Styler.list(dimens)).toEqual({height: 200, width: 400})
 })
 
 test("#row", () => {
-  expect(Styler.row(layout)).toEqual({
+  expect(Styler.row(dimens)).toEqual({
     height: 10,
     width: 400
   })
-})
-
-test("#cell", () => {
-  expect(Styler.cell(layout, "_path")).toEqual({width: 22})
 })

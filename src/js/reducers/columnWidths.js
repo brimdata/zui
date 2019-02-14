@@ -13,7 +13,7 @@ export type ColumnWidths = {
 }
 
 export default createReducer(initialState, {
-  COLUMN_WIDTHS_SET: (state, {widths}) => {
+  OLD_COLUMN_WIDTHS_SET: (state, {widths}) => {
     return {
       ...state,
       ...widths

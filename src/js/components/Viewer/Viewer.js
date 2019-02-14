@@ -1,19 +1,21 @@
 /* @flow */
 
 import React from "react"
-import Header from "./Header"
+
+import type {RowRenderer, ViewerDimens} from "../../types"
 import Chunk from "./Chunk"
-import * as Styler from "./Styler"
 import Chunker from "./Chunker"
-import type {Layout} from "./Layout"
-import type {RowRenderer} from "./types"
 import * as Doc from "../../lib/Doc"
-import ScrollHooks from "../../lib/ScrollHooks"
+import Header from "./Header"
 import Log from "../../models/Log"
+import ScrollHooks from "../../lib/ScrollHooks"
+import * as Styler from "./Styler"
+import TableColumns from "../../models/TableColumns"
 
 type Props = {
   chunker: Chunker,
-  layout: Layout,
+  dimens: ViewerDimens,
+  tableColumns: TableColumns,
   rowRenderer: RowRenderer,
   atEnd: boolean,
   logs: Log[],
@@ -76,30 +78,35 @@ export default class Viewer extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {layout, chunker, rowRenderer, logs} = this.props
+    const {dimens, chunker, rowRenderer, logs, tableColumns} = this.props
     const {scrollLeft, chunks} = this.state
     return (
-      <div className="viewer" style={Styler.viewer(layout)}>
-        <Header layout={layout} scrollLeft={scrollLeft} />
+      <div className="viewer" style={{width: dimens.viewWidth}}>
+        <Header
+          columns={tableColumns}
+          dimens={dimens}
+          scrollLeft={scrollLeft}
+        />
         <div
           className="view"
           onScroll={this.onScroll}
-          style={Styler.view(layout)}
+          style={{width: dimens.viewWidth, height: dimens.viewHeight}}
           ref={r => (this.view = r)}
         >
-          <div className="list" style={Styler.list(layout)}>
+          <div className="list" style={Styler.list(dimens)}>
             {chunks.map(chunk => (
               <Chunk
+                columns={this.props.tableColumns}
                 selectedLog={this.props.selectedLog}
                 logs={logs}
                 rows={chunker.rows(chunk)}
                 key={chunk}
                 rowRenderer={rowRenderer}
-                layout={layout}
+                dimens={dimens}
               />
             ))}
             {this.props.atEnd && (
-              <p className="end-message" style={Styler.endMessage(layout)}>
+              <p className="end-message" style={Styler.endMessage(dimens)}>
                 End of Results 🎉
               </p>
             )}

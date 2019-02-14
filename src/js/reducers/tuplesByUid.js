@@ -1,10 +1,11 @@
 /* @flow */
 
-import createReducer from "./createReducer"
 import get from "lodash/get"
-import {uniq} from "../lib/Tuple"
+
 import type {State} from "./types"
-import type {Tuple} from "../models/Log"
+import type {Tuple} from "../types"
+import {uniq} from "../lib/Tuple"
+import createReducer from "./createReducer"
 
 const initialState = {}
 

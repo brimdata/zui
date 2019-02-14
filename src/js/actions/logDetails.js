@@ -1,9 +1,10 @@
 /* @flow */
 
-import {fetchTuplesByUid} from "./tuplesByUid"
-import type {Tuple, Descriptor} from "../models/Log"
-import Log from "../models/Log"
 import type {Thunk} from "redux-thunk"
+
+import type {Descriptor, Tuple} from "../types"
+import {fetchTuplesByUid} from "./tuplesByUid"
+import Log from "../models/Log"
 
 export const viewLogDetail = (log: Log): Thunk => dispatch => {
   dispatch(pushLogDetail(log))

@@ -1,17 +1,16 @@
 /* @flow */
 
-import createReducer from "./createReducer"
 import {createSelector} from "reselect"
-import countByTimeInterval from "../lib/countByTimeInterval"
-import {splitOnEvery} from "../models/TimeWindow"
-import * as TimeWindow from "../lib/TimeWindow"
+
+import {type DateTuple, floorAndCeil} from "../lib/TimeWindow"
+import type {Descriptor, Tuple} from "../types"
+import type {State} from "./types"
 import {getTimeWindow} from "./timeWindow"
+import {splitOnEvery} from "../models/TimeWindow"
 import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
-import type {State} from "./types"
-import type {DateTuple} from "../lib/TimeWindow"
-import type {Interval} from "../lib/countByTimeInterval"
-import type {Tuple, Descriptor} from "../models/Log"
+import countByTimeInterval, {type Interval} from "../lib/countByTimeInterval"
+import createReducer from "./createReducer"
 
 type Results = {
   tuples: Tuple[],
@@ -61,10 +60,7 @@ export const formatHistogram = (
 ): Histogram => {
   const tuples = data.tuples || []
   const interval = countByTimeInterval(timeWindow)
-  const roundedTimeWindow = TimeWindow.floorAndCeil(
-    timeWindow,
-    interval.roundingUnit
-  )
+  const roundedTimeWindow = floorAndCeil(timeWindow, interval.roundingUnit)
   const buckets = splitOnEvery(roundedTimeWindow, interval)
   const keys = new UniqArray()
   const hash = new MergeHash()

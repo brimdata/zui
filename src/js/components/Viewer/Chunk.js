@@ -1,16 +1,18 @@
 /* @flow */
 
 import React from "react"
-import type {Layout} from "./Layout"
-import type {RowRenderer} from "./types"
 import isEqual from "lodash/isEqual"
+
+import type {RowRenderer, ViewerDimens} from "../../types"
 import Log from "../../models/Log"
 import * as Styler from "./Styler"
+import TableColumns from "../../models/TableColumns"
 
 type Props = {
   selectedLog: ?Log,
   rowRenderer: RowRenderer,
-  layout: Layout,
+  columns: TableColumns,
+  dimens: ViewerDimens,
   rows: number[],
   logs: Log[]
 }
@@ -21,11 +23,15 @@ export default class Chunk extends React.Component<Props> {
       return true
     }
 
-    if (!isEqual(this.props.layout.columns, nextProps.layout.columns)) {
+    if (!isEqual(this.props.columns, nextProps.columns)) {
       return true
     }
 
     if (this.props.selectedLog !== nextProps.selectedLog) {
+      return true
+    }
+
+    if (this.props.dimens.rowWidth !== nextProps.dimens.rowWidth) {
       return true
     }
 
@@ -38,10 +44,10 @@ export default class Chunk extends React.Component<Props> {
   }
 
   render() {
-    const {rowRenderer, layout, rows} = this.props
+    const {rowRenderer, dimens, rows} = this.props
     return (
-      <div className="chunk" style={Styler.chunk(layout, rows[0], rows.length)}>
-        {rows.map(index => rowRenderer(index, layout))}
+      <div className="chunk" style={Styler.chunk(dimens, rows[0], rows.length)}>
+        {rows.map(index => rowRenderer(index, dimens))}
       </div>
     )
   }

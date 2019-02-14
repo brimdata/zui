@@ -1,31 +1,34 @@
 /* @flow */
 
 import React from "react"
+
+import type {ViewerDimens} from "../../types"
 import {XColResizer} from "./ColResizer"
 import * as Styler from "./Styler"
-import type {Layout} from "./Layout"
-import FixedLayout from "./FixedLayout"
+import TableColumns from "../../models/TableColumns"
+import columnKey from "../../lib/columnKey"
 
 type Props = {
-  layout: Layout,
-  scrollLeft: number
+  dimens: ViewerDimens,
+  scrollLeft: number,
+  columns: TableColumns
 }
 
 export default class Header extends React.PureComponent<Props> {
   render() {
-    const {layout, scrollLeft} = this.props
+    const {dimens, scrollLeft} = this.props
 
-    if (layout instanceof FixedLayout) {
+    if (dimens.rowWidth !== "auto") {
       return (
-        <header style={Styler.header(layout, scrollLeft)}>
-          {layout.visibleColumns().map(({name: col}) => (
+        <header style={Styler.header(dimens, scrollLeft)}>
+          {this.props.columns.getVisible().map(column => (
             <div
               className="header-cell"
-              key={col}
-              style={Styler.cell(layout, col)}
+              key={columnKey(column)}
+              style={{width: column.width || 300}}
             >
-              {col}
-              <XColResizer col={col} width={layout.cellWidth(col)} />
+              {column.name}
+              <XColResizer column={column} tableId={this.props.columns.id} />
             </div>
           ))}
         </header>

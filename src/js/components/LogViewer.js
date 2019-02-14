@@ -1,14 +1,15 @@
 /* @flow */
 
 import React from "react"
-import LogRow from "./LogRow"
-import Log from "../models/Log"
-import * as Layout from "./Viewer/Layout"
-import type {Layout as LayoutInterface} from "./Viewer/Layout"
-import Chunker from "./Viewer/Chunker"
-import Viewer from "./Viewer/Viewer"
+
+import type {ViewerDimens} from "../types"
 import {XPhonyViewer} from "./Viewer/PhonyViewer"
-import Columns from "../models/Columns"
+import Chunker from "./Viewer/Chunker"
+import Log from "../models/Log"
+import LogRow from "./LogRow"
+import TableColumns from "../models/TableColumns"
+import Viewer from "./Viewer/Viewer"
+import buildViewerDimens from "./Viewer/buildViewerDimens"
 
 type Props = {
   height: number,
@@ -16,7 +17,7 @@ type Props = {
   logs: Log[],
   selectedLog: ?Log,
   timeZone: string,
-  columns: Columns,
+  tableColumns: TableColumns,
   atEnd: boolean,
   onLastChunk?: Function,
   onRowClick?: Function
@@ -29,13 +30,14 @@ type State = {
 export default class LogViewer extends React.Component<Props, State> {
   state = {selectedIndex: null}
 
-  createLayout() {
-    return Layout.create({
+  createDimens() {
+    return buildViewerDimens({
+      type: this.props.tableColumns.showHeader() ? "fixed" : "auto",
       height: this.props.height,
       width: this.props.width,
       size: this.props.logs.length,
-      rowH: 25,
-      columns: this.props.columns
+      rowHeight: 25,
+      sumColumnWidths: this.props.tableColumns.sumWidths()
     })
   }
 
@@ -49,15 +51,16 @@ export default class LogViewer extends React.Component<Props, State> {
     })
   }
 
-  renderRow = (index: number, layout: LayoutInterface) => {
+  renderRow = (index: number, dimens: ViewerDimens) => {
     return (
       <LogRow
+        columns={this.props.tableColumns}
         key={index}
         index={index}
         log={this.props.logs[index]}
         timeZone={this.props.timeZone}
         highlight={Log.isSame(this.props.logs[index], this.props.selectedLog)}
-        layout={layout}
+        dimens={dimens}
         onClick={() => {
           this.props.onRowClick && this.props.onRowClick(index)
         }}
@@ -71,8 +74,9 @@ export default class LogViewer extends React.Component<Props, State> {
       <div>
         <XPhonyViewer />
         <Viewer
+          tableColumns={this.props.tableColumns}
           logs={this.props.logs}
-          layout={this.createLayout()}
+          dimens={this.createDimens()}
           chunker={this.createChunker()}
           onLastChunk={this.props.onLastChunk}
           rowRenderer={this.renderRow}

@@ -1,5 +1,6 @@
 /* @flow */
-import type {Tuple, Descriptor} from "../models/Log"
+
+import type {Descriptor, Tuple} from "../types"
 
 export type SearchResult = {
   type: "SearchResult",

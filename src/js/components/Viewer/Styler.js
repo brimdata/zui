@@ -1,58 +1,57 @@
 /* @flow */
-import type {Layout} from "./Layout"
 
-export const viewer = (layout: Layout) => {
+import type {ViewerDimens} from "../../types"
+
+export const viewer = (dimens: ViewerDimens) => {
   return {
-    width: layout.viewWidth()
+    width: dimens.viewWidth
   }
 }
 
-export const view = (layout: Layout) => {
+export const view = (dimens: ViewerDimens) => {
   return {
-    height: layout.viewHeight(),
-    width: layout.viewWidth()
+    height: dimens.viewHeight,
+    width: dimens.viewWidth
   }
 }
 
-export const header = (layout: Layout, scrollLeft: number) => {
+export const header = (dimens: ViewerDimens, scrollLeft: number) => {
   return {
-    width: layout.listWidth(),
+    width: dimens.listWidth,
     transform: `translateX(${scrollLeft * -1}px)`
   }
 }
 
-export const list = (layout: Layout) => {
+export const list = (dimens: ViewerDimens) => {
   return {
-    height: layout.listHeight(),
-    width: layout.listWidth()
+    height: dimens.listHeight,
+    width: dimens.listWidth
   }
 }
 
-export const chunk = (layout: Layout, index: number, chunkSize: number) => {
+export const chunk = (
+  dimens: ViewerDimens,
+  index: number,
+  chunkSize: number
+) => {
   return {
-    width: layout.rowWidth(),
-    transform: `translateY(${index * layout.rowHeight()}px)`,
-    height: layout.rowHeight() * chunkSize
+    width: dimens.rowWidth,
+    transform: `translateY(${index * dimens.rowHeight}px)`,
+    height: dimens.rowHeight * chunkSize
   }
 }
 
-export const row = (layout: Layout) => {
+export const row = (dimens: ViewerDimens) => {
   return {
-    width: layout.rowWidth(),
-    height: layout.rowHeight()
+    width: dimens.rowWidth,
+    height: dimens.rowHeight
   }
 }
 
-export const cell = (layout: Layout, col: string) => {
+export const endMessage = (dimens: ViewerDimens) => {
   return {
-    width: layout.cellWidth(col)
-  }
-}
-
-export const endMessage = (layout: Layout) => {
-  return {
-    height: layout.rowHeight() * 4,
-    transform: `translateY(${layout.listHeight()}px)`,
-    width: layout.viewWidth()
+    height: dimens.rowHeight * 4,
+    transform: `translateY(${dimens.listHeight}px)`,
+    width: dimens.viewWidth
   }
 }

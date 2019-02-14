@@ -1,11 +1,12 @@
 /* @flow */
 
+import type {Thunk} from "redux-thunk"
+
+import type {Tuple} from "../types"
+import {discoverDescriptors} from "./descriptors"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
-import {discoverDescriptors} from "./descriptors"
 import Log from "../models/Log"
-import type {Tuple} from "../models/Log"
-import type {Thunk} from "redux-thunk"
 
 export const clearTuplesByUid = () => ({
   type: "TUPLES_BY_UID_CLEAR"

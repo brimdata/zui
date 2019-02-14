@@ -12,7 +12,8 @@ const PERSIST = [
   "boomdCredentials",
   "currentSpaceName",
   "view",
-  "starredLogs"
+  "starredLogs",
+  "tableColumnSets"
 ]
 
 export const saveState = (state: State) => {

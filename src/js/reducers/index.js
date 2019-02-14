@@ -1,29 +1,31 @@
 /* @flow */
 
 import {combineReducers} from "redux"
-import descriptors from "./descriptors"
-import mainSearch from "./mainSearch"
-import tuplesByUid from "./tuplesByUid"
-import initialLoad from "./initialLoad"
-import spaces from "./spaces"
-import timeWindow from "./timeWindow"
-import filterTree from "./filterTree"
-import countByTime from "./countByTime"
+
 import analysis from "./analysis"
-import logDetails from "./logDetails"
-import searchStats from "./searchStats"
 import boomdCredentials from "./boomdCredentials"
-import searchBar from "./searchBar"
-import view from "./view"
-import starredLogs from "./starredLogs"
-import logs from "./logs"
-import packets from "./packets"
-import logViewer from "./logViewer"
 import columnWidths from "./columnWidths"
-import selectedColumns from "./selectedColumns"
-import searchHistory from "./searchHistory"
-import whois from "./whois"
+import countByTime from "./countByTime"
+import descriptors from "./descriptors"
+import filterTree from "./filterTree"
+import initialLoad from "./initialLoad"
+import logDetails from "./logDetails"
+import logViewer from "./logViewer"
+import logs from "./logs"
+import mainSearch from "./mainSearch"
 import notifications from "./notifications"
+import packets from "./packets"
+import searchBar from "./searchBar"
+import searchHistory from "./searchHistory"
+import searchStats from "./searchStats"
+import selectedColumns from "./selectedColumns"
+import spaces from "./spaces"
+import starredLogs from "./starredLogs"
+import tableColumnSets from "./tableColumnSets"
+import timeWindow from "./timeWindow"
+import tuplesByUid from "./tuplesByUid"
+import view from "./view"
+import whois from "./whois"
 
 export default combineReducers<*, *>({
   logs,
@@ -48,5 +50,6 @@ export default combineReducers<*, *>({
   selectedColumns,
   searchHistory,
   whois,
-  notifications
+  notifications,
+  tableColumnSets
 })

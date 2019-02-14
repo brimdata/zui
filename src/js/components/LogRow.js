@@ -1,39 +1,81 @@
+/* @flow */
+
 import React from "react"
-import LogCell from "./LogCell"
 import classNames from "classnames"
+
+import type {ViewerDimens} from "../types"
+import Log from "../models/Log"
+import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
-import FixedLayout from "./Viewer/FixedLayout"
+import TableColumns from "../models/TableColumns"
+import columnOrder from "../lib/columnOrder"
 
-export default class LogRow extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.renderCell = this.renderCell.bind(this)
-  }
+type Props = {
+  dimens: ViewerDimens,
+  highlight: boolean,
+  index: number,
+  log: Log,
+  columns: TableColumns,
+  onClick: () => void
+}
 
-  renderCell({name: col}, colIndex) {
-    const {log, layout, index} = this.props
-    const field = log.getField(col)
-    const style = Styler.cell(layout, col)
-    const key = `${index}-${colIndex}`
-    if (field) {
-      return (
-        <LogCell key={key} field={log.getField(col)} log={log} style={style} />
-      )
-    } else if (layout instanceof FixedLayout) {
-      return <div className="log-cell" key={key} style={style} />
+export default class LogRow extends React.PureComponent<Props> {
+  renderAutoLayout() {
+    const {dimens, highlight, index, log} = this.props
+    const columns = columnOrder(log.descriptor)
+    console.log()
+    const renderCell = (column, colIndex) => {
+      const field = log.getField(column.name)
+      if (field) {
+        return (
+          <LogCell
+            key={`${index}-${colIndex}`}
+            field={field}
+            log={log}
+            style={{width: "auto"}}
+          />
+        )
+      }
     }
-  }
-
-  render() {
-    const {layout, highlight, index} = this.props
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={Styler.row(layout)}
+        style={Styler.row(dimens)}
         onClick={this.props.onClick}
       >
-        {layout.visibleColumns().map(this.renderCell)}
+        {columns.map(renderCell)}
       </div>
     )
+  }
+
+  renderFixedLayout() {
+    const {highlight, columns, log, dimens, index} = this.props
+    const renderCell = (column, colIndex) => {
+      const field = log.getField(column.name)
+      const style = {width: column.width || 300}
+      const key = `${index}-${colIndex}`
+
+      if (field) {
+        return <LogCell key={key} field={field} log={log} style={style} />
+      } else {
+        return <div className="log-cell" key={key} style={style} />
+      }
+    }
+
+    return (
+      <div
+        className={classNames("log-row", {highlight, even: index % 2 == 0})}
+        style={Styler.row(dimens)}
+        onClick={this.props.onClick}
+      >
+        {columns.getVisible().map(renderCell)}
+      </div>
+    )
+  }
+
+  render() {
+    return this.props.dimens.rowWidth !== "auto"
+      ? this.renderFixedLayout()
+      : this.renderAutoLayout()
   }
 }
