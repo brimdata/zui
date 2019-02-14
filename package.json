@@ -3,7 +3,7 @@
   "description": "Looky Desktop App",
   "repository": "https://github.com/looky/looky-desktop",
   "license": "ISC",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "main": "electron/main.js",
   "author": "Looky Labs, Inc.",
   "scripts": {
