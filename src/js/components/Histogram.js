@@ -1,25 +1,28 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
 import * as d3 from "d3"
+import isEqual from "lodash/isEqual"
+
 import type {DateTuple} from "../lib/TimeWindow"
-import TimeSpanXAxis from "../charts/TimeSpanXAxis"
-import SingleTickYAxis from "../charts/SingleTickYAxis"
-import XAxisBrush from "../charts/XAxisBrush"
-import StackedPathBars from "../charts/StackedPathBars"
-import Chart from "../models/Chart"
-import XPositionTooltip from "../charts/XPositionTooltip"
-import HoverLine from "../charts/HoverLine"
-import {connect} from "react-redux"
+import {type DispatchProps, type State} from "../reducers/types"
+import {type Interval} from "../lib/countByTimeInterval"
+import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import {
   getMainSearchCountByTime,
   getCountByTimeData
 } from "../reducers/countByTime"
-import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-import {type DispatchProps} from "../reducers/types"
-import {type State} from "../reducers/types"
+import {getMainSearchIsFetching} from "../reducers/mainSearch"
+import Chart from "../models/Chart"
+import HoverLine from "../charts/HoverLine"
+import LoadingMessage from "./LoadingMessage"
+import SingleTickYAxis from "../charts/SingleTickYAxis"
+import StackedPathBars from "../charts/StackedPathBars"
+import TimeSpanXAxis from "../charts/TimeSpanXAxis"
+import XAxisBrush from "../charts/XAxisBrush"
+import XPositionTooltip from "../charts/XPositionTooltip"
 import dispatchToProps from "../lib/dispatchToProps"
-import {type Interval} from "../lib/countByTimeInterval"
 
 type OwnProps = {|
   width: number,
@@ -33,7 +36,8 @@ type StateProps = {|
   timeWindow: DateTuple,
   innerTimeWindow: DateTuple,
   interval: Interval,
-  keys: string[]
+  keys: string[],
+  isFetching: boolean
 |}
 
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
@@ -64,11 +68,14 @@ export default class Histogram extends React.Component<Props> {
   }
 
   shouldComponentUpdate(nextProps: Props) {
-    const {rawData, width, height} = this.props
+    const {rawData, width, height, timeWindow, innerTimeWindow} = this.props
     return (
       nextProps.rawData !== rawData ||
       nextProps.width !== width ||
-      nextProps.height !== height
+      nextProps.height !== height ||
+      !isEqual(timeWindow, nextProps.timeWindow) ||
+      !isEqual(innerTimeWindow, nextProps.innerTimeWindow) ||
+      this.props.isFetching !== nextProps.isFetching
     )
   }
 
@@ -83,10 +90,11 @@ export default class Histogram extends React.Component<Props> {
   }
 
   render() {
+    const {width, height} = this.props
     return (
-      <div className="count-by-time-wrapper">
+      <div className="count-by-time-wrapper loading" style={{width, height}}>
         <div id="histogram-tooltip" />
-
+        <LoadingMessage show={this.props.isFetching} />
         <svg
           className="count-by-time"
           height={this.props.height}
@@ -141,7 +149,8 @@ const stateToProps = (state: State) => ({
   rawData: getCountByTimeData(state),
   ...getMainSearchCountByTime(state),
   timeWindow: getTimeWindow(state),
-  innerTimeWindow: getInnerTimeWindow(state)
+  innerTimeWindow: getInnerTimeWindow(state),
+  isFetching: getMainSearchIsFetching(state)
 })
 
 export const XHistogram = connect<Props, OwnProps, _, _, _, _>(

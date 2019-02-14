@@ -41,7 +41,7 @@ test("init with several spaces", done => {
         expect.objectContaining(defaultSpace)
       )
       expect(getTimeWindow(store.getState())).toEqual([
-        new Date("2015-03-05T14:15:00.000Z"),
+        new Date("2015-04-13T09:06:33.750Z"),
         new Date("2015-04-13T09:36:33.750Z")
       ])
       done()

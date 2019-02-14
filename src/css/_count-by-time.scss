@@ -3,12 +3,9 @@
 
   .loading-message {
     position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    p {
-      @include pulsing;
-    }
+    right: 12px;
+    top: 50%;
+    transform: translateY(-80%);
   }
 
   .tooltip {
@@ -46,7 +43,7 @@
   }
 
   .tick line {
-    stroke: $light-gray;
+    stroke: $gray-warm-5;
   }
 
   .tick text {
@@ -59,7 +56,7 @@
   }
 
   .domain {
-    stroke: $light-gray;
+    stroke: $gray-warm-5;
   }
 
   text {

@@ -1,9 +1,11 @@
 /* @flow */
 
 import React from "react"
-import XSearchStats from "../connectors/XSearchStats"
 import classNames from "classnames"
+
 import {type State} from "../reducers/types"
+import LoadingMessage from "./LoadingMessage"
+import XSearchStats from "../connectors/XSearchStats"
 
 type StateProps = {|
   isFetching: boolean
@@ -14,16 +16,10 @@ type Props = {|...StateProps|}
 export default class StatusBar extends React.Component<Props> {
   render() {
     return (
-      <div className="status-bar">
-        <div
-          className={classNames("loading-animation", {
-            visible: this.props.isFetching
-          })}
-        >
-          <div className="ring-1" />
-          <div className="ring-2" />
-        </div>
-
+      <div
+        className={classNames("status-bar", {loading: this.props.isFetching})}
+      >
+        <LoadingMessage show={this.props.isFetching} message="Searching..." />
         <XSearchStats />
       </div>
     )

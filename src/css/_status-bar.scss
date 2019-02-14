@@ -4,53 +4,35 @@
   align-items: center;
   background-color: $page-background-color;
   border-top: 1px solid $page-border-color;
-}
-
-.loading-animation.visible {
-  opacity: 1;
-}
-
-.loading-animation {
-  opacity: 0;
-  transition: opacity 500ms;
-  margin-left: 10px;
-  height: 12px;
-  width: 12px;
   position: relative;
+  overflow: hidden;
+  transition: background-color 500ms;
 
-  .ring-1,
-  .ring-2 {
-    border-radius: 50%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-  }
+  &.loading {
+    transition: background-color 500ms;
+    background-color: $green-3;
+    animation: pulse-green-bg 500ms ease-in-out infinite alternate;
+    p {
+      color: white;
+    }
+    .ring-1,
+    .ring-2 {
+      background-color: white;
+    }
 
-  .ring-1 {
-    background: $green-3;
-    animation: burst 1s infinite;
-  }
-
-  .ring-2 {
-    background: $green-4;
-    animation: burst 1s 200ms infinite;
+    .label,
+    .number {
+      transition: all 500ms;
+      color: white;
+    }
   }
 }
 
-@keyframes burst {
-  0% {
-    opacity: 1;
-    transform: scale(0);
+@keyframes pulse-green-bg {
+  from {
+    background-color: $green-3;
   }
-
-  50% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(2);
+  to {
+    background-color: $green-4;
   }
 }
