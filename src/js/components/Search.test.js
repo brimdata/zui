@@ -1,9 +1,12 @@
 /* @flow */
 
 import React from "react"
+
 import {shallow} from "enzyme"
-import Search, {stateToProps} from "./Search"
+
+import {UnauthorizedError} from "../models/Errors"
 import AppError from "../models/AppError"
+import Search, {stateToProps} from "./Search"
 import initStore from "../test/initStore"
 
 let props
@@ -43,6 +46,13 @@ test("no chargs when results are not logs", () => {
   comp.setState({ready: true})
 
   expect(comp.find(".search-page-header-charts")).toHaveLength(0)
+})
+
+test("redirects when unauthorized error", () => {
+  const comp = shallow(<Search {...props} />)
+  comp.setState({error: new UnauthorizedError("")})
+
+  expect(comp.find("Redirect")).toHaveLength(1)
 })
 
 test("stateToProps", () => {

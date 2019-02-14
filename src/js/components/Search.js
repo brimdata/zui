@@ -1,26 +1,28 @@
 /* @flow */
 
-import React from "react"
 import {AutoSizer} from "react-virtualized"
-import {XTitleBar} from "./TitleBar"
+import {Redirect} from "react-router-dom"
+import {connect} from "react-redux"
+import React from "react"
+
+import {type DispatchProps, type State as S} from "../reducers/types"
+import {UnauthorizedError} from "../models/Errors"
 import {XControlBar} from "./ControlBar"
+import {XDownloadProgress} from "./DownloadProgress"
 import {XHistogram} from "./Histogram"
 import {XLeftPane} from "./LeftPane"
 import {XRightPane} from "../components/RightPane"
-import {XDownloadProgress} from "./DownloadProgress"
-import * as searchPage from "../actions/searchPage"
 import {XSearchResults} from "./SearchResults"
-import ColumnChooser from "./ColumnChooser"
-import {XWhoisModal} from "./WhoisModal"
 import {XStatusBar} from "./StatusBar"
-import {connect} from "react-redux"
-import * as view from "../reducers/view"
-import {type DispatchProps} from "../reducers/types"
-import dispatchToProps from "../lib/dispatchToProps"
-import {type State as S} from "../reducers/types"
-import ErrorFactory from "../models/ErrorFactory"
+import {XTitleBar} from "./TitleBar"
+import {XWhoisModal} from "./WhoisModal"
 import AppError from "../models/AppError"
+import ColumnChooser from "./ColumnChooser"
+import ErrorFactory from "../models/ErrorFactory"
 import StartupError from "./StartupError"
+import dispatchToProps from "../lib/dispatchToProps"
+import * as searchPage from "../actions/searchPage"
+import * as view from "../reducers/view"
 
 type StateProps = {|
   logsTab: boolean
@@ -47,8 +49,10 @@ export default class Search extends React.Component<Props, State> {
   }
 
   render() {
-    if (this.state.error) return <StartupError error={this.state.error} />
-    if (!this.state.ready) return null
+    const {ready, error} = this.state
+    if (error instanceof UnauthorizedError) return <Redirect to="/connect " />
+    if (error) return <StartupError error={error} />
+    if (!ready) return null
 
     return (
       <div className="search-page-wrapper">

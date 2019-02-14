@@ -81,8 +81,13 @@ const LookytalkVersionErrorTemplate = ({error, onClose}: Props) => {
 
 const print = rawError => {
   const error = tryParse(rawError)
-  if (isObject(error)) return JSON.stringify(error, null, 2)
-  else return error
+  if (isObject(error)) {
+    if (error instanceof Error) {
+      return error.message
+    } else {
+      return JSON.stringify(error, null, 2)
+    }
+  } else return error
 }
 
 const tryParse = string => {
