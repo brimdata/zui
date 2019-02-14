@@ -7,6 +7,10 @@ import {type RawError} from "./AppError"
 
 export class UnauthorizedError extends AppError {
   static is(e: RawError) {
+    if (e instanceof Error) {
+      if (e.message.match(/Need boom credentials/)) return true
+    }
+
     try {
       return JSON.parse(e).code === "UNAUTHORIZED"
     } catch (e) {
