@@ -13,8 +13,8 @@ export default class LoadingBurst extends React.Component<Props> {
           visible: this.props.show
         })}
       >
-        <div className="ring-1" />
-        <div className="ring-2" />
+        <div className="burst-1 burst" />
+        <div className="burst-2 burst" />
       </div>
     )
   }

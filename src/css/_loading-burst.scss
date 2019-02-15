@@ -10,8 +10,7 @@
   width: 12px;
   position: relative;
 
-  .ring-1,
-  .ring-2 {
+  .burst {
     border-radius: 50%;
     position: absolute;
     width: 100%;
@@ -19,12 +18,12 @@
     opacity: 0;
   }
 
-  .ring-1 {
+  .burst-1 {
     background: $green-3;
     animation: burst 1s infinite;
   }
 
-  .ring-2 {
+  .burst-2 {
     background: $green-4;
     animation: burst 1s 200ms infinite;
   }

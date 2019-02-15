@@ -3,9 +3,14 @@
 
   .loading-message {
     position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-80%);
+    left: 50%;
+    top: 47%;
+    transform: translate(-50%, -50%);
+    color: $gray-warm-4;
+
+    .burst {
+      background-color: $gray-warm-4;
+    }
   }
 
   .tooltip {

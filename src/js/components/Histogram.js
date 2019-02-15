@@ -94,7 +94,7 @@ export default class Histogram extends React.Component<Props> {
     return (
       <div className="count-by-time-wrapper loading" style={{width, height}}>
         <div id="histogram-tooltip" />
-        <LoadingMessage show={this.props.isFetching} />
+        <LoadingMessage show={this.props.isFetching} message="Loading Chart" />
         <svg
           className="count-by-time"
           height={this.props.height}
