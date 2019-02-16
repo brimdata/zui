@@ -36,8 +36,8 @@ export const Code = ({children, ...props}: CodeProps) => (
   </pre>
 )
 
-export const Fieldset = ({children, ...props}: Props) => (
-  <p className="fieldset" {...props}>
+export const Fieldset = ({children, className, ...props}: Props) => (
+  <p className={classNames("fieldset", className)} {...props}>
     {children}
   </p>
 )

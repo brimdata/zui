@@ -1,7 +1,8 @@
 .count-by-time-wrapper {
   position: relative;
 
-  .loading-message {
+  .loading-message,
+  .no-chart-data {
     position: absolute;
     left: 50%;
     top: 47%;
@@ -11,6 +12,13 @@
     .burst {
       background-color: $gray-warm-4;
     }
+  }
+
+  .no-chart-data {
+    opacity: 0;
+  }
+  .no-chart-data.visible {
+    opacity: 1;
   }
 
   .tooltip {

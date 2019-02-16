@@ -2,11 +2,13 @@
 
 import {connect} from "react-redux"
 import React from "react"
+import classNames from "classnames"
 import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 
 import type {DateTuple} from "../lib/TimeWindow"
 import {type DispatchProps, type State} from "../reducers/types"
+import {Fieldset} from "./Typography"
 import {type Interval} from "../lib/countByTimeInterval"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import {
@@ -90,11 +92,15 @@ export default class Histogram extends React.Component<Props> {
   }
 
   render() {
-    const {width, height} = this.props
+    const {width, height, isFetching} = this.props
+    const noResults = !isFetching && this.chart.data.data.length === 0
     return (
       <div className="count-by-time-wrapper loading" style={{width, height}}>
         <div id="histogram-tooltip" />
         <LoadingMessage show={this.props.isFetching} message="Loading Chart" />
+        <Fieldset className={classNames("no-chart-data", {visible: noResults})}>
+          No Chart Data
+        </Fieldset>
         <svg
           className="count-by-time"
           height={this.props.height}
