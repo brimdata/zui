@@ -1,14 +1,24 @@
 .count-by-time-wrapper {
   position: relative;
 
-  .loading-message {
+  .loading-message,
+  .no-chart-data {
     position: absolute;
-    top: 30%;
     left: 50%;
+    top: 47%;
     transform: translate(-50%, -50%);
-    p {
-      @include pulsing;
+    color: $gray-warm-4;
+
+    .burst {
+      background-color: $gray-warm-4;
     }
+  }
+
+  .no-chart-data {
+    opacity: 0;
+  }
+  .no-chart-data.visible {
+    opacity: 1;
   }
 
   .tooltip {
@@ -46,7 +56,7 @@
   }
 
   .tick line {
-    stroke: $light-gray;
+    stroke: $gray-warm-5;
   }
 
   .tick text {
@@ -59,7 +69,7 @@
   }
 
   .domain {
-    stroke: $light-gray;
+    stroke: $gray-warm-5;
   }
 
   text {

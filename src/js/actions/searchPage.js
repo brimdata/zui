@@ -1,10 +1,14 @@
 /* @flow */
-import * as spaces from "./spaces"
-import {getCurrentSpaceName} from "../reducers/spaces"
-import * as timeWindow from "./timeWindow"
-import * as searchBar from "./searchBar"
-import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
 import type {Thunk} from "redux-thunk"
+
+import {
+  getCurrentSpaceName,
+  getCurrentSpaceTimeWindow
+} from "../reducers/spaces"
+import {subtract} from "../lib/Time"
+import * as searchBar from "./searchBar"
+import * as spaces from "./spaces"
+import * as timeWindow from "./timeWindow"
 
 export const init = (): Thunk => (dispatch, getState, api) =>
   new Promise<string>((resolve, reject) => {
@@ -29,8 +33,9 @@ export const switchSpace = (name: string): Thunk => {
     return api.space({name}).done(info => {
       dispatch(spaces.setSpaceInfo(info))
       dispatch(spaces.setCurrentSpaceName(info.name))
+      const [_min, max] = getCurrentSpaceTimeWindow(getState())
       dispatch(
-        timeWindow.setOuterTimeWindow(getCurrentSpaceTimeWindow(getState()))
+        timeWindow.setOuterTimeWindow([subtract(max, 30, "minutes"), max])
       )
       dispatch(searchBar.submitSearchBar())
     })

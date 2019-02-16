@@ -37,7 +37,8 @@ type Props = {|
 
 type State = {
   fromDate: Date,
-  toDate: Date
+  toDate: Date,
+  isFocused: boolean
 }
 
 export default class SpanPickers extends React.Component<Props, State> {
@@ -48,11 +49,14 @@ export default class SpanPickers extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
+    // $FlowFixMe
     this.state = SpanPickers.getDerivedStateFromProps(props)
   }
 
-  static getDerivedStateFromProps(nextProps: Props) {
+  static getDerivedStateFromProps(nextProps: Props, state: State = {}) {
+    if (state.isFocused) return null
     return {
+      isFocused: false,
       fromDate: nextProps.timeWindow[0],
       toDate: nextProps.timeWindow[1]
     }
@@ -68,10 +72,8 @@ export default class SpanPickers extends React.Component<Props, State> {
     if (fromDate > this.state.toDate) {
       const toDate = Time.add(fromDate, 30, "minutes")
       this.setState({fromDate, toDate})
-      this.props.setOuterTimeWindow([fromDate, toDate])
     } else {
       this.setState({fromDate})
-      this.props.setOuterTimeWindow([fromDate, this.state.toDate])
     }
 
     this.fromTime.focus()
@@ -83,10 +85,8 @@ export default class SpanPickers extends React.Component<Props, State> {
     if (fromDate > this.state.toDate) {
       const toDate = Time.add(fromDate, 30, "minutes")
       this.setState({fromDate, toDate})
-      this.props.setOuterTimeWindow([fromDate, toDate])
     } else {
       this.setState({fromDate})
-      this.props.setOuterTimeWindow([fromDate, this.state.toDate])
     }
 
     this.toDate.focus()
@@ -102,10 +102,8 @@ export default class SpanPickers extends React.Component<Props, State> {
     if (toDate < this.state.fromDate) {
       const fromDate = Time.subtract(toDate, 30, "minutes")
       this.setState({fromDate, toDate})
-      this.props.setOuterTimeWindow([fromDate, toDate])
     } else {
       this.setState({toDate})
-      this.props.setOuterTimeWindow([this.state.fromDate, toDate])
     }
 
     this.toTime.focus()
@@ -114,63 +112,77 @@ export default class SpanPickers extends React.Component<Props, State> {
   onToTimeChange = (time: TimeObj) => {
     const toDate = Time.set(this.state.toDate, time)
     this.setState({toDate})
-    this.props.setOuterTimeWindow([this.state.fromDate, toDate])
 
     if (toDate < this.state.fromDate) {
       const fromDate = Time.subtract(toDate, 30, "minutes")
       this.setState({fromDate, toDate})
-      this.props.setOuterTimeWindow([fromDate, toDate])
     } else {
       this.setState({toDate})
-      this.props.setOuterTimeWindow([this.state.fromDate, toDate])
     }
 
     this.toTime.blur()
   }
 
+  onFocus = () => {
+    this.setState({isFocused: true})
+    clearTimeout(this.blurTimeout)
+  }
+
+  onBlur = () => {
+    clearTimeout(this.blurTimeout)
+    this.blurTimeout = setTimeout(() => {
+      this.props.setOuterTimeWindow([this.state.fromDate, this.state.toDate])
+      this.props.submitSearchBar()
+      this.setState({isFocused: false})
+    }, 100)
+  }
+
   render() {
     return (
-      <div
-        className="button-group span-pickers"
-        onFocus={() => clearTimeout(this.blurTimeout)}
-        onBlur={() => {
-          clearTimeout(this.blurTimeout)
-          this.blurTimeout = setTimeout(this.props.submitSearchBar, 100)
-        }}
-      >
-        <div className="thin-button">
-          <DayPicker
-            from={this.state.fromDate}
-            to={this.state.toDate}
-            day={this.state.fromDate}
-            onDayChange={this.onFromDayChange}
-          />
-          <TimePicker
-            ref={r => (this.fromTime = r)}
-            time={this.state.fromDate}
-            onTimeChange={this.onFromTimeChange}
-          />
+      <div className="button-group span-pickers">
+        <div
+          className="button-group"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+        >
+          <div className="thin-button">
+            <DayPicker
+              from={this.state.fromDate}
+              to={this.state.toDate}
+              day={this.state.fromDate}
+              onDayChange={this.onFromDayChange}
+            />
+            <TimePicker
+              ref={r => (this.fromTime = r)}
+              time={this.state.fromDate}
+              onTimeChange={this.onFromTimeChange}
+            />
+          </div>
+          <div className="span-duration">
+            <hr />
+            <p>
+              {TimeWindow.humanDuration([
+                this.state.fromDate,
+                this.state.toDate
+              ])}
+            </p>
+            <hr />
+          </div>
+          <div className="thin-button">
+            <DayPicker
+              from={this.state.fromDate}
+              to={this.state.toDate}
+              day={this.state.toDate}
+              onDayChange={this.onToDayChange}
+              ref={r => (this.toDate = r)}
+            />
+            <TimePicker
+              time={this.state.toDate}
+              onTimeChange={this.onToTimeChange}
+              ref={r => (this.toTime = r)}
+            />
+          </div>
         </div>
-        <div className="span-duration">
-          <hr />
-          <p>{TimeWindow.humanDuration(this.props.timeWindow)}</p>
-          <hr />
-        </div>
-        <div className="thin-button">
-          <DayPicker
-            from={this.state.fromDate}
-            to={this.state.toDate}
-            day={this.state.toDate}
-            onDayChange={this.onToDayChange}
-            ref={r => (this.toDate = r)}
-          />
-          <TimePicker
-            time={this.state.toDate}
-            onTimeChange={this.onToTimeChange}
-            ref={r => (this.toTime = r)}
-          />
-        </div>
-
         <DropMenu
           menu={XSpanPickerMenu}
           className="span-drop-menu"

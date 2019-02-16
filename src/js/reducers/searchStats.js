@@ -15,6 +15,7 @@ export const initialState = {
 export type SearchStats = typeof initialState
 
 export default createReducer(initialState, {
+  MAIN_SEARCH_REQUEST: () => ({...initialState}),
   SEARCH_STATS_SET: (state, {stats}) => stats
 })
 

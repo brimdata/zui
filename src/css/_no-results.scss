@@ -1,11 +1,21 @@
 .no-results {
   text-align: center;
   margin: $leading * 2;
-
+  animation: fade-in 500ms;
   h3 {
     padding: $leading/2 $leading;
     display: inline-block;
     border-top: 1px solid $light-gray-3;
     border-bottom: 1px solid $light-gray-3;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

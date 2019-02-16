@@ -16,10 +16,16 @@ export default function([start, end]: DateTuple): Interval {
   if (duration.asMinutes() <= 5)
     return {number: 1, unit: "second", roundingUnit: "second"}
 
+  if (duration.asMinutes() <= 30)
+    return {number: 30, unit: "second", roundingUnit: "minute"}
+
   if (duration.asHours() <= 2)
+    return {number: 1, unit: "minute", roundingUnit: "minute"}
+
+  if (duration.asHours() <= 4)
     return {number: 5, unit: "minute", roundingUnit: "hour"}
 
-  if (duration.asHours() <= 5)
+  if (duration.asHours() <= 12)
     return {number: 15, unit: "minute", roundingUnit: "hour"}
 
   if (duration.asDays() <= 1)

@@ -13,7 +13,8 @@ const PERSIST = [
   "currentSpaceName",
   "view",
   "starredLogs",
-  "tableColumnSets"
+  "tableColumnSets",
+  "spaces"
 ]
 
 export const saveState = (state: State) => {
