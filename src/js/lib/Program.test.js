@@ -73,9 +73,9 @@ test("#getHeadCount with no head", () => {
 })
 
 test("#hasHeadCount when false", () => {
-  expect(Program.hasHeadProc("*")).toBe(false)
+  expect(Program.hasHeadOrTailProc("*")).toBe(false)
 })
 
 test("#hasHeadCount when true", () => {
-  expect(Program.hasHeadProc("* | head 1")).toBe(true)
+  expect(Program.hasHeadOrTailProc("* | head 1")).toBe(true)
 })

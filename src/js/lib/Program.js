@@ -5,7 +5,9 @@ import {LookyTalk} from "boom-js-client"
 type Program = string
 
 const HEAD_PROC = "HeadProc"
-const TUPLE_PROCS = [HEAD_PROC, "SortProc"]
+const TAIL_PROC = "TailProc"
+const SORT_PROC = "SortProc"
+const TUPLE_PROCS = [HEAD_PROC, TAIL_PROC, SORT_PROC]
 const COMPOUND_PROCS = ["ParallelProc", "SequentialProc"]
 
 export const hasAnalytics = (string: Program) => {
@@ -38,9 +40,9 @@ export const getHeadCount = (program: Program) => {
   return head ? head.count : 0
 }
 
-export const hasHeadProc = (program: Program) => {
+export const hasHeadOrTailProc = (program: Program) => {
   const [ast] = parse(program)
-  return !!getProcs(ast).find(({op}) => op === HEAD_PROC)
+  return !!getProcs(ast).find(({op}) => op === HEAD_PROC || op === TAIL_PROC)
 }
 
 const getProcs = ast => {
