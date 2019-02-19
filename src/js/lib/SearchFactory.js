@@ -22,7 +22,7 @@ export const getType = (state: State) => {
     return "ANALYTICS"
   } else if (getInnerTimeWindow(state)) {
     return "LOGS_SUBSET"
-  } else if (Program.hasHeadProc(getSearchProgram(state))) {
+  } else if (Program.hasHeadOrTailProc(getSearchProgram(state))) {
     return "LOGS_HEAD"
   } else {
     return "LOGS_PAGED"
@@ -70,10 +70,7 @@ export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
 }
 
 export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
-  const program =
-    Program.addHeadProc(getSearchProgram(state), PER_PAGE) +
-    "; " +
-    getCountByTimeProc(state)
+  const program = getSearchProgram(state) + "; " + getCountByTimeProc(state)
   return {
     space: getCurrentSpaceName(state),
     program,
