@@ -45,6 +45,7 @@ export default class SearchButton extends React.Component<Props> {
         </DropMenu>
 
         <Modal
+          title="Debug Query"
           isOpen={this.props.debugModalIsOpen}
           onClose={() => this.props.dispatch(hideModal())}
         >

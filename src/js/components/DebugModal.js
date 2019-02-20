@@ -1,13 +1,13 @@
 /* @flow */
 
-import React from "react"
-import {SmallHeading} from "./Headings"
-import Prism from "prismjs"
-import * as Program from "../lib/Program"
 import {connect} from "react-redux"
-import * as searchBar from "../selectors/searchBar"
+import Prism from "prismjs"
+import React from "react"
+
+import {Code, Label} from "./Typography"
 import type {State as S} from "../reducers/types"
-import {Code} from "./Typography"
+import * as Program from "../lib/Program"
+import * as searchBar from "../selectors/searchBar"
 
 type Props = {
   searchProgram: string
@@ -27,7 +27,7 @@ export default class DebugModal extends React.Component<Props, State> {
     const [ast, _error] = Program.parse(this.state.program)
     return (
       <div className="debug-query-modal">
-        <SmallHeading>Search Program</SmallHeading>
+        <Label>Search Program</Label>
         <div className="text-input-wrapper">
           <input
             className="debug-modal-input"
@@ -37,7 +37,7 @@ export default class DebugModal extends React.Component<Props, State> {
           />
         </div>
 
-        <SmallHeading>Abstract Syntax Tree</SmallHeading>
+        <Label>Abstract Syntax Tree</Label>
         <Code full light>
           <code
             className="language-js"

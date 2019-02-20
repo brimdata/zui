@@ -17,9 +17,13 @@
 .button {
   @include button-reset;
   color: white;
-  background: $blue-3;
+  background: $accent-blue;
+  text-transform: uppercase;
+  font-weight: bold;
+  height: 24px;
+  line-height: 24px;
   border-radius: 3px;
-  padding: 3px;
+  padding: 0 12px;
   display: inline-block;
   box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.25);
   transition: all 100ms;
@@ -187,6 +191,7 @@
   outline: none;
   cursor: pointer;
   background: none;
+  position: relative;
 
   svg {
     fill: white;
@@ -203,15 +208,15 @@
 
   &.light {
     svg {
-      fill: $gray-cold-2;
-      stroke: $gray-cold-2;
+      fill: $gray-cold-3;
+      stroke: $gray-cold-3;
     }
   }
 
   &.light:hover {
     svg {
-      fill: $gray-cold-1;
-      stroke: $gray-cold-1;
+      fill: $gray-cold-2;
+      stroke: $gray-cold-2;
     }
   }
 

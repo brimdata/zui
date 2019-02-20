@@ -35,3 +35,36 @@ input {
     transform: translate(0, -50%);
   }
 }
+
+.checkbox {
+  -webkit-appearance: none;
+  @include input-primary;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin-right: 12px;
+
+  &:before {
+    content: "";
+    width: 12px;
+    height: 5px;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    border: 3px solid $accent-blue;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    transform: rotate(-45deg);
+  }
+
+  &:checked:before {
+    opacity: 1;
+  }
+}
+
+.label-wrapper {
+  display: flex;
+  align-items: center;
+}
