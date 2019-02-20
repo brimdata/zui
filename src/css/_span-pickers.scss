@@ -1,4 +1,5 @@
 .span-pickers {
+  margin-left: 3px;
   .thin-button:hover {
     background: #dcdcdc;
   }
@@ -35,6 +36,7 @@
       font-size: 10px;
       color: #545866;
       padding: 0 3px;
+      white-space: nowrap;
     }
 
     hr {
