@@ -27,11 +27,8 @@ type CodeProps = {
   full?: boolean
 }
 
-export const Code = ({children, ...props}: CodeProps) => (
-  <pre
-    {...props}
-    className={classNames("code", {full: props.full, light: props.light})}
-  >
+export const Code = ({children, full, light, ...props}: CodeProps) => (
+  <pre {...props} className={classNames("code", {full, light})}>
     {children}
   </pre>
 )
