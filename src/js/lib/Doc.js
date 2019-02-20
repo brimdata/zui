@@ -36,3 +36,16 @@ export const getWidth = () => {
 export const getHeight = () => {
   return window.innerHeight
 }
+
+export const copyToClipboard = (string: string) => {
+  const el = document.createElement("textarea")
+  el.value = string
+  const body = document.body
+  if (!body) {
+    throw new Error("Can't find document body")
+  }
+  body.appendChild(el)
+  el.select()
+  document.execCommand("copy")
+  body.removeChild(el)
+}

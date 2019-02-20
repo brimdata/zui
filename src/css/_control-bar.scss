@@ -14,6 +14,11 @@
     .thin-picker {
       margin-left: 1px;
     }
+
+    * > div {
+      diplay: flex;
+      align-items: center;
+    }
   }
 
   .row-2 {

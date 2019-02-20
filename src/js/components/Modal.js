@@ -26,6 +26,7 @@ class Modal extends Component {
     return ReactDOM.createPortal(
       <div className="modal-overlay">
         <ModalContents
+          title={this.props.title}
           className={className}
           onOutsideClick={onClose}
           onClose={onClose}

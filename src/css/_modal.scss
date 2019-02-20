@@ -23,17 +23,26 @@
   box-shadow: 10px 10px 35px 10px fade-out($gray-3, 0.8);
   border-radius: 3px;
   width: 80%;
-  padding: 1rem;
-  padding-top: 2rem;
   position: relative;
 
+  .modal-header {
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 12px;
+    padding-left: 36px;
+    border-bottom: 1px solid $gray-cold-4;
+  }
+
+  .modal-body {
+    padding: 24px 36px;
+  }
+
   .close-button {
-    position: absolute;
-    top: 12px;
-    right: 12px;
     border-radius: 0;
     svg {
-      fill: $gray-3;
+      fill: $gray-cold-4;
     }
   }
 }
