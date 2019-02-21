@@ -5,8 +5,8 @@ import React from "react"
 
 import type {Dispatch} from "../reducers/types"
 import {Label} from "./Typography"
-import {getTimeZone} from "../reducers/view"
-import {setTimeZone} from "../actions/view"
+import {getTimeZone, getSettingsModalIsOpen} from "../reducers/view"
+import {hideModal, setTimeZone} from "../actions/view"
 import Modal from "./Modal"
 import * as Time from "../lib/Time"
 import Toggle from "./Toggle"
@@ -14,6 +14,7 @@ import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {
   timeZone: string,
+  isOpen: boolean,
   dispatch: Dispatch
 }
 
@@ -30,7 +31,11 @@ export default class SettingsModal extends React.Component<Props, State> {
 
   render() {
     return (
-      <Modal title="Settings" isOpen={true}>
+      <Modal
+        title="Settings"
+        isOpen={this.props.isOpen}
+        onClose={() => this.props.dispatch(hideModal())}
+      >
         <div className="settings-form">
           <div className="setting-panel">
             <Label>Timezone:</Label>
@@ -68,7 +73,10 @@ export default class SettingsModal extends React.Component<Props, State> {
   }
 }
 
-const stateToProps = state => ({timeZone: getTimeZone(state)})
+const stateToProps = state => ({
+  timeZone: getTimeZone(state),
+  isOpen: getSettingsModalIsOpen(state)
+})
 
 export const XSettingsModal = connect<Props, *, _, _, _, _>(
   stateToProps,
