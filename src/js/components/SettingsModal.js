@@ -26,7 +26,7 @@ export default class SettingsModal extends React.Component<Props> {
   render() {
     return (
       <Modal
-        title="Settings"
+        title="Preferences"
         isOpen={this.props.isOpen}
         onClose={() => this.props.dispatch(hideModal())}
       >
