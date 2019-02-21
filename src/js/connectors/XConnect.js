@@ -2,7 +2,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import Connect from "../components/Connect"
 import * as actions from "../actions/boomd"
-import {getCredentials} from "../reducers/boomdCredentials"
+import {getCredentials} from "../reducers/boomd"
 
 const stateToProps = state => ({
   credentials: getCredentials(state)

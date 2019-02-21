@@ -3,7 +3,7 @@
 import {Client} from "boom-js-client"
 
 import type {Analysis} from "./analysis"
-import type {BoomdCredentials} from "./boomdCredentials"
+import type {Boomd} from "./boomd"
 import type {ColumnWidths} from "./columnWidths"
 import type {CountByTime} from "./countByTime"
 import type {Descriptors} from "./descriptors"
@@ -28,7 +28,7 @@ export type State = {
   searchBar: SearchBar,
   timeWindow: TimeWindow,
   spaces: Spaces,
-  boomdCredentials: BoomdCredentials,
+  boomd: Boomd,
   logViewer: LogViewer,
   selectedColumns: SelectedColumns,
   columnWidths: ColumnWidths,

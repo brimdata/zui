@@ -1,6 +1,6 @@
 /* @flow */
 
-import {getCredentials} from "../reducers/boomdCredentials"
+import {getCredentials} from "../reducers/boomd"
 import type {Credentials} from "../lib/Credentials"
 import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"

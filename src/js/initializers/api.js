@@ -1,7 +1,7 @@
 /* @flow */
 
 import Client from "boom-js-client"
-import {getCredentials} from "../reducers/boomdCredentials"
+import {getCredentials} from "../reducers/boomd"
 import type {State} from "../reducers/types"
 
 export default (state: ?State) => {
