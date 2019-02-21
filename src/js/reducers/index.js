@@ -3,7 +3,7 @@
 import {combineReducers} from "redux"
 
 import analysis from "./analysis"
-import boomdCredentials from "./boomdCredentials"
+import boomd from "./boomd"
 import columnWidths from "./columnWidths"
 import countByTime from "./countByTime"
 import descriptors from "./descriptors"
@@ -42,7 +42,7 @@ export default combineReducers<*, *>({
   analysis,
   logDetails,
   searchStats,
-  boomdCredentials,
+  boomd,
   starredLogs,
   packets,
   logViewer,

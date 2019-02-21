@@ -9,21 +9,32 @@ import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
 import TableColumns from "../models/TableColumns"
 import columnOrder from "../lib/columnOrder"
+import isEqual from "lodash/isEqual"
 
 type Props = {
   dimens: ViewerDimens,
   highlight: boolean,
   index: number,
+  timeZone: string,
   log: Log,
   columns: TableColumns,
   onClick: () => void
 }
 
-export default class LogRow extends React.PureComponent<Props> {
+export default class LogRow extends React.Component<Props> {
+  shouldComponentUpdate(nextProps: Props) {
+    return (
+      !Log.isSame(this.props.log, nextProps.log) ||
+      !isEqual(this.props.columns, nextProps.columns) ||
+      this.props.highlight !== nextProps.highlight ||
+      this.props.dimens.rowWidth !== nextProps.dimens.rowWidth ||
+      this.props.timeZone !== nextProps.timeZone
+    )
+  }
+
   renderAutoLayout() {
     const {dimens, highlight, index, log} = this.props
     const columns = columnOrder(log.descriptor)
-    console.log()
     const renderCell = (column, colIndex) => {
       const field = log.getField(column.name)
       if (field) {

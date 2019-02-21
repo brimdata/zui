@@ -34,7 +34,7 @@ test("SearchEnd when received less than expected", () => {
   expect(action).toHaveProperty("value", false)
 })
 
-test.skip("SearchEnd when received more than expected", () => {
+test("SearchEnd when received more than expected", () => {
   const dispatch = jest.fn()
   const receiver = pageReceiver(dispatch, 2)
   receiver({

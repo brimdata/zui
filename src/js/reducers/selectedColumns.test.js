@@ -31,7 +31,7 @@ test("toggle column adds column if it doesn't exist", () => {
   ])
 })
 
-test.only("toggle column removes column if exists", () => {
+test("toggle column removes column if exists", () => {
   const store = initStore()
   const state = store.dispatchAll([
     actions.toggleColumn({name: "duration", type: "number"}),

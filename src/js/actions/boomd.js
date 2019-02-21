@@ -1,10 +1,20 @@
 /* @flow */
 
-import {getCredentials} from "../reducers/boomdCredentials"
+import {getCredentials} from "../reducers/boomd"
 import type {Credentials} from "../lib/Credentials"
 import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
 import {LookytalkVersionError} from "../models/Errors"
+
+export const useBoomCache = (value: boolean) => ({
+  type: "BOOMD_CACHE_USE_SET",
+  value
+})
+
+export const useBoomIndex = (value: boolean) => ({
+  type: "BOOMD_INDEX_USE_SET",
+  value
+})
 
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",

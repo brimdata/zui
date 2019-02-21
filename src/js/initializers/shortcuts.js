@@ -1,12 +1,12 @@
 import {ipcRenderer} from "electron"
+
+import {clearState} from "./persistance"
 import {
   pinSearchBar,
   removeAllSearchBarPins,
   changeSearchBarInput
 } from "../actions/searchBar"
-
-import {toggleLeftSidebar, toggleRightSidebar} from "../actions/view"
-import {clearState} from "./persistance"
+import {showModal, toggleLeftSidebar, toggleRightSidebar} from "../actions/view"
 
 export default store => {
   ipcRenderer.on("pinSearch", () => {
@@ -35,5 +35,9 @@ export default store => {
   ipcRenderer.on("resetState", () => {
     clearState()
     location.reload()
+  })
+
+  ipcRenderer.on("showPreferences", () => {
+    store.dispatch(showModal("settings"))
   })
 }

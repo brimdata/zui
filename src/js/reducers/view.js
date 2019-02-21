@@ -1,10 +1,14 @@
 /* @flow */
 
-import createReducer from "./createReducer"
 import {type State} from "./types"
+import createReducer from "./createReducer"
+
 const ANALYTICS = "analytics"
 const LOGS = "logs"
+
 export type ResultsTabEnum = "analytics" | "logs" | null
+
+export type ModalEnum = "curl" | "debug" | "settings"
 
 export type View = {
   leftSidebarIsOpen: boolean,
@@ -14,7 +18,7 @@ export type View = {
   rightSidebarWidth: number,
   resultsTab: ResultsTabEnum,
   timeZone: string,
-  modal: ?string
+  modal: ?ModalEnum
 }
 
 export const initalState: View = {
@@ -118,3 +122,6 @@ export const getModal = (state: State) => state.view.modal
 export const getDebugModalIsOpen = (state: State) => getModal(state) === "debug"
 
 export const getCurlModalIsOpen = (state: State) => getModal(state) === "curl"
+
+export const getSettingsModalIsOpen = (state: State) =>
+  getModal(state) === "settings"
