@@ -92,6 +92,12 @@ module.exports = {
         submenu: [
           {role: "about"},
           {type: "separator"},
+          {
+            label: "Preferences...",
+            click() {
+              browserWindow.webContents.send("showPreferences")
+            }
+          },
           {role: "services", submenu: []},
           {type: "separator"},
           {role: "hide"},
