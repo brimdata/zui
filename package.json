@@ -31,7 +31,9 @@
   "jest": {
     "notify": false,
     "notifyMode": "change",
-    "setupTestFrameworkScriptFile": "./src/js/test/setup.js",
+    "setupFilesAfterEnv": [
+      "./src/js/test/setup.js"
+    ],
     "testURL": "http://localhost",
     "roots": [
       "./src/js"
@@ -56,12 +58,12 @@
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.4.2",
+    "babel-jest": "^24.1.0",
     "babel-plugin-inline-react-svg": "^0.5.4",
     "commander": "^2.19.0",
     "cpx": "^1.5.0",
     "electron": "^3.0.10",
-    "electron-packager": "^12.1.0",
+    "electron-packager": "^13.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.9.0",
@@ -70,7 +72,7 @@
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.91.0",
     "flow-typed": "^2.5.1",
-    "jest": "^23.6.0",
+    "jest": "^24.1.0",
     "livereload": "^0.7.0",
     "node-sass-chokidar": "^1.3.3",
     "npm-run-all": "^4.1.3",
