@@ -36,6 +36,10 @@ $accent-blue: #416b9c;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
+@mixin shadow-small {
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
 @mixin fills-transparent-black-20 {
   background-color: rgba(0, 0, 0, 0.2);
 }

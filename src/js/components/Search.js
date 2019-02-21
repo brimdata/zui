@@ -13,6 +13,7 @@ import {XHistogram} from "./Histogram"
 import {XLeftPane} from "./LeftPane"
 import {XRightPane} from "../components/RightPane"
 import {XSearchResults} from "./SearchResults"
+import {XSettingsModal} from "./SettingsModal"
 import {XStatusBar} from "./StatusBar"
 import {XTitleBar} from "./TitleBar"
 import {XWhoisModal} from "./WhoisModal"
@@ -78,6 +79,7 @@ export default class Search extends React.Component<Props, State> {
         </div>
         <XDownloadProgress />
         <XWhoisModal />
+        <XSettingsModal />
       </div>
     )
   }
