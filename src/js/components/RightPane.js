@@ -1,6 +1,22 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
+import classNames from "classnames"
+
+import {type DispatchProps} from "../reducers/types"
+import type {Space} from "../lib/Space"
+import {XLogDetailPane} from "./LogDetailPane"
+import {XRightPaneCollapser} from "./RightPaneCollapser"
+import {XRightPaneExpander} from "./RightPaneExpander"
+import {backLogDetail, forwardLogDetail} from "../actions/logDetails"
+import {fetchPackets} from "../actions/packets"
+import {open} from "../lib/System"
+import {setRightSidebarWidth} from "../actions/view"
+import {starLog, unstarLog} from "../actions/starredLogs"
+import Back from "../icons/back-arrow.svg"
+import Forward from "../icons/forward-arrow.svg"
+import Log from "../models/Log"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -10,26 +26,10 @@ import Pane, {
   PaneBody
 } from "./Pane"
 import Star from "../icons/star-sm.svg"
-import Back from "../icons/back-arrow.svg"
-import Forward from "../icons/forward-arrow.svg"
-import classNames from "classnames"
-import {XLogDetailPane} from "./LogDetailPane"
-import Log from "../models/Log"
-import type {Space} from "../lib/Space"
-import {connect} from "react-redux"
-import * as view from "../reducers/view"
+import dispatchToProps from "../lib/dispatchToProps"
 import * as logDetails from "../selectors/logDetails"
 import * as spaces from "../reducers/spaces"
-import dispatchToProps from "../lib/dispatchToProps"
-import {type DispatchProps} from "../reducers/types"
-import {unstarLog} from "../actions/starredLogs"
-import {starLog} from "../actions/starredLogs"
-import {setRightSidebarWidth} from "../actions/view"
-import {fetchPackets} from "../actions/packets"
-import {backLogDetail} from "../actions/logDetails"
-import {forwardLogDetail} from "../actions/logDetails"
-import {XRightPaneExpander} from "./RightPaneExpander"
-import {XRightPaneCollapser} from "./RightPaneCollapser"
+import * as view from "../reducers/view"
 
 type StateProps = {|
   isStarred: boolean,
@@ -63,7 +63,7 @@ export default class RightPane extends React.Component<Props, S> {
   }
 
   onPacketsClick = () => {
-    this.props.dispatch(fetchPackets(this.props.currentLog))
+    this.props.dispatch(fetchPackets(this.props.currentLog)).then(open)
   }
 
   render() {
