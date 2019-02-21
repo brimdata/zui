@@ -49,7 +49,7 @@ export const fetchPackets = (log: Log) => (
     })
     .then(file => {
       dispatch(receivePackets(log.get("uid"), file))
-      System.open(file).catch(e => console.log(e))
+      return file
     })
     .catch(error => {
       dispatch(errorPackets(log.get("uid"), error))

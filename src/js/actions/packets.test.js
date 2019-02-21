@@ -14,7 +14,7 @@ test("fetching packets is a success", done => {
 
   actions
     .fetchPackets(log)(dispatch, getState, {packets: packetsFn})
-    .finally(() => {
+    .then(() => {
       expect(packetsFn).toBeCalledWith(
         expect.objectContaining({
           dst_host: "239.255.255.250",
@@ -37,6 +37,7 @@ test("fetching packets is a success", done => {
       expect(dispatched).not.toEqual(expect.arrayContaining(["PACKETS_ERROR"]))
       done()
     })
+    .catch(done)
 })
 
 test("fetching packets is a failure", done => {
@@ -48,7 +49,7 @@ test("fetching packets is a failure", done => {
 
   actions
     .fetchPackets(log)(dispatch, getState, {packets: packetsFn})
-    .finally(() => {
+    .then(() => {
       expect(packetsFn).toBeCalledWith(
         expect.objectContaining({
           dst_host: "239.255.255.250",
@@ -70,4 +71,5 @@ test("fetching packets is a failure", done => {
       )
       done()
     })
+    .catch(done)
 })

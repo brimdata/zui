@@ -1,15 +1,15 @@
 /* @flow */
 
-import * as searchBar from "../actions/searchBar"
-import * as packets from "../actions/packets"
+import type {Dispatch} from "../reducers/types"
+import {open} from "../lib/System"
+import Field, {TimeField} from "../models/Field"
+import Log from "../models/Log"
 import * as logDetails from "../actions/logDetails"
+import * as packets from "../actions/packets"
+import * as searchBar from "../actions/searchBar"
 import * as timeWindow from "../actions/timeWindow"
 import * as view from "../actions/view"
 import * as whoisActions from "../actions/whois"
-import Log from "../models/Log"
-import Field from "../models/Field"
-import type {Dispatch} from "../reducers/types"
-import {TimeField} from "../models/Field"
 
 type Action = {
   type: "action",
@@ -57,7 +57,7 @@ export const pcaps = (log: Log, dispatch: Dispatch) => ({
   type: "action",
   text: "Download PCAPS",
   onClick: (_e: Event) => {
-    dispatch(packets.fetchPackets(log))
+    dispatch(packets.fetchPackets(log)).then(open)
   }
 })
 
