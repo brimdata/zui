@@ -6,7 +6,9 @@ import React from "react"
 import type {Dispatch} from "../reducers/types"
 import {Label} from "./Typography"
 import {getTimeZone, getSettingsModalIsOpen} from "../reducers/view"
+import {getUseBoomCache, getUseBoomIndex} from "../reducers/boomd"
 import {hideModal, setTimeZone} from "../actions/view"
+import {useBoomCache, useBoomIndex} from "../actions/boomd"
 import Modal from "./Modal"
 import * as Time from "../lib/Time"
 import Toggle from "./Toggle"
@@ -15,20 +17,12 @@ import dispatchToProps from "../lib/dispatchToProps"
 type Props = {
   timeZone: string,
   isOpen: boolean,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  useBoomCache: boolean,
+  useBoomIndex: boolean
 }
 
-type State = {
-  useCache: boolean,
-  useIndex: boolean
-}
-
-export default class SettingsModal extends React.Component<Props, State> {
-  state = {
-    useCache: false,
-    useIndex: true
-  }
-
+export default class SettingsModal extends React.Component<Props> {
   render() {
     return (
       <Modal
@@ -55,16 +49,20 @@ export default class SettingsModal extends React.Component<Props, State> {
           <div className="setting-panel">
             <Label>Enable Analytics Cache:</Label>
             <Toggle
-              checked={this.state.useCache}
-              onChange={() => this.setState({useCache: !this.state.useCache})}
+              checked={this.props.useBoomCache}
+              onChange={() =>
+                this.props.dispatch(useBoomCache(!this.props.useBoomCache))
+              }
             />
           </div>
 
           <div className="setting-panel">
             <Label>Enable Index Lookups:</Label>
             <Toggle
-              checked={this.state.useIndex}
-              onChange={() => this.setState({useIndex: !this.state.useIndex})}
+              checked={this.props.useBoomIndex}
+              onChange={() =>
+                this.props.dispatch(useBoomIndex(!this.props.useBoomIndex))
+              }
             />
           </div>
         </div>
@@ -75,7 +73,9 @@ export default class SettingsModal extends React.Component<Props, State> {
 
 const stateToProps = state => ({
   timeZone: getTimeZone(state),
-  isOpen: getSettingsModalIsOpen(state)
+  isOpen: getSettingsModalIsOpen(state),
+  useBoomIndex: getUseBoomIndex(state),
+  useBoomCache: getUseBoomCache(state)
 })
 
 export const XSettingsModal = connect<Props, *, _, _, _, _>(

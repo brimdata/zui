@@ -9,7 +9,7 @@ const PERSIST = [
   "filterTree",
   "searchBar",
   "timeWindow",
-  "boomdCredentials",
+  "boomd",
   "currentSpaceName",
   "view",
   "starredLogs",
