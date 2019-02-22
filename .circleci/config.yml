@@ -27,5 +27,8 @@ jobs:
           name: Flow
           command: npm run flow
       - run:
-          name: Test
+          name: Unit Tests
           command: npm test -- --maxWorkers=2 --ci
+      - run:
+          name: Integration Tests
+          command: npm run itest -- --maxWorkers=2 --ci
