@@ -4,7 +4,7 @@ import pick from "lodash/pick"
 import throttle from "lodash/throttle"
 import type {State} from "../reducers/types"
 
-const KEY = "LOOKY_STATE"
+const KEY = "LOOKY_STATE.1"
 const PERSIST = [
   "filterTree",
   "searchBar",
