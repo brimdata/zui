@@ -1,14 +1,15 @@
 /* @flow */
 
+import {BoomClient} from "boom-js-client"
+
 import Search from "./Search"
-import MockApi from "../test/MockApi"
 
 describe("#send", () => {
   let api, dispatch, options
 
   beforeEach(() => {
     dispatch = jest.fn()
-    api = new MockApi()
+    api = new BoomClient()
     options = {
       space: "default",
       program: "*",

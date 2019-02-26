@@ -28,7 +28,12 @@ export default class Search {
   send() {
     this.dispatch(requestMainSearch())
     const {space, program, timeWindow, callbacks} = this.options
-    const request = this.api.search({space, string: program, timeWindow})
+    this.api.setOptions({
+      searchSpan: timeWindow,
+      searchSpace: space
+    })
+
+    const request = this.api.search(program)
     callbacks(request)
     return request
       .each(statsReceiver(this.dispatch))

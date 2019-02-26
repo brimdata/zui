@@ -1,17 +1,19 @@
 /* @flow */
 
-import {getSearchProgram} from "../selectors/searchBar"
-import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-import analyticsReceiver from "../receivers/analyticsReceiver"
-import logsReceiver from "../receivers/logsReceiver"
-import countByTimeReceiver from "../receivers/countByTimeReceiver"
+import {BoomClient} from "boom-js-client"
+
+import {PER_PAGE} from "../reducers/logViewer"
+import type {State, Dispatch, Api} from "../reducers/types"
 import {getCountByTimeProc} from "../reducers/mainSearch"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
+import {getSearchProgram} from "../selectors/searchBar"
 import * as Program from "../lib/Program"
 import Search from "../models/Search"
-import {getCurrentSpaceName} from "../reducers/spaces"
-import type {State, Dispatch, Api} from "../reducers/types"
+import analyticsReceiver from "../receivers/analyticsReceiver"
+import countByTimeReceiver from "../receivers/countByTimeReceiver"
+import logsReceiver from "../receivers/logsReceiver"
 import pageReceiver from "../receivers/pageReceiver"
-import {PER_PAGE} from "../reducers/logViewer"
 
 export const create = (dispatch: Dispatch, state: State, api: Api) => {
   return new Search(dispatch, api, getArgs(dispatch, state))

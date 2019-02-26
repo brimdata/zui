@@ -1,6 +1,6 @@
 /* @flow */
 
-import Client, {Handler} from "boom-js-client"
+import Client, {BoomClient, Handler} from "boom-js-client"
 
 export default class MockApi extends Client {
   constructor(obj: Object = {}) {
@@ -18,3 +18,5 @@ export default class MockApi extends Client {
     return this
   }
 }
+
+BoomClient.prototype.send = jest.fn(() => new Handler(() => {}))
