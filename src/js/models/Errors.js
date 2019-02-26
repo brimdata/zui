@@ -39,7 +39,7 @@ export class InternalServerError extends AppError {
 
 export class NetworkError extends AppError {
   static is(e: RawError) {
-    return e === "Failed to fetch"
+    return /Failed to fetch/.test(e.toString())
   }
 
   message() {

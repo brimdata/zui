@@ -20,8 +20,8 @@ class Connect extends React.Component {
       this.props.setBoomdCredentials(this.state)
       this.props
         .connectBoomd()
-        .done(() => delay(300, () => this.setState({isConnected: true})))
-        .error(e => {
+        .then(() => delay(300, () => this.setState({isConnected: true})))
+        .catch(e => {
           delay(300, () =>
             this.setState({
               isConnecting: false,
