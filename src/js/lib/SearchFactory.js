@@ -13,8 +13,8 @@ import countByTimeReceiver from "../receivers/countByTimeReceiver"
 import logsReceiver from "../receivers/logsReceiver"
 import pageReceiver from "../receivers/pageReceiver"
 
-export const create = (dispatch: Dispatch, state: State, api: Api) => {
-  return new Search(dispatch, api, getArgs(dispatch, state))
+export const create = (dispatch: Dispatch, state: State, boom: Api) => {
+  return new Search(dispatch, boom, getArgs(dispatch, state))
 }
 
 export const getType = (state: State) => {
