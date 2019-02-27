@@ -13,14 +13,14 @@ type TestStore = {
   getState: () => State
 }
 
-export default (api: *): TestStore =>
+export default (boom: *): TestStore =>
   // $FlowFixMe
   createStore(
     reducer,
     undefined,
     compose(
       applyDispatchAll(),
-      applyMiddleware(reduxThunk.withExtraArgument(api)),
+      applyMiddleware(reduxThunk.withExtraArgument(boom)),
       applyActionHistory()
     )
   )

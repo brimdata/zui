@@ -3,7 +3,7 @@
 import statsReceiver from "../receivers/statsReceiver"
 import {completeMainSearch, requestMainSearch} from "../actions/mainSearch"
 import type {DateTuple} from "../lib/TimeWindow"
-import Client, {Handler} from "boom-js-client"
+import {BoomClient, Handler} from "boom-js-client"
 import {addNotification} from "../actions/notifications"
 import ErrorFactory from "./ErrorFactory"
 
@@ -16,24 +16,24 @@ type Options = {
 
 export default class Search {
   dispatch: Function
-  api: Client
+  boom: BoomClient
   options: Options
 
-  constructor(dispatch: Function, api: Client, options: Options) {
+  constructor(dispatch: Function, boom: BoomClient, options: Options) {
     this.dispatch = dispatch
-    this.api = api
+    this.boom = boom
     this.options = options
   }
 
   send() {
     this.dispatch(requestMainSearch())
     const {space, program, timeWindow, callbacks} = this.options
-    this.api.setOptions({
+    this.boom.setOptions({
       searchSpan: timeWindow,
       searchSpace: space
     })
 
-    const request = this.api.search(program)
+    const request = this.boom.search(program)
 
     callbacks(request)
     return request
