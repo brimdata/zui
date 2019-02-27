@@ -1,6 +1,6 @@
 import {ipcRenderer} from "electron"
 
-import {clearState} from "./persistance"
+import {clearState} from "./initPersistance"
 import {
   pinSearchBar,
   removeAllSearchBarPins,

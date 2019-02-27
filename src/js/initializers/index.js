@@ -1,15 +1,15 @@
 /* @flow */
 
-import initState from "./state"
-import initStore from "./store"
-import initApi from "./api"
-import initShortcuts from "./shortcuts"
-import initPersistance from "./persistance"
+import initBoom from "./initBoom"
+import initPersistance from "./initPersistance"
+import initShortcuts from "./initShortcuts"
+import initState from "./initState"
+import initStore from "./initStore"
 
 export default () => {
   const state = initState()
-  const api = initApi(state)
-  const store = initStore(state, api)
+  const boom = initBoom(state)
+  const store = initStore(state, boom)
   initPersistance(store)
   initShortcuts(store)
   return store

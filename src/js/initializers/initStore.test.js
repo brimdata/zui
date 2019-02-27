@@ -1,4 +1,4 @@
-import initStore from "./store"
+import initStore from "./initStore"
 import initTestStore from "../test/initStore"
 
 test("initStore runs", () => {
