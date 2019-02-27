@@ -5,7 +5,6 @@ import {LookytalkVersionError} from "../models/Errors"
 import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
 import {getBoomClient} from "../selectors/boom"
-import {getCredentials} from "../reducers/boomd"
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -24,12 +23,18 @@ export const setBoomdCredentials = (credentials: Credentials) => ({
 
 export const connectBoomd = (): Thunk => (dispatch, getState) => {
   const boom = getBoomClient(getState())
-  return boom.spaces.list()
+  return boom.spaces.list().then(() => {
+    setTimeout(() => dispatch(checkLookytalkVersion()), 3000)
+  })
 }
 
-export const checkLookytalkVersion = (): Thunk => (dispatch, _, api) =>
-  api.serverInfo().done(({lookytalk: serverVersion}) => {
-    const clientVersion = api.info().lookytalk
+export const checkLookytalkVersion = (): Thunk => (
+  dispatch,
+  getState,
+  boom
+) => {
+  return boom.serverVersion().then(({lookytalk: serverVersion}) => {
+    const clientVersion = boom.clientVersion().lookytalk
     if (clientVersion !== serverVersion) {
       dispatch(
         addNotification(
@@ -41,3 +46,4 @@ export const checkLookytalkVersion = (): Thunk => (dispatch, _, api) =>
       )
     }
   })
+}

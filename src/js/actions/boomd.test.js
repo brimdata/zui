@@ -1,27 +1,30 @@
 /* @flow */
 
-import initStore from "../test/initStore"
-import {checkLookytalkVersion} from "./boomd"
 import {LookytalkVersionError} from "../models/Errors"
-import MockApi from "../test/MockApi"
+import {checkLookytalkVersion} from "./boomd"
+import {MockBoomClient} from "../test/MockApi"
+import initStore from "../test/initStore"
 
 test("#checkLookytalkVersion when they are the same", done => {
-  const api = new MockApi()
-  const {lookytalk} = api.info()
-  api.stub("serverInfo", {lookytalk})
-  const store = initStore(api)
+  const boom = new MockBoomClient()
+  const {lookytalk} = boom.clientVersion()
+  boom.stubPromise("serverVersion", {lookytalk})
 
-  store.dispatch(checkLookytalkVersion()).done(() => {
+  const store = initStore(boom)
+
+  store.dispatch(checkLookytalkVersion()).then(() => {
     expect(store.getActions()).toEqual([])
     done()
   })
 })
 
 test("#checkLookytalkVersion when they are different", done => {
-  const api = new MockApi().stub("serverInfo", {lookytalk: "1.1.1"})
-  const store = initStore(api)
+  const boom = new MockBoomClient().stubPromise("serverVersion", {
+    lookytalk: "1.1.1"
+  })
+  const store = initStore(boom)
 
-  store.dispatch(checkLookytalkVersion()).done(() => {
+  store.dispatch(checkLookytalkVersion()).then(() => {
     const action = store.getActions()[0]
     expect(action.type).toBe("NOTIFICATIONS_ADD")
     expect(action.notification).toBeInstanceOf(LookytalkVersionError)
