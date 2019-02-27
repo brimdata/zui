@@ -1,17 +1,16 @@
 /* @flow */
 
-import {createStore, applyMiddleware} from "redux"
+import {BoomClient} from "boom-js-client"
 import {composeWithDevTools} from "redux-devtools-extension"
-import reducer from "../reducers"
+import {createStore, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
-import Client from "boom-js-client"
-import {type State} from "../reducers/types"
-import {type Action} from "../reducers/types"
-import {type Dispatch} from "../reducers/types"
 
-export default (initialState?: State, api: Client) =>
+import {type Action, type Dispatch, type State} from "../reducers/types"
+import reducer from "../reducers"
+
+export default (initialState?: State, boom: BoomClient) =>
   createStore<State, Action, Dispatch>(
     reducer,
     initialState,
-    composeWithDevTools(applyMiddleware(reduxThunk.withExtraArgument(api)))
+    composeWithDevTools(applyMiddleware(reduxThunk.withExtraArgument(boom)))
   )
