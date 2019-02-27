@@ -1,10 +1,12 @@
 /* @flow */
 
-import Client from "boom-js-client"
-import * as spaces from "../reducers/spaces"
-import * as System from "../lib/System"
+import {BoomClient} from "boom-js-client"
+
 import {showDownloads, hideDownloads} from "./view"
 import Log from "../models/Log"
+import * as System from "../lib/System"
+import api from "../initializers/api"
+import * as spaces from "../reducers/spaces"
 
 export const requestPackets = (uid: string) => ({
   type: "PACKETS_REQUEST",
@@ -26,15 +28,15 @@ export const errorPackets = (uid: string, error: string) => ({
 export const fetchPackets = (log: Log) => (
   dispatch: Function,
   getState: Function,
-  api: Client
+  boom: BoomClient
 ) => {
   dispatch(requestPackets(log.get("uid")))
   dispatch(showDownloads())
   const state = getState()
   const space = spaces.getCurrentSpaceName(state)
   const destDir = System.downloadsDir()
-  return api
-    .packets({
+  return boom.packets
+    .get({
       ts_sec: log.getSec("ts"),
       ts_ns: log.getNs("ts"),
       duration_sec: log.getSec("duration"),

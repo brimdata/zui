@@ -1,21 +1,26 @@
 /* @flow */
 
-import * as actions from "./packets"
+import {MockBoomClient} from "../test/MockApi"
 import {conn} from "../test/mockLogs"
-import reducers from "../reducers"
+import {fetchPackets} from "./packets"
 import {setCurrentSpaceName} from "./spaces"
+import initStore from "../test/initStore"
+
+let boom, store
+beforeEach(() => {
+  boom = new MockBoomClient()
+  store = initStore(boom)
+})
 
 test("fetching packets is a success", done => {
-  const state = [setCurrentSpaceName("trump-tower")].reduce(reducers, undefined)
-  const log = conn()
-  const dispatch = jest.fn()
-  const getState = jest.fn(() => state)
-  const packetsFn = jest.fn(() => new Promise(res => res("file.pcap")))
+  boom.stubPromise("packets.get", "file.pcap")
+  const packets = jest.spyOn(boom.packets, "get")
+  store.dispatch(setCurrentSpaceName("trump-tower"))
 
-  actions
-    .fetchPackets(log)(dispatch, getState, {packets: packetsFn})
+  store
+    .dispatch(fetchPackets(conn()))
     .then(() => {
-      expect(packetsFn).toBeCalledWith(
+      expect(packets).toBeCalledWith(
         expect.objectContaining({
           dst_host: "239.255.255.250",
           dst_port: "1900",
@@ -30,27 +35,28 @@ test("fetching packets is a success", done => {
         })
       )
 
-      const dispatched = dispatch.mock.calls.map(([{type}]) => type)
-      expect(dispatched).toEqual(
+      expect(store.getActions().map(a => a.type)).toEqual(
         expect.arrayContaining(["PACKETS_REQUEST", "PACKETS_RECEIVE"])
       )
-      expect(dispatched).not.toEqual(expect.arrayContaining(["PACKETS_ERROR"]))
+
+      expect(store.getActions().map(a => a.type)).not.toEqual(
+        expect.arrayContaining(["PACKETS_ERROR"])
+      )
+
       done()
     })
     .catch(done)
 })
 
 test("fetching packets is a failure", done => {
-  const state = [setCurrentSpaceName("trump-tower")].reduce(reducers, undefined)
-  const log = conn()
-  const dispatch = jest.fn()
-  const getState = jest.fn(() => state)
-  const packetsFn = jest.fn(() => new Promise((res, rej) => rej()))
+  boom.stubPromiseError("packets.get", "Boom!")
+  const packets = jest.spyOn(boom.packets, "get")
+  store.dispatch(setCurrentSpaceName("trump-tower"))
 
-  actions
-    .fetchPackets(log)(dispatch, getState, {packets: packetsFn})
+  store
+    .dispatch(fetchPackets(conn()))
     .then(() => {
-      expect(packetsFn).toBeCalledWith(
+      expect(packets).toBeCalledWith(
         expect.objectContaining({
           dst_host: "239.255.255.250",
           dst_port: "1900",
@@ -65,7 +71,7 @@ test("fetching packets is a failure", done => {
         })
       )
 
-      const dispatched = dispatch.mock.calls.map(([{type}]) => type)
+      const dispatched = store.getActions().map(a => a.type)
       expect(dispatched).toEqual(
         expect.arrayContaining(["PACKETS_REQUEST", "PACKETS_ERROR"])
       )

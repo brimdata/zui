@@ -51,6 +51,25 @@ MockBoomClient.prototype.stubPromise = function(method: string, returnVal: *) {
   return this
 }
 
+MockBoomClient.prototype.stubPromiseError = function(method: string, error: *) {
+  const stub = () => new Promise((_, r) => r(error))
+
+  const props = method.split(".")
+  let parent = this
+  for (let i = 0; i < props.length; i++) {
+    if (!parent[props[i]])
+      throw new Error(`${method} does not exist on BoomClient`)
+
+    if (i < props.length - 1) {
+      parent = parent[props[i]]
+    } else {
+      parent[props[i]] = stub
+    }
+  }
+
+  return this
+}
+
 MockBoomClient.prototype.stubStream = function(method: string, returnVal: *) {
   const handler = new Handler(() => {})
   const stub = () => {
