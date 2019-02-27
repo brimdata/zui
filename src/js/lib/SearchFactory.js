@@ -1,7 +1,5 @@
 /* @flow */
 
-import {BoomClient} from "boom-js-client"
-
 import {PER_PAGE} from "../reducers/logViewer"
 import type {State, Dispatch, Api} from "../reducers/types"
 import {getCountByTimeProc} from "../reducers/mainSearch"

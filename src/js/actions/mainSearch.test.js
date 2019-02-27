@@ -1,15 +1,16 @@
-import {BoomClient} from "boom-js-client"
-
 import {changeSearchBarInput} from "./searchBar"
 import {fetchMainSearch} from "./mainSearch"
+import {init, setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
 import {setSpaceInfo, setCurrentSpaceName} from "./spaces"
-import MockApi from "../test/MockApi"
+import {MockBoomClient} from "../test/MockApi"
 import initStore from "../test/initStore"
-import timeWindow, {
-  init,
-  setInnerTimeWindow,
-  setOuterTimeWindow
-} from "./timeWindow"
+
+let store, boom
+
+beforeEach(() => {
+  boom = new MockBoomClient()
+  store = initStore(boom)
+})
 
 const spaceInfo = {
   name: "ranch-logs",
@@ -18,6 +19,8 @@ const spaceInfo = {
 }
 
 test("fetching an analytics search", () => {
+  boom.stubStream("send")
+
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -25,7 +28,6 @@ test("fetching an analytics search", () => {
     fetchMainSearch()
   ]
 
-  const store = initStore(new MockApi())
   actions.forEach(store.dispatch)
 
   const dispatched = store.getActions().map(action => action.type)
@@ -39,7 +41,9 @@ test("fetching an analytics search", () => {
 })
 
 test("analytics always use the outer time window", () => {
-  const store = initStore()
+  boom.stubStream("send")
+  const send = jest.spyOn(boom, "send")
+
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -49,7 +53,7 @@ test("analytics always use the outer time window", () => {
     fetchMainSearch()
   ])
 
-  expect(BoomClient.prototype.send).toBeCalledWith(
+  expect(send).toBeCalledWith(
     expect.any(Object),
     expect.objectContaining({
       searchSpan: [new Date(2000, 0, 1), new Date(3000, 0, 1)]
@@ -58,7 +62,9 @@ test("analytics always use the outer time window", () => {
 })
 
 test("search with inner time window if set", () => {
-  const store = initStore()
+  boom.stubStream("send")
+  const send = jest.spyOn(boom, "send")
+
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -66,7 +72,8 @@ test("search with inner time window if set", () => {
     setInnerTimeWindow([new Date(2015, 2, 10), new Date(2015, 2, 11)]),
     fetchMainSearch()
   ])
-  expect(BoomClient.prototype.send).toBeCalledWith(
+
+  expect(send).toBeCalledWith(
     expect.any(Object),
     expect.objectContaining({
       searchSpan: [new Date(2015, 2, 10), new Date(2015, 2, 11)]
@@ -75,9 +82,9 @@ test("search with inner time window if set", () => {
 })
 
 test("search with inner time does not ask for count by every", () => {
-  const spy = jest.spyOn(BoomClient.prototype, "search")
+  boom.stubStream("search")
+  const search = jest.spyOn(boom, "search")
 
-  const store = initStore()
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -86,12 +93,12 @@ test("search with inner time does not ask for count by every", () => {
     fetchMainSearch()
   ])
 
-  expect(spy).toBeCalledWith("_path = conn | head 800; count()")
+  expect(search).toBeCalledWith("_path = conn | head 800; count()")
 })
 
 test("search with a provided head proc", () => {
-  const store = initStore()
-  const search = jest.spyOn(BoomClient.prototype, "search")
+  boom.stubStream("search")
+  const search = jest.spyOn(boom, "search")
 
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
@@ -107,7 +114,8 @@ test("search with a provided head proc", () => {
 })
 
 test("search with outerTimeWindow if no inner", () => {
-  const store = initStore()
+  boom.stubStream("send")
+  const send = jest.spyOn(boom, "send")
 
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
@@ -118,7 +126,7 @@ test("search with outerTimeWindow if no inner", () => {
     fetchMainSearch()
   ])
 
-  expect(BoomClient.prototype.send).toBeCalledWith(
+  expect(send).toBeCalledWith(
     expect.any(Object),
     expect.objectContaining({
       searchSpan: [new Date(2000, 0, 1), new Date(3000, 0, 1)]
@@ -127,9 +135,8 @@ test("search with outerTimeWindow if no inner", () => {
 })
 
 test("fetching an analytics does not put any procs on the query", () => {
-  const search = jest.spyOn(BoomClient.prototype, "search")
-
-  const store = initStore()
+  boom.stubStream("search")
+  const search = jest.spyOn(boom, "search")
 
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
@@ -142,6 +149,7 @@ test("fetching an analytics does not put any procs on the query", () => {
 })
 
 test("fetching a regular search", () => {
+  boom.stubStream("send")
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -149,7 +157,7 @@ test("fetching a regular search", () => {
     changeSearchBarInput("_path=conn"),
     fetchMainSearch()
   ]
-  const store = initStore(new MockApi())
+
   actions.forEach(store.dispatch)
 
   expect(store.getActions().map(action => action.type)).toEqual(
@@ -162,8 +170,10 @@ test("fetching a regular search", () => {
 })
 
 test("fetching a regular search puts procs on the end", () => {
-  const search = jest.spyOn(BoomClient.prototype, "search")
-  initStore().dispatchAll([
+  boom.stubStream("search")
+  const search = jest.spyOn(boom, "search")
+
+  store.dispatchAll([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     init(),
@@ -175,6 +185,7 @@ test("fetching a regular search puts procs on the end", () => {
 })
 
 test("not saving a search to history", () => {
+  boom.stubStream("send")
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -182,7 +193,7 @@ test("not saving a search to history", () => {
     changeSearchBarInput("_path=conn"),
     fetchMainSearch({saveToHistory: false})
   ]
-  const store = initStore(new MockApi())
+
   actions.forEach(store.dispatch)
 
   const dispatched = store.getActions().map(action => action.type)
@@ -190,7 +201,6 @@ test("not saving a search to history", () => {
 })
 
 test("a bad search query", () => {
-  const store = initStore()
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -205,7 +215,6 @@ test("a bad search query", () => {
 })
 
 test("starred querys", () => {
-  const store = initStore()
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),

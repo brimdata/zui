@@ -4,7 +4,6 @@ import type {Credentials} from "../lib/Credentials"
 import {LookytalkVersionError} from "../models/Errors"
 import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
-import {getBoomClient} from "../selectors/boom"
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -21,8 +20,7 @@ export const setBoomdCredentials = (credentials: Credentials) => ({
   credentials
 })
 
-export const connectBoomd = (): Thunk => (dispatch, getState) => {
-  const boom = getBoomClient(getState())
+export const connectBoomd = (): Thunk => (dispatch, getState, boom) => {
   return boom.spaces.list().then(() => {
     setTimeout(() => dispatch(checkLookytalkVersion()), 3000)
   })

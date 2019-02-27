@@ -1,7 +1,8 @@
 /* @flow */
 
+import {BoomClient} from "boom-js-client"
+
 import type {Tuple} from "../types"
-import {getBoomClient} from "../selectors/boom"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getStarredLogs} from "../reducers/starredLogs"
 import {pushSearchHistory} from "./searchHistory"
@@ -16,7 +17,8 @@ type Options = {
 
 export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
   dispatch: Function,
-  getState: Function
+  getState: Function,
+  boom: BoomClient
 ) => {
   const state = getState()
   if (!dispatch(validateProgram())) return
@@ -24,7 +26,6 @@ export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
   if (saveToHistory) dispatch(pushSearchHistory())
   if (starredSearch(state)) return showStarred(state, dispatch)
 
-  const boom = getBoomClient(state)
   fetch(dispatch, state, boom)
 }
 

@@ -1,20 +1,21 @@
-import MockApi from "../test/MockApi"
 import {Handler} from "boom-js-client"
-import * as mainSearch from "../actions/mainSearch"
+
+import {MockBoomClient} from "../test/MockApi"
 import * as descriptors from "../actions/descriptors"
-import * as spaces from "../actions/spaces"
-import * as timeWindow from "./timeWindow"
 import initStore from "../test/initStore"
 import * as logViewer from "./logViewer"
+import * as mainSearch from "../actions/mainSearch"
+import * as spaces from "../actions/spaces"
+import * as timeWindow from "./timeWindow"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
 
-let store, api, handler
+let store, boom, handler
 beforeEach(() => {
-  handler = new Handler()
-  api = new MockApi({search: jest.fn(() => handler)})
-  store = initStore(api)
+  boom = new MockBoomClient()
+  boom.search = () => new Handler()
+  store = initStore(boom)
   store.dispatchAll([
     spaces.setCurrentSpaceName("default"),
     timeWindow.setOuterTimeWindow([new Date(0), new Date(10 * 1000)]),
@@ -82,22 +83,25 @@ test("#fetchAhead sets isFetching to false when done", done => {
   }, 501)
 })
 
-test("#fetchAhead adds 1ms to ts of last change", () => {
+test.only("#fetchAhead adds 1ms to ts of last change", () => {
+  const search = jest.spyOn(boom, "search")
   store.dispatch(logViewer.fetchAhead())
 
   const lastChangeTs = tuples[1][1]
-  expect(api.search).toBeCalledWith(
+  expect(search).toBeCalledWith(
+    expect.any(String),
     expect.objectContaining({
-      timeWindow: [new Date(+lastChangeTs * 1000 + 1), new Date(10 * 1000)]
+      searchSpan: [new Date(+lastChangeTs * 1000 + 1), new Date(10 * 1000)]
     })
   )
 })
 
 test("#fetchAhead when there is only 1 event", () => {
+  const search = jest.spyOn(boom, "search")
   store.dispatch(mainSearch.spliceMainSearchEvents(1))
   store.dispatch(logViewer.fetchAhead())
 
-  expect(api.search).toBeCalledWith(
+  expect(search).toBeCalledWith(
     expect.objectContaining({
       timeWindow: [new Date(0), new Date(10 * 1000)]
     })

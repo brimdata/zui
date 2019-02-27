@@ -34,10 +34,13 @@ export default class Search {
     })
 
     const request = this.api.search(program)
+
     callbacks(request)
     return request
       .each(statsReceiver(this.dispatch))
-      .done(() => this.dispatch(completeMainSearch()))
+      .done(() => {
+        this.dispatch(completeMainSearch())
+      })
       .error(error => {
         const context = {space, program, timeWindow}
         this.dispatch(completeMainSearch())

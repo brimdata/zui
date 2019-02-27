@@ -1,7 +1,5 @@
 /* @flow */
 
-import {BoomClient} from "boom-js-client"
-
 import type {State} from "../reducers/types"
 import {
   getCredentials,
@@ -11,10 +9,10 @@ import {
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
 
-export const getBoomClient = (state: State) => {
+export const getBoomOptions = (state: State) => {
   const credentials = getCredentials(state)
 
-  return new BoomClient({
+  return {
     username: credentials.user,
     password: credentials.pass,
     host: credentials.host,
@@ -24,5 +22,5 @@ export const getBoomClient = (state: State) => {
     adapter: "BrowserFetch",
     enableIndex: getUseBoomIndex(state),
     enableCache: getUseBoomCache(state)
-  })
+  }
 }
