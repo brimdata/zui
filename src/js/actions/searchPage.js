@@ -26,8 +26,8 @@ export const init = (): Thunk => (dispatch, getState, boom) =>
   })
 
 export const switchSpace = (name: string): Thunk => {
-  return (dispatch, getState, api) => {
-    return api.spaces.get(name).then(info => {
+  return (dispatch, getState, boom) => {
+    return boom.spaces.get(name).then(info => {
       dispatch(spaces.setSpaceInfo(info))
       dispatch(spaces.setCurrentSpaceName(info.name))
       const [_min, max] = getCurrentSpaceTimeWindow(getState())

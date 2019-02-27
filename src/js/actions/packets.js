@@ -5,7 +5,6 @@ import {BoomClient} from "boom-js-client"
 import {showDownloads, hideDownloads} from "./view"
 import Log from "../models/Log"
 import * as System from "../lib/System"
-import api from "../initializers/api"
 import * as spaces from "../reducers/spaces"
 
 export const requestPackets = (uid: string) => ({

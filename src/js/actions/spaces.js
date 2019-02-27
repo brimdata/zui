@@ -1,6 +1,7 @@
 /* @flow */
 
 import Client from "boom-js-client"
+
 import type {Space} from "../lib/Space"
 
 export function fetchSpaceInfo(name: string) {
@@ -17,20 +18,6 @@ export const fetchAndSetCurrentSpace = (name: string) => {
       dispatch(setCurrentSpaceName(name))
     })
   }
-}
-
-export const fetchAllSpaces = () => (
-  dispatch: *,
-  _getState: *,
-  api: Client
-) => {
-  dispatch(requestAllSpaces())
-  return api
-    .spaces()
-    .done(spaces => {
-      spaces.forEach(name => dispatch(fetchSpaceInfo(name)))
-    })
-    .error(e => console.log(e))
 }
 
 export const requestAllSpaces = () => {
