@@ -16,6 +16,24 @@ export const useBoomIndex = (value: boolean) => ({
   value
 })
 
+export const enableCache = (value: boolean): Thunk => (
+  dispatch,
+  getState,
+  boom
+) => {
+  dispatch(useBoomCache(value))
+  boom.setOptions({enableCache: value})
+}
+
+export const enableIndex = (value: boolean): Thunk => (
+  dispatch,
+  getState,
+  boom
+) => {
+  dispatch(useBoomIndex(value))
+  boom.setOptions({enableCache: value})
+}
+
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",
   credentials
