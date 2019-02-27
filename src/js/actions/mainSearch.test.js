@@ -8,7 +8,7 @@ import initStore from "../test/initStore"
 let store, boom
 
 beforeEach(() => {
-  boom = new MockBoomClient()
+  boom = new MockBoomClient({host: "localhost", port: 123})
   store = initStore(boom)
 })
 

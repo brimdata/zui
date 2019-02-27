@@ -12,17 +12,22 @@ import * as timeWindow from "./timeWindow"
 
 export const init = (): Thunk => (dispatch, getState, boom) =>
   new Promise<string>((resolve, reject) => {
-    boom.spaces.list().then(names => {
-      dispatch(spaces.setSpaceNames(names))
-      const name = chooseSpaceName(names, getState())
-      if (name) {
-        return dispatch(switchSpace(name))
-          .then(resolve)
-          .catch(reject)
-      } else {
-        reject("NoSpaces")
-      }
-    })
+    boom.spaces
+      .list()
+      .then(names => {
+        dispatch(spaces.setSpaceNames(names))
+        const name = chooseSpaceName(names, getState())
+        if (name) {
+          return dispatch(switchSpace(name))
+            .then(resolve)
+            .catch(reject)
+        } else {
+          reject("NoSpaces")
+        }
+      })
+      .catch(e => {
+        reject(e)
+      })
   })
 
 export const switchSpace = (name: string): Thunk => {

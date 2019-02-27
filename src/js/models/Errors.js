@@ -11,6 +11,10 @@ export class UnauthorizedError extends AppError {
       if (e.message.match(/Need boom credentials/)) return true
     }
 
+    if (typeof e === "string") {
+      if (/unauthorized/i.test(e)) return true
+    }
+
     try {
       return JSON.parse(e).code === "UNAUTHORIZED"
     } catch (e) {
