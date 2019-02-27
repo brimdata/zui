@@ -60,10 +60,14 @@ export default class CurlModal extends React.Component<Props, LocalState> {
     if (!timeWindow[0]) return null
     const {host, port} = credentials
     const [ast, _error] = Program.parse(program)
+    const [from, to] = timeWindow
     const payload = {
       ...ast,
-      from: (timeWindow[0].getTime() / 1000).toString(),
-      to: (timeWindow[1].getTime() / 1000).toString(),
+      span: {
+        ts: from.getTime() / 1000,
+        dur: (to - from) / 1000
+      },
+      dir: -1,
       space
     }
     const url = `http://${host}:${port}/search`
