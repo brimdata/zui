@@ -46,7 +46,7 @@ export default class SettingsModal extends React.Component<Props> {
               ))}
             </select>
           </div>
-          <div className="setting-panel" style={{display: "none"}}>
+          <div className="setting-panel">
             <Label>Enable Analytics Cache:</Label>
             <Toggle
               checked={this.props.useBoomCache}
@@ -56,7 +56,7 @@ export default class SettingsModal extends React.Component<Props> {
             />
           </div>
 
-          <div className="setting-panel" style={{display: "none"}}>
+          <div className="setting-panel">
             <Label>Enable Index Lookups:</Label>
             <Toggle
               checked={this.props.useBoomIndex}
