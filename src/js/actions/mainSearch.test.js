@@ -2,7 +2,7 @@ import {changeSearchBarInput} from "./searchBar"
 import {fetchMainSearch} from "./mainSearch"
 import {init, setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
 import {setSpaceInfo, setCurrentSpaceName} from "./spaces"
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import initStore from "../test/initStore"
 
 let store, boom

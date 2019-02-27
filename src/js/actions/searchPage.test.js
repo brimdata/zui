@@ -1,4 +1,4 @@
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {setCurrentSpaceName} from "./spaces"
 import initStore from "../test/initStore"

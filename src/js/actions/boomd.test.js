@@ -2,7 +2,7 @@
 
 import {LookytalkVersionError} from "../models/Errors"
 import {checkLookytalkVersion} from "./boomd"
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import initStore from "../test/initStore"
 
 test("#checkLookytalkVersion when they are the same", done => {

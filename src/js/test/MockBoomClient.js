@@ -2,18 +2,13 @@
 
 import {BoomClient, Handler} from "boom-js-client"
 
-export function MockBoomClient() {
+export default function MockBoomClient() {
   BoomClient.call(this)
   return this
 }
 
 MockBoomClient.prototype = Object.create(BoomClient.prototype)
-
-Object.defineProperty(MockBoomClient.prototype, "constructor", {
-  value: MockBoomClient,
-  enumerable: false,
-  writeable: true
-})
+MockBoomClient.prototype.constructor = MockBoomClient
 
 MockBoomClient.prototype.stubPromise = function(method: string, returnVal: *) {
   const stub = () => new Promise(r => r(returnVal))

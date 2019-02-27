@@ -1,6 +1,6 @@
 import {Handler} from "boom-js-client"
 
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import * as descriptors from "../actions/descriptors"
 import initStore from "../test/initStore"
 import * as logViewer from "./logViewer"

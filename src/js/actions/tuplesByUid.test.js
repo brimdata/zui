@@ -1,4 +1,4 @@
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import {dns} from "../test/mockLogs"
 import {fetchTuplesByUid} from "./tuplesByUid"
 import initStore from "../test/initStore"

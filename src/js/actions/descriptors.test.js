@@ -1,4 +1,4 @@
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import {fetchDescriptor} from "./descriptors"
 import {getDescriptors} from "../reducers/descriptors"
 import {setCurrentSpaceName} from "./spaces"

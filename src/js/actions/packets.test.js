@@ -1,6 +1,6 @@
 /* @flow */
 
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import {conn} from "../test/mockLogs"
 import {fetchPackets} from "./packets"
 import {setCurrentSpaceName} from "./spaces"

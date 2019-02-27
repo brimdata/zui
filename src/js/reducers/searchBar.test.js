@@ -13,7 +13,7 @@ import {
 import {initialState} from "./searchBar"
 import {setOuterTimeWindow} from "../actions/timeWindow"
 import Field from "../models/Field"
-import {MockBoomClient} from "../test/MockApi"
+import MockBoomClient from "../test/MockBoomClient"
 import * as actions from "../actions/searchBar"
 import initStore from "../test/initStore"
 
