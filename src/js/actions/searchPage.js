@@ -10,27 +10,29 @@ import * as searchBar from "./searchBar"
 import * as spaces from "./spaces"
 import * as timeWindow from "./timeWindow"
 
-export const init = (): Thunk => (dispatch, getState, api) =>
+export const init = (): Thunk => (dispatch, getState, boom) =>
   new Promise<string>((resolve, reject) => {
-    api
-      .spaces()
-      .done(names => {
+    boom.spaces
+      .list()
+      .then(names => {
         dispatch(spaces.setSpaceNames(names))
         const name = chooseSpaceName(names, getState())
         if (name) {
-          dispatch(switchSpace(name))
-            .done(resolve)
-            .error(reject)
+          return dispatch(switchSpace(name))
+            .then(resolve)
+            .catch(reject)
         } else {
           reject("NoSpaces")
         }
       })
-      .error(reject)
+      .catch(e => {
+        reject(e)
+      })
   })
 
 export const switchSpace = (name: string): Thunk => {
-  return (dispatch, getState, api) => {
-    return api.space({name}).done(info => {
+  return (dispatch, getState, boom) => {
+    return boom.spaces.get(name).then(info => {
       dispatch(spaces.setSpaceInfo(info))
       dispatch(spaces.setCurrentSpaceName(info.name))
       const [_min, max] = getCurrentSpaceTimeWindow(getState())

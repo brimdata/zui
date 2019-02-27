@@ -26,7 +26,7 @@ export const requestTuplesByUid = (uid: string) => ({
 export const fetchTuplesByUid = (log: Log): Thunk => (
   dispatch,
   getState,
-  api
+  boom
 ) => {
   let uid = log.correlationId()
   if (!uid) return
@@ -36,11 +36,11 @@ export const fetchTuplesByUid = (log: Log): Thunk => (
   const string = `${uid} | head 500`
 
   dispatch(requestTuplesByUid(uid))
-  api
-    .search({
-      space,
-      string,
-      timeWindow
+
+  return boom
+    .search(string, {
+      searchSpace: space,
+      searchSpan: timeWindow
     })
     .channel(0, ({type, results}) => {
       if (type === "SearchResult") {

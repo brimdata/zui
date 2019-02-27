@@ -1,6 +1,6 @@
 /* @flow */
 
-import {Client} from "boom-js-client"
+import {BoomClient} from "boom-js-client"
 
 import type {Analysis} from "./analysis"
 import type {Boomd} from "./boomd"
@@ -44,8 +44,8 @@ export type State = {
   tableColumnSets: TableColumnSets
 }
 
-export type Thunk = (Dispatch, () => State, Client) => *
+export type Thunk = (Dispatch, () => State, BoomClient) => *
 export type Action = {type: string}
 export type Dispatch = (Action | Thunk) => *
-export type Api = Client
+export type Api = BoomClient
 export type DispatchProps = {|dispatch: Dispatch|}

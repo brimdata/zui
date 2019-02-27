@@ -1,14 +1,15 @@
 /* @flow */
 
+import {BoomClient} from "boom-js-client"
+
 import Search from "./Search"
-import MockApi from "../test/MockApi"
 
 describe("#send", () => {
-  let api, dispatch, options
+  let boom, dispatch, options
 
   beforeEach(() => {
     dispatch = jest.fn()
-    api = new MockApi()
+    boom = new BoomClient()
     options = {
       space: "default",
       program: "*",
@@ -18,7 +19,7 @@ describe("#send", () => {
   })
 
   test("successful send", () => {
-    const sender = new Search(dispatch, api, options)
+    const sender = new Search(dispatch, boom, options)
     const request = sender.send()
     expect(dispatch).toBeCalledWith(
       expect.objectContaining({type: "MAIN_SEARCH_REQUEST"})
@@ -30,7 +31,7 @@ describe("#send", () => {
   })
 
   test("errors", () => {
-    const sender = new Search(dispatch, api, options)
+    const sender = new Search(dispatch, boom, options)
     const request = sender.send()
 
     request.onError("shit")

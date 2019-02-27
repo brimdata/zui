@@ -1,10 +1,10 @@
 /* @flow */
 
-import {getCredentials} from "../reducers/boomd"
 import type {Credentials} from "../lib/Credentials"
+import {LookytalkVersionError} from "../models/Errors"
 import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
-import {LookytalkVersionError} from "../models/Errors"
+import {getBoomOptions} from "../selectors/boom"
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -21,14 +21,20 @@ export const setBoomdCredentials = (credentials: Credentials) => ({
   credentials
 })
 
-export const connectBoomd = (): Thunk => (dispatch, getState, api) => {
-  api.connect(getCredentials(getState()))
-  return api.spaces()
+export const connectBoomd = (): Thunk => (dispatch, getState, boom) => {
+  boom.setOptions(getBoomOptions(getState()))
+  return boom.spaces.list().then(() => {
+    setTimeout(() => dispatch(checkLookytalkVersion()), 3000)
+  })
 }
 
-export const checkLookytalkVersion = (): Thunk => (dispatch, _, api) =>
-  api.serverInfo().done(({lookytalk: serverVersion}) => {
-    const clientVersion = api.info().lookytalk
+export const checkLookytalkVersion = (): Thunk => (
+  dispatch,
+  getState,
+  boom
+) => {
+  return boom.serverVersion().then(({lookytalk: serverVersion}) => {
+    const clientVersion = boom.clientVersion().lookytalk
     if (clientVersion !== serverVersion) {
       dispatch(
         addNotification(
@@ -40,3 +46,4 @@ export const checkLookytalkVersion = (): Thunk => (dispatch, _, api) =>
       )
     }
   })
+}

@@ -4,6 +4,8 @@
   .loading-message,
   .no-chart-data {
     position: absolute;
+    user-select: none;
+    z-index: -1;
     left: 50%;
     top: 47%;
     transform: translate(-50%, -50%);

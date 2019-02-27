@@ -1,6 +1,6 @@
 /* @flow */
 
-import Client from "boom-js-client"
+import {BoomClient} from "boom-js-client"
 
 import type {Tuple} from "../types"
 import {getSearchProgram} from "../selectors/searchBar"
@@ -18,14 +18,15 @@ type Options = {
 export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
   dispatch: Function,
   getState: Function,
-  api: Client
+  boom: BoomClient
 ) => {
   const state = getState()
   if (!dispatch(validateProgram())) return
   dispatch(updateTab(state))
   if (saveToHistory) dispatch(pushSearchHistory())
   if (starredSearch(state)) return showStarred(state, dispatch)
-  fetch(dispatch, state, api)
+
+  fetch(dispatch, state, boom)
 }
 
 const fetch = serially(

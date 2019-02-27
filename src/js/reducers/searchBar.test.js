@@ -1,5 +1,6 @@
 /* @flow */
 
+import {getOuterTimeWindow} from "./timeWindow"
 import {
   getSearchProgram,
   getSearchBarError,
@@ -10,16 +11,17 @@ import {
   getSearchBar
 } from "../selectors/searchBar"
 import {initialState} from "./searchBar"
-import {getOuterTimeWindow} from "./timeWindow"
-import * as actions from "../actions/searchBar"
 import {setOuterTimeWindow} from "../actions/timeWindow"
 import Field from "../models/Field"
+import MockBoomClient from "../test/MockBoomClient"
+import * as actions from "../actions/searchBar"
 import initStore from "../test/initStore"
-import MockApi from "../test/MockApi"
 
-let store
+let store, boom
 beforeEach(() => {
-  store = initStore()
+  boom = new MockBoomClient()
+  boom.stubStream("search")
+  store = initStore(boom)
 })
 
 test("input value changed", () => {
@@ -209,7 +211,6 @@ test("remove all pins", () => {
 })
 
 test("restore", () => {
-  const store = initStore()
   const slice = {
     current: "restore",
     previous: "me",
@@ -227,7 +228,6 @@ test("restore", () => {
 })
 
 test("goBack", () => {
-  const store = initStore(new MockApi())
   const state = store.dispatchAll([
     actions.changeSearchBarInput("hello"),
     setOuterTimeWindow([new Date(1), new Date(2)]),
@@ -243,7 +243,6 @@ test("goBack", () => {
 })
 
 test("goForward", () => {
-  const store = initStore(new MockApi())
   const state = store.dispatchAll([
     actions.changeSearchBarInput("hello"),
     setOuterTimeWindow([new Date(1), new Date(2)]),
@@ -267,7 +266,6 @@ test("goForward", () => {
 })
 
 test("clearSearchBar", () => {
-  const store = initStore()
   const state = store.dispatchAll([
     actions.changeSearchBarInput("hello"),
     actions.clearSearchBar()

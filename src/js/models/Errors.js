@@ -11,6 +11,10 @@ export class UnauthorizedError extends AppError {
       if (e.message.match(/Need boom credentials/)) return true
     }
 
+    if (typeof e === "string") {
+      if (/unauthorized/i.test(e)) return true
+    }
+
     try {
       return JSON.parse(e).code === "UNAUTHORIZED"
     } catch (e) {
@@ -39,7 +43,7 @@ export class InternalServerError extends AppError {
 
 export class NetworkError extends AppError {
   static is(e: RawError) {
-    return e === "Failed to fetch"
+    return /Failed to fetch/.test(e.toString())
   }
 
   message() {
