@@ -1,10 +1,16 @@
 /* @flow */
 
-import Client from "boom-js-client"
-import {getCredentials} from "../reducers/boomd"
+import {BoomClient} from "boom-js-client"
+
 import type {State} from "../reducers/types"
+import {getBoomOptions} from "../selectors/boom"
 
 export default (state: ?State) => {
-  const creds = state && getCredentials(state)
-  return new Client(creds)
+  const boom = new BoomClient()
+
+  if (state) {
+    boom.setOptions(getBoomOptions(state))
+  }
+
+  return boom
 }
