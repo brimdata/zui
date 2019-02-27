@@ -22,16 +22,16 @@ export const discoverDescriptors = (events: Tuple[] = []): Thunk => {
 }
 
 export const fetchDescriptor = (id: string): Thunk => {
-  return (dispatch, getState, api) => {
+  return (dispatch, getState, boom) => {
     const space = getCurrentSpaceName(getState())
 
     dispatch(requestDescriptor(space, id))
-    return api
-      .descriptor({space, id})
-      .done(descriptor => {
+    return boom.descriptors
+      .get(space, id)
+      .then(descriptor => {
         dispatch(receiveDescriptor(space, id, descriptor))
       })
-      .error(error => dispatch(errorDescriptor(error)))
+      .catch(error => dispatch(errorDescriptor(error)))
   }
 }
 
