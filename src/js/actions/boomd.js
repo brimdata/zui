@@ -6,6 +6,18 @@ import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
 import {getBoomOptions} from "../selectors/boom"
 
+export const inspectSearch = (
+  lookytalk: string,
+  overrides: Object = {}
+): Thunk => (_dispatch, getState, boom) => {
+  boom.setOptions(getBoomOptions(getState()))
+  try {
+    return boom.inspectSearch(lookytalk, overrides)
+  } catch {
+    return null
+  }
+}
+
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
   value

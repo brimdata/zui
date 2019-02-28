@@ -6,11 +6,12 @@ import React from "react"
 import {Code} from "./Typography"
 import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
-import {type State} from "../reducers/types"
+import {type DispatchProps, type State} from "../reducers/types"
 import {copyToClipboard} from "../lib/Doc"
+import {inspectSearch} from "../actions/boomd"
 import Modal from "./Modal"
-import * as Program from "../lib/Program"
 import * as boomd from "../reducers/boomd"
+import dispatchToProps from "../lib/dispatchToProps"
 import * as searchBar from "../selectors/searchBar"
 import * as spaces from "../reducers/spaces"
 import * as timeWindow from "../reducers/timeWindow"
@@ -27,7 +28,7 @@ type StateProps = {|
   space: string
 |}
 
-type Props = {|...StateProps, ...OwnProps|}
+type Props = {|...StateProps, ...OwnProps, ...DispatchProps|}
 
 type LocalState = {includeCredentials: boolean, buttonText: string}
 
@@ -56,21 +57,8 @@ export default class CurlModal extends React.Component<Props, LocalState> {
   }
 
   render() {
-    const {space, program, timeWindow, credentials} = this.props
-    if (!timeWindow[0]) return null
-    const {host, port} = credentials
-    const [ast, _error] = Program.parse(program)
-    const [from, to] = timeWindow
-    const payload = {
-      ...ast,
-      span: {
-        ts: from.getTime() / 1000,
-        dur: (to - from) / 1000
-      },
-      dir: -1,
-      space
-    }
-    const url = `http://${host}:${port}/search`
+    const info = this.props.dispatch(inspectSearch(this.props.program))
+
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -94,11 +82,19 @@ export default class CurlModal extends React.Component<Props, LocalState> {
             {this.state.buttonText}
           </button>
         </div>
-        <Code full light id="copy-to-curl-code">
-          curl -X POST {this.getCredentials()} -d &apos;
-          {JSON.stringify(payload, null, 4)}
-          &apos; {url}
-        </Code>
+        {info && (
+          <Code full light id="copy-to-curl-code">
+            curl -X {info.method} {this.getCredentials()} -d &apos;
+            {JSON.stringify(info.body, null, 2)}
+            &apos; {info.url}
+          </Code>
+        )}
+
+        {!info && (
+          <Code full light id="copy-to-curl-code">
+            Invalid Lookytalk: &apos;{this.props.program}&apos;
+          </Code>
+        )}
       </Modal>
     )
   }
@@ -111,6 +107,7 @@ const stateToProps = (state: State) => ({
   credentials: boomd.getCredentials(state)
 })
 
-export const XCurlModal = connect<Props, OwnProps, _, _, _, _>(stateToProps)(
-  CurlModal
-)
+export const XCurlModal = connect<Props, OwnProps, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(CurlModal)
