@@ -5,10 +5,10 @@ import React from "react"
 
 import type {Dispatch} from "../reducers/types"
 import {Label} from "./Typography"
+import {enableCache, enableIndex} from "../actions/boomd"
 import {getTimeZone, getSettingsModalIsOpen} from "../reducers/view"
 import {getUseBoomCache, getUseBoomIndex} from "../reducers/boomd"
 import {hideModal, setTimeZone} from "../actions/view"
-import {useBoomCache, useBoomIndex} from "../actions/boomd"
 import Modal from "./Modal"
 import * as Time from "../lib/Time"
 import Toggle from "./Toggle"
@@ -51,7 +51,7 @@ export default class SettingsModal extends React.Component<Props> {
             <Toggle
               checked={this.props.useBoomCache}
               onChange={() =>
-                this.props.dispatch(useBoomCache(!this.props.useBoomCache))
+                this.props.dispatch(enableCache(!this.props.useBoomCache))
               }
             />
           </div>
@@ -61,7 +61,7 @@ export default class SettingsModal extends React.Component<Props> {
             <Toggle
               checked={this.props.useBoomIndex}
               onChange={() =>
-                this.props.dispatch(useBoomIndex(!this.props.useBoomIndex))
+                this.props.dispatch(enableIndex(!this.props.useBoomIndex))
               }
             />
           </div>
