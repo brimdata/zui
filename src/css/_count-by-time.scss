@@ -1,6 +1,12 @@
 .count-by-time-wrapper {
   position: relative;
 
+  .selection {
+    fill: $yellow-3;
+    stroke: $yellow-4;
+    stroke-dasharray: 3px;
+  }
+
   .loading-message,
   .no-chart-data {
     position: absolute;
