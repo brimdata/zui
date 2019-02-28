@@ -82,7 +82,7 @@ describe("Application launch", () => {
       // TODO: Don't use selectors as literals in tests. These definitions
       // should be defined in a single place and ideally be tested to ensure
       // they can be found.
-      .getText("//header[@class='looky-header']/h1")
+      .getText(".looky-header h1")
       .then(headerText => {
         expect(headerText).toBe("LOOKY")
         done()
