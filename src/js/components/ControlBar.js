@@ -20,7 +20,7 @@ export default class ControlBar extends React.Component<Props> {
     return (
       <div className="control-bar">
         <div className="row-1">
-          <DropMenu position="left" menu={XSpacesMenu}>
+          <DropMenu position="left" menu={XSpacesMenu} className="button-group">
             {<ThinButton>{this.props.currentSpace}</ThinButton>}
           </DropMenu>
           <XSpanPickers />
