@@ -52,7 +52,7 @@ describe("Application launch", () => {
       path: electronPath,
       args: [path.join(__dirname, "..")]
     })
-    return app.start()
+    return app.start().then(() => app.webContents.send("resetState"))
   })
 
   afterEach(() => {
