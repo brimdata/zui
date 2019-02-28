@@ -24,17 +24,18 @@ $page-border-color: $light-gray-3;
 }
 
 .search-page-main {
-  flex-grow: 1;
   overflow-x: scroll;
   display: flex;
+  flex-grow: 1;
   flex-flow: column;
   position: relative;
 }
 
 .search-page-header,
 .search-results,
-.status-bar {
-  min-width: 500px;
+.status-bar,
+.title-bar {
+  min-width: 573px;
 }
 
 .search-results {

@@ -1,24 +1,27 @@
 .search-stats {
   display: flex;
-  flex-flow: row-reverse;
 
   p {
-    margin-right: 24px;
-    width: 140px;
     color: $gray-warm-1;
     line-height: 25px;
+    display: flex;
+    align-items: center;
+    min-width: 150px;
   }
 
   .label {
     text-transform: uppercase;
     font-size: 9px;
     margin-right: 6px;
+    padding-left: 6px;
+    display: inline-block;
+    border-left: 2px solid $gray-warm-5;
   }
 
   .number {
-    margin-right: 6px;
+    margin-right: 24px;
+    display: inline-block;
     font-size: 12px;
-
     white-space: nowrap;
   }
 

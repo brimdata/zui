@@ -2,9 +2,14 @@
   background-color: $page-background-color;
   border-top: 1px solid $page-border-color;
   position: relative;
+  overflow: hidden;
 
   p {
     transition: color 500ms;
+  }
+
+  .loading-message {
+    margin-right: 12px;
   }
 }
 
@@ -20,11 +25,11 @@
 }
 
 .status-bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .status-bar.loading {
@@ -39,7 +44,7 @@
   }
 
   .burst {
-    background-color: white;
+    background-color: white !important;
   }
 }
 
