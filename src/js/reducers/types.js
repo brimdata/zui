@@ -44,7 +44,8 @@ export type State = {
   tableColumnSets: TableColumnSets
 }
 
-export type Thunk = (Dispatch, () => State, BoomClient) => *
+export type GetState = () => State
+export type Thunk = (Dispatch, GetState, BoomClient) => *
 export type Action = {type: string}
 export type Dispatch = (Action | Thunk) => *
 export type Api = BoomClient
