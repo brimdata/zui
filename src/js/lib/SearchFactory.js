@@ -1,6 +1,8 @@
 /* @flow */
 
 import type {State, Dispatch} from "../reducers/types"
+import {addNotification} from "../actions/notifications"
+import {completeMainSearch, requestMainSearch} from "../actions/mainSearch"
 import {getInnerTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
 import {
@@ -10,10 +12,21 @@ import {
   searchPaged,
   searchSubset
 } from "../actions/searches"
+import ErrorFactory from "../models/ErrorFactory"
 import ParallelSearch from "../models/ParallelSearch"
 import * as Program from "../lib/Program"
 
 export const create = (dispatch: Dispatch, state: State) => {
+  dispatch(requestMainSearch())
+  return createSearch(dispatch, state)
+    .done(() => dispatch(completeMainSearch()))
+    .error(error => {
+      dispatch(completeMainSearch())
+      dispatch(addNotification(ErrorFactory.create(error)))
+    })
+}
+
+const createSearch = (dispatch, state) => {
   switch (getType(state)) {
     case "ANALYTICS":
       return new ParallelSearch(dispatch, [searchAnalytics()])

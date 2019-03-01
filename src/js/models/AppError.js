@@ -2,11 +2,11 @@
 
 import startCase from "lodash/startCase"
 
-export type RawError = string
+export type RawError = *
 export type ErrorContext = *
 
 export default class AppError {
-  raw: RawError
+  raw: *
   ts: Date
   context: ErrorContext
 
@@ -25,6 +25,14 @@ export default class AppError {
   }
 
   message() {
+    if (this.raw instanceof Error) {
+      return this.raw.message
+    }
+
+    if (typeof this.raw === "string") {
+      return this.raw
+    }
+
     return this.title()
   }
 }

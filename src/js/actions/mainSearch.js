@@ -31,7 +31,7 @@ export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
 
 const fetch = serially(
   (...args) => SearchFactory.create(...args).send(),
-  search => search.abortRequest()
+  search => search.abort()
 )
 
 const starredSearch = state => {

@@ -83,7 +83,7 @@ const print = rawError => {
   const error = tryParse(rawError)
   if (isObject(error)) {
     if (error instanceof Error) {
-      return error.message
+      return error.stack
     } else {
       return JSON.stringify(error, null, 2)
     }
