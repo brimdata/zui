@@ -1,12 +1,12 @@
 /* @flow */
 
-import React from "react"
-import {PaneHeader, Center, Left, Right, PaneTitle} from "./Pane"
-import {disconnect} from "../actions/disconnect"
+import {Link} from "react-router-dom"
 import {connect} from "react-redux"
+import React from "react"
+
+import {disconnect} from "../actions/disconnect"
 import {getBoomHost, getBoomPort} from "../reducers/boomd"
 import dispatchToProps from "../lib/dispatchToProps"
-import {Link} from "react-router-dom"
 
 type Props = {|
   host: string,
@@ -21,17 +21,13 @@ export default class TitleBar extends React.Component<Props> {
     const {host, port} = this.props
     return (
       <div className="title-bar">
-        <PaneHeader>
-          <Left />
-          <Center>
-            <PaneTitle>
-              <Link to="/connect" className="link" onClick={this.onHostClick}>
-                {host}:{port}
-              </Link>
-            </PaneTitle>
-          </Center>
-          <Right />
-        </PaneHeader>
+        <Link
+          to="/connect"
+          className="thin-button host"
+          onClick={this.onHostClick}
+        >
+          {host}:{port}
+        </Link>
       </div>
     )
   }

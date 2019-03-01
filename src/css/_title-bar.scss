@@ -1,10 +1,23 @@
 .title-bar {
-  .link {
+  height: 36px;
+  display: flex;
+  background-color: $gray-cold-5;
+  justify-content: center;
+  .host {
+    font-family: $mono-font;
+    line-height: 13px;
+    margin-top: 4px;
+    margin-right: 6px;
+    margin-left: 68px;
+    // text-decoration: none;
+    background-color: transparent;
     color: $gray-warm-1;
-    padding: 0 6px;
-    cursor: pointer;
+
+    // color: $gray-;
+    // padding: 0 6px;
+    cursor: pointer !important;
     &:hover {
-      text-decoration: underline;
+      color: $gray-warm-2;
     }
   }
 }

@@ -11,6 +11,10 @@
   .loading-message {
     margin-right: 12px;
   }
+
+  .label {
+    transition: border-left-color 500ms;
+  }
 }
 
 .status-bar-bg {
@@ -40,6 +44,11 @@
 
   p {
     color: white;
+    transition: none;
+  }
+
+  .label {
+    border-left-color: $green-5;
     transition: none;
   }
 
