@@ -13,13 +13,13 @@ export class UnauthorizedError extends AppError {
 
     if (typeof e === "string") {
       if (/unauthorized/i.test(e)) return true
+      try {
+        return JSON.parse(e).code === "UNAUTHORIZED"
+      } catch (e) {
+        return false
+      }
     }
-
-    try {
-      return JSON.parse(e).code === "UNAUTHORIZED"
-    } catch (e) {
-      return false
-    }
+    return false
   }
 
   message() {
@@ -29,11 +29,14 @@ export class UnauthorizedError extends AppError {
 
 export class InternalServerError extends AppError {
   static is(e: RawError) {
-    try {
-      return JSON.parse(e).code === "INTERNAL_ERROR"
-    } catch (e) {
-      return false
+    if (typeof e === "string") {
+      try {
+        return JSON.parse(e).code === "INTERNAL_ERROR"
+      } catch (e) {
+        return false
+      }
     }
+    return false
   }
 
   message() {

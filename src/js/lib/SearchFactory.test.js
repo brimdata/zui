@@ -1,38 +1,20 @@
 /* @flow */
 
-import * as SearchFactory from "./SearchFactory"
-import * as searchBar from "../actions/searchBar"
+import {getType} from "./SearchFactory"
 import initStore from "../test/initStore"
+import * as searchBar from "../actions/searchBar"
 
 let store
 beforeEach(() => {
   store = initStore()
 })
 
-test("#logsArgs", () => {
-  const args = SearchFactory.logsPagedArgs(jest.fn(), store.getState())
-
-  expect(args.program).toBe("* | head 800; every 30sec count() by _path")
-})
-
-test("#logsSubsetArgs", () => {
-  const args = SearchFactory.logsSubsetArgs(jest.fn(), store.getState())
-
-  expect(args.program).toBe("* | head 800; count()")
-})
-
-test("#analyticsArgs", () => {
-  const args = SearchFactory.analyticsArgs(jest.fn(), store.getState())
-
-  expect(args.program).toBe("*")
-})
-
 test("#getType when LOGS_PAGED", () => {
-  expect(SearchFactory.getType(store.getState())).toBe("LOGS_PAGED")
+  expect(getType(store.getState())).toBe("LOGS_PAGED")
 })
 
 test("#getType when LOGS_HEAD", () => {
   store.dispatch(searchBar.changeSearchBarInput("* | head 1"))
 
-  expect(SearchFactory.getType(store.getState())).toBe("LOGS_HEAD")
+  expect(getType(store.getState())).toBe("LOGS_HEAD")
 })

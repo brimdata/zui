@@ -81,7 +81,7 @@ test("search with inner time window if set", () => {
   )
 })
 
-test("search with inner time does not ask for count by every", () => {
+test("search with inner time", () => {
   boom.stubStream("search")
   const search = jest.spyOn(boom, "search")
 
@@ -93,7 +93,7 @@ test("search with inner time does not ask for count by every", () => {
     fetchMainSearch()
   ])
 
-  expect(search).toBeCalledWith("_path = conn | head 800; count()")
+  expect(search).toBeCalledWith("_path = conn | head 800", expect.any(Object))
 })
 
 test("search with a provided head proc", () => {
@@ -108,9 +108,7 @@ test("search with a provided head proc", () => {
     fetchMainSearch()
   ])
 
-  expect(search).toBeCalledWith(
-    "_path = conn | head 45; every 12hr count() by _path"
-  )
+  expect(search).toBeCalledWith("_path = conn | head 45", expect.any(Object))
 })
 
 test("search with outerTimeWindow if no inner", () => {
@@ -145,7 +143,7 @@ test("fetching an analytics does not put any procs on the query", () => {
     fetchMainSearch()
   ])
 
-  expect(search).toBeCalledWith("* | count()")
+  expect(search).toBeCalledWith("* | count()", expect.any(Object))
 })
 
 test("fetching a regular search", () => {
@@ -181,7 +179,7 @@ test("fetching a regular search puts procs on the end", () => {
     fetchMainSearch()
   ])
 
-  expect(search).toBeCalledWith("* | head 800; every 12hr count() by _path")
+  expect(search).toBeCalledWith("* | head 800", expect.any(Object))
 })
 
 test("not saving a search to history", () => {

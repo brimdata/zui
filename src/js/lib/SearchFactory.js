@@ -1,20 +1,44 @@
 /* @flow */
 
-import {PER_PAGE} from "../reducers/logViewer"
-import type {State, Dispatch, Api} from "../reducers/types"
-import {getCountByTimeProc} from "../reducers/mainSearch"
-import {getCurrentSpaceName} from "../reducers/spaces"
-import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
+import type {State, Dispatch} from "../reducers/types"
+import {addNotification} from "../actions/notifications"
+import {completeMainSearch, requestMainSearch} from "../actions/mainSearch"
+import {getInnerTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
+import {
+  searchAnalytics,
+  searchHead,
+  searchHistogram,
+  searchPaged,
+  searchSubset
+} from "../actions/searches"
+import ErrorFactory from "../models/ErrorFactory"
+import ParallelSearch from "../models/ParallelSearch"
 import * as Program from "../lib/Program"
-import Search from "../models/Search"
-import analyticsReceiver from "../receivers/analyticsReceiver"
-import countByTimeReceiver from "../receivers/countByTimeReceiver"
-import logsReceiver from "../receivers/logsReceiver"
-import pageReceiver from "../receivers/pageReceiver"
 
-export const create = (dispatch: Dispatch, state: State, boom: Api) => {
-  return new Search(dispatch, boom, getArgs(dispatch, state))
+export const create = (dispatch: Dispatch, state: State) => {
+  dispatch(requestMainSearch())
+  return createSearch(dispatch, state)
+    .done(() => dispatch(completeMainSearch()))
+    .error(error => {
+      dispatch(completeMainSearch())
+      dispatch(addNotification(ErrorFactory.create(error)))
+    })
+}
+
+const createSearch = (dispatch, state) => {
+  switch (getType(state)) {
+    case "ANALYTICS":
+      return new ParallelSearch(dispatch, [searchAnalytics()])
+    case "LOGS_HEAD":
+      return new ParallelSearch(dispatch, [searchHistogram(), searchHead()])
+    case "LOGS_PAGED":
+      return new ParallelSearch(dispatch, [searchHistogram(), searchPaged()])
+    case "LOGS_SUBSET":
+      return new ParallelSearch(dispatch, [searchSubset()])
+    default:
+      throw "Unknown Search Type"
+  }
 }
 
 export const getType = (state: State) => {
@@ -26,76 +50,5 @@ export const getType = (state: State) => {
     return "LOGS_HEAD"
   } else {
     return "LOGS_PAGED"
-  }
-}
-
-export const getArgs = (dispatch: Dispatch, state: State) => {
-  switch (getType(state)) {
-    case "ANALYTICS":
-      return analyticsArgs(dispatch, state)
-    case "LOGS_SUBSET":
-      return logsSubsetArgs(dispatch, state)
-    case "LOGS_HEAD":
-      return logsHeadArgs(dispatch, state)
-    case "LOGS_PAGED":
-      return logsPagedArgs(dispatch, state)
-    default:
-      throw new Error("Unknown search type")
-  }
-}
-
-export const analyticsArgs = (dispatch: Dispatch, state: State) => {
-  return {
-    space: getCurrentSpaceName(state),
-    program: getSearchProgram(state),
-    timeWindow: getTimeWindow(state),
-    callbacks: (request: *) =>
-      request.channel(0, analyticsReceiver(dispatch, 0))
-  }
-}
-
-export const logsSubsetArgs = (dispatch: Dispatch, state: State) => {
-  const program =
-    Program.addHeadProc(getSearchProgram(state), PER_PAGE) + "; count()"
-
-  return {
-    space: getCurrentSpaceName(state),
-    program,
-    timeWindow: getInnerTimeWindow(state),
-    callbacks: (request: *) =>
-      request
-        .channel(1, pageReceiver(dispatch, PER_PAGE))
-        .channel(1, logsReceiver(dispatch))
-  }
-}
-
-export const logsHeadArgs = (dispatch: Dispatch, state: State) => {
-  const program = getSearchProgram(state) + "; " + getCountByTimeProc(state)
-  return {
-    space: getCurrentSpaceName(state),
-    program,
-    timeWindow: getTimeWindow(state),
-    callbacks: (request: *) =>
-      request
-        .channel(1, logsReceiver(dispatch))
-        .channel(0, countByTimeReceiver(dispatch))
-  }
-}
-
-export const logsPagedArgs = (dispatch: Dispatch, state: State) => {
-  const program =
-    Program.addHeadProc(getSearchProgram(state), PER_PAGE) +
-    "; " +
-    getCountByTimeProc(state)
-
-  return {
-    space: getCurrentSpaceName(state),
-    program,
-    timeWindow: getTimeWindow(state),
-    callbacks: (request: *) =>
-      request
-        .channel(1, pageReceiver(dispatch, PER_PAGE))
-        .channel(1, logsReceiver(dispatch))
-        .channel(0, countByTimeReceiver(dispatch))
   }
 }

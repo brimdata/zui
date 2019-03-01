@@ -6,11 +6,13 @@ import React from "react"
 
 import {type DispatchProps, type State} from "../reducers/types"
 import {type ResultsTabEnum, getResultsTab, getTimeZone} from "../reducers/view"
+import type {Tuple} from "../types"
 import {buildLogDetail} from "../selectors/logDetails"
 import {fetchAhead} from "../actions/logViewer"
 import {getCurrentTableColumns} from "../selectors/tableColumnSets"
 import {getLogs} from "../selectors/logs"
 import {
+  getMainSearchEvents,
   getMainSearchIsComplete,
   getMainSearchIsFetching
 } from "../reducers/mainSearch"
@@ -31,6 +33,7 @@ type StateProps = {|
   isFetchingAhead: boolean,
   isFetching: boolean,
   isComplete: boolean,
+  tuples: Tuple[],
   tableColumns: TableColumns,
   tab: ResultsTabEnum
 |}
@@ -40,8 +43,8 @@ type Props = {|...StateProps, ...DispatchProps|}
 export default class LogResults extends React.Component<Props> {
   onLastChunk = () => {
     if (this.props.tab === "analytics") return
-    const {isFetching, isFetchingAhead, moreAhead} = this.props
-    if (!isFetching && !isFetchingAhead && moreAhead) {
+    const {isFetchingAhead, moreAhead} = this.props
+    if (!isFetchingAhead && moreAhead) {
       this.props.dispatch(fetchAhead())
     }
   }
@@ -52,7 +55,7 @@ export default class LogResults extends React.Component<Props> {
   }
 
   render() {
-    if (!this.props.logs.length && this.props.isComplete) return <NoResults />
+    if (!this.props.tuples.length && this.props.isComplete) return <NoResults />
     if (!this.props.logs.length) return null
 
     return (
@@ -92,6 +95,7 @@ const stateToProps = (state: State) => ({
   tableColumns: getCurrentTableColumns(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
+  tuples: getMainSearchEvents(state),
   logs: getLogs(state)
 })
 

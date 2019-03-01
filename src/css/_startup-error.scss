@@ -3,6 +3,10 @@
   display: flex;
   justify-content: center;
 
+  .message-box {
+    width: 100%;
+  }
+
   .actions {
     text-decoration: underline;
     a {
