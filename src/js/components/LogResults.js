@@ -43,8 +43,8 @@ type Props = {|...StateProps, ...DispatchProps|}
 export default class LogResults extends React.Component<Props> {
   onLastChunk = () => {
     if (this.props.tab === "analytics") return
-    const {isFetching, isFetchingAhead, moreAhead} = this.props
-    if (!isFetching && !isFetchingAhead && moreAhead) {
+    const {isFetchingAhead, moreAhead} = this.props
+    if (!isFetchingAhead && moreAhead) {
       this.props.dispatch(fetchAhead())
     }
   }
