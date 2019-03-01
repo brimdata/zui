@@ -5,7 +5,7 @@
   overflow: hidden;
 
   p {
-    transition: color 500ms;
+    transition: color 1750ms;
   }
 
   .loading-message {
@@ -13,7 +13,7 @@
   }
 
   .label {
-    transition: border-left-color 500ms;
+    transition: border-left-color 1750ms;
   }
 }
 
@@ -24,8 +24,8 @@
   left: 0;
   bottom: 0;
   opacity: 0;
-  transition: opacity 500ms;
-  animation: pulse-green-bg 500ms ease-in-out infinite alternate;
+  transition: opacity 1750ms;
+  animation: pulse-green-bg 1750ms ease-in-out infinite alternate;
 }
 
 .status-bar-content {

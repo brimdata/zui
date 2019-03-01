@@ -82,7 +82,7 @@
 
   text {
     font-family: $body-font;
-    fill: $gray;
+    fill: $gray-warm-3;
     font-size: 9px;
   }
 
@@ -96,12 +96,10 @@
   }
 
   .y-axis text {
-    fill: white;
   }
 
   .y-axis .tick-bg {
-    opacity: 0.85;
-    fill: $gray-2;
+    fill: $gray-cold-5;
   }
 
   .time-cursor {
