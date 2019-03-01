@@ -19,6 +19,7 @@ export default class ParallelSearch {
 
   send() {
     this.handlers = this.searches.map(this.dispatch)
+    return this
   }
 
   abortRequest() {
