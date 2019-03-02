@@ -35,6 +35,22 @@ export const getAnalysisLogs = createSelector<State, void, *, *>(
   }
 )
 
+export const getTuples = createSelector<State, void, *, *, *, *>(
+  getResultsTab,
+  getMainSearchEvents,
+  analysis.getAnalysis,
+  (tab, eventTuples, analysis) => {
+    switch (tab) {
+      case "logs":
+        return eventTuples
+      case "analytics":
+        return analysis.tuples
+      default:
+        return eventTuples
+    }
+  }
+)
+
 export const getLogs = createSelector<State, void, *, *, *, *>(
   getResultsTab,
   getEventLogs,
