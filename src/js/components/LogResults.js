@@ -10,9 +10,8 @@ import type {Tuple} from "../types"
 import {buildLogDetail} from "../selectors/logDetails"
 import {fetchAhead} from "../actions/logViewer"
 import {getCurrentTableColumns} from "../selectors/tableColumnSets"
-import {getLogs} from "../selectors/logs"
+import {getLogs, getTuples} from "../selectors/logs"
 import {
-  getMainSearchEvents,
   getMainSearchIsComplete,
   getMainSearchIsFetching
 } from "../reducers/mainSearch"
@@ -95,7 +94,7 @@ const stateToProps = (state: State) => ({
   tableColumns: getCurrentTableColumns(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
-  tuples: getMainSearchEvents(state),
+  tuples: getTuples(state),
   logs: getLogs(state)
 })
 
