@@ -8,7 +8,7 @@ import initStore from "../test/initStore"
 test("#checkLookytalkVersion when they are the same", done => {
   const boom = new MockBoomClient()
   const {lookytalk} = boom.clientVersion()
-  boom.stubPromise("serverVersion", {lookytalk})
+  boom.stubSend("serverVersion", {lookytalk})
 
   const store = initStore(boom)
 
@@ -19,7 +19,7 @@ test("#checkLookytalkVersion when they are the same", done => {
 })
 
 test("#checkLookytalkVersion when they are different", done => {
-  const boom = new MockBoomClient().stubPromise("serverVersion", {
+  const boom = new MockBoomClient().stubSend("serverVersion", {
     lookytalk: "1.1.1"
   })
   const store = initStore(boom)

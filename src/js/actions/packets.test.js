@@ -13,7 +13,7 @@ beforeEach(() => {
 })
 
 test("fetching packets is a success", done => {
-  boom.stubPromise("packets.get", "file.pcap")
+  boom.stubSend("packets.get", "file.pcap")
   const packets = jest.spyOn(boom.packets, "get")
   store.dispatch(setCurrentSpaceName("trump-tower"))
 
@@ -49,7 +49,7 @@ test("fetching packets is a success", done => {
 })
 
 test("fetching packets is a failure", done => {
-  boom.stubPromiseError("packets.get", "Boom!")
+  boom.stubSendError("packets.get", "Boom!")
   const packets = jest.spyOn(boom.packets, "get")
   store.dispatch(setCurrentSpaceName("trump-tower"))
 

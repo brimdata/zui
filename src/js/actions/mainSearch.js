@@ -1,13 +1,12 @@
 /* @flow */
 
-import {BoomClient} from "boom-js-client"
-
 import type {Tuple} from "../types"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getStarredLogs} from "../reducers/starredLogs"
 import {pushSearchHistory} from "./searchHistory"
 import {updateTab} from "../actions/view"
 import {validateProgram} from "./searchBar"
+import BoomClient from "../BoomClient"
 import * as SearchFactory from "../lib/SearchFactory"
 import serially from "../lib/serially"
 

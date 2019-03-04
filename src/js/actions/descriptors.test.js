@@ -8,7 +8,7 @@ test("#fetchDescriptor", done => {
   const boom = new MockBoomClient()
   const store = initStore(boom)
 
-  boom.stubPromise("descriptors.get", [{name: "hello", type: "world"}])
+  boom.stubSend("descriptors.get", [{name: "hello", type: "world"}])
 
   store.dispatch(setCurrentSpaceName("default"))
 

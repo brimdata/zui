@@ -16,7 +16,7 @@ export const getBoomOptions = (state: State) => {
     username: credentials.user,
     password: credentials.pass,
     host: credentials.host,
-    port: credentials.port,
+    port: parseInt(credentials.port),
     searchSpace: getCurrentSpaceName(state),
     searchSpan: getTimeWindow(state),
     adapter: "BrowserFetch",

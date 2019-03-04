@@ -1,8 +1,7 @@
 /* @flow */
 
-import {BoomClient} from "boom-js-client"
-
 import {showDownloads, hideDownloads} from "./view"
+import BoomClient from "../BoomClient"
 import Log from "../models/Log"
 import * as System from "../lib/System"
 import * as spaces from "../reducers/spaces"

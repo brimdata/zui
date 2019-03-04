@@ -1,8 +1,7 @@
 /* @flow */
 
-import {Handler} from "boom-js-client"
-
 import type {Api, Dispatch, GetState} from "../reducers/types"
+import {Handler} from "../BoomClient"
 
 type SearchFunc = (Dispatch, GetState, Api) => Handler
 

@@ -19,7 +19,7 @@ const spaceInfo = {
 }
 
 test("fetching an analytics search", () => {
-  boom.stubStream("send")
+  boom.stubStream("stream")
 
   const actions = [
     setSpaceInfo(spaceInfo),
@@ -41,8 +41,8 @@ test("fetching an analytics search", () => {
 })
 
 test("analytics always use the outer time window", () => {
-  boom.stubStream("send")
-  const send = jest.spyOn(boom, "send")
+  boom.stubStream("stream")
+  const stream = jest.spyOn(boom, "stream")
 
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
@@ -53,7 +53,7 @@ test("analytics always use the outer time window", () => {
     fetchMainSearch()
   ])
 
-  expect(send).toBeCalledWith(
+  expect(stream).toBeCalledWith(
     expect.any(Object),
     expect.objectContaining({
       searchSpan: [new Date(2000, 0, 1), new Date(3000, 0, 1)]
@@ -62,8 +62,8 @@ test("analytics always use the outer time window", () => {
 })
 
 test("search with inner time window if set", () => {
-  boom.stubStream("send")
-  const send = jest.spyOn(boom, "send")
+  boom.stubStream("stream")
+  const stream = jest.spyOn(boom, "stream")
 
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
@@ -73,7 +73,7 @@ test("search with inner time window if set", () => {
     fetchMainSearch()
   ])
 
-  expect(send).toBeCalledWith(
+  expect(stream).toBeCalledWith(
     expect.any(Object),
     expect.objectContaining({
       searchSpan: [new Date(2015, 2, 10), new Date(2015, 2, 11)]
@@ -112,8 +112,8 @@ test("search with a provided head proc", () => {
 })
 
 test("search with outerTimeWindow if no inner", () => {
-  boom.stubStream("send")
-  const send = jest.spyOn(boom, "send")
+  boom.stubStream("stream")
+  const stream = jest.spyOn(boom, "stream")
 
   store.dispatchAll([
     setSpaceInfo(spaceInfo),
@@ -124,7 +124,7 @@ test("search with outerTimeWindow if no inner", () => {
     fetchMainSearch()
   ])
 
-  expect(send).toBeCalledWith(
+  expect(stream).toBeCalledWith(
     expect.any(Object),
     expect.objectContaining({
       searchSpan: [new Date(2000, 0, 1), new Date(3000, 0, 1)]
@@ -147,7 +147,7 @@ test("fetching an analytics does not put any procs on the query", () => {
 })
 
 test("fetching a regular search", () => {
-  boom.stubStream("send")
+  boom.stubStream("stream")
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -183,7 +183,7 @@ test("fetching a regular search puts procs on the end", () => {
 })
 
 test("not saving a search to history", () => {
-  boom.stubStream("send")
+  boom.stubStream("stream")
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
