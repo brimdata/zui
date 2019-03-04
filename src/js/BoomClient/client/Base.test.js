@@ -6,7 +6,7 @@ beforeEach(() => {
   boom = new BoomClient({
     host: "boom.com",
     port: "123",
-    searchSpan: [new Date(0), new Date(10)]
+    searchSpan: [new Date(0), new Date(1)]
   })
 })
 
@@ -21,7 +21,7 @@ test("#inspectSearch", () => {
       proc: {op: "ReducerProc", reducers: [{op: "Count", var: "count"}]},
       space: "default",
       dir: -1,
-      span: {ts: "0.000000", dur: "0.01"}
+      span: {ts: {sec: 0, ns: 0}, dur: {sec: 0, ns: 1000000}}
     }
   })
 })

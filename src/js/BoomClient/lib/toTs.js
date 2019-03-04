@@ -1,4 +1,5 @@
-import moment from "moment"
-const BRO_TS_FORMAT = "X.SSSSSS"
+import {msToTs} from "./time"
 
-export default date => moment.utc(date).format(BRO_TS_FORMAT)
+export default date => {
+  return msToTs(date.getTime())
+}
