@@ -1,5 +1,4 @@
-import {Handler} from "boom-js-client"
-
+import {Handler} from "../BoomClient"
 import MockBoomClient from "../test/MockBoomClient"
 import * as descriptors from "../actions/descriptors"
 import initStore from "../test/initStore"

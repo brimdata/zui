@@ -1,8 +1,14 @@
-import {LookyTalk} from "boom-js-client"
+/* @flow */
+
 import isEmpty from "lodash/isEmpty"
 
+import {LookyTalk} from "../BoomClient"
+
 export default class Ast {
-  constructor(program) {
+  program: string
+  tree: ?Object
+
+  constructor(program: string) {
     this.program = program
     try {
       this.tree = LookyTalk.parse(isEmpty(program) ? "*" : program)
@@ -15,7 +21,7 @@ export default class Ast {
     return this.tree
   }
 
-  findNode(finderFunc) {
+  findNode(finderFunc: Function) {
     if (!this.tree) return null
 
     let stack = [this.tree.search]

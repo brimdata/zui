@@ -28,7 +28,7 @@ test("#getBoomOptions", () => {
       enableIndex: false,
       username: "rosie",
       host: "boom.com",
-      port: "123",
+      port: 123,
       password: "puppy",
       searchSpace: "work-zone",
       searchSpan: [

@@ -1,6 +1,6 @@
 /* @flow */
 
-import {LookyTalk} from "boom-js-client"
+import {LookyTalk} from "../BoomClient"
 
 type Program = string
 

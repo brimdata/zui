@@ -1,7 +1,5 @@
 /* @flow */
 
-import {BoomClient} from "boom-js-client"
-
 import type {Analysis} from "./analysis"
 import type {Boomd} from "./boomd"
 import type {ColumnWidths} from "./columnWidths"
@@ -21,6 +19,7 @@ import type {TimeWindow} from "./timeWindow"
 import type {TuplesByUid} from "./tuplesByUid"
 import type {View} from "./view"
 import type {Whois} from "./whois"
+import BoomClient from "../BoomClient"
 
 export type State = {
   analysis: Analysis,

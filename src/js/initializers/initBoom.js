@@ -1,9 +1,8 @@
 /* @flow */
 
-import {BoomClient} from "boom-js-client"
-
 import type {State} from "../reducers/types"
 import {getBoomOptions} from "../selectors/boom"
+import BoomClient from "../BoomClient"
 
 export default (state: ?State) => {
   const boom = new BoomClient()
