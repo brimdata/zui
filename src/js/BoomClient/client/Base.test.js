@@ -1,4 +1,5 @@
 import BoomClient from "../"
+import "whatwg-fetch"
 
 let boom
 beforeEach(() => {
@@ -23,4 +24,16 @@ test("#inspectSearch", () => {
       span: {ts: "0.000000", dur: "0.01"}
     }
   })
+})
+
+test("#searching with BrowserFetch adapter includes options", () => {
+  const fetchFunc = jest.spyOn(window, "fetch")
+  boom.setOptions({adapter: "BrowserFetch", enableCache: false})
+
+  boom.search("*")
+
+  expect(fetchFunc).toBeCalledWith(
+    "http://boom.com:123/search?rewrite=f",
+    expect.any(Object)
+  )
 })
