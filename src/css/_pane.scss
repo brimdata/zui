@@ -11,7 +11,6 @@ $pane-header-background-color: $light-gray-3;
 }
 
 .pane-header {
-  -webkit-app-region: drag;
   position: relative;
   border-bottom: 1px solid $pane-border-color;
   svg {
