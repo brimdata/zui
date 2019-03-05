@@ -1,12 +1,15 @@
 /* @flow */
 
+import type {Thunk} from "../reducers/types"
 import type {Tuple} from "../types"
+import {getMainSearchRequest} from "../reducers/mainSearch"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getStarredLogs} from "../reducers/starredLogs"
 import {pushSearchHistory} from "./searchHistory"
 import {updateTab} from "../actions/view"
 import {validateProgram} from "./searchBar"
 import BoomClient from "../BoomClient"
+import ParallelSearch from "../models/ParallelSearch"
 import * as SearchFactory from "../lib/SearchFactory"
 import serially from "../lib/serially"
 
@@ -30,17 +33,22 @@ export const fetchMainSearch = ({saveToHistory = true}: Options = {}) => (
 
 const fetch = serially(
   (...args) => SearchFactory.create(...args).send(),
-  search => search.abort()
+  search => search.kill()
 )
 
 const starredSearch = state => {
   return getSearchProgram(state) === ":starred"
 }
 
+export const killMainSearch = (): Thunk => (dispatch, getState) => {
+  const request = getMainSearchRequest(getState())
+  request && request.kill()
+}
+
 const showStarred = serially(
   (state, dispatch) => {
     const starredLogs = getStarredLogs(state)
-    dispatch(requestMainSearch())
+    dispatch(requestMainSearch(new ParallelSearch(dispatch, [])))
     return setTimeout(() => {
       dispatch(mainSearchEvents([...starredLogs]))
       dispatch(completeMainSearch())
@@ -49,9 +57,10 @@ const showStarred = serially(
   id => clearTimeout(id)
 )
 
-export function requestMainSearch() {
+export function requestMainSearch(request: ParallelSearch) {
   return {
-    type: "MAIN_SEARCH_REQUEST"
+    type: "MAIN_SEARCH_REQUEST",
+    request
   }
 }
 

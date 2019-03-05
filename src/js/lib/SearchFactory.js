@@ -17,12 +17,16 @@ import ParallelSearch from "../models/ParallelSearch"
 import * as Program from "../lib/Program"
 
 export const create = (dispatch: Dispatch, state: State) => {
-  dispatch(requestMainSearch())
-  return createSearch(dispatch, state)
+  const request = createSearch(dispatch, state)
+  dispatch(requestMainSearch(request))
+  return request
     .done(() => dispatch(completeMainSearch()))
     .error(error => {
       dispatch(completeMainSearch())
       dispatch(addNotification(ErrorFactory.create(error)))
+    })
+    .abort(() => {
+      dispatch(completeMainSearch())
     })
 }
 

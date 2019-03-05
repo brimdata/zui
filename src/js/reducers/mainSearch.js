@@ -1,27 +1,42 @@
+/* @flow */
+
 import {createSelector} from "reselect"
 
+import type {State} from "./types"
+import type {Tuple} from "../types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getDescriptors} from "./descriptors"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {isTimeWindow} from "../models/TimeWindow"
 import Log from "../models/Log"
+import ParallelSearch from "../models/ParallelSearch"
 import UniqArray from "../models/UniqArray"
 import countByTimeInterval from "../lib/countByTimeInterval"
 import createReducer from "./createReducer"
 
 const initialState = {
   status: "INIT",
-  events: []
+  events: [],
+  request: null
+}
+
+export type MainSearch = {
+  status: "INIT" | "FETCHING" | "COMPLETE",
+  events: Tuple[],
+  request: ?ParallelSearch
 }
 
 export default createReducer(initialState, {
   MAIN_SEARCH_CLEAR: () => ({
     ...initialState
   }),
-  MAIN_SEARCH_REQUEST: () => ({
-    ...initialState,
-    status: "FETCHING"
-  }),
+  MAIN_SEARCH_REQUEST: (state, {request}) => {
+    return {
+      ...initialState,
+      status: "FETCHING",
+      request
+    }
+  },
   MAIN_SEARCH_EVENTS: (state, {events}) => ({
     ...state,
     events: [...state.events, ...events]
@@ -36,7 +51,8 @@ export default createReducer(initialState, {
   },
   MAIN_SEARCH_COMPLETE: state => ({
     ...state,
-    status: "COMPLETE"
+    status: "COMPLETE",
+    request: null
   })
 })
 
@@ -48,25 +64,27 @@ const BOOM_INTERVALS = {
   day: "day"
 }
 
-export const getMainSearchIsFetching = state => {
+export const getMainSearchIsFetching = (state: State) => {
   return getMainSearchStatus(state) === "FETCHING"
 }
 
-export const getMainSearchIsComplete = state => {
+export const getMainSearchIsComplete = (state: State) => {
   return getMainSearchStatus(state) === "COMPLETE"
 }
 
-export const getMainSearchStatus = state => {
+export const getMainSearchStatus = (state: State) => {
   return state.mainSearch.status
 }
 
-export function mainSearchEvents(state) {
+export const getMainSearchEvents = (state: State) => {
   return state.mainSearch.events
 }
 
-export const getMainSearchEvents = state => state.mainSearch.events
+export const getMainSearchRequest = (state: State) => {
+  return state.mainSearch.request
+}
 
-export const getTds = createSelector(
+export const getTds = createSelector<State, void, *, *>(
   getMainSearchEvents,
   tuples => {
     const uniq = new UniqArray()
@@ -75,7 +93,7 @@ export const getTds = createSelector(
   }
 )
 
-export const getEventLogs = createSelector(
+export const getEventLogs = createSelector<State, void, *, *, *, *>(
   getMainSearchEvents,
   getDescriptors,
   getCurrentSpaceName,
@@ -92,17 +110,19 @@ export const getEventLogs = createSelector(
   }
 )
 
-export const getLogs = createSelector(
+export const getLogs = createSelector<State, void, *, *>(
   getEventLogs,
   logs => logs
 )
 
-export const getCountByTimeProc = createSelector(
+export const getCountByTimeProc = createSelector<State, void, *, *>(
   getTimeWindow,
   timeWindow => {
     if (isTimeWindow(timeWindow)) {
       const {number, unit} = countByTimeInterval(timeWindow)
       return `every ${number}${BOOM_INTERVALS[unit]} count() by _path`
+    } else {
+      return ""
     }
   }
 )

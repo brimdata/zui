@@ -4,9 +4,11 @@ import moment from "moment"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {TimeUnit} from "../lib/Time"
 
+type LongTimeUnit = "millisecond" | "second" | "minute" | "hour" | "day"
+
 export type Interval = {
   number: number,
-  unit: TimeUnit,
+  unit: LongTimeUnit,
   roundingUnit: TimeUnit
 }
 
