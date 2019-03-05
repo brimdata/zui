@@ -5,6 +5,7 @@ import React from "react"
 
 import {type DateTuple, last} from "../lib/TimeWindow"
 import {type DispatchProps} from "../reducers/types"
+import {add} from "../lib/Time"
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
 import {setOuterTimeWindow} from "../actions/timeWindow"
 import {submitSearchBar} from "../actions/searchBar"
@@ -43,8 +44,11 @@ export default class SpanPickerMenu extends React.Component<Props> {
 }
 
 export const XSpanPickerMenu = connect<Props, {||}, _, _, _, _>(
-  state => ({
-    spaceSpan: getCurrentSpaceTimeWindow(state)
-  }),
+  state => {
+    const [from, to] = getCurrentSpaceTimeWindow(state)
+    return {
+      spaceSpan: [from, add(to, 1, "ms")]
+    }
+  },
   dispatchToProps
 )(SpanPickerMenu)
