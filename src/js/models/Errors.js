@@ -7,18 +7,10 @@ import {type RawError} from "./AppError"
 
 export class UnauthorizedError extends AppError {
   static is(e: RawError) {
-    if (e instanceof Error) {
-      if (e.message.match(/Need boom credentials/)) return true
-    }
-
-    if (typeof e === "string") {
-      if (/unauthorized/i.test(e)) return true
-      try {
-        return JSON.parse(e).code === "UNAUTHORIZED"
-      } catch (e) {
-        return false
-      }
-    }
+    if (e instanceof Error && e.message.match(/Need boom credentials/))
+      return true
+    if (e.type === "UNAUTHORIZED") return true
+    if (typeof e === "string" && /unauthorized/i.test(e)) return true
     return false
   }
 
@@ -29,18 +21,11 @@ export class UnauthorizedError extends AppError {
 
 export class InternalServerError extends AppError {
   static is(e: RawError) {
-    if (typeof e === "string") {
-      try {
-        return JSON.parse(e).code === "INTERNAL_ERROR"
-      } catch (e) {
-        return false
-      }
-    }
-    return false
+    return e.type === "INTERNAL_ERROR"
   }
 
   message() {
-    return upperFirst(JSON.parse(this.raw).error) + "."
+    return upperFirst(this.raw.error) + "."
   }
 }
 
@@ -50,7 +35,7 @@ export class NetworkError extends AppError {
   }
 
   message() {
-    return "Either the server is not running or you do not have internet access."
+    return "The server could not be reached."
   }
 }
 
@@ -66,34 +51,21 @@ export class NoSpacesError extends AppError {
 
 export class NotFoundError extends AppError {
   static is(e: RawError) {
-    try {
-      return JSON.parse(e).code === "NOT_FOUND"
-    } catch (e) {
-      return false
-    }
+    return e.type === "NOT_FOUND"
   }
 
   message() {
-    return upperFirst(JSON.parse(this.raw).error) + "."
+    return upperFirst(this.raw.error) + "."
   }
 }
 
 export class SpaceNotFoundError extends AppError {
   static is(e: RawError) {
-    try {
-      const {code, error} = JSON.parse(e)
-      return code === "INTERNAL_ERROR" && error === "space not found"
-    } catch (e) {
-      return false
-    }
+    return e.type === "SPACE_NOT_FOUND"
   }
 
   message() {
-    if (this.context.space)
-      return `Could not find space "${this.context.space}".`
-    else {
-      return "Could not find space."
-    }
+    return upperFirst(this.raw.error) + "."
   }
 }
 
@@ -109,7 +81,18 @@ export class InvalidUrlError extends AppError {
 
 export class LookytalkVersionError extends AppError {}
 
+export class SearchError extends AppError {
+  static is(e: RawError) {
+    return e.type === "SEARCH_ERROR"
+  }
+
+  message() {
+    return this.raw.error
+  }
+}
+
 export const KNOWN_ERRORS = [
+  SearchError,
   InvalidUrlError,
   LookytalkVersionError,
   UnauthorizedError,

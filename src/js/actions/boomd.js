@@ -53,6 +53,11 @@ export const setBoomdCredentials = (credentials: Credentials) => ({
 
 export const connectBoomd = (): Thunk => (dispatch, getState, boom) => {
   boom.setOptions(getBoomOptions(getState()))
+
+  if (!boom.options.host || !boom.options.port) {
+    return Promise.reject("Host and port are required.")
+  }
+
   return boom.spaces.list().then(() => {
     setTimeout(() => dispatch(checkLookytalkVersion()), 3000)
   })

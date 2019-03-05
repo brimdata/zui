@@ -24,7 +24,7 @@ export const send = (
 
   return fetch(url, options).then(resp => {
     if (!resp.ok) {
-      return resp.text().then(t => Promise.reject(t))
+      return resp.json().then(j => Promise.reject(j))
     } else {
       return resp.json()
     }
@@ -62,7 +62,7 @@ export const stream = (
 
 const handleSuccess = (resp, handler) => {
   if (!resp.ok) {
-    resp.text().then(text => handler.onError(text))
+    resp.json().then(json => handler.onError(json))
   } else {
     streamJSON(resp, handler)
   }

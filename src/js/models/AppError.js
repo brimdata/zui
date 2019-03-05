@@ -33,6 +33,6 @@ export default class AppError {
       return this.raw
     }
 
-    return this.title()
+    return ""
   }
 }
