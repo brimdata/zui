@@ -3,19 +3,23 @@
   display: flex;
   background-color: $gray-cold-5;
   justify-content: center;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  cursor: pointer;
+
+  a {
+    -webkit-app-region: no-drag;
+  }
+
   .host {
     font-family: $mono-font;
     line-height: 13px;
     margin-top: 4px;
     margin-right: 6px;
     margin-left: 68px;
-    // text-decoration: none;
     background-color: transparent;
     color: $gray-warm-1;
 
-    // color: $gray-;
-    // padding: 0 6px;
-    cursor: pointer !important;
     &:hover {
       color: $gray-warm-2;
     }
