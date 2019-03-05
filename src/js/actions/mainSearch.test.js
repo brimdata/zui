@@ -1,8 +1,9 @@
 import {changeSearchBarInput} from "./searchBar"
-import {fetchMainSearch} from "./mainSearch"
+import {fetchMainSearch, killMainSearch, requestMainSearch} from "./mainSearch"
 import {init, setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
 import {setSpaceInfo, setCurrentSpaceName} from "./spaces"
 import MockBoomClient from "../test/MockBoomClient"
+import ParallelSearch from "../models/ParallelSearch"
 import initStore from "../test/initStore"
 
 let store, boom
@@ -17,6 +18,15 @@ const spaceInfo = {
   min_time: {sec: 1425564900, ns: 0},
   max_time: {sec: 1428917793, ns: 750000000}
 }
+
+test("killing a search", () => {
+  const request = new ParallelSearch(store.dispatch, [])
+  const kill = jest.spyOn(request, "kill")
+
+  store.dispatchAll([requestMainSearch(request), killMainSearch()])
+
+  expect(kill).toBeCalled()
+})
 
 test("fetching an analytics search", () => {
   boom.stubStream("stream")

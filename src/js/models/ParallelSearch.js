@@ -12,6 +12,7 @@ export default class ParallelSearch {
   pending: number
   onDone: Function
   onError: Function
+  onAbort: Function
 
   constructor(dispatch: Dispatch, searches: SearchFunc[]) {
     this.dispatch = dispatch
@@ -20,6 +21,7 @@ export default class ParallelSearch {
     this.handlers = []
     this.onDone = () => {}
     this.onError = () => {}
+    this.onAbort = () => {}
   }
 
   send() {
@@ -28,8 +30,9 @@ export default class ParallelSearch {
     return this
   }
 
-  abort() {
+  kill() {
     this.handlers.map(handler => handler.abortRequest())
+    this.onAbort()
   }
 
   done(cb: Function) {
@@ -39,6 +42,11 @@ export default class ParallelSearch {
 
   error(cb: Function) {
     this.onError = cb
+    return this
+  }
+
+  abort(cb: Function) {
+    this.onAbort = cb
     return this
   }
 
