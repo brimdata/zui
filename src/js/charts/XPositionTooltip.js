@@ -66,20 +66,29 @@ const tooltipProps = point => {
   return {ts: point.ts, segments}
 }
 
-const positionTooltip = (tooltip, parent, padding) => {
+export const positionTooltip = (
+  tooltip: HTMLElement,
+  parent: HTMLElement,
+  padding: number
+) => {
   const [left] = d3.mouse(parent)
-  const {width: tooltipWidth} = tooltip.getBoundingClientRect()
+  const {width} = tooltip.getBoundingClientRect()
   const {width: parentWidth} = parent.getBoundingClientRect()
 
-  if (left + tooltipWidth + padding >= parentWidth) {
-    d3.select(tooltip)
-      .style("right", left * -1 + padding + "px")
-      .style("left", "")
-      .style("opacity", "1")
+  d3.select(tooltip)
+    .style("left", xPosition(left, width, parentWidth, padding))
+    .style("opacity", "1")
+}
+
+export const xPosition = (
+  left: number,
+  width: number,
+  parentWidth: number,
+  padding: number
+) => {
+  if (left + width + padding >= parentWidth) {
+    return left - width - padding + "px"
   } else {
-    d3.select(tooltip)
-      .style("left", left + padding + "px")
-      .style("right", "")
-      .style("opacity", "1")
+    return left + padding + "px"
   }
 }
