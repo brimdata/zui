@@ -6,6 +6,7 @@ import {getMainSearchRequest} from "../reducers/mainSearch"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getStarredLogs} from "../reducers/starredLogs"
 import {pushSearchHistory} from "./searchHistory"
+import {receiveLogTuples} from "./logs"
 import {updateTab} from "../actions/view"
 import {validateProgram} from "./searchBar"
 import BoomClient from "../BoomClient"
@@ -50,7 +51,7 @@ const showStarred = serially(
     const starredLogs = getStarredLogs(state)
     dispatch(requestMainSearch(new ParallelSearch(dispatch, [])))
     return setTimeout(() => {
-      dispatch(mainSearchEvents([...starredLogs]))
+      dispatch(receiveLogTuples([...starredLogs]))
       dispatch(completeMainSearch())
     })
   },
@@ -64,16 +65,9 @@ export function requestMainSearch(request: ParallelSearch) {
   }
 }
 
-export function mainSearchEvents(events: Tuple[] = []) {
-  return {
-    type: "MAIN_SEARCH_EVENTS",
-    events
-  }
-}
-
 export function spliceMainSearchEvents(index: number) {
   return {
-    type: "MAIN_SEARCH_EVENTS_SPLICE",
+    type: "LOGS_SPLICE",
     index
   }
 }

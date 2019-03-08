@@ -1,17 +1,12 @@
-export const requestLogs = () => ({
-  type: "LOGS_REQUEST"
+/* @flow */
+
+import type {Tuple} from "../types"
+
+export const clearLogs = () => ({
+  type: "LOGS_CLEAR"
 })
 
-export const receiveLogs = tuples => ({
+export const receiveLogTuples = (tuples: Tuple[]) => ({
   type: "LOGS_RECEIVE",
   tuples
-})
-
-export const errorLogs = error => ({
-  type: "LOGS_ERROR",
-  error
-})
-
-export const successLogs = () => ({
-  type: "LOGS_SUCCESS"
 })

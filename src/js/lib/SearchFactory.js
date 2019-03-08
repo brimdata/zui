@@ -2,6 +2,7 @@
 
 import type {State, Dispatch} from "../reducers/types"
 import {addNotification} from "../actions/notifications"
+import {clearLogs} from "../actions/logs"
 import {completeMainSearch, requestMainSearch} from "../actions/mainSearch"
 import {getInnerTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
@@ -19,6 +20,7 @@ import * as Program from "../lib/Program"
 export const create = (dispatch: Dispatch, state: State) => {
   const request = createSearch(dispatch, state)
   dispatch(requestMainSearch(request))
+  dispatch(clearLogs())
   return request
     .done(() => dispatch(completeMainSearch()))
     .error(error => {

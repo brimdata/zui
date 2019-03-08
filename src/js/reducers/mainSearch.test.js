@@ -1,5 +1,7 @@
 /* @flow */
 
+import {getLogTuples} from "./logs"
+import {receiveLogTuples} from "../actions/logs"
 import ParallelSearch from "../models/ParallelSearch"
 import * as actions from "../actions/mainSearch"
 import initStore from "../test/initStore"
@@ -11,40 +13,10 @@ beforeEach(() => {
   request = new ParallelSearch(store.dispatch, [])
 })
 
-test("REQUEST resets the data", () => {
-  const state = store.dispatchAll([
-    actions.mainSearchEvents([["hiii"]]),
-    actions.requestMainSearch(request)
-  ])
-
-  expect(mainSearch.getMainSearchEvents(state)).toEqual([])
-})
-
 test("request resets the stats to fetching", () => {
   const state = store.dispatchAll([actions.requestMainSearch(request)])
 
   expect(mainSearch.getMainSearchIsFetching(state)).toBe(true)
-})
-
-test("MAIN_SEARCH_EVENTS appents items to the state", () => {
-  const store = initStore()
-  const state = store.dispatchAll([actions.mainSearchEvents([["item1"]])])
-
-  expect(mainSearch.getMainSearchEvents(state)).toEqual([["item1"]])
-})
-
-test("MAIN_SEARCH_EVENTS appents items to the state when called many times", () => {
-  const store = initStore()
-  const state = store.dispatchAll([
-    actions.mainSearchEvents([["item1"]]),
-    actions.mainSearchEvents([["item2"], ["item3"]])
-  ])
-
-  expect(mainSearch.getMainSearchEvents(state)).toEqual([
-    ["item1"],
-    ["item2"],
-    ["item3"]
-  ])
 })
 
 test("MAIN_SEARCH_COMPLETE sets is fetching to false", () => {
@@ -60,17 +32,17 @@ test("MAIN_SEARCH_COMPLETE sets is fetching to false", () => {
 test("MAIN_SEARCH_EVENTS_SPLICE chomps off the events at an index", () => {
   const store = initStore()
   const state2 = store.dispatchAll([
-    actions.mainSearchEvents([["a"], ["b"], ["c"], ["d"]]),
+    receiveLogTuples([["a"], ["b"], ["c"], ["d"]]),
     actions.spliceMainSearchEvents(1)
   ])
 
-  expect(mainSearch.getMainSearchEvents(state2)).toEqual([["a"]])
+  expect(getLogTuples(state2)).toEqual([["a"]])
 })
 
 test("#getTds", () => {
   const store = initStore()
   const state = store.dispatchAll([
-    actions.mainSearchEvents([
+    receiveLogTuples([
       ["1", "conn"],
       ["1", "conn"],
       ["2", "dns"],

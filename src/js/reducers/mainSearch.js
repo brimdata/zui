@@ -6,6 +6,7 @@ import type {State} from "./types"
 import type {Tuple} from "../types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getDescriptors} from "./descriptors"
+import {getLogTuples} from "./logs"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {isTimeWindow} from "../models/TimeWindow"
 import Log from "../models/Log"
@@ -76,16 +77,12 @@ export const getMainSearchStatus = (state: State) => {
   return state.mainSearch.status
 }
 
-export const getMainSearchEvents = (state: State) => {
-  return state.mainSearch.events
-}
-
 export const getMainSearchRequest = (state: State) => {
   return state.mainSearch.request
 }
 
 export const getTds = createSelector<State, void, *, *>(
-  getMainSearchEvents,
+  getLogTuples,
   tuples => {
     const uniq = new UniqArray()
     tuples.forEach(([td]) => uniq.push(td))
@@ -94,7 +91,7 @@ export const getTds = createSelector<State, void, *, *>(
 )
 
 export const getEventLogs = createSelector<State, void, *, *, *, *>(
-  getMainSearchEvents,
+  getLogTuples,
   getDescriptors,
   getCurrentSpaceName,
   (tuples, descriptors, spaceName) => {

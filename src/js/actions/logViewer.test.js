@@ -1,11 +1,14 @@
+/* @flow */
+
 import {Handler} from "../BoomClient"
+import {receiveDescriptor} from "./descriptors"
+import {receiveLogTuples} from "./logs"
+import {setCurrentSpaceName} from "./spaces"
+import {setOuterTimeWindow} from "./timeWindow"
 import MockBoomClient from "../test/MockBoomClient"
-import * as descriptors from "../actions/descriptors"
 import initStore from "../test/initStore"
 import * as logViewer from "./logViewer"
 import * as mainSearch from "../actions/mainSearch"
-import * as spaces from "../actions/spaces"
-import * as timeWindow from "./timeWindow"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
@@ -13,13 +16,15 @@ const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
 let store, boom, handler
 beforeEach(() => {
   boom = new MockBoomClient()
-  boom.search = () => new Handler()
+  handler = new Handler()
+  // $FlowFixMe
+  boom.search = () => handler
   store = initStore(boom)
   store.dispatchAll([
-    spaces.setCurrentSpaceName("default"),
-    timeWindow.setOuterTimeWindow([new Date(0), new Date(10 * 1000)]),
-    descriptors.receiveDescriptor("default", 1, descriptor),
-    mainSearch.mainSearchEvents(tuples)
+    setCurrentSpaceName("default"),
+    setOuterTimeWindow([new Date(0), new Date(10 * 1000)]),
+    receiveDescriptor("default", "1", descriptor),
+    receiveLogTuples(tuples)
   ])
   store.clearActions()
 })
@@ -42,10 +47,10 @@ test("#fetchAhead dispatches splice and new logs", () => {
 
   expect(store.getActions()).toEqual(
     expect.arrayContaining([
-      {type: "MAIN_SEARCH_EVENTS_SPLICE", index: 2},
+      {type: "LOGS_SPLICE", index: 2},
       {
-        type: "MAIN_SEARCH_EVENTS",
-        events: [["1", "300"], ["1", "400"], ["1", "500"]]
+        type: "LOGS_RECEIVE",
+        tuples: [["1", "300"], ["1", "400"], ["1", "500"]]
       }
     ])
   )
@@ -82,7 +87,7 @@ test("#fetchAhead sets isFetching to false when done", done => {
   }, 501)
 })
 
-test.only("#fetchAhead adds 1ms to ts of last change", () => {
+test("#fetchAhead adds 1ms to ts of last change", () => {
   const search = jest.spyOn(boom, "search")
   store.dispatch(logViewer.fetchAhead())
 
@@ -101,8 +106,9 @@ test("#fetchAhead when there is only 1 event", () => {
   store.dispatch(logViewer.fetchAhead())
 
   expect(search).toBeCalledWith(
+    expect.any(String),
     expect.objectContaining({
-      timeWindow: [new Date(0), new Date(10 * 1000)]
+      searchSpan: [new Date(0), new Date(10 * 1000)]
     })
   )
 })
