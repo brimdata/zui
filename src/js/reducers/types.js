@@ -2,12 +2,12 @@
 
 import type {Analysis} from "./analysis"
 import type {Boomd} from "./boomd"
-import type {ColumnWidths} from "./columnWidths"
 import type {CountByTime} from "./countByTime"
 import type {Descriptors} from "./descriptors"
 import type {FilterTree} from "./filterTree"
 import type {LogDetails} from "./logDetails"
 import type {LogViewer} from "./logViewer"
+import type {Logs} from "./logs"
 import type {MainSearch} from "./mainSearch"
 import type {Notifications} from "./notifications"
 import type {SearchBar} from "./searchBar"
@@ -31,7 +31,6 @@ export type State = {
   boomd: Boomd,
   logViewer: LogViewer,
   selectedColumns: SelectedColumns,
-  columnWidths: ColumnWidths,
   searchStats: SearchStats,
   searchHistory: SearchHistory,
   whois: Whois,
@@ -42,7 +41,8 @@ export type State = {
   view: View,
   notifications: Notifications,
   tableColumnSets: TableColumnSets,
-  mainSearch: MainSearch
+  mainSearch: MainSearch,
+  logs: Logs
 }
 
 export type GetState = () => State

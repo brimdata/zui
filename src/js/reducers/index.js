@@ -4,7 +4,6 @@ import {combineReducers} from "redux"
 
 import analysis from "./analysis"
 import boomd from "./boomd"
-import columnWidths from "./columnWidths"
 import countByTime from "./countByTime"
 import descriptors from "./descriptors"
 import filterTree from "./filterTree"
@@ -46,7 +45,6 @@ export default combineReducers<*, *>({
   starredLogs,
   packets,
   logViewer,
-  columnWidths,
   selectedColumns,
   searchHistory,
   whois,
