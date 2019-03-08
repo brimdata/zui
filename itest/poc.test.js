@@ -92,7 +92,7 @@ describe("Application launch", () => {
 
   // Skipped until PROD-308 and PROD-309 are done. If you have an auth-less
   // boomd running with a space created, you can uncomment and run this test.
-  test.skip("log in and see Search and Histogram", done => {
+  test("log in and see Search and Histogram", done => {
     logIn(app)
       .then(() => waitForHistogram(app))
       .then(() => waitForSearch(app))
