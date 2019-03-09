@@ -8,8 +8,8 @@
   "author": "Looky Labs, Inc.",
   "scripts": {
     "start": "npm-run-all -s clean build:* -p electron watch:*",
-    "test": "TZ=US/Pacific jest src",
-    "itest": "TZ=US/Pacific jest itest",
+    "test": "TZ=US/Pacific jest",
+    "itest": "TZ=US/Pacific jest --config=itest/config.json",
     "electron": "electron .",
     "clean": "rm -rf releases/** && rm -fr dist/**",
     "release": "npm-run-all release:*",
@@ -39,8 +39,7 @@
     ],
     "testURL": "http://localhost",
     "roots": [
-      "./src/js",
-      "./itest"
+      "./src/js"
     ],
     "collectCoverageFrom": [
       "**/*.js",
