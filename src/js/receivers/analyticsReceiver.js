@@ -12,7 +12,7 @@ export default (dispatch: Function, id: number) => {
 
   const dispatchNow = () => {
     if (tuples.length !== 0) {
-      dispatch(setAnalysis({id, tuples, descriptor}))
+      dispatch(setAnalysis(descriptor, tuples))
       tuples = []
     }
   }

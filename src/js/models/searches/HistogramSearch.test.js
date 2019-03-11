@@ -2,7 +2,7 @@
 
 import HistogramSearch from "./HistogramSearch"
 
-describe("BaseSearch", () => {
+describe("HistogramSearch", () => {
   const program = "_path = conn"
   const spans = [new Date(0), new Date(10)]
 
@@ -15,10 +15,6 @@ describe("BaseSearch", () => {
     expect(search.getProgram()).toEqual(
       "_path = conn | every 1sec count() by _path"
     )
-  })
-
-  test("#getSpan", () => {
-    expect(search.getSpan()).toEqual([new Date(0), new Date(10)])
   })
 
   test("#getReceivers", () => {

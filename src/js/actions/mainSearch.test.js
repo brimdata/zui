@@ -44,7 +44,8 @@ test("fetching an analytics search", () => {
   expect(dispatched).toEqual(
     expect.arrayContaining([
       "SEARCH_HISTORY_PUSH",
-      "MAIN_SEARCH_REQUEST",
+      "LOGS_CLEAR",
+      "ANALYSIS_CLEAR",
       "SHOW_ANALYTICS_TAB"
     ])
   )
@@ -171,7 +172,8 @@ test("fetching a regular search", () => {
   expect(store.getActions().map(action => action.type)).toEqual(
     expect.arrayContaining([
       "SEARCH_HISTORY_PUSH",
-      "MAIN_SEARCH_REQUEST",
+      "LOGS_CLEAR",
+      "ANALYSIS_CLEAR",
       "SHOW_LOGS_TAB"
     ])
   )

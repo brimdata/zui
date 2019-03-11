@@ -15,8 +15,8 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  MAIN_SEARCH_REQUEST: () => initialState,
-  ANALYSIS_SET: (state, {_id, descriptor, tuples}) => ({
+  ANALYSIS_CLEAR: () => ({...initialState}),
+  ANALYSIS_SET: (state, {descriptor, tuples}) => ({
     descriptor,
     tuples: [...state.tuples, ...tuples]
   })

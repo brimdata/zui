@@ -12,6 +12,10 @@ export default class BaseSearch {
     this.span = span
   }
 
+  getName() {
+    return this.constructor.name
+  }
+
   getProgram() {
     return this.program
   }

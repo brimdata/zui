@@ -11,6 +11,10 @@ describe("BaseSearch", () => {
     search = new BaseSearch(program, span)
   })
 
+  test("#getName", () => {
+    expect(search.getName()).toEqual("BaseSearch")
+  })
+
   test("#getProgram", () => {
     expect(search.getProgram()).toEqual(program)
   })

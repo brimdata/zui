@@ -1,8 +1,15 @@
-export function setAnalysis({id, descriptor, tuples}) {
+/* @flow */
+
+import type {Descriptor, Tuple} from "../types"
+
+export function setAnalysis(descriptor: Descriptor, tuples: Tuple[]) {
   return {
     type: "ANALYSIS_SET",
-    id,
     descriptor,
     tuples
   }
 }
+
+export const clearAnalysis = () => ({
+  type: "ANALYSIS_CLEAR"
+})
