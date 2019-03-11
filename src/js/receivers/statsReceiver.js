@@ -1,16 +1,20 @@
-import {setSearchStats} from "../actions/searchStats"
+/* @flow */
+
+import type {Dispatch} from "../reducers/types"
+import type {Payload} from "./types"
+import {setBoomSearchStats} from "../actions/boomSearches"
 
 function boomTime({sec, ns}) {
   let flt = sec + ns / 1e9
   return flt
 }
 
-export default dispatch => payload => {
+export default (name: string, dispatch: Dispatch) => (payload: Payload) => {
   if (payload.type === "SearchStats") {
     const startTime = boomTime(payload.start_time)
     const updateTime = boomTime(payload.update_time)
     dispatch(
-      setSearchStats({
+      setBoomSearchStats(name, {
         startTime,
         updateTime,
         bytesMatched: payload.stats.bytes_matched,

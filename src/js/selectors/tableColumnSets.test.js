@@ -6,8 +6,8 @@ import {
   getCurrentTableColumnsId,
   getCurrentUniqColumns
 } from "./tableColumnSets"
-import {mainSearchEvents} from "../actions/mainSearch"
 import {receiveDescriptor} from "../actions/descriptors"
+import {receiveLogTuples} from "../actions/logs"
 import {setCurrentSpaceName} from "../actions/spaces"
 import TableColumns from "../models/TableColumns"
 import initStore from "../test/initStore"
@@ -25,7 +25,7 @@ describe("#getCurrentTableColumnsId", () => {
     const state = store.dispatchAll([
       setCurrentSpaceName("default"),
       receiveDescriptor("default", connLog.tuple[0], connLog.descriptor),
-      mainSearchEvents([connLog.tuple])
+      receiveLogTuples([connLog.tuple])
     ])
 
     expect(getCurrentTableColumnsId(state)).toBe(connLog.tuple[0])
@@ -36,7 +36,7 @@ describe("#getCurrentTableColumnsId", () => {
       setCurrentSpaceName("default"),
       receiveDescriptor("default", connLog.tuple[0], connLog.descriptor),
       receiveDescriptor("default", dnsLog.tuple[0], dnsLog.descriptor),
-      mainSearchEvents([connLog.tuple, dnsLog.tuple])
+      receiveLogTuples([connLog.tuple, dnsLog.tuple])
     ])
 
     expect(getCurrentTableColumnsId(state)).toBe("temp")
@@ -59,7 +59,7 @@ describe("#getCurrentUniqColumns", () => {
       setCurrentSpaceName("default"),
       receiveDescriptor("default", "1", [a, b, b2]),
       receiveDescriptor("default", "2", [a, b, c]),
-      mainSearchEvents([["1"], ["2"]])
+      receiveLogTuples([["1"], ["2"]])
     ])
 
     expect(getCurrentUniqColumns(state)).toEqual([a, b, b2, c])
@@ -77,7 +77,7 @@ describe("#getCurrentTableColumns", () => {
       setCurrentSpaceName("default"),
       receiveDescriptor("default", connLog.tuple[0], connLog.descriptor),
       receiveDescriptor("default", dnsLog.tuple[0], dnsLog.descriptor),
-      mainSearchEvents([connLog.tuple, dnsLog.tuple])
+      receiveLogTuples([connLog.tuple, dnsLog.tuple])
     ])
 
     const tableColumns = getCurrentTableColumns(state)

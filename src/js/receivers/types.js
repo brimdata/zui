@@ -1,6 +1,7 @@
 /* @flow */
 
 import type {Descriptor, Tuple} from "../types"
+import type {EpochObj} from "../lib/Time"
 
 export type SearchResult = {
   type: "SearchResult",
@@ -15,4 +16,16 @@ export type SearchEnd = {
   type: "SearchEnd"
 }
 
-export type Payload = SearchResult | SearchEnd
+export type SearchStats = {
+  type: "SearchStats",
+  start_time: EpochObj,
+  update_time: EpochObj,
+  stats: {
+    bytes_matched: number,
+    bytes_read: number,
+    tuples_matched: number,
+    tuples_read: number
+  }
+}
+
+export type Payload = SearchResult | SearchEnd | SearchStats

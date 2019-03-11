@@ -2,16 +2,14 @@
 
 import type {Thunk} from "redux-thunk"
 
-import {PER_PAGE} from "../reducers/logViewer"
+import {getLogs} from "../selectors/logs"
 import {getTimeWindow} from "../reducers/timeWindow"
+import {issueBoomSearch} from "./boomSearches"
+import {setLogsSpliceIndex} from "./logs"
 import * as Arr from "../lib/Array"
-import * as Program from "../lib/Program"
+import LogSearch from "../models/searches/LogSearch"
 import * as Time from "../lib/Time"
-import logsReceiver from "../receivers/logsReceiver"
-import * as mainSearch from "../reducers/mainSearch"
-import pageReceiver from "../receivers/pageReceiver"
 import * as searchBar from "../selectors/searchBar"
-import * as spaces from "../reducers/spaces"
 
 export const clearLogViewer = () => ({
   type: "LOG_VIEWER_CLEAR"
@@ -37,27 +35,27 @@ export const setIsFetchingAhead = (value: boolean) => ({
   value
 })
 
-export const fetchAhead = (): Thunk => (dispatch, getState, boom) => {
-  dispatch(setIsFetchingAhead(true))
+export const fetchAhead = (): Thunk => (dispatch, getState) => {
   const state = getState()
-  const logs = mainSearch.getLogs(state)
+  const logs = getLogs(state)
   let searchSpan = getTimeWindow(state)
   let spliceIndex = 0
+
   if (!Arr.isEmpty(logs)) {
     const index = Arr.indexOfLastChange(logs, log => log.get("ts"))
     if (index >= 0) {
-      const from = Time.add(logs[index].getField("ts").toDate(), 1, "ms")
-      const [_, to] = getTimeWindow(state)
+      const to = Time.add(logs[index].getField("ts").toDate(), 1, "ms")
+      const [from, _] = getTimeWindow(state)
       searchSpan = [from, to]
       spliceIndex = index + 1
     }
   }
-  const searchSpace = spaces.getCurrentSpaceName(state)
-  const program = searchBar.getPrevSearchProgram(state)
-  const programWithHead = Program.addHeadProc(program, PER_PAGE)
-  boom
-    .search(programWithHead, {searchSpan, searchSpace})
-    .channel(0, pageReceiver(dispatch, PER_PAGE, spliceIndex))
-    .channel(0, logsReceiver(dispatch))
-    .done(() => setTimeout(() => dispatch(setIsFetchingAhead(false)), 500))
+
+  dispatch(setIsFetchingAhead(true))
+  dispatch(setLogsSpliceIndex(spliceIndex))
+  dispatch(
+    issueBoomSearch(
+      new LogSearch(searchBar.getPrevSearchProgram(state), searchSpan)
+    )
+  ).done(() => setTimeout(() => dispatch(setIsFetchingAhead(false)), 500))
 }

@@ -1,21 +1,16 @@
 /* @flow */
 
-import * as logViewer from "../actions/logViewer"
-import * as mainSearch from "../actions/mainSearch"
 import type {Payload} from "./types"
+import {spliceLogs} from "../actions/logs"
+import * as logViewer from "../actions/logViewer"
 
-export default (
-  dispatch: Function,
-  perPage: number,
-  spliceIndex: number = 0
-) => {
+export default (dispatch: Function, perPage: number) => {
   let count = 0
 
   return (payload: Payload) => {
     switch (payload.type) {
       case "SearchResult":
-        if (count === 0)
-          dispatch(mainSearch.spliceMainSearchEvents(spliceIndex))
+        if (count === 0) dispatch(spliceLogs())
 
         count += payload.results.tuples.length
         break

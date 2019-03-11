@@ -5,13 +5,13 @@ import {createSelector} from "reselect"
 import {type State} from "../reducers/types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getDescriptors} from "../reducers/descriptors"
-import {getMainSearchEvents} from "../reducers/mainSearch"
+import {getLogTuples} from "../reducers/logs"
 import {getResultsTab} from "../reducers/view"
 import Log from "../models/Log"
 import * as analysis from "../reducers/analysis"
 
 export const getEventLogs = createSelector<State, void, *, *, *, *>(
-  getMainSearchEvents,
+  getLogTuples,
   getDescriptors,
   getCurrentSpaceName,
   (tuples, descriptors, spaceName) => {
@@ -37,7 +37,7 @@ export const getAnalysisLogs = createSelector<State, void, *, *>(
 
 export const getTuples = createSelector<State, void, *, *, *, *>(
   getResultsTab,
-  getMainSearchEvents,
+  getLogTuples,
   analysis.getAnalysis,
   (tab, eventTuples, analysis) => {
     switch (tab) {

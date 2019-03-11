@@ -1,17 +1,23 @@
+/* @flow */
+
+import type {State} from "./types"
+import type {Tuple} from "../types"
 import createReducer from "./createReducer"
 
+export type Logs = {
+  tuples: Tuple[],
+  spliceIndex: number
+}
+
 const initialState = {
-  isFetching: false,
   tuples: [],
-  error: null
+  spliceIndex: 0
 }
 
 export default createReducer(initialState, {
-  LOGS_REQUEST: state => ({
+  LOGS_CLEAR: state => ({
     ...state,
-    isFetching: true,
-    tuples: [],
-    error: null
+    tuples: []
   }),
 
   LOGS_RECEIVE: (state, {tuples}) => ({
@@ -19,18 +25,21 @@ export default createReducer(initialState, {
     tuples: [...state.tuples, ...tuples]
   }),
 
-  LOGS_ERROR: (state, {error}) => ({
+  LOGS_SPLICE_INDEX_SET: (state, {index}) => ({
     ...state,
-    isFetching: false,
-    error
+    spliceIndex: index
   }),
 
-  LOGS_SUCCESS: state => ({
-    ...state,
-    isFetching: false
-  })
+  LOGS_SPLICE: state => {
+    const tuples = [...state.tuples]
+    tuples.splice(state.spliceIndex)
+    return {
+      ...state,
+      tuples
+    }
+  }
 })
 
-export const getLogsIsFetching = state => state.logs.isFetching
-export const getLogTuples = state => state.logs.tuples
-export const getLogsError = state => state.logs.error
+export const getLogTuples = (state: State) => {
+  return state.logs.tuples
+}

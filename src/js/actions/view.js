@@ -1,7 +1,8 @@
 /* @flow */
 
-import * as SearchFactory from "../lib/SearchFactory"
 import {type State} from "../reducers/types"
+import {getSearchProgram} from "../selectors/searchBar"
+import {hasAnalytics} from "../lib/Program"
 
 export const showModal = (modal: string) => ({
   type: "MODAL_SHOW",
@@ -68,6 +69,4 @@ export const hideDownloads = () => ({
 })
 
 export const updateTab = (state: State) =>
-  SearchFactory.getType(state) === "ANALYTICS"
-    ? showAnalyticsTab()
-    : showLogsTab()
+  hasAnalytics(getSearchProgram(state)) ? showAnalyticsTab() : showLogsTab()

@@ -15,7 +15,7 @@ test("SearchResult", done => {
   receiver(payload)
   setTimeout(() => {
     expect(dispatch.mock.calls.length).toBe(2)
-    expect(actionTypes(dispatch)).toContain("MAIN_SEARCH_EVENTS")
+    expect(actionTypes(dispatch)).toContain("LOGS_RECEIVE")
     done()
   }, 100)
 })
