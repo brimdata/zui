@@ -1,6 +1,7 @@
 /* @flow */
 
 import type {Analysis} from "./analysis"
+import type {BoomSearches} from "./boomSearches"
 import type {Boomd} from "./boomd"
 import type {CountByTime} from "./countByTime"
 import type {Descriptors} from "./descriptors"
@@ -42,7 +43,8 @@ export type State = {
   notifications: Notifications,
   tableColumnSets: TableColumnSets,
   mainSearch: MainSearch,
-  logs: Logs
+  logs: Logs,
+  boomSearches: BoomSearches
 }
 
 export type GetState = () => State
