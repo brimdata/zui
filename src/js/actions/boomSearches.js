@@ -8,6 +8,7 @@ import {
 import type {Thunk} from "../reducers/types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import BaseSearch from "../models/searches/BaseSearch"
+import statsReceiver from "../receivers/statsReceiver"
 
 export const registerBoomSearch = (name: string, handler: Handler) => ({
   type: "BOOM_SEARCHES_REGISTER",
@@ -56,12 +57,7 @@ export const issueBoomSearch = (search: BaseSearch): Thunk => (
   const handler = boom.search(program, {searchSpan, searchSpace})
 
   receivers.forEach(cb => handler.channel(0, cb))
-
-  // Like a base search receiver?
-  // Add stats receivers //
-  // Add status receivers //
-
+  handler.each(statsReceiver(search.getName(), dispatch))
   dispatch(registerBoomSearch(search.getName(), handler))
-
   return handler
 }

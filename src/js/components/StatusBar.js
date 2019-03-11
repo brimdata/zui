@@ -5,7 +5,7 @@ import classNames from "classnames"
 
 import {type State} from "../reducers/types"
 import LoadingMessage from "./LoadingMessage"
-import XSearchStats from "../connectors/XSearchStats"
+import {XSearchStats} from "./SearchStats"
 
 type StateProps = {|
   isFetching: boolean,
