@@ -32,9 +32,14 @@ beforeEach(() => {
 test("#fetchAhead dispatches is fetching true", () => {
   store.dispatch(logViewer.fetchAhead())
 
-  expect(store.getActions()).toEqual([
-    {type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET", value: true}
-  ])
+  expect(store.getActions()).toEqual(
+    expect.arrayContaining([
+      {
+        type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET",
+        value: true
+      }
+    ])
+  )
 })
 
 test("#fetchAhead dispatches splice and new logs", () => {
@@ -47,7 +52,7 @@ test("#fetchAhead dispatches splice and new logs", () => {
 
   expect(store.getActions()).toEqual(
     expect.arrayContaining([
-      {type: "LOGS_SPLICE", index: 2},
+      {type: "LOGS_SPLICE_INDEX_SET", index: 2},
       {
         type: "LOGS_RECEIVE",
         tuples: [["1", "300"], ["1", "400"], ["1", "500"]]
@@ -95,7 +100,7 @@ test("#fetchAhead adds 1ms to ts of last change", () => {
   expect(search).toBeCalledWith(
     expect.any(String),
     expect.objectContaining({
-      searchSpan: [new Date(+lastChangeTs * 1000 + 1), new Date(10 * 1000)]
+      searchSpan: [new Date(0), new Date(+lastChangeTs * 1000 + 1)]
     })
   )
 })

@@ -1,5 +1,6 @@
 /* @flow */
 
+import {PER_PAGE} from "../../reducers/logViewer"
 import LogSearch from "./LogSearch"
 
 describe("LogSearch", () => {
@@ -12,7 +13,7 @@ describe("LogSearch", () => {
   })
 
   test("#getProgram", () => {
-    expect(base.getProgram()).toEqual("_path = conn | head 800")
+    expect(base.getProgram()).toEqual(`_path = conn | head ${PER_PAGE}`)
   })
 
   test("#getReceivers", () => {

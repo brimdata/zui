@@ -10,7 +10,7 @@ const initialState = {
   isFetchingBehind: false
 }
 
-export const PER_PAGE = 800
+export const PER_PAGE = 500
 
 export type LogViewer = typeof initialState
 

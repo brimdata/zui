@@ -32,7 +32,6 @@ export const fetchMainSearch = ({
   if (saveToHistory) dispatch(pushSearchHistory())
   if (starredSearch(state)) return showStarred(state, dispatch)
 
-  // --
   dispatch(killBoomSearches())
   setTimeout(() => {
     dispatch(clearBoomSearches())

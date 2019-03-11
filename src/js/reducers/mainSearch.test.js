@@ -1,7 +1,7 @@
 /* @flow */
 
 import {getLogTuples} from "./logs"
-import {receiveLogTuples} from "../actions/logs"
+import {receiveLogTuples, setLogsSpliceIndex, spliceLogs} from "../actions/logs"
 import ParallelSearch from "../models/ParallelSearch"
 import * as actions from "../actions/mainSearch"
 import initStore from "../test/initStore"
@@ -23,11 +23,12 @@ test("MAIN_SEARCH_COMPLETE sets is fetching to false", () => {
   expect(mainSearch.getMainSearchIsFetching(state)).toBe(false)
 })
 
-test("MAIN_SEARCH_EVENTS_SPLICE chomps off the events at an index", () => {
+test("SPLICE_LOGS chomps off the events at an index", () => {
   const store = initStore()
   const state2 = store.dispatchAll([
     receiveLogTuples([["a"], ["b"], ["c"], ["d"]]),
-    actions.spliceMainSearchEvents(1)
+    setLogsSpliceIndex(1),
+    spliceLogs()
   ])
 
   expect(getLogTuples(state2)).toEqual([["a"]])

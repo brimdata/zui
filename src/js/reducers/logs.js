@@ -5,11 +5,13 @@ import type {Tuple} from "../types"
 import createReducer from "./createReducer"
 
 export type Logs = {
-  tuples: Tuple[]
+  tuples: Tuple[],
+  spliceIndex: number
 }
 
 const initialState = {
-  tuples: []
+  tuples: [],
+  spliceIndex: 0
 }
 
 export default createReducer(initialState, {
@@ -23,9 +25,14 @@ export default createReducer(initialState, {
     tuples: [...state.tuples, ...tuples]
   }),
 
-  LOGS_SPLICE: (state, {index}) => {
+  LOGS_SPLICE_INDEX_SET: (state, {index}) => ({
+    ...state,
+    spliceIndex: index
+  }),
+
+  LOGS_SPLICE: state => {
     const tuples = [...state.tuples]
-    tuples.splice(index)
+    tuples.splice(state.spliceIndex)
     return {
       ...state,
       tuples

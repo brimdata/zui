@@ -1,3 +1,4 @@
+import {PER_PAGE} from "../reducers/logViewer"
 import {changeSearchBarInput} from "./searchBar"
 import {fetchMainSearch} from "./mainSearch"
 import {init, setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
@@ -103,7 +104,10 @@ test("search with inner time", done => {
   ])
 
   setTimeout(() => {
-    expect(search).toBeCalledWith("_path = conn | head 800", expect.any(Object))
+    expect(search).toBeCalledWith(
+      `_path = conn | head ${PER_PAGE}`,
+      expect.any(Object)
+    )
     done()
   })
 })
@@ -203,7 +207,7 @@ test("fetching a regular search puts procs on the end", done => {
   ])
 
   setTimeout(() => {
-    expect(search).toBeCalledWith("* | head 800", expect.any(Object))
+    expect(search).toBeCalledWith(`* | head ${PER_PAGE}`, expect.any(Object))
     done()
   })
 })
