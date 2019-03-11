@@ -13,12 +13,6 @@ beforeEach(() => {
   request = new ParallelSearch(store.dispatch, [])
 })
 
-test("request resets the stats to fetching", () => {
-  const state = store.dispatchAll([actions.requestMainSearch(request)])
-
-  expect(mainSearch.getMainSearchIsFetching(state)).toBe(true)
-})
-
 test("MAIN_SEARCH_COMPLETE sets is fetching to false", () => {
   const store = initStore()
   const state = store.dispatchAll([

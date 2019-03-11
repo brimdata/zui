@@ -53,11 +53,17 @@ export const issueBoomSearch = (search: BaseSearch): Thunk => (
   const program = search.getProgram()
   const searchSpan = search.getSpan()
   const searchSpace = getCurrentSpaceName(getState())
+  const name = search.getName()
   const receivers = search.getReceivers(dispatch)
   const handler = boom.search(program, {searchSpan, searchSpace})
 
   receivers.forEach(cb => handler.channel(0, cb))
-  handler.each(statsReceiver(search.getName(), dispatch))
-  dispatch(registerBoomSearch(search.getName(), handler))
+  handler
+    .each(statsReceiver(name, dispatch))
+    .done(() => dispatch(setBoomSearchStatus(name, "SUCCESS")))
+    .error(() => dispatch(setBoomSearchStatus(name, "ERROR")))
+    .abort(() => dispatch(setBoomSearchStatus(name, "ABORTED")))
+
+  dispatch(registerBoomSearch(name, handler))
   return handler
 }

@@ -10,12 +10,12 @@ import type {DateTuple} from "../lib/TimeWindow"
 import {type DispatchProps, type State} from "../reducers/types"
 import {Fieldset} from "./Typography"
 import {type Interval} from "../lib/countByTimeInterval"
+import {getHistogramStatus} from "../selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import {
   getMainSearchCountByTime,
   getCountByTimeData
 } from "../reducers/countByTime"
-import {getMainSearchIsFetching} from "../reducers/mainSearch"
 import Chart from "../models/Chart"
 import HoverLine from "../charts/HoverLine"
 import LoadingMessage from "./LoadingMessage"
@@ -156,7 +156,7 @@ const stateToProps = (state: State) => ({
   ...getMainSearchCountByTime(state),
   timeWindow: getTimeWindow(state),
   innerTimeWindow: getInnerTimeWindow(state),
-  isFetching: getMainSearchIsFetching(state)
+  isFetching: getHistogramStatus(state) === "FETCHING"
 })
 
 export const XHistogram = connect<Props, OwnProps, _, _, _, _>(

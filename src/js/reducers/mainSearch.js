@@ -6,6 +6,7 @@ import type {State} from "./types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getDescriptors} from "./descriptors"
 import {getLogTuples} from "./logs"
+import {getPrimarySearch} from "../selectors/boomSearches"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {isTimeWindow} from "../models/TimeWindow"
 import Log from "../models/Log"
@@ -50,9 +51,12 @@ const BOOM_INTERVALS = {
   day: "day"
 }
 
-export const getMainSearchIsFetching = (state: State) => {
-  return getMainSearchStatus(state) === "FETCHING"
-}
+export const getMainSearchIsFetching = createSelector<State, void, *, *>(
+  getPrimarySearch,
+  search => {
+    return !!(search && search.status === "FETCHING")
+  }
+)
 
 export const getMainSearchIsComplete = (state: State) => {
   return getMainSearchStatus(state) === "COMPLETE"
