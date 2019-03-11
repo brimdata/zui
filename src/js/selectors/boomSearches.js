@@ -10,7 +10,7 @@ export const getPrimarySearch = createSelector<State, void, *, *, *>(
   getBoomSearches,
   getResultsTab,
   (searches, tab) => {
-    if (tab === "logs") return searches["LogSearch"]
+    if (tab === "logs") return searches["LogSearch"] || searches["HeadSearch"]
     if (tab === "analytics") return searches["AnalyticSearch"]
   }
 )
