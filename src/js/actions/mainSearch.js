@@ -2,12 +2,16 @@
 
 import type {Thunk} from "../reducers/types"
 import {clearAnalysis} from "./analysis"
+import {
+  clearBoomSearches,
+  issueBoomSearch,
+  killBoomSearches
+} from "./boomSearches"
 import {clearLogs, receiveLogTuples} from "./logs"
 import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
 import {getMainSearchRequest} from "../reducers/mainSearch"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getStarredLogs} from "../reducers/starredLogs"
-import {issueBoomSearch} from "./boomSearches"
 import {pushSearchHistory} from "./searchHistory"
 import {updateTab} from "../actions/view"
 import {validateProgram} from "./searchBar"
@@ -29,14 +33,18 @@ export const fetchMainSearch = ({
   if (starredSearch(state)) return showStarred(state, dispatch)
 
   // --
-  dispatch(clearLogs())
-  dispatch(clearAnalysis())
+  dispatch(killBoomSearches())
+  setTimeout(() => {
+    dispatch(clearBoomSearches())
+    dispatch(clearLogs())
+    dispatch(clearAnalysis())
 
-  const program = getSearchProgram(state)
-  const innerSpan = getInnerTimeWindow(state)
-  const outerSpan = getOuterTimeWindow(state)
-  const searches = SearchFactory.createAll(program, innerSpan, outerSpan)
-  searches.forEach(search => dispatch(issueBoomSearch(search)))
+    const program = getSearchProgram(state)
+    const innerSpan = getInnerTimeWindow(state)
+    const outerSpan = getOuterTimeWindow(state)
+    const searches = SearchFactory.createAll(program, innerSpan, outerSpan)
+    searches.forEach(search => dispatch(issueBoomSearch(search)))
+  })
 }
 
 const starredSearch = state => {
