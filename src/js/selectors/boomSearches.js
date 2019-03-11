@@ -22,3 +22,13 @@ export const getHistogramStatus = createSelector<State, void, *, *>(
     return search && search.status
   }
 )
+
+export const getSomeAreFetching = createSelector<State, void, *, *>(
+  getBoomSearches,
+  searches => {
+    for (let name in searches) {
+      if (searches[name].status === "FETCHING") return true
+    }
+    return false
+  }
+)

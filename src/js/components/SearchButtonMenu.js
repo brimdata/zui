@@ -4,8 +4,8 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {State} from "../reducers/types"
-import {getMainSearchIsFetching} from "../reducers/mainSearch"
-import {killMainSearch} from "../actions/mainSearch"
+import {getSomeAreFetching} from "../selectors/boomSearches"
+import {killBoomSearches} from "../actions/boomSearches"
 import {showModal} from "../actions/view"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
@@ -20,7 +20,7 @@ export default class SearchButtonMenu extends React.Component<Props> {
           <>
             <li
               onClick={() => {
-                this.props.dispatch(killMainSearch())
+                this.props.dispatch(killBoomSearches())
               }}
             >
               Kill Search
@@ -40,7 +40,7 @@ export default class SearchButtonMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  isFetching: getMainSearchIsFetching(state)
+  isFetching: getSomeAreFetching(state)
 })
 
 export const XSearchButtonMenu = connect<Props, {||}, _, _, _, _>(
