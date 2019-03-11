@@ -13,7 +13,6 @@ import type {MainSearch} from "./mainSearch"
 import type {Notifications} from "./notifications"
 import type {SearchBar} from "./searchBar"
 import type {SearchHistory} from "./searchHistory"
-import type {SearchStats} from "./searchStats"
 import type {SelectedColumns} from "./selectedColumns"
 import type {Spaces} from "./spaces"
 import type {TableColumnSets} from "./tableColumnSets"
@@ -32,7 +31,6 @@ export type State = {
   boomd: Boomd,
   logViewer: LogViewer,
   selectedColumns: SelectedColumns,
-  searchStats: SearchStats,
   searchHistory: SearchHistory,
   whois: Whois,
   logDetails: LogDetails,

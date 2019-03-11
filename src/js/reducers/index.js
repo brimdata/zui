@@ -17,7 +17,6 @@ import notifications from "./notifications"
 import packets from "./packets"
 import searchBar from "./searchBar"
 import searchHistory from "./searchHistory"
-import searchStats from "./searchStats"
 import selectedColumns from "./selectedColumns"
 import spaces from "./spaces"
 import starredLogs from "./starredLogs"
@@ -41,7 +40,6 @@ export default combineReducers<*, *>({
   countByTime,
   analysis,
   logDetails,
-  searchStats,
   boomd,
   starredLogs,
   packets,
