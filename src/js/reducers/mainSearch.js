@@ -3,7 +3,6 @@
 import {createSelector} from "reselect"
 
 import type {State} from "./types"
-import type {Tuple} from "../types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getDescriptors} from "./descriptors"
 import {getLogTuples} from "./logs"
@@ -17,13 +16,11 @@ import createReducer from "./createReducer"
 
 const initialState = {
   status: "INIT",
-  events: [],
   request: null
 }
 
 export type MainSearch = {
   status: "INIT" | "FETCHING" | "COMPLETE",
-  events: Tuple[],
   request: ?ParallelSearch
 }
 
@@ -36,18 +33,6 @@ export default createReducer(initialState, {
       ...initialState,
       status: "FETCHING",
       request
-    }
-  },
-  MAIN_SEARCH_EVENTS: (state, {events}) => ({
-    ...state,
-    events: [...state.events, ...events]
-  }),
-  MAIN_SEARCH_EVENTS_SPLICE: (state, {index}) => {
-    const events = [...state.events]
-    events.splice(index)
-    return {
-      ...state,
-      events
     }
   },
   MAIN_SEARCH_COMPLETE: state => ({

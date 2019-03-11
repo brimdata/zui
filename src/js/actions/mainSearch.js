@@ -1,7 +1,6 @@
 /* @flow */
 
 import type {Thunk} from "../reducers/types"
-import type {Tuple} from "../types"
 import {getMainSearchRequest} from "../reducers/mainSearch"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getStarredLogs} from "../reducers/starredLogs"
