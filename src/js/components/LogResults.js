@@ -25,13 +25,11 @@ import * as logDetails from "../actions/logDetails"
 
 type StateProps = {|
   logs: Log[],
-  isComplete: boolean,
   selectedLog: ?Log,
   timeZone: string,
   moreAhead: boolean,
   isFetchingAhead: boolean,
   isFetching: boolean,
-  isComplete: boolean,
   tuples: Tuple[],
   tableColumns: TableColumns,
   tab: ResultsTabEnum
@@ -54,7 +52,8 @@ export default class LogResults extends React.Component<Props> {
   }
 
   render() {
-    if (!this.props.tuples.length && this.props.isComplete) return <NoResults />
+    if (!this.props.tuples.length && !this.props.isFetching)
+      return <NoResults />
     if (!this.props.logs.length) return null
 
     return (
@@ -89,7 +88,6 @@ const stateToProps = (state: State) => ({
   tab: getResultsTab(state),
   isFetchingAhead: isFetchingAhead(state),
   isFetching: getMainSearchIsFetching(state),
-  isComplete: getMainSearchIsComplete(state),
   moreAhead: moreAhead(state),
   tableColumns: getCurrentTableColumns(state),
   timeZone: getTimeZone(state),
