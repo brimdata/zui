@@ -1,20 +1,22 @@
 /* @flow */
 
-import {clearMainSearch} from "./mainSearch"
-import {clearDescriptors} from "./descriptors"
-import {clearSearchBar} from "./searchBar"
-import {clearTuplesByUid} from "./tuplesByUid"
-import {clearSpaces} from "./spaces"
-import {clearTimeWindows} from "./timeWindow"
-import {clearFilterTree} from "./filterTree"
-import {clearStarredLogs} from "./starredLogs"
-import {clearSearchHistory} from "./searchHistory"
-import {clearLogViewer} from "./logViewer"
-import {clearCountByTime} from "./countByTime"
 import type {Thunk} from "../reducers/types"
+import {clearAnalysis} from "./analysis"
+import {clearCountByTime} from "./countByTime"
+import {clearDescriptors} from "./descriptors"
+import {clearFilterTree} from "./filterTree"
+import {clearLogViewer} from "./logViewer"
+import {clearLogs} from "./logs"
+import {clearSearchBar} from "./searchBar"
+import {clearSearchHistory} from "./searchHistory"
+import {clearSpaces} from "./spaces"
+import {clearStarredLogs} from "./starredLogs"
+import {clearTimeWindows} from "./timeWindow"
+import {clearTuplesByUid} from "./tuplesByUid"
 
-export const disconnect = (): Thunk => (dispatch, _g, _a) => {
-  dispatch(clearMainSearch())
+export const disconnect = (): Thunk => dispatch => {
+  dispatch(clearLogs())
+  dispatch(clearAnalysis())
   dispatch(clearDescriptors())
   dispatch(clearSearchBar())
   dispatch(clearTuplesByUid())

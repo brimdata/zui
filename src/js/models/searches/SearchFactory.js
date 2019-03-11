@@ -1,6 +1,5 @@
-import {hasAnalytics, hasHeadOrTailProc} from "../../lib/Program"
+import {hasAnalytics} from "../../lib/Program"
 import AnalyticSearch from "./AnalyticSearch"
-import HeadSearch from "./HeadSearch"
 import HistogramSearch from "./HistogramSearch"
 import LogSearch from "./LogSearch"
 
@@ -12,13 +11,6 @@ export default class SearchFactory {
 
     if (innerSpan) {
       return [new LogSearch(program, innerSpan)]
-    }
-
-    if (hasHeadOrTailProc(program)) {
-      return [
-        new HistogramSearch(program, outerSpan),
-        new HeadSearch(program, outerSpan)
-      ]
     }
 
     return [

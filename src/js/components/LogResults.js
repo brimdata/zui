@@ -11,10 +11,7 @@ import {buildLogDetail} from "../selectors/logDetails"
 import {fetchAhead} from "../actions/logViewer"
 import {getCurrentTableColumns} from "../selectors/tableColumnSets"
 import {getLogs, getTuples} from "../selectors/logs"
-import {
-  getMainSearchIsComplete,
-  getMainSearchIsFetching
-} from "../reducers/mainSearch"
+import {getMainSearchIsFetching} from "../selectors/boomSearches"
 import {isFetchingAhead, moreAhead} from "../reducers/logViewer"
 import Log from "../models/Log"
 import LogViewer from "../components/LogViewer"

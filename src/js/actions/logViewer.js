@@ -2,13 +2,13 @@
 
 import type {Thunk} from "redux-thunk"
 
+import {getLogs} from "../selectors/logs"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {issueBoomSearch} from "./boomSearches"
 import {setLogsSpliceIndex} from "./logs"
 import * as Arr from "../lib/Array"
 import LogSearch from "../models/searches/LogSearch"
 import * as Time from "../lib/Time"
-import * as mainSearch from "../reducers/mainSearch"
 import * as searchBar from "../selectors/searchBar"
 
 export const clearLogViewer = () => ({
@@ -37,7 +37,7 @@ export const setIsFetchingAhead = (value: boolean) => ({
 
 export const fetchAhead = (): Thunk => (dispatch, getState) => {
   const state = getState()
-  const logs = mainSearch.getLogs(state)
+  const logs = getLogs(state)
   let searchSpan = getTimeWindow(state)
   let spliceIndex = 0
 

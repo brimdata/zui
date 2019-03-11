@@ -10,7 +10,7 @@ export const getPrimarySearch = createSelector<State, void, *, *, *>(
   getBoomSearches,
   getResultsTab,
   (searches, tab) => {
-    if (tab === "logs") return searches["LogSearch"] || searches["HeadSearch"]
+    if (tab === "logs") return searches["LogSearch"]
     if (tab === "analytics") return searches["AnalyticSearch"]
   }
 )
@@ -30,5 +30,12 @@ export const getSomeAreFetching = createSelector<State, void, *, *>(
       if (searches[name].status === "FETCHING") return true
     }
     return false
+  }
+)
+
+export const getMainSearchIsFetching = createSelector<State, void, *, *>(
+  getPrimarySearch,
+  search => {
+    return !!(search && search.status === "FETCHING")
   }
 )

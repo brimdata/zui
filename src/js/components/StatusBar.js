@@ -1,11 +1,14 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
 import {type State} from "../reducers/types"
-import LoadingMessage from "./LoadingMessage"
 import {XSearchStats} from "./SearchStats"
+import {getMainSearchIsFetching} from "../selectors/boomSearches"
+import {isFetchingAhead} from "../reducers/logViewer"
+import LoadingMessage from "./LoadingMessage"
 
 type StateProps = {|
   isFetching: boolean,
@@ -36,10 +39,6 @@ export default class StatusBar extends React.Component<Props> {
     )
   }
 }
-
-import {connect} from "react-redux"
-import {getMainSearchIsFetching} from "../reducers/mainSearch"
-import {isFetchingAhead} from "../reducers/logViewer"
 
 const stateToProps = (state: State): StateProps => ({
   isFetching: getMainSearchIsFetching(state) || isFetchingAhead(state),

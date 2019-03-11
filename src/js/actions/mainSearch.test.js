@@ -244,17 +244,3 @@ test("a bad search query", () => {
     expect.arrayContaining(["SEARCH_BAR_PARSE_ERROR"])
   )
 })
-
-test("starred querys", () => {
-  const actions = [
-    setSpaceInfo(spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
-    changeSearchBarInput(":starred"),
-    fetchMainSearch()
-  ]
-  actions.forEach(store.dispatch)
-
-  expect(store.getActions().map(action => action.type)).toEqual(
-    expect.arrayContaining(["MAIN_SEARCH_REQUEST", "SHOW_LOGS_TAB"])
-  )
-})

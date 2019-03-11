@@ -8,11 +8,9 @@ import boomd from "./boomd"
 import countByTime from "./countByTime"
 import descriptors from "./descriptors"
 import filterTree from "./filterTree"
-import initialLoad from "./initialLoad"
 import logDetails from "./logDetails"
 import logViewer from "./logViewer"
 import logs from "./logs"
-import mainSearch from "./mainSearch"
 import notifications from "./notifications"
 import packets from "./packets"
 import searchBar from "./searchBar"
@@ -30,9 +28,7 @@ export default combineReducers<*, *>({
   logs,
   view,
   searchBar,
-  initialLoad,
   descriptors,
-  mainSearch,
   tuplesByUid,
   spaces,
   timeWindow,

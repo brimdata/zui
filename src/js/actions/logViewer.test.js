@@ -2,13 +2,12 @@
 
 import {Handler} from "../BoomClient"
 import {receiveDescriptor} from "./descriptors"
-import {receiveLogTuples} from "./logs"
+import {receiveLogTuples, setLogsSpliceIndex, spliceLogs} from "./logs"
 import {setCurrentSpaceName} from "./spaces"
 import {setOuterTimeWindow} from "./timeWindow"
 import MockBoomClient from "../test/MockBoomClient"
 import initStore from "../test/initStore"
 import * as logViewer from "./logViewer"
-import * as mainSearch from "../actions/mainSearch"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
@@ -107,7 +106,8 @@ test("#fetchAhead adds 1ms to ts of last change", () => {
 
 test("#fetchAhead when there is only 1 event", () => {
   const search = jest.spyOn(boom, "search")
-  store.dispatch(mainSearch.spliceMainSearchEvents(1))
+  store.dispatch(setLogsSpliceIndex(1))
+  store.dispatch(spliceLogs())
   store.dispatch(logViewer.fetchAhead())
 
   expect(search).toBeCalledWith(

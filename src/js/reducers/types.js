@@ -9,7 +9,6 @@ import type {FilterTree} from "./filterTree"
 import type {LogDetails} from "./logDetails"
 import type {LogViewer} from "./logViewer"
 import type {Logs} from "./logs"
-import type {MainSearch} from "./mainSearch"
 import type {Notifications} from "./notifications"
 import type {SearchBar} from "./searchBar"
 import type {SearchHistory} from "./searchHistory"
@@ -40,7 +39,6 @@ export type State = {
   view: View,
   notifications: Notifications,
   tableColumnSets: TableColumnSets,
-  mainSearch: MainSearch,
   logs: Logs,
   boomSearches: BoomSearches
 }

@@ -9,8 +9,12 @@ describe("#disconnect", () => {
     actionTypes = store.getActions().map(a => a.type)
   })
 
-  test("dispatches MAIN_SEARCH_CLEAR", () => {
-    expect(actionTypes).toContain("MAIN_SEARCH_CLEAR")
+  test("dispatches LOGS_CLEAR", () => {
+    expect(actionTypes).toContain("LOGS_CLEAR")
+  })
+
+  test("dispatches ANALYSIS_CLEAR", () => {
+    expect(actionTypes).toContain("ANALYSIS_CLEAR")
   })
 
   test("dispatches DESCRIPTORS_CLEAR", () => {
