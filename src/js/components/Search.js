@@ -6,7 +6,7 @@ import {connect} from "react-redux"
 import React from "react"
 
 import {type DispatchProps, type State as S} from "../reducers/types"
-import {UnauthorizedError} from "../models/Errors"
+import {NetworkError, UnauthorizedError} from "../models/Errors"
 import {XControlBar} from "./ControlBar"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XHistogram} from "./Histogram"
@@ -51,7 +51,8 @@ export default class Search extends React.Component<Props, State> {
 
   render() {
     const {ready, error} = this.state
-    if (error instanceof UnauthorizedError) return <Redirect to="/connect " />
+    if (error instanceof UnauthorizedError || error instanceof NetworkError)
+      return <Redirect to="/connect " />
     if (error) return <StartupError error={error} />
     if (!ready) return null
 
