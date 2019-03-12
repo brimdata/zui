@@ -9,6 +9,7 @@ export default class Handler {
   abortCallbacks: Function[]
   isDone: boolean
   isAborted: boolean
+  shouldCallbackAbort: boolean
 
   constructor(abortFunc: Function) {
     this.abortFunc = abortFunc
@@ -19,10 +20,12 @@ export default class Handler {
     this.eachCallbacks = []
     this.errorCallbacks = []
     this.abortCallbacks = []
+    this.shouldCallbackAbort = true
   }
 
-  abortRequest() {
+  abortRequest(fireEvent: boolean = true) {
     if (!this.isDone) {
+      this.shouldCallbackAbort = fireEvent
       this.abortFunc()
     }
   }
@@ -71,7 +74,9 @@ export default class Handler {
 
   onAbort() {
     this.isAborted = true
-    this.abortCallbacks.forEach(cb => cb())
+    if (this.shouldCallbackAbort) {
+      this.abortCallbacks.forEach(cb => cb())
+    }
   }
 
   receive(payload: *) {

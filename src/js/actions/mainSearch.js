@@ -1,12 +1,8 @@
 /* @flow */
 
 import type {Thunk} from "../reducers/types"
+import {cancelBoomSearches, issueBoomSearch} from "./boomSearches"
 import {clearAnalysis} from "./analysis"
-import {
-  clearBoomSearches,
-  issueBoomSearch,
-  killBoomSearches
-} from "./boomSearches"
 import {clearLogs} from "./logs"
 import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
@@ -27,15 +23,14 @@ export const fetchMainSearch = ({
   dispatch(updateTab(state))
   if (saveToHistory) dispatch(pushSearchHistory())
 
-  dispatch(killBoomSearches())
+  dispatch(cancelBoomSearches())
   dispatch(clearLogs())
-  dispatch(clearBoomSearches())
   dispatch(clearAnalysis())
-  setTimeout(() => {
-    const program = getSearchProgram(state)
-    const innerSpan = getInnerTimeWindow(state)
-    const outerSpan = getOuterTimeWindow(state)
-    const searches = SearchFactory.createAll(program, innerSpan, outerSpan)
-    searches.forEach(search => dispatch(issueBoomSearch(search)))
-  })
+
+  const program = getSearchProgram(state)
+  const innerSpan = getInnerTimeWindow(state)
+  const outerSpan = getOuterTimeWindow(state)
+  const searches = SearchFactory.createAll(program, innerSpan, outerSpan)
+
+  searches.forEach(search => dispatch(issueBoomSearch(search)))
 }

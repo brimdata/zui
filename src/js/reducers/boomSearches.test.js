@@ -1,5 +1,6 @@
 import {Handler} from "../BoomClient"
 import {
+  cancelBoomSearches,
   clearBoomSearches,
   killBoomSearches,
   registerBoomSearch,
@@ -36,12 +37,24 @@ describe("boomSearches reducer", () => {
     expect(getSearch("Histogram").status).toBe("SUCCESS")
   })
 
+  test("#setBoomSearchStatus for search that does not exist", () => {
+    expect(() => {
+      store.dispatch(setBoomSearchStatus("NoSearchHere", "SUCCESS"))
+    }).toThrowErrorMatchingSnapshot()
+  })
+
   test("#setBoomSearchStats", () => {
     store.dispatch(setBoomSearchStats("Histogram", {tuples_read: 100}))
 
     expect(getSearch("Histogram").stats).toEqual({
       tuples_read: 100
     })
+  })
+
+  test("#setBoomSearchStats for search that does not exist", () => {
+    expect(() => {
+      store.dispatch(setBoomSearchStats("NoSearchHere", {tuples_read: 100}))
+    }).toThrowErrorMatchingSnapshot()
   })
 
   test("#boomSearchesClear", () => {
@@ -60,5 +73,33 @@ describe("boomSearches reducer", () => {
     ])
 
     expect(killFunc).toBeCalledTimes(2)
+  })
+
+  test("#killBoomSearches runs abort callback", () => {
+    const handler = new Handler(jest.fn())
+
+    const func = jest.spyOn(handler, "abortRequest")
+
+    store.dispatchAll([
+      clearBoomSearches(),
+      registerBoomSearch("KillMe", handler),
+      killBoomSearches()
+    ])
+
+    expect(func).toBeCalledWith()
+  })
+
+  test("#cancelBoomSearches does not run abort callback", () => {
+    const handler = new Handler(jest.fn())
+
+    const func = jest.spyOn(handler, "abortRequest")
+
+    store.dispatchAll([
+      clearBoomSearches(),
+      registerBoomSearch("Cancel Me", handler),
+      cancelBoomSearches()
+    ])
+
+    expect(func).toBeCalledWith(false)
   })
 })
