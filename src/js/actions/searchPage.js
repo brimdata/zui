@@ -5,6 +5,7 @@ import {
   getCurrentSpaceName,
   getCurrentSpaceTimeWindow
 } from "../reducers/spaces"
+import {killBoomSearches} from "./boomSearches"
 import {subtract} from "../lib/Time"
 import * as searchBar from "./searchBar"
 import * as spaces from "./spaces"
@@ -32,6 +33,7 @@ export const init = (): Thunk => (dispatch, getState, boom) =>
 
 export const switchSpace = (name: string): Thunk => {
   return (dispatch, getState, boom) => {
+    dispatch(killBoomSearches())
     return boom.spaces.get(name).then(info => {
       dispatch(spaces.setSpaceInfo(info))
       dispatch(spaces.setCurrentSpaceName(info.name))

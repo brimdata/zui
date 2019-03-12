@@ -16,8 +16,4 @@ describe("HistogramSearch", () => {
       "_path = conn | every 1sec count() by _path"
     )
   })
-
-  test("#getReceivers", () => {
-    expect(search.getReceivers(jest.fn())).toHaveLength(1)
-  })
 })

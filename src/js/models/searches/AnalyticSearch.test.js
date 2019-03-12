@@ -14,8 +14,4 @@ describe("AnalyticSearch", () => {
   test("#getName", () => {
     expect(search.getName()).toEqual("AnalyticSearch")
   })
-
-  test("#getReceivers", () => {
-    expect(search.getReceivers(jest.fn())).toHaveLength(1)
-  })
 })
