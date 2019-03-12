@@ -38,10 +38,14 @@ export const clearBoomSearches = () => ({
 export const killBoomSearches = (): Thunk => (_dispatch, getState) => {
   const state = getState()
   const searches = getBoomSearches(state)
+  for (let name in searches) searches[name].handler.abortRequest()
+}
 
-  for (let name in searches) {
-    searches[name].handler.abortRequest()
-  }
+export const cancelBoomSearches = (): Thunk => (dispatch, getState) => {
+  const state = getState()
+  const searches = getBoomSearches(state)
+  for (let name in searches) searches[name].handler.abortRequest(false)
+  dispatch(clearBoomSearches())
 }
 
 export const issueBoomSearch = (search: BaseSearch): Thunk => (

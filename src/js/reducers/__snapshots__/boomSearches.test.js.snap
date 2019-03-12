@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`boomSearches reducer #setBoomSearchStats for search that does not exist 1`] = `"Trying to update search that does not exist: NoSearchHere"`;
+
+exports[`boomSearches reducer #setBoomSearchStatus for search that does not exist 1`] = `"Trying to update search that does not exist: NoSearchHere"`;
