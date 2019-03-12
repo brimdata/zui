@@ -15,8 +15,4 @@ describe("LogSearch", () => {
   test("#getProgram", () => {
     expect(base.getProgram()).toEqual(`_path = conn | head ${PER_PAGE}`)
   })
-
-  test("#getReceivers", () => {
-    expect(base.getReceivers(jest.fn())).toHaveLength(2)
-  })
 })
