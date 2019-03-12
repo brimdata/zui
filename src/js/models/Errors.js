@@ -31,7 +31,7 @@ export class InternalServerError extends AppError {
 
 export class NetworkError extends AppError {
   static is(e: RawError) {
-    return /Failed to fetch/.test(e.toString())
+    return /(Failed to fetch|ECONNREFUSED)/.test(e.toString())
   }
 
   message() {
