@@ -28,11 +28,10 @@ export const fetchMainSearch = ({
   if (saveToHistory) dispatch(pushSearchHistory())
 
   dispatch(killBoomSearches())
+  dispatch(clearLogs())
+  dispatch(clearBoomSearches())
+  dispatch(clearAnalysis())
   setTimeout(() => {
-    dispatch(clearBoomSearches())
-    dispatch(clearLogs())
-    dispatch(clearAnalysis())
-
     const program = getSearchProgram(state)
     const innerSpan = getInnerTimeWindow(state)
     const outerSpan = getOuterTimeWindow(state)
