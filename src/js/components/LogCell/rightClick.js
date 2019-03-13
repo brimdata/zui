@@ -117,7 +117,7 @@ export const whois = (field: Field) => ({
 
 export const groupByDrillDown = (program: string, log: Log) => ({
   type: "action",
-  text: "New search with this value",
+  text: "Pivot to logs",
   onClick: (dispatch: Dispatch) => {
     const newProgram = drillDown(program, log)
     if (newProgram) {
