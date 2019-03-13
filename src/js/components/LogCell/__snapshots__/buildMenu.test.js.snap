@@ -30,7 +30,7 @@ exports[`Analysis Right Click group by proc 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "New search with this value",
+    "text": "Pivot to logs",
     "type": "action",
   },
   Object {
