@@ -45,6 +45,12 @@ export const hasHeadOrTailProc = (program: Program) => {
   return !!getProcs(ast).find(({op}) => op === HEAD_PROC || op === TAIL_PROC)
 }
 
+export const hasGroupByProc = (program: Program) => {
+  const [ast] = parse(program)
+  if (!ast) return false
+  return !!getGroupByProc(ast)
+}
+
 export const getProcs = (ast: *) => {
   if (!ast || !ast.proc) return []
   return COMPOUND_PROCS.includes(ast.proc.op) ? ast.proc.procs : [ast.proc]

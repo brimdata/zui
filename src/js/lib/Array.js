@@ -31,3 +31,16 @@ export const head = (array: *[], n: number) => {
 export const indexInBounds = (index: number, array: *[]) => {
   return isNumber(index) && index >= 0 && index < array.length
 }
+
+export const flattenJoin = (array: *[], between: *) => {
+  let newArray = []
+
+  for (let index = 0; index < array.length; index++) {
+    if (array[index] && array[index].length) {
+      newArray = [...newArray, ...array[index]]
+      if (index !== array.length - 1) newArray.push(between)
+    }
+  }
+
+  return newArray
+}

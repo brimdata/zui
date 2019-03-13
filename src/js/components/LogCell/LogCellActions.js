@@ -26,7 +26,8 @@ type OwnProps = {|
 
 type StateProps = {|
   space: Space,
-  resultType: ResultsTabEnum
+  resultType: ResultsTabEnum,
+  menuActions: MenuItemData[]
 |}
 
 type Props = {|
@@ -36,13 +37,6 @@ type Props = {|
 |}
 
 export default class LogCellActions extends React.Component<Props> {
-  menu: MenuItemData[]
-
-  constructor(props: Props) {
-    super(props)
-    this.menu = buildMenu(props)
-  }
-
   renderItem = (item: MenuItemData, index: number) => {
     switch (item.type) {
       case "action":
@@ -73,7 +67,7 @@ export default class LogCellActions extends React.Component<Props> {
               )}
             >
               <MenuList ref={measureRef}>
-                {this.menu.map(this.renderItem)}
+                {this.props.menuActions.map(this.renderItem)}
               </MenuList>
             </Portal>
           )
@@ -83,7 +77,8 @@ export default class LogCellActions extends React.Component<Props> {
   }
 }
 
-const stateToProps = (state: State): StateProps => ({
+const stateToProps = (state: State, props: OwnProps): StateProps => ({
+  menuActions: buildMenu(state, props),
   space: spaces.getCurrentSpace(state),
   resultType: getResultsTab(state)
 })

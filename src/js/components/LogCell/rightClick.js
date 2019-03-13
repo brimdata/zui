@@ -5,6 +5,7 @@ import {
   appendQueryCountBy,
   appendQueryExclude,
   appendQueryInclude,
+  changeSearchBarInput,
   submitSearchBar
 } from "../../actions/searchBar"
 import {fetchPackets} from "../../actions/packets"
@@ -14,6 +15,7 @@ import {showRightSidebar} from "../../actions/view"
 import {viewLogDetail} from "../../actions/logDetails"
 import Field, {TimeField} from "../../models/Field"
 import Log from "../../models/Log"
+import drillDown from "../../lib/drillDown"
 import timeWindow from "../../reducers/timeWindow"
 
 type Action = {
@@ -30,7 +32,7 @@ export type MenuItemData = Seperator | Action
 
 export const exclude = (field: Field) => ({
   type: "action",
-  text: `Filter out this ${field.name}`,
+  text: "Exclude this value",
   onClick: (dispatch: Dispatch, e: Event) => {
     e.stopPropagation()
     dispatch(appendQueryExclude(field))
@@ -40,7 +42,7 @@ export const exclude = (field: Field) => ({
 
 export const include = (field: Field) => ({
   type: "action",
-  text: `Only show this ${field.name}`,
+  text: "Include this value",
   onClick: (dispatch: Dispatch, e: Event) => {
     e.stopPropagation()
     dispatch(appendQueryInclude(field))
@@ -68,16 +70,7 @@ export const pcaps = (log: Log) => ({
 
 export const detail = (log: Log) => ({
   type: "action",
-  text: "View log details",
-  onClick: (dispatch: Dispatch) => {
-    dispatch(viewLogDetail(log))
-    dispatch(showRightSidebar())
-  }
-})
-
-export const analyticDetail = (log: Log) => ({
-  type: "action",
-  text: "View analytic details",
+  text: "Open details",
   onClick: (dispatch: Dispatch) => {
     dispatch(viewLogDetail(log))
     dispatch(showRightSidebar())
@@ -107,6 +100,18 @@ export const whois = (field: Field) => ({
   text: "Whois Lookup",
   onClick: (dispatch: Dispatch) => {
     dispatch(fetchWhois(field.value))
+  }
+})
+
+export const groupByDrillDown = (program: string, log: Log) => ({
+  type: "action",
+  text: "Query for these logs",
+  onClick: (dispatch: Dispatch) => {
+    const newProgram = drillDown(program, log)
+    if (newProgram) {
+      dispatch(changeSearchBarInput(newProgram))
+      dispatch(submitSearchBar())
+    }
   }
 })
 
