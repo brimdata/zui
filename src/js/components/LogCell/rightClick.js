@@ -6,6 +6,7 @@ import {
   appendQueryExclude,
   appendQueryInclude,
   changeSearchBarInput,
+  removeAllSearchBarPins,
   submitSearchBar
 } from "../../actions/searchBar"
 import {fetchPackets} from "../../actions/packets"
@@ -32,7 +33,7 @@ export type MenuItemData = Seperator | Action
 
 export const exclude = (field: Field) => ({
   type: "action",
-  text: "Exclude this value",
+  text: "Exclude these values",
   onClick: (dispatch: Dispatch, e: Event) => {
     e.stopPropagation()
     dispatch(appendQueryExclude(field))
@@ -42,7 +43,7 @@ export const exclude = (field: Field) => ({
 
 export const include = (field: Field) => ({
   type: "action",
-  text: "Include this value",
+  text: "Include these values",
   onClick: (dispatch: Dispatch, e: Event) => {
     e.stopPropagation()
     dispatch(appendQueryInclude(field))
@@ -109,6 +110,7 @@ export const groupByDrillDown = (program: string, log: Log) => ({
   onClick: (dispatch: Dispatch) => {
     const newProgram = drillDown(program, log)
     if (newProgram) {
+      dispatch(removeAllSearchBarPins())
       dispatch(changeSearchBarInput(newProgram))
       dispatch(submitSearchBar())
     }

@@ -50,12 +50,12 @@ exports[`Log Right Click conn log with pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Exclude this value",
+    "text": "Exclude these values",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Include this value",
+    "text": "Include these values",
     "type": "action",
   },
   Object {
@@ -91,12 +91,12 @@ exports[`Log Right Click conn log without pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Exclude this value",
+    "text": "Exclude these values",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Include this value",
+    "text": "Include these values",
     "type": "action",
   },
   Object {
@@ -127,12 +127,12 @@ exports[`Log Right Click dns log 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Exclude this value",
+    "text": "Exclude these values",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Include this value",
+    "text": "Include these values",
     "type": "action",
   },
   Object {
