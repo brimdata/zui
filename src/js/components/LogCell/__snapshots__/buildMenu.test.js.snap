@@ -4,6 +4,14 @@ exports[`Analysis Right Click address field 1`] = `
 Array [
   Object {
     "onClick": [Function],
+    "text": "New search with this value",
+    "type": "action",
+  },
+  Object {
+    "type": "seperator",
+  },
+  Object {
+    "onClick": [Function],
     "text": "Whois Lookup",
     "type": "action",
   },
@@ -22,7 +30,12 @@ exports[`Analysis Right Click group by proc 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Query for these logs",
+    "text": "New search with this value",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "New search with this value",
     "type": "action",
   },
   Object {
@@ -40,6 +53,14 @@ exports[`Analysis Right Click non-address field 1`] = `
 Array [
   Object {
     "onClick": [Function],
+    "text": "New search with this value",
+    "type": "action",
+  },
+  Object {
+    "type": "seperator",
+  },
+  Object {
+    "onClick": [Function],
     "text": "Open details",
     "type": "action",
   },
@@ -50,17 +71,22 @@ exports[`Log Right Click conn log with pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Exclude these values",
+    "text": "Exclude this value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Include these values",
+    "text": "Include this value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
     "text": "Count by id.orig_h",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "New search with this value",
     "type": "action",
   },
   Object {
@@ -91,17 +117,22 @@ exports[`Log Right Click conn log without pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Exclude these values",
+    "text": "Exclude this value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Include these values",
+    "text": "Include this value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
     "text": "Count by id.orig_h",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "New search with this value",
     "type": "action",
   },
   Object {
@@ -127,17 +158,22 @@ exports[`Log Right Click dns log 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Exclude these values",
+    "text": "Exclude this value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Include these values",
+    "text": "Include this value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
     "text": "Count by query",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "New search with this value",
     "type": "action",
   },
   Object {
