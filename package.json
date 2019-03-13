@@ -12,9 +12,9 @@
     "itest": "TZ=US/Pacific jest --config=itest/config.json",
     "electron": "electron .",
     "clean": "rm -rf releases/** && rm -fr dist/**",
-    "release": "npm-run-all release:*",
-    "release:mac": "electron-packager . Looky --out=releases --platform=darwin --icon=dist/static/AppIcon.icns",
-    "release:win": "electron-packager . Looky --out=releases --platform=win32 --icon=dist/static/AppIcon.ico",
+    "release": "npm-run-all -p packager:* -s installer:*",
+    "packager:mac": "electron-packager . Looky --out=releases --platform=darwin --icon=dist/static/AppIcon.icns",
+    "packager:win": "electron-packager . Looky --out=releases --platform=win32 --icon=dist/static/AppIcon.ico",
     "prerelease": "npm run build",
     "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
@@ -29,7 +29,8 @@
     "lint": "eslint .",
     "format": "prettier '{src,itest}/**/*.{js,scss}' --write --loglevel warn",
     "flow": "flow",
-    "check": "npm-run-all -p lint flow test"
+    "check": "npm-run-all -p lint flow test",
+    "installer:mac": "electron-installer-dmg releases/Looky-darwin-x64/Looky.app releases/Looky"
   },
   "jest": {
     "notify": false,
@@ -69,6 +70,7 @@
     "commander": "^2.19.0",
     "cpx": "^1.5.0",
     "electron": "^3.0.10",
+    "electron-installer-dmg": "^2.0.0",
     "electron-packager": "^13.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
