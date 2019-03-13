@@ -1,0 +1,7 @@
+{
+  "collectCoverageFrom": [
+    "**/*.js",
+    "!**/flow-typed/**",
+    "!**/test/**"
+  ]
+}

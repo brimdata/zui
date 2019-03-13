@@ -29,6 +29,3 @@ jobs:
       - run:
           name: Unit Tests
           command: npm test -- --maxWorkers=2 --ci
-      - run:
-          name: Integration Tests
-          command: npm run itest -- --maxWorkers=2 --ci
