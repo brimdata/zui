@@ -6,7 +6,7 @@ import {
   appendQueryExclude,
   appendQueryInclude,
   changeSearchBarInput,
-  removeAllSearchBarPins,
+  clearSearchBar,
   submitSearchBar
 } from "../../actions/searchBar"
 import {fetchPackets} from "../../actions/packets"
@@ -33,7 +33,7 @@ export type MenuItemData = Seperator | Action
 
 export const exclude = (field: Field) => ({
   type: "action",
-  text: "Exclude these values",
+  text: "Exclude this value",
   onClick: (dispatch: Dispatch, e: Event) => {
     e.stopPropagation()
     dispatch(appendQueryExclude(field))
@@ -43,9 +43,20 @@ export const exclude = (field: Field) => ({
 
 export const include = (field: Field) => ({
   type: "action",
-  text: "Include these values",
+  text: "Include this value",
   onClick: (dispatch: Dispatch, e: Event) => {
     e.stopPropagation()
+    dispatch(appendQueryInclude(field))
+    dispatch(submitSearchBar())
+  }
+})
+
+export const freshInclude = (field: Field) => ({
+  type: "action",
+  text: "New search with this value",
+  onClick: (dispatch: Dispatch, e: Event) => {
+    e.stopPropagation()
+    dispatch(clearSearchBar())
     dispatch(appendQueryInclude(field))
     dispatch(submitSearchBar())
   }
@@ -106,11 +117,11 @@ export const whois = (field: Field) => ({
 
 export const groupByDrillDown = (program: string, log: Log) => ({
   type: "action",
-  text: "Query for these logs",
+  text: "New search with this value",
   onClick: (dispatch: Dispatch) => {
     const newProgram = drillDown(program, log)
     if (newProgram) {
-      dispatch(removeAllSearchBarPins())
+      dispatch(clearSearchBar())
       dispatch(changeSearchBarInput(newProgram))
       dispatch(submitSearchBar())
     }

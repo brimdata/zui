@@ -5,6 +5,7 @@ import {
   countBy,
   detail,
   exclude,
+  freshInclude,
   fromTime,
   groupByDrillDown,
   include,
@@ -41,15 +42,19 @@ export default (state: State, props: Props) => {
     queryActions.push(groupByDrillDown(program, log))
   }
 
-  if (field instanceof TimeField) {
-    queryActions.push(fromTime(field))
-    queryActions.push(toTime(field))
-  }
-
   if (tab === "logs" && !(field instanceof TimeField)) {
     queryActions.push(exclude(field))
     queryActions.push(include(field))
     queryActions.push(countBy(field))
+  }
+
+  if (!(field instanceof TimeField)) {
+    queryActions.push(freshInclude(field))
+  }
+
+  if (field instanceof TimeField) {
+    queryActions.push(fromTime(field))
+    queryActions.push(toTime(field))
   }
 
   if (["addr", "set[addr]"].includes(props.field.type)) {
