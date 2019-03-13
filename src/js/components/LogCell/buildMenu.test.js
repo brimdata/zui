@@ -1,14 +1,14 @@
 /* @flow */
 
+import {conn, dns, weird} from "../../test/mockLogs"
 import buildMenu from "./buildMenu"
-import * as mockLogs from "../test/mockLogs"
-import mockSpace from "../test/mockSpace"
+import mockSpace from "../../test/mockSpace"
 
 describe("Log Right Click", () => {
   const resultType = "logs"
 
   test("conn log with pcap support", () => {
-    const log = mockLogs.conn()
+    const log = conn()
     const dispatch = jest.fn()
     const field = log.getField("id.orig_h")
     const space = mockSpace()
@@ -18,7 +18,7 @@ describe("Log Right Click", () => {
   })
 
   test("dns log", () => {
-    const log = mockLogs.dns()
+    const log = dns()
     const dispatch = jest.fn()
     const field = log.getField("query")
     const space = mockSpace()
@@ -28,7 +28,7 @@ describe("Log Right Click", () => {
   })
 
   test("time field for weird log", () => {
-    const log = mockLogs.weird()
+    const log = weird()
     const dispatch = jest.fn()
     const field = log.getField("ts")
     const space = mockSpace()
@@ -38,7 +38,7 @@ describe("Log Right Click", () => {
   })
 
   test("time field for conn log", () => {
-    const log = mockLogs.conn()
+    const log = conn()
     const dispatch = jest.fn()
     const field = log.getField("ts")
     const space = mockSpace()

@@ -1,14 +1,13 @@
 /* @flow */
 
-import type {Space} from "../lib/Space"
-import Log from "../models/Log"
-import Field from "../models/Field"
-import {type ResultsTabEnum} from "../reducers/view"
-import buildLogRightClickMenu from "./buildLogRightClickMenu"
+import type {ResultsTabEnum} from "../../reducers/view"
+import type {Space} from "../../lib/Space"
+import Field from "../../models/Field"
+import Log from "../../models/Log"
 import buildAnalyticRightClickMenu from "./buildAnalyticRightClickMenu"
+import buildLogRightClickMenu from "./buildLogRightClickMenu"
 
 type Args = {
-  dispatch: Function,
   field: Field,
   log: Log,
   space: Space,
