@@ -22,6 +22,7 @@ export default class WhoisModal extends React.Component<Props> {
   render() {
     return (
       <Modal
+        title="Whois Lookup"
         isOpen={this.props.isOpen}
         onClose={() => this.props.dispatch(closeWhois())}
         className="whois-modal"

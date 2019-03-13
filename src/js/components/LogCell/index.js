@@ -1,16 +1,16 @@
 /* @flow */
 
 import React from "react"
-import DownArrow from "../icons/chevron-bottom-md.svg"
-import Tooltip from "./Tooltip"
-import * as Time from "../lib/Time"
-import * as Doc from "../lib/Doc"
-import type {FixedPos} from "../lib/Doc"
-import Field, {TimeField} from "../models/Field"
-import Log from "../models/Log"
 import classNames from "classnames"
-import * as fmt from "../lib/fmt"
-import {XLogCellActions} from "./LogCell/LogCellActions"
+
+import {type FixedPos, clearTextSelection, selectText} from "../../lib/Doc"
+import {XLogCellActions} from "./LogCellActions"
+import {format} from "../../lib/Time"
+import {withCommas} from "../../lib/fmt"
+import DownArrow from "../../icons/chevron-bottom-md.svg"
+import Field, {TimeField} from "../../models/Field"
+import Log from "../../models/Log"
+import Tooltip from "../Tooltip"
 
 type Props = {
   field: Field,
@@ -35,7 +35,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
   }
 
   onRightClick = (e: MouseEvent) => {
-    Doc.clearTextSelection()
+    clearTextSelection()
     e.stopPropagation()
     this.setState({
       hover: true,
@@ -46,7 +46,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
   }
 
   onMenuDismiss = (e: MouseEvent) => {
-    Doc.clearTextSelection()
+    clearTextSelection()
     e.stopPropagation()
     this.setState({
       hover: false,
@@ -75,17 +75,13 @@ export default class LogCell extends React.PureComponent<Props, State> {
     if (field instanceof TimeField)
       return (
         <p>
-          <span className="date">
-            {Time.format(field.toDate(), "MM/DD/YY")}
-          </span>
-          <span className="time">{Time.format(field.toDate(), "HH:mm")}</span>
-          <span className="seconds">
-            {Time.format(field.toDate(), "ss.SSSS")}
-          </span>
+          <span className="date">{format(field.toDate(), "MM/DD/YY")}</span>
+          <span className="time">{format(field.toDate(), "HH:mm")}</span>
+          <span className="seconds">{format(field.toDate(), "ss.SSSS")}</span>
         </p>
       )
     if (field.type === "count") {
-      return <span>{fmt.withCommas(field.value)}</span>
+      return <span>{withCommas(field.value)}</span>
     }
     return <span>{field.value}</span>
   }
@@ -103,7 +99,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onRightClick}
-        onClick={e => Doc.selectText(e.currentTarget)}
+        onClick={e => selectText(e.currentTarget)}
         style={this.props.style}
         ref={r => (this.el = r)}
       >

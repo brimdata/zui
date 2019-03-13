@@ -1,11 +1,13 @@
 /* @flow */
 
 import React from "react"
-import {shallow} from "enzyme"
-import LogCell from "./LogCell"
-import * as mockLogs from "../test/mockLogs"
 
-const log = mockLogs.conn()
+import {shallow} from "enzyme"
+
+import {conn} from "../../test/mockLogs"
+import LogCell from "./"
+
+const log = conn()
 
 test("shapshot", () => {
   const logCell = shallow(

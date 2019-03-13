@@ -1,22 +1,21 @@
 /* @flow */
 
+import {connect} from "react-redux"
+import Measure from "react-measure"
 import React from "react"
+
+import type {DispatchProps, State} from "../../reducers/types"
+import type {MenuItemData} from "./rightClick"
+import {type ResultsTabEnum, getResultsTab} from "../../reducers/view"
+import type {Space} from "../../lib/Space"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
-import buildMenu from "../../lib/buildMenu"
-import type {Space} from "../../lib/Space"
-import type {MenuItemData} from "../../actions/rightClick"
 import MenuList from "../MenuList"
-import Portal from "../Portal"
 import * as MenuStyler from "../../lib/MenuStyler"
-import Measure from "react-measure"
-import {connect} from "react-redux"
-import * as spaces from "../../reducers/spaces"
-import type {State} from "../../reducers/types"
-import {type DispatchProps} from "../../reducers/types"
+import Portal from "../Portal"
+import buildMenu from "./buildMenu"
 import dispatchToProps from "../../lib/dispatchToProps"
-import {getResultsTab} from "../../reducers/view"
-import type {ResultsTabEnum} from "../../reducers/view"
+import * as spaces from "../../reducers/spaces"
 
 type OwnProps = {|
   log: Log,
@@ -27,7 +26,8 @@ type OwnProps = {|
 
 type StateProps = {|
   space: Space,
-  resultType: ResultsTabEnum
+  resultType: ResultsTabEnum,
+  menuActions: MenuItemData[]
 |}
 
 type Props = {|
@@ -37,18 +37,14 @@ type Props = {|
 |}
 
 export default class LogCellActions extends React.Component<Props> {
-  menu: MenuItemData[]
-
-  constructor(props: Props) {
-    super(props)
-    this.menu = buildMenu(props)
-  }
-
-  renderItem(item: MenuItemData, index: number) {
+  renderItem = (item: MenuItemData, index: number) => {
     switch (item.type) {
       case "action":
         return (
-          <li key={index} onClick={item.onClick}>
+          <li
+            key={index}
+            onClick={item.onClick.bind(null, this.props.dispatch)}
+          >
             {item.text}
           </li>
         )
@@ -71,7 +67,7 @@ export default class LogCellActions extends React.Component<Props> {
               )}
             >
               <MenuList ref={measureRef}>
-                {this.menu.map(this.renderItem)}
+                {this.props.menuActions.map(this.renderItem)}
               </MenuList>
             </Portal>
           )
@@ -81,7 +77,8 @@ export default class LogCellActions extends React.Component<Props> {
   }
 }
 
-const stateToProps = (state: State): StateProps => ({
+const stateToProps = (state: State, props: OwnProps): StateProps => ({
+  menuActions: buildMenu(state, props),
   space: spaces.getCurrentSpace(state),
   resultType: getResultsTab(state)
 })
