@@ -69,6 +69,7 @@
     "commander": "^2.19.0",
     "cpx": "^1.5.0",
     "electron": "^3.0.10",
+    "electron-installer-dmg": "^2.0.0",
     "electron-packager": "^13.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
