@@ -8,7 +8,7 @@ import {XNotifications} from "./Notifications"
 import {XSearch} from "./Search"
 import {getTimeZone} from "../reducers/view"
 import * as Time from "../lib/Time"
-import XConnect from "../connectors/XConnect"
+import {XConnect} from "./Connect"
 
 type Props = {
   isConnected: boolean,
