@@ -3,7 +3,6 @@
 import React from "react"
 import ViewerErrorBoundary from "./ViewerErrorBoundary"
 
-import XAnalysisViewer from "../connectors/XAnalysisViewer"
 import {XLogResults} from "./LogResults"
 import type {ResultsTabEnum} from "../reducers/view"
 import type {State} from "../reducers/types"
@@ -15,21 +14,12 @@ type StateProps = {|
 type Props = {|...StateProps|}
 
 export default class SearchResults extends React.Component<Props> {
-  chooseTab() {
-    switch (this.props.tab) {
-      case "analytics":
-        return <XAnalysisViewer />
-      case "logs":
-        return
-      default:
-        return null
-    }
-  }
-
   render() {
     return (
       <div className="search-results">
-        <ViewerErrorBoundary>{<XLogResults />}</ViewerErrorBoundary>
+        <ViewerErrorBoundary>
+          <XLogResults />
+        </ViewerErrorBoundary>
       </div>
     )
   }
