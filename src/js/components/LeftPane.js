@@ -1,6 +1,14 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
+
+import type {Dispatch, State} from "../reducers/types"
+import {XLeftPaneCollapser} from "./LeftPaneCollapser"
+import {XLeftPaneExpander} from "./LeftPaneExpander"
+import {clearFilterTree} from "../actions/filterTree"
+import {setLeftSidebarWidth} from "../actions/view"
+import HistoryAside from "./HistoryAside"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -9,15 +17,8 @@ import Pane, {
   Center,
   PaneBody
 } from "./Pane"
-import XHistoryAside from "../connectors/XHistoryAside"
-import {connect} from "react-redux"
-import * as view from "../reducers/view"
 import dispatchToProps from "../lib/dispatchToProps"
-import type {Dispatch, State} from "../reducers/types"
-import {clearFilterTree} from "../actions/filterTree"
-import {setLeftSidebarWidth} from "../actions/view"
-import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {XLeftPaneCollapser} from "./LeftPaneCollapser"
+import * as view from "../reducers/view"
 
 type Props = {|
   isOpen: boolean,
@@ -70,7 +71,7 @@ export default class LeftPane extends React.Component<Props, S> {
           </Right>
         </PaneHeader>
         <PaneBody>
-          <XHistoryAside />
+          <HistoryAside />
         </PaneBody>
         <XLeftPaneCollapser show={this.state.showCollapse} />
       </Pane>
