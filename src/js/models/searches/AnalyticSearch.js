@@ -5,13 +5,17 @@ import throttle from "lodash/throttle"
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Payload} from "../../receivers/types"
+import {addHeadProc} from "../../lib/Program"
 import {setAnalysis} from "../../actions/analysis"
 import BaseSearch from "./BaseSearch"
 
 export default class AnalyticSearch extends BaseSearch {
+  getProgram() {
+    return addHeadProc(this.program, 10000)
+  }
+
   receiveData(handler: Handler, dispatch: Dispatch) {
     const THROTTLE_DELAY = 200
-
     let tuples = []
     let descriptor = []
 
@@ -28,7 +32,7 @@ export default class AnalyticSearch extends BaseSearch {
       .channel(0, (payload: Payload) => {
         switch (payload.type) {
           case "SearchEnd":
-            dispatchSteady.cancel
+            dispatchSteady.cancel()
             dispatchNow()
             break
           case "SearchResult":

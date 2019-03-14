@@ -32,8 +32,23 @@ export const getCurrentTableColumnsId = createSelector<State, void, string, *>(
 export const getCurrentUniqColumns = createSelector<State, void, *, *>(
   getLogs,
   (logs): Column[] => {
+    /* Performance seriously matters in this function.  See PROD-405 */
+
+    if (logs.length === 0) return []
+    if (!logs[0].get("_td")) return logs[0].descriptor
+
+    let colMap = {}
+    for (const log of logs) {
+      const td = log.get("_td")
+      if (colMap[td]) continue
+      colMap[td] = log.descriptor
+    }
+
     let columns = []
-    for (const log of logs) columns = columns.concat(log.descriptor)
+    for (const td in colMap) {
+      columns = [...columns, ...colMap[td]]
+    }
+
     return uniqBy(columns, columnKey)
   }
 )
