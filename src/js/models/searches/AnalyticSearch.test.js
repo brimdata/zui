@@ -11,6 +11,10 @@ describe("AnalyticSearch", () => {
     search = new AnalyticSearch(program, span)
   })
 
+  test("#getProgram", () => {
+    expect(search.getProgram()).toEqual("* | count() by _path | head 10000")
+  })
+
   test("#getName", () => {
     expect(search.getName()).toEqual("AnalyticSearch")
   })

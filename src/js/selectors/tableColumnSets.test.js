@@ -8,7 +8,9 @@ import {
 } from "./tableColumnSets"
 import {receiveDescriptor} from "../actions/descriptors"
 import {receiveLogTuples} from "../actions/logs"
+import {setAnalysis} from "../actions/analysis"
 import {setCurrentSpaceName} from "../actions/spaces"
+import {showAnalyticsTab} from "../actions/view"
 import TableColumns from "../models/TableColumns"
 import initStore from "../test/initStore"
 
@@ -51,18 +53,32 @@ describe("#getCurrentTableColumnsId", () => {
 
 describe("#getCurrentUniqColumns", () => {
   test("contains no duplicate columns", () => {
+    const td1 = {name: "_td", type: "integer"}
+    const td2 = {name: "_td", type: "integer"}
     const a = {name: "a", type: "string"}
     const b = {name: "b", type: "string"}
     const b2 = {name: "b2", type: "integer"}
     const c = {name: "c", type: "time"}
     const state = store.dispatchAll([
       setCurrentSpaceName("default"),
-      receiveDescriptor("default", "1", [a, b, b2]),
-      receiveDescriptor("default", "2", [a, b, c]),
+      receiveDescriptor("default", "1", [td1, a, b, b2]),
+      receiveDescriptor("default", "2", [td2, a, b, c]),
       receiveLogTuples([["1"], ["2"]])
     ])
 
-    expect(getCurrentUniqColumns(state)).toEqual([a, b, b2, c])
+    expect(getCurrentUniqColumns(state)).toEqual([td1, a, b, b2, c])
+  })
+
+  test("analyic results returns the descriptor", () => {
+    const a = {name: "a", type: "string"}
+    const b = {name: "b", type: "string"}
+    const state = store.dispatchAll([
+      setCurrentSpaceName("default"),
+      showAnalyticsTab(),
+      setAnalysis([a, b], [["A", "B"]])
+    ])
+
+    expect(getCurrentUniqColumns(state)).toEqual([a, b])
   })
 })
 

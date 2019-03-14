@@ -112,24 +112,6 @@ test("search with inner time", done => {
   })
 })
 
-test("search with a provided head proc", done => {
-  boom.stubStream("search")
-  const search = jest.spyOn(boom, "search")
-
-  store.dispatchAll([
-    setSpaceInfo(spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
-    init(),
-    changeSearchBarInput("_path = conn | head 45"),
-    fetchMainSearch()
-  ])
-
-  setTimeout(() => {
-    expect(search).toBeCalledWith("_path = conn | head 45", expect.any(Object))
-    done()
-  })
-})
-
 test("search with outerTimeWindow if no inner", done => {
   boom.stubStream("stream")
   const stream = jest.spyOn(boom, "stream")
@@ -154,22 +136,6 @@ test("search with outerTimeWindow if no inner", done => {
   })
 })
 
-test("fetching an analytics does not put any procs on the query", done => {
-  boom.stubStream("search")
-  const search = jest.spyOn(boom, "search")
-
-  store.dispatchAll([
-    setSpaceInfo(spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
-    changeSearchBarInput("* | count()"),
-    fetchMainSearch()
-  ])
-  setTimeout(() => {
-    expect(search).toBeCalledWith("* | count()", expect.any(Object))
-    done()
-  })
-})
-
 test("fetching a regular search", done => {
   boom.stubStream("stream")
   const actions = [
@@ -190,24 +156,6 @@ test("fetching a regular search", done => {
         "SHOW_LOGS_TAB"
       ])
     )
-    done()
-  })
-})
-
-test("fetching a regular search puts procs on the end", done => {
-  boom.stubStream("search")
-  const search = jest.spyOn(boom, "search")
-
-  store.dispatchAll([
-    setSpaceInfo(spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
-    init(),
-    changeSearchBarInput(""),
-    fetchMainSearch()
-  ])
-
-  setTimeout(() => {
-    expect(search).toBeCalledWith(`* | head ${PER_PAGE}`, expect.any(Object))
     done()
   })
 })
