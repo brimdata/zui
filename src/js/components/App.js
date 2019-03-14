@@ -1,11 +1,14 @@
 /* @flow */
 
+import {Redirect, Route, Switch, withRouter} from "react-router-dom"
+import {connect} from "react-redux"
 import React, {Component} from "react"
-import {Route, Switch, Redirect} from "react-router-dom"
-import {XSearch} from "./Search"
-import XConnect from "../connectors/XConnect"
-import * as Time from "../lib/Time"
+
 import {XNotifications} from "./Notifications"
+import {XSearch} from "./Search"
+import {getTimeZone} from "../reducers/view"
+import * as Time from "../lib/Time"
+import {XConnect} from "./Connect"
 
 type Props = {
   isConnected: boolean,
@@ -28,3 +31,9 @@ export default class App extends Component<Props> {
     )
   }
 }
+
+const stateToProps = state => ({
+  timeZone: getTimeZone(state)
+})
+
+export const XApp = withRouter(connect(stateToProps)(App))

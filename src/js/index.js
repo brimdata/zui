@@ -1,10 +1,11 @@
 /* @flow */
 
+import {HashRouter} from "react-router-dom"
+import {Provider} from "react-redux"
 import React from "react"
 import ReactDOM from "react-dom"
-import {Provider} from "react-redux"
-import {HashRouter} from "react-router-dom"
-import XApp from "./connectors/XApp"
+
+import {XApp} from "./components/App"
 import AppErrorBoundary from "./components/AppErrorBoundary"
 import * as Doc from "./lib/Doc"
 import init from "./initializers"

@@ -1,12 +1,34 @@
-import React from "react"
+/* @flow */
+
 import {Redirect} from "react-router-dom"
-import LookyHeader from "./LookyHeader"
+import {bindActionCreators} from "redux"
+import {connect} from "react-redux"
+import React from "react"
+
+import type {Credentials} from "../lib/Credentials"
+import {getCredentials} from "../reducers/boomd"
 import AdminTitle from "./AdminTitle"
+import AppError from "../models/AppError"
 import ErrorFactory from "../models/ErrorFactory"
+import LookyHeader from "./LookyHeader"
+import * as actions from "../actions/boomd"
 import delay from "../lib/delay"
 
-class Connect extends React.Component {
-  constructor(props) {
+type Props = {|
+  credentials: Credentials,
+  setBoomdCredentials: Function,
+  connectBoomd: Function
+|}
+
+type CompState = {|
+  ...$Exact<Credentials>,
+  error: ?AppError,
+  isConnected: boolean,
+  isConnecting: boolean
+|}
+
+export default class Connect extends React.Component<Props, CompState> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       ...props.credentials,
@@ -14,22 +36,23 @@ class Connect extends React.Component {
       isConnecting: false,
       isConnected: false
     }
-    this.onSubmit = e => {
-      this.setState({isConnecting: true, error: null})
-      e.preventDefault()
-      this.props.setBoomdCredentials(this.state)
-      this.props
-        .connectBoomd()
-        .then(() => delay(300, () => this.setState({isConnected: true})))
-        .catch(e => {
-          delay(300, () =>
-            this.setState({
-              isConnecting: false,
-              error: ErrorFactory.create(e)
-            })
-          )
-        })
-    }
+  }
+
+  onSubmit = (e: Event) => {
+    this.setState({isConnecting: true, error: null})
+    e.preventDefault()
+    this.props.setBoomdCredentials(this.state)
+    this.props
+      .connectBoomd()
+      .then(() => delay(300, () => this.setState({isConnected: true})))
+      .catch(e => {
+        delay(300, () =>
+          this.setState({
+            isConnecting: false,
+            error: ErrorFactory.create(e)
+          })
+        )
+      })
   }
 
   render() {
@@ -100,4 +123,16 @@ class Connect extends React.Component {
   }
 }
 
-export default Connect
+const stateToProps = state => ({
+  credentials: getCredentials(state)
+})
+
+const dispatchToProps = dispatch => ({
+  ...bindActionCreators(actions, dispatch),
+  dispatch
+})
+
+export const XConnect = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(Connect)
