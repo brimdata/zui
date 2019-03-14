@@ -4,7 +4,7 @@ import throttle from "lodash/throttle"
 
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
-import type {Payload} from "../../receivers/types"
+import type {Payload} from "../../types"
 import {addHeadProc} from "../../lib/Program"
 import {setAnalysis} from "../../actions/analysis"
 import BaseSearch from "./BaseSearch"

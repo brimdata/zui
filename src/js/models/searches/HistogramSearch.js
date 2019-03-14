@@ -4,7 +4,7 @@ import throttle from "lodash/throttle"
 
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
-import type {Payload} from "../../receivers/types"
+import type {Payload} from "../../types"
 import {clearCountByTime, receiveCountByTime} from "../../actions/countByTime"
 import BaseSearch from "./BaseSearch"
 import countByTimeInterval from "../../lib/countByTimeInterval"

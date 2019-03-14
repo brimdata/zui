@@ -3,8 +3,11 @@
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
-import {setBoomSearchStatus} from "../../actions/boomSearches"
-import statsReceiver from "../../receivers/statsReceiver"
+import type {Payload} from "../../types"
+import {
+  setBoomSearchStats,
+  setBoomSearchStatus
+} from "../../actions/boomSearches"
 
 export default class BaseSearch {
   program: string
@@ -31,8 +34,29 @@ export default class BaseSearch {
 
   receiveStats(handler: Handler, dispatch: Dispatch) {
     const name = this.getName()
+
+    function boomTime({sec, ns}) {
+      let flt = sec + ns / 1e9
+      return flt
+    }
+
     handler
-      .each(statsReceiver(name, dispatch))
+      .each((payload: Payload) => {
+        if (payload.type === "SearchStats") {
+          const startTime = boomTime(payload.start_time)
+          const updateTime = boomTime(payload.update_time)
+          dispatch(
+            setBoomSearchStats(name, {
+              startTime,
+              updateTime,
+              bytesMatched: payload.stats.bytes_matched,
+              bytesRead: payload.stats.bytes_read,
+              tuplesMatched: payload.stats.tuples_matched,
+              tuplesRead: payload.stats.tuples_read
+            })
+          )
+        }
+      })
       .done(() => dispatch(setBoomSearchStatus(name, "SUCCESS")))
       .error(() => dispatch(setBoomSearchStatus(name, "ERROR")))
       .abort(() => dispatch(setBoomSearchStatus(name, "ABORTED")))
