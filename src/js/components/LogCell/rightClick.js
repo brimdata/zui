@@ -57,7 +57,7 @@ export const freshInclude = (field: Field) => ({
   onClick: (dispatch: Dispatch, e: Event) => {
     e.stopPropagation()
     dispatch(clearSearchBar())
-    dispatch(appendQueryInclude(field))
+    dispatch(changeSearchBarInput(field.value))
     dispatch(submitSearchBar())
   }
 })
