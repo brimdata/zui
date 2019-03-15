@@ -119,7 +119,7 @@ exports[`shapshot after right-clicking 1`] = `
       _path
     </span>
   </Tooltip>
-  <Connect(LogCellActions)
+  <Connect(ViewerFieldActions)
     field={
       Field {
         "name": "_path",
@@ -307,7 +307,7 @@ exports[`shapshot right clicking a time cell 1`] = `
       ts
     </span>
   </Tooltip>
-  <Connect(LogCellActions)
+  <Connect(ViewerFieldActions)
     field={
       TimeField {
         "name": "ts",

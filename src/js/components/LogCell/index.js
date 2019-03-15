@@ -4,7 +4,7 @@ import React from "react"
 import classNames from "classnames"
 
 import {type FixedPos, clearTextSelection, selectText} from "../../lib/Doc"
-import {XLogCellActions} from "./LogCellActions"
+import {XViewerFieldActions} from "../ViewerFieldActions"
 import {format} from "../../lib/Time"
 import {withCommas} from "../../lib/fmt"
 import DownArrow from "../../icons/chevron-bottom-md.svg"
@@ -118,7 +118,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
         )}
 
         {this.state.showMenu && (
-          <XLogCellActions
+          <XViewerFieldActions
             log={this.props.log}
             field={this.props.field}
             style={this.state.menuStyle}

@@ -4,13 +4,13 @@ import React from "react"
 
 import {shallow} from "enzyme"
 
-import LogCellActions from "./LogCellActions"
-import * as mockLogs from "../../test/mockLogs"
+import {conn} from "../test/mockLogs"
+import ViewerFieldActions from "./ViewerFieldActions"
 
 test("basic snapshot", () => {
-  const log = mockLogs.conn()
+  const log = conn()
   const wrapper = shallow(
-    <LogCellActions
+    <ViewerFieldActions
       actions={[]}
       log={log}
       field={log.getField("_path")}
