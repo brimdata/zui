@@ -9,7 +9,7 @@ import {getTimeWindow} from "./timeWindow"
 import {splitOnEvery} from "../models/TimeWindow"
 import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
-import countByTimeInterval, {type Interval} from "../lib/countByTimeInterval"
+import histogramInterval, {type Interval} from "../lib/histogramInterval"
 import createReducer from "./createReducer"
 
 type Results = {
@@ -17,7 +17,7 @@ type Results = {
   descriptor: Descriptor
 }
 
-type Histogram = {
+type HistogramChart = {
   data: {ts: Date, [string]: number}[],
   keys: string[],
   timeBinCount: number,
@@ -32,7 +32,7 @@ const initialState = {
   error: null
 }
 
-export type CountByTime = typeof initialState
+export type Histogram = typeof initialState
 
 export default createReducer(initialState, {
   COUNT_BY_TIME_CLEAR: () => ({
@@ -47,19 +47,19 @@ export default createReducer(initialState, {
   })
 })
 
-export const getCountByTimeData = (state: State) => state.countByTime.data
-export const getMainSearchCountByTime = createSelector<State, void, *, *, *>(
+export const getHistogramData = (state: State) => state.histogram.data
+export const getMainSearchHistogram = createSelector<State, void, *, *, *>(
   getTimeWindow,
-  getCountByTimeData,
+  getHistogramData,
   (t, d) => formatHistogram(t, d)
 )
 
 export const formatHistogram = (
   timeWindow: DateTuple,
   data: Results
-): Histogram => {
+): HistogramChart => {
   const tuples = data.tuples || []
-  const interval = countByTimeInterval(timeWindow)
+  const interval = histogramInterval(timeWindow)
   const roundedTimeWindow = floorAndCeil(timeWindow, interval.roundingUnit)
   const buckets = splitOnEvery(roundedTimeWindow, interval)
   const keys = new UniqArray()
@@ -92,9 +92,9 @@ export const formatHistogram = (
   }
 }
 
-export function getMainSearchCountByTimeInterval(state: State) {
+export function getMainSearchHistogramInterval(state: State) {
   const timeWindow = getTimeWindow(state)
-  return countByTimeInterval(timeWindow).unit
+  return histogramInterval(timeWindow).unit
 }
 
 const toDate = string => new Date(+string * 1000)

@@ -3,7 +3,7 @@
 import type {Analysis} from "./analysis"
 import type {BoomSearches} from "./boomSearches"
 import type {Boomd} from "./boomd"
-import type {CountByTime} from "./countByTime"
+import type {Histogram} from "./histogram"
 import type {Descriptors} from "./descriptors"
 import type {FilterTree} from "./filterTree"
 import type {LogDetails} from "./logDetails"
@@ -23,7 +23,7 @@ import BoomClient from "../BoomClient"
 
 export type State = {
   analysis: Analysis,
-  countByTime: CountByTime,
+  histogram: Histogram,
   searchBar: SearchBar,
   timeWindow: TimeWindow,
   spaces: Spaces,

@@ -2,7 +2,7 @@
 
 import type {Thunk} from "../reducers/types"
 import {clearAnalysis} from "./analysis"
-import {clearCountByTime} from "./countByTime"
+import {clearHistogram} from "./histogram"
 import {clearDescriptors} from "./descriptors"
 import {clearFilterTree} from "./filterTree"
 import {clearLogViewer} from "./logViewer"
@@ -26,5 +26,5 @@ export const disconnect = (): Thunk => dispatch => {
   dispatch(clearStarredLogs())
   dispatch(clearSearchHistory())
   dispatch(clearLogViewer())
-  dispatch(clearCountByTime())
+  dispatch(clearHistogram())
 }

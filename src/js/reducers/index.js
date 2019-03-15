@@ -5,7 +5,7 @@ import {combineReducers} from "redux"
 import analysis from "./analysis"
 import boomSearches from "./boomSearches"
 import boomd from "./boomd"
-import countByTime from "./countByTime"
+import histogram from "./histogram"
 import descriptors from "./descriptors"
 import filterTree from "./filterTree"
 import logDetails from "./logDetails"
@@ -33,7 +33,7 @@ export default combineReducers<*, *>({
   spaces,
   timeWindow,
   filterTree,
-  countByTime,
+  histogram,
   analysis,
   logDetails,
   boomd,

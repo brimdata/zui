@@ -9,13 +9,13 @@ import isEqual from "lodash/isEqual"
 import type {DateTuple} from "../lib/TimeWindow"
 import {type DispatchProps, type State} from "../reducers/types"
 import {Fieldset} from "./Typography"
-import {type Interval} from "../lib/countByTimeInterval"
+import {type Interval} from "../lib/histogramInterval"
 import {getHistogramStatus} from "../selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import {
-  getMainSearchCountByTime,
-  getCountByTimeData
-} from "../reducers/countByTime"
+  getMainSearchHistogram,
+  getHistogramData
+} from "../reducers/histogram"
 import Chart from "../models/Chart"
 import HoverLine from "../charts/HoverLine"
 import LoadingMessage from "./LoadingMessage"
@@ -152,8 +152,8 @@ const buildScales = ({data, dimens}) => {
 }
 
 const stateToProps = (state: State) => ({
-  rawData: getCountByTimeData(state),
-  ...getMainSearchCountByTime(state),
+  rawData: getHistogramData(state),
+  ...getMainSearchHistogram(state),
   timeWindow: getTimeWindow(state),
   innerTimeWindow: getInnerTimeWindow(state),
   isFetching: getHistogramStatus(state) === "FETCHING"

@@ -5,9 +5,9 @@ import throttle from "lodash/throttle"
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Payload} from "../../types"
-import {clearCountByTime, receiveCountByTime} from "../../actions/countByTime"
+import {clearHistogram, receiveHistogram} from "../../actions/histogram"
 import BaseSearch from "./BaseSearch"
-import countByTimeInterval from "../../lib/countByTimeInterval"
+import histogramInterval from "../../lib/histogramInterval"
 
 const BOOM_INTERVALS = {
   millisecond: "ms",
@@ -19,7 +19,7 @@ const BOOM_INTERVALS = {
 
 export default class HistogramSearch extends BaseSearch {
   getProgram() {
-    const {number, unit} = countByTimeInterval(this.getSpan())
+    const {number, unit} = histogramInterval(this.getSpan())
 
     return (
       this.program +
@@ -28,13 +28,13 @@ export default class HistogramSearch extends BaseSearch {
   }
 
   receiveData(handler: Handler, dispatch: Dispatch) {
-    dispatch(clearCountByTime())
+    dispatch(clearHistogram())
     let descriptor
     let tuples = []
 
     const dispatchNow = () => {
       if (tuples.length === 0) return
-      dispatch(receiveCountByTime({descriptor, tuples}))
+      dispatch(receiveHistogram({descriptor, tuples}))
       tuples = []
     }
 
