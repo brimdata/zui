@@ -1,0 +1,3051 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rendering the row 1`] = `
+<div
+  className="log-row"
+  onClick={[Function]}
+  style={
+    Object {
+      "height": 25,
+      "width": 300,
+    }
+  }
+>
+  <LogCell
+    field={
+      TimeField {
+        "name": "ts",
+        "type": "time",
+        "value": "1425612054.369843",
+      }
+    }
+    key="1-0"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "conn",
+      }
+    }
+    key="1-1"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "uid",
+        "type": "string",
+        "value": "Cynwae4qh1GxM82hQ2",
+      }
+    }
+    key="1-2"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "id.orig_h",
+        "type": "addr",
+        "value": "192.168.0.50",
+      }
+    }
+    key="1-3"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "id.orig_p",
+        "type": "port",
+        "value": "1900",
+      }
+    }
+    key="1-4"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "id.resp_h",
+        "type": "addr",
+        "value": "239.255.255.250",
+      }
+    }
+    key="1-5"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "id.resp_p",
+        "type": "port",
+        "value": "1900",
+      }
+    }
+    key="1-6"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "proto",
+        "type": "enum",
+        "value": "udp",
+      }
+    }
+    key="1-7"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      NullField {
+        "name": "service",
+        "type": "string",
+        "value": "-",
+      }
+    }
+    key="1-8"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      IntervalField {
+        "name": "duration",
+        "type": "interval",
+        "value": "2.000293",
+      }
+    }
+    key="1-9"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "orig_bytes",
+        "type": "count",
+        "value": "282",
+      }
+    }
+    key="1-10"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "resp_bytes",
+        "type": "count",
+        "value": "0",
+      }
+    }
+    key="1-11"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "conn_state",
+        "type": "string",
+        "value": "S0",
+      }
+    }
+    key="1-12"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      NullField {
+        "name": "local_orig",
+        "type": "bool",
+        "value": "-",
+      }
+    }
+    key="1-13"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      NullField {
+        "name": "local_resp",
+        "type": "bool",
+        "value": "-",
+      }
+    }
+    key="1-14"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "missed_bytes",
+        "type": "count",
+        "value": "0",
+      }
+    }
+    key="1-15"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "history",
+        "type": "string",
+        "value": "D",
+      }
+    }
+    key="1-16"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "orig_pkts",
+        "type": "count",
+        "value": "3",
+      }
+    }
+    key="1-17"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "orig_ip_bytes",
+        "type": "count",
+        "value": "366",
+      }
+    }
+    key="1-18"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "resp_pkts",
+        "type": "count",
+        "value": "0",
+      }
+    }
+    key="1-19"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "resp_ip_bytes",
+        "type": "count",
+        "value": "0",
+      }
+    }
+    key="1-20"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+  <LogCell
+    field={
+      Field {
+        "name": "tunnel_parents",
+        "type": "set[string]",
+        "value": "(empty)",
+      }
+    }
+    key="1-21"
+    log={
+      Log {
+        "descriptor": Array [
+          Object {
+            "name": "_td",
+            "type": "int",
+          },
+          Object {
+            "name": "_path",
+            "type": "string",
+          },
+          Object {
+            "name": "ts",
+            "type": "time",
+          },
+          Object {
+            "name": "uid",
+            "type": "string",
+          },
+          Object {
+            "name": "id.orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "id.resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "id.resp_p",
+            "type": "port",
+          },
+          Object {
+            "name": "proto",
+            "type": "enum",
+          },
+          Object {
+            "name": "service",
+            "type": "string",
+          },
+          Object {
+            "name": "duration",
+            "type": "interval",
+          },
+          Object {
+            "name": "orig_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "conn_state",
+            "type": "string",
+          },
+          Object {
+            "name": "local_orig",
+            "type": "bool",
+          },
+          Object {
+            "name": "local_resp",
+            "type": "bool",
+          },
+          Object {
+            "name": "missed_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "history",
+            "type": "string",
+          },
+          Object {
+            "name": "orig_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "orig_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_pkts",
+            "type": "count",
+          },
+          Object {
+            "name": "resp_ip_bytes",
+            "type": "count",
+          },
+          Object {
+            "name": "tunnel_parents",
+            "type": "set[string]",
+          },
+        ],
+        "tuple": Array [
+          "0",
+          "conn",
+          "1425612054.369843",
+          "Cynwae4qh1GxM82hQ2",
+          "192.168.0.50",
+          "1900",
+          "239.255.255.250",
+          "1900",
+          "udp",
+          "-",
+          "2.000293",
+          "282",
+          "0",
+          "S0",
+          "-",
+          "-",
+          "0",
+          "D",
+          "3",
+          "366",
+          "0",
+          "0",
+          "(empty)",
+        ],
+      }
+    }
+    style={
+      Object {
+        "width": 300,
+      }
+    }
+  />
+</div>
+`;
