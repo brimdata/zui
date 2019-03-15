@@ -1,6 +1,15 @@
+/* @flow */
+
 import React from "react"
 
-const FieldsTable = ({log, only}) => {
+import Log from "../models/Log"
+
+type TableProps = {
+  log: Log,
+  only?: string[]
+}
+
+const FieldsTable = ({log, only}: TableProps) => {
   const rows = []
   const {tuple, descriptor} = log
 
@@ -32,7 +41,13 @@ const FieldsTable = ({log, only}) => {
   )
 }
 
-export const FieldsTableRow = ({value, type, name}) => (
+type RowProps = {
+  name: string,
+  type: string,
+  value: string
+}
+
+export const FieldsTableRow = ({value, type, name}: RowProps) => (
   <tr>
     <th>{name}</th>
     <td className={type}>{value}</td>
