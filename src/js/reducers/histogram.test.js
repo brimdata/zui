@@ -1,7 +1,7 @@
 /* @flow */
 
-import {getCountByTimeData, formatHistogram} from "./countByTime"
-import * as a from "../actions/countByTime"
+import {getHistogramData, formatHistogram} from "./histogram"
+import * as a from "../actions/histogram"
 import initStore from "../test/initStore"
 
 let store
@@ -14,9 +14,9 @@ test("receive data", () => {
     tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   }
-  const state = store.dispatchAll([a.receiveCountByTime(data)])
+  const state = store.dispatchAll([a.receiveHistogram(data)])
 
-  expect(getCountByTimeData(state)).toEqual(data)
+  expect(getHistogramData(state)).toEqual(data)
 })
 
 test("receive data twice", () => {
@@ -25,11 +25,11 @@ test("receive data twice", () => {
     descriptor: [{type: "integer", name: "count"}]
   }
   const state = store.dispatchAll([
-    a.receiveCountByTime(data),
-    a.receiveCountByTime(data)
+    a.receiveHistogram(data),
+    a.receiveHistogram(data)
   ])
 
-  expect(getCountByTimeData(state)).toEqual({
+  expect(getHistogramData(state)).toEqual({
     tuples: [["1"], ["2"], ["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   })
@@ -59,9 +59,9 @@ test("clearing the count by time data", () => {
     descriptor: [{type: "integer", name: "count"}]
   }
   const state = store.dispatchAll([
-    a.receiveCountByTime(data),
-    a.clearCountByTime()
+    a.receiveHistogram(data),
+    a.clearHistogram()
   ])
 
-  expect(getCountByTimeData(state)).toEqual({tuples: [], descriptor: []})
+  expect(getHistogramData(state)).toEqual({tuples: [], descriptor: []})
 })

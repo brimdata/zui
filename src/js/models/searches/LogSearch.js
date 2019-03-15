@@ -1,15 +1,16 @@
 /* @flow */
 
+import throttle from "lodash/throttle"
+
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
 import {PER_PAGE} from "../../reducers/logViewer"
-import type {Payload} from "../../receivers/types"
+import type {Payload} from "../../types"
 import {addHeadProc} from "../../lib/Program"
 import {discoverDescriptors} from "../../actions/descriptors"
 import {receiveLogTuples, spliceLogs} from "../../actions/logs"
 import {setMoreAhead} from "../../actions/logViewer"
 import BaseSearch from "./BaseSearch"
-import throttle from "lodash/throttle"
 
 export default class LogSearch extends BaseSearch {
   getProgram() {
