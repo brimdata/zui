@@ -27,16 +27,16 @@
       transform: scale(1.05);
       @include shadow-medium;
     }
-
-    svg {
-      transform: translateX(-2px);
-    }
   }
 
   &:active {
     .circle {
       transform: scale(1);
       @include shadow-flat;
+    }
+
+    svg {
+      transform: translateX(-2px);
     }
   }
 
