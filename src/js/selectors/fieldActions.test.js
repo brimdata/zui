@@ -1,13 +1,13 @@
 /* @flow */
 
-import {changeSearchBarInput, submitSearchBar} from "../../actions/searchBar"
-import {conn, dns, weird} from "../../test/mockLogs"
-import {setCurrentSpaceName, setSpaceInfo} from "../../actions/spaces"
-import {showAnalyticsTab, showLogsTab} from "../../actions/view"
-import MockBoomClient from "../../test/MockBoomClient"
-import buildMenu from "./buildMenu"
-import initStore from "../../test/initStore"
-import mockSpace from "../../test/mockSpace"
+import {changeSearchBarInput, submitSearchBar} from "../actions/searchBar"
+import {conn, dns, weird} from "../test/mockLogs"
+import {getViewerFieldActions} from "./fieldActions"
+import {setCurrentSpaceName, setSpaceInfo} from "../actions/spaces"
+import {showAnalyticsTab, showLogsTab} from "../actions/view"
+import MockBoomClient from "../test/MockBoomClient"
+import initStore from "../test/initStore"
+import mockSpace from "../test/mockSpace"
 
 let store, space, boom
 beforeEach(() => {
@@ -28,7 +28,7 @@ describe("Log Right Click", () => {
   test("conn log with pcap support", () => {
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })
@@ -38,7 +38,7 @@ describe("Log Right Click", () => {
     store.dispatch(setSpaceInfo(space))
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })
@@ -46,7 +46,7 @@ describe("Log Right Click", () => {
   test("dns log", () => {
     const log = dns()
     const field = log.getField("query")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })
@@ -54,7 +54,7 @@ describe("Log Right Click", () => {
   test("time field for weird log", () => {
     const log = weird()
     const field = log.getField("ts")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })
@@ -62,7 +62,7 @@ describe("Log Right Click", () => {
   test("time field for conn log", () => {
     const log = conn()
     const field = log.getField("ts")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })
@@ -80,7 +80,7 @@ describe("Analysis Right Click", () => {
   test("address field", () => {
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })
@@ -88,7 +88,7 @@ describe("Analysis Right Click", () => {
   test("non-address field", () => {
     const log = conn()
     const field = log.getField("proto")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })
@@ -102,7 +102,7 @@ describe("Analysis Right Click", () => {
 
     const log = conn()
     const field = log.getField("proto")
-    const menu = buildMenu(store.getState(), {log, field})
+    const menu = getViewerFieldActions(store.getState(), {log, field})
 
     expect(menu).toMatchSnapshot()
   })

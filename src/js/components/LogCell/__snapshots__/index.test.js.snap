@@ -8,11 +8,15 @@ exports[`shapshot 1`] = `
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <span
-    className="_path conn-bg-color "
-  >
-    conn
-  </span>
+  <CellValue
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "conn",
+      }
+    }
+  />
 </div>
 `;
 
@@ -24,11 +28,15 @@ exports[`shapshot after clicking 1`] = `
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <span
-    className="_path conn-bg-color "
-  >
-    conn
-  </span>
+  <CellValue
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "conn",
+      }
+    }
+  />
 </div>
 `;
 
@@ -40,23 +48,15 @@ exports[`shapshot after hovering 1`] = `
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <span
-    className="_path conn-bg-color "
-  >
-    conn
-  </span>
-  <button
-    className="cell-options-button"
-  >
-    <DownArrow
-      data-container-transform="translate(0 1)"
-      data-icon="chevron-bottom"
-      height="32"
-      viewBox="0 0 32 32"
-      width="32"
-      xmlns="http://www.w3.org/2000/svg"
-    />
-  </button>
+  <CellValue
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "conn",
+      }
+    }
+  />
   <Tooltip
     style={Object {}}
   >
@@ -77,11 +77,15 @@ exports[`shapshot after hovering 2`] = `
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <span
-    className="_path conn-bg-color "
-  >
-    conn
-  </span>
+  <CellValue
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "conn",
+      }
+    }
+  />
 </div>
 `;
 
@@ -93,23 +97,15 @@ exports[`shapshot after right-clicking 1`] = `
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <span
-    className="_path conn-bg-color "
-  >
-    conn
-  </span>
-  <button
-    className="cell-options-button"
-  >
-    <DownArrow
-      data-container-transform="translate(0 1)"
-      data-icon="chevron-bottom"
-      height="32"
-      viewBox="0 0 32 32"
-      width="32"
-      xmlns="http://www.w3.org/2000/svg"
-    />
-  </button>
+  <CellValue
+    field={
+      Field {
+        "name": "_path",
+        "type": "string",
+        "value": "conn",
+      }
+    }
+  />
   <Tooltip
     style={Object {}}
   >
@@ -119,7 +115,7 @@ exports[`shapshot after right-clicking 1`] = `
       _path
     </span>
   </Tooltip>
-  <Connect(ViewerFieldActions)
+  <Connect(FieldActions)
     field={
       Field {
         "name": "_path",
@@ -269,35 +265,15 @@ exports[`shapshot right clicking a time cell 1`] = `
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <p>
-    <span
-      className="date"
-    >
-      03/05/15
-    </span>
-    <span
-      className="time"
-    >
-      19:20
-    </span>
-    <span
-      className="seconds"
-    >
-      54.3690
-    </span>
-  </p>
-  <button
-    className="cell-options-button"
-  >
-    <DownArrow
-      data-container-transform="translate(0 1)"
-      data-icon="chevron-bottom"
-      height="32"
-      viewBox="0 0 32 32"
-      width="32"
-      xmlns="http://www.w3.org/2000/svg"
-    />
-  </button>
+  <CellValue
+    field={
+      TimeField {
+        "name": "ts",
+        "type": "time",
+        "value": "1425612054.369843",
+      }
+    }
+  />
   <Tooltip
     style={Object {}}
   >
@@ -307,7 +283,7 @@ exports[`shapshot right clicking a time cell 1`] = `
       ts
     </span>
   </Tooltip>
-  <Connect(ViewerFieldActions)
+  <Connect(FieldActions)
     field={
       TimeField {
         "name": "ts",

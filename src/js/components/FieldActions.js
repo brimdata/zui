@@ -3,12 +3,15 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {MenuItemData} from "./LogCell/rightClick"
+import type {MenuItemData} from "./FieldActionData"
 import type {State} from "../reducers/types"
+import {
+  getViewerFieldActions,
+  getDetailFieldActions
+} from "../selectors/fieldActions"
 import Field from "../models/Field"
 import Log from "../models/Log"
 import RightClickMenu from "./RightClickMenu"
-import buildMenu from "./LogCell/buildMenu"
 
 type OwnProps = {|
   log: Log,
@@ -26,7 +29,7 @@ type Props = {|
   ...StateProps
 |}
 
-export default class ViewerFieldActions extends React.Component<Props> {
+export default class FieldActions extends React.Component<Props> {
   render() {
     return (
       <RightClickMenu
@@ -38,10 +41,14 @@ export default class ViewerFieldActions extends React.Component<Props> {
   }
 }
 
-const stateToProps = (state: State, props: OwnProps): StateProps => ({
-  actions: buildMenu(state, props)
-})
-
 export const XViewerFieldActions = connect<Props, OwnProps, _, _, _, _>(
-  stateToProps
-)(ViewerFieldActions)
+  (state: State, props: OwnProps): StateProps => ({
+    actions: getViewerFieldActions(state, props)
+  })
+)(FieldActions)
+
+export const XDetailFieldActions = connect<Props, OwnProps, _, _, _, _>(
+  (state: State, props: OwnProps): StateProps => ({
+    actions: getDetailFieldActions(state, props)
+  })
+)(FieldActions)

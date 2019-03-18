@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Dispatch} from "../../reducers/types"
+import type {Dispatch} from "../reducers/types"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -8,16 +8,16 @@ import {
   changeSearchBarInput,
   clearSearchBar,
   submitSearchBar
-} from "../../actions/searchBar"
-import {fetchPackets} from "../../actions/packets"
-import {fetchWhois} from "../../actions/whois"
-import {open} from "../../lib/System"
-import {showRightSidebar} from "../../actions/view"
-import {viewLogDetail} from "../../actions/logDetails"
-import Field, {TimeField} from "../../models/Field"
-import Log from "../../models/Log"
-import drillDown from "../../lib/drillDown"
-import timeWindow from "../../reducers/timeWindow"
+} from "../actions/searchBar"
+import {fetchPackets} from "../actions/packets"
+import {fetchWhois} from "../actions/whois"
+import {open} from "../lib/System"
+import {showRightSidebar} from "../actions/view"
+import {viewLogDetail} from "../actions/logDetails"
+import Field, {TimeField} from "../models/Field"
+import Log from "../models/Log"
+import drillDown from "../lib/drillDown"
+import timeWindow from "../reducers/timeWindow"
 
 type Action = {
   type: "action",
@@ -34,8 +34,7 @@ export type MenuItemData = Seperator | Action
 export const exclude = (field: Field) => ({
   type: "action",
   text: "Exclude this value",
-  onClick: (dispatch: Dispatch, e: Event) => {
-    e.stopPropagation()
+  onClick: (dispatch: Dispatch) => {
     dispatch(appendQueryExclude(field))
     dispatch(submitSearchBar())
   }
@@ -44,8 +43,7 @@ export const exclude = (field: Field) => ({
 export const include = (field: Field) => ({
   type: "action",
   text: "Include this value",
-  onClick: (dispatch: Dispatch, e: Event) => {
-    e.stopPropagation()
+  onClick: (dispatch: Dispatch) => {
     dispatch(appendQueryInclude(field))
     dispatch(submitSearchBar())
   }
@@ -54,8 +52,7 @@ export const include = (field: Field) => ({
 export const freshInclude = (field: Field) => ({
   type: "action",
   text: "New search with this value",
-  onClick: (dispatch: Dispatch, e: Event) => {
-    e.stopPropagation()
+  onClick: (dispatch: Dispatch) => {
     dispatch(clearSearchBar())
     dispatch(changeSearchBarInput(field.value))
     dispatch(submitSearchBar())
@@ -65,8 +62,7 @@ export const freshInclude = (field: Field) => ({
 export const countBy = (field: Field) => ({
   type: "action",
   text: `Count by ${field.name}`,
-  onClick: (dispatch: Dispatch, e: Event) => {
-    e.stopPropagation()
+  onClick: (dispatch: Dispatch) => {
     dispatch(appendQueryCountBy(field))
     dispatch(submitSearchBar())
   }

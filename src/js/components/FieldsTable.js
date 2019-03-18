@@ -2,6 +2,8 @@
 
 import React from "react"
 
+import {XDetailFieldActions} from "./FieldActions"
+import Field from "../models/Field"
 import Log from "../models/Log"
 
 type TableProps = {
@@ -11,26 +13,22 @@ type TableProps = {
 
 const FieldsTable = ({log, only}: TableProps) => {
   const rows = []
-  const {tuple, descriptor} = log
+  const {tuple} = log
 
   if (only) {
     only.forEach(name => {
       const field = log.getField(name)
       if (field) {
-        const {value, type} = field
-        rows.push(
-          <FieldsTableRow key={name} name={name} value={value} type={type} />
-        )
+        rows.push(<FieldsTableRow key={name} field={field} log={log} />)
       }
     })
   } else {
     for (let index = 0; index < tuple.length; index++) {
-      const value = tuple[index]
-      const {name, type} = descriptor[index]
-      if (name === "_td") continue
-      rows.push(
-        <FieldsTableRow key={name} name={name} value={value} type={type} />
-      )
+      const field = log.getFieldAt(index)
+      if (field) {
+        if (field.name === "_td") continue
+        rows.push(<FieldsTableRow key={field.name} field={field} log={log} />)
+      }
     }
   }
 
@@ -42,16 +40,44 @@ const FieldsTable = ({log, only}: TableProps) => {
 }
 
 type RowProps = {
-  name: string,
-  type: string,
-  value: string
+  field: Field,
+  log: Log
 }
 
-export const FieldsTableRow = ({value, type, name}: RowProps) => (
-  <tr>
-    <th>{name}</th>
-    <td className={type}>{value}</td>
-  </tr>
-)
+type RowState = {
+  showMenu: boolean,
+  menuStyle: Object
+}
+
+export class FieldsTableRow extends React.Component<RowProps, RowState> {
+  state = {
+    showMenu: false,
+    menuStyle: {top: 0, left: 0}
+  }
+
+  onRightClick = (e: MouseEvent) => {
+    this.setState({showMenu: true, menuStyle: {top: e.pageY, left: e.pageX}})
+  }
+
+  dismissRightClick = () => {
+    this.setState({showMenu: false})
+  }
+
+  render() {
+    return (
+      <tr onContextMenu={this.onRightClick}>
+        <th>{this.props.field.name}</th>
+        <td className={this.props.field.type}>{this.props.field.value}</td>
+        {this.state.showMenu && (
+          <XDetailFieldActions
+            {...this.props}
+            style={this.state.menuStyle}
+            onClose={this.dismissRightClick}
+          />
+        )}
+      </tr>
+    )
+  }
+}
 
 export default FieldsTable

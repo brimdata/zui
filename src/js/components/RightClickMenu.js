@@ -3,7 +3,7 @@
 import React from "react"
 import ReactMeasure from "react-measure"
 
-import type {MenuItemData} from "./LogCell/rightClick"
+import type {MenuItemData} from "./FieldActionData"
 import {XRightClickMenuItem} from "./RightClickMenuItem"
 import {ensureVisible} from "../lib/MenuStyler"
 import MenuList from "./MenuList"
@@ -25,7 +25,7 @@ const RightClickMenu = (props: Props) => {
             onClose={props.onClose}
             style={ensureVisible(contentRect.bounds, props.style)}
           >
-            <MenuList ref={measureRef} onClick={props.onClose}>
+            <MenuList ref={measureRef} onClick={() => console.log("hi")}>
               {props.actions.map((action, index) => (
                 <XRightClickMenuItem key={index} action={action} />
               ))}

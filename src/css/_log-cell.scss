@@ -20,38 +20,6 @@
     position: relative;
     border: 1px dashed $gray-5;
   }
-
-  .cell-options-button {
-    display: none;
-    left: calc(100%);
-    top: 0;
-    position: absolute;
-    height: $bro-log-row-height;
-    width: $bro-log-row-height;
-    box-shadow: $box-shadow;
-    background: $gray-5;
-    outline: none;
-    cursor: pointer;
-    border: none;
-    border-radius: 3px;
-
-    svg {
-      width: 8px;
-      height: 8px;
-      fill: white;
-      transition-duration: 150ms;
-    }
-
-    &:hover {
-      background: $gray-3;
-    }
-  }
-
-  &.active .cell-options-button {
-    svg {
-      transform: rotate(-90deg);
-    }
-  }
 }
 
 .log-cell.time {
