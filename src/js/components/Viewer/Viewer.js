@@ -20,7 +20,8 @@ type Props = {
   atEnd: boolean,
   logs: Log[],
   selectedLog: ?Log,
-  onLastChunk?: Function
+  onLastChunk?: Function,
+  endMessage: string
 }
 
 type State = {
@@ -107,7 +108,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
             ))}
             {this.props.atEnd && (
               <p className="end-message" style={Styler.endMessage(dimens)}>
-                End of Results 🎉
+                {this.props.endMessage}
               </p>
             )}
           </div>

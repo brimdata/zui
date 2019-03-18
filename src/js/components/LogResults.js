@@ -72,6 +72,12 @@ export default class LogResults extends React.Component<Props> {
                   !this.props.isFetching &&
                   !this.props.isFetchingAhead
                 }
+                endMessage={
+                  this.props.tab == "analytics" &&
+                  this.props.logs.length === 10000
+                    ? "Showing first 10,000 results"
+                    : "End of results 🎉"
+                }
               />
             )}
           </AutoSizer>
