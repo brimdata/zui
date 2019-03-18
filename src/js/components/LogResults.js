@@ -4,6 +4,7 @@ import {AutoSizer} from "react-virtualized"
 import {connect} from "react-redux"
 import React from "react"
 
+import {ANALYTIC_MAX_RESULTS} from "../models/searches/AnalyticSearch"
 import {type DispatchProps, type State} from "../reducers/types"
 import {type ResultsTabEnum, getResultsTab, getTimeZone} from "../reducers/view"
 import type {Tuple} from "../types"
@@ -13,6 +14,7 @@ import {getCurrentTableColumns} from "../selectors/tableColumnSets"
 import {getLogs, getTuples} from "../selectors/logs"
 import {getMainSearchIsFetching} from "../selectors/boomSearches"
 import {isFetchingAhead, moreAhead} from "../reducers/logViewer"
+import {withCommas} from "../lib/fmt"
 import Log from "../models/Log"
 import LogViewer from "../components/LogViewer"
 import NoResults from "./NoResults"
@@ -74,8 +76,10 @@ export default class LogResults extends React.Component<Props> {
                 }
                 endMessage={
                   this.props.tab == "analytics" &&
-                  this.props.logs.length === 10000
-                    ? "Showing first 10,000 results"
+                  this.props.logs.length === ANALYTIC_MAX_RESULTS
+                    ? `Showing first ${withCommas(
+                        ANALYTIC_MAX_RESULTS
+                      )} results`
                     : "End of results 🎉"
                 }
               />
