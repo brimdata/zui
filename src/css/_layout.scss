@@ -1,25 +1,18 @@
 #app-root {
   height: 100%;
+  width: 100%;
 }
 
-.side-bar {
-  flex: 0 0 auto;
+.app-wrapper {
+  height: 100%;
+  width: 100%;
 }
 
-.section-heading {
-  color: $gray;
+body > div {
+  position: fixed;
 }
 
-.search-area {
-  margin: 0 $base-space * 2;
-}
-
-.count-by-time-area {
-  margin: 0 $base-space * 2;
-}
-
-.loading-area {
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
+#measure-layer {
+  top: 0;
+  z-index: -1;
 }
