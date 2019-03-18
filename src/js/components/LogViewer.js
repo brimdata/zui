@@ -20,7 +20,8 @@ type Props = {
   tableColumns: TableColumns,
   atEnd: boolean,
   onLastChunk?: Function,
-  onRowClick?: Function
+  onRowClick?: Function,
+  endMessage: string
 }
 
 type State = {
@@ -82,6 +83,7 @@ export default class LogViewer extends React.Component<Props, State> {
           rowRenderer={this.renderRow}
           selectedLog={this.props.selectedLog}
           atEnd={this.props.atEnd}
+          endMessage={this.props.endMessage}
         />
       </div>
     )
