@@ -26,7 +26,7 @@ export const initalState: View = {
   rightSidebarIsOpen: false,
   downloadsIsOpen: false,
   leftSidebarWidth: 350,
-  rightSidebarWidth: 350,
+  rightSidebarWidth: 450,
   resultsTab: null,
   timeZone: "UTC",
   modal: null

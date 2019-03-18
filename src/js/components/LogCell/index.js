@@ -4,11 +4,10 @@ import React from "react"
 import classNames from "classnames"
 
 import {type FixedPos, clearTextSelection, selectText} from "../../lib/Doc"
-import {XLogCellActions} from "./LogCellActions"
-import {format} from "../../lib/Time"
-import {withCommas} from "../../lib/fmt"
-import DownArrow from "../../icons/chevron-bottom-md.svg"
-import Field, {TimeField} from "../../models/Field"
+import {XViewerFieldActions} from "../FieldActions"
+import {getTooltipStyle} from "../../lib/MenuStyler"
+import CellValue from "./CellValue"
+import Field from "../../models/Field"
 import Log from "../../models/Log"
 import Tooltip from "../Tooltip"
 
@@ -65,34 +64,12 @@ export default class LogCell extends React.PureComponent<Props, State> {
     this.setState({hover: false})
   }
 
-  renderValue(field: Field) {
-    if (field.name === "_path")
-      return (
-        <span className={`${field.name} ${field.value}-bg-color `}>
-          {field.value}
-        </span>
-      )
-    if (field instanceof TimeField)
-      return (
-        <p>
-          <span className="date">{format(field.toDate(), "MM/DD/YY")}</span>
-          <span className="time">{format(field.toDate(), "HH:mm")}</span>
-          <span className="seconds">{format(field.toDate(), "ss.SSSS")}</span>
-        </p>
-      )
-    if (field.type === "count") {
-      return <span>{withCommas(field.value)}</span>
-    }
-    return <span>{field.value}</span>
-  }
-
   render() {
     const {name, type} = this.props.field
     const cellClass = classNames(`log-cell ${type}`, {
       active: this.state.showMenu,
       hover: this.state.hover
     })
-
     return (
       <div
         className={cellClass}
@@ -103,13 +80,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
         style={this.props.style}
         ref={r => (this.el = r)}
       >
-        {this.renderValue(this.props.field)}
-
-        {this.state.hover && (
-          <button className="cell-options-button">
-            <DownArrow />
-          </button>
-        )}
+        <CellValue field={this.props.field} />
 
         {this.state.hover && (
           <Tooltip style={this.state.tooltipStyle}>
@@ -118,7 +89,7 @@ export default class LogCell extends React.PureComponent<Props, State> {
         )}
 
         {this.state.showMenu && (
-          <XLogCellActions
+          <XViewerFieldActions
             log={this.props.log}
             field={this.props.field}
             style={this.state.menuStyle}
@@ -128,10 +99,4 @@ export default class LogCell extends React.PureComponent<Props, State> {
       </div>
     )
   }
-}
-
-const getTooltipStyle = (el): FixedPos => {
-  if (!el) return {}
-  const {top, left} = el.getBoundingClientRect()
-  return {top: top - 21, left}
 }

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic snapshot 1`] = `
+<RightClickMenu
+  actions={Array []}
+  onClose={[Function]}
+  style={
+    Object {
+      "left": 1,
+      "top": 1,
+    }
+  }
+/>
+`;

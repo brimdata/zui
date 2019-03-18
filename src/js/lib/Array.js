@@ -33,14 +33,11 @@ export const indexInBounds = (index: number, array: *[]) => {
 }
 
 export const flattenJoin = (array: *[], between: *) => {
-  let newArray = []
-
-  for (let index = 0; index < array.length; index++) {
-    if (array[index] && array[index].length) {
-      newArray = [...newArray, ...array[index]]
-      if (index !== array.length - 1) newArray.push(between)
-    }
-  }
-
-  return newArray
+  return array
+    .filter(a => !!(a && a.length))
+    .reduce((final, item, index, orig) => {
+      const next = [...final, ...item]
+      if (index !== orig.length - 1) next.push(between)
+      return next
+    }, [])
 }

@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {State} from "../../reducers/types"
+import type {State} from "../reducers/types"
 import {
   countBy,
   detail,
@@ -13,21 +13,21 @@ import {
   seperator,
   toTime,
   whois
-} from "./rightClick"
-import {flattenJoin} from "../../lib/Array"
-import {getCurrentSpace} from "../../reducers/spaces"
-import {getPrevSearchProgram} from "../../selectors/searchBar"
-import {getResultsTab} from "../../reducers/view"
-import {hasGroupByProc} from "../../lib/Program"
-import Field, {TimeField} from "../../models/Field"
-import Log from "../../models/Log"
+} from "../components/FieldActionData"
+import {flattenJoin} from "../lib/Array"
+import {getCurrentSpace} from "../reducers/spaces"
+import {getPrevSearchProgram} from "./searchBar"
+import {getResultsTab} from "../reducers/view"
+import {hasGroupByProc} from "../lib/Program"
+import Field, {TimeField} from "../models/Field"
+import Log from "../models/Log"
 
 type Props = {
   field: Field,
   log: Log
 }
 
-export default (state: State, props: Props) => {
+export const getViewerFieldActions = (state: State, props: Props) => {
   const field = props.field
   const log = props.log
   const space = getCurrentSpace(state)
@@ -66,6 +66,29 @@ export default (state: State, props: Props) => {
   }
 
   logActions.push(detail(log))
+
+  return flattenJoin([queryActions, fieldActions, logActions], seperator())
+}
+
+export const getDetailFieldActions = (state: State, props: Props) => {
+  const field = props.field
+
+  const queryActions = []
+  const fieldActions = []
+  const logActions = []
+
+  if (!(field instanceof TimeField)) {
+    queryActions.push(freshInclude(field))
+  }
+
+  if (field instanceof TimeField) {
+    queryActions.push(fromTime(field))
+    queryActions.push(toTime(field))
+  }
+
+  if (["addr", "set[addr]"].includes(props.field.type)) {
+    fieldActions.push(whois(props.field))
+  }
 
   return flattenJoin([queryActions, fieldActions, logActions], seperator())
 }
