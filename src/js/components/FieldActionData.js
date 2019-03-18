@@ -54,7 +54,7 @@ export const freshInclude = (field: Field) => ({
   text: "New search with this value",
   onClick: (dispatch: Dispatch) => {
     dispatch(clearSearchBar())
-    dispatch(changeSearchBarInput(field.value))
+    dispatch(changeSearchBarInput(field.queryableValue()))
     dispatch(submitSearchBar())
   }
 })

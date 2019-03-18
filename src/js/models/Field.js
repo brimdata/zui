@@ -1,5 +1,7 @@
 /* @flow */
 
+import {escapeSpaces} from "../lib/Str"
+
 export default class Field {
   name: string
   type: string
@@ -13,6 +15,10 @@ export default class Field {
 
   cast() {
     return this.value
+  }
+
+  queryableValue() {
+    return escapeSpaces(this.value)
   }
 }
 
