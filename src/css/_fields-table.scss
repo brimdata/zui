@@ -1,13 +1,26 @@
 .fields-table {
   border-collapse: collapse;
+  color: $gray-warm-2;
 
   tr {
     vertical-align: baseline;
+
+    &:nth-child(odd) {
+      background: $table-stripe-color;
+    }
+
+    td {
+      border-radius: 0 3px 3px 0;
+    }
+
+    th {
+      border-radius: 3px 0 0 3px;
+    }
   }
 
   th,
   td {
-    padding: 2px 0;
+    padding: 3px 6px;
     padding-right: $base-space;
     word-break: break-word;
   }
@@ -15,7 +28,6 @@
   th {
     font-size: 9px;
     text-align: left;
-    padding-left: $base-space;
     white-space: nowrap;
   }
 
@@ -27,7 +39,14 @@
   }
 
   tr:hover {
-    background: $light-gray;
-    border-radius: 3px;
+    background: $table-stripe-hover;
+
+    td {
+      border-radius: 0 3px 3px 0;
+    }
+
+    th {
+      border-radius: 3px 0 0 3px;
+    }
   }
 }

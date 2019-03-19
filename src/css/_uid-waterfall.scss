@@ -5,15 +5,14 @@
     display: flex;
     align-items: center;
     padding-bottom: 3px;
-    padding-left: 12px;
   }
 
   .ts-label,
   .duration {
     font-size: 9px;
+    color: $gray-warm-2;
     font-weight: bold;
-    font-family: $mono-font;
-    padding-right: $base-space;
+    padding: 3px 6px;
   }
 
   .slider {
@@ -25,7 +24,7 @@
   .line {
     display: block;
     position: absolute;
-    border-top: 1px solid $light-gray;
+    border-top: 1px solid $table-stripe-hover;
     width: 100%;
     top: 50%;
   }

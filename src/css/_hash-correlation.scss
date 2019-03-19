@@ -1,0 +1,14 @@
+.hash-correlation {
+  .two-column {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    & > * {
+      flex-basis: 45%;
+    }
+  }
+
+  .inline-table {
+    margin-bottom: 12px;
+  }
+}

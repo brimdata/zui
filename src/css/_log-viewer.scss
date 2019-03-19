@@ -47,11 +47,11 @@
   opacity: 1;
 
   &.even {
-    background: darken(white, 2%);
+    background: $table-stripe-color;
   }
 
   &:hover {
-    background: darken(white, 6%);
+    background: $table-stripe-hover;
   }
 
   &.highlight {

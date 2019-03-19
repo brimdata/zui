@@ -1,33 +1,38 @@
 .inline-table {
-  // outline: 1px solid gray;
   table {
     border-collapse: collapse;
+    width: 100%;
   }
 
-  tr {
-    height: 25px;
-
-    &:nth-child(even) {
-      td {
-        background-color: $gray-cold-5;
-        &:first-child {
-          border-radius: 3px 0 0 3px;
-        }
-        &:last-child {
-          border-radius: 0 3px 3px 0;
-        }
-      }
+  td {
+    &:first-child {
+      border-radius: 3px 0 0 3px;
     }
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+    }
+  }
+
+  tbody tr:nth-child(odd) {
+    background: $table-stripe-color;
+  }
+
+  tbody tr:hover {
+    background: $table-stripe-hover;
   }
 
   th,
   td {
-    padding: 0 6px;
+    padding: 3px 6px;
+    &.count {
+      text-align: right;
+    }
   }
 
   th {
     text-align: left;
     @extend .label;
+    font-size: 9px;
     font-weight: bold;
     color: $gray-warm-2;
   }

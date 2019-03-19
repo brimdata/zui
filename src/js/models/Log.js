@@ -6,6 +6,11 @@ import type {Descriptor, Tuple} from "../types"
 import Field from "./Field"
 import FieldFactory from "./FieldFactory"
 
+type BuildArgs = {
+  tuples: Tuple[],
+  descriptor: Descriptor
+}
+
 export default class Log {
   tuple: Tuple
   descriptor: Descriptor
@@ -21,6 +26,10 @@ export default class Log {
       if (descriptor) logs.push(new Log(tuple, descriptor))
     })
     return logs
+  }
+
+  static build({descriptor, tuples}: BuildArgs) {
+    return tuples.map<Log>(tuple => new Log(tuple, descriptor))
   }
 
   static isSame(a: ?Log, b: ?Log) {
@@ -62,7 +71,12 @@ export default class Log {
   }
 
   getFields(): Field[] {
-    return this.descriptor.map((_col, index) => this.getFieldAt(index))
+    const fields = []
+    for (let i = 0; i < this.descriptor.length; ++i) {
+      const field = this.getFieldAt(i)
+      if (field) fields.push(field)
+    }
+    return fields
   }
 
   getSec(fieldName: string): number | void {

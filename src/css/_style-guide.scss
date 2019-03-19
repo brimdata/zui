@@ -16,6 +16,9 @@ $black-20: rgba(0, 0, 0, 0.2);
 
 $accent-blue: #416b9c;
 
+$table-stripe-color: darken(white, 2%);
+$table-stripe-hover: darken(white, 6%);
+
 @mixin fills-transparent-dark {
   background-color: transparentize(#545866, 0.03);
 }
