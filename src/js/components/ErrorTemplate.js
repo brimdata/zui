@@ -60,7 +60,7 @@ const NoSpacesErrorTemplate = ({error, onClose}: Props) => (
     <Paragraph>{error.message()}</Paragraph>
     <br />
     <Paragraph>For example, to create a space called {'"default"'}:</Paragraph>
-    <Code>{"boom -execute 'new default'"}</Code>
+    <Code>{"boom new default"}</Code>
   </MessageBox>
 )
 
