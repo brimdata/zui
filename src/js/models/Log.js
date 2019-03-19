@@ -3,6 +3,7 @@
 import isEqual from "lodash/isEqual"
 
 import type {Descriptor, Tuple} from "../types"
+import Field from "./Field"
 import FieldFactory from "./FieldFactory"
 
 export default class Log {
@@ -58,6 +59,10 @@ export default class Log {
       const {name, type} = this.descriptor[index]
       return FieldFactory.create({value, name, type})
     }
+  }
+
+  getFields(): Field[] {
+    return this.descriptor.map((_col, index) => this.getFieldAt(index))
   }
 
   getSec(fieldName: string): number | void {

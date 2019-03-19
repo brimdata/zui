@@ -1,10 +1,12 @@
 /* @flow */
 
 import React from "react"
-import FieldsTable from "./FieldsTable"
-import UidTimeline from "./UidTimeline"
+
 import ConnVersation from "./ConnVersation"
+import FieldsTable from "./FieldsTable"
+import InlineTable from "./InlineTable"
 import Log from "../models/Log"
+import UidTimeline from "./UidTimeline"
 
 type Props = {
   log: Log,
@@ -17,6 +19,33 @@ export default class LogDetail extends React.Component<Props> {
 
   render() {
     const {log, correlatedLogs, viewLogDetail} = this.props
+
+    const descriptor = [
+      {type: "addr", name: "tx_hosts"},
+      {type: "count", name: "count"}
+    ]
+    const tuples = [
+      ["213.155.151.155", "155"],
+      ["213.155.151.150", "144"],
+      ["213.155.151.149", "132"],
+      ["213.155.151.151", "132"],
+      ["213.155.151.180", "130"]
+    ]
+
+    const descriptor1 = [
+      {type: "addr", name: "rx_hosts"},
+      {type: "count", name: "count"}
+    ]
+    const tuples1 = [
+      ["213.155.151.155", "155"],
+      ["213.155.151.150", "144"],
+      ["213.155.151.149", "132"],
+      ["213.155.151.151", "132"],
+      ["213.155.151.180", "130"]
+    ]
+    const rxLogs = tuples1.map(t => new Log(t, descriptor1))
+    const txLogs = tuples.map(t => new Log(t, descriptor))
+
     return (
       <div className="log-detail">
         <div className="fields-table-panel">
@@ -40,6 +69,12 @@ export default class LogDetail extends React.Component<Props> {
             <ConnVersation log={log} />
           </div>
         )}
+
+        <InlineTable
+          logs={[new Log(["12,231"], [{type: "count", name: "count"}])]}
+        />
+        <InlineTable logs={txLogs} />
+        <InlineTable logs={rxLogs} />
       </div>
     )
   }

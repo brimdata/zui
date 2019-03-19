@@ -1,0 +1,39 @@
+.inline-table {
+  // outline: 1px solid gray;
+  table {
+    border-collapse: collapse;
+  }
+
+  tr {
+    height: 25px;
+
+    &:nth-child(even) {
+      td {
+        background-color: $gray-cold-5;
+        &:first-child {
+          border-radius: 3px 0 0 3px;
+        }
+        &:last-child {
+          border-radius: 0 3px 3px 0;
+        }
+      }
+    }
+  }
+
+  th,
+  td {
+    padding: 0 6px;
+  }
+
+  th {
+    text-align: left;
+    @extend .label;
+    font-weight: bold;
+    color: $gray-warm-2;
+  }
+
+  td {
+    @extend .code-text;
+    @include type-colors;
+  }
+}

@@ -117,6 +117,14 @@ $accent-blue: #416b9c;
   margin: 0;
 }
 
+.code-text {
+  font-family: $mono-font;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  margin: 0;
+}
+
 .code {
   display: inline-block;
   font-family: $mono-font;
