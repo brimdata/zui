@@ -23,7 +23,7 @@ export const fetchMainSearch = ({
   dispatch(updateTab(state))
   if (saveToHistory) dispatch(pushSearchHistory())
 
-  dispatch(cancelBoomSearches())
+  dispatch(cancelBoomSearches("viewer"))
   dispatch(clearLogs())
   dispatch(clearAnalysis())
 
