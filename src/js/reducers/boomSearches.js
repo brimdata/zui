@@ -5,13 +5,14 @@ import type {State} from "./types"
 import createReducer from "./createReducer"
 
 export type BoomSearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "ABORTED"
+export type BoomSearchTag = "viewer" | "detail"
 
 export type BoomSearch = {
   name: string,
   status: BoomSearchStatus,
   handler: Handler,
   stats: {},
-  tag: "viewer" | "detail"
+  tag: BoomSearchTag
 }
 
 export type BoomSearches = {

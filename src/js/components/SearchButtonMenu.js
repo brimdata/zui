@@ -20,7 +20,7 @@ export default class SearchButtonMenu extends React.Component<Props> {
           <>
             <li
               onClick={() => {
-                this.props.dispatch(killBoomSearches())
+                this.props.dispatch(killBoomSearches("viewer"))
               }}
             >
               Kill Search

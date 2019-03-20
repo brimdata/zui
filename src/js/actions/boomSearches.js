@@ -1,10 +1,11 @@
 /* @flow */
 
-import {Handler} from "../BoomClient"
 import {
+  type BoomSearchTag,
   type BoomSearchStatus as Status,
   getBoomSearches
 } from "../reducers/boomSearches"
+import {Handler} from "../BoomClient"
 import type {Thunk} from "../reducers/types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import BaseSearch from "../models/searches/BaseSearch"
@@ -39,7 +40,7 @@ export const clearBoomSearches = (tag?: string) => ({
   tag
 })
 
-export const killBoomSearches = (tag?: string): Thunk => (
+export const killBoomSearches = (tag?: BoomSearchTag): Thunk => (
   _dispatch,
   getState
 ) => {
