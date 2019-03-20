@@ -7,6 +7,8 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
+import {dataSets, selectors} from "../src/js/test/integration"
+
 const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
 const path = require("path")
@@ -30,6 +32,60 @@ const retry = (f, attempts = 100, delay = 100) => {
       })
   })
 }
+
+const retryUntil = (f, cond_f, attempts = 5, delay = 1000) =>
+  // Retry f until cond_f is true. Return results from f.
+  //
+  // f: function that returns a promise
+  // cond_f: function that expects f's resolved value and returns a Boolean.
+  // If cond_f returns false, then f is retried. This attempts every delay ms
+  // for attempts before rejecting.
+  retry(
+    () =>
+      new Promise((resolve, reject) => {
+        f()
+          .then(val => {
+            if (cond_f(val)) {
+              resolve(val)
+            } else {
+              reject(new Error(`retryUntil condition failure: ${val}`))
+            }
+          })
+          .catch(err => {
+            reject(`retryUntil promise failure: ${err}`)
+          })
+      }),
+    attempts,
+    delay
+  )
+
+const verifySingleRectAttr = (app, pathClass, attr) =>
+  app.client.getAttribute(`.${pathClass} rect`, attr).then(vals => {
+    // Handle case of a single rect, in which case webdriver doesn't return an
+    // array of 1 item but instead a scalar
+    if (typeof vals === "string") {
+      vals = [vals]
+    }
+    if (!Array.isArray(vals)) {
+      throw new Error(
+        `expected Array for ${pathClass} attr ${attr}; got ${vals}`
+      )
+    }
+    vals.forEach(val => {
+      expect(Number(val)).toBeGreaterThanOrEqual(
+        dataSets.corelight.histogram.rectAttrMin
+      )
+      expect(Number(val)).toBeLessThan(dataSets.corelight.histogram.rectAttrMax)
+    })
+    return vals
+  })
+
+const verifyPathClassRect = (app, pathClass) =>
+  Promise.all(
+    ["x", "y", "width", "height"].map(attr =>
+      verifySingleRectAttr(app, pathClass, attr)
+    )
+  )
 
 const logIn = app => {
   return app.client
@@ -58,7 +114,9 @@ const waitForSearch = app => {
 }
 
 const waitForHistogram = app => {
-  return retry(() => app.client.element(".count-by-time").getAttribute("class"))
+  return retry(() =>
+    app.client.element(selectors.histogram.topLevel).getAttribute("class")
+  )
 }
 
 describe("Application launch", () => {
@@ -124,6 +182,81 @@ describe("Application launch", () => {
         .then(() => waitForSearch(app))
         .then(val => {
           expect(val).toBeDefined()
+          done()
+        })
+        .catch(done)
+    },
+    TestTimeout
+  )
+
+  test(
+    "histogram deep inspection",
+    done => {
+      // This is a data-sensitive test that assumes the histogram has corelight
+      // data loaded. There are inline comments that explain the test's flow.
+      waitForLoginAvailable(app)
+        .then(() => logIn(app))
+        .then(() => waitForHistogram(app))
+        .then(() => waitForSearch(app))
+        // Assuming we properly loaded corelight data into the default space, we
+        // we must wait until the components of the histogram are rendered. This
+        // means we must wait for a number of g elements and rect elements. Those
+        // elements depend on both the dataset itself and the product's behavior.
+        // For example, these values will change if the default time window
+        // changes from the last 30 minutes.
+        .then(() =>
+          retryUntil(
+            () => app.client.getAttribute(selectors.histogram.gElem, "class"),
+            pathClasses =>
+              pathClasses.length ===
+              dataSets.corelight.histogram.defaultDistinctPaths
+          )
+        )
+        .then(pathClasses =>
+          retryUntil(
+            () => app.client.$$(selectors.histogram.rectElem),
+            rectElements =>
+              rectElements.length ===
+              dataSets.corelight.histogram.defaultTotalRectCount
+          ).then(() => pathClasses)
+        )
+        // Once we see all the g and rect elements, ensure the g elements'
+        // classes are expected. This nominally ensures the different _path
+        // values are present.
+        .then(pathClasses => {
+          expect(pathClasses.sort()).toMatchSnapshot()
+          return pathClasses
+        })
+        .then(async pathClasses => {
+          // Here is the meat of the test verification. Here we fetch all 4
+          // attributes' values of all rect elements, in a 2-D array of _path and
+          // attribute. We ensure all the values are positive in a REASONABLE
+          // range. We do NOT validate absolutely correct attribute values (which
+          // sets the size of a bar). That's best done with unit testing.
+          // XXX I could not get failures in this nested hierarchy to
+          // propagate without doing this using async / await. In some cases
+          // exceptions were quashed; in others they were uncaught. I gave up
+          // because I got this pattern to work.
+          let allRectValues = await Promise.all(
+            pathClasses.map(
+              async pathClass => await verifyPathClassRect(app, pathClass)
+            )
+          )
+          expect(allRectValues.length).toBe(
+            // Whereas we just counted g elements before, this breaks down rect
+            // elements within their g parent, ensuring rect elements are of the
+            // proper _path.
+            dataSets.corelight.histogram.defaultDistinctPaths
+          )
+          allRectValues.forEach(pathClass => {
+            // The 4 comes from each of x, y, width, height for a rect element.
+            expect(pathClass.length).toBe(4)
+            pathClass.forEach(attr => {
+              expect(attr.length).toBe(
+                dataSets.corelight.histogram.defaultRectsPerClass
+              )
+            })
+          })
           done()
         })
         .catch(done)
