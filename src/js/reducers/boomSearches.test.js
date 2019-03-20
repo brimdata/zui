@@ -16,8 +16,8 @@ describe("boomSearches reducer", () => {
   beforeEach(() => {
     store = initStore()
     store.dispatchAll([
-      registerBoomSearch("Histogram", new Handler()),
-      registerBoomSearch("Logs", new Handler())
+      registerBoomSearch("Histogram", {tag: "viewer", handler: new Handler()}),
+      registerBoomSearch("Logs", {tag: "detail", handler: new Handler()})
     ])
   })
 
@@ -29,6 +29,10 @@ describe("boomSearches reducer", () => {
 
   test("#registerBoomSearch", () => {
     expect(getSearchCount()).toBe(2)
+  })
+
+  test("#registerBoomSearch adds a tag", () => {
+    expect(getSearch("Histogram").tag).toBe("viewer")
   })
 
   test("#setBoomSearchStatus", () => {
@@ -60,19 +64,49 @@ describe("boomSearches reducer", () => {
   test("#boomSearchesClear", () => {
     store.dispatch(clearBoomSearches())
 
-    expect(getBoomSearches(store.getState())).toEqual({})
+    expect(getSearches()).toEqual({})
+  })
+
+  test("#boomSearchesClearWithTag", () => {
+    store.dispatch(clearBoomSearches("viewer"))
+
+    expect(getSearchCount()).toEqual(1)
   })
 
   test("#killBoomSearches", () => {
     const killFunc = jest.fn()
     store.dispatchAll([
       clearBoomSearches(),
-      registerBoomSearch("Histogram", new Handler(killFunc)),
-      registerBoomSearch("Logs", new Handler(killFunc)),
+      registerBoomSearch("Histogram", {
+        handler: new Handler(killFunc),
+        tag: "detail"
+      }),
+      registerBoomSearch("Logs", {
+        handler: new Handler(killFunc),
+        tag: "detail"
+      }),
       killBoomSearches()
     ])
 
     expect(killFunc).toBeCalledTimes(2)
+  })
+
+  test("#killBoomSearches by tag", () => {
+    const killFunc = jest.fn()
+    store.dispatchAll([
+      clearBoomSearches(),
+      registerBoomSearch("Histogram", {
+        tag: "detail",
+        handler: new Handler(killFunc)
+      }),
+      registerBoomSearch("Logs", {
+        tag: "viewer",
+        handler: new Handler(killFunc)
+      }),
+      killBoomSearches("viewer")
+    ])
+
+    expect(killFunc).toBeCalledTimes(1)
   })
 
   test("#killBoomSearches runs abort callback", () => {
@@ -82,7 +116,7 @@ describe("boomSearches reducer", () => {
 
     store.dispatchAll([
       clearBoomSearches(),
-      registerBoomSearch("KillMe", handler),
+      registerBoomSearch("KillMe", {handler, tag: "viewer"}),
       killBoomSearches()
     ])
 
@@ -96,7 +130,7 @@ describe("boomSearches reducer", () => {
 
     store.dispatchAll([
       clearBoomSearches(),
-      registerBoomSearch("Cancel Me", handler),
+      registerBoomSearch("Cancel Me", {handler, tag: "detail"}),
       cancelBoomSearches()
     ])
 

@@ -55,7 +55,8 @@ export const fetchAhead = (): Thunk => (dispatch, getState) => {
   dispatch(setLogsSpliceIndex(spliceIndex))
   dispatch(
     issueBoomSearch(
-      new LogSearch(searchBar.getPrevSearchProgram(state), searchSpan)
+      new LogSearch(searchBar.getPrevSearchProgram(state), searchSpan),
+      "viewer"
     )
   ).done(() => setTimeout(() => dispatch(setIsFetchingAhead(false)), 500))
 }

@@ -8,8 +8,8 @@ test("#getSomeAreFetching true", () => {
   store = initStore()
 
   store.dispatchAll([
-    registerBoomSearch("A", new Handler()),
-    registerBoomSearch("B", new Handler())
+    registerBoomSearch("A", {handler: new Handler(), tag: "hi"}),
+    registerBoomSearch("B", {handler: new Handler(), tag: "hi"})
   ])
 
   const state = store.getState()
@@ -22,8 +22,8 @@ test("#getSomeAreFetching false", () => {
   store = initStore()
 
   store.dispatchAll([
-    registerBoomSearch("A", new Handler()),
-    registerBoomSearch("B", new Handler()),
+    registerBoomSearch("A", {handler: new Handler(), tag: "hi"}),
+    registerBoomSearch("B", {handler: new Handler(), tag: "hi"}),
     setBoomSearchStatus("A", "SUCCESS"),
     setBoomSearchStatus("B", "ERROR")
   ])

@@ -23,7 +23,7 @@ export const fetchMainSearch = ({
   dispatch(updateTab(state))
   if (saveToHistory) dispatch(pushSearchHistory())
 
-  dispatch(cancelBoomSearches())
+  dispatch(cancelBoomSearches("viewer"))
   dispatch(clearLogs())
   dispatch(clearAnalysis())
 
@@ -32,5 +32,5 @@ export const fetchMainSearch = ({
   const outerSpan = getOuterTimeWindow(state)
   const searches = SearchFactory.createAll(program, innerSpan, outerSpan)
 
-  searches.forEach(search => dispatch(issueBoomSearch(search)))
+  searches.forEach(search => dispatch(issueBoomSearch(search, "viewer")))
 }

@@ -5,12 +5,14 @@ import type {State} from "./types"
 import createReducer from "./createReducer"
 
 export type BoomSearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "ABORTED"
+export type BoomSearchTag = "viewer" | "detail"
 
 export type BoomSearch = {
   name: string,
   status: BoomSearchStatus,
   handler: Handler,
-  stats: {}
+  stats: {},
+  tag: BoomSearchTag
 }
 
 export type BoomSearches = {
@@ -38,7 +40,13 @@ export default createReducer(initialState, {
       [name]: {...state[name], stats}
     }
   },
-  BOOM_SEARCHES_CLEAR: () => ({...initialState})
+  BOOM_SEARCHES_CLEAR: (state, {tag}) => {
+    if (!tag) return {...initialState}
+    const newState = {...state}
+    for (let key in newState)
+      if (newState[key].tag === tag) delete newState[key]
+    return newState
+  }
 })
 
 const throwUpdateError = name => {
