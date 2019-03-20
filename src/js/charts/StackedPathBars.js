@@ -4,6 +4,7 @@ import * as d3 from "d3"
 import type {ChartElement} from "../models/Chart"
 import Chart from "../models/Chart"
 import * as Time from "../lib/Time"
+import {dataAttrs} from "../test/integration"
 
 export default class StackedPathBars implements ChartElement {
   dispatch: Function
@@ -16,6 +17,7 @@ export default class StackedPathBars implements ChartElement {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "chart")
+      .attr(dataAttrs.histogram.attr, dataAttrs.histogram.value)
       .attr(
         "transform",
         `translate(${chart.margins.left}, ${chart.margins.top})`
