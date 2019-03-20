@@ -5,9 +5,10 @@ import {combineReducers} from "redux"
 import analysis from "./analysis"
 import boomSearches from "./boomSearches"
 import boomd from "./boomd"
-import histogram from "./histogram"
+import correlations from "./correlations"
 import descriptors from "./descriptors"
 import filterTree from "./filterTree"
+import histogram from "./histogram"
 import logDetails from "./logDetails"
 import logViewer from "./logViewer"
 import logs from "./logs"
@@ -25,6 +26,7 @@ import view from "./view"
 import whois from "./whois"
 
 export default combineReducers<*, *>({
+  correlations,
   logs,
   view,
   searchBar,
