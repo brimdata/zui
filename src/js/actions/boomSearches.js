@@ -9,13 +9,16 @@ import type {Thunk} from "../reducers/types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import BaseSearch from "../models/searches/BaseSearch"
 
-export const registerBoomSearch = (name: string, handler: Handler) => ({
+type RegisterOpts = {handler: Handler, tag: string}
+
+export const registerBoomSearch = (name: string, opts: RegisterOpts) => ({
   type: "BOOM_SEARCHES_REGISTER",
   search: {
     name,
-    handler,
+    handler: opts.handler,
     status: "FETCHING",
-    stats: {}
+    stats: {},
+    tag: opts.tag
   }
 })
 
@@ -31,14 +34,21 @@ export const setBoomSearchStats = (name: string, stats: {}) => ({
   stats
 })
 
-export const clearBoomSearches = () => ({
-  type: "BOOM_SEARCHES_CLEAR"
+export const clearBoomSearches = (tag?: string) => ({
+  type: "BOOM_SEARCHES_CLEAR",
+  tag
 })
 
-export const killBoomSearches = (): Thunk => (_dispatch, getState) => {
+export const killBoomSearches = (tag?: string): Thunk => (
+  _dispatch,
+  getState
+) => {
   const state = getState()
   const searches = getBoomSearches(state)
-  for (let name in searches) searches[name].handler.abortRequest()
+  for (let name in searches) {
+    if (!tag || searches[name].tag === tag)
+      searches[name].handler.abortRequest()
+  }
 }
 
 export const cancelBoomSearches = (): Thunk => (dispatch, getState) => {
@@ -48,7 +58,7 @@ export const cancelBoomSearches = (): Thunk => (dispatch, getState) => {
   dispatch(clearBoomSearches())
 }
 
-export const issueBoomSearch = (search: BaseSearch): Thunk => (
+export const issueBoomSearch = (search: BaseSearch, tag: string): Thunk => (
   dispatch,
   getState,
   boom
@@ -62,6 +72,6 @@ export const issueBoomSearch = (search: BaseSearch): Thunk => (
   search.receiveData(handler, dispatch)
   search.receiveStats(handler, dispatch)
 
-  dispatch(registerBoomSearch(name, handler))
+  dispatch(registerBoomSearch(name, {handler, tag}))
   return handler
 }
