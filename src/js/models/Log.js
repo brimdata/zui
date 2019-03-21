@@ -27,6 +27,10 @@ export default class Log {
     return isEqual(a.tuple, b.tuple)
   }
 
+  id() {
+    return this.tuple.join()
+  }
+
   isPath(pathName: string) {
     return this.get("_path") === pathName
   }

@@ -3,9 +3,9 @@
 import type {Analysis} from "./analysis"
 import type {BoomSearches} from "./boomSearches"
 import type {Boomd} from "./boomd"
-import type {Histogram} from "./histogram"
 import type {Descriptors} from "./descriptors"
 import type {FilterTree} from "./filterTree"
+import type {Histogram} from "./histogram"
 import type {LogDetails} from "./logDetails"
 import type {LogViewer} from "./logViewer"
 import type {Logs} from "./logs"
@@ -20,8 +20,10 @@ import type {TuplesByUid} from "./tuplesByUid"
 import type {View} from "./view"
 import type {Whois} from "./whois"
 import BoomClient from "../BoomClient"
+import Correlations from "./correlations"
 
 export type State = {
+  correlations: Correlations,
   analysis: Analysis,
   histogram: Histogram,
   searchBar: SearchBar,

@@ -72,3 +72,17 @@ export type SearchStats = {
 }
 
 export type Payload = SearchResult | SearchEnd | SearchStats
+
+export type HashCorrelation = {
+  name: CorrelationName,
+  data: {tuples: Tuple[], descriptor: Descriptor}
+}
+
+export type UidCorrelation = {
+  name: "uid",
+  data: {descriptors: {[string]: Descriptor}, tuples: Tuple[]}
+}
+
+export type Correlation = HashCorrelation | UidCorrelation
+
+export type CorrelationName = "hash" | "uid" | "tx" | "rx" | "md5"
