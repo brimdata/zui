@@ -70,6 +70,16 @@ export const cancelBoomSearches = (tag?: BoomSearchTag): Thunk => (
   dispatch(clearBoomSearches(tag))
 }
 
+export const cancelBoomSearch = (name: string): Thunk => (
+  dispatch,
+  getState
+) => {
+  const searches = getBoomSearches(getState())
+  if (searches[name]) {
+    searches[name].handler.abortRequest(false)
+  }
+}
+
 export const issueBoomSearch = (
   search: BaseSearch,
   tag: BoomSearchTag
@@ -80,9 +90,9 @@ export const issueBoomSearch = (
   const name = search.getName()
   const handler = boom.search(program, {searchSpan, searchSpace})
 
+  dispatch(cancelBoomSearch(name))
   search.receiveData(handler, dispatch)
   search.receiveStats(handler, dispatch)
-
   dispatch(registerBoomSearch(name, {handler, tag}))
   return handler
 }

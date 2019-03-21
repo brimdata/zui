@@ -75,11 +75,11 @@ export default class Search extends React.Component<Props, State> {
               <ColumnChooser />
             </div>
             <XSearchResults />
-            <XSearchInspector />
             <XStatusBar />
           </div>
           <XRightPane />
         </div>
+        <XSearchInspector />
         <XDownloadProgress />
         <XWhoisModal />
         <XSettingsModal />
