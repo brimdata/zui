@@ -1,6 +1,5 @@
 /* @flow */
 
-import type {CorrelationName} from "../../types"
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Span} from "../../BoomClient/types"
@@ -28,8 +27,8 @@ export default class HashSearch extends BaseSearch {
 
   receiveData(handler: Handler, dispatch: Dispatch) {
     const key = this.log.id()
-    const makeCallback = (name: CorrelationName) =>
-      accumAnalytics(data => dispatch(setCorrelation(key, {name, data})))
+    const makeCallback = (name: string) =>
+      accumAnalytics(data => dispatch(setCorrelation(key, name, data)))
 
     handler
       .channel(0, makeCallback("tx"))

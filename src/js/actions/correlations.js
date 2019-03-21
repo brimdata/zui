@@ -1,11 +1,10 @@
 /* @flow */
 
-import type {Correlation} from "../types"
-
-export const setCorrelation = (key: string, correlation: Correlation) => ({
+export const setCorrelation = (key: string, name: string, data: *) => ({
   type: "CORRELATION_SET",
   key,
-  correlation
+  name,
+  data
 })
 
 export const clearCorrelations = (key: string) => ({

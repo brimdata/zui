@@ -1,19 +1,20 @@
 /* @flow */
 
 import {createSelector} from "reselect"
-import {getTuplesByUid} from "../reducers/tuplesByUid"
-import {getDescriptors} from "../reducers/descriptors"
+
+import type {State} from "../reducers/types"
+import {buildCorrelations} from "./correlations"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import {getStarredLogs} from "../reducers/starredLogs"
+import {getDescriptors} from "../reducers/descriptors"
 import {
   getLogDetails,
   toHistory,
   getPosition,
   getPrevPosition
 } from "../reducers/logDetails"
+import {getStarredLogs} from "../reducers/starredLogs"
 import Log from "../models/Log"
 import * as Tuple from "../lib/Tuple"
-import type {State} from "../reducers/types"
 
 export const getLogDetailHistory = createSelector<State, void, *, *>(
   getLogDetails,
@@ -54,16 +55,12 @@ export const getLogDetailIsStarred = createSelector<State, void, *, *, *>(
 
 export const buildCorrelatedLogs = createSelector<State, void, *, *, *, *, *>(
   buildLogDetail,
-  getTuplesByUid,
+  buildCorrelations,
   getDescriptors,
   getCurrentSpaceName,
-  (log, tuplesByUid, descriptors, space) => {
+  (log, correlations, descriptors, space) => {
     if (!log) return []
-
-    const uid = log.correlationId()
-    if (!uid) return []
-
-    const tuples = tuplesByUid[uid] || []
+    const tuples = correlations.get(log.id(), "uid") || []
     const logs = Log.buildAll(tuples, descriptors, space).sort((a, b) =>
       a.get("ts") > b.get("ts") ? 1 : -1
     )

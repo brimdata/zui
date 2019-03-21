@@ -19,9 +19,8 @@ export const addTuplesByUid = (uid: string, tuples: Tuple[]) => ({
 })
 
 export const fetchTuplesByUid = (log: Log): Thunk => (dispatch, getState) => {
-  let uid = log.correlationId()
-  if (!uid) return
-  return dispatch(
-    issueBoomSearch(new UidSearch(uid, getTimeWindow(getState())), "detail")
-  )
+  if (log.correlationId()) {
+    const search = new UidSearch(log, getTimeWindow(getState()))
+    return dispatch(issueBoomSearch(search, "detail"))
+  }
 }
