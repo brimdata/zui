@@ -1,5 +1,6 @@
 /* @flow */
 
+import type {BoomSearchStats} from "../types"
 import {Handler} from "../BoomClient"
 import type {State} from "./types"
 import createReducer from "./createReducer"
@@ -11,7 +12,7 @@ export type BoomSearch = {
   name: string,
   status: BoomSearchStatus,
   handler: Handler,
-  stats: {},
+  stats: BoomSearchStats,
   tag: BoomSearchTag
 }
 

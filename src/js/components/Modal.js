@@ -1,7 +1,9 @@
+import {CSSTransition} from "react-transition-group"
 import React, {Component} from "react"
 import ReactDOM from "react-dom"
-import ModalContents from "./ModalContents"
+
 import * as Doc from "../lib/Doc"
+import ModalContents from "./ModalContents"
 
 class Modal extends Component {
   constructor(props) {
@@ -24,16 +26,24 @@ class Modal extends Component {
     if (!isOpen) return null
 
     return ReactDOM.createPortal(
-      <div className="modal-overlay">
-        <ModalContents
-          title={this.props.title}
-          className={className}
-          onOutsideClick={onClose}
-          onClose={onClose}
-        >
-          {children}
-        </ModalContents>
-      </div>,
+      <CSSTransition
+        in={this.props.isOpen}
+        classNames="dim-portal-overlay"
+        timeout={{enter: 200}}
+        onClick={this.props.onClose}
+        appear
+      >
+        <div className="modal-overlay">
+          <ModalContents
+            title={this.props.title}
+            className={className}
+            onOutsideClick={onClose}
+            onClose={onClose}
+          >
+            {children}
+          </ModalContents>
+        </div>
+      </CSSTransition>,
       Doc.id("modal-root")
     )
   }

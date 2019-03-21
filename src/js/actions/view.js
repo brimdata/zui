@@ -1,6 +1,7 @@
 /* @flow */
 
-import {type State} from "../reducers/types"
+import {type State, type Thunk} from "../reducers/types"
+import {getSearchInspectorIsOpen} from "../reducers/view"
 import {getSearchProgram} from "../selectors/searchBar"
 import {hasAnalytics} from "../lib/Program"
 
@@ -67,6 +68,22 @@ export const showDownloads = () => ({
 export const hideDownloads = () => ({
   type: "DOWNLOADS_HIDE"
 })
+
+export const showSearchInspector = () => ({
+  type: "SEARCH_INSPECTOR_SHOW"
+})
+
+export const hideSearchInspector = () => ({
+  type: "SEARCH_INSPECTOR_HIDE"
+})
+
+export const toggleSearchInspector = (): Thunk => (dispatch, getState) => {
+  if (getSearchInspectorIsOpen(getState())) {
+    dispatch(hideSearchInspector())
+  } else {
+    dispatch(showSearchInspector())
+  }
+}
 
 export const updateTab = (state: State) =>
   hasAnalytics(getSearchProgram(state)) ? showAnalyticsTab() : showLogsTab()

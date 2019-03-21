@@ -16,33 +16,48 @@
 }
 
 .log-detail {
-  padding: 12px;
-
-  .fields-table {
-    margin-bottom: 18px;
-  }
   .path-tag {
     @include path-tag;
   }
 }
 
+.detail-panel {
+  max-width: 600px;
+  margin: 0 24px 24px 24px;
+
+  .small-heading {
+    padding: 3px 12px;
+    color: white;
+    background-color: $gray-cold-2;
+    border-right: 6px solid $gray-cold-2;
+    transform: translateX(-24px);
+    display: inline-block;
+    border-radius: 0 12px 12px 0;
+    box-shadow: $box-shadow;
+  }
+
+  &:first-child {
+    margin-top: 24px;
+  }
+}
+
 .correlated-logs-panel {
-  margin-bottom: 18px;
-  border-radius: 3px;
-  padding: 12px;
   max-width: 600px;
 }
 
 .conn-versation-panel {
-  margin-bottom: 18px;
-  padding: 12px;
   max-width: 600px;
 }
 
 .fields-table-panel {
-  border-radius: 3px;
-  padding: 12px;
+  table {
+    width: 100%;
+  }
   th {
     min-width: 120px;
   }
+}
+
+.hash-panel {
+  max-width: 600px;
 }

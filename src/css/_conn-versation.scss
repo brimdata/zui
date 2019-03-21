@@ -11,7 +11,6 @@
   .host {
     border: 1px solid $light-gray-3;
     border-radius: 3px;
-
     width: 135px;
 
     .fields-table {
@@ -19,9 +18,13 @@
     }
   }
 
-  .small-heading {
-    margin: 6px 0;
+  .fieldset {
     text-align: center;
+    padding: 6px 3px;
+  }
+
+  table {
+    width: 100%;
   }
 
   .ip,

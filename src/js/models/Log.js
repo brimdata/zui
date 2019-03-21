@@ -3,7 +3,13 @@
 import isEqual from "lodash/isEqual"
 
 import type {Descriptor, Tuple} from "../types"
+import Field from "./Field"
 import FieldFactory from "./FieldFactory"
+
+type BuildArgs = {
+  tuples: Tuple[],
+  descriptor: Descriptor
+}
 
 export default class Log {
   tuple: Tuple
@@ -20,6 +26,10 @@ export default class Log {
       if (descriptor) logs.push(new Log(tuple, descriptor))
     })
     return logs
+  }
+
+  static build({descriptor, tuples}: BuildArgs) {
+    return tuples.map<Log>(tuple => new Log(tuple, descriptor))
   }
 
   static isSame(a: ?Log, b: ?Log) {
@@ -58,6 +68,15 @@ export default class Log {
       const {name, type} = this.descriptor[index]
       return FieldFactory.create({value, name, type})
     }
+  }
+
+  getFields(): Field[] {
+    const fields = []
+    for (let i = 0; i < this.descriptor.length; ++i) {
+      const field = this.getFieldAt(i)
+      if (field) fields.push(field)
+    }
+    return fields
   }
 
   getSec(fieldName: string): number | void {
