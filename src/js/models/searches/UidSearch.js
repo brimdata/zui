@@ -5,7 +5,6 @@ import {Handler} from "../../BoomClient"
 import type {Span} from "../../BoomClient/types"
 import type {Tuple} from "../../types"
 import {addHeadProc} from "../../lib/Program"
-import {addTuplesByUid} from "../../actions/tuplesByUid"
 import {discoverDescriptors} from "../../actions/descriptors"
 import {setCorrelation} from "../../actions/correlations"
 import BaseSearch from "./BaseSearch"
@@ -32,7 +31,6 @@ export default class UidSearch extends BaseSearch {
         if (type === "SearchResult") {
           data = [...data, ...results.tuples]
           dispatch(setCorrelation(key, "uid", data))
-          dispatch(addTuplesByUid(this.program, results.tuples))
           dispatch(discoverDescriptors(results.tuples))
         }
       })
