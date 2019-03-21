@@ -3,10 +3,10 @@
 import type {Thunk} from "redux-thunk"
 
 import type {Tuple} from "../types"
-import {discoverDescriptors} from "./descriptors"
-import {getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
+import {issueBoomSearch} from "./boomSearches"
 import Log from "../models/Log"
+import UidSearch from "../models/searches/UidSearch"
 
 export const clearTuplesByUid = () => ({
   type: "TUPLES_BY_UID_CLEAR"
@@ -18,36 +18,10 @@ export const addTuplesByUid = (uid: string, tuples: Tuple[]) => ({
   tuples
 })
 
-export const requestTuplesByUid = (uid: string) => ({
-  type: "TUPLES_BY_UID_REQUEST",
-  uid
-})
-
-export const fetchTuplesByUid = (log: Log): Thunk => (
-  dispatch,
-  getState,
-  boom
-) => {
+export const fetchTuplesByUid = (log: Log): Thunk => (dispatch, getState) => {
   let uid = log.correlationId()
   if (!uid) return
-  const state = getState()
-  const timeWindow = getTimeWindow(state)
-  const space = getCurrentSpaceName(state)
-  const string = `${uid} | head 500`
-
-  dispatch(requestTuplesByUid(uid))
-
-  return boom
-    .search(string, {
-      searchSpace: space,
-      searchSpan: timeWindow
-    })
-    .channel(0, ({type, results}) => {
-      if (type === "SearchResult") {
-        const {tuples} = results
-        dispatch(addTuplesByUid(uid, tuples))
-        dispatch(discoverDescriptors(tuples))
-      }
-    })
-    .error(e => e)
+  return dispatch(
+    issueBoomSearch(new UidSearch(uid, getTimeWindow(getState())), "detail")
+  )
 }
