@@ -52,6 +52,11 @@ export const killBoomSearches = (tag?: BoomSearchTag): Thunk => (
   }
 }
 
+export const killBoomSearch = (name: string): Thunk => (_, getState) => {
+  const searches = getBoomSearches(getState())
+  searches[name] && searches[name].handler.abortRequest()
+}
+
 export const cancelBoomSearches = (tag?: BoomSearchTag): Thunk => (
   dispatch,
   getState

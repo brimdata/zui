@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import {XHashCorrelation} from "./HashCorrelation"
 import ConnVersation from "./ConnVersation"
 import FieldsTable from "./FieldsTable"
 import Log from "../models/Log"
@@ -40,14 +39,10 @@ export default class LogDetail extends React.Component<Props> {
 
         {ConnVersation.shouldShow(log) && (
           <div className="conn-versation-panel detail-panel">
+            <h4 className="small-heading">Conn History</h4>
             <ConnVersation log={log} />
           </div>
         )}
-
-        <div className="detail-panel">
-          <h4 className="small-heading">Hash Correlations</h4>
-          <XHashCorrelation log={log} />
-        </div>
       </div>
     )
   }

@@ -6,7 +6,12 @@ import {
   removeAllSearchBarPins,
   changeSearchBarInput
 } from "../actions/searchBar"
-import {showModal, toggleLeftSidebar, toggleRightSidebar} from "../actions/view"
+import {
+  showModal,
+  toggleLeftSidebar,
+  toggleRightSidebar,
+  toggleSearchInspector
+} from "../actions/view"
 
 export default store => {
   ipcRenderer.on("pinSearch", () => {
@@ -22,6 +27,10 @@ export default store => {
   ipcRenderer.on("clearPins", () => {
     store.dispatch(removeAllSearchBarPins())
     store.dispatch(changeSearchBarInput(""))
+  })
+
+  ipcRenderer.on("toggleSearchInspector", () => {
+    store.dispatch(toggleSearchInspector())
   })
 
   ipcRenderer.on("toggleLeftSidebar", () => {

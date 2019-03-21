@@ -4,8 +4,14 @@ import React from "react"
 
 import Log from "../models/Log"
 
+type InlineTableAction = {
+  text: string,
+  click: (log: Log) => void
+}
+
 type Props = {
-  logs: Log[]
+  logs: Log[],
+  actions?: InlineTableAction[]
 }
 
 export default class InlineTable extends React.Component<Props> {
@@ -23,6 +29,7 @@ export default class InlineTable extends React.Component<Props> {
                   {column.name}
                 </th>
               ))}
+              {this.props.actions && <th>actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -33,6 +40,15 @@ export default class InlineTable extends React.Component<Props> {
                     {field.value}
                   </td>
                 ))}
+                {this.props.actions && (
+                  <td>
+                    {this.props.actions.map((a, i) => (
+                      <button key={i} onClick={a.click.bind(null, log)}>
+                        {a.text}
+                      </button>
+                    ))}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

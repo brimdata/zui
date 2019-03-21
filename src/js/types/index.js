@@ -86,3 +86,12 @@ export type UidCorrelation = {
 export type Correlation = HashCorrelation | UidCorrelation
 
 export type CorrelationName = "hash" | "uid" | "tx" | "rx" | "md5"
+
+export type BoomSearchStats = {
+  updateTime: number,
+  startTime: number,
+  bytesMatched: number,
+  bytesRead: number,
+  tuplesMatched: number,
+  tuplesRead: number
+}

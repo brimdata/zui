@@ -54,3 +54,23 @@ test("hide a modal", () => {
 
   expect(view.getModal(state)).toBe(null)
 })
+
+test("show the search inspector", () => {
+  const store = initStore()
+
+  expect(view.getSearchInspectorIsOpen(store.getState())).toBe(false)
+
+  const state = store.dispatchAll([a.showSearchInspector()])
+
+  expect(view.getSearchInspectorIsOpen(state)).toBe(true)
+})
+
+test("hide the search inspector", () => {
+  const store = initStore()
+  const state = store.dispatchAll([
+    a.showSearchInspector(),
+    a.hideSearchInspector()
+  ])
+
+  expect(view.getSearchInspectorIsOpen(state)).toBe(false)
+})

@@ -43,6 +43,11 @@ module.exports = {
           {role: "reload"},
           {role: "forcereload"},
           {role: "toggledevtools"},
+          {
+            label: "Toggle Search Inspector",
+            accelerator: "CmdOrCtrl+i",
+            click: () => browserWindow.webContents.send("toggleSearchInspector")
+          },
           {type: "separator"},
           {role: "resetzoom"},
           {role: "zoomin"},

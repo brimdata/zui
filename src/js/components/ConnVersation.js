@@ -1,10 +1,12 @@
 /* @flow */
 
 import React from "react"
-import connHistoryView from "../lib/connHistoryView"
-import FieldsTable from "./FieldsTable"
 import every from "lodash/every"
+
+import {Fieldset} from "./Typography"
+import FieldsTable from "./FieldsTable"
 import Log from "../models/Log"
+import connHistoryView from "../lib/connHistoryView"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
 const RESP_FIELDS = ["resp_bytes", "resp_pkts", "resp_ip_bytes", "local_resp"]
@@ -53,7 +55,7 @@ const ConnHistory = ({history = ""}) => (
 
 const Host = ({className, title = "", ip = "", port = "", fieldNames, log}) => (
   <div className={`host ${className}`}>
-    <h4 className="small-heading">{title}</h4>
+    <Fieldset>{title}</Fieldset>
     <p className={`ip ${ip.length > 16 ? "small" : ""}`}>{ip}</p>
     <p className="port">{port}</p>
     <FieldsTable log={log} only={fieldNames} />

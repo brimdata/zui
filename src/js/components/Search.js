@@ -12,6 +12,7 @@ import {XDownloadProgress} from "./DownloadProgress"
 import {XHistogram} from "./Histogram"
 import {XLeftPane} from "./LeftPane"
 import {XRightPane} from "../components/RightPane"
+import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults"
 import {XSettingsModal} from "./SettingsModal"
 import {XStatusBar} from "./StatusBar"
@@ -74,6 +75,7 @@ export default class Search extends React.Component<Props, State> {
               <ColumnChooser />
             </div>
             <XSearchResults />
+            <XSearchInspector />
             <XStatusBar />
           </div>
           <XRightPane />

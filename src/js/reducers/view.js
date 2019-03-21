@@ -11,6 +11,7 @@ export type ResultsTabEnum = "analytics" | "logs" | null
 export type ModalEnum = "curl" | "debug" | "settings"
 
 export type View = {
+  searchInspectorIsOpen: boolean,
   leftSidebarIsOpen: boolean,
   rightSidebarIsOpen: boolean,
   downloadsIsOpen: boolean,
@@ -22,6 +23,7 @@ export type View = {
 }
 
 export const initalState: View = {
+  searchInspectorIsOpen: false,
   leftSidebarIsOpen: false,
   rightSidebarIsOpen: false,
   downloadsIsOpen: false,
@@ -92,8 +94,20 @@ export default createReducer(initalState, {
   DOWNLOADS_HIDE: state => ({
     ...state,
     downloadsIsOpen: false
+  }),
+  SEARCH_INSPECTOR_SHOW: state => ({
+    ...state,
+    searchInspectorIsOpen: true
+  }),
+  SEARCH_INSPECTOR_HIDE: state => ({
+    ...state,
+    searchInspectorIsOpen: false
   })
 })
+
+export const getSearchInspectorIsOpen = (state: State) => {
+  return state.view.searchInspectorIsOpen
+}
 
 export const getRightSidebarWidth = (state: State) =>
   state.view.rightSidebarWidth
