@@ -16,7 +16,6 @@ import type {SelectedColumns} from "./selectedColumns"
 import type {Spaces} from "./spaces"
 import type {TableColumnSets} from "./tableColumnSets"
 import type {TimeWindow} from "./timeWindow"
-import type {TuplesByUid} from "./tuplesByUid"
 import type {View} from "./view"
 import type {Whois} from "./whois"
 import BoomClient from "../BoomClient"
@@ -35,7 +34,6 @@ export type State = {
   searchHistory: SearchHistory,
   whois: Whois,
   logDetails: LogDetails,
-  tuplesByUid: TuplesByUid,
   filterTree: FilterTree,
   descriptors: Descriptors,
   view: View,

@@ -1,6 +1,7 @@
 /* @flow */
 
 import isEqual from "lodash/isEqual"
+import md5 from "md5"
 
 import type {Descriptor, Tuple} from "../types"
 import Field from "./Field"
@@ -38,7 +39,7 @@ export default class Log {
   }
 
   id() {
-    return this.tuple.join()
+    return md5(this.tuple.join())
   }
 
   isPath(pathName: string) {

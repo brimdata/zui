@@ -9,20 +9,21 @@ import {getCorrelations} from "./correlations"
 import initStore from "../test/initStore"
 
 const store = initStore()
-const hash = {name: "hash", data: {descriptor: [], tuples: []}}
-const uid = {name: "uid", data: {descriptors: {}, tuples: []}}
+const hash = {descriptor: [], tuples: []}
+const uid = []
 const get = key => getCorrelations(store.getState())[key]
 
 test("setting a correlation", () => {
-  store.dispatch(setCorrelation("123-456", hash))
+  store.dispatch(setCorrelation("123-456", "hash", hash))
 
-  expect(get("123-456")).toEqual({
-    hash: hash.data
-  })
+  expect(get("123-456")).toEqual({hash})
 })
 
 test("setting multiple", () => {
-  store.dispatchAll([setCorrelation("123", hash), setCorrelation("123", uid)])
+  store.dispatchAll([
+    setCorrelation("123", "hash", hash),
+    setCorrelation("123", "uid", uid)
+  ])
 
   expect(get("123")).toEqual({
     hash: expect.any(Object),
@@ -32,8 +33,8 @@ test("setting multiple", () => {
 
 test("clearing one correlation", () => {
   store.dispatchAll([
-    setCorrelation("123", hash),
-    setCorrelation("345", uid),
+    setCorrelation("123", "hash", hash),
+    setCorrelation("345", "uid", uid),
     clearCorrelations("123")
   ])
 
@@ -42,8 +43,8 @@ test("clearing one correlation", () => {
 
 test("clearing all correlations", () => {
   const state = store.dispatchAll([
-    setCorrelation("123", hash),
-    setCorrelation("123", uid),
+    setCorrelation("123", "hash", hash),
+    setCorrelation("123", "uid", uid),
     clearAllCorrelations()
   ])
 

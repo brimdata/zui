@@ -3,17 +3,19 @@
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Span} from "../../BoomClient/types"
+import type {Tuple} from "../../types"
 import {addHeadProc} from "../../lib/Program"
-import {addTuplesByUid} from "../../actions/tuplesByUid"
 import {discoverDescriptors} from "../../actions/descriptors"
+import {setCorrelation} from "../../actions/correlations"
 import BaseSearch from "./BaseSearch"
+import Log from "../Log"
 
 export default class UidSearch extends BaseSearch {
-  uid: string
+  log: Log
 
-  constructor(uid: string, span: Span) {
-    super(uid, span)
-    this.uid = uid
+  constructor(log: Log, span: Span) {
+    super(log.correlationId(), span)
+    this.log = log
   }
 
   getProgram() {
@@ -21,14 +23,17 @@ export default class UidSearch extends BaseSearch {
   }
 
   receiveData(handler: Handler, dispatch: Dispatch) {
+    let data: Tuple[] = []
+    const key = this.log.id()
+
     handler
       .channel(0, ({type, results}) => {
         if (type === "SearchResult") {
-          const {tuples} = results
-          dispatch(addTuplesByUid(this.program, tuples))
-          dispatch(discoverDescriptors(tuples))
+          data = [...data, ...results.tuples]
+          dispatch(setCorrelation(key, "uid", data))
+          dispatch(discoverDescriptors(results.tuples))
         }
       })
-      .error(e => e)
+      .error(console.error)
   }
 }

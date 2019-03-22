@@ -25,8 +25,8 @@ describe("#disconnect", () => {
     expect(actionTypes).toContain("SEARCH_BAR_CLEAR")
   })
 
-  test("dispatches TUPLES_BY_UID_CLEAR", () => {
-    expect(actionTypes).toContain("TUPLES_BY_UID_CLEAR")
+  test("dispatches CORRELATIONS_CLEAR_ALL", () => {
+    expect(actionTypes).toContain("CORRELATIONS_CLEAR_ALL")
   })
 
   test("dispatches SPACES_CLEAR", () => {

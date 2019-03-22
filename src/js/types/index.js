@@ -74,18 +74,14 @@ export type SearchStats = {
 export type Payload = SearchResult | SearchEnd | SearchStats
 
 export type HashCorrelation = {
-  name: CorrelationName,
+  name: "hash" | "tx" | "rx" | "md5",
   data: {tuples: Tuple[], descriptor: Descriptor}
 }
 
 export type UidCorrelation = {
   name: "uid",
-  data: {descriptors: {[string]: Descriptor}, tuples: Tuple[]}
+  data: Tuple[]
 }
-
-export type Correlation = HashCorrelation | UidCorrelation
-
-export type CorrelationName = "hash" | "uid" | "tx" | "rx" | "md5"
 
 export type BoomSearchStats = {
   updateTime: number,
@@ -94,4 +90,12 @@ export type BoomSearchStats = {
   bytesRead: number,
   tuplesMatched: number,
   tuplesRead: number
+}
+
+export type Correlation = HashCorrelation | UidCorrelation
+export type LogCorrelations = {
+  uid?: Tuple[],
+  md5?: {tuples: Tuple[], descriptor: Descriptor},
+  tx?: {tuples: Tuple[], descriptor: Descriptor},
+  rx?: {tuples: Tuple[], descriptor: Descriptor}
 }

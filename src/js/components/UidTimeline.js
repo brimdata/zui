@@ -1,29 +1,38 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
-import Log from "../models/Log"
-import * as TimeField from "../lib/TimeField"
 import * as d3 from "d3"
-import * as Time from "../lib/Time"
-import * as TimeWindow from "../lib/TimeWindow"
 import isEqual from "lodash/isEqual"
 
-type Props = {
-  viewLogDetail: Function,
-  logs: Log[],
-  currentLog: Log
-}
+import type {DispatchProps} from "../reducers/types"
+import {viewLogDetail} from "../actions/logDetails"
+import Log from "../models/Log"
+import * as Time from "../lib/Time"
+import * as TimeField from "../lib/TimeField"
+import * as TimeWindow from "../lib/TimeWindow"
+import dispatchToProps from "../lib/dispatchToProps"
 
-export default class UidWaterfall extends React.Component<Props> {
+type OwnProps = {|
+  logs: Log[],
+  log: Log
+|}
+
+type Props = {|
+  ...DispatchProps,
+  ...OwnProps
+|}
+
+export default class UidTimeline extends React.Component<Props> {
   row(log: Log, index: number, xScale: *) {
     const ts = TimeField.toDate(log.get("ts"))
     const position = xScale(ts)
-    const isCurrent = isEqual(log, this.props.currentLog)
+    const isCurrent = isEqual(log, this.props.log)
     return (
       <div
         key={index}
         className="waterfall-row"
-        onClick={() => this.props.viewLogDetail(log)}
+        onClick={() => this.props.dispatch(viewLogDetail(log))}
       >
         <div className="ts-label">{Time.format(ts, "HH:mm:ss.SSS")}</div>
         <div className="slider">
@@ -60,3 +69,8 @@ export default class UidWaterfall extends React.Component<Props> {
     )
   }
 }
+
+export const XUidTimeline = connect<Props, OwnProps, _, DispatchProps, _, _>(
+  null,
+  dispatchToProps
+)(UidTimeline)

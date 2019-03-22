@@ -1,21 +1,20 @@
 /* @flow */
 
+import type {LogCorrelations} from "../types"
 import type {State} from "./types"
 import createReducer from "./createReducer"
 
 export type Correlations = {
-  [string]: {
-    [string]: *
-  }
+  [string]: LogCorrelations
 }
 const initialState = {}
 
 export default createReducer(initialState, {
-  CORRELATION_SET: (state, {key, correlation}) => ({
+  CORRELATION_SET: (state, {key, name, data}) => ({
     ...state,
     [key]: {
       ...state[key],
-      [correlation.name]: correlation.data
+      [name]: data
     }
   }),
 

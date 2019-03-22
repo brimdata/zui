@@ -21,7 +21,6 @@ import spaces from "./spaces"
 import starredLogs from "./starredLogs"
 import tableColumnSets from "./tableColumnSets"
 import timeWindow from "./timeWindow"
-import tuplesByUid from "./tuplesByUid"
 import view from "./view"
 import whois from "./whois"
 
@@ -31,7 +30,6 @@ export default combineReducers<*, *>({
   view,
   searchBar,
   descriptors,
-  tuplesByUid,
   spaces,
   timeWindow,
   filterTree,

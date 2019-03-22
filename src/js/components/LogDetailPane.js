@@ -1,29 +1,24 @@
 /* @flow */
 
-import React from "react"
-import Log from "../models/Log"
 import {TransitionGroup, CSSTransition} from "react-transition-group"
-import EmptyLogDetail from "./EmptyLogDetail"
-import LogDetail from "./LogDetail"
-import classNames from "classnames"
 import {connect} from "react-redux"
-import * as selector from "../selectors/logDetails"
-import dispatchToProps from "../lib/dispatchToProps"
-import {type DispatchProps} from "../reducers/types"
-import {type State} from "../reducers/types"
-import {viewLogDetail} from "../actions/logDetails"
+import React from "react"
+import classNames from "classnames"
 
-type StateProps = {|
+import {type State} from "../reducers/types"
+import {XLogDetail} from "./LogDetail"
+import EmptyLogDetail from "./EmptyLogDetail"
+import Log from "../models/Log"
+import * as selector from "../selectors/logDetails"
+
+type Props = {|
   log: ?Log,
-  correlatedLogs: Log[],
   isGoingBack: boolean
 |}
 
-type Props = {|...StateProps, ...DispatchProps|}
-
 export default class LogDetailPane extends React.Component<Props> {
   render() {
-    const {log, correlatedLogs, isGoingBack} = this.props
+    const {log, isGoingBack} = this.props
 
     if (!log) return <EmptyLogDetail />
 
@@ -41,11 +36,7 @@ export default class LogDetailPane extends React.Component<Props> {
             exit: 250
           }}
         >
-          <LogDetail
-            log={log}
-            correlatedLogs={correlatedLogs}
-            viewLogDetail={log => this.props.dispatch(viewLogDetail(log))}
-          />
+          <XLogDetail log={log} />
         </CSSTransition>
       </TransitionGroup>
     )
@@ -54,11 +45,9 @@ export default class LogDetailPane extends React.Component<Props> {
 
 const stateToProps = (state: State) => ({
   log: selector.buildLogDetail(state),
-  correlatedLogs: selector.buildCorrelatedLogs(state),
   isGoingBack: selector.getIsGoingBack(state)
 })
 
-export const XLogDetailPane = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(LogDetailPane)
+export const XLogDetailPane = connect<Props, {||}, _, _, _, _>(stateToProps)(
+  LogDetailPane
+)
