@@ -2,6 +2,7 @@
 
 import type {EpochObj} from "../lib/Time"
 import AppError from "../models/AppError"
+import Log from "../models/Log"
 
 export type Notification =
   | AppError
@@ -98,4 +99,8 @@ export type LogCorrelations = {
   md5?: {tuples: Tuple[], descriptor: Descriptor},
   tx?: {tuples: Tuple[], descriptor: Descriptor},
   rx?: {tuples: Tuple[], descriptor: Descriptor}
+}
+
+export type RelatedLogs = {
+  [string]: Log[]
 }

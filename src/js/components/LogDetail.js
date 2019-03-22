@@ -1,29 +1,23 @@
 /* @flow */
 
-import {connect} from "react-redux"
 import React from "react"
 
-import type {State} from "../reducers/types"
+import type {RelatedLogs} from "../types"
 import {XUidTimeline} from "./UidTimeline"
-import {buildCorrelatedLogs} from "../selectors/correlations"
 import ConnVersation from "./ConnVersation"
 import FieldsTable from "./FieldsTable"
 import Log from "../models/Log"
 
-type OwnProps = {|
-  log: Log
-|}
-
 type Props = {|
-  ...OwnProps,
-  uidCorrelation: Log[]
+  log: Log,
+  relatedLogs: RelatedLogs
 |}
 
 export default class LogDetail extends React.Component<Props> {
   el: ?HTMLElement
 
   render() {
-    const {log} = this.props
+    const {log, relatedLogs} = this.props
 
     return (
       <div className="log-detail">
@@ -32,10 +26,10 @@ export default class LogDetail extends React.Component<Props> {
           <FieldsTable log={log} />
         </div>
 
-        {this.props.uidCorrelation.length > 1 && (
+        {relatedLogs["uid"] && relatedLogs["uid"].length > 1 && (
           <div className="correlated-logs-panel detail-panel">
             <h4 className="small-heading">Correlated Logs</h4>
-            <XUidTimeline log={log} logs={this.props.uidCorrelation} />
+            <XUidTimeline log={log} logs={relatedLogs["uid"]} />
           </div>
         )}
 
@@ -49,11 +43,3 @@ export default class LogDetail extends React.Component<Props> {
     )
   }
 }
-
-const stateToProps = (state: State) => ({
-  uidCorrelation: buildCorrelatedLogs(state)
-})
-
-export const XLogDetail = connect<Props, OwnProps, _, _, _, _>(stateToProps)(
-  LogDetail
-)

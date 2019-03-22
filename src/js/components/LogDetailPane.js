@@ -6,19 +6,21 @@ import React from "react"
 import classNames from "classnames"
 
 import {type State} from "../reducers/types"
-import {XLogDetail} from "./LogDetail"
+import {buildLogDetail, getIsGoingBack} from "../selectors/logDetails"
+import {getLogCorrelations} from "../selectors/correlations"
 import EmptyLogDetail from "./EmptyLogDetail"
 import Log from "../models/Log"
-import * as selector from "../selectors/logDetails"
+import LogDetail from "./LogDetail"
 
 type Props = {|
   log: ?Log,
-  isGoingBack: boolean
+  isGoingBack: boolean,
+  correlations: {[string]: Log[]}
 |}
 
 export default class LogDetailPane extends React.Component<Props> {
   render() {
-    const {log, isGoingBack} = this.props
+    const {log, isGoingBack, correlations} = this.props
 
     if (!log) return <EmptyLogDetail />
 
@@ -29,14 +31,14 @@ export default class LogDetailPane extends React.Component<Props> {
         })}
       >
         <CSSTransition
-          key={log.tuple.join("")}
+          key={log.id()}
           classNames="log-detail"
           timeout={{
             enter: 250,
             exit: 250
           }}
         >
-          <XLogDetail log={log} />
+          <LogDetail log={log} relatedLogs={correlations} />
         </CSSTransition>
       </TransitionGroup>
     )
@@ -44,8 +46,9 @@ export default class LogDetailPane extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  log: selector.buildLogDetail(state),
-  isGoingBack: selector.getIsGoingBack(state)
+  log: buildLogDetail(state),
+  correlations: getLogCorrelations(state),
+  isGoingBack: getIsGoingBack(state)
 })
 
 export const XLogDetailPane = connect<Props, {||}, _, _, _, _>(stateToProps)(
