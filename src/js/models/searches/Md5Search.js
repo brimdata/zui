@@ -8,11 +8,11 @@ import BaseSearch from "./BaseSearch"
 import Log from "../Log"
 import accumAnalytics from "../../lib/accumAnalytics"
 
-export default class HashSearch extends BaseSearch {
+export default class Md5Search extends BaseSearch {
   log: Log
 
-  constructor(program: string, span: Span, log: Log) {
-    super(program, span)
+  constructor(log: Log, span: Span) {
+    super(`_path=${log.get("_path")} md5=${log.get("md5")}`, span)
     this.log = log
   }
 

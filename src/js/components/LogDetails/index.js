@@ -9,6 +9,7 @@ import {getLogCorrelations} from "../../selectors/correlations"
 import ConnPanel from "./ConnPanel"
 import FieldsPanel from "./FieldsPanel"
 import Log from "../../models/Log"
+import Md5Panel from "./Md5Panel"
 import NavAnimation from "./NavAnimation"
 import NoSelection from "./NoSelection"
 import UidPanel from "./UidPanel"
@@ -31,6 +32,7 @@ export default class LogDetails extends React.Component<Props> {
           <FieldsPanel {...panelProps} />
           <UidPanel {...panelProps} />
           <ConnPanel {...panelProps} />
+          <Md5Panel {...panelProps} />
         </div>
       </NavAnimation>
     )

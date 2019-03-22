@@ -13,7 +13,7 @@ const UidPanel = ({log, relatedLogs}: Props) => {
 
   return (
     <div className="correlated-logs-panel detail-panel">
-      <h4 className="small-heading">Correlated Logs</h4>
+      <h4 className="small-heading">Uid Correlation</h4>
       <XUidTimeline log={log} logs={relatedLogs["uid"]} />
     </div>
   )
