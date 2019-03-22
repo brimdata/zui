@@ -6,7 +6,7 @@ import classNames from "classnames"
 
 import {type DispatchProps} from "../reducers/types"
 import type {Space} from "../lib/Space"
-import {XLogDetailPane} from "./LogDetailPane"
+import {XLogDetails} from "./LogDetails"
 import {XRightPaneCollapser} from "./RightPaneCollapser"
 import {XRightPaneExpander} from "./RightPaneExpander"
 import {backLogDetail, forwardLogDetail} from "../actions/logDetails"
@@ -139,7 +139,7 @@ export default class RightPane extends React.Component<Props, S> {
           </PaneHeader>
         )}
         <PaneBody>
-          <XLogDetailPane />
+          <XLogDetails />
         </PaneBody>
         <XRightPaneCollapser show={this.state.showCollapse} />
       </Pane>

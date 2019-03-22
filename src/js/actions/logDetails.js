@@ -3,12 +3,13 @@
 import type {Thunk} from "redux-thunk"
 
 import type {Descriptor, Tuple} from "../types"
-import {fetchTuplesByUid} from "./correlations"
+import {fetchByMd5, fetchTuplesByUid} from "./correlations"
 import Log from "../models/Log"
 
 export const viewLogDetail = (log: Log): Thunk => dispatch => {
   dispatch(pushLogDetail(log))
   dispatch(fetchTuplesByUid(log))
+  dispatch(fetchByMd5(log))
 }
 
 export const pushLogDetail = ({

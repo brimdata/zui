@@ -41,3 +41,12 @@ export const flattenJoin = (array: *[], between: *) => {
       return next
     }, [])
 }
+
+export const toFront = (array: *[], accessor: (*) => boolean) => {
+  const copy = [...array]
+  const index = copy.findIndex(accessor)
+
+  if (index > 0) copy.splice(0, 0, copy.splice(index, 1)[0])
+
+  return copy
+}

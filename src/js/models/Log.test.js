@@ -1,7 +1,7 @@
 /* @flow */
 
+import {conn, dns, http} from "../test/mockLogs"
 import Log from "./Log"
-import {conn} from "../test/mockLogs"
 
 test("isSame when tuples are the same", () => {
   const a = new Log(
@@ -61,4 +61,33 @@ test("getNs on non time field", () => {
   const log = conn()
 
   expect(() => log.getNs("_path")).toThrow("_path is not a time type")
+})
+
+describe(".sort", () => {
+  let logs
+  beforeEach(() => {
+    logs = [conn(), dns(), http()]
+  })
+
+  const getTs = t => t.get("ts")
+
+  test("asc", () => {
+    Log.sort(logs, "ts", "asc")
+
+    expect(logs.map(getTs)).toEqual([
+      "1425565514.419939",
+      "1425567042.047800",
+      "1425612054.369843"
+    ])
+  })
+
+  test("desc", () => {
+    Log.sort(logs, "ts", "desc")
+
+    expect(logs.map(getTs)).toEqual([
+      "1425612054.369843",
+      "1425567042.047800",
+      "1425565514.419939"
+    ])
+  })
 })
