@@ -12,10 +12,7 @@ import {Fieldset} from "./Typography"
 import {type Interval} from "../lib/histogramInterval"
 import {getHistogramStatus} from "../selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-import {
-  getMainSearchHistogram,
-  getHistogramData
-} from "../reducers/histogram"
+import {getMainSearchHistogram, getHistogramData} from "../reducers/histogram"
 import Chart from "../models/Chart"
 import HoverLine from "../charts/HoverLine"
 import LoadingMessage from "./LoadingMessage"
