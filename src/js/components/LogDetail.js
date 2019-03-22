@@ -5,7 +5,7 @@ import React from "react"
 
 import type {State} from "../reducers/types"
 import {XUidTimeline} from "./UidTimeline"
-import {buildCorrelatedLogs} from "../selectors/logDetails"
+import {buildCorrelatedLogs} from "../selectors/correlations"
 import ConnVersation from "./ConnVersation"
 import FieldsTable from "./FieldsTable"
 import Log from "../models/Log"

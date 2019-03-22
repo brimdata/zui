@@ -1,4 +1,4 @@
-import {flattenJoin, indexOfLastChange} from "./Array"
+import {flattenJoin, indexOfLastChange, toFront} from "./Array"
 
 test("#indexOfLastChange", () => {
   const logsTs = [
@@ -70,5 +70,36 @@ describe("#flattenJoin", () => {
   test("on array with many empty arrays", () => {
     const result = flattenJoin([[], ["2"], [], ["3"]], "|")
     expect(result.join("")).toEqual("2|3")
+  })
+})
+
+describe("#toFront", () => {
+  let array
+  beforeEach(() => {
+    array = [1, 2, 3, 4, 5]
+  })
+
+  test("item exists", () => {
+    const newArray = toFront(array, item => item === 4)
+
+    expect(newArray).toEqual([4, 1, 2, 3, 5])
+  })
+
+  test("item does not exist", () => {
+    const newArray = toFront(array, item => item === 10)
+
+    expect(newArray).toEqual([1, 2, 3, 4, 5])
+  })
+
+  test("first item ", () => {
+    const newArray = toFront(array, item => item === 1)
+
+    expect(newArray).toEqual([1, 2, 3, 4, 5])
+  })
+
+  test("last item", () => {
+    const newArray = toFront(array, item => item === 5)
+
+    expect(newArray).toEqual([5, 1, 2, 3, 4])
   })
 })

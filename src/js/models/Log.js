@@ -33,6 +33,16 @@ export default class Log {
     return tuples.map<Log>(tuple => new Log(tuple, descriptor))
   }
 
+  static sort(logs: Log[], name: string, dir: "asc" | "desc" = "asc") {
+    const direction = dir === "asc" ? 1 : -1
+
+    logs.sort((a, b) =>
+      a.get(name) > b.get(name) ? direction : direction * -1
+    )
+
+    return logs
+  }
+
   static isSame(a: ?Log, b: ?Log) {
     if (!a || !b) return false
     return isEqual(a.tuple, b.tuple)
