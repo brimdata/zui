@@ -36,6 +36,21 @@ const logIn = app => {
     .click("button")
 }
 
+const waitForLoginAvailable = app => {
+  const waitForHostname = () => {
+    return app.client.waitForExist("[name=host]")
+  }
+  const waitForPort = () => {
+    return app.client.waitForExist("[name=port]")
+  }
+  const waitForButton = () => {
+    return app.client.waitForExist("button")
+  }
+  return waitForHostname()
+    .then(() => waitForPort())
+    .then(() => waitForButton())
+}
+
 const waitForSearch = app => {
   return retry(() => app.client.element("#main-search-input").getValue())
 }
@@ -61,13 +76,12 @@ describe("Application launch", () => {
     }
   })
 
-  // Describe two tests. We choose two to ensure application launch/teardown
-  // works in a CI environment.
   // TODO: Parallel runs across files are not supported due to chromebrowser
   // port contention. Support that later.
   test("shows a window with the correct title", done => {
     app.client
-      .getTitle()
+      .waitForExist("title")
+      .then(() => app.client.getTitle())
       .then(title => {
         // TODO: Looky shouldn't be hardcoded but instead read from a title
         // defined elsewhere.
@@ -79,10 +93,11 @@ describe("Application launch", () => {
 
   test("shows a window with the correct header text", done => {
     app.client
+      .waitForExist(".looky-header h1")
       // TODO: Don't use selectors as literals in tests. These definitions
       // should be defined in a single place and ideally be tested to ensure
       // they can be found.
-      .getText(".looky-header h1")
+      .then(() => app.client.getText(".looky-header h1"))
       .then(headerText => {
         expect(headerText).toBe("LOOKY")
         done()
@@ -90,10 +105,9 @@ describe("Application launch", () => {
       .catch(done)
   })
 
-  // Skipped until PROD-308 and PROD-309 are done. If you have an auth-less
-  // boomd running with a space created, you can uncomment and run this test.
   test("log in and see Search and Histogram", done => {
-    logIn(app)
+    waitForLoginAvailable(app)
+      .then(() => logIn(app))
       .then(() => waitForHistogram(app))
       .then(() => waitForSearch(app))
       .then(val => {
