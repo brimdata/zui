@@ -25,28 +25,9 @@
   max-width: 600px;
   margin: 0 24px 24px 24px;
 
-  .small-heading {
-    padding: 3px 12px;
-    color: white;
-    background-color: $gray-cold-2;
-    border-right: 6px solid $gray-cold-2;
-    transform: translateX(-24px);
-    display: inline-block;
-    border-radius: 0 12px 12px 0;
-    box-shadow: $box-shadow;
-  }
-
-  &:first-child {
+  .panel-heading:first-child {
     margin-top: 24px;
   }
-}
-
-.correlated-logs-panel {
-  max-width: 600px;
-}
-
-.conn-versation-panel {
-  max-width: 600px;
 }
 
 .fields-table-panel {
@@ -56,8 +37,4 @@
   th {
     min-width: 120px;
   }
-}
-
-.hash-panel {
-  max-width: 600px;
 }

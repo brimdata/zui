@@ -1,0 +1,55 @@
+.inline-table-loading {
+  thead {
+    th {
+      color: $gray-warm-3;
+      font-weight: normal;
+      font-size: 12px;
+      text-align: center;
+    }
+  }
+
+  tr {
+    height: 20px;
+    &:hover {
+      background: initial !important;
+    }
+  }
+
+  tbody {
+    td {
+      border-radius: 3px !important;
+    }
+
+    tr:nth-child(1) {
+      animation: squeeze 3000ms 100ms ease-in-out infinite;
+    }
+
+    tr:nth-child(3) {
+      animation: squeeze 3000ms 300ms ease-in-out infinite;
+    }
+
+    tr:nth-child(5) {
+      animation: squeeze 3000ms 500ms ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes squeeze {
+  from {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(1);
+    background-color: $table-stripe-color;
+  }
+
+  60% {
+    transform: scaleX(0.85);
+    background-color: $table-stripe-hover;
+  }
+
+  70% {
+    transform: scaleX(1);
+  }
+}

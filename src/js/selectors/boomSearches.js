@@ -42,6 +42,18 @@ export const getMainSearchIsFetching = createSelector<State, void, *, *>(
   }
 )
 
+export const getDetailStatuses = createSelector<State, void, *, *>(
+  getBoomSearches,
+  searches => {
+    const statuses = {}
+    for (let name in searches) {
+      if (searches[name].tag === "detail")
+        statuses[name] = searches[name].status
+    }
+    return statuses
+  }
+)
+
 export const getBoomSearchesAsLogs = createSelector<State, void, *, *>(
   getBoomSearches,
   searches => {
