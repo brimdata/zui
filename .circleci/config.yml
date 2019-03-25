@@ -41,6 +41,10 @@ jobs:
       - run:
           name: Integration tests
           command: ./.circleci/rug-component.sh
+      - store_artifacts:
+          path: /var/tmp/looky/logs
+      - store_artifacts:
+          path: /home/circleci/.npm/_logs
 workflows:
   version: 2
   main:
