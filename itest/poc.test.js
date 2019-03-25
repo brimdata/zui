@@ -11,6 +11,8 @@ const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
 const path = require("path")
 
+const TestTimeout = 60000
+
 const retry = (f, attempts = 100, delay = 100) => {
   return new Promise((resolve, reject) => {
     f()
@@ -78,42 +80,54 @@ describe("Application launch", () => {
 
   // TODO: Parallel runs across files are not supported due to chromebrowser
   // port contention. Support that later.
-  test("shows a window with the correct title", done => {
-    app.client
-      .waitForExist("title")
-      .then(() => app.client.getTitle())
-      .then(title => {
-        // TODO: Looky shouldn't be hardcoded but instead read from a title
-        // defined elsewhere.
-        expect(title).toBe("Looky")
-        done()
-      })
-      .catch(done)
-  })
+  test(
+    "shows a window with the correct title",
+    done => {
+      app.client
+        .waitForExist("title")
+        .then(() => app.client.getTitle())
+        .then(title => {
+          // TODO: Looky shouldn't be hardcoded but instead read from a title
+          // defined elsewhere.
+          expect(title).toBe("Looky")
+          done()
+        })
+        .catch(done)
+    },
+    TestTimeout
+  )
 
-  test("shows a window with the correct header text", done => {
-    app.client
-      .waitForExist(".looky-header h1")
-      // TODO: Don't use selectors as literals in tests. These definitions
-      // should be defined in a single place and ideally be tested to ensure
-      // they can be found.
-      .then(() => app.client.getText(".looky-header h1"))
-      .then(headerText => {
-        expect(headerText).toBe("LOOKY")
-        done()
-      })
-      .catch(done)
-  })
+  test(
+    "shows a window with the correct header text",
+    done => {
+      app.client
+        .waitForExist(".looky-header h1")
+        // TODO: Don't use selectors as literals in tests. These definitions
+        // should be defined in a single place and ideally be tested to ensure
+        // they can be found.
+        .then(() => app.client.getText(".looky-header h1"))
+        .then(headerText => {
+          expect(headerText).toBe("LOOKY")
+          done()
+        })
+        .catch(done)
+    },
+    TestTimeout
+  )
 
-  test("log in and see Search and Histogram", done => {
-    waitForLoginAvailable(app)
-      .then(() => logIn(app))
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
-      .then(val => {
-        expect(val).toBeDefined()
-        done()
-      })
-      .catch(done)
-  })
+  test(
+    "log in and see Search and Histogram",
+    done => {
+      waitForLoginAvailable(app)
+        .then(() => logIn(app))
+        .then(() => waitForHistogram(app))
+        .then(() => waitForSearch(app))
+        .then(val => {
+          expect(val).toBeDefined()
+          done()
+        })
+        .catch(done)
+    },
+    TestTimeout
+  )
 })
