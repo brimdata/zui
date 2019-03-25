@@ -11,6 +11,8 @@ const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
 const path = require("path")
 
+const TestTimeout = 60000
+
 const retry = (f, attempts = 100, delay = 100) => {
   return new Promise((resolve, reject) => {
     f()
@@ -89,7 +91,7 @@ describe("Application launch", () => {
         done()
       })
       .catch(done)
-  })
+  }, TestTimeout)
 
   test("shows a window with the correct header text", done => {
     app.client
@@ -103,7 +105,7 @@ describe("Application launch", () => {
         done()
       })
       .catch(done)
-  })
+  }, TestTimeout)
 
   test("log in and see Search and Histogram", done => {
     waitForLoginAvailable(app)
@@ -115,5 +117,5 @@ describe("Application launch", () => {
         done()
       })
       .catch(done)
-  })
+  }, TestTimeout)
 })
