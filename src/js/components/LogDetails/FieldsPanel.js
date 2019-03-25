@@ -2,14 +2,13 @@
 
 import React from "react"
 
+import type {PanelProps} from "./"
 import FieldsTable from "../FieldsTable"
-import Log from "../../models/Log"
+import PanelHeading from "./PanelHeading"
 
-type Props = {log: Log}
-
-const FieldsPanel = ({log}: Props) => (
+const FieldsPanel = ({log}: PanelProps) => (
   <div className="fields-table-panel detail-panel">
-    <h4 className="small-heading">Fields</h4>
+    <PanelHeading>Fields</PanelHeading>
     <FieldsTable log={log} />
   </div>
 )

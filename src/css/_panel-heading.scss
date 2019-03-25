@@ -1,0 +1,29 @@
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+  transform: translateX(-24px);
+
+  & > * {
+    margin: 0;
+  }
+
+  .burst-1,
+  .burst-2 {
+    background-color: $gray-warm-4;
+  }
+}
+
+.panel-title {
+  margin-right: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: normal;
+  padding: 3px 12px;
+  color: white;
+  background-color: $gray-cold-2;
+  border-right: 6px solid $gray-cold-2;
+  border-radius: 0 12px 12px 0;
+  box-shadow: $box-shadow;
+}

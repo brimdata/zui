@@ -2,16 +2,15 @@
 
 import React from "react"
 
+import type {PanelProps} from "./"
 import ConnVersation from "../ConnVersation"
-import Log from "../../models/Log"
+import PanelHeading from "./PanelHeading"
 
-type Props = {log: Log}
-
-const ConnPanel = ({log}: Props) => {
+const ConnPanel = ({log}: PanelProps) => {
   if (!ConnVersation.shouldShow(log)) return null
   return (
     <div className="conn-versation-panel detail-panel">
-      <h4 className="small-heading">Conn History</h4>
+      <PanelHeading>Conn History</PanelHeading>
       <ConnVersation log={log} />
     </div>
   )
