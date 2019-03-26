@@ -13,4 +13,6 @@ const MenuList = React.forwardRef((props: Props, ref: *) => {
   )
 })
 
+MenuList.displayName = "MenuList"
+
 export default MenuList

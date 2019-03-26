@@ -54,6 +54,8 @@ export default class UidTimeline extends React.Component<Props> {
     if (this.props.logs.length === 0) return null
 
     const extent = d3.extent(this.props.logs.map(l => l.cast("ts")))
+    if (extent[0] === extent[1]) extent[1] += 1
+
     const xScale = d3
       .scaleTime()
       .domain(extent)
