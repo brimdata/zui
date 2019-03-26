@@ -1,15 +1,16 @@
 /* @flow */
 
-import React from "react"
+import React, {useState} from "react"
 import classNames from "classnames"
 
-import {type FixedPos, clearTextSelection, selectText} from "../../lib/Doc"
 import {XViewerFieldActions} from "../FieldActions"
+import {clearTextSelection, selectText} from "../../lib/Doc"
 import {getTooltipStyle} from "../../lib/MenuStyler"
 import CellValue from "./CellValue"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
 import Tooltip from "../Tooltip"
+import useContextMenu from "../../hooks/useContextMenu"
 
 type Props = {
   field: Field,
@@ -17,86 +18,64 @@ type Props = {
   style?: Object
 }
 
-type State = {
-  showMenu: boolean,
-  hover: boolean,
-  menuStyle: FixedPos,
-  tooltipStyle: FixedPos
-}
+export default function LogCell(props: Props) {
+  let [hover, setHover] = useState(false)
+  let [tooltipStyle, setTooltipStyle] = useState({})
+  let menu = useContextMenu()
 
-export default class LogCell extends React.PureComponent<Props, State> {
-  el: ?HTMLElement
-  state = {
-    showMenu: false,
-    hover: false,
-    menuStyle: {top: 0, left: 0},
-    tooltipStyle: {top: 0, left: 0}
+  function handleMouseEnter(e) {
+    setHover(true)
+    setTooltipStyle(getTooltipStyle(e.currentTarget))
   }
 
-  onRightClick = (e: MouseEvent) => {
+  function handleMouseLeave() {
+    setHover(false)
+  }
+
+  function handleRightClick(e) {
     clearTextSelection()
     e.stopPropagation()
-    this.setState({
-      hover: true,
-      tooltipStyle: getTooltipStyle(this.el),
-      showMenu: true,
-      menuStyle: {top: e.pageY, left: e.pageX}
-    })
+    setHover(true)
+    menu.handleOpen(e)
   }
 
-  onMenuDismiss = (e: MouseEvent) => {
+  function handleRightClickDismiss(e) {
     clearTextSelection()
     e.stopPropagation()
-    this.setState({
-      hover: false,
-      showMenu: false
-    })
+    setHover(false)
+    menu.handleClose()
   }
 
-  onMouseEnter = () => {
-    this.setState({
-      hover: true,
-      tooltipStyle: getTooltipStyle(this.el)
-    })
-  }
+  let {name, type} = props.field
 
-  onMouseLeave = () => {
-    this.setState({hover: false})
-  }
+  return (
+    <div
+      className={classNames(`log-cell ${type}`, {
+        active: menu.show,
+        hover
+      })}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onContextMenu={handleRightClick}
+      onClick={e => selectText(e.currentTarget)}
+      style={props.style}
+    >
+      <CellValue field={props.field} />
 
-  render() {
-    const {name, type} = this.props.field
-    const cellClass = classNames(`log-cell ${type}`, {
-      active: this.state.showMenu,
-      hover: this.state.hover
-    })
-    return (
-      <div
-        className={cellClass}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        onContextMenu={this.onRightClick}
-        onClick={e => selectText(e.currentTarget)}
-        style={this.props.style}
-        ref={r => (this.el = r)}
-      >
-        <CellValue field={this.props.field} />
+      {hover && (
+        <Tooltip style={tooltipStyle}>
+          <span className="field-name">{name}</span>
+        </Tooltip>
+      )}
 
-        {this.state.hover && (
-          <Tooltip style={this.state.tooltipStyle}>
-            <span className="field-name">{name}</span>
-          </Tooltip>
-        )}
-
-        {this.state.showMenu && (
-          <XViewerFieldActions
-            log={this.props.log}
-            field={this.props.field}
-            style={this.state.menuStyle}
-            onClose={this.onMenuDismiss}
-          />
-        )}
-      </div>
-    )
-  }
+      {menu.show && (
+        <XViewerFieldActions
+          log={props.log}
+          field={props.field}
+          style={menu.style}
+          onClose={handleRightClickDismiss}
+        />
+      )}
+    </div>
+  )
 }
