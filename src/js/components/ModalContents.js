@@ -15,7 +15,10 @@ class ModalContents extends Component {
         timeout={{enter: 150}}
         appear
       >
-        <div className={`modal-contents ${className}`}>
+        <div
+          className={`modal-contents ${className}`}
+          onClick={e => e.stopPropagation()}
+        >
           <header className="modal-header">
             <Fieldset>{title}</Fieldset>
             <CloseButton light onClick={onClose} />
