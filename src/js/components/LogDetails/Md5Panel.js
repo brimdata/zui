@@ -3,7 +3,9 @@
 import React from "react"
 
 import type {PanelProps} from "./"
-import AsyncTable from "./AsyncTable"
+import HorizontalTable from "../Tables/HorizontalTable"
+import InlineTableLoading from "../InlineTableLoading"
+import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 
 export const Md5Panel = ({log, statuses, relatedLogs}: PanelProps) => {
@@ -37,4 +39,23 @@ export const Md5Panel = ({log, statuses, relatedLogs}: PanelProps) => {
       </div>
     </div>
   )
+}
+
+type Props = {
+  logs: Log[],
+  expect: number,
+  name: string
+}
+
+function AsyncTable({logs, expect, name}: Props) {
+  if (logs.length === 0) {
+    return <InlineTableLoading title={`Loading ${name}...`} rows={expect} />
+  } else {
+    return (
+      <HorizontalTable
+        headers={logs[0].descriptor}
+        data={logs.map(log => log.getFields().map(f => ({...f})))}
+      />
+    )
+  }
 }

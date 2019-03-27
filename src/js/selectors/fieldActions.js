@@ -93,26 +93,3 @@ export function rightClickFieldsPanel(cell: DataCell) {
 
   return flattenJoin([queryActions, fieldActions, logActions], seperator())
 }
-
-export const getDetailFieldActions = (state: State, props: Props) => {
-  const field = props.field
-
-  const queryActions = []
-  const fieldActions = []
-  const logActions = []
-
-  if (!(field instanceof TimeField)) {
-    queryActions.push(freshInclude(field))
-  }
-
-  if (field instanceof TimeField) {
-    queryActions.push(fromTime(field))
-    queryActions.push(toTime(field))
-  }
-
-  if (["addr", "set[addr]"].includes(props.field.type)) {
-    fieldActions.push(whois(props.field))
-  }
-
-  return flattenJoin([queryActions, fieldActions, logActions], seperator())
-}
