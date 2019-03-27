@@ -68,6 +68,10 @@ export default class Log {
     return this.filter(field => names.includes(field.name))
   }
 
+  map(func: *) {
+    return this.getFields().map<*>(func)
+  }
+
   id() {
     return md5(this.tuple.join())
   }
@@ -98,6 +102,8 @@ export default class Log {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
       return FieldFactory.create({value, name, type})
+    } else {
+      throw "Index out of bounds"
     }
   }
 

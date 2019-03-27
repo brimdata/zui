@@ -8,15 +8,14 @@ import PanelHeading from "./PanelHeading"
 import VerticalTable from "../Tables/VerticalTable"
 
 export default function FieldsPanel({log}: PanelProps) {
-  const logSubset = log.exclude("_td")
-  const data = logSubset.getFields().map(f => ({...f}))
+  log = log.exclude("_td")
 
   return (
     <div className="fields-table-panel detail-panel">
       <PanelHeading>Fields</PanelHeading>
       <VerticalTable
-        headers={logSubset.descriptor}
-        data={data}
+        descriptor={log.descriptor}
+        log={log}
         rightClick={rightClickFieldsPanel}
       />
     </div>

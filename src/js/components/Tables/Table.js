@@ -2,8 +2,9 @@
 
 import React from "react"
 
-import type {DataCell, HeaderCell} from "./types"
+import type {Column} from "../../types"
 import type {MenuItemData} from "../FieldActionData"
+import Field from "../../models/Field"
 import RightClickMenu from "../RightClickMenu"
 import useContextMenu from "../../hooks/useContextMenu"
 
@@ -11,26 +12,29 @@ export default function Table({className, ...props}: *) {
   return <table className={`table ${className}`} {...props} />
 }
 
-export function TableHeader({header}: {header: HeaderCell}) {
-  return <th className={header.type}>{header.name}</th>
+export function TableHeader({column}: {column: Column}) {
+  return <th className={column.type}>{column.name}</th>
 }
 
 type Props = {
-  cell: DataCell,
-  rightClick?: DataCell => MenuItemData[]
+  field: Field,
+  rightClick?: Field => MenuItemData[]
 }
 
-export function TableData({cell, rightClick}: Props) {
+export function TableData({field, rightClick}: Props) {
   const menu = useContextMenu()
 
   return (
-    <td onContextMenu={menu.handleOpen} className={`${cell.type} ${cell.name}`}>
-      {cell.value}
+    <td
+      onContextMenu={menu.handleOpen}
+      className={`${field.type} ${field.name}`}
+    >
+      {field.value}
       {menu.show && !!rightClick && (
         <RightClickMenu
           style={menu.style}
           onClose={menu.handleClose}
-          actions={rightClick(cell)}
+          actions={rightClick(field)}
         />
       )}
     </td>

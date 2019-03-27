@@ -53,16 +53,14 @@ const ConnHistory = ({history = ""}) => (
 )
 
 const Host = ({className, title = "", ip = "", port = "", log}) => {
-  const data = log.getFields().map(f => ({...f}))
-
   return (
     <div className={`host ${className}`}>
       <Fieldset>{title}</Fieldset>
       <p className={`ip ${ip.length > 16 ? "small" : ""}`}>{ip}</p>
       <p className="port">{port}</p>
       <VerticalTable
-        headers={log.descriptor}
-        data={data}
+        descriptor={log.descriptor}
+        log={log}
         rightClick={rightClickFieldsPanel}
       />
     </div>

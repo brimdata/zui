@@ -2,24 +2,26 @@
 
 import React from "react"
 
-import type {DataCell, HeaderCell} from "./types"
+import type {Descriptor} from "../../types"
 import type {MenuItemData} from "../FieldActionData"
+import Field from "../../models/Field"
+import Log from "../../models/Log"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {
-  headers: HeaderCell[],
-  data: DataCell[],
-  rightClick?: DataCell => MenuItemData[]
+  descriptor: Descriptor,
+  log: Log,
+  rightClick?: Field => MenuItemData[]
 }
 
-export default function VerticalTable({headers, data, rightClick}: Props) {
+export default function VerticalTable({descriptor, log, rightClick}: Props) {
   return (
     <Table className="vertical-table">
       <tbody>
-        {headers.map((header, index) => (
+        {descriptor.map((column, index) => (
           <tr key={index}>
-            <TableHeader header={header} />
-            <TableData cell={data[index]} rightClick={rightClick} />
+            <TableHeader column={column} />
+            <TableData field={log.getFieldAt(index)} rightClick={rightClick} />
           </tr>
         ))}
       </tbody>

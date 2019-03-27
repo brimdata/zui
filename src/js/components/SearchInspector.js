@@ -23,8 +23,6 @@ type Props = {
 export default function SearchInspector({dispatch, logs, isOpen}: Props) {
   if (!isOpen) return null
 
-  const data = logs.map(log => log.getFields().map(f => ({...f})))
-
   function Actions({row}) {
     const nameCell = row.find(cell => cell.name === "name")
 
@@ -43,8 +41,8 @@ export default function SearchInspector({dispatch, logs, isOpen}: Props) {
       </header>
       <section>
         <HorizontalTable
-          headers={logs[0].descriptor}
-          data={data}
+          descriptor={logs[0].descriptor}
+          logs={logs}
           actions={Actions}
         />
       </section>

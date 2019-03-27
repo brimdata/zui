@@ -2,46 +2,47 @@
 
 import * as React from "react"
 
-import type {DataCell, HeaderCell} from "./types"
+import type {Descriptor} from "../../types"
+import Log from "../../models/Log"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {
-  headers: HeaderCell[],
-  data: DataCell[][],
-  Actions?: React.AbstractComponent<{row: DataCell[]}>
+  descriptor: Descriptor,
+  logs: Log[],
+  Actions?: React.AbstractComponent<{log: Log}>
 }
 
-export default function HorizontalTable({headers, data, Actions}: Props) {
+export default function HorizontalTable({descriptor, logs, Actions}: Props) {
   return (
     <Table className="horizontal-table">
       <thead>
         <tr>
-          {headers.map((header, index) => (
-            <TableHeader header={header} key={index} />
+          {descriptor.map((column, index) => (
+            <TableHeader column={column} key={index} />
           ))}
           {!!Actions && (
-            <TableHeader header={{name: "actions", type: "actions"}} />
+            <TableHeader column={{name: "actions", type: "actions"}} />
           )}
         </tr>
       </thead>
       <tbody>
-        {data.map((cells, index) => (
-          <TableRow cells={cells} key={index} Actions={Actions} />
+        {logs.map((log, index) => (
+          <TableRow log={log} key={index} Actions={Actions} />
         ))}
       </tbody>
     </Table>
   )
 }
 
-function TableRow({cells, Actions}) {
+function TableRow({log, Actions}) {
   return (
     <tr>
-      {cells.map((cell, index) => (
-        <TableData cell={cell} key={index} />
+      {log.map((field, index) => (
+        <TableData field={field} key={index} />
       ))}
       {!!Actions && (
         <td>
-          <Actions row={cells} />
+          <Actions log={log} />
         </td>
       )}
     </tr>

@@ -1,12 +1,8 @@
 /* @flow */
 
-export type HeaderCell = {
-  name: string,
-  type: string
-}
+import type {Column} from "../../types"
+import Field from "../../models/Field"
 
-export type DataCell = {
-  name: string,
-  type: string,
-  value: string
-}
+export type HeaderCell = Column
+
+export type DataCell = Field

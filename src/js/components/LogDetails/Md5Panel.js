@@ -51,11 +51,6 @@ function AsyncTable({logs, expect, name}: Props) {
   if (logs.length === 0) {
     return <InlineTableLoading title={`Loading ${name}...`} rows={expect} />
   } else {
-    return (
-      <HorizontalTable
-        headers={logs[0].descriptor}
-        data={logs.map(log => log.getFields().map(f => ({...f})))}
-      />
-    )
+    return <HorizontalTable descriptor={logs[0].descriptor} logs={logs} />
   }
 }
