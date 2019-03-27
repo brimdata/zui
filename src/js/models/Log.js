@@ -48,6 +48,26 @@ export default class Log {
     return isEqual(a.tuple, b.tuple)
   }
 
+  filter(func: Field => boolean) {
+    const tuple = []
+    const descriptor = []
+    this.getFields()
+      .filter(func)
+      .forEach(({name, value, type}) => {
+        tuple.push(value)
+        descriptor.push({name, type})
+      })
+    return new Log(tuple, descriptor)
+  }
+
+  exclude(...names: string[]) {
+    return this.filter(field => !names.includes(field.name))
+  }
+
+  only(...names: string[]) {
+    return this.filter(field => names.includes(field.name))
+  }
+
   id() {
     return md5(this.tuple.join())
   }

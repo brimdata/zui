@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import {AsyncTable} from "./AsyncTable"
 import type {PanelProps} from "./"
+import AsyncTable from "./AsyncTable"
 import PanelHeading from "./PanelHeading"
 
 export const Md5Panel = ({log, statuses, relatedLogs}: PanelProps) => {

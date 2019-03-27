@@ -70,6 +70,27 @@ export const getViewerFieldActions = (state: State, props: Props) => {
   return flattenJoin([queryActions, fieldActions, logActions], seperator())
 }
 
+export function getFieldsPanelCellActions(field: Field) {
+  const queryActions = []
+  const fieldActions = []
+  const logActions = []
+
+  if (!(field instanceof TimeField)) {
+    queryActions.push(freshInclude(field))
+  }
+
+  if (field instanceof TimeField) {
+    queryActions.push(fromTime(field))
+    queryActions.push(toTime(field))
+  }
+
+  if (["addr", "set[addr]"].includes(field.type)) {
+    fieldActions.push(whois(field))
+  }
+
+  return flattenJoin([queryActions, fieldActions, logActions], seperator())
+}
+
 export const getDetailFieldActions = (state: State, props: Props) => {
   const field = props.field
 

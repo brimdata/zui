@@ -8,9 +8,8 @@ import {PaneTitle} from "./Pane"
 import {getBoomSearchesAsLogs} from "../selectors/boomSearches"
 import {getSearchInspectorIsOpen} from "../reducers/view"
 import {hideSearchInspector} from "../actions/view"
-import {killBoomSearch} from "../actions/boomSearches"
 import CloseButton from "./CloseButton"
-import InlineTable from "./InlineTable"
+import HorizontalTable from "./Tables/HorizontalTable"
 import Log from "../models/Log"
 import dispatchToProps from "../lib/dispatchToProps"
 
@@ -20,34 +19,33 @@ type Props = {
   dispatch: Dispatch
 }
 
-export default class SearchInspector extends React.Component<Props> {
-  onClose = () => this.props.dispatch(hideSearchInspector())
+export default function SearchInspector({dispatch, logs, isOpen}: Props) {
+  // const actions = [
+  // {
+  // text: "Kill",
+  // click: (log: Log) => dispatch(killBoomSearch(log.get("name")))
+  // }
+  // ]
 
-  getActions = () => {
-    return [
-      {
-        text: "Kill",
-        click: (log: Log) =>
-          this.props.dispatch(killBoomSearch(log.get("name")))
-      }
-    ]
+  function onClose() {
+    dispatch(hideSearchInspector())
   }
 
-  render() {
-    if (!this.props.isOpen) return null
+  if (!isOpen) return null
 
-    return (
-      <div className="search-inspector">
-        <header>
-          <PaneTitle>Search Inspector</PaneTitle>
-          <CloseButton light onClick={this.onClose} />
-        </header>
-        <section>
-          <InlineTable logs={this.props.logs} actions={this.getActions()} />
-        </section>
-      </div>
-    )
-  }
+  const data = logs.map(log => log.getFields().map(f => ({...f})))
+  console.log(data)
+  return (
+    <div className="search-inspector">
+      <header>
+        <PaneTitle>Search Inspector</PaneTitle>
+        <CloseButton light onClick={onClose} />
+      </header>
+      <section>
+        <HorizontalTable headers={logs[0].descriptor} data={data} />
+      </section>
+    </div>
+  )
 }
 
 const stateToProps = (state: State) => ({

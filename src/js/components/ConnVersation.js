@@ -4,8 +4,8 @@ import React from "react"
 import every from "lodash/every"
 
 import {Fieldset} from "./Typography"
-import FieldsTable from "./FieldsTable"
 import Log from "../models/Log"
+import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
@@ -21,8 +21,7 @@ const ConnVersation = ({log}: Props) => {
       <Host
         title="Originator"
         className="originator"
-        fieldNames={ORIG_FIELDS}
-        log={log}
+        log={log.only(...ORIG_FIELDS)}
         ip={log.get("id.orig_h")}
         port={log.get("id.orig_p")}
       />
@@ -30,8 +29,7 @@ const ConnVersation = ({log}: Props) => {
       <Host
         title="Responder"
         className="responder"
-        fieldNames={RESP_FIELDS}
-        log={log}
+        log={log.only(...RESP_FIELDS)}
         ip={log.get("id.resp_h")}
         port={log.get("id.resp_p")}
       />
@@ -53,14 +51,18 @@ const ConnHistory = ({history = ""}) => (
   </div>
 )
 
-const Host = ({className, title = "", ip = "", port = "", fieldNames, log}) => (
-  <div className={`host ${className}`}>
-    <Fieldset>{title}</Fieldset>
-    <p className={`ip ${ip.length > 16 ? "small" : ""}`}>{ip}</p>
-    <p className="port">{port}</p>
-    <FieldsTable log={log} only={fieldNames} />
-  </div>
-)
+const Host = ({className, title = "", ip = "", port = "", log}) => {
+  const data = log.getFields().map(f => ({...f}))
+
+  return (
+    <div className={`host ${className}`}>
+      <Fieldset>{title}</Fieldset>
+      <p className={`ip ${ip.length > 16 ? "small" : ""}`}>{ip}</p>
+      <p className="port">{port}</p>
+      <VerticalTable headers={log.descriptor} data={data} />
+    </div>
+  )
+}
 
 ConnVersation.shouldShow = log => every(ORIG_FIELDS, field => log.get(field))
 

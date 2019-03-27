@@ -58,7 +58,12 @@ exports[`shapshot after hovering 1`] = `
     }
   />
   <Tooltip
-    style={Object {}}
+    style={
+      Object {
+        "left": 100,
+        "top": 79,
+      }
+    }
   >
     <span
       className="field-name"
