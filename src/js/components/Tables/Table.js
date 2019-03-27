@@ -3,6 +3,7 @@
 import React from "react"
 
 import type {DataCell, HeaderCell} from "./types"
+import type {MenuItemData} from "../FieldActionData"
 import RightClickMenu from "../RightClickMenu"
 import useContextMenu from "../../hooks/useContextMenu"
 
@@ -14,17 +15,22 @@ export function TableHeader({header}: {header: HeaderCell}) {
   return <th className={header.type}>{header.name}</th>
 }
 
-export function TableData({cell}: {cell: DataCell}) {
+type Props = {
+  cell: DataCell,
+  rightClick?: DataCell => MenuItemData[]
+}
+
+export function TableData({cell, rightClick}: Props) {
   const menu = useContextMenu()
 
   return (
     <td onContextMenu={menu.handleOpen} className={`${cell.type} ${cell.name}`}>
       {cell.value}
-      {menu.show && (
+      {menu.show && !!rightClick && (
         <RightClickMenu
           style={menu.style}
           onClose={menu.handleClose}
-          actions={[]}
+          actions={rightClick(cell)}
         />
       )}
     </td>
