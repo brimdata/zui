@@ -23,14 +23,9 @@ type Props = {
 export default function SearchInspector({dispatch, logs, isOpen}: Props) {
   if (!isOpen) return null
 
-  function Actions({row}) {
-    const nameCell = row.find(cell => cell.name === "name")
-
-    return (
-      <button onClick={() => dispatch(killBoomSearch(nameCell.value))}>
-        Kill
-      </button>
-    )
+  function Actions({log}) {
+    const onClick = () => dispatch(killBoomSearch(log.get("name")))
+    return <button onClick={onClick}>Kill</button>
   }
 
   return (

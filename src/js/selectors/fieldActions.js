@@ -1,6 +1,5 @@
 /* @flow */
 
-import type {DataCell} from "../components/Tables/types"
 import type {State} from "../reducers/types"
 import {
   countBy,
@@ -21,7 +20,6 @@ import {getPrevSearchProgram} from "./searchBar"
 import {getResultsTab} from "../reducers/view"
 import {hasGroupByProc} from "../lib/Program"
 import Field, {TimeField} from "../models/Field"
-import FieldFactory from "../models/FieldFactory"
 import Log from "../models/Log"
 
 type Props = {
@@ -72,8 +70,7 @@ export const getViewerFieldActions = (state: State, props: Props) => {
   return flattenJoin([queryActions, fieldActions, logActions], seperator())
 }
 
-export function rightClickFieldsPanel(cell: DataCell) {
-  const field = FieldFactory.create(cell)
+export function rightClickFieldsPanel(field: Field) {
   const queryActions = []
   const fieldActions = []
   const logActions = []
