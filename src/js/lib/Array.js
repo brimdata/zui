@@ -50,3 +50,18 @@ export const toFront = (array: *[], accessor: (*) => boolean) => {
 
   return copy
 }
+
+export function first(array: *[]) {
+  return array[0]
+}
+
+export function same(array: *[]) {
+  if (array.length === 0) return true
+  if (array.length === 1) return true
+
+  for (let i = 1; i < array.length; ++i) {
+    if (!isEqual(array[0], array[i])) return false
+  }
+
+  return true
+}

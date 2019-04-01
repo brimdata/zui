@@ -2,17 +2,23 @@
 
 import * as React from "react"
 
-import type {Descriptor} from "../../types"
+import type {Descriptor, RightClickBuilder} from "../../types"
 import Log from "../../models/Log"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {
   descriptor: Descriptor,
   logs: Log[],
+  rightClick?: RightClickBuilder,
   Actions?: React.AbstractComponent<{log: Log}>
 }
 
-export default function HorizontalTable({descriptor, logs, Actions}: Props) {
+export default function HorizontalTable({
+  descriptor,
+  logs,
+  Actions,
+  rightClick
+}: Props) {
   return (
     <Table className="horizontal-table">
       <thead>
@@ -27,24 +33,23 @@ export default function HorizontalTable({descriptor, logs, Actions}: Props) {
       </thead>
       <tbody>
         {logs.map((log, index) => (
-          <TableRow log={log} key={index} Actions={Actions} />
+          <tr key={index}>
+            {log.map((field, index) => (
+              <TableData
+                field={field}
+                log={log}
+                key={index}
+                rightClick={rightClick}
+              />
+            ))}
+            {!!Actions && (
+              <td>
+                <Actions log={log} />
+              </td>
+            )}
+          </tr>
         ))}
       </tbody>
     </Table>
-  )
-}
-
-function TableRow({log, Actions}) {
-  return (
-    <tr>
-      {log.map((field, index) => (
-        <TableData field={field} key={index} />
-      ))}
-      {!!Actions && (
-        <td>
-          <Actions log={log} />
-        </td>
-      )}
-    </tr>
   )
 }

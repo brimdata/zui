@@ -1,81 +1,136 @@
 /* @flow */
 
-import * as Program from "./Program"
+import {
+  addHeadProc,
+  getHeadCount,
+  hasAnalytics,
+  hasHeadOrTailProc,
+  joinParts,
+  parallelizeProcs,
+  splitParts
+} from "./Program"
 
 test("#hasAnalytics head proc does not have analytics", () => {
-  expect(Program.hasAnalytics("* | head 2")).toBe(false)
+  expect(hasAnalytics("* | head 2")).toBe(false)
 })
 
 test("#hasAnalytics sort proc does not have analytics", () => {
-  expect(Program.hasAnalytics("* | sort -r id.resp_p")).toBe(false)
+  expect(hasAnalytics("* | sort -r id.resp_p")).toBe(false)
 })
 
 test("#hasAnalytics every proc does contain analytics", () => {
-  expect(Program.hasAnalytics("* | every 1hr count()")).toBe(true)
+  expect(hasAnalytics("* | every 1hr count()")).toBe(true)
 })
 
 test("#hasAnalytics parallel procs when one does have analytics", () => {
-  expect(
-    Program.hasAnalytics("* | every 1hr count(); count() by id.resp_h")
-  ).toBe(true)
+  expect(hasAnalytics("* | every 1hr count(); count() by id.resp_h")).toBe(true)
 })
 
 test("#hasAnalytics parallel procs when both do not have analytics", () => {
-  expect(Program.hasAnalytics("* | head 100; head 200")).toBe(false)
+  expect(hasAnalytics("* | head 100; head 200")).toBe(false)
 })
 
 test("#hasAnalytics when there are no procs", () => {
-  expect(Program.hasAnalytics("*")).toBe(false)
+  expect(hasAnalytics("*")).toBe(false)
 })
 
 test("#hasAnalytics for a crappy string", () => {
-  expect(Program.hasAnalytics("-r")).toBe(false)
+  expect(hasAnalytics("-r")).toBe(false)
 })
 
 test("#hasAnalytics for sequential proc", () => {
-  expect(Program.hasAnalytics("*google* | head 3 | sort -r id.resp_p")).toBe(
-    false
-  )
+  expect(hasAnalytics("*google* | head 3 | sort -r id.resp_p")).toBe(false)
 })
 
 test("#addHeadProc when no head exists", () => {
-  expect(Program.addHeadProc("_path=dns", 300)).toBe("_path=dns | head 300")
+  expect(addHeadProc("_path=dns", 300)).toBe("_path=dns | head 300")
 })
 
 test("#addHeadProc when head exists", () => {
-  expect(Program.addHeadProc("_path=dns | head 45", 300)).toBe(
-    "_path=dns | head 45"
-  )
+  expect(addHeadProc("_path=dns | head 45", 300)).toBe("_path=dns | head 45")
 })
 
 test("#addHeadProc when sort exists", () => {
-  expect(Program.addHeadProc("_path=dns | sort ts", 300)).toBe(
+  expect(addHeadProc("_path=dns | sort ts", 300)).toBe(
     "_path=dns | sort ts | head 300"
   )
 })
 
 test("#addHeadProc when sort and head exists", () => {
-  expect(Program.addHeadProc("_path=dns | head 23 | sort ts", 300)).toBe(
+  expect(addHeadProc("_path=dns | head 23 | sort ts", 300)).toBe(
     "_path=dns | head 23 | sort ts"
   )
 })
 
 test("#getHeadCount with one head proc", () => {
-  expect(Program.getHeadCount("* | head 1000")).toBe(1000)
+  expect(getHeadCount("* | head 1000")).toBe(1000)
 })
 
 test("#getHeadCount with many procs", () => {
-  expect(Program.getHeadCount("* | head 1000; count()")).toBe(1000)
+  expect(getHeadCount("* | head 1000; count()")).toBe(1000)
 })
 
 test("#getHeadCount with no head", () => {
-  expect(Program.getHeadCount("*")).toBe(0)
+  expect(getHeadCount("*")).toBe(0)
 })
 
 test("#hasHeadCount when false", () => {
-  expect(Program.hasHeadOrTailProc("*")).toBe(false)
+  expect(hasHeadOrTailProc("*")).toBe(false)
 })
 
 test("#hasHeadCount when true", () => {
-  expect(Program.hasHeadOrTailProc("* | head 1")).toBe(true)
+  expect(hasHeadOrTailProc("* | head 1")).toBe(true)
+})
+
+describe("Get Parts of Program", () => {
+  let program = "md5=123 _path=files | count() by md5 | sort -r | head 1"
+
+  test("get filter part", () => {
+    expect(splitParts(program)[0]).toBe("md5=123 _path=files")
+  })
+
+  test("get filter part when none", () => {
+    expect(splitParts("* | count()")[0]).toBe("*")
+  })
+
+  test("get proc part", () => {
+    expect(splitParts(program)[1]).toBe("count() by md5 | sort -r | head 1")
+  })
+
+  test("get proc part when none", () => {
+    expect(splitParts("_path=files")[1]).toEqual("")
+  })
+})
+
+describe("Join Parts of Program", () => {
+  let filter = "md5=123"
+  let proc = "count() by _path"
+
+  test("#joinParts", () => {
+    expect(joinParts(filter, proc)).toBe("md5=123 | count() by _path")
+  })
+
+  test("#joinParts when empty filter", () => {
+    expect(joinParts("", proc)).toBe("* | count() by _path")
+  })
+})
+
+describe("Parallelizing multiple programs", () => {
+  let a = "md5=123 | count()"
+  let b = "md5=123 | head 5"
+  let c = "md5=123 | count() by _path"
+
+  test("#parallelizeProcs when programs have same filter", () => {
+    expect(parallelizeProcs([a, b, c])).toEqual(
+      "md5=123 | count(); head 5; count() by _path"
+    )
+  })
+
+  test("#parallelizeProcs when programs do no have same filter", () => {
+    expect(() => {
+      parallelizeProcs([a, b, c, "_path=conn"])
+    }).toThrow(
+      "Filters must be the same in all programs: md5=123, md5=123, md5=123, _path=conn"
+    )
+  })
 })

@@ -5,6 +5,7 @@ import React from "react"
 import type {Column} from "../../types"
 import type {MenuItemData} from "../FieldActionData"
 import Field from "../../models/Field"
+import Log from "../../models/Log"
 import RightClickMenu from "../RightClickMenu"
 import useContextMenu from "../../hooks/useContextMenu"
 
@@ -17,11 +18,12 @@ export function TableHeader({column}: {column: Column}) {
 }
 
 type Props = {
+  log: Log,
   field: Field,
-  rightClick?: Field => MenuItemData[]
+  rightClick?: (Field, Log) => MenuItemData[]
 }
 
-export function TableData({field, rightClick}: Props) {
+export function TableData({field, log, rightClick}: Props) {
   const menu = useContextMenu()
 
   return (
@@ -34,7 +36,7 @@ export function TableData({field, rightClick}: Props) {
         <RightClickMenu
           style={menu.style}
           onClose={menu.handleClose}
-          actions={rightClick(field)}
+          actions={rightClick(field, log)}
         />
       )}
     </td>
