@@ -3,14 +3,21 @@
 import React from "react"
 
 import type {PanelProps} from "./"
-import FieldsTable from "../FieldsTable"
+import {rightClickFieldsPanel} from "../../selectors/fieldActions"
 import PanelHeading from "./PanelHeading"
+import VerticalTable from "../Tables/VerticalTable"
 
-const FieldsPanel = ({log}: PanelProps) => (
-  <div className="fields-table-panel detail-panel">
-    <PanelHeading>Fields</PanelHeading>
-    <FieldsTable log={log} />
-  </div>
-)
+export default function FieldsPanel({log}: PanelProps) {
+  log = log.exclude("_td")
 
-export default FieldsPanel
+  return (
+    <div className="fields-table-panel detail-panel">
+      <PanelHeading>Fields</PanelHeading>
+      <VerticalTable
+        descriptor={log.descriptor}
+        log={log}
+        rightClick={rightClickFieldsPanel}
+      />
+    </div>
+  )
+}

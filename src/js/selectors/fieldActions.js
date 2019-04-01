@@ -70,9 +70,7 @@ export const getViewerFieldActions = (state: State, props: Props) => {
   return flattenJoin([queryActions, fieldActions, logActions], seperator())
 }
 
-export const getDetailFieldActions = (state: State, props: Props) => {
-  const field = props.field
-
+export function rightClickFieldsPanel(field: Field) {
   const queryActions = []
   const fieldActions = []
   const logActions = []
@@ -86,8 +84,8 @@ export const getDetailFieldActions = (state: State, props: Props) => {
     queryActions.push(toTime(field))
   }
 
-  if (["addr", "set[addr]"].includes(props.field.type)) {
-    fieldActions.push(whois(props.field))
+  if (["addr", "set[addr]"].includes(field.type)) {
+    fieldActions.push(whois(field))
   }
 
   return flattenJoin([queryActions, fieldActions, logActions], seperator())

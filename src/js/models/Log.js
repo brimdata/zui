@@ -48,6 +48,30 @@ export default class Log {
     return isEqual(a.tuple, b.tuple)
   }
 
+  filter(func: Field => boolean) {
+    const tuple = []
+    const descriptor = []
+    this.getFields()
+      .filter(func)
+      .forEach(({name, value, type}) => {
+        tuple.push(value)
+        descriptor.push({name, type})
+      })
+    return new Log(tuple, descriptor)
+  }
+
+  exclude(...names: string[]) {
+    return this.filter(field => !names.includes(field.name))
+  }
+
+  only(...names: string[]) {
+    return this.filter(field => names.includes(field.name))
+  }
+
+  map(func: *) {
+    return this.getFields().map<*>(func)
+  }
+
   id() {
     return md5(this.tuple.join())
   }
@@ -78,6 +102,8 @@ export default class Log {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
       return FieldFactory.create({value, name, type})
+    } else {
+      throw "Index out of bounds"
     }
   }
 

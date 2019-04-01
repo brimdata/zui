@@ -37,6 +37,16 @@ test("easy peasy", () => {
   expect(drillDown(program, result)).toBe("names james proto=udp")
 })
 
+test("count by and filter the same", () => {
+  const program = "md5=123 | count() by md5 | sort -r | head 5"
+
+  const result = new Log(
+    ["123", "1"],
+    [{type: "string", name: "md5"}, {type: "count", name: "count"}]
+  )
+  expect(drillDown(program, result)).toEqual("md5=123")
+})
+
 describe("null cases", () => {
   const nullPrograms = [
     "_path=conn",

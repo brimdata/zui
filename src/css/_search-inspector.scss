@@ -2,6 +2,7 @@
   box-shadow: 0 -2px 1px 0px rgba(0, 0, 0, 0.2);
   position: relative;
   background: white;
+
   header {
     height: 36px;
     padding: 12px;
@@ -14,14 +15,14 @@
     @extend .pane-title;
   }
 
+  section {
+    padding: 12px 6px;
+  }
+
   .close-button {
     transform: scale(0.75);
     position: absolute;
     right: 6px;
     top: 3px;
-  }
-
-  .inline-table {
-    padding: 12px 6px;
   }
 }

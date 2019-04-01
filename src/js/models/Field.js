@@ -1,7 +1,5 @@
 /* @flow */
 
-import {escapeSpaces} from "../lib/Str"
-
 export default class Field {
   name: string
   type: string
@@ -18,7 +16,11 @@ export default class Field {
   }
 
   queryableValue() {
-    return escapeSpaces(this.value)
+    let WHITE_SPACE = /\s+/
+    let COMMA = /,/
+    let quote = [WHITE_SPACE, COMMA].some(reg => reg.test(this.value))
+
+    return quote ? `"${this.value}"` : this.value
   }
 }
 

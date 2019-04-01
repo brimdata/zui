@@ -1,7 +1,9 @@
 /* @flow */
 
 import type {EpochObj} from "../lib/Time"
+import type {MenuItemData} from "../components/FieldActionData"
 import AppError from "../models/AppError"
+import Field from "../models/Field"
 import Log from "../models/Log"
 
 export type Notification =
@@ -104,3 +106,5 @@ export type LogCorrelations = {
 export type RelatedLogs = {
   [string]: Log[]
 }
+
+export type RightClickBuilder = (Field, Log) => MenuItemData[]

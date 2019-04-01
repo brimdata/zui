@@ -14,46 +14,61 @@ type Props = {
   actions?: InlineTableAction[]
 }
 
-export default class InlineTable extends React.Component<Props> {
-  render() {
-    const descriptor =
-      (this.props.logs[0] && this.props.logs[0].descriptor) || []
+export default function InlineTable({logs, actions}: Props) {
+  const descriptor = (logs[0] && logs[0].descriptor) || []
 
-    return (
-      <div className="inline-table">
-        <table>
-          <thead>
-            <tr>
-              {descriptor.map(column => (
-                <th key={column.name} className={column.type}>
-                  {column.name}
-                </th>
-              ))}
-              {this.props.actions && <th>actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.logs.map((log, i) => (
-              <tr key={i}>
-                {log.getFields().map(field => (
-                  <td key={field.name} className={field.type}>
-                    {field.value}
-                  </td>
-                ))}
-                {this.props.actions && (
-                  <td>
-                    {this.props.actions.map((a, i) => (
-                      <button key={i} onClick={a.click.bind(null, log)}>
-                        {a.text}
-                      </button>
-                    ))}
-                  </td>
-                )}
-              </tr>
+  return (
+    <div className="inline-table">
+      <table>
+        <thead>
+          <tr>
+            {descriptor.map(column => (
+              <th key={column.name} className={column.type}>
+                {column.name}
+              </th>
             ))}
-          </tbody>
-        </table>
-      </div>
-    )
-  }
+            {actions && <th>actions</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {logs.map((log, i) => (
+            <TableRow log={log} key={i} actions={actions} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function TableRow({log, actions}) {
+  return (
+    <tr>
+      {log.getFields().map(field => (
+        <TableCell field={field} key={field.name} />
+      ))}
+      {actions && <ActionsCell actions={actions} log={log} />}
+    </tr>
+  )
+}
+
+function TableCell({field}) {
+  return (
+    <td key={field.name} className={field.type}>
+      {field.value}
+    </td>
+  )
+}
+
+function ActionsCell({actions, log}) {
+  return (
+    <td>
+      {actions.map((a, i) => (
+        <ActionButton key={i} action={a} log={log} />
+      ))}
+    </td>
+  )
+}
+
+function ActionButton({action, log}) {
+  return <button onClick={action.click.bind(null, log)}>{action.text}</button>
 }

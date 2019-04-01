@@ -23,7 +23,6 @@ $filter-node-foreground: white;
 /* Mixins */
 @import "mixins/range-input";
 @import "mixins/clearfix";
-@import "mixins/table";
 @import "mixins/ip-address";
 @import "mixins/tags";
 @import "mixins/clickable";
@@ -117,3 +116,4 @@ $filter-node-foreground: white;
 @import "search-inspector";
 @import "inline-table-loading";
 @import "panel-heading";
+@import "table";

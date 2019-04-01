@@ -5,10 +5,7 @@ import React from "react"
 
 import type {MenuItemData} from "./FieldActionData"
 import type {State} from "../reducers/types"
-import {
-  getViewerFieldActions,
-  getDetailFieldActions
-} from "../selectors/fieldActions"
+import {getViewerFieldActions} from "../selectors/fieldActions"
 import Field from "../models/Field"
 import Log from "../models/Log"
 import RightClickMenu from "./RightClickMenu"
@@ -44,11 +41,5 @@ export default class FieldActions extends React.Component<Props> {
 export const XViewerFieldActions = connect<Props, OwnProps, _, _, _, _>(
   (state: State, props: OwnProps): StateProps => ({
     actions: getViewerFieldActions(state, props)
-  })
-)(FieldActions)
-
-export const XDetailFieldActions = connect<Props, OwnProps, _, _, _, _>(
-  (state: State, props: OwnProps): StateProps => ({
-    actions: getDetailFieldActions(state, props)
   })
 )(FieldActions)
