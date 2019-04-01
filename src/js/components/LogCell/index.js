@@ -33,7 +33,6 @@ export default function LogCell(props: Props) {
   }
 
   function handleRightClick(e) {
-    clearTextSelection()
     e.stopPropagation()
     setHover(true)
     menu.handleOpen(e)
