@@ -10,12 +10,15 @@ type Program = string
 const HEAD_PROC = "HeadProc"
 const TAIL_PROC = "TailProc"
 const SORT_PROC = "SortProc"
-const TUPLE_PROCS = [HEAD_PROC, TAIL_PROC, SORT_PROC]
+const FILTER_PROC = "FilterProc"
+const TUPLE_PROCS = [HEAD_PROC, TAIL_PROC, SORT_PROC, FILTER_PROC]
 const COMPOUND_PROCS = ["ParallelProc", "SequentialProc"]
 
 export const hasAnalytics = (string: Program) => {
   const [ast] = parse(string)
-  for (let op of getProcNames(ast)) if (!TUPLE_PROCS.includes(op)) return true
+  for (let op of getProcNames(ast)) {
+    if (!TUPLE_PROCS.includes(op)) return true
+  }
   return false
 }
 
