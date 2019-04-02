@@ -4,7 +4,13 @@ import Tree from "../models/Tree"
 
 test("insertAppliedFilters in a variety of cases", () => {
   // From initial state
-  let state = insertAppliedFilters(initialState, {
+  let state = new Tree({
+    data: "ROOT",
+    children: [],
+    parent: null
+  }).toJSON()
+
+  state = insertAppliedFilters(state, {
     pinned: ["a", "b"],
     current: "c"
   })

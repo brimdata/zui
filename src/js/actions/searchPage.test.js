@@ -37,7 +37,7 @@ test("init with several spaces", done => {
       ])
       done()
     })
-    .catch(e => done("failed with: " + e))
+    .catch(e => done.fail("failed with: " + e))
 })
 
 test("init with no spaces", done => {
@@ -49,7 +49,7 @@ test("init with no spaces", done => {
 
   store
     .dispatch(searchPage.init())
-    .then(() => done("Expected to fail with NoSpaces"))
+    .then(() => done.fail("Expected to fail with NoSpaces"))
     .catch(e => {
       expect(e).toBe("NoSpaces")
       done()
@@ -70,5 +70,5 @@ test("init with a space already selected", done => {
       expect(spaces.getCurrentSpaceName(store.getState())).toBe("alternate")
       done()
     })
-    .catch(e => done(e))
+    .catch(e => done.fail(e))
 })

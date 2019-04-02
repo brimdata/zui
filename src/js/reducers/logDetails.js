@@ -4,7 +4,7 @@ import createReducer from "./createReducer"
 import History from "../models/History"
 import type {State} from "./types"
 
-const initialState = {
+export const initialState = {
   logs: [],
   position: 0,
   prevPosition: -1

@@ -9,7 +9,7 @@ import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../lib/Program"
 import {restoreTimeWindow, setInnerTimeWindow} from "./timeWindow"
 import Field from "../models/Field"
-import SearchBar from "../reducers/searchBar"
+import type {SearchBar} from "../reducers/searchBar"
 
 export const clearSearchBar = () => ({
   type: "SEARCH_BAR_CLEAR"

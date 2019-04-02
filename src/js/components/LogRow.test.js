@@ -13,7 +13,7 @@ beforeEach(() => {
   const log = conn()
   props = {
     columns: new TableColumns("1", log.descriptor, {
-      "1": log.descriptor.map(d => ({...d, isVisible: true}))
+      "1": {...log.descriptor[0], isVisible: true}
     }),
     dimens: {
       rowHeight: 25,

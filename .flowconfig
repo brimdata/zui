@@ -1,5 +1,7 @@
 [ignore]
 .*/node_modules/.*
+.*/dist/.*
+.*/coverage/.*
 
 [include]
 
@@ -8,5 +10,6 @@
 [lints]
 
 [options]
+all=true
 
 [strict]

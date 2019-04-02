@@ -3,6 +3,11 @@ import {shallow} from "enzyme"
 import DayPicker from "./DayPicker"
 
 test("rendering DayPicker", () => {
-  const onDayChange = jest.fn()
-  shallow(<DayPicker onDayChange={onDayChange} />)
+  const props = {
+    onDayChange: jest.fn(),
+    from: new Date(),
+    to: new Date(),
+    day: new Date()
+  }
+  shallow(<DayPicker {...props} />)
 })

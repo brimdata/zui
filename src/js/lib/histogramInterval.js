@@ -4,7 +4,13 @@ import moment from "moment"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {TimeUnit} from "../lib/Time"
 
-type LongTimeUnit = "millisecond" | "second" | "minute" | "hour" | "day"
+type LongTimeUnit =
+  | "millisecond"
+  | "second"
+  | "minute"
+  | "hour"
+  | "day"
+  | "month"
 
 export type Interval = {
   number: number,

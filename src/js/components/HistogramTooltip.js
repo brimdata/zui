@@ -2,7 +2,12 @@ import React from "react"
 import * as Time from "../lib/Time"
 import * as fmt from "../lib/fmt"
 
-const HistogramTooltip = ({segments, ts}) => {
+type Props = {
+  ts: Date,
+  segments: [string, number][]
+}
+
+const HistogramTooltip = ({segments, ts}: Props) => {
   const total = segments.reduce((sum, [_, count]) => (sum += count), 0)
   const rows = segments
     .sort((a, b) => b[1] - a[1])

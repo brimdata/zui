@@ -1,7 +1,7 @@
 const is = Object.is
 const keys = Object.keys
 
-export default function shallowDiff(objA, objB) {
+export default function shallowDiff(objA: Object, objB: Object) {
   if (is(objA, objB)) {
     console.log("no diff")
     return

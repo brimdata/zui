@@ -5,19 +5,11 @@
   Delete this file in favor of lib/TimeWindow
 */
 import * as d3 from "d3"
-import isArray from "lodash/isArray"
-import isDate from "lodash/isDate"
 
-export function isTimeWindow(timeWindow) {
-  return (
-    isArray(timeWindow) &&
-    timeWindow.length === 2 &&
-    isDate(timeWindow[0]) &&
-    isDate(timeWindow[1])
-  )
-}
+import type {Interval} from "../lib/histogramInterval"
+import type {Span} from "../BoomClient/types"
 
-export function splitOnEvery(timeWindow, {number, unit}) {
+export function splitOnEvery(timeWindow: Span, {number, unit}: Interval) {
   switch (unit) {
     case "second":
       return d3.utcSecond.range(...timeWindow, number)
@@ -29,5 +21,7 @@ export function splitOnEvery(timeWindow, {number, unit}) {
       return d3.utcDay.range(...timeWindow, number)
     case "month":
       return d3.utcMonth.range(...timeWindow, number)
+    default:
+      throw new Error("Unknown Unit")
   }
 }

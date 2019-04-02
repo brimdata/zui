@@ -58,7 +58,7 @@ describe("null cases", () => {
 
   nullPrograms.forEach(program => {
     test(`${program} returns null`, () => {
-      expect(drillDown(program, new Log())).toBe(null)
+      expect(drillDown(program, new Log([], []))).toBe(null)
     })
   })
 })

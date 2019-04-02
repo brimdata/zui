@@ -1,9 +1,17 @@
+/* @flow */
+
 import React from "react"
 
 import {getSearchStats} from "../selectors/stats"
 import * as fmt from "../lib/fmt"
 
-export default class SearchStats extends React.Component {
+type Props = {
+  bytesRead: number,
+  startTime: number,
+  updateTime: number
+}
+
+export default class SearchStats extends React.Component<Props> {
   render() {
     const {bytesRead, startTime, updateTime} = this.props
     return (
@@ -48,4 +56,6 @@ const stateToProps = state => ({
   ...getSearchStats(state)
 })
 
-export const XSearchStats = connect(stateToProps)(SearchStats)
+export const XSearchStats = connect<Props, {||}, _, _, _, _>(stateToProps)(
+  SearchStats
+)

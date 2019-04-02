@@ -1,5 +1,6 @@
 import {ipcRenderer} from "electron"
 
+import type {Store} from "../reducers/types"
 import {clearState} from "./initPersistance"
 import {
   pinSearchBar,
@@ -13,14 +14,16 @@ import {
   toggleSearchInspector
 } from "../actions/view"
 
-export default store => {
+export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
     store.dispatch(pinSearchBar())
   })
 
   ipcRenderer.on("focusSearchBar", () => {
     const el = document.getElementById("main-search-input")
+
     el && el.focus()
+    // $FlowFixMe
     el && el.select()
   })
 

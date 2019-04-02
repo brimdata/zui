@@ -5,10 +5,22 @@ import DayPickerInput from "react-day-picker/DayPickerInput"
 
 const FORMAT = "MMM D, YYYY"
 
-export default class DayPicker extends React.Component {
-  constructor(props) {
+type Props = {
+  onDayChange: Function,
+  from: Date,
+  to: Date,
+  day: Date
+}
+
+type State = {
+  inputWidth: number
+}
+
+export default class DayPicker extends React.Component<Props, State> {
+  daypicker: *
+
+  constructor(props: Props) {
     super(props)
-    this.onDayChange = this.onDayChange.bind(this)
     this.state = {inputWidth: 70}
   }
 
@@ -27,10 +39,11 @@ export default class DayPicker extends React.Component {
   }
 
   measureInput() {
-    if (this.daypicker) {
+    const {daypicker} = this
+    if (daypicker) {
       const parent = Doc.id("measure-layer")
       const span = document.createElement("span")
-      span.innerHTML = this.daypicker.input.value
+      span.innerHTML = daypicker.input.value
       span.className = "thin-button"
       span.style.padding = "0 5px"
       parent.append(span)
@@ -43,7 +56,7 @@ export default class DayPicker extends React.Component {
     }
   }
 
-  onDayChange(day) {
+  onDayChange = (day: Date) => {
     if (day) this.props.onDayChange(day)
   }
 

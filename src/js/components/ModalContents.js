@@ -5,7 +5,14 @@ import {Fieldset} from "./Typography"
 import CloseButton from "./CloseButton"
 import WithOutsideClick from "./WithOutsideClick"
 
-class ModalContents extends Component {
+type Props = {
+  onClose: Function,
+  children: *,
+  className: string,
+  title: string
+}
+
+class ModalContents extends Component<Props> {
   render() {
     const {onClose, children, className, title} = this.props
     return (

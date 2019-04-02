@@ -1,6 +1,11 @@
 import isEmpty from "lodash/isEmpty"
 
-export default (host, port, path, query = {}) => {
+export default (
+  host: string,
+  port: number,
+  path: string,
+  query: Object = {}
+) => {
   const url = `http://${host}:${port}${path}`
 
   if (isEmpty(query)) return url

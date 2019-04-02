@@ -13,6 +13,8 @@ export const stream = (
   request: RequestOptions,
   client: RequiredClientOptions
 ) => {
+  if (!client.host || !client.port) throw new Error("Host and Port required")
+
   const url = buildUrl(client.host, client.port, request.path, request.query)
 
   // $FlowFixMe

@@ -1,5 +1,8 @@
 export default class History {
-  constructor(entries = [], position = 0) {
+  entries: *[]
+  position: number
+
+  constructor(entries: *[] = [], position: number = 0) {
     this.entries = entries
     this.position = position
   }
@@ -9,7 +12,7 @@ export default class History {
     this.position = 0
   }
 
-  save(entry) {
+  save(entry: *) {
     this.entries.push(entry)
     this.position = 0
   }
@@ -22,7 +25,7 @@ export default class History {
     return this.position + 1 < this.entries.length
   }
 
-  get(position) {
+  get(position: number) {
     const index = this.entries.length - 1 - position
     return this.entries[index]
   }

@@ -25,6 +25,7 @@ describe("#positionTooltip", () => {
   beforeAll(() => {
     tooltip = document.createElement("div")
     parent = document.createElement("div")
+    // $FlowFixMe
     d3.mouse = jest.fn(() => [0, 0])
   })
 

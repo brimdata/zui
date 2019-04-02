@@ -19,7 +19,7 @@ export default createReducer(initialState, {
   SEARCH_HISTORY_PUSH: (state, {entry}) =>
     insertAppliedFilters(state, entry.searchBar),
 
-  FILTER_TREE_CLEAR: () => initialState,
+  FILTER_TREE_CLEAR: () => ({...initialState}),
 
   FILTER_TREE_NODE_REMOVE: (state, {node}) => {
     const tree = new Tree(state)
@@ -31,7 +31,7 @@ export default createReducer(initialState, {
 
 export function insertAppliedFilters(
   treeData: NodeAttrs,
-  searchBar: SearchBar
+  searchBar: $Shape<SearchBar>
 ) {
   let tree = new Tree(treeData)
   let node = tree.getRoot()

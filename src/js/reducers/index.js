@@ -16,7 +16,6 @@ import notifications from "./notifications"
 import packets from "./packets"
 import searchBar from "./searchBar"
 import searchHistory from "./searchHistory"
-import selectedColumns from "./selectedColumns"
 import spaces from "./spaces"
 import starredLogs from "./starredLogs"
 import tableColumnSets from "./tableColumnSets"
@@ -40,7 +39,6 @@ export default combineReducers<*, *>({
   starredLogs,
   packets,
   logViewer,
-  selectedColumns,
   searchHistory,
   whois,
   notifications,

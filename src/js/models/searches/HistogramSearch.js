@@ -14,7 +14,8 @@ const BOOM_INTERVALS = {
   second: "sec",
   minute: "min",
   hour: "hr",
-  day: "day"
+  day: "day",
+  month: "month"
 }
 
 export default class HistogramSearch extends BaseSearch {
