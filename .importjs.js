@@ -3,6 +3,7 @@ module.exports = {
   namedExports: {
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
-    react: ["useState", "useRef", "useEffect"]
+    react: ["useState", "useRef", "useEffect"],
+    lodash: ["get", "isEqual", "isEmpty"]
   }
 }
