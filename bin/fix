@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function fix {
+  npx importjs rewrite --overwrite $@
+  npx prettier --write $@
+}
+
+for f in $(./bin/flowfiles)
+do
+  fix $f
+done
