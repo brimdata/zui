@@ -1,23 +1,17 @@
 /* @flow */
 
+import {HEAD_PROC, TAIL_PROC, TUPLE_PROCS, getProcNames, getProcs} from "./ast"
 import {LookyTalk} from "../BoomClient"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
 import Log from "../models/Log"
 
-type Program = string
-
-const HEAD_PROC = "HeadProc"
-const TAIL_PROC = "TailProc"
-const SORT_PROC = "SortProc"
-const FILTER_PROC = "FilterProc"
-const TUPLE_PROCS = [HEAD_PROC, TAIL_PROC, SORT_PROC, FILTER_PROC]
-const COMPOUND_PROCS = ["ParallelProc", "SequentialProc"]
+export type Program = string
 
 export const hasAnalytics = (string: Program) => {
   const [ast] = parse(string)
-  for (let op of getProcNames(ast)) {
-    if (!TUPLE_PROCS.includes(op)) return true
+  for (let proc of getProcs(ast)) {
+    if (!TUPLE_PROCS.includes(proc.op)) return true
   }
   return false
 }
@@ -57,17 +51,8 @@ export const hasGroupByProc = (program: Program) => {
   return !!getGroupByProc(ast)
 }
 
-export const getProcs = (ast: *) => {
-  if (!ast || !ast.proc) return []
-  return COMPOUND_PROCS.includes(ast.proc.op) ? ast.proc.procs : [ast.proc]
-}
-
 export const getGroupByProc = (ast: *) => {
   return getProcs(ast).find(p => p.op === "GroupByProc")
-}
-
-const getProcNames = ast => {
-  return getProcs(ast).map(p => p.op)
 }
 
 function joinProcs(procs: string[]) {

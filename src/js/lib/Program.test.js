@@ -10,76 +10,94 @@ import {
   splitParts
 } from "./Program"
 
-test("#hasAnalytics head proc does not have analytics", () => {
-  expect(hasAnalytics("* | head 2")).toBe(false)
+describe("#hasAnalytics", () => {
+  test("head proc does not have analytics", () => {
+    expect(hasAnalytics("* | head 2")).toBe(false)
+  })
+
+  test("sort proc does not have analytics", () => {
+    expect(hasAnalytics("* | sort -r id.resp_p")).toBe(false)
+  })
+
+  test("every proc does contain analytics", () => {
+    expect(hasAnalytics("* | every 1hr count()")).toBe(true)
+  })
+
+  test("parallel procs when one does have analytics", () => {
+    expect(hasAnalytics("* | every 1hr count(); count() by id.resp_h")).toBe(
+      true
+    )
+  })
+
+  test("parallel procs when both do not have analytics", () => {
+    expect(hasAnalytics("* | head 100; head 200")).toBe(false)
+  })
+
+  test("when there are no procs", () => {
+    expect(hasAnalytics("*")).toBe(false)
+  })
+
+  test("for a crappy string", () => {
+    expect(hasAnalytics("-r")).toBe(false)
+  })
+
+  test("for sequential proc", () => {
+    expect(hasAnalytics("*google* | head 3 | sort -r id.resp_p")).toBe(false)
+  })
+
+  test("for cut proc", () => {
+    expect(hasAnalytics("* | (cut uid, _path; cut uid) | tail 1")).toBe(true)
+  })
+
+  test("for filter proc", () => {
+    expect(hasAnalytics("* | filter _path=conn")).toBe(false)
+  })
 })
 
-test("#hasAnalytics sort proc does not have analytics", () => {
-  expect(hasAnalytics("* | sort -r id.resp_p")).toBe(false)
+describe("#addHeadProc", () => {
+  test("when no head exists", () => {
+    expect(addHeadProc("_path=dns", 300)).toBe("_path=dns | head 300")
+  })
+
+  test("when head exists", () => {
+    expect(addHeadProc("_path=dns | head 45", 300)).toBe("_path=dns | head 45")
+  })
+
+  test("when sort exists", () => {
+    expect(addHeadProc("_path=dns | sort ts", 300)).toBe(
+      "_path=dns | sort ts | head 300"
+    )
+  })
+
+  test("when sort and head exists", () => {
+    expect(addHeadProc("_path=dns | head 23 | sort ts", 300)).toBe(
+      "_path=dns | head 23 | sort ts"
+    )
+  })
 })
 
-test("#hasAnalytics every proc does contain analytics", () => {
-  expect(hasAnalytics("* | every 1hr count()")).toBe(true)
+describe("#getHeadCount", () => {
+  test("with one head proc", () => {
+    expect(getHeadCount("* | head 1000")).toBe(1000)
+  })
+
+  test("with many procs", () => {
+    expect(getHeadCount("* | head 1000; count()")).toBe(1000)
+  })
+
+  test("with no head", () => {
+    expect(getHeadCount("*")).toBe(0)
+  })
 })
 
-test("#hasAnalytics parallel procs when one does have analytics", () => {
-  expect(hasAnalytics("* | every 1hr count(); count() by id.resp_h")).toBe(true)
-})
+describe("#hasHeadCount", () => {
+  test("#hasHeadCount when false", () => {
+    expect(hasHeadOrTailProc("*")).toBe(false)
+  })
 
-test("#hasAnalytics parallel procs when both do not have analytics", () => {
-  expect(hasAnalytics("* | head 100; head 200")).toBe(false)
-})
-
-test("#hasAnalytics when there are no procs", () => {
-  expect(hasAnalytics("*")).toBe(false)
-})
-
-test("#hasAnalytics for a crappy string", () => {
-  expect(hasAnalytics("-r")).toBe(false)
-})
-
-test("#hasAnalytics for sequential proc", () => {
-  expect(hasAnalytics("*google* | head 3 | sort -r id.resp_p")).toBe(false)
-})
-
-test("#addHeadProc when no head exists", () => {
-  expect(addHeadProc("_path=dns", 300)).toBe("_path=dns | head 300")
-})
-
-test("#addHeadProc when head exists", () => {
-  expect(addHeadProc("_path=dns | head 45", 300)).toBe("_path=dns | head 45")
-})
-
-test("#addHeadProc when sort exists", () => {
-  expect(addHeadProc("_path=dns | sort ts", 300)).toBe(
-    "_path=dns | sort ts | head 300"
-  )
-})
-
-test("#addHeadProc when sort and head exists", () => {
-  expect(addHeadProc("_path=dns | head 23 | sort ts", 300)).toBe(
-    "_path=dns | head 23 | sort ts"
-  )
-})
-
-test("#getHeadCount with one head proc", () => {
-  expect(getHeadCount("* | head 1000")).toBe(1000)
-})
-
-test("#getHeadCount with many procs", () => {
-  expect(getHeadCount("* | head 1000; count()")).toBe(1000)
-})
-
-test("#getHeadCount with no head", () => {
-  expect(getHeadCount("*")).toBe(0)
-})
-
-test("#hasHeadCount when false", () => {
-  expect(hasHeadOrTailProc("*")).toBe(false)
-})
-
-test("#hasHeadCount when true", () => {
-  expect(hasHeadOrTailProc("* | head 1")).toBe(true)
+  test("#hasHeadCount when true", () => {
+    expect(hasHeadOrTailProc("* | head 1")).toBe(true)
+  })
 })
 
 describe("Get Parts of Program", () => {

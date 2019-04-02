@@ -1,14 +1,15 @@
 /* @flow */
 
+import {PARALLEL_PROC, getProcNames} from "../lib/ast"
+import type {Thunk} from "../reducers/types"
+import {backSearchHistory, forwardSearchHistory} from "./searchHistory"
 import {fetchMainSearch} from "./mainSearch"
-import {setInnerTimeWindow, restoreTimeWindow} from "./timeWindow"
-import {getSearchProgram} from "../selectors/searchBar"
-import * as searchHistory from "./searchHistory"
-import * as Program from "../lib/Program"
-import Field from "../models/Field"
-import type {SearchBar} from "../reducers/searchBar"
 import {getCurrentEntry} from "../reducers/searchHistory"
-import {type Thunk} from "../reducers/types"
+import {getSearchProgram} from "../selectors/searchBar"
+import {parse} from "../lib/Program"
+import {restoreTimeWindow, setInnerTimeWindow} from "./timeWindow"
+import Field from "../models/Field"
+import SearchBar from "../reducers/searchBar"
 
 export const clearSearchBar = () => ({
   type: "SEARCH_BAR_CLEAR"
@@ -72,7 +73,7 @@ export const submittingSearchBar = () => ({
 })
 
 export const goBack = (): Thunk => (dispatch, getState) => {
-  dispatch(searchHistory.backSearchHistory())
+  dispatch(backSearchHistory())
   const entry = getCurrentEntry(getState())
   dispatch(restoreSearchBar(entry.searchBar))
   dispatch(restoreTimeWindow(entry.timeWindow))
@@ -80,7 +81,7 @@ export const goBack = (): Thunk => (dispatch, getState) => {
 }
 
 export const goForward = (): Thunk => (dispatch, getState) => {
-  dispatch(searchHistory.forwardSearchHistory())
+  dispatch(forwardSearchHistory())
   const entry = getCurrentEntry(getState())
   dispatch(restoreSearchBar(entry.searchBar))
   dispatch(restoreTimeWindow(entry.timeWindow))
@@ -94,11 +95,18 @@ export const submitSearchBar = (): Thunk => dispatch => {
 }
 
 export const validateProgram = (): Thunk => (dispatch, getState) => {
-  const [, error] = Program.parse(getSearchProgram(getState()))
+  const [ast, error] = parse(getSearchProgram(getState()))
   if (error) {
     dispatch(errorSearchBarParse(error.message))
     return false
-  } else {
-    return true
   }
+
+  if (getProcNames(ast).includes(PARALLEL_PROC)) {
+    dispatch(
+      errorSearchBarParse("Parallel procs are not supported in the app viewer.")
+    )
+    return false
+  }
+
+  return true
 }
