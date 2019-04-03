@@ -4,6 +4,6 @@ module.exports = {
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
     react: ["useState", "useRef", "useEffect"],
-    lodash: ["get", "isEqual", "isEmpty"]
+    lodash: ["get", "isEqual", "isEmpty", "every"]
   }
 }

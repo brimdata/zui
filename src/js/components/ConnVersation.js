@@ -1,10 +1,10 @@
 /* @flow */
 
+import {every} from "lodash"
 import React from "react"
-import every from "lodash/every"
 
 import {Fieldset} from "./Typography"
-import {rightClickFieldsPanel} from "../selectors/fieldActions"
+import {rightClickFieldsPanel} from "../rightclick/detail"
 import Log from "../models/Log"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"

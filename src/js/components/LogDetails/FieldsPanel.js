@@ -3,7 +3,7 @@
 import React from "react"
 
 import type {PanelProps} from "./"
-import {rightClickFieldsPanel} from "../../selectors/fieldActions"
+import {rightClickFieldsPanel} from "../../rightclick/detail"
 import PanelHeading from "./PanelHeading"
 import VerticalTable from "../Tables/VerticalTable"
 
