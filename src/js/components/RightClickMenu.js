@@ -3,7 +3,7 @@
 import React from "react"
 import ReactMeasure from "react-measure"
 
-import type {MenuItemData} from "./FieldActionData"
+import type {MenuItemData} from "../rightclick/actions"
 import {XRightClickMenuItem} from "./RightClickMenuItem"
 import {ensureVisible} from "../lib/MenuStyler"
 import MenuList from "./MenuList"

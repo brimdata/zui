@@ -3,7 +3,7 @@
 import React from "react"
 
 import type {Column} from "../../types"
-import type {MenuItemData} from "../FieldActionData"
+import type {MenuItemData} from "../../rightclick/actions"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
 import RightClickMenu from "../RightClickMenu"

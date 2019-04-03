@@ -103,7 +103,7 @@ export const toTime = (field: TimeField) => ({
   }
 })
 
-export const whois = (field: Field) => ({
+export const whoisRightclick = (field: Field) => ({
   type: "action",
   text: "Whois Lookup",
   onClick: (dispatch: Dispatch) => {

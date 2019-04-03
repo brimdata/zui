@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {EpochObj} from "../lib/Time"
-import type {MenuItemData} from "../components/FieldActionData"
+import type {MenuItemData} from "../rightclick/actions"
 import AppError from "../models/AppError"
 import Field from "../models/Field"
 import Log from "../models/Log"

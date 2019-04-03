@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {Dispatch} from "../reducers/types"
-import type {MenuItemData} from "./FieldActionData"
+import type {MenuItemData} from "../rightclick/actions"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {

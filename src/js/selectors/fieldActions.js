@@ -12,8 +12,8 @@ import {
   pcaps,
   seperator,
   toTime,
-  whois
-} from "../components/FieldActionData"
+  whoisRightclick
+} from "../rightclick/actions"
 import {flattenJoin} from "../lib/Array"
 import {getCurrentSpace} from "../reducers/spaces"
 import {getPrevSearchProgram} from "./searchBar"
@@ -58,7 +58,7 @@ export const getViewerFieldActions = (state: State, props: Props) => {
   }
 
   if (["addr", "set[addr]"].includes(props.field.type)) {
-    fieldActions.push(whois(props.field))
+    fieldActions.push(whoisRightclick(props.field))
   }
 
   if (tab === "logs" && log.isPath("conn") && space.packet_support) {
@@ -85,7 +85,7 @@ export function rightClickFieldsPanel(field: Field) {
   }
 
   if (["addr", "set[addr]"].includes(field.type)) {
-    fieldActions.push(whois(field))
+    fieldActions.push(whoisRightclick(field))
   }
 
   return flattenJoin([queryActions, fieldActions, logActions], seperator())
