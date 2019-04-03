@@ -2,6 +2,7 @@
 .*/node_modules/.*
 .*/dist/.*
 .*/coverage/.*
+.*/__snapshots__/.*
 
 [include]
 
