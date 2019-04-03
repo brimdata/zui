@@ -4,16 +4,16 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {Dispatch} from "../reducers/types"
-import type {MenuItemData} from "../rightclick/actions"
+import type {RightClickAction} from "../rightclick/actions"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {
-  action: MenuItemData,
+  action: RightClickAction,
   dispatch: Dispatch
 }
 
 type OwnProps = {
-  action: MenuItemData
+  action: RightClickAction
 }
 
 const RightClickMenuItem = (props: Props) => {

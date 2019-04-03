@@ -29,7 +29,7 @@ type Seperator = {
   type: "seperator"
 }
 
-export type MenuItemData = Seperator | Action
+export type RightClickAction = Seperator | Action
 
 export const exclude = (field: Field) => ({
   type: "action",

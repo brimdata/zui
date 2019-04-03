@@ -3,14 +3,14 @@
 import React from "react"
 import ReactMeasure from "react-measure"
 
-import type {MenuItemData} from "../rightclick/actions"
+import type {RightClickAction} from "../rightclick/actions"
 import {XRightClickMenuItem} from "./RightClickMenuItem"
 import {ensureVisible} from "../lib/MenuStyler"
 import MenuList from "./MenuList"
 import Portal from "./Portal"
 
 type Props = {
-  actions: MenuItemData[],
+  actions: RightClickAction[],
   style: Object,
   onClose: Function
 }

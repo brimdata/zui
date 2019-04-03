@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {MenuItemData} from "../rightclick/actions"
+import type {RightClickAction} from "../rightclick/actions"
 import type {State} from "../reducers/types"
 import {getViewerFieldActions} from "../selectors/fieldActions"
 import Field from "../models/Field"
@@ -18,7 +18,7 @@ type OwnProps = {|
 |}
 
 type StateProps = {|
-  actions: MenuItemData[]
+  actions: RightClickAction[]
 |}
 
 type Props = {|
