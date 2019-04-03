@@ -1,3 +1,4 @@
+/* @flow */
 import BoomClient from "../"
 import "whatwg-fetch"
 
@@ -5,7 +6,7 @@ let boom
 beforeEach(() => {
   boom = new BoomClient({
     host: "boom.com",
-    port: "123",
+    port: 123,
     searchSpan: [new Date(0), new Date(1)]
   })
 })

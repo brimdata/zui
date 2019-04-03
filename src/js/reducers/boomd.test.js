@@ -1,3 +1,4 @@
+/* @flow */
 import {getCredentials, getUseBoomCache, getUseBoomIndex} from "./boomd"
 import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../actions/boomd"
 import initStore from "../test/initStore"

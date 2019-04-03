@@ -1,3 +1,4 @@
+/* @flow */
 import {PER_PAGE} from "../reducers/logViewer"
 import {changeSearchBarInput} from "./searchBar"
 import {fetchMainSearch} from "./mainSearch"

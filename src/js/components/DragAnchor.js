@@ -1,31 +1,36 @@
+/* @flow */
 import React from "react"
 
-export default class DragAnchor extends React.Component {
-  constructor(props) {
-    super(props)
-    this.down = this.down.bind(this)
-    this.up = this.up.bind(this)
-    this.move = this.move.bind(this)
-  }
+type Props = {
+  position: "left" | "right",
+  onDrag: Function
+}
 
+export default class DragAnchor extends React.Component<Props> {
   componentWillUnmount() {
     this.up()
   }
 
-  down() {
-    document.body.classList.add("dragging")
-    document.addEventListener("mousemove", this.move)
-    document.addEventListener("mouseup", this.up)
+  down = () => {
+    const body = document.body
+    if (body) {
+      body.classList.add("dragging")
+      document.addEventListener("mousemove", this.move)
+      document.addEventListener("mouseup", this.up)
+    }
   }
 
-  move(e) {
+  move = (e: Event) => {
     this.props.onDrag(e)
   }
 
-  up() {
-    document.body.classList.remove("dragging")
-    document.removeEventListener("mousemove", this.move)
-    document.removeEventListener("mouseup", this.up)
+  up = () => {
+    const body = document.body
+    if (body) {
+      body.classList.remove("dragging")
+      document.removeEventListener("mousemove", this.move)
+      document.removeEventListener("mouseup", this.up)
+    }
   }
 
   render() {

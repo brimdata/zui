@@ -1,56 +1,69 @@
-import * as view from "./view"
-import * as a from "../actions/view"
+/* @flow */
+import {
+  hideDownloads,
+  hideModal,
+  hideSearchInspector,
+  setLeftSidebarWidth,
+  setRightSidebarWidth,
+  setTimeZone,
+  showDownloads,
+  showModal,
+  showSearchInspector
+} from "../actions/view"
 import initStore from "../test/initStore"
+import * as view from "./view"
 
-const reduce = actionList => ({
-  view: actionList.reduce(view.default, view.initialState)
+let store, reduce
+beforeEach(() => {
+  store = initStore()
+  reduce = store.dispatchAll
 })
 
 test("sets the timezone", () => {
-  const actions = [a.setTimeZone("America/Los_Angeles")]
+  const actions = [setTimeZone("America/Los_Angeles")]
   const state = reduce(actions)
   expect(view.getTimeZone(state)).toBe("America/Los_Angeles")
 })
 
 test("timeZone defaults to UTC", () => {
-  const state = reduce([{}])
+  const state = store.getState()
   expect(view.getTimeZone(state)).toBe("UTC")
 })
 
 test("setting right side bar width", () => {
-  const state = reduce([a.setRightSidebarWidth(299)])
+  const state = reduce([setRightSidebarWidth(299)])
 
   expect(view.getRightSidebarWidth(state)).toBe(299)
 })
 
 test("setting left side bar width", () => {
-  const state = reduce([a.setLeftSidebarWidth(1299)])
+  const state = reduce([setLeftSidebarWidth(1299)])
 
   expect(view.getLeftSidebarWidth(state)).toBe(1299)
 })
 
 test("showing the downloads bar", () => {
-  const state = reduce([a.showDownloads()])
+  const state = reduce([showDownloads()])
 
   expect(view.getDownloadsIsOpen(state)).toBe(true)
 })
 
 test("hiding the downloads bar", () => {
-  const state = reduce([a.showDownloads(), a.hideDownloads()])
+  const state = reduce([showDownloads(), hideDownloads()])
 
   expect(view.getDownloadsIsOpen(state)).toBe(false)
 })
 
 test("set the active modal", () => {
   const store = initStore()
-  const state = store.dispatchAll([a.showModal("debug")])
+  const state = store.dispatchAll([showModal("debug")])
 
   expect(view.getDebugModalIsOpen(state)).toBe(true)
 })
 
 test("hide a modal", () => {
   const store = initStore()
-  const state = store.dispatchAll([a.showModal("debug"), a.hideModal()])
+  const state = store.dispatchAll([showModal("debug"), hideModal()])
 
   expect(view.getModal(state)).toBe(null)
 })
@@ -60,7 +73,7 @@ test("show the search inspector", () => {
 
   expect(view.getSearchInspectorIsOpen(store.getState())).toBe(false)
 
-  const state = store.dispatchAll([a.showSearchInspector()])
+  const state = store.dispatchAll([showSearchInspector()])
 
   expect(view.getSearchInspectorIsOpen(state)).toBe(true)
 })
@@ -68,8 +81,8 @@ test("show the search inspector", () => {
 test("hide the search inspector", () => {
   const store = initStore()
   const state = store.dispatchAll([
-    a.showSearchInspector(),
-    a.hideSearchInspector()
+    showSearchInspector(),
+    hideSearchInspector()
   ])
 
   expect(view.getSearchInspectorIsOpen(state)).toBe(false)

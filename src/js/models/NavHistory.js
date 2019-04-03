@@ -1,4 +1,5 @@
 /* @flow */
+
 import defaultArg from "../lib/defaultArg"
 import isEqual from "lodash/isEqual"
 

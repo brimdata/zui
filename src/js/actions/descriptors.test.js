@@ -1,3 +1,4 @@
+/* @flow */
 import MockBoomClient from "../test/MockBoomClient"
 import {fetchDescriptor} from "./descriptors"
 import {getDescriptors} from "../reducers/descriptors"

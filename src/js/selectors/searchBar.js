@@ -1,4 +1,5 @@
 /* @flow */
+
 import trim from "lodash/trim"
 import Ast from "../models/Ast"
 import {createSelector} from "reselect"

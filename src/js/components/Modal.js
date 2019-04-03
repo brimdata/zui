@@ -1,3 +1,4 @@
+/* @flow */
 import {CSSTransition} from "react-transition-group"
 import React, {Component} from "react"
 import ReactDOM from "react-dom"
@@ -5,12 +6,17 @@ import ReactDOM from "react-dom"
 import * as Doc from "../lib/Doc"
 import ModalContents from "./ModalContents"
 
-class Modal extends Component {
-  constructor(props) {
-    super(props)
-    this.onKeyDown = e => {
-      if (e.key === "Escape") this.props.onClose()
-    }
+type Props = {
+  onClose: Function,
+  children: *,
+  isOpen: boolean,
+  className?: string,
+  title: string
+}
+
+class Modal extends Component<Props> {
+  onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") this.props.onClose()
   }
 
   componentDidMount() {

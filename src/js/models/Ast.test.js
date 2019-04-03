@@ -1,3 +1,4 @@
+/* @flow */
 import Ast from "./Ast"
 
 test("toJSON", () => {

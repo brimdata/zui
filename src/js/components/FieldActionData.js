@@ -12,12 +12,12 @@ import {
 import {fetchPackets} from "../actions/packets"
 import {fetchWhois} from "../actions/whois"
 import {open} from "../lib/System"
+import {setOuterFromTime, setOuterToTime} from "../actions/timeWindow"
 import {showRightSidebar} from "../actions/view"
 import {viewLogDetail} from "../actions/logDetails"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import drillDown from "../lib/drillDown"
-import timeWindow from "../reducers/timeWindow"
 
 type Action = {
   type: "action",
@@ -89,7 +89,7 @@ export const fromTime = (field: TimeField) => ({
   type: "action",
   text: 'Use as "start" time',
   onClick: (dispatch: Dispatch) => {
-    dispatch(timeWindow.setOuterFromTime(field.toDate()))
+    dispatch(setOuterFromTime(field.toDate()))
     dispatch(submitSearchBar())
   }
 })
@@ -98,7 +98,7 @@ export const toTime = (field: TimeField) => ({
   type: "action",
   text: 'Use as "end" time',
   onClick: (dispatch: Dispatch) => {
-    dispatch(timeWindow.setOuterToTime(field.toDate()))
+    dispatch(setOuterToTime(field.toDate()))
     dispatch(submitSearchBar())
   }
 })

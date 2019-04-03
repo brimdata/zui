@@ -1,3 +1,4 @@
+/* @flow */
 import "whatwg-fetch"
 
 global.TEST_BOOM = {

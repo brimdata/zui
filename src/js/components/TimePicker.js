@@ -1,3 +1,4 @@
+/* @flow */
 import React from "react"
 import * as Time from "../lib/Time"
 import * as d3 from "d3"
@@ -9,29 +10,37 @@ const times = d3.timeMinute
   .range(new Date(1990, 9, 16, 0, 0, 0), new Date(1990, 9, 17, 0, 0, 0))
   .map(d => Time.format(d, FORMAT))
 
-export default class TimePicker extends React.Component {
-  constructor(props) {
+type Props = {
+  time: Date,
+  onTimeChange: Function
+}
+type State = {
+  isOpen: boolean,
+  value: string
+}
+
+export default class TimePicker extends React.Component<Props, State> {
+  input: ?HTMLInputElement
+  timesList: ?HTMLElement
+
+  constructor(props: Props) {
     super(props)
 
     this.state = {
       isOpen: false,
       value: formatTime(this.props.time)
     }
-    this.onBlur = this.onBlur.bind(this)
-    this.onFocus = this.onFocus.bind(this)
-    this.onInputClick = this.onInputClick.bind(this)
-    this.onInputChange = this.onInputChange.bind(this)
   }
 
   focus() {
-    this.input.focus()
+    this.input && this.input.focus()
   }
 
   blur() {
-    this.input.blur()
+    this.input && this.input.blur()
   }
 
-  UNSAFE_componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props: Props) {
     this.setState({value: formatTime(props.time)})
   }
 
@@ -39,25 +48,25 @@ export default class TimePicker extends React.Component {
     this.scrollToSelectedTime()
   }
 
-  onFocus() {
+  onFocus = () => {
     this.setState({isOpen: true})
   }
 
-  onBlur() {
+  onBlur = () => {
     this.setState({isOpen: false})
     this.attemptCallback(this.state.value)
   }
 
-  onTimeClick(timeString) {
+  onTimeClick(timeString: string) {
     this.setState({isOpen: false})
     this.attemptCallback(timeString)
   }
 
-  onInputClick() {
+  onInputClick = () => {
     this.setState({isOpen: true})
   }
 
-  onInputChange(e) {
+  onInputChange = (e: SyntheticEvent<HTMLInputElement>) => {
     this.setState({value: e.currentTarget.value})
   }
 
@@ -73,12 +82,12 @@ export default class TimePicker extends React.Component {
         : time
     const index = times.indexOf(Time.format(roundTime, FORMAT)) - 2
 
-    if (this.state.isOpen && index >= 0) {
+    if (this.state.isOpen && index >= 0 && this.timesList) {
       this.timesList.scrollTop = heightOfItem * index
     }
   }
 
-  attemptCallback(selectedValue) {
+  attemptCallback(selectedValue: string) {
     const newTime = parseTime(selectedValue)
 
     if (!newTime) {

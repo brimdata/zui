@@ -1,4 +1,5 @@
 /* @flow */
+
 import initStore from "../test/initStore"
 import * as searchHistory from "../actions/searchHistory"
 import * as searchBar from "../actions/searchBar"

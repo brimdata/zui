@@ -42,9 +42,9 @@ type State = {
 }
 
 export default class SpanPickers extends React.Component<Props, State> {
-  fromTime: TimePicker
-  toTime: TimePicker
-  toDate: DayPicker
+  fromTime: ?TimePicker
+  toTime: ?TimePicker
+  toDate: ?DayPicker
   blurTimeout: TimeoutID
 
   constructor(props: Props) {
@@ -76,7 +76,7 @@ export default class SpanPickers extends React.Component<Props, State> {
       this.setState({fromDate})
     }
 
-    this.fromTime.focus()
+    this.fromTime && this.fromTime.focus()
   }
 
   onFromTimeChange = (time: TimeObj) => {
@@ -89,7 +89,7 @@ export default class SpanPickers extends React.Component<Props, State> {
       this.setState({fromDate})
     }
 
-    this.toDate.focus()
+    this.toDate && this.toDate.focus()
   }
 
   onToDayChange = (day: Date) => {
@@ -106,7 +106,7 @@ export default class SpanPickers extends React.Component<Props, State> {
       this.setState({toDate})
     }
 
-    this.toTime.focus()
+    this.toTime && this.toTime.focus()
   }
 
   onToTimeChange = (time: TimeObj) => {
@@ -120,7 +120,7 @@ export default class SpanPickers extends React.Component<Props, State> {
       this.setState({toDate})
     }
 
-    this.toTime.blur()
+    this.toTime && this.toTime.blur()
   }
 
   onFocus = () => {

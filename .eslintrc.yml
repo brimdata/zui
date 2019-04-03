@@ -41,3 +41,7 @@ rules:
     - off
   no-debugger:
     - off
+  flowtype/require-valid-file-annotation:
+    - error
+    - always
+    - annotationStyle: block

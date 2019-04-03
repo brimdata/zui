@@ -1,3 +1,4 @@
+/* @flow */
 // Code from https://github.com/juliangruber/downloads-folder
 import os from "os"
 const statSync = require("fs").statSync
@@ -17,12 +18,12 @@ module.exports.unix = unix
 module.exports.windows = windows
 
 function darwin() {
-  return `${process.env.HOME}/Downloads`
+  return `${process.env.HOME || "~"}/Downloads`
 }
 
 function unix() {
   let stat
-  const homeDownloads = `${process.env.HOME}/Downloads`
+  const homeDownloads = `${process.env.HOME || "~"}/Downloads`
   try {
     stat = statSync(homeDownloads)
   } catch (e) {
@@ -34,5 +35,5 @@ function unix() {
 }
 
 function windows() {
-  return `${process.env.USERPROFILE}/Downloads`
+  return `${process.env.USERPROFILE || "~"}/Downloads`
 }

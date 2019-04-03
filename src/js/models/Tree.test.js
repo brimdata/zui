@@ -1,3 +1,4 @@
+/* @flow */
 import Tree from "./Tree"
 
 const exampleTree = {
@@ -33,7 +34,7 @@ const exampleTree = {
 }
 
 test("build the tree by adding children", () => {
-  let tree = new Tree({data: "David"})
+  let tree = new Tree({data: "David", children: []})
 
   let root = tree.getRoot()
 
@@ -122,14 +123,16 @@ test("find", () => {
 
   const node = tree.find("Chloe")
 
-  expect(node.data).toEqual("Chloe")
+  expect(node && node.data).toEqual("Chloe")
 })
 
 test("parentCount", () => {
   const tree = new Tree(exampleTree)
 
-  expect(tree.find("Chloe").parentCount()).toBe(1)
-  expect(tree.find("Abe").parentCount()).toBe(2)
+  const chloe = tree.find("Chloe")
+  const abe = tree.find("Abe")
+  expect(chloe && chloe.parentCount()).toBe(1)
+  expect(abe && abe.parentCount()).toBe(2)
 })
 
 test("getNodeAt empty indexPath", () => {
@@ -181,8 +184,8 @@ test("isInPath when outmost node", () => {
 test("isInPath when inner node", () => {
   const tree = new Tree(exampleTree)
   const node = tree.getNodeAt([1, 0])
-
-  expect(node.parent.isInPath([1, 0])).toBe(true)
+  const parent = node.parent
+  expect(parent && parent.isInPath([1, 0])).toBe(true)
 })
 
 // indexPath: [3, 0] // no

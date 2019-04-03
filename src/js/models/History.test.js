@@ -1,3 +1,4 @@
+/* @flow */
 import History from "./History"
 
 test("saves to history entries", () => {

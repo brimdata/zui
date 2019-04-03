@@ -1,17 +1,20 @@
+/* @flow */
 export default class MergeHash {
-  constructor(hash = {}) {
+  hash: Object
+
+  constructor(hash: Object = {}) {
     this.hash = hash
   }
 
-  get(key, defaultVal = {}) {
+  get(key: string, defaultVal: * = {}) {
     return this.hash[key] || defaultVal
   }
 
-  set(key, data) {
+  set(key: string, data: *) {
     this.hash[key] = data
   }
 
-  merge(key, data) {
+  merge(key: *, data: *) {
     const value = this.get(key)
 
     if (value) this.set(key, {...data, ...value})

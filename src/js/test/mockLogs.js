@@ -1,3 +1,4 @@
+/* @flow */
 import Log from "../models/Log"
 
 export const dns = () =>

@@ -1,3 +1,4 @@
+/* @flow */
 import {positionTooltip, xPosition} from "./XPositionTooltip"
 import * as d3 from "d3"
 
@@ -25,6 +26,7 @@ describe("#positionTooltip", () => {
   beforeAll(() => {
     tooltip = document.createElement("div")
     parent = document.createElement("div")
+    // $FlowFixMe
     d3.mouse = jest.fn(() => [0, 0])
   })
 

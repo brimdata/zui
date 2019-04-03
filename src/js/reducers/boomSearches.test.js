@@ -1,3 +1,4 @@
+/* @flow */
 import {Handler} from "../BoomClient"
 import {
   cancelBoomSearches,

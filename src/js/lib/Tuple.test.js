@@ -1,3 +1,4 @@
+/* @flow */
 import * as Tuple from "./Tuple"
 
 const tuple1 = ["1", "conn", "0", "ABC", "foo"]

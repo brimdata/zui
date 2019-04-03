@@ -1,3 +1,4 @@
+/* @flow */
 import InputHistory from "./InputHistory"
 
 test("push new value", () => {

@@ -1,3 +1,4 @@
+/* @flow */
 import ErrorFactory from "./ErrorFactory"
 
 const TEST_CASES = {

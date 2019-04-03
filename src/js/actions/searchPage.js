@@ -1,4 +1,5 @@
 /* @flow */
+
 import type {Thunk} from "redux-thunk"
 
 import {

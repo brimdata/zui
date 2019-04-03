@@ -1,3 +1,4 @@
+/* @flow */
 import {Handler} from "../BoomClient"
 import {getSomeAreFetching} from "./boomSearches"
 import {registerBoomSearch, setBoomSearchStatus} from "../actions/boomSearches"
@@ -8,8 +9,8 @@ test("#getSomeAreFetching true", () => {
   store = initStore()
 
   store.dispatchAll([
-    registerBoomSearch("A", {handler: new Handler(), tag: "hi"}),
-    registerBoomSearch("B", {handler: new Handler(), tag: "hi"})
+    registerBoomSearch("A", {handler: new Handler(), tag: "detail"}),
+    registerBoomSearch("B", {handler: new Handler(), tag: "detail"})
   ])
 
   const state = store.getState()
@@ -22,8 +23,8 @@ test("#getSomeAreFetching false", () => {
   store = initStore()
 
   store.dispatchAll([
-    registerBoomSearch("A", {handler: new Handler(), tag: "hi"}),
-    registerBoomSearch("B", {handler: new Handler(), tag: "hi"}),
+    registerBoomSearch("A", {handler: new Handler(), tag: "detail"}),
+    registerBoomSearch("B", {handler: new Handler(), tag: "detail"}),
     setBoomSearchStatus("A", "SUCCESS"),
     setBoomSearchStatus("B", "ERROR")
   ])

@@ -1,3 +1,4 @@
+/* @flow */
 import Handler from "./Handler"
 
 test("#channel accepts multiple callbacks for same number", () => {

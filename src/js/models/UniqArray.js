@@ -1,14 +1,20 @@
+/* @flow */
+type CompareFn = (*, *) => boolean
+
 export default class UniqArray {
-  constructor(compareFn = (a, b) => a === b) {
+  compareFn: CompareFn
+  array: *[]
+
+  constructor(compareFn: CompareFn = (a, b) => a === b) {
     this.compareFn = compareFn
     this.array = []
   }
 
-  push(item) {
+  push(item: *) {
     if (!this.exists(item)) this.array.push(item)
   }
 
-  exists(item) {
+  exists(item: *) {
     return !!this.array.find(i => this.compareFn(i, item))
   }
 

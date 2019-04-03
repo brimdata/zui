@@ -16,6 +16,8 @@ export default class SearchRequest {
   }
 
   url() {
+    if (!this.options.host || !this.options.port)
+      throw new Error("Host and Port required")
     return buildUrl(
       this.options.host,
       this.options.port,

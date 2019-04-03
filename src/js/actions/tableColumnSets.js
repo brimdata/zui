@@ -1,4 +1,5 @@
 /* @flow */
+
 import type {Column, ColumnSetting} from "../types"
 import TableColumns from "../models/TableColumns"
 import columnKey from "../lib/columnKey"

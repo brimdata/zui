@@ -1,5 +1,9 @@
 [ignore]
 .*/node_modules/.*
+.*/dist/.*
+.*/coverage/.*
+.*/__snapshots__/.*
+.*/electron/.*
 
 [include]
 
@@ -8,5 +12,6 @@
 [lints]
 
 [options]
+all=true
 
 [strict]

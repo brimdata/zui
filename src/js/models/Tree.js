@@ -4,8 +4,8 @@ import isEqual from "lodash/isEqual"
 
 export type NodeAttrs = {
   data: *,
-  parent: ?Node,
-  children: Node[]
+  parent?: Object,
+  children: Object[]
 }
 
 export default class Tree {
@@ -24,11 +24,7 @@ export default class Tree {
   }
 
   toJSON() {
-    if (this.root) {
-      return this.root.toJSON()
-    } else {
-      return null
-    }
+    return this.root.toJSON()
   }
 
   getNodeAt(indexPath: number[]) {

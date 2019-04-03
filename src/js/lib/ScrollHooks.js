@@ -1,5 +1,6 @@
+/* @flow */
 export default class ScrollHooks {
-  static create(start, stop) {
+  static create(start: Function, stop: Function) {
     let scrolling = false
     let timeout
 

@@ -1,21 +1,25 @@
+/* @flow */
 import * as Doc from "./Doc"
 
 const PADDING = 6
 
-export const getStyle = (node, position) => {
+type Node = HTMLElement
+type Position = string
+
+export const getStyle = (node: Node, position: Position) => {
   switch (position) {
     case "left":
       return belowLeft(node)
     case "right":
       return belowRight(node)
     case "right-wall":
-      return rightWall(node)
+      return rightWall()
     default:
       throw new Error("Unknown Menu Position")
   }
 }
 
-export const belowRight = node => {
+export const belowRight = (node: Node) => {
   const {left, top, height, width} = node.getBoundingClientRect()
 
   return {
@@ -25,13 +29,13 @@ export const belowRight = node => {
   }
 }
 
-export const belowLeft = node => {
+export const belowLeft = (node: Node) => {
   const {left, top, height} = node.getBoundingClientRect()
 
   return {left, top: top + height + PADDING}
 }
 
-export const rightWall = _node => {
+export const rightWall = () => {
   return {
     right: 0,
     top: 0,
@@ -39,7 +43,7 @@ export const rightWall = _node => {
   }
 }
 
-export const ensureVisible = (bounds, style) => {
+export const ensureVisible = (bounds: Object, style: Object) => {
   const {width, height} = bounds
   const {top, left, right} = style
   const newStyle = {...style}
@@ -63,7 +67,7 @@ export const ensureVisible = (bounds, style) => {
   return newStyle
 }
 
-export const getTooltipStyle = el => {
+export const getTooltipStyle = (el: Node) => {
   if (!el) return {}
   const {top, left} = el.getBoundingClientRect()
   return {top: top - 21, left}

@@ -1,5 +1,7 @@
 /* @flow */
 
+import {type Store as ReduxStore} from "redux"
+
 import type {Analysis} from "./analysis"
 import type {BoomSearches} from "./boomSearches"
 import type {Boomd} from "./boomd"
@@ -12,14 +14,13 @@ import type {Logs} from "./logs"
 import type {Notifications} from "./notifications"
 import type {SearchBar} from "./searchBar"
 import type {SearchHistory} from "./searchHistory"
-import type {SelectedColumns} from "./selectedColumns"
 import type {Spaces} from "./spaces"
 import type {TableColumnSets} from "./tableColumnSets"
 import type {TimeWindow} from "./timeWindow"
 import type {View} from "./view"
 import type {Whois} from "./whois"
+import type {Correlations} from "./correlations"
 import BoomClient from "../BoomClient"
-import Correlations from "./correlations"
 
 export type State = {
   correlations: Correlations,
@@ -30,7 +31,6 @@ export type State = {
   spaces: Spaces,
   boomd: Boomd,
   logViewer: LogViewer,
-  selectedColumns: SelectedColumns,
   searchHistory: SearchHistory,
   whois: Whois,
   logDetails: LogDetails,
@@ -49,3 +49,4 @@ export type Action = {type: string}
 export type Dispatch = (Action | Thunk) => *
 export type Api = BoomClient
 export type DispatchProps = {|dispatch: Dispatch|}
+export type Store = ReduxStore<State, *>
