@@ -4,6 +4,7 @@ module.exports = {
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
     react: ["useState", "useRef", "useEffect"],
-    lodash: ["get", "isEqual", "isEmpty", "every"]
+    lodash: ["get", "isEqual", "isEmpty", "every"],
+    "react-router-dom": ["Redirect"]
   }
 }

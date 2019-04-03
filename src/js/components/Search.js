@@ -5,26 +5,26 @@ import {Redirect} from "react-router-dom"
 import {connect} from "react-redux"
 import React from "react"
 
-import {type DispatchProps, type State as S} from "../reducers/types"
+import type {DispatchProps, State} from "../reducers/types"
 import {NetworkError, UnauthorizedError} from "../models/Errors"
 import {XControlBar} from "./ControlBar"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XHistogram} from "./Histogram"
 import {XLeftPane} from "./LeftPane"
-import {XRightPane} from "../components/RightPane"
+import {XRightPane} from "./RightPane"
 import {XSearchInspector} from "./SearchInspector"
-import {XSearchResults} from "./SearchResults"
+import {XSearchResults} from "./SearchResults/SearchResults"
 import {XSettingsModal} from "./SettingsModal"
 import {XStatusBar} from "./StatusBar"
 import {XTitleBar} from "./TitleBar"
 import {XWhoisModal} from "./WhoisModal"
+import {getShowLogsTab} from "../reducers/view"
+import {init} from "../actions/searchPage"
 import AppError from "../models/AppError"
 import ColumnChooser from "./ColumnChooser"
 import ErrorFactory from "../models/ErrorFactory"
 import StartupError from "./StartupError"
 import dispatchToProps from "../lib/dispatchToProps"
-import * as searchPage from "../actions/searchPage"
-import * as view from "../reducers/view"
 
 type StateProps = {|
   logsTab: boolean
@@ -35,17 +35,17 @@ type Props = {|
   ...DispatchProps
 |}
 
-type State = {
+type LocalState = {
   ready: boolean,
   error: ?AppError
 }
 
-export default class Search extends React.Component<Props, State> {
+export default class Search extends React.Component<Props, LocalState> {
   constructor(props: Props) {
     super(props)
     this.state = {ready: false, error: null}
     props
-      .dispatch(searchPage.init())
+      .dispatch(init())
       .then(() => this.setState({ready: true}))
       .catch(e => this.setState({error: ErrorFactory.create(e)}))
   }
@@ -74,7 +74,13 @@ export default class Search extends React.Component<Props, State> {
               )}
               <ColumnChooser />
             </div>
-            <XSearchResults />
+            <div className="search-results">
+              <AutoSizer>
+                {({height, width}) => (
+                  <XSearchResults width={width} height={height} />
+                )}
+              </AutoSizer>
+            </div>
             <XStatusBar />
           </div>
           <XRightPane />
@@ -88,8 +94,8 @@ export default class Search extends React.Component<Props, State> {
   }
 }
 
-export const stateToProps = (state: S): StateProps => ({
-  logsTab: view.getShowLogsTab(state)
+export const stateToProps = (state: State): StateProps => ({
+  logsTab: getShowLogsTab(state)
 })
 
 export const XSearch = connect<Props, {||}, _, _, _, _>(

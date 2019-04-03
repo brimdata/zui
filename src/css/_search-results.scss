@@ -1,6 +1,14 @@
+.search-results {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  position: relative;
+  flex: 1;
+}
+
 .no-results {
   text-align: center;
-  margin: $leading * 2;
+  margin-top: 100px;
 
   .fieldset {
     color: $gray-warm-4;
@@ -8,15 +16,5 @@
     display: inline-block;
     border-top: 1px solid $light-gray-3;
     border-bottom: 1px solid $light-gray-3;
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 }

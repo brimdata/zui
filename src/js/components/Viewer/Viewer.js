@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from "react"
+import * as React from "react"
 
 import type {RowRenderer, ViewerDimens} from "../../types"
 import Chunk from "./Chunk"
@@ -16,12 +16,10 @@ type Props = {
   chunker: Chunker,
   dimens: ViewerDimens,
   tableColumns: TableColumns,
-  rowRenderer: RowRenderer,
-  atEnd: boolean,
+  renderRow: RowRenderer,
   logs: Log[],
-  selectedLog: ?Log,
   onLastChunk?: Function,
-  endMessage: string
+  renderEnd: () => *
 }
 
 type State = {
@@ -79,7 +77,14 @@ export default class Viewer extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {dimens, chunker, rowRenderer, logs, tableColumns} = this.props
+    const {
+      dimens,
+      chunker,
+      renderRow,
+      logs,
+      tableColumns,
+      renderEnd
+    } = this.props
     const {scrollLeft, chunks} = this.state
     return (
       <div className="viewer" style={{width: dimens.viewWidth}}>
@@ -98,19 +103,14 @@ export default class Viewer extends React.PureComponent<Props, State> {
             {chunks.map(chunk => (
               <Chunk
                 columns={this.props.tableColumns}
-                selectedLog={this.props.selectedLog}
                 logs={logs}
                 rows={chunker.rows(chunk)}
                 key={chunk}
-                rowRenderer={rowRenderer}
+                rowRenderer={renderRow}
                 dimens={dimens}
               />
             ))}
-            {this.props.atEnd && (
-              <p className="end-message" style={Styler.endMessage(dimens)}>
-                {this.props.endMessage}
-              </p>
-            )}
+            {renderEnd()}
           </div>
         </div>
       </div>

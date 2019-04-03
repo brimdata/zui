@@ -8,7 +8,6 @@ import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 
 type Props = {
-  selectedLog: ?Log,
   rowRenderer: RowRenderer,
   columns: TableColumns,
   dimens: ViewerDimens,
