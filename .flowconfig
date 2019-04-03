@@ -12,6 +12,5 @@
 
 [options]
 all=true
-emoji=true
 
 [strict]
