@@ -1,4 +1,5 @@
 /* @flow */
+
 import React from "react"
 import ReactDOM from "react-dom"
 import * as Doc from "../lib/Doc"

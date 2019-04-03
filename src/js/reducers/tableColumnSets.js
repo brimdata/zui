@@ -1,4 +1,5 @@
 /* @flow */
+
 import type {ColumnSetting} from "../types"
 import createReducer from "./createReducer"
 

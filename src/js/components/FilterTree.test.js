@@ -1,3 +1,4 @@
+/* @flow */
 import {getPinnedFilters, nodeIsPinned} from "./FilterTree"
 import Tree from "../models/Tree"
 

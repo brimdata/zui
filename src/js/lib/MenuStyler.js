@@ -1,3 +1,4 @@
+/* @flow */
 import * as Doc from "./Doc"
 
 const PADDING = 6

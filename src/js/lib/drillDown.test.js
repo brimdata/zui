@@ -1,3 +1,4 @@
+/* @flow */
 import Log from "../models/Log"
 import drillDown from "./drillDown"
 

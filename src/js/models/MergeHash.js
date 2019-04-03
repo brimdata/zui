@@ -1,3 +1,4 @@
+/* @flow */
 export default class MergeHash {
   hash: Object
 

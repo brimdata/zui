@@ -1,3 +1,4 @@
+/* @flow */
 import {Handler} from "../BoomClient"
 import {getSomeAreFetching} from "./boomSearches"
 import {registerBoomSearch, setBoomSearchStatus} from "../actions/boomSearches"

@@ -1,3 +1,4 @@
+/* @flow */
 import {CSSTransition} from "react-transition-group"
 import React, {Component} from "react"
 

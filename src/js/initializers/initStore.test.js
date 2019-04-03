@@ -1,3 +1,4 @@
+/* @flow */
 import initStore from "./initStore"
 import initTestStore from "../test/initStore"
 

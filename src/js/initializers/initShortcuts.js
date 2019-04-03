@@ -1,3 +1,4 @@
+/* @flow */
 import {ipcRenderer} from "electron"
 
 import type {Store} from "../reducers/types"

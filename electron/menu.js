@@ -1,3 +1,4 @@
+/* @flow */
 const {app, Menu} = require("electron")
 
 module.exports = {

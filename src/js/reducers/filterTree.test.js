@@ -1,3 +1,4 @@
+/* @flow */
 import reducer, {insertAppliedFilters, initialState} from "./filterTree"
 import * as actions from "../actions/filterTree"
 import Tree from "../models/Tree"

@@ -1,3 +1,4 @@
+/* @flow */
 import Tree from "./Tree"
 
 const exampleTree = {

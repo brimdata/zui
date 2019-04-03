@@ -1,3 +1,4 @@
+/* @flow */
 export default class History {
   entries: *[]
   position: number

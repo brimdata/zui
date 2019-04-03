@@ -41,5 +41,7 @@ rules:
     - off
   no-debugger:
     - off
-  flowtype/no-types-missing-file-annotation:
-    - off
+  flowtype/require-valid-file-annotation:
+    - error
+    - always
+    - annotationStyle: block

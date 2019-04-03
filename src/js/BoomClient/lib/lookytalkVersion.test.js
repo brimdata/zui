@@ -1,3 +1,4 @@
+/* @flow */
 import lookytalkVersion from "./lookytalkVersion"
 
 test("version", () => {

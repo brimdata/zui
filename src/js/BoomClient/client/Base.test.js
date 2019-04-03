@@ -1,3 +1,4 @@
+/* @flow */
 import BoomClient from "../"
 import "whatwg-fetch"
 

@@ -1,3 +1,4 @@
+/* @flow */
 import type {Span} from "../../BoomClient/types"
 import {hasAnalytics} from "../../lib/Program"
 import AnalyticSearch from "./AnalyticSearch"

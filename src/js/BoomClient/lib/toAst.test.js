@@ -1,3 +1,4 @@
+/* @flow */
 import toAst from "./toAst"
 
 test("parsing with a bare sort proc", () => {

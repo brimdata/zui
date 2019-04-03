@@ -1,3 +1,4 @@
+/* @flow */
 import {msToTs, tsToMs} from "./time"
 
 test("#tsToMs", () => {

@@ -1,3 +1,4 @@
+/* @flow */
 // Code from https://github.com/juliangruber/downloads-folder
 import os from "os"
 const statSync = require("fs").statSync

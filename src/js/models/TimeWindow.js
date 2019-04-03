@@ -1,3 +1,4 @@
+/* @flow */
 /*
   A time window is an array with two dates in it.
   [new Date(), new Date()]

@@ -1,4 +1,5 @@
 /* @flow */
+
 type Chunk = number[]
 
 export default class Chunker {

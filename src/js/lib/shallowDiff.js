@@ -1,3 +1,4 @@
+/* @flow */
 const is = Object.is
 const keys = Object.keys
 

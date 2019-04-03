@@ -1,3 +1,4 @@
+/* @flow */
 import {flattenJoin, indexOfLastChange, toFront} from "./Array"
 
 test("#indexOfLastChange", () => {

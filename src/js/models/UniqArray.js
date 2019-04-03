@@ -1,3 +1,4 @@
+/* @flow */
 type CompareFn = (*, *) => boolean
 
 export default class UniqArray {

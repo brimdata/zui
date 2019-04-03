@@ -1,4 +1,5 @@
 /* @flow */
+
 import * as MenuStyler from "./MenuStyler"
 
 describe("#ensureVisible", () => {

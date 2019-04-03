@@ -1,3 +1,4 @@
+/* @flow */
 import {disconnect} from "./disconnect"
 import initStore from "../test/initStore"
 

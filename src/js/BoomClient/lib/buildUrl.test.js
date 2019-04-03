@@ -1,3 +1,4 @@
+/* @flow */
 import buildUrl from "./buildUrl"
 
 test("#buildUrl", () => {

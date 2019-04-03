@@ -1,3 +1,4 @@
+/* @flow */
 export default class ScrollHooks {
   static create(start: Function, stop: Function) {
     let scrolling = false

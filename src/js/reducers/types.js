@@ -1,4 +1,5 @@
 /* @flow */
+
 import {type Store as ReduxStore} from "redux"
 
 import type {Analysis} from "./analysis"

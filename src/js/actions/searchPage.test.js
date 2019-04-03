@@ -1,3 +1,4 @@
+/* @flow */
 import MockBoomClient from "../test/MockBoomClient"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {setCurrentSpaceName} from "./spaces"

@@ -1,3 +1,4 @@
+/* @flow */
 import UniqArray from "./UniqArray"
 import isEqual from "lodash/isEqual"
 

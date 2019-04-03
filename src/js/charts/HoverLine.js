@@ -1,4 +1,5 @@
 /* @flow */
+
 import * as d3 from "d3"
 import Chart from "../models/Chart"
 

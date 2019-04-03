@@ -1,3 +1,4 @@
+/* @flow */
 const {app, BrowserWindow, Menu} = require("electron")
 const {createMenu} = require("./menu")
 const {

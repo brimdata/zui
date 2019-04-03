@@ -1,3 +1,4 @@
+/* @flow */
 import React from "react"
 import * as Doc from "../lib/Doc"
 import * as Time from "../lib/Time"

@@ -1,3 +1,4 @@
+/* @flow */
 import {files} from "../../test/mockLogs"
 import Md5Search from "./Md5Search"
 
