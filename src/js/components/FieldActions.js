@@ -5,7 +5,7 @@ import React from "react"
 
 import type {RightClickAction} from "../rightclick/actions"
 import type {State} from "../reducers/types"
-import {getViewerFieldActions} from "../selectors/fieldActions"
+import {getViewerFieldActions} from "../rightclick/logs"
 import Field from "../models/Field"
 import Log from "../models/Log"
 import RightClickMenu from "./RightClickMenu"

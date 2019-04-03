@@ -2,7 +2,7 @@
 
 import {changeSearchBarInput, submitSearchBar} from "../actions/searchBar"
 import {conn, dns, weird} from "../test/mockLogs"
-import {getViewerFieldActions} from "./fieldActions"
+import {getViewerFieldActions} from "../rightclick/logs"
 import {setCurrentSpaceName, setSpaceInfo} from "../actions/spaces"
 import {showAnalyticsTab, showLogsTab} from "../actions/view"
 import MockBoomClient from "../test/MockBoomClient"
