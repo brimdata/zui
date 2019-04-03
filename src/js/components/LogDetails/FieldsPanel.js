@@ -3,7 +3,7 @@
 import React from "react"
 
 import type {PanelProps} from "./"
-import {rightClickFieldsPanel} from "../../selectors/fieldActions"
+import {detailMenu} from "../../rightclick/detailMenu"
 import PanelHeading from "./PanelHeading"
 import VerticalTable from "../Tables/VerticalTable"
 
@@ -16,7 +16,7 @@ export default function FieldsPanel({log}: PanelProps) {
       <VerticalTable
         descriptor={log.descriptor}
         log={log}
-        rightClick={rightClickFieldsPanel}
+        rightClick={detailMenu}
       />
     </div>
   )

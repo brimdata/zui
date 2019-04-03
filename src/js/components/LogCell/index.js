@@ -3,19 +3,21 @@
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import {XViewerFieldActions} from "../FieldActions"
+import type {RightClickBuilder} from "../../types"
 import {clearTextSelection, selectText} from "../../lib/Doc"
 import {getTooltipStyle} from "../../lib/MenuStyler"
 import CellValue from "./CellValue"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
+import RightClickMenu from "../RightClickMenu"
 import Tooltip from "../Tooltip"
 import useContextMenu from "../../hooks/useContextMenu"
 
 type Props = {
   field: Field,
   log: Log,
-  style?: Object
+  style?: Object,
+  rightClick?: RightClickBuilder
 }
 
 export default function LogCell(props: Props) {
@@ -67,12 +69,11 @@ export default function LogCell(props: Props) {
         </Tooltip>
       )}
 
-      {menu.show && (
-        <XViewerFieldActions
-          log={props.log}
-          field={props.field}
-          style={menu.style}
+      {menu.show && !!props.rightClick && (
+        <RightClickMenu
+          actions={props.rightClick(props.field, props.log)}
           onClose={handleRightClickDismiss}
+          style={menu.style}
         />
       )}
     </div>

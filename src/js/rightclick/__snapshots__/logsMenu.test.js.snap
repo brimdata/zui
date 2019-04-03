@@ -1,72 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Analysis Right Click address field 1`] = `
-Array [
-  Object {
-    "onClick": [Function],
-    "text": "New search with this value",
-    "type": "action",
-  },
-  Object {
-    "type": "seperator",
-  },
-  Object {
-    "onClick": [Function],
-    "text": "Whois Lookup",
-    "type": "action",
-  },
-  Object {
-    "type": "seperator",
-  },
-  Object {
-    "onClick": [Function],
-    "text": "Open details",
-    "type": "action",
-  },
-]
-`;
-
-exports[`Analysis Right Click group by proc 1`] = `
-Array [
-  Object {
-    "onClick": [Function],
-    "text": "Pivot to logs",
-    "type": "action",
-  },
-  Object {
-    "onClick": [Function],
-    "text": "New search with this value",
-    "type": "action",
-  },
-  Object {
-    "type": "seperator",
-  },
-  Object {
-    "onClick": [Function],
-    "text": "Open details",
-    "type": "action",
-  },
-]
-`;
-
-exports[`Analysis Right Click non-address field 1`] = `
-Array [
-  Object {
-    "onClick": [Function],
-    "text": "New search with this value",
-    "type": "action",
-  },
-  Object {
-    "type": "seperator",
-  },
-  Object {
-    "onClick": [Function],
-    "text": "Open details",
-    "type": "action",
-  },
-]
-`;
-
 exports[`Log Right Click conn log with pcap support 1`] = `
 Array [
   Object {
@@ -201,11 +134,6 @@ Array [
   },
   Object {
     "type": "seperator",
-  },
-  Object {
-    "onClick": [Function],
-    "text": "Download PCAPS",
-    "type": "action",
   },
   Object {
     "onClick": [Function],
