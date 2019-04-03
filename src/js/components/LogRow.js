@@ -2,14 +2,14 @@
 
 import React from "react"
 import classNames from "classnames"
+import isEqual from "lodash/isEqual"
 
-import type {ViewerDimens} from "../types"
+import type {RightClickBuilder, ViewerDimens} from "../types"
 import Log from "../models/Log"
 import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
 import TableColumns from "../models/TableColumns"
 import columnOrder from "../lib/columnOrder"
-import isEqual from "lodash/isEqual"
 
 type Props = {
   dimens: ViewerDimens,
@@ -18,7 +18,8 @@ type Props = {
   timeZone: string,
   log: Log,
   columns: TableColumns,
-  onClick: () => void
+  onClick: () => void,
+  rightClick?: RightClickBuilder
 }
 
 export default class LogRow extends React.Component<Props> {
@@ -33,13 +34,14 @@ export default class LogRow extends React.Component<Props> {
   }
 
   renderAutoLayout() {
-    const {dimens, highlight, index, log} = this.props
+    const {dimens, highlight, index, log, rightClick} = this.props
     const columns = columnOrder(log.descriptor)
     const renderCell = (column, colIndex) => {
       const field = log.getField(column.name)
       if (field) {
         return (
           <LogCell
+            rightClick={rightClick}
             key={`${index}-${colIndex}`}
             field={field}
             log={log}
@@ -60,14 +62,22 @@ export default class LogRow extends React.Component<Props> {
   }
 
   renderFixedLayout() {
-    const {highlight, columns, log, dimens, index} = this.props
+    const {highlight, columns, log, dimens, index, rightClick} = this.props
     const renderCell = (column, colIndex) => {
       const field = log.getField(column.name)
       const style = {width: column.width || 300}
       const key = `${index}-${colIndex}`
 
       if (field) {
-        return <LogCell key={key} field={field} log={log} style={style} />
+        return (
+          <LogCell
+            rightClick={rightClick}
+            key={key}
+            field={field}
+            log={log}
+            style={style}
+          />
+        )
       } else {
         return <div className="log-cell" key={key} style={style} />
       }

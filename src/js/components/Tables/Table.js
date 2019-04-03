@@ -2,8 +2,7 @@
 
 import React from "react"
 
-import type {Column} from "../../types"
-import type {RightClickAction} from "../../rightclick/actions"
+import type {Column, RightClickBuilder} from "../../types"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
 import RightClickMenu from "../RightClickMenu"
@@ -20,7 +19,7 @@ export function TableHeader({column}: {column: Column}) {
 type Props = {
   log: Log,
   field: Field,
-  rightClick?: (Field, Log) => RightClickAction[]
+  rightClick?: RightClickBuilder
 }
 
 export function TableData({field, log, rightClick}: Props) {

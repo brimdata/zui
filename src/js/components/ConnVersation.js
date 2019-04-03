@@ -4,7 +4,7 @@ import {every} from "lodash"
 import React from "react"
 
 import {Fieldset} from "./Typography"
-import {rightClickFieldsPanel} from "../rightclick/detail"
+import {detailMenu} from "../rightclick/detailMenu"
 import Log from "../models/Log"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
@@ -61,7 +61,7 @@ const Host = ({className, title = "", ip = "", port = "", log}) => {
       <VerticalTable
         descriptor={log.descriptor}
         log={log}
-        rightClick={rightClickFieldsPanel}
+        rightClick={detailMenu}
       />
     </div>
   )

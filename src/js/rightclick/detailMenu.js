@@ -10,7 +10,7 @@ import {
 } from "../rightclick/actions"
 import Field, {TimeField} from "../models/Field"
 
-export function rightClickFieldsPanel(field: Field) {
+export function detailMenu(field: Field) {
   const queryActions = []
   const fieldActions = []
   const logActions = []

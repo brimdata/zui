@@ -10,14 +10,17 @@ import {
   getResultsTab,
   getTimeZone
 } from "../../reducers/view"
+import type {Space} from "../../lib/Space"
 import type {Tuple, ViewerDimens} from "../../types"
 import {XPhonyViewer} from "../Viewer/PhonyViewer"
 import {buildLogDetail} from "../../selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
 import {fetchAhead} from "../../actions/logViewer"
+import {getCurrentSpace} from "../../reducers/spaces"
 import {getCurrentTableColumns} from "../../selectors/tableColumnSets"
 import {getLogs, getTuples} from "../../selectors/logs"
 import {getMainSearchIsFetching} from "../../selectors/boomSearches"
+import {getPrevSearchProgram} from "../../selectors/searchBar"
 import {moreAhead} from "../../reducers/logViewer"
 import {viewLogDetail} from "../../actions/logDetails"
 import Chunker from "../Viewer/Chunker"
@@ -29,6 +32,7 @@ import Viewer from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
+import viewerMenu from "../../rightclick/viewerMenu"
 
 type StateProps = {|
   logs: Log[],
@@ -38,7 +42,9 @@ type StateProps = {|
   isFetching: boolean,
   tuples: Tuple[],
   tableColumns: TableColumns,
-  tab: ResultsTabEnum
+  tab: ResultsTabEnum,
+  program: string,
+  space: Space
 |}
 
 type OwnProps = {|
@@ -77,15 +83,15 @@ export default function SearchResults(props: Props) {
         highlight={Log.isSame(props.logs[index], props.selectedLog)}
         dimens={dimens}
         onClick={() => props.dispatch(viewLogDetail(props.logs[index]))}
+        rightClick={viewerMenu(props.program, props.space, props.tab)}
       />
     )
   }
 
   function onLastChunk() {
-    if (props.isFetching) return
-    if (props.tab === "analytics") return
-    if (!props.moreAhead) return
-    props.dispatch(fetchAhead())
+    if (props.moreAhead && !props.isFetching && props.tab === "logs") {
+      props.dispatch(fetchAhead())
+    }
   }
 
   function renderEnd() {
@@ -127,7 +133,9 @@ const stateToProps = (state: State) => ({
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
   tuples: getTuples(state),
-  logs: getLogs(state)
+  logs: getLogs(state),
+  program: getPrevSearchProgram(state),
+  space: getCurrentSpace(state)
 })
 
 export const XSearchResults = connect<Props, OwnProps, _, _, _, _>(
