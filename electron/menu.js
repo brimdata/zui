@@ -1,8 +1,9 @@
-/* @flow */
+/* @noflow */
+
 const {app, Menu} = require("electron")
 
 module.exports = {
-  createMenu: (browserWindow: *) => {
+  createMenu: browserWindow => {
     const template = [
       {
         label: "Edit",
