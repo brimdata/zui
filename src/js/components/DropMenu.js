@@ -15,6 +15,7 @@ type Props = {
   className?: string,
   children: *,
   dim?: boolean,
+  onChange?: Function,
   menu: *
 }
 
@@ -48,7 +49,7 @@ export default class DropMenu extends React.Component<Props, State> {
           isOpen={this.state.isOpen}
           onClose={this.close}
         >
-          <Menu onClose={this.close} />
+          <Menu onClose={this.close} onChange={this.props.onChange} />
         </DimPortal>
       )
     } else {
@@ -58,7 +59,7 @@ export default class DropMenu extends React.Component<Props, State> {
           isOpen={this.state.isOpen}
           onClose={this.close}
         >
-          <Menu onClose={this.close} />
+          <Menu onClose={this.close} onChange={this.props.onChange} />
         </Portal>
       )
     }

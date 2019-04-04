@@ -4,6 +4,7 @@ import type {Thunk} from "redux-thunk"
 import uniq from "lodash/uniq"
 
 import type {Tuple} from "../types"
+import {boomFetchDescriptors} from "../backend/fetch"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getDescriptors} from "../reducers/descriptors"
 
@@ -22,12 +23,12 @@ export const discoverDescriptors = (events: Tuple[] = []): Thunk => {
 }
 
 export const fetchDescriptor = (id: string): Thunk => {
-  return (dispatch, getState, boom) => {
+  return (dispatch, getState) => {
     const space = getCurrentSpaceName(getState())
 
     dispatch(requestDescriptor(space, id))
-    return boom.descriptors
-      .get(space, id)
+
+    return dispatch(boomFetchDescriptors(space, id))
       .then(descriptor => {
         dispatch(receiveDescriptor(space, id, descriptor))
       })

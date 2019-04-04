@@ -7,6 +7,7 @@ import {
 } from "../reducers/boomSearches"
 import {Handler} from "../BoomClient"
 import type {Thunk} from "../reducers/types"
+import {fetchSearch} from "../backend/fetch"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import BaseSearch from "../models/searches/BaseSearch"
 
@@ -83,12 +84,15 @@ export const cancelBoomSearch = (name: string): Thunk => (
 export const issueBoomSearch = (
   search: BaseSearch,
   tag: BoomSearchTag
-): Thunk => (dispatch, getState, boom) => {
-  const program = search.getProgram()
-  const searchSpan = search.getSpan()
-  const searchSpace = getCurrentSpaceName(getState())
+): Thunk => (dispatch, getState) => {
   const name = search.getName()
-  const handler = boom.search(program, {searchSpan, searchSpace})
+  const handler = dispatch(
+    fetchSearch(
+      search.getProgram(),
+      search.getSpan(),
+      getCurrentSpaceName(getState())
+    )
+  )
 
   dispatch(cancelBoomSearch(name))
   search.receiveData(handler, dispatch)

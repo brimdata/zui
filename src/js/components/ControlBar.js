@@ -1,43 +1,62 @@
 /* @flow */
 
-import React from "react"
-import {XSearchBar} from "./SearchBar"
-import {XHistoryStepper} from "./HistoryStepper"
-import {XSpanPickers} from "./SpanPickers"
-import {ThinButton} from "./Buttons"
-import DropMenu from "./DropMenu"
 import {connect} from "react-redux"
-import type {State} from "../reducers/types"
-import * as spaces from "../reducers/spaces"
+import React, {useEffect, useState} from "react"
+
+import type {Dispatch, State} from "../reducers/types"
+import {ThinButton} from "./Buttons"
+import {XHistoryStepper} from "./HistoryStepper"
+import {XSearchBar} from "./SearchBar"
 import {XSpacesMenu} from "./SpacesMenu"
+import {XSpanPickers} from "./SpanPickers"
+import {switchSpace} from "../space/switch"
+import DropMenu from "./DropMenu"
+import dispatchToProps from "../lib/dispatchToProps"
+import * as spaces from "../reducers/spaces"
 
 type Props = {|
-  currentSpace: string
+  currentSpace: string,
+  dispatch: Dispatch
 |}
 
-export default class ControlBar extends React.Component<Props> {
-  render() {
-    return (
-      <div className="control-bar">
-        <div className="row-1">
-          <DropMenu position="left" menu={XSpacesMenu} className="button-group">
-            {<ThinButton>{this.props.currentSpace}</ThinButton>}
-          </DropMenu>
-          <XSpanPickers />
-        </div>
-        <div className="row-2">
-          <XHistoryStepper />
-          <XSearchBar />
-        </div>
-      </div>
-    )
+export default function ControlBar({currentSpace, dispatch}: Props) {
+  let [space, setSpace] = useState(currentSpace)
+
+  useEffect(() => {
+    setSpace(currentSpace)
+  })
+
+  function onSpaceChange(val) {
+    setSpace(val)
+    dispatch(switchSpace(val))
   }
+
+  return (
+    <div className="control-bar">
+      <div className="row-1">
+        <DropMenu
+          position="left"
+          menu={XSpacesMenu}
+          onChange={onSpaceChange}
+          className="button-group"
+        >
+          {<ThinButton>{space}</ThinButton>}
+        </DropMenu>
+        <XSpanPickers />
+      </div>
+      <div className="row-2">
+        <XHistoryStepper />
+        <XSearchBar />
+      </div>
+    </div>
+  )
 }
 
 const stateToProps = (state: State) => ({
   currentSpace: spaces.getCurrentSpaceName(state)
 })
 
-export const XControlBar = connect<Props, {||}, _, _, _, _>(stateToProps)(
-  ControlBar
-)
+export const XControlBar = connect<Props, {||}, _, _, _, _>(
+  stateToProps,
+  dispatchToProps
+)(ControlBar)

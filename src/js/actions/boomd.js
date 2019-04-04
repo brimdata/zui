@@ -4,19 +4,9 @@ import type {Credentials} from "../lib/Credentials"
 import {LookytalkVersionError} from "../models/Errors"
 import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
+import {fetchLookytalkVersions, fetchSpaces} from "../backend/fetch"
 import {getBoomOptions} from "../selectors/boom"
-
-export const inspectSearch = (
-  lookytalk: string,
-  overrides: Object = {}
-): Thunk => (_dispatch, getState, boom) => {
-  boom.setOptions(getBoomOptions(getState()))
-  try {
-    return boom.inspectSearch(lookytalk, overrides)
-  } catch {
-    return null
-  }
-}
+import {updateBoomOptions} from "../backend/options"
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -51,34 +41,26 @@ export const setBoomdCredentials = (credentials: Credentials) => ({
   credentials
 })
 
-export const connectBoomd = (): Thunk => (dispatch, getState, boom) => {
-  boom.setOptions(getBoomOptions(getState()))
+export const connectBoomd = (): Thunk => (dispatch, getState) => {
+  dispatch(updateBoomOptions())
 
-  if (!boom.options.host || !boom.options.port) {
-    return Promise.reject("Host and port are required.")
-  }
+  const {host, port} = getBoomOptions(getState())
 
-  return boom.spaces.list().then(() => {
+  if (!host || !port) return Promise.reject("Host and port are required.")
+
+  return dispatch(fetchSpaces()).then(() => {
     setTimeout(() => dispatch(checkLookytalkVersion()), 3000)
   })
 }
 
-export const checkLookytalkVersion = (): Thunk => (
-  dispatch,
-  getState,
-  boom
-) => {
-  return boom.serverVersion().then(({lookytalk: serverVersion}) => {
-    const clientVersion = boom.clientVersion().lookytalk
-    if (clientVersion !== serverVersion) {
-      dispatch(
-        addNotification(
-          new LookytalkVersionError("", {
-            clientVersion,
-            serverVersion
-          })
-        )
-      )
+export const checkLookytalkVersion = (): Thunk => dispatch => {
+  return dispatch(fetchLookytalkVersions()).then(({server, client}) => {
+    if (client !== server) {
+      let error = new LookytalkVersionError("", {
+        clientVersion: client,
+        serverVersion: server
+      })
+      dispatch(addNotification(error))
     }
   })
 }
