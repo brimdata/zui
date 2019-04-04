@@ -31,6 +31,15 @@ type Seperator = {
 
 export type RightClickAction = Seperator | Action
 
+export const logResult = (field: Field, log: Log) => ({
+  type: "action",
+  text: "Log result to console",
+  onClick: () => {
+    console.log(JSON.stringify(log))
+    console.log(JSON.stringify(field))
+  }
+})
+
 export const exclude = (field: Field) => ({
   type: "action",
   text: "Exclude this value",

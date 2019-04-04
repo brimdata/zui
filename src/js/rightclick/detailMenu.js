@@ -1,32 +1,29 @@
 /* @flow */
 
-import {flattenJoin} from "../lib/Array"
 import {
   freshInclude,
   fromTime,
-  seperator,
   toTime,
   whoisRightclick
 } from "../rightclick/actions"
 import Field, {TimeField} from "../models/Field"
+import menuBuilder from "./menuBuilder"
 
 export function detailMenu(field: Field) {
-  const queryActions = []
-  const fieldActions = []
-  const logActions = []
+  const menu = menuBuilder()
 
   if (!(field instanceof TimeField)) {
-    queryActions.push(freshInclude(field))
+    menu.queryAction(freshInclude(field))
   }
 
   if (field instanceof TimeField) {
-    queryActions.push(fromTime(field))
-    queryActions.push(toTime(field))
+    menu.queryAction(fromTime(field))
+    menu.queryAction(toTime(field))
   }
 
   if (["addr", "set[addr]"].includes(field.type)) {
-    fieldActions.push(whoisRightclick(field))
+    menu.fieldAction(whoisRightclick(field))
   }
 
-  return flattenJoin([queryActions, fieldActions, logActions], seperator())
+  return menu.build()
 }
