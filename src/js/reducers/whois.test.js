@@ -1,11 +1,11 @@
 /* @flow */
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import * as actions from "../actions/whois"
 import {getWhoisText, getWhoisIsOpen, getWhoisAddr} from "./whois"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("whois lookup success", done => {

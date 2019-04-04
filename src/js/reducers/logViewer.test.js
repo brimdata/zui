@@ -2,12 +2,12 @@
 
 import * as logViewer from "./logViewer"
 import * as a from "../actions/logViewer"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import dispatchAll from "../test/dispatchAll"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("initialState", () => {

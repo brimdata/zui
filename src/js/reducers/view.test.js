@@ -10,12 +10,12 @@ import {
   showModal,
   showSearchInspector
 } from "../actions/view"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import * as view from "./view"
 
 let store, reduce
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
   reduce = store.dispatchAll
 })
 
@@ -55,21 +55,21 @@ test("hiding the downloads bar", () => {
 })
 
 test("set the active modal", () => {
-  const store = initStore()
+  const store = initTestStore()
   const state = store.dispatchAll([showModal("debug")])
 
   expect(view.getDebugModalIsOpen(state)).toBe(true)
 })
 
 test("hide a modal", () => {
-  const store = initStore()
+  const store = initTestStore()
   const state = store.dispatchAll([showModal("debug"), hideModal()])
 
   expect(view.getModal(state)).toBe(null)
 })
 
 test("show the search inspector", () => {
-  const store = initStore()
+  const store = initTestStore()
 
   expect(view.getSearchInspectorIsOpen(store.getState())).toBe(false)
 
@@ -79,7 +79,7 @@ test("show the search inspector", () => {
 })
 
 test("hide the search inspector", () => {
-  const store = initStore()
+  const store = initTestStore()
   const state = store.dispatchAll([
     showSearchInspector(),
     hideSearchInspector()

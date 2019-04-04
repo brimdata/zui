@@ -5,7 +5,7 @@ import {
   pushLogDetail
 } from "../actions/logDetails"
 import {buildLogDetail} from "../selectors/logDetails"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 const tuple = ["1", "a"]
 const descriptor = [
@@ -15,7 +15,7 @@ const descriptor = [
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("viewing a log detail", () => {

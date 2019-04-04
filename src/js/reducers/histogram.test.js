@@ -2,11 +2,11 @@
 
 import {getHistogramData, formatHistogram} from "./histogram"
 import * as a from "../actions/histogram"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("receive data", () => {

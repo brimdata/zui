@@ -9,6 +9,7 @@ type TestStore = {
   dispatch: Function,
   dispatchAll: Function,
   getActions: Function,
+  getActionTypes: Function,
   clearActions: Function,
   getState: () => State
 }

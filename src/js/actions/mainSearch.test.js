@@ -5,13 +5,13 @@ import {fetchMainSearch} from "./mainSearch"
 import {init, setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
 import {setSpaceInfo, setCurrentSpaceName} from "./spaces"
 import MockBoomClient from "../test/MockBoomClient"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 let store, boom
 
 beforeEach(() => {
   boom = new MockBoomClient({host: "localhost", port: 123})
-  store = initStore(boom)
+  store = initTestStore(boom)
 })
 
 const spaceInfo = {

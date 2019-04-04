@@ -7,7 +7,7 @@ import {receiveDescriptor} from "../actions/descriptors"
 import {setCorrelation} from "../actions/correlations"
 import {setCurrentSpaceName} from "../actions/spaces"
 import Log from "../models/Log"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 describe("#getLogCorrelations", () => {
   const space = "default"
@@ -21,7 +21,7 @@ describe("#getLogCorrelations", () => {
   let store, state
 
   beforeEach(() => {
-    store = initStore()
+    store = initTestStore()
     state = store.dispatchAll([
       receiveDescriptor(space, connLog.get("_td"), connLog.descriptor),
       receiveDescriptor(space, dnsLog.get("_td"), dnsLog.descriptor),

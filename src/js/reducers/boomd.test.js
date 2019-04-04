@@ -1,10 +1,10 @@
 /* @flow */
 import {getCredentials, getUseBoomCache, getUseBoomIndex} from "./boomd"
 import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../actions/boomd"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 test("setting the credentials", () => {
-  const store = initStore()
+  const store = initTestStore()
 
   store.dispatch(
     setBoomdCredentials({
@@ -24,7 +24,7 @@ test("setting the credentials", () => {
 })
 
 test("setting use analytics cache", () => {
-  const store = initStore()
+  const store = initTestStore()
 
   store.dispatch(useBoomCache(true))
 
@@ -36,7 +36,7 @@ test("setting use analytics cache", () => {
 })
 
 test("setting use analytics cache", () => {
-  const store = initStore()
+  const store = initTestStore()
 
   store.dispatch(useBoomIndex(true))
 

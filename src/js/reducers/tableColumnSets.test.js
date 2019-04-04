@@ -9,12 +9,12 @@ import {
   updateTableColumns
 } from "../actions/tableColumnSets"
 import TableColumns from "../models/TableColumns"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 const tableId = "test"
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("get initial state", () => {

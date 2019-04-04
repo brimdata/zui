@@ -4,12 +4,12 @@ import MockBoomClient from "../test/MockBoomClient"
 import {conn} from "../test/mockLogs"
 import {fetchPackets} from "./packets"
 import {setCurrentSpaceName} from "./spaces"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 let boom, store
 beforeEach(() => {
   boom = new MockBoomClient()
-  store = initStore(boom)
+  store = initTestStore(boom)
 })
 
 test("fetching packets is a success", done => {

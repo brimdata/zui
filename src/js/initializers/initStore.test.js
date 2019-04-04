@@ -1,6 +1,6 @@
 /* @flow */
 import initStore from "./initStore"
-import initTestStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 test("initStore runs", () => {
   const store = initStore()

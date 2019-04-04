@@ -2,11 +2,11 @@
 
 import {getOuterTimeWindow, getInnerTimeWindow} from "./timeWindow"
 import * as actions from "../actions/timeWindow"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("setting the outer time window", () => {

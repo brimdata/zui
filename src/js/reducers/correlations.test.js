@@ -6,9 +6,9 @@ import {
   setCorrelation
 } from "../actions/correlations"
 import {getCorrelations} from "./correlations"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
-const store = initStore()
+const store = initTestStore()
 const hash = {descriptor: [], tuples: []}
 const uid = []
 const get = key => getCorrelations(store.getState())[key]
