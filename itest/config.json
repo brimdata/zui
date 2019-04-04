@@ -3,5 +3,8 @@
     "**/*.js",
     "!**/flow-typed/**",
     "!**/test/**"
+  ],
+  "setupFiles": [
+    "<rootDir>/setup.js"
   ]
 }
