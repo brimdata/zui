@@ -4,6 +4,7 @@ import type {Credentials} from "../lib/Credentials"
 import {LookytalkVersionError} from "../models/Errors"
 import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
+import {fetchLookytalkVersions, fetchSpaces} from "../backend/fetch"
 import {getBoomOptions} from "../selectors/boom"
 
 export const inspectSearch = (
@@ -58,27 +59,19 @@ export const connectBoomd = (): Thunk => (dispatch, getState, boom) => {
     return Promise.reject("Host and port are required.")
   }
 
-  return boom.spaces.list().then(() => {
+  return dispatch(fetchSpaces()).then(() => {
     setTimeout(() => dispatch(checkLookytalkVersion()), 3000)
   })
 }
 
-export const checkLookytalkVersion = (): Thunk => (
-  dispatch,
-  getState,
-  boom
-) => {
-  return boom.serverVersion().then(({lookytalk: serverVersion}) => {
-    const clientVersion = boom.clientVersion().lookytalk
-    if (clientVersion !== serverVersion) {
-      dispatch(
-        addNotification(
-          new LookytalkVersionError("", {
-            clientVersion,
-            serverVersion
-          })
-        )
-      )
+export const checkLookytalkVersion = (): Thunk => dispatch => {
+  return dispatch(fetchLookytalkVersions()).then(({server, client}) => {
+    if (client !== server) {
+      let error = new LookytalkVersionError("", {
+        clientVersion: client,
+        serverVersion: server
+      })
+      dispatch(addNotification(error))
     }
   })
 }
