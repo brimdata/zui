@@ -4,6 +4,7 @@ import isEqual from "lodash/isEqual"
 import md5 from "md5"
 
 import type {Descriptor, Tuple} from "../types"
+import {inBounds} from "../lib/Array"
 import Field from "./Field"
 import FieldFactory from "./FieldFactory"
 
@@ -94,7 +95,10 @@ export default class Log {
   }
 
   getField(fieldName: string) {
-    return this.getFieldAt(this.getIndex(fieldName))
+    const index = this.getIndex(fieldName)
+    if (inBounds(this.tuple, index)) {
+      return this.getFieldAt(index)
+    }
   }
 
   getFieldAt(index: number) {

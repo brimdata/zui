@@ -65,3 +65,7 @@ export function same(array: *[]) {
 
   return true
 }
+
+export function inBounds(array: *[], index: number) {
+  return index >= 0 && index < array.length
+}
