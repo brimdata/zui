@@ -9,13 +9,13 @@ import {
   setBoomSearchStatus
 } from "../actions/boomSearches"
 import {getBoomSearches} from "./boomSearches"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 describe("boomSearches reducer", () => {
   let store
 
   beforeEach(() => {
-    store = initStore()
+    store = initTestStore()
     store.dispatchAll([
       registerBoomSearch("Histogram", {tag: "viewer", handler: new Handler()}),
       registerBoomSearch("Logs", {tag: "detail", handler: new Handler()})

@@ -31,13 +31,13 @@ import {initialState} from "./searchBar"
 import {setOuterTimeWindow} from "../actions/timeWindow"
 import Field from "../models/Field"
 import MockBoomClient from "../test/MockBoomClient"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 let store, boom
 beforeEach(() => {
   boom = new MockBoomClient()
   boom.stubStream("search")
-  store = initStore(boom)
+  store = initTestStore(boom)
 })
 
 test("input value changed", () => {

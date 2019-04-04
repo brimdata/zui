@@ -1,11 +1,11 @@
 /* @flow */
 import {disconnect} from "./disconnect"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 describe("#disconnect", () => {
   let store, actionTypes
   beforeEach(() => {
-    store = initStore()
+    store = initTestStore()
     store.dispatch(disconnect())
     actionTypes = store.getActions().map(a => a.type)
   })

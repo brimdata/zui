@@ -12,14 +12,14 @@ import {setAnalysis} from "../actions/analysis"
 import {setCurrentSpaceName} from "../actions/spaces"
 import {showAnalyticsTab} from "../actions/view"
 import TableColumns from "../models/TableColumns"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 const connLog = conn()
 const dnsLog = dns()
 let store
 
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 describe("#getCurrentTableColumnsId", () => {

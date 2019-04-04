@@ -2,11 +2,11 @@
 import {Handler} from "../BoomClient"
 import {getSomeAreFetching} from "./boomSearches"
 import {registerBoomSearch, setBoomSearchStatus} from "../actions/boomSearches"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 test("#getSomeAreFetching true", () => {
   let store
-  store = initStore()
+  store = initTestStore()
 
   store.dispatchAll([
     registerBoomSearch("A", {handler: new Handler(), tag: "detail"}),
@@ -20,7 +20,7 @@ test("#getSomeAreFetching true", () => {
 
 test("#getSomeAreFetching false", () => {
   let store
-  store = initStore()
+  store = initTestStore()
 
   store.dispatchAll([
     registerBoomSearch("A", {handler: new Handler(), tag: "detail"}),

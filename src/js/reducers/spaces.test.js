@@ -1,12 +1,12 @@
 /* @flow */
 
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import {getSpaces, getAllSpaceNames, getCurrentSpaceName} from "./spaces"
 import * as a from "../actions/spaces"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 const spaceInfo = {

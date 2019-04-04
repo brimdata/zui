@@ -2,11 +2,11 @@
 
 import {starLog, unstarLog, clearStarredLogs} from "../actions/starredLogs"
 import {getStarredLogs} from "./starredLogs"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 const tuple = ["1", "2", "3", "4"]

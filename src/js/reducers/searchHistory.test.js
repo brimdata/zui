@@ -1,13 +1,13 @@
 /* @flow */
 
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import * as searchHistory from "../actions/searchHistory"
 import * as searchBar from "../actions/searchBar"
 import {getCurrentEntry, getSearchHistory} from "./searchHistory"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
   store.dispatchAll([
     searchBar.changeSearchBarInput("first"),
     searchHistory.pushSearchHistory(),

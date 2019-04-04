@@ -6,7 +6,7 @@ import {shallow} from "enzyme"
 import {UnauthorizedError} from "../models/Errors"
 import AppError from "../models/AppError"
 import Search, {stateToProps} from "./Search"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 let props
 beforeEach(() => {
@@ -55,7 +55,7 @@ test("redirects when unauthorized error", () => {
 })
 
 test("stateToProps", () => {
-  const store = initStore()
+  const store = initTestStore()
   const props = stateToProps(store.getState())
 
   expect(props).toEqual({

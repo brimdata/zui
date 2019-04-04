@@ -4,10 +4,10 @@ import {getBoomOptions} from "./boom"
 import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../actions/boomd"
 import {setCurrentSpaceName} from "../actions/spaces"
 import {setOuterTimeWindow} from "../actions/timeWindow"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 test("#getBoomOptions", () => {
-  const store = initStore()
+  const store = initTestStore()
   const state = store.dispatchAll([
     setBoomdCredentials({
       host: "boom.com",

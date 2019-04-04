@@ -1,12 +1,12 @@
 /* @flow */
 
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import {addNotification, removeNotification} from "../actions/notifications"
 import {getNotifications} from "../selectors/notifications"
 
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("Initial state is empty array", () => {

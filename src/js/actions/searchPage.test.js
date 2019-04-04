@@ -2,7 +2,7 @@
 import MockBoomClient from "../test/MockBoomClient"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {setCurrentSpaceName} from "./spaces"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import * as searchPage from "./searchPage"
 import * as spaces from "../reducers/spaces"
 
@@ -23,7 +23,7 @@ test("init with several spaces", done => {
   boom.stubSend("spaces.list", ["default", "ranch-logs"])
   boom.stubSend("spaces.get", defaultSpace)
   boom.stubStream("search", [])
-  const store = initStore(boom)
+  const store = initTestStore(boom)
 
   store
     .dispatch(searchPage.init())
@@ -46,7 +46,7 @@ test("init with no spaces", done => {
   boom.stubSend("spaces.list", [])
   boom.stubSend("spaces.get", defaultSpace)
   boom.stubStream("search", [])
-  const store = initStore(boom)
+  const store = initTestStore(boom)
 
   store
     .dispatch(searchPage.init())
@@ -62,7 +62,7 @@ test("init with a space already selected", done => {
   boom.stubSend("spaces.list", ["alternate"])
   boom.stubSend("spaces.get", alternateSpace)
   boom.stubStream("search", [])
-  const store = initStore(boom)
+  const store = initTestStore(boom)
 
   store.dispatch(setCurrentSpaceName("alternate"))
   store

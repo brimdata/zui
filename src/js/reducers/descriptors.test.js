@@ -2,12 +2,12 @@
 
 import * as actions from "../actions/descriptors"
 import {getDescriptors} from "./descriptors"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 const descriptor = [{type: "string", name: "_td"}, {type: "string", name: "a"}]
 let store
 beforeEach(() => {
-  store = initStore()
+  store = initTestStore()
 })
 
 test("getDescriptors", () => {
@@ -21,7 +21,7 @@ test("getDescriptors", () => {
 })
 
 test("clearing descriptors", () => {
-  const store = initStore()
+  const store = initTestStore()
   store.dispatch(actions.receiveDescriptor("default", "1", descriptor))
   store.dispatch(actions.clearDescriptors())
   expect(getDescriptors(store.getState())).toEqual({})

@@ -3,11 +3,11 @@ import MockBoomClient from "../test/MockBoomClient"
 import {fetchDescriptor} from "./descriptors"
 import {getDescriptors} from "../reducers/descriptors"
 import {setCurrentSpaceName} from "./spaces"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 
 test("#fetchDescriptor", done => {
   const boom = new MockBoomClient()
-  const store = initStore(boom)
+  const store = initTestStore(boom)
 
   boom.stubSend("descriptors.get", [{name: "hello", type: "world"}])
 

@@ -6,7 +6,7 @@ import {receiveLogTuples, setLogsSpliceIndex, spliceLogs} from "./logs"
 import {setCurrentSpaceName} from "./spaces"
 import {setOuterTimeWindow} from "./timeWindow"
 import MockBoomClient from "../test/MockBoomClient"
-import initStore from "../test/initStore"
+import initTestStore from "../test/initTestStore"
 import * as logViewer from "./logViewer"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
@@ -18,7 +18,7 @@ beforeEach(() => {
   handler = new Handler()
   // $FlowFixMe
   boom.search = () => handler
-  store = initStore(boom)
+  store = initTestStore(boom)
   store.dispatchAll([
     setCurrentSpaceName("default"),
     setOuterTimeWindow([new Date(0), new Date(10 * 1000)]),
