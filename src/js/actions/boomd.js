@@ -6,18 +6,7 @@ import type {Thunk} from "../reducers/types"
 import {addNotification} from "./notifications"
 import {fetchLookytalkVersions, fetchSpaces} from "../backend/fetch"
 import {getBoomOptions} from "../selectors/boom"
-
-export const inspectSearch = (
-  lookytalk: string,
-  overrides: Object = {}
-): Thunk => (_dispatch, getState, boom) => {
-  boom.setOptions(getBoomOptions(getState()))
-  try {
-    return boom.inspectSearch(lookytalk, overrides)
-  } catch {
-    return null
-  }
-}
+import {updateBoomOptions} from "../backend/options"
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -52,12 +41,12 @@ export const setBoomdCredentials = (credentials: Credentials) => ({
   credentials
 })
 
-export const connectBoomd = (): Thunk => (dispatch, getState, boom) => {
-  boom.setOptions(getBoomOptions(getState()))
+export const connectBoomd = (): Thunk => (dispatch, getState) => {
+  dispatch(updateBoomOptions())
 
-  if (!boom.options.host || !boom.options.port) {
-    return Promise.reject("Host and port are required.")
-  }
+  const {host, port} = getBoomOptions(getState())
+
+  if (!host || !port) return Promise.reject("Host and port are required.")
 
   return dispatch(fetchSpaces()).then(() => {
     setTimeout(() => dispatch(checkLookytalkVersion()), 3000)

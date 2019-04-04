@@ -6,15 +6,15 @@ import React from "react"
 import {Code} from "./Typography"
 import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
-import {type DispatchProps, type State} from "../reducers/types"
+import type {DispatchProps, State} from "../reducers/types"
 import {copyToClipboard} from "../lib/Doc"
-import {inspectSearch} from "../actions/boomd"
+import {getCredentials} from "../reducers/boomd"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getSearchProgram} from "../selectors/searchBar"
+import {getTimeWindow} from "../reducers/timeWindow"
+import {inspectSearch} from "../backend/inspectSearch"
 import Modal from "./Modal"
-import * as boomd from "../reducers/boomd"
 import dispatchToProps from "../lib/dispatchToProps"
-import * as searchBar from "../selectors/searchBar"
-import * as spaces from "../reducers/spaces"
-import * as timeWindow from "../reducers/timeWindow"
 
 type OwnProps = {|
   isOpen: boolean,
@@ -101,10 +101,10 @@ export default class CurlModal extends React.Component<Props, LocalState> {
 }
 
 const stateToProps = (state: State) => ({
-  program: searchBar.getSearchProgram(state),
-  space: spaces.getCurrentSpaceName(state),
-  timeWindow: timeWindow.getTimeWindow(state),
-  credentials: boomd.getCredentials(state)
+  program: getSearchProgram(state),
+  space: getCurrentSpaceName(state),
+  timeWindow: getTimeWindow(state),
+  credentials: getCredentials(state)
 })
 
 export const XCurlModal = connect<Props, OwnProps, _, _, _, _>(
