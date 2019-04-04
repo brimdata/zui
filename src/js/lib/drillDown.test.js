@@ -48,6 +48,20 @@ test("count by and filter the same", () => {
   expect(drillDown(program, result)).toEqual("md5=123")
 })
 
+test("filter query", () => {
+  const program =
+    '_path=files filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
+
+  const result = new Log(
+    ["9f51ef98c42df4430a978e4157c43dd5", "21"],
+    [{name: "md5", type: "string"}, {name: "count", type: "count"}]
+  )
+
+  expect(drillDown(program, result)).toEqual(
+    '_path=files filename!="-" md5=9f51ef98c42df4430a978e4157c43dd5'
+  )
+})
+
 describe("null cases", () => {
   const nullPrograms = [
     "_path=conn",

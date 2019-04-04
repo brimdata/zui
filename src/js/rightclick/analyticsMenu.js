@@ -5,6 +5,7 @@ import {
   freshInclude,
   fromTime,
   groupByDrillDown,
+  logResult,
   toTime,
   whoisRightclick
 } from "./actions"
@@ -32,6 +33,7 @@ export function analyticsMenu(program: string) {
     }
 
     menu.logAction(detail(log))
+    menu.debugAction(logResult(field, log))
 
     return menu.build()
   }

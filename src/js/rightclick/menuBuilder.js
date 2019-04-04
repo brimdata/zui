@@ -1,4 +1,6 @@
 /* @flow */
+import electronIsDev from "electron-is-dev"
+
 import {type RightClickAction, seperator} from "./actions"
 import {flattenJoin} from "../lib/Array"
 
@@ -6,6 +8,7 @@ export default function menuBuilder() {
   let query = []
   let field = []
   let log = []
+  let debug = []
 
   return {
     queryAction(...actions: RightClickAction[]) {
@@ -20,8 +23,14 @@ export default function menuBuilder() {
       log = [...log, ...actions]
     },
 
+    debugAction(...actions: RightClickAction[]) {
+      if (electronIsDev) {
+        debug = [...debug, ...actions]
+      }
+    },
+
     build() {
-      return flattenJoin([query, field, log], seperator())
+      return flattenJoin([query, field, log, debug], seperator())
     }
   }
 }

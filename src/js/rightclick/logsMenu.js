@@ -9,6 +9,7 @@ import {
   fromTime,
   groupByDrillDown,
   include,
+  logResult,
   pcaps,
   toTime,
   whoisRightclick
@@ -46,6 +47,7 @@ export function logsMenu(program: string, space: Space) {
     }
 
     menu.logAction(detail(log))
+    menu.debugAction(logResult(field, log))
 
     return menu.build()
   }
