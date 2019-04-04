@@ -6,6 +6,7 @@ import type {PanelProps} from "./"
 import type {RightClickBuilder} from "../../types"
 import {correlationMenu} from "../../rightclick/correlationMenu"
 import {
+  filenameCorrelation,
   md5Correlation,
   rxHostsCorrelation,
   txHostsCorrelation
@@ -19,7 +20,7 @@ export const Md5Panel = ({log, statuses, relatedLogs}: PanelProps) => {
   const logMd5 = log.get("md5")
   if (!logMd5) return null
 
-  const {md5, tx, rx} = relatedLogs
+  const {md5, tx, rx, filenames} = relatedLogs
   return (
     <div className="hash-correlation detail-panel">
       <PanelHeading status={statuses["Md5Search"]}>
@@ -29,6 +30,13 @@ export const Md5Panel = ({log, statuses, relatedLogs}: PanelProps) => {
         logs={md5}
         rightClick={correlationMenu(md5Correlation(logMd5))}
         name="md5 count"
+        status={statuses["Md5Search"]}
+        expect={1}
+      />
+      <AsyncTable
+        logs={filenames}
+        rightClick={correlationMenu(filenameCorrelation(logMd5))}
+        name="filename, mime_type count"
         status={statuses["Md5Search"]}
         expect={1}
       />

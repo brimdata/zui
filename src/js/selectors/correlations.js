@@ -24,7 +24,8 @@ export const getLogCorrelations = createSelector<State, void, *, *, *, *, *>(
       uid: uidOrder(Log.buildAll(get(rels, "uid", []), descriptors, space)),
       md5: Log.build(get(rels, "md5", {tuples: []})),
       tx: Log.build(get(rels, "tx", {tuples: []})),
-      rx: Log.build(get(rels, "rx", {tuples: []}))
+      rx: Log.build(get(rels, "rx", {tuples: []})),
+      filenames: Log.build(get(rels, "filenames", {tuples: []}))
     }
   }
 )
