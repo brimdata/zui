@@ -1,19 +1,28 @@
 /* @flow */
+import type {Span} from "../BoomClient/types"
 import type {Thunk} from "../reducers/types"
 
-export const fetchSpaces = (): Thunk => (_d, _g, boom) => {
-  return boom.spaces.list()
+export function fetchSearch(program: string, span: Span, space: string): Thunk {
+  return (d, g, boom) =>
+    boom.search(program, {searchSpan: span, searchSpace: space})
 }
 
-export const fetchSpace = (name: string): Thunk => (_d, _g, boom) => {
-  return boom.spaces.get(name)
+export function fetchSpaces(): Thunk {
+  return (d, g, boom) => boom.spaces.list()
 }
 
-export const fetchLookytalkVersions = (): Thunk => (_d, _g, boom) => {
-  return boom.serverVersion().then(({lookytalk}) => {
-    return {
+export function fetchSpace(name: string): Thunk {
+  return (d, g, boom) => boom.spaces.get(name)
+}
+
+export function fetchLookytalkVersions(): Thunk {
+  return (d, g, boom) =>
+    boom.serverVersion().then(({lookytalk}) => ({
       server: lookytalk,
       client: boom.clientVersion().lookytalk
-    }
-  })
+    }))
+}
+
+export function boomFetchDescriptors(space: string, id: string): Thunk {
+  return (d, g, boom) => boom.descriptors.get(space, id)
 }
