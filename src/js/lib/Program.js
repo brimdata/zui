@@ -99,7 +99,13 @@ export function deaggregate(program: string, log: Log) {
 
   if (!groupByProc) return null
 
-  const filters = groupByProc.keys.map(key => `${key}=${log.get(key)}`)
+  function getKeyFromLog(key) {
+    let val = log.get(key)
+    if (val) return `${key}=${log.get(key)}`
+    else return ""
+  }
+
+  const filters = groupByProc.keys.map(getKeyFromLog)
   let [filter] = splitParts(program)
 
   if (/\s*\*\s*/.test(filter)) filter = ""
