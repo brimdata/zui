@@ -9,6 +9,7 @@ import correlations from "./correlations"
 import descriptors from "./descriptors"
 import filterTree from "./filterTree"
 import histogram from "./histogram"
+import investigation from "./investigation"
 import logDetails from "./logDetails"
 import logViewer from "./logViewer"
 import logs from "./logs"
@@ -24,6 +25,7 @@ import view from "./view"
 import whois from "./whois"
 
 export default combineReducers<*, *>({
+  investigation,
   correlations,
   logs,
   view,

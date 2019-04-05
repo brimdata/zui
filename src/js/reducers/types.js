@@ -5,9 +5,11 @@ import {type Store as ReduxStore} from "redux"
 import type {Analysis} from "./analysis"
 import type {BoomSearches} from "./boomSearches"
 import type {Boomd} from "./boomd"
+import type {Correlations} from "./correlations"
 import type {Descriptors} from "./descriptors"
 import type {FilterTree} from "./filterTree"
 import type {Histogram} from "./histogram"
+import type {Investigation} from "./investigation"
 import type {LogDetails} from "./logDetails"
 import type {LogViewer} from "./logViewer"
 import type {Logs} from "./logs"
@@ -19,7 +21,6 @@ import type {TableColumnSets} from "./tableColumnSets"
 import type {TimeWindow} from "./timeWindow"
 import type {View} from "./view"
 import type {Whois} from "./whois"
-import type {Correlations} from "./correlations"
 import BoomClient from "../BoomClient"
 
 export type State = {
@@ -40,7 +41,8 @@ export type State = {
   notifications: Notifications,
   tableColumnSets: TableColumnSets,
   logs: Logs,
-  boomSearches: BoomSearches
+  boomSearches: BoomSearches,
+  investigation: Investigation
 }
 
 export type GetState = () => State
