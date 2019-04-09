@@ -210,7 +210,7 @@ describe("Application launch", () => {
             pathClasses =>
               pathClasses.length ===
               dataSets.corelight.histogram.defaultDistinctPaths
-          )
+          ).catch(done)
         )
         .then(pathClasses =>
           retryUntil(
@@ -218,7 +218,9 @@ describe("Application launch", () => {
             rectElements =>
               rectElements.length ===
               dataSets.corelight.histogram.defaultTotalRectCount
-          ).then(() => pathClasses)
+          )
+            .then(() => pathClasses)
+            .catch(done)
         )
         // Once we see all the g and rect elements, ensure the g elements'
         // classes are expected. This nominally ensures the different _path
