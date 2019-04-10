@@ -29,7 +29,7 @@
     "lint": "eslint .",
     "format": "prettier '{src,itest}/**/*.{js,scss}' --write --loglevel warn",
     "flow": "flow",
-    "check": "npm-run-all -p lint flow test",
+    "check": "npm-run-all -p format lint flow test",
     "installer:mac": "electron-installer-dmg releases/Looky-darwin-x64/Looky.app releases/Looky"
   },
   "jest": {

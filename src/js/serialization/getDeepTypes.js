@@ -11,7 +11,7 @@ export function getDeepTypes(obj: any, getType: Function) {
       for (var key in obj) map[key] = getDeepTypes(obj[key], func)
       return map
     case "Array":
-      return obj.map((v) => getDeepTypes(v, func))
+      return obj.map(v => getDeepTypes(v, func))
     default:
       return type
   }
