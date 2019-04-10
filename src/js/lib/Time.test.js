@@ -142,7 +142,7 @@ test("parseFromBoom", () => {
   expect(date.getTime()).toEqual(1428917793750)
 })
 
-test("parseFromBoom", () => {
+test("parseFromBoom with no ns", () => {
   const timeObj = {
     sec: 1428917793,
     ns: 0

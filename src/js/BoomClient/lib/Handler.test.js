@@ -9,6 +9,6 @@ test("#channel accepts multiple callbacks for same number", () => {
   handler.channel(1, cb2)
   handler.channelCallback(1, "payload")
 
-  expect(cb1).toBeCalled()
-  expect(cb2).toBeCalled()
+  expect(cb1).toHaveBeenCalled()
+  expect(cb2).toHaveBeenCalled()
 })

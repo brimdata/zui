@@ -84,13 +84,6 @@ test("#canGoForward when two then back", () => {
   expect(history.canGoForward()).toBe(true)
 })
 
-test("#canGoForward when two then back", () => {
-  history.push("a")
-  history.push("b")
-  history.goBack()
-  expect(history.canGoForward()).toBe(true)
-})
-
 test("#push after going back", () => {
   history.push("a")
   history.push("b")
@@ -99,18 +92,6 @@ test("#push after going back", () => {
   history.push("d")
   expect(history.getEntries()).toEqual(["a", "b", "d"])
   expect(history.getCurrentEntry()).toEqual("d")
-})
-
-test("#push after going back", () => {
-  history.push("a")
-  history.push("b")
-  history.push("c")
-  history.goBack()
-  history.goBack()
-  history.push("d")
-  expect(history.getEntries()).toEqual(["a", "d"])
-  history.goBack()
-  expect(history.getCurrentEntry()).toEqual("a")
 })
 
 test("#goBack can be called many times", () => {

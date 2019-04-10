@@ -59,7 +59,7 @@ test("analytics always use the outer time window", done => {
   ])
 
   setTimeout(() => {
-    expect(stream).toBeCalledWith(
+    expect(stream).toHaveBeenCalledWith(
       expect.any(Object),
       expect.objectContaining({
         searchSpan: [new Date(2000, 0, 1), new Date(3000, 0, 1)]
@@ -82,7 +82,7 @@ test("search with inner time window if set", done => {
   ])
 
   setTimeout(() => {
-    expect(stream).toBeCalledWith(
+    expect(stream).toHaveBeenCalledWith(
       expect.any(Object),
       expect.objectContaining({
         searchSpan: [new Date(2015, 2, 10), new Date(2015, 2, 11)]
@@ -105,7 +105,7 @@ test("search with inner time", done => {
   ])
 
   setTimeout(() => {
-    expect(search).toBeCalledWith(
+    expect(search).toHaveBeenCalledWith(
       `_path = conn | head ${PER_PAGE}`,
       expect.any(Object)
     )
@@ -127,7 +127,7 @@ test("search with outerTimeWindow if no inner", done => {
   ])
 
   setTimeout(() => {
-    expect(stream).toBeCalledWith(
+    expect(stream).toHaveBeenCalledWith(
       expect.any(Object),
       expect.objectContaining({
         searchSpan: [new Date(2000, 0, 1), new Date(3000, 0, 1)]
@@ -137,7 +137,7 @@ test("search with outerTimeWindow if no inner", done => {
   })
 })
 
-test.only("fetching a regular search", done => {
+test("fetching a regular search", done => {
   boom.stubStream("stream")
   const actions = [
     setSpaceInfo(spaceInfo),

@@ -89,7 +89,7 @@ describe("boomSearches reducer", () => {
       killBoomSearches()
     ])
 
-    expect(killFunc).toBeCalledTimes(2)
+    expect(killFunc).toHaveBeenCalledTimes(2)
   })
 
   test("#killBoomSearches by tag", () => {
@@ -107,7 +107,7 @@ describe("boomSearches reducer", () => {
       killBoomSearches("viewer")
     ])
 
-    expect(killFunc).toBeCalledTimes(1)
+    expect(killFunc).toHaveBeenCalledTimes(1)
   })
 
   test("#killBoomSearches runs abort callback", () => {
@@ -121,7 +121,7 @@ describe("boomSearches reducer", () => {
       killBoomSearches()
     ])
 
-    expect(func).toBeCalledWith()
+    expect(func).toHaveBeenCalledWith()
   })
 
   test("#cancelBoomSearches does not run abort callback", () => {
@@ -135,6 +135,6 @@ describe("boomSearches reducer", () => {
       cancelBoomSearches()
     ])
 
-    expect(func).toBeCalledWith(false)
+    expect(func).toHaveBeenCalledWith(false)
   })
 })

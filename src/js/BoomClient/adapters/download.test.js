@@ -18,7 +18,7 @@ describe.skip("downloading packets", () => {
       .then(file => {
         stat(file)
           .then(stats => {
-            expect(stats.isFile())
+            expect(stats.isFile()).toBeTruthy()
             done()
           })
           .catch(done)

@@ -20,7 +20,7 @@ test("fetching packets is a success", done => {
   store
     .dispatch(fetchPackets(conn()))
     .then(() => {
-      expect(packets).toBeCalledWith(
+      expect(packets).toHaveBeenCalledWith(
         expect.objectContaining({
           dst_host: "239.255.255.250",
           dst_port: "1900",
@@ -56,7 +56,7 @@ test("fetching packets is a failure", done => {
   store
     .dispatch(fetchPackets(conn()))
     .then(() => {
-      expect(packets).toBeCalledWith(
+      expect(packets).toHaveBeenCalledWith(
         expect.objectContaining({
           dst_host: "239.255.255.250",
           dst_port: "1900",

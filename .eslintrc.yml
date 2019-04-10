@@ -16,6 +16,7 @@ extends:
   - eslint:recommended
   - plugin:react/recommended
   - plugin:flowtype/recommended
+  - plugin:jest/recommended
 
 settings:
   react:

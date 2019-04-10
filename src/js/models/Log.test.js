@@ -45,7 +45,7 @@ test("getNs on a time field", () => {
   expect(log.getNs("ts")).toEqual(369843000)
 })
 
-test("getNs on a time field", () => {
+test("getNs on an inverval field", () => {
   const log = conn()
   // "2.000293"
   expect(log.getNs("duration")).toEqual(293000)

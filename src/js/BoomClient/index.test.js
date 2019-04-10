@@ -100,7 +100,7 @@ describe.skip("external tests (need a running boomd)", () => {
 
     boom.search("* | count()")
 
-    expect(request).toBeCalledWith(
+    expect(request).toHaveBeenCalledWith(
       "http://localhost:9867/search",
       expect.any(Object)
     )
@@ -116,7 +116,7 @@ describe.skip("external tests (need a running boomd)", () => {
 
     boom.search("* | count()")
 
-    expect(request).toBeCalledWith(
+    expect(request).toHaveBeenCalledWith(
       "http://localhost:9867/search?rewrite=f&useindex=f",
       expect.any(Object)
     )
