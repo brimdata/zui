@@ -55,6 +55,10 @@ export function first(array: *[]) {
   return array[0]
 }
 
+export function last(array: *[]) {
+  return array[array.length - 1]
+}
+
 export function same(array: *[]) {
   if (array.length === 0) return true
   if (array.length === 1) return true

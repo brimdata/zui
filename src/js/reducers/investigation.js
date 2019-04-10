@@ -1,8 +1,19 @@
 /* @flow */
-import type {Action, State} from "./types"
+import type {SearchBar} from "./searchBar"
+import type {Span} from "../BoomClient/types"
+import type {State} from "./types"
+import {last} from "../lib/Array"
+import Log from "../models/Log"
 
 export type Investigation = Probe[]
-export type Probe = {}
+export type Probe = {
+  ts: Date,
+  searchBar: SearchBar,
+  span: Span,
+  space: string,
+  note: ?string,
+  logs: Log[]
+}
 
 export default function(state: Investigation = [], a: *) {
   switch (a.type) {
@@ -14,6 +25,8 @@ export default function(state: Investigation = [], a: *) {
         state[state.length - 1] = {...tmp, ...a.probe}
       }
       return [...state]
+    case "INVESTIGATION_CLEAR":
+      return []
     default:
       return state
   }
@@ -21,4 +34,8 @@ export default function(state: Investigation = [], a: *) {
 
 export function getInvestigation(state: State) {
   return state.investigation
+}
+
+export function getCurrentProbe(state: State) {
+  return last(getInvestigation(state))
 }

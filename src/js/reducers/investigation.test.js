@@ -13,12 +13,12 @@ function get() {
 }
 
 test("new probe", () => {
-  const probe = {ts: new Date().getTime()}
+  const probe = {ts: new Date()}
   store.dispatch(newProbe(probe))
 
   expect(get()).toEqual([
     {
-      ts: expect.any(Number)
+      ts: expect.any(Date)
     }
   ])
 })

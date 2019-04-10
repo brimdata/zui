@@ -7,6 +7,7 @@ import {clearLogs} from "./logs"
 import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
 import {pushSearchHistory} from "./searchHistory"
+import {recordSearch} from "../investigation/recordSearch"
 import {updateTab} from "../actions/view"
 import {validateProgram} from "./searchBar"
 import SearchFactory from "../models/searches/SearchFactory"
@@ -21,7 +22,11 @@ export const fetchMainSearch = ({
   const state = getState()
   if (!dispatch(validateProgram())) return
   dispatch(updateTab(state))
-  if (saveToHistory) dispatch(pushSearchHistory())
+
+  if (saveToHistory) {
+    dispatch(recordSearch())
+    dispatch(pushSearchHistory())
+  }
 
   dispatch(cancelBoomSearches("viewer"))
   dispatch(clearLogs())
