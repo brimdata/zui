@@ -33,7 +33,7 @@ type StateProps = {|
   data: {ts: Date, [string]: number}[],
   timeBinCount: number,
   timeWindow: DateTuple,
-  innerTimeWindow: DateTuple,
+  innerTimeWindow: ?DateTuple,
   interval: Interval,
   keys: string[],
   isFetching: boolean

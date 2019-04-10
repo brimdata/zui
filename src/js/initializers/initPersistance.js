@@ -2,7 +2,9 @@
 
 import pick from "lodash/pick"
 import throttle from "lodash/throttle"
+
 import type {State} from "../reducers/types"
+import {deserialize, serialize} from "../serialization/serialization"
 
 const KEY = "LOOKY_STATE.1"
 const PERSIST = [
@@ -16,10 +18,11 @@ const PERSIST = [
   "tableColumnSets",
   "spaces"
 ]
-
 export const saveState = (state: State) => {
+  const toSave = pick(state, ...PERSIST) || {}
+  const json = serialize(toSave)
   try {
-    const serializedState = JSON.stringify(pick(state, ...PERSIST))
+    const serializedState = JSON.stringify(json)
     localStorage.setItem(KEY, serializedState)
   } catch (_err) {
     console.error("Unable to save the state")
@@ -30,7 +33,8 @@ export const loadState = () => {
   try {
     const serializedState = localStorage.getItem(KEY)
     if (typeof serializedState === "string") {
-      return JSON.parse(serializedState)
+      const json = JSON.parse(serializedState)
+      return deserialize(json)
     } else {
       return undefined
     }

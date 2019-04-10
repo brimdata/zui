@@ -1,12 +1,8 @@
 /* @flow */
 
-import createReducer from "./createReducer"
-import {createSelector} from "reselect"
-import isArray from "lodash/isArray"
-import isDate from "lodash/isDate"
-import {last} from "../lib/TimeWindow"
+import {type DateTuple, last} from "../lib/TimeWindow"
 import type {State} from "./types"
-import type {DateTuple} from "../lib/TimeWindow"
+import createReducer from "./createReducer"
 
 const initialState = {
   inner: null,
@@ -46,21 +42,6 @@ export default createReducer(initialState, {
   })
 })
 
-export const getRawOuterTimeWindow = (state: State) => state.timeWindow.outer
-export const getRawInnerTimeWindow = (state: State) => state.timeWindow.inner
-
-export const getOuterTimeWindow = createSelector<State, void, *, *>(
-  getRawOuterTimeWindow,
-  value => makeDates(value)
-)
-
-export const getInnerTimeWindow = createSelector<State, void, *, *>(
-  getRawInnerTimeWindow,
-  value => makeDates(value)
-)
+export const getOuterTimeWindow = (state: State) => state.timeWindow.outer
+export const getInnerTimeWindow = (state: State) => state.timeWindow.inner
 export const getTimeWindow = getOuterTimeWindow
-
-const makeDates = (value): DateTuple =>
-  isArray(value)
-    ? value.map(item => (isDate(item) ? item : new Date(item)))
-    : value

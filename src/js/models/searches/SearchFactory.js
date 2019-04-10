@@ -6,7 +6,7 @@ import HistogramSearch from "./HistogramSearch"
 import LogSearch from "./LogSearch"
 
 export default class SearchFactory {
-  static createAll(program: string, innerSpan: Span, outerSpan: Span) {
+  static createAll(program: string, innerSpan: ?Span, outerSpan: Span) {
     if (hasAnalytics(program)) {
       return [new AnalyticSearch(program, outerSpan)]
     }
