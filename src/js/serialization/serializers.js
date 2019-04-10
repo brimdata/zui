@@ -17,6 +17,7 @@ export function getSerializer(type: string) {
     case "Object":
     case "Array":
     case "String":
+    case "Boolean":
       return basicSerializer
     case "Date":
       return dateSerializer
