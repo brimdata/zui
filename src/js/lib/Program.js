@@ -10,8 +10,9 @@ export type Program = string
 
 export const hasAnalytics = (string: Program) => {
   const [ast] = parse(string)
-  for (let proc of getProcs(ast)) {
-    if (!TUPLE_PROCS.includes(proc.op)) return true
+
+  for (let proc of getProcNames(ast)) {
+    if (!TUPLE_PROCS.includes(proc)) return true
   }
   return false
 }
@@ -36,7 +37,6 @@ export const addHeadProc = (program: Program, count: number) => {
 export const getHeadCount = (program: Program) => {
   const [ast] = parse(program)
   const head = getProcs(ast).find(({op}) => op === HEAD_PROC)
-
   return head ? head.count : 0
 }
 
