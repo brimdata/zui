@@ -56,7 +56,7 @@ export const getGroupByProc = (ast: *) => {
 }
 
 function joinProcs(procs: string[]) {
-  return procs.join("; ")
+  return "(" + procs.join("; ") + ")"
 }
 
 export function joinParts(filter: string, proc: string) {
@@ -100,8 +100,8 @@ export function deaggregate(program: string, log: Log) {
   if (!groupByProc) return null
 
   function getKeyFromLog(key) {
-    let val = log.get(key)
-    if (val) return `${key}=${log.get(key)}`
+    let field = log.getField(key)
+    if (field) return `${key}=${field.queryableValue()}`
     else return ""
   }
 

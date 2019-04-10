@@ -140,7 +140,7 @@ describe("Parallelizing multiple programs", () => {
 
   test("#parallelizeProcs when programs have same filter", () => {
     expect(parallelizeProcs([a, b, c])).toEqual(
-      "md5=123 | count(); head 5; count() by _path"
+      "md5=123 | (count(); head 5; count() by _path)"
     )
   })
 

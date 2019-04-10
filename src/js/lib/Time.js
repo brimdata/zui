@@ -116,3 +116,5 @@ export const fakeZone = (date: Date) => {
 }
 
 export const toObject = (date: Date) => Moment(date).toObject()
+
+export const timeAgo = (date: Date) => Moment(date).fromNow()
