@@ -3,7 +3,7 @@
 const {app, Menu} = require("electron")
 
 module.exports = {
-  createMenu: browserWindow => {
+  createMenu: (browserWindow) => {
     const template = [
       {
         label: "Edit",
@@ -36,6 +36,17 @@ module.exports = {
             label: "Focus Search Bar",
             accelerator: "CmdOrCtrl+L",
             click: () => browserWindow.webContents.send("focusSearchBar")
+          },
+          {type: "separator"},
+          {
+            label: "Back",
+            accelerator: "CmdOrCtrl+Left",
+            click: () => browserWindow.webContents.send("back")
+          },
+          {
+            label: "Forward",
+            accelerator: "CmdOrCtrl+Right",
+            click: () => browserWindow.webContents.send("forward")
           }
         ]
       },
