@@ -44,7 +44,7 @@ test("going back twice", () => {
   expect(history.getCurrentEntry()).toEqual("a")
 })
 
-test("going back twice", () => {
+test("going back twice then forward twice", () => {
   const history = new InputHistory()
 
   history.push("a")

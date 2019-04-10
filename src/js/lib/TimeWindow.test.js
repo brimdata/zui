@@ -32,7 +32,7 @@ test("humanDuration", () => {
   expect(duration).toBe("3 hours")
 })
 
-test("inSameUnit", () => {
+test("inSameUnit when false", () => {
   const window = [
     new Date(2000, 1, 15, 12, 30, 0, 0),
     new Date(2000, 1, 15, 15, 30, 45, 0)
@@ -42,7 +42,7 @@ test("inSameUnit", () => {
   expect(duration).toBe(false)
 })
 
-test("inSameUnit", () => {
+test("inSameUnit when true", () => {
   const window = [
     new Date(2000, 1, 15, 12, 30, 0, 0),
     new Date(2000, 1, 15, 15, 30, 45, 0)

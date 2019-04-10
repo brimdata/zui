@@ -26,12 +26,6 @@ test("removes *", () => {
   expect(drillDown(program, result)).toBe("id.orig_h=192.168.0.54")
 })
 
-test("removes *", () => {
-  const program = "* | count() by id.orig_h"
-
-  expect(drillDown(program, result)).toBe("id.orig_h=192.168.0.54")
-})
-
 test("easy peasy", () => {
   const program = "names james | count() by proto"
 

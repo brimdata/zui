@@ -52,7 +52,7 @@ test("#searching with BrowserFetch adapter includes options", () => {
 
   boom.search("*")
 
-  expect(fetchFunc).toBeCalledWith(
+  expect(fetchFunc).toHaveBeenCalledWith(
     "http://boom.com:123/search?rewrite=f",
     expect.any(Object)
   )

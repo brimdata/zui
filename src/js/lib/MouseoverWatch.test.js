@@ -34,7 +34,7 @@ test("runs the condition", done => {
   document.dispatchEvent(new MouseEvent("mousemove"))
 
   setTimeout(() => {
-    expect(condition).toBeCalled()
+    expect(condition).toHaveBeenCalled()
     done()
   })
 })
@@ -46,7 +46,7 @@ test("onEnter is called when entering", () => {
     .onEnter(enter)
     .run([42, 42])
 
-  expect(enter).toBeCalled()
+  expect(enter).toHaveBeenCalled()
 })
 
 test("fires onEnter once when it enters", () => {
@@ -59,7 +59,7 @@ test("fires onEnter once when it enters", () => {
     .run([42, 42])
     .run([42, 42])
 
-  expect(enter).toBeCalledTimes(1)
+  expect(enter).toHaveBeenCalledTimes(1)
 })
 
 test("onExit is called when leaving", () => {
@@ -71,7 +71,7 @@ test("onExit is called when leaving", () => {
     .run([1, 1])
     .run([2, 2])
 
-  expect(exit).toBeCalled()
+  expect(exit).toHaveBeenCalled()
 })
 
 test("onExit is called once when outside", () => {
@@ -84,7 +84,7 @@ test("onExit is called once when outside", () => {
     .run([2, 2])
     .run([2, 2])
 
-  expect(exit).toBeCalledTimes(1)
+  expect(exit).toHaveBeenCalledTimes(1)
 })
 
 test("exit delay", done => {
@@ -100,11 +100,11 @@ test("exit delay", done => {
     .run([42, 42])
     .run([0, 0])
 
-  expect(enter).toBeCalled()
-  expect(exit).not.toBeCalled()
+  expect(enter).toHaveBeenCalled()
+  expect(exit).not.toHaveBeenCalled()
 
   setTimeout(() => {
-    expect(exit).toBeCalledTimes(1)
+    expect(exit).toHaveBeenCalledTimes(1)
     done()
   }, 10)
 })
@@ -123,10 +123,10 @@ test("exiting with a delay then re-entering cancels timeout", done => {
     .run([0, 0])
     .run([42, 42])
 
-  expect(enter).toBeCalledTimes(1)
+  expect(enter).toHaveBeenCalledTimes(1)
 
   setTimeout(() => {
-    expect(exit).not.toBeCalled()
+    expect(exit).not.toHaveBeenCalled()
     done()
   }, 10)
 })

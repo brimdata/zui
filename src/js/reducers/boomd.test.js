@@ -35,7 +35,7 @@ test("setting use analytics cache", () => {
   expect(getUseBoomCache(store.getState())).toEqual(false)
 })
 
-test("setting use analytics cache", () => {
+test("setting use index", () => {
   const store = initTestStore()
 
   store.dispatch(useBoomIndex(true))

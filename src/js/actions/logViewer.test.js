@@ -96,7 +96,7 @@ test("#fetchAhead adds 1ms to ts of last change", () => {
   store.dispatch(logViewer.fetchAhead())
 
   const lastChangeTs = tuples[1][1]
-  expect(search).toBeCalledWith(
+  expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({
       searchSpan: [new Date(0), new Date(+lastChangeTs * 1000 + 1)]
@@ -110,7 +110,7 @@ test("#fetchAhead when there is only 1 event", () => {
   store.dispatch(spliceLogs())
   store.dispatch(logViewer.fetchAhead())
 
-  expect(search).toBeCalledWith(
+  expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({
       searchSpan: [new Date(0), new Date(10 * 1000)]
