@@ -16,10 +16,8 @@ const PERSIST = [
   "view",
   "starredLogs",
   "tableColumnSets",
-  "spaces",
-  "investigation"
+  "spaces"
 ]
-
 export const saveState = (state: State) => {
   const toSave = pick(state, ...PERSIST) || {}
   const json = serialize(toSave)
