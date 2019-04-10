@@ -56,7 +56,7 @@ export const getGroupByProc = (ast: *) => {
 }
 
 function joinProcs(procs: string[]) {
-  return procs.join("; ")
+  return "(" + procs.join("; ") + ")"
 }
 
 export function joinParts(filter: string, proc: string) {
