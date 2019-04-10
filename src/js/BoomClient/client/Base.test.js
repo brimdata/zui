@@ -18,8 +18,27 @@ test("#inspectSearch", () => {
     method: "POST",
     url: "http://boom.com:123/search?rewrite=f",
     body: {
-      search: {op: "BooleanLiteral", value: true},
-      proc: {op: "ReducerProc", reducers: [{op: "Count", var: "count"}]},
+      proc: {
+        op: "SequentialProc",
+        procs: [
+          {
+            op: "SourceProc",
+            filter: {
+              op: "BooleanLiteral",
+              value: true
+            }
+          },
+          {
+            op: "ReducerProc",
+            reducers: [
+              {
+                op: "Count",
+                var: "count"
+              }
+            ]
+          }
+        ]
+      },
       space: "default",
       dir: -1,
       span: {ts: {sec: 0, ns: 0}, dur: {sec: 0, ns: 1000000}}

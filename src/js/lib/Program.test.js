@@ -24,7 +24,7 @@ describe("#hasAnalytics", () => {
   })
 
   test("parallel procs when one does have analytics", () => {
-    expect(hasAnalytics("* | every 1hr count(); count() by id.resp_h")).toBe(
+    expect(hasAnalytics("* | (every 1hr count(); count() by id.resp_h)")).toBe(
       true
     )
   })
@@ -82,7 +82,7 @@ describe("#getHeadCount", () => {
   })
 
   test("with many procs", () => {
-    expect(getHeadCount("* | head 1000; count()")).toBe(1000)
+    expect(getHeadCount("* | (head 1000; count())")).toBe(1000)
   })
 
   test("with no head", () => {

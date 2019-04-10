@@ -107,6 +107,5 @@ export const validateProgram = (): Thunk => (dispatch, getState) => {
     )
     return false
   }
-
   return true
 }

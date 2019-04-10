@@ -137,7 +137,7 @@ test("search with outerTimeWindow if no inner", done => {
   })
 })
 
-test("fetching a regular search", done => {
+test.only("fetching a regular search", done => {
   boom.stubStream("stream")
   const actions = [
     setSpaceInfo(spaceInfo),
