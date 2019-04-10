@@ -1,18 +1,17 @@
 /* @flow */
 
+export const itestLocator = "data-test-locator"
+
 const dataAttrs = {
   // The purpose of this object is to have a single source of truth where tests
   // and code can identify and find specific elements that integration tests
   // are interested in. This is done by injecting custom data attributes [1]
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
-  histogram: {
-    attr: "data-test-locator",
-    value: "histogram-chart"
-  }
+  histogram: "histogram-chart"
 }
 
-const dataSets = {
+export const dataSets = {
   // The purpose of this object is to have a single source of truth about
   // bounds and metrics related to test data. These numbers are also dependent
   // on product behavior. For example, if the default time window changes from
@@ -33,16 +32,17 @@ const dataSets = {
 // instead use what's defined here. Likewise if product moves stuff around,
 // these can be updated in one place.
 // The preferred convention is to use CSS selectors, not Xpaths.
-const _histogramSelector = `[${dataAttrs.histogram.attr}='${
-  dataAttrs.histogram.value
-}']`
+const _histogramSelector = `[${itestLocator}='${dataAttrs.histogram}']`
 
-const selectors = {
+const dataAttrSelector = (component: string) =>
+  `[${itestLocator}='` + dataAttrs[component] + "']"
+
+export const selectors = {
   histogram: {
-    topLevel: _histogramSelector,
-    gElem: `${_histogramSelector} g`,
-    rectElem: `${_histogramSelector} rect`
+    topLevel: dataAttrSelector("histogram"),
+    gElem: dataAttrSelector("histogram") + " g",
+    rectElem: dataAttrSelector("histogram") + " rect"
   }
 }
 
-export {dataAttrs, dataSets, selectors}
+export const d3ElementAttr = (component: string) => dataAttrs[component]
