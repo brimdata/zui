@@ -2,12 +2,14 @@
 import {ipcRenderer} from "electron"
 
 import type {Store} from "../reducers/types"
-import {clearState} from "./initPersistance"
 import {
+  changeSearchBarInput,
+  goBack,
+  goForward,
   pinSearchBar,
-  removeAllSearchBarPins,
-  changeSearchBarInput
+  removeAllSearchBarPins
 } from "../actions/searchBar"
+import {clearState} from "./initPersistance"
 import {
   showModal,
   toggleLeftSidebar,
@@ -52,5 +54,13 @@ export default (store: Store) => {
 
   ipcRenderer.on("showPreferences", () => {
     store.dispatch(showModal("settings"))
+  })
+
+  ipcRenderer.on("back", () => {
+    store.dispatch(goBack())
+  })
+
+  ipcRenderer.on("forward", () => {
+    store.dispatch(goForward())
   })
 }
