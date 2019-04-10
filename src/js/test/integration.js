@@ -8,7 +8,8 @@ const dataAttrs = {
   // are interested in. This is done by injecting custom data attributes [1]
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
-  histogram: "histogram-chart"
+  histogram: "histogram-chart",
+  notification: "notification-header"
 }
 
 export const dataSets = {
@@ -42,7 +43,14 @@ export const selectors = {
     topLevel: dataAttrSelector("histogram"),
     gElem: dataAttrSelector("histogram") + " g",
     rectElem: dataAttrSelector("histogram") + " rect"
-  }
+  },
+  notification: dataAttrSelector("notification")
 }
 
 export const d3ElementAttr = (component: string) => dataAttrs[component]
+
+export const reactElementProps = (component: string) => {
+  return {
+    [itestLocator]: dataAttrs[component]
+  }
+}
