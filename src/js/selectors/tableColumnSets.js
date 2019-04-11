@@ -15,7 +15,7 @@ export const getTableColumnSets = (state: State) => {
 
 export const getCurrentTableColumnsId = createSelector<State, void, string, *>(
   getLogs,
-  logs => {
+  (logs) => {
     if (logs.length === 0) return "none"
 
     const td = logs[0].get("_td")

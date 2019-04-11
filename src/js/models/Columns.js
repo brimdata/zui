@@ -23,7 +23,7 @@ export default class Columns {
   }
 
   getTds(): string[] {
-    return uniq(this.cols.map(c => c.td))
+    return uniq(this.cols.map((c) => c.td))
   }
 
   getAll() {
@@ -31,7 +31,7 @@ export default class Columns {
   }
 
   getVisible(): Column[] {
-    return this.cols.filter(col => col.isVisible)
+    return this.cols.filter((col) => col.isVisible)
   }
 
   showHeader() {

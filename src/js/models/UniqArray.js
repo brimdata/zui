@@ -15,7 +15,7 @@ export default class UniqArray {
   }
 
   exists(item: *) {
-    return !!this.array.find(i => this.compareFn(i, item))
+    return !!this.array.find((i) => this.compareFn(i, item))
   }
 
   toArray() {

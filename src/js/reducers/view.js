@@ -39,39 +39,39 @@ export default createReducer(initalState, {
     ...state,
     modal
   }),
-  MODAL_HIDE: state => ({
+  MODAL_HIDE: (state) => ({
     ...state,
     modal: null
   }),
-  LEFT_SIDEBAR_SHOW: state => ({
+  LEFT_SIDEBAR_SHOW: (state) => ({
     ...state,
     leftSidebarIsOpen: true
   }),
-  LEFT_SIDEBAR_HIDE: state => ({
+  LEFT_SIDEBAR_HIDE: (state) => ({
     ...state,
     leftSidebarIsOpen: false
   }),
-  RIGHT_SIDEBAR_SHOW: state => ({
+  RIGHT_SIDEBAR_SHOW: (state) => ({
     ...state,
     rightSidebarIsOpen: true
   }),
-  RIGHT_SIDEBAR_HIDE: state => ({
+  RIGHT_SIDEBAR_HIDE: (state) => ({
     ...state,
     rightSidebarIsOpen: false
   }),
-  LEFT_SIDEBAR_TOGGLE: state => ({
+  LEFT_SIDEBAR_TOGGLE: (state) => ({
     ...state,
     leftSidebarIsOpen: !state.leftSidebarIsOpen
   }),
-  RIGHT_SIDEBAR_TOGGLE: state => ({
+  RIGHT_SIDEBAR_TOGGLE: (state) => ({
     ...state,
     rightSidebarIsOpen: !state.rightSidebarIsOpen
   }),
-  SHOW_LOGS_TAB: state => ({
+  SHOW_LOGS_TAB: (state) => ({
     ...state,
     resultsTab: LOGS
   }),
-  SHOW_ANALYTICS_TAB: state => ({
+  SHOW_ANALYTICS_TAB: (state) => ({
     ...state,
     resultsTab: ANALYTICS
   }),
@@ -87,19 +87,19 @@ export default createReducer(initalState, {
     ...state,
     leftSidebarWidth: width
   }),
-  DOWNLOADS_SHOW: state => ({
+  DOWNLOADS_SHOW: (state) => ({
     ...state,
     downloadsIsOpen: true
   }),
-  DOWNLOADS_HIDE: state => ({
+  DOWNLOADS_HIDE: (state) => ({
     ...state,
     downloadsIsOpen: false
   }),
-  SEARCH_INSPECTOR_SHOW: state => ({
+  SEARCH_INSPECTOR_SHOW: (state) => ({
     ...state,
     searchInspectorIsOpen: true
   }),
-  SEARCH_INSPECTOR_HIDE: state => ({
+  SEARCH_INSPECTOR_HIDE: (state) => ({
     ...state,
     searchInspectorIsOpen: false
   })

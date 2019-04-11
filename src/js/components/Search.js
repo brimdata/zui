@@ -47,7 +47,7 @@ export default class Search extends React.Component<Props, LocalState> {
     props
       .dispatch(init())
       .then(() => this.setState({ready: true}))
-      .catch(e => this.setState({error: ErrorFactory.create(e)}))
+      .catch((e) => this.setState({error: ErrorFactory.create(e)}))
   }
 
   render() {

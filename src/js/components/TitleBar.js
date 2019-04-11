@@ -33,7 +33,7 @@ export default class TitleBar extends React.Component<Props> {
   }
 }
 
-const stateToProps = state => ({
+const stateToProps = (state) => ({
   host: getBoomHost(state),
   port: getBoomPort(state)
 })

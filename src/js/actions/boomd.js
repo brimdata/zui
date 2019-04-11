@@ -53,7 +53,7 @@ export const connectBoomd = (): Thunk => (dispatch, getState) => {
   })
 }
 
-export const checkLookytalkVersion = (): Thunk => dispatch => {
+export const checkLookytalkVersion = (): Thunk => (dispatch) => {
   return dispatch(fetchLookytalkVersions()).then(({server, client}) => {
     if (client !== server) {
       let error = new LookytalkVersionError("", {

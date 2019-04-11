@@ -29,9 +29,9 @@ export const getEventLogs = createSelector<State, void, *, *, *, *>(
 
 export const getAnalysisLogs = createSelector<State, void, *, *>(
   analysis.getAnalysis,
-  data => {
+  (data) => {
     const {descriptor, tuples} = data
-    return tuples.map(t => new Log(t, descriptor))
+    return tuples.map((t) => new Log(t, descriptor))
   }
 )
 

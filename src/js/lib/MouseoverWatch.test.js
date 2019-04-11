@@ -27,7 +27,7 @@ test("run the default on exit", () => {
     .run([0, 0])
 })
 
-test("runs the condition", done => {
+test("runs the condition", (done) => {
   const condition = jest.fn()
   watcher.condition(condition)
 
@@ -87,7 +87,7 @@ test("onExit is called once when outside", () => {
   expect(exit).toHaveBeenCalledTimes(1)
 })
 
-test("exit delay", done => {
+test("exit delay", (done) => {
   const exit = jest.fn()
   const enter = jest.fn()
 
@@ -109,7 +109,7 @@ test("exit delay", done => {
   }, 10)
 })
 
-test("exiting with a delay then re-entering cancels timeout", done => {
+test("exiting with a delay then re-entering cancels timeout", (done) => {
   const exit = jest.fn()
   const enter = jest.fn()
 

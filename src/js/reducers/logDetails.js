@@ -22,7 +22,7 @@ export default createReducer(initialState, {
       prevPosition: state.position
     }
   },
-  LOG_DETAIL_BACK: state => {
+  LOG_DETAIL_BACK: (state) => {
     const history = toHistory(state)
     history.goBack()
     return {
@@ -31,7 +31,7 @@ export default createReducer(initialState, {
       prevPosition: state.position
     }
   },
-  LOG_DETAIL_FORWARD: state => {
+  LOG_DETAIL_FORWARD: (state) => {
     const history = toHistory(state)
     history.goForward()
     return {

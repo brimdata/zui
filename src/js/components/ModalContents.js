@@ -25,7 +25,7 @@ class ModalContents extends Component<Props> {
       >
         <div
           className={`modal-contents ${className}`}
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           <header className="modal-header">
             <Fieldset>{title}</Fieldset>

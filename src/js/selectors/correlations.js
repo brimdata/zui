@@ -31,6 +31,6 @@ export const getLogCorrelations = createSelector<State, void, *, *, *, *, *>(
 )
 
 const uidOrder = (logs: Log[]) => {
-  const findConn = log => log.get("_path") === "conn"
+  const findConn = (log) => log.get("_path") === "conn"
   return toFront(Log.sort(logs, "ts"), findConn)
 }

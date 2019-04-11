@@ -65,7 +65,7 @@ describe("null cases", () => {
     "un->pars=able"
   ]
 
-  nullPrograms.forEach(program => {
+  nullPrograms.forEach((program) => {
     test(`${program} returns null`, () => {
       expect(drillDown(program, new Log([], []))).toBe(null)
     })

@@ -25,7 +25,7 @@ export const getSearchProgram = createSelector<State, void, *, *, *>(
   getSearchBarPins,
   getSearchBarInputValue,
   (pinned, current) => {
-    const program = [...pinned, current].map(s => trim(s)).join(" ")
+    const program = [...pinned, current].map((s) => trim(s)).join(" ")
     return program.length === 0 ? "*" : program
   }
 )
@@ -34,14 +34,14 @@ export const getPrevSearchProgram = createSelector<State, void, *, *, *>(
   getSearchBarPins,
   getSearchBarPreviousInputValue,
   (pinned, prev) => {
-    const program = [...pinned, prev].map(s => trim(s)).join(" ")
+    const program = [...pinned, prev].map((s) => trim(s)).join(" ")
     return program.length === 0 ? "*" : program
   }
 )
 
 export const getAst = createSelector<State, void, *, *>(
   getSearchProgram,
-  searchProgram => {
+  (searchProgram) => {
     const ast = new Ast(searchProgram).toJSON()
     return JSON.stringify(ast, null, 2)
   }

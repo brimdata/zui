@@ -56,7 +56,7 @@ test("depth first search from left", () => {
   const tree = new Tree(exampleTree)
 
   const names = []
-  tree.dfSearch(node => names.push(node.data))
+  tree.dfSearch((node) => names.push(node.data))
 
   expect(names).toEqual([
     "David",
@@ -72,7 +72,7 @@ test("depth first search from left", () => {
 test("depth first search to Array", () => {
   const tree = new Tree(exampleTree)
 
-  const names = tree.dfArray().map(node => node.data)
+  const names = tree.dfArray().map((node) => node.data)
 
   expect(names).toEqual([
     "David",
@@ -89,7 +89,7 @@ test("bredth first search from left", () => {
   const tree = new Tree(exampleTree)
 
   const names = []
-  tree.bfSearch(node => names.push(node.data))
+  tree.bfSearch((node) => names.push(node.data))
 
   expect(names).toEqual([
     "David",
@@ -105,7 +105,7 @@ test("bredth first search from left", () => {
 test("bredth first search to Array", () => {
   const tree = new Tree(exampleTree)
 
-  const names = tree.bfArray().map(node => node.data)
+  const names = tree.bfArray().map((node) => node.data)
 
   expect(names).toEqual([
     "David",

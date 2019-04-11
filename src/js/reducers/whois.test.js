@@ -8,8 +8,8 @@ beforeEach(() => {
   store = initTestStore()
 })
 
-test("whois lookup success", done => {
-  const fakeClientFunc = () => new Promise(resolve => resolve("i am"))
+test("whois lookup success", (done) => {
+  const fakeClientFunc = () => new Promise((resolve) => resolve("i am"))
   const action = actions.fetchWhois("www.example.com", fakeClientFunc)
 
   store.dispatch(action).then(() => {
@@ -20,7 +20,7 @@ test("whois lookup success", done => {
   })
 })
 
-test("whois lookup error", done => {
+test("whois lookup error", (done) => {
   const fakeClientFunc = () => new Promise((_, reject) => reject("error here"))
   const action = actions.fetchWhois("www.example.com", fakeClientFunc)
 

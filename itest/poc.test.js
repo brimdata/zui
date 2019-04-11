@@ -18,15 +18,15 @@ const TestTimeout = 60000
 const retry = (f, attempts = 100, delay = 100) => {
   return new Promise((resolve, reject) => {
     f()
-      .then(ret => resolve(ret))
-      .catch(err => {
+      .then((ret) => resolve(ret))
+      .catch((err) => {
         setTimeout(() => {
           if (attempts === 1) {
             reject(err)
           } else {
             retry(f, attempts - 1, delay)
-              .then(ret => resolve(ret))
-              .catch(err => reject(err))
+              .then((ret) => resolve(ret))
+              .catch((err) => reject(err))
           }
         }, delay)
       })
@@ -44,14 +44,14 @@ const retryUntil = (f, cond_f, attempts = 5, delay = 1000) =>
     () =>
       new Promise((resolve, reject) => {
         f()
-          .then(val => {
+          .then((val) => {
             if (cond_f(val)) {
               resolve(val)
             } else {
               reject(new Error(`retryUntil condition failure: ${val}`))
             }
           })
-          .catch(err => {
+          .catch((err) => {
             reject(`retryUntil promise failure: ${err}`)
           })
       }),
@@ -60,7 +60,7 @@ const retryUntil = (f, cond_f, attempts = 5, delay = 1000) =>
   )
 
 const verifySingleRectAttr = (app, pathClass, attr) =>
-  app.client.getAttribute(`.${pathClass} rect`, attr).then(vals => {
+  app.client.getAttribute(`.${pathClass} rect`, attr).then((vals) => {
     // Handle case of a single rect, in which case webdriver doesn't return an
     // array of 1 item but instead a scalar
     if (typeof vals === "string") {
@@ -71,7 +71,7 @@ const verifySingleRectAttr = (app, pathClass, attr) =>
         `expected Array for ${pathClass} attr ${attr}; got ${vals}`
       )
     }
-    vals.forEach(val => {
+    vals.forEach((val) => {
       expect(Number(val)).toBeGreaterThanOrEqual(
         dataSets.corelight.histogram.rectAttrMin
       )
@@ -82,19 +82,19 @@ const verifySingleRectAttr = (app, pathClass, attr) =>
 
 const verifyPathClassRect = (app, pathClass) =>
   Promise.all(
-    ["x", "y", "width", "height"].map(attr =>
+    ["x", "y", "width", "height"].map((attr) =>
       verifySingleRectAttr(app, pathClass, attr)
     )
   )
 
-const logIn = app => {
+const logIn = (app) => {
   return app.client
     .setValue("[name=host]", "localhost")
     .setValue("[name=port]", "9867")
     .click("button")
 }
 
-const waitForLoginAvailable = app => {
+const waitForLoginAvailable = (app) => {
   const waitForHostname = () => {
     return app.client.waitForExist("[name=host]")
   }
@@ -109,11 +109,11 @@ const waitForLoginAvailable = app => {
     .then(() => waitForButton())
 }
 
-const waitForSearch = app => {
+const waitForSearch = (app) => {
   return retry(() => app.client.element("#main-search-input").getValue())
 }
 
-const waitForHistogram = app => {
+const waitForHistogram = (app) => {
   return retry(() =>
     app.client.element(selectors.histogram.topLevel).getAttribute("class")
   )
@@ -165,17 +165,17 @@ describe("Application launch", () => {
   // port contention. Support that later.
   test(
     "shows a window with the correct title",
-    done => {
+    (done) => {
       app.client
         .waitForExist("title")
         .then(() => app.client.getTitle())
-        .then(title => {
+        .then((title) => {
           // TODO: Looky shouldn't be hardcoded but instead read from a title
           // defined elsewhere.
           expect(title).toBe("Looky")
           done()
         })
-        .catch(err => {
+        .catch((err) => {
           handleError(app, err, done)
         })
     },
@@ -184,18 +184,18 @@ describe("Application launch", () => {
 
   test(
     "shows a window with the correct header text",
-    done => {
+    (done) => {
       app.client
         .waitForExist(".looky-header h1")
         // TODO: Don't use selectors as literals in tests. These definitions
         // should be defined in a single place and ideally be tested to ensure
         // they can be found.
         .then(() => app.client.getText(".looky-header h1"))
-        .then(headerText => {
+        .then((headerText) => {
           expect(headerText).toBe("LOOKY")
           done()
         })
-        .catch(err => {
+        .catch((err) => {
           handleError(app, err, done)
         })
     },
@@ -204,16 +204,16 @@ describe("Application launch", () => {
 
   test(
     "log in and see Search and Histogram",
-    done => {
+    (done) => {
       waitForLoginAvailable(app)
         .then(() => logIn(app))
         .then(() => waitForHistogram(app))
         .then(() => waitForSearch(app))
-        .then(val => {
+        .then((val) => {
           expect(val).toBeDefined()
           done()
         })
-        .catch(err => {
+        .catch((err) => {
           handleError(app, err, done)
         })
     },
@@ -222,7 +222,7 @@ describe("Application launch", () => {
 
   test(
     "histogram deep inspection",
-    done => {
+    (done) => {
       // This is a data-sensitive test that assumes the histogram has corelight
       // data loaded. There are inline comments that explain the test's flow.
       waitForLoginAvailable(app)
@@ -238,33 +238,33 @@ describe("Application launch", () => {
         .then(() =>
           retryUntil(
             () => app.client.getAttribute(selectors.histogram.gElem, "class"),
-            pathClasses =>
+            (pathClasses) =>
               pathClasses.length ===
               dataSets.corelight.histogram.defaultDistinctPaths
-          ).catch(err => {
+          ).catch((err) => {
             handleError(app, err, done)
           })
         )
-        .then(pathClasses =>
+        .then((pathClasses) =>
           retryUntil(
             () => app.client.$$(selectors.histogram.rectElem),
-            rectElements =>
+            (rectElements) =>
               rectElements.length ===
               dataSets.corelight.histogram.defaultTotalRectCount
           )
             .then(() => pathClasses)
-            .catch(err => {
+            .catch((err) => {
               handleError(app, err, done)
             })
         )
         // Once we see all the g and rect elements, ensure the g elements'
         // classes are expected. This nominally ensures the different _path
         // values are present.
-        .then(pathClasses => {
+        .then((pathClasses) => {
           expect(pathClasses.sort()).toMatchSnapshot()
           return pathClasses
         })
-        .then(async pathClasses => {
+        .then(async (pathClasses) => {
           // Here is the meat of the test verification. Here we fetch all 4
           // attributes' values of all rect elements, in a 2-D array of _path and
           // attribute. We ensure all the values are positive in a REASONABLE
@@ -276,7 +276,7 @@ describe("Application launch", () => {
           // because I got this pattern to work.
           let allRectValues = await Promise.all(
             pathClasses.map(
-              async pathClass => await verifyPathClassRect(app, pathClass)
+              async (pathClass) => await verifyPathClassRect(app, pathClass)
             )
           )
           expect(allRectValues.length).toBe(
@@ -285,10 +285,10 @@ describe("Application launch", () => {
             // proper _path.
             dataSets.corelight.histogram.defaultDistinctPaths
           )
-          allRectValues.forEach(pathClass => {
+          allRectValues.forEach((pathClass) => {
             // The 4 comes from each of x, y, width, height for a rect element.
             expect(pathClass.length).toBe(4)
-            pathClass.forEach(attr => {
+            pathClass.forEach((attr) => {
               expect(attr.length).toBe(
                 dataSets.corelight.histogram.defaultRectsPerClass
               )
@@ -296,7 +296,7 @@ describe("Application launch", () => {
           })
           done()
         })
-        .catch(err => {
+        .catch((err) => {
           handleError(app, err, done)
         })
     },

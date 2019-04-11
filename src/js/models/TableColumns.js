@@ -38,7 +38,7 @@ export default class TableColumns {
   static visibilityDefault(settings: ColumnSettingsMap) {
     const values = Object.values(settings)
     // $FlowFixMe
-    return values.every(v => v.isVisible) || values.every(v => !v.isVisible)
+    return values.every((v) => v.isVisible) || values.every((v) => !v.isVisible)
   }
 
   sumWidths() {
@@ -49,7 +49,7 @@ export default class TableColumns {
   }
 
   getVisible(): TableColumn[] {
-    return this.cols.filter(c => c.isVisible)
+    return this.cols.filter((c) => c.isVisible)
   }
 
   showHeader() {
@@ -65,10 +65,10 @@ export default class TableColumns {
   }
 
   visibleCount() {
-    return this.cols.filter(c => c.isVisible).length
+    return this.cols.filter((c) => c.isVisible).length
   }
 
   allVisible() {
-    return this.cols.every(c => c.isVisible)
+    return this.cols.every((c) => c.isVisible)
   }
 }

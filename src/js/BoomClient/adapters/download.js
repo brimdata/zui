@@ -33,14 +33,14 @@ export default (
             method,
             auth: `${username}:${password}`
           })
-          .on("response", resp => {
+          .on("response", (resp) => {
             if (resp.statusCode === 200) {
               resp.pipe(file)
             } else {
               reject(resp.statusMessage)
             }
           })
-          .on("error", e => {
+          .on("error", (e) => {
             reject(e)
           })
           .end()

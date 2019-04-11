@@ -8,7 +8,7 @@ test("#detail first shows right pane, then views log", () => {
   const store = initTestStore()
   detail(conn()).onClick(store.dispatch)
 
-  expect(store.getActions().map(a => a.type)).toEqual([
+  expect(store.getActions().map((a) => a.type)).toEqual([
     "RIGHT_SIDEBAR_SHOW",
     "LOG_DETAIL_PUSH",
     "BOOM_SEARCHES_REGISTER"

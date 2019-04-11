@@ -41,10 +41,10 @@ export default class Chart {
 
   mount(svg: HTMLElement) {
     this.svg = svg
-    this.elements.forEach(el => el.mount(this))
+    this.elements.forEach((el) => el.mount(this))
   }
 
   draw() {
-    this.elements.forEach(el => el.draw(this))
+    this.elements.forEach((el) => el.draw(this))
   }
 }

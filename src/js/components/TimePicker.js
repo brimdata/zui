@@ -8,7 +8,7 @@ const FORMAT = "HH:mm"
 const times = d3.timeMinute
   .every(30)
   .range(new Date(1990, 9, 16, 0, 0, 0), new Date(1990, 9, 17, 0, 0, 0))
-  .map(d => Time.format(d, FORMAT))
+  .map((d) => Time.format(d, FORMAT))
 
 type Props = {
   time: Date,
@@ -110,7 +110,7 @@ export default class TimePicker extends React.Component<Props, State> {
   }
 
   renderTimes() {
-    const timeItems = times.map(time => (
+    const timeItems = times.map((time) => (
       <li key={time} onClick={() => this.onTimeClick(time)}>
         {time}
       </li>
@@ -118,8 +118,8 @@ export default class TimePicker extends React.Component<Props, State> {
 
     return (
       <div
-        onMouseDown={e => e.preventDefault()}
-        ref={r => (this.timesList = r)}
+        onMouseDown={(e) => e.preventDefault()}
+        ref={(r) => (this.timesList = r)}
         className="context-menu"
       >
         {timeItems}
@@ -134,7 +134,7 @@ export default class TimePicker extends React.Component<Props, State> {
           className="time-input"
           type="text"
           size="5"
-          ref={r => (this.input = r)}
+          ref={(r) => (this.input = r)}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           value={this.state.value}
@@ -147,5 +147,5 @@ export default class TimePicker extends React.Component<Props, State> {
   }
 }
 
-const formatTime = date => Time.format(date, FORMAT)
-const parseTime = string => Time.parse(string, FORMAT)
+const formatTime = (date) => Time.format(date, FORMAT)
+const parseTime = (string) => Time.parse(string, FORMAT)

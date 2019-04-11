@@ -88,7 +88,7 @@ export const goForward = (): Thunk => (dispatch, getState) => {
   dispatch(fetchMainSearch({saveToHistory: false}))
 }
 
-export const submitSearchBar = (): Thunk => dispatch => {
+export const submitSearchBar = (): Thunk => (dispatch) => {
   dispatch(submittingSearchBar())
   dispatch(setInnerTimeWindow(null))
   dispatch(fetchMainSearch())

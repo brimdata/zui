@@ -18,7 +18,7 @@ const alternateSpace = {
   max_time: {sec: 1428917794, ns: 750000000}
 }
 
-test("init with several spaces", done => {
+test("init with several spaces", (done) => {
   const boom = new MockBoomClient()
   boom.stubSend("spaces.list", ["default", "ranch-logs"])
   boom.stubSend("spaces.get", defaultSpace)
@@ -38,10 +38,10 @@ test("init with several spaces", done => {
       ])
       done()
     })
-    .catch(e => done.fail("failed with: " + e))
+    .catch((e) => done.fail("failed with: " + e))
 })
 
-test("init with no spaces", done => {
+test("init with no spaces", (done) => {
   const boom = new MockBoomClient()
   boom.stubSend("spaces.list", [])
   boom.stubSend("spaces.get", defaultSpace)
@@ -51,13 +51,13 @@ test("init with no spaces", done => {
   store
     .dispatch(searchPage.init())
     .then(() => done.fail("Expected to fail with NoSpaces"))
-    .catch(e => {
+    .catch((e) => {
       expect(e).toBe("NoSpaces")
       done()
     })
 })
 
-test("init with a space already selected", done => {
+test("init with a space already selected", (done) => {
   const boom = new MockBoomClient()
   boom.stubSend("spaces.list", ["alternate"])
   boom.stubSend("spaces.get", alternateSpace)
@@ -71,5 +71,5 @@ test("init with a space already selected", done => {
       expect(spaces.getCurrentSpaceName(store.getState())).toBe("alternate")
       done()
     })
-    .catch(e => done.fail(e))
+    .catch((e) => done.fail(e))
 })

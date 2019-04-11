@@ -39,7 +39,7 @@ export default class Pins extends React.Component<Props> {
         onClick={() => {
           this.props.dispatch(actions.editSearchBarPin(index))
         }}
-        onRemoveClick={e => {
+        onRemoveClick={(e) => {
           e.stopPropagation()
           this.props.dispatch(actions.removeSearchBarPin(index))
         }}

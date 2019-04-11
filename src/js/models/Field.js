@@ -18,7 +18,7 @@ export default class Field {
   queryableValue() {
     let WHITE_SPACE = /\s+/
     let COMMA = /,/
-    let quote = [WHITE_SPACE, COMMA].some(reg => reg.test(this.value))
+    let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value))
 
     return quote ? `"${this.value}"` : this.value
   }

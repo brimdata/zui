@@ -11,7 +11,7 @@ import initTestStore from "../test/initTestStore"
 const store = initTestStore()
 const hash = {descriptor: [], tuples: []}
 const uid = []
-const get = key => getCorrelations(store.getState())[key]
+const get = (key) => getCorrelations(store.getState())[key]
 
 test("setting a correlation", () => {
   store.dispatch(setCorrelation("123-456", "hash", hash))

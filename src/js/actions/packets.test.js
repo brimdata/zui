@@ -12,7 +12,7 @@ beforeEach(() => {
   store = initTestStore(boom)
 })
 
-test("fetching packets is a success", done => {
+test("fetching packets is a success", (done) => {
   boom.stubSend("packets.get", "file.pcap")
   const packets = jest.spyOn(boom.packets, "get")
   store.dispatch(setCurrentSpaceName("trump-tower"))
@@ -35,11 +35,11 @@ test("fetching packets is a success", done => {
         })
       )
 
-      expect(store.getActions().map(a => a.type)).toEqual(
+      expect(store.getActions().map((a) => a.type)).toEqual(
         expect.arrayContaining(["PACKETS_REQUEST", "PACKETS_RECEIVE"])
       )
 
-      expect(store.getActions().map(a => a.type)).not.toEqual(
+      expect(store.getActions().map((a) => a.type)).not.toEqual(
         expect.arrayContaining(["PACKETS_ERROR"])
       )
 
@@ -48,7 +48,7 @@ test("fetching packets is a success", done => {
     .catch(done)
 })
 
-test("fetching packets is a failure", done => {
+test("fetching packets is a failure", (done) => {
   boom.stubSendError("packets.get", "Boom!")
   const packets = jest.spyOn(boom.packets, "get")
   store.dispatch(setCurrentSpaceName("trump-tower"))
@@ -71,7 +71,7 @@ test("fetching packets is a failure", done => {
         })
       )
 
-      const dispatched = store.getActions().map(a => a.type)
+      const dispatched = store.getActions().map((a) => a.type)
       expect(dispatched).toEqual(
         expect.arrayContaining(["PACKETS_REQUEST", "PACKETS_ERROR"])
       )

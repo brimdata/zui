@@ -97,10 +97,10 @@ export default class Viewer extends React.PureComponent<Props, State> {
           className="view"
           onScroll={this.onScroll}
           style={{width: dimens.viewWidth, height: dimens.viewHeight}}
-          ref={r => (this.view = r)}
+          ref={(r) => (this.view = r)}
         >
           <div className="list" style={Styler.list(dimens)}>
-            {chunks.map(chunk => (
+            {chunks.map((chunk) => (
               <Chunk
                 columns={this.props.tableColumns}
                 logs={logs}

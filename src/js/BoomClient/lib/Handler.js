@@ -62,27 +62,27 @@ export default class Handler {
   onError(error: *) {
     if (this.isAborted) return
 
-    this.errorCallbacks.forEach(cb => cb(error))
+    this.errorCallbacks.forEach((cb) => cb(error))
   }
 
   onDone(payload: *) {
     if (this.isAborted) return
 
     this.isDone = true
-    this.doneCallbacks.forEach(cb => cb(payload))
+    this.doneCallbacks.forEach((cb) => cb(payload))
   }
 
   onAbort() {
     this.isAborted = true
     if (this.shouldCallbackAbort) {
-      this.abortCallbacks.forEach(cb => cb())
+      this.abortCallbacks.forEach((cb) => cb())
     }
   }
 
   receive(payload: *) {
     if (this.isAborted) return
 
-    this.eachCallbacks.forEach(cb => cb(payload))
+    this.eachCallbacks.forEach((cb) => cb(payload))
 
     if ("channel_id" in payload) {
       this.channelCallback(payload.channel_id, payload)
@@ -91,7 +91,7 @@ export default class Handler {
 
   channelCallback(id: number, payload: *) {
     if (id in this.channelCallbacks) {
-      this.channelCallbacks[id].forEach(cb => cb(payload))
+      this.channelCallbacks[id].forEach((cb) => cb(payload))
     }
   }
 }

@@ -57,7 +57,7 @@ export default class Tree {
 
   find(data: *) {
     let node = null
-    this.bfSearch(n => {
+    this.bfSearch((n) => {
       if (n && n.data === data) node = n
     })
     return node
@@ -71,14 +71,14 @@ export default class Tree {
     if (this.isEmpty()) return []
 
     let array = []
-    this.dfSearch(node => array.push(node))
+    this.dfSearch((node) => array.push(node))
     return array
   }
 
   recursiveDfSearch(node: ?Node, callback: Function) {
     if (node) {
       callback(node)
-      node.children.forEach(c => this.recursiveDfSearch(c, callback))
+      node.children.forEach((c) => this.recursiveDfSearch(c, callback))
     }
   }
 
@@ -88,7 +88,7 @@ export default class Tree {
       let node = queue.shift()
       if (node) {
         callback(node)
-        node.children.forEach(c => queue.push(c))
+        node.children.forEach((c) => queue.push(c))
       }
     }
   }
@@ -97,7 +97,7 @@ export default class Tree {
     if (this.isEmpty()) return []
 
     let array = []
-    this.bfSearch(node => array.push(node))
+    this.bfSearch((node) => array.push(node))
     return array
   }
 }
@@ -142,7 +142,7 @@ export class Node {
   toJSON(): Object {
     return {
       data: this.data,
-      children: this.children.map(c => c.toJSON())
+      children: this.children.map((c) => c.toJSON())
     }
   }
 

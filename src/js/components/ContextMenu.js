@@ -49,7 +49,7 @@ export class ContextMenu extends React.Component<Props, State> {
       <div className="context-menu-overlay" onClick={this.props.onOutsideClick}>
         <ul
           className={classNames("context-menu", this.props.className)}
-          ref={r => (this.ref = r)}
+          ref={(r) => (this.ref = r)}
           style={{...this.state}}
         >
           {this.props.children}

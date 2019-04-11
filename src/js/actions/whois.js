@@ -5,13 +5,13 @@ import type {Thunk} from "redux-thunk"
 
 export const fetchWhois = (
   addr: string,
-  clientFunc: string => Promise<string> = System.whois
-): Thunk => dispatch => {
+  clientFunc: (string) => Promise<string> = System.whois
+): Thunk => (dispatch) => {
   dispatch(requestWhois(addr))
 
   return clientFunc(addr)
-    .then(text => dispatch(successWhois(text)))
-    .catch(err => dispatch(errorWhois(err)))
+    .then((text) => dispatch(successWhois(text)))
+    .catch((err) => dispatch(errorWhois(err)))
     .finally(dispatch(openWhois()))
 }
 

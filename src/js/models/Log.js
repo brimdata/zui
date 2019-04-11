@@ -23,7 +23,7 @@ export default class Log {
     space: string
   ) {
     const logs = []
-    tuples.forEach(tuple => {
+    tuples.forEach((tuple) => {
       const descriptor = descriptors[space + "." + tuple[0]]
       if (descriptor) logs.push(new Log(tuple, descriptor))
     })
@@ -31,7 +31,7 @@ export default class Log {
   }
 
   static build({descriptor, tuples}: BuildArgs) {
-    return tuples.map<Log>(tuple => new Log(tuple, descriptor))
+    return tuples.map<Log>((tuple) => new Log(tuple, descriptor))
   }
 
   static sort(logs: Log[], name: string, dir: "asc" | "desc" = "asc") {
@@ -49,7 +49,7 @@ export default class Log {
     return isEqual(a.tuple, b.tuple)
   }
 
-  filter(func: Field => boolean) {
+  filter(func: (Field) => boolean) {
     const tuple = []
     const descriptor = []
     this.getFields()
@@ -62,11 +62,11 @@ export default class Log {
   }
 
   exclude(...names: string[]) {
-    return this.filter(field => !names.includes(field.name))
+    return this.filter((field) => !names.includes(field.name))
   }
 
   only(...names: string[]) {
-    return this.filter(field => names.includes(field.name))
+    return this.filter((field) => names.includes(field.name))
   }
 
   map(func: *) {
@@ -87,7 +87,7 @@ export default class Log {
   }
 
   getIndex(name: string) {
-    return this.descriptor.findIndex(field => field.name === name)
+    return this.descriptor.findIndex((field) => field.name === name)
   }
 
   get(name: string) {

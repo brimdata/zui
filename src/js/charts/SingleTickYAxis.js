@@ -64,7 +64,7 @@ export default class SingleTickYAxis implements ChartElement {
           .attr(
             "points",
             [[5, 0], [width, 0], [width, height], [5, height]]
-              .map(a => a.join(","))
+              .map((a) => a.join(","))
               .join(" ")
           )
       })

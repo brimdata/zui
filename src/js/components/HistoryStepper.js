@@ -47,7 +47,7 @@ export default class HistoryStepper extends React.Component<Props> {
   }
 }
 
-const stateToProps = state => ({
+const stateToProps = (state) => ({
   canGoBack: searchHistory.canGoBack(state),
   canGoForward: searchHistory.canGoForward(state)
 })

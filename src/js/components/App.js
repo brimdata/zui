@@ -32,7 +32,7 @@ export default class App extends Component<Props> {
   }
 }
 
-const stateToProps = state => ({
+const stateToProps = (state) => ({
   timeZone: getTimeZone(state)
 })
 

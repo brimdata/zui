@@ -64,7 +64,7 @@ export const formatHistogram = (
   const buckets = splitOnEvery(roundedTimeWindow, interval)
   const keys = new UniqArray()
   const hash = new MergeHash()
-  tuples.forEach(d => {
+  tuples.forEach((d) => {
     const ts = toDate(d[0])
     const path = d[1]
     const count = parseInt(d[2])
@@ -75,7 +75,7 @@ export const formatHistogram = (
     .toArray()
     .reduce((obj, path) => ({...obj, [path]: 0}), {})
   const table = hash.toJSON()
-  const bins = Object.keys(table).map(ts => {
+  const bins = Object.keys(table).map((ts) => {
     return {
       ts: new Date(ts),
       ...defaults,
@@ -97,4 +97,4 @@ export function getMainSearchHistogramInterval(state: State) {
   return histogramInterval(timeWindow).unit
 }
 
-const toDate = string => new Date(+string * 1000)
+const toDate = (string) => new Date(+string * 1000)

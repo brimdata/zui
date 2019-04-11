@@ -1,7 +1,7 @@
 /* @flow */
 
-const secToMs = sec => sec * 1000
-const nsToMs = ns => ns / 1e6
+const secToMs = (sec) => sec * 1000
+const nsToMs = (ns) => ns / 1e6
 
 type Ts = {
   sec: number,

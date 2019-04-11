@@ -19,7 +19,7 @@ export const getPrimarySearch = createSelector<State, void, *, *, *>(
 
 export const getHistogramStatus = createSelector<State, void, *, *>(
   getBoomSearches,
-  searches => {
+  (searches) => {
     const search = searches["HistogramSearch"]
     return search && search.status
   }
@@ -27,7 +27,7 @@ export const getHistogramStatus = createSelector<State, void, *, *>(
 
 export const getSomeAreFetching = createSelector<State, void, *, *>(
   getBoomSearches,
-  searches => {
+  (searches) => {
     for (let name in searches) {
       if (searches[name].status === "FETCHING") return true
     }
@@ -37,14 +37,14 @@ export const getSomeAreFetching = createSelector<State, void, *, *>(
 
 export const getMainSearchIsFetching = createSelector<State, void, *, *>(
   getPrimarySearch,
-  search => {
+  (search) => {
     return !!(search && search.status === "FETCHING")
   }
 )
 
 export const getDetailStatuses = createSelector<State, void, *, *>(
   getBoomSearches,
-  searches => {
+  (searches) => {
     const statuses = {}
     for (let name in searches) {
       if (searches[name].tag === "detail")
@@ -56,7 +56,7 @@ export const getDetailStatuses = createSelector<State, void, *, *>(
 
 export const getBoomSearchesAsLogs = createSelector<State, void, *, *>(
   getBoomSearches,
-  searches => {
+  (searches) => {
     const descriptor = [
       {name: "name", type: "string"},
       {name: "status", type: "string"},

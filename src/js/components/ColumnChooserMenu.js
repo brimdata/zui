@@ -80,7 +80,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
         in={true}
         appear
       >
-        <div className={this.className()} onClick={e => e.stopPropagation()}>
+        <div className={this.className()} onClick={(e) => e.stopPropagation()}>
           <Fieldset>Column Chooser</Fieldset>
           <hr />
           <CloseButton light onClick={this.props.onClose} />
@@ -93,11 +93,11 @@ export default class ColumnChooserMenu extends React.Component<Props> {
             <li className="show-all" onClick={this.showAllColumns}>
               <Paragraph>Show All</Paragraph>
             </li>
-            {columns.map(c => (
+            {columns.map((c) => (
               <li
                 className={classNames({visible: c.isVisible})}
                 key={`${c.name}-${c.type}`}
-                onClick={e => this.onColumnClick(e, c)}
+                onClick={(e) => this.onColumnClick(e, c)}
               >
                 <Paragraph>{c.name}</Paragraph>
                 <Subscript>{c.type}</Subscript>

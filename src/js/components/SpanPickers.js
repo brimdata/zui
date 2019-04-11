@@ -153,7 +153,7 @@ export default class SpanPickers extends React.Component<Props, State> {
               onDayChange={this.onFromDayChange}
             />
             <TimePicker
-              ref={r => (this.fromTime = r)}
+              ref={(r) => (this.fromTime = r)}
               time={this.state.fromDate}
               onTimeChange={this.onFromTimeChange}
             />
@@ -174,12 +174,12 @@ export default class SpanPickers extends React.Component<Props, State> {
               to={this.state.toDate}
               day={this.state.toDate}
               onDayChange={this.onToDayChange}
-              ref={r => (this.toDate = r)}
+              ref={(r) => (this.toDate = r)}
             />
             <TimePicker
               time={this.state.toDate}
               onTimeChange={this.onToTimeChange}
-              ref={r => (this.toTime = r)}
+              ref={(r) => (this.toTime = r)}
             />
           </div>
         </div>

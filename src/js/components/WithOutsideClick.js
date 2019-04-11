@@ -29,7 +29,7 @@ export default function(Component: *) {
     }
 
     render() {
-      return <Component ref={r => (this.component = r)} {...this.props} />
+      return <Component ref={(r) => (this.component = r)} {...this.props} />
     }
   }
 }

@@ -24,9 +24,9 @@ export const send = (
     }
   }
 
-  return fetch(url, options).then(resp => {
+  return fetch(url, options).then((resp) => {
     if (!resp.ok) {
-      return resp.json().then(j => Promise.reject(j))
+      return resp.json().then((j) => Promise.reject(j))
     } else {
       return resp.json()
     }
@@ -54,8 +54,8 @@ export const stream = (
   }
 
   fetch(url, options)
-    .then(resp => handleSuccess(resp, handler))
-    .catch(error => handleError(error, handler))
+    .then((resp) => handleSuccess(resp, handler))
+    .catch((error) => handleError(error, handler))
 
   if (client.timeout !== 0) {
     setTimeout(() => handler.abortRequest(), client.timeout)
@@ -66,7 +66,7 @@ export const stream = (
 
 const handleSuccess = (resp, handler) => {
   if (!resp.ok) {
-    resp.json().then(json => handler.onError(json))
+    resp.json().then((json) => handler.onError(json))
   } else {
     streamJSON(resp, handler)
   }
@@ -83,7 +83,7 @@ const handleError = (error, handler) => {
 
 const streamJSON = (resp, handler) => {
   const text = new TextDecoder()
-  const ndJson = new NdJsonDecoder(payload => handler.receive(payload))
+  const ndJson = new NdJsonDecoder((payload) => handler.receive(payload))
   const stream = resp.body && resp.body.getReader()
 
   const pull = () => {
@@ -100,7 +100,7 @@ const streamJSON = (resp, handler) => {
           handler.onDone()
         }
       })
-      .catch(error => handleError(error, handler))
+      .catch((error) => handleError(error, handler))
   }
   pull()
 }

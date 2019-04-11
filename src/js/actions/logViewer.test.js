@@ -73,7 +73,7 @@ test("#fetchAhead sets more ahead to false if tuple count < per page", () => {
   )
 })
 
-test("#fetchAhead sets isFetching to false when done", done => {
+test("#fetchAhead sets isFetching to false when done", (done) => {
   store.dispatch(logViewer.fetchAhead())
   handler.channelCallback(0, {
     type: "SearchResult",

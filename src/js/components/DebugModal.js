@@ -33,7 +33,7 @@ export default class DebugModal extends React.Component<Props, State> {
             className="debug-modal-input"
             type="text"
             value={this.state.program}
-            onChange={e => this.setState({program: e.currentTarget.value})}
+            onChange={(e) => this.setState({program: e.currentTarget.value})}
           />
         </div>
 

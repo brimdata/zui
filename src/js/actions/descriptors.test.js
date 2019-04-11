@@ -5,7 +5,7 @@ import {getDescriptors} from "../reducers/descriptors"
 import {setCurrentSpaceName} from "./spaces"
 import initTestStore from "../test/initTestStore"
 
-test("#fetchDescriptor", done => {
+test("#fetchDescriptor", (done) => {
   const boom = new MockBoomClient()
   const store = initTestStore(boom)
 

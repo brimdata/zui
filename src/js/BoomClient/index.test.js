@@ -52,10 +52,10 @@ test("#clientVersion", () => {
 })
 
 describe.skip("external tests (need a running boomd)", () => {
-  test("#serverVersion", done => {
+  test("#serverVersion", (done) => {
     boom
       .serverVersion()
-      .then(version => {
+      .then((version) => {
         expect(version).toHaveProperty("boomd")
         expect(version).toHaveProperty("lookytalk")
         done()
@@ -63,7 +63,7 @@ describe.skip("external tests (need a running boomd)", () => {
       .catch(done)
   })
 
-  test("#search", done => {
+  test("#search", (done) => {
     boom.setOptions({
       searchSpace: "default",
       searchSpan: [new Date("2015-04-01"), new Date("2015-04-13")]
@@ -72,7 +72,7 @@ describe.skip("external tests (need a running boomd)", () => {
     let tuples = []
     boom
       .search("* | head 100")
-      .channel(0, payload => {
+      .channel(0, (payload) => {
         if (payload.type === "SearchResult")
           tuples = [...tuples, ...payload.results.tuples]
       })
@@ -83,13 +83,13 @@ describe.skip("external tests (need a running boomd)", () => {
       .error(done)
   })
 
-  test("#search with options", done => {
+  test("#search with options", (done) => {
     boom.setOptions({
       searchSpace: "default",
       searchSpan: [new Date("2015-04-01"), new Date("2015-04-13")]
     })
 
-    boom.search("* | head 100", {searchSpace: "foo-foo-bar-bar"}).error(e => {
+    boom.search("* | head 100", {searchSpace: "foo-foo-bar-bar"}).error((e) => {
       expect(e).toMatch("SPACE_NOT_FOUND")
       done()
     })
@@ -125,20 +125,20 @@ describe.skip("external tests (need a running boomd)", () => {
   describe("#spaces", () => {
     const tempSpace = `temp-space-${new Date().getTime()}`
 
-    test("#list", done => {
+    test("#list", (done) => {
       boom.spaces
         .list()
-        .then(spaces => {
+        .then((spaces) => {
           expect(spaces).toBeInstanceOf(Array)
           done()
         })
         .catch(done)
     })
 
-    test("#get", done => {
+    test("#get", (done) => {
       boom.spaces
         .get("default")
-        .then(space => {
+        .then((space) => {
           expect(space).toEqual(
             expect.objectContaining({
               name: expect.any(String),
@@ -160,13 +160,13 @@ describe.skip("external tests (need a running boomd)", () => {
         .catch(done)
     })
 
-    test("#create", done => {
+    test("#create", (done) => {
       boom.spaces
         .create({
           name: tempSpace,
           config: {compression: "snappy"}
         })
-        .then(response => {
+        .then((response) => {
           expect(response).toEqual(
             expect.objectContaining({
               name: tempSpace,
@@ -178,29 +178,29 @@ describe.skip("external tests (need a running boomd)", () => {
         .catch(done)
     })
 
-    test("#delete", done => {
+    test("#delete", (done) => {
       boom.spaces
         .delete(tempSpace)
-        .then(_ => done())
+        .then((_) => done())
         .catch(done)
     })
   })
 
   describe("#descriptors", () => {
-    test("#list", done => {
+    test("#list", (done) => {
       boom.descriptors
         .list("default")
-        .then(list => {
+        .then((list) => {
           expect(list).toHaveLength(19)
           done()
         })
         .catch(done)
     })
 
-    test("#get", done => {
+    test("#get", (done) => {
       boom.descriptors
         .get("default", 0)
-        .then(response => {
+        .then((response) => {
           expect(response[0]).toEqual({name: "_td", type: "int"})
           done()
         })
@@ -209,10 +209,10 @@ describe.skip("external tests (need a running boomd)", () => {
   })
 
   describe("#tasks", () => {
-    test("#list", done => {
+    test("#list", (done) => {
       boom.tasks
         .list()
-        .then(response => {
+        .then((response) => {
           expect(response[0]).toEqual(
             expect.objectContaining({
               tid: expect.any(Number),
@@ -232,7 +232,7 @@ describe.skip("external tests (need a running boomd)", () => {
   })
 
   describe.skip("#packets", () => {
-    test("get", done => {
+    test("get", (done) => {
       const space = "corelight"
       const destDir = "tmp/client-test"
       const options = {
@@ -251,7 +251,7 @@ describe.skip("external tests (need a running boomd)", () => {
 
       boom.packets
         .get(options)
-        .then(_ => {
+        .then((_) => {
           done()
         })
         .catch(done)

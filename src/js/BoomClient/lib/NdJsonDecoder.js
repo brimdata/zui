@@ -4,9 +4,9 @@ const NEW_LINE = "\n\n\n"
 
 export default class NdJsonDecoder {
   leftover: string
-  callback: Object => *
+  callback: (Object) => *
 
-  constructor(callback: Object => *) {
+  constructor(callback: (Object) => *) {
     this.leftover = ""
     this.callback = callback
   }

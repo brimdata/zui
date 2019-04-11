@@ -14,7 +14,7 @@ export const uniq = (list: Tuple[]): Tuple[] => {
 }
 
 export const removeFrom = (list: Tuple[], tuple: Tuple): Tuple[] => {
-  return list.filter(item => !isSame(tuple, item))
+  return list.filter((item) => !isSame(tuple, item))
 }
 
 export const isSame = (a: Tuple, b: Tuple) => {
@@ -22,5 +22,5 @@ export const isSame = (a: Tuple, b: Tuple) => {
 }
 
 export const contains = (list: Tuple[], tuple: Tuple) => {
-  return list.find(el => isSame(el, tuple))
+  return list.find((el) => isSame(el, tuple))
 }
