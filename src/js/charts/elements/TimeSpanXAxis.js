@@ -2,19 +2,14 @@
 
 import * as d3 from "d3"
 
+import type {Dispatch} from "../../reducers/types"
 import {duration, shift} from "../../lib/TimeWindow"
 import {fetchMainSearch} from "../../actions/mainSearch"
 import {setOuterTimeWindow} from "../../actions/timeWindow"
 import Chart from "../Chart"
 
-export default class TimeSpanXAxis {
-  dispatch: Function
-
-  constructor(dispatch: Function) {
-    this.dispatch = dispatch
-  }
-
-  mount(chart: Chart) {
+export default function(dispatch: Dispatch) {
+  function mount(chart: Chart) {
     const xAxis = d3
       .select(chart.svg)
       .append("g")
@@ -51,8 +46,8 @@ export default class TimeSpanXAxis {
       const pos = d3.mouse(parent)[0]
       const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
       const diff = duration([from, to])
-      this.dispatch(setOuterTimeWindow(shift(startSpan, diff)))
-      this.dispatch(fetchMainSearch())
+      dispatch(setOuterTimeWindow(shift(startSpan, diff)))
+      dispatch(fetchMainSearch())
       startPos = null
       startSpan = null
     }
@@ -69,7 +64,7 @@ export default class TimeSpanXAxis {
       .on("mousedown", dragStart)
   }
 
-  draw(chart: Chart) {
+  function draw(chart: Chart) {
     d3.select(chart.svg)
       .select(".x-axis")
       .call(d3.axisBottom(chart.scales.timeScale))
@@ -78,4 +73,6 @@ export default class TimeSpanXAxis {
       .select(".x-axis-drag")
       .attr("width", chart.dimens.innerWidth)
   }
+
+  return {mount, draw}
 }

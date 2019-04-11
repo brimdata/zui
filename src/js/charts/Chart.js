@@ -1,9 +1,9 @@
 /* @flow */
 
-export interface ChartElement {
-  mount(chart: Chart): void;
-  draw(chart: Chart): void;
-}
+export type ChartElement = {|
+  mount?: (chart: Chart) => void,
+  draw?: (chart: Chart) => void
+|}
 
 type BuilderKey = "data" | "margins" | "dimens" | "scales"
 type BuilderFunc = ($ReadOnly<Chart>) => Object
@@ -41,10 +41,10 @@ export default class Chart {
 
   mount(svg: *) {
     this.svg = svg
-    this.elements.forEach((el) => el.mount(this))
+    this.elements.forEach((el) => el.mount && el.mount(this))
   }
 
   draw() {
-    this.elements.forEach((el) => el.draw(this))
+    this.elements.forEach((el) => el.draw && el.draw(this))
   }
 }

@@ -9,8 +9,8 @@ import {id} from "../../lib/Doc"
 import Chart from "../Chart"
 import HistogramTooltip from "../../components/HistogramTooltip"
 
-export default class PositionTooltip {
-  mount(chart: Chart) {
+export default function() {
+  function mount(chart: Chart) {
     const tooltip = id("histogram-tooltip")
     let prevPoint = null
 
@@ -41,7 +41,7 @@ export default class PositionTooltip {
       .on("mousemove.tooltip", show)
   }
 
-  draw(_chart: Chart) {}
+  return {mount}
 }
 
 const getPointAt = (left, chart) => {
@@ -50,7 +50,6 @@ const getPointAt = (left, chart) => {
   for (let index = 0; index < chart.data.data.length; index++) {
     const point = chart.data.data[index]
     const nextTs = add(point.ts, number, unit)
-    console.log(point)
     if (ts >= point.ts && ts < nextTs) return point
   }
 

@@ -1,7 +1,7 @@
 /* @flow */
 
 import {connect} from "react-redux"
-import React from "react"
+import React, {useState} from "react"
 import * as d3 from "d3"
 
 import type {DateTuple} from "../lib/TimeWindow"
@@ -11,14 +11,14 @@ import {getHistogramData, getMainSearchHistogram} from "../reducers/histogram"
 import {getHistogramStatus} from "../selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
 import Chart from "../charts/Chart"
-import HoverLine from "../charts/elements/HoverLine"
 import SVGChart from "./SVGChart"
-import SingleTickYAxis from "../charts/elements/SingleTickYAxis"
-import StackedPathBars from "../charts/elements/StackedPathBars"
-import TimeSpanXAxis from "../charts/elements/TimeSpanXAxis"
-import XAxisBrush from "../charts/elements/XAxisBrush"
-import XPositionTooltip from "../charts/elements/XPositionTooltip"
 import dispatchToProps from "../lib/dispatchToProps"
+import hoverLine from "../charts/elements/hoverLine"
+import singleTickYAxis from "../charts/elements/singleTickYAxis"
+import stackedPathBars from "../charts/elements/stackedPathBars"
+import timeSpanXAxis from "../charts/elements/timeSpanXAxis"
+import xAxisBrush from "../charts/elements/xAxisBrush"
+import xPositionTooltip from "../charts/elements/xPositionTooltip"
 
 type OwnProps = {|
   width: number,
@@ -48,34 +48,27 @@ function buildHistogramChart(props) {
       scales: buildScales
     },
     elements: [
-      new TimeSpanXAxis(props.dispatch),
-      new StackedPathBars(props.dispatch),
-      new SingleTickYAxis(props.dispatch),
-      new XAxisBrush(props.dispatch),
-      new HoverLine(),
-      new XPositionTooltip()
+      timeSpanXAxis(props.dispatch),
+      stackedPathBars(),
+      singleTickYAxis(),
+      xAxisBrush(props.dispatch),
+      hoverLine(),
+      xPositionTooltip()
     ]
   })
 }
-export default class Histogram extends React.Component<Props> {
-  chart: Chart
 
-  constructor(props: Props) {
-    super(props)
-    this.chart = buildHistogramChart(props)
-  }
-
-  render() {
-    this.chart.update(this.props)
-    return (
-      <SVGChart
-        className="main-search-histogram"
-        chart={this.chart}
-        isFetching={this.props.isFetching}
-        isEmpty={this.chart.data.data.length === 0}
-      />
-    )
-  }
+export default function Histogram(props: Props) {
+  const [chart] = useState(buildHistogramChart(props))
+  chart.update(props)
+  return (
+    <SVGChart
+      className="main-search-histogram"
+      chart={chart}
+      isFetching={props.isFetching}
+      isEmpty={chart.data.data.length === 0}
+    />
+  )
 }
 
 const buildData = ({props}) => ({

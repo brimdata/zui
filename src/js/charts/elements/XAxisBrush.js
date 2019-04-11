@@ -3,18 +3,13 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
+import type {Dispatch} from "../../reducers/types"
 import {fetchMainSearch} from "../../actions/mainSearch"
 import {setInnerTimeWindow, setOuterTimeWindow} from "../../actions/timeWindow"
 import Chart from "../Chart"
 
-export default class HistogramBrush {
-  dispatch: Function
-
-  constructor(dispatch: Function) {
-    this.dispatch = dispatch
-  }
-
-  mount(chart: Chart) {
+export default function(dispatch: Dispatch) {
+  function mount(chart: Chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "brush")
@@ -24,11 +19,10 @@ export default class HistogramBrush {
       )
   }
 
-  draw(chart: Chart) {
+  function draw(chart: Chart) {
     let prevSelection = null
     let justClicked = false
     let timeout
-    const dispatch = this.dispatch
 
     function onBrushStart() {
       prevSelection = d3.brushSelection(
@@ -94,4 +88,6 @@ export default class HistogramBrush {
     brush.on("end", onBrushEnd)
     brush.on("start", onBrushStart)
   }
+
+  return {mount, draw}
 }

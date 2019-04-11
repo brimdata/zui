@@ -1,5 +1,5 @@
 /* @flow */
-import {positionTooltip, xPosition} from "./XPositionTooltip"
+import {positionTooltip, xPosition} from "./xPositionTooltip"
 import * as d3 from "d3"
 
 describe("#xPosition", () => {

@@ -3,8 +3,8 @@
 import Chart from "../Chart"
 import * as d3 from "d3"
 
-export default class HoverLine {
-  mount(chart: Chart) {
+export default function() {
+  function mount(chart: Chart) {
     const overflow = 10
     const line = d3
       .select(chart.svg)
@@ -31,5 +31,5 @@ export default class HoverLine {
       })
   }
 
-  draw(_chart: Chart) {}
+  return {mount}
 }

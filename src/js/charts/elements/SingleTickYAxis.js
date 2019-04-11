@@ -3,14 +3,8 @@
 import Chart from "../Chart"
 import * as d3 from "d3"
 
-export default class SingleTickYAxis {
-  dispatch: Function
-
-  constructor(dispatch: Function) {
-    this.dispatch = dispatch
-  }
-
-  mount(chart: Chart) {
+export default function() {
+  function mount(chart: Chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "y-axis")
@@ -20,7 +14,7 @@ export default class SingleTickYAxis {
       )
   }
 
-  draw(chart: Chart) {
+  function draw(chart: Chart) {
     if (chart.data.data.length === 0) {
       d3.select(chart.svg)
         .select(".y-axis")
@@ -68,4 +62,6 @@ export default class SingleTickYAxis {
           )
       })
   }
+
+  return {mount, draw}
 }
