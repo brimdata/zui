@@ -36,9 +36,9 @@ export function insertAppliedFilters(
   let tree = new Tree(treeData)
   let node = tree.getRoot()
 
-  combine(searchBar).forEach(filter => {
+  combine(searchBar).forEach((filter) => {
     if (!node) return
-    let nextNode = node.children.find(child => isEqual(child.data, filter))
+    let nextNode = node.children.find((child) => isEqual(child.data, filter))
     if (nextNode) {
       node = nextNode
     } else {

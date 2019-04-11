@@ -21,12 +21,12 @@ test("#indexOfLastChange with accessor", () => {
     {ts: new Date("2018-1-1 13:00")}
   ]
 
-  const index = indexOfLastChange(logsTs, obj => obj.ts)
+  const index = indexOfLastChange(logsTs, (obj) => obj.ts)
   expect(index).toBe(1)
 })
 
 test("#indexOfLastChange with empty array", () => {
-  const index = indexOfLastChange([], thing => thing.get("hi"))
+  const index = indexOfLastChange([], (thing) => thing.get("hi"))
   expect(index).toBe(-1)
 })
 
@@ -43,7 +43,7 @@ test("#indexOfLastChange when all same with accessor", () => {
     {ts: new Date("2018-1-1 10:00")}
   ]
 
-  const index = indexOfLastChange(logsTs, obj => obj.ts)
+  const index = indexOfLastChange(logsTs, (obj) => obj.ts)
   expect(index).toBe(-1)
 })
 
@@ -81,25 +81,25 @@ describe("#toFront", () => {
   })
 
   test("item exists", () => {
-    const newArray = toFront(array, item => item === 4)
+    const newArray = toFront(array, (item) => item === 4)
 
     expect(newArray).toEqual([4, 1, 2, 3, 5])
   })
 
   test("item does not exist", () => {
-    const newArray = toFront(array, item => item === 10)
+    const newArray = toFront(array, (item) => item === 10)
 
     expect(newArray).toEqual([1, 2, 3, 4, 5])
   })
 
   test("first item ", () => {
-    const newArray = toFront(array, item => item === 1)
+    const newArray = toFront(array, (item) => item === 1)
 
     expect(newArray).toEqual([1, 2, 3, 4, 5])
   })
 
   test("last item", () => {
-    const newArray = toFront(array, item => item === 5)
+    const newArray = toFront(array, (item) => item === 5)
 
     expect(newArray).toEqual([5, 1, 2, 3, 4])
   })

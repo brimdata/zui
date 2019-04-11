@@ -12,7 +12,7 @@ export const switchSpace = (name: string): Thunk => {
   return (dispatch, getState) => {
     dispatch(killBoomSearches())
 
-    return dispatch(fetchSpace(name)).then(info => {
+    return dispatch(fetchSpace(name)).then((info) => {
       dispatch(setSpaceInfo(info))
       dispatch(setCurrentSpaceName(name))
 

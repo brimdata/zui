@@ -36,7 +36,7 @@ export default class Md5Search extends BaseSearch {
   receiveData(handler: Handler, dispatch: Dispatch) {
     const key = this.log.id()
     const makeCallback = (name: string) =>
-      accumAnalytics(data => dispatch(setCorrelation(key, name, data)))
+      accumAnalytics((data) => dispatch(setCorrelation(key, name, data)))
 
     handler
       .channel(0, makeCallback("tx"))

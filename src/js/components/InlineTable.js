@@ -22,7 +22,7 @@ export default function InlineTable({logs, actions}: Props) {
       <table>
         <thead>
           <tr>
-            {descriptor.map(column => (
+            {descriptor.map((column) => (
               <th key={column.name} className={column.type}>
                 {column.name}
               </th>
@@ -43,7 +43,7 @@ export default function InlineTable({logs, actions}: Props) {
 function TableRow({log, actions}) {
   return (
     <tr>
-      {log.getFields().map(field => (
+      {log.getFields().map((field) => (
         <TableCell field={field} key={field.name} />
       ))}
       {actions && <ActionsCell actions={actions} log={log} />}

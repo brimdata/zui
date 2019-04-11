@@ -34,12 +34,12 @@ export default class SettingsModal extends React.Component<Props> {
           <div className="setting-panel">
             <Label>Timezone:</Label>
             <select
-              onChange={e =>
+              onChange={(e) =>
                 this.props.dispatch(setTimeZone(e.currentTarget.value))
               }
               value={this.props.timeZone}
             >
-              {Time.zones().map(name => (
+              {Time.zones().map((name) => (
                 <option key={name} value={name}>
                   {name}
                 </option>
@@ -71,7 +71,7 @@ export default class SettingsModal extends React.Component<Props> {
   }
 }
 
-const stateToProps = state => ({
+const stateToProps = (state) => ({
   timeZone: getTimeZone(state),
   isOpen: getSettingsModalIsOpen(state),
   useBoomIndex: getUseBoomIndex(state),

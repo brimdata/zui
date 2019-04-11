@@ -13,11 +13,11 @@ describe.skip("downloading packets", () => {
 
   afterAll(() => remove("tmp/downloads-test"))
 
-  test("creates directory and downloads file", done => {
+  test("creates directory and downloads file", (done) => {
     download({host, port, username, password, path, method}, dest)
-      .then(file => {
+      .then((file) => {
         stat(file)
-          .then(stats => {
+          .then((stats) => {
             expect(stats.isFile()).toBeTruthy()
             done()
           })
@@ -26,10 +26,10 @@ describe.skip("downloading packets", () => {
       .catch(done)
   })
 
-  test("if directory exists, downloads file", done => {
+  test("if directory exists, downloads file", (done) => {
     ensureDirSync("tmp")
     download({host, port, username, password, path, method}, dest)
-      .then(_file => {
+      .then((_file) => {
         done()
       })
       .catch(done)

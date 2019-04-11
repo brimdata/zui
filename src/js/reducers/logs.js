@@ -15,7 +15,7 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  LOGS_CLEAR: state => ({
+  LOGS_CLEAR: (state) => ({
     ...state,
     tuples: []
   }),
@@ -30,7 +30,7 @@ export default createReducer(initialState, {
     spliceIndex: index
   }),
 
-  LOGS_SPLICE: state => {
+  LOGS_SPLICE: (state) => {
     const tuples = [...state.tuples]
     tuples.splice(state.spliceIndex)
     return {

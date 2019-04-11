@@ -15,17 +15,17 @@ import * as Tuple from "../lib/Tuple"
 
 export const getLogDetailHistory = createSelector<State, void, *, *>(
   getLogDetails,
-  logDetails => toHistory(logDetails)
+  (logDetails) => toHistory(logDetails)
 )
 
 export const getPrevExists = createSelector<State, void, *, *>(
   getLogDetailHistory,
-  history => history.prevExists()
+  (history) => history.prevExists()
 )
 
 export const getNextExists = createSelector<State, void, *, *>(
   getLogDetailHistory,
-  history => history.nextExists()
+  (history) => history.nextExists()
 )
 
 export const getIsGoingBack = createSelector<State, void, *, *, *>(
@@ -36,7 +36,7 @@ export const getIsGoingBack = createSelector<State, void, *, *, *>(
 
 export const buildLogDetail = createSelector<State, void, *, *>(
   getLogDetailHistory,
-  history => {
+  (history) => {
     const log = history.getCurrent()
     return log ? new Log(log.tuple, log.descriptor) : null
   }

@@ -18,7 +18,7 @@ export default class MockBoomClient extends BoomClient {
   }
 
   stubSend(method: string, returnVal: *) {
-    return this.stub(method, () => new Promise(r => r(returnVal)))
+    return this.stub(method, () => new Promise((r) => r(returnVal)))
   }
 
   stubSendError(method: string, error: *) {

@@ -16,7 +16,7 @@ export const removeNotification = (index: number) => ({
 export const notifyLookytalkVersionError = (
   clientVersion: string,
   serverVersion: string
-): Thunk => dispatch => {
+): Thunk => (dispatch) => {
   dispatch(
     addNotification({
       type: "LookytalkVersionError",

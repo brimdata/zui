@@ -7,7 +7,7 @@ describe("#disconnect", () => {
   beforeEach(() => {
     store = initTestStore()
     store.dispatch(disconnect())
-    actionTypes = store.getActions().map(a => a.type)
+    actionTypes = store.getActions().map((a) => a.type)
   })
 
   test("dispatches LOGS_CLEAR", () => {

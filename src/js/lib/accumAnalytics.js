@@ -7,7 +7,7 @@ type Analytic = {
   tuples: Tuple[]
 }
 
-export default (callback: Analytic => *) => {
+export default (callback: (Analytic) => *) => {
   let accum = {descriptor: [], tuples: []}
 
   return (payload: Payload) => {

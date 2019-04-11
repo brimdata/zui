@@ -50,7 +50,7 @@ export default createReducer(initialState, {
   }
 })
 
-const throwUpdateError = name => {
+const throwUpdateError = (name) => {
   throw new Error(`Trying to update search that does not exist: ${name}`)
 }
 

@@ -32,5 +32,5 @@ export const fetchMainSearch = ({
   const outerSpan = getOuterTimeWindow(state)
   const searches = SearchFactory.createAll(program, innerSpan, outerSpan)
 
-  searches.forEach(search => dispatch(issueBoomSearch(search, "viewer")))
+  searches.forEach((search) => dispatch(issueBoomSearch(search, "viewer")))
 }

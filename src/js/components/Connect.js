@@ -45,7 +45,7 @@ export default class Connect extends React.Component<Props, CompState> {
     this.props
       .connectBoomd()
       .then(() => delay(300, () => this.setState({isConnected: true})))
-      .catch(e => {
+      .catch((e) => {
         delay(300, () =>
           this.setState({
             isConnecting: false,
@@ -75,7 +75,7 @@ export default class Connect extends React.Component<Props, CompState> {
                   type="text"
                   name="host"
                   value={this.state.host || ""}
-                  onChange={e => this.setState({host: e.currentTarget.value})}
+                  onChange={(e) => this.setState({host: e.currentTarget.value})}
                 />
               </div>
               <div className="form-field">
@@ -84,7 +84,7 @@ export default class Connect extends React.Component<Props, CompState> {
                   type="text"
                   name="port"
                   value={this.state.port || ""}
-                  onChange={e => this.setState({port: e.currentTarget.value})}
+                  onChange={(e) => this.setState({port: e.currentTarget.value})}
                 />
               </div>
               <div className="form-field">
@@ -93,7 +93,7 @@ export default class Connect extends React.Component<Props, CompState> {
                   type="text"
                   name="user"
                   value={this.state.user || ""}
-                  onChange={e => this.setState({user: e.currentTarget.value})}
+                  onChange={(e) => this.setState({user: e.currentTarget.value})}
                 />
               </div>
               <div className="form-field">
@@ -102,7 +102,7 @@ export default class Connect extends React.Component<Props, CompState> {
                   type="password"
                   name="pass"
                   value={this.state.pass || ""}
-                  onChange={e => this.setState({pass: e.currentTarget.value})}
+                  onChange={(e) => this.setState({pass: e.currentTarget.value})}
                 />
               </div>
               <button
@@ -123,11 +123,11 @@ export default class Connect extends React.Component<Props, CompState> {
   }
 }
 
-const stateToProps = state => ({
+const stateToProps = (state) => ({
   credentials: getCredentials(state)
 })
 
-const dispatchToProps = dispatch => ({
+const dispatchToProps = (dispatch) => ({
   ...bindActionCreators(actions, dispatch),
   dispatch
 })

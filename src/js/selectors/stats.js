@@ -7,7 +7,7 @@ import {getPrimarySearch} from "./boomSearches"
 
 export const getSearchStats = createSelector<State, void, *, *>(
   getPrimarySearch,
-  search => {
+  (search) => {
     if (search) {
       return search.stats
     }

@@ -47,7 +47,7 @@ export default function connHistoryView(historyString: string): Flag[] {
   return historyString
     .split("")
     .filter(hasView)
-    .map(char => ({
+    .map((char) => ({
       text: getText(char),
       direction: getDirection(char)
     }))

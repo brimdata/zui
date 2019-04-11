@@ -61,7 +61,7 @@ export default createReducer(initialState, {
     }
   },
 
-  SEARCH_BAR_PIN: state => {
+  SEARCH_BAR_PIN: (state) => {
     if (Str.onlyWhitespace(state.current)) return state
     else
       return {
@@ -104,7 +104,7 @@ export default createReducer(initialState, {
     }
   },
 
-  SEARCH_BAR_PIN_REMOVE_ALL: state => ({
+  SEARCH_BAR_PIN_REMOVE_ALL: (state) => ({
     ...state,
     editing: null,
     pinned: [],
@@ -118,7 +118,7 @@ export default createReducer(initialState, {
     }
   },
 
-  SEARCH_BAR_SUBMIT: state => {
+  SEARCH_BAR_SUBMIT: (state) => {
     if (state.editing === null) {
       return {
         ...state,

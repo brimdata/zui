@@ -102,7 +102,7 @@ export default class Histogram extends React.Component<Props> {
           className="count-by-time"
           height={this.props.height}
           width={this.props.width}
-          ref={r => (this.svg = r)}
+          ref={(r) => (this.svg = r)}
         />
       </div>
     )
@@ -113,7 +113,7 @@ const buildData = ({props}) => ({
   ...props
 })
 
-const buildMargins = _ => ({
+const buildMargins = (_) => ({
   left: 0,
   right: 0,
   top: 12,
@@ -128,7 +128,7 @@ const buildDimens = ({props, margins}) => ({
 })
 
 const buildScales = ({data, dimens}) => {
-  const max = d3.max(data.data, d => d.count) || 0
+  const max = d3.max(data.data, (d) => d.count) || 0
   const xDomain = [] // Filled with fake values
   for (let i = 0; i < data.timeBinCount; ++i) xDomain.push(i)
 

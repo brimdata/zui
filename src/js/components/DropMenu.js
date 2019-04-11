@@ -27,14 +27,14 @@ export default class DropMenu extends React.Component<Props, State> {
     super(props)
     this.state = {isOpen: false, style: {}}
 
-    this.open = e => {
+    this.open = (e) => {
       this.setState({
         isOpen: true,
         style: MenuStyler.getStyle(e.currentTarget, this.props.position)
       })
     }
 
-    this.close = e => {
+    this.close = (e) => {
       e.stopPropagation()
       this.setState({isOpen: false})
     }

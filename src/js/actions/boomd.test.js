@@ -5,7 +5,7 @@ import {checkLookytalkVersion} from "./boomd"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
 
-test("#checkLookytalkVersion when they are the same", done => {
+test("#checkLookytalkVersion when they are the same", (done) => {
   const boom = new MockBoomClient()
   const {lookytalk} = boom.clientVersion()
   boom.stubSend("serverVersion", {lookytalk})
@@ -18,7 +18,7 @@ test("#checkLookytalkVersion when they are the same", done => {
   })
 })
 
-test("#checkLookytalkVersion when they are different", done => {
+test("#checkLookytalkVersion when they are different", (done) => {
   const boom = new MockBoomClient().stubSend("serverVersion", {
     lookytalk: "1.1.1"
   })

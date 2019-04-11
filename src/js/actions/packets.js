@@ -47,11 +47,11 @@ export const fetchPackets = (log: Log) => (
       space,
       destDir
     })
-    .then(file => {
+    .then((file) => {
       dispatch(receivePackets(log.get("uid"), file))
       return file
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(errorPackets(log.get("uid"), error))
     })
     .finally(() => {

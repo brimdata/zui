@@ -9,7 +9,7 @@ import {setSpaceNames} from "./spaces"
 import {switchSpace} from "../space/switch"
 
 export const init = (): Thunk => (dispatch, getState) => {
-  return dispatch(fetchSpaces()).then(names => {
+  return dispatch(fetchSpaces()).then((names) => {
     dispatch(setSpaceNames(names))
 
     if (names.length == 0) {

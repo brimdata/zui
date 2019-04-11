@@ -5,7 +5,7 @@ import isNumber from "lodash/isNumber"
 
 export const indexOfLastChange = (
   array: *[],
-  accessor: (*) => * = item => item
+  accessor: (*) => * = (item) => item
 ) => {
   if (array.length === 0) return -1
   const lastIndex = array.length - 1
@@ -34,7 +34,7 @@ export const indexInBounds = (index: number, array: *[]) => {
 
 export const flattenJoin = (array: *[], between: *) => {
   return array
-    .filter(a => !!(a && a.length))
+    .filter((a) => !!(a && a.length))
     .reduce((final, item, index, orig) => {
       const next = [...final, ...item]
       if (index !== orig.length - 1) next.push(between)

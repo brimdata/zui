@@ -57,7 +57,7 @@ const getPointAt = (left, chart) => {
   return null
 }
 
-const tooltipProps = point => {
+const tooltipProps = (point) => {
   const segments = []
   for (let key in point) {
     if (["ts", "count"].includes(key)) continue

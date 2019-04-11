@@ -52,7 +52,7 @@ const fmtSpeed = (startTime, updateTime, bytesRead) => {
 
 import {connect} from "react-redux"
 
-const stateToProps = state => ({
+const stateToProps = (state) => ({
   ...getSearchStats(state)
 })
 

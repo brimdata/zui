@@ -69,9 +69,9 @@ export default class DayPicker extends React.Component<Props, State> {
 
     return (
       <DayPickerInput
-        ref={r => (this.daypicker = r)}
+        ref={(r) => (this.daypicker = r)}
         value={Time.format(day, FORMAT)}
-        formatDate={date => Time.format(date, FORMAT)}
+        formatDate={(date) => Time.format(date, FORMAT)}
         parseDate={parseDate}
         placeholder={FORMAT}
         onDayChange={this.onDayChange}
@@ -89,7 +89,7 @@ export default class DayPicker extends React.Component<Props, State> {
   }
 }
 
-const parseDate = string => {
+const parseDate = (string) => {
   const date = Time.parse(string, FORMAT, true)
   return date ? Time.fakeZone(date) : null
 }

@@ -20,7 +20,7 @@ export default class Chunk extends React.Component<Props> {
     const {rowRenderer, dimens, rows} = this.props
     return (
       <div className="chunk" style={Styler.chunk(dimens, rows[0], rows.length)}>
-        {rows.map(index => rowRenderer(index, dimens))}
+        {rows.map((index) => rowRenderer(index, dimens))}
       </div>
     )
   }

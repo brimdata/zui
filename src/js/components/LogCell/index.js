@@ -58,7 +58,7 @@ export default function LogCell(props: Props) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onContextMenu={handleRightClick}
-      onClick={e => selectText(e.currentTarget)}
+      onClick={(e) => selectText(e.currentTarget)}
       style={props.style}
     >
       <CellValue field={props.field} />

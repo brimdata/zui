@@ -21,7 +21,7 @@ export default class Header extends React.PureComponent<Props> {
     if (dimens.rowWidth !== "auto") {
       return (
         <header style={Styler.header(dimens, scrollLeft)}>
-          {this.props.columns.getVisible().map(column => (
+          {this.props.columns.getVisible().map((column) => (
             <div
               className="header-cell"
               key={columnKey(column)}

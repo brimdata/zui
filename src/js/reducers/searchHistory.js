@@ -31,12 +31,12 @@ export default createReducer(initialState, {
     history.push(entry)
     return history.toJSON()
   },
-  SEARCH_HISTORY_BACK: state => {
+  SEARCH_HISTORY_BACK: (state) => {
     const history = new NavHistory<Entry>(state)
     history.goBack()
     return history.toJSON()
   },
-  SEARCH_HISTORY_FORWARD: state => {
+  SEARCH_HISTORY_FORWARD: (state) => {
     const history = new NavHistory<Entry>(state)
     history.goForward()
     return history.toJSON()
@@ -49,14 +49,14 @@ export const getSearchHistory = (state: State) => {
 
 export const buildSearchHistory = createSelector<State, void, *, *>(
   getSearchHistory,
-  state => {
+  (state) => {
     return new NavHistory<Entry>(state)
   }
 )
 
 export const getCurrentEntry = createSelector<State, void, *, *>(
   buildSearchHistory,
-  history => {
+  (history) => {
     return history.getCurrentEntry()
   }
 )
@@ -70,14 +70,14 @@ export const pickEntryOffState = (state: State) => {
 
 export const canGoBack = createSelector<State, void, *, *>(
   buildSearchHistory,
-  history => {
+  (history) => {
     return history.canGoBack()
   }
 )
 
 export const canGoForward = createSelector<State, void, *, *>(
   buildSearchHistory,
-  history => {
+  (history) => {
     return history.canGoForward()
   }
 )

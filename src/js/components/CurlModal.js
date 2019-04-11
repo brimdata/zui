@@ -72,7 +72,7 @@ export default class CurlModal extends React.Component<Props, LocalState> {
               type="checkbox"
               className="checkbox"
               checked={this.state.includeCredentials}
-              onChange={e =>
+              onChange={(e) =>
                 this.setState({includeCredentials: e.target.checked})
               }
             />

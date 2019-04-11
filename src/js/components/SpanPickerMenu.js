@@ -44,7 +44,7 @@ export default class SpanPickerMenu extends React.Component<Props> {
 }
 
 export const XSpanPickerMenu = connect<Props, {||}, _, _, _, _>(
-  state => {
+  (state) => {
     const [from, to] = getCurrentSpaceTimeWindow(state)
     return {
       spaceSpan: [from, add(to, 1, "ms")]

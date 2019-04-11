@@ -29,11 +29,11 @@ export default createReducer(initialState, {
     isFetching: false,
     text: error
   }),
-  WHOIS_OPEN: state => ({
+  WHOIS_OPEN: (state) => ({
     ...state,
     isOpen: true
   }),
-  WHOIS_CLOSE: state => ({
+  WHOIS_CLOSE: (state) => ({
     ...state,
     isOpen: false
   })

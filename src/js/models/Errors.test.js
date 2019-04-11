@@ -28,11 +28,11 @@ const TEST_CASES = {
 describe("ErrorFactory#create", () => {
   const ErrorClasses = Object.keys(TEST_CASES)
 
-  ErrorClasses.forEach(klass => {
+  ErrorClasses.forEach((klass) => {
     test(`${klass}`, () => {
       const errors = TEST_CASES[klass]
 
-      errors.forEach(error => {
+      errors.forEach((error) => {
         expect(ErrorFactory.create(error).constructor.name).toBe(klass)
         expect(ErrorFactory.create("Negative").constructor.name).not.toBe(klass)
       })

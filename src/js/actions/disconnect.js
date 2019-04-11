@@ -14,7 +14,7 @@ import {clearSpaces} from "./spaces"
 import {clearStarredLogs} from "./starredLogs"
 import {clearTimeWindows} from "./timeWindow"
 
-export const disconnect = (): Thunk => dispatch => {
+export const disconnect = (): Thunk => (dispatch) => {
   dispatch(clearLogs())
   dispatch(clearAnalysis())
   dispatch(clearDescriptors())

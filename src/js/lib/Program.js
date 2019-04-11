@@ -52,7 +52,7 @@ export const hasGroupByProc = (program: Program) => {
 }
 
 export const getGroupByProc = (ast: *) => {
-  return getProcs(ast).find(p => p.op === "GroupByProc")
+  return getProcs(ast).find((p) => p.op === "GroupByProc")
 }
 
 function joinProcs(procs: string[]) {

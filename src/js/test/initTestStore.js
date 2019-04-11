@@ -31,7 +31,7 @@ export default (
   )
 
 function applyDispatchAll() {
-  return createStore => (...args) => {
+  return (createStore) => (...args) => {
     const store = createStore(...args)
 
     const dispatchAll = (actions: Action[]): State => {
@@ -48,7 +48,7 @@ function applyDispatchAll() {
 
 function applyActionHistory() {
   let actions = []
-  return createStore => (...args) => {
+  return (createStore) => (...args) => {
     const store = createStore(...args)
 
     const dispatch = (...args) => {

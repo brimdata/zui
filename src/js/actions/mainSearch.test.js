@@ -20,7 +20,7 @@ const spaceInfo = {
   max_time: {sec: 1428917793, ns: 750000000}
 }
 
-test("fetching an analytics search", done => {
+test("fetching an analytics search", (done) => {
   boom.stubStream("stream")
 
   const actions = [
@@ -32,7 +32,7 @@ test("fetching an analytics search", done => {
 
   actions.forEach(store.dispatch)
   setTimeout(() => {
-    const dispatched = store.getActions().map(action => action.type)
+    const dispatched = store.getActions().map((action) => action.type)
     expect(dispatched).toEqual(
       expect.arrayContaining([
         "SEARCH_HISTORY_PUSH",
@@ -45,7 +45,7 @@ test("fetching an analytics search", done => {
   })
 })
 
-test("analytics always use the outer time window", done => {
+test("analytics always use the outer time window", (done) => {
   boom.stubStream("stream")
   const stream = jest.spyOn(boom, "stream")
 
@@ -69,7 +69,7 @@ test("analytics always use the outer time window", done => {
   })
 })
 
-test("search with inner time window if set", done => {
+test("search with inner time window if set", (done) => {
   boom.stubStream("stream")
   const stream = jest.spyOn(boom, "stream")
 
@@ -92,7 +92,7 @@ test("search with inner time window if set", done => {
   })
 })
 
-test("search with inner time", done => {
+test("search with inner time", (done) => {
   boom.stubStream("search")
   const search = jest.spyOn(boom, "search")
 
@@ -113,7 +113,7 @@ test("search with inner time", done => {
   })
 })
 
-test("search with outerTimeWindow if no inner", done => {
+test("search with outerTimeWindow if no inner", (done) => {
   boom.stubStream("stream")
   const stream = jest.spyOn(boom, "stream")
 
@@ -137,7 +137,7 @@ test("search with outerTimeWindow if no inner", done => {
   })
 })
 
-test("fetching a regular search", done => {
+test("fetching a regular search", (done) => {
   boom.stubStream("stream")
   const actions = [
     setSpaceInfo(spaceInfo),
@@ -149,7 +149,7 @@ test("fetching a regular search", done => {
 
   actions.forEach(store.dispatch)
   setTimeout(() => {
-    expect(store.getActions().map(action => action.type)).toEqual(
+    expect(store.getActions().map((action) => action.type)).toEqual(
       expect.arrayContaining([
         "SEARCH_HISTORY_PUSH",
         "LOGS_CLEAR",
@@ -161,7 +161,7 @@ test("fetching a regular search", done => {
   })
 })
 
-test("not saving a search to history", done => {
+test("not saving a search to history", (done) => {
   boom.stubStream("stream")
   const actions = [
     setSpaceInfo(spaceInfo),
@@ -174,7 +174,7 @@ test("not saving a search to history", done => {
   actions.forEach(store.dispatch)
 
   setTimeout(() => {
-    const dispatched = store.getActions().map(action => action.type)
+    const dispatched = store.getActions().map((action) => action.type)
     expect(dispatched).not.toContain("SEARCH_HISTORY_PUSH")
     done()
   })
@@ -189,7 +189,7 @@ test("a bad search query", () => {
   ]
   actions.forEach(store.dispatch)
 
-  expect(store.getActions().map(action => action.type)).toEqual(
+  expect(store.getActions().map((action) => action.type)).toEqual(
     expect.arrayContaining(["SEARCH_BAR_PARSE_ERROR"])
   )
 })

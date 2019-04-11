@@ -67,6 +67,7 @@ const Host = ({className, title = "", ip = "", port = "", log}) => {
   )
 }
 
-ConnVersation.shouldShow = log => every(ORIG_FIELDS, field => log.get(field))
+ConnVersation.shouldShow = (log) =>
+  every(ORIG_FIELDS, (field) => log.get(field))
 
 export default ConnVersation

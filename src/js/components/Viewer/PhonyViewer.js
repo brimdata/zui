@@ -38,8 +38,8 @@ export default class PhonyViewer extends React.Component<Props> {
   shouldComponentUpdate(nextProps: Props) {
     return (
       !isEqual(
-        this.props.tableColumns.getVisible().map(c => c.name),
-        nextProps.tableColumns.getVisible().map(c => c.name)
+        this.props.tableColumns.getVisible().map((c) => c.name),
+        nextProps.tableColumns.getVisible().map((c) => c.name)
       ) || this.props.data !== nextProps.data
     )
   }
@@ -103,11 +103,11 @@ export default class PhonyViewer extends React.Component<Props> {
     const headers = <tr>{cols.map(this.renderHeaderCell)}</tr>
 
     const renderRow = (datum, i) => (
-      <tr key={i}>{cols.map(column => this.renderCell(datum, column, i))}</tr>
+      <tr key={i}>{cols.map((column) => this.renderCell(datum, column, i))}</tr>
     )
 
     return ReactDOM.createPortal(
-      <table className="phony-viewer" ref={r => (this.table = r)}>
+      <table className="phony-viewer" ref={(r) => (this.table = r)}>
         <thead>{headers}</thead>
         <tbody>{Arr.head(data, 10).map(renderRow)}</tbody>
       </table>,

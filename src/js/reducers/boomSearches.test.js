@@ -24,7 +24,7 @@ describe("boomSearches reducer", () => {
 
   const getSearches = () => getBoomSearches(store.getState())
 
-  const getSearch = name => getSearches()[name]
+  const getSearch = (name) => getSearches()[name]
 
   const getSearchCount = () => Object.keys(getSearches()).length
 

@@ -37,7 +37,7 @@ export default class TimeSpanXAxis implements ChartElement {
     const drag = () => {
       if (startPos === null || startSpan === null) return
       const pos = d3.mouse(parent)[0]
-      const [from, to] = [pos, startPos].map(num =>
+      const [from, to] = [pos, startPos].map((num) =>
         chart.scales.timeScale.invert(num)
       )
       const diff = TimeWindow.duration([from, to])

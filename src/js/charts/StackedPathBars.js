@@ -30,7 +30,7 @@ export default class StackedPathBars implements ChartElement {
       .select(chart.svg)
       .select(".chart")
       .selectAll("g")
-      .data(series, d => d.key)
+      .data(series, (d) => d.key)
 
     const t = d3.transition().duration(100)
 
@@ -42,10 +42,10 @@ export default class StackedPathBars implements ChartElement {
     const bars = barGroups
       .enter()
       .append("g")
-      .attr("class", d => `${d.key}-bg-color`)
+      .attr("class", (d) => `${d.key}-bg-color`)
       .merge(barGroups)
       .selectAll("rect")
-      .data(d => d)
+      .data((d) => d)
 
     bars
       .exit()
@@ -70,12 +70,12 @@ export default class StackedPathBars implements ChartElement {
       .attr("height", 0)
       .merge(bars)
       .attr("width", width)
-      .attr("x", d => chart.scales.timeScale(d.data.ts))
+      .attr("x", (d) => chart.scales.timeScale(d.data.ts))
       .transition(t)
-      .attr("y", d => chart.scales.yScale(d[1]))
+      .attr("y", (d) => chart.scales.yScale(d[1]))
       .attr(
         "height",
-        d => chart.scales.yScale(d[0]) - chart.scales.yScale(d[1])
+        (d) => chart.scales.yScale(d[0]) - chart.scales.yScale(d[1])
       )
   }
 }

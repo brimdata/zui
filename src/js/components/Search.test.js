@@ -11,7 +11,7 @@ import initTestStore from "../test/initTestStore"
 let props
 beforeEach(() => {
   props = {
-    dispatch: () => new Promise(res => res()),
+    dispatch: () => new Promise((res) => res()),
     logsTab: true
   }
 })

@@ -42,7 +42,7 @@ export default createReducer(initialState, {
   })
 })
 
-const normalize = space => ({
+const normalize = (space) => ({
   [space.name]: {
     ...space,
     minTime: Time.toStore(Time.parseFromBoom(space.min_time)),
@@ -50,7 +50,7 @@ const normalize = space => ({
   }
 })
 
-const parse = space => ({
+const parse = (space) => ({
   ...space,
   minTime: Time.fromStore(space.minTime),
   maxTime: Time.fromStore(space.maxTime)
@@ -69,7 +69,7 @@ export const getRawSpaces = (state: State) => {
 }
 export const getSpaces = createSelector<State, void, *, *>(
   getRawSpaces,
-  rawSpaces => {
+  (rawSpaces) => {
     return Object.keys(rawSpaces).reduce(
       (spaces, name) => ({
         ...spaces,
@@ -88,5 +88,5 @@ export const getCurrentSpace = createSelector<State, void, *, *, *>(
 
 export const getCurrentSpaceTimeWindow = createSelector<State, void, *, *>(
   getCurrentSpace,
-  space => [space.minTime, space.maxTime]
+  (space) => [space.minTime, space.maxTime]
 )

@@ -42,7 +42,7 @@ export const fetchAhead = (): Thunk => (dispatch, getState) => {
   let spliceIndex = 0
 
   if (!Arr.isEmpty(logs)) {
-    const index = Arr.indexOfLastChange(logs, log => log.get("ts"))
+    const index = Arr.indexOfLastChange(logs, (log) => log.get("ts"))
     if (index >= 0) {
       const to = Time.add(logs[index].getField("ts").toDate(), 1, "ms")
       const [from, _] = getTimeWindow(state)

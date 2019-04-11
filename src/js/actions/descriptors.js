@@ -16,9 +16,9 @@ export const discoverDescriptors = (events: Tuple[] = []): Thunk => {
     const unknownSchemas = uniq(
       events
         .map(([descriptorId]) => descriptorId)
-        .filter(id => !schemas[space + "." + id])
+        .filter((id) => !schemas[space + "." + id])
     )
-    unknownSchemas.forEach(id => dispatch(fetchDescriptor(id)))
+    unknownSchemas.forEach((id) => dispatch(fetchDescriptor(id)))
   }
 }
 
@@ -29,10 +29,10 @@ export const fetchDescriptor = (id: string): Thunk => {
     dispatch(requestDescriptor(space, id))
 
     return dispatch(boomFetchDescriptors(space, id))
-      .then(descriptor => {
+      .then((descriptor) => {
         dispatch(receiveDescriptor(space, id, descriptor))
       })
-      .catch(error => dispatch(errorDescriptor(error)))
+      .catch((error) => dispatch(errorDescriptor(error)))
   }
 }
 
