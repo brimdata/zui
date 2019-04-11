@@ -89,8 +89,8 @@ export const detail = (log: Log) => ({
   type: "action",
   text: "Open details",
   onClick: (dispatch: Dispatch) => {
-    dispatch(viewLogDetail(log))
     dispatch(showRightSidebar())
+    dispatch(viewLogDetail(log))
   }
 })
 

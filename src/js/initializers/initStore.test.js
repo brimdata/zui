@@ -11,7 +11,7 @@ test("initStore runs", () => {
 })
 
 test("initTestStore works with thunk and action log", () => {
-  const store = initTestStore({})
+  const store = initTestStore()
 
   store.dispatch({type: "A"})
   store.dispatch(dispatch => dispatch({type: "B"}))
