@@ -119,6 +119,31 @@ const waitForHistogram = app => {
   )
 }
 
+const handleError = async (app, initialError, done) => {
+  let realError = undefined
+  let notificationError = undefined
+  console.log(`handleError: Test hit exception: ${initialError}`)
+  console.log("handleError: Looking for any desktop app notifications")
+  try {
+    notificationError = await app.client.getText(selectors.notification)
+  } catch {
+    notificationError = undefined
+  }
+  if (notificationError) {
+    realError = new Error(
+      "App notification '" +
+        notificationError +
+        "' (initial error: '" +
+        initialError +
+        "'"
+    )
+  } else {
+    console.log("handleError: desktop app notification not found")
+    realError = initialError
+  }
+  done.fail(realError)
+}
+
 describe("Application launch", () => {
   let app
   beforeEach(() => {
@@ -150,7 +175,9 @@ describe("Application launch", () => {
           expect(title).toBe("Looky")
           done()
         })
-        .catch(done)
+        .catch(err => {
+          handleError(app, err, done)
+        })
     },
     TestTimeout
   )
@@ -168,7 +195,9 @@ describe("Application launch", () => {
           expect(headerText).toBe("LOOKY")
           done()
         })
-        .catch(done)
+        .catch(err => {
+          handleError(app, err, done)
+        })
     },
     TestTimeout
   )
@@ -184,7 +213,9 @@ describe("Application launch", () => {
           expect(val).toBeDefined()
           done()
         })
-        .catch(done)
+        .catch(err => {
+          handleError(app, err, done)
+        })
     },
     TestTimeout
   )
@@ -210,7 +241,9 @@ describe("Application launch", () => {
             pathClasses =>
               pathClasses.length ===
               dataSets.corelight.histogram.defaultDistinctPaths
-          ).catch(done)
+          ).catch(err => {
+            handleError(app, err, done)
+          })
         )
         .then(pathClasses =>
           retryUntil(
@@ -220,7 +253,9 @@ describe("Application launch", () => {
               dataSets.corelight.histogram.defaultTotalRectCount
           )
             .then(() => pathClasses)
-            .catch(done)
+            .catch(err => {
+              handleError(app, err, done)
+            })
         )
         // Once we see all the g and rect elements, ensure the g elements'
         // classes are expected. This nominally ensures the different _path
@@ -261,7 +296,9 @@ describe("Application launch", () => {
           })
           done()
         })
-        .catch(done)
+        .catch(err => {
+          handleError(app, err, done)
+        })
     },
     TestTimeout
   )
