@@ -38,7 +38,7 @@ export default function SearchInspector({dispatch, logs, isOpen}: Props) {
         <HorizontalTable
           descriptor={logs[0].descriptor}
           logs={logs}
-          actions={Actions}
+          Actions={Actions}
         />
       </section>
     </div>

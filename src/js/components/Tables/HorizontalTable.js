@@ -6,12 +6,12 @@ import type {Descriptor, RightClickBuilder} from "../../types"
 import Log from "../../models/Log"
 import Table, {TableData, TableHeader} from "./Table"
 
-type Props = {
+type Props = {|
   descriptor: Descriptor,
   logs: Log[],
   rightClick?: RightClickBuilder,
   Actions?: React.AbstractComponent<{log: Log}>
-}
+|}
 
 export default function HorizontalTable({
   descriptor,
