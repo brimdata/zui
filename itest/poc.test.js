@@ -175,7 +175,9 @@ describe("Application launch", () => {
           expect(title).toBe("Looky")
           done()
         })
-        .catch(done)
+        .catch(err => {
+          handleError(app, err, done)
+        })
     },
     TestTimeout
   )
@@ -193,7 +195,9 @@ describe("Application launch", () => {
           expect(headerText).toBe("LOOKY")
           done()
         })
-        .catch(done)
+        .catch(err => {
+          handleError(app, err, done)
+        })
     },
     TestTimeout
   )
@@ -209,7 +213,9 @@ describe("Application launch", () => {
           expect(val).toBeDefined()
           done()
         })
-        .catch(done)
+        .catch(err => {
+          handleError(app, err, done)
+        })
     },
     TestTimeout
   )
