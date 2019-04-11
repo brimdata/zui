@@ -1,13 +1,13 @@
 /* @flow */
 
 import * as d3 from "d3"
-import type {ChartElement} from "../models/Chart"
-import * as TimeWindow from "../lib/TimeWindow"
-import {setOuterTimeWindow} from "../actions/timeWindow"
-import {fetchMainSearch} from "../actions/mainSearch"
-import Chart from "../models/Chart"
 
-export default class TimeSpanXAxis implements ChartElement {
+import {duration, shift} from "../../lib/TimeWindow"
+import {fetchMainSearch} from "../../actions/mainSearch"
+import {setOuterTimeWindow} from "../../actions/timeWindow"
+import Chart from "../Chart"
+
+export default class TimeSpanXAxis {
   dispatch: Function
 
   constructor(dispatch: Function) {
@@ -40,8 +40,8 @@ export default class TimeSpanXAxis implements ChartElement {
       const [from, to] = [pos, startPos].map((num) =>
         chart.scales.timeScale.invert(num)
       )
-      const diff = TimeWindow.duration([from, to])
-      const [nextFrom, nextTo] = TimeWindow.shift(startSpan, diff)
+      const diff = duration([from, to])
+      const [nextFrom, nextTo] = shift(startSpan, diff)
       chart.update({timeWindow: [nextFrom, nextTo]})
       chart.draw()
     }
@@ -50,8 +50,8 @@ export default class TimeSpanXAxis implements ChartElement {
       if (startPos === null || startSpan === null) return
       const pos = d3.mouse(parent)[0]
       const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
-      const diff = TimeWindow.duration([from, to])
-      this.dispatch(setOuterTimeWindow(TimeWindow.shift(startSpan, diff)))
+      const diff = duration([from, to])
+      this.dispatch(setOuterTimeWindow(shift(startSpan, diff)))
       this.dispatch(fetchMainSearch())
       startPos = null
       startSpan = null

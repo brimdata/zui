@@ -1,16 +1,17 @@
 /* @flow */
 
-import React from "react"
 import {renderToString} from "react-dom/server"
-import Chart from "../models/Chart"
+import React from "react"
 import * as d3 from "d3"
-import * as Doc from "../lib/Doc"
-import Component from "../components/HistogramTooltip"
-import * as Time from "../lib/Time"
 
-export default class HistogramTooltip {
+import {add} from "../../lib/Time"
+import {id} from "../../lib/Doc"
+import Chart from "../Chart"
+import HistogramTooltip from "../../components/HistogramTooltip"
+
+export default class PositionTooltip {
   mount(chart: Chart) {
-    const tooltip = Doc.id("histogram-tooltip")
+    const tooltip = id("histogram-tooltip")
     let prevPoint = null
 
     const hide = () => {
@@ -26,7 +27,7 @@ export default class HistogramTooltip {
         if (prevPoint === point) return
         prevPoint = point
         tooltip.innerHTML = renderToString(
-          <Component {...tooltipProps(point)} />
+          <HistogramTooltip {...tooltipProps(point)} />
         )
       } else {
         hide()
@@ -46,11 +47,10 @@ export default class HistogramTooltip {
 const getPointAt = (left, chart) => {
   const ts = chart.scales.timeScale.invert(left)
   const {number, unit} = chart.data.interval
-
   for (let index = 0; index < chart.data.data.length; index++) {
     const point = chart.data.data[index]
-    const nextTs = Time.add(point.ts, number, unit)
-
+    const nextTs = add(point.ts, number, unit)
+    console.log(point)
     if (ts >= point.ts && ts < nextTs) return point
   }
 

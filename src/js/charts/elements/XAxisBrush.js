@@ -1,13 +1,13 @@
 /* @flow */
 
+import {isEqual} from "lodash"
 import * as d3 from "d3"
-import type {ChartElement} from "../models/Chart"
-import Chart from "../models/Chart"
-import isEqual from "lodash/isEqual"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
-import {fetchMainSearch} from "../actions/mainSearch"
 
-export default class HistogramBrush implements ChartElement {
+import {fetchMainSearch} from "../../actions/mainSearch"
+import {setInnerTimeWindow, setOuterTimeWindow} from "../../actions/timeWindow"
+import Chart from "../Chart"
+
+export default class HistogramBrush {
   dispatch: Function
 
   constructor(dispatch: Function) {

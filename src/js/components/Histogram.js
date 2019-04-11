@@ -2,25 +2,22 @@
 
 import {connect} from "react-redux"
 import React from "react"
-import classNames from "classnames"
 import * as d3 from "d3"
-import isEqual from "lodash/isEqual"
 
 import type {DateTuple} from "../lib/TimeWindow"
-import {type DispatchProps, type State} from "../reducers/types"
-import {Fieldset} from "./Typography"
-import {type Interval} from "../lib/histogramInterval"
+import type {DispatchProps, State} from "../reducers/types"
+import type {Interval} from "../lib/histogramInterval"
+import {getHistogramData, getMainSearchHistogram} from "../reducers/histogram"
 import {getHistogramStatus} from "../selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
-import {getMainSearchHistogram, getHistogramData} from "../reducers/histogram"
-import Chart from "../models/Chart"
-import HoverLine from "../charts/HoverLine"
-import LoadingMessage from "./LoadingMessage"
-import SingleTickYAxis from "../charts/SingleTickYAxis"
-import StackedPathBars from "../charts/StackedPathBars"
-import TimeSpanXAxis from "../charts/TimeSpanXAxis"
-import XAxisBrush from "../charts/XAxisBrush"
-import XPositionTooltip from "../charts/XPositionTooltip"
+import Chart from "../charts/Chart"
+import HoverLine from "../charts/elements/HoverLine"
+import SVGChart from "./SVGChart"
+import SingleTickYAxis from "../charts/elements/SingleTickYAxis"
+import StackedPathBars from "../charts/elements/StackedPathBars"
+import TimeSpanXAxis from "../charts/elements/TimeSpanXAxis"
+import XAxisBrush from "../charts/elements/XAxisBrush"
+import XPositionTooltip from "../charts/elements/XPositionTooltip"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {|
@@ -41,70 +38,42 @@ type StateProps = {|
 
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
+function buildHistogramChart(props) {
+  return new Chart({
+    props: props,
+    builders: {
+      data: buildData,
+      margins: buildMargins,
+      dimens: buildDimens,
+      scales: buildScales
+    },
+    elements: [
+      new TimeSpanXAxis(props.dispatch),
+      new StackedPathBars(props.dispatch),
+      new SingleTickYAxis(props.dispatch),
+      new XAxisBrush(props.dispatch),
+      new HoverLine(),
+      new XPositionTooltip()
+    ]
+  })
+}
 export default class Histogram extends React.Component<Props> {
-  svg: any
   chart: Chart
 
   constructor(props: Props) {
     super(props)
-    this.chart = new Chart({
-      props: this.props,
-      builders: {
-        data: buildData,
-        margins: buildMargins,
-        dimens: buildDimens,
-        scales: buildScales
-      },
-      elements: [
-        new TimeSpanXAxis(props.dispatch),
-        new StackedPathBars(props.dispatch),
-        new SingleTickYAxis(props.dispatch),
-        new XAxisBrush(props.dispatch),
-        new HoverLine(),
-        new XPositionTooltip()
-      ]
-    })
-  }
-
-  shouldComponentUpdate(nextProps: Props) {
-    const {rawData, width, height, timeWindow, innerTimeWindow} = this.props
-    return (
-      nextProps.rawData !== rawData ||
-      nextProps.width !== width ||
-      nextProps.height !== height ||
-      !isEqual(timeWindow, nextProps.timeWindow) ||
-      !isEqual(innerTimeWindow, nextProps.innerTimeWindow) ||
-      this.props.isFetching !== nextProps.isFetching
-    )
-  }
-
-  componentDidMount() {
-    this.chart.mount(this.svg)
-    this.chart.draw()
-  }
-
-  componentDidUpdate() {
-    this.chart.update(this.props)
-    this.chart.draw()
+    this.chart = buildHistogramChart(props)
   }
 
   render() {
-    const {width, height, isFetching} = this.props
-    const noResults = !isFetching && this.chart.data.data.length === 0
+    this.chart.update(this.props)
     return (
-      <div className="count-by-time-wrapper loading" style={{width, height}}>
-        <div id="histogram-tooltip" />
-        <LoadingMessage show={this.props.isFetching} message="Loading Chart" />
-        <Fieldset className={classNames("no-chart-data", {visible: noResults})}>
-          No Chart Data
-        </Fieldset>
-        <svg
-          className="count-by-time"
-          height={this.props.height}
-          width={this.props.width}
-          ref={(r) => (this.svg = r)}
-        />
-      </div>
+      <SVGChart
+        className="main-search-histogram"
+        chart={this.chart}
+        isFetching={this.props.isFetching}
+        isEmpty={this.chart.data.data.length === 0}
+      />
     )
   }
 }

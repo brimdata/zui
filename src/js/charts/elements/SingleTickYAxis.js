@@ -1,10 +1,9 @@
 /* @flow */
 
+import Chart from "../Chart"
 import * as d3 from "d3"
-import type {ChartElement} from "../models/Chart"
-import Chart from "../models/Chart"
 
-export default class SingleTickYAxis implements ChartElement {
+export default class SingleTickYAxis {
   dispatch: Function
 
   constructor(dispatch: Function) {

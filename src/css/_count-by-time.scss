@@ -1,4 +1,4 @@
-.count-by-time-wrapper {
+.main-search-histogram {
   position: relative;
 
   .selection {
@@ -55,7 +55,7 @@
   }
 }
 
-.count-by-time {
+.main-search-histogram svg {
   display: block;
 
   .data-point {

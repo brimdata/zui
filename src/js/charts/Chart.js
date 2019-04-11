@@ -39,7 +39,7 @@ export default class Chart {
     this.scales = this.builders.scales(this)
   }
 
-  mount(svg: HTMLElement) {
+  mount(svg: *) {
     this.svg = svg
     this.elements.forEach((el) => el.mount(this))
   }
