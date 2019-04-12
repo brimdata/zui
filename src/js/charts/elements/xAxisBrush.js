@@ -1,20 +1,27 @@
 /* @flow */
 
+import {isEqual} from "lodash"
 import * as d3 from "d3"
-import type {ChartElement} from "../models/Chart"
-import Chart from "../models/Chart"
-import isEqual from "lodash/isEqual"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
-import {fetchMainSearch} from "../actions/mainSearch"
 
-export default class HistogramBrush implements ChartElement {
-  dispatch: Function
+import type {Span} from "../../BoomClient/types"
+import Chart from "../Chart"
 
-  constructor(dispatch: Function) {
-    this.dispatch = dispatch
-  }
+type Props = {
+  onSelection?: (span: Span) => void,
+  onSelectionClear?: () => void,
+  onSelectionDoubleClick?: (span: Span) => void,
+  onSelectionClick: (span: Span) => void
+}
 
-  mount(chart: Chart) {
+export default function(props: Props = {}) {
+  const {
+    onSelection,
+    onSelectionClear,
+    onSelectionDoubleClick,
+    onSelectionClick
+  } = props
+
+  function mount(chart: Chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "brush")
@@ -24,11 +31,10 @@ export default class HistogramBrush implements ChartElement {
       )
   }
 
-  draw(chart: Chart) {
+  function draw(chart: Chart) {
     let prevSelection = null
     let justClicked = false
     let timeout
-    const dispatch = this.dispatch
 
     function onBrushStart() {
       prevSelection = d3.brushSelection(
@@ -41,21 +47,21 @@ export default class HistogramBrush implements ChartElement {
 
     function onBrushEnd() {
       const {selection, sourceEvent} = d3.event
+
       if (!sourceEvent) {
         return
       }
+
       if (!selection) {
-        dispatch(setInnerTimeWindow(null))
-        dispatch(fetchMainSearch({saveToHistory: false}))
+        if (chart.props.innerTimeWindow) onSelectionClear && onSelectionClear()
         return
       }
+
       if (!isEqual(selection, prevSelection)) {
-        dispatch(
-          setInnerTimeWindow(selection.map(chart.scales.timeScale.invert))
-        )
-        dispatch(fetchMainSearch({saveToHistory: false}))
+        onSelection && onSelection(selection.map(chart.scales.timeScale.invert))
         return
       }
+
       const [x] = d3.mouse(this)
       const [start, end] = selection
       const withinSelection = x >= start && x <= end
@@ -64,14 +70,12 @@ export default class HistogramBrush implements ChartElement {
       if (singleClickedSelection) {
         justClicked = true
         timeout = setTimeout(() => (justClicked = false), 400)
+        onSelectionClick(selection.map(chart.scales.timeScale.invert))
         return
       }
       if (doubleClickedSelection) {
-        dispatch(
-          setOuterTimeWindow(selection.map(chart.scales.timeScale.invert))
-        )
-        dispatch(setInnerTimeWindow(null))
-        dispatch(fetchMainSearch())
+        onSelectionDoubleClick &&
+          onSelectionDoubleClick(selection.map(chart.scales.timeScale.invert))
         justClicked = false
         clearTimeout(timeout)
         return
@@ -84,14 +88,16 @@ export default class HistogramBrush implements ChartElement {
       .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
     element.call(brush)
 
-    chart.data.innerTimeWindow
+    chart.props.innerTimeWindow
       ? brush.move(
           element,
-          chart.data.innerTimeWindow.map(chart.scales.timeScale)
+          chart.props.innerTimeWindow.map(chart.scales.timeScale)
         )
       : brush.move(element, null)
 
     brush.on("end", onBrushEnd)
     brush.on("start", onBrushStart)
   }
+
+  return {mount, draw}
 }

@@ -1,17 +1,10 @@
 /* @flow */
 
+import Chart from "../Chart"
 import * as d3 from "d3"
-import type {ChartElement} from "../models/Chart"
-import Chart from "../models/Chart"
 
-export default class SingleTickYAxis implements ChartElement {
-  dispatch: Function
-
-  constructor(dispatch: Function) {
-    this.dispatch = dispatch
-  }
-
-  mount(chart: Chart) {
+export default function() {
+  function mount(chart: Chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "y-axis")
@@ -21,7 +14,7 @@ export default class SingleTickYAxis implements ChartElement {
       )
   }
 
-  draw(chart: Chart) {
+  function draw(chart: Chart) {
     if (chart.data.data.length === 0) {
       d3.select(chart.svg)
         .select(".y-axis")
@@ -69,4 +62,6 @@ export default class SingleTickYAxis implements ChartElement {
           )
       })
   }
+
+  return {mount, draw}
 }

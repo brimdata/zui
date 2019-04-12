@@ -1,20 +1,17 @@
 /* @flow */
 
 import * as d3 from "d3"
-import type {ChartElement} from "../models/Chart"
-import * as TimeWindow from "../lib/TimeWindow"
-import {setOuterTimeWindow} from "../actions/timeWindow"
-import {fetchMainSearch} from "../actions/mainSearch"
-import Chart from "../models/Chart"
 
-export default class TimeSpanXAxis implements ChartElement {
-  dispatch: Function
+import type {Span} from "../../BoomClient/types"
+import {duration, shift} from "../../lib/TimeWindow"
+import Chart from "../Chart"
 
-  constructor(dispatch: Function) {
-    this.dispatch = dispatch
-  }
+type Props = {
+  onDragEnd?: (Span) => void
+}
 
-  mount(chart: Chart) {
+export default function({onDragEnd}: Props) {
+  function mount(chart: Chart) {
     const xAxis = d3
       .select(chart.svg)
       .append("g")
@@ -25,13 +22,13 @@ export default class TimeSpanXAxis implements ChartElement {
           chart.margins.bottom})`
       )
 
-    const parent = xAxis.node()
+    let parent = xAxis.node()
     let startSpan = null
     let startPos = null
 
     const dragStart = () => {
       startPos = d3.mouse(parent)[0]
-      startSpan = chart.data.timeWindow
+      startSpan = chart.props.timeWindow
     }
 
     const drag = () => {
@@ -40,8 +37,8 @@ export default class TimeSpanXAxis implements ChartElement {
       const [from, to] = [pos, startPos].map((num) =>
         chart.scales.timeScale.invert(num)
       )
-      const diff = TimeWindow.duration([from, to])
-      const [nextFrom, nextTo] = TimeWindow.shift(startSpan, diff)
+      const diff = duration([from, to])
+      const [nextFrom, nextTo] = shift(startSpan, diff)
       chart.update({timeWindow: [nextFrom, nextTo]})
       chart.draw()
     }
@@ -50,9 +47,9 @@ export default class TimeSpanXAxis implements ChartElement {
       if (startPos === null || startSpan === null) return
       const pos = d3.mouse(parent)[0]
       const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
-      const diff = TimeWindow.duration([from, to])
-      this.dispatch(setOuterTimeWindow(TimeWindow.shift(startSpan, diff)))
-      this.dispatch(fetchMainSearch())
+      const diff = duration([from, to])
+
+      onDragEnd && onDragEnd(shift(startSpan, diff))
       startPos = null
       startSpan = null
     }
@@ -69,7 +66,7 @@ export default class TimeSpanXAxis implements ChartElement {
       .on("mousedown", dragStart)
   }
 
-  draw(chart: Chart) {
+  function draw(chart: Chart) {
     d3.select(chart.svg)
       .select(".x-axis")
       .call(d3.axisBottom(chart.scales.timeScale))
@@ -78,4 +75,6 @@ export default class TimeSpanXAxis implements ChartElement {
       .select(".x-axis-drag")
       .attr("width", chart.dimens.innerWidth)
   }
+
+  return {mount, draw}
 }

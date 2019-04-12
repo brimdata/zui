@@ -1,19 +1,13 @@
 /* @flow */
 
 import * as d3 from "d3"
-import type {ChartElement} from "../models/Chart"
-import Chart from "../models/Chart"
-import * as Time from "../lib/Time"
-import {itestLocator, d3ElementAttr} from "../test/integration"
 
-export default class StackedPathBars implements ChartElement {
-  dispatch: Function
+import {add} from "../../lib/Time"
+import {d3ElementAttr, itestLocator} from "../../test/integration"
+import Chart from "../Chart"
 
-  constructor(dispatch: Function) {
-    this.dispatch = dispatch
-  }
-
-  mount(chart: Chart) {
+export default function() {
+  function mount(chart: Chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "chart")
@@ -24,7 +18,7 @@ export default class StackedPathBars implements ChartElement {
       )
   }
 
-  draw(chart: Chart) {
+  function draw(chart: Chart) {
     const series = d3.stack().keys(chart.data.keys)(chart.data.data)
     const barGroups = d3
       .select(chart.svg)
@@ -59,7 +53,7 @@ export default class StackedPathBars implements ChartElement {
       const ts = chart.data.data[0].ts
       const {number, unit} = chart.data.interval
       const a = chart.scales.timeScale(ts)
-      const b = chart.scales.timeScale(Time.add(ts, number, unit))
+      const b = chart.scales.timeScale(add(ts, number, unit))
       width = Math.max(Math.floor(b - a) - 2, 2)
     }
 
@@ -78,4 +72,6 @@ export default class StackedPathBars implements ChartElement {
         (d) => chart.scales.yScale(d[0]) - chart.scales.yScale(d[1])
       )
   }
+
+  return {mount, draw}
 }

@@ -69,3 +69,9 @@ export function same(array: *[]) {
 export function inBounds(array: *[], index: number) {
   return index >= 0 && index < array.length
 }
+
+export function fillWithIndex(desiredLength: number) {
+  let arr = []
+  for (let i = 0; i < desiredLength; ++i) arr.push(i)
+  return arr
+}
