@@ -22,13 +22,13 @@ export default function({onDragEnd}: Props) {
           chart.margins.bottom})`
       )
 
-    const parent = xAxis.node()
+    let parent = xAxis.node()
     let startSpan = null
     let startPos = null
 
     const dragStart = () => {
       startPos = d3.mouse(parent)[0]
-      startSpan = chart.data.timeWindow
+      startSpan = chart.props.timeWindow
     }
 
     const drag = () => {
@@ -48,6 +48,7 @@ export default function({onDragEnd}: Props) {
       const pos = d3.mouse(parent)[0]
       const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
       const diff = duration([from, to])
+
       onDragEnd && onDragEnd(shift(startSpan, diff))
       startPos = null
       startSpan = null

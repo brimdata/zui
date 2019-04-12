@@ -1,13 +1,7 @@
 /* @flow */
-/*
-  A time window is an array with two dates in it.
-  [new Date(), new Date()]
-
-  Delete this file in favor of lib/TimeWindow
-*/
 import * as d3 from "d3"
 
-import type {Interval} from "../lib/histogramInterval"
+import type {Interval} from "../types"
 import type {Span} from "../BoomClient/types"
 
 export function splitOnEvery(timeWindow: Span, {number, unit}: Interval) {

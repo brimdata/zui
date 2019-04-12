@@ -72,5 +72,6 @@ export default function() {
         (d) => chart.scales.yScale(d[0]) - chart.scales.yScale(d[1])
       )
   }
+
   return {mount, draw}
 }

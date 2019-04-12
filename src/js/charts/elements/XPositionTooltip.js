@@ -4,7 +4,7 @@ import {renderToString} from "react-dom/server"
 import React from "react"
 import * as d3 from "d3"
 
-import {add} from "../../lib/Time"
+import {getPointAt} from "../getPointAt"
 import {id} from "../../lib/Doc"
 import Chart from "../Chart"
 import HistogramTooltip from "../../components/HistogramTooltip"
@@ -42,18 +42,6 @@ export default function() {
   }
 
   return {mount}
-}
-
-const getPointAt = (left, chart) => {
-  const ts = chart.scales.timeScale.invert(left)
-  const {number, unit} = chart.data.interval
-  for (let index = 0; index < chart.data.data.length; index++) {
-    const point = chart.data.data[index]
-    const nextTs = add(point.ts, number, unit)
-    if (ts >= point.ts && ts < nextTs) return point
-  }
-
-  return null
 }
 
 const tooltipProps = (point) => {

@@ -7,13 +7,19 @@ import type {Span} from "../../BoomClient/types"
 import Chart from "../Chart"
 
 type Props = {
-  onSelection: (span: Span) => void,
-  onSelectionClear: () => void,
-  onSelectionDoubleClick: (span: Span) => void
+  onSelection?: (span: Span) => void,
+  onSelectionClear?: () => void,
+  onSelectionDoubleClick?: (span: Span) => void,
+  onSelectionClick: (span: Span) => void
 }
 
-export default function(props: Props) {
-  const {onSelection, onSelectionClear, onSelectionDoubleClick} = props
+export default function(props: Props = {}) {
+  const {
+    onSelection,
+    onSelectionClear,
+    onSelectionDoubleClick,
+    onSelectionClick
+  } = props
 
   function mount(chart: Chart) {
     d3.select(chart.svg)
@@ -47,14 +53,15 @@ export default function(props: Props) {
       }
 
       if (!selection) {
-        onSelectionClear()
+        if (chart.props.innerTimeWindow) onSelectionClear && onSelectionClear()
         return
       }
 
       if (!isEqual(selection, prevSelection)) {
-        onSelection(selection.map(chart.scales.timeScale.invert))
+        onSelection && onSelection(selection.map(chart.scales.timeScale.invert))
         return
       }
+
       const [x] = d3.mouse(this)
       const [start, end] = selection
       const withinSelection = x >= start && x <= end
@@ -63,10 +70,12 @@ export default function(props: Props) {
       if (singleClickedSelection) {
         justClicked = true
         timeout = setTimeout(() => (justClicked = false), 400)
+        onSelectionClick(selection.map(chart.scales.timeScale.invert))
         return
       }
       if (doubleClickedSelection) {
-        onSelectionDoubleClick(selection.map(chart.scales.timeScale.invert))
+        onSelectionDoubleClick &&
+          onSelectionDoubleClick(selection.map(chart.scales.timeScale.invert))
         justClicked = false
         clearTimeout(timeout)
         return
@@ -79,10 +88,10 @@ export default function(props: Props) {
       .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
     element.call(brush)
 
-    chart.data.innerTimeWindow
+    chart.props.innerTimeWindow
       ? brush.move(
           element,
-          chart.data.innerTimeWindow.map(chart.scales.timeScale)
+          chart.props.innerTimeWindow.map(chart.scales.timeScale)
         )
       : brush.move(element, null)
 

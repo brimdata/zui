@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {EpochObj} from "../lib/Time"
+import type {EpochObj, TimeUnit} from "../lib/Time"
 import type {RightClickAction} from "../rightclick/actions"
 import AppError from "../models/AppError"
 import Field from "../models/Field"
@@ -108,3 +108,29 @@ export type RelatedLogs = {
 }
 
 export type RightClickBuilder = (Field, Log) => RightClickAction[]
+
+export type Results = {
+  tuples: Tuple[],
+  descriptor: Descriptor
+}
+
+export type HistogramData = {
+  data: {ts: Date, [string]: number}[],
+  keys: string[],
+  timeBinCount: number,
+  interval: Interval
+}
+
+export type Interval = {
+  number: number,
+  unit: LongTimeUnit,
+  roundingUnit: TimeUnit
+}
+
+export type LongTimeUnit =
+  | "millisecond"
+  | "second"
+  | "minute"
+  | "hour"
+  | "day"
+  | "month"
