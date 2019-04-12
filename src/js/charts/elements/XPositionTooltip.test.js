@@ -1,6 +1,7 @@
 /* @flow */
-import {positionTooltip, xPosition} from "./xPositionTooltip"
 import * as d3 from "d3"
+
+import {positionTooltip, xPosition} from "./xPositionTooltip"
 
 describe("#xPosition", () => {
   let parentWidth, padding, width

@@ -10,12 +10,12 @@ import {fillWithIndex} from "../lib/Array"
 import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
 import Chart from "./Chart"
 import focusBar from "./elements/focusBar"
-import hoverLine from "./elements/HoverLine"
-import singleTickYAxis from "./elements/SingleTickYAxis"
-import stackedPathBars from "./elements/StackedPathBars"
-import timeSpanXAxis from "./elements/TimeSpanXAxis"
-import xAxisBrush from "./elements/XAxisBrush"
-import xPositionTooltip from "./elements/XPositionTooltip"
+import hoverLine from "./elements/hoverLine"
+import singleTickYAxis from "./elements/singleTickYAxis"
+import stackedPathBars from "./elements/stackedPathBars"
+import timeSpanXAxis from "./elements/timeSpanXAxis"
+import xAxisBrush from "./elements/xAxisBrush"
+import xPositionTooltip from "./elements/xPositionTooltip"
 
 type Props = {
   dispatch: Dispatch,
