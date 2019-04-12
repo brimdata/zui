@@ -3,12 +3,18 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
-import type {Dispatch} from "../../reducers/types"
-import {fetchMainSearch} from "../../actions/mainSearch"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../../actions/timeWindow"
+import type {Span} from "../../BoomClient/types"
 import Chart from "../Chart"
 
-export default function(dispatch: Dispatch) {
+type Props = {
+  onSelection: (span: Span) => void,
+  onSelectionClear: () => void,
+  onSelectionDoubleClick: (span: Span) => void
+}
+
+export default function(props: Props) {
+  const {onSelection, onSelectionClear, onSelectionDoubleClick} = props
+
   function mount(chart: Chart) {
     d3.select(chart.svg)
       .append("g")
@@ -35,19 +41,18 @@ export default function(dispatch: Dispatch) {
 
     function onBrushEnd() {
       const {selection, sourceEvent} = d3.event
+
       if (!sourceEvent) {
         return
       }
+
       if (!selection) {
-        dispatch(setInnerTimeWindow(null))
-        dispatch(fetchMainSearch({saveToHistory: false}))
+        onSelectionClear()
         return
       }
+
       if (!isEqual(selection, prevSelection)) {
-        dispatch(
-          setInnerTimeWindow(selection.map(chart.scales.timeScale.invert))
-        )
-        dispatch(fetchMainSearch({saveToHistory: false}))
+        onSelection(selection.map(chart.scales.timeScale.invert))
         return
       }
       const [x] = d3.mouse(this)
@@ -61,11 +66,7 @@ export default function(dispatch: Dispatch) {
         return
       }
       if (doubleClickedSelection) {
-        dispatch(
-          setOuterTimeWindow(selection.map(chart.scales.timeScale.invert))
-        )
-        dispatch(setInnerTimeWindow(null))
-        dispatch(fetchMainSearch())
+        onSelectionDoubleClick(selection.map(chart.scales.timeScale.invert))
         justClicked = false
         clearTimeout(timeout)
         return

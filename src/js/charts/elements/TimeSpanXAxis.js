@@ -2,13 +2,15 @@
 
 import * as d3 from "d3"
 
-import type {Dispatch} from "../../reducers/types"
+import type {Span} from "../../BoomClient/types"
 import {duration, shift} from "../../lib/TimeWindow"
-import {fetchMainSearch} from "../../actions/mainSearch"
-import {setOuterTimeWindow} from "../../actions/timeWindow"
 import Chart from "../Chart"
 
-export default function(dispatch: Dispatch) {
+type Props = {
+  onDragEnd?: (Span) => void
+}
+
+export default function({onDragEnd}: Props) {
   function mount(chart: Chart) {
     const xAxis = d3
       .select(chart.svg)
@@ -46,8 +48,7 @@ export default function(dispatch: Dispatch) {
       const pos = d3.mouse(parent)[0]
       const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
       const diff = duration([from, to])
-      dispatch(setOuterTimeWindow(shift(startSpan, diff)))
-      dispatch(fetchMainSearch())
+      onDragEnd && onDragEnd(shift(startSpan, diff))
       startPos = null
       startSpan = null
     }

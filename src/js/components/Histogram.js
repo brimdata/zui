@@ -7,9 +7,12 @@ import * as d3 from "d3"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {DispatchProps, State} from "../reducers/types"
 import type {Interval} from "../lib/histogramInterval"
+import type {Span} from "../BoomClient/types"
+import {fetchMainSearch} from "../actions/mainSearch"
 import {getHistogramData, getMainSearchHistogram} from "../reducers/histogram"
 import {getHistogramStatus} from "../selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../reducers/timeWindow"
+import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
 import Chart from "../charts/Chart"
 import SVGChart from "./SVGChart"
 import dispatchToProps from "../lib/dispatchToProps"
@@ -38,7 +41,28 @@ type StateProps = {|
 
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
-function buildHistogramChart(props) {
+function buildHistogramChart({dispatch, ...props}) {
+  function onDragEnd(span: Span) {
+    dispatch(setOuterTimeWindow(span))
+    dispatch(fetchMainSearch())
+  }
+
+  function onSelection(span: Span) {
+    dispatch(setInnerTimeWindow(span))
+    dispatch(fetchMainSearch({saveToHistory: false}))
+  }
+
+  function onSelectionClear() {
+    dispatch(setInnerTimeWindow(null))
+    dispatch(fetchMainSearch({saveToHistory: false}))
+  }
+
+  function onSelectionDoubleClick(span) {
+    dispatch(setOuterTimeWindow(span))
+    dispatch(setInnerTimeWindow(null))
+    dispatch(fetchMainSearch())
+  }
+
   return new Chart({
     props: props,
     builders: {
@@ -48,10 +72,10 @@ function buildHistogramChart(props) {
       scales: buildScales
     },
     elements: [
-      timeSpanXAxis(props.dispatch),
+      timeSpanXAxis({onDragEnd}),
       stackedPathBars(),
       singleTickYAxis(),
-      xAxisBrush(props.dispatch),
+      xAxisBrush({onSelection, onSelectionClear, onSelectionDoubleClick}),
       hoverLine(),
       xPositionTooltip()
     ]
