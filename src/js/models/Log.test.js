@@ -1,6 +1,6 @@
 /* @flow */
 
-import {conn, dns, http} from "../test/mockLogs"
+import {conn, dns, files, http} from "../test/mockLogs"
 import Log from "./Log"
 
 test("isSame when tuples are the same", () => {
@@ -89,5 +89,15 @@ describe(".sort", () => {
       "1425567042.047800",
       "1425565514.419939"
     ])
+  })
+})
+
+describe("#correlationId", () => {
+  test("when it has commas in it", () => {
+    const log = files()
+    let i = log.getIndex("conn_uids")
+    log.tuple[i] = "abc,def"
+
+    expect(log.correlationId()).toEqual('"abc,def"')
   })
 })

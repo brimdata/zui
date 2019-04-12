@@ -152,10 +152,12 @@ export default class Log {
   }
 
   correlationId() {
-    if (this.get("_path") === "files") {
-      return this.get("conn_uids")
+    let name = this.get("_path") === "files" ? "conn_uids" : "uid"
+    let field = this.getField(name)
+    if (field) {
+      return field.queryableValue()
     } else {
-      return this.get("uid")
+      return ""
     }
   }
 }
