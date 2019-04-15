@@ -1,6 +1,6 @@
 /* @flow */
 import {getInvestigation} from "./investigation"
-import {newProbe} from "../actions/investigation"
+import {createFinding} from "../actions/investigation"
 import initTestStore from "../test/initTestStore"
 
 let store
@@ -12,9 +12,9 @@ function get() {
   return getInvestigation(store.getState())
 }
 
-test("new probe", () => {
-  const probe = {ts: new Date()}
-  store.dispatch(newProbe(probe))
+test("new finding", () => {
+  const finding = {ts: new Date()}
+  store.dispatch(createFinding(finding))
 
   expect(get()).toEqual([
     {

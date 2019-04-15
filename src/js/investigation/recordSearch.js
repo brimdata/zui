@@ -2,8 +2,8 @@
 import {isEqual} from "lodash"
 
 import type {Thunk} from "../reducers/types"
-import {addToProbe, newProbe} from "../actions/investigation"
-import {getCurrentProbe} from "../reducers/investigation"
+import {createFinding, updateFinding} from "../actions/investigation"
+import {getCurrentFinding} from "../reducers/investigation"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getSearchBar} from "../selectors/searchBar"
 import {getTimeWindow} from "../reducers/timeWindow"
@@ -11,22 +11,22 @@ import {getTimeWindow} from "../reducers/timeWindow"
 export function recordSearch(): Thunk {
   return function(dispatch, getState) {
     let state = getState()
-    let prevProbe = getCurrentProbe(state)
-    let probe = {
+    let prevFinding = getCurrentFinding(state)
+    let finding = {
       ts: new Date(),
       searchBar: getSearchBar(state),
       span: getTimeWindow(state),
       space: getCurrentSpaceName(state)
     }
 
-    if (similarProbe(probe, prevProbe)) {
-      dispatch(addToProbe(probe))
+    if (similarFinding(finding, prevFinding)) {
+      dispatch(updateFinding(finding))
     } else {
-      dispatch(newProbe(probe))
+      dispatch(createFinding(finding))
     }
   }
 }
 
-function similarProbe(a, b) {
+function similarFinding(a, b) {
   return a && b && isEqual(a.searchBar, b.searchBar) && isEqual(a.span, b.span)
 }
