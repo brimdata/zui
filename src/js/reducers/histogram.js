@@ -17,12 +17,9 @@ export default createReducer(initialState, {
   HISTOGRAM_CLEAR: () => ({
     ...initialState
   }),
-  HISTOGRAM_SEARCH_RESULT: (state, {data: {descriptor, tuples}}) => ({
+  HISTOGRAM_SEARCH_RESULT: (state, {data}) => ({
     ...state,
-    data: {
-      descriptor,
-      tuples: [...state.data.tuples, ...tuples]
-    }
+    data
   })
 })
 

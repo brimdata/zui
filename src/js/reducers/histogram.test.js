@@ -31,7 +31,7 @@ test("receive data twice", () => {
   ])
 
   expect(getHistogramData(state)).toEqual({
-    tuples: [["1"], ["2"], ["1"], ["2"]],
+    tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   })
 })
