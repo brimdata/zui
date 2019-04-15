@@ -1,11 +1,11 @@
 /* @flow */
 
-import createReducer from "./createReducer"
-import Tree from "../models/Tree"
 import isEqual from "lodash/isEqual"
+
+import type {SearchRecord} from "../types"
 import type {State} from "./types"
-import type {NodeAttrs} from "../models/Tree"
-import type {SearchBar} from "./searchBar"
+import Tree, {type NodeAttrs} from "../models/Tree"
+import createReducer from "./createReducer"
 
 export const initialState = new Tree({
   data: "ROOT",
@@ -16,8 +16,7 @@ export const initialState = new Tree({
 export type FilterTree = {data: *, children: *[]}
 
 export default createReducer(initialState, {
-  SEARCH_HISTORY_PUSH: (state, {entry}) =>
-    insertAppliedFilters(state, entry.searchBar),
+  SEARCH_HISTORY_PUSH: (state, {entry}) => insertAppliedFilters(state, entry),
 
   FILTER_TREE_CLEAR: () => ({...initialState}),
 
@@ -31,12 +30,12 @@ export default createReducer(initialState, {
 
 export function insertAppliedFilters(
   treeData: NodeAttrs,
-  searchBar: $Shape<SearchBar>
+  record: $Shape<SearchRecord>
 ) {
   let tree = new Tree(treeData)
   let node = tree.getRoot()
 
-  combine(searchBar).forEach((filter) => {
+  combine(record).forEach((filter) => {
     if (!node) return
     let nextNode = node.children.find((child) => isEqual(child.data, filter))
     if (nextNode) {
@@ -50,10 +49,10 @@ export function insertAppliedFilters(
 }
 
 function combine(searchBar) {
-  const {pinned, current} = searchBar
-  const filters = [...pinned]
+  const {pins, program} = searchBar
+  const filters = [...pins]
 
-  if (!/^\s*$/.test(current)) filters.push(current)
+  if (!/^\s*$/.test(program)) filters.push(program)
   return filters
 }
 

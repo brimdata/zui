@@ -7,7 +7,8 @@ import {getSearchBar} from "./searchBar"
 
 export const getSearchRecord = (state: State): SearchRecord => {
   return {
-    searchBar: getSearchBar(state),
+    program: getSearchBar(state).current,
+    pins: getSearchBar(state).pinned,
     span: getOuterTimeWindow(state),
     space: getCurrentSpaceName(state)
   }

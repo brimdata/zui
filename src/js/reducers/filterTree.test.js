@@ -12,8 +12,8 @@ test("insertAppliedFilters in a variety of cases", () => {
   }).toJSON()
 
   state = insertAppliedFilters(state, {
-    pinned: ["a", "b"],
-    current: "c"
+    pins: ["a", "b"],
+    program: "c"
   })
 
   expect(state).toEqual({
@@ -38,8 +38,8 @@ test("insertAppliedFilters in a variety of cases", () => {
 
   // The same applied filters do not create duplicates
   state = insertAppliedFilters(state, {
-    pinned: ["a", "b"],
-    current: "c"
+    pins: ["a", "b"],
+    program: "c"
   })
 
   expect(state).toEqual({
@@ -64,8 +64,8 @@ test("insertAppliedFilters in a variety of cases", () => {
 
   // Switch the current program only
   state = insertAppliedFilters(state, {
-    pinned: ["a", "b"],
-    current: "d"
+    pins: ["a", "b"],
+    program: "d"
   })
 
   expect(state).toEqual({
@@ -92,10 +92,10 @@ test("insertAppliedFilters in a variety of cases", () => {
     ]
   })
 
-  // Rmove the last pinned filter
+  // Rmove the last pins filter
   state = insertAppliedFilters(state, {
-    pinned: ["a"],
-    current: "d"
+    pins: ["a"],
+    program: "d"
   })
 
   expect(state).toEqual({
@@ -126,10 +126,10 @@ test("insertAppliedFilters in a variety of cases", () => {
     ]
   })
 
-  // Remove all pinned and make a new current
+  // Remove all pins and make a new current
   state = insertAppliedFilters(state, {
-    pinned: [],
-    current: "e"
+    pins: [],
+    program: "e"
   })
 
   expect(state).toEqual({
@@ -166,8 +166,8 @@ test("insertAppliedFilters in a variety of cases", () => {
 
   // None at all
   state = insertAppliedFilters(state, {
-    pinned: [],
-    current: ""
+    pins: [],
+    program: ""
   })
 
   expect(state).toEqual({
@@ -205,8 +205,8 @@ test("insertAppliedFilters in a variety of cases", () => {
 
 test("remove a node", () => {
   let state = insertAppliedFilters(initialState, {
-    pinned: ["a", "b"],
-    current: "c"
+    pins: ["a", "b"],
+    program: "c"
   })
 
   expect(state).toEqual({

@@ -138,7 +138,8 @@ export type LongTimeUnit =
   | "month"
 
 export type SearchRecord = {
-  searchBar: SearchBar,
+  program: string,
+  pins: string[],
   span: Span,
   space: string
 }

@@ -26,13 +26,13 @@ beforeEach(() => {
 test("pushing history", () => {
   const state = store.getState()
   const entry = getCurrentEntry(state)
-  expect(entry.searchBar.current).toEqual("third")
+  expect(entry.program).toEqual("third")
 })
 
 test("moving back changes the position", () => {
   let state = store.dispatchAll([backSearchHistory()])
   const entry = getCurrentEntry(state)
-  expect(entry.searchBar.current).toEqual("second")
+  expect(entry.program).toEqual("second")
 })
 
 test("going forward in history", () => {
@@ -42,7 +42,7 @@ test("going forward in history", () => {
     forwardSearchHistory()
   ])
   const entry = getCurrentEntry(state)
-  expect(entry.searchBar.current).toEqual("second")
+  expect(entry.program).toEqual("second")
 })
 
 test("going back in history then pushing new history", () => {
@@ -53,7 +53,7 @@ test("going back in history then pushing new history", () => {
     fetchMainSearch()
   ])
   const entry = getCurrentEntry(state)
-  expect(entry.searchBar.current).toEqual("fourth")
+  expect(entry.program).toEqual("fourth")
 })
 
 test("back, back, push, back", () => {
@@ -65,7 +65,7 @@ test("back, back, push, back", () => {
     backSearchHistory()
   ])
   const entry = getCurrentEntry(state)
-  expect(entry.searchBar.current).toEqual("first")
+  expect(entry.program).toEqual("first")
 })
 
 test("clearing history", () => {
