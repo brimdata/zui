@@ -1,20 +1,15 @@
 /* @flow */
 
-import createReducer from "./createReducer"
-import type {State} from "./types"
-import type {TimeWindow} from "./timeWindow"
-import type {SearchBar} from "./searchBar"
-import NavHistory from "../models/NavHistory"
 import {createSelector} from "reselect"
 
-type Entry = {
-  searchBar: SearchBar,
-  timeWindow: TimeWindow
-}
+import type {SearchRecord} from "../types"
+import type {State} from "./types"
+import NavHistory from "../models/NavHistory"
+import createReducer from "./createReducer"
 
 export type SearchHistory = {
   position: number,
-  entries: Entry[]
+  entries: SearchRecord[]
 }
 
 const initialState: SearchHistory = {
@@ -27,17 +22,17 @@ export default createReducer(initialState, {
     ...initialState
   }),
   SEARCH_HISTORY_PUSH: (state, {entry}) => {
-    const history = new NavHistory<Entry>(state)
+    const history = new NavHistory<SearchRecord>(state)
     history.push(entry)
     return history.toJSON()
   },
   SEARCH_HISTORY_BACK: (state) => {
-    const history = new NavHistory<Entry>(state)
+    const history = new NavHistory<SearchRecord>(state)
     history.goBack()
     return history.toJSON()
   },
   SEARCH_HISTORY_FORWARD: (state) => {
-    const history = new NavHistory<Entry>(state)
+    const history = new NavHistory<SearchRecord>(state)
     history.goForward()
     return history.toJSON()
   }
@@ -50,23 +45,16 @@ export const getSearchHistory = (state: State) => {
 export const buildSearchHistory = createSelector<State, void, *, *>(
   getSearchHistory,
   (state) => {
-    return new NavHistory<Entry>(state)
+    return new NavHistory<SearchRecord>(state)
   }
 )
 
-export const getCurrentEntry = createSelector<State, void, *, *>(
+export const getCurrentEntry = createSelector<State, void, SearchRecord, *>(
   buildSearchHistory,
   (history) => {
     return history.getCurrentEntry()
   }
 )
-
-export const pickEntryOffState = (state: State) => {
-  return {
-    searchBar: state.searchBar,
-    timeWindow: state.timeWindow
-  }
-}
 
 export const canGoBack = createSelector<State, void, *, *>(
   buildSearchHistory,

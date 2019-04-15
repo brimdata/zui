@@ -3,7 +3,7 @@
 import type {EpochObj, TimeUnit} from "../lib/Time"
 import type {RightClickAction} from "../rightclick/actions"
 import type {SearchBar} from "../reducers/searchBar"
-import type {TimeWindow} from "../reducers/timeWindow"
+import type {Span} from "../BoomClient/types"
 import AppError from "../models/AppError"
 import Field from "../models/Field"
 import Log from "../models/Log"
@@ -139,6 +139,6 @@ export type LongTimeUnit =
 
 export type SearchRecord = {
   searchBar: SearchBar,
-  timeWindow: TimeWindow,
+  span: Span,
   space: string
 }
