@@ -2,6 +2,8 @@
 
 import type {EpochObj, TimeUnit} from "../lib/Time"
 import type {RightClickAction} from "../rightclick/actions"
+import type {SearchBar} from "../reducers/searchBar"
+import type {TimeWindow} from "../reducers/timeWindow"
 import AppError from "../models/AppError"
 import Field from "../models/Field"
 import Log from "../models/Log"
@@ -134,3 +136,9 @@ export type LongTimeUnit =
   | "hour"
   | "day"
   | "month"
+
+export type SearchRecord = {
+  searchBar: SearchBar,
+  timeWindow: TimeWindow,
+  space: string
+}
