@@ -1,25 +1,13 @@
 /* @flow */
 
 import {Handler} from "../../BoomClient"
+import {histogramPayload} from "../../test/mockPayloads"
 import HistogramSearch from "./HistogramSearch"
-
-const resultPayload = {
-  channel_id: 0,
-  type: "SearchResult",
-  results: {
-    descriptor: [{name: "ts", type: "time"}, {name: "count", type: "count"}],
-    tuples: [["9999", "1"], ["9998", "2"]]
-  }
-}
-
-const endPayload = {
-  channel_id: 0,
-  type: "SearchEnd"
-}
 
 describe("HistogramSearch", () => {
   const program = "_path = conn"
   const spans = [new Date(0), new Date(10)]
+  const payload = histogramPayload()
 
   let search
   beforeEach(() => {
@@ -37,8 +25,8 @@ describe("HistogramSearch", () => {
     let dispatch = jest.fn()
     search.receiveData(handler, dispatch)
 
-    handler.receive(resultPayload)
-    handler.receive(endPayload)
+    handler.receive(payload.result())
+    handler.receive(payload.end())
 
     expect(dispatch).toHaveBeenNthCalledWith(1, {
       type: "HISTOGRAM_CLEAR"
@@ -46,7 +34,7 @@ describe("HistogramSearch", () => {
 
     expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: "HISTOGRAM_SEARCH_RESULT",
-      data: resultPayload.results
+      data: payload.result().results
     })
   })
 })
