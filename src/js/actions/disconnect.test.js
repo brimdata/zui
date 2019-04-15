@@ -54,7 +54,7 @@ describe("#disconnect", () => {
     expect(actionTypes).toContain("LOG_VIEWER_CLEAR")
   })
 
-  test("dispatches COUNT_BY_TIME_CLEAR", () => {
-    expect(actionTypes).toContain("COUNT_BY_TIME_CLEAR")
+  test("dispatches HISTOGRAM_CLEAR", () => {
+    expect(actionTypes).toContain("HISTOGRAM_CLEAR")
   })
 })

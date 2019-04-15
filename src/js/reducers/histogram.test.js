@@ -15,7 +15,7 @@ test("receive data", () => {
     tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   }
-  const state = store.dispatchAll([a.receiveHistogram(data)])
+  const state = store.dispatchAll([a.histogramSearchResult(data)])
 
   expect(getHistogramData(state)).toEqual(data)
 })
@@ -26,8 +26,8 @@ test("receive data twice", () => {
     descriptor: [{type: "integer", name: "count"}]
   }
   const state = store.dispatchAll([
-    a.receiveHistogram(data),
-    a.receiveHistogram(data)
+    a.histogramSearchResult(data),
+    a.histogramSearchResult(data)
   ])
 
   expect(getHistogramData(state)).toEqual({
@@ -60,7 +60,7 @@ test("clearing the count by time data", () => {
     descriptor: [{type: "integer", name: "count"}]
   }
   const state = store.dispatchAll([
-    a.receiveHistogram(data),
+    a.histogramSearchResult(data),
     a.clearHistogram()
   ])
 

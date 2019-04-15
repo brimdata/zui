@@ -5,7 +5,7 @@ import throttle from "lodash/throttle"
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Payload} from "../../types"
-import {clearHistogram, receiveHistogram} from "../../actions/histogram"
+import {clearHistogram, histogramSearchResult} from "../../actions/histogram"
 import BaseSearch from "./BaseSearch"
 import histogramInterval from "../../lib/histogramInterval"
 
@@ -35,7 +35,7 @@ export default class HistogramSearch extends BaseSearch {
 
     const dispatchNow = () => {
       if (tuples.length === 0) return
-      dispatch(receiveHistogram({descriptor, tuples}))
+      dispatch(histogramSearchResult({descriptor, tuples}))
       tuples = []
     }
 
@@ -48,6 +48,7 @@ export default class HistogramSearch extends BaseSearch {
             descriptor = payload.results.descriptor
             tuples = [...tuples, ...payload.results.tuples]
             dispatchSteady()
+            histogramSearchResult()
             break
           case "SearchEnd":
             dispatchSteady.cancel()

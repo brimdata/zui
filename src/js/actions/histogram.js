@@ -1,10 +1,10 @@
 /* @flow */
 
-export const receiveHistogram = (data: Object) => ({
-  type: "COUNT_BY_TIME_RECEIVE",
+export const histogramSearchResult = (data: Object) => ({
+  type: "HISTOGRAM_SEARCH_RESULT",
   data
 })
 
 export const clearHistogram = () => ({
-  type: "COUNT_BY_TIME_CLEAR"
+  type: "HISTOGRAM_CLEAR"
 })
