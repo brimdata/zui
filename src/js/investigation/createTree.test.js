@@ -1,22 +1,22 @@
 /* @flow */
-import reducer, {insertAppliedFilters, initialState} from "./filterTree"
-import * as actions from "../actions/filterTree"
-import Tree from "../models/Tree"
+import {createInvestigationTree} from "./createTree"
+
+function search(pins, program) {
+  return {
+    ts: new Date(),
+    record: {
+      pins,
+      program,
+      space: "default",
+      span: [new Date(), new Date()]
+    }
+  }
+}
 
 test("insertAppliedFilters in a variety of cases", () => {
-  // From initial state
-  let state = new Tree({
-    data: "ROOT",
-    children: [],
-    parent: null
-  }).toJSON()
+  let investigation = [search(["a", "b"], "c")]
 
-  state = insertAppliedFilters(state, {
-    pins: ["a", "b"],
-    program: "c"
-  })
-
-  expect(state).toEqual({
+  expect(createInvestigationTree(investigation).toJSON()).toEqual({
     data: "ROOT",
     children: [
       {
@@ -35,14 +35,12 @@ test("insertAppliedFilters in a variety of cases", () => {
       }
     ]
   })
+})
 
-  // The same applied filters do not create duplicates
-  state = insertAppliedFilters(state, {
-    pins: ["a", "b"],
-    program: "c"
-  })
+test("The same applied filters do not create duplicates", () => {
+  let investigation = [search(["a", "b"], "c"), search(["a", "b"], "c")]
 
-  expect(state).toEqual({
+  expect(createInvestigationTree(investigation).toJSON()).toEqual({
     data: "ROOT",
     children: [
       {
@@ -61,14 +59,12 @@ test("insertAppliedFilters in a variety of cases", () => {
       }
     ]
   })
+})
 
-  // Switch the current program only
-  state = insertAppliedFilters(state, {
-    pins: ["a", "b"],
-    program: "d"
-  })
+test("Switch the current program only", () => {
+  let investigation = [search(["a", "b"], "c"), search(["a", "b"], "d")]
 
-  expect(state).toEqual({
+  expect(createInvestigationTree(investigation).toJSON()).toEqual({
     data: "ROOT",
     children: [
       {
@@ -91,14 +87,17 @@ test("insertAppliedFilters in a variety of cases", () => {
       }
     ]
   })
+})
 
-  // Rmove the last pins filter
-  state = insertAppliedFilters(state, {
-    pins: ["a"],
-    program: "d"
-  })
+//
+test("Remove the last pins filter", () => {
+  let investigation = [
+    search(["a", "b"], "c"),
+    search(["a", "b"], "d"),
+    search(["a"], "d")
+  ]
 
-  expect(state).toEqual({
+  expect(createInvestigationTree(investigation).toJSON()).toEqual({
     data: "ROOT",
     children: [
       {
@@ -125,52 +124,17 @@ test("insertAppliedFilters in a variety of cases", () => {
       }
     ]
   })
+})
+//
+test("Remove all pins and make a new current", () => {
+  let tree = createInvestigationTree([
+    search(["a", "b"], "c"),
+    search(["a", "b"], "d"),
+    search(["a"], "d"),
+    search([], "e")
+  ])
 
-  // Remove all pins and make a new current
-  state = insertAppliedFilters(state, {
-    pins: [],
-    program: "e"
-  })
-
-  expect(state).toEqual({
-    data: "ROOT",
-    children: [
-      {
-        data: "a",
-        children: [
-          {
-            data: "b",
-            children: [
-              {
-                data: "c",
-                children: []
-              },
-              {
-                data: "d",
-                children: []
-              }
-            ]
-          },
-          {
-            data: "d",
-            children: []
-          }
-        ]
-      },
-      {
-        data: "e",
-        children: []
-      }
-    ]
-  })
-
-  // None at all
-  state = insertAppliedFilters(state, {
-    pins: [],
-    program: ""
-  })
-
-  expect(state).toEqual({
+  expect(tree.toJSON()).toEqual({
     data: "ROOT",
     children: [
       {
@@ -203,13 +167,16 @@ test("insertAppliedFilters in a variety of cases", () => {
   })
 })
 
-test("remove a node", () => {
-  let state = insertAppliedFilters(initialState, {
-    pins: ["a", "b"],
-    program: "c"
-  })
+test("None at all", () => {
+  let tree = createInvestigationTree([
+    search(["a", "b"], "c"),
+    search(["a", "b"], "d"),
+    search(["a"], "d"),
+    search([], "e"),
+    search([], "")
+  ])
 
-  expect(state).toEqual({
+  expect(tree.toJSON()).toEqual({
     data: "ROOT",
     children: [
       {
@@ -221,31 +188,22 @@ test("remove a node", () => {
               {
                 data: "c",
                 children: []
+              },
+              {
+                data: "d",
+                children: []
               }
             ]
-          }
-        ]
-      }
-    ]
-  })
-
-  const tree = new Tree(state)
-  const node = tree.getNodeAt([0, 0, 0])
-  expect(node.data).toBe("c")
-
-  state = reducer(state, actions.removeFilterTreeNode(node))
-
-  expect(state).toEqual({
-    data: "ROOT",
-    children: [
-      {
-        data: "a",
-        children: [
+          },
           {
-            data: "b",
+            data: "d",
             children: []
           }
         ]
+      },
+      {
+        data: "e",
+        children: []
       }
     ]
   })

@@ -7,7 +7,6 @@ import type {BoomSearches} from "./boomSearches"
 import type {Boomd} from "./boomd"
 import type {Correlations} from "./correlations"
 import type {Descriptors} from "./descriptors"
-import type {FilterTree} from "./filterTree"
 import type {Histogram} from "./histogram"
 import type {Investigation} from "./investigation"
 import type {LogDetails} from "./logDetails"
@@ -35,7 +34,6 @@ export type State = {
   searchHistory: SearchHistory,
   whois: Whois,
   logDetails: LogDetails,
-  filterTree: FilterTree,
   descriptors: Descriptors,
   view: View,
   notifications: Notifications,

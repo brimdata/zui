@@ -7,7 +7,6 @@ import boomSearches from "./boomSearches"
 import boomd from "./boomd"
 import correlations from "./correlations"
 import descriptors from "./descriptors"
-import filterTree from "./filterTree"
 import histogram from "./histogram"
 import investigation from "./investigation"
 import logDetails from "./logDetails"
@@ -33,7 +32,6 @@ export default combineReducers<*, *>({
   descriptors,
   spaces,
   timeWindow,
-  filterTree,
   histogram,
   analysis,
   logDetails,

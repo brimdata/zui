@@ -1,19 +1,19 @@
 /* @flow */
 
-import React from "react"
-import Tree, {Node} from "../models/Tree"
-import FilterNode from "./FilterNode"
-import isEqual from "lodash/isEqual"
-import CloseSVG from "../icons/circle-x-md.svg"
 import {connect} from "react-redux"
-import {getSearchBarPins} from "../selectors/searchBar"
-import {getFilterTree} from "../reducers/filterTree"
-import type {State} from "../reducers/types"
-import type {Dispatch} from "../reducers/types"
-import {setSearchBarPins} from "../actions/searchBar"
+import React from "react"
+import isEqual from "lodash/isEqual"
+
+import type {Dispatch, State} from "../reducers/types"
+import {type Investigation, getInvestigation} from "../reducers/investigation"
+import {Node} from "../models/Tree"
+import {createInvestigationTree} from "../investigation/createTree"
 import {fetchMainSearch} from "../actions/mainSearch"
+import {getSearchBarPins} from "../selectors/searchBar"
 import {removeFilterTreeNode} from "../actions/filterTree"
-import type {FilterTree as FilterTreeType} from "../reducers/filterTree"
+import {setSearchBarPins} from "../actions/searchBar"
+import CloseSVG from "../icons/circle-x-md.svg"
+import FilterNode from "./FilterNode"
 
 type OwnProps = {||}
 
@@ -22,7 +22,7 @@ type DispatchProps = {|
 |}
 
 type StateProps = {|
-  filterTree: FilterTreeType,
+  investigation: Investigation,
   pinnedFilters: string[]
 |}
 
@@ -72,8 +72,8 @@ export default class FilterTree extends React.Component<AllProps> {
   }
 
   render() {
-    const {children, data} = this.props.filterTree
-    const tree = new Tree({children, data, parent: null})
+    let tree = createInvestigationTree(this.props.investigation)
+
     return (
       <div className="filter-tree">
         {tree.getRoot().children.map(this.renderNode)}
@@ -109,7 +109,7 @@ export function nodeIsPinned(pinnedFilters: string[], node: ?Node) {
 
 function stateToProps(state: State) {
   return {
-    filterTree: getFilterTree(state),
+    investigation: getInvestigation(state),
     pinnedFilters: getSearchBarPins(state)
   }
 }
