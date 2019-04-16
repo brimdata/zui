@@ -17,18 +17,18 @@ export const clearSearchHistory = () => ({
   type: "SEARCH_HISTORY_CLEAR"
 })
 
-export function restoreSearch(record: SearchRecord): Thunk {
+export function restoreSearch(search: SearchRecord): Thunk {
   return function(dispatch) {
     dispatch(
       restoreSearchBar({
-        current: record.program,
+        current: search.program,
         previous: "",
-        pinned: record.pins,
+        pinned: search.pins,
         editing: null,
         error: null
       })
     )
-    dispatch(setOuterTimeWindow(record.span))
+    dispatch(setOuterTimeWindow(search.span))
     dispatch(setInnerTimeWindow(null))
   }
 }

@@ -4,7 +4,7 @@ import {createInvestigationTree} from "./createTree"
 function search(pins, program) {
   return {
     ts: new Date(0),
-    record: {
+    search: {
       pins,
       program,
       space: "default",

@@ -10,7 +10,7 @@ export function createInvestigationTree(investigation: Investigation) {
   for (let finding of investigation) {
     let node = tree.getRoot()
 
-    eachFilter(finding.record, (filter) => {
+    eachFilter(finding.search, (filter) => {
       if (!node) return
       let nextNode = node.children.find((child) =>
         isEqual(child.data.filter, filter)

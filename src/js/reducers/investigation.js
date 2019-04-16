@@ -9,7 +9,7 @@ import Log from "../models/Log"
 export type Investigation = Finding[]
 export type Finding = {
   ts: Date,
-  record: SearchRecord,
+  search: SearchRecord,
   note?: string,
   logs?: Log[],
   chart?: {
@@ -49,16 +49,16 @@ function updateLatest(state: Investigation, updates: $Shape<Finding>) {
   }
 }
 
-function createFinding(state, record: SearchRecord, ts = new Date()) {
-  if (sameRecord(last(state), {ts, record})) {
+function createFinding(state, search: SearchRecord, ts = new Date()) {
+  if (sameRecord(last(state), {ts, search})) {
     return updateLatest(state, {ts})
   } else {
-    return [...state, {ts, record}]
+    return [...state, {ts, search}]
   }
 }
 
 function sameRecord(a: Finding, b: Finding) {
-  return !!a && !!b && isEqual(a.record, b.record)
+  return !!a && !!b && isEqual(a.search, b.search)
 }
 
 export function getInvestigation(state: State) {
