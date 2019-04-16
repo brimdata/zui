@@ -1,12 +1,3 @@
 #!/bin/bash
 
-function fix {
-  npx importjs fix --overwrite $@
-  npx prettier --write $@
-}
-
-./bin/deletebadrefs
-for f in $(./bin/flowfiles)
-do
-  fix $f
-done
+npx babel-node ./bin/fixer/index.js $@
