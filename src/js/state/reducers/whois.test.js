@@ -1,6 +1,6 @@
 /* @flow */
 import initTestStore from "../test/initTestStore"
-import * as actions from "../actions/whois"
+import * as actions from "../state/actions/whois"
 import {getWhoisText, getWhoisIsOpen, getWhoisAddr} from "./whois"
 
 let store

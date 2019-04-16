@@ -1,13 +1,13 @@
 /* @flow */
 
 import type {DateTuple} from "../../lib/TimeWindow"
-import type {Dispatch} from "../../reducers/types"
+import type {Dispatch} from "../../state/reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Payload} from "../../types"
 import {
   setBoomSearchStats,
   setBoomSearchStatus
-} from "../../actions/boomSearches"
+} from "../../state/actions/boomSearches"
 
 export default class BaseSearch {
   program: string

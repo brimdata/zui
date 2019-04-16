@@ -1,7 +1,7 @@
 /* @flow */
 
 import {conn} from "../test/mockLogs"
-import {detail} from "./actions"
+import {detail} from "./state/actions"
 import initTestStore from "../test/initTestStore"
 
 test("#detail first shows right pane, then views log", () => {

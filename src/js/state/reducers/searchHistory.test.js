@@ -4,9 +4,9 @@ import {
   backSearchHistory,
   clearSearchHistory,
   forwardSearchHistory
-} from "../actions/searchHistory"
-import {changeSearchBarInput} from "../actions/searchBar"
-import {fetchMainSearch} from "../actions/mainSearch"
+} from "../state/actions/searchHistory"
+import {changeSearchBarInput} from "../state/actions/searchBar"
+import {fetchMainSearch} from "../state/actions/mainSearch"
 import {getCurrentEntry, getSearchHistory} from "./searchHistory"
 import initTestStore from "../test/initTestStore"
 

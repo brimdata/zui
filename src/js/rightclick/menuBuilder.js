@@ -1,7 +1,7 @@
 /* @flow */
 import electronIsDev from "electron-is-dev"
 
-import {type RightClickAction, seperator} from "./actions"
+import {type RightClickAction, seperator} from "./state/actions"
 import {flattenJoin} from "../lib/Array"
 
 export default function menuBuilder() {

@@ -2,13 +2,13 @@
 
 import {createSelector} from "reselect"
 
-import {type State} from "../reducers/types"
-import {getCurrentSpaceName} from "../reducers/spaces"
-import {getDescriptors} from "../reducers/descriptors"
-import {getLogTuples} from "../reducers/logs"
-import {getResultsTab} from "../reducers/view"
+import {type State} from "../state/reducers/types"
+import {getCurrentSpaceName} from "../state/reducers/spaces"
+import {getDescriptors} from "../state/reducers/descriptors"
+import {getLogTuples} from "../state/reducers/logs"
+import {getResultsTab} from "../state/reducers/view"
 import Log from "../models/Log"
-import * as analysis from "../reducers/analysis"
+import * as analysis from "../state/reducers/analysis"
 
 export const getEventLogs = createSelector<State, void, *, *, *, *>(
   getLogTuples,

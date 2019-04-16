@@ -1,10 +1,11 @@
 /* @flow */
-import MockBoomClient from "../test/MockBoomClient"
+
+import {getCurrentSpace, getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
-import {setCurrentSpaceName} from "./spaces"
-import initTestStore from "../test/initTestStore"
-import * as searchPage from "./searchPage"
-import * as spaces from "../reducers/spaces"
+import {init} from "./searchPage"
+import {setCurrentSpaceName} from "../actions"
+import MockBoomClient from "../../test/MockBoomClient"
+import initTestStore from "../../test/initTestStore"
 
 const defaultSpace = {
   name: "default",
@@ -26,10 +27,10 @@ test("init with several spaces", (done) => {
   const store = initTestStore(boom)
 
   store
-    .dispatch(searchPage.init())
+    .dispatch(init())
     .then(() => {
-      expect(spaces.getCurrentSpaceName(store.getState())).toBe("default")
-      expect(spaces.getCurrentSpace(store.getState())).toEqual(
+      expect(getCurrentSpaceName(store.getState())).toBe("default")
+      expect(getCurrentSpace(store.getState())).toEqual(
         expect.objectContaining(defaultSpace)
       )
       expect(getTimeWindow(store.getState())).toEqual([
@@ -49,7 +50,7 @@ test("init with no spaces", (done) => {
   const store = initTestStore(boom)
 
   store
-    .dispatch(searchPage.init())
+    .dispatch(init())
     .then(() => done.fail("Expected to fail with NoSpaces"))
     .catch((e) => {
       expect(e).toBe("NoSpaces")
@@ -66,9 +67,9 @@ test("init with a space already selected", (done) => {
 
   store.dispatch(setCurrentSpaceName("alternate"))
   store
-    .dispatch(searchPage.init())
+    .dispatch(init())
     .then(() => {
-      expect(spaces.getCurrentSpaceName(store.getState())).toBe("alternate")
+      expect(getCurrentSpaceName(store.getState())).toBe("alternate")
       done()
     })
     .catch((e) => done.fail(e))

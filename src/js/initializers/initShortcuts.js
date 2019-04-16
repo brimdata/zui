@@ -1,21 +1,21 @@
 /* @flow */
 import {ipcRenderer} from "electron"
 
-import type {Store} from "../reducers/types"
+import type {Store} from "../state/reducers/types"
 import {
   changeSearchBarInput,
   goBack,
   goForward,
   pinSearchBar,
   removeAllSearchBarPins
-} from "../actions/searchBar"
+} from "../state/actions/searchBar"
 import {clearState} from "./initPersistance"
 import {
   showModal,
   toggleLeftSidebar,
   toggleRightSidebar,
   toggleSearchInspector
-} from "../actions/view"
+} from "../state/actions/view"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {

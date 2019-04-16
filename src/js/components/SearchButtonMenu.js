@@ -3,10 +3,10 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {State} from "../reducers/types"
-import {getSomeAreFetching} from "../selectors/boomSearches"
-import {killBoomSearches} from "../actions/boomSearches"
-import {showModal} from "../actions/view"
+import type {State} from "../state/reducers/types"
+import {getSomeAreFetching} from "../state/selectors/boomSearches"
+import {killBoomSearches} from "../state/actions/boomSearches"
+import {showModal} from "../state/actions/view"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
 

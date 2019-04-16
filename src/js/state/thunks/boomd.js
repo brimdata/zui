@@ -1,22 +1,11 @@
 /* @flow */
 
-import type {Credentials} from "../lib/Credentials"
-import {LookytalkVersionError} from "../models/Errors"
+import {LookytalkVersionError} from "../../models/Errors"
 import type {Thunk} from "../reducers/types"
-import {addNotification} from "./notifications"
-import {fetchLookytalkVersions, fetchSpaces} from "../backend/fetch"
+import {addNotification, useBoomCache, useBoomIndex} from "../actions"
+import {fetchLookytalkVersions, fetchSpaces} from "../../backend/fetch"
 import {getBoomOptions} from "../selectors/boom"
-import {updateBoomOptions} from "../backend/options"
-
-export const useBoomCache = (value: boolean) => ({
-  type: "BOOMD_CACHE_USE_SET",
-  value
-})
-
-export const useBoomIndex = (value: boolean) => ({
-  type: "BOOMD_INDEX_USE_SET",
-  value
-})
+import {updateBoomOptions} from "../../backend/options"
 
 export const enableCache = (value: boolean): Thunk => (
   dispatch,
@@ -35,11 +24,6 @@ export const enableIndex = (value: boolean): Thunk => (
   dispatch(useBoomIndex(value))
   boom.setOptions({enableCache: value})
 }
-
-export const setBoomdCredentials = (credentials: Credentials) => ({
-  type: "BOOMD_CREDENTIALS_SET",
-  credentials
-})
 
 export const connectBoomd = (): Thunk => (dispatch, getState) => {
   dispatch(updateBoomOptions())

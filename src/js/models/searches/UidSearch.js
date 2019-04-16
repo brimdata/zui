@@ -1,12 +1,12 @@
 /* @flow */
 
-import type {Dispatch} from "../../reducers/types"
+import type {Dispatch} from "../../state/reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Span} from "../../BoomClient/types"
 import type {Tuple} from "../../types"
 import {addHeadProc} from "../../lib/Program"
-import {discoverDescriptors} from "../../actions/descriptors"
-import {setCorrelation} from "../../actions/correlations"
+import {discoverDescriptors} from "../../state/actions/descriptors"
+import {setCorrelation} from "../../state/actions/correlations"
 import BaseSearch from "./BaseSearch"
 import Log from "../Log"
 

@@ -2,14 +2,14 @@
 
 import throttle from "lodash/throttle"
 
-import type {Dispatch} from "../../reducers/types"
+import type {Dispatch} from "../../state/reducers/types"
 import {Handler} from "../../BoomClient"
-import {PER_PAGE} from "../../reducers/logViewer"
+import {PER_PAGE} from "../../state/reducers/logViewer"
 import type {Payload} from "../../types"
 import {addHeadProc} from "../../lib/Program"
-import {discoverDescriptors} from "../../actions/descriptors"
-import {receiveLogTuples, spliceLogs} from "../../actions/logs"
-import {setMoreAhead} from "../../actions/logViewer"
+import {discoverDescriptors} from "../../state/actions/descriptors"
+import {receiveLogTuples, spliceLogs} from "../../state/actions/logs"
+import {setMoreAhead} from "../../state/actions/logViewer"
 import BaseSearch from "./BaseSearch"
 
 export default class LogSearch extends BaseSearch {

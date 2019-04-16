@@ -1,0 +1,14 @@
+#!/usr/local/bin/node
+
+const execSync = require("child_process").execSync
+const exec = require("child_process").exec
+
+exec("./bin/badrefs", (err, out) => {
+  out.split("\n").forEach((file) => {
+    const [path, line, endline ] = file.split(":")
+
+    if (path && line && endline) {
+      execSync(`sed -i '${line},${endline}d' ${path}`)
+    }
+  })
+})

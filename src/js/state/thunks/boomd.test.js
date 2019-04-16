@@ -1,9 +1,9 @@
 /* @flow */
 
-import {LookytalkVersionError} from "../models/Errors"
+import {LookytalkVersionError} from "../../models/Errors"
 import {checkLookytalkVersion} from "./boomd"
-import MockBoomClient from "../test/MockBoomClient"
-import initTestStore from "../test/initTestStore"
+import MockBoomClient from "../../test/MockBoomClient"
+import initTestStore from "../../test/initTestStore"
 
 test("#checkLookytalkVersion when they are the same", (done) => {
   const boom = new MockBoomClient()

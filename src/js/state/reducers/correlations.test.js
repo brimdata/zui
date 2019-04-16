@@ -4,7 +4,7 @@ import {
   clearAllCorrelations,
   clearCorrelations,
   setCorrelation
-} from "../actions/correlations"
+} from "../state/actions/correlations"
 import {getCorrelations} from "./correlations"
 import initTestStore from "../test/initTestStore"
 

@@ -5,9 +5,9 @@ import Prism from "prismjs"
 import React from "react"
 
 import {Code, Label} from "./Typography"
-import type {State as S} from "../reducers/types"
+import type {State as S} from "../state/reducers/types"
 import * as Program from "../lib/Program"
-import * as searchBar from "../selectors/searchBar"
+import * as searchBar from "../state/selectors/searchBar"
 
 type Props = {
   searchProgram: string

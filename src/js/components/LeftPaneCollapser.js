@@ -3,10 +3,10 @@
 import React from "react"
 import CircleChevron from "./CircleChevron"
 import classNames from "classnames"
-import type {Dispatch} from "../reducers/types"
+import type {Dispatch} from "../state/reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
 import {connect} from "react-redux"
-import {hideLeftSidebar} from "../actions/view"
+import {hideLeftSidebar} from "../state/actions/view"
 
 type Props = {
   show: boolean,

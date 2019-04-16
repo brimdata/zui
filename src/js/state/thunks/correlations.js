@@ -3,25 +3,9 @@
 import type {Thunk} from "../reducers/types"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {issueBoomSearch} from "./boomSearches"
-import Log from "../models/Log"
-import Md5Search from "../models/searches/Md5Search"
-import UidSearch from "../models/searches/UidSearch"
-
-export const setCorrelation = (key: string, name: string, data: *) => ({
-  type: "CORRELATION_SET",
-  key,
-  name,
-  data
-})
-
-export const clearCorrelations = (key: string) => ({
-  type: "CORRELATIONS_CLEAR",
-  key
-})
-
-export const clearAllCorrelations = () => ({
-  type: "CORRELATIONS_CLEAR_ALL"
-})
+import Log from "../../models/Log"
+import Md5Search from "../../models/searches/Md5Search"
+import UidSearch from "../../models/searches/UidSearch"
 
 export const fetchTuplesByUid = (log: Log): Thunk => (dispatch, getState) => {
   if (log.correlationId()) {

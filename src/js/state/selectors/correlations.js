@@ -3,11 +3,11 @@
 import {createSelector} from "reselect"
 import get from "lodash/get"
 
-import type {State} from "../reducers/types"
+import type {State} from "../state/reducers/types"
 import {buildLogDetail} from "./logDetails"
-import {getCorrelations} from "../reducers/correlations"
-import {getCurrentSpaceName} from "../reducers/spaces"
-import {getDescriptors} from "../reducers/descriptors"
+import {getCorrelations} from "../state/reducers/correlations"
+import {getCurrentSpaceName} from "../state/reducers/spaces"
+import {getDescriptors} from "../state/reducers/descriptors"
 import {toFront} from "../lib/Array"
 import Log from "../models/Log"
 

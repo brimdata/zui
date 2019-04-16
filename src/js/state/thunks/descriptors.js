@@ -3,8 +3,9 @@
 import type {Thunk} from "redux-thunk"
 import uniq from "lodash/uniq"
 
-import type {Tuple} from "../types"
-import {boomFetchDescriptors} from "../backend/fetch"
+import type {Tuple} from "../../types"
+import {boomFetchDescriptors} from "../../backend/fetch"
+import {errorDescriptor, receiveDescriptor, requestDescriptor} from "../actions"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getDescriptors} from "../reducers/descriptors"
 
@@ -35,29 +36,3 @@ export const fetchDescriptor = (id: string): Thunk => {
       .catch((error) => dispatch(errorDescriptor(error)))
   }
 }
-
-export const requestDescriptor = (space: string, id: string) => ({
-  type: "DESCRIPTOR_REQUEST",
-  space,
-  id
-})
-
-export const receiveDescriptor = (
-  space: string,
-  id: string,
-  descriptor: {name: string, type: string}[]
-) => ({
-  type: "DESCRIPTOR_RECEIVE",
-  space,
-  id,
-  descriptor
-})
-
-export const errorDescriptor = (error: string) => ({
-  type: "DESCRIPTOR_ERROR",
-  error
-})
-
-export const clearDescriptors = () => ({
-  type: "DESCRIPTORS_CLEAR"
-})

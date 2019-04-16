@@ -1,7 +1,7 @@
 /* @flow */
 
 import * as packets from "./packets"
-import * as a from "../actions/packets"
+import * as a from "../state/actions/packets"
 
 const reduce = (actions) => ({
   packets: actions.reduce(packets.default, packets.initialState)

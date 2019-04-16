@@ -7,7 +7,7 @@ import {
   registerBoomSearch,
   setBoomSearchStats,
   setBoomSearchStatus
-} from "../actions/boomSearches"
+} from "../state/actions/boomSearches"
 import {getBoomSearches} from "./boomSearches"
 import initTestStore from "../test/initTestStore"
 

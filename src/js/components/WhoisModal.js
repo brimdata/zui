@@ -2,12 +2,12 @@
 
 import React from "react"
 import Modal from "./Modal"
-import {closeWhois} from "../actions/whois"
+import {closeWhois} from "../state/actions/whois"
 import {connect} from "react-redux"
-import * as whois from "../reducers/whois"
+import * as whois from "../state/reducers/whois"
 import dispatchToProps from "../lib/dispatchToProps"
-import type {State} from "../reducers/types"
-import {type DispatchProps} from "../reducers/types"
+import type {State} from "../state/reducers/types"
+import {type DispatchProps} from "../state/reducers/types"
 
 type StateProps = {|
   isOpen: boolean,

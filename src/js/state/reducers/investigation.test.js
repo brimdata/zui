@@ -1,9 +1,9 @@
 /* @flow */
-import {createFinding, deleteFindingByTs} from "../actions/investigation"
+import {createFinding, deleteFindingByTs} from "../state/actions/investigation"
 import {getCurrentFinding, getInvestigation} from "./investigation"
 import {histogramPayload} from "../test/mockPayloads"
-import {histogramSearchResult} from "../actions/histogram"
-import {recordSearch} from "../actions/searchRecord"
+import {histogramSearchResult} from "../state/actions/histogram"
+import {recordSearch} from "../state/actions/searchRecord"
 import initTestStore from "../test/initTestStore"
 
 let store

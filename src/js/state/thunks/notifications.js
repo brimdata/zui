@@ -1,17 +1,7 @@
 /* @flow */
 
-import type {Notification} from "../types"
 import type {Thunk} from "../reducers/types"
-
-export const addNotification = (notification: Notification) => ({
-  type: "NOTIFICATIONS_ADD",
-  notification
-})
-
-export const removeNotification = (index: number) => ({
-  type: "NOTIFICATIONS_REMOVE",
-  index
-})
+import {addNotification} from "../actions"
 
 export const notifyLookytalkVersionError = (
   clientVersion: string,

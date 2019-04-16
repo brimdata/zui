@@ -3,10 +3,10 @@
 import React from "react"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
-import {goBack, goForward} from "../actions/searchBar"
+import {goBack, goForward} from "../state/actions/searchBar"
 import {connect} from "react-redux"
-import * as searchHistory from "../reducers/searchHistory"
-import {type DispatchProps} from "../reducers/types"
+import * as searchHistory from "../state/reducers/searchHistory"
+import {type DispatchProps} from "../state/reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type StateProps = {

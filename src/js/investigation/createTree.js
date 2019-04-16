@@ -1,7 +1,7 @@
 /* @flow */
 import {isEqual} from "lodash"
 
-import type {Investigation} from "../reducers/investigation"
+import type {Investigation} from "../state/reducers/investigation"
 import Tree from "../models/Tree"
 
 export function createInvestigationTree(investigation: Investigation) {

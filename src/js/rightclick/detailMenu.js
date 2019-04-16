@@ -5,7 +5,7 @@ import {
   fromTime,
   toTime,
   whoisRightclick
-} from "../rightclick/actions"
+} from "../rightclick/state/actions"
 import Field, {TimeField} from "../models/Field"
 import menuBuilder from "./menuBuilder"
 

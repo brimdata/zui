@@ -2,7 +2,7 @@
 
 import {createHistogramData} from "../charts/createHistogramData"
 import {getHistogramData} from "./histogram"
-import * as a from "../actions/histogram"
+import * as a from "../state/actions/histogram"
 import initTestStore from "../test/initTestStore"
 
 let store

@@ -8,7 +8,7 @@ import {
   logResult,
   toTime,
   whoisRightclick
-} from "./actions"
+} from "./state/actions"
 import {hasGroupByProc} from "../lib/Program"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"

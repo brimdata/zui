@@ -2,14 +2,14 @@
 
 import {createSelector} from "reselect"
 
-import type {State} from "../reducers/types"
+import type {State} from "../state/reducers/types"
 import {
   getLogDetails,
   toHistory,
   getPosition,
   getPrevPosition
-} from "../reducers/logDetails"
-import {getStarredLogs} from "../reducers/starredLogs"
+} from "../state/reducers/logDetails"
+import {getStarredLogs} from "../state/reducers/starredLogs"
 import Log from "../models/Log"
 import * as Tuple from "../lib/Tuple"
 

@@ -1,11 +1,12 @@
 /* @flow */
+
 import {PER_PAGE} from "../reducers/logViewer"
 import {changeSearchBarInput} from "./searchBar"
 import {fetchMainSearch} from "./mainSearch"
 import {init, setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
 import {setSpaceInfo, setCurrentSpaceName} from "./spaces"
-import MockBoomClient from "../test/MockBoomClient"
-import initTestStore from "../test/initTestStore"
+import MockBoomClient from "../../test/MockBoomClient"
+import initTestStore from "../../test/initTestStore"
 
 let store, boom
 

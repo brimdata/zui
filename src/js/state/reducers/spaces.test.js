@@ -2,7 +2,7 @@
 
 import initTestStore from "../test/initTestStore"
 import {getSpaces, getAllSpaceNames, getCurrentSpaceName} from "./spaces"
-import * as a from "../actions/spaces"
+import * as a from "../state/actions/spaces"
 
 let store
 beforeEach(() => {

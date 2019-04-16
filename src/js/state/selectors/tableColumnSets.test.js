@@ -6,11 +6,11 @@ import {
   getCurrentTableColumnsId,
   getCurrentUniqColumns
 } from "./tableColumnSets"
-import {receiveDescriptor} from "../actions/descriptors"
-import {receiveLogTuples} from "../actions/logs"
-import {setAnalysis} from "../actions/analysis"
-import {setCurrentSpaceName} from "../actions/spaces"
-import {showAnalyticsTab} from "../actions/view"
+import {receiveDescriptor} from "../state/actions/descriptors"
+import {receiveLogTuples} from "../state/actions/logs"
+import {setAnalysis} from "../state/actions/analysis"
+import {setCurrentSpaceName} from "../state/actions/spaces"
+import {showAnalyticsTab} from "../state/actions/view"
 import TableColumns from "../models/TableColumns"
 import initTestStore from "../test/initTestStore"
 

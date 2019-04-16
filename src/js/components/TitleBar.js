@@ -4,8 +4,8 @@ import {Link} from "react-router-dom"
 import {connect} from "react-redux"
 import React from "react"
 
-import {disconnect} from "../actions/disconnect"
-import {getBoomHost, getBoomPort} from "../reducers/boomd"
+import {disconnect} from "../state/actions/disconnect"
+import {getBoomHost, getBoomPort} from "../state/reducers/boomd"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {|

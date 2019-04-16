@@ -1,9 +1,7 @@
 /* @flow */
 
 import type {Thunk} from "../reducers/types"
-import {clearAllCorrelations} from "./correlations"
-import {clearAnalysis} from "./analysis"
-import {clearDescriptors} from "./descriptors"
+import {clearAllCorrelations, clearAnalysis, clearDescriptors} from "../actions"
 import {clearFilterTree} from "./filterTree"
 import {clearHistogram} from "./histogram"
 import {clearLogViewer} from "./logViewer"

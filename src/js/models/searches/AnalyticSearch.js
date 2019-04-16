@@ -2,11 +2,11 @@
 
 import throttle from "lodash/throttle"
 
-import type {Dispatch} from "../../reducers/types"
+import type {Dispatch} from "../../state/reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Payload} from "../../types"
 import {addHeadProc} from "../../lib/Program"
-import {setAnalysis} from "../../actions/analysis"
+import {setAnalysis} from "../../state/actions/analysis"
 import BaseSearch from "./BaseSearch"
 
 export const ANALYTIC_MAX_RESULTS = 10000

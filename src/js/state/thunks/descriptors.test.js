@@ -1,9 +1,10 @@
 /* @flow */
-import MockBoomClient from "../test/MockBoomClient"
+
 import {fetchDescriptor} from "./descriptors"
 import {getDescriptors} from "../reducers/descriptors"
-import {setCurrentSpaceName} from "./spaces"
-import initTestStore from "../test/initTestStore"
+import {setCurrentSpaceName} from "../actions"
+import MockBoomClient from "../../test/MockBoomClient"
+import initTestStore from "../../test/initTestStore"
 
 test("#fetchDescriptor", (done) => {
   const boom = new MockBoomClient()

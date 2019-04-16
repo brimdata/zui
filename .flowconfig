@@ -4,6 +4,7 @@
 .*/coverage/.*
 .*/__snapshots__/.*
 .*/electron/.*
+.*/bin/.*
 
 [include]
 

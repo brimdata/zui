@@ -9,7 +9,7 @@ import {
   showDownloads,
   showModal,
   showSearchInspector
-} from "../actions/view"
+} from "../state/actions/view"
 import initTestStore from "../test/initTestStore"
 import * as view from "./view"
 

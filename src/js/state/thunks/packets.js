@@ -1,27 +1,11 @@
 /* @flow */
 
-import {showDownloads, hideDownloads} from "./view"
-import BoomClient from "../BoomClient"
-import Log from "../models/Log"
-import * as System from "../lib/System"
-import * as spaces from "../reducers/spaces"
-
-export const requestPackets = (uid: string) => ({
-  type: "PACKETS_REQUEST",
-  uid
-})
-
-export const receivePackets = (uid: string, fileName: string) => ({
-  type: "PACKETS_RECEIVE",
-  uid,
-  fileName
-})
-
-export const errorPackets = (uid: string, error: string) => ({
-  type: "PACKETS_ERROR",
-  error,
-  uid
-})
+import {downloadsDir} from "../../lib/System"
+import {errorPackets, receivePackets, requestPackets} from "../actions"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {hideDownloads, showDownloads} from "./view"
+import BoomClient from "../../BoomClient"
+import Log from "../../models/Log"
 
 export const fetchPackets = (log: Log) => (
   dispatch: Function,
@@ -31,8 +15,8 @@ export const fetchPackets = (log: Log) => (
   dispatch(requestPackets(log.get("uid")))
   dispatch(showDownloads())
   const state = getState()
-  const space = spaces.getCurrentSpaceName(state)
-  const destDir = System.downloadsDir()
+  const space = getCurrentSpaceName(state)
+  const destDir = downloadsDir()
   return boom.packets
     .get({
       ts_sec: log.getSec("ts"),

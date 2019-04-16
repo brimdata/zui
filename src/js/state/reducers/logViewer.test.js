@@ -1,7 +1,7 @@
 /* @flow */
 
 import * as logViewer from "./logViewer"
-import * as a from "../actions/logViewer"
+import * as a from "../state/actions/logViewer"
 import initTestStore from "../test/initTestStore"
 import dispatchAll from "../test/dispatchAll"
 

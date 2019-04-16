@@ -1,6 +1,6 @@
 /* @flow */
 import {getCredentials, getUseBoomCache, getUseBoomIndex} from "./boomd"
-import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../actions/boomd"
+import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../state/actions/boomd"
 import initTestStore from "../test/initTestStore"
 
 test("setting the credentials", () => {

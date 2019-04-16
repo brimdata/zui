@@ -2,11 +2,11 @@
 
 import React from "react"
 import InputHistory from "../models/InputHistory"
-import {type Dispatch} from "../reducers/types"
-import * as actions from "../actions/searchBar"
+import {type Dispatch} from "../state/reducers/types"
+import * as actions from "../state/actions/searchBar"
 import {connect} from "react-redux"
-import {getSearchBarInputValue, getSearchBarError} from "../selectors/searchBar"
-import {type State} from "../reducers/types"
+import {getSearchBarInputValue, getSearchBarError} from "../state/selectors/searchBar"
+import {type State} from "../state/reducers/types"
 
 type StateProps = {|
   inputValue: string,

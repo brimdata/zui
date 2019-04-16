@@ -1,6 +1,6 @@
 /* @flow */
 
-import * as actions from "../actions/descriptors"
+import * as actions from "../state/actions/descriptors"
 import {getDescriptors} from "./descriptors"
 import initTestStore from "../test/initTestStore"
 

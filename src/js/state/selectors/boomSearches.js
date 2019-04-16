@@ -2,9 +2,9 @@
 
 import {createSelector} from "reselect"
 
-import type {State} from "../reducers/types"
-import {getBoomSearches} from "../reducers/boomSearches"
-import {getResultsTab} from "../reducers/view"
+import type {State} from "../state/reducers/types"
+import {getBoomSearches} from "../state/reducers/boomSearches"
+import {getResultsTab} from "../state/reducers/view"
 import Log from "../models/Log"
 import Stats from "../models/Stats"
 

@@ -1,6 +1,6 @@
 /* @flow */
 
-import {starLog, unstarLog, clearStarredLogs} from "../actions/starredLogs"
+import {starLog, unstarLog, clearStarredLogs} from "../state/actions/starredLogs"
 import {getStarredLogs} from "./starredLogs"
 import initTestStore from "../test/initTestStore"
 

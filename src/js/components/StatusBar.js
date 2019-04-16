@@ -4,10 +4,10 @@ import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import {type State} from "../reducers/types"
+import {type State} from "../state/reducers/types"
 import {XSearchStats} from "./SearchStats"
-import {getMainSearchIsFetching} from "../selectors/boomSearches"
-import {isFetchingAhead} from "../reducers/logViewer"
+import {getMainSearchIsFetching} from "../state/selectors/boomSearches"
+import {isFetchingAhead} from "../state/reducers/logViewer"
 import LoadingMessage from "./LoadingMessage"
 
 type StateProps = {|

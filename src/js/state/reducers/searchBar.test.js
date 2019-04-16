@@ -16,7 +16,7 @@ import {
   restoreSearchBar,
   submitSearchBar,
   submittingSearchBar
-} from "../actions/searchBar"
+} from "../state/actions/searchBar"
 import {getOuterTimeWindow} from "./timeWindow"
 import {
   getSearchProgram,
@@ -26,9 +26,9 @@ import {
   getSearchBarEditingIndex,
   getSearchBarPreviousInputValue,
   getSearchBar
-} from "../selectors/searchBar"
+} from "../state/selectors/searchBar"
 import {initialState} from "./searchBar"
-import {setOuterTimeWindow} from "../actions/timeWindow"
+import {setOuterTimeWindow} from "../state/actions/timeWindow"
 import Field from "../models/Field"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"

@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import type {Dispatch, State} from "../reducers/types"
+import type {Dispatch, State} from "../state/reducers/types"
 import {ThinButton} from "./Buttons"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSearchBar} from "./SearchBar"
@@ -12,7 +12,7 @@ import {XSpanPickers} from "./SpanPickers"
 import {switchSpace} from "../space/switch"
 import DropMenu from "./DropMenu"
 import dispatchToProps from "../lib/dispatchToProps"
-import * as spaces from "../reducers/spaces"
+import * as spaces from "../state/reducers/spaces"
 
 type Props = {|
   currentSpace: string,

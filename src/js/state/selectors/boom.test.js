@@ -1,9 +1,9 @@
 /* @flow */
 
 import {getBoomOptions} from "./boom"
-import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../actions/boomd"
-import {setCurrentSpaceName} from "../actions/spaces"
-import {setOuterTimeWindow} from "../actions/timeWindow"
+import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../state/actions/boomd"
+import {setCurrentSpaceName} from "../state/actions/spaces"
+import {setOuterTimeWindow} from "../state/actions/timeWindow"
 import initTestStore from "../test/initTestStore"
 
 test("#getBoomOptions", () => {

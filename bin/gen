@@ -43,7 +43,7 @@ import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
 import ${name} from "../components/${name}"
 import type {Dispatch} from "redux"
-import type {State} from "../reducers/types"
+import type {State} from "../state/reducers/types"
 
 const stateToProps = (state: State) => ({})
 

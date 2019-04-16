@@ -4,14 +4,14 @@ import React from "react"
 import Pin from "../icons/pin-md.svg"
 import FilterNode from "./FilterNode"
 import {connect} from "react-redux"
-import * as actions from "../actions/searchBar"
+import * as actions from "../state/actions/searchBar"
 import {
   getSearchBarPins,
   getSearchBarPreviousInputValue,
   getSearchBarEditingIndex
-} from "../selectors/searchBar"
-import type {State} from "../reducers/types"
-import type {Dispatch} from "../reducers/types"
+} from "../state/selectors/searchBar"
+import type {State} from "../state/reducers/types"
+import type {Dispatch} from "../state/reducers/types"
 
 type StateProps = {|
   editing: ?number,

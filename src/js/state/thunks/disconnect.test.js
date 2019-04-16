@@ -1,6 +1,6 @@
 /* @flow */
 import {disconnect} from "./disconnect"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 describe("#disconnect", () => {
   let store, actionTypes

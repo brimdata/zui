@@ -1,45 +1,11 @@
 /* @flow */
 
-import {
-  type BoomSearchTag,
-  type BoomSearchStatus as Status,
-  getBoomSearches
-} from "../reducers/boomSearches"
-import {Handler} from "../BoomClient"
+import {type BoomSearchTag, getBoomSearches} from "../reducers/boomSearches"
 import type {Thunk} from "../reducers/types"
-import {fetchSearch} from "../backend/fetch"
+import {clearBoomSearches, registerBoomSearch} from "../actions"
+import {fetchSearch} from "../../backend/fetch"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import BaseSearch from "../models/searches/BaseSearch"
-
-type RegisterOpts = {handler: Handler, tag: BoomSearchTag}
-
-export const registerBoomSearch = (name: string, opts: RegisterOpts) => ({
-  type: "BOOM_SEARCHES_REGISTER",
-  search: {
-    name,
-    handler: opts.handler,
-    status: "FETCHING",
-    stats: {},
-    tag: opts.tag
-  }
-})
-
-export const setBoomSearchStatus = (name: string, status: Status) => ({
-  type: "BOOM_SEARCHES_SET_STATUS",
-  name,
-  status
-})
-
-export const setBoomSearchStats = (name: string, stats: {}) => ({
-  type: "BOOM_SEARCHES_SET_STATS",
-  name,
-  stats
-})
-
-export const clearBoomSearches = (tag?: string) => ({
-  type: "BOOM_SEARCHES_CLEAR",
-  tag
-})
+import BaseSearch from "../../models/searches/BaseSearch"
 
 export const killBoomSearches = (tag?: BoomSearchTag): Thunk => (
   _dispatch,

@@ -1,7 +1,7 @@
 /* @flow */
 
-import type {BoomSearchStats} from "../types"
-import {Handler} from "../BoomClient"
+import type {BoomSearchStats} from "../../types"
+import {Handler} from "../../BoomClient"
 import type {State} from "./types"
 import createReducer from "./createReducer"
 

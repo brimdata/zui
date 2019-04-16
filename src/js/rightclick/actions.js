@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Dispatch} from "../reducers/types"
+import type {Dispatch} from "../state/reducers/types"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -8,13 +8,13 @@ import {
   changeSearchBarInput,
   clearSearchBar,
   submitSearchBar
-} from "../actions/searchBar"
-import {fetchPackets} from "../actions/packets"
-import {fetchWhois} from "../actions/whois"
+} from "../state/actions/searchBar"
+import {fetchPackets} from "../state/actions/packets"
+import {fetchWhois} from "../state/actions/whois"
 import {open} from "../lib/System"
-import {setOuterFromTime, setOuterToTime} from "../actions/timeWindow"
-import {showRightSidebar} from "../actions/view"
-import {viewLogDetail} from "../actions/logDetails"
+import {setOuterFromTime, setOuterToTime} from "../state/actions/timeWindow"
+import {showRightSidebar} from "../state/actions/view"
+import {viewLogDetail} from "../state/actions/logDetails"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import drillDown from "../lib/drillDown"

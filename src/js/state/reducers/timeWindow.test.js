@@ -1,7 +1,7 @@
 /* @flow */
 
 import {getOuterTimeWindow, getInnerTimeWindow} from "./timeWindow"
-import * as actions from "../actions/timeWindow"
+import * as actions from "../state/actions/timeWindow"
 import initTestStore from "../test/initTestStore"
 
 let store

@@ -1,8 +1,8 @@
 /* @flow */
 
 import initTestStore from "../test/initTestStore"
-import {addNotification, removeNotification} from "../actions/notifications"
-import {getNotifications} from "../selectors/notifications"
+import {addNotification, removeNotification} from "../state/actions/notifications"
+import {getNotifications} from "../state/selectors/notifications"
 
 let store
 beforeEach(() => {

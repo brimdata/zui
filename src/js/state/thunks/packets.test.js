@@ -1,10 +1,10 @@
 /* @flow */
 
-import MockBoomClient from "../test/MockBoomClient"
-import {conn} from "../test/mockLogs"
+import {conn} from "../../test/mockLogs"
 import {fetchPackets} from "./packets"
 import {setCurrentSpaceName} from "./spaces"
-import initTestStore from "../test/initTestStore"
+import MockBoomClient from "../../test/MockBoomClient"
+import initTestStore from "../../test/initTestStore"
 
 let boom, store
 beforeEach(() => {

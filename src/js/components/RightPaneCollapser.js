@@ -3,9 +3,9 @@
 import React from "react"
 import CircleChevron from "./CircleChevron"
 import classNames from "classnames"
-import type {Dispatch} from "../reducers/types"
+import type {Dispatch} from "../state/reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
-import {hideRightSidebar} from "../actions/view"
+import {hideRightSidebar} from "../state/actions/view"
 import {connect} from "react-redux"
 
 type Props = {

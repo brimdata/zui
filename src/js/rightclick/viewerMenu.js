@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {ResultsTabEnum} from "../reducers/view"
+import type {ResultsTabEnum} from "../state/reducers/view"
 import type {Space} from "../lib/Space"
 import {analyticsMenu} from "./analyticsMenu"
 import {logsMenu} from "./logsMenu"
