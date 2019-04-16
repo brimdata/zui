@@ -1,5 +1,4 @@
 module.exports = {
-  environments: ["node"],
   excludes: ["./dist/**", "**/**.test.js"],
   namedExports: {
     reselect: ["createSelector"],
