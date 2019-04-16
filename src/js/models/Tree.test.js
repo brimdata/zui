@@ -69,43 +69,11 @@ test("depth first search from left", () => {
   ])
 })
 
-test("depth first search to Array", () => {
-  const tree = new Tree(exampleTree)
-
-  const names = tree.dfArray().map((node) => node.data)
-
-  expect(names).toEqual([
-    "David",
-    "James",
-    "Abe",
-    "Chloe",
-    "Max",
-    "Gavin",
-    "Marsali"
-  ])
-})
-
 test("bredth first search from left", () => {
   const tree = new Tree(exampleTree)
 
   const names = []
   tree.bfSearch((node) => names.push(node.data))
-
-  expect(names).toEqual([
-    "David",
-    "James",
-    "Chloe",
-    "Gavin",
-    "Marsali",
-    "Abe",
-    "Max"
-  ])
-})
-
-test("bredth first search to Array", () => {
-  const tree = new Tree(exampleTree)
-
-  const names = tree.bfArray().map((node) => node.data)
 
   expect(names).toEqual([
     "David",
@@ -281,4 +249,18 @@ test("removing a node that does not exist in the tree", () => {
 
   expect(tree.contains(node)).toBe(false)
   expect(tree.root.children.length).toBe(3)
+})
+
+test("mapChildren", () => {
+  const tree = new Tree(exampleTree)
+
+  expect(tree.getRoot().mapChildren((n) => n.data)).toEqual([
+    "David",
+    "James",
+    "Abe",
+    "Chloe",
+    "Max",
+    "Gavin",
+    "Marsali"
+  ])
 })

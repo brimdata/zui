@@ -1,19 +1,19 @@
 /* @flow */
 
 import {connect} from "react-redux"
+import {isEqual} from "lodash"
 import React from "react"
-import isEqual from "lodash/isEqual"
 
 import type {Dispatch, State} from "../reducers/types"
 import {type Investigation, getInvestigation} from "../reducers/investigation"
-import {Node} from "../models/Tree"
+import {Node} from "../models/Node"
 import {createInvestigationTree} from "../investigation/createTree"
 import {deleteFindingByTs} from "../actions/investigation"
 import {fetchMainSearch} from "../actions/mainSearch"
 import {getSearchBarPins} from "../selectors/searchBar"
 import {setSearchBarPins} from "../actions/searchBar"
-import CloseSVG from "../icons/circle-x-md.svg"
 import FilterNode from "./FilterNode"
+import CloseSVG from "../icons/circle-x-md.svg"
 
 type OwnProps = {||}
 
