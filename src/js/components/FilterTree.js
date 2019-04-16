@@ -58,8 +58,8 @@ export default class FilterTree extends React.Component<AllProps> {
             className="delete-button"
             onClick={(e) => {
               e.stopPropagation()
-              let ts = node.mapChildren((node) => node.data.finding.ts)
-              this.props.dispatch(deleteFindingByTs(...ts))
+              let multiTs = node.mapChildren((node) => node.data.finding.ts)
+              this.props.dispatch(deleteFindingByTs(multiTs))
             }}
           >
             <CloseSVG />

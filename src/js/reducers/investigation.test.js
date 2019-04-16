@@ -1,5 +1,5 @@
 /* @flow */
-import {createFinding} from "../actions/investigation"
+import {createFinding, deleteFindingByTs} from "../actions/investigation"
 import {getCurrentFinding, getInvestigation} from "./investigation"
 import {histogramPayload} from "../test/mockPayloads"
 import {histogramSearchResult} from "../actions/histogram"
@@ -13,6 +13,20 @@ beforeEach(() => {
 
 function get() {
   return getInvestigation(store.getState())
+}
+
+let record1 = {
+  program: "record1",
+  pins: [],
+  span: [new Date(0), new Date(5)],
+  space: "default"
+}
+
+let record2 = {
+  program: "record2",
+  pins: [],
+  span: [new Date(0), new Date(5)],
+  space: "default"
 }
 
 test("new finding", () => {
@@ -44,58 +58,45 @@ test("when the histogram runs it saves as a chart", () => {
 })
 
 test("when a new search is recorded", () => {
-  let record = {
-    program: "",
-    pins: [],
-    span: [new Date(0), new Date(5)],
-    space: "default"
-  }
-
   expect(get()).toHaveLength(0)
-  store.dispatch(recordSearch(record))
+  store.dispatch(recordSearch(record1))
   expect(get()).toHaveLength(1)
 })
 
 test("when a search is many times twice", () => {
-  let record = {
-    program: "",
-    pins: [],
-    span: [new Date(0), new Date(5)],
-    space: "default"
-  }
-
   expect(get()).toHaveLength(0)
   store.dispatchAll([
-    recordSearch(record),
-    recordSearch(record),
-    recordSearch(record)
+    recordSearch(record1),
+    recordSearch(record1),
+    recordSearch(record1)
   ])
   expect(get()).toHaveLength(1)
 })
 
 test("when a search is different", () => {
-  let record1 = {
-    program: "",
-    pins: [],
-    span: [new Date(0), new Date(5)],
-    space: "default"
-  }
-
-  let record2 = {
-    program: "* | count()",
-    pins: [],
-    span: [new Date(0), new Date(5)],
-    space: "default"
-  }
-
   expect(get()).toHaveLength(0)
   let state = store.dispatchAll([recordSearch(record1), recordSearch(record2)])
   expect(get()).toHaveLength(2)
 
-  expect(getCurrentFinding(state)).toEqual(
-    expect.objectContaining({
-      ts: expect.any(Date),
-      record: record2
-    })
-  )
+  expect(getCurrentFinding(state)).toEqual({
+    ts: expect.any(Date),
+    record: record2
+  })
+})
+
+test("delete a single finding by ts", () => {
+  let state = store.dispatchAll([recordSearch(record1), recordSearch(record2)])
+  let {ts} = getCurrentFinding(state)
+
+  state = store.dispatchAll([deleteFindingByTs(ts)])
+
+  expect(get()[0]).toEqual({ts: expect.any(Date), record: record1})
+})
+
+test("removing several records with multiple ts", () => {
+  store.dispatchAll([recordSearch(record1), recordSearch(record2)])
+  let multiTs = get().map((finding) => finding.ts)
+  store.dispatchAll([deleteFindingByTs(multiTs)])
+
+  expect(get().length).toBe(0)
 })

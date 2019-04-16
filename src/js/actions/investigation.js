@@ -1,5 +1,6 @@
 /* @flow */
 import type {Finding} from "../reducers/investigation"
+import {isArray} from "../lib/is"
 
 export const createFinding = (finding: $Shape<Finding>) => ({
   type: "FINDING_CREATE",
@@ -11,9 +12,9 @@ export const updateFinding = (finding: $Shape<Finding>) => ({
   finding
 })
 
-export const deleteFindingByTs = (...ts: Date[]) => ({
+export const deleteFindingByTs = (ts: Date[] | Date) => ({
   type: "FINDING_DELETE",
-  ts
+  ts: isArray(ts) ? ts : [ts]
 })
 
 export const clearInvestigation = () => ({
