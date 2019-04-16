@@ -2,6 +2,7 @@
 
 import type {EpochObj, TimeUnit} from "../lib/Time"
 import type {RightClickAction} from "../rightclick/actions"
+import type {Span} from "../BoomClient/types"
 import AppError from "../models/AppError"
 import Field from "../models/Field"
 import Log from "../models/Log"
@@ -134,3 +135,10 @@ export type LongTimeUnit =
   | "hour"
   | "day"
   | "month"
+
+export type SearchRecord = {
+  program: string,
+  pins: string[],
+  span: Span,
+  space: string
+}

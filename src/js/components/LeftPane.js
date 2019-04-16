@@ -6,7 +6,7 @@ import React from "react"
 import type {Dispatch, State} from "../reducers/types"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {clearFilterTree} from "../actions/filterTree"
+import {clearInvestigation} from "../actions/investigation"
 import {setLeftSidebarWidth} from "../actions/view"
 import HistoryAside from "./HistoryAside"
 import Pane, {
@@ -63,7 +63,7 @@ export default class LeftPane extends React.Component<Props, S> {
           </Center>
           <Right>
             <button
-              onClick={() => this.props.dispatch(clearFilterTree())}
+              onClick={() => this.props.dispatch(clearInvestigation())}
               className="panel-button clear-button"
             >
               CLEAR

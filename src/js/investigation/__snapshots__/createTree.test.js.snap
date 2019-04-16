@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Remove all pins and make a new current 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [],
+              "data": Object {
+                "filter": "c",
+                "finding": Object {
+                  "search": Object {
+                    "pins": Array [
+                      "a",
+                      "b",
+                    ],
+                    "program": "c",
+                    "space": "default",
+                    "span": Array [
+                      1970-01-01T00:00:00.001Z,
+                      1970-01-01T00:00:00.002Z,
+                    ],
+                  },
+                  "ts": 1970-01-01T00:00:00.000Z,
+                },
+              },
+            },
+            Object {
+              "children": Array [],
+              "data": Object {
+                "filter": "d",
+                "finding": Object {
+                  "search": Object {
+                    "pins": Array [
+                      "a",
+                      "b",
+                    ],
+                    "program": "d",
+                    "space": "default",
+                    "span": Array [
+                      1970-01-01T00:00:00.001Z,
+                      1970-01-01T00:00:00.002Z,
+                    ],
+                  },
+                  "ts": 1970-01-01T00:00:00.000Z,
+                },
+              },
+            },
+          ],
+          "data": Object {
+            "filter": "b",
+            "finding": Object {
+              "search": Object {
+                "pins": Array [
+                  "a",
+                  "b",
+                ],
+                "program": "c",
+                "space": "default",
+                "span": Array [
+                  1970-01-01T00:00:00.001Z,
+                  1970-01-01T00:00:00.002Z,
+                ],
+              },
+              "ts": 1970-01-01T00:00:00.000Z,
+            },
+          },
+        },
+        Object {
+          "children": Array [],
+          "data": Object {
+            "filter": "d",
+            "finding": Object {
+              "search": Object {
+                "pins": Array [
+                  "a",
+                ],
+                "program": "d",
+                "space": "default",
+                "span": Array [
+                  1970-01-01T00:00:00.001Z,
+                  1970-01-01T00:00:00.002Z,
+                ],
+              },
+              "ts": 1970-01-01T00:00:00.000Z,
+            },
+          },
+        },
+      ],
+      "data": Object {
+        "filter": "a",
+        "finding": Object {
+          "search": Object {
+            "pins": Array [
+              "a",
+              "b",
+            ],
+            "program": "c",
+            "space": "default",
+            "span": Array [
+              1970-01-01T00:00:00.001Z,
+              1970-01-01T00:00:00.002Z,
+            ],
+          },
+          "ts": 1970-01-01T00:00:00.000Z,
+        },
+      },
+    },
+    Object {
+      "children": Array [],
+      "data": Object {
+        "filter": "e",
+        "finding": Object {
+          "search": Object {
+            "pins": Array [],
+            "program": "e",
+            "space": "default",
+            "span": Array [
+              1970-01-01T00:00:00.001Z,
+              1970-01-01T00:00:00.002Z,
+            ],
+          },
+          "ts": 1970-01-01T00:00:00.000Z,
+        },
+      },
+    },
+  ],
+  "data": "ROOT",
+}
+`;

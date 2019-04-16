@@ -1,6 +1,6 @@
 /* @flow */
 
-import {Node} from "../models/Tree"
+import {Node} from "../models/Node"
 
 export const clearFilterTree = () => ({
   type: "FILTER_TREE_CLEAR"

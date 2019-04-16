@@ -14,15 +14,12 @@ const initialState = {
 export type Histogram = typeof initialState
 
 export default createReducer(initialState, {
-  COUNT_BY_TIME_CLEAR: () => ({
+  HISTOGRAM_CLEAR: () => ({
     ...initialState
   }),
-  COUNT_BY_TIME_RECEIVE: (state, {data: {descriptor, tuples}}) => ({
+  HISTOGRAM_SEARCH_RESULT: (state, {data}) => ({
     ...state,
-    data: {
-      descriptor,
-      tuples: [...state.data.tuples, ...tuples]
-    }
+    data
   })
 })
 

@@ -30,25 +30,21 @@ export function buildMainHistogramChart({dispatch, ...props}: Props) {
   }
 
   function onSelection(span: Span) {
-    console.log("onSelection")
     dispatch(setInnerTimeWindow(null))
     dispatch(setOuterTimeWindow(span))
     dispatch(fetchMainSearch())
   }
 
   function onBarClick(span: Span) {
-    console.log("onBarClick")
     dispatch(setInnerTimeWindow(span))
     dispatch(fetchMainSearch({saveToHistory: false}))
   }
 
   function onSelectionClear() {
-    console.log("onSelectionClear")
     dispatch(setInnerTimeWindow(null))
   }
 
   function onSelectionClick(span) {
-    console.log("onSelectionClick")
     dispatch(setInnerTimeWindow(null))
     dispatch(setOuterTimeWindow(span))
     dispatch(fetchMainSearch())

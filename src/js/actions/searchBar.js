@@ -1,15 +1,19 @@
 /* @flow */
 
 import {PARALLEL_PROC, getProcNames} from "../lib/ast"
+import type {SearchBar} from "../reducers/searchBar"
 import type {Thunk} from "../reducers/types"
-import {backSearchHistory, forwardSearchHistory} from "./searchHistory"
+import {
+  backSearchHistory,
+  forwardSearchHistory,
+  restoreSearch
+} from "./searchHistory"
 import {fetchMainSearch} from "./mainSearch"
 import {getCurrentEntry} from "../reducers/searchHistory"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../lib/Program"
-import {restoreTimeWindow, setInnerTimeWindow} from "./timeWindow"
+import {setInnerTimeWindow} from "./timeWindow"
 import Field from "../models/Field"
-import type {SearchBar} from "../reducers/searchBar"
 
 export const clearSearchBar = () => ({
   type: "SEARCH_BAR_CLEAR"
@@ -74,17 +78,13 @@ export const submittingSearchBar = () => ({
 
 export const goBack = (): Thunk => (dispatch, getState) => {
   dispatch(backSearchHistory())
-  const entry = getCurrentEntry(getState())
-  dispatch(restoreSearchBar(entry.searchBar))
-  dispatch(restoreTimeWindow(entry.timeWindow))
+  dispatch(restoreSearch(getCurrentEntry(getState())))
   dispatch(fetchMainSearch({saveToHistory: false}))
 }
 
 export const goForward = (): Thunk => (dispatch, getState) => {
   dispatch(forwardSearchHistory())
-  const entry = getCurrentEntry(getState())
-  dispatch(restoreSearchBar(entry.searchBar))
-  dispatch(restoreTimeWindow(entry.timeWindow))
+  dispatch(restoreSearch(getCurrentEntry(getState())))
   dispatch(fetchMainSearch({saveToHistory: false}))
 }
 

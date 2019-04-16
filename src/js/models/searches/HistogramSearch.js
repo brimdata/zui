@@ -5,7 +5,8 @@ import throttle from "lodash/throttle"
 import type {Dispatch} from "../../reducers/types"
 import {Handler} from "../../BoomClient"
 import type {Payload} from "../../types"
-import {clearHistogram, receiveHistogram} from "../../actions/histogram"
+import {accumResults} from "../../lib/accumulator"
+import {clearHistogram, histogramSearchResult} from "../../actions/histogram"
 import BaseSearch from "./BaseSearch"
 import histogramInterval from "../../lib/histogramInterval"
 
@@ -30,13 +31,11 @@ export default class HistogramSearch extends BaseSearch {
 
   receiveData(handler: Handler, dispatch: Dispatch) {
     dispatch(clearHistogram())
-    let descriptor
-    let tuples = []
+    let accum = accumResults()
 
     const dispatchNow = () => {
-      if (tuples.length === 0) return
-      dispatch(receiveHistogram({descriptor, tuples}))
-      tuples = []
+      if (accum.data.tuples.length === 0) return
+      dispatch(histogramSearchResult(accum.data))
     }
 
     const dispatchSteady = throttle(dispatchNow, 50, {leading: false})
@@ -45,8 +44,7 @@ export default class HistogramSearch extends BaseSearch {
       .channel(0, (payload: Payload) => {
         switch (payload.type) {
           case "SearchResult":
-            descriptor = payload.results.descriptor
-            tuples = [...tuples, ...payload.results.tuples]
+            accum.handle(payload.results)
             dispatchSteady()
             break
           case "SearchEnd":
