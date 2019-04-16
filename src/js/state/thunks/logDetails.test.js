@@ -1,7 +1,7 @@
 /* @flow */
 
 import {conn} from "../../test/mockLogs"
-import {hideRightSidebar, showRightSidebar} from "./view"
+import {hideRightSidebar, showRightSidebar} from "../actions"
 import {viewLogDetail} from "./logDetails"
 import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"

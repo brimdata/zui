@@ -1,9 +1,10 @@
 /* @flow */
 
-import trim from "lodash/trim"
-import Ast from "../models/Ast"
 import {createSelector} from "reselect"
-import type {State} from "../state/reducers/types"
+import trim from "lodash/trim"
+
+import type {State} from "../reducers/types"
+import Ast from "../../models/Ast"
 
 export const getSearchBar = (state: State) => {
   return state.searchBar

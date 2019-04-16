@@ -5,15 +5,17 @@ import {isEqual} from "lodash"
 import React from "react"
 
 import type {Dispatch, State} from "../state/reducers/types"
-import {type Investigation, getInvestigation} from "../state/reducers/investigation"
+import {
+  type Investigation,
+  getInvestigation
+} from "../state/reducers/investigation"
 import {Node} from "../models/Node"
 import {createInvestigationTree} from "../investigation/createTree"
-import {deleteFindingByTs} from "../state/actions/investigation"
-import {fetchMainSearch} from "../state/actions/mainSearch"
+import {deleteFindingByTs, setSearchBarPins} from "../state/actions"
+import {fetchMainSearch} from "../state/thunks/mainSearch"
 import {getSearchBarPins} from "../state/selectors/searchBar"
-import {setSearchBarPins} from "../state/actions/searchBar"
-import FilterNode from "./FilterNode"
 import CloseSVG from "../icons/circle-x-md.svg"
+import FilterNode from "./FilterNode"
 
 type OwnProps = {||}
 

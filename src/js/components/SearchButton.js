@@ -1,20 +1,19 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
-import MagGlass from "../icons/magnifying-glass-md.svg"
-import Arrow from "../icons/caret-bottom-sm.svg"
-import Modal from "./Modal"
+
+import {type DispatchProps, type State} from "../state/reducers/types"
 import {XCurlModal} from "./CurlModal"
 import {XDebugModal} from "./DebugModal"
-import {connect} from "react-redux"
-import {getDebugModalIsOpen} from "../state/reducers/view"
-import {getCurlModalIsOpen} from "../state/reducers/view"
-import {submitSearchBar} from "../state/actions/searchBar"
-import {hideModal} from "../state/actions/view"
-import DropMenu from "./DropMenu"
 import {XSearchButtonMenu} from "./SearchButtonMenu"
-import {type DispatchProps} from "../state/reducers/types"
-import type {State} from "../state/reducers/types"
+import {getCurlModalIsOpen, getDebugModalIsOpen} from "../state/reducers/view"
+import {hideModal} from "../state/actions"
+import {submitSearchBar} from "../state/thunks/searchBar"
+import Arrow from "../icons/caret-bottom-sm.svg"
+import DropMenu from "./DropMenu"
+import MagGlass from "../icons/magnifying-glass-md.svg"
+import Modal from "./Modal"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type StateProps = {|

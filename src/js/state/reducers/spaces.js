@@ -1,9 +1,10 @@
 /* @flow */
 
 import {createSelector} from "reselect"
-import createReducer from "./createReducer"
-import * as Time from "../lib/Time"
+
 import type {State} from "./types"
+import {fromStore, parseFromBoom, toStore} from "../../lib/Time"
+import createReducer from "./createReducer"
 
 const initialState = {
   details: {},
@@ -45,15 +46,15 @@ export default createReducer(initialState, {
 const normalize = (space) => ({
   [space.name]: {
     ...space,
-    minTime: Time.toStore(Time.parseFromBoom(space.min_time)),
-    maxTime: Time.toStore(Time.parseFromBoom(space.max_time))
+    minTime: toStore(parseFromBoom(space.min_time)),
+    maxTime: toStore(parseFromBoom(space.max_time))
   }
 })
 
 const parse = (space) => ({
   ...space,
-  minTime: Time.fromStore(space.minTime),
-  maxTime: Time.fromStore(space.maxTime)
+  minTime: fromStore(space.minTime),
+  maxTime: fromStore(space.maxTime)
 })
 
 export const getAllSpaceNames = (state: State): string[] => {

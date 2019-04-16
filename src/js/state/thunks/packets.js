@@ -1,9 +1,14 @@
 /* @flow */
 
 import {downloadsDir} from "../../lib/System"
-import {errorPackets, receivePackets, requestPackets} from "../actions"
+import {
+  errorPackets,
+  hideDownloads,
+  receivePackets,
+  requestPackets,
+  showDownloads
+} from "../actions"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import {hideDownloads, showDownloads} from "./view"
 import BoomClient from "../../BoomClient"
 import Log from "../../models/Log"
 

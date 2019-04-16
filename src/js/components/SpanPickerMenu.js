@@ -3,12 +3,12 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import {type DateTuple, last} from "../lib/TimeWindow"
+import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
 import {type DispatchProps} from "../state/reducers/types"
 import {add} from "../lib/Time"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
-import {setOuterTimeWindow} from "../state/actions/timeWindow"
-import {submitSearchBar} from "../state/actions/searchBar"
+import {setOuterTimeWindow} from "../state/actions"
+import {submitSearchBar} from "../state/thunks/searchBar"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
 
@@ -31,13 +31,19 @@ export default class SpanPickerMenu extends React.Component<Props> {
     return (
       <MenuList>
         <li onClick={() => this.setSpan(this.props.spaceSpan)}>Whole Space</li>
-        <li onClick={() => this.setSpan(last(30, "minutes"))}>
+        <li onClick={() => this.setSpan(spanOfLast(30, "minutes"))}>
           Last 30 minutes
         </li>
-        <li onClick={() => this.setSpan(last(24, "hours"))}>Last 24 hours</li>
-        <li onClick={() => this.setSpan(last(7, "days"))}>Last 7 days</li>
-        <li onClick={() => this.setSpan(last(30, "days"))}>Last 30 days</li>
-        <li onClick={() => this.setSpan(last(90, "days"))}>Last 90 days</li>
+        <li onClick={() => this.setSpan(spanOfLast(24, "hours"))}>
+          Last 24 hours
+        </li>
+        <li onClick={() => this.setSpan(spanOfLast(7, "days"))}>Last 7 days</li>
+        <li onClick={() => this.setSpan(spanOfLast(30, "days"))}>
+          Last 30 days
+        </li>
+        <li onClick={() => this.setSpan(spanOfLast(90, "days"))}>
+          Last 90 days
+        </li>
       </MenuList>
     )
   }

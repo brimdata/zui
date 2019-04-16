@@ -9,11 +9,15 @@ import type {Space} from "../lib/Space"
 import {XLogDetails} from "./LogDetails"
 import {XRightPaneCollapser} from "./RightPaneCollapser"
 import {XRightPaneExpander} from "./RightPaneExpander"
-import {backLogDetail, forwardLogDetail} from "../state/actions/logDetails"
-import {fetchPackets} from "../state/actions/packets"
+import {
+  backLogDetail,
+  forwardLogDetail,
+  setRightSidebarWidth,
+  starLog,
+  unstarLog
+} from "../state/actions"
+import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
-import {setRightSidebarWidth} from "../state/actions/view"
-import {starLog, unstarLog} from "../state/actions/starredLogs"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import Log from "../models/Log"

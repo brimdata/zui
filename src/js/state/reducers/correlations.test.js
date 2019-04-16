@@ -4,9 +4,9 @@ import {
   clearAllCorrelations,
   clearCorrelations,
   setCorrelation
-} from "../state/actions/correlations"
+} from "../actions"
 import {getCorrelations} from "./correlations"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 const store = initTestStore()
 const hash = {descriptor: [], tuples: []}

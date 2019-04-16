@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Descriptor, Tuple} from "../types"
+import type {Descriptor, Tuple} from "../../types"
 import type {State} from "./types"
 import createReducer from "./createReducer"
 

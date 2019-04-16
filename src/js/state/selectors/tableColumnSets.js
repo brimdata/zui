@@ -3,11 +3,11 @@
 import {createSelector} from "reselect"
 import {uniqBy} from "lodash"
 
-import type {Column} from "../types"
-import type {State} from "../state/reducers/types"
+import type {Column} from "../../types"
+import type {State} from "../reducers/types"
 import {getLogs} from "./logs"
-import TableColumns from "../models/TableColumns"
-import columnKey from "../lib/columnKey"
+import TableColumns from "../../models/TableColumns"
+import columnKey from "../../lib/columnKey"
 
 export const getTableColumnSets = (state: State) => {
   return state.tableColumnSets

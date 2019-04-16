@@ -1,6 +1,7 @@
 /* @flow */
 
-import BoomClient, {Handler} from "../BoomClient"
+import BoomClient from "../BoomClient"
+import Handler from "../BoomClient/lib/Handler"
 
 export default class MockBoomClient extends BoomClient {
   send() {

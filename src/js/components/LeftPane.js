@@ -6,8 +6,7 @@ import React from "react"
 import type {Dispatch, State} from "../state/reducers/types"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {clearInvestigation} from "../state/actions/investigation"
-import {setLeftSidebarWidth} from "../state/actions/view"
+import {clearInvestigation, setLeftSidebarWidth} from "../state/actions"
 import HistoryAside from "./HistoryAside"
 import Pane, {
   PaneHeader,

@@ -1,10 +1,15 @@
 /* @flow */
 
 import {PER_PAGE} from "../reducers/logViewer"
-import {changeSearchBarInput} from "./searchBar"
+import {
+  changeSearchBarInput,
+  setCurrentSpaceName,
+  setInnerTimeWindow,
+  setOuterTimeWindow,
+  setSpaceInfo
+} from "../actions"
 import {fetchMainSearch} from "./mainSearch"
-import {init, setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
-import {setSpaceInfo, setCurrentSpaceName} from "./spaces"
+import {initTimeWindow} from "./timeWindow"
 import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"
 
@@ -143,7 +148,7 @@ test("fetching a regular search", (done) => {
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
-    init(),
+    initTimeWindow(),
     changeSearchBarInput("_path=conn"),
     fetchMainSearch()
   ]
@@ -167,7 +172,6 @@ test("not saving a search to history", (done) => {
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
-    init(),
     changeSearchBarInput("_path=conn"),
     fetchMainSearch({saveToHistory: false})
   ]

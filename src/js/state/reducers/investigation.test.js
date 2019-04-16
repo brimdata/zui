@@ -1,10 +1,14 @@
 /* @flow */
-import {createFinding, deleteFindingByTs} from "../state/actions/investigation"
+
+import {
+  createFinding,
+  deleteFindingByTs,
+  histogramSearchResult,
+  recordSearch
+} from "../actions"
 import {getCurrentFinding, getInvestigation} from "./investigation"
-import {histogramPayload} from "../test/mockPayloads"
-import {histogramSearchResult} from "../state/actions/histogram"
-import {recordSearch} from "../state/actions/searchRecord"
-import initTestStore from "../test/initTestStore"
+import {histogramPayload} from "../../test/mockPayloads"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {

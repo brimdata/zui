@@ -1,15 +1,15 @@
 /* @flow */
 
-import {getTableColumnSets} from "../state/selectors/tableColumnSets"
+import {getTableColumnSets} from "../selectors/tableColumnSets"
 import {
   hideAllColumns,
   hideColumn,
   showAllColumns,
   showColumn,
   updateTableColumns
-} from "../state/actions/tableColumnSets"
-import TableColumns from "../models/TableColumns"
-import initTestStore from "../test/initTestStore"
+} from "../actions"
+import TableColumns from "../../models/TableColumns"
+import initTestStore from "../../test/initTestStore"
 
 const tableId = "test"
 let store

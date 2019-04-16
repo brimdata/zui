@@ -1,7 +1,7 @@
 /* @flow */
 
-import {Handler} from "../../BoomClient"
 import {histogramPayload} from "../../test/mockPayloads"
+import Handler from "../../BoomClient/lib/Handler"
 import HistogramSearch from "./HistogramSearch"
 
 describe("HistogramSearch", () => {

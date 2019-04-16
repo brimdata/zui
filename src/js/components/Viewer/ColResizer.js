@@ -4,7 +4,7 @@ import React from "react"
 
 import {type DispatchProps} from "../../state/reducers/types"
 import type {TableColumn} from "../../types"
-import {updateTableColumns} from "../../state/actions/tableColumnSets"
+import {updateTableColumns} from "../../state/actions"
 import columnKey from "../../lib/columnKey"
 import dispatchToProps from "../../lib/dispatchToProps"
 

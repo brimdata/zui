@@ -8,7 +8,7 @@ import {getCurrentSpaceName} from "../reducers/spaces"
 import {setSpaceNames} from "../actions"
 import {switchSpace} from "../../space/switch"
 
-export const init = (): Thunk => (dispatch, getState) => {
+export const initSearchPage = (): Thunk => (dispatch, getState) => {
   return dispatch(fetchSpaces()).then((names) => {
     dispatch(setSpaceNames(names))
 

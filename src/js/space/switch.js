@@ -2,10 +2,13 @@
 import type {Thunk} from "../state/reducers/types"
 import {fetchSpace} from "../backend/fetch"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
-import {killBoomSearches} from "../state/actions/boomSearches"
-import {setCurrentSpaceName, setSpaceInfo} from "../state/actions/spaces"
-import {setOuterTimeWindow} from "../state/actions/timeWindow"
-import {submitSearchBar} from "../state/actions/searchBar"
+import {killBoomSearches} from "../state/thunks/boomSearches"
+import {
+  setCurrentSpaceName,
+  setOuterTimeWindow,
+  setSpaceInfo
+} from "../state/actions"
+import {submitSearchBar} from "../state/thunks/searchBar"
 import {subtract} from "../lib/Time"
 
 export const switchSpace = (name: string): Thunk => {

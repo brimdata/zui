@@ -8,30 +8,28 @@ import {
   clearSearchBar,
   editSearchBarPin,
   errorSearchBarParse,
-  goBack,
-  goForward,
   pinSearchBar,
   removeAllSearchBarPins,
   removeSearchBarPin,
   restoreSearchBar,
-  submitSearchBar,
+  setOuterTimeWindow,
   submittingSearchBar
-} from "../state/actions/searchBar"
+} from "../actions"
 import {getOuterTimeWindow} from "./timeWindow"
 import {
-  getSearchProgram,
+  getSearchBar,
+  getSearchBarEditingIndex,
   getSearchBarError,
   getSearchBarInputValue,
   getSearchBarPins,
-  getSearchBarEditingIndex,
   getSearchBarPreviousInputValue,
-  getSearchBar
-} from "../state/selectors/searchBar"
+  getSearchProgram
+} from "../selectors/searchBar"
+import {goBack, goForward, submitSearchBar} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
-import {setOuterTimeWindow} from "../state/actions/timeWindow"
-import Field from "../models/Field"
-import MockBoomClient from "../test/MockBoomClient"
-import initTestStore from "../test/initTestStore"
+import Field from "../../models/Field"
+import MockBoomClient from "../../test/MockBoomClient"
+import initTestStore from "../../test/initTestStore"
 
 let store, boom
 beforeEach(() => {

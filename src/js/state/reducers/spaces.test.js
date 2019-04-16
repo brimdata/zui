@@ -1,8 +1,13 @@
 /* @flow */
 
-import initTestStore from "../test/initTestStore"
+import {
+  clearSpaces,
+  setCurrentSpaceName,
+  setSpaceInfo,
+  setSpaceNames
+} from "../actions"
 import {getSpaces, getAllSpaceNames, getCurrentSpaceName} from "./spaces"
-import * as a from "../state/actions/spaces"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {
@@ -28,7 +33,7 @@ const spaceInfo = {
 }
 
 test("setting space information", () => {
-  const state = store.dispatchAll([a.setSpaceInfo(spaceInfo)])
+  const state = store.dispatchAll([setSpaceInfo(spaceInfo)])
 
   expect(getSpaces(state)).toEqual({
     "ranch-logs": {
@@ -54,15 +59,15 @@ test("setting space information", () => {
 })
 
 test("setting space names", () => {
-  store.dispatch(a.setSpaceNames(["a", "b", "c"]))
+  store.dispatch(setSpaceNames(["a", "b", "c"]))
   expect(getAllSpaceNames(store.getState())).toEqual(["a", "b", "c"])
 })
 
 test("clearing spaces", () => {
   const state = store.dispatchAll([
-    a.setSpaceNames(["a", "b", "c"]),
-    a.setSpaceInfo(spaceInfo),
-    a.clearSpaces()
+    setSpaceNames(["a", "b", "c"]),
+    setSpaceInfo(spaceInfo),
+    clearSpaces()
   ])
 
   expect(getAllSpaceNames(state)).toEqual([])
@@ -70,15 +75,15 @@ test("clearing spaces", () => {
 })
 
 test("set the current space name", () => {
-  store.dispatch(a.setCurrentSpaceName("facebook"))
+  store.dispatch(setCurrentSpaceName("facebook"))
 
   expect(getCurrentSpaceName(store.getState())).toEqual("facebook")
 })
 
 test("clear the current space name", () => {
   const state = store.dispatchAll([
-    store.dispatch(a.setCurrentSpaceName("facebook")),
-    store.dispatch(a.clearSpaces())
+    store.dispatch(setCurrentSpaceName("facebook")),
+    store.dispatch(clearSpaces())
   ])
 
   expect(getCurrentSpaceName(state)).toEqual(null)

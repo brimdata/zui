@@ -1,11 +1,8 @@
 /* @flow */
-import {
-  backLogDetail,
-  forwardLogDetail,
-  pushLogDetail
-} from "../state/actions/logDetails"
-import {buildLogDetail} from "../state/selectors/logDetails"
-import initTestStore from "../test/initTestStore"
+
+import {backLogDetail, forwardLogDetail, pushLogDetail} from "../actions"
+import {buildLogDetail} from "../selectors/logDetails"
+import initTestStore from "../../test/initTestStore"
 
 const tuple = ["1", "a"]
 const descriptor = [

@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {EpochObj, TimeUnit} from "../lib/Time"
-import type {RightClickAction} from "../rightclick/state/actions"
+import type {RightClickAction} from "../rightclick/actions"
 import type {Span} from "../BoomClient/types"
 import AppError from "../models/AppError"
 import Field from "../models/Field"

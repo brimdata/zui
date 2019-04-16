@@ -1,17 +1,21 @@
 /* @flow */
 
-import React from "react"
-import Pin from "../icons/pin-md.svg"
-import FilterNode from "./FilterNode"
 import {connect} from "react-redux"
-import * as actions from "../state/actions/searchBar"
+import React from "react"
+
+import type {Dispatch, State} from "../state/reducers/types"
+import {
+  editSearchBarPin,
+  pinSearchBar,
+  removeSearchBarPin
+} from "../state/actions"
 import {
   getSearchBarPins,
   getSearchBarPreviousInputValue,
   getSearchBarEditingIndex
 } from "../state/selectors/searchBar"
-import type {State} from "../state/reducers/types"
-import type {Dispatch} from "../state/reducers/types"
+import FilterNode from "./FilterNode"
+import Pin from "../icons/pin-md.svg"
 
 type StateProps = {|
   editing: ?number,
@@ -37,11 +41,11 @@ export default class Pins extends React.Component<Props> {
         focused={this.props.editing === index}
         pending={index === -1}
         onClick={() => {
-          this.props.dispatch(actions.editSearchBarPin(index))
+          this.props.dispatch(editSearchBarPin(index))
         }}
         onRemoveClick={(e) => {
           e.stopPropagation()
-          this.props.dispatch(actions.removeSearchBarPin(index))
+          this.props.dispatch(removeSearchBarPin(index))
         }}
       />
     )
@@ -54,7 +58,7 @@ export default class Pins extends React.Component<Props> {
         <button
           className="pin-button"
           title="⌘K"
-          onClick={() => this.props.dispatch(actions.pinSearchBar())}
+          onClick={() => this.props.dispatch(pinSearchBar())}
         >
           <Pin />
         </button>

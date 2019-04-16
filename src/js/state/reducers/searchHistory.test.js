@@ -2,13 +2,13 @@
 
 import {
   backSearchHistory,
+  changeSearchBarInput,
   clearSearchHistory,
   forwardSearchHistory
-} from "../state/actions/searchHistory"
-import {changeSearchBarInput} from "../state/actions/searchBar"
-import {fetchMainSearch} from "../state/actions/mainSearch"
+} from "../actions"
+import {fetchMainSearch} from "../thunks/mainSearch"
 import {getCurrentEntry, getSearchHistory} from "./searchHistory"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {

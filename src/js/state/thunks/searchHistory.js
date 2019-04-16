@@ -2,8 +2,11 @@
 
 import type {SearchRecord} from "../../types"
 import type {Thunk} from "../reducers/types"
-import {restoreSearchBar} from "../actions"
-import {setInnerTimeWindow, setOuterTimeWindow} from "./timeWindow"
+import {
+  restoreSearchBar,
+  setInnerTimeWindow,
+  setOuterTimeWindow
+} from "../actions"
 
 export function restoreSearch(search: SearchRecord): Thunk {
   return function(dispatch) {

@@ -1,10 +1,10 @@
 /* @flow */
 import {isEqual} from "lodash"
 
-import type {Results, SearchRecord} from "../types"
+import type {Results, SearchRecord} from "../../types"
 import type {State} from "./types"
-import {last} from "../lib/Array"
-import Log from "../models/Log"
+import {last} from "../../lib/Array"
+import Log from "../../models/Log"
 
 export type Investigation = Finding[]
 export type Finding = {

@@ -1,8 +1,8 @@
 /* @flow */
 
-import * as actions from "../state/actions/descriptors"
+import {clearDescriptors, receiveDescriptor} from "../actions"
 import {getDescriptors} from "./descriptors"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 const descriptor = [{type: "string", name: "_td"}, {type: "string", name: "a"}]
 let store
@@ -11,7 +11,7 @@ beforeEach(() => {
 })
 
 test("getDescriptors", () => {
-  const action = actions.receiveDescriptor("default", "1", descriptor)
+  const action = receiveDescriptor("default", "1", descriptor)
   store.dispatch(action)
   const state = store.getState()
 
@@ -22,7 +22,7 @@ test("getDescriptors", () => {
 
 test("clearing descriptors", () => {
   const store = initTestStore()
-  store.dispatch(actions.receiveDescriptor("default", "1", descriptor))
-  store.dispatch(actions.clearDescriptors())
+  store.dispatch(receiveDescriptor("default", "1", descriptor))
+  store.dispatch(clearDescriptors())
   expect(getDescriptors(store.getState())).toEqual({})
 })

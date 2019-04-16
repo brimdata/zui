@@ -1,13 +1,14 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
+
+import {type DispatchProps} from "../state/reducers/types"
+import {goBack, goForward} from "../state/thunks/searchBar"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
-import {goBack, goForward} from "../state/actions/searchBar"
-import {connect} from "react-redux"
-import * as searchHistory from "../state/reducers/searchHistory"
-import {type DispatchProps} from "../state/reducers/types"
 import dispatchToProps from "../lib/dispatchToProps"
+import * as searchHistory from "../state/reducers/searchHistory"
 
 type StateProps = {
   canGoBack: boolean,

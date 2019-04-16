@@ -1,12 +1,16 @@
 /* @flow */
 
-import React from "react"
-import InputHistory from "../models/InputHistory"
-import {type Dispatch} from "../state/reducers/types"
-import * as actions from "../state/actions/searchBar"
 import {connect} from "react-redux"
-import {getSearchBarInputValue, getSearchBarError} from "../state/selectors/searchBar"
-import {type State} from "../state/reducers/types"
+import React from "react"
+
+import {type Dispatch, type State} from "../state/reducers/types"
+import {changeSearchBarInput} from "../state/actions"
+import {
+  getSearchBarInputValue,
+  getSearchBarError
+} from "../state/selectors/searchBar"
+import {submitSearchBar} from "../state/thunks/searchBar"
+import InputHistory from "../models/InputHistory"
 
 type StateProps = {|
   inputValue: string,
@@ -43,11 +47,11 @@ export default class SearchInput extends React.Component<Props> {
   }
 
   changeTo(value: string) {
-    this.props.dispatch(actions.changeSearchBarInput(value))
+    this.props.dispatch(changeSearchBarInput(value))
   }
 
   submit() {
-    this.props.dispatch(actions.submitSearchBar())
+    this.props.dispatch(submitSearchBar())
   }
 
   render() {

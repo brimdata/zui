@@ -20,7 +20,7 @@ import type {TableColumnSets} from "./tableColumnSets"
 import type {TimeWindow} from "./timeWindow"
 import type {View} from "./view"
 import type {Whois} from "./whois"
-import BoomClient from "../BoomClient"
+import BoomClient from "../../BoomClient"
 
 export type State = {
   correlations: Correlations,

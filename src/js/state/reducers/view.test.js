@@ -1,4 +1,5 @@
 /* @flow */
+
 import {
   hideDownloads,
   hideModal,
@@ -9,8 +10,8 @@ import {
   showDownloads,
   showModal,
   showSearchInspector
-} from "../state/actions/view"
-import initTestStore from "../test/initTestStore"
+} from "../actions"
+import initTestStore from "../../test/initTestStore"
 import * as view from "./view"
 
 let store, reduce

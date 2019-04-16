@@ -6,6 +6,7 @@ import {
   backSearchHistory,
   errorSearchBarParse,
   forwardSearchHistory,
+  setInnerTimeWindow,
   submittingSearchBar
 } from "../actions"
 import {fetchMainSearch} from "./mainSearch"
@@ -13,7 +14,6 @@ import {getCurrentEntry} from "../reducers/searchHistory"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
-import {setInnerTimeWindow} from "./timeWindow"
 
 export const goBack = (): Thunk => (dispatch, getState) => {
   dispatch(backSearchHistory())

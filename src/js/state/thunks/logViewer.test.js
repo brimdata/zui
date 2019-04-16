@@ -1,15 +1,15 @@
 /* @flow */
 
-import {Handler} from "../../BoomClient"
 import {fetchAhead} from "./logViewer"
 import {
   receiveDescriptor,
   receiveLogTuples,
+  setCurrentSpaceName,
   setLogsSpliceIndex,
+  setOuterTimeWindow,
   spliceLogs
 } from "../actions"
-import {setCurrentSpaceName} from "./spaces"
-import {setOuterTimeWindow} from "./timeWindow"
+import Handler from "../../BoomClient/lib/Handler"
 import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"
 

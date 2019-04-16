@@ -1,8 +1,9 @@
 /* @flow */
-import type {SearchRecord} from "../types"
-import type {State} from "../state/reducers/types"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {getOuterTimeWindow} from "../state/reducers/timeWindow"
+
+import type {SearchRecord} from "../../types"
+import type {State} from "../reducers/types"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchBar} from "./searchBar"
 
 export const getSearchRecord = (state: State): SearchRecord => {

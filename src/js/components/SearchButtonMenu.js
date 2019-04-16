@@ -5,8 +5,8 @@ import React from "react"
 
 import type {State} from "../state/reducers/types"
 import {getSomeAreFetching} from "../state/selectors/boomSearches"
-import {killBoomSearches} from "../state/actions/boomSearches"
-import {showModal} from "../state/actions/view"
+import {killBoomSearches} from "../state/thunks/boomSearches"
+import {showModal} from "../state/actions"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
 

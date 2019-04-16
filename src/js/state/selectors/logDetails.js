@@ -2,16 +2,16 @@
 
 import {createSelector} from "reselect"
 
-import type {State} from "../state/reducers/types"
+import type {State} from "../reducers/types"
+import {contains} from "../../lib/Tuple"
 import {
   getLogDetails,
-  toHistory,
   getPosition,
-  getPrevPosition
-} from "../state/reducers/logDetails"
-import {getStarredLogs} from "../state/reducers/starredLogs"
-import Log from "../models/Log"
-import * as Tuple from "../lib/Tuple"
+  getPrevPosition,
+  toHistory
+} from "../reducers/logDetails"
+import {getStarredLogs} from "../reducers/starredLogs"
+import Log from "../../models/Log"
 
 export const getLogDetailHistory = createSelector<State, void, *, *>(
   getLogDetails,
@@ -46,6 +46,6 @@ export const getLogDetailIsStarred = createSelector<State, void, *, *, *>(
   buildLogDetail,
   getStarredLogs,
   (log, starred) => {
-    return log ? Tuple.contains(starred, log.tuple) : false
+    return log ? contains(starred, log.tuple) : false
   }
 )

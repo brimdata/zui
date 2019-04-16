@@ -1,12 +1,13 @@
 /* @flow */
 
-import React from "react"
-import CircleChevron from "./CircleChevron"
-import classNames from "classnames"
-import type {Dispatch} from "../state/reducers/types"
-import dispatchToProps from "../lib/dispatchToProps"
 import {connect} from "react-redux"
-import {hideLeftSidebar} from "../state/actions/view"
+import React from "react"
+import classNames from "classnames"
+
+import type {Dispatch} from "../state/reducers/types"
+import {hideLeftSidebar} from "../state/actions"
+import CircleChevron from "./CircleChevron"
+import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {
   show: boolean,

@@ -2,7 +2,7 @@
 
 import {conn} from "../../test/mockLogs"
 import {fetchPackets} from "./packets"
-import {setCurrentSpaceName} from "./spaces"
+import {setCurrentSpaceName} from "../actions"
 import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"
 

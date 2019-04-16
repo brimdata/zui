@@ -1,13 +1,15 @@
 /* @flow */
 
-import {conn, dns} from "../test/mockLogs"
+import {conn, dns} from "../../test/mockLogs"
 import {getLogCorrelations} from "./correlations"
-import {pushLogDetail} from "../state/actions/logDetails"
-import {receiveDescriptor} from "../state/actions/descriptors"
-import {setCorrelation} from "../state/actions/correlations"
-import {setCurrentSpaceName} from "../state/actions/spaces"
-import Log from "../models/Log"
-import initTestStore from "../test/initTestStore"
+import {
+  pushLogDetail,
+  receiveDescriptor,
+  setCorrelation,
+  setCurrentSpaceName
+} from "../actions"
+import Log from "../../models/Log"
+import initTestStore from "../../test/initTestStore"
 
 describe("#getLogCorrelations", () => {
   const space = "default"

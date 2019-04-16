@@ -13,7 +13,7 @@ import {
   pcaps,
   toTime,
   whoisRightclick
-} from "./state/actions"
+} from "./actions"
 import {hasGroupByProc} from "../lib/Program"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"

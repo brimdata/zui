@@ -1,8 +1,8 @@
 /* @flow */
 
-import createReducer from "./createReducer"
-import History from "../models/History"
 import type {State} from "./types"
+import History from "../../models/History"
+import createReducer from "./createReducer"
 
 export const initialState = {
   logs: [],

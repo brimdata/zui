@@ -1,15 +1,15 @@
 /* @flow */
-import {Handler} from "../BoomClient"
+
+import {cancelBoomSearches, killBoomSearches} from "../thunks/boomSearches"
 import {
-  cancelBoomSearches,
   clearBoomSearches,
-  killBoomSearches,
   registerBoomSearch,
   setBoomSearchStats,
   setBoomSearchStatus
-} from "../state/actions/boomSearches"
+} from "../actions"
 import {getBoomSearches} from "./boomSearches"
-import initTestStore from "../test/initTestStore"
+import Handler from "../../BoomClient/lib/Handler"
+import initTestStore from "../../test/initTestStore"
 
 describe("boomSearches reducer", () => {
   let store

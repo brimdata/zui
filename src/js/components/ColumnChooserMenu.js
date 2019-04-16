@@ -14,7 +14,7 @@ import {
   hideColumn,
   showAllColumns,
   showColumn
-} from "../state/actions/tableColumnSets"
+} from "../state/actions"
 import CloseButton from "./CloseButton"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"

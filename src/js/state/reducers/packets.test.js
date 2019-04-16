@@ -1,16 +1,21 @@
 /* @flow */
 
-import * as packets from "./packets"
-import * as a from "../state/actions/packets"
+import {errorPackets, receivePackets, requestPackets} from "../actions"
+import {getDownloads} from "./packets"
+import initTestStore from "../../test/initTestStore"
 
-const reduce = (actions) => ({
-  packets: actions.reduce(packets.default, packets.initialState)
+let store
+
+beforeEach(() => {
+  store = initTestStore()
 })
 
-test("requesting packets", () => {
-  const state = reduce([a.requestPackets("123")])
+const reduce = (actions) => store.dispatchAll(actions)
 
-  expect(packets.getDownloads(state)[0]).toEqual({
+test("requesting packets", () => {
+  const state = reduce([requestPackets("123")])
+
+  expect(getDownloads(state)[0]).toEqual({
     uid: "123",
     percentComplete: 0,
     error: null
@@ -19,12 +24,9 @@ test("requesting packets", () => {
 
 test("receiving packets", () => {
   const uid = "123"
-  const state = reduce([
-    a.requestPackets(uid),
-    a.receivePackets(uid, "123.pcap")
-  ])
+  const state = reduce([requestPackets(uid), receivePackets(uid, "123.pcap")])
 
-  expect(packets.getDownloads(state)[0]).toEqual({
+  expect(getDownloads(state)[0]).toEqual({
     uid,
     percentComplete: 1,
     error: null
@@ -34,11 +36,11 @@ test("receiving packets", () => {
 test("error with the packets", () => {
   const uid = "123"
   const state = reduce([
-    a.requestPackets(uid),
-    a.errorPackets(uid, "boom goes the dyno")
+    requestPackets(uid),
+    errorPackets(uid, "boom goes the dyno")
   ])
 
-  expect(packets.getDownloads(state)[0]).toEqual({
+  expect(getDownloads(state)[0]).toEqual({
     uid,
     percentComplete: 0.0,
     error: "boom goes the dyno"

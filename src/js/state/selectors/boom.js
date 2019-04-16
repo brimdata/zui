@@ -1,13 +1,13 @@
 /* @flow */
 
-import type {State} from "../state/reducers/types"
+import type {State} from "../reducers/types"
 import {
   getCredentials,
   getUseBoomCache,
   getUseBoomIndex
-} from "../state/reducers/boomd"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {getTimeWindow} from "../state/reducers/timeWindow"
+} from "../reducers/boomd"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getTimeWindow} from "../reducers/timeWindow"
 
 export const getBoomOptions = (state: State) => {
   const credentials = getCredentials(state)

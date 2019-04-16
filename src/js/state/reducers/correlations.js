@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {LogCorrelations} from "../types"
+import type {LogCorrelations} from "../../types"
 import type {State} from "./types"
 import createReducer from "./createReducer"
 

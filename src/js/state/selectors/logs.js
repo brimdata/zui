@@ -2,13 +2,13 @@
 
 import {createSelector} from "reselect"
 
-import {type State} from "../state/reducers/types"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {getDescriptors} from "../state/reducers/descriptors"
-import {getLogTuples} from "../state/reducers/logs"
-import {getResultsTab} from "../state/reducers/view"
-import Log from "../models/Log"
-import * as analysis from "../state/reducers/analysis"
+import type {State} from "../reducers/types"
+import {getAnalysis} from "../reducers/analysis"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getDescriptors} from "../reducers/descriptors"
+import {getLogTuples} from "../reducers/logs"
+import {getResultsTab} from "../reducers/view"
+import Log from "../../models/Log"
 
 export const getEventLogs = createSelector<State, void, *, *, *, *>(
   getLogTuples,
@@ -28,7 +28,7 @@ export const getEventLogs = createSelector<State, void, *, *, *, *>(
 )
 
 export const getAnalysisLogs = createSelector<State, void, *, *>(
-  analysis.getAnalysis,
+  getAnalysis,
   (data) => {
     const {descriptor, tuples} = data
     return tuples.map((t) => new Log(t, descriptor))
@@ -38,7 +38,7 @@ export const getAnalysisLogs = createSelector<State, void, *, *>(
 export const getTuples = createSelector<State, void, *, *, *, *>(
   getResultsTab,
   getLogTuples,
-  analysis.getAnalysis,
+  getAnalysis,
   (tab, eventTuples, analysis) => {
     switch (tab) {
       case "logs":

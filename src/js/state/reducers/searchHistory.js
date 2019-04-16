@@ -2,9 +2,9 @@
 
 import {createSelector} from "reselect"
 
-import type {SearchRecord} from "../types"
+import type {SearchRecord} from "../../types"
 import type {State} from "./types"
-import NavHistory from "../models/NavHistory"
+import NavHistory from "../../models/NavHistory"
 import createReducer from "./createReducer"
 
 export type SearchHistory = {

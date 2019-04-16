@@ -6,7 +6,7 @@ import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/reducers/types"
-import {viewLogDetail} from "../state/actions/logDetails"
+import {viewLogDetail} from "../state/thunks/logDetails"
 import Log from "../models/Log"
 import * as Time from "../lib/Time"
 import * as TimeField from "../lib/TimeField"

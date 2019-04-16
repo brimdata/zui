@@ -7,14 +7,15 @@ import {
   appendQueryInclude,
   changeSearchBarInput,
   clearSearchBar,
-  submitSearchBar
-} from "../state/actions/searchBar"
-import {fetchPackets} from "../state/actions/packets"
-import {fetchWhois} from "../state/actions/whois"
+  setOuterFromTime,
+  setOuterToTime,
+  showRightSidebar
+} from "../state/actions"
+import {fetchPackets} from "../state/thunks/packets"
+import {fetchWhois} from "../state/thunks/whois"
 import {open} from "../lib/System"
-import {setOuterFromTime, setOuterToTime} from "../state/actions/timeWindow"
-import {showRightSidebar} from "../state/actions/view"
-import {viewLogDetail} from "../state/actions/logDetails"
+import {submitSearchBar} from "../state/thunks/searchBar"
+import {viewLogDetail} from "../state/thunks/logDetails"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import drillDown from "../lib/drillDown"

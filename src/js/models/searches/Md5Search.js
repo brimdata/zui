@@ -1,7 +1,6 @@
 /* @flow */
 
 import type {Dispatch} from "../../state/reducers/types"
-import {Handler} from "../../BoomClient"
 import type {Span} from "../../BoomClient/types"
 import {
   filenameCorrelation,
@@ -10,8 +9,9 @@ import {
   txHostsCorrelation
 } from "./programs"
 import {parallelizeProcs} from "../../lib/Program"
-import {setCorrelation} from "../../state/actions/correlations"
+import {setCorrelation} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
+import Handler from "../../BoomClient/lib/Handler"
 import Log from "../Log"
 import accumAnalytics from "../../lib/accumAnalytics"
 

@@ -8,7 +8,7 @@ exec("./bin/badrefs", (err, out) => {
     const [path, line, endline ] = file.split(":")
 
     if (path && line && endline) {
-      execSync(`sed -i '${line},${endline}d' ${path}`)
+      execSync(`sed -i '' '${line},${endline}s/.*//' ${path}`)
     }
   })
 })

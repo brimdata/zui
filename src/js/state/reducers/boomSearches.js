@@ -1,8 +1,8 @@
 /* @flow */
 
 import type {BoomSearchStats} from "../../types"
-import {Handler} from "../../BoomClient"
 import type {State} from "./types"
+import Handler from "../../BoomClient/lib/Handler"
 import createReducer from "./createReducer"
 
 export type BoomSearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "ABORTED"

@@ -1,16 +1,20 @@
 /* @flow */
 
 import type {Thunk} from "../reducers/types"
-import {clearAllCorrelations, clearAnalysis, clearDescriptors} from "../actions"
-import {clearFilterTree} from "./filterTree"
-import {clearHistogram} from "./histogram"
-import {clearLogViewer} from "./logViewer"
-import {clearLogs} from "./logs"
-import {clearSearchBar} from "./searchBar"
-import {clearSearchHistory} from "./searchHistory"
-import {clearSpaces} from "./spaces"
-import {clearStarredLogs} from "./starredLogs"
-import {clearTimeWindows} from "./timeWindow"
+import {
+  clearAllCorrelations,
+  clearAnalysis,
+  clearDescriptors,
+  clearFilterTree,
+  clearHistogram,
+  clearLogViewer,
+  clearLogs,
+  clearSearchBar,
+  clearSearchHistory,
+  clearSpaces,
+  clearStarredLogs,
+  clearTimeWindows
+} from "../actions"
 
 export const disconnect = (): Thunk => (dispatch) => {
   dispatch(clearLogs())

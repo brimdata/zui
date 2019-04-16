@@ -1,8 +1,8 @@
 /* @flow */
 
-import {starLog, unstarLog, clearStarredLogs} from "../state/actions/starredLogs"
+import {clearStarredLogs, starLog, unstarLog} from "../actions"
 import {getStarredLogs} from "./starredLogs"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {

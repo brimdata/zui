@@ -1,8 +1,8 @@
 /* @flow */
 
+import {escapeSpaces, onlyWhitespace, trim} from "../../lib/Str"
+import {indexInBounds} from "../../lib/Array"
 import createReducer from "./createReducer"
-import * as Str from "../lib/Str"
-import * as Arr from "../lib/Array"
 
 export const initialState = {
   current: "",
@@ -24,24 +24,22 @@ export default createReducer(initialState, {
   },
   QUERY_INCLUDE_APPEND: (state, {field}) => ({
     ...state,
-    current: Str.trim(
-      state.current + ` ${field.name}=${Str.escapeSpaces(field.value)}`
-    )
+    current: trim(state.current + ` ${field.name}=${escapeSpaces(field.value)}`)
   }),
 
   QUERY_EXCLUDE_APPEND: (state, {field}) => ({
     ...state,
-    current: Str.trim(
-      state.current + ` ${field.name}!=${Str.escapeSpaces(field.value)}`
+    current: trim(
+      state.current + ` ${field.name}!=${escapeSpaces(field.value)}`
     )
   }),
 
   QUERY_COUNT_BY_APPEND: (state, {field}) => {
     const query = [...state.pinned, state.current].join(" ")
-    const current = Str.onlyWhitespace(query) ? "*" : state.current
+    const current = onlyWhitespace(query) ? "*" : state.current
     return {
       ...state,
-      current: Str.trim(current + ` | count() by ${field.name}`)
+      current: trim(current + ` | count() by ${field.name}`)
     }
   },
 
@@ -62,7 +60,7 @@ export default createReducer(initialState, {
   },
 
   SEARCH_BAR_PIN: (state) => {
-    if (Str.onlyWhitespace(state.current)) return state
+    if (onlyWhitespace(state.current)) return state
     else
       return {
         ...state,
@@ -74,7 +72,7 @@ export default createReducer(initialState, {
   },
 
   SEARCH_BAR_PIN_EDIT: (state, {index}) => {
-    if (Arr.indexInBounds(index, state.pinned)) {
+    if (indexInBounds(index, state.pinned)) {
       return {
         ...state,
         current: state.pinned[index],
@@ -86,7 +84,7 @@ export default createReducer(initialState, {
   },
 
   SEARCH_BAR_PIN_REMOVE: (state, {index}) => {
-    if (Arr.indexInBounds(index, state.pinned)) {
+    if (indexInBounds(index, state.pinned)) {
       return {
         ...state,
         pinned: state.pinned.filter((_e, i) => i != index),
@@ -114,7 +112,7 @@ export default createReducer(initialState, {
   MAIN_SEARCH_QUERY_PROGRAM_APPEND: (state, {fragment}) => {
     return {
       ...state,
-      current: Str.trim(state.current + " " + fragment)
+      current: trim(state.current + " " + fragment)
     }
   },
 

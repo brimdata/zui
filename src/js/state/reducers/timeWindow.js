@@ -1,12 +1,12 @@
 /* @flow */
 
-import {type DateTuple, last} from "../lib/TimeWindow"
+import {type DateTuple, spanOfLast} from "../../lib/TimeWindow"
 import type {State} from "./types"
 import createReducer from "./createReducer"
 
 const initialState = {
   inner: null,
-  outer: last(30, "minutes")
+  outer: spanOfLast(30, "minutes")
 }
 
 export type TimeWindow = {

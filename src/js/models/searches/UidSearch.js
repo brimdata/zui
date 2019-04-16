@@ -1,13 +1,13 @@
 /* @flow */
 
 import type {Dispatch} from "../../state/reducers/types"
-import {Handler} from "../../BoomClient"
 import type {Span} from "../../BoomClient/types"
 import type {Tuple} from "../../types"
 import {addHeadProc} from "../../lib/Program"
-import {discoverDescriptors} from "../../state/actions/descriptors"
-import {setCorrelation} from "../../state/actions/correlations"
+import {discoverDescriptors} from "../../state/thunks/descriptors"
+import {setCorrelation} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
+import Handler from "../../BoomClient/lib/Handler"
 import Log from "../Log"
 
 export default class UidSearch extends BaseSearch {

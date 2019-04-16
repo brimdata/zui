@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {ColumnSetting} from "../types"
+import type {ColumnSetting} from "../../types"
 import createReducer from "./createReducer"
 
 export type TableColumnSets = {

@@ -1,10 +1,14 @@
 /* @flow */
 
 import {getBoomOptions} from "./boom"
-import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../state/actions/boomd"
-import {setCurrentSpaceName} from "../state/actions/spaces"
-import {setOuterTimeWindow} from "../state/actions/timeWindow"
-import initTestStore from "../test/initTestStore"
+import {
+  setBoomdCredentials,
+  setCurrentSpaceName,
+  setOuterTimeWindow,
+  useBoomCache,
+  useBoomIndex
+} from "../actions"
+import initTestStore from "../../test/initTestStore"
 
 test("#getBoomOptions", () => {
   const store = initTestStore()

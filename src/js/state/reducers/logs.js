@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {State} from "./types"
-import type {Tuple} from "../types"
+import type {Tuple} from "../../types"
 import createReducer from "./createReducer"
 
 export type Logs = {

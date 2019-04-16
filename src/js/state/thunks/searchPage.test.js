@@ -2,7 +2,7 @@
 
 import {getCurrentSpace, getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
-import {init} from "./searchPage"
+import {initSearchPage} from "./searchPage"
 import {setCurrentSpaceName} from "../actions"
 import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"
@@ -27,7 +27,7 @@ test("init with several spaces", (done) => {
   const store = initTestStore(boom)
 
   store
-    .dispatch(init())
+    .dispatch(initSearchPage())
     .then(() => {
       expect(getCurrentSpaceName(store.getState())).toBe("default")
       expect(getCurrentSpace(store.getState())).toEqual(
@@ -50,7 +50,7 @@ test("init with no spaces", (done) => {
   const store = initTestStore(boom)
 
   store
-    .dispatch(init())
+    .dispatch(initSearchPage())
     .then(() => done.fail("Expected to fail with NoSpaces"))
     .catch((e) => {
       expect(e).toBe("NoSpaces")
@@ -67,7 +67,7 @@ test("init with a space already selected", (done) => {
 
   store.dispatch(setCurrentSpaceName("alternate"))
   store
-    .dispatch(init())
+    .dispatch(initSearchPage())
     .then(() => {
       expect(getCurrentSpaceName(store.getState())).toBe("alternate")
       done()

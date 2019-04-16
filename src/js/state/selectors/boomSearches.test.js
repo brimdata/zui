@@ -1,8 +1,9 @@
 /* @flow */
-import {Handler} from "../BoomClient"
+
 import {getSomeAreFetching} from "./boomSearches"
-import {registerBoomSearch, setBoomSearchStatus} from "../state/actions/boomSearches"
-import initTestStore from "../test/initTestStore"
+import {registerBoomSearch, setBoomSearchStatus} from "../actions"
+import Handler from "../../BoomClient/lib/Handler"
+import initTestStore from "../../test/initTestStore"
 
 test("#getSomeAreFetching true", () => {
   let store

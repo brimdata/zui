@@ -1,10 +1,11 @@
 #!/bin/bash
 
 function fix {
-  npx importjs rewrite --overwrite $@
+  npx importjs fix --overwrite $@
   npx prettier --write $@
 }
 
+./bin/deletebadrefs
 for f in $(./bin/flowfiles)
 do
   fix $f

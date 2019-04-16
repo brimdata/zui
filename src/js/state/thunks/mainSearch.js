@@ -2,11 +2,10 @@
 
 import type {Thunk} from "../reducers/types"
 import {cancelBoomSearches, issueBoomSearch} from "./boomSearches"
-import {clearAnalysis, clearLogs} from "../actions"
+import {clearAnalysis, clearLogs, recordSearch} from "../actions"
 import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getSearchRecord} from "../selectors/searchRecord"
-import {recordSearch} from "./searchRecord"
 import {updateTab} from "./view"
 import {validateProgram} from "./searchBar"
 import SearchFactory from "../../models/searches/SearchFactory"

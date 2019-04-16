@@ -1,9 +1,9 @@
 /* @flow */
 
-import {createHistogramData} from "../charts/createHistogramData"
+import {clearHistogram, histogramSearchResult} from "../actions"
+import {createHistogramData} from "../../charts/createHistogramData"
 import {getHistogramData} from "./histogram"
-import * as a from "../state/actions/histogram"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {
@@ -15,7 +15,7 @@ test("receive data", () => {
     tuples: [["1"], ["2"]],
     descriptor: [{type: "integer", name: "count"}]
   }
-  const state = store.dispatchAll([a.histogramSearchResult(data)])
+  const state = store.dispatchAll([histogramSearchResult(data)])
 
   expect(getHistogramData(state)).toEqual(data)
 })
@@ -26,8 +26,8 @@ test("receive data twice", () => {
     descriptor: [{type: "integer", name: "count"}]
   }
   const state = store.dispatchAll([
-    a.histogramSearchResult(data),
-    a.histogramSearchResult(data)
+    histogramSearchResult(data),
+    histogramSearchResult(data)
   ])
 
   expect(getHistogramData(state)).toEqual({
@@ -60,8 +60,8 @@ test("clearing the count by time data", () => {
     descriptor: [{type: "integer", name: "count"}]
   }
   const state = store.dispatchAll([
-    a.histogramSearchResult(data),
-    a.clearHistogram()
+    histogramSearchResult(data),
+    clearHistogram()
   ])
 
   expect(getHistogramData(state)).toEqual({tuples: [], descriptor: []})

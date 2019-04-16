@@ -19,7 +19,7 @@ import {XStatusBar} from "./StatusBar"
 import {XTitleBar} from "./TitleBar"
 import {XWhoisModal} from "./WhoisModal"
 import {getShowLogsTab} from "../state/reducers/view"
-import {init} from "../state/actions/searchPage"
+import {initSearchPage} from "../state/thunks/searchPage"
 import AppError from "../models/AppError"
 import ColumnChooser from "./ColumnChooser"
 import ErrorFactory from "../models/ErrorFactory"
@@ -45,7 +45,7 @@ export default class Search extends React.Component<Props, LocalState> {
     super(props)
     this.state = {ready: false, error: null}
     props
-      .dispatch(init())
+      .dispatch(initSearchPage())
       .then(() => this.setState({ready: true}))
       .catch((e) => this.setState({error: ErrorFactory.create(e)}))
   }

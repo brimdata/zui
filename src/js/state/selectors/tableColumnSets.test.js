@@ -1,18 +1,20 @@
 /* @flow */
 
-import {conn, dns} from "../test/mockLogs"
+import {conn, dns} from "../../test/mockLogs"
 import {
   getCurrentTableColumns,
   getCurrentTableColumnsId,
   getCurrentUniqColumns
 } from "./tableColumnSets"
-import {receiveDescriptor} from "../state/actions/descriptors"
-import {receiveLogTuples} from "../state/actions/logs"
-import {setAnalysis} from "../state/actions/analysis"
-import {setCurrentSpaceName} from "../state/actions/spaces"
-import {showAnalyticsTab} from "../state/actions/view"
-import TableColumns from "../models/TableColumns"
-import initTestStore from "../test/initTestStore"
+import {
+  receiveDescriptor,
+  receiveLogTuples,
+  setAnalysis,
+  setCurrentSpaceName,
+  showAnalyticsTab
+} from "../actions"
+import TableColumns from "../../models/TableColumns"
+import initTestStore from "../../test/initTestStore"
 
 const connLog = conn()
 const dnsLog = dns()

@@ -1,8 +1,13 @@
 /* @flow */
 
+import {
+  clearTimeWindows,
+  restoreTimeWindow,
+  setInnerTimeWindow,
+  setOuterTimeWindow
+} from "../actions"
 import {getOuterTimeWindow, getInnerTimeWindow} from "./timeWindow"
-import * as actions from "../state/actions/timeWindow"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {
@@ -11,21 +16,21 @@ beforeEach(() => {
 
 test("setting the outer time window", () => {
   const range = [new Date(), new Date()]
-  const state = store.dispatchAll([actions.setOuterTimeWindow(range)])
+  const state = store.dispatchAll([setOuterTimeWindow(range)])
 
   expect(getOuterTimeWindow(state)).toEqual(range)
 })
 
 test("setting the inner time window", () => {
   const range = [new Date(), new Date()]
-  const state = store.dispatchAll([actions.setInnerTimeWindow(range)])
+  const state = store.dispatchAll([setInnerTimeWindow(range)])
 
   expect(getInnerTimeWindow(state)).toEqual(range)
 })
 
 test("restoring the time window", () => {
   store.dispatch(
-    actions.restoreTimeWindow({
+    restoreTimeWindow({
       inner: [new Date("1"), new Date("2")],
       outer: [new Date("0"), new Date("3")]
     })
@@ -38,11 +43,11 @@ test("restoring the time window", () => {
 
 test("clearing the time window", () => {
   const state = store.dispatchAll([
-    actions.restoreTimeWindow({
+    restoreTimeWindow({
       inner: [new Date("1"), new Date("2")],
       outer: [new Date("0"), new Date("3")]
     }),
-    actions.clearTimeWindows()
+    clearTimeWindows()
   ])
 
   expect(getInnerTimeWindow(state)).toBe(null)
