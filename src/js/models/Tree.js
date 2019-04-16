@@ -184,4 +184,13 @@ export class Node {
     }
     return indexPath
   }
+
+  mapChildren(func: (Node) => *) {
+    let me = func(this)
+    let children = []
+    for (let child of this.children) {
+      children = [...children, ...child.mapChildren(func)]
+    }
+    return [me, ...children]
+  }
 }

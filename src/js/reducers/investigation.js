@@ -28,6 +28,9 @@ export default function(state: Investigation = [], a: *) {
       return [...state, a.finding]
     case "FINDING_UPDATE":
       return updateLatest(state, a.finding)
+    case "FINDING_DELETE":
+      // $FlowFixMe
+      return state.filter((f): boolean => !a.ts.includes(f.ts))
     case "INVESTIGATION_CLEAR":
       return []
     default:

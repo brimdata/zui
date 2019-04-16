@@ -12,11 +12,13 @@ export function createInvestigationTree(investigation: Investigation) {
 
     eachFilter(finding.record, (filter) => {
       if (!node) return
-      let nextNode = node.children.find((child) => isEqual(child.data, filter))
+      let nextNode = node.children.find((child) =>
+        isEqual(child.data.filter, filter)
+      )
       if (nextNode) {
         node = nextNode
       } else {
-        node = node.addChild(filter)
+        node = node.addChild({filter, finding})
       }
     })
   }

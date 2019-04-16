@@ -11,6 +11,11 @@ export const updateFinding = (finding: $Shape<Finding>) => ({
   finding
 })
 
+export const deleteFindingByTs = (...ts: Date[]) => ({
+  type: "FINDING_DELETE",
+  ts
+})
+
 export const clearInvestigation = () => ({
   type: "INVESTIGATION_CLEAR"
 })

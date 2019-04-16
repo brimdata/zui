@@ -8,9 +8,9 @@ import type {Dispatch, State} from "../reducers/types"
 import {type Investigation, getInvestigation} from "../reducers/investigation"
 import {Node} from "../models/Tree"
 import {createInvestigationTree} from "../investigation/createTree"
+import {deleteFindingByTs} from "../actions/investigation"
 import {fetchMainSearch} from "../actions/mainSearch"
 import {getSearchBarPins} from "../selectors/searchBar"
-import {removeFilterTreeNode} from "../actions/filterTree"
 import {setSearchBarPins} from "../actions/searchBar"
 import CloseSVG from "../icons/circle-x-md.svg"
 import FilterNode from "./FilterNode"
@@ -53,12 +53,13 @@ export default class FilterTree extends React.Component<AllProps> {
           className="filter-tree-parent"
           onClick={() => this.onNodeClick(node)}
         >
-          <FilterNode filter={node.data} />
+          <FilterNode filter={node.data.filter} />
           <a
             className="delete-button"
             onClick={(e) => {
               e.stopPropagation()
-              this.props.dispatch(removeFilterTreeNode(node))
+              let ts = node.mapChildren((node) => node.data.finding.ts)
+              this.props.dispatch(deleteFindingByTs(...ts))
             }}
           >
             <CloseSVG />
@@ -87,7 +88,7 @@ export function getPinnedFilters(node: ?Node) {
 
   while (node) {
     if (node.isRoot()) break
-    pinnedFilters.unshift(node.data)
+    pinnedFilters.unshift(node.data.filter)
     node = node.parent
   }
 
@@ -99,7 +100,7 @@ export function nodeIsPinned(pinnedFilters: string[], node: ?Node) {
     const index = node.parentCount() - 1
     const pinned = pinnedFilters[index]
 
-    if (!isEqual(node.data, pinned)) return false
+    if (!isEqual(node.data.filter, pinned)) return false
 
     node = node.parent
   }
