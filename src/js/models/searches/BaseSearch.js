@@ -2,7 +2,7 @@
 
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {Dispatch} from "../../state/reducers/types"
-import type {Payload} from "../../types"
+import type {Payload} from "../../types/payloads"
 import {setBoomSearchStats, setBoomSearchStatus} from "../../state/actions"
 import Handler from "../../BoomClient/lib/Handler"
 

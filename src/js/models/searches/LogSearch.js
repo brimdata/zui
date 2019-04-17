@@ -4,7 +4,7 @@ import throttle from "lodash/throttle"
 
 import type {Dispatch} from "../../state/reducers/types"
 import {PER_PAGE} from "../../state/reducers/logViewer"
-import type {Payload} from "../../types"
+import type {Payload} from "../../types/payloads"
 import {addHeadProc} from "../../lib/Program"
 import {discoverDescriptors} from "../../state/thunks/descriptors"
 import {receiveLogTuples, setMoreAhead, spliceLogs} from "../../state/actions"

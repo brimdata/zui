@@ -3,7 +3,7 @@
 import throttle from "lodash/throttle"
 
 import type {Dispatch} from "../../state/reducers/types"
-import type {Payload} from "../../types"
+import type {Payload} from "../../types/payloads"
 import {accumResults} from "../../lib/accumulator"
 import {clearHistogram, histogramSearchResult} from "../../state/actions"
 import BaseSearch from "./BaseSearch"

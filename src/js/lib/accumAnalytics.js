@@ -1,6 +1,7 @@
 /* @flow */
 
-import type {Descriptor, Payload, Tuple} from "../types"
+import type {Descriptor, Tuple} from "../types"
+import type {Payload} from "../types/payloads"
 
 type Analytic = {
   descriptor: Descriptor,
