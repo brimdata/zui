@@ -1,6 +1,6 @@
 /* @flow */
 import {ANALYTIC_MAX_RESULTS as MAX} from "../../models/searches/AnalyticSearch"
-import type {ResultsTabEnum} from "../../reducers/view"
+import type {ResultsTabEnum} from "../../state/reducers/view"
 import {withCommas} from "../../lib/fmt"
 
 const EOF = "End of results 🎉"

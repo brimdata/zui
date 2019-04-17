@@ -3,10 +3,10 @@
 import React from "react"
 import classNames from "classnames"
 import {connect} from "react-redux"
-import * as packets from "../reducers/packets"
-import * as view from "../reducers/view"
-import {type State} from "../reducers/types"
-import {type Dispatch} from "../reducers/types"
+import * as packets from "../state/reducers/packets"
+import * as view from "../state/reducers/view"
+import {type State} from "../state/reducers/types"
+import {type Dispatch} from "../state/reducers/types"
 
 type Props = {
   downloads: *[],

@@ -5,16 +5,16 @@ import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import {type DispatchProps, type State} from "../reducers/types"
+import {type DispatchProps, type State} from "../state/reducers/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
 import type {TableColumn} from "../types"
-import {getCurrentTableColumns} from "../selectors/tableColumnSets"
+import {getCurrentTableColumns} from "../state/selectors/tableColumnSets"
 import {
   hideAllColumns,
   hideColumn,
   showAllColumns,
   showColumn
-} from "../actions/tableColumnSets"
+} from "../state/actions"
 import CloseButton from "./CloseButton"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"

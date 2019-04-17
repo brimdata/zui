@@ -1,6 +1,6 @@
 /* @flow */
 
-import {PER_PAGE} from "../../reducers/logViewer"
+import {PER_PAGE} from "../../state/reducers/logViewer"
 import LogSearch from "./LogSearch"
 
 describe("LogSearch", () => {

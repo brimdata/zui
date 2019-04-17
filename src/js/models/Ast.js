@@ -1,8 +1,7 @@
 /* @flow */
 
+import LookyTalk from "lookytalk"
 import isEmpty from "lodash/isEmpty"
-
-import {LookyTalk} from "../BoomClient"
 
 export default class Ast {
   program: string

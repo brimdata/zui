@@ -6,8 +6,8 @@ import {XSearchButton} from "../components/SearchButton"
 import {XPins} from "./Pins"
 import Warning from "../icons/warning-sm.svg"
 import {connect} from "react-redux"
-import {getSearchBarError} from "../selectors/searchBar"
-import {type State} from "../reducers/types"
+import {getSearchBarError} from "../state/selectors/searchBar"
+import {type State} from "../state/reducers/types"
 
 type StateProps = {|
   error: ?string

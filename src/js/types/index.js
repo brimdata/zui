@@ -142,3 +142,5 @@ export type SearchRecord = {
   span: Span,
   space: string
 }
+
+export type Updates = {[string]: ColumnSetting}

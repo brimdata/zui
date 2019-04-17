@@ -6,12 +6,13 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {Credentials} from "../lib/Credentials"
-import {getCredentials} from "../reducers/boomd"
+import {connectBoomd} from "../state/thunks/boomd"
+import {getCredentials} from "../state/reducers/boomd"
+import {setBoomdCredentials} from "../state/actions"
 import AdminTitle from "./AdminTitle"
 import AppError from "../models/AppError"
 import ErrorFactory from "../models/ErrorFactory"
 import LookyHeader from "./LookyHeader"
-import * as actions from "../actions/boomd"
 import delay from "../lib/delay"
 
 type Props = {|
@@ -128,7 +129,7 @@ const stateToProps = (state) => ({
 })
 
 const dispatchToProps = (dispatch) => ({
-  ...bindActionCreators(actions, dispatch),
+  ...bindActionCreators({setBoomdCredentials, connectBoomd}, dispatch),
   dispatch
 })
 

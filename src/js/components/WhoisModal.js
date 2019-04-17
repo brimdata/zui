@@ -1,13 +1,13 @@
 /* @flow */
 
-import React from "react"
-import Modal from "./Modal"
-import {closeWhois} from "../actions/whois"
 import {connect} from "react-redux"
-import * as whois from "../reducers/whois"
+import React from "react"
+
+import type {DispatchProps, State} from "../state/reducers/types"
+import {closeWhois} from "../state/actions"
+import Modal from "./Modal"
 import dispatchToProps from "../lib/dispatchToProps"
-import type {State} from "../reducers/types"
-import {type DispatchProps} from "../reducers/types"
+import * as whois from "../state/reducers/whois"
 
 type StateProps = {|
   isOpen: boolean,

@@ -1,7 +1,8 @@
 /* @flow */
 
+import LookyTalk from "lookytalk"
+
 import {HEAD_PROC, TAIL_PROC, TUPLE_PROCS, getProcNames, getProcs} from "./ast"
-import {LookyTalk} from "../BoomClient"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
 import Log from "../models/Log"

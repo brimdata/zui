@@ -3,11 +3,10 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {Dispatch, State} from "../reducers/types"
+import type {Dispatch, State} from "../state/reducers/types"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {clearInvestigation} from "../actions/investigation"
-import {setLeftSidebarWidth} from "../actions/view"
+import {clearInvestigation, setLeftSidebarWidth} from "../state/actions"
 import HistoryAside from "./HistoryAside"
 import Pane, {
   PaneHeader,
@@ -18,7 +17,7 @@ import Pane, {
   PaneBody
 } from "./Pane"
 import dispatchToProps from "../lib/dispatchToProps"
-import * as view from "../reducers/view"
+import * as view from "../state/reducers/view"
 
 type Props = {|
   isOpen: boolean,

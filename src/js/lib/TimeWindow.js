@@ -43,7 +43,7 @@ export const shift = (
   return [Time.add(from, amount, unit), Time.add(to, amount, unit)]
 }
 
-export const last = (number: number, unit: TimeUnit) => {
+export const spanOfLast = (number: number, unit: TimeUnit) => {
   const now = new Date()
   return [Time.subtract(now, number, unit), now]
 }

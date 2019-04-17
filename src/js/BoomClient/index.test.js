@@ -1,17 +1,8 @@
 /* @flow */
 
-import L from "lookytalk"
 import http from "http"
-import BoomClient, {LookyTalk, Handler} from "./index"
-import H from "./lib/Handler"
 
-test("export looktalk as named export", () => {
-  expect(LookyTalk).toBe(L)
-})
-
-test("export Handler", () => {
-  expect(Handler).toBe(H)
-})
+import BoomClient from "./"
 
 let boom
 beforeEach(() => {

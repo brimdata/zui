@@ -7,9 +7,6 @@ import Packets from "./client/Packets"
 import Spaces from "./client/Spaces"
 import Tasks from "./client/Tasks"
 
-export {default as LookyTalk} from "lookytalk"
-export {default as Handler} from "./lib/Handler"
-
 export default class BoomClient extends Base {
   spaces: *
   descriptors: *

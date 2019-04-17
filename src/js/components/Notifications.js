@@ -1,16 +1,17 @@
 /* @flow */
 
-import React from "react"
-import {connect} from "react-redux"
-import ReactDOM from "react-dom"
-import * as Doc from "../lib/Doc"
 import {CSSTransition, TransitionGroup} from "react-transition-group"
+import {connect} from "react-redux"
+import React from "react"
+import ReactDOM from "react-dom"
+
+import type {State, Dispatch} from "../state/reducers/types"
+import {getNotifications} from "../state/selectors/notifications"
+import {removeNotification} from "../state/actions"
 import AppError from "../models/AppError"
-import type {State, Dispatch} from "../reducers/types"
-import {getNotifications} from "../selectors/notifications"
-import dispatchToProps from "../lib/dispatchToProps"
-import {removeNotification} from "../actions/notifications"
+import * as Doc from "../lib/Doc"
 import ErrorTemplate from "./ErrorTemplate"
+import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {messages: AppError[], dispatch: Dispatch}
 

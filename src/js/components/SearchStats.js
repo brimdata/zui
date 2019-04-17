@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import {getSearchStats} from "../selectors/stats"
+import {getSearchStats} from "../state/selectors/stats"
 import * as fmt from "../lib/fmt"
 
 type Props = {

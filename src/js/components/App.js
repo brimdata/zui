@@ -6,7 +6,7 @@ import React, {Component} from "react"
 
 import {XNotifications} from "./Notifications"
 import {XSearch} from "./Search"
-import {getTimeZone} from "../reducers/view"
+import {getTimeZone} from "../state/reducers/view"
 import * as Time from "../lib/Time"
 import {XConnect} from "./Connect"
 

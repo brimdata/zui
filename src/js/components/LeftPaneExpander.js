@@ -1,15 +1,16 @@
 /* @flow */
 
-import React from "react"
-import {connect} from "react-redux"
-import CircleChevron from "./CircleChevron"
-import ReactDOM from "react-dom"
-import * as Doc from "../lib/Doc"
-import dispatchToProps from "../lib/dispatchToProps"
-import type {Dispatch} from "../reducers/types"
-import {showLeftSidebar} from "../actions/view"
-import MouseoverWatch from "../lib/MouseoverWatch"
 import {CSSTransition} from "react-transition-group"
+import {connect} from "react-redux"
+import React from "react"
+import ReactDOM from "react-dom"
+
+import type {Dispatch} from "../state/reducers/types"
+import {showLeftSidebar} from "../state/actions"
+import CircleChevron from "./CircleChevron"
+import * as Doc from "../lib/Doc"
+import MouseoverWatch from "../lib/MouseoverWatch"
+import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}

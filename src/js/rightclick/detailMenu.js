@@ -1,11 +1,6 @@
 /* @flow */
 
-import {
-  freshInclude,
-  fromTime,
-  toTime,
-  whoisRightclick
-} from "../rightclick/actions"
+import {freshInclude, fromTime, toTime, whoisRightclick} from "./actions"
 import Field, {TimeField} from "../models/Field"
 import menuBuilder from "./menuBuilder"
 

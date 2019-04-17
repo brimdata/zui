@@ -1,13 +1,13 @@
 /* @flow */
 import * as d3 from "d3"
 
-import type {Dispatch} from "../reducers/types"
+import type {Dispatch} from "../state/reducers/types"
 import type {Results} from "../types"
 import type {Span} from "../BoomClient/types"
 import {createHistogramData} from "./createHistogramData"
-import {fetchMainSearch} from "../actions/mainSearch"
+import {fetchMainSearch} from "../state/thunks/mainSearch"
 import {fillWithIndex} from "../lib/Array"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../actions/timeWindow"
+import {setInnerTimeWindow, setOuterTimeWindow} from "../state/actions"
 import Chart from "./Chart"
 import focusBar from "./elements/focusBar"
 import hoverLine from "./elements/hoverLine"

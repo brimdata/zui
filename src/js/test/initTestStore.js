@@ -3,9 +3,9 @@
 import {createStore, compose, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
-import type {State, Action} from "../reducers/types"
+import type {State, Action} from "../state/reducers/types"
 import MockBoomClient from "./MockBoomClient"
-import reducer from "../reducers"
+import reducer from "../state/reducers"
 
 type TestStore = {
   dispatch: Function,

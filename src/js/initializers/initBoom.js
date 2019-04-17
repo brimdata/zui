@@ -1,7 +1,7 @@
 /* @flow */
 
-import type {State} from "../reducers/types"
-import {getBoomOptions} from "../selectors/boom"
+import type {State} from "../state/reducers/types"
+import {getBoomOptions} from "../state/selectors/boom"
 import BoomClient from "../BoomClient"
 
 export default (state: ?State) => {

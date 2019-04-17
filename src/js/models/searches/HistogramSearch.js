@@ -2,12 +2,12 @@
 
 import throttle from "lodash/throttle"
 
-import type {Dispatch} from "../../reducers/types"
-import {Handler} from "../../BoomClient"
+import type {Dispatch} from "../../state/reducers/types"
 import type {Payload} from "../../types"
 import {accumResults} from "../../lib/accumulator"
-import {clearHistogram, histogramSearchResult} from "../../actions/histogram"
+import {clearHistogram, histogramSearchResult} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
+import Handler from "../../BoomClient/lib/Handler"
 import histogramInterval from "../../lib/histogramInterval"
 
 const BOOM_INTERVALS = {

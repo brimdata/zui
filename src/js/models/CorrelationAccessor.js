@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Correlations} from "../reducers/correlations"
+import type {Correlations} from "../state/reducers/correlations"
 
 export default class CorrelationAccessor {
   data: Correlations

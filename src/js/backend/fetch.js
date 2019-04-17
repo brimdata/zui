@@ -1,6 +1,6 @@
 /* @flow */
 import type {Span} from "../BoomClient/types"
-import type {Thunk} from "../reducers/types"
+import type {Thunk} from "../state/reducers/types"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (d, g, boom) =>
