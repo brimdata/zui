@@ -11,16 +11,16 @@ import {
   getTimeZone
 } from "../../state/reducers/view"
 import type {Space} from "../../lib/Space"
-import type {Tuple, ViewerDimens} from "../../types"
+import type {Tuple, TupleSet, ViewerDimens} from "../../types"
 import {XPhonyViewer} from "../Viewer/PhonyViewer"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
 import {fetchAhead} from "../../state/thunks/logViewer"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/selectors/tableColumnSets"
-import {getLogs, getTuples} from "../../state/selectors/logs"
 import {getMainSearchIsFetching} from "../../state/selectors/boomSearches"
 import {getPrevSearchProgram} from "../../state/selectors/searchBar"
+import {getResults} from "../../state/results/selector"
 import {moreAhead} from "../../state/reducers/logViewer"
 import {viewLogDetail} from "../../state/thunks/logDetails"
 import Chunker from "../Viewer/Chunker"
@@ -35,12 +35,11 @@ import getEndMessage from "./getEndMessage"
 import viewerMenu from "../../rightclick/viewerMenu"
 
 type StateProps = {|
-  logs: Log[],
+  results: TupleSet,
   selectedLog: ?Log,
   timeZone: string,
   moreAhead: boolean,
   isFetching: boolean,
-  tuples: Tuple[],
   tableColumns: TableColumns,
   tab: ResultsTabEnum,
   program: string,
@@ -55,17 +54,19 @@ type OwnProps = {|
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function SearchResults(props: Props) {
+  let logs = Log.fromTupleSet(props.results)
+
   const dimens = buildViewerDimens({
     type: props.tableColumns.showHeader() ? "fixed" : "auto",
     height: props.height,
     width: props.width,
-    size: props.logs.length,
+    size: logs.length,
     rowHeight: 25,
     sumColumnWidths: props.tableColumns.sumWidths()
   })
 
   const chunker = new Chunker({
-    size: props.logs.length,
+    size: logs.length,
     height: props.height,
     rowHeight: 25,
     chunkSize: 5,
@@ -78,11 +79,11 @@ export default function SearchResults(props: Props) {
         columns={props.tableColumns}
         key={index}
         index={index}
-        log={props.logs[index]}
+        log={logs[index]}
         timeZone={props.timeZone}
-        highlight={Log.isSame(props.logs[index], props.selectedLog)}
+        highlight={Log.isSame(logs[index], props.selectedLog)}
         dimens={dimens}
-        onClick={() => props.dispatch(viewLogDetail(props.logs[index]))}
+        onClick={() => props.dispatch(viewLogDetail(logs[index]))}
         rightClick={viewerMenu(props.program, props.space, props.tab)}
       />
     )
@@ -99,30 +100,29 @@ export default function SearchResults(props: Props) {
     else
       return (
         <p className="end-message" style={endMessage(dimens)}>
-          {getEndMessage(props.tab, props.logs.length)}
+          {getEndMessage(props.tab, logs.length)}
         </p>
       )
   }
 
-  if (isEmpty(props.tuples) && !props.isFetching)
-    return <NoResults width={props.width} />
-  else if (isEmpty(props.logs)) return null
-  else
-    return (
-      <div>
-        <XPhonyViewer />
-        <Viewer
-          logs={props.logs}
-          renderRow={renderRow}
-          chunker={chunker}
-          dimens={dimens}
-          tableColumns={props.tableColumns}
-          timeZone={props.timeZone}
-          onLastChunk={onLastChunk}
-          renderEnd={renderEnd}
-        />
-      </div>
-    )
+  if (isEmpty(logs) && props.isFetching) return null
+  if (isEmpty(logs)) return <NoResults width={props.width} />
+
+  return (
+    <div>
+      <XPhonyViewer />
+      <Viewer
+        logs={logs}
+        renderRow={renderRow}
+        chunker={chunker}
+        dimens={dimens}
+        tableColumns={props.tableColumns}
+        timeZone={props.timeZone}
+        onLastChunk={onLastChunk}
+        renderEnd={renderEnd}
+      />
+    </div>
+  )
 }
 
 const stateToProps = (state: State) => ({
@@ -132,8 +132,7 @@ const stateToProps = (state: State) => ({
   tableColumns: getCurrentTableColumns(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
-  tuples: getTuples(state),
-  logs: getLogs(state),
+  results: getResults(state),
   program: getPrevSearchProgram(state),
   space: getCurrentSpace(state)
 })

@@ -17,6 +17,7 @@ export function fetchSpace(name: string): Thunk {
 
 export function fetchLookytalkVersions(): Thunk {
   return (d, g, boom) =>
+    // $FlowFixMe
     boom.serverVersion().then(({lookytalk}) => ({
       server: lookytalk,
       client: boom.clientVersion().lookytalk

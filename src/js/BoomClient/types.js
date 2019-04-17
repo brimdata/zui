@@ -1,5 +1,8 @@
 /* @flow */
 
+import type {Descriptors, Tuples} from "../types"
+import type {EpochObj} from "../lib/Time"
+
 export type ClientOptions = $Shape<RequiredClientOptions>
 
 export type RequiredClientOptions = {
@@ -51,5 +54,37 @@ export type PacketArgs = {
 }
 
 export type Span = [Date, Date]
-
 export type FetchAdapter = (RequestOptions, ClientOptions) => Promise<*>
+
+type SearchDescriptorsPayload = {
+  type: "SearchDescriptors",
+  descriptors: Descriptors
+}
+
+type SearchTuplesPayload = {
+  type: "SearchTuples",
+  tuples: Tuples,
+  channel_id: number
+}
+
+type SearchEndPayload = {
+  type: "SearchEnd"
+}
+
+type SearchStatsPayload = {
+  type: "SearchStats",
+  start_time: EpochObj,
+  update_time: EpochObj,
+  stats: {
+    bytes_matched: number,
+    bytes_read: number,
+    tuples_matched: number,
+    tuples_read: number
+  }
+}
+
+export type BoomPayload =
+  | SearchDescriptorsPayload
+  | SearchTuplesPayload
+  | SearchStatsPayload
+  | SearchEndPayload

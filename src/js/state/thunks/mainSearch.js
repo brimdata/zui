@@ -2,10 +2,11 @@
 
 import type {Thunk} from "../reducers/types"
 import {cancelBoomSearches, issueBoomSearch} from "./boomSearches"
-import {clearAnalysis, clearLogs, recordSearch} from "../actions"
+import {clearResults} from "../results/actions"
 import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getSearchRecord} from "../selectors/searchRecord"
+import {recordSearch} from "../actions"
 import {updateTab} from "./view"
 import {validateProgram} from "./searchBar"
 import SearchFactory from "../../models/searches/SearchFactory"
@@ -26,8 +27,7 @@ export const fetchMainSearch = ({
   }
 
   dispatch(cancelBoomSearches("viewer"))
-  dispatch(clearLogs())
-  dispatch(clearAnalysis())
+  dispatch(clearResults())
 
   const program = getSearchProgram(state)
   const innerSpan = getInnerTimeWindow(state)

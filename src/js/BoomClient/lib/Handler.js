@@ -1,5 +1,8 @@
 /* @flow */
 
+import type {BoomPayload} from "../types"
+import {isNumber} from "../../lib/is"
+
 export default class Handler {
   abortFunc: Function
   channelCallbacks: {[number]: Function[]}
@@ -79,12 +82,12 @@ export default class Handler {
     }
   }
 
-  receive(payload: *) {
+  receive(payload: BoomPayload) {
     if (this.isAborted) return
 
     this.eachCallbacks.forEach((cb) => cb(payload))
 
-    if ("channel_id" in payload) {
+    if (payload.type === "SearchTuples") {
       this.channelCallback(payload.channel_id, payload)
     }
   }

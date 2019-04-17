@@ -14,6 +14,7 @@ import logViewer from "./logViewer"
 import logs from "./logs"
 import notifications from "./notifications"
 import packets from "./packets"
+import resultsReducer from "../results/reducer"
 import searchBar from "./searchBar"
 import searchHistory from "./searchHistory"
 import spaces from "./spaces"
@@ -24,6 +25,7 @@ import view from "./view"
 import whois from "./whois"
 
 export default combineReducers<*, *>({
+  results: resultsReducer,
   investigation,
   correlations,
   logs,

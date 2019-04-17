@@ -13,6 +13,7 @@ import type {LogDetails} from "./logDetails"
 import type {LogViewer} from "./logViewer"
 import type {Logs} from "./logs"
 import type {Notifications} from "./notifications"
+import type {ResultsState} from "../results/types"
 import type {SearchBar} from "./searchBar"
 import type {SearchHistory} from "./searchHistory"
 import type {Spaces} from "./spaces"
@@ -23,6 +24,7 @@ import type {Whois} from "./whois"
 import BoomClient from "../../BoomClient"
 
 export type State = {
+  results: ResultsState,
   correlations: Correlations,
   analysis: Analysis,
   histogram: Histogram,
@@ -45,8 +47,8 @@ export type State = {
 
 export type GetState = () => State
 export type Thunk = (Dispatch, GetState, BoomClient) => any
-export type Action = {type: string}
-export type Dispatch = (Action | Thunk) => *
+export type Dispatch = (*) => *
+export type Action = Object
 export type Api = BoomClient
 export type DispatchProps = {|dispatch: Dispatch|}
 export type Store = ReduxStore<State, *>

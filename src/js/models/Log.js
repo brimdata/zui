@@ -3,7 +3,7 @@
 import isEqual from "lodash/isEqual"
 import md5 from "md5"
 
-import type {Descriptor, Tuple} from "../types"
+import type {Descriptor, Tuple, TupleSet} from "../types"
 import {inBounds} from "../lib/Array"
 import Field from "./Field"
 import FieldFactory from "./FieldFactory"
@@ -16,6 +16,10 @@ type BuildArgs = {
 export default class Log {
   tuple: Tuple
   descriptor: Descriptor
+
+  static fromTupleSet({tuples, descriptors}: TupleSet) {
+    return tuples.map((t) => new Log(t, descriptors[t[0]]))
+  }
 
   static buildAll(
     tuples: Tuple[],

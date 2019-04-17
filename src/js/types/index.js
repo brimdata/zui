@@ -35,6 +35,7 @@ export type Descriptor = Column[]
 export type Descriptors = {[string]: Descriptor}
 export type Tuple = string[]
 export type Tuples = Tuple[]
+export type TupleSet = {descriptors: Descriptors, tuples: Tuples}
 
 export type ViewerDimens = {
   rowHeight: number,

@@ -2,12 +2,13 @@
 
 import throttle from "lodash/throttle"
 
+import type {BoomPayload} from "../../BoomClient/types"
 import type {Dispatch} from "../../state/reducers/types"
 import {PER_PAGE} from "../../state/reducers/logViewer"
-import type {Payload} from "../../types/payloads"
+import {accumResults} from "../../lib/accumResults"
 import {addHeadProc} from "../../lib/Program"
-import {discoverDescriptors} from "../../state/thunks/descriptors"
-import {receiveLogTuples, setMoreAhead, spliceLogs} from "../../state/actions"
+import {receiveResults} from "../../state/results/actions"
+import {setMoreAhead, spliceLogs} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
 import Handler from "../../BoomClient/lib/Handler"
 
@@ -19,12 +20,11 @@ export default class LogSearch extends BaseSearch {
   receiveData(handler: Handler, dispatch: Dispatch) {
     // Page Receiver
     let count = 0
-    handler.channel(0, (payload: Payload) => {
+    handler.each((payload: BoomPayload) => {
       switch (payload.type) {
-        case "SearchResult":
+        case "SearchTuples":
           if (count === 0) dispatch(spliceLogs())
-
-          count += payload.results.tuples.length
+          count += payload.tuples.length
           break
         case "SearchEnd":
           dispatch(setMoreAhead(count >= PER_PAGE))
@@ -33,33 +33,23 @@ export default class LogSearch extends BaseSearch {
     })
 
     // Logs Receiver
-    const THROTTLE_DELAY = 100
-    let buffer = []
-
-    const dispatchNow = () => {
-      if (buffer.length !== 0) {
-        dispatch(discoverDescriptors(buffer))
-        dispatch(receiveLogTuples(buffer))
-        buffer = []
-      }
-    }
-
-    const dispatchSteady = throttle(dispatchNow, THROTTLE_DELAY, {
-      leading: false
-    })
+    let accum = accumResults()
+    let dispatchNow = () => dispatch(receiveResults(accum.results))
+    let dispatchSteady = throttle(dispatchNow, 100, {leading: false})
 
     handler
-      .channel(0, (payload: Payload) => {
+      .each((payload: BoomPayload) => {
         switch (payload.type) {
+          case "SearchDescriptors":
+            accum.addDescriptors(payload.descriptors)
+            break
+          case "SearchTuples":
+            accum.addTuples(payload.tuples)
+            dispatchSteady()
+            break
           case "SearchEnd":
             dispatchSteady.cancel()
             dispatchNow()
-            break
-          case "SearchResult":
-            if (payload.results.tuples.length) {
-              buffer = [...buffer, ...payload.results.tuples]
-              dispatchSteady()
-            }
             break
         }
       })
