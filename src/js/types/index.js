@@ -29,15 +29,12 @@ export type TableColumn = {
   position: number
 }
 
-export type ColumnSettingsMap = {
-  [string]: ColumnSetting
-}
-
+export type ColumnSettingsMap = {[string]: ColumnSetting}
 export type Column = {type: string, name: string}
-
 export type Descriptor = Column[]
-
+export type Descriptors = {[string]: Descriptor}
 export type Tuple = string[]
+export type Tuples = Tuple[]
 
 export type ViewerDimens = {
   rowHeight: number,
