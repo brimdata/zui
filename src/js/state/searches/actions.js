@@ -2,11 +2,13 @@
 import type {
   SEARCHES_CLEAR,
   SEARCH_REGISTER,
+  SEARCH_RESULTS,
   SEARCH_STATS,
   SEARCH_STATUS,
+  SearchResults,
+  SearchTag,
   SearchStats,
-  SearchStatus,
-  SearchTag
+  SearchStatus
 } from "./types"
 import Handler from "../../BoomClient/lib/Handler"
 import createSearchObject from "./createSearchObject"
@@ -24,13 +26,35 @@ export function setSearchStatus(
   name: string,
   status: SearchStatus
 ): SEARCH_STATUS {
-  return {type: "SEARCH_STATUS", name, status}
+  return {
+    type: "SEARCH_STATUS",
+    name,
+    status
+  }
 }
 
 export function setSearchStats(name: string, stats: SearchStats): SEARCH_STATS {
-  return {type: "SEARCH_STATS", name, stats}
+  return {
+    type: "SEARCH_STATS",
+    name,
+    stats
+  }
+}
+
+export function appendSearchResults(
+  name: string,
+  results: SearchResults
+): SEARCH_RESULTS {
+  return {
+    type: "SEARCH_RESULTS",
+    name,
+    results
+  }
 }
 
 export function clearSearches(tag?: SearchTag): SEARCHES_CLEAR {
-  return {type: "SEARCHES_CLEAR", tag}
+  return {
+    type: "SEARCHES_CLEAR",
+    tag
+  }
 }

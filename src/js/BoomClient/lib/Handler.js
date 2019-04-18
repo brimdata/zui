@@ -1,7 +1,6 @@
 /* @flow */
 
 import type {BoomPayload} from "../types"
-import {isNumber} from "../../lib/is"
 
 export default class Handler {
   abortFunc: Function

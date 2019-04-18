@@ -3,13 +3,20 @@
 import type {
   SEARCHES_CLEAR,
   SEARCH_REGISTER,
+  SEARCH_RESULTS,
   SEARCH_STATS,
   SEARCH_STATUS,
   SearchesState
 } from "./types"
 import {deleteIf} from "../../stdlib/object"
+import mergeResults from "./mergeResults"
 
-type Action = SEARCH_REGISTER | SEARCH_STATS | SEARCH_STATUS | SEARCHES_CLEAR
+type Action =
+  | SEARCH_REGISTER
+  | SEARCH_STATS
+  | SEARCH_STATUS
+  | SEARCHES_CLEAR
+  | SEARCH_RESULTS
 
 const init = {}
 
@@ -32,6 +39,15 @@ export default function(state: SearchesState = init, action: Action) {
         ...state,
         [action.name]: {...state[action.name], status: action.status}
       }
+    case "SEARCH_RESULTS":
+      var {name, results} = action
+      var search = state[action.name]
+      if (!search) throwUpdateError(action.name)
+
+      return {
+        ...state,
+        [name]: {...search, results: mergeResults(search.results, results)}
+      }
     case "SEARCHES_CLEAR":
       var tag = action.tag
       if (!tag) return {...init}
@@ -40,6 +56,7 @@ export default function(state: SearchesState = init, action: Action) {
       return state
   }
 }
+
 //
 // export const james = createReducer(initialState, {
 //   BOOM_SEARCHES_REGISTER: (state, {search}) => ({

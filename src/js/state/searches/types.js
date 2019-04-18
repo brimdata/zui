@@ -18,7 +18,7 @@ export type SearchStats = {
 }
 
 export type SearchResults = {
-  tuples: {[number]: Tuples},
+  tuples: {[string]: Tuples},
   descriptors: Descriptors
 }
 
@@ -46,6 +46,12 @@ export type SEARCH_STATS = {
   type: "SEARCH_STATS",
   name: string,
   stats: SearchStats
+}
+
+export type SEARCH_RESULTS = {
+  type: "SEARCH_RESULTS",
+  name: string,
+  results: SearchResults
 }
 
 export type SEARCHES_CLEAR = {

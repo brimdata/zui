@@ -1,6 +1,7 @@
 /* @flow */
 
 import {
+  appendSearchResults,
   clearSearches,
   registerSearch,
   setSearchStats,
@@ -88,5 +89,17 @@ describe("searches reducer", () => {
     let searches = getSearches(store.getState())
 
     expect(Object.keys(searches)).toHaveLength(1)
+  })
+
+  test("search results", () => {
+    let results = {
+      descriptors: {"1": [{name: "_td", type: "string"}]},
+      tuples: {"0": [["1"]]}
+    }
+
+    store.dispatch(appendSearchResults("Histogram", results))
+    let search = getSearch(store.getState(), "Histogram")
+
+    expect(search.results).toEqual(results)
   })
 })

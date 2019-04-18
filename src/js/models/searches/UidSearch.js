@@ -2,10 +2,8 @@
 
 import type {BoomPayload, Span} from "../../BoomClient/types"
 import type {Dispatch} from "../../state/reducers/types"
-import type {Tuple} from "../../types"
 import {accumTupleSet} from "../../lib/accumResults"
 import {addHeadProc} from "../../lib/Program"
-import {discoverDescriptors} from "../../state/thunks/descriptors"
 import {setCorrelation} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
 import Handler from "../../BoomClient/lib/Handler"

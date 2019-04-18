@@ -1,11 +1,8 @@
 /* @flow */
 
-import {PER_PAGE} from "../reducers/logViewer"
 import {
   changeSearchBarInput,
   setCurrentSpaceName,
-  setInnerTimeWindow,
-  setOuterTimeWindow,
   setSpaceInfo
 } from "../actions"
 import {fetchMainSearch} from "./mainSearch"
