@@ -17,6 +17,7 @@ import packets from "./packets"
 import resultsReducer from "../results/reducer"
 import searchBar from "./searchBar"
 import searchHistory from "./searchHistory"
+import searchesReducer from "../searches/reducer"
 import spaces from "./spaces"
 import starredLogs from "./starredLogs"
 import tableColumnSets from "./tableColumnSets"
@@ -25,6 +26,7 @@ import view from "./view"
 import whois from "./whois"
 
 export default combineReducers<*, *>({
+  searches: searchesReducer,
   results: resultsReducer,
   investigation,
   correlations,
