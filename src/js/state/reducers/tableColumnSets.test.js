@@ -16,17 +16,34 @@ let store
 beforeEach(() => {
   store = initTestStore()
 })
+describe("TableColumnSets", () => {
+  test("get initial state", () => {
+    const state = store.getState()
+    expect(getTableColumnSets(state)).toEqual({})
+  })
 
-test("get initial state", () => {
-  const state = store.getState()
-  expect(getTableColumnSets(state)).toEqual({})
-})
+  test("Bulk update column settings", () => {
+    const state = store.dispatchAll([
+      updateTableColumns(tableId, {
+        "_path:string": {
+          width: 22,
+          isVisible: true,
+          position: 0
+        },
+        "ts:time": {
+          width: 200,
+          isVisible: false,
+          position: 1
+        }
+      }),
+      updateTableColumns(tableId, {
+        "_path:string": {width: 100}
+      })
+    ])
 
-test("Bulk update column settings", () => {
-  const state = store.dispatchAll([
-    updateTableColumns(tableId, {
+    expect(getTableColumnSets(state)[tableId]).toEqual({
       "_path:string": {
-        width: 22,
+        width: 100,
         isVisible: true,
         position: 0
       },
@@ -35,91 +52,75 @@ test("Bulk update column settings", () => {
         isVisible: false,
         position: 1
       }
-    }),
-    updateTableColumns(tableId, {
-      "_path:string": {width: 100}
     })
-  ])
-
-  expect(getTableColumnSets(state)[tableId]).toEqual({
-    "_path:string": {
-      width: 100,
-      isVisible: true,
-      position: 0
-    },
-    "ts:time": {
-      width: 200,
-      isVisible: false,
-      position: 1
-    }
   })
-})
 
-test("hide one column", () => {
-  const state = store.dispatchAll([
-    hideColumn(tableId, {name: "a", type: "string"})
-  ])
+  test("hide one column", () => {
+    const state = store.dispatchAll([
+      hideColumn(tableId, {name: "a", type: "string"})
+    ])
 
-  const table = getTableColumnSets(state)[tableId]
+    const table = getTableColumnSets(state)[tableId]
 
-  expect(table["a:string"]).toEqual({isVisible: false})
-})
+    expect(table["a:string"]).toEqual({isVisible: false})
+  })
 
-test("show one column", () => {
-  const state = store.dispatchAll([
-    hideColumn(tableId, {name: "a", type: "string"}),
-    showColumn(tableId, {name: "a", type: "string"})
-  ])
+  test("show one column", () => {
+    const state = store.dispatchAll([
+      hideColumn(tableId, {name: "a", type: "string"}),
+      showColumn(tableId, {name: "a", type: "string"})
+    ])
 
-  const table = getTableColumnSets(state)[tableId]
+    const table = getTableColumnSets(state)[tableId]
 
-  expect(table["a:string"]).toEqual({isVisible: true})
-})
+    expect(table["a:string"]).toEqual({isVisible: true})
+  })
 
-test("show all columns", () => {
-  const tableColumns = new TableColumns(
-    tableId,
-    [
-      {name: "a", type: "string"},
-      {name: "b", type: "string"},
-      {name: "c", type: "string"}
-    ],
-    {
-      "a:string": {isVisible: false},
-      "b:string": {isVisible: false},
-      "c:string": {isVisible: false}
-    }
-  )
+  test("show all columns", () => {
+    const tableColumns = new TableColumns(
+      tableId,
+      [
+        {name: "a", type: "string"},
+        {name: "b", type: "string"},
+        {name: "c", type: "string"}
+      ],
+      {
+        "a:string": {isVisible: false},
+        "b:string": {isVisible: false},
+        "c:string": {isVisible: false}
+      }
+    )
 
-  const state = store.dispatchAll([showAllColumns(tableColumns)])
+    const state = store.dispatchAll([showAllColumns(tableColumns)])
 
-  const table = getTableColumnSets(state)[tableId]
+    const table = getTableColumnSets(state)[tableId]
 
-  expect(table["a:string"]).toEqual({isVisible: true})
-  expect(table["b:string"]).toEqual({isVisible: true})
-  expect(table["c:string"]).toEqual({isVisible: true})
-})
+    expect(table["a:string"]).toEqual({isVisible: true})
+    expect(table["b:string"]).toEqual({isVisible: true})
+    expect(table["c:string"]).toEqual({isVisible: true})
+  })
 
-test("hide all columns", () => {
-  const tableColumns = new TableColumns(
-    tableId,
-    [
-      {name: "a", type: "string"},
-      {name: "b", type: "string"},
-      {name: "c", type: "string"}
-    ],
-    {
-      "a:string": {isVisible: true},
-      "b:string": {isVisible: true},
-      "c:string": {isVisible: true}
-    }
-  )
+  test("hide all columns", () => {
+    const tableColumns = new TableColumns(
+      tableId,
+      [
+        {name: "a", type: "string"},
+        {name: "b", type: "string"},
+        {name: "c", type: "string"}
+      ],
+      {
+        "a:string": {isVisible: true},
+        "b:string": {isVisible: true},
+        "c:string": {isVisible: true}
+      }
+    )
 
-  const state = store.dispatchAll([hideAllColumns(tableColumns)])
+    const state = store.dispatchAll([hideAllColumns(tableColumns)])
 
-  const table = getTableColumnSets(state)[tableId]
+    const table = getTableColumnSets(state)[tableId]
 
-  expect(table["a:string"]).toEqual({isVisible: false})
-  expect(table["b:string"]).toEqual({isVisible: false})
-  expect(table["c:string"]).toEqual({isVisible: false})
+    expect(table["a:string"]).toEqual({isVisible: false})
+    expect(table["b:string"]).toEqual({isVisible: false})
+    expect(table["c:string"]).toEqual({isVisible: false})
+  })
 })
