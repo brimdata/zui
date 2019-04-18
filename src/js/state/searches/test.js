@@ -8,6 +8,7 @@ import {
   setSearchStatus
 } from "./actions"
 import {getSearch, getSearches} from "./selector"
+import {mockSearchResults} from "../../test/mockSearchResults"
 import Handler from "../../BoomClient/lib/Handler"
 import initTestStore from "../../test/initTestStore"
 
@@ -92,10 +93,7 @@ describe("searches reducer", () => {
   })
 
   test("search results", () => {
-    let results = {
-      descriptors: {"1": [{name: "_td", type: "string"}]},
-      tuples: {"0": [["1"]]}
-    }
+    let results = mockSearchResults()
 
     store.dispatch(appendSearchResults("Histogram", results))
     let search = getSearch(store.getState(), "Histogram")
