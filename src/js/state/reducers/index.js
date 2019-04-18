@@ -2,7 +2,6 @@
 
 import {combineReducers} from "redux"
 
-import {pagesReducer} from "../pages"
 import analysis from "./analysis"
 import boomSearches from "./boomSearches"
 import boomd from "./boomd"
@@ -27,7 +26,6 @@ import whois from "./whois"
 
 export default combineReducers<*, *>({
   results: resultsReducer,
-  pages: pagesReducer,
   investigation,
   correlations,
   logs,
