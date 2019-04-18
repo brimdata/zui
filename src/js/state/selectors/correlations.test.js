@@ -15,10 +15,12 @@ describe("#getLogCorrelations", () => {
   const space = "default"
   const dnsLog = dns()
   const connLog = conn()
-  const md5Result = {
-    descriptor: [{name: "md5", type: "string"}, {name: "count", type: "count"}],
-    tuples: [["asdfasdfasf", "200"]]
-  }
+  const md5Result = [
+    new Log(
+      ["asdfasdfasf", "200"],
+      [{name: "md5", type: "string"}, {name: "count", type: "count"}]
+    )
+  ]
 
   let store, state
 
@@ -30,7 +32,7 @@ describe("#getLogCorrelations", () => {
       setCurrentSpaceName(space),
       pushLogDetail(connLog),
 
-      setCorrelation(connLog.id(), "uid", [dnsLog.tuple, connLog.tuple]),
+      setCorrelation(connLog.id(), "uid", [dns(), conn()]),
       setCorrelation(connLog.id(), "md5", md5Result)
     ])
   })
@@ -40,9 +42,6 @@ describe("#getLogCorrelations", () => {
   })
 
   test("md5 correlations", () => {
-    expect(getLogCorrelations(state)).toHaveProperty(
-      "md5",
-      Log.build(md5Result)
-    )
+    expect(getLogCorrelations(state)).toHaveProperty("md5", md5Result)
   })
 })

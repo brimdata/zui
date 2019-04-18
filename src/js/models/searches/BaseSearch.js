@@ -1,8 +1,8 @@
 /* @flow */
 
+import type {BoomPayload} from "../../BoomClient/types"
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {Dispatch} from "../../state/reducers/types"
-import type {Payload} from "../../types/payloads"
 import {setBoomSearchStats, setBoomSearchStatus} from "../../state/actions"
 import Handler from "../../BoomClient/lib/Handler"
 
@@ -38,7 +38,7 @@ export default class BaseSearch {
     }
 
     handler
-      .each((payload: Payload) => {
+      .each((payload: BoomPayload) => {
         if (payload.type === "SearchStats") {
           const startTime = boomTime(payload.start_time)
           const updateTime = boomTime(payload.update_time)

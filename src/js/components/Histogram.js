@@ -5,11 +5,11 @@ import React, {useState} from "react"
 
 import type {DateTuple} from "../lib/TimeWindow"
 import type {DispatchProps, State} from "../state/reducers/types"
-import type {Results} from "../types"
 import {buildMainHistogramChart} from "../charts/mainHistogram"
 import {getHistogramData} from "../state/reducers/histogram"
 import {getHistogramStatus} from "../state/selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../state/reducers/timeWindow"
+import Log from "../models/Log"
 import SVGChart from "./SVGChart"
 import dispatchToProps from "../lib/dispatchToProps"
 
@@ -19,7 +19,7 @@ type OwnProps = {|
 |}
 
 type StateProps = {|
-  results: Results,
+  results: Log[],
   timeWindow: DateTuple,
   innerTimeWindow: ?DateTuple,
   isFetching: boolean

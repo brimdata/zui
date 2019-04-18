@@ -34,13 +34,17 @@ export const saveState = (state: State) => {
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem(KEY)
-    if (typeof serializedState === "string") {
+    if (
+      typeof serializedState === "string" &&
+      serializedState.startsWith("{")
+    ) {
       const json = JSON.parse(serializedState)
       return deserialize(json)
     } else {
       return undefined
     }
-  } catch (_err) {
+  } catch (err) {
+    console.error(err)
     return undefined
   }
 }
@@ -57,6 +61,6 @@ export default (store: *) => {
   store.subscribe(
     throttle(() => {
       saveState(store.getState())
-    }, 1000)
+    }, 3000)
   )
 }

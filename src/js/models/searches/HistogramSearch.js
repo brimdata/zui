@@ -2,12 +2,13 @@
 
 import throttle from "lodash/throttle"
 
+import type {BoomPayload} from "../../BoomClient/types"
 import type {Dispatch} from "../../state/reducers/types"
-import type {Payload} from "../../types/payloads"
-import {accumResults} from "../../lib/accumulator"
+import {accumTupleSet} from "../../lib/accumResults"
 import {clearHistogram, histogramSearchResult} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
 import Handler from "../../BoomClient/lib/Handler"
+import Log from "../Log"
 import histogramInterval from "../../lib/histogramInterval"
 
 const BOOM_INTERVALS = {
@@ -31,20 +32,22 @@ export default class HistogramSearch extends BaseSearch {
 
   receiveData(handler: Handler, dispatch: Dispatch) {
     dispatch(clearHistogram())
-    let accum = accumResults()
+    let accum = accumTupleSet()
 
     const dispatchNow = () => {
-      if (accum.data.tuples.length === 0) return
-      dispatch(histogramSearchResult(accum.data))
+      dispatch(histogramSearchResult(Log.fromTupleSet(accum.getTupleSet())))
     }
 
     const dispatchSteady = throttle(dispatchNow, 50, {leading: false})
 
     handler
-      .channel(0, (payload: Payload) => {
+      .each((payload: BoomPayload) => {
         switch (payload.type) {
-          case "SearchResult":
-            accum.handle(payload.results)
+          case "SearchDescriptors":
+            accum.addDescriptors(payload.descriptors)
+            break
+          case "SearchTuples":
+            accum.addTuples(payload.tuples)
             dispatchSteady()
             break
           case "SearchEnd":

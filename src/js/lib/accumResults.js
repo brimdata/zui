@@ -1,33 +1,36 @@
 /* @flow */
 
 import type {Descriptors, TupleSet, Tuples} from "../types"
+import {concat} from "./Array"
 
 export function accumTupleSet() {
-  let results = initTupleSet()
+  let descriptors: Descriptors = {}
+  let tuples: {[number]: Tuples} = {}
 
-  function clear() {
-    results = initTupleSet()
+  function clearTuples() {
+    tuples = {}
   }
 
-  function addDescriptors(descriptors: Descriptors) {
-    results.descriptors = {...results.descriptors, ...descriptors}
+  function addDescriptors(newDesc: Descriptors) {
+    descriptors = {...descriptors, ...newDesc}
   }
 
-  function addTuples(tuples: Tuples) {
-    results.tuples = [...results.tuples, ...tuples]
+  function addTuples(newTuples: Tuples, channel: number = 0) {
+    if (!tuples[channel]) tuples[channel] = []
+    tuples[channel] = concat(tuples[channel], newTuples)
+  }
+
+  function getTupleSet(channel: number = 0): TupleSet {
+    return {
+      descriptors,
+      tuples: tuples[channel] || []
+    }
   }
 
   return {
-    results,
+    getTupleSet,
     addDescriptors,
     addTuples,
-    clear
-  }
-}
-
-function initTupleSet(): TupleSet {
-  return {
-    tuples: [],
-    descriptors: {}
+    clearTuples
   }
 }

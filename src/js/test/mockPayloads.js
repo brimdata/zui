@@ -1,26 +1,16 @@
 /* @flow */
 
-export function histogramPayload() {
-  function result() {
-    return {
-      channel_id: 0,
-      type: "SearchResult",
-      results: {
-        descriptor: [
-          {name: "ts", type: "time"},
-          {name: "count", type: "count"}
-        ],
-        tuples: [["9999", "1"], ["9998", "2"]]
-      }
-    }
-  }
+import Log from "../models/Log"
 
-  function end() {
-    return {
-      channel_id: 0,
-      type: "SearchEnd"
-    }
-  }
+export function histogramLogs() {
+  let descriptor = [
+    {name: "ts", type: "time"},
+    {name: "_path", type: "string"},
+    {name: "count", type: "count"}
+  ]
 
-  return {result, end}
+  return [
+    new Log(["9999", "dns", "1"], descriptor),
+    new Log(["9998", "conn", "2"], descriptor)
+  ]
 }

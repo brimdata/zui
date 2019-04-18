@@ -18,6 +18,7 @@ import type {TimeWindow} from "./reducers/timeWindow"
 import {isArray} from "../lib/is"
 import Field from "../models/Field"
 import Handler from "../BoomClient/lib/Handler"
+import Log from "../models/Log"
 import TableColumns from "../models/TableColumns"
 import columnKey from "../lib/columnKey"
 
@@ -81,7 +82,7 @@ export const clearBoomSearches = (tag?: string) => ({
   tag
 })
 
-export const setCorrelation = (key: string, name: string, data: *) => ({
+export const setCorrelation = (key: string, name: string, data: Log[]) => ({
   type: "CORRELATION_SET",
   key,
   name,
@@ -132,7 +133,7 @@ export const removeFilterTreeNode = (node: Node) => ({
   node
 })
 
-export const histogramSearchResult = (data: Object) => ({
+export const histogramSearchResult = (data: Log[]) => ({
   type: "HISTOGRAM_SEARCH_RESULT",
   data
 })

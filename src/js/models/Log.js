@@ -18,7 +18,12 @@ export default class Log {
   descriptor: Descriptor
 
   static fromTupleSet({tuples, descriptors}: TupleSet) {
-    return tuples.map((t) => new Log(t, descriptors[t[0]]))
+    return tuples.map((t) => {
+      let [td, ...tuple] = t
+      let [_, ...descriptor] = descriptors[td]
+
+      return new Log(tuple, descriptor)
+    })
   }
 
   static buildAll(

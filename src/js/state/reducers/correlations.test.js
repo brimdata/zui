@@ -5,11 +5,12 @@ import {
   clearCorrelations,
   setCorrelation
 } from "../actions"
+import {conn} from "../../test/mockLogs"
 import {getCorrelations} from "./correlations"
 import initTestStore from "../../test/initTestStore"
 
 const store = initTestStore()
-const hash = {descriptor: [], tuples: []}
+const hash = conn()
 const uid = []
 const get = (key) => getCorrelations(store.getState())[key]
 

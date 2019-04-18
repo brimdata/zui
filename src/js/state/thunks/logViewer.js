@@ -20,9 +20,9 @@ export const fetchAhead = (): Thunk => (dispatch, getState) => {
 
   if (!isEmpty(logs)) {
     const index = indexOfLastChange(logs, (log) => log.get("ts"))
-    const prevTs = logs[index].getField("ts").toDate()
 
     if (index >= 0) {
+      const prevTs = logs[index].getField("ts").toDate()
       searchSpan[1] = add(prevTs, 1, "ms")
       spliceIndex = index + 1
     }

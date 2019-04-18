@@ -1,7 +1,8 @@
 /* @flow */
 
+import type {BoomPayload, Span} from "../../BoomClient/types"
 import type {Dispatch} from "../../state/reducers/types"
-import type {Span} from "../../BoomClient/types"
+import {accumTupleSet} from "../../lib/accumResults"
 import {
   filenameCorrelation,
   md5Correlation,
@@ -13,7 +14,6 @@ import {setCorrelation} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
 import Handler from "../../BoomClient/lib/Handler"
 import Log from "../Log"
-import accumAnalytics from "../../lib/accumAnalytics"
 
 export default class Md5Search extends BaseSearch {
   log: Log
@@ -34,14 +34,40 @@ export default class Md5Search extends BaseSearch {
   }
 
   receiveData(handler: Handler, dispatch: Dispatch) {
-    const key = this.log.id()
-    const makeCallback = (name: string) =>
-      accumAnalytics((data) => dispatch(setCorrelation(key, name, data)))
+    let key = this.log.id()
+    let accum = accumTupleSet()
 
-    handler
-      .channel(0, makeCallback("tx"))
-      .channel(1, makeCallback("rx"))
-      .channel(2, makeCallback("md5"))
-      .channel(3, makeCallback("filenames"))
+    function getCorrelationName(channel) {
+      switch (channel) {
+        case 0:
+          return "tx"
+        case 1:
+          return "rx"
+        case 2:
+          return "md5"
+        case 3:
+          return "filenames"
+        default:
+          throw "Unknown Channel"
+      }
+    }
+
+    function dispatchCorrelation(channel: number) {
+      let name = getCorrelationName(channel)
+      let tupleSet = accum.getTupleSet(channel)
+      dispatch(setCorrelation(key, name, Log.fromTupleSet(tupleSet)))
+    }
+
+    handler.each((payload: BoomPayload) => {
+      switch (payload.type) {
+        case "SearchDescriptors":
+          accum.addDescriptors(payload.descriptors)
+          break
+        case "SearchTuples":
+          accum.addTuples(payload.tuples, payload.channel_id)
+          dispatchCorrelation(payload.channel_id)
+          break
+      }
+    })
   }
 }

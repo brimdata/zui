@@ -1,17 +1,16 @@
 /* @flow */
 
 import type {State} from "./types"
+import Log from "../../models/Log"
 import createReducer from "./createReducer"
 
 const initialState = {
-  data: {
-    tuples: [],
-    descriptor: []
-  },
-  error: null
+  logs: []
 }
 
-export type Histogram = typeof initialState
+export type Histogram = {
+  logs: Log[]
+}
 
 export default createReducer(initialState, {
   HISTOGRAM_CLEAR: () => ({
@@ -19,10 +18,10 @@ export default createReducer(initialState, {
   }),
   HISTOGRAM_SEARCH_RESULT: (state, {data}) => ({
     ...state,
-    data
+    logs: data
   })
 })
 
 export function getHistogramData(state: State) {
-  return state.histogram.data
+  return state.histogram.logs
 }

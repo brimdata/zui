@@ -1,15 +1,10 @@
 /* @flow */
 
+import {appendResults, spliceResults} from "../results/actions"
 import {fetchAhead} from "./logViewer"
-import {
-  receiveDescriptor,
-  receiveLogTuples,
-  setCurrentSpaceName,
-  setLogsSpliceIndex,
-  setOuterTimeWindow,
-  spliceLogs
-} from "../actions"
+import {setCurrentSpaceName, setOuterTimeWindow} from "../actions"
 import Handler from "../../BoomClient/lib/Handler"
+import Log from "../../models/Log"
 import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"
 
@@ -26,73 +21,17 @@ beforeEach(() => {
   store.dispatchAll([
     setCurrentSpaceName("default"),
     setOuterTimeWindow([new Date(0), new Date(10 * 1000)]),
-    receiveDescriptor("default", "1", descriptor),
-    receiveLogTuples(tuples)
+    appendResults(tuples.map((t) => new Log(t, descriptor)))
   ])
   store.clearActions()
 })
 
-test("#fetchAhead dispatches is fetching true", () => {
+test("#fetchAhead dispatches splice", () => {
   store.dispatch(fetchAhead())
 
   expect(store.getActions()).toEqual(
-    expect.arrayContaining([
-      {
-        type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET",
-        value: true
-      }
-    ])
+    expect.arrayContaining([{type: "RESULTS_SPLICE", index: 2}])
   )
-})
-
-test("#fetchAhead dispatches splice and new logs", () => {
-  store.dispatch(fetchAhead())
-  handler.channelCallback(0, {
-    type: "SearchResult",
-    results: {tuples: [["1", "300"], ["1", "400"], ["1", "500"]]}
-  })
-  handler.channelCallback(0, {type: "SearchEnd"})
-
-  expect(store.getActions()).toEqual(
-    expect.arrayContaining([
-      {type: "LOGS_SPLICE_INDEX_SET", index: 2},
-      {
-        type: "LOGS_RECEIVE",
-        tuples: [["1", "300"], ["1", "400"], ["1", "500"]]
-      }
-    ])
-  )
-})
-
-test("#fetchAhead sets more ahead to false if tuple count < per page", () => {
-  store.dispatch(fetchAhead())
-  handler.channelCallback(0, {
-    type: "SearchResult",
-    results: {tuples: [["1", "300"], ["1", "400"], ["1", "500"]]}
-  })
-  handler.channelCallback(0, {type: "SearchEnd"})
-
-  expect(store.getActions()).toEqual(
-    expect.arrayContaining([{type: "LOG_VIEWER_MORE_AHEAD_SET", value: false}])
-  )
-})
-
-test("#fetchAhead sets isFetching to false when done", (done) => {
-  store.dispatch(fetchAhead())
-  handler.channelCallback(0, {
-    type: "SearchResult",
-    results: {tuples: [["1", "300"], ["1", "400"], ["1", "500"]]}
-  })
-  handler.channelCallback(0, {type: "SearchEnd"})
-
-  handler.onDone()
-  setTimeout(() => {
-    expect(store.getActions()).toContainEqual({
-      type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET",
-      value: false
-    })
-    done()
-  }, 501)
 })
 
 test("#fetchAhead adds 1ms to ts of last change", () => {
@@ -110,8 +49,7 @@ test("#fetchAhead adds 1ms to ts of last change", () => {
 
 test("#fetchAhead when there is only 1 event", () => {
   const search = jest.spyOn(boom, "search")
-  store.dispatch(setLogsSpliceIndex(1))
-  store.dispatch(spliceLogs())
+  store.dispatch(spliceResults(1))
   store.dispatch(fetchAhead())
 
   expect(search).toHaveBeenCalledWith(

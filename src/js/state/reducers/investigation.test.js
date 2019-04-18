@@ -7,7 +7,7 @@ import {
   recordSearch
 } from "../actions"
 import {getCurrentFinding, getInvestigation} from "./investigation"
-import {histogramPayload} from "../../test/mockPayloads"
+import {histogramLogs} from "../../test/mockPayloads"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -45,17 +45,16 @@ test("new finding", () => {
 })
 
 test("when the histogram runs it saves as a chart", () => {
-  let payload = histogramPayload()
   let state = store.dispatchAll([
     createFinding({ts: new Date()}),
-    histogramSearchResult(payload.result().results)
+    histogramSearchResult(histogramLogs())
   ])
 
   expect(getCurrentFinding(state)).toEqual(
     expect.objectContaining({
       chart: {
         type: "Histogram",
-        results: payload.result().results
+        results: histogramLogs()
       }
     })
   )

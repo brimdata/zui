@@ -1,11 +1,8 @@
 /* @flow */
 
-import throttle from "lodash/throttle"
-
 import type {Dispatch} from "../../state/reducers/types"
-import type {Payload} from "../../types/payloads"
 import {addHeadProc} from "../../lib/Program"
-import {setAnalysis} from "../../state/actions"
+import {resultsHandlers} from "../../searches/resultsHandlers"
 import BaseSearch from "./BaseSearch"
 import Handler from "../../BoomClient/lib/Handler"
 
@@ -17,35 +14,8 @@ export default class AnalyticSearch extends BaseSearch {
   }
 
   receiveData(handler: Handler, dispatch: Dispatch) {
-    const THROTTLE_DELAY = 200
-    let tuples = []
-    let descriptor = []
+    let handlers = resultsHandlers(dispatch)
 
-    const dispatchNow = () => {
-      if (tuples.length !== 0) {
-        dispatch(setAnalysis(descriptor, tuples))
-        tuples = []
-      }
-    }
-
-    const dispatchSteady = throttle(dispatchNow, THROTTLE_DELAY)
-
-    handler
-      .channel(0, (payload: Payload) => {
-        switch (payload.type) {
-          case "SearchEnd":
-            dispatchSteady.cancel()
-            dispatchNow()
-            break
-          case "SearchResult":
-            tuples = [...tuples, ...payload.results.tuples]
-            descriptor = payload.results.descriptor
-            dispatchSteady()
-            break
-        }
-      })
-      .abort(() => {
-        dispatchSteady.cancel()
-      })
+    handler.each(handlers.each).abort(handlers.abort)
   }
 }
