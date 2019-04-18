@@ -2,10 +2,11 @@
 
 import type {Descriptors, TupleSet, Tuples} from "../types"
 
-export function accumResults() {
-  let results: TupleSet = {
-    tuples: [],
-    descriptors: {}
+export function accumTupleSet() {
+  let results = initTupleSet()
+
+  function clear() {
+    results = initTupleSet()
   }
 
   function addDescriptors(descriptors: Descriptors) {
@@ -19,6 +20,14 @@ export function accumResults() {
   return {
     results,
     addDescriptors,
-    addTuples
+    addTuples,
+    clear
+  }
+}
+
+function initTupleSet(): TupleSet {
+  return {
+    tuples: [],
+    descriptors: {}
   }
 }

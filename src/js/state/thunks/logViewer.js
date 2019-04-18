@@ -9,7 +9,7 @@ import {getPrevSearchProgram} from "../selectors/searchBar"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {indexOfLastChange} from "../../lib/Array"
 import {issueBoomSearch} from "./boomSearches"
-import {setIsFetchingAhead, setLogsSpliceIndex} from "../actions"
+import {spliceResults} from "../results/actions"
 import LogSearch from "../../models/searches/LogSearch"
 
 export const fetchAhead = (): Thunk => (dispatch, getState) => {
@@ -20,20 +20,19 @@ export const fetchAhead = (): Thunk => (dispatch, getState) => {
 
   if (!isEmpty(logs)) {
     const index = indexOfLastChange(logs, (log) => log.get("ts"))
+    const prevTs = logs[index].getField("ts").toDate()
+
     if (index >= 0) {
-      const to = add(logs[index].getField("ts").toDate(), 1, "ms")
-      const [from, _] = getTimeWindow(state)
-      searchSpan = [from, to]
+      searchSpan[1] = add(prevTs, 1, "ms")
       spliceIndex = index + 1
     }
   }
 
-  dispatch(setIsFetchingAhead(true))
-  dispatch(setLogsSpliceIndex(spliceIndex))
+  dispatch(spliceResults(spliceIndex))
   dispatch(
     issueBoomSearch(
       new LogSearch(getPrevSearchProgram(state), searchSpan),
       "viewer"
     )
-  ).done(() => setTimeout(() => dispatch(setIsFetchingAhead(false)), 500))
+  )
 }

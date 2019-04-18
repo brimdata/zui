@@ -79,3 +79,13 @@ export function fillWithIndex(desiredLength: number) {
   for (let i = 0; i < desiredLength; ++i) arr.push(i)
   return arr
 }
+
+export function splice(array: *[], index: number) {
+  const copy = [...array]
+  copy.splice(index)
+  return copy
+}
+
+export function concat(array1: *[], array2: *[]) {
+  return [...array1, ...array2]
+}

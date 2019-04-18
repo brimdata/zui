@@ -5,12 +5,12 @@ import throttle from "lodash/throttle"
 import type {BoomPayload} from "../../BoomClient/types"
 import type {Dispatch} from "../../state/reducers/types"
 import {PER_PAGE} from "../../state/reducers/logViewer"
-import {accumResults} from "../../lib/accumResults"
+import {accumTupleSet} from "../../lib/accumResults"
 import {addHeadProc} from "../../lib/Program"
-import {receiveResults} from "../../state/results/actions"
-import {setMoreAhead, spliceLogs} from "../../state/actions"
+import {appendResults, resultsComplete} from "../../state/results/actions"
 import BaseSearch from "./BaseSearch"
 import Handler from "../../BoomClient/lib/Handler"
+import Log from "../Log"
 
 export default class LogSearch extends BaseSearch {
   getProgram() {
@@ -18,23 +18,15 @@ export default class LogSearch extends BaseSearch {
   }
 
   receiveData(handler: Handler, dispatch: Dispatch) {
-    // Page Receiver
     let count = 0
-    handler.each((payload: BoomPayload) => {
-      switch (payload.type) {
-        case "SearchTuples":
-          if (count === 0) dispatch(spliceLogs())
-          count += payload.tuples.length
-          break
-        case "SearchEnd":
-          dispatch(setMoreAhead(count >= PER_PAGE))
-          break
-      }
-    })
+    let accum = accumTupleSet()
 
-    // Logs Receiver
-    let accum = accumResults()
-    let dispatchNow = () => dispatch(receiveResults(accum.results))
+    function dispatchNow() {
+      let logs = Log.fromTupleSet(accum.results)
+      if (logs.length) dispatch(appendResults(logs))
+      accum.clear()
+    }
+
     let dispatchSteady = throttle(dispatchNow, 100, {leading: false})
 
     handler
@@ -45,11 +37,13 @@ export default class LogSearch extends BaseSearch {
             break
           case "SearchTuples":
             accum.addTuples(payload.tuples)
+            count += payload.tuples.length
             dispatchSteady()
             break
           case "SearchEnd":
             dispatchSteady.cancel()
             dispatchNow()
+            if (count < PER_PAGE) dispatch(resultsComplete())
             break
         }
       })

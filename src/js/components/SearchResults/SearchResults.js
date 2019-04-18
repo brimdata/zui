@@ -11,7 +11,7 @@ import {
   getTimeZone
 } from "../../state/reducers/view"
 import type {Space} from "../../lib/Space"
-import type {Tuple, TupleSet, ViewerDimens} from "../../types"
+import type {ViewerDimens} from "../../types"
 import {XPhonyViewer} from "../Viewer/PhonyViewer"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
@@ -20,8 +20,10 @@ import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/selectors/tableColumnSets"
 import {getMainSearchIsFetching} from "../../state/selectors/boomSearches"
 import {getPrevSearchProgram} from "../../state/selectors/searchBar"
-import {getResults} from "../../state/results/selector"
-import {moreAhead} from "../../state/reducers/logViewer"
+import {
+  getResultLogs,
+  getResultsAreIncomplete
+} from "../../state/results/selector"
 import {viewLogDetail} from "../../state/thunks/logDetails"
 import Chunker from "../Viewer/Chunker"
 import Log from "../../models/Log"
@@ -35,10 +37,10 @@ import getEndMessage from "./getEndMessage"
 import viewerMenu from "../../rightclick/viewerMenu"
 
 type StateProps = {|
-  results: TupleSet,
+  logs: Log[],
   selectedLog: ?Log,
   timeZone: string,
-  moreAhead: boolean,
+  isIncomplete: boolean,
   isFetching: boolean,
   tableColumns: TableColumns,
   tab: ResultsTabEnum,
@@ -54,7 +56,7 @@ type OwnProps = {|
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function SearchResults(props: Props) {
-  let logs = Log.fromTupleSet(props.results)
+  let {logs} = props
 
   const dimens = buildViewerDimens({
     type: props.tableColumns.showHeader() ? "fixed" : "auto",
@@ -90,13 +92,13 @@ export default function SearchResults(props: Props) {
   }
 
   function onLastChunk() {
-    if (props.moreAhead && !props.isFetching && props.tab === "logs") {
+    if (props.isIncomplete && !props.isFetching) {
       props.dispatch(fetchAhead())
     }
   }
 
   function renderEnd() {
-    if (props.moreAhead || props.isFetching) return null
+    if (props.isIncomplete || props.isFetching) return null
     else
       return (
         <p className="end-message" style={endMessage(dimens)}>
@@ -128,11 +130,11 @@ export default function SearchResults(props: Props) {
 const stateToProps = (state: State) => ({
   tab: getResultsTab(state),
   isFetching: getMainSearchIsFetching(state),
-  moreAhead: moreAhead(state),
+  isIncomplete: getResultsAreIncomplete(state),
   tableColumns: getCurrentTableColumns(state),
   timeZone: getTimeZone(state),
   selectedLog: buildLogDetail(state),
-  results: getResults(state),
+  logs: getResultLogs(state),
   program: getPrevSearchProgram(state),
   space: getCurrentSpace(state)
 })
