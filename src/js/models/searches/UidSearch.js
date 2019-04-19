@@ -1,12 +1,8 @@
 /* @flow */
 
-import type {BoomPayload, Span} from "../../BoomClient/types"
-import type {Dispatch} from "../../state/reducers/types"
-import {accumTupleSet} from "../../lib/accumResults"
+import type {Span} from "../../BoomClient/types"
 import {addHeadProc} from "../../lib/Program"
-import {setCorrelation} from "../../state/actions"
 import BaseSearch from "./BaseSearch"
-import Handler from "../../BoomClient/lib/Handler"
 import Log from "../Log"
 
 export default class UidSearch extends BaseSearch {
@@ -19,26 +15,5 @@ export default class UidSearch extends BaseSearch {
 
   getProgram() {
     return addHeadProc(this.program, 500)
-  }
-
-  receiveData(handler: Handler, dispatch: Dispatch) {
-    const key = this.log.id()
-    let accum = accumTupleSet()
-
-    handler
-      .each((payload: BoomPayload) => {
-        switch (payload.type) {
-          case "SearchDescriptors":
-            accum.addDescriptors(payload.descriptors)
-            break
-          case "SearchTuples":
-            accum.addTuples(payload.tuples)
-            dispatch(
-              setCorrelation(key, "uid", Log.fromTupleSet(accum.getTupleSet()))
-            )
-            break
-        }
-      })
-      .error(console.error)
   }
 }

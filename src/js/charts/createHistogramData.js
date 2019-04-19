@@ -10,7 +10,7 @@ import UniqArray from "../models/UniqArray"
 import histogramInterval from "../lib/histogramInterval"
 
 export function createHistogramData(
-  results: Log[],
+  logs: Log[],
   timeWindow: Span
 ): HistogramData {
   let interval = histogramInterval(timeWindow)
@@ -19,7 +19,7 @@ export function createHistogramData(
   let keys = new UniqArray()
   let hash = new MergeHash()
 
-  results.forEach((log) => {
+  logs.forEach((log) => {
     let ts = toDate(log.get("ts"))
     let path = log.get("_path")
     let count = parseInt(log.get("count"))

@@ -1,0 +1,19 @@
+/* @flow */
+import type {BoomPayload, Span} from "../BoomClient/types"
+import type {Dispatch} from "../state/reducers/types"
+
+export type SearchCallbackMap = {
+  each?: (BoomPayload) => *,
+  error?: (string) => *,
+  abort?: () => *
+}
+
+export type SearchTemplate = {
+  name: string,
+  tag: string,
+  program: string,
+  span: Span,
+  handlers?: SearchHandler[]
+}
+
+export type SearchHandler = (Dispatch, SearchTemplate) => SearchCallbackMap

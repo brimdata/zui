@@ -4,17 +4,17 @@ import type {Thunk} from "redux-thunk"
 import {isEmpty} from "lodash"
 
 import {add} from "../../lib/Time"
-import {getLogs} from "../selectors/logs"
+import {createViewerSearch} from "../../searches/templates/viewerSearch"
 import {getPrevSearchProgram} from "../selectors/searchBar"
 import {getTimeWindow} from "../reducers/timeWindow"
+import {getViewerLogs} from "../viewer/selector"
 import {indexOfLastChange} from "../../lib/Array"
 import {issueBoomSearch} from "./boomSearches"
-import {spliceResults} from "../results/actions"
-import LogSearch from "../../models/searches/LogSearch"
+import {spliceViewer} from "../viewer/actions"
 
 export const fetchAhead = (): Thunk => (dispatch, getState) => {
   const state = getState()
-  const logs = getLogs(state)
+  const logs = getViewerLogs(state)
   let searchSpan = getTimeWindow(state)
   let spliceIndex = 0
 
@@ -28,11 +28,8 @@ export const fetchAhead = (): Thunk => (dispatch, getState) => {
     }
   }
 
-  dispatch(spliceResults(spliceIndex))
+  dispatch(spliceViewer(spliceIndex))
   dispatch(
-    issueBoomSearch(
-      new LogSearch(getPrevSearchProgram(state), searchSpan),
-      "viewer"
-    )
+    issueBoomSearch(createViewerSearch(getPrevSearchProgram(state), searchSpan))
   )
 }

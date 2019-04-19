@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {State} from "../state/reducers/types"
-import {getSomeAreFetching} from "../state/selectors/boomSearches"
+import {getSearchesByTag} from "../state/searches/selector"
 import {killBoomSearches} from "../state/thunks/boomSearches"
 import {showModal} from "../state/actions"
 import MenuList from "./MenuList"
@@ -40,7 +40,9 @@ export default class SearchButtonMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  isFetching: getSomeAreFetching(state)
+  isFetching: getSearchesByTag(state, "viewer")
+    .map((s) => s.status)
+    .some((s) => s === "FETCHING")
 })
 
 export const XSearchButtonMenu = connect<Props, {||}, _, _, _, _>(

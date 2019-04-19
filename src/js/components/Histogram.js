@@ -5,11 +5,11 @@ import React, {useState} from "react"
 
 import type {DateTuple} from "../lib/TimeWindow"
 import type {DispatchProps, State} from "../state/reducers/types"
+import type {SearchResults} from "../state/searches/types"
 import {buildMainHistogramChart} from "../charts/mainHistogram"
-import {getHistogramData} from "../state/reducers/histogram"
-import {getHistogramStatus} from "../state/selectors/boomSearches"
 import {getInnerTimeWindow, getTimeWindow} from "../state/reducers/timeWindow"
-import Log from "../models/Log"
+import {getSearch, getSearchStatus} from "../state/searches/selector"
+import {resultsToLogs} from "../log/resultsToLogs"
 import SVGChart from "./SVGChart"
 import dispatchToProps from "../lib/dispatchToProps"
 
@@ -19,7 +19,7 @@ type OwnProps = {|
 |}
 
 type StateProps = {|
-  results: Log[],
+  results: SearchResults,
   timeWindow: DateTuple,
   innerTimeWindow: ?DateTuple,
   isFetching: boolean
@@ -28,8 +28,17 @@ type StateProps = {|
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function Histogram(props: Props) {
-  const [chart] = useState(buildMainHistogramChart(props))
-  chart.update(props)
+  let chartProps = {
+    logs: resultsToLogs(props.results, "0"),
+    timeWindow: props.timeWindow,
+    dispatch: props.dispatch,
+    height: props.height,
+    width: props.width
+  }
+
+  const [chart] = useState(buildMainHistogramChart(chartProps))
+  chart.update(chartProps)
+
   return (
     <SVGChart
       className="main-search-histogram"
@@ -41,10 +50,10 @@ export default function Histogram(props: Props) {
 }
 
 const stateToProps = (state: State) => ({
-  results: getHistogramData(state),
+  results: getSearch(state, "HistogramSearch").results,
   timeWindow: getTimeWindow(state),
   innerTimeWindow: getInnerTimeWindow(state),
-  isFetching: getHistogramStatus(state) === "FETCHING"
+  isFetching: getSearchStatus(state, "HistogramSearch") === "FETCHING"
 })
 
 export const XHistogram = connect<Props, OwnProps, _, _, _, _>(

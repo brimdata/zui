@@ -1,12 +1,8 @@
 /* @flow */
-import type {Search, SearchTag} from "./types"
+import type {Search} from "./types"
 import Handler from "../../BoomClient/lib/Handler"
 
-export default function(
-  name: string,
-  tag: SearchTag,
-  handler: Handler
-): Search {
+export default function(name: string, tag: string, handler: Handler): Search {
   return {
     name,
     tag,

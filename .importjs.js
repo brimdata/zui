@@ -5,7 +5,7 @@ module.exports = {
     enzyme: ["mount", "shallow"],
     react: ["useState", "useRef", "useEffect", "useLayoutEffect"],
     "react-dom": ["renderToString"],
-    lodash: ["get", "isEqual", "isEmpty", "every", "kebabCase"],
+    lodash: ["throttle", "get", "isEqual", "isEmpty", "every", "kebabCase"],
     "react-router-dom": ["Redirect"]
   }
 }

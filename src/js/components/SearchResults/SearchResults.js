@@ -18,12 +18,9 @@ import {endMessage} from "../Viewer/Styler"
 import {fetchAhead} from "../../state/thunks/logViewer"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/selectors/tableColumnSets"
-import {getMainSearchIsFetching} from "../../state/selectors/boomSearches"
 import {getPrevSearchProgram} from "../../state/selectors/searchBar"
-import {
-  getResultLogs,
-  getResultsAreIncomplete
-} from "../../state/results/selector"
+import {getSearchStatus} from "../../state/searches/selector"
+import {getViewerLogs, getViewerStatus} from "../../state/viewer/selector"
 import {viewLogDetail} from "../../state/thunks/logDetails"
 import Chunker from "../Viewer/Chunker"
 import Log from "../../models/Log"
@@ -92,6 +89,7 @@ export default function SearchResults(props: Props) {
   }
 
   function onLastChunk() {
+    console.log(props.isIncomplete)
     if (props.isIncomplete && !props.isFetching) {
       props.dispatch(fetchAhead())
     }
@@ -127,17 +125,19 @@ export default function SearchResults(props: Props) {
   )
 }
 
-const stateToProps = (state: State) => ({
-  tab: getResultsTab(state),
-  isFetching: getMainSearchIsFetching(state),
-  isIncomplete: getResultsAreIncomplete(state),
-  tableColumns: getCurrentTableColumns(state),
-  timeZone: getTimeZone(state),
-  selectedLog: buildLogDetail(state),
-  logs: getResultLogs(state),
-  program: getPrevSearchProgram(state),
-  space: getCurrentSpace(state)
-})
+function stateToProps(state: State) {
+  return {
+    tab: getResultsTab(state),
+    isFetching: getSearchStatus(state, "ViewerSearch") === "FETCHING",
+    isIncomplete: getViewerStatus(state) === "INCOMPLETE",
+    tableColumns: getCurrentTableColumns(state),
+    timeZone: getTimeZone(state),
+    selectedLog: buildLogDetail(state),
+    logs: getViewerLogs(state),
+    program: getPrevSearchProgram(state),
+    space: getCurrentSpace(state)
+  }
+}
 
 export const XSearchResults = connect<Props, OwnProps, _, _, _, _>(
   stateToProps,

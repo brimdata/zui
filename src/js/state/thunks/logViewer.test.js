@@ -1,6 +1,6 @@
 /* @flow */
 
-import {appendResults, spliceResults} from "../results/actions"
+import {appendViewerLogs, spliceViewer} from "../viewer/actions"
 import {fetchAhead} from "./logViewer"
 import {setCurrentSpaceName, setOuterTimeWindow} from "../actions"
 import Handler from "../../BoomClient/lib/Handler"
@@ -21,7 +21,7 @@ beforeEach(() => {
   store.dispatchAll([
     setCurrentSpaceName("default"),
     setOuterTimeWindow([new Date(0), new Date(10 * 1000)]),
-    appendResults(tuples.map((t) => new Log(t, descriptor)))
+    appendViewerLogs(tuples.map((t) => new Log(t, descriptor)))
   ])
   store.clearActions()
 })
@@ -49,7 +49,7 @@ test("#fetchAhead adds 1ms to ts of last change", () => {
 
 test("#fetchAhead when there is only 1 event", () => {
   const search = jest.spyOn(boom, "search")
-  store.dispatch(spliceResults(1))
+  store.dispatch(spliceViewer(1))
   store.dispatch(fetchAhead())
 
   expect(search).toHaveBeenCalledWith(

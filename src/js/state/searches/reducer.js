@@ -46,10 +46,10 @@ export default function(
       var {name, results} = action
       var search = state[action.name]
       if (!search) throwUpdateError(action.name)
-
+      var v = mergeResults(search.results, results)
       return {
         ...state,
-        [name]: {...search, results: mergeResults(search.results, results)}
+        [name]: {...search, results: v}
       }
     case "SEARCHES_CLEAR":
       var tag = action.tag

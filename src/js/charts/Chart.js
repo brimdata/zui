@@ -9,12 +9,6 @@ type BuilderKey = "data" | "margins" | "dimens" | "scales"
 type BuilderFunc = ($ReadOnly<Chart>) => Object
 type Builders = {[BuilderKey]: BuilderFunc}
 
-type Args = {
-  props: Object,
-  builders: Builders,
-  elements: ChartElement[]
-}
-
 export default class Chart {
   props: *
   data: *
@@ -25,13 +19,21 @@ export default class Chart {
   elements: ChartElement[]
   svg: HTMLElement
 
-  constructor({props, builders, elements}: Args) {
+  constructor({
+    props,
+    builders,
+    elements
+  }: {
+    props: *,
+    builders: Builders,
+    elements: ChartElement[]
+  }) {
     this.elements = elements
     this.builders = builders
     this.update(props)
   }
 
-  update(props: Object) {
+  update(props: *) {
     this.props = {...this.props, ...props}
     this.data = this.builders.data(this)
     this.margins = this.builders.margins(this)

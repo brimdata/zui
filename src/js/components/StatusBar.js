@@ -6,7 +6,7 @@ import classNames from "classnames"
 
 import {type State} from "../state/reducers/types"
 import {XSearchStats} from "./SearchStats"
-import {getMainSearchIsFetching} from "../state/selectors/boomSearches"
+import {getSearchStatus} from "../state/searches/selector"
 import {isFetchingAhead} from "../state/reducers/logViewer"
 import LoadingMessage from "./LoadingMessage"
 
@@ -41,7 +41,7 @@ export default class StatusBar extends React.Component<Props> {
 }
 
 const stateToProps = (state: State): StateProps => ({
-  isFetching: getMainSearchIsFetching(state) || isFetchingAhead(state),
+  isFetching: getSearchStatus(state, "ViewerSearch") === "FETCHING",
   isFetchingAhead: isFetchingAhead(state)
 })
 

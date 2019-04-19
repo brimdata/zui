@@ -6,8 +6,6 @@ export type SearchesState = {[string]: Search}
 
 export type SearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "ABORTED"
 
-export type SearchTag = "viewer" | "detail"
-
 export type SearchStats = {
   updateTime: number,
   startTime: number,
@@ -27,7 +25,7 @@ export type Search = {
   status: SearchStatus,
   handler: Handler,
   stats: SearchStats,
-  tag: SearchTag,
+  tag: string,
   results: SearchResults
 }
 
@@ -56,5 +54,5 @@ export type SEARCH_RESULTS = {
 
 export type SEARCHES_CLEAR = {
   type: "SEARCHES_CLEAR",
-  tag?: SearchTag
+  tag?: string
 }

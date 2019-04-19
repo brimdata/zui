@@ -5,7 +5,7 @@ import {uniqBy} from "lodash"
 
 import type {Column} from "../../types"
 import type {State} from "../reducers/types"
-import {getLogs} from "./logs"
+import {getViewerLogs} from "../viewer/selector"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
 
@@ -14,7 +14,7 @@ export const getTableColumnSets = (state: State) => {
 }
 
 export const getCurrentTableColumnsId = createSelector<State, void, string, *>(
-  getLogs,
+  getViewerLogs,
   (logs) => {
     if (logs.length === 0) return "none"
 
@@ -30,7 +30,7 @@ export const getCurrentTableColumnsId = createSelector<State, void, string, *>(
 )
 
 export const getCurrentUniqColumns = createSelector<State, void, *, *>(
-  getLogs,
+  getViewerLogs,
   (logs): Column[] => {
     /* Performance seriously matters in this function.  See PROD-405 */
 

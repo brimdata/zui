@@ -3,9 +3,9 @@
 import type {Descriptors, TupleSet, Tuples} from "../types"
 import {concat} from "./Array"
 
-export function accumTupleSet() {
+export function accumResults() {
   let descriptors: Descriptors = {}
-  let tuples: {[number]: Tuples} = {}
+  let tuples: {[string]: Tuples} = {}
 
   function clearTuples() {
     tuples = {}
@@ -15,22 +15,35 @@ export function accumTupleSet() {
     descriptors = {...descriptors, ...newDesc}
   }
 
-  function addTuples(newTuples: Tuples, channel: number = 0) {
+  function addTuples(newTuples: Tuples, channel: string = "0") {
     if (!tuples[channel]) tuples[channel] = []
     tuples[channel] = concat(tuples[channel], newTuples)
   }
 
-  function getTupleSet(channel: number = 0): TupleSet {
+  function getChannel(channel: string = "0"): TupleSet {
     return {
       descriptors,
       tuples: tuples[channel] || []
     }
   }
 
+  function getResults() {
+    return {
+      descriptors,
+      tuples
+    }
+  }
+
+  function noTuples() {
+    return Object.keys(tuples).length === 0
+  }
+
   return {
-    getTupleSet,
+    getResults,
+    getChannel,
     addDescriptors,
     addTuples,
-    clearTuples
+    clearTuples,
+    noTuples
   }
 }

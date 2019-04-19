@@ -19,8 +19,10 @@ import xPositionTooltip from "./elements/xPositionTooltip"
 
 type Props = {
   dispatch: Dispatch,
-  results: Log[],
-  timeWindow: Span
+  logs: Log[],
+  timeWindow: Span,
+  width: number,
+  height: number
 }
 
 export function buildMainHistogramChart({dispatch, ...props}: Props) {
@@ -53,7 +55,7 @@ export function buildMainHistogramChart({dispatch, ...props}: Props) {
   return new Chart({
     props: props,
     builders: {
-      data: ({props}) => createHistogramData(props.results, props.timeWindow),
+      data: ({props}) => createHistogramData(props.logs, props.timeWindow),
       margins: (_) => ({left: 0, right: 0, top: 12, bottom: 24}),
       dimens: ({props, margins}) => ({
         width: props.width,

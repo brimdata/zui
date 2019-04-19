@@ -13,7 +13,6 @@ import type {LogDetails} from "./logDetails"
 import type {LogViewer} from "./logViewer"
 import type {Logs} from "./logs"
 import type {Notifications} from "./notifications"
-import type {ResultsState} from "../results/types"
 import type {SearchBar} from "./searchBar"
 import type {SearchHistory} from "./searchHistory"
 import type {SearchesState} from "../searches/types"
@@ -21,12 +20,13 @@ import type {Spaces} from "./spaces"
 import type {TableColumnSets} from "./tableColumnSets"
 import type {TimeWindow} from "./timeWindow"
 import type {View} from "./view"
+import type {ViewerState} from "../viewer/types"
 import type {Whois} from "./whois"
 import BoomClient from "../../BoomClient"
 
 export type State = {
+  viewer: ViewerState,
   searches: SearchesState,
-  results: ResultsState,
   correlations: Correlations,
   analysis: Analysis,
   histogram: Histogram,

@@ -1,9 +1,17 @@
 /* @flow */
 
+import {throttle} from "lodash"
+
 import type {BoomPayload} from "../../BoomClient/types"
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {Dispatch} from "../../state/reducers/types"
-import {setBoomSearchStats, setBoomSearchStatus} from "../../state/actions"
+import {accumResults} from "../../lib/accumResults"
+import {
+  appendSearchResults,
+  setSearchStats,
+  setSearchStatus
+} from "../../state/searches/actions"
+import {boomTime} from "../../lib/Time"
 import Handler from "../../BoomClient/lib/Handler"
 
 export default class BaseSearch {
@@ -30,32 +38,54 @@ export default class BaseSearch {
   receiveData(_handler: Handler, _dispatch: Dispatch) {}
 
   receiveStats(handler: Handler, dispatch: Dispatch) {
-    const name = this.getName()
+    let name = this.getName()
+    let accum = accumResults()
 
-    function boomTime({sec, ns}) {
-      let flt = sec + ns / 1e9
-      return flt
+    function dispatchResults() {
+      dispatch(appendSearchResults(name, accum.getResults()))
+      accum.clearTuples()
     }
+
+    let dispatchResultsSteady = throttle(dispatchResults, 100, {leading: false})
 
     handler
       .each((payload: BoomPayload) => {
-        if (payload.type === "SearchStats") {
-          const startTime = boomTime(payload.start_time)
-          const updateTime = boomTime(payload.update_time)
-          dispatch(
-            setBoomSearchStats(name, {
-              startTime,
-              updateTime,
-              bytesMatched: payload.stats.bytes_matched,
-              bytesRead: payload.stats.bytes_read,
-              tuplesMatched: payload.stats.tuples_matched,
-              tuplesRead: payload.stats.tuples_read
-            })
-          )
+        switch (payload.type) {
+          case "SearchDescriptors":
+            accum.addDescriptors(payload.descriptors)
+            break
+          case "SearchTuples":
+            accum.addTuples(payload.tuples)
+            dispatchResultsSteady()
+            break
+          case "SearchStats":
+            dispatch(
+              setSearchStats(name, {
+                startTime: boomTime(payload.start_time),
+                updateTime: boomTime(payload.update_time),
+                bytesMatched: payload.stats.bytes_matched,
+                bytesRead: payload.stats.bytes_read,
+                tuplesMatched: payload.stats.tuples_matched,
+                tuplesRead: payload.stats.tuples_read
+              })
+            )
+            break
         }
       })
-      .done(() => dispatch(setBoomSearchStatus(name, "SUCCESS")))
-      .error(() => dispatch(setBoomSearchStatus(name, "ERROR")))
-      .abort(() => dispatch(setBoomSearchStatus(name, "ABORTED")))
+      .done(() => {
+        dispatchResultsSteady.cancel()
+        dispatchResults()
+        dispatch(setSearchStatus(name, "SUCCESS"))
+      })
+      .error(() => {
+        dispatch(setSearchStatus(name, "ERROR"))
+        dispatchResultsSteady.cancel()
+        dispatchResults()
+      })
+      .abort(() => {
+        dispatch(setSearchStatus(name, "ABORTED"))
+        dispatchResultsSteady.cancel()
+        dispatchResults()
+      })
   }
 }

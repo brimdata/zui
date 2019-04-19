@@ -2,32 +2,26 @@
 
 import React from "react"
 
-import type {RelatedLogs} from "../../types"
+import type {PanelProps} from "./"
 import {XUidTimeline} from "../UidTimeline"
+import {resultsToLogs} from "../../log/resultsToLogs"
 import InlineTableLoading from "../InlineTableLoading"
-import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 
-type Props = {
-  log: Log,
-  relatedLogs: RelatedLogs,
-  statuses: {[string]: string}
-}
-
-const UidPanel = ({log, relatedLogs, statuses}: Props) => {
+const UidPanel = ({log, searches}: PanelProps) => {
   if (!log.correlationId()) return null
+  const search = searches.find((s) => s.name === "UidSearch")
+  if (!search) return null
 
-  const {uid} = relatedLogs
+  const logs = resultsToLogs(search.results, "0")
 
   return (
     <div className="correlated-logs-panel detail-panel">
-      <PanelHeading status={statuses["UidSearch"]}>
-        Uid Correlation
-      </PanelHeading>
-      {uid.length === 0 && (
+      <PanelHeading status={search.status}>Uid Correlation</PanelHeading>
+      {logs.length === 0 && (
         <InlineTableLoading title="Loading timeline..." rows={3} />
       )}
-      <XUidTimeline log={log} logs={relatedLogs["uid"]} />
+      <XUidTimeline log={log} logs={logs} />
     </div>
   )
 }

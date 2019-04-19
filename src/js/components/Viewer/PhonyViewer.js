@@ -8,7 +8,7 @@ import ReactDOM from "react-dom"
 import type {Dispatch, State} from "../../state/reducers/types"
 import type {TableColumn} from "../../types"
 import {getCurrentTableColumns} from "../../state/selectors/tableColumnSets"
-import {getLogs} from "../../state/selectors/logs"
+import {getViewerLogs} from "../../state/viewer/selector"
 import {updateTableColumns} from "../../state/actions"
 import * as Arr from "../../lib/Array"
 import * as Doc from "../../lib/Doc"
@@ -118,7 +118,7 @@ export default class PhonyViewer extends React.Component<Props> {
 
 const stateToProps = (state: State) => ({
   tableColumns: getCurrentTableColumns(state),
-  data: getLogs(state)
+  data: getViewerLogs(state)
 })
 
 export const XPhonyViewer = connect<Props, {||}, _, _, _, _>(
