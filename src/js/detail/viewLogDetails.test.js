@@ -1,10 +1,10 @@
 /* @flow */
 
-import {conn} from "../../test/mockLogs"
-import {hideRightSidebar, showRightSidebar} from "../actions"
-import {viewLogDetail} from "./logDetails"
-import MockBoomClient from "../../test/MockBoomClient"
-import initTestStore from "../../test/initTestStore"
+import {conn} from "../test/mockLogs"
+import {hideRightSidebar, showRightSidebar} from "../state/actions"
+import {viewLogDetail} from "./viewLogDetail"
+import MockBoomClient from "../test/MockBoomClient"
+import initTestStore from "../test/initTestStore"
 
 describe("#viewLogDetail", () => {
   let store, log, boom

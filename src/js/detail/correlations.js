@@ -1,16 +1,16 @@
 /* @flow */
 
-import type {Thunk} from "../reducers/types"
+import type {Thunk} from "../state/reducers/types"
 import {
   filenameCorrelation,
   md5Correlation,
   rxHostsCorrelation,
   txHostsCorrelation
-} from "../../models/searches/programs"
-import {getTimeWindow} from "../reducers/timeWindow"
-import {issueSearch} from "../../searches/issueSearch"
-import {parallelizeProcs} from "../../lib/Program"
-import Log from "../../models/Log"
+} from "../models/searches/programs"
+import {getTimeWindow} from "../state/reducers/timeWindow"
+import {issueSearch} from "../searches/issueSearch"
+import {parallelizeProcs} from "../lib/Program"
+import Log from "../models/Log"
 
 export const fetchTuplesByUid = (log: Log): Thunk => (dispatch, getState) => {
   let uid = log.correlationId()

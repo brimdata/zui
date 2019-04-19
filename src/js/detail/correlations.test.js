@@ -1,13 +1,12 @@
 /* @flow */
-
 import {
   clearAllCorrelations,
   clearCorrelations,
   setCorrelation
-} from "../actions"
-import {conn} from "../../test/mockLogs"
-import {getCorrelations} from "./correlations"
-import initTestStore from "../../test/initTestStore"
+} from "../state/actions"
+import {conn} from "../test/mockLogs"
+import {getCorrelations} from "../state/reducers/correlations"
+import initTestStore from "../test/initTestStore"
 
 const store = initTestStore()
 const hash = conn()
