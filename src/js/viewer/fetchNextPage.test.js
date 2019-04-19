@@ -29,7 +29,7 @@ test("#fetchNextPage dispatches splice", () => {
   store.dispatch(fetchNextPage())
 
   expect(store.getActions()).toEqual(
-    expect.arrayContaining([{type: "RESULTS_SPLICE", index: 2}])
+    expect.arrayContaining([{type: "VIEWER_SPLICE", index: 2}])
   )
 })
 

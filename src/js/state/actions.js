@@ -10,27 +10,13 @@ import type {
 import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {Finding} from "./reducers/investigation"
-import {Node} from "../models/Node"
 import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
 import type {TimeWindow} from "./reducers/timeWindow"
 import {isArray} from "../lib/is"
 import Field from "../models/Field"
-import Log from "../models/Log"
 import TableColumns from "../models/TableColumns"
 import columnKey from "../lib/columnKey"
-
-export function setAnalysis(descriptor: Descriptor, tuples: Tuple[]) {
-  return {
-    type: "ANALYSIS_SET",
-    descriptor,
-    tuples
-  }
-}
-
-export const clearAnalysis = () => ({
-  type: "ANALYSIS_CLEAR"
-})
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -45,66 +31,6 @@ export const useBoomIndex = (value: boolean) => ({
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",
   credentials
-})
-
-export const setCorrelation = (key: string, name: string, data: Log[]) => ({
-  type: "CORRELATION_SET",
-  key,
-  name,
-  data
-})
-
-export const clearCorrelations = (key: string) => ({
-  type: "CORRELATIONS_CLEAR",
-  key
-})
-
-export const clearAllCorrelations = () => ({
-  type: "CORRELATIONS_CLEAR_ALL"
-})
-
-export const requestDescriptor = (space: string, id: string) => ({
-  type: "DESCRIPTOR_REQUEST",
-  space,
-  id
-})
-
-export const receiveDescriptor = (
-  space: string,
-  id: string,
-  descriptor: {name: string, type: string}[]
-) => ({
-  type: "DESCRIPTOR_RECEIVE",
-  space,
-  id,
-  descriptor
-})
-
-export const errorDescriptor = (error: string) => ({
-  type: "DESCRIPTOR_ERROR",
-  error
-})
-
-export const clearDescriptors = () => ({
-  type: "DESCRIPTORS_CLEAR"
-})
-
-export const clearFilterTree = () => ({
-  type: "FILTER_TREE_CLEAR"
-})
-
-export const removeFilterTreeNode = (node: Node) => ({
-  type: "FILTER_TREE_NODE_REMOVE",
-  node
-})
-
-export const histogramSearchResult = (data: Log[]) => ({
-  type: "HISTOGRAM_SEARCH_RESULT",
-  data
-})
-
-export const clearHistogram = () => ({
-  type: "HISTOGRAM_CLEAR"
 })
 
 export const createFinding = (finding: $Shape<Finding>) => ({
@@ -144,24 +70,6 @@ export const backLogDetail = () => ({
 
 export const forwardLogDetail = () => ({
   type: "LOG_DETAIL_FORWARD"
-})
-
-export const clearLogs = () => ({
-  type: "LOGS_CLEAR"
-})
-
-export const receiveLogTuples = (tuples: Tuple[]) => ({
-  type: "LOGS_RECEIVE",
-  tuples
-})
-
-export const setLogsSpliceIndex = (index: number) => ({
-  type: "LOGS_SPLICE_INDEX_SET",
-  index
-})
-
-export const spliceLogs = () => ({
-  type: "LOGS_SPLICE"
 })
 
 export const addNotification = (notification: Notification) => ({

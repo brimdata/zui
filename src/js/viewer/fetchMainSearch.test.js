@@ -38,7 +38,7 @@ test("fetching a regular search", () => {
   expect(store.getActions().map((action) => action.type)).toEqual(
     expect.arrayContaining([
       "SEARCH_HISTORY_PUSH",
-      "RESULTS_CLEAR",
+      "VIEWER_CLEAR",
       "SHOW_LOGS_TAB"
     ])
   )

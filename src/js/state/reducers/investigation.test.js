@@ -1,13 +1,7 @@
 /* @flow */
 
-import {
-  createFinding,
-  deleteFindingByTs,
-  histogramSearchResult,
-  recordSearch
-} from "../actions"
+import {createFinding, deleteFindingByTs, recordSearch} from "../actions"
 import {getCurrentFinding, getInvestigation} from "./investigation"
-import {histogramLogs} from "../../test/mockPayloads"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -42,22 +36,6 @@ test("new finding", () => {
       ts: expect.any(Date)
     }
   ])
-})
-
-test("when the histogram runs it saves as a chart", () => {
-  let state = store.dispatchAll([
-    createFinding({ts: new Date()}),
-    histogramSearchResult(histogramLogs())
-  ])
-
-  expect(getCurrentFinding(state)).toEqual(
-    expect.objectContaining({
-      chart: {
-        type: "Histogram",
-        results: histogramLogs()
-      }
-    })
-  )
 })
 
 test("when a new search is recorded", () => {

@@ -2,13 +2,9 @@
 
 import {combineReducers} from "redux"
 
-import analysis from "./analysis"
 import boomd from "./boomd"
-import correlations from "./correlations"
-import histogram from "./histogram"
 import investigation from "./investigation"
 import logDetails from "./logDetails"
-import logs from "./logs"
 import notifications from "./notifications"
 import packets from "./packets"
 import searchBar from "./searchBar"
@@ -26,14 +22,10 @@ export default combineReducers<*, *>({
   searches: searchesReducer,
   viewer: viewerReducer,
   investigation,
-  correlations,
-  logs,
   view,
   searchBar,
   spaces,
   timeWindow,
-  histogram,
-  analysis,
   logDetails,
   boomd,
   starredLogs,
