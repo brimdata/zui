@@ -1,6 +1,5 @@
 /* @flow */
 import type {Thunk} from "../state/reducers/types"
-import {clearBoomSearches} from "../state/actions"
 import {getSearches} from "../state/searches/selector"
 
 export const cancelSearchesByTag = (tag?: string): Thunk => (
@@ -13,7 +12,6 @@ export const cancelSearchesByTag = (tag?: string): Thunk => (
     if (!tag || searches[name].tag === tag)
       searches[name].handler.abortRequest(false)
   }
-  dispatch(clearBoomSearches(tag))
 }
 
 export const killSearchesByTag = (tag?: string): Thunk => (

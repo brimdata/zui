@@ -5,7 +5,7 @@ import {PER_PAGE} from "../state/reducers/logViewer"
 import type {Thunk} from "../state/reducers/types"
 import {addEveryCountProc} from "../searches/histogramSearch"
 import {addHeadProc, hasAnalytics} from "../lib/Program"
-import {cancelBoomSearches, issueBoomSearch} from "../state/thunks/boomSearches"
+import {cancelSearchesByTag} from "../searches/cancelSearch"
 import {clearViewer} from "../state/viewer/actions"
 import {
   getInnerTimeWindow,
@@ -13,6 +13,7 @@ import {
 } from "../state/reducers/timeWindow"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
+import {issueSearch} from "../searches/issueSearch"
 import {recordSearch} from "../state/actions"
 import {updateTab} from "../state/thunks/view"
 import {validateProgram} from "../state/thunks/searchBar"
@@ -33,7 +34,7 @@ export const fetchMainSearch = ({
     dispatch(recordSearch(getSearchRecord(state)))
   }
 
-  dispatch(cancelBoomSearches("viewer"))
+  dispatch(cancelSearchesByTag("viewer"))
   dispatch(clearViewer())
 
   const program = getSearchProgram(state)
@@ -79,5 +80,5 @@ export const fetchMainSearch = ({
     ]
   }
 
-  searches.forEach((template) => dispatch(issueBoomSearch(template)))
+  searches.forEach((template) => dispatch(issueSearch(template)))
 }

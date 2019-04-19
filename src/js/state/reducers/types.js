@@ -3,7 +3,6 @@
 import {type Store as ReduxStore} from "redux"
 
 import type {Analysis} from "./analysis"
-import type {BoomSearches} from "./boomSearches"
 import type {Boomd} from "./boomd"
 import type {Correlations} from "./correlations"
 import type {Descriptors} from "./descriptors"
@@ -43,7 +42,6 @@ export type State = {
   notifications: Notifications,
   tableColumnSets: TableColumnSets,
   logs: Logs,
-  boomSearches: BoomSearches,
   investigation: Investigation
 }
 

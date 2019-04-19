@@ -17,16 +17,14 @@ describe("#viewLogDetail", () => {
   test("when detail pane is open", () => {
     store.dispatch(showRightSidebar())
     store.dispatch(viewLogDetail(log))
-    expect(store.getActions().map((a) => a.type)).toContain(
-      "BOOM_SEARCHES_REGISTER"
-    )
+    expect(store.getActions().map((a) => a.type)).toContain("SEARCHES_REGISTER")
   })
 
   test("when detail pane is closed", () => {
     store.dispatch(hideRightSidebar())
     store.dispatch(viewLogDetail(log))
     expect(store.getActions().map((a) => a.type)).not.toContain(
-      "BOOM_SEARCHES_REGISTER"
+      "SEARCHES_REGISTER"
     )
   })
 })

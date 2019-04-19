@@ -8,7 +8,7 @@ import {
   txHostsCorrelation
 } from "../../models/searches/programs"
 import {getTimeWindow} from "../reducers/timeWindow"
-import {issueBoomSearch} from "./boomSearches"
+import {issueSearch} from "../../searches/issueSearch"
 import {parallelizeProcs} from "../../lib/Program"
 import Log from "../../models/Log"
 
@@ -16,7 +16,7 @@ export const fetchTuplesByUid = (log: Log): Thunk => (dispatch, getState) => {
   let uid = log.correlationId()
   if (uid) {
     return dispatch(
-      issueBoomSearch({
+      issueSearch({
         name: "UidSearch",
         tag: "detail",
         program: uid,
@@ -31,7 +31,7 @@ export const fetchByMd5 = (log: Log): Thunk => (dispatch, getState) => {
 
   if (md5) {
     return dispatch(
-      issueBoomSearch({
+      issueSearch({
         name: "Md5Search",
         tag: "detail",
         program: parallelizeProcs([

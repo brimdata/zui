@@ -1,5 +1,4 @@
 /* @flow */
-import type {BoomSearchStatus, BoomSearchTag} from "./reducers/boomSearches"
 import type {
   Column,
   Descriptor,
@@ -17,12 +16,9 @@ import type {Space} from "../lib/Space"
 import type {TimeWindow} from "./reducers/timeWindow"
 import {isArray} from "../lib/is"
 import Field from "../models/Field"
-import Handler from "../BoomClient/lib/Handler"
 import Log from "../models/Log"
 import TableColumns from "../models/TableColumns"
 import columnKey from "../lib/columnKey"
-
-type RegisterOpts = {handler: Handler, tag: BoomSearchTag}
 
 export function setAnalysis(descriptor: Descriptor, tuples: Tuple[]) {
   return {
@@ -49,37 +45,6 @@ export const useBoomIndex = (value: boolean) => ({
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",
   credentials
-})
-
-export const registerBoomSearch = (name: string, opts: RegisterOpts) => ({
-  type: "BOOM_SEARCHES_REGISTER",
-  search: {
-    name,
-    handler: opts.handler,
-    status: "FETCHING",
-    stats: {},
-    tag: opts.tag
-  }
-})
-
-export const setBoomSearchStatus = (
-  name: string,
-  status: BoomSearchStatus
-) => ({
-  type: "BOOM_SEARCHES_SET_STATUS",
-  name,
-  status
-})
-
-export const setBoomSearchStats = (name: string, stats: {}) => ({
-  type: "BOOM_SEARCHES_SET_STATS",
-  name,
-  stats
-})
-
-export const clearBoomSearches = (tag?: string) => ({
-  type: "BOOM_SEARCHES_CLEAR",
-  tag
 })
 
 export const setCorrelation = (key: string, name: string, data: Log[]) => ({

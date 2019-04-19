@@ -3,7 +3,6 @@
 import {combineReducers} from "redux"
 
 import analysis from "./analysis"
-import boomSearches from "./boomSearches"
 import boomd from "./boomd"
 import correlations from "./correlations"
 import descriptors from "./descriptors"
@@ -46,6 +45,5 @@ export default combineReducers<*, *>({
   searchHistory,
   whois,
   notifications,
-  tableColumnSets,
-  boomSearches
+  tableColumnSets
 })
