@@ -12,7 +12,7 @@ import {
 import {Node} from "../models/Node"
 import {createInvestigationTree} from "../investigation/createTree"
 import {deleteFindingByTs, setSearchBarPins} from "../state/actions"
-import {fetchMainSearch} from "../state/thunks/mainSearch"
+import {fetchMainSearch} from "../viewer/fetchMainSearch"
 import {getSearchBarPins} from "../state/selectors/searchBar"
 import CloseSVG from "../icons/circle-x-md.svg"
 import FilterNode from "./FilterNode"

@@ -9,7 +9,7 @@ import {
   setInnerTimeWindow,
   submittingSearchBar
 } from "../actions"
-import {fetchMainSearch} from "./mainSearch"
+import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getCurrentEntry} from "../reducers/searchHistory"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"

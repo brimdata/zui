@@ -4,11 +4,11 @@ import {
   changeSearchBarInput,
   setCurrentSpaceName,
   setSpaceInfo
-} from "../actions"
-import {fetchMainSearch} from "./mainSearch"
-import {initTimeWindow} from "./timeWindow"
-import MockBoomClient from "../../test/MockBoomClient"
-import initTestStore from "../../test/initTestStore"
+} from "../state/actions"
+import {fetchMainSearch} from "./fetchMainSearch"
+import {initTimeWindow} from "../state/thunks/timeWindow"
+import MockBoomClient from "../test/MockBoomClient"
+import initTestStore from "../test/initTestStore"
 
 let store, boom
 

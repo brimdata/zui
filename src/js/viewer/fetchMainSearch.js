@@ -1,19 +1,22 @@
 /* @flow */
 
-import {ANALYTIC_MAX_RESULTS} from "../../models/searches/AnalyticSearch"
-import {PER_PAGE} from "../reducers/logViewer"
-import type {Thunk} from "../reducers/types"
-import {addEveryCountProc} from "../../searches/histogramSearch"
-import {addHeadProc, hasAnalytics} from "../../lib/Program"
-import {cancelBoomSearches, issueBoomSearch} from "./boomSearches"
-import {clearViewer} from "../viewer/actions"
-import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
-import {getSearchProgram} from "../selectors/searchBar"
-import {getSearchRecord} from "../selectors/searchRecord"
-import {recordSearch} from "../actions"
-import {updateTab} from "./view"
-import {validateProgram} from "./searchBar"
-import viewerHandler from "../../viewer/viewerHandler"
+import {ANALYTIC_MAX_RESULTS} from "../models/searches/AnalyticSearch"
+import {PER_PAGE} from "../state/reducers/logViewer"
+import type {Thunk} from "../state/reducers/types"
+import {addEveryCountProc} from "../searches/histogramSearch"
+import {addHeadProc, hasAnalytics} from "../lib/Program"
+import {cancelBoomSearches, issueBoomSearch} from "../state/thunks/boomSearches"
+import {clearViewer} from "../state/viewer/actions"
+import {
+  getInnerTimeWindow,
+  getOuterTimeWindow
+} from "../state/reducers/timeWindow"
+import {getSearchProgram} from "../state/selectors/searchBar"
+import {getSearchRecord} from "../state/selectors/searchRecord"
+import {recordSearch} from "../state/actions"
+import {updateTab} from "../state/thunks/view"
+import {validateProgram} from "../state/thunks/searchBar"
+import viewerHandler from "./viewerHandler"
 
 type Options = {
   saveToHistory: boolean
@@ -75,16 +78,6 @@ export const fetchMainSearch = ({
       }
     ]
   }
-
-  //
-  // if (innerSpan) {
-  //   return [new LogSearch(program, innerSpan)]
-  // }
-  //
-  // return [
-  //   new HistogramSearch(program, outerSpan),
-  //   new LogSearch(program, outerSpan)
-  // ]
 
   searches.forEach((template) => dispatch(issueBoomSearch(template)))
 }

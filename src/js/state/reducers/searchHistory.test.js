@@ -6,7 +6,7 @@ import {
   clearSearchHistory,
   forwardSearchHistory
 } from "../actions"
-import {fetchMainSearch} from "../thunks/mainSearch"
+import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getCurrentEntry, getSearchHistory} from "./searchHistory"
 import initTestStore from "../../test/initTestStore"
 
