@@ -31,6 +31,7 @@ export default function Histogram(props: Props) {
   let chartProps = {
     logs: resultsToLogs(props.results, "0"),
     timeWindow: props.timeWindow,
+    innerTimeWindow: props.innerTimeWindow,
     dispatch: props.dispatch,
     height: props.height,
     width: props.width
