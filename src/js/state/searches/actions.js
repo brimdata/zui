@@ -3,6 +3,7 @@ import type {
   SEARCHES_CLEAR,
   SEARCH_REGISTER,
   SEARCH_RESULTS,
+  SEARCH_RESULTS_CLEAR,
   SEARCH_STATS,
   SEARCH_STATUS,
   SearchResults,
@@ -55,5 +56,12 @@ export function clearSearches(tag?: string): SEARCHES_CLEAR {
   return {
     type: "SEARCHES_CLEAR",
     tag
+  }
+}
+
+export function clearSearchResults(name: string): SEARCH_RESULTS_CLEAR {
+  return {
+    type: "SEARCH_RESULTS_CLEAR",
+    name
   }
 }

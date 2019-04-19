@@ -22,6 +22,7 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
   if (!logMd5) return null
   const search = searches.find((s) => s.name === "Md5Search")
   if (!search) return null
+
   const status = search.status
   const tx = resultsToLogs(search.results, "0")
   const rx = resultsToLogs(search.results, "1")

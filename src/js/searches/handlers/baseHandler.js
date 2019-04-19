@@ -34,7 +34,7 @@ export default function(
         accum.addDescriptors(payload.descriptors)
         break
       case "SearchTuples":
-        accum.addTuples(payload.tuples)
+        accum.addTuples(payload.tuples, payload.channel_id.toString())
         dispatchResultsSteady()
         break
       case "SearchStats":

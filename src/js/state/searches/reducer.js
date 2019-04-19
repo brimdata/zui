@@ -4,6 +4,7 @@ import type {
   SEARCHES_CLEAR,
   SEARCH_REGISTER,
   SEARCH_RESULTS,
+  SEARCH_RESULTS_CLEAR,
   SEARCH_STATS,
   SEARCH_STATUS,
   SearchesState
@@ -17,6 +18,7 @@ type Action =
   | SEARCH_STATUS
   | SEARCHES_CLEAR
   | SEARCH_RESULTS
+  | SEARCH_RESULTS_CLEAR
 
 const init = {}
 
@@ -46,10 +48,17 @@ export default function(
       var {name, results} = action
       var search = state[action.name]
       if (!search) throwUpdateError(action.name)
-      var v = mergeResults(search.results, results)
+
       return {
         ...state,
-        [name]: {...search, results: v}
+        [name]: {...search, results: mergeResults(search.results, results)}
+      }
+    case "SEARCH_RESULTS_CLEAR":
+      if (!state[action.name]) throwUpdateError(action.name)
+      var cleared = {tuples: {}, descriptor: {}}
+      return {
+        ...state,
+        [action.name]: {...state[action.name], ...{results: cleared}}
       }
     case "SEARCHES_CLEAR":
       var tag = action.tag

@@ -29,7 +29,7 @@ export function getSearchesByTag(state: State, tag: string) {
   let searches = getSearches(state)
   for (let name in searches) {
     let search = searches[name]
-    if (searches.tag === tag) tagged.push(search)
+    if (search.tag === tag) tagged.push(search)
   }
   return tagged
 }

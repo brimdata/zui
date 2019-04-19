@@ -52,6 +52,11 @@ export type SEARCH_RESULTS = {
   results: SearchResults
 }
 
+export type SEARCH_RESULTS_CLEAR = {
+  type: "SEARCH_RESULTS_CLEAR",
+  name: string
+}
+
 export type SEARCHES_CLEAR = {
   type: "SEARCHES_CLEAR",
   tag?: string

@@ -4,9 +4,10 @@ import {type BoomSearchTag, getBoomSearches} from "../reducers/boomSearches"
 import type {SearchTemplate} from "../../searches/types"
 import type {Thunk} from "../reducers/types"
 import {clearBoomSearches} from "../actions"
+import {clearSearchResults, registerSearch} from "../searches/actions"
 import {fetchSearch} from "../../backend/fetch"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import {registerSearch} from "../searches/actions"
+import {getSearches} from "../searches/selector"
 import baseHandler from "../../searches/handlers/baseHandler"
 
 export const killBoomSearches = (tag?: BoomSearchTag): Thunk => (
@@ -39,11 +40,8 @@ export const cancelBoomSearches = (tag?: BoomSearchTag): Thunk => (
   dispatch(clearBoomSearches(tag))
 }
 
-export const cancelBoomSearch = (name: string): Thunk => (
-  dispatch,
-  getState
-) => {
-  const searches = getBoomSearches(getState())
+export const cancelSearch = (name: string): Thunk => (dispatch, getState) => {
+  const searches = getSearches(getState())
   if (searches[name]) {
     searches[name].handler.abortRequest(false)
   }
@@ -53,10 +51,16 @@ export const issueBoomSearch = (search: SearchTemplate): Thunk => (
   dispatch,
   getState
 ) => {
-  dispatch(cancelBoomSearch(search.name))
+  let state = getState()
+  let searches = getSearches(state)
+  let space = getCurrentSpaceName(state)
+  let {name, program, span, handlers = []} = search
 
-  const {name, program, span, handlers = []} = search
-  const space = getCurrentSpaceName(getState())
+  if (searches[name]) {
+    searches[name].handler.abortRequest(false)
+    dispatch(clearSearchResults(name))
+  }
+
   const handler = dispatch(fetchSearch(program, span, space))
 
   handlers.push(baseHandler)

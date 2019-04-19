@@ -2,6 +2,9 @@
 
 import isEqual from "lodash/isEqual"
 import isNumber from "lodash/isNumber"
+import _uniq from "lodash/uniq"
+
+export const uniq = _uniq
 
 export const indexOfLastChange = (
   array: *[],

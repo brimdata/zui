@@ -1,5 +1,6 @@
 /* @flow */
 import type {SearchResults} from "./types"
+import {uniq} from "../../lib/Array"
 
 export default function(a: SearchResults, b: SearchResults) {
   let descriptors = {
@@ -8,9 +9,13 @@ export default function(a: SearchResults, b: SearchResults) {
   }
   let tuples = {}
 
-  for (let channel in b.tuples) {
+  let aChannels = Object.keys(a.tuples)
+  let bChannels = Object.keys(b.tuples)
+  let channels = uniq([...aChannels, ...bChannels])
+
+  for (let channel of channels) {
     let prev = a.tuples[channel] || []
-    let curr = b.tuples[channel]
+    let curr = b.tuples[channel] || []
     tuples[channel] = [...prev, ...curr]
   }
 
