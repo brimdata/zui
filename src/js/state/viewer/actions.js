@@ -1,12 +1,15 @@
 /* @flow */
 
+import type {Descriptors} from "../../types"
 import type {
   VIEWER_CLEAR,
+  VIEWER_COLUMNS,
   VIEWER_LOGS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
   ViewerStatus
 } from "./types"
+import {hashDescriptorKeys} from "./hashDescriptorKeys"
 import Log from "../../models/Log"
 
 export function clearViewer(): VIEWER_CLEAR {
@@ -23,4 +26,11 @@ export function setViewerStatus(status: ViewerStatus): VIEWER_STATUS {
 
 export function appendViewerLogs(logs: Log[]): VIEWER_LOGS {
   return {type: "VIEWER_LOGS", logs}
+}
+
+export function updateViewerColumns(desc: Descriptors): VIEWER_COLUMNS {
+  return {
+    type: "VIEWER_COLUMNS",
+    columns: hashDescriptorKeys(desc)
+  }
 }

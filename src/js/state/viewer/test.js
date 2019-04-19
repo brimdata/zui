@@ -4,10 +4,11 @@ import {
   appendViewerLogs,
   clearViewer,
   setViewerStatus,
-  spliceViewer
+  spliceViewer,
+  updateViewerColumns
 } from "./actions"
 import {conn, dns, http} from "../../test/mockLogs"
-import {getViewerLogs, getViewerStatus} from "./selector"
+import {getViewerColumns, getViewerLogs, getViewerStatus} from "./selector"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -58,4 +59,18 @@ test("results limitted", () => {
   let state = store.dispatchAll([setViewerStatus("LIMIT")])
 
   expect(getViewerStatus(state)).toBe("LIMIT")
+})
+
+test("update columns with same tds", () => {
+  let descriptor1 = {"1": [{name: "hello", type: "string"}]}
+  let descriptor2 = {"1": [{name: "world", type: "string"}]}
+  let state = store.dispatchAll([
+    updateViewerColumns(descriptor1),
+    updateViewerColumns(descriptor2)
+  ])
+
+  expect(getViewerColumns(state)).toEqual({
+    "9d14c2039a78d76760aae879c7fd2c82": [{name: "hello", type: "string"}],
+    "71f1b421963d31952e15edf7e3957a81": [{name: "world", type: "string"}]
+  })
 })

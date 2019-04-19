@@ -6,7 +6,11 @@ import type {BoomPayload} from "../BoomClient/types"
 import type {Dispatch} from "../state/reducers/types"
 import type {SearchCallbackMap, SearchTemplate} from "../searches/types"
 import {accumResults} from "../lib/accumResults"
-import {appendViewerLogs, setViewerStatus} from "../state/viewer/actions"
+import {
+  appendViewerLogs,
+  setViewerStatus,
+  updateViewerColumns
+} from "../state/viewer/actions"
 import Log from "../models/Log"
 
 export default function(
@@ -16,8 +20,10 @@ export default function(
   let accum = accumResults()
 
   function dispatchResults() {
-    let logs = Log.fromTupleSet(accum.getChannel("0"))
+    let tupleSet = accum.getChannel("0")
+    let logs = Log.fromTupleSet(tupleSet)
     dispatch(appendViewerLogs(logs))
+    dispatch(updateViewerColumns(tupleSet.descriptors))
     accum.clearTuples()
   }
 

@@ -2,6 +2,7 @@
 
 import type {
   VIEWER_CLEAR,
+  VIEWER_COLUMNS,
   VIEWER_LOGS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
@@ -9,11 +10,17 @@ import type {
 } from "./types"
 import {concat, splice} from "../../lib/Array"
 
-type Action = VIEWER_CLEAR | VIEWER_SPLICE | VIEWER_STATUS | VIEWER_LOGS
+type Action =
+  | VIEWER_CLEAR
+  | VIEWER_SPLICE
+  | VIEWER_STATUS
+  | VIEWER_LOGS
+  | VIEWER_COLUMNS
 
 const init = {
   logs: [],
-  status: "INCOMPLETE"
+  status: "INCOMPLETE",
+  columns: {}
 }
 
 export default function(
@@ -29,6 +36,8 @@ export default function(
       return {...state, logs: splice(state.logs, action.index)}
     case "VIEWER_STATUS":
       return {...state, status: action.status}
+    case "VIEWER_COLUMNS":
+      return {...state, columns: {...state.columns, ...action.columns}}
     default:
       return state
   }

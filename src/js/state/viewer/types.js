@@ -1,11 +1,15 @@
 /* @flow */
 
+import type {Descriptor} from "../../types"
 import Log from "../../models/Log"
 
 export type ViewerStatus = "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
+export type ViewerColumns = {[string]: Descriptor}
+
 export type ViewerState = {|
   logs: Log[],
+  columns: ViewerColumns,
   status: ViewerStatus
 |}
 
@@ -26,4 +30,9 @@ export type VIEWER_SPLICE = {
 export type VIEWER_STATUS = {
   type: "VIEWER_STATUS",
   status: ViewerStatus
+}
+
+export type VIEWER_COLUMNS = {
+  type: "VIEWER_COLUMNS",
+  columns: ViewerColumns
 }
