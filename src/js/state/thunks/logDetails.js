@@ -8,8 +8,8 @@ import {pushLogDetail} from "../actions"
 import Log from "../../models/Log"
 
 export const viewLogDetail = (log: Log): Thunk => (dispatch, getState) => {
+  dispatch(pushLogDetail(log))
   if (getRightSidebarIsOpen(getState())) {
-    dispatch(pushLogDetail(log))
     dispatch(fetchTuplesByUid(log))
     dispatch(fetchByMd5(log))
   }
