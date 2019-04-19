@@ -1,17 +1,19 @@
 /* @flow */
 
+import {ANALYTIC_MAX_RESULTS} from "../../models/searches/AnalyticSearch"
+import {PER_PAGE} from "../reducers/logViewer"
 import type {Thunk} from "../reducers/types"
+import {addEveryCountProc} from "../../searches/histogramSearch"
+import {addHeadProc, hasAnalytics} from "../../lib/Program"
 import {cancelBoomSearches, issueBoomSearch} from "./boomSearches"
 import {clearViewer} from "../viewer/actions"
-import {createHistogramSearch} from "../../searches/templates/histogramSearch"
-import {createViewerSearch} from "../../searches/templates/viewerSearch"
 import {getInnerTimeWindow, getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchProgram} from "../selectors/searchBar"
 import {getSearchRecord} from "../selectors/searchRecord"
 import {recordSearch} from "../actions"
 import {updateTab} from "./view"
 import {validateProgram} from "./searchBar"
-import viewerHandler from "../../searches/handlers/viewerHandler"
+import viewerHandler from "../../viewer/viewerHandler"
 
 type Options = {
   saveToHistory: boolean
@@ -36,14 +38,44 @@ export const fetchMainSearch = ({
   const outerSpan = getOuterTimeWindow(state)
   let searches = []
 
-  searches = [
-    createHistogramSearch(program, outerSpan),
-    createViewerSearch(program, outerSpan)
-  ]
+  if (hasAnalytics(program)) {
+    searches = [
+      {
+        name: "ViewerSearch",
+        tag: "viewer",
+        program: addHeadProc(program, ANALYTIC_MAX_RESULTS),
+        span: outerSpan,
+        handlers: [viewerHandler]
+      }
+    ]
+  } else if (innerSpan) {
+    searches = [
+      {
+        name: "ViewerSearch",
+        tag: "viewer",
+        program: addHeadProc(program, PER_PAGE),
+        span: innerSpan,
+        handlers: [viewerHandler]
+      }
+    ]
+  } else {
+    searches = [
+      {
+        name: "HistogramSearch",
+        tag: "viewer",
+        program: addEveryCountProc(program, outerSpan),
+        span: outerSpan
+      },
+      {
+        name: "ViewerSearch",
+        tag: "viewer",
+        program: addHeadProc(program, PER_PAGE),
+        span: outerSpan,
+        handlers: [viewerHandler]
+      }
+    ]
+  }
 
-  // if (hasAnalytics(program)) {
-  // return [new AnalyticSearch(program, outerSpan)]
-  // }
   //
   // if (innerSpan) {
   //   return [new LogSearch(program, innerSpan)]

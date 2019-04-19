@@ -15,7 +15,7 @@ import type {ViewerDimens} from "../../types"
 import {XPhonyViewer} from "../Viewer/PhonyViewer"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
-import {fetchAhead} from "../../state/thunks/logViewer"
+import {fetchNextPage} from "../../viewer/fetchNextPage"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/selectors/tableColumnSets"
 import {getPrevSearchProgram} from "../../state/selectors/searchBar"
@@ -91,7 +91,7 @@ export default function SearchResults(props: Props) {
   function onLastChunk() {
     console.log(props.isIncomplete)
     if (props.isIncomplete && !props.isFetching) {
-      props.dispatch(fetchAhead())
+      props.dispatch(fetchNextPage())
     }
   }
 

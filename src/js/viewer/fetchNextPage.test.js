@@ -1,12 +1,11 @@
 /* @flow */
-
-import {appendViewerLogs, spliceViewer} from "../viewer/actions"
-import {fetchAhead} from "./logViewer"
-import {setCurrentSpaceName, setOuterTimeWindow} from "../actions"
-import Handler from "../../BoomClient/lib/Handler"
-import Log from "../../models/Log"
-import MockBoomClient from "../../test/MockBoomClient"
-import initTestStore from "../../test/initTestStore"
+import {appendViewerLogs, spliceViewer} from "../state/viewer/actions"
+import {fetchNextPage} from "./fetchNextPage"
+import {setCurrentSpaceName, setOuterTimeWindow} from "../state/actions"
+import Handler from "../BoomClient/lib/Handler"
+import Log from "../models/Log"
+import MockBoomClient from "../test/MockBoomClient"
+import initTestStore from "../test/initTestStore"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
@@ -26,17 +25,17 @@ beforeEach(() => {
   store.clearActions()
 })
 
-test("#fetchAhead dispatches splice", () => {
-  store.dispatch(fetchAhead())
+test("#fetchNextPage dispatches splice", () => {
+  store.dispatch(fetchNextPage())
 
   expect(store.getActions()).toEqual(
     expect.arrayContaining([{type: "RESULTS_SPLICE", index: 2}])
   )
 })
 
-test("#fetchAhead adds 1ms to ts of last change", () => {
+test("#fetchNextPage adds 1ms to ts of last change", () => {
   const search = jest.spyOn(boom, "search")
-  store.dispatch(fetchAhead())
+  store.dispatch(fetchNextPage())
 
   const lastChangeTs = tuples[1][1]
   expect(search).toHaveBeenCalledWith(
@@ -47,10 +46,10 @@ test("#fetchAhead adds 1ms to ts of last change", () => {
   )
 })
 
-test("#fetchAhead when there is only 1 event", () => {
+test("#fetchNextPage when there is only 1 event", () => {
   const search = jest.spyOn(boom, "search")
   store.dispatch(spliceViewer(1))
-  store.dispatch(fetchAhead())
+  store.dispatch(fetchNextPage())
 
   expect(search).toHaveBeenCalledWith(
     expect.any(String),

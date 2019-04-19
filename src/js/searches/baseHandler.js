@@ -1,16 +1,16 @@
 /* @flow */
 import {throttle} from "lodash"
 
-import type {BoomPayload} from "../../BoomClient/types"
-import type {Dispatch} from "../../state/reducers/types"
-import type {SearchCallbackMap, SearchTemplate} from "../types"
-import {accumResults} from "../../lib/accumResults"
+import type {BoomPayload} from "../BoomClient/types"
+import type {Dispatch} from "../state/reducers/types"
+import type {SearchCallbackMap, SearchTemplate} from "./types"
+import {accumResults} from "../lib/accumResults"
 import {
   appendSearchResults,
   setSearchStats,
   setSearchStatus
-} from "../../state/searches/actions"
-import {boomTime} from "../../lib/Time"
+} from "../state/searches/actions"
+import {boomTime} from "../lib/Time"
 
 export default function(
   dispatch: Dispatch,
@@ -58,13 +58,13 @@ export default function(
   }
 
   function abort() {
-    dispatch(setSearchStatus(name, "ERROR"))
+    dispatch(setSearchStatus(name, "ABORTED"))
     dispatchResultsSteady.cancel()
     dispatchResults()
   }
 
   function error() {
-    dispatch(setSearchStatus(name, "ABORTED"))
+    dispatch(setSearchStatus(name, "ERROR"))
     dispatchResultsSteady.cancel()
     dispatchResults()
   }

@@ -8,7 +8,7 @@ import {clearSearchResults, registerSearch} from "../searches/actions"
 import {fetchSearch} from "../../backend/fetch"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getSearches} from "../searches/selector"
-import baseHandler from "../../searches/handlers/baseHandler"
+import baseHandler from "../../searches/baseHandler"
 
 export const killBoomSearches = (tag?: BoomSearchTag): Thunk => (
   _dispatch,

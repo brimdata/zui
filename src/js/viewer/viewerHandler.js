@@ -1,13 +1,14 @@
 /* @flow */
 import {throttle} from "lodash"
 
-import type {BoomPayload} from "../../BoomClient/types"
-import type {Dispatch} from "../../state/reducers/types"
-import {PER_PAGE} from "../../state/reducers/logViewer"
-import type {SearchCallbackMap, SearchTemplate} from "../types"
-import {accumResults} from "../../lib/accumResults"
-import {appendViewerLogs, setViewerStatus} from "../../state/viewer/actions"
-import Log from "../../models/Log"
+import {ANALYTIC_MAX_RESULTS} from "../models/searches/AnalyticSearch"
+import type {BoomPayload} from "../BoomClient/types"
+import type {Dispatch} from "../state/reducers/types"
+import {PER_PAGE} from "../state/reducers/logViewer"
+import type {SearchCallbackMap, SearchTemplate} from "../searches/types"
+import {accumResults} from "../lib/accumResults"
+import {appendViewerLogs, setViewerStatus} from "../state/viewer/actions"
+import Log from "../models/Log"
 
 export default function(
   dispatch: Dispatch,
@@ -37,6 +38,8 @@ export default function(
         dispatchResultsSteady.cancel()
         dispatchResults()
         if (count < PER_PAGE) dispatch(setViewerStatus("COMPLETE"))
+        else if (count === ANALYTIC_MAX_RESULTS)
+          dispatch(setViewerStatus("LIMIT"))
         break
     }
   }

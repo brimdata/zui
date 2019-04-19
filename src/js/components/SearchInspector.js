@@ -9,7 +9,7 @@ import type {SearchesState} from "../state/searches/types"
 import {getSearchInspectorIsOpen} from "../state/reducers/view"
 import {getSearches} from "../state/searches/selector"
 import {hideSearchInspector} from "../state/actions"
-import {killBoomSearch} from "../state/thunks/boomSearches"
+import {killSearch} from "../searches/cancelSearch"
 import CloseButton from "./CloseButton"
 import HorizontalTable from "./Tables/HorizontalTable"
 import Log from "../models/Log"
@@ -28,7 +28,7 @@ export default function SearchInspector({dispatch, searches, isOpen}: Props) {
   let logs = toLogs(searches)
 
   function Actions({log}) {
-    const onClick = () => dispatch(killBoomSearch(log.get("name")))
+    const onClick = () => dispatch(killSearch(log.get("name")))
     return <button onClick={onClick}>Kill</button>
   }
 
