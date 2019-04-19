@@ -8,7 +8,6 @@ import type {Correlations} from "./correlations"
 import type {Histogram} from "./histogram"
 import type {Investigation} from "./investigation"
 import type {LogDetails} from "./logDetails"
-import type {LogViewer} from "./logViewer"
 import type {Logs} from "./logs"
 import type {Notifications} from "./notifications"
 import type {SearchBar} from "./searchBar"
@@ -32,7 +31,6 @@ export type State = {
   timeWindow: TimeWindow,
   spaces: Spaces,
   boomd: Boomd,
-  logViewer: LogViewer,
   searchHistory: SearchHistory,
   whois: Whois,
   logDetails: LogDetails,

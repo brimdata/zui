@@ -8,7 +8,6 @@ import correlations from "./correlations"
 import histogram from "./histogram"
 import investigation from "./investigation"
 import logDetails from "./logDetails"
-import logViewer from "./logViewer"
 import logs from "./logs"
 import notifications from "./notifications"
 import packets from "./packets"
@@ -39,7 +38,6 @@ export default combineReducers<*, *>({
   boomd,
   starredLogs,
   packets,
-  logViewer,
   searchHistory,
   whois,
   notifications,

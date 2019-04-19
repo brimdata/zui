@@ -10,7 +10,7 @@ import {
   md5Correlation,
   rxHostsCorrelation,
   txHostsCorrelation
-} from "../../models/searches/programs"
+} from "../../searches/programs"
 import {resultsToLogs} from "../../log/resultsToLogs"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"

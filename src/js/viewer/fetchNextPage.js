@@ -1,7 +1,7 @@
 /* @flow */
 import {isEmpty} from "lodash"
 
-import {PER_PAGE} from "../state/reducers/logViewer"
+import {PER_PAGE} from "./config"
 import type {Thunk} from "../state/reducers/types"
 import {add} from "../lib/Time"
 import {addHeadProc} from "../lib/Program"

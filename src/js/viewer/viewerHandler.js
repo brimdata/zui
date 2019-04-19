@@ -1,10 +1,9 @@
 /* @flow */
 import {throttle} from "lodash"
 
-import {ANALYTIC_MAX_RESULTS} from "../models/searches/AnalyticSearch"
+import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {BoomPayload} from "../BoomClient/types"
 import type {Dispatch} from "../state/reducers/types"
-import {PER_PAGE} from "../state/reducers/logViewer"
 import type {SearchCallbackMap, SearchTemplate} from "../searches/types"
 import {accumResults} from "../lib/accumResults"
 import {appendViewerLogs, setViewerStatus} from "../state/viewer/actions"

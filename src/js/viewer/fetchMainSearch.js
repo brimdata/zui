@@ -1,7 +1,6 @@
 /* @flow */
 
-import {ANALYTIC_MAX_RESULTS} from "../models/searches/AnalyticSearch"
-import {PER_PAGE} from "../state/reducers/logViewer"
+import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {Thunk} from "../state/reducers/types"
 import {addEveryCountProc} from "../searches/histogramSearch"
 import {addHeadProc, hasAnalytics} from "../lib/Program"

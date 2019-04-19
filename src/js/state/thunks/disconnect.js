@@ -7,7 +7,6 @@ import {
   clearDescriptors,
   clearFilterTree,
   clearHistogram,
-  clearLogViewer,
   clearLogs,
   clearSearchBar,
   clearSearchHistory,
@@ -15,6 +14,7 @@ import {
   clearStarredLogs,
   clearTimeWindows
 } from "../actions"
+import {clearViewer} from "../viewer/actions"
 
 export const disconnect = (): Thunk => (dispatch) => {
   dispatch(clearLogs())
@@ -27,6 +27,6 @@ export const disconnect = (): Thunk => (dispatch) => {
   dispatch(clearFilterTree())
   dispatch(clearStarredLogs())
   dispatch(clearSearchHistory())
-  dispatch(clearLogViewer())
+  dispatch(clearViewer())
   dispatch(clearHistogram())
 }

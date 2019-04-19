@@ -164,30 +164,6 @@ export const spliceLogs = () => ({
   type: "LOGS_SPLICE"
 })
 
-export const clearLogViewer = () => ({
-  type: "LOG_VIEWER_CLEAR"
-})
-
-export const setMoreBehind = (value: boolean) => ({
-  type: "LOG_VIEWER_MORE_BEHIND_SET",
-  value
-})
-
-export const setMoreAhead = (value: boolean) => ({
-  type: "LOG_VIEWER_MORE_AHEAD_SET",
-  value
-})
-
-export const setIsFetchingBehind = (value: boolean) => ({
-  type: "LOG_VIEWER_IS_FETCHING_BEHIND_SET",
-  value
-})
-
-export const setIsFetchingAhead = (value: boolean) => ({
-  type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET",
-  value
-})
-
 export const addNotification = (notification: Notification) => ({
   type: "NOTIFICATIONS_ADD",
   notification

@@ -6,7 +6,7 @@ import {
   md5Correlation,
   rxHostsCorrelation,
   txHostsCorrelation
-} from "../models/searches/programs"
+} from "../searches/programs"
 import {getTimeWindow} from "../state/reducers/timeWindow"
 import {issueSearch} from "../searches/issueSearch"
 import {parallelizeProcs} from "../lib/Program"
