@@ -5,7 +5,6 @@ import {type Store as ReduxStore} from "redux"
 import type {Analysis} from "./analysis"
 import type {Boomd} from "./boomd"
 import type {Correlations} from "./correlations"
-import type {Descriptors} from "./descriptors"
 import type {Histogram} from "./histogram"
 import type {Investigation} from "./investigation"
 import type {LogDetails} from "./logDetails"
@@ -37,7 +36,6 @@ export type State = {
   searchHistory: SearchHistory,
   whois: Whois,
   logDetails: LogDetails,
-  descriptors: Descriptors,
   view: View,
   notifications: Notifications,
   tableColumnSets: TableColumnSets,
