@@ -1,16 +1,15 @@
 /* @flow */
-
 import {createSelector} from "reselect"
-import {uniqBy} from "lodash"
 
 import type {Column} from "../../types"
 import type {State} from "../reducers/types"
 import {getViewerLogs} from "../viewer/selector"
+import {uniqBy} from "../../lib/Array"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
 
-export const getTableColumnSets = (state: State) => {
-  return state.tableColumnSets
+export function getColumns(state: State) {
+  return state.columns
 }
 
 export const getCurrentTableColumnsId = createSelector<State, void, string, *>(
@@ -21,6 +20,7 @@ export const getCurrentTableColumnsId = createSelector<State, void, string, *>(
     const td = logs[0].get("_td")
     if (!td) return "analysis"
 
+    // if (getViewerDescriptors().length === 1) return desc.idHash()
     for (const log of logs) {
       if (log.get("_td") !== td) return "temp"
     }
@@ -56,7 +56,7 @@ export const getCurrentUniqColumns = createSelector<State, void, *, *>(
 export const getCurrentTableColumns = createSelector<State, void, *, *, *, *>(
   getCurrentTableColumnsId,
   getCurrentUniqColumns,
-  getTableColumnSets,
+  getColumns,
   (tableKey, columns, tableSettings) => {
     return new TableColumns(tableKey, columns, tableSettings[tableKey])
   }

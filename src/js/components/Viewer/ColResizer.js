@@ -3,8 +3,8 @@ import {connect} from "react-redux"
 import React from "react"
 
 import {type DispatchProps} from "../../state/reducers/types"
-import type {TableColumn} from "../../types"
-import {updateTableColumns} from "../../state/actions"
+import type {TableColumn} from "../../state/columns/types"
+import {updateColumns} from "../../state/columns/actions"
 import columnKey from "../../lib/columnKey"
 import dispatchToProps from "../../lib/dispatchToProps"
 
@@ -27,7 +27,7 @@ export default class ColResizer extends React.PureComponent<Props> {
       const {column} = this.props
       const moved = e.clientX - start
       const update = {[columnKey(column)]: {width: oldWidth + moved}}
-      this.props.dispatch(updateTableColumns(this.props.tableId, update))
+      this.props.dispatch(updateColumns(this.props.tableId, update))
     }
   }
 

@@ -3,8 +3,10 @@
 import isEqual from "lodash/isEqual"
 import isNumber from "lodash/isNumber"
 import _uniq from "lodash/uniq"
+import _uniqBy from "lodash/uniqBy"
 
 export const uniq = _uniq
+export const uniqBy = _uniqBy
 
 export const indexOfLastChange = (
   array: *[],

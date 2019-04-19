@@ -1,22 +1,13 @@
 /* @flow */
-import type {
-  Column,
-  Descriptor,
-  Notification,
-  SearchRecord,
-  Tuple,
-  Updates
-} from "../types"
 import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
+import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
 import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
 import type {TimeWindow} from "./reducers/timeWindow"
 import {isArray} from "../lib/is"
 import Field from "../models/Field"
-import TableColumns from "../models/TableColumns"
-import columnKey from "../lib/columnKey"
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -217,52 +208,6 @@ export const unstarLog = (tuple: Tuple) => ({
 export const clearStarredLogs = () => ({
   type: "STARRED_LOGS_CLEAR"
 })
-
-export const updateTableColumns = (tableId: string, updates: Updates) => ({
-  type: "TABLE_LAYOUT_UPDATE",
-  tableId,
-  updates
-})
-
-export const hideColumn = (tableId: string, column: Column) =>
-  updateTableColumns(tableId, {
-    [columnKey(column)]: {
-      isVisible: false
-    }
-  })
-
-export const showColumn = (tableId: string, column: Column) =>
-  updateTableColumns(tableId, {
-    [columnKey(column)]: {
-      isVisible: true
-    }
-  })
-
-export const showAllColumns = (table: TableColumns) => {
-  return updateTableColumns(
-    table.id,
-    table.getColumns().reduce(
-      (updates, col) => ({
-        ...updates,
-        [columnKey(col)]: {isVisible: true}
-      }),
-      {}
-    )
-  )
-}
-
-export const hideAllColumns = (table: TableColumns) => {
-  return updateTableColumns(
-    table.id,
-    table.getColumns().reduce(
-      (updates, col) => ({
-        ...updates,
-        [columnKey(col)]: {isVisible: false}
-      }),
-      {}
-    )
-  )
-}
 
 export const setOuterTimeWindow = (timeWindow: DateTuple) => ({
   type: "OUTER_TIME_WINDOW_SET",

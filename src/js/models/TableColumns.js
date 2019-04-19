@@ -1,6 +1,7 @@
 /* @flow */
 
-import type {Column, TableColumn, ColumnSettingsMap} from "../types"
+import type {Column} from "../types"
+import type {ColumnSettingsMap, TableColumn} from "../state/columns/types"
 import columnKey from "../lib/columnKey"
 import columnOrder from "../lib/columnOrder"
 

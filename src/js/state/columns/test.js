@@ -1,13 +1,13 @@
 /* @flow */
 
-import {getTableColumnSets} from "../selectors/tableColumnSets"
+import {getColumns} from "./selector"
 import {
   hideAllColumns,
   hideColumn,
   showAllColumns,
   showColumn,
-  updateTableColumns
-} from "../actions"
+  updateColumns
+} from "../columns/actions"
 import TableColumns from "../../models/TableColumns"
 import initTestStore from "../../test/initTestStore"
 
@@ -16,15 +16,15 @@ let store
 beforeEach(() => {
   store = initTestStore()
 })
-describe("TableColumnSets", () => {
+describe("Columns", () => {
   test("get initial state", () => {
     const state = store.getState()
-    expect(getTableColumnSets(state)).toEqual({})
+    expect(getColumns(state)).toEqual({})
   })
 
   test("Bulk update column settings", () => {
     const state = store.dispatchAll([
-      updateTableColumns(tableId, {
+      updateColumns(tableId, {
         "_path:string": {
           width: 22,
           isVisible: true,
@@ -36,12 +36,12 @@ describe("TableColumnSets", () => {
           position: 1
         }
       }),
-      updateTableColumns(tableId, {
+      updateColumns(tableId, {
         "_path:string": {width: 100}
       })
     ])
 
-    expect(getTableColumnSets(state)[tableId]).toEqual({
+    expect(getColumns(state)[tableId]).toEqual({
       "_path:string": {
         width: 100,
         isVisible: true,
@@ -60,7 +60,7 @@ describe("TableColumnSets", () => {
       hideColumn(tableId, {name: "a", type: "string"})
     ])
 
-    const table = getTableColumnSets(state)[tableId]
+    const table = getColumns(state)[tableId]
 
     expect(table["a:string"]).toEqual({isVisible: false})
   })
@@ -71,7 +71,7 @@ describe("TableColumnSets", () => {
       showColumn(tableId, {name: "a", type: "string"})
     ])
 
-    const table = getTableColumnSets(state)[tableId]
+    const table = getColumns(state)[tableId]
 
     expect(table["a:string"]).toEqual({isVisible: true})
   })
@@ -93,7 +93,7 @@ describe("TableColumnSets", () => {
 
     const state = store.dispatchAll([showAllColumns(tableColumns)])
 
-    const table = getTableColumnSets(state)[tableId]
+    const table = getColumns(state)[tableId]
 
     expect(table["a:string"]).toEqual({isVisible: true})
     expect(table["b:string"]).toEqual({isVisible: true})
@@ -117,7 +117,7 @@ describe("TableColumnSets", () => {
 
     const state = store.dispatchAll([hideAllColumns(tableColumns)])
 
-    const table = getTableColumnSets(state)[tableId]
+    const table = getColumns(state)[tableId]
 
     expect(table["a:string"]).toEqual({isVisible: false})
     expect(table["b:string"]).toEqual({isVisible: false})

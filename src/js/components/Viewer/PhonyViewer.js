@@ -6,10 +6,10 @@ import React from "react"
 import ReactDOM from "react-dom"
 
 import type {Dispatch, State} from "../../state/reducers/types"
-import type {TableColumn} from "../../types"
-import {getCurrentTableColumns} from "../../state/selectors/tableColumnSets"
+import type {TableColumn} from "../../state/columns/types"
+import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getViewerLogs} from "../../state/viewer/selector"
-import {updateTableColumns} from "../../state/actions"
+import {updateColumns} from "../../state/columns/actions"
 import * as Arr from "../../lib/Array"
 import * as Doc from "../../lib/Doc"
 import Log from "../../models/Log"
@@ -66,9 +66,7 @@ export default class PhonyViewer extends React.Component<Props> {
         {}
       )
 
-      this.props.dispatch(
-        updateTableColumns(this.props.tableColumns.id, updates)
-      )
+      this.props.dispatch(updateColumns(this.props.tableColumns.id, updates))
     }
   }
 
