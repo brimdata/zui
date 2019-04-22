@@ -8,6 +8,7 @@ import React from "react"
 import type {Credentials} from "../lib/Credentials"
 import {connectBoomd} from "../state/thunks/boomd"
 import {getCredentials} from "../state/reducers/boomd"
+import {setAppMenu} from "../electron/setAppMenu"
 import {setBoomdCredentials} from "../state/actions"
 import AdminTitle from "./AdminTitle"
 import AppError from "../models/AppError"
@@ -30,6 +31,7 @@ type CompState = {|
 
 export default class Connect extends React.Component<Props, CompState> {
   constructor(props: Props) {
+    setAppMenu("LOGIN")
     super(props)
     this.state = {
       ...props.credentials,

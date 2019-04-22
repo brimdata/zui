@@ -1,6 +1,7 @@
 module.exports = {
   excludes: ["./dist/**", "**/**.test.js"],
   namedExports: {
+    electron: ["remote"],
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
     react: ["useState", "useRef", "useEffect", "useLayoutEffect"],
