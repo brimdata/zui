@@ -6,20 +6,18 @@ import classNames from "classnames"
 
 import {type State} from "../state/reducers/types"
 import {XSearchStats} from "./SearchStats"
-import {getMainSearchIsFetching} from "../state/selectors/boomSearches"
-import {isFetchingAhead} from "../state/reducers/logViewer"
+import {getSearchStatus} from "../state/searches/selector"
 import LoadingMessage from "./LoadingMessage"
 
 type StateProps = {|
-  isFetching: boolean,
-  isFetchingAhead: boolean
+  isFetching: boolean
 |}
 
 type Props = {|...StateProps|}
 
 export default class StatusBar extends React.Component<Props> {
   loadingMessage() {
-    return this.props.isFetchingAhead ? "Loading More" : "Searching"
+    return "Searching"
   }
 
   render() {
@@ -41,8 +39,7 @@ export default class StatusBar extends React.Component<Props> {
 }
 
 const stateToProps = (state: State): StateProps => ({
-  isFetching: getMainSearchIsFetching(state) || isFetchingAhead(state),
-  isFetchingAhead: isFetchingAhead(state)
+  isFetching: getSearchStatus(state, "ViewerSearch") === "FETCHING"
 })
 
 export const XStatusBar = connect<Props, {||}, _, _, _, _>(stateToProps)(

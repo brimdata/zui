@@ -2,7 +2,7 @@
 import {whatIs} from "../lib/is"
 
 export function mapWithTypes(value: *, types: *, transform: Function): Object {
-  const type = whatIs(value)
+  const type = whatIs(types)
   switch (type) {
     case "Object":
       var newObj = {}
@@ -12,7 +12,7 @@ export function mapWithTypes(value: *, types: *, transform: Function): Object {
       }
       return newObj
     case "Array":
-      return value.map((v, i) => mapWithTypes(v, types[i], transform))
+      return types.map((t, i) => mapWithTypes(value[i], t, transform))
     default:
       return transform(value, types)
   }

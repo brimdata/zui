@@ -1,28 +1,28 @@
 /* @flow */
-import type {HistogramData, Results} from "../types"
+import type {HistogramData} from "../types"
 import type {Span} from "../BoomClient/types"
 import {floorAndCeil} from "../lib/TimeWindow"
 import {splitOnEvery} from "../models/TimeWindow"
 import {toDate} from "../lib/TimeField"
+import Log from "../models/Log"
 import MergeHash from "../models/MergeHash"
 import UniqArray from "../models/UniqArray"
 import histogramInterval from "../lib/histogramInterval"
 
 export function createHistogramData(
-  results: Results,
+  logs: Log[],
   timeWindow: Span
 ): HistogramData {
-  let tuples = results.tuples || []
   let interval = histogramInterval(timeWindow)
   let roundedTimeWindow = floorAndCeil(timeWindow, interval.roundingUnit)
   let buckets = splitOnEvery(roundedTimeWindow, interval)
   let keys = new UniqArray()
   let hash = new MergeHash()
 
-  tuples.forEach((d) => {
-    let ts = toDate(d[0])
-    let path = d[1]
-    let count = parseInt(d[2])
+  logs.forEach((log) => {
+    let ts = toDate(log.get("ts"))
+    let path = log.get("_path")
+    let count = parseInt(log.get("count"))
     keys.push(path)
     hash.merge(ts, {[path]: count})
   })

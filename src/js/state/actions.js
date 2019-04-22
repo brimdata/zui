@@ -1,39 +1,13 @@
 /* @flow */
-import type {BoomSearchStatus, BoomSearchTag} from "./reducers/boomSearches"
-import type {
-  Column,
-  Descriptor,
-  Notification,
-  SearchRecord,
-  Tuple,
-  Updates
-} from "../types"
 import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
+import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
-import {Node} from "../models/Node"
 import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
 import type {TimeWindow} from "./reducers/timeWindow"
 import {isArray} from "../lib/is"
 import Field from "../models/Field"
-import Handler from "../BoomClient/lib/Handler"
-import TableColumns from "../models/TableColumns"
-import columnKey from "../lib/columnKey"
-
-type RegisterOpts = {handler: Handler, tag: BoomSearchTag}
-
-export function setAnalysis(descriptor: Descriptor, tuples: Tuple[]) {
-  return {
-    type: "ANALYSIS_SET",
-    descriptor,
-    tuples
-  }
-}
-
-export const clearAnalysis = () => ({
-  type: "ANALYSIS_CLEAR"
-})
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -48,97 +22,6 @@ export const useBoomIndex = (value: boolean) => ({
 export const setBoomdCredentials = (credentials: Credentials) => ({
   type: "BOOMD_CREDENTIALS_SET",
   credentials
-})
-
-export const registerBoomSearch = (name: string, opts: RegisterOpts) => ({
-  type: "BOOM_SEARCHES_REGISTER",
-  search: {
-    name,
-    handler: opts.handler,
-    status: "FETCHING",
-    stats: {},
-    tag: opts.tag
-  }
-})
-
-export const setBoomSearchStatus = (
-  name: string,
-  status: BoomSearchStatus
-) => ({
-  type: "BOOM_SEARCHES_SET_STATUS",
-  name,
-  status
-})
-
-export const setBoomSearchStats = (name: string, stats: {}) => ({
-  type: "BOOM_SEARCHES_SET_STATS",
-  name,
-  stats
-})
-
-export const clearBoomSearches = (tag?: string) => ({
-  type: "BOOM_SEARCHES_CLEAR",
-  tag
-})
-
-export const setCorrelation = (key: string, name: string, data: *) => ({
-  type: "CORRELATION_SET",
-  key,
-  name,
-  data
-})
-
-export const clearCorrelations = (key: string) => ({
-  type: "CORRELATIONS_CLEAR",
-  key
-})
-
-export const clearAllCorrelations = () => ({
-  type: "CORRELATIONS_CLEAR_ALL"
-})
-
-export const requestDescriptor = (space: string, id: string) => ({
-  type: "DESCRIPTOR_REQUEST",
-  space,
-  id
-})
-
-export const receiveDescriptor = (
-  space: string,
-  id: string,
-  descriptor: {name: string, type: string}[]
-) => ({
-  type: "DESCRIPTOR_RECEIVE",
-  space,
-  id,
-  descriptor
-})
-
-export const errorDescriptor = (error: string) => ({
-  type: "DESCRIPTOR_ERROR",
-  error
-})
-
-export const clearDescriptors = () => ({
-  type: "DESCRIPTORS_CLEAR"
-})
-
-export const clearFilterTree = () => ({
-  type: "FILTER_TREE_CLEAR"
-})
-
-export const removeFilterTreeNode = (node: Node) => ({
-  type: "FILTER_TREE_NODE_REMOVE",
-  node
-})
-
-export const histogramSearchResult = (data: Object) => ({
-  type: "HISTOGRAM_SEARCH_RESULT",
-  data
-})
-
-export const clearHistogram = () => ({
-  type: "HISTOGRAM_CLEAR"
 })
 
 export const createFinding = (finding: $Shape<Finding>) => ({
@@ -178,48 +61,6 @@ export const backLogDetail = () => ({
 
 export const forwardLogDetail = () => ({
   type: "LOG_DETAIL_FORWARD"
-})
-
-export const clearLogs = () => ({
-  type: "LOGS_CLEAR"
-})
-
-export const receiveLogTuples = (tuples: Tuple[]) => ({
-  type: "LOGS_RECEIVE",
-  tuples
-})
-
-export const setLogsSpliceIndex = (index: number) => ({
-  type: "LOGS_SPLICE_INDEX_SET",
-  index
-})
-
-export const spliceLogs = () => ({
-  type: "LOGS_SPLICE"
-})
-
-export const clearLogViewer = () => ({
-  type: "LOG_VIEWER_CLEAR"
-})
-
-export const setMoreBehind = (value: boolean) => ({
-  type: "LOG_VIEWER_MORE_BEHIND_SET",
-  value
-})
-
-export const setMoreAhead = (value: boolean) => ({
-  type: "LOG_VIEWER_MORE_AHEAD_SET",
-  value
-})
-
-export const setIsFetchingBehind = (value: boolean) => ({
-  type: "LOG_VIEWER_IS_FETCHING_BEHIND_SET",
-  value
-})
-
-export const setIsFetchingAhead = (value: boolean) => ({
-  type: "LOG_VIEWER_IS_FETCHING_AHEAD_SET",
-  value
 })
 
 export const addNotification = (notification: Notification) => ({
@@ -367,52 +208,6 @@ export const unstarLog = (tuple: Tuple) => ({
 export const clearStarredLogs = () => ({
   type: "STARRED_LOGS_CLEAR"
 })
-
-export const updateTableColumns = (tableId: string, updates: Updates) => ({
-  type: "TABLE_LAYOUT_UPDATE",
-  tableId,
-  updates
-})
-
-export const hideColumn = (tableId: string, column: Column) =>
-  updateTableColumns(tableId, {
-    [columnKey(column)]: {
-      isVisible: false
-    }
-  })
-
-export const showColumn = (tableId: string, column: Column) =>
-  updateTableColumns(tableId, {
-    [columnKey(column)]: {
-      isVisible: true
-    }
-  })
-
-export const showAllColumns = (table: TableColumns) => {
-  return updateTableColumns(
-    table.id,
-    table.getColumns().reduce(
-      (updates, col) => ({
-        ...updates,
-        [columnKey(col)]: {isVisible: true}
-      }),
-      {}
-    )
-  )
-}
-
-export const hideAllColumns = (table: TableColumns) => {
-  return updateTableColumns(
-    table.id,
-    table.getColumns().reduce(
-      (updates, col) => ({
-        ...updates,
-        [columnKey(col)]: {isVisible: false}
-      }),
-      {}
-    )
-  )
-}
 
 export const setOuterTimeWindow = (timeWindow: DateTuple) => ({
   type: "OUTER_TIME_WINDOW_SET",

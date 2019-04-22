@@ -11,6 +11,6 @@ test("#detail first shows right pane, then views log", () => {
   expect(store.getActions().map((a) => a.type)).toEqual([
     "RIGHT_SIDEBAR_SHOW",
     "LOG_DETAIL_PUSH",
-    "BOOM_SEARCHES_REGISTER"
+    "SEARCH_REGISTER"
   ])
 })

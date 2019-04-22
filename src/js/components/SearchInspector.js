@@ -5,26 +5,30 @@ import React from "react"
 
 import type {Dispatch, State} from "../state/reducers/types"
 import {PaneTitle} from "./Pane"
-import {getBoomSearchesAsLogs} from "../state/selectors/boomSearches"
+import type {SearchesState} from "../state/searches/types"
 import {getSearchInspectorIsOpen} from "../state/reducers/view"
+import {getSearches} from "../state/searches/selector"
 import {hideSearchInspector} from "../state/actions"
-import {killBoomSearch} from "../state/thunks/boomSearches"
+import {killSearch} from "../searches/cancelSearch"
 import CloseButton from "./CloseButton"
 import HorizontalTable from "./Tables/HorizontalTable"
 import Log from "../models/Log"
+import Stats from "../models/Stats"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {
   isOpen: boolean,
-  logs: Log[],
+  searches: SearchesState,
   dispatch: Dispatch
 }
 
-export default function SearchInspector({dispatch, logs, isOpen}: Props) {
+export default function SearchInspector({dispatch, searches, isOpen}: Props) {
   if (!isOpen) return null
 
+  let logs = toLogs(searches)
+
   function Actions({log}) {
-    const onClick = () => dispatch(killBoomSearch(log.get("name")))
+    const onClick = () => dispatch(killSearch(log.get("name")))
     return <button onClick={onClick}>Kill</button>
   }
 
@@ -45,9 +49,41 @@ export default function SearchInspector({dispatch, logs, isOpen}: Props) {
   )
 }
 
+function toLogs(searches) {
+  const descriptor = [
+    {name: "name", type: "string"},
+    {name: "status", type: "string"},
+    {name: "tag", type: "string"},
+    {name: "elapsed", type: "interval"},
+    {name: "bytes matched", type: "count"},
+    {name: "bytes read", type: "count"},
+    {name: "tuples matched", type: "count"},
+    {name: "tuples read", type: "count"}
+  ]
+
+  let tuples = []
+
+  for (let name in searches) {
+    const search = searches[name]
+    const stats = new Stats(search.stats)
+    tuples.push([
+      search.name,
+      search.status,
+      search.tag,
+      stats.getElapsed(),
+      stats.getBytesMatched(),
+      stats.getBytesRead(),
+      stats.getTuplesMatched(),
+      stats.getTuplesRead()
+    ])
+  }
+
+  return Log.build({descriptor, tuples})
+}
+
 const stateToProps = (state: State) => ({
   isOpen: getSearchInspectorIsOpen(state),
-  logs: getBoomSearchesAsLogs(state)
+  searches: getSearches(state)
 })
 
 export const XSearchInspector = connect<Props, {||}, _, _, _, _>(

@@ -2,6 +2,11 @@
 
 import isEqual from "lodash/isEqual"
 import isNumber from "lodash/isNumber"
+import _uniq from "lodash/uniq"
+import _uniqBy from "lodash/uniqBy"
+
+export const uniq = _uniq
+export const uniqBy = _uniqBy
 
 export const indexOfLastChange = (
   array: *[],
@@ -78,4 +83,14 @@ export function fillWithIndex(desiredLength: number) {
   let arr = []
   for (let i = 0; i < desiredLength; ++i) arr.push(i)
   return arr
+}
+
+export function splice(array: *[], index: number) {
+  const copy = [...array]
+  copy.splice(index)
+  return copy
+}
+
+export function concat(array1: *[], array2: *[]) {
+  return [...array1, ...array2]
 }

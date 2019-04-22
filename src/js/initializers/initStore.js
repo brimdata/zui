@@ -9,6 +9,7 @@ import BoomClient from "../BoomClient"
 import reducer from "../state/reducers"
 
 export default (initialState?: State, boom?: BoomClient) =>
+  //$FlowFixMe
   createStore<State, Action, Dispatch>(
     reducer,
     initialState,

@@ -1,8 +1,8 @@
 /* @flow */
 
-import type {EpochObj, TimeUnit} from "../lib/Time"
 import type {RightClickAction} from "../rightclick/actions"
 import type {Span} from "../BoomClient/types"
+import type {TimeUnit} from "../lib/Time"
 import AppError from "../models/AppError"
 import Field from "../models/Field"
 import Log from "../models/Log"
@@ -15,29 +15,12 @@ export type Notification =
       key: string
     }
 
-export type ColumnSetting = {
-  width?: number,
-  isVisible?: boolean,
-  position?: number
-}
-
-export type TableColumn = {
-  isVisible: boolean,
-  width: ?number,
-  name: string,
-  type: string,
-  position: number
-}
-
-export type ColumnSettingsMap = {
-  [string]: ColumnSetting
-}
-
 export type Column = {type: string, name: string}
-
 export type Descriptor = Column[]
-
+export type Descriptors = {[string]: Descriptor}
 export type Tuple = string[]
+export type Tuples = Tuple[]
+export type TupleSet = {descriptors: Descriptors, tuples: Tuples}
 
 export type ViewerDimens = {
   rowHeight: number,
@@ -49,33 +32,6 @@ export type ViewerDimens = {
 }
 
 export type RowRenderer = (index: number, dimens: ViewerDimens) => *
-
-export type SearchResult = {
-  type: "SearchResult",
-  channel_id?: number,
-  results: {
-    tuples: Tuple[],
-    descriptor: Descriptor
-  }
-}
-
-export type SearchEnd = {
-  type: "SearchEnd"
-}
-
-export type SearchStats = {
-  type: "SearchStats",
-  start_time: EpochObj,
-  update_time: EpochObj,
-  stats: {
-    bytes_matched: number,
-    bytes_read: number,
-    tuples_matched: number,
-    tuples_read: number
-  }
-}
-
-export type Payload = SearchResult | SearchEnd | SearchStats
 
 export type HashCorrelation = {
   name: "hash" | "tx" | "rx" | "md5",
@@ -142,5 +98,3 @@ export type SearchRecord = {
   span: Span,
   space: string
 }
-
-export type Updates = {[string]: ColumnSetting}

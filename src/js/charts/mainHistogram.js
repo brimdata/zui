@@ -2,13 +2,13 @@
 import * as d3 from "d3"
 
 import type {Dispatch} from "../state/reducers/types"
-import type {Results} from "../types"
 import type {Span} from "../BoomClient/types"
 import {createHistogramData} from "./createHistogramData"
-import {fetchMainSearch} from "../state/thunks/mainSearch"
+import {fetchMainSearch} from "../viewer/fetchMainSearch"
 import {fillWithIndex} from "../lib/Array"
 import {setInnerTimeWindow, setOuterTimeWindow} from "../state/actions"
 import Chart from "./Chart"
+import Log from "../models/Log"
 import focusBar from "./elements/focusBar"
 import hoverLine from "./elements/hoverLine"
 import singleTickYAxis from "./elements/singleTickYAxis"
@@ -19,8 +19,10 @@ import xPositionTooltip from "./elements/xPositionTooltip"
 
 type Props = {
   dispatch: Dispatch,
-  results: Results,
-  timeWindow: Span
+  logs: Log[],
+  timeWindow: Span,
+  width: number,
+  height: number
 }
 
 export function buildMainHistogramChart({dispatch, ...props}: Props) {
@@ -53,7 +55,7 @@ export function buildMainHistogramChart({dispatch, ...props}: Props) {
   return new Chart({
     props: props,
     builders: {
-      data: ({props}) => createHistogramData(props.results, props.timeWindow),
+      data: ({props}) => createHistogramData(props.logs, props.timeWindow),
       margins: (_) => ({left: 0, right: 0, top: 12, bottom: 24}),
       dimens: ({props, margins}) => ({
         width: props.width,

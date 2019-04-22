@@ -2,18 +2,17 @@
 
 import React from "react"
 
-import {getSearchStats} from "../state/selectors/stats"
+import type {SearchStats as TSearchStats} from "../state/searches/types"
+import {getSearchStats} from "../state/searches/selector"
 import * as fmt from "../lib/fmt"
 
 type Props = {
-  bytesRead: number,
-  startTime: number,
-  updateTime: number
+  stats?: TSearchStats
 }
 
 export default class SearchStats extends React.Component<Props> {
   render() {
-    const {bytesRead, startTime, updateTime} = this.props
+    const {bytesRead, startTime, updateTime} = this.props.stats || {}
     return (
       <div className="search-stats">
         <p>
@@ -53,7 +52,7 @@ const fmtSpeed = (startTime, updateTime, bytesRead) => {
 import {connect} from "react-redux"
 
 const stateToProps = (state) => ({
-  ...getSearchStats(state)
+  stats: getSearchStats(state, "ViewerSearch")
 })
 
 export const XSearchStats = connect<Props, {||}, _, _, _, _>(stateToProps)(
