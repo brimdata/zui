@@ -9,9 +9,12 @@ export function createLoginMenuTemplate(send: Function) {
   let menu = createSearchMenuTemplate(send)
 
   disableChildren(menu, "Query")
-  disable(menu, "Preferences...")
   disable(menu, "Toggle Search History")
   disable(menu, "Toggle Log Details")
+
+  if (process.platform === "darwin") {
+    disable(menu, "Preferences...")
+  }
 
   return menu
 }
