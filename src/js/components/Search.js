@@ -20,6 +20,7 @@ import {XTitleBar} from "./TitleBar"
 import {XWhoisModal} from "./WhoisModal"
 import {getShowLogsTab} from "../state/reducers/view"
 import {initSearchPage} from "../state/thunks/searchPage"
+import {setAppMenu} from "../electron/setAppMenu"
 import AppError from "../models/AppError"
 import ColumnChooser from "./ColumnChooser"
 import ErrorFactory from "../models/ErrorFactory"
@@ -42,6 +43,7 @@ type LocalState = {
 
 export default class Search extends React.Component<Props, LocalState> {
   constructor(props: Props) {
+    setAppMenu("SEARCH")
     super(props)
     this.state = {ready: false, error: null}
     props

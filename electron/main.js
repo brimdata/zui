@@ -1,7 +1,6 @@
 /* @noflow */
 
-const {app, BrowserWindow, Menu} = require("electron")
-const {createMenu} = require("./menu")
+const {app, BrowserWindow} = require("electron")
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS,
@@ -11,11 +10,11 @@ const {
 let win
 
 const installExtensions = () => {
-  installExtension(REACT_DEVELOPER_TOOLS).catch(err =>
+  installExtension(REACT_DEVELOPER_TOOLS).catch((err) =>
     console.log("An error occurred: ", err)
   )
 
-  installExtension(REDUX_DEVTOOLS).catch(err =>
+  installExtension(REDUX_DEVTOOLS).catch((err) =>
     console.log("An error occurred: ", err)
   )
 }
@@ -35,8 +34,6 @@ const createWindow = () => {
   win.on("closed", () => {
     win = null
   })
-  const menu = createMenu(win)
-  Menu.setApplicationMenu(menu)
 }
 
 app.on("ready", () => {
