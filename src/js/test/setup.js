@@ -8,7 +8,9 @@ jest.mock("electron", function() {
       isPackaged: true,
       getName: () => "TestApp"
     },
-    getCurrentWebContents: jest.fn(),
+    getCurrentWebContents: jest.fn(() => ({
+      send: jest.fn()
+    })),
     Menu: {
       buildFromTemplate: jest.fn(),
       setApplicationMenu: jest.fn()

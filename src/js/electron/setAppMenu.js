@@ -7,12 +7,13 @@ import {createSearchMenuTemplate} from "./menus/searchMenu"
 
 type MenuName = "SEARCH" | "LOGIN"
 
-export function setAppMenu(name: MenuName) {
+export function setAppMenu(name: MenuName, r: typeof remote = remote) {
   let builder = getTemplateBuilder(name)
-  let template = builder(remote.getCurrentWebContents())
-  let menu = remote.Menu.buildFromTemplate(template)
+  let template = builder(r.getCurrentWebContents().send)
+  let menu = r.Menu.buildFromTemplate(template)
 
-  remote.Menu.setApplicationMenu(menu)
+  r.Menu.setApplicationMenu(menu)
+  return menu
 }
 
 function getTemplateBuilder(name) {
