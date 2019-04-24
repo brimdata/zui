@@ -3,7 +3,7 @@
 import {createSelector} from "reselect"
 import trim from "lodash/trim"
 
-import type {State} from "../reducers/types"
+import type {State} from "../types"
 import Ast from "../../models/Ast"
 
 export const getSearchBar = (state: State) => {

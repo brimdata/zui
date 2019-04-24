@@ -2,7 +2,7 @@
 import {isEmpty} from "lodash"
 
 import {PER_PAGE} from "./config"
-import type {Thunk} from "../state/reducers/types"
+import type {Thunk} from "../state/types"
 import {add} from "../lib/Time"
 import {addHeadProc} from "../lib/Program"
 import {getPrevSearchProgram} from "../state/selectors/searchBar"

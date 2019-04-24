@@ -5,7 +5,7 @@ import {isEqual} from "lodash"
 import React from "react"
 import ReactDOM from "react-dom"
 
-import type {Dispatch, State} from "../../state/reducers/types"
+import type {Dispatch, State} from "../../state/types"
 import type {TableColumn} from "../../state/columns/types"
 import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getViewerLogs} from "../../state/viewer/selector"

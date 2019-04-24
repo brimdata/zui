@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {State, Thunk} from "../reducers/types"
+import type {State, Thunk} from "../types"
 import {getSearchInspectorIsOpen} from "../reducers/view"
 import {getSearchProgram} from "../selectors/searchBar"
 import {hasAnalytics} from "../../lib/Program"

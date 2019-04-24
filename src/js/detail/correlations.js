@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Thunk} from "../state/reducers/types"
+import type {Thunk} from "../state/types"
 import {
   filenameCorrelation,
   md5Correlation,

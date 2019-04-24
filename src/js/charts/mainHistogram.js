@@ -1,7 +1,7 @@
 /* @flow */
 import * as d3 from "d3"
 
-import type {Dispatch} from "../state/reducers/types"
+import type {Dispatch} from "../state/types"
 import type {Span} from "../BoomClient/types"
 import {createHistogramData} from "./createHistogramData"
 import {fetchMainSearch} from "../viewer/fetchMainSearch"

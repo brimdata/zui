@@ -1,7 +1,7 @@
 /* @flow */
 
 import {PARALLEL_PROC, getProcNames} from "../../lib/ast"
-import type {Thunk} from "../reducers/types"
+import type {Thunk} from "../types"
 import {
   backSearchHistory,
   errorSearchBarParse,

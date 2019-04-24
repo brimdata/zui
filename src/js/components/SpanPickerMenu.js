@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import React from "react"
 
 import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
-import {type DispatchProps} from "../state/reducers/types"
+import type {DispatchProps} from "../state/types"
 import {add} from "../lib/Time"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
 import {setOuterTimeWindow} from "../state/actions"

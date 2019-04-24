@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import {type DispatchProps, type State} from "../state/reducers/types"
+import type {DispatchProps, State} from "../state/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
 import type {TableColumn} from "../state/columns/types"
 import {getCurrentTableColumns} from "../state/columns/selector"

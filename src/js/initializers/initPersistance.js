@@ -3,7 +3,7 @@
 import pick from "lodash/pick"
 import throttle from "lodash/throttle"
 
-import type {State} from "../state/reducers/types"
+import type {State} from "../state/types"
 import {deserialize, serialize} from "../serialization/serialization"
 
 const KEY = "LOOKY_STATE.1"

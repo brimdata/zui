@@ -1,7 +1,7 @@
 /* @flow */
 
+import type {State} from "../types"
 import createReducer from "./createReducer"
-import type {State} from "./types"
 
 const initialState = {
   host: "",

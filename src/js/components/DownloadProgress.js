@@ -1,12 +1,12 @@
 /* @flow */
 
+import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
-import {connect} from "react-redux"
+
+import type {Dispatch, State} from "../state/types"
 import * as packets from "../state/reducers/packets"
 import * as view from "../state/reducers/view"
-import {type State} from "../state/reducers/types"
-import {type Dispatch} from "../state/reducers/types"
 
 type Props = {
   downloads: *[],

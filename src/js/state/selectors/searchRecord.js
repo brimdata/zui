@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {SearchRecord} from "../../types"
-import type {State} from "../reducers/types"
+import type {State} from "../types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchBar} from "./searchBar"

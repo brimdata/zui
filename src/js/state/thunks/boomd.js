@@ -1,7 +1,7 @@
 /* @flow */
 
 import {LookytalkVersionError} from "../../models/Errors"
-import type {Thunk} from "../reducers/types"
+import type {Thunk} from "../types"
 import {addNotification, useBoomCache, useBoomIndex} from "../actions"
 import {fetchLookytalkVersions, fetchSpaces} from "../../backend/fetch"
 import {getBoomOptions} from "../selectors/boom"

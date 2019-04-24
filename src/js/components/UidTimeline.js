@@ -5,7 +5,7 @@ import React from "react"
 import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 
-import type {DispatchProps} from "../state/reducers/types"
+import type {DispatchProps} from "../state/types"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Log from "../models/Log"
 import * as Time from "../lib/Time"

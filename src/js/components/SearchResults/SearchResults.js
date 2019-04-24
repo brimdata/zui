@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import {isEmpty} from "lodash"
 import React from "react"
 
-import type {DispatchProps, State} from "../../state/reducers/types"
+import type {DispatchProps, State} from "../../state/types"
 import {
   type ResultsTabEnum,
   getResultsTab,

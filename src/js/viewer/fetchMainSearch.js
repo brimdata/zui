@@ -1,7 +1,7 @@
 /* @flow */
 
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
-import type {Thunk} from "../state/reducers/types"
+import type {Thunk} from "../state/types"
 import {addEveryCountProc} from "../searches/histogramSearch"
 import {addHeadProc, hasAnalytics} from "../lib/Program"
 import {cancelSearchesByTag} from "../searches/cancelSearch"

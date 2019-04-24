@@ -4,7 +4,7 @@ import {composeWithDevTools} from "redux-devtools-extension"
 import {createStore, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
-import {type Action, type Dispatch, type State} from "../state/reducers/types"
+import type {Action, Dispatch, State} from "../state/types"
 import BoomClient from "../BoomClient"
 import reducer from "../state/reducers"
 

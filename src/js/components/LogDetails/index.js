@@ -5,7 +5,7 @@ import React from "react"
 
 import {Md5Panel} from "./Md5Panel"
 import type {Search} from "../../state/searches/types"
-import type {State} from "../../state/reducers/types"
+import type {State} from "../../state/types"
 import {buildLogDetail, getIsGoingBack} from "../../state/selectors/logDetails"
 import {getSearchesByTag} from "../../state/searches/selector"
 import ConnPanel from "./ConnPanel"

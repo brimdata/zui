@@ -1,5 +1,6 @@
 /* @flow */
-import type {Thunk} from "../state/reducers/types"
+
+import type {Thunk} from "../state/types"
 import {updateBoomOptions} from "./options"
 
 export const inspectSearch = (

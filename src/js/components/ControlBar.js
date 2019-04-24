@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import type {Dispatch, State} from "../state/reducers/types"
+import type {Dispatch, State} from "../state/types"
 import {ThinButton} from "./Buttons"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSearchBar} from "./SearchBar"

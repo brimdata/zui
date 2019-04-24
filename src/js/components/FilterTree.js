@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import {isEqual} from "lodash"
 import React from "react"
 
-import type {Dispatch, State} from "../state/reducers/types"
+import type {Dispatch, State} from "../state/types"
 import {
   type Investigation,
   getInvestigation

@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import {type DispatchProps} from "../state/reducers/types"
+import type {DispatchProps} from "../state/types"
 import type {Space} from "../lib/Space"
 import {XLogDetails} from "./LogDetails"
 import {XRightPaneCollapser} from "./RightPaneCollapser"

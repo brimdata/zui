@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React, {useEffect} from "react"
 
-import type {State, Dispatch} from "../state/reducers/types"
+import type {Dispatch, State} from "../state/types"
 import {getAllSpaceNames} from "../state/reducers/spaces"
 import {refreshSpaces} from "../space/refresh"
 import MenuList from "./MenuList"

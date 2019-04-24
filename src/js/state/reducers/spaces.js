@@ -2,7 +2,7 @@
 
 import {createSelector} from "reselect"
 
-import type {State} from "./types"
+import type {State} from "../types"
 import {fromStore, parseFromBoom, toStore} from "../../lib/Time"
 import createReducer from "./createReducer"
 

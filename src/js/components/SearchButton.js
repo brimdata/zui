@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import {type DispatchProps, type State} from "../state/reducers/types"
+import type {DispatchProps, State} from "../state/types"
 import {XCurlModal} from "./CurlModal"
 import {XDebugModal} from "./DebugModal"
 import {XSearchButtonMenu} from "./SearchButtonMenu"

@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {Dispatch} from "../state/reducers/types"
+import type {Dispatch} from "../state/types"
 import type {RightClickAction} from "../rightclick/actions"
 import dispatchToProps from "../lib/dispatchToProps"
 

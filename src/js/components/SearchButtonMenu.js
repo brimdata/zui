@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {State} from "../state/reducers/types"
+import type {State} from "../state/types"
 import {getSearchesByTag} from "../state/searches/selector"
 import {killSearchesByTag} from "../searches/cancelSearch"
 import {showModal} from "../state/actions"

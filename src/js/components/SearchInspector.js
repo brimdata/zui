@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {Dispatch, State} from "../state/reducers/types"
+import type {Dispatch, State} from "../state/types"
 import {PaneTitle} from "./Pane"
 import type {SearchesState} from "../state/searches/types"
 import {getSearchInspectorIsOpen} from "../state/reducers/view"

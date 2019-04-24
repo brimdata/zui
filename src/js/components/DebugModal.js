@@ -5,7 +5,7 @@ import Prism from "prismjs"
 import React from "react"
 
 import {Code, Label} from "./Typography"
-import type {State as S} from "../state/reducers/types"
+import type {State} from "../state/types"
 import * as Program from "../lib/Program"
 import * as searchBar from "../state/selectors/searchBar"
 
@@ -13,11 +13,11 @@ type Props = {
   searchProgram: string
 }
 
-type State = {
+type LocalState = {
   program: string
 }
 
-export default class DebugModal extends React.Component<Props, State> {
+export default class DebugModal extends React.Component<Props, LocalState> {
   constructor(props: Props) {
     super(props)
     this.state = {program: props.searchProgram}
@@ -55,7 +55,7 @@ export default class DebugModal extends React.Component<Props, State> {
   }
 }
 
-const stateToProps = (state: S) => ({
+const stateToProps = (state: State) => ({
   searchProgram: searchBar.getSearchProgram(state)
 })
 
