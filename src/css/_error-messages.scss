@@ -1,0 +1,28 @@
+.error-messages {
+  background-color: $gray-cold-5;
+  box-shadow: $high-box-shadow;
+  border-radius: 24px;
+  padding: 24px;
+  position: fixed;
+  overflow: scroll;
+  z-index: 20;
+  left: 50%;
+  min-width: 300px;
+  max-height: 50%;
+  left: 24px;
+  bottom: 24px;
+  // display: none;
+
+  .title {
+    margin-bottom: 24px;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  li {
+    margin-bottom: 12px;
+  }
+}

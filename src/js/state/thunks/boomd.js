@@ -3,6 +3,7 @@
 import {LookytalkVersionError} from "../../models/Errors"
 import type {Thunk} from "../types"
 import {addNotification, useBoomCache, useBoomIndex} from "../actions"
+import {createError} from "../errors"
 import {fetchLookytalkVersions, fetchSpaces} from "../../backend/fetch"
 import {getBoomOptions} from "../selectors/boom"
 import {updateBoomOptions} from "../../backend/options"
@@ -45,6 +46,7 @@ export const checkLookytalkVersion = (): Thunk => (dispatch) => {
         serverVersion: server
       })
       dispatch(addNotification(error))
+      dispatch(createError(error))
     }
   })
 }

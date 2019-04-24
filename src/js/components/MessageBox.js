@@ -1,9 +1,9 @@
 /* @flow */
 
 import React from "react"
-import CloseButton from "./CloseButton"
+
 import {Header} from "./Typography"
-import {reactElementProps} from "../test/integration"
+import CloseButton from "./CloseButton"
 
 type Props = {|
   title: string,
@@ -15,9 +15,7 @@ export default class MessageBox extends React.Component<Props> {
   render() {
     return (
       <div className="message-box">
-        <Header {...reactElementProps("notification")}>
-          {this.props.title}
-        </Header>
+        <Header>{this.props.title}</Header>
         {this.props.children}
         {this.props.onClose && <CloseButton onClick={this.props.onClose} />}
       </div>

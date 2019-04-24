@@ -1,22 +1,19 @@
 /* @flow */
 import type {State} from "../types"
+import {head} from "../../lib/Array"
+import AppError from "../../models/AppError"
+import ErrorFactory from "../../models/ErrorFactory"
 
-export type ErrorItem = string
-export type ErrorsState = ErrorItem[]
-export type ERROR_CREATE = {
-  type: "ERROR_CREATE",
-  msg: string
-}
-export type ERRORS_CLEAR = {
-  type: "ERRORS_CLEAR"
-}
+export type ErrorsState = AppError[]
+export type ERROR_CREATE = {type: "ERROR_CREATE", error: AppError}
+export type ERRORS_CLEAR = {type: "ERRORS_CLEAR"}
 type Action = ERROR_CREATE | ERRORS_CLEAR
 
-export function createError(msg: string) {
-  return {type: "ERROR_CREATE", msg}
+export function createError(raw: any): ERROR_CREATE {
+  return {type: "ERROR_CREATE", error: ErrorFactory.create(raw)}
 }
 
-export function clearErrors() {
+export function clearErrors(): ERRORS_CLEAR {
   return {type: "ERRORS_CLEAR"}
 }
 
@@ -32,7 +29,7 @@ export function errorsReducer(
 ): ErrorsState {
   switch (action.type) {
     case "ERROR_CREATE":
-      return [...state, action.msg]
+      return head([action.error, ...state], 30)
     case "ERRORS_CLEAR":
       return []
     default:

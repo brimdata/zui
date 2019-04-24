@@ -4,6 +4,7 @@ import isEqual from "lodash/isEqual"
 import isNumber from "lodash/isNumber"
 import _uniq from "lodash/uniq"
 import _uniqBy from "lodash/uniqBy"
+import _sortBy from "lodash/sortBy"
 
 export const uniq = _uniq
 export const uniqBy = _uniqBy
