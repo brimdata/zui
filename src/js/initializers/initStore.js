@@ -6,12 +6,12 @@ import reduxThunk from "redux-thunk"
 
 import type {Action, Dispatch, State} from "../state/types"
 import BoomClient from "../BoomClient"
-import reducer from "../state/reducers"
+import rootReducer from "../state/rootReducer"
 
 export default (initialState?: State, boom?: BoomClient) =>
   //$FlowFixMe
   createStore<State, Action, Dispatch>(
-    reducer,
+    rootReducer,
     initialState,
     composeWithDevTools(applyMiddleware(reduxThunk.withExtraArgument(boom)))
   )

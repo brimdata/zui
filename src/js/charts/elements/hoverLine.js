@@ -1,7 +1,8 @@
 /* @flow */
 
-import Chart from "../Chart"
 import * as d3 from "d3"
+
+import Chart from "../Chart"
 
 export default function() {
   function mount(chart: Chart) {
