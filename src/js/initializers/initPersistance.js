@@ -30,7 +30,7 @@ export const saveState = (state: State) => {
   }
 }
 
-export const loadState = () => {
+export const getState = () => {
   try {
     const serializedState = localStorage.getItem(KEY)
     if (
@@ -63,3 +63,6 @@ export default (store: *) => {
     }, 3000)
   )
 }
+
+window.clearState = clearState
+window.getState = getState

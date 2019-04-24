@@ -1,5 +1,5 @@
 /* @flow */
 
-import {loadState} from "./initPersistance"
+import {getState} from "./initPersistance"
 
-export default loadState
+export default getState
