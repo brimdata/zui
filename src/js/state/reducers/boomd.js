@@ -17,7 +17,10 @@ export type Boomd = typeof initialState
 export default createReducer(initialState, {
   BOOMD_CREDENTIALS_SET: (state, {credentials}) => ({
     ...state,
-    ...credentials
+    host: credentials.host,
+    port: credentials.port,
+    user: credentials.user,
+    pass: credentials.pass
   }),
   BOOMD_CACHE_USE_SET: (state, {value}) => ({
     ...state,
