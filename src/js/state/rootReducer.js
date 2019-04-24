@@ -2,6 +2,7 @@
 
 import {combineReducers} from "redux"
 
+import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
 import columnsReducer from "./columns/reducer"
 import investigation from "./reducers/investigation"
@@ -19,6 +20,7 @@ import viewerReducer from "./viewer/reducer"
 import whois from "./reducers/whois"
 
 export default combineReducers<*, *>({
+  errors: errorsReducer,
   searches: searchesReducer,
   viewer: viewerReducer,
   columns: columnsReducer,
