@@ -8,7 +8,6 @@ import {deserialize, serialize} from "../serialization/serialization"
 
 const KEY = "LOOKY_STATE.1"
 const PERSIST = [
-  "filterTree",
   "searchBar",
   "timeWindow",
   "boomd",
