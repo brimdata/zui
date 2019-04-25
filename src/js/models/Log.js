@@ -161,7 +161,19 @@ export default class Log {
   }
 
   correlationId() {
-    let name = this.get("_path") === "files" ? "conn_uids" : "uid"
+    let name
+    switch (this.get("_path")) {
+      case "files":
+        name = "conn_uids"
+        break
+      case "dhcp":
+        name = "uids"
+        break
+      default:
+        name = "uid"
+        break
+    }
+
     let field = this.getField(name)
     if (field) {
       return field.queryableValue()
