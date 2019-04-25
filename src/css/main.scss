@@ -4,12 +4,13 @@
 @import "react-day-picker";
 
 /* Variables */
+@import "fonts";
 @import "colors";
 @import "bro-log-colors";
 
-$heading-font: "Lato", sans-serif;
-$body-font: "Lato", sans-serif;
-$mono-font: "PT Mono", monospace;
+$heading-font: "Cartograph", sans-serif;
+$body-font: "Cartograph", sans-serif;
+$mono-font: "Cartograph-Mono", monospace;
 $box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
 $base-space: 12px;
 $high-box-shadow: 0 2px 15px 0px rgba(0, 0, 0, 0.3);
