@@ -2,15 +2,15 @@
 
 import {connect} from "react-redux"
 import React from "react"
+import classNames from "classnames"
 import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/types"
+import {add, format} from "../lib/Time"
+import {duration} from "../lib/TimeWindow"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Log from "../models/Log"
-import * as Time from "../lib/Time"
-import * as TimeField from "../lib/TimeField"
-import * as TimeWindow from "../lib/TimeWindow"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {|
@@ -23,53 +23,63 @@ type Props = {|
   ...OwnProps
 |}
 
-export default class UidTimeline extends React.Component<Props> {
-  row(log: Log, index: number, xScale: *) {
-    const ts = TimeField.toDate(log.get("ts"))
-    const position = xScale(ts)
-    const isCurrent = isEqual(log, this.props.log)
-    return (
-      <div
-        key={index}
-        className="waterfall-row"
-        onClick={() => this.props.dispatch(viewLogDetail(log))}
-      >
-        <div className="ts-label">{Time.format(ts, "HH:mm:ss.SSS")}</div>
-        <div className="slider">
-          <div className="line" />
-          <span
-            className={`path-tag ${log.get("_path")}-bg-color ${
-              isCurrent ? "current" : ""
-            }`}
-            style={{left: position + "%"}}
-          >
-            {log.get("_path")}
-          </span>
-        </div>
-      </div>
-    )
+export default function UidTimeline({logs, log, dispatch}: Props) {
+  if (logs.length === 0) return null
+  let xScale = createScale(logs)
+
+  return (
+    <div className="uid-waterfall">
+      {logs.map((currLog, i) => (
+        <PathRow
+          key={i}
+          log={currLog}
+          current={isEqual(currLog, log)}
+          position={xScale(currLog.cast("ts"))}
+          onClick={() => dispatch(viewLogDetail(currLog))}
+        />
+      ))}
+      <Duration span={xScale.domain()} />
+    </div>
+  )
+}
+
+function createScale(logs) {
+  let tss = []
+
+  for (let log of logs) {
+    tss.push(log.cast("ts"))
   }
 
-  render() {
-    if (this.props.logs.length === 0) return null
+  let [start, end] = d3.extent(tss)
+  if (start === end) end = add(start, 1, "ms")
 
-    const extent = d3.extent(this.props.logs.map((l) => l.cast("ts")))
-    if (extent[0] === extent[1]) extent[1] += 1
+  return d3
+    .scaleTime()
+    .domain([start, end])
+    .range([0, 100])
+}
 
-    const xScale = d3
-      .scaleTime()
-      .domain(extent)
-      .range([0, 100])
-
-    const duration = TimeWindow.duration(extent, "seconds")
-
-    return (
-      <div className="uid-waterfall">
-        {this.props.logs.map((log, i) => this.row(log, i, xScale))}
-        <p className="duration">Duration: {duration}s</p>
+function PathRow({log, current, position, ...rest}) {
+  let ts = log.cast("ts")
+  let path = log.get("_path")
+  return (
+    <div className="waterfall-row" {...rest}>
+      <div className="ts-label">{format(ts, "HH:mm:ss.SSS")}</div>
+      <div className="slider">
+        <div className="line" />
+        <span
+          className={classNames("path-tag", `${path}-bg-color`, {current})}
+          style={{left: position + "%"}}
+        >
+          {path}
+        </span>
       </div>
-    )
-  }
+    </div>
+  )
+}
+
+function Duration({span}) {
+  return <p className="duration">Duration: {duration(span, "seconds")}s</p>
 }
 
 export const XUidTimeline = connect<Props, OwnProps, _, DispatchProps, _, _>(

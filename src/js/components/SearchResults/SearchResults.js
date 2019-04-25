@@ -89,7 +89,6 @@ export default function SearchResults(props: Props) {
   }
 
   function onLastChunk() {
-    console.log(props.isIncomplete)
     if (props.isIncomplete && !props.isFetching) {
       props.dispatch(fetchNextPage())
     }
