@@ -1,7 +1,9 @@
 /* @flow */
 
 import type {Thunk} from "../types"
+import {clearErrors} from "../errors"
 import {
+  clearNotifications,
   clearSearchBar,
   clearSearchHistory,
   clearSpaces,
@@ -19,4 +21,6 @@ export const disconnect = (): Thunk => (dispatch) => {
   dispatch(clearSearchHistory())
   dispatch(clearViewer())
   dispatch(clearSearches())
+  dispatch(clearErrors())
+  dispatch(clearNotifications())
 }
