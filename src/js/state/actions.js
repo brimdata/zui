@@ -63,6 +63,10 @@ export const forwardLogDetail = () => ({
   type: "LOG_DETAIL_FORWARD"
 })
 
+export const clearNotifications = () => ({
+  type: "NOTIFICATIONS_CLEAR"
+})
+
 export const addNotification = (notification: Notification) => ({
   type: "NOTIFICATIONS_ADD",
   notification
