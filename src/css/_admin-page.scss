@@ -1,6 +1,5 @@
 .admin-page {
   background: $light-gray-1;
-  // radial-gradient($blue-3, $blue-5);
   min-height: 100%;
   width: 100%;
 
@@ -118,7 +117,6 @@
     }
 
     label {
-      flex: 2;
       padding-right: 12px;
       @include admin-label;
     }
@@ -164,5 +162,5 @@
 }
 
 .boomd-connect .admin-panel {
-  max-width: 264px;
+  min-width: 400px;
 }
