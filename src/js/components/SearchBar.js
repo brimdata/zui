@@ -1,13 +1,14 @@
 /* @flow */
 
-import React from "react"
-import {XSearchInput} from "./SearchInput"
-import {XSearchButton} from "../components/SearchButton"
-import {XPins} from "./Pins"
-import Warning from "../icons/warning-sm.svg"
 import {connect} from "react-redux"
+import React from "react"
+
+import type {State} from "../state/types"
+import {XPins} from "./Pins"
+import {XSearchButton} from "../components/SearchButton"
+import {XSearchInput} from "./SearchInput"
 import {getSearchBarError} from "../state/selectors/searchBar"
-import {type State} from "../state/reducers/types"
+import Warning from "../icons/warning-sm.svg"
 
 type StateProps = {|
   error: ?string

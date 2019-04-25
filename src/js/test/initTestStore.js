@@ -3,9 +3,9 @@
 import {createStore, compose, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
-import type {State, Action} from "../state/reducers/types"
+import type {Action, State} from "../state/types"
 import MockBoomClient from "./MockBoomClient"
-import reducer from "../state/reducers"
+import rootReducer from "../state/rootReducer"
 
 type TestStore = {
   dispatch: Function,
@@ -21,7 +21,7 @@ export default (
 ): TestStore =>
   // $FlowFixMe
   createStore(
-    reducer,
+    rootReducer,
     undefined,
     compose(
       applyDispatchAll(),

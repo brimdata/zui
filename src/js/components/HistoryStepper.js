@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import {type DispatchProps} from "../state/reducers/types"
+import type {DispatchProps} from "../state/types"
 import {goBack, goForward} from "../state/thunks/searchBar"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"

@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {State} from "./types"
+import type {State} from "../types"
 import History from "../../models/History"
 import createReducer from "./createReducer"
 

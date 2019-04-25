@@ -1,7 +1,7 @@
 /* @flow */
 
 import {PARALLEL_PROC, getProcNames} from "../../lib/ast"
-import type {Thunk} from "../reducers/types"
+import type {Thunk} from "../types"
 import {
   backSearchHistory,
   errorSearchBarParse,
@@ -9,6 +9,7 @@ import {
   setInnerTimeWindow,
   submittingSearchBar
 } from "../actions"
+import {createError} from "../errors"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getCurrentEntry} from "../reducers/searchHistory"
 import {getSearchProgram} from "../selectors/searchBar"
@@ -36,6 +37,7 @@ export const submitSearchBar = (): Thunk => (dispatch) => {
 export const validateProgram = (): Thunk => (dispatch, getState) => {
   const [ast, error] = parse(getSearchProgram(getState()))
   if (error) {
+    dispatch(createError(error))
     dispatch(errorSearchBarParse(error.message))
     return false
   }

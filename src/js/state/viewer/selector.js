@@ -1,5 +1,6 @@
 /* @flow */
-import type {State} from "../reducers/types"
+
+import type {State} from "../types"
 
 export function getViewerLogs(state: State) {
   return state.viewer.logs

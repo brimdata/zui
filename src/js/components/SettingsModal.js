@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {Dispatch} from "../state/reducers/types"
+import type {Dispatch} from "../state/types"
 import {Label} from "./Typography"
 import {enableCache, enableIndex} from "../state/thunks/boomd"
 import {getTimeZone, getSettingsModalIsOpen} from "../state/reducers/view"

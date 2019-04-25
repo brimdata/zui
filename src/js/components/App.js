@@ -4,11 +4,12 @@ import {Redirect, Route, Switch, withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 import React, {Component} from "react"
 
+import {XConnect} from "./Connect"
+import {XLatestError} from "./LatestError"
 import {XNotifications} from "./Notifications"
 import {XSearch} from "./Search"
 import {getTimeZone} from "../state/reducers/view"
 import * as Time from "../lib/Time"
-import {XConnect} from "./Connect"
 
 type Props = {
   isConnected: boolean,
@@ -21,6 +22,7 @@ export default class App extends Component<Props> {
     Time.setZone(timeZone)
     return (
       <div className="app-wrapper">
+        <XLatestError />
         <XNotifications />
         <Switch>
           <Route path="/search" component={XSearch} />

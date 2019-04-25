@@ -1,6 +1,6 @@
 /* @flow */
 import type {SearchTemplate} from "./types"
-import type {Thunk} from "../state/reducers/types"
+import type {Thunk} from "../state/types"
 import {clearSearchResults, registerSearch} from "../state/searches/actions"
 import {fetchSearch} from "../backend/fetch"
 import {getCurrentSpaceName} from "../state/reducers/spaces"

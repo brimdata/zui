@@ -79,7 +79,11 @@ export class InvalidUrlError extends AppError {
   }
 }
 
-export class LookytalkVersionError extends AppError {}
+export class LookytalkVersionError extends AppError {
+  message() {
+    return "The server and client lookytalk versions do not match."
+  }
+}
 
 export class SearchError extends AppError {
   static is(e: RawError) {

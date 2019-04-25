@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import type {DispatchProps, State} from "../state/reducers/types"
+import type {DispatchProps, State} from "../state/types"
 import {closeWhois} from "../state/actions"
 import Modal from "./Modal"
 import dispatchToProps from "../lib/dispatchToProps"

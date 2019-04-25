@@ -13,7 +13,7 @@ import init from "./initializers"
 const store = init()
 
 ReactDOM.render(
-  <AppErrorBoundary>
+  <AppErrorBoundary dispatch={store.dispatch}>
     <Provider store={store}>
       <HashRouter>
         <XApp />

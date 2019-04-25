@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import {type Dispatch, type State} from "../state/reducers/types"
+import type {Dispatch, State} from "../state/types"
 import {changeSearchBarInput} from "../state/actions"
 import {
   getSearchBarInputValue,

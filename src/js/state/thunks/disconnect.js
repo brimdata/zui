@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Thunk} from "../reducers/types"
+import type {Thunk} from "../types"
 import {
   clearSearchBar,
   clearSearchHistory,

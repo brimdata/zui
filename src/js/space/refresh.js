@@ -1,5 +1,6 @@
 /* @flow */
-import type {Thunk} from "../state/reducers/types"
+
+import type {Thunk} from "../state/types"
 import {fetchSpaces} from "../backend/fetch"
 import {setSpaceNames} from "../state/actions"
 

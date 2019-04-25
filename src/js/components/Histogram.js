@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import React, {useState} from "react"
 
 import type {DateTuple} from "../lib/TimeWindow"
-import type {DispatchProps, State} from "../state/reducers/types"
+import type {DispatchProps, State} from "../state/types"
 import type {SearchResults} from "../state/searches/types"
 import {buildMainHistogramChart} from "../charts/mainHistogram"
 import {getInnerTimeWindow, getTimeWindow} from "../state/reducers/timeWindow"

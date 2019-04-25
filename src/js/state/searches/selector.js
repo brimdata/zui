@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {State} from "../reducers/types"
+import type {State} from "../types"
 
 export function getSearches(state: State) {
   return state.searches

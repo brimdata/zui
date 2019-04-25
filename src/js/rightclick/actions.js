@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Dispatch} from "../state/reducers/types"
+import type {Dispatch} from "../state/types"
 import {
   appendQueryCountBy,
   appendQueryExclude,

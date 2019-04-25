@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {SearchRecord} from "../../types"
-import type {Thunk} from "../reducers/types"
+import type {Thunk} from "../types"
 import {
   restoreSearchBar,
   setInnerTimeWindow,

@@ -2,7 +2,7 @@
 
 import {createSelector} from "reselect"
 
-import type {State} from "../reducers/types"
+import type {State} from "../types"
 import {contains} from "../../lib/Tuple"
 import {
   getLogDetails,

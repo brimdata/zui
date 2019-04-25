@@ -2,7 +2,7 @@
 import {createSelector} from "reselect"
 
 import type {ColumnsState} from "./types"
-import type {State} from "../reducers/types"
+import type {State} from "../types"
 import type {ViewerColumns} from "../viewer/types"
 import {getViewerColumns} from "../viewer/selector"
 import {uniqBy} from "../../lib/Array"

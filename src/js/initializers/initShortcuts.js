@@ -1,7 +1,7 @@
 /* @flow */
 import {ipcRenderer} from "electron"
 
-import type {Store} from "../state/reducers/types"
+import type {Store} from "../state/types"
 import {
   changeSearchBarInput,
   pinSearchBar,

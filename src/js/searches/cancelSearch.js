@@ -1,5 +1,6 @@
 /* @flow */
-import type {Thunk} from "../state/reducers/types"
+
+import type {Thunk} from "../state/types"
 import {getSearches} from "../state/searches/selector"
 
 export const cancelSearchesByTag = (tag?: string): Thunk => (

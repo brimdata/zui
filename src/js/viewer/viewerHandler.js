@@ -3,7 +3,7 @@ import {throttle} from "lodash"
 
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {BoomPayload} from "../BoomClient/types"
-import type {Dispatch} from "../state/reducers/types"
+import type {Dispatch} from "../state/types"
 import type {SearchCallbackMap, SearchTemplate} from "../searches/types"
 import {accumResults} from "../lib/accumResults"
 import {

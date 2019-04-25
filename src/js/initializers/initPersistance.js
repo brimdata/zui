@@ -3,12 +3,11 @@
 import pick from "lodash/pick"
 import throttle from "lodash/throttle"
 
-import type {State} from "../state/reducers/types"
+import type {State} from "../state/types"
 import {deserialize, serialize} from "../serialization/serialization"
 
 const KEY = "LOOKY_STATE.1"
 const PERSIST = [
-  "filterTree",
   "searchBar",
   "timeWindow",
   "boomd",
@@ -31,7 +30,7 @@ export const saveState = (state: State) => {
   }
 }
 
-export const loadState = () => {
+export const getState = () => {
   try {
     const serializedState = localStorage.getItem(KEY)
     if (
@@ -64,3 +63,6 @@ export default (store: *) => {
     }, 3000)
   )
 }
+
+window.clearState = clearState
+window.getState = getState

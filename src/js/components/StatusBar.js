@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import {type State} from "../state/reducers/types"
+import type {State} from "../state/types"
 import {XSearchStats} from "./SearchStats"
 import {getSearchStatus} from "../state/searches/selector"
 import LoadingMessage from "./LoadingMessage"

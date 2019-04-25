@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 import React from "react"
 import ReactDOM from "react-dom"
 
-import type {Dispatch} from "../state/reducers/types"
+import type {Dispatch} from "../state/types"
 import {showRightSidebar} from "../state/actions"
 import CircleChevron from "./CircleChevron"
 import * as Doc from "../lib/Doc"

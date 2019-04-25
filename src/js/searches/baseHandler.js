@@ -2,7 +2,7 @@
 import {throttle} from "lodash"
 
 import type {BoomPayload} from "../BoomClient/types"
-import type {Dispatch} from "../state/reducers/types"
+import type {Dispatch} from "../state/types"
 import type {SearchCallbackMap, SearchTemplate} from "./types"
 import {accumResults} from "../lib/accumResults"
 import {

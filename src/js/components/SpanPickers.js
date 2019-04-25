@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import React from "react"
 
 import {type DateTuple, humanDuration} from "../lib/TimeWindow"
-import type {Dispatch, State as S} from "../state/reducers/types"
+import type {Dispatch, State} from "../state/types"
 import {ThinPicker} from "./Buttons"
 import {type TimeObj, add, set, subtract} from "../lib/Time"
 import {XSpanPickerMenu} from "./SpanPickerMenu"
@@ -33,13 +33,13 @@ type Props = {|
   ...DispatchProps
 |}
 
-type State = {
+type LocalState = {
   fromDate: Date,
   toDate: Date,
   isFocused: boolean
 }
 
-export default class SpanPickers extends React.Component<Props, State> {
+export default class SpanPickers extends React.Component<Props, LocalState> {
   fromTime: ?TimePicker
   toTime: ?TimePicker
   toDate: ?DayPicker
@@ -51,7 +51,7 @@ export default class SpanPickers extends React.Component<Props, State> {
     this.state = SpanPickers.getDerivedStateFromProps(props)
   }
 
-  static getDerivedStateFromProps(nextProps: Props, state: State = {}) {
+  static getDerivedStateFromProps(nextProps: Props, state: LocalState = {}) {
     if (state.isFocused) return null
     return {
       isFocused: false,
@@ -188,7 +188,7 @@ export default class SpanPickers extends React.Component<Props, State> {
   }
 }
 
-const stateToProps = (state: S): StateProps => ({
+const stateToProps = (state: State): StateProps => ({
   timeWindow: getTimeWindow(state),
   timeZone: getTimeZone(state),
   spaceSpan: getCurrentSpaceTimeWindow(state)

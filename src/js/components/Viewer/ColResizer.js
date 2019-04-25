@@ -2,7 +2,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import {type DispatchProps} from "../../state/reducers/types"
+import type {DispatchProps} from "../../state/types"
 import type {TableColumn} from "../../state/columns/types"
 import {updateColumns} from "../../state/columns/actions"
 import columnKey from "../../lib/columnKey"

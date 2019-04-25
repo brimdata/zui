@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 import React from "react"
 import ReactDOM from "react-dom"
 
-import type {State, Dispatch} from "../state/reducers/types"
+import type {Dispatch, State} from "../state/types"
 import {getNotifications} from "../state/selectors/notifications"
 import {removeNotification} from "../state/actions"
 import AppError from "../models/AppError"

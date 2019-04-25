@@ -5,7 +5,7 @@ import {Redirect} from "react-router-dom"
 import {connect} from "react-redux"
 import React from "react"
 
-import type {DispatchProps, State} from "../state/reducers/types"
+import type {DispatchProps, State} from "../state/types"
 import {NetworkError, UnauthorizedError} from "../models/Errors"
 import {XControlBar} from "./ControlBar"
 import {XDownloadProgress} from "./DownloadProgress"
