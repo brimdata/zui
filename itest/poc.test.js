@@ -125,8 +125,8 @@ const handleError = async (app, initialError, done) => {
   console.log(`handleError: Test hit exception: ${initialError}`)
   console.log("handleError: Looking for any desktop app notifications")
   try {
-    notificationError = await app.client.getText(selectors.notification)
-  } catch {
+    notificationError = await app.client.getHTML(selectors.notification, false)
+  } catch (e) {
     notificationError = undefined
   }
   if (notificationError) {
