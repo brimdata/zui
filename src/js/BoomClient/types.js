@@ -22,7 +22,7 @@ export type RequiredClientOptions = {
 export type RequestOptions = {
   method: "GET" | "PUT" | "PATCH" | "POST" | "DELETE",
   path: string,
-  stream?: boolean,
+  streaming?: boolean,
   payload?: Object,
   query?: Object
 }

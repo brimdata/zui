@@ -5,10 +5,11 @@ import type {
   RequestOptions,
   RequiredClientOptions
 } from "../types"
+import {basicAuthHeader} from "../lib/authHeaders"
+import BoomRequest from "../lib/BoomRequest"
 import * as BrowserFetchAdapter from "../adapters/BrowserFetchAdapter"
-import Handler from "../lib/Handler"
-import * as NodeRequestAdapter from "../adapters/NodeRequestAdapter"
 import SearchRequest from "../lib/SearchRequest"
+import buildUrl from "../lib/buildUrl"
 import defaultOptions from "../lib/defaultOptions"
 import lookytalkVersion from "../lib/lookytalkVersion"
 
@@ -31,23 +32,24 @@ export default class Base {
     }
   }
 
-  send(reqOpts: RequestOptions, clientOpts: ?RequiredClientOptions) {
-    return this.getAdapter().send(reqOpts, clientOpts || this.options)
+  clientVersion() {
+    return {lookytalk: lookytalkVersion()}
   }
 
-  stream(reqOpts: RequestOptions, clientOpts: ?RequiredClientOptions) {
-    return this.getAdapter().stream(reqOpts, clientOpts || this.options)
+  serverVersion() {
+    return this.send({method: "GET", path: "/version"})
   }
 
-  search(lookytalk: string, overrides: ?ClientOptions = {}): Handler {
-    const search = new SearchRequest(lookytalk, {...this.options, ...overrides})
+  search(lookytalk: string, overrides: ?ClientOptions = {}): BoomRequest {
+    let search = new SearchRequest(lookytalk, {...this.options, ...overrides})
 
-    return this.stream(
+    return this.send(
       {
         method: "POST",
         path: "/search",
         query: search.query(),
-        payload: search.body()
+        payload: search.body(),
+        streaming: true
       },
       search.options
     )
@@ -60,27 +62,25 @@ export default class Base {
     }).inspect()
   }
 
-  clientVersion() {
-    return {
-      lookytalk: lookytalkVersion()
-    }
-  }
+  send(
+    reqOpts: RequestOptions,
+    clientOpts: ?RequiredClientOptions
+  ): BoomRequest {
+    let {host, port, username, password} = clientOpts || this.options
+    if (!host || !port) throw new Error("host/port are missing")
 
-  serverVersion() {
-    return this.send({
-      method: "GET",
-      path: "/version"
-    })
+    return this.getAdapter().send(
+      new BoomRequest({
+        method: reqOpts.method,
+        url: buildUrl(host, port, reqOpts.path, reqOpts.query),
+        body: JSON.stringify(reqOpts.payload),
+        headers: basicAuthHeader(username, password),
+        streaming: reqOpts.streaming
+      })
+    )
   }
 
   getAdapter() {
-    switch (this.options.adapter) {
-      case "NodeRequest":
-        return NodeRequestAdapter
-      case "BrowserFetch":
-        return BrowserFetchAdapter
-      default:
-        throw new Error("Unknown HTTP Adapter")
-    }
+    return BrowserFetchAdapter
   }
 }

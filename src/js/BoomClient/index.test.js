@@ -46,12 +46,12 @@ describe.skip("external tests (need a running boomd)", () => {
   test("#serverVersion", (done) => {
     boom
       .serverVersion()
-      .then((version) => {
+      .done((version) => {
         expect(version).toHaveProperty("boomd")
         expect(version).toHaveProperty("lookytalk")
         done()
       })
-      .catch(done)
+      .error(done)
   })
 
   test("#search", (done) => {
@@ -63,7 +63,7 @@ describe.skip("external tests (need a running boomd)", () => {
     let tuples = []
     boom
       .search("* | head 100")
-      .channel(0, (payload) => {
+      .stream((payload) => {
         if (payload.type === "SearchResult")
           tuples = [...tuples, ...payload.results.tuples]
       })
