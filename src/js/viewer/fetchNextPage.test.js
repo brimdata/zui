@@ -2,7 +2,6 @@
 import {appendViewerLogs, spliceViewer} from "../state/viewer/actions"
 import {fetchNextPage} from "./fetchNextPage"
 import {setCurrentSpaceName, setOuterTimeWindow} from "../state/actions"
-import Handler from "../BoomClient/lib/Handler"
 import Log from "../models/Log"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
@@ -10,12 +9,9 @@ import initTestStore from "../test/initTestStore"
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
 
-let store, boom, handler
+let store, boom
 beforeEach(() => {
-  boom = new MockBoomClient()
-  handler = new Handler()
-  // $FlowFixMe
-  boom.search = () => handler
+  boom = new MockBoomClient().stub("search")
   store = initTestStore(boom)
   store.dispatchAll([
     setCurrentSpaceName("default"),

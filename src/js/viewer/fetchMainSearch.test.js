@@ -24,7 +24,7 @@ const spaceInfo = {
 }
 
 test("fetching a regular search", () => {
-  boom.stubStream("stream")
+  boom.stub("search")
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
@@ -45,7 +45,7 @@ test("fetching a regular search", () => {
 })
 
 test("not saving a search to history", (done) => {
-  boom.stubStream("stream")
+  boom.stub("search")
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),

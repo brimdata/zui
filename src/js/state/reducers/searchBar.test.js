@@ -28,14 +28,11 @@ import {
 import {goBack, goForward, submitSearchBar} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
 import Field from "../../models/Field"
-import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"
 
-let store, boom
+let store
 beforeEach(() => {
-  boom = new MockBoomClient()
-  boom.stubStream("search")
-  store = initTestStore(boom)
+  store = initTestStore()
 })
 
 test("input value changed", () => {
