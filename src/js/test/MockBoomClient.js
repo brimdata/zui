@@ -1,40 +1,40 @@
 /* @flow */
 
 import BoomClient from "../BoomClient"
-import Handler from "../BoomClient/lib/Handler"
+import BoomRequest from "../BoomClient/lib/BoomRequest"
 
 export default class MockBoomClient extends BoomClient {
+  mockRequest() {
+    return mockRequest()
+  }
+
   send() {
     throw new Error(`
   Http Requests are disabled in tests.
-  Use #stubStream(method, val) or #stubSend(method, val)
+  Use #stub(method, val) or #stub(method, val)
   to mock the server response.`)
   }
 
-  stream() {
-    throw new Error(`
-  Http Requests are disabled in tests.
-  Use #stubStream(method, val) or #stubSend(method, val)
-  to mock the server response.`)
+  stub(name: string, returnVal: *) {
+    let req = this.mockRequest()
+
+    function newMethod() {
+      setTimeout(() => req.emitDone(returnVal), 0)
+      return req
+    }
+    return this.redef(name, newMethod)
   }
 
-  stubSend(method: string, returnVal: *) {
-    return this.stub(method, () => new Promise((r) => r(returnVal)))
+  stubError(name: string, error: *) {
+    let req = this.mockRequest()
+    function newMethod() {
+      setTimeout(() => req.emitError(error), 0)
+      return req
+    }
+    return this.redef(name, newMethod)
   }
 
-  stubSendError(method: string, error: *) {
-    return this.stub(method, () => new Promise((_, r) => r(error)))
-  }
-
-  stubStream(method: string, returnVal: *) {
-    const handler = new Handler(() => {})
-    return this.stub(method, () => {
-      setTimeout(() => handler.onDone(returnVal), 0)
-      return handler
-    })
-  }
-
-  stub(method: string, methodBody: Function) {
+  redef(method: string, methodBody: Function) {
     const props = method.split(".")
     let parent = this
     for (let i = 0; i < props.length; i++) {
@@ -51,4 +51,12 @@ export default class MockBoomClient extends BoomClient {
     }
     return this
   }
+}
+
+export function mockRequest() {
+  return new BoomRequest({
+    method: "GET",
+    url: "testing.123",
+    body: ""
+  })
 }
