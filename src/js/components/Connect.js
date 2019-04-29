@@ -6,12 +6,16 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {Credentials} from "../lib/Credentials"
-import {connectBoomd} from "../state/thunks/boomd"
+import {checkLookytalkVersion} from "../state/thunks/boomd"
+import {fetchSpaces} from "../backend/fetch"
 import {getCredentials} from "../state/reducers/boomd"
 import {setAppMenu} from "../electron/setAppMenu"
 import {setBoomdCredentials} from "../state/actions"
+import {trim} from "../lib/Str"
+import {updateBoomOptions} from "../backend/options"
 import AdminTitle from "./AdminTitle"
 import AppError from "../models/AppError"
+import BoomRequest from "../BoomClient/lib/BoomRequest"
 import ErrorFactory from "../models/ErrorFactory"
 import LookyHeader from "./LookyHeader"
 import delay from "../lib/delay"
@@ -19,14 +23,16 @@ import delay from "../lib/delay"
 type Props = {|
   credentials: Credentials,
   setBoomdCredentials: Function,
-  connectBoomd: Function
+  connectBoomd: Function,
+  dispatch: Function
 |}
 
 type CompState = {|
   ...$Exact<Credentials>,
   error: ?AppError,
   isConnected: boolean,
-  isConnecting: boolean
+  isConnecting: boolean,
+  request: ?BoomRequest
 |}
 
 export default class Connect extends React.Component<Props, CompState> {
@@ -37,18 +43,34 @@ export default class Connect extends React.Component<Props, CompState> {
       ...props.credentials,
       error: null,
       isConnecting: false,
-      isConnected: false
+      isConnected: false,
+      request: null
     }
   }
 
   onSubmit = (e: Event) => {
+    e.preventDefault()
+    const {host, port} = this.state
+
+    if (!trim(host) || !trim(port)) {
+      this.setState({error: ErrorFactory.create("Host and port are required.")})
+      return
+    }
+
     this.setState({isConnecting: true, error: null})
     e.preventDefault()
+
     this.props.setBoomdCredentials(this.state)
-    this.props
-      .connectBoomd()
-      .then(() => delay(300, () => this.setState({isConnected: true})))
-      .catch((e) => {
+    this.props.dispatch(updateBoomOptions())
+
+    let request = this.props.dispatch(fetchSpaces())
+
+    request
+      .done(() => {
+        setTimeout(() => this.props.dispatch(checkLookytalkVersion()), 3000)
+        delay(300, () => this.setState({isConnected: true}))
+      })
+      .error((e) => {
         delay(300, () =>
           this.setState({
             isConnecting: false,
@@ -56,6 +78,11 @@ export default class Connect extends React.Component<Props, CompState> {
           })
         )
       })
+      .onAbort(() => {
+        this.setState({isConnecting: false})
+      })
+
+    this.setState({request})
   }
 
   render() {
@@ -117,7 +144,11 @@ export default class Connect extends React.Component<Props, CompState> {
               </button>
               <div className="status-message">
                 {this.state.isConnecting ? (
-                  <ConnectingMessage onCancel={() => {}} />
+                  <ConnectingMessage
+                    onCancel={() => {
+                      this.state.request && this.state.request.abort()
+                    }}
+                  />
                 ) : null}
                 {this.state.error ? (
                   <p className="form-error">{this.state.error.message()}</p>
@@ -144,7 +175,7 @@ const stateToProps = (state) => ({
 })
 
 const dispatchToProps = (dispatch) => ({
-  ...bindActionCreators({setBoomdCredentials, connectBoomd}, dispatch),
+  ...bindActionCreators({setBoomdCredentials}, dispatch),
   dispatch
 })
 

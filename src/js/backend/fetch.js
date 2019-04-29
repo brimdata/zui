@@ -13,7 +13,7 @@ export function fetchSearch(program: string, span: Span, space: string): Thunk {
 
 export function fetchSpaces(): Thunk {
   return (dispatch, g, boom) =>
-    toPromise(boom.spaces.list()).catch(recordError(dispatch))
+    boom.spaces.list().error((error) => dispatch(createError(error)))
 }
 
 export function fetchSpace(name: string): Thunk {

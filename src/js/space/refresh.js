@@ -5,7 +5,7 @@ import {fetchSpaces} from "../backend/fetch"
 import {setSpaceNames} from "../state/actions"
 
 export const refreshSpaces = (): Thunk => (dispatch) => {
-  return dispatch(fetchSpaces()).then((spaces) =>
+  return dispatch(fetchSpaces()).done((spaces) =>
     dispatch(setSpaceNames(spaces))
   )
 }
