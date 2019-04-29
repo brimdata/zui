@@ -4,7 +4,7 @@ import {Redirect, Route, Switch, withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 import React, {Component} from "react"
 
-import {XConnect} from "./Connect"
+import {XLogin} from "./Login"
 import {XLatestError} from "./LatestError"
 import {XNotifications} from "./Notifications"
 import {XSearch} from "./Search"
@@ -26,7 +26,7 @@ export default class App extends Component<Props> {
         <XNotifications />
         <Switch>
           <Route path="/search" component={XSearch} />
-          <Route path="/connect" component={XConnect} />
+          <Route path="/connect" component={XLogin} />
           <Redirect to="/connect" />
         </Switch>
       </div>

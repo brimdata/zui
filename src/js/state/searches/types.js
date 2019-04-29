@@ -1,6 +1,6 @@
 /* @flow */
 import type {Descriptors, Tuples} from "../../types"
-import Handler from "../../BoomClient/lib/Handler"
+import BoomRequest from "../../BoomClient/lib/BoomRequest"
 
 export type SearchesState = {[string]: Search}
 
@@ -23,7 +23,7 @@ export type SearchResults = {
 export type Search = {
   name: string,
   status: SearchStatus,
-  handler: Handler,
+  handler: BoomRequest,
   stats: SearchStats,
   tag: string,
   results: SearchResults

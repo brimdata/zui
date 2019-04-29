@@ -10,8 +10,7 @@ export const cancelSearchesByTag = (tag?: string): Thunk => (
   const state = getState()
   const searches = getSearches(state)
   for (let name in searches) {
-    if (!tag || searches[name].tag === tag)
-      searches[name].handler.abortRequest(false)
+    if (!tag || searches[name].tag === tag) searches[name].handler.abort(false)
   }
 }
 
@@ -22,12 +21,11 @@ export const killSearchesByTag = (tag?: string): Thunk => (
   const state = getState()
   const searches = getSearches(state)
   for (let name in searches) {
-    if (!tag || searches[name].tag === tag)
-      searches[name].handler.abortRequest()
+    if (!tag || searches[name].tag === tag) searches[name].handler.abort()
   }
 }
 
 export const killSearch = (name: string): Thunk => (_, getState) => {
   const searches = getSearches(getState())
-  searches[name] && searches[name].handler.abortRequest()
+  searches[name] && searches[name].handler.abort()
 }

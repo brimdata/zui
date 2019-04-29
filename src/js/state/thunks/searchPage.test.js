@@ -21,9 +21,9 @@ const alternateSpace = {
 
 test("init with several spaces", (done) => {
   const boom = new MockBoomClient()
-  boom.stubSend("spaces.list", ["default", "ranch-logs"])
-  boom.stubSend("spaces.get", defaultSpace)
-  boom.stubStream("search", [])
+  boom.stub("spaces.list", ["default", "ranch-logs"])
+  boom.stub("spaces.get", defaultSpace)
+  boom.stub("search", [])
   const store = initTestStore(boom)
 
   store
@@ -44,9 +44,9 @@ test("init with several spaces", (done) => {
 
 test("init with no spaces", (done) => {
   const boom = new MockBoomClient()
-  boom.stubSend("spaces.list", [])
-  boom.stubSend("spaces.get", defaultSpace)
-  boom.stubStream("search", [])
+  boom.stub("spaces.list", [])
+  boom.stub("spaces.get", defaultSpace)
+  boom.stub("search", [])
   const store = initTestStore(boom)
 
   store
@@ -60,9 +60,9 @@ test("init with no spaces", (done) => {
 
 test("init with a space already selected", (done) => {
   const boom = new MockBoomClient()
-  boom.stubSend("spaces.list", ["alternate"])
-  boom.stubSend("spaces.get", alternateSpace)
-  boom.stubStream("search", [])
+  boom.stub("spaces.list", ["alternate"])
+  boom.stub("spaces.get", alternateSpace)
+  boom.stub("search", [])
   const store = initTestStore(boom)
 
   store.dispatch(setCurrentSpaceName("alternate"))

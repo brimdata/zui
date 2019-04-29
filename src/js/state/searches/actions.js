@@ -10,10 +10,10 @@ import type {
   SearchStats,
   SearchStatus
 } from "./types"
-import Handler from "../../BoomClient/lib/Handler"
+import BoomRequest from "../../BoomClient/lib/BoomRequest"
 import createSearchObject from "./createSearchObject"
 
-type RegOpts = {handler: Handler, tag: string}
+type RegOpts = {handler: BoomRequest, tag: string}
 
 export function registerSearch(name: string, opts: RegOpts): SEARCH_REGISTER {
   return {

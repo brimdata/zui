@@ -9,7 +9,7 @@ import initTestStore from "../test/initTestStore"
 describe("#viewLogDetail", () => {
   let store, log, boom
   beforeEach(() => {
-    boom = new MockBoomClient().stubStream("stream")
+    boom = new MockBoomClient().stub("search")
     store = initTestStore(boom)
     log = conn()
   })

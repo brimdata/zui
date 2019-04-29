@@ -8,8 +8,8 @@ import {
   setSearchStatus
 } from "./actions"
 import {getSearch, getSearches} from "./selector"
+import {mockRequest} from "../../test/MockBoomClient"
 import {mockSearchResults} from "../../test/mockSearchResults"
-import Handler from "../../BoomClient/lib/Handler"
 import initTestStore from "../../test/initTestStore"
 
 describe("searches reducer", () => {
@@ -18,8 +18,8 @@ describe("searches reducer", () => {
   beforeEach(() => {
     store = initTestStore()
     store.dispatchAll([
-      registerSearch("Histogram", {tag: "viewer", handler: new Handler()}),
-      registerSearch("Logs", {tag: "detail", handler: new Handler()})
+      registerSearch("Histogram", {tag: "viewer", handler: mockRequest()}),
+      registerSearch("Logs", {tag: "detail", handler: mockRequest()})
     ])
   })
 

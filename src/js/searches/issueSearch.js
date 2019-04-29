@@ -17,7 +17,7 @@ export const issueSearch = (search: SearchTemplate): Thunk => (
   let {name, program, span, handlers = []} = search
 
   if (searches[name]) {
-    searches[name].handler.abortRequest(false)
+    searches[name].handler.abort(false)
     dispatch(clearSearchResults(name))
   }
 
@@ -27,9 +27,9 @@ export const issueSearch = (search: SearchTemplate): Thunk => (
   handlers.forEach((buildCallbacks) => {
     let {each, abort, error} = buildCallbacks(dispatch, search)
 
-    if (each) handler.each(each)
-    if (abort) handler.abort(abort)
+    if (each) handler.stream(each)
     if (error) handler.error(error)
+    if (abort) handler.onAbort(abort)
   })
 
   dispatch(registerSearch(name, {handler, tag: search.tag}))

@@ -4,9 +4,7 @@ import {LookytalkVersionError} from "../../models/Errors"
 import type {Thunk} from "../types"
 import {addNotification, useBoomCache, useBoomIndex} from "../actions"
 import {createError} from "../errors"
-import {fetchLookytalkVersions, fetchSpaces} from "../../backend/fetch"
-import {getBoomOptions} from "../selectors/boom"
-import {updateBoomOptions} from "../../backend/options"
+import {fetchLookytalkVersions} from "../../backend/fetch"
 
 export const enableCache = (value: boolean): Thunk => (
   dispatch,
@@ -24,18 +22,6 @@ export const enableIndex = (value: boolean): Thunk => (
 ) => {
   dispatch(useBoomIndex(value))
   boom.setOptions({enableCache: value})
-}
-
-export const connectBoomd = (): Thunk => (dispatch, getState) => {
-  dispatch(updateBoomOptions())
-
-  const {host, port} = getBoomOptions(getState())
-
-  if (!host || !port) return Promise.reject("Host and port are required.")
-
-  return dispatch(fetchSpaces()).then(() => {
-    setTimeout(() => dispatch(checkLookytalkVersion()), 3000)
-  })
 }
 
 export const checkLookytalkVersion = (): Thunk => (dispatch) => {
