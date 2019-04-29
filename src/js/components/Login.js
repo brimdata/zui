@@ -35,7 +35,7 @@ type CompState = {|
   request: ?BoomRequest
 |}
 
-export default class Connect extends React.Component<Props, CompState> {
+export default class Login extends React.Component<Props, CompState> {
   constructor(props: Props) {
     setAppMenu("LOGIN")
     super(props)
@@ -179,7 +179,7 @@ const dispatchToProps = (dispatch) => ({
   dispatch
 })
 
-export const XConnect = connect<Props, {||}, _, _, _, _>(
+export const XLogin = connect<Props, {||}, _, _, _, _>(
   stateToProps,
   dispatchToProps
-)(Connect)
+)(Login)
