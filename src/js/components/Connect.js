@@ -115,15 +115,28 @@ export default class Connect extends React.Component<Props, CompState> {
               >
                 {this.state.isConnecting ? "Connecting..." : "Connect"}
               </button>
-              {this.state.error ? (
-                <p className="form-error">{this.state.error.message()}</p>
-              ) : null}
+              <div className="status-message">
+                {this.state.isConnecting ? (
+                  <ConnectingMessage onCancel={() => {}} />
+                ) : null}
+                {this.state.error ? (
+                  <p className="form-error">{this.state.error.message()}</p>
+                ) : null}
+              </div>
             </form>
           </div>
         </div>
       </main>
     )
   }
+}
+
+function ConnectingMessage({onCancel}) {
+  return (
+    <p>
+      Connecting to boom...<a onClick={onCancel}>Cancel</a>
+    </p>
+  )
 }
 
 const stateToProps = (state) => ({
