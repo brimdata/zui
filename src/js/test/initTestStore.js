@@ -16,9 +16,7 @@ type TestStore = {
   getState: () => State
 }
 
-export default (
-  boom: * = new MockBoomClient().stubStream("stream").stubSend("send")
-): TestStore =>
+export default (boom: * = new MockBoomClient().stub("send")): TestStore =>
   // $FlowFixMe
   createStore(
     rootReducer,
