@@ -11,6 +11,7 @@ import initTestStore from "../test/initTestStore"
 let props
 beforeEach(() => {
   props = {
+    renderKey: "123",
     dispatch: () => new Promise((res) => res()),
     logsTab: true
   }
