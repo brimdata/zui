@@ -37,8 +37,13 @@ export function buildMainHistogramChart({dispatch, ...props}: Props) {
     dispatch(fetchMainSearch())
   }
 
-  function onBarClick(span: Span) {
+  function onFocus(span: Span) {
     dispatch(setInnerTimeWindow(span))
+    dispatch(fetchMainSearch({saveToHistory: false}))
+  }
+
+  function onBlur() {
+    dispatch(setInnerTimeWindow(null))
     dispatch(fetchMainSearch({saveToHistory: false}))
   }
 
@@ -85,7 +90,7 @@ export function buildMainHistogramChart({dispatch, ...props}: Props) {
       xAxisBrush({onSelection, onSelectionClear, onSelectionClick}),
       hoverLine(),
       xPositionTooltip(),
-      focusBar({onBarClick})
+      focusBar({onFocus, onBlur})
     ]
   })
 }
