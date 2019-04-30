@@ -7,19 +7,13 @@ import type {Span} from "../../BoomClient/types"
 import Chart from "../Chart"
 
 type Props = {
-  onSelection?: (span: Span) => void,
-  onSelectionClear?: () => void,
-  onSelectionDoubleClick?: (span: Span) => void,
+  onSelection: (span: Span) => void,
+  onSelectionClear: () => void,
   onSelectionClick: (span: Span) => void
 }
 
 export default function(props: Props = {}) {
-  const {
-    onSelection,
-    onSelectionClear,
-    onSelectionDoubleClick,
-    onSelectionClick
-  } = props
+  const {onSelection, onSelectionClear, onSelectionClick} = props
 
   function mount(chart: Chart) {
     d3.select(chart.svg)
@@ -33,8 +27,6 @@ export default function(props: Props = {}) {
 
   function draw(chart: Chart) {
     let prevSelection = null
-    let justClicked = false
-    let timeout
 
     function onBrushStart() {
       prevSelection = d3.brushSelection(
@@ -46,7 +38,10 @@ export default function(props: Props = {}) {
     }
 
     function onBrushEnd() {
-      const {selection, sourceEvent} = d3.event
+      let {selection, sourceEvent} = d3.event
+      let [x] = d3.mouse(this)
+      let [start, end] = selection
+      let withinSelection = x >= start && x <= end
 
       if (!sourceEvent) {
         return
@@ -62,22 +57,8 @@ export default function(props: Props = {}) {
         return
       }
 
-      const [x] = d3.mouse(this)
-      const [start, end] = selection
-      const withinSelection = x >= start && x <= end
-      const singleClickedSelection = withinSelection && !justClicked
-      const doubleClickedSelection = withinSelection && justClicked
-      if (singleClickedSelection) {
-        justClicked = true
-        timeout = setTimeout(() => (justClicked = false), 400)
+      if (withinSelection) {
         onSelectionClick(selection.map(chart.scales.timeScale.invert))
-        return
-      }
-      if (doubleClickedSelection) {
-        onSelectionDoubleClick &&
-          onSelectionDoubleClick(selection.map(chart.scales.timeScale.invert))
-        justClicked = false
-        clearTimeout(timeout)
         return
       }
     }
