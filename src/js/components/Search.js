@@ -18,6 +18,7 @@ import {XSettingsModal} from "./SettingsModal"
 import {XStatusBar} from "./StatusBar"
 import {XTitleBar} from "./TitleBar"
 import {XWhoisModal} from "./WhoisModal"
+import {getCurrentFinding} from "../state/reducers/investigation"
 import {getShowLogsTab} from "../state/reducers/view"
 import {initSearchPage} from "../state/thunks/searchPage"
 import {setAppMenu} from "../electron/setAppMenu"
@@ -28,7 +29,8 @@ import StartupError from "./StartupError"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type StateProps = {|
-  logsTab: boolean
+  logsTab: boolean,
+  renderKey: string
 |}
 
 type Props = {|
@@ -70,7 +72,13 @@ export default class Search extends React.Component<Props, LocalState> {
               {this.props.logsTab && (
                 <div className="search-page-header-charts">
                   <AutoSizer disableHeight>
-                    {({width}) => <XHistogram height={80} width={width} />}
+                    {({width}) => (
+                      <XHistogram
+                        height={80}
+                        width={width}
+                        key={this.props.renderKey}
+                      />
+                    )}
                   </AutoSizer>
                 </div>
               )}
@@ -97,7 +105,12 @@ export default class Search extends React.Component<Props, LocalState> {
 }
 
 export const stateToProps = (state: State): StateProps => ({
-  logsTab: getShowLogsTab(state)
+  logsTab: getShowLogsTab(state),
+  renderKey:
+    getCurrentFinding(state) &&
+    getCurrentFinding(state)
+      .ts.getTime()
+      .toString()
 })
 
 export const XSearch = connect<Props, {||}, _, _, _, _>(
