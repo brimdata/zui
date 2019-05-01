@@ -3,7 +3,7 @@
 import {getCurrentSpace, getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
 import {initSearchPage} from "./searchPage"
-import {setCurrentSpaceName} from "../actions"
+import {setBoomdCredentials, setCurrentSpaceName} from "../actions"
 import MockBoomClient from "../../test/MockBoomClient"
 import initTestStore from "../../test/initTestStore"
 
@@ -25,6 +25,9 @@ test("init with several spaces", (done) => {
   boom.stub("spaces.get", defaultSpace)
   boom.stub("search", [])
   const store = initTestStore(boom)
+  store.dispatch(
+    setBoomdCredentials({host: "h", port: "1", user: "", pass: ""})
+  )
 
   store
     .dispatch(initSearchPage())
@@ -48,6 +51,9 @@ test("init with no spaces", (done) => {
   boom.stub("spaces.get", defaultSpace)
   boom.stub("search", [])
   const store = initTestStore(boom)
+  store.dispatch(
+    setBoomdCredentials({host: "h", port: "1", user: "", pass: ""})
+  )
 
   store
     .dispatch(initSearchPage())
@@ -64,6 +70,9 @@ test("init with a space already selected", (done) => {
   boom.stub("spaces.get", alternateSpace)
   boom.stub("search", [])
   const store = initTestStore(boom)
+  store.dispatch(
+    setBoomdCredentials({host: "h", port: "1", user: "", pass: ""})
+  )
 
   store.dispatch(setCurrentSpaceName("alternate"))
   store
