@@ -7,6 +7,7 @@ module.exports = {
     react: ["useState", "useRef", "useEffect", "useLayoutEffect"],
     "react-dom": ["renderToString"],
     lodash: ["throttle", "get", "isEqual", "isEmpty", "every", "kebabCase"],
-    "react-router-dom": ["Redirect"]
+    "react-router-dom": ["Redirect"],
+    "react-redux": ["useDispatch"]
   }
 }
