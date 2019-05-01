@@ -32,7 +32,12 @@ export default function LoginForm(props: Props) {
 
   return (
     <form className="admin-form" onSubmit={onSubmit}>
-      <LoginFormField name="host" value={host || ""} onChange={onChange} />
+      <LoginFormField
+        name="host"
+        value={host || ""}
+        onChange={onChange}
+        autoFocus
+      />
       <LoginFormField name="port" value={port || ""} onChange={onChange} />
       <LoginFormField name="user" value={user} onChange={onChange} />
       <LoginFormField name="pass" value={pass} onChange={onChange} />
@@ -53,7 +58,7 @@ function LoginFormField(props) {
   return (
     <div className="form-field">
       <label>{props.name}</label>
-      <input autoFocus type="text" {...props} />
+      <input type="text" {...props} />
     </div>
   )
 }
