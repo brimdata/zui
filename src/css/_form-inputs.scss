@@ -27,13 +27,6 @@ input {
       color: $gray;
     }
   }
-
-  .spin-loader-wrapper {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translate(0, -50%);
-  }
 }
 
 .checkbox {
