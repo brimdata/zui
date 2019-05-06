@@ -40,7 +40,12 @@ export default function LoginForm(props: Props) {
       />
       <LoginFormField name="port" value={port || ""} onChange={onChange} />
       <LoginFormField name="user" value={user} onChange={onChange} />
-      <LoginFormField name="pass" value={pass} onChange={onChange} />
+      <LoginFormField
+        name="pass"
+        value={pass}
+        onChange={onChange}
+        type="password"
+      />
       <LoginButton status={props.status} />
       <div className="status-message">
         {props.status === "connecting" && (
