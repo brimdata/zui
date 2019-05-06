@@ -1,0 +1,169 @@
+.title {
+  font-family: $heading-font;
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 29px;
+  margin: 0;
+}
+
+.header {
+  font-family: $heading-font;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  margin: 0;
+}
+
+.paragraph {
+  font-family: $body-font;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.code-text {
+  font-family: $mono-font;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  margin: 0;
+}
+
+.code {
+  display: inline-block;
+  font-family: $mono-font;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 3px 6px;
+  margin: 0;
+
+  &.full {
+    width: 100%;
+  }
+
+  &.light {
+    background-color: rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0px 0px 2px 0 rgba(0, 0, 0, 0.1);
+    padding: 12px 24px;
+  }
+}
+
+.fieldset {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: 15px;
+  margin: 0;
+  font-family: $body-font;
+}
+
+.subscript {
+  font-family: $body-font;
+  font-size: 9px;
+  font-weight: normal;
+  line-height: 11px;
+  margin: 0;
+}
+
+.label {
+  font-family: $body-font;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.link {
+  font-family: $body-font;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+  text-decoration: underline;
+  cursor: pointer;
+
+  color: $blue;
+
+  &:hover {
+    color: darken($blue, 20%);
+  }
+
+  &:active {
+    color: darken($blue, 30%);
+  }
+
+  &.yellow {
+    color: $yellow-3;
+
+    &:hover {
+      color: $yellow-4;
+    }
+    &:active {
+      color: $yellow-5;
+    }
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.tiny-heading {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin: 0 0 $base-space 0;
+}
+
+.small-heading {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin: 0 0 $base-space 0;
+}
+
+.medium-heading {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin: 0 0 $base-space 0;
+}
+
+.large-heading {
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin: 0 0 $base-space 0;
+}
+
+.huge-heading {
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin: 0 0 $base-space 0;
+}
+
+.mono-body-text {
+  font-family: $mono-font;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.body-text {
+  font-size: 14px;
+  font-family: $body-font;
+  font-weight: normal;
+}
+
+.field-label {
+  font-family: $body-font;
+  font-size: 10px;
+  font-weight: bold;
+  color: $gray;
+}

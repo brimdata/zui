@@ -5,14 +5,14 @@
   position: relative;
   border-radius: 3px;
   width: 400px;
-  @include fills-transparent-dark;
+  background-color: transparentize(#545866, 0.03);
   @include shadow-medium;
 
   &::after {
     width: 120px;
     height: 120px;
     content: "";
-    @include fills-accent-red;
+    background-color: #d93347;
     position: absolute;
     top: -80px;
     left: -80px;
@@ -26,7 +26,7 @@
 
   .code {
     margin-top: 12px;
-    @include fills-transparent-black-20;
+    background-color: rgba(0, 0, 0, 0.2);
     white-space: normal;
   }
 

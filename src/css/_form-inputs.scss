@@ -31,7 +31,9 @@ input {
 
 .checkbox {
   -webkit-appearance: none;
-  @include input-primary;
+  background-color: white;
+  border: 1px solid #dfe0e6;
+  border-radius: 3px;
   width: 24px;
   height: 24px;
   position: relative;

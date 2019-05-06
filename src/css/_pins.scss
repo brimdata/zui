@@ -32,7 +32,15 @@
 
   .pin-button {
     @include button-reset;
-    @include input-secondary;
+    background-color: #dcdcdc;
+    &:hover {
+      background: darken(#dcdcdc, 5%);
+    }
+
+    &:active,
+    .active {
+      background: darken(#dcdcdc, 10%);
+    }
     min-height: 17px;
     border-radius: 0px 3px 3px 0px;
     padding: 0;
