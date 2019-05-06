@@ -1,5 +1,5 @@
-// flow-typed signature: b7f98c6a7afc32bb93cf5d468d7d757a
-// flow-typed version: b999c93144/react-router-dom_v4.x.x/flow_>=v0.63.x
+// flow-typed signature: c7da6beaa4e842836d96c097a61392c8
+// flow-typed version: be05cd918c/react-router-dom_v5.x.x/flow_>=v0.63.x
 
 declare module "react-router-dom" {
   declare export var BrowserRouter: React$ComponentType<{|
@@ -28,8 +28,8 @@ declare module "react-router-dom" {
     to: string | LocationShape,
     activeClassName?: string,
     className?: string,
-    activeStyle?: Object,
-    style?: Object,
+    activeStyle?: { +[string]: mixed },
+    style?: { +[string]: mixed },
     isActive?: (match: Match, location: Location) => boolean,
     children?: React$Node,
     exact?: boolean,
@@ -69,8 +69,8 @@ declare module "react-router-dom" {
     goForward(): void,
     canGo?: (n: number) => boolean,
     block(
-      callback: (location: Location, action: HistoryAction) => boolean
-    ): void,
+      callback: string | (location: Location, action: HistoryAction) => ?string
+    ): () => void,
     // createMemoryHistory
     index?: number,
     entries?: Array<Location>
@@ -170,5 +170,5 @@ declare module "react-router-dom" {
     parent?: Match
   ): null | Match;
 
-  declare export function generatePath(pattern?: string, params?: Object): string;
+  declare export function generatePath(pattern?: string, params?: { +[string]: mixed }): string;
 }
