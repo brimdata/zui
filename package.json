@@ -111,7 +111,7 @@
     "react-day-picker": "^7.3.0",
     "react-dom": "^16.8.5",
     "react-measure": "^2.2.4",
-    "react-redux": "^6.0.1",
+    "react-redux": "^7.1.0-alpha.4",
     "react-router-dom": "^5.0.0",
     "react-transition-group": "^2.7.1",
     "react-virtualized": "^9.20.1",
