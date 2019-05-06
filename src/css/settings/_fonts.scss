@@ -1,3 +1,73 @@
 $heading-font: "Cartograph", sans-serif;
 $body-font: "Cartograph", sans-serif;
 $mono-font: "Cartograph-Mono", monospace;
+
+@font-face {
+  font-family: "Cartograph";
+  src: url(../static/fonts/CartographSansCF-Regular.otf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cartograph";
+  src: url(../static/fonts/CartographSansCF-RegularItalic.otf);
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cartograph";
+  src: url(../static/fonts/CartographSansCF-Bold.otf);
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cartograph";
+  src: url(../static/fonts/CartographSansCF-BoldItalic.otf);
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cartograph";
+  src: url(../static/fonts/CartographSansCF-Heavy.otf);
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cartograph";
+  src: url(../static/fonts/CartographSansCF-HeavyItalic.otf);
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cartograph-Mono";
+  src: url(../static/fonts/CartographMonoCF-Regular.otf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cartograph-Mono";
+  src: url(../static/fonts/CartographMonoCF-RegularItalic.otf);
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cartograph-Mono";
+  src: url(../static/fonts/CartographMonoCF-Bold.otf);
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cartograph-Mono";
+  src: url(../static/fonts/CartographMonoCF-BoldItalic.otf);
+  font-weight: 700;
+  font-style: italic;
+}
