@@ -8,7 +8,7 @@ import type {DispatchProps, State} from "../state/types"
 import type {SearchResults} from "../state/searches/types"
 import {buildMainHistogramChart} from "../charts/mainHistogram"
 import {getInnerTimeWindow, getTimeWindow} from "../state/reducers/timeWindow"
-import {getSearch, getSearchStatus} from "../state/searches/selector"
+import {getSearchResults, getSearchStatus} from "../state/searches/selector"
 import {resultsToLogs} from "../log/resultsToLogs"
 import Chart from "../charts/Chart"
 import SVGChart from "./SVGChart"
@@ -30,7 +30,7 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 function stateToProps(state: State): StateProps {
   return {
-    results: getSearch(state, "HistogramSearch").results,
+    results: getSearchResults(state, "HistogramSearch"),
     timeWindow: getTimeWindow(state),
     innerTimeWindow: getInnerTimeWindow(state),
     isFetching: getSearchStatus(state, "HistogramSearch") === "FETCHING"
