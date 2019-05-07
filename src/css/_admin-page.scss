@@ -1,5 +1,5 @@
 .admin-page {
-  background: $light-gray-1;
+  background: $white-3;
   min-height: 100%;
   width: 100%;
 
@@ -71,7 +71,7 @@
 }
 
 .admin-panel {
-  background: $gray-5;
+  background: $gray-9;
   padding: 24px;
   border-radius: 3px;
   position: relative;
@@ -82,7 +82,7 @@
   &:before {
     content: "";
     background: transparent;
-    box-shadow: 0 12px 24px 0 transparentize($gray-5, 0.5);
+    box-shadow: 0 12px 24px 0 transparentize($gray-9, 0.5);
     border-radius: 3px;
     top: 12px;
     right: 30px;
@@ -98,7 +98,7 @@
     position: absolute;
     left: 3px;
     top: 1px;
-    background: $gray-3;
+    background: $gray-7;
     content: "";
   }
 }
@@ -107,7 +107,7 @@
   font-size: 9px;
   text-transform: uppercase;
   font-weight: normal;
-  color: $blue-1;
+  color: #95b2d5;
 }
 
 .admin-form {
@@ -127,7 +127,7 @@
   }
 
   input {
-    background: $gray-3;
+    background: $gray-7;
     font-size: 14px;
     line-height: 28px;
     height: 28px;
@@ -137,7 +137,7 @@
 
     &:focus {
       box-shadow: $box-shadow;
-      background: $gray-2;
+      background: $gray-5;
     }
   }
 

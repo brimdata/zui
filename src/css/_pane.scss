@@ -1,7 +1,7 @@
-$pane-background-color: $light-gray-2;
-$pane-border-color: $light-gray-3;
+$pane-background-color: $white-3;
+$pane-border-color: $white-5;
 $pane-header-height: 36px;
-$pane-header-background-color: $light-gray-3;
+$pane-header-background-color: $white-5;
 
 .pane {
   position: relative;
@@ -14,8 +14,8 @@ $pane-header-background-color: $light-gray-3;
   position: relative;
   border-bottom: 1px solid $pane-border-color;
   svg {
-    fill: $gray-3;
-    stroke: $gray-3;
+    fill: $gray-7;
+    stroke: $gray-7;
   }
   flex-shrink: 0;
   height: $pane-header-height;

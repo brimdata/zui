@@ -11,10 +11,10 @@ input {
   position: relative;
 
   input {
-    color: $gray-3;
+    color: $gray-7;
     font-size: 14px;
     border: none;
-    color: $gray-3;
+    color: $gray-7;
     font-size: 14px;
     font-family: $mono-font;
     outline: none;
@@ -24,7 +24,7 @@ input {
     border-radius: 3px;
 
     &::placeholder {
-      color: $gray;
+      color: $white-9;
     }
   }
 }

@@ -1,6 +1,6 @@
 /* This file is for your main application css. */
 
-/* Styles from node modules */
+/* Third-party libs */
 @import "react-day-picker";
 
 /* Settings */
@@ -15,6 +15,7 @@
 @import "shared/zeek-colors";
 @import "shared/effects";
 
+/* Specific */
 @import "global";
 @import "buttons";
 @import "icons";

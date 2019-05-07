@@ -75,7 +75,7 @@
     align-items: center;
     padding: 8px 36px;
     cursor: pointer;
-    color: $gray-1;
+    color: $gray-4;
 
     &:hover {
       background-color: #f5f5f7;
@@ -97,9 +97,9 @@
     li.visible {
       font-weight: normal;
       background: inherit;
-      color: $gray-3;
+      color: $gray-7;
       &:hover {
-        background: $light-gray-2;
+        background: $white-3;
       }
     }
   }
@@ -109,10 +109,10 @@
 
   li.show-all {
     background: none;
-    color: $gray-5;
+    color: $gray-9;
 
     &:hover {
-      background: $light-gray-2;
+      background: $white-3;
     }
   }
 

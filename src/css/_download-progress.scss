@@ -1,7 +1,7 @@
 .download-progress {
   position: relative;
-  background: $gray-3;
-  border-top: 2px solid $gray-4;
+  background: $gray-7;
+  border-top: 2px solid $gray-8;
 
   &.complete .progress-value {
     background-color: $green-3;
@@ -48,7 +48,7 @@
     }
 
     &.open:hover {
-      background: $gray-4;
+      background: $gray-8;
     }
 
     &.cancel:hover {

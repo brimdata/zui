@@ -20,7 +20,7 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  box-shadow: 10px 10px 35px 10px fade-out($gray-3, 0.8);
+  box-shadow: 10px 10px 35px 10px fade-out($gray-7, 0.8);
   border-radius: 3px;
   width: 80%;
   position: relative;
@@ -32,7 +32,7 @@
     align-items: center;
     padding-right: 12px;
     padding-left: 36px;
-    border-bottom: 1px solid $gray-cold-4;
+    border-bottom: 1px solid $white-5;
   }
 
   .modal-body {
@@ -42,7 +42,7 @@
   .close-button {
     border-radius: 0;
     svg {
-      fill: $gray-cold-4;
+      fill: $gray-3;
     }
   }
 }

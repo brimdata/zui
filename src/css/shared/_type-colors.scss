@@ -1,7 +1,7 @@
 @mixin type-colors {
   &.string,
   &.set\[string\] {
-    color: $gray-3;
+    color: $gray-7;
   }
 
   &.addr,

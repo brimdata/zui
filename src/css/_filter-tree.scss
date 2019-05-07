@@ -1,7 +1,7 @@
-$filter-tree-line-color: $gray-1;
+$filter-tree-line-color: $gray-4;
 
 .filter-tree {
-  color: $light-gray-3;
+  color: $white-5;
 
   .delete-button {
     position: absolute;
@@ -14,7 +14,7 @@ $filter-tree-line-color: $gray-1;
       transition: fill 100ms;
       width: 16px;
       height: 16px;
-      fill: $gray-1;
+      fill: $gray-4;
     }
 
     &:hover {
@@ -30,7 +30,7 @@ $filter-tree-line-color: $gray-1;
 }
 
 .filter-tree-parent:hover {
-  background: $gray-2;
+  background: $gray-5;
   cursor: pointer;
   .delete-button {
     opacity: 1;

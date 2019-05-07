@@ -1,5 +1,5 @@
 .date-time-picker {
-  background-color: $light-gray;
+  background-color: $white-5;
   padding-bottom: 24px;
 
   .selected-date-heading {
@@ -50,11 +50,11 @@
   }
 
   .DayPicker-Weekday {
-    color: $gray;
+    color: $white-9;
   }
 
   .DayPicker-NavButton {
-    color: $gray;
+    color: $white-9;
   }
 
   .time-picker {
@@ -69,6 +69,6 @@
 
   .range-value {
     float: right;
-    color: $gray;
+    color: $white-9;
   }
 }
