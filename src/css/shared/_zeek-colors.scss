@@ -13,9 +13,9 @@ $unknown-type-color: #afafaf;
 
 @include zeek-bg-color("conn", #86c8b7);
 @include zeek-bg-color("dhcp", #00578a);
-@include zeek-bg-color("dns", $blue-3);
+@include zeek-bg-color("dns", $blue);
 @include zeek-bg-color("ftp", #392277);
-@include zeek-bg-color("http", $yellow-4);
+@include zeek-bg-color("http", $yellow-dark);
 @include zeek-bg-color("files", #ad3f95);
 @include zeek-bg-color("mysql", #d28204);
 @include zeek-bg-color("irc", #00d1a6);
@@ -35,4 +35,4 @@ $unknown-type-color: #afafaf;
 @include zeek-bg-color("weird", $gray-4);
 @include zeek-bg-color("x509", $orange);
 @include zeek-bg-color("pe", $red);
-@include zeek-bg-color("dpd", $green-5);
+@include zeek-bg-color("dpd", $green-dark);

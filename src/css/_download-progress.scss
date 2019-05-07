@@ -4,7 +4,7 @@
   border-top: 2px solid $gray-8;
 
   &.complete .progress-value {
-    background-color: $green-3;
+    background-color: $green;
   }
 
   .progress-bar {
@@ -13,7 +13,7 @@
   }
 
   .progress-value {
-    background-color: $yellow-3;
+    background-color: $yellow;
     height: 100%;
     border-radius: 0 8px 8px 0;
     width: 0%;
@@ -44,7 +44,7 @@
     margin-right: 12px;
 
     &.open {
-      background: $green-3;
+      background: $green;
     }
 
     &.open:hover {

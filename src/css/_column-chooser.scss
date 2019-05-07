@@ -44,7 +44,7 @@
     left: 24px;
     width: 24px;
     height: 24px;
-    background-color: $blue-3;
+    background-color: $blue;
     color: white;
     border-radius: 50%;
     position: absolute;
@@ -117,11 +117,11 @@
   }
 
   li.visible {
-    background: $blue-3;
+    background: $blue;
     color: white;
 
     &:hover {
-      background: $blue-2;
+      background: $blue-light;
     }
   }
 }

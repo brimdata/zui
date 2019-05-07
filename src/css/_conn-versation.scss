@@ -27,7 +27,7 @@
   .port {
     margin: 0;
     color: white;
-    background: $blue-3;
+    background: $blue;
     font-size: 12px;
     text-align: center;
     line-height: 20px;
@@ -39,15 +39,15 @@
   }
 
   .port {
-    background: $blue-2;
+    background: $blue-light;
   }
 
   .responder {
     .ip {
-      background: $green-3;
+      background: $green;
     }
     .port {
-      background: $green-2;
+      background: $green-light;
     }
   }
 
@@ -73,13 +73,13 @@
     hr {
       flex: 1;
       border: none;
-      border-bottom: 1px solid $yellow-3;
+      border-bottom: 1px solid $yellow;
       margin: 0;
     }
 
     .triangle {
-      fill: $yellow-3;
-      stroke: $yellow-3;
+      fill: $yellow;
+      stroke: $yellow;
       width: 10px;
     }
   }

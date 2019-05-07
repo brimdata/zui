@@ -6,7 +6,7 @@
 
   &.addr,
   &.set\[addr\] {
-    color: $blue;
+    color: #4a90e2;
   }
 
   &.port,
@@ -26,6 +26,6 @@
 
   &.bool,
   &.set\[bool\] {
-    color: $light-blue;
+    color: $blue-light;
   }
 }

@@ -4,7 +4,7 @@
   width: 100%;
 
   a {
-    color: $green-3;
+    color: $green;
   }
 
   h1 {
@@ -23,7 +23,7 @@
     font-family: $body-font;
     font-weight: bold;
     font-size: 12px;
-    background: $green-3;
+    background: $green;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,7 +144,7 @@
   .form-error {
     margin: 24px 0;
 
-    color: $yellow-3;
+    color: $yellow;
   }
 }
 
