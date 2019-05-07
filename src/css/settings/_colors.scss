@@ -31,8 +31,12 @@ $green-light: lighten(#399c81, 15%);
 $green: #399c81;
 $green-dark: darken(#399c81, 15%);
 
+$red: #e65835;
+$red-light: lighten($red, 15%);
+$red-dark: darken($red, 15%);
+
 $pink: #ad3f95;
-$red: #d0021b;
+
 $purple: #544aa6;
 $orange: #eeb457;
 
