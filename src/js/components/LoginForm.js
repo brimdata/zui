@@ -47,14 +47,18 @@ export default function LoginForm(props: Props) {
         type="password"
       />
       <LoginButton status={props.status} />
-      <div className="status-message">
-        {props.status === "connecting" && (
+      {props.status === "connecting" && (
+        <div className="status-message">
           <p>
             Connecting to boom...<a onClick={props.cancel}>Cancel</a>
           </p>
-        )}
-        {props.error && <p className="form-error">{props.error.message()}</p>}
-      </div>
+        </div>
+      )}
+      {props.error && (
+        <div className="status-message">
+          <p className="form-error">{props.error.message()}</p>
+        </div>
+      )}
     </form>
   )
 }

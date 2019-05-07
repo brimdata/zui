@@ -1,10 +1,7 @@
 .title {
   font-family: $heading-font;
-  font-size: 24px;
-  text-transform: uppercase;
-  font-weight: 700;
-  line-height: 29px;
-  margin: 0;
+  font-size: $space-l;
+  font-weight: 900;
 }
 
 .header {
@@ -52,8 +49,7 @@
 
 .fieldset {
   font-size: 12px;
-  text-transform: uppercase;
-  font-weight: normal;
+  font-weight: 700;
   line-height: 15px;
   margin: 0;
   font-family: $body-font;
@@ -101,7 +97,7 @@
       color: $yellow-dark;
     }
     &:active {
-      color: $yellow-5;
+      color: $yellow;
     }
   }
 }
@@ -118,35 +114,35 @@
   font-size: 9px;
   text-transform: uppercase;
   font-weight: normal;
-  margin: 0 0 $base-space 0;
+  margin: 0 0 $space-s 0;
 }
 
 .small-heading {
   font-size: 12px;
   text-transform: uppercase;
   font-weight: normal;
-  margin: 0 0 $base-space 0;
+  margin: 0 0 $space-s 0;
 }
 
 .medium-heading {
   font-size: 16px;
   text-transform: uppercase;
   font-weight: normal;
-  margin: 0 0 $base-space 0;
+  margin: 0 0 $space-s 0;
 }
 
 .large-heading {
   font-size: 24px;
   text-transform: uppercase;
   font-weight: normal;
-  margin: 0 0 $base-space 0;
+  margin: 0 0 $space-s 0;
 }
 
 .huge-heading {
   font-size: 36px;
   text-transform: uppercase;
   font-weight: normal;
-  margin: 0 0 $base-space 0;
+  margin: 0 0 $space-s 0;
 }
 
 .mono-body-text {

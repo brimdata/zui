@@ -1,10 +1,10 @@
 .space-switcher {
-  margin: $base-space 0;
-  margin-top: $base-space * 3;
+  margin: $space-s 0;
+  margin-top: $space-s * 3;
 
   .tiny-heading {
-    margin: $base-space;
-    margin-bottom: $base-space/2;
+    margin: $space-s;
+    margin-bottom: $space-s/2;
   }
 
   .current-space-name {
@@ -14,10 +14,10 @@
     cursor: pointer;
     position: relative;
     display: block;
-    padding: $base-space;
+    padding: $space-s;
     line-height: 1;
     margin: 0;
-    margin-top: $base-space/2;
+    margin-top: $space-s/2;
 
     svg {
       width: 8px;
@@ -26,7 +26,7 @@
         fill: white;
         stroke: white;
       }
-      margin-left: $base-space;
+      margin-left: $space-s;
       margin-top: 2px;
     }
 

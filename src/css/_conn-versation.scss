@@ -1,5 +1,5 @@
 .conn-versation {
-  margin-bottom: $base-space;
+  margin-bottom: $space-s;
   display: flex;
   justify-content: space-between;
 
@@ -54,7 +54,7 @@
   .history {
     align-self: center;
     flex: 1;
-    padding: $base-space;
+    padding: $space-s;
   }
 
   .history-packet {
@@ -85,11 +85,11 @@
   }
 
   .history-packet.arrow-right {
-    padding-right: $base-space/2;
+    padding-right: $space-s/2;
   }
 
   .history-packet.arrow-left {
-    padding-left: $base-space/2;
+    padding-left: $space-s/2;
     .triangle {
       order: 1;
       transform: rotate(180deg);
