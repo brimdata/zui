@@ -37,11 +37,7 @@ type AllProps = {
 export default class FilterTree extends React.Component<AllProps> {
   onNodeClick = (node: Node) => {
     this.props.dispatch(setSearchBarPins(getPinnedFilters(node)))
-
-    setTimeout(
-      () => this.props.dispatch(fetchMainSearch({saveToHistory: false})),
-      150
-    )
+    this.props.dispatch(fetchMainSearch({saveToHistory: false}))
   }
 
   renderNode = (node: Node, i: number) => {

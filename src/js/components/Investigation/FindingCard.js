@@ -31,7 +31,7 @@ export default function FindingCard({finding}: Props) {
     dispatch(setCurrentSpaceName(finding.search.space))
     dispatch(setOuterTimeWindow(finding.search.span))
     dispatch(setInnerTimeWindow(null))
-    setTimeout(() => dispatch(fetchMainSearch({saveToHistory: false})), 150)
+    dispatch(fetchMainSearch({saveToHistory: false}))
   }
 
   function onRemove() {

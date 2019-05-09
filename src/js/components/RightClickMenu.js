@@ -25,7 +25,7 @@ const RightClickMenu = (props: Props) => {
             onClose={props.onClose}
             style={ensureVisible(contentRect.bounds, props.style)}
           >
-            <MenuList ref={measureRef} onClick={() => console.log("hi")}>
+            <MenuList ref={measureRef}>
               {props.actions.map((action, index) => (
                 <XRightClickMenuItem key={index} action={action} />
               ))}
