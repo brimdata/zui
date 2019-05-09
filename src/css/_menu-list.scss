@@ -11,9 +11,10 @@
   a,
   li {
     font-size: 14px;
-    font-family: $body-font;
+    font-family: $menu-font;
+    font-weight: 400;
     padding: 8px 36px;
-    color: $gray-3;
+    color: $gray-7;
     list-style-type: none;
     display: block;
     white-space: nowrap;
@@ -22,13 +23,13 @@
     text-overflow: ellipsis;
 
     &:hover {
-      background-color: $off-white;
+      background-color: $white-2;
     }
   }
 
   hr {
     border: none;
-    border-top: 1px solid $light-gray-3;
+    border-top: 1px solid $white-5;
     margin: 8px 0;
   }
 }

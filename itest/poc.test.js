@@ -172,7 +172,7 @@ describe("Application launch", () => {
         .then((title) => {
           // TODO: Looky shouldn't be hardcoded but instead read from a title
           // defined elsewhere.
-          expect(title).toBe("Looky")
+          expect(title.toLowerCase()).toBe("looky")
           done()
         })
         .catch((err) => {
@@ -192,7 +192,7 @@ describe("Application launch", () => {
         // they can be found.
         .then(() => app.client.getText(".looky-header h1"))
         .then((headerText) => {
-          expect(headerText).toBe("LOOKY")
+          expect(headerText.toLowerCase()).toBe("looky")
           done()
         })
         .catch((err) => {

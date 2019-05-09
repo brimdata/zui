@@ -30,23 +30,23 @@
   }
 
   .looky-face {
-    margin-right: $base-space;
+    margin-right: $space-s;
   }
 
   .control-button {
     cursor: pointer;
-    margin-left: $base-space;
+    margin-left: $space-s;
     height: 34px;
     display: flex;
     align-items: center;
 
     svg {
-      fill: $light-gray-4;
+      fill: $white-9;
       height: 22px;
     }
 
     &.active svg {
-      fill: $blue-3;
+      fill: $blue;
     }
   }
 }

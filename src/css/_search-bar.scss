@@ -19,14 +19,14 @@
   }
 
   .search-button {
-    margin-left: $base-space;
+    margin-left: $space-s;
   }
 
   .error-message {
     display: flex;
     align-items: center;
     color: white;
-    background: $green-3;
+    background: $green;
     font-size: 11px;
     padding: 6px 12px;
     margin: 0 12px;

@@ -10,7 +10,7 @@
   .ts-label,
   .duration {
     font-size: 9px;
-    color: $gray-warm-2;
+    color: $gray-6;
     font-weight: bold;
     padding: 3px 6px;
   }
@@ -43,12 +43,12 @@
   }
 
   .path-tag.current {
-    outline: 2px dotted $light-gray-4;
+    outline: 2px dotted $white-9;
   }
 
   .duration {
     font-family: $body-font;
-    margin: $base-space 0 0 0;
+    margin: $space-s 0 0 0;
     padding: 0;
     text-align: right;
   }

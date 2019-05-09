@@ -1,4 +1,4 @@
-$context-menu-padding: $base-space;
+$context-menu-padding: $space-s;
 $br: 8px;
 
 .context-menu-overlay {
@@ -26,20 +26,20 @@ $br: 8px;
     font-size: 14px;
     font-family: $body-font;
     padding: 8px 36px;
-    color: $gray-3;
+    color: $gray-7;
     list-style-type: none;
     display: block;
     white-space: nowrap;
     cursor: pointer;
 
     &:hover {
-      background-color: $off-white;
+      background-color: $white-2;
     }
   }
 
   hr {
     border: none;
-    border-top: 1px solid $light-gray-3;
+    border-top: 1px solid $white-5;
     margin: 8px 0;
   }
 }

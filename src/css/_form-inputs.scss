@@ -1,5 +1,5 @@
 .form-field {
-  margin-bottom: $base-space;
+  margin-bottom: $space-s;
 }
 
 input {
@@ -11,10 +11,10 @@ input {
   position: relative;
 
   input {
-    color: $gray-3;
+    color: $gray-7;
     font-size: 14px;
     border: none;
-    color: $gray-3;
+    color: $gray-7;
     font-size: 14px;
     font-family: $mono-font;
     outline: none;
@@ -24,14 +24,16 @@ input {
     border-radius: 3px;
 
     &::placeholder {
-      color: $gray;
+      color: $white-9;
     }
   }
 }
 
 .checkbox {
   -webkit-appearance: none;
-  @include input-primary;
+  background-color: white;
+  border: 1px solid #dfe0e6;
+  border-radius: 3px;
   width: 24px;
   height: 24px;
   position: relative;
@@ -44,7 +46,7 @@ input {
     position: absolute;
     top: 5px;
     left: 4px;
-    border: 3px solid $accent-blue;
+    border: 3px solid $blue;
     border-top: none;
     border-right: none;
     background: transparent;

@@ -1,9 +1,10 @@
 .main-search-histogram {
+  font-family: $mono-font;
   position: relative;
 
   .selection {
-    fill: $yellow-3;
-    stroke: $yellow-4;
+    fill: $yellow;
+    stroke: $yellow-dark;
     stroke-dasharray: 3px;
   }
 
@@ -15,10 +16,10 @@
     left: 50%;
     top: 47%;
     transform: translate(-50%, -50%);
-    color: $gray-warm-4;
+    color: $white-9;
 
     .burst {
-      background-color: $gray-warm-4;
+      background-color: $white-9;
     }
   }
 
@@ -60,11 +61,11 @@
 
   .data-point {
     stroke-width: 1px;
-    fill: $light-green;
+    fill: #50e3c2;
   }
 
   .tick line {
-    stroke: $gray-warm-5;
+    stroke: $white-5;
   }
 
   .tick text {
@@ -77,12 +78,12 @@
   }
 
   .domain {
-    stroke: $gray-warm-5;
+    stroke: $white-5;
   }
 
   text {
     font-family: $body-font;
-    fill: $gray-warm-3;
+    fill: $gray-1;
     font-size: 9px;
   }
 
@@ -99,12 +100,12 @@
   }
 
   .y-axis .tick-bg {
-    fill: $gray-cold-5;
+    fill: $white-3;
   }
 
   .time-cursor {
     stroke-width: 1px;
-    stroke: $gray-5;
+    stroke: $gray-9;
   }
 }
 

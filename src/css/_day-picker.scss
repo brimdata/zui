@@ -15,13 +15,13 @@
     }
 
     &.DayPicker-Day--from {
-      background: $blue-3;
+      background: $blue;
       border-radius: 50% 0 0 50%;
       color: white;
     }
 
     &.DayPicker-Day--to {
-      background: $blue-3;
+      background: $blue;
       border-radius: 0 50% 50% 0;
       color: white;
     }
@@ -33,7 +33,7 @@
 }
 
 .DayPickerInput-OverlayWrapper {
-  top: $base-space;
+  top: $space-s;
 }
 
 .DayPickerInput-Overlay {

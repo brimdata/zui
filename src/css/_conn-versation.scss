@@ -1,5 +1,5 @@
 .conn-versation {
-  margin-bottom: $base-space;
+  margin-bottom: $space-s;
   display: flex;
   justify-content: space-between;
 
@@ -9,7 +9,7 @@
   }
 
   .host {
-    border: 1px solid $light-gray-3;
+    border: 1px solid $white-5;
     border-radius: 3px;
     width: 135px;
   }
@@ -27,7 +27,7 @@
   .port {
     margin: 0;
     color: white;
-    background: $blue-3;
+    background: $blue;
     font-size: 12px;
     text-align: center;
     line-height: 20px;
@@ -39,22 +39,22 @@
   }
 
   .port {
-    background: $blue-2;
+    background: $blue-light;
   }
 
   .responder {
     .ip {
-      background: $green-3;
+      background: $green;
     }
     .port {
-      background: $green-2;
+      background: $green-light;
     }
   }
 
   .history {
     align-self: center;
     flex: 1;
-    padding: $base-space;
+    padding: $space-s;
   }
 
   .history-packet {
@@ -73,23 +73,23 @@
     hr {
       flex: 1;
       border: none;
-      border-bottom: 1px solid $yellow-3;
+      border-bottom: 1px solid $yellow;
       margin: 0;
     }
 
     .triangle {
-      fill: $yellow-3;
-      stroke: $yellow-3;
+      fill: $yellow;
+      stroke: $yellow;
       width: 10px;
     }
   }
 
   .history-packet.arrow-right {
-    padding-right: $base-space/2;
+    padding-right: $space-s/2;
   }
 
   .history-packet.arrow-left {
-    padding-left: $base-space/2;
+    padding-left: $space-s/2;
     .triangle {
       order: 1;
       transform: rotate(180deg);

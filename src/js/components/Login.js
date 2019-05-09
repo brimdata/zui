@@ -5,13 +5,13 @@ import {connect} from "react-redux"
 import React, {useEffect, useState} from "react"
 
 import type {Credentials} from "../lib/Credentials"
+import {Title} from "./Typography"
 import {fetchSpaces} from "../backend/fetch"
 import {getCredentials} from "../state/reducers/boomd"
 import {setAppMenu} from "../electron/setAppMenu"
 import {setBoomdCredentials} from "../state/actions"
 import {trim} from "../lib/Str"
 import {updateBoomOptions} from "../backend/options"
-import AdminTitle from "./AdminTitle"
 import ErrorFactory from "../models/ErrorFactory"
 import LoginForm from "./LoginForm"
 import LookyHeader from "./LookyHeader"
@@ -72,7 +72,7 @@ export default function Login({dispatch, credentials}: Props) {
   return (
     <main className="admin-page boomd-connect">
       <LookyHeader />
-      <AdminTitle title="Connect To Boom" />
+      <Title>Connect To Boom</Title>
       <div className="admin-panel-wrapper">
         <div className="admin-panel">
           <LoginForm

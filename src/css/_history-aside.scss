@@ -1,10 +1,10 @@
 .history-aside {
-  color: $light-gray-4;
+  color: $white-9;
   header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: $base-space;
+    margin: $space-s;
   }
 
   .tiny-heading {
@@ -20,7 +20,7 @@
     text-transform: uppercase;
     border-radius: 3px;
     padding: 2px 6px;
-    background: $gray-2;
+    background: $gray-5;
     transition: all 50ms;
     &:hover {
       transform: scale(1.05);

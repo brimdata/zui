@@ -1,18 +1,10 @@
 .admin-page {
-  background: $light-gray-1;
+  background: $white-3;
   min-height: 100%;
   width: 100%;
 
   a {
-    color: $green-3;
-  }
-
-  h1 {
-    font-size: 24px;
-    font-weight: 100;
-    text-transform: uppercase;
-    word-spacing: 6px;
-    margin: 0;
+    color: $green;
   }
 
   .button {
@@ -23,7 +15,7 @@
     font-family: $body-font;
     font-weight: bold;
     font-size: 12px;
-    background: $green-3;
+    background: $green;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,11 +33,6 @@
   }
 }
 
-.admin-title {
-  text-align: center;
-  margin: 50px 0;
-}
-
 .looky-header {
   display: flex;
   align-items: center;
@@ -61,7 +48,6 @@
   h1 {
     font-weight: 100;
     font-size: 16px;
-    text-transform: uppercase;
     margin: 0;
   }
 }
@@ -71,8 +57,8 @@
 }
 
 .admin-panel {
-  background: $gray-5;
-  padding: 24px;
+  background: $gray-9;
+
   border-radius: 3px;
   position: relative;
   display: inline-block;
@@ -82,7 +68,7 @@
   &:before {
     content: "";
     background: transparent;
-    box-shadow: 0 12px 24px 0 transparentize($gray-5, 0.5);
+    box-shadow: 0 12px 24px 0 transparentize($gray-9, 0.5);
     border-radius: 3px;
     top: 12px;
     right: 30px;
@@ -98,7 +84,7 @@
     position: absolute;
     left: 3px;
     top: 1px;
-    background: $gray-3;
+    background: $gray-7;
     content: "";
   }
 }
@@ -107,7 +93,7 @@
   font-size: 9px;
   text-transform: uppercase;
   font-weight: normal;
-  color: $blue-1;
+  color: #95b2d5;
 }
 
 .admin-form {
@@ -117,17 +103,17 @@
 
     input {
       flex: 1;
-      padding: 0 8px;
+      padding: 0 $space-xs;
     }
 
     label {
-      padding-right: 12px;
+      padding-right: $space-s;
       @include admin-label;
     }
   }
 
   input {
-    background: $gray-3;
+    background: $gray-7;
     font-size: 14px;
     line-height: 28px;
     height: 28px;
@@ -137,39 +123,29 @@
 
     &:focus {
       box-shadow: $box-shadow;
-      background: $gray-2;
+      background: $gray-5;
     }
   }
 
   .form-error {
-    margin: 24px 0;
-
-    color: $yellow-3;
+    margin-top: $space-m;
+    color: $yellow;
   }
 }
 
-.admin-table {
-  text-align: left;
-  th,
-  td {
-    padding: 6px;
-  }
-  th {
-    @include admin-label;
-  }
-
-  td {
-    font-family: $mono-font;
-    font-size: 14px;
-    font-weight: 300;
+.boomd-connect {
+  .title {
+    text-align: center;
+    margin-bottom: $space-l;
   }
 }
 
 .boomd-connect .admin-panel {
-  min-width: 400px;
+  width: 500px;
+  padding: $space-m $space-l;
 
   .status-message {
-    margin-top: 24px;
+    margin-top: $space-m;
 
     a {
       cursor: pointer;

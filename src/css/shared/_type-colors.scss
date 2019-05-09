@@ -1,11 +1,12 @@
 @mixin type-colors {
   &.string,
   &.set\[string\] {
-    color: $gray-3;
+    color: $gray-7;
   }
+
   &.addr,
   &.set\[addr\] {
-    color: $blue;
+    color: #4a90e2;
   }
 
   &.port,
@@ -25,6 +26,6 @@
 
   &.bool,
   &.set\[bool\] {
-    color: $light-blue;
+    color: $blue-light;
   }
 }

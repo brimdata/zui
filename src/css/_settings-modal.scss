@@ -1,10 +1,10 @@
 .settings-form {
-  border: 1px solid $gray-cold-5;
+  border: 1px solid $white-3;
   border-radius: 3px;
 
   select {
     border: none;
-    background-color: $accent-blue;
+    background-color: $blue;
     color: white;
     @extend .label;
     height: 24px;
@@ -17,7 +17,7 @@
   justify-content: space-between;
   padding: 0 12px;
   height: 48px;
-  border-bottom: 1px solid $gray-cold-5;
+  border-bottom: 1px solid $white-3;
 
   &:last-child {
     border: none;

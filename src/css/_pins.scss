@@ -1,5 +1,5 @@
 .pins {
-  margin-top: $base-space;
+  margin-top: $space-s;
   display: inline-flex;
   align-items: center;
   min-height: 20px;
@@ -32,7 +32,15 @@
 
   .pin-button {
     @include button-reset;
-    @include input-secondary;
+    background-color: #dcdcdc;
+    &:hover {
+      background: darken(#dcdcdc, 5%);
+    }
+
+    &:active,
+    .active {
+      background: darken(#dcdcdc, 10%);
+    }
     min-height: 17px;
     border-radius: 0px 3px 3px 0px;
     padding: 0;
@@ -43,8 +51,8 @@
 
     svg {
       transform: rotate(45deg);
-      fill: $gray-cold-1;
-      stroke: $gray-cold-1;
+      fill: $gray-9;
+      stroke: $gray-9;
       width: 12px;
       height: 12px;
       margin: 0 6px;

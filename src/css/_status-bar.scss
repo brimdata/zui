@@ -48,7 +48,7 @@
   }
 
   .label {
-    border-left-color: $green-5;
+    border-left-color: $green-dark;
     transition: none;
   }
 
@@ -59,9 +59,9 @@
 
 @keyframes pulse-green-bg {
   from {
-    background-color: $green-3;
+    background-color: $green;
   }
   to {
-    background-color: $green-4;
+    background-color: $green;
   }
 }

@@ -1,7 +1,7 @@
 .no-events-found-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: $base-space * 8;
+  margin-top: $space-s * 8;
 }
 
 .no-events-found {
@@ -14,7 +14,7 @@
 
   table {
     font-size: 12px;
-    color: $gray;
+    color: $white-9;
     display: inline-block;
   }
 

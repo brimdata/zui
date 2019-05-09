@@ -1,7 +1,7 @@
 .title-bar {
   height: 36px;
   display: flex;
-  background-color: $gray-cold-5;
+  background-color: $white-3;
   justify-content: center;
   -webkit-user-select: none;
   -webkit-app-region: drag;
@@ -18,10 +18,10 @@
     margin-right: 6px;
     margin-left: 68px;
     background-color: transparent;
-    color: $gray-warm-1;
+    color: $gray-9;
 
     &:hover {
-      color: $gray-warm-2;
+      color: $gray-6;
     }
   }
 }

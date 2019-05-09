@@ -1,41 +1,31 @@
 /* This file is for your main application css. */
 
-/* Styles from node modules */
+/* Third-party libs */
 @import "react-day-picker";
 
-/* Variables */
-@import "fonts";
-@import "colors";
-@import "bro-log-colors";
+/* Settings */
+@import "settings/fonts";
+@import "settings/colors";
+@import "settings/spacing";
 
-$heading-font: "Cartograph", sans-serif;
-$body-font: "Cartograph", sans-serif;
-$mono-font: "Cartograph-Mono", monospace;
-$box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
-$base-space: 12px;
-$high-box-shadow: 0 2px 15px 0px rgba(0, 0, 0, 0.3);
-$bro-log-row-height: 25px;
-$filter-node-background: $green-3;
-$filter-node-foreground: white;
+/* Shared */
+@import "shared/shadows";
+@import "shared/type-colors";
+@import "shared/typography";
+@import "shared/zeek-colors";
+@import "shared/effects";
 
-@import "style-guide";
-@import "effects";
-
-/* Mixins */
-@import "mixins/tags";
-@import "mixins/type-colors";
-
-/* Styles */
+/* Specific */
 @import "global";
+@import "buttons";
+@import "icons";
+@import "tags";
 @import "body-content";
 @import "prism";
-@import "typography";
-@import "icons";
 @import "layout";
 @import "modal";
 @import "date-time-picker";
 @import "conn-versation";
-@import "buttons";
 @import "uid-waterfall";
 @import "context-menu";
 @import "count-by-time";

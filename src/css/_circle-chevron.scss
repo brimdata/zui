@@ -42,14 +42,14 @@
 
   // &.dark (default)
   .circle {
-    background-color: $gray-cold-2;
+    background-color: $gray-5;
 
     &:hover {
-      background-color: lighten($gray-cold-2, 2%);
+      background-color: lighten($gray-5, 2%);
     }
 
     &:active {
-      background-color: $gray-cold-1;
+      background-color: $gray-9;
     }
 
     svg {
@@ -72,8 +72,8 @@
     }
 
     svg {
-      fill: $gray-cold-2;
-      stroke: $gray-cold-2;
+      fill: $gray-5;
+      stroke: $gray-5;
     }
   }
 

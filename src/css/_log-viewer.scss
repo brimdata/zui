@@ -17,7 +17,7 @@
 .viewer .col-resizer {
   width: 3px;
   height: 100%;
-  background: $gray-1;
+  background: $gray-4;
   position: absolute;
   right: 0;
   top: 0;
@@ -30,7 +30,7 @@
   height: $bro-log-row-height;
   display: flex;
   align-items: center;
-  background: $gray-3;
+  background: $gray-7;
 }
 
 .viewer .log-row,
@@ -55,7 +55,7 @@
   }
 
   &.highlight {
-    background: $light-gray-3;
+    background: $white-5;
   }
 }
 
@@ -73,7 +73,7 @@
 .viewer .end-message {
   text-align: center;
   font-size: 12px;
-  color: $light-gray-4;
+  color: $white-9;
   line-height: 100px;
 }
 

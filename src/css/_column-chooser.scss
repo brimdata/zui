@@ -1,7 +1,7 @@
 .column-chooser-wrapper {
   display: flex;
   float: right;
-  margin-right: $base-space/2;
+  margin-right: $space-s/2;
   margin-bottom: 3px;
 }
 
@@ -26,11 +26,11 @@
     min-height: 1px;
     width: calc(100% - (24px + 24px));
     margin: 0 auto;
-    @include fills-gray-warm-5;
+    background-color: #dfe0e6;
   }
 
   .subscript {
-    @include color-light-cold;
+    color: #c5c7d1;
   }
 
   .close-button {
@@ -44,7 +44,7 @@
     left: 24px;
     width: 24px;
     height: 24px;
-    @include fills-accent-blue;
+    background-color: $blue;
     color: white;
     border-radius: 50%;
     position: absolute;
@@ -75,31 +75,31 @@
     align-items: center;
     padding: 8px 36px;
     cursor: pointer;
-    color: $gray-1;
+    color: $gray-4;
 
     &:hover {
-      @include fills-gray-cold-5;
+      background-color: #f5f5f7;
     }
   }
 
   .show-all .paragraph {
-    @include color-dark-cold;
+    color: #545866;
     font-weight: bold;
     text-decoration: underline;
   }
 
   &.all-visible {
     .show-all .paragraph {
-      @include color-light-cold;
+      color: #c5c7d1;
       font-weight: normal;
       text-decoration: none;
     }
     li.visible {
       font-weight: normal;
       background: inherit;
-      color: $gray-3;
+      color: $gray-7;
       &:hover {
-        background: $light-gray-2;
+        background: $white-3;
       }
     }
   }
@@ -109,19 +109,19 @@
 
   li.show-all {
     background: none;
-    color: $gray-5;
+    color: $gray-9;
 
     &:hover {
-      background: $light-gray-2;
+      background: $white-3;
     }
   }
 
   li.visible {
-    background: $blue-3;
+    background: $blue;
     color: white;
 
     &:hover {
-      background: $blue-2;
+      background: $blue-light;
     }
   }
 }
