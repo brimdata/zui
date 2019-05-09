@@ -6,11 +6,11 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {DispatchProps, State} from "../state/types"
+import {LeftPane} from "./LeftPane"
 import {NetworkError, UnauthorizedError} from "../models/Errors"
 import {XControlBar} from "./ControlBar"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XHistogram} from "./Histogram"
-import {XLeftPane} from "./LeftPane"
 import {XRightPane} from "./RightPane"
 import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults/SearchResults"
@@ -64,7 +64,7 @@ export default class Search extends React.Component<Props, LocalState> {
     return (
       <div className="search-page-wrapper">
         <div className="search-page">
-          <XLeftPane />
+          <LeftPane />
           <div className="search-page-main">
             <XTitleBar />
             <div className="search-page-header">
