@@ -1,6 +1,7 @@
 /* @flow */
 
 import _trim from "lodash/trim"
+import _capitalize from "lodash/capitalize"
 
 export const onlyWhitespace = (value: string) => {
   return /^\s*$/.test(value)
@@ -17,3 +18,5 @@ export const escapeSpaces = (value: string) => {
 export const trim = (value: string) => {
   return _trim(value)
 }
+
+export const capitalize = _capitalize
