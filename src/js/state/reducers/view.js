@@ -10,6 +10,8 @@ export type ResultsTabEnum = "analytics" | "logs" | null
 
 export type ModalEnum = "curl" | "debug" | "settings"
 
+export type InvestigationView = "tree" | "linear"
+
 export type View = {
   searchInspectorIsOpen: boolean,
   leftSidebarIsOpen: boolean,
@@ -19,7 +21,8 @@ export type View = {
   rightSidebarWidth: number,
   resultsTab: ResultsTabEnum,
   timeZone: string,
-  modal: ?ModalEnum
+  modal: ?ModalEnum,
+  investigationView: InvestigationView
 }
 
 export const initalState: View = {
@@ -31,7 +34,8 @@ export const initalState: View = {
   rightSidebarWidth: 450,
   resultsTab: null,
   timeZone: "UTC",
-  modal: null
+  modal: null,
+  investigationView: "linear"
 }
 
 export default createReducer(initalState, {
@@ -102,6 +106,10 @@ export default createReducer(initalState, {
   SEARCH_INSPECTOR_HIDE: (state) => ({
     ...state,
     searchInspectorIsOpen: false
+  }),
+  INVESTIGATION_VIEW_SET: (state, {view}) => ({
+    ...state,
+    investigationView: view
   })
 })
 
@@ -139,3 +147,7 @@ export const getCurlModalIsOpen = (state: State) => getModal(state) === "curl"
 
 export const getSettingsModalIsOpen = (state: State) =>
   getModal(state) === "settings"
+
+export const getInvestigationView = (state: State) => {
+  return state.view.investigationView
+}

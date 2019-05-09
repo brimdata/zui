@@ -3,6 +3,7 @@ import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
+import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
 import type {TimeWindow} from "./reducers/timeWindow"
@@ -335,4 +336,9 @@ export const openWhois = () => ({
 
 export const closeWhois = () => ({
   type: "WHOIS_CLOSE"
+})
+
+export const setInvestigationView = (view: InvestigationView) => ({
+  type: "INVESTIGATION_VIEW_SET",
+  view
 })

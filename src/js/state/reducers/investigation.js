@@ -3,7 +3,7 @@ import {isEqual} from "lodash"
 
 import type {Results, SearchRecord} from "../../types"
 import type {State} from "../types"
-import {last} from "../../lib/Array"
+import {first, last} from "../../lib/Array"
 import Log from "../../models/Log"
 
 export type Investigation = Finding[]
@@ -51,13 +51,16 @@ function updateLatest(state: Investigation, updates: $Shape<Finding>) {
 
 function createFinding(state, search: SearchRecord, ts = new Date()) {
   if (sameRecord(last(state), {ts, search})) {
+    console.log("update")
     return updateLatest(state, {ts})
   } else {
+    console.log("new")
     return [...state, {ts, search}]
   }
 }
 
 function sameRecord(a: Finding, b: Finding) {
+  console.log(a && a.search, b && b.search)
   return !!a && !!b && isEqual(a.search, b.search)
 }
 

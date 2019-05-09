@@ -4,17 +4,26 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import {Code, Header, LinkButton} from "./Typography"
+import {Header, LinkButton} from "./Typography"
 import {XFilterTree} from "./FilterTree"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {clearInvestigation, setLeftSidebarWidth} from "../state/actions"
-import {getLeftSidebarIsOpen, getLeftSidebarWidth} from "../state/reducers/view"
+import {
+  clearInvestigation,
+  setInvestigationView,
+  setLeftSidebarWidth
+} from "../state/actions"
+import {
+  getInvestigationView,
+  getLeftSidebarIsOpen,
+  getLeftSidebarWidth
+} from "../state/reducers/view"
+import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
 
 export function LeftPane() {
   let [showCollapse, setShowCollapse] = useState(true)
-  let [view, setView] = useState("tree")
+  let view = useSelector(getInvestigationView)
   let isOpen = useSelector(getLeftSidebarIsOpen)
   let width = useSelector(getLeftSidebarWidth)
   let dispatch = useDispatch()
@@ -26,7 +35,7 @@ export function LeftPane() {
   }
 
   function onViewChange(name) {
-    setView(name)
+    dispatch(setInvestigationView(name))
   }
 
   function onClearAll() {
@@ -81,7 +90,7 @@ function InvestigationHeader({view, onViewChange}) {
 
   return (
     <header className="investigation-header">
-      <Header white-1>Name</Header>
+      <Header white-1>My Investigation</Header>
       <nav className="investigation-view-options">
         <LinkButton
           className={classNames({selected: view === "tree"})}
@@ -113,12 +122,4 @@ function InvestigationView({view}) {
 
 function InvestigationTree() {
   return <XFilterTree />
-}
-
-function InvestigationLinear() {
-  return (
-    <Code light white>
-      Linear investigation here
-    </Code>
-  )
 }
