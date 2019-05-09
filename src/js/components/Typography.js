@@ -81,6 +81,7 @@ export const Subscript = createTypeEl("sup", "subscript")
 export const Label = createTypeEl("label", "lable")
 export const Title = createTypeEl("h1", "title")
 export const Link = createTypeEl("a", "link")
+export const LinkButton = createTypeEl("a", "link-button")
 
 type CodeProps = {
   children?: React.Node,

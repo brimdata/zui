@@ -2,17 +2,19 @@
 
 import {useDispatch, useSelector} from "react-redux"
 import React, {useState} from "react"
+import classNames from "classnames"
 
-import {Header} from "./Typography"
+import {Code, Header, LinkButton} from "./Typography"
+import {XFilterTree} from "./FilterTree"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import {clearInvestigation, setLeftSidebarWidth} from "../state/actions"
 import {getLeftSidebarIsOpen, getLeftSidebarWidth} from "../state/reducers/view"
-import HistoryAside from "./HistoryAside"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
 
 export function LeftPane() {
   let [showCollapse, setShowCollapse] = useState(true)
+  let [view, setView] = useState("tree")
   let isOpen = useSelector(getLeftSidebarIsOpen)
   let width = useSelector(getLeftSidebarWidth)
   let dispatch = useDispatch()
@@ -23,8 +25,12 @@ export function LeftPane() {
     dispatch(setLeftSidebarWidth(Math.min(width, max)))
   }
 
+  function onViewChange(name) {
+    setView(name)
+  }
+
   function onClearAll() {
-    dispatch(clearInvestigation)
+    dispatch(clearInvestigation())
   }
 
   if (!isOpen) return <XLeftPaneExpander />
@@ -40,8 +46,8 @@ export function LeftPane() {
       onMouseLeave={() => setShowCollapse(false)}
     >
       <InvestigationTitleBar onClearAll={onClearAll} />
-      <InvestigationHeader />
-      <HistoryAside />
+      <InvestigationHeader view={view} onViewChange={onViewChange} />
+      <InvestigationView view={view} />
 
       <XLeftPaneCollapser show={showCollapse} />
     </Pane>
@@ -64,6 +70,55 @@ function InvestigationTitleBar({onClearAll}) {
   )
 }
 
-function InvestigationHeader() {
-  return null
+function InvestigationHeader({view, onViewChange}) {
+  function treeView() {
+    onViewChange("tree")
+  }
+
+  function linearView() {
+    onViewChange("linear")
+  }
+
+  return (
+    <header className="investigation-header">
+      <Header white-1>Name</Header>
+      <nav className="investigation-view-options">
+        <LinkButton
+          className={classNames({selected: view === "tree"})}
+          onClick={treeView}
+        >
+          Tree
+        </LinkButton>
+        <LinkButton
+          className={classNames({selected: view === "linear"})}
+          onClick={linearView}
+        >
+          Linear
+        </LinkButton>
+      </nav>
+    </header>
+  )
+}
+
+function InvestigationView({view}) {
+  switch (view) {
+    case "tree":
+      return <InvestigationTree />
+    case "linear":
+      return <InvestigationLinear />
+    default:
+      return null
+  }
+}
+
+function InvestigationTree() {
+  return <XFilterTree />
+}
+
+function InvestigationLinear() {
+  return (
+    <Code light white>
+      Linear investigation here
+    </Code>
+  )
 }

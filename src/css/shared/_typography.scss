@@ -163,3 +163,80 @@
   font-weight: bold;
   color: $white-9;
 }
+
+.link-button {
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: $space-xxs $space-xs;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-block;
+  transform: translateY(0px);
+  user-select: none;
+  text-align: center;
+
+  &:hover {
+    transition: background-color 100ms;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(2px);
+  }
+}
+
+.white-1 {
+  color: $white-1;
+}
+.white-2 {
+  color: $white-2;
+}
+.white-3 {
+  color: $white-3;
+}
+.white-4 {
+  color: $white-4;
+}
+.white-5 {
+  color: $white-5;
+}
+.white-6 {
+  color: $white-6;
+}
+.white-7 {
+  color: $white-7;
+}
+.white-8 {
+  color: $white-8;
+}
+.white-9 {
+  color: $white-9;
+}
+.gray-1 {
+  color: $gray-1;
+}
+.gray-2 {
+  color: $gray-2;
+}
+.gray-3 {
+  color: $gray-3;
+}
+.gray-4 {
+  color: $gray-4;
+}
+.gray-5 {
+  color: $gray-5;
+}
+.gray-6 {
+  color: $gray-6;
+}
+.gray-7 {
+  color: $gray-7;
+}
+.gray-8 {
+  color: $gray-8;
+}
+.gray-9 {
+  color: $gray-9;
+}
