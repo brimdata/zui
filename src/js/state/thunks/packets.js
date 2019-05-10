@@ -9,7 +9,6 @@ import {
   showDownloads
 } from "../actions"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import {toPromise} from "../../backend/fetch"
 import BoomClient from "../../BoomClient"
 import Log from "../../models/Log"
 
