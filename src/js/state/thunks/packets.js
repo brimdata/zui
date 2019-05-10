@@ -9,7 +9,6 @@ import {
   showDownloads
 } from "../actions"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import {toPromise} from "../../backend/fetch"
 import BoomClient from "../../BoomClient"
 import Log from "../../models/Log"
 
@@ -23,8 +22,8 @@ export const fetchPackets = (log: Log) => (
   const state = getState()
   const space = getCurrentSpaceName(state)
   const destDir = downloadsDir()
-  return toPromise(
-    boom.packets.get({
+  return boom.packets
+    .get({
       ts_sec: log.getSec("ts"),
       ts_ns: log.getNs("ts"),
       duration_sec: log.getSec("duration"),
@@ -37,7 +36,6 @@ export const fetchPackets = (log: Log) => (
       space,
       destDir
     })
-  )
     .then((file) => {
       dispatch(receivePackets(log.get("uid"), file))
       return file

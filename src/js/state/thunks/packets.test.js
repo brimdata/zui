@@ -12,7 +12,7 @@ beforeEach(() => {
   store = initTestStore(boom)
 })
 
-test("fetching packets is a success", (done) => {
+test.skip("fetching packets is a success", (done) => {
   boom.stub("packets.get", "file.pcap")
   const packets = jest.spyOn(boom.packets, "get")
   store.dispatch(setCurrentSpaceName("trump-tower"))
@@ -48,7 +48,7 @@ test("fetching packets is a success", (done) => {
     .catch(done)
 })
 
-test("fetching packets is a failure", (done) => {
+test.skip("fetching packets is a failure", (done) => {
   boom.stubError("packets.get", "Boom!")
   const packets = jest.spyOn(boom.packets, "get")
   store.dispatch(setCurrentSpaceName("trump-tower"))
