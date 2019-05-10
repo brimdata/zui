@@ -58,7 +58,6 @@ function createFinding(state, search: SearchRecord, ts = new Date()) {
 }
 
 function sameRecord(a: Finding, b: Finding) {
-  console.log(a && a.search, b && b.search)
   return !!a && !!b && isEqual(a.search, b.search)
 }
 

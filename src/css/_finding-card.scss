@@ -13,21 +13,21 @@
 .finding-card {
   cursor: pointer;
   flex: 1;
-  padding: $space-xxs $space-s;
-  background: $gray-3;
-  border: 1px solid $gray-2;
+  padding: 0 $space-s;
+  background: $gray-5;
+  border: 1px solid $gray-4;
   border-radius: 3px;
   margin-bottom: $space-xxs;
   color: $white-1;
   user-select: none;
 
   &:hover {
-    background: $gray-2;
-    border: 1px solid $gray-1;
+    background: $gray-4;
+    border: 1px solid $gray-3;
   }
 
   &:active {
-    background: $gray-1;
+    background: $gray-3;
     border: 1px solid $yellow;
   }
 
@@ -35,28 +35,33 @@
     line-height: 9px;
   }
 
+  .mono {
+    display: inline-block;
+    border-radius: 3px;
+    margin-right: $space-xxs;
+    margin-top: $space-xxs;
+    font-size: 9px;
+  }
+
+  .pin {
+    padding: 0px $space-xxs;
+    background: $green;
+  }
+
   .footer {
     color: $white-8;
     display: flex;
     justify-content: flex-end;
-    padding-top: $space-xxs;
-  }
-
-  .mono {
-    display: inline;
-    border-radius: 3px;
-    margin-right: $space-xxs;
-  }
-
-  .pin {
-    padding: 2px $space-xxs;
-    background: $green;
+    padding: $space-xxs 0;
+    .stats {
+      font-size: 9px;
+    }
   }
 }
 
 .left-gutter,
 .right-gutter {
-  width: 29px;
+  min-width: $space-l;
   visibility: hidden;
 }
 
