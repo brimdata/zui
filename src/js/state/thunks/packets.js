@@ -23,8 +23,8 @@ export const fetchPackets = (log: Log) => (
   const state = getState()
   const space = getCurrentSpaceName(state)
   const destDir = downloadsDir()
-  return toPromise(
-    boom.packets.get({
+  boom.packets
+    .get({
       ts_sec: log.getSec("ts"),
       ts_ns: log.getNs("ts"),
       duration_sec: log.getSec("duration"),
