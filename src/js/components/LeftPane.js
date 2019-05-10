@@ -1,89 +1,125 @@
 /* @flow */
 
-import {connect} from "react-redux"
-import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useState} from "react"
+import classNames from "classnames"
 
-import type {Dispatch, State} from "../state/types"
+import {Header, LinkButton} from "./Typography"
+import {XFilterTree} from "./FilterTree"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {clearInvestigation, setLeftSidebarWidth} from "../state/actions"
-import HistoryAside from "./HistoryAside"
-import Pane, {
-  PaneHeader,
-  PaneTitle,
-  Left,
-  Right,
-  Center,
-  PaneBody
-} from "./Pane"
-import dispatchToProps from "../lib/dispatchToProps"
-import * as view from "../state/reducers/view"
+import {
+  clearInvestigation,
+  setInvestigationView,
+  setLeftSidebarWidth
+} from "../state/actions"
+import {
+  getInvestigationView,
+  getLeftSidebarIsOpen,
+  getLeftSidebarWidth
+} from "../state/reducers/view"
+import InvestigationLinear from "./Investigation/InvestigationLinear"
+import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
 
-type Props = {|
-  isOpen: boolean,
-  width: number,
-  dispatch: Dispatch
-|}
+export function LeftPane() {
+  let [showCollapse, setShowCollapse] = useState(true)
+  let view = useSelector(getInvestigationView)
+  let isOpen = useSelector(getLeftSidebarIsOpen)
+  let width = useSelector(getLeftSidebarWidth)
+  let dispatch = useDispatch()
 
-type S = {
-  showCollapse: boolean
-}
-
-export default class LeftPane extends React.Component<Props, S> {
-  state = {showCollapse: true}
-
-  onDrag = (e: MouseEvent) => {
+  function onDrag(e: MouseEvent) {
     const width = e.clientX
     const max = window.innerWidth
-    this.props.dispatch(setLeftSidebarWidth(Math.min(width, max)))
+    dispatch(setLeftSidebarWidth(Math.min(width, max)))
   }
 
-  render() {
-    const {isOpen, width} = this.props
+  function onViewChange(name) {
+    dispatch(setInvestigationView(name))
+  }
 
-    if (!isOpen) {
-      return <XLeftPaneExpander />
-    }
+  function onClearAll() {
+    dispatch(clearInvestigation())
+  }
 
-    return (
-      <Pane
-        isOpen={isOpen}
-        position="left"
-        width={width}
-        onDrag={this.onDrag}
-        className="history-pane"
-        onMouseEnter={() => this.setState({showCollapse: true})}
-        onMouseLeave={() => this.setState({showCollapse: false})}
-      >
-        <PaneHeader>
-          <Left />
-          <Center>
-            <PaneTitle>Search History</PaneTitle>
-          </Center>
-          <Right>
-            <button
-              onClick={() => this.props.dispatch(clearInvestigation())}
-              className="panel-button clear-button"
-            >
-              CLEAR
-            </button>
-          </Right>
-        </PaneHeader>
-        <PaneBody>
-          <HistoryAside />
-        </PaneBody>
-        <XLeftPaneCollapser show={this.state.showCollapse} />
-      </Pane>
-    )
+  if (!isOpen) return <XLeftPaneExpander />
+
+  return (
+    <Pane
+      isOpen={isOpen}
+      position="left"
+      width={width}
+      onDrag={onDrag}
+      className="history-pane"
+      onMouseEnter={() => setShowCollapse(true)}
+      onMouseLeave={() => setShowCollapse(false)}
+    >
+      <InvestigationTitleBar onClearAll={onClearAll} />
+      <InvestigationHeader view={view} onViewChange={onViewChange} />
+      <InvestigationView view={view} />
+
+      <XLeftPaneCollapser show={showCollapse} />
+    </Pane>
+  )
+}
+
+function InvestigationTitleBar({onClearAll}) {
+  return (
+    <PaneHeader>
+      <Left />
+      <Center>
+        <PaneTitle>Investigation</PaneTitle>
+      </Center>
+      <Right>
+        <button onClick={onClearAll} className="panel-button clear-button">
+          CLEAR
+        </button>
+      </Right>
+    </PaneHeader>
+  )
+}
+
+function InvestigationHeader({view, onViewChange}) {
+  function treeView() {
+    onViewChange("tree")
+  }
+
+  function linearView() {
+    onViewChange("linear")
+  }
+
+  return (
+    <header className="investigation-header">
+      <Header white-1>My Investigation</Header>
+      <nav className="investigation-view-options">
+        <LinkButton
+          className={classNames({selected: view === "tree"})}
+          onClick={treeView}
+        >
+          Tree
+        </LinkButton>
+        <LinkButton
+          className={classNames({selected: view === "linear"})}
+          onClick={linearView}
+        >
+          Linear
+        </LinkButton>
+      </nav>
+    </header>
+  )
+}
+
+function InvestigationView({view}) {
+  switch (view) {
+    case "tree":
+      return <InvestigationTree />
+    case "linear":
+      return <InvestigationLinear />
+    default:
+      return null
   }
 }
 
-const stateToProps = (state: State) => ({
-  isOpen: view.getLeftSidebarIsOpen(state),
-  width: view.getLeftSidebarWidth(state)
-})
-
-export const XLeftPane = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(LeftPane)
+function InvestigationTree() {
+  return <XFilterTree />
+}

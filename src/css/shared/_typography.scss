@@ -6,7 +6,7 @@
 
 .header {
   font-family: $heading-font;
-  font-weight: normal;
+  font-weight: 900;
   font-size: 16px;
   line-height: 19px;
   margin: 0;
@@ -20,11 +20,11 @@
   margin: 0;
 }
 
-.code-text {
+.mono {
   font-family: $mono-font;
   font-weight: normal;
   font-size: 12px;
-  line-height: 14px;
+  line-height: 16px;
   margin: 0;
 }
 
@@ -61,6 +61,13 @@
   font-weight: normal;
   line-height: 11px;
   margin: 0;
+}
+
+.stats {
+  font-family: $body-font;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 12px;
 }
 
 .label {
@@ -110,56 +117,82 @@
   text-decoration: underline;
 }
 
-.tiny-heading {
-  font-size: 9px;
+.link-button {
+  font-size: 11px;
   text-transform: uppercase;
-  font-weight: normal;
-  margin: 0 0 $space-s 0;
+  padding: $space-xxs $space-xs;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-block;
+  transform: translateY(0px);
+  user-select: none;
+  text-align: center;
+
+  &:hover {
+    transition: background-color 100ms;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(2px);
+  }
 }
 
-.small-heading {
-  font-size: 12px;
-  text-transform: uppercase;
-  font-weight: normal;
-  margin: 0 0 $space-s 0;
+.mono {
 }
 
-.medium-heading {
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: normal;
-  margin: 0 0 $space-s 0;
+.white-1 {
+  color: $white-1;
 }
-
-.large-heading {
-  font-size: 24px;
-  text-transform: uppercase;
-  font-weight: normal;
-  margin: 0 0 $space-s 0;
+.white-2 {
+  color: $white-2;
 }
-
-.huge-heading {
-  font-size: 36px;
-  text-transform: uppercase;
-  font-weight: normal;
-  margin: 0 0 $space-s 0;
+.white-3 {
+  color: $white-3;
 }
-
-.mono-body-text {
-  font-family: $mono-font;
-  font-size: 14px;
-  font-weight: normal;
+.white-4 {
+  color: $white-4;
 }
-
-.body-text {
-  font-size: 14px;
-  font-family: $body-font;
-  font-weight: normal;
+.white-5 {
+  color: $white-5;
 }
-
-.field-label {
-  font-family: $body-font;
-  font-size: 10px;
-  font-weight: bold;
+.white-6 {
+  color: $white-6;
+}
+.white-7 {
+  color: $white-7;
+}
+.white-8 {
+  color: $white-8;
+}
+.white-9 {
   color: $white-9;
+}
+.gray-1 {
+  color: $gray-1;
+}
+.gray-2 {
+  color: $gray-2;
+}
+.gray-3 {
+  color: $gray-3;
+}
+.gray-4 {
+  color: $gray-4;
+}
+.gray-5 {
+  color: $gray-5;
+}
+.gray-6 {
+  color: $gray-6;
+}
+.gray-7 {
+  color: $gray-7;
+}
+.gray-8 {
+  color: $gray-8;
+}
+.gray-9 {
+  color: $gray-9;
 }

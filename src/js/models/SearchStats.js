@@ -3,7 +3,7 @@
 import type {BoomSearchStats} from "../types"
 import {bytes, withCommas} from "../lib/fmt"
 
-export default class Stats {
+export default class SearchStats {
   updateTime: number
   startTime: number
   bytesMatched: number

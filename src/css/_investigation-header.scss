@@ -1,0 +1,24 @@
+.investigation-header {
+  padding: $space-m $space-l;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .link-button {
+    color: $white-1;
+    width: 60px;
+  }
+
+  .link-button.selected {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: normal;
+
+    &:hover {
+      background: inherit;
+    }
+    &:active {
+      transform: translateY(0px);
+    }
+  }
+}

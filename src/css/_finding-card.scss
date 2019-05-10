@@ -1,0 +1,108 @@
+.finding-card-wrapper {
+  display: flex;
+  align-items: flex-start;
+
+  &:hover {
+    .left-gutter,
+    .right-gutter {
+      visibility: visible;
+    }
+  }
+}
+
+.finding-card {
+  cursor: pointer;
+  flex: 1;
+  padding: 0 $space-s;
+  background: $gray-5;
+  border: 1px solid $gray-4;
+  border-radius: 3px;
+  margin-bottom: $space-xxs;
+  color: $white-1;
+  user-select: none;
+
+  &:hover {
+    background: $gray-4;
+    border: 1px solid $gray-3;
+  }
+
+  &:active {
+    background: $gray-3;
+    border: 1px solid $yellow;
+  }
+
+  .program {
+    line-height: 9px;
+  }
+
+  .mono {
+    display: inline-block;
+    border-radius: 3px;
+    margin-right: $space-xxs;
+    margin-top: $space-xxs;
+    font-size: 9px;
+  }
+
+  .pin {
+    padding: 0px $space-xxs;
+    background: $green;
+  }
+
+  .footer {
+    color: $white-8;
+    display: flex;
+    justify-content: flex-end;
+    padding: $space-xxs 0;
+    .stats {
+      font-size: 9px;
+    }
+  }
+}
+
+.left-gutter,
+.right-gutter {
+  min-width: $space-l;
+  visibility: hidden;
+}
+
+.gutter-button.expand {
+  display: none;
+}
+
+.gutter-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $transparent-light;
+  height: 19px;
+  width: 19px;
+  border-radius: 15px;
+  opacity: 0.7;
+  cursor: pointer;
+  margin: auto;
+  margin-top: $space-xxs;
+
+  svg {
+    fill: $white-1;
+  }
+
+  &.remove svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  &.expand svg {
+    margin-top: 2px;
+    width: 11px;
+    height: 11px;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    transform: translateY(1px);
+    background: $gray-2;
+  }
+}

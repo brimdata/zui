@@ -13,7 +13,7 @@ import {killSearch} from "../searches/cancelSearch"
 import CloseButton from "./CloseButton"
 import HorizontalTable from "./Tables/HorizontalTable"
 import Log from "../models/Log"
-import Stats from "../models/Stats"
+import SearchStats from "../models/SearchStats"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {
@@ -65,7 +65,7 @@ function toLogs(searches) {
 
   for (let name in searches) {
     const search = searches[name]
-    const stats = new Stats(search.stats)
+    const stats = new SearchStats(search.stats)
     tuples.push([
       search.name,
       search.status,

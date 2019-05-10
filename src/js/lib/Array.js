@@ -95,3 +95,5 @@ export function splice(array: *[], index: number) {
 export function concat(array1: *[], array2: *[]) {
   return [...array1, ...array2]
 }
+
+export const sortBy = _sortBy

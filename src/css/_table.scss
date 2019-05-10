@@ -23,7 +23,7 @@
   }
 
   td {
-    @extend .code-text;
+    @extend .mono;
     @include type-colors;
   }
 }
