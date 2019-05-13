@@ -16,6 +16,7 @@ import {issueSearch} from "../searches/issueSearch"
 import {recordSearch} from "../state/actions"
 import {updateTab} from "../state/thunks/view"
 import {validateProgram} from "../state/thunks/searchBar"
+import analyticsHandler from "../searches/analyticsHandler"
 import histogramHandler from "../searches/histogramHandler"
 import viewerHandler from "./viewerHandler"
 
@@ -49,7 +50,7 @@ export const fetchMainSearch = ({
         tag: "viewer",
         program: addHeadProc(program, ANALYTIC_MAX_RESULTS),
         span: outerSpan,
-        handlers: [viewerHandler]
+        handlers: [viewerHandler, analyticsHandler]
       }
     ]
   } else if (innerSpan) {
