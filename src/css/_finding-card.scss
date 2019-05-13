@@ -51,7 +51,7 @@
   .footer {
     color: $white-8;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: $space-xxs 0;
     .stats {
       font-size: 9px;

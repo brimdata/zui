@@ -16,6 +16,7 @@ import {issueSearch} from "../searches/issueSearch"
 import {recordSearch} from "../state/actions"
 import {updateTab} from "../state/thunks/view"
 import {validateProgram} from "../state/thunks/searchBar"
+import histogramHandler from "../searches/histogramHandler"
 import viewerHandler from "./viewerHandler"
 
 type Options = {
@@ -67,7 +68,8 @@ export const fetchMainSearch = ({
         name: "HistogramSearch",
         tag: "viewer",
         program: addEveryCountProc(program, outerSpan),
-        span: outerSpan
+        span: outerSpan,
+        handlers: [histogramHandler]
       },
       {
         name: "ViewerSearch",

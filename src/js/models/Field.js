@@ -45,3 +45,9 @@ export class NullField extends Field {
     return null
   }
 }
+
+export class CountField extends Field {
+  cast() {
+    return parseInt(this.value)
+  }
+}

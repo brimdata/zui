@@ -10,6 +10,7 @@ export type Investigation = Finding[]
 export type Finding = {
   ts: Date,
   search: SearchRecord,
+  resultCount?: number,
   note?: string,
   logs?: Log[],
   chart?: {
