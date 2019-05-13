@@ -11,3 +11,12 @@ export function deleteIf(obj: *, condFn: (prop: *) => boolean) {
   }
   return newObj
 }
+
+export function extract(obj: Object, ...props: string[]) {
+  let newObj = {}
+  for (let key of props) {
+    newObj[key] = obj[key]
+    delete obj[key]
+  }
+  return newObj
+}

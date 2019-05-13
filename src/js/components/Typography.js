@@ -4,6 +4,7 @@ import * as React from "react"
 import classNames from "classnames"
 
 import {capitalize} from "../lib/Str"
+import {extract} from "../stdlib/object"
 
 type Props = {
   children?: React.Node,
@@ -55,23 +56,13 @@ const VARIATIONS = [
 ]
 
 function createTypeEl(tag, name) {
-  const TypeComp = function({children, ...props}: Props) {
-    return React.createElement(
-      tag,
-      {...props, className: createClassName(name, props)},
-      children
-    )
+  function TypeComponent({children, className: passClass, ...props}: Props) {
+    let className = classNames(name, passClass, extract(props, ...VARIATIONS))
+    let elProps = {...props, className}
+    return React.createElement(tag, elProps, children)
   }
-  TypeComp.displayName = capitalize(name)
-  return TypeComp
-}
-
-function createClassName(name, props) {
-  function reducer(obj, name) {
-    obj[name] = props[name]
-    return obj
-  }
-  return classNames(name, props.className, VARIATIONS.reduce(reducer, {}))
+  TypeComponent.displayName = capitalize(name)
+  return TypeComponent
 }
 
 export const Header = createTypeEl("h2", "header")
