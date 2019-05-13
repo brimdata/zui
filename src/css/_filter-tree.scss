@@ -1,4 +1,4 @@
-$filter-tree-line-color: $gray-4;
+$filter-tree-line-color: $gray-5;
 
 .filter-tree {
   color: $white-5;
@@ -30,7 +30,7 @@ $filter-tree-line-color: $gray-4;
 }
 
 .filter-tree-parent:hover {
-  background: $gray-5;
+  background: $gray-6;
   cursor: pointer;
   .delete-button {
     opacity: 1;
@@ -61,8 +61,15 @@ $filter-tree-line-color: $gray-4;
     }
   }
 
-  &.active > .filter-tree-parent > .filter-node {
+  &.pinned > .filter-tree-parent > .filter-node {
     background: $filter-node-background;
+    p {
+      color: $filter-node-foreground;
+    }
+  }
+
+  &.active > .filter-tree-parent > .filter-node {
+    background: $gray-4;
     p {
       color: $filter-node-foreground;
     }

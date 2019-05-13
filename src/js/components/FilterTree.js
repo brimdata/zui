@@ -3,13 +3,17 @@
 import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
+import classNames from "classnames"
 
 import {Node} from "../models/Node"
 import {createInvestigationTree} from "../investigation/createTree"
-import {deleteFindingByTs, setSearchBarPins} from "../state/actions"
+import {deleteFindingByTs, restoreSearchBar} from "../state/actions"
 import {fetchMainSearch} from "../viewer/fetchMainSearch"
 import {getInvestigation} from "../state/reducers/investigation"
-import {getSearchBarPins} from "../state/selectors/searchBar"
+import {
+  getSearchBarPins,
+  getSearchBarPreviousInputValue
+} from "../state/selectors/searchBar"
 import CloseSVG from "../icons/circle-x-md.svg"
 import FilterNode from "./FilterNode"
 
@@ -17,29 +21,38 @@ export default function FilterTree() {
   let dispatch = useDispatch()
   let investigation = useSelector(getInvestigation)
   let pinnedFilters = useSelector(getSearchBarPins)
-
-  function onNodeClick(node: Node) {
-    dispatch(setSearchBarPins(getPinnedFilters(node)))
-    dispatch(fetchMainSearch({saveToHistory: false}))
-  }
+  let previous = useSelector(getSearchBarPreviousInputValue)
 
   function renderNode(node: Node, i: number) {
-    let classNames = ["filter-tree-node"]
+    function onNodeClick() {
+      dispatch(
+        restoreSearchBar({
+          pinned: getPinnedFilters(node),
+          current: node.data.filter,
+          previous: node.data.filter,
+          error: null,
+          editing: null
+        })
+      )
+      dispatch(fetchMainSearch({saveToHistory: false}))
+    }
 
-    if (nodeIsPinned(pinnedFilters, node)) classNames.push("active")
+    function onNodeRemove(e) {
+      e.stopPropagation()
+      let multiTs = node.mapChildren((node) => node.data.finding.ts)
+      dispatch(deleteFindingByTs(multiTs))
+    }
+
+    let className = classNames("filter-tree-node", {
+      pinned: nodeIsPinned(pinnedFilters, node),
+      active: nodeIsActive(pinnedFilters, previous, node)
+    })
 
     return (
-      <div key={i} className={classNames.join(" ")}>
-        <div className="filter-tree-parent" onClick={() => onNodeClick(node)}>
+      <div key={i} className={className}>
+        <div className="filter-tree-parent" onClick={onNodeClick}>
           <FilterNode filter={node.data.filter} />
-          <a
-            className="delete-button"
-            onClick={(e) => {
-              e.stopPropagation()
-              let multiTs = node.mapChildren((node) => node.data.finding.ts)
-              dispatch(deleteFindingByTs(multiTs))
-            }}
-          >
+          <a className="delete-button" onClick={onNodeRemove}>
             <CloseSVG />
           </a>
         </div>
@@ -58,8 +71,9 @@ export default function FilterTree() {
 }
 
 export function getPinnedFilters(node: ?Node) {
-  const pinnedFilters = []
+  let pinnedFilters = []
 
+  node = node && node.parent
   while (node) {
     if (node.isRoot()) break
     pinnedFilters.unshift(node.data.filter)
@@ -80,4 +94,12 @@ export function nodeIsPinned(pinnedFilters: string[], node: ?Node) {
   }
 
   return true
+}
+
+function nodeIsActive(pinnedFilters: string[], previous: string, node: ?Node) {
+  return (
+    node &&
+    node.data.filter === previous &&
+    isEqual(pinnedFilters, getPinnedFilters(node))
+  )
 }
