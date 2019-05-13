@@ -5,7 +5,6 @@ import React, {useState} from "react"
 import classNames from "classnames"
 
 import {Header, LinkButton} from "./Typography"
-import {XFilterTree} from "./FilterTree"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import {
@@ -18,6 +17,7 @@ import {
   getLeftSidebarIsOpen,
   getLeftSidebarWidth
 } from "../state/reducers/view"
+import FilterTree from "./FilterTree"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
 
@@ -121,5 +121,5 @@ function InvestigationView({view}) {
 }
 
 function InvestigationTree() {
-  return <XFilterTree />
+  return <FilterTree />
 }

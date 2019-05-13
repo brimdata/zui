@@ -1,89 +1,79 @@
 /* @flow */
 
-import {connect} from "react-redux"
 import {isEqual} from "lodash"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
+import classNames from "classnames"
 
-import type {Dispatch, State} from "../state/types"
-import {
-  type Investigation,
-  getInvestigation
-} from "../state/reducers/investigation"
 import {Node} from "../models/Node"
 import {createInvestigationTree} from "../investigation/createTree"
-import {deleteFindingByTs, setSearchBarPins} from "../state/actions"
+import {deleteFindingByTs, restoreSearchBar} from "../state/actions"
 import {fetchMainSearch} from "../viewer/fetchMainSearch"
-import {getSearchBarPins} from "../state/selectors/searchBar"
+import {getInvestigation} from "../state/reducers/investigation"
+import {
+  getSearchBarPins,
+  getSearchBarPreviousInputValue
+} from "../state/selectors/searchBar"
 import CloseSVG from "../icons/circle-x-md.svg"
 import FilterNode from "./FilterNode"
 
-type OwnProps = {||}
+export default function FilterTree() {
+  let dispatch = useDispatch()
+  let investigation = useSelector(getInvestigation)
+  let pinnedFilters = useSelector(getSearchBarPins)
+  let previous = useSelector(getSearchBarPreviousInputValue)
 
-type DispatchProps = {|
-  dispatch: Dispatch
-|}
+  function renderNode(node: Node, i: number) {
+    function onNodeClick() {
+      dispatch(
+        restoreSearchBar({
+          pinned: getPinnedFilters(node),
+          current: node.data.filter,
+          previous: node.data.filter,
+          error: null,
+          editing: null
+        })
+      )
+      dispatch(fetchMainSearch({saveToHistory: false}))
+    }
 
-type StateProps = {|
-  investigation: Investigation,
-  pinnedFilters: string[]
-|}
+    function onNodeRemove(e) {
+      e.stopPropagation()
+      let multiTs = node.mapChildren((node) => node.data.finding.ts)
+      dispatch(deleteFindingByTs(multiTs))
+    }
 
-type AllProps = {
-  ...DispatchProps,
-  ...OwnProps,
-  ...StateProps
-}
-
-export default class FilterTree extends React.Component<AllProps> {
-  onNodeClick = (node: Node) => {
-    this.props.dispatch(setSearchBarPins(getPinnedFilters(node)))
-    this.props.dispatch(fetchMainSearch({saveToHistory: false}))
-  }
-
-  renderNode = (node: Node, i: number) => {
-    const classNames = ["filter-tree-node"]
-
-    if (nodeIsPinned(this.props.pinnedFilters, node)) classNames.push("active")
+    let className = classNames("filter-tree-node", {
+      pinned: nodeIsPinned(pinnedFilters, node),
+      active: nodeIsActive(pinnedFilters, previous, node)
+    })
 
     return (
-      <div key={i} className={classNames.join(" ")}>
-        <div
-          className="filter-tree-parent"
-          onClick={() => this.onNodeClick(node)}
-        >
+      <div key={i} className={className}>
+        <div className="filter-tree-parent" onClick={onNodeClick}>
           <FilterNode filter={node.data.filter} />
-          <a
-            className="delete-button"
-            onClick={(e) => {
-              e.stopPropagation()
-              let multiTs = node.mapChildren((node) => node.data.finding.ts)
-              this.props.dispatch(deleteFindingByTs(multiTs))
-            }}
-          >
+          <a className="delete-button" onClick={onNodeRemove}>
             <CloseSVG />
           </a>
         </div>
         <div className="filter-tree-children">
-          {node.children.map(this.renderNode)}
+          {node.children.map(renderNode)}
         </div>
       </div>
     )
   }
 
-  render() {
-    let tree = createInvestigationTree(this.props.investigation)
+  let tree = createInvestigationTree(investigation)
 
-    return (
-      <div className="filter-tree">
-        {tree.getRoot().children.map(this.renderNode)}
-      </div>
-    )
-  }
+  return (
+    <div className="filter-tree">{tree.getRoot().children.map(renderNode)}</div>
+  )
 }
 
 export function getPinnedFilters(node: ?Node) {
-  const pinnedFilters = []
+  let pinnedFilters = []
 
+  node = node && node.parent
   while (node) {
     if (node.isRoot()) break
     pinnedFilters.unshift(node.data.filter)
@@ -106,18 +96,10 @@ export function nodeIsPinned(pinnedFilters: string[], node: ?Node) {
   return true
 }
 
-function stateToProps(state: State) {
-  return {
-    investigation: getInvestigation(state),
-    pinnedFilters: getSearchBarPins(state)
-  }
+function nodeIsActive(pinnedFilters: string[], previous: string, node: ?Node) {
+  return (
+    node &&
+    node.data.filter === previous &&
+    isEqual(pinnedFilters, getPinnedFilters(node))
+  )
 }
-
-const dispatchToProps = (dispatch: Dispatch) => ({
-  dispatch
-})
-
-export const XFilterTree = connect<AllProps, OwnProps, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(FilterTree)
