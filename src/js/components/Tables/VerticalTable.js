@@ -11,7 +11,7 @@ type Props = {
   descriptor: Descriptor,
   log: Log,
   rightClick?: RightClickBuilder,
-  light: boolean
+  light?: boolean
 }
 
 export default function VerticalTable({
