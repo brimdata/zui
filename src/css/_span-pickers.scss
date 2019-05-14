@@ -27,26 +27,6 @@
       background-color: darken(#dcdcdc, 10%);
     }
   }
-
-  .span-duration {
-    display: flex;
-    align-items: center;
-
-    p {
-      font-size: 10px;
-      color: #545866;
-      padding: 0 3px;
-      white-space: nowrap;
-    }
-
-    hr {
-      margin: 0;
-      width: 10px;
-      border: none;
-      border-top: 1px solid #dcdcdc;
-    }
-  }
-
   .span-drop-menu {
     display: flex;
   }

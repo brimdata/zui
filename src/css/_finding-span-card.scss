@@ -1,0 +1,31 @@
+.finding-span-card {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding: $space-s 0;
+  margin-bottom: $space-xxs;
+  cursor: pointer;
+
+  .span-duration {
+    color: $white-6;
+  }
+
+  &:hover {
+    .thin-button {
+      background-color: $white-7;
+    }
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  .day {
+    margin-right: $space-xs;
+  }
+
+  .time {
+    font-weight: 400;
+  }
+}

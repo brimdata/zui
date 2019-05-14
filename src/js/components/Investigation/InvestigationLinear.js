@@ -7,6 +7,7 @@ import React, {useEffect, useState} from "react"
 import {getInvestigation} from "../../state/reducers/investigation"
 import {getSearchRecord} from "../../state/selectors/searchRecord"
 import FindingCard from "./FindingCard"
+import FindingSpanCard from "./FindingSpanCard"
 
 export default function InvestigationLinear() {
   let [key, setKey] = useState(0)
@@ -26,11 +27,14 @@ export default function InvestigationLinear() {
   sorted.sort((a, b) => (a.ts < b.ts ? 1 : -1))
 
   let cards = sorted.map((f) => (
-    <FindingCard
-      key={f.ts.getTime().toString()}
-      finding={f}
-      active={isEqual(currentSearch, f.search)}
-    />
+    <>
+      <FindingCard
+        key={f.ts.getTime().toString()}
+        finding={f}
+        active={isEqual(currentSearch, f.search)}
+      />
+      <FindingSpanCard span={f.search.span} />
+    </>
   ))
 
   return (

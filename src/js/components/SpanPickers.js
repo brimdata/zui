@@ -3,7 +3,7 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import {type DateTuple, humanDuration} from "../lib/TimeWindow"
+import {type DateTuple} from "../lib/TimeWindow"
 import type {Dispatch, State} from "../state/types"
 import {ThinPicker} from "./Buttons"
 import {type TimeObj, add, set, subtract} from "../lib/Time"
@@ -15,6 +15,7 @@ import {setOuterTimeWindow} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import DayPicker from "./DayPicker"
 import DropMenu from "./DropMenu"
+import SpanDuration from "./SpanDuration"
 import TimePicker from "./TimePicker"
 
 type StateProps = {|
@@ -156,11 +157,7 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
               onTimeChange={this.onFromTimeChange}
             />
           </div>
-          <div className="span-duration">
-            <hr />
-            <p>{humanDuration([this.state.fromDate, this.state.toDate])}</p>
-            <hr />
-          </div>
+          <SpanDuration span={[this.state.fromDate, this.state.toDate]} />
           <div className="thin-button">
             <DayPicker
               from={this.state.fromDate}
