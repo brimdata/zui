@@ -19,6 +19,9 @@
 
   &:active {
     transform: translateY(1px);
+    .thin-button {
+      background-color: $white-9;
+    }
   }
 
   .day {
