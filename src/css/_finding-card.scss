@@ -4,6 +4,7 @@
   position: relative;
   padding: 0 $space-l;
   margin-bottom: $space-xxs;
+  color: white;
 
   .gutter-button {
     opacity: 0;
@@ -40,6 +41,10 @@
   user-select: none;
   transition: background 150ms;
 
+  &.open {
+    border-radius: 3px 3px 0 0;
+  }
+
   &:hover {
     background: $gray-4;
     border: 1px solid $gray-3;
@@ -75,6 +80,16 @@
     .stats {
       font-size: 9px;
     }
+  }
+}
+
+.finding-detail {
+  padding: $space-xxs;
+  border: 1px solid $gray-5;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  .vertical-table td {
+    font-size: 9px;
   }
 }
 

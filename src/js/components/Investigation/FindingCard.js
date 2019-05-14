@@ -16,10 +16,13 @@ import {
   setSearchBarPins
 } from "../../state/actions"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
+import {format} from "../../lib/Time"
 import {humanDuration} from "../../lib/TimeWindow"
 import {isNumber} from "../../lib/is"
 import {withCommas} from "../../lib/fmt"
 import Caret from "../../icons/caret-bottom-sm.svg"
+import Log from "../../models/Log"
+import VerticalTable from "../Tables/VerticalTable"
 import X from "../../icons/x-md.svg"
 
 type Props = {finding: Finding}
@@ -45,15 +48,33 @@ export default function FindingCard({finding}: Props) {
     setOpen(!open)
   }
 
+  function timeFormat(date) {
+    return format(date, "MMM DD, YYYY HH:mm:ss")
+  }
+
+  let descriptor = [
+    {type: "string", name: "Executed:"},
+    {type: "string", name: "Space:"},
+    {type: "string", name: "Span:"}
+  ]
+
+  let tuple = [
+    timeFormat(finding.ts),
+    finding.search.space,
+    finding.search.span.map(timeFormat).join(" -- ")
+  ]
+
+  let log = new Log(tuple, descriptor)
+
   return (
     <div className="finding-card-wrapper">
-      <div className="finding-card" onClick={onClick}>
+      <div className={classNames("finding-card", {open})} onClick={onClick}>
         <FindingProgram search={finding.search} />
         <FindingFooter finding={finding} />
       </div>
       {open && (
         <div className="finding-detail">
-          <Mono>Hello world</Mono>
+          <VerticalTable descriptor={descriptor} log={log} light />
         </div>
       )}
 

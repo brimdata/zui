@@ -1,6 +1,7 @@
 /* @flow */
 
 import React from "react"
+import classNames from "classnames"
 
 import type {Descriptor, RightClickBuilder} from "../../types"
 import Log from "../../models/Log"
@@ -9,12 +10,18 @@ import Table, {TableData, TableHeader} from "./Table"
 type Props = {
   descriptor: Descriptor,
   log: Log,
-  rightClick?: RightClickBuilder
+  rightClick?: RightClickBuilder,
+  light: boolean
 }
 
-export default function VerticalTable({descriptor, log, rightClick}: Props) {
+export default function VerticalTable({
+  descriptor,
+  log,
+  rightClick,
+  light
+}: Props) {
   return (
-    <Table className="vertical-table">
+    <Table className={classNames("vertical-table", {light})}>
       <tbody>
         {descriptor.map((column, index) => (
           <tr key={index}>

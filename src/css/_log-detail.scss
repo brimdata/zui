@@ -1,5 +1,14 @@
 .log-detail {
-  color: $white-9;
+  color: $gray-6;
+
+  .vertical-table {
+    th {
+      width: 130px;
+    }
+    td {
+      @include type-colors;
+    }
+  }
 }
 
 .empty-message-wrapper {

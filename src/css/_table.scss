@@ -19,12 +19,20 @@
     text-align: left;
     font-size: 9px;
     font-weight: bold;
-    color: $gray-6;
   }
 
   td {
     @extend .mono;
-    @include type-colors;
+  }
+}
+
+.table.light {
+  tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  tbody tr:hover {
+    background: rgba(255, 255, 255, 0.06);
   }
 }
 
@@ -35,7 +43,6 @@
   }
 
   th {
-    width: 120px;
     white-space: nowrap;
     border-radius: 3px 0 0 3px;
   }
