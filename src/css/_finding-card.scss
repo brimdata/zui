@@ -1,25 +1,44 @@
-.finding-card-wrapper {
-  display: flex;
-  align-items: flex-start;
+// margin-bottom: $space-xxs;
 
-  &:hover {
-    .left-gutter,
-    .right-gutter {
-      visibility: visible;
+.finding-card-wrapper {
+  position: relative;
+  padding: 0 $space-l;
+  margin-bottom: $space-xxs;
+
+  .gutter-button {
+    opacity: 0;
+    transition: opacity 150ms, transform 150ms;
+  }
+
+  &:hover .gutter-button {
+    opacity: 1;
+  }
+
+  .expand {
+    left: 6px;
+    top: 0px;
+    transform: rotate(-90deg);
+    &.open {
+      transform: rotate(0deg);
+      opacity: 1;
     }
+  }
+
+  .remove {
+    top: 0px;
+    right: 6px;
   }
 }
 
 .finding-card {
   cursor: pointer;
-  flex: 1;
   padding: 0 $space-s;
   background: $gray-5;
   border: 1px solid $gray-4;
   border-radius: 3px;
-  margin-bottom: $space-xxs;
   color: $white-1;
   user-select: none;
+  transition: background 150ms;
 
   &:hover {
     background: $gray-4;
@@ -59,17 +78,8 @@
   }
 }
 
-.left-gutter,
-.right-gutter {
-  min-width: $space-l;
-  visibility: hidden;
-}
-
-.gutter-button.expand {
-  display: none;
-}
-
 .gutter-button {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,6 +91,7 @@
   cursor: pointer;
   margin: auto;
   margin-top: $space-xxs;
+  transition: transform 150ms;
 
   svg {
     fill: $white-1;
@@ -89,6 +100,11 @@
   &.remove svg {
     width: 9px;
     height: 9px;
+  }
+
+  &.expand {
+    border-radius: 3px;
+    transform: rotate(-90deg);
   }
 
   &.expand svg {
@@ -102,7 +118,6 @@
   }
 
   &:active {
-    transform: translateY(1px);
     background: $gray-2;
   }
 }

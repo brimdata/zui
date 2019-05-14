@@ -2,7 +2,7 @@
 
 import {isEmpty} from "lodash"
 import {useDispatch} from "react-redux"
-import React from "react"
+import React, {useState} from "react"
 import classNames from "classnames"
 
 import type {Finding} from "../../state/reducers/investigation"
@@ -26,6 +26,7 @@ type Props = {finding: Finding}
 
 export default function FindingCard({finding}: Props) {
   let dispatch = useDispatch()
+  let [open, setOpen] = useState(false)
 
   function onClick() {
     dispatch(setSearchBarPins(finding.search.pins))
@@ -40,20 +41,24 @@ export default function FindingCard({finding}: Props) {
     dispatch(deleteFindingByTs(finding.ts))
   }
 
-  let className = classNames("finding-card")
+  function onExpandClick() {
+    setOpen(!open)
+  }
 
   return (
     <div className="finding-card-wrapper">
-      <div className="left-gutter">
-        <Expand />
-      </div>
-      <div className={className} onClick={onClick}>
+      <div className="finding-card" onClick={onClick}>
         <FindingProgram search={finding.search} />
         <FindingFooter finding={finding} />
       </div>
-      <div className="right-gutter">
-        <Remove onClick={onRemove} />
-      </div>
+      {open && (
+        <div className="finding-detail">
+          <Mono>Hello world</Mono>
+        </div>
+      )}
+
+      <Expand onClick={onExpandClick} open={open} />
+      <Remove onClick={onRemove} />
     </div>
   )
 }
@@ -86,9 +91,9 @@ function FindingFooter({finding}) {
   )
 }
 
-function Expand() {
+function Expand({open, ...props}) {
   return (
-    <div className="gutter-button expand">
+    <div className={classNames("gutter-button expand", {open})} {...props}>
       <Caret />
     </div>
   )
