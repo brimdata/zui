@@ -1393,7 +1393,7 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      CountField {
         "name": "orig_bytes",
         "type": "count",
         "value": "282",
@@ -1531,7 +1531,7 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      CountField {
         "name": "resp_bytes",
         "type": "count",
         "value": "0",
@@ -2083,7 +2083,7 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      CountField {
         "name": "missed_bytes",
         "type": "count",
         "value": "0",
@@ -2359,7 +2359,7 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      CountField {
         "name": "orig_pkts",
         "type": "count",
         "value": "3",
@@ -2497,7 +2497,7 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      CountField {
         "name": "orig_ip_bytes",
         "type": "count",
         "value": "366",
@@ -2635,7 +2635,7 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      CountField {
         "name": "resp_pkts",
         "type": "count",
         "value": "0",
@@ -2773,7 +2773,7 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      CountField {
         "name": "resp_ip_bytes",
         "type": "count",
         "value": "0",
