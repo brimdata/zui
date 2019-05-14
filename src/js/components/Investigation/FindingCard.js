@@ -61,7 +61,7 @@ export default function FindingCard({finding}: Props) {
   let tuple = [
     timeFormat(finding.ts),
     finding.search.space,
-    finding.search.span.map(timeFormat).join(" -- ")
+    finding.search.span.map(timeFormat).join(" – ")
   ]
 
   let log = new Log(tuple, descriptor)
