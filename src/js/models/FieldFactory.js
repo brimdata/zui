@@ -19,6 +19,8 @@ export default class FieldFactory {
         return new F.TimeField(args)
       case "interval":
         return new F.IntervalField(args)
+      case "count":
+        return new F.CountField(args)
       default:
         return new F.default(args)
     }

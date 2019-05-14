@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetching a regular search 1`] = `
+Array [
+  "SHOW_LOGS_TAB",
+  "SEARCH_HISTORY_PUSH",
+  "VIEWER_CLEAR",
+  "SEARCH_REGISTER",
+  "SEARCH_REGISTER",
+]
+`;
+
+exports[`fetching an analytic search 1`] = `
+Array [
+  "SHOW_ANALYTICS_TAB",
+  "SEARCH_HISTORY_PUSH",
+  "VIEWER_CLEAR",
+  "SEARCH_REGISTER",
+]
+`;
+
+exports[`fetching an analytic search without history 1`] = `
+Array [
+  "SHOW_ANALYTICS_TAB",
+  "VIEWER_CLEAR",
+  "SEARCH_REGISTER",
+]
+`;
+
+exports[`fetching an zoom search 1`] = `
+Array [
+  "SHOW_ANALYTICS_TAB",
+  "SEARCH_HISTORY_PUSH",
+  "VIEWER_CLEAR",
+  "SEARCH_REGISTER",
+]
+`;
+
+exports[`fetching an zoom search without history 1`] = `
+Array [
+  "SHOW_ANALYTICS_TAB",
+  "VIEWER_CLEAR",
+  "SEARCH_REGISTER",
+]
+`;
+
+exports[`not saving a search to history 1`] = `
+Array [
+  "SHOW_LOGS_TAB",
+  "VIEWER_CLEAR",
+  "SEARCH_REGISTER",
+  "SEARCH_REGISTER",
+]
+`;

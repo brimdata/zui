@@ -3,6 +3,7 @@
 import {
   changeSearchBarInput,
   setCurrentSpaceName,
+  setInnerTimeWindow,
   setSpaceInfo
 } from "../state/actions"
 import {fetchMainSearch} from "./fetchMainSearch"
@@ -25,41 +26,93 @@ const spaceInfo = {
 
 test("fetching a regular search", () => {
   boom.stub("search")
-  const actions = [
+  store.dispatchAll([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
-    changeSearchBarInput("_path=conn"),
-    fetchMainSearch()
-  ]
+    changeSearchBarInput("_path=conn")
+  ])
 
-  actions.forEach(store.dispatch)
+  store.clearActions()
+  store.dispatch(fetchMainSearch())
 
-  expect(store.getActions().map((action) => action.type)).toEqual(
-    expect.arrayContaining([
-      "SEARCH_HISTORY_PUSH",
-      "VIEWER_CLEAR",
-      "SHOW_LOGS_TAB"
-    ])
-  )
+  expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
-test("not saving a search to history", (done) => {
+test("not saving a search to history", () => {
   boom.stub("search")
-  const actions = [
+  store.dispatchAll([
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
-    changeSearchBarInput("_path=conn"),
-    fetchMainSearch({saveToHistory: false})
-  ]
+    changeSearchBarInput("_path=conn")
+  ])
 
-  actions.forEach(store.dispatch)
+  store.clearActions()
+  store.dispatch(fetchMainSearch({saveToHistory: false}))
 
-  setTimeout(() => {
-    const dispatched = store.getActions().map((action) => action.type)
-    expect(dispatched).not.toContain("SEARCH_HISTORY_PUSH")
-    done()
-  })
+  expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
+})
+
+test("fetching an analytic search", () => {
+  boom.stub("search")
+  store.dispatchAll([
+    setSpaceInfo(spaceInfo),
+    setCurrentSpaceName("ranch-logs"),
+    initTimeWindow(),
+    changeSearchBarInput("_path=conn | count()")
+  ])
+
+  store.clearActions()
+  store.dispatch(fetchMainSearch())
+
+  expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
+})
+
+test("fetching an analytic search without history", () => {
+  boom.stub("search")
+  store.dispatchAll([
+    setSpaceInfo(spaceInfo),
+    setCurrentSpaceName("ranch-logs"),
+    initTimeWindow(),
+    changeSearchBarInput("_path=conn | count()")
+  ])
+
+  store.clearActions()
+  store.dispatch(fetchMainSearch({saveToHistory: false}))
+
+  expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
+})
+
+test("fetching an zoom search", () => {
+  boom.stub("search")
+  store.dispatchAll([
+    setSpaceInfo(spaceInfo),
+    setCurrentSpaceName("ranch-logs"),
+    initTimeWindow(),
+    setInnerTimeWindow([new Date(0), new Date(1)]),
+    changeSearchBarInput("_path=conn | count()")
+  ])
+
+  store.clearActions()
+  store.dispatch(fetchMainSearch())
+
+  expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
+})
+
+test("fetching an zoom search without history", () => {
+  boom.stub("search")
+  store.dispatchAll([
+    setSpaceInfo(spaceInfo),
+    setCurrentSpaceName("ranch-logs"),
+    initTimeWindow(),
+    setInnerTimeWindow([new Date(0), new Date(1)]),
+    changeSearchBarInput("_path=conn | count()")
+  ])
+
+  store.clearActions()
+  store.dispatch(fetchMainSearch({saveToHistory: false}))
+
+  expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
 test("a bad search query", () => {
