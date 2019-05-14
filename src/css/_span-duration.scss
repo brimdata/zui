@@ -1,0 +1,17 @@
+.span-duration {
+  display: flex;
+  align-items: center;
+
+  p {
+    font-size: 10px;
+    padding: 0 3px;
+    white-space: nowrap;
+  }
+
+  hr {
+    margin: 0;
+    width: 10px;
+    border: none;
+    border-top: 1px solid #dcdcdc;
+  }
+}

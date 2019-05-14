@@ -28,7 +28,7 @@
 
   &:active {
     background: $gray-3;
-    border: 1px solid $yellow;
+    transform: translateY(1px);
   }
 
   .program {
