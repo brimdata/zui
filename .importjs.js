@@ -4,7 +4,7 @@ module.exports = {
     electron: ["remote"],
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
-    react: ["useState", "useRef", "useEffect", "useLayoutEffect"],
+    react: ["useState", "useRef", "useEffect", "useLayoutEffect", "useMemo"],
     "react-dom": ["renderToString"],
     lodash: ["throttle", "get", "isEqual", "isEmpty", "every", "kebabCase"],
     "react-router-dom": ["Redirect"],
