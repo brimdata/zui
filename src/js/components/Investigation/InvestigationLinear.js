@@ -2,19 +2,17 @@
 
 import {isEqual} from "lodash"
 import {useSelector} from "react-redux"
-import React from "react"
+import React, {useMemo} from "react"
 
 import {getInvestigation} from "../../state/reducers/investigation"
-import {getSearchRecord} from "../../state/selectors/searchRecord"
 import FindingCard from "./FindingCard"
 import FindingSpanCard from "./FindingSpanCard"
 
 export default function InvestigationLinear() {
   let findings = useSelector(getInvestigation)
-  let currentSearch = useSelector(getSearchRecord)
-
-  let sorted = [...findings]
-  sorted.sort((a, b) => (a.ts < b.ts ? 1 : -1))
+  let sorted = useMemo(() => {
+    return [...findings].sort((a, b) => (a.ts < b.ts ? 1 : -1))
+  }, [findings])
 
   function sameSpan(a, b) {
     if (!b) return false
@@ -24,11 +22,7 @@ export default function InvestigationLinear() {
   let cards = []
   sorted.forEach((f, i) => {
     cards.push(
-      <FindingCard
-        key={f.ts.getTime().toString()}
-        finding={f}
-        active={isEqual(currentSearch, f.search)}
-      />
+      <FindingCard index={i} key={f.ts.getTime().toString()} finding={f} />
     )
     if (!sameSpan(f, sorted[i + 1])) {
       cards.push(
