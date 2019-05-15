@@ -27,7 +27,7 @@ import X from "../../icons/x-md.svg"
 
 type Props = {finding: Finding}
 
-export default function FindingCard({finding}: Props) {
+export default React.memo<Props>(function FindingCard({finding}: Props) {
   let dispatch = useDispatch()
   let [open, setOpen] = useState(false)
 
@@ -82,7 +82,7 @@ export default function FindingCard({finding}: Props) {
       <Remove onClick={onRemove} />
     </div>
   )
-}
+})
 
 function FindingProgram({search}) {
   if (isEmpty(search.pins) && isEmpty(search.program)) return <Mono>*</Mono>
