@@ -17,10 +17,12 @@ export default function FindingSpanCard({span}: {span: DateTuple}) {
   }
 
   return (
-    <div className="finding-span-card" onClick={onClick}>
-      <DatePill date={span[0]} />
-      <SpanDuration span={span} />
-      <DatePill date={span[1]} />
+    <div className="finding-card-wrapper">
+      <div className="finding-span-card" onClick={onClick}>
+        <DatePill date={span[0]} />
+        <SpanDuration span={span} />
+        <DatePill date={span[1]} />
+      </div>
     </div>
   )
 }

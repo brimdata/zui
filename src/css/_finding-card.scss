@@ -1,10 +1,14 @@
-// margin-bottom: $space-xxs;
-
 .finding-card-wrapper {
+  display: block;
   position: relative;
-  padding: 0 $space-l;
-  margin-bottom: $space-xxs;
+  padding: $space-xs;
+  padding-left: $space-l;
   color: white;
+  margin-bottom: $space-xxs;
+
+  &:nth-last-child(odd) {
+    background: transparentize(white, 0.97);
+  }
 
   .gutter-button {
     opacity: 0;
@@ -15,9 +19,22 @@
     opacity: 1;
   }
 
+  &:hover {
+    background: $gray-6;
+  }
+
+  &.open {
+    background: $gray-6;
+  }
+
+  &:active {
+    background: $gray-5;
+    transform: translateY(1px);
+  }
+
   .expand {
-    left: 6px;
-    top: 0px;
+    left: 5px;
+    top: 2px;
     transform: rotate(-90deg);
     &.open {
       transform: rotate(0deg);
@@ -33,37 +50,19 @@
 
 .finding-card {
   cursor: pointer;
-  padding: 0 $space-s;
-  background: $gray-5;
-  border: 1px solid $gray-4;
-  border-radius: 3px;
   color: $white-1;
   user-select: none;
   transition: background 150ms;
 
-  &.open {
-    border-radius: 3px 3px 0 0;
-  }
-
-  &:hover {
-    background: $gray-4;
-    border: 1px solid $gray-3;
-  }
-
-  &:active {
-    background: $gray-3;
-    transform: translateY(1px);
-  }
-
   .program {
-    line-height: 9px;
+    display: flex;
+    margin-bottom: $space-xxs;
   }
 
   .mono {
     display: inline-block;
     border-radius: 3px;
     margin-right: $space-xxs;
-    margin-top: $space-xxs;
     font-size: 9px;
   }
 
@@ -75,19 +74,19 @@
   .footer {
     color: $white-8;
     display: flex;
-    justify-content: space-between;
-    padding: $space-xxs 0;
     .stats {
+      margin-right: $space-xxs;
       font-size: 9px;
     }
   }
 }
 
 .finding-detail {
-  padding: $space-xxs;
-  border: 1px solid $gray-5;
-  border-top: none;
-  border-radius: 0 0 3px 3px;
+  padding-top: $space-xs;
+  margin: $space-xs;
+  margin-left: 0;
+  border-top: 1px solid $gray-4;
+
   .vertical-table td {
     font-size: 9px;
   }
