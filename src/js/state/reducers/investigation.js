@@ -52,7 +52,7 @@ function updateLatest(state: Investigation, updates: $Shape<Finding>) {
 
 function createFinding(state, search: SearchRecord, ts = new Date()) {
   if (sameRecord(last(state), {ts, search})) {
-    return updateLatest(state, {ts})
+    return state
   } else {
     return [...state, {ts, search}]
   }

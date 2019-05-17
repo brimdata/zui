@@ -1,10 +1,9 @@
 .finding-span-card {
-  justify-content: center;
   display: flex;
   align-items: center;
-  margin: 0 auto;
   padding: $space-s 0;
-  margin-bottom: $space-xxs;
+  white-space: nowrap;
+  color: $gray-9;
   cursor: pointer;
 
   .span-duration {

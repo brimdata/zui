@@ -27,7 +27,7 @@ import X from "../../icons/x-md.svg"
 
 type Props = {finding: Finding}
 
-export default function FindingCard({finding}: Props) {
+export default React.memo<Props>(function FindingCard({finding}: Props) {
   let dispatch = useDispatch()
   let [open, setOpen] = useState(false)
 
@@ -67,8 +67,8 @@ export default function FindingCard({finding}: Props) {
   let log = new Log(tuple, descriptor)
 
   return (
-    <div className="finding-card-wrapper">
-      <div className={classNames("finding-card", {open})} onClick={onClick}>
+    <div className={classNames("finding-card-wrapper", {open})}>
+      <div className="finding-card" onClick={onClick}>
         <FindingProgram search={finding.search} />
         <FindingFooter finding={finding} />
       </div>
@@ -82,10 +82,15 @@ export default function FindingCard({finding}: Props) {
       <Remove onClick={onRemove} />
     </div>
   )
-}
+})
 
 function FindingProgram({search}) {
-  if (isEmpty(search.pins) && isEmpty(search.program)) return <Mono>*</Mono>
+  if (isEmpty(search.pins) && isEmpty(search.program))
+    return (
+      <div className="program">
+        <Mono>*</Mono>
+      </div>
+    )
 
   return (
     <div className="program">
@@ -103,10 +108,11 @@ function FindingFooter({finding}) {
   return (
     <div className="footer">
       {isNumber(finding.resultCount) ? (
-        <Stats>Results: {withCommas(finding.resultCount)}</Stats>
+        <Stats>{withCommas(finding.resultCount)} results</Stats>
       ) : (
         <Stats>...</Stats>
       )}
+      <Stats>•</Stats>
       <Stats>{humanDuration([finding.ts, new Date()])} ago</Stats>
     </div>
   )

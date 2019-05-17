@@ -55,8 +55,10 @@ export function LeftPane() {
       onMouseLeave={() => setShowCollapse(false)}
     >
       <InvestigationTitleBar onClearAll={onClearAll} />
-      <InvestigationHeader view={view} onViewChange={onViewChange} />
-      <InvestigationView view={view} />
+      <div className="investigation-pane-body">
+        <InvestigationHeader view={view} onViewChange={onViewChange} />
+        <InvestigationView view={view} />
+      </div>
 
       <XLeftPaneCollapser show={showCollapse} />
     </Pane>
