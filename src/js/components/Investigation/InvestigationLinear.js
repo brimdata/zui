@@ -13,15 +13,11 @@ export default React.memo<{}>(function InvestigationLinear() {
   let findings = useFindings()
 
   let cards = []
-  let keys = {}
-  let autoCount = 0
 
   findings.forEach((f, i) => {
     cards.push(<FindingCard index={i} key={getKey(f)} finding={f} />)
     if (!sameSpan(f, findings[i + 1])) {
-      let key = JSON.stringify(f.search.span)
-      if (keys[key]) key + autoCount
-      autoCount++
+      let key = JSON.stringify(f.search.span) + (findings.length - i)
       cards.push(<FindingSpanCard key={key} span={f.search.span} />)
     }
   })

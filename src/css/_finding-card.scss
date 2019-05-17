@@ -12,7 +12,6 @@
 
   .gutter-button {
     opacity: 0;
-    transition: opacity 150ms, transform 150ms;
   }
 
   &:hover .gutter-button {
@@ -29,7 +28,6 @@
 
   &:active {
     background: $gray-5;
-    transform: translateY(1px);
   }
 
   .expand {
@@ -53,6 +51,10 @@
   color: $white-1;
   user-select: none;
   transition: background 150ms;
+
+  &:active {
+    transform: translateY(1px);
+  }
 
   .program {
     display: flex;
@@ -97,15 +99,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $transparent-light;
   height: 19px;
   width: 19px;
   border-radius: 15px;
-  opacity: 0.7;
+  opacity: 1;
   cursor: pointer;
   margin: auto;
   margin-top: $space-xxs;
-  transition: transform 150ms;
+  background: transparent;
+  transition: opacity 150ms, background 250ms, transform 300ms;
 
   svg {
     fill: $white-1;
@@ -128,7 +130,7 @@
   }
 
   &:hover {
-    opacity: 1;
+    background: $transparent-light;
   }
 
   &:active {
