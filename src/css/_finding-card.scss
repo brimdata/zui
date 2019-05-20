@@ -8,41 +8,32 @@
   overflow: hidden;
 
   &:nth-last-child(odd) {
-    background: transparentize(white, 0.97);
+    background: transparentize(white, 0.98);
   }
 
-  .gutter-button {
+  .gutter-button-style {
     opacity: 0;
   }
 
-  &:hover .gutter-button {
+  &:hover .gutter-button-style {
     opacity: 1;
   }
 
   &:hover {
-    background: $gray-6;
-  }
-
-  &.open {
-    background: $gray-6;
+    background: transparentize(white, 0.97);
   }
 
   &:active {
-    background: $gray-5;
+    background: transparentize(white, 0.94);
   }
 
-  .expand {
+  .expand-button {
     left: 5px;
-    top: 2px;
-    transform: rotate(-90deg);
-    &.open {
-      transform: rotate(0deg);
-      opacity: 1;
-    }
+    top: $space-xs;
   }
 
-  .remove {
-    top: 0px;
+  .remove-button {
+    top: $space-xs;
     right: 6px;
   }
 }
@@ -53,10 +44,6 @@
   user-select: none;
   transition: background 150ms;
 
-  &:active {
-    transform: translateY(1px);
-  }
-
   .program {
     display: flex;
     margin-bottom: $space-xxs;
@@ -66,7 +53,6 @@
     display: inline-block;
     border-radius: 3px;
     margin-right: $space-xxs;
-    font-size: 9px;
   }
 
   .pin {
@@ -81,60 +67,5 @@
       margin-right: $space-xxs;
       font-size: 9px;
     }
-  }
-}
-
-.finding-detail {
-  padding-top: $space-xs;
-  margin: $space-xs;
-  margin-left: 0;
-  border-top: 1px solid $gray-4;
-
-  .vertical-table td {
-    font-size: 9px;
-  }
-}
-
-.gutter-button {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 19px;
-  width: 19px;
-  border-radius: 15px;
-  opacity: 1;
-  cursor: pointer;
-  margin: auto;
-  margin-top: $space-xxs;
-  background: transparent;
-  transition: opacity 150ms, background 250ms, transform 300ms;
-
-  svg {
-    fill: $white-1;
-  }
-
-  &.remove svg {
-    width: 9px;
-    height: 9px;
-  }
-
-  &.expand {
-    border-radius: 3px;
-    transform: rotate(-90deg);
-  }
-
-  &.expand svg {
-    margin-top: 2px;
-    width: 11px;
-    height: 11px;
-  }
-
-  &:hover {
-    background: $transparent-light;
-  }
-
-  &:active {
-    background: $gray-2;
   }
 }

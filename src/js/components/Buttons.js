@@ -1,7 +1,10 @@
 /* @flow */
 
 import * as React from "react"
-import Arrow from "../icons/caret-bottom-sm.svg"
+import classNames from "classnames"
+
+import Caret from "../icons/caret-bottom-sm.svg"
+import X from "../icons/x-md.svg"
 
 type Children = {
   children: ?React.Node
@@ -19,8 +22,35 @@ export class ThinPicker extends React.Component<{}> {
   render() {
     return (
       <button className="thin-button thin-picker">
-        <Arrow />
+        <Caret />
       </button>
     )
   }
+}
+
+type Props = {
+  className: string
+}
+
+export function ExpandButton({
+  open,
+  className,
+  ...props
+}: {
+  ...Props,
+  open: boolean
+}) {
+  return (
+    <div className={classNames("expand-button", className, {open})} {...props}>
+      <Caret />
+    </div>
+  )
+}
+
+export function RemoveButton({className, ...props}: Props) {
+  return (
+    <div className={classNames("remove-button", className)} {...props}>
+      <X />
+    </div>
+  )
 }

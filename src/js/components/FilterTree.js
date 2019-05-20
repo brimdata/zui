@@ -6,6 +6,7 @@ import React from "react"
 import classNames from "classnames"
 
 import {Node} from "../models/Node"
+import {RemoveButton} from "./Buttons"
 import {createInvestigationTree} from "../investigation/createTree"
 import {deleteFindingByTs, restoreSearchBar} from "../state/actions"
 import {fetchMainSearch} from "../viewer/fetchMainSearch"
@@ -14,7 +15,6 @@ import {
   getSearchBarPins,
   getSearchBarPreviousInputValue
 } from "../state/selectors/searchBar"
-import CloseSVG from "../icons/circle-x-md.svg"
 import FilterNode from "./FilterNode"
 
 export default function FilterTree() {
@@ -52,9 +52,10 @@ export default function FilterTree() {
       <div key={i} className={className}>
         <div className="filter-tree-parent" onClick={onNodeClick}>
           <FilterNode filter={node.data.filter} />
-          <a className="delete-button" onClick={onNodeRemove}>
-            <CloseSVG />
-          </a>
+          <RemoveButton
+            className="gutter-button-style"
+            onClick={onNodeRemove}
+          />
         </div>
         <div className="filter-tree-children">
           {node.children.map(renderNode)}
