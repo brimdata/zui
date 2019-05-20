@@ -23,10 +23,19 @@ export default function(dispatch: Dispatch): SearchCallbackMap {
       return (count += log.cast("count"))
     }
 
-    let logs = Log.fromTupleSet(accum.getChannel("0"))
+    let results = accum.getChannel("0")
+    let logs = Log.fromTupleSet(results)
     let resultCount = logs.reduce(sumCounts, 0)
 
-    dispatch(updateFinding({resultCount}))
+    dispatch(
+      updateFinding({
+        resultCount,
+        chart: {
+          type: "Histogram",
+          results: accum.getResults()
+        }
+      })
+    )
   }
 
   return {each}
