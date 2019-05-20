@@ -5,6 +5,7 @@
   padding-left: $space-l;
   color: white;
   margin-bottom: $space-xxs;
+  overflow: hidden;
 
   &:nth-last-child(odd) {
     background: transparentize(white, 0.97);
