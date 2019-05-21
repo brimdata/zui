@@ -1,5 +1,9 @@
 /* @noflow */
 
+// Disable Warnings in the Console
+delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+
 const {app, BrowserWindow} = require("electron")
 const {
   default: installExtension,
@@ -26,6 +30,7 @@ const createWindow = () => {
     backgroundColor: "#ffffff",
     titleBarStyle: "hidden",
     webPreferences: {
+      experimentalFeatures: true,
       nodeIntegration: true
     }
   })
