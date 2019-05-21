@@ -26,7 +26,7 @@ const createWindow = () => {
     backgroundColor: "#ffffff",
     titleBarStyle: "hidden",
     webPreferences: {
-      experimentalFeatures: true
+      nodeIntegration: true
     }
   })
   win.loadFile("index.html")
