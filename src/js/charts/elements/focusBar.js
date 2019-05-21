@@ -12,11 +12,11 @@ type Props = {
 
 function findSpan(ts, chart) {
   let {number, unit} = chart.data.interval
-  let a = chart.scales.timeScale(ts)
-  let b = chart.scales.timeScale(add(ts, number, unit))
+  let a = chart.scales.xScale(ts)
+  let b = chart.scales.xScale(add(ts, number, unit))
   let width = Math.max(Math.floor(b - a) - 2, 2)
 
-  return [a, a + width].map(chart.scales.timeScale.invert)
+  return [a, a + width].map(chart.scales.xScale.invert)
 }
 
 export default function({onFocus, onBlur}: Props) {

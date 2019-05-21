@@ -53,12 +53,12 @@ export default function(props: Props = {}) {
       }
 
       if (!isEqual(selection, prevSelection)) {
-        onSelection && onSelection(selection.map(chart.scales.timeScale.invert))
+        onSelection && onSelection(selection.map(chart.scales.xScale.invert))
         return
       }
 
       if (withinSelection) {
-        onSelectionClick(selection.map(chart.scales.timeScale.invert))
+        onSelectionClick(selection.map(chart.scales.xScale.invert))
         return
       }
     }
@@ -72,7 +72,7 @@ export default function(props: Props = {}) {
     chart.props.innerTimeWindow
       ? brush.move(
           element,
-          chart.props.innerTimeWindow.map(chart.scales.timeScale)
+          chart.props.innerTimeWindow.map(chart.scales.xScale)
         )
       : brush.move(element, null)
 

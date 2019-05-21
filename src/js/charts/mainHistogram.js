@@ -69,15 +69,11 @@ export function buildMainHistogramChart({dispatch, ...props}: Props) {
         innerHeight: Math.max(props.height - margins.top - margins.bottom, 0)
       }),
       scales: ({data, dimens, props}) => ({
-        xScale: d3
-          .scaleBand()
-          .rangeRound([0, dimens.innerWidth])
-          .domain(fillWithIndex(data.timeBinCount)),
         yScale: d3
           .scaleLinear()
           .range([dimens.innerHeight, 0])
           .domain([0, d3.max(data.data, (d) => d.count) || 0]),
-        timeScale: d3
+        xScale: d3
           .scaleUtc()
           .range([0, dimens.innerWidth])
           .domain(props.timeWindow)

@@ -35,7 +35,7 @@ export default function({onDragEnd}: Props) {
       if (startPos === null || startSpan === null) return
       const pos = d3.mouse(parent)[0]
       const [from, to] = [pos, startPos].map((num) =>
-        chart.scales.timeScale.invert(num)
+        chart.scales.xScale.invert(num)
       )
       const diff = duration([from, to])
       const [nextFrom, nextTo] = shift(startSpan, diff)
@@ -46,7 +46,7 @@ export default function({onDragEnd}: Props) {
     const dragEnd = () => {
       if (startPos === null || startSpan === null) return
       const pos = d3.mouse(parent)[0]
-      const [from, to] = [pos, startPos].map(chart.scales.timeScale.invert)
+      const [from, to] = [pos, startPos].map(chart.scales.xScale.invert)
       const diff = duration([from, to])
 
       onDragEnd && onDragEnd(shift(startSpan, diff))
@@ -69,7 +69,7 @@ export default function({onDragEnd}: Props) {
   function draw(chart: Chart) {
     d3.select(chart.svg)
       .select(".x-axis")
-      .call(d3.axisBottom(chart.scales.timeScale))
+      .call(d3.axisBottom(chart.scales.xScale))
 
     d3.select(chart.svg)
       .select(".x-axis-drag")

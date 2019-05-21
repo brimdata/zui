@@ -52,8 +52,8 @@ export default function() {
     if (chart.data.data[0]) {
       const ts = chart.data.data[0].ts
       const {number, unit} = chart.data.interval
-      const a = chart.scales.timeScale(ts)
-      const b = chart.scales.timeScale(add(ts, number, unit))
+      const a = chart.scales.xScale(ts)
+      const b = chart.scales.xScale(add(ts, number, unit))
       width = Math.max(Math.floor(b - a) - 2, 2)
     }
 
@@ -64,7 +64,7 @@ export default function() {
       .attr("height", 0)
       .merge(bars)
       .attr("width", width)
-      .attr("x", (d) => chart.scales.timeScale(d.data.ts))
+      .attr("x", (d) => chart.scales.xScale(d.data.ts))
       .transition(t)
       .attr("y", (d) => chart.scales.yScale(d[1]))
       .attr(
