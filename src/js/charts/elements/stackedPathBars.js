@@ -7,7 +7,7 @@ import {d3ElementAttr, itestLocator} from "../../test/integration"
 import Chart from "../Chart"
 
 export default function() {
-  function mount(chart: Chart) {
+  function mount(chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "chart")
@@ -18,8 +18,8 @@ export default function() {
       )
   }
 
-  function draw(chart: Chart) {
-    const series = d3.stack().keys(chart.data.keys)(chart.data.data)
+  function draw(chart) {
+    const series = d3.stack().keys(chart.data.keys)(chart.data.points)
     const barGroups = d3
       .select(chart.svg)
       .select(".chart")
@@ -49,11 +49,11 @@ export default function() {
       .remove()
 
     let width = 0
-    if (chart.data.data[0]) {
-      const ts = chart.data.data[0].ts
+    if (chart.data.points[0]) {
+      const ts = chart.data.points[0].ts
       const {number, unit} = chart.data.interval
-      const a = chart.scales.xScale(ts)
-      const b = chart.scales.xScale(add(ts, number, unit))
+      const a = chart.xScale(ts)
+      const b = chart.xScale(add(ts, number, unit))
       width = Math.max(Math.floor(b - a) - 2, 2)
     }
 
@@ -64,13 +64,10 @@ export default function() {
       .attr("height", 0)
       .merge(bars)
       .attr("width", width)
-      .attr("x", (d) => chart.scales.xScale(d.data.ts))
+      .attr("x", (d) => chart.xScale(d.data.ts))
       .transition(t)
-      .attr("y", (d) => chart.scales.yScale(d[1]))
-      .attr(
-        "height",
-        (d) => chart.scales.yScale(d[0]) - chart.scales.yScale(d[1])
-      )
+      .attr("y", (d) => chart.yScale(d[1]))
+      .attr("height", (d) => chart.yScale(d[0]) - chart.yScale(d[1]))
   }
 
   return {mount, draw}

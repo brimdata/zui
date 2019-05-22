@@ -11,42 +11,60 @@ type Props = {
 }
 
 export default function({onDragEnd}: Props) {
-  function mount(chart: Chart) {
-    const xAxis = d3
+  let startSpan = null
+  let startPos = null
+  let xAxis
+  let dragArea
+
+  function mount(chart, redraw) {
+    xAxis = d3
       .select(chart.svg)
       .append("g")
       .attr("class", "x-axis")
+
+    dragArea = xAxis
+      .append("rect")
+      .attr("class", "x-axis-drag")
+      .attr("fill", "transparent")
+  }
+
+  function draw(chart: Chart, redraw: Function) {
+    d3.select(chart.svg)
+      .select(".x-axis")
       .attr(
         "transform",
         `translate(${chart.margins.left}, ${chart.dimens.height -
           chart.margins.bottom})`
       )
+      .call(d3.axisBottom(chart.xScale))
 
-    let parent = xAxis.node()
-    let startSpan = null
-    let startPos = null
+    d3.select(chart.svg)
+      .select(".x-axis-drag")
+      .attr("width", chart.dimens.innerWidth)
 
-    const dragStart = () => {
-      startPos = d3.mouse(parent)[0]
-      startSpan = chart.props.timeWindow
+    function getXPos() {
+      return d3.mouse(xAxis.node())[0]
     }
 
-    const drag = () => {
+    function dragStart() {
+      startPos = getXPos()
+      startSpan = chart.data.span
+    }
+
+    function drag() {
       if (startPos === null || startSpan === null) return
-      const pos = d3.mouse(parent)[0]
-      const [from, to] = [pos, startPos].map((num) =>
-        chart.scales.xScale.invert(num)
-      )
+      const pos = getXPos()
+      const [from, to] = [pos, startPos].map((num) => chart.xScale.invert(num))
       const diff = duration([from, to])
       const [nextFrom, nextTo] = shift(startSpan, diff)
-      chart.update({timeWindow: [nextFrom, nextTo]})
-      chart.draw()
+      chart.xScale.domain([nextFrom, nextTo])
+      redraw(chart)
     }
 
-    const dragEnd = () => {
+    function dragEnd() {
       if (startPos === null || startSpan === null) return
-      const pos = d3.mouse(parent)[0]
-      const [from, to] = [pos, startPos].map(chart.scales.xScale.invert)
+      const pos = getXPos()
+      const [from, to] = [pos, startPos].map(chart.xScale.invert)
       const diff = duration([from, to])
 
       onDragEnd && onDragEnd(shift(startSpan, diff))
@@ -55,25 +73,10 @@ export default function({onDragEnd}: Props) {
     }
 
     d3.select("body")
-      .on("mousemove", drag)
+      .on("mousemove", drag, {passive: true})
       .on("mouseup", dragEnd)
 
-    xAxis
-      .append("rect")
-      .attr("class", "x-axis-drag")
-      .attr("fill", "transparent")
-      .attr("height", chart.margins.bottom)
-      .on("mousedown", dragStart)
-  }
-
-  function draw(chart: Chart) {
-    d3.select(chart.svg)
-      .select(".x-axis")
-      .call(d3.axisBottom(chart.scales.xScale))
-
-    d3.select(chart.svg)
-      .select(".x-axis-drag")
-      .attr("width", chart.dimens.innerWidth)
+    dragArea.attr("height", chart.margins.bottom).on("mousedown", dragStart)
   }
 
   return {mount, draw}

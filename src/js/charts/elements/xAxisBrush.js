@@ -4,7 +4,6 @@ import {isEqual} from "lodash"
 import * as d3 from "d3"
 
 import type {Span} from "../../BoomClient/types"
-import Chart from "../Chart"
 
 type Props = {
   onSelection: (span: Span) => void,
@@ -15,7 +14,7 @@ type Props = {
 export default function(props: Props = {}) {
   const {onSelection, onSelectionClear, onSelectionClick} = props
 
-  function mount(chart: Chart) {
+  function mount(chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "brush")
@@ -25,7 +24,7 @@ export default function(props: Props = {}) {
       )
   }
 
-  function draw(chart: Chart) {
+  function draw(chart) {
     let prevSelection = null
 
     function onBrushStart() {
@@ -39,26 +38,25 @@ export default function(props: Props = {}) {
 
     function onBrushEnd() {
       let {selection, sourceEvent} = d3.event
-      let [x] = d3.mouse(this)
-      let [start, end] = selection
-      let withinSelection = x >= start && x <= end
 
       if (!sourceEvent) {
         return
       }
 
       if (!selection) {
-        if (chart.props.innerTimeWindow) onSelectionClear && onSelectionClear()
+        if (chart.selection) onSelectionClear && onSelectionClear()
         return
       }
 
       if (!isEqual(selection, prevSelection)) {
-        onSelection && onSelection(selection.map(chart.scales.xScale.invert))
+        onSelection && onSelection(selection.map(chart.xScale.invert))
         return
       }
 
-      if (withinSelection) {
-        onSelectionClick(selection.map(chart.scales.xScale.invert))
+      let [start, end] = selection
+      let [x] = d3.mouse(this)
+      if (x >= start && x <= end) {
+        onSelectionClick(selection.map(chart.xScale.invert))
         return
       }
     }
@@ -67,13 +65,10 @@ export default function(props: Props = {}) {
     const brush = d3
       .brushX()
       .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
-    element.call(brush)
 
-    chart.props.innerTimeWindow
-      ? brush.move(
-          element,
-          chart.props.innerTimeWindow.map(chart.scales.xScale)
-        )
+    element.call(brush)
+    chart.selection
+      ? brush.move(element, chart.selection.map(chart.xScale))
       : brush.move(element, null)
 
     brush.on("end", onBrushEnd)

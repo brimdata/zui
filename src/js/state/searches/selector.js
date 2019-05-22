@@ -1,5 +1,7 @@
 /* @flow */
 
+import {createSelector} from "reselect"
+
 import type {SearchResults} from "./types"
 import type {State} from "../types"
 
@@ -43,3 +45,10 @@ export function getSearchesByTag(state: State, tag: string) {
   }
   return tagged
 }
+
+export const getHistogramSearch = createSelector<State, void, *, *>(
+  getSearches,
+  (searches) => {
+    return searches["HistogramSearch"]
+  }
+)

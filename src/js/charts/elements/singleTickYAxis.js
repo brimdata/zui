@@ -5,7 +5,7 @@ import * as d3 from "d3"
 import Chart from "../Chart"
 
 export default function() {
-  function mount(chart: Chart) {
+  function mount(chart) {
     d3.select(chart.svg)
       .append("g")
       .attr("class", "y-axis")
@@ -15,8 +15,8 @@ export default function() {
       )
   }
 
-  function draw(chart: Chart) {
-    if (chart.data.data.length === 0) {
+  function draw(chart) {
+    if (chart.data.points.length === 0) {
       d3.select(chart.svg)
         .select(".y-axis")
         .style("opacity", "0")
@@ -28,9 +28,9 @@ export default function() {
       .style("opacity", "1")
       .call(
         d3
-          .axisRight(chart.scales.yScale)
+          .axisRight(chart.yScale)
           .ticks(1)
-          .tickValues(chart.scales.yScale.domain().map(d3.format("d")))
+          .tickValues(chart.yScale.domain().map(d3.format("d")))
       )
       .selectAll(".tick")
       .each(function() {

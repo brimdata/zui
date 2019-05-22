@@ -5,16 +5,21 @@ import * as d3 from "d3"
 import Chart from "../Chart"
 
 export default function() {
+  let line
+  let overflow = 10
+
   function mount(chart: Chart) {
-    const overflow = 10
-    const line = d3
+    line = d3
       .select(chart.svg)
       .insert("rect")
       .attr("class", "hover-line")
       .style("pointer-events", "none")
       .style("display", "none")
       .attr("width", "1px")
-      .attr("height", chart.dimens.innerHeight + overflow * 2)
+  }
+
+  function draw(chart: Chart) {
+    line.attr("height", chart.dimens.innerHeight + overflow * 2)
 
     d3.select(chart.svg)
       .select(".brush")
@@ -32,5 +37,5 @@ export default function() {
       })
   }
 
-  return {mount}
+  return {mount, draw}
 }

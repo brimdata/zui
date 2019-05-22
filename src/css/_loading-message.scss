@@ -10,6 +10,7 @@
   }
 
   &.visible {
+    transition: opacity 250ms;
     opacity: 1;
   }
 }

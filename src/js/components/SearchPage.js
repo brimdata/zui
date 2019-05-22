@@ -8,7 +8,6 @@ import {LeftPane} from "./LeftPane"
 import {NetworkError, UnauthorizedError} from "../models/Errors"
 import {XControlBar} from "./ControlBar"
 import {XDownloadProgress} from "./DownloadProgress"
-import {XHistogram} from "./Histogram"
 import {XRightPane} from "./RightPane"
 import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults/SearchResults"
@@ -24,6 +23,7 @@ import {useResizeObserver} from "../hooks/useResizeObserver"
 import AppError from "../models/AppError"
 import ColumnChooser from "./ColumnChooser"
 import ErrorFactory from "../models/ErrorFactory"
+import MainSearchHistogram from "./MainSearchHistogram"
 import StartupError from "./StartupError"
 
 export default function SearchPage() {
@@ -33,7 +33,6 @@ export default function SearchPage() {
   let logsTab = useSelector(getShowLogsTab)
   let finding = useSelector(getCurrentFinding)
   let renderKey = finding && finding.ts.getTime().toString()
-  let histogram = useResizeObserver()
   let results = useResizeObserver()
 
   useEffect(() => {
@@ -57,12 +56,8 @@ export default function SearchPage() {
           <div className="search-page-header">
             <XControlBar />
             {logsTab && (
-              <div className="search-page-header-charts" ref={histogram.ref}>
-                <XHistogram
-                  height={80}
-                  width={histogram.rect.width}
-                  key={renderKey}
-                />
+              <div className="search-page-header-charts">
+                <MainSearchHistogram key={renderKey} />
               </div>
             )}
             <ColumnChooser />
