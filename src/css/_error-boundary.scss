@@ -1,13 +1,11 @@
 .error-boundary {
   overflow: scroll;
-  background: $white-3;
   height: 100%;
+  background-color: $gray-7;
+  color: white;
   -webkit-app-region: drag;
 
   .body-content {
-    background: white;
-    border-radius: 3px;
-    box-shadow: $high-box-shadow;
     margin-top: $leading;
     margin-bottom: $leading;
   }
@@ -25,5 +23,11 @@
       width: 30px * 1.5;
       margin-right: $leading;
     }
+  }
+
+  pre,
+  li,
+  code {
+    font-size: 12px;
   }
 }
