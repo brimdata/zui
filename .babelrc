@@ -3,6 +3,7 @@
   "plugins": [
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-class-properties",
+    "source-map-support",
     "inline-react-svg"
   ],
   "ignore": ["src/js/flow-typed"]

@@ -5,7 +5,7 @@ module.exports = {
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
     react: ["useState", "useRef", "useEffect", "useLayoutEffect", "useMemo"],
-    "react-dom": ["renderToString"],
+    "react-dom": ["render"],
     lodash: ["throttle", "get", "isEqual", "isEmpty", "every", "kebabCase"],
     "react-router-dom": ["Redirect"],
     "react-redux": ["useDispatch"]

@@ -19,10 +19,10 @@
     "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
     "watch": "npm-run-all -p watch:*",
-    "build:js": "babel src/js -d dist/js",
+    "build:js": "babel src/js -d dist/js --source-maps=inline",
     "build:css": "node-sass-chokidar src/css --output dist/css",
     "build:static": "cpx \"src/static/**\" dist/static",
-    "watch:js": "npm run build:js -- --watch --skip-initial-build",
+    "watch:js": "npm run build:js -- --watch --skip-initial-build --source-maps",
     "watch:css": "npm run build:css -- --watch --skip-initial",
     "watch:static": "npm run build:static -- --watch",
     "watch:reload": "livereload dist",
@@ -69,6 +69,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "babel-plugin-inline-react-svg": "^1.1.0",
+    "babel-plugin-source-map-support": "^2.0.1",
     "commander": "^2.19.0",
     "cpx": "^1.5.0",
     "electron": "^4.1.1",
@@ -119,6 +120,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "source-map-support": "^0.5.12",
     "valid-url": "^1.0.9"
   }
 }
