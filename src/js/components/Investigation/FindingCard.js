@@ -1,12 +1,11 @@
 /* @flow */
 
-import {isEmpty} from "lodash"
 import {useDispatch} from "react-redux"
 import React, {useState} from "react"
 import classNames from "classnames"
 
+import {ExpandButton, RemoveButton} from "../Buttons"
 import type {Finding} from "../../state/reducers/investigation"
-import {Mono, Stats} from "../Typography"
 import {
   changeSearchBarInput,
   deleteFindingByTs,
@@ -16,14 +15,9 @@ import {
   setSearchBarPins
 } from "../../state/actions"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
-import {format} from "../../lib/Time"
-import {humanDuration} from "../../lib/TimeWindow"
-import {isNumber} from "../../lib/is"
-import {withCommas} from "../../lib/fmt"
-import Caret from "../../icons/caret-bottom-sm.svg"
-import Log from "../../models/Log"
-import VerticalTable from "../Tables/VerticalTable"
-import X from "../../icons/x-md.svg"
+import FindingDetail from "./FindingDetail"
+import FindingFooter from "./FindingFooter"
+import FindingProgram from "./FindingProgram"
 
 type Props = {finding: Finding}
 
@@ -48,88 +42,20 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     setOpen(!open)
   }
 
-  function timeFormat(date) {
-    return format(date, "MMM DD, YYYY HH:mm:ss")
-  }
-
-  let descriptor = [
-    {type: "string", name: "Executed:"},
-    {type: "string", name: "Space:"},
-    {type: "string", name: "Span:"}
-  ]
-
-  let tuple = [
-    timeFormat(finding.ts),
-    finding.search.space,
-    finding.search.span.map(timeFormat).join(" – ")
-  ]
-
-  let log = new Log(tuple, descriptor)
-
   return (
     <div className={classNames("finding-card-wrapper", {open})}>
       <div className="finding-card" onClick={onClick}>
         <FindingProgram search={finding.search} />
         <FindingFooter finding={finding} />
       </div>
-      {open && (
-        <div className="finding-detail">
-          <VerticalTable descriptor={descriptor} log={log} light />
-        </div>
-      )}
+      {open && <FindingDetail finding={finding} />}
 
-      <Expand onClick={onExpandClick} open={open} />
-      <Remove onClick={onRemove} />
+      <ExpandButton
+        className="gutter-button-style"
+        onClick={onExpandClick}
+        open={open}
+      />
+      <RemoveButton className="gutter-button-style" onClick={onRemove} />
     </div>
   )
 })
-
-function FindingProgram({search}) {
-  if (isEmpty(search.pins) && isEmpty(search.program))
-    return (
-      <div className="program">
-        <Mono>*</Mono>
-      </div>
-    )
-
-  return (
-    <div className="program">
-      {search.pins.map((text, i) => (
-        <Mono className="pin" key={i}>
-          {text}
-        </Mono>
-      ))}
-      <Mono>{search.program}</Mono>
-    </div>
-  )
-}
-
-function FindingFooter({finding}) {
-  return (
-    <div className="footer">
-      {isNumber(finding.resultCount) ? (
-        <Stats>{withCommas(finding.resultCount)} results</Stats>
-      ) : (
-        <Stats>...</Stats>
-      )}
-      <Stats>•</Stats>
-      <Stats>{humanDuration([finding.ts, new Date()])} ago</Stats>
-    </div>
-  )
-}
-
-function Expand({open, ...props}) {
-  return (
-    <div className={classNames("gutter-button expand", {open})} {...props}>
-      <Caret />
-    </div>
-  )
-}
-
-function Remove(props) {
-  return (
-    <div className="gutter-button remove" {...props}>
-      <X />
-    </div>
-  )
-}

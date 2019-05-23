@@ -13,7 +13,7 @@ const HistogramTooltip = ({segments, ts}: Props) => {
   const rows = segments
     .sort((a, b) => b[1] - a[1])
     .map(([path, count]) => (
-      <tr key="path">
+      <tr key={path}>
         <td>
           <span className={`tag path-tag ${path}-bg-color`}>{path}</span>
         </td>

@@ -3,8 +3,8 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
+import type {ChartElement} from "../types"
 import type {Span} from "../../BoomClient/types"
-import Chart from "../Chart"
 
 type Props = {
   onSelection: (span: Span) => void,
@@ -12,11 +12,11 @@ type Props = {
   onSelectionClick: (span: Span) => void
 }
 
-export default function(props: Props = {}) {
+export default function(props: Props = {}): ChartElement {
   const {onSelection, onSelectionClear, onSelectionClick} = props
 
-  function mount(chart: Chart) {
-    d3.select(chart.svg)
+  function mount(chart) {
+    d3.select(chart.el)
       .append("g")
       .attr("class", "brush")
       .attr(
@@ -25,13 +25,13 @@ export default function(props: Props = {}) {
       )
   }
 
-  function draw(chart: Chart) {
+  function draw(chart) {
     let prevSelection = null
 
     function onBrushStart() {
       prevSelection = d3.brushSelection(
         d3
-          .select(chart.svg)
+          .select(chart.el)
           .select(".brush")
           .node()
       )
@@ -39,26 +39,25 @@ export default function(props: Props = {}) {
 
     function onBrushEnd() {
       let {selection, sourceEvent} = d3.event
-      let [x] = d3.mouse(this)
-      let [start, end] = selection
-      let withinSelection = x >= start && x <= end
 
       if (!sourceEvent) {
         return
       }
 
       if (!selection) {
-        if (chart.props.innerTimeWindow) onSelectionClear && onSelectionClear()
+        if (chart.state.selection) onSelectionClear && onSelectionClear()
         return
       }
 
       if (!isEqual(selection, prevSelection)) {
-        onSelection && onSelection(selection.map(chart.scales.timeScale.invert))
+        onSelection && onSelection(selection.map(chart.xScale.invert))
         return
       }
 
-      if (withinSelection) {
-        onSelectionClick(selection.map(chart.scales.timeScale.invert))
+      let [start, end] = selection
+      let [x] = d3.mouse(this)
+      if (x >= start && x <= end) {
+        onSelectionClick(selection.map(chart.xScale.invert))
         return
       }
     }
@@ -67,13 +66,10 @@ export default function(props: Props = {}) {
     const brush = d3
       .brushX()
       .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
-    element.call(brush)
 
-    chart.props.innerTimeWindow
-      ? brush.move(
-          element,
-          chart.props.innerTimeWindow.map(chart.scales.timeScale)
-        )
+    element.call(brush)
+    chart.state.selection
+      ? brush.move(element, chart.state.selection.map(chart.xScale))
       : brush.move(element, null)
 
     brush.on("end", onBrushEnd)

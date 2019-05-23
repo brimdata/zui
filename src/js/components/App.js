@@ -4,11 +4,11 @@ import {Redirect, Route, Switch, withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 import React, {Component} from "react"
 
-import {XLogin} from "./Login"
 import {XLatestError} from "./LatestError"
+import {XLogin} from "./Login"
 import {XNotifications} from "./Notifications"
-import {XSearch} from "./Search"
 import {getTimeZone} from "../state/reducers/view"
+import SearchPage from "./SearchPage"
 import * as Time from "../lib/Time"
 
 type Props = {
@@ -25,7 +25,7 @@ export default class App extends Component<Props> {
         <XLatestError />
         <XNotifications />
         <Switch>
-          <Route path="/search" component={XSearch} />
+          <Route path="/search" component={SearchPage} />
           <Route path="/connect" component={XLogin} />
           <Redirect to="/connect" />
         </Switch>

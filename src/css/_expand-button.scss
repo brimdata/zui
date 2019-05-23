@@ -1,0 +1,14 @@
+.expand-button {
+  transform: rotate(-90deg);
+
+  &.open {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+
+  svg {
+    margin-top: 2px;
+    width: 11px;
+    height: 11px;
+  }
+}

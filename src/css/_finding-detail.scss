@@ -1,0 +1,28 @@
+.finding-detail {
+  transition: opacity 150ms;
+  // padding-top: $space-xs;
+  margin: $space-xs;
+  margin-left: 0;
+  border-top: 1px solid $gray-4;
+
+  .vertical-table td {
+    font-size: 9px;
+  }
+
+  .vertical-table {
+    margin-top: $space-s;
+    margin-left: $space-xs;
+  }
+
+  .finding-histogram {
+    margin-top: $space-s;
+    margin-left: $space-xs;
+    height: 100px;
+    width: 100%;
+
+    .tick line,
+    .domain {
+      stroke: $gray-4;
+    }
+  }
+}

@@ -1,10 +1,9 @@
 /* @flow */
 
-import {isEqual} from "lodash"
-import {useSelector} from "react-redux"
-import React, {useMemo} from "react"
+import React from "react"
 
-import {getInvestigation} from "../../state/reducers/investigation"
+import {getKey, sameSpan} from "../../lib/finding"
+import {useFindings} from "./useFindings"
 import AnimateChildren from "../AnimateChildren"
 import FindingCard from "./FindingCard"
 import FindingSpanCard from "./FindingSpanCard"
@@ -26,19 +25,3 @@ export default React.memo<{}>(function InvestigationLinear() {
     <AnimateChildren className="investigation-linear">{cards}</AnimateChildren>
   )
 })
-
-function getKey(finding) {
-  return finding.ts.getTime().toString()
-}
-
-function useFindings() {
-  let findings = useSelector(getInvestigation)
-  return useMemo(() => {
-    return [...findings].sort((a, b) => (a.ts < b.ts ? 1 : -1))
-  }, [findings])
-}
-
-function sameSpan(a, b) {
-  if (!b) return false
-  return isEqual(a.search.span, b.search.span)
-}

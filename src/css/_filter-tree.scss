@@ -2,45 +2,33 @@ $filter-tree-line-color: $gray-5;
 
 .filter-tree {
   height: 100%;
-  color: $white-5;
+  color: $white-1;
 
-  .delete-button {
+  .filter-node p {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .remove-button {
     position: absolute;
     top: 5px;
     right: 12px;
     opacity: 0;
-    cursor: pointer;
-
-    svg {
-      transition: fill 100ms;
-      width: 16px;
-      height: 16px;
-      fill: $gray-4;
-    }
-
-    &:hover {
-      svg {
-        fill: white;
-      }
-    }
-
-    &:active {
-      transform: translateY(2px);
-    }
   }
 }
 
 .filter-tree-parent:hover {
   background: $gray-6;
   cursor: pointer;
-  .delete-button {
+  .remove-button {
     opacity: 1;
   }
 }
 
 .filter-tree-node {
   position: relative;
-  margin-left: 12px;
+  margin-left: $space-m;
+  padding: 2px 0;
   border-left: 1px solid $filter-tree-line-color;
 
   .filter-node {

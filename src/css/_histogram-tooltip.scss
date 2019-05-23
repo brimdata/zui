@@ -1,8 +1,10 @@
-#histogram-tooltip {
+.histogram-tooltip-wrapper {
   position: absolute;
+  z-index: 1;
   top: 0px;
   pointer-events: none;
   transition: opacity 200ms 50ms, right 75ms, left 75ms;
+  opacity: 1;
 }
 
 .histogram-tooltip {

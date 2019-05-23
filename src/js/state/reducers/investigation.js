@@ -1,7 +1,8 @@
 /* @flow */
 import {isEqual} from "lodash"
 
-import type {Results, SearchRecord} from "../../types"
+import type {SearchRecord} from "../../types"
+import type {SearchResults} from "../searches/types"
 import type {State} from "../types"
 import {last} from "../../lib/Array"
 import Log from "../../models/Log"
@@ -15,7 +16,7 @@ export type Finding = {
   logs?: Log[],
   chart?: {
     type: "Histogram",
-    results: Results
+    results: SearchResults
   }
 }
 

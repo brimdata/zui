@@ -2,35 +2,35 @@
 
 import * as d3 from "d3"
 
-import Chart from "../Chart"
+import type {ChartElement} from "../types"
 
-export default function() {
-  function mount(chart: Chart) {
-    d3.select(chart.svg)
+export default function(): ChartElement {
+  function mount(chart) {
+    d3.select(chart.el)
       .append("g")
-      .attr("class", "y-axis")
+      .attr("class", "y-axis-single-tick")
       .attr(
         "transform",
         `translate(${chart.margins.left}, ${chart.margins.top})`
       )
   }
 
-  function draw(chart: Chart) {
-    if (chart.data.data.length === 0) {
-      d3.select(chart.svg)
-        .select(".y-axis")
+  function draw(chart) {
+    if (chart.data.points.length === 0) {
+      d3.select(chart.el)
+        .select(".y-axis-single-tick")
         .style("opacity", "0")
       return
     }
 
-    d3.select(chart.svg)
-      .select(".y-axis")
+    d3.select(chart.el)
+      .select(".y-axis-single-tick")
       .style("opacity", "1")
       .call(
         d3
-          .axisRight(chart.scales.yScale)
+          .axisRight(chart.yScale)
           .ticks(1)
-          .tickValues(chart.scales.yScale.domain().map(d3.format("d")))
+          .tickValues(chart.yScale.domain().map(d3.format("d")))
       )
       .selectAll(".tick")
       .each(function() {

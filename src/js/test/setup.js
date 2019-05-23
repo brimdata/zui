@@ -1,6 +1,6 @@
 /* @flow */
-const enzyme = require("enzyme")
 const Adapter = require("enzyme-adapter-react-16")
+const enzyme = require("enzyme")
 
 jest.mock("electron", function() {
   let electron = {

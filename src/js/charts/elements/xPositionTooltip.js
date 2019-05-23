@@ -1,50 +1,59 @@
 /* @flow */
 
-import {renderToString} from "react-dom/server"
+import {render} from "react-dom"
 import React from "react"
 import * as d3 from "d3"
 
+import type {ChartElement} from "../types"
 import {getPointAt} from "../getPointAt"
-import {id} from "../../lib/Doc"
-import Chart from "../Chart"
-import HistogramTooltip from "../../components/HistogramTooltip"
 
-export default function() {
-  function mount(chart: Chart) {
-    const tooltip = id("histogram-tooltip")
-    let prevPoint = null
+type Args = {
+  wrapperClassName: string,
+  render: *
+}
 
-    const hide = () => {
-      tooltip.style.opacity = "0"
-      prevPoint = null
-    }
+export default function({
+  wrapperClassName,
+  render: Component
+}: Args): ChartElement {
+  let div
 
-    const show = function() {
-      const [left] = d3.mouse(this)
-      const point = getPointAt(left, chart)
+  function hide() {
+    div.style.opacity = "0"
+  }
+
+  function mount({el}) {
+    if (!el) return
+    div = document.createElement("div")
+    div.classList.add(wrapperClassName)
+    if (el.parentNode) el.parentNode.appendChild(div)
+
+    d3.select(el)
+      .select(".brush")
+      .on("mousedown.abc", hide)
+  }
+
+  function draw(chart) {
+    function show() {
+      let [left] = d3.mouse(this)
+      let point = getPointAt(left, chart)
       if (point && point.count) {
-        positionTooltip(tooltip, this, 30)
-        if (prevPoint === point) return
-        prevPoint = point
-        tooltip.innerHTML = renderToString(
-          <HistogramTooltip {...tooltipProps(point)} />
-        )
+        positionTooltip(div, this, 30)
+        render(<Component {...getProps(point)} />, div)
       } else {
         hide()
       }
     }
 
-    d3.select(chart.svg)
-      .select(".brush")
-      .on("mousedown.tooltip", hide)
+    d3.select(chart.el)
       .on("mouseout.tooltip", hide)
       .on("mousemove.tooltip", show)
   }
 
-  return {mount}
+  return {mount, draw}
 }
 
-const tooltipProps = (point) => {
+const getProps = (point) => {
   const segments = []
   for (let key in point) {
     if (["ts", "count"].includes(key)) continue
@@ -55,15 +64,15 @@ const tooltipProps = (point) => {
 }
 
 export const positionTooltip = (
-  tooltip: HTMLElement,
+  el: HTMLElement,
   parent: HTMLElement,
   padding: number
 ) => {
   const [left] = d3.mouse(parent)
-  const {width} = tooltip.getBoundingClientRect()
+  const {width} = el.getBoundingClientRect()
   const {width: parentWidth} = parent.getBoundingClientRect()
 
-  d3.select(tooltip)
+  d3.select(el)
     .style("left", xPosition(left, width, parentWidth, padding))
     .style("opacity", "1")
 }

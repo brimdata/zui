@@ -1,4 +1,5 @@
-.main-search-histogram {
+.chart {
+  height: 80px;
   font-family: $mono-font;
   position: relative;
 
@@ -56,13 +57,8 @@
   }
 }
 
-.main-search-histogram svg {
+.chart svg {
   display: block;
-
-  .data-point {
-    stroke-width: 1px;
-    fill: #50e3c2;
-  }
 
   .tick line {
     stroke: $white-5;
@@ -87,25 +83,17 @@
     font-size: 9px;
   }
 
-  .y-axis .tick,
-  .y-axis .domain {
-    display: none;
-  }
-
-  .y-axis .tick:last-child {
-    display: block;
-  }
-
-  .y-axis text {
-  }
-
-  .y-axis .tick-bg {
-    fill: $white-3;
-  }
-
-  .time-cursor {
-    stroke-width: 1px;
-    stroke: $gray-9;
+  .y-axis-single-tick {
+    .tick,
+    .domain {
+      display: none;
+    }
+    .tick:last-child {
+      display: block;
+    }
+    .tick-bg {
+      fill: $white-3;
+    }
   }
 }
 

@@ -30,10 +30,10 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
         <div className="body-content">
           <h1>
             <Warn />
-            App Error
+            Error
           </h1>
-          <p>This error is not yet handled by the application.</p>
-          <h3>Possible Solutions</h3>
+          <pre>{error.stack}</pre>
+          <h5>Possible Solutions</h5>
           <ul>
             <li>
               Reload the pane <code>View -&gt; Reload</code>
@@ -42,8 +42,6 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
               Reset the state <code>Window -&gt; Reset State</code>
             </li>
           </ul>
-          <h3>Details</h3>
-          <pre>{error.stack}</pre>
         </div>
       </div>
     )
