@@ -28,7 +28,9 @@ export default function({
     div.classList.add(wrapperClassName)
     if (el.parentNode) el.parentNode.appendChild(div)
 
-    d3.select(el).on("mousedown", hide)
+    d3.select(el)
+      .select(".brush")
+      .on("mousedown.abc", hide)
   }
 
   function draw(chart) {
