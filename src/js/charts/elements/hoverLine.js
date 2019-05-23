@@ -2,7 +2,7 @@
 
 import * as d3 from "d3"
 
-import type {ChartElement} from "../../components/Charts/types"
+import type {ChartElement} from "../types"
 
 export default function(): ChartElement {
   let line

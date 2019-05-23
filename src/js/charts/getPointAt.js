@@ -1,5 +1,5 @@
 /* @flow */
-import type {Chart} from "../components/Charts/types"
+import type {Chart} from "./types"
 import {add} from "../lib/Time"
 
 export const getPointAt = (left: number, chart: Chart) => {

@@ -1,6 +1,7 @@
 /* @flow */
-import type {Interval} from "../../types"
-import type {Span} from "../../BoomClient/types"
+
+import type {Interval} from "../types"
+import type {Span} from "../BoomClient/types"
 
 type Dimens = {
   height: number,
@@ -48,7 +49,7 @@ type HistogramState = {|
   isEmpty: boolean
 |}
 
-type HistogramData = {|
+export type HistogramData = {|
   points: {ts: Date, [string]: number}[],
   keys: string[],
   interval: Interval,

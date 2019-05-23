@@ -4,7 +4,7 @@ import {render} from "react-dom"
 import React from "react"
 import * as d3 from "d3"
 
-import type {ChartElement} from "../../components/Charts/types"
+import type {ChartElement} from "../types"
 import {getPointAt} from "../getPointAt"
 
 type Args = {

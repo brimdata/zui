@@ -3,7 +3,7 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
-import type {ChartElement} from "../../components/Charts/types"
+import type {ChartElement} from "../types"
 import type {Span} from "../../BoomClient/types"
 
 type Props = {

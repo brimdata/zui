@@ -71,13 +71,6 @@ export type Results = {
   descriptor: Descriptor
 }
 
-export type HistogramData = {
-  data: {ts: Date, [string]: number}[],
-  keys: string[],
-  timeBinCount: number,
-  interval: Interval
-}
-
 export type Interval = {
   number: number,
   unit: LongTimeUnit,

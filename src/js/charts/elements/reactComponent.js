@@ -1,7 +1,7 @@
 /* @flow */
 import {render} from "react-dom"
 
-import type {ChartElement} from "../../components/Charts/types"
+import type {ChartElement} from "../types"
 
 export default function reactComponent(renderComponent: *): ChartElement {
   let root

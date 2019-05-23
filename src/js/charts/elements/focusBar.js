@@ -1,7 +1,7 @@
 /* @flow */
 import * as d3 from "d3"
 
-import type {ChartElement} from "../../components/Charts/types"
+import type {ChartElement} from "../types"
 import {add} from "../../lib/Time"
 import {getPointAt} from "../getPointAt"
 

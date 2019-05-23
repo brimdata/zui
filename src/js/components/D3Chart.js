@@ -4,7 +4,7 @@ import React, {useLayoutEffect, useRef} from "react"
 import classNames from "classnames"
 import * as d3 from "d3"
 
-import type {ChartElement, HistogramProps} from "./Charts/types"
+import type {ChartElement, HistogramProps} from "../charts/types"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 
 type Props = HistogramProps
