@@ -6,7 +6,7 @@ import type {ChartElement} from "../types"
 
 export default function(): ChartElement {
   function mount(chart) {
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .append("g")
       .attr("class", "y-axis")
       .attr(
@@ -17,13 +17,13 @@ export default function(): ChartElement {
 
   function draw(chart) {
     if (chart.data.points.length === 0) {
-      d3.select(chart.svg)
+      d3.select(chart.el)
         .select(".y-axis")
         .style("opacity", "0")
       return
     }
 
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .select(".y-axis")
       .style("opacity", "1")
       .call(

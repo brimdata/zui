@@ -6,11 +6,11 @@ import type {ChartElement} from "../types"
 export default function reactComponent(renderComponent: *): ChartElement {
   let root
 
-  function mount({svg}) {
-    if (!svg) return
+  function mount({el}) {
+    if (!el) return
     root = document.createElement("div")
-    if (svg.parentNode) {
-      svg.parentNode.appendChild(root)
+    if (el.parentNode) {
+      el.parentNode.appendChild(root)
     }
   }
 

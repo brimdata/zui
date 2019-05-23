@@ -2,38 +2,33 @@
 
 import React, {useLayoutEffect, useRef} from "react"
 import classNames from "classnames"
-import * as d3 from "d3"
 
-import type {ChartElement, HistogramProps} from "../charts/types"
+import type {Chart, ChartElement, ChartSVG, Margins} from "../charts/types"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 
-type Props = HistogramProps
+type Props = {|
+  className?: string,
+  margins: Margins,
+  buildElements: () => ChartElement[],
+  buildChart: (ChartSVG) => Chart
+|}
 
 export default function D3Chart(props: Props) {
   let resize = useResizeObserver()
-  let svg = useRef(null)
+  let el = useRef(null)
   let elements = useRef<ChartElement[]>([])
   let {width, height} = resize.rect
   let {right, left, top, bottom} = props.margins
-  let {points, span} = props.data
   let innerWidth = Math.max(width - left - right, 0)
   let innerHeight = Math.max(height - top - bottom, 0)
 
-  let chart = {
-    svg: svg.current,
-    data: props.data,
-    state: props.state,
-    margins: props.margins,
+  let svg = {
     dimens: {width, height, innerWidth, innerHeight},
-    yScale: d3
-      .scaleLinear()
-      .range([innerHeight, 0])
-      .domain([0, d3.max(points, (d) => d.count) || 0]),
-    xScale: d3
-      .scaleUtc()
-      .range([0, innerWidth])
-      .domain(span)
+    margins: props.margins,
+    el: el.current
   }
+
+  let chart = props.buildChart(svg)
 
   function mount(chart) {
     elements.current.forEach((el) => {
@@ -48,11 +43,11 @@ export default function D3Chart(props: Props) {
   }
 
   useLayoutEffect(() => {
-    if (chart.svg) {
+    if (chart.el) {
       elements.current = props.buildElements()
       mount(chart)
     }
-  }, [chart.svg])
+  }, [chart.el])
 
   useLayoutEffect(() => {
     draw(chart)
@@ -60,7 +55,7 @@ export default function D3Chart(props: Props) {
 
   return (
     <div className={classNames("chart", props.className)} ref={resize.ref}>
-      <svg width={width} height={height} ref={svg} />
+      <svg width={width} height={height} ref={el} />
     </div>
   )
 }

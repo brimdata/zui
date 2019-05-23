@@ -16,7 +16,7 @@ export default function(props: Props = {}): ChartElement {
   const {onSelection, onSelectionClear, onSelectionClick} = props
 
   function mount(chart) {
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .append("g")
       .attr("class", "brush")
       .attr(
@@ -31,7 +31,7 @@ export default function(props: Props = {}): ChartElement {
     function onBrushStart() {
       prevSelection = d3.brushSelection(
         d3
-          .select(chart.svg)
+          .select(chart.el)
           .select(".brush")
           .node()
       )

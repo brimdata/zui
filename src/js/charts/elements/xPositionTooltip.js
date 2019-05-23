@@ -16,34 +16,37 @@ export default function({
   wrapperClassName,
   render: Component
 }: Args): ChartElement {
-  let el
+  let div
 
-  function mount({svg}) {
-    if (!svg) return
-    el = document.createElement("div")
-    el.classList.add(wrapperClassName)
-    if (svg.parentNode) svg.parentNode.appendChild(el)
+  function hide() {
+    div.style.opacity = "0"
+  }
+
+  function mount({el}) {
+    if (!el) return
+    div = document.createElement("div")
+    div.classList.add(wrapperClassName)
+    if (el.parentNode) el.parentNode.appendChild(div)
+
+    d3.select(el)
+      .select(".brush")
+      .on("mousedown", hide)
   }
 
   function draw(chart) {
-    function hide() {
-      el.style.opacity = "0"
-    }
-
     function show() {
       let [left] = d3.mouse(this)
       let point = getPointAt(left, chart)
       if (point && point.count) {
-        positionTooltip(el, this, 30)
-        render(<Component {...getProps(point)} />, el)
+        positionTooltip(div, this, 30)
+        render(<Component {...getProps(point)} />, div)
       } else {
         hide()
       }
     }
 
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .select(".brush")
-      .on("mousedown.tooltip", hide)
       .on("mouseout.tooltip", hide)
       .on("mousemove.tooltip", show)
   }

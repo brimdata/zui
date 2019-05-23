@@ -18,7 +18,7 @@ export default function({onDragEnd}: Props): ChartElement {
 
   function mount(chart) {
     xAxis = d3
-      .select(chart.svg)
+      .select(chart.el)
       .append("g")
       .attr("class", "x-axis")
 
@@ -29,7 +29,7 @@ export default function({onDragEnd}: Props): ChartElement {
   }
 
   function draw(chart, redraw) {
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .select(".x-axis")
       .attr(
         "transform",
@@ -38,7 +38,7 @@ export default function({onDragEnd}: Props): ChartElement {
       )
       .call(d3.axisBottom(chart.xScale))
 
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .select(".x-axis-drag")
       .attr("width", chart.dimens.innerWidth)
 

@@ -14,7 +14,7 @@ export default function({onFocus, onBlur}: Props): ChartElement {
   let focused = false
 
   function draw(chart) {
-    d3.select(chart.svg).on("click", () => {
+    d3.select(chart.el).on("click", () => {
       let data = getPointAt(d3.event.offsetX, chart)
       if (data && !focused) {
         focused = true

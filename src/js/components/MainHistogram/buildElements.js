@@ -64,11 +64,11 @@ export default function buildElements(dispatch: Dispatch) {
       reactComponent((chart) => (
         <EmptyMessage show={!chart.state.isFetching && chart.state.isEmpty} />
       )),
+      focusBar({onFocus, onBlur}),
       xPositionTooltip({
         wrapperClassName: "histogram-tooltip-wrapper",
         render: HistogramTooltip
-      }),
-      focusBar({onFocus, onBlur})
+      })
     ]
   }
 }

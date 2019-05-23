@@ -8,7 +8,7 @@ import {d3ElementAttr, itestLocator} from "../../test/integration"
 
 export default function(): ChartElement {
   function mount(chart) {
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .append("g")
       .attr("class", "chart")
       .attr(itestLocator, d3ElementAttr("histogram"))
@@ -21,7 +21,7 @@ export default function(): ChartElement {
   function draw(chart) {
     const series = d3.stack().keys(chart.data.keys)(chart.data.points)
     const barGroups = d3
-      .select(chart.svg)
+      .select(chart.el)
       .select(".chart")
       .selectAll("g")
       .data(series, (d) => d.key)

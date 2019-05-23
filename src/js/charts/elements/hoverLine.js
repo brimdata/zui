@@ -10,7 +10,7 @@ export default function(): ChartElement {
 
   function mount(chart) {
     line = d3
-      .select(chart.svg)
+      .select(chart.el)
       .insert("rect")
       .attr("class", "hover-line")
       .style("pointer-events", "none")
@@ -21,7 +21,7 @@ export default function(): ChartElement {
   function draw(chart) {
     line.attr("height", chart.dimens.innerHeight + overflow * 2)
 
-    d3.select(chart.svg)
+    d3.select(chart.el)
       .select(".brush")
       .on("mouseout.hoverline", function() {
         line.style("display", "none")
