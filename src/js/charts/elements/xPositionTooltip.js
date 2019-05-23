@@ -1,18 +1,28 @@
 /* @flow */
 
+import {render} from "react-dom"
 import React from "react"
 import * as d3 from "d3"
-import {render} from "react-dom"
 
+import type {ChartElement} from "../../components/Charts/types"
 import {getPointAt} from "../getPointAt"
 
-export default function({wrapperClassName, render: Component}) {
+type Args = {
+  wrapperClassName: string,
+  render: *
+}
+
+export default function({
+  wrapperClassName,
+  render: Component
+}: Args): ChartElement {
   let el
 
-  function mount(chart) {
+  function mount({svg}) {
+    if (!svg) return
     el = document.createElement("div")
     el.classList.add(wrapperClassName)
-    if (chart.svg.parentNode) chart.svg.parentNode.appendChild(el)
+    if (svg.parentNode) svg.parentNode.appendChild(el)
   }
 
   function draw(chart) {

@@ -2,21 +2,21 @@
 
 import * as d3 from "d3"
 
+import type {ChartElement} from "../../components/Charts/types"
 import type {Span} from "../../BoomClient/types"
 import {duration, shift} from "../../lib/TimeWindow"
-import Chart from "../Chart"
 
 type Props = {
   onDragEnd?: (Span) => void
 }
 
-export default function({onDragEnd}: Props) {
+export default function({onDragEnd}: Props): ChartElement {
   let startSpan = null
   let startPos = null
   let xAxis
   let dragArea
 
-  function mount(chart, redraw) {
+  function mount(chart) {
     xAxis = d3
       .select(chart.svg)
       .append("g")
@@ -28,7 +28,7 @@ export default function({onDragEnd}: Props) {
       .attr("fill", "transparent")
   }
 
-  function draw(chart: Chart, redraw: Function) {
+  function draw(chart, redraw) {
     d3.select(chart.svg)
       .select(".x-axis")
       .attr(

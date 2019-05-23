@@ -1,13 +1,16 @@
 /* @flow */
 import {render} from "react-dom"
 
-export default function loading(renderComponent) {
+import type {ChartElement} from "../../components/Charts/types"
+
+export default function reactComponent(renderComponent: *): ChartElement {
   let root
 
-  function mount(chart) {
+  function mount({svg}) {
+    if (!svg) return
     root = document.createElement("div")
-    if (chart.svg.parentNode) {
-      chart.svg.parentNode.appendChild(root)
+    if (svg.parentNode) {
+      svg.parentNode.appendChild(root)
     }
   }
 

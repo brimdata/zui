@@ -12,7 +12,7 @@ import {getInnerTimeWindow, getTimeWindow} from "../state/reducers/timeWindow"
 import {resultsToLogs} from "../log/resultsToLogs"
 import {setInnerTimeWindow, setOuterTimeWindow} from "../state/actions"
 import {toDate} from "../lib/TimeField"
-import Chart from "./Chart"
+import D3Chart from "./D3Chart"
 import HistogramTooltip from "./HistogramTooltip"
 import LoadingMessage from "./LoadingMessage"
 import Log from "../models/Log"
@@ -76,7 +76,7 @@ export default function MainSearchHistogram() {
       xAxisBrush({onSelection, onSelectionClear, onSelectionClick}),
       hoverLine(),
       reactComponent((chart) => (
-        <LoadingMessage show={chart.state.isFetching} message="chart loading" />
+        <LoadingMessage show={chart.state.isFetching} message="Chart Loading" />
       )),
       reactComponent((chart) => (
         <EmptyMessage show={!chart.state.isFetching && chart.state.isEmpty} />
@@ -86,19 +86,18 @@ export default function MainSearchHistogram() {
         render: HistogramTooltip
       }),
       focusBar({onFocus, onBlur})
-      // empty()
     ]
   }
 
-  let props = {
-    data: formatCountByPathEvery(logs, span),
-    margins: {left: 0, right: 0, top: 3, bottom: 16},
-    state: {selection: innerSpan, isFetching, isEmpty: logs.length === 0},
-    selection: innerSpan,
-    buildElements
-  }
-
-  return <Chart className="main-search-histogram" {...props} />
+  return (
+    <D3Chart
+      className="main-search-histogram"
+      data={formatCountByPathEvery(logs, span)}
+      margins={{left: 0, right: 0, top: 3, bottom: 16}}
+      state={{selection: innerSpan, isFetching, isEmpty: logs.length === 0}}
+      buildElements={buildElements}
+    />
+  )
 }
 
 export function formatCountByPathEvery(logs: Log[], span: Span) {

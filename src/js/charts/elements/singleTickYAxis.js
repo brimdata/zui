@@ -2,9 +2,9 @@
 
 import * as d3 from "d3"
 
-import Chart from "../Chart"
+import type {ChartElement} from "../../components/Charts/types"
 
-export default function() {
+export default function(): ChartElement {
   function mount(chart) {
     d3.select(chart.svg)
       .append("g")

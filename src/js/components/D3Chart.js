@@ -4,30 +4,15 @@ import React, {useLayoutEffect, useRef} from "react"
 import classNames from "classnames"
 import * as d3 from "d3"
 
-import type {Interval} from "../types"
-import type {Span} from "../BoomClient/types"
+import type {ChartElement, HistogramProps} from "./Charts/types"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 
-export type SeriesHistogramData = {
-  points: {ts: Date, [string]: number}[],
-  keys: string[],
-  interval: Interval,
-  span: Span
-}
+type Props = HistogramProps
 
-type Props = {
-  data: SeriesHistogramData,
-  margins: {top: number, left: number, right: number, bottom: number},
-  buildElements: Function,
-  selection: ?Span,
-  state: Object,
-  className?: string
-}
-
-export default function Chart({className, ...props}: Props) {
+export default function D3Chart(props: Props) {
   let resize = useResizeObserver()
   let svg = useRef(null)
-  let elements = useRef([])
+  let elements = useRef<ChartElement[]>([])
   let {width, height} = resize.rect
   let {right, left, top, bottom} = props.margins
   let {points, span} = props.data
@@ -39,7 +24,6 @@ export default function Chart({className, ...props}: Props) {
     data: props.data,
     state: props.state,
     margins: props.margins,
-    selection: props.selection,
     dimens: {width, height, innerWidth, innerHeight},
     yScale: d3
       .scaleLinear()
@@ -75,7 +59,7 @@ export default function Chart({className, ...props}: Props) {
   })
 
   return (
-    <div className={classNames("chart", className)} ref={resize.ref}>
+    <div className={classNames("chart", props.className)} ref={resize.ref}>
       <svg width={width} height={height} ref={svg} />
     </div>
   )

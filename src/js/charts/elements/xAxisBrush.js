@@ -3,6 +3,7 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
+import type {ChartElement} from "../../components/Charts/types"
 import type {Span} from "../../BoomClient/types"
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
   onSelectionClick: (span: Span) => void
 }
 
-export default function(props: Props = {}) {
+export default function(props: Props = {}): ChartElement {
   const {onSelection, onSelectionClear, onSelectionClick} = props
 
   function mount(chart) {
@@ -44,7 +45,7 @@ export default function(props: Props = {}) {
       }
 
       if (!selection) {
-        if (chart.selection) onSelectionClear && onSelectionClear()
+        if (chart.state.selection) onSelectionClear && onSelectionClear()
         return
       }
 
@@ -67,8 +68,8 @@ export default function(props: Props = {}) {
       .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
 
     element.call(brush)
-    chart.selection
-      ? brush.move(element, chart.selection.map(chart.xScale))
+    chart.state.selection
+      ? brush.move(element, chart.state.selection.map(chart.xScale))
       : brush.move(element, null)
 
     brush.on("end", onBrushEnd)

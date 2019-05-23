@@ -2,11 +2,11 @@
 
 import * as d3 from "d3"
 
+import type {ChartElement} from "../../components/Charts/types"
 import {add} from "../../lib/Time"
 import {d3ElementAttr, itestLocator} from "../../test/integration"
-import Chart from "../Chart"
 
-export default function() {
+export default function(): ChartElement {
   function mount(chart) {
     d3.select(chart.svg)
       .append("g")

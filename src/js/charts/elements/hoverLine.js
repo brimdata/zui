@@ -2,13 +2,13 @@
 
 import * as d3 from "d3"
 
-import Chart from "../Chart"
+import type {ChartElement} from "../../components/Charts/types"
 
-export default function() {
+export default function(): ChartElement {
   let line
   let overflow = 10
 
-  function mount(chart: Chart) {
+  function mount(chart) {
     line = d3
       .select(chart.svg)
       .insert("rect")
@@ -18,7 +18,7 @@ export default function() {
       .attr("width", "1px")
   }
 
-  function draw(chart: Chart) {
+  function draw(chart) {
     line.attr("height", chart.dimens.innerHeight + overflow * 2)
 
     d3.select(chart.svg)

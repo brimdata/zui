@@ -1,8 +1,8 @@
 /* @flow */
+import type {Chart} from "../components/Charts/types"
 import {add} from "../lib/Time"
-import Chart from "./Chart"
 
-export const getPointAt = (left: number, chart) => {
+export const getPointAt = (left: number, chart: Chart) => {
   const ts = chart.xScale.invert(left)
   const {number, unit} = chart.data.interval
   for (let index = 0; index < chart.data.points.length; index++) {
