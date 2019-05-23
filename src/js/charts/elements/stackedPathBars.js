@@ -12,10 +12,6 @@ export default function(): ChartElement {
       .append("g")
       .attr("class", "chart")
       .attr(itestLocator, d3ElementAttr("histogram"))
-      .attr(
-        "transform",
-        `translate(${chart.margins.left}, ${chart.margins.top})`
-      )
   }
 
   function draw(chart) {
@@ -23,6 +19,10 @@ export default function(): ChartElement {
     const barGroups = d3
       .select(chart.el)
       .select(".chart")
+      .attr(
+        "transform",
+        `translate(${chart.margins.left}, ${chart.margins.top})`
+      )
       .selectAll("g")
       .data(series, (d) => d.key)
 

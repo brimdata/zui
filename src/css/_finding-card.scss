@@ -5,7 +5,20 @@
   padding-left: $space-l;
   color: white;
   margin-bottom: $space-xxs;
-  overflow: hidden;
+
+  &.open {
+    background: $gray-6;
+    box-shadow: 0 1px 2px -1px $gray-9, 0 -1px 2px -1px $gray-9;
+
+    &:hover,
+    &:nth-last-child(odd) {
+      background: $gray-6;
+    }
+
+    .program .mono {
+      font-weight: 700;
+    }
+  }
 
   &:nth-last-child(odd) {
     background: transparentize(white, 0.98);
@@ -53,6 +66,7 @@
     display: inline-block;
     border-radius: 3px;
     margin-right: $space-xxs;
+    transition: font-weight 250ms;
   }
 
   .pin {

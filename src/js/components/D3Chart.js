@@ -17,40 +17,35 @@ export default function D3Chart(props: Props) {
   let resize = useResizeObserver()
   let el = useRef(null)
   let elements = useRef<ChartElement[]>([])
+
   let {width, height} = resize.rect
   let {right, left, top, bottom} = props.margins
   let innerWidth = Math.max(width - left - right, 0)
   let innerHeight = Math.max(height - top - bottom, 0)
 
-  let svg = {
+  let chart = props.buildChart({
     dimens: {width, height, innerWidth, innerHeight},
     margins: props.margins,
     el: el.current
+  })
+
+  function mountElements(chart) {
+    elements.current.forEach(({mount}) => mount && mount(chart, drawElements))
   }
 
-  let chart = props.buildChart(svg)
-
-  function mount(chart) {
-    elements.current.forEach((el) => {
-      el.mount && el.mount(chart, draw)
-    })
-  }
-
-  function draw(chart) {
-    elements.current.forEach((el) => {
-      el.draw && el.draw(chart, draw)
-    })
+  function drawElements(chart) {
+    elements.current.forEach(({draw}) => draw && draw(chart, drawElements))
   }
 
   useLayoutEffect(() => {
     if (chart.el) {
       elements.current = props.buildElements()
-      mount(chart)
+      mountElements(chart)
     }
   }, [chart.el])
 
   useLayoutEffect(() => {
-    draw(chart)
+    drawElements(chart)
   })
 
   return (

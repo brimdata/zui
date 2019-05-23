@@ -22,15 +22,21 @@ export default function(): ChartElement {
     line.attr("height", chart.dimens.innerHeight + overflow * 2)
 
     d3.select(chart.el)
-      .select(".brush")
       .on("mouseout.hoverline", function() {
         line.style("display", "none")
       })
       .on("mousemove.hoverline", function() {
         const [x] = d3.mouse(this)
-        line
-          .attr("transform", `translate(${x}, ${chart.margins.top - overflow})`)
-          .style("display", "block")
+        if (x < chart.margins.left) {
+          line.style("display", "none")
+        } else {
+          line
+            .attr(
+              "transform",
+              `translate(${x}, ${chart.margins.top - overflow})`
+            )
+            .style("display", "block")
+        }
       })
       .on("mousedown.hoverline", function() {
         line.style("display", "none")

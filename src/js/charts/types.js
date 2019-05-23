@@ -31,11 +31,11 @@ export type ChartSVG = {|
   dimens: Dimens
 |}
 
-type HistogramState = {|
-  selection: ?Span,
-  isFetching: boolean,
-  isEmpty: boolean
-|}
+type HistogramState = {
+  selection?: ?Span,
+  isFetching?: boolean,
+  isEmpty?: boolean
+}
 
 export type HistogramData = {|
   points: {ts: Date, [string]: number}[],

@@ -3,7 +3,7 @@ import type {Chart} from "./types"
 import {add} from "../lib/Time"
 
 export const getPointAt = (left: number, chart: Chart) => {
-  const ts = chart.xScale.invert(left)
+  const ts = chart.xScale.invert(left - chart.margins.left)
   const {number, unit} = chart.data.interval
   for (let index = 0; index < chart.data.points.length; index++) {
     const point = chart.data.points[index]

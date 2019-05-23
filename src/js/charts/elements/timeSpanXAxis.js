@@ -10,7 +10,7 @@ type Props = {
   onDragEnd?: (Span) => void
 }
 
-export default function({onDragEnd}: Props): ChartElement {
+export default function({onDragEnd}: Props = {}): ChartElement {
   let startSpan = null
   let startPos = null
   let xAxis
@@ -41,6 +41,7 @@ export default function({onDragEnd}: Props): ChartElement {
     d3.select(chart.el)
       .select(".x-axis-drag")
       .attr("width", chart.dimens.innerWidth)
+      .attr("height", chart.margins.bottom)
 
     function getXPos() {
       return d3.mouse(xAxis.node())[0]
@@ -72,11 +73,12 @@ export default function({onDragEnd}: Props): ChartElement {
       startSpan = null
     }
 
-    d3.select("body")
-      .on("mousemove", drag, {passive: true})
-      .on("mouseup", dragEnd)
-
-    dragArea.attr("height", chart.margins.bottom).on("mousedown", dragStart)
+    if (onDragEnd) {
+      d3.select("body")
+        .on("mousemove", drag, {passive: true})
+        .on("mouseup", dragEnd)
+      dragArea.on("mousedown", dragStart)
+    }
   }
 
   return {mount, draw}
