@@ -11,6 +11,7 @@ import Log from "../../models/Log"
 import ScrollHooks from "../../lib/ScrollHooks"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
+import {reactElementProps} from "../../test/integration"
 
 type Props = {
   chunker: Chunker,
@@ -92,6 +93,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
           columns={tableColumns}
           dimens={dimens}
           scrollLeft={scrollLeft}
+          locator="viewer_header"
         />
         <div
           className="view"
@@ -99,7 +101,11 @@ export default class Viewer extends React.PureComponent<Props, State> {
           style={{width: dimens.viewWidth, height: dimens.viewHeight}}
           ref={(r) => (this.view = r)}
         >
-          <div className="list" style={Styler.list(dimens)}>
+          <div
+            className="list"
+            style={Styler.list(dimens)}
+            {...reactElementProps("viewer_results")}
+          >
             {chunks.map((chunk) => (
               <Chunk
                 columns={this.props.tableColumns}

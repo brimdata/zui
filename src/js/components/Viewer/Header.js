@@ -7,6 +7,7 @@ import {XColResizer} from "./ColResizer"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
+import {reactElementProps} from "../../test/integration"
 
 type Props = {
   dimens: ViewerDimens,
@@ -20,7 +21,11 @@ export default class Header extends React.PureComponent<Props> {
 
     if (dimens.rowWidth !== "auto") {
       return (
-        <header style={Styler.header(dimens, scrollLeft)}>
+        <header
+          style={Styler.header(dimens, scrollLeft)}
+          // Cannot get this.props.locator because property locator is missing in Props
+          {...reactElementProps(this.props.locator)}
+        >
           {this.props.columns.getVisible().map((column) => (
             <div
               className="header-cell"

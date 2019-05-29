@@ -15,6 +15,7 @@ import DropMenu from "./DropMenu"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import Modal from "./Modal"
 import dispatchToProps from "../lib/dispatchToProps"
+import {reactElementProps} from "../test/integration"
 
 type StateProps = {|
   debugModalIsOpen: boolean,
@@ -32,6 +33,7 @@ export default class SearchButton extends React.Component<Props> {
       <div className="search-button-wrapper">
         <button
           className="button search-button"
+          {...reactElementProps("search_button")}
           onClick={() => this.props.dispatch(submitSearchBar())}
         >
           <MagGlass />
