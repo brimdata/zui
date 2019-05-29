@@ -10,7 +10,8 @@ const dataAttrs = {
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
   histogram: "histogram-chart",
   notification: "notification-header",
-  search_input: "search_input"
+  search_input: "search_input",
+  search_button: "search_button"
 }
 
 export const dataSets = {
