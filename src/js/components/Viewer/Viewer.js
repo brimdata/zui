@@ -93,7 +93,7 @@ export default class Viewer extends React.PureComponent<Props, State> {
           columns={tableColumns}
           dimens={dimens}
           scrollLeft={scrollLeft}
-          locator="viewer_header"
+          {...reactElementProps("viewer_header")}
         />
         <div
           className="view"
