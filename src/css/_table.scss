@@ -1,6 +1,7 @@
 .table {
   border-collapse: collapse;
   width: 100%;
+  font-family: $data-font;
 
   tbody tr:nth-child(odd) {
     background: $table-stripe-color;

@@ -1,6 +1,5 @@
 .chart {
   height: 80px;
-  font-family: $mono-font;
   position: relative;
 
   .selection {
@@ -11,6 +10,7 @@
 
   .loading-message,
   .no-chart-data {
+    font-family: $data-font;
     position: absolute;
     user-select: none;
     z-index: -1;
@@ -78,7 +78,7 @@
   }
 
   text {
-    font-family: $body-font;
+    font-family: $data-font;
     fill: $gray-1;
     font-size: 9px;
   }

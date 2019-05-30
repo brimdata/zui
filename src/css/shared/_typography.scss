@@ -6,7 +6,7 @@
 
 .header {
   font-family: $heading-font;
-  font-weight: 900;
+  font-weight: bold;
   font-size: 16px;
   line-height: 19px;
   margin: 0;
@@ -64,7 +64,7 @@
 }
 
 .stats {
-  font-family: $body-font;
+  font-family: $data-font;
   font-size: 12px;
   font-weight: normal;
   line-height: 12px;
