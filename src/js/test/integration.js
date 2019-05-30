@@ -48,7 +48,17 @@ export const selectors = {
     gElem: dataAttrSelector("histogram") + " g",
     rectElem: dataAttrSelector("histogram") + " rect"
   },
-  notification: dataAttrSelector("notification")
+  notification: dataAttrSelector("notification"),
+  search: {
+    input: dataAttrSelector("search_input"),
+    button: dataAttrSelector("search_button")
+  },
+  viewer: {
+    header_base: dataAttrSelector("viewer_header"),
+    headers: dataAttrSelector("viewer_header") + " .header-cell",
+    results_base: dataAttrSelector("viewer_results"),
+    results: dataAttrSelector("viewer_results") + " span"
+  }
 }
 
 export const d3ElementAttr = (component: string) => dataAttrs[component]
