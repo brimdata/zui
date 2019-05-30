@@ -9,12 +9,12 @@ import {Node} from "../models/Node"
 import {RemoveButton} from "./Buttons"
 import {createInvestigationTree} from "../investigation/createTree"
 import {deleteFindingByTs, restoreSearchBar} from "../state/actions"
-import {fetchMainSearch} from "../viewer/fetchMainSearch"
 import {getInvestigation} from "../state/reducers/investigation"
 import {
   getSearchBarPins,
   getSearchBarPreviousInputValue
 } from "../state/selectors/searchBar"
+import {submitSearchBar} from "../state/thunks/searchBar"
 import FilterNode from "./FilterNode"
 
 export default function FilterTree() {
@@ -34,7 +34,7 @@ export default function FilterTree() {
           editing: null
         })
       )
-      dispatch(fetchMainSearch({saveToHistory: false}))
+      dispatch(submitSearchBar(false))
     }
 
     function onNodeRemove(e) {
