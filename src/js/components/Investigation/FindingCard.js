@@ -14,7 +14,7 @@ import {
   setOuterTimeWindow,
   setSearchBarPins
 } from "../../state/actions"
-import {fetchMainSearch} from "../../viewer/fetchMainSearch"
+import {submitSearchBar} from "../../state/thunks/searchBar"
 import FindingDetail from "./FindingDetail"
 import FindingFooter from "./FindingFooter"
 import FindingProgram from "./FindingProgram"
@@ -31,7 +31,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(setCurrentSpaceName(finding.search.space))
     dispatch(setOuterTimeWindow(finding.search.span))
     dispatch(setInnerTimeWindow(null))
-    dispatch(fetchMainSearch({saveToHistory: false}))
+    dispatch(submitSearchBar(false))
   }
 
   function onRemove() {

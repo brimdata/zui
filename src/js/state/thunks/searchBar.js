@@ -19,19 +19,19 @@ import {restoreSearch} from "./searchHistory"
 export const goBack = (): Thunk => (dispatch, getState) => {
   dispatch(backSearchHistory())
   dispatch(restoreSearch(getCurrentEntry(getState())))
-  dispatch(fetchMainSearch({saveToHistory: false}))
+  dispatch(submitSearchBar(false))
 }
 
 export const goForward = (): Thunk => (dispatch, getState) => {
   dispatch(forwardSearchHistory())
   dispatch(restoreSearch(getCurrentEntry(getState())))
-  dispatch(fetchMainSearch({saveToHistory: false}))
+  dispatch(submitSearchBar(false))
 }
 
-export const submitSearchBar = (): Thunk => (dispatch) => {
+export const submitSearchBar = (save: boolean = true): Thunk => (dispatch) => {
   dispatch(submittingSearchBar())
   dispatch(setInnerTimeWindow(null))
-  dispatch(fetchMainSearch())
+  dispatch(fetchMainSearch({saveToHistory: save}))
 }
 
 export const validateProgram = (): Thunk => (dispatch, getState) => {
