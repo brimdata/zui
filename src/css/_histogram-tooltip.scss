@@ -5,6 +5,7 @@
   pointer-events: none;
   transition: opacity 200ms 50ms, right 75ms, left 75ms;
   opacity: 1;
+  font-family: $data-font;
 }
 
 .histogram-tooltip {

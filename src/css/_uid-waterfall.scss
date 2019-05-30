@@ -1,5 +1,6 @@
 .uid-waterfall {
   width: 100%;
+  font-family: $data-font;
 
   .waterfall-row {
     display: flex;
@@ -33,6 +34,7 @@
     cursor: pointer;
     position: relative;
     left: 0%;
+    font-size: 12px;
 
     &:active {
       transform: translateY(2px);
@@ -47,7 +49,6 @@
   }
 
   .duration {
-    font-family: $body-font;
     margin: $space-s 0 0 0;
     padding: 0;
     text-align: right;

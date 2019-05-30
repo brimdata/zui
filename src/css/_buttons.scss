@@ -123,6 +123,7 @@
     }
     &:active {
       box-shadow: none;
+      transform: none;
     }
   }
 
@@ -133,6 +134,7 @@
 
 .thin-button {
   @include button-reset;
+  font-family: $data-font;
   height: 14px;
   background: #dcdcdc;
   border-radius: 3px;
@@ -145,7 +147,7 @@
   font-weight: bold;
   cursor: pointer;
 
-  &:hover {
+  ˜ &:hover {
     background: darken(#dcdcdc, 5%);
   }
 

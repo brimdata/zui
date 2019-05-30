@@ -1,6 +1,5 @@
 .chart {
   height: 80px;
-  font-family: $mono-font;
   position: relative;
 
   .selection {
@@ -11,13 +10,17 @@
 
   .loading-message,
   .no-chart-data {
+    font-family: $data-font;
     position: absolute;
     user-select: none;
-    z-index: -1;
+    z-index: 0;
     left: 50%;
     top: 47%;
     transform: translate(-50%, -50%);
     color: $white-9;
+    .fieldset {
+      font-family: $data-font;
+    }
 
     .burst {
       background-color: $white-9;
@@ -78,7 +81,7 @@
   }
 
   text {
-    font-family: $body-font;
+    font-family: $data-font;
     fill: $gray-1;
     font-size: 9px;
   }
