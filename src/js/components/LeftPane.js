@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import {Header, LinkButton} from "./Typography"
+import {LinkButton} from "./Typography"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import {
@@ -56,7 +56,11 @@ export function LeftPane() {
     >
       <InvestigationTitleBar onClearAll={onClearAll} />
       <div className="investigation-pane-body">
-        <InvestigationHeader view={view} onViewChange={onViewChange} />
+        <InvestigationHeader
+          view={view}
+          onViewChange={onViewChange}
+          onClearAll={onClearAll}
+        />
         <InvestigationView view={view} />
       </div>
 
@@ -65,23 +69,19 @@ export function LeftPane() {
   )
 }
 
-function InvestigationTitleBar({onClearAll}) {
+function InvestigationTitleBar() {
   return (
     <PaneHeader>
       <Left />
       <Center>
-        <PaneTitle>Investigation</PaneTitle>
+        <PaneTitle>History</PaneTitle>
       </Center>
-      <Right>
-        <button onClick={onClearAll} className="panel-button clear-button">
-          CLEAR
-        </button>
-      </Right>
+      <Right />
     </PaneHeader>
   )
 }
 
-function InvestigationHeader({view, onViewChange}) {
+function InvestigationHeader({view, onViewChange, onClearAll}) {
   function treeView() {
     onViewChange("tree")
   }
@@ -92,7 +92,6 @@ function InvestigationHeader({view, onViewChange}) {
 
   return (
     <header className="investigation-header">
-      <Header white-1>My Investigation</Header>
       <nav className="investigation-view-options">
         <LinkButton
           className={classNames({selected: view === "tree"})}
@@ -107,6 +106,7 @@ function InvestigationHeader({view, onViewChange}) {
           Linear
         </LinkButton>
       </nav>
+      <LinkButton onClick={onClearAll}>Clear</LinkButton>
     </header>
   )
 }
