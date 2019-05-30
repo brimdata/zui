@@ -13,11 +13,14 @@
     font-family: $data-font;
     position: absolute;
     user-select: none;
-    z-index: -1;
+    z-index: 0;
     left: 50%;
     top: 47%;
     transform: translate(-50%, -50%);
     color: $white-9;
+    .fieldset {
+      font-family: $data-font;
+    }
 
     .burst {
       background-color: $white-9;
