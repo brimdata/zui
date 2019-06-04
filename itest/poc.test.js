@@ -139,8 +139,7 @@ const searchDisplay = async (app) => {
   const _trim = (s: string) => s.split(">")[1].split("<")[0]
 
   const headerResults = () => {
-    return app.client.getHTML(selectors.viewer.headers)
-    .then((headers) => {
+    return app.client.getHTML(selectors.viewer.headers).then((headers) => {
       if (typeof headers === "string") {
         headers = [headers]
       }
