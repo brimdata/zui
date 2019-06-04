@@ -11,6 +11,7 @@ import {
 } from "../state/selectors/searchBar"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import InputHistory from "../models/InputHistory"
+import {reactElementProps} from "../test/integration"
 
 type StateProps = {|
   inputValue: string,
@@ -69,6 +70,7 @@ export default class SearchInput extends React.Component<Props> {
             spellCheck={false}
             autoFocus={true}
             autoComplete="off"
+            {...reactElementProps("search_input")}
           />
         </div>
       </div>
