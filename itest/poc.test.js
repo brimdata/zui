@@ -199,48 +199,24 @@ describe("Application launch", () => {
   // TODO: Parallel runs across files are not supported due to chromebrowser
   // port contention. Support that later.
   test(
-    "shows a window with the correct title",
+    "show a sane window; log in and see Search and Histogram",
     (done) => {
-      app.client
-        .waitForExist("title")
+      waitForLoginAvailable(app)
+        .then(() => app.client.waitForExist("title"))
         .then(() => app.client.getTitle())
         .then((title) => {
           // TODO: Looky shouldn't be hardcoded but instead read from a title
           // defined elsewhere.
           expect(title.toLowerCase()).toBe("looky")
-          done()
         })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
-
-  test(
-    "shows a window with the correct header text",
-    (done) => {
-      app.client
-        .waitForExist(".looky-header h1")
+        .then(() => app.client.waitForExist(".looky-header h1"))
         // TODO: Don't use selectors as literals in tests. These definitions
         // should be defined in a single place and ideally be tested to ensure
         // they can be found.
         .then(() => app.client.getText(".looky-header h1"))
         .then((headerText) => {
           expect(headerText.toLowerCase()).toBe("looky")
-          done()
         })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
-
-  test(
-    "log in and see Search and Histogram",
-    (done) => {
-      waitForLoginAvailable(app)
         .then(() => logIn(app))
         .then(() => waitForHistogram(app))
         .then(() => waitForSearch(app))
