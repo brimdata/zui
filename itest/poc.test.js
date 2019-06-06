@@ -402,4 +402,41 @@ describe("Application launch", () => {
     },
     TestTimeout
   )
+
+  test(
+    "reset state after query works",
+    (done) => {
+      waitForLoginAvailable(app)
+        .then(() => logIn(app))
+        .then(() => waitForSearch(app))
+        .then(() => writeSearch(app, "_path=http | count()"))
+        .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toBeTruthy()
+        })
+        .then(() => app.webContents.send("resetState"))
+        .then(() => waitForLoginAvailable(app))
+        .then(() => app.client.getValue("[name=host]"))
+        .then((host) => {
+          expect(host).toBe("")
+        })
+        .then(() => app.client.getValue("[name=port]"))
+        .then((port) => {
+          expect(port).toBe("")
+        })
+        .then(() => logIn(app))
+        .then(() => waitForSearch(app))
+        .then(() => app.client.getValue(selectors.search.input))
+        .then((val) => {
+          expect(val).toBe("")
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    },
+    TestTimeout
+  )
 })
