@@ -89,20 +89,20 @@ const verifyPathClassRect = (app, pathClass) =>
 
 const logIn = (app) => {
   return app.client
-    .setValue("[name=host]", "localhost")
-    .setValue("[name=port]", "9867")
-    .click("button")
+    .setValue(selectors.login.host, "localhost")
+    .setValue(selectors.login.port, "9867")
+    .click(selectors.login.button)
 }
 
 const waitForLoginAvailable = (app) => {
   const waitForHostname = () => {
-    return app.client.waitForExist("[name=host]")
+    return app.client.waitForExist(selectors.login.host)
   }
   const waitForPort = () => {
-    return app.client.waitForExist("[name=port]")
+    return app.client.waitForExist(selectors.login.port)
   }
   const waitForButton = () => {
-    return app.client.waitForExist("button")
+    return app.client.waitForExist(selectors.login.button)
   }
   return waitForHostname()
     .then(() => waitForPort())
@@ -394,6 +394,43 @@ describe("Application launch", () => {
         .then(() => searchDisplay(app))
         .then((results) => {
           expect(results).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    },
+    TestTimeout
+  )
+
+  test(
+    "reset state after query works",
+    (done) => {
+      waitForLoginAvailable(app)
+        .then(() => logIn(app))
+        .then(() => waitForSearch(app))
+        .then(() => writeSearch(app, "_path=http | count()"))
+        .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toBeTruthy()
+        })
+        .then(() => app.webContents.send("resetState"))
+        .then(() => waitForLoginAvailable(app))
+        .then(() => app.client.getValue(selectors.login.host))
+        .then((host) => {
+          expect(host).toBe("")
+        })
+        .then(() => app.client.getValue(selectors.login.port))
+        .then((port) => {
+          expect(port).toBe("")
+        })
+        .then(() => logIn(app))
+        .then(() => waitForSearch(app))
+        .then(() => app.client.getValue(selectors.search.input))
+        .then((val) => {
+          expect(val).toBe("")
           done()
         })
         .catch((err) => {

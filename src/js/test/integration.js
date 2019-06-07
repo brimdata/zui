@@ -9,6 +9,7 @@ const dataAttrs = {
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
   histogram: "histogram-chart",
+  login: "login",
   notification: "notification-header",
   search_input: "search_input",
   search_button: "search_button",
@@ -47,6 +48,11 @@ export const selectors = {
     topLevel: dataAttrSelector("histogram"),
     gElem: dataAttrSelector("histogram") + " g",
     rectElem: dataAttrSelector("histogram") + " rect"
+  },
+  login: {
+    host: dataAttrSelector("login") + " [name=host]",
+    port: dataAttrSelector("login") + " [name=port]",
+    button: dataAttrSelector("login") + " button"
   },
   notification: dataAttrSelector("notification"),
   search: {

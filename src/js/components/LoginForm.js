@@ -3,6 +3,7 @@ import React from "react"
 
 import type {Credentials} from "../lib/Credentials"
 import AppError from "../models/AppError"
+import {reactElementProps} from "../test/integration"
 
 type Props = {
   credentials: Credentials,
@@ -31,7 +32,11 @@ export default function LoginForm(props: Props) {
   }
 
   return (
-    <form className="admin-form" onSubmit={onSubmit}>
+    <form
+      className="admin-form"
+      onSubmit={onSubmit}
+      {...reactElementProps("login")}
+    >
       <LoginFormField
         name="host"
         value={host || ""}
