@@ -89,20 +89,20 @@ const verifyPathClassRect = (app, pathClass) =>
 
 const logIn = (app) => {
   return app.client
-    .setValue("[name=host]", "localhost")
-    .setValue("[name=port]", "9867")
-    .click("button")
+    .setValue(selectors.login.host, "localhost")
+    .setValue(selectors.login.port, "9867")
+    .click(selectors.login.button)
 }
 
 const waitForLoginAvailable = (app) => {
   const waitForHostname = () => {
-    return app.client.waitForExist("[name=host]")
+    return app.client.waitForExist(selectors.login.host)
   }
   const waitForPort = () => {
-    return app.client.waitForExist("[name=port]")
+    return app.client.waitForExist(selectors.login.port)
   }
   const waitForButton = () => {
-    return app.client.waitForExist("button")
+    return app.client.waitForExist(selectors.login.button)
   }
   return waitForHostname()
     .then(() => waitForPort())
@@ -418,11 +418,11 @@ describe("Application launch", () => {
         })
         .then(() => app.webContents.send("resetState"))
         .then(() => waitForLoginAvailable(app))
-        .then(() => app.client.getValue("[name=host]"))
+        .then(() => app.client.getValue(selectors.login.host))
         .then((host) => {
           expect(host).toBe("")
         })
-        .then(() => app.client.getValue("[name=port]"))
+        .then(() => app.client.getValue(selectors.login.port))
         .then((port) => {
           expect(port).toBe("")
         })
