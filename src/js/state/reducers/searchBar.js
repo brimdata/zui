@@ -50,11 +50,12 @@ export default createReducer(initialState, {
         current: value
       }
     } else {
-      state.pinned[state.editing] = value
+      let newPins = [...state.pinned]
+      newPins[state.editing] = value
       return {
         ...state,
         current: value,
-        pinned: [...state.pinned]
+        pinned: newPins
       }
     }
   },
