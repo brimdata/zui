@@ -6,8 +6,8 @@ import {
   setInnerTimeWindow,
   setSpaceInfo
 } from "../state/actions"
-import {fetchMainSearch} from "./fetchMainSearch"
 import {initTimeWindow} from "../state/thunks/timeWindow"
+import {submitSearchBar} from "../state/thunks/searchBar"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
 
@@ -34,7 +34,7 @@ test("fetching a regular search", () => {
   ])
 
   store.clearActions()
-  store.dispatch(fetchMainSearch())
+  store.dispatch(submitSearchBar())
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
@@ -48,7 +48,7 @@ test("not saving a search to history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(fetchMainSearch({saveToHistory: false}))
+  store.dispatch(submitSearchBar(false))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
@@ -63,7 +63,7 @@ test("fetching an analytic search", () => {
   ])
 
   store.clearActions()
-  store.dispatch(fetchMainSearch())
+  store.dispatch(submitSearchBar())
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
@@ -78,7 +78,7 @@ test("fetching an analytic search without history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(fetchMainSearch({saveToHistory: false}))
+  store.dispatch(submitSearchBar(false))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
@@ -94,7 +94,7 @@ test("fetching an zoom search", () => {
   ])
 
   store.clearActions()
-  store.dispatch(fetchMainSearch())
+  store.dispatch(submitSearchBar())
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
@@ -106,21 +106,23 @@ test("fetching an zoom search without history", () => {
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
     setInnerTimeWindow([new Date(0), new Date(1)]),
-    changeSearchBarInput("_path=conn | count()")
+    changeSearchBarInput("_path=conn | count()"),
+    submitSearchBar()
   ])
 
   store.clearActions()
-  store.dispatch(fetchMainSearch({saveToHistory: false}))
+  store.dispatch(submitSearchBar(false))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
 test("a bad search query", () => {
+  boom.stub("search")
   const actions = [
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_ath="),
-    fetchMainSearch()
+    submitSearchBar()
   ]
   actions.forEach(store.dispatch)
 

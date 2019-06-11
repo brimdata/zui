@@ -74,6 +74,25 @@ test("search pin edit sets the editing index", () => {
   expect(getSearchBarEditingIndex(state)).toBe(1)
 })
 
+test("editing a pin to an empty string removes it", () => {
+  let state = store.dispatchAll([
+    changeSearchBarInput("first"),
+    pinSearchBar(),
+    editSearchBarPin(0),
+    changeSearchBarInput(""),
+    submitSearchBar()
+  ])
+
+  expect(getSearchBar(state)).toEqual(
+    expect.objectContaining({
+      current: "",
+      previous: "",
+      pinned: [],
+      editing: null
+    })
+  )
+})
+
 test("search pin edit with null removes editing index", () => {
   let state = store.dispatchAll([
     changeSearchBarInput("first"),
@@ -216,7 +235,8 @@ test("get search program", () => {
     pinSearchBar(),
     changeSearchBarInput("GET"),
     pinSearchBar(),
-    changeSearchBarInput("| count() by host")
+    changeSearchBarInput("| count() by host"),
+    submitSearchBar()
   ])
   expect(getSearchProgram(state)).toBe("http GET | count() by host")
 })

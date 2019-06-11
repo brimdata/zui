@@ -1,7 +1,8 @@
 /* @flow */
 
 import LookyTalk from "lookytalk"
-import isEmpty from "lodash/isEmpty"
+
+import {fmtProgram} from "../lib/Program"
 
 export default class Ast {
   program: string
@@ -10,7 +11,7 @@ export default class Ast {
   constructor(program: string) {
     this.program = program
     try {
-      this.tree = LookyTalk.parse(isEmpty(program) ? "*" : program)
+      this.tree = LookyTalk.parse(fmtProgram(program))
     } catch (e) {
       this.tree = null
     }
