@@ -72,6 +72,13 @@ export default createReducer(initialState, {
   },
 
   SEARCH_BAR_PIN_EDIT: (state, {index}) => {
+    if (index === null) {
+      return {
+        ...state,
+        current: state.previous,
+        editing: null
+      }
+    }
     if (indexInBounds(index, state.pinned)) {
       return {
         ...state,
