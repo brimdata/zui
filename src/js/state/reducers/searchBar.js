@@ -133,9 +133,6 @@ export default createReducer(initialState, {
     } else {
       return {
         ...state,
-        current: "",
-        previous: "",
-        editing: null,
         error: null
       }
     }
@@ -144,7 +141,7 @@ export default createReducer(initialState, {
   SEARCH_BAR_PINS_SET: (state, {pinned}) => {
     return {
       ...state,
-      pinned,
+      pinned: [...pinned],
       previous: "",
       editing: null,
       current: ""
