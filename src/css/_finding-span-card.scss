@@ -1,13 +1,14 @@
 .finding-span-card {
   display: flex;
   align-items: center;
-  padding: $space-s 0;
+  padding: $space-xs 0;
   white-space: nowrap;
   color: $gray-9;
   cursor: pointer;
 
-  .span-duration {
+  .span-duration p {
     color: $white-6;
+    font-size: 9px;
   }
 
   &:hover {
@@ -21,6 +22,11 @@
     .thin-button {
       background-color: $white-9;
     }
+  }
+
+  .day,
+  .time {
+    font-size: 9px;
   }
 
   .day {

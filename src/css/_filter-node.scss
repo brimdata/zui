@@ -6,15 +6,18 @@
   border-radius: 3px;
   margin-bottom: 3px;
   position: relative;
-  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.5);
+  border: 1px solid transparent;
+  transition: all 50ms;
 
   p {
-    padding: 3px 12px;
     font-family: $mono-font;
-    font-size: 9px;
-    margin: 0;
     color: $filter-node-foreground;
-    line-height: 11px;
+    font-size: 9px;
+    line-height: 13px;
+    padding: 0 4px;
+    border-radius: 3px;
+    margin: 0;
   }
 
   .remove-button {
@@ -63,6 +66,7 @@
   }
 
   &.focused {
-    box-shadow: $box-shadow;
+    border: 1px solid $yellow;
+    background: $green-light;
   }
 }
