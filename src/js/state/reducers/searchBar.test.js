@@ -74,6 +74,53 @@ test("search pin edit sets the editing index", () => {
   expect(getSearchBarEditingIndex(state)).toBe(1)
 })
 
+test("search pin edit with null removes editing index", () => {
+  let state = store.dispatchAll([
+    changeSearchBarInput("first"),
+    pinSearchBar(),
+    changeSearchBarInput("second"),
+    pinSearchBar(),
+    changeSearchBarInput("third"),
+    submitSearchBar(),
+    editSearchBarPin(1),
+    changeSearchBarInput("second (edited)"),
+    editSearchBarPin(null),
+    changeSearchBarInput("third (edited)")
+  ])
+
+  expect(getSearchBar(state)).toEqual(
+    expect.objectContaining({
+      pinned: ["first", "second (edited)"],
+      current: "third (edited)",
+      previous: "third",
+      editing: null
+    })
+  )
+})
+
+test("search pin edit then submiting", () => {
+  let state = store.dispatchAll([
+    changeSearchBarInput("first"),
+    pinSearchBar(),
+    changeSearchBarInput("second"),
+    pinSearchBar(),
+    changeSearchBarInput("third"),
+    submitSearchBar(),
+    editSearchBarPin(0),
+    changeSearchBarInput("first (edited)"),
+    submitSearchBar()
+  ])
+
+  expect(getSearchBar(state)).toEqual(
+    expect.objectContaining({
+      current: "first (edited)",
+      previous: "third",
+      pinned: ["first (edited)", "second"],
+      editing: 0
+    })
+  )
+})
+
 test("search pin edit does not set index if out of bounds", () => {
   expect(() => {
     store.dispatch(editSearchBarPin(100))
@@ -105,19 +152,6 @@ test("search bar submit", () => {
   expect(getSearchBarInputValue(state)).toBe("conn")
   expect(getSearchBarPreviousInputValue(state)).toBe("conn")
   expect(getSearchBarEditingIndex(state)).toBe(null)
-})
-
-test("search bar submit after editing resets editing", () => {
-  let state = store.dispatchAll([
-    changeSearchBarInput("http"),
-    pinSearchBar(),
-    editSearchBarPin(0),
-    changeSearchBarInput("https"),
-    submittingSearchBar()
-  ])
-
-  expect(getSearchBarInputValue(state)).toBe("")
-  expect(getSearchBarPins(state)[0]).toBe("https")
 })
 
 test("append an include field", () => {

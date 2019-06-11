@@ -20,6 +20,7 @@
     margin-bottom: 3px;
 
     p {
+      cursor: pointer;
       border: 1px solid #dcdcdc;
       border-right: none;
       border-radius: 3px 0 0 3px;
@@ -27,6 +28,11 @@
       font-family: $mono-font;
       font-size: 9px;
       line-height: 9px;
+      transition: all 150ms;
+
+      &:hover {
+        background: white;
+      }
     }
   }
 

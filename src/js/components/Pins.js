@@ -54,7 +54,9 @@ export default class Pins extends React.Component<Props> {
   renderPinButton() {
     return (
       <div className="pin-button-wrapper">
-        <p>{this.props.previousValue}</p>
+        <p onClick={() => this.props.dispatch(editSearchBarPin(null))}>
+          {this.props.previousValue}
+        </p>
         <button
           className="pin-button"
           title="⌘K"

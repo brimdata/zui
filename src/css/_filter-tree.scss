@@ -4,11 +4,6 @@ $filter-tree-line-color: $gray-5;
   height: 100%;
   color: $white-1;
 
-  .filter-node p {
-    font-size: 12px;
-    line-height: 1.2;
-  }
-
   .remove-button {
     position: absolute;
     top: 5px;
@@ -29,7 +24,34 @@ $filter-tree-line-color: $gray-5;
   position: relative;
   margin-left: $space-m;
   padding: 2px 0;
-  border-left: 1px solid $filter-tree-line-color;
+
+  .filter-tree-parent::before {
+    content: "";
+    width: 1px;
+    height: 27px;
+    position: absolute;
+    background: $filter-tree-line-color;
+    top: -3px;
+    left: 0;
+  }
+
+  &:last-of-type > .filter-tree-parent::before {
+    height: 17px;
+  }
+
+  .filter-tree-children::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    background: $filter-tree-line-color;
+    top: 0;
+    left: 0;
+  }
+
+  &:last-of-type > .filter-tree-children::before {
+    display: none;
+  }
 
   .filter-node {
     background: transparent;
@@ -46,7 +68,7 @@ $filter-tree-line-color: $gray-5;
       background: $filter-tree-line-color;
       width: 6px;
       height: 1px;
-      right: 100%;
+      right: calc(100% + 1px);
     }
   }
 
@@ -62,20 +84,5 @@ $filter-tree-line-color: $gray-5;
     p {
       color: $filter-node-foreground;
     }
-  }
-}
-
-.filter-tree > .filter-tree-node:last-child,
-.filter-tree-node > .filter-tree-node:last-child {
-  border-color: transparent;
-  position: relative;
-  &:before {
-    content: "";
-    position: absolute;
-    background: $filter-tree-line-color;
-    height: 14px;
-    width: 1px;
-    left: -1px;
-    top: 0;
   }
 }

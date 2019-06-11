@@ -1,10 +1,10 @@
 .finding-card-wrapper {
   display: block;
   position: relative;
-  padding: $space-xs;
+  padding: $space-xxs;
+  padding-top: $space-xs;
   padding-left: $space-l;
   color: white;
-  margin-bottom: $space-xxs;
 
   &.open {
     background: $gray-6;
@@ -59,19 +59,26 @@
 
   .program {
     display: flex;
-    margin-bottom: $space-xxs;
-  }
+    margin-bottom: 2px;
+    flex-wrap: wrap;
 
-  .mono {
-    display: inline-block;
-    border-radius: 3px;
-    margin-right: $space-xxs;
-    transition: font-weight 250ms;
+    p {
+      font-size: 9px;
+      line-height: 13px;
+      display: inline-block;
+      margin-right: 4px;
+      margin-bottom: 2px;
+      transition: font-weight 250ms;
+    }
   }
 
   .pin {
-    padding: 0px $space-xxs;
+    font-size: 9px;
+    line-height: 13px;
     background: $green;
+    padding: 0 4px;
+    border-radius: 3px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.1);
   }
 
   .footer {

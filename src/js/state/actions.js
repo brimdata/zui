@@ -113,7 +113,7 @@ export const pinSearchBar = () => ({
   type: "SEARCH_BAR_PIN"
 })
 
-export const editSearchBarPin = (index: number) => ({
+export const editSearchBarPin = (index: number | null) => ({
   type: "SEARCH_BAR_PIN_EDIT",
   index
 })
