@@ -61,7 +61,7 @@ function joinProcs(procs: string[]) {
 }
 
 export function joinParts(filter: string, proc: string) {
-  let f = onlyWhitespace(filter) ? "*" : filter
+  let f = fmtProgram(filter)
   return [f, proc].join(" | ")
 }
 
@@ -113,4 +113,8 @@ export function deaggregate(program: string, log: Log) {
   if (filters.includes(filter)) filter = ""
 
   return trim([filter, ...filters].map(trim).join(" "))
+}
+
+export function fmtProgram(string: string) {
+  return onlyWhitespace(string) ? "*" : string
 }

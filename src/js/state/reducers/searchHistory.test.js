@@ -6,8 +6,8 @@ import {
   clearSearchHistory,
   forwardSearchHistory
 } from "../actions"
-import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getCurrentEntry, getSearchHistory} from "./searchHistory"
+import {submitSearchBar} from "../thunks/searchBar"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -15,11 +15,11 @@ beforeEach(() => {
   store = initTestStore()
   store.dispatchAll([
     changeSearchBarInput("first"),
-    fetchMainSearch(),
+    submitSearchBar(),
     changeSearchBarInput("second"),
-    fetchMainSearch(),
+    submitSearchBar(),
     changeSearchBarInput("third"),
-    fetchMainSearch()
+    submitSearchBar()
   ])
 })
 
@@ -50,7 +50,7 @@ test("going back in history then pushing new history", () => {
     backSearchHistory(),
     backSearchHistory(),
     changeSearchBarInput("fourth"),
-    fetchMainSearch()
+    submitSearchBar()
   ])
   const entry = getCurrentEntry(state)
   expect(entry.program).toEqual("fourth")
@@ -61,7 +61,7 @@ test("back, back, push, back", () => {
     backSearchHistory(),
     backSearchHistory(),
     changeSearchBarInput("fourth"),
-    fetchMainSearch(),
+    submitSearchBar(),
     backSearchHistory()
   ])
   const entry = getCurrentEntry(state)

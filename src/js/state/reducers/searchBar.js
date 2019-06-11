@@ -129,9 +129,19 @@ export default createReducer(initialState, {
       return {
         ...state,
         previous: state.current,
+        pinned: state.pinned.filter((s) => !onlyWhitespace(s)),
         error: null
       }
     } else {
+      if (state.pinned.some(onlyWhitespace)) {
+        return {
+          ...state,
+          editing: null,
+          current: state.previous,
+          pinned: state.pinned.filter((s) => !onlyWhitespace(s)),
+          error: null
+        }
+      }
       return {
         ...state,
         error: null

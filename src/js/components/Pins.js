@@ -9,6 +9,7 @@ import {
   pinSearchBar,
   removeSearchBarPin
 } from "../state/actions"
+import {fmtProgram} from "../lib/Program"
 import {
   getSearchBarPins,
   getSearchBarPreviousInputValue,
@@ -55,7 +56,7 @@ export default class Pins extends React.Component<Props> {
     return (
       <div className="pin-button-wrapper">
         <p onClick={() => this.props.dispatch(editSearchBarPin(null))}>
-          {this.props.previousValue}
+          {fmtProgram(this.props.previousValue)}
         </p>
         <button
           className="pin-button"
@@ -69,15 +70,10 @@ export default class Pins extends React.Component<Props> {
   }
 
   render() {
-    const {previousValue, pins} = this.props
-    const hasStagedFilter = !/^\s*$/.test(previousValue)
-    const hasCommittedFilter = pins.length > 0
-    if (!hasStagedFilter && !hasCommittedFilter) return null
-
     return (
       <div className="pins">
-        {pins.map(this.renderFilter)}
-        {hasStagedFilter && this.renderPinButton()}
+        {this.props.pins.map(this.renderFilter)}
+        {this.renderPinButton()}
       </div>
     )
   }
