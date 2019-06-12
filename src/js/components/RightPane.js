@@ -6,7 +6,6 @@ import classNames from "classnames"
 
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../lib/Space"
-import {XLogDetails} from "./LogDetails"
 import {XRightPaneCollapser} from "./RightPaneCollapser"
 import {XRightPaneExpander} from "./RightPaneExpander"
 import {
@@ -21,6 +20,7 @@ import {open} from "../lib/System"
 import Back from "../icons/back-arrow.svg"
 import Forward from "../icons/forward-arrow.svg"
 import Log from "../models/Log"
+import LogDetails from "./LogDetails"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -143,7 +143,7 @@ export default class RightPane extends React.Component<Props, S> {
           </PaneHeader>
         )}
         <PaneBody>
-          <XLogDetails />
+          <LogDetails />
         </PaneBody>
         <XRightPaneCollapser show={this.state.showCollapse} />
       </Pane>
