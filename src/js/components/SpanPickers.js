@@ -1,6 +1,7 @@
 /* @flow */
 
 import {connect} from "react-redux"
+import {isEqual} from "lodash"
 import React from "react"
 
 import {type DateTuple} from "../lib/TimeWindow"
@@ -50,6 +51,10 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
     super(props)
     // $FlowFixMe
     this.state = SpanPickers.getDerivedStateFromProps(props)
+  }
+
+  shouldComponentUpdate(props: Props, state: LocalState) {
+    return !isEqual(props, this.props) || !isEqual(state, this.state)
   }
 
   static getDerivedStateFromProps(nextProps: Props, state: LocalState = {}) {
