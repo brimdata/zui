@@ -1,3 +1,8 @@
+/* @flow */
+// Note that whenever these extensions need to be updated,
+// go and delete them from app.getPath("userData")/extensions,
+// then restart the app.
+
 const isDev = require("electron-is-dev")
 const {
   default: install,
