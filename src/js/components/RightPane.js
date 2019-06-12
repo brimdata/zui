@@ -6,7 +6,6 @@ import classNames from "classnames"
 
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../lib/Space"
-import {XRightPaneCollapser} from "./RightPaneCollapser"
 import {XRightPaneExpander} from "./RightPaneExpander"
 import {
   backLogDetail,
@@ -29,6 +28,7 @@ import Pane, {
   Center,
   PaneBody
 } from "./Pane"
+import RightPaneCollapser from "./RightPaneCollapser"
 import Star from "../icons/star-sm.svg"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as logDetails from "../state/selectors/logDetails"
@@ -92,12 +92,6 @@ export default class RightPane extends React.Component<Props, S> {
         position="right"
         width={width}
         className="log-detail-pane"
-        onMouseEnter={() => {
-          this.setState({showCollapse: true})
-        }}
-        onMouseLeave={() => {
-          this.setState({showCollapse: false})
-        }}
       >
         {currentLog && (
           <PaneHeader>
@@ -145,7 +139,7 @@ export default class RightPane extends React.Component<Props, S> {
         <PaneBody>
           <LogDetails />
         </PaneBody>
-        <XRightPaneCollapser show={this.state.showCollapse} />
+        <RightPaneCollapser />
       </Pane>
     )
   }
