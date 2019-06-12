@@ -5,23 +5,9 @@ delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
 
 const {app, BrowserWindow} = require("electron")
-const {
-  default: installExtension,
-  REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS
-} = require("electron-devtools-installer")
+const {installExtensions} = require("./extensions")
 
 let win
-
-const installExtensions = () => {
-  installExtension(REACT_DEVELOPER_TOOLS).catch((err) =>
-    console.log("An error occurred: ", err)
-  )
-
-  installExtension(REDUX_DEVTOOLS).catch((err) =>
-    console.log("An error occurred: ", err)
-  )
-}
 
 const createWindow = () => {
   win = new BrowserWindow({
@@ -42,8 +28,8 @@ const createWindow = () => {
 }
 
 app.on("ready", () => {
-  createWindow()
   installExtensions()
+  createWindow()
 })
 
 app.on("window-all-closed", () => {

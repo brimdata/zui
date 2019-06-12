@@ -78,48 +78,49 @@ export default class Viewer extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {
-      dimens,
-      chunker,
-      renderRow,
-      logs,
-      tableColumns,
-      renderEnd
-    } = this.props
     const {scrollLeft, chunks} = this.state
     return (
-      <div className="viewer" style={{width: dimens.viewWidth}}>
+      <div className="viewer" style={{width: this.props.dimens.viewWidth}}>
         <Header
-          columns={tableColumns}
-          dimens={dimens}
+          columns={this.props.tableColumns}
+          dimens={this.props.dimens}
           scrollLeft={scrollLeft}
           {...reactElementProps("viewer_header")}
         />
         <div
           className="view"
           onScroll={this.onScroll}
-          style={{width: dimens.viewWidth, height: dimens.viewHeight}}
+          style={{
+            width: this.props.dimens.viewWidth,
+            height: this.props.dimens.viewHeight
+          }}
           ref={(r) => (this.view = r)}
         >
-          <div
-            className="list"
-            style={Styler.list(dimens)}
-            {...reactElementProps("viewer_results")}
-          >
-            {chunks.map((chunk) => (
-              <Chunk
-                columns={this.props.tableColumns}
-                logs={logs}
-                rows={chunker.rows(chunk)}
-                key={chunk}
-                rowRenderer={renderRow}
-                dimens={dimens}
-              />
-            ))}
-            {renderEnd()}
-          </div>
+          <List {...{...this.props, chunks}} />
         </div>
       </div>
     )
   }
 }
+
+const List = React.memo(function List(props) {
+  return (
+    <div
+      className="list"
+      style={Styler.list(props.dimens)}
+      {...reactElementProps("viewer_results")}
+    >
+      {props.chunks.map((chunk) => (
+        <Chunk
+          columns={props.tableColumns}
+          logs={props.logs}
+          rows={props.chunker.rows(chunk)}
+          key={chunk}
+          rowRenderer={props.renderRow}
+          dimens={props.dimens}
+        />
+      ))}
+      {props.renderEnd()}
+    </div>
+  )
+})

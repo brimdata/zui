@@ -36,6 +36,18 @@ export function getSearchStats(state: State, name: string) {
   }
 }
 
+export const getLogDetailSearches = createSelector<State, void, *, *>(
+  getSearches,
+  (searches) => {
+    let tagged = []
+    for (let name in searches) {
+      let search = searches[name]
+      if (search.tag === "detail") tagged.push(search)
+    }
+    return tagged
+  }
+)
+
 export function getSearchesByTag(state: State, tag: string) {
   let tagged = []
   let searches = getSearches(state)

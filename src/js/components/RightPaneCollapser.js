@@ -1,42 +1,43 @@
 /* @flow */
 
-import {connect} from "react-redux"
-import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
-import type {Dispatch} from "../state/types"
+import {getRightSidebarWidth} from "../state/reducers/view"
+import {getWidth} from "../lib/Doc"
 import {hideRightSidebar} from "../state/actions"
 import CircleChevron from "./CircleChevron"
-import dispatchToProps from "../lib/dispatchToProps"
+import MouseoverWatch from "../lib/MouseoverWatch"
 
-type Props = {
-  show: boolean,
-  dispatch: Dispatch
-}
+export default function RightPaneCollapser() {
+  let dispatch = useDispatch()
+  let [show, setShow] = useState(false)
+  let width = useSelector(getRightSidebarWidth)
 
-type OwnProps = {
-  show: boolean
-}
+  useEffect(() => {
+    let watcher = new MouseoverWatch()
+      .addListener()
+      .condition(([x]) => getWidth() - x < width)
+      .onEnter(() => setShow(true))
+      .onExit(() => setShow(false))
+      .exitDelay(500)
 
-export default class RightPaneCollapser extends React.Component<Props> {
-  onClick = () => {
-    this.props.dispatch(hideRightSidebar())
+    return () => {
+      watcher.removeListener()
+    }
+  })
+
+  function onClick() {
+    dispatch(hideRightSidebar())
   }
 
-  render() {
-    const {show} = this.props
-    return (
-      <div
-        className={classNames("right-pane-collapser", {show})}
-        onClick={this.onClick}
-      >
-        <CircleChevron collapse right light />
-      </div>
-    )
-  }
+  return (
+    <div
+      className={classNames("right-pane-collapser", {show})}
+      onClick={onClick}
+    >
+      <CircleChevron collapse right light />
+    </div>
+  )
 }
-
-export const XRightPaneCollapser = connect<Props, OwnProps, _, _, _, _>(
-  null,
-  dispatchToProps
-)(RightPaneCollapser)
