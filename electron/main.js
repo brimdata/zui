@@ -6,8 +6,6 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
 
 const {app, BrowserWindow} = require("electron")
 const {installExtensions} = require("./extensions")
-const path = require("path")
-const os = require("os")
 
 let win
 
