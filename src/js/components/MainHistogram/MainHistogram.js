@@ -1,7 +1,7 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {useMemo} from "react"
 import * as d3 from "d3"
 
 import type {ChartSVG, HistogramChart} from "../../charts/types"
@@ -18,20 +18,30 @@ import formatMainHistogramData from "./formatMainHistogramData"
 export default function MainSearchHistogram() {
   let search = useSelector(getHistogramSearch)
   if (!search) return null
-  let logs = resultsToLogs(search.results, "0")
+  let logs = useMemo(() => resultsToLogs(search.results, "0"), [search.results])
   let span = useSelector(getTimeWindow)
   let innerSpan = useSelector(getInnerTimeWindow)
   let isFetching = search.status === "FETCHING"
   let dispatch = useDispatch()
+  let data = useMemo(() => formatMainHistogramData(logs, span), [logs, span])
 
-  let data = formatMainHistogramData(logs, span)
-  let margins = {left: 0, right: 0, top: 3, bottom: 16}
+  return <MainHistogramD3 {...{data, span, innerSpan, isFetching, dispatch}} />
+}
+
+type Props = {}
+
+const MainHistogramD3 = React.memo<Props>(function MainHistogramD3(props) {
+  let {data, span, innerSpan, isFetching, dispatch} = props
 
   function buildChart(svg: ChartSVG): HistogramChart {
     return {
       ...svg,
       data,
-      state: {selection: innerSpan, isFetching, isEmpty: logs.length === 0},
+      state: {
+        selection: innerSpan,
+        isFetching,
+        isEmpty: data.points.length === 0
+      },
       yScale: d3
         .scaleLinear()
         .range([svg.dimens.innerHeight, 0])
@@ -42,13 +52,12 @@ export default function MainSearchHistogram() {
         .domain(span)
     }
   }
-
   return (
     <D3Chart
       className="main-search-histogram"
-      margins={margins}
+      margins={{left: 0, right: 0, top: 3, bottom: 16}}
       buildChart={buildChart}
       buildElements={buildElements(dispatch)}
     />
   )
-}
+})
