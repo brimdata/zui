@@ -1,4 +1,5 @@
-/* @flow */
+/* @noflow */
+
 function handleEvent(app) {
   if (process.argv.length === 1) {
     return false

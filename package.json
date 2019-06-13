@@ -13,8 +13,9 @@
     "electron": "electron .",
     "clean": "rm -rf releases/** && rm -fr dist/**",
     "release": "npm-run-all -p packager:* -s installer:*",
-    "packager:mac": "electron-packager . Looky --out=releases --platform=darwin --icon=dist/static/AppIcon.icns",
-    "packager:win": "electron-packager . Looky --out=releases --platform=win32 --icon=dist/static/AppIcon.ico --asar",
+    "release:win": "npm-run-all -s packager:win installer:win",
+    "packager:mac": "electron-packager . Looky --out=dist/packages --platform=darwin --icon=dist/static/AppIcon.icns",
+    "packager:win": "electron-packager . Looky --out=dist/packages --platform=win32 --icon=dist/static/AppIcon.ico --asar",
     "prerelease": "npm run build",
     "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
@@ -30,7 +31,8 @@
     "format": "prettier '{src,itest}/**/*.{js,scss}' --write --loglevel warn",
     "flow": "flow",
     "check": "npm-run-all -p format lint flow test",
-    "installer:mac": "electron-installer-dmg releases/Looky-darwin-x64/Looky.app releases/Looky"
+    "installer:mac": "electron-installer-dmg releases/Looky-darwin-x64/Looky.app releases/Looky",
+    "installer:win": "node pix/build.js"
   },
   "jest": {
     "notify": false,
