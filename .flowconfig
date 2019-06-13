@@ -3,6 +3,7 @@
 .*/dist/.*
 .*/coverage/.*
 .*/__snapshots__/.*
+.*/pix/.*
 
 [include]
 
