@@ -1,12 +1,12 @@
-/* @noflow */
+/* @flow */
 
-function handleEvent(app: *) {
+import path from "path"
+import child_process from "child_process"
+
+export function handleSquirrelEvent(app: *) {
   if (process.argv.length === 1) {
     return false
   }
-
-  const ChildProcess = require("child_process")
-  const path = require("path")
 
   const appFolder = path.resolve(process.execPath, "..")
   const rootAtomFolder = path.resolve(appFolder, "..")
@@ -17,7 +17,7 @@ function handleEvent(app: *) {
     let spawnedProcess
 
     try {
-      spawnedProcess = ChildProcess.spawn(command, args, {detached: true})
+      spawnedProcess = child_process.spawn(command, args, {detached: true})
     } catch (error) {
       console.log(error)
     }
@@ -63,5 +63,3 @@ function handleEvent(app: *) {
       return true
   }
 }
-
-module.exports = {handleEvent}
