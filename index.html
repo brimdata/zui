@@ -19,7 +19,13 @@
     <div id="measure-layer"></div>
     <script>
       require("./dist/js/index.js")
+      let isDev = require("electron-is-dev")
+
+      if (isDev) {
+        let script = document.createElement("script")
+        script.src = "http://localhost:35729/livereload.js?snipver=1"
+        document.body.appendChild(script)
+      }
     </script>
-    <script src="http://localhost:35729/livereload.js?snipver=1"></script>
   </body>
 </html>

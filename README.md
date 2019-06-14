@@ -72,4 +72,4 @@ npm run format
 npm run release
 ```
 
-This packages the app into `./releases` for the host's architecture.
+This creates installers for both Windows and MacOS that can be found in `./dist/installers`.

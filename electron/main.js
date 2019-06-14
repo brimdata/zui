@@ -1,11 +1,19 @@
 /* @noflow */
 
 // Disable Warnings in the Console
+
 delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
 
 const {app, BrowserWindow} = require("electron")
 const {installExtensions} = require("./extensions")
+const squirrel = require("./squirrel")
+
+if (squirrel.handleEvent(app)) {
+  /*:: (function (exports, require, module, __filename, __dirname) { */
+  return
+  /*:: })(); */
+}
 
 let win
 
