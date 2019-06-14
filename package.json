@@ -6,18 +6,14 @@
   "version": "0.1.24",
   "main": "electron/main.js",
   "author": "Looky Labs, Inc.",
+  "bin": {
+    "release": "./scripts/release/index.js"
+  },
   "scripts": {
     "start": "npm-run-all -s clean build:* -p electron watch:*",
     "test": "TZ=US/Pacific jest",
     "itest": "TZ=US/Pacific jest --config=itest/config.json",
     "electron": "electron .",
-    "clean": "rm -rf releases/** && rm -fr dist/**",
-    "release": "npm-run-all -p packager:* -s installer:*",
-    "release:win": "npm-run-all -s packager:win installer:win",
-    "packager:mac": "electron-packager . Looky --out=dist/packages --platform=darwin --icon=dist/static/AppIcon.icns",
-    "packager:win": "electron-packager . Looky --out=dist/packages --platform=win32 --icon=dist/static/AppIcon.ico --asar",
-    "prerelease": "npm run build",
-    "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
     "watch": "npm-run-all -p watch:*",
     "build:js": "babel src/js -d dist/js",
@@ -31,8 +27,10 @@
     "format": "prettier '{src,itest}/**/*.{js,scss}' --write --loglevel warn",
     "flow": "flow",
     "check": "npm-run-all -p format lint flow test",
-    "installer:mac": "electron-installer-dmg releases/Looky-darwin-x64/Looky.app releases/Looky",
-    "installer:win": "node pix/build.js"
+    "clean": "node scripts/clean",
+    "release": "node scripts/release --win32 --darwin",
+    "prerelease": "npm run build",
+    "prebuild": "npm run clean"
   },
   "jest": {
     "notify": false,

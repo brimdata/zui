@@ -3,6 +3,7 @@ const fs = require("fs")
 const os = require("os")
 const installer = require("electron-winstaller")
 const createDMG = require("electron-installer-dmg")
+const path = require("path")
 
 const out = "./dist/installers"
 
@@ -11,6 +12,7 @@ module.exports = {
     console.log("Building installer for darwin")
     createDMG(
       {
+        overwrite: true,
         appPath: "dist/packages/Looky-darwin-x64/Looky.app",
         name: "Looky",
         out
@@ -53,11 +55,11 @@ function fixWindowsInstallerDeps() {
   // https://github.com/electron/windows-installer/issues/186#issuecomment-313222658
   if (os.platform() === "darwin") {
     fs.copyFileSync(
-      "pix/vendor/7z.exe",
+      path.join(__dirname, "vendor", "7z.exe"),
       "node_modules/electron-winstaller/vendor/7z.exe"
     )
     fs.copyFileSync(
-      "pix/vendor/7z.dll",
+      path.join(__dirname, "vendor", "7z.dll"),
       "node_modules/electron-winstaller/vendor/7z.dll"
     )
   }
