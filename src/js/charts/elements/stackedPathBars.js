@@ -8,8 +8,8 @@ import {d3ElementAttr, itestLocator} from "../../test/integration"
 import {innerHeight} from "../dimens"
 
 export default function(): ChartElement {
-  function mount(chart) {
-    d3.select(chart.el)
+  function mount(svg) {
+    d3.select(svg)
       .append("g")
       .attr("class", "chart")
       .attr(itestLocator, d3ElementAttr("histogram"))

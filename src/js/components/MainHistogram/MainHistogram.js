@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useMemo} from "react"
 import * as d3 from "d3"
 
-import type {ChartSVG, HistogramChart} from "../../charts/types"
+import type {ChartElement, ChartSVG, HistogramChart} from "../../charts/types"
 import {getHistogramSearch} from "../../state/searches/selector"
 import {
   getInnerTimeWindow,
@@ -25,14 +25,19 @@ export default function MainSearchHistogram() {
   let isFetching = search.status === "FETCHING"
   let dispatch = useDispatch()
   let data = useMemo(() => formatMainHistogramData(logs, span), [logs, span])
+  let elements = useMemo<ChartElement[]>(() => buildElements(dispatch)(), [])
 
-  return <MainHistogramD3 {...{data, span, innerSpan, isFetching, dispatch}} />
+  return (
+    <MainHistogramD3
+      {...{data, span, innerSpan, isFetching, dispatch, elements}}
+    />
+  )
 }
 
 type Props = {}
 
 const MainHistogramD3 = React.memo<Props>(function MainHistogramD3(props) {
-  let {data, span, innerSpan, isFetching, dispatch} = props
+  let {data, span, innerSpan, isFetching, dispatch, elements} = props
 
   function buildChart(svg: ChartSVG): HistogramChart {
     let chart = {...svg}
@@ -51,7 +56,8 @@ const MainHistogramD3 = React.memo<Props>(function MainHistogramD3(props) {
       xScale: d3
         .scaleUtc()
         .range([0, innerWidth(chart)])
-        .domain(span)
+        .domain(span),
+      elements
     }
   }
   return (
@@ -59,7 +65,6 @@ const MainHistogramD3 = React.memo<Props>(function MainHistogramD3(props) {
       className="main-search-histogram"
       margins={{left: 0, right: 0, top: 3, bottom: 16}}
       buildChart={buildChart}
-      buildElements={buildElements(dispatch)}
     />
   )
 })

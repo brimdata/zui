@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from "react"
+import React, {useMemo} from "react"
 import * as d3 from "d3"
 
 import type {ChartSVG, HistogramChart} from "../charts/types"
@@ -33,6 +33,20 @@ export default function FindingHistogram({logs, span}: Props) {
     top: 4,
     bottom: 16
   }
+  let elements = useMemo(
+    () => [
+      stackedPathBars(),
+      timeSpanXAxis(),
+      yAxis(),
+      hoverline(),
+      reactComponent((chart) => <EmptyMessage show={chart.state.isEmpty} />),
+      xPositionTooltip({
+        wrapperClassName: "histogram-tooltip-wrapper",
+        render: HistogramTooltip
+      })
+    ],
+    []
+  )
 
   function buildChart(svg: ChartSVG): HistogramChart {
     let chart = {...svg}
@@ -47,22 +61,9 @@ export default function FindingHistogram({logs, span}: Props) {
       xScale: d3
         .scaleUtc()
         .range([0, innerWidth(chart)])
-        .domain(span)
+        .domain(span),
+      elements
     }
-  }
-
-  function buildElements() {
-    return [
-      stackedPathBars(),
-      timeSpanXAxis(),
-      yAxis(),
-      hoverline(),
-      reactComponent((chart) => <EmptyMessage show={chart.state.isEmpty} />),
-      xPositionTooltip({
-        wrapperClassName: "histogram-tooltip-wrapper",
-        render: HistogramTooltip
-      })
-    ]
   }
 
   return (
@@ -70,7 +71,6 @@ export default function FindingHistogram({logs, span}: Props) {
       className="finding-histogram"
       margins={margins}
       buildChart={buildChart}
-      buildElements={buildElements}
     />
   )
 }

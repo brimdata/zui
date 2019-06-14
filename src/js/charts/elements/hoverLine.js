@@ -8,10 +8,12 @@ import {innerHeight} from "../dimens"
 export default function(): ChartElement {
   let line
   let overflow = 10
+  let svg
 
-  function mount(chart) {
+  function mount(svg) {
+    svg = svg
     line = d3
-      .select(chart.el)
+      .select(svg)
       .insert("rect")
       .attr("class", "hover-line")
       .style("pointer-events", "none")
@@ -22,7 +24,7 @@ export default function(): ChartElement {
   function draw(chart) {
     line.attr("height", innerHeight(chart) + overflow * 2)
 
-    d3.select(chart.el)
+    d3.select(svg)
       .on("mouseout.hoverline", function() {
         line.style("display", "none")
       })

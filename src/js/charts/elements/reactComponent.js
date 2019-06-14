@@ -6,8 +6,7 @@ import type {ChartElement} from "../types"
 export default function reactComponent(renderComponent: *): ChartElement {
   let root
 
-  function mount({el}) {
-    if (!el) return
+  function mount(el) {
     root = document.createElement("div")
     if (el.parentNode) {
       el.parentNode.appendChild(root)

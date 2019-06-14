@@ -9,15 +9,12 @@ import {useResizeObserver} from "../hooks/useResizeObserver"
 type Props = {|
   className?: string,
   margins: Margins,
-  buildElements: () => ChartElement[],
   buildChart: (ChartSVG) => Chart
 |}
 
 export default function D3Chart(props: Props) {
   let resize = useResizeObserver()
   let el = useRef(null)
-  let elements = useRef<ChartElement[]>([])
-
   let {width, height} = resize.rect
   let {right, left, top, bottom} = props.margins
 
@@ -27,18 +24,14 @@ export default function D3Chart(props: Props) {
     el: el.current
   })
 
-  function mountElements(chart) {
-    elements.current.forEach(({mount}) => mount && mount(chart, drawElements))
-  }
-
   function drawElements(chart) {
-    elements.current.forEach(({draw}) => draw && draw(chart, drawElements))
+    chart.elements.forEach(({draw}) => draw && draw(chart, drawElements))
   }
 
   useLayoutEffect(() => {
-    if (chart.el) {
-      elements.current = props.buildElements()
-      mountElements(chart)
+    let svg = el.current
+    if (svg) {
+      chart.elements.forEach(({mount}) => mount && mount(svg))
     }
   }, [chart.el])
 

@@ -17,9 +17,9 @@ export default function({onDragEnd}: Props = {}): ChartElement {
   let xAxis
   let dragArea
 
-  function mount(chart) {
+  function mount(svg) {
     xAxis = d3
-      .select(chart.el)
+      .select(svg)
       .append("g")
       .attr("class", "x-axis")
 

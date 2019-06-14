@@ -22,13 +22,12 @@ export default function({
     div.style.opacity = "0"
   }
 
-  function mount({el}) {
-    if (!el) return
+  function mount(svg) {
     div = document.createElement("div")
     div.classList.add(wrapperClassName)
-    if (el.parentNode) el.parentNode.appendChild(div)
+    if (svg.parentNode) svg.parentNode.appendChild(div)
 
-    d3.select(el)
+    d3.select(svg)
       .select(".brush")
       .on("mousedown.abc", hide)
   }

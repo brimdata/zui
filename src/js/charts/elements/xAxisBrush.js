@@ -15,15 +15,13 @@ type Props = {
 
 export default function(props: Props = {}): ChartElement {
   const {onSelection, onSelectionClear, onSelectionClick} = props
+  let brushEl
 
-  function mount(chart) {
-    d3.select(chart.el)
+  function mount(svg) {
+    brushEl = d3
+      .select(svg)
       .append("g")
       .attr("class", "brush")
-      .attr(
-        "transform",
-        `translate(${chart.margins.left}, ${chart.margins.top})`
-      )
   }
 
   function draw(chart) {
@@ -63,15 +61,20 @@ export default function(props: Props = {}): ChartElement {
       }
     }
 
-    const element = d3.select(".brush")
+    brushEl
+      .select(".brush")
+      .attr(
+        "transform",
+        `translate(${chart.margins.left}, ${chart.margins.top})`
+      )
     const brush = d3
       .brushX()
       .extent([[0, 0], [innerWidth(chart), innerHeight(chart)]])
 
-    element.call(brush)
+    brushEl.call(brush)
     chart.state.selection
-      ? brush.move(element, chart.state.selection.map(chart.xScale))
-      : brush.move(element, null)
+      ? brush.move(brushEl, chart.state.selection.map(chart.xScale))
+      : brush.move(brushEl, null)
 
     brush.on("end", onBrushEnd)
     brush.on("start", onBrushStart)

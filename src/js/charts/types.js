@@ -20,7 +20,7 @@ type ChartElementFunc = (Chart, Redraw) => void
 
 export type ChartElement = {|
   draw?: ChartElementFunc,
-  mount?: ChartElementFunc
+  mount?: (Element) => void
 |}
 
 export type ChartSVG = {|
@@ -47,7 +47,8 @@ export type HistogramChart = {|
   data: HistogramData,
   state: HistogramState,
   yScale: Function,
-  xScale: Function
+  xScale: Function,
+  elements: ChartElement[]
 |}
 
 export type Chart = HistogramChart
