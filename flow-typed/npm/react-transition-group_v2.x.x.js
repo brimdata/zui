@@ -1,5 +1,5 @@
-// flow-typed signature: 896bbb51b1a943fefff583786cd4d0c0
-// flow-typed version: b6c24caf38/react-transition-group_v2.x.x/flow_>=v0.60.x
+// flow-typed signature: 0c68fc2b00a4b42f3f3b1d257d92be16
+// flow-typed version: e078565466/react-transition-group_v2.x.x/flow_>=v0.60.x
 
 // @flow
 
@@ -15,7 +15,7 @@ declare module 'react-transition-group' {
     exitDone?: string,
   };
 
-  declare export type TransitionStatus = 'entering' | 'entered' | 'exiting' | 'exited' | 'unmounted';
+  declare export type TransitionStatus = 'entering' | 'entered' | 'exiting' | 'exited';
 
   declare export type EndHandler = (node: HTMLElement, done: () => void) => void;
   declare export type EnterHandler = (node: HTMLElement, isAppearing: boolean) => void;

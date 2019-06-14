@@ -1,6 +1,6 @@
 /* @noflow */
 
-function handleEvent(app) {
+function handleEvent(app: *) {
   if (process.argv.length === 1) {
     return false
   }
@@ -14,11 +14,13 @@ function handleEvent(app) {
   const exeName = path.basename(process.execPath)
 
   const spawn = function(command, args) {
-    let spawnedProcess, error
+    let spawnedProcess
 
     try {
       spawnedProcess = ChildProcess.spawn(command, args, {detached: true})
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
 
     return spawnedProcess
   }
