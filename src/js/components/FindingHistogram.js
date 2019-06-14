@@ -5,6 +5,7 @@ import * as d3 from "d3"
 
 import type {ChartSVG, HistogramChart} from "../charts/types"
 import type {Span} from "../BoomClient/types"
+import {innerHeight, innerWidth} from "../charts/dimens"
 import {withCommas} from "../lib/fmt"
 import D3Chart from "./D3Chart"
 import EmptyMessage from "./EmptyMessage"
@@ -34,17 +35,18 @@ export default function FindingHistogram({logs, span}: Props) {
   }
 
   function buildChart(svg: ChartSVG): HistogramChart {
+    let chart = {...svg}
     return {
-      ...svg,
+      ...chart,
       data,
       state: {isEmpty: logs.length === 0},
       yScale: d3
         .scaleLinear()
-        .range([svg.dimens.innerHeight, 0])
+        .range([innerHeight(chart), 0])
         .domain([0, max]),
       xScale: d3
         .scaleUtc()
-        .range([0, svg.dimens.innerWidth])
+        .range([0, innerWidth(chart)])
         .domain(span)
     }
   }

@@ -5,6 +5,7 @@ import * as d3 from "d3"
 import type {ChartElement} from "../types"
 import {add} from "../../lib/Time"
 import {d3ElementAttr, itestLocator} from "../../test/integration"
+import {innerHeight} from "../dimens"
 
 export default function(): ChartElement {
   function mount(chart) {
@@ -44,7 +45,7 @@ export default function(): ChartElement {
     bars
       .exit()
       .attr("opacity", 1)
-      .attr("y", chart.dimens.innerHeight)
+      .attr("y", innerHeight(chart))
       .attr("opacity", 0)
       .remove()
 
@@ -60,7 +61,7 @@ export default function(): ChartElement {
     bars
       .enter()
       .append("rect")
-      .attr("y", chart.dimens.innerHeight)
+      .attr("y", innerHeight(chart))
       .attr("height", 0)
       .merge(bars)
       .attr("width", width)

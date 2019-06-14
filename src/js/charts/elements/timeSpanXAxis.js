@@ -5,6 +5,7 @@ import * as d3 from "d3"
 import type {ChartElement} from "../types"
 import type {Span} from "../../BoomClient/types"
 import {duration, shift} from "../../lib/TimeWindow"
+import {innerWidth} from "../dimens"
 
 type Props = {
   onDragEnd?: (Span) => void
@@ -40,7 +41,7 @@ export default function({onDragEnd}: Props = {}): ChartElement {
 
     d3.select(chart.el)
       .select(".x-axis-drag")
-      .attr("width", chart.dimens.innerWidth)
+      .attr("width", innerWidth(chart))
       .attr("height", chart.margins.bottom)
 
     function getXPos() {

@@ -5,6 +5,7 @@ import * as d3 from "d3"
 
 import type {ChartElement} from "../types"
 import type {Span} from "../../BoomClient/types"
+import {innerHeight, innerWidth} from "../dimens"
 
 type Props = {
   onSelection: (span: Span) => void,
@@ -65,7 +66,7 @@ export default function(props: Props = {}): ChartElement {
     const element = d3.select(".brush")
     const brush = d3
       .brushX()
-      .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
+      .extent([[0, 0], [innerWidth(chart), innerHeight(chart)]])
 
     element.call(brush)
     chart.state.selection

@@ -20,11 +20,9 @@ export default function D3Chart(props: Props) {
 
   let {width, height} = resize.rect
   let {right, left, top, bottom} = props.margins
-  let innerWidth = Math.max(width - left - right, 0)
-  let innerHeight = Math.max(height - top - bottom, 0)
 
   let chart = props.buildChart({
-    dimens: {width, height, innerWidth, innerHeight},
+    dimens: {width, height},
     margins: props.margins,
     el: el.current
   })

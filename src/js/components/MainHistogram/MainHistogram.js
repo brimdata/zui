@@ -10,6 +10,7 @@ import {
   getInnerTimeWindow,
   getTimeWindow
 } from "../../state/reducers/timeWindow"
+import {innerHeight, innerWidth} from "../../charts/dimens"
 import {resultsToLogs} from "../../log/resultsToLogs"
 import D3Chart from "../D3Chart"
 import buildElements from "./buildElements"
@@ -34,8 +35,9 @@ const MainHistogramD3 = React.memo<Props>(function MainHistogramD3(props) {
   let {data, span, innerSpan, isFetching, dispatch} = props
 
   function buildChart(svg: ChartSVG): HistogramChart {
+    let chart = {...svg}
     return {
-      ...svg,
+      ...chart,
       data,
       state: {
         selection: innerSpan,
@@ -44,11 +46,11 @@ const MainHistogramD3 = React.memo<Props>(function MainHistogramD3(props) {
       },
       yScale: d3
         .scaleLinear()
-        .range([svg.dimens.innerHeight, 0])
+        .range([innerHeight(chart), 0])
         .domain([0, d3.max(data.points, (d) => d.count) || 0]),
       xScale: d3
         .scaleUtc()
-        .range([0, svg.dimens.innerWidth])
+        .range([0, innerWidth(chart)])
         .domain(span)
     }
   }

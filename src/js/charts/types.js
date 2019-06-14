@@ -5,9 +5,7 @@ import type {Span} from "../BoomClient/types"
 
 export type Dimens = {
   height: number,
-  width: number,
-  innerHeight: number,
-  innerWidth: number
+  width: number
 }
 
 export type Margins = {
