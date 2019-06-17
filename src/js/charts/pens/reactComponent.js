@@ -1,13 +1,12 @@
 /* @flow */
 import {render} from "react-dom"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 
-export default function reactComponent(renderComponent: *): ChartElement {
+export default function reactComponent(renderComponent: *): Pen {
   let root
 
-  function mount({el}) {
-    if (!el) return
+  function mount(el) {
     root = document.createElement("div")
     if (el.parentNode) {
       el.parentNode.appendChild(root)

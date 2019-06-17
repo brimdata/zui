@@ -2,23 +2,24 @@
 
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import type {Span} from "../../BoomClient/types"
 import {duration, shift} from "../../lib/TimeWindow"
+import {innerWidth} from "../dimens"
 
 type Props = {
   onDragEnd?: (Span) => void
 }
 
-export default function({onDragEnd}: Props = {}): ChartElement {
+export default function({onDragEnd}: Props = {}): Pen {
   let startSpan = null
   let startPos = null
   let xAxis
   let dragArea
 
-  function mount(chart) {
+  function mount(svg) {
     xAxis = d3
-      .select(chart.el)
+      .select(svg)
       .append("g")
       .attr("class", "x-axis")
 
@@ -29,18 +30,16 @@ export default function({onDragEnd}: Props = {}): ChartElement {
   }
 
   function draw(chart, redraw) {
-    d3.select(chart.el)
-      .select(".x-axis")
+    xAxis
       .attr(
         "transform",
-        `translate(${chart.margins.left}, ${chart.dimens.height -
+        `translate(${chart.margins.left}, ${chart.height -
           chart.margins.bottom})`
       )
       .call(d3.axisBottom(chart.xScale))
 
-    d3.select(chart.el)
-      .select(".x-axis-drag")
-      .attr("width", chart.dimens.innerWidth)
+    dragArea
+      .attr("width", innerWidth(chart.width, chart.margins))
       .attr("height", chart.margins.bottom)
 
     function getXPos() {

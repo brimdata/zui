@@ -3,9 +3,8 @@ import React, {useEffect, useState} from "react"
 
 import type {Finding} from "../../state/reducers/investigation"
 import {format} from "../../lib/Time"
-import {resultsToLogs} from "../../log/resultsToLogs"
 import {useResizeObserver} from "../../hooks/useResizeObserver"
-import FindingHistogram from "../FindingHistogram"
+import FindingHistogramChart from "../../charts/FindingHistogram/Chart"
 import Log from "../../models/Log"
 import VerticalTable from "../Tables/VerticalTable"
 
@@ -41,8 +40,8 @@ export default function FindingDetail({finding}: Props) {
   return (
     <div className="finding-detail" ref={ref} style={{opacity}}>
       {finding.chart && (
-        <FindingHistogram
-          logs={resultsToLogs(finding.chart.results, "0")}
+        <FindingHistogramChart
+          results={finding.chart.results}
           span={finding.search.span}
         />
       )}

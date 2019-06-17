@@ -3,8 +3,9 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import type {Span} from "../../BoomClient/types"
+import {innerHeight, innerWidth} from "../dimens"
 
 type Props = {
   onSelection: (span: Span) => void,
@@ -12,29 +13,22 @@ type Props = {
   onSelectionClick: (span: Span) => void
 }
 
-export default function(props: Props = {}): ChartElement {
+export default function(props: Props = {}): Pen {
   const {onSelection, onSelectionClear, onSelectionClick} = props
+  let brushG
 
-  function mount(chart) {
-    d3.select(chart.el)
+  function mount(svg) {
+    brushG = d3
+      .select(svg)
       .append("g")
       .attr("class", "brush")
-      .attr(
-        "transform",
-        `translate(${chart.margins.left}, ${chart.margins.top})`
-      )
   }
 
   function draw(chart) {
     let prevSelection = null
 
     function onBrushStart() {
-      prevSelection = d3.brushSelection(
-        d3
-          .select(chart.el)
-          .select(".brush")
-          .node()
-      )
+      prevSelection = d3.brushSelection(brushG.node())
     }
 
     function onBrushEnd() {
@@ -62,15 +56,24 @@ export default function(props: Props = {}): ChartElement {
       }
     }
 
-    const element = d3.select(".brush")
+    brushG.attr(
+      "transform",
+      `translate(${chart.margins.left}, ${chart.margins.top})`
+    )
     const brush = d3
       .brushX()
-      .extent([[0, 0], [chart.dimens.innerWidth, chart.dimens.innerHeight]])
+      .extent([
+        [0, 0],
+        [
+          innerWidth(chart.width, chart.margins),
+          innerHeight(chart.height, chart.margins)
+        ]
+      ])
 
-    element.call(brush)
+    brushG.call(brush)
     chart.state.selection
-      ? brush.move(element, chart.state.selection.map(chart.xScale))
-      : brush.move(element, null)
+      ? brush.move(brushG, chart.state.selection.map(chart.xScale))
+      : brush.move(brushG, null)
 
     brush.on("end", onBrushEnd)
     brush.on("start", onBrushStart)

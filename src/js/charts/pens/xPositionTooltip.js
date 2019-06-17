@@ -4,7 +4,7 @@ import {render} from "react-dom"
 import React from "react"
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import {getPointAt} from "../getPointAt"
 
 type Args = {
@@ -12,25 +12,22 @@ type Args = {
   render: *
 }
 
-export default function({
-  wrapperClassName,
-  render: Component
-}: Args): ChartElement {
+export default function({wrapperClassName, render: Component}: Args): Pen {
   let div
-
+  let svg
   function hide() {
     div.style.opacity = "0"
   }
 
-  function mount({el}) {
-    if (!el) return
+  function mount(el) {
+    svg = el
     div = document.createElement("div")
     div.classList.add(wrapperClassName)
-    if (el.parentNode) el.parentNode.appendChild(div)
+    if (svg.parentNode) svg.parentNode.appendChild(div)
 
-    d3.select(el)
+    d3.select(svg)
       .select(".brush")
-      .on("mousedown.abc", hide)
+      .on("mousedown.tooltip", hide)
   }
 
   function draw(chart) {
@@ -45,7 +42,7 @@ export default function({
       }
     }
 
-    d3.select(chart.el)
+    d3.select(svg)
       .on("mouseout.tooltip", hide)
       .on("mousemove.tooltip", show)
   }

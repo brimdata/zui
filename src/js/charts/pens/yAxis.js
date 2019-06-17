@@ -1,17 +1,20 @@
 /* @flow */
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import * as d3 from "d3"
 
-export default function(): ChartElement {
+export default function(): Pen {
+  let yaxis
+
   return {
-    mount: function(chart) {
-      d3.select(chart.el)
+    mount: function(svg) {
+      yaxis = d3
+        .select(svg)
         .append("g")
         .attr("class", "y-axis")
     },
+
     draw: function(chart) {
-      d3.select(chart.el)
-        .select(".y-axis")
+      yaxis
         .attr(
           "transform",
           `translate(${chart.margins.left}, ${chart.margins.top})`

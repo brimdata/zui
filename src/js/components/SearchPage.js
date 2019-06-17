@@ -23,7 +23,7 @@ import {useResizeObserver} from "../hooks/useResizeObserver"
 import AppError from "../models/AppError"
 import ColumnChooser from "./ColumnChooser"
 import ErrorFactory from "../models/ErrorFactory"
-import MainHistogram from "./MainHistogram/MainHistogram"
+import MainHistogramChart from "../charts/MainHistogram/Chart"
 import StartupError from "./StartupError"
 
 export default function SearchPage() {
@@ -57,7 +57,7 @@ export default function SearchPage() {
             <XControlBar />
             {logsTab && (
               <div className="search-page-header-charts">
-                <MainHistogram key={renderKey} />
+                <MainHistogramChart key={renderKey} />
               </div>
             )}
             <ColumnChooser />

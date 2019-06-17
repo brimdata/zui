@@ -3,13 +3,6 @@
 import type {Interval} from "../types"
 import type {Span} from "../BoomClient/types"
 
-export type Dimens = {
-  height: number,
-  width: number,
-  innerHeight: number,
-  innerWidth: number
-}
-
 export type Margins = {
   top: number,
   left: number,
@@ -18,17 +11,11 @@ export type Margins = {
 }
 
 type Redraw = (Chart) => void
-type ChartElementFunc = (Chart, Redraw) => void
+type PenFunc = (Chart, Redraw) => void
 
-export type ChartElement = {|
-  draw?: ChartElementFunc,
-  mount?: ChartElementFunc
-|}
-
-export type ChartSVG = {|
-  el: ?Element,
-  margins: Margins,
-  dimens: Dimens
+export type Pen = {|
+  draw: PenFunc,
+  mount: (Element) => void
 |}
 
 type HistogramState = {
@@ -45,11 +32,14 @@ export type HistogramData = {|
 |}
 
 export type HistogramChart = {|
-  ...ChartSVG,
+  height: number,
+  width: number,
+  margins: Margins,
   data: HistogramData,
   state: HistogramState,
   yScale: Function,
-  xScale: Function
+  xScale: Function,
+  pens: Pen[]
 |}
 
 export type Chart = HistogramChart

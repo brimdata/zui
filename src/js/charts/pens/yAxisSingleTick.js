@@ -2,29 +2,30 @@
 
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
+import {innerWidth} from "../dimens"
 
-export default function(): ChartElement {
-  function mount(chart) {
-    d3.select(chart.el)
+export default function(): Pen {
+  let yaxis
+
+  function mount(svg) {
+    yaxis = d3
+      .select(svg)
       .append("g")
       .attr("class", "y-axis-single-tick")
-      .attr(
-        "transform",
-        `translate(${chart.margins.left}, ${chart.margins.top})`
-      )
   }
 
   function draw(chart) {
     if (chart.data.points.length === 0) {
-      d3.select(chart.el)
-        .select(".y-axis-single-tick")
-        .style("opacity", "0")
+      yaxis.style("opacity", "0")
       return
     }
 
-    d3.select(chart.el)
-      .select(".y-axis-single-tick")
+    yaxis
+      .attr(
+        "transform",
+        `translate(${chart.margins.left}, ${chart.margins.top})`
+      )
       .style("opacity", "1")
       .call(
         d3
@@ -45,7 +46,7 @@ export default function(): ChartElement {
 
         d3.select(this)
           .selectAll("line")
-          .attr("x2", chart.dimens.innerWidth)
+          .attr("x2", innerWidth(chart.width, chart.margins))
 
         d3.select(this)
           .select("text")

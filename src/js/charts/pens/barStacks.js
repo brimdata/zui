@@ -2,13 +2,16 @@
 
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import {add} from "../../lib/Time"
 import {d3ElementAttr, itestLocator} from "../../test/integration"
+import {innerHeight} from "../dimens"
 
-export default function(): ChartElement {
-  function mount(chart) {
-    d3.select(chart.el)
+export default function(): Pen {
+  let chartG
+  function mount(svg) {
+    chartG = d3
+      .select(svg)
       .append("g")
       .attr("class", "chart")
       .attr(itestLocator, d3ElementAttr("histogram"))
@@ -16,9 +19,7 @@ export default function(): ChartElement {
 
   function draw(chart) {
     const series = d3.stack().keys(chart.data.keys)(chart.data.points)
-    const barGroups = d3
-      .select(chart.el)
-      .select(".chart")
+    const barGroups = chartG
       .attr(
         "transform",
         `translate(${chart.margins.left}, ${chart.margins.top})`
@@ -27,7 +28,7 @@ export default function(): ChartElement {
       .data(series, (d) => d.key)
 
     const t = d3.transition().duration(100)
-
+    let innerH = innerHeight(chart.height, chart.margins)
     barGroups
       .exit()
       .selectAll("rect")
@@ -44,7 +45,7 @@ export default function(): ChartElement {
     bars
       .exit()
       .attr("opacity", 1)
-      .attr("y", chart.dimens.innerHeight)
+      .attr("y", innerH)
       .attr("opacity", 0)
       .remove()
 
@@ -54,13 +55,13 @@ export default function(): ChartElement {
       const {number, unit} = chart.data.interval
       const a = chart.xScale(ts)
       const b = chart.xScale(add(ts, number, unit))
-      width = Math.max(Math.floor(b - a) - 2, 2)
+      width = Math.max(Math.floor(b - a), 1)
     }
 
     bars
       .enter()
       .append("rect")
-      .attr("y", chart.dimens.innerHeight)
+      .attr("y", innerH)
       .attr("height", 0)
       .merge(bars)
       .attr("width", width)
