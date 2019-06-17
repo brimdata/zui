@@ -3,7 +3,7 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import type {Span} from "../../BoomClient/types"
 import {innerHeight, innerWidth} from "../dimens"
 
@@ -13,12 +13,12 @@ type Props = {
   onSelectionClick: (span: Span) => void
 }
 
-export default function(props: Props = {}): ChartElement {
+export default function(props: Props = {}): Pen {
   const {onSelection, onSelectionClear, onSelectionClick} = props
-  let brushEl
+  let brushG
 
   function mount(svg) {
-    brushEl = d3
+    brushG = d3
       .select(svg)
       .append("g")
       .attr("class", "brush")
@@ -28,12 +28,7 @@ export default function(props: Props = {}): ChartElement {
     let prevSelection = null
 
     function onBrushStart() {
-      prevSelection = d3.brushSelection(
-        d3
-          .select(chart.el)
-          .select(".brush")
-          .node()
-      )
+      prevSelection = d3.brushSelection(brushG.node())
     }
 
     function onBrushEnd() {
@@ -61,20 +56,24 @@ export default function(props: Props = {}): ChartElement {
       }
     }
 
-    brushEl
-      .select(".brush")
-      .attr(
-        "transform",
-        `translate(${chart.margins.left}, ${chart.margins.top})`
-      )
+    brushG.attr(
+      "transform",
+      `translate(${chart.margins.left}, ${chart.margins.top})`
+    )
     const brush = d3
       .brushX()
-      .extent([[0, 0], [innerWidth(chart), innerHeight(chart)]])
+      .extent([
+        [0, 0],
+        [
+          innerWidth(chart.width, chart.margins),
+          innerHeight(chart.height, chart.margins)
+        ]
+      ])
 
-    brushEl.call(brush)
+    brushG.call(brush)
     chart.state.selection
-      ? brush.move(brushEl, chart.state.selection.map(chart.xScale))
-      : brush.move(brushEl, null)
+      ? brush.move(brushG, chart.state.selection.map(chart.xScale))
+      : brush.move(brushG, null)
 
     brush.on("end", onBrushEnd)
     brush.on("start", onBrushStart)

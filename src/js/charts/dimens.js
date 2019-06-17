@@ -1,22 +1,11 @@
 /* @flow */
 
-import type {Dimens, Margins} from "./types"
+import type {Margins} from "./types"
 
-interface GenChart {
-  margins: Margins;
-  dimens: Dimens;
+export function innerHeight(height: number, margins: Margins) {
+  return Math.max(height - margins.top - margins.bottom, 0)
 }
 
-export function innerHeight(chart: GenChart) {
-  return Math.max(
-    chart.dimens.height - chart.margins.top - chart.margins.bottom,
-    0
-  )
-}
-
-export function innerWidth(chart: GenChart) {
-  return Math.max(
-    chart.dimens.width - chart.margins.left - chart.margins.right,
-    0
-  )
+export function innerWidth(width: number, margins: Margins) {
+  return Math.max(width - margins.left - margins.right, 0)
 }

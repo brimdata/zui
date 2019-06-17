@@ -2,10 +2,10 @@
 
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import {innerWidth} from "../dimens"
 
-export default function(): ChartElement {
+export default function(): Pen {
   let yaxis
 
   function mount(svg) {
@@ -22,7 +22,6 @@ export default function(): ChartElement {
     }
 
     yaxis
-      .select(".y-axis-single-tick")
       .attr(
         "transform",
         `translate(${chart.margins.left}, ${chart.margins.top})`
@@ -47,7 +46,7 @@ export default function(): ChartElement {
 
         d3.select(this)
           .selectAll("line")
-          .attr("x2", innerWidth(chart))
+          .attr("x2", innerWidth(chart.width, chart.margins))
 
         d3.select(this)
           .select("text")

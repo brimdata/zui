@@ -2,16 +2,16 @@
 
 import * as d3 from "d3"
 
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import {innerHeight} from "../dimens"
 
-export default function(): ChartElement {
+export default function(): Pen {
   let line
   let overflow = 10
   let svg
 
-  function mount(svg) {
-    svg = svg
+  function mount(el) {
+    svg = el
     line = d3
       .select(svg)
       .insert("rect")
@@ -22,7 +22,7 @@ export default function(): ChartElement {
   }
 
   function draw(chart) {
-    line.attr("height", innerHeight(chart) + overflow * 2)
+    line.attr("height", innerHeight(chart.height, chart.margins) + overflow * 2)
 
     d3.select(svg)
       .on("mouseout.hoverline", function() {

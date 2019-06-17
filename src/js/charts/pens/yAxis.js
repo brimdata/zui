@@ -1,8 +1,8 @@
 /* @flow */
-import type {ChartElement} from "../types"
+import type {Pen} from "../types"
 import * as d3 from "d3"
 
-export default function(): ChartElement {
+export default function(): Pen {
   let yaxis
 
   return {
