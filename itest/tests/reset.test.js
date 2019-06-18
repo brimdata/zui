@@ -7,47 +7,13 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {logIn, waitForLoginAvailable, waitForSearch} from "../lib/app.js"
+import {logIn, startSearch, searchDisplay, waitForLoginAvailable, waitForSearch, writeSearch} from "../lib/app.js"
 import {TestTimeout, handleError} from "../lib/jest.js"
 import {selectors} from "../../src/js/test/integration"
 
 const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
 const path = require("path")
-
-const writeSearch = (app, searchText) =>
-  app.client.setValue(selectors.search.input, searchText)
-
-const startSearch = (app) => app.client.click(selectors.search.button)
-
-const searchDisplay = async (app) => {
-  // This stinks. We have to use getHTML because headers that are off the
-  // screen return as empty strings if you use getText. This isn't required of
-  // actual results.
-  // See http://v4.webdriver.io/api/property/getText.html
-  // app.browserWindow.maximize() fixes the problem on my laptop but not CircleCI.
-  // But what we get back includes the width which can be non-deterministic:
-  // <div class="header-cell" style="width: 192px;">ts<div class="col-resizer"></div></div>
-  // That style width will vary on my laptop vs. CircleCI.
-  // The hack is to split this and extract just the text.
-  // '<div class="header-cell" style="width: 192px;">ts<div // class="col-resizer"></div></div>'.split('>')[1].split('<')[0]
-
-  const _trim = (s: string) => s.split(">")[1].split("<")[0]
-
-  const headerResults = () => {
-    return app.client.getHTML(selectors.viewer.headers).then((headers) => {
-      if (typeof headers === "string") {
-        headers = [headers]
-      }
-      return headers.map((h) => _trim(h))
-    })
-  }
-  const searchResults = () => app.client.getText(selectors.viewer.results)
-
-  let headers = await headerResults()
-  let search = await searchResults()
-  return headers.concat(search)
-}
 
 describe("Application launch", () => {
   let app

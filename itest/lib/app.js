@@ -34,3 +34,35 @@ export const waitForHistogram = (app) => {
     app.client.element(selectors.histogram.topLevel).getAttribute("class")
   )
 }
+
+export const writeSearch = (app, searchText) =>
+  app.client.setValue(selectors.search.input, searchText)
+
+export const startSearch = (app) => app.client.click(selectors.search.button)
+
+export const searchDisplay = async (app) => {
+  // This stinks. We have to use getHTML because headers that are off the
+  // screen return as empty strings if you use getText. This isn't required of
+  // actual results.
+  // See http://v4.webdriver.io/api/property/getText.html
+  // app.browserWindow.maximize() fixes the problem on my laptop but not CircleCI.
+  // But what we get back includes the width which can be non-deterministic:
+  // <div class="header-cell" style="width: 192px;">ts<div class="col-resizer"></div></div>
+  // That style width will vary on my laptop vs. CircleCI.
+  // The hack is to split this and extract just the text.
+  const _trim = (s: string) => s.split(">")[1].split("<")[0]
+
+  const headerResults = () => {
+    return app.client.getHTML(selectors.viewer.headers).then((headers) => {
+      if (typeof headers === "string") {
+        headers = [headers]
+      }
+      return headers.map((h) => _trim(h))
+    })
+  }
+  const searchResults = () => app.client.getText(selectors.viewer.results)
+
+  let headers = await headerResults()
+  let search = await searchResults()
+  return headers.concat(search)
+}
