@@ -7,7 +7,7 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {retry} from "../lib/control.js"
+import {logIn, waitForLoginAvailable, waitForHistogram, waitForSearch} from "../lib/app.js"
 import {selectors} from "../../src/js/test/integration"
 
 const Application = require("spectron").Application
@@ -15,38 +15,6 @@ const electronPath = require("electron") // Require Electron from the binaries i
 const path = require("path")
 
 const TestTimeout = 60000
-
-const logIn = (app) => {
-  return app.client
-    .setValue(selectors.login.host, "localhost")
-    .setValue(selectors.login.port, "9867")
-    .click(selectors.login.button)
-}
-
-const waitForLoginAvailable = (app) => {
-  const waitForHostname = () => {
-    return app.client.waitForExist(selectors.login.host)
-  }
-  const waitForPort = () => {
-    return app.client.waitForExist(selectors.login.port)
-  }
-  const waitForButton = () => {
-    return app.client.waitForExist(selectors.login.button)
-  }
-  return waitForHostname()
-    .then(() => waitForPort())
-    .then(() => waitForButton())
-}
-
-const waitForSearch = (app) => {
-  return retry(() => app.client.element("#main-search-input").getValue())
-}
-
-const waitForHistogram = (app) => {
-  return retry(() =>
-    app.client.element(selectors.histogram.topLevel).getAttribute("class")
-  )
-}
 
 const writeSearch = (app, searchText) =>
   app.client.setValue(selectors.search.input, searchText)
