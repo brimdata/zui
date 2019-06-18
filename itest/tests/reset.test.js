@@ -7,6 +7,7 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
+import {retry} from "../lib/control.js"
 import {selectors} from "../../src/js/test/integration"
 
 const Application = require("spectron").Application
@@ -14,24 +15,6 @@ const electronPath = require("electron") // Require Electron from the binaries i
 const path = require("path")
 
 const TestTimeout = 60000
-
-const retry = (f, attempts = 100, delay = 100) => {
-  return new Promise((resolve, reject) => {
-    f()
-      .then((ret) => resolve(ret))
-      .catch((err) => {
-        setTimeout(() => {
-          if (attempts === 1) {
-            reject(err)
-          } else {
-            retry(f, attempts - 1, delay)
-              .then((ret) => resolve(ret))
-              .catch((err) => reject(err))
-          }
-        }, delay)
-      })
-  })
-}
 
 const logIn = (app) => {
   return app.client
