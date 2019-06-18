@@ -7,7 +7,7 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {selectors} from "../src/js/test/integration"
+import {selectors} from "../../src/js/test/integration"
 
 const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
@@ -57,6 +57,12 @@ const waitForLoginAvailable = (app) => {
 
 const waitForSearch = (app) => {
   return retry(() => app.client.element("#main-search-input").getValue())
+}
+
+const waitForHistogram = (app) => {
+  return retry(() =>
+    app.client.element(selectors.histogram.topLevel).getAttribute("class")
+  )
 }
 
 const writeSearch = (app, searchText) =>
@@ -124,7 +130,7 @@ describe("Application launch", () => {
     // TODO: Move this logic into a library, especially as it expands.
     app = new Application({
       path: electronPath,
-      args: [path.join(__dirname, "..")]
+      args: [path.join(__dirname, "..", "..")]
     })
     return app.start().then(() => app.webContents.send("resetState"))
   })
@@ -136,33 +142,86 @@ describe("Application launch", () => {
   })
 
   test(
-    "reset state after query works",
+    "query path=weird | sort",
     (done) => {
       waitForLoginAvailable(app)
         .then(() => logIn(app))
+        .then(() => waitForHistogram(app))
+        .then(() => waitForSearch(app))
+        .then(() => writeSearch(app, "_path=weird | sort"))
+        .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    },
+    TestTimeout
+  )
+
+  test(
+    "query path=_http | count()",
+    (done) => {
+      waitForLoginAvailable(app)
+        .then(() => logIn(app))
+        .then(() => waitForHistogram(app))
         .then(() => waitForSearch(app))
         .then(() => writeSearch(app, "_path=http | count()"))
         .then(() => startSearch(app))
         .then(() => waitForSearch(app))
         .then(() => searchDisplay(app))
         .then((results) => {
-          expect(results).toBeTruthy()
+          expect(results).toMatchSnapshot()
+          done()
         })
-        .then(() => app.webContents.send("resetState"))
-        .then(() => waitForLoginAvailable(app))
-        .then(() => app.client.getValue(selectors.login.host))
-        .then((host) => {
-          expect(host).toBe("")
+        .catch((err) => {
+          handleError(app, err, done)
         })
-        .then(() => app.client.getValue(selectors.login.port))
-        .then((port) => {
-          expect(port).toBe("")
-        })
+    },
+    TestTimeout
+  )
+
+  test(
+    "query _path=http | count() by id.resp_p | sort",
+    (done) => {
+      waitForLoginAvailable(app)
         .then(() => logIn(app))
+        .then(() => waitForHistogram(app))
         .then(() => waitForSearch(app))
-        .then(() => app.client.getValue(selectors.search.input))
-        .then((val) => {
-          expect(val).toBe("")
+        .then(() =>
+          writeSearch(app, "_path=http | count() by id.resp_p | sort")
+        )
+        .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    },
+    TestTimeout
+  )
+
+  test(
+    "query _path=http | every 5m count()",
+    (done) => {
+      waitForLoginAvailable(app)
+        .then(() => logIn(app))
+        .then(() => waitForHistogram(app))
+        .then(() => waitForSearch(app))
+        .then(() => writeSearch(app, "_path=http | every 5m count()"))
+        .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toMatchSnapshot()
           done()
         })
         .catch((err) => {

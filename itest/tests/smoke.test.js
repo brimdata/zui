@@ -7,7 +7,7 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {selectors} from "../src/js/test/integration"
+import {selectors} from "../../src/js/test/integration"
 
 const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
@@ -96,7 +96,7 @@ describe("Application launch", () => {
     // TODO: Move this logic into a library, especially as it expands.
     app = new Application({
       path: electronPath,
-      args: [path.join(__dirname, "..")]
+      args: [path.join(__dirname, "..", "..")]
     })
     return app.start().then(() => app.webContents.send("resetState"))
   })
