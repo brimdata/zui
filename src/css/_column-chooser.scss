@@ -64,9 +64,10 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: scroll;
+    overflow-y: scroll;
     padding-top: 18px;
     padding-bottom: 12px;
+    height: 100%;
   }
 
   li {
