@@ -5,9 +5,9 @@ import {connect} from "react-redux"
 import React, {Component} from "react"
 
 import {XLatestError} from "./LatestError"
-import {XLogin} from "./Login"
 import {XNotifications} from "./Notifications"
 import {getTimeZone} from "../state/reducers/view"
+import Login from "./Login/Login"
 import SearchPage from "./SearchPage"
 import * as Time from "../lib/Time"
 
@@ -26,7 +26,7 @@ export default class App extends Component<Props> {
         <XNotifications />
         <Switch>
           <Route path="/search" component={SearchPage} />
-          <Route path="/connect" component={XLogin} />
+          <Route path="/connect" component={Login} />
           <Redirect to="/connect" />
         </Switch>
       </div>

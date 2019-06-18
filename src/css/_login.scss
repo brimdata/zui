@@ -1,0 +1,65 @@
+$temp-bg: rgba(0, 0, 0, 0.05);
+
+.login {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  aside {
+    min-width: 300px;
+    width: 30%;
+    background: $temp-bg;
+  }
+
+  main {
+    flex: 1;
+  }
+}
+
+.company-name {
+  background: $temp-bg;
+  margin-top: $space-m;
+
+  h1 {
+    padding: $space-m;
+    margin: 0;
+    font-weight: 900;
+  }
+}
+
+.saved-creds {
+  margin-top: $space-m;
+  padding: $space-m;
+  background: $temp-bg;
+}
+
+.login-form {
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 200px;
+  background: $temp-bg;
+  padding: $space-m;
+}
+
+.form {
+  & > div {
+    margin-bottom: $space-xs;
+  }
+
+  label {
+    @extend .label;
+    font-weight: bold;
+    display: block;
+  }
+
+  .checkbox-label {
+    font-weight: normal;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 3px 5px;
+    @extend .mono;
+  }
+}
