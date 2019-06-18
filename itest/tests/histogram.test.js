@@ -9,13 +9,12 @@
 
 import {logIn, waitForLoginAvailable, waitForHistogram, waitForSearch} from "../lib/app.js"
 import {retryUntil} from "../lib/control.js"
+import {TestTimeout, handleError} from "../lib/jest.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
 
 const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
 const path = require("path")
-
-const TestTimeout = 60000
 
 const verifySingleRectAttr = (app, pathClass, attr) =>
   app.client.getAttribute(`.${pathClass} rect`, attr).then((vals) => {
@@ -44,31 +43,6 @@ const verifyPathClassRect = (app, pathClass) =>
       verifySingleRectAttr(app, pathClass, attr)
     )
   )
-
-const handleError = async (app, initialError, done) => {
-  let realError = undefined
-  let notificationError = undefined
-  console.log(`handleError: Test hit exception: ${initialError}`)
-  console.log("handleError: Looking for any desktop app notifications")
-  try {
-    notificationError = await app.client.getHTML(selectors.notification, false)
-  } catch (e) {
-    notificationError = undefined
-  }
-  if (notificationError) {
-    realError = new Error(
-      "App notification '" +
-        notificationError +
-        "' (initial error: '" +
-        initialError +
-        "'"
-    )
-  } else {
-    console.log("handleError: desktop app notification not found")
-    realError = initialError
-  }
-  done.fail(realError)
-}
 
 describe("Application launch", () => {
   let app
