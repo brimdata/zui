@@ -7,7 +7,14 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {logIn, startSearch, searchDisplay, waitForLoginAvailable, waitForSearch, writeSearch} from "../lib/app.js"
+import {
+  logIn,
+  startSearch,
+  searchDisplay,
+  waitForLoginAvailable,
+  waitForSearch,
+  writeSearch
+} from "../lib/app.js"
 import {TestTimeout, handleError} from "../lib/jest.js"
 import {selectors} from "../../src/js/test/integration"
 

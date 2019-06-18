@@ -7,7 +7,12 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {logIn, waitForLoginAvailable, waitForHistogram, waitForSearch} from "../lib/app.js"
+import {
+  logIn,
+  waitForLoginAvailable,
+  waitForHistogram,
+  waitForSearch
+} from "../lib/app.js"
 import {TestTimeout, handleError} from "../lib/jest.js"
 
 const Application = require("spectron").Application
