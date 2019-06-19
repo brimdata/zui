@@ -1,6 +1,6 @@
 /* @flow */
 
-export const retry = (f, attempts = 100, delay = 100) => {
+export const retry = (f, attempts: number = 100, delay: number = 100) => {
   return new Promise((resolve, reject) => {
     f()
       .then((ret) => resolve(ret))
@@ -18,7 +18,12 @@ export const retry = (f, attempts = 100, delay = 100) => {
   })
 }
 
-export const retryUntil = (f, cond_f, attempts = 5, delay = 1000) =>
+export const retryUntil = (
+  f,
+  cond_f,
+  attempts: number = 5,
+  delay: number = 1000
+) =>
   // Retry f until cond_f is true. Return results from f.
   //
   // f: function that returns a promise
