@@ -1,7 +1,13 @@
 /* @flow */
 
-export const retry = (f, attempts: number = 100, delay: number = 100) => {
-  return new Promise((resolve, reject) => {
+type PromiseFunc = () => Promise<*>
+
+export function retry(
+  f: PromiseFunc,
+  attempts: number = 100,
+  delay: number = 100
+) {
+  return new Promise<*>((resolve, reject) => {
     f()
       .then((ret) => resolve(ret))
       .catch((err) => {
@@ -19,8 +25,8 @@ export const retry = (f, attempts: number = 100, delay: number = 100) => {
 }
 
 export const retryUntil = (
-  f,
-  cond_f,
+  f: PromiseFunc,
+  cond_f: (*) => boolean,
   attempts: number = 5,
   delay: number = 1000
 ) =>

@@ -1,13 +1,24 @@
 /* @flow */
 
+import {Application} from "spectron"
+
 import {selectors} from "../../src/js/test/integration"
 
 export const TestTimeout = 60000
 
-export const handleError = async (app, initialError, done) => {
+export type Done = {
+  (string | Error | void): void,
+  fail?: (string | Error | void) => void
+}
+
+export const handleError = async (
+  app: Application,
+  initialError: Error,
+  done: Done
+) => {
   let realError = undefined
   let notificationError = undefined
-  console.log(`handleError: Test hit exception: ${initialError}`)
+  console.log(`handleError: Test hit exception: ${initialError.message}`)
   console.log("handleError: Looking for any desktop app notifications")
   try {
     notificationError = await app.client.getHTML(selectors.notification, false)
@@ -26,5 +37,5 @@ export const handleError = async (app, initialError, done) => {
     console.log("handleError: desktop app notification not found")
     realError = initialError
   }
-  done.fail(realError)
+  done.fail && done.fail(realError)
 }

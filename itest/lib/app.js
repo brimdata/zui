@@ -2,15 +2,16 @@
 
 import {retry} from "./control"
 import {selectors} from "../../src/js/test/integration"
+import {Application} from "spectron"
 
-export const logIn = (app) => {
+export const logIn = (app: Application) => {
   return app.client
     .setValue(selectors.login.host, "localhost")
     .setValue(selectors.login.port, "9867")
     .click(selectors.login.button)
 }
 
-export const waitForLoginAvailable = (app) => {
+export const waitForLoginAvailable = (app: Application) => {
   const waitForHostname = () => {
     return app.client.waitForExist(selectors.login.host)
   }
@@ -25,22 +26,23 @@ export const waitForLoginAvailable = (app) => {
     .then(() => waitForButton())
 }
 
-export const waitForSearch = (app) => {
+export const waitForSearch = (app: Application) => {
   return retry(() => app.client.element("#main-search-input").getValue())
 }
 
-export const waitForHistogram = (app) => {
+export const waitForHistogram = (app: Application) => {
   return retry(() =>
     app.client.element(selectors.histogram.topLevel).getAttribute("class")
   )
 }
 
-export const writeSearch = (app, searchText: string) =>
+export const writeSearch = (app: Application, searchText: string) =>
   app.client.setValue(selectors.search.input, searchText)
 
-export const startSearch = (app) => app.client.click(selectors.search.button)
+export const startSearch = (app: Application) =>
+  app.client.click(selectors.search.button)
 
-export const searchDisplay = async (app) => {
+export const searchDisplay = async (app: Application) => {
   // This stinks. We have to use getHTML because headers that are off the
   // screen return as empty strings if you use getText. This isn't required of
   // actual results.
