@@ -1,23 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Application launch histogram deep inspection 1`] = `
-Array [
-  "capture_loss-bg-color",
-  "conn-bg-color",
-  "dhcp-bg-color",
-  "dns-bg-color",
-  "files-bg-color",
-  "http-bg-color",
-  "notice-bg-color",
-  "software-bg-color",
-  "ssl-bg-color",
-  "stats-bg-color",
-  "weird-bg-color",
-  "x509-bg-color",
-]
-`;
-
-exports[`Application launch query _path=http | count() by id.resp_p | sort 1`] = `
+exports[`Query tests query _path=http | count() by id.resp_p | sort 1`] = `
 Array [
   "id.resp_p",
   "count",
@@ -28,7 +11,7 @@ Array [
 ]
 `;
 
-exports[`Application launch query _path=http | every 5m count() 1`] = `
+exports[`Query tests query _path=http | every 5m count() 1`] = `
 Array [
   "ts",
   "count",
@@ -51,14 +34,14 @@ Array [
 ]
 `;
 
-exports[`Application launch query path=_http | count() 1`] = `
+exports[`Query tests query path=_http | count() 1`] = `
 Array [
   "count",
   "61",
 ]
 `;
 
-exports[`Application launch query path=weird | sort 1`] = `
+exports[`Query tests query path=weird | sort 1`] = `
 Array [
   "ts",
   "_path",
