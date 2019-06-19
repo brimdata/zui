@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Application launch histogram deep inspection 1`] = `
+exports[`Histogram tests histogram deep inspection 1`] = `
 Array [
   "capture_loss-bg-color",
   "conn-bg-color",
