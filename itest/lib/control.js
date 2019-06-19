@@ -30,12 +30,9 @@ export const retryUntil = (
   attempts: number = 5,
   delay: number = 1000
 ) =>
-  // Retry f until cond_f is true. Return results from f.
-  //
-  // f: function that returns a promise
-  // cond_f: function that expects f's resolved value and returns a Boolean.
-  // If cond_f returns false, then f is retried. This attempts every delay ms
-  // for attempts before rejecting.
+  // Retry f until a condition is met. cond_f receives the value from f after
+  // it is resolved and is responsible for examining and returning a boolean to
+  // determine if the condition is satisfied.
   retry(
     () =>
       new Promise((resolve, reject) => {

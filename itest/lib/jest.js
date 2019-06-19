@@ -6,6 +6,8 @@ import {selectors} from "../../src/js/test/integration"
 
 export const TestTimeout = 60000
 
+// This is trying to make Flow happy for passing in the done function from
+// Jest.
 export type Done = {
   (string | Error | void): void,
   fail?: (string | Error | void) => void
