@@ -14,8 +14,10 @@ export const ButtonGroup = ({children}: Children) => (
   <div className="button-group">{children}</div>
 )
 
-export const ThinButton = ({children}: Children) => (
-  <button className="thin-button">{children}</button>
+export const ThinButton = ({children, ...rest}: Children) => (
+  <button className="thin-button" {...rest}>
+    {children}
+  </button>
 )
 
 export class ThinPicker extends React.Component<{}> {

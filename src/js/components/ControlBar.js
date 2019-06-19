@@ -13,6 +13,7 @@ import {switchSpace} from "../space/switch"
 import DropMenu from "./DropMenu"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as spaces from "../state/reducers/spaces"
+import {reactElementProps} from "../test/integration"
 
 type Props = {|
   currentSpace: string,
@@ -40,7 +41,11 @@ export default function ControlBar({currentSpace, dispatch}: Props) {
           onChange={onSpaceChange}
           className="button-group"
         >
-          {<ThinButton>{space}</ThinButton>}
+          {
+            <ThinButton {...reactElementProps("spaces_button")}>
+              {space}
+            </ThinButton>
+          }
         </DropMenu>
         <XSpanPickers />
       </div>

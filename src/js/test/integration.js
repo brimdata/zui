@@ -13,6 +13,7 @@ const dataAttrs = {
   notification: "notification-header",
   search_input: "search_input",
   search_button: "search_button",
+  spaces_button: "spaces_button",
   viewer_header: "viewer_header",
   viewer_results: "viewer_results"
 }
