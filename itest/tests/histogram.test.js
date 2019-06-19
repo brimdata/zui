@@ -49,7 +49,7 @@ const verifyPathClassRect = (app, pathClass) =>
     )
   )
 
-describe("Application launch", () => {
+describe("Histogram tests", () => {
   let app
   beforeEach(() => {
     // TODO: Move this logic into a library, especially as it expands.

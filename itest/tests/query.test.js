@@ -22,7 +22,7 @@ const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
 const path = require("path")
 
-describe("Application launch", () => {
+describe("Query tests", () => {
   let app
   beforeEach(() => {
     // TODO: Move this logic into a library, especially as it expands.
