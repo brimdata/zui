@@ -71,3 +71,12 @@ export const searchDisplay = async (app: Application) => {
 
 export const getCurrentSpace = (app: Application) =>
   app.client.getText(selectors.spaces.button)
+
+const getSearchStat = (app: Application, selector: string) =>
+  app.client.getText(selector).then((text) => parseFloat(text.split(" ")[0]))
+
+export const getSearchSpeed = (app: Application) =>
+  getSearchStat(app, selectors.search.speed)
+
+export const getSearchTime = (app: Application) =>
+  getSearchStat(app, selectors.search.time)
