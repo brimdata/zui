@@ -10,8 +10,8 @@ export type Margins = {
   bottom: number
 }
 
-type Redraw = (Chart) => void
-type PenFunc = (Chart, Redraw) => void
+type Redraw = (*) => void
+type PenFunc = (*, Redraw) => void
 
 export type Pen = {|
   draw: PenFunc,

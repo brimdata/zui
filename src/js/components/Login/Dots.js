@@ -1,5 +1,5 @@
 /* @flow */
-import React, {useEffect, useMemo, useState} from "react"
+import React, {useMemo} from "react"
 import * as d3 from "d3"
 
 import ChartSVG from "../../charts/ChartSVG"
@@ -61,12 +61,6 @@ let endData = "0,0,0,2,0,0,0,5,0,0,0,3,0,0,6,0,11,0,14,0,0,0,7,0,0,0,10,0,8,0,0,
   .map((d) => parseInt(d))
 
 export function Dots() {
-  let [data, setData] = useState<number[]>(endData.map((_) => 0))
-
-  useEffect(() => {
-    setTimeout(() => setData(endData), 1000)
-  }, [])
-
   return (
     <Dimens
       className="deco-dots"
