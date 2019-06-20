@@ -1,15 +1,14 @@
 /* @flow */
-
 import type {
   CLUSTER_ADD,
   CLUSTER_ERROR_SET,
   CLUSTER_REMOVE,
   CLUSTER_SET,
-  Cluster
+  CLUSTER_STATE_SET,
+  Cluster,
+  ClusterStateEnum
 } from "./types"
-import type {State} from "../types"
 
-// Actions
 export function setCluster(cluster: Cluster): CLUSTER_SET {
   return {type: "CLUSTER_SET", cluster}
 }
@@ -26,15 +25,6 @@ export function setClusterError(error: string): CLUSTER_ERROR_SET {
   return {type: "CLUSTER_ERROR_SET", error}
 }
 
-// Selectors
-export function getCluster(state: State) {
-  return state.clusters.current
-}
-
-export function getClusters(state: State) {
-  return state.clusters.saved
-}
-
-export function getClusterError(state: State) {
-  return state.clusters.error
+export function setClusterState(state: ClusterStateEnum): CLUSTER_STATE_SET {
+  return {type: "CLUSTER_STATE_SET", state}
 }

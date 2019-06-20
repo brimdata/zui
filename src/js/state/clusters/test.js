@@ -2,13 +2,17 @@
 
 import {
   addCluster,
-  getCluster,
-  getClusterError,
-  getClusters,
   removeCluster,
   setCluster,
-  setClusterError
-} from "./"
+  setClusterError,
+  setClusterState
+} from "./actions"
+import {
+  getCluster,
+  getClusterError,
+  getClusterState,
+  getClusters
+} from "./selectors"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -57,4 +61,14 @@ test("setClusterError to empty", () => {
   let state = store.dispatchAll([setClusterError("")])
 
   expect(getClusterError(state)).toEqual("")
+})
+
+test("setClusterState", () => {
+  let state = store.dispatchAll([
+    setClusterState("testing"),
+    setClusterState("ok"),
+    setClusterState("error")
+  ])
+
+  expect(getClusterState(state)).toBe("error")
 })
