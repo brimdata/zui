@@ -68,3 +68,6 @@ export const searchDisplay = async (app: Application) => {
   let search = await searchResults()
   return headers.concat(search)
 }
+
+export const getCurrentSpace = (app: Application) =>
+  app.client.getText(selectors.spaces.button)

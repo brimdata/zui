@@ -60,6 +60,9 @@ export const selectors = {
     input: dataAttrSelector("search_input"),
     button: dataAttrSelector("search_button")
   },
+  spaces: {
+    button: dataAttrSelector("spaces_button")
+  },
   viewer: {
     header_base: dataAttrSelector("viewer_header"),
     headers: dataAttrSelector("viewer_header") + " .header-cell",
