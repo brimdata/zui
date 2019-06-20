@@ -13,6 +13,8 @@ const dataAttrs = {
   notification: "notification-header",
   search_input: "search_input",
   search_button: "search_button",
+  search_time: "search_time",
+  search_speed: "search_speed",
   spaces_button: "spaces_button",
   viewer_header: "viewer_header",
   viewer_results: "viewer_results"
@@ -57,8 +59,10 @@ export const selectors = {
   },
   notification: dataAttrSelector("notification"),
   search: {
+    button: dataAttrSelector("search_button"),
     input: dataAttrSelector("search_input"),
-    button: dataAttrSelector("search_button")
+    speed: dataAttrSelector("search_speed"),
+    time: dataAttrSelector("search_time")
   },
   spaces: {
     button: dataAttrSelector("spaces_button")
