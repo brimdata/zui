@@ -1,0 +1,60 @@
+/* @flow */
+
+import {
+  addCluster,
+  getCluster,
+  getClusterError,
+  getClusters,
+  removeCluster,
+  setCluster,
+  setClusterError
+} from "./"
+import initTestStore from "../../test/initTestStore"
+
+let store
+beforeEach(() => {
+  store = initTestStore()
+})
+
+let cluster = {
+  host: "boom.com",
+  port: "9867",
+  username: "kerr",
+  password: "123"
+}
+
+test("addCluster", () => {
+  let state = store.dispatchAll([addCluster(cluster)])
+
+  expect(getClusters(state)).toEqual([cluster])
+})
+
+test("addCluster when it already exists", () => {
+  let state = store.dispatchAll([addCluster(cluster), addCluster(cluster)])
+
+  expect(getClusters(state)).toEqual([cluster])
+})
+
+test("removeCluster", () => {
+  let state = store.dispatchAll([addCluster(cluster), removeCluster(cluster)])
+
+  expect(getClusters(state)).toEqual([])
+})
+
+test("setCluster", () => {
+  let state = store.dispatchAll([setCluster(cluster)])
+
+  expect(getCluster(state)).toEqual(cluster)
+})
+
+test("setClusterError to message", () => {
+  let state = store.dispatchAll([setClusterError("Yo yo")])
+
+  expect(getClusterError(state)).toEqual("Yo yo")
+})
+
+test("setClusterError to empty", () => {
+  let state = store.dispatchAll([setClusterError("")])
+
+  expect(getClusterError(state)).toEqual("")
+})

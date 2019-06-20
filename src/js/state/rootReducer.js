@@ -4,6 +4,7 @@ import {combineReducers} from "redux"
 
 import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
+import clustersReducer from "./clusters/reducer"
 import columnsReducer from "./columns/reducer"
 import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
@@ -24,6 +25,7 @@ export default combineReducers<*, *>({
   searches: searchesReducer,
   viewer: viewerReducer,
   columns: columnsReducer,
+  clusters: clustersReducer,
   investigation,
   view,
   searchBar,

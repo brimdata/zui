@@ -1,0 +1,40 @@
+/* @flow */
+
+import type {
+  CLUSTER_ADD,
+  CLUSTER_ERROR_SET,
+  CLUSTER_REMOVE,
+  CLUSTER_SET,
+  Cluster
+} from "./types"
+import type {State} from "../types"
+
+// Actions
+export function setCluster(cluster: Cluster): CLUSTER_SET {
+  return {type: "CLUSTER_SET", cluster}
+}
+
+export function addCluster(cluster: Cluster): CLUSTER_ADD {
+  return {type: "CLUSTER_ADD", cluster}
+}
+
+export function removeCluster(cluster: Cluster): CLUSTER_REMOVE {
+  return {type: "CLUSTER_REMOVE", cluster}
+}
+
+export function setClusterError(error: string): CLUSTER_ERROR_SET {
+  return {type: "CLUSTER_ERROR_SET", error}
+}
+
+// Selectors
+export function getCluster(state: State) {
+  return state.clusters.current
+}
+
+export function getClusters(state: State) {
+  return state.clusters.saved
+}
+
+export function getClusterError(state: State) {
+  return state.clusters.error
+}
