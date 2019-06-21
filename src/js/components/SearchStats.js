@@ -5,6 +5,7 @@ import React from "react"
 import type {SearchStats as TSearchStats} from "../state/searches/types"
 import {getSearchStats} from "../state/searches/selector"
 import * as fmt from "../lib/fmt"
+import {reactElementProps} from "../test/integration"
 
 type Props = {
   stats?: TSearchStats
@@ -17,13 +18,15 @@ export default class SearchStats extends React.Component<Props> {
       <div className="search-stats">
         <p>
           <span className="label">Speed:</span>
-          <span className="number">
+          <span className="number" {...reactElementProps("search_speed")}>
             {fmtSpeed(startTime, updateTime, bytesRead)}
           </span>
         </p>
         <p>
           <span className="label">Time:</span>
-          <span className="number">{fmtDiff(startTime, updateTime)}</span>
+          <span className="number" {...reactElementProps("search_time")}>
+            {fmtDiff(startTime, updateTime)}
+          </span>
         </p>
       </div>
     )
