@@ -55,17 +55,20 @@ export const searchDisplay = async (app: Application) => {
   const _trim = (s: string) => s.split(">")[1].split("<")[0]
 
   const headerResults = () => {
-    return app.client.getHTML(selectors.viewer.headers).then((headers) => {
-      if (typeof headers === "string") {
-        headers = [headers]
+    return retry(() => app.client.getHTML(selectors.viewer.headers)).then(
+      (headers) => {
+        if (typeof headers === "string") {
+          headers = [headers]
+        }
+        return headers.map((h) => _trim(h))
       }
-      return headers.map((h) => _trim(h))
-    })
+    )
   }
   const searchResults = () => app.client.getText(selectors.viewer.results)
 
   let headers = await headerResults()
   let search = await searchResults()
+  // $FlowFixMe
   return headers.concat(search)
 }
 
