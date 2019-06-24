@@ -83,3 +83,11 @@ export const getSearchSpeed = (app: Application) =>
 
 export const getSearchTime = (app: Application) =>
   getSearchStat(app, selectors.search.time)
+
+export const setSpan = (app: Application, span: string) => {
+  const clickSpanButton = () => app.client.click(selectors.span.button)
+
+  const clickSpan = () => app.client.click(selectors.span.menuItem(span))
+
+  return clickSpanButton().then(() => clickSpan())
+}
