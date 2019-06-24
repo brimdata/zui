@@ -11,6 +11,7 @@ import {setOuterTimeWindow} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
+import {reactElementProps} from "../test/integration"
 
 type StateProps = {|
   spaceSpan: DateTuple
@@ -29,7 +30,7 @@ export default class SpanPickerMenu extends React.Component<Props> {
 
   render() {
     return (
-      <MenuList>
+      <MenuList {...reactElementProps("span_menu")}>
         <li onClick={() => this.setSpan(this.props.spaceSpan)}>Whole Space</li>
         <li onClick={() => this.setSpan(spanOfLast(30, "minutes"))}>
           Last 30 minutes

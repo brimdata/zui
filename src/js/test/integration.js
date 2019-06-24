@@ -17,6 +17,7 @@ const dataAttrs = {
   search_speed: "search_speed",
   spaces_button: "spaces_button",
   span_button: "span_button",
+  span_menu: "span_menu",
   viewer_header: "viewer_header",
   viewer_results: "viewer_results"
 }
@@ -69,7 +70,17 @@ export const selectors = {
     button: dataAttrSelector("spaces_button")
   },
   span: {
-    button: dataAttrSelector("span_button")
+    button: dataAttrSelector("span_button"),
+    menu: dataAttrSelector("span_menu"),
+    menuItem: (itemText: string) => {
+      // This has to use an Xpath because CSS selectors don't have the
+      // capability to evaluate whether a child text node has particular
+      // content.
+      // https://stackoverflow.com/questions/1520429/is-there-a-css-selector-for-elements-containing-certain-text
+      // The Xpath below finds the span_menu and then the li under it whose
+      // child text matches itemText.
+      return `//*[@${itestLocator}='span_menu']/li[contains(text(), '${itemText}')]`
+    }
   },
   viewer: {
     header_base: dataAttrSelector("viewer_header"),
