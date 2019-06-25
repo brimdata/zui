@@ -33,7 +33,8 @@ export const dataSets = {
       defaultRectsPerClass: 49,
       defaultTotalRectCount: 588,
       rectAttrMin: 0,
-      rectAttrMax: 1000
+      rectAttrMax: 1000,
+      wholeSpaceDistinctPaths: 19
     }
   }
 }
