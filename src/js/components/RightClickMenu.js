@@ -8,6 +8,7 @@ import {XRightClickMenuItem} from "./RightClickMenuItem"
 import {ensureVisible} from "../lib/MenuStyler"
 import MenuList from "./MenuList"
 import Portal from "./Portal"
+import {reactElementProps} from "../test/integration"
 
 type Props = {
   actions: RightClickAction[],
@@ -25,7 +26,7 @@ const RightClickMenu = (props: Props) => {
             onClose={props.onClose}
             style={ensureVisible(contentRect.bounds, props.style)}
           >
-            <MenuList ref={measureRef}>
+            <MenuList ref={measureRef} {...reactElementProps("logCellMenu")}>
               {props.actions.map((action, index) => (
                 <XRightClickMenuItem key={index} action={action} />
               ))}
