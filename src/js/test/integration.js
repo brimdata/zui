@@ -32,7 +32,7 @@ export const dataSets = {
   corelight: {
     logDetails: {
       getDetailsFrom: "C9FG8S2NvxVUR0b0La",
-      initialSearch: "_path=http www.mybusinessdoc.com",
+      initialSearch: "_path=http www.mybusinessdoc.com | sort",
       span: "Whole Space"
     },
     histogram: {
