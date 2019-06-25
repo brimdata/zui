@@ -18,6 +18,7 @@ import DayPicker from "./DayPicker"
 import DropMenu from "./DropMenu"
 import SpanDuration from "./SpanDuration"
 import TimePicker from "./TimePicker"
+import {reactElementProps} from "../test/integration"
 
 type StateProps = {|
   timeWindow: DateTuple,
@@ -183,7 +184,7 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
           className="span-drop-menu"
           position="right"
         >
-          <ThinPicker />
+          <ThinPicker {...reactElementProps("span_button")} />
         </DropMenu>
       </div>
     )

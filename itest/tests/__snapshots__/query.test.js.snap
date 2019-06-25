@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Query tests query * | count(); switch to whole space 1`] = `
+Array [
+  "count",
+  "959",
+]
+`;
+
+exports[`Query tests query * | count(); switch to whole space 2`] = `
+Array [
+  "count",
+  "1,031,683",
+]
+`;
+
 exports[`Query tests query _path=http | count() by id.resp_p | sort 1`] = `
 Array [
   "id.resp_p",

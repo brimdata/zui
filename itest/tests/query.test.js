@@ -12,6 +12,7 @@ import {
   getSearchTime,
   logIn,
   searchDisplay,
+  setSpan,
   startSearch,
   waitForLoginAvailable,
   waitForHistogram,
@@ -148,6 +149,44 @@ describe("Query tests", () => {
         .then(() => waitForSearch(app))
         .then(() => writeSearch(app, "_path=http | every 5m count()"))
         .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toMatchSnapshot()
+        })
+        .then(() => getSearchSpeed(app))
+        .then((searchSpeed) => {
+          expect(searchSpeed).toBeGreaterThan(0)
+          expect(searchSpeed).toBeLessThan(1000)
+        })
+        .then(() => getSearchTime(app))
+        .then((searchTime) => {
+          expect(searchTime).toBeGreaterThan(0)
+          expect(searchTime).toBeLessThan(5)
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    },
+    TestTimeout
+  )
+
+  test(
+    "query * | count(); switch to whole space",
+    (done) => {
+      waitForLoginAvailable(app)
+        .then(() => logIn(app))
+        .then(() => waitForHistogram(app))
+        .then(() => waitForSearch(app))
+        .then(() => writeSearch(app, "* | count()"))
+        .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toMatchSnapshot()
+        })
+        .then(() => setSpan(app, "Whole Space"))
         .then(() => waitForSearch(app))
         .then(() => searchDisplay(app))
         .then((results) => {

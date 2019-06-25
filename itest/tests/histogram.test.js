@@ -9,6 +9,7 @@
 
 import {
   logIn,
+  setSpan,
   waitForLoginAvailable,
   waitForHistogram,
   waitForSearch
@@ -140,6 +141,21 @@ describe("Histogram tests", () => {
               )
             })
           })
+        })
+        // Now set to "Whole Space" to make sure this histogram is redrawn.
+        .then(() => setSpan(app, "Whole Space"))
+        .then(() =>
+          // Just count a higher number of _paths, not all ~1500 rect elements.
+          retryUntil(
+            () => app.client.getAttribute(selectors.histogram.gElem, "class"),
+            (pathClasses) =>
+              pathClasses.length ===
+              dataSets.corelight.histogram.wholeSpaceDistinctPaths
+          ).catch((err) => {
+            handleError(app, err, done)
+          })
+        )
+        .then(() => {
           done()
         })
         .catch((err) => {

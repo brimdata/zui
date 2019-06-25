@@ -16,6 +16,8 @@ const dataAttrs = {
   search_time: "search_time",
   search_speed: "search_speed",
   spaces_button: "spaces_button",
+  span_button: "span_button",
+  span_menu: "span_menu",
   viewer_header: "viewer_header",
   viewer_results: "viewer_results"
 }
@@ -31,7 +33,8 @@ export const dataSets = {
       defaultRectsPerClass: 49,
       defaultTotalRectCount: 588,
       rectAttrMin: 0,
-      rectAttrMax: 1000
+      rectAttrMax: 1000,
+      wholeSpaceDistinctPaths: 19
     }
   }
 }
@@ -67,6 +70,19 @@ export const selectors = {
   spaces: {
     button: dataAttrSelector("spaces_button")
   },
+  span: {
+    button: dataAttrSelector("span_button"),
+    menu: dataAttrSelector("span_menu"),
+    menuItem: (itemText: string) => {
+      // This has to use an Xpath because CSS selectors don't have the
+      // capability to evaluate whether a child text node has particular
+      // content.
+      // https://stackoverflow.com/questions/1520429/is-there-a-css-selector-for-elements-containing-certain-text
+      // The Xpath below finds the span_menu and then the li under it whose
+      // child text matches itemText.
+      return `//*[@${itestLocator}='span_menu']/li[contains(text(), '${itemText}')]`
+    }
+  },
   viewer: {
     header_base: dataAttrSelector("viewer_header"),
     headers: dataAttrSelector("viewer_header") + " .header-cell",
@@ -75,10 +91,17 @@ export const selectors = {
   }
 }
 
-export const d3ElementAttr = (component: string) => dataAttrs[component]
-
+// Use this function to add properties to react elements/components. The
+// dataAttrs object must define the key/value pair for the object. The key is
+// the argument passed into this method upon use. The value is what will be in
+// the product's DOM.
+// Integration tests that want to find the element/component via selector can
+// define, import, and use the selectors object above.
 export const reactElementProps = (component: string) => {
   return {
     [itestLocator]: dataAttrs[component]
   }
 }
+
+// This function is like reactElementProps except used to annotate D3 elements.
+export const d3ElementAttr = (component: string) => dataAttrs[component]

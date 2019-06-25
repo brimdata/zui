@@ -23,7 +23,7 @@ export const ThinButton = ({children, ...rest}: Children) => (
 export class ThinPicker extends React.Component<{}> {
   render() {
     return (
-      <button className="thin-button thin-picker">
+      <button className="thin-button thin-picker" {...this.props}>
         <Caret />
       </button>
     )
