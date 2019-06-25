@@ -8,7 +8,9 @@ const dataAttrs = {
   // are interested in. This is done by injecting custom data attributes [1]
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
+  correlationPanel: "correlationPanel",
   histogram: "histogram-chart",
+  logCellMenu: "logCellMenu",
   login: "login",
   notification: "notification-header",
   search_input: "search_input",
@@ -28,6 +30,11 @@ export const dataSets = {
   // on product behavior. For example, if the default time window changes from
   // last 30 minutes to last hour, some of these numbers may become invalid.
   corelight: {
+    logDetails: {
+      getDetailsFrom: "C9FG8S2NvxVUR0b0La",
+      initialSearch: "_path=http www.mybusinessdoc.com",
+      span: "Whole Space"
+    },
     histogram: {
       defaultDistinctPaths: 12,
       defaultRectsPerClass: 49,
@@ -49,7 +56,31 @@ const _histogramSelector = `[${itestLocator}='${dataAttrs.histogram}']`
 const dataAttrSelector = (component: string) =>
   `[${itestLocator}='` + dataAttrs[component] + "']"
 
+// Use this to generate Xpaths to find elemnents containing text, all under a
+// common dataAttrValue. For example the right-click Log Detail Cell menu that
+// produces an option for "Log details" is the element:
+//
+//   <ul class="menu-list" data-test-locator="logCellMenu">
+//
+// genSelectorForTextUnderElement("logCellMenu") returns a function that can be used to
+// generate Xpaths to specific items contained in that menu, i.e.,
+//
+//   genSelectorForTextUnderElement("logCellMenu")("Open details")
+//
+// Xpaths are used because CSS selectors don't have the capability to evaluate
+// whether a child text node has particular content.
+// https://stackoverflow.com/questions/1520429/is-there-a-css-selector-for-elements-containing-certain-text
+const genSelectorForTextUnderElement = (dataAttrValue: string) => (
+  menuItem: string
+) =>
+  `//*[@${itestLocator}='${dataAttrValue}']//*[contains(text(), '${menuItem}')]`
+
 export const selectors = {
+  correlationPanel: {
+    duration: dataAttrSelector("correlationPanel") + " .duration",
+    pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
+    tsLabel: dataAttrSelector("correlationPanel") + " .ts-label"
+  },
   histogram: {
     topLevel: dataAttrSelector("histogram"),
     gElem: dataAttrSelector("histogram") + " g",
@@ -73,21 +104,16 @@ export const selectors = {
   span: {
     button: dataAttrSelector("span_button"),
     menu: dataAttrSelector("span_menu"),
-    menuItem: (itemText: string) => {
-      // This has to use an Xpath because CSS selectors don't have the
-      // capability to evaluate whether a child text node has particular
-      // content.
-      // https://stackoverflow.com/questions/1520429/is-there-a-css-selector-for-elements-containing-certain-text
-      // The Xpath below finds the span_menu and then the li under it whose
-      // child text matches itemText.
-      return `//*[@${itestLocator}='span_menu']/li[contains(text(), '${itemText}')]`
-    }
+    menuItem: genSelectorForTextUnderElement("span_menu")
   },
   viewer: {
     header_base: dataAttrSelector("viewer_header"),
     headers: dataAttrSelector("viewer_header") + " .header-cell",
     results_base: dataAttrSelector("viewer_results"),
-    results: dataAttrSelector("viewer_results") + " span"
+    results: dataAttrSelector("viewer_results") + " span",
+    resultCellContaining: genSelectorForTextUnderElement("viewer_results"),
+    rightClickMenu: dataAttrSelector("logCellMenu"),
+    rightClickMenuItem: genSelectorForTextUnderElement("logCellMenu")
   }
 }
 

@@ -9,6 +9,7 @@ import {toFront} from "../../lib/Array"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
+import {reactElementProps} from "../../test/integration"
 
 const UidPanel = ({log, searches}: PanelProps) => {
   if (!log.correlationId()) return null
@@ -18,7 +19,10 @@ const UidPanel = ({log, searches}: PanelProps) => {
   const logs = uidOrder(resultsToLogs(search.results, "0"))
 
   return (
-    <div className="correlated-logs-panel detail-panel">
+    <div
+      className="correlated-logs-panel detail-panel"
+      {...reactElementProps("correlationPanel")}
+    >
       <PanelHeading status={search.status}>Uid Correlation</PanelHeading>
       {logs.length === 0 && (
         <InlineTableLoading title="Loading timeline..." rows={3} />
