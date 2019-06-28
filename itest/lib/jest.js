@@ -39,5 +39,5 @@ export const handleError = async (
     console.log("handleError: desktop app notification not found")
     realError = initialError
   }
-  done.fail && done.fail(realError)
+  done.fail && done.fail(realError.message)
 }
