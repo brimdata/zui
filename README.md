@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/looky-cloud/desktop.svg?style=svg&circle-token=8fb219d4419937d21fb70c99c89157bff05c2ecc)](https://circleci.com/gh/looky-cloud/desktop)
 # Looky Desktop
 
 The desktop client for the Boom backend built with Electron and React.
