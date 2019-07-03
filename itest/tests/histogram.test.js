@@ -88,9 +88,7 @@ describe("Histogram tests", () => {
             (pathClasses) =>
               pathClasses.length ===
               dataSets.corelight.histogram.defaultDistinctPaths
-          ).catch((err) => {
-            handleError(app, err, done)
-          })
+          )
         )
         .then((pathClasses) =>
           retryUntil(
@@ -98,11 +96,7 @@ describe("Histogram tests", () => {
             (rectElements) =>
               rectElements.length ===
               dataSets.corelight.histogram.defaultTotalRectCount
-          )
-            .then(() => pathClasses)
-            .catch((err) => {
-              handleError(app, err, done)
-            })
+          ).then(() => pathClasses)
         )
         // Once we see all the g and rect elements, ensure the g elements'
         // classes are expected. This nominally ensures the different _path
@@ -151,9 +145,7 @@ describe("Histogram tests", () => {
             (pathClasses) =>
               pathClasses.length ===
               dataSets.corelight.histogram.wholeSpaceDistinctPaths
-          ).catch((err) => {
-            handleError(app, err, done)
-          })
+          )
         )
         .then(() => {
           done()
