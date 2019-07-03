@@ -76,36 +76,28 @@ describe("Histogram tests", () => {
         .then(() => logIn(app))
         .then(() => waitForHistogram(app))
         .then(() => waitForSearch(app))
-        // Assuming we properly loaded corelight data into the default space, we
-        // we must wait until the components of the histogram are rendered. This
-        // means we must wait for a number of g elements and rect elements. Those
-        // elements depend on both the dataset itself and the product's behavior.
-        // For example, these values will change if the default time window
-        // changes from the last 30 minutes.
         .then(() =>
-          retryUntil(
-            () => app.client.getAttribute(selectors.histogram.gElem, "class"),
-            (pathClasses) =>
-              pathClasses.length ===
-              dataSets.corelight.histogram.defaultDistinctPaths
-          )
-        )
-        .then((pathClasses) =>
           retryUntil(
             () => app.client.$$(selectors.histogram.rectElem),
             (rectElements) =>
               rectElements.length ===
               dataSets.corelight.histogram.defaultTotalRectCount
-          ).then(() => pathClasses)
+          )
         )
-        // Once we see all the g and rect elements, ensure the g elements'
-        // classes are expected. This nominally ensures the different _path
-        // values are present.
-        .then((pathClasses) => {
+        .then(async () => {
+          // Assuming we properly loaded corelight data into the default space, we
+          // we must wait until the components of the histogram are rendered. This
+          // means we must wait for a number of g elements and rect elements. Those
+          // elements depend on both the dataset itself and the product's behavior.
+          // For example, these values will change if the default time window
+          // changes from the last 30 minutes.
+          let pathClasses = await retryUntil(
+            () => app.client.getAttribute(selectors.histogram.gElem, "class"),
+            (pathClasses) =>
+              pathClasses.length ===
+              dataSets.corelight.histogram.defaultDistinctPaths
+          )
           expect(pathClasses.sort()).toMatchSnapshot()
-          return pathClasses
-        })
-        .then(async (pathClasses) => {
           // Here is the meat of the test verification. Here we fetch all 4
           // attributes' values of all rect elements, in a 2-D array of _path and
           // attribute. We ensure all the values are positive in a REASONABLE
@@ -135,19 +127,15 @@ describe("Histogram tests", () => {
               )
             })
           })
-        })
-        // Now set to "Whole Space" to make sure this histogram is redrawn.
-        .then(() => setSpan(app, "Whole Space"))
-        .then(() =>
+          // Now set to "Whole Space" to make sure this histogram is redrawn.
+          await setSpan(app, "Whole Space")
           // Just count a higher number of _paths, not all ~1500 rect elements.
-          retryUntil(
+          await retryUntil(
             () => app.client.getAttribute(selectors.histogram.gElem, "class"),
             (pathClasses) =>
               pathClasses.length ===
               dataSets.corelight.histogram.wholeSpaceDistinctPaths
           )
-        )
-        .then(() => {
           done()
         })
         .catch((err) => {
