@@ -82,7 +82,11 @@ describe("Histogram tests", () => {
             (rectElements) =>
               rectElements.length ===
               dataSets.corelight.histogram.defaultTotalRectCount
-          )
+          ).catch(() => {
+            throw new Error(
+              "Histogram did not render the expected number of rect elements"
+            )
+          })
         )
         .then(async () => {
           // Assuming we properly loaded corelight data into the default space, we
