@@ -7,8 +7,8 @@ import React, {Component} from "react"
 import {XLatestError} from "./LatestError"
 import {XNotifications} from "./Notifications"
 import {getTimeZone} from "../state/reducers/view"
-import Login from "./Login/Login"
 import SearchPage from "./SearchPage"
+import {XLogin} from "./Login"
 import * as Time from "../lib/Time"
 
 type Props = {
@@ -26,7 +26,7 @@ export default class App extends Component<Props> {
         <XNotifications />
         <Switch>
           <Route path="/search" component={SearchPage} />
-          <Route path="/connect" component={Login} />
+          <Route path="/connect" component={XLogin} />
           <Redirect to="/connect" />
         </Switch>
       </div>
