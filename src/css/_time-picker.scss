@@ -2,6 +2,11 @@
   position: relative;
   font-weight: normal;
 
+  input {
+    outline: none;
+    border: none;
+  }
+
   .context-menu {
     height: 40px * 5;
     padding: 0;

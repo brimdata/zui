@@ -1,0 +1,273 @@
+$temp-bg: rgba(0, 0, 0, 0.05);
+$start-aside-bg: #f49165;
+$end-aside-bg: #e65835;
+
+$burnt-red: #bf4a2c;
+
+.login {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  aside {
+    min-width: 300px;
+    max-width: 360px;
+    width: 30%;
+    background: linear-gradient($start-aside-bg, $end-aside-bg);
+    box-shadow: 1px 0 10px 0 rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+  }
+
+  main {
+    flex: 1;
+    background: linear-gradient(to right, white, #f7f7f7);
+    position: relative;
+  }
+}
+
+.company-name {
+  position: relative;
+  height: 180px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .company-name-bg {
+    position: absolute;
+    width: 100%;
+  }
+
+  .company-name-text {
+    position: relative;
+    color: $start-aside-bg;
+    border: 1px solid $start-aside-bg;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border-radius: 50px;
+
+    h1 {
+      font-weight: 100;
+      padding: $space-m;
+      margin: 0;
+    }
+  }
+}
+
+.saved-creds {
+  margin-top: $space-xxl;
+  font-family: $mono-font;
+  font-size: 12px;
+
+  h3 {
+    padding-left: $space-m;
+    color: $burnt-red;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .empty-message {
+    color: $burnt-red;
+    font-size: 12px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    position: relative;
+    color: white;
+    background: rgba(255, 255, 255, 0.12);
+    padding: $space-xs;
+    padding-left: $space-m;
+    margin-bottom: 1px;
+    line-height: 1.3;
+    cursor: pointer;
+    user-select: none;
+    transition: background 300ms;
+    display: flex;
+    align-items: center;
+
+    .host {
+      font-weight: bold;
+    }
+
+    .arrow {
+      position: absolute;
+      right: 0;
+      opacity: 0;
+      transition: all 300ms;
+    }
+
+    .star {
+      fill: $burnt-red;
+      margin-right: $space-s;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.24);
+      .arrow {
+        opacity: 1;
+        transition: all 500ms;
+        transform: translateX(30px);
+      }
+    }
+
+    &:active {
+      background: rgba(255, 255, 255, 0.5);
+      transition: background 100ms;
+
+      .arrow {
+        transition: all 100ms;
+        transform: translateX(55px);
+      }
+    }
+  }
+}
+
+.login-form {
+  position: relative;
+  z-index: 1;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 200px;
+  color: $gray-5;
+
+  h1 {
+    font-weight: 900;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: $space-xxl;
+  }
+}
+
+.input {
+  label {
+    @extend .label;
+    transform: translateY(6px);
+    background: white;
+    padding: 0 1px;
+    margin-left: 5px;
+    display: inline-block;
+    font-weight: bold;
+    transition: transform 200ms, background 200ms;
+  }
+
+  input {
+    border: 1px solid $white-4;
+    width: 100%;
+    padding: 0 6px;
+    line-height: 2.5;
+    @extend .mono;
+  }
+
+  &.focus {
+    input {
+      outline: none;
+      border: 1px solid $gray-1;
+      background: $white-2;
+    }
+
+    label {
+      color: $gray-9;
+      background: none;
+      transform: translateY(0);
+    }
+  }
+}
+
+.input-checkbox {
+  padding-top: 8px;
+  label {
+    display: flex;
+    @extend .label;
+    align-items: center;
+  }
+
+  input {
+    margin: 0;
+    margin-right: $space-s;
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border: 1px solid $white-4;
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      background: linear-gradient($start-aside-bg, $end-aside-bg);
+      box-shadow: 0px 0 3px 0 rgba(0, 0, 0, 0.25);
+      border-radius: 3px;
+      transform: scale(0);
+      transition: transform 200ms;
+    }
+
+    &:checked:after {
+      transform: scale(1);
+    }
+  }
+
+  input:focus {
+    outline: none;
+    border: 1px solid $gray-1;
+    background: $white-2;
+  }
+}
+
+.input-submit {
+  padding-top: 8px;
+
+  input {
+    cursor: pointer;
+    font-weight: bold;
+    background: linear-gradient($white-1, $white-3);
+    border: 1px solid $white-4;
+    border-radius: 3px;
+    font-family: $mono-font;
+    padding: 6px 16px;
+    box-shadow: 0 2px 6px -3px rgba(0, 0, 0, 0.5);
+
+    &:focus {
+      border-color: $gray-1;
+      outline: none;
+    }
+
+    &:active {
+      box-shadow: none;
+      transform: translateY(2px);
+    }
+  }
+}
+
+.form > * {
+  margin-bottom: $space-xs;
+}
+
+.deco-dots {
+  opacity: 0.6;
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+
+  circle {
+    fill: $start-aside-bg;
+  }
+
+  line {
+    stroke: $white-5;
+  }
+}

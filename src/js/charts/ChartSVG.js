@@ -1,10 +1,14 @@
 /* @flow */
 import React, {useLayoutEffect, useRef} from "react"
 
-import type {Chart} from "./types"
+import type {Pen} from "./types"
 
 type Props = {
-  chart: Chart
+  chart: {
+    pens: Pen[],
+    width: number,
+    height: number
+  }
 }
 
 const ChartSVG = React.memo<Props>(function ChartSVG({chart}: Props) {

@@ -19,7 +19,6 @@ function main() {
       width: 1000,
       height: 1200,
       backgroundColor: "#ffffff",
-      titleBarStyle: "hidden",
       webPreferences: {
         experimentalFeatures: true,
         nodeIntegration: true

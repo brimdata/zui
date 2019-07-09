@@ -5,10 +5,10 @@ import {connect} from "react-redux"
 import React, {Component} from "react"
 
 import {XLatestError} from "./LatestError"
-import {XLogin} from "./Login"
 import {XNotifications} from "./Notifications"
 import {getTimeZone} from "../state/reducers/view"
 import SearchPage from "./SearchPage"
+import {XLogin} from "./Login"
 import * as Time from "../lib/Time"
 
 type Props = {
