@@ -1,5 +1,9 @@
 .DayPickerInput {
   font-size: 14px;
+  input {
+    outline: none;
+    border: none;
+  }
 
   .DayPicker-Day {
     font-weight: normal;
