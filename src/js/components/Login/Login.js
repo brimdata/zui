@@ -46,7 +46,6 @@ export default function Login() {
   // Global state
   let [saved, setSaved] = useState(SAVED)
   let [current, setCurrent] = useState({})
-  let [loggedIn, setLoggedIn] = useState(false)
 
   // Local state
   let [error, setError] = useState("")
@@ -83,23 +82,22 @@ export default function Login() {
   }
 
   // Goes in creds reducer
-  function deleteCreds(creds) {
-    setSaved(saved.filter((c) => getCredKey(c) !== getCredKey(creds)))
-  }
+  // function deleteCreds(creds) {
+  // setSaved(saved.filter((c) => getCredKey(c) !== getCredKey(creds)))
+  // }
 
   // Goes in connection thunks
   function login(creds) {
     // return Promise.reject("This is bad!")
     setCurrent(creds)
-    setLoggedIn(true)
     return Promise.resolve()
   }
 
   // Goes in connection thunks
-  function logout() {
-    setCurrent({})
-    setLoggedIn(false)
-  }
+  // function logout() {
+  // setCurrent({})
+  // setLoggedIn(false)
+  // }
 
   return (
     <div className="login">
