@@ -1,5 +1,4 @@
 /* @flow */
-import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
@@ -18,11 +17,6 @@ export const useBoomCache = (value: boolean) => ({
 export const useBoomIndex = (value: boolean) => ({
   type: "BOOMD_INDEX_USE_SET",
   value
-})
-
-export const setBoomdCredentials = (credentials: Credentials) => ({
-  type: "BOOMD_CREDENTIALS_SET",
-  credentials
 })
 
 export const createFinding = (finding: $Shape<Finding>) => ({

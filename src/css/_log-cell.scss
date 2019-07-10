@@ -25,19 +25,8 @@
 .log-cell.time {
   height: $bro-log-row-height;
   cursor: pointer;
-  // font-family: $body-font;
-  p {
-    span {
-      display: inline-block;
-      padding: 0 6px;
-    }
-
-    .date {
-    }
-    .time {
-    }
-    .seconds {
-    }
+  span {
+    padding: 0 6px;
   }
 
   &.highlight {

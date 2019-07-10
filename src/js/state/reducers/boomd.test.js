@@ -1,27 +1,7 @@
 /* @flow */
-import {getCredentials, getUseBoomCache, getUseBoomIndex} from "./boomd"
-import {setBoomdCredentials, useBoomCache, useBoomIndex} from "../actions"
+import {getUseBoomCache, getUseBoomIndex} from "./boomd"
+import {useBoomCache, useBoomIndex} from "../actions"
 import initTestStore from "../../test/initTestStore"
-
-test("setting the credentials", () => {
-  const store = initTestStore()
-
-  store.dispatch(
-    setBoomdCredentials({
-      user: "james",
-      pass: "word",
-      host: "localhost",
-      port: "9867"
-    })
-  )
-
-  expect(getCredentials(store.getState())).toEqual({
-    user: "james",
-    pass: "word",
-    host: "localhost",
-    port: "9867"
-  })
-})
 
 test("setting use analytics cache", () => {
   const store = initTestStore()

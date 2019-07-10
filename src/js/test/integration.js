@@ -89,7 +89,7 @@ export const selectors = {
   login: {
     host: dataAttrSelector("login") + " [name=host]",
     port: dataAttrSelector("login") + " [name=port]",
-    button: dataAttrSelector("login") + " button"
+    button: dataAttrSelector("login") + " [type=submit]"
   },
   notification: dataAttrSelector("notification"),
   search: {

@@ -11,7 +11,6 @@ function useDots(width, height, data) {
 
   return useMemo(() => {
     let dotSize = 12
-    console.log(d3.max(data, (d) => d), 0)
     return {
       data,
       width,

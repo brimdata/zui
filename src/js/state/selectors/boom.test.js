@@ -1,8 +1,8 @@
 /* @flow */
 
 import {getBoomOptions} from "./boom"
+import {setCluster} from "../clusters/actions"
 import {
-  setBoomdCredentials,
   setCurrentSpaceName,
   setOuterTimeWindow,
   useBoomCache,
@@ -13,11 +13,11 @@ import initTestStore from "../../test/initTestStore"
 test("#getBoomOptions", () => {
   const store = initTestStore()
   const state = store.dispatchAll([
-    setBoomdCredentials({
+    setCluster({
       host: "boom.com",
       port: "123",
-      user: "rosie",
-      pass: "puppy"
+      username: "rosie",
+      password: "puppy"
     }),
     setOuterTimeWindow([new Date(0), new Date(1)]),
     setCurrentSpaceName("work-zone"),

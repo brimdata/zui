@@ -3,12 +3,12 @@
 import {connect} from "react-redux"
 import React from "react"
 
+import type {Cluster} from "../state/clusters/types"
 import {Code} from "./Typography"
-import type {Credentials} from "../lib/Credentials"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {DispatchProps, State} from "../state/types"
 import {copyToClipboard} from "../lib/Doc"
-import {getCredentials} from "../state/reducers/boomd"
+import {getCurrentCluster} from "../state/clusters/selectors"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getTimeWindow} from "../state/reducers/timeWindow"
@@ -24,7 +24,7 @@ type OwnProps = {|
 type StateProps = {|
   program: string,
   timeWindow: DateTuple,
-  credentials: Credentials,
+  credentials: Cluster,
   space: string
 |}
 
@@ -36,10 +36,10 @@ export default class CurlModal extends React.Component<Props, LocalState> {
   state = {includeCredentials: false, buttonText: "Copy to Clipboard"}
 
   getCredentials() {
-    const {user, pass} = this.props.credentials
+    const {username, password} = this.props.credentials
 
     if (this.state.includeCredentials) {
-      return `-u ${user}:${pass}`
+      return `-u ${username}:${password}`
     } else {
       return ""
     }
@@ -104,7 +104,7 @@ const stateToProps = (state: State) => ({
   program: getSearchProgram(state),
   space: getCurrentSpaceName(state),
   timeWindow: getTimeWindow(state),
-  credentials: getCredentials(state)
+  credentials: getCurrentCluster(state)
 })
 
 export const XCurlModal = connect<Props, OwnProps, _, _, _, _>(

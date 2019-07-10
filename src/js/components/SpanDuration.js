@@ -7,7 +7,7 @@ export default function SpanDuration({span}: {span: DateTuple}) {
   return (
     <div className="span-duration">
       <hr />
-      <p>{humanDuration(span)}</p>
+      <span>{humanDuration(span)}</span>
       <hr />
     </div>
   )

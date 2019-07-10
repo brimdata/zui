@@ -38,7 +38,7 @@ const ErrorMessage = ({error}) => (
     <div className="warning-icon">
       <Warning />
     </div>
-    <p>{error}</p>
+    <span>{error}</span>
   </div>
 )
 

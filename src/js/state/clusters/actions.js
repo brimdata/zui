@@ -9,7 +9,7 @@ import type {
   ClusterStateEnum
 } from "./types"
 
-export function setCluster(cluster: Cluster): CLUSTER_SET {
+export function setCluster(cluster: Cluster | null): CLUSTER_SET {
   return {type: "CLUSTER_SET", cluster}
 }
 

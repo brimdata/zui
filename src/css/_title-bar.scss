@@ -4,19 +4,13 @@
   background-color: $white-3;
   justify-content: center;
   -webkit-user-select: none;
-  -webkit-app-region: drag;
   cursor: pointer;
-
-  a {
-    -webkit-app-region: no-drag;
-  }
 
   .host {
     font-family: $mono-font;
     line-height: 13px;
-    margin-top: 4px;
+    margin-top: 8px;
     margin-right: 6px;
-    margin-left: 68px;
     background-color: transparent;
     color: $gray-9;
 

@@ -4,7 +4,7 @@ import BoomRequest from "../../BoomClient/lib/BoomRequest"
 
 export type SearchesState = {[string]: Search}
 
-export type SearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "ABORTED"
+export type SearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "ABORTED" | "INIT"
 
 export type SearchStats = {
   updateTime: number,

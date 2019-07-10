@@ -35,7 +35,7 @@ export type CLUSTER_ADD = {
 
 export type CLUSTER_SET = {
   type: "CLUSTER_SET",
-  cluster: Cluster
+  cluster: Cluster | null
 }
 
 export type CLUSTER_ERROR_SET = {

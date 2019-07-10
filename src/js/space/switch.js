@@ -15,7 +15,6 @@ import {subtract} from "../lib/Time"
 export const switchSpace = (name: string): Thunk => {
   return (dispatch, getState) => {
     dispatch(killSearchesByTag())
-
     return dispatch(fetchSpace(name)).then((info) => {
       dispatch(setSpaceInfo(info))
       dispatch(setCurrentSpaceName(name))
