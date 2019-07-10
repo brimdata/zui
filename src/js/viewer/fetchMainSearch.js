@@ -28,7 +28,6 @@ export const fetchMainSearch = ({
   if (saveToHistory) dispatch(recordSearch(getSearchRecord(state)))
   dispatch(cancelSearchesByTag("viewer"))
   dispatch(clearViewer())
-
   new SearchTemplateFactory({
     program: getSearchProgram(state),
     innerSpan: getInnerTimeWindow(state),

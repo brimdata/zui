@@ -1,44 +1,24 @@
 /* @flow */
 
-import {Link} from "react-router-dom"
-import {connect} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import {disconnect} from "../state/thunks/disconnect"
-import {getBoomHost, getBoomPort} from "../state/reducers/boomd"
-import dispatchToProps from "../lib/dispatchToProps"
+import {getCurrentCluster} from "../state/clusters/selectors"
 
-type Props = {|
-  host: string,
-  port: string,
-  dispatch: Function
-|}
+export default function TitleBar() {
+  const {host, port} = useSelector(getCurrentCluster)
+  let dispatch = useDispatch()
 
-export default class TitleBar extends React.Component<Props> {
-  onHostClick = () => this.props.dispatch(disconnect())
-
-  render() {
-    const {host, port} = this.props
-    return (
-      <div className="title-bar">
-        <Link
-          to="/connect"
-          className="thin-button host"
-          onClick={this.onHostClick}
-        >
-          {host}:{port}
-        </Link>
-      </div>
-    )
+  function onHostClick() {
+    dispatch(disconnect())
   }
+
+  return (
+    <div className="title-bar">
+      <a className="thin-button host" onClick={onHostClick}>
+        {host}:{port}
+      </a>
+    </div>
+  )
 }
-
-const stateToProps = (state) => ({
-  host: getBoomHost(state),
-  port: getBoomPort(state)
-})
-
-export const XTitleBar = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(TitleBar)

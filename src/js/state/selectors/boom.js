@@ -1,26 +1,30 @@
 /* @flow */
 
 import type {State} from "../types"
-import {
-  getCredentials,
-  getUseBoomCache,
-  getUseBoomIndex
-} from "../reducers/boomd"
+import {getCurrentCluster} from "../clusters/selectors"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getTimeWindow} from "../reducers/timeWindow"
+import {getUseBoomCache, getUseBoomIndex} from "../reducers/boomd"
 
 export const getBoomOptions = (state: State) => {
-  const credentials = getCredentials(state)
+  let credentials = getCurrentCluster(state)
 
-  return {
-    username: credentials.user,
-    password: credentials.pass,
-    host: credentials.host,
-    port: parseInt(credentials.port),
+  let opts = {
     searchSpace: getCurrentSpaceName(state),
     searchSpan: getTimeWindow(state),
     adapter: "BrowserFetch",
     enableIndex: getUseBoomIndex(state),
     enableCache: getUseBoomCache(state)
   }
+  if (credentials) {
+    opts = {
+      ...opts,
+      username: credentials.username,
+      password: credentials.password,
+      host: credentials.host,
+      port: parseInt(credentials.port)
+    }
+  }
+
+  return opts
 }

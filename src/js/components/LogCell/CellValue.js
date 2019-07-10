@@ -17,11 +17,11 @@ const CellValue = ({field}: Props) => {
     )
   if (field instanceof TimeField)
     return (
-      <p>
+      <div>
         <span className="date">{format(field.toDate(), "MM/DD/YY")}</span>
         <span className="time">{format(field.toDate(), "HH:mm")}</span>
         <span className="seconds">{format(field.toDate(), "ss.SSSS")}</span>
-      </p>
+      </div>
     )
   if (field.type === "count") {
     return <span>{withCommas(field.value)}</span>

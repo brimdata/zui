@@ -16,7 +16,8 @@ const PERSIST = [
   "starredLogs",
   "tableColumnSets",
   "spaces",
-  "investigation"
+  "investigation",
+  "clusters"
 ]
 
 export const saveState = (state: State) => {

@@ -12,8 +12,10 @@ import {
 } from "../actions"
 import {clearSearches} from "../searches/actions"
 import {clearViewer} from "../viewer/actions"
+import {setCluster} from "../clusters/actions"
 
 export const disconnect = (): Thunk => (dispatch) => {
+  dispatch(setCluster(null))
   dispatch(clearSearchBar())
   dispatch(clearSpaces())
   dispatch(clearTimeWindows())

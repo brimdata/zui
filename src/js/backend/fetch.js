@@ -1,6 +1,6 @@
 /* @flow */
+import type {Dispatch, Thunk} from "../state/types"
 import type {Span} from "../BoomClient/types"
-import type {Thunk} from "../state/types"
 import {createError} from "../state/errors"
 import BoomRequest from "../BoomClient/lib/BoomRequest"
 
@@ -37,8 +37,8 @@ export function boomFetchDescriptors(space: string, id: string): Thunk {
     toPromise(boom.descriptors.get(space, id)).catch(recordError(dispatch))
 }
 
-function recordError(dispatch) {
-  return function(error) {
+export function recordError(dispatch: Dispatch) {
+  return function(error: Error) {
     dispatch(createError(error))
     throw error
   }

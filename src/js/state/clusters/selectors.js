@@ -5,11 +5,11 @@
 // Selectors
 import type {State} from "../types"
 
-export function getCluster(state: State) {
+export function getCurrentCluster(state: State) {
   return state.clusters.current
 }
 
-export function getClusters(state: State) {
+export function getSavedClusters(state: State) {
   return state.clusters.saved
 }
 

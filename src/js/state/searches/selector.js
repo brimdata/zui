@@ -2,15 +2,16 @@
 
 import {createSelector} from "reselect"
 
-import type {SearchResults} from "./types"
+import type {Search, SearchResults} from "./types"
 import type {State} from "../types"
+import BoomRequest from "../../BoomClient/lib/BoomRequest"
 
 export function getSearches(state: State) {
   return state.searches
 }
 
 export function getSearch(state: State, name: string) {
-  return state.searches[name]
+  return state.searches[name] || emptySearch(name)
 }
 
 export function getSearchResults(state: State, name: string): SearchResults {
@@ -61,6 +62,24 @@ export function getSearchesByTag(state: State, tag: string) {
 export const getHistogramSearch = createSelector<State, void, *, *>(
   getSearches,
   (searches) => {
-    return searches["HistogramSearch"]
+    return searches["HistogramSearch"] || emptySearch("HistogramSearch")
   }
 )
+
+function emptySearch(name): Search {
+  return {
+    name,
+    results: {descriptors: {}, tuples: {}},
+    stats: {
+      bytesMatched: 0,
+      bytesRead: 0,
+      tuplesMatched: 0,
+      tuplesRead: 0,
+      startTime: 0,
+      updateTime: 0
+    },
+    status: "INIT",
+    tag: "empty",
+    handler: new BoomRequest({url: "", body: "", method: "GET"})
+  }
+}
