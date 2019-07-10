@@ -19,8 +19,8 @@ export default function ClustersPage() {
   let dispatch = useDispatch()
   let [status, setStatus] = useState("Waiting for user input...")
   let [form, setForm] = useState({
-    host: "localhost",
-    port: "9867",
+    host: "",
+    port: "",
     username: "",
     password: "",
     save: true

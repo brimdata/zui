@@ -47,15 +47,15 @@ describe("Smoke test", () => {
         .then((title) => {
           // TODO: Looky shouldn't be hardcoded but instead read from a title
           // defined elsewhere.
-          expect(title.toLowerCase()).toBe("looky")
+          expect(title.toLowerCase()).toBe("brim")
         })
-        .then(() => app.client.waitForExist(".looky-header h1"))
+        .then(() => app.client.waitForExist(".company-name h1"))
         // TODO: Don't use selectors as literals in tests. These definitions
         // should be defined in a single place and ideally be tested to ensure
         // they can be found.
-        .then(() => app.client.getText(".looky-header h1"))
+        .then(() => app.client.getText(".company-name h1"))
         .then((headerText) => {
-          expect(headerText.toLowerCase()).toBe("looky")
+          expect(headerText.toLowerCase()).toBe("brim")
         })
         .then(() => logIn(app))
         .then(() => waitForHistogram(app))

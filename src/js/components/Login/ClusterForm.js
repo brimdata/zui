@@ -2,6 +2,7 @@
 import React from "react"
 
 import {Input, InputCheckbox, InputSubmit} from "../form/Inputs"
+import {reactElementProps} from "../../test/integration"
 import Form from "../form/Form"
 
 type Props = {
@@ -18,7 +19,7 @@ export default function ClusterForm({data, onChange, status, submit}: Props) {
   }
 
   return (
-    <div className="login-form">
+    <div className="login-form" {...reactElementProps("login")}>
       <h1>Login</h1>
       <p className="status">{status}</p>
       <Form onSubmit={onSubmit}>
