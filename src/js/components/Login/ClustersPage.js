@@ -1,11 +1,12 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 
 import {Dots} from "./Dots"
 import {addCluster} from "../../state/clusters/actions"
 import {attemptLogin} from "../../state/clusters/thunks"
 import {getSavedClusters} from "../../state/clusters/selectors"
+import {setAppMenu} from "../../electron/setAppMenu"
 import BrandedAside from "./BrandedAside"
 import ClusterForm from "./ClusterForm"
 import ClusterWelcome from "./ClusterWelcome"
@@ -23,6 +24,10 @@ export default function ClustersPage() {
     username: "",
     password: "",
     save: true
+  })
+
+  useEffect(() => {
+    setAppMenu("LOGIN")
   })
 
   function onChange(e) {
