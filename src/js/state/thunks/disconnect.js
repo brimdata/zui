@@ -15,7 +15,6 @@ import {clearViewer} from "../viewer/actions"
 import {setCluster} from "../clusters/actions"
 
 export const disconnect = (): Thunk => (dispatch) => {
-  dispatch(setCluster(null))
   dispatch(clearSearchBar())
   dispatch(clearSpaces())
   dispatch(clearTimeWindows())
@@ -25,4 +24,5 @@ export const disconnect = (): Thunk => (dispatch) => {
   dispatch(clearSearches())
   dispatch(clearErrors())
   dispatch(clearNotifications())
+  dispatch(setCluster(null))
 }
