@@ -1,8 +1,11 @@
 /* @flow */
 
 import opn from "opn"
-import downloads from "./downloadsDir"
+
 import {exec} from "child_process"
+import {remote} from "electron"
+
+import downloads from "./downloadsDir"
 
 export const open = (path: string) => {
   return opn(path)
@@ -22,4 +25,8 @@ export const whois = (addr: string) => {
       }
     })
   })
+}
+
+export function showContextMenu(template: Object) {
+  new remote.Menu.buildFromTemplate(template).popup()
 }
