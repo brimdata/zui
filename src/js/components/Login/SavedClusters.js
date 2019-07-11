@@ -1,15 +1,31 @@
 /* @flow */
+import {useDispatch} from "react-redux"
 import React from "react"
 
 import type {Cluster} from "../../state/clusters/types"
+import {removeCluster} from "../../state/clusters/actions"
+import {showContextMenu} from "../../lib/System"
 
 type Props = {saved: Cluster[], setForm: Function, submit: Function}
 
 export default function SavedClusters({saved, setForm, submit}: Props) {
+  let dispatch = useDispatch()
+
   function onClick(creds) {
     let data = {...creds, save: true}
     setForm({...creds, save: true})
     submit(data)
+  }
+
+  function onRightClick(creds) {
+    showContextMenu([
+      {
+        label: "Remove",
+        click() {
+          dispatch(removeCluster(creds))
+        }
+      }
+    ])
   }
 
   return (
@@ -20,6 +36,7 @@ export default function SavedClusters({saved, setForm, submit}: Props) {
           <li
             key={creds.host + creds.port + creds.username}
             onClick={() => onClick(creds)}
+            onContextMenu={() => onRightClick(creds)}
           >
             <svg
               className="star"
