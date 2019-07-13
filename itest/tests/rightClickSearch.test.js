@@ -8,9 +8,11 @@ import * as path from "path"
 import {
   logIn,
   searchDisplay,
+  startSearch,
   waitForLoginAvailable,
   waitForHistogram,
-  waitForSearch
+  waitForSearch,
+  writeSearch
 } from "../lib/app.js"
 import {TestTimeout, handleError} from "../lib/jest.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
@@ -56,6 +58,47 @@ describe("Test search mods via right-clicks", () => {
         return searchDisplay(app)
       }
       includeExcludeFlow()
+        .then((searchResults) => {
+          expect(searchResults).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    },
+    TestTimeout
+  )
+
+  test(
+    "Use as start/end time works",
+    (done) => {
+      let startEndFlow = async () => {
+        await waitForLoginAvailable(app)
+        await logIn(app)
+        await waitForHistogram(app)
+        await waitForSearch(app)
+        await writeSearch(app, "_path=conn")
+        await startSearch(app)
+        await waitForSearch(app)
+        await app.client.rightClick(
+          selectors.viewer.resultCellContaining(
+            dataSets.corelight.rightClickSearch.startTime
+          )
+        )
+        await app.client.click(
+          selectors.viewer.rightClickMenuItem('Use as "start" time')
+        )
+        await app.client.rightClick(
+          selectors.viewer.resultCellContaining(
+            dataSets.corelight.rightClickSearch.endTime
+          )
+        )
+        await app.client.click(
+          selectors.viewer.rightClickMenuItem('Use as "end" time')
+        )
+        return searchDisplay(app)
+      }
+      startEndFlow()
         .then((searchResults) => {
           expect(searchResults).toMatchSnapshot()
           done()
