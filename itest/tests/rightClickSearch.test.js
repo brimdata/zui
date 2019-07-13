@@ -6,6 +6,7 @@ import {Application} from "spectron"
 import * as path from "path"
 
 import {
+  getSearchText,
   logIn,
   searchDisplay,
   startSearch,
@@ -101,6 +102,48 @@ describe("Test search mods via right-clicks", () => {
       startEndFlow()
         .then((searchResults) => {
           expect(searchResults).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    },
+    TestTimeout
+  )
+
+  test(
+    "New Search works",
+    (done) => {
+      let newSearchFlow = async () => {
+        await waitForLoginAvailable(app)
+        await logIn(app)
+        await waitForHistogram(app)
+        await waitForSearch(app)
+        await app.client.rightClick(
+          selectors.viewer.resultCellContaining(
+            dataSets.corelight.rightClickSearch.newSearchSetup
+          )
+        )
+        await app.client.click(
+          selectors.viewer.rightClickMenuItem("Include this value")
+        )
+        await app.client.rightClick(
+          selectors.viewer.resultCellContaining("weird")
+        )
+        await app.client.click(
+          selectors.viewer.rightClickMenuItem("New search with this value")
+        )
+        return searchDisplay(app)
+      }
+      newSearchFlow()
+        .then((searchResults) => {
+          expect(searchResults).toMatchSnapshot()
+        })
+        // This section verifies the previous search was cleared in favor of
+        // the new search "weird".
+        .then(() => getSearchText(app))
+        .then((searchText) => {
+          expect(searchText).toBe("weird")
           done()
         })
         .catch((err) => {

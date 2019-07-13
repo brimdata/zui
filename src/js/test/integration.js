@@ -45,6 +45,7 @@ export const dataSets = {
     },
     rightClickSearch: {
       endTime: "09:34",
+      newSearchSetup: "Ctd0Gv1XC3Z0UV1iX",
       includeValue: "CgVEQNkcytYYMtmE5",
       startTime: "09:32"
     }
