@@ -42,6 +42,9 @@ export const dataSets = {
       rectAttrMin: 0,
       rectAttrMax: 1000,
       wholeSpaceDistinctPaths: 19
+    },
+    rightClickSearch: {
+      includeValue: "CgVEQNkcytYYMtmE5"
     }
   }
 }
