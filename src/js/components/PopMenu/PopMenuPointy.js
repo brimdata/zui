@@ -46,7 +46,9 @@ function PopMenuList({template}) {
   return (
     <ul>
       {template.map((item, i) => (
-        <li key={i}>{item.label}</li>
+        <li onClick={item.click} key={i}>
+          {item.label}
+        </li>
       ))}
     </ul>
   )
