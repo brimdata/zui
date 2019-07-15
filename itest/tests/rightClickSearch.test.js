@@ -152,4 +152,34 @@ describe("Test search mods via right-clicks", () => {
     },
     TestTimeout
   )
+
+  test(
+    "Pivot to logs works",
+    (done) => {
+      let pivotToLogsFlow = async () => {
+        await waitForLoginAvailable(app)
+        await logIn(app)
+        await waitForHistogram(app)
+        await waitForSearch(app)
+        await app.client.rightClick(
+          selectors.viewer.resultCellContaining("dns")
+        )
+        await app.client.click(
+          selectors.viewer.rightClickMenuItem("Count by _path")
+        )
+        await app.client.rightClick(
+          selectors.viewer.resultCellContaining("dhcp")
+        )
+        await app.client.click(
+          selectors.viewer.rightClickMenuItem("Pivot to logs")
+        )
+        return searchDisplay(app)
+      }
+      pivotToLogsFlow().then((searchResults) => {
+        expect(searchResults).toMatchSnapshot()
+        done()
+      })
+    },
+    TestTimeout
+  )
 })
