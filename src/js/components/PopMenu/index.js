@@ -77,6 +77,16 @@ function usePopMenu(children, align = "left bottom") {
     let [wStyle, pStyle] = new PopMenuStyler(a, w, 20).getStyle(align)
     setStyle(wStyle)
     setPointerStyle(pStyle)
+
+    wrapper.animate(
+      [
+        {transform: "scale(0.9) translateY(-18px)", opacity: 0.5},
+        {transform: "scale(1) translateY(4px)"},
+        {opacity: 1},
+        {transform: "scale(1) translateY(0px)"}
+      ],
+      {duration: 100, easing: "cubic-bezier(0,0,1,1)"}
+    )
   }, [isOpen])
 
   return {anchor, open, close, isOpen, ref: wrapperRef, style, pointerStyle}

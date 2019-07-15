@@ -73,8 +73,8 @@ function pointerStyles(pos, a, w) {
     center: () => ({left: w.width / 2 - width / 2}),
     right: () => ({right: a.width / 2 - width / 2}),
     left: () => ({left: a.width / 2 - width / 2}),
-    top: () => ({top: "100%", transform: "rotate(180deg)"}),
-    bottom: () => ({bottom: "100%"})
+    top: () => ({top: "99%", transform: "rotate(180deg)"}),
+    bottom: () => ({bottom: "99%"})
   })
 }
 
