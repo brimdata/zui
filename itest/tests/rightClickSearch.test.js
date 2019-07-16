@@ -58,6 +58,8 @@ describe("Test search mods via right-clicks", () => {
         await app.client.click(
           selectors.viewer.rightClickMenuItem("Exclude this value")
         )
+        // The result order is deterministic because clicked a uid and then
+        // removed its conn log entry.
         return searchDisplay(app)
       }
       includeExcludeFlow()
@@ -80,7 +82,12 @@ describe("Test search mods via right-clicks", () => {
         await logIn(app)
         await waitForHistogram(app)
         await waitForSearch(app)
-        await writeSearch(app, "_path=conn")
+        // The sort proc is used here to ensure that the two tuples that appear
+        // with the same timestamp are deterministically sorted.  If PROD-647
+        // is fixed, the results will still be deterministic because, although
+        // two points with the same ts appear, they will be sorted by uid as
+        // well.
+        await writeSearch(app, "_path=conn | sort -r ts, uid")
         await startSearch(app)
         await waitForSearch(app)
         await app.client.rightClick(
@@ -99,6 +106,8 @@ describe("Test search mods via right-clicks", () => {
         await app.client.click(
           selectors.viewer.rightClickMenuItem('Use as "end" time')
         )
+        // The result order is deterministic because of the sort proc as
+        // explained above.
         return searchDisplay(app)
       }
       startEndFlow()
@@ -135,6 +144,8 @@ describe("Test search mods via right-clicks", () => {
         await app.client.click(
           selectors.viewer.rightClickMenuItem("New search with this value")
         )
+        // The result order is deterministic because all the points rendered have
+        // different ts values.
         return searchDisplay(app)
       }
       newSearchFlow()
@@ -156,15 +167,19 @@ describe("Test search mods via right-clicks", () => {
   )
 
   test(
-    "Pivot to logs works",
+    "Count by / Pivot to logs works",
     (done) => {
       let pivotToLogsFlow = async () => {
         await waitForLoginAvailable(app)
         await logIn(app)
         await waitForHistogram(app)
         await waitForSearch(app)
+        // If we want to "Count by" _path, we *must* select a conn cell,
+        // because conn logs contain the _path of the connection. Searching for
+        // "dns" will find either the first conn log tuple of a dns connection,
+        // or the first dns log tuple of the same.
         await app.client.rightClick(
-          selectors.viewer.resultCellContaining("dns")
+          selectors.viewer.resultCellContaining("conn")
         )
         await app.client.click(
           selectors.viewer.rightClickMenuItem("Count by _path")
@@ -175,6 +190,8 @@ describe("Test search mods via right-clicks", () => {
         await app.client.click(
           selectors.viewer.rightClickMenuItem("Pivot to logs")
         )
+        // The result order is deterministic because all the points rendered have
+        // different ts values.
         return searchDisplay(app)
       }
       pivotToLogsFlow().then((searchResults) => {
@@ -199,6 +216,7 @@ describe("Test search mods via right-clicks", () => {
         .then(() => startSearch(app))
         .then(() => waitForSearch(app))
         .then(() => searchDisplay(app))
+         // Search is deterministic because all tuples have different ts
         .then((results) => {
           expect(results).toMatchSnapshot()
         })
