@@ -39,9 +39,6 @@ export const waitForHistogram = (app: Application) => {
 export const writeSearch = (app: Application, searchText: string) =>
   app.client.setValue(selectors.search.input, searchText)
 
-export const getSearchText = (app: Application) =>
-  app.client.getValue(selectors.search.input)
-
 export const startSearch = (app: Application) =>
   app.client.click(selectors.search.button)
 
