@@ -216,7 +216,7 @@ describe("Test search mods via right-clicks", () => {
         .then(() => startSearch(app))
         .then(() => waitForSearch(app))
         .then(() => searchDisplay(app))
-         // Search is deterministic because all tuples have different ts
+        // Search is deterministic because all tuples have different ts
         .then((results) => {
           expect(results).toMatchSnapshot()
         })
