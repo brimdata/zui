@@ -46,12 +46,19 @@ function PopMenuList({template}) {
   return (
     <ul>
       {template.map((item, i) => (
-        <li onClick={item.click} key={i}>
-          {item.label}
-        </li>
+        <PopMenuListItem item={item} key={i} />
       ))}
     </ul>
   )
+}
+
+function PopMenuListItem({item}) {
+  switch (item.type) {
+    case "divider":
+      return <hr />
+    default:
+      return <li onClick={item.click}>{item.label}</li>
+  }
 }
 
 function PopMenuPointer({style}) {
