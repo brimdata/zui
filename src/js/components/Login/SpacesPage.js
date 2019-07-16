@@ -6,10 +6,10 @@ import React, {useState} from "react"
 import type {Cluster} from "../../state/clusters/types"
 import {Dots} from "./Dots"
 import {Input, InputSubmit} from "../form/Inputs"
-import {createSpace} from "../../backend/createSpace"
-import {disconnect} from "../../state/thunks/disconnect"
+import {createSpace} from "../../backend/thunks"
+import {disconnectCluster} from "../../state/clusters/thunks"
 import {getFormData} from "../../stdlib/form"
-import {switchSpace} from "../../space/switch"
+import {setCurrentSpaceName} from "../../state/actions"
 import Back from "../../icons/back-arrow.svg"
 import BrandedAside from "./BrandedAside"
 import Form from "../form/Form"
@@ -18,7 +18,7 @@ type Props = {cluster: Cluster}
 
 export default function SpacesPage({cluster}: Props) {
   let dispatch = useDispatch()
-  let [status, setStatus] = useState("Waiting for user input...")
+  let [status, setStatus] = useState("")
 
   function onSubmit(e) {
     e.preventDefault()
@@ -27,7 +27,7 @@ export default function SpacesPage({cluster}: Props) {
 
     dispatch(createSpace(name))
       .then((space) => {
-        return dispatch(switchSpace(space.name))
+        dispatch(setCurrentSpaceName(space.name))
       })
       .catch((e) => {
         setStatus(e.error)
@@ -51,7 +51,7 @@ export default function SpacesPage({cluster}: Props) {
       </BrandedAside>
 
       <main>
-        <a className="go-back" onClick={() => dispatch(disconnect())}>
+        <a className="go-back" onClick={() => dispatch(disconnectCluster())}>
           <Back />
           <span>Back</span>
         </a>

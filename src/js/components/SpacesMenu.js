@@ -6,6 +6,7 @@ import React, {useEffect} from "react"
 import type {Dispatch, State} from "../state/types"
 import {getAllSpaceNames} from "../state/reducers/spaces"
 import {refreshSpaces} from "../space/refresh"
+import {setCurrentSpaceName} from "../state/actions"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
 
@@ -23,6 +24,16 @@ export const SpacesMenu = ({spaces, dispatch, onChange}: Props) => {
   useEffect(() => {
     dispatch(refreshSpaces())
   }, [])
+
+  if (spaces.length === 0) {
+    return (
+      <MenuList>
+        <li onClick={() => dispatch(setCurrentSpaceName(null))}>
+          Create space
+        </li>
+      </MenuList>
+    )
+  }
 
   return (
     <MenuList>

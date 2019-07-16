@@ -1,6 +1,6 @@
 /* @flow */
 
-export function animatePopMenu(menu, position) {
+export function animatePopMenu(menu: *, position: string) {
   if (position.includes("top")) {
     menu.animate(popDown, settings)
   } else {

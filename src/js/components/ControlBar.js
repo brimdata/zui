@@ -1,52 +1,17 @@
 /* @flow */
 
-import {connect} from "react-redux"
-import React, {useEffect, useState} from "react"
+import React from "react"
 
-import type {Dispatch, State} from "../state/types"
-import {ThinButton} from "./Buttons"
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSearchBar} from "./SearchBar"
-import {XSpacesMenu} from "./SpacesMenu"
 import {XSpanPickers} from "./SpanPickers"
-import {switchSpace} from "../space/switch"
-import DropMenu from "./DropMenu"
-import dispatchToProps from "../lib/dispatchToProps"
-import * as spaces from "../state/reducers/spaces"
-import {reactElementProps} from "../test/integration"
+import SpacePicker from "./SpacePicker"
 
-type Props = {|
-  currentSpace: string,
-  dispatch: Dispatch
-|}
-
-export default function ControlBar({currentSpace, dispatch}: Props) {
-  let [space, setSpace] = useState(currentSpace)
-
-  useEffect(() => {
-    setSpace(currentSpace)
-  })
-
-  function onSpaceChange(val) {
-    setSpace(val)
-    dispatch(switchSpace(val))
-  }
-
+export default function ControlBar() {
   return (
     <div className="control-bar">
       <div className="row-1">
-        <DropMenu
-          position="left"
-          menu={XSpacesMenu}
-          onChange={onSpaceChange}
-          className="button-group"
-        >
-          {
-            <ThinButton {...reactElementProps("spaces_button")}>
-              {space}
-            </ThinButton>
-          }
-        </DropMenu>
+        <SpacePicker />
         <XSpanPickers />
       </div>
       <div className="row-2">
@@ -56,12 +21,3 @@ export default function ControlBar({currentSpace, dispatch}: Props) {
     </div>
   )
 }
-
-const stateToProps = (state: State) => ({
-  currentSpace: spaces.getCurrentSpaceName(state)
-})
-
-export const XControlBar = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(ControlBar)

@@ -1,10 +1,10 @@
 /* @flow */
 
-import {useSelector} from "react-redux"
-import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useEffect} from "react"
 
+import type {Cluster} from "../state/clusters/types"
 import {LeftPane} from "./LeftPane"
-import {XControlBar} from "./ControlBar"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
 import {XSearchInspector} from "./SearchInspector"
@@ -13,18 +13,29 @@ import {XSettingsModal} from "./SettingsModal"
 import {XStatusBar} from "./StatusBar"
 import {XWhoisModal} from "./WhoisModal"
 import {getCurrentFinding} from "../state/reducers/investigation"
+import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getShowLogsTab} from "../state/reducers/view"
+import {initSpace} from "../space/thunks"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import ClusterError from "./ClusterError"
 import ColumnChooser from "./ColumnChooser"
+import ControlBar from "./ControlBar"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
 import TitleBar from "./TitleBar"
 
-export default function SearchPage() {
+type Props = {|cluster: Cluster|}
+
+export default function SearchPage({cluster}: Props) {
   let logsTab = useSelector(getShowLogsTab)
   let finding = useSelector(getCurrentFinding)
   let renderKey = finding && finding.ts.getTime().toString()
   let results = useResizeObserver()
+  let dispatch = useDispatch()
+  let spaceName = useSelector(getCurrentSpaceName)
+
+  useEffect(() => {
+    dispatch(initSpace(spaceName))
+  }, [spaceName, cluster])
 
   return (
     <div className="search-page-wrapper">
@@ -33,7 +44,7 @@ export default function SearchPage() {
         <div className="search-page-main">
           <TitleBar />
           <div className="search-page-header">
-            <XControlBar />
+            <ControlBar />
             {logsTab && (
               <div className="search-page-header-charts">
                 <MainHistogramChart key={renderKey} />

@@ -3,7 +3,11 @@ import {animatePopMenu} from "./animation"
 import {getPopMenuPosition} from "./position"
 import {getPopMenuStyles} from "./style"
 
-export function layoutPopMenu(anchor, menu, position) {
+export function layoutPopMenu(
+  anchor: HTMLElement,
+  menu: HTMLElement,
+  position: string
+) {
   let aRect = anchor.getBoundingClientRect()
   let mRect = menu.getBoundingClientRect()
   let pad = 20

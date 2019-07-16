@@ -1,11 +1,11 @@
 /* @flow */
 
 import type {Thunk} from "../state/types"
-import {fetchSpaces} from "../backend/fetch"
+import {fetchSpaces} from "../backend/thunks"
 import {setSpaceNames} from "../state/actions"
 
 export const refreshSpaces = (): Thunk => (dispatch) => {
-  return dispatch(fetchSpaces()).done((spaces) =>
+  return dispatch(fetchSpaces()).then((spaces) =>
     dispatch(setSpaceNames(spaces))
   )
 }

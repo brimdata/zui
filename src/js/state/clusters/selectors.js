@@ -13,7 +13,7 @@ export function getSavedClusters(state: State) {
   return state.clusters.saved
 }
 
-export function getClusterError(state: State) {
+export function getClusterMessage(state: State) {
   return state.clusters.error
 }
 

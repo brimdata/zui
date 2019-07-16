@@ -57,7 +57,11 @@ function PopMenuListItem({item}) {
     case "divider":
       return <hr />
     default:
-      return <li onClick={item.click}>{item.label}</li>
+      if (item.disabled) {
+        return <li className="disabled">{item.label}</li>
+      } else {
+        return <li onClick={item.click}>{item.label}</li>
+      }
   }
 }
 

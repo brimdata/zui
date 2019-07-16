@@ -47,6 +47,15 @@ $pop-menu-padding: $space-s;
     }
   }
 
+  .disabled {
+    cursor: auto;
+    color: $white-9;
+    &:hover {
+      background-color: inherit;
+      color: $white-9;
+    }
+  }
+
   hr {
     border: none;
     border-top: 1px solid $white-5;

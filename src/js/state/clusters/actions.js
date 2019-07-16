@@ -21,7 +21,7 @@ export function removeCluster(cluster: Cluster): CLUSTER_REMOVE {
   return {type: "CLUSTER_REMOVE", cluster}
 }
 
-export function setClusterError(error: string): CLUSTER_ERROR_SET {
+export function setClusterMessage(error: string): CLUSTER_ERROR_SET {
   return {type: "CLUSTER_ERROR_SET", error}
 }
 

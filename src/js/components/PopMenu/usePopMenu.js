@@ -5,7 +5,7 @@ import {layoutPopMenu} from "./layout"
 
 export function usePopMenu(children: *, position: string = "left bottom") {
   let anchorRef = useRef()
-  let menuRef = useRef<*>()
+  let menuRef = useRef<HTMLElement | null>(null)
   let [isOpen, setIsOpen] = useState(false)
   let [style, setStyle] = useState({})
   let [pointerStyle, setPointerStyle] = useState({})

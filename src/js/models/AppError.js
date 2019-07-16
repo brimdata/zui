@@ -33,6 +33,13 @@ export default class AppError {
       return this.raw
     }
 
+    if (typeof this.raw === "object") {
+      if (this.raw.error) {
+        return this.raw.error
+      }
+      return JSON.stringify(this.raw)
+    }
+
     return this.raw.toString()
   }
 }

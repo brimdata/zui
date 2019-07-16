@@ -4,12 +4,12 @@ import {
   addCluster,
   removeCluster,
   setCluster,
-  setClusterError,
+  setClusterMessage,
   setClusterState
 } from "./actions"
 import {
   getCurrentCluster,
-  getClusterError,
+  getClusterMessage,
   getClusterState,
   getSavedClusters
 } from "./selectors"
@@ -51,16 +51,16 @@ test("setCluster", () => {
   expect(getCurrentCluster(state)).toEqual(cluster)
 })
 
-test("setClusterError to message", () => {
-  let state = store.dispatchAll([setClusterError("Yo yo")])
+test("setClusterMessage to message", () => {
+  let state = store.dispatchAll([setClusterMessage("Yo yo")])
 
-  expect(getClusterError(state)).toEqual("Yo yo")
+  expect(getClusterMessage(state)).toEqual("Yo yo")
 })
 
-test("setClusterError to empty", () => {
-  let state = store.dispatchAll([setClusterError("")])
+test("setClusterMessage to empty", () => {
+  let state = store.dispatchAll([setClusterMessage("")])
 
-  expect(getClusterError(state)).toEqual("")
+  expect(getClusterMessage(state)).toEqual("")
 })
 
 test("setClusterState", () => {

@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {Thunk} from "../state/types"
-import {fetchSpace} from "../backend/fetch"
+import {fetchSpace} from "../backend/thunks"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
 import {killSearchesByTag} from "../searches/cancelSearch"
 import {
