@@ -15,6 +15,7 @@ import {XWhoisModal} from "./WhoisModal"
 import {getCurrentFinding} from "../state/reducers/investigation"
 import {getShowLogsTab} from "../state/reducers/view"
 import {useResizeObserver} from "../hooks/useResizeObserver"
+import ClusterError from "./ClusterError"
 import ColumnChooser from "./ColumnChooser"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
 import TitleBar from "./TitleBar"
@@ -50,6 +51,7 @@ export default function SearchPage() {
         </div>
         <XRightPane />
       </div>
+      <ClusterError />
       <XSearchInspector />
       <XDownloadProgress />
       <XWhoisModal />
