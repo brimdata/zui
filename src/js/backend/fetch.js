@@ -2,7 +2,9 @@
 import type {Dispatch, Thunk} from "../state/types"
 import type {Span} from "../BoomClient/types"
 import {createError} from "../state/errors"
+import {setClusterError} from "../state/clusters/actions"
 import BoomRequest from "../BoomClient/lib/BoomRequest"
+import ErrorFactory from "../models/ErrorFactory"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, g, boom) =>
@@ -39,6 +41,7 @@ export function boomFetchDescriptors(space: string, id: string): Thunk {
 
 export function recordError(dispatch: Dispatch) {
   return function(error: Error) {
+    dispatch(setClusterError(ErrorFactory.create(error).message()))
     dispatch(createError(error))
     throw error
   }
