@@ -28,7 +28,7 @@ export default function ClustersPage() {
 
   useEffect(() => {
     setAppMenu("LOGIN")
-  })
+  }, [])
 
   function onChange(e) {
     if (e.target.type == "checkbox") {
