@@ -35,3 +35,15 @@
     pointer-events: all;
   }
 }
+
+.notice {
+  position: fixed;
+  background: $yellow;
+  padding: $space-xxs $space-l;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.5);
+  top: $space-m;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+}
