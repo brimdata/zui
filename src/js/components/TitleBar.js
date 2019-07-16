@@ -23,6 +23,9 @@ export default function TitleBar() {
     }
   }))
 
+  template.push({type: "divider"})
+  template.push({label: "Other...", click: () => dispatch(disconnect())})
+
   return (
     <div className="title-bar">
       <PopMenuPointy template={template} position="bottom center">
