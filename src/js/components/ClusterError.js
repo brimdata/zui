@@ -3,16 +3,16 @@ import {useSelector} from "react-redux"
 import React from "react"
 import ReactDom from "react-dom"
 
-import {getClusterMessage} from "../state/clusters/selectors"
+import {getBackendError} from "../backend"
 import {id} from "../lib/Doc"
 
 export default function ClusterError() {
-  let error = useSelector(getClusterMessage)
+  let error = useSelector(getBackendError)
 
-  if (error.length === 0) return null
+  if (!error) return null
 
   return ReactDom.createPortal(
-    <p className="notice">{error}</p>,
+    <p className="notice">{error.message()}</p>,
     id("notification-root")
   )
 }

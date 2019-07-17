@@ -1,9 +1,10 @@
 /* @flow */
+import {NoSpacesError} from "../models/Errors"
 import type {Thunk} from "../state/types"
 import {fetchSpace, fetchSpaces} from "../backend/thunks"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
 import {killAllSearches} from "../searches/cancelSearch"
-import {setClusterError} from "../state/clusters/actions"
+import {setBackendError} from "../backend"
 import {
   setCurrentSpaceName,
   setOuterTimeWindow,
@@ -18,7 +19,7 @@ export function initSpace(space: string): Thunk {
     dispatch(killAllSearches())
     return dispatch(fetchSpaces()).then((spaces) => {
       if (spaces.length === 0) {
-        dispatch(setClusterError("No spaces in this cluster."))
+        dispatch(setBackendError(new NoSpacesError()))
       } else {
         let name = spaces.includes(space) ? space : spaces[0]
         dispatch(fetchSpace(name)).then((info) => {

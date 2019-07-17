@@ -5,10 +5,8 @@ import React, {useEffect, useState} from "react"
 import {Dots} from "./Dots"
 import {addCluster} from "../../state/clusters/actions"
 import {connectCluster} from "../../state/clusters/thunks"
-import {
-  getClusterMessage,
-  getSavedClusters
-} from "../../state/clusters/selectors"
+import {getBackendError} from "../../backend"
+import {getSavedClusters} from "../../state/clusters/selectors"
 import {setAppMenu} from "../../electron/setAppMenu"
 import BrandedAside from "./BrandedAside"
 import ClusterForm from "./ClusterForm"
@@ -18,7 +16,7 @@ import SavedClusters from "./SavedClusters"
 
 export default function ClustersPage() {
   let saved = useSelector(getSavedClusters)
-  let status = useSelector(getClusterMessage)
+  let error = useSelector(getBackendError)
   let dispatch = useDispatch()
   let [form, setForm] = useState({
     host: "",
@@ -58,7 +56,7 @@ export default function ClustersPage() {
         <ClusterForm
           data={form}
           onChange={onChange}
-          status={status}
+          status={error ? error.message() : ""}
           submit={submit}
         />
         <Dots />

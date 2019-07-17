@@ -2,6 +2,7 @@
 
 import {combineReducers} from "redux"
 
+import {backendReducer} from "../backend"
 import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
 import clustersReducer from "./clusters/reducer"
@@ -21,6 +22,7 @@ import viewerReducer from "./viewer/reducer"
 import whois from "./reducers/whois"
 
 export default combineReducers<*, *>({
+  backend: backendReducer,
   errors: errorsReducer,
   searches: searchesReducer,
   viewer: viewerReducer,

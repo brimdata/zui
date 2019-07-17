@@ -3,15 +3,14 @@ import type {Cluster} from "../state/clusters/types"
 import type {Span} from "../BoomClient/types"
 import type {Thunk} from "../state/types"
 import {createError} from "../state/errors"
-import {setClusterError} from "../state/clusters/actions"
+import {setBackendError} from "./"
 import ErrorFactory from "../models/ErrorFactory"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, g, boom) => {
-    dispatch(setClusterError(""))
+    dispatch(setBackendError(null))
     return boom
       .search(program, {searchSpan: span, searchSpace: space})
-
       .error((e) => handleError(e, dispatch))
   }
 }
@@ -55,7 +54,7 @@ function promise(request): Thunk {
     return new Promise((resolve, reject) => {
       request(boom)
         .done((...args) => {
-          dispatch(setClusterError(""))
+          dispatch(setBackendError(null))
           resolve(...args)
         })
         .error((e) => {
@@ -67,7 +66,6 @@ function promise(request): Thunk {
 }
 
 function handleError(e, dispatch) {
-  let appError = ErrorFactory.create(e)
-  dispatch(setClusterError(appError.message()))
+  dispatch(setBackendError(ErrorFactory.create(e)))
   dispatch(createError(e))
 }
