@@ -6,7 +6,7 @@ import type {Cluster, ClusterAction, ClustersState} from "./types"
 let init: ClustersState = {
   saved: [],
   current: null,
-  error: null
+  error: ""
 }
 
 export default function(state: ClustersState = init, action: ClusterAction) {

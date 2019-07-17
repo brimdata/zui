@@ -1,6 +1,5 @@
 /* @flow */
 
-import {NoSpacesError} from "../../models/Errors"
 import {addCluster, removeCluster, setCluster, setClusterError} from "./actions"
 import {
   getCurrentCluster,
@@ -46,13 +45,13 @@ test("setCluster", () => {
 })
 
 test("setClusterMessage to message", () => {
-  let state = store.dispatchAll([setClusterError(new NoSpacesError())])
+  let state = store.dispatchAll([setClusterError("no spaces")])
 
-  expect(getClusterMessage(state)).toEqual(new NoSpacesError())
+  expect(getClusterMessage(state)).toEqual("no spaces")
 })
 
 test("setClusterMessage to empty", () => {
-  let state = store.dispatchAll([setClusterError(null)])
+  let state = store.dispatchAll([setClusterError("")])
 
-  expect(getClusterMessage(state)).toEqual(null)
+  expect(getClusterMessage(state)).toEqual("")
 })

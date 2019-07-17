@@ -14,12 +14,12 @@ import {
 } from "../actions"
 import {clearSearches} from "../searches/actions"
 import {clearViewer} from "../viewer/actions"
-import {setCluster, setClusterMessage} from "./actions"
+import {setCluster, setClusterError} from "./actions"
 import {testConnection} from "../../backend/thunks"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
-    d(setClusterMessage("Testing connection to cluster..."))
+    d(setClusterError("Testing connection to cluster..."))
     return d(testConnection(cluster)).then((spaces) => {
       d(setSpaceNames(spaces))
       d(setCluster(cluster))

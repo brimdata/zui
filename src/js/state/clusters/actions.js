@@ -7,8 +7,6 @@ import type {
   Cluster
 } from "./types"
 
-import AppError from "../../models/AppError"
-
 export function setCluster(cluster: Cluster | null): CLUSTER_SET {
   return {type: "CLUSTER_SET", cluster}
 }
@@ -21,6 +19,6 @@ export function removeCluster(cluster: Cluster): CLUSTER_REMOVE {
   return {type: "CLUSTER_REMOVE", cluster}
 }
 
-export function setClusterError(error: AppError | null): CLUSTER_ERROR_SET {
+export function setClusterError(error: string): CLUSTER_ERROR_SET {
   return {type: "CLUSTER_ERROR_SET", error}
 }

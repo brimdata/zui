@@ -1,7 +1,5 @@
 /* @flow */
 
-import AppError from "../../models/AppError"
-
 export type Cluster = {
   host: string,
   port: string,
@@ -12,7 +10,7 @@ export type Cluster = {
 export type ClustersState = {
   saved: Cluster[],
   current: Cluster | null,
-  error: AppError | null
+  error: string
 }
 
 export type ClusterAction =
@@ -38,5 +36,5 @@ export type CLUSTER_SET = {
 
 export type CLUSTER_ERROR_SET = {
   type: "CLUSTER_ERROR_SET",
-  error: AppError | null
+  error: string
 }
