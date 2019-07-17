@@ -34,6 +34,10 @@ export default function SearchPage({cluster}: Props) {
   let spaceName = useSelector(getCurrentSpaceName)
 
   useEffect(() => {
+    setAppMenu("SEARCH")
+  })
+
+  useEffect(() => {
     dispatch(initSpace(spaceName))
   }, [spaceName, cluster])
 
