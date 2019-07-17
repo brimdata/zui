@@ -12,6 +12,7 @@
   a {
     text-decoration: underline;
     cursor: pointer;
+    user-select: none;
 
     &:hover {
       color: $gray-6;
