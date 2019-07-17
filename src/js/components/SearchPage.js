@@ -40,7 +40,7 @@ export default function SearchPage({cluster}: Props) {
 
   useEffect(() => {
     dispatch(initSpace(spaceName))
-  }, [spaceName, cluster])
+  }, [cluster])
 
   return (
     <div className="search-page-wrapper">

@@ -5,8 +5,8 @@ import React, {useEffect, useState} from "react"
 import {ThinButton} from "./Buttons"
 import {XSpacesMenu} from "./SpacesMenu"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
+import {initSpace} from "../space/thunks"
 import {reactElementProps} from "../test/integration"
-import {switchSpace} from "../space/switch"
 import DropMenu from "./DropMenu"
 
 export default function SpacePicker() {
@@ -20,7 +20,7 @@ export default function SpacePicker() {
 
   function onSpaceChange(val) {
     setSpace(val)
-    dispatch(switchSpace(val))
+    dispatch(initSpace(val))
   }
 
   if (!space) return <div style={{height: 14}} />
