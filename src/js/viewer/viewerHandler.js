@@ -42,9 +42,14 @@ export default function(
       case "SearchEnd":
         dispatchResultsSteady.cancel()
         dispatchResults()
-        if (count < PER_PAGE) dispatch(setViewerStatus("COMPLETE"))
-        else if (count === ANALYTIC_MAX_RESULTS)
+
+        if (count === PER_PAGE) {
+          dispatch(setViewerStatus("INCOMPLETE"))
+        } else if (count === ANALYTIC_MAX_RESULTS) {
           dispatch(setViewerStatus("LIMIT"))
+        } else {
+          dispatch(setViewerStatus("COMPLETE"))
+        }
         break
     }
   }
