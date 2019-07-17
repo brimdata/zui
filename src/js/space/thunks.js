@@ -2,6 +2,7 @@
 import type {Thunk} from "../state/types"
 import {fetchSpace, fetchSpaces} from "../backend/thunks"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
+import {killAllSearches} from "../searches/cancelSearch"
 import {setClusterError} from "../state/clusters/actions"
 import {
   setCurrentSpaceName,
@@ -14,6 +15,7 @@ import {subtract} from "../lib/Time"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {
+    dispatch(killAllSearches())
     return dispatch(fetchSpaces()).then((spaces) => {
       if (spaces.length === 0) {
         dispatch(setClusterError("No spaces in this cluster."))
