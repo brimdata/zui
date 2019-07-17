@@ -16,6 +16,7 @@ import {getCurrentFinding} from "../state/reducers/investigation"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getShowLogsTab} from "../state/reducers/view"
 import {initSpace} from "../space/thunks"
+import {killAllSearches} from "../searches/cancelSearch"
 import {setAppMenu} from "../electron/setAppMenu"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import ClusterError from "./ClusterError"
@@ -36,7 +37,10 @@ export default function SearchPage({cluster}: Props) {
 
   useEffect(() => {
     setAppMenu("SEARCH")
-  })
+    return () => {
+      dispatch(killAllSearches())
+    }
+  }, [])
 
   useEffect(() => {
     dispatch(initSpace(spaceName))
