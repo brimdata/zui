@@ -1,6 +1,7 @@
 /* @flow */
 
 import type {Dispatch} from "../state/types"
+import {add} from "../lib/Time"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -108,7 +109,7 @@ export const toTime = (field: TimeField) => ({
   type: "action",
   text: 'Use as "end" time',
   onClick: (dispatch: Dispatch) => {
-    dispatch(setOuterToTime(field.toDate()))
+    dispatch(setOuterToTime(add(field.toDate(), 1, "ms")))
     dispatch(submitSearchBar())
   }
 })

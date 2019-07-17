@@ -4,7 +4,7 @@ import React from "react"
 import ReactDom from "react-dom"
 
 import {NetworkError} from "../models/Errors"
-import {getBackendError} from "../backend"
+import {getBackendError, setBackendError} from "../backend"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {id} from "../lib/Doc"
 import {initSpace} from "../space/thunks"
@@ -35,7 +35,8 @@ function renderError(error, dispatch, space) {
 
   return (
     <Notice>
-      <b>{error.title()}:</b> {error.message()}
+      <b>{error.title()}:</b> {error.message()}{" "}
+      <a onClick={() => dispatch(setBackendError(null))}>Dismiss</a>
     </Notice>
   )
 }
