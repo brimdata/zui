@@ -38,7 +38,7 @@ export default function UidTimeline({logs, log, dispatch}: Props) {
           onClick={() => dispatch(viewLogDetail(currLog))}
         />
       ))}
-      <Duration span={xScale.domain()} />
+      <Duration conn={logs.find((l) => l.get("_path") === "conn")} />
     </div>
   )
 }
@@ -78,8 +78,12 @@ function PathRow({log, current, position, ...rest}) {
   )
 }
 
-function Duration({span}) {
-  return <p className="duration">Duration: {duration(span, "seconds")}s</p>
+function Duration({conn}) {
+  if (conn) {
+    return <p className="duration">Duration: {conn.cast("duration") || 0}s</p>
+  } else {
+    return <p className="duration">Duration: 0s (No conn log)</p>
+  }
 }
 
 export const XUidTimeline = connect<Props, OwnProps, _, DispatchProps, _, _>(
