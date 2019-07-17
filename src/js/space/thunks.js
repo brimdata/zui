@@ -6,7 +6,8 @@ import {setClusterError} from "../state/clusters/actions"
 import {
   setCurrentSpaceName,
   setOuterTimeWindow,
-  setSpaceInfo
+  setSpaceInfo,
+  setSpaceNames
 } from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {subtract} from "../lib/Time"
@@ -28,4 +29,10 @@ export function initSpace(space: string): Thunk {
       }
     })
   }
+}
+
+export const refreshSpaces = (): Thunk => (dispatch) => {
+  return dispatch(fetchSpaces()).then((spaces) =>
+    dispatch(setSpaceNames(spaces))
+  )
 }

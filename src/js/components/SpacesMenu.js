@@ -5,7 +5,7 @@ import React, {useEffect} from "react"
 
 import type {Dispatch, State} from "../state/types"
 import {getAllSpaceNames} from "../state/reducers/spaces"
-import {refreshSpaces} from "../space/refresh"
+import {refreshSpaces} from "../space/thunks"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
 
