@@ -9,7 +9,6 @@ import type {ColumnsState} from "./columns/types"
 import type {ErrorsState} from "./errors"
 import type {Investigation} from "./reducers/investigation"
 import type {LogDetails} from "./reducers/logDetails"
-import type {Notifications} from "./reducers/notifications"
 import type {SearchBar} from "./reducers/searchBar"
 import type {SearchHistory} from "./reducers/searchHistory"
 import type {SearchesState} from "./searches/types"
@@ -42,6 +41,5 @@ export type State = {
   whois: Whois,
   logDetails: LogDetails,
   view: View,
-  notifications: Notifications,
   investigation: Investigation
 }

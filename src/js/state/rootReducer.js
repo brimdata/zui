@@ -9,7 +9,6 @@ import clustersReducer from "./clusters/reducer"
 import columnsReducer from "./columns/reducer"
 import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
-import notifications from "./reducers/notifications"
 import packets from "./reducers/packets"
 import searchBar from "./reducers/searchBar"
 import searchHistory from "./reducers/searchHistory"
@@ -38,6 +37,5 @@ export default combineReducers<*, *>({
   starredLogs,
   packets,
   searchHistory,
-  whois,
-  notifications
+  whois
 })
