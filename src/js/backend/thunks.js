@@ -7,10 +7,13 @@ import {setClusterError} from "../state/clusters/actions"
 import ErrorFactory from "../models/ErrorFactory"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
-  return (dispatch, g, boom) =>
-    boom
+  return (dispatch, g, boom) => {
+    dispatch(setClusterError(""))
+    return boom
       .search(program, {searchSpan: span, searchSpace: space})
+
       .error((e) => handleError(e, dispatch))
+  }
 }
 
 export function fetchSpaces() {
