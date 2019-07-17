@@ -8,7 +8,6 @@ import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/types"
 import {add, format} from "../lib/Time"
-import {duration} from "../lib/TimeWindow"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Log from "../models/Log"
 import dispatchToProps from "../lib/dispatchToProps"
