@@ -19,7 +19,7 @@ import {initSpace} from "../space/thunks"
 import {killAllSearches} from "../searches/cancelSearch"
 import {setAppMenu} from "../electron/setAppMenu"
 import {useResizeObserver} from "../hooks/useResizeObserver"
-import ClusterError from "./ClusterError"
+import BackendErrorNotice from "./BackendErrorNotice"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
@@ -71,7 +71,7 @@ export default function SearchPage({cluster}: Props) {
         </div>
         <XRightPane />
       </div>
-      <ClusterError />
+      <BackendErrorNotice />
       <XSearchInspector />
       <XDownloadProgress />
       <XWhoisModal />

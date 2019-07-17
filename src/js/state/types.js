@@ -2,13 +2,13 @@
 
 import {type Store as ReduxStore} from "redux"
 
+import type {BackendState} from "../backend"
 import type {Boomd} from "./reducers/boomd"
 import type {ClustersState} from "./clusters/types"
 import type {ColumnsState} from "./columns/types"
 import type {ErrorsState} from "./errors"
 import type {Investigation} from "./reducers/investigation"
 import type {LogDetails} from "./reducers/logDetails"
-import type {Notifications} from "./reducers/notifications"
 import type {SearchBar} from "./reducers/searchBar"
 import type {SearchHistory} from "./reducers/searchHistory"
 import type {SearchesState} from "./searches/types"
@@ -27,6 +27,7 @@ export type DispatchProps = {|dispatch: Dispatch|}
 export type Store = ReduxStore<State, *>
 
 export type State = {
+  backend: BackendState,
   clusters: ClustersState,
   errors: ErrorsState,
   columns: ColumnsState,
@@ -40,6 +41,5 @@ export type State = {
   whois: Whois,
   logDetails: LogDetails,
   view: View,
-  notifications: Notifications,
   investigation: Investigation
 }

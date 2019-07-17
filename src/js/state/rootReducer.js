@@ -2,13 +2,13 @@
 
 import {combineReducers} from "redux"
 
+import {backendReducer} from "../backend"
 import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
 import clustersReducer from "./clusters/reducer"
 import columnsReducer from "./columns/reducer"
 import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
-import notifications from "./reducers/notifications"
 import packets from "./reducers/packets"
 import searchBar from "./reducers/searchBar"
 import searchHistory from "./reducers/searchHistory"
@@ -21,6 +21,7 @@ import viewerReducer from "./viewer/reducer"
 import whois from "./reducers/whois"
 
 export default combineReducers<*, *>({
+  backend: backendReducer,
   errors: errorsReducer,
   searches: searchesReducer,
   viewer: viewerReducer,
@@ -36,6 +37,5 @@ export default combineReducers<*, *>({
   starredLogs,
   packets,
   searchHistory,
-  whois,
-  notifications
+  whois
 })

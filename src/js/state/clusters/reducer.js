@@ -26,12 +26,6 @@ export default function(state: ClustersState = init, action: ClusterAction) {
         ...state,
         current: action.cluster
       }
-    case "CLUSTER_ERROR_SET":
-      return {
-        ...state,
-        error: action.error
-      }
-
     default:
       return state
   }
