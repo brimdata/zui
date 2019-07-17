@@ -18,5 +18,5 @@ export const enableIndex = (value: boolean): Thunk => (
   boom
 ) => {
   dispatch(useBoomIndex(value))
-  boom.setOptions({enableCache: value})
+  boom.setOptions({enableIndex: value})
 }
