@@ -16,7 +16,3 @@ export function getSavedClusters(state: State) {
 export function getClusterMessage(state: State) {
   return state.clusters.error
 }
-
-export function getClusterState(state: State) {
-  return state.clusters.state
-}

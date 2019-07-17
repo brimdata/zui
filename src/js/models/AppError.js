@@ -8,15 +8,13 @@ export type ErrorContext = *
 export default class AppError {
   raw: *
   ts: Date
-  context: ErrorContext
 
   static is(_e: RawError) {
     return false
   }
 
-  constructor(e: RawError, context: ErrorContext = {}) {
+  constructor(e?: RawError) {
     this.raw = e
-    this.context = context
     this.ts = new Date()
   }
 
@@ -40,6 +38,8 @@ export default class AppError {
       return JSON.stringify(this.raw)
     }
 
-    return this.raw.toString()
+    if (this.raw && this.raw.toString) return this.raw.toString()
+
+    return "Unknown error"
   }
 }
