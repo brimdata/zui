@@ -4,20 +4,22 @@ import React, {useEffect, useState} from "react"
 
 import {Dots} from "./Dots"
 import {addCluster} from "../../state/clusters/actions"
-import {attemptLogin} from "../../state/clusters/thunks"
-import {getSavedClusters} from "../../state/clusters/selectors"
+import {connectCluster} from "../../state/clusters/thunks"
+import {
+  getClusterMessage,
+  getSavedClusters
+} from "../../state/clusters/selectors"
 import {setAppMenu} from "../../electron/setAppMenu"
 import BrandedAside from "./BrandedAside"
 import ClusterForm from "./ClusterForm"
 import ClusterWelcome from "./ClusterWelcome"
 import EmptyCheck from "../EmptyCheck"
-import ErrorFactory from "../../models/ErrorFactory"
 import SavedClusters from "./SavedClusters"
 
 export default function ClustersPage() {
   let saved = useSelector(getSavedClusters)
+  let status = useSelector(getClusterMessage)
   let dispatch = useDispatch()
-  let [status, setStatus] = useState("Waiting for user input...")
   let [form, setForm] = useState({
     host: "",
     port: "",
@@ -28,7 +30,7 @@ export default function ClustersPage() {
 
   useEffect(() => {
     setAppMenu("LOGIN")
-  })
+  }, [])
 
   function onChange(e) {
     if (e.target.type == "checkbox") {
@@ -40,15 +42,9 @@ export default function ClustersPage() {
 
   function submit(form) {
     let {save, ...creds} = form
-    setStatus("Testing connection.")
-    dispatch(attemptLogin(creds))
-      .then(() => {
-        setStatus("Connection succeeded.")
-        if (save) dispatch(addCluster(creds))
-      })
-      .catch((e) => {
-        setStatus(ErrorFactory.create(e).message())
-      })
+    dispatch(connectCluster(creds)).then(() => {
+      if (save) dispatch(addCluster(creds))
+    })
   }
 
   return (

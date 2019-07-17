@@ -45,7 +45,7 @@ export class NoSpacesError extends AppError {
   }
 
   message() {
-    return "This host has no spaces to search. Use the command line to create a space, then reload this page."
+    return "No spaces in this cluster."
   }
 }
 

@@ -39,11 +39,15 @@ export default function SearchInspector({dispatch, searches, isOpen}: Props) {
         <CloseButton light onClick={() => dispatch(hideSearchInspector())} />
       </header>
       <section>
-        <HorizontalTable
-          descriptor={logs[0].descriptor}
-          logs={logs}
-          Actions={Actions}
-        />
+        {logs.length ? (
+          <HorizontalTable
+            descriptor={logs[0].descriptor}
+            logs={logs}
+            Actions={Actions}
+          />
+        ) : (
+          <p className="empty">No searches to inspect.</p>
+        )}
       </section>
     </div>
   )

@@ -10,18 +10,14 @@ export type Cluster = {
 export type ClustersState = {
   saved: Cluster[],
   current: Cluster | null,
-  error: string,
-  state: ClusterStateEnum
+  error: string
 }
-
-export type ClusterStateEnum = "testing" | "ok" | "error" | "none"
 
 export type ClusterAction =
   | CLUSTER_REMOVE
   | CLUSTER_ADD
   | CLUSTER_SET
   | CLUSTER_ERROR_SET
-  | CLUSTER_STATE_SET
 
 export type CLUSTER_REMOVE = {
   type: "CLUSTER_REMOVE",
@@ -41,9 +37,4 @@ export type CLUSTER_SET = {
 export type CLUSTER_ERROR_SET = {
   type: "CLUSTER_ERROR_SET",
   error: string
-}
-
-export type CLUSTER_STATE_SET = {
-  type: "CLUSTER_STATE_SET",
-  state: ClusterStateEnum
 }

@@ -12,7 +12,7 @@ import {getCurrentCluster} from "../state/clusters/selectors"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getTimeWindow} from "../state/reducers/timeWindow"
-import {inspectSearch} from "../backend/inspectSearch"
+import {inspectSearch} from "../backend/thunks"
 import Modal from "./Modal"
 import dispatchToProps from "../lib/dispatchToProps"
 

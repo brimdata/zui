@@ -1,16 +1,9 @@
 /* @flow */
 
-import {
-  addCluster,
-  removeCluster,
-  setCluster,
-  setClusterError,
-  setClusterState
-} from "./actions"
+import {addCluster, removeCluster, setCluster, setClusterError} from "./actions"
 import {
   getCurrentCluster,
-  getClusterError,
-  getClusterState,
+  getClusterMessage,
   getSavedClusters
 } from "./selectors"
 import initTestStore from "../../test/initTestStore"
@@ -51,24 +44,14 @@ test("setCluster", () => {
   expect(getCurrentCluster(state)).toEqual(cluster)
 })
 
-test("setClusterError to message", () => {
-  let state = store.dispatchAll([setClusterError("Yo yo")])
+test("setClusterMessage to message", () => {
+  let state = store.dispatchAll([setClusterError("no spaces")])
 
-  expect(getClusterError(state)).toEqual("Yo yo")
+  expect(getClusterMessage(state)).toEqual("no spaces")
 })
 
-test("setClusterError to empty", () => {
+test("setClusterMessage to empty", () => {
   let state = store.dispatchAll([setClusterError("")])
 
-  expect(getClusterError(state)).toEqual("")
-})
-
-test("setClusterState", () => {
-  let state = store.dispatchAll([
-    setClusterState("testing"),
-    setClusterState("ok"),
-    setClusterState("error")
-  ])
-
-  expect(getClusterState(state)).toBe("error")
+  expect(getClusterMessage(state)).toEqual("")
 })

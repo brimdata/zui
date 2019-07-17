@@ -29,3 +29,9 @@ export const killSearch = (name: string): Thunk => (_, getState) => {
   const searches = getSearches(getState())
   searches[name] && searches[name].handler.abort()
 }
+
+export function killAllSearches(): Thunk {
+  return function(dispatch) {
+    return dispatch(killSearchesByTag())
+  }
+}

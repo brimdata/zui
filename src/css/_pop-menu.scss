@@ -1,0 +1,110 @@
+$pop-menu-padding: $space-s;
+
+.pop-menu-overlay {
+  position: fixed;
+  background: transparent;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.pop-menu-wrapper {
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  z-index: 1;
+  margin: 0;
+  text-align: left;
+  background-color: $white-1;
+  position: relative;
+  border-radius: 5px;
+  display: inline-block;
+
+  ul {
+    padding: 8px 0;
+    margin: 0;
+  }
+
+  li {
+    font-size: 14px;
+    font-family: $body-font;
+    padding: $space-xxs 36px;
+    color: $gray-7;
+    list-style-type: none;
+    display: block;
+    white-space: nowrap;
+    cursor: pointer;
+    margin: 0;
+    user-select: none;
+
+    &:hover {
+      background-color: $blue;
+      color: white;
+    }
+
+    &:active {
+      background-color: $blue-light;
+    }
+  }
+
+  .disabled {
+    cursor: auto;
+    color: $white-9;
+    &:hover {
+      background-color: inherit;
+      color: $white-9;
+    }
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid $white-5;
+    margin: 8px 0;
+  }
+
+  .pop-menu-pointer {
+    margin: 0;
+    padding: 0;
+    fill: $white-1;
+    position: absolute;
+    height: 16px;
+  }
+}
+
+.test-anchor {
+  position: fixed;
+  background-color: $blue;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+
+.a {
+  top: 10px;
+  left: 10px;
+}
+
+.b {
+  top: 10px;
+  right: 10px;
+}
+
+.c {
+  bottom: 10px;
+  right: 10px;
+}
+
+.d {
+  bottom: 10px;
+  left: 10px;
+}
+
+.e {
+  top: 30%;
+  left: 50%;
+}
+
+.f {
+  top: 60%;
+  left: 50%;
+}

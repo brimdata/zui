@@ -1,37 +1,24 @@
-.notifications {
+.notice {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
-  flex-flow: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 0 24px;
-  pointer-events: none;
+  background: $yellow;
+  padding: $space-xxs $space-l;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.5);
+  top: $space-m;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
 
-  .notification-enter {
-    transform: translate(100%);
-  }
+  a {
+    text-decoration: underline;
+    cursor: pointer;
 
-  .notification-enter-active {
-    transition: transform 200ms;
-    transform: translate(0);
-  }
+    &:hover {
+      color: $gray-6;
+    }
 
-  .notification-exit {
-    transform: translate(0);
-  }
-
-  .notification-exit-active {
-    transition: transform 200ms;
-    transform: translate(100%);
-  }
-
-  .message-box {
-    margin-bottom: 24px;
-    pointer-events: all;
+    &:active {
+      color: inherit;
+    }
   }
 }

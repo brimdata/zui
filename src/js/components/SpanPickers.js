@@ -6,24 +6,25 @@ import React from "react"
 
 import {type DateTuple} from "../lib/TimeWindow"
 import type {Dispatch, State} from "../state/types"
+import type {Space} from "../lib/Space"
 import {ThinPicker} from "./Buttons"
 import {type TimeObj, add, set, subtract} from "../lib/Time"
 import {XSpanPickerMenu} from "./SpanPickerMenu"
-import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
+import {getCurrentSpace} from "../state/reducers/spaces"
 import {getTimeWindow} from "../state/reducers/timeWindow"
 import {getTimeZone} from "../state/reducers/view"
+import {reactElementProps} from "../test/integration"
 import {setOuterTimeWindow} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import DayPicker from "./DayPicker"
 import DropMenu from "./DropMenu"
 import SpanDuration from "./SpanDuration"
 import TimePicker from "./TimePicker"
-import {reactElementProps} from "../test/integration"
 
 type StateProps = {|
   timeWindow: DateTuple,
-  spaceSpan: DateTuple,
-  timeZone: string
+  timeZone: string,
+  space: Space
 |}
 
 type DispatchProps = {|
@@ -143,6 +144,8 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
   }
 
   render() {
+    if (!this.props.space) return null
+
     return (
       <div className="button-group span-pickers">
         <div
@@ -194,7 +197,7 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
 const stateToProps = (state: State): StateProps => ({
   timeWindow: getTimeWindow(state),
   timeZone: getTimeZone(state),
-  spaceSpan: getCurrentSpaceTimeWindow(state)
+  space: getCurrentSpace(state)
 })
 
 const dispatchToProps = (dispatch: Dispatch): DispatchProps => ({

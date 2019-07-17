@@ -4,9 +4,7 @@ import type {
   CLUSTER_ERROR_SET,
   CLUSTER_REMOVE,
   CLUSTER_SET,
-  CLUSTER_STATE_SET,
-  Cluster,
-  ClusterStateEnum
+  Cluster
 } from "./types"
 
 export function setCluster(cluster: Cluster | null): CLUSTER_SET {
@@ -23,8 +21,4 @@ export function removeCluster(cluster: Cluster): CLUSTER_REMOVE {
 
 export function setClusterError(error: string): CLUSTER_ERROR_SET {
   return {type: "CLUSTER_ERROR_SET", error}
-}
-
-export function setClusterState(state: ClusterStateEnum): CLUSTER_STATE_SET {
-  return {type: "CLUSTER_STATE_SET", state}
 }
