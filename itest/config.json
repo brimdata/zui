@@ -4,6 +4,10 @@
     "!**/flow-typed/**",
     "!**/test/**"
   ],
+  "reporters": [
+    "default",
+    "jest-junit"
+  ],
   "setupFiles": [
     "<rootDir>/setup.js"
   ]
