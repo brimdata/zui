@@ -8,4 +8,17 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 14px;
+
+  a {
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      color: $gray-6;
+    }
+
+    &:active {
+      color: inherit;
+    }
+  }
 }
