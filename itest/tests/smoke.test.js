@@ -13,7 +13,7 @@ import {
   waitForHistogram,
   waitForSearch
 } from "../lib/app.js"
-import {TestTimeout, handleError} from "../lib/jest.js"
+import {handleError, stdTest} from "../lib/jest.js"
 
 const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
@@ -38,36 +38,32 @@ describe("Smoke test", () => {
 
   // TODO: Parallel runs across files are not supported due to chromebrowser
   // port contention. Support that later.
-  test(
-    "show a sane window; log in and see Search and Histogram",
-    (done) => {
-      waitForLoginAvailable(app)
-        .then(() => app.client.waitForExist("title"))
-        .then(() => app.client.getTitle())
-        .then((title) => {
-          // TODO: Looky shouldn't be hardcoded but instead read from a title
-          // defined elsewhere.
-          expect(title.toLowerCase()).toBe("brim")
-        })
-        .then(() => app.client.waitForExist(".company-name h1"))
-        // TODO: Don't use selectors as literals in tests. These definitions
-        // should be defined in a single place and ideally be tested to ensure
-        // they can be found.
-        .then(() => app.client.getText(".company-name h1"))
-        .then((headerText) => {
-          expect(headerText.toLowerCase()).toBe("brim")
-        })
-        .then(() => logIn(app))
-        .then(() => waitForHistogram(app))
-        .then(() => waitForSearch(app))
-        .then((val) => {
-          expect(val).toBeDefined()
-          done()
-        })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
+  stdTest("show a sane window; log in and see Search and Histogram", (done) => {
+    waitForLoginAvailable(app)
+      .then(() => app.client.waitForExist("title"))
+      .then(() => app.client.getTitle())
+      .then((title) => {
+        // TODO: Looky shouldn't be hardcoded but instead read from a title
+        // defined elsewhere.
+        expect(title.toLowerCase()).toBe("brim")
+      })
+      .then(() => app.client.waitForExist(".company-name h1"))
+      // TODO: Don't use selectors as literals in tests. These definitions
+      // should be defined in a single place and ideally be tested to ensure
+      // they can be found.
+      .then(() => app.client.getText(".company-name h1"))
+      .then((headerText) => {
+        expect(headerText.toLowerCase()).toBe("brim")
+      })
+      .then(() => logIn(app))
+      .then(() => waitForHistogram(app))
+      .then(() => waitForSearch(app))
+      .then((val) => {
+        expect(val).toBeDefined()
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 })

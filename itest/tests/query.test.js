@@ -19,7 +19,7 @@ import {
   waitForSearch,
   writeSearch
 } from "../lib/app.js"
-import {TestTimeout, handleError} from "../lib/jest.js"
+import {handleError, stdTest} from "../lib/jest.js"
 
 const Application = require("spectron").Application
 const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
@@ -42,171 +42,149 @@ describe("Query tests", () => {
     }
   })
 
-  test(
-    "query path=weird | sort",
-    (done) => {
-      waitForLoginAvailable(app)
-        .then(() => logIn(app))
-        .then(() => waitForHistogram(app))
-        .then(() => waitForSearch(app))
-        .then(() => writeSearch(app, "_path=weird | sort"))
-        .then(() => startSearch(app))
-        .then(() => waitForSearch(app))
-        .then(() => searchDisplay(app))
-        .then((results) => {
-          expect(results).toMatchSnapshot()
-        })
-        .then(() => getSearchSpeed(app))
-        .then((searchSpeed) => {
-          expect(searchSpeed).toBeGreaterThan(0)
-          expect(searchSpeed).toBeLessThan(1000)
-        })
-        .then(() => getSearchTime(app))
-        .then((searchTime) => {
-          expect(searchTime).toBeGreaterThan(0)
-          expect(searchTime).toBeLessThan(5)
-          done()
-        })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
+  stdTest("query path=weird | sort", (done) => {
+    waitForLoginAvailable(app)
+      .then(() => logIn(app))
+      .then(() => waitForHistogram(app))
+      .then(() => waitForSearch(app))
+      .then(() => writeSearch(app, "_path=weird | sort"))
+      .then(() => startSearch(app))
+      .then(() => waitForSearch(app))
+      .then(() => searchDisplay(app))
+      .then((results) => {
+        expect(results).toMatchSnapshot()
+      })
+      .then(() => getSearchSpeed(app))
+      .then((searchSpeed) => {
+        expect(searchSpeed).toBeGreaterThan(0)
+        expect(searchSpeed).toBeLessThan(1000)
+      })
+      .then(() => getSearchTime(app))
+      .then((searchTime) => {
+        expect(searchTime).toBeGreaterThan(0)
+        expect(searchTime).toBeLessThan(5)
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 
-  test(
-    "query path=_http | count()",
-    (done) => {
-      waitForLoginAvailable(app)
-        .then(() => logIn(app))
-        .then(() => waitForHistogram(app))
-        .then(() => waitForSearch(app))
-        .then(() => writeSearch(app, "_path=http | count()"))
-        .then(() => startSearch(app))
-        .then(() => waitForSearch(app))
-        .then(() => searchDisplay(app))
-        .then((results) => {
-          expect(results).toMatchSnapshot()
-        })
-        .then(() => getSearchSpeed(app))
-        .then((searchSpeed) => {
-          expect(searchSpeed).toBeGreaterThan(0)
-          expect(searchSpeed).toBeLessThan(1000)
-        })
-        .then(() => getSearchTime(app))
-        .then((searchTime) => {
-          expect(searchTime).toBeGreaterThan(0)
-          expect(searchTime).toBeLessThan(5)
-          done()
-        })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
+  stdTest("query path=_http | count()", (done) => {
+    waitForLoginAvailable(app)
+      .then(() => logIn(app))
+      .then(() => waitForHistogram(app))
+      .then(() => waitForSearch(app))
+      .then(() => writeSearch(app, "_path=http | count()"))
+      .then(() => startSearch(app))
+      .then(() => waitForSearch(app))
+      .then(() => searchDisplay(app))
+      .then((results) => {
+        expect(results).toMatchSnapshot()
+      })
+      .then(() => getSearchSpeed(app))
+      .then((searchSpeed) => {
+        expect(searchSpeed).toBeGreaterThan(0)
+        expect(searchSpeed).toBeLessThan(1000)
+      })
+      .then(() => getSearchTime(app))
+      .then((searchTime) => {
+        expect(searchTime).toBeGreaterThan(0)
+        expect(searchTime).toBeLessThan(5)
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 
-  test(
-    "query _path=http | count() by id.resp_p | sort",
-    (done) => {
-      waitForLoginAvailable(app)
-        .then(() => logIn(app))
-        .then(() => waitForHistogram(app))
-        .then(() => waitForSearch(app))
-        .then(() =>
-          writeSearch(app, "_path=http | count() by id.resp_p | sort")
-        )
-        .then(() => startSearch(app))
-        .then(() => waitForSearch(app))
-        .then(() => searchDisplay(app))
-        .then((results) => {
-          expect(results).toMatchSnapshot()
-        })
-        .then(() => getSearchSpeed(app))
-        .then((searchSpeed) => {
-          expect(searchSpeed).toBeGreaterThan(0)
-          expect(searchSpeed).toBeLessThan(1000)
-        })
-        .then(() => getSearchTime(app))
-        .then((searchTime) => {
-          expect(searchTime).toBeGreaterThan(0)
-          expect(searchTime).toBeLessThan(5)
-          done()
-        })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
+  stdTest("query _path=http | count() by id.resp_p | sort", (done) => {
+    waitForLoginAvailable(app)
+      .then(() => logIn(app))
+      .then(() => waitForHistogram(app))
+      .then(() => waitForSearch(app))
+      .then(() => writeSearch(app, "_path=http | count() by id.resp_p | sort"))
+      .then(() => startSearch(app))
+      .then(() => waitForSearch(app))
+      .then(() => searchDisplay(app))
+      .then((results) => {
+        expect(results).toMatchSnapshot()
+      })
+      .then(() => getSearchSpeed(app))
+      .then((searchSpeed) => {
+        expect(searchSpeed).toBeGreaterThan(0)
+        expect(searchSpeed).toBeLessThan(1000)
+      })
+      .then(() => getSearchTime(app))
+      .then((searchTime) => {
+        expect(searchTime).toBeGreaterThan(0)
+        expect(searchTime).toBeLessThan(5)
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 
-  test(
-    "query _path=http | every 5m count()",
-    (done) => {
-      waitForLoginAvailable(app)
-        .then(() => logIn(app))
-        .then(() => waitForHistogram(app))
-        .then(() => waitForSearch(app))
-        .then(() => writeSearch(app, "_path=http | every 5m count()"))
-        .then(() => startSearch(app))
-        .then(() => waitForSearch(app))
-        .then(() => searchDisplay(app))
-        .then((results) => {
-          expect(results).toMatchSnapshot()
-        })
-        .then(() => getSearchSpeed(app))
-        .then((searchSpeed) => {
-          expect(searchSpeed).toBeGreaterThan(0)
-          expect(searchSpeed).toBeLessThan(1000)
-        })
-        .then(() => getSearchTime(app))
-        .then((searchTime) => {
-          expect(searchTime).toBeGreaterThan(0)
-          expect(searchTime).toBeLessThan(5)
-          done()
-        })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
+  stdTest("query _path=http | every 5m count()", (done) => {
+    waitForLoginAvailable(app)
+      .then(() => logIn(app))
+      .then(() => waitForHistogram(app))
+      .then(() => waitForSearch(app))
+      .then(() => writeSearch(app, "_path=http | every 5m count()"))
+      .then(() => startSearch(app))
+      .then(() => waitForSearch(app))
+      .then(() => searchDisplay(app))
+      .then((results) => {
+        expect(results).toMatchSnapshot()
+      })
+      .then(() => getSearchSpeed(app))
+      .then((searchSpeed) => {
+        expect(searchSpeed).toBeGreaterThan(0)
+        expect(searchSpeed).toBeLessThan(1000)
+      })
+      .then(() => getSearchTime(app))
+      .then((searchTime) => {
+        expect(searchTime).toBeGreaterThan(0)
+        expect(searchTime).toBeLessThan(5)
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 
-  test(
-    "query * | count(); switch to whole space",
-    (done) => {
-      waitForLoginAvailable(app)
-        .then(() => logIn(app))
-        .then(() => waitForHistogram(app))
-        .then(() => waitForSearch(app))
-        .then(() => writeSearch(app, "* | count()"))
-        .then(() => startSearch(app))
-        .then(() => waitForSearch(app))
-        .then(() => searchDisplay(app))
-        .then((results) => {
-          expect(results).toMatchSnapshot()
-        })
-        .then(() => setSpan(app, "Whole Space"))
-        .then(() => waitForSearch(app))
-        .then(() => searchDisplay(app))
-        .then((results) => {
-          expect(results).toMatchSnapshot()
-        })
-        .then(() => getSearchSpeed(app))
-        .then((searchSpeed) => {
-          expect(searchSpeed).toBeGreaterThan(0)
-          expect(searchSpeed).toBeLessThan(1000)
-        })
-        .then(() => getSearchTime(app))
-        .then((searchTime) => {
-          expect(searchTime).toBeGreaterThan(0)
-          expect(searchTime).toBeLessThan(5)
-          done()
-        })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    },
-    TestTimeout
-  )
+  stdTest("query * | count(); switch to whole space", (done) => {
+    waitForLoginAvailable(app)
+      .then(() => logIn(app))
+      .then(() => waitForHistogram(app))
+      .then(() => waitForSearch(app))
+      .then(() => writeSearch(app, "* | count()"))
+      .then(() => startSearch(app))
+      .then(() => waitForSearch(app))
+      .then(() => searchDisplay(app))
+      .then((results) => {
+        expect(results).toMatchSnapshot()
+      })
+      .then(() => setSpan(app, "Whole Space"))
+      .then(() => waitForSearch(app))
+      .then(() => searchDisplay(app))
+      .then((results) => {
+        expect(results).toMatchSnapshot()
+      })
+      .then(() => getSearchSpeed(app))
+      .then((searchSpeed) => {
+        expect(searchSpeed).toBeGreaterThan(0)
+        expect(searchSpeed).toBeLessThan(1000)
+      })
+      .then(() => getSearchTime(app))
+      .then((searchTime) => {
+        expect(searchTime).toBeGreaterThan(0)
+        expect(searchTime).toBeLessThan(5)
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 })
