@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Query tests query * | count(); switch to whole space 1`] = `
+exports[`Query tests query "* | count()"; switch to whole space 1`] = `
 Array [
   "count",
   "959",
 ]
 `;
 
-exports[`Query tests query * | count(); switch to whole space 2`] = `
+exports[`Query tests query "* | count()"; switch to whole space 2`] = `
 Array [
   "count",
   "1,031,683",
 ]
 `;
 
-exports[`Query tests query _path=http | count() by id.resp_p | sort 1`] = `
+exports[`Query tests query "_path=http | count() by id.resp_p | sort" 1`] = `
 Array [
   "id.resp_p",
   "count",
@@ -25,7 +25,14 @@ Array [
 ]
 `;
 
-exports[`Query tests query _path=http | every 5m count() 1`] = `
+exports[`Query tests query "_path=http | count()" 1`] = `
+Array [
+  "count",
+  "61",
+]
+`;
+
+exports[`Query tests query "_path=http | every 5m count()" 1`] = `
 Array [
   "ts",
   "count",
@@ -48,14 +55,7 @@ Array [
 ]
 `;
 
-exports[`Query tests query path=_http | count() 1`] = `
-Array [
-  "count",
-  "61",
-]
-`;
-
-exports[`Query tests query path=weird | sort 1`] = `
+exports[`Query tests query "_path=weird | sort" 1`] = `
 Array [
   "ts",
   "_path",
