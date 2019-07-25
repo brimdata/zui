@@ -42,7 +42,7 @@ describe("Query tests", () => {
     }
   })
 
-  stdTest("query path=weird | sort", (done) => {
+  stdTest('query "_path=weird | sort"', (done) => {
     waitForLoginAvailable(app)
       .then(() => logIn(app))
       .then(() => waitForHistogram(app))
@@ -70,7 +70,7 @@ describe("Query tests", () => {
       })
   })
 
-  stdTest("query path=_http | count()", (done) => {
+  stdTest('query "_path=http | count()"', (done) => {
     waitForLoginAvailable(app)
       .then(() => logIn(app))
       .then(() => waitForHistogram(app))
@@ -98,7 +98,7 @@ describe("Query tests", () => {
       })
   })
 
-  stdTest("query _path=http | count() by id.resp_p | sort", (done) => {
+  stdTest('query "_path=http | count() by id.resp_p | sort"', (done) => {
     waitForLoginAvailable(app)
       .then(() => logIn(app))
       .then(() => waitForHistogram(app))
@@ -126,7 +126,7 @@ describe("Query tests", () => {
       })
   })
 
-  stdTest("query _path=http | every 5m count()", (done) => {
+  stdTest('query "_path=http | every 5m count()"', (done) => {
     waitForLoginAvailable(app)
       .then(() => logIn(app))
       .then(() => waitForHistogram(app))
@@ -154,7 +154,7 @@ describe("Query tests", () => {
       })
   })
 
-  stdTest("query * | count(); switch to whole space", (done) => {
+  stdTest('query "* | count()"; switch to whole space', (done) => {
     waitForLoginAvailable(app)
       .then(() => logIn(app))
       .then(() => waitForHistogram(app))
