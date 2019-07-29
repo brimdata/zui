@@ -5,6 +5,9 @@ import {Application} from "spectron"
 import {selectors} from "../../src/js/test/integration"
 
 export const TestTimeout = 60000
+// https://jestjs.io/docs/en/troubleshooting#unresolved-promises
+// https://jestjs.io/docs/en/jest-object#jestsettimeouttimeout
+jest.setTimeout(TestTimeout)
 
 // This is trying to make Flow happy for passing in the done function from
 // Jest.
