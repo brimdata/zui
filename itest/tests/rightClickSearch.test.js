@@ -144,7 +144,7 @@ describe("Test search mods via right-clicks", () => {
       // the new search "weird".
       .then(() => getSearchText(app))
       .then((searchText) => {
-        expect(searchText).toBe("weird")
+        expect(searchText).toBe('"weird"')
         done()
       })
       .catch((err) => {
