@@ -19,6 +19,7 @@ export default class Field {
     let WHITE_SPACE = /\s+/
     let COMMA = /,/
     let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value))
+    if (this.type === "string") quote = true
 
     return quote ? `"${this.value}"` : this.value
   }

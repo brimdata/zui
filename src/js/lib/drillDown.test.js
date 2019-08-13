@@ -16,7 +16,7 @@ test("combines keys in the group by proc", () => {
   const program = "_path=dns | count() by id.orig_h, proto, query | sort -r"
 
   expect(drillDown(program, result)).toBe(
-    "_path=dns id.orig_h=192.168.0.54 proto=udp query=WPAD"
+    '_path=dns id.orig_h=192.168.0.54 proto=udp query="WPAD"'
   )
 })
 
@@ -39,7 +39,7 @@ test("count by and filter the same", () => {
     ["123", "1"],
     [{type: "string", name: "md5"}, {type: "count", name: "count"}]
   )
-  expect(drillDown(program, result)).toEqual("md5=123")
+  expect(drillDown(program, result)).toEqual('md5=123 md5="123"')
 })
 
 test("filter query", () => {
@@ -52,7 +52,7 @@ test("filter query", () => {
   )
 
   expect(drillDown(program, result)).toEqual(
-    '_path=files filename!="-" md5=9f51ef98c42df4430a978e4157c43dd5'
+    '_path=files filename!="-" md5="9f51ef98c42df4430a978e4157c43dd5"'
   )
 })
 
