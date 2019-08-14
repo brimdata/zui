@@ -1,11 +1,12 @@
 /* @flow */
 
+import type {$Field, $Log} from "./"
 import {getGroupByProc, parse, splitParts} from "../lib/Program"
 import {onlyWhitespace, trim} from "../lib/Str"
 
 export default function(string: string = "") {
   return {
-    exclude(field) {
+    exclude(field: $Field) {
       let index = string.indexOf("|")
       let part = field.name + "!=" + field.queryableValue()
 
@@ -21,7 +22,7 @@ export default function(string: string = "") {
 
       return this
     },
-    include(field) {
+    include(field: $Field) {
       let index = string.indexOf("|")
       let part = field.name + "=" + field.queryableValue()
 
@@ -37,7 +38,7 @@ export default function(string: string = "") {
 
       return this
     },
-    drillDown(log) {
+    drillDown(log: $Log) {
       const [ast] = parse(string)
       const groupByProc = getGroupByProc(ast)
 
@@ -61,7 +62,7 @@ export default function(string: string = "") {
       return this
     },
 
-    countBy(field) {
+    countBy(field: $Field) {
       let current = onlyWhitespace(string) ? "*" : string
       string = trim(current + ` | count() by ${field.name}`)
       return this
