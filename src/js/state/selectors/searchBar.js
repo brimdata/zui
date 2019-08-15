@@ -4,7 +4,6 @@ import {createSelector} from "reselect"
 import trim from "lodash/trim"
 
 import type {State} from "../types"
-import Ast from "../../models/Ast"
 
 export const getSearchBar = (state: State) => {
   return state.searchBar
@@ -37,13 +36,5 @@ export const getPrevSearchProgram = createSelector<State, void, *, *, *>(
   (pinned, prev) => {
     const program = [...pinned, prev].map((s) => trim(s)).join(" ")
     return program.length === 0 ? "*" : program
-  }
-)
-
-export const getAst = createSelector<State, void, *, *>(
-  getSearchProgram,
-  (searchProgram) => {
-    const ast = new Ast(searchProgram).toJSON()
-    return JSON.stringify(ast, null, 2)
   }
 )
