@@ -2,19 +2,19 @@
 
 import LookyTalk from "lookytalk"
 
-import {onlyWhitespace, trim} from "../lib/Str"
+import {trim} from "../lib/Str"
 import brim, {type $Field, type $Log} from "./"
 import stdlib from "../stdlib"
 
 export default function(p: string = "") {
   return {
     exclude(field: $Field) {
-      p = insertFilter(p, field.excludeFilter())
+      p = insertFilter(p, brim.syntax.exclude(field))
       return this
     },
 
     include(field: $Field) {
-      p = insertFilter(p, field.includeFilter())
+      p = insertFilter(p, brim.syntax.include(field))
       return this
     },
 
@@ -25,7 +25,8 @@ export default function(p: string = "") {
         .groupByKeys()
         .map((n) => log.field(n))
         .filter((f) => !!f)
-        .map((f) => f && f.includeFilter())
+        // $FlowFixMe flow doesn't know I just took out all the nils
+        .map(brim.syntax.include)
         .join(" ")
 
       if (/\s*\*\s*/.test(filter)) filter = ""
@@ -42,8 +43,12 @@ export default function(p: string = "") {
     },
 
     countBy(field: $Field) {
-      let current = onlyWhitespace(p) ? "*" : p
-      p = trim(current + ` | count() by ${field.name}`)
+      p = stdlib
+        .string(p)
+        .append(" | " + brim.syntax.countBy(field))
+        .trim()
+        .self()
+
       return this
     },
 

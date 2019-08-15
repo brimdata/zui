@@ -2,6 +2,10 @@
 
 import {
   appendQueryCountBy,
+  appendQueryExclude,
+  appendQueryInclude
+} from "../../searchBar/actions"
+import {
   changeSearchBarInput,
   clearSearchBar,
   editSearchBarPin,
@@ -13,7 +17,6 @@ import {
   setOuterTimeWindow,
   submittingSearchBar
 } from "../actions"
-import {appendQueryExclude, appendQueryInclude} from "../../searchBar/actions"
 import {getOuterTimeWindow} from "./timeWindow"
 import {
   getSearchBar,

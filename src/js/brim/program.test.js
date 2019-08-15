@@ -126,7 +126,7 @@ describe("count by", () => {
       .countBy(field)
       .string()
 
-    expect(program).toBe("* | count() by _path")
+    expect(program).toBe("| count() by _path")
   })
 
   test("append a count to an existing query", () => {

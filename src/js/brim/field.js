@@ -11,12 +11,6 @@ function field(name: string, type: string, value: string) {
       if (this.type === "string") quote = true
 
       return quote ? `"${this.value}"` : this.value
-    },
-    includeFilter() {
-      return `${this.name}=${this.queryableValue()}`
-    },
-    excludeFilter() {
-      return `${this.name}!=${this.queryableValue()}`
     }
   }
 }
