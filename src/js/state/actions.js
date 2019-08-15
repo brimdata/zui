@@ -126,16 +126,6 @@ export const setSearchBarPins = (pinned: string[]) => ({
   pinned
 })
 
-export const appendQueryInclude = (field: Field) => ({
-  type: "QUERY_INCLUDE_APPEND",
-  field
-})
-
-export const appendQueryExclude = (field: Field) => ({
-  type: "QUERY_EXCLUDE_APPEND",
-  field
-})
-
 export const appendQueryCountBy = (field: Field) => ({
   type: "QUERY_COUNT_BY_APPEND",
   field

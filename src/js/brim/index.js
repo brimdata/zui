@@ -1,4 +1,5 @@
 /* @flow */
+import ast from "./ast"
 import field from "./field"
 import log from "./log"
 import program from "./program"
@@ -8,7 +9,9 @@ export type $Field = {
   name: string,
   value: string,
   type: string,
-  queryableValue: () => string
+  queryableValue: () => string,
+  includeFilter: () => string,
+  excludeFilter: () => string
 }
 
 export type $Log = {
@@ -19,5 +22,6 @@ export default {
   table,
   program,
   field,
-  log
+  log,
+  ast
 }

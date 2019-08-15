@@ -2,8 +2,6 @@
 
 import {
   appendQueryCountBy,
-  appendQueryExclude,
-  appendQueryInclude,
   changeSearchBarInput,
   clearSearchBar,
   editSearchBarPin,
@@ -15,6 +13,7 @@ import {
   setOuterTimeWindow,
   submittingSearchBar
 } from "../actions"
+import {appendQueryExclude, appendQueryInclude} from "../../searchBar/actions"
 import {getOuterTimeWindow} from "./timeWindow"
 import {
   getSearchBar,
@@ -177,7 +176,7 @@ test("append an include field", () => {
   const field = new Field({name: "_path", type: "string", value: "conn"})
   const state = store.dispatchAll([appendQueryInclude(field)])
 
-  expect(getSearchBarInputValue(state)).toBe("_path=conn")
+  expect(getSearchBarInputValue(state)).toBe('_path="conn"')
 })
 
 test("append an include field when some text already exists", () => {
@@ -186,13 +185,13 @@ test("append an include field when some text already exists", () => {
     changeSearchBarInput("text"),
     appendQueryInclude(field)
   ])
-  expect(getSearchBarInputValue(state)).toBe("text _path=conn")
+  expect(getSearchBarInputValue(state)).toBe('text _path="conn"')
 })
 
 test("append an exclude field", () => {
   const field = new Field({name: "_path", type: "string", value: "conn"})
   let state = store.dispatchAll([appendQueryExclude(field)])
-  expect(getSearchBarInputValue(state)).toBe("_path!=conn")
+  expect(getSearchBarInputValue(state)).toBe('_path!="conn"')
 })
 
 test("append an exclude field when some text already exists", () => {
@@ -201,7 +200,7 @@ test("append an exclude field when some text already exists", () => {
     changeSearchBarInput("text"),
     appendQueryExclude(field)
   ])
-  expect(getSearchBarInputValue(state)).toBe("text _path!=conn")
+  expect(getSearchBarInputValue(state)).toBe('text _path!="conn"')
 })
 
 test("append a count by field", () => {

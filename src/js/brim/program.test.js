@@ -9,25 +9,29 @@ describe("excluding and including", () => {
     let program = brim
       .program("_path=weird")
       .exclude(field)
-      .toString()
+      .string()
 
     expect(program).toEqual('_path=weird uid!="123"')
   })
 
   test("excluding a field with a pipe", () => {
     let program = brim
-      .program("_path=weird | sort")
-      .exclude(field)
-      .toString()
+      .program(
+        'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
+      )
+      .exclude(brim.field("source", "string", "HTTP"))
+      .string()
 
-    expect(program).toEqual('_path=weird uid!="123" | sort')
+    expect(program).toEqual(
+      'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" source!="HTTP" | sort'
+    )
   })
 
   test("excluding a field with two pipes", () => {
     let program = brim
       .program("_path=weird | sort | filter 1")
       .exclude(field)
-      .toString()
+      .string()
 
     expect(program).toEqual('_path=weird uid!="123" | sort | filter 1')
   })
@@ -36,7 +40,7 @@ describe("excluding and including", () => {
     let program = brim
       .program("_path=weird | sort | filter 1")
       .include(field)
-      .toString()
+      .string()
 
     expect(program).toEqual('_path=weird uid="123" | sort | filter 1')
   })
@@ -56,7 +60,7 @@ describe("drill down", () => {
     let program = brim
       .program("_path=dns | count() by id.orig_h, proto, query | sort -r")
       .drillDown(result)
-      .toString()
+      .string()
 
     expect(program).toBe(
       '_path=dns id.orig_h=192.168.0.54 proto=udp query="WPAD"'
@@ -67,7 +71,7 @@ describe("drill down", () => {
     const program = brim
       .program("* | count() by id.orig_h")
       .drillDown(result)
-      .toString()
+      .string()
 
     expect(program).toBe("id.orig_h=192.168.0.54")
   })
@@ -76,7 +80,7 @@ describe("drill down", () => {
     let program = brim
       .program("names james | count() by proto")
       .drillDown(result)
-      .toString()
+      .string()
 
     expect(program).toBe("names james proto=udp")
   })
@@ -90,7 +94,7 @@ describe("drill down", () => {
     let program = brim
       .program("md5=123 | count() by md5 | sort -r | head 5")
       .drillDown(result)
-      .toString()
+      .string()
 
     expect(program).toEqual('md5=123 md5="123"')
   })
@@ -106,29 +110,11 @@ describe("drill down", () => {
         '_path=files filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
       )
       .drillDown(result)
-      .toString()
+      .string()
 
     expect(program).toEqual(
       '_path=files filename!="-" md5="9f51ef98c42df4430a978e4157c43dd5"'
     )
-  })
-
-  describe("null cases", () => {
-    const nullPrograms = [
-      "_path=conn",
-      "_path=conn | sort duration",
-      "_path=conn | avg()",
-      "blah blah string",
-      "un->pars=able"
-    ]
-
-    nullPrograms.forEach((program) => {
-      test(`${program} throws an error`, () => {
-        expect(() => brim.program(program).drillDown(brim.log([], []))).toThrow(
-          "Missing GroupByProc in '" + program + "'"
-        )
-      })
-    })
   })
 })
 
@@ -138,7 +124,7 @@ describe("count by", () => {
     let program = brim
       .program()
       .countBy(field)
-      .toString()
+      .string()
 
     expect(program).toBe("* | count() by _path")
   })
@@ -148,7 +134,7 @@ describe("count by", () => {
     let program = brim
       .program("dns")
       .countBy(field)
-      .toString()
+      .string()
 
     expect(program).toBe("dns | count() by query")
   })

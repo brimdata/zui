@@ -1,75 +1,85 @@
 /* @flow */
 
-import type {$Field, $Log} from "./"
-import {getGroupByProc, parse, splitParts} from "../lib/Program"
-import {onlyWhitespace, trim} from "../lib/Str"
+import LookyTalk from "lookytalk"
 
-export default function(string: string = "") {
+import {onlyWhitespace, trim} from "../lib/Str"
+import brim, {type $Field, type $Log} from "./"
+import stdlib from "../stdlib"
+
+export default function(p: string = "") {
   return {
     exclude(field: $Field) {
-      let index = string.indexOf("|")
-      let part = field.name + "!=" + field.queryableValue()
-
-      if (index < 0) {
-        string = string + " " + part
-      } else {
-        string =
-          string.substring(0, index) +
-          part +
-          " " +
-          string.substring(index, string.length)
-      }
-
+      p = insertFilter(p, field.excludeFilter())
       return this
     },
+
     include(field: $Field) {
-      let index = string.indexOf("|")
-      let part = field.name + "=" + field.queryableValue()
-
-      if (index < 0) {
-        string = string + " " + part
-      } else {
-        string =
-          string.substring(0, index) +
-          part +
-          " " +
-          string.substring(index, string.length)
-      }
-
+      p = insertFilter(p, field.includeFilter())
       return this
     },
+
     drillDown(log: $Log) {
-      const [ast] = parse(string)
-      const groupByProc = getGroupByProc(ast)
-
-      if (!groupByProc) {
-        throw new Error(`Missing GroupByProc in '${string}'`)
-      }
-
-      function getKeyFromLog(key) {
-        let field = log.field(key)
-        if (field) return `${key}=${field.queryableValue()}`
-        else return ""
-      }
-
-      const filters = groupByProc.keys.map(getKeyFromLog)
-      let [filter] = splitParts(string)
+      let filter = this.filter()
+      let newFilters = brim
+        .ast(this.ast())
+        .groupByKeys()
+        .map((n) => log.field(n))
+        .filter((f) => !!f)
+        .map((f) => f && f.includeFilter())
+        .join(" ")
 
       if (/\s*\*\s*/.test(filter)) filter = ""
-      if (filters.includes(filter)) filter = ""
+      if (newFilters.includes(filter)) filter = ""
 
-      string = trim([filter, ...filters].map(trim).join(" "))
+      p = stdlib
+        .string(filter)
+        .append(" ")
+        .append(newFilters)
+        .trim()
+        .self()
+
       return this
     },
 
     countBy(field: $Field) {
-      let current = onlyWhitespace(string) ? "*" : string
-      string = trim(current + ` | count() by ${field.name}`)
+      let current = onlyWhitespace(p) ? "*" : p
+      p = trim(current + ` | count() by ${field.name}`)
       return this
     },
 
-    toString() {
-      return string
+    ast() {
+      return LookyTalk.parse(p)
+    },
+
+    filter() {
+      let [f] = p.split("|")
+      return trim(f)
+    },
+
+    procs() {
+      let [_, ...procs] = p.split("|")
+      return procs.join("|")
+    },
+
+    string() {
+      return p
     }
+  }
+}
+
+function insertFilter(program, filter) {
+  return stdlib
+    .string(program)
+    .insert(" " + filter + " ", filterEnd(program))
+    .trim()
+    .self()
+}
+
+function filterEnd(string) {
+  let pos = string.indexOf("|")
+  if (pos < 0) {
+    return string.length
+  } else {
+    return pos
   }
 }

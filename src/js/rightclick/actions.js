@@ -4,14 +4,13 @@ import type {Dispatch} from "../state/types"
 import {add} from "../lib/Time"
 import {
   appendQueryCountBy,
-  appendQueryExclude,
-  appendQueryInclude,
   changeSearchBarInput,
   clearSearchBar,
   setOuterFromTime,
   setOuterToTime,
   showRightSidebar
 } from "../state/actions"
+import {appendQueryExclude, appendQueryInclude} from "../searchBar/actions"
 import {fetchPackets} from "../state/thunks/packets"
 import {fetchWhois} from "../state/thunks/whois"
 import {open} from "../lib/System"
