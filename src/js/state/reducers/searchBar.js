@@ -1,7 +1,7 @@
 /* @flow */
 
-import {escapeSpaces, onlyWhitespace, trim} from "../../lib/Str"
 import {indexInBounds} from "../../lib/Array"
+import {onlyWhitespace} from "../../lib/Str"
 import createReducer from "./createReducer"
 
 export const initialState = {
@@ -20,26 +20,6 @@ export default createReducer(initialState, {
     return {
       ...state,
       ...value
-    }
-  },
-  QUERY_INCLUDE_APPEND: (state, {field}) => ({
-    ...state,
-    current: trim(state.current + ` ${field.name}=${escapeSpaces(field.value)}`)
-  }),
-
-  QUERY_EXCLUDE_APPEND: (state, {field}) => ({
-    ...state,
-    current: trim(
-      state.current + ` ${field.name}!=${escapeSpaces(field.value)}`
-    )
-  }),
-
-  QUERY_COUNT_BY_APPEND: (state, {field}) => {
-    const query = [...state.pinned, state.current].join(" ")
-    const current = onlyWhitespace(query) ? "*" : state.current
-    return {
-      ...state,
-      current: trim(current + ` | count() by ${field.name}`)
     }
   },
 
@@ -116,13 +96,6 @@ export default createReducer(initialState, {
     pinned: [],
     previous: ""
   }),
-
-  MAIN_SEARCH_QUERY_PROGRAM_APPEND: (state, {fragment}) => {
-    return {
-      ...state,
-      current: trim(state.current + " " + fragment)
-    }
-  },
 
   SEARCH_BAR_SUBMIT: (state) => {
     if (state.editing === null) {

@@ -5,7 +5,9 @@ import {add} from "../lib/Time"
 import {
   appendQueryCountBy,
   appendQueryExclude,
-  appendQueryInclude,
+  appendQueryInclude
+} from "../searchBar/actions"
+import {
   changeSearchBarInput,
   clearSearchBar,
   setOuterFromTime,
@@ -19,7 +21,7 @@ import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
-import drillDown from "../lib/drillDown"
+import brim from "../brim"
 
 type Action = {
   type: "action",
@@ -126,7 +128,11 @@ export const groupByDrillDown = (program: string, log: Log) => ({
   type: "action",
   text: "Pivot to logs",
   onClick: (dispatch: Dispatch) => {
-    const newProgram = drillDown(program, log)
+    let newProgram = brim
+      .program(program)
+      .drillDown(brim.log(log.tuple, log.descriptor))
+      .string()
+
     if (newProgram) {
       dispatch(clearSearchBar())
       dispatch(changeSearchBarInput(newProgram))

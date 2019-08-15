@@ -7,7 +7,6 @@ import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
 import type {TimeWindow} from "./reducers/timeWindow"
 import {isArray} from "../lib/is"
-import Field from "../models/Field"
 
 export const useBoomCache = (value: boolean) => ({
   type: "BOOMD_CACHE_USE_SET",
@@ -124,21 +123,6 @@ export const removeAllSearchBarPins = () => ({
 export const setSearchBarPins = (pinned: string[]) => ({
   type: "SEARCH_BAR_PINS_SET",
   pinned
-})
-
-export const appendQueryInclude = (field: Field) => ({
-  type: "QUERY_INCLUDE_APPEND",
-  field
-})
-
-export const appendQueryExclude = (field: Field) => ({
-  type: "QUERY_EXCLUDE_APPEND",
-  field
-})
-
-export const appendQueryCountBy = (field: Field) => ({
-  type: "QUERY_COUNT_BY_APPEND",
-  field
 })
 
 export const errorSearchBarParse = (error: string) => ({

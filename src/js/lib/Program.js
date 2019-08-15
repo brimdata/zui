@@ -5,7 +5,6 @@ import LookyTalk from "lookytalk"
 import {HEAD_PROC, TAIL_PROC, TUPLE_PROCS, getProcNames, getProcs} from "./ast"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
-import Log from "../models/Log"
 
 export type Program = string
 
@@ -92,27 +91,6 @@ export function parallelizeProcs(programs: string[]) {
   }
 
   return joinParts(first(filters), joinProcs(procs))
-}
-
-export function deaggregate(program: string, log: Log) {
-  const [ast] = parse(program)
-  const groupByProc = getGroupByProc(ast)
-
-  if (!groupByProc) return null
-
-  function getKeyFromLog(key) {
-    let field = log.getField(key)
-    if (field) return `${key}=${field.queryableValue()}`
-    else return ""
-  }
-
-  const filters = groupByProc.keys.map(getKeyFromLog)
-  let [filter] = splitParts(program)
-
-  if (/\s*\*\s*/.test(filter)) filter = ""
-  if (filters.includes(filter)) filter = ""
-
-  return trim([filter, ...filters].map(trim).join(" "))
 }
 
 export function fmtProgram(string: string) {
