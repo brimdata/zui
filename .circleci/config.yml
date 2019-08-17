@@ -32,7 +32,7 @@ jobs:
   integration_tests:
     docker:
       # Built from https://github.com/looky-cloud/rug/blob/master/.circleci/Dockerfile.
-      - image: gcr.io/quixotic-strand-159502/rug@sha256:349ab7134e0dc210ec511452b922f6d7e0173c38d0cca52822f6aaa7b85e41d7
+      - image: gcr.io/quixotic-strand-159502/rug@sha256:1e481d07f11a7363b7b38bea3c0fd0aea642c90e88cb46c596b7749408bfb0f7
         auth:
           username: _json_key
           password: $GCLOUD_SERVICE_KEY
