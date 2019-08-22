@@ -4,7 +4,7 @@ import {every} from "lodash"
 import React from "react"
 
 import {Fieldset} from "./Typography"
-import {detailMenu} from "../rightclick/detailMenu"
+import {useDetailMenu} from "../rightclick/detailMenu"
 import Log from "../models/Log"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
@@ -53,6 +53,7 @@ const ConnHistory = ({history = ""}) => (
 )
 
 const Host = ({className, title = "", ip = "", port = "", log}) => {
+  let detailMenu = useDetailMenu()
   return (
     <div className={`host ${className}`}>
       <Fieldset>{title}</Fieldset>
