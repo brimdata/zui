@@ -55,7 +55,7 @@ test("results incomplete", () => {
   expect(getViewerStatus(state)).toBe("INCOMPLETE")
 })
 
-test("results limitted", () => {
+test("results limited", () => {
   let state = store.dispatchAll([setViewerStatus("LIMIT")])
 
   expect(getViewerStatus(state)).toBe("LIMIT")

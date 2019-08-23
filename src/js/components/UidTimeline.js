@@ -96,7 +96,7 @@ function captionText(logs: Log[], queryForAll) {
   if (limit)
     return (
       <>
-        Limitted to 100 logs. <a onClick={queryForAll}>Query for all.</a>
+        Limited to 100 events. <a onClick={queryForAll}>Query for all.</a>
       </>
     )
   else if (conn) {
