@@ -58,7 +58,6 @@ export default class CurlModal extends React.Component<Props, LocalState> {
 
   render() {
     const info = this.props.dispatch(inspectSearch(this.props.program))
-
     return (
       <Modal
         isOpen={this.props.isOpen}

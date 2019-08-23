@@ -24,7 +24,19 @@ export default class DebugModal extends React.Component<Props, LocalState> {
   }
 
   render() {
-    const [ast, _error] = Program.parse(this.state.program)
+    const [ast, error] = Program.parse(this.state.program)
+
+    let result
+    if (ast) {
+      result = Prism.highlight(
+        JSON.stringify(ast, null, 4),
+        Prism.languages.js,
+        "JSON"
+      )
+    } else if (error) {
+      result = error.toString()
+    }
+
     return (
       <div className="debug-query-modal">
         <Label>Search Program</Label>
@@ -41,13 +53,7 @@ export default class DebugModal extends React.Component<Props, LocalState> {
         <Code full light>
           <code
             className="language-js"
-            dangerouslySetInnerHTML={{
-              __html: Prism.highlight(
-                JSON.stringify(ast, null, 4),
-                Prism.languages.js,
-                "JSON"
-              )
-            }}
+            dangerouslySetInnerHTML={{__html: result}}
           />
         </Code>
       </div>
