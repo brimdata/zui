@@ -83,9 +83,9 @@ const genSelectorForTextUnderElement = (dataAttrValue: string) => (
 
 export const selectors = {
   correlationPanel: {
-    duration: dataAttrSelector("correlationPanel") + " .duration",
+    duration: dataAttrSelector("correlationPanel") + " .caption",
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
-    tsLabel: dataAttrSelector("correlationPanel") + " .ts-label"
+    tsLabel: dataAttrSelector("correlationPanel") + " .data-label"
   },
   histogram: {
     topLevel: dataAttrSelector("histogram"),
