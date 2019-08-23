@@ -8,12 +8,21 @@
     padding-bottom: 3px;
   }
 
-  .ts-label,
-  .duration {
+  .data-label {
     font-size: 9px;
     color: $gray-6;
     font-weight: bold;
     padding: 3px 6px;
+
+    a {
+      text-decoration: underline;
+      color: $blue-light;
+      cursor: pointer;
+
+      &:active {
+        color: $blue;
+      }
+    }
   }
 
   .slider {
@@ -48,7 +57,7 @@
     outline: 2px dotted $white-9;
   }
 
-  .duration {
+  .caption {
     margin: $space-s 0 0 0;
     padding: 0;
     text-align: right;

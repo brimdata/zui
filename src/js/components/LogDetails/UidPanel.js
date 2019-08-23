@@ -4,12 +4,12 @@ import React from "react"
 
 import type {PanelProps} from "./"
 import {XUidTimeline} from "../UidTimeline"
+import {reactElementProps} from "../../test/integration"
 import {resultsToLogs} from "../../log/resultsToLogs"
 import {toFront} from "../../lib/Array"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import {reactElementProps} from "../../test/integration"
 
 const UidPanel = ({log, searches}: PanelProps) => {
   if (!log.correlationId()) return null
