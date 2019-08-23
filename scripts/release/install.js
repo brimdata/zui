@@ -13,8 +13,8 @@ module.exports = {
     createDMG(
       {
         overwrite: true,
-        appPath: "dist/packages/Looky-darwin-x64/Looky.app",
-        name: "Looky",
+        appPath: "dist/packages/Brim-darwin-x64/Brim.app",
+        name: "Brim",
         out
       },
       (err) => {
@@ -32,10 +32,10 @@ module.exports = {
     fixWindowsInstallerDeps()
     return installer
       .createWindowsInstaller({
-        appDirectory: "./dist/packages/Looky-Win32-x64",
+        appDirectory: "./dist/packages/Brim-Win32-x64",
         outputDirectory: out,
-        authors: "Looky Labs, Inc.",
-        exe: "Looky.exe"
+        authors: "Brim Security, Inc.",
+        exe: "Brim.exe"
       })
       .then(() => {
         console.log("Built installer for win32 in " + out)
