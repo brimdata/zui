@@ -5,7 +5,7 @@ let opts = {
   dir: ".",
   out: "dist/packages",
   overwrite: true,
-  name: "Looky"
+  name: "Brim"
 }
 
 module.exports = {
