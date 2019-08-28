@@ -11,6 +11,8 @@ import {
   setSearchStatus
 } from "../state/searches/actions"
 import {boomTime} from "../lib/Time"
+import {setBackendError} from "../backend"
+import ErrorFactory from "../models/ErrorFactory"
 
 export default function(
   dispatch: Dispatch,
@@ -54,6 +56,14 @@ export default function(
         dispatchResults()
         dispatch(setSearchStatus(name, "SUCCESS"))
         break
+      case "TaskEnd":
+        if (payload.error) {
+          dispatch(setSearchStatus(name, "ERROR"))
+          dispatch(setBackendError(ErrorFactory.create(payload.error)))
+          dispatchResultsSteady.cancel()
+          dispatchResults()
+          break
+        }
     }
   }
 
