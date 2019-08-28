@@ -4,7 +4,7 @@ import {Application} from "spectron"
 
 import {selectors} from "../../src/js/test/integration"
 
-export const TestTimeout = 60000
+export const TestTimeout = 300000
 // https://jestjs.io/docs/en/troubleshooting#unresolved-promises
 // https://jestjs.io/docs/en/jest-object#jestsettimeouttimeout
 jest.setTimeout(TestTimeout)
