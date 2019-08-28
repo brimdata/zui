@@ -83,8 +83,17 @@ type SearchStatsPayload = {
   }
 }
 
+type TaskEndPayload = {
+  type: "TaskEnd",
+  error?: {
+    type: string,
+    error: string
+  }
+}
+
 export type BoomPayload =
   | SearchDescriptorsPayload
   | SearchTuplesPayload
   | SearchStatsPayload
   | SearchEndPayload
+  | TaskEndPayload

@@ -8,6 +8,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 14px;
+  white-space: nowrap;
 
   a {
     padding-left: $space-s;
