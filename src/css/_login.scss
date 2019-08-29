@@ -7,36 +7,48 @@ $burnt-red: #bf4a2c;
   width: 100%;
   height: 100%;
   display: flex;
+  color: $gray-5;
+
+  .section-heading {
+    font-size: 0.625rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: $gray-1;
+  }
+
+  .brand {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    svg {
+      filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.19));
+    }
+    h1 {
+      margin: 0;
+      margin-top: 1rem;
+      font-size: 1.25rem;
+    }
+    span {
+      margin: 0;
+      font-size: 0.625rem;
+    }
+  }
 
   aside {
-    min-width: 300px;
-    max-width: 360px;
-    width: 30%;
-    background: linear-gradient($start-aside-bg, $end-aside-bg);
-    box-shadow: 1px 0 10px 0 rgba(0, 0, 0, 0.25);
-    position: relative;
-    z-index: 1;
-    font-family: $mono-font;
-    h3 {
-      color: $burnt-red;
-      text-transform: uppercase;
-      font-weight: bold;
-      padding-left: $space-m;
-      font-size: 14px;
-    }
-    article {
-      color: white;
-      font-size: 12px;
-      padding: $space-xxs $space-m;
-      background: rgba(255, 255, 255, 0.12);
-      margin: 0;
-    }
+    width: 230px;
+    background: linear-gradient(
+      to bottom,
+      $white-2,
+      $white-2,
+      $white-2,
+      $white-3
+    );
+    border-right: 1px solid $white-4;
   }
 
   main {
     flex: 1;
-    background: linear-gradient(to right, white, #f7f7f7);
-    position: relative;
+    padding: 60px 85px;
   }
 
   .go-back {
@@ -97,31 +109,14 @@ $burnt-red: #bf4a2c;
 
   .company-name-text {
     position: relative;
-    color: $start-aside-bg;
-    border: 1px solid $start-aside-bg;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50px;
-
-    h1 {
-      font-weight: 100;
-      margin: 0;
-      line-height: 1;
-      margin-left: 5px;
-      text-transform: uppercase;
-      letter-spacing: 5px;
-    }
+    transform: translateX(-8px);
   }
 }
 
 .saved-creds {
-  font-size: 12px;
-
-  h3 {
+  .section-heading {
     padding-left: $space-m;
+    margin-bottom: 7px;
   }
 
   ul {
@@ -133,78 +128,58 @@ $burnt-red: #bf4a2c;
   li {
     font-size: 12px;
     position: relative;
-    color: white;
-    background: rgba(255, 255, 255, 0.12);
-    padding: $space-xs;
+    padding-top: 4px;
+    padding-bottom: 4px;
     padding-left: $space-m;
-    margin-bottom: 1px;
     line-height: 1.3;
     cursor: pointer;
     user-select: none;
-    transition: background 300ms;
+    transition: background 100ms;
     display: flex;
     align-items: center;
-
+    border-bottom: 1px solid $white-4;
+    &:last-child {
+      border-bottom: none;
+    }
     .host {
       font-weight: bold;
     }
 
-    .arrow {
-      position: absolute;
-      right: 0;
-      opacity: 0;
-      transition: all 300ms;
-    }
-
-    .star {
-      fill: $burnt-red;
-      margin-right: $space-s;
-    }
-
     &:hover {
-      background: rgba(255, 255, 255, 0.24);
-      .arrow {
-        opacity: 1;
-        transition: all 500ms;
-        transform: translateX(30px);
-      }
+      background: rgba(0, 0, 0, 0.03);
     }
 
     &:active {
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(0, 0, 0, 0.1);
       transition: background 100ms;
-
-      .arrow {
-        transition: all 100ms;
-        transform: translateX(55px);
-      }
     }
   }
 }
 
 .login-form {
   position: relative;
-  z-index: 1;
-  width: 300px;
   margin: 0 auto;
-  margin-top: 200px;
-  color: $gray-5;
 
-  h1 {
-    font-weight: 900;
-    font-size: 36px;
+  .section-heading {
     text-align: center;
-    margin-bottom: $space-l;
+  }
+
+  .input-submit {
+    text-align: center;
+    margin-top: 2rem;
   }
 
   .status {
-    color: $gray-1;
-    border-radius: 3px;
-    margin-bottom: $space-l;
-    padding: $space-xxs;
-    font-size: 12px;
-    font-family: $mono-font;
+    position: fixed;
+    font-size: 0.75rem;
+    bottom: 0px;
+    left: 0;
+    background: $yellow;
+    width: 100%;
+    margin: 0;
+    padding: 0.25rem;
     text-align: center;
+    color: $gray-9;
   }
 }
 

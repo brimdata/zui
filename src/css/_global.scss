@@ -35,3 +35,11 @@ pre {
 code {
   padding: 2px 3px;
 }
+
+.title-bar-drag-area {
+  position: fixed;
+  height: 22px;
+  width: 100%;
+  -webkit-app-region: drag;
+  z-index: -1;
+}

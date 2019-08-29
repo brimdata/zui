@@ -16,9 +16,9 @@ function main() {
 
   const createWindow = () => {
     win = new BrowserWindow({
-      width: 1000,
-      height: 1200,
-      backgroundColor: "#ffffff",
+      width: 630,
+      height: 460,
+      titleBarStyle: "hidden",
       webPreferences: {
         experimentalFeatures: true,
         nodeIntegration: true

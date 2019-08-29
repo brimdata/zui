@@ -4,7 +4,6 @@
   background-color: $white-3;
   justify-content: center;
   -webkit-user-select: none;
-  cursor: pointer;
 
   .host {
     font-family: $mono-font;
@@ -13,9 +12,12 @@
     margin-right: 6px;
     background-color: transparent;
     color: $gray-9;
+    -webkit-app-region: nodrag;
+    cursor: pointer;
 
     &:hover {
       color: $gray-6;
+      cursor: pointer;
     }
   }
 }
