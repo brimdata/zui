@@ -34,16 +34,20 @@ export default function brimWindow() {
     },
 
     makeLogin() {
-      lastSize = win.getSize()
-      win.setSize(630, 460)
-      win.setResizable(false)
-      setAppMenu("LOGIN", win)
+      if (win) {
+        lastSize = win.getSize()
+        win.setSize(630, 460)
+        win.setResizable(false)
+        setAppMenu("LOGIN", win)
+      }
     },
 
     makeSearch() {
-      win.setSize(...lastSize)
-      win.setResizable(true)
-      setAppMenu("SEARCH", win)
+      if (win) {
+        win.setSize(...lastSize)
+        win.setResizable(true)
+        setAppMenu("SEARCH", win)
+      }
     }
   }
 }
