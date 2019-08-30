@@ -36,13 +36,7 @@ $burnt-red: #bf4a2c;
 
   aside {
     width: 230px;
-    background: linear-gradient(
-      to bottom,
-      $white-2,
-      $white-2,
-      $white-2,
-      $white-3
-    );
+    background: linear-gradient(to bottom, $white-2, $white-3);
     border-right: 1px solid $white-4;
   }
 
@@ -93,24 +87,8 @@ $burnt-red: #bf4a2c;
   }
 }
 
-.company-name {
-  position: relative;
-  height: 180px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: $space-xxl;
-
-  .company-name-bg {
-    position: absolute;
-    width: 100%;
-  }
-
-  .company-name-text {
-    position: relative;
-    transform: translateX(-8px);
-  }
+.brand {
+  -webkit-app-region: drag;
 }
 
 .saved-creds {
@@ -128,8 +106,8 @@ $burnt-red: #bf4a2c;
   li {
     font-size: 12px;
     position: relative;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: $space-m;
     line-height: 1.3;
     cursor: pointer;
@@ -137,7 +115,6 @@ $burnt-red: #bf4a2c;
     transition: background 100ms;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid $white-4;
     &:last-child {
       border-bottom: none;
     }
