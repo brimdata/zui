@@ -1,7 +1,7 @@
 module.exports = {
   excludes: ["./dist/**", "**/**.test.js"],
   namedExports: {
-    electron: ["remote"],
+    electron: ["ipcMain", "ipcRenderer", "remote", "BrowserWindow"],
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
     react: ["useState", "useRef", "useEffect", "useLayoutEffect", "useMemo"],
