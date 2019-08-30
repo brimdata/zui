@@ -2,13 +2,13 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import {Dots} from "./Dots"
+import {ipcRenderer} from "electron"
+
 import {addCluster} from "../../state/clusters/actions"
 import {connectCluster} from "../../state/clusters/thunks"
 import {getBackendError} from "../../backend"
 import {getSavedClusters} from "../../state/clusters/selectors"
-import {setAppMenu} from "../../electron/setAppMenu"
-import BrandedAside from "./BrandedAside"
+import Brand from "./Brand"
 import ClusterForm from "./ClusterForm"
 import ClusterWelcome from "./ClusterWelcome"
 import EmptyCheck from "../EmptyCheck"
@@ -27,7 +27,7 @@ export default function ClustersPage() {
   })
 
   useEffect(() => {
-    setAppMenu("LOGIN")
+    ipcRenderer.send("page:login:mount")
   }, [])
 
   function onChange(e) {
@@ -47,11 +47,12 @@ export default function ClustersPage() {
 
   return (
     <div className="login">
-      <BrandedAside>
+      <aside>
+        <Brand />
         <EmptyCheck array={saved} empty={<ClusterWelcome />}>
           <SavedClusters saved={saved} setForm={setForm} submit={submit} />
         </EmptyCheck>
-      </BrandedAside>
+      </aside>
       <main>
         <ClusterForm
           data={form}
@@ -59,7 +60,6 @@ export default function ClustersPage() {
           status={error ? error.message() : ""}
           submit={submit}
         />
-        <Dots />
       </main>
     </div>
   )

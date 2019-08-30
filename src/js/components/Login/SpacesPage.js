@@ -11,7 +11,6 @@ import {disconnectCluster} from "../../state/clusters/thunks"
 import {getFormData} from "../../stdlib/form"
 import {setCurrentSpaceName} from "../../state/actions"
 import Back from "../../icons/back-arrow.svg"
-import BrandedAside from "./BrandedAside"
 import Form from "../form/Form"
 
 type Props = {cluster: Cluster}
@@ -36,7 +35,7 @@ export default function SpacesPage({cluster}: Props) {
 
   return (
     <div className="login">
-      <BrandedAside>
+      <aside>
         <h3>Connected</h3>
         <article>
           <p>
@@ -48,7 +47,7 @@ export default function SpacesPage({cluster}: Props) {
           </p>
           <p>Create a space using the form on the right.</p>
         </article>
-      </BrandedAside>
+      </aside>
 
       <main>
         <a className="go-back" onClick={() => dispatch(disconnectCluster())}>

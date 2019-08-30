@@ -12,6 +12,7 @@ export default function App() {
   Time.setZone(useSelector(getTimeZone))
   return (
     <div className="app-wrapper">
+      <div className="title-bar-drag-area" />
       <XLatestError />
       <ClusterGate />
     </div>

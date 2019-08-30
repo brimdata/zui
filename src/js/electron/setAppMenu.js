@@ -1,18 +1,23 @@
 /* @flow */
 
-import {remote} from "electron"
+import {BrowserWindow, Menu} from "electron"
 
 import {createLoginMenuTemplate} from "./menus/loginMenu"
 import {createSearchMenuTemplate} from "./menus/searchMenu"
 
 type MenuName = "SEARCH" | "LOGIN"
 
-export function setAppMenu(name: MenuName, r: typeof remote = remote) {
+export function setAppMenu(name: MenuName, win: BrowserWindow) {
   let builder = getTemplateBuilder(name)
-  let template = builder(r.getCurrentWebContents().send)
-  let menu = r.Menu.buildFromTemplate(template)
 
-  r.Menu.setApplicationMenu(menu)
+  function send(message) {
+    win.webContents.send(message)
+  }
+
+  let template = builder(send)
+  let menu = Menu.buildFromTemplate(template)
+
+  Menu.setApplicationMenu(menu)
   return menu
 }
 

@@ -20,8 +20,7 @@ export default function ClusterForm({data, onChange, status, submit}: Props) {
 
   return (
     <div className="login-form" {...reactElementProps("login")}>
-      <h1>Login</h1>
-      <p className="status">{status}</p>
+      <h3 className="section-heading">New Connection</h3>
       <Form onSubmit={onSubmit}>
         <Input
           label="Host:"
@@ -62,6 +61,7 @@ export default function ClusterForm({data, onChange, status, submit}: Props) {
         />
         <InputSubmit value="Connect" />
       </Form>
+      {!!status.length && <p className="status">{status}</p>}
     </div>
   )
 }

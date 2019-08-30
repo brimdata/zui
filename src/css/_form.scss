@@ -18,8 +18,9 @@
     border: 1px solid $white-4;
     width: 100%;
     padding: 0 6px;
-    line-height: 2.5;
-    @extend .mono;
+    line-height: 2.33;
+    font-size: 0.75rem;
+    font-family: $body-font;
   }
 
   &.focus {
@@ -30,7 +31,7 @@
     }
 
     label {
-      color: $gray-9;
+      color: $gray-5;
       background: none;
       transform: translateY(0);
     }
@@ -57,13 +58,13 @@
     &:after {
       content: "";
       position: absolute;
-      top: 2px;
-      left: 2px;
-      right: 2px;
-      bottom: 2px;
-      background: linear-gradient($start-aside-bg, $end-aside-bg);
+      top: 4px;
+      left: 4px;
+      right: 4px;
+      bottom: 4px;
+      background: linear-gradient($blue-light, $blue);
       box-shadow: 0px 0 3px 0 rgba(0, 0, 0, 0.25);
-      border-radius: 3px;
+      border-radius: 8px;
       transform: scale(0);
       transition: transform 200ms;
     }
@@ -89,7 +90,7 @@
     background: linear-gradient($white-1, $white-3);
     border: 1px solid $white-4;
     border-radius: 3px;
-    font-family: $mono-font;
+    font-family: $body-font;
     padding: 6px 16px;
     box-shadow: 0 2px 6px -3px rgba(0, 0, 0, 0.5);
 

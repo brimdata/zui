@@ -1,7 +1,5 @@
 /* @noflow */
 
-import {getAppName} from "../getAppName"
-
 export function createSearchMenuTemplate(send: Function) {
   let template = [
     {
@@ -105,7 +103,7 @@ export function createSearchMenuTemplate(send: Function) {
 
   if (process.platform === "darwin") {
     template.unshift({
-      label: getAppName(),
+      label: "Brim",
       submenu: [
         {role: "about"},
         {type: "separator"},
