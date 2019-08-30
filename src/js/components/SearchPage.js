@@ -3,6 +3,8 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect} from "react"
 
+import {ipcRenderer} from "electron"
+
 import type {Cluster} from "../state/clusters/types"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
@@ -17,7 +19,6 @@ import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getShowLogsTab} from "../state/reducers/view"
 import {initSpace} from "../space/thunks"
 import {killAllSearches} from "../searches/cancelSearch"
-import {setAppMenu} from "../electron/setAppMenu"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import BackendErrorNotice from "./BackendErrorNotice"
 import ColumnChooser from "./ColumnChooser"
@@ -36,7 +37,7 @@ export default function SearchPage({cluster}: Props) {
   let spaceName = useSelector(getCurrentSpaceName)
 
   useEffect(() => {
-    setAppMenu("SEARCH")
+    ipcRenderer.send("page:search")
     return () => {
       dispatch(killAllSearches())
     }

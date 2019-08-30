@@ -2,12 +2,12 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import {Dots} from "./Dots"
+import {ipcRenderer} from "electron"
+
 import {addCluster} from "../../state/clusters/actions"
 import {connectCluster} from "../../state/clusters/thunks"
 import {getBackendError} from "../../backend"
 import {getSavedClusters} from "../../state/clusters/selectors"
-import {setAppMenu} from "../../electron/setAppMenu"
 import Brand from "./Brand"
 import ClusterForm from "./ClusterForm"
 import ClusterWelcome from "./ClusterWelcome"
@@ -27,7 +27,7 @@ export default function ClustersPage() {
   })
 
   useEffect(() => {
-    setAppMenu("LOGIN")
+    ipcRenderer.send("page:login")
   }, [])
 
   function onChange(e) {
