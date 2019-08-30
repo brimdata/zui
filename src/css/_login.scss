@@ -16,7 +16,13 @@ $burnt-red: #bf4a2c;
     color: $gray-1;
   }
 
+  .cluster-welcome {
+    padding: 0 20px;
+    font-size: 0.75rem;
+  }
+
   .brand {
+    -webkit-app-region: drag;
     text-align: center;
     margin-top: 40px;
     margin-bottom: 50px;
@@ -85,10 +91,6 @@ $burnt-red: #bf4a2c;
       transform: translateY(2px);
     }
   }
-}
-
-.brand {
-  -webkit-app-region: drag;
 }
 
 .saved-creds {
