@@ -37,8 +37,9 @@ export default function SearchPage({cluster}: Props) {
   let spaceName = useSelector(getCurrentSpaceName)
 
   useEffect(() => {
-    ipcRenderer.send("page:search")
+    ipcRenderer.send("page:search:mount")
     return () => {
+      ipcRenderer.send("page:search:unmount")
       dispatch(killAllSearches())
     }
   }, [])

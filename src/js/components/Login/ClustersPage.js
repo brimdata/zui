@@ -27,7 +27,7 @@ export default function ClustersPage() {
   })
 
   useEffect(() => {
-    ipcRenderer.send("page:login")
+    ipcRenderer.send("page:login:mount")
   }, [])
 
   function onChange(e) {
