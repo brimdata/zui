@@ -8,6 +8,6 @@ set -euo pipefail
 PRODUCT_BRANCH="master"
 
 rm -rf /var/tmp/rug.git
-git clone --depth=1 --branch="${PRODUCT_BRANCH}" git@github.com:looky-cloud/rug.git /var/tmp/rug.git
+git clone --depth=1 --branch="workspace" git@github.com:looky-cloud/rug.git /var/tmp/rug.git
 cd /var/tmp/rug.git
 ./circleci-build.sh "${PRODUCT_BRANCH}"
