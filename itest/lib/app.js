@@ -7,6 +7,7 @@ import * as path from "path"
 import {retry} from "./control"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "./log"
+import {workspaceLogfile} from "../lib/log"
 
 const appStep = async (stepMessage, f) => {
   LOG.debug(`Starting step "${stepMessage}"`)
@@ -19,6 +20,8 @@ export const newAppInstance = () =>
   new Application({
     path: electronPath,
     args: [path.join(__dirname, "..", "..")],
+    chromeDriverLogPath: workspaceLogfile("chromedriver.log"),
+    webdriverLogPath: workspaceLogfile("webdriverLogFiles"),
     // PROD-831: Latest compatible spectron and webdriverio lead to the
     // following:
     //  console.warn node_modules/webdriverio/build/lib/helpers/deprecationWarning.js:12
