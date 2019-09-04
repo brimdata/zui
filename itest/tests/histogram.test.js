@@ -1,14 +1,9 @@
 /* @flow */
 
-// The purpose of this file is to demonstrate that basic Spectron interaction
-// can work in a CI environment. The tests don't claim to be meaningful other
-// than showing Spectron works in a headless environment.
-//
-// The setup/teardown was taken from
-// https://github.com/electron/spectron/#usage
-
 import {
+  appInit,
   logIn,
+  newAppInstance,
   setSpan,
   waitForLoginAvailable,
   waitForHistogram,
@@ -18,10 +13,6 @@ import {retryUntil} from "../lib/control.js"
 import {handleError, stdTest} from "../lib/jest.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
 import {LOG} from "../lib/log"
-
-const Application = require("spectron").Application
-const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
-const path = require("path")
 
 const verifySingleRectAttr = (app, pathClass, attr) =>
   app.client.getAttribute(`.${pathClass} rect`, attr).then((vals) => {
@@ -54,12 +45,8 @@ const verifyPathClassRect = (app, pathClass) =>
 describe("Histogram tests", () => {
   let app
   beforeEach(() => {
-    // TODO: Move this logic into a library, especially as it expands.
-    app = new Application({
-      path: electronPath,
-      args: [path.join(__dirname, "..", "..")]
-    })
-    return app.start().then(() => app.webContents.send("resetState"))
+    app = newAppInstance()
+    return appInit(app)
   })
 
   afterEach(() => {

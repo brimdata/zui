@@ -1,16 +1,11 @@
 /* @flow */
 
-// The purpose of this file is to demonstrate that basic Spectron interaction
-// can work in a CI environment. The tests don't claim to be meaningful other
-// than showing Spectron works in a headless environment.
-//
-// The setup/teardown was taken from
-// https://github.com/electron/spectron/#usage
-
 import {
+  appInit,
   getSearchSpeed,
   getSearchTime,
   logIn,
+  newAppInstance,
   searchDisplay,
   setSpan,
   startSearch,
@@ -21,19 +16,11 @@ import {
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
-const Application = require("spectron").Application
-const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
-const path = require("path")
-
 describe("Query tests", () => {
   let app
   beforeEach(() => {
-    // TODO: Move this logic into a library, especially as it expands.
-    app = new Application({
-      path: electronPath,
-      args: [path.join(__dirname, "..", "..")]
-    })
-    return app.start().then(() => app.webContents.send("resetState"))
+    app = newAppInstance()
+    return appInit(app)
   })
 
   afterEach(() => {

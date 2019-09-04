@@ -1,8 +1,11 @@
 /* @flow */
+const electronPath = require("electron")
+
+import {Application} from "spectron"
+import * as path from "path"
 
 import {retry} from "./control"
 import {selectors} from "../../src/js/test/integration"
-import {Application} from "spectron"
 import {LOG} from "./log"
 
 const appStep = async (stepMessage, f) => {
@@ -10,6 +13,33 @@ const appStep = async (stepMessage, f) => {
   let result = await f()
   LOG.debug(`Finished step "${stepMessage}"`)
   return result
+}
+
+export const newAppInstance = () =>
+  new Application({
+    path: electronPath,
+    args: [path.join(__dirname, "..", "..")],
+    // PROD-831: Latest compatible spectron and webdriverio lead to the
+    // following:
+    //  console.warn node_modules/webdriverio/build/lib/helpers/deprecationWarning.js:12
+    //    WARNING: the "<cmd>" command will be deprecated soon. If you have further questions, reach out in the WebdriverIO Gitter support channel (https://gitter.im/webdriverio/webdriverio).
+    //    Note: This command is not part of the W3C WebDriver spec and won't be supported in future versions of the driver. It is recommended to use the actions command to emulate pointer events.
+    //
+    //    (You can disable this warning by setting `"deprecationWarnings": false` in your WebdriverIO config)
+    // for <cmd> in the following:
+    //   buttonPress
+    //   moveTo
+    // Test code isn't using these directly according to git grep, which
+    // means this is something one of my dependencies must fix. Ignore the
+    // warnings for now.
+    webdriverOptions: {
+      deprecationWarnings: false
+    }
+  })
+
+export const appInit = async (app: Application) => {
+  await appStep("starting app", () => app.start())
+  return await resetState(app)
 }
 
 export const logIn = (app: Application) => {
@@ -20,6 +50,9 @@ export const logIn = (app: Application) => {
       .click(selectors.login.button)
   )
 }
+
+export const resetState = (app: Application) =>
+  appStep("reset state", () => app.webContents.send("resetState"))
 
 export const waitForLoginAvailable = (app: Application) => {
   const waitForHostname = () => {
