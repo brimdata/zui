@@ -8,7 +8,6 @@ import {
   searchDisplay,
   setSpan,
   startSearch,
-  waitForLoginAvailable,
   waitForHistogram,
   waitForSearch,
   writeSearch
@@ -32,7 +31,6 @@ describe("Test search mods via right-clicks", () => {
 
   stdTest("Include / Exclude this value works", (done) => {
     let includeExcludeFlow = async () => {
-      await waitForLoginAvailable(app)
       await logIn(app)
       await waitForHistogram(app)
       await waitForSearch(app)
@@ -64,7 +62,6 @@ describe("Test search mods via right-clicks", () => {
 
   stdTest("Use as start/end time works", (done) => {
     let startEndFlow = async () => {
-      await waitForLoginAvailable(app)
       await logIn(app)
       await waitForHistogram(app)
       await waitForSearch(app)
@@ -108,7 +105,6 @@ describe("Test search mods via right-clicks", () => {
 
   stdTest("New Search works", (done) => {
     let newSearchFlow = async () => {
-      await waitForLoginAvailable(app)
       await logIn(app)
       await waitForHistogram(app)
       await waitForSearch(app)
@@ -148,7 +144,6 @@ describe("Test search mods via right-clicks", () => {
 
   stdTest("Count by / Pivot to logs works", (done) => {
     let pivotToLogsFlow = async () => {
-      await waitForLoginAvailable(app)
       await logIn(app)
       await waitForHistogram(app)
       await waitForSearch(app)
@@ -175,8 +170,7 @@ describe("Test search mods via right-clicks", () => {
   })
 
   stdTest("conn for www.mybusinessdoc.com is found via correlation", (done) => {
-    waitForLoginAvailable(app)
-      .then(() => logIn(app))
+    logIn(app)
       .then(() => waitForHistogram(app))
       .then(() => waitForSearch(app))
       .then(() => setSpan(app, dataSets.corelight.logDetails.span))

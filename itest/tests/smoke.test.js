@@ -11,7 +11,6 @@ import {
   appInit,
   logIn,
   newAppInstance,
-  waitForLoginAvailable,
   waitForHistogram,
   waitForSearch
 } from "../lib/app.js"
@@ -33,11 +32,11 @@ describe("Smoke test", () => {
   // TODO: Parallel runs across files are not supported due to chromebrowser
   // port contention. Support that later.
   stdTest("show a sane window; log in and see Search and Histogram", (done) => {
-    waitForLoginAvailable(app)
-      .then(() => app.client.waitForExist("title"))
+    app.client
+      .waitForExist("title")
       .then(() => app.client.getTitle())
       .then((title) => {
-        // TODO: Looky shouldn't be hardcoded but instead read from a title
+        // TODO: Brim shouldn't be hardcoded but instead read from a title
         // defined elsewhere.
         expect(title.toLowerCase()).toBe("brim")
       })

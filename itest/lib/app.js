@@ -48,19 +48,10 @@ export const appInit = async (app: Application) => {
   return await resetState(app)
 }
 
-export const logIn = (app: Application) => {
-  return appStep("fill out login page and log in", () =>
-    app.client
-      .setValue(selectors.login.host, "localhost")
-      .setValue(selectors.login.port, "9867")
-      .click(selectors.login.button)
-  )
-}
-
-export const resetState = (app: Application) =>
-  appStep("reset state", () => app.webContents.send("resetState"))
-
 export const waitForLoginAvailable = (app: Application) => {
+  // Wait for login elements to exist. In most cases this is taken care of for
+  // you in logIn() however if you need to inspect those elements before
+  // logging in, use this first.
   const waitForHostname = () => {
     return app.client.waitForExist(selectors.login.host)
   }
@@ -76,6 +67,24 @@ export const waitForLoginAvailable = (app: Application) => {
       .then(() => waitForButton())
   )
 }
+
+export const logIn = (app: Application) => {
+  // Wait for necessary login widgets and then log in. This method is suitable
+  // for most test procedures.
+  return waitForLoginAvailable(app).then(() =>
+    appStep("fill out login page and log in", () =>
+      // WebdriverV4 doesn't return promises for these methods. Instead they can
+      // be chained together.
+      app.client
+        .setValue(selectors.login.host, "localhost")
+        .setValue(selectors.login.port, "9867")
+        .click(selectors.login.button)
+    )
+  )
+}
+
+export const resetState = (app: Application) =>
+  appStep("reset state", () => app.webContents.send("resetState"))
 
 export const waitForSearch = (app: Application) => {
   return appStep("wait for main search input to appear", () =>

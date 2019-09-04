@@ -5,7 +5,6 @@ import {
   getCurrentSpace,
   logIn,
   newAppInstance,
-  waitForLoginAvailable,
   waitForHistogram,
   waitForSearch
 } from "../lib/app.js"
@@ -25,8 +24,7 @@ describe("Spaces tests", () => {
   })
 
   stdTest("default space is default", (done) => {
-    waitForLoginAvailable(app)
-      .then(() => logIn(app))
+    logIn(app)
       .then(() => waitForHistogram(app))
       .then(() => waitForSearch(app))
       .then(() => getCurrentSpace(app))

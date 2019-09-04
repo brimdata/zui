@@ -5,7 +5,6 @@ import {
   logIn,
   newAppInstance,
   setSpan,
-  waitForLoginAvailable,
   waitForHistogram,
   waitForSearch
 } from "../lib/app.js"
@@ -59,8 +58,7 @@ describe("Histogram tests", () => {
     // This is a data-sensitive test that assumes the histogram has corelight
     // data loaded. There are inline comments that explain the test's flow.
     LOG.debug("Pre-login")
-    waitForLoginAvailable(app)
-      .then(() => logIn(app))
+    logIn(app)
       .then(() => waitForHistogram(app))
       .then(() => waitForSearch(app))
       .then(async () => {

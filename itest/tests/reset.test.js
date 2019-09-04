@@ -27,8 +27,7 @@ describe("Reset state tests", () => {
   })
 
   stdTest("reset state after query works", (done) => {
-    waitForLoginAvailable(app)
-      .then(() => logIn(app))
+    logIn(app)
       .then(() => waitForSearch(app))
       .then(() => writeSearch(app, "_path=http | count()"))
       .then(() => startSearch(app))
