@@ -3,6 +3,7 @@
 import {Application} from "spectron"
 
 import {selectors} from "../../src/js/test/integration"
+import {LOG} from "./log"
 
 export const TestTimeout = 300000
 // https://jestjs.io/docs/en/troubleshooting#unresolved-promises
@@ -23,8 +24,8 @@ export const handleError = async (
 ) => {
   let realError = undefined
   let notificationError = undefined
-  console.log(`handleError: Test hit exception: ${initialError.message}`)
-  console.log("handleError: Looking for any desktop app notifications")
+  LOG.info(`handleError: Test hit exception: ${initialError.message}`)
+  LOG.info("handleError: Looking for any desktop app notifications")
   try {
     notificationError = await app.client.getHTML(selectors.notification, false)
   } catch (e) {
@@ -39,7 +40,7 @@ export const handleError = async (
         "'"
     )
   } else {
-    console.log("handleError: desktop app notification not found")
+    LOG.info("handleError: desktop app notification not found")
     realError = initialError
   }
   done.fail && done.fail(realError.message)
@@ -49,7 +50,7 @@ export const handleError = async (
 // to eagerly print to the console where the run is so that hangs and other
 // failures are easier to diagnose. Without this, Jest is pretty silent and
 // it's hard to know what went wrong in a CI run. This MUST be paired with jest
-// --verbose to work properly, otherwise console.log() calls seem to get
+// --verbose to work properly, otherwise LOG.info() calls seem to get
 // buffered and printed later.
 export const stdTest = (
   descr: string,
@@ -59,7 +60,7 @@ export const stdTest = (
   test(
     descr,
     (done) => {
-      console.log(`Running test: ${descr}`)
+      LOG.info(`Running test: ${descr}`)
       f(done)
     },
     timeout
