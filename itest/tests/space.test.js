@@ -1,13 +1,10 @@
 /* @flow */
 
-const electronPath = require("electron")
-
-import {Application} from "spectron"
-import * as path from "path"
-
 import {
+  appInit,
   getCurrentSpace,
   logIn,
+  newAppInstance,
   waitForLoginAvailable,
   waitForHistogram,
   waitForSearch
@@ -17,11 +14,8 @@ import {handleError, stdTest} from "../lib/jest.js"
 describe("Spaces tests", () => {
   let app
   beforeEach(() => {
-    app = new Application({
-      path: electronPath,
-      args: [path.join(__dirname, "..", "..")]
-    })
-    return app.start().then(() => app.webContents.send("resetState"))
+    app = newAppInstance()
+    return appInit(app)
   })
 
   afterEach(() => {

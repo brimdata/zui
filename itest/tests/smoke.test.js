@@ -8,26 +8,20 @@
 // https://github.com/electron/spectron/#usage
 
 import {
+  appInit,
   logIn,
+  newAppInstance,
   waitForLoginAvailable,
   waitForHistogram,
   waitForSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
-const Application = require("spectron").Application
-const electronPath = require("electron") // Require Electron from the binaries included in node_modules.
-const path = require("path")
-
 describe("Smoke test", () => {
   let app
   beforeEach(() => {
-    // TODO: Move this logic into a library, especially as it expands.
-    app = new Application({
-      path: electronPath,
-      args: [path.join(__dirname, "..", "..")]
-    })
-    return app.start().then(() => app.webContents.send("resetState"))
+    app = newAppInstance()
+    return appInit(app)
   })
 
   afterEach(() => {

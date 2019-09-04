@@ -2,6 +2,10 @@
 const path = require("path")
 const {createLogger, format, transports} = require("winston")
 
+const LOGDIR = path.join(process.env.WORKSPACE || "", "logs")
+
+export const workspaceLogfile = (name: string) => path.join(LOGDIR, name)
+
 // When the flow-typed update produces an error....
 // flow-typed/npm/winston_v3.x.x.js
 // [1] 124│     createLogger: <T>($winstonLoggerConfig<T>) => $winstonLogger<T>,
@@ -21,7 +25,7 @@ export const LOG = createLogger({
     // No idea how to make this runtime-configurable via command line. This has
     // mkdir -p semantics so the environment variable seems OK enough.
     new transports.File({
-      filename: path.join(process.env.WORKSPACE || "", "logs", "itest.log"),
+      filename: workspaceLogfile("itest.log"),
       level: "debug"
     })
   ]

@@ -1,13 +1,10 @@
 /* @flow */
 
-const electronPath = require("electron")
-
-import {Application} from "spectron"
-import * as path from "path"
-
 import {
+  appInit,
   getSearchText,
   logIn,
+  newAppInstance,
   searchDisplay,
   setSpan,
   startSearch,
@@ -23,27 +20,8 @@ import {dataSets, selectors} from "../../src/js/test/integration"
 describe("Test search mods via right-clicks", () => {
   let app
   beforeEach(() => {
-    app = new Application({
-      path: electronPath,
-      args: [path.join(__dirname, "..", "..")],
-      // PROD-831: Latest compatible spectron and webdriverio lead to the
-      // following:
-      //  console.warn node_modules/webdriverio/build/lib/helpers/deprecationWarning.js:12
-      //    WARNING: the "<cmd>" command will be deprecated soon. If you have further questions, reach out in the WebdriverIO Gitter support channel (https://gitter.im/webdriverio/webdriverio).
-      //    Note: This command is not part of the W3C WebDriver spec and won't be supported in future versions of the driver. It is recommended to use the actions command to emulate pointer events.
-      //
-      //    (You can disable this warning by setting `"deprecationWarnings": false` in your WebdriverIO config)
-      // for <cmd> in the following:
-      //   buttonPress
-      //   moveTo
-      // Test code isn't using these directly according to git grep, which
-      // means this is something one of my dependencies must fix. Ignore the
-      // warnings for now.
-      webdriverOptions: {
-        deprecationWarnings: false
-      }
-    })
-    return app.start().then(() => app.webContents.send("resetState"))
+    app = newAppInstance()
+    return appInit(app)
   })
 
   afterEach(() => {
