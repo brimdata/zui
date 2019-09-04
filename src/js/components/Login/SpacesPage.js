@@ -5,13 +5,14 @@ import React, {useState} from "react"
 
 import type {Cluster} from "../../state/clusters/types"
 import {Dots} from "./Dots"
-import {Input, InputSubmit} from "../form/Inputs"
 import {createSpace} from "../../backend/thunks"
 import {disconnectCluster} from "../../state/clusters/thunks"
 import {getFormData} from "../../stdlib/form"
 import {setCurrentSpaceName} from "../../state/actions"
 import Back from "../../icons/back-arrow.svg"
 import Form from "../form/Form"
+import Input from "../form/Input"
+import InputSubmit from "../form/InputSubmit"
 
 type Props = {cluster: Cluster}
 

@@ -1,0 +1,48 @@
+#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	ftp
+#open	2018-10-20-14-40-15
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	user	password	command	arg	mime_type	file_size	reply_code	reply_msg	data_channel.passive	data_channel.orig_h	data_channel.resp_h	data_channel.resp_p	fuid
+#types	time	string	addr	port	addr	port	string	string	string	string	string	count	count	string	bool	addr	addr	port	string
+1426095842.051249	C5ZDFu2WqoSX5telXc	192.168.0.54	50642	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095842.100039	C5ZDFu2WqoSX5telXc	192.168.0.54	50642	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,195,204)	T	192.168.0.54	77.67.22.165	50124	-
+1426095842.311375	C5ZDFu2WqoSX5telXc	192.168.0.54	50642	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/SiteStat.xml	-	118	226	Transfer Complete	-	-	-	-	Fl5YN02CIAGXFSeDl3
+1426095843.391589	C4qoYL1dPfehz4FtE1	192.168.0.54	50645	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095843.449416	C4qoYL1dPfehz4FtE1	192.168.0.54	50645	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,222,132)	T	192.168.0.54	77.67.22.165	56964	-
+1426095843.777201	C4qoYL1dPfehz4FtE1	192.168.0.54	50645	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/catalog.z	-	5364	226	Transfer Complete	-	-	-	-	FvEQu83uWVcrTN14Y2
+1426095844.345187	C1LFZA4X4TWQOtVeO5	192.168.0.54	50647	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095844.403235	C1LFZA4X4TWQOtVeO5	192.168.0.54	50647	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,218,56)	T	192.168.0.54	77.67.22.165	55864	-
+1426095844.673140	C1LFZA4X4TWQOtVeO5	192.168.0.54	50647	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/catalog.z	-	5364	226	Transfer Complete	-	-	-	-	FWLRvWax1VkFOxUb3
+1426095845.905466	CoxDXg1bHPJJPFSPxg	192.168.0.54	50650	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095845.993796	CoxDXg1bHPJJPFSPxg	192.168.0.54	50650	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,200,46)	T	192.168.0.54	77.67.22.165	51246	-
+1426095846.304982	CoxDXg1bHPJJPFSPxg	192.168.0.54	50650	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/SiteStat.xml	-	118	226	Transfer Complete	-	-	-	-	F4QFeB4PbLKKXMhKzf
+1426095848.434041	CB7RQw1vtADUTlPqKb	192.168.0.54	50653	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095848.492824	CB7RQw1vtADUTlPqKb	192.168.0.54	50653	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,175,151)	T	192.168.0.54	77.67.22.165	44951	-
+1426095848.723407	CB7RQw1vtADUTlPqKb	192.168.0.54	50653	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/catalog.z	<unknown>	5364	226	Transfer Complete	-	-	-	-	Fu9QoH3qdWa1utkWAj
+1426095851.163770	Cq9KWTVswBCWfXa17	192.168.0.54	50656	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095851.222544	Cq9KWTVswBCWfXa17	192.168.0.54	50656	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,253,73)	T	192.168.0.54	77.67.22.165	64841	-
+1426095851.464813	Cq9KWTVswBCWfXa17	192.168.0.54	50656	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/VSCANENG1000/Engine/0000/PkgCatalog.z	<unknown>	2292	226	Transfer Complete	-	-	-	-	FZtJUL3dY2kgZ7SQB5
+1426095854.134777	CnxJbL1E8qFC2pLUeh	192.168.0.54	50659	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095854.202480	CnxJbL1E8qFC2pLUeh	192.168.0.54	50659	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,191,158)	T	192.168.0.54	77.67.22.165	49054	-
+1426095854.452670	CnxJbL1E8qFC2pLUeh	192.168.0.54	50659	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/VSCANDAT1000/DAT/0000/PkgCatalog.z	<unknown>	3804	226	Transfer Complete	-	-	-	-	Fv276q109ZSlfefwb1
+1426095857.045104	CNhTks14iXKbwavV4a	192.168.0.54	50662	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095857.111713	CNhTks14iXKbwavV4a	192.168.0.54	50662	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,146,208)	T	192.168.0.54	77.67.22.165	37584	-
+1426095857.375730	CNhTks14iXKbwavV4a	192.168.0.54	50662	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/VSCANDAT1000/DAT/0000/PkgCatalog.z	<unknown>	3804	226	Transfer Complete	-	-	-	-	Fe14KF3eX42mNxHj9e
+1426095859.801718	CAcJX21CIRWmLYywz5	192.168.0.54	50665	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095859.860174	CAcJX21CIRWmLYywz5	192.168.0.54	50665	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,196,20)	T	192.168.0.54	77.67.22.165	50196	-
+1426095860.111063	CAcJX21CIRWmLYywz5	192.168.0.54	50665	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/VSCANDAT1000/DAT/0000/V2datinstall.mcs	<unknown>	88252	226	Transfer Complete	-	-	-	-	F0e8ps2pOIgBteWda9
+1426095861.723459	CLVJGe2aDZIopzJGxi	192.168.0.54	50668	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095861.781206	CLVJGe2aDZIopzJGxi	192.168.0.54	50668	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,185,243)	T	192.168.0.54	77.67.22.165	47603	-
+1426095862.032372	CLVJGe2aDZIopzJGxi	192.168.0.54	50668	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/VSCANDAT1000/DAT/0000/gdeltaavv.ini	text/ini	2315	226	Transfer Complete	-	-	-	-	FWFnsi2bJGWygNYPol
+1426095863.342188	CqViHK2lmhrDj19wX5	192.168.0.54	50671	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095863.390385	CqViHK2lmhrDj19wX5	192.168.0.54	50671	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,207,202)	T	192.168.0.54	77.67.22.165	53194	-
+1426095863.602392	CqViHK2lmhrDj19wX5	192.168.0.54	50671	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/VSCANDAT1000/DAT/0000/77357736avv.gem	text/plain	440388	226	Transfer Complete	-	-	-	-	F7B36U3Ema1cOcYpJg
+1426095866.214180	CPGNYF1jxUT6ermxze	192.168.0.54	50674	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095866.272181	CPGNYF1jxUT6ermxze	192.168.0.54	50674	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,202,19)	T	192.168.0.54	77.67.22.165	51731	-
+1426095866.473203	CPGNYF1jxUT6ermxze	192.168.0.54	50674	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/VSCANDAT1000/DAT/0000/77367737avv.gem	text/plain	451780	226	Transfer Complete	-	-	-	-	FukMEL1s6OsggM9TYj
+1426095883.071888	CJ3hYe3CIenWI89lci	192.168.0.54	50677	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	EPSV	-	-	-	500	Command not supported.	-	-	-	-	-
+1426095883.121023	CJ3hYe3CIenWI89lci	192.168.0.54	50677	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	PASV	-	-	-	227	Entering Passive Mode. (77,67,22,165,217,82)	T	192.168.0.54	77.67.22.165	55634	-
+1426095883.332809	CJ3hYe3CIenWI89lci	192.168.0.54	50677	77.67.22.165	21	anonymous	CommonUpdater%40McAfeeB2B.com	RETR	ftp://77.67.22.165/CommonUpdater/Current/BOCVSE__1000/DAT/0000/PkgCatalog.z	<unknown>	1436	226	Transfer Complete	-	-	-	-	FfUEpTBppdIXeQw4i
+#close	2018-10-20-14-43-53

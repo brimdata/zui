@@ -12,6 +12,7 @@ import SearchRequest from "../lib/SearchRequest"
 import buildUrl from "../lib/buildUrl"
 import defaultOptions from "../lib/defaultOptions"
 import lookytalkVersion from "../lib/lookytalkVersion"
+import normalizePayload from "../lib/normalizePayload"
 
 export default class Base {
   options: RequiredClientOptions
@@ -73,7 +74,7 @@ export default class Base {
       new BoomRequest({
         method: reqOpts.method,
         url: buildUrl(host, port, reqOpts.path, reqOpts.query),
-        body: JSON.stringify(reqOpts.payload),
+        body: normalizePayload(reqOpts.payload),
         headers: basicAuthHeader(username, password),
         streaming: reqOpts.streaming
       })
@@ -82,5 +83,14 @@ export default class Base {
 
   getAdapter() {
     return BrowserFetchAdapter
+  }
+
+  ingest(space: string, file: File) {
+    return this.send({
+      method: "POST",
+      path: `/space/${space}/zeek`,
+      query: {bulk: "t"},
+      payload: file
+    })
   }
 }

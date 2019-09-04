@@ -1,0 +1,50 @@
+/* @flow */
+import fs from "fs"
+import path from "path"
+
+export default function file(p: string) {
+  return {
+    read() {
+      return new Promise<*>((good, bad) => {
+        fs.readFile(p, (err, data) => {
+          if (err) bad(err)
+          else good(data)
+        })
+      })
+    },
+
+    allFiles() {
+      return this.stats().then((stats) => {
+        if (stats.isDirectory()) {
+          return this.contents()
+            .then((files) =>
+              Promise.all(files.map((f) => file(path.join(p, f)).allFiles()))
+            )
+            .then((results) =>
+              results.reduce<string[]>((all, one) => all.concat(one), [])
+            )
+        } else {
+          return [p]
+        }
+      })
+    },
+
+    contents() {
+      return new Promise<*>((good, bad) => {
+        fs.readdir(p, (err, files) => {
+          if (err) bad(err)
+          else good(files)
+        })
+      })
+    },
+
+    stats() {
+      return new Promise<*>((good, bad) => {
+        fs.lstat(p, (err, stats) => {
+          if (err) bad(err)
+          else good(stats)
+        })
+      })
+    }
+  }
+}

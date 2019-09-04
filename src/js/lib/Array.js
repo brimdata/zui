@@ -1,10 +1,10 @@
 /* @flow */
 
-import isEqual from "lodash/isEqual"
-import isNumber from "lodash/isNumber"
+import _sortBy from "lodash/sortBy"
 import _uniq from "lodash/uniq"
 import _uniqBy from "lodash/uniqBy"
-import _sortBy from "lodash/sortBy"
+import isEqual from "lodash/isEqual"
+import isNumber from "lodash/isNumber"
 
 export const uniq = _uniq
 export const uniqBy = _uniqBy

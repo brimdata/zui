@@ -1,9 +1,11 @@
 /* @flow */
 import React from "react"
 
-import {Input, InputCheckbox, InputSubmit} from "../form/Inputs"
 import {reactElementProps} from "../../test/integration"
 import Form from "../form/Form"
+import Input from "../form/Input"
+import InputCheckbox from "../form/InputCheckbox"
+import InputSubmit from "../form/InputSubmit"
 
 type Props = {
   data: Object,

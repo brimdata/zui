@@ -1,0 +1,21 @@
+.drag-ingest {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  color: white;
+  h2 {
+    text-align: center;
+    margin-top: 50%;
+  }
+
+  .file-input {
+    margin-top: 20px;
+    display: block;
+    width: 100vh;
+    height: 100%;
+  }
+}

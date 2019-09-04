@@ -14,13 +14,23 @@
     transition: transform 200ms, background 200ms;
   }
 
-  input {
-    border: 1px solid $white-4;
-    width: 100%;
-    padding: 0 6px;
+  input,
+  option,
+  li {
     line-height: 2.33;
     font-size: 0.75rem;
     font-family: $body-font;
+    width: 100%;
+  }
+
+  input,
+  select {
+    padding: 0 6px;
+    border: 1px solid $white-4;
+  }
+
+  select {
+    display: block;
   }
 
   &.focus {
@@ -102,6 +112,69 @@
     &:active {
       box-shadow: none;
       transform: translateY(2px);
+    }
+  }
+}
+
+.input-select-multiple {
+  position: relative;
+  label {
+    transform: none;
+  }
+  nav {
+    display: inline-block;
+    user-select: none;
+    padding-left: 3px;
+
+    a {
+      color: $blue;
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover {
+        color: $blue-dark;
+      }
+      &:active {
+        color: $blue;
+      }
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid $white-4;
+    overflow-y: scroll;
+    max-height: 300px;
+    background: $white-2;
+  }
+
+  li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    line-height: 1.6;
+    user-select: none;
+    color: lighten($gray-9, 20%);
+
+    &:nth-child(even) {
+      background: $table-stripe-color;
+    }
+    .check-circle {
+      margin: 0 0.5rem;
+    }
+
+    &[data-selected="false"] {
+      color: $gray-9;
+      .check-circle {
+        circle {
+          fill: white;
+          stroke: $white-5;
+        }
+
+        // opacity: 0;
+      }
     }
   }
 }
