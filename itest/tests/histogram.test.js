@@ -1,7 +1,7 @@
 /* @flow */
 
 import {
-  appInit,
+  startApp,
   logIn,
   newAppInstance,
   setSpan,
@@ -45,7 +45,7 @@ describe("Histogram tests", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {

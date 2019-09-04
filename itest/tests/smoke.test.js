@@ -8,7 +8,7 @@
 // https://github.com/electron/spectron/#usage
 
 import {
-  appInit,
+  startApp,
   logIn,
   newAppInstance,
   waitForHistogram,
@@ -20,7 +20,7 @@ describe("Smoke test", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {

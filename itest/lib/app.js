@@ -43,7 +43,7 @@ export const newAppInstance = () =>
     }
   })
 
-export const appInit = async (app: Application) => {
+export const startApp = async (app: Application) => {
   await appStep("starting app", () => app.start())
   return await resetState(app)
 }

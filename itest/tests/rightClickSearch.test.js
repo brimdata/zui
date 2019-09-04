@@ -1,7 +1,7 @@
 /* @flow */
 
 import {
-  appInit,
+  startApp,
   getSearchText,
   logIn,
   newAppInstance,
@@ -20,7 +20,7 @@ describe("Test search mods via right-clicks", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {

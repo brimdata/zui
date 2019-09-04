@@ -1,7 +1,7 @@
 /* @flow */
 
 import {
-  appInit,
+  startApp,
   logIn,
   newAppInstance,
   startSearch,
@@ -17,7 +17,7 @@ describe("Reset state tests", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {

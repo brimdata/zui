@@ -1,7 +1,7 @@
 /* @flow */
 
 import {
-  appInit,
+  startApp,
   getCurrentSpace,
   logIn,
   newAppInstance,
@@ -14,7 +14,7 @@ describe("Spaces tests", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {

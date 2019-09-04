@@ -1,7 +1,7 @@
 /* @flow */
 
 import {
-  appInit,
+  startApp,
   getSearchSpeed,
   getSearchTime,
   logIn,
@@ -19,7 +19,7 @@ describe("Query tests", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {
