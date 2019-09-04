@@ -91,8 +91,12 @@ export const resetState = (app: Application) =>
   appStep("reset state", () => app.webContents.send("resetState"))
 
 export const waitForSearch = (app: Application) => {
-  return appStep("wait for main search input to appear", () =>
-    retry(() => app.client.element("#main-search-input").getValue())
+  return appStep(
+    "wait for main search input to appear and then get its value",
+    () =>
+      app.client
+        .waitForVisible("#main-search-input")
+        .then(() => app.client.element("#main-search-input").getValue())
   )
 }
 
