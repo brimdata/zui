@@ -17,9 +17,12 @@ const appStep = async (stepMessage, f) => {
 }
 
 export const newAppInstance = () =>
+  // https://github.com/electron-userland/spectron#new-applicationoptions
   new Application({
     path: electronPath,
     args: [path.join(__dirname, "..", "..")],
+    startTimeout: 60000,
+    waitTimeout: 60000,
     chromeDriverLogPath: workspaceLogfile("chromedriver.log"),
     webdriverLogPath: workspaceLogfile("webdriverLogFiles"),
     // PROD-831: Latest compatible spectron and webdriverio lead to the
