@@ -1,13 +1,6 @@
 /* @flow */
 
-import {
-  startApp,
-  getCurrentSpace,
-  logIn,
-  newAppInstance,
-  waitForHistogram,
-  waitForSearch
-} from "../lib/app.js"
+import {startApp, getCurrentSpace, logIn, newAppInstance} from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Spaces tests", () => {
@@ -25,8 +18,6 @@ describe("Spaces tests", () => {
 
   stdTest("default space is default", (done) => {
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(() => getCurrentSpace(app))
       .then((spaceName) => {
         expect(spaceName).toBe("default")

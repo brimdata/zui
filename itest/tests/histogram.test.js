@@ -1,13 +1,6 @@
 /* @flow */
 
-import {
-  startApp,
-  logIn,
-  newAppInstance,
-  setSpan,
-  waitForHistogram,
-  waitForSearch
-} from "../lib/app.js"
+import {startApp, logIn, newAppInstance, setSpan} from "../lib/app.js"
 import {retryUntil} from "../lib/control.js"
 import {handleError, stdTest} from "../lib/jest.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
@@ -59,8 +52,6 @@ describe("Histogram tests", () => {
     // data loaded. There are inline comments that explain the test's flow.
     LOG.debug("Pre-login")
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(async () => {
         LOG.debug("Checking number of histogram rect elements")
         let result = await retryUntil(

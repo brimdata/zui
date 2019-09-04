@@ -8,7 +8,6 @@ import {
   searchDisplay,
   setSpan,
   startSearch,
-  waitForHistogram,
   waitForSearch,
   writeSearch
 } from "../lib/app.js"
@@ -32,8 +31,6 @@ describe("Test search mods via right-clicks", () => {
   stdTest("Include / Exclude this value works", (done) => {
     let includeExcludeFlow = async () => {
       await logIn(app)
-      await waitForHistogram(app)
-      await waitForSearch(app)
       await app.client.rightClick(
         selectors.viewer.resultCellContaining(
           dataSets.corelight.rightClickSearch.includeValue
@@ -63,8 +60,6 @@ describe("Test search mods via right-clicks", () => {
   stdTest("Use as start/end time works", (done) => {
     let startEndFlow = async () => {
       await logIn(app)
-      await waitForHistogram(app)
-      await waitForSearch(app)
       // The sort proc is used here to ensure that the two tuples that appear
       // with the same timestamp are deterministically sorted.  If PROD-647
       // is fixed, the results will still be deterministic because, although
@@ -106,8 +101,6 @@ describe("Test search mods via right-clicks", () => {
   stdTest("New Search works", (done) => {
     let newSearchFlow = async () => {
       await logIn(app)
-      await waitForHistogram(app)
-      await waitForSearch(app)
       await app.client.rightClick(
         selectors.viewer.resultCellContaining(
           dataSets.corelight.rightClickSearch.newSearchSetup
@@ -145,8 +138,6 @@ describe("Test search mods via right-clicks", () => {
   stdTest("Count by / Pivot to logs works", (done) => {
     let pivotToLogsFlow = async () => {
       await logIn(app)
-      await waitForHistogram(app)
-      await waitForSearch(app)
       // If we want to "Count by" _path, we *must* select a conn cell,
       // because conn logs contain the _path of the connection. Searching for
       // "dns" will find either the first conn log tuple of a dns connection,
@@ -171,8 +162,6 @@ describe("Test search mods via right-clicks", () => {
 
   stdTest("conn for www.mybusinessdoc.com is found via correlation", (done) => {
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(() => setSpan(app, dataSets.corelight.logDetails.span))
       .then(() => writeSearch(app, dataSets.corelight.logDetails.initialSearch))
       .then(() => startSearch(app))

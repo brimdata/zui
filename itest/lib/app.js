@@ -69,18 +69,22 @@ export const waitForLoginAvailable = (app: Application) => {
 }
 
 export const logIn = (app: Application) => {
-  // Wait for necessary login widgets and then log in. This method is suitable
-  // for most test procedures.
-  return waitForLoginAvailable(app).then(() =>
-    appStep("fill out login page and log in", () =>
-      // WebdriverV4 doesn't return promises for these methods. Instead they can
-      // be chained together.
-      app.client
-        .setValue(selectors.login.host, "localhost")
-        .setValue(selectors.login.port, "9867")
-        .click(selectors.login.button)
+  // Wait for necessary login widgets and then log in. Then make sure the app
+  // is ostensibly ready before continuing. This method is suitable for most
+  // test procedures.
+  return waitForLoginAvailable(app)
+    .then(() =>
+      appStep("fill out login page and log in", () =>
+        // WebdriverV4 doesn't return promises for these methods. Instead they can
+        // be chained together.
+        app.client
+          .setValue(selectors.login.host, "localhost")
+          .setValue(selectors.login.port, "9867")
+          .click(selectors.login.button)
+      )
     )
-  )
+    .then(() => waitForSearch(app))
+    .then(() => waitForHistogram(app))
 }
 
 export const resetState = (app: Application) =>

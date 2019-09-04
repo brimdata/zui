@@ -9,7 +9,6 @@ import {
   searchDisplay,
   setSpan,
   startSearch,
-  waitForHistogram,
   waitForSearch,
   writeSearch
 } from "../lib/app.js"
@@ -30,8 +29,6 @@ describe("Query tests", () => {
 
   stdTest('query "_path=weird | sort"', (done) => {
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(() => writeSearch(app, "_path=weird | sort"))
       .then(() => startSearch(app))
       .then(() => waitForSearch(app))
@@ -57,8 +54,6 @@ describe("Query tests", () => {
 
   stdTest('query "_path=http | count()"', (done) => {
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(() => writeSearch(app, "_path=http | count()"))
       .then(() => startSearch(app))
       .then(() => waitForSearch(app))
@@ -84,8 +79,6 @@ describe("Query tests", () => {
 
   stdTest('query "_path=http | count() by id.resp_p | sort"', (done) => {
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(() => writeSearch(app, "_path=http | count() by id.resp_p | sort"))
       .then(() => startSearch(app))
       .then(() => waitForSearch(app))
@@ -111,8 +104,6 @@ describe("Query tests", () => {
 
   stdTest('query "_path=http | every 5m count()"', (done) => {
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(() => writeSearch(app, "_path=http | every 5m count()"))
       .then(() => startSearch(app))
       .then(() => waitForSearch(app))
@@ -138,8 +129,6 @@ describe("Query tests", () => {
 
   stdTest('query "* | count()"; switch to whole space', (done) => {
     logIn(app)
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then(() => writeSearch(app, "* | count()"))
       .then(() => startSearch(app))
       .then(() => waitForSearch(app))

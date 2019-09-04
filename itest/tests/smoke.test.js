@@ -7,13 +7,7 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {
-  startApp,
-  logIn,
-  newAppInstance,
-  waitForHistogram,
-  waitForSearch
-} from "../lib/app.js"
+import {startApp, logIn, newAppInstance} from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Smoke test", () => {
@@ -49,8 +43,6 @@ describe("Smoke test", () => {
         expect(headerText.toLowerCase()).toBe("welcome to brim")
       })
       .then(() => logIn(app))
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then((val) => {
         expect(val).toBeDefined()
         done()
