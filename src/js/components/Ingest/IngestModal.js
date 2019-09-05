@@ -18,6 +18,11 @@ type Props = {
 export default function IngestModal({isOpen, onClose, files}: Props) {
   let [selected, setSelected] = useState([])
 
+  function onThisClose() {
+    onClose()
+    setSelected([])
+  }
+
   function onSubmit(e) {
     e.preventDefault()
     let form = e.target
@@ -30,7 +35,7 @@ export default function IngestModal({isOpen, onClose, files}: Props) {
   }
 
   return (
-    <Modal isOpen={isOpen} title="Ingest Zeek Files" onClose={onClose}>
+    <Modal isOpen={isOpen} title="Ingest Zeek Files" onClose={onThisClose}>
       {isEmpty(selected) ? (
         <IngestForm onSubmit={onSubmit} files={files} />
       ) : (
