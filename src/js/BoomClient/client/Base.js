@@ -96,6 +96,14 @@ export default class Base {
     let query = {bulk: "t"}
     let url = buildUrl(host, port, urlPath, query)
     let headers = basicAuthHeader(username, password)
+
+    if (/\.gz$/.test(path)) {
+      headers = {
+        ...headers,
+        "Content-Encoding": "gzip"
+      }
+    }
+
     let request = new BoomRequest({method, url, headers, body: null})
     // $FlowFixMe
     let req = http.request(url, {method})
