@@ -1,13 +1,14 @@
 /* @flow */
 
 import {
-  startApp,
   getSearchSpeed,
   getSearchTime,
   logIn,
   newAppInstance,
+  resetState,
   searchDisplay,
   setSpan,
+  startApp,
   startSearch,
   waitForSearch,
   writeSearch
@@ -21,9 +22,10 @@ describe("Query tests", () => {
     return startApp(app)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (app && app.isRunning()) {
-      return app.stop()
+      await resetState(app)
+      return await app.stop()
     }
   })
 

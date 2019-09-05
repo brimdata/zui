@@ -2,13 +2,14 @@
 
 import {
   click,
-  startApp,
   getSearchText,
   logIn,
   newAppInstance,
+  resetState,
   rightClick,
   searchDisplay,
   setSpan,
+  startApp,
   startSearch,
   waitForSearch,
   writeSearch
@@ -23,9 +24,10 @@ describe("Test search mods via right-clicks", () => {
     return startApp(app)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (app && app.isRunning()) {
-      return app.stop()
+      await resetState(app)
+      return await app.stop()
     }
   })
 

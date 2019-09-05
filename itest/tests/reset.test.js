@@ -4,6 +4,7 @@ import {
   startApp,
   logIn,
   newAppInstance,
+  resetState,
   startSearch,
   searchDisplay,
   waitForLoginAvailable,
@@ -20,9 +21,10 @@ describe("Reset state tests", () => {
     return startApp(app)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (app && app.isRunning()) {
-      return app.stop()
+      await resetState(app)
+      return await app.stop()
     }
   })
 
@@ -35,7 +37,7 @@ describe("Reset state tests", () => {
       .then((results) => {
         expect(results).toBeTruthy()
       })
-      .then(() => app.webContents.send("resetState"))
+      .then(() => resetState(app))
       .then(() => waitForLoginAvailable(app))
       // This call is safe because of the waitForLoginAvailable call above.
       .then(() => app.client.getValue(selectors.login.host))

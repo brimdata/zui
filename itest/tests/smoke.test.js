@@ -7,7 +7,7 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {startApp, logIn, newAppInstance} from "../lib/app.js"
+import {logIn, newAppInstance, resetState, startApp} from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Smoke test", () => {
@@ -17,9 +17,10 @@ describe("Smoke test", () => {
     return startApp(app)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (app && app.isRunning()) {
-      return app.stop()
+      await resetState(app)
+      return await app.stop()
     }
   })
 
