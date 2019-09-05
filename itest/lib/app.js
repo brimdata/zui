@@ -102,9 +102,11 @@ export const waitForSearch = (app: Application) => {
 
 export const waitForHistogram = (app: Application) => {
   return appStep("wait for base histogram element hierarchy", () =>
-    retry(() =>
-      app.client.element(selectors.histogram.topLevel).getAttribute("class")
-    )
+    app.client
+      .waitForVisible(selectors.histogram.topLevel)
+      .then(() =>
+        app.client.element(selectors.histogram.topLevel).getAttribute("class")
+      )
   )
 }
 
