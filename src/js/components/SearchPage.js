@@ -23,7 +23,7 @@ import {useResizeObserver} from "../hooks/useResizeObserver"
 import BackendErrorNotice from "./BackendErrorNotice"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
-import DragIngest from "./DragIngest"
+import DropZone from "./Ingest/DropZone"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
 import TitleBar from "./TitleBar"
 
@@ -79,7 +79,7 @@ export default function SearchPage({cluster}: Props) {
       <XDownloadProgress />
       <XWhoisModal />
       <XSettingsModal />
-      <DragIngest />
+      <DropZone />
     </div>
   )
 }

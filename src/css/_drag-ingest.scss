@@ -41,8 +41,9 @@
     line-height: 1.6;
     font-size: 0.75rem;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     border-radius: 3px;
+    padding: 3px;
 
     &:nth-child(even) {
       background: $table-stripe-color;
@@ -54,9 +55,16 @@
       justify-content: center;
     }
 
+    .message {
+      display: block;
+    }
+
     .error {
-      margin-left: 1rem;
       color: $red-dark;
+    }
+
+    .success {
+      color: $blue;
     }
   }
 }

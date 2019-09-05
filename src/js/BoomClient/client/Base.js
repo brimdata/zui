@@ -13,6 +13,8 @@ import buildUrl from "../lib/buildUrl"
 import defaultOptions from "../lib/defaultOptions"
 import lookytalkVersion from "../lib/lookytalkVersion"
 import normalizePayload from "../lib/normalizePayload"
+import fs from "fs"
+import http from "http"
 
 export default class Base {
   options: RequiredClientOptions
@@ -85,12 +87,46 @@ export default class Base {
     return BrowserFetchAdapter
   }
 
-  ingest(space: string, file: File) {
-    return this.send({
-      method: "POST",
-      path: `/space/${space}/zeek`,
-      query: {bulk: "t"},
-      payload: file
+  ingest(space: string, path: string) {
+    let {host, port, username, password} = this.options
+    if (!host || !port) throw new Error("host/port are missing")
+
+    let method = "POST"
+    let urlPath = `/space/${space}/zeek`
+    let query = {bulk: "t"}
+    let url = buildUrl(host, port, urlPath, query)
+    let headers = basicAuthHeader(username, password)
+    let request = new BoomRequest({method, url, headers, body: null})
+    // $FlowFixMe
+    let req = http.request(url, {method})
+    for (let key in headers) {
+      req.setHeader(key, headers[key])
+    }
+
+    req.on("response", (res) => {
+      res.setEncoding("utf-8")
+
+      let body = ""
+      res.on("data", (d) => (body += d))
+      res.on("end", () => {
+        try {
+          body = JSON.parse(body)
+          if (res.statusCode === 200) {
+            request.emitDone(body)
+          } else {
+            request.emitError(body)
+          }
+        } catch {
+          request.emitError(new Error(body))
+        }
+      })
     })
+
+    req.on("error", (e) => request.emitError(e))
+
+    let file = fs.createReadStream(path)
+    file.pipe(req)
+
+    return request
   }
 }
