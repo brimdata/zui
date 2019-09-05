@@ -52,13 +52,13 @@ export const waitForLoginAvailable = (app: Application) => {
   // you in logIn() however if you need to inspect those elements before
   // logging in, use this first.
   const waitForHostname = () => {
-    return app.client.waitForExist(selectors.login.host)
+    return app.client.waitForVisible(selectors.login.host)
   }
   const waitForPort = () => {
-    return app.client.waitForExist(selectors.login.port)
+    return app.client.waitForVisible(selectors.login.port)
   }
   const waitForButton = () => {
-    return app.client.waitForExist(selectors.login.button)
+    return app.client.waitForVisible(selectors.login.button)
   }
   return appStep("wait for hostname, port, and login widget", () =>
     waitForHostname()

@@ -27,6 +27,7 @@ describe("Smoke test", () => {
   // port contention. Support that later.
   stdTest("show a sane window; log in and see Search and Histogram", (done) => {
     app.client
+      // Use waitForExist, not waitForVisible: title isn't visible in the app.
       .waitForExist("title")
       .then(() => app.client.getTitle())
       .then((title) => {
@@ -34,7 +35,7 @@ describe("Smoke test", () => {
         // defined elsewhere.
         expect(title.toLowerCase()).toBe("brim")
       })
-      .then(() => app.client.waitForExist(".brand h1"))
+      .then(() => app.client.waitForVisible(".brand h1"))
       // TODO: Don't use selectors as literals in tests. These definitions
       // should be defined in a single place and ideally be tested to ensure
       // they can be found.
