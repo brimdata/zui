@@ -205,3 +205,15 @@ export const setSpan = (app: Application, span: string) => {
 
   return clickSpanButton().then(() => clickSpan())
 }
+
+export const click = (app: Application, selector: string) =>
+  appStep(`click on selector "${selector}"`, () =>
+    app.client.waitForVisible(selector).then(() => app.client.click(selector))
+  )
+
+export const rightClick = (app: Application, selector: string) =>
+  appStep(`right-click on selector "${selector}"`, () =>
+    app.client
+      .waitForVisible(selector)
+      .then(() => app.client.rightClick(selector))
+  )

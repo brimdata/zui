@@ -1,10 +1,12 @@
 /* @flow */
 
 import {
+  click,
   startApp,
   getSearchText,
   logIn,
   newAppInstance,
+  rightClick,
   searchDisplay,
   setSpan,
   startSearch,
@@ -31,16 +33,19 @@ describe("Test search mods via right-clicks", () => {
   stdTest("Include / Exclude this value works", (done) => {
     let includeExcludeFlow = async () => {
       await logIn(app)
-      await app.client.rightClick(
+      await rightClick(
+        app,
         selectors.viewer.resultCellContaining(
           dataSets.corelight.rightClickSearch.includeValue
         )
       )
-      await app.client.click(
+      await click(
+        app,
         selectors.viewer.rightClickMenuItem("Include this value")
       )
-      await app.client.rightClick(selectors.viewer.resultCellContaining("conn"))
-      await app.client.click(
+      await rightClick(app, selectors.viewer.resultCellContaining("conn"))
+      await click(
+        app,
         selectors.viewer.rightClickMenuItem("Exclude this value")
       )
       // The result order is deterministic because clicked a uid and then
@@ -68,22 +73,23 @@ describe("Test search mods via right-clicks", () => {
       await writeSearch(app, "_path=conn | sort -r ts, uid")
       await startSearch(app)
       await waitForSearch(app)
-      await app.client.rightClick(
+      await rightClick(
+        app,
         selectors.viewer.resultCellContaining(
           dataSets.corelight.rightClickSearch.startTime
         )
       )
-      await app.client.click(
+      await click(
+        app,
         selectors.viewer.rightClickMenuItem('Use as "start" time')
       )
-      await app.client.rightClick(
+      await rightClick(
+        app,
         selectors.viewer.resultCellContaining(
           dataSets.corelight.rightClickSearch.endTime
         )
       )
-      await app.client.click(
-        selectors.viewer.rightClickMenuItem('Use as "end" time')
-      )
+      await click(app, selectors.viewer.rightClickMenuItem('Use as "end" time'))
       // The result order is deterministic because of the sort proc as
       // explained above.
       return searchDisplay(app)
@@ -101,18 +107,19 @@ describe("Test search mods via right-clicks", () => {
   stdTest("New Search works", (done) => {
     let newSearchFlow = async () => {
       await logIn(app)
-      await app.client.rightClick(
+      await rightClick(
+        app,
         selectors.viewer.resultCellContaining(
           dataSets.corelight.rightClickSearch.newSearchSetup
         )
       )
-      await app.client.click(
+      await click(
+        app,
         selectors.viewer.rightClickMenuItem("Include this value")
       )
-      await app.client.rightClick(
-        selectors.viewer.resultCellContaining("weird")
-      )
-      await app.client.click(
+      await rightClick(app, selectors.viewer.resultCellContaining("weird"))
+      await click(
+        app,
         selectors.viewer.rightClickMenuItem("New search with this value")
       )
       // The result order is deterministic because all the points rendered have
@@ -142,14 +149,10 @@ describe("Test search mods via right-clicks", () => {
       // because conn logs contain the _path of the connection. Searching for
       // "dns" will find either the first conn log tuple of a dns connection,
       // or the first dns log tuple of the same.
-      await app.client.rightClick(selectors.viewer.resultCellContaining("conn"))
-      await app.client.click(
-        selectors.viewer.rightClickMenuItem("Count by _path")
-      )
-      await app.client.rightClick(selectors.viewer.resultCellContaining("dhcp"))
-      await app.client.click(
-        selectors.viewer.rightClickMenuItem("Pivot to logs")
-      )
+      await rightClick(app, selectors.viewer.resultCellContaining("conn"))
+      await click(app, selectors.viewer.rightClickMenuItem("Count by _path"))
+      await rightClick(app, selectors.viewer.resultCellContaining("dhcp"))
+      await click(app, selectors.viewer.rightClickMenuItem("Pivot to logs"))
       // The result order is deterministic because all the points rendered have
       // different ts values.
       return searchDisplay(app)
@@ -172,14 +175,15 @@ describe("Test search mods via right-clicks", () => {
         expect(results).toMatchSnapshot()
       })
       .then(() =>
-        app.client.rightClick(
+        rightClick(
+          app,
           selectors.viewer.resultCellContaining(
             dataSets.corelight.logDetails.getDetailsFrom
           )
         )
       )
       .then(() =>
-        app.client.click(selectors.viewer.rightClickMenuItem("Open details"))
+        click(app, selectors.viewer.rightClickMenuItem("Open details"))
       )
       .then(() =>
         Promise.all([
