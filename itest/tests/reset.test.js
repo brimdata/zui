@@ -37,7 +37,7 @@ describe("Reset state tests", () => {
       .then((results) => {
         expect(results).toBeTruthy()
       })
-      .then(() => app.webContents.send("resetState"))
+      .then(() => resetState(app))
       .then(() => waitForLoginAvailable(app))
       // This call is safe because of the waitForLoginAvailable call above.
       .then(() => app.client.getValue(selectors.login.host))
