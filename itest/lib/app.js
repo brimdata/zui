@@ -4,7 +4,6 @@ const electronPath = require("electron")
 import {Application} from "spectron"
 import * as path from "path"
 
-import {retry} from "./control"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "./log"
 import {workspaceLogfile} from "../lib/log"
@@ -112,7 +111,9 @@ export const waitForHistogram = (app: Application) => {
 
 export const writeSearch = (app: Application, searchText: string) =>
   appStep("write to main search", () =>
-    app.client.setValue(selectors.search.input, searchText)
+    app.client
+      .waitForVisible(selectors.search.input)
+      .then(() => app.client.setValue(selectors.search.input, searchText))
   )
 
 export const getSearchText = (app: Application) =>
@@ -124,7 +125,9 @@ export const getSearchText = (app: Application) =>
 
 export const startSearch = (app: Application) =>
   appStep("click the search button", () =>
-    app.client.click(selectors.search.button)
+    app.client
+      .waitForVisible(selectors.search.button)
+      .then(() => app.client.click(selectors.search.button))
   )
 
 export const searchDisplay = async (app: Application) => {
@@ -141,7 +144,9 @@ export const searchDisplay = async (app: Application) => {
 
   const headerResults = () => {
     return appStep("get search fields", () =>
-      retry(() => app.client.getHTML(selectors.viewer.headers))
+      app.client
+        .waitForVisible(selectors.viewer.headers)
+        .then(() => app.client.getHTML(selectors.viewer.headers))
     ).then((headers) => {
       if (typeof headers === "string") {
         headers = [headers]
@@ -151,7 +156,9 @@ export const searchDisplay = async (app: Application) => {
   }
   const searchResults = () =>
     appStep("get search tuples", () =>
-      app.client.getText(selectors.viewer.results)
+      app.client
+        .waitForVisible(selectors.viewer.results)
+        .then(() => app.client.getText(selectors.viewer.results))
     )
 
   let headers = await headerResults()
@@ -162,12 +169,17 @@ export const searchDisplay = async (app: Application) => {
 
 export const getCurrentSpace = (app: Application) =>
   appStep("get the current space", () =>
-    app.client.getText(selectors.spaces.button)
+    app.client
+      .waitForVisible(selectors.spaces.button)
+      .then(() => app.client.getText(selectors.spaces.button))
   )
 
 const getSearchStat = (app: Application, selector: string) =>
   appStep(`get search stats for selector "${selector}"`, () =>
-    app.client.getText(selector).then((text) => parseFloat(text.split(" ")[0]))
+    app.client
+      .waitForVisible(selector)
+      .then(() => app.client.getText(selector))
+      .then((text) => parseFloat(text.split(" ")[0]))
   )
 
 export const getSearchSpeed = (app: Application) =>
@@ -179,12 +191,16 @@ export const getSearchTime = (app: Application) =>
 export const setSpan = (app: Application, span: string) => {
   const clickSpanButton = () =>
     appStep("click span selector", () =>
-      app.client.click(selectors.span.button)
+      app.client
+        .waitForVisible(selectors.span.button)
+        .then(() => app.client.click(selectors.span.button))
     )
 
   const clickSpan = () =>
     appStep(`select span ${span}`, () =>
-      app.client.click(selectors.span.menuItem(span))
+      app.client
+        .waitForVisible(selectors.span.menuItem(span))
+        .then(() => app.client.click(selectors.span.menuItem(span)))
     )
 
   return clickSpanButton().then(() => clickSpan())
