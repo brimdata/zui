@@ -24,7 +24,7 @@ export const handleError = async (
 ) => {
   let realError = undefined
   let notificationError = undefined
-  LOG.info(`handleError: Test hit exception: ${initialError.message}`)
+  LOG.error(`handleError: Test hit exception: ${initialError.message}`)
   LOG.info("handleError: Looking for any desktop app notifications")
   try {
     notificationError = await app.client.getHTML(selectors.notification, false)

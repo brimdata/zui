@@ -7,21 +7,14 @@
 // The setup/teardown was taken from
 // https://github.com/electron/spectron/#usage
 
-import {
-  appInit,
-  logIn,
-  newAppInstance,
-  waitForLoginAvailable,
-  waitForHistogram,
-  waitForSearch
-} from "../lib/app.js"
+import {startApp, logIn, newAppInstance} from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Smoke test", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {
@@ -33,15 +26,16 @@ describe("Smoke test", () => {
   // TODO: Parallel runs across files are not supported due to chromebrowser
   // port contention. Support that later.
   stdTest("show a sane window; log in and see Search and Histogram", (done) => {
-    waitForLoginAvailable(app)
-      .then(() => app.client.waitForExist("title"))
+    app.client
+      // Use waitForExist, not waitForVisible: title isn't visible in the app.
+      .waitForExist("title")
       .then(() => app.client.getTitle())
       .then((title) => {
-        // TODO: Looky shouldn't be hardcoded but instead read from a title
+        // TODO: Brim shouldn't be hardcoded but instead read from a title
         // defined elsewhere.
         expect(title.toLowerCase()).toBe("brim")
       })
-      .then(() => app.client.waitForExist(".brand h1"))
+      .then(() => app.client.waitForVisible(".brand h1"))
       // TODO: Don't use selectors as literals in tests. These definitions
       // should be defined in a single place and ideally be tested to ensure
       // they can be found.
@@ -50,8 +44,6 @@ describe("Smoke test", () => {
         expect(headerText.toLowerCase()).toBe("welcome to brim")
       })
       .then(() => logIn(app))
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
       .then((val) => {
         expect(val).toBeDefined()
         done()

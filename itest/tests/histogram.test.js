@@ -1,20 +1,15 @@
 /* @flow */
 
-import {
-  appInit,
-  logIn,
-  newAppInstance,
-  setSpan,
-  waitForLoginAvailable,
-  waitForHistogram,
-  waitForSearch
-} from "../lib/app.js"
+import {startApp, logIn, newAppInstance, setSpan} from "../lib/app.js"
 import {retryUntil} from "../lib/control.js"
 import {handleError, stdTest} from "../lib/jest.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
 import {LOG} from "../lib/log"
 
 const verifySingleRectAttr = (app, pathClass, attr) =>
+  // This we needn't wait on this selector: the stack has verifyPathClassRect()
+  // calling this after a retryUntil() succeeds in which the number of distinct
+  // _path g classes are present.
   app.client.getAttribute(`.${pathClass} rect`, attr).then((vals) => {
     // Handle case of a single rect, in which case webdriver doesn't return an
     // array of 1 item but instead a scalar
@@ -46,7 +41,7 @@ describe("Histogram tests", () => {
   let app
   beforeEach(() => {
     app = newAppInstance()
-    return appInit(app)
+    return startApp(app)
   })
 
   afterEach(() => {
@@ -59,10 +54,7 @@ describe("Histogram tests", () => {
     // This is a data-sensitive test that assumes the histogram has corelight
     // data loaded. There are inline comments that explain the test's flow.
     LOG.debug("Pre-login")
-    waitForLoginAvailable(app)
-      .then(() => logIn(app))
-      .then(() => waitForHistogram(app))
-      .then(() => waitForSearch(app))
+    logIn(app)
       .then(async () => {
         LOG.debug("Checking number of histogram rect elements")
         let result = await retryUntil(
