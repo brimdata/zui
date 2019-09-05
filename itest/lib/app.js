@@ -95,8 +95,8 @@ export const waitForSearch = (app: Application) => {
     "wait for main search input to appear and then get its value",
     () =>
       app.client
-        .waitForVisible("#main-search-input")
-        .then(() => app.client.element("#main-search-input").getValue())
+        .waitForVisible(selectors.search.input)
+        .then(() => app.client.element(selectors.search.input).getValue())
   )
 }
 
