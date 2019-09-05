@@ -117,7 +117,9 @@ export const writeSearch = (app: Application, searchText: string) =>
 
 export const getSearchText = (app: Application) =>
   appStep("get contents of main search", () =>
-    app.client.getValue(selectors.search.input)
+    app.client
+      .waitForVisible(selectors.search.input)
+      .then(() => app.client.getValue(selectors.search.input))
   )
 
 export const startSearch = (app: Application) =>
