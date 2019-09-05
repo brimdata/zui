@@ -7,7 +7,7 @@ import {
   resetState,
   startApp
 } from "../lib/app.js"
-import {handleError} from "../lib/jest.js"
+import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Spaces tests", () => {
   let app
@@ -23,11 +23,11 @@ describe("Spaces tests", () => {
     }
   })
 
-  test.skip("default space is default", (done) => {
+  stdTest("default space is corelight", (done) => {
     logIn(app)
       .then(() => getCurrentSpace(app))
       .then((spaceName) => {
-        expect(spaceName).toBe("default")
+        expect(spaceName).toBe("corelight")
         done()
       })
       .catch((err) => {
