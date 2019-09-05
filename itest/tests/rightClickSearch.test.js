@@ -13,7 +13,6 @@ import {
   waitForSearch,
   writeSearch
 } from "../lib/app.js"
-import {retry} from "../lib/control"
 import {handleError, stdTest} from "../lib/jest.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
 
@@ -187,11 +186,16 @@ describe("Test search mods via right-clicks", () => {
       )
       .then(() =>
         Promise.all([
-          retry(() => app.client.getText(selectors.correlationPanel.tsLabel)),
-          retry(() => app.client.getText(selectors.correlationPanel.pathTag)),
-          retry(() =>
-            app.client.getText(selectors.correlationPanel.duration)
-          ).then((result) => [result])
+          app.client
+            .waitForVisible(selectors.correlationPanel.tsLabel)
+            .then(() => app.client.getText(selectors.correlationPanel.tsLabel)),
+          app.client
+            .waitForVisible(selectors.correlationPanel.pathTag)
+            .then(() => app.client.getText(selectors.correlationPanel.pathTag)),
+          app.client
+            .waitForVisible(selectors.correlationPanel.duration)
+            .then(() => app.client.getText(selectors.correlationPanel.duration))
+            .then((result) => [result])
         ])
       )
       .then((correlationData) => {
