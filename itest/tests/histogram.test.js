@@ -7,6 +7,9 @@ import {dataSets, selectors} from "../../src/js/test/integration"
 import {LOG} from "../lib/log"
 
 const verifySingleRectAttr = (app, pathClass, attr) =>
+  // This we needn't wait on this selector: the stack has verifyPathClassRect()
+  // calling this after a retryUntil() succeeds in which the number of distinct
+  // _path g classes are present.
   app.client.getAttribute(`.${pathClass} rect`, attr).then((vals) => {
     // Handle case of a single rect, in which case webdriver doesn't return an
     // array of 1 item but instead a scalar

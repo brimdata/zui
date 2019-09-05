@@ -37,16 +37,19 @@ describe("Reset state tests", () => {
       })
       .then(() => app.webContents.send("resetState"))
       .then(() => waitForLoginAvailable(app))
+      // This call is safe because of the waitForLoginAvailable call above.
       .then(() => app.client.getValue(selectors.login.host))
       .then((host) => {
         expect(host).toBe("")
       })
+      // This call is safe because of the waitForLoginAvailable call above.
       .then(() => app.client.getValue(selectors.login.port))
       .then((port) => {
         expect(port).toBe("")
       })
       .then(() => logIn(app))
       .then(() => waitForSearch(app))
+      // This call is safe because of the waitForSearch call above.
       .then(() => app.client.getValue(selectors.search.input))
       .then((val) => {
         expect(val).toBe("")
