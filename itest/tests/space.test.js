@@ -7,7 +7,7 @@ import {
   resetState,
   startApp
 } from "../lib/app.js"
-import {handleError} from "../lib/jest.js"
+import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Spaces tests", () => {
   let app
@@ -23,7 +23,7 @@ describe("Spaces tests", () => {
     }
   })
 
-  test.skip("default space is default", (done) => {
+  stdTest("default space is default", (done) => {
     logIn(app)
       .then(() => getCurrentSpace(app))
       .then((spaceName) => {
