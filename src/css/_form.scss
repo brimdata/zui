@@ -128,7 +128,7 @@
 
     a {
       color: $blue;
-      text-decoration: underline;
+      // text-decoration: underline;
       cursor: pointer;
       &:hover {
         color: $blue-dark;
@@ -161,6 +161,7 @@
     &:nth-child(even) {
       background: $table-stripe-color;
     }
+
     .check-circle {
       margin: 0 0.5rem;
     }
@@ -172,8 +173,6 @@
           fill: white;
           stroke: $white-5;
         }
-
-        // opacity: 0;
       }
     }
   }

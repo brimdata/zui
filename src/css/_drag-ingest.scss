@@ -1,3 +1,13 @@
+@keyframes pulse-padding {
+  from {
+    padding: 1rem;
+  }
+
+  to {
+    padding: 2rem;
+  }
+}
+
 .drag-ingest {
   position: fixed;
   top: 0;
@@ -7,15 +17,46 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
   color: white;
-  h2 {
-    text-align: center;
-    margin-top: 50%;
-  }
+  padding: 1rem;
+  animation: pulse-padding 0.75s ease-in-out alternate infinite;
 
-  .file-input {
-    margin-top: 20px;
-    display: block;
-    width: 100vh;
+  .message {
+    width: 100%;
     height: 100%;
+    border: 2px dotted white;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+}
+
+.ingest-table {
+  padding: 0;
+  list-style-type: none;
+  font-size: 1rem;
+
+  li {
+    line-height: 1.6;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    border-radius: 3px;
+
+    &:nth-child(even) {
+      background: $table-stripe-color;
+    }
+
+    .status {
+      display: flex;
+      margin-right: 1rem;
+      justify-content: center;
+    }
+
+    .error {
+      margin-left: 1rem;
+      color: $red-dark;
+    }
   }
 }
