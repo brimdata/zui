@@ -23,11 +23,11 @@ describe("Spaces tests", () => {
     }
   })
 
-  stdTest("default space is default", (done) => {
+  stdTest("default space is corelight", (done) => {
     logIn(app)
       .then(() => getCurrentSpace(app))
       .then((spaceName) => {
-        expect(spaceName).toBe("default")
+        expect(spaceName).toBe("corelight")
         done()
       })
       .catch((err) => {
