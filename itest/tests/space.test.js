@@ -1,6 +1,12 @@
 /* @flow */
 
-import {startApp, getCurrentSpace, logIn, newAppInstance} from "../lib/app.js"
+import {
+  getCurrentSpace,
+  logIn,
+  newAppInstance,
+  resetState,
+  startApp
+} from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Spaces tests", () => {
@@ -10,9 +16,10 @@ describe("Spaces tests", () => {
     return startApp(app)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (app && app.isRunning()) {
-      return app.stop()
+      await resetState(app)
+      return await app.stop()
     }
   })
 

@@ -1,6 +1,12 @@
 /* @flow */
 
-import {startApp, logIn, newAppInstance, setSpan} from "../lib/app.js"
+import {
+  logIn,
+  newAppInstance,
+  resetState,
+  startApp,
+  setSpan
+} from "../lib/app.js"
 import {retryUntil} from "../lib/control.js"
 import {handleError, stdTest} from "../lib/jest.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
@@ -44,9 +50,10 @@ describe("Histogram tests", () => {
     return startApp(app)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (app && app.isRunning()) {
-      return app.stop()
+      await resetState(app)
+      return await app.stop()
     }
   })
 
