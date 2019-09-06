@@ -38,14 +38,10 @@ export default function SavedClusters({saved, setForm, submit}: Props) {
             onClick={() => onClick(creds)}
             onContextMenu={() => onRightClick(creds)}
           >
-            <div>
-              <span className="host">{creds.host}</span>:
-              <span className="port">{creds.port}</span>
-              <br />
-              <span className="username">{creds.username || "(no user)"}</span>
-            </div>
-
-            {/* <a onClick={() => deleteCreds(creds)}>Delete</a> */}
+            <span className="host">{creds.host}</span>:
+            <span className="port">{creds.port}</span>
+            <br />
+            <span className="username">{creds.username || "(no user)"}</span>
           </li>
         ))}
       </ul>

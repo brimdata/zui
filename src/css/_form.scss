@@ -12,6 +12,8 @@
     display: inline-block;
     font-weight: bold;
     transition: transform 200ms, background 200ms;
+    font-size: $font-size-1;
+    color: $gray-1;
   }
 
   input {
@@ -19,8 +21,9 @@
     width: 100%;
     padding: 0 6px;
     line-height: 2.33;
-    font-size: 0.75rem;
+    font-size: $font-size-2;
     font-family: $body-font;
+    border-radius: 3px;
   }
 
   &.focus {
@@ -40,10 +43,12 @@
 
 .input-checkbox {
   padding-top: 8px;
+
   label {
     display: flex;
     @extend .label;
     align-items: center;
+    font-size: $font-size-1;
   }
 
   input {
@@ -54,6 +59,7 @@
     height: 25px;
     border: 1px solid $white-4;
     position: relative;
+    border-radius: 3px;
 
     &:after {
       content: "";
@@ -85,14 +91,22 @@
   padding-top: 8px;
 
   input {
+    font-size: $font-size-1;
+    text-transform: uppercase;
+    color: $gray-5;
     cursor: pointer;
     font-weight: bold;
-    background: linear-gradient($white-1, $white-3);
-    border: 1px solid $white-4;
-    border-radius: 3px;
+    background: linear-gradient($white-2, $white-3);
+    border: 1px solid $white-3;
+    border-bottom: 1px solid $white-5;
+    border-radius: 5px;
     font-family: $body-font;
-    padding: 6px 16px;
-    box-shadow: 0 2px 6px -3px rgba(0, 0, 0, 0.5);
+    padding: $font-size-2 / 2 $font-size-2;
+
+    &:hover {
+      background: linear-gradient($white-2, $white-4);
+      color: $gray-9;
+    }
 
     &:focus {
       border-color: $gray-1;

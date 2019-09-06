@@ -48,7 +48,6 @@ export default function brimWindow() {
     makeLogin() {
       if (win) {
         win.setSize(...loginSize)
-        win.setResizable(false)
         setAppMenu("LOGIN", win)
       }
     },
@@ -57,7 +56,6 @@ export default function brimWindow() {
       if (win) {
         win.setSize(...size)
         if (firstVisit) win.center()
-        win.setResizable(true)
         setAppMenu("SEARCH", win)
       }
     }
