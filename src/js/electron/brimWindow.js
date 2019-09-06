@@ -12,7 +12,7 @@ export default function brimWindow() {
 
   return {
     exists() {
-      win != null
+      return win != null
     },
 
     destroy() {

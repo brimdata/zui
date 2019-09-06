@@ -3,6 +3,13 @@ const Adapter = require("enzyme-adapter-react-16")
 const enzyme = require("enzyme")
 
 jest.mock("electron", function() {
+  class FakeBrowserWindow {
+    center() {}
+    setMenu() {}
+    on() {}
+    loadFile() {}
+  }
+
   let electron = {
     app: {
       isPackaged: true,
@@ -14,6 +21,10 @@ jest.mock("electron", function() {
     Menu: {
       buildFromTemplate: jest.fn(),
       setApplicationMenu: jest.fn()
+    },
+    BrowserWindow: FakeBrowserWindow,
+    ipcMain: {
+      on: jest.fn()
     }
   }
 
