@@ -1,5 +1,7 @@
 /* @flow */
 
+import {basename} from "path"
+
 import {
   getSearchSpeed,
   getSearchTime,
@@ -17,8 +19,9 @@ import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Query tests", () => {
   let app
+  let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance()
+    app = newAppInstance(basename(__filename), ++testIdx)
     return startApp(app)
   })
 
