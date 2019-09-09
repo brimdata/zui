@@ -1,5 +1,7 @@
 /* @flow */
 
+import {basename} from "path"
+
 import {
   startApp,
   logIn,
@@ -16,8 +18,9 @@ import {selectors} from "../../src/js/test/integration"
 
 describe("Reset state tests", () => {
   let app
+  let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance()
+    app = newAppInstance(basename(__filename), ++testIdx)
     return startApp(app)
   })
 

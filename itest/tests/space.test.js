@@ -1,5 +1,7 @@
 /* @flow */
 
+import {basename} from "path"
+
 import {
   getCurrentSpace,
   logIn,
@@ -11,8 +13,9 @@ import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Spaces tests", () => {
   let app
+  let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance()
+    app = newAppInstance(basename(__filename), ++testIdx)
     return startApp(app)
   })
 

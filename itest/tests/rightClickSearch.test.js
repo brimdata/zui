@@ -1,5 +1,7 @@
 /* @flow */
 
+import {basename} from "path"
+
 import {
   click,
   getSearchText,
@@ -19,8 +21,9 @@ import {dataSets, selectors} from "../../src/js/test/integration"
 
 describe("Test search mods via right-clicks", () => {
   let app
+  let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance()
+    app = newAppInstance(basename(__filename), ++testIdx)
     return startApp(app)
   })
 

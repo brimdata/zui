@@ -1,19 +1,15 @@
 /* @flow */
 
-// The purpose of this file is to demonstrate that basic Spectron interaction
-// can work in a CI environment. The tests don't claim to be meaningful other
-// than showing Spectron works in a headless environment.
-//
-// The setup/teardown was taken from
-// https://github.com/electron/spectron/#usage
+import {basename} from "path"
 
 import {logIn, newAppInstance, resetState, startApp} from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Smoke test", () => {
   let app
+  let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance()
+    app = newAppInstance(basename(__filename), ++testIdx)
     return startApp(app)
   })
 

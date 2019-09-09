@@ -1,5 +1,7 @@
 /* @flow */
 
+import {basename} from "path"
+
 import {
   logIn,
   newAppInstance,
@@ -45,8 +47,9 @@ const verifyPathClassRect = (app, pathClass) =>
 
 describe("Histogram tests", () => {
   let app
+  let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance()
+    app = newAppInstance(basename(__filename), ++testIdx)
     return startApp(app)
   })
 

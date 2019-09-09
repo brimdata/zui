@@ -15,15 +15,17 @@ const appStep = async (stepMessage, f) => {
   return result
 }
 
-export const newAppInstance = () =>
+export const newAppInstance = (name: string, idx: number) =>
   // https://github.com/electron-userland/spectron#new-applicationoptions
   new Application({
     path: electronPath,
     args: [path.join(__dirname, "..", "..")],
     startTimeout: 60000,
     waitTimeout: 60000,
-    chromeDriverLogPath: workspaceLogfile("chromedriver.log"),
-    webdriverLogPath: workspaceLogfile("webdriverLogFiles"),
+    chromeDriverLogPath: workspaceLogfile(
+      name + idx.toString() + "-chromedriver.log"
+    ),
+    webdriverLogPath: workspaceLogfile(name + "-webdriverLogFiles"),
     // PROD-831: Latest compatible spectron and webdriverio lead to the
     // following:
     //  console.warn node_modules/webdriverio/build/lib/helpers/deprecationWarning.js:12
