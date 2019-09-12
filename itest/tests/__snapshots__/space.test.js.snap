@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Spaces tests change space 1`] = `
+exports[`Spaces tests change space to hq_integration 1`] = `
 Array [
   "count",
   "3",
 ]
 `;
 
-exports[`Spaces tests change space 2`] = `
+exports[`Spaces tests change space to hq_integration 2`] = `
 Array [
   "count",
   "41,108,632",
