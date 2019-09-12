@@ -3,12 +3,15 @@
 import {basename} from "path"
 
 import {
+  getCurrentSpace,
   startApp,
   logIn,
   newAppInstance,
   resetState,
   startSearch,
   searchDisplay,
+  setSpace,
+  setSpan,
   waitForLoginAvailable,
   waitForSearch,
   writeSearch
@@ -40,6 +43,8 @@ describe("Reset state tests", () => {
       .then((results) => {
         expect(results).toBeTruthy()
       })
+      .then(() => setSpan(app, "Whole Space"))
+      .then(() => setSpace(app, "hq_integration"))
       .then(() => resetState(app))
       .then(() => waitForLoginAvailable(app))
       // This call is safe because of the waitForLoginAvailable call above.
@@ -58,6 +63,10 @@ describe("Reset state tests", () => {
       .then(() => app.client.getValue(selectors.search.input))
       .then((val) => {
         expect(val).toBe("")
+      })
+      .then(() => getCurrentSpace(app))
+      .then((val) => {
+        expect(val).toBe("corelight")
         done()
       })
       .catch((err) => {
