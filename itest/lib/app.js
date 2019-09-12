@@ -176,6 +176,15 @@ export const getCurrentSpace = (app: Application) =>
       .then(() => app.client.getText(selectors.spaces.button))
   )
 
+export const setSpace = (app: Application, space: string) =>
+  appStep(`set space to "${space}"`, () =>
+    app.client
+      .waitForVisible(selectors.spaces.button)
+      .then(() => app.client.click(selectors.spaces.button))
+      .then(() => app.client.waitForVisible(selectors.spaces.menuItem(space)))
+      .then(() => app.client.click(selectors.spaces.menuItem(space)))
+  )
+
 const getSearchStat = (app: Application, selector: string) =>
   appStep(`get search stats for selector "${selector}"`, () =>
     app.client

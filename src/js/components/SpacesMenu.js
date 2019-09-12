@@ -8,6 +8,7 @@ import {getAllSpaceNames} from "../state/reducers/spaces"
 import {refreshSpaces} from "../space/thunks"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
+import {reactElementProps} from "../test/integration"
 
 type OwnProps = {|
   onChange?: Function
@@ -25,7 +26,7 @@ export const SpacesMenu = ({spaces, dispatch, onChange}: Props) => {
   }, [])
 
   return (
-    <MenuList>
+    <MenuList {...reactElementProps("spacesMenu")}>
       {spaces.map((name, i) => (
         <li key={i} onClick={() => onChange && onChange(name)}>
           {name}

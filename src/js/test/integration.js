@@ -17,6 +17,7 @@ const dataAttrs = {
   search_button: "search_button",
   search_time: "search_time",
   search_speed: "search_speed",
+  spacesMenu: "spacesMenu",
   spaces_button: "spaces_button",
   span_button: "span_button",
   span_menu: "span_menu",
@@ -105,7 +106,9 @@ export const selectors = {
     time: dataAttrSelector("search_time")
   },
   spaces: {
-    button: dataAttrSelector("spaces_button")
+    button: dataAttrSelector("spaces_button"),
+    menu: dataAttrSelector("spacesMenu"),
+    menuItem: genSelectorForTextUnderElement("spacesMenu")
   },
   span: {
     button: dataAttrSelector("span_button"),
