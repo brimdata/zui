@@ -20,6 +20,9 @@ export const newAppInstance = (name: string, idx: number) =>
   new Application({
     path: electronPath,
     args: [path.join(__dirname, "..", "..")],
+    // PROD-853: Spectron will choose a random debugging port in the 9000-9999
+    // range. Since boomd uses 9867, set this to 9999.
+    chromeDriverArgs: ['remote-debugging-port=9999'],
     startTimeout: 60000,
     waitTimeout: 60000,
     chromeDriverLogPath: workspaceLogfile(
