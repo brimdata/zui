@@ -107,7 +107,8 @@ export const selectors = {
   },
   spaces: {
     button: dataAttrSelector("spaces_button"),
-    menu: dataAttrSelector("spacesMenu")
+    menu: dataAttrSelector("spacesMenu"),
+    menuItem: genSelectorForTextUnderElement("spacesMenu")
   },
   span: {
     button: dataAttrSelector("span_button"),
