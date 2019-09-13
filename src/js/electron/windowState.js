@@ -1,10 +1,8 @@
 /* @flow */
 
-import {app} from "electron"
-import path from "path"
-
 import type {Keep} from "../lib/keep"
 import type {WindowName} from "../lib/window"
+import config from "./config"
 import lib from "../lib"
 
 type WindowState = {
@@ -15,7 +13,6 @@ type WindowState = {
 }
 
 export default function windowState(): Keep {
-  let file = path.join(app.getPath("userData"), "windowState.json")
   let initialState = {
     login: {
       size: [630, 460],
@@ -26,5 +23,5 @@ export default function windowState(): Keep {
       position: "center"
     }
   }
-  return lib.keep<WindowState>(file, initialState)
+  return lib.keep<WindowState>(config.windowStateFile, initialState)
 }
