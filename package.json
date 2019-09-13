@@ -3,7 +3,7 @@
   "description": "Brim Desktop App",
   "repository": "https://github.com/looky/looky-desktop",
   "license": "ISC",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "main": "dist/js/electron/main.js",
   "author": "Brim Security, Inc.",
   "bin": {
