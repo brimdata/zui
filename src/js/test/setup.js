@@ -15,7 +15,8 @@ jest.mock("electron", function() {
   let electron = {
     app: {
       isPackaged: true,
-      getName: () => "TestApp"
+      getName: () => "TestApp",
+      getPath: () => "/fake/path"
     },
     getCurrentWebContents: jest.fn(() => ({
       send: jest.fn()
