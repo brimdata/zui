@@ -19,8 +19,17 @@ export default function window(state: Object) {
 
   return {
     create() {
+      let {
+        position: [x, y],
+        size: [width, height]
+      } = state.get(name)
+
       win = new BrowserWindow({
         titleBarStyle: "hidden",
+        height,
+        width,
+        x,
+        y,
         webPreferences: {
           experimentalFeatures: true,
           nodeIntegration: true
