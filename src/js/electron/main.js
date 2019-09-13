@@ -16,21 +16,19 @@ async function main() {
 
   if (handleSquirrelEvent(app)) return
 
-  let state = windowState()
-  let win = lib.window(state)
+  let winState = windowState()
+  let win = lib.window(winState)
 
   app.on("ready", () => {
     installExtensions()
-    state
+    winState
       .load()
       .then(() => win.create())
       .catch((e) => console.error(e))
   })
 
   app.on("activate", () => {
-    if (!win.exists()) {
-      win.create()
-    }
+    if (!win.exists()) win.create()
   })
 
   ipcMain.on("open-search-window", () => {
@@ -42,9 +40,7 @@ async function main() {
   })
 
   app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") {
-      app.quit()
-    }
+    if (process.platform !== "darwin") app.quit()
   })
 }
 

@@ -3,6 +3,7 @@
 import {app} from "electron"
 import path from "path"
 
+import type {Keep} from "../lib/keep"
 import type {WindowName} from "../lib/window"
 import lib from "../lib"
 
@@ -13,7 +14,7 @@ type WindowState = {
   }
 }
 
-export default function windowState() {
+export default function windowState(): Keep {
   let file = path.join(app.getPath("userData"), "windowState.json")
   let initialState = {
     login: {

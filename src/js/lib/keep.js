@@ -4,7 +4,14 @@ import {has, set, get} from "lodash"
 
 import lib from "./"
 
-export default function keep<T>(path: string, init: T) {
+export type Keep = {
+  set: (string, *) => Keep,
+  get: (string) => *,
+  save: () => Promise<*>,
+  load: () => Promise<*>
+}
+
+export default function keep<T>(path: string, init: T): Keep {
   let data: T = {...init}
 
   function keyErrorMsg(key) {

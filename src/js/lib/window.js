@@ -1,11 +1,13 @@
 /* @flow */
-import {BrowserWindow} from "electron"
+import {BrowserWindow, Menu} from "electron"
 
-import {setAppMenu} from "../electron/setAppMenu"
+import type {Keep} from "./keep"
+import {createLoginMenuTemplate} from "../electron/menus/loginMenu"
+import {createSearchMenuTemplate} from "../electron/menus/searchMenu"
 
 export type WindowName = "login" | "search"
 
-export default function window(state: Object) {
+export default function window(state: Keep) {
   let win = null
   let name = "login"
 
@@ -15,6 +17,17 @@ export default function window(state: Object) {
 
   function getState(field) {
     return state.get(name + "." + field)
+  }
+
+  function getMenuBuilder() {
+    switch (name) {
+      case "search":
+        return createSearchMenuTemplate
+      case "login":
+        return createLoginMenuTemplate
+      default:
+        throw "Unknown Menu"
+    }
   }
 
   return {
@@ -47,7 +60,7 @@ export default function window(state: Object) {
       name = newName
       this.setPosition()
       this.setSize()
-      setAppMenu(name, win)
+      this.setMenu()
     },
 
     exists() {
@@ -76,6 +89,17 @@ export default function window(state: Object) {
       let pos = getState("position")
       if (pos === "center") win.center()
       else win.setPosition(...pos)
+    },
+
+    setMenu() {
+      function send(msg) {
+        if (!win) return
+        win.webContents.send(msg)
+      }
+
+      let template = getMenuBuilder()(send)
+      Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+      return this
     }
   }
 }
