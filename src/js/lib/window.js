@@ -47,7 +47,7 @@ export default function window(state: Object) {
       name = newName
       this.setPosition()
       this.setSize()
-      setAppMenu(name)
+      setAppMenu(name, win)
     },
 
     exists() {
