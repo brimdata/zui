@@ -51,3 +51,8 @@ test("keep load", async () => {
 
   expect(keep.get("name")).toBe("James")
 })
+
+test("keep load if file does not exist", async () => {
+  let init = {}
+  return lib.keep(tmpFile + "-nope.js", init).load()
+})

@@ -1,14 +1,15 @@
 /* @flow */
-import brimWindow from "./brimWindow"
+
+import lib from "./"
 
 test("brim window exists", () => {
-  let win = brimWindow()
+  let win = lib.window()
 
   expect(win.exists()).toBe(false)
 })
 
 test("brim window does not exists", () => {
-  let win = brimWindow()
+  let win = lib.window()
   win.create()
   expect(win.exists()).toBe(true)
 })

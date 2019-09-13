@@ -63,6 +63,10 @@ export default (store: *) => {
       saveState(store.getState())
     }, 3000)
   )
+
+  window.onbeforeunload = () => {
+    saveState(store.getState())
+  }
 }
 
 window.clearState = clearState

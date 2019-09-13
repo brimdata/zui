@@ -2,12 +2,11 @@
 
 import {BrowserWindow, Menu} from "electron"
 
+import type {WindowName} from "../lib/window"
 import {createLoginMenuTemplate} from "./menus/loginMenu"
 import {createSearchMenuTemplate} from "./menus/searchMenu"
 
-type MenuName = "SEARCH" | "LOGIN"
-
-export function setAppMenu(name: MenuName, win: BrowserWindow) {
+export function setAppMenu(name: WindowName, win: BrowserWindow) {
   let builder = getTemplateBuilder(name)
 
   function send(message) {
@@ -23,9 +22,9 @@ export function setAppMenu(name: MenuName, win: BrowserWindow) {
 
 function getTemplateBuilder(name) {
   switch (name) {
-    case "SEARCH":
+    case "search":
       return createSearchMenuTemplate
-    case "LOGIN":
+    case "login":
       return createLoginMenuTemplate
     default:
       throw "Unknown Menu"

@@ -5,13 +5,13 @@ import {remote} from "electron"
 import {setAppMenu} from "./setAppMenu"
 
 test("setAppMenu to login", () => {
-  setAppMenu("LOGIN")
+  setAppMenu("login")
 
   expect(remote.Menu.setApplicationMenu).toHaveBeenCalled()
 })
 
 test("setAppMenu to search", () => {
-  setAppMenu("SEARCH")
+  setAppMenu("search")
 
   expect(remote.Menu.setApplicationMenu).toHaveBeenCalled()
 })

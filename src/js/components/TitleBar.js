@@ -24,7 +24,9 @@ export default function TitleBar() {
   template.push({type: "divider"})
   template.push({
     label: "Other...",
-    click: () => dispatch(disconnectCluster())
+    click: () => {
+      dispatch(disconnectCluster())
+    }
   })
 
   return (
