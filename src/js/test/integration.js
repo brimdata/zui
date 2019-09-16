@@ -30,6 +30,8 @@ export const dataSets = {
   // bounds and metrics related to test data. These numbers are also dependent
   // on product behavior. For example, if the default time window changes from
   // last 30 minutes to last hour, some of these numbers may become invalid.
+  // XXX This object probably doesn't belong here, as it has nothing to do with
+  // Brim. Move this to itest/lib.
   corelight: {
     logDetails: {
       getDetailsFrom: "C9FG8S2NvxVUR0b0La",
