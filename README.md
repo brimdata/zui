@@ -38,6 +38,10 @@ Run all the tests and watch for changes:
 npx jest --watch
 ```
 
+### Integration Tests
+
+For integration tests, see [itest/README.md](itest/README.md).
+
 ## Style
 
 This project uses eslint and prettier for style consistency.
