@@ -3,6 +3,7 @@ import ast from "./ast"
 import field from "./field"
 import log from "./log"
 import program from "./program"
+import space from "./space"
 import syntax from "./syntax"
 import table from "./table"
 
@@ -23,5 +24,6 @@ export default {
   field,
   log,
   ast,
-  syntax
+  syntax,
+  space
 }

@@ -23,6 +23,7 @@ import {useResizeObserver} from "../hooks/useResizeObserver"
 import BackendErrorNotice from "./BackendErrorNotice"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
+import EmptySpaceModal from "./EmptySpaceModal"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
 import TitleBar from "./TitleBar"
 
@@ -75,6 +76,7 @@ export default function SearchPage({cluster}: Props) {
       <XDownloadProgress />
       <XWhoisModal />
       <XSettingsModal />
+      <EmptySpaceModal />
     </div>
   )
 }
