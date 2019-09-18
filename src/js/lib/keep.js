@@ -38,16 +38,24 @@ export default function keep<T>(path: string, init: T): Keep {
     async load() {
       let file = lib.file(path)
       if (await file.exists()) {
-        return file.read().then((string) => {
-          try {
-            data = JSON.parse(string)
-          } catch {
-            return
-          }
-        })
+        return file
+          .read()
+          .then(parseJSON)
+          .then((json) => {
+            data = json
+            return json
+          })
       } else {
         return Promise.resolve()
       }
     }
+  }
+}
+
+function parseJSON(string) {
+  try {
+    return Promise.resolve(JSON.parse(string))
+  } catch (e) {
+    return Promise.reject(e)
   }
 }
