@@ -186,43 +186,30 @@
   height: 30px;
   padding: 0;
   border: none;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   outline: none;
-  cursor: pointer;
   background: none;
   position: relative;
 
   svg {
-    fill: white;
-    height: 12px;
-    width: 12px;
-    transition: fill 150ms;
+    height: 10px;
+    width: 10px;
+    stroke: none;
+    fill: lighten($gray-5, 30%);
+    transition: fill 50ms;
   }
 
-  @include background-burst($transparent-light);
-
-  &.light:before {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  &.light {
-    svg {
-      fill: $gray-1;
-      stroke: $gray-1;
-    }
-  }
-
-  &.light:hover {
+  &:hover {
     svg {
       fill: $gray-5;
-      stroke: $gray-5;
     }
   }
 
-  &:active:before {
-    opacity: 0.75;
+  &:active {
+    svg {
+      fill: $gray-9;
+    }
   }
 }

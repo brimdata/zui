@@ -2,6 +2,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
+import {InputSubmit} from "./form/Inputs"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getModal} from "../state/reducers/view"
 import {showModal} from "../state/actions"
@@ -18,10 +19,16 @@ export default function EmptySpaceModal() {
       title="Empty Space"
       isOpen={modal === "spaceEmpty"}
       onClose={onClose}
+      width={400}
     >
-      <p>This space is empty.</p>
-      <p>Use the boom CLI to ingest zeek logs into this space:</p>
-      <code>boom post -s {name} [path to logs]</code>
+      <p>
+        There is no data in this space. Use the boom cli to ingest zeek logs
+        into this space.
+      </p>
+      <pre>boom post -s {name} /path/to/zeek/*.log</pre>
+      <div className="button-row">
+        <InputSubmit value="OK" type="button" onClick={onClose} />
+      </div>
     </Modal>
   )
 }

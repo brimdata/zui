@@ -1,8 +1,7 @@
 /* @flow */
-import {CSSTransition} from "react-transition-group"
 import React, {Component} from "react"
+import classNames from "classnames"
 
-import {Fieldset} from "./Typography"
 import CloseButton from "./CloseButton"
 import WithOutsideClick from "./WithOutsideClick"
 
@@ -10,30 +9,23 @@ type Props = {
   onClose: Function,
   children: *,
   className: string,
-  title: string
+  title: string,
+  width: number | string
 }
 
 class ModalContents extends Component<Props> {
   render() {
-    const {onClose, children, className, title} = this.props
+    const {onClose, children, className, title, width} = this.props
     return (
-      <CSSTransition
-        classNames="portal-item"
-        in={true}
-        timeout={{enter: 150}}
-        appear
+      <div
+        className={classNames("modal-contents", className)}
+        onClick={(e) => e.stopPropagation()}
+        style={{width}}
       >
-        <div
-          className={`modal-contents ${className}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <header className="modal-header">
-            <Fieldset>{title}</Fieldset>
-            <CloseButton light onClick={onClose} />
-          </header>
-          <div className="modal-body">{children}</div>
-        </div>
-      </CSSTransition>
+        <CloseButton light onClick={onClose} />
+        <h2 className="modal-header">{title}</h2>
+        <div className="modal-body">{children}</div>
+      </div>
     )
   }
 }

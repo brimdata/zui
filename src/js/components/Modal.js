@@ -1,5 +1,4 @@
 /* @flow */
-import {CSSTransition} from "react-transition-group"
 import React, {Component} from "react"
 import ReactDOM from "react-dom"
 
@@ -11,7 +10,8 @@ type Props = {
   children: *,
   isOpen: boolean,
   className?: string,
-  title: string
+  title: string,
+  width?: number | string
 }
 
 class Modal extends Component<Props> {
@@ -28,28 +28,21 @@ class Modal extends Component<Props> {
   }
 
   render() {
-    const {onClose, children, isOpen, className} = this.props
+    const {onClose, children, isOpen, className, width} = this.props
     if (!isOpen) return null
 
     return ReactDOM.createPortal(
-      <CSSTransition
-        in={this.props.isOpen}
-        classNames="dim-portal-overlay"
-        timeout={{enter: 200}}
-        onClick={this.props.onClose}
-        appear
-      >
-        <div className="modal-overlay">
-          <ModalContents
-            title={this.props.title}
-            className={className}
-            onOutsideClick={onClose}
-            onClose={onClose}
-          >
-            {children}
-          </ModalContents>
-        </div>
-      </CSSTransition>,
+      <div className="modal-overlay">
+        <ModalContents
+          title={this.props.title}
+          className={className}
+          onOutsideClick={onClose}
+          onClose={onClose}
+          width={width || "80%"}
+        >
+          {children}
+        </ModalContents>
+      </div>,
       Doc.id("modal-root")
     )
   }
