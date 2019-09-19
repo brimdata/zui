@@ -4,13 +4,8 @@
   background-color: $gray-7;
   color: white;
 
-  .body-content {
-    margin-top: $leading;
-    margin-bottom: $leading;
-  }
-
   h1 {
-    padding-top: $leading;
+    padding-top: $space-l;
     display: flex;
     align-items: center;
     color: $red;
@@ -20,7 +15,7 @@
       margin: 0;
       height: 30px * 1.5;
       width: 30px * 1.5;
-      margin-right: $leading;
+      margin-right: $space-l;
     }
   }
 

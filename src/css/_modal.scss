@@ -7,7 +7,7 @@
   background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 2rem;
@@ -26,34 +26,6 @@
   .modal-header {
     font-size: $font-size-4;
     margin-bottom: 20px;
-  }
-
-  .button-row {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-
-    & > * {
-      margin-left: 5px;
-    }
-  }
-
-  .modal-body {
-    font-size: $font-size-2;
-    line-height: $line-height-2;
-
-    p {
-      margin-bottom: 20px;
-    }
-
-    pre {
-      background: $white-3;
-      border: 1px solid $white-5;
-      padding: $space-xs $space-s;
-      margin-bottom: 20px;
-      overflow: hidden;
-      font-size: $font-size-1;
-    }
   }
 
   .close-button {

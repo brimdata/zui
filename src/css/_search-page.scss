@@ -46,14 +46,6 @@ $page-border-color: $white-5;
   & > * {
     flex: 1;
   }
-
-  .error-boundary {
-    background: none;
-    .body-content {
-      box-shadow: none;
-      background: none;
-    }
-  }
 }
 
 .search-page-header {

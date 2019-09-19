@@ -1,70 +1,86 @@
 /* @flow */
-
-import {connect} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import Prism from "prismjs"
-import React from "react"
+import React, {useEffect, useState} from "react"
 
-import {Code, Label} from "./Typography"
-import type {State} from "../state/types"
-import * as Program from "../lib/Program"
-import * as searchBar from "../state/selectors/searchBar"
+import {Input, InputSubmit} from "./form/Inputs"
+import {getDebugModalIsOpen} from "../state/reducers/view"
+import {getSearchProgram} from "../state/selectors/searchBar"
+import {hideModal} from "../state/actions"
+import ButtonRow from "./ButtonRow"
+import Form from "./form/Form"
+import Modal from "./Modal"
+import TextContent from "./TextContent"
+import brim from "../brim"
 
-type Props = {
-  searchProgram: string
-}
+export function DebugModal() {
+  let dispatch = useDispatch()
+  let isOpen = useSelector(getDebugModalIsOpen)
+  let onClose = () => dispatch(hideModal())
+  let searchProgram = useSelector(getSearchProgram)
+  let [program, setProgram] = useState(searchProgram)
 
-type LocalState = {
-  program: string
-}
-
-export default class DebugModal extends React.Component<Props, LocalState> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {program: props.searchProgram}
+  let ast, error
+  try {
+    ast = brim.program(program).ast()
+  } catch (e) {
+    error = e
   }
 
-  render() {
-    const [ast, error] = Program.parse(this.state.program)
+  let result
+  if (ast) {
+    result = Prism.highlight(
+      JSON.stringify(ast, null, 4),
+      Prism.languages.js,
+      "JSON"
+    )
+  } else if (error) {
+    result = error.toString()
+  }
 
-    let result
-    if (ast) {
-      result = Prism.highlight(
-        JSON.stringify(ast, null, 4),
-        Prism.languages.js,
-        "JSON"
-      )
-    } else if (error) {
-      result = error.toString()
+  function onKeyPress(e) {
+    if (!isOpen) return
+    if (e.key === "Enter") {
+      onClose()
+      e.stopPropagation()
+      e.preventDefault()
     }
+  }
 
-    return (
+  useEffect(() => {
+    document.addEventListener("keypress", onKeyPress, false)
+    return () => {
+      document.removeEventListener("keypress", onKeyPress, false)
+    }
+  }, [])
+
+  return (
+    <Modal title="Debug Query" isOpen={isOpen} onClose={onClose}>
       <div className="debug-query-modal">
-        <Label>Search Program</Label>
-        <div className="text-input-wrapper">
-          <input
-            className="debug-modal-input"
-            type="text"
-            value={this.state.program}
-            onChange={(e) => this.setState({program: e.currentTarget.value})}
-          />
-        </div>
+        <TextContent>
+          <p>
+            Type a query in the text box to see the parsed abstract syntax tree
+            (AST).
+          </p>
 
-        <Label>Abstract Syntax Tree</Label>
-        <Code full light>
-          <code
+          <Form>
+            <Input
+              label="Query"
+              className="mono"
+              value={program}
+              onChange={(e) => setProgram(e.target.value)}
+            />
+          </Form>
+
+          <pre
             className="language-js"
             dangerouslySetInnerHTML={{__html: result}}
           />
-        </Code>
+        </TextContent>
+        <ButtonRow>
+          <InputSubmit value="Done" onClick={onClose} />
+        </ButtonRow>
       </div>
-    )
-  }
+    </Modal>
+  )
 }
-
-const stateToProps = (state: State) => ({
-  searchProgram: searchBar.getSearchProgram(state)
-})
-
-export const XDebugModal = connect<Props, {}, _, _, _, _>(stateToProps)(
-  DebugModal
-)
