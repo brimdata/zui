@@ -49,11 +49,3 @@ export default function keep<T>(path: string, init: T): Keep {
     }
   }
 }
-
-function parseJSON(string) {
-  try {
-    return Promise.resolve(JSON.parse(string))
-  } catch (e) {
-    return Promise.reject(e)
-  }
-}
