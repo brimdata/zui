@@ -13,6 +13,10 @@ export default function file(p: string) {
       })
     },
 
+    readSync() {
+      return fs.readFileSync(p, "utf8")
+    },
+
     allFiles() {
       return this.stats().then((stats) => {
         if (stats.isDirectory()) {
@@ -47,10 +51,23 @@ export default function file(p: string) {
       })
     },
 
+    statsSync() {
+      return fs.lstatSync(p)
+    },
+
     exists() {
       return this.stats()
         .then(() => true)
         .catch(() => false)
+    },
+
+    existsSync() {
+      try {
+        this.statsSync()
+        return true
+      } catch {
+        return false
+      }
     },
 
     write(data: string) {

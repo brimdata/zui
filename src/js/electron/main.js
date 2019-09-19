@@ -21,10 +21,8 @@ async function main() {
 
   app.on("ready", () => {
     installExtensions()
-    winState
-      .load()
-      .then(() => win.create())
-      .catch((e) => console.error(e))
+    winState.load()
+    win.create()
   })
 
   app.on("activate", () => {

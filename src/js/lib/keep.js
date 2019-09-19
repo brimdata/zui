@@ -8,7 +8,7 @@ export type Keep = {
   set: (string, *) => Keep,
   get: (string) => *,
   save: () => Promise<*>,
-  load: () => Promise<*>
+  load: () => void
 }
 
 export default function keep<T>(path: string, init: T): Keep {
@@ -35,18 +35,16 @@ export default function keep<T>(path: string, init: T): Keep {
       return lib.file(path).write(string)
     },
 
-    async load() {
+    load() {
       let file = lib.file(path)
-      if (await file.exists()) {
-        return file
-          .read()
-          .then(parseJSON)
-          .then((json) => {
-            data = json
-            return json
-          })
-      } else {
-        return Promise.resolve()
+      if (file.existsSync()) {
+        try {
+          let string = file.readSync()
+          let json = JSON.parse(string)
+          data = json
+        } catch (e) {
+          console.error(e)
+        }
       }
     }
   }
