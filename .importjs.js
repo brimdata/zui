@@ -6,7 +6,15 @@ module.exports = {
     enzyme: ["mount", "shallow"],
     react: ["useState", "useRef", "useEffect", "useLayoutEffect", "useMemo"],
     "react-dom": ["render"],
-    lodash: ["throttle", "get", "isEqual", "isEmpty", "every", "kebabCase"],
+    lodash: [
+      "throttle",
+      "get",
+      "has",
+      "isEqual",
+      "isEmpty",
+      "every",
+      "kebabCase"
+    ],
     "react-router-dom": ["Redirect"],
     "react-redux": ["useDispatch"]
   }

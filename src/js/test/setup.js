@@ -1,4 +1,6 @@
 /* @flow */
+// $FlowFixMe
+require("regenerator-runtime/runtime")
 const Adapter = require("enzyme-adapter-react-16")
 const enzyme = require("enzyme")
 
@@ -13,7 +15,8 @@ jest.mock("electron", function() {
   let electron = {
     app: {
       isPackaged: true,
-      getName: () => "TestApp"
+      getName: () => "TestApp",
+      getPath: () => "/fake/path"
     },
     getCurrentWebContents: jest.fn(() => ({
       send: jest.fn()

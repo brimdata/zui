@@ -1,5 +1,8 @@
 /* @noflow */
 
+import config from "../config"
+import lib from "../../lib"
+
 export function createSearchMenuTemplate(send: Function) {
   let template = [
     {
@@ -84,7 +87,13 @@ export function createSearchMenuTemplate(send: Function) {
         {role: "close"},
         {
           label: "Reset State",
-          click: () => send("resetState")
+          click: () => {
+            send("resetState")
+            lib
+              .file(config.windowStateFile)
+              .remove()
+              .catch(() => {})
+          }
         }
       ]
     },
