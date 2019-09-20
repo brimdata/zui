@@ -5,6 +5,7 @@ import React from "react"
 
 import type {DispatchProps, State} from "../state/types"
 import Modal from "./Modal"
+import TextContent from "./TextContent"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as whois from "../state/reducers/whois"
 
@@ -20,10 +21,19 @@ type Props = {...DispatchProps, ...StateProps}
 export default class WhoisModal extends React.Component<Props> {
   render() {
     return (
-      <Modal name="whois" title="Whois Lookup" className="whois-modal">
-        <pre>whois {this.props.addr}</pre>
-        {this.props.isFetching && <p>Loading...</p>}
-        {!this.props.isFetching && <pre>{this.props.text}</pre>}
+      <Modal
+        name="whois"
+        title="Whois Lookup"
+        className="whois-modal"
+        buttons="Done"
+      >
+        <TextContent>
+          <pre>whois {this.props.addr}</pre>
+          {this.props.isFetching && <p>Loading...</p>}
+          {!this.props.isFetching && (
+            <pre className="output">{this.props.text}</pre>
+          )}
+        </TextContent>
       </Modal>
     )
   }

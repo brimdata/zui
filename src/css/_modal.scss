@@ -23,16 +23,29 @@
   border-radius: 5px;
   position: relative;
   max-width: 80%;
+  min-width: 400px;
+  width: 50%;
   max-height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .modal-header {
     font-size: $font-size-4;
     margin-bottom: 20px;
   }
 
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+  }
+
   .close-button {
     position: absolute;
     top: 0;
     right: 0;
+  }
+
+  .button-row {
+    flex: 0 0;
   }
 }
