@@ -6,13 +6,13 @@ import {
   changeSearchBarInput,
   pinSearchBar,
   removeAllSearchBarPins,
-  showModal,
   toggleLeftSidebar,
   toggleRightSidebar
 } from "../state/actions"
 import {clearState} from "./initPersistance"
 import {goBack, goForward} from "../state/thunks/searchBar"
 import {toggleSearchInspector} from "../state/thunks/view"
+import modal from "../modal"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
@@ -50,7 +50,7 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("showPreferences", () => {
-    store.dispatch(showModal("settings"))
+    store.dispatch(modal.show("settings"))
   })
 
   ipcRenderer.on("back", () => {

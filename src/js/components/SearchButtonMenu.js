@@ -6,9 +6,9 @@ import React from "react"
 import type {State} from "../state/types"
 import {getSearchesByTag} from "../state/searches/selector"
 import {killSearchesByTag} from "../searches/cancelSearch"
-import {showModal} from "../state/actions"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
+import modal from "../modal"
 
 type Props = {dispatch: Function, isFetching: boolean}
 
@@ -28,10 +28,10 @@ export default class SearchButtonMenu extends React.Component<Props> {
             <hr />
           </>
         )}
-        <li onClick={() => this.props.dispatch(showModal("debug"))}>
+        <li onClick={() => this.props.dispatch(modal.show("debug"))}>
           Debug query
         </li>
-        <li onClick={() => this.props.dispatch(showModal("curl"))}>
+        <li onClick={() => this.props.dispatch(modal.show("curl"))}>
           Copy for curl
         </li>
       </MenuList>

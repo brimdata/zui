@@ -221,15 +221,6 @@ export const restoreTimeWindow = (value: TimeWindow) => ({
   value
 })
 
-export const showModal = (modal: string) => ({
-  type: "MODAL_SHOW",
-  modal
-})
-
-export const hideModal = () => ({
-  type: "MODAL_HIDE"
-})
-
 export const showRightSidebar = () => ({
   type: "RIGHT_SIDEBAR_SHOW"
 })

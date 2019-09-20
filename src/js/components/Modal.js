@@ -5,26 +5,25 @@ import ReactDOM from "react-dom"
 import classNames from "classnames"
 
 import {InputSubmit} from "./form/Inputs"
-import {getModal} from "../state/reducers/view"
-import {hideModal} from "../state/actions"
+import type {ModalName} from "../modal/types"
 import {isString} from "../lib/is"
 import ButtonRow from "./ButtonRow"
 import CloseButton from "./CloseButton"
 import * as Doc from "../lib/Doc"
+import modal from "../modal"
 import useListener from "../hooks/useListener"
 
 type Button = {label: string, click: Function}
 type Props = {
   children: *,
   title: string,
-  name: string,
+  name: ModalName,
   className?: string,
-  style?: Object,
   buttons: string | Button[]
 }
 
 export default function Modal({name, children, ...contentProps}: Props) {
-  let active = useSelector(getModal)
+  let active = useSelector(modal.getName)
   if (active !== name) {
     return null
   } else {
@@ -37,7 +36,7 @@ export default function Modal({name, children, ...contentProps}: Props) {
   }
 }
 
-function ModalContents({children, className, title, style, buttons}) {
+function ModalContents({children, className, title, buttons}) {
   let dispatch = useDispatch()
 
   useListener(document, "keydown", (e: KeyboardEvent) => {
@@ -48,7 +47,7 @@ function ModalContents({children, className, title, style, buttons}) {
     }
   })
 
-  const close = () => dispatch(hideModal())
+  const close = () => dispatch(modal.hide())
   const onClick = (button, e) => button.click(close, e)
 
   function getButtons(): Button[] {
@@ -62,7 +61,7 @@ function ModalContents({children, className, title, style, buttons}) {
   }
 
   return (
-    <div className={classNames("modal-contents", className)} style={style}>
+    <div className={classNames("modal-contents", className)}>
       <CloseButton light onClick={close} />
       <h2 className="modal-header">{title}</h2>
       <div className="modal-body">{children}</div>

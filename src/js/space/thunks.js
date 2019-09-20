@@ -10,12 +10,12 @@ import {
   setCurrentSpaceName,
   setOuterTimeWindow,
   setSpaceInfo,
-  setSpaceNames,
-  showModal
+  setSpaceNames
 } from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {subtract} from "../lib/Time"
 import brim from "../brim"
+import modal from "../modal"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {
@@ -33,7 +33,7 @@ export function initSpace(space: string): Thunk {
 
           if (space.empty()) {
             dispatch(clearViewer())
-            dispatch(showModal("spaceEmpty"))
+            dispatch(modal.show("nodata"))
           } else {
             const [_, max] = getCurrentSpaceTimeWindow(getState())
             dispatch(setOuterTimeWindow([subtract(max, 30, "minutes"), max]))

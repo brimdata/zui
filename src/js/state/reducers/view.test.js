@@ -2,13 +2,11 @@
 
 import {
   hideDownloads,
-  hideModal,
   hideSearchInspector,
   setLeftSidebarWidth,
   setRightSidebarWidth,
   setTimeZone,
   showDownloads,
-  showModal,
   showSearchInspector
 } from "../actions"
 import initTestStore from "../../test/initTestStore"
@@ -53,20 +51,6 @@ test("hiding the downloads bar", () => {
   const state = reduce([showDownloads(), hideDownloads()])
 
   expect(view.getDownloadsIsOpen(state)).toBe(false)
-})
-
-test("set the active modal", () => {
-  const store = initTestStore()
-  const state = store.dispatchAll([showModal("debug")])
-
-  expect(view.getDebugModalIsOpen(state)).toBe(true)
-})
-
-test("hide a modal", () => {
-  const store = initTestStore()
-  const state = store.dispatchAll([showModal("debug"), hideModal()])
-
-  expect(view.getModal(state)).toBe(null)
 })
 
 test("show the search inspector", () => {

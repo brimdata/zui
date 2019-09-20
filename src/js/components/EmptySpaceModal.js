@@ -9,12 +9,7 @@ import TextContent from "./TextContent"
 export default function EmptySpaceModal() {
   let space = useSelector(getCurrentSpaceName)
   return (
-    <Modal
-      title="Empty Space"
-      name="spaceEmpty"
-      style={{width: 400}}
-      buttons="Ok"
-    >
+    <Modal title="Empty Space" name="nodata" buttons="Ok">
       <TextContent>
         <p>
           There is no data in this space. Use the boom cli to ingest zeek logs
