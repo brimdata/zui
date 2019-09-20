@@ -17,7 +17,7 @@ export function whatIs(value: *) {
 }
 
 export function isString(value: any): %checks {
-  return typeof value === "string" || value instanceof String
+  return typeof value === "string"
 }
 
 export function isNumber(value: any): %checks {

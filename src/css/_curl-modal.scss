@@ -1,15 +1,25 @@
 .curl-modal {
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
   min-width: 400px;
 
-  .curl-form {
+  .modal-body {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+    flex-direction: column;
+  }
 
-    .button {
-      width: 200px;
+  .button-row {
+    flex: 0 0;
+  }
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    pre {
+      flex: 1;
+      overflow: auto;
+      user-select: all;
     }
   }
 }

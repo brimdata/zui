@@ -7,18 +7,20 @@ import classNames from "classnames"
 import {InputSubmit} from "./form/Inputs"
 import {getModal} from "../state/reducers/view"
 import {hideModal} from "../state/actions"
+import {isString} from "../lib/is"
 import ButtonRow from "./ButtonRow"
 import CloseButton from "./CloseButton"
 import * as Doc from "../lib/Doc"
 import useListener from "../hooks/useListener"
 
+type Button = {label: string, click: Function}
 type Props = {
   children: *,
   title: string,
   name: string,
   className?: string,
   style?: Object,
-  buttons: string
+  buttons: string | Button[]
 }
 
 export default function Modal({name, children, ...contentProps}: Props) {
@@ -38,25 +40,39 @@ export default function Modal({name, children, ...contentProps}: Props) {
 function ModalContents({children, className, title, style, buttons}) {
   let dispatch = useDispatch()
 
-  function onClose() {
-    dispatch(hideModal())
-  }
-
   useListener(document, "keydown", (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === "Escape") {
       e.stopPropagation()
       e.preventDefault()
-      onClose()
+      close()
     }
   })
 
+  const close = () => dispatch(hideModal())
+  const onClick = (button, e) => button.click(close, e)
+
+  function getButtons(): Button[] {
+    if (isString(buttons)) {
+      return [{label: buttons, click: close}]
+    } else {
+      return buttons
+    }
+  }
+
   return (
     <div className={classNames("modal-contents", className)} style={style}>
-      <CloseButton light onClick={onClose} />
+      <CloseButton light onClick={close} />
       <h2 className="modal-header">{title}</h2>
       <div className="modal-body">{children}</div>
       <ButtonRow>
-        <InputSubmit value={buttons} type="button" onClick={onClose} />
+        {getButtons().map((b) => (
+          <InputSubmit
+            key={b.label}
+            value={b.label}
+            type="button"
+            onClick={(e) => onClick(b, e)}
+          />
+        ))}
       </ButtonRow>
     </div>
   )

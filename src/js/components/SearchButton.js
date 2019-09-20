@@ -4,14 +4,12 @@ import {connect} from "react-redux"
 import React from "react"
 
 import {DebugModal} from "./DebugModal"
-import type {DispatchProps, State} from "../state/types"
-import {XCurlModal} from "./CurlModal"
+import type {DispatchProps} from "../state/types"
 import {XSearchButtonMenu} from "./SearchButtonMenu"
-import {getCurlModalIsOpen} from "../state/reducers/view"
-import {hideModal} from "../state/actions"
 import {reactElementProps} from "../test/integration"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import Arrow from "../icons/caret-bottom-sm.svg"
+import CurlModal from "./CurlModal"
 import DropMenu from "./DropMenu"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import dispatchToProps from "../lib/dispatchToProps"
@@ -46,20 +44,13 @@ export default class SearchButton extends React.Component<Props> {
 
         <DebugModal />
 
-        <XCurlModal
-          isOpen={this.props.curlModalIsOpen}
-          onClose={() => this.props.dispatch(hideModal())}
-        />
+        <CurlModal />
       </div>
     )
   }
 }
 
-const stateToProps = (state: State) => ({
-  curlModalIsOpen: getCurlModalIsOpen(state)
-})
-
 export const XSearchButton = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
+  null,
   dispatchToProps
 )(SearchButton)
