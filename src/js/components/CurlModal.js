@@ -60,8 +60,8 @@ export default class CurlModal extends React.Component<Props, LocalState> {
     const info = this.props.dispatch(inspectSearch(this.props.program))
     return (
       <Modal
-        isOpen={this.props.isOpen}
-        onClose={this.props.onClose}
+        buttons="Done"
+        name="curl"
         className="curl-modal"
         title="Curl Command"
       >
