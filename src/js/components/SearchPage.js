@@ -11,7 +11,6 @@ import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
 import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults/SearchResults"
-import {XSettingsModal} from "./SettingsModal"
 import {XStatusBar} from "./StatusBar"
 import {XWhoisModal} from "./WhoisModal"
 import {getCurrentFinding} from "../state/reducers/investigation"
@@ -25,6 +24,7 @@ import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import EmptySpaceModal from "./EmptySpaceModal"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
+import SettingsModal from "./SettingsModal"
 import TitleBar from "./TitleBar"
 
 type Props = {|cluster: Cluster|}
@@ -75,7 +75,7 @@ export default function SearchPage({cluster}: Props) {
       <XSearchInspector />
       <XDownloadProgress />
       <XWhoisModal />
-      <XSettingsModal />
+      <SettingsModal />
       <EmptySpaceModal />
     </div>
   )

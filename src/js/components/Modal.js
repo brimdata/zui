@@ -54,6 +54,8 @@ function ModalContents({children, className, title, style, buttons}) {
   function getButtons(): Button[] {
     if (isString(buttons)) {
       return [{label: buttons, click: close}]
+    } else if (!buttons) {
+      return []
     } else {
       return buttons
     }

@@ -1,43 +1,33 @@
 /* @flow */
 
-import {connect} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
-import type {Dispatch} from "../state/types"
 import {Label} from "./Typography"
 import {enableCache, enableIndex} from "../state/thunks/boomd"
-import {getTimeZone, getSettingsModalIsOpen} from "../state/reducers/view"
+import {getTimeZone} from "../state/reducers/view"
 import {getUseBoomCache, getUseBoomIndex} from "../state/reducers/boomd"
-import {hideModal, setTimeZone} from "../state/actions"
+import {setTimeZone} from "../state/actions"
 import Modal from "./Modal"
+import TextContent from "./TextContent"
 import * as Time from "../lib/Time"
 import Toggle from "./Toggle"
-import dispatchToProps from "../lib/dispatchToProps"
 
-type Props = {
-  timeZone: string,
-  isOpen: boolean,
-  dispatch: Dispatch,
-  useBoomCache: boolean,
-  useBoomIndex: boolean
-}
+export default function SettingsModal() {
+  let dispatch = useDispatch()
+  let timeZone = useSelector(getTimeZone)
+  let useBoomIndex = useSelector(getUseBoomIndex)
+  let useBoomCache = useSelector(getUseBoomCache)
 
-export default class SettingsModal extends React.Component<Props> {
-  render() {
-    return (
-      <Modal
-        title="Preferences"
-        isOpen={this.props.isOpen}
-        onClose={() => this.props.dispatch(hideModal())}
-      >
+  return (
+    <Modal name="settings" title="Preferences" buttons="Ok">
+      <TextContent>
         <div className="settings-form">
           <div className="setting-panel">
             <Label>Timezone:</Label>
             <select
-              onChange={(e) =>
-                this.props.dispatch(setTimeZone(e.currentTarget.value))
-              }
-              value={this.props.timeZone}
+              onChange={(e) => dispatch(setTimeZone(e.target.value))}
+              value={timeZone}
             >
               {Time.zones().map((name) => (
                 <option key={name} value={name}>
@@ -49,36 +39,20 @@ export default class SettingsModal extends React.Component<Props> {
           <div className="setting-panel">
             <Label>Enable Analytics Cache:</Label>
             <Toggle
-              checked={this.props.useBoomCache}
-              onChange={() =>
-                this.props.dispatch(enableCache(!this.props.useBoomCache))
-              }
+              checked={useBoomCache}
+              onChange={() => dispatch(enableCache(!useBoomCache))}
             />
           </div>
 
           <div className="setting-panel">
             <Label>Enable Index Lookups:</Label>
             <Toggle
-              checked={this.props.useBoomIndex}
-              onChange={() =>
-                this.props.dispatch(enableIndex(!this.props.useBoomIndex))
-              }
+              checked={useBoomIndex}
+              onChange={() => dispatch(enableIndex(!useBoomIndex))}
             />
           </div>
         </div>
-      </Modal>
-    )
-  }
+      </TextContent>
+    </Modal>
+  )
 }
-
-const stateToProps = (state) => ({
-  timeZone: getTimeZone(state),
-  isOpen: getSettingsModalIsOpen(state),
-  useBoomIndex: getUseBoomIndex(state),
-  useBoomCache: getUseBoomCache(state)
-})
-
-export const XSettingsModal = connect<Props, *, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(SettingsModal)

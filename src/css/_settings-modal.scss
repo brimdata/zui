@@ -1,6 +1,7 @@
 .settings-form {
   border: 1px solid $white-3;
   border-radius: 3px;
+  min-width: 400px;
 
   select {
     border: none;
@@ -21,5 +22,10 @@
 
   &:last-child {
     border: none;
+  }
+
+  label.label {
+    font-weight: bold;
+    font-size: $font-size-1;
   }
 }
