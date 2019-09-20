@@ -1,7 +1,8 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {useEffect, useLayoutEffect, useRef, useState} from "react"
 import ReactDOM from "react-dom"
+import anime from "animejs"
 import classNames from "classnames"
 
 import {InputSubmit} from "./form/Inputs"
@@ -22,21 +23,74 @@ type Props = {
   buttons: string | Button[]
 }
 
-export default function Modal({name, children, ...contentProps}: Props) {
+let d = 200
+
+function useDelayedUnmount(show, delay) {
+  let [mounted, setMounted] = useState(show)
+  let [unmounting, setUnmounting] = useState(false)
+
+  useEffect(() => {
+    if (show && !mounted) {
+      setMounted(true)
+      setUnmounting(false)
+    } else if (!show && mounted) {
+      setUnmounting(true)
+      setTimeout(() => setMounted(false), delay)
+    }
+  }, [show])
+
+  return {
+    mounted,
+    unmounting
+  }
+}
+
+export default function Modal({name, children, ...props}: Props) {
   let active = useSelector(modal.getName)
-  if (active !== name) {
+
+  let {mounted, unmounting} = useDelayedUnmount(name === active, d)
+
+  if (!mounted) {
     return null
   } else {
-    return ReactDOM.createPortal(
-      <div className="modal-overlay">
-        <ModalContents {...contentProps}>{children}</ModalContents>
-      </div>,
-      Doc.id("modal-root")
+    return (
+      <ModalWrapper {...props} unmounting={unmounting}>
+        {children}
+      </ModalWrapper>
     )
   }
 }
 
-function ModalContents({children, className, title, buttons}) {
+function ModalWrapper({children, ...props}) {
+  let ref = useRef()
+
+  useLayoutEffect(() => {
+    if (!props.unmounting) {
+      anime({
+        targets: ref.current,
+        backgroundColor: "rgba(0,0,0,0.4)",
+        easing: "linear",
+        duration: d
+      })
+    } else {
+      anime({
+        targets: ref.current,
+        backgroundColor: "rgba(0,0,0,0.0)",
+        easing: "linear",
+        duration: d
+      })
+    }
+  }, [props.unmounting])
+
+  return ReactDOM.createPortal(
+    <div className="modal-overlay" ref={ref}>
+      <ModalContents {...props}>{children}</ModalContents>
+    </div>,
+    Doc.id("modal-root")
+  )
+}
+
+function ModalContents({children, className, title, buttons, unmounting}) {
   let dispatch = useDispatch()
 
   useListener(document, "keydown", (e: KeyboardEvent) => {
@@ -47,7 +101,6 @@ function ModalContents({children, className, title, buttons}) {
     }
   })
 
-  const close = () => dispatch(modal.hide())
   const onClick = (button, e) => button.click(close, e)
 
   function getButtons(): Button[] {
@@ -60,8 +113,41 @@ function ModalContents({children, className, title, buttons}) {
     }
   }
 
+  function close() {
+    dispatch(modal.hide())
+  }
+
+  let ref = useRef()
+  useLayoutEffect(() => {
+    if (!unmounting) {
+      anime({
+        targets: ref.current,
+        opacity: {
+          value: [0.5, 1],
+          easing: "easeInOutSine",
+          duration: d
+        },
+        scale: [0.7, 1],
+        duration: d,
+        easing: "easeInOutSine"
+      })
+    } else {
+      anime({
+        targets: ref.current,
+        opacity: {
+          value: [1, 0],
+          easing: "easeInOutSine",
+          duration: d
+        },
+        scale: [1, 0.7],
+        duration: d,
+        easing: "easeInOutSine"
+      })
+    }
+  }, [unmounting])
+
   return (
-    <div className={classNames("modal-contents", className)}>
+    <div className={classNames("modal-contents", className)} ref={ref}>
       <CloseButton light onClick={close} />
       <h2 className="modal-header">{title}</h2>
       <div className="modal-body">{children}</div>
@@ -78,3 +164,7 @@ function ModalContents({children, className, title, buttons}) {
     </div>
   )
 }
+
+// anime({
+
+// })

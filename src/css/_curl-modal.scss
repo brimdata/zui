@@ -1,18 +1,4 @@
 .curl-modal {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  min-width: 400px;
-
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .button-row {
-    flex: 0 0;
-  }
-
   .text-content {
     display: flex;
     flex-direction: column;

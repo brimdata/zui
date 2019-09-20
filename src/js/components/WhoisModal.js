@@ -26,10 +26,12 @@ function WhoIsRequest() {
   let {addr} = useSelector(modal.getArgs)
 
   useEffect(() => {
-    sys
-      .whois(addr)
-      .then(setText)
-      .catch(setText)
+    setTimeout(() => {
+      sys
+        .whois(addr)
+        .then(setText)
+        .catch(setText)
+    }, 250)
   }, [])
 
   return (
