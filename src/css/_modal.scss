@@ -22,6 +22,8 @@
   color: $gray-5;
   border-radius: 5px;
   position: relative;
+  max-width: 80%;
+  max-height: 100%;
 
   .modal-header {
     font-size: $font-size-4;

@@ -1,51 +1,63 @@
 /* @flow */
-import React, {Component} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React from "react"
 import ReactDOM from "react-dom"
+import classNames from "classnames"
 
+import {InputSubmit} from "./form/Inputs"
+import {getModal} from "../state/reducers/view"
+import {hideModal} from "../state/actions"
+import ButtonRow from "./ButtonRow"
+import CloseButton from "./CloseButton"
 import * as Doc from "../lib/Doc"
-import ModalContents from "./ModalContents"
+import useListener from "../hooks/useListener"
 
 type Props = {
-  onClose: Function,
   children: *,
-  isOpen: boolean,
-  className?: string,
   title: string,
-  width?: number | string
+  name: string,
+  className?: string,
+  style?: Object,
+  buttons: string
 }
 
-class Modal extends Component<Props> {
-  onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") this.props.onClose()
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.onKeyDown)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.onKeyDown)
-  }
-
-  render() {
-    const {onClose, children, isOpen, className, width} = this.props
-    if (!isOpen) return null
-
+export default function Modal({name, children, ...contentProps}: Props) {
+  let active = useSelector(getModal)
+  if (active !== name) {
+    return null
+  } else {
     return ReactDOM.createPortal(
       <div className="modal-overlay">
-        <ModalContents
-          title={this.props.title}
-          className={className}
-          onOutsideClick={onClose}
-          onClose={onClose}
-          width={width || "80%"}
-        >
-          {children}
-        </ModalContents>
+        <ModalContents {...contentProps}>{children}</ModalContents>
       </div>,
       Doc.id("modal-root")
     )
   }
 }
 
-export default Modal
+function ModalContents({children, className, title, style, buttons}) {
+  let dispatch = useDispatch()
+
+  function onClose() {
+    dispatch(hideModal())
+  }
+
+  useListener(document, "keydown", (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === "Escape") {
+      e.stopPropagation()
+      e.preventDefault()
+      onClose()
+    }
+  })
+
+  return (
+    <div className={classNames("modal-contents", className)} style={style}>
+      <CloseButton light onClick={onClose} />
+      <h2 className="modal-header">{title}</h2>
+      <div className="modal-body">{children}</div>
+      <ButtonRow>
+        <InputSubmit value={buttons} type="button" onClick={onClose} />
+      </ButtonRow>
+    </div>
+  )
+}

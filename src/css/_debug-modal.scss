@@ -1,0 +1,23 @@
+.debug-modal {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button-row {
+    flex: 0 0;
+  }
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    pre {
+      flex: 1;
+      overflow: auto;
+    }
+  }
+}
