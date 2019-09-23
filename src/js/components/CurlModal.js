@@ -10,6 +10,7 @@ import {inspectSearch} from "../backend/thunks"
 import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
+import clickFeedback from "./clickFeedback"
 import lib from "../lib"
 
 export default function CurlModalBox() {
@@ -24,7 +25,9 @@ export default function CurlModalBox() {
     else return ""
   }
 
-  function copyToClip() {
+  function copyToClip(_, e) {
+    clickFeedback(e.target, "Copied")
+
     var node = document.getElementById("copy-to-curl-code")
     if (node) lib.doc.copyToClipboard(node.textContent)
   }

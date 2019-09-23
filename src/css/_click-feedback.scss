@@ -1,0 +1,21 @@
+.click-feedback {
+  background: $blue-light;
+  color: white;
+  font-size: $font-size-2;
+  border-radius: 5px;
+  padding: 2px 4px;
+  user-select: none;
+  text-align: center;
+
+  &:before {
+    content: "";
+    background: $blue-light;
+    position: absolute;
+    top: calc(100% - 2px);
+    left: calc(50% - 2px);
+    width: 4px;
+    height: 4px;
+    border-radius: 0px;
+    transform: rotate(45deg);
+  }
+}
