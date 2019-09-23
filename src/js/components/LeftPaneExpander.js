@@ -8,9 +8,9 @@ import ReactDOM from "react-dom"
 import type {Dispatch} from "../state/types"
 import {showLeftSidebar} from "../state/actions"
 import CircleChevron from "./CircleChevron"
-import * as Doc from "../lib/Doc"
 import MouseoverWatch from "../lib/MouseoverWatch"
 import dispatchToProps from "../lib/dispatchToProps"
+import lib from "../lib"
 
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}
@@ -49,7 +49,7 @@ export default class LeftPaneExpander extends React.Component<Props, State> {
           <CircleChevron right expand />
         </div>
       </CSSTransition>,
-      Doc.id("tooltip-root")
+      lib.doc.id("tooltip-root")
     )
   }
 }

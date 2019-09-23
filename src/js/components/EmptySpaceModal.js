@@ -3,13 +3,13 @@ import {useSelector} from "react-redux"
 import React from "react"
 
 import {getCurrentSpaceName} from "../state/reducers/spaces"
-import Modal from "./Modal"
+import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 
 export default function EmptySpaceModal() {
   let space = useSelector(getCurrentSpaceName)
   return (
-    <Modal
+    <ModalBox
       title="Empty Space"
       className="empty-space-modal"
       name="nodata"
@@ -22,6 +22,6 @@ export default function EmptySpaceModal() {
         </p>
         <pre>boom post -s {space} /path/to/zeek/*.log</pre>
       </TextContent>
-    </Modal>
+    </ModalBox>
   )
 }

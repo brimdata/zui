@@ -6,7 +6,7 @@ import React, {useState} from "react"
 import {Input} from "./form/Inputs"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import Form from "./form/Form"
-import Modal from "./Modal"
+import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import brim from "../brim"
 
@@ -15,7 +15,7 @@ export function DebugModal() {
   let [program, setProgram] = useState(searchProgram)
 
   return (
-    <Modal
+    <ModalBox
       name="debug"
       title="Debug Query"
       buttons="Done"
@@ -39,7 +39,7 @@ export function DebugModal() {
           dangerouslySetInnerHTML={{__html: formatAst(program)}}
         />
       </TextContent>
-    </Modal>
+    </ModalBox>
   )
 }
 

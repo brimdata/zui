@@ -5,10 +5,10 @@ import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
 import {getRightSidebarWidth} from "../state/reducers/view"
-import {getWidth} from "../lib/Doc"
 import {hideRightSidebar} from "../state/actions"
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
+import lib from "../lib"
 
 export default function RightPaneCollapser() {
   let dispatch = useDispatch()
@@ -18,7 +18,7 @@ export default function RightPaneCollapser() {
   useEffect(() => {
     let watcher = new MouseoverWatch()
       .addListener()
-      .condition(([x]) => getWidth() - x < width)
+      .condition(([x]) => lib.win.getWidth() - x < width)
       .onEnter(() => setShow(true))
       .onExit(() => setShow(false))
       .exitDelay(500)

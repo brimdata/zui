@@ -4,15 +4,15 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useState} from "react"
 
 import {InputCheckbox} from "./form/Inputs"
-import {copyToClipboard} from "../lib/Doc"
 import {getCurrentCluster} from "../state/clusters/selectors"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {inspectSearch} from "../backend/thunks"
 import Form from "./form/Form"
-import Modal from "./Modal"
+import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
+import lib from "../lib"
 
-export default function CurlModal() {
+export default function CurlModalBox() {
   let dispatch = useDispatch()
   let [includeCreds, setIncludeCreds] = useState(false)
   let program = useSelector(getSearchProgram)
@@ -26,7 +26,7 @@ export default function CurlModal() {
 
   function copyToClip() {
     var node = document.getElementById("copy-to-curl-code")
-    if (node) copyToClipboard(node.textContent)
+    if (node) lib.doc.copyToClipboard(node.textContent)
   }
 
   let buttons = [
@@ -41,7 +41,7 @@ export default function CurlModal() {
   ]
 
   return (
-    <Modal
+    <ModalBox
       buttons={buttons}
       name="curl"
       className="curl-modal"
@@ -68,6 +68,6 @@ export default function CurlModal() {
           />
         </Form>
       </TextContent>
-    </Modal>
+    </ModalBox>
   )
 }

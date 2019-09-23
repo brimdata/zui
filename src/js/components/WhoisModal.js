@@ -3,21 +3,21 @@
 import {useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import Modal from "./Modal"
+import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import modal from "../modal"
 import sys from "../sys"
 
 export default function WhoisModal() {
   return (
-    <Modal
+    <ModalBox
       name="whois"
       title="Whois Lookup"
       className="whois-modal"
       buttons="Done"
     >
       <WhoIsRequest />
-    </Modal>
+    </ModalBox>
   )
 }
 

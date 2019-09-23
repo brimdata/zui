@@ -1,5 +1,6 @@
 /* @flow */
-import {getHeight, getWidth} from "../../lib/Doc"
+
+import lib from "../../lib"
 
 export function getPopMenuPosition(position: string, wrapperRect: Object) {
   let {top, left, width, height} = wrapperRect
@@ -7,8 +8,8 @@ export function getPopMenuPosition(position: string, wrapperRect: Object) {
   let overflow = []
   if (top < 0) overflow.push("top")
   if (left < 0) overflow.push("left")
-  if (left + width > getWidth()) overflow.push("right")
-  if (top + height > getHeight()) overflow.push("bottom")
+  if (left + width > lib.win.getWidth()) overflow.push("right")
+  if (top + height > lib.win.getHeight()) overflow.push("bottom")
 
   let truePos = position
   overflow.forEach((over) => {

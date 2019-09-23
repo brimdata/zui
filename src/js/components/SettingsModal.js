@@ -8,7 +8,7 @@ import {enableCache, enableIndex} from "../state/thunks/boomd"
 import {getTimeZone} from "../state/reducers/view"
 import {getUseBoomCache, getUseBoomIndex} from "../state/reducers/boomd"
 import {setTimeZone} from "../state/actions"
-import Modal from "./Modal"
+import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import * as Time from "../lib/Time"
 import Toggle from "./Toggle"
@@ -20,7 +20,7 @@ export default function SettingsModal() {
   let useBoomCache = useSelector(getUseBoomCache)
 
   return (
-    <Modal name="settings" title="Preferences" buttons="Ok">
+    <ModalBox name="settings" title="Preferences" buttons="Ok">
       <TextContent>
         <div className="settings-form">
           <div className="setting-panel">
@@ -53,6 +53,6 @@ export default function SettingsModal() {
           </div>
         </div>
       </TextContent>
-    </Modal>
+    </ModalBox>
   )
 }

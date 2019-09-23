@@ -3,15 +3,15 @@
 import * as React from "react"
 
 import type {RowRenderer, ViewerDimens} from "../../types"
+import {reactElementProps} from "../../test/integration"
 import Chunk from "./Chunk"
 import Chunker from "./Chunker"
-import * as Doc from "../../lib/Doc"
 import Header from "./Header"
 import Log from "../../models/Log"
 import ScrollHooks from "../../lib/ScrollHooks"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
-import {reactElementProps} from "../../test/integration"
+import lib from "../../lib"
 
 type Props = {
   chunker: Chunker,
@@ -53,11 +53,11 @@ export default class Viewer extends React.PureComponent<Props, State> {
   }
 
   onScrollStart() {
-    Doc.id("tooltip-root").style.display = "none"
+    lib.doc.id("tooltip-root").style.display = "none"
   }
 
   onScrollStop() {
-    Doc.id("tooltip-root").style.display = "block"
+    lib.doc.id("tooltip-root").style.display = "block"
   }
 
   onScroll = () => {
