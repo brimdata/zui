@@ -59,16 +59,12 @@ export const waitForLoginAvailable = (app: Application) => {
   const waitForHostname = () => {
     return app.client.waitForVisible(selectors.login.host)
   }
-  const waitForPort = () => {
-    return app.client.waitForVisible(selectors.login.port)
-  }
+
   const waitForButton = () => {
     return app.client.waitForVisible(selectors.login.button)
   }
   return appStep("wait for hostname, port, and login widget", () =>
-    waitForHostname()
-      .then(() => waitForPort())
-      .then(() => waitForButton())
+    waitForHostname().then(() => waitForButton())
   )
 }
 
@@ -82,8 +78,7 @@ export const logIn = (app: Application) => {
         // WebdriverV4 doesn't return promises for these methods. Instead they can
         // be chained together.
         app.client
-          .setValue(selectors.login.host, "localhost")
-          .setValue(selectors.login.port, "9867")
+          .setValue(selectors.login.host, "localhost:9867")
           .click(selectors.login.button)
       )
     )
