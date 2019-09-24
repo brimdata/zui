@@ -12,7 +12,7 @@ type Props = {
   status: string
 }
 
-export default function ClusterForm({data, onChange, status, submit}: Props) {
+export default function LoginForm({data, onChange, status, submit}: Props) {
   function onSubmit(e) {
     e.preventDefault()
     submit(data)

@@ -9,12 +9,12 @@ import {connectCluster} from "../../state/clusters/thunks"
 import {getBackendError} from "../../backend"
 import {getSavedClusters} from "../../state/clusters/selectors"
 import Brand from "./Brand"
-import ClusterForm from "./ClusterForm"
-import ClusterWelcome from "./ClusterWelcome"
 import EmptyCheck from "../EmptyCheck"
+import LoginForm from "./LoginForm"
+import LoginWelcome from "./LoginWelcome"
 import SavedClusters from "./SavedClusters"
 
-export default function ClustersPage() {
+export default function LoginPage() {
   let saved = useSelector(getSavedClusters)
   let error = useSelector(getBackendError)
   let dispatch = useDispatch()
@@ -56,12 +56,12 @@ export default function ClustersPage() {
     <div className="login">
       <aside>
         <Brand />
-        <EmptyCheck array={saved} empty={<ClusterWelcome />}>
+        <EmptyCheck array={saved} empty={<LoginWelcome />}>
           <SavedClusters saved={saved} setForm={setForm} submit={submit} />
         </EmptyCheck>
       </aside>
       <main>
-        <ClusterForm
+        <LoginForm
           data={form}
           onChange={onChange}
           status={error ? error.message() : ""}
