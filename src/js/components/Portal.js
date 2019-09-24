@@ -1,9 +1,10 @@
 /* @flow */
 
+import {CSSTransition} from "react-transition-group"
 import React from "react"
 import ReactDOM from "react-dom"
-import * as Doc from "../lib/Doc"
-import {CSSTransition} from "react-transition-group"
+
+import lib from "../lib"
 
 type Props = {
   children: *,
@@ -28,7 +29,7 @@ export default class Portal extends React.Component<Props, Object> {
           </div>
         </CSSTransition>
       </div>,
-      Doc.id("context-menu-root")
+      lib.doc.id("context-menu-root")
     )
   }
 }

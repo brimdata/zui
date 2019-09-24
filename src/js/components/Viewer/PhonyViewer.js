@@ -11,12 +11,12 @@ import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getViewerLogs} from "../../state/viewer/selector"
 import {updateColumns} from "../../state/columns/actions"
 import * as Arr from "../../lib/Array"
-import * as Doc from "../../lib/Doc"
 import Log from "../../models/Log"
 import LogCell from "../LogCell"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
 import dispatchToProps from "../../lib/dispatchToProps"
+import lib from "../../lib"
 
 type StateProps = {|
   tableColumns: TableColumns,
@@ -109,7 +109,7 @@ export default class PhonyViewer extends React.Component<Props> {
         <thead>{headers}</thead>
         <tbody>{Arr.head(data, 10).map(renderRow)}</tbody>
       </table>,
-      Doc.id("measure-layer")
+      lib.doc.id("measure-layer")
     )
   }
 }

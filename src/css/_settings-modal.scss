@@ -22,4 +22,9 @@
   &:last-child {
     border: none;
   }
+
+  label.label {
+    font-weight: bold;
+    font-size: $font-size-1;
+  }
 }

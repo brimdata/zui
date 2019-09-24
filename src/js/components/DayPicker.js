@@ -1,8 +1,9 @@
 /* @flow */
-import React from "react"
-import * as Doc from "../lib/Doc"
-import * as Time from "../lib/Time"
 import DayPickerInput from "react-day-picker/DayPickerInput"
+import React from "react"
+
+import * as Time from "../lib/Time"
+import lib from "../lib"
 
 const FORMAT = "MMM D, YYYY"
 
@@ -42,7 +43,7 @@ export default class DayPicker extends React.Component<Props, State> {
   measureInput() {
     const {daypicker} = this
     if (daypicker) {
-      const parent = Doc.id("measure-layer")
+      const parent = lib.doc.id("measure-layer")
       const span = document.createElement("span")
       span.innerHTML = daypicker.input.value
       span.className = "thin-button"

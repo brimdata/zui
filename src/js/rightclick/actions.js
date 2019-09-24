@@ -15,13 +15,13 @@ import {
   showRightSidebar
 } from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
-import {fetchWhois} from "../state/thunks/whois"
 import {open} from "../lib/System"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import brim from "../brim"
+import modal from "../modal"
 
 type Action = {
   type: "action",
@@ -120,7 +120,7 @@ export const whoisRightclick = (field: Field) => ({
   type: "action",
   text: "Whois Lookup",
   onClick: (dispatch: Dispatch) => {
-    dispatch(fetchWhois(field.value))
+    dispatch(modal.show("whois", {addr: field.value}))
   }
 })
 

@@ -4,13 +4,13 @@ import React, {useState} from "react"
 import classNames from "classnames"
 
 import type {RightClickBuilder} from "../../types"
-import {clearTextSelection, selectText} from "../../lib/Doc"
 import {getTooltipStyle} from "../../lib/MenuStyler"
 import CellValue from "./CellValue"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
 import RightClickMenu from "../RightClickMenu"
 import Tooltip from "../Tooltip"
+import lib from "../../lib"
 import useContextMenu from "../../hooks/useContextMenu"
 
 type Props = {
@@ -41,7 +41,7 @@ export default function LogCell(props: Props) {
   }
 
   function handleRightClickDismiss(e) {
-    clearTextSelection()
+    lib.win.clearTextSelection()
     e.stopPropagation()
     setHover(false)
     menu.handleClose()
@@ -58,7 +58,7 @@ export default function LogCell(props: Props) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onContextMenu={handleRightClick}
-      onClick={(e) => selectText(e.currentTarget)}
+      onClick={(e) => lib.win.selectText(e.currentTarget)}
       style={props.style}
     >
       <CellValue field={props.field} />

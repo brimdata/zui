@@ -9,6 +9,7 @@ import clustersReducer from "./clusters/reducer"
 import columnsReducer from "./columns/reducer"
 import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
+import modal from "../modal"
 import packets from "./reducers/packets"
 import searchBar from "./reducers/searchBar"
 import searchHistory from "./reducers/searchHistory"
@@ -18,7 +19,6 @@ import starredLogs from "./reducers/starredLogs"
 import timeWindow from "./reducers/timeWindow"
 import view from "./reducers/view"
 import viewerReducer from "./viewer/reducer"
-import whois from "./reducers/whois"
 
 export default combineReducers<*, *>({
   backend: backendReducer,
@@ -27,6 +27,7 @@ export default combineReducers<*, *>({
   viewer: viewerReducer,
   columns: columnsReducer,
   clusters: clustersReducer,
+  modal: modal.reducer,
   investigation,
   view,
   searchBar,
@@ -36,6 +37,5 @@ export default combineReducers<*, *>({
   boomd,
   starredLogs,
   packets,
-  searchHistory,
-  whois
+  searchHistory
 })

@@ -1,7 +1,7 @@
 /* @flow */
 import {BrowserWindow, Menu} from "electron"
 
-import type {Keep} from "./keep"
+import type {Keep} from "../lib/keep"
 import {createLoginMenuTemplate} from "../electron/menus/loginMenu"
 import {createSearchMenuTemplate} from "../electron/menus/searchMenu"
 

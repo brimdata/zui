@@ -6,9 +6,9 @@ import ReactDom from "react-dom"
 import {NetworkError} from "../models/Errors"
 import {getBackendError, setBackendError} from "../backend"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {id} from "../lib/Doc"
 import {initSpace} from "../space/thunks"
 import Notice from "./Notice"
+import lib from "../lib"
 
 export default function BackendErrorNotice() {
   let error = useSelector(getBackendError)
@@ -19,7 +19,7 @@ export default function BackendErrorNotice() {
 
   return ReactDom.createPortal(
     renderError(error, dispatch, space),
-    id("notification-root")
+    lib.doc.id("notification-root")
   )
 }
 

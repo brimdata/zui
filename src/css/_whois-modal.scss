@@ -1,2 +1,15 @@
 .whois-modal {
+  .text-content {
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+      flex-shrink: 0;
+    }
+
+    pre.output {
+      flex: 1;
+      overflow: auto;
+    }
+  }
 }

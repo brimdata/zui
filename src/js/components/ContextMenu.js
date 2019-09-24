@@ -2,18 +2,18 @@
 
 import React from "react"
 import ReactDOM from "react-dom"
-import * as Doc from "../lib/Doc"
-import type {FixedPos} from "../lib/Doc"
 import classNames from "classnames"
+
+import lib from "../lib"
 
 type Props = {
   children: any,
-  style: FixedPos,
+  style: Object,
   className?: string,
   onOutsideClick: Function
 }
 
-type State = FixedPos
+type State = Object
 
 export class ContextMenu extends React.Component<Props, State> {
   ref: any
@@ -31,15 +31,15 @@ export class ContextMenu extends React.Component<Props, State> {
   ensureVisiblePosition() {
     const {left, top, width, height} = this.ref.getBoundingClientRect()
 
-    if (top + height > Doc.getHeight()) {
+    if (top + height > lib.win.getHeight()) {
       if (top - height >= 0) {
         this.setState({top: top - height})
       } else {
-        this.setState({height: Doc.getHeight() - top - 6})
+        this.setState({height: lib.win.getHeight() - top - 6})
       }
     }
 
-    if (left + width > Doc.getWidth()) {
+    if (left + width > lib.win.getWidth()) {
       this.setState({left: left - width})
     }
   }
@@ -55,7 +55,7 @@ export class ContextMenu extends React.Component<Props, State> {
           {this.props.children}
         </ul>
       </div>,
-      Doc.id("context-menu-root")
+      lib.doc.id("context-menu-root")
     )
   }
 }

@@ -1,12 +1,11 @@
 .curl-modal {
-  .curl-form {
+  .text-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-
-    .button {
-      width: 200px;
+    flex-direction: column;
+    pre {
+      flex: 1;
+      overflow: auto;
+      user-select: all;
     }
   }
 }

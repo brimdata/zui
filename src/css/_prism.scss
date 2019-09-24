@@ -9,8 +9,6 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 code[class*="language-"],
 pre[class*="language-"] {
   color: black;
-  background: none;
-  text-shadow: 0 1px white;
   font-family: $mono-font, Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
     monospace;
   text-align: left;
@@ -18,11 +16,10 @@ pre[class*="language-"] {
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-  line-height: 1.5;
 
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
 
   -webkit-hyphens: none;
   -moz-hyphens: none;
@@ -55,20 +52,11 @@ code[class*="language-"] ::selection {
 
 /* Code blocks */
 pre[class*="language-"] {
-  padding: 1em;
-  margin: 0.5em 0;
   overflow: auto;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-  background: $white-3;
 }
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {
-  padding: 0.1em;
-  border-radius: 0.3em;
   white-space: normal;
 }
 

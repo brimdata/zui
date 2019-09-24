@@ -6,8 +6,8 @@ import ReactDOM from "react-dom"
 
 import App from "./components/App"
 import AppErrorBoundary from "./components/AppErrorBoundary"
-import * as Doc from "./lib/Doc"
 import init from "./initializers"
+import lib from "./lib"
 
 const store = init()
 
@@ -17,5 +17,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </AppErrorBoundary>,
-  Doc.id("app-root")
+  lib.doc.id("app-root")
 )

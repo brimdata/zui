@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {Keep} from "../lib/keep"
-import type {WindowName} from "../lib/window"
+import type {WindowName} from "./browserWindow"
 import config from "./config"
 import lib from "../lib"
 

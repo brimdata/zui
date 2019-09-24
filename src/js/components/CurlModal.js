@@ -1,112 +1,76 @@
 /* @flow */
 
-import {connect} from "react-redux"
-import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useState} from "react"
 
-import type {Cluster} from "../state/clusters/types"
-import {Code} from "./Typography"
-import type {DateTuple} from "../lib/TimeWindow"
-import type {DispatchProps, State} from "../state/types"
-import {copyToClipboard} from "../lib/Doc"
+import {InputCheckbox} from "./form/Inputs"
 import {getCurrentCluster} from "../state/clusters/selectors"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getSearchProgram} from "../state/selectors/searchBar"
-import {getTimeWindow} from "../state/reducers/timeWindow"
 import {inspectSearch} from "../backend/thunks"
-import Modal from "./Modal"
-import dispatchToProps from "../lib/dispatchToProps"
+import Form from "./form/Form"
+import ModalBox from "./ModalBox/ModalBox"
+import TextContent from "./TextContent"
+import clickFeedback from "./clickFeedback"
+import lib from "../lib"
 
-type OwnProps = {|
-  isOpen: boolean,
-  onClose: Function
-|}
+export default function CurlModalBox() {
+  let dispatch = useDispatch()
+  let [includeCreds, setIncludeCreds] = useState(false)
+  let program = useSelector(getSearchProgram)
+  let {username, password} = useSelector(getCurrentCluster)
+  let info = dispatch(inspectSearch(program))
 
-type StateProps = {|
-  program: string,
-  timeWindow: DateTuple,
-  credentials: Cluster,
-  space: string
-|}
-
-type Props = {|...StateProps, ...OwnProps, ...DispatchProps|}
-
-type LocalState = {includeCredentials: boolean, buttonText: string}
-
-export default class CurlModal extends React.Component<Props, LocalState> {
-  state = {includeCredentials: false, buttonText: "Copy to Clipboard"}
-
-  getCredentials() {
-    const {username, password} = this.props.credentials
-
-    if (this.state.includeCredentials) {
-      return `-u ${username}:${password}`
-    } else {
-      return ""
-    }
+  function getCreds() {
+    if (includeCreds) return `-u ${username}:${password}`
+    else return ""
   }
 
-  copyToClip = () => {
+  function copyToClip(_, e) {
+    clickFeedback(e.target, "Copied")
+
     var node = document.getElementById("copy-to-curl-code")
-    if (node) {
-      copyToClipboard(node.textContent)
-      this.setState({buttonText: "Copied!"})
-      setTimeout(() => {
-        this.setState({buttonText: "Copy to Clipboard"})
-      }, 2000)
-    }
+    if (node) lib.doc.copyToClipboard(node.textContent)
   }
 
-  render() {
-    const info = this.props.dispatch(inspectSearch(this.props.program))
-    return (
-      <Modal
-        isOpen={this.props.isOpen}
-        onClose={this.props.onClose}
-        className="curl-modal"
-        title="Curl Command"
-      >
-        <div className="curl-form">
-          <label className="label label-wrapper">
-            <input
-              type="checkbox"
-              className="checkbox"
-              checked={this.state.includeCredentials}
-              onChange={(e) =>
-                this.setState({includeCredentials: e.target.checked})
-              }
-            />
-            Include Credentials
-          </label>
-          <button className="button" onClick={this.copyToClip}>
-            {this.state.buttonText}
-          </button>
-        </div>
+  let buttons = [
+    {
+      label: "Copy",
+      click: copyToClip
+    },
+    {
+      label: "Done",
+      click: (close) => close()
+    }
+  ]
+
+  return (
+    <ModalBox
+      buttons={buttons}
+      name="curl"
+      className="curl-modal"
+      title="Curl Command"
+    >
+      <TextContent>
         {info && (
-          <Code full light id="copy-to-curl-code">
-            curl -X {info.method} {this.getCredentials()} -d &apos;
+          <pre id="copy-to-curl-code">
+            curl -X {info.method} {getCreds()} -d &apos;
             {JSON.stringify(info.body, null, 2)}
             &apos; {info.url}
-          </Code>
+          </pre>
         )}
-
         {!info && (
-          <Code full light id="copy-to-curl-code">
-            Invalid Lookytalk: &apos;{this.props.program}&apos;
-          </Code>
+          <pre id="copy-to-curl-code">
+            Invalid Lookytalk: &apos;{program}&apos;
+          </pre>
         )}
-      </Modal>
-    )
-  }
+        <Form>
+          <InputCheckbox
+            label="Include Credentials:"
+            checked={includeCreds}
+            onChange={(e) => setIncludeCreds(e.target.checked)}
+          />
+        </Form>
+      </TextContent>
+    </ModalBox>
+  )
 }
-
-const stateToProps = (state: State) => ({
-  program: getSearchProgram(state),
-  space: getCurrentSpaceName(state),
-  timeWindow: getTimeWindow(state),
-  credentials: getCurrentCluster(state)
-})
-
-export const XCurlModal = connect<Props, OwnProps, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(CurlModal)

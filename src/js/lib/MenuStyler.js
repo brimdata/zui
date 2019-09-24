@@ -1,5 +1,5 @@
 /* @flow */
-import * as Doc from "./Doc"
+import lib from "./"
 
 const PADDING = 6
 
@@ -23,7 +23,7 @@ export const belowRight = (node: Node) => {
   const {left, top, height, width} = node.getBoundingClientRect()
 
   return {
-    right: Doc.getWidth() - (left + width),
+    right: lib.win.getWidth() - (left + width),
     top: top + height + PADDING,
     bottom: 10
   }
@@ -39,7 +39,7 @@ export const rightWall = () => {
   return {
     right: 0,
     top: 0,
-    height: Doc.getHeight()
+    height: lib.win.getHeight()
   }
 }
 
@@ -49,18 +49,18 @@ export const ensureVisible = (bounds: Object, style: Object) => {
   const newStyle = {...style}
 
   if ("right" in style) {
-    if (right + width > Doc.getWidth()) {
+    if (right + width > lib.win.getWidth()) {
       newStyle.right = right - width
     }
   }
 
   if ("left" in style) {
-    if (left + width > Doc.getWidth()) {
+    if (left + width > lib.win.getWidth()) {
       newStyle.left = left - width
     }
   }
 
-  if (top + height > Doc.getHeight()) {
+  if (top + height > lib.win.getHeight()) {
     newStyle.top = top - height
   }
 

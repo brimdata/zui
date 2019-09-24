@@ -2,11 +2,11 @@
 
 import React from "react"
 import ReactDOM from "react-dom"
-import * as Doc from "../lib/Doc"
-import type {FixedPos} from "../lib/Doc"
+
+import lib from "../lib"
 
 type Props = {
-  style: FixedPos,
+  style: Object,
   children: any
 }
 
@@ -16,7 +16,7 @@ export default class Tooltip extends React.Component<Props> {
       <div className="tool-tip" style={this.props.style}>
         {this.props.children}
       </div>,
-      Doc.id("tooltip-root")
+      lib.doc.id("tooltip-root")
     )
   }
 }

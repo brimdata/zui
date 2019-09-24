@@ -24,7 +24,7 @@ $page-border-color: $white-5;
 }
 
 .search-page-main {
-  overflow-x: scroll;
+  overflow-x: auto;
   display: flex;
   flex-grow: 1;
   flex-flow: column;
@@ -45,14 +45,6 @@ $page-border-color: $white-5;
 
   & > * {
     flex: 1;
-  }
-
-  .error-boundary {
-    background: none;
-    .body-content {
-      box-shadow: none;
-      background: none;
-    }
   }
 }
 

@@ -2,8 +2,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
-import {id} from "../../lib/Doc"
 import {usePopMenu} from "./usePopMenu"
+import lib from "../../lib"
 
 type Props = {
   children: *,
@@ -38,7 +38,7 @@ function PopMenuWrapper({children, onClose, isOpen, setRef, style}) {
         {children}
       </div>
     </div>,
-    id("context-menu-root")
+    lib.doc.id("context-menu-root")
   )
 }
 

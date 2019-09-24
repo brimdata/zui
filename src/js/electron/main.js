@@ -6,7 +6,7 @@ import {app, ipcMain} from "electron"
 
 import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
-import lib from "../lib"
+import browserWindow from "./browserWindow"
 import windowState from "./windowState"
 
 async function main() {
@@ -17,7 +17,7 @@ async function main() {
   if (handleSquirrelEvent(app)) return
 
   let winState = windowState()
-  let win = lib.window(winState)
+  let win = browserWindow(winState)
 
   app.on("ready", () => {
     installExtensions()

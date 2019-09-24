@@ -1,48 +1,43 @@
 /* @flow */
 
-import {connect} from "react-redux"
-import React from "react"
+import {useSelector} from "react-redux"
+import React, {useEffect, useState} from "react"
 
-import type {DispatchProps, State} from "../state/types"
-import {closeWhois} from "../state/actions"
-import Modal from "./Modal"
-import dispatchToProps from "../lib/dispatchToProps"
-import * as whois from "../state/reducers/whois"
+import ModalBox from "./ModalBox/ModalBox"
+import TextContent from "./TextContent"
+import modal from "../modal"
+import sys from "../sys"
 
-type StateProps = {|
-  isOpen: boolean,
-  text: string,
-  isFetching: boolean,
-  addr: string
-|}
-
-type Props = {...DispatchProps, ...StateProps}
-
-export default class WhoisModal extends React.Component<Props> {
-  render() {
-    return (
-      <Modal
-        title="Whois Lookup"
-        isOpen={this.props.isOpen}
-        onClose={() => this.props.dispatch(closeWhois())}
-        className="whois-modal"
-      >
-        <pre>whois {this.props.addr}</pre>
-        {this.props.isFetching && <p>Loading...</p>}
-        {!this.props.isFetching && <pre>{this.props.text}</pre>}
-      </Modal>
-    )
-  }
+export default function WhoisModal() {
+  return (
+    <ModalBox
+      name="whois"
+      title="Whois Lookup"
+      className="whois-modal"
+      buttons="Done"
+    >
+      <WhoIsRequest />
+    </ModalBox>
+  )
 }
 
-const stateToProps = (state: State) => ({
-  text: whois.getWhoisText(state),
-  isOpen: whois.getWhoisIsOpen(state),
-  isFetching: whois.getWhoisIsFetching(state),
-  addr: whois.getWhoisAddr(state)
-})
+function WhoIsRequest() {
+  let [text, setText] = useState("...Fetching...")
+  let {addr} = useSelector(modal.getArgs)
 
-export const XWhoisModal = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
-  dispatchToProps
-)(WhoisModal)
+  useEffect(() => {
+    setTimeout(() => {
+      sys
+        .whois(addr)
+        .then(setText)
+        .catch(setText)
+    }, 250)
+  }, [])
+
+  return (
+    <TextContent>
+      <pre>{addr}</pre>
+      <pre className="output">{text}</pre>
+    </TextContent>
+  )
+}

@@ -1,0 +1,10 @@
+.debug-modal {
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    pre {
+      flex: 1;
+      overflow: auto;
+    }
+  }
+}
