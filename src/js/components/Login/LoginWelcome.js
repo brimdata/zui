@@ -1,7 +1,7 @@
 /* @flow */
 import React from "react"
 
-export default function ClusterWelcome() {
+export default function LoginWelcome() {
   return (
     <article className="cluster-welcome">
       <p>Connect to your Boom cluster using the form on the right.</p>

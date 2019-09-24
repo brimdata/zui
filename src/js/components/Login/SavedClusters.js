@@ -1,33 +1,15 @@
 /* @flow */
-import {useDispatch} from "react-redux"
 import React from "react"
 
 import type {Cluster} from "../../state/clusters/types"
-import {removeCluster} from "../../state/clusters/actions"
-import {showContextMenu} from "../../lib/System"
 
-type Props = {saved: Cluster[], setForm: Function, submit: Function}
+type Props = {
+  saved: Cluster[],
+  onClick: Function,
+  onRightClick: Function
+}
 
-export default function SavedClusters({saved, setForm, submit}: Props) {
-  let dispatch = useDispatch()
-
-  function onClick(creds) {
-    let data = {...creds, save: true}
-    setForm({...creds, save: true})
-    submit(data)
-  }
-
-  function onRightClick(creds) {
-    showContextMenu([
-      {
-        label: "Remove",
-        click() {
-          dispatch(removeCluster(creds))
-        }
-      }
-    ])
-  }
-
+export default function SavedClusters({saved, onClick, onRightClick}: Props) {
   return (
     <div className="saved-creds">
       <h3 className="section-heading">Saved Connections</h3>

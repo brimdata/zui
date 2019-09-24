@@ -52,11 +52,6 @@ describe("Reset state tests", () => {
       .then((host) => {
         expect(host).toBe("")
       })
-      // This call is safe because of the waitForLoginAvailable call above.
-      .then(() => app.client.getValue(selectors.login.port))
-      .then((port) => {
-        expect(port).toBe("")
-      })
       .then(() => logIn(app))
       .then(() => waitForSearch(app))
       // This call is safe because of the waitForSearch call above.

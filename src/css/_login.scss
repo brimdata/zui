@@ -128,11 +128,11 @@
   }
 
   .status {
-    position: fixed;
+    position: absolute;
     font-size: $font-size-2;
+    left: 50%;
+    transform: translateX(-50%);
     top: 20px;
-    left: $space-m;
-    right: $space-m;
     background: linear-gradient(
       to top,
       lighten($yellow, 10%),
@@ -141,7 +141,7 @@
       lighten($yellow, 10%)
     );
     margin: 0;
-    padding: 0.25rem;
+    padding: 0.25rem 1rem;
     text-align: center;
     color: $gray-9;
     border-radius: 3px;
@@ -149,6 +149,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
   }
 }
 

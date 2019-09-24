@@ -51,8 +51,10 @@
   label {
     display: flex;
     @extend .label;
+    font-weight: bold;
     align-items: center;
     font-size: $font-size-1;
+    color: $gray-1;
   }
 
   input {
