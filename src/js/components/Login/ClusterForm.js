@@ -32,14 +32,6 @@ export default function ClusterForm({data, onChange, status, submit}: Props) {
           onChange={onChange}
         />
         <Input
-          label="Port:"
-          name="port"
-          type="text"
-          required
-          value={data.port}
-          onChange={onChange}
-        />
-        <Input
           label="Username:"
           name="username"
           type="text"

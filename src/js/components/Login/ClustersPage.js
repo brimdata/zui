@@ -20,7 +20,6 @@ export default function ClustersPage() {
   let dispatch = useDispatch()
   let [form, setForm] = useState({
     host: "",
-    port: "",
     username: "",
     password: "",
     save: true
@@ -31,7 +30,7 @@ export default function ClustersPage() {
   }, [])
 
   function onChange(e) {
-    if (e.target.type == "checkbox") {
+    if (e.target.type === "checkbox") {
       setForm({...form, [e.target.name]: e.target.checked})
     } else {
       setForm({...form, [e.target.name]: e.target.value})
@@ -39,9 +38,17 @@ export default function ClustersPage() {
   }
 
   function submit(form) {
-    let {save, ...creds} = form
+    let hostparts = form.host.split(":")
+    let host = hostparts[0]
+    let port = hostparts[1] || "9867"
+    let creds = {
+      host,
+      port,
+      username: form.username,
+      password: form.password
+    }
     dispatch(connectCluster(creds)).then(() => {
-      if (save) dispatch(addCluster(creds))
+      if (form.save) dispatch(addCluster(creds))
     })
   }
 
