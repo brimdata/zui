@@ -1,0 +1,71 @@
+.viewer header,
+.phony-viewer thead {
+  white-space: nowrap;
+  height: $bro-log-row-height;
+  display: flex;
+  background: linear-gradient(white, $white-2);
+  box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.7);
+}
+
+.viewer .header-cell,
+.phony-viewer th {
+  height: $bro-log-row-height;
+  line-height: $bro-log-row-height;
+  padding: 0 6px;
+  font-size: $font-size-2;
+  color: $gray-9;
+  user-select: none;
+  transition: border 150ms;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &:before,
+  &:after {
+    content: none;
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: $white-6;
+    top: 0;
+  }
+
+  &:before {
+    left: -1px;
+  }
+
+  &:after {
+    right: 0px;
+  }
+
+  &.active,
+  &:hover {
+    &:before,
+    &:after {
+      content: "";
+    }
+  }
+
+  &:active,
+  &.active {
+    background: $white-2;
+  }
+
+  &.sorted {
+    font-weight: bold;
+    svg {
+      margin-left: $space-xs;
+    }
+  }
+}
+
+.viewer .col-resizer {
+  width: 6px;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  right: -3px;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1;
+}

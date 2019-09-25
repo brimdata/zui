@@ -6,6 +6,8 @@ import classNames from "classnames"
 import type {TableColumn} from "../../state/columns/types"
 import {updateColumns} from "../../state/columns/actions"
 import columnKey from "../../lib/columnKey"
+import IconDesc from "../../icons/icon-desc.svg"
+import IconAsc from "../../icons/icon-asc.svg"
 
 let oldWidth = null
 let start = null
@@ -54,15 +56,23 @@ export default function HeaderCell({column, tableId}: Props) {
     setActive(true)
   }
 
-  function onClick() {}
+  let [sorted, setSorted] = useState(null)
+  function onClick() {
+    setSorted(sorted === null ? "asc" : sorted === "asc" ? "desc" : null)
+  }
 
   return (
     <div
       onClick={onClick}
-      className={classNames("header-cell", {active})}
+      className={classNames("header-cell", {
+        active,
+        sorted
+      })}
       style={{width: column.width || 300}}
     >
       {column.name}
+      {sorted == "desc" && <IconDesc />}
+      {sorted == "asc" && <IconAsc />}
       <div
         className="col-resizer"
         onMouseDown={onMouseDown}
