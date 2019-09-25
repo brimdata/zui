@@ -4,10 +4,12 @@ import React, {useState} from "react"
 import classNames from "classnames"
 
 import type {TableColumn} from "../../state/columns/types"
+import {appendQuerySortBy} from "../../searchBar/actions"
+import {submitSearchBar} from "../../state/thunks/searchBar"
 import {updateColumns} from "../../state/columns/actions"
-import columnKey from "../../lib/columnKey"
-import IconDesc from "../../icons/icon-desc.svg"
 import IconAsc from "../../icons/icon-asc.svg"
+import IconDesc from "../../icons/icon-desc.svg"
+import columnKey from "../../lib/columnKey"
 
 let oldWidth = null
 let start = null
@@ -56,9 +58,10 @@ export default function HeaderCell({column, tableId}: Props) {
     setActive(true)
   }
 
-  let [sorted, setSorted] = useState(null)
+  let sorted = false
   function onClick() {
-    setSorted(sorted === null ? "asc" : sorted === "asc" ? "desc" : null)
+    dispatch(appendQuerySortBy(column.name, "asc"))
+    dispatch(submitSearchBar())
   }
 
   return (
@@ -71,8 +74,8 @@ export default function HeaderCell({column, tableId}: Props) {
       style={{width: column.width || 300}}
     >
       {column.name}
-      {sorted == "desc" && <IconDesc />}
-      {sorted == "asc" && <IconAsc />}
+      {sorted === "desc" && <IconDesc />}
+      {sorted === "asc" && <IconAsc />}
       <div
         className="col-resizer"
         onMouseDown={onMouseDown}

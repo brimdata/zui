@@ -52,6 +52,17 @@ export default function(p: string = "") {
       return this
     },
 
+    sortBy(name: string, direction: "asc" | "desc" = "asc") {
+      p = stdlib
+        .string(p)
+        .replace(/\|\s*sort[^|]*$/i, "")
+        .append(" | " + brim.syntax.sortBy(name, direction))
+        .trim()
+        .self()
+
+      return this
+    },
+
     ast() {
       return LookyTalk.parse(p)
     },
