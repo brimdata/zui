@@ -4,6 +4,7 @@
 
 .viewer .view {
   overflow: scroll;
+  display: flex;
 }
 
 .viewer .list {
@@ -15,13 +16,14 @@
 }
 
 .viewer .col-resizer {
-  width: 3px;
+  width: 6px;
   height: 100%;
-  background: $gray-4;
+  background: transparent;
   position: absolute;
-  right: 0;
+  right: -3px;
   top: 0;
   cursor: col-resize;
+  z-index: 1;
 }
 
 .viewer header,
@@ -29,8 +31,8 @@
   white-space: nowrap;
   height: $bro-log-row-height;
   display: flex;
-  align-items: center;
-  background: $gray-7;
+  background: linear-gradient(white, $white-2);
+  box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.7);
 }
 
 .viewer .log-row,
@@ -55,7 +57,7 @@
   }
 
   &.highlight {
-    background: $white-5;
+    background: $white-4;
   }
 }
 
@@ -63,11 +65,43 @@
 .phony-viewer th {
   height: $bro-log-row-height;
   line-height: $bro-log-row-height;
-  color: white;
-  font-size: 14px;
-  font-weight: normal;
-  padding: 0 12px;
+  padding: 0 6px;
+  font-size: $font-size-2;
+  color: $gray-9;
+  user-select: none;
+  transition: border 150ms;
   position: relative;
+
+  &:before,
+  &:after {
+    content: none;
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: $white-6;
+    top: 0;
+  }
+
+  &:before {
+    left: -1px;
+  }
+
+  &:after {
+    right: 0px;
+  }
+
+  &.active,
+  &:hover {
+    &:before,
+    &:after {
+      content: "";
+    }
+  }
+
+  &:active,
+  &.active {
+    background: $white-2;
+  }
 }
 
 .viewer .end-message {

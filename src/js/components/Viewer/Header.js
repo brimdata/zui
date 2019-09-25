@@ -3,7 +3,7 @@
 import React from "react"
 
 import type {ViewerDimens} from "../../types"
-import {XColResizer} from "./ColResizer"
+import HeaderCell from "./HeaderCell"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
@@ -14,27 +14,17 @@ type Props = {
   columns: TableColumns
 }
 
-export default class Header extends React.PureComponent<Props> {
-  render() {
-    const {dimens, scrollLeft, columns, ...rest} = this.props
-
-    if (dimens.rowWidth !== "auto") {
-      return (
-        <header style={Styler.header(dimens, scrollLeft)} {...rest}>
-          {columns.getVisible().map((column) => (
-            <div
-              className="header-cell"
-              key={columnKey(column)}
-              style={{width: column.width || 300}}
-            >
-              {column.name}
-              <XColResizer column={column} tableId={columns.id} />
-            </div>
-          ))}
-        </header>
-      )
-    } else {
-      return null
-    }
-  }
+export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
+  if (dimens.rowWidth === "auto") return null
+  return (
+    <header style={Styler.header(dimens, scrollLeft)} {...rest}>
+      {columns.getVisible().map((column) => (
+        <HeaderCell
+          key={columnKey(column)}
+          column={column}
+          tableId={columns.id}
+        />
+      ))}
+    </header>
+  )
 }
