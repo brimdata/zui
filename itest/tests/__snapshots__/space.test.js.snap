@@ -10,6 +10,6 @@ Array [
 exports[`Spaces tests change space to hq_integration 2`] = `
 Array [
   "count",
-  "41,108,632",
+  "41,088,058",
 ]
 `;

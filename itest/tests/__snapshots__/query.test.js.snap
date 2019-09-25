@@ -10,7 +10,7 @@ Array [
 exports[`Query tests query "* | count()"; switch to whole space 2`] = `
 Array [
   "count",
-  "1,031,683",
+  "1,031,672",
 ]
 `;
 
