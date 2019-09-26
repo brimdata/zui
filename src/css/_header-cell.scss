@@ -1,5 +1,4 @@
-.viewer header,
-.phony-viewer thead {
+.viewer header {
   white-space: nowrap;
   height: $bro-log-row-height;
   display: flex;
@@ -7,8 +6,7 @@
   box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.7);
 }
 
-.viewer .header-cell,
-.phony-viewer th {
+.viewer .header-cell {
   height: $bro-log-row-height;
   line-height: $bro-log-row-height;
   padding: 0 6px;
@@ -19,15 +17,20 @@
   position: relative;
   display: flex;
   align-items: center;
+  overflow: hidden;
+
+  &.count {
+    justify-content: flex-end;
+  }
 
   &:before,
   &:after {
-    content: none;
+    content: "";
     position: absolute;
-    height: 100%;
+    height: 60%;
     width: 1px;
     background: $white-6;
-    top: 0;
+    top: 20%;
   }
 
   &:before {
@@ -60,12 +63,11 @@
 }
 
 .viewer .col-resizer {
-  width: 6px;
+  width: 12px;
   height: 100%;
   background: transparent;
   position: absolute;
-  right: -3px;
+  right: -2px;
   top: 0;
   cursor: col-resize;
-  z-index: 1;
 }
