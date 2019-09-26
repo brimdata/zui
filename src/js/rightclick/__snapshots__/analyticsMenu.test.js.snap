@@ -8,6 +8,16 @@ Array [
     "type": "action",
   },
   Object {
+    "onClick": [Function],
+    "text": "Sort A...Z",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Sort Z...A",
+    "type": "action",
+  },
+  Object {
     "type": "seperator",
   },
   Object {
@@ -34,6 +44,16 @@ Array [
     "type": "action",
   },
   Object {
+    "onClick": [Function],
+    "text": "Sort A...Z",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Sort Z...A",
+    "type": "action",
+  },
+  Object {
     "type": "seperator",
   },
   Object {
@@ -49,6 +69,16 @@ Array [
   Object {
     "onClick": [Function],
     "text": "New search with this value",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Sort A...Z",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Sort Z...A",
     "type": "action",
   },
   Object {

@@ -20,8 +20,7 @@ export default function(p: string = "") {
 
     drillDown(log: $Log) {
       let filter = this.filter()
-      let newFilters = brim
-        .ast(this.ast())
+      let newFilters = this.ast()
         .groupByKeys()
         .map((n) => log.field(n))
         .filter((f) => !!f)
