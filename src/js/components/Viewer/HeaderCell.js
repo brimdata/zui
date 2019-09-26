@@ -68,11 +68,11 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
   return (
     <div
       onClick={onClick}
-      className={classNames("header-cell", {
+      className={classNames("header-cell", column.type, {
         active,
         sorted
       })}
-      style={{width: column.width || 300}}
+      style={{width: column.width || 200}}
     >
       {column.name}
       {sorted === "desc" && <IconDesc />}

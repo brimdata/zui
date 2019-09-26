@@ -4,8 +4,9 @@ import {createSelector} from "reselect"
 import type {ColumnsState} from "./types"
 import type {State} from "../types"
 import type {ViewerColumns} from "../viewer/types"
-import {getViewerColumns} from "../viewer/selector"
+import {getViewerColumns, getViewerLogs} from "../viewer/selector"
 import {uniqBy} from "../../lib/Array"
+import Log from "../../models/Log"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
 
@@ -19,14 +20,18 @@ export const getCurrentTableColumns = createSelector<
   TableColumns,
   ViewerColumns,
   ColumnsState,
+  Log[],
   *
 >(
   getViewerColumns,
   getColumns,
-  (viewerColumns, columnSettings) => {
+  getViewerLogs,
+  (viewerColumns, columnSettings, logs) => {
     let tableKey = getTableKey(viewerColumns)
     let columns = getUniqColumns(viewerColumns)
-    return new TableColumns(tableKey, columns, columnSettings[tableKey])
+    let table = new TableColumns(tableKey, columns, columnSettings[tableKey])
+    table.setWidths(logs.slice(0, 50))
+    return table
   }
 )
 
