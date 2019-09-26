@@ -11,6 +11,8 @@ import {
   include,
   logResult,
   pcaps,
+  sortAsc,
+  sortDesc,
   toTime,
   whoisRightclick
 } from "./actions"
@@ -34,7 +36,9 @@ export function logsMenu(program: string, space: Space) {
         exclude(field),
         include(field),
         countBy(field),
-        freshInclude(field)
+        freshInclude(field),
+        sortAsc(field),
+        sortDesc(field)
       )
     }
 

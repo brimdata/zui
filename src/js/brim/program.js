@@ -64,7 +64,13 @@ export default function(p: string = "") {
     },
 
     ast() {
-      return LookyTalk.parse(p)
+      let tree
+      try {
+        tree = LookyTalk.parse(p)
+      } catch (error) {
+        tree = {error}
+      }
+      return brim.ast(tree)
     },
 
     filter() {

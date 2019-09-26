@@ -6,6 +6,8 @@ import {
   fromTime,
   groupByDrillDown,
   logResult,
+  sortAsc,
+  sortDesc,
   toTime,
   whoisRightclick
 } from "./actions"
@@ -27,6 +29,8 @@ export function analyticsMenu(program: string) {
     } else {
       menu.queryAction(freshInclude(field))
     }
+
+    menu.queryAction(sortAsc(field), sortDesc(field))
 
     if (["addr", "set[addr]"].includes(field.type)) {
       menu.fieldAction(whoisRightclick(field))

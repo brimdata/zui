@@ -18,7 +18,8 @@ let remove = document.removeEventListener
 
 type Props = {
   column: TableColumn,
-  tableId: string
+  tableId: string,
+  sorts: {[string]: "asc" | "desc"}
 }
 
 function style(selector, key: string, value) {
@@ -28,7 +29,7 @@ function style(selector, key: string, value) {
   el.style[key] = value
 }
 
-export default function HeaderCell({column, tableId}: Props) {
+export default function HeaderCell({column, tableId, sorts}: Props) {
   let dispatch = useDispatch()
   let [active, setActive] = useState(false)
 
@@ -58,9 +59,9 @@ export default function HeaderCell({column, tableId}: Props) {
     setActive(true)
   }
 
-  let sorted = false
+  let sorted = sorts[column.name] || ""
   function onClick() {
-    dispatch(appendQuerySortBy(column.name, "asc"))
+    dispatch(appendQuerySortBy(column.name, sorted === "asc" ? "desc" : "asc"))
     dispatch(submitSearchBar())
   }
 

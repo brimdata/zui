@@ -5,7 +5,8 @@ import {add} from "../lib/Time"
 import {
   appendQueryCountBy,
   appendQueryExclude,
-  appendQueryInclude
+  appendQueryInclude,
+  appendQuerySortBy
 } from "../searchBar/actions"
 import {
   changeSearchBarInput,
@@ -46,7 +47,7 @@ export const logResult = (field: Field, log: Log) => ({
 
 export const exclude = (field: Field) => ({
   type: "action",
-  text: "Exclude this value",
+  text: "Filter != value",
   onClick: (dispatch: Dispatch) => {
     dispatch(appendQueryExclude(field))
     dispatch(submitSearchBar())
@@ -55,7 +56,7 @@ export const exclude = (field: Field) => ({
 
 export const include = (field: Field) => ({
   type: "action",
-  text: "Include this value",
+  text: "Filter = value",
   onClick: (dispatch: Dispatch) => {
     dispatch(appendQueryInclude(field))
     dispatch(submitSearchBar())
@@ -74,9 +75,27 @@ export const freshInclude = (field: Field) => ({
 
 export const countBy = (field: Field) => ({
   type: "action",
-  text: `Count by ${field.name}`,
+  text: "Count by field",
   onClick: (dispatch: Dispatch) => {
     dispatch(appendQueryCountBy(field))
+    dispatch(submitSearchBar())
+  }
+})
+
+export const sortAsc = (field: Field) => ({
+  type: "action",
+  text: "Sort A...Z",
+  onClick(dispatch: Dispatch) {
+    dispatch(appendQuerySortBy(field.name, "asc"))
+    dispatch(submitSearchBar())
+  }
+})
+
+export const sortDesc = (field: Field) => ({
+  type: "action",
+  text: "Sort Z...A",
+  onClick(dispatch: Dispatch) {
+    dispatch(appendQuerySortBy(field.name, "desc"))
     dispatch(submitSearchBar())
   }
 })
