@@ -10,7 +10,6 @@ import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import brim from "../../brim"
 import columnKey from "../../lib/columnKey"
-
 type Props = {
   dimens: ViewerDimens,
   scrollLeft: number,
@@ -22,17 +21,10 @@ export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
 
   let program = useSelector(getSearchProgram)
   let sorts = useMemo(() => {
-    let obj = {}
-    brim
+    return brim
       .program(program)
       .ast()
-      .procs("SortProc")
-      .forEach((sort) => {
-        sort.fields.forEach((field) => {
-          obj[field] = sort.sortdir === 1 ? "asc" : "desc"
-        })
-      })
-    return obj
+      .sorts()
   }, [program])
 
   return (

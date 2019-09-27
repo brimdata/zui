@@ -19,6 +19,14 @@ export default function ast(tree: Object) {
     },
     self() {
       return tree
+    },
+    sorts() {
+      return this.procs("SortProc").reduce((sorts, proc) => {
+        (proc.fields || []).forEach((field) => {
+          sorts[field] = proc.sortdir === 1 ? "asc" : "desc"
+        })
+        return sorts
+      }, {})
     }
   }
 }
