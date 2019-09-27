@@ -33,14 +33,14 @@ export function logsMenu(program: string, space: Space) {
       menu.queryAction(fromTime(field), toTime(field))
     } else {
       menu.queryAction(
-        exclude(field),
         include(field),
+        exclude(field),
         countBy(field),
-        freshInclude(field),
-        sortAsc(field),
-        sortDesc(field)
+        freshInclude(field)
       )
     }
+
+    menu.queryAction(sortAsc(field), sortDesc(field))
 
     if (["addr", "set[addr]"].includes(field.type)) {
       menu.fieldAction(whoisRightclick(field))
