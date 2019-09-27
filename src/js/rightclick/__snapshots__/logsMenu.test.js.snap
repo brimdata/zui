@@ -4,12 +4,12 @@ exports[`Log Right Click conn log with pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Filter != value",
+    "text": "Filter = value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Filter = value",
+    "text": "Filter != value",
     "type": "action",
   },
   Object {
@@ -60,12 +60,12 @@ exports[`Log Right Click conn log without pcap support 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Filter != value",
+    "text": "Filter = value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Filter = value",
+    "text": "Filter != value",
     "type": "action",
   },
   Object {
@@ -111,12 +111,12 @@ exports[`Log Right Click dns log 1`] = `
 Array [
   Object {
     "onClick": [Function],
-    "text": "Filter != value",
+    "text": "Filter = value",
     "type": "action",
   },
   Object {
     "onClick": [Function],
-    "text": "Filter = value",
+    "text": "Filter != value",
     "type": "action",
   },
   Object {
@@ -163,6 +163,16 @@ Array [
     "type": "action",
   },
   Object {
+    "onClick": [Function],
+    "text": "Sort A...Z",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Sort Z...A",
+    "type": "action",
+  },
+  Object {
     "type": "seperator",
   },
   Object {
@@ -183,6 +193,16 @@ Array [
   Object {
     "onClick": [Function],
     "text": "Use as \\"end\\" time",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Sort A...Z",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
+    "text": "Sort Z...A",
     "type": "action",
   },
   Object {
