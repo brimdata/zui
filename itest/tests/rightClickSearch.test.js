@@ -43,15 +43,9 @@ describe("Test search mods via right-clicks", () => {
           dataSets.corelight.rightClickSearch.includeValue
         )
       )
-      await click(
-        app,
-        selectors.viewer.rightClickMenuItem("Include this value")
-      )
+      await click(app, selectors.viewer.rightClickMenuItem("Filter = value"))
       await rightClick(app, selectors.viewer.resultCellContaining("conn"))
-      await click(
-        app,
-        selectors.viewer.rightClickMenuItem("Exclude this value")
-      )
+      await click(app, selectors.viewer.rightClickMenuItem("Filter != value"))
       // The result order is deterministic because clicked a uid and then
       // removed its conn log entry.
       return searchDisplay(app)
@@ -117,10 +111,7 @@ describe("Test search mods via right-clicks", () => {
           dataSets.corelight.rightClickSearch.newSearchSetup
         )
       )
-      await click(
-        app,
-        selectors.viewer.rightClickMenuItem("Include this value")
-      )
+      await click(app, selectors.viewer.rightClickMenuItem("Filter = value"))
       await rightClick(app, selectors.viewer.resultCellContaining("weird"))
       await click(
         app,
@@ -154,7 +145,7 @@ describe("Test search mods via right-clicks", () => {
       // "dns" will find either the first conn log tuple of a dns connection,
       // or the first dns log tuple of the same.
       await rightClick(app, selectors.viewer.resultCellContaining("conn"))
-      await click(app, selectors.viewer.rightClickMenuItem("Count by _path"))
+      await click(app, selectors.viewer.rightClickMenuItem("Count by field"))
       await rightClick(app, selectors.viewer.resultCellContaining("dhcp"))
       await click(app, selectors.viewer.rightClickMenuItem("Pivot to logs"))
       // The result order is deterministic because all the points rendered have

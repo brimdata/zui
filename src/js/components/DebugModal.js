@@ -51,26 +51,14 @@ function formatAst(program) {
       "JSON"
     )
   }
-
-  let [ast, error] = parseAst(program)
-
-  if (ast) {
+  let ast = brim.program(program).ast()
+  if (ast.valid()) {
     return Prism.highlight(
-      JSON.stringify(ast, null, 4),
+      JSON.stringify(ast.self(), null, 4),
       Prism.languages.js,
       "JSON"
     )
-  } else if (error) {
-    return error.toString()
+  } else {
+    return ast.error().toString()
   }
-}
-
-function parseAst(program) {
-  let ast, error
-  try {
-    ast = brim.program(program).ast()
-  } catch (e) {
-    error = e
-  }
-  return [ast, error]
 }

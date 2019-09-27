@@ -139,3 +139,41 @@ describe("count by", () => {
     expect(program).toBe("dns | count() by query")
   })
 })
+
+describe("sort by", () => {
+  test("sort asc does not yet exist", () => {
+    let program = brim
+      .program("* | count() by _path")
+      .sortBy("count", "asc")
+      .string()
+
+    expect(program).toBe("* | count() by _path | sort count")
+  })
+
+  test("sort desc does not yet exist", () => {
+    let program = brim
+      .program("* | count() by _path")
+      .sortBy("count", "desc")
+      .string()
+
+    expect(program).toBe("* | count() by _path | sort -r count")
+  })
+
+  test("sort asc when one already exists", () => {
+    let program = brim
+      .program("* | sort name")
+      .sortBy("count", "asc")
+      .string()
+
+    expect(program).toBe("* | sort count")
+  })
+
+  test("sort desc when one already exists", () => {
+    let program = brim
+      .program("* | sort name")
+      .sortBy("count", "desc")
+      .string()
+
+    expect(program).toBe("* | sort -r count")
+  })
+})

@@ -2,6 +2,7 @@
 
 import type {Column} from "../types"
 import type {ColumnSettingsMap, TableColumn} from "../state/columns/types"
+import Log from "./Log"
 import columnKey from "../lib/columnKey"
 import columnOrder from "../lib/columnOrder"
 
@@ -47,6 +48,24 @@ export default class TableColumns {
       (sum, column) => (sum += column.width || 0),
       0
     )
+  }
+
+  setWidths(logs: Log[]) {
+    this.cols.forEach((col) => {
+      if (col.width) return
+      if (col.name === "ts") {
+        col.width = 192
+        return
+      }
+      let max = col.name.length + 5
+      logs.forEach((log) => {
+        let value = log.cast(col.name)
+        if (!value) return
+        let len = value.length
+        if (len > max) max = len
+      })
+      col.width = Math.min(max * 7.375 + 20, 500)
+    })
   }
 
   getVisible(): TableColumn[] {

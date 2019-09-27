@@ -4,6 +4,7 @@
 
 .viewer .view {
   overflow: scroll;
+  display: flex;
 }
 
 .viewer .list {
@@ -12,25 +13,6 @@
 
 .viewer .chunk {
   position: absolute;
-}
-
-.viewer .col-resizer {
-  width: 3px;
-  height: 100%;
-  background: $gray-4;
-  position: absolute;
-  right: 0;
-  top: 0;
-  cursor: col-resize;
-}
-
-.viewer header,
-.phony-viewer thead {
-  white-space: nowrap;
-  height: $bro-log-row-height;
-  display: flex;
-  align-items: center;
-  background: $gray-7;
 }
 
 .viewer .log-row,
@@ -55,19 +37,8 @@
   }
 
   &.highlight {
-    background: $white-5;
+    background: $white-4;
   }
-}
-
-.viewer .header-cell,
-.phony-viewer th {
-  height: $bro-log-row-height;
-  line-height: $bro-log-row-height;
-  color: white;
-  font-size: 14px;
-  font-weight: normal;
-  padding: 0 12px;
-  position: relative;
 }
 
 .viewer .end-message {

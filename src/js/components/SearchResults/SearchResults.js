@@ -12,7 +12,6 @@ import {
 } from "../../state/reducers/view"
 import type {Space} from "../../lib/Space"
 import type {ViewerDimens} from "../../types"
-import {XPhonyViewer} from "../Viewer/PhonyViewer"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../viewer/fetchNextPage"
@@ -109,7 +108,6 @@ export default function SearchResults(props: Props) {
 
   return (
     <div>
-      <XPhonyViewer />
       <Viewer
         logs={logs}
         renderRow={renderRow}

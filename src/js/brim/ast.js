@@ -1,12 +1,34 @@
 /* @flow */
-export default function(ast: Object) {
+import lib from "../lib"
+
+export default function ast(tree: Object) {
   return {
+    valid() {
+      return !tree.error
+    },
+    error() {
+      return tree.error || null
+    },
     groupByKeys() {
       let g = this.proc("GroupByProc")
       return g ? g.keys : []
     },
     proc(name: string) {
-      return getProcs(ast).find((p) => p.op === name)
+      return getProcs(tree).find((p) => p.op === name)
+    },
+    procs(name: string): *[] {
+      return getProcs(tree).filter((p) => p.op === name)
+    },
+    self() {
+      return tree
+    },
+    sorts() {
+      return this.procs("SortProc").reduce((sorts, proc) => {
+        lib.array.wrap(proc.fields).forEach((field) => {
+          sorts[field] = proc.sortdir === 1 ? "asc" : "desc"
+        })
+        return sorts
+      }, {})
     }
   }
 }

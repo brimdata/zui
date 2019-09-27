@@ -52,3 +52,23 @@ export function appendQueryCountBy(field: Field): Thunk {
     )
   }
 }
+
+export function appendQuerySortBy(
+  name: string,
+  direction: "asc" | "desc"
+): Thunk {
+  return function(dispatch, getState) {
+    let {current, pinned} = getSearchBar(getState())
+    let query = [...pinned, current].join(" ")
+    let program = onlyWhitespace(query) ? "*" : current
+
+    dispatch(
+      changeSearchBarInput(
+        brim
+          .program(program)
+          .sortBy(name, direction)
+          .string()
+      )
+    )
+  }
+}

@@ -16,7 +16,7 @@ jobs:
             - ./node_modules
       - run:
           name: Format
-          command: npm run format && git diff --exit-code -- src itest
+          command: npm run format-check
       - run:
           name: Build
           command: npm run build

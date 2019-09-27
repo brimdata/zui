@@ -2,6 +2,11 @@
 
 function string(s: string = "") {
   return {
+    replace(pattern: string | RegExp, replacement: string) {
+      s = s.replace(pattern, replacement)
+      return this
+    },
+
     insert(item: string, index: number) {
       s = s.substring(0, index) + item + s.substring(index, s.length)
       return this

@@ -20,8 +20,7 @@ export default function(p: string = "") {
 
     drillDown(log: $Log) {
       let filter = this.filter()
-      let newFilters = brim
-        .ast(this.ast())
+      let newFilters = this.ast()
         .groupByKeys()
         .map((n) => log.field(n))
         .filter((f) => !!f)
@@ -52,8 +51,25 @@ export default function(p: string = "") {
       return this
     },
 
+    sortBy(name: string, direction: "asc" | "desc" = "asc") {
+      p = stdlib
+        .string(p)
+        .replace(/\|\s*sort[^|]*$/i, "")
+        .append(" | " + brim.syntax.sortBy(name, direction))
+        .trim()
+        .self()
+
+      return this
+    },
+
     ast() {
-      return LookyTalk.parse(p)
+      let tree
+      try {
+        tree = LookyTalk.parse(p)
+      } catch (error) {
+        tree = {error}
+      }
+      return brim.ast(tree)
     },
 
     filter() {
