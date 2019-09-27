@@ -1,6 +1,6 @@
 /* @flow */
 
-import * as React from "react"
+import React, {useEffect, useRef, useState} from "react"
 
 import type {RowRenderer, ViewerDimens} from "../../types"
 import {reactElementProps} from "../../test/integration"
@@ -12,6 +12,7 @@ import ScrollHooks from "../../lib/ScrollHooks"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import lib from "../../lib"
+import useConst from "../../hooks/useConst"
 
 type Props = {
   chunker: Chunker,
@@ -23,84 +24,66 @@ type Props = {
   renderEnd: () => *
 }
 
-type State = {
-  scrollLeft: number,
-  chunks: number[]
-}
-
-export default class Viewer extends React.PureComponent<Props, State> {
-  scrollHooks: Function
-  view: ?HTMLDivElement
-
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      scrollLeft: 0,
-      chunks: props.chunker.visibleChunks(0)
-    }
-    this.scrollHooks = ScrollHooks.create(this.onScrollStart, this.onScrollStop)
-  }
-
-  componentDidUpdate() {
-    if (!this.view) return
-    this.updateChunks(this.view.scrollTop)
-    if (
-      this.props.chunker.lastChunk() ==
-      this.state.chunks[this.state.chunks.length - 1]
-    ) {
-      this.props.onLastChunk && this.props.onLastChunk()
-    }
-  }
-
-  onScrollStart() {
+export default function Viewer(props: Props) {
+  let [scrollLeft, setScrollLeft] = useState(0)
+  let [chunks, setChunks] = useState(props.chunker.visibleChunks(0))
+  let ref = useRef()
+  function onScrollStart() {
     lib.doc.id("tooltip-root").style.display = "none"
   }
 
-  onScrollStop() {
+  function onScrollStop() {
     lib.doc.id("tooltip-root").style.display = "block"
   }
 
-  onScroll = () => {
-    this.scrollHooks()
-    const view = this.view
+  let scrollHooks = useConst(null, () =>
+    ScrollHooks.create(onScrollStart, onScrollStop)
+  )
+
+  function onScroll() {
+    scrollHooks && scrollHooks()
+    let view = ref.current
     if (view) {
-      this.updateChunks(view.scrollTop)
-      this.setState({scrollLeft: view.scrollLeft})
+      updateChunks(view.scrollTop)
+      setScrollLeft(view.scrollLeft)
     }
   }
 
-  updateChunks(scrollTop: number) {
-    const next = this.props.chunker.visibleChunks(scrollTop)
-    const current = this.state.chunks
-    if (!Chunker.isEqual(next, current)) {
-      this.setState({chunks: next})
-    }
+  function updateChunks(scrollTop) {
+    const next = props.chunker.visibleChunks(scrollTop)
+    if (!Chunker.isEqual(next, chunks)) setChunks(next)
   }
 
-  render() {
-    const {scrollLeft, chunks} = this.state
-    return (
-      <div className="viewer" style={{width: this.props.dimens.viewWidth}}>
-        <Header
-          columns={this.props.tableColumns}
-          dimens={this.props.dimens}
-          scrollLeft={scrollLeft}
-          {...reactElementProps("viewer_header")}
-        />
-        <div
-          className="view"
-          onScroll={this.onScroll}
-          style={{
-            width: this.props.dimens.viewWidth,
-            height: this.props.dimens.viewHeight
-          }}
-          ref={(r) => (this.view = r)}
-        >
-          <List {...{...this.props, chunks}} />
-        </div>
+  useEffect(() => {
+    let view = ref.current
+    if (!view) return
+    updateChunks(view.scrollTop)
+    if (props.chunker.lastChunk() == chunks[chunks.length - 1]) {
+      props.onLastChunk && props.onLastChunk()
+    }
+  })
+
+  return (
+    <div className="viewer" style={{width: props.dimens.viewWidth}}>
+      <Header
+        columns={props.tableColumns}
+        dimens={props.dimens}
+        scrollLeft={scrollLeft}
+        {...reactElementProps("viewer_header")}
+      />
+      <div
+        className="view"
+        onScroll={onScroll}
+        style={{
+          width: props.dimens.viewWidth,
+          height: props.dimens.viewHeight
+        }}
+        ref={ref}
+      >
+        <List {...{...props, chunks}} />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 const List = React.memo(function List(props) {
