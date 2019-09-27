@@ -26,7 +26,7 @@
     "lint": "eslint .",
     "format": "prettier '{src,itest}/**/*.{js,scss}' --write --loglevel warn",
     "flow": "flow",
-    "format-chceck": "npm run format && git diff --exit-code -- src itest",
+    "format-check": "npm run format && git diff --exit-code -- src itest",
     "check": "npm-run-all -p format-check lint flow test",
     "clean": "node scripts/clean",
     "release": "node scripts/release --win32 --darwin",
