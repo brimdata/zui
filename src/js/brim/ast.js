@@ -1,4 +1,6 @@
 /* @flow */
+import lib from "../lib"
+
 export default function ast(tree: Object) {
   return {
     valid() {
@@ -22,7 +24,7 @@ export default function ast(tree: Object) {
     },
     sorts() {
       return this.procs("SortProc").reduce((sorts, proc) => {
-        (proc.fields || []).forEach((field) => {
+        lib.array.wrap(proc.fields).forEach((field) => {
           sorts[field] = proc.sortdir === 1 ? "asc" : "desc"
         })
         return sorts
