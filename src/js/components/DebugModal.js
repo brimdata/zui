@@ -9,6 +9,7 @@ import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import brim from "../brim"
+import {reactElementProps} from "../test/integration"
 
 export function DebugModal() {
   let searchProgram = useSelector(getSearchProgram)
@@ -32,11 +33,13 @@ export function DebugModal() {
             className="mono"
             value={program}
             onChange={(e) => setProgram(e.target.value)}
+            {...reactElementProps("debugProgram")}
           />
         </Form>
         <pre
           className="language-js"
           dangerouslySetInnerHTML={{__html: formatAst(program)}}
+          {...reactElementProps("debugAst")}
         />
       </TextContent>
     </ModalBox>

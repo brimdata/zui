@@ -9,6 +9,8 @@ const dataAttrs = {
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
   correlationPanel: "correlationPanel",
+  debugAst: "debugAst",
+  debugProgram: "debugProgram",
   histogram: "histogram-chart",
   logCellMenu: "logCellMenu",
   login: "login",
