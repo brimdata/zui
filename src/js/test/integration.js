@@ -13,6 +13,8 @@ const dataAttrs = {
   logCellMenu: "logCellMenu",
   login: "login",
   notification: "notification-header",
+  optionsButton: "optionsButton",
+  optionsMenu: "optionsMenu",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -100,6 +102,11 @@ export const selectors = {
     button: dataAttrSelector("login") + " [type=submit]"
   },
   notification: dataAttrSelector("notification"),
+  options: {
+    button: dataAttrSelector("optionsButton"),
+    menu: dataAttrSelector("optionsMenu"),
+    menuItem: genSelectorForTextUnderElement("optionsMenu")
+  },
   search: {
     button: dataAttrSelector("search_button"),
     input: dataAttrSelector("search_input"),

@@ -37,7 +37,10 @@ export default class SearchButton extends React.Component<Props> {
         </button>
 
         <DropMenu menu={XSearchButtonMenu} position="right">
-          <button className="button options-button">
+          <button
+            className="button options-button"
+            {...reactElementProps("optionsButton")}
+          >
             <Arrow />
           </button>
         </DropMenu>
