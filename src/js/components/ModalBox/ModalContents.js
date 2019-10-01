@@ -16,14 +16,15 @@ export default function ModalContents({
   title,
   buttons,
   duration,
-  willUnmount
+  willUnmount,
+  ...rest
 }: ModalContentsProps) {
   let {close} = useModalController()
   useModalAnimation(duration, willUnmount)
 
   return ReactDOM.createPortal(
     <div className="modal-overlay">
-      <div className={classNames("modal-contents", className)}>
+      <div className={classNames("modal-contents", className)} {...rest}>
         <CloseButton light onClick={close} />
         <h2 className="modal-header">{title}</h2>
         <div className="modal-body">{children}</div>
