@@ -21,6 +21,7 @@ export function DebugModal() {
       title="Debug Query"
       buttons="Done"
       className="debug-modal"
+      {...reactElementProps("debugModal")}
     >
       <TextContent>
         <p>
