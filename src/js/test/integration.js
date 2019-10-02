@@ -89,11 +89,23 @@ const genSelectorForTextUnderElement = (dataAttrValue: string) => (
 ) =>
   `//*[@${itestLocator}='${dataAttrValue}']//*[contains(text(), '${menuItem}')]`
 
+// Use this to generate a function that can generate selectors to find elements
+// for modal buttons under the given modal data-test-locator name.
+const genSelectorForModalButton = (modalTestName: string) => (
+  buttonValue: string
+) => `[${itestLocator}='${modalTestName}'] input[value='${buttonValue}']`
+
 export const selectors = {
   correlationPanel: {
     duration: dataAttrSelector("correlationPanel") + " .caption",
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
     tsLabel: dataAttrSelector("correlationPanel") + " .data-label"
+  },
+  debugSearch: {
+    ast: dataAttrSelector("debugAst") + " span",
+    astError: dataAttrSelector("debugAst"),
+    search: dataAttrSelector("debugProgram"),
+    done: genSelectorForModalButton("debugModal")("Done")
   },
   histogram: {
     topLevel: dataAttrSelector("histogram"),
