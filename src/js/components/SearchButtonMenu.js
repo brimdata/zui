@@ -9,13 +9,14 @@ import {killSearchesByTag} from "../searches/cancelSearch"
 import MenuList from "./MenuList"
 import dispatchToProps from "../lib/dispatchToProps"
 import modal from "../modal"
+import {reactElementProps} from "../test/integration"
 
 type Props = {dispatch: Function, isFetching: boolean}
 
 export default class SearchButtonMenu extends React.Component<Props> {
   render() {
     return (
-      <MenuList>
+      <MenuList {...reactElementProps("optionsMenu")}>
         {this.props.isFetching && (
           <>
             <li

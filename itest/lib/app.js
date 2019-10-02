@@ -226,3 +226,23 @@ export const rightClick = (app: Application, selector: string) =>
       .waitForVisible(selector)
       .then(() => app.client.rightClick(selector))
   )
+
+export const openDebugQuery = async (app: Application) => {
+  await click(app, selectors.options.button)
+  await click(app, selectors.options.menuItem("Debug query"))
+  await appStep("wait for Debug Query modal to appear", () =>
+    Promise.all([
+      app.client.waitForVisible(selectors.debugSearch.search),
+      app.client.waitForVisible(selectors.debugSearch.ast),
+      app.client.waitForVisible(selectors.debugSearch.done)
+    ])
+  )
+}
+
+export const setDebugQuery = (app: Application, searchText: string) =>
+  app.client.setValue(selectors.debugSearch.search, searchText)
+
+export const getDebugAst = (app: Application) =>
+  app.client
+    .getText(selectors.debugSearch.ast)
+    .then((astText) => astText.join(""))

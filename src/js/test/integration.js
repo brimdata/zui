@@ -9,10 +9,15 @@ const dataAttrs = {
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
   correlationPanel: "correlationPanel",
+  debugAst: "debugAst",
+  debugModal: "debugModal",
+  debugProgram: "debugProgram",
   histogram: "histogram-chart",
   logCellMenu: "logCellMenu",
   login: "login",
   notification: "notification-header",
+  optionsButton: "optionsButton",
+  optionsMenu: "optionsMenu",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -84,11 +89,23 @@ const genSelectorForTextUnderElement = (dataAttrValue: string) => (
 ) =>
   `//*[@${itestLocator}='${dataAttrValue}']//*[contains(text(), '${menuItem}')]`
 
+// Use this to generate a function that can generate selectors to find elements
+// for modal buttons under the given modal data-test-locator name.
+const genSelectorForModalButton = (modalTestName: string) => (
+  buttonValue: string
+) => `[${itestLocator}='${modalTestName}'] input[value='${buttonValue}']`
+
 export const selectors = {
   correlationPanel: {
     duration: dataAttrSelector("correlationPanel") + " .caption",
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
     tsLabel: dataAttrSelector("correlationPanel") + " .data-label"
+  },
+  debugSearch: {
+    ast: dataAttrSelector("debugAst") + " span",
+    astError: dataAttrSelector("debugAst"),
+    search: dataAttrSelector("debugProgram"),
+    done: genSelectorForModalButton("debugModal")("Done")
   },
   histogram: {
     topLevel: dataAttrSelector("histogram"),
@@ -100,6 +117,11 @@ export const selectors = {
     button: dataAttrSelector("login") + " [type=submit]"
   },
   notification: dataAttrSelector("notification"),
+  options: {
+    button: dataAttrSelector("optionsButton"),
+    menu: dataAttrSelector("optionsMenu"),
+    menuItem: genSelectorForTextUnderElement("optionsMenu")
+  },
   search: {
     button: dataAttrSelector("search_button"),
     input: dataAttrSelector("search_input"),
