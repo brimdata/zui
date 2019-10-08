@@ -7,6 +7,7 @@ import * as path from "path"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "./log"
 import {workspaceLogfile} from "../lib/log"
+import {retryUntil} from "./control"
 
 const appStep = async (stepMessage, f) => {
   LOG.debug(`Starting step "${stepMessage}"`)
@@ -246,3 +247,12 @@ export const getDebugAst = (app: Application) =>
   app.client
     .getText(selectors.debugSearch.ast)
     .then((astText) => astText.join(""))
+
+export const waitUntilDownloadFinished = async (app: Application) =>
+  await appStep("wait for a download to finish", async () => {
+    await app.client.waitForVisible(selectors.downloadMessage)
+    return await retryUntil(
+      () => app.client.getText(selectors.downloadMessage),
+      (text) => text == "Download Complete" || text.includes("Download error")
+    )
+  })
