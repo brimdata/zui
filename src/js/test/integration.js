@@ -12,6 +12,7 @@ const dataAttrs = {
   debugAst: "debugAst",
   debugModal: "debugModal",
   debugProgram: "debugProgram",
+  downloadMessage: "downloadMessage",
   histogram: "histogram-chart",
   logCellMenu: "logCellMenu",
   login: "login",
@@ -99,6 +100,7 @@ const genSelectorForModalButton = (modalTestName: string) => (
 ) => `[${itestLocator}='${modalTestName}'] input[value='${buttonValue}']`
 
 export const selectors = {
+  downloadMessage: dataAttrSelector("downloadMessage"),
   correlationPanel: {
     duration: dataAttrSelector("correlationPanel") + " .caption",
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
