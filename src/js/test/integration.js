@@ -56,6 +56,9 @@ export const dataSets = {
       newSearchSetup: "Ctd0Gv1XC3Z0UV1iX",
       includeValue: "CgVEQNkcytYYMtmE5",
       startTime: "09:32"
+    },
+    pcaps: {
+      setDurationUid: "CZusuU27VRdyfg5thj"
     }
   }
 }
