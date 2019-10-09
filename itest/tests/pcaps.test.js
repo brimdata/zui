@@ -83,31 +83,34 @@ describe("Test PCAPs", () => {
     }
   )
 
-  stdTest("Clicking on Download PCAPS with unset duration", (done) => {
-    // This is a failing test that, once PROD-967 is fixed, can be updated.
-    // It's left on because I can't fix/disable it, and I want to call
-    // attention to getting it fixed right away.
-    let downloadPcapFromConnTuple = async () => {
-      await logIn(app)
-      await writeSearch(app, "_path=conn duration=nil | sort -r ts, uid")
-      await startSearch(app)
-      await waitForSearch(app)
-      await rightClick(
-        app,
-        selectors.viewer.resultCellContaining(
-          dataSets.corelight.pcaps.unsetDurationUid
+  stdTest(
+    "Clicking on Download PCAPS with unset duration (update after fixing PROD-967)",
+    (done) => {
+      // This is a failing test that, once PROD-967 is fixed, can be updated.
+      // It's left on because I can't fix/disable it, and I want to call
+      // attention to getting it fixed right away.
+      let downloadPcapFromConnTuple = async () => {
+        await logIn(app)
+        await writeSearch(app, "_path=conn duration=nil | sort -r ts, uid")
+        await startSearch(app)
+        await waitForSearch(app)
+        await rightClick(
+          app,
+          selectors.viewer.resultCellContaining(
+            dataSets.corelight.pcaps.unsetDurationUid
+          )
         )
-      )
-      await click(app, selectors.viewer.rightClickMenuItem("Download PCAPS"))
-      return await waitUntilDownloadFinished(app)
+        await click(app, selectors.viewer.rightClickMenuItem("Download PCAPS"))
+        return await waitUntilDownloadFinished(app)
+      }
+      downloadPcapFromConnTuple()
+        .then((downloadText) => {
+          expect(downloadText).toBe("Download error: Bad Request")
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
     }
-    downloadPcapFromConnTuple()
-      .then((downloadText) => {
-        expect(downloadText).toBe("Download error: Bad Request")
-        done()
-      })
-      .catch((err) => {
-        handleError(app, err, done)
-      })
-  })
+  )
 })
