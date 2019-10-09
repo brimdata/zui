@@ -60,6 +60,8 @@ export const dataSets = {
     },
     pcaps: {
       setDurationUid: "CZusuU27VRdyfg5thj",
+      setDurationFilename: "packets-1428917653.242511.pcap",
+      setDurationMD5: "a6cba8acc833dff9f2a04acd7ac0304a",
       unsetDurationUid: "CgVEQNkcytYYMtmE5"
     }
   }
