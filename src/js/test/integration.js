@@ -19,6 +19,7 @@ const dataAttrs = {
   notification: "notification-header",
   optionsButton: "optionsButton",
   optionsMenu: "optionsMenu",
+  pcapsButton: "pcapsButton",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -107,7 +108,8 @@ export const selectors = {
   correlationPanel: {
     duration: dataAttrSelector("correlationPanel") + " .caption",
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
-    tsLabel: dataAttrSelector("correlationPanel") + " .data-label"
+    tsLabel: dataAttrSelector("correlationPanel") + " .data-label",
+    getText: genSelectorForTextUnderElement("correlationPanel")
   },
   debugSearch: {
     ast: dataAttrSelector("debugAst") + " span",
@@ -129,6 +131,9 @@ export const selectors = {
     button: dataAttrSelector("optionsButton"),
     menu: dataAttrSelector("optionsMenu"),
     menuItem: genSelectorForTextUnderElement("optionsMenu")
+  },
+  pcaps: {
+    button: dataAttrSelector("pcapsButton")
   },
   search: {
     button: dataAttrSelector("search_button"),
