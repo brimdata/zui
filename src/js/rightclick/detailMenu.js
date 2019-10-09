@@ -8,6 +8,7 @@ import {
   freshInclude,
   fromTime,
   include,
+  maybeAddVirusTotalRightclick,
   toTime,
   whoisRightclick
 } from "./actions"
@@ -36,6 +37,8 @@ export function useDetailMenu() {
       menu.queryAction(fromTime(field))
       menu.queryAction(toTime(field))
     }
+
+    maybeAddVirusTotalRightclick(menu, field)
 
     if (["addr", "set[addr]"].includes(field.type)) {
       menu.fieldAction(whoisRightclick(field))

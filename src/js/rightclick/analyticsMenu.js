@@ -6,6 +6,7 @@ import {
   fromTime,
   groupByDrillDown,
   logResult,
+  maybeAddVirusTotalRightclick,
   sortAsc,
   sortDesc,
   toTime,
@@ -31,6 +32,8 @@ export function analyticsMenu(program: string) {
     }
 
     menu.queryAction(sortAsc(field), sortDesc(field))
+
+    maybeAddVirusTotalRightclick(menu, field)
 
     if (["addr", "set[addr]"].includes(field.type)) {
       menu.fieldAction(whoisRightclick(field))

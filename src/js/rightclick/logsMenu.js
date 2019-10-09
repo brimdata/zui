@@ -10,6 +10,7 @@ import {
   groupByDrillDown,
   include,
   logResult,
+  maybeAddVirusTotalRightclick,
   pcaps,
   sortAsc,
   sortDesc,
@@ -41,6 +42,8 @@ export function logsMenu(program: string, space: Space) {
     }
 
     menu.queryAction(sortAsc(field), sortDesc(field))
+
+    maybeAddVirusTotalRightclick(menu, field)
 
     if (["addr", "set[addr]"].includes(field.type)) {
       menu.fieldAction(whoisRightclick(field))

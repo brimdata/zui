@@ -4,6 +4,7 @@ import {
   freshInclude,
   fromTime,
   groupByDrillDown,
+  maybeAddVirusTotalRightclick,
   toTime,
   whoisRightclick
 } from "./actions"
@@ -25,6 +26,8 @@ export function correlationMenu(program: string) {
     } else {
       menu.queryAction(freshInclude(field))
     }
+
+    maybeAddVirusTotalRightclick(menu, field)
 
     if (["addr", "set[addr]"].includes(field.type)) {
       menu.fieldAction(whoisRightclick(field))
