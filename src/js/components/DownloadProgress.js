@@ -7,6 +7,7 @@ import classNames from "classnames"
 import type {Dispatch, State} from "../state/types"
 import * as packets from "../state/reducers/packets"
 import * as view from "../state/reducers/view"
+import {reactElementProps} from "../test/integration"
 
 type Props = {
   downloads: *[],
@@ -29,7 +30,9 @@ export default class DownloadProgress extends React.Component<Props> {
         })}
       >
         <div className="message-wrapper">
-          <p className="message">{message({complete, error})}</p>
+          <p className="message" {...reactElementProps("downloadMessage")}>
+            {message({complete, error})}
+          </p>
         </div>
 
         <div className="progress-bar">

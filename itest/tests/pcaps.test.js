@@ -1,52 +1,147 @@
 /* @flow */
 
-import {basename} from "path"
+import {readFileSync, readdirSync, unlinkSync} from "fs"
+import md5 from "md5"
+import path from "path"
 
 import {
+  click,
   logIn,
   newAppInstance,
+  pcapsDir,
   resetState,
   rightClick,
+  searchDisplay,
+  setSpan,
   startApp,
   startSearch,
   waitForSearch,
+  waitUntilDownloadFinished,
   writeSearch
 } from "../lib/app.js"
+
 import {handleError, stdTest} from "../lib/jest.js"
+import {LOG} from "../lib/log"
 import {dataSets, selectors} from "../../src/js/test/integration"
+
+const clearPcaps = () => {
+  let files = readdirSync(pcapsDir())
+  files.forEach((fileBasename) => {
+    if (fileBasename.match(/^packets-.+\.pcap$/)) {
+      let fileAbspath = path.join(pcapsDir(), fileBasename)
+      unlinkSync(fileAbspath)
+      LOG.debug(`Unlinked file ${fileAbspath}`)
+    }
+  })
+}
 
 describe("Test PCAPs", () => {
   let app
   let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance(basename(__filename), ++testIdx)
+    clearPcaps()
+    app = newAppInstance(path.basename(__filename), ++testIdx)
     return startApp(app)
   })
 
   afterEach(async () => {
+    clearPcaps()
     if (app && app.isRunning()) {
       await resetState(app)
       return await app.stop()
     }
   })
 
-  stdTest("Download PCAPS menu item appears with conn log items", (done) => {
-    let getRightClickFromConnTuple = async () => {
+  stdTest(
+    "Clicking on Download PCAPS from conn log entry downloads deterministically-formed PCAP file",
+    (done) => {
+      let downloadPcapFromConnTuple = async () => {
+        await logIn(app)
+        await writeSearch(app, "_path=conn duration!=nil | sort -r ts, uid")
+        await startSearch(app)
+        await waitForSearch(app)
+        await rightClick(
+          app,
+          selectors.viewer.resultCellContaining(
+            dataSets.corelight.pcaps.setDurationUid
+          )
+        )
+        await click(app, selectors.viewer.rightClickMenuItem("Download PCAPS"))
+        return await waitUntilDownloadFinished(app)
+      }
+      downloadPcapFromConnTuple()
+        .then((downloadText) => {
+          expect(downloadText).toBe("Download Complete")
+          let fileBasename = dataSets.corelight.pcaps.setDurationFilename
+          let pcapAbspath = path.join(pcapsDir(), fileBasename)
+          expect(md5(readFileSync(pcapAbspath))).toBe(
+            dataSets.corelight.pcaps.setDurationMD5
+          )
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    }
+  )
+
+  stdTest(
+    "Clicking on Download PCAPS with unset duration (update after fixing PROD-967)",
+    (done) => {
+      // This is a failing test that, once PROD-967 is fixed, can be updated.
+      // It's left on because I can't fix/disable it, and I want to call
+      // attention to getting it fixed right away.
+      let downloadPcapFromConnTuple = async () => {
+        await logIn(app)
+        await writeSearch(app, "_path=conn duration=nil | sort -r ts, uid")
+        await startSearch(app)
+        await waitForSearch(app)
+        await rightClick(
+          app,
+          selectors.viewer.resultCellContaining(
+            dataSets.corelight.pcaps.unsetDurationUid
+          )
+        )
+        await click(app, selectors.viewer.rightClickMenuItem("Download PCAPS"))
+        return await waitUntilDownloadFinished(app)
+      }
+      downloadPcapFromConnTuple()
+        .then((downloadText) => {
+          expect(downloadText).toBe("Download error: Bad Request")
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    }
+  )
+
+  stdTest("www.mybusinessdoc.com dosexec PCAP download", (done) => {
+    const pcapFromCorrelation = async () => {
       await logIn(app)
-      await writeSearch(app, "_path=conn duration!=nil | sort -r ts, uid")
+      await setSpan(app, dataSets.corelight.logDetails.span)
+      await writeSearch(app, dataSets.corelight.logDetails.initialSearch)
       await startSearch(app)
       await waitForSearch(app)
-      return await rightClick(
+      await searchDisplay(app)
+      await rightClick(
         app,
         selectors.viewer.resultCellContaining(
-          dataSets.corelight.pcaps.setDurationUid
+          dataSets.corelight.logDetails.getDetailsFrom
         )
       )
+      await click(app, selectors.viewer.rightClickMenuItem("Open details"))
+      await click(app, selectors.correlationPanel.getText("conn"))
+      await click(app, selectors.pcaps.button)
+      return await waitUntilDownloadFinished(app)
     }
-    getRightClickFromConnTuple()
-      .then(async () => {
-        await app.client.waitForVisible(
-          selectors.viewer.rightClickMenuItem("Download PCAPS")
+    pcapFromCorrelation()
+      .then((downloadText) => {
+        expect(downloadText).toBe("Download Complete")
+        let fileBasename = dataSets.corelight.pcaps.logDetailsFilename
+        let pcapAbspath = path.join(pcapsDir(), fileBasename)
+        expect(md5(readFileSync(pcapAbspath))).toBe(
+          dataSets.corelight.pcaps.logDetailsMD5
         )
         done()
       })

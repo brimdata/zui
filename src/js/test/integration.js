@@ -12,12 +12,14 @@ const dataAttrs = {
   debugAst: "debugAst",
   debugModal: "debugModal",
   debugProgram: "debugProgram",
+  downloadMessage: "downloadMessage",
   histogram: "histogram-chart",
   logCellMenu: "logCellMenu",
   login: "login",
   notification: "notification-header",
   optionsButton: "optionsButton",
   optionsMenu: "optionsMenu",
+  pcapsButton: "pcapsButton",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -58,7 +60,12 @@ export const dataSets = {
       startTime: "09:32"
     },
     pcaps: {
-      setDurationUid: "CZusuU27VRdyfg5thj"
+      logDetailsFilename: "packets-1428413683.772332.pcap",
+      logDetailsMD5: "40a896bf40bd2d7155ce5b52bb4924cc",
+      setDurationUid: "CZusuU27VRdyfg5thj",
+      setDurationFilename: "packets-1428917653.242511.pcap",
+      setDurationMD5: "a6cba8acc833dff9f2a04acd7ac0304a",
+      unsetDurationUid: "CgVEQNkcytYYMtmE5"
     }
   }
 }
@@ -99,10 +106,12 @@ const genSelectorForModalButton = (modalTestName: string) => (
 ) => `[${itestLocator}='${modalTestName}'] input[value='${buttonValue}']`
 
 export const selectors = {
+  downloadMessage: dataAttrSelector("downloadMessage"),
   correlationPanel: {
     duration: dataAttrSelector("correlationPanel") + " .caption",
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
-    tsLabel: dataAttrSelector("correlationPanel") + " .data-label"
+    tsLabel: dataAttrSelector("correlationPanel") + " .data-label",
+    getText: genSelectorForTextUnderElement("correlationPanel")
   },
   debugSearch: {
     ast: dataAttrSelector("debugAst") + " span",
@@ -124,6 +133,9 @@ export const selectors = {
     button: dataAttrSelector("optionsButton"),
     menu: dataAttrSelector("optionsMenu"),
     menuItem: genSelectorForTextUnderElement("optionsMenu")
+  },
+  pcaps: {
+    button: dataAttrSelector("pcapsButton")
   },
   search: {
     button: dataAttrSelector("search_button"),

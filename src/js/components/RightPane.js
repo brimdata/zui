@@ -34,6 +34,7 @@ import dispatchToProps from "../lib/dispatchToProps"
 import * as logDetails from "../state/selectors/logDetails"
 import * as spaces from "../state/reducers/spaces"
 import * as view from "../state/reducers/view"
+import {reactElementProps} from "../test/integration"
 
 type StateProps = {|
   isStarred: boolean,
@@ -121,6 +122,7 @@ export default class RightPane extends React.Component<Props, S> {
                 <button
                   className="panel-button text"
                   onClick={this.onPacketsClick}
+                  {...reactElementProps("pcapsButton")}
                 >
                   PCAPS
                 </button>
