@@ -11,6 +11,8 @@ import {
   pcapsDir,
   resetState,
   rightClick,
+  searchDisplay,
+  setSpan,
   startApp,
   startSearch,
   waitForSearch,
@@ -113,4 +115,38 @@ describe("Test PCAPs", () => {
         })
     }
   )
+
+  stdTest("www.mybusinessdoc.com dosexec PCAP download", (done) => {
+    const pcapFromCorrelation = async () => {
+      await logIn(app)
+      await setSpan(app, dataSets.corelight.logDetails.span)
+      await writeSearch(app, dataSets.corelight.logDetails.initialSearch)
+      await startSearch(app)
+      await waitForSearch(app)
+      await searchDisplay(app)
+      await rightClick(
+        app,
+        selectors.viewer.resultCellContaining(
+          dataSets.corelight.logDetails.getDetailsFrom
+        )
+      )
+      await click(app, selectors.viewer.rightClickMenuItem("Open details"))
+      await click(app, selectors.correlationPanel.getText("conn"))
+      await click(app, selectors.pcaps.button)
+      return await waitUntilDownloadFinished(app)
+    }
+    pcapFromCorrelation()
+      .then((downloadText) => {
+        expect(downloadText).toBe("Download Complete")
+        let fileBasename = dataSets.corelight.pcaps.logDetailsFilename
+        let pcapAbspath = path.join(pcapsDir(), fileBasename)
+        expect(md5(readFileSync(pcapAbspath))).toBe(
+          dataSets.corelight.pcaps.logDetailsMD5
+        )
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 })

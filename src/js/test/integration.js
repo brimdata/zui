@@ -60,6 +60,8 @@ export const dataSets = {
       startTime: "09:32"
     },
     pcaps: {
+      logDetailsFilename: "packets-1428413683.772332.pcap",
+      logDetailsMD5: "40a896bf40bd2d7155ce5b52bb4924cc",
       setDurationUid: "CZusuU27VRdyfg5thj",
       setDurationFilename: "packets-1428917653.242511.pcap",
       setDurationMD5: "a6cba8acc833dff9f2a04acd7ac0304a",
