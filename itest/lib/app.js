@@ -4,6 +4,7 @@ const electronPath = require("electron")
 import {Application} from "spectron"
 import * as path from "path"
 
+import {downloadsDir} from "../../src/js/lib/System"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "./log"
 import {workspaceLogfile} from "../lib/log"
@@ -256,3 +257,5 @@ export const waitUntilDownloadFinished = async (app: Application) =>
       (text) => text == "Download Complete" || text.includes("Download error")
     )
   })
+
+export const pcapsDir = () => downloadsDir()

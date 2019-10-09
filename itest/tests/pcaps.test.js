@@ -1,11 +1,13 @@
 /* @flow */
 
-import {basename} from "path"
+import {readdirSync, unlinkSync} from "fs"
+import path from "path"
 
 import {
   click,
   logIn,
   newAppInstance,
+  pcapsDir,
   resetState,
   rightClick,
   startApp,
@@ -15,17 +17,31 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
+import {LOG} from "../lib/log"
 import {dataSets, selectors} from "../../src/js/test/integration"
+
+const clearPcaps = () => {
+  let files = readdirSync(pcapsDir())
+  files.forEach((fileBasename) => {
+    if (fileBasename.match(/^packets-.+\.pcap$/)) {
+      let fileAbspath = path.join(pcapsDir(), fileBasename)
+      unlinkSync(fileAbspath)
+      LOG.debug(`Unlinked file ${fileAbspath}`)
+    }
+  })
+}
 
 describe("Test PCAPs", () => {
   let app
   let testIdx = 0
   beforeEach(() => {
-    app = newAppInstance(basename(__filename), ++testIdx)
+    clearPcaps()
+    app = newAppInstance(path.basename(__filename), ++testIdx)
     return startApp(app)
   })
 
   afterEach(async () => {
+    clearPcaps()
     if (app && app.isRunning()) {
       await resetState(app)
       return await app.stop()
