@@ -162,4 +162,28 @@ describe("Query tests", () => {
         handleError(app, err, done)
       })
   })
+
+  stdTest(
+    'query "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"',
+    (done) => {
+      logIn(app)
+        .then(() =>
+          writeSearch(
+            app,
+            "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
+          )
+        )
+        .then(() => setSpan(app, "Whole Space"))
+        .then(() => startSearch(app))
+        .then(() => waitForSearch(app))
+        .then(() => searchDisplay(app))
+        .then((results) => {
+          expect(results).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    }
+  )
 })
