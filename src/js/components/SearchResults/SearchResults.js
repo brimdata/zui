@@ -28,9 +28,9 @@ import NoResults from "./NoResults"
 import TableColumns from "../../models/TableColumns"
 import Viewer from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
+import cellMenu from "../../rightclick/cellMenu"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
-import viewerMenu from "../../rightclick/viewerMenu"
 
 type StateProps = {|
   logs: Log[],
@@ -82,7 +82,12 @@ export default function SearchResults(props: Props) {
         highlight={Log.isSame(logs[index], props.selectedLog)}
         dimens={dimens}
         onClick={() => props.dispatch(viewLogDetail(logs[index]))}
-        rightClick={viewerMenu(props.program, props.space, props.tab)}
+        rightClick={cellMenu(
+          props.program,
+          props.tableColumns.getColumns().map((c) => c.name),
+          props.space,
+          props.selectedLog
+        )}
       />
     )
   }

@@ -164,7 +164,7 @@ export const seperator = () => ({
   type: "seperator"
 })
 
-const virusTotalRightclick = (field: Field) => ({
+export const virusTotalRightclick = (field: Field) => ({
   type: "action",
   text: "VirusTotal Lookup",
   onClick: () => {
