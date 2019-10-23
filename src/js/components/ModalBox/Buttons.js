@@ -8,14 +8,14 @@ import ButtonRow from "../ButtonRow"
 
 type Props = {
   template: void | string | ModalButton[],
-  close: Function
+  closeModal: Function
 }
 
-export default function Buttons({template, close}: Props) {
+export default function Buttons({template, closeModal}: Props) {
   let buttons = []
 
   if (isString(template)) {
-    buttons = [{label: template, click: close}]
+    buttons = [{label: template, click: closeModal}]
   }
 
   if (isArray(template)) {
@@ -23,7 +23,7 @@ export default function Buttons({template, close}: Props) {
   }
 
   function onClick(button: ModalButton, e: PointerEvent) {
-    button.click(close, e)
+    button.click(closeModal, e)
   }
 
   return (
