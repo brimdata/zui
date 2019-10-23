@@ -4,7 +4,7 @@ import {useSelector} from "react-redux"
 import React, {useMemo} from "react"
 
 import type {ViewerDimens} from "../../types"
-import {getSearchProgram} from "../../state/selectors/searchBar"
+import {getPrevSearchProgram} from "../../state/selectors/searchBar"
 import HeaderCell from "./HeaderCell"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
@@ -19,7 +19,7 @@ type Props = {
 export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
   if (dimens.rowWidth === "auto") return null
 
-  let program = useSelector(getSearchProgram)
+  let program = useSelector(getPrevSearchProgram)
   let sorts = useMemo(() => {
     return brim
       .program(program)

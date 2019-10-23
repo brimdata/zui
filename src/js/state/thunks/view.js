@@ -1,8 +1,8 @@
 /* @flow */
 
 import type {State, Thunk} from "../types"
+import {getPrevSearchProgram} from "../selectors/searchBar"
 import {getSearchInspectorIsOpen} from "../reducers/view"
-import {getSearchProgram} from "../selectors/searchBar"
 import {hasAnalytics} from "../../lib/Program"
 import {
   hideSearchInspector,
@@ -20,4 +20,4 @@ export const toggleSearchInspector = (): Thunk => (dispatch, getState) => {
 }
 
 export const updateTab = (state: State) =>
-  hasAnalytics(getSearchProgram(state)) ? showAnalyticsTab() : showLogsTab()
+  hasAnalytics(getPrevSearchProgram(state)) ? showAnalyticsTab() : showLogsTab()

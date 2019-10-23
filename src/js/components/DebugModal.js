@@ -5,16 +5,13 @@ import React, {useState} from "react"
 
 import {Input} from "./form/Inputs"
 import {getSearchProgram} from "../state/selectors/searchBar"
+import {reactElementProps} from "../test/integration"
 import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import brim from "../brim"
-import {reactElementProps} from "../test/integration"
 
 export function DebugModal() {
-  let searchProgram = useSelector(getSearchProgram)
-  let [program, setProgram] = useState(searchProgram)
-
   return (
     <ModalBox
       name="debug"
@@ -23,27 +20,36 @@ export function DebugModal() {
       className="debug-modal"
       {...reactElementProps("debugModal")}
     >
-      <TextContent>
-        <p>
-          Type a query in the text box to see the parsed abstract syntax tree
-          (AST).
-        </p>
-        <Form>
-          <Input
-            label="Query"
-            className="mono"
-            value={program}
-            onChange={(e) => setProgram(e.target.value)}
-            {...reactElementProps("debugProgram")}
-          />
-        </Form>
-        <pre
-          className="language-js"
-          dangerouslySetInnerHTML={{__html: formatAst(program)}}
-          {...reactElementProps("debugAst")}
-        />
-      </TextContent>
+      <DebugModalContents />
     </ModalBox>
+  )
+}
+
+function DebugModalContents() {
+  let searchProgram = useSelector(getSearchProgram)
+  let [program, setProgram] = useState(searchProgram)
+
+  return (
+    <TextContent>
+      <p>
+        Type a query in the text box to see the parsed abstract syntax tree
+        (AST).
+      </p>
+      <Form>
+        <Input
+          label="Query"
+          className="mono"
+          value={program}
+          onChange={(e) => setProgram(e.target.value)}
+          {...reactElementProps("debugProgram")}
+        />
+      </Form>
+      <pre
+        className="language-js"
+        dangerouslySetInnerHTML={{__html: formatAst(program)}}
+        {...reactElementProps("debugAst")}
+      />
+    </TextContent>
   )
 }
 
