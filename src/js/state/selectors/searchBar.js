@@ -23,9 +23,9 @@ export const getSearchBarError = (state: State) => state.searchBar.error
 
 export const getSearchProgram = createSelector<State, void, *, *, *>(
   getSearchBarPins,
-  getSearchBarPreviousInputValue,
-  (pinned, previous) => {
-    const program = [...pinned, previous].map((s) => trim(s)).join(" ")
+  getSearchBarInputValue,
+  (pinned, current) => {
+    const program = [...pinned, current].map((s) => trim(s)).join(" ")
     return program.length === 0 ? "*" : program
   }
 )

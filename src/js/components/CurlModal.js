@@ -14,17 +14,6 @@ import clickFeedback from "./clickFeedback"
 import lib from "../lib"
 
 export default function CurlModalBox() {
-  let dispatch = useDispatch()
-  let [includeCreds, setIncludeCreds] = useState(false)
-  let program = useSelector(getSearchProgram)
-  let {username, password} = useSelector(getCurrentCluster)
-  let info = dispatch(inspectSearch(program))
-
-  function getCreds() {
-    if (includeCreds) return `-u ${username}:${password}`
-    else return ""
-  }
-
   function copyToClip(_, e) {
     clickFeedback(e.target, "Copied")
 
@@ -50,27 +39,43 @@ export default function CurlModalBox() {
       className="curl-modal"
       title="Curl Command"
     >
-      <TextContent>
-        {info && (
-          <pre id="copy-to-curl-code">
-            curl -X {info.method} {getCreds()} -d &apos;
-            {JSON.stringify(info.body, null, 2)}
-            &apos; {info.url}
-          </pre>
-        )}
-        {!info && (
-          <pre id="copy-to-curl-code">
-            Invalid Lookytalk: &apos;{program}&apos;
-          </pre>
-        )}
-        <Form>
-          <InputCheckbox
-            label="Include Credentials:"
-            checked={includeCreds}
-            onChange={(e) => setIncludeCreds(e.target.checked)}
-          />
-        </Form>
-      </TextContent>
+      <CurlModalContents />
     </ModalBox>
+  )
+}
+
+function CurlModalContents() {
+  let dispatch = useDispatch()
+  let [includeCreds, setIncludeCreds] = useState(false)
+  let program = useSelector(getSearchProgram)
+  let {username, password} = useSelector(getCurrentCluster)
+  let info = dispatch(inspectSearch(program))
+
+  function getCreds() {
+    if (includeCreds) return `-u ${username}:${password}`
+    else return ""
+  }
+  return (
+    <TextContent>
+      {info && (
+        <pre id="copy-to-curl-code">
+          curl -X {info.method} {getCreds()} -d &apos;
+          {JSON.stringify(info.body, null, 2)}
+          &apos; {info.url}
+        </pre>
+      )}
+      {!info && (
+        <pre id="copy-to-curl-code">
+          Invalid Lookytalk: &apos;{program}&apos;
+        </pre>
+      )}
+      <Form>
+        <InputCheckbox
+          label="Include Credentials:"
+          checked={includeCreds}
+          onChange={(e) => setIncludeCreds(e.target.checked)}
+        />
+      </Form>
+    </TextContent>
   )
 }
