@@ -39,7 +39,7 @@ export default function CurlModalBox() {
     },
     {
       label: "Done",
-      click: (close) => close()
+      click: (closeModal) => closeModal()
     }
   ]
 
