@@ -167,15 +167,20 @@ export const seperator = () => ({
 const virusTotalRightclick = (field: Field) => ({
   type: "action",
   text: "VirusTotal Lookup",
-  onClick: (dispatch: Dispatch) => {
-    const url = "https://www.virustotal.com/gui/search/"+encodeURIComponent(field.value)
-    require("electron").shell.openExternal(url)
+  onClick: () => {
+    const url =
+      "https://www.virustotal.com/gui/search/" + encodeURIComponent(field.value)
+    open(url)
   }
 })
 
 export function maybeAddVirusTotalRightclick(menu: any, field: Field) {
-  if (["hassh", "host", "ja3", "ja3s", "md5", "sha1", "sha256"].includes(field.name)
-      || ["addr", "set[addr]"].includes(field.type)) {
+  if (
+    ["hassh", "host", "ja3", "ja3s", "md5", "sha1", "sha256"].includes(
+      field.name
+    ) ||
+    ["addr", "set[addr]"].includes(field.type)
+  ) {
     menu.fieldAction(virusTotalRightclick(field))
   }
 }
