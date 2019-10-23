@@ -43,27 +43,24 @@ describe("Debug and search helpers", () => {
       })
   })
 
-  stdTest(
-    "write into main search shows Debug Query AST (update snapshot after fixing PROD-950)",
-    (done) => {
-      logIn(app)
-        .then(() =>
-          writeSearch(
-            app,
-            "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
-          )
+  stdTest("write into main search shows Debug Query AST", (done) => {
+    logIn(app)
+      .then(() =>
+        writeSearch(
+          app,
+          "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
         )
-        .then(() => openDebugQuery(app))
-        .then(() => getDebugAst(app))
-        .then((searchResults) => {
-          expect(searchResults).toMatchSnapshot()
-          done()
-        })
-        .catch((err) => {
-          handleError(app, err, done)
-        })
-    }
-  )
+      )
+      .then(() => openDebugQuery(app))
+      .then(() => getDebugAst(app))
+      .then((searchResults) => {
+        expect(searchResults).toMatchSnapshot()
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
 
   stdTest("write new search into Debug Query shows AST", (done) => {
     logIn(app)
