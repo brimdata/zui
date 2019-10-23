@@ -1,4 +1,6 @@
 /* @flow */
+import {isEqual} from "lodash"
+
 import type {Space} from "../lib/Space"
 import {
   countBy,
@@ -75,15 +77,26 @@ export default function cellMenu(
     }
 
     // groupByDrillDown
-    if (hasGroupByProc(program)) {
+    if (
+      hasGroupByProc(program) &&
+      isEqual(log.descriptor.map((d) => d.name).sort(), columns.sort())
+    ) {
       menu.queryAction(groupByDrillDown(program, log))
     }
 
     // virusTotalRightclick
     if (
-      ["hassh", "host", "ja3", "ja3s", "md5", "sha1", "sha256"].includes(
-        field.name
-      ) ||
+      [
+        "hassh",
+        "host",
+        "ja3",
+        "ja3s",
+        "md5",
+        "sha1",
+        "sha256",
+        "server_name",
+        "query"
+      ].includes(field.name) ||
       ["addr", "set[addr]"].includes(field.type)
     ) {
       menu.fieldAction(virusTotalRightclick(field))
