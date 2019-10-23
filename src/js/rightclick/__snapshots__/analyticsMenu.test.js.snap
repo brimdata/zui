@@ -22,6 +22,11 @@ Array [
   },
   Object {
     "onClick": [Function],
+    "text": "VirusTotal Lookup",
+    "type": "action",
+  },
+  Object {
+    "onClick": [Function],
     "text": "Whois Lookup",
     "type": "action",
   },
