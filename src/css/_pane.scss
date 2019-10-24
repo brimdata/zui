@@ -44,8 +44,8 @@ $pane-header-background-color: $white-5;
 }
 
 .pane-body {
-  overflow-y: scroll;
   height: 100%;
+  overflow: hidden;
 }
 
 .pane-left {

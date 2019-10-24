@@ -1,12 +1,16 @@
 /* @flow */
 
 import {every} from "lodash"
+import {useSelector} from "react-redux"
 import React from "react"
 
 import {Fieldset} from "./Typography"
-import {useDetailMenu} from "../rightclick/detailMenu"
+import {getCurrentSpace} from "../state/reducers/spaces"
+import {getCurrentTableColumns} from "../state/columns/selector"
+import {getSearchProgram} from "../state/selectors/searchBar"
 import Log from "../models/Log"
 import VerticalTable from "./Tables/VerticalTable"
+import cellMenu from "../rightclick/cellMenu"
 import connHistoryView from "../lib/connHistoryView"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
@@ -53,7 +57,10 @@ const ConnHistory = ({history = ""}) => (
 )
 
 const Host = ({className, title = "", ip = "", port = "", log}) => {
-  let detailMenu = useDetailMenu()
+  let program = useSelector(getSearchProgram)
+  let tableColumns = useSelector(getCurrentTableColumns)
+  let space = useSelector(getCurrentSpace)
+
   return (
     <div className={`host ${className}`}>
       <Fieldset>{title}</Fieldset>
@@ -62,7 +69,12 @@ const Host = ({className, title = "", ip = "", port = "", log}) => {
       <VerticalTable
         descriptor={log.descriptor}
         log={log}
-        rightClick={detailMenu}
+        rightClick={cellMenu(
+          program,
+          tableColumns.getColumns().map((c) => c.name),
+          space,
+          log
+        )}
       />
     </div>
   )
