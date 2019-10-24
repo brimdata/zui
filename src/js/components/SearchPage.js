@@ -51,8 +51,8 @@ export default function SearchPage({cluster}: Props) {
       <div className="search-page">
         <LeftPane />
         <div className="search-page-main">
-          <TitleBar />
           <div className="search-page-header">
+            <TitleBar />
             <ControlBar />
             {logsTab && (
               <div className="search-page-header-charts">

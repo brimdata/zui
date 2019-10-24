@@ -48,3 +48,7 @@ $filter-node-background: $green;
 $filter-node-foreground: $white-1;
 $table-stripe-color: rgba(0, 0, 0, 0.02);
 $table-stripe-hover: rgba(0, 0, 0, 0.06);
+
+// Gradients
+$chrome-gradient: linear-gradient(to bottom, $white-3, $white-4);
+$chrome-border: $white-5;

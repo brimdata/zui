@@ -49,8 +49,8 @@ $page-border-color: $white-4;
 }
 
 .search-page-header {
-  background-color: $page-background-color;
-  border-bottom: 1px solid $page-border-color;
+  background: $chrome-gradient;
+  border-bottom: 1px solid $chrome-border;
   z-index: 1;
 }
 
