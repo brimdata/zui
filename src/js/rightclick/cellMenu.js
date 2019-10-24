@@ -2,25 +2,10 @@
 import {isEqual} from "lodash"
 
 import type {Space} from "../lib/Space"
-import {
-  countBy,
-  detail,
-  exclude,
-  freshInclude,
-  fromTime,
-  groupByDrillDown,
-  include,
-  logResult,
-  pcaps,
-  sortAsc,
-  sortDesc,
-  toTime,
-  virusTotalRightclick,
-  whoisRightclick
-} from "./actions"
 import {hasGroupByProc} from "../lib/Program"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
+import actions from "./actions"
 import menuBuilder from "./menuBuilder"
 
 export default function cellMenu(
@@ -32,59 +17,45 @@ export default function cellMenu(
   return function(field: Field, log: Log) {
     const menu = menuBuilder()
 
-    // logResult
-    menu.debugAction(logResult(field, log))
+    menu.debugAction(actions.logResult(field, log))
 
-    // exclude
-    // include
     if (!(field instanceof TimeField) && columns.includes(field.name)) {
-      menu.queryAction(include(field), exclude(field))
+      menu.queryAction(actions.include(field), actions.exclude(field))
     }
 
-    // freshInclude
-    menu.queryAction(freshInclude(field))
+    menu.queryAction(actions.freshInclude(field))
 
-    // countBy
     if (!(field instanceof TimeField) && !hasGroupByProc(program)) {
-      menu.queryAction(countBy(field))
+      menu.queryAction(actions.countBy(field))
     }
 
-    // sortAsc
-    // sortDesc
     if (columns.includes(field.name)) {
-      menu.queryAction(sortAsc(field), sortDesc(field))
+      menu.queryAction(actions.sortAsc(field), actions.sortDesc(field))
     }
 
-    // pcaps
     if (log.isPath("conn") && space.packet_support) {
-      menu.logAction(pcaps(log))
+      menu.logAction(actions.pcaps(log))
     }
 
-    // detail
     if (!Log.isSame(log, currentLog)) {
-      menu.logAction(detail(log))
+      menu.logAction(actions.detail(log))
     }
 
-    // fromTime
-    // toTime
     if (field instanceof TimeField) {
-      menu.queryAction(fromTime(field), toTime(field))
+      menu.queryAction(actions.fromTime(field), actions.toTime(field))
     }
 
-    // whoisRightclick
     if (["addr", "set[addr]"].includes(field.type)) {
-      menu.fieldAction(whoisRightclick(field))
+      menu.fieldAction(actions.whoisRightclick(field))
     }
 
-    // groupByDrillDown
     if (
       hasGroupByProc(program) &&
       isEqual(log.descriptor.map((d) => d.name).sort(), columns.sort())
     ) {
-      menu.queryAction(groupByDrillDown(program, log))
+      menu.queryAction(actions.groupByDrillDown(program, log))
     }
 
-    // virusTotalRightclickś
     if (
       [
         "hassh",
@@ -99,7 +70,7 @@ export default function cellMenu(
       ].includes(field.name) ||
       ["addr", "set[addr]"].includes(field.type)
     ) {
-      menu.fieldAction(virusTotalRightclick(field))
+      menu.fieldAction(actions.virusTotalRightclick(field))
     }
 
     return menu.build()

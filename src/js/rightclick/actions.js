@@ -36,7 +36,7 @@ type Seperator = {
 
 export type RightClickAction = Seperator | Action
 
-export const logResult = (field: Field, log: Log) => ({
+const logResult = (field: Field, log: Log) => ({
   type: "action",
   text: "Log result to console",
   onClick: () => {
@@ -45,7 +45,7 @@ export const logResult = (field: Field, log: Log) => ({
   }
 })
 
-export const exclude = (field: Field) => ({
+const exclude = (field: Field) => ({
   type: "action",
   text: "Filter != value",
   onClick: (dispatch: Dispatch) => {
@@ -54,7 +54,7 @@ export const exclude = (field: Field) => ({
   }
 })
 
-export const include = (field: Field) => ({
+const include = (field: Field) => ({
   type: "action",
   text: "Filter = value",
   onClick: (dispatch: Dispatch) => {
@@ -63,7 +63,7 @@ export const include = (field: Field) => ({
   }
 })
 
-export const freshInclude = (field: Field) => ({
+const freshInclude = (field: Field) => ({
   type: "action",
   text: "New search with this value",
   onClick: (dispatch: Dispatch) => {
@@ -73,7 +73,7 @@ export const freshInclude = (field: Field) => ({
   }
 })
 
-export const countBy = (field: Field) => ({
+const countBy = (field: Field) => ({
   type: "action",
   text: "Count by field",
   onClick: (dispatch: Dispatch) => {
@@ -82,7 +82,7 @@ export const countBy = (field: Field) => ({
   }
 })
 
-export const sortAsc = (field: Field) => ({
+const sortAsc = (field: Field) => ({
   type: "action",
   text: "Sort A...Z",
   onClick(dispatch: Dispatch) {
@@ -91,7 +91,7 @@ export const sortAsc = (field: Field) => ({
   }
 })
 
-export const sortDesc = (field: Field) => ({
+const sortDesc = (field: Field) => ({
   type: "action",
   text: "Sort Z...A",
   onClick(dispatch: Dispatch) {
@@ -100,7 +100,7 @@ export const sortDesc = (field: Field) => ({
   }
 })
 
-export const pcaps = (log: Log) => ({
+const pcaps = (log: Log) => ({
   type: "action",
   text: "Download PCAPS",
   onClick: (dispatch: Dispatch) => {
@@ -108,7 +108,7 @@ export const pcaps = (log: Log) => ({
   }
 })
 
-export const detail = (log: Log) => ({
+const detail = (log: Log) => ({
   type: "action",
   text: "Open details",
   onClick: (dispatch: Dispatch) => {
@@ -117,7 +117,7 @@ export const detail = (log: Log) => ({
   }
 })
 
-export const fromTime = (field: TimeField) => ({
+const fromTime = (field: TimeField) => ({
   type: "action",
   text: 'Use as "start" time',
   onClick: (dispatch: Dispatch) => {
@@ -126,7 +126,7 @@ export const fromTime = (field: TimeField) => ({
   }
 })
 
-export const toTime = (field: TimeField) => ({
+const toTime = (field: TimeField) => ({
   type: "action",
   text: 'Use as "end" time',
   onClick: (dispatch: Dispatch) => {
@@ -135,7 +135,7 @@ export const toTime = (field: TimeField) => ({
   }
 })
 
-export const whoisRightclick = (field: Field) => ({
+const whoisRightclick = (field: Field) => ({
   type: "action",
   text: "Whois Lookup",
   onClick: (dispatch: Dispatch) => {
@@ -143,7 +143,7 @@ export const whoisRightclick = (field: Field) => ({
   }
 })
 
-export const groupByDrillDown = (program: string, log: Log) => ({
+const groupByDrillDown = (program: string, log: Log) => ({
   type: "action",
   text: "Pivot to logs",
   onClick: (dispatch: Dispatch) => {
@@ -161,11 +161,11 @@ export const groupByDrillDown = (program: string, log: Log) => ({
   }
 })
 
-export const seperator = () => ({
+const seperator = () => ({
   type: "seperator"
 })
 
-export const virusTotalRightclick = (field: Field) => ({
+const virusTotalRightclick = (field: Field) => ({
   type: "action",
   text: "VirusTotal Lookup",
   onClick: () => {
@@ -175,13 +175,20 @@ export const virusTotalRightclick = (field: Field) => ({
   }
 })
 
-export function maybeAddVirusTotalRightclick(menu: any, field: Field) {
-  if (
-    ["hassh", "host", "ja3", "ja3s", "md5", "sha1", "sha256"].includes(
-      field.name
-    ) ||
-    ["addr", "set[addr]"].includes(field.type)
-  ) {
-    menu.fieldAction(virusTotalRightclick(field))
-  }
+export default {
+  countBy,
+  detail,
+  exclude,
+  freshInclude,
+  fromTime,
+  groupByDrillDown,
+  include,
+  logResult,
+  pcaps,
+  sortAsc,
+  sortDesc,
+  toTime,
+  virusTotalRightclick,
+  whoisRightclick,
+  seperator
 }
