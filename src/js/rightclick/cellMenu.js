@@ -84,7 +84,7 @@ export default function cellMenu(
       menu.queryAction(groupByDrillDown(program, log))
     }
 
-    // virusTotalRightclick
+    // virusTotalRightclickś
     if (
       [
         "hassh",

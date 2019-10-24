@@ -147,6 +147,7 @@ export const groupByDrillDown = (program: string, log: Log) => ({
   type: "action",
   text: "Pivot to logs",
   onClick: (dispatch: Dispatch) => {
+    console.log(program, log)
     let newProgram = brim
       .program(program)
       .drillDown(brim.log(log.tuple, log.descriptor))
