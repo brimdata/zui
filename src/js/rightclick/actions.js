@@ -23,6 +23,7 @@ import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import brim from "../brim"
 import modal from "../modal"
+import external from "../external"
 
 type Action = {
   type: "action",
@@ -168,11 +169,7 @@ const seperator = () => ({
 const virusTotalRightclick = (field: Field) => ({
   type: "action",
   text: "VirusTotal Lookup",
-  onClick: () => {
-    const url =
-      "https://www.virustotal.com/gui/search/" + encodeURIComponent(field.value)
-    open(url)
-  }
+  onClick: () => open(external.virusTotalUrl(field.value))
 })
 
 export default {
