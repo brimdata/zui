@@ -85,8 +85,7 @@ export default function SearchResults(props: Props) {
         rightClick={cellMenu(
           props.program,
           props.tableColumns.getColumns().map((c) => c.name),
-          props.space,
-          props.selectedLog
+          props.space
         )}
       />
     )

@@ -10,7 +10,6 @@
 
   .loading-message,
   .no-chart-data {
-    font-family: $data-font;
     position: absolute;
     user-select: none;
     z-index: 0;
@@ -18,10 +17,6 @@
     top: 47%;
     transform: translate(-50%, -50%);
     color: $white-9;
-
-    .fieldset {
-      font-family: $data-font;
-    }
 
     .burst {
       background-color: $white-9;

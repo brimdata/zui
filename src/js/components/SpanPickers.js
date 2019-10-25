@@ -7,7 +7,6 @@ import React from "react"
 import {type DateTuple} from "../lib/TimeWindow"
 import type {Dispatch, State} from "../state/types"
 import type {Space} from "../lib/Space"
-import {ThinPicker} from "./Buttons"
 import {type TimeObj, add, set, subtract} from "../lib/Time"
 import {getCurrentSpace} from "../state/reducers/spaces"
 import {getTimeWindow} from "../state/reducers/timeWindow"
@@ -197,9 +196,7 @@ function SpanPickerMenu() {
       position="bottom right"
       {...reactElementProps("span_menu")}
     >
-      <div>
-        <ThinPicker {...reactElementProps("span_button")} />
-      </div>
+      <MenuBarButton dropdown {...reactElementProps("span_button")} />
     </PopMenuPointy>
   )
 }

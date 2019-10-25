@@ -38,6 +38,7 @@ export default function SpacePicker() {
     >
       <MenuBarButton
         {...reactElementProps("spaces_button")}
+        dropdown
         onClick={() => dispatch(refreshSpaces())}
       >
         {space}

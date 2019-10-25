@@ -1,14 +1,14 @@
 .span-pickers {
   margin-left: 3px;
+
   .thin-button:hover {
     background: #dcdcdc;
   }
 
-  .DayPickerInput {
-  }
   .time-input {
     padding: 1px 5px;
   }
+
   .day-input,
   .time-input {
     background: none;
@@ -26,7 +26,15 @@
       background-color: white;
     }
   }
+
   .span-drop-menu {
     display: flex;
+  }
+
+  .menu-bar-button {
+    margin-left: 3px;
+    .dropdown-arrow {
+      margin-left: 0;
+    }
   }
 }

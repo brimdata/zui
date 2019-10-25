@@ -3,7 +3,7 @@
   background: linear-gradient($white-1, $white-3);
   border-radius: 3px;
   border: none;
-  box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.5px 0.15px rgba(0, 0, 0, 0.25);
 
   font-family: $mono-font;
   font-weight: bold;
@@ -14,6 +14,12 @@
   color: $gray-9;
   display: flex;
   outline: none;
+  justify-content: center;
+  align-items: center;
+
+  .dropdown-arrow {
+    margin-left: 6px;
+  }
 
   &:active {
     background: linear-gradient($white-2, $white-4);

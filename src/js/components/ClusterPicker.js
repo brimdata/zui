@@ -34,8 +34,8 @@ export default function CluterPicker() {
     <div className="cluster-picker">
       <PopMenuPointy template={template} position="bottom center">
         <div>
-          <MenuBarButton>
-            {current.host}:{current.port}
+          <MenuBarButton dropdown>
+            <strong>{current.host}</strong>:{current.port}
           </MenuBarButton>
         </div>
       </PopMenuPointy>

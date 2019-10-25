@@ -42,12 +42,7 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
       <PanelHeading status={status}>Md5 Correlation</PanelHeading>
       <AsyncTable
         logs={md5}
-        rightClick={cellMenu(
-          md5Correlation(logMd5),
-          getColumns(md5),
-          space,
-          log
-        )}
+        rightClick={cellMenu(md5Correlation(logMd5), getColumns(md5), space)}
         name="md5 count"
         status={status}
         expect={1}
@@ -57,8 +52,7 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
         rightClick={cellMenu(
           filenameCorrelation(logMd5),
           getColumns(filenames),
-          space,
-          log
+          space
         )}
         name="filename, mime_type count"
         status={status}
@@ -70,8 +64,7 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
           rightClick={cellMenu(
             txHostsCorrelation(logMd5),
             getColumns(tx),
-            space,
-            log
+            space
           )}
           name="tx_hosts count"
           status={status}
@@ -82,8 +75,7 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
           rightClick={cellMenu(
             rxHostsCorrelation(logMd5),
             getColumns(rx),
-            space,
-            log
+            space
           )}
           name="rx_hosts count"
           status={status}
