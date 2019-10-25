@@ -2,16 +2,16 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import {XSpacesMenu} from "./SpacesMenu"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {initSpace} from "../space/thunks"
+import {getAllSpaceNames, getCurrentSpaceName} from "../state/reducers/spaces"
+import {initSpace, refreshSpaces} from "../space/thunks"
 import {reactElementProps} from "../test/integration"
-import DropMenu from "./DropMenu"
 import MenuBarButton from "./MenuBarButton"
+import PopMenuPointy from "./PopMenu/PopMenuPointy"
 
 export default function SpacePicker() {
   let currentSpace = useSelector(getCurrentSpaceName)
   let [space, setSpace] = useState(currentSpace)
+  let spaces = useSelector(getAllSpaceNames)
   let dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,18 +25,21 @@ export default function SpacePicker() {
 
   if (!space) return <div style={{height: 14}} />
 
+  let template = spaces.map((space) => ({
+    label: space,
+    click: () => onSpaceChange(space)
+  }))
+
   return (
-    <DropMenu
-      position="left"
-      menu={XSpacesMenu}
-      onChange={onSpaceChange}
-      className="button-group"
-    >
-      {
-        <MenuBarButton {...reactElementProps("spaces_button")}>
+    <PopMenuPointy template={template} position="bottom center">
+      <div>
+        <MenuBarButton
+          {...reactElementProps("spaces_button")}
+          onClick={() => dispatch(refreshSpaces())}
+        >
           {space}
         </MenuBarButton>
-      }
-    </DropMenu>
+      </div>
+    </PopMenuPointy>
   )
 }
