@@ -9,7 +9,6 @@ import type {Dispatch, State} from "../state/types"
 import type {Space} from "../lib/Space"
 import {ThinPicker} from "./Buttons"
 import {type TimeObj, add, set, subtract} from "../lib/Time"
-import {XSpanPickerMenu} from "./SpanPickerMenu"
 import {getCurrentSpace} from "../state/reducers/spaces"
 import {getTimeWindow} from "../state/reducers/timeWindow"
 import {getTimeZone} from "../state/reducers/view"
@@ -17,10 +16,11 @@ import {reactElementProps} from "../test/integration"
 import {setOuterTimeWindow} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import DayPicker from "./DayPicker"
-import DropMenu from "./DropMenu"
 import MenuBarButton from "./MenuBarButton"
+import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import SpanDuration from "./SpanDuration"
 import TimePicker from "./TimePicker"
+import useSpanPickerMenu from "./useSpanPickerMenu"
 
 type StateProps = {|
   timeWindow: DateTuple,
@@ -183,16 +183,21 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
             />
           </MenuBarButton>
         </div>
-        <DropMenu
-          menu={XSpanPickerMenu}
-          className="span-drop-menu"
-          position="right"
-        >
-          <ThinPicker {...reactElementProps("span_button")} />
-        </DropMenu>
+        <SpanPickerMenu />
       </div>
     )
   }
+}
+
+function SpanPickerMenu() {
+  let menu = useSpanPickerMenu()
+  return (
+    <PopMenuPointy template={menu} position="bottom right">
+      <div>
+        <ThinPicker {...reactElementProps("span_button")} />
+      </div>
+    </PopMenuPointy>
+  )
 }
 
 const stateToProps = (state: State): StateProps => ({

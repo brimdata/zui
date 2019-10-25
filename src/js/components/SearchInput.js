@@ -3,14 +3,16 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
 
-import {XSearchButtonMenu} from "./SearchButtonMenu"
 import {changeSearchBarInput} from "../state/actions"
 import {getSearchBarInputValue} from "../state/selectors/searchBar"
+import {getSearches} from "../state/searches/selector"
+import {killSearchesByTag} from "../searches/cancelSearch"
 import {reactElementProps} from "../test/integration"
 import {submitSearchBar} from "../state/thunks/searchBar"
-import DropMenu from "./DropMenu"
 import InputHistory from "../models/InputHistory"
+import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
+import modal from "../modal"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -57,9 +59,33 @@ export default function SearchInput() {
         autoComplete="off"
         {...reactElementProps("search_input")}
       />
-      <DropMenu menu={XSearchButtonMenu} position="right">
-        <ThreeDotButton {...reactElementProps("optionsButton")} />
-      </DropMenu>
+      <Menu />
     </div>
+  )
+}
+
+function Menu() {
+  let dispatch = useDispatch()
+  let searches = useSelector(getSearches)
+  let isFetching = Object.values(searches)
+    //$FlowFixMe
+    .filter((s) => s.tag === "viewer")
+    //$FlowFixMe
+    .some((s) => s.status === "FETCHING")
+
+  let menu = [
+    {label: "Debug query", click: () => dispatch(modal.show("debug"))},
+    {label: "Copy for curl", click: () => dispatch(modal.show("curl"))},
+    {
+      label: "Kill search",
+      click: () => dispatch(killSearchesByTag("viewer")),
+      disabled: !isFetching
+    }
+  ]
+
+  return (
+    <PopMenuPointy template={menu}>
+      <ThreeDotButton {...reactElementProps("optionsButton")} />
+    </PopMenuPointy>
   )
 }

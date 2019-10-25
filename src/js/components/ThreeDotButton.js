@@ -4,12 +4,22 @@ import classNames from "classnames"
 
 import type {PassProps} from "./types"
 
-export default function ThreeDotButton({className, ...props}: PassProps) {
+//$FlowFixMe
+const ThreeDotButton = React.forwardRef(function ThreeDotButton(
+  {className, ...props}: PassProps,
+  ref
+) {
   return (
-    <button className={classNames(className, "three-dot-button")} {...props}>
+    <button
+      ref={ref}
+      className={classNames(className, "three-dot-button")}
+      {...props}
+    >
       <div className="dot dot-1" />
       <div className="dot dot-2" />
       <div className="dot dot-3" />
     </button>
   )
-}
+})
+
+export default ThreeDotButton

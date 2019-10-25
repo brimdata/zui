@@ -26,7 +26,6 @@ export default class SearchBar extends React.Component<Props> {
           {this.props.error && <ErrorMessage error={this.props.error} />}
           <XPins />
         </div>
-        {/* <XSearchButton /> */}
       </div>
     )
   }
