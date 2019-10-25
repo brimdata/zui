@@ -5,7 +5,6 @@ import React from "react"
 
 import type {State} from "../state/types"
 import {XPins} from "./Pins"
-import {XSearchButton} from "../components/SearchButton"
 import {getSearchBarError} from "../state/selectors/searchBar"
 import SearchInput from "./SearchInput"
 import Warning from "../icons/warning-sm.svg"
@@ -27,7 +26,7 @@ export default class SearchBar extends React.Component<Props> {
           {this.props.error && <ErrorMessage error={this.props.error} />}
           <XPins />
         </div>
-        <XSearchButton />
+        {/* <XSearchButton /> */}
       </div>
     )
   }

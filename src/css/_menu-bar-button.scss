@@ -1,18 +1,17 @@
 .menu-bar-button {
+  -webkit-app-region: no-drag;
   background: linear-gradient($white-1, $white-3);
   border-radius: 3px;
-  border: 1px solid;
-  border-color: $white-4 $white-5 $white-6;
   border: none;
   box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.3);
 
   font-family: $mono-font;
   font-weight: bold;
-  height: 19px;
-  line-height: 17px;
+  height: 16px;
+  line-height: 14px;
+  padding: 0 8px;
   font-size: 11px;
-  color: $gray-7;
-  padding: 0 10px;
+  color: $gray-9;
   display: flex;
   outline: none;
 

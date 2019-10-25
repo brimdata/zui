@@ -1,5 +1,6 @@
 .search-bar {
   display: flex;
+  -webkit-app-region: no-drag;
 
   .search-builder {
     flex: 1;
@@ -10,8 +11,6 @@
   .search-inputs {
     display: flex;
     flex-basis: 100%;
-    box-shadow: $box-shadow;
-    border-radius: 3px;
 
     .search-input {
       flex: 1;

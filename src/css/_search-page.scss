@@ -52,8 +52,10 @@ $page-border-color: $white-4;
   background: $chrome-gradient;
   border-bottom: 1px solid $chrome-border;
   z-index: 1;
+  -webkit-app-region: drag;
 }
 
 .search-page-header-charts {
+  -webkit-app-region: no-drag;
   height: 80px;
 }

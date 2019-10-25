@@ -3,11 +3,14 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
 
+import {XSearchButtonMenu} from "./SearchButtonMenu"
 import {changeSearchBarInput} from "../state/actions"
 import {getSearchBarInputValue} from "../state/selectors/searchBar"
 import {reactElementProps} from "../test/integration"
 import {submitSearchBar} from "../state/thunks/searchBar"
+import DropMenu from "./DropMenu"
 import InputHistory from "../models/InputHistory"
+import ThreeDotButton from "./ThreeDotButton"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -43,20 +46,20 @@ export default function SearchInput() {
 
   return (
     <div className="search-input">
-      <div className="text-input-wrapper">
-        <input
-          id="main-search-input"
-          type="text"
-          value={inputValue}
-          placeholder="Search"
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          spellCheck={false}
-          autoFocus={true}
-          autoComplete="off"
-          {...reactElementProps("search_input")}
-        />
-      </div>
+      <input
+        id="main-search-input"
+        type="text"
+        value={inputValue}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        spellCheck={false}
+        autoFocus={true}
+        autoComplete="off"
+        {...reactElementProps("search_input")}
+      />
+      <DropMenu menu={XSearchButtonMenu} position="right">
+        <ThreeDotButton {...reactElementProps("optionsButton")} />
+      </DropMenu>
     </div>
   )
 }

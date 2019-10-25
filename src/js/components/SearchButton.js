@@ -3,14 +3,9 @@
 import {connect} from "react-redux"
 import React from "react"
 
-import {DebugModal} from "./DebugModal"
 import type {DispatchProps} from "../state/types"
-import {XSearchButtonMenu} from "./SearchButtonMenu"
 import {reactElementProps} from "../test/integration"
 import {submitSearchBar} from "../state/thunks/searchBar"
-import Arrow from "../icons/caret-bottom-sm.svg"
-import CurlModal from "./CurlModal"
-import DropMenu from "./DropMenu"
 import MagGlass from "../icons/magnifying-glass-md.svg"
 import dispatchToProps from "../lib/dispatchToProps"
 
@@ -35,19 +30,6 @@ export default class SearchButton extends React.Component<Props> {
         >
           <MagGlass />
         </button>
-
-        <DropMenu menu={XSearchButtonMenu} position="right">
-          <button
-            className="button options-button"
-            {...reactElementProps("optionsButton")}
-          >
-            <Arrow />
-          </button>
-        </DropMenu>
-
-        <DebugModal />
-
-        <CurlModal />
       </div>
     )
   }
