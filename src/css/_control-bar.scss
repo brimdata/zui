@@ -2,6 +2,7 @@
   position: relative;
   z-index: 1;
   margin-bottom: 8px;
+  padding-top: 22px;
 
   .row-1 {
     display: flex;
@@ -19,6 +20,14 @@
       diplay: flex;
       align-items: center;
     }
+
+    .group {
+      display: flex;
+      align-items: center;
+      & > * {
+        margin-right: 3px;
+      }
+    }
   }
 
   .row-2 {
@@ -27,10 +36,6 @@
 
   .search-bar {
     flex: 1;
-  }
-
-  .looky-face {
-    margin-right: $space-s;
   }
 
   .control-button {

@@ -51,6 +51,8 @@
 }
 
 .DayPicker-TodayButton {
-  @extend .button;
+  @extend .menu-bar-button;
+  font-family: $body-font;
+  margin: 0 auto;
   padding: 3px 6px;
 }

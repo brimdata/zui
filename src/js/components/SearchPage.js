@@ -24,7 +24,6 @@ import ControlBar from "./ControlBar"
 import EmptySpaceModal from "./EmptySpaceModal"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
 import SettingsModal from "./SettingsModal"
-import TitleBar from "./TitleBar"
 import WhoisModal from "./WhoisModal"
 
 type Props = {|cluster: Cluster|}
@@ -52,7 +51,6 @@ export default function SearchPage({cluster}: Props) {
         <LeftPane />
         <div className="search-page-main">
           <div className="search-page-header">
-            <TitleBar />
             <ControlBar />
             {logsTab && (
               <div className="search-page-header-charts">

@@ -18,6 +18,7 @@ import {setOuterTimeWindow} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import DayPicker from "./DayPicker"
 import DropMenu from "./DropMenu"
+import MenuBarButton from "./MenuBarButton"
 import SpanDuration from "./SpanDuration"
 import TimePicker from "./TimePicker"
 
@@ -153,7 +154,7 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
         >
-          <div className="thin-button">
+          <MenuBarButton>
             <DayPicker
               from={this.state.fromDate}
               to={this.state.toDate}
@@ -165,9 +166,9 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
               time={this.state.fromDate}
               onTimeChange={this.onFromTimeChange}
             />
-          </div>
+          </MenuBarButton>
           <SpanDuration span={[this.state.fromDate, this.state.toDate]} />
-          <div className="thin-button">
+          <MenuBarButton>
             <DayPicker
               from={this.state.fromDate}
               to={this.state.toDate}
@@ -180,7 +181,7 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
               onTimeChange={this.onToTimeChange}
               ref={(r) => (this.toTime = r)}
             />
-          </div>
+          </MenuBarButton>
         </div>
         <DropMenu
           menu={XSpanPickerMenu}

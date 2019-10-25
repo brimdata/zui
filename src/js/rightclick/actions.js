@@ -22,8 +22,8 @@ import {viewLogDetail} from "../detail/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import brim from "../brim"
-import modal from "../modal"
 import external from "../external"
+import modal from "../modal"
 
 type Action = {
   type: "action",

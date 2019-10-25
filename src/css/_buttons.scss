@@ -158,9 +158,11 @@
 }
 
 .thin-picker {
-  cursor: pointer;
   width: 22px;
-  padding: 0;
+  padding: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 100ms;
 
   svg {
@@ -168,16 +170,6 @@
     width: 8px;
     padding: 0;
     margin: 0;
-  }
-
-  &:hover {
-    background: darken(#dcdcdc, 5%);
-    transform: scale(1.05);
-  }
-
-  &:active {
-    background: darken(#dcdcdc, 10%);
-    transform: scale(1);
   }
 }
 

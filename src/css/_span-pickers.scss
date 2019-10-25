@@ -5,7 +5,7 @@
   }
 
   .DayPickerInput {
-    height: 14px;
+    height: 19px;
   }
   .time-input {
     padding: 0 5px;
@@ -21,10 +21,10 @@
     transition: all 100ms;
     text-align: center;
     &:hover {
-      background-color: darken(#dcdcdc, 5%);
+      background-color: $white-2;
     }
     &:focus {
-      background-color: darken(#dcdcdc, 10%);
+      background-color: white;
     }
   }
   .span-drop-menu {

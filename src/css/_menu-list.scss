@@ -18,9 +18,9 @@
     list-style-type: none;
     display: block;
     white-space: nowrap;
-    cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
 
     &:hover {
       background-color: $white-2;

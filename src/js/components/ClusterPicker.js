@@ -9,7 +9,7 @@ import {getCurrentCluster, getSavedClusters} from "../state/clusters/selectors"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 
-export default function TitleBar() {
+export default function CluterPicker() {
   const current = useSelector(getCurrentCluster)
   const clusters = useSelector(getSavedClusters)
   const dispatch = useDispatch()
@@ -31,7 +31,7 @@ export default function TitleBar() {
   })
 
   return (
-    <div className="title-bar">
+    <div className="cluster-picker">
       <PopMenuPointy template={template} position="bottom center">
         <div>
           <MenuBarButton>

@@ -2,12 +2,12 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import {ThinButton} from "./Buttons"
 import {XSpacesMenu} from "./SpacesMenu"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {initSpace} from "../space/thunks"
 import {reactElementProps} from "../test/integration"
 import DropMenu from "./DropMenu"
+import MenuBarButton from "./MenuBarButton"
 
 export default function SpacePicker() {
   let currentSpace = useSelector(getCurrentSpaceName)
@@ -32,7 +32,11 @@ export default function SpacePicker() {
       onChange={onSpaceChange}
       className="button-group"
     >
-      {<ThinButton {...reactElementProps("spaces_button")}>{space}</ThinButton>}
+      {
+        <MenuBarButton {...reactElementProps("spaces_button")}>
+          {space}
+        </MenuBarButton>
+      }
     </DropMenu>
   )
 }
