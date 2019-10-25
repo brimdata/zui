@@ -7,10 +7,20 @@ type Props = {
   className?: string
 }
 
-export default function MenuBarButton({className, children, ...props}: Props) {
+// $FlowFixMe
+const MenuBarButton = React.forwardRef(function MenuBarButton(
+  {className, children, ...props}: Props,
+  ref
+) {
   return (
-    <button className={classNames(className, "menu-bar-button")} {...props}>
+    <button
+      ref={ref}
+      className={classNames(className, "menu-bar-button")}
+      {...props}
+    >
       {children}
     </button>
   )
-}
+})
+
+export default MenuBarButton

@@ -31,15 +31,17 @@ export default function SpacePicker() {
   }))
 
   return (
-    <PopMenuPointy template={template} position="bottom center">
-      <div>
-        <MenuBarButton
-          {...reactElementProps("spaces_button")}
-          onClick={() => dispatch(refreshSpaces())}
-        >
-          {space}
-        </MenuBarButton>
-      </div>
+    <PopMenuPointy
+      template={template}
+      position="bottom center"
+      {...reactElementProps("spacesMenu")}
+    >
+      <MenuBarButton
+        {...reactElementProps("spaces_button")}
+        onClick={() => dispatch(refreshSpaces())}
+      >
+        {space}
+      </MenuBarButton>
     </PopMenuPointy>
   )
 }

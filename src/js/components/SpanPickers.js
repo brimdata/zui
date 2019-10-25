@@ -192,7 +192,11 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
 function SpanPickerMenu() {
   let menu = useSpanPickerMenu()
   return (
-    <PopMenuPointy template={menu} position="bottom right">
+    <PopMenuPointy
+      template={menu}
+      position="bottom right"
+      {...reactElementProps("span_menu")}
+    >
       <div>
         <ThinPicker {...reactElementProps("span_button")} />
       </div>

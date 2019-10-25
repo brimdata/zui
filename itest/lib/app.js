@@ -126,11 +126,7 @@ export const getSearchText = (app: Application) =>
   )
 
 export const startSearch = (app: Application) =>
-  appStep("click the search button", () =>
-    app.client
-      .waitForVisible(selectors.search.button)
-      .then(() => app.client.click(selectors.search.button))
-  )
+  appStep("click the search button", () => app.client.keys("Enter"))
 
 export const searchDisplay = async (app: Application) => {
   // This stinks. We have to use getHTML because headers that are off the

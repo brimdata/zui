@@ -84,7 +84,7 @@ function Menu() {
   ]
 
   return (
-    <PopMenuPointy template={menu}>
+    <PopMenuPointy template={menu} {...reactElementProps("optionsMenu")}>
       <ThreeDotButton {...reactElementProps("optionsButton")} />
     </PopMenuPointy>
   )

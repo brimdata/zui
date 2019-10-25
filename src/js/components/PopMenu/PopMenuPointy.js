@@ -11,7 +11,12 @@ type Props = {
   position?: string
 }
 
-export default function PopMenuPointy({children, template, position}: Props) {
+export default function PopMenuPointy({
+  children,
+  template,
+  position,
+  ...props
+}: Props) {
   let menu = usePopMenu(children, position)
 
   return (
@@ -23,7 +28,7 @@ export default function PopMenuPointy({children, template, position}: Props) {
         style={menu.style}
       >
         <PopMenuPointer style={menu.pointerStyle} />
-        <PopMenuList template={template} />
+        <PopMenuList template={template} {...props} />
       </PopMenuWrapper>
       {menu.anchor}
     </>
@@ -42,9 +47,9 @@ function PopMenuWrapper({children, onClose, isOpen, setRef, style}) {
   )
 }
 
-function PopMenuList({template}) {
+function PopMenuList({template, ...props}) {
   return (
-    <ul>
+    <ul {...props}>
       {template.map((item, i) => (
         <PopMenuListItem item={item} key={i} />
       ))}
