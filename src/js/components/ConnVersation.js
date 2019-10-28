@@ -1,7 +1,7 @@
 /* @flow */
 
 import {every} from "lodash"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import {Fieldset} from "./Typography"
@@ -60,6 +60,7 @@ const Host = ({className, title = "", ip = "", port = "", log}) => {
   let program = useSelector(getSearchProgram)
   let tableColumns = useSelector(getCurrentTableColumns)
   let space = useSelector(getCurrentSpace)
+  let dispatch = useDispatch()
 
   return (
     <div className={`host ${className}`}>
@@ -72,7 +73,8 @@ const Host = ({className, title = "", ip = "", port = "", log}) => {
         rightClick={cellMenu(
           program,
           tableColumns.getColumns().map((c) => c.name),
-          space
+          space,
+          dispatch
         )}
       />
     </div>

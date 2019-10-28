@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import type {PanelProps} from "./"
@@ -21,6 +21,7 @@ import cellMenu from "../../rightclick/cellMenu"
 
 export const Md5Panel = ({log, searches}: PanelProps) => {
   let space = useSelector(getCurrentSpace)
+  let dispatch = useDispatch()
 
   const logMd5 = log.get("md5")
   if (!logMd5) return null
@@ -42,7 +43,12 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
       <PanelHeading status={status}>Md5 Correlation</PanelHeading>
       <AsyncTable
         logs={md5}
-        rightClick={cellMenu(md5Correlation(logMd5), getColumns(md5), space)}
+        rightClick={cellMenu(
+          md5Correlation(logMd5),
+          getColumns(md5),
+          space,
+          dispatch
+        )}
         name="md5 count"
         status={status}
         expect={1}
@@ -52,7 +58,8 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
         rightClick={cellMenu(
           filenameCorrelation(logMd5),
           getColumns(filenames),
-          space
+          space,
+          dispatch
         )}
         name="filename, mime_type count"
         status={status}
@@ -64,7 +71,8 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
           rightClick={cellMenu(
             txHostsCorrelation(logMd5),
             getColumns(tx),
-            space
+            space,
+            dispatch
           )}
           name="tx_hosts count"
           status={status}
@@ -75,7 +83,8 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
           rightClick={cellMenu(
             rxHostsCorrelation(logMd5),
             getColumns(rx),
-            space
+            space,
+            dispatch
           )}
           name="rx_hosts count"
           status={status}

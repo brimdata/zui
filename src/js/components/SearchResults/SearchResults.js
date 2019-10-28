@@ -1,6 +1,6 @@
 /* @flow */
 
-import {connect} from "react-redux"
+import {connect, useDispatch} from "react-redux"
 import {isEmpty} from "lodash"
 import React from "react"
 
@@ -53,6 +53,7 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function SearchResults(props: Props) {
   let {logs} = props
+  let dispatch = useDispatch()
 
   const dimens = buildViewerDimens({
     type: props.tableColumns.showHeader() ? "fixed" : "auto",
@@ -85,7 +86,8 @@ export default function SearchResults(props: Props) {
         rightClick={cellMenu(
           props.program,
           props.tableColumns.getColumns().map((c) => c.name),
-          props.space
+          props.space,
+          dispatch
         )}
       />
     )

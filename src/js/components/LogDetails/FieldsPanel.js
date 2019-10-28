@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import type {PanelProps} from "./"
@@ -16,6 +16,7 @@ export default function FieldsPanel({log}: PanelProps) {
   let program = useSelector(getSearchProgram)
   let tableColumns = useSelector(getCurrentTableColumns)
   let space = useSelector(getCurrentSpace)
+  let dispatch = useDispatch()
 
   return (
     <div className="fields-table-panel detail-panel">
@@ -26,7 +27,8 @@ export default function FieldsPanel({log}: PanelProps) {
         rightClick={cellMenu(
           program,
           tableColumns.getColumns().map((c) => c.name),
-          space
+          space,
+          dispatch
         )}
       />
     </div>

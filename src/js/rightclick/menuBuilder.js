@@ -1,10 +1,11 @@
 /* @flow */
 import electronIsDev from "electron-is-dev"
 
+import type {Dispatch} from "../state/types"
 import {flattenJoin} from "../lib/Array"
 import actions, {type RightClickAction} from "./actions"
 
-export default function menuBuilder() {
+export default function menuBuilder(dispatch: Dispatch) {
   let query = []
   let field = []
   let log = []
@@ -30,7 +31,21 @@ export default function menuBuilder() {
     },
 
     build() {
-      return flattenJoin([query, field, log, debug], actions.separator())
+      return flattenJoin(
+        [query, field, log, debug],
+        actions.separator()
+      ).map<RightClickAction>((item) => bindDispatch(item, dispatch))
     }
+  }
+}
+
+function bindDispatch(action, dispatch) {
+  if (action.click) {
+    return {
+      ...action,
+      click: action.click.bind(null, dispatch)
+    }
+  } else {
+    return action
   }
 }

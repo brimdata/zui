@@ -5,7 +5,7 @@ import cellMenu from "./cellMenu"
 import mockSpace from "../test/mockSpace"
 
 function menuText(menu) {
-  return menu.map((item) => item.text).join(", ")
+  return menu.map((item) => item.label).join(", ")
 }
 
 describe("Log Right Click", () => {
