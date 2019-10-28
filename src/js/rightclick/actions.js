@@ -28,7 +28,8 @@ import modal from "../modal"
 export type RightClickAction = {
   type?: string,
   label?: string,
-  click?: () => void
+  click?: () => void,
+  enabled?: boolean
 }
 
 type Options = {
