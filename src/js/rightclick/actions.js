@@ -162,8 +162,8 @@ const groupByDrillDown = (program: string, log: Log) => ({
   }
 })
 
-const seperator = () => ({
-  type: "seperator"
+const separator = () => ({
+  type: "separator"
 })
 
 const virusTotalRightclick = (field: Field) => ({
@@ -187,5 +187,5 @@ export default {
   toTime,
   virusTotalRightclick,
   whoisRightclick,
-  seperator
+  separator
 }

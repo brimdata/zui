@@ -30,7 +30,7 @@ export default function menuBuilder() {
     },
 
     build() {
-      return flattenJoin([query, field, log, debug], actions.seperator())
+      return flattenJoin([query, field, log, debug], actions.separator())
     }
   }
 }
