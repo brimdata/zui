@@ -61,8 +61,8 @@ function toLogs(searches) {
     {name: "elapsed", type: "interval"},
     {name: "bytes matched", type: "count"},
     {name: "bytes read", type: "count"},
-    {name: "tuples matched", type: "count"},
-    {name: "tuples read", type: "count"}
+    {name: "records matched", type: "count"},
+    {name: "records read", type: "count"}
   ]
 
   let tuples = []
