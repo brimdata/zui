@@ -1,0 +1,29 @@
+.menu-bar-button {
+  -webkit-app-region: no-drag;
+  background: linear-gradient($white-1, $white-3);
+  border-radius: 3px;
+  border: none;
+  box-shadow: 0 0.5px 0.15px rgba(0, 0, 0, 0.25);
+
+  font-family: $mono-font;
+  font-weight: bold;
+  height: 16px;
+  line-height: 14px;
+  padding: 0 8px;
+  font-size: 11px;
+  color: $gray-9;
+  display: flex;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+
+  .dropdown-arrow {
+    margin-left: 6px;
+  }
+
+  &:active {
+    background: linear-gradient($white-2, $white-4);
+    box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.4);
+    color: $gray-9;
+  }
+}

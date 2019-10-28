@@ -6,6 +6,7 @@ import React, {useEffect} from "react"
 import {ipcRenderer} from "electron"
 
 import type {Cluster} from "../state/clusters/types"
+import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
@@ -21,10 +22,10 @@ import {useResizeObserver} from "../hooks/useResizeObserver"
 import BackendErrorNotice from "./BackendErrorNotice"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
+import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
 import SettingsModal from "./SettingsModal"
-import TitleBar from "./TitleBar"
 import WhoisModal from "./WhoisModal"
 
 type Props = {|cluster: Cluster|}
@@ -51,7 +52,6 @@ export default function SearchPage({cluster}: Props) {
       <div className="search-page">
         <LeftPane />
         <div className="search-page-main">
-          <TitleBar />
           <div className="search-page-header">
             <ControlBar />
             {logsTab && (
@@ -75,6 +75,8 @@ export default function SearchPage({cluster}: Props) {
       <XSearchInspector />
       <XDownloadProgress />
       <WhoisModal />
+      <DebugModal />
+      <CurlModal />
       <SettingsModal />
       <EmptySpaceModal />
     </div>

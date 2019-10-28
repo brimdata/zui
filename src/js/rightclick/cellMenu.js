@@ -11,8 +11,7 @@ import menuBuilder from "./menuBuilder"
 export default function cellMenu(
   program: string,
   columns: string[],
-  space: Space,
-  currentLog: ?Log
+  space: Space
 ) {
   return function(field: Field, log: Log) {
     const menu = menuBuilder()
@@ -37,9 +36,7 @@ export default function cellMenu(
       menu.logAction(actions.pcaps(log))
     }
 
-    if (!Log.isSame(log, currentLog)) {
-      menu.logAction(actions.detail(log))
-    }
+    menu.logAction(actions.detail(log))
 
     if (field instanceof TimeField) {
       menu.queryAction(actions.fromTime(field), actions.toTime(field))

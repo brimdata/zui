@@ -40,8 +40,8 @@
 
   aside {
     width: 230px;
-    background: linear-gradient(to bottom, $white-2, $white-3);
-    border-right: 1px solid $white-4;
+    background: $chrome-gradient;
+    border-right: 1px solid $chrome-border;
     display: flex;
     flex-direction: column;
     height: 100%;

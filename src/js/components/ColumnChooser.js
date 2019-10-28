@@ -1,9 +1,10 @@
 /* @flow */
 
 import React from "react"
-import DropMenu from "./DropMenu"
-import {ThinButton} from "./Buttons"
+
 import {XColumnChooserMenu} from "./ColumnChooserMenu"
+import DropMenu from "./DropMenu"
+import MenuBarButton from "./MenuBarButton"
 
 type Props = {}
 
@@ -17,7 +18,7 @@ export default class ColumnChooser extends React.Component<Props> {
           menu={XColumnChooserMenu}
           dim={true}
         >
-          <ThinButton>Columns</ThinButton>
+          <MenuBarButton>Columns</MenuBarButton>
         </DropMenu>
       </div>
     )

@@ -15,12 +15,10 @@ describe("Log Right Click", () => {
   test("conn log with pcap support", () => {
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = cellMenu(
-      program,
-      log.descriptor.map((c) => c.name),
-      space,
-      null
-    )(field, log)
+    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
+      field,
+      log
+    )
 
     expect(menuText(menu)).toMatch(/pcaps/i)
   })
@@ -30,12 +28,10 @@ describe("Log Right Click", () => {
 
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = cellMenu(
-      program,
-      log.descriptor.map((c) => c.name),
-      space,
-      null
-    )(field, log)
+    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
+      field,
+      log
+    )
 
     expect(menuText(menu)).not.toMatch(/pcaps/i)
   })
@@ -43,12 +39,10 @@ describe("Log Right Click", () => {
   test("dns log", () => {
     const log = dns()
     const field = log.getField("query")
-    const menu = cellMenu(
-      program,
-      log.descriptor.map((c) => c.name),
-      space,
-      null
-    )(field, log)
+    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
+      field,
+      log
+    )
 
     expect(menuText(menu)).toMatch(/virustotal/i)
     expect(menuText(menu)).toMatch(/count by/i)
@@ -57,12 +51,10 @@ describe("Log Right Click", () => {
   test("time field for weird log", () => {
     const log = weird()
     const field = log.getField("ts")
-    const menu = cellMenu(
-      program,
-      log.descriptor.map((c) => c.name),
-      space,
-      null
-    )(field, log)
+    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
+      field,
+      log
+    )
 
     expect(menuText(menu)).toMatch(/"start" time/i)
     expect(menuText(menu)).toMatch(/"end" time/i)
@@ -71,12 +63,10 @@ describe("Log Right Click", () => {
   test("time field for conn log", () => {
     const log = conn()
     const field = log.getField("ts")
-    const menu = cellMenu(
-      program,
-      log.descriptor.map((c) => c.name),
-      space,
-      null
-    )(field, log)
+    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
+      field,
+      log
+    )
 
     expect(menuText(menu)).toMatch(/"start" time/i)
     expect(menuText(menu)).toMatch(/"end" time/i)
@@ -90,12 +80,10 @@ describe("Analysis Right Click", () => {
   test("address field", () => {
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = cellMenu(
-      program,
-      log.descriptor.map((c) => c.name),
-      space,
-      null
-    )(field, log)
+    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
+      field,
+      log
+    )
 
     expect(menuText(menu)).toMatch(/whois/i)
   })
@@ -106,8 +94,7 @@ describe("Analysis Right Click", () => {
     const menu = cellMenu(
       "* | count() by proto",
       log.descriptor.map((c) => c.name),
-      space,
-      null
+      space
     )(field, log)
 
     expect(menuText(menu)).toMatch(/pivot/i)
@@ -119,8 +106,7 @@ describe("Analysis Right Click", () => {
     const menu = cellMenu(
       "* | group by proto",
       log.descriptor.map((c) => c.name),
-      space,
-      null
+      space
     )(field, log)
 
     expect(menuText(menu)).toMatch(/filter/i)

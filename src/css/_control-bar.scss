@@ -2,51 +2,42 @@
   position: relative;
   z-index: 1;
   margin-bottom: 8px;
+  padding-top: 20px;
+  padding-left: 6px;
+  padding-right: 6px;
 
   .row-1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 68px;
-    margin-right: 80px;
-    margin-bottom: 3px;
+    margin-left: 68px + 16px;
+    margin-right: 16px;
+    margin-bottom: 6px;
 
     .thin-picker {
-      margin-left: 1px;
+      margin-left: 6px;
     }
 
     * > div {
       diplay: flex;
       align-items: center;
     }
+
+    .group {
+      display: flex;
+      align-items: center;
+      & > * {
+        margin-right: 6px;
+      }
+    }
   }
 
   .row-2 {
     display: flex;
+    -webkit-app-region: no-drag;
   }
 
   .search-bar {
     flex: 1;
-  }
-
-  .looky-face {
-    margin-right: $space-s;
-  }
-
-  .control-button {
-    cursor: pointer;
-    margin-left: $space-s;
-    height: 34px;
-    display: flex;
-    align-items: center;
-
-    svg {
-      fill: $white-9;
-      height: 22px;
-    }
-
-    &.active svg {
-      fill: $blue;
-    }
   }
 }

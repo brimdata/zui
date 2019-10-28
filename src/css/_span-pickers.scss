@@ -1,15 +1,14 @@
 .span-pickers {
   margin-left: 3px;
+
   .thin-button:hover {
     background: #dcdcdc;
   }
 
-  .DayPickerInput {
-    height: 14px;
-  }
   .time-input {
-    padding: 0 5px;
+    padding: 1px 5px;
   }
+
   .day-input,
   .time-input {
     background: none;
@@ -21,13 +20,21 @@
     transition: all 100ms;
     text-align: center;
     &:hover {
-      background-color: darken(#dcdcdc, 5%);
+      background-color: $white-2;
     }
     &:focus {
-      background-color: darken(#dcdcdc, 10%);
+      background-color: white;
     }
   }
+
   .span-drop-menu {
     display: flex;
+  }
+
+  .menu-bar-button {
+    margin-left: 3px;
+    .dropdown-arrow {
+      margin-left: 0;
+    }
   }
 }

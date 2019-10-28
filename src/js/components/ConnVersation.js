@@ -72,8 +72,7 @@ const Host = ({className, title = "", ip = "", port = "", log}) => {
         rightClick={cellMenu(
           program,
           tableColumns.getColumns().map((c) => c.name),
-          space,
-          log
+          space
         )}
       />
     </div>

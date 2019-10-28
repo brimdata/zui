@@ -7,9 +7,7 @@ import React from "react"
 import {type DateTuple} from "../lib/TimeWindow"
 import type {Dispatch, State} from "../state/types"
 import type {Space} from "../lib/Space"
-import {ThinPicker} from "./Buttons"
 import {type TimeObj, add, set, subtract} from "../lib/Time"
-import {XSpanPickerMenu} from "./SpanPickerMenu"
 import {getCurrentSpace} from "../state/reducers/spaces"
 import {getTimeWindow} from "../state/reducers/timeWindow"
 import {getTimeZone} from "../state/reducers/view"
@@ -17,9 +15,11 @@ import {reactElementProps} from "../test/integration"
 import {setOuterTimeWindow} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import DayPicker from "./DayPicker"
-import DropMenu from "./DropMenu"
+import MenuBarButton from "./MenuBarButton"
+import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import SpanDuration from "./SpanDuration"
 import TimePicker from "./TimePicker"
+import useSpanPickerMenu from "./useSpanPickerMenu"
 
 type StateProps = {|
   timeWindow: DateTuple,
@@ -153,7 +153,7 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
         >
-          <div className="thin-button">
+          <MenuBarButton>
             <DayPicker
               from={this.state.fromDate}
               to={this.state.toDate}
@@ -165,9 +165,9 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
               time={this.state.fromDate}
               onTimeChange={this.onFromTimeChange}
             />
-          </div>
+          </MenuBarButton>
           <SpanDuration span={[this.state.fromDate, this.state.toDate]} />
-          <div className="thin-button">
+          <MenuBarButton>
             <DayPicker
               from={this.state.fromDate}
               to={this.state.toDate}
@@ -180,18 +180,25 @@ export default class SpanPickers extends React.Component<Props, LocalState> {
               onTimeChange={this.onToTimeChange}
               ref={(r) => (this.toTime = r)}
             />
-          </div>
+          </MenuBarButton>
         </div>
-        <DropMenu
-          menu={XSpanPickerMenu}
-          className="span-drop-menu"
-          position="right"
-        >
-          <ThinPicker {...reactElementProps("span_button")} />
-        </DropMenu>
+        <SpanPickerMenu />
       </div>
     )
   }
+}
+
+function SpanPickerMenu() {
+  let menu = useSpanPickerMenu()
+  return (
+    <PopMenuPointy
+      template={menu}
+      position="bottom right"
+      {...reactElementProps("span_menu")}
+    >
+      <MenuBarButton dropdown {...reactElementProps("span_button")} />
+    </PopMenuPointy>
+  )
 }
 
 const stateToProps = (state: State): StateProps => ({

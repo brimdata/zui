@@ -26,8 +26,7 @@ export default function FieldsPanel({log}: PanelProps) {
         rightClick={cellMenu(
           program,
           tableColumns.getColumns().map((c) => c.name),
-          space,
-          log
+          space
         )}
       />
     </div>

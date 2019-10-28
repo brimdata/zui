@@ -4,6 +4,7 @@ import * as React from "react"
 import classNames from "classnames"
 
 import Caret from "../icons/caret-bottom-sm.svg"
+import MenuBarButton from "./MenuBarButton"
 import X from "../icons/x-md.svg"
 
 type Children = {
@@ -23,9 +24,9 @@ export const ThinButton = ({children, ...rest}: Children) => (
 export class ThinPicker extends React.Component<{}> {
   render() {
     return (
-      <button className="thin-button thin-picker" {...this.props}>
+      <MenuBarButton className="thin-picker" {...this.props}>
         <Caret />
-      </button>
+      </MenuBarButton>
     )
   }
 }

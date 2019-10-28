@@ -1,89 +1,91 @@
 /* @flow */
 
-import {connect} from "react-redux"
-import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useRef} from "react"
 
-import type {Dispatch, State} from "../state/types"
 import {changeSearchBarInput} from "../state/actions"
-import {
-  getSearchBarInputValue,
-  getSearchBarError
-} from "../state/selectors/searchBar"
+import {getSearchBarInputValue} from "../state/selectors/searchBar"
+import {getSearches} from "../state/searches/selector"
+import {killSearchesByTag} from "../searches/cancelSearch"
+import {reactElementProps} from "../test/integration"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import InputHistory from "../models/InputHistory"
-import {reactElementProps} from "../test/integration"
+import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import ThreeDotButton from "./ThreeDotButton"
+import modal from "../modal"
 
-type StateProps = {|
-  inputValue: string,
-  error: ?string,
-  dispatch: Dispatch
-|}
+export default function SearchInput() {
+  let dispatch = useDispatch()
+  let history = useRef(new InputHistory<string>())
+  let inputValue = useSelector(getSearchBarInputValue)
 
-type DispatchProps = {|
-  dispatch: Dispatch
-|}
-
-type Props = {|...StateProps, ...DispatchProps|}
-
-export default class SearchInput extends React.Component<Props> {
-  history = new InputHistory<string>()
-
-  onChange = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
-    this.changeTo(e.currentTarget.value)
+  function changeTo(value: string) {
+    dispatch(changeSearchBarInput(value))
   }
 
-  onKeyDown = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
+  function submit() {
+    dispatch(submitSearchBar())
+  }
+
+  function onChange(e) {
+    changeTo(e.currentTarget.value)
+  }
+
+  function onKeyDown(e) {
     if (e.key === "Enter") {
-      this.submit()
-      this.history.push(e.currentTarget.value)
+      submit()
+      history.current.push(e.currentTarget.value)
     }
     if (e.key === "ArrowUp") {
-      this.history.goBack()
-      this.changeTo(this.history.getCurrentEntry())
+      history.current.goBack()
+      changeTo(history.current.getCurrentEntry())
     }
     if (e.key === "ArrowDown") {
-      this.history.goForward()
-      this.changeTo(this.history.getCurrentEntry())
+      history.current.goForward()
+      changeTo(history.current.getCurrentEntry())
     }
   }
 
-  changeTo(value: string) {
-    this.props.dispatch(changeSearchBarInput(value))
-  }
-
-  submit() {
-    this.props.dispatch(submitSearchBar())
-  }
-
-  render() {
-    const {inputValue} = this.props
-    return (
-      <div className="search-input">
-        <div className="text-input-wrapper">
-          <input
-            id="main-search-input"
-            type="text"
-            value={inputValue}
-            placeholder="Search"
-            onChange={this.onChange}
-            onKeyDown={this.onKeyDown}
-            spellCheck={false}
-            autoFocus={true}
-            autoComplete="off"
-            {...reactElementProps("search_input")}
-          />
-        </div>
-      </div>
-    )
-  }
+  return (
+    <div className="search-input">
+      <input
+        id="main-search-input"
+        type="text"
+        value={inputValue}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        spellCheck={false}
+        autoFocus={true}
+        autoComplete="off"
+        {...reactElementProps("search_input")}
+      />
+      <Menu />
+    </div>
+  )
 }
 
-const stateToProps = (state: State) => ({
-  inputValue: getSearchBarInputValue(state),
-  error: getSearchBarError(state)
-})
+function Menu() {
+  let dispatch = useDispatch()
+  let searches = useSelector(getSearches)
+  let isFetching = Object.values(searches)
+    //$FlowFixMe
+    .filter((s) => s.tag === "viewer")
+    //$FlowFixMe
+    .some((s) => s.status === "FETCHING")
 
-export const XSearchInput = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
-  (dispatch: Dispatch) => ({dispatch})
-)(SearchInput)
+  let menu = [
+    {label: "Debug query", click: () => dispatch(modal.show("debug"))},
+    {label: "Copy for curl", click: () => dispatch(modal.show("curl"))},
+    {
+      label: "Kill search",
+      click: () => dispatch(killSearchesByTag("viewer")),
+      disabled: !isFetching
+    }
+  ]
+
+  return (
+    <PopMenuPointy template={menu} {...reactElementProps("optionsMenu")}>
+      <ThreeDotButton {...reactElementProps("optionsButton")} />
+    </PopMenuPointy>
+  )
+}

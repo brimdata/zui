@@ -1,8 +1,24 @@
 .search-input {
   flex: 1;
+  position: relative;
+
   input {
-    border-radius: 3px;
+    min-height: 32px;
+    border-radius: 16px;
     box-shadow: none;
-    min-height: 34px;
+    color: $gray-7;
+    border: none;
+    font-size: 12px;
+    font-family: $mono-font;
+    outline: none;
+    width: 100%;
+    padding: 6px 16px;
+    box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .three-dot-button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
   }
 }

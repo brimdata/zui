@@ -5,9 +5,8 @@ import React from "react"
 
 import type {State} from "../state/types"
 import {XPins} from "./Pins"
-import {XSearchButton} from "../components/SearchButton"
-import {XSearchInput} from "./SearchInput"
 import {getSearchBarError} from "../state/selectors/searchBar"
+import SearchInput from "./SearchInput"
 import Warning from "../icons/warning-sm.svg"
 
 type StateProps = {|
@@ -22,12 +21,11 @@ export default class SearchBar extends React.Component<Props> {
       <div className="search-bar">
         <div className="search-builder">
           <div className="search-inputs">
-            <XSearchInput />
+            <SearchInput />
           </div>
           {this.props.error && <ErrorMessage error={this.props.error} />}
           <XPins />
         </div>
-        <XSearchButton />
       </div>
     )
   }
