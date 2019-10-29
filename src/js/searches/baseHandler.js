@@ -42,12 +42,13 @@ export default function(
       case "SearchStats":
         dispatch(
           setSearchStats(name, {
+            currentTs: boomTime(payload.current_ts),
             startTime: boomTime(payload.start_time),
             updateTime: boomTime(payload.update_time),
-            bytesMatched: payload.stats.bytes_matched,
-            bytesRead: payload.stats.bytes_read,
-            tuplesMatched: payload.stats.tuples_matched,
-            tuplesRead: payload.stats.tuples_read
+            bytesMatched: payload.bytes_matched,
+            bytesRead: payload.bytes_read,
+            tuplesMatched: payload.records_matched,
+            tuplesRead: payload.records_read
           })
         )
         break

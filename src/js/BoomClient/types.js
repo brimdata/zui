@@ -75,12 +75,11 @@ type SearchStatsPayload = {
   type: "SearchStats",
   start_time: EpochObj,
   update_time: EpochObj,
-  stats: {
-    bytes_matched: number,
-    bytes_read: number,
-    tuples_matched: number,
-    tuples_read: number
-  }
+  current_ts: EpochObj,
+  bytes_matched: number,
+  bytes_read: number,
+  records_matched: number,
+  records_read: number
 }
 
 type TaskEndPayload = {
