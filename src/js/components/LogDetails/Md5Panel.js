@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import React from "react"
 
 import type {PanelProps} from "./"
@@ -17,11 +17,10 @@ import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import cellMenu from "../../rightclick/cellMenu"
+import menu from "../../electron/menu"
 
 export const Md5Panel = ({log, searches}: PanelProps) => {
   let space = useSelector(getCurrentSpace)
-  let dispatch = useDispatch()
 
   const logMd5 = log.get("md5")
   if (!logMd5) return null
@@ -43,11 +42,10 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
       <PanelHeading status={status}>Md5 Correlation</PanelHeading>
       <AsyncTable
         logs={md5}
-        rightClick={cellMenu(
+        rightClick={menu.fieldContextMenu(
           md5Correlation(logMd5),
           getColumns(md5),
-          space,
-          dispatch
+          space
         )}
         name="md5 count"
         status={status}
@@ -55,11 +53,10 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
       />
       <AsyncTable
         logs={filenames}
-        rightClick={cellMenu(
+        rightClick={menu.fieldContextMenu(
           filenameCorrelation(logMd5),
           getColumns(filenames),
-          space,
-          dispatch
+          space
         )}
         name="filename, mime_type count"
         status={status}
@@ -68,11 +65,10 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
       <div className="two-column">
         <AsyncTable
           logs={tx}
-          rightClick={cellMenu(
+          rightClick={menu.fieldContextMenu(
             txHostsCorrelation(logMd5),
             getColumns(tx),
-            space,
-            dispatch
+            space
           )}
           name="tx_hosts count"
           status={status}
@@ -80,11 +76,10 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
         />
         <AsyncTable
           logs={rx}
-          rightClick={cellMenu(
+          rightClick={menu.fieldContextMenu(
             rxHostsCorrelation(logMd5),
             getColumns(rx),
-            space,
-            dispatch
+            space
           )}
           name="rx_hosts count"
           status={status}

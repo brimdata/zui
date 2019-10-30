@@ -1,6 +1,7 @@
 /* @flow */
 
 import initBoom from "./initBoom"
+import initMenuActionListeners from "./initMenuActionListeners"
 import initPersistance from "./initPersistance"
 import initShortcuts from "./initShortcuts"
 import initState from "./initState"
@@ -12,5 +13,6 @@ export default () => {
   const store = initStore(state, boom)
   initPersistance(store)
   initShortcuts(store)
+  initMenuActionListeners(store.dispatch)
   return store
 }

@@ -1,6 +1,6 @@
 /* @flow */
 
-import {connect, useDispatch} from "react-redux"
+import {connect} from "react-redux"
 import {isEmpty} from "lodash"
 import React from "react"
 
@@ -28,9 +28,9 @@ import NoResults from "./NoResults"
 import TableColumns from "../../models/TableColumns"
 import Viewer from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
-import cellMenu from "../../rightclick/cellMenu"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
+import menu from "../../electron/menu"
 
 type StateProps = {|
   logs: Log[],
@@ -53,7 +53,6 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function SearchResults(props: Props) {
   let {logs} = props
-  let dispatch = useDispatch()
 
   const dimens = buildViewerDimens({
     type: props.tableColumns.showHeader() ? "fixed" : "auto",
@@ -83,11 +82,10 @@ export default function SearchResults(props: Props) {
         highlight={Log.isSame(logs[index], props.selectedLog)}
         dimens={dimens}
         onClick={() => props.dispatch(viewLogDetail(logs[index]))}
-        rightClick={cellMenu(
+        rightClick={menu.fieldContextMenu(
           props.program,
           props.tableColumns.getColumns().map((c) => c.name),
-          props.space,
-          dispatch
+          props.space
         )}
       />
     )

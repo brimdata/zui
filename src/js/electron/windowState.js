@@ -23,5 +23,5 @@ export default function windowState(): Keep {
       position: "center"
     }
   }
-  return lib.keep<WindowState>(config.windowStateFile, initialState)
+  return lib.keep<WindowState>(config.windowStateFile(), initialState)
 }

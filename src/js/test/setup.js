@@ -28,6 +28,9 @@ jest.mock("electron", function() {
     BrowserWindow: FakeBrowserWindow,
     ipcMain: {
       on: jest.fn()
+    },
+    ipcRenderer: {
+      on: jest.fn()
     }
   }
 

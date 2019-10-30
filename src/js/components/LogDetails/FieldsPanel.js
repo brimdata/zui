@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import React from "react"
 
 import type {PanelProps} from "./"
@@ -9,14 +9,13 @@ import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
 import PanelHeading from "./PanelHeading"
 import VerticalTable from "../Tables/VerticalTable"
-import cellMenu from "../../rightclick/cellMenu"
+import menu from "../../electron/menu"
 
 export default function FieldsPanel({log}: PanelProps) {
   log = log.exclude("_td")
   let program = useSelector(getSearchProgram)
   let tableColumns = useSelector(getCurrentTableColumns)
   let space = useSelector(getCurrentSpace)
-  let dispatch = useDispatch()
 
   return (
     <div className="fields-table-panel detail-panel">
@@ -24,11 +23,10 @@ export default function FieldsPanel({log}: PanelProps) {
       <VerticalTable
         descriptor={log.descriptor}
         log={log}
-        rightClick={cellMenu(
+        rightClick={menu.fieldContextMenu(
           program,
           tableColumns.getColumns().map((c) => c.name),
-          space,
-          dispatch
+          space
         )}
       />
     </div>
