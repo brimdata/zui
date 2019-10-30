@@ -12,6 +12,7 @@ import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
+import {reactElementProps} from "../test/integration"
 
 export default function CurlModalBox() {
   function copyToClip(_, e) {
@@ -38,6 +39,7 @@ export default function CurlModalBox() {
       name="curl"
       className="curl-modal"
       title="Curl Command"
+      {...reactElementProps("curlModal")}
     >
       <CurlModalContents />
     </ModalBox>
@@ -58,14 +60,16 @@ function CurlModalContents() {
   return (
     <TextContent>
       {info && (
-        <pre id="copy-to-curl-code">
+        <pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
           curl -X {info.method} {getCreds()} -d &apos;
           {JSON.stringify(info.body, null, 2)}
           &apos; {info.url}
         </pre>
       )}
       {!info && (
-        <pre id="copy-to-curl-code">Invalid ZQL: &apos;{program}&apos;</pre>
+        <pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
+          Invalid ZQL: &apos;{program}&apos;
+        </pre>
       )}
       <Form>
         <InputCheckbox

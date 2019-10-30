@@ -62,6 +62,8 @@ const dataAttrs = {
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
   correlationPanel: "correlationPanel",
+  curlCommand: "curlCommand",
+  curlModal: "curlModal",
   debugAst: "debugAst",
   debugModal: "debugModal",
   debugProgram: "debugProgram",
@@ -178,6 +180,10 @@ export const selectors = {
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
     tsLabel: dataAttrSelector("correlationPanel") + " .data-label",
     getText: genSelectorForTextUnderElement("correlationPanel")
+  },
+  cliHelp: {
+    curlCommand: dataAttrSelector("curlCommand"),
+    curlModal: dataAttrSelector("curlModal")
   },
   debugSearch: {
     ast: dataAttrSelector("debugAst") + " span",
