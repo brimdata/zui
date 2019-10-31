@@ -3,23 +3,25 @@
 import React, {useState} from "react"
 import classNames from "classnames"
 
+import type {$Field} from "../../brim"
 import type {RightClickBuilder} from "../../types"
 import {getTooltipStyle} from "../../lib/MenuStyler"
-import CellValueItem from "./CellValueItem"
-import Field from "../../models/Field"
+import CompoundField from "./CompoundField"
 import Log from "../../models/Log"
+import SingleField from "./SingleField"
 import Tooltip from "../Tooltip"
 
 type Props = {
-  field: Field,
+  field: $Field,
   log: Log,
   style?: Object,
-  rightClick?: RightClickBuilder
+  rightClick: RightClickBuilder
 }
 
-export default function LogCell(props: Props) {
+export default function LogCell({field, style, rightClick, log}: Props) {
   let [hover, setHover] = useState(false)
   let [tooltipStyle, setTooltipStyle] = useState({})
+  let {name, type} = field
 
   function handleMouseEnter(e) {
     setHover(true)
@@ -30,21 +32,14 @@ export default function LogCell(props: Props) {
     setHover(false)
   }
 
-  let {name, type} = props.field
-
   return (
     <div
       className={classNames(`log-cell ${type}`, {hover})}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={props.style}
+      style={style}
     >
-      <CellValueItem
-        menu={props.rightClick}
-        field={props.field}
-        log={props.log}
-        valueIndex={0}
-      />
+      <FieldSwitch field={field} log={log} menuBuilder={rightClick} />
       {hover && (
         <Tooltip style={tooltipStyle}>
           <span className="field-name">{name}</span>
@@ -52,4 +47,14 @@ export default function LogCell(props: Props) {
       )}
     </div>
   )
+}
+
+function FieldSwitch(props) {
+  if (props.field.compound()) {
+    return <CompoundField {...props} />
+  } else {
+    let {field, log, menuBuilder} = props
+    let menu = menuBuilder(field, log, false)
+    return <SingleField field={field} menu={menu} />
+  }
 }

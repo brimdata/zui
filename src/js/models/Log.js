@@ -7,6 +7,7 @@ import type {Descriptor, Tuple, TupleSet} from "../types"
 import {inBounds} from "../lib/Array"
 import Field from "./Field"
 import FieldFactory from "./FieldFactory"
+import brim, {type $Field} from "../brim"
 
 type BuildArgs = {
   tuples: Tuple[],
@@ -78,6 +79,18 @@ export default class Log {
         descriptor.push({name, type})
       })
     return new Log(tuple, descriptor)
+  }
+
+  // Temp duplication while we migrate to using brim.log
+  field(name: string): ?$Field {
+    let index = this.descriptor.findIndex((d) => d.name === name)
+    if (inBounds(this.tuple, index)) {
+      let {name, type} = this.descriptor[index]
+      let value = this.tuple[index]
+      return brim.field(name, type, value)
+    } else {
+      return null
+    }
   }
 
   exclude(...names: string[]) {

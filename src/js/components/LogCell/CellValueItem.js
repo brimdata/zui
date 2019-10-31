@@ -11,11 +11,10 @@ import lib from "../../lib"
 type Props = {
   field: Field,
   log: Log,
-  valueIndex: null | number,
   menu?: RightClickBuilder
 }
 
-export default function CellValueItem({log, field, _valueIndex, menu}: Props) {
+export default function CellValueItem({log, field, menu}: Props) {
   function onContextMenu() {
     menu && showContextMenu(menu(field, log))
   }

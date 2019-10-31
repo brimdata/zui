@@ -37,7 +37,7 @@ export default class LogRow extends React.Component<Props> {
     const {dimens, highlight, index, log, rightClick} = this.props
     const columns = columnOrder(log.descriptor)
     const renderCell = (column, colIndex) => {
-      const field = log.getField(column.name)
+      const field = log.field(column.name)
       if (field) {
         return (
           <LogCell
@@ -64,7 +64,7 @@ export default class LogRow extends React.Component<Props> {
   renderFixedLayout() {
     const {highlight, columns, log, dimens, index, rightClick} = this.props
     const renderCell = (column, colIndex) => {
-      const field = log.getField(column.name)
+      const field = log.field(column.name)
       const style = {width: column.width || 300}
       const key = `${index}-${colIndex}`
 

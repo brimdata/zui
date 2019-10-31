@@ -1,5 +1,9 @@
 /* @flow */
-function field(name: string, type: string, value: string) {
+
+import {COMPOUND_FIELD_RGX} from "./compoundField"
+import brim, {type $Field} from "./"
+
+function field(name: string, type: string, value: string): $Field {
   return {
     name,
     type,
@@ -11,6 +15,15 @@ function field(name: string, type: string, value: string) {
       if (this.type === "string") quote = true
 
       return quote ? `"${this.value}"` : this.value
+    },
+    compound() {
+      return COMPOUND_FIELD_RGX.test(type)
+    },
+    toCompound() {
+      return brim.compoundField(name, type, value)
+    },
+    toDate() {
+      return new Date(+this.value * 1000)
     }
   }
 }

@@ -5,7 +5,9 @@ import {add} from "../../lib/Time"
 import {
   appendQueryCountBy,
   appendQueryExclude,
+  appendQueryIn,
   appendQueryInclude,
+  appendQueryNotIn,
   appendQuerySortBy
 } from "../../searchBar/actions"
 import {
@@ -95,6 +97,22 @@ function buildActions() {
       label: "Filter = value",
       listener(dispatch, field) {
         dispatch(appendQueryInclude(field))
+        dispatch(submitSearchBar())
+      }
+    }),
+    in: action({
+      name: "cell-menu-in",
+      label: "Filter in field",
+      listener(dispatch, {name, value, type}) {
+        dispatch(appendQueryIn(brim.field(name, type, value)))
+        dispatch(submitSearchBar())
+      }
+    }),
+    notIn: action({
+      name: "cell-menu-not-in",
+      label: "Filter not in field",
+      listener(dispatch, {name, value, type}) {
+        dispatch(appendQueryNotIn(brim.field(name, type, value)))
         dispatch(submitSearchBar())
       }
     }),

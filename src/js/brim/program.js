@@ -18,6 +18,16 @@ export default function(p: string = "") {
       return this
     },
 
+    in(field: $Field) {
+      p = insertFilter(p, brim.syntax.in(field))
+      return this
+    },
+
+    notIn(field: $Field) {
+      p = insertFilter(p, brim.syntax.notIn(field))
+      return this
+    },
+
     drillDown(log: $Log) {
       let filter = this.filter()
       let newFilters = this.ast()

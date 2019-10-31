@@ -8,7 +8,7 @@ import {
 } from "../state/selectors/searchBar"
 import {onlyWhitespace} from "../lib/Str"
 import Field from "../models/Field"
-import brim from "../brim"
+import brim, {type $Field} from "../brim"
 
 export function appendQueryInclude(field: Field): Thunk {
   return function(dispatch, getState) {
@@ -67,6 +67,32 @@ export function appendQuerySortBy(
         brim
           .program(program)
           .sortBy(name, direction)
+          .string()
+      )
+    )
+  }
+}
+
+export function appendQueryIn(field: $Field): Thunk {
+  return function(dispatch, getState) {
+    dispatch(
+      changeSearchBarInput(
+        brim
+          .program(getSearchBarInputValue(getState()))
+          .in(field)
+          .string()
+      )
+    )
+  }
+}
+
+export function appendQueryNotIn(field: $Field): Thunk {
+  return function(dispatch, getState) {
+    dispatch(
+      changeSearchBarInput(
+        brim
+          .program(getSearchBarInputValue(getState()))
+          .notIn(field)
           .string()
       )
     )

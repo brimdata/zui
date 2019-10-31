@@ -1,5 +1,6 @@
 /* @flow */
 import ast from "./ast"
+import compoundField from "./compoundField"
 import field from "./field"
 import log from "./log"
 import program from "./program"
@@ -11,7 +12,19 @@ export type $Field = {
   name: string,
   value: string,
   type: string,
-  queryableValue: () => string
+  queryableValue: () => string,
+  compound: () => boolean,
+  toCompound: () => $CompoundField,
+  toDate: () => Date
+}
+
+export type $CompoundField = {
+  name: string,
+  container: string,
+  itemType: string,
+  length: number,
+  items: () => $Field[],
+  item: (number) => ?$Field
 }
 
 export type $Log = {
@@ -22,6 +35,7 @@ export default {
   table,
   program,
   field,
+  compoundField,
   log,
   ast,
   syntax,

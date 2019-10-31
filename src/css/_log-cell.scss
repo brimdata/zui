@@ -1,11 +1,12 @@
 .log-cell {
-  padding: 0 6px;
+  padding: 0;
   position: relative;
-  border: 1px solid transparent;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   height: 25px;
+  display: flex;
+  align-items: flex-start;
 
   @include type-colors;
 
@@ -18,7 +19,6 @@
   &.hover,
   &.active {
     position: relative;
-    border: 1px dashed $gray-9;
   }
 }
 
@@ -36,4 +36,27 @@
 
 .log-cell.count {
   text-align: right;
+}
+
+.cell-value-item {
+  position: relative;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  height: 25px;
+
+  &:hover {
+    z-index: 1;
+    border: 1px dashed $gray-9;
+  }
+}
+
+.cell-value-item:last-child {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.compound-field-separator {
+  color: $gray-1;
 }
