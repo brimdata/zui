@@ -43,6 +43,16 @@ export default class Log {
     return tuples.map<Log>((tuple) => new Log(tuple, descriptor))
   }
 
+  static fromString(string: string) {
+    let [front, back] = string.split("\t\t")
+    let descriptor = front.split("\t").map((val) => {
+      let [name, type] = val.split(":")
+      return {name, type}
+    })
+    let tuple = back.split("\t")
+    return new Log(tuple, descriptor)
+  }
+
   static sort(logs: Log[], name: string, dir: "asc" | "desc" = "asc") {
     const direction = dir === "asc" ? 1 : -1
 
@@ -180,5 +190,13 @@ export default class Log {
     } else {
       return ""
     }
+  }
+
+  toString() {
+    return (
+      this.descriptor.map((col) => [col.name, col.type].join(":")).join("\t") +
+      "\t\t" +
+      this.tuple.join("\t")
+    )
   }
 }

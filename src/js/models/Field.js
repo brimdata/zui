@@ -23,6 +23,16 @@ export default class Field {
 
     return quote ? `"${this.value}"` : this.value
   }
+
+  toString() {
+    return [this.name, this.type].join(":") + "\t" + this.value
+  }
+
+  static fromString(string: string) {
+    let [front, value] = string.split("\t")
+    let [name, type] = front.split(":")
+    return new Field({name, type, value})
+  }
 }
 
 export class TimeField extends Field {

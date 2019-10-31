@@ -118,7 +118,7 @@ export const writeSearch = (app: Application, searchText: string) =>
       .then(() => app.client.setValue(selectors.search.input, searchText))
   )
 
-export const getSearchText = (app: Application) =>
+export const getSearchText = (app: Application): Promise<string> =>
   appStep("get contents of main search", () =>
     app.client
       .waitForVisible(selectors.search.input)

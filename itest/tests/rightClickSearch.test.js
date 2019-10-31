@@ -2,13 +2,12 @@
 
 import {basename} from "path"
 
+import {dataSets, selectors} from "../../src/js/test/integration"
 import {
-  click,
   getSearchText,
   logIn,
   newAppInstance,
   resetState,
-  rightClick,
   searchDisplay,
   setSpan,
   startApp,
@@ -17,13 +16,18 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
-import {dataSets, selectors} from "../../src/js/test/integration"
+import contextMenu from "../lib/contextMenu"
+import fixtures from "../../src/js/test/fixtures"
+import mockSpace from "../../src/js/test/mockSpace"
 
 describe("Test search mods via right-clicks", () => {
   let app
   let testIdx = 0
+  let menu
+
   beforeEach(() => {
     app = newAppInstance(basename(__filename), ++testIdx)
+    menu = contextMenu(app, "*", ["ts", "uid", "_path"], mockSpace())
     return startApp(app)
   })
 
@@ -37,15 +41,12 @@ describe("Test search mods via right-clicks", () => {
   stdTest("Include / Exclude this value works", (done) => {
     let includeExcludeFlow = async () => {
       await logIn(app)
-      await rightClick(
-        app,
-        selectors.viewer.resultCellContaining(
-          dataSets.corelight.rightClickSearch.includeValue
-        )
-      )
-      await click(app, selectors.viewer.rightClickMenuItem("Filter = value"))
-      await rightClick(app, selectors.viewer.resultCellContaining("conn"))
-      await click(app, selectors.viewer.rightClickMenuItem("Filter != value"))
+
+      let field = dataSets.corelight.rightClickSearch.includeValue
+      let log = fixtures.log("conn1")
+      menu.click("Filter = value", field, log)
+      menu.click("Filter != value", fixtures.field("conn"), log)
+
       // The result order is deterministic because clicked a uid and then
       // removed its conn log entry.
       return searchDisplay(app)
@@ -68,28 +69,19 @@ describe("Test search mods via right-clicks", () => {
       // is fixed, the results will still be deterministic because, although
       // two points with the same ts appear, they will be sorted by uid as
       // well.
-      await writeSearch(app, "_path=conn | sort -r ts, uid")
+      let program = "_path=conn | sort -r ts, uid"
+      await writeSearch(app, program)
       await startSearch(app)
       await waitForSearch(app)
-      await rightClick(
-        app,
-        selectors.viewer.resultCellContaining(
-          dataSets.corelight.rightClickSearch.startTime
-        )
-      )
-      await click(
-        app,
-        selectors.viewer.rightClickMenuItem('Use as "start" time')
-      )
-      await rightClick(
-        app,
-        selectors.viewer.resultCellContaining(
-          dataSets.corelight.rightClickSearch.endTime
-        )
-      )
-      await click(app, selectors.viewer.rightClickMenuItem('Use as "end" time'))
-      // The result order is deterministic because of the sort proc as
-      // explained above.
+
+      let {startTime, endTime} = dataSets.corelight.rightClickSearch
+      let log = fixtures.log("conn1")
+
+      menu
+        .program(program)
+        .click('Use as "start" time', startTime, log)
+        .click('Use as "end" time', endTime, log)
+
       return searchDisplay(app)
     }
     startEndFlow()
@@ -105,18 +97,12 @@ describe("Test search mods via right-clicks", () => {
   stdTest("New Search works", (done) => {
     let newSearchFlow = async () => {
       await logIn(app)
-      await rightClick(
-        app,
-        selectors.viewer.resultCellContaining(
-          dataSets.corelight.rightClickSearch.newSearchSetup
-        )
-      )
-      await click(app, selectors.viewer.rightClickMenuItem("Filter = value"))
-      await rightClick(app, selectors.viewer.resultCellContaining("weird"))
-      await click(
-        app,
-        selectors.viewer.rightClickMenuItem("New search with this value")
-      )
+      let uid = dataSets.corelight.rightClickSearch.newSearchSetup
+      let path = fixtures.field("weird")
+      let log = fixtures.log("weird1")
+      menu
+        .click("Filter = value", uid, log)
+        .click("New search with this value", path, log)
       // The result order is deterministic because all the points rendered have
       // different ts values.
       return searchDisplay(app)
@@ -144,10 +130,11 @@ describe("Test search mods via right-clicks", () => {
       // because conn logs contain the _path of the connection. Searching for
       // "dns" will find either the first conn log tuple of a dns connection,
       // or the first dns log tuple of the same.
-      await rightClick(app, selectors.viewer.resultCellContaining("conn"))
-      await click(app, selectors.viewer.rightClickMenuItem("Count by field"))
-      await rightClick(app, selectors.viewer.resultCellContaining("dhcp"))
-      await click(app, selectors.viewer.rightClickMenuItem("Pivot to logs"))
+      menu
+        .click("Count by field", fixtures.field("conn"), fixtures.log("conn1"))
+        .program(await getSearchText(app))
+        .click("Pivot to logs", fixtures.field("dhcp"), fixtures.log("dhcp1"))
+
       // The result order is deterministic because all the points rendered have
       // different ts values.
       return searchDisplay(app)
@@ -169,17 +156,12 @@ describe("Test search mods via right-clicks", () => {
       .then((results) => {
         expect(results).toMatchSnapshot()
       })
-      .then(() =>
-        rightClick(
-          app,
-          selectors.viewer.resultCellContaining(
-            dataSets.corelight.logDetails.getDetailsFrom
-          )
-        )
-      )
-      .then(() =>
-        click(app, selectors.viewer.rightClickMenuItem("Open details"))
-      )
+      .then(() => {
+        let uid = dataSets.corelight.logDetails.getDetailsFrom
+        menu
+          .program(dataSets.corelight.logDetails.initialSearch)
+          .click("Open details", uid, fixtures.log("myBusinessDocHttp"))
+      })
       .then(() =>
         Promise.all([
           app.client

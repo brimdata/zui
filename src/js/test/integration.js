@@ -1,5 +1,7 @@
 /* @flow */
 
+import fixtures from "./fixtures"
+
 export const itestLocator = "data-test-locator"
 
 const dataAttrs = {
@@ -41,7 +43,7 @@ export const dataSets = {
   // Brim. Move this to itest/lib.
   corelight: {
     logDetails: {
-      getDetailsFrom: "C9FG8S2NvxVUR0b0La",
+      getDetailsFrom: fixtures.field("uid3"),
       initialSearch: "_path=http www.mybusinessdoc.com | sort",
       span: "Whole Space"
     },
@@ -54,18 +56,18 @@ export const dataSets = {
       wholeSpaceDistinctPaths: 19
     },
     rightClickSearch: {
-      endTime: "09:34",
-      newSearchSetup: "Ctd0Gv1XC3Z0UV1iX",
-      includeValue: "CgVEQNkcytYYMtmE5",
-      startTime: "09:32"
+      endTime: fixtures.field("ts2"),
+      newSearchSetup: fixtures.field("uid2"),
+      includeValue: fixtures.field("uid1"),
+      startTime: fixtures.field("ts1")
     },
     pcaps: {
       logDetailsFilename: "packets-1428413683.772332.pcap",
       logDetailsMD5: "40a896bf40bd2d7155ce5b52bb4924cc",
-      setDurationUid: "CZusuU27VRdyfg5thj",
+      setDurationUid: fixtures.field("uid4"),
       setDurationFilename: "packets-1428917653.242511.pcap",
       setDurationMD5: "a6cba8acc833dff9f2a04acd7ac0304a",
-      unsetDurationUid: "CgVEQNkcytYYMtmE5"
+      unsetDurationUid: fixtures.field("uid1")
     }
   }
 }

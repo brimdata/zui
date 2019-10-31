@@ -1,16 +1,17 @@
 /* @flow */
 
-import {readFileSync, readdirSync, unlinkSync} from "fs"
 import md5 from "md5"
+
+import {readFileSync, readdirSync, unlinkSync} from "fs"
 import path from "path"
 
+import {LOG} from "../lib/log"
 import {
   click,
   logIn,
   newAppInstance,
   pcapsDir,
   resetState,
-  rightClick,
   searchDisplay,
   setSpan,
   startApp,
@@ -19,10 +20,11 @@ import {
   waitUntilDownloadFinished,
   writeSearch
 } from "../lib/app.js"
-
-import {handleError, stdTest} from "../lib/jest.js"
-import {LOG} from "../lib/log"
 import {dataSets, selectors} from "../../src/js/test/integration"
+import {handleError, stdTest} from "../lib/jest.js"
+import contextMenu from "../lib/contextMenu"
+import fixtures from "../../src/js/test/fixtures"
+import mockSpace from "../../src/js/test/mockSpace"
 
 const clearPcaps = () => {
   let files = readdirSync(pcapsDir())
@@ -38,9 +40,12 @@ const clearPcaps = () => {
 describe("Test PCAPs", () => {
   let app
   let testIdx = 0
+  let menu
+
   beforeEach(() => {
     clearPcaps()
     app = newAppInstance(path.basename(__filename), ++testIdx)
+    menu = contextMenu(app, "*", [], mockSpace())
     return startApp(app)
   })
 
@@ -56,17 +61,18 @@ describe("Test PCAPs", () => {
     "Clicking on Download PCAPS from conn log entry downloads deterministically-formed PCAP file",
     (done) => {
       let downloadPcapFromConnTuple = async () => {
+        let program = "_path=conn duration!=nil | sort -r ts, uid"
         await logIn(app)
-        await writeSearch(app, "_path=conn duration!=nil | sort -r ts, uid")
+        await writeSearch(app, program)
         await startSearch(app)
         await waitForSearch(app)
-        await rightClick(
-          app,
-          selectors.viewer.resultCellContaining(
-            dataSets.corelight.pcaps.setDurationUid
-          )
-        )
-        await click(app, selectors.viewer.rightClickMenuItem("Download PCAPS"))
+
+        let field = dataSets.corelight.pcaps.setDurationUid
+
+        menu
+          .program(program)
+          .click("Download PCAPS", field, fixtures.log("setDurationConn"))
+
         return await waitUntilDownloadFinished(app)
       }
       downloadPcapFromConnTuple()
@@ -92,17 +98,18 @@ describe("Test PCAPs", () => {
       // It's left on because I can't fix/disable it, and I want to call
       // attention to getting it fixed right away.
       let downloadPcapFromConnTuple = async () => {
+        let program = "_path=conn duration=nil | sort -r ts, uid"
         await logIn(app)
-        await writeSearch(app, "_path=conn duration=nil | sort -r ts, uid")
+        await writeSearch(app, program)
         await startSearch(app)
         await waitForSearch(app)
-        await rightClick(
-          app,
-          selectors.viewer.resultCellContaining(
-            dataSets.corelight.pcaps.unsetDurationUid
-          )
-        )
-        await click(app, selectors.viewer.rightClickMenuItem("Download PCAPS"))
+
+        let field = dataSets.corelight.pcaps.unsetDurationUid
+
+        menu
+          .program(program)
+          .click("Download PCAPS", field, fixtures.log("unsetDurationConn"))
+
         return await waitUntilDownloadFinished(app)
       }
       downloadPcapFromConnTuple()
@@ -124,13 +131,9 @@ describe("Test PCAPs", () => {
       await startSearch(app)
       await waitForSearch(app)
       await searchDisplay(app)
-      await rightClick(
-        app,
-        selectors.viewer.resultCellContaining(
-          dataSets.corelight.logDetails.getDetailsFrom
-        )
-      )
-      await click(app, selectors.viewer.rightClickMenuItem("Open details"))
+
+      let uid = dataSets.corelight.logDetails.getDetailsFrom
+      menu.click("Open details", uid, fixtures.log("myBusinessDocHttp"))
       await click(app, selectors.correlationPanel.getText("conn"))
       await click(app, selectors.pcaps.button)
       return await waitUntilDownloadFinished(app)
