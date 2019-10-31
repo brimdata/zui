@@ -1,0 +1,11 @@
+#! /bin/bash
+
+files=$(find src/js -type file -not -path "*/test/*" -not -name "*.test.js" -name "*.js")
+for f in $files
+do
+  path=${f%.js}
+  name=${path##*/}
+  count=$(git grep -w -c $name $files | grep -v $f | wc -l)
+
+  [ $count -eq 0 ] && echo "Unused: $f"
+ done
