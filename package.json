@@ -73,7 +73,7 @@
     "babel-plugin-source-map-support": "^2.0.1",
     "commander": "^2.19.0",
     "cpx": "^1.5.0",
-    "electron": "^4.2.4",
+    "electron": "^4.2.12",
     "electron-devtools-installer": "^2.2.4",
     "electron-installer-dmg": "^2.0.0",
     "electron-packager": "^13.1.1",
