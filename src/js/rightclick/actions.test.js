@@ -6,7 +6,7 @@ import initTestStore from "../test/initTestStore"
 
 test("#detail first shows right pane, then views log", () => {
   const store = initTestStore()
-  actions.detail(conn()).onClick(store.dispatch)
+  actions.detail(conn(), {enabled: true}).click(store.dispatch)
 
   expect(store.getActions().map((a) => a.type)).toEqual(
     expect.arrayContaining([

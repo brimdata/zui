@@ -1,11 +1,16 @@
 /* @flow */
 
+import type {MenuItem} from "electron"
+
 import {conn, dns, weird} from "../test/mockLogs"
-import cellMenu from "./cellMenu"
+import menu from "../electron/menu"
 import mockSpace from "../test/mockSpace"
 
-function menuText(menu) {
-  return menu.map((item) => item.text).join(", ")
+function menuText(menu: MenuItem) {
+  return menu
+    .filter((item) => item.enabled)
+    .map((item) => item.label)
+    .join(", ")
 }
 
 describe("Log Right Click", () => {
@@ -15,12 +20,13 @@ describe("Log Right Click", () => {
   test("conn log with pcap support", () => {
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
-      field,
-      log
-    )
+    const ctxMenu = menu.fieldContextMenu(
+      program,
+      log.descriptor.map((c) => c.name),
+      space
+    )(field, log)
 
-    expect(menuText(menu)).toMatch(/pcaps/i)
+    expect(menuText(ctxMenu)).toMatch(/pcaps/i)
   })
 
   test("conn log without pcap support", () => {
@@ -28,48 +34,52 @@ describe("Log Right Click", () => {
 
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
-      field,
-      log
-    )
+    const ctxMenu = menu.fieldContextMenu(
+      program,
+      log.descriptor.map((c) => c.name),
+      space
+    )(field, log)
 
-    expect(menuText(menu)).not.toMatch(/pcaps/i)
+    expect(menuText(ctxMenu)).not.toMatch(/pcaps/i)
   })
 
   test("dns log", () => {
     const log = dns()
     const field = log.getField("query")
-    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
-      field,
-      log
-    )
+    const ctxMenu = menu.fieldContextMenu(
+      program,
+      log.descriptor.map((c) => c.name),
+      space
+    )(field, log)
 
-    expect(menuText(menu)).toMatch(/virustotal/i)
-    expect(menuText(menu)).toMatch(/count by/i)
+    expect(menuText(ctxMenu)).toMatch(/virustotal/i)
+    expect(menuText(ctxMenu)).toMatch(/count by/i)
   })
 
   test("time field for weird log", () => {
     const log = weird()
     const field = log.getField("ts")
-    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
-      field,
-      log
-    )
+    const ctxMenu = menu.fieldContextMenu(
+      program,
+      log.descriptor.map((c) => c.name),
+      space
+    )(field, log)
 
-    expect(menuText(menu)).toMatch(/"start" time/i)
-    expect(menuText(menu)).toMatch(/"end" time/i)
+    expect(menuText(ctxMenu)).toMatch(/"start" time/i)
+    expect(menuText(ctxMenu)).toMatch(/"end" time/i)
   })
 
   test("time field for conn log", () => {
     const log = conn()
     const field = log.getField("ts")
-    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
-      field,
-      log
-    )
+    const ctxMenu = menu.fieldContextMenu(
+      program,
+      log.descriptor.map((c) => c.name),
+      space
+    )(field, log)
 
-    expect(menuText(menu)).toMatch(/"start" time/i)
-    expect(menuText(menu)).toMatch(/"end" time/i)
+    expect(menuText(ctxMenu)).toMatch(/"start" time/i)
+    expect(menuText(ctxMenu)).toMatch(/"end" time/i)
   })
 })
 
@@ -80,35 +90,36 @@ describe("Analysis Right Click", () => {
   test("address field", () => {
     const log = conn()
     const field = log.getField("id.orig_h")
-    const menu = cellMenu(program, log.descriptor.map((c) => c.name), space)(
-      field,
-      log
-    )
+    const ctxMenu = menu.fieldContextMenu(
+      program,
+      log.descriptor.map((c) => c.name),
+      space
+    )(field, log)
 
-    expect(menuText(menu)).toMatch(/whois/i)
+    expect(menuText(ctxMenu)).toMatch(/whois/i)
   })
 
   test("non-address field", () => {
     const log = conn()
     const field = log.getField("proto")
-    const menu = cellMenu(
+    const ctxMenu = menu.fieldContextMenu(
       "* | count() by proto",
       log.descriptor.map((c) => c.name),
       space
     )(field, log)
 
-    expect(menuText(menu)).toMatch(/pivot/i)
+    expect(menuText(ctxMenu)).toMatch(/pivot/i)
   })
 
   test("group by proc", () => {
     const log = conn()
     const field = log.getField("proto")
-    const menu = cellMenu(
+    const ctxMenu = menu.fieldContextMenu(
       "* | group by proto",
       log.descriptor.map((c) => c.name),
       space
     )(field, log)
 
-    expect(menuText(menu)).toMatch(/filter/i)
+    expect(menuText(ctxMenu)).toMatch(/filter/i)
   })
 })

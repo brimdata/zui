@@ -5,13 +5,10 @@ import classNames from "classnames"
 
 import type {RightClickBuilder} from "../../types"
 import {getTooltipStyle} from "../../lib/MenuStyler"
-import CellValue from "./CellValue"
+import CellValueItem from "./CellValueItem"
 import Field from "../../models/Field"
 import Log from "../../models/Log"
-import RightClickMenu from "../RightClickMenu"
 import Tooltip from "../Tooltip"
-import lib from "../../lib"
-import useContextMenu from "../../hooks/useContextMenu"
 
 type Props = {
   field: Field,
@@ -23,7 +20,6 @@ type Props = {
 export default function LogCell(props: Props) {
   let [hover, setHover] = useState(false)
   let [tooltipStyle, setTooltipStyle] = useState({})
-  let menu = useContextMenu()
 
   function handleMouseEnter(e) {
     setHover(true)
@@ -34,47 +30,25 @@ export default function LogCell(props: Props) {
     setHover(false)
   }
 
-  function handleRightClick(e) {
-    e.stopPropagation()
-    setHover(true)
-    menu.handleOpen(e)
-  }
-
-  function handleRightClickDismiss(e) {
-    lib.win.clearTextSelection()
-    e.stopPropagation()
-    setHover(false)
-    menu.handleClose()
-  }
-
   let {name, type} = props.field
 
   return (
     <div
-      className={classNames(`log-cell ${type}`, {
-        active: menu.show,
-        hover
-      })}
+      className={classNames(`log-cell ${type}`, {hover})}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onContextMenu={handleRightClick}
-      onClick={(e) => lib.win.selectText(e.currentTarget)}
       style={props.style}
     >
-      <CellValue field={props.field} />
-
+      <CellValueItem
+        menu={props.rightClick}
+        field={props.field}
+        log={props.log}
+        valueIndex={0}
+      />
       {hover && (
         <Tooltip style={tooltipStyle}>
           <span className="field-name">{name}</span>
         </Tooltip>
-      )}
-
-      {menu.show && !!props.rightClick && (
-        <RightClickMenu
-          actions={props.rightClick(props.field, props.log)}
-          onClose={handleRightClickDismiss}
-          style={menu.style}
-        />
       )}
     </div>
   )

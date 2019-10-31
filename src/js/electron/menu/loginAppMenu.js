@@ -2,11 +2,11 @@
 
 import {MenuItem} from "electron"
 
-import {createSearchMenuTemplate} from "./searchMenu"
 import {isArray} from "../../lib/is"
+import searchAppMenu from "./searchAppMenu"
 
-export function createLoginMenuTemplate(send: Function) {
-  let menu = createSearchMenuTemplate(send)
+export default function loginAppMenu(send: Function) {
+  let menu = searchAppMenu(send)
 
   disableChildren(menu, "Query")
   disable(menu, "Toggle Search History")

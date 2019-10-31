@@ -20,16 +20,10 @@ const RightClickMenuItem = (props: Props) => {
   const action = props.action
 
   switch (action.type) {
-    case "action":
-      return (
-        <li onClick={action.onClick.bind(null, props.dispatch)}>
-          {action.text}
-        </li>
-      )
-    case "seperator":
+    case "separator":
       return <hr />
     default:
-      throw "Unknown Action"
+      return <li onClick={action.click}>{action.label}</li>
   }
 }
 

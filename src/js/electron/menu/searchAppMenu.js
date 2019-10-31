@@ -3,7 +3,7 @@
 import config from "../config"
 import lib from "../../lib"
 
-export function createSearchMenuTemplate(send: Function) {
+export default function searchAppMenu(send: Function) {
   let template = [
     {
       label: "Edit",
@@ -90,7 +90,7 @@ export function createSearchMenuTemplate(send: Function) {
           click: () => {
             send("resetState")
             lib
-              .file(config.windowStateFile)
+              .file(config.windowStateFile())
               .remove()
               .catch(() => {})
           }

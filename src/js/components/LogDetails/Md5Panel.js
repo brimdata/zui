@@ -17,7 +17,7 @@ import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import cellMenu from "../../rightclick/cellMenu"
+import menu from "../../electron/menu"
 
 export const Md5Panel = ({log, searches}: PanelProps) => {
   let space = useSelector(getCurrentSpace)
@@ -42,14 +42,18 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
       <PanelHeading status={status}>Md5 Correlation</PanelHeading>
       <AsyncTable
         logs={md5}
-        rightClick={cellMenu(md5Correlation(logMd5), getColumns(md5), space)}
+        rightClick={menu.fieldContextMenu(
+          md5Correlation(logMd5),
+          getColumns(md5),
+          space
+        )}
         name="md5 count"
         status={status}
         expect={1}
       />
       <AsyncTable
         logs={filenames}
-        rightClick={cellMenu(
+        rightClick={menu.fieldContextMenu(
           filenameCorrelation(logMd5),
           getColumns(filenames),
           space
@@ -61,7 +65,7 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
       <div className="two-column">
         <AsyncTable
           logs={tx}
-          rightClick={cellMenu(
+          rightClick={menu.fieldContextMenu(
             txHostsCorrelation(logMd5),
             getColumns(tx),
             space
@@ -72,7 +76,7 @@ export const Md5Panel = ({log, searches}: PanelProps) => {
         />
         <AsyncTable
           logs={rx}
-          rightClick={cellMenu(
+          rightClick={menu.fieldContextMenu(
             rxHostsCorrelation(logMd5),
             getColumns(rx),
             space

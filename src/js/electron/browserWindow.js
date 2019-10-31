@@ -2,8 +2,7 @@
 import {BrowserWindow, Menu} from "electron"
 
 import type {Keep} from "../lib/keep"
-import {createLoginMenuTemplate} from "../electron/menus/loginMenu"
-import {createSearchMenuTemplate} from "../electron/menus/searchMenu"
+import menu from "./menu"
 
 export type WindowName = "login" | "search"
 
@@ -22,9 +21,9 @@ export default function window(state: Keep) {
   function getMenuBuilder() {
     switch (name) {
       case "search":
-        return createSearchMenuTemplate
+        return menu.searchAppMenu
       case "login":
-        return createLoginMenuTemplate
+        return menu.loginAppMenu
       default:
         throw "Unknown Menu"
     }
