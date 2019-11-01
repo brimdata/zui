@@ -2,10 +2,11 @@
   margin-bottom: $space-s;
   display: flex;
   justify-content: space-between;
-
+  user-select: none;
   td,
   th {
     white-space: nowrap;
+    user-select: all;
   }
 
   .host {
@@ -27,6 +28,7 @@
     text-align: center;
     line-height: 20px;
     font-family: $mono-font;
+    user-select: all;
   }
 
   .ip.small {

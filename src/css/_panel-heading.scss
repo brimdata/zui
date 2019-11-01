@@ -4,6 +4,7 @@
   justify-content: flex-start;
   margin-bottom: 12px;
   transform: translateX(-24px);
+  user-select: none;
 
   & > * {
     margin: 0;

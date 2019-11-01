@@ -11,6 +11,7 @@ $pane-header-background-color: $white-5;
 }
 
 .pane-header {
+  user-select: none;
   position: relative;
   border-bottom: 1px solid $pane-border-color;
   svg {

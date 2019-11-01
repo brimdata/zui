@@ -7,12 +7,7 @@
   height: 25px;
   display: flex;
   align-items: flex-start;
-
   @include type-colors;
-
-  ._path {
-    @include path-tag;
-  }
 
   &.hover,
   &.active {
@@ -57,4 +52,10 @@
 
 .compound-field-separator {
   color: $gray-1;
+}
+
+.cell-value {
+  &._path {
+    @include path-tag;
+  }
 }
