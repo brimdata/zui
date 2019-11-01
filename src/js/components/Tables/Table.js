@@ -4,8 +4,8 @@ import React from "react"
 
 import type {Column, RightClickBuilder} from "../../types"
 import {showContextMenu} from "../../lib/System"
-import CellValue from "../LogCell/CellValue"
 import Field from "../../models/Field"
+import FieldCell from "../FieldCell"
 import Log from "../../models/Log"
 
 export default function Table({className, ...props}: *) {
@@ -29,7 +29,7 @@ export function TableData({field, log, rightClick}: Props) {
 
   return (
     <td onContextMenu={onContextMenu} className={`${field.type} ${field.name}`}>
-      <CellValue field={field.toBrimField()} />
+      <FieldCell field={field.toBrimField()} />
     </td>
   )
 }

@@ -159,7 +159,7 @@ export const selectors = {
     header_base: dataAttrSelector("viewer_header"),
     headers: dataAttrSelector("viewer_header") + " .header-cell",
     results_base: dataAttrSelector("viewer_results"),
-    results: dataAttrSelector("viewer_results") + " span",
+    results: dataAttrSelector("viewer_results") + " .field-cell",
     resultCellContaining: genSelectorForTextUnderElement("viewer_results"),
     rightClickMenu: dataAttrSelector("logCellMenu"),
     rightClickMenuItem: genSelectorForTextUnderElement("logCellMenu")

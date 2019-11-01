@@ -4,7 +4,7 @@ import React from "react"
 import type {$Field} from "../../brim"
 import type {$Menu} from "../../electron/menu"
 import {showContextMenu} from "../../lib/System"
-import CellValue from "./CellValue"
+import FieldCell from "../FieldCell"
 import lib from "../../lib"
 
 type Props = {
@@ -19,7 +19,7 @@ export default function SingleField({field, menu}: Props) {
       onClick={(e) => lib.win.selectText(e.currentTarget)}
       onContextMenu={() => showContextMenu(menu)}
     >
-      <CellValue field={field} />
+      <FieldCell field={field} />
     </div>
   )
 }
