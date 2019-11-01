@@ -15,22 +15,6 @@
   }
 }
 
-.log-cell.time {
-  height: $bro-log-row-height;
-  cursor: pointer;
-  span {
-    padding: 0 6px;
-  }
-
-  &.highlight {
-    border-top: 1px dashed $white-9;
-  }
-}
-
-.log-cell.count {
-  text-align: right;
-}
-
 .cell-value-item {
   position: relative;
   padding: 0 6px;
@@ -52,10 +36,4 @@
 
 .compound-field-separator {
   color: $gray-1;
-}
-
-.cell-value {
-  &._path {
-    @include path-tag;
-  }
 }
