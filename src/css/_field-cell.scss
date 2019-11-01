@@ -1,0 +1,14 @@
+.field-cell {
+  @include type-colors;
+  cursor: default;
+
+  &.time {
+    span {
+      padding: 0 6px;
+    }
+  }
+
+  &._path {
+    @include path-tag;
+  }
+}
