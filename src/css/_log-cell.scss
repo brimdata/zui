@@ -12,8 +12,6 @@
 
   ._path {
     @include path-tag;
-    width: 100%;
-    min-width: 58px;
   }
 
   &.hover,
