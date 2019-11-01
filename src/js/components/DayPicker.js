@@ -3,7 +3,6 @@ import DayPickerInput from "react-day-picker/DayPickerInput"
 import React from "react"
 
 import * as Time from "../lib/Time"
-import lib from "../lib"
 
 const FORMAT = "MMM D, YYYY"
 
@@ -43,17 +42,10 @@ export default class DayPicker extends React.Component<Props, State> {
   measureInput() {
     const {daypicker} = this
     if (daypicker) {
-      const parent = lib.doc.id("measure-layer")
-      const span = document.createElement("span")
-      span.innerHTML = daypicker.input.value
-      span.className = "thin-button"
-      span.style.padding = "0 5px"
-      parent.append(span)
-      const {width} = span.getBoundingClientRect()
-      span.remove()
-      const inputWidth = Math.floor(width)
+      let oneChar = 7.6
+      let inputWidth = Math.ceil(daypicker.input.value.length * oneChar)
       if (this.state.inputWidth !== inputWidth) {
-        this.setState({inputWidth: Math.floor(width)})
+        this.setState({inputWidth})
       }
     }
   }
