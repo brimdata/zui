@@ -18,7 +18,11 @@ export default function contextMenu(
 
     click(label: string, field: Field, log: Log) {
       let item = menu
-        .fieldContextMenu(program, columns, space)(field, log)
+        .fieldContextMenu(program, columns, space)(
+          field.toBrimField(),
+          log,
+          false
+        )
         .find((item) => item.label && item.label === label)
 
       if (item && item.click) {

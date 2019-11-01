@@ -19,7 +19,7 @@ type Props = {
   log: Log,
   columns: TableColumns,
   onClick: () => void,
-  rightClick?: RightClickBuilder
+  rightClick: RightClickBuilder
 }
 
 export default class LogRow extends React.Component<Props> {

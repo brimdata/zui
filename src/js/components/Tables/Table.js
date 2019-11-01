@@ -24,7 +24,7 @@ type Props = {
 
 export function TableData({field, log, rightClick}: Props) {
   function onContextMenu() {
-    rightClick && showContextMenu(rightClick(field, log))
+    rightClick && showContextMenu(rightClick(field.toBrimField(), log, false))
   }
 
   return (

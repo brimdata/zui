@@ -10,8 +10,8 @@ type Props = {
 }
 
 type Options = {
-  enabled: boolean,
-  visible: boolean
+  enabled?: boolean,
+  visible?: boolean
 }
 
 export default function action({name, label, listener}: Props) {
