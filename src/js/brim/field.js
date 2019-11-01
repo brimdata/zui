@@ -1,7 +1,12 @@
 /* @flow */
 
 import {COMPOUND_FIELD_RGX} from "./compoundField"
+import {withCommas} from "../lib/fmt"
 import brim, {type $Field} from "./"
+
+export const ONE_CHAR = 7.39
+export const FIELD_PAD = 14
+export const PATH_PAD = 12
 
 function field(name: string, type: string, value: string): $Field {
   return {
@@ -24,6 +29,24 @@ function field(name: string, type: string, value: string): $Field {
     },
     toDate() {
       return new Date(+this.value * 1000)
+    },
+    display() {
+      if (type === "count") {
+        return withCommas(value)
+      } else {
+        return value
+      }
+    },
+    guessWidth() {
+      if (type === "time") {
+        return 192
+      } else if (name === "_path") {
+        return this.display().length * ONE_CHAR + FIELD_PAD + PATH_PAD
+      } else if (this.compound()) {
+        return this.toCompound().guessWidth()
+      } else {
+        return Math.ceil(this.display().length * ONE_CHAR + FIELD_PAD)
+      }
     }
   }
 }

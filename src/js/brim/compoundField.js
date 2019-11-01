@@ -1,4 +1,5 @@
 /* @flow */
+import {ONE_CHAR} from "./field"
 import brim, {type $CompoundField} from "./"
 
 export const COMPOUND_FIELD_RGX = /^(set|vector)\[(\w+)\]$/
@@ -24,6 +25,16 @@ function compoundField(name: string, type: string, value: string): $T {
       } else {
         return null
       }
+    },
+    guessWidth() {
+      const comma = ONE_CHAR
+      let items = this.items()
+      let sum = 0
+      for (let item of items) {
+        sum += item.guessWidth()
+      }
+      sum += comma * (items.length - 1)
+      return sum
     }
   }
 }

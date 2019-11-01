@@ -3,9 +3,7 @@
 import React from "react"
 
 import type {$Field} from "../../brim"
-import {TimeField} from "../../models/Field"
 import {format} from "../../lib/Time"
-import {withCommas} from "../../lib/fmt"
 
 type Props = {field: $Field}
 
@@ -13,7 +11,7 @@ const CellValue = ({field}: Props) => {
   if (field.name === "_path")
     return (
       <span className={`${field.name} ${field.value}-bg-color `}>
-        {field.value}
+        {field.display()}
       </span>
     )
   if (field.type === "time")
@@ -24,10 +22,8 @@ const CellValue = ({field}: Props) => {
         <span className="seconds">{format(field.toDate(), "ss.SSSS")}</span>
       </div>
     )
-  if (field.type === "count") {
-    return <span>{withCommas(field.value)}</span>
-  }
-  return <span>{field.value}</span>
+
+  return <span>{field.display()}</span>
 }
 
 export default CellValue

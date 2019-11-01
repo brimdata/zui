@@ -15,7 +15,9 @@ export type $Field = {
   queryableValue: () => string,
   compound: () => boolean,
   toCompound: () => $CompoundField,
-  toDate: () => Date
+  toDate: () => Date,
+  display: () => string,
+  guessWidth: () => number
 }
 
 export type $CompoundField = {
@@ -24,7 +26,8 @@ export type $CompoundField = {
   itemType: string,
   length: number,
   items: () => $Field[],
-  item: (number) => ?$Field
+  item: (number) => ?$Field,
+  guessWidth: () => number
 }
 
 export type $Log = {
