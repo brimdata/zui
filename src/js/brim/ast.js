@@ -34,9 +34,9 @@ export default function ast(tree: Object) {
 }
 
 function getProcs(ast) {
-  if (!ast || !ast.proc) return []
+  if (!ast) return []
   let list = []
-  collectProcs(ast.proc, list)
+  collectProcs(ast, list)
   return list
 }
 
