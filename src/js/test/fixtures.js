@@ -50,6 +50,3 @@ export default {
     }
   }
 }
-
-// let string = new Log(log.tuple, log.descriptor).toString()
-// console.log(`"${string}"`)
