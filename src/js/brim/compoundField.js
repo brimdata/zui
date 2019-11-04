@@ -28,12 +28,14 @@ function compoundField(name: string, type: string, value: string): $T {
     },
     guessWidth() {
       const comma = ONE_CHAR
+      const wrap = 2 * ONE_CHAR
       let items = this.items()
       let sum = 0
       for (let item of items) {
         sum += item.guessWidth()
       }
       sum += comma * (items.length - 1)
+      sum += wrap
       return sum
     }
   }

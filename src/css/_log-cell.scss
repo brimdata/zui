@@ -17,7 +17,7 @@
 
 .cell-value-item {
   position: relative;
-  padding: 0 6px;
+  padding: 0 2px;
   border: 1px solid transparent;
   height: 25px;
 
@@ -34,6 +34,12 @@
   text-overflow: ellipsis;
 }
 
-.compound-field-separator {
-  color: $gray-1;
+.compound-field-extra {
+  height: 25px;
+  border: 1px solid transparent;
+  color: $white-7;
+
+  &.separator {
+    margin-right: 6px;
+  }
 }

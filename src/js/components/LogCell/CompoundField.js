@@ -1,6 +1,7 @@
 /* @flow */
 
 import React from "react"
+import classNames from "classnames"
 
 import {type $Field} from "../../brim"
 import Log from "../../models/Log"
@@ -22,13 +23,41 @@ export default function CompoundField({field, log, menuBuilder}: Props) {
       render.push(<SingleField key={i} field={item} log={log} menu={menu} />)
     }
     if (i !== compound.length - 1) {
-      render.push(<Separator />)
+      render.push(<Comma />)
     }
   }
 
-  return render
+  return <Wrapper type={compound.container}>{render}</Wrapper>
 }
 
-function Separator() {
-  return <div className="compound-field-separator">,</div>
+function Comma() {
+  return <Extra value="," className="separator" />
+}
+
+function Extra({value, className}) {
+  return (
+    <div className={classNames("compound-field-extra", className)}>{value}</div>
+  )
+}
+
+function Wrapper({type, children}) {
+  let [open, close] = getWrapper(type)
+  return (
+    <>
+      <Extra value={open} />
+      {children}
+      <Extra value={close} />
+    </>
+  )
+}
+
+function getWrapper(container) {
+  switch (container) {
+    case "set":
+      return ["{", "}"]
+    case "vector":
+      return ["[", "]"]
+    default:
+      return [null, null]
+  }
 }
