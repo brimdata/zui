@@ -37,7 +37,7 @@ export default {
     if (string) {
       return Log.fromString(string)
     } else {
-      throw new Error("Unkonwn log fixture: " + name)
+      throw new Error("Unknown log fixture: " + name)
     }
   },
 
@@ -46,7 +46,7 @@ export default {
     if (string) {
       return Field.fromString(string)
     } else {
-      throw new Error("Unkonwn field fixture: " + name)
+      throw new Error("Unknown field fixture: " + name)
     }
   }
 }
