@@ -1,39 +1,39 @@
 .log-cell {
-  padding: 0 6px;
+  padding: 0;
   position: relative;
-  border: 1px solid transparent;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   height: 25px;
-
+  display: flex;
+  align-items: flex-start;
   @include type-colors;
-
-  ._path {
-    @include path-tag;
-    width: 100%;
-    min-width: 58px;
-  }
 
   &.hover,
   &.active {
     position: relative;
+  }
+}
+
+.cell-value-item {
+  position: relative;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  height: 25px;
+
+  &:hover {
+    z-index: 1;
     border: 1px dashed $gray-9;
   }
 }
 
-.log-cell.time {
-  height: $bro-log-row-height;
-  cursor: pointer;
-  span {
-    padding: 0 6px;
-  }
-
-  &.highlight {
-    border-top: 1px dashed $white-9;
-  }
+.cell-value-item:last-child {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.log-cell.count {
-  text-align: right;
+.compound-field-separator {
+  color: $gray-1;
 }

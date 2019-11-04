@@ -5,6 +5,11 @@ import fieldContextMenu from "./fieldContextMenu"
 import loginAppMenu from "./loginAppMenu"
 import searchAppMenu from "./searchAppMenu"
 
+export type $MenuItem =
+  | {click: Function, label: string, enabled: boolean}
+  | {type: "separator"}
+export type $Menu = $MenuItem[]
+
 export default {
   actions,
   fieldContextMenu,

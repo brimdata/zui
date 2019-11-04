@@ -1,9 +1,9 @@
 /* @flow */
 import {isEqual} from "lodash"
 
+import type {$Field} from "../../brim"
 import type {Space} from "../../lib/Space"
 import {hasGroupByProc} from "../../lib/Program"
-import Field, {TimeField} from "../../models/Field"
 import Log from "../../models/Log"
 import menu from "./"
 
@@ -12,8 +12,8 @@ export default function fieldContextMenu(
   columns: string[],
   space: Space
 ) {
-  return function(field: Field, log: Log) {
-    const isTime = field instanceof TimeField
+  return function(field: $Field, log: Log, compound: boolean) {
+    const isTime = field.type === "time"
     const isConn = log.isPath("conn")
     const isGroupBy = hasGroupByProc(program)
     const isAddr = ["addr", "set[addr]"].includes(field.type)
@@ -36,8 +36,20 @@ export default function fieldContextMenu(
     ].includes(field.name)
 
     return [
-      menu.actions.include.menuItem([field], {enabled: !isTime && hasCol}),
-      menu.actions.exclude.menuItem([field], {enabled: !isTime && hasCol}),
+      menu.actions.include.menuItem([field], {
+        enabled: !isTime && hasCol,
+        visible: !compound
+      }),
+      menu.actions.exclude.menuItem([field], {
+        enabled: !isTime && hasCol,
+        visible: !compound
+      }),
+      menu.actions.in.menuItem([field], {
+        visible: !!compound
+      }),
+      menu.actions.notIn.menuItem([field], {
+        visible: !!compound
+      }),
       menu.actions.freshInclude.menuItem([field], {enabled: true}),
       menu.separator(),
       menu.actions.groupByDrillDown.menuItem([program, log], {

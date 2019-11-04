@@ -13,8 +13,14 @@ exports[`Rendering the row 1`] = `
 >
   <LogCell
     field={
-      TimeField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "ts",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "time",
         "value": "1425612054.369843",
       }
@@ -143,6 +149,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -151,8 +158,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "_path",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "string",
         "value": "conn",
       }
@@ -281,6 +294,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -289,8 +303,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "uid",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "string",
         "value": "Cynwae4qh1GxM82hQ2",
       }
@@ -419,6 +439,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -427,8 +448,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "id.orig_h",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "addr",
         "value": "192.168.0.50",
       }
@@ -557,6 +584,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -565,8 +593,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "id.orig_p",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "port",
         "value": "1900",
       }
@@ -695,6 +729,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -703,8 +738,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "id.resp_h",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "addr",
         "value": "239.255.255.250",
       }
@@ -833,6 +874,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -841,8 +883,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "id.resp_p",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "port",
         "value": "1900",
       }
@@ -971,6 +1019,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -979,8 +1028,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "proto",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "enum",
         "value": "udp",
       }
@@ -1109,6 +1164,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -1117,8 +1173,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      NullField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "service",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "string",
         "value": "-",
       }
@@ -1247,6 +1309,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -1255,8 +1318,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      IntervalField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "duration",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "interval",
         "value": "2.000293",
       }
@@ -1385,6 +1454,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -1393,8 +1463,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      CountField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "orig_bytes",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "count",
         "value": "282",
       }
@@ -1523,6 +1599,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -1531,8 +1608,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      CountField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "resp_bytes",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "count",
         "value": "0",
       }
@@ -1661,6 +1744,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -1669,8 +1753,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "conn_state",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "string",
         "value": "S0",
       }
@@ -1799,6 +1889,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -1807,8 +1898,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      NullField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "local_orig",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "bool",
         "value": "-",
       }
@@ -1937,6 +2034,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -1945,8 +2043,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      NullField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "local_resp",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "bool",
         "value": "-",
       }
@@ -2075,6 +2179,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -2083,8 +2188,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      CountField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "missed_bytes",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "count",
         "value": "0",
       }
@@ -2213,6 +2324,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -2221,8 +2333,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "history",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "string",
         "value": "D",
       }
@@ -2351,6 +2469,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -2359,8 +2478,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      CountField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "orig_pkts",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "count",
         "value": "3",
       }
@@ -2489,6 +2614,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -2497,8 +2623,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      CountField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "orig_ip_bytes",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "count",
         "value": "366",
       }
@@ -2627,6 +2759,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -2635,8 +2768,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      CountField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "resp_pkts",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "count",
         "value": "0",
       }
@@ -2765,6 +2904,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -2773,8 +2913,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      CountField {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "resp_ip_bytes",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "count",
         "value": "0",
       }
@@ -2903,6 +3049,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,
@@ -2911,8 +3058,14 @@ exports[`Rendering the row 1`] = `
   />
   <LogCell
     field={
-      Field {
+      Object {
+        "compound": [Function],
+        "display": [Function],
+        "guessWidth": [Function],
         "name": "tunnel_parents",
+        "queryableValue": [Function],
+        "toCompound": [Function],
+        "toDate": [Function],
         "type": "set[string]",
         "value": "(empty)",
       }
@@ -3041,6 +3194,7 @@ exports[`Rendering the row 1`] = `
         ],
       }
     }
+    rightClick={[Function]}
     style={
       Object {
         "width": 300,

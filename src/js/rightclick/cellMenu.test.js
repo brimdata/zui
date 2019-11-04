@@ -24,7 +24,7 @@ describe("Log Right Click", () => {
       program,
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/pcaps/i)
   })
@@ -38,7 +38,7 @@ describe("Log Right Click", () => {
       program,
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).not.toMatch(/pcaps/i)
   })
@@ -50,7 +50,7 @@ describe("Log Right Click", () => {
       program,
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/virustotal/i)
     expect(menuText(ctxMenu)).toMatch(/count by/i)
@@ -63,7 +63,7 @@ describe("Log Right Click", () => {
       program,
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/"start" time/i)
     expect(menuText(ctxMenu)).toMatch(/"end" time/i)
@@ -76,7 +76,7 @@ describe("Log Right Click", () => {
       program,
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/"start" time/i)
     expect(menuText(ctxMenu)).toMatch(/"end" time/i)
@@ -94,7 +94,7 @@ describe("Analysis Right Click", () => {
       program,
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/whois/i)
   })
@@ -106,7 +106,7 @@ describe("Analysis Right Click", () => {
       "* | count() by proto",
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/pivot/i)
   })
@@ -118,7 +118,7 @@ describe("Analysis Right Click", () => {
       "* | group by proto",
       log.descriptor.map((c) => c.name),
       space
-    )(field, log)
+    )(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/filter/i)
   })

@@ -1,5 +1,7 @@
 /* @flow */
 
+import brim from "../brim"
+
 export default class Field {
   name: string
   type: string
@@ -13,6 +15,10 @@ export default class Field {
 
   cast() {
     return this.value
+  }
+
+  toBrimField() {
+    return brim.field(this.name, this.type, this.value)
   }
 
   queryableValue() {

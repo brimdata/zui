@@ -8,6 +8,12 @@ export default {
   include(field: $Field) {
     return `${field.name}=${field.queryableValue()}`
   },
+  in(field: $Field) {
+    return `${field.queryableValue()} in ${field.name}`
+  },
+  notIn(field: $Field) {
+    return `!${field.queryableValue()} in ${field.name}`
+  },
   countBy(field: $Field) {
     return `count() by ${field.name}`
   },

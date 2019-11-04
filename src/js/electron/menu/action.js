@@ -10,7 +10,8 @@ type Props = {
 }
 
 type Options = {
-  enabled: boolean
+  enabled?: boolean,
+  visible?: boolean
 }
 
 export default function action({name, label, listener}: Props) {
@@ -19,10 +20,10 @@ export default function action({name, label, listener}: Props) {
     menuItem(args: *[], options?: Options) {
       return {
         label,
-        ...options,
         click(menuItem: MenuItem, win: BrowserWindow) {
           win.webContents.send(name, ...args)
-        }
+        },
+        ...options
       }
     },
     // To be called in the render process

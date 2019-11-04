@@ -1,10 +1,10 @@
 /* @flow */
 
-import type {RightClickAction} from "../rightclick/actions"
+import type {$Field} from "../brim"
+import type {$Menu} from "../electron/menu"
 import type {Span} from "../BoomClient/types"
 import type {TimeUnit} from "../lib/Time"
 import AppError from "../models/AppError"
-import Field from "../models/Field"
 import Log from "../models/Log"
 
 export type Notification =
@@ -64,7 +64,7 @@ export type RelatedLogs = {
   [string]: Log[]
 }
 
-export type RightClickBuilder = (Field, Log) => RightClickAction[]
+export type RightClickBuilder = ($Field, Log, boolean) => $Menu
 
 export type Results = {
   tuples: Tuple[],

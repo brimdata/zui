@@ -3,6 +3,7 @@
 import type {Column} from "../types"
 import type {ColumnSettingsMap, TableColumn} from "../state/columns/types"
 import Log from "./Log"
+import brim from "../brim"
 import columnKey from "../lib/columnKey"
 import columnOrder from "../lib/columnOrder"
 
@@ -51,20 +52,23 @@ export default class TableColumns {
   }
 
   setWidths(logs: Log[]) {
+    const MAX_WIDTH = 500
+    const resizeHandle = 5
+
     this.cols.forEach((col) => {
       if (col.width) return
-      if (col.name === "ts") {
-        col.width = 192
-        return
-      }
-      let max = col.name.length + 5
+      let colName = brim.field("", "", col.name)
+      let max = colName.guessWidth() + resizeHandle
+
       logs.forEach((log) => {
-        let value = log.cast(col.name)
-        if (!value) return
-        let len = value.length
-        if (len > max) max = len
+        let field = log.field(col.name)
+        if (field) {
+          let len = field.guessWidth()
+          if (len > max) max = len
+        }
       })
-      col.width = Math.min(max * 7.375 + 20, 500)
+
+      col.width = Math.min(max, MAX_WIDTH)
     })
   }
 
