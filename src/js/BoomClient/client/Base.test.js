@@ -22,7 +22,7 @@ test("#inspectSearch", () => {
         op: "SequentialProc",
         procs: [
           {
-            op: "SourceProc",
+            op: "FilterProc",
             filter: {
               op: "BooleanLiteral",
               value: true

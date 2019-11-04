@@ -13,7 +13,7 @@ describe("#getProcNames", () => {
     const program = "* | (cut uid; cut uid, ts) | tail 1"
     expect(run(program)).toEqual([
       "SequentialProc",
-      "SourceProc",
+      "FilterProc",
       "ParallelProc",
       "CutProc",
       "CutProc",
