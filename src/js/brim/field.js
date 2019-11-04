@@ -33,6 +33,8 @@ function field(name: string, type: string, value: string): $Field {
     display() {
       if (type === "count") {
         return withCommas(value)
+      } else if (value === "(empty)") {
+        return ""
       } else {
         return value
       }
