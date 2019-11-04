@@ -16,7 +16,7 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
-import contextMenu from "../lib/contextMenu"
+import contextMenu from "../lib/appIpc"
 import fixtures from "../../src/js/test/fixtures"
 import mockSpace from "../../src/js/test/mockSpace"
 
