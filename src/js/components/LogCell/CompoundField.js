@@ -12,6 +12,7 @@ type Props = {
   log: Log,
   menuBuilder: Function
 }
+
 export default function CompoundField({field, log, menuBuilder}: Props) {
   let compound = field.toCompound()
   let render = []
@@ -34,13 +35,18 @@ function Comma() {
   return <Extra value="," className="separator" />
 }
 
-function Extra({value, className}) {
+function Extra({value, className}: {value: string | null, className?: string}) {
   return (
     <div className={classNames("compound-field-extra", className)}>{value}</div>
   )
 }
 
-function Wrapper({type, children}) {
+type WrapperProps = {
+  type: string | null,
+  children: *
+}
+
+function Wrapper({type, children}: WrapperProps) {
   let [open, close] = getWrapper(type)
   return (
     <>
