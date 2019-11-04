@@ -1,11 +1,12 @@
 /* @flow */
+import {Application} from "spectron"
 import type {Space} from "../../src/js/lib/Space"
 import Field from "../../src/js/models/Field"
 import Log from "../../src/js/models/Log"
 import menu from "../../src/js/electron/menu"
 
 export default function contextMenu(
-  app: *,
+  app: Application,
   program: string,
   columns: string[],
   space: Space
