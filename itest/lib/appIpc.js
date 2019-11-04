@@ -5,6 +5,11 @@ import Field from "../../src/js/models/Field"
 import Log from "../../src/js/models/Log"
 import menu from "../../src/js/electron/menu"
 
+// This module exists to work around difficulties in using Spectron to drive
+// Brim with its components that use Electron's native support. Right now
+// that's the right-click menu, which has recently gone native. See the
+// long-standing issue here:
+// https://github.com/electron-userland/spectron/issues/21
 export default function contextMenu(
   app: Application,
   program: string,
