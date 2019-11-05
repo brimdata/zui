@@ -107,7 +107,7 @@
     "electron-is-dev": "^1.0.1",
     "fs-extra": "^7.0.0",
     "lodash": "^4.17.14",
-    "lookytalk": "git+https://github.com/looky-cloud/lookytalk.git#13ddfabbfaf16f08932cbf02b49e7ab1e653b6aa",
+    "lookytalk": "git+https://github.com/looky-cloud/lookytalk.git#db6611330917522c4698688c39d6899094207374",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.21",
