@@ -35,6 +35,10 @@ describe("Debug and search helpers", () => {
       .then(() => openDebugQuery(app))
       .then(() => getDebugAst(app))
       .then((searchResults) => {
+        // XXX This test (and others below it) depend on the order in
+        // which individual keys inside an object are serialized to json.
+        // Would be nice to relax this a bit by comparing parsed objects
+        // instead of the serialized json.
         expect(searchResults).toMatchSnapshot()
         done()
       })
