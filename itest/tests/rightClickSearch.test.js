@@ -16,7 +16,7 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
-import contextMenu from "../lib/appIpc"
+import contextMenuShim from "../lib/appIpc"
 import mockSpace from "../../src/js/test/mockSpace"
 
 describe("Test search mods via right-clicks", () => {
@@ -26,7 +26,7 @@ describe("Test search mods via right-clicks", () => {
 
   beforeEach(() => {
     app = newAppInstance(basename(__filename), ++testIdx)
-    menu = contextMenu(app, "*", ["ts", "uid", "_path"], mockSpace())
+    menu = contextMenuShim(app, "*", ["ts", "uid", "_path"], mockSpace())
     return startApp(app)
   })
 

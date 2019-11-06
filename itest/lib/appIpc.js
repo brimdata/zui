@@ -11,7 +11,7 @@ import {LOG} from "./log"
 // that's the right-click menu, which has recently gone native. See the
 // long-standing issue here:
 // https://github.com/electron-userland/spectron/issues/21
-export default function contextMenu(
+export default function contextMenuShim(
   app: Application,
   program: string,
   columns: string[],

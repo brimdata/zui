@@ -22,7 +22,7 @@ import {
 } from "../lib/app.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
 import {handleError, stdTest} from "../lib/jest.js"
-import contextMenu from "../lib/appIpc"
+import contextMenuShim from "../lib/appIpc"
 import mockSpace from "../../src/js/test/mockSpace"
 
 const clearPcaps = () => {
@@ -44,7 +44,7 @@ describe("Test PCAPs", () => {
   beforeEach(() => {
     clearPcaps()
     app = newAppInstance(path.basename(__filename), ++testIdx)
-    menu = contextMenu(app, "*", [], mockSpace())
+    menu = contextMenuShim(app, "*", [], mockSpace())
     return startApp(app)
   })
 
