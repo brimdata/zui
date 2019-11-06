@@ -22,8 +22,7 @@ import {
 } from "../lib/app.js"
 import {dataSets, selectors} from "../../src/js/test/integration"
 import {handleError, stdTest} from "../lib/jest.js"
-import contextMenu from "../lib/contextMenu"
-import fixtures from "../../src/js/test/fixtures"
+import contextMenuShim from "../lib/appIpc"
 import mockSpace from "../../src/js/test/mockSpace"
 
 const clearPcaps = () => {
@@ -45,7 +44,7 @@ describe("Test PCAPs", () => {
   beforeEach(() => {
     clearPcaps()
     app = newAppInstance(path.basename(__filename), ++testIdx)
-    menu = contextMenu(app, "*", [], mockSpace())
+    menu = contextMenuShim(app, "*", [], mockSpace())
     return startApp(app)
   })
 
@@ -67,11 +66,13 @@ describe("Test PCAPs", () => {
         await startSearch(app)
         await waitForSearch(app)
 
-        let field = dataSets.corelight.pcaps.setDurationUid
-
         menu
           .program(program)
-          .click("Download PCAPS", field, fixtures.log("setDurationConn"))
+          .click(
+            "Download PCAPS",
+            dataSets.corelight.pcaps.setDurationUid,
+            dataSets.corelight.pcaps.setDurationConnLog
+          )
 
         return await waitUntilDownloadFinished(app)
       }
@@ -104,11 +105,13 @@ describe("Test PCAPs", () => {
         await startSearch(app)
         await waitForSearch(app)
 
-        let field = dataSets.corelight.pcaps.unsetDurationUid
-
         menu
           .program(program)
-          .click("Download PCAPS", field, fixtures.log("unsetDurationConn"))
+          .click(
+            "Download PCAPS",
+            dataSets.corelight.pcaps.unsetDurationUid,
+            dataSets.corelight.pcaps.unsetDurationConnLog
+          )
 
         return await waitUntilDownloadFinished(app)
       }
@@ -132,8 +135,11 @@ describe("Test PCAPs", () => {
       await waitForSearch(app)
       await searchDisplay(app)
 
-      let uid = dataSets.corelight.logDetails.getDetailsFrom
-      menu.click("Open details", uid, fixtures.log("myBusinessDocHttp"))
+      menu.click(
+        "Open details",
+        dataSets.corelight.logDetails.getDetailsFrom,
+        dataSets.corelight.logDetails.myBusinessDocHttpLog
+      )
       await click(app, selectors.correlationPanel.getText("conn"))
       await click(app, selectors.pcaps.button)
       return await waitUntilDownloadFinished(app)

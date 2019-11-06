@@ -16,8 +16,7 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
-import contextMenu from "../lib/contextMenu"
-import fixtures from "../../src/js/test/fixtures"
+import contextMenuShim from "../lib/appIpc"
 import mockSpace from "../../src/js/test/mockSpace"
 
 describe("Test search mods via right-clicks", () => {
@@ -27,7 +26,7 @@ describe("Test search mods via right-clicks", () => {
 
   beforeEach(() => {
     app = newAppInstance(basename(__filename), ++testIdx)
-    menu = contextMenu(app, "*", ["ts", "uid", "_path"], mockSpace())
+    menu = contextMenuShim(app, "*", ["ts", "uid", "_path"], mockSpace())
     return startApp(app)
   })
 
@@ -42,10 +41,16 @@ describe("Test search mods via right-clicks", () => {
     let includeExcludeFlow = async () => {
       await logIn(app)
 
-      let field = dataSets.corelight.rightClickSearch.includeValue
-      let log = fixtures.log("conn1")
-      menu.click("Filter = value", field, log)
-      menu.click("Filter != value", fixtures.field("conn"), log)
+      menu.click(
+        "Filter = value",
+        dataSets.corelight.rightClickSearch.includeValue,
+        dataSets.corelight.rightClickSearch.connLog
+      )
+      menu.click(
+        "Filter != value",
+        dataSets.all.rightClickSearch.connPathValue,
+        dataSets.corelight.rightClickSearch.connLog
+      )
 
       // The result order is deterministic because clicked a uid and then
       // removed its conn log entry.
@@ -74,13 +79,18 @@ describe("Test search mods via right-clicks", () => {
       await startSearch(app)
       await waitForSearch(app)
 
-      let {startTime, endTime} = dataSets.corelight.rightClickSearch
-      let log = fixtures.log("conn1")
-
       menu
         .program(program)
-        .click('Use as "start" time', startTime, log)
-        .click('Use as "end" time', endTime, log)
+        .click(
+          'Use as "start" time',
+          dataSets.corelight.rightClickSearch.startTime,
+          dataSets.corelight.rightClickSearch.connLog
+        )
+        .click(
+          'Use as "end" time',
+          dataSets.corelight.rightClickSearch.endTime,
+          dataSets.corelight.rightClickSearch.connLog
+        )
 
       return searchDisplay(app)
     }
@@ -97,12 +107,17 @@ describe("Test search mods via right-clicks", () => {
   stdTest("New Search works", (done) => {
     let newSearchFlow = async () => {
       await logIn(app)
-      let uid = dataSets.corelight.rightClickSearch.newSearchSetup
-      let path = fixtures.field("weird")
-      let log = fixtures.log("weird1")
       menu
-        .click("Filter = value", uid, log)
-        .click("New search with this value", path, log)
+        .click(
+          "Filter = value",
+          dataSets.corelight.rightClickSearch.newSearchSetup,
+          dataSets.corelight.rightClickSearch.weirdLog
+        )
+        .click(
+          "New search with this value",
+          dataSets.all.rightClickSearch.weirdPathValue,
+          dataSets.corelight.rightClickSearch.weirdLog
+        )
       // The result order is deterministic because all the points rendered have
       // different ts values.
       return searchDisplay(app)
@@ -131,9 +146,17 @@ describe("Test search mods via right-clicks", () => {
       // "dns" will find either the first conn log tuple of a dns connection,
       // or the first dns log tuple of the same.
       menu
-        .click("Count by field", fixtures.field("conn"), fixtures.log("conn1"))
+        .click(
+          "Count by field",
+          dataSets.all.rightClickSearch.connPathValue,
+          dataSets.corelight.rightClickSearch.connLog
+        )
         .program(await getSearchText(app))
-        .click("Pivot to logs", fixtures.field("dhcp"), fixtures.log("dhcp1"))
+        .click(
+          "Pivot to logs",
+          dataSets.all.rightClickSearch.dhcpPathValue,
+          dataSets.corelight.rightClickSearch.dhcpLog
+        )
 
       // The result order is deterministic because all the points rendered have
       // different ts values.
@@ -157,10 +180,13 @@ describe("Test search mods via right-clicks", () => {
         expect(results).toMatchSnapshot()
       })
       .then(() => {
-        let uid = dataSets.corelight.logDetails.getDetailsFrom
         menu
           .program(dataSets.corelight.logDetails.initialSearch)
-          .click("Open details", uid, fixtures.log("myBusinessDocHttp"))
+          .click(
+            "Open details",
+            dataSets.corelight.logDetails.getDetailsFrom,
+            dataSets.corelight.logDetails.myBusinessDocHttpLog
+          )
       })
       .then(() =>
         Promise.all([
