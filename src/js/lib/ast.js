@@ -18,9 +18,9 @@ export const TUPLE_PROCS = [
 export const COMPOUND_PROCS = [PARALLEL_PROC, SEQUENTIAL_PROC]
 
 export function getProcNames(ast: *) {
-  if (!ast || !ast.proc) return []
+  if (!ast) return []
 
-  return extractNames(ast.proc)
+  return extractNames(ast)
 }
 
 function extractNames(proc) {
@@ -33,9 +33,9 @@ function extractNames(proc) {
 }
 
 export function getProcs(ast: *) {
-  if (!ast || !ast.proc) return []
+  if (!ast) return []
   let list = []
-  collectProcs(ast.proc, list)
+  collectProcs(ast, list)
   return list
 }
 
