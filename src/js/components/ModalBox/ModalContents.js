@@ -7,23 +7,17 @@ import type {ModalContentsProps} from "./types"
 import Buttons from "./Buttons"
 import CloseButton from "../CloseButton"
 import lib from "../../lib"
-import useModalAnimation from "./useModalAnimation"
 import useModalController from "./useModalController"
 
-export default function ModalContents({
-  children,
-  className,
-  title,
-  buttons,
-  duration,
-  willUnmount,
-  ...rest
-}: ModalContentsProps) {
+// $FlowFixMe
+const ModalContents = React.forwardRef(function ModalContents(
+  {children, className, title, buttons, ...rest}: ModalContentsProps,
+  ref
+) {
   let {closeModal} = useModalController()
-  useModalAnimation(duration, willUnmount)
 
   return ReactDOM.createPortal(
-    <div className="modal-overlay">
+    <div className="modal-overlay" ref={ref}>
       <div className={classNames("modal-contents", className)} {...rest}>
         <CloseButton light onClick={closeModal} />
         <h2 className="modal-header">{title}</h2>
@@ -33,4 +27,6 @@ export default function ModalContents({
     </div>,
     lib.doc.id("modal-root")
   )
-}
+})
+
+export default ModalContents
