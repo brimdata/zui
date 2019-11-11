@@ -1,0 +1,78 @@
+.time-span-pickers {
+  -webkit-app-region: no-drag;
+  z-index: 1;
+  position: relative;
+  display: flex;
+}
+
+.time-picker-button {
+  position: relative;
+
+  .menu-bar-button {
+    position: relative;
+  }
+
+  .hover-zone {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  & > .hover-zone {
+    z-index: -1;
+  }
+
+  &.hovering .hover-zone {
+    top: -20px;
+    bottom: -20px;
+  }
+}
+
+.time-piece {
+  padding: 0 3px;
+  position: relative;
+
+  &[data-unit="hour"],
+  &[data-unit="minute"] {
+    font-weight: normal;
+    padding-right: 0;
+  }
+
+  .hover-zone {
+    z-index: -1;
+  }
+}
+
+.steppers {
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: all 25ms;
+}
+
+.stepper {
+  width: 20px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  transition: background-color 100ms;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  &.step-up {
+    border-radius: 4px 4px 0 0;
+  }
+  &.step-down {
+    border-radius: 0 0 4px 4px;
+  }
+}
