@@ -3,6 +3,7 @@
 import {isEmpty} from "lodash"
 
 import {isArray} from "./is"
+import animation from "./animation"
 import doc from "./doc"
 import file from "./file"
 import keep from "./keep"
@@ -23,5 +24,6 @@ export default {
   obj,
   doc,
   win,
-  array
+  array,
+  animation
 }
