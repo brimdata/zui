@@ -65,9 +65,7 @@ function CurlModalContents() {
         </pre>
       )}
       {!info && (
-        <pre id="copy-to-curl-code">
-          Invalid ZQL: &apos;{program}&apos;
-        </pre>
+        <pre id="copy-to-curl-code">Invalid ZQL: &apos;{program}&apos;</pre>
       )}
       <Form>
         <InputCheckbox
