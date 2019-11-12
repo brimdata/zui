@@ -4,9 +4,9 @@ import React from "react"
 
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSearchBar} from "./SearchBar"
-import {XSpanPickers} from "./SpanPickers"
 import ClusterPicker from "./ClusterPicker"
 import SpacePicker from "./SpacePicker"
+import TimeSpanPickers from "./TimeSpanPickers"
 
 export default function ControlBar() {
   return (
@@ -16,7 +16,7 @@ export default function ControlBar() {
           <ClusterPicker />
           <SpacePicker />
         </div>
-        <XSpanPickers />
+        <TimeSpanPickers />
       </div>
       <div className="row-2">
         <XHistoryStepper />
