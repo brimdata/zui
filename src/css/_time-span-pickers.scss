@@ -5,6 +5,21 @@
   display: flex;
 }
 
+.time-picker-button-input {
+  display: flex;
+  input {
+    margin: 0;
+    outline: none;
+    width: 142px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid $gray-5;
+    font-family: $data-font;
+    padding-left: 8px;
+    line-height: 16px;
+  }
+}
+
 .time-picker-button {
   position: relative;
 

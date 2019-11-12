@@ -7,6 +7,7 @@ import Animate from "./Animate"
 import CarrotDown from "../icons/carrot-down.svg"
 import CarrotUp from "../icons/carrot-up.svg"
 import MenuBarButton from "./MenuBarButton"
+import TimePickerButtonInput from "./TimePickerButtonInput"
 import useFuzzyHover from "../hooks/useFuzzyHover"
 
 type Props = {
@@ -17,6 +18,7 @@ type Props = {
 export default function TimePickerButton({date, onChange}: Props) {
   let [[x, y], setPosition] = useState([0, 0])
   let [unit, setUnit] = useState("month")
+  let [editing, setEditing] = useState(false)
   let fuzzy = useFuzzyHover(0, 150)
 
   function updatePosition(e) {
@@ -28,18 +30,32 @@ export default function TimePickerButton({date, onChange}: Props) {
     setPosition([centeredX, y])
   }
 
-  function onUp() {
+  function onUp(e) {
+    e.stopPropagation()
     onChange(add(date, 1, unit))
   }
 
-  function onDown() {
+  function onDown(e) {
+    e.stopPropagation()
     onChange(subtract(date, 1, unit))
   }
+
+  function onClick() {
+    setEditing(true)
+  }
+
+  function onSubmit(date) {
+    onChange(date)
+    setEditing(false)
+  }
+
+  if (editing) return <TimePickerButtonInput date={date} onSubmit={onSubmit} />
 
   return (
     <div
       className={classNames("time-picker-button", {hovering: fuzzy.hovering})}
       onMouseLeave={fuzzy.mouseLeave}
+      onClick={onClick}
     >
       <div className="hover-zone" />
       <Steppers

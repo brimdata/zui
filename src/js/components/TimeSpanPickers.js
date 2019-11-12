@@ -7,6 +7,7 @@ import {getTimeWindow} from "../state/reducers/timeWindow"
 import {setOuterTimeWindow} from "../state/actions"
 import SpanDuration from "./SpanDuration"
 import TimePickerButton from "./TimePickerButton"
+import TimeSpanMenu from "./TimeSpanMenu"
 
 export default function TimeSpanPickers() {
   let [from, to] = useSelector(getTimeWindow)
@@ -25,6 +26,7 @@ export default function TimeSpanPickers() {
       <TimePickerButton date={from} onChange={fromChange} />
       <SpanDuration span={[from, to]} />
       <TimePickerButton date={to} onChange={toChange} />
+      <TimeSpanMenu />
     </div>
   )
 }
