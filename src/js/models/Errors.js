@@ -79,9 +79,9 @@ export class InvalidUrlError extends AppError {
   }
 }
 
-export class LookytalkVersionError extends AppError {
+export class ZqVersionError extends AppError {
   message() {
-    return "The server and client lookytalk versions do not match."
+    return "The server and client zq versions do not match."
   }
 }
 
@@ -98,7 +98,7 @@ export class SearchError extends AppError {
 export const KNOWN_ERRORS = [
   SearchError,
   InvalidUrlError,
-  LookytalkVersionError,
+  ZqVersionError,
   UnauthorizedError,
   NetworkError,
   NoSpacesError,

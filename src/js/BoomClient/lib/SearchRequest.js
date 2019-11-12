@@ -7,11 +7,11 @@ import toDur from "./toDur"
 import toTs from "./toTs"
 
 export default class SearchRequest {
-  lookytalk: string
+  zql: string
   options: ClientOptions
 
-  constructor(lookytalk: string, options: ClientOptions) {
-    this.lookytalk = lookytalk
+  constructor(zql: string, options: ClientOptions) {
+    this.zql = zql
     this.options = options
   }
 
@@ -51,7 +51,7 @@ export default class SearchRequest {
   }
 
   ast() {
-    return toAst(this.lookytalk)
+    return toAst(this.zql)
   }
 
   inspect() {

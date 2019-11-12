@@ -37,5 +37,5 @@ test("#setOptions", () => {
 })
 
 test("#clientVersion", () => {
-  expect(boom.clientVersion()).toHaveProperty("lookytalk")
+  expect(boom.clientVersion()).toHaveProperty("zq")
 })

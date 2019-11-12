@@ -66,7 +66,7 @@ function CurlModalContents() {
       )}
       {!info && (
         <pre id="copy-to-curl-code">
-          Invalid Lookytalk: &apos;{program}&apos;
+          Invalid ZQL: &apos;{program}&apos;
         </pre>
       )}
       <Form>

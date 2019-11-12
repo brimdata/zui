@@ -1,4 +1,4 @@
 /* @flow */
-import lookytalk from "lookytalk"
+import ZQL from "zq/zql/zql.js"
 
-export default (string: string) => lookytalk.parse(string)
+export default (string: string) => ZQL.parse(string)

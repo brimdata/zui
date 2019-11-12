@@ -1,6 +1,6 @@
 /* @flow */
 
-import LookyTalk from "lookytalk"
+import ZQL from "zq/zql/zql.js"
 
 import {HEAD_PROC, TAIL_PROC, TUPLE_PROCS, getProcNames, getProcs} from "./ast"
 import {first, same} from "./Array"
@@ -21,7 +21,7 @@ export const parse = (string: Program) => {
   let ast = null
   let error = null
   try {
-    ast = LookyTalk.parse(string)
+    ast = ZQL.parse(string)
   } catch (e) {
     error = e
   }
