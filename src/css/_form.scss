@@ -5,15 +5,27 @@
 .input {
   label {
     @extend .label;
+    position: relative;
     transform: translateY(6px);
-    background: white;
     padding: 0 1px;
     margin-left: 5px;
     display: inline-block;
     font-weight: bold;
-    transition: transform 200ms, background 200ms;
+    transition: transform 200ms, background-color 200ms;
     font-size: $font-size-1;
     color: $gray-1;
+    z-index: 1;
+
+    &::before {
+      content: " ";
+      z-index: -1;
+      background-color: white;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 6px;
+    }
   }
 
   input {
@@ -41,6 +53,10 @@
       color: $gray-5;
       background: none;
       transform: translateY(0);
+
+      &::before {
+        display: none;
+      }
     }
   }
 }
