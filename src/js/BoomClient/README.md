@@ -73,7 +73,7 @@ boom.spaces.delete(name)
 Any options passed to search override the options passed in the constructor or set with setOptions().
 
 ```js
-boom.search(lookytalk, options)
+boom.search(zql, options)
 ```
 
 ## Descriptors

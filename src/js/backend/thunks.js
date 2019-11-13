@@ -41,12 +41,12 @@ export function testConnection(cluster: Cluster): Thunk {
   }
 }
 
-export function inspectSearch(lookytalk: string): Thunk {
+export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
     let searchSpan = getTimeWindow(getState())
     let searchSpace = getCurrentSpaceName(getState())
     try {
-      return boom.inspectSearch(lookytalk, {searchSpan, searchSpace})
+      return boom.inspectSearch(zql, {searchSpan, searchSpace})
     } catch {
       return null
     }

@@ -11,7 +11,7 @@ import * as BrowserFetchAdapter from "../adapters/BrowserFetchAdapter"
 import SearchRequest from "../lib/SearchRequest"
 import buildUrl from "../lib/buildUrl"
 import defaultOptions from "../lib/defaultOptions"
-import lookytalkVersion from "../lib/lookytalkVersion"
+import zqVersion from "../lib/zqVersion"
 
 export default class Base {
   options: RequiredClientOptions
@@ -33,15 +33,15 @@ export default class Base {
   }
 
   clientVersion() {
-    return {lookytalk: lookytalkVersion()}
+    return {zq: zqVersion()}
   }
 
   serverVersion() {
     return this.send({method: "GET", path: "/version"})
   }
 
-  search(lookytalk: string, overrides: ?ClientOptions = {}): BoomRequest {
-    let search = new SearchRequest(lookytalk, {...this.options, ...overrides})
+  search(zql: string, overrides: ?ClientOptions = {}): BoomRequest {
+    let search = new SearchRequest(zql, {...this.options, ...overrides})
 
     return this.send(
       {
@@ -55,8 +55,8 @@ export default class Base {
     )
   }
 
-  inspectSearch(lookytalk: string, overrides: ClientOptions = {}) {
-    return new SearchRequest(lookytalk, {
+  inspectSearch(zql: string, overrides: ClientOptions = {}) {
+    return new SearchRequest(zql, {
       ...this.options,
       ...overrides
     }).inspect()

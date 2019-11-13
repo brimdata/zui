@@ -107,7 +107,6 @@
     "electron-is-dev": "^1.0.1",
     "fs-extra": "^7.0.0",
     "lodash": "^4.17.14",
-    "lookytalk": "git+https://github.com/looky-cloud/lookytalk.git#v0.1.18",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.21",
@@ -125,6 +124,7 @@
     "regenerator-runtime": "^0.13.3",
     "reselect": "^4.0.0",
     "source-map-support": "^0.5.12",
-    "valid-url": "^1.0.9"
+    "valid-url": "^1.0.9",
+    "zq": "mccanne/zq#v0.0.1-16-gc9b95c4"
   }
 }

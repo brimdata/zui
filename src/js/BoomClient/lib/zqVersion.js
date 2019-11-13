@@ -3,5 +3,5 @@
 import packageJSON from "../../../../package.json"
 
 export default () => {
-  return packageJSON.dependencies.lookytalk.split("#")[1]
+  return packageJSON.dependencies.zq.split("#")[1]
 }

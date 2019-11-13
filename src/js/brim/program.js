@@ -1,6 +1,6 @@
 /* @flow */
 
-import LookyTalk from "lookytalk"
+import ZQL from "zq/zql/zql.js"
 
 import {trim} from "../lib/Str"
 import brim, {type $Field, type $Log} from "./"
@@ -75,7 +75,7 @@ export default function(p: string = "") {
     ast() {
       let tree
       try {
-        tree = LookyTalk.parse(p)
+        tree = ZQL.parse(p)
       } catch (error) {
         tree = {error}
       }
