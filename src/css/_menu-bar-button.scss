@@ -20,6 +20,10 @@
 
   .dropdown-arrow {
     margin-left: 6px;
+
+    &:first-child {
+      margin: 0;
+    }
   }
 
   &:active {

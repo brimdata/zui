@@ -14,7 +14,11 @@ export default function SpanPickerMenu() {
       position="bottom right"
       {...reactElementProps("span_menu")}
     >
-      <MenuBarButton dropdown {...reactElementProps("span_button")} />
+      <MenuBarButton
+        dropdown
+        {...reactElementProps("span_button")}
+        className="time-span-menu"
+      />
     </PopMenuPointy>
   )
 }
