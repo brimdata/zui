@@ -6,8 +6,8 @@ import lib from "../lib"
 type AnimationOpts = Object | ((Function, HTMLElement) => Object)
 type Props = {
   show: boolean,
-  enter: AnimationOpts,
-  exit: AnimationOpts | "reverse",
+  enter?: AnimationOpts,
+  exit?: AnimationOpts | "reverse",
   children: *
 }
 

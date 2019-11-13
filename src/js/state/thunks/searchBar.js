@@ -6,7 +6,6 @@ import {
   backSearchHistory,
   errorSearchBarParse,
   forwardSearchHistory,
-  setInnerTimeWindow,
   submittingSearchBar
 } from "../actions"
 import {createError} from "../errors"
@@ -30,7 +29,6 @@ export const goForward = (): Thunk => (dispatch, getState) => {
 
 export const submitSearchBar = (save: boolean = true): Thunk => (dispatch) => {
   dispatch(submittingSearchBar())
-  dispatch(setInnerTimeWindow(null))
   dispatch(fetchMainSearch({saveToHistory: save}))
 }
 

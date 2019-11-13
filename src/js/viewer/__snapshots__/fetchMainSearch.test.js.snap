@@ -3,7 +3,6 @@
 exports[`fetching a regular search 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
-  "INNER_TIME_WINDOW_SET",
   "SHOW_LOGS_TAB",
   "SEARCH_HISTORY_PUSH",
   "VIEWER_CLEAR",
@@ -17,7 +16,6 @@ Array [
 exports[`fetching an analytic search 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
-  "INNER_TIME_WINDOW_SET",
   "SHOW_ANALYTICS_TAB",
   "SEARCH_HISTORY_PUSH",
   "VIEWER_CLEAR",
@@ -29,7 +27,6 @@ Array [
 exports[`fetching an analytic search without history 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
-  "INNER_TIME_WINDOW_SET",
   "SHOW_ANALYTICS_TAB",
   "VIEWER_CLEAR",
   "BACKEND_ERROR_SET",
@@ -40,7 +37,6 @@ Array [
 exports[`fetching an zoom search 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
-  "INNER_TIME_WINDOW_SET",
   "SHOW_ANALYTICS_TAB",
   "SEARCH_HISTORY_PUSH",
   "VIEWER_CLEAR",
@@ -52,7 +48,6 @@ Array [
 exports[`fetching an zoom search without history 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
-  "INNER_TIME_WINDOW_SET",
   "SHOW_ANALYTICS_TAB",
   "VIEWER_CLEAR",
   "SEARCH_RESULTS_CLEAR",
@@ -64,7 +59,6 @@ Array [
 exports[`not saving a search to history 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
-  "INNER_TIME_WINDOW_SET",
   "SHOW_LOGS_TAB",
   "VIEWER_CLEAR",
   "BACKEND_ERROR_SET",

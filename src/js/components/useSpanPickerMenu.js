@@ -4,19 +4,22 @@ import {useDispatch, useSelector} from "react-redux"
 
 import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
 import {add} from "../lib/Time"
-import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
+import {getCurrentSpace} from "../state/reducers/spaces"
 import {setOuterTimeWindow} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 
 export default function useSpanPickerMenu() {
   let dispatch = useDispatch()
-  let [from, to] = useSelector(getCurrentSpaceTimeWindow)
-  let spaceSpan = [from, add(to, 1, "ms")]
+  let space = useSelector(getCurrentSpace)
 
   function setSpan(span: DateTuple) {
     dispatch(setOuterTimeWindow(span))
     dispatch(submitSearchBar())
   }
+
+  if (!space) return []
+  let {minTime, maxTime} = space
+  let spaceSpan = [minTime, add(maxTime, 1, "ms")]
 
   return [
     {click: () => setSpan(spaceSpan), label: "Whole Space"},

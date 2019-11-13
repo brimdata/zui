@@ -4,9 +4,14 @@ import {
   clearTimeWindows,
   restoreTimeWindow,
   setInnerTimeWindow,
+  setNextOuterTimeWindow,
   setOuterTimeWindow
 } from "../actions"
-import {getOuterTimeWindow, getInnerTimeWindow} from "./timeWindow"
+import {
+  getInnerTimeWindow,
+  getNextOuterTimeWindow,
+  getOuterTimeWindow
+} from "./timeWindow"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -32,7 +37,8 @@ test("restoring the time window", () => {
   store.dispatch(
     restoreTimeWindow({
       inner: [new Date("1"), new Date("2")],
-      outer: [new Date("0"), new Date("3")]
+      outer: [new Date("0"), new Date("3")],
+      nextOuter: null
     })
   )
 
@@ -45,11 +51,20 @@ test("clearing the time window", () => {
   const state = store.dispatchAll([
     restoreTimeWindow({
       inner: [new Date("1"), new Date("2")],
-      outer: [new Date("0"), new Date("3")]
+      outer: [new Date("0"), new Date("3")],
+      nextOuter: null
     }),
     clearTimeWindows()
   ])
 
   expect(getInnerTimeWindow(state)).toBe(null)
   expect(getOuterTimeWindow(state)).not.toEqual([new Date("0"), new Date("3")])
+})
+
+test("next outer time window set", () => {
+  let state = store.dispatchAll([
+    setNextOuterTimeWindow([new Date(0), new Date(1)])
+  ])
+
+  expect(getNextOuterTimeWindow(state)).toEqual([new Date(0), new Date(1)])
 })

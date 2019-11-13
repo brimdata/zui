@@ -197,6 +197,11 @@ export const setOuterTimeWindow = (timeWindow: DateTuple) => ({
   timeWindow
 })
 
+export const setNextOuterTimeWindow = (timeWindow: ?DateTuple) => ({
+  type: "NEXT_OUTER_TIME_WINDOW_SET",
+  timeWindow
+})
+
 export const setInnerTimeWindow = (timeWindow: ?DateTuple) => ({
   type: "INNER_TIME_WINDOW_SET",
   timeWindow
