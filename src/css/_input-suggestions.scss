@@ -1,0 +1,52 @@
+.input-suggestions {
+  min-width: 100%;
+  position: absolute;
+  box-shadow: $high-box-shadow;
+  top: calc(100%);
+  left: 0;
+  border-radius: 3px;
+  background: white;
+  font-size: 11px;
+  user-select: none;
+
+  .help-message {
+    padding: 6px 6px;
+    margin: 0;
+    color: $gray-1;
+    background: $white-3;
+    border-radius: 0 0 3px 3px;
+    a {
+      color: $blue-light;
+    }
+  }
+
+  hr {
+    border-top: none;
+    border-color: $white-3;
+  }
+
+  .suggestion {
+    padding: 6px 6px;
+    margin: 0;
+    white-space: nowrap;
+    height: 25px;
+    cursor: default;
+
+    &:hover {
+      background: $white-3;
+    }
+
+    &.active,
+    &:active {
+      &:first-child {
+        border-radius: 3px 3px 0 0;
+      }
+      background: $blue-light;
+      color: white;
+    }
+
+    &.error {
+      color: $white-9;
+    }
+  }
+}
