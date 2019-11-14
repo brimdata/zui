@@ -9,6 +9,7 @@ import file from "./file"
 import keep from "./keep"
 import obj from "./obj"
 import win from "./win"
+import date from "./date"
 
 let array = {
   wrap(item: *) {
@@ -25,5 +26,6 @@ export default {
   doc,
   win,
   array,
-  animation
+  animation,
+  date
 }
