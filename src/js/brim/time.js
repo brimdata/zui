@@ -28,4 +28,12 @@ function time(o: EpochObj) {
   }
 }
 
+time.setZone = function(name: string) {
+  moment.tz.setDefault(name)
+}
+
+time.getZoneNames = function() {
+  return moment.tz.names()
+}
+
 export default time

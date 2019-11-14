@@ -6,10 +6,6 @@ import type {TimeUnit} from "./"
 
 export const moment = Moment
 
-export const zones = Moment.tz.names
-
-export const setZone = (zone: string) => Moment.tz.setDefault(zone)
-
 export const format = (date: Date, format: string) =>
   Moment(date).format(format)
 
