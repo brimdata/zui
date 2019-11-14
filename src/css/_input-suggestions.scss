@@ -9,24 +9,9 @@
   font-size: 11px;
   user-select: none;
 
-  .help-message {
-    padding: 6px 6px;
-    margin: 0;
-    color: $gray-1;
-    background: $white-3;
-    border-radius: 0 0 3px 3px;
-    a {
-      color: $blue-light;
-    }
-  }
-
-  hr {
-    border-top: none;
-    border-color: $white-3;
-  }
-
   .suggestion {
-    padding: 6px 6px;
+    font-family: $mono-font;
+    padding: 6px 8px;
     margin: 0;
     white-space: nowrap;
     height: 25px;
@@ -41,7 +26,10 @@
       &:first-child {
         border-radius: 3px 3px 0 0;
       }
-      background: $blue-light;
+      &:last-child {
+        border-radius: 0 0 3px 3px;
+      }
+      background: $blue;
       color: white;
     }
 

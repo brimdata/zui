@@ -36,6 +36,11 @@ export default function Animate({show, enter, exit, children}: Props) {
         else playExit()
         break
     }
+
+    return () => {
+      cancel(enterAni.current)
+      cancel(exitAni.current)
+    }
   }, [state, show])
 
   function playEnter() {

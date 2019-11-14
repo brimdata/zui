@@ -42,6 +42,7 @@ export default function TimePickerButton({date, onChange}: Props) {
 
   function onClick() {
     setEditing(true)
+    fuzzy.mouseLeave()
   }
 
   function onSubmit(date) {
