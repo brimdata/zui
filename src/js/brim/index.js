@@ -7,6 +7,7 @@ import program from "./program"
 import space from "./space"
 import syntax from "./syntax"
 import table from "./table"
+import time from "./time"
 
 export type $Field = {
   name: string,
@@ -42,5 +43,6 @@ export default {
   log,
   ast,
   syntax,
-  space
+  space,
+  time
 }

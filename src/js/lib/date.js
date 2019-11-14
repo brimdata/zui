@@ -2,7 +2,7 @@
 import chrono from "chrono-node"
 import moment from "moment-timezone"
 
-function date(d, zone = "UTC") {
+function date(d: Date, zone: string = "UTC") {
   return {
     zone(name: string) {
       zone = name

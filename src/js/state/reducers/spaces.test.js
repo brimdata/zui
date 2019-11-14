@@ -43,8 +43,6 @@ test("setting space information", () => {
       slab_threshold: 131072,
       slab_fanout: 8,
       max_writers: 150,
-      minTime: new Date(Date.UTC(2015, 2, 5, 14, 15, 0, 0)),
-      maxTime: new Date(Date.UTC(2015, 3, 13, 9, 36, 33, 750)),
       min_time: {
         sec: 1425564900,
         ns: 0

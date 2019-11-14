@@ -13,8 +13,6 @@ export type Space = {
   max_time: EpochObj,
   size: number,
   packet_support: boolean,
-  minTime: string,
-  maxTime: string,
   compression: string,
   path: string
 }

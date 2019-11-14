@@ -40,18 +40,6 @@ beforeEach(() => {
   Time.setZone(sampleTimeZones[random(0, sampleTimeZones.length)])
 })
 
-test("parse a string to a date", () => {
-  const date = Time.fromStore(mockString)
-
-  expect(date).toEqual(mockDate)
-})
-
-test("store a string", () => {
-  const string = Time.toStore(mockDate)
-
-  expect(string).toBe(mockString)
-})
-
 test("set the time", () => {
   Time.setZone("US/Pacific")
   const date = Time.fromStore(mockString)
