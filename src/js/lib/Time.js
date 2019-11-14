@@ -32,12 +32,3 @@ export const subtract = (date: Date, amount: number, unit: TimeUnit) =>
   Moment(date)
     .subtract(amount, unit)
     .toDate()
-
-export const toObject = (date: Date) => Moment(date).toObject()
-
-export const timeAgo = (date: Date) => Moment(date).fromNow()
-
-export function boomTime({sec, ns}: {sec: number, ns: number}) {
-  let flt = sec + ns / 1e9
-  return flt
-}

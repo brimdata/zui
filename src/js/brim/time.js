@@ -12,6 +12,10 @@ function time(o: EpochObj) {
       return date
     },
 
+    toFracSec() {
+      return o.sec + o.ns / 1e9
+    },
+
     add(amount: number, unit: TimeUnit) {
       date = moment(date)
         .add(amount, unit)
