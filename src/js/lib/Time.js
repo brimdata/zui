@@ -4,20 +4,11 @@ import Moment from "moment-timezone"
 
 import type {EpochObj, TimeUnit} from "./"
 
-const STORAGE_FORMAT = "YYYY-MM-DD HH:mm:ss.SSS"
-
-export const toStore = (date: Date) => Moment.utc(date).format(STORAGE_FORMAT)
-
-export const fromStore = (string: string) =>
-  Moment.utc(string, STORAGE_FORMAT, true).toDate()
-
 export const moment = Moment
 
 export const zones = Moment.tz.names
 
 export const setZone = (zone: string) => Moment.tz.setDefault(zone)
-
-export const toString = (date: Date) => Moment.utc(date).format(STORAGE_FORMAT)
 
 export const format = (date: Date, format: string) =>
   Moment(date).format(format)
