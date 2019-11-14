@@ -2,7 +2,7 @@
 
 import moment from "moment-timezone"
 
-import type {EpochObj, TimeUnit} from "../lib/Time"
+import type {EpochObj, TimeUnit} from "../lib"
 
 function time(o: EpochObj) {
   let date = new Date((o.sec + o.ns / 1e9) * 1e3)

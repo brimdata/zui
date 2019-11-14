@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {EpochObj} from "./Time"
+import type {EpochObj} from "./"
 
 export type Space = {
   name: string,

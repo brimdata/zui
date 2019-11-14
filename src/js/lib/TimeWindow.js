@@ -1,9 +1,10 @@
 /* @flow */
 
-import moment from "moment"
 import isEqual from "lodash/isEqual"
+import moment from "moment"
+
+import type {TimeUnit} from "./"
 import * as Time from "./Time"
-import type {TimeUnit} from "./Time"
 
 export type DateTuple = [Date, Date]
 

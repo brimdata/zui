@@ -29,3 +29,33 @@ export default {
   animation,
   date
 }
+
+export type TimeUnit =
+  | "years"
+  | "year"
+  | "y"
+  | "months"
+  | "month"
+  | "M"
+  | "weeks"
+  | "week"
+  | "w"
+  | "days"
+  | "day"
+  | "d"
+  | "hours"
+  | "hour"
+  | "h"
+  | "minutes"
+  | "minute"
+  | "m"
+  | "seconds"
+  | "second"
+  | "s"
+  | "milliseconds"
+  | "millisecond"
+  | "ms"
+
+export type TimeObj = {minutes: number, hours: number}
+
+export type EpochObj = {sec: number, ns: number}

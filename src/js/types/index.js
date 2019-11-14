@@ -3,7 +3,7 @@
 import type {$Field} from "../brim"
 import type {$Menu} from "../electron/menu"
 import type {Span} from "../BoomClient/types"
-import type {TimeUnit} from "../lib/Time"
+import type {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import Log from "../models/Log"
 
