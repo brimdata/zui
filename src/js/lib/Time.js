@@ -1,28 +1,5 @@
 /* @flow */
 
-/* Date functions that are aware of the global timezone
-
-There are three important timeones:
-  1. Host Timezone
-     All native JS dates objects will be in this timezone.
-  2. User Supplied Timezone
-     Moment will use this timezone to format the date objects.
-     This can be the same or different from the host timezone.
-  3. UTC
-     All dates will be stored in the redux store as UTC strings
-
-This library only operates on native date objects or on strings.
-Internally it uses the moment library, but does not expose moment
-objects.
-
-Set the user supplied timezone globally with:
-    Time.setZone("US/Pacific")
-When we store dates in the store, always use the UTC version of the
-date.
-    Time.toStore(date)
-    Time.fromStore(string)
-*/
-
 import Moment from "moment-timezone"
 
 import type {EpochObj, TimeUnit} from "./"
