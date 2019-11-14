@@ -1,7 +1,6 @@
 /* @flow */
 
 import {TimeField} from "../../models/Field"
-import {add} from "../../lib/Time"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -154,7 +153,7 @@ function buildActions() {
       listener(dispatch, field) {
         field = FieldFactory.create(field)
         if (field instanceof TimeField) {
-          dispatch(setOuterToTime(add(field.toDate(), 1, "ms")))
+          dispatch(setOuterToTime(brim.time(field.toDate()).add(1, "ms")))
           dispatch(submitSearchBar())
         }
       }

@@ -4,8 +4,8 @@ import moment from "moment-timezone"
 
 import type {EpochObj, TimeUnit} from "../lib"
 
-function time(o: EpochObj) {
-  let date = new Date((o.sec + o.ns / 1e9) * 1e3)
+function time(val: EpochObj | Date) {
+  let date = convertToDate(val)
 
   return {
     toDate() {
@@ -13,7 +13,19 @@ function time(o: EpochObj) {
     },
 
     toFracSec() {
-      return o.sec + o.ns / 1e9
+      let ms = date.getTime()
+      return ms / 1000
+    },
+
+    toTs() {
+      let ms = date.getTime()
+      let secFloat = ms / 1000
+      let sec = Math.floor(secFloat)
+      let ns = +(secFloat - sec).toFixed(3) * 1e9
+      return {
+        sec,
+        ns
+      }
     },
 
     add(amount: number, unit: TimeUnit) {
@@ -30,6 +42,18 @@ function time(o: EpochObj) {
       return this
     }
   }
+}
+
+function convertToDate(val) {
+  if (val instanceof Date) {
+    return val
+  }
+
+  if ("ns" in val && "sec" in val) {
+    return new Date((val.sec + val.ns / 1e9) * 1e3)
+  }
+
+  return new Date()
 }
 
 time.setZone = function(name: string) {

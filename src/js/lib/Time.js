@@ -18,11 +18,6 @@ export const parse = (
   return m.isValid() ? m.toDate() : null
 }
 
-export const add = (date: Date, amount: number, unit: TimeUnit) =>
-  Moment(date)
-    .add(amount, unit)
-    .toDate()
-
 export const subtract = (date: Date, amount: number, unit: TimeUnit) =>
   Moment(date)
     .subtract(amount, unit)

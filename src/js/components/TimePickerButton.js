@@ -2,12 +2,13 @@
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import {add, format, subtract} from "../lib/Time"
+import {format, subtract} from "../lib/Time"
 import Animate from "./Animate"
 import CarrotDown from "../icons/carrot-down.svg"
 import CarrotUp from "../icons/carrot-up.svg"
 import MenuBarButton from "./MenuBarButton"
 import TimePickerButtonInput from "./TimePickerButtonInput"
+import brim from "../brim"
 import useFuzzyHover from "../hooks/useFuzzyHover"
 
 type Props = {
@@ -32,7 +33,12 @@ export default function TimePickerButton({date, onChange}: Props) {
 
   function onUp(e) {
     e.stopPropagation()
-    onChange(add(date, 1, unit))
+    onChange(
+      brim
+        .time(date)
+        .add(1, unit)
+        .toDate()
+    )
   }
 
   function onDown(e) {

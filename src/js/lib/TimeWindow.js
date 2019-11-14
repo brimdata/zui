@@ -5,6 +5,7 @@ import moment from "moment"
 
 import type {TimeUnit} from "./"
 import * as Time from "./Time"
+import brim from "../brim"
 
 export type DateTuple = [Date, Date]
 
@@ -41,7 +42,16 @@ export const shift = (
   amount: number,
   unit: TimeUnit = "ms"
 ) => {
-  return [Time.add(from, amount, unit), Time.add(to, amount, unit)]
+  return [
+    brim
+      .time(from)
+      .add(amount, unit)
+      .toDate(),
+    brim
+      .time(to)
+      .add(amount, unit)
+      .toDate()
+  ]
 }
 
 export const spanOfLast = (number: number, unit: TimeUnit) => {

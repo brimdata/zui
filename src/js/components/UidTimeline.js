@@ -8,11 +8,12 @@ import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/types"
 import {UID_CORRELATION_LIMIT} from "../detail/correlations"
-import {add, format} from "../lib/Time"
 import {changeSearchBarInput, clearSearchBar} from "../state/actions"
+import {format} from "../lib/Time"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Log from "../models/Log"
+import brim from "../brim"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {|
@@ -62,7 +63,11 @@ function createScale(logs) {
   }
 
   let [start, end] = d3.extent(tss)
-  if (start === end) end = add(start, 1, "ms")
+  if (start === end)
+    end = brim
+      .time(start)
+      .add(1, "ms")
+      .toDate()
 
   return d3
     .scaleTime()

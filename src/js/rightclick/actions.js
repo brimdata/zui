@@ -1,7 +1,6 @@
 /* @flow */
 
 import type {Dispatch} from "../state/types"
-import {add} from "../lib/Time"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -132,7 +131,7 @@ const toTime = (field: Field, opts: Options) => ({
   label: 'Use as "end" time',
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
-      dispatch(setOuterToTime(add(field.toDate(), 1, "ms")))
+      dispatch(setOuterToTime(brim.time(field.toDate()).add(1, "ms")))
       dispatch(submitSearchBar())
     }
   },
