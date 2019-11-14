@@ -33,19 +33,6 @@ export const subtract = (date: Date, amount: number, unit: TimeUnit) =>
     .subtract(amount, unit)
     .toDate()
 
-export const fakeZone = (date: Date) => {
-  const obj = Moment(date).toObject()
-  return new Date(
-    obj.years,
-    obj.months,
-    obj.date,
-    obj.hours,
-    obj.minutes,
-    obj.seconds,
-    obj.milliseconds
-  )
-}
-
 export const toObject = (date: Date) => Moment(date).toObject()
 
 export const timeAgo = (date: Date) => Moment(date).fromNow()
