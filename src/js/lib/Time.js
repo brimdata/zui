@@ -2,7 +2,7 @@
 
 import Moment from "moment-timezone"
 
-import type {EpochObj, TimeUnit} from "./"
+import type {TimeUnit} from "./"
 
 export const moment = Moment
 
@@ -20,11 +20,6 @@ export const parse = (
 ): ?Date => {
   const m = Moment(string, format, strict)
   return m.isValid() ? m.toDate() : null
-}
-
-export const parseFromBoom = ({sec, ns}: EpochObj): Date => {
-  const millis = (sec + ns / 1e9) * 1e3
-  return new Date(millis)
 }
 
 export const set = (date: Date, object: Object) =>
