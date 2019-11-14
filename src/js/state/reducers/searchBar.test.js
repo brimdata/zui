@@ -19,13 +19,13 @@ import {
 } from "../actions"
 import {getOuterTimeWindow} from "./timeWindow"
 import {
+  getSearchProgram,
   getSearchBar,
   getSearchBarEditingIndex,
   getSearchBarError,
   getSearchBarInputValue,
   getSearchBarPins,
-  getSearchBarPreviousInputValue,
-  getSearchProgram
+  getSearchBarPreviousInputValue
 } from "../selectors/searchBar"
 import {goBack, goForward, submitSearchBar} from "../thunks/searchBar"
 import {initialState} from "./searchBar"

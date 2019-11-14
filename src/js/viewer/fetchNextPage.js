@@ -5,7 +5,7 @@ import {PER_PAGE} from "./config"
 import type {Thunk} from "../state/types"
 import {add} from "../lib/Time"
 import {addHeadProc} from "../lib/Program"
-import {getPrevSearchProgram} from "../state/selectors/searchBar"
+import {getSearchProgram} from "../state/selectors/searchBar"
 import {getTimeWindow} from "../state/reducers/timeWindow"
 import {getViewerLogs} from "../state/viewer/selector"
 import {indexOfLastChange} from "../lib/Array"
@@ -34,7 +34,7 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
     issueSearch({
       name: "ViewerSearch",
       tag: "viewer",
-      program: addHeadProc(getPrevSearchProgram(state), PER_PAGE),
+      program: addHeadProc(getSearchProgram(state), PER_PAGE),
       span: searchSpan,
       handlers: [viewerHandler]
     })
