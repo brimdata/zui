@@ -18,11 +18,6 @@ export const parse = (
   return m.isValid() ? m.toDate() : null
 }
 
-export const set = (date: Date, object: Object) =>
-  Moment(date)
-    .set(object)
-    .toDate()
-
 export const add = (date: Date, amount: number, unit: TimeUnit) =>
   Moment(date)
     .add(amount, unit)
