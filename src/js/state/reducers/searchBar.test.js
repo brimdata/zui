@@ -231,6 +231,20 @@ test("append a count to an existing query with a pin", () => {
   expect(getSearchBarInputValue(state)).toBe("| count() by query")
 })
 
+test("edit pin then submit search", () => {
+  let state = store.dispatchAll([
+    changeSearchBarInput("192.168.0.54"),
+    submitSearchBar(),
+    pinSearchBar(),
+    changeSearchBarInput("| count() by _path"),
+    submitSearchBar(),
+    editSearchBarPin(0),
+    changeSearchBarInput("192.168.0.51"),
+    submitSearchBar()
+  ])
+  expect(getSearchProgram(state)).toBe("192.168.0.51 | count() by _path")
+})
+
 test("get search program", () => {
   let state = store.dispatchAll([
     changeSearchBarInput("http"),
