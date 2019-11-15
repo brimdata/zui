@@ -2,11 +2,11 @@
 import React, {useEffect, useState} from "react"
 
 import type {Finding} from "../../state/reducers/investigation"
-import {format} from "../../lib/Time"
 import {useResizeObserver} from "../../hooks/useResizeObserver"
 import FindingHistogramChart from "../../charts/FindingHistogram/Chart"
 import Log from "../../models/Log"
 import VerticalTable from "../Tables/VerticalTable"
+import brim from "../../brim"
 
 type Props = {finding: Finding}
 
@@ -21,7 +21,7 @@ export default function FindingDetail({finding}: Props) {
   }, [])
 
   function timeFormat(date) {
-    return format(date, "MMM DD, YYYY HH:mm:ss")
+    return brim.time(date).format("MMM DD, YYYY HH:mm:ss")
   }
 
   let descriptor = [

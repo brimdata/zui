@@ -2,7 +2,6 @@
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import {format} from "../lib/Time"
 import Animate from "./Animate"
 import CarrotDown from "../icons/carrot-down.svg"
 import CarrotUp from "../icons/carrot-up.svg"
@@ -62,7 +61,7 @@ export default function TimePickerButton({date, onChange}: Props) {
   }
 
   if (editing) return <TimePickerButtonInput date={date} onSubmit={onSubmit} />
-
+  let t = brim.time(date)
   return (
     <div
       className={classNames("time-picker-button", {hovering: fuzzy.hovering})}
@@ -78,21 +77,21 @@ export default function TimePickerButton({date, onChange}: Props) {
       />
       <MenuBarButton>
         <TimePiece data-unit="month" onMouseEnter={updatePosition}>
-          {format(date, "MMM")}
+          {t.format("MMM")}
         </TimePiece>
         <TimePiece data-unit="day" onMouseEnter={updatePosition}>
-          {format(date, "DD")}
+          {t.format("DD")}
         </TimePiece>
         ,
         <TimePiece data-unit="year" onMouseEnter={updatePosition}>
-          {format(date, "YYYY")}
+          {t.format("YYYY")}
         </TimePiece>
         <TimePiece data-unit="hour" onMouseEnter={updatePosition}>
-          {format(date, "HH")}
+          {t.format("HH")}
         </TimePiece>
         :
         <TimePiece data-unit="minute" onMouseEnter={updatePosition}>
-          {format(date, "mm")}
+          {t.format("mm")}
         </TimePiece>
       </MenuBarButton>
     </div>

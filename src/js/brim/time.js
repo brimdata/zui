@@ -40,6 +40,10 @@ function time(val: EpochObj | Date) {
         .subtract(amount, unit)
         .toDate()
       return this
+    },
+
+    format(fmt: string) {
+      return moment(date).format(fmt)
     }
   }
 }

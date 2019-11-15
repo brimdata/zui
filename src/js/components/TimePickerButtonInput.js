@@ -3,10 +3,10 @@ import {useSelector} from "react-redux"
 import React, {useEffect, useRef, useState} from "react"
 import moment from "moment"
 
-import {format} from "../lib/Time"
 import {getTimeZone} from "../state/reducers/view"
 import {isDate} from "../lib/is"
 import Form from "./form/Form"
+import brim from "../brim"
 import lib from "../lib"
 
 type Props = {
@@ -20,7 +20,7 @@ export default function TimePickerButtonInput({date, onSubmit}: Props) {
   let el = useRef()
   let zone = useSelector(getTimeZone)
 
-  let [value, setValue] = useState(format(date, "MMM DD, YYYY HH:mm"))
+  let [value, setValue] = useState(brim.time(date).format("MMM DD, YYYY HH:mm"))
   let [result, setResult] = useState(null)
   let [error, setError] = useState(null)
 
@@ -33,7 +33,7 @@ export default function TimePickerButtonInput({date, onSubmit}: Props) {
     let d = lib.date.parseInZone(e.target.value, zone)
     if (isDate(d)) {
       setError(null)
-      setResult(format(d, "MMM DD, YYYY HH:mm"))
+      setResult(brim.time(d).format("MMM DD, YYYY HH:mm"))
     } else {
       setError("Unknown date format")
       setResult(null)
