@@ -12,7 +12,7 @@ import {
 import {createError} from "../errors"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getCurrentEntry} from "../reducers/searchHistory"
-import {getPrevSearchProgram} from "../selectors/searchBar"
+import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
 
@@ -35,7 +35,7 @@ export const submitSearchBar = (save: boolean = true): Thunk => (dispatch) => {
 }
 
 export const validateProgram = (): Thunk => (dispatch, getState) => {
-  const [ast, error] = parse(getPrevSearchProgram(getState()))
+  const [ast, error] = parse(getSearchProgram(getState()))
   if (error) {
     dispatch(createError(error))
     dispatch(errorSearchBarParse(error.message))

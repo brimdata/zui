@@ -19,13 +19,13 @@ import {
 } from "../actions"
 import {getOuterTimeWindow} from "./timeWindow"
 import {
+  getSearchProgram,
   getSearchBar,
   getSearchBarEditingIndex,
   getSearchBarError,
   getSearchBarInputValue,
   getSearchBarPins,
-  getSearchBarPreviousInputValue,
-  getSearchProgram
+  getSearchBarPreviousInputValue
 } from "../selectors/searchBar"
 import {goBack, goForward, submitSearchBar} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
@@ -229,6 +229,20 @@ test("append a count to an existing query with a pin", () => {
     appendQueryCountBy(field)
   ])
   expect(getSearchBarInputValue(state)).toBe("| count() by query")
+})
+
+test("edit pin then submit search", () => {
+  let state = store.dispatchAll([
+    changeSearchBarInput("192.168.0.54"),
+    submitSearchBar(),
+    pinSearchBar(),
+    changeSearchBarInput("| count() by _path"),
+    submitSearchBar(),
+    editSearchBarPin(0),
+    changeSearchBarInput("192.168.0.51"),
+    submitSearchBar()
+  ])
+  expect(getSearchProgram(state)).toBe("192.168.0.51 | count() by _path")
 })
 
 test("get search program", () => {

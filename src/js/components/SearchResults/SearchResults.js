@@ -17,7 +17,7 @@ import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../viewer/fetchNextPage"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/columns/selector"
-import {getPrevSearchProgram} from "../../state/selectors/searchBar"
+import {getSearchProgram} from "../../state/selectors/searchBar"
 import {getSearchStatus} from "../../state/searches/selector"
 import {getViewerLogs, getViewerStatus} from "../../state/viewer/selector"
 import {viewLogDetail} from "../../detail/viewLogDetail"
@@ -135,7 +135,7 @@ function stateToProps(state: State) {
     timeZone: getTimeZone(state),
     selectedLog: buildLogDetail(state),
     logs: getViewerLogs(state),
-    program: getPrevSearchProgram(state),
+    program: getSearchProgram(state),
     space: getCurrentSpace(state)
   }
 }
