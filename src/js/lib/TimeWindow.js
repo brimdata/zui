@@ -4,7 +4,6 @@ import isEqual from "lodash/isEqual"
 import moment from "moment"
 
 import type {TimeUnit} from "./"
-import * as Time from "./Time"
 import brim from "../brim"
 
 export type DateTuple = [Date, Date]
@@ -56,5 +55,11 @@ export const shift = (
 
 export const spanOfLast = (number: number, unit: TimeUnit) => {
   const now = new Date()
-  return [Time.subtract(now, number, unit), now]
+  return [
+    brim
+      .time(now)
+      .subtract(number, unit)
+      .toDate(),
+    now
+  ]
 }

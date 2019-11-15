@@ -2,7 +2,7 @@
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import {format, subtract} from "../lib/Time"
+import {format} from "../lib/Time"
 import Animate from "./Animate"
 import CarrotDown from "../icons/carrot-down.svg"
 import CarrotUp from "../icons/carrot-up.svg"
@@ -43,7 +43,12 @@ export default function TimePickerButton({date, onChange}: Props) {
 
   function onDown(e) {
     e.stopPropagation()
-    onChange(subtract(date, 1, unit))
+    onChange(
+      brim
+        .time(date)
+        .subtract(1, unit)
+        .toDate()
+    )
   }
 
   function onClick() {
