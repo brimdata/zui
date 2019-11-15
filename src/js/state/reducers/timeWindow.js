@@ -1,5 +1,6 @@
 /* @flow */
 
+import {createSelector} from "reselect"
 import {isEqual} from "lodash"
 
 import type {State} from "../types"
@@ -58,27 +59,45 @@ export default createReducer(initialState, {
   }
 })
 
-export function getOuterTimeWindow(state: State) {
-  let [from, to] = state.timeWindow.outer
-  return [brim.time(from).toDate(), brim.time(to).toDate()]
+function getRawOuterTimeWindow(state: State) {
+  return state.timeWindow.outer
 }
 
-export function getNextOuterTimeWindow(state: State) {
-  if (state.timeWindow.nextOuter) {
-    let [from, to] = state.timeWindow.nextOuter
-    return [brim.time(from).toDate(), brim.time(to).toDate()]
-  } else {
-    return null
-  }
+export function getRawNextOuterTimeWindow(state: State) {
+  return state.timeWindow.nextOuter
 }
 
-export function getInnerTimeWindow(state: State) {
-  if (state.timeWindow.inner) {
-    let [from, to] = state.timeWindow.inner
-    return [brim.time(from).toDate(), brim.time(to).toDate()]
-  } else {
-    return null
-  }
+export function getRawInnerTimeWindow(state: State) {
+  return state.timeWindow.inner
 }
+
+//$FlowFixMe
+export const getOuterTimeWindow = createSelector(
+  getRawOuterTimeWindow,
+  (tw) => {
+    let [from, to] = tw
+    return [brim.time(from).toDate(), brim.time(to).toDate()]
+  }
+)
+
+//$FlowFixMe
+export const getNextOuterTimeWindow = createSelector(
+  getRawNextOuterTimeWindow,
+  (tw) => {
+    if (!tw) return null
+    let [from, to] = tw
+    return [brim.time(from).toDate(), brim.time(to).toDate()]
+  }
+)
+
+//$FlowFixMe
+export const getInnerTimeWindow = createSelector(
+  getRawInnerTimeWindow,
+  (tw) => {
+    if (!tw) return null
+    let [from, to] = tw
+    return [brim.time(from).toDate(), brim.time(to).toDate()]
+  }
+)
 
 export const getTimeWindow = getOuterTimeWindow
