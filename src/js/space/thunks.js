@@ -8,10 +8,10 @@ import {killAllSearches} from "../searches/cancelSearch"
 import {setBackendError} from "../backend"
 import {
   setCurrentSpaceName,
-  setOuterTimeWindow,
   setSpaceInfo,
   setSpaceNames
 } from "../state/actions"
+import {setOuterTimeWindow} from "../state/span/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import brim from "../brim"
 import modal from "../modal"

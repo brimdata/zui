@@ -10,10 +10,9 @@ import {
   changeSearchBarInput,
   deleteFindingByTs,
   setCurrentSpaceName,
-  setInnerTimeWindow,
-  setOuterTimeWindow,
   setSearchBarPins
 } from "../../state/actions"
+import {setInnerTimeWindow, setOuterTimeWindow} from "../../state/span/actions"
 import {submitSearchBar} from "../../state/thunks/searchBar"
 import FindingDetail from "./FindingDetail"
 import FindingFooter from "./FindingFooter"

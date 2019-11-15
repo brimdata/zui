@@ -10,12 +10,11 @@ import {
 import {
   changeSearchBarInput,
   clearSearchBar,
-  setOuterFromTime,
-  setOuterToTime,
   showRightSidebar
 } from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
+import {setOuterFromTime, setOuterToTime} from "../state/span/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Field, {TimeField} from "../models/Field"

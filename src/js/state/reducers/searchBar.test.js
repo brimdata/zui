@@ -14,7 +14,6 @@ import {
   removeAllSearchBarPins,
   removeSearchBarPin,
   restoreSearchBar,
-  setOuterTimeWindow,
   submittingSearchBar
 } from "../actions"
 import {getOuterTimeWindow} from "./timeWindow"
@@ -29,6 +28,7 @@ import {
 } from "../selectors/searchBar"
 import {goBack, goForward, submitSearchBar} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
+import {setOuterTimeWindow} from "../span/actions"
 import Field from "../../models/Field"
 import initTestStore from "../../test/initTestStore"
 

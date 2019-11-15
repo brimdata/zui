@@ -14,7 +14,7 @@ import {
 } from "../../state/reducers/timeWindow"
 import {innerHeight, innerWidth} from "../dimens"
 import {resultsToLogs} from "../../log/resultsToLogs"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../../state/actions"
+import {setInnerTimeWindow, setOuterTimeWindow} from "../../state/span/actions"
 import EmptyMessage from "../../components/EmptyMessage"
 import HistogramTooltip from "../../components/HistogramTooltip"
 import LoadingMessage from "../../components/LoadingMessage"

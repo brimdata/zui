@@ -1,7 +1,7 @@
 /* @flow */
 
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
-import {setOuterTimeWindow} from "../actions"
+import {setOuterTimeWindow} from "../span/actions"
 
 export const initTimeWindow = () => (
   dispatch: Function,

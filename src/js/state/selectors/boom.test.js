@@ -2,12 +2,8 @@
 
 import {getBoomOptions} from "./boom"
 import {setCluster} from "../clusters/actions"
-import {
-  setCurrentSpaceName,
-  setOuterTimeWindow,
-  useBoomCache,
-  useBoomIndex
-} from "../actions"
+import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
+import {setOuterTimeWindow} from "../span/actions"
 import initTestStore from "../../test/initTestStore"
 
 test("#getBoomOptions", () => {

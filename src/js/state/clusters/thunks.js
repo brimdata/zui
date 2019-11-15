@@ -9,10 +9,10 @@ import {
   clearSearchHistory,
   clearSpaces,
   clearStarredLogs,
-  clearTimeWindows,
   setSpaceNames
 } from "../actions"
 import {clearSearches} from "../searches/actions"
+import {clearTimeWindows} from "../span/actions"
 import {clearViewer} from "../viewer/actions"
 import {setCluster} from "./actions"
 import {testConnection} from "../../backend/thunks"

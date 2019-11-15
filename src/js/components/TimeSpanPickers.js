@@ -7,7 +7,7 @@ import {
   getNextOuterTimeWindow,
   getOuterTimeWindow
 } from "../state/reducers/timeWindow"
-import {setNextOuterTimeWindow} from "../state/actions"
+import {setNextOuterTimeWindow} from "../state/span/actions"
 import SpanDuration from "./SpanDuration"
 import TimePickerButton from "./TimePickerButton"
 import TimeSpanMenu from "./TimeSpanMenu"

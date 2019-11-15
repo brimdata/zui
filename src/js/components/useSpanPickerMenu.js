@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 
 import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
 import {getCurrentSpace} from "../state/reducers/spaces"
-import {setOuterTimeWindow} from "../state/actions"
+import {setOuterTimeWindow} from "../state/span/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import brim from "../brim"
 

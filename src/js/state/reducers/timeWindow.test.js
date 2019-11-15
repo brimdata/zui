@@ -6,7 +6,7 @@ import {
   setInnerTimeWindow,
   setNextOuterTimeWindow,
   setOuterTimeWindow
-} from "../actions"
+} from "../span/actions"
 import {
   getInnerTimeWindow,
   getNextOuterTimeWindow,

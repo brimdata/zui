@@ -1,7 +1,8 @@
 /* @flow */
 import {appendViewerLogs, spliceViewer} from "../state/viewer/actions"
 import {fetchNextPage} from "./fetchNextPage"
-import {setCurrentSpaceName, setOuterTimeWindow} from "../state/actions"
+import {setCurrentSpaceName} from "../state/actions"
+import {setOuterTimeWindow} from "../state/span/actions"
 import Log from "../models/Log"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
