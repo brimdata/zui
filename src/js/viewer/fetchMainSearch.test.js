@@ -3,10 +3,10 @@
 import {
   changeSearchBarInput,
   setCurrentSpaceName,
-  setInnerTimeWindow,
   setSpaceInfo
 } from "../state/actions"
 import {initTimeWindow} from "../state/thunks/timeWindow"
+import {setInnerTimeWindow} from "../state/span/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"

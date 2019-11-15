@@ -152,7 +152,14 @@ function buildActions() {
       listener(dispatch, field) {
         field = FieldFactory.create(field)
         if (field instanceof TimeField) {
-          dispatch(setOuterToTime(brim.time(field.toDate()).add(1, "ms")))
+          dispatch(
+            setOuterToTime(
+              brim
+                .time(field.toDate())
+                .add(1, "ms")
+                .toDate()
+            )
+          )
           dispatch(submitSearchBar())
         }
       }

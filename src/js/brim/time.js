@@ -2,9 +2,10 @@
 
 import moment from "moment-timezone"
 
-import type {EpochObj, TimeUnit} from "../lib"
+import type {$Ts} from "./"
+import type {TimeUnit} from "../lib"
 
-function time(val: EpochObj | Date) {
+function time(val: $Ts | Date) {
   let date = convertToDate(val)
 
   return {
@@ -17,7 +18,7 @@ function time(val: EpochObj | Date) {
       return ms / 1000
     },
 
-    toTs() {
+    toTs(): $Ts {
       let ms = date.getTime()
       let secFloat = ms / 1000
       let sec = Math.floor(secFloat)

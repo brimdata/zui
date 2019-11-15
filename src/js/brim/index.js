@@ -35,6 +35,13 @@ export type $Log = {
   field: (string) => ?$Field
 }
 
+export type $Ts = {
+  ns: number,
+  sec: number
+}
+
+export type $Span = [$Ts, $Ts]
+
 export default {
   table,
   program,

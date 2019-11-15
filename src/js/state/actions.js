@@ -1,11 +1,9 @@
 /* @flow */
-import type {DateTuple} from "../lib/TimeWindow"
 import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
 import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
-import type {TimeWindow} from "./reducers/timeWindow"
 import {isArray} from "../lib/is"
 
 export const useBoomCache = (value: boolean) => ({

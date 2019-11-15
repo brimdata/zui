@@ -2,8 +2,9 @@
 
 import {isEqual} from "lodash"
 
-import {type DateTuple, spanOfLast} from "../../lib/TimeWindow"
 import type {State} from "../types"
+import {spanOfLast} from "../../lib/TimeWindow"
+import brim, {type $Span} from "../../brim"
 import createReducer from "./createReducer"
 
 const initialState = {
@@ -13,9 +14,9 @@ const initialState = {
 }
 
 export type TimeWindow = {
-  inner: ?DateTuple,
-  outer: DateTuple,
-  nextOuter: ?DateTuple
+  inner: ?$Span,
+  outer: $Span,
+  nextOuter: ?$Span
 }
 
 export default createReducer(initialState, {
@@ -57,8 +58,27 @@ export default createReducer(initialState, {
   }
 })
 
-export const getOuterTimeWindow = (state: State) => state.timeWindow.outer
-export const getNextOuterTimeWindow = (state: State) =>
-  state.timeWindow.nextOuter
-export const getInnerTimeWindow = (state: State) => state.timeWindow.inner
+export function getOuterTimeWindow(state: State) {
+  let [from, to] = state.timeWindow.outer
+  return [brim.time(from).toDate(), brim.time(to).toDate()]
+}
+
+export function getNextOuterTimeWindow(state: State) {
+  if (state.timeWindow.nextOuter) {
+    let [from, to] = state.timeWindow.nextOuter
+    return [brim.time(from).toDate(), brim.time(to).toDate()]
+  } else {
+    return null
+  }
+}
+
+export function getInnerTimeWindow(state: State) {
+  if (state.timeWindow.inner) {
+    let [from, to] = state.timeWindow.inner
+    return [brim.time(from).toDate(), brim.time(to).toDate()]
+  } else {
+    return null
+  }
+}
+
 export const getTimeWindow = getOuterTimeWindow

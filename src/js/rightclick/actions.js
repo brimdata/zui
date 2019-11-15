@@ -130,7 +130,14 @@ const toTime = (field: Field, opts: Options) => ({
   label: 'Use as "end" time',
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
-      dispatch(setOuterToTime(brim.time(field.toDate()).add(1, "ms")))
+      dispatch(
+        setOuterToTime(
+          brim
+            .time(field.toDate())
+            .add(1, "ms")
+            .toDate()
+        )
+      )
       dispatch(submitSearchBar())
     }
   },
