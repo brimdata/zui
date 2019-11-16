@@ -28,6 +28,13 @@ CI. See its documentation for more details.
 Parallelization is not supported, so `jest --runInBand` is forced in
 `package.json`.
 
+You can also run individual files like:
+
+`npm run itest -- itest/tests/helpers.test.js`
+
+See `npm run itest -- --help` for more, or see [Jest
+docs](https://jestjs.io/docs/en/24.6/getting-started).
+
 # Code Layout
 
 * `itest/lib/app.js`: common tasks for performing actions in Brim
@@ -60,3 +67,15 @@ expected to pass lint/flow/format. There is a CI check for this.
 1. Run your tests locally via `npm run itest`.
 1. Make sure your tests pass in CI. Pushing a branch will automatically
    trigger an execution of the integration tests.
+
+# Updating Snapshots
+
+You might need to update snapshots for one or more integration tests.
+The mechanism to do this is:
+
+`npm run itest -- -u [optional Jest test file listing]`.
+
+Don't forget to `git add` any changes to snapshots. You must add
+mikesbrown as a reviewer when changing snapshots. [Jest
+docs](https://jestjs.io/docs/en/24.6/snapshot-testing#1-treat-snapshots-as-code)
+even say to review these as carefully as code.
