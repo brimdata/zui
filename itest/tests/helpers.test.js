@@ -35,10 +35,6 @@ describe("Debug and search helpers", () => {
       .then(() => openDebugQuery(app))
       .then(() => getDebugAst(app))
       .then((searchResults) => {
-        // XXX This test (and others below it) depend on the order in
-        // which individual keys inside an object are serialized to json.
-        // Would be nice to relax this a bit by comparing parsed objects
-        // instead of the serialized json.
         expect(searchResults).toMatchSnapshot()
         done()
       })
@@ -47,24 +43,27 @@ describe("Debug and search helpers", () => {
       })
   })
 
-  stdTest("write into main search shows Debug Query AST", (done) => {
-    logIn(app)
-      .then(() =>
-        writeSearch(
-          app,
-          "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
+  stdTest(
+    "write into main search shows Debug Query AST (update after fixing PROD-950 again)",
+    (done) => {
+      logIn(app)
+        .then(() =>
+          writeSearch(
+            app,
+            "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
+          )
         )
-      )
-      .then(() => openDebugQuery(app))
-      .then(() => getDebugAst(app))
-      .then((searchResults) => {
-        expect(searchResults).toMatchSnapshot()
-        done()
-      })
-      .catch((err) => {
-        handleError(app, err, done)
-      })
-  })
+        .then(() => openDebugQuery(app))
+        .then(() => getDebugAst(app))
+        .then((searchResults) => {
+          expect(searchResults).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    }
+  )
 
   stdTest("write new search into Debug Query shows AST", (done) => {
     logIn(app)

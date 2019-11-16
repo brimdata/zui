@@ -1,9 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Debug and search helpers fresh state shows default Debug Query AST 1`] = `"{\\"op\\":\\"FilterProc\\",\\"filter\\":{\\"op\\":\\"BooleanLiteral\\",\\"value\\":true}}"`;
+exports[`Debug and search helpers fresh state shows default Debug Query AST 1`] = `
+Object {
+  "filter": Object {
+    "op": "BooleanLiteral",
+    "value": true,
+  },
+  "op": "FilterProc",
+}
+`;
 
-exports[`Debug and search helpers write into main search shows Debug Query AST 1`] = `"{\\"op\\":\\"FilterProc\\",\\"filter\\":{\\"op\\":\\"BooleanLiteral\\",\\"value\\":true}}"`;
+exports[`Debug and search helpers write into main search shows Debug Query AST (update after fixing PROD-950 again) 1`] = `
+Object {
+  "filter": Object {
+    "op": "BooleanLiteral",
+    "value": true,
+  },
+  "op": "FilterProc",
+}
+`;
 
 exports[`Debug and search helpers write invalid search into Debug Query shows reasonable error 1`] = `"SyntaxError: Expected \\"=\\", [0-9.], [A-Za-z_$], or whitespace but \\"(\\" found."`;
 
-exports[`Debug and search helpers write new search into Debug Query shows AST 1`] = `"{\\"op\\":\\"SequentialProc\\",\\"procs\\":[{\\"op\\":\\"FilterProc\\",\\"filter\\":{\\"op\\":\\"CompareField\\",\\"comparator\\":\\"eql\\",\\"field\\":{\\"op\\":\\"FieldRead\\",\\"field\\":\\"_path\\"},\\"value\\":{\\"type\\":\\"string\\",\\"value\\":\\"x509\\"}}},{\\"op\\":\\"GroupByProc\\",\\"keys\\":[\\"certificate.version\\"],\\"reducers\\":[{\\"op\\":\\"Count\\",\\"var\\":\\"count\\"}],\\"duration\\":{\\"type\\":\\"Duration\\",\\"seconds\\":86400}},{\\"op\\":\\"SortProc\\",\\"fields\\":[\\"ts\\",\\"certification.version\\"],\\"sortdir\\":1}]}"`;
+exports[`Debug and search helpers write new search into Debug Query shows AST 1`] = `
+Object {
+  "op": "SequentialProc",
+  "procs": Array [
+    Object {
+      "filter": Object {
+        "comparator": "eql",
+        "field": Object {
+          "field": "_path",
+          "op": "FieldRead",
+        },
+        "op": "CompareField",
+        "value": Object {
+          "type": "string",
+          "value": "x509",
+        },
+      },
+      "op": "FilterProc",
+    },
+    Object {
+      "duration": Object {
+        "seconds": 86400,
+        "type": "Duration",
+      },
+      "keys": Array [
+        "certificate.version",
+      ],
+      "op": "GroupByProc",
+      "reducers": Array [
+        Object {
+          "op": "Count",
+          "var": "count",
+        },
+      ],
+    },
+    Object {
+      "fields": Array [
+        "ts",
+        "certification.version",
+      ],
+      "op": "SortProc",
+      "sortdir": 1,
+    },
+  ],
+}
+`;
