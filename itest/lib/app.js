@@ -243,7 +243,7 @@ export const setDebugQuery = (app: Application, searchText: string) =>
 export const getDebugAst = (app: Application) =>
   app.client
     .getText(selectors.debugSearch.ast)
-    .then((astText) => astText.join(""))
+    .then((astText) => JSON.parse(astText.join("")))
 
 export const waitUntilDownloadFinished = async (app: Application) =>
   await appStep("wait for a download to finish", async () => {
