@@ -10,13 +10,37 @@ Object {
 }
 `;
 
-exports[`Debug and search helpers write into main search shows Debug Query AST (update after fixing PROD-950 again) 1`] = `
+exports[`Debug and search helpers write into main search shows Debug Query AST (update after fixing PROD-950 again and remove this clause) 1`] = `
 Object {
   "filter": Object {
     "op": "BooleanLiteral",
     "value": true,
   },
   "op": "FilterProc",
+}
+`;
+
+exports[`Debug and search helpers write into main search shows proper AST in Copy for curl command (update after fixing PROD-950 again and remove this clause) 1`] = `
+Object {
+  "dir": -1,
+  "proc": Object {
+    "filter": Object {
+      "op": "BooleanLiteral",
+      "value": true,
+    },
+    "op": "FilterProc",
+  },
+  "space": "corelight",
+  "span": Object {
+    "dur": Object {
+      "ns": 0,
+      "sec": 1800,
+    },
+    "ts": Object {
+      "ns": 732000000,
+      "sec": 1428915884,
+    },
+  },
 }
 `;
 

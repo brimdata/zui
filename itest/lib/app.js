@@ -245,6 +245,20 @@ export const getDebugAst = (app: Application) =>
     .getText(selectors.debugSearch.ast)
     .then((astText) => JSON.parse(astText.join("")))
 
+export const openCopyForCurl = async (app: Application) => {
+  await click(app, selectors.options.button)
+  await click(app, selectors.options.menuItem("Copy for curl"))
+  await appStep("wait for Copy for curl modal to appear", () =>
+    Promise.all([
+      app.client.waitForVisible(selectors.cliHelp.curlModal),
+      app.client.waitForVisible(selectors.cliHelp.curlCommand)
+    ])
+  )
+}
+
+export const getCopyForCurl = (app: Application) =>
+  app.client.getText(selectors.cliHelp.curlCommand)
+
 export const waitUntilDownloadFinished = async (app: Application) =>
   await appStep("wait for a download to finish", async () => {
     await app.client.waitForVisible(selectors.downloadMessage)
