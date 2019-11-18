@@ -123,7 +123,7 @@ describe("Debug and search helpers", () => {
         expect(curlCommand).toMatch(/\s+-X\s+POST(?:\s+|$)/)
         // URL MAY be at the end
         expect(curlCommand).toMatch(/\s+http:\/\/[^/]+\/search(?:\s+|$)/)
-        expect(extractCurlPost(curlCommand)).toMatchSnapshot()
+        expect(extractCurlPost(curlCommand)).toBeTruthy()
         done()
       })
       .catch((err) => {
@@ -179,7 +179,7 @@ describe("Debug and search helpers", () => {
       .then(() => openCopyForCurl(app))
       .then(() => getCopyForCurl(app))
       .then((curlCommand) => {
-        expect(extractCurlPost(curlCommand)).toMatchSnapshot()
+        expect(extractCurlPost(curlCommand).space).toBe("hq_integration")
         done()
       })
       .catch((err) => {
@@ -193,7 +193,7 @@ describe("Debug and search helpers", () => {
       .then(() => openCopyForCurl(app))
       .then(() => getCopyForCurl(app))
       .then((curlCommand) => {
-        expect(extractCurlPost(curlCommand)).toMatchSnapshot()
+        expect(extractCurlPost(curlCommand).span.dur.sec).toBe(3352171)
         done()
       })
       .catch((err) => {
