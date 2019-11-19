@@ -16,7 +16,6 @@ import {
 } from "../../state/actions"
 import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
-import {setOuterToTime} from "../../state/span/actions"
 import {submitSearchBar} from "../../state/thunks/searchBar"
 import {viewLogDetail} from "../../detail/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
@@ -154,11 +153,11 @@ function buildActions() {
         field = FieldFactory.create(field)
         if (field instanceof TimeField) {
           dispatch(
-            setOuterToTime(
+            search.setTo(
               brim
                 .time(field.toDate())
                 .add(1, "ms")
-                .toDate()
+                .toTs()
             )
           )
           dispatch(submitSearchBar())

@@ -14,7 +14,6 @@ import {
 } from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
-import {setOuterToTime} from "../state/span/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
@@ -132,11 +131,11 @@ const toTime = (field: Field, opts: Options) => ({
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
       dispatch(
-        setOuterToTime(
+        search.setTo(
           brim
             .time(field.toDate())
             .add(1, "ms")
-            .toDate()
+            .toTs()
         )
       )
       dispatch(submitSearchBar())
