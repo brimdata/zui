@@ -6,13 +6,11 @@ import * as d3 from "d3"
 
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {Pen, HistogramChart} from "../types"
-import type {Span} from "../../BoomClient/types"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getHistogramSearch} from "../../state/searches/selector"
 import {getInnerTimeWindow} from "../../state/reducers/timeWindow"
 import {innerHeight, innerWidth} from "../dimens"
 import {resultsToLogs} from "../../log/resultsToLogs"
-import {setInnerTimeWindow} from "../../state/span/actions"
 import EmptyMessage from "../../components/EmptyMessage"
 import HistogramTooltip from "../../components/HistogramTooltip"
 import LoadingMessage from "../../components/LoadingMessage"
@@ -22,6 +20,7 @@ import format from "./format"
 import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
 import search from "../../state/search"
+import time from "../../brim/time"
 import useConst from "../../hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
 import xAxisTime from "../pens/xAxisTime"
@@ -39,28 +38,28 @@ export default function(width: number, height: number): HistogramChart {
       dispatch(fetchMainSearch())
     }
 
-    function onSelection(span: Span) {
-      dispatch(setInnerTimeWindow(null))
+    function onSelection(span: DateTuple) {
+      dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
       dispatch(fetchMainSearch())
     }
 
-    function onFocus(span: Span) {
-      dispatch(setInnerTimeWindow(span))
+    function onFocus(dates: DateTuple) {
+      dispatch(search.setSpanFocus(time.convertToSpan(dates)))
       dispatch(fetchMainSearch({saveToHistory: false}))
     }
 
     function onBlur() {
-      dispatch(setInnerTimeWindow(null))
+      dispatch(search.setSpanFocus(null))
       dispatch(fetchMainSearch({saveToHistory: false}))
     }
 
     function onSelectionClear() {
-      dispatch(setInnerTimeWindow(null))
+      dispatch(search.setSpanFocus(null))
     }
 
     function onSelectionClick(span) {
-      dispatch(setInnerTimeWindow(null))
+      dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
       dispatch(fetchMainSearch())
     }

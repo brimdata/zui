@@ -2,8 +2,9 @@
 
 import moment from "moment-timezone"
 
-import type {Ts} from "./"
+import type {DateTuple} from "../lib/TimeWindow"
 import type {TimeUnit} from "../lib"
+import brim, {type Ts} from "./"
 
 function time(val: Ts | Date) {
   let date = convertToDate(val)
@@ -67,6 +68,16 @@ time.setZone = function(name: string) {
 
 time.getZoneNames = function() {
   return moment.tz.names()
+}
+
+// Remove or move this later
+time.convertToSpan = function(tw: ?DateTuple) {
+  if (tw) {
+    let [from, to] = tw
+    return [brim.time(from).toTs(), brim.time(to).toTs()]
+  } else {
+    return null
+  }
 }
 
 export default time

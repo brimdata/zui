@@ -1,7 +1,8 @@
 /* @flow */
 
-import {clearTimeWindows, setInnerTimeWindow} from "../span/actions"
+import {clearTimeWindows} from "../span/actions"
 import {getInnerTimeWindow} from "./timeWindow"
+import brim from "../../brim"
 import initTestStore from "../../test/initTestStore"
 import search from "../search"
 
@@ -22,9 +23,11 @@ test("setting the outer time window", () => {
 
 test("setting the inner time window", () => {
   const range = [new Date(), new Date()]
-  const state = store.dispatchAll([setInnerTimeWindow(range)])
+  const state = store.dispatchAll([
+    search.setSpanFocus(brim.time.convertToSpan(range))
+  ])
 
-  expect(getInnerTimeWindow(state)).toEqual(range)
+  expect(search.getSpanFocusAsDates(state)).toEqual(range)
 })
 
 test("clearing the time window", () => {
