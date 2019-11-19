@@ -16,6 +16,7 @@ export type SearchActions =
   | SEARCH_SPAN_SET
   | SEARCH_SPAN_ARGS_SET
   | SEARCH_SPAN_FOCUS_SET
+  | SEARCH_CLEAR
 
 export type SEARCH_SPAN_SET = {type: "SEARCH_SPAN_SET", span: Span}
 export type SEARCH_SPAN_ARGS_SET = {
@@ -26,3 +27,4 @@ export type SEARCH_SPAN_FOCUS_SET = {
   type: "SEARCH_SPAN_FOCUS_SET",
   spanFocus: ?Span
 }
+export type SEARCH_CLEAR = {type: "SEARCH_CLEAR"}

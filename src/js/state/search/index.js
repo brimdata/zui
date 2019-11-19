@@ -2,6 +2,7 @@
 
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {
+  SEARCH_CLEAR,
   SEARCH_SPAN_ARGS_SET,
   SEARCH_SPAN_FOCUS_SET,
   SEARCH_SPAN_SET,
@@ -40,6 +41,9 @@ const actions = {
   },
   setSpanFocus(spanFocus: ?Span): SEARCH_SPAN_FOCUS_SET {
     return {type: "SEARCH_SPAN_FOCUS_SET", spanFocus}
+  },
+  clear(): SEARCH_CLEAR {
+    return {type: "SEARCH_CLEAR"}
   }
 }
 
@@ -85,6 +89,8 @@ function reducer(state: SearchState = init, action: SearchActions) {
       return {...state, spanArgs: action.spanArgs}
     case "SEARCH_SPAN_FOCUS_SET":
       return {...state, spanFocus: action.spanFocus}
+    case "SEARCH_CLEAR":
+      return {...init}
     default:
       return state
   }
