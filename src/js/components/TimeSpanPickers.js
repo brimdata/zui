@@ -3,14 +3,13 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import {getNextOuterTimeWindow} from "../state/reducers/timeWindow"
 import SpanDuration from "./SpanDuration"
 import TimePickerButton from "./TimePickerButton"
 import TimeSpanMenu from "./TimeSpanMenu"
 import search from "../state/search"
 
 export default function TimeSpanPickers() {
-  let next = useSelector(getNextOuterTimeWindow)
+  let next = useSelector(search.getComputedSpan)
   let prev = useSelector(search.getSpanAsDates)
   let [from, to] = next || prev
   let dispatch = useDispatch()

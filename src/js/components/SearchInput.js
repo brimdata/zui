@@ -1,10 +1,10 @@
 /* @flow */
 
+import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
 
 import {changeSearchBarInput} from "../state/actions"
-import {getNextOuterTimeWindow} from "../state/reducers/timeWindow"
 import {getSearchBarInputValue} from "../state/selectors/searchBar"
 import {getSearches} from "../state/searches/selector"
 import {killSearchesByTag} from "../searches/cancelSearch"
@@ -15,6 +15,7 @@ import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
 import modal from "../modal"
+import search from "../state/search"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -94,7 +95,9 @@ function Menu() {
 }
 
 function ActionButton() {
-  let next = useSelector(getNextOuterTimeWindow)
+  let next = useSelector(search.getComputedSpan)
+  let prev = useSelector(search.getSpan)
+  let show = isEqual(next, prev)
   let dispatch = useDispatch()
   let onClick = () => dispatch(submitSearchBar())
 
@@ -117,7 +120,7 @@ function ActionButton() {
   }
 
   return (
-    <Animate show={!!next} enter={enter}>
+    <Animate show={show} enter={enter}>
       <button className="input-action" onClick={onClick}>
         <span>R</span>
         <span>u</span>

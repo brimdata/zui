@@ -17,7 +17,6 @@ import searchHistory from "./reducers/searchHistory"
 import searchesReducer from "./searches/reducer"
 import spaces from "./reducers/spaces"
 import starredLogs from "./reducers/starredLogs"
-import timeWindow from "./reducers/timeWindow"
 import view from "./reducers/view"
 import viewerReducer from "./viewer/reducer"
 
@@ -34,7 +33,6 @@ export default combineReducers<*, *>({
   view,
   searchBar,
   spaces,
-  timeWindow,
   logDetails,
   boomd,
   starredLogs,

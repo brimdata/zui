@@ -51,8 +51,8 @@ const thunks = {
   computeSpan(now: Date = new Date()): Thunk {
     return function(dispatch, getState) {
       let [fromArg, toArg] = selectors.getSpanArgs(getState())
-      let from = computeTimeArg(fromArg, now)
-      let to = computeTimeArg(toArg, now)
+      let from = computeArg(fromArg, now)
+      let to = computeArg(toArg, now)
 
       dispatch(actions.setSpan([from, to]))
     }
@@ -71,7 +71,7 @@ const thunks = {
   }
 }
 
-function computeTimeArg(arg: SpanItemArg, now: Date): Ts {
+function computeArg(arg: SpanItemArg, now: Date = new Date()): Ts {
   return arg.time ? arg.time : brim.relTime(arg.relTime, now).toTs()
 }
 
@@ -100,5 +100,6 @@ export default {
   ...actions,
   ...selectors,
   ...thunks,
+  computeArg,
   reducer
 }
