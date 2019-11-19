@@ -76,13 +76,3 @@ export const getNextOuterTimeWindow = createSelector(
     return [brim.time(from).toDate(), brim.time(to).toDate()]
   }
 )
-
-//$FlowFixMe
-export const getInnerTimeWindow = createSelector(
-  getRawInnerTimeWindow,
-  (tw) => {
-    if (!tw) return null
-    let [from, to] = tw
-    return [brim.time(from).toDate(), brim.time(to).toDate()]
-  }
-)

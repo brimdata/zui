@@ -8,7 +8,6 @@ import type {DateTuple} from "../../lib/TimeWindow"
 import type {Pen, HistogramChart} from "../types"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getHistogramSearch} from "../../state/searches/selector"
-import {getInnerTimeWindow} from "../../state/reducers/timeWindow"
 import {innerHeight, innerWidth} from "../dimens"
 import {resultsToLogs} from "../../log/resultsToLogs"
 import EmptyMessage from "../../components/EmptyMessage"
@@ -30,7 +29,7 @@ import yAxisSingleTick from "../pens/yAxisSingleTick"
 export default function(width: number, height: number): HistogramChart {
   let histogramSearch = useSelector(getHistogramSearch)
   let span = useSelector(search.getSpanAsDates)
-  let innerSpan = useSelector(getInnerTimeWindow)
+  let innerSpan = useSelector(search.getSpanFocusAsDates)
   let dispatch = useDispatch()
   let pens = useConst<Pen[]>([], () => {
     function onDragEnd(span: DateTuple) {

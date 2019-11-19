@@ -3,7 +3,6 @@
 import type {Thunk} from "../state/types"
 import {cancelSearchesByTag} from "../searches/cancelSearch"
 import {clearViewer} from "../state/viewer/actions"
-import {getInnerTimeWindow} from "../state/reducers/timeWindow"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
 import {issueSearch} from "../searches/issueSearch"
@@ -28,7 +27,7 @@ export const fetchMainSearch = ({
   dispatch(clearViewer())
   new SearchTemplateFactory({
     program: getSearchProgram(state),
-    innerSpan: getInnerTimeWindow(state),
+    innerSpan: search.getSpanFocusAsDates(state),
     outerSpan: search.getSpanAsDates(state),
     saveToHistory
   })
