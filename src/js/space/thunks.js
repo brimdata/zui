@@ -11,10 +11,10 @@ import {
   setSpaceInfo,
   setSpaceNames
 } from "../state/actions"
-import {setOuterTimeWindow} from "../state/span/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import brim from "../brim"
 import modal from "../modal"
+import search from "../state/search"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {
@@ -36,7 +36,7 @@ export function initSpace(space: string): Thunk {
           } else {
             const [_, max] = getCurrentSpaceTimeWindow(getState())
             dispatch(
-              setOuterTimeWindow([
+              search.setSpanArgsFromDates([
                 brim
                   .time(max)
                   .subtract(30, "minutes")

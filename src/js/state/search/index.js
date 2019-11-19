@@ -1,5 +1,6 @@
 /* @flow */
 
+import type {DateTuple} from "../../lib/TimeWindow"
 import type {
   SEARCH_SPAN_ARGS_SET,
   SEARCH_SPAN_FOCUS_SET,
@@ -9,8 +10,9 @@ import type {
   SpanArgs,
   SpanItemArg
 } from "./types"
-import type {State, Thunk} from "../types"
+import type {Thunk} from "../types"
 import brim, {type Span, type Ts} from "../../brim"
+import selectors from "./selectors"
 
 // search:
 //   span:
@@ -29,20 +31,15 @@ const actions = {
   setSpanArgs(spanArgs: SpanArgs): SEARCH_SPAN_ARGS_SET {
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
   },
+  setSpanArgsFromDates(dates: DateTuple): SEARCH_SPAN_ARGS_SET {
+    let spanArgs = [
+      {time: brim.time(dates[0]).toTs()},
+      {time: brim.time(dates[1]).toTs()}
+    ]
+    return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
+  },
   setSpanFocus(spanFocus: ?Span): SEARCH_SPAN_FOCUS_SET {
     return {type: "SEARCH_SPAN_FOCUS_SET", spanFocus}
-  }
-}
-
-const selectors = {
-  getSpan(state: State) {
-    return state.search.span
-  },
-  getSpanFocus(state: State) {
-    return state.search.spanFocus
-  },
-  getSpanArgs(state: State) {
-    return state.search.spanArgs
   }
 }
 

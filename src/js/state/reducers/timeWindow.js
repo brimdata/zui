@@ -59,10 +59,6 @@ export default createReducer(initialState, {
   }
 })
 
-function getRawOuterTimeWindow(state: State) {
-  return state.timeWindow.outer
-}
-
 export function getRawNextOuterTimeWindow(state: State) {
   return state.timeWindow.nextOuter
 }
@@ -70,15 +66,6 @@ export function getRawNextOuterTimeWindow(state: State) {
 export function getRawInnerTimeWindow(state: State) {
   return state.timeWindow.inner
 }
-
-//$FlowFixMe
-export const getOuterTimeWindow = createSelector(
-  getRawOuterTimeWindow,
-  (tw) => {
-    let [from, to] = tw
-    return [brim.time(from).toDate(), brim.time(to).toDate()]
-  }
-)
 
 //$FlowFixMe
 export const getNextOuterTimeWindow = createSelector(
@@ -99,5 +86,3 @@ export const getInnerTimeWindow = createSelector(
     return [brim.time(from).toDate(), brim.time(to).toDate()]
   }
 )
-
-export const getTimeWindow = getOuterTimeWindow

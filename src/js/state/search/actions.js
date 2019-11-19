@@ -11,11 +11,6 @@ function convertToSpan(tw: ?DateTuple) {
   }
 }
 
-export const setOuterTimeWindow = (timeWindow: DateTuple) => ({
-  type: "OUTER_TIME_WINDOW_SET",
-  timeWindow: convertToSpan(timeWindow)
-})
-
 export const setNextOuterTimeWindow = (timeWindow: ?DateTuple) => ({
   type: "NEXT_OUTER_TIME_WINDOW_SET",
   timeWindow: convertToSpan(timeWindow)
@@ -38,19 +33,4 @@ export const setOuterToTime = (date: Date) => ({
 
 export const clearTimeWindows = () => ({
   type: "TIME_WINDOWS_CLEAR"
-})
-
-type OldTimeWindow = {
-  inner: ?DateTuple,
-  outer: DateTuple,
-  nextOuter: ?DateTuple
-}
-
-export const restoreTimeWindow = (value: OldTimeWindow) => ({
-  type: "TIME_WINDOW_RESTORE",
-  value: {
-    inner: convertToSpan(value.inner),
-    outer: convertToSpan(value.outer),
-    nextOuter: convertToSpan(value.nextOuter)
-  }
 })

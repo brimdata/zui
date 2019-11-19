@@ -12,11 +12,12 @@ import {
   setCurrentSpaceName,
   setSearchBarPins
 } from "../../state/actions"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../../state/span/actions"
+import {setInnerTimeWindow} from "../../state/span/actions"
 import {submitSearchBar} from "../../state/thunks/searchBar"
 import FindingDetail from "./FindingDetail"
 import FindingFooter from "./FindingFooter"
 import FindingProgram from "./FindingProgram"
+import search from "../../state/search"
 
 type Props = {finding: Finding}
 
@@ -28,7 +29,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(setSearchBarPins(finding.search.pins))
     dispatch(changeSearchBarInput(finding.search.program))
     dispatch(setCurrentSpaceName(finding.search.space))
-    dispatch(setOuterTimeWindow(finding.search.span))
+    dispatch(search.setSpanArgsFromDates(finding.search.span))
     dispatch(setInnerTimeWindow(null))
     dispatch(submitSearchBar(false))
   }

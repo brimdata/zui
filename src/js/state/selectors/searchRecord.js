@@ -3,14 +3,14 @@
 import type {SearchRecord} from "../../types"
 import type {State} from "../types"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import {getOuterTimeWindow} from "../reducers/timeWindow"
 import {getSearchBar} from "./searchBar"
+import search from "../search"
 
 export const getSearchRecord = (state: State): SearchRecord => {
   return {
     program: getSearchBar(state).previous,
     pins: getSearchBar(state).pinned,
-    span: getOuterTimeWindow(state),
+    span: search.getSpanAsDates(state),
     space: getCurrentSpaceName(state)
   }
 }

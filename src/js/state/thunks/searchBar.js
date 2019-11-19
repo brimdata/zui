@@ -14,6 +14,7 @@ import {getCurrentEntry} from "../reducers/searchHistory"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
+import search from "../search"
 
 export const goBack = (): Thunk => (dispatch, getState) => {
   dispatch(backSearchHistory())
@@ -29,6 +30,7 @@ export const goForward = (): Thunk => (dispatch, getState) => {
 
 export const submitSearchBar = (save: boolean = true): Thunk => (dispatch) => {
   dispatch(submittingSearchBar())
+  dispatch(search.computeSpan())
   dispatch(fetchMainSearch({saveToHistory: save}))
 }
 

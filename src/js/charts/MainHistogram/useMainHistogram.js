@@ -4,17 +4,15 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useMemo} from "react"
 import * as d3 from "d3"
 
+import type {DateTuple} from "../../lib/TimeWindow"
 import type {Pen, HistogramChart} from "../types"
 import type {Span} from "../../BoomClient/types"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getHistogramSearch} from "../../state/searches/selector"
-import {
-  getInnerTimeWindow,
-  getTimeWindow
-} from "../../state/reducers/timeWindow"
+import {getInnerTimeWindow} from "../../state/reducers/timeWindow"
 import {innerHeight, innerWidth} from "../dimens"
 import {resultsToLogs} from "../../log/resultsToLogs"
-import {setInnerTimeWindow, setOuterTimeWindow} from "../../state/span/actions"
+import {setInnerTimeWindow} from "../../state/span/actions"
 import EmptyMessage from "../../components/EmptyMessage"
 import HistogramTooltip from "../../components/HistogramTooltip"
 import LoadingMessage from "../../components/LoadingMessage"
@@ -23,6 +21,7 @@ import focusBar from "../pens/focusBar"
 import format from "./format"
 import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
+import search from "../../state/search"
 import useConst from "../../hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
 import xAxisTime from "../pens/xAxisTime"
@@ -30,19 +29,19 @@ import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 
 export default function(width: number, height: number): HistogramChart {
-  let search = useSelector(getHistogramSearch)
-  let span = useSelector(getTimeWindow)
+  let histogramSearch = useSelector(getHistogramSearch)
+  let span = useSelector(search.getSpanAsDates)
   let innerSpan = useSelector(getInnerTimeWindow)
   let dispatch = useDispatch()
   let pens = useConst<Pen[]>([], () => {
-    function onDragEnd(span: Span) {
-      dispatch(setOuterTimeWindow(span))
+    function onDragEnd(span: DateTuple) {
+      dispatch(search.setSpanArgsFromDates(span))
       dispatch(fetchMainSearch())
     }
 
     function onSelection(span: Span) {
       dispatch(setInnerTimeWindow(null))
-      dispatch(setOuterTimeWindow(span))
+      dispatch(search.setSpanArgsFromDates(span))
       dispatch(fetchMainSearch())
     }
 
@@ -62,7 +61,7 @@ export default function(width: number, height: number): HistogramChart {
 
     function onSelectionClick(span) {
       dispatch(setInnerTimeWindow(null))
-      dispatch(setOuterTimeWindow(span))
+      dispatch(search.setSpanArgsFromDates(span))
       dispatch(fetchMainSearch())
     }
 
@@ -87,7 +86,7 @@ export default function(width: number, height: number): HistogramChart {
   })
 
   return useMemo<HistogramChart>(() => {
-    let data = format(resultsToLogs(search.results, "0"), span)
+    let data = format(resultsToLogs(histogramSearch.results, "0"), span)
     let margins = {left: 0, right: 0, top: 3, bottom: 16}
 
     return {
@@ -96,7 +95,7 @@ export default function(width: number, height: number): HistogramChart {
       height,
       margins,
       state: {
-        isFetching: search.status === "FETCHING",
+        isFetching: histogramSearch.status === "FETCHING",
         selection: innerSpan,
         isEmpty: data.points.length === 0
       },
@@ -110,5 +109,12 @@ export default function(width: number, height: number): HistogramChart {
         .domain(span),
       pens
     }
-  }, [search.results, search.status, span, innerSpan, width, height])
+  }, [
+    histogramSearch.results,
+    histogramSearch.status,
+    span,
+    innerSpan,
+    width,
+    height
+  ])
 }

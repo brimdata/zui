@@ -7,10 +7,10 @@ import {
   rxHostsCorrelation,
   txHostsCorrelation
 } from "../searches/programs"
-import {getTimeWindow} from "../state/reducers/timeWindow"
 import {issueSearch} from "../searches/issueSearch"
 import {parallelizeProcs} from "../lib/Program"
 import Log from "../models/Log"
+import search from "../state/search"
 
 export const UID_CORRELATION_LIMIT = 100
 
@@ -22,7 +22,7 @@ export const fetchTuplesByUid = (log: Log): Thunk => (dispatch, getState) => {
         name: "UidSearch",
         tag: "detail",
         program: uid + " | head " + UID_CORRELATION_LIMIT,
-        span: getTimeWindow(getState())
+        span: search.getSpanAsDates(getState())
       })
     )
   }
@@ -42,7 +42,7 @@ export const fetchByMd5 = (log: Log): Thunk => (dispatch, getState) => {
           rxHostsCorrelation(md5),
           txHostsCorrelation(md5)
         ]),
-        span: getTimeWindow(getState())
+        span: search.getSpanAsDates(getState())
       })
     )
   }

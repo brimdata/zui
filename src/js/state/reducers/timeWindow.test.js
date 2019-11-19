@@ -2,17 +2,12 @@
 
 import {
   clearTimeWindows,
-  restoreTimeWindow,
   setInnerTimeWindow,
-  setNextOuterTimeWindow,
-  setOuterTimeWindow
+  setNextOuterTimeWindow
 } from "../span/actions"
-import {
-  getInnerTimeWindow,
-  getNextOuterTimeWindow,
-  getOuterTimeWindow
-} from "./timeWindow"
+import {getInnerTimeWindow, getNextOuterTimeWindow} from "./timeWindow"
 import initTestStore from "../../test/initTestStore"
+import search from "../search"
 
 let store
 beforeEach(() => {
@@ -21,9 +16,12 @@ beforeEach(() => {
 
 test("setting the outer time window", () => {
   const range = [new Date(), new Date()]
-  const state = store.dispatchAll([setOuterTimeWindow(range)])
+  const state = store.dispatchAll([
+    search.setSpanArgsFromDates(range),
+    search.computeSpan()
+  ])
 
-  expect(getOuterTimeWindow(state)).toEqual(range)
+  expect(search.getSpanAsDates(state)).toEqual(range)
 })
 
 test("setting the inner time window", () => {
@@ -33,32 +31,14 @@ test("setting the inner time window", () => {
   expect(getInnerTimeWindow(state)).toEqual(range)
 })
 
-test("restoring the time window", () => {
-  store.dispatch(
-    restoreTimeWindow({
-      inner: [new Date("1"), new Date("2")],
-      outer: [new Date("0"), new Date("3")],
-      nextOuter: null
-    })
-  )
-
-  const state = store.getState()
-  expect(getInnerTimeWindow(state)).toEqual([new Date("1"), new Date("2")])
-  expect(getOuterTimeWindow(state)).toEqual([new Date("0"), new Date("3")])
-})
-
 test("clearing the time window", () => {
-  const state = store.dispatchAll([
-    restoreTimeWindow({
-      inner: [new Date("1"), new Date("2")],
-      outer: [new Date("0"), new Date("3")],
-      nextOuter: null
-    }),
-    clearTimeWindows()
-  ])
+  const state = store.dispatchAll([clearTimeWindows()])
 
   expect(getInnerTimeWindow(state)).toBe(null)
-  expect(getOuterTimeWindow(state)).not.toEqual([new Date("0"), new Date("3")])
+  expect(search.getSpanAsDates(state)).not.toEqual([
+    new Date("0"),
+    new Date("3")
+  ])
 })
 
 test("next outer time window set", () => {

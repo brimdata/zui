@@ -4,15 +4,15 @@ import React from "react"
 
 import type {DateTuple} from "../../lib/TimeWindow"
 import {fetchMainSearch} from "../../viewer/fetchMainSearch"
-import {setOuterTimeWindow} from "../../state/span/actions"
 import SpanDuration from "../SpanDuration"
 import brim from "../../brim"
+import search from "../../state/search"
 
 export default function FindingSpanCard({span}: {span: DateTuple}) {
   let dispatch = useDispatch()
 
   function onClick() {
-    dispatch(setOuterTimeWindow(span))
+    dispatch(search.setSpanArgsFromDates(span))
     dispatch(fetchMainSearch({saveToHistory: false}))
   }
 

@@ -3,8 +3,8 @@
 import {getBoomOptions} from "./boom"
 import {setCluster} from "../clusters/actions"
 import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
-import {setOuterTimeWindow} from "../span/actions"
 import initTestStore from "../../test/initTestStore"
+import search from "../search"
 
 test("#getBoomOptions", () => {
   const store = initTestStore()
@@ -15,7 +15,8 @@ test("#getBoomOptions", () => {
       username: "rosie",
       password: "puppy"
     }),
-    setOuterTimeWindow([new Date(0), new Date(1)]),
+    search.setSpanArgsFromDates([new Date(0), new Date(1)]),
+    search.computeSpan(),
     setCurrentSpaceName("work-zone"),
     useBoomCache(true),
     useBoomIndex(false)
