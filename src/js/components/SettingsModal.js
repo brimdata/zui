@@ -13,6 +13,8 @@ import TextContent from "./TextContent"
 import Toggle from "./Toggle"
 import brim from "../brim"
 
+import {reactElementProps} from "../test/integration"
+
 export default function SettingsModal() {
   let dispatch = useDispatch()
   let timeZone = useSelector(getTimeZone)
@@ -20,7 +22,12 @@ export default function SettingsModal() {
   let useBoomCache = useSelector(getUseBoomCache)
 
   return (
-    <ModalBox name="settings" title="Preferences" buttons="Ok">
+    <ModalBox
+      name="settings"
+      title="Preferences"
+      buttons="Ok"
+      {...reactElementProps("settingsModal")}
+    >
       <TextContent>
         <div className="settings-form">
           <div className="setting-panel">
@@ -41,6 +48,9 @@ export default function SettingsModal() {
             <Toggle
               checked={useBoomCache}
               onChange={() => dispatch(enableCache(!useBoomCache))}
+              // Passthrough props with {...reactElementProps()} didn't work here.
+              // I had to set this directly. Feel free to improve.
+              dataTestLocator="useCacheToggle"
             />
           </div>
 
@@ -49,6 +59,7 @@ export default function SettingsModal() {
             <Toggle
               checked={useBoomIndex}
               onChange={() => dispatch(enableIndex(!useBoomIndex))}
+              dataTestLocator="useIndexToggle"
             />
           </div>
         </div>

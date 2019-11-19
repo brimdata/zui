@@ -69,6 +69,8 @@ const dataAttrs = {
   debugProgram: "debugProgram",
   downloadMessage: "downloadMessage",
   histogram: "histogram-chart",
+  killHistogramSearch: "killHistogramSearch",
+  killViewerSearch: "killViewerSearch",
   logCellMenu: "logCellMenu",
   login: "login",
   notification: "notification-header",
@@ -79,10 +81,13 @@ const dataAttrs = {
   search_button: "search_button",
   search_time: "search_time",
   search_speed: "search_speed",
+  settingsModal: "settingsModal",
   spacesMenu: "spacesMenu",
   spaces_button: "spaces_button",
   span_button: "span_button",
   span_menu: "span_menu",
+  useCacheToggle: "useCacheToggle",
+  useIndexToggle: "useIndexToggle",
   viewer_header: "viewer_header",
   viewer_results: "viewer_results"
 }
@@ -214,6 +219,16 @@ export const selectors = {
     input: dataAttrSelector("search_input"),
     speed: dataAttrSelector("search_speed"),
     time: dataAttrSelector("search_time")
+  },
+  searchInspector: {
+    killHistogramSearch: dataAttrSelector("killHistogramSearch"),
+    killViewerSearch: dataAttrSelector("killViewerSearch")
+  },
+  settings: {
+    button: dataAttrSelector("settingsModal") + " .input-submit > [value=Ok]",
+    modal: dataAttrSelector("settingsModal"),
+    useCacheToggle: dataAttrSelector("useCacheToggle"),
+    useIndexToggle: dataAttrSelector("useIndexToggle")
   },
   spaces: {
     button: dataAttrSelector("spaces_button"),
