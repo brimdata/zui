@@ -14,7 +14,7 @@ import {
 } from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
-import {setOuterFromTime, setOuterToTime} from "../state/span/actions"
+import {setOuterToTime} from "../state/span/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
@@ -22,6 +22,7 @@ import Log from "../models/Log"
 import brim from "../brim"
 import external from "../external"
 import modal from "../modal"
+import search from "../state/search"
 
 export type RightClickAction = {
   type?: string,
@@ -119,7 +120,7 @@ const fromTime = (field: Field, opts: Options) => ({
   label: 'Use as "start" time',
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
-      dispatch(setOuterFromTime(field.toDate()))
+      dispatch(search.setFrom(brim.time(field.toDate()).toTs()))
       dispatch(submitSearchBar())
     }
   },

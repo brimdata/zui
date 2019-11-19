@@ -16,7 +16,7 @@ import {
 } from "../../state/actions"
 import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
-import {setOuterFromTime, setOuterToTime} from "../../state/span/actions"
+import {setOuterToTime} from "../../state/span/actions"
 import {submitSearchBar} from "../../state/thunks/searchBar"
 import {viewLogDetail} from "../../detail/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
@@ -25,6 +25,7 @@ import action from "./action"
 import brim from "../../brim"
 import external from "../../external"
 import modal from "../../modal"
+import search from "../../state/search"
 
 function buildActions() {
   return {
@@ -69,7 +70,7 @@ function buildActions() {
       listener(dispatch, field) {
         field = FieldFactory.create(field)
         if (field instanceof TimeField) {
-          dispatch(setOuterFromTime(field.toDate()))
+          dispatch(search.setFrom(brim.time(field.toDate()).toTs()))
           dispatch(submitSearchBar())
         }
       }

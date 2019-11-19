@@ -52,6 +52,18 @@ const thunks = {
 
       dispatch(actions.setSpan([from, to]))
     }
+  },
+  setFrom(ts: Ts): Thunk {
+    return function(dispatch, getState) {
+      let [_, to] = selectors.getSpanArgs(getState())
+      dispatch(actions.setSpanArgs([{time: ts}, to]))
+    }
+  },
+  setTo(ts: Ts): Thunk {
+    return function(dispatch, getState) {
+      let [from, _] = selectors.getSpanArgs(getState())
+      dispatch(actions.setSpanArgs([from, {time: ts}]))
+    }
   }
 }
 
