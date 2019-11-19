@@ -4,6 +4,7 @@ import compoundField from "./compoundField"
 import field from "./field"
 import log from "./log"
 import program from "./program"
+import relTime from "./relTime"
 import space from "./space"
 import syntax from "./syntax"
 import table from "./table"
@@ -35,12 +36,12 @@ export type $Log = {
   field: (string) => ?$Field
 }
 
-export type $Ts = {
+export type Ts = {
   ns: number,
   sec: number
 }
 
-export type $Span = [$Ts, $Ts]
+export type Span = [Ts, Ts]
 
 export default {
   table,
@@ -51,5 +52,6 @@ export default {
   ast,
   syntax,
   space,
-  time
+  time,
+  relTime
 }

@@ -2,10 +2,10 @@
 
 import moment from "moment-timezone"
 
-import type {$Ts} from "./"
+import type {Ts} from "./"
 import type {TimeUnit} from "../lib"
 
-function time(val: $Ts | Date) {
+function time(val: Ts | Date) {
   let date = convertToDate(val)
 
   return {
@@ -18,7 +18,7 @@ function time(val: $Ts | Date) {
       return ms / 1000
     },
 
-    toTs(): $Ts {
+    toTs(): Ts {
       let ms = date.getTime()
       let secFloat = ms / 1000
       let sec = Math.floor(secFloat)
@@ -49,7 +49,7 @@ function time(val: $Ts | Date) {
   }
 }
 
-function convertToDate(val) {
+function convertToDate(val): Date {
   if (val instanceof Date) {
     return val
   }

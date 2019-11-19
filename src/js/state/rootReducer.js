@@ -11,6 +11,7 @@ import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
 import modal from "../modal"
 import packets from "./reducers/packets"
+import search from "./search"
 import searchBar from "./reducers/searchBar"
 import searchHistory from "./reducers/searchHistory"
 import searchesReducer from "./searches/reducer"
@@ -28,6 +29,7 @@ export default combineReducers<*, *>({
   columns: columnsReducer,
   clusters: clustersReducer,
   modal: modal.reducer,
+  search: search.reducer,
   investigation,
   view,
   searchBar,

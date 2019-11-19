@@ -12,6 +12,7 @@ import type {LogDetails} from "./reducers/logDetails"
 import type {ModalState} from "../modal/types"
 import type {SearchBar} from "./reducers/searchBar"
 import type {SearchHistory} from "./reducers/searchHistory"
+import type {SearchState} from "./search/types"
 import type {SearchesState} from "./searches/types"
 import type {Spaces} from "./reducers/spaces"
 import type {TimeWindow} from "./reducers/timeWindow"
@@ -41,5 +42,6 @@ export type State = {
   logDetails: LogDetails,
   view: View,
   investigation: Investigation,
-  modal: ModalState
+  modal: ModalState,
+  search: SearchState
 }

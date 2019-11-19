@@ -5,7 +5,7 @@ import {isEqual} from "lodash"
 
 import type {State} from "../types"
 import {spanOfLast} from "../../lib/TimeWindow"
-import brim, {type $Span} from "../../brim"
+import brim, {type Span} from "../../brim"
 import createReducer from "./createReducer"
 
 const initialState = {
@@ -15,9 +15,9 @@ const initialState = {
 }
 
 export type TimeWindow = {
-  inner: ?$Span,
-  outer: $Span,
-  nextOuter: ?$Span
+  inner: ?Span,
+  outer: Span,
+  nextOuter: ?Span
 }
 
 export default createReducer(initialState, {
