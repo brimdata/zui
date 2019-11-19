@@ -4,7 +4,6 @@ import React from "react"
 import classNames from "classnames"
 
 import {getNextOuterTimeWindow} from "../state/reducers/timeWindow"
-import {setNextOuterTimeWindow} from "../state/span/actions"
 import SpanDuration from "./SpanDuration"
 import TimePickerButton from "./TimePickerButton"
 import TimeSpanMenu from "./TimeSpanMenu"
@@ -17,11 +16,11 @@ export default function TimeSpanPickers() {
   let dispatch = useDispatch()
 
   function fromChange(date) {
-    dispatch(setNextOuterTimeWindow([date, to]))
+    dispatch(search.setSpanArgsFromDates([date, to]))
   }
 
   function toChange(date) {
-    dispatch(setNextOuterTimeWindow([from, date]))
+    dispatch(search.setSpanArgsFromDates([from, date]))
   }
 
   return (

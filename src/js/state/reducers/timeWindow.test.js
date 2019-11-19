@@ -1,11 +1,7 @@
 /* @flow */
 
-import {
-  clearTimeWindows,
-  setInnerTimeWindow,
-  setNextOuterTimeWindow
-} from "../span/actions"
-import {getInnerTimeWindow, getNextOuterTimeWindow} from "./timeWindow"
+import {clearTimeWindows, setInnerTimeWindow} from "../span/actions"
+import {getInnerTimeWindow} from "./timeWindow"
 import initTestStore from "../../test/initTestStore"
 import search from "../search"
 
@@ -39,12 +35,4 @@ test("clearing the time window", () => {
     new Date("0"),
     new Date("3")
   ])
-})
-
-test("next outer time window set", () => {
-  let state = store.dispatchAll([
-    setNextOuterTimeWindow([new Date(0), new Date(1)])
-  ])
-
-  expect(getNextOuterTimeWindow(state)).toEqual([new Date(0), new Date(1)])
 })

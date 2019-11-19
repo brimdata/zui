@@ -11,11 +11,6 @@ function convertToSpan(tw: ?DateTuple) {
   }
 }
 
-export const setNextOuterTimeWindow = (timeWindow: ?DateTuple) => ({
-  type: "NEXT_OUTER_TIME_WINDOW_SET",
-  timeWindow: convertToSpan(timeWindow)
-})
-
 export const setInnerTimeWindow = (timeWindow: ?DateTuple) => ({
   type: "INNER_TIME_WINDOW_SET",
   timeWindow: convertToSpan(timeWindow)
