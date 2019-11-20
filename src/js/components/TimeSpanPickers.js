@@ -25,7 +25,7 @@ export default function TimeSpanPickers() {
   return (
     <div className={classNames("time-span-pickers")}>
       <TimePickerButton date={from} onChange={fromChange} />
-      <SpanDuration span={[from, to]} />
+      <SpanDuration spanArgs={[from, to]} />
       <TimePickerButton date={to} onChange={toChange} />
       <TimeSpanMenu />
     </div>

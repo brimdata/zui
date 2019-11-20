@@ -17,14 +17,14 @@ function get() {
 let search1 = {
   program: "search1",
   pins: [],
-  spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpanArgs(),
+  spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpan(),
   space: "default"
 }
 
 let search2 = {
   program: "search2",
   pins: [],
-  spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpanArgs(),
+  spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpan(),
   space: "default"
 }
 

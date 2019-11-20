@@ -6,14 +6,15 @@ import * as d3 from "d3"
 
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {Pen, HistogramChart} from "../types"
-import {fetchMainSearch} from "../../viewer/fetchMainSearch"
 import {getHistogramSearch} from "../../state/searches/selector"
 import {innerHeight, innerWidth} from "../dimens"
 import {resultsToLogs} from "../../log/resultsToLogs"
+import {submitSearchBar} from "../../state/thunks/searchBar"
 import EmptyMessage from "../../components/EmptyMessage"
 import HistogramTooltip from "../../components/HistogramTooltip"
 import LoadingMessage from "../../components/LoadingMessage"
 import barStacks from "../pens/barStacks"
+import brim from "../../brim"
 import focusBar from "../pens/focusBar"
 import format from "./format"
 import hoverLine from "../pens/hoverLine"
@@ -33,24 +34,24 @@ export default function(width: number, height: number): HistogramChart {
   let dispatch = useDispatch()
   let pens = useConst<Pen[]>([], () => {
     function onDragEnd(span: DateTuple) {
-      dispatch(search.setSpanArgsFromDates(span))
-      dispatch(fetchMainSearch())
+      dispatch(search.setSpanArgs(brim.dateTuple(span).toSpan()))
+      dispatch(submitSearchBar())
     }
 
     function onSelection(span: DateTuple) {
       dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
-      dispatch(fetchMainSearch())
+      dispatch(submitSearchBar())
     }
 
     function onFocus(dates: DateTuple) {
       dispatch(search.setSpanFocus(time.convertToSpan(dates)))
-      dispatch(fetchMainSearch({saveToHistory: false}))
+      dispatch(submitSearchBar(false))
     }
 
     function onBlur() {
       dispatch(search.setSpanFocus(null))
-      dispatch(fetchMainSearch({saveToHistory: false}))
+      dispatch(submitSearchBar(false))
     }
 
     function onSelectionClear() {
@@ -60,7 +61,7 @@ export default function(width: number, height: number): HistogramChart {
     function onSelectionClick(span) {
       dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
-      dispatch(fetchMainSearch())
+      dispatch(submitSearchBar())
     }
 
     return [

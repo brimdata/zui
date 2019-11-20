@@ -33,7 +33,7 @@ const actions = {
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
   },
   setSpanArgsFromDates(dates: DateTuple): SEARCH_SPAN_ARGS_SET {
-    let spanArgs = brim.dateTuple(dates).toSpanArgs()
+    let spanArgs = brim.dateTuple(dates).toSpan()
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
   },
   setSpanFocus(spanFocus: ?Span): SEARCH_SPAN_FOCUS_SET {

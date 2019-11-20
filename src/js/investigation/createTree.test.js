@@ -9,7 +9,7 @@ function search(pins, program) {
       pins,
       program,
       space: "default",
-      spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpanArgs()
+      spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpan()
     }
   }
 }
