@@ -32,16 +32,14 @@ describe("reducer", () => {
   })
 
   test("set span args", () => {
-    let state = store.dispatchAll([
-      search.setSpanArgs([{time: ts1}, {relTime: "now"}])
-    ])
-    expect(search.getSpanArgs(state)).toEqual([{time: ts1}, {relTime: "now"}])
+    let state = store.dispatchAll([search.setSpanArgs([ts1, "now"])])
+    expect(search.getSpanArgs(state)).toEqual([ts1, "now"])
   })
 
   test("compute span", () => {
     let now = new Date(2000, 3, 12, 12, 30)
     let state = store.dispatchAll([
-      search.setSpanArgs([{relTime: "now - 5m"}, {relTime: "now"}]),
+      search.setSpanArgs(["now - 5m", "now"]),
       search.computeSpan(now)
     ])
     let from = brim

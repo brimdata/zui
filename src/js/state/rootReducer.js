@@ -2,6 +2,7 @@
 
 import {combineReducers} from "redux"
 
+import {VERSION} from "../initializers/initPersistance"
 import {backendReducer} from "../backend"
 import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
@@ -37,5 +38,6 @@ export default combineReducers<*, *>({
   boomd,
   starredLogs,
   packets,
-  searchHistory
+  searchHistory,
+  version: () => VERSION
 })

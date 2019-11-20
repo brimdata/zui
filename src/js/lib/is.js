@@ -12,6 +12,7 @@ export function whatIs(value: *) {
   if (isError(value)) return "Error"
   if (isDate(value)) return "Date"
   if (isSymbol(value)) return "Symbol"
+  if (value === undefined) return undefined
   if (value.constructor) return value.constructor.name
   throw `Unknown JS Type: ${JSON.stringify(value)}`
 }

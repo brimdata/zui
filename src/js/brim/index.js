@@ -1,11 +1,13 @@
 /* @flow */
 import ast from "./ast"
 import compoundField from "./compoundField"
+import dateTuple from "./dateTuple"
 import field from "./field"
 import log from "./log"
 import program from "./program"
 import relTime from "./relTime"
 import space from "./space"
+import span from "./span"
 import syntax from "./syntax"
 import table from "./table"
 import time from "./time"
@@ -53,5 +55,7 @@ export default {
   syntax,
   space,
   time,
-  relTime
+  relTime,
+  span,
+  dateTuple
 }

@@ -16,7 +16,7 @@ export function restoreSearch(record: SearchRecord): Thunk {
         error: null
       })
     )
-    dispatch(search.setSpanArgsFromDates(record.span))
+    dispatch(search.setSpanArgs(record.spanArgs))
     dispatch(search.setSpanFocus(null))
   }
 }

@@ -8,11 +8,11 @@ import type {
   SEARCH_SPAN_SET,
   SearchActions,
   SearchState,
-  SpanArgs,
-  SpanItemArg
+  SpanArgs
 } from "./types"
 import type {Thunk} from "../types"
 import brim, {type Span, type Ts} from "../../brim"
+import search from "./"
 import selectors from "./selectors"
 
 // search:
@@ -33,10 +33,7 @@ const actions = {
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
   },
   setSpanArgsFromDates(dates: DateTuple): SEARCH_SPAN_ARGS_SET {
-    let spanArgs = [
-      {time: brim.time(dates[0]).toTs()},
-      {time: brim.time(dates[1]).toTs()}
-    ]
+    let spanArgs = brim.dateTuple(dates).toSpanArgs()
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
   },
   setSpanFocus(spanFocus: ?Span): SEARCH_SPAN_FOCUS_SET {
@@ -50,34 +47,31 @@ const actions = {
 const thunks = {
   computeSpan(now: Date = new Date()): Thunk {
     return function(dispatch, getState) {
-      let [fromArg, toArg] = selectors.getSpanArgs(getState())
-      let from = computeArg(fromArg, now)
-      let to = computeArg(toArg, now)
-
-      dispatch(actions.setSpan([from, to]))
+      let args = selectors.getSpanArgs(getState())
+      let span = brim
+        .span(args)
+        .recompute(now)
+        .toSpan()
+      dispatch(search.setSpan(span))
     }
   },
   setFrom(ts: Ts): Thunk {
     return function(dispatch, getState) {
       let [_, to] = selectors.getSpanArgs(getState())
-      dispatch(actions.setSpanArgs([{time: ts}, to]))
+      dispatch(actions.setSpanArgs([ts, to]))
     }
   },
   setTo(ts: Ts): Thunk {
     return function(dispatch, getState) {
       let [from, _] = selectors.getSpanArgs(getState())
-      dispatch(actions.setSpanArgs([from, {time: ts}]))
+      dispatch(actions.setSpanArgs([from, ts]))
     }
   }
 }
 
-function computeArg(arg: SpanItemArg, now: Date = new Date()): Ts {
-  return arg.time ? arg.time : brim.relTime(arg.relTime, now).toTs()
-}
-
 const init: SearchState = {
   span: [{sec: 0, ns: 0}, {sec: 1, ns: 0}],
-  spanArgs: [{relTime: "now - 5m"}, {relTime: "now"}],
+  spanArgs: ["now - 5m", "now"],
   spanFocus: null
 }
 
@@ -100,6 +94,5 @@ export default {
   ...actions,
   ...selectors,
   ...thunks,
-  computeArg,
   reducer
 }

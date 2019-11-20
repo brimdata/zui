@@ -7,9 +7,7 @@ export type SearchState = {
   spanFocus: ?Span
 }
 
-export type RelTimeArg = {|relTime: string|}
-export type TimeArg = {|time: Ts|}
-export type SpanItemArg = TimeArg | RelTimeArg
+export type SpanItemArg = string | Ts
 export type SpanArgs = [SpanItemArg, SpanItemArg]
 
 export type SearchActions =

@@ -6,7 +6,7 @@ import type {DateTuple} from "../lib/TimeWindow"
 import type {TimeUnit} from "../lib"
 import brim, {type Ts} from "./"
 
-function time(val: Ts | Date) {
+function time(val: Ts | Date = new Date()) {
   let date = convertToDate(val)
 
   return {

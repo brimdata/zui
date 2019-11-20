@@ -15,6 +15,7 @@ import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
 import {getCurrentFinding} from "../state/reducers/investigation"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
+import {getKey} from "../lib/finding"
 import {getShowLogsTab} from "../state/reducers/view"
 import {initSpace} from "../space/thunks"
 import {killAllSearches} from "../searches/cancelSearch"
@@ -33,7 +34,7 @@ type Props = {|cluster: Cluster|}
 export default function SearchPage({cluster}: Props) {
   let logsTab = useSelector(getShowLogsTab)
   let finding = useSelector(getCurrentFinding)
-  let renderKey = finding && finding.ts.getTime().toString()
+  let renderKey = finding && getKey(finding)
   let results = useResizeObserver()
   let dispatch = useDispatch()
   let spaceName = useSelector(getCurrentSpaceName)

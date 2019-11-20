@@ -5,7 +5,6 @@ import type {DateTuple} from "../../lib/TimeWindow"
 import type {SpanArgs} from "./types"
 import type {State} from "../types"
 import brim, {type Span} from "../../brim"
-import search from "./"
 
 function getSpan(state: State) {
   return state.search.span
@@ -22,14 +21,13 @@ function getSpanArgs(state: State) {
 const getComputedSpan = createSelector<State, void, Span, SpanArgs>(
   getSpanArgs,
   (args) => {
-    let [fromArg, toArg] = args
-    return [search.computeArg(fromArg), search.computeArg(toArg)]
+    return brim.span(args).toSpan()
   }
 )
 
 const getSpanAsDates = createSelector<State, void, DateTuple, Span>(
   getSpan,
-  ([from, to]) => [brim.time(from).toDate(), brim.time(to).toDate()]
+  (span) => brim.span(span).toDateTuple()
 )
 
 const getSpanFocusAsDates = createSelector<State, void, ?DateTuple, ?Span>(

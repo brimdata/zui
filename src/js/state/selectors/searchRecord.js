@@ -10,7 +10,7 @@ export const getSearchRecord = (state: State): SearchRecord => {
   return {
     program: getSearchBar(state).previous,
     pins: getSearchBar(state).pinned,
-    span: search.getSpanAsDates(state),
+    spanArgs: search.getSpanArgs(state),
     space: getCurrentSpaceName(state)
   }
 }

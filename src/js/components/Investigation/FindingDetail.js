@@ -6,7 +6,7 @@ import {useResizeObserver} from "../../hooks/useResizeObserver"
 import FindingHistogramChart from "../../charts/FindingHistogram/Chart"
 import Log from "../../models/Log"
 import VerticalTable from "../Tables/VerticalTable"
-import brim from "../../brim"
+import brim, {type Ts} from "../../brim"
 
 type Props = {finding: Finding}
 
@@ -20,7 +20,7 @@ export default function FindingDetail({finding}: Props) {
     }, 100)
   }, [])
 
-  function timeFormat(date) {
+  function timeFormat(date: Ts) {
     return brim.time(date).format("MMM DD, YYYY HH:mm:ss")
   }
 
@@ -33,7 +33,11 @@ export default function FindingDetail({finding}: Props) {
   let tuple = [
     timeFormat(finding.ts),
     finding.search.space,
-    finding.search.span.map(timeFormat).join(" – ")
+    brim
+      .span(finding.search.spanArgs)
+      .toSpan()
+      .map(timeFormat)
+      .join(" – ")
   ]
 
   let log = new Log(tuple, descriptor)
@@ -42,7 +46,7 @@ export default function FindingDetail({finding}: Props) {
       {finding.chart && (
         <FindingHistogramChart
           results={finding.chart.results}
-          span={finding.search.span}
+          spanArgs={finding.search.spanArgs}
         />
       )}
       <VerticalTable descriptor={descriptor} log={log} light />

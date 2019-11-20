@@ -28,7 +28,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(setSearchBarPins(finding.search.pins))
     dispatch(changeSearchBarInput(finding.search.program))
     dispatch(setCurrentSpaceName(finding.search.space))
-    dispatch(search.setSpanArgsFromDates(finding.search.span))
+    dispatch(search.setSpanArgs(finding.search.spanArgs))
     dispatch(search.setSpanFocus(null))
     dispatch(submitSearchBar(false))
   }

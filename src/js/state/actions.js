@@ -4,6 +4,7 @@ import type {Finding} from "./reducers/investigation"
 import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
+import type {Ts} from "../brim"
 import {isArray} from "../lib/is"
 
 export const useBoomCache = (value: boolean) => ({
@@ -26,7 +27,7 @@ export const updateFinding = (finding: $Shape<Finding>) => ({
   finding
 })
 
-export const deleteFindingByTs = (ts: Date[] | Date) => ({
+export const deleteFindingByTs = (ts: Ts[] | Ts) => ({
   type: "FINDING_DELETE",
   ts: isArray(ts) ? ts : [ts]
 })

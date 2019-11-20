@@ -2,6 +2,7 @@
 
 import {createFinding, deleteFindingByTs, recordSearch} from "../actions"
 import {getCurrentFinding, getInvestigation} from "./investigation"
+import brim from "../../brim"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -16,24 +17,27 @@ function get() {
 let search1 = {
   program: "search1",
   pins: [],
-  span: [new Date(0), new Date(5)],
+  spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpanArgs(),
   space: "default"
 }
 
 let search2 = {
   program: "search2",
   pins: [],
-  span: [new Date(0), new Date(5)],
+  spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpanArgs(),
   space: "default"
 }
 
 test("new finding", () => {
-  const finding = {ts: new Date()}
+  const finding = {ts: brim.time().toTs()}
   store.dispatch(createFinding(finding))
 
   expect(get()).toEqual([
     {
-      ts: expect.any(Date)
+      ts: {
+        ns: expect.any(Number),
+        sec: expect.any(Number)
+      }
     }
   ])
 })
@@ -60,7 +64,10 @@ test("when a search is different", () => {
   expect(get()).toHaveLength(2)
 
   expect(getCurrentFinding(state)).toEqual({
-    ts: expect.any(Date),
+    ts: {
+      ns: expect.any(Number),
+      sec: expect.any(Number)
+    },
     search: search2
   })
 })
@@ -71,7 +78,13 @@ test("delete a single finding by ts", () => {
 
   state = store.dispatchAll([deleteFindingByTs(ts)])
 
-  expect(get()[0]).toEqual({ts: expect.any(Date), search: search1})
+  expect(get()[0]).toEqual({
+    ts: {
+      ns: expect.any(Number),
+      sec: expect.any(Number)
+    },
+    search: search1
+  })
 })
 
 test("removing several records with multiple ts", () => {
