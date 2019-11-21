@@ -35,12 +35,13 @@ export function initSpace(space: string): Thunk {
             dispatch(modal.show("nodata"))
           } else {
             const [_, max] = getCurrentSpaceTimeWindow(getState())
+            console.log()
             dispatch(
-              search.setSpanArgsFromDates([
+              search.setSpanArgs([
                 brim
                   .time(max)
                   .subtract(30, "minutes")
-                  .toDate(),
+                  .toTs(),
                 max
               ])
             )

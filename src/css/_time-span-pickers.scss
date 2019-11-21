@@ -17,11 +17,10 @@
   display: flex;
   input {
     margin: 0;
-    outline: none;
-    width: 142px;
+    width: 164px;
     height: 16px;
     border-radius: 3px;
-    border: 1px solid $blue;
+    border: none;
     font-family: $data-font;
     padding-left: 8px;
     line-height: 16px;
@@ -72,7 +71,8 @@
   position: relative;
 
   &[data-unit="hour"],
-  &[data-unit="minute"] {
+  &[data-unit="minute"],
+  &[data-unit="second"] {
     font-weight: normal;
     padding-right: 0;
   }

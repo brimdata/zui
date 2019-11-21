@@ -7,6 +7,6 @@ export const initTimeWindow = () => (
   dispatch: Function,
   getState: Function
 ) => {
-  const timeWindow = getCurrentSpaceTimeWindow(getState())
-  dispatch(search.setSpanArgsFromDates(timeWindow))
+  const span = getCurrentSpaceTimeWindow(getState())
+  dispatch(search.setSpanArgs(span))
 }

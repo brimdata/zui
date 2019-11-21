@@ -44,3 +44,15 @@ code {
   -webkit-app-region: drag;
   z-index: -1;
 }
+
+.using-mouse {
+  :not(input[type="text"]):focus {
+    outline: none;
+  }
+}
+
+.using-keyboard {
+  :focus {
+    outline: auto 5px -webkit-focus-ring-color;
+  }
+}

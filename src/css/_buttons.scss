@@ -1,6 +1,5 @@
 @mixin button-reset {
   border: none;
-  outline: none;
   font-family: $body-font;
   cursor: pointer;
 }
@@ -94,7 +93,6 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  outline: none;
 
   svg {
     fill: $gray-4;

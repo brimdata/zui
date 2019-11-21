@@ -2,6 +2,7 @@
 import {useSelector} from "react-redux"
 import React, {useEffect, useRef, useState} from "react"
 
+import {SPAN_TIME_FMT} from "./SpanControls"
 import type {TimeArg} from "../../state/search/types"
 import {getTimeZone} from "../../state/reducers/view"
 import {isString} from "../../lib/is"
@@ -19,9 +20,7 @@ export default function TimeInput({timeArg, onSubmit}: Props) {
   let zone = useSelector(getTimeZone)
 
   let [value, setValue] = useState(
-    isString(timeArg)
-      ? timeArg
-      : brim.time(timeArg).format("MMM DD, YYYY HH:mm")
+    isString(timeArg) ? timeArg : brim.time(timeArg).format(SPAN_TIME_FMT)
   )
   let [result, setResult] = useState(null)
   let [error, setError] = useState(null)
@@ -46,6 +45,8 @@ export default function TimeInput({timeArg, onSubmit}: Props) {
   }
 
   function submit() {
+    console.log(timeArg)
+    console.log(lib.date.parseInZone(value, zone))
     onSubmit(lib.date.parseInZone(value, zone) || timeArg)
   }
 

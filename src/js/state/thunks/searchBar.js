@@ -32,6 +32,8 @@ export const submitSearchBar = (save: boolean = true): Thunk => (dispatch) => {
   dispatch(submittingSearchBar())
   dispatch(search.computeSpan())
   dispatch(fetchMainSearch({saveToHistory: save}))
+  // let el = document.getElementById("main-search-input")
+  // if (el) el.focus()
 }
 
 export const validateProgram = (): Thunk => (dispatch, getState) => {

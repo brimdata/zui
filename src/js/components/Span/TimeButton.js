@@ -1,6 +1,6 @@
 /* @flow */
 import {isEqual} from "lodash"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
 import type {TimeArg} from "../../state/search/types"
@@ -25,6 +25,10 @@ export default function TimeButton({timeArg, prevTimeArg, onChange}: Props) {
   let [editing, setEditing] = useState(false)
   let fuzzy = useFuzzyHover(0, 150)
   let dirty = !!prevTimeArg && !isEqual(timeArg, prevTimeArg)
+
+  useEffect(() => {
+    if (editing === false) fuzzy.mouseLeave()
+  }, [editing])
 
   function updatePosition(e) {
     fuzzy.mouseEnter()
@@ -90,7 +94,7 @@ export default function TimeButton({timeArg, prevTimeArg, onChange}: Props) {
         onDown={onDown}
         style={{transform: `translate(${x}px, ${y}px)`}}
       />
-      <MenuBarButton>
+      <MenuBarButton onFocus={() => setEditing(true)}>
         {isString(timeArg) ? (
           brim.relTime(timeArg).format()
         ) : (
@@ -132,6 +136,10 @@ function TimeDisplay({ts, onMouseEnter}: TDProps) {
       :
       <TimePiece data-unit="minute" onMouseEnter={onMouseEnter}>
         {t.format("mm")}
+      </TimePiece>
+      :
+      <TimePiece data-unit="second" onMouseEnter={onMouseEnter}>
+        {t.format("ss")}
       </TimePiece>
     </>
   )

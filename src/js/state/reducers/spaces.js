@@ -3,7 +3,6 @@
 import {createSelector} from "reselect"
 
 import type {State} from "../types"
-import brim from "../../brim"
 import createReducer from "./createReducer"
 
 const initialState = {
@@ -63,8 +62,10 @@ export const getCurrentSpace = createSelector<State, void, *, *, *>(
 
 export const getCurrentSpaceTimeWindow = createSelector<State, void, *, *>(
   getCurrentSpace,
-  (space) => [
-    brim.time(space.min_time).toDate(),
-    brim.time(space.max_time).toDate()
-  ]
+  (space) => {
+    return [
+      {sec: space.min_time.sec, ns: 0},
+      {sec: space.max_time.sec + 1, ns: 0}
+    ]
+  }
 )
