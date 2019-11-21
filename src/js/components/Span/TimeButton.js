@@ -1,9 +1,11 @@
 /* @flow */
+import {isEqual} from "lodash"
 import React, {useState} from "react"
 import classNames from "classnames"
 
 import type {TimeArg} from "../../state/search/types"
 import {isString} from "../../lib/is"
+import Animate from "../Animate"
 import MenuBarButton from "../MenuBarButton"
 import TimeInput from "./TimeInput"
 import TimePiece from "./TimePiece"
@@ -13,14 +15,16 @@ import useFuzzyHover from "../../hooks/useFuzzyHover"
 
 type Props = {
   timeArg: TimeArg,
+  prevTimeArg: ?TimeArg,
   onChange: Function
 }
 
-export default function TimeButton({timeArg, onChange}: Props) {
+export default function TimeButton({timeArg, prevTimeArg, onChange}: Props) {
   let [[x, y], setPosition] = useState([0, 0])
   let [unit, setUnit] = useState("month")
   let [editing, setEditing] = useState(false)
   let fuzzy = useFuzzyHover(0, 150)
+  let dirty = !!prevTimeArg && !isEqual(timeArg, prevTimeArg)
 
   function updatePosition(e) {
     fuzzy.mouseEnter()
@@ -63,10 +67,19 @@ export default function TimeButton({timeArg, onChange}: Props) {
     setEditing(false)
   }
 
+  function reset(e) {
+    e.stopPropagation()
+    if (prevTimeArg) {
+      onChange(prevTimeArg)
+    }
+  }
+
   if (editing) return <TimeInput timeArg={timeArg} onSubmit={onSubmit} />
   return (
     <div
-      className={classNames("time-picker-button", {hovering: fuzzy.hovering})}
+      className={classNames("time-picker-button", {
+        hovering: fuzzy.hovering
+      })}
       onMouseLeave={fuzzy.mouseLeave}
       onClick={onClick}
     >
@@ -84,7 +97,17 @@ export default function TimeButton({timeArg, onChange}: Props) {
           <TimeDisplay ts={timeArg} onMouseEnter={updatePosition} />
         )}
       </MenuBarButton>
+      <ChangedDot show={dirty} onClick={reset} />
     </div>
+  )
+}
+
+function ChangedDot({show, onClick}) {
+  let enter = {scale: [0, 1]}
+  return (
+    <Animate show={show} enter={enter}>
+      <div className="changed-dot" onClick={onClick} />
+    </Animate>
   )
 }
 

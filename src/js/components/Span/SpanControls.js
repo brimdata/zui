@@ -10,6 +10,7 @@ import search from "../../state/search"
 
 export default function SpanControls() {
   let [from, to] = useSelector(search.getSpanArgs)
+  let prev = useSelector(search.getPrevSpanArgs)
   let dispatch = useDispatch()
 
   function fromChange(arg) {
@@ -22,9 +23,9 @@ export default function SpanControls() {
 
   return (
     <div className={classNames("time-span-pickers")}>
-      <TimeButton timeArg={from} onChange={fromChange} />
+      <TimeButton timeArg={from} prevTimeArg={prev[0]} onChange={fromChange} />
       <SpanDuration spanArgs={[from, to]} />
-      <TimeButton timeArg={to} onChange={toChange} />
+      <TimeButton timeArg={to} prevTimeArg={prev[1]} onChange={toChange} />
       <SpanPicker />
     </div>
   )

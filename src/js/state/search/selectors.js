@@ -2,6 +2,7 @@
 import {createSelector} from "reselect"
 
 import type {DateTuple} from "../../lib/TimeWindow"
+import {type Finding, getCurrentFinding} from "../reducers/investigation"
 import type {SpanArgs} from "./types"
 import type {State} from "../types"
 import brim, {type Span} from "../../brim"
@@ -42,11 +43,23 @@ const getSpanFocusAsDates = createSelector<State, void, ?DateTuple, ?Span>(
   }
 )
 
+const getPrevSpanArgs = createSelector<State, void, ?SpanArgs, ?Finding>(
+  getCurrentFinding,
+  (finding) => {
+    if (finding) {
+      return finding.search.spanArgs
+    } else {
+      return null
+    }
+  }
+)
+
 export default {
   getSpan,
   getSpanAsDates,
   getSpanFocus,
   getSpanFocusAsDates,
   getSpanArgs,
+  getPrevSpanArgs,
   getComputedSpan
 }

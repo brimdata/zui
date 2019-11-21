@@ -19,7 +19,8 @@
   align-items: center;
   overflow: hidden;
 
-  &.count {
+  &.count,
+  &.interval {
     justify-content: flex-end;
   }
 

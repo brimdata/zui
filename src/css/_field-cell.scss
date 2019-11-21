@@ -11,4 +11,9 @@
   &._path {
     @include path-tag;
   }
+
+  &.count,
+  &.duration {
+    text-align: right;
+  }
 }

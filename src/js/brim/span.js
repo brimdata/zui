@@ -29,9 +29,27 @@ export default function span(args: SpanArgs | Span) {
     toDateTuple(): DateTuple {
       return [brim.time(computed[0]).toDate(), brim.time(computed[1]).toDate()]
     },
-    format() {
+    formatAgo() {
       let [from, to] = this.toDateTuple()
       return moment.duration(moment(to).diff(moment(from))).humanize()
+    },
+    shortFormat() {
+      let [from, to] = this.toDateTuple()
+      let diff = moment.duration(moment(to).diff(moment(from)))
+      let ms = diff.asMilliseconds()
+      let sec = diff.asSeconds()
+      let min = diff.asMinutes()
+      let hr = diff.asHours()
+      let day = diff.asDays()
+      let wk = diff.asWeeks()
+      let mth = diff.asMonths()
+      let yr = diff.asYears()
+      let obj = {yr, mth, wk, day, hr, min, sec, ms}
+
+      for (let [unit, amount] of Object.entries(obj)) {
+        if (Number(amount) > 1) return `${parseInt(amount)} ${unit}`
+      }
+      return `${ms} ms`
     },
     isValid() {
       let [from, to] = this.toDateTuple()

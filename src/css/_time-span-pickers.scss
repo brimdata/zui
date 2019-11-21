@@ -33,7 +33,7 @@
 
   .menu-bar-button {
     position: relative;
-    min-width: 142px;
+    min-width: 60px;
   }
 
   .hover-zone {
@@ -51,6 +51,19 @@
   &.hovering .hover-zone {
     top: -20px;
     bottom: -20px;
+  }
+
+  .changed-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: $blue;
+    top: calc(50% - 4px);
+    left: -4px;
+    border-radius: 50%;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: all 150ms;
   }
 }
 
