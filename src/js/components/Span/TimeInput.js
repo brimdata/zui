@@ -1,26 +1,28 @@
 /* @flow */
 import {useSelector} from "react-redux"
 import React, {useEffect, useRef, useState} from "react"
-import moment from "moment"
 
-import {getTimeZone} from "../state/reducers/view"
-import {isDate} from "../lib/is"
-import Form from "./form/Form"
-import brim from "../brim"
-import lib from "../lib"
+import type {TimeArg} from "../../state/search/types"
+import {getTimeZone} from "../../state/reducers/view"
+import {isString} from "../../lib/is"
+import Form from "../form/Form"
+import brim from "../../brim"
+import lib from "../../lib"
 
 type Props = {
-  date: Date,
+  timeArg: TimeArg,
   onSubmit: Function
 }
 
-global.moment = moment
-
-export default function TimePickerButtonInput({date, onSubmit}: Props) {
+export default function TimeInput({timeArg, onSubmit}: Props) {
   let el = useRef()
   let zone = useSelector(getTimeZone)
 
-  let [value, setValue] = useState(brim.time(date).format("MMM DD, YYYY HH:mm"))
+  let [value, setValue] = useState(
+    isString(timeArg)
+      ? timeArg
+      : brim.time(timeArg).format("MMM DD, YYYY HH:mm")
+  )
   let [result, setResult] = useState(null)
   let [error, setError] = useState(null)
 
@@ -31,18 +33,20 @@ export default function TimePickerButtonInput({date, onSubmit}: Props) {
   function onChange(e) {
     setValue(e.target.value)
     let d = lib.date.parseInZone(e.target.value, zone)
-    if (isDate(d)) {
-      setError(null)
-      setResult(brim.time(d).format("MMM DD, YYYY HH:mm"))
-    } else {
+    if (d === null) {
       setError("Unknown date format")
       setResult(null)
+    } else if (isString(d)) {
+      setError(null)
+      setResult(d)
+    } else {
+      setError(null)
+      setResult(brim.time(d).format("MMM DD, YYYY HH:mm"))
     }
   }
 
   function submit() {
-    let d = lib.date.parseInZone(value, zone)
-    isDate(d) ? onSubmit(d) : onSubmit(date)
+    onSubmit(lib.date.parseInZone(value, zone) || timeArg)
   }
 
   return (

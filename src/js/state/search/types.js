@@ -7,8 +7,8 @@ export type SearchState = {
   spanFocus: ?Span
 }
 
-export type SpanItemArg = string | Ts
-export type SpanArgs = [SpanItemArg, SpanItemArg]
+export type TimeArg = string | Ts
+export type SpanArgs = [TimeArg, TimeArg]
 
 export type SearchActions =
   | SEARCH_SPAN_SET

@@ -40,10 +40,11 @@ function wrapperStyler(a, w, pad) {
 
 function pointerStyler(a, w, _pad) {
   let width = 32
+  let floor = (n) => Math.max(n, 0)
   return {
     center: {left: w.width / 2 - width / 2},
-    right: {right: a.width / 2 - width / 2},
-    left: {left: a.width / 2 - width / 2},
+    right: {right: floor(a.width / 2 - width / 2)},
+    left: {left: floor(a.width / 2 - width / 2)},
     top: {top: "99%", transform: "rotate(180deg)"},
     bottom: {bottom: "99%"}
   }

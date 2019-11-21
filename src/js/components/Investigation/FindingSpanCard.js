@@ -2,10 +2,10 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
-import type {SpanArgs, SpanItemArg} from "../../state/search/types"
+import type {SpanArgs, TimeArg} from "../../state/search/types"
 import {isString} from "../../lib/is"
 import {submitSearchBar} from "../../state/thunks/searchBar"
-import SpanDuration from "../SpanDuration"
+import SpanDuration from "../Span/SpanDuration"
 import brim from "../../brim"
 import search from "../../state/search"
 
@@ -28,7 +28,7 @@ export default function FindingSpanCard({spanArgs}: {spanArgs: SpanArgs}) {
   )
 }
 
-function DatePill({date}: {date: SpanItemArg}) {
+function DatePill({date}: {date: TimeArg}) {
   if (isString(date)) {
     return (
       <div className="thin-button date-pill">

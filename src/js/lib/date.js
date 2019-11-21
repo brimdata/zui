@@ -2,6 +2,8 @@
 import chrono from "chrono-node"
 import moment from "moment-timezone"
 
+import brim from "../brim"
+
 function date(d: Date, zone: string = "UTC") {
   return {
     zone(name: string) {
@@ -17,6 +19,7 @@ function date(d: Date, zone: string = "UTC") {
   }
 }
 
+// Move this, add tests, refactor
 date.parseInZone = (string, zone, ref) => {
   let pad = (n) => (n < 10 ? `0${n}` : n)
 
@@ -36,9 +39,17 @@ date.parseInZone = (string, zone, ref) => {
     let str = [year, month, date, hour, mins, secs, ms, offset].join(" ")
     let fmt = "YYYY MM DD HH mm ss SSS Z"
 
-    return moment(str, fmt, true).toDate()
+    return brim.time(moment(str, fmt, true).toDate()).toTs()
+  } else if (brim.relTime(string).isValid()) {
+    return string
   } else {
-    return chrono.casual.parseDate(string, ref)
+    if (/^\s*now.*/i.test(string)) return null
+    let d = chrono.casual.parseDate(string, ref)
+    if (d) {
+      return brim.time(d).toTs()
+    } else {
+      return null
+    }
   }
 }
 

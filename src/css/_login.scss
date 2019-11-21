@@ -128,24 +128,16 @@
   }
 
   .status {
+    @include error-bg;
     position: absolute;
     font-size: $font-size-2;
     left: 50%;
     transform: translateX(-50%);
     top: 20px;
-    background: linear-gradient(
-      to top,
-      lighten($yellow, 10%),
-      $yellow 2%,
-      $yellow-dark 98%,
-      lighten($yellow, 10%)
-    );
     margin: 0;
     padding: 0.25rem 1rem;
     text-align: center;
     color: $gray-9;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.4);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

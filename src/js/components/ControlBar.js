@@ -6,7 +6,7 @@ import {XHistoryStepper} from "./HistoryStepper"
 import {XSearchBar} from "./SearchBar"
 import ClusterPicker from "./ClusterPicker"
 import SpacePicker from "./SpacePicker"
-import TimeSpanPickers from "./TimeSpanPickers"
+import SpanControls from "./Span/SpanControls"
 
 export default function ControlBar() {
   return (
@@ -16,7 +16,7 @@ export default function ControlBar() {
           <ClusterPicker />
           <SpacePicker />
         </div>
-        <TimeSpanPickers />
+        <SpanControls />
       </div>
       <div className="row-2">
         <XHistoryStepper />

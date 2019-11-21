@@ -6,6 +6,9 @@
 
   .time-span-menu {
     margin-left: 3px;
+    svg {
+      margin: 0;
+    }
   }
 }
 
@@ -30,6 +33,7 @@
 
   .menu-bar-button {
     position: relative;
+    min-width: 142px;
   }
 
   .hover-zone {

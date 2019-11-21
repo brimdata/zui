@@ -4,12 +4,13 @@
   justify-content: center;
   font-family: $data-font;
   user-select: none;
-  width: 80px;
+  min-width: 70px;
 
   span {
     font-size: 10px;
-    padding: 0 6px;
+    padding: 0 3px;
     white-space: nowrap;
+    line-height: 13px;
   }
 
   hr {
@@ -17,5 +18,39 @@
     flex: 1;
     border: none;
     border-top: 1px solid #dcdcdc;
+    width: 5px;
+  }
+
+  &.error {
+    span {
+      @include error-bg;
+      padding: 0 8px;
+      animation: nope-shake 200ms;
+      animation-delay: 50ms;
+      animation-iteration-count: 2;
+      animation-timing-function: linear;
+    }
+    hr {
+      opacity: 0;
+    }
+  }
+}
+
+$shake: 3px;
+@keyframes nope-shake {
+  from {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX($shake);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-$shake);
+  }
+  to {
+    transform: translateX(0);
   }
 }

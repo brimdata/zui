@@ -1,13 +1,15 @@
 /* @flow */
+import moment from "moment"
+
 import type {DateTuple} from "../lib/TimeWindow"
-import type {SpanArgs, SpanItemArg} from "../state/search/types"
+import type {SpanArgs, TimeArg} from "../state/search/types"
 import {isString} from "../lib/is"
 import brim, {type Span, type Ts} from "./"
 
 export default function span(args: SpanArgs | Span) {
   let computed = compute()
 
-  function computeArg(arg: SpanItemArg, now: Date = new Date()): Ts {
+  function computeArg(arg: TimeArg, now: Date = new Date()): Ts {
     if (isString(arg)) return brim.relTime(arg, now).toTs()
     else return arg
   }
@@ -26,6 +28,14 @@ export default function span(args: SpanArgs | Span) {
     },
     toDateTuple(): DateTuple {
       return [brim.time(computed[0]).toDate(), brim.time(computed[1]).toDate()]
+    },
+    format() {
+      let [from, to] = this.toDateTuple()
+      return moment.duration(moment(to).diff(moment(from))).humanize()
+    },
+    isValid() {
+      let [from, to] = this.toDateTuple()
+      return to > from
     }
   }
 }

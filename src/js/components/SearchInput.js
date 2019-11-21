@@ -95,9 +95,10 @@ function Menu() {
 }
 
 function ActionButton() {
-  let next = useSelector(search.getComputedSpan)
-  let prev = useSelector(search.getSpan)
-  let show = !isEqual(next, prev)
+  // let next = useSelector(search.getComputedSpan)
+  // let prev = useSelector(search.getSpan)
+  // let show = !isEqual(next, prev)
+  let show = false
   let dispatch = useDispatch()
   let onClick = () => dispatch(submitSearchBar())
 

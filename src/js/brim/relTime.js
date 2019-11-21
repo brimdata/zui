@@ -48,8 +48,28 @@ export default function relTime(expr: string, now: Date = new Date()) {
     toTs() {
       return execute(parse()).toTs()
     },
+
     toAst() {
       return parse()
+    },
+
+    format() {
+      let {op, amount, unit} = parse()
+      if (op === null) return "Now"
+
+      let map = {
+        s: "second",
+        m: "minute",
+        h: "hour",
+        d: "day",
+        w: "week",
+        M: "month",
+        y: "year"
+      }
+      let fullUnit = map[unit] || "?"
+      if (amount > 1) fullUnit += "s"
+
+      return `${amount} ${fullUnit} ago`
     }
   }
 }
