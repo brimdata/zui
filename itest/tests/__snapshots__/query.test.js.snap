@@ -3,7 +3,7 @@
 exports[`Query tests query "* | count()"; switch to whole space 1`] = `
 Array [
   "count",
-  "959",
+  "961",
 ]
 `;
 

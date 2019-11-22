@@ -3,7 +3,7 @@
 exports[`Spaces tests change space to hq_integration 1`] = `
 Array [
   "count",
-  "3",
+  "4",
 ]
 `;
 
