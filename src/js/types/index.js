@@ -6,7 +6,6 @@ import type {SpanArgs} from "../state/search/types"
 import type {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import Log from "../models/Log"
-import dimens from "../components/Dimens"
 
 export type Notification =
   | AppError
@@ -32,7 +31,7 @@ export type ViewerDimens = {
   listWidth: number | "auto"
 }
 
-export type RowRenderer = (index: number, dimens: ViewerDimens) => *
+export type RowRenderer = (number, ViewerDimens) => *
 
 export type HashCorrelation = {
   name: "hash" | "tx" | "rx" | "md5",
