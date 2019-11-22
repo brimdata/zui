@@ -2,8 +2,8 @@
 import React, {useMemo} from "react"
 import * as d3 from "d3"
 
+import type {DateTuple} from "../../lib/TimeWindow"
 import type {SearchResults} from "../../state/searches/types"
-import type {Span} from "../../BoomClient/types"
 import {innerHeight, innerWidth} from "../dimens"
 import {resultsToLogs} from "../../log/resultsToLogs"
 import {withCommas} from "../../lib/fmt"
@@ -22,7 +22,7 @@ export default function useFindingHistogram(
   width: number,
   height: number,
   results: SearchResults,
-  span: Span
+  span: DateTuple
 ) {
   let data = format(resultsToLogs(results, "0"), span)
   let max = d3.max(data.points, (d) => d.count) || 0

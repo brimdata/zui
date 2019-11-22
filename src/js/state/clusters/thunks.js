@@ -9,13 +9,13 @@ import {
   clearSearchHistory,
   clearSpaces,
   clearStarredLogs,
-  clearTimeWindows,
   setSpaceNames
 } from "../actions"
 import {clearSearches} from "../searches/actions"
 import {clearViewer} from "../viewer/actions"
 import {setCluster} from "./actions"
 import {testConnection} from "../../backend/thunks"
+import search from "../search"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
@@ -44,7 +44,7 @@ export function switchCluster(cluster: Cluster): Thunk {
 function clearClusterState(dispatch) {
   dispatch(clearSearchBar())
   dispatch(clearSpaces())
-  dispatch(clearTimeWindows())
+  dispatch(search.clear())
   dispatch(clearStarredLogs())
   dispatch(clearSearchHistory())
   dispatch(clearViewer())

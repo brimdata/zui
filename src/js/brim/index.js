@@ -1,12 +1,16 @@
 /* @flow */
 import ast from "./ast"
 import compoundField from "./compoundField"
+import dateTuple from "./dateTuple"
 import field from "./field"
 import log from "./log"
 import program from "./program"
+import relTime from "./relTime"
 import space from "./space"
+import span from "./span"
 import syntax from "./syntax"
 import table from "./table"
+import time from "./time"
 
 export type $Field = {
   name: string,
@@ -34,6 +38,13 @@ export type $Log = {
   field: (string) => ?$Field
 }
 
+export type Ts = {
+  ns: number,
+  sec: number
+}
+
+export type Span = [Ts, Ts]
+
 export default {
   table,
   program,
@@ -42,5 +53,9 @@ export default {
   log,
   ast,
   syntax,
-  space
+  space,
+  time,
+  relTime,
+  span,
+  dateTuple
 }

@@ -2,8 +2,8 @@
 
 import type {$Field} from "../brim"
 import type {$Menu} from "../electron/menu"
-import type {Span} from "../BoomClient/types"
-import type {TimeUnit} from "../lib/Time"
+import type {SpanArgs} from "../state/search/types"
+import type {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import Log from "../models/Log"
 
@@ -31,7 +31,7 @@ export type ViewerDimens = {
   listWidth: number | "auto"
 }
 
-export type RowRenderer = (index: number, dimens: ViewerDimens) => *
+export type RowRenderer = (number, ViewerDimens) => *
 
 export type HashCorrelation = {
   name: "hash" | "tx" | "rx" | "md5",
@@ -88,6 +88,6 @@ export type LongTimeUnit =
 export type SearchRecord = {
   program: string,
   pins: string[],
-  span: Span,
+  spanArgs: SpanArgs,
   space: string
 }

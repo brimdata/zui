@@ -3,17 +3,19 @@
 import React from "react"
 
 import type {SearchResults} from "../../state/searches/types"
-import type {Span} from "../../BoomClient/types"
+import type {SpanArgs} from "../../state/search/types"
 import ChartSVG from "../ChartSVG"
 import Dimens from "../../components/Dimens"
+import brim from "../../brim"
 import useFindingHistogram from "./useFindingHistogram"
 
 type Props = {
   results: SearchResults,
-  span: Span
+  spanArgs: SpanArgs
 }
 
-const Chart = React.memo<Props>(function Chart({results, span}: Props) {
+const Chart = React.memo<Props>(function Chart({results, spanArgs}: Props) {
+  let span = brim.span(spanArgs).toDateTuple()
   return (
     <Dimens
       className="chart finding-histogram"

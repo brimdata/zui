@@ -2,8 +2,8 @@
 import * as d3 from "d3"
 
 import type {Pen} from "../types"
-import {add} from "../../lib/Time"
 import {getPointAt} from "../getPointAt"
+import brim from "../../brim"
 
 type Props = {
   onFocus: Function,
@@ -24,7 +24,13 @@ export default function({onFocus, onBlur}: Props): Pen {
       if (data && !focused) {
         focused = true
         let {number, unit} = chart.data.interval
-        onFocus([data.ts, add(data.ts, number, unit)])
+        onFocus([
+          data.ts,
+          brim
+            .time(data.ts)
+            .add(number, unit)
+            .toDate()
+        ])
       } else {
         focused = false
         onBlur()

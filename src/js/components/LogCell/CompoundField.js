@@ -24,7 +24,7 @@ export default function CompoundField({field, log, menuBuilder}: Props) {
       render.push(<SingleField key={i} field={item} log={log} menu={menu} />)
     }
     if (i !== compound.length - 1) {
-      render.push(<Comma />)
+      render.push(<Comma key={"comma-" + i} />)
     }
   }
 

@@ -1,5 +1,6 @@
 /* @flow */
 
+import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
 
@@ -9,10 +10,12 @@ import {getSearches} from "../state/searches/selector"
 import {killSearchesByTag} from "../searches/cancelSearch"
 import {reactElementProps} from "../test/integration"
 import {submitSearchBar} from "../state/thunks/searchBar"
+import Animate from "./Animate"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
 import modal from "../modal"
+import search from "../state/search"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -59,6 +62,7 @@ export default function SearchInput() {
         autoComplete="off"
         {...reactElementProps("search_input")}
       />
+      <ActionButton />
       <Menu />
     </div>
   )
@@ -87,5 +91,41 @@ function Menu() {
     <PopMenuPointy template={menu} {...reactElementProps("optionsMenu")}>
       <ThreeDotButton {...reactElementProps("optionsButton")} />
     </PopMenuPointy>
+  )
+}
+
+function ActionButton() {
+  let next = useSelector(search.getSpanArgs)
+  let prev = useSelector(search.getPrevSpanArgs)
+  let show = !isEqual(next, prev)
+  let dispatch = useDispatch()
+  let onClick = () => dispatch(submitSearchBar())
+
+  let enter = (anime, el) => {
+    return anime
+      .timeline({easing: "easeOutSine", duration: 100})
+      .add({
+        targets: el,
+        scaleY: [0, 1],
+        opacity: [0, 1]
+      })
+      .add(
+        {
+          targets: el.querySelectorAll("span"),
+          opacity: [0, 1],
+          delay: anime.stagger(50)
+        },
+        50
+      )
+  }
+
+  return (
+    <Animate show={show} enter={enter}>
+      <button className="input-action" onClick={onClick}>
+        <span>R</span>
+        <span>u</span>
+        <span>n</span>
+      </button>
+    </Animate>
   )
 }

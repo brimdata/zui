@@ -14,10 +14,8 @@ import {
   removeAllSearchBarPins,
   removeSearchBarPin,
   restoreSearchBar,
-  setOuterTimeWindow,
   submittingSearchBar
 } from "../actions"
-import {getOuterTimeWindow} from "./timeWindow"
 import {
   getSearchProgram,
   getSearchBar,
@@ -31,6 +29,7 @@ import {goBack, goForward, submitSearchBar} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
 import Field from "../../models/Field"
 import initTestStore from "../../test/initTestStore"
+import search from "../search"
 
 let store
 beforeEach(() => {
@@ -304,28 +303,28 @@ test("restore", () => {
 test("goBack", () => {
   const state = store.dispatchAll([
     changeSearchBarInput("hello"),
-    setOuterTimeWindow([new Date(1), new Date(2)]),
+    search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearchBar(),
     changeSearchBarInput("goodbye"),
-    setOuterTimeWindow([new Date(3), new Date(4)]),
+    search.setSpanArgsFromDates([new Date(3), new Date(4)]),
     submitSearchBar(),
     goBack()
   ])
 
-  expect(getOuterTimeWindow(state)).toEqual([new Date(1), new Date(2)])
+  expect(search.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
   expect(getSearchBarInputValue(state)).toBe("hello")
 })
 
 test("goForward", () => {
   const state = store.dispatchAll([
     changeSearchBarInput("hello"),
-    setOuterTimeWindow([new Date(1), new Date(2)]),
+    search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearchBar(),
     changeSearchBarInput("goodbye"),
-    setOuterTimeWindow([new Date(3), new Date(4)]),
+    search.setSpanArgsFromDates([new Date(3), new Date(4)]),
     submitSearchBar(),
     changeSearchBarInput("hello again"),
-    setOuterTimeWindow([new Date(5), new Date(6)]),
+    search.setSpanArgsFromDates([new Date(5), new Date(6)]),
     submitSearchBar(),
     goBack(),
     goBack(),
@@ -336,7 +335,7 @@ test("goForward", () => {
   ])
 
   expect(getSearchBarInputValue(state)).toBe("goodbye")
-  expect(getOuterTimeWindow(state)).toEqual([new Date(3), new Date(4)])
+  expect(search.getSpanAsDates(state)).toEqual([new Date(3), new Date(4)])
 })
 
 test("clearSearchBar", () => {

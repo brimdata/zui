@@ -84,15 +84,16 @@
   }
 
   .y-axis-single-tick {
+    // transform: translateX(12px);
     .tick,
     .domain {
-      display: none;
+      // display: none;
     }
     .tick:last-child {
-      display: block;
+      // display: block;
     }
-    .tick-bg {
-      fill: $white-3;
+    .tick line {
+      display: none;
     }
   }
 }

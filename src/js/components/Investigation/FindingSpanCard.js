@@ -2,36 +2,45 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
-import type {DateTuple} from "../../lib/TimeWindow"
-import {fetchMainSearch} from "../../viewer/fetchMainSearch"
-import {format} from "../../lib/Time"
-import {setOuterTimeWindow} from "../../state/actions"
-import SpanDuration from "../SpanDuration"
+import type {SpanArgs, TimeArg} from "../../state/search/types"
+import {isString} from "../../lib/is"
+import {submitSearchBar} from "../../state/thunks/searchBar"
+import SpanDuration from "../Span/SpanDuration"
+import brim from "../../brim"
+import search from "../../state/search"
 
-export default function FindingSpanCard({span}: {span: DateTuple}) {
+export default function FindingSpanCard({spanArgs}: {spanArgs: SpanArgs}) {
   let dispatch = useDispatch()
 
   function onClick() {
-    dispatch(setOuterTimeWindow(span))
-    dispatch(fetchMainSearch({saveToHistory: false}))
+    dispatch(search.setSpanArgs(spanArgs))
+    dispatch(submitSearchBar(false))
   }
 
   return (
     <div className="finding-card-wrapper">
       <div className="finding-span-card" onClick={onClick}>
-        <DatePill date={span[0]} />
-        <SpanDuration span={span} />
-        <DatePill date={span[1]} />
+        <DatePill date={spanArgs[0]} />
+        <SpanDuration spanArgs={spanArgs} />
+        <DatePill date={spanArgs[1]} />
       </div>
     </div>
   )
 }
 
-function DatePill({date}: {date: Date}) {
-  return (
-    <div className="thin-button date-pill">
-      <span className="day">{format(date, "MMM DD, YYYY")}</span>
-      <span className="time">{format(date, "HH:mm:ss")}</span>
-    </div>
-  )
+function DatePill({date}: {date: TimeArg}) {
+  if (isString(date)) {
+    return (
+      <div className="thin-button date-pill">
+        <span className="day">{date}</span>
+      </div>
+    )
+  } else {
+    return (
+      <div className="thin-button date-pill">
+        <span className="day">{brim.time(date).format("MMM DD, YYYY")}</span>
+        <span className="time">{brim.time(date).format("HH:mm:ss")}</span>
+      </div>
+    )
+  }
 }

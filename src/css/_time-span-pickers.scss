@@ -1,0 +1,115 @@
+.time-span-pickers {
+  -webkit-app-region: no-drag;
+  z-index: 1;
+  position: relative;
+  display: flex;
+
+  .time-span-menu {
+    margin-left: 3px;
+    svg {
+      margin: 0;
+    }
+  }
+}
+
+.time-picker-button-input {
+  position: relative;
+  display: flex;
+  input {
+    margin: 0;
+    width: 164px;
+    height: 16px;
+    border-radius: 3px;
+    border: none;
+    font-family: $data-font;
+    padding-left: 8px;
+    line-height: 16px;
+  }
+}
+
+.time-picker-button {
+  position: relative;
+
+  .menu-bar-button {
+    position: relative;
+    min-width: 60px;
+  }
+
+  .hover-zone {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  & > .hover-zone {
+    z-index: -1;
+  }
+
+  &.hovering .hover-zone {
+    top: -20px;
+    bottom: -20px;
+  }
+
+  .changed-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: $blue;
+    top: calc(50% - 4px);
+    left: -4px;
+    border-radius: 50%;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: all 150ms;
+  }
+}
+
+.time-piece {
+  padding: 0 3px;
+  position: relative;
+
+  &[data-unit="hour"],
+  &[data-unit="minute"],
+  &[data-unit="second"] {
+    font-weight: normal;
+    padding-right: 0;
+  }
+
+  .hover-zone {
+    z-index: -1;
+  }
+}
+
+.steppers {
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: all 25ms;
+}
+
+.stepper {
+  width: 20px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  transition: background-color 100ms;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  &.step-up {
+    border-radius: 4px 4px 0 0;
+  }
+  &.step-down {
+    border-radius: 0 0 4px 4px;
+  }
+}

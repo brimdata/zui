@@ -237,8 +237,15 @@ export const openDebugQuery = async (app: Application) => {
   )
 }
 
-export const setDebugQuery = (app: Application, searchText: string) =>
-  app.client.setValue(selectors.debugSearch.search, searchText)
+export const setDebugQuery = (app: Application, searchText: string) => {
+  return (
+    app.client
+      // A very weird limitation. A keypress listener in the app prevents these
+      // setValue calls from first clearing the input.
+      .setValue(selectors.debugSearch.search, " ")
+      .setValue(selectors.debugSearch.search, searchText)
+  )
+}
 
 export const getDebugAst = (app: Application) =>
   app.client

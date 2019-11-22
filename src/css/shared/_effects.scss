@@ -18,3 +18,15 @@
     background-color: $color;
   }
 }
+
+@mixin error-bg {
+  background: linear-gradient(
+    to top,
+    lighten($yellow, 10%),
+    $yellow 2%,
+    $yellow-dark 98%,
+    lighten($yellow, 10%)
+  );
+  box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+}

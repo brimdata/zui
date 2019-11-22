@@ -20,7 +20,5 @@ export default (props: $Shape<Space> = {}): Space => ({
   },
   size: 4580591172,
   packet_support: true,
-  minTime: "2015-03-05 14:15:00.000",
-  maxTime: "2015-04-13 09:36:33.750",
   ...props
 })

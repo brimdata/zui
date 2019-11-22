@@ -3,15 +3,15 @@
 import type {State} from "../types"
 import {getCurrentCluster} from "../clusters/selectors"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import {getTimeWindow} from "../reducers/timeWindow"
 import {getUseBoomCache, getUseBoomIndex} from "../reducers/boomd"
+import search from "../search"
 
 export const getBoomOptions = (state: State) => {
   let credentials = getCurrentCluster(state)
 
   let opts = {
     searchSpace: getCurrentSpaceName(state),
-    searchSpan: getTimeWindow(state),
+    searchSpan: search.getSpanAsDates(state),
     adapter: "BrowserFetch",
     enableIndex: getUseBoomIndex(state),
     enableCache: getUseBoomCache(state)

@@ -4,12 +4,12 @@ import pick from "lodash/pick"
 import throttle from "lodash/throttle"
 
 import type {State} from "../state/types"
-import {deserialize, serialize} from "../serialization/serialization"
 
-const KEY = "LOOKY_STATE.1"
+export const VERSION = "1"
+const KEY = "BRIM_STATE"
 const PERSIST = [
+  "search",
   "searchBar",
-  "timeWindow",
   "boomd",
   "currentSpaceName",
   "view",
@@ -17,12 +17,13 @@ const PERSIST = [
   "tableColumnSets",
   "spaces",
   "investigation",
-  "clusters"
+  "clusters",
+  "version"
 ]
 
 export const saveState = (state: State) => {
-  const toSave = pick(state, ...PERSIST) || {}
-  const json = serialize(toSave)
+  const json = pick(state, ...PERSIST) || {}
+
   try {
     const serializedState = JSON.stringify(json)
     localStorage.setItem(KEY, serializedState)
@@ -39,7 +40,14 @@ export const getState = () => {
       serializedState.startsWith("{")
     ) {
       const json = JSON.parse(serializedState)
-      return deserialize(json)
+      if (json.version !== VERSION) {
+        console.log(
+          `New state version ${VERSION}. Dropping version ${json.version}`
+        )
+        return undefined
+      } else {
+        return json
+      }
     } else {
       return undefined
     }

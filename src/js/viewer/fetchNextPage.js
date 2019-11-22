@@ -3,20 +3,20 @@ import {isEmpty} from "lodash"
 
 import {PER_PAGE} from "./config"
 import type {Thunk} from "../state/types"
-import {add} from "../lib/Time"
 import {addHeadProc} from "../lib/Program"
 import {getSearchProgram} from "../state/selectors/searchBar"
-import {getTimeWindow} from "../state/reducers/timeWindow"
 import {getViewerLogs} from "../state/viewer/selector"
 import {indexOfLastChange} from "../lib/Array"
 import {issueSearch} from "../searches/issueSearch"
 import {spliceViewer} from "../state/viewer/actions"
+import brim from "../brim"
+import search from "../state/search"
 import viewerHandler from "./viewerHandler"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   const state = getState()
   const logs = getViewerLogs(state)
-  let searchSpan = getTimeWindow(state)
+  let searchSpan = search.getSpanAsDates(state)
   let spliceIndex = 0
 
   if (!isEmpty(logs)) {
@@ -24,7 +24,10 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
 
     if (index >= 0) {
       const prevTs = logs[index].getField("ts").toDate()
-      searchSpan[1] = add(prevTs, 1, "ms")
+      searchSpan[1] = brim
+        .time(prevTs)
+        .add(1, "ms")
+        .toDate()
       spliceIndex = index + 1
     }
   }

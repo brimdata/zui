@@ -6,10 +6,11 @@ import type {SearchResults} from "../searches/types"
 import type {State} from "../types"
 import {last} from "../../lib/Array"
 import Log from "../../models/Log"
+import brim, {type Ts} from "../../brim"
 
 export type Investigation = Finding[]
 export type Finding = {
-  ts: Date,
+  ts: Ts,
   search: SearchRecord,
   resultCount?: number,
   note?: string,
@@ -51,7 +52,11 @@ function updateLatest(state: Investigation, updates: $Shape<Finding>) {
   }
 }
 
-function createFinding(state, search: SearchRecord, ts = new Date()) {
+function createFinding(
+  state,
+  search: SearchRecord,
+  ts: Ts = brim.time().toTs()
+) {
   if (sameRecord(last(state), {ts, search})) {
     return state
   } else {

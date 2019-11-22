@@ -2,24 +2,21 @@
 
 import type {SearchRecord} from "../../types"
 import type {Thunk} from "../types"
-import {
-  restoreSearchBar,
-  setInnerTimeWindow,
-  setOuterTimeWindow
-} from "../actions"
+import {restoreSearchBar} from "../actions"
+import search from "../search"
 
-export function restoreSearch(search: SearchRecord): Thunk {
+export function restoreSearch(record: SearchRecord): Thunk {
   return function(dispatch) {
     dispatch(
       restoreSearchBar({
-        current: search.program,
+        current: record.program,
         previous: "",
-        pinned: search.pins,
+        pinned: record.pins,
         editing: null,
         error: null
       })
     )
-    dispatch(setOuterTimeWindow(search.span))
-    dispatch(setInnerTimeWindow(null))
+    dispatch(search.setSpanArgs(record.spanArgs))
+    dispatch(search.setSpanFocus(null))
   }
 }

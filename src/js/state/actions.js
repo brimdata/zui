@@ -1,11 +1,10 @@
 /* @flow */
-import type {DateTuple} from "../lib/TimeWindow"
 import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
 import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
 import type {Space} from "../lib/Space"
-import type {TimeWindow} from "./reducers/timeWindow"
+import type {Ts} from "../brim"
 import {isArray} from "../lib/is"
 
 export const useBoomCache = (value: boolean) => ({
@@ -28,7 +27,7 @@ export const updateFinding = (finding: $Shape<Finding>) => ({
   finding
 })
 
-export const deleteFindingByTs = (ts: Date[] | Date) => ({
+export const deleteFindingByTs = (ts: Ts[] | Ts) => ({
   type: "FINDING_DELETE",
   ts: isArray(ts) ? ts : [ts]
 })
@@ -190,35 +189,6 @@ export const unstarLog = (tuple: Tuple) => ({
 
 export const clearStarredLogs = () => ({
   type: "STARRED_LOGS_CLEAR"
-})
-
-export const setOuterTimeWindow = (timeWindow: DateTuple) => ({
-  type: "OUTER_TIME_WINDOW_SET",
-  timeWindow
-})
-
-export const setInnerTimeWindow = (timeWindow: ?DateTuple) => ({
-  type: "INNER_TIME_WINDOW_SET",
-  timeWindow
-})
-
-export const setOuterFromTime = (date: Date) => ({
-  type: "OUTER_FROM_TIME_SET",
-  date
-})
-
-export const setOuterToTime = (date: Date) => ({
-  type: "OUTER_TO_TIME_SET",
-  date
-})
-
-export const clearTimeWindows = () => ({
-  type: "TIME_WINDOWS_CLEAR"
-})
-
-export const restoreTimeWindow = (value: TimeWindow) => ({
-  type: "TIME_WINDOW_RESTORE",
-  value
 })
 
 export const showRightSidebar = () => ({

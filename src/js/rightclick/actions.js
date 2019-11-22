@@ -1,7 +1,6 @@
 /* @flow */
 
 import type {Dispatch} from "../state/types"
-import {add} from "../lib/Time"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -11,8 +10,6 @@ import {
 import {
   changeSearchBarInput,
   clearSearchBar,
-  setOuterFromTime,
-  setOuterToTime,
   showRightSidebar
 } from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
@@ -24,6 +21,7 @@ import Log from "../models/Log"
 import brim from "../brim"
 import external from "../external"
 import modal from "../modal"
+import search from "../state/search"
 
 export type RightClickAction = {
   type?: string,
@@ -121,7 +119,7 @@ const fromTime = (field: Field, opts: Options) => ({
   label: 'Use as "start" time',
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
-      dispatch(setOuterFromTime(field.toDate()))
+      dispatch(search.setFrom(brim.time(field.toDate()).toTs()))
       dispatch(submitSearchBar())
     }
   },
@@ -132,7 +130,14 @@ const toTime = (field: Field, opts: Options) => ({
   label: 'Use as "end" time',
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
-      dispatch(setOuterToTime(add(field.toDate(), 1, "ms")))
+      dispatch(
+        search.setTo(
+          brim
+            .time(field.toDate())
+            .add(1, "ms")
+            .toTs()
+        )
+      )
       dispatch(submitSearchBar())
     }
   },

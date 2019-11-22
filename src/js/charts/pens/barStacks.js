@@ -3,9 +3,9 @@
 import * as d3 from "d3"
 
 import type {Pen} from "../types"
-import {add} from "../../lib/Time"
 import {d3ElementAttr, itestLocator} from "../../test/integration"
 import {innerHeight} from "../dimens"
+import brim from "../../brim"
 
 export default function(): Pen {
   let chartG
@@ -54,7 +54,12 @@ export default function(): Pen {
       const ts = chart.data.points[0].ts
       const {number, unit} = chart.data.interval
       const a = chart.xScale(ts)
-      const b = chart.xScale(add(ts, number, unit))
+      const b = chart.xScale(
+        brim
+          .time(ts)
+          .add(number, unit)
+          .toDate()
+      )
       width = Math.max(Math.floor(b - a), 1)
     }
 

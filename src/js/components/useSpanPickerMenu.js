@@ -3,20 +3,30 @@
 import {useDispatch, useSelector} from "react-redux"
 
 import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
-import {add} from "../lib/Time"
-import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
-import {setOuterTimeWindow} from "../state/actions"
+import {getCurrentSpace} from "../state/reducers/spaces"
 import {submitSearchBar} from "../state/thunks/searchBar"
+import brim from "../brim"
+import search from "../state/search"
 
 export default function useSpanPickerMenu() {
   let dispatch = useDispatch()
-  let [from, to] = useSelector(getCurrentSpaceTimeWindow)
-  let spaceSpan = [from, add(to, 1, "ms")]
+  let space = useSelector(getCurrentSpace)
 
   function setSpan(span: DateTuple) {
-    dispatch(setOuterTimeWindow(span))
+    dispatch(search.setSpanArgsFromDates(span))
     dispatch(submitSearchBar())
   }
+
+  if (!space) return []
+  let {min_time, max_time} = space
+
+  let from = brim.time(min_time).toDate()
+  let to = brim
+    .time(max_time)
+    .add(1, "ms")
+    .toDate()
+
+  let spaceSpan = [from, to]
 
   return [
     {click: () => setSpan(spaceSpan), label: "Whole Space"},
@@ -27,42 +37,3 @@ export default function useSpanPickerMenu() {
     {click: () => setSpan(spanOfLast(90, "days")), label: "Last 90 days"}
   ]
 }
-
-//
-// export default class SpanPickerMenu extends React.Component<Props> {
-//   setSpan(span: DateTuple) {
-//     this.props.dispatch(setOuterTimeWindow(span))
-//     this.props.dispatch(submitSearchBar())
-//   }
-//
-//   render() {
-//     return (
-//       <MenuList {...reactElementProps("span_menu")}>
-//         <li onClick={() => this.setSpan(this.props.spaceSpan)}>Whole Space</li>
-//         <li onClick={() => this.setSpan(spanOfLast(30, "minutes"))}>
-//           Last 30 minutes
-//         </li>
-//         <li onClick={() => this.setSpan(spanOfLast(24, "hours"))}>
-//           Last 24 hours
-//         </li>
-//         <li onClick={() => this.setSpan(spanOfLast(7, "days"))}>Last 7 days</li>
-//         <li onClick={() => this.setSpan(spanOfLast(30, "days"))}>
-//           Last 30 days
-//         </li>
-//         <li onClick={() => this.setSpan(spanOfLast(90, "days"))}>
-//           Last 90 days
-//         </li>
-//       </MenuList>
-//     )
-//   }
-// }
-//
-// export const XSpanPickerMenu = connect<Props, {||}, _, _, _, _>(
-//   (state) => {
-//     const [from, to] = getCurrentSpaceTimeWindow(state)
-//     return {
-//       spaceSpan: [from, add(to, 1, "ms")]
-//     }
-//   },
-//   dispatchToProps
-// )(SpanPickerMenu)

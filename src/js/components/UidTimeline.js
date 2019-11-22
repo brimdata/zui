@@ -8,11 +8,11 @@ import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/types"
 import {UID_CORRELATION_LIMIT} from "../detail/correlations"
-import {add, format} from "../lib/Time"
 import {changeSearchBarInput, clearSearchBar} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"
 import Log from "../models/Log"
+import brim from "../brim"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {|
@@ -62,7 +62,11 @@ function createScale(logs) {
   }
 
   let [start, end] = d3.extent(tss)
-  if (start === end) end = add(start, 1, "ms")
+  if (start === end)
+    end = brim
+      .time(start)
+      .add(1, "ms")
+      .toDate()
 
   return d3
     .scaleTime()
@@ -75,7 +79,7 @@ function PathRow({log, current, position, ...rest}) {
   let path = log.get("_path")
   return (
     <div className="waterfall-row" {...rest}>
-      <div className="data-label">{format(ts, "HH:mm:ss.SSS")}</div>
+      <div className="data-label">{brim.time(ts).format("HH:mm:ss.SSS")}</div>
       <div className="slider">
         <div className="line" />
         <span

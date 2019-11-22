@@ -3,16 +3,17 @@
 import {
   changeSearchBarInput,
   setCurrentSpaceName,
-  setInnerTimeWindow,
   setSpaceInfo
 } from "../state/actions"
 import {initTimeWindow} from "../state/thunks/timeWindow"
+import {setInnerTimeWindow} from "../state/search/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import MockBoomClient from "../test/MockBoomClient"
+import brim from "../brim"
 import initTestStore from "../test/initTestStore"
+import search from "../state/search"
 
 let store, boom
-
 beforeEach(() => {
   boom = new MockBoomClient({host: "localhost", port: 123})
   store = initTestStore(boom)
@@ -89,7 +90,7 @@ test("fetching an zoom search", () => {
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
-    setInnerTimeWindow([new Date(0), new Date(1)]),
+    search.setSpanFocus(brim.time.convertToSpan([new Date(0), new Date(1)])),
     changeSearchBarInput("_path=conn | count()")
   ])
 

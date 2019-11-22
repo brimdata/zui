@@ -6,6 +6,7 @@ import {Stats} from "../Typography"
 import {humanDuration} from "../../lib/TimeWindow"
 import {isNumber} from "../../lib/is"
 import {withCommas} from "../../lib/fmt"
+import brim from "../../brim"
 
 type Props = {finding: Finding}
 
@@ -18,7 +19,9 @@ export default function FindingFooter({finding}: Props) {
         <Stats>...</Stats>
       )}
       <Stats>•</Stats>
-      <Stats>{humanDuration([finding.ts, new Date()])} ago</Stats>
+      <Stats>
+        {humanDuration([brim.time(finding.ts).toDate(), new Date()])} ago
+      </Stats>
     </div>
   )
 }

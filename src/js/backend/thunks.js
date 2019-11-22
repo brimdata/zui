@@ -4,9 +4,10 @@ import type {Span} from "../BoomClient/types"
 import type {Thunk} from "../state/types"
 import {createError} from "../state/errors"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {getTimeWindow} from "../state/reducers/timeWindow"
 import {setBackendError} from "./"
 import ErrorFactory from "../models/ErrorFactory"
+import brim from "../brim"
+import search from "../state/search"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, g, boom) => {
@@ -43,7 +44,8 @@ export function testConnection(cluster: Cluster): Thunk {
 
 export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
-    let searchSpan = getTimeWindow(getState())
+    let [from, to] = search.getSpan(getState())
+    let searchSpan = [brim.time(from).toDate(), brim.time(to).toDate()]
     let searchSpace = getCurrentSpaceName(getState())
     try {
       return boom.inspectSearch(zql, {searchSpan, searchSpace})

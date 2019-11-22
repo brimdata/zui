@@ -12,9 +12,9 @@ import type {LogDetails} from "./reducers/logDetails"
 import type {ModalState} from "../modal/types"
 import type {SearchBar} from "./reducers/searchBar"
 import type {SearchHistory} from "./reducers/searchHistory"
+import type {SearchState} from "./search/types"
 import type {SearchesState} from "./searches/types"
 import type {Spaces} from "./reducers/spaces"
-import type {TimeWindow} from "./reducers/timeWindow"
 import type {View} from "./reducers/view"
 import type {ViewerState} from "./viewer/types"
 import BoomClient from "../BoomClient"
@@ -34,12 +34,12 @@ export type State = {
   viewer: ViewerState,
   searches: SearchesState,
   searchBar: SearchBar,
-  timeWindow: TimeWindow,
   spaces: Spaces,
   boomd: Boomd,
   searchHistory: SearchHistory,
   logDetails: LogDetails,
   view: View,
   investigation: Investigation,
-  modal: ModalState
+  modal: ModalState,
+  search: SearchState
 }

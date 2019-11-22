@@ -19,6 +19,7 @@ $pop-menu-padding: $space-s;
   position: relative;
   border-radius: 5px;
   display: inline-block;
+  pointer-events: all;
 
   ul {
     padding: 8px 0;
@@ -33,7 +34,6 @@ $pop-menu-padding: $space-s;
     list-style-type: none;
     display: block;
     white-space: nowrap;
-    cursor: pointer;
     margin: 0;
     user-select: none;
 

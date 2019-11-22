@@ -1,19 +1,55 @@
 .span-duration {
   display: flex;
   align-items: center;
+  justify-content: center;
   font-family: $data-font;
   user-select: none;
+  width: 55px;
 
   span {
     font-size: 10px;
     padding: 0 3px;
     white-space: nowrap;
+    line-height: 13px;
   }
 
   hr {
     margin: 0;
-    width: 10px;
+    flex: 1;
     border: none;
     border-top: 1px solid #dcdcdc;
+  }
+
+  &.error {
+    span {
+      @include error-bg;
+      padding: 0 8px;
+      animation: nope-shake 200ms;
+      animation-delay: 50ms;
+      animation-iteration-count: 2;
+      animation-timing-function: linear;
+    }
+    hr {
+      opacity: 0;
+    }
+  }
+}
+
+$shake: 3px;
+@keyframes nope-shake {
+  from {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX($shake);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-$shake);
+  }
+  to {
+    transform: translateX(0);
   }
 }

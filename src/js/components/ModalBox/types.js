@@ -13,7 +13,5 @@ export type ModalBoxProps = {
 
 export type ModalContentsProps = {
   ...ModalBoxProps,
-  willUnmount: boolean,
-  duration: number,
   rest?: *
 }

@@ -10,8 +10,8 @@ import {getUseBoomCache, getUseBoomIndex} from "../state/reducers/boomd"
 import {setTimeZone} from "../state/actions"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
-import * as Time from "../lib/Time"
 import Toggle from "./Toggle"
+import brim from "../brim"
 
 export default function SettingsModal() {
   let dispatch = useDispatch()
@@ -29,7 +29,7 @@ export default function SettingsModal() {
               onChange={(e) => dispatch(setTimeZone(e.target.value))}
               value={timeZone}
             >
-              {Time.zones().map((name) => (
+              {brim.time.getZoneNames().map((name) => (
                 <option key={name} value={name}>
                   {name}
                 </option>

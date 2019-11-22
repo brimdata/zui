@@ -8,14 +8,13 @@ import {killAllSearches} from "../searches/cancelSearch"
 import {setBackendError} from "../backend"
 import {
   setCurrentSpaceName,
-  setOuterTimeWindow,
   setSpaceInfo,
   setSpaceNames
 } from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
-import {subtract} from "../lib/Time"
 import brim from "../brim"
 import modal from "../modal"
+import search from "../state/search"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {
@@ -36,7 +35,16 @@ export function initSpace(space: string): Thunk {
             dispatch(modal.show("nodata"))
           } else {
             const [_, max] = getCurrentSpaceTimeWindow(getState())
-            dispatch(setOuterTimeWindow([subtract(max, 30, "minutes"), max]))
+            console.log()
+            dispatch(
+              search.setSpanArgs([
+                brim
+                  .time(max)
+                  .subtract(30, "minutes")
+                  .toTs(),
+                max
+              ])
+            )
             dispatch(submitSearchBar())
           }
         })

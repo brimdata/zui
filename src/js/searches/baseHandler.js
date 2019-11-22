@@ -10,9 +10,9 @@ import {
   setSearchStats,
   setSearchStatus
 } from "../state/searches/actions"
-import {boomTime} from "../lib/Time"
 import {setBackendError} from "../backend"
 import ErrorFactory from "../models/ErrorFactory"
+import brim from "../brim"
 
 export default function(
   dispatch: Dispatch,
@@ -42,9 +42,9 @@ export default function(
       case "SearchStats":
         dispatch(
           setSearchStats(name, {
-            currentTs: boomTime(payload.current_ts),
-            startTime: boomTime(payload.start_time),
-            updateTime: boomTime(payload.update_time),
+            currentTs: brim.time(payload.current_ts).toFracSec(),
+            startTime: brim.time(payload.start_time).toFracSec(),
+            updateTime: brim.time(payload.update_time).toFracSec(),
             bytesMatched: payload.bytes_matched,
             bytesRead: payload.bytes_read,
             tuplesMatched: payload.records_matched,

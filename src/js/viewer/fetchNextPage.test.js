@@ -1,10 +1,11 @@
 /* @flow */
 import {appendViewerLogs, spliceViewer} from "../state/viewer/actions"
 import {fetchNextPage} from "./fetchNextPage"
-import {setCurrentSpaceName, setOuterTimeWindow} from "../state/actions"
+import {setCurrentSpaceName} from "../state/actions"
 import Log from "../models/Log"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
+import search from "../state/search"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
@@ -15,7 +16,8 @@ beforeEach(() => {
   store = initTestStore(boom)
   store.dispatchAll([
     setCurrentSpaceName("default"),
-    setOuterTimeWindow([new Date(0), new Date(10 * 1000)]),
+    search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
+    search.computeSpan(),
     appendViewerLogs(tuples.map((t) => new Log(t, descriptor)))
   ])
   store.clearActions()

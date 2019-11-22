@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {Descriptors, Tuples} from "../types"
-import type {EpochObj} from "../lib/Time"
+import type {EpochObj} from "../lib"
 
 export type ClientOptions = $Shape<RequiredClientOptions>
 

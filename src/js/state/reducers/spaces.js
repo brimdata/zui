@@ -3,7 +3,6 @@
 import {createSelector} from "reselect"
 
 import type {State} from "../types"
-import {fromStore, parseFromBoom, toStore} from "../../lib/Time"
 import createReducer from "./createReducer"
 
 const initialState = {
@@ -30,7 +29,7 @@ export default createReducer(initialState, {
     ...state,
     details: {
       ...state.details,
-      ...normalize(spaceInfo)
+      [spaceInfo.name]: spaceInfo
     }
   }),
   SPACE_NAMES_SET: (state, {names}) => ({
@@ -43,20 +42,6 @@ export default createReducer(initialState, {
   })
 })
 
-const normalize = (space) => ({
-  [space.name]: {
-    ...space,
-    minTime: toStore(parseFromBoom(space.min_time)),
-    maxTime: toStore(parseFromBoom(space.max_time))
-  }
-})
-
-const parse = (space) => ({
-  ...space,
-  minTime: fromStore(space.minTime),
-  maxTime: fromStore(space.maxTime)
-})
-
 export const getAllSpaceNames = (state: State): string[] => {
   return state.spaces.names
 }
@@ -65,21 +50,9 @@ export const getCurrentSpaceName = (state: State) => {
   return state.spaces.current
 }
 
-export const getRawSpaces = (state: State) => {
+export const getSpaces = (state: State) => {
   return state.spaces.details
 }
-export const getSpaces = createSelector<State, void, *, *>(
-  getRawSpaces,
-  (rawSpaces) => {
-    return Object.keys(rawSpaces).reduce(
-      (spaces, name) => ({
-        ...spaces,
-        [name]: parse(spaces[name])
-      }),
-      rawSpaces
-    )
-  }
-)
 
 export const getCurrentSpace = createSelector<State, void, *, *, *>(
   getSpaces,
@@ -89,5 +62,10 @@ export const getCurrentSpace = createSelector<State, void, *, *, *>(
 
 export const getCurrentSpaceTimeWindow = createSelector<State, void, *, *>(
   getCurrentSpace,
-  (space) => [space.minTime, space.maxTime]
+  (space) => {
+    return [
+      {sec: space.min_time.sec, ns: 0},
+      {sec: space.max_time.sec + 1, ns: 0}
+    ]
+  }
 )

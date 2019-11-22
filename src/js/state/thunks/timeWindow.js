@@ -1,12 +1,12 @@
 /* @flow */
 
 import {getCurrentSpaceTimeWindow} from "../reducers/spaces"
-import {setOuterTimeWindow} from "../actions"
+import search from "../search"
 
 export const initTimeWindow = () => (
   dispatch: Function,
   getState: Function
 ) => {
-  const timeWindow = getCurrentSpaceTimeWindow(getState())
-  dispatch(setOuterTimeWindow(timeWindow))
+  const span = getCurrentSpaceTimeWindow(getState())
+  dispatch(search.setSpanArgs(span))
 }
