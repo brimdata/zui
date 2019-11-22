@@ -21,7 +21,8 @@ for (let [string, expectedAst] of Object.entries(validResults)) {
 }
 
 test("case insensitivity", () => {
-  ["now", "NOW", "NoW", "   Now", "now   ", " now "].forEach((string) => {
+  let a = ["now", "NOW", "NoW", "   Now", "now   ", " now "]
+  a.forEach((string) => {
     let ast = brim.relTime(string).toAst()
 
     expect(ast).toEqual({
