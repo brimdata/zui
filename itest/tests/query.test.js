@@ -3,8 +3,6 @@
 import {basename} from "path"
 
 import {
-  getSearchSpeed,
-  getSearchTime,
   logIn,
   newAppInstance,
   resetState,
@@ -40,16 +38,6 @@ describe("Query tests", () => {
       .then(() => searchDisplay(app))
       .then((results) => {
         expect(results).toMatchSnapshot()
-      })
-      .then(() => getSearchSpeed(app))
-      .then((searchSpeed) => {
-        expect(searchSpeed).toBeGreaterThan(0)
-        expect(searchSpeed).toBeLessThan(1000)
-      })
-      .then(() => getSearchTime(app))
-      .then((searchTime) => {
-        expect(searchTime).toBeGreaterThan(0)
-        expect(searchTime).toBeLessThan(5)
         done()
       })
       .catch((err) => {
@@ -65,16 +53,6 @@ describe("Query tests", () => {
       .then(() => searchDisplay(app))
       .then((results) => {
         expect(results).toMatchSnapshot()
-      })
-      .then(() => getSearchSpeed(app))
-      .then((searchSpeed) => {
-        expect(searchSpeed).toBeGreaterThan(0)
-        expect(searchSpeed).toBeLessThan(1000)
-      })
-      .then(() => getSearchTime(app))
-      .then((searchTime) => {
-        expect(searchTime).toBeGreaterThan(0)
-        expect(searchTime).toBeLessThan(5)
         done()
       })
       .catch((err) => {
@@ -90,16 +68,6 @@ describe("Query tests", () => {
       .then(() => searchDisplay(app))
       .then((results) => {
         expect(results).toMatchSnapshot()
-      })
-      .then(() => getSearchSpeed(app))
-      .then((searchSpeed) => {
-        expect(searchSpeed).toBeGreaterThan(0)
-        expect(searchSpeed).toBeLessThan(1000)
-      })
-      .then(() => getSearchTime(app))
-      .then((searchTime) => {
-        expect(searchTime).toBeGreaterThan(0)
-        expect(searchTime).toBeLessThan(5)
         done()
       })
       .catch((err) => {
@@ -115,16 +83,6 @@ describe("Query tests", () => {
       .then(() => searchDisplay(app))
       .then((results) => {
         expect(results).toMatchSnapshot()
-      })
-      .then(() => getSearchSpeed(app))
-      .then((searchSpeed) => {
-        expect(searchSpeed).toBeGreaterThan(0)
-        expect(searchSpeed).toBeLessThan(1000)
-      })
-      .then(() => getSearchTime(app))
-      .then((searchTime) => {
-        expect(searchTime).toBeGreaterThan(0)
-        expect(searchTime).toBeLessThan(5)
         done()
       })
       .catch((err) => {
@@ -146,16 +104,6 @@ describe("Query tests", () => {
       .then(() => searchDisplay(app))
       .then((results) => {
         expect(results).toMatchSnapshot()
-      })
-      .then(() => getSearchSpeed(app))
-      .then((searchSpeed) => {
-        expect(searchSpeed).toBeGreaterThan(0)
-        expect(searchSpeed).toBeLessThan(1000)
-      })
-      .then(() => getSearchTime(app))
-      .then((searchTime) => {
-        expect(searchTime).toBeGreaterThan(0)
-        expect(searchTime).toBeLessThan(5)
         done()
       })
       .catch((err) => {
