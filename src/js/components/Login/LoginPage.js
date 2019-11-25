@@ -7,6 +7,7 @@ import Brand from "./Brand"
 import EmptyCheck from "../EmptyCheck"
 import Form from "../form/Form"
 import LoginWelcome from "./LoginWelcome"
+import Notice from "../Notice"
 import SavedClusters from "./SavedClusters"
 import useLoginController from "./useLoginController"
 
@@ -60,11 +61,10 @@ export default function LoginPage() {
             />
             <InputSubmit value="Connect" />
           </Form>
-          {login.error && (
-            <p className="status">
-              {login.error.message()} <a onClick={login.clearError}>Dismiss</a>{" "}
-            </p>
-          )}
+          <Notice show={login.error}>
+            <span>{login.error && login.error.message()} </span>
+            <a onClick={login.clearError}>Dismiss</a>{" "}
+          </Notice>
         </div>
       </main>
     </div>

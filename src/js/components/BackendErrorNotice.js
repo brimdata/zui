@@ -12,31 +12,38 @@ import lib from "../lib"
 
 export default function BackendErrorNotice() {
   let error = useSelector(getBackendError)
-  let dispatch = useDispatch()
-  let space = useSelector(getCurrentSpaceName)
-
-  if (!error) return null
+  let Message = getMessageComponent(error)
 
   return ReactDom.createPortal(
-    renderError(error, dispatch, space),
+    <Notice show={!!error}>
+      <Message error={error} />
+    </Notice>,
     lib.doc.id("notification-root")
   )
 }
 
-function renderError(error, dispatch, space) {
-  if (error instanceof NetworkError) {
-    return (
-      <Notice>
-        <b>{error.title()}:</b> {error.message()}{" "}
-        <a onClick={() => dispatch(initSpace(space))}>Retry</a>
-      </Notice>
-    )
-  }
+function getMessageComponent(error) {
+  if (error instanceof NetworkError) return Network
+  else return Default
+}
 
+function Network({error}) {
+  let dispatch = useDispatch()
+  let space = useSelector(getCurrentSpaceName)
   return (
-    <Notice>
+    <>
+      <b>{error.title()}:</b> {error.message()}{" "}
+      <a onClick={() => dispatch(initSpace(space))}>Retry</a>
+    </>
+  )
+}
+
+function Default({error}) {
+  let dispatch = useDispatch()
+  return (
+    <>
       <b>{error.title()}:</b> {error.message()}{" "}
       <a onClick={() => dispatch(setBackendError(null))}>Dismiss</a>
-    </Notice>
+    </>
   )
 }
