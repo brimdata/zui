@@ -6,6 +6,7 @@ import type {BackendState} from "../backend"
 import type {Boomd} from "./reducers/boomd"
 import type {ClustersState} from "./clusters/types"
 import type {ColumnsState} from "./columns/types"
+import type {ErrorState} from "./error"
 import type {ErrorsState} from "./errors"
 import type {Investigation} from "./reducers/investigation"
 import type {LogDetails} from "./reducers/logDetails"
@@ -41,5 +42,6 @@ export type State = {
   view: View,
   investigation: Investigation,
   modal: ModalState,
-  search: SearchState
+  search: SearchState,
+  error: ErrorState
 }
