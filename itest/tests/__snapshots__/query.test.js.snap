@@ -14,7 +14,7 @@ Array [
 ]
 `;
 
-exports[`Query tests query "_path=http | count() by id.resp_p | sort" 1`] = `
+exports[`Query tests query "_path=http | count() by id.resp_p | sort count" 1`] = `
 Array [
   "id.resp_p",
   "count",
@@ -47,7 +47,7 @@ Array [
 ]
 `;
 
-exports[`Query tests query "_path=weird | sort" 1`] = `
+exports[`Query tests query "_path=weird | sort ts" 1`] = `
 Array [
   "ts",
   "_path",

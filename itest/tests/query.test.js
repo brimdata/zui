@@ -32,9 +32,9 @@ describe("Query tests", () => {
     }
   })
 
-  stdTest('query "_path=weird | sort"', (done) => {
+  stdTest('query "_path=weird | sort ts"', (done) => {
     logIn(app)
-      .then(() => writeSearch(app, "_path=weird | sort"))
+      .then(() => writeSearch(app, "_path=weird | sort ts"))
       .then(() => startSearch(app))
       .then(() => waitForSearch(app))
       .then(() => searchDisplay(app))
@@ -82,9 +82,11 @@ describe("Query tests", () => {
       })
   })
 
-  stdTest('query "_path=http | count() by id.resp_p | sort"', (done) => {
+  stdTest('query "_path=http | count() by id.resp_p | sort count"', (done) => {
     logIn(app)
-      .then(() => writeSearch(app, "_path=http | count() by id.resp_p | sort"))
+      .then(() =>
+        writeSearch(app, "_path=http | count() by id.resp_p | sort count")
+      )
       .then(() => startSearch(app))
       .then(() => waitForSearch(app))
       .then(() => searchDisplay(app))
