@@ -4,11 +4,8 @@ import {basename} from "path"
 import {execSync} from "child_process"
 
 import {
-  killHistogramSearch,
-  killViewerSearch,
   killSearch,
   logIn,
-  openSearchInspector,
   newAppInstance,
   resetState,
   setSpace,
@@ -47,13 +44,6 @@ describe("Cancellation tests", () => {
 
   const isSearchRunning = () => getTasks().includes("POST")
 
-  const assertNumUnoptimizedSearchesRunning = (num) => {
-    let tasks = getTasks().toString()
-    expect((tasks.match(/POST/g) || []).length).toBe(num)
-    expect((tasks.match(/useindex=f/g) || []).length).toBe(num)
-    expect((tasks.match(/rewrite=f/g) || []).length).toBe(num)
-  }
-
   const setupFlow = async (app) => {
     await logIn(app)
     await setSpace(app, "hq_integration")
@@ -80,25 +70,6 @@ describe("Cancellation tests", () => {
     setupFlow(app)
       .then(async () => {
         await killSearch(app)
-        await blockUntilTrue(() => !isSearchRunning())
-        done()
-      })
-      .catch((err) => {
-        handleError(app, err, done)
-      })
-  })
-
-  stdTest("Kill Search Inspector works", (done) => {
-    setupFlow(app)
-      .then(async () => {
-        // It's quite difficult to get a search that is slow in HistogramSearch
-        // but not ViewerSearch, even with optimizations turned off. Craft the
-        // test to use the buttons together. Since we are verifying 2 searches
-        // run, this is fine.
-        assertNumUnoptimizedSearchesRunning(2)
-        await openSearchInspector(app)
-        await killHistogramSearch(app)
-        await killViewerSearch(app)
         await blockUntilTrue(() => !isSearchRunning())
         done()
       })
