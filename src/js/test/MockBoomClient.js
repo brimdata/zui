@@ -8,14 +8,17 @@ export default class MockBoomClient extends BoomClient {
     return mockRequest()
   }
 
-  send() {
+  send(args: *) {
     throw new Error(`
   Http Requests are disabled in tests.
   Use #stub(method, val) or #stub(method, val)
-  to mock the server response.`)
+  to mock the server response.
+
+  Args: ${JSON.stringify(args)}
+  `)
   }
 
-  stub(name: string, returnVal: *) {
+  stub(name: string, returnVal: any) {
     let req = this.mockRequest()
 
     function newMethod() {
