@@ -6,7 +6,12 @@ import Animate from "./Animate"
 
 type Props = {show: boolean, children: *, className?: string}
 
-export default function Notice({show, children, className, ...rest}: Props) {
+export default function NoticeBanner({
+  show,
+  children,
+  className,
+  ...rest
+}: Props) {
   let enter = {
     translateY: ["-100%", 0],
     translateX: ["-50%", "-50%"],
@@ -19,9 +24,9 @@ export default function Notice({show, children, className, ...rest}: Props) {
   }
   return (
     <Animate show={show} enter={enter} exit={exit}>
-      <p className={classNames("notice-banner", className)} {...rest}>
+      <div className={classNames("notice-banner", className)} {...rest}>
         {children}
-      </p>
+      </div>
     </Animate>
   )
 }
