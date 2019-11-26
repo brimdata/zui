@@ -1,4 +1,5 @@
 /* @flow */
+import "regenerator-runtime/runtime"
 
 import {Provider} from "react-redux"
 import React from "react"
