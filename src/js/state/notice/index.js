@@ -1,6 +1,7 @@
 /* @flow */
 
-import type {State} from "../types"
+import {NetworkError, SearchError} from "../../models/Errors"
+import type {State, Thunk} from "../types"
 import AppError from "../../models/AppError"
 
 // Actions //
@@ -12,6 +13,18 @@ const actions = {
   set: (error: AppError): NOTICE_SET => ({type: "NOTICE_SET", error}),
   clear: (): NOTICE_CLEAR => ({type: "NOTICE_CLEAR"}),
   dismiss: (): NOTICE_DISMISS => ({type: "NOTICE_DISMISS"})
+}
+
+// Thunks
+const thunks = {
+  clearNetworkError: (): Thunk => (dispatch, getState) => {
+    let e = selectors.getError(getState())
+    if (e instanceof NetworkError) dispatch(actions.dismiss())
+  },
+  clearSearchError: (): Thunk => (dispatch, getState) => {
+    let e = selectors.getError(getState())
+    if (e instanceof SearchError) dispatch(actions.dismiss())
+  }
 }
 
 // Selectors //
@@ -41,5 +54,6 @@ function reducer(state: NoticeState = init, action: Actions) {
 export default {
   ...actions,
   ...selectors,
+  ...thunks,
   reducer
 }

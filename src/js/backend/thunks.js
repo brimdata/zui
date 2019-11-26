@@ -12,7 +12,7 @@ import search from "../state/search"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, g, boom) => {
-    dispatch(notice.clear())
+    dispatch(notice.clearSearchError())
     return boom
       .search(program, {searchSpan: span, searchSpace: space})
       .error((e) => handleError(e, dispatch))
@@ -72,7 +72,7 @@ function promise(request): Thunk {
     return new Promise((resolve, reject) => {
       request(boom)
         .done((...args) => {
-          dispatch(notice.clear())
+          dispatch(notice.clearNetworkError())
           resolve(...args)
         })
         .error((e) => {

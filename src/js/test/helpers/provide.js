@@ -4,9 +4,7 @@ import React from "react"
 
 import {mount} from "enzyme"
 
-import type {Store} from "../../state/types"
-
-export default function provide(store: Store, children: *) {
+export default function provide(store: any, children: *) {
   // $FlowFixMe
   return mount(<Provider store={store}>{children}</Provider>)
 }
