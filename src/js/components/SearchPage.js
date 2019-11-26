@@ -13,6 +13,7 @@ import {XRightPane} from "./RightPane"
 import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
+import {checkVersions} from "../backend/thunks"
 import {getCurrentFinding} from "../state/reducers/investigation"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getKey} from "../lib/finding"
@@ -20,11 +21,11 @@ import {getShowLogsTab} from "../state/reducers/view"
 import {initSpace} from "../space/thunks"
 import {killAllSearches} from "../searches/cancelSearch"
 import {useResizeObserver} from "../hooks/useResizeObserver"
-import BackendErrorNotice from "./BackendErrorNotice"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
+import ErrorNotice from "./ErrorNotice"
 import MainHistogramChart from "../charts/MainHistogram/Chart"
 import SettingsModal from "./SettingsModal"
 import WhoisModal from "./WhoisModal"
@@ -41,6 +42,7 @@ export default function SearchPage({cluster}: Props) {
 
   useEffect(() => {
     ipcRenderer.send("open-search-window")
+    setTimeout(() => dispatch(checkVersions()), 500)
     return () => dispatch(killAllSearches())
   }, [])
 
@@ -72,7 +74,7 @@ export default function SearchPage({cluster}: Props) {
         </div>
         <XRightPane />
       </div>
-      <BackendErrorNotice />
+      <ErrorNotice />
       <XSearchInspector />
       <XDownloadProgress />
       <WhoisModal />

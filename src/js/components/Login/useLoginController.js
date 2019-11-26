@@ -8,7 +8,6 @@ import type {Cluster} from "../../state/clusters/types"
 import type {FormData} from "./types"
 import {addCluster, removeCluster} from "../../state/clusters/actions"
 import {connectCluster} from "../../state/clusters/thunks"
-import {getBackendError, setBackendError} from "../../backend"
 import {getSavedClusters} from "../../state/clusters/selectors"
 import {showContextMenu} from "../../lib/System"
 
@@ -74,8 +73,6 @@ export default function useLoginController() {
     onFormChange,
     submitSaved,
     showSavedMenu,
-    saved: useSelector(getSavedClusters),
-    error: useSelector(getBackendError),
-    clearError: () => dispatch(setBackendError(null))
+    saved: useSelector(getSavedClusters)
   }
 }

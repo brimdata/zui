@@ -5,6 +5,7 @@ $page-border-color: $white-4;
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .title-bar .pane-header {

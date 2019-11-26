@@ -5,7 +5,6 @@ import {clearViewer} from "../state/viewer/actions"
 import {fetchSpace, fetchSpaces} from "../backend/thunks"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
 import {killAllSearches} from "../searches/cancelSearch"
-import {setBackendError} from "../backend"
 import {
   setCurrentSpaceName,
   setSpaceInfo,
@@ -14,6 +13,7 @@ import {
 import {submitSearchBar} from "../state/thunks/searchBar"
 import brim from "../brim"
 import modal from "../modal"
+import notice from "../state/notice"
 import search from "../state/search"
 
 export function initSpace(space: string): Thunk {
@@ -21,7 +21,7 @@ export function initSpace(space: string): Thunk {
     dispatch(killAllSearches())
     return dispatch(fetchSpaces()).then((spaces) => {
       if (spaces.length === 0) {
-        dispatch(setBackendError(new NoSpacesError()))
+        dispatch(notice.set(new NoSpacesError()))
       } else {
         let name = spaces.includes(space) ? space : spaces[0]
         dispatch(fetchSpace(name)).then((info) => {
@@ -35,7 +35,6 @@ export function initSpace(space: string): Thunk {
             dispatch(modal.show("nodata"))
           } else {
             const [_, max] = getCurrentSpaceTimeWindow(getState())
-            console.log()
             dispatch(
               search.setSpanArgs([
                 brim

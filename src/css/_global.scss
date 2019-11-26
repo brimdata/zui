@@ -46,8 +46,12 @@ code {
 }
 
 .using-mouse {
-  :not(input[type="text"]):focus {
+  :focus {
     outline: none;
+  }
+
+  input[type="text"]:focus {
+    outline: auto 5px -webkit-focus-ring-color;
   }
 }
 

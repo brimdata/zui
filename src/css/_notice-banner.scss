@@ -1,12 +1,18 @@
 .notice-banner {
   @include error-bg;
-  position: fixed;
-  padding: $space-xxs $space-l;
-  top: $space-m;
+  position: absolute;
+  z-index: 1;
+  padding: $space-s $space-m;
+  top: 22px;
   left: 50%;
-  transform: translateX(-50%);
   font-size: 14px;
   white-space: nowrap;
+  margin: 0;
+  max-width: 90%;
+
+  p {
+    margin: 0;
+  }
 
   a {
     padding-left: $space-s;
@@ -20,6 +26,15 @@
 
     &:active {
       color: inherit;
+    }
+  }
+
+  .error-details {
+    margin-top: 12px;
+    p {
+      font-weight: bold;
+      font-size: 10px;
+      margin-bottom: 3px;
     }
   }
 }

@@ -1,6 +1,9 @@
 /* @flow */
 // $FlowFixMe
 require("regenerator-runtime/runtime")
+
+import initDOM from "../initializers/initDOM"
+
 const Adapter = require("enzyme-adapter-react-16")
 const enzyme = require("enzyme")
 
@@ -30,6 +33,7 @@ jest.mock("electron", function() {
       on: jest.fn()
     },
     ipcRenderer: {
+      send: jest.fn(),
       on: jest.fn()
     }
   }
@@ -37,4 +41,11 @@ jest.mock("electron", function() {
   return {...electron, remote: electron}
 })
 
+global.DOMRectReadOnly = class DOMRectReadOnly {}
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  disconnect() {}
+}
+
 enzyme.configure({adapter: new Adapter()})
+initDOM()

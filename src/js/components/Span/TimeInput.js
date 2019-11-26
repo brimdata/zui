@@ -52,7 +52,13 @@ export default function TimeInput({timeArg, onSubmit}: Props) {
 
   return (
     <Form onSubmit={submit} className="time-picker-button-input">
-      <input ref={el} value={value} onChange={onChange} onBlur={submit} />
+      <input
+        type="text"
+        ref={el}
+        value={value}
+        onChange={onChange}
+        onBlur={submit}
+      />
       <div className="input-suggestions">
         {value.length > 2 && error && (
           <p className="suggestion error">{error}</p>

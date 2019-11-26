@@ -3,6 +3,7 @@ import React from "react"
 
 import {Input, InputCheckbox, InputSubmit} from "../form/Inputs"
 import {reactElementProps} from "../../test/integration"
+import ErrorNotice from "../ErrorNotice"
 import Brand from "./Brand"
 import EmptyCheck from "../EmptyCheck"
 import Form from "../form/Form"
@@ -60,11 +61,7 @@ export default function LoginPage() {
             />
             <InputSubmit value="Connect" />
           </Form>
-          {login.error && (
-            <p className="status">
-              {login.error.message()} <a onClick={login.clearError}>Dismiss</a>{" "}
-            </p>
-          )}
+          <ErrorNotice />
         </div>
       </main>
     </div>
