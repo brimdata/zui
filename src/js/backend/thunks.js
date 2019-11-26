@@ -1,4 +1,6 @@
 /* @flow */
+import electronIsDev from "electron-is-dev"
+
 import type {Cluster} from "../state/clusters/types"
 import type {Span} from "../BoomClient/types"
 import type {Thunk} from "../state/types"
@@ -44,11 +46,22 @@ export function testConnection(cluster: Cluster): Thunk {
 }
 
 export function checkVersions(): Thunk {
+  function extractVersion(string) {
+    let match = string.match(/v\d+\.\d+\.\d+/)
+    return match ? match[0] : string
+  }
+
   return function(dispatch, _, boom) {
-    let cv = boom.clientVersion()
-    boom.serverVersion().done((sv) => {
-      if (cv.zq !== sv.zq) {
-        dispatch(notice.set(new ZqVersionError({client: cv.zq, server: sv.zq})))
+    let client = extractVersion(boom.clientVersion().zq)
+    boom.serverVersion().done((resp) => {
+      let server = extractVersion(resp.lookytalk || resp.zq)
+      if (client !== server) {
+        let error = new ZqVersionError({client, server})
+        if (electronIsDev) {
+          console.error(error.message(), error.details().join(", "))
+        } else {
+          dispatch(notice.set(error))
+        }
       }
     })
   }
