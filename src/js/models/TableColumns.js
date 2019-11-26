@@ -54,11 +54,12 @@ export default class TableColumns {
   setWidths(logs: Log[]) {
     const MAX_WIDTH = 500
     const resizeHandle = 5
+    const sortIcon = 11
 
     this.cols.forEach((col) => {
       if (col.width) return
       let colName = brim.field("", "", col.name)
-      let max = colName.guessWidth() + resizeHandle
+      let max = colName.guessWidth() + resizeHandle + sortIcon
 
       logs.forEach((log) => {
         let field = log.field(col.name)
