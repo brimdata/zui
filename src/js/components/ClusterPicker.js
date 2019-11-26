@@ -24,7 +24,7 @@ export default function CluterPicker() {
 
   template.push({type: "divider"})
   template.push({
-    label: "Other...",
+    label: "New connection...",
     click: () => {
       dispatch(disconnectCluster())
     }
