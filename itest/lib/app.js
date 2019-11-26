@@ -91,6 +91,14 @@ export const logIn = (app: Application) => {
 export const resetState = (app: Application) =>
   appStep("reset state", () => app.webContents.send("resetState"))
 
+export const showPreferences = (app: Application) =>
+  appStep("show preferences", () => app.webContents.send("showPreferences"))
+
+export const toggleSearchInspector = (app: Application) =>
+  appStep("toggle search inspector", () =>
+    app.webContents.send("toggleSearchInspector")
+  )
+
 export const waitForSearch = (app: Application) => {
   return appStep(
     "wait for main search input to appear and then get its value",
@@ -237,6 +245,11 @@ export const openDebugQuery = async (app: Application) => {
   )
 }
 
+export const killSearch = async (app: Application) => {
+  await click(app, selectors.options.button)
+  await click(app, selectors.options.menuItem("Kill search"))
+}
+
 export const setDebugQuery = (app: Application, searchText: string) => {
   return (
     app.client
@@ -276,3 +289,46 @@ export const waitUntilDownloadFinished = async (app: Application) =>
   })
 
 export const pcapsDir = () => downloadsDir()
+
+export const toggleOptimizations = async (app: Application) => {
+  // Stateless toggle of optimizations. If you use this twice after reset
+  // state, both will be back to their original state. This is only used to
+  // disabled optimizations, which is why it's not state-aware.
+  await showPreferences(app)
+  await appStep("wait for Preferences modal to appear", () =>
+    Promise.all(
+      Object.values(selectors.settings).map((item) =>
+        app.client.waitForVisible(item)
+      )
+    )
+  )
+  await appStep("toggle optimizations", () =>
+    Promise.all([
+      app.client.click(selectors.settings.useCacheToggle),
+      app.client.click(selectors.settings.useIndexToggle)
+    ])
+  )
+  await app.client.click(selectors.settings.button)
+}
+
+export const openSearchInspector = async (app: Application) => {
+  // Stateless toggle of search inspector. If you use this twice after reset
+  // state, the search inspector will be back to its original state. This is
+  // only used to open and hit kill buttons, which is why it's not state-aware.
+  await toggleSearchInspector(app)
+  await appStep("wait for Search Inspector kill buttons to appear", () =>
+    Promise.all(
+      Object.values(selectors.searchInspector).map((item) =>
+        app.client.waitForVisible(item)
+      )
+    )
+  )
+}
+
+export const killViewerSearch = async (app: Application) => {
+  await click(app, selectors.searchInspector.killViewerSearch)
+}
+
+export const killHistogramSearch = async (app: Application) => {
+  await click(app, selectors.searchInspector.killHistogramSearch)
+}

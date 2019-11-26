@@ -16,6 +16,8 @@ import Log from "../models/Log"
 import SearchStats from "../models/SearchStats"
 import dispatchToProps from "../lib/dispatchToProps"
 
+import {reactElementProps} from "../test/integration"
+
 type Props = {
   isOpen: boolean,
   searches: SearchesState,
@@ -29,7 +31,20 @@ export default function SearchInspector({dispatch, searches, isOpen}: Props) {
 
   function Actions({log}) {
     const onClick = () => dispatch(killSearch(log.get("name")))
-    return <button onClick={onClick}>Kill</button>
+    return (
+      <button
+        onClick={onClick}
+        {
+          // Dynamically creates killHistogramSearch and killViewerSearch.
+          // Whatever log.get("name") produces must match
+          // dataAttrs in src/js/test/integration.js. Note that this is kind of
+          // a workaround to the problem described at PROD-1116.
+          ...reactElementProps("kill" + log.get("name"))
+        }
+      >
+        Kill
+      </button>
+    )
   }
 
   return (
@@ -41,6 +56,8 @@ export default function SearchInspector({dispatch, searches, isOpen}: Props) {
       <section>
         {logs.length ? (
           <HorizontalTable
+            // PROD-1116: Could each row have some sort of hierarchical identifier based
+            // on name so that integration tests can find the right row?
             descriptor={logs[0].descriptor}
             logs={logs}
             Actions={Actions}
