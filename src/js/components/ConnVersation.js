@@ -8,6 +8,7 @@ import {Fieldset} from "./Typography"
 import {getCurrentSpace} from "../state/reducers/spaces"
 import {getCurrentTableColumns} from "../state/columns/selector"
 import {getSearchProgram} from "../state/selectors/searchBar"
+import {showContextMenu} from "../lib/System"
 import Log from "../models/Log"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
@@ -27,16 +28,16 @@ const ConnVersation = ({log}: Props) => {
         title="Originator"
         className="originator"
         log={log.only(...ORIG_FIELDS)}
-        ip={log.get("id.orig_h")}
-        port={log.get("id.orig_p")}
+        ip={log.getField("id.orig_h")}
+        port={log.getField("id.orig_p")}
       />
       <ConnHistory history={log.get("history")} />
       <Host
         title="Responder"
         className="responder"
         log={log.only(...RESP_FIELDS)}
-        ip={log.get("id.resp_h")}
-        port={log.get("id.resp_p")}
+        ip={log.getField("id.resp_h")}
+        port={log.getField("id.resp_p")}
       />
     </div>
   )
@@ -56,24 +57,40 @@ const ConnHistory = ({history = ""}) => (
   </div>
 )
 
-const Host = ({className, title = "", ip = "", port = "", log}) => {
+const Host = ({className, title, ip, port, log}) => {
   let program = useSelector(getSearchProgram)
   let tableColumns = useSelector(getCurrentTableColumns)
   let space = useSelector(getCurrentSpace)
+  let rightClick = menu.fieldContextMenu(
+    program,
+    tableColumns.getColumns().map((c) => c.name),
+    space
+  )
+
+  function onIpContextMenu() {
+    showContextMenu(rightClick(ip.toBrimField(), log, false))
+  }
+
+  function onPortContextMenu() {
+    showContextMenu(rightClick(port.toBrimField(), log, false))
+  }
 
   return (
     <div className={`host ${className}`}>
       <Fieldset>{title}</Fieldset>
-      <p className={`ip ${ip.length > 16 ? "small" : ""}`}>{ip}</p>
-      <p className="port">{port}</p>
+      <p
+        onContextMenu={onIpContextMenu}
+        className={`ip ${ip.value.length > 16 ? "small" : ""}`}
+      >
+        {ip.value}
+      </p>
+      <p onContextMenu={onPortContextMenu} className="port">
+        {port.value}
+      </p>
       <VerticalTable
         descriptor={log.descriptor}
         log={log}
-        rightClick={menu.fieldContextMenu(
-          program,
-          tableColumns.getColumns().map((c) => c.name),
-          space
-        )}
+        rightClick={rightClick}
       />
     </div>
   )
