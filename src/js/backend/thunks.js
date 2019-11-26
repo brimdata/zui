@@ -1,5 +1,4 @@
 /* @flow */
-import electronIsDev from "electron-is-dev"
 
 import type {Cluster} from "../state/clusters/types"
 import type {Span} from "../BoomClient/types"
@@ -9,6 +8,7 @@ import {createError} from "../state/errors"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import ErrorFactory from "../models/ErrorFactory"
 import brim from "../brim"
+import electronIsDev from "../electron/isDev"
 import notice from "../state/notice"
 import search from "../state/search"
 

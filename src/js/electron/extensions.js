@@ -3,7 +3,7 @@
 // go and delete them from app.getPath("userData")/extensions,
 // then restart the app.
 
-const isDev = require("electron-is-dev")
+import isDev from "./isDev"
 
 function installExtensions() {
   if (isDev) {
