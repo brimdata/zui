@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import {NetworkError} from "../models/Errors"
+import {capitalize} from "../lib/Str"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {initSpace} from "../space/thunks"
 import NoticeBanner from "./NoticeBanner"
@@ -50,10 +51,20 @@ function Network({error}) {
 
 function Default({error}) {
   let dispatch = useDispatch()
+  let msg = capitalize(error.message())
+  let details = error.details()
   return (
-    <p>
-      {error.message()}{" "}
-      <a onClick={() => dispatch(notice.dismiss())}>Dismiss</a>
-    </p>
+    <>
+      <p>
+        {msg} <a onClick={() => dispatch(notice.dismiss())}>Dismiss</a>
+      </p>
+      {details.length > 0 && (
+        <div className="error-details">
+          {details.map((string, i) => (
+            <p key={i}>{string}</p>
+          ))}
+        </div>
+      )}
+    </>
   )
 }

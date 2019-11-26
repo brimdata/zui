@@ -35,7 +35,6 @@ export function initSpace(space: string): Thunk {
             dispatch(modal.show("nodata"))
           } else {
             const [_, max] = getCurrentSpaceTimeWindow(getState())
-            console.log()
             dispatch(
               search.setSpanArgs([
                 brim

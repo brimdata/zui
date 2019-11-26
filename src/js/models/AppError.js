@@ -22,7 +22,7 @@ export default class AppError {
     return startCase(this.constructor.name)
   }
 
-  message() {
+  message(): string {
     if (this.raw instanceof Error) {
       return this.raw.message
     }
@@ -41,5 +41,9 @@ export default class AppError {
     if (this.raw && this.raw.toString) return this.raw.toString()
 
     return "Unknown error"
+  }
+
+  details(): string[] {
+    return []
   }
 }

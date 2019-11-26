@@ -1,9 +1,9 @@
 /* @flow */
 
-import upperFirst from "lodash/upperFirst"
-import AppError from "./AppError"
 import isString from "lodash/isString"
-import {type RawError} from "./AppError"
+import upperFirst from "lodash/upperFirst"
+
+import AppError, {type RawError} from "./AppError"
 
 export class UnauthorizedError extends AppError {
   static is(e: RawError) {
@@ -80,8 +80,20 @@ export class InvalidUrlError extends AppError {
 }
 
 export class ZqVersionError extends AppError {
+  client: string
+  server: string
+  constructor({client, server}: {client: string, server: string}) {
+    super()
+    this.client = client
+    this.server = server
+  }
+
   message() {
-    return "The server and client zq versions do not match."
+    return "Server and client zq versions do not match."
+  }
+
+  details() {
+    return [`Client: ${this.client}`, `Server: ${this.server}`]
   }
 }
 
