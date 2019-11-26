@@ -4,14 +4,17 @@ import React from "react"
 import ReactDom from "react-dom"
 
 import {NetworkError} from "../models/Errors"
-import {getBackendError, setBackendError} from "../backend"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {initSpace} from "../space/thunks"
 import Notice from "./Notice"
 import lib from "../lib"
+import notice from "../state/notice"
+import useListener from "../hooks/useListener"
 
 export default function BackendErrorNotice() {
-  let error = useSelector(getBackendError)
+  let error = useSelector(notice.getError)
+  let dispatch = useDispatch()
+  let visible = useSelector(notice.getVisible)
   let Message = getMessageComponent(error)
 
   return ReactDom.createPortal(
@@ -24,7 +27,12 @@ export default function BackendErrorNotice() {
 
 function getMessageComponent(error) {
   if (error instanceof NetworkError) return Network
-  else return Default
+  else if (error) return Default
+  else return None
+}
+
+function None() {
+  return null
 }
 
 function Network({error}) {
@@ -43,7 +51,7 @@ function Default({error}) {
   return (
     <>
       <b>{error.title()}:</b> {error.message()}{" "}
-      <a onClick={() => dispatch(setBackendError(null))}>Dismiss</a>
+      <a onClick={() => dispatch(notice.dismiss())}>Dismiss</a>
     </>
   )
 }

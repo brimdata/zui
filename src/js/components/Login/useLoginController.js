@@ -8,9 +8,9 @@ import type {Cluster} from "../../state/clusters/types"
 import type {FormData} from "./types"
 import {addCluster, removeCluster} from "../../state/clusters/actions"
 import {connectCluster} from "../../state/clusters/thunks"
-import {getBackendError, setBackendError} from "../../backend"
 import {getSavedClusters} from "../../state/clusters/selectors"
 import {showContextMenu} from "../../lib/System"
+import notice from "../../state/notice"
 
 export default function useLoginController() {
   useEffect(() => {
@@ -75,7 +75,8 @@ export default function useLoginController() {
     submitSaved,
     showSavedMenu,
     saved: useSelector(getSavedClusters),
-    error: useSelector(getBackendError),
-    clearError: () => dispatch(setBackendError(null))
+    error: useSelector(notice.getError),
+    showNotice: useSelector(notice.getVisible),
+    dismiss: () => dispatch(notice.dismiss())
   }
 }

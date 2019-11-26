@@ -61,9 +61,9 @@ export default function LoginPage() {
             />
             <InputSubmit value="Connect" />
           </Form>
-          <Notice show={login.error}>
+          <Notice show={login.showNotice}>
             <span>{login.error && login.error.message()} </span>
-            <a onClick={login.clearError}>Dismiss</a>{" "}
+            <a onClick={login.dismiss}>Dismiss</a>{" "}
           </Notice>
         </div>
       </main>

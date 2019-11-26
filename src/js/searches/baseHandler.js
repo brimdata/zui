@@ -10,9 +10,9 @@ import {
   setSearchStats,
   setSearchStatus
 } from "../state/searches/actions"
-import {setBackendError} from "../backend"
 import ErrorFactory from "../models/ErrorFactory"
 import brim from "../brim"
+import notice from "../state/notice"
 
 export default function(
   dispatch: Dispatch,
@@ -60,7 +60,7 @@ export default function(
       case "TaskEnd":
         if (payload.error) {
           dispatch(setSearchStatus(name, "ERROR"))
-          dispatch(setBackendError(ErrorFactory.create(payload.error)))
+          dispatch(notice.set(ErrorFactory.create(payload.error)))
           dispatchResultsSteady.cancel()
           dispatchResults()
           break

@@ -3,7 +3,6 @@
 import {combineReducers} from "redux"
 
 import {VERSION} from "../initializers/initPersistance"
-import {backendReducer} from "../backend"
 import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
 import clustersReducer from "./clusters/reducer"
@@ -23,7 +22,6 @@ import view from "./reducers/view"
 import viewerReducer from "./viewer/reducer"
 
 export default combineReducers<*, *>({
-  backend: backendReducer,
   errors: errorsReducer,
   searches: searchesReducer,
   viewer: viewerReducer,
