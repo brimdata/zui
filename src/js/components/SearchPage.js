@@ -13,6 +13,7 @@ import {XRightPane} from "./RightPane"
 import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
+import {checkVersions} from "../backend/thunks"
 import {getCurrentFinding} from "../state/reducers/investigation"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getKey} from "../lib/finding"
@@ -41,6 +42,7 @@ export default function SearchPage({cluster}: Props) {
 
   useEffect(() => {
     ipcRenderer.send("open-search-window")
+    setTimeout(() => dispatch(checkVersions()), 500)
     return () => dispatch(killAllSearches())
   }, [])
 

@@ -43,6 +43,17 @@ export function testConnection(cluster: Cluster): Thunk {
   }
 }
 
+export function checkVersions(): Thunk {
+  return function(dispatch, _, boom) {
+    let cv = boom.clientVersion()
+    boom.serverVersion().done((sv) => {
+      if (cv.zq !== sv.zq) {
+        dispatch(notice.set(new ZqVersionError({client: cv.zq, server: sv.zq})))
+      }
+    })
+  }
+}
+
 export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
     let [from, to] = search.getSpan(getState())
