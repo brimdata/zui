@@ -19,8 +19,9 @@ export default function NoticeBanner({
   }
   let exit = {
     opacity: [1, 0],
+    scale: [1, 0.7],
     easing: "easeOutSine",
-    duration: 300
+    duration: 150
   }
   return (
     <Animate show={show} enter={enter} exit={exit}>

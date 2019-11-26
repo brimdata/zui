@@ -20,7 +20,7 @@ import {getShowLogsTab} from "../state/reducers/view"
 import {initSpace} from "../space/thunks"
 import {killAllSearches} from "../searches/cancelSearch"
 import {useResizeObserver} from "../hooks/useResizeObserver"
-import BackendErrorNotice from "./BackendErrorNotice"
+import ErrorNotice from "./ErrorNotice"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
@@ -72,7 +72,7 @@ export default function SearchPage({cluster}: Props) {
         </div>
         <XRightPane />
       </div>
-      <BackendErrorNotice />
+      <ErrorNotice />
       <XSearchInspector />
       <XDownloadProgress />
       <WhoisModal />

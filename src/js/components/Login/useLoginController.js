@@ -10,7 +10,6 @@ import {addCluster, removeCluster} from "../../state/clusters/actions"
 import {connectCluster} from "../../state/clusters/thunks"
 import {getSavedClusters} from "../../state/clusters/selectors"
 import {showContextMenu} from "../../lib/System"
-import notice from "../../state/notice"
 
 export default function useLoginController() {
   useEffect(() => {
@@ -74,9 +73,6 @@ export default function useLoginController() {
     onFormChange,
     submitSaved,
     showSavedMenu,
-    saved: useSelector(getSavedClusters),
-    error: useSelector(notice.getError),
-    showNotice: useSelector(notice.getVisible),
-    dismiss: () => dispatch(notice.dismiss())
+    saved: useSelector(getSavedClusters)
   }
 }

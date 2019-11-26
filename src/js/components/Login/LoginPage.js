@@ -3,11 +3,11 @@ import React from "react"
 
 import {Input, InputCheckbox, InputSubmit} from "../form/Inputs"
 import {reactElementProps} from "../../test/integration"
+import ErrorNotice from "../ErrorNotice"
 import Brand from "./Brand"
 import EmptyCheck from "../EmptyCheck"
 import Form from "../form/Form"
 import LoginWelcome from "./LoginWelcome"
-import Notice from "../Notice"
 import SavedClusters from "./SavedClusters"
 import useLoginController from "./useLoginController"
 
@@ -61,10 +61,7 @@ export default function LoginPage() {
             />
             <InputSubmit value="Connect" />
           </Form>
-          <Notice show={login.showNotice}>
-            <span>{login.error && login.error.message()} </span>
-            <a onClick={login.dismiss}>Dismiss</a>{" "}
-          </Notice>
+          <ErrorNotice />
         </div>
       </main>
     </div>

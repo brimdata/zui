@@ -1,31 +1,33 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
-import ReactDom from "react-dom"
 
 import {NetworkError} from "../models/Errors"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {initSpace} from "../space/thunks"
-import Notice from "./Notice"
-import lib from "../lib"
+import NoticeBanner from "./NoticeBanner"
 import notice from "../state/notice"
-import useListener from "../hooks/useListener"
+import useEscapeKey from "../hooks/useEscapeKey"
 
-export default function BackendErrorNotice() {
+export default function ErrorNotice() {
   let error = useSelector(notice.getError)
-  let dispatch = useDispatch()
   let visible = useSelector(notice.getVisible)
-  let Message = getMessageComponent(error)
 
-  return ReactDom.createPortal(
-    <Notice show={!!error}>
-      <Message error={error} />
-    </Notice>,
-    lib.doc.id("notification-root")
+  return (
+    <NoticeBanner show={visible}>
+      <ErrorMessage error={error} />
+    </NoticeBanner>
   )
 }
 
-function getMessageComponent(error) {
+function ErrorMessage({error}) {
+  let Component = getComponent(error)
+  let dispatch = useDispatch()
+  useEscapeKey(() => dispatch(notice.dismiss()))
+  return <Component error={error} />
+}
+
+function getComponent(error) {
   if (error instanceof NetworkError) return Network
   else if (error) return Default
   else return None
@@ -39,19 +41,19 @@ function Network({error}) {
   let dispatch = useDispatch()
   let space = useSelector(getCurrentSpaceName)
   return (
-    <>
-      <b>{error.title()}:</b> {error.message()}{" "}
-      <a onClick={() => dispatch(initSpace(space))}>Retry</a>
-    </>
+    <p>
+      {error.message()} <a onClick={() => dispatch(initSpace(space))}>Retry</a>
+      <a onClick={() => dispatch(notice.dismiss())}>Dismiss</a>
+    </p>
   )
 }
 
 function Default({error}) {
   let dispatch = useDispatch()
   return (
-    <>
-      <b>{error.title()}:</b> {error.message()}{" "}
+    <p>
+      {error.message()}{" "}
       <a onClick={() => dispatch(notice.dismiss())}>Dismiss</a>
-    </>
+    </p>
   )
 }
