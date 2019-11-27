@@ -17,7 +17,7 @@
   <body>
     <script>
       require("./dist/js/index.js")
-      let isDev = require("electron-is-dev")
+      let isDev = require("./dist/js/electron/isDev.js")
 
       if (isDev) {
         let script = document.createElement("script")
