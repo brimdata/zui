@@ -7,7 +7,7 @@ import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/types"
-import {UID_CORRELATION_LIMIT} from "../detail/correlations"
+import {UID_CORRELATION_LIMIT} from "./LogDetails/UidPanel"
 import {changeSearchBarInput, clearSearchBar} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import {viewLogDetail} from "../detail/viewLogDetail"

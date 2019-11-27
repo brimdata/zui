@@ -12,22 +12,6 @@ import {parallelizeProcs} from "../lib/Program"
 import Log from "../models/Log"
 import search from "../state/search"
 
-export const UID_CORRELATION_LIMIT = 100
-
-export const fetchTuplesByUid = (log: Log): Thunk => (dispatch, getState) => {
-  let uid = log.correlationId()
-  if (uid) {
-    return dispatch(
-      issueSearch({
-        name: "UidSearch",
-        tag: "detail",
-        program: uid + " | head " + UID_CORRELATION_LIMIT,
-        span: search.getSpanAsDates(getState())
-      })
-    )
-  }
-}
-
 export const fetchByMd5 = (log: Log): Thunk => (dispatch, getState) => {
   let md5 = log.get("md5")
 

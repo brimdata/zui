@@ -9,10 +9,6 @@ test("#detail first shows right pane, then views log", () => {
   actions.detail(conn(), {enabled: true}).click(store.dispatch)
 
   expect(store.getActions().map((a) => a.type)).toEqual(
-    expect.arrayContaining([
-      "RIGHT_SIDEBAR_SHOW",
-      "LOG_DETAIL_PUSH",
-      "SEARCH_REGISTER"
-    ])
+    expect.arrayContaining(["RIGHT_SIDEBAR_SHOW", "LOG_DETAIL_PUSH"])
   )
 })

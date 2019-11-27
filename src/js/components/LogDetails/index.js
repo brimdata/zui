@@ -31,7 +31,7 @@ export default function LogDetails() {
     <NavAnimation log={log} prev={isGoingBack}>
       <div className="log-detail">
         <FieldsPanel {...panelProps} />
-        <UidPanel {...panelProps} />
+        {log.correlationId() && <UidPanel {...panelProps} />}
         <ConnPanel {...panelProps} />
         <Md5Panel {...panelProps} />
       </div>

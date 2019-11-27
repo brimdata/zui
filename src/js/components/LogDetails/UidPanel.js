@@ -5,29 +5,29 @@ import React from "react"
 import type {PanelProps} from "./"
 import {XUidTimeline} from "../UidTimeline"
 import {reactElementProps} from "../../test/integration"
-import {resultsToLogs} from "../../log/resultsToLogs"
 import {toFront} from "../../lib/Array"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
+import useSearch from "../../hooks/useSearch"
 
-const UidPanel = ({log, searches}: PanelProps) => {
-  if (!log.correlationId()) return null
-  const search = searches.find((s) => s.name === "UidSearch")
-  if (!search) return null
+export const UID_CORRELATION_LIMIT = 100
 
-  const logs = uidOrder(resultsToLogs(search.results, "0"))
+export default function UidPanel({log}: PanelProps) {
+  let [logs, status] = useSearch({
+    program: log.correlationId() + " | head " + UID_CORRELATION_LIMIT
+  })
 
   return (
     <div
       className="correlated-logs-panel detail-panel"
       {...reactElementProps("correlationPanel")}
     >
-      <PanelHeading status={search.status}>Uid Correlation</PanelHeading>
+      <PanelHeading status={status}>Uid Correlation</PanelHeading>
       {logs.length === 0 && (
         <InlineTableLoading title="Loading timeline..." rows={3} />
       )}
-      <XUidTimeline log={log} logs={logs} />
+      <XUidTimeline log={log} logs={uidOrder(logs)} />
     </div>
   )
 }
@@ -36,5 +36,3 @@ const uidOrder = (logs: Log[]) => {
   const findConn = (log) => log.get("_path") === "conn"
   return toFront(Log.sort(logs, "ts"), findConn)
 }
-
-export default UidPanel
