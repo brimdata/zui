@@ -21,11 +21,15 @@ export default class MouseoverWatch {
 
   addListener() {
     document.addEventListener("mousemove", this.listener)
+    let bod = document.body
+    bod && bod.addEventListener("mouseleave", this.startExit)
     return this
   }
 
   removeListener() {
     document.removeEventListener("mousemove", this.listener)
+    let bod = document.body
+    bod && bod.removeEventListener("mouseleave", this.startExit)
     return this
   }
 
@@ -54,17 +58,17 @@ export default class MouseoverWatch {
     return this
   }
 
-  enter() {
+  enter = () => {
     this.state = "IN"
     this.onEnterCb()
   }
 
-  exit() {
+  exit = () => {
     this.state = "OUT"
     this.onExitCb()
   }
 
-  startExit() {
+  startExit = () => {
     if (this.delay > 0) {
       this.state = "EXITING"
       this.tid = setTimeout(() => this.exit(), this.delay)
