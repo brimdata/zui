@@ -5,7 +5,6 @@ import {useEffect, useState} from "react"
 import {accumResults} from "../lib/accumResults"
 import {fetchSearch} from "../backend/thunks"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {resultsToLogs} from "../log/resultsToLogs"
 import search from "../state/search"
 
 type Opts = {program: string}
@@ -14,7 +13,7 @@ export default function useSearch(opts: Opts) {
   let dispatch = useDispatch()
   let span = useSelector(search.getSpanAsDates)
   let space = useSelector(getCurrentSpaceName)
-  let [results, setResults] = useState([])
+  let [results, setResults] = useState({descriptors: {}, tuples: {}})
   let [stats, setStats] = useState({})
   let [status, setStatus] = useState("FETCHING")
 
@@ -30,7 +29,7 @@ export default function useSearch(opts: Opts) {
           break
         case "SearchTuples":
           accum.addTuples(payload.tuples, payload.channel_id.toString())
-          setResults(resultsToLogs(accum.getResults()))
+          setResults(accum.getResults())
           break
         case "SearchStats":
           setStats(payload)
