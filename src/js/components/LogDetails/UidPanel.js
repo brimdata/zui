@@ -5,18 +5,19 @@ import React from "react"
 import type {PanelProps} from "./"
 import {XUidTimeline} from "../UidTimeline"
 import {reactElementProps} from "../../test/integration"
+import {resultsToLogs} from "../../log/resultsToLogs"
 import {toFront} from "../../lib/Array"
+import {uidCorrelation} from "../../searches/programs"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import useSearch from "../../hooks/useSearch"
 
-export const UID_CORRELATION_LIMIT = 100
-
 export default function UidPanel({log}: PanelProps) {
-  let [logs, status] = useSearch({
-    program: log.correlationId() + " | head " + UID_CORRELATION_LIMIT
+  let [results, status] = useSearch({
+    program: uidCorrelation(log.correlationId())
   })
+  let logs = resultsToLogs(results)
 
   return (
     <div
