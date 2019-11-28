@@ -15,6 +15,7 @@ import type {SearchHistory} from "./reducers/searchHistory"
 import type {SearchState} from "./search/types"
 import type {SearchesState} from "./searches/types"
 import type {Spaces} from "./reducers/spaces"
+import type {TasksState} from "./tasks"
 import type {View} from "./reducers/view"
 import type {ViewerState} from "./viewer/types"
 import BoomClient from "../BoomClient"
@@ -35,6 +36,7 @@ export type State = {
   searchBar: SearchBar,
   spaces: Spaces,
   boomd: Boomd,
+  tasks: TasksState,
   searchHistory: SearchHistory,
   logDetails: LogDetails,
   view: View,

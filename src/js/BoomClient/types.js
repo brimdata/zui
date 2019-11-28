@@ -71,7 +71,7 @@ type SearchEndPayload = {
   type: "SearchEnd"
 }
 
-type SearchStatsPayload = {
+export type SearchStatsPayload = {
   type: "SearchStats",
   start_time: EpochObj,
   update_time: EpochObj,
