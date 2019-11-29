@@ -125,6 +125,6 @@
     "reselect": "^4.0.0",
     "source-map-support": "^0.5.12",
     "valid-url": "^1.0.9",
-    "zq": "mccanne/zq#v0.0.1-16-gc9b95c4"
+    "zq": "mccanne/zq#v0.0.1-16-g865f4eb0"
   }
 }
