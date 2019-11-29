@@ -73,7 +73,7 @@ Object {
       "keys": Array [
         Object {
           "field": Object {
-            "field": "certification"
+            "field": "certificate",
             "op": "FieldRead",
           },
           "fn": "RecordFieldRead",
