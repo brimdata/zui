@@ -166,13 +166,13 @@ describe("Query tests", () => {
   })
 
   stdTest(
-    'query "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"',
+    'query "_path=x509 | every 1d count() by certificate.version | sort ts, certificate.version"',
     (done) => {
       logIn(app)
         .then(() =>
           writeSearch(
             app,
-            "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
+            "_path=x509 | every 1d count() by certificate.version | sort ts, certificate.version"
           )
         )
         .then(() => setSpan(app, "Whole Space"))

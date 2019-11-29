@@ -84,7 +84,7 @@ Object {
     Object {
       "fields": Array [
         "ts",
-        "certification.version",
+        "certificate.version",
       ],
       "op": "SortProc",
       "sortdir": 1,
