@@ -44,7 +44,7 @@ Object {
 }
 `;
 
-exports[`Debug and search helpers write invalid search into Debug Query shows reasonable error 1`] = `"SyntaxError: Expected \\"=\\", [0-9.], [A-Za-z_$], or whitespace but \\"(\\" found."`;
+exports[`Debug and search helpers write invalid search into Debug Query shows reasonable error 1`] = `"SyntaxError: Expected \\"=\\", [0-9], [A-Za-z_$], or whitespace but \\"(\\" found."`;
 
 exports[`Debug and search helpers write new search into Debug Query shows AST 1`] = `
 Object {
@@ -71,7 +71,15 @@ Object {
         "type": "Duration",
       },
       "keys": Array [
-        "certificate.version",
+        Object {
+          "field": Object {
+            "field": "certification"
+            "op": "FieldRead",
+          },
+          "fn": "RecordFieldRead",
+          "op": "FieldCall",
+          "param": "version",
+        },
       ],
       "op": "GroupByProc",
       "reducers": Array [
@@ -83,8 +91,19 @@ Object {
     },
     Object {
       "fields": Array [
-        "ts",
-        "certification.version",
+        Object {
+          "field": "ts",
+          "op": "FieldRead",
+        },
+        Object {
+          "field": Object {
+            "field": "certification",
+            "op": "FieldRead",
+          },
+          "fn": "RecordFieldRead",
+          "op": "FieldCall",
+          "param": "version",
+        },
       ],
       "op": "SortProc",
       "sortdir": 1,

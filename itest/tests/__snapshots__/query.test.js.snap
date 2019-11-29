@@ -16,7 +16,7 @@ Array [
 
 exports[`Query tests query "_path=http | count() by id.resp_p | sort count" 1`] = `
 Array [
-  "id.resp_p",
+  "resp_p",
   "count",
   "8080",
   "6",
@@ -110,7 +110,7 @@ Array [
 exports[`Query tests query "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version" 1`] = `
 Array [
   "ts",
-  "certificate.version",
+  "version",
   "count",
   "03/05/1500:0000.0000",
   "3",

@@ -11,7 +11,8 @@ export default function ast(tree: Object) {
     },
     groupByKeys() {
       let g = this.proc("GroupByProc")
-      return g ? g.keys : []
+      let keys = g ? g.keys : []
+      return keys.map(k => fieldExprToName(k))
     },
     proc(name: string) {
       return getProcs(tree).find((p) => p.op === name)
@@ -30,6 +31,20 @@ export default function ast(tree: Object) {
         return sorts
       }, {})
     }
+  }
+}
+
+function fieldExprToName(expr) {
+  switch (expr.op) {
+    case "FieldRead":
+      return expr.field;
+    case "RecordFieldRead":
+      return `${fieldExprToName(expr.field)}.${expr.param}`;
+    case "Index":
+      return `${fieldExprToName(expr.field)}[${expr.param}]`;
+    default:
+      // XXX
+      return ""
   }
 }
 
