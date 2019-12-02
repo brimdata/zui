@@ -1,6 +1,6 @@
 /* @flow */
 
-import {PARALLEL_PROC, getProcNames} from "../../lib/ast"
+import {PARALLEL_PROC} from "../../brim/ast"
 import type {Thunk} from "../types"
 import {
   backSearchHistory,
@@ -14,6 +14,7 @@ import {getCurrentEntry} from "../reducers/searchHistory"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
+import brim from "../../brim"
 import search from "../search"
 
 export const goBack = (): Thunk => (dispatch, getState) => {
@@ -44,7 +45,7 @@ export const validateProgram = (): Thunk => (dispatch, getState) => {
     return false
   }
 
-  if (getProcNames(ast).includes(PARALLEL_PROC)) {
+  if (brim.ast(ast).proc(PARALLEL_PROC)) {
     dispatch(
       errorSearchBarParse("Parallel procs are not supported in the app viewer.")
     )

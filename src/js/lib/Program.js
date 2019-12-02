@@ -2,17 +2,18 @@
 
 import ZQL from "zq/zql/zql.js"
 
-import {HEAD_PROC, TAIL_PROC, TUPLE_PROCS, getProcNames, getProcs} from "./ast"
+import {HEAD_PROC, TAIL_PROC, TUPLE_PROCS} from "../brim/ast"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
+import brim from "../brim"
 
 export type Program = string
 
 export const hasAnalytics = (string: Program) => {
   const [ast] = parse(string)
 
-  for (let proc of getProcNames(ast)) {
-    if (!TUPLE_PROCS.includes(proc)) return true
+  for (let proc of brim.ast(ast).getProcs()) {
+    if (!TUPLE_PROCS.includes(proc.op)) return true
   }
   return false
 }
@@ -30,19 +31,20 @@ export const parse = (string: Program) => {
 
 export const addHeadProc = (program: Program, count: number) => {
   const [ast] = parse(program)
-  if (getProcNames(ast).includes(HEAD_PROC)) return program
+  if (brim.ast(ast).proc(HEAD_PROC)) return program
   else return program + ` | head ${count}`
 }
 
 export const getHeadCount = (program: Program) => {
   const [ast] = parse(program)
-  const head = getProcs(ast).find(({op}) => op === HEAD_PROC)
+  const head = brim.ast(ast).proc(HEAD_PROC)
   return head ? head.count : 0
 }
 
 export const hasHeadOrTailProc = (program: Program) => {
   const [ast] = parse(program)
-  return !!getProcs(ast).find(({op}) => op === HEAD_PROC || op === TAIL_PROC)
+  const a = brim.ast(ast)
+  return !!(a.proc(HEAD_PROC) || a.proc(TAIL_PROC))
 }
 
 export const hasGroupByProc = (program: Program) => {
@@ -52,7 +54,7 @@ export const hasGroupByProc = (program: Program) => {
 }
 
 export const getGroupByProc = (ast: *) => {
-  return getProcs(ast).find((p) => p.op === "GroupByProc")
+  return brim.ast(ast).proc("GroupByProc")
 }
 
 function joinProcs(procs: string[]) {
