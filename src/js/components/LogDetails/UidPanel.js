@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import type {PanelProps} from "./"
 import {XUidTimeline} from "../UidTimeline"
 import {reactElementProps} from "../../test/integration"
 import {resultsToLogs} from "../../log/resultsToLogs"
@@ -13,8 +12,9 @@ import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import useSearch from "../../hooks/useSearch"
 
-export default function UidPanel({log}: PanelProps) {
+export default function UidPanel({log}: {log: Log}) {
   let [results, status] = useSearch({
+    name: "Uid Search",
     program: uidCorrelation(log.correlationId())
   })
   let logs = resultsToLogs(results)

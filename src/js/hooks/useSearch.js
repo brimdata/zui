@@ -6,8 +6,9 @@ import {accumResults} from "../lib/accumResults"
 import {fetchSearch} from "../backend/thunks"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import search from "../state/search"
+import tasks from "../state/tasks"
 
-type Opts = {program: string}
+type Opts = {name: string, program: string}
 
 export default function useSearch(opts: Opts) {
   let dispatch = useDispatch()
@@ -18,9 +19,10 @@ export default function useSearch(opts: Opts) {
   let [status, setStatus] = useState("FETCHING")
 
   useEffect(() => {
-    let {program} = opts
+    let {program, name} = opts
     let handler = dispatch(fetchSearch(program, span, space))
     let accum = accumResults()
+    dispatch(tasks.register(name, program, handler))
 
     handler.stream((payload) => {
       switch (payload.type) {

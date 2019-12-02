@@ -3,15 +3,15 @@
 import {useSelector} from "react-redux"
 import React from "react"
 
-import type {PanelProps} from "./"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
+import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import VerticalTable from "../Tables/VerticalTable"
 import menu from "../../electron/menu"
 
-export default function FieldsPanel({log}: PanelProps) {
+export default function FieldsPanel({log}: {log: Log}) {
   log = log.exclude("_td")
   let program = useSelector(getSearchProgram)
   let tableColumns = useSelector(getCurrentTableColumns)
