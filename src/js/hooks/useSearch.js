@@ -5,6 +5,8 @@ import {useEffect, useState} from "react"
 import {accumResults} from "../lib/accumResults"
 import {fetchSearch} from "../backend/thunks"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
+import {registerSearch} from "../state/searches/actions"
+import baseHandler from "../searches/baseHandler"
 import search from "../state/search"
 import tasks from "../state/tasks"
 
@@ -23,6 +25,16 @@ export default function useSearch(opts: Opts) {
     let handler = dispatch(fetchSearch(program, span, space))
     let accum = accumResults()
     dispatch(tasks.register(name, program, handler))
+
+    // Remove once searchTasks is more fully developed.
+    dispatch(registerSearch(name, {handler, tag: "detail"}))
+    // $FlowFixMe
+    let {each, error, abort} = baseHandler(dispatch, {name})
+    handler
+      .stream(each)
+      .error(error)
+      .onAbort(abort)
+    // end Remove
 
     handler.stream((payload) => {
       switch (payload.type) {

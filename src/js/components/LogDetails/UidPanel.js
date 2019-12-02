@@ -14,7 +14,7 @@ import useSearch from "../../hooks/useSearch"
 
 export default function UidPanel({log}: {log: Log}) {
   let [results, status] = useSearch({
-    name: "Uid Search",
+    name: "UidSearch",
     program: uidCorrelation(log.correlationId())
   })
   let logs = resultsToLogs(results)

@@ -23,7 +23,7 @@ import useSearch from "../../hooks/useSearch"
 export const Md5Panel = ({log}: {log: Log}) => {
   let logMd5 = log.get("md5")
   let [results, status] = useSearch({
-    name: "Md5 Search",
+    name: "Md5Search",
     program: parallelizeProcs([
       filenameCorrelation(logMd5),
       md5Correlation(logMd5),
