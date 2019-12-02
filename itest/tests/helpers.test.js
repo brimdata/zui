@@ -59,7 +59,7 @@ describe("Debug and search helpers", () => {
         .then(() =>
           writeSearch(
             app,
-            "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
+            "_path=x509 | every 1d count() by certificate.version | sort ts, certificate.version"
           )
         )
         .then(() => openDebugQuery(app))
@@ -80,7 +80,7 @@ describe("Debug and search helpers", () => {
       .then(() =>
         setDebugQuery(
           app,
-          "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
+          "_path=x509 | every 1d count() by certificate.version | sort ts, certificate.version"
         )
       )
       .then(() => getDebugAst(app))
@@ -158,7 +158,7 @@ describe("Debug and search helpers", () => {
         .then(() =>
           writeSearch(
             app,
-            "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version"
+            "_path=x509 | every 1d count() by certificate.version | sort ts, certificate.version"
           )
         )
         .then(() => openCopyForCurl(app))

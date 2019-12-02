@@ -107,7 +107,7 @@ Array [
 ]
 `;
 
-exports[`Query tests query "_path=x509 | every 1d count() by certificate.version | sort ts, certification.version" 1`] = `
+exports[`Query tests query "_path=x509 | every 1d count() by certificate.version | sort ts, certificate.version" 1`] = `
 Array [
   "ts",
   "version",
