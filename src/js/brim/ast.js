@@ -20,6 +20,9 @@ export default function ast(tree: Object) {
     procs(name: string): *[] {
       return getProcs(tree).filter((p) => p.op === name)
     },
+    getProcs() {
+      return getProcs(tree)
+    },
     self() {
       return tree
     },
