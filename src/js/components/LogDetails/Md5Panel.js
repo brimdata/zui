@@ -3,7 +3,6 @@
 import {useSelector} from "react-redux"
 import React from "react"
 
-import type {PanelProps} from "./"
 import type {RightClickBuilder} from "../../types"
 import {
   filenameCorrelation,
@@ -12,26 +11,31 @@ import {
   txHostsCorrelation
 } from "../../searches/programs"
 import {getCurrentSpace} from "../../state/reducers/spaces"
+import {parallelizeProcs} from "../../lib/Program"
 import {resultsToLogs} from "../../log/resultsToLogs"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import menu from "../../electron/menu"
+import useSearch from "../../hooks/useSearch"
 
-export const Md5Panel = ({log, searches}: PanelProps) => {
+export const Md5Panel = ({log}: {log: Log}) => {
+  let logMd5 = log.get("md5")
+  let [results, status] = useSearch({
+    name: "Md5Search",
+    program: parallelizeProcs([
+      filenameCorrelation(logMd5),
+      md5Correlation(logMd5),
+      rxHostsCorrelation(logMd5),
+      txHostsCorrelation(logMd5)
+    ])
+  })
   let space = useSelector(getCurrentSpace)
-
-  const logMd5 = log.get("md5")
-  if (!logMd5) return null
-  const search = searches.find((s) => s.name === "Md5Search")
-  if (!search) return null
-
-  const status = search.status
-  const tx = resultsToLogs(search.results, "3")
-  const rx = resultsToLogs(search.results, "2")
-  const md5 = resultsToLogs(search.results, "1")
-  const filenames = resultsToLogs(search.results, "0")
+  let tx = resultsToLogs(results, "3")
+  let rx = resultsToLogs(results, "2")
+  let md5 = resultsToLogs(results, "1")
+  let filenames = resultsToLogs(results, "0")
 
   function getColumns(logs) {
     return logs.length ? logs[0].descriptor.map((c) => c.name) : []

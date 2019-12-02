@@ -18,6 +18,7 @@ import searchHistory from "./reducers/searchHistory"
 import searchesReducer from "./searches/reducer"
 import spaces from "./reducers/spaces"
 import starredLogs from "./reducers/starredLogs"
+import tasks from "./tasks"
 import view from "./reducers/view"
 import viewerReducer from "./viewer/reducer"
 
@@ -30,6 +31,7 @@ export default combineReducers<*, *>({
   modal: modal.reducer,
   search: search.reducer,
   notice: notice.reducer,
+  tasks: tasks.reducer,
   investigation,
   view,
   searchBar,
