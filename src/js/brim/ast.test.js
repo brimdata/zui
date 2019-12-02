@@ -46,3 +46,32 @@ describe("#sorts", () => {
     })
   })
 })
+
+describe("#groupByKeys", () => {
+  const getGroupByKeys = (string) =>
+    brim
+      .program(string)
+      .ast()
+      .groupByKeys()
+
+  test("no group by", () => {
+    expect(getGroupByKeys("_path=conn")).toEqual([])
+  })
+
+  test("one key", () => {
+    expect(getGroupByKeys("_path=conn | count() by duration")).toEqual([
+      "duration"
+    ])
+  })
+
+  test("several keys", () => {
+    expect(getGroupByKeys("_path=conn | count() by duration, uid")).toEqual([
+      "duration",
+      "uid"
+    ])
+  })
+
+  test("nested records", () => {
+    expect(getGroupByKeys("* | count() by id.orig_h")).toEqual(["id.orig_h"])
+  })
+})
