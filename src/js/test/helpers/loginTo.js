@@ -1,4 +1,5 @@
 /* @flow */
+import {initSpace} from "../../space/thunks"
 import {setCluster} from "../../state/clusters/actions"
 import MockBoomClient from "../MockBoomClient"
 import fixtures from "../fixtures"
@@ -16,6 +17,7 @@ export default function loginTo(clusterName: string, spaceName: string) {
     .stub("search")
 
   store.dispatch(setCluster(cluster))
+  store.dispatch(initSpace(space.name))
 
   return {store, boom, cluster}
 }

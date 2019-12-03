@@ -48,4 +48,5 @@ global.ResizeObserver = class ResizeObserver {
 }
 
 enzyme.configure({adapter: new Adapter()})
+document.execCommand = jest.fn()
 initDOM()

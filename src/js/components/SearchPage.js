@@ -21,6 +21,7 @@ import {getShowLogsTab} from "../state/reducers/view"
 import {initSpace} from "../space/thunks"
 import {killAllSearches} from "../searches/cancelSearch"
 import {useResizeObserver} from "../hooks/useResizeObserver"
+import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
@@ -82,6 +83,7 @@ export default function SearchPage({cluster}: Props) {
       <CurlModal />
       <SettingsModal />
       <EmptySpaceModal />
+      <BoomGetModal />
     </div>
   )
 }
