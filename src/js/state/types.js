@@ -14,8 +14,8 @@ import type {ModalState} from "./modal/types"
 import type {NoticeState} from "./notice"
 import type {SearchBar} from "./reducers/searchBar"
 import type {SearchHistory} from "./reducers/searchHistory"
-import type {SearchState} from "./search/types"
 import type {Spaces} from "./reducers/spaces"
+import type {TabsState} from "./tabs"
 import type {TasksState} from "./tasks"
 import type {View} from "./reducers/view"
 import type {ViewerState} from "./viewer/types"
@@ -44,6 +44,6 @@ export type State = {
   view: View,
   investigation: Investigation,
   modal: ModalState,
-  search: SearchState,
-  notice: NoticeState
+  notice: NoticeState,
+  tabs: TabsState
 }

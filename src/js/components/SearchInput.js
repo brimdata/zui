@@ -14,8 +14,8 @@ import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
 import handlers from "../state/handlers"
 import modal from "../state/modal"
-import search from "../state/search"
 import submitSearch from "../flows/submitSearch"
+import tab from "../state/tab"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -91,8 +91,8 @@ function Menu() {
 }
 
 function ActionButton() {
-  let next = useSelector(search.getSpanArgs)
-  let prev = useSelector(search.getPrevSpanArgs)
+  let next = useSelector(tab.getSpanArgs)
+  let prev = useSelector(tab.getPrevSpanArgs)
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
   let onClick = () => dispatch(submitSearch())

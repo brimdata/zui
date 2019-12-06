@@ -10,10 +10,8 @@ import type {
   SearchState,
   SpanArgs
 } from "./types"
-import type {Thunk} from "../types"
-import brim, {type Span, type Ts} from "../../brim"
-import search from "./"
-import selectors from "./selectors"
+import type {TabActions} from "../tabs"
+import brim, {type Span} from "../../brim"
 
 const actions = {
   setSpan(span: Span): SEARCH_SPAN_SET {
@@ -34,38 +32,16 @@ const actions = {
   }
 }
 
-const thunks = {
-  computeSpan(now: Date = new Date()): Thunk {
-    return function(dispatch, getState) {
-      let args = selectors.getSpanArgs(getState())
-      let span = brim
-        .span(args)
-        .recompute(now)
-        .toSpan()
-      dispatch(search.setSpan(span))
-    }
-  },
-  setFrom(ts: Ts): Thunk {
-    return function(dispatch, getState) {
-      let [_, to] = selectors.getSpanArgs(getState())
-      dispatch(actions.setSpanArgs([ts, to]))
-    }
-  },
-  setTo(ts: Ts): Thunk {
-    return function(dispatch, getState) {
-      let [from, _] = selectors.getSpanArgs(getState())
-      dispatch(actions.setSpanArgs([from, ts]))
-    }
-  }
-}
-
 const init: SearchState = {
   span: [{sec: 0, ns: 0}, {sec: 1, ns: 0}],
   spanArgs: ["now - 5m", "now"],
   spanFocus: null
 }
 
-function reducer(state: SearchState = init, action: SearchActions) {
+function reducer(
+  state: SearchState = init,
+  action: TabActions | SearchActions
+) {
   switch (action.type) {
     case "SEARCH_SPAN_SET":
       return {...state, span: action.span}
@@ -82,7 +58,5 @@ function reducer(state: SearchState = init, action: SearchActions) {
 
 export default {
   ...actions,
-  ...selectors,
-  ...thunks,
   reducer
 }

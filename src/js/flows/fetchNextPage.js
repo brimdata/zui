@@ -13,6 +13,7 @@ import searchArgs from "./searchArgs"
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let state = getState()
   let logs = getViewerLogs(state)
+  // FIX
   let tab = search.getTab(state)
   let [spliceIndex, span] = nextPageArgs(logs, tab.span)
 

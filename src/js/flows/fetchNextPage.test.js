@@ -7,6 +7,7 @@ import Log from "../models/Log"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
 import search from "../state/search"
+import tab from "../state/tab"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
@@ -18,7 +19,7 @@ beforeEach(() => {
   store.dispatchAll([
     setCurrentSpaceName("default"),
     search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
-    search.computeSpan(),
+    tab.computeSpan(),
     appendViewerRecords(tuples.map((t) => new Log(t, descriptor)))
   ])
   store.clearActions()

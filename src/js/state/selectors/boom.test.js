@@ -5,6 +5,7 @@ import {setCluster} from "../clusters/actions"
 import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
 import initTestStore from "../../test/initTestStore"
 import search from "../search"
+import tab from "../tab"
 
 test("#getBoomOptions", () => {
   const store = initTestStore()
@@ -16,7 +17,7 @@ test("#getBoomOptions", () => {
       password: "puppy"
     }),
     search.setSpanArgsFromDates([new Date(0), new Date(1)]),
-    search.computeSpan(),
+    tab.computeSpan(),
     setCurrentSpaceName("work-zone"),
     useBoomCache(true),
     useBoomIndex(false)

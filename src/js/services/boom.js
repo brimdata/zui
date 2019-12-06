@@ -10,7 +10,7 @@ import ErrorFactory from "../models/ErrorFactory"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
 import notice from "../state/notice"
-import search from "../state/search"
+import tab from "../state/tab"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, g, boom) => {
@@ -69,7 +69,7 @@ export function checkVersions(): Thunk {
 
 export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
-    let [from, to] = search.getSpan(getState())
+    let [from, to] = tab.getSpan(getState())
     let searchSpan = [brim.time(from).toDate(), brim.time(to).toDate()]
     let searchSpace = getCurrentSpaceName(getState())
     try {

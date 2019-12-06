@@ -3,7 +3,7 @@ import {createSelector} from "reselect"
 
 import type {DateTuple} from "../../lib/TimeWindow"
 import {type Finding, getCurrentFinding} from "../reducers/investigation"
-import type {SpanArgs, TabState} from "./types"
+import type {SpanArgs, TabState} from "../search/types"
 import type {State} from "../types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getSearchProgram} from "../selectors/searchBar"

@@ -4,13 +4,13 @@ import type {SearchRecord} from "../../types"
 import type {State} from "../types"
 import {getCurrentSpaceName} from "../reducers/spaces"
 import {getSearchBar} from "./searchBar"
-import search from "../search"
+import tab from "../tab"
 
 export const getSearchRecord = (state: State): SearchRecord => {
   return {
     program: getSearchBar(state).previous,
     pins: getSearchBar(state).pinned,
-    spanArgs: search.getSpanArgs(state),
+    spanArgs: tab.getSpanArgs(state),
     space: getCurrentSpaceName(state)
   }
 }

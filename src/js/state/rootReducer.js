@@ -14,11 +14,11 @@ import logDetails from "./reducers/logDetails"
 import modal from "./modal"
 import notice from "./notice"
 import packets from "./reducers/packets"
-import search from "./search"
 import searchBar from "./reducers/searchBar"
 import searchHistory from "./reducers/searchHistory"
 import spaces from "./reducers/spaces"
 import starredLogs from "./reducers/starredLogs"
+import tabs from "./tabs"
 import tasks from "./tasks"
 import view from "./reducers/view"
 import viewerReducer from "./viewer/reducer"
@@ -29,11 +29,11 @@ export default combineReducers<*, *>({
   columns: columnsReducer,
   clusters: clustersReducer,
   modal: modal.reducer,
-  search: search.reducer,
   notice: notice.reducer,
   tasks: tasks.reducer,
   handlers: handlers.reducer,
   chart: chart.reducer,
+  tabs: tabs.reducer,
   investigation,
   view,
   searchBar,
