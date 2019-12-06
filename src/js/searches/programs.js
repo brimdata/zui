@@ -18,5 +18,5 @@ export function filenameCorrelation(md5: string) {
 
 export const UID_CORRELATION_LIMIT = 100
 export function uidCorrelation(uid: string) {
-  return `uid=${uid} or ${uid} in conn_uids or ${uid} in uids | head ${UID_CORRELATION_LIMIT}`
+  return `uid=${uid} or ${uid} in conn_uids or ${uid} in uids or referenced_file.uid=${uid} | head ${UID_CORRELATION_LIMIT}`
 }
