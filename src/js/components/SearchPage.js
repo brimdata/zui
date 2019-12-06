@@ -28,6 +28,7 @@ import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 import SettingsModal from "./SettingsModal"
+import TabBar from "./TabBar"
 import WhoisModal from "./WhoisModal"
 import handlers from "../state/handlers"
 
@@ -56,6 +57,7 @@ export default function SearchPage({cluster}: Props) {
       <div className="search-page">
         <LeftPane />
         <div className="search-page-main">
+          <TabBar />
           <div className="search-page-header">
             <ControlBar />
             {logsTab && (

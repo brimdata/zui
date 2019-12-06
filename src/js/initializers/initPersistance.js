@@ -5,10 +5,11 @@ import throttle from "lodash/throttle"
 
 import type {State} from "../state/types"
 
-export const VERSION = "2"
+export const VERSION = "4"
 const KEY = "BRIM_STATE"
 const PERSIST = [
-  "search",
+  // "search",
+  "tabs",
   "searchBar",
   "boomd",
   "currentSpaceName",

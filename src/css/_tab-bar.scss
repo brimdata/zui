@@ -1,0 +1,17 @@
+.tab-bar {
+  display: flex;
+  height: 32px;
+  padding-left: 80px;
+
+  .tab {
+    background: $gray-1;
+    max-width: 200px;
+    margin: 0 1px;
+    a {
+      color: white;
+    }
+    &.active {
+      background: $white-9;
+    }
+  }
+}
