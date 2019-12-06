@@ -55,7 +55,7 @@ for (let [name, info] of Object.entries(JSON.parse(file))) {
     console.log(percent(covered, total), htmlPath(info))
   }
 }
-console.log("--------")
+console.log("-------")
 console.log(
   percent(allCov, allState),
   'Total (Update with: "npm test -- --coverage")'
