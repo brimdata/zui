@@ -1,6 +1,12 @@
 /* @flow */
 
-export type ModalName = "debug" | "settings" | "whois" | "curl" | "nodata"
+export type ModalName =
+  | "debug"
+  | "settings"
+  | "whois"
+  | "curl"
+  | "nodata"
+  | "boom-get"
 
 export type MODAL_SHOW = {
   type: "MODAL_SHOW",

@@ -48,4 +48,6 @@ global.ResizeObserver = class ResizeObserver {
 }
 
 enzyme.configure({adapter: new Adapter()})
+//$FlowFixMe
+document.execCommand = jest.fn()
 initDOM()
