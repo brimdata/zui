@@ -22,7 +22,7 @@ export default function TabBar() {
           key={i}
           index={i}
           onClick={() => dispatch(tabs.activate(i))}
-          active={i === parseInt(active)}
+          active={i === active}
         />
       ))}
       <a onClick={addTab}>New Tab...</a>
@@ -35,7 +35,14 @@ function Tab({index, active, onClick}) {
   return (
     <div onClick={onClick} className={classNames("tab", {active})}>
       Tab #{index}
-      <a onClick={() => dispatch(tabs.remove(index))}>X</a>
+      <a
+        onClick={(e) => {
+          e.stopPropagation()
+          dispatch(tabs.remove(index))
+        }}
+      >
+        X
+      </a>
     </div>
   )
 }
