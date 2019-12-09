@@ -3,11 +3,14 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
+import CloseButton from "./CloseButton"
+import RampLeft from "../icons/ramp-left.svg"
+import RampRight from "../icons/ramp-right.svg"
 import tabs from "../state/tabs"
 
 export default function TabBar() {
   let dispatch = useDispatch()
-  let allTabs = useSelector(tabs.getAll)
+  let allTabs = useSelector(tabs.getData)
   let active = useSelector(tabs.getActive)
 
   function addTab() {
@@ -34,15 +37,15 @@ function Tab({index, active, onClick}) {
   let dispatch = useDispatch()
   return (
     <div onClick={onClick} className={classNames("tab", {active})}>
-      Tab #{index}
-      <a
+      <p className="title">Tab #{index}</p>
+      <CloseButton
         onClick={(e) => {
           e.stopPropagation()
           dispatch(tabs.remove(index))
         }}
-      >
-        X
-      </a>
+      />
+      <RampRight />
+      <RampLeft />
     </div>
   )
 }

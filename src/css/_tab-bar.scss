@@ -1,17 +1,104 @@
+$tab-hover-color: #f1f2f5;
+$tab-bg-color: #dee1e6;
+
 .tab-bar {
   display: flex;
-  height: 32px;
+  height: 40px;
   padding-left: 80px;
+  background: $tab-bg-color;
+  align-items: flex-end;
+  overflow: hidden;
+  position: relative;
 
   .tab {
-    background: $gray-1;
-    max-width: 200px;
-    margin: 0 1px;
-    a {
-      color: white;
+    z-index: 1;
+    -webkit-app-region: no-drag;
+    height: 32px;
+    max-width: 240px;
+    flex: 1;
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0);
+    transition: all 300ms;
+    cursor: default;
+    border-radius: 8px 8px 0 0;
+
+    .title {
+      font-family: system-ui;
+      font-size: 12px;
+      margin: 0;
+      font-weight: 500;
+      color: $gray-5;
     }
+
+    .close-button {
+      width: 8px;
+      height: 8px;
+      svg {
+        fill: $gray-5;
+      }
+    }
+
+    .ramp-right,
+    .ramp-left {
+      position: absolute;
+      bottom: 0;
+      fill: transparent;
+      transition: all 300ms;
+    }
+    .ramp-right {
+      left: 100%;
+    }
+    .ramp-left {
+      right: 100%;
+    }
+
+    &:not(.active):hover {
+      background: $tab-hover-color;
+      box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+      .ramp-left,
+      .ramp-right {
+        fill: $tab-hover-color;
+      }
+      &:after,
+      & + .tab:after {
+        opacity: 0;
+      }
+    }
+
     &.active {
-      background: $white-9;
+      transition: all 300ms;
+      background: white;
+      z-index: 2;
+      .ramp-left,
+      .ramp-right {
+        fill: white;
+      }
+      &:after,
+      & + .tab:after {
+        opacity: 0;
+      }
+    }
+
+    &:after {
+      content: " ";
+      position: absolute;
+      background-color: $gray-1;
+      width: 1px;
+      transform: scaleX(0.4);
+      top: 6px;
+      bottom: 6px;
+      left: 0;
+      opacity: 1;
+      transition: all 300ms;
+    }
+
+    &:first-child:after {
+      display: none;
     }
   }
 }
