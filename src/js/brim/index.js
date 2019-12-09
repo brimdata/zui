@@ -5,6 +5,7 @@ import dateTuple from "./dateTuple"
 import field from "./field"
 import log from "./log"
 import program from "./program"
+import recordCollector from "./recordCollector"
 import relTime from "./relTime"
 import space from "./space"
 import span from "./span"
@@ -57,5 +58,6 @@ export default {
   time,
   relTime,
   span,
-  dateTuple
+  dateTuple,
+  recordCollector
 }

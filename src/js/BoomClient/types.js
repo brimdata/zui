@@ -90,9 +90,16 @@ type TaskEndPayload = {
   }
 }
 
+type SearchRecordsPayload = {
+  type: "SearchRecords",
+  records: *,
+  channel_id: number
+}
+
 export type BoomPayload =
   | SearchDescriptorsPayload
   | SearchTuplesPayload
   | SearchStatsPayload
   | SearchEndPayload
   | TaskEndPayload
+  | SearchRecordsPayload

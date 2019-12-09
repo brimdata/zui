@@ -20,6 +20,7 @@ export default function(
 ): SearchCallbackMap {
   let name = search.name
   let accum = accumResults()
+  let collector = brim.recordCollector()
 
   function dispatchResults() {
     if (accum.noTuples()) return
@@ -32,6 +33,10 @@ export default function(
 
   function each(payload: BoomPayload) {
     switch (payload.type) {
+      case "SearchRecords":
+        var chanId = payload.channel_id.toString()
+        collector.add(chanId, payload.records)
+        break
       case "SearchDescriptors":
         accum.addDescriptors(payload.descriptors)
         break
@@ -53,6 +58,7 @@ export default function(
         )
         break
       case "SearchEnd":
+        collector.records()
         dispatchResultsSteady.cancel()
         dispatchResults()
         dispatch(setSearchStatus(name, "SUCCESS"))
