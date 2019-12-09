@@ -2,7 +2,6 @@
 
 import type {SearchActions} from "../search/types"
 import type {TabActions, TabsState} from "./"
-import {last} from "../../lib/Array"
 import initialState, {initTab} from "./initialState"
 import search from "../search"
 
@@ -12,16 +11,13 @@ export default function reducer(
 ) {
   if (action.type.startsWith("SEARCH_")) {
     let {data, active} = state
-    let tab = data[active.toString()]
+    let tab = data[active]
+    let updates = search.reducer(tab, action)
+    let newData = [...data]
+    newData[active] = {...tab, ...updates}
     return {
       active,
-      data: {
-        ...data,
-        [active]: {
-          ...tab,
-          ...search.reducer(tab, action)
-        }
-      }
+      data: newData
     }
   }
 
@@ -32,9 +28,9 @@ export default function reducer(
         active: action.id
       }
     case "TABS_REMOVE":
-      if (Object.keys(state.data).length === 1) return state
+      if (state.data.length === 1) return state
       return {
-        active: removeTabActive(parseIds(state.data), state.active, action.id),
+        active: removeTabActive(state.data.length, state.active, action.id),
         data: removeTabData(state.data, action.id)
       }
     case "TABS_ADD":
@@ -47,24 +43,13 @@ export default function reducer(
   }
 }
 
-function parseIds(data) {
-  return Object.keys(data)
-    .map((k) => parseInt(k))
-    .sort()
-}
-
-function initId(state): string {
-  return Object.keys(state).length.toString()
-}
-
 function addTabData(stateData, actionData) {
-  let id = initId(stateData)
   let tab = {...initTab(), ...actionData}
-  return {...stateData, [id]: tab}
+  return [...stateData, tab]
 }
 
-function removeTabActive(ids: number[], activeId: number, removeId: number) {
-  if (activeId === removeId && activeId === last(ids)) {
+function removeTabActive(length: number, activeId: number, removeId: number) {
+  if (activeId === removeId && activeId === length - 1) {
     return activeId - 1
   } else if (activeId > removeId) {
     return activeId - 1
@@ -74,7 +59,7 @@ function removeTabActive(ids: number[], activeId: number, removeId: number) {
 }
 
 function removeTabData(data, id) {
-  let newData = {...data}
-  delete newData[id.toString()]
+  let newData = [...data]
+  newData.splice(id, 1)
   return newData
 }

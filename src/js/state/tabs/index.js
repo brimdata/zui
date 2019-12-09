@@ -5,9 +5,8 @@ import type {SearchState} from "../search/types"
 import type {State} from "../types"
 import reducer from "./reducer"
 
-export type TabsState = {active: number, data: TabDataState}
+export type TabsState = {active: number, data: Tab[]}
 export type Tab = SearchState
-type TabDataState = {[string]: SearchState}
 type TABS_ADD = {type: "TABS_ADD", data?: $Shape<SearchState>}
 type TABS_REMOVE = {type: "TABS_REMOVE", id: number}
 type TABS_ACTIVATE = {type: "TABS_ACTIVATE", id: number}
@@ -22,27 +21,17 @@ const actions = {
 const selectors = {
   getData: (state: State) => state.tabs.data,
   getActive: (state: State) => state.tabs.active,
-  getCount: (state: State) => Object.keys(state.tabs.data).length
+  getCount: (state: State) => state.tabs.data.length
 }
-
-const getAll = createSelector<State, void, SearchState[], TabDataState>(
-  selectors.getData,
-  (data) =>
-    Object.keys(data)
-      .map((id) => parseInt(id))
-      .sort()
-      .map((id) => data[id.toString()])
-)
 
 const getActiveTab = createSelector<State, void, SearchState, TabsState>(
   (state) => state.tabs,
-  (tabs) => tabs.data[tabs.active.toString()]
+  (tabs) => tabs.data[tabs.active]
 )
 
 export default {
   ...actions,
   ...selectors,
   getActiveTab,
-  getAll,
   reducer
 }

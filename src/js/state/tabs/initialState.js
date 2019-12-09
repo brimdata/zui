@@ -8,5 +8,5 @@ export function initTab() {
 }
 
 export default function() {
-  return {active: 0, data: {"0": initTab()}}
+  return {active: 0, data: [initTab()]}
 }

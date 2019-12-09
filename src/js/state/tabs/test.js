@@ -95,8 +95,3 @@ test("remove tab does nothing if only one tab left", () => {
 
   expect(tabs.getCount(state)).toBe(1)
 })
-
-test("getAll returns an array", () => {
-  let state = store.dispatchAll([tabs.add(), tabs.add()])
-  expect(tabs.getAll(state)).toBeInstanceOf(Array)
-})
