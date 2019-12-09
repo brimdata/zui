@@ -2,7 +2,7 @@
 import type {SearchTemplate} from "./types"
 import type {Thunk} from "../state/types"
 import {clearSearchResults, registerSearch} from "../state/searches/actions"
-import {fetchSearch} from "../backend/thunks"
+import {fetchSearch} from "../services/boom"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getSearches} from "../state/searches/selector"
 import baseHandler from "./baseHandler"

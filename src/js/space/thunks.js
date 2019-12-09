@@ -2,7 +2,7 @@
 import {NoSpacesError} from "../models/Errors"
 import type {Thunk} from "../state/types"
 import {clearViewer} from "../state/viewer/actions"
-import {fetchSpace, fetchSpaces} from "../backend/thunks"
+import {fetchSpace, fetchSpaces} from "../services/boom"
 import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
 import {killAllSearches} from "../searches/cancelSearch"
 import {

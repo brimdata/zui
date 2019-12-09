@@ -14,7 +14,7 @@ import {
 import {clearSearches} from "../searches/actions"
 import {clearViewer} from "../viewer/actions"
 import {setCluster} from "./actions"
-import {testConnection} from "../../backend/thunks"
+import {testConnection} from "../../services/boom"
 import search from "../search"
 
 export function connectCluster(cluster: Cluster): Thunk {

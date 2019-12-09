@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {useEffect, useState} from "react"
 
 import {accumResults} from "../lib/accumResults"
-import {fetchSearch} from "../backend/thunks"
+import {fetchSearch} from "../services/boom"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {registerSearch} from "../state/searches/actions"
 import baseHandler from "../searches/baseHandler"
