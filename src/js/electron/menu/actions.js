@@ -17,7 +17,7 @@ import {
 import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
 import {submitSearchBar} from "../../state/thunks/searchBar"
-import {viewLogDetail} from "../../detail/viewLogDetail"
+import {viewLogDetail} from "../../flows/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import action from "./action"

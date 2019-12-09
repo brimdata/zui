@@ -15,7 +15,7 @@ import {
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
 import {submitSearchBar} from "../state/thunks/searchBar"
-import {viewLogDetail} from "../detail/viewLogDetail"
+import {viewLogDetail} from "../flows/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import brim from "../brim"
