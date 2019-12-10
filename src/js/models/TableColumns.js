@@ -58,7 +58,7 @@ export default class TableColumns {
 
     this.cols.forEach((col) => {
       if (col.width) return
-      let colName = brim.field("", "", col.name)
+      let colName = brim.field({value: "", type: "", name: col.name})
       let max = colName.guessWidth() + resizeHandle + sortIcon
 
       logs.forEach((log) => {

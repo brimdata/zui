@@ -16,7 +16,7 @@ export function appendQueryInclude(field: Field): Thunk {
       changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .include(brim.field(field.name, field.type, field.value))
+          .include(brim.field(field))
           .string()
       )
     )
@@ -29,7 +29,7 @@ export function appendQueryExclude(field: Field): Thunk {
       changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .exclude(brim.field(field.name, field.type, field.value))
+          .exclude(brim.field(field))
           .string()
       )
     )
@@ -46,7 +46,7 @@ export function appendQueryCountBy(field: Field): Thunk {
       changeSearchBarInput(
         brim
           .program(program)
-          .countBy(brim.field(field.name, field.type, field.value))
+          .countBy(brim.field(field))
           .string()
       )
     )

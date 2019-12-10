@@ -13,6 +13,13 @@ import syntax from "./syntax"
 import table from "./table"
 import time from "./time"
 
+export type FieldData = {
+  name: string,
+  value: string,
+  type: string
+}
+export type RecordData = FieldData[]
+
 export type $Field = {
   name: string,
   value: string,

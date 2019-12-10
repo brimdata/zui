@@ -12,7 +12,7 @@ export default function(tuple: string[], descriptor: Descriptor) {
       if (inBounds(this.tuple, index)) {
         let {name, type} = descriptor[index]
         let value = tuple[index]
-        return brim.field(name, type, value)
+        return brim.field({name, type, value})
       } else {
         return null
       }

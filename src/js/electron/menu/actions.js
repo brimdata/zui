@@ -102,7 +102,7 @@ function buildActions() {
       name: "cell-menu-in",
       label: "Filter in field",
       listener(dispatch, {name, value, type}) {
-        dispatch(appendQueryIn(brim.field(name, type, value)))
+        dispatch(appendQueryIn(brim.field({name, type, value})))
         dispatch(submitSearchBar())
       }
     }),
@@ -110,7 +110,7 @@ function buildActions() {
       name: "cell-menu-not-in",
       label: "Filter not in field",
       listener(dispatch, {name, value, type}) {
-        dispatch(appendQueryNotIn(brim.field(name, type, value)))
+        dispatch(appendQueryNotIn(brim.field({name, type, value})))
         dispatch(submitSearchBar())
       }
     }),

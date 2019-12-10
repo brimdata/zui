@@ -21,7 +21,7 @@ function compoundField(name: string, type: string, value: string): $T {
     },
     item(index: number) {
       if (items[index]) {
-        return brim.field(name, itemType, items[index])
+        return brim.field({name, type: itemType, value: items[index]})
       } else {
         return null
       }

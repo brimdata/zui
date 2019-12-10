@@ -87,7 +87,7 @@ export default class Log {
     if (inBounds(this.tuple, index)) {
       let {name, type} = this.descriptor[index]
       let value = this.tuple[index]
-      return brim.field(name, type, value)
+      return brim.field({name, type, value})
     } else {
       return null
     }
