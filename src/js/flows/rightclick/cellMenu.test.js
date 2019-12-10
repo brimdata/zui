@@ -2,9 +2,9 @@
 
 import type {MenuItem} from "electron"
 
-import {conn, dns, weird} from "../test/mockLogs"
-import menu from "../electron/menu"
-import mockSpace from "../test/mockSpace"
+import {conn, dns, weird} from "../../test/mockLogs"
+import menu from "../../electron/menu"
+import mockSpace from "../../test/mockSpace"
 
 function menuText(menu: MenuItem) {
   return menu

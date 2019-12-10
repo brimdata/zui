@@ -4,7 +4,7 @@ import {
   appendQueryCountBy,
   appendQueryExclude,
   appendQueryInclude
-} from "../../searchBar/actions"
+} from "../../flows/searchBar/actions"
 import {
   changeSearchBarInput,
   clearSearchBar,

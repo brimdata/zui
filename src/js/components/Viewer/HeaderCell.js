@@ -4,7 +4,7 @@ import React, {useState} from "react"
 import classNames from "classnames"
 
 import type {TableColumn} from "../../state/columns/types"
-import {appendQuerySortBy} from "../../searchBar/actions"
+import {appendQuerySortBy} from "../../flows/searchBar/actions"
 import {submitSearchBar} from "../../state/thunks/searchBar"
 import {updateColumns} from "../../state/columns/actions"
 import IconAsc from "../icons/icon-asc.svg"

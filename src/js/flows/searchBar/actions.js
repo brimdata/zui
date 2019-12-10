@@ -1,14 +1,14 @@
 /* @flow */
 
-import type {Thunk} from "../state/types"
-import {changeSearchBarInput} from "../state/actions"
+import type {Thunk} from "../../state/types"
+import {changeSearchBarInput} from "../../state/actions"
 import {
   getSearchBar,
   getSearchBarInputValue
-} from "../state/selectors/searchBar"
-import {onlyWhitespace} from "../lib/Str"
-import Field from "../models/Field"
-import brim, {type $Field} from "../brim"
+} from "../../state/selectors/searchBar"
+import {onlyWhitespace} from "../../lib/Str"
+import Field from "../../models/Field"
+import brim, {type $Field} from "../../brim"
 
 export function appendQueryInclude(field: Field): Thunk {
   return function(dispatch, getState) {

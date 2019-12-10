@@ -1,8 +1,8 @@
 /* @flow */
 
-import {conn} from "../test/mockLogs"
+import {conn} from "../../test/mockLogs"
 import actions from "./actions"
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 
 test("#detail first shows right pane, then views log", () => {
   const store = initTestStore()

@@ -8,7 +8,7 @@ import {
   appendQueryInclude,
   appendQueryNotIn,
   appendQuerySortBy
-} from "../../searchBar/actions"
+} from "../../flows/searchBar/actions"
 import {
   changeSearchBarInput,
   clearSearchBar,

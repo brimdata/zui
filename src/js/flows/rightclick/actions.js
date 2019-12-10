@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Dispatch} from "../state/types"
+import type {Dispatch} from "../../state/types"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -11,17 +11,17 @@ import {
   changeSearchBarInput,
   clearSearchBar,
   showRightSidebar
-} from "../state/actions"
-import {fetchPackets} from "../state/thunks/packets"
-import {open} from "../lib/System"
-import {submitSearchBar} from "../state/thunks/searchBar"
-import {viewLogDetail} from "../flows/viewLogDetail"
-import Field, {TimeField} from "../models/Field"
-import Log from "../models/Log"
-import brim from "../brim"
-import modal from "../state/modal"
-import search from "../state/search"
-import virusTotal from "../services/virusTotal"
+} from "../../state/actions"
+import {fetchPackets} from "../../state/thunks/packets"
+import {open} from "../../lib/System"
+import {submitSearchBar} from "../../state/thunks/searchBar"
+import {viewLogDetail} from "../viewLogDetail"
+import Field, {TimeField} from "../../models/Field"
+import Log from "../../models/Log"
+import brim from "../../brim"
+import modal from "../../state/modal"
+import search from "../../state/search"
+import virusTotal from "../../services/virusTotal"
 
 export type RightClickAction = {
   type?: string,
