@@ -19,9 +19,9 @@ import {viewLogDetail} from "../flows/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import brim from "../brim"
-import external from "../external"
 import modal from "../modal"
 import search from "../state/search"
+import virusTotal from "../services/virusTotal"
 
 export type RightClickAction = {
   type?: string,
@@ -175,7 +175,7 @@ const separator = () => ({
 
 const virusTotalRightclick = (field: Field, opts: Options) => ({
   label: "VirusTotal Lookup",
-  click: (_: Dispatch) => open(external.virusTotalUrl(field.value)),
+  click: (_: Dispatch) => open(virusTotal.url(field.value)),
   ...opts
 })
 

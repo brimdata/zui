@@ -22,9 +22,9 @@ import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import action from "./action"
 import brim from "../../brim"
-import external from "../../external"
 import modal from "../../modal"
 import search from "../../state/search"
+import virusTotal from "../../services/virusTotal"
 
 function buildActions() {
   return {
@@ -168,7 +168,7 @@ function buildActions() {
       name: "cell-menu-virus-total",
       label: "VirusTotal Lookup",
       listener(_dispatch, field) {
-        open(external.virusTotalUrl(field.value))
+        open(virusTotal.url(field.value))
       }
     }),
     whoisRightclick: action({

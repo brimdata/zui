@@ -1,11 +1,12 @@
 /* @flow */
 import https from "https"
-import external from "../../src/js/external"
+
 import {retry} from "../lib/control"
+import virusTotal from "../../src/js/services/virusTotal"
 
 test("ping virus total for a success", () => {
   let value = "80.239.217.49"
-  let url = external.virusTotalUrl(value)
+  let url = virusTotal.url(value)
 
   function makeRequest() {
     return new Promise((good, bad) => {
