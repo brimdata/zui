@@ -3,7 +3,7 @@ import * as d3 from "d3"
 
 import type {Pen} from "../types"
 import {getPointAt} from "../getPointAt"
-import brim from "../../brim"
+import brim from "../../../brim"
 
 type Props = {
   onFocus: Function,

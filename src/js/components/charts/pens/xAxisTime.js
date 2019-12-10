@@ -3,8 +3,8 @@
 import * as d3 from "d3"
 
 import type {Pen} from "../types"
-import type {Span} from "../../services/BoomClient/types"
-import {duration, shift} from "../../lib/TimeWindow"
+import type {Span} from "../../../services/BoomClient/types"
+import {duration, shift} from "../../../lib/TimeWindow"
 import {innerWidth} from "../dimens"
 
 type Props = {

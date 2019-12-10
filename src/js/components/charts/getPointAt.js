@@ -1,6 +1,6 @@
 /* @flow */
 import type {Chart} from "./types"
-import brim from "../brim"
+import brim from "../../brim"
 
 export const getPointAt = (left: number, chart: Chart) => {
   const ts = chart.xScale.invert(left - chart.margins.left)

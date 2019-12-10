@@ -1,12 +1,12 @@
 /* @flow */
 
 import type {HistogramData} from "../../charts/types"
-import type {Span} from "../../services/BoomClient/types"
-import {toDate} from "../../lib/TimeField"
-import Log from "../../models/Log"
-import MergeHash from "../../models/MergeHash"
-import UniqArray from "../../models/UniqArray"
-import histogramInterval from "../../lib/histogramInterval"
+import type {Span} from "../../../services/BoomClient/types"
+import {toDate} from "../../../lib/TimeField"
+import Log from "../../../models/Log"
+import MergeHash from "../../../models/MergeHash"
+import UniqArray from "../../../models/UniqArray"
+import histogramInterval from "../../../lib/histogramInterval"
 
 export default function(logs: Log[], span: Span): HistogramData {
   let interval = histogramInterval(span)

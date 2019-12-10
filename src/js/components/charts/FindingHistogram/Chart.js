@@ -2,11 +2,11 @@
 
 import React from "react"
 
-import type {SearchResults} from "../../state/searches/types"
-import type {SpanArgs} from "../../state/search/types"
+import type {SearchResults} from "../../../state/searches/types"
+import type {SpanArgs} from "../../../state/search/types"
 import ChartSVG from "../ChartSVG"
-import Dimens from "../../components/Dimens"
-import brim from "../../brim"
+import Dimens from "../../Dimens"
+import brim from "../../../brim"
 import useFindingHistogram from "./useFindingHistogram"
 
 type Props = {

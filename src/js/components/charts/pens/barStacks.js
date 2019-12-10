@@ -3,9 +3,9 @@
 import * as d3 from "d3"
 
 import type {Pen} from "../types"
-import {d3ElementAttr, itestLocator} from "../../test/integration"
+import {d3ElementAttr, itestLocator} from "../../../test/integration"
 import {innerHeight} from "../dimens"
-import brim from "../../brim"
+import brim from "../../../brim"
 
 export default function(): Pen {
   let chartG

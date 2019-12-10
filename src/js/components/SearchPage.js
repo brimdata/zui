@@ -27,7 +27,7 @@ import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
-import MainHistogramChart from "../charts/MainHistogram/Chart"
+import MainHistogramChart from "./charts/MainHistogram/Chart"
 import SettingsModal from "./SettingsModal"
 import WhoisModal from "./WhoisModal"
 

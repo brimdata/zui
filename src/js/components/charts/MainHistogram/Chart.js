@@ -2,7 +2,7 @@
 import React from "react"
 
 import ChartSVG from "../ChartSVG"
-import Dimens from "../../components/Dimens"
+import Dimens from "../../Dimens"
 import useMainHistogram from "./useMainHistogram"
 
 export default function MainHistogramChart() {
