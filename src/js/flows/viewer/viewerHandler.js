@@ -2,16 +2,16 @@
 import {throttle} from "lodash"
 
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
-import type {BoomPayload} from "../services/BoomClient/types"
-import type {Dispatch} from "../state/types"
-import type {SearchCallbackMap, SearchTemplate} from "../searches/types"
-import {accumResults} from "../lib/accumResults"
+import type {BoomPayload} from "../../services/BoomClient/types"
+import type {Dispatch} from "../../state/types"
+import type {SearchCallbackMap, SearchTemplate} from "../../searches/types"
+import {accumResults} from "../../lib/accumResults"
 import {
   appendViewerLogs,
   setViewerStatus,
   updateViewerColumns
-} from "../state/viewer/actions"
-import Log from "../models/Log"
+} from "../../state/viewer/actions"
+import Log from "../../models/Log"
 
 export default function(
   dispatch: Dispatch,

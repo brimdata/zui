@@ -9,7 +9,7 @@ import {
   submittingSearchBar
 } from "../actions"
 import {createError} from "../errors"
-import {fetchMainSearch} from "../../viewer/fetchMainSearch"
+import {fetchMainSearch} from "../../flows/viewer/fetchMainSearch"
 import {getCurrentEntry} from "../reducers/searchHistory"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"

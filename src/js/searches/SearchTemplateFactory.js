@@ -1,11 +1,12 @@
 /* @flow */
-import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../viewer/config"
+
+import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../flows/viewer/config"
 import type {DateTuple} from "../lib/TimeWindow"
 import {addEveryCountProc} from "./histogramSearch"
 import {addHeadProc, hasAnalytics} from "../lib/Program"
 import analyticsHandler from "./analyticsHandler"
 import histogramHandler from "./histogramHandler"
-import viewerHandler from "../viewer/viewerHandler"
+import viewerHandler from "../flows/viewer/viewerHandler"
 
 type Args = {
   program: string,

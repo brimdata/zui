@@ -1,5 +1,6 @@
 /* @flow */
-import {ANALYTIC_MAX_RESULTS} from "../../viewer/config"
+
+import {ANALYTIC_MAX_RESULTS} from "../../flows/viewer/config"
 import type {ResultsTabEnum} from "../../state/reducers/view"
 import {withCommas} from "../../lib/fmt"
 

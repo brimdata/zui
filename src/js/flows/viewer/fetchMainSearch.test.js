@@ -4,14 +4,14 @@ import {
   changeSearchBarInput,
   setCurrentSpaceName,
   setSpaceInfo
-} from "../state/actions"
-import {initTimeWindow} from "../state/thunks/timeWindow"
-import {setInnerTimeWindow} from "../state/search/actions"
-import {submitSearchBar} from "../state/thunks/searchBar"
-import MockBoomClient from "../test/MockBoomClient"
-import brim from "../brim"
-import initTestStore from "../test/initTestStore"
-import search from "../state/search"
+} from "../../state/actions"
+import {initTimeWindow} from "../../state/thunks/timeWindow"
+import {setInnerTimeWindow} from "../../state/search/actions"
+import {submitSearchBar} from "../../state/thunks/searchBar"
+import MockBoomClient from "../../test/MockBoomClient"
+import brim from "../../brim"
+import initTestStore from "../../test/initTestStore"
+import search from "../../state/search"
 
 let store, boom
 beforeEach(() => {

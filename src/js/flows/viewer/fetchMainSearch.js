@@ -1,16 +1,16 @@
 /* @flow */
 
-import type {Thunk} from "../state/types"
-import {cancelSearchesByTag} from "../searches/cancelSearch"
-import {clearViewer} from "../state/viewer/actions"
-import {getSearchProgram} from "../state/selectors/searchBar"
-import {getSearchRecord} from "../state/selectors/searchRecord"
-import {issueSearch} from "../searches/issueSearch"
-import {recordSearch} from "../state/actions"
-import {updateTab} from "../state/thunks/view"
-import {validateProgram} from "../state/thunks/searchBar"
-import SearchTemplateFactory from "../searches/SearchTemplateFactory"
-import search from "../state/search"
+import type {Thunk} from "../../state/types"
+import {cancelSearchesByTag} from "../../searches/cancelSearch"
+import {clearViewer} from "../../state/viewer/actions"
+import {getSearchProgram} from "../../state/selectors/searchBar"
+import {getSearchRecord} from "../../state/selectors/searchRecord"
+import {issueSearch} from "../../searches/issueSearch"
+import {recordSearch} from "../../state/actions"
+import {updateTab} from "../../state/thunks/view"
+import {validateProgram} from "../../state/thunks/searchBar"
+import SearchTemplateFactory from "../../searches/SearchTemplateFactory"
+import search from "../../state/search"
 
 type Options = {
   saveToHistory: boolean
