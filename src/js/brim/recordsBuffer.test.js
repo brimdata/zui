@@ -17,7 +17,7 @@ let records = [
 ]
 
 test("coverts to an array of records", () => {
-  let collector = brim.recordCollector()
+  let collector = brim.recordsBuffer()
   collector.add("0", records)
   expect(collector.records()).toMatchSnapshot()
 })

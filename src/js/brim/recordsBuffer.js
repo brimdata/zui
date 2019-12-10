@@ -9,7 +9,7 @@ type Record = {
 
 export default function recordCollector() {
   let channels = mapArrays()
-  let types = new Map()
+  let types = new Map<number, Descriptor>()
 
   function toFields({values, id}) {
     let col = types.get(id)
@@ -34,6 +34,14 @@ export default function recordCollector() {
 
     records(chanId: string = "0") {
       return channels.get(chanId)
+    },
+
+    columns() {
+      return types
+    },
+
+    clear(chanId: string = "0") {
+      channels.clear(chanId)
     }
   }
 }
@@ -51,6 +59,9 @@ function mapArrays() {
     },
     set(key, val) {
       return m.set(key, val)
+    },
+    clear(key) {
+      return m.set(key, [])
     }
   }
 }

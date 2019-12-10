@@ -5,38 +5,32 @@ import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {BoomPayload} from "../../services/BoomClient/types"
 import type {Dispatch} from "../../state/types"
 import type {SearchCallbackMap, SearchTemplate} from "../../searches/types"
-import {accumResults} from "../../lib/accumResults"
 import {
   appendViewerLogs,
   setViewerStatus,
   updateViewerColumns
 } from "../../state/viewer/actions"
-import Log from "../../models/Log"
+import brim from "../../brim"
 
 export default function(
   dispatch: Dispatch,
   _search: SearchTemplate
 ): SearchCallbackMap {
-  let accum = accumResults()
+  let buffer = brim.recordsBuffer()
 
   function dispatchResults() {
-    let tupleSet = accum.getChannel("0")
-    let logs = Log.fromTupleSet(tupleSet)
-    dispatch(appendViewerLogs(logs))
-    dispatch(updateViewerColumns(tupleSet.descriptors))
-    accum.clearTuples()
+    dispatch(appendViewerLogs(buffer.records()))
+    dispatch(updateViewerColumns(buffer.columns()))
+    buffer.clear()
   }
 
   let dispatchResultsSteady = throttle(dispatchResults, 100, {leading: false})
   let count = 0
   function each(payload: BoomPayload) {
     switch (payload.type) {
-      case "SearchDescriptors":
-        accum.addDescriptors(payload.descriptors)
-        break
-      case "SearchTuples":
-        accum.addTuples(payload.tuples)
-        count += payload.tuples.length
+      case "SearchRecords":
+        buffer.add(payload.channel_id.toString(), payload.records)
+        count += payload.records.length
         dispatchResultsSteady()
         break
       case "SearchEnd":

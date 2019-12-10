@@ -14,15 +14,6 @@ export function getSearch(state: State, name: string) {
   return state.searches[name] || emptySearch(name)
 }
 
-export function getSearchResults(state: State, name: string): SearchResults {
-  let search = getSearch(state, name)
-  if (search) {
-    return search.results
-  } else {
-    return {descriptors: {}, tuples: {}}
-  }
-}
-
 export function getSearchStatus(state: State, name: string) {
   let search = getSearch(state, name)
   if (search) {
