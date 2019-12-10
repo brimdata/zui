@@ -4,7 +4,7 @@ import React from "react"
 
 import {XUidTimeline} from "../UidTimeline"
 import {reactElementProps} from "../../test/integration"
-import {resultsToLogs} from "../../log/resultsToLogs"
+import {resultsToLogs} from "../../models/resultsToLogs"
 import {toFront} from "../../lib/Array"
 import {uidCorrelation} from "../../searches/programs"
 import InlineTableLoading from "../InlineTableLoading"

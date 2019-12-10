@@ -12,7 +12,7 @@ import {
 } from "../../searches/programs"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {parallelizeProcs} from "../../lib/Program"
-import {resultsToLogs} from "../../log/resultsToLogs"
+import {resultsToLogs} from "../../models/resultsToLogs"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
