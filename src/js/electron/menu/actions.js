@@ -22,7 +22,7 @@ import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import action from "./action"
 import brim from "../../brim"
-import modal from "../../modal"
+import modal from "../../state/modal"
 import search from "../../state/search"
 import virusTotal from "../../services/virusTotal"
 

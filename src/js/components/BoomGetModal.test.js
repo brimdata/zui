@@ -5,7 +5,7 @@ import {changeSearchBarInput} from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import BoomGetModal from "./BoomGetModal"
 import logInto from "../test/helpers/loginTo"
-import modal from "../modal"
+import modal from "../state/modal"
 import provide from "../test/helpers/provide"
 
 test("renders with boom get command", () => {

@@ -12,7 +12,7 @@ import {
 } from "../state/actions"
 import {submitSearchBar} from "../state/thunks/searchBar"
 import brim from "../brim"
-import modal from "../modal"
+import modal from "../state/modal"
 import notice from "../state/notice"
 import search from "../state/search"
 

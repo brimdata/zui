@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react"
 
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
-import modal from "../modal"
+import modal from "../state/modal"
 import sys from "../sys"
 
 export default function WhoisModal() {

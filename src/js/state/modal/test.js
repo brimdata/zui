@@ -1,6 +1,6 @@
 /* @flow */
 
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../test/initTestStore"
 import modal from "./"
 
 let store

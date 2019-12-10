@@ -1,6 +1,6 @@
 /* @flow */
 import type {MODAL_HIDE, MODAL_SHOW, ModalName} from "./types"
-import type {State} from "../state/types"
+import type {State} from "../types"
 import reducer from "./reducer"
 
 export default {

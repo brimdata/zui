@@ -19,7 +19,7 @@ import {viewLogDetail} from "../flows/viewLogDetail"
 import Field, {TimeField} from "../models/Field"
 import Log from "../models/Log"
 import brim from "../brim"
-import modal from "../modal"
+import modal from "../state/modal"
 import search from "../state/search"
 import virusTotal from "../services/virusTotal"
 

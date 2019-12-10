@@ -14,7 +14,7 @@ import Animate from "./Animate"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
-import modal from "../modal"
+import modal from "../state/modal"
 import search from "../state/search"
 
 export default function SearchInput() {
