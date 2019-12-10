@@ -1,20 +1,21 @@
 /* @flow */
-import {NoSpacesError} from "../models/Errors"
-import type {Thunk} from "../state/types"
-import {clearViewer} from "../state/viewer/actions"
-import {fetchSpace, fetchSpaces} from "../services/boom"
-import {getCurrentSpaceTimeWindow} from "../state/reducers/spaces"
-import {killAllSearches} from "../searches/cancelSearch"
+
+import {NoSpacesError} from "../../models/Errors"
+import type {Thunk} from "../../state/types"
+import {clearViewer} from "../../state/viewer/actions"
+import {fetchSpace, fetchSpaces} from "../../services/boom"
+import {getCurrentSpaceTimeWindow} from "../../state/reducers/spaces"
+import {killAllSearches} from "../../searches/cancelSearch"
 import {
   setCurrentSpaceName,
   setSpaceInfo,
   setSpaceNames
-} from "../state/actions"
-import {submitSearchBar} from "../state/thunks/searchBar"
-import brim from "../brim"
-import modal from "../state/modal"
-import notice from "../state/notice"
-import search from "../state/search"
+} from "../../state/actions"
+import {submitSearchBar} from "../../state/thunks/searchBar"
+import brim from "../../brim"
+import modal from "../../state/modal"
+import notice from "../../state/notice"
+import search from "../../state/search"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {

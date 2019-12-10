@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
 import {getAllSpaceNames, getCurrentSpaceName} from "../state/reducers/spaces"
-import {initSpace, refreshSpaces} from "../space/thunks"
+import {initSpace, refreshSpaces} from "../flows/space/thunks"
 import {reactElementProps} from "../test/integration"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
