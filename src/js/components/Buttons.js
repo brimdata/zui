@@ -3,9 +3,9 @@
 import * as React from "react"
 import classNames from "classnames"
 
-import Caret from "../icons/caret-bottom-sm.svg"
+import Caret from "./icons/caret-bottom-sm.svg"
 import MenuBarButton from "./MenuBarButton"
-import X from "../icons/x-md.svg"
+import X from "./icons/x-md.svg"
 
 type Children = {
   children: ?React.Node

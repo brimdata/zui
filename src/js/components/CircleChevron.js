@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from "react"
-import Arrow from "../icons/chevron-left-md.svg"
+import Arrow from "./icons/chevron-left-md.svg"
 import pick from "lodash/pick"
 import classNames from "classnames"
 

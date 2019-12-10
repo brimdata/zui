@@ -16,8 +16,8 @@ import {
 } from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
-import Back from "../icons/back-arrow.svg"
-import Forward from "../icons/forward-arrow.svg"
+import Back from "./icons/back-arrow.svg"
+import Forward from "./icons/forward-arrow.svg"
 import Log from "../models/Log"
 import LogDetails from "./LogDetails"
 import Pane, {
@@ -29,7 +29,7 @@ import Pane, {
   PaneBody
 } from "./Pane"
 import RightPaneCollapser from "./RightPaneCollapser"
-import Star from "../icons/star-sm.svg"
+import Star from "./icons/star-sm.svg"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as logDetails from "../state/selectors/logDetails"
 import * as spaces from "../state/reducers/spaces"

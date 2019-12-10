@@ -7,8 +7,8 @@ import type {TableColumn} from "../../state/columns/types"
 import {appendQuerySortBy} from "../../searchBar/actions"
 import {submitSearchBar} from "../../state/thunks/searchBar"
 import {updateColumns} from "../../state/columns/actions"
-import IconAsc from "../../icons/icon-asc.svg"
-import IconDesc from "../../icons/icon-desc.svg"
+import IconAsc from "../icons/icon-asc.svg"
+import IconDesc from "../icons/icon-desc.svg"
 import columnKey from "../../lib/columnKey"
 
 let oldWidth = null

@@ -5,7 +5,7 @@ import React from "react"
 import type {Dispatch} from "../state/types"
 import {LatestError} from "./LatestError"
 import ErrorFactory from "../models/ErrorFactory"
-import Warn from "../icons/warning-md.svg"
+import Warn from "./icons/warning-md.svg"
 
 type Props = {children: any, dispatch: Dispatch}
 type State = {error: ?Error}

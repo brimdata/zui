@@ -16,7 +16,7 @@ import {
   getSearchBarEditingIndex
 } from "../state/selectors/searchBar"
 import FilterNode from "./FilterNode"
-import Pin from "../icons/pin-md.svg"
+import Pin from "./icons/pin-md.svg"
 
 type StateProps = {|
   editing: ?number,
