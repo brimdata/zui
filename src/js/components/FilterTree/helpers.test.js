@@ -1,6 +1,7 @@
 /* @flow */
-import {createInvestigationTree} from "./createTree"
-import brim from "../brim"
+
+import {createInvestigationTree} from "./helpers"
+import brim from "../../brim"
 
 function search(pins, program) {
   return {

@@ -1,8 +1,9 @@
 /* @flow */
+
 import {isEqual} from "lodash"
 
-import type {Investigation} from "../state/reducers/investigation"
-import Tree from "../models/Tree"
+import type {Investigation} from "../../state/reducers/investigation"
+import Tree from "../../models/Tree"
 
 export function createInvestigationTree(investigation: Investigation) {
   let tree = new Tree({data: "ROOT", children: []})
