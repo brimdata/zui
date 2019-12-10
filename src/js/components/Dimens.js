@@ -2,7 +2,7 @@
 
 import React, {type Node} from "react"
 
-import {useResizeObserver} from "../hooks/useResizeObserver"
+import {useResizeObserver} from "./hooks/useResizeObserver"
 
 type Props = {
   render: (DOMRectReadOnly) => Node

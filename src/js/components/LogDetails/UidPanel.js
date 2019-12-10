@@ -10,7 +10,7 @@ import {uidCorrelation} from "../../searches/programs"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import useSearch from "../../hooks/useSearch"
+import useSearch from "../hooks/useSearch"
 
 export default function UidPanel({log}: {log: Log}) {
   let [results, status] = useSearch({

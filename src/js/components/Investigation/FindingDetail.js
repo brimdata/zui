@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react"
 
 import type {Finding} from "../../state/reducers/investigation"
-import {useResizeObserver} from "../../hooks/useResizeObserver"
+import {useResizeObserver} from "../hooks/useResizeObserver"
 import FindingHistogramChart from "../../charts/FindingHistogram/Chart"
 import Log from "../../models/Log"
 import VerticalTable from "../Tables/VerticalTable"

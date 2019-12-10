@@ -18,7 +18,7 @@ import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import menu from "../../electron/menu"
-import useSearch from "../../hooks/useSearch"
+import useSearch from "../hooks/useSearch"
 
 export const Md5Panel = ({log}: {log: Log}) => {
   let logMd5 = log.get("md5")

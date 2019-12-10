@@ -2,13 +2,13 @@
 import {useDispatch, useSelector} from "react-redux"
 import {useEffect, useState} from "react"
 
-import {accumResults} from "../lib/accumResults"
-import {fetchSearch} from "../services/boom"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {registerSearch} from "../state/searches/actions"
-import baseHandler from "../searches/baseHandler"
-import search from "../state/search"
-import tasks from "../state/tasks"
+import {accumResults} from "../../lib/accumResults"
+import {fetchSearch} from "../../services/boom"
+import {getCurrentSpaceName} from "../../state/reducers/spaces"
+import {registerSearch} from "../../state/searches/actions"
+import baseHandler from "../../searches/baseHandler"
+import search from "../../state/search"
+import tasks from "../../state/tasks"
 
 type Opts = {name: string, program: string}
 

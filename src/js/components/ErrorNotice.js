@@ -8,7 +8,7 @@ import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {initSpace} from "../space/thunks"
 import NoticeBanner from "./NoticeBanner"
 import notice from "../state/notice"
-import useEscapeKey from "../hooks/useEscapeKey"
+import useEscapeKey from "./hooks/useEscapeKey"
 
 export default function ErrorNotice() {
   let error = useSelector(notice.getError)

@@ -12,7 +12,7 @@ import ScrollHooks from "../../lib/ScrollHooks"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import lib from "../../lib"
-import useConst from "../../hooks/useConst"
+import useConst from "../hooks/useConst"
 
 type Props = {
   chunker: Chunker,

@@ -11,7 +11,7 @@ import TimeInput from "./TimeInput"
 import TimePiece from "./TimePiece"
 import TimeSteppers from "./TimeSteppers"
 import brim, {type Ts} from "../../brim"
-import useFuzzyHover from "../../hooks/useFuzzyHover"
+import useFuzzyHover from "../hooks/useFuzzyHover"
 
 type Props = {
   timeArg: TimeArg,
