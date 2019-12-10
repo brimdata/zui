@@ -53,7 +53,6 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function SearchResults(props: Props) {
   let {logs} = props
-
   const dimens = buildViewerDimens({
     type: props.tableColumns.showHeader() ? "fixed" : "auto",
     height: props.height,

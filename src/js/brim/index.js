@@ -3,8 +3,10 @@ import ast from "./ast"
 import compoundField from "./compoundField"
 import dateTuple from "./dateTuple"
 import field from "./field"
+import interop from "./interop"
 import log from "./log"
 import program from "./program"
+import record from "./record"
 import recordsBuffer from "./recordsBuffer"
 import relTime from "./relTime"
 import space from "./space"
@@ -12,13 +14,6 @@ import span from "./span"
 import syntax from "./syntax"
 import table from "./table"
 import time from "./time"
-
-export type FieldData = {
-  name: string,
-  value: string,
-  type: string
-}
-export type RecordData = FieldData[]
 
 export type $Field = {
   name: string,
@@ -66,5 +61,7 @@ export default {
   relTime,
   span,
   dateTuple,
-  recordsBuffer
+  recordsBuffer,
+  record,
+  interop
 }

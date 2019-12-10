@@ -82,7 +82,6 @@ export default class LogRow extends React.Component<Props> {
         return <div className="log-cell" key={key} style={style} />
       }
     }
-
     return (
       <div
         className={classNames("log-row", {highlight, even: index % 2 == 0})}

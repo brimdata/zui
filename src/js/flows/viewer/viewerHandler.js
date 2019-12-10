@@ -6,7 +6,7 @@ import type {BoomPayload} from "../../services/BoomClient/types"
 import type {Dispatch} from "../../state/types"
 import type {SearchCallbackMap, SearchTemplate} from "../../searches/types"
 import {
-  appendViewerLogs,
+  appendViewerRecords,
   setViewerStatus,
   updateViewerColumns
 } from "../../state/viewer/actions"
@@ -19,7 +19,7 @@ export default function(
   let buffer = brim.recordsBuffer()
 
   function dispatchResults() {
-    dispatch(appendViewerLogs(buffer.records()))
+    dispatch(appendViewerRecords(buffer.records()))
     dispatch(updateViewerColumns(buffer.columns()))
     buffer.clear()
   }

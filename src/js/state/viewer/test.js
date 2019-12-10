@@ -1,7 +1,7 @@
 /* @flow */
 
 import {
-  appendViewerLogs,
+  appendViewerRecords,
   clearViewer,
   setViewerStatus,
   spliceViewer,
@@ -19,24 +19,24 @@ beforeEach(() => {
 
 test("adding logs to the viewer", () => {
   let state = store.dispatchAll([
-    appendViewerLogs([conn(), dns()]),
-    appendViewerLogs([http()])
+    appendViewerRecords([conn(), dns()]),
+    appendViewerRecords([http()])
   ])
 
   expect(getViewerLogs(state).length).toEqual(3)
 })
 
 test("clear results", () => {
-  let state = store.dispatchAll([appendViewerLogs([http()]), clearViewer()])
+  let state = store.dispatchAll([appendViewerRecords([http()]), clearViewer()])
 
   expect(getViewerLogs(state)).toEqual([])
 })
 
 test("splice results", () => {
   let state = store.dispatchAll([
-    appendViewerLogs([http()]),
-    appendViewerLogs([http()]),
-    appendViewerLogs([http()]),
+    appendViewerRecords([http()]),
+    appendViewerRecords([http()]),
+    appendViewerRecords([http()]),
     spliceViewer(1)
   ])
 

@@ -1,8 +1,10 @@
 /* @flow */
 
 import {COMPOUND_FIELD_RGX} from "./compoundField"
+import type {FieldData} from "../types/records"
+import {isArray} from "../lib/is"
 import {withCommas} from "../lib/fmt"
-import brim, {type $Field, type FieldData} from "./"
+import brim, {type $Field} from "./"
 
 export const ONE_CHAR = 7.39
 export const FIELD_PAD = 14
@@ -25,16 +27,19 @@ function field({name, type, value}: FieldData): $Field {
       return COMPOUND_FIELD_RGX.test(type)
     },
     toCompound() {
+      if (!isArray(value)) throw new Error("Not a compound field")
       return brim.compoundField(name, type, value)
     },
     toDate() {
       return new Date(+this.value * 1000)
     },
     display() {
-      if (type === "count") {
-        return withCommas(value)
-      } else if (value === "(empty)") {
+      if (value === "(empty)") {
         return ""
+      } else if (value === null) {
+        return "⦻"
+      } else if (type === "count") {
+        return withCommas(value)
       } else {
         return value
       }

@@ -3,7 +3,7 @@
 import type {
   VIEWER_CLEAR,
   VIEWER_COLUMNS,
-  VIEWER_LOGS,
+  VIEWER_RECORDS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
   ViewerState
@@ -14,11 +14,11 @@ type Action =
   | VIEWER_CLEAR
   | VIEWER_SPLICE
   | VIEWER_STATUS
-  | VIEWER_LOGS
+  | VIEWER_RECORDS
   | VIEWER_COLUMNS
 
 const init = {
-  logs: [],
+  records: [],
   status: "INCOMPLETE",
   columns: {}
 }
@@ -28,12 +28,12 @@ export default function(
   action: Action
 ): ViewerState {
   switch (action.type) {
-    case "VIEWER_LOGS":
-      return {...state, logs: concat(state.logs, action.logs)}
+    case "VIEWER_RECORDS":
+      return {...state, records: concat(state.records, action.records)}
     case "VIEWER_CLEAR":
       return {...init}
     case "VIEWER_SPLICE":
-      return {...state, logs: splice(state.logs, action.index)}
+      return {...state, records: splice(state.records, action.index)}
     case "VIEWER_STATUS":
       return {...state, status: action.status}
     case "VIEWER_COLUMNS":

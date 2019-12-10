@@ -1,6 +1,6 @@
 /* @flow */
 
-import {appendViewerLogs, spliceViewer} from "../../state/viewer/actions"
+import {appendViewerRecords, spliceViewer} from "../../state/viewer/actions"
 import {fetchNextPage} from "./fetchNextPage"
 import {setCurrentSpaceName} from "../../state/actions"
 import Log from "../../models/Log"
@@ -19,7 +19,7 @@ beforeEach(() => {
     setCurrentSpaceName("default"),
     search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     search.computeSpan(),
-    appendViewerLogs(tuples.map((t) => new Log(t, descriptor)))
+    appendViewerRecords(tuples.map((t) => new Log(t, descriptor)))
   ])
   store.clearActions()
 })

@@ -1,21 +1,21 @@
 /* @flow */
 
 import type {Descriptor} from "../../types"
-import Log from "../../models/Log"
+import type {RecordData} from "../../types/records"
 
 export type ViewerStatus = "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
 export type ViewerColumns = {[string]: Descriptor}
 
 export type ViewerState = {|
-  logs: Log[],
+  records: RecordData[],
   columns: ViewerColumns,
   status: ViewerStatus
 |}
 
-export type VIEWER_LOGS = {
-  type: "VIEWER_LOGS",
-  logs: Log[]
+export type VIEWER_RECORDS = {
+  type: "VIEWER_RECORDS",
+  records: RecordData[]
 }
 
 export type VIEWER_CLEAR = {

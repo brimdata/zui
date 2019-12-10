@@ -9,10 +9,10 @@ type Record = {
 
 export default function recordCollector() {
   let channels = mapArrays()
-  let types = new Map<number, Descriptor>()
+  let types = {}
 
   function toFields({values, id}) {
-    let col = types.get(id)
+    let col = types[id]
     return values.map((value, index) => {
       // $FlowFixMe
       let {name, type} = col[index]
@@ -22,7 +22,7 @@ export default function recordCollector() {
 
   function toRows(records) {
     return records.map((r) => {
-      if (r.type) types.set(r.id, r.type)
+      if (r.type) types[r.id] = r.type
       return toFields(r)
     })
   }
