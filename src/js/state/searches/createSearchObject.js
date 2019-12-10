@@ -1,6 +1,6 @@
 /* @flow */
 import type {Search} from "./types"
-import BoomRequest from "../../BoomClient/lib/BoomRequest"
+import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
 
 export default function(
   name: string,

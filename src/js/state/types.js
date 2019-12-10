@@ -18,7 +18,7 @@ import type {Spaces} from "./reducers/spaces"
 import type {TasksState} from "./tasks"
 import type {View} from "./reducers/view"
 import type {ViewerState} from "./viewer/types"
-import BoomClient from "../BoomClient"
+import BoomClient from "../services/BoomClient"
 
 export type GetState = () => State
 export type Thunk = (Dispatch, GetState, BoomClient) => any

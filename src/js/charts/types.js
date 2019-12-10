@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {Interval} from "../types"
-import type {Span} from "../BoomClient/types"
+import type {Span} from "../services/BoomClient/types"
 
 export type Margins = {
   top: number,

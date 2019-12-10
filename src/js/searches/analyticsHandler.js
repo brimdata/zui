@@ -1,5 +1,6 @@
 /* @flow */
-import type {BoomPayload} from "../BoomClient/types"
+
+import type {BoomPayload} from "../services/BoomClient/types"
 import type {Dispatch} from "../state/types"
 import type {SearchCallbackMap} from "./types"
 import {updateFinding} from "../state/actions"

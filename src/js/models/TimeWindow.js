@@ -2,7 +2,7 @@
 import * as d3 from "d3"
 
 import type {Interval} from "../types"
-import type {Span} from "../BoomClient/types"
+import type {Span} from "../services/BoomClient/types"
 
 export function splitOnEvery(timeWindow: Span, {number, unit}: Interval) {
   switch (unit) {

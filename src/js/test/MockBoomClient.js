@@ -1,7 +1,7 @@
 /* @flow */
 
-import BoomClient from "../BoomClient"
-import BoomRequest from "../BoomClient/lib/BoomRequest"
+import BoomClient from "../services/BoomClient"
+import BoomRequest from "../services/BoomClient/lib/BoomRequest"
 
 export default class MockBoomClient extends BoomClient {
   mockRequest() {

@@ -4,13 +4,13 @@ import {isEqual} from "lodash"
 import * as d3 from "d3"
 
 import type {Pen} from "../types"
-import type {Span} from "../../BoomClient/types"
+import type {Span} from "../../services/BoomClient/types"
 import {innerHeight, innerWidth} from "../dimens"
 
 type Props = {
-  onSelection: (span: Span) => void,
+  onSelection: (Span) => void,
   onSelectionClear: () => void,
-  onSelectionClick: (span: Span) => void
+  onSelectionClick: (Span) => void
 }
 
 export default function(props: Props = {}): Pen {

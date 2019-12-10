@@ -1,7 +1,8 @@
 /* @flow */
 
-import type {Descriptors, Tuples} from "../types"
-import type {EpochObj} from "../lib"
+import type {EpochObj} from "../../lib"
+import type {Tuples} from "../../types"
+import Descriptors from "./client/Descriptors"
 
 export type ClientOptions = $Shape<RequiredClientOptions>
 

@@ -4,7 +4,7 @@ import {createSelector} from "reselect"
 
 import type {Search, SearchResults} from "./types"
 import type {State} from "../types"
-import BoomRequest from "../../BoomClient/lib/BoomRequest"
+import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
 
 export function getSearches(state: State) {
   return state.searches

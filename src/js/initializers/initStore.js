@@ -5,7 +5,7 @@ import {createStore, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
 import type {Action, Dispatch, State} from "../state/types"
-import BoomClient from "../BoomClient"
+import BoomClient from "../services/BoomClient"
 import rootReducer from "../state/rootReducer"
 
 export default (initialState?: State, boom?: BoomClient) =>

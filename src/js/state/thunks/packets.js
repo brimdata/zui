@@ -9,7 +9,7 @@ import {
   showDownloads
 } from "../actions"
 import {getCurrentSpaceName} from "../reducers/spaces"
-import BoomClient from "../../BoomClient"
+import BoomClient from "../../services/BoomClient"
 import Log from "../../models/Log"
 
 export const fetchPackets = (log: Log) => (

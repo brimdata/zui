@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {Cluster} from "../state/clusters/types"
-import type {Span} from "../BoomClient/types"
+import type {Span} from "./BoomClient/types"
 import type {Thunk} from "../state/types"
 import {ZqVersionError} from "../models/Errors"
 import {createError} from "../state/errors"

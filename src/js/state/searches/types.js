@@ -1,6 +1,6 @@
 /* @flow */
 import type {Descriptors, Tuples} from "../../types"
-import BoomRequest from "../../BoomClient/lib/BoomRequest"
+import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
 
 export type SearchesState = {[string]: Search}
 

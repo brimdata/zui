@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {HistogramData} from "../../charts/types"
-import type {Span} from "../../BoomClient/types"
+import type {Span} from "../../services/BoomClient/types"
 import {toDate} from "../../lib/TimeField"
 import Log from "../../models/Log"
 import MergeHash from "../../models/MergeHash"
