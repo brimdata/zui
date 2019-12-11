@@ -2,7 +2,6 @@
 
 import {COMPOUND_FIELD_RGX} from "./compoundField"
 import type {FieldData} from "../types/records"
-import {isArray} from "../lib/is"
 import {withCommas} from "../lib/fmt"
 import brim, {type $Field} from "./"
 
@@ -27,7 +26,6 @@ function field({name, type, value}: FieldData): $Field {
       return COMPOUND_FIELD_RGX.test(type)
     },
     toCompound() {
-      if (!isArray(value)) throw new Error("Not a compound field")
       return brim.compoundField(name, type, value)
     },
     toDate() {

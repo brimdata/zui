@@ -1,6 +1,7 @@
 /* @flow */
 import type {FieldValue} from "../types/records"
 import {ONE_CHAR} from "./field"
+import {isArray} from "../lib/is"
 import brim, {type $CompoundField} from "./"
 
 export const COMPOUND_FIELD_RGX = /^(set|vector)\[(\w+)\]$/
@@ -10,7 +11,8 @@ function compoundField(name: string, type: string, value: ?(FieldValue[])): $T {
   let match = type.match(COMPOUND_FIELD_RGX)
   if (!match) throw new Error("Not compound type: " + type)
   let [_, container, itemType] = match
-  let items = value ? value : []
+  let items = []
+  if (isArray(value)) items = value
 
   return {
     name,

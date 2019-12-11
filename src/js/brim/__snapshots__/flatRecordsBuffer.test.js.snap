@@ -1,0 +1,286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`coverts to an array of nested records 1`] = `
+Array [
+  Array [
+    Object {
+      "name": "_path",
+      "type": "string",
+      "value": "conn",
+    },
+    Object {
+      "name": "ts",
+      "type": "time",
+      "value": "1428917684.732640",
+    },
+    Object {
+      "name": "uid",
+      "type": "string",
+      "value": "ClM1vE3c4iNZUgpZhh",
+    },
+    Object {
+      "name": "id.orig_h",
+      "type": "addr",
+      "value": "fe80::eef4:bbff:fe4f:b245",
+    },
+    Object {
+      "name": "id.orig_p",
+      "type": "port",
+      "value": "143",
+    },
+    Object {
+      "name": "id.resp_h",
+      "type": "addr",
+      "value": "ff02::16",
+    },
+    Object {
+      "name": "id.resp_p",
+      "type": "port",
+      "value": "0",
+    },
+    Object {
+      "name": "proto",
+      "type": "enum",
+      "value": "icmp",
+    },
+    Object {
+      "name": "service",
+      "type": "string",
+      "value": null,
+    },
+    Object {
+      "name": "duration",
+      "type": "interval",
+      "value": null,
+    },
+    Object {
+      "name": "orig_bytes",
+      "type": "count",
+      "value": null,
+    },
+    Object {
+      "name": "resp_bytes",
+      "type": "count",
+      "value": null,
+    },
+    Object {
+      "name": "conn_state",
+      "type": "string",
+      "value": "OTH",
+    },
+    Object {
+      "name": "local_orig",
+      "type": "bool",
+      "value": "F",
+    },
+    Object {
+      "name": "local_resp",
+      "type": "bool",
+      "value": "F",
+    },
+    Object {
+      "name": "missed_bytes",
+      "type": "count",
+      "value": "0",
+    },
+    Object {
+      "name": "history",
+      "type": "string",
+      "value": null,
+    },
+    Object {
+      "name": "orig_pkts",
+      "type": "count",
+      "value": "1",
+    },
+    Object {
+      "name": "orig_ip_bytes",
+      "type": "count",
+      "value": "76",
+    },
+    Object {
+      "name": "resp_pkts",
+      "type": "count",
+      "value": "0",
+    },
+    Object {
+      "name": "resp_ip_bytes",
+      "type": "count",
+      "value": "0",
+    },
+    Object {
+      "name": "tunnel_parents",
+      "type": "set[string]",
+      "value": null,
+    },
+  ],
+]
+`;
+
+exports[`coverts to an array of records 1`] = `
+Array [
+  Array [
+    Object {
+      "name": "ts",
+      "type": "time",
+      "value": "1428917670.000000000",
+    },
+    Object {
+      "name": "_path",
+      "type": "string",
+      "value": "dns",
+    },
+    Object {
+      "name": "count",
+      "type": "count",
+      "value": "2",
+    },
+  ],
+  Array [
+    Object {
+      "name": "ts",
+      "type": "time",
+      "value": "1428917670.000000000",
+    },
+    Object {
+      "name": "_path",
+      "type": "string",
+      "value": "conn",
+    },
+    Object {
+      "name": "count",
+      "type": "count",
+      "value": "3",
+    },
+  ],
+  Array [
+    Object {
+      "name": "ts",
+      "type": "time",
+      "value": "1428917670.000000000",
+    },
+    Object {
+      "name": "_path",
+      "type": "string",
+      "value": "capture_loss",
+    },
+    Object {
+      "name": "count",
+      "type": "count",
+      "value": "1",
+    },
+  ],
+  Array [
+    Object {
+      "name": "ts",
+      "type": "time",
+      "value": "1428917640.000000000",
+    },
+    Object {
+      "name": "_path",
+      "type": "string",
+      "value": "conn",
+    },
+    Object {
+      "name": "count",
+      "type": "count",
+      "value": "1",
+    },
+  ],
+]
+`;
+
+exports[`flattens the columns 1`] = `
+Object {
+  "10": Array [
+    Object {
+      "name": "_path",
+      "type": "string",
+    },
+    Object {
+      "name": "ts",
+      "type": "time",
+    },
+    Object {
+      "name": "uid",
+      "type": "string",
+    },
+    Object {
+      "name": "id.orig_h",
+      "type": "addr",
+    },
+    Object {
+      "name": "id.orig_p",
+      "type": "port",
+    },
+    Object {
+      "name": "id.resp_h",
+      "type": "addr",
+    },
+    Object {
+      "name": "id.resp_p",
+      "type": "port",
+    },
+    Object {
+      "name": "proto",
+      "type": "enum",
+    },
+    Object {
+      "name": "service",
+      "type": "string",
+    },
+    Object {
+      "name": "duration",
+      "type": "interval",
+    },
+    Object {
+      "name": "orig_bytes",
+      "type": "count",
+    },
+    Object {
+      "name": "resp_bytes",
+      "type": "count",
+    },
+    Object {
+      "name": "conn_state",
+      "type": "string",
+    },
+    Object {
+      "name": "local_orig",
+      "type": "bool",
+    },
+    Object {
+      "name": "local_resp",
+      "type": "bool",
+    },
+    Object {
+      "name": "missed_bytes",
+      "type": "count",
+    },
+    Object {
+      "name": "history",
+      "type": "string",
+    },
+    Object {
+      "name": "orig_pkts",
+      "type": "count",
+    },
+    Object {
+      "name": "orig_ip_bytes",
+      "type": "count",
+    },
+    Object {
+      "name": "resp_pkts",
+      "type": "count",
+    },
+    Object {
+      "name": "resp_ip_bytes",
+      "type": "count",
+    },
+    Object {
+      "name": "tunnel_parents",
+      "type": "set[string]",
+    },
+  ],
+}
+`;

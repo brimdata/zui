@@ -16,7 +16,7 @@ export default function(
   dispatch: Dispatch,
   _search: SearchTemplate
 ): SearchCallbackMap {
-  let buffer = brim.recordsBuffer()
+  let buffer = brim.flatRecordsBuffer()
 
   function dispatchResults() {
     dispatch(appendViewerRecords(buffer.records()))
@@ -26,6 +26,7 @@ export default function(
 
   let dispatchResultsSteady = throttle(dispatchResults, 100, {leading: false})
   let count = 0
+
   function each(payload: BoomPayload) {
     switch (payload.type) {
       case "SearchRecords":
