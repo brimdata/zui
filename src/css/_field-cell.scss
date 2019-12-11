@@ -19,11 +19,6 @@
     @include path-tag;
   }
 
-  &.count,
-  &.duration {
-    text-align: right;
-  }
-
   &.null {
     color: $white-6;
   }
