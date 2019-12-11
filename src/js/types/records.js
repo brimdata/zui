@@ -3,16 +3,15 @@
 import type {$Field} from "../brim"
 import type {Column} from "./"
 
-export type FieldValue = string | null
-export type FieldData = {name: string, type: string, value: string}
-export type RecordData = FieldData[]
+export type FieldValue = string
 
-export type NestedFieldData = {
+export type FieldData = {
   name: string,
   type: string,
-  value: FieldValue | NestedFieldData[]
+  value: string
 }
-export type NestedRecordData = NestedFieldData[]
+
+export type RecordData = FieldData[]
 
 export type $Record = {|
   columns: () => Column[],

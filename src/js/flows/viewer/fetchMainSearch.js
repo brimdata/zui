@@ -7,7 +7,6 @@ import {getSearchProgram} from "../../state/selectors/searchBar"
 import {getSearchRecord} from "../../state/selectors/searchRecord"
 import {issueSearch} from "../../searches/issueSearch"
 import {recordSearch} from "../../state/actions"
-import {updateTab} from "../../state/thunks/view"
 import {validateProgram} from "../../state/thunks/searchBar"
 import SearchTemplateFactory from "../../searches/SearchTemplateFactory"
 import search from "../../state/search"
@@ -21,7 +20,6 @@ export const fetchMainSearch = ({
 }: Options = {}): Thunk => (dispatch, getState) => {
   const state = getState()
   if (!dispatch(validateProgram())) return
-  dispatch(updateTab(state))
   if (saveToHistory) dispatch(recordSearch(getSearchRecord(state)))
   dispatch(cancelSearchesByTag("viewer"))
   dispatch(clearViewer())

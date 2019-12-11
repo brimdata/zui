@@ -17,8 +17,8 @@ import time from "./time"
 
 export type $Field = {
   name: string,
-  value: string,
   type: string,
+  value: string,
   queryableValue: () => string,
   compound: () => boolean,
   toCompound: () => $CompoundField,

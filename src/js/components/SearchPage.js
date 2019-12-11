@@ -17,7 +17,8 @@ import {checkVersions} from "../services/boom"
 import {getCurrentFinding} from "../state/reducers/investigation"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getKey} from "../lib/finding"
-import {getShowLogsTab} from "../state/reducers/view"
+import {getSearchProgram} from "../state/selectors/searchBar"
+import {hasAnalytics} from "../lib/Program"
 import {initSpace} from "../flows/space/thunks"
 import {killAllSearches} from "../searches/cancelSearch"
 import {useResizeObserver} from "./hooks/useResizeObserver"
@@ -34,7 +35,7 @@ import WhoisModal from "./WhoisModal"
 type Props = {|cluster: Cluster|}
 
 export default function SearchPage({cluster}: Props) {
-  let logsTab = useSelector(getShowLogsTab)
+  let logsTab = !hasAnalytics(useSelector(getSearchProgram))
   let finding = useSelector(getCurrentFinding)
   let renderKey = finding && getKey(finding)
   let results = useResizeObserver()

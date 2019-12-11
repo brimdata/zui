@@ -26,6 +26,7 @@ function field({name, type, value}: FieldData): $Field {
       return COMPOUND_FIELD_RGX.test(type)
     },
     toCompound() {
+      // $FlowFixMe
       return brim.compoundField(name, type, value)
     },
     toDate() {

@@ -1,12 +1,15 @@
 /* @flow */
-import type {Descriptor} from "../types"
 import type {FieldData} from "../types/records"
 import {isArray, isString} from "../lib/is"
+
+type Col = {name: string, type: string | Descriptor}
+type Descriptor = Col[]
+type Value = null | string | Value[]
 
 type NestedRecord = {
   id: number,
   type?: Descriptor,
-  values: string[]
+  values: Value[]
 }
 
 export default function flatRecordBuffers() {

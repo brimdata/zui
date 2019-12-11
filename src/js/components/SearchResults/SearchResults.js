@@ -5,11 +5,6 @@ import {isEmpty} from "lodash"
 import React from "react"
 
 import type {DispatchProps, State} from "../../state/types"
-import {
-  type ResultsTabEnum,
-  getResultsTab,
-  getTimeZone
-} from "../../state/reducers/view"
 import type {Space} from "../../lib/Space"
 import type {ViewerDimens} from "../../types"
 import {buildLogDetail} from "../../state/selectors/logDetails"
@@ -19,6 +14,7 @@ import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
 import {getSearchStatus} from "../../state/searches/selector"
+import {getTimeZone} from "../../state/reducers/view"
 import {getViewerLogs, getViewerStatus} from "../../state/viewer/selector"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
@@ -39,7 +35,6 @@ type StateProps = {|
   isIncomplete: boolean,
   isFetching: boolean,
   tableColumns: TableColumns,
-  tab: ResultsTabEnum,
   program: string,
   space: Space
 |}
@@ -101,7 +96,7 @@ export default function SearchResults(props: Props) {
     else
       return (
         <p className="end-message" style={endMessage(dimens)}>
-          {getEndMessage(props.tab, logs.length)}
+          {getEndMessage(props.program, logs.length)}
         </p>
       )
   }
@@ -127,7 +122,6 @@ export default function SearchResults(props: Props) {
 
 function stateToProps(state: State) {
   return {
-    tab: getResultsTab(state),
     isFetching: getSearchStatus(state, "ViewerSearch") === "FETCHING",
     isIncomplete: getViewerStatus(state) === "INCOMPLETE",
     tableColumns: getCurrentTableColumns(state),
