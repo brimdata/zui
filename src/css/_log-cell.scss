@@ -1,5 +1,5 @@
 .log-cell {
-  padding: 0;
+  padding: 0 4px;
   position: relative;
   overflow: hidden;
   white-space: nowrap;
@@ -17,7 +17,7 @@
 
 .cell-value-item {
   position: relative;
-  padding: 0 2px;
+  padding: 0 1px;
   border: 1px solid transparent;
   height: 25px;
 

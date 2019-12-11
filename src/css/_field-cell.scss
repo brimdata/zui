@@ -5,6 +5,13 @@
   &.time {
     span {
       padding: 0 6px;
+      &:last-child {
+        padding-right: 0;
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
     }
   }
 
@@ -15,5 +22,9 @@
   &.count,
   &.duration {
     text-align: right;
+  }
+
+  &.null {
+    color: $white-6;
   }
 }
