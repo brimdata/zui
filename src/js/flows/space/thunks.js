@@ -11,11 +11,11 @@ import {
   setSpaceInfo,
   setSpaceNames
 } from "../../state/actions"
-import {submitSearchBar} from "../../state/thunks/searchBar"
 import brim from "../../brim"
 import modal from "../../state/modal"
 import notice from "../../state/notice"
 import search from "../../state/search"
+import submitSearch from "../submitSearch"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {
@@ -45,7 +45,7 @@ export function initSpace(space: string): Thunk {
                 max
               ])
             )
-            dispatch(submitSearchBar())
+            dispatch(submitSearch())
           }
         })
       }

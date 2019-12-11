@@ -7,6 +7,7 @@ import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
 import clustersReducer from "./clusters/reducer"
 import columnsReducer from "./columns/reducer"
+import handlers from "./handlers"
 import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
 import modal from "./modal"
@@ -32,6 +33,7 @@ export default combineReducers<*, *>({
   search: search.reducer,
   notice: notice.reducer,
   tasks: tasks.reducer,
+  handlers: handlers.reducer,
   investigation,
   view,
   searchBar,

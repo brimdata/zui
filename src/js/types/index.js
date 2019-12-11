@@ -91,3 +91,5 @@ export type SearchRecord = {
   spanArgs: SpanArgs,
   space: string
 }
+
+export type ExtractReturn<Fn> = $Call<<T>((...Iterable<any>) => T) => T, Fn>

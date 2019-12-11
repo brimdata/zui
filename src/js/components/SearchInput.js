@@ -16,6 +16,7 @@ import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
 import modal from "../state/modal"
 import search from "../state/search"
+import submitSearch from "../flows/submitSearch"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -27,7 +28,7 @@ export default function SearchInput() {
   }
 
   function submit() {
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   }
 
   function onChange(e) {

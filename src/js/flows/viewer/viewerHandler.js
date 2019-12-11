@@ -21,7 +21,7 @@ export default function(
   function dispatchResults() {
     dispatch(appendViewerRecords(buffer.records()))
     dispatch(updateViewerColumns(buffer.columns()))
-    buffer.clear()
+    buffer.clearRecords()
   }
 
   let dispatchResultsSteady = throttle(dispatchResults, 100, {leading: false})

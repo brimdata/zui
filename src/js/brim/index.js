@@ -1,4 +1,5 @@
 /* @flow */
+import type {ExtractReturn} from "../types"
 import ast from "./ast"
 import compoundField from "./compoundField"
 import dateTuple from "./dateTuple"
@@ -7,8 +8,10 @@ import flatRecordsBuffer from "./flatRecordsBuffer"
 import interop from "./interop"
 import log from "./log"
 import program from "./program"
+import randomHash from "./randomHash"
 import record from "./record"
 import relTime from "./relTime"
+import search from "./search"
 import space from "./space"
 import span from "./span"
 import syntax from "./syntax"
@@ -27,19 +30,9 @@ export type $Field = {
   guessWidth: () => number
 }
 
-export type $CompoundField = {
-  name: string,
-  container: string,
-  itemType: string,
-  length: number,
-  items: () => $Field[],
-  item: (number) => ?$Field,
-  guessWidth: () => number
-}
-
-export type $Log = {
-  field: (string) => ?$Field
-}
+export type $CompoundField = ExtractReturn<typeof compoundField>
+export type $Search = ExtractReturn<typeof search>
+export type $Log = ExtractReturn<typeof log>
 
 export type Ts = {
   ns: number,
@@ -63,5 +56,7 @@ export default {
   dateTuple,
   flatRecordsBuffer,
   record,
-  interop
+  interop,
+  search,
+  randomHash
 }

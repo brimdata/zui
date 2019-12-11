@@ -32,6 +32,10 @@ export default function flatRecordBuffers() {
       return channels.get(chanId)
     },
 
+    empty(chanId: string = "0") {
+      return this.records(chanId).length === 0
+    },
+
     columns() {
       return Object.keys(types).reduce((all, id) => {
         all[id] = flattenType(types[id])
@@ -39,7 +43,7 @@ export default function flatRecordBuffers() {
       }, {})
     },
 
-    clear(chanId: string = "0") {
+    clearRecords(chanId: string = "0") {
       channels.clear(chanId)
     }
   }

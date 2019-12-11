@@ -32,16 +32,17 @@ export default class SearchTemplateFactory {
   }
 
   getTemplates() {
-    switch (this.type()) {
-      case "analytic":
-        return [this.analyticTemplate()]
-      case "zoom":
-        return [this.logTemplate(this.innerSpan)]
-      case "log":
-        return [this.histogramTemplate(), this.logTemplate(this.outerSpan)]
-      default:
-        return []
-    }
+    return []
+    // switch (this.type()) {
+    //   case "analytic":
+    //     return [this.analyticTemplate()]
+    //   case "zoom":
+    //     return [this.logTemplate(this.innerSpan)]
+    //   case "log":
+    //     return [this.histogramTemplate(), this.logTemplate(this.outerSpan)]
+    //   default:
+    //     return []
+    // }
   }
 
   histogramTemplate() {
