@@ -5,11 +5,11 @@ import classNames from "classnames"
 
 import type {TableColumn} from "../../state/columns/types"
 import {appendQuerySortBy} from "../../flows/searchBar/actions"
-import {submitSearchBar} from "../../state/thunks/searchBar"
 import {updateColumns} from "../../state/columns/actions"
 import IconAsc from "../icons/icon-asc.svg"
 import IconDesc from "../icons/icon-desc.svg"
 import columnKey from "../../lib/columnKey"
+import submitSearch from "../../flows/submitSearch"
 
 let oldWidth = null
 let start = null
@@ -62,7 +62,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
   let sorted = sorts[column.name] || ""
   function onClick() {
     dispatch(appendQuerySortBy(column.name, sorted === "asc" ? "desc" : "asc"))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   }
 
   return (

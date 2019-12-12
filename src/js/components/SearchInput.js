@@ -9,7 +9,6 @@ import {getSearchBarInputValue} from "../state/selectors/searchBar"
 import {getSearches} from "../state/searches/selector"
 import {killSearchesByTag} from "../searches/cancelSearch"
 import {reactElementProps} from "../test/integration"
-import {submitSearchBar} from "../state/thunks/searchBar"
 import Animate from "./Animate"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
@@ -101,7 +100,7 @@ function ActionButton() {
   let prev = useSelector(search.getPrevSpanArgs)
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
-  let onClick = () => dispatch(submitSearchBar())
+  let onClick = () => dispatch(submitSearch())
 
   let enter = (anime, el) => {
     return anime

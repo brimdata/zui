@@ -16,7 +16,6 @@ import {
 } from "../../state/actions"
 import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
-import {submitSearchBar} from "../../state/thunks/searchBar"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
@@ -24,6 +23,7 @@ import action from "./action"
 import brim from "../../brim"
 import modal from "../../state/modal"
 import search from "../../state/search"
+import submitSearch from "../../flows/submitSearch"
 import virusTotal from "../../services/virusTotal"
 
 function buildActions() {
@@ -33,7 +33,7 @@ function buildActions() {
       label: "Count by field",
       listener(dispatch, field) {
         dispatch(appendQueryCountBy(field))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     detail: action({
@@ -50,7 +50,7 @@ function buildActions() {
       label: "Filter != value",
       listener(dispatch, field) {
         dispatch(appendQueryExclude(field))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     freshInclude: action({
@@ -60,7 +60,7 @@ function buildActions() {
         field = FieldFactory.create(field)
         dispatch(clearSearchBar())
         dispatch(changeSearchBarInput(field.queryableValue()))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     fromTime: action({
@@ -70,7 +70,7 @@ function buildActions() {
         field = FieldFactory.create(field)
         if (field instanceof TimeField) {
           dispatch(search.setFrom(brim.time(field.toDate()).toTs()))
-          dispatch(submitSearchBar())
+          dispatch(submitSearch())
         }
       }
     }),
@@ -86,7 +86,7 @@ function buildActions() {
         if (newProgram) {
           dispatch(clearSearchBar())
           dispatch(changeSearchBarInput(newProgram))
-          dispatch(submitSearchBar())
+          dispatch(submitSearch())
         }
       }
     }),
@@ -95,7 +95,7 @@ function buildActions() {
       label: "Filter = value",
       listener(dispatch, field) {
         dispatch(appendQueryInclude(field))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     in: action({
@@ -103,7 +103,7 @@ function buildActions() {
       label: "Filter in field",
       listener(dispatch, {name, value, type}) {
         dispatch(appendQueryIn(brim.field({name, type, value})))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     notIn: action({
@@ -111,7 +111,7 @@ function buildActions() {
       label: "Filter not in field",
       listener(dispatch, {name, value, type}) {
         dispatch(appendQueryNotIn(brim.field({name, type, value})))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     logResult: action({
@@ -135,7 +135,7 @@ function buildActions() {
       label: "Sort A...Z",
       listener(dispatch, field) {
         dispatch(appendQuerySortBy(field.name, "asc"))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     sortDesc: action({
@@ -143,7 +143,7 @@ function buildActions() {
       label: "Sort Z...A",
       listener(dispatch, field) {
         dispatch(appendQuerySortBy(field.name, "desc"))
-        dispatch(submitSearchBar())
+        dispatch(submitSearch())
       }
     }),
     toTime: action({
@@ -160,7 +160,7 @@ function buildActions() {
                 .toTs()
             )
           )
-          dispatch(submitSearchBar())
+          dispatch(submitSearch())
         }
       }
     }),

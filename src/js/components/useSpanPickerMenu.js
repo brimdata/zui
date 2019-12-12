@@ -4,9 +4,9 @@ import {useDispatch, useSelector} from "react-redux"
 
 import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
 import {getCurrentSpace} from "../state/reducers/spaces"
-import {submitSearchBar} from "../state/thunks/searchBar"
 import brim from "../brim"
 import search from "../state/search"
+import submitSearch from "../flows/submitSearch"
 
 export default function useSpanPickerMenu() {
   let dispatch = useDispatch()
@@ -14,7 +14,7 @@ export default function useSpanPickerMenu() {
 
   function setSpan(span: DateTuple) {
     dispatch(search.setSpanArgsFromDates(span))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   }
 
   if (!space) return []

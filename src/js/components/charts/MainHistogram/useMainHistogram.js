@@ -7,7 +7,6 @@ import * as d3 from "d3"
 import type {DateTuple} from "../../../lib/TimeWindow"
 import type {Pen, HistogramChart} from "../types"
 import {innerHeight, innerWidth} from "../dimens"
-import {submitSearchBar} from "../../../state/thunks/searchBar"
 import EmptyMessage from "../../EmptyMessage"
 import HistogramTooltip from "../../HistogramTooltip"
 import LoadingMessage from "../../LoadingMessage"
@@ -19,6 +18,7 @@ import format from "./format"
 import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
 import search from "../../../state/search"
+import submitSearch from "../../../flows/submitSearch"
 import time from "../../../brim/time"
 import useConst from "../../hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
@@ -35,23 +35,23 @@ export default function(width: number, height: number): HistogramChart {
   let pens = useConst<Pen[]>([], () => {
     function onDragEnd(span: DateTuple) {
       dispatch(search.setSpanArgs(brim.dateTuple(span).toSpan()))
-      dispatch(submitSearchBar())
+      dispatch(submitSearch())
     }
 
     function onSelection(span: DateTuple) {
       dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
-      dispatch(submitSearchBar())
+      dispatch(submitSearch())
     }
 
     function onFocus(dates: DateTuple) {
       dispatch(search.setSpanFocus(time.convertToSpan(dates)))
-      dispatch(submitSearchBar(false))
+      dispatch(submitSearch(false))
     }
 
     function onBlur() {
       dispatch(search.setSpanFocus(null))
-      dispatch(submitSearchBar(false))
+      dispatch(submitSearch(false))
     }
 
     function onSelectionClear() {
@@ -61,7 +61,7 @@ export default function(width: number, height: number): HistogramChart {
     function onSelectionClick(span) {
       dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
-      dispatch(submitSearchBar())
+      dispatch(submitSearch())
     }
 
     return [

@@ -4,17 +4,17 @@ import React from "react"
 
 import type {SpanArgs, TimeArg} from "../../state/search/types"
 import {isString} from "../../lib/is"
-import {submitSearchBar} from "../../state/thunks/searchBar"
 import SpanDuration from "../Span/SpanDuration"
 import brim from "../../brim"
 import search from "../../state/search"
+import submitSearch from "../../flows/submitSearch"
 
 export default function FindingSpanCard({spanArgs}: {spanArgs: SpanArgs}) {
   let dispatch = useDispatch()
 
   function onClick() {
     dispatch(search.setSpanArgs(spanArgs))
-    dispatch(submitSearchBar(false))
+    dispatch(submitSearch(false))
   }
 
   return (

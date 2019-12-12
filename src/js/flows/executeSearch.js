@@ -7,7 +7,7 @@ import whenIdle from "../lib/whenIdle"
 export default function executeSearch(search: $Search): Thunk {
   return function(dispatch, getState, boom) {
     let buffer = brim.flatRecordsBuffer()
-
+    let count = 0
     function flushBuffer() {
       if (buffer.empty()) return
       search.emit("chunk", buffer.records(), buffer.columns())
@@ -26,6 +26,7 @@ export default function executeSearch(search: $Search): Thunk {
     }
 
     function records(payload) {
+      count += payload.records.length
       buffer.add(payload.channel_id.toString(), payload.records)
       flushBufferLazy()
     }
@@ -47,7 +48,7 @@ export default function executeSearch(search: $Search): Thunk {
       } else {
         flushBuffer()
         search.emit("status", "SUCCESS")
-        search.emit("end", id)
+        search.emit("end", id, count)
       }
       dispatch(handlers.remove(search.getId()))
     }

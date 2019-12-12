@@ -14,13 +14,13 @@ import {
 } from "../../state/actions"
 import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
-import {submitSearchBar} from "../../state/thunks/searchBar"
 import {viewLogDetail} from "../viewLogDetail"
 import Field, {TimeField} from "../../models/Field"
 import Log from "../../models/Log"
 import brim from "../../brim"
 import modal from "../../state/modal"
 import search from "../../state/search"
+import submitSearch from "../submitSearch"
 import virusTotal from "../../services/virusTotal"
 
 export type RightClickAction = {
@@ -47,7 +47,7 @@ const exclude = (field: Field, opts: Options) => ({
   label: "Filter != value",
   click: (dispatch: Dispatch) => {
     dispatch(appendQueryExclude(field))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   },
   ...opts
 })
@@ -56,7 +56,7 @@ const include = (field: Field, opts: Options) => ({
   label: "Filter = value",
   click: (dispatch: Dispatch) => {
     dispatch(appendQueryInclude(field))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   },
   ...opts
 })
@@ -66,7 +66,7 @@ const freshInclude = (field: Field, opts: Options) => ({
   click: (dispatch: Dispatch) => {
     dispatch(clearSearchBar())
     dispatch(changeSearchBarInput(field.queryableValue()))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   },
   ...opts
 })
@@ -75,7 +75,7 @@ const countBy = (field: Field, opts: Options) => ({
   label: "Count by field",
   click: (dispatch: Dispatch) => {
     dispatch(appendQueryCountBy(field))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   },
   ...opts
 })
@@ -84,7 +84,7 @@ const sortAsc = (field: Field, opts: Options) => ({
   label: "Sort A...Z",
   click(dispatch: Dispatch) {
     dispatch(appendQuerySortBy(field.name, "asc"))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   },
   ...opts
 })
@@ -93,7 +93,7 @@ const sortDesc = (field: Field, opts: Options) => ({
   label: "Sort Z...A",
   click(dispatch: Dispatch) {
     dispatch(appendQuerySortBy(field.name, "desc"))
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   },
   ...opts
 })
@@ -120,7 +120,7 @@ const fromTime = (field: Field, opts: Options) => ({
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
       dispatch(search.setFrom(brim.time(field.toDate()).toTs()))
-      dispatch(submitSearchBar())
+      dispatch(submitSearch())
     }
   },
   ...opts
@@ -138,7 +138,7 @@ const toTime = (field: Field, opts: Options) => ({
             .toTs()
         )
       )
-      dispatch(submitSearchBar())
+      dispatch(submitSearch())
     }
   },
   ...opts
@@ -163,7 +163,7 @@ const groupByDrillDown = (program: string, log: Log, opts: Options) => ({
     if (newProgram) {
       dispatch(clearSearchBar())
       dispatch(changeSearchBarInput(newProgram))
-      dispatch(submitSearchBar())
+      dispatch(submitSearch())
     }
   },
   ...opts

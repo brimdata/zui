@@ -12,11 +12,11 @@ import {
   setCurrentSpaceName,
   setSearchBarPins
 } from "../../state/actions"
-import {submitSearchBar} from "../../state/thunks/searchBar"
 import FindingDetail from "./FindingDetail"
 import FindingFooter from "./FindingFooter"
 import FindingProgram from "./FindingProgram"
 import search from "../../state/search"
+import submitSearch from "../../flows/submitSearch"
 
 type Props = {finding: Finding}
 
@@ -30,7 +30,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(setCurrentSpaceName(finding.search.space))
     dispatch(search.setSpanArgs(finding.search.spanArgs))
     dispatch(search.setSpanFocus(null))
-    dispatch(submitSearchBar(false))
+    dispatch(submitSearch(false))
   }
 
   function onRemove() {

@@ -25,11 +25,12 @@ import {
   getSearchBarPins,
   getSearchBarPreviousInputValue
 } from "../selectors/searchBar"
-import {goBack, goForward, submitSearchBar} from "../thunks/searchBar"
+import {goBack, goForward} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
 import Field from "../../models/Field"
 import initTestStore from "../../test/initTestStore"
 import search from "../search"
+import submitSearch from "../../flows/submitSearch"
 
 let store
 beforeEach(() => {
@@ -81,7 +82,7 @@ test("editing a pin to an empty string removes it", () => {
     pinSearchBar(),
     editSearchBarPin(0),
     changeSearchBarInput(""),
-    submitSearchBar()
+    submitSearch()
   ])
 
   expect(getSearchBar(state)).toEqual(
@@ -101,7 +102,7 @@ test("search pin edit with null removes editing index", () => {
     changeSearchBarInput("second"),
     pinSearchBar(),
     changeSearchBarInput("third"),
-    submitSearchBar(),
+    submitSearch(),
     editSearchBarPin(1),
     changeSearchBarInput("second (edited)"),
     editSearchBarPin(null),
@@ -125,10 +126,10 @@ test("search pin edit then submiting", () => {
     changeSearchBarInput("second"),
     pinSearchBar(),
     changeSearchBarInput("third"),
-    submitSearchBar(),
+    submitSearch(),
     editSearchBarPin(0),
     changeSearchBarInput("first (edited)"),
-    submitSearchBar()
+    submitSearch()
   ])
 
   expect(getSearchBar(state)).toEqual(
@@ -233,13 +234,13 @@ test("append a count to an existing query with a pin", () => {
 test("edit pin then submit search", () => {
   let state = store.dispatchAll([
     changeSearchBarInput("192.168.0.54"),
-    submitSearchBar(),
+    submitSearch(),
     pinSearchBar(),
     changeSearchBarInput("| count() by _path"),
-    submitSearchBar(),
+    submitSearch(),
     editSearchBarPin(0),
     changeSearchBarInput("192.168.0.51"),
-    submitSearchBar()
+    submitSearch()
   ])
   expect(getSearchProgram(state)).toBe("192.168.0.51 | count() by _path")
 })
@@ -251,7 +252,7 @@ test("get search program", () => {
     changeSearchBarInput("GET"),
     pinSearchBar(),
     changeSearchBarInput("| count() by host"),
-    submitSearchBar()
+    submitSearch()
   ])
   expect(getSearchProgram(state)).toBe("http GET | count() by host")
 })
@@ -304,10 +305,10 @@ test("goBack", () => {
   const state = store.dispatchAll([
     changeSearchBarInput("hello"),
     search.setSpanArgsFromDates([new Date(1), new Date(2)]),
-    submitSearchBar(),
+    submitSearch(),
     changeSearchBarInput("goodbye"),
     search.setSpanArgsFromDates([new Date(3), new Date(4)]),
-    submitSearchBar(),
+    submitSearch(),
     goBack()
   ])
 
@@ -319,13 +320,13 @@ test("goForward", () => {
   const state = store.dispatchAll([
     changeSearchBarInput("hello"),
     search.setSpanArgsFromDates([new Date(1), new Date(2)]),
-    submitSearchBar(),
+    submitSearch(),
     changeSearchBarInput("goodbye"),
     search.setSpanArgsFromDates([new Date(3), new Date(4)]),
-    submitSearchBar(),
+    submitSearch(),
     changeSearchBarInput("hello again"),
     search.setSpanArgsFromDates([new Date(5), new Date(6)]),
-    submitSearchBar(),
+    submitSearch(),
     goBack(),
     goBack(),
     goBack(),
