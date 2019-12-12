@@ -15,6 +15,7 @@ import {getSearchRecord} from "../state/selectors/searchRecord"
 import {recordSearch, submittingSearchBar} from "../state/actions"
 import {validateProgram} from "../state/thunks/searchBar"
 import brim from "../brim"
+import chart from "../state/chart"
 import executeSearch from "./executeSearch"
 import search from "../state/search"
 
@@ -27,6 +28,7 @@ export default function submitSearch(save: boolean = true): Thunk {
     if (save) dispatch(recordSearch(getSearchRecord(state)))
 
     dispatch(executeTableSearch())
+    dispatch(executeHistogramSearch())
   }
 }
 
@@ -36,14 +38,17 @@ function executeTableSearch() {
     let program = addHeadProc(getSearchProgram(state), PER_PAGE)
     let span = search.getSpanAsDates(state)
     let space = getCurrentSpaceName(state)
+    console.log("clear it!")
+    dispatch(clearViewer())
     let tableSearch = brim
       .search(program, span, space)
       .id("Table")
-      .start(() => dispatch(clearViewer()))
       .status((status) => dispatch(setViewerStatus(status)))
       .chunk((records, types) => {
-        dispatch(appendViewerRecords(records))
-        dispatch(updateViewerColumns(types))
+        requestAnimationFrame(() => {
+          dispatch(appendViewerRecords(records))
+          dispatch(updateViewerColumns(types))
+        })
       })
 
     return dispatch(executeSearch(tableSearch))
@@ -57,14 +62,16 @@ function executeHistogramSearch() {
     let program = addEveryCountProc(getSearchProgram(state), span)
     let space = getCurrentSpaceName(state)
 
+    dispatch(chart.clear())
+
     let histogram = brim
       .search(program, span, space)
       .id("Histogram")
-      .start(() => dispatch(clearViewer()))
-      .status((status) => dispatch(setViewerStatus(status)))
-      .chunk((records, types) => {
-        dispatch(appendViewerRecords(records))
-        dispatch(updateViewerColumns(types))
+      .status((status) => dispatch(chart.setStatus(status)))
+      .chunk((records) => {
+        requestAnimationFrame(() => {
+          dispatch(chart.appendRecords(records))
+        })
       })
 
     return dispatch(executeSearch(histogram))

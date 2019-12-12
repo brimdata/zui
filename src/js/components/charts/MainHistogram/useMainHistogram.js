@@ -6,15 +6,14 @@ import * as d3 from "d3"
 
 import type {DateTuple} from "../../../lib/TimeWindow"
 import type {Pen, HistogramChart} from "../types"
-import {getHistogramSearch} from "../../../state/searches/selector"
 import {innerHeight, innerWidth} from "../dimens"
-import {resultsToLogs} from "../../../models/resultsToLogs"
 import {submitSearchBar} from "../../../state/thunks/searchBar"
 import EmptyMessage from "../../EmptyMessage"
 import HistogramTooltip from "../../HistogramTooltip"
 import LoadingMessage from "../../LoadingMessage"
 import barStacks from "../pens/barStacks"
 import brim from "../../../brim"
+import chart from "../../../state/chart"
 import focusBar from "../pens/focusBar"
 import format from "./format"
 import hoverLine from "../pens/hoverLine"
@@ -28,7 +27,8 @@ import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 
 export default function(width: number, height: number): HistogramChart {
-  let histogramSearch = useSelector(getHistogramSearch)
+  let records = useSelector(chart.getRecords)
+  let status = useSelector(chart.getStatus)
   let span = useSelector(search.getSpanAsDates)
   let innerSpan = useSelector(search.getSpanFocusAsDates)
   let dispatch = useDispatch()
@@ -85,7 +85,8 @@ export default function(width: number, height: number): HistogramChart {
   })
 
   return useMemo<HistogramChart>(() => {
-    let data = format(resultsToLogs(histogramSearch.results, "0"), span)
+    let logs = records.map((r) => brim.interop.recordToLog(brim.record(r)))
+    let data = format(logs, span)
     let margins = {left: 0, right: 0, top: 3, bottom: 16}
 
     return {
@@ -94,7 +95,7 @@ export default function(width: number, height: number): HistogramChart {
       height,
       margins,
       state: {
-        isFetching: histogramSearch.status === "FETCHING",
+        isFetching: status === "FETCHING",
         selection: innerSpan,
         isEmpty: data.points.length === 0
       },
@@ -108,12 +109,5 @@ export default function(width: number, height: number): HistogramChart {
         .domain(span),
       pens
     }
-  }, [
-    histogramSearch.results,
-    histogramSearch.status,
-    span,
-    innerSpan,
-    width,
-    height
-  ])
+  }, [records, status, span, innerSpan, width, height])
 }

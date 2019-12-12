@@ -2,7 +2,7 @@
 
 import {createSelector} from "reselect"
 
-import type {Search, SearchResults} from "./types"
+import type {Search} from "./types"
 import type {State} from "../types"
 import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
 
