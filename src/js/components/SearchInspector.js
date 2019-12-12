@@ -7,16 +7,14 @@ import type {Dispatch, State} from "../state/types"
 import {PaneTitle} from "./Pane"
 import type {SearchesState} from "../state/searches/types"
 import {getSearchInspectorIsOpen} from "../state/reducers/view"
-import {getSearches} from "../state/searches/selector"
 import {hideSearchInspector} from "../state/actions"
 import {killSearch} from "../searches/cancelSearch"
+import {reactElementProps} from "../test/integration"
 import CloseButton from "./CloseButton"
 import HorizontalTable from "./Tables/HorizontalTable"
 import Log from "../models/Log"
 import SearchStats from "../models/SearchStats"
 import dispatchToProps from "../lib/dispatchToProps"
-
-import {reactElementProps} from "../test/integration"
 
 type Props = {
   isOpen: boolean,
@@ -104,7 +102,7 @@ function toLogs(searches) {
 
 const stateToProps = (state: State) => ({
   isOpen: getSearchInspectorIsOpen(state),
-  searches: getSearches(state)
+  searches: {}
 })
 
 export const XSearchInspector = connect<Props, {||}, _, _, _, _>(

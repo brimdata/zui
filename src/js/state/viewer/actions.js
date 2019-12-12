@@ -2,9 +2,11 @@
 
 import type {Descriptors} from "../../types"
 import type {RecordData} from "../../types/records"
+import type {SearchStatus} from "../searches/types"
 import type {
   VIEWER_CLEAR,
   VIEWER_COLUMNS,
+  VIEWER_END_STATUS,
   VIEWER_RECORDS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
@@ -20,8 +22,12 @@ export function spliceViewer(index: number): VIEWER_SPLICE {
   return {type: "VIEWER_SPLICE", index}
 }
 
-export function setViewerStatus(status: ViewerStatus): VIEWER_STATUS {
+export function setViewerStatus(status: SearchStatus): VIEWER_STATUS {
   return {type: "VIEWER_STATUS", status}
+}
+
+export function setViewerEndStatus(status: ViewerStatus): VIEWER_END_STATUS {
+  return {type: "VIEWER_END_STATUS", status}
 }
 
 export function appendViewerRecords(records: RecordData[]): VIEWER_RECORDS {

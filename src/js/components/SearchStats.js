@@ -3,9 +3,9 @@
 import React from "react"
 
 import type {SearchStats as TSearchStats} from "../state/searches/types"
-import {getSearchStats} from "../state/searches/selector"
-import * as fmt from "../lib/fmt"
+import {getViewerStats} from "../state/viewer/selector"
 import {reactElementProps} from "../test/integration"
+import * as fmt from "../lib/fmt"
 
 type Props = {
   stats?: TSearchStats
@@ -55,7 +55,7 @@ const fmtSpeed = (startTime, updateTime, bytesRead) => {
 import {connect} from "react-redux"
 
 const stateToProps = (state) => ({
-  stats: getSearchStats(state, "ViewerSearch")
+  stats: getViewerStats(state)
 })
 
 export const XSearchStats = connect<Props, {||}, _, _, _, _>(stateToProps)(

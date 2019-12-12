@@ -13,9 +13,12 @@ import {fetchNextPage} from "../../flows/viewer/fetchNextPage"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
-import {getSearchStatus} from "../../state/searches/selector"
 import {getTimeZone} from "../../state/reducers/view"
-import {getViewerLogs, getViewerStatus} from "../../state/viewer/selector"
+import {
+  getViewerEndStatus,
+  getViewerLogs,
+  getViewerStatus
+} from "../../state/viewer/selector"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Log from "../../models/Log"
@@ -122,8 +125,8 @@ export default function SearchResults(props: Props) {
 
 function stateToProps(state: State) {
   return {
-    isFetching: getSearchStatus(state, "ViewerSearch") === "FETCHING",
-    isIncomplete: getViewerStatus(state) === "INCOMPLETE",
+    isFetching: getViewerStatus(state) === "FETCHING",
+    isIncomplete: getViewerEndStatus(state) === "INCOMPLETE",
     tableColumns: getCurrentTableColumns(state),
     timeZone: getTimeZone(state),
     selectedLog: buildLogDetail(state),

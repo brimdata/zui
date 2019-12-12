@@ -3,8 +3,10 @@
 import type {
   VIEWER_CLEAR,
   VIEWER_COLUMNS,
+  VIEWER_END_STATUS,
   VIEWER_RECORDS,
   VIEWER_SPLICE,
+  VIEWER_STATS,
   VIEWER_STATUS,
   ViewerState
 } from "./types"
@@ -16,11 +18,15 @@ type Action =
   | VIEWER_STATUS
   | VIEWER_RECORDS
   | VIEWER_COLUMNS
+  | VIEWER_END_STATUS
+  | VIEWER_STATS
 
 const init = {
   records: [],
-  status: "INCOMPLETE",
-  columns: {}
+  endStatus: "INCOMPLETE",
+  status: "INIT",
+  columns: {},
+  stats: {updateTime: 0, startTime: 0, bytesRead: 0}
 }
 
 export default function(
@@ -34,8 +40,12 @@ export default function(
       return {...init}
     case "VIEWER_SPLICE":
       return {...state, records: splice(state.records, action.index)}
+    case "VIEWER_END_STATUS":
+      return {...state, endStatus: action.status}
     case "VIEWER_STATUS":
       return {...state, status: action.status}
+    case "VIEWER_STATS":
+      return {...state, stats: action.stats}
     case "VIEWER_COLUMNS":
       return {...state, columns: {...state.columns, ...action.columns}}
     default:

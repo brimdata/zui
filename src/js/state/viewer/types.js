@@ -2,15 +2,22 @@
 
 import type {Descriptor} from "../../types"
 import type {RecordData} from "../../types/records"
+import type {SearchStatus} from "../searches/types"
 
 export type ViewerStatus = "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
 export type ViewerColumns = {[string]: Descriptor}
-
+export type ViewerStats = {
+  updateTime: number,
+  startTime: number,
+  bytesRead: number
+}
 export type ViewerState = {|
   records: RecordData[],
   columns: ViewerColumns,
-  status: ViewerStatus
+  endStatus: ViewerStatus,
+  status: SearchStatus,
+  stats: ViewerStats
 |}
 
 export type VIEWER_RECORDS = {
@@ -27,12 +34,22 @@ export type VIEWER_SPLICE = {
   index: number
 }
 
+export type VIEWER_END_STATUS = {
+  type: "VIEWER_END_STATUS",
+  status: ViewerStatus
+}
+
 export type VIEWER_STATUS = {
   type: "VIEWER_STATUS",
-  status: ViewerStatus
+  status: SearchStatus
 }
 
 export type VIEWER_COLUMNS = {
   type: "VIEWER_COLUMNS",
   columns: ViewerColumns
+}
+
+export type VIEWER_STATS = {
+  type: "VIEWER_STATS",
+  stats: ViewerStats
 }

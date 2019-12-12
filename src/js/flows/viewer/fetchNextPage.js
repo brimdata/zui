@@ -1,17 +1,12 @@
 /* @flow */
 import {isEmpty} from "lodash"
 
-import {PER_PAGE} from "./config"
 import type {Thunk} from "../../state/types"
-import {addHeadProc} from "../../lib/Program"
-import {getSearchProgram} from "../../state/selectors/searchBar"
 import {getViewerLogs} from "../../state/viewer/selector"
 import {indexOfLastChange} from "../../lib/Array"
-import {issueSearch} from "../../searches/issueSearch"
 import {spliceViewer} from "../../state/viewer/actions"
 import brim from "../../brim"
 import search from "../../state/search"
-import viewerHandler from "./viewerHandler"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   const state = getState()
@@ -33,13 +28,14 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   }
 
   dispatch(spliceViewer(spliceIndex))
-  dispatch(
-    issueSearch({
-      name: "ViewerSearch",
-      tag: "viewer",
-      program: addHeadProc(getSearchProgram(state), PER_PAGE),
-      span: searchSpan,
-      handlers: [viewerHandler]
-    })
-  )
+  // Replace with execute table search
+  // dispatch(
+  //   issueSearch({
+  //     name: "ViewerSearch",
+  //     tag: "viewer",
+  //     program: addHeadProc(getSearchProgram(state), PER_PAGE),
+  //     span: searchSpan,
+  //     handlers: [viewerHandler]
+  //   })
+  // )
 }

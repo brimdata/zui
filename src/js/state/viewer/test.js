@@ -3,12 +3,12 @@
 import {
   appendViewerRecords,
   clearViewer,
-  setViewerStatus,
+  setViewerEndStatus,
   spliceViewer,
   updateViewerColumns
 } from "./actions"
 import {conn, dns, http} from "../../test/mockLogs"
-import {getViewerColumns, getViewerLogs, getViewerStatus} from "./selector"
+import {getViewerColumns, getViewerEndStatus, getViewerLogs} from "./selector"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -44,21 +44,21 @@ test("splice results", () => {
 })
 
 test("results complete", () => {
-  let state = store.dispatchAll([setViewerStatus("COMPLETE")])
+  let state = store.dispatchAll([setViewerEndStatus("COMPLETE")])
 
-  expect(getViewerStatus(state)).toBe("COMPLETE")
+  expect(getViewerEndStatus(state)).toBe("COMPLETE")
 })
 
 test("results incomplete", () => {
-  let state = store.dispatchAll([setViewerStatus("INCOMPLETE")])
+  let state = store.dispatchAll([setViewerEndStatus("INCOMPLETE")])
 
-  expect(getViewerStatus(state)).toBe("INCOMPLETE")
+  expect(getViewerEndStatus(state)).toBe("INCOMPLETE")
 })
 
 test("results limited", () => {
-  let state = store.dispatchAll([setViewerStatus("LIMIT")])
+  let state = store.dispatchAll([setViewerEndStatus("LIMIT")])
 
-  expect(getViewerStatus(state)).toBe("LIMIT")
+  expect(getViewerEndStatus(state)).toBe("LIMIT")
 })
 
 test("update columns with same tds", () => {

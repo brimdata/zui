@@ -6,7 +6,7 @@ import React, {useRef} from "react"
 
 import {changeSearchBarInput} from "../state/actions"
 import {getSearchBarInputValue} from "../state/selectors/searchBar"
-import {getSearches} from "../state/searches/selector"
+import {getViewerStatus} from "../state/viewer/selector"
 import {killSearchesByTag} from "../searches/cancelSearch"
 import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
@@ -70,12 +70,7 @@ export default function SearchInput() {
 
 function Menu() {
   let dispatch = useDispatch()
-  let searches = useSelector(getSearches)
-  let isFetching = Object.values(searches)
-    //$FlowFixMe
-    .filter((s) => s.tag === "viewer")
-    //$FlowFixMe
-    .some((s) => s.status === "FETCHING")
+  let isFetching = useSelector(getViewerStatus) === "FETCHING"
 
   let menu = [
     {label: "Debug query", click: () => dispatch(modal.show("debug"))},
