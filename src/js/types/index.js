@@ -92,4 +92,5 @@ export type SearchRecord = {
   space: string
 }
 
-export type ExtractReturn<Fn> = $Call<<T>((...Iterable<any>) => T) => T, Fn>
+type _ReturnType<B, _F: (...args: any[]) => B> = B
+export type ReturnType<F> = _ReturnType<*, F>

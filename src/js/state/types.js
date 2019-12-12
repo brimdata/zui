@@ -3,6 +3,7 @@
 import {type Store as ReduxStore} from "redux"
 
 import type {Boomd} from "./reducers/boomd"
+import type {ChartState} from "./chart"
 import type {ClustersState} from "./clusters/types"
 import type {ColumnsState} from "./columns/types"
 import type {ErrorsState} from "./errors"
@@ -29,6 +30,7 @@ export type DispatchProps = {|dispatch: Dispatch|}
 export type Store = ReduxStore<State, *>
 
 export type State = {
+  chart: ChartState,
   handlers: HandlersState,
   clusters: ClustersState,
   errors: ErrorsState,

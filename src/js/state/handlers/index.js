@@ -1,12 +1,13 @@
 /* @flow */
 
-import type {ExtractReturn} from "../../types"
+import type {ReturnType} from "../../types"
 import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
 
 type HandlersAction =
-  | ExtractReturn<typeof abort>
-  | ExtractReturn<typeof register>
-  | ExtractReturn<typeof remove>
+  | ReturnType<typeof abort>
+  | ReturnType<typeof register>
+  | ReturnType<typeof remove>
+
 export type HandlersState = {[string]: BoomRequest}
 
 function register(id: string, handler: BoomRequest) {

@@ -1,5 +1,5 @@
 /* @flow */
-import type {ExtractReturn} from "../types"
+import type {ReturnType} from "../types"
 import ast from "./ast"
 import compoundField from "./compoundField"
 import dateTuple from "./dateTuple"
@@ -30,9 +30,9 @@ export type $Field = {
   guessWidth: () => number
 }
 
-export type $CompoundField = ExtractReturn<typeof compoundField>
-export type $Search = ExtractReturn<typeof search>
-export type $Log = ExtractReturn<typeof log>
+export type $CompoundField = ReturnType<typeof compoundField>
+export type $Search = ReturnType<typeof search>
+export type $Log = ReturnType<typeof log>
 
 export type Ts = {
   ns: number,
