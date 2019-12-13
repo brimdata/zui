@@ -1,19 +1,17 @@
 /* @flow */
 
 import {useDispatch} from "react-redux"
-import React, {useState} from "react"
+import React from "react"
 import classNames from "classnames"
 
-import {ExpandButton, RemoveButton} from "../Buttons"
 import type {Finding} from "../../state/reducers/investigation"
+import {RemoveButton} from "../Buttons"
 import {
   changeSearchBarInput,
   deleteFindingByTs,
   setCurrentSpaceName,
   setSearchBarPins
 } from "../../state/actions"
-import FindingDetail from "./FindingDetail"
-import FindingFooter from "./FindingFooter"
 import FindingProgram from "./FindingProgram"
 import search from "../../state/search"
 import submitSearch from "../../flows/submitSearch"
@@ -22,7 +20,6 @@ type Props = {finding: Finding}
 
 export default React.memo<Props>(function FindingCard({finding}: Props) {
   let dispatch = useDispatch()
-  let [open, setOpen] = useState(false)
 
   function onClick() {
     dispatch(setSearchBarPins(finding.search.pins))
@@ -37,23 +34,11 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(deleteFindingByTs(finding.ts))
   }
 
-  function onExpandClick() {
-    setOpen(!open)
-  }
-
   return (
-    <div className={classNames("finding-card-wrapper", {open})}>
+    <div className={classNames("finding-card-wrapper")}>
       <div className="finding-card" onClick={onClick}>
         <FindingProgram search={finding.search} />
-        <FindingFooter finding={finding} />
       </div>
-      {open && <FindingDetail finding={finding} />}
-
-      <ExpandButton
-        className="gutter-button-style"
-        onClick={onExpandClick}
-        open={open}
-      />
       <RemoveButton className="gutter-button-style" onClick={onRemove} />
     </div>
   )

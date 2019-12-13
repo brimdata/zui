@@ -10,7 +10,6 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
 import {checkVersions} from "../services/boom"
@@ -28,6 +27,7 @@ import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
+import SearchInspector from "./SearchInspector"
 import SettingsModal from "./SettingsModal"
 import WhoisModal from "./WhoisModal"
 import handlers from "../state/handlers"
@@ -77,7 +77,7 @@ export default function SearchPage({cluster}: Props) {
         <XRightPane />
       </div>
       <ErrorNotice />
-      <XSearchInspector />
+      <SearchInspector />
       <XDownloadProgress />
       <WhoisModal />
       <DebugModal />
