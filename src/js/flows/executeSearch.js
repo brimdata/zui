@@ -22,7 +22,7 @@ export default function executeSearch(search: $Search): Thunk {
     }
 
     function stats(payload) {
-      search.emit("stats", payload)
+      search.emit("stats", transformStats(payload))
     }
 
     function records(payload) {
@@ -66,7 +66,7 @@ export default function executeSearch(search: $Search): Thunk {
       }
     }
 
-    dispatch(handlers.abort(search.getId()))
+    dispatch(handlers.abort(search.getId(), false))
 
     let handler = boom
       .search(search.program, {
@@ -79,5 +79,17 @@ export default function executeSearch(search: $Search): Thunk {
 
     dispatch(handlers.register(search.getId(), handler))
     return handler
+  }
+}
+
+function transformStats(payload) {
+  return {
+    currentTs: brim.time(payload.current_ts).toFracSec(),
+    startTime: brim.time(payload.start_time).toFracSec(),
+    updateTime: brim.time(payload.update_time).toFracSec(),
+    bytesMatched: payload.bytes_matched,
+    bytesRead: payload.bytes_read,
+    tuplesMatched: payload.records_matched,
+    tuplesRead: payload.records_read
   }
 }

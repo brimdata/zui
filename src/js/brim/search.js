@@ -2,8 +2,7 @@
 import type {DateTuple} from "../lib/TimeWindow"
 import type {Descriptors} from "../types"
 import type {RecordData} from "../types/records"
-import type {SearchStatsPayload} from "../services/BoomClient/types"
-import type {SearchStatus} from "../state/searches/types"
+import type {SearchStats, SearchStatus} from "../state/searches/types"
 import randomHash from "./randomHash"
 
 type EventNames = "chunk" | "stats" | "status" | "end" | "start" | "error"
@@ -31,7 +30,7 @@ export default function search(
       callbacks.set("chunk", func)
       return this
     },
-    stats(func: (SearchStatsPayload) => void) {
+    stats(func: (SearchStats) => void) {
       callbacks.set("stats", func)
       return this
     },

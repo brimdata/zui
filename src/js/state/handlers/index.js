@@ -14,8 +14,8 @@ function register(id: string, handler: BoomRequest) {
   return {type: "HANDLERS_REGISTER", id, handler}
 }
 
-function abort(id: string) {
-  return {type: "HANDLERS_ABORT", id}
+function abort(id: string, emit: boolean = true) {
+  return {type: "HANDLERS_ABORT", id, emit}
 }
 
 function remove(id: string) {
@@ -31,7 +31,7 @@ function reducer(
       return {...state, [action.id]: action.handler}
     case "HANDLERS_ABORT":
       var handler = state[action.id]
-      if (handler) handler.abort()
+      if (handler) handler.abort(action.emit)
       var abortState = {...state}
       delete abortState[action.id]
       return abortState

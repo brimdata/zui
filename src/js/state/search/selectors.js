@@ -3,8 +3,10 @@ import {createSelector} from "reselect"
 
 import type {DateTuple} from "../../lib/TimeWindow"
 import {type Finding, getCurrentFinding} from "../reducers/investigation"
-import type {SpanArgs} from "./types"
+import type {SpanArgs, TabState} from "./types"
 import type {State} from "../types"
+import {getCurrentSpaceName} from "../reducers/spaces"
+import {getSearchProgram} from "../selectors/searchBar"
 import brim, {type Span} from "../../brim"
 
 function getSpan(state: State) {
@@ -54,6 +56,19 @@ const getPrevSpanArgs = createSelector<State, void, ?SpanArgs, ?Finding>(
   }
 )
 
+const getTab = createSelector<State, void, TabState, _, _, _, _>(
+  getSearchProgram,
+  getSpanAsDates,
+  getSpanFocusAsDates,
+  getCurrentSpaceName,
+  (program, span, spanFocus, space) => ({
+    program,
+    span,
+    spanFocus,
+    space
+  })
+)
+
 export default {
   getSpan,
   getSpanAsDates,
@@ -61,5 +76,6 @@ export default {
   getSpanFocusAsDates,
   getSpanArgs,
   getPrevSpanArgs,
-  getComputedSpan
+  getComputedSpan,
+  getTab
 }

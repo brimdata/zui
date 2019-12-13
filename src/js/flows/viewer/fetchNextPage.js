@@ -6,36 +6,33 @@ import {getViewerLogs} from "../../state/viewer/selector"
 import {indexOfLastChange} from "../../lib/Array"
 import {spliceViewer} from "../../state/viewer/actions"
 import brim from "../../brim"
+import executeTableSearch from "../executeTableSearch"
 import search from "../../state/search"
+import searchArgs from "../searchArgs"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
-  const state = getState()
-  const logs = getViewerLogs(state)
-  let searchSpan = search.getSpanAsDates(state)
-  let spliceIndex = 0
+  let state = getState()
+  let logs = getViewerLogs(state)
+  let tab = search.getTab(state)
+  let [spliceIndex, span] = nextPageArgs(logs, tab.span)
 
+  dispatch(spliceViewer(spliceIndex))
+  dispatch(executeTableSearch(searchArgs.events({...tab, span})))
+}
+
+function nextPageArgs(logs, span) {
+  let spliceIndex = 0
   if (!isEmpty(logs)) {
-    const index = indexOfLastChange(logs, (log) => log.get("ts"))
+    let index = indexOfLastChange(logs, (log) => log.get("ts"))
 
     if (index >= 0) {
       const prevTs = logs[index].getField("ts").toDate()
-      searchSpan[1] = brim
+      span[1] = brim
         .time(prevTs)
         .add(1, "ms")
         .toDate()
       spliceIndex = index + 1
     }
   }
-
-  dispatch(spliceViewer(spliceIndex))
-  // Replace with execute table search
-  // dispatch(
-  //   issueSearch({
-  //     name: "ViewerSearch",
-  //     tag: "viewer",
-  //     program: addHeadProc(getSearchProgram(state), PER_PAGE),
-  //     span: searchSpan,
-  //     handlers: [viewerHandler]
-  //   })
-  // )
+  return [spliceIndex, span]
 }

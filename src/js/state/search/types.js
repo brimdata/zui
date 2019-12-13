@@ -1,4 +1,5 @@
 /* @flow */
+import type {DateTuple} from "../../lib/TimeWindow"
 import type {Span, Ts} from "../../brim"
 
 export type SearchState = {
@@ -26,3 +27,10 @@ export type SEARCH_SPAN_FOCUS_SET = {
   spanFocus: ?Span
 }
 export type SEARCH_CLEAR = {type: "SEARCH_CLEAR"}
+
+export type TabState = {
+  program: string,
+  span: DateTuple,
+  spanFocus: ?DateTuple,
+  space: string
+}

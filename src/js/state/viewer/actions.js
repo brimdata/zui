@@ -9,7 +9,9 @@ import type {
   VIEWER_END_STATUS,
   VIEWER_RECORDS,
   VIEWER_SPLICE,
+  VIEWER_STATS,
   VIEWER_STATUS,
+  ViewerStats,
   ViewerStatus
 } from "./types"
 import {hashDescriptorKeys} from "./hashDescriptorKeys"
@@ -32,6 +34,10 @@ export function setViewerEndStatus(status: ViewerStatus): VIEWER_END_STATUS {
 
 export function appendViewerRecords(records: RecordData[]): VIEWER_RECORDS {
   return {type: "VIEWER_RECORDS", records}
+}
+
+export function setViewerStats(stats: ViewerStats): VIEWER_STATS {
+  return {type: "VIEWER_STATS", stats}
 }
 
 export function updateViewerColumns(desc: Descriptors): VIEWER_COLUMNS {
