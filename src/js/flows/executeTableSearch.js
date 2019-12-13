@@ -23,7 +23,7 @@ export default function executeTableSearch({
       .search(program, span, space)
       .id("Table")
       .status((status) => dispatch(setViewerStatus(status)))
-      .chunk((records, types) => {
+      .chan(0, (records, types) => {
         dispatch(appendViewerRecords(records))
         dispatch(updateViewerColumns(types))
       })

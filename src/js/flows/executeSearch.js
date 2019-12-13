@@ -9,14 +9,8 @@ export default function executeSearch(search: $Search): Thunk {
     let buffer = brim.flatRecordsBuffer()
     let count = 0
     function flushBuffer() {
-      // Delete this later
-      let first = buffer.channels()[0]
-      search.emit("chunk", first.records(), buffer.columns())
-      // EndDelete
-
       for (let chan of buffer.channels()) {
         if (!chan.empty()) {
-          console.log("emitting", chan.id(), chan.records())
           search.emit(chan.id(), chan.records(), buffer.columns())
           chan.clear()
         }

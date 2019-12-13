@@ -16,7 +16,7 @@ export default function executeHistogramSearch({
       .search(addEveryCountProc(program, span), span, space)
       .id("Histogram")
       .status((status) => dispatch(chart.setStatus(status)))
-      .chunk((records) => dispatch(chart.appendRecords(records)))
+      .chan(0, (records) => dispatch(chart.appendRecords(records)))
 
     dispatch(chart.clear())
     dispatch(chart.setStatus("FETCHING"))

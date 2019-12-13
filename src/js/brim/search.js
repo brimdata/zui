@@ -5,14 +5,7 @@ import type {RecordData} from "../types/records"
 import type {SearchStats, SearchStatus} from "../state/searches/types"
 import randomHash from "./randomHash"
 
-type EventNames =
-  | "chunk"
-  | "stats"
-  | "status"
-  | "end"
-  | "start"
-  | "error"
-  | number
+type EventNames = "stats" | "status" | "end" | "start" | "error" | number
 
 export default function search(
   program: string,
@@ -35,10 +28,6 @@ export default function search(
     },
     chan(num: number, func: (RecordData[], Descriptors) => void) {
       callbacks.set(num, func)
-      return this
-    },
-    chunk(func: (RecordData[], Descriptors) => void) {
-      callbacks.set("chunk", func)
       return this
     },
     stats(func: (SearchStats) => void) {
