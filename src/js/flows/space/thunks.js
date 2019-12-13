@@ -11,7 +11,6 @@ import {
   setSpaceNames
 } from "../../state/actions"
 import brim from "../../brim"
-import handlers from "../../state/handlers"
 import modal from "../../state/modal"
 import notice from "../../state/notice"
 import search from "../../state/search"
@@ -19,7 +18,6 @@ import submitSearch from "../submitSearch"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {
-    dispatch(handlers.abortAll())
     return dispatch(fetchSpaces()).then((spaces) => {
       if (spaces.length === 0) {
         dispatch(notice.set(new NoSpacesError()))

@@ -1,22 +1,23 @@
 /* @flow */
-import brim from "./"
+
+import brim from ".."
 
 test("coverts to an array of records", () => {
   let buffer = brim.flatRecordsBuffer()
-  buffer.add("0", records)
-  expect(buffer.records()).toMatchSnapshot()
+  buffer.add(0, records)
+  expect(buffer.channels()[0].records()).toMatchSnapshot()
 })
 
 test("flattens the columns", () => {
   let buffer = brim.flatRecordsBuffer()
-  buffer.add("0", nestedRecords)
+  buffer.add(0, nestedRecords)
   expect(buffer.columns()).toMatchSnapshot()
 })
 
 test("coverts to an array of nested records", () => {
   let buffer = brim.flatRecordsBuffer()
-  buffer.add("0", nestedRecords)
-  expect(buffer.records()).toMatchSnapshot()
+  buffer.add(0, nestedRecords)
+  expect(buffer.channels()[0].records()).toMatchSnapshot()
 })
 
 let records = [

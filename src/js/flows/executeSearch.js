@@ -9,9 +9,18 @@ export default function executeSearch(search: $Search): Thunk {
     let buffer = brim.flatRecordsBuffer()
     let count = 0
     function flushBuffer() {
-      if (buffer.empty()) return
-      search.emit("chunk", buffer.records(), buffer.columns())
-      buffer.clearRecords()
+      // Delete this later
+      let first = buffer.channels()[0]
+      search.emit("chunk", first.records(), buffer.columns())
+      // EndDelete
+
+      for (let chan of buffer.channels()) {
+        if (!chan.empty()) {
+          console.log("emitting", chan.id(), chan.records())
+          search.emit(chan.id(), chan.records(), buffer.columns())
+          chan.clear()
+        }
+      }
     }
 
     let flushBufferLazy = whenIdle(flushBuffer)
@@ -27,11 +36,12 @@ export default function executeSearch(search: $Search): Thunk {
 
     function records(payload) {
       count += payload.records.length
-      buffer.add(payload.channel_id.toString(), payload.records)
+      buffer.add(payload.channel_id, payload.records)
       flushBufferLazy()
     }
 
     function aborted() {
+      console.log("aborted?")
       flushBufferLazy.cancel()
       search.emit("status", "ABORT")
     }
@@ -78,7 +88,7 @@ export default function executeSearch(search: $Search): Thunk {
       .stream(streamed)
 
     dispatch(handlers.register(search.getId(), handler))
-    return handler
+    return () => handler.abort(false)
   }
 }
 
