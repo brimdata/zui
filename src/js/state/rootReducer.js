@@ -17,7 +17,6 @@ import packets from "./reducers/packets"
 import search from "./search"
 import searchBar from "./reducers/searchBar"
 import searchHistory from "./reducers/searchHistory"
-import searchesReducer from "./searches/reducer"
 import spaces from "./reducers/spaces"
 import starredLogs from "./reducers/starredLogs"
 import tasks from "./tasks"
@@ -26,7 +25,6 @@ import viewerReducer from "./viewer/reducer"
 
 export default combineReducers<*, *>({
   errors: errorsReducer,
-  searches: searchesReducer,
   viewer: viewerReducer,
   columns: columnsReducer,
   clusters: clustersReducer,

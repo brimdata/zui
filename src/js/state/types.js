@@ -15,7 +15,6 @@ import type {NoticeState} from "./notice"
 import type {SearchBar} from "./reducers/searchBar"
 import type {SearchHistory} from "./reducers/searchHistory"
 import type {SearchState} from "./search/types"
-import type {SearchesState} from "./searches/types"
 import type {Spaces} from "./reducers/spaces"
 import type {TasksState} from "./tasks"
 import type {View} from "./reducers/view"
@@ -36,7 +35,6 @@ export type State = {
   errors: ErrorsState,
   columns: ColumnsState,
   viewer: ViewerState,
-  searches: SearchesState,
   searchBar: SearchBar,
   spaces: Spaces,
   boomd: Boomd,
