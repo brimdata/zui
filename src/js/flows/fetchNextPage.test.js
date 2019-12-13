@@ -1,12 +1,12 @@
 /* @flow */
 
-import {appendViewerRecords, spliceViewer} from "../../state/viewer/actions"
+import {appendViewerRecords, spliceViewer} from "../state/viewer/actions"
 import {fetchNextPage} from "./fetchNextPage"
-import {setCurrentSpaceName} from "../../state/actions"
-import Log from "../../models/Log"
-import MockBoomClient from "../../test/MockBoomClient"
-import initTestStore from "../../test/initTestStore"
-import search from "../../state/search"
+import {setCurrentSpaceName} from "../state/actions"
+import Log from "../models/Log"
+import MockBoomClient from "../test/MockBoomClient"
+import initTestStore from "../test/initTestStore"
+import search from "../state/search"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]

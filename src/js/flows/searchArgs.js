@@ -1,6 +1,6 @@
 /* @flow */
 
-import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./viewer/config"
+import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {DateTuple} from "../lib/TimeWindow"
 import type {TabState} from "../state/search/types"
 import {addHeadProc, hasAnalytics} from "../lib/Program"

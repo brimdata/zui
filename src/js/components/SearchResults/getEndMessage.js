@@ -1,6 +1,6 @@
 /* @flow */
 
-import {ANALYTIC_MAX_RESULTS} from "../../flows/viewer/config"
+import {ANALYTIC_MAX_RESULTS} from "../../flows/config"
 import {hasAnalytics} from "../../lib/Program"
 import {withCommas} from "../../lib/fmt"
 

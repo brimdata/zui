@@ -4,7 +4,7 @@ import type {Descriptor} from "../../types"
 import type {RecordData} from "../../types/records"
 import type {SearchStatus} from "../searches/types"
 
-export type ViewerStatus = "INCOMPLETE" | "COMPLETE" | "LIMIT"
+export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
 export type ViewerColumns = {[string]: Descriptor}
 export type ViewerStats = {

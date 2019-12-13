@@ -22,6 +22,10 @@ function remove(id: string) {
   return {type: "HANDLERS_REMOVE", id}
 }
 
+function abortAll(emit: boolean = true) {
+  return {type: "HANLDERS_ABORT_ALL", emit}
+}
+
 function reducer(
   state: HandlersState = {},
   action: HandlersAction
@@ -35,6 +39,12 @@ function reducer(
       var abortState = {...state}
       delete abortState[action.id]
       return abortState
+    case "HANLDERS_ABORT_ALL":
+      for (var [_id, handle] of Object.entries(state)) {
+        // $FlowFixMe
+        handle.abort(action.emit)
+      }
+      return {}
     case "HANDLERS_REMOVE":
       var removeState = {...state}
       delete removeState[action.id]
@@ -47,6 +57,7 @@ function reducer(
 export default {
   register,
   abort,
+  abortAll,
   remove,
   reducer
 }

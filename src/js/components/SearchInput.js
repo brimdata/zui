@@ -7,12 +7,12 @@ import React, {useRef} from "react"
 import {changeSearchBarInput} from "../state/actions"
 import {getSearchBarInputValue} from "../state/selectors/searchBar"
 import {getViewerStatus} from "../state/viewer/selector"
-import {killSearchesByTag} from "../searches/cancelSearch"
 import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
+import handlers from "../state/handlers"
 import modal from "../state/modal"
 import search from "../state/search"
 import submitSearch from "../flows/submitSearch"
@@ -78,7 +78,7 @@ function Menu() {
     {label: "Copy for boom get", click: () => dispatch(modal.show("boom-get"))},
     {
       label: "Kill search",
-      click: () => dispatch(killSearchesByTag("viewer")),
+      click: () => dispatch(handlers.abortAll()),
       disabled: !isFetching
     }
   ]

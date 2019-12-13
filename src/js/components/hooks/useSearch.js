@@ -6,7 +6,7 @@ import {accumResults} from "../../lib/accumResults"
 import {fetchSearch} from "../../services/boom"
 import {getCurrentSpaceName} from "../../state/reducers/spaces"
 import {registerSearch} from "../../state/searches/actions"
-import baseHandler from "../../searches/baseHandler"
+
 import search from "../../state/search"
 import tasks from "../../state/tasks"
 

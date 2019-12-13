@@ -1,14 +1,14 @@
 /* @flow */
 import {isEmpty} from "lodash"
 
-import type {Thunk} from "../../state/types"
-import {getViewerLogs} from "../../state/viewer/selector"
-import {indexOfLastChange} from "../../lib/Array"
-import {spliceViewer} from "../../state/viewer/actions"
-import brim from "../../brim"
-import executeTableSearch from "../executeTableSearch"
-import search from "../../state/search"
-import searchArgs from "../searchArgs"
+import type {Thunk} from "../state/types"
+import {getViewerLogs} from "../state/viewer/selector"
+import {indexOfLastChange} from "../lib/Array"
+import {spliceViewer} from "../state/viewer/actions"
+import brim from "../brim"
+import executeTableSearch from "./executeTableSearch"
+import search from "../state/search"
+import searchArgs from "./searchArgs"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let state = getState()

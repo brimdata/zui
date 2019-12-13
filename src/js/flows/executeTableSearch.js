@@ -1,5 +1,6 @@
 /* @flow */
-import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./viewer/config"
+
+import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {SearchArgs} from "./searchArgs"
 import type {Thunk} from "../state/types"
 import {
@@ -30,6 +31,7 @@ export default function executeTableSearch({
       .end((_id, count) => dispatch(setViewerEndStatus(endStatus(count))))
 
     dispatch(setViewerStatus("FETCHING"))
+    dispatch(setViewerEndStatus("FETCHING"))
     return dispatch(executeSearch(table))
   }
 }

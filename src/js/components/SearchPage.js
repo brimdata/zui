@@ -20,7 +20,6 @@ import {getKey} from "../lib/finding"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {hasAnalytics} from "../lib/Program"
 import {initSpace} from "../flows/space/thunks"
-import {killAllSearches} from "../searches/cancelSearch"
 import {useResizeObserver} from "./hooks/useResizeObserver"
 import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
@@ -31,6 +30,7 @@ import ErrorNotice from "./ErrorNotice"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 import SettingsModal from "./SettingsModal"
 import WhoisModal from "./WhoisModal"
+import handlers from "../state/handlers"
 
 type Props = {|cluster: Cluster|}
 
@@ -45,7 +45,7 @@ export default function SearchPage({cluster}: Props) {
   useEffect(() => {
     ipcRenderer.send("open-search-window")
     setTimeout(() => dispatch(checkVersions()), 500)
-    return () => dispatch(killAllSearches())
+    return () => dispatch(handlers.abortAll())
   }, [])
 
   useEffect(() => {

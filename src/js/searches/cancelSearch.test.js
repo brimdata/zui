@@ -1,8 +1,7 @@
 /* @flow */
 
-import {cancelSearchesByTag, killSearchesByTag} from "./cancelSearch"
-import {clearSearches, registerSearch} from "../state/searches/actions"
 import MockBoomClient from "../test/MockBoomClient"
+import handlers from "../state/handlers"
 import initTestStore from "../test/initTestStore"
 
 describe("boomSearches reducer", () => {
@@ -11,13 +10,9 @@ describe("boomSearches reducer", () => {
   beforeEach(() => {
     boom = new MockBoomClient().stub("send")
     store = initTestStore(boom)
-    store.dispatchAll([
-      registerSearch("Histogram", {tag: "viewer", handler: boom.mockRequest()}),
-      registerSearch("Logs", {tag: "detail", handler: boom.mockRequest()})
-    ])
   })
 
-  test("#killSearchesByTag", () => {
+  test("#abort all", () => {
     let killFunc = jest.fn()
     let req1 = boom.mockRequest()
     let req2 = boom.mockRequest()
@@ -26,22 +21,15 @@ describe("boomSearches reducer", () => {
     req2.setAbort(killFunc)
 
     store.dispatchAll([
-      clearSearches(),
-      registerSearch("Histogram", {
-        handler: req1,
-        tag: "detail"
-      }),
-      registerSearch("Logs", {
-        handler: req2,
-        tag: "detail"
-      }),
-      killSearchesByTag()
+      handlers.register("Histogram", req1),
+      handlers.register("Logs", req2),
+      handlers.abortAll()
     ])
 
     expect(killFunc).toHaveBeenCalledTimes(2)
   })
 
-  test("#killSearchesByTag by tag", () => {
+  test("#abort", () => {
     let killFunc = jest.fn()
     let req1 = boom.mockRequest()
     let req2 = boom.mockRequest()
@@ -50,42 +38,30 @@ describe("boomSearches reducer", () => {
     req2.setAbort(killFunc)
 
     store.dispatchAll([
-      clearSearches(),
-      registerSearch("Histogram", {
-        tag: "detail",
-        handler: req1
-      }),
-      registerSearch("Logs", {
-        tag: "viewer",
-        handler: req2
-      }),
-      killSearchesByTag("viewer")
+      handlers.register("Histogram", req1),
+      handlers.register("Logs", req2),
+      handlers.abort("Histogram")
     ])
 
     expect(killFunc).toHaveBeenCalledTimes(1)
   })
 
-  test("#killSearchesByTag runs abort callback", () => {
+  test("#abortAll runs callback", () => {
     let req = boom.mockRequest()
     let killFunc = jest.spyOn(req, "abort")
 
-    store.dispatchAll([
-      clearSearches(),
-      registerSearch("KillMe", {handler: req, tag: "viewer"}),
-      killSearchesByTag()
-    ])
+    store.dispatchAll([handlers.register("KillMe", req), handlers.abortAll()])
 
     expect(killFunc).toHaveBeenCalled()
   })
 
-  test("#cancelSearches does not run abort callback", () => {
+  test("#abortAll does not run abort callback", () => {
     let req = boom.mockRequest()
     let killFunc = jest.spyOn(req, "abort")
 
     store.dispatchAll([
-      clearSearches(),
-      registerSearch("Cancel Me", {handler: req, tag: "detail"}),
-      cancelSearchesByTag()
+      handlers.register("Cancel Me", req),
+      handlers.abortAll(false)
     ])
 
     expect(killFunc).toHaveBeenCalledWith(false)
