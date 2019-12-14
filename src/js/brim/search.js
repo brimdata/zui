@@ -2,7 +2,7 @@
 import type {DateTuple} from "../lib/TimeWindow"
 import type {Descriptors} from "../types"
 import type {RecordData} from "../types/records"
-import type {SearchStats, SearchStatus} from "../state/searches/types"
+import type {SearchStats, SearchStatus} from "../types/searches"
 import randomHash from "./randomHash"
 
 type EventNames = "stats" | "status" | "end" | "start" | "error" | number

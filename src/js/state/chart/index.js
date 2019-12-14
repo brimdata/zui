@@ -1,7 +1,7 @@
 /* @flow */
 import type {RecordData} from "../../types/records"
 import type {ReturnType} from "../../types"
-import type {SearchStatus} from "../searches/types"
+import type {SearchStatus} from "../../types/searches"
 import type {State} from "../types"
 import {concat} from "../../lib/Array"
 

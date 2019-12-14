@@ -8,6 +8,7 @@ export default function executeSearch(search: $Search): Thunk {
   return function(dispatch, getState, boom) {
     let buffer = brim.flatRecordsBuffer()
     let count = 0
+
     function flushBuffer() {
       for (let chan of buffer.channels()) {
         if (!chan.empty()) {
@@ -35,7 +36,6 @@ export default function executeSearch(search: $Search): Thunk {
     }
 
     function aborted() {
-      console.log("aborted?")
       flushBufferLazy.cancel()
       search.emit("status", "ABORT")
     }

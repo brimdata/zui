@@ -2,7 +2,7 @@
 
 import type {Descriptors} from "../../types"
 import type {RecordData} from "../../types/records"
-import type {SearchStatus} from "../searches/types"
+import type {SearchStatus} from "../../types/searches"
 import type {
   VIEWER_CLEAR,
   VIEWER_COLUMNS,

@@ -2,7 +2,6 @@
 import {isEqual} from "lodash"
 
 import type {SearchRecord} from "../../types"
-import type {SearchResults} from "../searches/types"
 import type {State} from "../types"
 import {last} from "../../lib/Array"
 import Log from "../../models/Log"
@@ -14,17 +13,11 @@ export type Finding = {
   search: SearchRecord,
   resultCount?: number,
   note?: string,
-  logs?: Log[],
-  chart?: {
-    type: "Histogram",
-    results: SearchResults
-  }
+  logs?: Log[]
 }
 
 export default function(state: Investigation = [], a: *) {
   switch (a.type) {
-    case "HISTOGRAM_SEARCH_RESULT":
-      return updateLatest(state, {chart: {type: "Histogram", results: a.data}})
     case "SEARCH_HISTORY_PUSH":
       return createFinding(state, a.entry)
     case "FINDING_CREATE":

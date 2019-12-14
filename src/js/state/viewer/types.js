@@ -2,7 +2,7 @@
 
 import type {Descriptor} from "../../types"
 import type {RecordData} from "../../types/records"
-import type {SearchStatus} from "../searches/types"
+import type {SearchStatus} from "../../types/searches"
 
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
