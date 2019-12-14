@@ -52,7 +52,6 @@ export const Md5Panel = ({log}: {log: Log}) => {
       .chan(2, (records) => setRx(rx.concat(toLogs(records))))
       .chan(3, (records) => setTx(tx.concat(toLogs(records))))
 
-    console.log("executing search")
     return dispatch(executeSearch(s))
   }, [])
 
