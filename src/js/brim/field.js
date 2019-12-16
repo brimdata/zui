@@ -1,5 +1,7 @@
 /* @flow */
 
+import {isEqual} from "lodash"
+
 import {COMPOUND_FIELD_RGX} from "./compoundField"
 import type {FieldData} from "../types/records"
 import {withCommas} from "../lib/fmt"
@@ -39,6 +41,8 @@ function field({name, type, value}: FieldData): $Field {
         return "⦻"
       } else if (type === "count") {
         return withCommas(value)
+      } else if (isEqual(value, {})) {
+        return ""
       } else {
         return value
       }

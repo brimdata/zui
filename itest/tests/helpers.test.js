@@ -121,8 +121,10 @@ describe("Debug and search helpers", () => {
         // -X POST must be concurrent non-whitespace tokens that MAY be at the
         // end
         expect(curlCommand).toMatch(/\s+-X\s+POST(?:\s+|$)/)
-        // URL MAY be at the end
-        expect(curlCommand).toMatch(/\s+http:\/\/[^/]+\/search(?:\s+|$)/)
+        // URL MAY be at the endn
+        expect(curlCommand).toMatch(
+          /\s+http:\/\/[^/]+\/search\?format=zjson(?:\s+|$)/
+        )
         expect(extractCurlPost(curlCommand)).toBeTruthy()
         done()
       })
