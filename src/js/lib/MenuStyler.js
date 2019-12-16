@@ -70,5 +70,5 @@ export const ensureVisible = (bounds: Object, style: Object) => {
 export const getTooltipStyle = (el: Node) => {
   if (!el) return {}
   const {top, left} = el.getBoundingClientRect()
-  return {top: top - 21, left}
+  return {top: top - 21, left: left + 4}
 }

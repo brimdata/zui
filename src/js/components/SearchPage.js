@@ -10,31 +10,32 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import {XSearchInspector} from "./SearchInspector"
 import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
-import {checkVersions} from "../backend/thunks"
+import {checkVersions} from "../services/boom"
 import {getCurrentFinding} from "../state/reducers/investigation"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getKey} from "../lib/finding"
-import {getShowLogsTab} from "../state/reducers/view"
-import {initSpace} from "../space/thunks"
-import {killAllSearches} from "../searches/cancelSearch"
-import {useResizeObserver} from "../hooks/useResizeObserver"
+import {getSearchProgram} from "../state/selectors/searchBar"
+import {hasAnalytics} from "../lib/Program"
+import {initSpace} from "../flows/space/thunks"
+import {useResizeObserver} from "./hooks/useResizeObserver"
 import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
-import MainHistogramChart from "../charts/MainHistogram/Chart"
+import MainHistogramChart from "./charts/MainHistogram/Chart"
+import SearchInspector from "./SearchInspector"
 import SettingsModal from "./SettingsModal"
 import WhoisModal from "./WhoisModal"
+import handlers from "../state/handlers"
 
 type Props = {|cluster: Cluster|}
 
 export default function SearchPage({cluster}: Props) {
-  let logsTab = useSelector(getShowLogsTab)
+  let logsTab = !hasAnalytics(useSelector(getSearchProgram))
   let finding = useSelector(getCurrentFinding)
   let renderKey = finding && getKey(finding)
   let results = useResizeObserver()
@@ -44,7 +45,7 @@ export default function SearchPage({cluster}: Props) {
   useEffect(() => {
     ipcRenderer.send("open-search-window")
     setTimeout(() => dispatch(checkVersions()), 500)
-    return () => dispatch(killAllSearches())
+    return () => dispatch(handlers.abortAll())
   }, [])
 
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function SearchPage({cluster}: Props) {
         <XRightPane />
       </div>
       <ErrorNotice />
-      <XSearchInspector />
+      <SearchInspector />
       <XDownloadProgress />
       <WhoisModal />
       <DebugModal />

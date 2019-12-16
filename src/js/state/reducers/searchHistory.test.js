@@ -7,19 +7,19 @@ import {
   forwardSearchHistory
 } from "../actions"
 import {getCurrentEntry, getSearchHistory} from "./searchHistory"
-import {submitSearchBar} from "../thunks/searchBar"
 import initTestStore from "../../test/initTestStore"
+import submitSearch from "../../flows/submitSearch"
 
 let store
 beforeEach(() => {
   store = initTestStore()
   store.dispatchAll([
     changeSearchBarInput("first"),
-    submitSearchBar(),
+    submitSearch(),
     changeSearchBarInput("second"),
-    submitSearchBar(),
+    submitSearch(),
     changeSearchBarInput("third"),
-    submitSearchBar()
+    submitSearch()
   ])
 })
 
@@ -50,7 +50,7 @@ test("going back in history then pushing new history", () => {
     backSearchHistory(),
     backSearchHistory(),
     changeSearchBarInput("fourth"),
-    submitSearchBar()
+    submitSearch()
   ])
   const entry = getCurrentEntry(state)
   expect(entry.program).toEqual("fourth")
@@ -61,7 +61,7 @@ test("back, back, push, back", () => {
     backSearchHistory(),
     backSearchHistory(),
     changeSearchBarInput("fourth"),
-    submitSearchBar(),
+    submitSearch(),
     backSearchHistory()
   ])
   const entry = getCurrentEntry(state)

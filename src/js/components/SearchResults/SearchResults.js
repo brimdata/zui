@@ -5,22 +5,21 @@ import {isEmpty} from "lodash"
 import React from "react"
 
 import type {DispatchProps, State} from "../../state/types"
-import {
-  type ResultsTabEnum,
-  getResultsTab,
-  getTimeZone
-} from "../../state/reducers/view"
 import type {Space} from "../../lib/Space"
 import type {ViewerDimens} from "../../types"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
-import {fetchNextPage} from "../../viewer/fetchNextPage"
+import {fetchNextPage} from "../../flows/fetchNextPage"
 import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
-import {getSearchStatus} from "../../state/searches/selector"
-import {getViewerLogs, getViewerStatus} from "../../state/viewer/selector"
-import {viewLogDetail} from "../../detail/viewLogDetail"
+import {getTimeZone} from "../../state/reducers/view"
+import {
+  getViewerEndStatus,
+  getViewerLogs,
+  getViewerStatus
+} from "../../state/viewer/selector"
+import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Log from "../../models/Log"
 import LogRow from "../LogRow"
@@ -39,7 +38,6 @@ type StateProps = {|
   isIncomplete: boolean,
   isFetching: boolean,
   tableColumns: TableColumns,
-  tab: ResultsTabEnum,
   program: string,
   space: Space
 |}
@@ -53,7 +51,6 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function SearchResults(props: Props) {
   let {logs} = props
-
   const dimens = buildViewerDimens({
     type: props.tableColumns.showHeader() ? "fixed" : "auto",
     height: props.height,
@@ -102,7 +99,7 @@ export default function SearchResults(props: Props) {
     else
       return (
         <p className="end-message" style={endMessage(dimens)}>
-          {getEndMessage(props.tab, logs.length)}
+          {getEndMessage(props.program, logs.length)}
         </p>
       )
   }
@@ -128,9 +125,8 @@ export default function SearchResults(props: Props) {
 
 function stateToProps(state: State) {
   return {
-    tab: getResultsTab(state),
-    isFetching: getSearchStatus(state, "ViewerSearch") === "FETCHING",
-    isIncomplete: getViewerStatus(state) === "INCOMPLETE",
+    isFetching: getViewerStatus(state) === "FETCHING",
+    isIncomplete: getViewerEndStatus(state) === "INCOMPLETE",
     tableColumns: getCurrentTableColumns(state),
     timeZone: getTimeZone(state),
     selectedLog: buildLogDetail(state),

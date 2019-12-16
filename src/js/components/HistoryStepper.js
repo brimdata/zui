@@ -5,8 +5,8 @@ import React from "react"
 
 import type {DispatchProps} from "../state/types"
 import {goBack, goForward} from "../state/thunks/searchBar"
-import Back from "../icons/back-arrow.svg"
-import Forward from "../icons/forward-arrow.svg"
+import Back from "./icons/back-arrow.svg"
+import Forward from "./icons/forward-arrow.svg"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as searchHistory from "../state/reducers/searchHistory"
 

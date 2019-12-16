@@ -2,11 +2,10 @@
 
 import React from "react"
 
-import {getKey, sameSpan} from "../../lib/finding"
+import {getKey} from "../../lib/finding"
 import {useFindings} from "./useFindings"
 import AnimateChildren from "../AnimateChildren"
 import FindingCard from "./FindingCard"
-import FindingSpanCard from "./FindingSpanCard"
 
 export default React.memo<{}>(function InvestigationLinear() {
   let findings = useFindings()
@@ -15,10 +14,6 @@ export default React.memo<{}>(function InvestigationLinear() {
 
   findings.forEach((f, i) => {
     cards.push(<FindingCard index={i} key={getKey(f)} finding={f} />)
-    if (!sameSpan(f, findings[i + 1])) {
-      let key = JSON.stringify(f.search.spanArgs) + (findings.length - i)
-      cards.push(<FindingSpanCard key={key} spanArgs={f.search.spanArgs} />)
-    }
   })
 
   return (

@@ -6,13 +6,13 @@ import React, {useState} from "react"
 import {InputCheckbox} from "./form/Inputs"
 import {getCurrentCluster} from "../state/clusters/selectors"
 import {getSearchProgram} from "../state/selectors/searchBar"
-import {inspectSearch} from "../backend/thunks"
+import {inspectSearch} from "../services/boom"
+import {reactElementProps} from "../test/integration"
 import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
-import {reactElementProps} from "../test/integration"
 
 export default function CurlModalBox() {
   function copyToClip(_, e) {

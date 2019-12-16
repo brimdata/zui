@@ -18,7 +18,8 @@ const PERSIST = [
   "spaces",
   "investigation",
   "clusters",
-  "version"
+  "version",
+  "logDetails"
 ]
 
 export const saveState = (state: State) => {

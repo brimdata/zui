@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Span} from "../BoomClient/types"
+import type {Span} from "../services/BoomClient/types"
 import histogramInterval from "../lib/histogramInterval"
 
 export function addEveryCountProc(program: string, span: Span) {

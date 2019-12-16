@@ -12,7 +12,7 @@ import {
 import {clearState} from "./initPersistance"
 import {goBack, goForward} from "../state/thunks/searchBar"
 import {toggleSearchInspector} from "../state/thunks/view"
-import modal from "../modal"
+import modal from "../state/modal"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {

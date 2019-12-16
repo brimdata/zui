@@ -15,8 +15,7 @@
   position: absolute;
 }
 
-.viewer .log-row,
-.phony-viewer tbody tr {
+.viewer .log-row {
   white-space: nowrap;
   contain: layout style;
   display: flex;
@@ -48,19 +47,9 @@
   line-height: 100px;
 }
 
-/* Phony Viewer Overrides */
-
-.phony-viewer {
-  border-collapse: collapse;
-  thead {
-    display: table-header-group;
-    text-align: left;
-  }
-  th {
-    border-right: 3px solid white;
-  }
-  tbody tr {
-    position: static;
-    display: table-row;
+.viewer .field-cell {
+  &.count,
+  &.duration {
+    text-align: right;
   }
 }

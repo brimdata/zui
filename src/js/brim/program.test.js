@@ -3,7 +3,7 @@
 import brim from "./"
 
 describe("excluding and including", () => {
-  let field = brim.field("uid", "string", "123")
+  let field = brim.field({name: "uid", type: "string", value: "123"})
 
   test("excluding a field", () => {
     let program = brim
@@ -19,7 +19,7 @@ describe("excluding and including", () => {
       .program(
         'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
       )
-      .exclude(brim.field("source", "string", "HTTP"))
+      .exclude(brim.field({name: "source", type: "string", value: "HTTP"}))
       .string()
 
     expect(program).toEqual(
@@ -120,7 +120,7 @@ describe("drill down", () => {
 
 describe("count by", () => {
   test("empty program", () => {
-    let field = brim.field("_path", "string", "conn")
+    let field = brim.field({name: "_path", type: "string", value: "conn"})
     let program = brim
       .program()
       .countBy(field)
@@ -130,7 +130,7 @@ describe("count by", () => {
   })
 
   test("append a count to an existing query", () => {
-    let field = brim.field("query", "string", "heyyo")
+    let field = brim.field({name: "query", type: "string", value: "heyyo"})
     let program = brim
       .program("dns")
       .countBy(field)

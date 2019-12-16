@@ -7,7 +7,7 @@ import type {State} from "../state/types"
 import {XPins} from "./Pins"
 import {getSearchBarError} from "../state/selectors/searchBar"
 import SearchInput from "./SearchInput"
-import Warning from "../icons/warning-sm.svg"
+import Warning from "./icons/warning-sm.svg"
 
 type StateProps = {|
   error: ?string

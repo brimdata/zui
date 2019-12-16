@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from "react"
-import X from "../icons/x-md.svg"
+import X from "./icons/x-md.svg"
 import classNames from "classnames"
 
 type Props = {

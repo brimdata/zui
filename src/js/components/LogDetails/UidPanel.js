@@ -1,23 +1,40 @@
 /* @flow */
 
-import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useEffect, useState} from "react"
 
 import {XUidTimeline} from "../UidTimeline"
+import {getCurrentSpaceName} from "../../state/reducers/spaces"
 import {reactElementProps} from "../../test/integration"
-import {resultsToLogs} from "../../log/resultsToLogs"
 import {toFront} from "../../lib/Array"
 import {uidCorrelation} from "../../searches/programs"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import useSearch from "../../hooks/useSearch"
+import brim from "../../brim"
+import executeSearch from "../../flows/executeSearch"
+import search from "../../state/search"
 
 export default function UidPanel({log}: {log: Log}) {
-  let [results, status] = useSearch({
-    name: "UidSearch",
-    program: uidCorrelation(log.correlationId())
-  })
-  let logs = resultsToLogs(results)
+  let dispatch = useDispatch()
+  let [logs, setLogs] = useState([])
+  let [status, setStatus] = useState("INIT")
+  let span = useSelector(search.getSpanAsDates)
+  let space = useSelector(getCurrentSpaceName)
+  let program = uidCorrelation(log.correlationId())
+
+  useEffect(() => {
+    let uid = brim
+      .search(program, span, space)
+      .id("UidTimeline")
+      .status(setStatus)
+      .chan(0, (records) => {
+        setLogs(
+          logs.concat(records.map(brim.record).map(brim.interop.recordToLog))
+        )
+      })
+    return dispatch(executeSearch(uid))
+  }, [])
 
   return (
     <div

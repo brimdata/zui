@@ -43,7 +43,7 @@ export const handleError = async (
     LOG.info("handleError: desktop app notification not found")
     realError = initialError
   }
-  done.fail && done.fail(realError.message)
+  done.fail && done.fail(realError)
 }
 
 // PROD-692: Put tests in a wrapper that prints what test is being run. This is

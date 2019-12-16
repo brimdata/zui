@@ -5,8 +5,8 @@ import React, {useEffect, useState} from "react"
 
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
-import modal from "../modal"
-import sys from "../sys"
+import modal from "../state/modal"
+import whois from "../services/whois"
 
 export default function WhoisModal() {
   return (
@@ -27,8 +27,7 @@ function WhoIsRequest() {
 
   useEffect(() => {
     setTimeout(() => {
-      sys
-        .whois(addr)
+      whois(addr)
         .then(setText)
         .catch(setText)
     }, 250)

@@ -1,5 +1,6 @@
 /* @flow */
-import type {ModalName} from "../../modal/types"
+
+import type {ModalName} from "../../state/modal/types"
 
 export type ModalButton = {label: string, click: Function}
 

@@ -6,16 +6,16 @@ import React, {useRef} from "react"
 
 import {changeSearchBarInput} from "../state/actions"
 import {getSearchBarInputValue} from "../state/selectors/searchBar"
-import {getSearches} from "../state/searches/selector"
-import {killSearchesByTag} from "../searches/cancelSearch"
+import {getViewerStatus} from "../state/viewer/selector"
 import {reactElementProps} from "../test/integration"
-import {submitSearchBar} from "../state/thunks/searchBar"
 import Animate from "./Animate"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
-import modal from "../modal"
+import handlers from "../state/handlers"
+import modal from "../state/modal"
 import search from "../state/search"
+import submitSearch from "../flows/submitSearch"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -27,7 +27,7 @@ export default function SearchInput() {
   }
 
   function submit() {
-    dispatch(submitSearchBar())
+    dispatch(submitSearch())
   }
 
   function onChange(e) {
@@ -70,12 +70,7 @@ export default function SearchInput() {
 
 function Menu() {
   let dispatch = useDispatch()
-  let searches = useSelector(getSearches)
-  let isFetching = Object.values(searches)
-    //$FlowFixMe
-    .filter((s) => s.tag === "viewer")
-    //$FlowFixMe
-    .some((s) => s.status === "FETCHING")
+  let isFetching = useSelector(getViewerStatus) === "FETCHING"
 
   let menu = [
     {label: "Debug query", click: () => dispatch(modal.show("debug"))},
@@ -83,7 +78,7 @@ function Menu() {
     {label: "Copy for boom get", click: () => dispatch(modal.show("boom-get"))},
     {
       label: "Kill search",
-      click: () => dispatch(killSearchesByTag("viewer")),
+      click: () => dispatch(handlers.abortAll()),
       disabled: !isFetching
     }
   ]
@@ -100,7 +95,7 @@ function ActionButton() {
   let prev = useSelector(search.getPrevSpanArgs)
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
-  let onClick = () => dispatch(submitSearchBar())
+  let onClick = () => dispatch(submitSearch())
 
   let enter = (anime, el) => {
     return anime

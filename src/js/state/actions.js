@@ -215,14 +215,6 @@ export const toggleLeftSidebar = () => ({
   type: "LEFT_SIDEBAR_TOGGLE"
 })
 
-export const showAnalyticsTab = () => ({
-  type: "SHOW_ANALYTICS_TAB"
-})
-
-export const showLogsTab = () => ({
-  type: "SHOW_LOGS_TAB"
-})
-
 export const setTimeZone = (timeZone: string) => ({
   type: "TIME_ZONE_SET",
   timeZone

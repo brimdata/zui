@@ -5,10 +5,10 @@ import React from "react"
 import {NetworkError} from "../models/Errors"
 import {capitalize} from "../lib/Str"
 import {getCurrentSpaceName} from "../state/reducers/spaces"
-import {initSpace} from "../space/thunks"
+import {initSpace} from "../flows/space/thunks"
 import NoticeBanner from "./NoticeBanner"
 import notice from "../state/notice"
-import useEscapeKey from "../hooks/useEscapeKey"
+import useEscapeKey from "./hooks/useEscapeKey"
 
 export default function ErrorNotice() {
   let error = useSelector(notice.getError)

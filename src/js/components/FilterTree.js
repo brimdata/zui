@@ -7,15 +7,15 @@ import classNames from "classnames"
 
 import {Node} from "../models/Node"
 import {RemoveButton} from "./Buttons"
-import {createInvestigationTree} from "../investigation/createTree"
+import {createInvestigationTree} from "./FilterTree/helpers"
 import {deleteFindingByTs, restoreSearchBar} from "../state/actions"
 import {getInvestigation} from "../state/reducers/investigation"
 import {
   getSearchBarPins,
   getSearchBarPreviousInputValue
 } from "../state/selectors/searchBar"
-import {submitSearchBar} from "../state/thunks/searchBar"
 import FilterNode from "./FilterNode"
+import submitSearch from "../flows/submitSearch"
 
 export default function FilterTree() {
   let dispatch = useDispatch()
@@ -34,7 +34,7 @@ export default function FilterTree() {
           editing: null
         })
       )
-      dispatch(submitSearchBar(false))
+      dispatch(submitSearch(false))
     }
 
     function onNodeRemove(e) {

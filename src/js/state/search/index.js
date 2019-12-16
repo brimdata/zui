@@ -15,16 +15,6 @@ import brim, {type Span, type Ts} from "../../brim"
 import search from "./"
 import selectors from "./selectors"
 
-// search:
-//   span:
-//   spanArgs:
-//   spanFocus:
-//   input:
-//   prevInput:
-//   pins:
-//   space:
-//   cluster:
-
 const actions = {
   setSpan(span: Span): SEARCH_SPAN_SET {
     return {type: "SEARCH_SPAN_SET", span}

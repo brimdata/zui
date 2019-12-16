@@ -2,8 +2,8 @@
 
 import {useDispatch} from "react-redux"
 
-import modal from "../../modal"
-import useListener from "../../hooks/useListener"
+import modal from "../../state/modal"
+import useListener from "../hooks/useListener"
 
 export default function useModalController() {
   let dispatch = useDispatch()

@@ -91,3 +91,6 @@ export type SearchRecord = {
   spanArgs: SpanArgs,
   space: string
 }
+
+type _ReturnType<B, _F: (...args: any[]) => B> = B
+export type ReturnType<F> = _ReturnType<*, F>

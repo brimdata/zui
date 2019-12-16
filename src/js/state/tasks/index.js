@@ -1,8 +1,9 @@
 /* @flow */
-import type {SearchStatsPayload} from "../../BoomClient/types"
+
+import type {SearchStatsPayload} from "../../services/BoomClient/types"
 import type {State, Thunk} from "../types"
 import {bytes} from "../../lib/fmt"
-import BoomRequest from "../../BoomClient/lib/BoomRequest"
+import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
 import brim, {type Ts} from "../../brim"
 
 type TASKS_CREATE = {

@@ -2,9 +2,9 @@
 import React, {useMemo} from "react"
 import * as d3 from "d3"
 
-import ChartSVG from "../../charts/ChartSVG"
+import ChartSVG from "../charts/ChartSVG"
 import Dimens from "../Dimens"
-import useConst from "../../hooks/useConst"
+import useConst from "../hooks/useConst"
 
 function useDots(width, height, data) {
   let pens = useConst([], () => [dotPen()])

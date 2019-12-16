@@ -3,11 +3,6 @@
 import type {State} from "../types"
 import createReducer from "./createReducer"
 
-const ANALYTICS = "analytics"
-const LOGS = "logs"
-
-export type ResultsTabEnum = "analytics" | "logs" | null
-
 export type InvestigationView = "tree" | "linear"
 
 export type View = {
@@ -17,7 +12,6 @@ export type View = {
   downloadsIsOpen: boolean,
   leftSidebarWidth: number,
   rightSidebarWidth: number,
-  resultsTab: ResultsTabEnum,
   timeZone: string,
   investigationView: InvestigationView
 }
@@ -58,14 +52,6 @@ export default createReducer(initalState, {
   RIGHT_SIDEBAR_TOGGLE: (state) => ({
     ...state,
     rightSidebarIsOpen: !state.rightSidebarIsOpen
-  }),
-  SHOW_LOGS_TAB: (state) => ({
-    ...state,
-    resultsTab: LOGS
-  }),
-  SHOW_ANALYTICS_TAB: (state) => ({
-    ...state,
-    resultsTab: ANALYTICS
   }),
   TIME_ZONE_SET: (state, {timeZone}) => ({
     ...state,
@@ -118,14 +104,7 @@ export const getRightSidebarIsOpen = (state: State) =>
 
 export const getDownloadsIsOpen = (state: State) => state.view.downloadsIsOpen
 
-export const getShowAnalyticsTab = (state: State) =>
-  state.view.resultsTab === ANALYTICS
-
-export const getShowLogsTab = (state: State) => state.view.resultsTab === LOGS
-
 export const getTimeZone = (state: State) => state.view.timeZone
-
-export const getResultsTab = (state: State) => state.view.resultsTab
 
 export const getInvestigationView = (state: State) => {
   return state.view.investigationView

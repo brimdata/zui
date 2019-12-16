@@ -8,7 +8,7 @@ import {XLatestError} from "./LatestError"
 import {getTimeZone} from "../state/reducers/view"
 import ClusterGate from "./Login/ClusterGate"
 import brim from "../brim"
-import useListener from "../hooks/useListener"
+import useListener from "./hooks/useListener"
 
 export default function App() {
   brim.time.setZone(useSelector(getTimeZone))
