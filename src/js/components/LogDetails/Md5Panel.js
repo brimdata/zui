@@ -19,13 +19,13 @@ import PanelHeading from "./PanelHeading"
 import brim from "../../brim"
 import executeSearch from "../../flows/executeSearch"
 import menu from "../../electron/menu"
-import search from "../../state/search"
+import tab from "../../state/tab"
 
 export const Md5Panel = ({log}: {log: Log}) => {
   let logMd5 = log.get("md5")
   let dispatch = useDispatch()
   let space = useSelector(getCurrentSpaceName)
-  let span = useSelector(search.getSpanAsDates)
+  let span = useSelector(tab.getSpanAsDates)
   let [tx, setTx] = useState([])
   let [rx, setRx] = useState([])
   let [md5, setMd5] = useState([])

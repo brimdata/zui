@@ -13,13 +13,13 @@ import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import brim from "../../brim"
 import executeSearch from "../../flows/executeSearch"
-import search from "../../state/search"
+import tab from "../../state/tab"
 
 export default function UidPanel({log}: {log: Log}) {
   let dispatch = useDispatch()
   let [logs, setLogs] = useState([])
   let [status, setStatus] = useState("INIT")
-  let span = useSelector(search.getSpanAsDates)
+  let span = useSelector(tab.getSpanAsDates)
   let space = useSelector(getCurrentSpaceName)
   let program = uidCorrelation(log.correlationId())
 
