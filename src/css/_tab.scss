@@ -1,0 +1,80 @@
+.tab-bar .tab {
+  user-select: none;
+  z-index: 1;
+  -webkit-app-region: no-drag;
+  height: 32px;
+  max-width: 240px;
+  flex: 1;
+  padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background: transparent;
+  transition: none;
+  cursor: default;
+  border-radius: 8px 8px 0 0;
+  &:hover {
+    transition: background-color 300ms;
+  }
+  &.active {
+    transition: all 300ms;
+  }
+
+  .title {
+    font-family: system-ui;
+    font-size: 12px;
+    margin: 0;
+    font-weight: 500;
+    color: $white-9;
+  }
+  &.active .title {
+    color: $gray-9;
+  }
+
+  .close-button {
+    width: 17px;
+    height: 17px;
+    svg {
+      width: 9px;
+      height: 9px;
+      fill: $white-9;
+      transition: fill 100ms 50ms;
+    }
+    &:after {
+      content: "";
+      width: 17px;
+      height: 17px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: scale(0);
+      transition: transform 100ms 50ms;
+    }
+  }
+  .close-button:hover {
+    svg {
+      fill: $white-1;
+      transition: fill 100ms;
+    }
+    &:after {
+      transition: transform 100ms;
+      transform: scale(1);
+    }
+  }
+  .close-button:active {
+    &:after {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+  &.active .close-button {
+    svg {
+      fill: $gray-4;
+    }
+    &:after {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+}

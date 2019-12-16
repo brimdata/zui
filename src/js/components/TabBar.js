@@ -28,7 +28,9 @@ export default function TabBar() {
           active={i === active}
         />
       ))}
-      <a onClick={addTab}>New Tab...</a>
+      <a className="add-tab" onClick={addTab}>
+        +
+      </a>
     </div>
   )
 }
