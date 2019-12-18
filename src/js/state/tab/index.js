@@ -5,23 +5,24 @@ import type {DateTuple} from "../../lib/TimeWindow"
 import {type Finding, getCurrentFinding} from "../reducers/investigation"
 import type {SpanArgs} from "../search/types"
 import type {State, Thunk} from "../types"
+import type {TabState} from "./types"
 import brim, {type Span, type Ts} from "../../brim"
 import search from "../search"
-import tabs, {type Tab} from "../tabs"
+import tabs from "../tabs"
 
-const getSpan = createSelector<State, void, Span, Tab>(
+const getSpan = createSelector<State, void, Span, TabState>(
   tabs.getActiveTab,
-  (tab) => tab.span
+  (tab) => tab.search.span
 )
 
-const getSpanFocus = createSelector<State, void, ?Span, Tab>(
+const getSpanFocus = createSelector<State, void, ?Span, TabState>(
   tabs.getActiveTab,
-  (tab) => tab.spanFocus
+  (tab) => tab.search.spanFocus
 )
 
-const getSpanArgs = createSelector<State, void, SpanArgs, Tab>(
+const getSpanArgs = createSelector<State, void, SpanArgs, TabState>(
   tabs.getActiveTab,
-  (tab) => tab.spanArgs
+  (tab) => tab.search.spanArgs
 )
 
 const getComputedSpan = createSelector<State, void, Span, SpanArgs>(

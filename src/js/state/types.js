@@ -12,13 +12,11 @@ import type {Investigation} from "./reducers/investigation"
 import type {LogDetails} from "./reducers/logDetails"
 import type {ModalState} from "./modal/types"
 import type {NoticeState} from "./notice"
-import type {SearchBar} from "./reducers/searchBar"
 import type {SearchHistory} from "./reducers/searchHistory"
 import type {Spaces} from "./reducers/spaces"
 import type {TabsState} from "./tabs"
 import type {TasksState} from "./tasks"
 import type {View} from "./reducers/view"
-import type {ViewerState} from "./viewer/types"
 import BoomClient from "../services/BoomClient"
 
 export type GetState = () => State
@@ -34,8 +32,6 @@ export type State = {
   clusters: ClustersState,
   errors: ErrorsState,
   columns: ColumnsState,
-  viewer: ViewerState,
-  searchBar: SearchBar,
   spaces: Spaces,
   boomd: Boomd,
   tasks: TasksState,

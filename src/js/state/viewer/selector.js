@@ -4,30 +4,43 @@ import {createSelector} from "reselect"
 
 import type {RecordData} from "../../types/records"
 import type {State} from "../types"
+import type {TabState} from "../tab/types"
+import type {ViewerState} from "./types"
 import Log from "../../models/Log"
 import brim from "../../brim"
+import tabs from "../tabs"
 
-export function getViewerRecords(state: State) {
-  return state.viewer.records
-}
+const getViewer = createSelector<State, void, ViewerState, TabState>(
+  tabs.getActiveTab,
+  (tab) => tab.viewer
+)
+
+export const getViewerRecords = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.records
+)
 
 export const getViewerLogs = createSelector<State, void, Log[], RecordData[]>(
   getViewerRecords,
   (records) => records.map(brim.record).map(brim.interop.recordToLog)
 )
 
-export function getViewerStatus(state: State) {
-  return state.viewer.status
-}
+export const getViewerStatus = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.status
+)
 
-export function getViewerEndStatus(state: State) {
-  return state.viewer.endStatus
-}
+export const getViewerEndStatus = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.endStatus
+)
 
-export function getViewerColumns(state: State) {
-  return state.viewer.columns
-}
+export const getViewerColumns = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.columns
+)
 
-export function getViewerStats(state: State) {
-  return state.viewer.stats
-}
+export const getViewerStats = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.stats
+)

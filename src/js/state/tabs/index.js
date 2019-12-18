@@ -3,10 +3,11 @@ import {createSelector} from "reselect"
 
 import type {SearchState} from "../search/types"
 import type {State} from "../types"
+import type {TabState} from "../tab/types"
 import reducer from "./reducer"
 
-export type TabsState = {active: number, data: Tab[]}
-export type Tab = SearchState
+export type TabsState = {active: number, data: TabState[]}
+
 type TABS_ADD = {type: "TABS_ADD", data?: $Shape<SearchState>}
 type TABS_REMOVE = {type: "TABS_REMOVE", id: number}
 type TABS_ACTIVATE = {type: "TABS_ACTIVATE", id: number}
@@ -25,7 +26,7 @@ const selectors = {
   getCount: (state: State) => state.tabs.data.length
 }
 
-const getActiveTab = createSelector<State, void, SearchState, TabsState>(
+const getActiveTab = createSelector<State, void, TabState, TabsState>(
   (state) => state.tabs,
   (tabs) => tabs.data[tabs.active]
 )

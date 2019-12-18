@@ -1,14 +1,20 @@
 /* @flow */
 import brim from "../../brim"
+import reducerSearchBar from "../reducers/searchBar"
+import searchReducer from "../search/reducer"
+import viewerReducer from "../viewer/reducer"
 
 export function initTab() {
-  return {
+  let ret = {
     id: brim.randomHash(),
-    program: "what up",
-    span: [{sec: 0, ns: 0}, {sec: 1, ns: 0}],
-    spanArgs: ["now - 5m", "now"],
-    spanFocus: null
+
+    // $FlowFixMe
+    search: searchReducer(undefined, {type: "INIT"}),
+    searchBar: reducerSearchBar(undefined, {type: "INIT"}),
+    // $FlowFixMe
+    viewer: viewerReducer(undefined, {type: "INIT"})
   }
+  return ret
 }
 
 export default function() {

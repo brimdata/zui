@@ -23,7 +23,7 @@ test("add tab with data and activate", () => {
     tabs.activate(1)
   ])
   let tab = tabs.getActiveTab(state)
-  expect(tab.spanArgs).toEqual(["now", "now-1m"])
+  expect(tab.search.spanArgs).toEqual(["now", "now-1m"])
 })
 
 test("remove tab", () => {
@@ -34,7 +34,7 @@ test("remove tab", () => {
 test("setSearchSpan", () => {
   let state = store.dispatchAll([search.setSpanArgs(["now-1m", "now"])])
   let tab = tabs.getActiveTab(state)
-  expect(tab.spanArgs).toEqual(["now-1m", "now"])
+  expect(tab.search.spanArgs).toEqual(["now-1m", "now"])
 })
 
 test("remove last, active tab", () => {
