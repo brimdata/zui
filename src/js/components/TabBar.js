@@ -132,7 +132,7 @@ export default function TabBar() {
 function Tab({tab, index, active, dragging, removeTab, ...rest}) {
   return (
     <div {...rest} className={classNames("tab", {active, dragging})}>
-      <p className="title">{tab.program}</p>
+      <p className="title">{tab.searchBar.previous || "New Tab"}</p>
       <CloseButton
         onClick={(e) => {
           e.stopPropagation()

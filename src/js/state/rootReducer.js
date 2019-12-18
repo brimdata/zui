@@ -5,7 +5,6 @@ import {combineReducers} from "redux"
 import {VERSION} from "../initializers/initPersistance"
 import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
-import chart from "./chart"
 import clustersReducer from "./clusters/reducer"
 import columnsReducer from "./columns/reducer"
 import handlers from "./handlers"
@@ -31,7 +30,6 @@ export default combineReducers<*, *>({
   notice: notice.reducer,
   tasks: tasks.reducer,
   handlers: handlers.reducer,
-  chart: chart.reducer,
   tabs: tabs.reducer,
   investigation,
   view,

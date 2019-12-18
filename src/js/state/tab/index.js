@@ -8,6 +8,7 @@ import type {State, Thunk} from "../types"
 import type {TabState} from "./types"
 import brim, {type Span, type Ts} from "../../brim"
 import search from "../search"
+import select from "./select"
 import tabs from "../tabs"
 
 const getSpan = createSelector<State, void, Span, TabState>(
@@ -95,5 +96,6 @@ export default {
   getSpanFocusAsDates,
   getSpanArgs,
   getPrevSpanArgs,
-  getComputedSpan
+  getComputedSpan,
+  select
 }

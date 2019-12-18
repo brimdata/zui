@@ -2,14 +2,22 @@
 
 import type {SearchActions} from "../search/types"
 import type {TabActions, TabsState} from "./"
-import initialState, {initTab} from "./initialState"
 import tabReducer from "../tab/reducer"
 
+let init = {
+  active: 0,
+  data: [tabReducer(undefined, {type: "INIT"})]
+}
+
 export default function reducer(
-  state: TabsState = initialState(),
+  state: TabsState = init,
   action: TabActions | SearchActions
 ) {
-  if (action.type.startsWith("SEARCH_") || action.type.startsWith("VIEWER_")) {
+  if (
+    action.type.startsWith("SEARCH_") ||
+    action.type.startsWith("VIEWER_") ||
+    action.type.startsWith("CHART_")
+  ) {
     let {data, active} = state
     let tab = data[active]
     let updates = tabReducer(tab, action)
@@ -44,7 +52,8 @@ export default function reducer(
 }
 
 function addTabData(stateData, actionData) {
-  let tab = {...initTab(), ...actionData}
+  let initialState = tabReducer(undefined, {type: "INIT"})
+  let tab = {...initialState, ...actionData}
   return [...stateData, tab]
 }
 
