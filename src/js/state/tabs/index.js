@@ -15,7 +15,8 @@ export type TabActions = TABS_ADD | TABS_REMOVE | TABS_ACTIVATE
 const actions = {
   add: (data?: $Shape<SearchState>): TABS_ADD => ({type: "TABS_ADD", data}),
   remove: (id: number): TABS_REMOVE => ({type: "TABS_REMOVE", id}),
-  activate: (id: number): TABS_ACTIVATE => ({type: "TABS_ACTIVATE", id})
+  activate: (id: number): TABS_ACTIVATE => ({type: "TABS_ACTIVATE", id}),
+  move: (from: number, to: number) => ({type: "TABS_MOVE", from, to})
 }
 
 const selectors = {

@@ -4,12 +4,12 @@ import {isEmpty} from "lodash"
 
 import {isArray} from "./is"
 import animation from "./animation"
+import date from "./date"
 import doc from "./doc"
 import file from "./file"
 import keep from "./keep"
 import obj from "./obj"
 import win from "./win"
-import date from "./date"
 
 let array = {
   wrap(item: *) {
@@ -27,7 +27,9 @@ export default {
   win,
   array,
   animation,
-  date
+  date,
+  on: (...args: *) => document.addEventListener(...args),
+  off: (...args: *) => document.removeEventListener(...args)
 }
 
 export type TimeUnit =

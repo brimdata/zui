@@ -2,6 +2,7 @@
 
 import type {SearchActions} from "../search/types"
 import type {TabActions, TabsState} from "./"
+import {swap} from "../../lib/Array"
 import initialState, {initTab} from "./initialState"
 import search from "../search"
 
@@ -37,6 +38,11 @@ export default function reducer(
       return {
         active: state.active,
         data: addTabData(state.data, action.data)
+      }
+    case "TABS_MOVE":
+      return {
+        ...state,
+        data: swap(state.data, action.from, action.to)
       }
     default:
       return state

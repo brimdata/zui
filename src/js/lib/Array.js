@@ -97,3 +97,12 @@ export function concat(array1: *[], array2: *[]) {
 }
 
 export const sortBy = _sortBy
+
+export function swap(array: *[], from: number, to: number) {
+  let item1 = array[from]
+  let item2 = array[to]
+  let copy = [...array]
+  copy[to] = item1
+  copy[from] = item2
+  return copy
+}

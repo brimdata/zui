@@ -18,23 +18,21 @@ $tab-border-radius-bottom: 6px;
 }
 
 .tab-bar .tab {
+  position: absolute;
+  left: 0;
   user-select: none;
   -webkit-app-region: no-drag;
   height: 34px;
-  max-width: 240px;
-  min-width: 0;
-  flex: 1;
   padding: 0 12px;
   padding-right: 10px;
   padding-bottom: 3px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   background: transparent;
-  transition: none;
   cursor: default;
   border-radius: $tab-border-radius-top $tab-border-radius-top 0 0;
+  transition: transform 200ms;
 
   // the little line when the tab is not active
   &:before {
@@ -141,9 +139,9 @@ $tab-border-radius-bottom: 6px;
 
   // The active state
   &.active {
-    transition: none;
     background: $tab-active-bg;
     z-index: 1;
+    transition: transform 200ms;
     .ramp {
       transition: none;
       fill: $tab-active-bg;
@@ -172,5 +170,10 @@ $tab-border-radius-bottom: 6px;
         background: rgba(0, 0, 0, 0.2);
       }
     }
+  }
+
+  &.dragging {
+    box-shadow: $high-box-shadow;
+    transition: none;
   }
 }
