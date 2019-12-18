@@ -95,15 +95,3 @@ test("remove tab does nothing if only one tab left", () => {
 
   expect(tabs.getCount(state)).toBe(1)
 })
-
-test("move a tab from one index to another", () => {
-  let state = store.dispatchAll([
-    tabs.add({program: "0"}),
-    tabs.remove(0),
-    tabs.add({program: "1"}),
-    tabs.add({program: "2"}),
-    tabs.move(2, 0)
-  ])
-
-  expect(tabs.getData(state).map((d) => d.program)).toEqual(["2", "1", "0"])
-})

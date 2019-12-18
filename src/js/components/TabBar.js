@@ -7,13 +7,10 @@ import {useResizeObserver} from "./hooks/useResizeObserver"
 import CloseButton from "./CloseButton"
 import RampLeft from "../icons/ramp-left.svg"
 import RampRight from "../icons/ramp-right.svg"
-import brim from "../brim"
 import tabDrag from "./tabDrag"
 import tabs from "../state/tabs"
 
 const MAX_WIDTH = 240
-
-let id = 1
 
 export default function TabBar() {
   let {ref, rect} = useResizeObserver()
@@ -28,8 +25,7 @@ export default function TabBar() {
   let [status, setStatus] = useState("INIT")
 
   function addTab() {
-    dispatch(tabs.add({program: `Tab numba ${id}`, id: brim.randomHash()}))
-    id++
+    dispatch(tabs.add())
     dispatch(tabs.activate(allTabs.length))
     calcWidths(count + 1)
   }
@@ -81,7 +77,6 @@ export default function TabBar() {
     let normal = i * width
     let shiftLeft = (i - 1) * width
     let shiftRight = (i + 1) * width
-    if (status === "INIT") return normal
 
     if (status === "DRAGGING") {
       if (i === active) return normal + diff
@@ -96,6 +91,8 @@ export default function TabBar() {
       if (slot < active && i >= slot && i < active) return shiftRight
       return normal
     }
+
+    return normal
   }
 
   function getStyle(i) {
