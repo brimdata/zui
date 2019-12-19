@@ -157,10 +157,10 @@ export function setSpaceInfo(spaceInfo: $Shape<Space>) {
   }
 }
 
-export function setCurrentSpaceName(name: ?string) {
+export function setCurrentSpaceName(space: string) {
   return {
-    type: "CURRENT_SPACE_NAME_SET",
-    name
+    type: "SEARCH_SPACE_SET",
+    space
   }
 }
 

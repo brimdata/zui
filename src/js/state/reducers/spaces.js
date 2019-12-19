@@ -4,6 +4,7 @@ import {createSelector} from "reselect"
 
 import type {State} from "../types"
 import createReducer from "./createReducer"
+import tab from "../tab"
 
 const initialState = {
   details: {},
@@ -46,9 +47,7 @@ export const getAllSpaceNames = (state: State): string[] => {
   return state.spaces.names
 }
 
-export const getCurrentSpaceName = (state: State) => {
-  return state.spaces.current
-}
+export const getCurrentSpaceName = tab.select<string>((tab) => tab.search.space)
 
 export const getSpaces = (state: State) => {
   return state.spaces.details
