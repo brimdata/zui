@@ -34,7 +34,7 @@ export default function reducer(
     case "TABS_ACTIVATE":
       return {
         ...state,
-        active: action.id
+        active: (state.data.length + action.id) % state.data.length
       }
     case "TABS_REMOVE":
       if (state.data.length === 1) return state

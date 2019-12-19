@@ -7,6 +7,7 @@ import {useResizeObserver} from "./hooks/useResizeObserver"
 import CloseButton from "./CloseButton"
 import RampLeft from "../icons/ramp-left.svg"
 import RampRight from "../icons/ramp-right.svg"
+import newTab from "../flows/newTab"
 import tabDrag from "./tabDrag"
 import tabs from "../state/tabs"
 
@@ -25,8 +26,8 @@ export default function TabBar() {
   let [status, setStatus] = useState("INIT")
 
   function addTab() {
-    dispatch(tabs.add())
-    dispatch(tabs.activate(allTabs.length))
+    dispatch(newTab())
+
     calcWidths(count + 1)
   }
 
