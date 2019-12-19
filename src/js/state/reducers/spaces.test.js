@@ -77,12 +77,3 @@ test("set the current space name", () => {
 
   expect(getCurrentSpaceName(store.getState())).toEqual("facebook")
 })
-
-test("clear the current space name", () => {
-  const state = store.dispatchAll([
-    store.dispatch(setCurrentSpaceName("facebook")),
-    store.dispatch(clearSpaces())
-  ])
-
-  expect(getCurrentSpaceName(state)).toEqual(null)
-})

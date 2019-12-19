@@ -1,11 +1,13 @@
 /* @flow */
+import type {Cluster} from "../clusters/types"
 import type {Span, Ts} from "../../brim"
 
 export type SearchState = {
   span: Span,
   spanArgs: SpanArgs,
   spanFocus: ?Span,
-  space: string
+  space: string,
+  cluster: ?Cluster
 }
 
 export type TimeArg = string | Ts
@@ -17,7 +19,12 @@ export type SearchActions =
   | SEARCH_SPAN_FOCUS_SET
   | SEARCH_CLEAR
   | SEARCH_SPACE_SET
+  | SEARCH_CLUSTER_SET
 
+export type SEARCH_CLUSTER_SET = {
+  type: "SEARCH_CLUSTER_SET",
+  cluster: ?Cluster
+}
 export type SEARCH_SPACE_SET = {
   type: "SEARCH_SPACE_SET",
   space: string

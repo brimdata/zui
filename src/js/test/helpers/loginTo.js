@@ -1,10 +1,10 @@
 /* @flow */
 
 import {initSpace} from "../../flows/space/thunks"
-import {setCluster} from "../../state/clusters/actions"
 import MockBoomClient from "../MockBoomClient"
 import fixtures from "../fixtures"
 import initTestStore from "../initTestStore"
+import search from "../../state/search"
 
 export default function loginTo(clusterName: string, spaceName: string) {
   let boom = new MockBoomClient()
@@ -17,7 +17,7 @@ export default function loginTo(clusterName: string, spaceName: string) {
     .stub("spaces.get", space)
     .stub("search")
 
-  store.dispatch(setCluster(cluster))
+  store.dispatch(search.setCluster(cluster))
   store.dispatch(initSpace(space.name))
 
   return {store, boom, cluster}

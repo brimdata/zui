@@ -5,7 +5,8 @@ export const initSearchState: SearchState = {
   span: [{sec: 0, ns: 0}, {sec: 1, ns: 0}],
   spanArgs: ["now - 5m", "now"],
   spanFocus: null,
-  space: ""
+  space: "",
+  cluster: null
 }
 
 export default function reducer(
@@ -21,6 +22,8 @@ export default function reducer(
       return {...state, spanFocus: action.spanFocus}
     case "SEARCH_SPACE_SET":
       return {...state, space: action.space}
+    case "SEARCH_CLUSTER_SET":
+      return {...state, cluster: action.cluster}
     case "SEARCH_CLEAR":
       return {...initSearchState}
     default:

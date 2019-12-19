@@ -6,7 +6,6 @@ import {
   setSpaceInfo
 } from "../state/actions"
 import {initTimeWindow} from "../state/thunks/timeWindow"
-import {setInnerTimeWindow} from "../state/search/actions"
 import MockBoomClient from "../test/MockBoomClient"
 import brim from "../brim"
 import initTestStore from "../test/initTestStore"
@@ -106,7 +105,6 @@ test("fetching an zoom search without history", () => {
     setSpaceInfo(spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
-    setInnerTimeWindow([new Date(0), new Date(1)]),
     changeSearchBarInput("_path=conn | count()"),
     submitSearch()
   ])

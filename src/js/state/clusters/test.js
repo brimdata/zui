@@ -1,8 +1,9 @@
 /* @flow */
 
-import {addCluster, removeCluster, setCluster} from "./actions"
+import {addCluster, removeCluster} from "./actions"
 import {getCurrentCluster, getSavedClusters} from "./selectors"
 import initTestStore from "../../test/initTestStore"
+import search from "../search"
 
 let store
 beforeEach(() => {
@@ -35,7 +36,7 @@ test("removeCluster", () => {
 })
 
 test("setCluster", () => {
-  let state = store.dispatchAll([setCluster(cluster)])
+  let state = store.dispatchAll([search.setCluster(cluster)])
 
   expect(getCurrentCluster(state)).toEqual(cluster)
 })

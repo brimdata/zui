@@ -54,7 +54,8 @@ export default function reducer(
 
 function addTabData(stateData, actionData) {
   let initialState = tabReducer(undefined, {type: "INIT"})
-  let tab = {...initialState, ...actionData}
+  let search = {...initialState.search, ...actionData}
+  let tab = {...initialState, ...{search}}
   return [...stateData, tab]
 }
 

@@ -1,13 +1,12 @@
 /* @flow */
 
-// Actions
-
-// Selectors
+import type {Cluster} from "./types"
 import type {State} from "../types"
+import tab from "../tab"
 
-export function getCurrentCluster(state: State) {
-  return state.clusters.current
-}
+export const getCurrentCluster = tab.select<?Cluster>(
+  (tab) => tab.search.cluster
+)
 
 export function getSavedClusters(state: State) {
   return state.clusters.saved

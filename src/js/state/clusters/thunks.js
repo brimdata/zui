@@ -12,7 +12,6 @@ import {
   setSpaceNames
 } from "../actions"
 import {clearViewer} from "../viewer/actions"
-import {setCluster} from "./actions"
 import {testConnection} from "../../services/boom"
 import handlers from "../handlers"
 import search from "../search"
@@ -21,7 +20,7 @@ export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
     return d(testConnection(cluster)).then((spaces) => {
       d(setSpaceNames(spaces))
-      d(setCluster(cluster))
+      d(search.setCluster(cluster))
     })
   }
 }
@@ -29,14 +28,14 @@ export function connectCluster(cluster: Cluster): Thunk {
 export function disconnectCluster(): Thunk {
   return function(dispatch) {
     clearClusterState(dispatch)
-    dispatch(setCluster(null))
+    dispatch(search.setCluster(null))
   }
 }
 
 export function switchCluster(cluster: Cluster): Thunk {
   return function(dispatch) {
     clearClusterState(dispatch)
-    dispatch(setCluster(cluster))
+    dispatch(search.setCluster(cluster))
     return dispatch(connectCluster(cluster))
   }
 }
