@@ -9,10 +9,9 @@ import {uniqBy} from "../../lib/Array"
 import Log from "../../models/Log"
 import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
+import tab from "../tab"
 
-export function getColumns(state: State) {
-  return state.columns
-}
+export const getColumns = tab.select<ColumnsState>((tab) => tab.columns)
 
 export const getCurrentTableColumns = createSelector<
   State,

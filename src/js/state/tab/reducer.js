@@ -3,6 +3,7 @@ import {combineReducers} from "redux"
 
 import brim from "../../brim"
 import chartReducer from "../chart/reducer"
+import columnsReducer from "../columns/reducer"
 import reducersSearchBar from "../reducers/searchBar"
 import search from "../search"
 import viewerReducer from "../viewer/reducer"
@@ -12,5 +13,6 @@ export default combineReducers<*, *>({
   search: search.reducer,
   searchBar: reducersSearchBar,
   viewer: viewerReducer,
-  chart: chartReducer
+  chart: chartReducer,
+  columns: columnsReducer
 })

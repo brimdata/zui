@@ -16,7 +16,8 @@ export default function reducer(
   if (
     action.type.startsWith("SEARCH_") ||
     action.type.startsWith("VIEWER_") ||
-    action.type.startsWith("CHART_")
+    action.type.startsWith("CHART_") ||
+    action.type.startsWith("COLUMNS_")
   ) {
     let {data, active} = state
     let tab = data[active]

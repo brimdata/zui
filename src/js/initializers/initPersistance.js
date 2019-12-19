@@ -8,9 +8,7 @@ import type {State} from "../state/types"
 export const VERSION = "4"
 const KEY = "BRIM_STATE"
 const PERSIST = [
-  // "search",
   "tabs",
-  "searchBar",
   "boomd",
   "currentSpaceName",
   "view",
