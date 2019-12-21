@@ -2,12 +2,10 @@
 
 import {
   hideDownloads,
-  hideSearchInspector,
   setLeftSidebarWidth,
   setRightSidebarWidth,
   setTimeZone,
-  showDownloads,
-  showSearchInspector
+  showDownloads
 } from "../actions"
 import initTestStore from "../../test/initTestStore"
 import * as view from "./view"
@@ -51,24 +49,4 @@ test("hiding the downloads bar", () => {
   const state = reduce([showDownloads(), hideDownloads()])
 
   expect(view.getDownloadsIsOpen(state)).toBe(false)
-})
-
-test("show the search inspector", () => {
-  const store = initTestStore()
-
-  expect(view.getSearchInspectorIsOpen(store.getState())).toBe(false)
-
-  const state = store.dispatchAll([showSearchInspector()])
-
-  expect(view.getSearchInspectorIsOpen(state)).toBe(true)
-})
-
-test("hide the search inspector", () => {
-  const store = initTestStore()
-  const state = store.dispatchAll([
-    showSearchInspector(),
-    hideSearchInspector()
-  ])
-
-  expect(view.getSearchInspectorIsOpen(state)).toBe(false)
 })

@@ -56,11 +56,6 @@ export default function searchAppMenu(send: Function) {
         {role: "reload"},
         {role: "forcereload"},
         {role: "toggledevtools"},
-        {
-          label: "Toggle Search Inspector",
-          accelerator: "CmdOrCtrl+i",
-          click: () => send("toggleSearchInspector")
-        },
         {type: "separator"},
         {role: "resetzoom"},
         {role: "zoomin"},

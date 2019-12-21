@@ -6,7 +6,6 @@ import createReducer from "./createReducer"
 export type InvestigationView = "tree" | "linear"
 
 export type View = {
-  searchInspectorIsOpen: boolean,
   leftSidebarIsOpen: boolean,
   rightSidebarIsOpen: boolean,
   downloadsIsOpen: boolean,
@@ -17,7 +16,6 @@ export type View = {
 }
 
 export const initalState: View = {
-  searchInspectorIsOpen: false,
   leftSidebarIsOpen: false,
   rightSidebarIsOpen: false,
   downloadsIsOpen: false,
@@ -73,23 +71,11 @@ export default createReducer(initalState, {
     ...state,
     downloadsIsOpen: false
   }),
-  SEARCH_INSPECTOR_SHOW: (state) => ({
-    ...state,
-    searchInspectorIsOpen: true
-  }),
-  SEARCH_INSPECTOR_HIDE: (state) => ({
-    ...state,
-    searchInspectorIsOpen: false
-  }),
   INVESTIGATION_VIEW_SET: (state, {view}) => ({
     ...state,
     investigationView: view
   })
 })
-
-export const getSearchInspectorIsOpen = (state: State) => {
-  return state.view.searchInspectorIsOpen
-}
 
 export const getRightSidebarWidth = (state: State) =>
   state.view.rightSidebarWidth

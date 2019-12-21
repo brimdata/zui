@@ -11,7 +11,6 @@ import {
 } from "../state/actions"
 import {clearState} from "./initPersistance"
 import {goBack, goForward} from "../state/thunks/searchBar"
-import {toggleSearchInspector} from "../state/thunks/view"
 import modal from "../state/modal"
 
 export default (store: Store) => {
@@ -30,10 +29,6 @@ export default (store: Store) => {
   ipcRenderer.on("clearPins", () => {
     store.dispatch(removeAllSearchBarPins())
     store.dispatch(changeSearchBarInput(""))
-  })
-
-  ipcRenderer.on("toggleSearchInspector", () => {
-    store.dispatch(toggleSearchInspector())
   })
 
   ipcRenderer.on("toggleLeftSidebar", () => {
