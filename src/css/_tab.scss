@@ -177,3 +177,19 @@ $tab-border-radius-bottom: 6px;
     transition: none;
   }
 }
+
+.box-group {
+  position: fixed;
+  top: 25%;
+  display: flex;
+  z-index: 9;
+
+  .box {
+    margin: 20px;
+    text-align: center;
+    width: 100px;
+    border-radius: 3px;
+    background: lightgreen;
+    height: 300px;
+  }
+}

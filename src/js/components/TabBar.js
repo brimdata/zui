@@ -4,11 +4,9 @@ import React, {useEffect, useRef, useState} from "react"
 import classNames from "classnames"
 
 import {useResizeObserver} from "./hooks/useResizeObserver"
-import CloseButton from "./CloseButton"
-import RampLeft from "../icons/ramp-left.svg"
-import RampRight from "../icons/ramp-right.svg"
+import Animate from "./Animate"
+import SearchTab from "./SearchTab"
 import newTab from "../flows/newTab"
-import tabDrag from "./tabDrag"
 import tabs from "../state/tabs"
 
 const MAX_WIDTH = 240
@@ -21,19 +19,23 @@ export default function TabBar() {
   let [width, setWidth] = useState(0)
   let count = allTabs.length
   let dirty = useRef(false)
-  let [diff, setDiff] = useState(0)
-  let [slot, setSlot] = useState(active)
-  let [status, setStatus] = useState("INIT")
+  // let [diff, setDiff] = useState(0)
+  // let [slot, setSlot] = useState(active)
+  // let [status, setStatus] = useState("INIT")
 
   function addTab() {
     dispatch(newTab())
-
     calcWidths(count + 1)
   }
 
-  function removeTab(index) {
-    dispatch(tabs.remove(index))
+  function removeTab(id, e) {
+    e.stopPropagation()
+    dispatch(tabs.remove(id))
     dirty.current = true
+  }
+
+  function activateTab(id) {
+    dispatch(tabs.activate(id))
   }
 
   function mouseLeave() {
@@ -51,47 +53,46 @@ export default function TabBar() {
     calcWidths(count)
   }, [rect.width])
 
-  function dragEnd(from, to) {
-    setStatus("DRAG_ENDING")
-    setDiff(0)
+  // function dragEnd(from, to) {
+  //   setDiff(0)
+  //
+  //   setTimeout(() => {
+  //     setStatus("INIT")
+  //     if (from !== to) {
+  //       dispatch(tabs.move(from, to))
+  //       dispatch(tabs.activate(to))
+  //     }
+  //   }, 200)
+  // }
 
-    setTimeout(() => {
-      setStatus("INIT")
-      if (from !== to) {
-        dispatch(tabs.move(from, to))
-        dispatch(tabs.activate(to))
-      }
-    }, 200)
-  }
-
-  function onMouseDown(e, i) {
-    dispatch(tabs.activate(i))
-    setSlot(i)
-    tabDrag(e, i, width, count)
-      .start(() => setStatus("DRAGGING"))
-      .drag(setDiff)
-      .hover(setSlot)
-      .end(dragEnd)
-  }
+  // function onMouseDown(e, i) {
+  //   dispatch(tabs.activate(i))
+  //   setSlot(i)
+  //   tabDrag(e, i, width, count)
+  //     .start(() => setStatus("DRAGGING"))
+  //     .drag(setDiff)
+  //     .hover(setSlot)
+  //     .end(dragEnd)
+  // }
 
   function left(i) {
     let normal = i * width
-    let shiftLeft = (i - 1) * width
-    let shiftRight = (i + 1) * width
-
-    if (status === "DRAGGING") {
-      if (i === active) return normal + diff
-      if (slot > active && i <= slot && i > active) return shiftLeft
-      if (slot < active && i >= slot && i < active) return shiftRight
-      return normal
-    }
-
-    if (status === "DRAG_ENDING") {
-      if (i === active) return slot * width
-      if (slot > active && i <= slot && i > active) return shiftLeft
-      if (slot < active && i >= slot && i < active) return shiftRight
-      return normal
-    }
+    // let shiftLeft = (i - 1) * width
+    // let shiftRight = (i + 1) * width
+    //
+    // if (status === "DRAGGING") {
+    //   if (i === active) return normal + diff
+    //   if (slot > active && i <= slot && i > active) return shiftLeft
+    //   if (slot < active && i >= slot && i < active) return shiftRight
+    //   return normal
+    // }
+    //
+    // if (status === "DRAG_ENDING") {
+    //   if (i === active) return slot * width
+    //   if (slot > active && i <= slot && i > active) return shiftLeft
+    //   if (slot < active && i >= slot && i < active) return shiftRight
+    //   return normal
+    // }
 
     return normal
   }
@@ -103,20 +104,26 @@ export default function TabBar() {
     }
   }
 
+  function getTitle(tab) {
+    return tab.searchBar.previous || "*"
+  }
+
   return (
     <div className="tab-bar">
       <div className="tabs-container" ref={ref} onMouseLeave={mouseLeave}>
         {allTabs.map((tab, i) => (
-          <Tab
-            tab={tab}
-            style={getStyle(i)}
-            key={tab.id}
-            index={i}
-            removeTab={removeTab}
-            active={i === active}
-            dragging={i === active && status === "DRAGGING"}
-            onMouseDown={(e) => onMouseDown(e, i)}
-          />
+          <Animate enter={{opacity: [0, 1]}} key={tab.id} show={true}>
+            <SearchTab
+              title={getTitle(tab)}
+              style={getStyle(i)}
+              removeTab={(e) => removeTab(tab.id, e)}
+              onClick={() => activateTab(tab.id)}
+              className={classNames({
+                active: tab.id === active,
+                dragging: status === "DRAGGING"
+              })}
+            />
+          </Animate>
         ))}
         <a
           className="add-tab"
@@ -126,22 +133,6 @@ export default function TabBar() {
           +
         </a>
       </div>
-    </div>
-  )
-}
-
-function Tab({tab, index, active, dragging, removeTab, ...rest}) {
-  return (
-    <div {...rest} className={classNames("tab", {active, dragging})}>
-      <p className="title">{tab.searchBar.previous || "New Tab"}</p>
-      <CloseButton
-        onClick={(e) => {
-          e.stopPropagation()
-          removeTab(index)
-        }}
-      />
-      <RampRight />
-      <RampLeft />
     </div>
   )
 }
