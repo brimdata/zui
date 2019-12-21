@@ -27,7 +27,6 @@ import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
-import SearchInspector from "./SearchInspector"
 import SettingsModal from "./SettingsModal"
 import WhoisModal from "./WhoisModal"
 import handlers from "../state/handlers"
@@ -77,7 +76,6 @@ export default function SearchPage({cluster}: Props) {
         <XRightPane />
       </div>
       <ErrorNotice />
-      <SearchInspector />
       <XDownloadProgress />
       <WhoisModal />
       <DebugModal />

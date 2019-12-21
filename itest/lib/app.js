@@ -94,11 +94,6 @@ export const resetState = (app: Application) =>
 export const showPreferences = (app: Application) =>
   appStep("show preferences", () => app.webContents.send("showPreferences"))
 
-export const toggleSearchInspector = (app: Application) =>
-  appStep("toggle search inspector", () =>
-    app.webContents.send("toggleSearchInspector")
-  )
-
 export const waitForSearch = (app: Application) => {
   return appStep(
     "wait for main search input to appear and then get its value",
@@ -309,26 +304,4 @@ export const toggleOptimizations = async (app: Application) => {
     ])
   )
   await app.client.click(selectors.settings.button)
-}
-
-export const openSearchInspector = async (app: Application) => {
-  // Stateless toggle of search inspector. If you use this twice after reset
-  // state, the search inspector will be back to its original state. This is
-  // only used to open and hit kill buttons, which is why it's not state-aware.
-  await toggleSearchInspector(app)
-  await appStep("wait for Search Inspector kill buttons to appear", () =>
-    Promise.all(
-      Object.values(selectors.searchInspector).map((item) =>
-        app.client.waitForVisible(item)
-      )
-    )
-  )
-}
-
-export const killViewerSearch = async (app: Application) => {
-  await click(app, selectors.searchInspector.killViewerSearch)
-}
-
-export const killHistogramSearch = async (app: Application) => {
-  await click(app, selectors.searchInspector.killHistogramSearch)
 }

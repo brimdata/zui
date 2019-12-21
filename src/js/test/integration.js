@@ -220,10 +220,6 @@ export const selectors = {
     speed: dataAttrSelector("search_speed"),
     time: dataAttrSelector("search_time")
   },
-  searchInspector: {
-    killHistogramSearch: dataAttrSelector("killHistogramSearch"),
-    killViewerSearch: dataAttrSelector("killViewerSearch")
-  },
   settings: {
     button: dataAttrSelector("settingsModal") + " .input-submit > [value=Ok]",
     modal: dataAttrSelector("settingsModal"),

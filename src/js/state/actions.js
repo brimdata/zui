@@ -238,14 +238,6 @@ export const hideDownloads = () => ({
   type: "DOWNLOADS_HIDE"
 })
 
-export const showSearchInspector = () => ({
-  type: "SEARCH_INSPECTOR_SHOW"
-})
-
-export const hideSearchInspector = () => ({
-  type: "SEARCH_INSPECTOR_HIDE"
-})
-
 export const successWhois = (text: string) => ({
   type: "WHOIS_SUCCESS",
   text
