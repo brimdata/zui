@@ -23,9 +23,6 @@ export default createReducer(initialState, {
   SPACES_CLEAR: () => ({
     ...initialState
   }),
-  ALL_SPACES_REQUEST: () => ({
-    ...initialState
-  }),
   SPACE_INFO_SET: (state, {spaceInfo}) => ({
     ...state,
     details: {
@@ -36,10 +33,6 @@ export default createReducer(initialState, {
   SPACE_NAMES_SET: (state, {names}) => ({
     ...state,
     names
-  }),
-  CURRENT_SPACE_NAME_SET: (state, {name}) => ({
-    ...state,
-    current: name
   })
 })
 
