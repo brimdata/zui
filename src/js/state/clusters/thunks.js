@@ -12,6 +12,7 @@ import {
   setSpaceNames
 } from "../actions"
 import {clearViewer} from "../viewer/actions"
+import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
 import handlers from "../handlers"
 import search from "../search"
@@ -21,6 +22,7 @@ export function connectCluster(cluster: Cluster): Thunk {
     return d(testConnection(cluster)).then((spaces) => {
       d(setSpaceNames(spaces))
       d(search.setCluster(cluster))
+      d(initSpace("default"))
     })
   }
 }

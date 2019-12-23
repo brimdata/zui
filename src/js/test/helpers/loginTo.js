@@ -1,6 +1,6 @@
 /* @flow */
 
-import {initSpace} from "../../flows/space/thunks"
+import {initSpace} from "../../flows/initSpace"
 import MockBoomClient from "../MockBoomClient"
 import fixtures from "../fixtures"
 import initTestStore from "../initTestStore"

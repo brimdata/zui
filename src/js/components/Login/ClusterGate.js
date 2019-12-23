@@ -12,6 +12,6 @@ export default function ClusterGate() {
   if (cluster === null) {
     return <LoginPage />
   } else {
-    return <SearchPage cluster={cluster} />
+    return <SearchPage />
   }
 }

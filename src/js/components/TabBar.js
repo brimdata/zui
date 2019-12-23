@@ -2,6 +2,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useRef, useState} from "react"
 import classNames from "classnames"
+import onIdle from "on-idle"
 
 import {useResizeObserver} from "./hooks/useResizeObserver"
 import Animate from "./Animate"
@@ -15,10 +16,16 @@ export default function TabBar() {
   let {ref, rect} = useResizeObserver()
   let dispatch = useDispatch()
   let allTabs = useSelector(tabs.getData)
-  let active = useSelector(tabs.getActive)
+  let activeTab = useSelector(tabs.getActive)
   let [width, setWidth] = useState(0)
   let count = allTabs.length
   let dirty = useRef(false)
+  let [active, setActive] = useState(activeTab)
+
+  useEffect(() => {
+    setActive(activeTab)
+  }, [activeTab])
+
   // let [diff, setDiff] = useState(0)
   // let [slot, setSlot] = useState(active)
   // let [status, setStatus] = useState("INIT")
@@ -35,7 +42,8 @@ export default function TabBar() {
   }
 
   function activateTab(id) {
-    dispatch(tabs.activate(id))
+    setActive(id)
+    onIdle(() => dispatch(tabs.activate(id)))
   }
 
   function mouseLeave() {

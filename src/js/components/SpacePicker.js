@@ -3,8 +3,9 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
 import {getAllSpaceNames, getCurrentSpaceName} from "../state/reducers/spaces"
-import {initSpace, refreshSpaces} from "../flows/space/thunks"
+import {initSpace} from "../flows/initSpace"
 import {reactElementProps} from "../test/integration"
+import {refreshSpaces} from "../flows/space/thunks"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 
@@ -16,7 +17,7 @@ export default function SpacePicker() {
 
   useEffect(() => {
     setSpace(currentSpace)
-  })
+  }, [currentSpace])
 
   function onSpaceChange(val) {
     setSpace(val)
