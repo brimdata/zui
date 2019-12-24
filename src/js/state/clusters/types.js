@@ -1,6 +1,7 @@
 /* @flow */
 
 export type Cluster = {
+  id: string,
   host: string,
   port: string,
   username: string,
@@ -8,23 +9,17 @@ export type Cluster = {
 }
 
 export type ClustersState = {
-  saved: Cluster[],
-  current: Cluster | null
+  [string]: Cluster
 }
 
-export type ClusterAction = CLUSTER_REMOVE | CLUSTER_ADD | CLUSTER_SET
+export type ClusterAction = CLUSTER_REMOVE | CLUSTER_ADD
 
 export type CLUSTER_REMOVE = {
   type: "CLUSTER_REMOVE",
-  cluster: Cluster
+  id: string
 }
 
 export type CLUSTER_ADD = {
   type: "CLUSTER_ADD",
   cluster: Cluster
-}
-
-export type CLUSTER_SET = {
-  type: "CLUSTER_SET",
-  cluster: Cluster | null
 }

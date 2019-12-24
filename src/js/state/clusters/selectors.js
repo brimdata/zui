@@ -8,6 +8,7 @@ export const getCurrentCluster = tab.select<?Cluster>(
   (tab) => tab.search.cluster
 )
 
-export function getSavedClusters(state: State) {
-  return state.clusters.saved
+export default {
+  id: (id: string) => (state: State) => state.clusters[id],
+  all: (state: State) => Object.values(state.clusters)
 }

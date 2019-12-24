@@ -31,3 +31,9 @@ export default function obj(o: Object) {
     }
   }
 }
+
+export function deleteKey(obj: Object, key: string) {
+  let copy = {...obj}
+  delete copy[key]
+  return copy
+}

@@ -10,6 +10,7 @@ test("#getBoomOptions", () => {
   const store = initTestStore()
   const state = store.dispatchAll([
     search.setCluster({
+      id: "abc",
       host: "boom.com",
       port: "123",
       username: "rosie",
