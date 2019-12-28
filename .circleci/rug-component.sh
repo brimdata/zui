@@ -5,7 +5,7 @@
 # deployed to component repositories as needed.
 set -euo pipefail
 
-PRODUCT_BRANCH="master"
+PRODUCT_BRANCH="rework-search-string"
 
 rm -rf /var/tmp/rug.git
 git clone --depth=1 --branch="${PRODUCT_BRANCH}" git@github.com:looky-cloud/rug.git /var/tmp/rug.git
