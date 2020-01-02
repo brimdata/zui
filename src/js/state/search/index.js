@@ -1,6 +1,5 @@
 /* @flow */
 
-import type {Cluster} from "../clusters/types"
 import type {DateTuple} from "../../lib/TimeWindow"
 import type {
   SEARCH_CLEAR,
@@ -27,8 +26,8 @@ const actions = {
   setSpanFocus(spanFocus: ?Span): SEARCH_SPAN_FOCUS_SET {
     return {type: "SEARCH_SPAN_FOCUS_SET", spanFocus}
   },
-  setCluster(cluster: ?Cluster): SEARCH_CLUSTER_SET {
-    return {type: "SEARCH_CLUSTER_SET", cluster}
+  setCluster(clusterId: string): SEARCH_CLUSTER_SET {
+    return {type: "SEARCH_CLUSTER_SET", clusterId}
   },
   clear(): SEARCH_CLEAR {
     return {type: "SEARCH_CLEAR"}

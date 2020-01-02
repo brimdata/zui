@@ -2,17 +2,20 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import {getAllSpaceNames, getCurrentSpaceName} from "../state/reducers/spaces"
+import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {initSpace} from "../flows/initSpace"
 import {reactElementProps} from "../test/integration"
 import {refreshSpaces} from "../flows/space/thunks"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import Spaces from "../state/spaces"
+import Tab from "../state/tab"
 
 export default function SpacePicker() {
   let currentSpace = useSelector(getCurrentSpaceName) || "(No space)"
   let [space, setSpace] = useState(currentSpace)
-  let spaces = useSelector(getAllSpaceNames)
+  let clusterId = useSelector(Tab.clusterId)
+  let spaces = useSelector(Spaces.names(clusterId))
   let dispatch = useDispatch()
 
   useEffect(() => {

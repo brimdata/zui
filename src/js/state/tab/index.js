@@ -9,6 +9,7 @@ import type {TabState} from "./types"
 import brim, {type Span, type Ts} from "../../brim"
 import search from "../search"
 import select from "./select"
+import selectors from "./selectors"
 import tabs from "../tabs"
 
 const getSpan = createSelector<State, void, Span, TabState>(
@@ -97,5 +98,6 @@ export default {
   getSpanArgs,
   getPrevSpanArgs,
   getComputedSpan,
-  select
+  select,
+  ...selectors
 }

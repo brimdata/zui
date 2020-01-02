@@ -22,7 +22,7 @@ export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
     return d(testConnection(cluster)).then((spaces) => {
       d(setSpaceNames(spaces))
-      d(search.setCluster(cluster))
+      d(search.setCluster(cluster.id))
       d(initSpace("default"))
     })
   }
@@ -32,7 +32,7 @@ export function disconnectCluster(): Thunk {
   return function(dispatch, getState) {
     let tabId = tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
-    dispatch(search.setCluster(null))
+    dispatch(search.setCluster(""))
   }
 }
 
@@ -40,7 +40,7 @@ export function switchCluster(cluster: Cluster): Thunk {
   return function(dispatch, getState) {
     let tabId = tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
-    dispatch(search.setCluster(cluster))
+    dispatch(search.setCluster(cluster.id))
     return dispatch(connectCluster(cluster))
   }
 }

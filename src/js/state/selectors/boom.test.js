@@ -2,6 +2,7 @@
 
 import {getBoomOptions} from "./boom"
 import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
+import Clusters from "../clusters"
 import initTestStore from "../../test/initTestStore"
 import search from "../search"
 import tab from "../tab"
@@ -9,13 +10,14 @@ import tab from "../tab"
 test("#getBoomOptions", () => {
   const store = initTestStore()
   const state = store.dispatchAll([
-    search.setCluster({
+    Clusters.add({
       id: "abc",
       host: "boom.com",
       port: "123",
       username: "rosie",
       password: "puppy"
     }),
+    search.setCluster("abc"),
     search.setSpanArgsFromDates([new Date(0), new Date(1)]),
     tab.computeSpan(),
     setCurrentSpaceName("work-zone"),
