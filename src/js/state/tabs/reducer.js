@@ -12,7 +12,7 @@ let init = {
 }
 
 export default function reducer(state: TabsState = init, action: TabActions) {
-  if (activeTabAction(action)) return updateActiveTab(state, action)
+  if (tabAction(action)) return updateTab(state, action)
 
   switch (action.type) {
     case "TABS_ACTIVATE":
@@ -54,7 +54,7 @@ function removeTab(state: TabsState, id) {
   }
 }
 
-function activeTabAction({type}) {
+function tabAction({type}) {
   return (
     type.startsWith("SEARCH_") ||
     type.startsWith("VIEWER_") ||
@@ -63,9 +63,10 @@ function activeTabAction({type}) {
   )
 }
 
-function updateActiveTab(state, action) {
+function updateTab(state, action: Object) {
   let {data, active} = state
-  let index = indexOf(data, active)
+  let id = action.tabId || active
+  let index = indexOf(data, id)
   let tab = data[index]
   let newData = [...data]
   newData[index] = tabReducer(tab, action)
