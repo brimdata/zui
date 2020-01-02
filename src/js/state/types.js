@@ -11,7 +11,7 @@ import type {LogDetails} from "./reducers/logDetails"
 import type {ModalState} from "./modal/types"
 import type {NoticeState} from "./notice"
 import type {SearchHistory} from "./reducers/searchHistory"
-import type {Spaces} from "./reducers/spaces"
+import type {SpacesState} from "./spaces/types"
 import type {TabsState} from "./tabs/types"
 import type {TasksState} from "./tasks"
 import type {View} from "./reducers/view"
@@ -28,7 +28,7 @@ export type State = {
   handlers: HandlersState,
   clusters: ClustersState,
   errors: ErrorsState,
-  spaces: Spaces,
+  spaces: SpacesState,
   boomd: Boomd,
   tasks: TasksState,
   searchHistory: SearchHistory,

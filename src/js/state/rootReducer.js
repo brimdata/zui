@@ -13,7 +13,7 @@ import modal from "./modal"
 import notice from "./notice"
 import packets from "./reducers/packets"
 import searchHistory from "./reducers/searchHistory"
-import spaces from "./reducers/spaces"
+import spacesReducer from "./spaces/reducer"
 import starredLogs from "./reducers/starredLogs"
 import tabs from "./tabs"
 import tasks from "./tasks"
@@ -31,7 +31,7 @@ export default combineReducers<*, *>({
   tabs: tabs.reducer,
   investigation,
   view,
-  spaces,
+  spaces: spacesReducer,
   logDetails,
   boomd,
   starredLogs,
