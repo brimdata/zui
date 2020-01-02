@@ -10,7 +10,7 @@ import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 
 export default function SpacePicker() {
-  let currentSpace = useSelector(getCurrentSpaceName)
+  let currentSpace = useSelector(getCurrentSpaceName) || "(No space)"
   let [space, setSpace] = useState(currentSpace)
   let spaces = useSelector(getAllSpaceNames)
   let dispatch = useDispatch()
@@ -24,12 +24,13 @@ export default function SpacePicker() {
     dispatch(initSpace(val))
   }
 
-  if (!space) return <div style={{height: 14}} />
-
   let template = spaces.map((space) => ({
     label: space,
     click: () => onSpaceChange(space)
   }))
+
+  if (template.length === 0)
+    template = [{label: "No spaces in this cluster", disabled: true}]
 
   return (
     <PopMenuPointy
