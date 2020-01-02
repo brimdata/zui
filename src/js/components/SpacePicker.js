@@ -12,7 +12,7 @@ import Spaces from "../state/spaces"
 import Tab from "../state/tab"
 
 export default function SpacePicker() {
-  let currentSpace = useSelector(getCurrentSpaceName) || "(No space)"
+  let currentSpace = useSelector(getCurrentSpaceName) || "No spaces"
   let [space, setSpace] = useState(currentSpace)
   let clusterId = useSelector(Tab.clusterId)
   let spaces = useSelector(Spaces.names(clusterId))

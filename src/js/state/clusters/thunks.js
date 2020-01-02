@@ -7,13 +7,12 @@ import {
   clearNotifications,
   clearSearchBar,
   clearSearchHistory,
-  clearSpaces,
-  clearStarredLogs,
-  setSpaceNames
+  clearStarredLogs
 } from "../actions"
 import {clearViewer} from "../viewer/actions"
 import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
+import Spaces from "../spaces"
 import handlers from "../handlers"
 import search from "../search"
 import tabs from "../tabs"
@@ -21,7 +20,7 @@ import tabs from "../tabs"
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
     return d(testConnection(cluster)).then((spaces) => {
-      d(setSpaceNames(spaces))
+      d(Spaces.setNames(cluster.id, spaces))
       d(search.setCluster(cluster.id))
       d(initSpace("default"))
     })
@@ -47,7 +46,6 @@ export function switchCluster(cluster: Cluster): Thunk {
 
 function clearClusterState(dispatch, tabId: string) {
   dispatch(clearSearchBar())
-  dispatch(clearSpaces())
   dispatch(search.clear())
   dispatch(clearStarredLogs())
   dispatch(clearSearchHistory())

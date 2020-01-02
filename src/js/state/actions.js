@@ -164,19 +164,6 @@ export function setCurrentSpaceName(space: string) {
   }
 }
 
-export function setSpaceNames(names: string[]) {
-  return {
-    type: "SPACE_NAMES_SET",
-    names
-  }
-}
-
-export function clearSpaces() {
-  return {
-    type: "SPACES_CLEAR"
-  }
-}
-
 export const starLog = (tuple: Tuple) => ({
   type: "LOG_STAR",
   tuple
