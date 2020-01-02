@@ -16,22 +16,25 @@ import executeSearch from "./executeSearch"
 export default function executeTableSearch({
   program,
   span,
-  space
+  space,
+  tabId
 }: SearchArgs): Thunk {
   return function(dispatch) {
     let table = brim
       .search(program, span, space)
       .id("Table")
-      .status((status) => dispatch(setViewerStatus(status)))
+      .status((status) => dispatch(setViewerStatus(tabId, status)))
       .chan(0, (records, types) => {
-        dispatch(appendViewerRecords(records))
-        dispatch(updateViewerColumns(types))
+        dispatch(appendViewerRecords(tabId, records))
+        dispatch(updateViewerColumns(tabId, types))
       })
-      .stats((stats) => dispatch(setViewerStats(stats)))
-      .end((_id, count) => dispatch(setViewerEndStatus(endStatus(count))))
+      .stats((stats) => dispatch(setViewerStats(tabId, stats)))
+      .end((_id, count) =>
+        dispatch(setViewerEndStatus(tabId, endStatus(count)))
+      )
 
-    dispatch(setViewerStatus("FETCHING"))
-    dispatch(setViewerEndStatus("FETCHING"))
+    dispatch(setViewerStatus(tabId, "FETCHING"))
+    dispatch(setViewerEndStatus(tabId, "FETCHING"))
     return dispatch(executeSearch(table))
   }
 }

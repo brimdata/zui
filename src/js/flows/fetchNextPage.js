@@ -11,19 +11,23 @@ import brim from "../brim"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
 import tab from "../state/tab"
+import tabs from "../state/tabs"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let state = getState()
   let logs = getViewerLogs(state)
   let currentSpan = tab.getSpanAsDates(state)
+  let tabId = tabs.getActive(state)
   let [spliceIndex, span] = nextPageArgs(logs, currentSpan)
   let program = getSearchProgram(state)
   let space = getCurrentSpaceName(state)
   let spanFocus = null
 
-  dispatch(spliceViewer(spliceIndex))
+  dispatch(spliceViewer(tabId, spliceIndex))
   dispatch(
-    executeTableSearch(searchArgs.events({program, span, spanFocus, space}))
+    executeTableSearch(
+      searchArgs.events({tabId, program, span, spanFocus, space})
+    )
   )
 }
 

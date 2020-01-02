@@ -10,9 +10,11 @@ import modal from "../state/modal"
 import notice from "../state/notice"
 import search from "../state/search"
 import submitSearch from "./submitSearch"
+import tabs from "../state/tabs"
 
 export function initSpace(space: string): Thunk {
   return function(dispatch, getState) {
+    let tabId = tabs.getActive(getState())
     return dispatch(fetchSpaces()).then((spaces) => {
       if (spaces.length === 0) {
         dispatch(notice.set(new NoSpacesError()))
@@ -25,7 +27,7 @@ export function initSpace(space: string): Thunk {
           dispatch(setSpaceInfo(info))
 
           if (space.empty()) {
-            dispatch(clearViewer())
+            dispatch(clearViewer(tabId))
             dispatch(modal.show("nodata"))
           } else {
             const [_, max] = getCurrentSpaceTimeWindow(getState())

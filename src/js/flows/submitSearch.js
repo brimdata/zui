@@ -10,6 +10,7 @@ import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
 import tab from "../state/tab"
+import tabs from "../state/tabs"
 
 export default function submitSearch(save: boolean = true): Thunk {
   return function(dispatch, getState) {
@@ -20,13 +21,15 @@ export default function submitSearch(save: boolean = true): Thunk {
 
     const state = getState()
     if (save) dispatch(recordSearch(getSearchRecord(state)))
+    let tabId = tabs.getActive(state)
     let tabData = {
       program: getSearchProgram(state),
       span: tab.getSpanAsDates(state),
       spanFocus: tab.getSpanFocusAsDates(state),
-      space: getCurrentSpaceName(state)
+      space: getCurrentSpaceName(state),
+      tabId
     }
-    dispatch(clearViewer())
+    dispatch(clearViewer(tabId))
 
     switch (searchArgs.type(tabData)) {
       case "analytic":

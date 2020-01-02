@@ -16,6 +16,7 @@ import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
 import handlers from "../handlers"
 import search from "../search"
+import tabs from "../tabs"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
@@ -28,27 +29,29 @@ export function connectCluster(cluster: Cluster): Thunk {
 }
 
 export function disconnectCluster(): Thunk {
-  return function(dispatch) {
-    clearClusterState(dispatch)
+  return function(dispatch, getState) {
+    let tabId = tabs.getActive(getState())
+    clearClusterState(dispatch, tabId)
     dispatch(search.setCluster(null))
   }
 }
 
 export function switchCluster(cluster: Cluster): Thunk {
-  return function(dispatch) {
-    clearClusterState(dispatch)
+  return function(dispatch, getState) {
+    let tabId = tabs.getActive(getState())
+    clearClusterState(dispatch, tabId)
     dispatch(search.setCluster(cluster))
     return dispatch(connectCluster(cluster))
   }
 }
 
-function clearClusterState(dispatch) {
+function clearClusterState(dispatch, tabId: string) {
   dispatch(clearSearchBar())
   dispatch(clearSpaces())
   dispatch(search.clear())
   dispatch(clearStarredLogs())
   dispatch(clearSearchHistory())
-  dispatch(clearViewer())
+  dispatch(clearViewer(tabId))
   dispatch(handlers.abortAll())
   dispatch(clearErrors())
   dispatch(clearNotifications())

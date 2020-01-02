@@ -16,33 +16,49 @@ import type {
 } from "./types"
 import {hashDescriptorKeys} from "./hashDescriptorKeys"
 
-export function clearViewer(): VIEWER_CLEAR {
-  return {type: "VIEWER_CLEAR"}
+export function clearViewer(tabId: string): VIEWER_CLEAR {
+  return {type: "VIEWER_CLEAR", tabId}
 }
 
-export function spliceViewer(index: number): VIEWER_SPLICE {
-  return {type: "VIEWER_SPLICE", index}
+export function spliceViewer(tabId: string, index: number): VIEWER_SPLICE {
+  return {type: "VIEWER_SPLICE", index, tabId}
 }
 
-export function setViewerStatus(status: SearchStatus): VIEWER_STATUS {
-  return {type: "VIEWER_STATUS", status}
+export function setViewerStatus(
+  tabId: string,
+  status: SearchStatus
+): VIEWER_STATUS {
+  return {type: "VIEWER_STATUS", status, tabId}
 }
 
-export function setViewerEndStatus(status: ViewerStatus): VIEWER_END_STATUS {
-  return {type: "VIEWER_END_STATUS", status}
+export function setViewerEndStatus(
+  tabId: string,
+  status: ViewerStatus
+): VIEWER_END_STATUS {
+  return {type: "VIEWER_END_STATUS", status, tabId}
 }
 
-export function appendViewerRecords(records: RecordData[]): VIEWER_RECORDS {
-  return {type: "VIEWER_RECORDS", records}
+export function appendViewerRecords(
+  tabId: string,
+  records: RecordData[]
+): VIEWER_RECORDS {
+  return {type: "VIEWER_RECORDS", records, tabId}
 }
 
-export function setViewerStats(stats: ViewerStats): VIEWER_STATS {
-  return {type: "VIEWER_STATS", stats}
+export function setViewerStats(
+  tabId: string,
+  stats: ViewerStats
+): VIEWER_STATS {
+  return {type: "VIEWER_STATS", stats, tabId}
 }
 
-export function updateViewerColumns(desc: Descriptors): VIEWER_COLUMNS {
+export function updateViewerColumns(
+  tabId: string,
+  desc: Descriptors
+): VIEWER_COLUMNS {
   return {
     type: "VIEWER_COLUMNS",
-    columns: hashDescriptorKeys(desc)
+    columns: hashDescriptorKeys(desc),
+    tabId
   }
 }

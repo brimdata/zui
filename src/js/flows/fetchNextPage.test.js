@@ -8,19 +8,21 @@ import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
 import search from "../state/search"
 import tab from "../state/tab"
+import tabs from "../state/tabs"
 
 const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
 const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
 
-let store, boom
+let store, boom, tabId
 beforeEach(() => {
   boom = new MockBoomClient().stub("search")
   store = initTestStore(boom)
+  tabId = tabs.getActive(store.getState())
   store.dispatchAll([
     setCurrentSpaceName("default"),
     search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     tab.computeSpan(),
-    appendViewerRecords(tuples.map((t) => new Log(t, descriptor)))
+    appendViewerRecords(tabId, tuples.map((t) => new Log(t, descriptor)))
   ])
   store.clearActions()
 })
@@ -29,7 +31,7 @@ test("#fetchNextPage dispatches splice", () => {
   store.dispatch(fetchNextPage())
 
   expect(store.getActions()).toEqual(
-    expect.arrayContaining([{type: "VIEWER_SPLICE", index: 2}])
+    expect.arrayContaining([{tabId, type: "VIEWER_SPLICE", index: 2}])
   )
 })
 
@@ -48,7 +50,7 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
 
 test("#fetchNextPage when there is only 1 event", () => {
   const search = jest.spyOn(boom, "search")
-  store.dispatch(spliceViewer(1))
+  store.dispatch(spliceViewer(tabId, 1))
   store.dispatch(fetchNextPage())
 
   expect(search).toHaveBeenCalledWith(
