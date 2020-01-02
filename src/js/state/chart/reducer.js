@@ -1,13 +1,14 @@
 /* @flow */
-import type {ChartState} from "./"
+import type {ChartActions, ChartState} from "./types"
 import {concat} from "../../lib/Array"
 
 let init = {records: [], status: "INIT"}
 
-export default function reducer(state: ChartState = init, action: *) {
+export default function reducer(
+  state: ChartState = init,
+  action: ChartActions
+) {
   switch (action.type) {
-    case "FUCK":
-      return state
     case "CHART_RECORDS":
       return {...state, records: concat(state.records, action.records)}
     case "CHART_STATUS":

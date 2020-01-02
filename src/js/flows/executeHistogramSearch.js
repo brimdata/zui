@@ -9,17 +9,18 @@ import executeSearch from "./executeSearch"
 export default function executeHistogramSearch({
   program,
   span,
-  space
+  space,
+  tabId
 }: SearchArgs): Thunk {
   return function(dispatch) {
     let histogram = brim
       .search(addEveryCountProc(program, span), span, space)
       .id("Histogram")
-      .status((status) => dispatch(chart.setStatus(status)))
-      .chan(0, (records) => dispatch(chart.appendRecords(records)))
+      .status((status) => dispatch(chart.setStatus(tabId, status)))
+      .chan(0, (records) => dispatch(chart.appendRecords(tabId, records)))
 
-    dispatch(chart.clear())
-    dispatch(chart.setStatus("FETCHING"))
+    dispatch(chart.clear(tabId))
+    dispatch(chart.setStatus(tabId, "FETCHING"))
     return dispatch(executeSearch(histogram))
   }
 }
