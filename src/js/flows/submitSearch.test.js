@@ -1,12 +1,12 @@
 /* @flow */
 
 import {changeSearchBarInput, setCurrentSpaceName} from "../state/actions"
-import {initTimeWindow} from "../state/thunks/timeWindow"
 import MockBoomClient from "../test/MockBoomClient"
+import Search from "../state/search"
 import Spaces from "../state/spaces"
+import Tab from "../state/tab"
 import brim from "../brim"
 import initTestStore from "../test/initTestStore"
-import search from "../state/search"
 import submitSearch from "./submitSearch"
 
 let store, boom
@@ -30,10 +30,18 @@ const spaceInfo = {
   path: "./"
 }
 
+const initTimeWindow = () => (dispatch: Function, getState: Function) => {
+  let space = Tab.space(getState())
+  if (space) {
+    let {min_time, max_time} = space
+    dispatch(Search.setSpanArgs([min_time, max_time]))
+  }
+}
+
 test("fetching a regular search", () => {
   boom.stub("search")
   store.dispatchAll([
-    search.setCluster("1"),
+    Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
@@ -49,7 +57,7 @@ test("fetching a regular search", () => {
 test("not saving a search to history", () => {
   boom.stub("search")
   store.dispatchAll([
-    search.setCluster("1"),
+    Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_path=conn")
@@ -64,7 +72,7 @@ test("not saving a search to history", () => {
 test("fetching an analytic search", () => {
   boom.stub("search")
   store.dispatchAll([
-    search.setCluster("1"),
+    Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
@@ -80,7 +88,7 @@ test("fetching an analytic search", () => {
 test("fetching an analytic search without history", () => {
   boom.stub("search")
   store.dispatchAll([
-    search.setCluster("1"),
+    Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
@@ -96,11 +104,11 @@ test("fetching an analytic search without history", () => {
 test("fetching an zoom search", () => {
   boom.stub("search")
   store.dispatchAll([
-    search.setCluster("1"),
+    Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
-    search.setSpanFocus(brim.time.convertToSpan([new Date(0), new Date(1)])),
+    Search.setSpanFocus(brim.time.convertToSpan([new Date(0), new Date(1)])),
     changeSearchBarInput("_path=conn | count()")
   ])
 
@@ -113,7 +121,7 @@ test("fetching an zoom search", () => {
 test("fetching an zoom search without history", () => {
   boom.stub("search")
   store.dispatchAll([
-    search.setCluster("1"),
+    Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     initTimeWindow(),
@@ -130,7 +138,7 @@ test("fetching an zoom search without history", () => {
 test("a bad search query", () => {
   boom.stub("search")
   const actions = [
-    search.setCluster("1"),
+    Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     setCurrentSpaceName("ranch-logs"),
     changeSearchBarInput("_ath="),

@@ -46,11 +46,11 @@ export function switchCluster(cluster: Cluster): Thunk {
 
 function clearClusterState(dispatch, tabId: string) {
   dispatch(clearSearchBar())
-  dispatch(search.clear())
   dispatch(clearStarredLogs())
   dispatch(clearSearchHistory())
   dispatch(clearViewer(tabId))
   dispatch(handlers.abortAll())
   dispatch(clearErrors())
   dispatch(clearNotifications())
+  dispatch(search.clear())
 }

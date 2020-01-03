@@ -21,11 +21,13 @@ const cluster = createSelector<State, void, ?Cluster, string, ClustersState>(
 
 const spaceName = select((tab) => tab.search.space)
 
-const space = createSelector<State, void, Space, TabState, SpacesState>(
+const space = createSelector<State, void, ?Space, TabState, SpacesState>(
   Tabs.getActiveTab,
   Spaces.raw,
   (tab, spaces) => {
-    return spaces[tab.search.clusterId][tab.search.space]
+    let list = spaces[tab.search.clusterId]
+    if (list) return list[tab.search.space]
+    else return null
   }
 )
 

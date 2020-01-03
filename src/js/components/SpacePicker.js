@@ -2,7 +2,6 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-
 import {initSpace} from "../flows/initSpace"
 import {reactElementProps} from "../test/integration"
 import {refreshSpaces} from "../flows/space/thunks"
