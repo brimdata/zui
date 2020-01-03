@@ -3,7 +3,6 @@ import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
 import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
-import type {Space} from "../lib/Space"
 import type {Ts} from "../brim"
 import {isArray} from "../lib/is"
 
@@ -149,13 +148,6 @@ export const recordSearch = (record: SearchRecord) => ({
   type: "SEARCH_HISTORY_PUSH",
   entry: record
 })
-
-export function setSpaceInfo(spaceInfo: $Shape<Space>) {
-  return {
-    type: "SPACE_INFO_SET",
-    spaceInfo
-  }
-}
 
 export function setCurrentSpaceName(space: string) {
   return {

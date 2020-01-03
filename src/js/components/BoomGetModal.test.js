@@ -8,8 +8,8 @@ import modal from "../state/modal"
 import provide from "../test/helpers/provide"
 import submitSearch from "../flows/submitSearch"
 
-test("renders with boom get command", () => {
-  let {store} = logInto("cluster1", "space1")
+test("renders with boom get command", async () => {
+  let {store} = await logInto("cluster1", "space1")
 
   store.dispatchAll([
     changeSearchBarInput("hi"),

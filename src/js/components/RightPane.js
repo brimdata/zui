@@ -16,6 +16,7 @@ import {
 } from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
+import {reactElementProps} from "../test/integration"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
 import Log from "../models/Log"
@@ -30,11 +31,10 @@ import Pane, {
 } from "./Pane"
 import RightPaneCollapser from "./RightPaneCollapser"
 import Star from "./icons/star-sm.svg"
+import Tab from "../state/tab"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as logDetails from "../state/selectors/logDetails"
-import * as spaces from "../state/reducers/spaces"
 import * as view from "../state/reducers/view"
-import {reactElementProps} from "../test/integration"
 
 type StateProps = {|
   isStarred: boolean,
@@ -154,7 +154,7 @@ const stateToProps = (state) => ({
   nextExists: logDetails.getLogDetailHistory(state).nextExists(),
   isStarred: logDetails.getLogDetailIsStarred(state),
   currentLog: logDetails.buildLogDetail(state),
-  space: spaces.getCurrentSpace(state)
+  space: Tab.space(state)
 })
 
 export const XRightPane = connect<Props, {||}, _, _, _, _>(

@@ -2,7 +2,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import {getCurrentSpaceName} from "../state/reducers/spaces"
+
 import {initSpace} from "../flows/initSpace"
 import {reactElementProps} from "../test/integration"
 import {refreshSpaces} from "../flows/space/thunks"
@@ -12,7 +12,7 @@ import Spaces from "../state/spaces"
 import Tab from "../state/tab"
 
 export default function SpacePicker() {
-  let currentSpace = useSelector(getCurrentSpaceName) || "No spaces"
+  let currentSpace = useSelector(Tab.spaceName) || "No spaces"
   let [space, setSpace] = useState(currentSpace)
   let clusterId = useSelector(Tab.clusterId)
   let spaces = useSelector(Spaces.names(clusterId))

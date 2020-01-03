@@ -1,21 +1,16 @@
 /* @flow */
 
-/*
-  The third argument to thunks "boom" only ever is used in this file.
-*/
-
 import type {Cluster} from "../state/clusters/types"
 import type {Span} from "./BoomClient/types"
 import type {Thunk} from "../state/types"
 import {ZqVersionError} from "../models/Errors"
 import {createError} from "../state/errors"
 import {getBoomOptions} from "../state/selectors/boom"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
 import ErrorFactory from "../models/ErrorFactory"
+import Tab from "../state/tab"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
 import notice from "../state/notice"
-import tab from "../state/tab"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, getState, boom) => {
@@ -75,9 +70,9 @@ export function checkVersions(): Thunk {
 
 export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
-    let [from, to] = tab.getSpan(getState())
+    let [from, to] = Tab.getSpan(getState())
     let searchSpan = [brim.time(from).toDate(), brim.time(to).toDate()]
-    let searchSpace = getCurrentSpaceName(getState())
+    let searchSpace = Tab.spaceName(getState())
     boom.setOptions(getBoomOptions(getState()))
     try {
       return boom.inspectSearch(zql, {searchSpan, searchSpace})

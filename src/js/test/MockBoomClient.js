@@ -19,13 +19,11 @@ export default class MockBoomClient extends BoomClient {
   }
 
   stub(name: string, returnVal: any) {
-    let req = this.mockRequest()
-
-    function newMethod() {
+    return this.redef(name, () => {
+      let req = mockRequest()
       setTimeout(() => req.emitDone(returnVal), 0)
       return req
-    }
-    return this.redef(name, newMethod)
+    })
   }
 
   stubError(name: string, error: *) {

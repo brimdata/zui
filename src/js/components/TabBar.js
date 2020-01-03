@@ -127,8 +127,8 @@ export default function TabBar() {
               removeTab={(e) => removeTab(tab.id, e)}
               onClick={() => activateTab(tab.id)}
               className={classNames({
-                active: tab.id === active,
-                dragging: status === "DRAGGING"
+                active: tab.id === active
+                // dragging: status === "DRAGGING"
               })}
             />
           </Animate>

@@ -10,22 +10,21 @@ import {
   rxHostsCorrelation,
   txHostsCorrelation
 } from "../../searches/programs"
-import {getCurrentSpaceName} from "../../state/reducers/spaces"
 import {parallelizeProcs} from "../../lib/Program"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
+import Tab from "../../state/tab"
 import brim from "../../brim"
 import executeSearch from "../../flows/executeSearch"
 import menu from "../../electron/menu"
-import tab from "../../state/tab"
 
 export const Md5Panel = ({log}: {log: Log}) => {
   let logMd5 = log.get("md5")
   let dispatch = useDispatch()
-  let space = useSelector(getCurrentSpaceName)
-  let span = useSelector(tab.getSpanAsDates)
+  let space = useSelector(Tab.spaceName)
+  let span = useSelector(Tab.getSpanAsDates)
   let [tx, setTx] = useState([])
   let [rx, setRx] = useState([])
   let [md5, setMd5] = useState([])

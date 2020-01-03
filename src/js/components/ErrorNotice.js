@@ -4,9 +4,9 @@ import React from "react"
 
 import {NetworkError} from "../models/Errors"
 import {capitalize} from "../lib/Str"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {initSpace} from "../flows/initSpace"
 import NoticeBanner from "./NoticeBanner"
+import Tab from "../state/tab"
 import notice from "../state/notice"
 import useEscapeKey from "./hooks/useEscapeKey"
 
@@ -40,7 +40,7 @@ function None() {
 
 function Network({error}) {
   let dispatch = useDispatch()
-  let space = useSelector(getCurrentSpaceName)
+  let space = useSelector(Tab.spaceName)
   return (
     <p>
       {error.message()} <a onClick={() => dispatch(initSpace(space))}>Retry</a>

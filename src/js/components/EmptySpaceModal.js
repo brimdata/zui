@@ -2,12 +2,12 @@
 import {useSelector} from "react-redux"
 import React from "react"
 
-import {getCurrentSpaceName} from "../state/reducers/spaces"
 import ModalBox from "./ModalBox/ModalBox"
+import Tab from "../state/tab"
 import TextContent from "./TextContent"
 
 export default function EmptySpaceModal() {
-  let space = useSelector(getCurrentSpaceName)
+  let space = useSelector(Tab.spaceName)
   return (
     <ModalBox
       title="Empty Space"

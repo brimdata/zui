@@ -4,7 +4,7 @@ import {useSelector} from "react-redux"
 import React, {useState} from "react"
 
 import {InputCheckbox} from "./form/Inputs"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
+
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getUseBoomCache, getUseBoomIndex} from "../state/reducers/boomd"
 import {reactElementProps} from "../test/integration"
@@ -42,7 +42,7 @@ function BoomGetModalContents() {
   let [includeCreds, setIncludeCreds] = useState(false)
   let program = useSelector(getSearchProgram)
   let {username, password} = useSelector(Tab.cluster)
-  let space = useSelector(getCurrentSpaceName)
+  let space = useSelector(Tab.spaceName)
   let useCache = useSelector(getUseBoomCache)
   let useIndex = useSelector(getUseBoomIndex)
 

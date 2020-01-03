@@ -1,21 +1,20 @@
 /* @flow */
 import type {Thunk} from "../state/types"
 import {clearViewer} from "../state/viewer/actions"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
 import {recordSearch, submittingSearchBar} from "../state/actions"
 import {validateProgram} from "../state/thunks/searchBar"
+import Tab from "../state/tab"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
-import tab from "../state/tab"
 import tabs from "../state/tabs"
 
 export default function submitSearch(save: boolean = true): Thunk {
   return function(dispatch, getState) {
     dispatch(submittingSearchBar())
-    dispatch(tab.computeSpan())
+    dispatch(Tab.computeSpan())
 
     if (!dispatch(validateProgram())) return
 
@@ -24,9 +23,9 @@ export default function submitSearch(save: boolean = true): Thunk {
     let tabId = tabs.getActive(state)
     let tabData = {
       program: getSearchProgram(state),
-      span: tab.getSpanAsDates(state),
-      spanFocus: tab.getSpanFocusAsDates(state),
-      space: getCurrentSpaceName(state),
+      span: Tab.getSpanAsDates(state),
+      spanFocus: Tab.getSpanFocusAsDates(state),
+      space: Tab.spaceName(state),
       tabId
     }
     dispatch(clearViewer(tabId))
