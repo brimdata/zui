@@ -65,7 +65,7 @@ export default function SearchResults(props: Props) {
     height: props.height,
     rowHeight: 25,
     chunkSize: 5,
-    overScan: 3
+    overScan: 1
   })
 
   function renderRow(index: number, dimens: ViewerDimens) {

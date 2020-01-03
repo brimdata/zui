@@ -29,7 +29,8 @@ export default {
   animation,
   date,
   on: (...args: *) => document.addEventListener(...args),
-  off: (...args: *) => document.removeEventListener(...args)
+  off: (...args: *) => document.removeEventListener(...args),
+  compact: (array: *) => array.filter((item) => !!item)
 }
 
 export type TimeUnit =

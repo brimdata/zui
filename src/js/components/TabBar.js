@@ -7,6 +7,7 @@ import onIdle from "on-idle"
 import {useResizeObserver} from "./hooks/useResizeObserver"
 import Animate from "./Animate"
 import SearchTab from "./SearchTab"
+import lib from "../lib"
 import newTab from "../flows/newTab"
 import tabs from "../state/tabs"
 
@@ -113,7 +114,9 @@ export default function TabBar() {
   }
 
   function getTitle(tab) {
-    return tab.searchBar.previous || "*"
+    return lib
+      .compact([tab.search.space || "No Space", tab.searchBar.previous])
+      .join(": ")
   }
 
   return (
