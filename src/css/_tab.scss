@@ -23,16 +23,28 @@ $tab-border-radius-bottom: 6px;
   user-select: none;
   -webkit-app-region: no-drag;
   height: 34px;
-  padding: 0 12px;
-  padding-right: 10px;
+  padding: 0;
   padding-bottom: 3px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
   background: transparent;
   cursor: default;
   border-radius: $tab-border-radius-top $tab-border-radius-top 0 0;
   transition: transform 200ms;
+
+  .tab-content {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    position: relative;
+  }
+
+  .loading {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+  }
 
   // the little line when the tab is not active
   &:before {
@@ -74,6 +86,8 @@ $tab-border-radius-bottom: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding-left: 10px;
+    flex: 1;
   }
 
   // Close x icon
@@ -81,6 +95,7 @@ $tab-border-radius-bottom: 6px;
     width: 17px;
     height: 17px;
     min-width: 17px;
+    margin-right: 10px;
     svg {
       width: 9px;
       height: 9px;
