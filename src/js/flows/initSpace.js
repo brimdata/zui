@@ -8,6 +8,7 @@ import {
 } from "../state/actions"
 import {clearViewer} from "../state/viewer/actions"
 import {fetchSpace, fetchSpaces} from "../services/boom"
+import ErrorFactory from "../models/ErrorFactory"
 import Spaces from "../state/spaces"
 import Tab from "../state/tab"
 import brim from "../brim"
@@ -29,7 +30,7 @@ export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
     .then(() => dispatch(submitSearch()))
-    .catch((error) => dispatch(notice.set(error)))
+    .catch((error) => dispatch(notice.set(ErrorFactory.create(error))))
 }
 
 function checkDataExists(dispatch, data, tabId) {
