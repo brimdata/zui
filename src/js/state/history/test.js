@@ -1,7 +1,7 @@
 /* @flow */
 
 import {changeSearchBarInput} from "../actions"
-import History from "../history"
+import History from "./"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
 

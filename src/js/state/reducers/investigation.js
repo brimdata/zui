@@ -18,7 +18,7 @@ export type Finding = {
 
 export default function(state: Investigation = [], a: *) {
   switch (a.type) {
-    case "SEARCH_HISTORY_PUSH":
+    case "HISTORY_PUSH":
       return createFinding(state, a.entry)
     case "FINDING_CREATE":
       return [...state, a.finding]

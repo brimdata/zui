@@ -13,7 +13,6 @@ import logDetails from "./reducers/logDetails"
 import modal from "./modal"
 import notice from "./notice"
 import packets from "./reducers/packets"
-import searchHistory from "./reducers/searchHistory"
 import spacesReducer from "./spaces/reducer"
 import starredLogs from "./reducers/starredLogs"
 import tabs from "./tabs"
@@ -37,7 +36,6 @@ export default combineReducers<*, *>({
   boomd,
   starredLogs,
   packets,
-  searchHistory,
   history: history.reducer,
   version: () => VERSION
 })

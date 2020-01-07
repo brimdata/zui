@@ -1,6 +1,6 @@
 /* @flow */
 
-import brim from "../brim"
+import brim from "./"
 
 let history
 beforeEach(() => {

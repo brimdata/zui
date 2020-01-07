@@ -4,7 +4,7 @@ exports[`fetching a regular search 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
-  "SEARCH_HISTORY_PUSH",
+  "HISTORY_PUSH",
   "VIEWER_CLEAR",
   "VIEWER_STATUS",
   "VIEWER_END_STATUS",
@@ -21,7 +21,7 @@ exports[`fetching an analytic search 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
-  "SEARCH_HISTORY_PUSH",
+  "HISTORY_PUSH",
   "VIEWER_CLEAR",
   "VIEWER_STATUS",
   "VIEWER_END_STATUS",
@@ -46,7 +46,7 @@ exports[`fetching an zoom search 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
-  "SEARCH_HISTORY_PUSH",
+  "HISTORY_PUSH",
   "VIEWER_CLEAR",
   "VIEWER_STATUS",
   "VIEWER_END_STATUS",
