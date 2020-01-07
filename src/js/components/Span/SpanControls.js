@@ -1,6 +1,6 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
 import SpanDuration from "./SpanDuration"
@@ -12,8 +12,13 @@ export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
 export default function SpanControls() {
   let [from, to] = useSelector(tab.getSpanArgs)
+  let entry = useSelector(tab.currentEntry)
+  let [prev, setPrev] = useState(null)
 
-  let prev = null
+  useEffect(() => {
+    setPrev(entry.spanArgs)
+  }, [entry])
+
   let dispatch = useDispatch()
 
   function fromChange(arg) {

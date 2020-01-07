@@ -8,10 +8,10 @@ import {getViewerColumns, getViewerLogs} from "../viewer/selector"
 import {uniqBy} from "../../lib/Array"
 import Log from "../../models/Log"
 import TableColumns from "../../models/TableColumns"
+import activeTabSelect from "../tab/activeTabSelect"
 import columnKey from "../../lib/columnKey"
-import tab from "../tab"
 
-export const getColumns = tab.select<ColumnsState>((tab) => tab.columns)
+export const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
 
 export const getCurrentTableColumns = createSelector<
   State,

@@ -7,19 +7,18 @@ import type {Space, SpacesState} from "../spaces/types"
 import type {State} from "../types"
 import type {TabState} from "./types"
 import Clusters from "../clusters"
+import History from "../history"
 import Spaces from "../spaces"
 import Tabs from "../tabs"
-import select from "./select"
+import activeTabSelect from "./activeTabSelect"
 
-const clusterId = select((tab) => tab.search.clusterId)
+const clusterId = activeTabSelect((tab) => tab.search.clusterId)
 
 const cluster = createSelector<State, void, ?Cluster, string, ClustersState>(
   clusterId,
   Clusters.raw,
   (id, obj) => obj[id]
 )
-
-const spaceName = select((tab) => tab.search.space)
 
 const space = createSelector<State, void, ?Space, TabState, SpacesState>(
   Tabs.getActiveTab,
@@ -34,6 +33,9 @@ const space = createSelector<State, void, ?Space, TabState, SpacesState>(
 export default {
   clusterId,
   cluster,
-  spaceName,
-  space
+  spaceName: activeTabSelect((tab) => tab.search.space),
+  space,
+  currentEntry: activeTabSelect(History.current),
+  canGoBack: activeTabSelect(History.canGoBack),
+  canGoForward: activeTabSelect(History.canGoForward)
 }

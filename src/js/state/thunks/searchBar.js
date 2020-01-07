@@ -8,18 +8,19 @@ import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
 import History from "../history"
+import Tab from "../tab"
 import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
 
 export const goBack = (): Thunk => (dispatch, getState) => {
   dispatch(History.back())
-  dispatch(restoreSearch(History.current(getState())))
+  dispatch(restoreSearch(Tab.currentEntry(getState())))
   dispatch(submitSearch(false))
 }
 
 export const goForward = (): Thunk => (dispatch, getState) => {
   dispatch(History.forward())
-  dispatch(restoreSearch(History.current(getState())))
+  dispatch(restoreSearch(Tab.currentEntry(getState())))
   dispatch(submitSearch(false))
 }
 
