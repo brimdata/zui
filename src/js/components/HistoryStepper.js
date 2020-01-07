@@ -7,8 +7,8 @@ import type {DispatchProps} from "../state/types"
 import {goBack, goForward} from "../state/thunks/searchBar"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
+import History from "../state/history"
 import dispatchToProps from "../lib/dispatchToProps"
-import * as searchHistory from "../state/reducers/searchHistory"
 
 type StateProps = {
   canGoBack: boolean,
@@ -49,8 +49,8 @@ export default class HistoryStepper extends React.Component<Props> {
 }
 
 const stateToProps = (state) => ({
-  canGoBack: searchHistory.canGoBack(state),
-  canGoForward: searchHistory.canGoForward(state)
+  canGoBack: History.canGoBack(state),
+  canGoForward: History.canGoForward(state)
 })
 
 export const XHistoryStepper = connect<Props, {||}, _, _, _, _>(

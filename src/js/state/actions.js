@@ -1,5 +1,5 @@
 /* @flow */
-import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
+import type {Descriptor, Notification, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
 import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
@@ -130,23 +130,6 @@ export const errorSearchBarParse = (error: string) => ({
 
 export const submittingSearchBar = () => ({
   type: "SEARCH_BAR_SUBMIT"
-})
-
-export const backSearchHistory = () => ({
-  type: "SEARCH_HISTORY_BACK"
-})
-
-export const forwardSearchHistory = () => ({
-  type: "SEARCH_HISTORY_FORWARD"
-})
-
-export const clearSearchHistory = () => ({
-  type: "SEARCH_HISTORY_CLEAR"
-})
-
-export const recordSearch = (record: SearchRecord) => ({
-  type: "SEARCH_HISTORY_PUSH",
-  entry: record
 })
 
 export function setCurrentSpaceName(space: string) {

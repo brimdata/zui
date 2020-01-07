@@ -1,15 +1,15 @@
 /* @flow */
 
-import NavHistory from "./NavHistory"
+import brim from "../brim"
 
 let history
 beforeEach(() => {
-  history = new NavHistory<string>({entries: []})
+  history = brim.entries({entries: [], position: -1})
 })
 
 test("#constructor throws error if position is out of bounds", () => {
   expect(() => {
-    new NavHistory<string>({entries: ["a"], position: 999})
+    brim.entries({entries: ["a"], position: 999})
   }).toThrow("Position out of bounds")
 })
 

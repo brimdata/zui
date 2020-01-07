@@ -3,8 +3,9 @@ import type {Thunk} from "../state/types"
 import {clearViewer} from "../state/viewer/actions"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
-import {recordSearch, submittingSearchBar} from "../state/actions"
+import {submittingSearchBar} from "../state/actions"
 import {validateProgram} from "../state/thunks/searchBar"
+import History from "../state/history"
 import Tab from "../state/tab"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
@@ -19,7 +20,7 @@ export default function submitSearch(save: boolean = true): Thunk {
     if (!dispatch(validateProgram())) return
 
     const state = getState()
-    if (save) dispatch(recordSearch(getSearchRecord(state)))
+    if (save) dispatch(History.push(getSearchRecord(state)))
     let tabId = tabs.getActive(state)
     let tabData = {
       program: getSearchProgram(state),

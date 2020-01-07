@@ -3,15 +3,11 @@
 import type {Cluster} from "./types"
 import type {Thunk} from "../types"
 import {clearErrors} from "../errors"
-import {
-  clearNotifications,
-  clearSearchBar,
-  clearSearchHistory,
-  clearStarredLogs
-} from "../actions"
+import {clearNotifications, clearSearchBar, clearStarredLogs} from "../actions"
 import {clearViewer} from "../viewer/actions"
 import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
+import History from "../history"
 import Spaces from "../spaces"
 import handlers from "../handlers"
 import search from "../search"
@@ -47,7 +43,7 @@ export function switchCluster(cluster: Cluster): Thunk {
 function clearClusterState(dispatch, tabId: string) {
   dispatch(clearSearchBar())
   dispatch(clearStarredLogs())
-  dispatch(clearSearchHistory())
+  dispatch(History.clear())
   dispatch(clearViewer(tabId))
   dispatch(handlers.abortAll())
   dispatch(clearErrors())

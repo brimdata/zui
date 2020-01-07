@@ -7,6 +7,7 @@ import {errorsReducer} from "./errors"
 import boomd from "./reducers/boomd"
 import clustersReducer from "./clusters/reducer"
 import handlers from "./handlers"
+import history from "./history"
 import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
 import modal from "./modal"
@@ -37,5 +38,6 @@ export default combineReducers<*, *>({
   starredLogs,
   packets,
   searchHistory,
+  history: history.reducer,
   version: () => VERSION
 })

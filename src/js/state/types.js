@@ -6,6 +6,7 @@ import type {Boomd} from "./reducers/boomd"
 import type {ClustersState} from "./clusters/types"
 import type {ErrorsState} from "./errors"
 import type {HandlersState} from "./handlers"
+import type {HistoryState} from "./history/types"
 import type {Investigation} from "./reducers/investigation"
 import type {LogDetails} from "./reducers/logDetails"
 import type {ModalState} from "./modal/types"
@@ -37,5 +38,6 @@ export type State = {
   investigation: Investigation,
   modal: ModalState,
   notice: NoticeState,
-  tabs: TabsState
+  tabs: TabsState,
+  history: HistoryState
 }

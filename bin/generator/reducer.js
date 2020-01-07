@@ -51,7 +51,7 @@ const init: ${stateType(name)} = {}
 export default function reducer(
   state: ${stateType(name)} = init,
   action: ${actionType(name)}
-): SpacesState {
+): ${stateType(name)} {
   switch (action.type) {
     default:
       return state

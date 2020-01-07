@@ -1,5 +1,5 @@
 /* @flow */
-import History from "./History"
+import History from "./LogDetailHistory"
 
 test("saves to history entries", () => {
   const history = new History()

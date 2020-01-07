@@ -1,8 +1,9 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {useEffect} from "react"
 import classNames from "classnames"
 
+import {getCurrentFinding} from "../../state/reducers/investigation"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
@@ -12,7 +13,14 @@ export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
 export default function SpanControls() {
   let [from, to] = useSelector(tab.getSpanArgs)
-  let prev = useSelector(tab.getPrevSpanArgs)
+  let lastSearchTs = useSelector(getCurrentFinding).ts
+
+  useEffect(() => {
+    console.log("submit")
+  }, [lastSearchTs])
+
+  console.log(lastSearchTs)
+  let prev = null
   let dispatch = useDispatch()
 
   function fromChange(arg) {

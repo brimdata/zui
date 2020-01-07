@@ -21,18 +21,21 @@ export default class NavHistory<T> {
       this.entries.splice(this.position + 1, this.entries.length, entry)
       this.position = this.entries.length - 1
     }
+    return this
   }
 
   goBack() {
     if (this.canGoBack()) {
       this.position -= 1
     }
+    return this
   }
 
   goForward() {
     if (this.canGoForward()) {
       this.position += 1
     }
+    return this
   }
 
   getEntries() {

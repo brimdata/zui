@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {State} from "../types"
-import History from "../../models/History"
+import LogDetailHistory from "../../models/LogDetailHistory"
 import createReducer from "./createReducer"
 
 export const initialState = {
@@ -55,9 +55,9 @@ export const getPrevPosition = (state: State) => {
 }
 
 export const toHistory = ({logs, position}: LogDetails) => {
-  return new History(logs, position)
+  return new LogDetailHistory(logs, position)
 }
 
-export const toState = ({entries, position}: History) => {
+export const toState = ({entries, position}: LogDetailHistory) => {
   return {logs: entries, position}
 }

@@ -2,28 +2,24 @@
 
 import {PARALLEL_PROC} from "../../brim/ast"
 import type {Thunk} from "../types"
-import {
-  backSearchHistory,
-  errorSearchBarParse,
-  forwardSearchHistory
-} from "../actions"
 import {createError} from "../errors"
-import {getCurrentEntry} from "../reducers/searchHistory"
+import {errorSearchBarParse} from "../actions"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
+import History from "../history"
 import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
 
 export const goBack = (): Thunk => (dispatch, getState) => {
-  dispatch(backSearchHistory())
-  dispatch(restoreSearch(getCurrentEntry(getState())))
+  dispatch(History.back())
+  dispatch(restoreSearch(History.current(getState())))
   dispatch(submitSearch(false))
 }
 
 export const goForward = (): Thunk => (dispatch, getState) => {
-  dispatch(forwardSearchHistory())
-  dispatch(restoreSearch(getCurrentEntry(getState())))
+  dispatch(History.forward())
+  dispatch(restoreSearch(History.current(getState())))
   dispatch(submitSearch(false))
 }
 

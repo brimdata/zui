@@ -1,12 +1,7 @@
 /* @flow */
 
-import {
-  backSearchHistory,
-  changeSearchBarInput,
-  clearSearchHistory,
-  forwardSearchHistory
-} from "../actions"
-import {getCurrentEntry, getSearchHistory} from "./searchHistory"
+import {changeSearchBarInput} from "../actions"
+import History from "../history"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
 
@@ -25,50 +20,50 @@ beforeEach(() => {
 
 test("pushing history", () => {
   const state = store.getState()
-  const entry = getCurrentEntry(state)
+  const entry = History.current(state)
   expect(entry.program).toEqual("third")
 })
 
 test("moving back changes the position", () => {
-  let state = store.dispatchAll([backSearchHistory()])
-  const entry = getCurrentEntry(state)
+  let state = store.dispatchAll([History.back()])
+  const entry = History.current(state)
   expect(entry.program).toEqual("second")
 })
 
 test("going forward in history", () => {
   let state = store.dispatchAll([
-    backSearchHistory(),
-    backSearchHistory(),
-    forwardSearchHistory()
+    History.back(),
+    History.back(),
+    History.forward()
   ])
-  const entry = getCurrentEntry(state)
+  const entry = History.current(state)
   expect(entry.program).toEqual("second")
 })
 
 test("going back in history then pushing new history", () => {
   let state = store.dispatchAll([
-    backSearchHistory(),
-    backSearchHistory(),
+    History.back(),
+    History.back(),
     changeSearchBarInput("fourth"),
     submitSearch()
   ])
-  const entry = getCurrentEntry(state)
+  const entry = History.current(state)
   expect(entry.program).toEqual("fourth")
 })
 
 test("back, back, push, back", () => {
   let state = store.dispatchAll([
-    backSearchHistory(),
-    backSearchHistory(),
+    History.back(),
+    History.back(),
     changeSearchBarInput("fourth"),
     submitSearch(),
-    backSearchHistory()
+    History.back()
   ])
-  const entry = getCurrentEntry(state)
+  const entry = History.current(state)
   expect(entry.program).toEqual("first")
 })
 
 test("clearing history", () => {
-  let state = store.dispatchAll([clearSearchHistory()])
-  expect(getSearchHistory(state)).toEqual({position: -1, entries: []})
+  let state = store.dispatchAll([History.clear()])
+  expect(History.current(state)).toBe(undefined)
 })
