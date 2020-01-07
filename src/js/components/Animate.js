@@ -36,12 +36,14 @@ export default function Animate({show, enter, exit, children}: Props) {
         else playExit()
         break
     }
+  }, [state, show])
 
+  useLayoutEffect(() => {
     return () => {
       cancel(enterAni.current)
       cancel(exitAni.current)
     }
-  }, [state, show])
+  }, [])
 
   function playEnter() {
     if (el.current) {
