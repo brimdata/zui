@@ -2,7 +2,6 @@
 import {createSelector} from "reselect"
 
 import type {DateTuple} from "../../lib/TimeWindow"
-import {type Finding, getCurrentFinding} from "../reducers/investigation"
 import type {SpanArgs} from "../search/types"
 import type {State, Thunk} from "../types"
 import type {TabState} from "./types"
@@ -50,17 +49,6 @@ const getSpanFocusAsDates = createSelector<State, void, ?DateTuple, ?Span>(
   }
 )
 
-const getPrevSpanArgs = createSelector<State, void, ?SpanArgs, ?Finding>(
-  getCurrentFinding,
-  (finding) => {
-    if (finding) {
-      return finding.search.spanArgs
-    } else {
-      return null
-    }
-  }
-)
-
 function computeSpan(now: Date = new Date()): Thunk {
   return function(dispatch, getState) {
     let args = getSpanArgs(getState())
@@ -95,7 +83,6 @@ export default {
   getSpanFocus,
   getSpanFocusAsDates,
   getSpanArgs,
-  getPrevSpanArgs,
   getComputedSpan,
   ...selectors
 }

@@ -13,10 +13,10 @@ export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 export default function SpanControls() {
   let [from, to] = useSelector(tab.getSpanArgs)
   let entry = useSelector(tab.currentEntry)
-  let [prev, setPrev] = useState(null)
+  let [prev, setPrev] = useState()
 
   useEffect(() => {
-    setPrev(entry.spanArgs)
+    setPrev(entry && entry.spanArgs)
   }, [entry])
 
   let dispatch = useDispatch()

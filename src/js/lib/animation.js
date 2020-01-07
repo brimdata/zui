@@ -8,7 +8,8 @@ export default function animation(
   opts: Object | Function
 ) {
   function initialize(): anime {
-    if (!opts) return anime({duration: 0})
+    if (!opts) return anime({targets: el, duration: 0})
+
     switch (whatIs(opts)) {
       case "Object":
         return anime({targets: el, ...opts})

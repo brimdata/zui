@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from "react"
 import classNames from "classnames"
 import onIdle from "on-idle"
 
+import {tabIsFetching} from "../state/tab/selectors"
 import {useResizeObserver} from "./hooks/useResizeObserver"
 import Animate from "./Animate"
 import SearchTab from "./SearchTab"
@@ -119,17 +120,13 @@ export default function TabBar() {
       .join(": ")
   }
 
-  function getIsFetching(tab) {
-    return tab.viewer.status === "FETCHING" || tab.chart.status === "FETCHING"
-  }
-
   return (
     <div className="tab-bar">
       <div className="tabs-container" ref={ref} onMouseLeave={mouseLeave}>
         {allTabs.map((tab, i) => (
           <Animate enter={{opacity: [0, 1]}} key={tab.id} show={true}>
             <SearchTab
-              loading={getIsFetching(tab)}
+              loading={tabIsFetching(tab)}
               title={getTitle(tab)}
               style={getStyle(i)}
               removeTab={(e) => removeTab(tab.id, e)}

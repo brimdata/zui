@@ -6,7 +6,7 @@ import React, {useRef} from "react"
 
 import {changeSearchBarInput} from "../state/actions"
 import {getSearchBarInputValue} from "../state/selectors/searchBar"
-import {getViewerStatus} from "../state/viewer/selector"
+import {getSearchRecord} from "../state/selectors/searchRecord"
 import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
 import InputHistory from "../models/InputHistory"
@@ -70,7 +70,7 @@ export default function SearchInput() {
 
 function Menu() {
   let dispatch = useDispatch()
-  let isFetching = useSelector(getViewerStatus) === "FETCHING"
+  let isFetching = useSelector(tab.isFetching)
 
   let menu = [
     {label: "Debug query", click: () => dispatch(modal.show("debug"))},
@@ -91,8 +91,8 @@ function Menu() {
 }
 
 function ActionButton() {
-  let next = useSelector(tab.getSpanArgs)
-  let prev = useSelector(tab.getPrevSpanArgs)
+  let next = useSelector(getSearchRecord)
+  let prev = useSelector(tab.currentEntry)
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
   let onClick = () => dispatch(submitSearch())
