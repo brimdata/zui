@@ -18,10 +18,11 @@ type Props = {
 export default function TimeInput({timeArg, onSubmit}: Props) {
   let el = useRef()
   let zone = useSelector(getTimeZone)
+  let initValue = isString(timeArg)
+    ? timeArg
+    : brim.time(timeArg).format(SPAN_TIME_FMT)
 
-  let [value, setValue] = useState(
-    isString(timeArg) ? timeArg : brim.time(timeArg).format(SPAN_TIME_FMT)
-  )
+  let [value, setValue] = useState(initValue)
   let [result, setResult] = useState(null)
   let [error, setError] = useState(null)
 
@@ -31,6 +32,7 @@ export default function TimeInput({timeArg, onSubmit}: Props) {
 
   function onChange(e) {
     setValue(e.target.value)
+
     let d = lib.date.parseInZone(e.target.value, zone)
     if (d === null) {
       setError("Unknown date format")
@@ -45,9 +47,11 @@ export default function TimeInput({timeArg, onSubmit}: Props) {
   }
 
   function submit() {
-    console.log(timeArg)
-    console.log(lib.date.parseInZone(value, zone))
-    onSubmit(lib.date.parseInZone(value, zone) || timeArg)
+    if (value !== initValue) {
+      onSubmit(lib.date.parseInZone(value, zone) || timeArg)
+    } else {
+      onSubmit(timeArg)
+    }
   }
 
   return (
