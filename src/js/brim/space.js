@@ -14,7 +14,10 @@ export default function space(info: Space) {
       let maxTime = brim.time(info.max_time)
       let oldData = new Date() - maxTime.toDate() > 1000 * 60 * 30
       if (oldData) {
-        return [maxTime.subtract(30, "minutes").toTs(), info.max_time]
+        return [
+          maxTime.subtract(30, "minutes").toTs(),
+          maxTime.add(1, "ms").toTs()
+        ]
       } else {
         return ["now-30m", "now"]
       }
