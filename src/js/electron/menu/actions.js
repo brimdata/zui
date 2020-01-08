@@ -22,8 +22,8 @@ import Log from "../../models/Log"
 import action from "./action"
 import brim from "../../brim"
 import modal from "../../state/modal"
-import search from "../../state/search"
 import submitSearch from "../../flows/submitSearch"
+import tab from "../../state/tab"
 import virusTotal from "../../services/virusTotal"
 
 function buildActions() {
@@ -69,7 +69,7 @@ function buildActions() {
       listener(dispatch, field) {
         field = FieldFactory.create(field)
         if (field instanceof TimeField) {
-          dispatch(search.setFrom(brim.time(field.toDate()).toTs()))
+          dispatch(tab.setFrom(brim.time(field.toDate()).toTs()))
           dispatch(submitSearch())
         }
       }
@@ -153,7 +153,7 @@ function buildActions() {
         field = FieldFactory.create(field)
         if (field instanceof TimeField) {
           dispatch(
-            search.setTo(
+            tab.setTo(
               brim
                 .time(field.toDate())
                 .add(1, "ms")

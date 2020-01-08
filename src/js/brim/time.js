@@ -24,21 +24,21 @@ function time(val: Ts | Date = new Date()) {
     },
 
     add(amount: number, unit: TimeUnit) {
-      ts = dateToTs(
+      let ts = dateToTs(
         moment(this.toDate())
           .add(amount, unit)
           .toDate()
       )
-      return this
+      return brim.time(ts)
     },
 
     subtract(amount: number, unit: TimeUnit) {
-      ts = dateToTs(
+      let ts = dateToTs(
         moment(this.toDate())
           .subtract(amount, unit)
           .toDate()
       )
-      return this
+      return brim.time(ts)
     },
 
     format(fmt: string) {

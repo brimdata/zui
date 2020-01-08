@@ -8,9 +8,9 @@ import {
   requestPackets,
   showDownloads
 } from "../actions"
-import {getCurrentSpaceName} from "../reducers/spaces"
 import BoomClient from "../../services/BoomClient"
 import Log from "../../models/Log"
+import Tab from "../tab"
 
 export const fetchPackets = (log: Log) => (
   dispatch: Function,
@@ -20,7 +20,7 @@ export const fetchPackets = (log: Log) => (
   dispatch(requestPackets(log.get("uid")))
   dispatch(showDownloads())
   const state = getState()
-  const space = getCurrentSpaceName(state)
+  const space = Tab.spaceName(state)
   const destDir = downloadsDir()
   return boom.packets
     .get({

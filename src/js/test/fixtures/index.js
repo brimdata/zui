@@ -1,6 +1,12 @@
 /* @flow */
 let fixtures = {
-  cluster1: {host: "test", port: "9867", username: "", password: ""},
+  cluster1: {
+    id: "cluster1",
+    host: "test",
+    port: "9867",
+    username: "",
+    password: ""
+  },
   space1: {
     name: "default",
     compression: "none",

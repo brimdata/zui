@@ -5,12 +5,11 @@ import {isEmpty} from "lodash"
 import React from "react"
 
 import type {DispatchProps, State} from "../../state/types"
-import type {Space} from "../../lib/Space"
+import type {Space} from "../../state/spaces/types"
 import type {ViewerDimens} from "../../types"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
-import {getCurrentSpace} from "../../state/reducers/spaces"
 import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
 import {getTimeZone} from "../../state/reducers/view"
@@ -24,6 +23,7 @@ import Chunker from "../Viewer/Chunker"
 import Log from "../../models/Log"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
+import Tab from "../../state/tab"
 import TableColumns from "../../models/TableColumns"
 import Viewer from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
@@ -65,7 +65,7 @@ export default function SearchResults(props: Props) {
     height: props.height,
     rowHeight: 25,
     chunkSize: 5,
-    overScan: 3
+    overScan: 1
   })
 
   function renderRow(index: number, dimens: ViewerDimens) {
@@ -132,7 +132,7 @@ function stateToProps(state: State) {
     selectedLog: buildLogDetail(state),
     logs: getViewerLogs(state),
     program: getSearchProgram(state),
-    space: getCurrentSpace(state)
+    space: Tab.space(state)
   }
 }
 

@@ -4,23 +4,22 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
 import {XUidTimeline} from "../UidTimeline"
-import {getCurrentSpaceName} from "../../state/reducers/spaces"
 import {reactElementProps} from "../../test/integration"
 import {toFront} from "../../lib/Array"
 import {uidCorrelation} from "../../searches/programs"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
+import Tab from "../../state/tab"
 import brim from "../../brim"
 import executeSearch from "../../flows/executeSearch"
-import search from "../../state/search"
 
 export default function UidPanel({log}: {log: Log}) {
   let dispatch = useDispatch()
   let [logs, setLogs] = useState([])
   let [status, setStatus] = useState("INIT")
-  let span = useSelector(search.getSpanAsDates)
-  let space = useSelector(getCurrentSpaceName)
+  let span = useSelector(Tab.getSpanAsDates)
+  let space = useSelector(Tab.spaceName)
   let program = uidCorrelation(log.correlationId())
 
   useEffect(() => {

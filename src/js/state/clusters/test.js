@@ -1,7 +1,6 @@
 /* @flow */
 
-import {addCluster, removeCluster, setCluster} from "./actions"
-import {getCurrentCluster, getSavedClusters} from "./selectors"
+import clusters from "./"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -10,6 +9,7 @@ beforeEach(() => {
 })
 
 let cluster = {
+  id: "123",
   host: "boom.com",
   port: "9867",
   username: "kerr",
@@ -17,25 +17,19 @@ let cluster = {
 }
 
 test("addCluster", () => {
-  let state = store.dispatchAll([addCluster(cluster)])
+  let state = store.dispatchAll([clusters.add(cluster)])
 
-  expect(getSavedClusters(state)).toEqual([cluster])
+  expect(clusters.id("123")(state)).toEqual(cluster)
 })
 
 test("addCluster when it already exists", () => {
-  let state = store.dispatchAll([addCluster(cluster), addCluster(cluster)])
+  let state = store.dispatchAll([clusters.add(cluster), clusters.add(cluster)])
 
-  expect(getSavedClusters(state)).toEqual([cluster])
+  expect(clusters.all(state)).toEqual([cluster])
 })
 
 test("removeCluster", () => {
-  let state = store.dispatchAll([addCluster(cluster), removeCluster(cluster)])
+  let state = store.dispatchAll([clusters.add(cluster), clusters.remove("123")])
 
-  expect(getSavedClusters(state)).toEqual([])
-})
-
-test("setCluster", () => {
-  let state = store.dispatchAll([setCluster(cluster)])
-
-  expect(getCurrentCluster(state)).toEqual(cluster)
+  expect(clusters.all(state)).toEqual([])
 })

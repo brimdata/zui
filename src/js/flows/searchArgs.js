@@ -2,35 +2,46 @@
 
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {DateTuple} from "../lib/TimeWindow"
-import type {TabState} from "../state/search/types"
 import {addHeadProc, hasAnalytics} from "../lib/Program"
 
 export type SearchArgs = {
   program: string,
   span: DateTuple,
-  space: string
+  space: string,
+  tabId: string
+}
+
+type Args = {
+  program: string,
+  span: DateTuple,
+  spanFocus: ?DateTuple,
+  space: string,
+  tabId: string
 }
 
 export default {
-  analytics: (tab: TabState) => ({
-    program: addHeadProc(tab.program, ANALYTIC_MAX_RESULTS),
-    span: tab.span,
-    space: tab.space
+  analytics: (args: Args) => ({
+    program: addHeadProc(args.program, ANALYTIC_MAX_RESULTS),
+    span: args.span,
+    space: args.space,
+    tabId: args.tabId
   }),
 
-  zoom: (tab: TabState) => ({
-    program: addHeadProc(tab.program, PER_PAGE),
-    span: tab.spanFocus || [new Date(), new Date()], // Appease flow
-    space: tab.space
+  zoom: (args: Args) => ({
+    program: addHeadProc(args.program, PER_PAGE),
+    span: args.spanFocus || [new Date(), new Date()], // Appease flow
+    space: args.space,
+    tabId: args.tabId
   }),
 
-  events: (tab: TabState) => ({
-    program: addHeadProc(tab.program, PER_PAGE),
-    span: tab.span,
-    space: tab.space
+  events: (args: Args) => ({
+    program: addHeadProc(args.program, PER_PAGE),
+    span: args.span,
+    space: args.space,
+    tabId: args.tabId
   }),
 
-  type({program, spanFocus}: TabState) {
+  type({program, spanFocus}: Args) {
     if (hasAnalytics(program)) return "analytic"
     else if (spanFocus) return "zoom"
     else return "log"

@@ -31,6 +31,7 @@ import Field from "../../models/Field"
 import initTestStore from "../../test/initTestStore"
 import search from "../search"
 import submitSearch from "../../flows/submitSearch"
+import tab from "../tab"
 
 let store
 beforeEach(() => {
@@ -312,7 +313,7 @@ test("goBack", () => {
     goBack()
   ])
 
-  expect(search.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
+  expect(tab.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
   expect(getSearchBarInputValue(state)).toBe("hello")
 })
 
@@ -336,7 +337,7 @@ test("goForward", () => {
   ])
 
   expect(getSearchBarInputValue(state)).toBe("goodbye")
-  expect(search.getSpanAsDates(state)).toEqual([new Date(3), new Date(4)])
+  expect(tab.getSpanAsDates(state)).toEqual([new Date(3), new Date(4)])
 })
 
 test("clearSearchBar", () => {

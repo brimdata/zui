@@ -1,7 +1,8 @@
 /* @flow */
 
-import {createFinding, deleteFindingByTs, recordSearch} from "../actions"
+import {createFinding, deleteFindingByTs} from "../actions"
 import {getCurrentFinding, getInvestigation} from "./investigation"
+import History from "../history"
 import brim from "../../brim"
 import initTestStore from "../../test/initTestStore"
 
@@ -44,23 +45,23 @@ test("new finding", () => {
 
 test("when a new search is recorded", () => {
   expect(get()).toHaveLength(0)
-  store.dispatch(recordSearch(search1))
+  store.dispatch(History.push(search1))
   expect(get()).toHaveLength(1)
 })
 
 test("when a search is many times twice", () => {
   expect(get()).toHaveLength(0)
   store.dispatchAll([
-    recordSearch(search1),
-    recordSearch(search1),
-    recordSearch(search1)
+    History.push(search1),
+    History.push(search1),
+    History.push(search1)
   ])
   expect(get()).toHaveLength(1)
 })
 
 test("when a search is different", () => {
   expect(get()).toHaveLength(0)
-  let state = store.dispatchAll([recordSearch(search1), recordSearch(search2)])
+  let state = store.dispatchAll([History.push(search1), History.push(search2)])
   expect(get()).toHaveLength(2)
 
   expect(getCurrentFinding(state)).toEqual({
@@ -73,7 +74,7 @@ test("when a search is different", () => {
 })
 
 test("delete a single finding by ts", () => {
-  let state = store.dispatchAll([recordSearch(search1), recordSearch(search2)])
+  let state = store.dispatchAll([History.push(search1), History.push(search2)])
   let {ts} = getCurrentFinding(state)
 
   state = store.dispatchAll([deleteFindingByTs(ts)])
@@ -88,7 +89,7 @@ test("delete a single finding by ts", () => {
 })
 
 test("removing several records with multiple ts", () => {
-  store.dispatchAll([recordSearch(search1), recordSearch(search2)])
+  store.dispatchAll([History.push(search1), History.push(search2)])
   let multiTs = get().map((finding) => finding.ts)
   store.dispatchAll([deleteFindingByTs(multiTs)])
 

@@ -2,7 +2,7 @@
 import {isEqual} from "lodash"
 
 import type {$Field} from "../../brim"
-import type {Space} from "../../lib/Space"
+import type {Space} from "../../state/spaces/types"
 import {hasGroupByProc} from "../../lib/Program"
 import Log from "../../models/Log"
 import menu from "./"
@@ -22,7 +22,7 @@ export default function fieldContextMenu(
       log.descriptor.map((d) => d.name).sort(),
       columns.sort()
     )
-    const hasPackets = space.packet_support
+    const hasPackets = space && space.packet_support
     const virusTotal = [
       "hassh",
       "host",

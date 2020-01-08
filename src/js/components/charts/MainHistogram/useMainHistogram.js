@@ -19,6 +19,7 @@ import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
 import search from "../../../state/search"
 import submitSearch from "../../../flows/submitSearch"
+import tab from "../../../state/tab"
 import time from "../../../brim/time"
 import useConst from "../../hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
@@ -29,8 +30,9 @@ import yAxisSingleTick from "../pens/yAxisSingleTick"
 export default function(width: number, height: number): HistogramChart {
   let records = useSelector(chart.getRecords)
   let status = useSelector(chart.getStatus)
-  let span = useSelector(search.getSpanAsDates)
-  let innerSpan = useSelector(search.getSpanFocusAsDates)
+  let span = useSelector(tab.getSpanAsDates)
+  let innerSpan = useSelector(tab.getSpanFocusAsDates)
+
   let dispatch = useDispatch()
   let pens = useConst<Pen[]>([], () => {
     function onDragEnd(span: DateTuple) {

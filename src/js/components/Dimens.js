@@ -2,10 +2,10 @@
 
 import React, {type Node} from "react"
 
-import {useResizeObserver} from "./hooks/useResizeObserver"
+import {type Rect, useResizeObserver} from "./hooks/useResizeObserver"
 
 type Props = {
-  render: (DOMRectReadOnly) => Node
+  render: (Rect) => Node
 }
 
 export default function Dimens({render, ...props}: Props) {

@@ -1,11 +1,13 @@
 /* @flow */
 
+import Tabs from "../tabs"
 import chart from "./"
 import initTestStore from "../../test/initTestStore"
 
-let store
+let store, tabId
 beforeEach(() => {
   store = initTestStore()
+  tabId = Tabs.getActive(store.getState())
 })
 
 let records = [
@@ -15,24 +17,24 @@ let records = [
 
 test("chart records append", () => {
   let state = store.dispatchAll([
-    chart.appendRecords([records[0]]),
-    chart.appendRecords([records[1]])
+    chart.appendRecords(tabId, [records[0]]),
+    chart.appendRecords(tabId, [records[1]])
   ])
 
   expect(chart.getRecords(state)).toEqual(records)
 })
 
 test("chart records status", () => {
-  let state = store.dispatchAll([chart.setStatus("SUCCESS")])
+  let state = store.dispatchAll([chart.setStatus(tabId, "SUCCESS")])
 
   expect(chart.getStatus(state)).toBe("SUCCESS")
 })
 
 test("chart records clear", () => {
   let state = store.dispatchAll([
-    chart.appendRecords(records),
-    chart.setStatus("SUCCESS"),
-    chart.clear()
+    chart.appendRecords(tabId, records),
+    chart.setStatus(tabId, "SUCCESS"),
+    chart.clear(tabId)
   ])
 
   expect(chart.getStatus(state)).toBe("INIT")

@@ -1,5 +1,5 @@
 /* @flow */
-import {flattenJoin, indexOfLastChange, toFront} from "./Array"
+import {flattenJoin, indexOfLastChange, swap, toFront} from "./Array"
 
 test("#indexOfLastChange", () => {
   const logsTs = [
@@ -103,4 +103,10 @@ describe("#toFront", () => {
 
     expect(newArray).toEqual([5, 1, 2, 3, 4])
   })
+})
+
+test("swap", () => {
+  let a = [0, 1, 2, 3, 4, 5]
+
+  expect(swap(a, 4, 2)).toEqual([0, 1, 4, 3, 2, 5])
 })

@@ -3,6 +3,7 @@
 const fs = require("fs-extra")
 
 export function write(path: string, contents: string) {
+  fs.ensureFileSync(path)
   fs.writeFileSync(path, contents)
   console.log(`Created: ${path}`)
 }

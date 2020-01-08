@@ -1,26 +1,32 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
-import search from "../../state/search"
+import tab from "../../state/tab"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
 export default function SpanControls() {
-  let [from, to] = useSelector(search.getSpanArgs)
-  let prev = useSelector(search.getPrevSpanArgs)
+  let [from, to] = useSelector(tab.getSpanArgs)
+  let entry = useSelector(tab.currentEntry)
+  let [prev, setPrev] = useState()
+
+  useEffect(() => {
+    setPrev(entry && entry.spanArgs)
+  }, [entry])
+
   let dispatch = useDispatch()
 
   function fromChange(arg) {
-    dispatch(search.setFrom(arg))
+    dispatch(tab.setFrom(arg))
   }
 
   function toChange(arg) {
-    dispatch(search.setTo(arg))
+    dispatch(tab.setTo(arg))
   }
 
   return (

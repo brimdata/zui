@@ -1,0 +1,210 @@
+$tab-inactive-color: $white-7;
+$tab-hover-color: $white-3;
+$tab-active-color: $gray-9;
+$tab-hover-bg: rgba(255, 255, 255, 0.1);
+$tab-active-bg: $white-3;
+$tab-transition-duration: 200ms;
+$tab-border-radius-top: 8px;
+$tab-border-radius-bottom: 6px;
+
+@mixin tab-border {
+  content: " ";
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.4);
+  width: 1px;
+  top: 6px;
+  bottom: 6px;
+  opacity: 1;
+}
+
+.tab-bar .tab {
+  position: absolute;
+  left: 0;
+  user-select: none;
+  -webkit-app-region: no-drag;
+  height: 34px;
+  padding: 0;
+  padding-bottom: 3px;
+
+  background: transparent;
+  cursor: default;
+  border-radius: $tab-border-radius-top $tab-border-radius-top 0 0;
+  transition: transform 200ms;
+
+  .tab-content {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    position: relative;
+  }
+
+  .loading {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+  }
+
+  // the little line when the tab is not active
+  &:before {
+    @include tab-border;
+    left: 0;
+  }
+
+  &:last-of-type:after {
+    @include tab-border;
+    left: 100%;
+  }
+
+  &:first-child:before {
+    display: none;
+  }
+
+  // The little swooshes on active and hovered tabs
+  .ramp {
+    position: absolute;
+    bottom: 0;
+    fill: transparent;
+    width: $tab-border-radius-bottom;
+    height: $tab-border-radius-bottom;
+  }
+  .ramp-right {
+    left: 100%;
+  }
+  .ramp-left {
+    right: 100%;
+  }
+
+  // Title
+  .title {
+    font-family: system-ui;
+    font-size: 12px;
+    margin: 0;
+    font-weight: 500;
+    color: $tab-inactive-color;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 10px;
+    flex: 1;
+  }
+
+  // Close x icon
+  .close-button {
+    width: 17px;
+    height: 17px;
+    min-width: 17px;
+    margin-right: 10px;
+    svg {
+      width: 9px;
+      height: 9px;
+      fill: $tab-inactive-color;
+      transition: fill $tab-transition-duration;
+    }
+    &:after {
+      content: "";
+      width: 17px;
+      height: 17px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: scale(0);
+    }
+    &:hover {
+      svg {
+        fill: $white-1;
+        transition: fill 100ms;
+      }
+      &:after {
+        transition: transform 100ms;
+        transform: scale(1);
+      }
+    }
+    &:active:after {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  // The hover state
+  &:hover {
+    background-color: $tab-hover-bg;
+    transition: background-color $tab-transition-duration;
+    &:before,
+    & + .tab:before,
+    &:last-of-type:after {
+      transition: opacity $tab-transition-duration;
+      opacity: 0;
+    }
+    .ramp {
+      transition: fill $tab-transition-duration;
+      fill: $tab-hover-bg;
+    }
+    .title {
+      transition: color $tab-transition-duration;
+      color: $tab-hover-color;
+    }
+    .close-button svg {
+      transition: fill $tab-transition-duration;
+      fill: $tab-hover-color;
+    }
+  }
+
+  // The active state
+  &.active {
+    background: $tab-active-bg;
+    z-index: 1;
+    transition: transform 200ms;
+    .ramp {
+      transition: none;
+      fill: $tab-active-bg;
+    }
+
+    &:before,
+    & + .tab:before,
+    &:last-of-type:after {
+      transition: none;
+      opacity: 0;
+    }
+
+    .title {
+      transition: none;
+      color: $tab-active-color;
+    }
+    .close-button {
+      svg {
+        transition: none;
+        fill: $tab-active-color;
+      }
+      &:after {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      &:active:after {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  &.dragging {
+    box-shadow: $high-box-shadow;
+    transition: none;
+  }
+}
+
+.box-group {
+  position: fixed;
+  top: 25%;
+  display: flex;
+  z-index: 9;
+
+  .box {
+    margin: 20px;
+    text-align: center;
+    width: 100px;
+    border-radius: 3px;
+    background: lightgreen;
+    height: 300px;
+  }
+}

@@ -7,7 +7,14 @@ module.exports = {
     electron: ["ipcMain", "ipcRenderer", "remote", "BrowserWindow"],
     reselect: ["createSelector"],
     enzyme: ["mount", "shallow"],
-    react: ["useState", "useRef", "useEffect", "useLayoutEffect", "useMemo"],
+    react: [
+      "useState",
+      "useRef",
+      "useEffect",
+      "useLayoutEffect",
+      "useMemo",
+      "useCallback"
+    ],
     "react-dom": ["render"],
     lodash: [
       "throttle",

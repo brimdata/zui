@@ -22,34 +22,41 @@ export type ViewerState = {|
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",
-  records: RecordData[]
+  records: RecordData[],
+  tabId: string
 }
 
 export type VIEWER_CLEAR = {
-  type: "VIEWER_CLEAR"
+  type: "VIEWER_CLEAR",
+  tabId: string
 }
 
 export type VIEWER_SPLICE = {
   type: "VIEWER_SPLICE",
-  index: number
+  index: number,
+  tabId: string
 }
 
 export type VIEWER_END_STATUS = {
   type: "VIEWER_END_STATUS",
-  status: ViewerStatus
+  status: ViewerStatus,
+  tabId: string
 }
 
 export type VIEWER_STATUS = {
   type: "VIEWER_STATUS",
-  status: SearchStatus
+  status: SearchStatus,
+  tabId: string
 }
 
 export type VIEWER_COLUMNS = {
   type: "VIEWER_COLUMNS",
-  columns: ViewerColumns
+  columns: ViewerColumns,
+  tabId: string
 }
 
 export type VIEWER_STATS = {
   type: "VIEWER_STATS",
-  stats: ViewerStats
+  stats: ViewerStats,
+  tabId: string
 }

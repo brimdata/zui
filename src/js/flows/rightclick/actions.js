@@ -19,8 +19,8 @@ import Field, {TimeField} from "../../models/Field"
 import Log from "../../models/Log"
 import brim from "../../brim"
 import modal from "../../state/modal"
-import search from "../../state/search"
 import submitSearch from "../submitSearch"
+import tab from "../../state/tab"
 import virusTotal from "../../services/virusTotal"
 
 export type RightClickAction = {
@@ -119,7 +119,7 @@ const fromTime = (field: Field, opts: Options) => ({
   label: 'Use as "start" time',
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
-      dispatch(search.setFrom(brim.time(field.toDate()).toTs()))
+      dispatch(tab.setFrom(brim.time(field.toDate()).toTs()))
       dispatch(submitSearch())
     }
   },
@@ -131,7 +131,7 @@ const toTime = (field: Field, opts: Options) => ({
   click: (dispatch: Dispatch) => {
     if (field instanceof TimeField) {
       dispatch(
-        search.setTo(
+        tab.setTo(
           brim
             .time(field.toDate())
             .add(1, "ms")

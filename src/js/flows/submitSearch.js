@@ -1,36 +1,46 @@
 /* @flow */
 import type {Thunk} from "../state/types"
 import {clearViewer} from "../state/viewer/actions"
+import {getSearchProgram} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
-import {recordSearch, submittingSearchBar} from "../state/actions"
+import {submittingSearchBar} from "../state/actions"
 import {validateProgram} from "../state/thunks/searchBar"
+import History from "../state/history"
+import Tab from "../state/tab"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
-import search from "../state/search"
 import searchArgs from "./searchArgs"
+import tabs from "../state/tabs"
 
 export default function submitSearch(save: boolean = true): Thunk {
   return function(dispatch, getState) {
     dispatch(submittingSearchBar())
-    dispatch(search.computeSpan())
+    dispatch(Tab.computeSpan())
 
     if (!dispatch(validateProgram())) return
 
     const state = getState()
-    if (save) dispatch(recordSearch(getSearchRecord(state)))
-    let tab = search.getTab(state)
-    dispatch(clearViewer())
+    if (save) dispatch(History.push(getSearchRecord(state)))
+    let tabId = tabs.getActive(state)
+    let tabData = {
+      program: getSearchProgram(state),
+      span: Tab.getSpanAsDates(state),
+      spanFocus: Tab.getSpanFocusAsDates(state),
+      space: Tab.spaceName(state),
+      tabId
+    }
+    dispatch(clearViewer(tabId))
 
-    switch (searchArgs.type(tab)) {
+    switch (searchArgs.type(tabData)) {
       case "analytic":
-        dispatch(executeTableSearch(searchArgs.analytics(tab)))
+        dispatch(executeTableSearch(searchArgs.analytics(tabData)))
         break
       case "zoom":
-        dispatch(executeTableSearch(searchArgs.zoom(tab)))
+        dispatch(executeTableSearch(searchArgs.zoom(tabData)))
         break
       default:
-        dispatch(executeTableSearch(searchArgs.events(tab)))
-        dispatch(executeHistogramSearch(tab))
+        dispatch(executeTableSearch(searchArgs.events(tabData)))
+        dispatch(executeHistogramSearch(tabData))
     }
   }
 }

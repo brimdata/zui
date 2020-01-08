@@ -30,6 +30,7 @@ export default class Base {
       ...this.options,
       ...options
     }
+    return this
   }
 
   clientVersion() {

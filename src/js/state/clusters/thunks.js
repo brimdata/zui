@@ -3,52 +3,50 @@
 import type {Cluster} from "./types"
 import type {Thunk} from "../types"
 import {clearErrors} from "../errors"
-import {
-  clearNotifications,
-  clearSearchBar,
-  clearSearchHistory,
-  clearSpaces,
-  clearStarredLogs,
-  setSpaceNames
-} from "../actions"
+import {clearNotifications, clearSearchBar, clearStarredLogs} from "../actions"
 import {clearViewer} from "../viewer/actions"
-import {setCluster} from "./actions"
+import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
+import History from "../history"
+import Spaces from "../spaces"
 import handlers from "../handlers"
 import search from "../search"
+import tabs from "../tabs"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
     return d(testConnection(cluster)).then((spaces) => {
-      d(setSpaceNames(spaces))
-      d(setCluster(cluster))
+      d(Spaces.setNames(cluster.id, spaces))
+      d(search.setCluster(cluster.id))
+      d(initSpace("default"))
     })
   }
 }
 
 export function disconnectCluster(): Thunk {
-  return function(dispatch) {
-    clearClusterState(dispatch)
-    dispatch(setCluster(null))
+  return function(dispatch, getState) {
+    let tabId = tabs.getActive(getState())
+    clearClusterState(dispatch, tabId)
+    dispatch(search.setCluster(""))
   }
 }
 
 export function switchCluster(cluster: Cluster): Thunk {
-  return function(dispatch) {
-    clearClusterState(dispatch)
-    dispatch(setCluster(cluster))
+  return function(dispatch, getState) {
+    let tabId = tabs.getActive(getState())
+    clearClusterState(dispatch, tabId)
+    dispatch(search.setCluster(cluster.id))
     return dispatch(connectCluster(cluster))
   }
 }
 
-function clearClusterState(dispatch) {
+function clearClusterState(dispatch, tabId: string) {
   dispatch(clearSearchBar())
-  dispatch(clearSpaces())
-  dispatch(search.clear())
   dispatch(clearStarredLogs())
-  dispatch(clearSearchHistory())
-  dispatch(clearViewer())
+  dispatch(History.clear())
+  dispatch(clearViewer(tabId))
   dispatch(handlers.abortAll())
   dispatch(clearErrors())
   dispatch(clearNotifications())
+  dispatch(search.clear())
 }

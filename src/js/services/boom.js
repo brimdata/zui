@@ -5,17 +5,18 @@ import type {Span} from "./BoomClient/types"
 import type {Thunk} from "../state/types"
 import {ZqVersionError} from "../models/Errors"
 import {createError} from "../state/errors"
-import {getCurrentSpaceName} from "../state/reducers/spaces"
+import {getBoomOptions} from "../state/selectors/boom"
 import ErrorFactory from "../models/ErrorFactory"
+import Tab from "../state/tab"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
 import notice from "../state/notice"
-import search from "../state/search"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
-  return (dispatch, g, boom) => {
+  return (dispatch, getState, boom) => {
     dispatch(notice.clearSearchError())
     return boom
+      .setOptions(getBoomOptions(getState()))
       .search(program, {searchSpan: span, searchSpace: space})
       .error((e) => handleError(e, dispatch))
   }
@@ -69,9 +70,10 @@ export function checkVersions(): Thunk {
 
 export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
-    let [from, to] = search.getSpan(getState())
+    let [from, to] = Tab.getSpan(getState())
     let searchSpan = [brim.time(from).toDate(), brim.time(to).toDate()]
-    let searchSpace = getCurrentSpaceName(getState())
+    let searchSpace = Tab.spaceName(getState())
+    boom.setOptions(getBoomOptions(getState()))
     try {
       return boom.inspectSearch(zql, {searchSpan, searchSpace})
     } catch {
@@ -80,10 +82,11 @@ export function inspectSearch(zql: string): Thunk {
   }
 }
 
-function promise(request): Thunk {
-  return function(dispatch, _, boom) {
+function promise(requestFunc): Thunk {
+  return function(dispatch, getState, boom) {
+    boom.setOptions(getBoomOptions(getState()))
     return new Promise((resolve, reject) => {
-      request(boom)
+      requestFunc(boom)
         .done((...args) => {
           dispatch(notice.clearNetworkError())
           resolve(...args)

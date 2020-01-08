@@ -46,7 +46,7 @@ global.ResizeObserver = class ResizeObserver {
   observe() {}
   disconnect() {}
 }
-
+global.SVGElement.prototype.getTotalLength = () => 0
 enzyme.configure({adapter: new Adapter()})
 //$FlowFixMe
 document.execCommand = jest.fn()

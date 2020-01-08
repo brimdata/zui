@@ -6,10 +6,10 @@ import {ipcRenderer} from "electron"
 
 import type {Cluster} from "../../state/clusters/types"
 import type {FormData} from "./types"
-import {addCluster, removeCluster} from "../../state/clusters/actions"
 import {connectCluster} from "../../state/clusters/thunks"
-import {getSavedClusters} from "../../state/clusters/selectors"
 import {showContextMenu} from "../../lib/System"
+import Clusters from "../../state/clusters"
+import brim from "../../brim"
 
 export default function useLoginController() {
   useEffect(() => {
@@ -28,14 +28,15 @@ export default function useLoginController() {
     let hostparts = form.host.split(":")
     let host = hostparts[0]
     let port = hostparts[1] || "9867"
-    let creds = {
+    let cluster = {
+      id: brim.randomHash(),
       host,
       port,
       username: form.username,
       password: form.password
     }
-    dispatch(connectCluster(creds)).then(() => {
-      if (form.save) dispatch(addCluster(creds))
+    dispatch(connectCluster(cluster)).then(() => {
+      if (form.save) dispatch(Clusters.add(cluster))
     })
   }
 
@@ -58,11 +59,11 @@ export default function useLoginController() {
     dispatch(connectCluster(creds))
   }
 
-  function showSavedMenu(creds: Cluster) {
+  function showSavedMenu(cluster: Cluster) {
     showContextMenu([
       {
         label: "Remove",
-        click: () => dispatch(removeCluster(creds))
+        click: () => dispatch(Clusters.remove(cluster.id))
       }
     ])
   }
@@ -73,6 +74,6 @@ export default function useLoginController() {
     onFormChange,
     submitSaved,
     showSavedMenu,
-    saved: useSelector(getSavedClusters)
+    saved: useSelector(Clusters.all)
   }
 }

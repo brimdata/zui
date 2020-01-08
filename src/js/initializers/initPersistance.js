@@ -5,11 +5,10 @@ import throttle from "lodash/throttle"
 
 import type {State} from "../state/types"
 
-export const VERSION = "1"
+export const VERSION = "5"
 const KEY = "BRIM_STATE"
 const PERSIST = [
-  "search",
-  "searchBar",
+  "tabs",
   "boomd",
   "currentSpaceName",
   "view",
@@ -67,6 +66,7 @@ export const clearState = () => {
 }
 
 export default (store: *) => {
+  window.store = store
   store.subscribe(
     throttle(() => {
       saveState(store.getState())
@@ -75,4 +75,3 @@ export default (store: *) => {
 }
 
 window.clearState = clearState
-window.getState = getState

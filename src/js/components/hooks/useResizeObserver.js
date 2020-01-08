@@ -1,14 +1,20 @@
 /* @flow */
 import {useLayoutEffect, useRef, useState} from "react"
 
+export type Rect = {width: number, height: number, x: number, y: number}
+
 export function useResizeObserver() {
   let ref = useRef<HTMLElement | null>(null)
-  let [rect, setRect] = useState<DOMRectReadOnly>(
-    new DOMRectReadOnly(0, 0, 0, 0)
-  )
+  let [rect, setRect] = useState<Rect>({
+    width: 0,
+    height: 0,
+    x: 0,
+    y: 0
+  })
 
   function onResize(entries) {
-    setRect(entries[0].contentRect)
+    let {x, y, width, height} = entries[0].contentRect
+    setRect({x, y, width, height})
   }
 
   useLayoutEffect(() => {

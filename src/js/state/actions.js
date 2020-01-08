@@ -1,9 +1,8 @@
 /* @flow */
-import type {Descriptor, Notification, SearchRecord, Tuple} from "../types"
+import type {Descriptor, Notification, Tuple} from "../types"
 import type {Finding} from "./reducers/investigation"
 import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
-import type {Space} from "../lib/Space"
 import type {Ts} from "../brim"
 import {isArray} from "../lib/is"
 
@@ -133,47 +132,10 @@ export const submittingSearchBar = () => ({
   type: "SEARCH_BAR_SUBMIT"
 })
 
-export const backSearchHistory = () => ({
-  type: "SEARCH_HISTORY_BACK"
-})
-
-export const forwardSearchHistory = () => ({
-  type: "SEARCH_HISTORY_FORWARD"
-})
-
-export const clearSearchHistory = () => ({
-  type: "SEARCH_HISTORY_CLEAR"
-})
-
-export const recordSearch = (record: SearchRecord) => ({
-  type: "SEARCH_HISTORY_PUSH",
-  entry: record
-})
-
-export function setSpaceInfo(spaceInfo: $Shape<Space>) {
+export function setCurrentSpaceName(space: string) {
   return {
-    type: "SPACE_INFO_SET",
-    spaceInfo
-  }
-}
-
-export function setCurrentSpaceName(name: ?string) {
-  return {
-    type: "CURRENT_SPACE_NAME_SET",
-    name
-  }
-}
-
-export function setSpaceNames(names: string[]) {
-  return {
-    type: "SPACE_NAMES_SET",
-    names
-  }
-}
-
-export function clearSpaces() {
-  return {
-    type: "SPACES_CLEAR"
+    type: "SEARCH_SPACE_SET",
+    space
   }
 }
 

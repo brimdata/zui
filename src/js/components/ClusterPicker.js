@@ -5,13 +5,14 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import {disconnectCluster, switchCluster} from "../state/clusters/thunks"
-import {getCurrentCluster, getSavedClusters} from "../state/clusters/selectors"
+import Clusters from "../state/clusters"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import Tab from "../state/tab"
 
 export default function CluterPicker() {
-  const current = useSelector(getCurrentCluster)
-  const clusters = useSelector(getSavedClusters)
+  const current = useSelector(Tab.cluster)
+  const clusters = useSelector(Clusters.all)
   const dispatch = useDispatch()
 
   let template = clusters.map((cluster) => ({

@@ -3,6 +3,7 @@ import type {ReturnType} from "../types"
 import ast from "./ast"
 import compoundField from "./compoundField"
 import dateTuple from "./dateTuple"
+import entries from "./entries"
 import field from "./field"
 import flatRecordsBuffer from "./flatRecordsBuffer"
 import interop from "./interop"
@@ -58,5 +59,6 @@ export default {
   record,
   interop,
   search,
-  randomHash
+  randomHash,
+  entries
 }

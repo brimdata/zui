@@ -1,14 +1,9 @@
 /* @flow */
 
-// Actions
-
-// Selectors
 import type {State} from "../types"
 
-export function getCurrentCluster(state: State) {
-  return state.clusters.current
-}
-
-export function getSavedClusters(state: State) {
-  return state.clusters.saved
+export default {
+  id: (id: string) => (state: State) => state.clusters[id],
+  all: (state: State) => Object.values(state.clusters),
+  raw: (state: State) => state.clusters
 }
