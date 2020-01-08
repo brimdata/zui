@@ -14,17 +14,9 @@ export type SpacesAction = SPACES_NAMES | SPACES_DETAIL
 
 export type Space = {
   name: string,
-  flush_timeout: number,
-  close_timeout: number,
-  slab_threshold: number,
-  slab_fanout: number,
-  max_writers: number,
   min_time: Ts,
   max_time: Ts,
-  size: number,
-  packet_support: boolean,
-  compression: string,
-  path: string
+  packet_support: boolean
 }
 
 export type SPACES_NAMES = {

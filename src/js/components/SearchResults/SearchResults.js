@@ -5,7 +5,7 @@ import {isEmpty} from "lodash"
 import React from "react"
 
 import type {DispatchProps, State} from "../../state/types"
-import type {Space} from "../../lib/Space"
+import type {Space} from "../../state/spaces/types"
 import type {ViewerDimens} from "../../types"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"

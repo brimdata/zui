@@ -1,10 +1,11 @@
 /* @flow */
 import {Application} from "spectron"
-import type {Space} from "../../src/js/lib/Space"
+
+import {LOG} from "./log"
+import type {Space} from "../../src/js/state/spaces/types"
 import Field from "../../src/js/models/Field"
 import Log from "../../src/js/models/Log"
 import menu from "../../src/js/electron/menu"
-import {LOG} from "./log"
 
 // This module exists to work around difficulties in using Spectron to drive
 // Brim with its components that use Electron's native support. Right now
