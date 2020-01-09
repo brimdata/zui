@@ -60,15 +60,13 @@ export default function(props: Props = {}): Pen {
       "transform",
       `translate(${chart.margins.left}, ${chart.margins.top})`
     )
-    const brush = d3
-      .brushX()
-      .extent([
-        [0, 0],
-        [
-          innerWidth(chart.width, chart.margins),
-          innerHeight(chart.height, chart.margins)
-        ]
-      ])
+    const brush = d3.brushX().extent([
+      [0, 0],
+      [
+        innerWidth(chart.width, chart.margins),
+        innerHeight(chart.height, chart.margins)
+      ]
+    ])
 
     brushG.call(brush)
     chart.state.selection

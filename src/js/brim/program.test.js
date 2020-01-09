@@ -88,7 +88,10 @@ describe("drill down", () => {
   test("count by and filter the same", () => {
     let result = brim.log(
       ["123", "1"],
-      [{type: "string", name: "md5"}, {type: "count", name: "count"}]
+      [
+        {type: "string", name: "md5"},
+        {type: "count", name: "count"}
+      ]
     )
 
     let program = brim
@@ -102,7 +105,10 @@ describe("drill down", () => {
   test("filter query", () => {
     let result = brim.log(
       ["9f51ef98c42df4430a978e4157c43dd5", "21"],
-      [{name: "md5", type: "string"}, {name: "count", type: "count"}]
+      [
+        {name: "md5", type: "string"},
+        {name: "count", type: "count"}
+      ]
     )
 
     let program = brim

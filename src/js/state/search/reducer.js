@@ -2,7 +2,10 @@
 import type {SearchActions, SearchState} from "./types"
 
 export const initSearchState: SearchState = {
-  span: [{sec: 0, ns: 0}, {sec: 1, ns: 0}],
+  span: [
+    {sec: 0, ns: 0},
+    {sec: 1, ns: 0}
+  ],
   spanArgs: ["now - 5m", "now"],
   spanFocus: null,
   space: "",
