@@ -10,17 +10,10 @@ export const TestTimeout = 300000
 // https://jestjs.io/docs/en/jest-object#jestsettimeouttimeout
 jest.setTimeout(TestTimeout)
 
-// This is trying to make Flow happy for passing in the done function from
-// Jest.
-export type Done = {
-  (string | Error | void): void,
-  fail?: (string | Error | void) => void
-}
-
 export const handleError = async (
   app: Application,
   initialError: Error,
-  done: Done
+  done: *
 ) => {
   let realError = undefined
   let notificationError = undefined
@@ -54,7 +47,7 @@ export const handleError = async (
 // buffered and printed later.
 export const stdTest = (
   descr: string,
-  f: (done: Done) => void,
+  f: (done: *) => void,
   timeout: number = TestTimeout
 ) => {
   test(

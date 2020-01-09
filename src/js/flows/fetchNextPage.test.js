@@ -3,15 +3,26 @@
 import {appendViewerRecords, spliceViewer} from "../state/viewer/actions"
 import {fetchNextPage} from "./fetchNextPage"
 import {setCurrentSpaceName} from "../state/actions"
-import Log from "../models/Log"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
 import search from "../state/search"
 import tab from "../state/tab"
 import tabs from "../state/tabs"
 
-const tuples = [["1", "100"], ["1", "200"], ["1", "300"]]
-const descriptor = [{name: "_td", type: "string"}, {name: "ts", type: "time"}]
+const records = [
+  [
+    {name: "_td", type: "string", value: "1"},
+    {name: "ts", type: "time", value: "100"}
+  ],
+  [
+    {name: "_td", type: "string", value: "1"},
+    {name: "ts", type: "time", value: "200"}
+  ],
+  [
+    {name: "_td", type: "string", value: "1"},
+    {name: "ts", type: "time", value: "300"}
+  ]
+]
 
 let store, boom, tabId
 beforeEach(() => {
@@ -22,7 +33,7 @@ beforeEach(() => {
     setCurrentSpaceName("default"),
     search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     tab.computeSpan(),
-    appendViewerRecords(tabId, tuples.map((t) => new Log(t, descriptor)))
+    appendViewerRecords(tabId, records)
   ])
   store.clearActions()
 })
@@ -39,7 +50,7 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
   const search = jest.spyOn(boom, "search")
   store.dispatch(fetchNextPage())
 
-  const lastChangeTs = tuples[1][1]
+  const lastChangeTs = records[1][1].value
   expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({

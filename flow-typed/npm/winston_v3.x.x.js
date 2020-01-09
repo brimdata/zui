@@ -1,5 +1,5 @@
-// flow-typed signature: 4b7441b9c6a157b08d52afa006d713d4
-// flow-typed version: c6154227d1/winston_v3.x.x/flow_>=v0.34.x <=v0.103.x
+// flow-typed signature: 7b1fbcbf46247c61e99a59a79dc08245
+// flow-typed version: b84a3fc45f/winston_v3.x.x/flow_>=v0.34.x <=v0.103.x
 
 declare type $winstonLevels = {
   [string]: number
@@ -55,12 +55,13 @@ declare type $winstonLoggerConfig<T: $winstonLevels> = {
 };
 
 declare type $winstonLogger<T: $winstonLevels> = {
-  [$Keys<T>]: (message: string, meta?: Object) => void,
-  add: $winstonTransport => void,
-  clear: () => void,
+  [$Keys<T>]: (message: string, meta?: Object) => $winstonLogger<T>,
+  add: $winstonTransport => $winstonLogger<T>,
+  remove: $winstonTransport => $winstonLogger<T>,
+  clear: () => $winstonLogger<T>,
+  close: () => $winstonLogger<T>,
   configure: ($winstonLoggerConfig<T>) => void,
-  log: (message: $winstonInfo<T>) => void,
-  remove: $winstonTransport => void
+  log: (message: $winstonInfo<T>) => $winstonLogger<T>
 };
 
 declare type $winstonConfigSubModule = {
@@ -82,7 +83,7 @@ declare type $winstonFormatSubModule = {
   prettyPrint: () => $winstonFormat,
   simple: () => $winstonFormat,
   splat: () => $winstonFormat,
-  timestamp: (?{ alias?: string, format?: string }) => $winstonFormat,
+  timestamp: (?{ alias?: string, format?: string | () => string }) => $winstonFormat,
   colorize: () => $winstonFormat,
   logstash: () => $winstonFormat,
   printf: ((args: $winstonInfo<Object>) => string) => $winstonFormat
@@ -95,6 +96,7 @@ declare class $winstonContainer<T> {
   add(loggerId: string, config?: $winstonLoggerConfig<T>): $winstonLogger<T>;
   get(loggerId: string): $winstonLogger<T>;
   has(loggerId: string): boolean;
+  close(loggerId?: string): void;
 }
 
 declare module "winston" {
@@ -103,7 +105,7 @@ declare module "winston" {
   declare export type Info<T: Levels > = $winstonInfo<T>;
   declare export type Format = $winstonFormat;
   declare export type FileTransportConfig<T: Levels> = $winstonFileTransportConfig<T>;
-  declare export type Transport = typeof $winstonTransport;
+  declare export type Transport = $winstonTransport;
   declare export type FileTransport<T: Levels> = $winstonFileTransport<T>;
   declare export type ConsoleTransportConfig<T: Levels> = $winstonConsoleTransportConfig<T>;
   declare export type ConsoleTransport<T: Levels> = $winstonConsoleTransport<T>;

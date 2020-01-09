@@ -145,7 +145,7 @@ describe("Debug and search helpers", () => {
         try {
           execSync(curlCommand, {stdio: "pipe"})
         } catch (err) {
-          done(err)
+          done.fail(err)
         }
         done()
       })
