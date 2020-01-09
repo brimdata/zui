@@ -2,7 +2,7 @@
 // $FlowFixMe
 import "regenerator-runtime/runtime"
 
-import {app, ipcMain} from "electron"
+import {BrowserWindow, app, ipcMain} from "electron"
 
 import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
@@ -35,6 +35,11 @@ async function main() {
 
   ipcMain.on("open-login-window", () => {
     win.switchTo("login")
+  })
+
+  ipcMain.on("close-window", () => {
+    let win = BrowserWindow.getFocusedWindow()
+    if (win) win.close()
   })
 
   app.on("window-all-closed", () => {

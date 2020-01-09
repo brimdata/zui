@@ -1,4 +1,6 @@
 /* @flow */
+import {ipcRenderer} from "electron"
+
 import type {Thunk} from "../types"
 import Tabs from "./"
 import brim from "../../brim"
@@ -14,8 +16,13 @@ export default {
   },
 
   closeActive: (): Thunk => (dispatch, getState) => {
-    let id = Tabs.getActive(getState())
-    dispatch(Tabs.remove(id))
+    let tabs = Tabs.getData(getState())
+    if (tabs.length === 1) {
+      ipcRenderer.send("close-window")
+    } else {
+      let id = Tabs.getActive(getState())
+      dispatch(Tabs.remove(id))
+    }
   },
 
   activateNext: (): Thunk => (dispatch, getState) => {
@@ -37,6 +44,12 @@ export default {
   activateByIndex: (index: number): Thunk => (dispatch, getState) => {
     let tabs = Tabs.getData(getState())
     let tab = tabs[index]
+    if (tab) dispatch(Tabs.activate(tab.id))
+  },
+
+  activateLast: (): Thunk => (dispatch, getState) => {
+    let tabs = Tabs.getData(getState())
+    let tab = tabs[tabs.length - 1]
     if (tab) dispatch(Tabs.activate(tab.id))
   }
 }
