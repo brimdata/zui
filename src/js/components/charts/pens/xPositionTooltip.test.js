@@ -1,7 +1,6 @@
 /* @flow */
-import * as d3 from "d3"
 
-import {positionTooltip, xPosition} from "./xPositionTooltip"
+import {xPosition} from "./xPositionTooltip"
 
 describe("#xPosition", () => {
   let parentWidth, padding, width
@@ -19,21 +18,5 @@ describe("#xPosition", () => {
   test("left of the mouse", () => {
     expect(xPosition(880, width, parentWidth, padding)).toBe("760px")
     expect(xPosition(1000, width, parentWidth, padding)).toBe("880px")
-  })
-})
-
-describe("#positionTooltip", () => {
-  let tooltip, parent
-  beforeAll(() => {
-    tooltip = document.createElement("div")
-    parent = document.createElement("div")
-    // $FlowFixMe
-    d3.mouse = jest.fn(() => [0, 0])
-  })
-
-  test("adds style to tooltip", () => {
-    positionTooltip(tooltip, parent, 20)
-    expect(tooltip.style.left).toMatch(/\d+px/)
-    expect(tooltip.style.opacity).toBe("1")
   })
 })
