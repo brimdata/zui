@@ -29,6 +29,7 @@ import SettingsModal from "./SettingsModal"
 import TabBar from "./TabBar"
 import WhoisModal from "./WhoisModal"
 import handlers from "../state/handlers"
+import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
   let logsTab = !hasAnalytics(useSelector(getSearchProgram))
@@ -36,6 +37,7 @@ export default function SearchPage() {
   let renderKey = finding && getKey(finding)
   let results = useResizeObserver()
   let dispatch = useDispatch()
+  useSearchShortcuts()
 
   useEffect(() => {
     ipcRenderer.send("open-search-window")

@@ -53,6 +53,7 @@ export default function SearchInput() {
     <div className="search-input">
       <input
         id="main-search-input"
+        className="mousetrap"
         type="text"
         value={inputValue}
         onChange={onChange}

@@ -8,21 +8,24 @@ import {tabIsFetching} from "../state/tab/selectors"
 import {useResizeObserver} from "./hooks/useResizeObserver"
 import Animate from "./Animate"
 import SearchTab from "./SearchTab"
+import Tabs from "../state/tabs"
 import lib from "../lib"
-import newTab from "../flows/newTab"
-import tabs from "../state/tabs"
 
 const MAX_WIDTH = 240
 
 export default function TabBar() {
   let {ref, rect} = useResizeObserver()
   let dispatch = useDispatch()
-  let allTabs = useSelector(tabs.getData)
-  let activeTab = useSelector(tabs.getActive)
+  let tabs = useSelector(Tabs.getData)
+  let activeTab = useSelector(Tabs.getActive)
   let [width, setWidth] = useState(0)
-  let count = allTabs.length
-  let dirty = useRef(false)
+  let count = tabs.length
+  let removedByClick = useRef(false)
   let [active, setActive] = useState(activeTab)
+
+  useEffect(() => {
+    if (!removedByClick.current) calcWidths(count)
+  }, [count])
 
   useEffect(() => {
     setActive(activeTab)
@@ -33,25 +36,24 @@ export default function TabBar() {
   // let [status, setStatus] = useState("INIT")
 
   function addTab() {
-    dispatch(newTab())
-    calcWidths(count + 1)
+    dispatch(Tabs.new())
   }
 
   function removeTab(id, e) {
     e.stopPropagation()
-    dispatch(tabs.remove(id))
-    dirty.current = true
+    removedByClick.current = true
+    dispatch(Tabs.remove(id))
   }
 
   function activateTab(id) {
     setActive(id)
-    onIdle(() => dispatch(tabs.activate(id)))
+    onIdle(() => dispatch(Tabs.activate(id)))
   }
 
   function mouseLeave() {
-    if (dirty.current) {
+    if (removedByClick.current) {
       calcWidths(count)
-      dirty.current = false
+      removedByClick.current = false
     }
   }
 
@@ -69,14 +71,14 @@ export default function TabBar() {
   //   setTimeout(() => {
   //     setStatus("INIT")
   //     if (from !== to) {
-  //       dispatch(tabs.move(from, to))
-  //       dispatch(tabs.activate(to))
+  //       dispatch(Tabs.move(from, to))
+  //       dispatch(Tabs.activate(to))
   //     }
   //   }, 200)
   // }
 
   // function onMouseDown(e, i) {
-  //   dispatch(tabs.activate(i))
+  //   dispatch(Tabs.activate(i))
   //   setSlot(i)
   //   tabDrag(e, i, width, count)
   //     .start(() => setStatus("DRAGGING"))
@@ -123,7 +125,7 @@ export default function TabBar() {
   return (
     <div className="tab-bar">
       <div className="tabs-container" ref={ref} onMouseLeave={mouseLeave}>
-        {allTabs.map((tab, i) => (
+        {tabs.map((tab, i) => (
           <Animate enter={{opacity: [0, 1]}} key={tab.id} show={true}>
             <SearchTab
               loading={tabIsFetching(tab)}
@@ -141,7 +143,7 @@ export default function TabBar() {
         <a
           className="add-tab"
           onClick={addTab}
-          style={{transform: `translateX(${left(allTabs.length)}px)`}}
+          style={{transform: `translateX(${left(tabs.length)}px)`}}
         >
           +
         </a>

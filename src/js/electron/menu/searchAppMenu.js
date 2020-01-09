@@ -79,7 +79,6 @@ export default function searchAppMenu(send: Function) {
       role: "window",
       submenu: [
         {role: "minimize"},
-        {role: "close"},
         {
           label: "Reset State",
           click: () => {
@@ -128,7 +127,7 @@ export default function searchAppMenu(send: Function) {
     })
 
     // Edit menu
-    template[1].submenu.push(
+    template[2].submenu.push(
       {type: "separator"},
       {
         label: "Speech",
@@ -137,7 +136,7 @@ export default function searchAppMenu(send: Function) {
     )
 
     // Window menu
-    template[4].submenu.concat([
+    template[5].submenu.concat([
       {role: "close"},
       {role: "minimize"},
       {role: "zoom"},
