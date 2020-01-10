@@ -3,10 +3,10 @@ import React, {useEffect, useRef} from "react"
 import anime from "animejs"
 import classNames from "classnames"
 
-import CloseButton from "./CloseButton"
-import RampLeft from "../icons/ramp-left.svg"
-import RampRight from "../icons/ramp-right.svg"
-import TabSpinner from "./TabSpinner"
+import CloseButton from "../CloseButton"
+import RampLeft from "../../icons/ramp-left.svg"
+import RampRight from "../../icons/ramp-right.svg"
+import TabSpinner from "../TabSpinner"
 
 type Props = {
   title: string,

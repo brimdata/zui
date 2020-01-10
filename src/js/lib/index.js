@@ -30,7 +30,8 @@ export default {
   date,
   on: (...args: *) => document.addEventListener(...args),
   off: (...args: *) => document.removeEventListener(...args),
-  compact: (array: *) => array.filter((item) => !!item)
+  // $FlowFixMe Everytime I use filter it doesn't like it
+  compact: (array: *[]) => array.filter((item) => !!item)
 }
 
 export type TimeUnit =
