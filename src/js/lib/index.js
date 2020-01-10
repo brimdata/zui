@@ -31,7 +31,10 @@ export default {
   on: (...args: *) => document.addEventListener(...args),
   off: (...args: *) => document.removeEventListener(...args),
   // $FlowFixMe Everytime I use filter it doesn't like it
-  compact: (array: *[]) => array.filter((item) => !!item)
+  compact: (array: *[]) => array.filter((item) => !!item),
+  bounded: (num: number, [from, to]: [number, number]) => {
+    return Math.max(from, Math.min(num, to))
+  }
 }
 
 export type TimeUnit =

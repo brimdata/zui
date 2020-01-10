@@ -28,20 +28,25 @@ export default function TabBar() {
         {tabs.map((tab, i) => (
           <Animate enter={{opacity: [0, 1]}} key={tab.id} show={true}>
             <SearchTab
+              {...layout.drag({
+                index: i,
+                id: tab.id,
+                onDown: () => ctl.onTabClick(tab.id),
+                moveTo: (index) => ctl.onTabMove(tab.id, index)
+              })}
               loading={tabIsFetching(tab)}
               title={brim.tab(tab).title()}
-              style={layout.getStyle(i)}
+              style={layout.getStyle(i, tab.id)}
               removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
               onClick={() => ctl.onTabClick(tab.id)}
               className={classNames({
-                active: tab.id === ctl.active
-                // dragging: draggingId === tab.id
+                active: tab.id === ctl.activeId,
+                dragging: tab.id === layout.dragId
               })}
-              // {...drag({id: tab.id})}
             />
           </Animate>
         ))}
-        <AddTab onClick={ctl.onAddClick} left={layout.getLeft(count)} />
+        <AddTab onClick={ctl.onAddClick} left={layout.width * count} />
       </div>
     </div>
   )

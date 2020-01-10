@@ -6,8 +6,8 @@ import onIdle from "on-idle"
 import Tabs from "../../state/tabs"
 
 export default function(count: number, calcWidths: Function) {
-  let activeId = useSelector(Tabs.getActive)
-  let [active, setActive] = useState(activeId)
+  let trueActiveId = useSelector(Tabs.getActive)
+  let [activeId, setActive] = useState(trueActiveId)
   let removedByClick = useRef(false)
   let dispatch = useDispatch()
 
@@ -16,11 +16,11 @@ export default function(count: number, calcWidths: Function) {
   }, [count])
 
   useEffect(() => {
-    setActive(activeId)
-  }, [activeId])
+    setActive(trueActiveId)
+  }, [trueActiveId])
 
   return {
-    active,
+    activeId,
 
     onAddClick() {
       dispatch(Tabs.new())
@@ -42,6 +42,11 @@ export default function(count: number, calcWidths: Function) {
         calcWidths()
         removedByClick.current = false
       }
+    },
+
+    onTabMove(id: string, index: number) {
+      console.log("dispatch move tab to ", index)
+      // dispatch(Tabs.move(id, index))
     }
   }
 }
