@@ -3,6 +3,7 @@
 import type {TabActions, TabsState} from "./types"
 import type {TabState} from "../tab/types"
 import {last} from "../../lib/Array"
+import lib from "../../lib"
 import tabReducer from "../tab/reducer"
 
 let firstTab = tabReducer(undefined, {type: "INIT"})
@@ -28,6 +29,8 @@ export default function reducer(state: TabsState = init, action: TabActions) {
         active: state.active,
         data: addTabData(state.data, action)
       }
+    case "TABS_MOVE":
+      return moveTab(state, action)
     default:
       return state
   }
@@ -51,6 +54,15 @@ function removeTab(state: TabsState, id) {
     return {data, active}
   } else {
     return {data, active: state.active}
+  }
+}
+
+function moveTab(state, action) {
+  let index = state.data.findIndex((t) => t.id === action.id)
+  if (index === action.index) return state
+  return {
+    ...state,
+    data: lib.move(state.data, index, action.index)
   }
 }
 

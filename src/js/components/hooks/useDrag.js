@@ -30,10 +30,11 @@ export default function useDrag(handler: Function) {
       handler({
         event,
         args,
-        dx: 0,
+        dx: event.clientX - startX,
         type: "up"
       })
       lib.off("mousemove", onMove)
+      lib.off("mouseup", onUp)
     }
 
     return {

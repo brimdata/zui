@@ -34,6 +34,11 @@ export default {
   compact: (array: *[]) => array.filter((item) => !!item),
   bounded: (num: number, [from, to]: [number, number]) => {
     return Math.max(from, Math.min(num, to))
+  },
+  move: (array: *[], src: number, dest: number) => {
+    let copy = [...array]
+    copy.splice(dest, 0, copy.splice(src, 1)[0])
+    return copy
   }
 }
 

@@ -53,7 +53,7 @@ const SearchTab = React.forwardRef<Props, HTMLDivElement>(function SearchTab(
         translateX: -30
       })
     }
-  }, [loading, ref.current])
+  }, [loading, aniRef.current])
 
   return (
     <div ref={ref} {...rest} className={classNames("tab", className)}>

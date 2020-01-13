@@ -10,9 +10,10 @@ const MAX_WIDTH = 240
 export default function(count: number) {
   let {ref, rect} = useResizeObserver()
   let [width, setWidth] = useState(0)
-  let [dragId, setDragId] = useState(null)
   let [dx, setDx] = useState(0)
+  let [dragId, setDragId] = useState(null)
   let [dragIndex, setDragIndex] = useState(-1)
+  let [hoverIndex, setHoverIndex] = useState(dragIndex)
 
   useEffect(() => {
     calcWidth()
@@ -27,11 +28,22 @@ export default function(count: number) {
   }
 
   function getStyle(i: number, id: string) {
+    if (dragId) {
+      if (i >= hoverIndex && i < dragIndex) i++
+      if (i > dragIndex && i <= hoverIndex) i--
+    }
+
     let left = id === dragId ? getDragLeft() : i * width
     return {
       width: width,
       transform: `translateX(${lib.bounded(left, [0, rect.width])}px)`
     }
+  }
+
+  function getHoverIndex(startIndex, dx) {
+    var half = width / 2
+    var midX = startIndex * width + dx + half
+    return parseInt(midX / width)
   }
 
   let drag = useDrag(({args, dx, type}) => {
@@ -43,14 +55,15 @@ export default function(count: number) {
         break
       case "move":
         setDx(dx)
-        var half = width / 2
-        var midX = args.index * width + dx + half
-        var newIndex = parseInt(midX / width)
-        args.moveTo(newIndex)
+        setHoverIndex(getHoverIndex(args.index, dx))
         break
       case "up":
+        console.log("up", args.id)
         setDragId(null)
-        setDx(0)
+        var hoverIndex = getHoverIndex(args.index, dx)
+        if (hoverIndex !== args.index) {
+          args.moveTo(hoverIndex)
+        }
         break
     }
   })

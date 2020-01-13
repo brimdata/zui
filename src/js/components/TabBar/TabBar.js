@@ -5,7 +5,6 @@ import classNames from "classnames"
 
 import {tabIsFetching} from "../../state/tab/selectors"
 import AddTab from "./AddTab"
-import Animate from "../Animate"
 import SearchTab from "./SearchTab"
 import Tabs from "../../state/tabs"
 import brim from "../../brim"
@@ -26,25 +25,24 @@ export default function TabBar() {
         onMouseLeave={ctl.onMouseLeave}
       >
         {tabs.map((tab, i) => (
-          <Animate enter={{opacity: [0, 1]}} key={tab.id} show={true}>
-            <SearchTab
-              {...layout.drag({
-                index: i,
-                id: tab.id,
-                onDown: () => ctl.onTabClick(tab.id),
-                moveTo: (index) => ctl.onTabMove(tab.id, index)
-              })}
-              loading={tabIsFetching(tab)}
-              title={brim.tab(tab).title()}
-              style={layout.getStyle(i, tab.id)}
-              removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
-              onClick={() => ctl.onTabClick(tab.id)}
-              className={classNames({
-                active: tab.id === ctl.activeId,
-                dragging: tab.id === layout.dragId
-              })}
-            />
-          </Animate>
+          <SearchTab
+            {...layout.drag({
+              index: i,
+              id: tab.id,
+              onDown: () => ctl.onTabClick(tab.id),
+              moveTo: (index) => ctl.onTabMove(tab.id, index)
+            })}
+            key={tab.id}
+            loading={tabIsFetching(tab)}
+            title={tab.id}
+            // title={brim.tab(tab).title()}
+            style={layout.getStyle(i, tab.id)}
+            removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
+            className={classNames({
+              active: tab.id === ctl.activeId,
+              dragging: tab.id === layout.dragId
+            })}
+          />
         ))}
         <AddTab onClick={ctl.onAddClick} left={layout.width * count} />
       </div>
