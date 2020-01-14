@@ -111,3 +111,24 @@ test("moving a tab to destination index", () => {
   expect(ids.length).toEqual(5)
   expect(ids[0]).toEqual("3")
 })
+
+test("reorder tabs", () => {
+  let first = tabs.getData(store.getState())[0].id
+
+  let state = store.dispatchAll([
+    tabs.add("a"),
+    tabs.add("b"),
+    tabs.add("c"),
+    tabs.order([3, 1, 2, 0])
+  ])
+
+  expect(tabs.getData(state).map((t) => t.id)).toEqual(["c", "a", "b", first])
+})
+
+test("reorder tabs throws error if invalid", () => {
+  store.dispatchAll([tabs.add("a"), tabs.add("b"), tabs.add("c")])
+
+  expect(() => {
+    store.dispatch(tabs.order([0, 0, 0, 0]))
+  }).toThrow("Tab order indices invalid: [0, 0, 0, 0]")
+})

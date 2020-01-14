@@ -1,5 +1,7 @@
 /* @flow */
 
+import {isEqual} from "lodash"
+
 import type {TabActions, TabsState} from "./types"
 import type {TabState} from "../tab/types"
 import {last} from "../../lib/Array"
@@ -31,6 +33,11 @@ export default function reducer(state: TabsState = init, action: TabActions) {
       }
     case "TABS_MOVE":
       return moveTab(state, action)
+    case "TABS_ORDER":
+      return {
+        ...state,
+        data: orderTabs(state.data, action.indices)
+      }
     default:
       return state
   }
@@ -64,6 +71,14 @@ function moveTab(state, action) {
     ...state,
     data: lib.move<TabState>(state.data, index, action.index)
   }
+}
+
+function orderTabs(tabs, indices) {
+  let existing = tabs.map((_, i) => i)
+  if (!isEqual(existing, indices.slice().sort()))
+    throw new Error("Tab order indices invalid: [" + indices.join(", ") + "]")
+
+  return indices.map<TabState>((i) => tabs[i])
 }
 
 function tabAction({type}) {
