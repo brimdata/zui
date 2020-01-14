@@ -33,7 +33,6 @@ export default function(count: number, calcWidths: Function) {
     },
 
     onTabClick(id: string) {
-      console.log("clicked", id)
       setActive(id)
       onIdle(() => dispatch(Tabs.activate(id)))
     },

@@ -1,7 +1,9 @@
 /* @flow */
 import lib from "../../lib"
 
+let id = 1
 export default function useDrag(handler: Function) {
+  id++
   return (args: Object) => {
     let startX = 0
 

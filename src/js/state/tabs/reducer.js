@@ -62,7 +62,7 @@ function moveTab(state, action) {
   if (index === action.index) return state
   return {
     ...state,
-    data: lib.move(state.data, index, action.index)
+    data: lib.move<TabState>(state.data, index, action.index)
   }
 }
 

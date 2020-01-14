@@ -1,79 +1,67 @@
 /* @flow */
-import {useEffect, useState} from "react"
+import {useEffect, useRef} from "react"
+import {useSprings} from "react-spring"
 
-import {useResizeObserver} from "../hooks/useResizeObserver"
+import type {TabState} from "../../state/tab/types"
 import lib from "../../lib"
 import useDrag from "../hooks/useDrag"
+import useFirst from "../hooks/useFirst"
 
-const MAX_WIDTH = 240
+const config = {
+  tension: 500,
+  friction: 50
+}
 
-export default function(count: number) {
-  let {ref, rect} = useResizeObserver()
-  let [width, setWidth] = useState(0)
-  let [dx, setDx] = useState(0)
-  let [dragId, setDragId] = useState(null)
-  let [dragIndex, setDragIndex] = useState(-1)
-  let [hoverIndex, setHoverIndex] = useState(dragIndex)
+function getHoverIndex(startIndex, width, dx) {
+  var half = width / 2
+  var midX = startIndex * width + dx + half
+  return parseInt(midX / width)
+}
+
+const fn = (
+  order,
+  width,
+  first,
+  down,
+  originalIndex,
+  currentIndex = -1,
+  dx
+) => (index) => {
+  if (down && originalIndex === index) {
+    return {x: currentIndex * width + dx, immediate: true}
+  } else {
+    return {x: order.indexOf(index) * width, immediate: first, config}
+  }
+}
+
+const toStyle = ({x, width}) => ({
+  transform: x.interpolate((x) => `translateX(${x}px)`),
+  width
+})
+
+export default function(tabs: TabState[], width: number) {
+  let order = useRef(tabs.map((_, i) => i))
+  let first = useFirst(width === 0)
+  let [springs, set] = useSprings(tabs.length, fn(order.current, width, first))
 
   useEffect(() => {
-    calcWidth()
-  }, [rect.width])
-
-  function calcWidth() {
-    setWidth(lib.bounded(rect.width / count, [0, MAX_WIDTH]))
-  }
-
-  function getDragLeft() {
-    return dragIndex * width + dx
-  }
-
-  function getStyle(i: number, id: string) {
-    if (dragId) {
-      if (i >= hoverIndex && i < dragIndex) i++
-      if (i > dragIndex && i <= hoverIndex) i--
-    }
-
-    let left = id === dragId ? getDragLeft() : i * width
-    return {
-      width: width,
-      transform: `translateX(${lib.bounded(left, [0, rect.width])}px)`
-    }
-  }
-
-  function getHoverIndex(startIndex, dx) {
-    var half = width / 2
-    var midX = startIndex * width + dx + half
-    return parseInt(midX / width)
-  }
+    order.current = tabs.map((_, i) => i)
+    set(fn(order.current, width, first))
+  }, [tabs, width])
 
   let drag = useDrag(({args, dx, type}) => {
-    switch (type) {
-      case "down":
-        setDragIndex(args.index)
-        setDragId(args.id)
-        args.onDown()
-        break
-      case "move":
-        setDx(dx)
-        setHoverIndex(getHoverIndex(args.index, dx))
-        break
-      case "up":
-        console.log("up", args.id)
-        setDragId(null)
-        var hoverIndex = getHoverIndex(args.index, dx)
-        if (hoverIndex !== args.index) {
-          args.moveTo(hoverIndex)
-        }
-        break
-    }
+    if (type === "down") args.onDown()
+    let currentIndex = order.current.indexOf(args.index)
+    let hoverIndex = getHoverIndex(currentIndex, width, dx)
+    let newOrder = lib.move(order.current, currentIndex, hoverIndex)
+    set(
+      fn(newOrder, width, false, type === "move", args.index, currentIndex, dx)
+    )
+    if (type === "up") order.current = newOrder
   })
 
   return {
-    width,
-    ref,
-    calcWidth,
-    getStyle,
-    dragId,
+    getStyle: (i: number) => toStyle({...springs[i], width}),
     drag
   }
 }

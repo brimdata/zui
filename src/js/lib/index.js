@@ -35,7 +35,7 @@ export default {
   bounded: (num: number, [from, to]: [number, number]) => {
     return Math.max(from, Math.min(num, to))
   },
-  move: (array: *[], src: number, dest: number) => {
+  move: <T>(array: T[], src: number, dest: number): T[] => {
     let copy = [...array]
     copy.splice(dest, 0, copy.splice(src, 1)[0])
     return copy

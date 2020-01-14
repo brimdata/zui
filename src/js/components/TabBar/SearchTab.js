@@ -6,7 +6,6 @@ import classNames from "classnames"
 import CloseButton from "../CloseButton"
 import RampLeft from "../../icons/ramp-left.svg"
 import RampRight from "../../icons/ramp-right.svg"
-import TabSpinner from "../TabSpinner"
 
 type Props = {
   title: string,
@@ -58,7 +57,6 @@ const SearchTab = React.forwardRef<Props, HTMLDivElement>(function SearchTab(
   return (
     <div ref={ref} {...rest} className={classNames("tab", className)}>
       <div className="tab-content" ref={aniRef}>
-        <Loading />
         <p className="title">{title}</p>
         <CloseButton onClick={removeTab} />
       </div>
@@ -67,13 +65,5 @@ const SearchTab = React.forwardRef<Props, HTMLDivElement>(function SearchTab(
     </div>
   )
 })
-
-function Loading() {
-  return (
-    <div className="loading">
-      <TabSpinner />
-    </div>
-  )
-}
 
 export default SearchTab
