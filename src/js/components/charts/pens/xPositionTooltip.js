@@ -1,8 +1,8 @@
 /* @flow */
 
 import {render} from "react-dom"
+import {select, mouse} from "d3"
 import React from "react"
-import * as d3 from "d3"
 
 import type {Pen} from "../types"
 import {getPointAt} from "../getPointAt"
@@ -25,14 +25,14 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
     div.classList.add(wrapperClassName)
     if (svg.parentNode) svg.parentNode.appendChild(div)
 
-    d3.select(svg)
+    select(svg)
       .select(".brush")
       .on("mousedown.tooltip", hide)
   }
 
   function draw(chart) {
     function show() {
-      let [left] = d3.mouse(this)
+      let [left] = mouse(this)
       let point = getPointAt(left, chart)
       if (point && point.count) {
         positionTooltip(div, this, 30)
@@ -42,7 +42,7 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
       }
     }
 
-    d3.select(svg)
+    select(svg)
       .on("mouseout.tooltip", hide)
       .on("mousemove.tooltip", show)
   }
@@ -65,11 +65,11 @@ export const positionTooltip = (
   parent: HTMLElement,
   padding: number
 ) => {
-  const [left] = d3.mouse(parent)
+  const [left] = mouse(parent)
   const {width} = el.getBoundingClientRect()
   const {width: parentWidth} = parent.getBoundingClientRect()
 
-  d3.select(el)
+  select(el)
     .style("left", xPosition(left, width, parentWidth, padding))
     .style("opacity", "1")
 }

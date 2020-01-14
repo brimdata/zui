@@ -10,7 +10,10 @@ let space = {
 
 test("default time span is 30 mins before max time", () => {
   let span = brim.space(space).defaultSpanArgs()
-  expect(span).toEqual([{sec: 1428915885, ns: 0}, {sec: 1428917685, ns: 0}])
+  expect(span).toEqual([
+    {sec: 1428915885, ns: 0},
+    {sec: 1428917685, ns: 0}
+  ])
 })
 
 test("default time span is last 30 minutes if data is recent", () => {

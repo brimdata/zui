@@ -1,5 +1,5 @@
-// flow-typed signature: 736900083d1f92195f5af04fec4c5eb7
-// flow-typed version: 564b2e9f7a/fs-extra_v7.x.x/flow_vx.x.x
+// flow-typed signature: bdb3399dff408f8afecba10818d9587e
+// flow-typed version: c6154227d1/fs-extra_v7.x.x/flow_>=v0.0.x <=v0.103.x
 
 declare module "fs-extra" {
   import type { Stats, ReadStream, WriteStream } from "fs";

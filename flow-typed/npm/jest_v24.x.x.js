@@ -1,5 +1,5 @@
-// flow-typed signature: f5997c5ee181aaeba6fc2d2a2158feb3
-// flow-typed version: cefb07e7f4/jest_v24.x.x/flow_>=v0.39.x
+// flow-typed signature: e5bfb35b37d41e4c5cf768a457706b14
+// flow-typed version: fa3a988c34/jest_v24.x.x/flow_>=v0.39.x <=v0.103.x
 
 type JestMockFn<TArguments: $ReadOnlyArray<*>, TReturn> = {
   (...args: TArguments): TReturn,
@@ -212,25 +212,34 @@ type EnzymeMatchersType = {
   toHaveDisplayName(name: string): void,
 };
 
-// DOM testing library extensions https://github.com/kentcdodds/dom-testing-library#custom-jest-matchers
+// DOM testing library extensions (jest-dom)
+// https://github.com/testing-library/jest-dom
 type DomTestingLibraryType = {
-  toBeDisabled(): void,
-  toBeEnabled(): void,
-  toBeEmpty(): void,
+  /**
+   * @deprecated
+   */
+  toBeInTheDOM(container?: HTMLElement): void,
+
   toBeInTheDocument(): void,
   toBeVisible(): void,
+  toBeEmpty(): void,
+  toBeDisabled(): void,
+  toBeEnabled(): void,
+  toBeInvalid(): void,
+  toBeRequired(): void,
+  toBeValid(): void,
   toContainElement(element: HTMLElement | null): void,
   toContainHTML(htmlText: string): void,
-  toHaveAttribute(name: string, expectedValue?: string): void,
+  toHaveAttribute(attr: string, value?: any): void,
   toHaveClass(...classNames: string[]): void,
   toHaveFocus(): void,
   toHaveFormValues(expectedValues: { [name: string]: any }): void,
   toHaveStyle(css: string): void,
   toHaveTextContent(
-    content: string | RegExp,
+    text: string | RegExp,
     options?: { normalizeWhitespace: boolean }
   ): void,
-  toBeInTheDOM(): void,
+  toHaveValue(value?: string | string[] | number): void,
 };
 
 // Jest JQuery Matchers: https://github.com/unindented/custom-jquery-matchers
@@ -321,6 +330,12 @@ type JestExtendedMatchersType = {
    * @param {Array.<*>} members
    */
   toIncludeAnyMembers(members: any[]): void,
+
+  /**
+   * Use `.toIncludeSameMembers` when checking if two arrays contain equal values, in any order.
+   * @param {Array.<*>} members
+   */
+  toIncludeSameMembers(members: any[]): void,
 
   /**
    * Use `.toSatisfyAll` when you want to use a custom matcher by supplying a predicate function that returns a `Boolean` for all values in an array.
@@ -708,7 +723,7 @@ interface JestExpectType {
   /**
    *
    */
-  toHaveProperty(propPath: string, value?: any): void;
+  toHaveProperty(propPath: string | $ReadOnlyArray<string>, value?: any): void;
   /**
    * Use .toMatch to check that a string matches a regular expression or string.
    */
@@ -929,24 +944,29 @@ type JestSpyType = {
   calls: JestCallsType,
 };
 
+type JestDoneFn = {|
+  (): void,
+  fail: (error: Error) => void,
+|};
+
 /** Runs this function after every test inside this context */
 declare function afterEach(
-  fn: (done: () => void) => ?Promise<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** Runs this function before every test inside this context */
 declare function beforeEach(
-  fn: (done: () => void) => ?Promise<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** Runs this function after all tests have finished inside this context */
 declare function afterAll(
-  fn: (done: () => void) => ?Promise<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** Runs this function before any tests have started inside this context */
 declare function beforeAll(
-  fn: (done: () => void) => ?Promise<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 
@@ -992,7 +1012,7 @@ declare var it: {
    */
   (
     name: JestTestName,
-    fn?: (done: () => void) => ?Promise<mixed>,
+    fn?: (done: JestDoneFn) => ?Promise<mixed>,
     timeout?: number
   ): void,
 
@@ -1003,19 +1023,20 @@ declare var it: {
    * @param {Function} Test
    * @param {number} Timeout for the test, in milliseconds.
    */
-  only(
-    name: JestTestName,
-    fn?: (done: () => void) => ?Promise<mixed>,
-    timeout?: number
-  ): {
+  only: {|
+    (
+      name: JestTestName,
+      fn?: (done: JestDoneFn) => ?Promise<mixed>,
+      timeout?: number
+    ): void,
     each(
       ...table: Array<Array<mixed> | mixed> | [Array<string>, string]
     ): (
       name: JestTestName,
       fn?: (...args: Array<any>) => ?Promise<mixed>,
       timeout?: number
-    ) => void,
-  },
+    ) => void
+  |},
 
   /**
    * Skip running this test
@@ -1026,7 +1047,7 @@ declare var it: {
    */
   skip(
     name: JestTestName,
-    fn?: (done: () => void) => ?Promise<mixed>,
+    fn?: (done: JestDoneFn) => ?Promise<mixed>,
     timeout?: number
   ): void,
 
@@ -1046,7 +1067,7 @@ declare var it: {
    */
   concurrent(
     name: JestTestName,
-    fn?: (done: () => void) => ?Promise<mixed>,
+    fn?: (done: JestDoneFn) => ?Promise<mixed>,
     timeout?: number
   ): void,
 
@@ -1066,7 +1087,7 @@ declare var it: {
 
 declare function fit(
   name: JestTestName,
-  fn: (done: () => void) => ?Promise<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** An individual test unit */

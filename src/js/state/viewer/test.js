@@ -7,7 +7,6 @@ import {
   spliceViewer,
   updateViewerColumns
 } from "./actions"
-import {conn, dns, http} from "../../test/mockLogs"
 import {getViewerColumns, getViewerEndStatus, getViewerLogs} from "./selector"
 import initTestStore from "../../test/initTestStore"
 import tabs from "../tabs"
@@ -20,10 +19,14 @@ beforeEach(() => {
   tabId = tabs.getActive(store.getState())
 })
 
+let conn = [{name: "ts", type: "time", value: "1"}]
+let dns = [{name: "ts", type: "time", value: "2"}]
+let http = [{name: "ts", type: "time", value: "3"}]
+
 test("adding logs to the viewer", () => {
   let state = store.dispatchAll([
-    appendViewerRecords(tabId, [conn(), dns()]),
-    appendViewerRecords(tabId, [http()])
+    appendViewerRecords(tabId, [conn, dns]),
+    appendViewerRecords(tabId, [http])
   ])
 
   expect(getViewerLogs(state).length).toEqual(3)
@@ -31,7 +34,7 @@ test("adding logs to the viewer", () => {
 
 test("clear results", () => {
   let state = store.dispatchAll([
-    appendViewerRecords(tabId, [http()]),
+    appendViewerRecords(tabId, [http]),
     clearViewer(tabId)
   ])
 
@@ -40,9 +43,9 @@ test("clear results", () => {
 
 test("splice results", () => {
   let state = store.dispatchAll([
-    appendViewerRecords(tabId, [http()]),
-    appendViewerRecords(tabId, [http()]),
-    appendViewerRecords(tabId, [http()]),
+    appendViewerRecords(tabId, [http]),
+    appendViewerRecords(tabId, [http]),
+    appendViewerRecords(tabId, [http]),
     spliceViewer(tabId, 1)
   ])
 

@@ -84,8 +84,9 @@ describe("Debug and search helpers", () => {
         )
       )
       .then(() => getDebugAst(app))
-      .then((searchResults) => {
-        expect(searchResults).toMatchSnapshot()
+      .then((ast) => {
+        console.log(JSON.stringify(ast))
+        expect(ast).toMatchSnapshot()
         done()
       })
       .catch((err) => {
@@ -144,7 +145,7 @@ describe("Debug and search helpers", () => {
         try {
           execSync(curlCommand, {stdio: "pipe"})
         } catch (err) {
-          done(err)
+          done.fail(err)
         }
         done()
       })

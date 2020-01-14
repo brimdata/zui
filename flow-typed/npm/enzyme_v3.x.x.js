@@ -1,5 +1,5 @@
-// flow-typed signature: f6bad512110ebc6da85b1ddda297fe3d
-// flow-typed version: f04d291d8b/enzyme_v3.x.x/flow_>=v0.53.x
+// flow-typed signature: 0b94fd0e11be793e7669a21f5bc4289f
+// flow-typed version: c6154227d1/enzyme_v3.x.x/flow_>=v0.53.x <=v0.103.x
 
 declare module "enzyme" {
   declare type PredicateFunction<T: Wrapper<*>> = (

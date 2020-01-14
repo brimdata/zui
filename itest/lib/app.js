@@ -1,14 +1,14 @@
 /* @flow */
-const electronPath = require("electron")
-
 import {Application} from "spectron"
 import * as path from "path"
 
-import {downloadsDir} from "../../src/js/lib/System"
-import {selectors} from "../../src/js/test/integration"
 import {LOG} from "./log"
-import {workspaceLogfile} from "../lib/log"
+import {downloadsDir} from "../../src/js/lib/System"
 import {retryUntil} from "./control"
+import {selectors} from "../../src/js/test/integration"
+import {workspaceLogfile} from "../lib/log"
+
+const electronPath = require("electron")
 
 const appStep = async (stepMessage, f) => {
   LOG.debug(`Starting step "${stepMessage}"`)
@@ -246,13 +246,14 @@ export const killSearch = async (app: Application) => {
 }
 
 export const setDebugQuery = (app: Application, searchText: string) => {
-  return (
-    app.client
-      // A very weird limitation. A keypress listener in the app prevents these
-      // setValue calls from first clearing the input.
-      .setValue(selectors.debugSearch.search, " ")
-      .setValue(selectors.debugSearch.search, searchText)
-  )
+  let selector = selectors.debugSearch.search
+  // React "blur" events prevents this input from being cleared
+  return app.client
+    .getValue(selector)
+    .then((value) => "\uE003".repeat(value.length))
+    .then((backspaces) =>
+      app.client.setValue(selector, backspaces + searchText)
+    )
 }
 
 export const getDebugAst = (app: Application) =>

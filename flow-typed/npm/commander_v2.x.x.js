@@ -1,5 +1,5 @@
-// flow-typed signature: 74acf151cd7a43fec2bcefb6e965afee
-// flow-typed version: 98126aa3f7/commander_v2.x.x/flow_>=v0.28.x
+// flow-typed signature: 83fa81d0568d109ebe28cab28dad9306
+// flow-typed version: c6154227d1/commander_v2.x.x/flow_>=v0.28.x <=v0.103.x
 
 declare module "commander" {
   declare class Command extends events$EventEmitter {

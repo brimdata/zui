@@ -1,5 +1,5 @@
-// flow-typed signature: abe80b5d57d40f13b34f7a7414f1c541
-// flow-typed version: c23239b2a8/moment_v2.x.x/flow_>=v0.25.x
+// flow-typed signature: 62491fb5f1b8d0ce28db6ce91c8599c6
+// flow-typed version: e56c0337dc/moment_v2.x.x/flow_>=v0.25.x <=v0.103.x
 
 type moment$MomentOptions = {
   y?: number | string,
@@ -39,7 +39,7 @@ type moment$MomentObject = {
 type moment$MomentCreationData = {
   input: string,
   format: string,
-  locale: Object,
+  locale: {},
   isUTC: boolean,
   strict: boolean
 };
@@ -111,8 +111,8 @@ declare class moment$MomentDuration {
   asMonths(): number;
   years(): number;
   asYears(): number;
-  add(value: number | moment$MomentDuration | Object, unit?: string): this;
-  subtract(value: number | moment$MomentDuration | Object, unit?: string): this;
+  add(value: number | moment$MomentDuration | {}, unit?: string): this;
+  subtract(value: number | moment$MomentDuration | {}, unit?: string): this;
   as(unit: string): number;
   get(unit: string): number;
   toJSON(): string;
@@ -271,13 +271,9 @@ declare class moment$Moment {
   static min(...dates: Array<moment$Moment>): moment$Moment;
   static min(dates: Array<moment$Moment>): moment$Moment;
   add(
-    value: number | moment$MomentDuration | moment$Moment | Object,
-    unit?: string
-  ): this;
+    value: number | moment$MomentDuration | moment$Moment | {}, unit?: string): this;
   subtract(
-    value: number | moment$MomentDuration | moment$Moment | string | Object,
-    unit?: string
-  ): this;
+    value: number | moment$MomentDuration | moment$Moment | string | {}, unit?: string): this;
   startOf(unit: string): this;
   endOf(unit: string): this;
   local(): this;
@@ -345,11 +341,11 @@ declare class moment$Moment {
   clone(): moment$Moment;
   static isMoment(obj: any): boolean;
   static isDate(obj: any): boolean;
-  static updateLocale(locale: string, localeData?: ?Object): void;
-  static defineLocale(locale: string, localeData?: ?Object): void;
-  static locale(locale?: string, localeData?: Object): string;
+  static updateLocale(locale: string, localeData?: ?{}): void;
+  static defineLocale(locale: string, localeData?: ?{}): void;
+  static locale(locale?: string, localeData?: {}): string;
   static locale(locales: Array<string>): string;
-  locale(locale: string, customization?: Object | null): moment$Moment;
+  locale(locale: string, customization?: {} | null): moment$Moment;
   locale(): string;
   static months(): Array<string>;
   static monthsShort(): Array<string>;
@@ -365,7 +361,7 @@ declare class moment$Moment {
   static localeData(key?: string): moment$LocaleData;
   localeData(): moment$LocaleData;
   static duration(
-    value: number | Object | string,
+    value: number | {} | string,
     unit?: string
   ): moment$MomentDuration;
   static isDuration(obj: any): boolean;

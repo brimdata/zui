@@ -58,7 +58,12 @@ export default function(): Pen {
           .attr("transform", `translate(6, ${y})`)
           .attr(
             "points",
-            [[5, 0], [width, 0], [width, height], [5, height]]
+            [
+              [5, 0],
+              [width, 0],
+              [width, height],
+              [5, height]
+            ]
               .map((a) => a.join(","))
               .join(" ")
           )

@@ -18,50 +18,35 @@ export const getSearchBarInputValue = createSelector<
   void,
   string,
   SearchBar
->(
-  getSearchBar,
-  (searchBar) => searchBar.current
-)
+>(getSearchBar, (searchBar) => searchBar.current)
 
 export const getSearchBarPins = createSelector<
   State,
   void,
   string[],
   SearchBar
->(
-  getSearchBar,
-  (searchBar) => searchBar.pinned
-)
+>(getSearchBar, (searchBar) => searchBar.pinned)
 
 export const getSearchBarPreviousInputValue = createSelector<
   State,
   void,
   string,
   SearchBar
->(
-  getSearchBar,
-  (searchBar) => searchBar.previous
-)
+>(getSearchBar, (searchBar) => searchBar.previous)
 
 export const getSearchBarEditingIndex = createSelector<
   State,
   void,
   number | null,
   SearchBar
->(
-  getSearchBar,
-  (searchBar) => searchBar.editing
-)
+>(getSearchBar, (searchBar) => searchBar.editing)
 
 export const getSearchBarError = createSelector<
   State,
   void,
   string | null,
   SearchBar
->(
-  getSearchBar,
-  (searchBar) => searchBar.error
-)
+>(getSearchBar, (searchBar) => searchBar.error)
 
 export const getSearchProgram = createSelector<State, void, *, *, *>(
   getSearchBarPins,
