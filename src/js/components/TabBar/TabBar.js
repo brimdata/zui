@@ -38,12 +38,12 @@ export default function TabBar() {
               index: i,
               id: tab.id,
               onDown: () => ctl.onTabClick(tab.id),
-              moveTo: (index) => ctl.onTabMove(tab.id, index)
+              onChange: ctl.onTabMove
             })}
             key={tab.id}
             loading={tabIsFetching(tab)}
-            title={brim.tab(tab).title()}
-            style={layout.getStyle(i)}
+            title={tab.id + "  ::  " + brim.tab(tab).title()}
+            style={layout.getStyle(tab.id)}
             removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
             className={classNames({
               active: tab.id === ctl.activeId

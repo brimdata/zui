@@ -44,8 +44,8 @@ export default function(count: number, calcWidths: Function) {
       }
     },
 
-    onTabMove(id: string, index: number) {
-      dispatch(Tabs.move(id, index))
+    onTabMove(indices: number[]) {
+      dispatch(Tabs.order(indices))
     }
   }
 }

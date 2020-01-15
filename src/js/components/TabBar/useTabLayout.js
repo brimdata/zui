@@ -18,50 +18,84 @@ function getHoverIndex(startIndex, width, dx) {
   return parseInt(midX / width)
 }
 
-const fn = (
-  order,
-  width,
-  first,
-  down,
-  originalIndex,
-  currentIndex = -1,
-  dx
-) => (index) => {
-  if (down && originalIndex === index) {
-    return {x: currentIndex * width + dx, immediate: true}
-  } else {
-    return {x: order.indexOf(index) * width, immediate: first, config}
-  }
-}
-
 const toStyle = ({x, width}) => ({
   transform: x.interpolate((x) => `translateX(${x}px)`),
   width
 })
 
+function mapIds(tabs) {
+  let map = new Map()
+  tabs.forEach((t, i) => map.set(t.id, i))
+  return map
+}
+
+const idle = (springOrder: number[], width: number, first: boolean) => (
+  springIndex: number
+) => {
+  return {x: springOrder.indexOf(springIndex) * width, config, immediate: first}
+}
+
+const dragging = (
+  springOrder: number[],
+  dragSpringIndex: number,
+  dragIndex: number,
+  width: number,
+  dx: number
+) => (springIndex: number) => {
+  if (dragSpringIndex === springIndex) {
+    return {x: dragIndex * width + dx, immediate: true}
+  } else {
+    return {x: springOrder.indexOf(springIndex) * width, immediate: false}
+  }
+}
+
+function mapSpringOrder(
+  ids: string[],
+  order: number[],
+  map: Map<string, number>
+): number[] {
+  // $FlowFixMe
+  return order.map<number>((i) => map.get(ids[i]))
+}
+
 export default function(tabs: TabState[], width: number) {
-  let order = useRef(tabs.map((_, i) => i))
+  let map = useRef(mapIds(tabs))
   let first = useFirst(width === 0)
-  let [springs, set] = useSprings(tabs.length, fn(order.current, width, first))
+  let order = tabs.map((_, i) => i)
+  let ids = tabs.map((t) => t.id)
+  // console.log(ids, order, map.current)
+  let springOrder = mapSpringOrder(ids, order, map.current)
+  let [springs, set] = useSprings(tabs.length, idle(springOrder, width, first))
 
   useEffect(() => {
-    order.current = tabs.map((_, i) => i)
-    set(fn(order.current, width, first))
-  }, [tabs, width])
+    map.current = mapIds(tabs)
+  }, [tabs.length])
+
+  useEffect(() => {
+    set(idle(springOrder, width, first))
+  }, [tabs.length, width])
 
   let drag = useDrag(({args, dx, type}) => {
-    if (type === "down") args.onDown()
-    let currentIndex = order.current.indexOf(args.index)
-    let hoverIndex = getHoverIndex(currentIndex, width, dx)
-    let newOrder = lib.move(order.current, currentIndex, hoverIndex)
-    set(
-      fn(newOrder, width, false, type === "move", args.index, currentIndex, dx)
-    )
-    if (type === "up") order.current = newOrder
+    if (type === "down") {
+      args.onDown()
+    }
+    // $FlowFixMe
+    let dragSpringIndex: number = map.current.get(args.id)
+    let dragIndex = ids.indexOf(args.id)
+    let dragOverIndex = getHoverIndex(dragIndex, width, dx)
+    let newOrder = lib.move(order, dragIndex, dragOverIndex)
+    let newSpringOrder = mapSpringOrder(ids, newOrder, map.current)
+
+    set(dragging(newSpringOrder, dragSpringIndex, dragIndex, width, dx))
+
+    if (type == "up") {
+      args.onChange(newOrder)
+      set(idle(newSpringOrder, width, false))
+    }
   })
 
   return {
-    getStyle: (i: number) => toStyle({...springs[i], width}),
+    getStyle: (id: string) => toStyle({...springs[map.current.get(id)], width}),
     drag
   }
 }
