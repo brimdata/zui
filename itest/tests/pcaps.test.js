@@ -60,7 +60,7 @@ describe("Test PCAPs", () => {
     "Clicking on Download PCAPS from conn log entry downloads deterministically-formed PCAP file",
     (done) => {
       let downloadPcapFromConnTuple = async () => {
-        let program = "_path=conn duration!=nil | sort -r ts, uid"
+        let program = "_path=conn duration!=null | sort -r ts, uid"
         await logIn(app)
         await writeSearch(app, program)
         await startSearch(app)
@@ -99,7 +99,7 @@ describe("Test PCAPs", () => {
       // It's left on because I can't fix/disable it, and I want to call
       // attention to getting it fixed right away.
       let downloadPcapFromConnTuple = async () => {
-        let program = "_path=conn duration=nil | sort -r ts, uid"
+        let program = "_path=conn duration=null | sort -r ts, uid"
         await logIn(app)
         await writeSearch(app, program)
         await startSearch(app)
