@@ -12,7 +12,6 @@ import type {ModalState} from "./Modal/types"
 import type {NoticeState} from "./Notice/types"
 import type {SpacesState} from "./Spaces/types"
 import type {TabsState} from "./Tabs/types"
-import type {TasksState} from "./tasks"
 import type {View} from "./reducers/view"
 import BoomClient from "../services/BoomClient"
 
@@ -29,7 +28,6 @@ export type State = {
   errors: ErrorsState,
   spaces: SpacesState,
   boomd: Boomd,
-  tasks: TasksState,
   logDetails: LogDetails,
   view: View,
   investigation: Investigation,
