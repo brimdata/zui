@@ -2,7 +2,7 @@
 
 import {createSelector} from "reselect"
 
-import type {Cluster, ClustersState} from "../clusters/types"
+import type {Cluster, ClustersState} from "../Clusters/types"
 import type {Space, SpacesState} from "../spaces/types"
 import type {State} from "../types"
 import type {TabState} from "./types"

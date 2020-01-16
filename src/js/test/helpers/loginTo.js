@@ -1,7 +1,7 @@
 /* @flow */
 
 import {initSpace} from "../../flows/initSpace"
-import Clusters from "../../state/clusters"
+import Clusters from "../../state/Clusters"
 import MockBoomClient from "../MockBoomClient"
 import Search from "../../state/search"
 import fixtures from "../fixtures"

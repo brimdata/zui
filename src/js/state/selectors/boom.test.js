@@ -2,7 +2,7 @@
 
 import {getBoomOptions} from "./boom"
 import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
-import Clusters from "../clusters"
+import Clusters from "../Clusters"
 import initTestStore from "../../test/initTestStore"
 import search from "../search"
 import tab from "../tab"
