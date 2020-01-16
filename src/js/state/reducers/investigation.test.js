@@ -2,7 +2,7 @@
 
 import {createFinding, deleteFindingByTs} from "../actions"
 import {getCurrentFinding, getInvestigation} from "./investigation"
-import History from "../history"
+import History from "../History"
 import brim from "../../brim"
 import initTestStore from "../../test/initTestStore"
 

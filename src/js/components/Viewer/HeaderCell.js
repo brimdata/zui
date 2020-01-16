@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux"
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import type {TableColumn} from "../../state/columns/types"
+import type {TableColumn} from "../../state/Columns/types"
 import {appendQuerySortBy} from "../../flows/searchBar/actions"
 import Columns from "../../state/Columns"
 import IconAsc from "../icons/icon-asc.svg"
