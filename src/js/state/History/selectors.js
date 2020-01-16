@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {TabState} from "../tab/types"
+import type {TabState} from "../Tab/types"
 import brim from "../../brim"
 
 export default {

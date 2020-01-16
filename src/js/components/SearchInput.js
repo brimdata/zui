@@ -11,11 +11,11 @@ import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
 import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
-import PopMenuPointy from "./PopMenu/PopMenuPointy"
-import ThreeDotButton from "./ThreeDotButton"
 import Modal from "../state/Modal"
+import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import Tab from "../state/Tab"
+import ThreeDotButton from "./ThreeDotButton"
 import submitSearch from "../flows/submitSearch"
-import tab from "../state/tab"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -71,7 +71,7 @@ export default function SearchInput() {
 
 function Menu() {
   let dispatch = useDispatch()
-  let isFetching = useSelector(tab.isFetching)
+  let isFetching = useSelector(Tab.isFetching)
 
   let menu = [
     {label: "Debug query", click: () => dispatch(Modal.show("debug"))},
@@ -93,7 +93,7 @@ function Menu() {
 
 function ActionButton() {
   let next = useSelector(getSearchRecord)
-  let prev = useSelector(tab.currentEntry)
+  let prev = useSelector(Tab.currentEntry)
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
   let onClick = () => dispatch(submitSearch())

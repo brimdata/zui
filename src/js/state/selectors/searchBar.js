@@ -5,7 +5,7 @@ import trim from "lodash/trim"
 
 import type {SearchBar} from "../reducers/searchBar"
 import type {State} from "../types"
-import type {TabState} from "../tab/types"
+import type {TabState} from "../Tab/types"
 import tabs from "../tabs"
 
 export const getSearchBar = createSelector<State, void, SearchBar, TabState>(

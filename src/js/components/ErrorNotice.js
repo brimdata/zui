@@ -7,7 +7,7 @@ import {capitalize} from "../lib/Str"
 import {initSpace} from "../flows/initSpace"
 import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 import useEscapeKey from "./hooks/useEscapeKey"
 
 export default function ErrorNotice() {

@@ -1,6 +1,6 @@
 /* @flow */
 import type {SearchState} from "../Search/types"
-import type {TabState} from "../tab/types"
+import type {TabState} from "../Tab/types"
 
 export type TabsState = {active: string, data: TabState[]}
 export type TabActions =

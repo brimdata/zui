@@ -19,11 +19,11 @@ import {open} from "../../lib/System"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
+import Modal from "../../state/Modal"
 import action from "./action"
 import brim from "../../brim"
-import Modal from "../../state/Modal"
 import submitSearch from "../../flows/submitSearch"
-import tab from "../../state/tab"
+import tab from "../../state/Tab"
 import virusTotal from "../../services/virusTotal"
 
 function buildActions() {

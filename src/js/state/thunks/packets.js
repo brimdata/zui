@@ -10,7 +10,7 @@ import {
 } from "../actions"
 import BoomClient from "../../services/BoomClient"
 import Log from "../../models/Log"
-import Tab from "../tab"
+import Tab from "../Tab"
 
 export const fetchPackets = (log: Log) => (
   dispatch: Function,

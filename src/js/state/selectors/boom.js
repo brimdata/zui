@@ -1,9 +1,8 @@
 /* @flow */
 
 import type {State} from "../types"
-
 import {getUseBoomCache, getUseBoomIndex} from "../reducers/boomd"
-import Tab from "../tab"
+import Tab from "../Tab"
 
 export const getBoomOptions = (state: State) => {
   let credentials = Tab.cluster(state)

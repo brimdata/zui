@@ -31,7 +31,7 @@ import Pane, {
 } from "./Pane"
 import RightPaneCollapser from "./RightPaneCollapser"
 import Star from "./icons/star-sm.svg"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as logDetails from "../state/selectors/logDetails"
 import * as view from "../state/reducers/view"

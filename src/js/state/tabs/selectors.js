@@ -2,7 +2,7 @@
 import {createSelector} from "reselect"
 
 import type {State} from "../types"
-import type {TabState} from "../tab/types"
+import type {TabState} from "../Tab/types"
 import type {TabsState} from "./types"
 
 const getData = (state: State) => state.tabs.data

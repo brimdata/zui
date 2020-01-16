@@ -3,7 +3,7 @@
 import {useDispatch, useSelector} from "react-redux"
 
 import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 import brim from "../brim"
 import search from "../state/Search"
 import submitSearch from "../flows/submitSearch"

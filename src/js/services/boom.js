@@ -8,7 +8,7 @@ import {getBoomOptions} from "../state/selectors/boom"
 import ErrorFactory from "../models/ErrorFactory"
 import Errors from "../state/Errors"
 import Notice from "../state/Notice"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
 

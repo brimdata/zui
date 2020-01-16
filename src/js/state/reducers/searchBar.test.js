@@ -29,9 +29,9 @@ import {goBack, goForward} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
 import Field from "../../models/Field"
 import Search from "../Search"
+import Tab from "../Tab"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
-import tab from "../tab"
 
 let store
 beforeEach(() => {
@@ -313,7 +313,7 @@ test("goBack", () => {
     goBack()
   ])
 
-  expect(tab.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
+  expect(Tab.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
   expect(getSearchBarInputValue(state)).toBe("hello")
 })
 
@@ -337,7 +337,7 @@ test("goForward", () => {
   ])
 
   expect(getSearchBarInputValue(state)).toBe("goodbye")
-  expect(tab.getSpanAsDates(state)).toEqual([new Date(3), new Date(4)])
+  expect(Tab.getSpanAsDates(state)).toEqual([new Date(3), new Date(4)])
 })
 
 test("clearSearchBar", () => {

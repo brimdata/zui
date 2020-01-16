@@ -4,7 +4,7 @@ import {createSelector} from "reselect"
 
 import type {RecordData} from "../../types/records"
 import type {State} from "../types"
-import type {TabState} from "../tab/types"
+import type {TabState} from "../Tab/types"
 import type {ViewerState} from "./types"
 import Log from "../../models/Log"
 import brim from "../../brim"

@@ -8,7 +8,7 @@ import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
 import Errors from "../Errors"
 import History from "../History"
-import Tab from "../tab"
+import Tab from "../Tab"
 import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
 

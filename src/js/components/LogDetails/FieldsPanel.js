@@ -7,7 +7,7 @@ import {getSearchProgram} from "../../state/selectors/searchBar"
 import Columns from "../../state/Columns"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import Tab from "../../state/tab"
+import Tab from "../../state/Tab"
 import VerticalTable from "../Tables/VerticalTable"
 import menu from "../../electron/menu"
 

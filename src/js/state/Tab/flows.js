@@ -2,7 +2,7 @@
 
 import type {Thunk} from "../types"
 import Search from "../Search"
-import Tab from "./"
+import Tab from "../Tab"
 import brim, {type Ts} from "../../brim"
 
 export default {

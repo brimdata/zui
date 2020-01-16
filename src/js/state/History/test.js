@@ -2,7 +2,7 @@
 
 import {changeSearchBarInput} from "../actions"
 import History from "./"
-import Tab from "../tab"
+import Tab from "../Tab"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
 

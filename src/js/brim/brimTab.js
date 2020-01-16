@@ -1,5 +1,6 @@
 /* @flow */
-import type {TabState} from "../state/tab/types"
+
+import type {TabState} from "../state/Tab/types"
 import lib from "../lib"
 
 export default function(tab: TabState) {

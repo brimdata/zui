@@ -3,10 +3,10 @@
 import {isEmpty} from "lodash"
 
 import type {TabActions, TabsState} from "./types"
-import type {TabState} from "../tab/types"
+import type {TabState} from "../Tab/types"
 import {last} from "../../lib/Array"
 import lib from "../../lib"
-import tabReducer from "../tab/reducer"
+import tabReducer from "../Tab/reducer"
 
 let firstTab = tabReducer(undefined, {type: "INIT"})
 let init = {

@@ -3,7 +3,7 @@
 import type {SearchRecord} from "../../types"
 import type {State} from "../types"
 import {getSearchBar} from "./searchBar"
-import Tab from "../tab"
+import Tab from "../Tab"
 
 export const getSearchRecord = (state: State): SearchRecord => {
   return {

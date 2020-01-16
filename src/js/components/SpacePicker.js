@@ -8,7 +8,7 @@ import {refreshSpaces} from "../flows/space/thunks"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import Spaces from "../state/Spaces"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 
 export default function SpacePicker() {
   let currentSpace = useSelector(Tab.spaceName) || "No spaces"

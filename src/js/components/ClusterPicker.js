@@ -8,7 +8,7 @@ import {disconnectCluster, switchCluster} from "../state/Clusters/flows"
 import Clusters from "../state/Clusters"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 
 export default function CluterPicker() {
   const current = useSelector(Tab.cluster)

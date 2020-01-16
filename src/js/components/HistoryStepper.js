@@ -7,7 +7,7 @@ import type {DispatchProps} from "../state/types"
 import {goBack, goForward} from "../state/thunks/searchBar"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type StateProps = {

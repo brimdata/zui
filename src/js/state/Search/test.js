@@ -3,7 +3,7 @@
 import brim from "../../brim"
 import initTestStore from "../../test/initTestStore"
 import search from "./"
-import tab from "../tab"
+import tab from "../Tab"
 
 let ts1 = {sec: 1, ns: 0}
 let ts2 = {sec: 2, ns: 1}

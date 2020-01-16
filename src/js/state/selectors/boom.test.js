@@ -4,8 +4,8 @@ import {getBoomOptions} from "./boom"
 import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
 import Clusters from "../Clusters"
 import Search from "../Search"
+import Tab from "../Tab"
 import initTestStore from "../../test/initTestStore"
-import tab from "../tab"
 
 test("#getBoomOptions", () => {
   const store = initTestStore()
@@ -19,7 +19,7 @@ test("#getBoomOptions", () => {
     }),
     Search.setCluster("abc"),
     Search.setSpanArgsFromDates([new Date(0), new Date(1)]),
-    tab.computeSpan(),
+    Tab.computeSpan(),
     setCurrentSpaceName("work-zone"),
     useBoomCache(true),
     useBoomIndex(false)

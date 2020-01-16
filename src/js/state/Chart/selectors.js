@@ -1,6 +1,7 @@
 /* @flow */
-import type {TabState} from "../tab/types"
-import activeTabSelect from "../tab/activeTabSelect"
+
+import type {TabState} from "../Tab/types"
+import activeTabSelect from "../Tab/activeTabSelect"
 
 export default {
   getRecords: activeTabSelect((tab: TabState) => tab.chart.records),

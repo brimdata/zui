@@ -6,7 +6,7 @@ import {setCurrentSpaceName} from "../state/actions"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
 import search from "../state/Search"
-import tab from "../state/tab"
+import tab from "../state/Tab"
 import tabs from "../state/tabs"
 
 const records = [
