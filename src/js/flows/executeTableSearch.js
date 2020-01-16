@@ -3,13 +3,7 @@
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {SearchArgs} from "./searchArgs"
 import type {Thunk} from "../state/types"
-import {
-  appendViewerRecords,
-  setViewerEndStatus,
-  setViewerStats,
-  setViewerStatus,
-  updateViewerColumns
-} from "../state/viewer/actions"
+import Viewer from "../state/viewer"
 import brim from "../brim"
 import executeSearch from "./executeSearch"
 
@@ -23,18 +17,18 @@ export default function executeTableSearch({
     let table = brim
       .search(program, span, space)
       .id("Table")
-      .status((status) => dispatch(setViewerStatus(tabId, status)))
+      .status((status) => dispatch(Viewer.setStatus(tabId, status)))
       .chan(0, (records, types) => {
-        dispatch(appendViewerRecords(tabId, records))
-        dispatch(updateViewerColumns(tabId, types))
+        dispatch(Viewer.appendRecords(tabId, records))
+        dispatch(Viewer.updateColumns(tabId, types))
       })
-      .stats((stats) => dispatch(setViewerStats(tabId, stats)))
+      .stats((stats) => dispatch(Viewer.setStats(tabId, stats)))
       .end((_id, count) =>
-        dispatch(setViewerEndStatus(tabId, endStatus(count)))
+        dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
       )
 
-    dispatch(setViewerStatus(tabId, "FETCHING"))
-    dispatch(setViewerEndStatus(tabId, "FETCHING"))
+    dispatch(Viewer.setStatus(tabId, "FETCHING"))
+    dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
     return dispatch(executeSearch(table))
   }
 }

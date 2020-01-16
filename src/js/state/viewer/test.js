@@ -1,15 +1,8 @@
 /* @flow */
 
-import {
-  appendViewerRecords,
-  clearViewer,
-  setViewerEndStatus,
-  spliceViewer,
-  updateViewerColumns
-} from "./actions"
-import {getViewerColumns, getViewerEndStatus, getViewerLogs} from "./selector"
-import initTestStore from "../../test/initTestStore"
 import Tabs from "../Tabs"
+import Viewer from "../viewer"
+import initTestStore from "../../test/initTestStore"
 
 let store
 let tabId
@@ -25,60 +18,60 @@ let http = [{name: "ts", type: "time", value: "3"}]
 
 test("adding logs to the viewer", () => {
   let state = store.dispatchAll([
-    appendViewerRecords(tabId, [conn, dns]),
-    appendViewerRecords(tabId, [http])
+    Viewer.appendRecords(tabId, [conn, dns]),
+    Viewer.appendRecords(tabId, [http])
   ])
 
-  expect(getViewerLogs(state).length).toEqual(3)
+  expect(Viewer.getLogs(state).length).toEqual(3)
 })
 
 test("clear results", () => {
   let state = store.dispatchAll([
-    appendViewerRecords(tabId, [http]),
-    clearViewer(tabId)
+    Viewer.appendRecords(tabId, [http]),
+    Viewer.clear(tabId)
   ])
 
-  expect(getViewerLogs(state)).toEqual([])
+  expect(Viewer.getLogs(state)).toEqual([])
 })
 
 test("splice results", () => {
   let state = store.dispatchAll([
-    appendViewerRecords(tabId, [http]),
-    appendViewerRecords(tabId, [http]),
-    appendViewerRecords(tabId, [http]),
-    spliceViewer(tabId, 1)
+    Viewer.appendRecords(tabId, [http]),
+    Viewer.appendRecords(tabId, [http]),
+    Viewer.appendRecords(tabId, [http]),
+    Viewer.splice(tabId, 1)
   ])
 
-  expect(getViewerLogs(state).length).toEqual(1)
+  expect(Viewer.getLogs(state).length).toEqual(1)
 })
 
 test("results complete", () => {
-  let state = store.dispatchAll([setViewerEndStatus(tabId, "COMPLETE")])
+  let state = store.dispatchAll([Viewer.setEndStatus(tabId, "COMPLETE")])
 
-  expect(getViewerEndStatus(state)).toBe("COMPLETE")
+  expect(Viewer.getEndStatus(state)).toBe("COMPLETE")
 })
 
 test("results incomplete", () => {
-  let state = store.dispatchAll([setViewerEndStatus(tabId, "INCOMPLETE")])
+  let state = store.dispatchAll([Viewer.setEndStatus(tabId, "INCOMPLETE")])
 
-  expect(getViewerEndStatus(state)).toBe("INCOMPLETE")
+  expect(Viewer.getEndStatus(state)).toBe("INCOMPLETE")
 })
 
 test("results limited", () => {
-  let state = store.dispatchAll([setViewerEndStatus(tabId, "LIMIT")])
+  let state = store.dispatchAll([Viewer.setEndStatus(tabId, "LIMIT")])
 
-  expect(getViewerEndStatus(state)).toBe("LIMIT")
+  expect(Viewer.getEndStatus(state)).toBe("LIMIT")
 })
 
 test("update columns with same tds", () => {
   let descriptor1 = {"1": [{name: "hello", type: "string"}]}
   let descriptor2 = {"1": [{name: "world", type: "string"}]}
   let state = store.dispatchAll([
-    updateViewerColumns(tabId, descriptor1),
-    updateViewerColumns(tabId, descriptor2)
+    Viewer.updateColumns(tabId, descriptor1),
+    Viewer.updateColumns(tabId, descriptor2)
   ])
 
-  expect(getViewerColumns(state)).toEqual({
+  expect(Viewer.getColumns(state)).toEqual({
     "9d14c2039a78d76760aae879c7fd2c82": [{name: "hello", type: "string"}],
     "71f1b421963d31952e15edf7e3957a81": [{name: "world", type: "string"}]
   })

@@ -1,11 +1,11 @@
 /* @flow */
 
-import type {TabState} from "../Tab/types"
-
-const selectors = {
-  isFetching: (state: TabState) => state.viewer.status === "FETCHING"
-}
+import actions from "./actions"
+import reducer from "./reducer"
+import selectors from "./selectors"
 
 export default {
-  ...selectors
+  ...selectors,
+  ...actions,
+  reducer
 }

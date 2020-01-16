@@ -1,6 +1,5 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import {clearViewer} from "../state/viewer/actions"
 import {getSearchProgram} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
 import {submittingSearchBar} from "../state/actions"
@@ -8,6 +7,7 @@ import {validateProgram} from "../state/thunks/searchBar"
 import History from "../state/History"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
+import Viewer from "../state/viewer"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
@@ -29,7 +29,7 @@ export default function submitSearch(save: boolean = true): Thunk {
       space: Tab.spaceName(state),
       tabId
     }
-    dispatch(clearViewer(tabId))
+    dispatch(Viewer.clear(tabId))
 
     switch (searchArgs.type(tabData)) {
       case "analytic":

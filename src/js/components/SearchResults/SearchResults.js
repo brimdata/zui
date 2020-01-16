@@ -12,11 +12,6 @@ import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
 import {getSearchProgram} from "../../state/selectors/searchBar"
 import {getTimeZone} from "../../state/reducers/view"
-import {
-  getViewerEndStatus,
-  getViewerLogs,
-  getViewerStatus
-} from "../../state/viewer/selector"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
@@ -25,7 +20,8 @@ import LogRow from "../LogRow"
 import NoResults from "./NoResults"
 import Tab from "../../state/Tab"
 import TableColumns from "../../models/TableColumns"
-import Viewer from "../Viewer/Viewer"
+import Viewer from "../../state/viewer"
+import ViewerComponent from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
@@ -109,7 +105,7 @@ export default function SearchResults(props: Props) {
 
   return (
     <div>
-      <Viewer
+      <ViewerComponent
         logs={logs}
         renderRow={renderRow}
         chunker={chunker}
@@ -125,12 +121,12 @@ export default function SearchResults(props: Props) {
 
 function stateToProps(state: State) {
   return {
-    isFetching: getViewerStatus(state) === "FETCHING",
-    isIncomplete: getViewerEndStatus(state) === "INCOMPLETE",
+    isFetching: Viewer.getStatus(state) === "FETCHING",
+    isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
     timeZone: getTimeZone(state),
     selectedLog: buildLogDetail(state),
-    logs: getViewerLogs(state),
+    logs: Viewer.getLogs(state),
     program: getSearchProgram(state),
     space: Tab.space(state)
   }

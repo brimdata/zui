@@ -6,17 +6,17 @@ import {
   removeAllSearchBarPins,
   setCurrentSpaceName
 } from "../state/actions"
-import {clearViewer} from "../state/viewer/actions"
 import {fetchSpace, fetchSpaces} from "../services/boom"
 import ErrorFactory from "../models/ErrorFactory"
 import Modal from "../state/Modal"
 import Notice from "../state/Notice"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import Tabs from "../state/Tabs"
+import Viewer from "../state/viewer"
 import brim from "../brim"
 import search from "../state/Search"
 import submitSearch from "./submitSearch"
-import Tabs from "../state/Tabs"
 
 export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
   let tabId = Tabs.getActive(getState())
@@ -35,7 +35,7 @@ export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
 
 function checkDataExists(dispatch, data, tabId) {
   if (brim.space(data).empty()) {
-    dispatch(clearViewer(tabId))
+    dispatch(Viewer.clear(tabId))
     dispatch(Modal.show("nodata"))
   }
 }

@@ -5,9 +5,9 @@ import React from "react"
 import classNames from "classnames"
 
 import type {State} from "../state/types"
-import {getViewerStatus} from "../state/viewer/selector"
 import LoadingMessage from "./LoadingMessage"
 import TableSearchStats from "./TableSearchStats"
+import Viewer from "../state/viewer"
 
 type StateProps = {|
   isFetching: boolean
@@ -39,7 +39,7 @@ export default class StatusBar extends React.Component<Props> {
 }
 
 const stateToProps = (state: State): StateProps => ({
-  isFetching: getViewerStatus(state) === "FETCHING"
+  isFetching: Viewer.getStatus(state) === "FETCHING"
 })
 
 export const XStatusBar = connect<Props, {||}, _, _, _, _>(stateToProps)(

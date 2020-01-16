@@ -1,27 +1,9 @@
 /* @flow */
 
-import type {
-  VIEWER_CLEAR,
-  VIEWER_COLUMNS,
-  VIEWER_END_STATUS,
-  VIEWER_RECORDS,
-  VIEWER_SPLICE,
-  VIEWER_STATS,
-  VIEWER_STATUS,
-  ViewerState
-} from "./types"
+import type {ViewerAction, ViewerState} from "./types"
 import {concat, splice} from "../../lib/Array"
 
-type Action =
-  | VIEWER_CLEAR
-  | VIEWER_SPLICE
-  | VIEWER_STATUS
-  | VIEWER_RECORDS
-  | VIEWER_COLUMNS
-  | VIEWER_END_STATUS
-  | VIEWER_STATS
-
-const init = {
+const init: ViewerState = {
   records: [],
   endStatus: "INCOMPLETE",
   status: "INIT",
@@ -31,7 +13,7 @@ const init = {
 
 export default function(
   state: ViewerState = init,
-  action: Action
+  action: ViewerAction
 ): ViewerState {
   switch (action.type) {
     case "VIEWER_RECORDS":

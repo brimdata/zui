@@ -3,18 +3,17 @@ import {isEmpty} from "lodash"
 
 import type {Thunk} from "../state/types"
 import {getSearchProgram} from "../state/selectors/searchBar"
-import {getViewerLogs} from "../state/viewer/selector"
 import {indexOfLastChange} from "../lib/Array"
-import {spliceViewer} from "../state/viewer/actions"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
+import Viewer from "../state/viewer"
 import brim from "../brim"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let state = getState()
-  let logs = getViewerLogs(state)
+  let logs = Viewer.getLogs(state)
   let currentSpan = Tab.getSpanAsDates(state)
   let tabId = Tabs.getActive(state)
   let [spliceIndex, span] = nextPageArgs(logs, currentSpan)
@@ -22,7 +21,7 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let space = Tab.spaceName(state)
   let spanFocus = null
 
-  dispatch(spliceViewer(tabId, spliceIndex))
+  dispatch(Viewer.splice(tabId, spliceIndex))
   dispatch(
     executeTableSearch(
       searchArgs.events({tabId, program, span, spanFocus, space})

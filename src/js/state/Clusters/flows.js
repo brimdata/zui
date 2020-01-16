@@ -3,7 +3,6 @@
 import type {Cluster} from "./types"
 import type {Thunk} from "../types"
 import {clearNotifications, clearSearchBar, clearStarredLogs} from "../actions"
-import {clearViewer} from "../viewer/actions"
 import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
 import Errors from "../Errors"
@@ -12,6 +11,7 @@ import History from "../History"
 import Search from "../Search"
 import Spaces from "../Spaces"
 import Tabs from "../Tabs"
+import Viewer from "../viewer"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
@@ -44,7 +44,7 @@ function clearClusterState(dispatch, tabId: string) {
   dispatch(clearSearchBar())
   dispatch(clearStarredLogs())
   dispatch(History.clear())
-  dispatch(clearViewer(tabId))
+  dispatch(Viewer.clear(tabId))
   dispatch(Handlers.abortAll())
   dispatch(Errors.clearErrors())
   dispatch(clearNotifications())

@@ -16,49 +16,36 @@ import type {
 } from "./types"
 import {hashDescriptorKeys} from "./hashDescriptorKeys"
 
-export function clearViewer(tabId: string): VIEWER_CLEAR {
-  return {type: "VIEWER_CLEAR", tabId}
-}
+export default {
+  clear(tabId: string): VIEWER_CLEAR {
+    return {type: "VIEWER_CLEAR", tabId}
+  },
 
-export function spliceViewer(tabId: string, index: number): VIEWER_SPLICE {
-  return {type: "VIEWER_SPLICE", index, tabId}
-}
+  splice(tabId: string, index: number): VIEWER_SPLICE {
+    return {type: "VIEWER_SPLICE", index, tabId}
+  },
 
-export function setViewerStatus(
-  tabId: string,
-  status: SearchStatus
-): VIEWER_STATUS {
-  return {type: "VIEWER_STATUS", status, tabId}
-}
+  setStatus(tabId: string, status: SearchStatus): VIEWER_STATUS {
+    return {type: "VIEWER_STATUS", status, tabId}
+  },
 
-export function setViewerEndStatus(
-  tabId: string,
-  status: ViewerStatus
-): VIEWER_END_STATUS {
-  return {type: "VIEWER_END_STATUS", status, tabId}
-}
+  setEndStatus(tabId: string, status: ViewerStatus): VIEWER_END_STATUS {
+    return {type: "VIEWER_END_STATUS", status, tabId}
+  },
 
-export function appendViewerRecords(
-  tabId: string,
-  records: RecordData[]
-): VIEWER_RECORDS {
-  return {type: "VIEWER_RECORDS", records, tabId}
-}
+  appendRecords(tabId: string, records: RecordData[]): VIEWER_RECORDS {
+    return {type: "VIEWER_RECORDS", records, tabId}
+  },
 
-export function setViewerStats(
-  tabId: string,
-  stats: ViewerStats
-): VIEWER_STATS {
-  return {type: "VIEWER_STATS", stats, tabId}
-}
+  setStats(tabId: string, stats: ViewerStats): VIEWER_STATS {
+    return {type: "VIEWER_STATS", stats, tabId}
+  },
 
-export function updateViewerColumns(
-  tabId: string,
-  desc: Descriptors
-): VIEWER_COLUMNS {
-  return {
-    type: "VIEWER_COLUMNS",
-    columns: hashDescriptorKeys(desc),
-    tabId
+  updateColumns(tabId: string, desc: Descriptors): VIEWER_COLUMNS {
+    return {
+      type: "VIEWER_COLUMNS",
+      columns: hashDescriptorKeys(desc),
+      tabId
+    }
   }
 }

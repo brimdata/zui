@@ -20,6 +20,15 @@ export type ViewerState = {|
   stats: ViewerStats
 |}
 
+export type ViewerAction =
+  | VIEWER_CLEAR
+  | VIEWER_SPLICE
+  | VIEWER_STATUS
+  | VIEWER_RECORDS
+  | VIEWER_COLUMNS
+  | VIEWER_END_STATUS
+  | VIEWER_STATS
+
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",
   records: RecordData[],
