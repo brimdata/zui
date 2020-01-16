@@ -2,7 +2,7 @@
 import {isEqual} from "lodash"
 
 import type {$Field} from "../../brim"
-import type {Space} from "../../state/spaces/types"
+import type {Space} from "../../state/Spaces/types"
 import {hasGroupByProc} from "../../lib/Program"
 import Log from "../../models/Log"
 import menu from "./"

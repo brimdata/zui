@@ -1,5 +1,5 @@
 /* @flow */
-import type {Space} from "../state/spaces/types"
+import type {Space} from "../state/Spaces/types"
 import brim from "./"
 
 export default function space(info: Space) {

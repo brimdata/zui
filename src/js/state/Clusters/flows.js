@@ -10,7 +10,7 @@ import Errors from "../Errors"
 import Handlers from "../Handlers"
 import History from "../History"
 import Search from "../Search"
-import Spaces from "../spaces"
+import Spaces from "../Spaces"
 import tabs from "../tabs"
 
 export function connectCluster(cluster: Cluster): Thunk {

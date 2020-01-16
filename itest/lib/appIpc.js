@@ -2,7 +2,7 @@
 import {Application} from "spectron"
 
 import {LOG} from "./log"
-import type {Space} from "../../src/js/state/spaces/types"
+import type {Space} from "../../src/js/state/Spaces/types"
 import Field from "../../src/js/models/Field"
 import Log from "../../src/js/models/Log"
 import menu from "../../src/js/electron/menu"

@@ -7,7 +7,7 @@ import {reactElementProps} from "../test/integration"
 import {refreshSpaces} from "../flows/space/thunks"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
-import Spaces from "../state/spaces"
+import Spaces from "../state/Spaces"
 import Tab from "../state/tab"
 
 export default function SpacePicker() {
