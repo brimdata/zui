@@ -3,7 +3,7 @@
 import {combineReducers} from "redux"
 
 import {VERSION} from "../initializers/initPersistance"
-import {errorsReducer} from "./errors"
+import Errors from "./Errors"
 import boomd from "./reducers/boomd"
 import clustersReducer from "./Clusters/reducer"
 import handlers from "./handlers"
@@ -20,7 +20,7 @@ import view from "./reducers/view"
 import viewerReducer from "./viewer/reducer"
 
 export default combineReducers<*, *>({
-  errors: errorsReducer,
+  errors: Errors.reducer,
   viewer: viewerReducer,
   clusters: clustersReducer,
   modal: modal.reducer,

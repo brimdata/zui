@@ -4,9 +4,9 @@ import type {Cluster} from "../state/Clusters/types"
 import type {Span} from "./BoomClient/types"
 import type {Thunk} from "../state/types"
 import {ZqVersionError} from "../models/Errors"
-import {createError} from "../state/errors"
 import {getBoomOptions} from "../state/selectors/boom"
 import ErrorFactory from "../models/ErrorFactory"
+import Errors from "../state/Errors"
 import Tab from "../state/tab"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
@@ -101,5 +101,5 @@ function promise(requestFunc): Thunk {
 
 function handleError(e, dispatch) {
   dispatch(notice.set(ErrorFactory.create(e)))
-  dispatch(createError(e))
+  dispatch(Errors.createError(e))
 }

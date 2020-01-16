@@ -4,7 +4,7 @@ import {type Store as ReduxStore} from "redux"
 
 import type {Boomd} from "./reducers/boomd"
 import type {ClustersState} from "./Clusters/types"
-import type {ErrorsState} from "./errors"
+import type {ErrorsState} from "./Errors/types"
 import type {HandlersState} from "./handlers"
 import type {Investigation} from "./reducers/investigation"
 import type {LogDetails} from "./reducers/logDetails"

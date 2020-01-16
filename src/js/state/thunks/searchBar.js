@@ -2,11 +2,11 @@
 
 import {PARALLEL_PROC} from "../../brim/ast"
 import type {Thunk} from "../types"
-import {createError} from "../errors"
 import {errorSearchBarParse} from "../actions"
 import {getSearchProgram} from "../selectors/searchBar"
 import {parse} from "../../lib/Program"
 import {restoreSearch} from "./searchHistory"
+import Errors from "../Errors"
 import History from "../history"
 import Tab from "../tab"
 import brim from "../../brim"
@@ -27,7 +27,7 @@ export const goForward = (): Thunk => (dispatch, getState) => {
 export const validateProgram = (): Thunk => (dispatch, getState) => {
   const [ast, error] = parse(getSearchProgram(getState()))
   if (error) {
-    dispatch(createError(error))
+    dispatch(Errors.createError(error))
     dispatch(errorSearchBarParse(error.message))
     return false
   }

@@ -2,11 +2,11 @@
 
 import type {Cluster} from "./types"
 import type {Thunk} from "../types"
-import {clearErrors} from "../errors"
 import {clearNotifications, clearSearchBar, clearStarredLogs} from "../actions"
 import {clearViewer} from "../viewer/actions"
 import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
+import Errors from "../Errors"
 import History from "../history"
 import Spaces from "../spaces"
 import handlers from "../handlers"
@@ -46,7 +46,7 @@ function clearClusterState(dispatch, tabId: string) {
   dispatch(History.clear())
   dispatch(clearViewer(tabId))
   dispatch(handlers.abortAll())
-  dispatch(clearErrors())
+  dispatch(Errors.clearErrors())
   dispatch(clearNotifications())
   dispatch(search.clear())
 }

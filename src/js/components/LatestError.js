@@ -4,9 +4,9 @@ import React from "react"
 
 import type {State} from "../state/types"
 import {first} from "../lib/Array"
-import {getErrors} from "../state/errors"
 import {reactElementProps} from "../test/integration"
 import AppError from "../models/AppError"
+import Errors from "../state/Errors"
 
 type Props = {|error: AppError|}
 
@@ -21,7 +21,7 @@ export function LatestError({error}: Props) {
 }
 
 function stateToProps(state: State): Props {
-  return {error: first(getErrors(state))}
+  return {error: first(Errors.getErrors(state))}
 }
 
 export const XLatestError = connect<Props, {||}, _, _, _, _>(
