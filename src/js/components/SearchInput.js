@@ -9,10 +9,10 @@ import {getSearchBarInputValue} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
 import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
+import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
-import handlers from "../state/handlers"
 import modal from "../state/modal"
 import submitSearch from "../flows/submitSearch"
 import tab from "../state/tab"
@@ -79,7 +79,7 @@ function Menu() {
     {label: "Copy for boom get", click: () => dispatch(modal.show("boom-get"))},
     {
       label: "Kill search",
-      click: () => dispatch(handlers.abortAll()),
+      click: () => dispatch(Handlers.abortAll()),
       disabled: !isFetching
     }
   ]

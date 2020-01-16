@@ -24,11 +24,11 @@ import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
+import Handlers from "../state/Handlers"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 import SettingsModal from "./SettingsModal"
 import TabBar from "./TabBar/TabBar"
 import WhoisModal from "./WhoisModal"
-import handlers from "../state/handlers"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
@@ -43,7 +43,7 @@ export default function SearchPage() {
     ipcRenderer.send("open-search-window")
     dispatch(initSpace("default"))
     setTimeout(() => dispatch(checkVersions()), 500)
-    return () => dispatch(handlers.abortAll())
+    return () => dispatch(Handlers.abortAll())
   }, [])
 
   return (

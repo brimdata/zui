@@ -7,9 +7,9 @@ import {clearViewer} from "../viewer/actions"
 import {initSpace} from "../../flows/initSpace"
 import {testConnection} from "../../services/boom"
 import Errors from "../Errors"
+import Handlers from "../Handlers"
 import History from "../history"
 import Spaces from "../spaces"
-import handlers from "../handlers"
 import search from "../search"
 import tabs from "../tabs"
 
@@ -45,7 +45,7 @@ function clearClusterState(dispatch, tabId: string) {
   dispatch(clearStarredLogs())
   dispatch(History.clear())
   dispatch(clearViewer(tabId))
-  dispatch(handlers.abortAll())
+  dispatch(Handlers.abortAll())
   dispatch(Errors.clearErrors())
   dispatch(clearNotifications())
   dispatch(search.clear())

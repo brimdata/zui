@@ -6,7 +6,7 @@ import {VERSION} from "../initializers/initPersistance"
 import Errors from "./Errors"
 import boomd from "./reducers/boomd"
 import clustersReducer from "./Clusters/reducer"
-import handlers from "./handlers"
+import Handlers from "./Handlers"
 import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
 import modal from "./modal"
@@ -26,7 +26,7 @@ export default combineReducers<*, *>({
   modal: modal.reducer,
   notice: notice.reducer,
   tasks: tasks.reducer,
-  handlers: handlers.reducer,
+  handlers: Handlers.reducer,
   tabs: tabs.reducer,
   investigation,
   view,
