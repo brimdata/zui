@@ -2,7 +2,7 @@
 
 import type {Thunk} from "../../state/types"
 import {fetchSpaces} from "../../services/boom"
-import Spaces from "../../state/spaces"
+import Spaces from "../../state/Spaces"
 import Tab from "../../state/tab"
 
 export const refreshSpaces = (): Thunk => (dispatch, getState) => {

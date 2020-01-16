@@ -1,9 +1,9 @@
 /* @flow */
-import type {ChartState} from "../chart/types"
-import type {ColumnsState} from "../columns/types"
+import type {ChartState} from "../Chart/types"
+import type {ColumnsState} from "../Columns/types"
 import type {HistoryState} from "../History/types"
 import type {SearchBar} from "../reducers/searchBar"
-import type {SearchState} from "../search/types"
+import type {SearchState} from "../Search/types"
 import type {ViewerState} from "../viewer/types"
 
 export type TabState = {

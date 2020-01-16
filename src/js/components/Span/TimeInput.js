@@ -3,7 +3,7 @@ import {useSelector} from "react-redux"
 import React, {useEffect, useRef, useState} from "react"
 
 import {SPAN_TIME_FMT} from "./SpanControls"
-import type {TimeArg} from "../../state/search/types"
+import type {TimeArg} from "../../state/Search/types"
 import {getTimeZone} from "../../state/reducers/view"
 import {isString} from "../../lib/is"
 import Form from "../form/Form"

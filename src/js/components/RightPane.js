@@ -5,7 +5,7 @@ import React from "react"
 import classNames from "classnames"
 
 import type {DispatchProps} from "../state/types"
-import type {Space} from "../state/spaces/types"
+import type {Space} from "../state/Spaces/types"
 import {XRightPaneExpander} from "./RightPaneExpander"
 import {
   backLogDetail,

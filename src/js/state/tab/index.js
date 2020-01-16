@@ -2,7 +2,7 @@
 import {createSelector} from "reselect"
 
 import type {DateTuple} from "../../lib/TimeWindow"
-import type {SpanArgs} from "../search/types"
+import type {SpanArgs} from "../Search/types"
 import type {State, Thunk} from "../types"
 import type {TabState} from "./types"
 import brim, {type Span, type Ts} from "../../brim"

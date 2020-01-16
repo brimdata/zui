@@ -2,7 +2,7 @@
 import moment from "moment"
 
 import type {DateTuple} from "../lib/TimeWindow"
-import type {SpanArgs, TimeArg} from "../state/search/types"
+import type {SpanArgs, TimeArg} from "../state/Search/types"
 import {isString} from "../lib/is"
 import brim, {type Span, type Ts} from "./"
 
