@@ -1,6 +1,6 @@
 /* @flow */
 
-import Tabs from "../tabs"
+import Tabs from "../Tabs"
 import chart from "./"
 import initTestStore from "../../test/initTestStore"
 

@@ -8,10 +8,10 @@ import type {TabState} from "../Tab/types"
 import type {ViewerState} from "./types"
 import Log from "../../models/Log"
 import brim from "../../brim"
-import tabs from "../tabs"
+import Tabs from "../Tabs"
 
 const getViewer = createSelector<State, void, ViewerState, TabState>(
-  tabs.getActiveTab,
+  Tabs.getActiveTab,
   (tab) => tab.viewer
 )
 

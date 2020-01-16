@@ -16,10 +16,10 @@ import Tab from "../state/Tab"
 import brim from "../brim"
 import search from "../state/Search"
 import submitSearch from "./submitSearch"
-import tabs from "../state/tabs"
+import Tabs from "../state/Tabs"
 
 export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
-  let tabId = tabs.getActive(getState())
+  let tabId = Tabs.getActive(getState())
   let clusterId = Tab.clusterId(getState())
 
   return dispatch(fetchSpaces())

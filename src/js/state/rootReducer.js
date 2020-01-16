@@ -14,7 +14,7 @@ import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
 import packets from "./reducers/packets"
 import starredLogs from "./reducers/starredLogs"
-import tabs from "./tabs"
+import Tabs from "./Tabs"
 import tasks from "./tasks"
 import view from "./reducers/view"
 import viewerReducer from "./viewer/reducer"
@@ -27,7 +27,7 @@ export default combineReducers<*, *>({
   notice: Notice.reducer,
   tasks: tasks.reducer,
   handlers: Handlers.reducer,
-  tabs: tabs.reducer,
+  tabs: Tabs.reducer,
   investigation,
   view,
   spaces: Spaces.reducer,

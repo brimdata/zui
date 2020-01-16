@@ -11,7 +11,7 @@ import Handlers from "../Handlers"
 import History from "../History"
 import Search from "../Search"
 import Spaces from "../Spaces"
-import tabs from "../tabs"
+import Tabs from "../Tabs"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
@@ -25,7 +25,7 @@ export function connectCluster(cluster: Cluster): Thunk {
 
 export function disconnectCluster(): Thunk {
   return function(dispatch, getState) {
-    let tabId = tabs.getActive(getState())
+    let tabId = Tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
     dispatch(Search.setCluster(""))
   }
@@ -33,7 +33,7 @@ export function disconnectCluster(): Thunk {
 
 export function switchCluster(cluster: Cluster): Thunk {
   return function(dispatch, getState) {
-    let tabId = tabs.getActive(getState())
+    let tabId = Tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
     dispatch(Search.setCluster(cluster.id))
     return dispatch(connectCluster(cluster))

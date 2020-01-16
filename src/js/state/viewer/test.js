@@ -9,14 +9,14 @@ import {
 } from "./actions"
 import {getViewerColumns, getViewerEndStatus, getViewerLogs} from "./selector"
 import initTestStore from "../../test/initTestStore"
-import tabs from "../tabs"
+import Tabs from "../Tabs"
 
 let store
 let tabId
 beforeEach(() => {
   store = initTestStore()
   store.dispatchAll([])
-  tabId = tabs.getActive(store.getState())
+  tabId = Tabs.getActive(store.getState())
 })
 
 let conn = [{name: "ts", type: "time", value: "1"}]

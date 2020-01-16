@@ -7,7 +7,7 @@ import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
 import search from "../state/Search"
 import tab from "../state/Tab"
-import tabs from "../state/tabs"
+import Tabs from "../state/Tabs"
 
 const records = [
   [
@@ -28,7 +28,7 @@ let store, boom, tabId
 beforeEach(() => {
   boom = new MockBoomClient().stub("search")
   store = initTestStore(boom)
-  tabId = tabs.getActive(store.getState())
+  tabId = Tabs.getActive(store.getState())
   store.dispatchAll([
     setCurrentSpaceName("default"),
     search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),

@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux"
 import {useEffect} from "react"
 import Mousetrap from "mousetrap"
 
-import Tabs from "../state/tabs"
+import Tabs from "../state/Tabs"
 
 export default function() {
   let dispatch = useDispatch()

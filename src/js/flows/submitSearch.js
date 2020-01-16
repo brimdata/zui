@@ -7,10 +7,10 @@ import {submittingSearchBar} from "../state/actions"
 import {validateProgram} from "../state/thunks/searchBar"
 import History from "../state/History"
 import Tab from "../state/Tab"
+import Tabs from "../state/Tabs"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
-import tabs from "../state/tabs"
 
 export default function submitSearch(save: boolean = true): Thunk {
   return function(dispatch, getState) {
@@ -21,7 +21,7 @@ export default function submitSearch(save: boolean = true): Thunk {
 
     const state = getState()
     if (save) dispatch(History.push(getSearchRecord(state)))
-    let tabId = tabs.getActive(state)
+    let tabId = Tabs.getActive(state)
     let tabData = {
       program: getSearchProgram(state),
       span: Tab.getSpanAsDates(state),

@@ -7,16 +7,16 @@ import {getViewerLogs} from "../state/viewer/selector"
 import {indexOfLastChange} from "../lib/Array"
 import {spliceViewer} from "../state/viewer/actions"
 import Tab from "../state/Tab"
+import Tabs from "../state/Tabs"
 import brim from "../brim"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
-import tabs from "../state/tabs"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let state = getState()
   let logs = getViewerLogs(state)
   let currentSpan = Tab.getSpanAsDates(state)
-  let tabId = tabs.getActive(state)
+  let tabId = Tabs.getActive(state)
   let [spliceIndex, span] = nextPageArgs(logs, currentSpan)
   let program = getSearchProgram(state)
   let space = Tab.spaceName(state)
