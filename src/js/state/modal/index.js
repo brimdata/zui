@@ -1,26 +1,10 @@
 /* @flow */
-import type {MODAL_HIDE, MODAL_SHOW, ModalName} from "./types"
-import type {State} from "../types"
+import actions from "./actions"
 import reducer from "./reducer"
+import selectors from "./selectors"
 
 export default {
   reducer,
-
-  show: (name: ModalName, args: Object): MODAL_SHOW => ({
-    type: "MODAL_SHOW",
-    name,
-    args
-  }),
-
-  hide: (): MODAL_HIDE => ({
-    type: "MODAL_HIDE"
-  }),
-
-  getName(state: State) {
-    return state.modal.name
-  },
-
-  getArgs(state: State) {
-    return state.modal.args
-  }
+  ...actions,
+  ...selectors
 }

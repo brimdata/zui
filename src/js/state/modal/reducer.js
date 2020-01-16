@@ -1,5 +1,5 @@
 /* @flow */
-import type {ModalActions, ModalState} from "./types"
+import type {ModalAction, ModalState} from "./types"
 
 const init: ModalState = {
   name: "",
@@ -8,7 +8,7 @@ const init: ModalState = {
 
 export default function(
   state: ModalState = init,
-  action: ModalActions
+  action: ModalAction
 ): ModalState {
   switch (action.type) {
     case "MODAL_SHOW":
