@@ -7,14 +7,14 @@ import {ZqVersionError} from "../models/Errors"
 import {getBoomOptions} from "../state/selectors/boom"
 import ErrorFactory from "../models/ErrorFactory"
 import Errors from "../state/Errors"
+import Notice from "../state/Notice"
 import Tab from "../state/tab"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
-import notice from "../state/notice"
 
 export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, getState, boom) => {
-    dispatch(notice.clearSearchError())
+    dispatch(Notice.clearSearchError())
     return boom
       .setOptions(getBoomOptions(getState()))
       .search(program, {searchSpan: span, searchSpace: space})
@@ -61,7 +61,7 @@ export function checkVersions(): Thunk {
         if (electronIsDev) {
           console.error(error.message(), error.details().join(", "))
         } else {
-          dispatch(notice.set(error))
+          dispatch(Notice.set(error))
         }
       }
     })
@@ -88,7 +88,7 @@ function promise(requestFunc): Thunk {
     return new Promise((resolve, reject) => {
       requestFunc(boom)
         .done((...args) => {
-          dispatch(notice.clearNetworkError())
+          dispatch(Notice.clearNetworkError())
           resolve(...args)
         })
         .error((e) => {
@@ -100,6 +100,6 @@ function promise(requestFunc): Thunk {
 }
 
 function handleError(e, dispatch) {
-  dispatch(notice.set(ErrorFactory.create(e)))
+  dispatch(Notice.set(ErrorFactory.create(e)))
   dispatch(Errors.createError(e))
 }

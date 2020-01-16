@@ -11,7 +11,7 @@ import {
 } from "../state/actions"
 import {clearState} from "./initPersistance"
 import {goBack, goForward} from "../state/thunks/searchBar"
-import modal from "../state/Modal"
+import Modal from "../state/Modal"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
@@ -45,7 +45,7 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("showPreferences", () => {
-    store.dispatch(modal.show("settings"))
+    store.dispatch(Modal.show("settings"))
   })
 
   ipcRenderer.on("back", () => {

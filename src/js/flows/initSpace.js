@@ -9,11 +9,11 @@ import {
 import {clearViewer} from "../state/viewer/actions"
 import {fetchSpace, fetchSpaces} from "../services/boom"
 import ErrorFactory from "../models/ErrorFactory"
+import Notice from "../state/Notice"
 import Spaces from "../state/spaces"
 import Tab from "../state/tab"
 import brim from "../brim"
-import modal from "../state/Modal"
-import notice from "../state/notice"
+import Modal from "../state/Modal"
 import search from "../state/search"
 import submitSearch from "./submitSearch"
 import tabs from "../state/tabs"
@@ -30,13 +30,13 @@ export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
     .then(() => dispatch(submitSearch()))
-    .catch((error) => dispatch(notice.set(ErrorFactory.create(error))))
+    .catch((error) => dispatch(Notice.set(ErrorFactory.create(error))))
 }
 
 function checkDataExists(dispatch, data, tabId) {
   if (brim.space(data).empty()) {
     dispatch(clearViewer(tabId))
-    dispatch(modal.show("nodata"))
+    dispatch(Modal.show("nodata"))
   }
 }
 

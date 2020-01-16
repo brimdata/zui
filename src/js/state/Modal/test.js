@@ -1,7 +1,7 @@
 /* @flow */
 
 import initTestStore from "../../test/initTestStore"
-import modal from "./"
+import Modal from "./"
 
 let store
 beforeEach(() => {
@@ -9,20 +9,20 @@ beforeEach(() => {
 })
 
 test("show modal", () => {
-  store.dispatch(modal.show("whois", {addr: "129.3.2.1"}))
+  store.dispatch(Modal.show("whois", {addr: "129.3.2.1"}))
 
   let state = store.getState()
 
-  expect(modal.getName(state)).toEqual("whois")
-  expect(modal.getArgs(state)).toEqual({addr: "129.3.2.1"})
+  expect(Modal.getName(state)).toEqual("whois")
+  expect(Modal.getArgs(state)).toEqual({addr: "129.3.2.1"})
 })
 
-test("hide modal", () => {
+test("hide Modal", () => {
   let state = store.dispatchAll([
-    modal.show("whois", {addr: "129.3.2.1"}),
-    modal.hide()
+    Modal.show("whois", {addr: "129.3.2.1"}),
+    Modal.hide()
   ])
 
-  expect(modal.getName(state)).toBe("")
-  expect(modal.getArgs(state)).toEqual({})
+  expect(Modal.getName(state)).toBe("")
+  expect(Modal.getArgs(state)).toEqual({})
 })

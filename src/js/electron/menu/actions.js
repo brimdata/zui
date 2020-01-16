@@ -21,7 +21,7 @@ import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import action from "./action"
 import brim from "../../brim"
-import modal from "../../state/Modal"
+import Modal from "../../state/Modal"
 import submitSearch from "../../flows/submitSearch"
 import tab from "../../state/tab"
 import virusTotal from "../../services/virusTotal"
@@ -175,7 +175,7 @@ function buildActions() {
       name: "cell-menu-who-is",
       label: "Whois Lookup",
       listener(dispatch, field) {
-        dispatch(modal.show("whois", {addr: field.value}))
+        dispatch(Modal.show("whois", {addr: field.value}))
       }
     })
   }

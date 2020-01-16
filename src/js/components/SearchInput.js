@@ -13,7 +13,7 @@ import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
-import modal from "../state/Modal"
+import Modal from "../state/Modal"
 import submitSearch from "../flows/submitSearch"
 import tab from "../state/tab"
 
@@ -74,9 +74,9 @@ function Menu() {
   let isFetching = useSelector(tab.isFetching)
 
   let menu = [
-    {label: "Debug query", click: () => dispatch(modal.show("debug"))},
-    {label: "Copy for curl", click: () => dispatch(modal.show("curl"))},
-    {label: "Copy for boom get", click: () => dispatch(modal.show("boom-get"))},
+    {label: "Debug query", click: () => dispatch(Modal.show("debug"))},
+    {label: "Copy for curl", click: () => dispatch(Modal.show("curl"))},
+    {label: "Copy for boom get", click: () => dispatch(Modal.show("boom-get"))},
     {
       label: "Kill search",
       click: () => dispatch(Handlers.abortAll()),

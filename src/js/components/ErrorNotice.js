@@ -5,14 +5,14 @@ import React from "react"
 import {NetworkError} from "../models/Errors"
 import {capitalize} from "../lib/Str"
 import {initSpace} from "../flows/initSpace"
+import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
 import Tab from "../state/tab"
-import notice from "../state/notice"
 import useEscapeKey from "./hooks/useEscapeKey"
 
 export default function ErrorNotice() {
-  let error = useSelector(notice.getError)
-  let visible = useSelector(notice.getVisible)
+  let error = useSelector(Notice.getError)
+  let visible = useSelector(Notice.getVisible)
 
   return (
     <NoticeBanner show={visible}>
@@ -24,7 +24,7 @@ export default function ErrorNotice() {
 function ErrorMessage({error}) {
   let Component = getComponent(error)
   let dispatch = useDispatch()
-  useEscapeKey(() => dispatch(notice.dismiss()))
+  useEscapeKey(() => dispatch(Notice.dismiss()))
   return <Component error={error} />
 }
 
@@ -44,7 +44,7 @@ function Network({error}) {
   return (
     <p>
       {error.message()} <a onClick={() => dispatch(initSpace(space))}>Retry</a>
-      <a onClick={() => dispatch(notice.dismiss())}>Dismiss</a>
+      <a onClick={() => dispatch(Notice.dismiss())}>Dismiss</a>
     </p>
   )
 }
@@ -56,7 +56,7 @@ function Default({error}) {
   return (
     <>
       <p>
-        {msg} <a onClick={() => dispatch(notice.dismiss())}>Dismiss</a>
+        {msg} <a onClick={() => dispatch(Notice.dismiss())}>Dismiss</a>
       </p>
       {details.length > 0 && (
         <div className="error-details">
