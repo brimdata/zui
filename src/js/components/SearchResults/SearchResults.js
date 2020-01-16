@@ -10,7 +10,6 @@ import type {ViewerDimens} from "../../types"
 import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
-import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
 import {getTimeZone} from "../../state/reducers/view"
 import {
@@ -20,6 +19,7 @@ import {
 } from "../../state/viewer/selector"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
+import Columns from "../../state/Columns"
 import Log from "../../models/Log"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
@@ -127,7 +127,7 @@ function stateToProps(state: State) {
   return {
     isFetching: getViewerStatus(state) === "FETCHING",
     isIncomplete: getViewerEndStatus(state) === "INCOMPLETE",
-    tableColumns: getCurrentTableColumns(state),
+    tableColumns: Columns.getCurrentTableColumns(state),
     timeZone: getTimeZone(state),
     selectedLog: buildLogDetail(state),
     logs: getViewerLogs(state),

@@ -7,15 +7,9 @@ import classNames from "classnames"
 
 import type {DispatchProps, State} from "../state/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
-import type {TableColumn} from "../state/columns/types"
-import {getCurrentTableColumns} from "../state/columns/selector"
-import {
-  hideAllColumns,
-  hideColumn,
-  showAllColumns,
-  showColumn
-} from "../state/columns/actions"
+import type {TableColumn} from "../state/Columns/types"
 import CloseButton from "./CloseButton"
+import Columns from "../state/Columns"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
 
@@ -44,22 +38,22 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 
   showAllColumns = (e: Event) => {
     e.stopPropagation()
-    this.props.dispatch(showAllColumns(this.props.tableColumns))
+    this.props.dispatch(Columns.showAllColumns(this.props.tableColumns))
   }
 
   onColumnClick(e: Event, column: TableColumn) {
     e.stopPropagation()
     if (column.isVisible) {
       if (this.allVisible()) {
-        this.props.dispatch(hideAllColumns(this.props.tableColumns))
-        this.props.dispatch(showColumn(this.tableId(), column))
+        this.props.dispatch(Columns.hideAllColumns(this.props.tableColumns))
+        this.props.dispatch(Columns.showColumn(this.tableId(), column))
       } else if (this.props.tableColumns.visibleCount() === 1) {
-        this.props.dispatch(showAllColumns(this.props.tableColumns))
+        this.props.dispatch(Columns.showAllColumns(this.props.tableColumns))
       } else {
-        this.props.dispatch(hideColumn(this.tableId(), column))
+        this.props.dispatch(Columns.hideColumn(this.tableId(), column))
       }
     } else {
-      this.props.dispatch(showColumn(this.tableId(), column))
+      this.props.dispatch(Columns.showColumn(this.tableId(), column))
     }
   }
 
@@ -111,7 +105,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  tableColumns: getCurrentTableColumns(state)
+  tableColumns: Columns.getCurrentTableColumns(state)
 })
 
 export const XColumnChooserMenu = connect<Props, OwnProps, _, _, _, _>(

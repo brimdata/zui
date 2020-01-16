@@ -11,9 +11,9 @@ import TableColumns from "../../models/TableColumns"
 import activeTabSelect from "../tab/activeTabSelect"
 import columnKey from "../../lib/columnKey"
 
-export const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
+const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
 
-export const getCurrentTableColumns = createSelector<
+const getCurrentTableColumns = createSelector<
   State,
   void,
   TableColumns,
@@ -45,4 +45,9 @@ function getUniqColumns(columns) {
   let allCols = []
   for (const id in columns) allCols = [...allCols, ...columns[id]]
   return uniqBy(allCols, columnKey)
+}
+
+export default {
+  getCurrentTableColumns,
+  getColumns
 }

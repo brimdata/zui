@@ -3,8 +3,8 @@
 import {useSelector} from "react-redux"
 import React from "react"
 
-import {getCurrentTableColumns} from "../../state/columns/selector"
 import {getSearchProgram} from "../../state/selectors/searchBar"
+import Columns from "../../state/Columns"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import Tab from "../../state/tab"
@@ -14,7 +14,7 @@ import menu from "../../electron/menu"
 export default function FieldsPanel({log}: {log: Log}) {
   log = log.exclude("_td")
   let program = useSelector(getSearchProgram)
-  let tableColumns = useSelector(getCurrentTableColumns)
+  let tableColumns = useSelector(Columns.getCurrentTableColumns)
   let space = useSelector(Tab.space)
 
   return (
