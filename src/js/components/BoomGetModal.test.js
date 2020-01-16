@@ -4,7 +4,7 @@ import React from "react"
 import {changeSearchBarInput} from "../state/actions"
 import BoomGetModal from "./BoomGetModal"
 import logInto from "../test/helpers/loginTo"
-import modal from "../state/modal"
+import modal from "../state/Modal"
 import provide from "../test/helpers/provide"
 import submitSearch from "../flows/submitSearch"
 

@@ -13,7 +13,7 @@ import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import ThreeDotButton from "./ThreeDotButton"
-import modal from "../state/modal"
+import modal from "../state/Modal"
 import submitSearch from "../flows/submitSearch"
 import tab from "../state/tab"
 

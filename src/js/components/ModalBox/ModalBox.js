@@ -5,7 +5,7 @@ import React from "react"
 import type {ModalBoxProps} from "./types"
 import Animate from "../Animate"
 import ModalContents from "./ModalContents"
-import modal from "../../state/modal"
+import modal from "../../state/Modal"
 
 export default function ModalBox({name, children, ...props}: ModalBoxProps) {
   let active = useSelector(modal.getName)

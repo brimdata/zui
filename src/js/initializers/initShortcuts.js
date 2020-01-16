@@ -11,7 +11,7 @@ import {
 } from "../state/actions"
 import {clearState} from "./initPersistance"
 import {goBack, goForward} from "../state/thunks/searchBar"
-import modal from "../state/modal"
+import modal from "../state/Modal"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {

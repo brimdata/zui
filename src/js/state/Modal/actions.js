@@ -1,4 +1,5 @@
 /* @flow */
+
 import type {MODAL_HIDE, MODAL_SHOW, ModalName} from "./types"
 
 export default {
