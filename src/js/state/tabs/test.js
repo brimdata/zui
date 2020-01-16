@@ -97,3 +97,43 @@ test("remove tab does nothing if only one tab left", () => {
 
   expect(tabs.getCount(state)).toBe(1)
 })
+
+test("moving a tab to destination index", () => {
+  let state = store.dispatchAll([
+    tabs.add("1"),
+    tabs.add("2"),
+    tabs.add("3"),
+    tabs.add("4"),
+    tabs.move("3", 0)
+  ])
+  let ids = tabs.getData(state).map((t) => t.id)
+
+  expect(ids.length).toEqual(5)
+  expect(ids[0]).toEqual("3")
+})
+
+test("reorder tabs", () => {
+  let first = tabs.getData(store.getState())[0].id
+
+  let state = store.dispatchAll([
+    tabs.add("a"),
+    tabs.add("b"),
+    tabs.add("c"),
+    tabs.order([3, 1, 2, 0])
+  ])
+
+  expect(tabs.getData(state).map((t) => t.id)).toEqual(["c", "a", "b", first])
+})
+
+test("reorder tabs does not throw error if invalid", () => {
+  let first = tabs.getData(store.getState())[0].id
+
+  let state = store.dispatchAll([
+    tabs.add("a"),
+    tabs.add("b"),
+    tabs.add("c"),
+    tabs.order([0, 0, 0, 0])
+  ])
+
+  expect(tabs.getData(state).map((t) => t.id)).toEqual([first])
+})

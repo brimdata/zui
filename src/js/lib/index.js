@@ -1,6 +1,7 @@
 /* @flow */
 
 import {isEmpty} from "lodash"
+import uniq from "lodash/uniq"
 
 import {isArray} from "./is"
 import animation from "./animation"
@@ -30,7 +31,17 @@ export default {
   date,
   on: (...args: *) => document.addEventListener(...args),
   off: (...args: *) => document.removeEventListener(...args),
-  compact: (array: *) => array.filter((item) => !!item)
+  // $FlowFixMe Everytime I use filter it doesn't like it
+  compact: (array: *[]) => array.filter((item) => !!item),
+  uniq,
+  bounded: (num: number, [from, to]: [number, number]) => {
+    return Math.max(from, Math.min(num, to))
+  },
+  move: <T>(array: T[], src: number, dest: number): T[] => {
+    let copy = [...array]
+    copy.splice(dest, 0, copy.splice(src, 1)[0])
+    return copy
+  }
 }
 
 export type TimeUnit =

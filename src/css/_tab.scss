@@ -25,11 +25,11 @@ $tab-border-radius-bottom: 6px;
   height: 34px;
   padding: 0;
   padding-bottom: 3px;
-
   background: transparent;
   cursor: default;
   border-radius: $tab-border-radius-top $tab-border-radius-top 0 0;
-  transition: transform 200ms;
+  will-change: transform;
+  transition: none;
 
   .tab-content {
     overflow: hidden;
@@ -44,22 +44,23 @@ $tab-border-radius-bottom: 6px;
     position: absolute;
     left: 10px;
     top: 6px;
+    transform: translateX(-30px);
   }
 
   // the little line when the tab is not active
-  &:before {
-    @include tab-border;
-    left: 0;
-  }
+  // &:before {
+  //   @include tab-border;
+  //   left: 0;
+  // }
 
-  &:last-of-type:after {
-    @include tab-border;
-    left: 100%;
-  }
+  // &:last-of-type:after {
+  //   @include tab-border;
+  //   left: 100%;
+  // }
 
-  &:first-child:before {
-    display: none;
-  }
+  // &:first-child:before {
+  //   display: none;
+  // }
 
   // The little swooshes on active and hovered tabs
   .ramp {
@@ -100,7 +101,6 @@ $tab-border-radius-bottom: 6px;
       width: 9px;
       height: 9px;
       fill: $tab-inactive-color;
-      transition: fill $tab-transition-duration;
     }
     &:after {
       content: "";
@@ -116,7 +116,6 @@ $tab-border-radius-bottom: 6px;
     &:hover {
       svg {
         fill: $white-1;
-        transition: fill 100ms;
       }
       &:after {
         transition: transform 100ms;
@@ -131,23 +130,20 @@ $tab-border-radius-bottom: 6px;
   // The hover state
   &:hover {
     background-color: $tab-hover-bg;
-    transition: background-color $tab-transition-duration;
-    &:before,
-    & + .tab:before,
-    &:last-of-type:after {
-      transition: opacity $tab-transition-duration;
-      opacity: 0;
-    }
+    //  transition: background-color $tab-transition-duration;
+    // &:before,
+    // & + .tab:before,
+    // &:last-of-type:after {
+    //   transition: opacity $tab-transition-duration;
+    //   opacity: 0;
+    // }
     .ramp {
-      transition: fill $tab-transition-duration;
       fill: $tab-hover-bg;
     }
     .title {
-      transition: color $tab-transition-duration;
       color: $tab-hover-color;
     }
     .close-button svg {
-      transition: fill $tab-transition-duration;
       fill: $tab-hover-color;
     }
   }
@@ -156,26 +152,22 @@ $tab-border-radius-bottom: 6px;
   &.active {
     background: $tab-active-bg;
     z-index: 1;
-    transition: transform 200ms;
     .ramp {
-      transition: none;
       fill: $tab-active-bg;
     }
 
-    &:before,
-    & + .tab:before,
-    &:last-of-type:after {
-      transition: none;
-      opacity: 0;
-    }
+    // &:before,
+    // & + .tab:before,
+    // &:last-of-type:after {
+    //   transition: none;
+    //   opacity: 0;
+    // }
 
     .title {
-      transition: none;
       color: $tab-active-color;
     }
     .close-button {
       svg {
-        transition: none;
         fill: $tab-active-color;
       }
       &:after {
@@ -185,26 +177,5 @@ $tab-border-radius-bottom: 6px;
         background: rgba(0, 0, 0, 0.2);
       }
     }
-  }
-
-  &.dragging {
-    box-shadow: $high-box-shadow;
-    transition: none;
-  }
-}
-
-.box-group {
-  position: fixed;
-  top: 25%;
-  display: flex;
-  z-index: 9;
-
-  .box {
-    margin: 20px;
-    text-align: center;
-    width: 100px;
-    border-radius: 3px;
-    background: lightgreen;
-    height: 300px;
   }
 }

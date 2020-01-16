@@ -1,8 +1,11 @@
 /* @flow */
 
+import {isEmpty} from "lodash"
+
 import type {TabActions, TabsState} from "./types"
 import type {TabState} from "../tab/types"
 import {last} from "../../lib/Array"
+import lib from "../../lib"
 import tabReducer from "../tab/reducer"
 
 let firstTab = tabReducer(undefined, {type: "INIT"})
@@ -28,6 +31,13 @@ export default function reducer(state: TabsState = init, action: TabActions) {
         active: state.active,
         data: addTabData(state.data, action)
       }
+    case "TABS_MOVE":
+      return moveTab(state, action)
+    case "TABS_ORDER":
+      return {
+        ...state,
+        data: orderTabs(state.data, action.indices)
+      }
     default:
       return state
   }
@@ -52,6 +62,20 @@ function removeTab(state: TabsState, id) {
   } else {
     return {data, active: state.active}
   }
+}
+
+function moveTab(state, action) {
+  let index = state.data.findIndex((t) => t.id === action.id)
+  if (index === action.index) return state
+  return {
+    ...state,
+    data: lib.move<TabState>(state.data, index, action.index)
+  }
+}
+
+function orderTabs(tabs, indices) {
+  let newTabs = lib.compact(lib.uniq(indices).map<TabState>((i) => tabs[i]))
+  return isEmpty(newTabs) ? tabs : newTabs
 }
 
 function tabAction({type}) {
