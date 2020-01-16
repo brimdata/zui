@@ -2,9 +2,7 @@
 import {animated} from "react-spring"
 import {useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
-import classNames from "classnames"
 
-import {tabIsFetching} from "../../state/tab/selectors"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import AddTab from "./AddTab"
 import SearchTab from "./SearchTab"
@@ -32,22 +30,18 @@ export default function TabBar() {
   return (
     <div className="tab-bar">
       <div className="tabs-container" ref={ref} onMouseLeave={ctl.onMouseLeave}>
-        {tabs.map((tab, i) => (
+        {tabs.map((tab) => (
           <AnimatedSearchTab
-            {...layout.drag({
-              index: i,
+            {...layout.dragBinding({
               id: tab.id,
               onDown: () => ctl.onTabClick(tab.id),
-              onChange: ctl.onTabMove
+              onChange: (indices) => ctl.onTabMove(indices)
             })}
             key={tab.id}
-            loading={tabIsFetching(tab)}
-            title={tab.id + "  ::  " + brim.tab(tab).title()}
+            title={brim.tab(tab).title()}
             style={layout.getStyle(tab.id)}
             removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
-            className={classNames({
-              active: tab.id === ctl.activeId
-            })}
+            active={tab.id === ctl.activeId}
           />
         ))}
         <AddTab onClick={ctl.onAddClick} left={width * count} />

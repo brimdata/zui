@@ -1,6 +1,5 @@
 /* @flow */
-import React, {useEffect, useRef} from "react"
-import anime from "animejs"
+import React from "react"
 import classNames from "classnames"
 
 import CloseButton from "../CloseButton"
@@ -9,54 +8,17 @@ import RampRight from "../../icons/ramp-right.svg"
 
 type Props = {
   title: string,
-  className: string,
-  loading: boolean,
-  removeTab: Function
+  removeTab: Function,
+  active: boolean
 }
 
 const SearchTab = React.forwardRef<Props, HTMLDivElement>(function SearchTab(
-  {title, className, loading, removeTab, ...rest},
+  {title, active, removeTab, ...rest},
   ref
 ) {
-  let aniRef = useRef()
-
-  useEffect(() => {
-    let el = aniRef.current
-    if (!el) return
-
-    let title = el.querySelector(".title")
-    let spinner = el.querySelector(".loading")
-
-    if (loading) {
-      anime.remove(title)
-      anime.remove(spinner)
-      anime({
-        targets: title,
-        paddingLeft: 40,
-        delay: 300
-      })
-      anime({
-        delay: 300,
-        targets: spinner,
-        translateX: 0
-      })
-    } else {
-      anime.remove(title)
-      anime.remove(spinner)
-      anime({
-        targets: title,
-        paddingLeft: 10
-      })
-      anime({
-        targets: spinner,
-        translateX: -30
-      })
-    }
-  }, [loading, aniRef.current])
-
   return (
-    <div ref={ref} {...rest} className={classNames("tab", className)}>
-      <div className="tab-content" ref={aniRef}>
+    <div ref={ref} {...rest} className={classNames("tab", {active})}>
+      <div className="tab-content">
         <p className="title">{title}</p>
         <CloseButton onClick={removeTab} />
       </div>

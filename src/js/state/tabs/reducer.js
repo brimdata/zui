@@ -1,6 +1,6 @@
 /* @flow */
 
-import {isEqual} from "lodash"
+import {isEmpty} from "lodash"
 
 import type {TabActions, TabsState} from "./types"
 import type {TabState} from "../tab/types"
@@ -74,11 +74,8 @@ function moveTab(state, action) {
 }
 
 function orderTabs(tabs, indices) {
-  let existing = tabs.map((_, i) => i)
-  if (!isEqual(existing, indices.slice().sort()))
-    throw new Error("Tab order indices invalid: [" + indices.join(", ") + "]")
-
-  return indices.map<TabState>((i) => tabs[i])
+  let newTabs = lib.compact(lib.uniq(indices).map<TabState>((i) => tabs[i]))
+  return isEmpty(newTabs) ? tabs : newTabs
 }
 
 function tabAction({type}) {

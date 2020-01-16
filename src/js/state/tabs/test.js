@@ -125,10 +125,15 @@ test("reorder tabs", () => {
   expect(tabs.getData(state).map((t) => t.id)).toEqual(["c", "a", "b", first])
 })
 
-test("reorder tabs throws error if invalid", () => {
-  store.dispatchAll([tabs.add("a"), tabs.add("b"), tabs.add("c")])
+test("reorder tabs does not throw error if invalid", () => {
+  let first = tabs.getData(store.getState())[0].id
 
-  expect(() => {
-    store.dispatch(tabs.order([0, 0, 0, 0]))
-  }).toThrow("Tab order indices invalid: [0, 0, 0, 0]")
+  let state = store.dispatchAll([
+    tabs.add("a"),
+    tabs.add("b"),
+    tabs.add("c"),
+    tabs.order([0, 0, 0, 0])
+  ])
+
+  expect(tabs.getData(state).map((t) => t.id)).toEqual([first])
 })

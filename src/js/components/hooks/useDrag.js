@@ -1,9 +1,7 @@
 /* @flow */
 import lib from "../../lib"
 
-let id = 1
 export default function useDrag(handler: Function) {
-  id++
   return (args: Object) => {
     let startX = 0
 
@@ -20,12 +18,16 @@ export default function useDrag(handler: Function) {
     }
 
     function onMove(event) {
-      handler({
+      let res = handler({
         event,
         args,
         dx: event.clientX - startX,
         type: "move"
       })
+      if (res === false) {
+        lib.off("mousemove", onMove)
+        lib.off("mouseup", onUp)
+      }
     }
 
     function onUp(event) {
