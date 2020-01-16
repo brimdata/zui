@@ -14,7 +14,7 @@ import Spaces from "../state/spaces"
 import Tab from "../state/tab"
 import brim from "../brim"
 import Modal from "../state/Modal"
-import search from "../state/search"
+import search from "../state/Search"
 import submitSearch from "./submitSearch"
 import tabs from "../state/tabs"
 

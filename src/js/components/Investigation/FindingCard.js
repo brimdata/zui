@@ -13,7 +13,7 @@ import {
   setSearchBarPins
 } from "../../state/actions"
 import FindingProgram from "./FindingProgram"
-import search from "../../state/search"
+import search from "../../state/Search"
 import submitSearch from "../../flows/submitSearch"
 
 type Props = {finding: Finding}

@@ -5,7 +5,7 @@ import {fetchNextPage} from "./fetchNextPage"
 import {setCurrentSpaceName} from "../state/actions"
 import MockBoomClient from "../test/MockBoomClient"
 import initTestStore from "../test/initTestStore"
-import search from "../state/search"
+import search from "../state/Search"
 import tab from "../state/tab"
 import tabs from "../state/tabs"
 

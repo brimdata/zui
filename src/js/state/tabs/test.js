@@ -1,6 +1,6 @@
 /* @flow */
+import Search from "../Search"
 import initTestStore from "../../test/initTestStore"
-import search from "../search"
 import tabs from "./"
 
 let store
@@ -32,7 +32,7 @@ test("remove tab", () => {
 })
 
 test("forwards actions to the active tab", () => {
-  let state = store.dispatchAll([search.setSpanArgs(["now-1m", "now"])])
+  let state = store.dispatchAll([Search.setSpanArgs(["now-1m", "now"])])
   let tab = tabs.getActiveTab(state)
   expect(tab.search.spanArgs).toEqual(["now-1m", "now"])
 })

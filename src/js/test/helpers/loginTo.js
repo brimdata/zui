@@ -3,7 +3,7 @@
 import {initSpace} from "../../flows/initSpace"
 import Clusters from "../../state/Clusters"
 import MockBoomClient from "../MockBoomClient"
-import Search from "../../state/search"
+import Search from "../../state/Search"
 import fixtures from "../fixtures"
 import initTestStore from "../initTestStore"
 

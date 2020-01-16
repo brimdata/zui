@@ -28,8 +28,8 @@ import {
 import {goBack, goForward} from "../thunks/searchBar"
 import {initialState} from "./searchBar"
 import Field from "../../models/Field"
+import Search from "../Search"
 import initTestStore from "../../test/initTestStore"
-import search from "../search"
 import submitSearch from "../../flows/submitSearch"
 import tab from "../tab"
 
@@ -305,10 +305,10 @@ test("restore", () => {
 test("goBack", () => {
   const state = store.dispatchAll([
     changeSearchBarInput("hello"),
-    search.setSpanArgsFromDates([new Date(1), new Date(2)]),
+    Search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearch(),
     changeSearchBarInput("goodbye"),
-    search.setSpanArgsFromDates([new Date(3), new Date(4)]),
+    Search.setSpanArgsFromDates([new Date(3), new Date(4)]),
     submitSearch(),
     goBack()
   ])
@@ -320,13 +320,13 @@ test("goBack", () => {
 test("goForward", () => {
   const state = store.dispatchAll([
     changeSearchBarInput("hello"),
-    search.setSpanArgsFromDates([new Date(1), new Date(2)]),
+    Search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearch(),
     changeSearchBarInput("goodbye"),
-    search.setSpanArgsFromDates([new Date(3), new Date(4)]),
+    Search.setSpanArgsFromDates([new Date(3), new Date(4)]),
     submitSearch(),
     changeSearchBarInput("hello again"),
-    search.setSpanArgsFromDates([new Date(5), new Date(6)]),
+    Search.setSpanArgsFromDates([new Date(5), new Date(6)]),
     submitSearch(),
     goBack(),
     goBack(),

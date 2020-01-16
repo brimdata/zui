@@ -9,15 +9,15 @@ import {testConnection} from "../../services/boom"
 import Errors from "../Errors"
 import Handlers from "../Handlers"
 import History from "../History"
+import Search from "../Search"
 import Spaces from "../spaces"
-import search from "../search"
 import tabs from "../tabs"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
     return d(testConnection(cluster)).then((spaces) => {
       d(Spaces.setNames(cluster.id, spaces))
-      d(search.setCluster(cluster.id))
+      d(Search.setCluster(cluster.id))
       d(initSpace("default"))
     })
   }
@@ -27,7 +27,7 @@ export function disconnectCluster(): Thunk {
   return function(dispatch, getState) {
     let tabId = tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
-    dispatch(search.setCluster(""))
+    dispatch(Search.setCluster(""))
   }
 }
 
@@ -35,7 +35,7 @@ export function switchCluster(cluster: Cluster): Thunk {
   return function(dispatch, getState) {
     let tabId = tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
-    dispatch(search.setCluster(cluster.id))
+    dispatch(Search.setCluster(cluster.id))
     return dispatch(connectCluster(cluster))
   }
 }
@@ -48,5 +48,5 @@ function clearClusterState(dispatch, tabId: string) {
   dispatch(Handlers.abortAll())
   dispatch(Errors.clearErrors())
   dispatch(clearNotifications())
-  dispatch(search.clear())
+  dispatch(Search.clear())
 }

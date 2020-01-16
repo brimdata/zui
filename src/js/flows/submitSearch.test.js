@@ -2,7 +2,7 @@
 
 import {changeSearchBarInput, setCurrentSpaceName} from "../state/actions"
 import MockBoomClient from "../test/MockBoomClient"
-import Search from "../state/search"
+import Search from "../state/Search"
 import Spaces from "../state/spaces"
 import Tab from "../state/tab"
 import brim from "../brim"

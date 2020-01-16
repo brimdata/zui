@@ -3,8 +3,8 @@
 import {getBoomOptions} from "./boom"
 import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
 import Clusters from "../Clusters"
+import Search from "../Search"
 import initTestStore from "../../test/initTestStore"
-import search from "../search"
 import tab from "../tab"
 
 test("#getBoomOptions", () => {
@@ -17,8 +17,8 @@ test("#getBoomOptions", () => {
       username: "rosie",
       password: "puppy"
     }),
-    search.setCluster("abc"),
-    search.setSpanArgsFromDates([new Date(0), new Date(1)]),
+    Search.setCluster("abc"),
+    Search.setSpanArgsFromDates([new Date(0), new Date(1)]),
     tab.computeSpan(),
     setCurrentSpaceName("work-zone"),
     useBoomCache(true),

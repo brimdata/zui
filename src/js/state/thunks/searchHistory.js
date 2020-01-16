@@ -3,7 +3,7 @@
 import type {SearchRecord} from "../../types"
 import type {Thunk} from "../types"
 import {restoreSearchBar} from "../actions"
-import search from "../search"
+import Search from "../Search"
 
 export function restoreSearch(record: SearchRecord): Thunk {
   return function(dispatch) {
@@ -16,7 +16,7 @@ export function restoreSearch(record: SearchRecord): Thunk {
         error: null
       })
     )
-    dispatch(search.setSpanArgs(record.spanArgs))
-    dispatch(search.setSpanFocus(null))
+    dispatch(Search.setSpanArgs(record.spanArgs))
+    dispatch(Search.setSpanFocus(null))
   }
 }

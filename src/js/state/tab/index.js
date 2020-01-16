@@ -6,7 +6,7 @@ import type {SpanArgs} from "../search/types"
 import type {State, Thunk} from "../types"
 import type {TabState} from "./types"
 import brim, {type Span, type Ts} from "../../brim"
-import search from "../search"
+import Search from "../Search"
 import selectors from "./selectors"
 import tabs from "../tabs"
 
@@ -56,21 +56,21 @@ function computeSpan(now: Date = new Date()): Thunk {
       .span(args)
       .recompute(now)
       .toSpan()
-    dispatch(search.setSpan(span))
+    dispatch(Search.setSpan(span))
   }
 }
 
 function setFrom(ts: Ts): Thunk {
   return function(dispatch, getState) {
     let [_, to] = getSpanArgs(getState())
-    dispatch(search.setSpanArgs([ts, to]))
+    dispatch(Search.setSpanArgs([ts, to]))
   }
 }
 
 function setTo(ts: Ts): Thunk {
   return function(dispatch, getState) {
     let [from, _] = getSpanArgs(getState())
-    dispatch(search.setSpanArgs([from, ts]))
+    dispatch(Search.setSpanArgs([from, ts]))
   }
 }
 
