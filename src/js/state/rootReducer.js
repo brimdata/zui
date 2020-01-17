@@ -7,12 +7,12 @@ import Boomd from "./Boomd"
 import Clusters from "./Clusters"
 import Errors from "./Errors"
 import Handlers from "./Handlers"
+import Investigation from "./Investigation"
 import Modal from "./Modal"
 import Notice from "./Notice"
 import Spaces from "./Spaces"
 import Tabs from "./Tabs"
 import Viewer from "./Viewer"
-import investigation from "./reducers/investigation"
 import logDetails from "./reducers/logDetails"
 import packets from "./reducers/packets"
 import starredLogs from "./reducers/starredLogs"
@@ -26,7 +26,7 @@ export default combineReducers<*, *>({
   notice: Notice.reducer,
   handlers: Handlers.reducer,
   tabs: Tabs.reducer,
-  investigation,
+  investigation: Investigation.reducer,
   view,
   spaces: Spaces.reducer,
   logDetails,

@@ -1,29 +1,7 @@
 /* @flow */
 import type {Descriptor, Notification, Tuple} from "../types"
-import type {Finding} from "./reducers/investigation"
 import type {InvestigationView} from "./reducers/view"
 import type {SearchBar} from "./reducers/searchBar"
-import type {Ts} from "../brim"
-import {isArray} from "../lib/is"
-
-export const createFinding = (finding: $Shape<Finding>) => ({
-  type: "FINDING_CREATE",
-  finding
-})
-
-export const updateFinding = (finding: $Shape<Finding>) => ({
-  type: "FINDING_UPDATE",
-  finding
-})
-
-export const deleteFindingByTs = (ts: Ts[] | Ts) => ({
-  type: "FINDING_DELETE",
-  ts: isArray(ts) ? ts : [ts]
-})
-
-export const clearInvestigation = () => ({
-  type: "INVESTIGATION_CLEAR"
-})
 
 export const pushLogDetail = ({
   tuple,

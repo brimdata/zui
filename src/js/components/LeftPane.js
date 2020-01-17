@@ -8,16 +8,13 @@ import {LinkButton} from "./Typography"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import {
-  clearInvestigation,
-  setInvestigationView,
-  setLeftSidebarWidth
-} from "../state/actions"
-import {
   getInvestigationView,
   getLeftSidebarIsOpen,
   getLeftSidebarWidth
 } from "../state/reducers/view"
+import {setInvestigationView, setLeftSidebarWidth} from "../state/actions"
 import FilterTree from "./FilterTree"
+import Investigation from "../state/Investigation"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
 
@@ -39,7 +36,7 @@ export function LeftPane() {
   }
 
   function onClearAll() {
-    dispatch(clearInvestigation())
+    dispatch(Investigation.clearInvestigation())
   }
 
   if (!isOpen) return <XLeftPaneExpander />

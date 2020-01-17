@@ -1,22 +1,18 @@
 /* @flow */
+
 import {isEqual} from "lodash"
 
+import type {Finding, InvestigationAction, InvestigationState} from "./types"
 import type {SearchRecord} from "../../types"
-import type {State} from "../types"
 import {last} from "../../lib/Array"
-import Log from "../../models/Log"
 import brim, {type Ts} from "../../brim"
 
-export type Investigation = Finding[]
-export type Finding = {
-  ts: Ts,
-  search: SearchRecord,
-  resultCount?: number,
-  note?: string,
-  logs?: Log[]
-}
+const init: InvestigationState = []
 
-export default function(state: Investigation = [], a: *) {
+export default function reducer(
+  state: InvestigationState = init,
+  a: InvestigationAction
+): InvestigationState {
   switch (a.type) {
     case "HISTORY_PUSH":
       return createFinding(state, a.entry)
@@ -34,9 +30,8 @@ export default function(state: Investigation = [], a: *) {
   }
 }
 
-function updateLatest(state: Investigation, updates: $Shape<Finding>) {
+function updateLatest(state: InvestigationState, updates: $Shape<Finding>) {
   var finding = last(state)
-
   if (finding) {
     state[state.length - 1] = {...finding, ...updates}
     return [...state]
@@ -59,12 +54,4 @@ function createFinding(
 
 function sameRecord(a: Finding, b: Finding) {
   return !!a && !!b && isEqual(a.search, b.search)
-}
-
-export function getInvestigation(state: State) {
-  return state.investigation
-}
-
-export function getCurrentFinding(state: State) {
-  return last(getInvestigation(state))
 }

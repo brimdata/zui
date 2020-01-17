@@ -4,15 +4,15 @@ import {useDispatch} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import type {Finding} from "../../state/reducers/investigation"
+import type {Finding} from "../../state/Investigation/types"
 import {RemoveButton} from "../Buttons"
 import {
   changeSearchBarInput,
-  deleteFindingByTs,
   setCurrentSpaceName,
   setSearchBarPins
 } from "../../state/actions"
 import FindingProgram from "./FindingProgram"
+import Investigation from "../../state/Investigation"
 import search from "../../state/Search"
 import submitSearch from "../../flows/submitSearch"
 
@@ -31,7 +31,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   }
 
   function onRemove() {
-    dispatch(deleteFindingByTs(finding.ts))
+    dispatch(Investigation.deleteFindingByTs(finding.ts))
   }
 
   return (

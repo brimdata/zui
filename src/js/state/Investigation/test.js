@@ -1,8 +1,7 @@
 /* @flow */
 
-import {createFinding, deleteFindingByTs} from "../actions"
-import {getCurrentFinding, getInvestigation} from "./investigation"
 import History from "../History"
+import Investigation from "./"
 import brim from "../../brim"
 import initTestStore from "../../test/initTestStore"
 
@@ -12,7 +11,7 @@ beforeEach(() => {
 })
 
 function get() {
-  return getInvestigation(store.getState())
+  return Investigation.getInvestigation(store.getState())
 }
 
 let search1 = {
@@ -31,7 +30,7 @@ let search2 = {
 
 test("new finding", () => {
   const finding = {ts: brim.time().toTs()}
-  store.dispatch(createFinding(finding))
+  store.dispatch(Investigation.createFinding(finding))
 
   expect(get()).toEqual([
     {
@@ -64,7 +63,7 @@ test("when a search is different", () => {
   let state = store.dispatchAll([History.push(search1), History.push(search2)])
   expect(get()).toHaveLength(2)
 
-  expect(getCurrentFinding(state)).toEqual({
+  expect(Investigation.getCurrentFinding(state)).toEqual({
     ts: {
       ns: expect.any(Number),
       sec: expect.any(Number)
@@ -75,9 +74,9 @@ test("when a search is different", () => {
 
 test("delete a single finding by ts", () => {
   let state = store.dispatchAll([History.push(search1), History.push(search2)])
-  let {ts} = getCurrentFinding(state)
+  let {ts} = Investigation.getCurrentFinding(state)
 
-  state = store.dispatchAll([deleteFindingByTs(ts)])
+  state = store.dispatchAll([Investigation.deleteFindingByTs(ts)])
 
   expect(get()[0]).toEqual({
     ts: {
@@ -91,7 +90,7 @@ test("delete a single finding by ts", () => {
 test("removing several records with multiple ts", () => {
   store.dispatchAll([History.push(search1), History.push(search2)])
   let multiTs = get().map((finding) => finding.ts)
-  store.dispatchAll([deleteFindingByTs(multiTs)])
+  store.dispatchAll([Investigation.deleteFindingByTs(multiTs)])
 
   expect(get().length).toBe(0)
 })

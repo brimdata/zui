@@ -1,7 +1,7 @@
 /* @flow */
 import {isEqual} from "lodash"
 
-import type {Finding} from "../state/reducers/investigation"
+import type {Finding} from "../state/Investigation/types"
 
 export function getKey(finding: Finding) {
   let {sec, ns} = finding.ts

@@ -8,18 +8,18 @@ import classNames from "classnames"
 import {Node} from "../models/Node"
 import {RemoveButton} from "./Buttons"
 import {createInvestigationTree} from "./FilterTree/helpers"
-import {deleteFindingByTs, restoreSearchBar} from "../state/actions"
-import {getInvestigation} from "../state/reducers/investigation"
 import {
   getSearchBarPins,
   getSearchBarPreviousInputValue
 } from "../state/selectors/searchBar"
+import {restoreSearchBar} from "../state/actions"
 import FilterNode from "./FilterNode"
+import Investigation from "../state/Investigation"
 import submitSearch from "../flows/submitSearch"
 
 export default function FilterTree() {
   let dispatch = useDispatch()
-  let investigation = useSelector(getInvestigation)
+  let investigation = useSelector(Investigation.getInvestigation)
   let pinnedFilters = useSelector(getSearchBarPins)
   let previous = useSelector(getSearchBarPreviousInputValue)
 
@@ -40,7 +40,7 @@ export default function FilterTree() {
     function onNodeRemove(e) {
       e.stopPropagation()
       let multiTs = node.mapChildren((node) => node.data.finding.ts)
-      dispatch(deleteFindingByTs(multiTs))
+      dispatch(Investigation.deleteFindingByTs(multiTs))
     }
 
     let className = classNames("filter-tree-node", {
