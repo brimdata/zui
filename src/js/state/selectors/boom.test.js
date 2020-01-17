@@ -1,7 +1,8 @@
 /* @flow */
 
 import {getBoomOptions} from "./boom"
-import {setCurrentSpaceName, useBoomCache, useBoomIndex} from "../actions"
+import {setCurrentSpaceName} from "../actions"
+import Boomd from "../Boomd"
 import Clusters from "../Clusters"
 import Search from "../Search"
 import Tab from "../Tab"
@@ -21,8 +22,8 @@ test("#getBoomOptions", () => {
     Search.setSpanArgsFromDates([new Date(0), new Date(1)]),
     Tab.computeSpan(),
     setCurrentSpaceName("work-zone"),
-    useBoomCache(true),
-    useBoomIndex(false)
+    Boomd.useCache(true),
+    Boomd.useIndex(false)
   ])
 
   expect(getBoomOptions(state)).toEqual(

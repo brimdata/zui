@@ -7,7 +7,7 @@ import classNames from "classnames"
 import type {State} from "../state/types"
 import LoadingMessage from "./LoadingMessage"
 import TableSearchStats from "./TableSearchStats"
-import Viewer from "../state/viewer"
+import Viewer from "../state/Viewer"
 
 type StateProps = {|
   isFetching: boolean

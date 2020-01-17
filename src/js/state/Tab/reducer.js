@@ -7,7 +7,7 @@ import columnsReducer from "../Columns/reducer"
 import historyReducer from "../History/reducer"
 import reducersSearchBar from "../reducers/searchBar"
 import searchReducer from "../Search/reducer"
-import viewerReducer from "../viewer/reducer"
+import viewerReducer from "../Viewer/reducer"
 
 export default combineReducers<*, *>({
   id: (state: string = brim.randomHash(), _) => state,

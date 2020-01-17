@@ -3,11 +3,11 @@ import {createSelector} from "reselect"
 
 import type {ColumnsState} from "./types"
 import type {State} from "../types"
-import type {ViewerColumns} from "../viewer/types"
+import type {ViewerColumns} from "../Viewer/types"
 import {uniqBy} from "../../lib/Array"
 import Log from "../../models/Log"
 import TableColumns from "../../models/TableColumns"
-import Viewer from "../viewer"
+import Viewer from "../Viewer"
 import activeTabSelect from "../Tab/activeTabSelect"
 import columnKey from "../../lib/columnKey"
 

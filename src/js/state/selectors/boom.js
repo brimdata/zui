@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {State} from "../types"
-import {getUseBoomCache, getUseBoomIndex} from "../reducers/boomd"
+import Boomd from "../Boomd"
 import Tab from "../Tab"
 
 export const getBoomOptions = (state: State) => {
@@ -11,8 +11,8 @@ export const getBoomOptions = (state: State) => {
     searchSpace: Tab.spaceName(state),
     searchSpan: Tab.getSpanAsDates(state),
     adapter: "BrowserFetch",
-    enableIndex: getUseBoomIndex(state),
-    enableCache: getUseBoomCache(state)
+    enableIndex: Boomd.usingIndex(state),
+    enableCache: Boomd.usingCache(state)
   }
   if (credentials) {
     opts = {

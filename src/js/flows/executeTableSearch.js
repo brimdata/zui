@@ -3,7 +3,7 @@
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {SearchArgs} from "./searchArgs"
 import type {Thunk} from "../state/types"
-import Viewer from "../state/viewer"
+import Viewer from "../state/Viewer"
 import brim from "../brim"
 import executeSearch from "./executeSearch"
 

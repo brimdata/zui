@@ -6,16 +6,6 @@ import type {SearchBar} from "./reducers/searchBar"
 import type {Ts} from "../brim"
 import {isArray} from "../lib/is"
 
-export const useBoomCache = (value: boolean) => ({
-  type: "BOOMD_CACHE_USE_SET",
-  value
-})
-
-export const useBoomIndex = (value: boolean) => ({
-  type: "BOOMD_INDEX_USE_SET",
-  value
-})
-
 export const createFinding = (finding: $Shape<Finding>) => ({
   type: "FINDING_CREATE",
   finding

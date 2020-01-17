@@ -2,7 +2,7 @@
 
 import {type Store as ReduxStore} from "redux"
 
-import type {Boomd} from "./reducers/boomd"
+import type {BoomdState} from "./Boomd/types"
 import type {ClustersState} from "./Clusters/types"
 import type {ErrorsState} from "./Errors/types"
 import type {HandlersState} from "./Handlers/types"
@@ -27,7 +27,7 @@ export type State = {
   clusters: ClustersState,
   errors: ErrorsState,
   spaces: SpacesState,
-  boomd: Boomd,
+  boomd: BoomdState,
   logDetails: LogDetails,
   view: View,
   investigation: Investigation,

@@ -13,7 +13,7 @@ import Clusters from "../Clusters"
 import History from "../History"
 import Spaces from "../Spaces"
 import Tabs from "../Tabs"
-import Viewer from "../viewer"
+import Viewer from "../Viewer"
 import activeTabSelect from "./activeTabSelect"
 import brim, {type Span} from "../../brim"
 

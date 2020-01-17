@@ -4,7 +4,7 @@ import {useSelector} from "react-redux"
 import React from "react"
 
 import {reactElementProps} from "../test/integration"
-import Viewer from "../state/viewer"
+import Viewer from "../state/Viewer"
 import * as fmt from "../lib/fmt"
 
 export default function TableSearchStatus() {
