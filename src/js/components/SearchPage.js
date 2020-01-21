@@ -13,7 +13,6 @@ import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
 import {checkVersions} from "../services/boom"
 import {getKey} from "../lib/finding"
-import {getSearchProgram} from "../state/selectors/searchBar"
 import {hasAnalytics} from "../lib/Program"
 import {initSpace} from "../flows/initSpace"
 import {useResizeObserver} from "./hooks/useResizeObserver"
@@ -26,13 +25,14 @@ import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
 import Investigation from "../state/Investigation"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
+import SearchBar from "../state/SearchBar"
 import SettingsModal from "./SettingsModal"
 import TabBar from "./TabBar/TabBar"
 import WhoisModal from "./WhoisModal"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
-  let logsTab = !hasAnalytics(useSelector(getSearchProgram))
+  let logsTab = !hasAnalytics(useSelector(SearchBar.getSearchProgram))
   let finding = useSelector(Investigation.getCurrentFinding)
   let renderKey = finding && getKey(finding)
   let results = useResizeObserver()

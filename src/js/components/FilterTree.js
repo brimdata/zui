@@ -8,25 +8,21 @@ import classNames from "classnames"
 import {Node} from "../models/Node"
 import {RemoveButton} from "./Buttons"
 import {createInvestigationTree} from "./FilterTree/helpers"
-import {
-  getSearchBarPins,
-  getSearchBarPreviousInputValue
-} from "../state/selectors/searchBar"
-import {restoreSearchBar} from "../state/actions"
 import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
+import SearchBar from "../state/SearchBar"
 import submitSearch from "../flows/submitSearch"
 
 export default function FilterTree() {
   let dispatch = useDispatch()
   let investigation = useSelector(Investigation.getInvestigation)
-  let pinnedFilters = useSelector(getSearchBarPins)
-  let previous = useSelector(getSearchBarPreviousInputValue)
+  let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
+  let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
 
   function renderNode(node: Node, i: number) {
     function onNodeClick() {
       dispatch(
-        restoreSearchBar({
+        SearchBar.restoreSearchBar({
           pinned: getPinnedFilters(node),
           current: node.data.filter,
           previous: node.data.filter,

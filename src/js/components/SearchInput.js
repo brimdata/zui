@@ -4,8 +4,6 @@ import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
 
-import {changeSearchBarInput} from "../state/actions"
-import {getSearchBarInputValue} from "../state/selectors/searchBar"
 import {getSearchRecord} from "../state/selectors/searchRecord"
 import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
@@ -13,6 +11,7 @@ import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
 import Modal from "../state/Modal"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import ThreeDotButton from "./ThreeDotButton"
 import submitSearch from "../flows/submitSearch"
@@ -20,10 +19,10 @@ import submitSearch from "../flows/submitSearch"
 export default function SearchInput() {
   let dispatch = useDispatch()
   let history = useRef(new InputHistory<string>())
-  let inputValue = useSelector(getSearchBarInputValue)
+  let inputValue = useSelector(SearchBar.getSearchBarInputValue)
 
   function changeTo(value: string) {
-    dispatch(changeSearchBarInput(value))
+    dispatch(SearchBar.changeSearchBarInput(value))
   }
 
   function submit() {

@@ -4,19 +4,10 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {Dispatch, State} from "../state/types"
-import {
-  editSearchBarPin,
-  pinSearchBar,
-  removeSearchBarPin
-} from "../state/actions"
 import {fmtProgram} from "../lib/Program"
-import {
-  getSearchBarPins,
-  getSearchBarPreviousInputValue,
-  getSearchBarEditingIndex
-} from "../state/selectors/searchBar"
 import FilterNode from "./FilterNode"
 import Pin from "./icons/pin-md.svg"
+import SearchBar from "../state/SearchBar"
 
 type StateProps = {|
   editing: ?number,
@@ -42,11 +33,11 @@ export default class Pins extends React.Component<Props> {
         focused={this.props.editing === index}
         pending={index === -1}
         onClick={() => {
-          this.props.dispatch(editSearchBarPin(index))
+          this.props.dispatch(SearchBar.editSearchBarPin(index))
         }}
         onRemoveClick={(e) => {
           e.stopPropagation()
-          this.props.dispatch(removeSearchBarPin(index))
+          this.props.dispatch(SearchBar.removeSearchBarPin(index))
         }}
       />
     )
@@ -55,13 +46,15 @@ export default class Pins extends React.Component<Props> {
   renderPinButton() {
     return (
       <div className="pin-button-wrapper">
-        <span onClick={() => this.props.dispatch(editSearchBarPin(null))}>
+        <span
+          onClick={() => this.props.dispatch(SearchBar.editSearchBarPin(null))}
+        >
           {fmtProgram(this.props.previousValue)}
         </span>
         <button
           className="pin-button"
           title="⌘K"
-          onClick={() => this.props.dispatch(pinSearchBar())}
+          onClick={() => this.props.dispatch(SearchBar.pinSearchBar())}
         >
           <Pin />
         </button>
@@ -80,9 +73,9 @@ export default class Pins extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  pins: getSearchBarPins(state),
-  previousValue: getSearchBarPreviousInputValue(state),
-  editing: getSearchBarEditingIndex(state)
+  pins: SearchBar.getSearchBarPins(state),
+  previousValue: SearchBar.getSearchBarPreviousInputValue(state),
+  editing: SearchBar.getSearchBarEditingIndex(state)
 })
 
 export const XPins = connect<Props, {||}, _, _, _, _>(

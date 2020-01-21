@@ -4,10 +4,10 @@ import Prism from "prismjs"
 import React, {useState} from "react"
 
 import {Input} from "./form/Inputs"
-import {getSearchProgram} from "../state/selectors/searchBar"
 import {reactElementProps} from "../test/integration"
 import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
+import SearchBar from "../state/SearchBar"
 import TextContent from "./TextContent"
 import brim from "../brim"
 
@@ -26,7 +26,7 @@ export function DebugModal() {
 }
 
 function DebugModalContents() {
-  let searchProgram = useSelector(getSearchProgram)
+  let searchProgram = useSelector(SearchBar.getSearchProgram)
   let [program, setProgram] = useState(searchProgram)
 
   return (

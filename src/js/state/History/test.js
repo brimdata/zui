@@ -1,7 +1,7 @@
 /* @flow */
 
-import {changeSearchBarInput} from "../actions"
 import History from "./"
+import SearchBar from "../SearchBar"
 import Tab from "../Tab"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
@@ -10,11 +10,11 @@ let store
 beforeEach(() => {
   store = initTestStore()
   store.dispatchAll([
-    changeSearchBarInput("first"),
+    SearchBar.changeSearchBarInput("first"),
     submitSearch(),
-    changeSearchBarInput("second"),
+    SearchBar.changeSearchBarInput("second"),
     submitSearch(),
-    changeSearchBarInput("third"),
+    SearchBar.changeSearchBarInput("third"),
     submitSearch()
   ])
 })
@@ -45,7 +45,7 @@ test("going back in history then pushing new history", () => {
   let state = store.dispatchAll([
     History.back(),
     History.back(),
-    changeSearchBarInput("fourth"),
+    SearchBar.changeSearchBarInput("fourth"),
     submitSearch()
   ])
   const entry = Tab.currentEntry(state)
@@ -56,7 +56,7 @@ test("back, back, push, back", () => {
   let state = store.dispatchAll([
     History.back(),
     History.back(),
-    changeSearchBarInput("fourth"),
+    SearchBar.changeSearchBarInput("fourth"),
     submitSearch(),
     History.back()
   ])

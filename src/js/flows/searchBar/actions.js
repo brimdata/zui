@@ -1,19 +1,19 @@
 /* @flow */
 
 import type {Thunk} from "../../state/types"
-import {changeSearchBarInput} from "../../state/actions"
 import {
   getSearchBar,
   getSearchBarInputValue
-} from "../../state/selectors/searchBar"
+} from "../../state/SearchBar/selectors"
 import {onlyWhitespace} from "../../lib/Str"
 import Field from "../../models/Field"
+import SearchBar from "../../state/SearchBar"
 import brim, {type $Field} from "../../brim"
 
 export function appendQueryInclude(field: Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
-      changeSearchBarInput(
+      SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
           .include(brim.field(field))
@@ -26,7 +26,7 @@ export function appendQueryInclude(field: Field): Thunk {
 export function appendQueryExclude(field: Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
-      changeSearchBarInput(
+      SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
           .exclude(brim.field(field))
@@ -43,7 +43,7 @@ export function appendQueryCountBy(field: Field): Thunk {
     let program = onlyWhitespace(query) ? "*" : current
 
     dispatch(
-      changeSearchBarInput(
+      SearchBar.changeSearchBarInput(
         brim
           .program(program)
           .countBy(brim.field(field))
@@ -63,7 +63,7 @@ export function appendQuerySortBy(
     let program = onlyWhitespace(query) ? "*" : current
 
     dispatch(
-      changeSearchBarInput(
+      SearchBar.changeSearchBarInput(
         brim
           .program(program)
           .sortBy(name, direction)
@@ -76,7 +76,7 @@ export function appendQuerySortBy(
 export function appendQueryIn(field: $Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
-      changeSearchBarInput(
+      SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
           .in(field)
@@ -89,7 +89,7 @@ export function appendQueryIn(field: $Field): Thunk {
 export function appendQueryNotIn(field: $Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
-      changeSearchBarInput(
+      SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
           .notIn(field)

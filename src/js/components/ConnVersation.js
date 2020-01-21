@@ -5,10 +5,10 @@ import {useSelector} from "react-redux"
 import React from "react"
 
 import {Fieldset} from "./Typography"
-import {getSearchProgram} from "../state/selectors/searchBar"
 import {showContextMenu} from "../lib/System"
 import Columns from "../state/Columns"
 import Log from "../models/Log"
+import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
@@ -58,7 +58,7 @@ const ConnHistory = ({history = ""}) => (
 )
 
 const Host = ({className, title, ip, port, log}) => {
-  let program = useSelector(getSearchProgram)
+  let program = useSelector(SearchBar.getSearchProgram)
   let tableColumns = useSelector(Columns.getCurrentTableColumns)
   let space = useSelector(Tab.space)
   let rightClick = menu.fieldContextMenu(

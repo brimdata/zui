@@ -8,9 +8,9 @@ import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/types"
 import {UID_CORRELATION_LIMIT} from "../searches/programs"
-import {changeSearchBarInput, clearSearchBar} from "../state/actions"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import Log from "../models/Log"
+import SearchBar from "../state/SearchBar"
 import brim from "../brim"
 import dispatchToProps from "../lib/dispatchToProps"
 import submitSearch from "../flows/submitSearch"
@@ -31,8 +31,8 @@ export default function UidTimeline({logs, log, dispatch}: Props) {
   let xScale = createScale(logs)
 
   function queryForAll() {
-    dispatch(clearSearchBar())
-    dispatch(changeSearchBarInput(log.correlationId()))
+    dispatch(SearchBar.clearSearchBar())
+    dispatch(SearchBar.changeSearchBarInput(log.correlationId()))
     dispatch(submitSearch())
   }
 

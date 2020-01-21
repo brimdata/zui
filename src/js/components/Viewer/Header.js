@@ -4,12 +4,13 @@ import {useSelector} from "react-redux"
 import React, {useMemo} from "react"
 
 import type {ViewerDimens} from "../../types"
-import {getSearchProgram} from "../../state/selectors/searchBar"
 import HeaderCell from "./HeaderCell"
+import SearchBar from "../../state/SearchBar"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import brim from "../../brim"
 import columnKey from "../../lib/columnKey"
+
 type Props = {
   dimens: ViewerDimens,
   scrollLeft: number,
@@ -17,7 +18,7 @@ type Props = {
 }
 
 export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
-  let program = useSelector(getSearchProgram)
+  let program = useSelector(SearchBar.getSearchProgram)
   let sorts = useMemo(() => {
     return brim
       .program(program)

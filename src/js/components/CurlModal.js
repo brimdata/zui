@@ -4,11 +4,11 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useState} from "react"
 
 import {InputCheckbox} from "./form/Inputs"
-import {getSearchProgram} from "../state/selectors/searchBar"
 import {inspectSearch} from "../services/boom"
 import {reactElementProps} from "../test/integration"
 import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
+import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
@@ -49,7 +49,7 @@ export default function CurlModalBox() {
 function CurlModalContents() {
   let dispatch = useDispatch()
   let [includeCreds, setIncludeCreds] = useState(false)
-  let program = useSelector(getSearchProgram)
+  let program = useSelector(SearchBar.getSearchProgram)
   let {username, password} = useSelector(Tab.cluster)
   let info = dispatch(inspectSearch(program))
 

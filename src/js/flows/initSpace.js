@@ -1,15 +1,12 @@
 /* @flow */
 import {NoSpacesError} from "../models/Errors"
 import type {Thunk} from "../state/types"
-import {
-  changeSearchBarInput,
-  removeAllSearchBarPins,
-  setCurrentSpaceName
-} from "../state/actions"
 import {fetchSpace, fetchSpaces} from "../services/boom"
+import {setCurrentSpaceName} from "../state/actions"
 import ErrorFactory from "../models/ErrorFactory"
 import Modal from "../state/Modal"
 import Notice from "../state/Notice"
+import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
@@ -57,7 +54,7 @@ function setSpace(dispatch, data, clusterId) {
 
 function setSearchDefaults(dispatch, data) {
   dispatch(search.setSpanArgs(brim.space(data).defaultSpanArgs()))
-  dispatch(removeAllSearchBarPins())
-  dispatch(changeSearchBarInput(""))
+  dispatch(SearchBar.removeAllSearchBarPins())
+  dispatch(SearchBar.changeSearchBarInput(""))
   return data
 }

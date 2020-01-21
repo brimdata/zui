@@ -2,8 +2,8 @@
 import {isEmpty} from "lodash"
 
 import type {Thunk} from "../state/types"
-import {getSearchProgram} from "../state/selectors/searchBar"
 import {indexOfLastChange} from "../lib/Array"
+import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/viewer"
@@ -17,7 +17,7 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let currentSpan = Tab.getSpanAsDates(state)
   let tabId = Tabs.getActive(state)
   let [spliceIndex, span] = nextPageArgs(logs, currentSpan)
-  let program = getSearchProgram(state)
+  let program = SearchBar.getSearchProgram(state)
   let space = Tab.spaceName(state)
   let spanFocus = null
 

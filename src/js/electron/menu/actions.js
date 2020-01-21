@@ -9,17 +9,14 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../flows/searchBar/actions"
-import {
-  changeSearchBarInput,
-  clearSearchBar,
-  showRightSidebar
-} from "../../state/actions"
 import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
+import {showRightSidebar} from "../../state/actions"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import Modal from "../../state/Modal"
+import SearchBar from "../../state/SearchBar"
 import action from "./action"
 import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
@@ -58,8 +55,8 @@ function buildActions() {
       label: "New search with this value",
       listener(dispatch, field) {
         field = FieldFactory.create(field)
-        dispatch(clearSearchBar())
-        dispatch(changeSearchBarInput(field.queryableValue()))
+        dispatch(SearchBar.clearSearchBar())
+        dispatch(SearchBar.changeSearchBarInput(field.queryableValue()))
         dispatch(submitSearch())
       }
     }),
@@ -84,8 +81,8 @@ function buildActions() {
           .string()
 
         if (newProgram) {
-          dispatch(clearSearchBar())
-          dispatch(changeSearchBarInput(newProgram))
+          dispatch(SearchBar.clearSearchBar())
+          dispatch(SearchBar.changeSearchBarInput(newProgram))
           dispatch(submitSearch())
         }
       }
