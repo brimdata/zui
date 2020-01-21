@@ -7,7 +7,7 @@ import type {ClustersState} from "./Clusters/types"
 import type {ErrorsState} from "./Errors/types"
 import type {HandlersState} from "./Handlers/types"
 import type {InvestigationState} from "./Investigation/types"
-import type {LogDetails} from "./reducers/logDetails"
+import type {LogDetailsState} from "./LogDetails/types"
 import type {ModalState} from "./Modal/types"
 import type {NoticeState} from "./Notice/types"
 import type {SpacesState} from "./Spaces/types"
@@ -28,7 +28,7 @@ export type State = {
   errors: ErrorsState,
   spaces: SpacesState,
   boomd: BoomdState,
-  logDetails: LogDetails,
+  logDetails: LogDetailsState,
   view: View,
   investigation: InvestigationState,
   modal: ModalState,

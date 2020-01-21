@@ -1,27 +1,7 @@
 /* @flow */
-import type {Descriptor, Notification, Tuple} from "../types"
 import type {InvestigationView} from "./reducers/view"
+import type {Notification, Tuple} from "../types"
 import type {SearchBar} from "./reducers/searchBar"
-
-export const pushLogDetail = ({
-  tuple,
-  descriptor
-}: {
-  tuple: Tuple,
-  descriptor: Descriptor
-}) => ({
-  type: "LOG_DETAIL_PUSH",
-  tuple,
-  descriptor
-})
-
-export const backLogDetail = () => ({
-  type: "LOG_DETAIL_BACK"
-})
-
-export const forwardLogDetail = () => ({
-  type: "LOG_DETAIL_FORWARD"
-})
 
 export const clearNotifications = () => ({
   type: "NOTIFICATIONS_CLEAR"

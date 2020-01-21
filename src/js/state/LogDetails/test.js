@@ -1,7 +1,6 @@
 /* @flow */
 
-import {backLogDetail, forwardLogDetail, pushLogDetail} from "../actions"
-import {buildLogDetail} from "../selectors/logDetails"
+import LogDetails from "./"
 import initTestStore from "../../test/initTestStore"
 
 const tuple = ["1", "a"]
@@ -16,8 +15,8 @@ beforeEach(() => {
 })
 
 test("viewing a log detail", () => {
-  let state = store.dispatchAll([pushLogDetail({tuple, descriptor})])
-  const log = buildLogDetail(state)
+  let state = store.dispatchAll([LogDetails.pushLogDetail({tuple, descriptor})])
+  const log = LogDetails.buildLogDetail(state)
 
   expect(log && log.get("letter")).toEqual("a")
 })
@@ -25,35 +24,35 @@ test("viewing a log detail", () => {
 test("viewing 2 logs", () => {
   const tuple2 = ["1", "b"]
   let state = store.dispatchAll([
-    pushLogDetail({tuple, descriptor}),
-    pushLogDetail({tuple: tuple2, descriptor})
+    LogDetails.pushLogDetail({tuple, descriptor}),
+    LogDetails.pushLogDetail({tuple: tuple2, descriptor})
   ])
 
-  const log = buildLogDetail(state)
+  const log = LogDetails.buildLogDetail(state)
   expect(log && log.get("letter")).toBe("b")
 })
 
 test("going back to the first log", () => {
   const tuple2 = ["1", "b"]
   let state = store.dispatchAll([
-    pushLogDetail({tuple, descriptor}),
-    pushLogDetail({tuple: tuple2, descriptor}),
-    backLogDetail()
+    LogDetails.pushLogDetail({tuple, descriptor}),
+    LogDetails.pushLogDetail({tuple: tuple2, descriptor}),
+    LogDetails.backLogDetail()
   ])
 
-  const log = buildLogDetail(state)
+  const log = LogDetails.buildLogDetail(state)
   expect(log && log.get("letter")).toBe("a")
 })
 
 test("going back and then forward", () => {
   const tuple2 = ["1", "b"]
   const state = store.dispatchAll([
-    pushLogDetail({tuple, descriptor}),
-    pushLogDetail({tuple: tuple2, descriptor}),
-    backLogDetail(),
-    forwardLogDetail()
+    LogDetails.pushLogDetail({tuple, descriptor}),
+    LogDetails.pushLogDetail({tuple: tuple2, descriptor}),
+    LogDetails.backLogDetail(),
+    LogDetails.forwardLogDetail()
   ])
 
-  const log = buildLogDetail(state)
+  const log = LogDetails.buildLogDetail(state)
   expect(log && log.get("letter")).toBe("b")
 })

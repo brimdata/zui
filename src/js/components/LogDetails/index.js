@@ -4,7 +4,6 @@ import {useSelector} from "react-redux"
 import React from "react"
 
 import {Md5Panel} from "./Md5Panel"
-import {buildLogDetail, getIsGoingBack} from "../../state/selectors/logDetails"
 import ConnPanel from "./ConnPanel"
 import FieldsPanel from "./FieldsPanel"
 import NavAnimation from "./NavAnimation"
@@ -12,8 +11,8 @@ import NoSelection from "./NoSelection"
 import UidPanel from "./UidPanel"
 
 export default function LogDetails() {
-  let log = useSelector(buildLogDetail)
-  let isGoingBack = useSelector(getIsGoingBack)
+  let log = useSelector(LogDetails.buildLogDetail)
+  let isGoingBack = useSelector(LogDetails.getIsGoingBack)
 
   if (!log) return <NoSelection />
 

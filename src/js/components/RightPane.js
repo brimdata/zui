@@ -7,20 +7,15 @@ import classNames from "classnames"
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../state/Spaces/types"
 import {XRightPaneExpander} from "./RightPaneExpander"
-import {
-  backLogDetail,
-  forwardLogDetail,
-  setRightSidebarWidth,
-  starLog,
-  unstarLog
-} from "../state/actions"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
 import {reactElementProps} from "../test/integration"
+import {setRightSidebarWidth, starLog, unstarLog} from "../state/actions"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
 import Log from "../models/Log"
-import LogDetails from "./LogDetails"
+import LogDetails from "../state/LogDetails"
+import LogDetailsComponent from "./LogDetails"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -33,7 +28,6 @@ import RightPaneCollapser from "./RightPaneCollapser"
 import Star from "./icons/star-sm.svg"
 import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
-import * as logDetails from "../state/selectors/logDetails"
 import * as view from "../state/reducers/view"
 
 type StateProps = {|
@@ -101,13 +95,17 @@ export default class RightPane extends React.Component<Props, S> {
                 <button
                   className="panel-button back-button"
                   disabled={!prevExists}
-                  onClick={() => this.props.dispatch(backLogDetail())}
+                  onClick={() =>
+                    this.props.dispatch(LogDetails.backLogDetail())
+                  }
                 >
                   <Back />
                 </button>
                 <button
                   className="panel-button forward-button"
-                  onClick={() => this.props.dispatch(forwardLogDetail())}
+                  onClick={() =>
+                    this.props.dispatch(LogDetails.forwardLogDetail())
+                  }
                   disabled={!nextExists}
                 >
                   <Forward />
@@ -139,7 +137,7 @@ export default class RightPane extends React.Component<Props, S> {
           </PaneHeader>
         )}
         <PaneBody>
-          <LogDetails />
+          <LogDetailsComponent />
         </PaneBody>
         <RightPaneCollapser />
       </Pane>
@@ -150,10 +148,10 @@ export default class RightPane extends React.Component<Props, S> {
 const stateToProps = (state) => ({
   isOpen: view.getRightSidebarIsOpen(state),
   width: view.getRightSidebarWidth(state),
-  prevExists: logDetails.getLogDetailHistory(state).prevExists(),
-  nextExists: logDetails.getLogDetailHistory(state).nextExists(),
-  isStarred: logDetails.getLogDetailIsStarred(state),
-  currentLog: logDetails.buildLogDetail(state),
+  prevExists: LogDetails.getLogDetailHistory(state).prevExists(),
+  nextExists: LogDetails.getLogDetailHistory(state).nextExists(),
+  isStarred: LogDetails.getLogDetailIsStarred(state),
+  currentLog: LogDetails.buildLogDetail(state),
   space: Tab.space(state)
 })
 

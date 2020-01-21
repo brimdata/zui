@@ -7,7 +7,6 @@ import React from "react"
 import type {DispatchProps, State} from "../../state/types"
 import type {Space} from "../../state/Spaces/types"
 import type {ViewerDimens} from "../../types"
-import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
 import {getSearchProgram} from "../../state/selectors/searchBar"
@@ -16,6 +15,7 @@ import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
 import Log from "../../models/Log"
+import LogDetails from "../../state/LogDetails"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
 import Tab from "../../state/Tab"
@@ -125,7 +125,7 @@ function stateToProps(state: State) {
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
     timeZone: getTimeZone(state),
-    selectedLog: buildLogDetail(state),
+    selectedLog: LogDetails.buildLogDetail(state),
     logs: Viewer.getLogs(state),
     program: getSearchProgram(state),
     space: Tab.space(state)
