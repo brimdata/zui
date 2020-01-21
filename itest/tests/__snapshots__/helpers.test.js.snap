@@ -30,7 +30,7 @@ Object {
     },
     "op": "FilterProc",
   },
-  "space": "corelight",
+  "space": "corelight-zeek-bulk",
   "span": Object {
     "dur": Object {
       "ns": 0,

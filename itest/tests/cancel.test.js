@@ -18,6 +18,7 @@ import {
 import {retryUntil} from "../lib/control"
 import {handleError, stdTest} from "../lib/jest.js"
 import {LOG} from "../lib/log"
+import {dataSets} from "../../src/js/test/integration"
 
 describe("Cancellation tests", () => {
   let app
@@ -46,7 +47,7 @@ describe("Cancellation tests", () => {
 
   const setupFlow = async (app) => {
     await logIn(app)
-    await setSpace(app, "hq_integration")
+    await setSpace(app, dataSets.hq_integration.spaceName)
     await setSpan(app, "Whole Space")
     // Disable optimizations to make queries slower.
     await toggleOptimizations(app)

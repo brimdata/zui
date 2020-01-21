@@ -16,6 +16,7 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
+import {dataSets} from "../../src/js/test/integration"
 
 describe("Spaces tests", () => {
   let app
@@ -32,11 +33,11 @@ describe("Spaces tests", () => {
     }
   })
 
-  stdTest("default space is corelight", (done) => {
+  stdTest(`default space is ${dataSets.hq_integration.spaceName}`, (done) => {
     logIn(app)
       .then(() => getCurrentSpace(app))
       .then((spaceName) => {
-        expect(spaceName).toBe("corelight")
+        expect(spaceName).toBe(dataSets.corelight.spaceName)
         done()
       })
       .catch((err) => {
@@ -44,12 +45,12 @@ describe("Spaces tests", () => {
       })
   })
 
-  stdTest("change space to hq_integration", (done) => {
+  stdTest(`change space to ${dataSets.hq_integration.spaceName}`, (done) => {
     logIn(app)
-      .then(() => setSpace(app, "hq_integration"))
+      .then(() => setSpace(app, dataSets.hq_integration.spaceName))
       .then(() => getCurrentSpace(app))
       .then((spaceName) => {
-        expect(spaceName).toBe("hq_integration")
+        expect(spaceName).toBe(dataSets.hq_integration.spaceName)
       })
       .then(() => writeSearch(app, "* | count()"))
       .then(() => startSearch(app))
