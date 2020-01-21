@@ -3,6 +3,7 @@ import type {DateTuple} from "../../lib/TimeWindow"
 import type {
   SEARCH_CLEAR,
   SEARCH_CLUSTER_SET,
+  SEARCH_SPACE_SET,
   SEARCH_SPAN_ARGS_SET,
   SEARCH_SPAN_FOCUS_SET,
   SEARCH_SPAN_SET,
@@ -11,6 +12,9 @@ import type {
 import brim, {type Span} from "../../brim"
 
 export default {
+  setSpace(space: string): SEARCH_SPACE_SET {
+    return {type: "SEARCH_SPACE_SET", space}
+  },
   setSpan(span: Span): SEARCH_SPAN_SET {
     return {type: "SEARCH_SPAN_SET", span}
   },

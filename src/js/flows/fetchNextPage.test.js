@@ -1,12 +1,11 @@
 /* @flow */
 
 import {fetchNextPage} from "./fetchNextPage"
-import {setCurrentSpaceName} from "../state/actions"
 import MockBoomClient from "../test/MockBoomClient"
+import Search from "../state/Search"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/viewer"
 import initTestStore from "../test/initTestStore"
-import search from "../state/Search"
 import tab from "../state/Tab"
 
 const records = [
@@ -30,8 +29,8 @@ beforeEach(() => {
   store = initTestStore(boom)
   tabId = Tabs.getActive(store.getState())
   store.dispatchAll([
-    setCurrentSpaceName("default"),
-    search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
+    Search.setSpace("default"),
+    Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     tab.computeSpan(),
     Viewer.appendRecords(tabId, records)
   ])

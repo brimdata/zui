@@ -1,7 +1,6 @@
 /* @flow */
 
 import {getBoomOptions} from "./boom"
-import {setCurrentSpaceName} from "../actions"
 import Boomd from "../Boomd"
 import Clusters from "../Clusters"
 import Search from "../Search"
@@ -21,7 +20,7 @@ test("#getBoomOptions", () => {
     Search.setCluster("abc"),
     Search.setSpanArgsFromDates([new Date(0), new Date(1)]),
     Tab.computeSpan(),
-    setCurrentSpaceName("work-zone"),
+    Search.setSpace("work-zone"),
     Boomd.useCache(true),
     Boomd.useIndex(false)
   ])

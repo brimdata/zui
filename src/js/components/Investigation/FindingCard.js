@@ -6,7 +6,6 @@ import classNames from "classnames"
 
 import type {Finding} from "../../state/Investigation/types"
 import {RemoveButton} from "../Buttons"
-import {setCurrentSpaceName} from "../../state/actions"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
 import Search from "../../state/Search"
@@ -21,7 +20,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
     dispatch(SearchBar.changeSearchBarInput(finding.search.program))
-    dispatch(setCurrentSpaceName(finding.search.space))
+    dispatch(Search.setSpace(finding.search.space))
     dispatch(Search.setSpanArgs(finding.search.spanArgs))
     dispatch(Search.setSpanFocus(null))
     dispatch(submitSearch(false))
