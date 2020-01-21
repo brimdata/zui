@@ -10,7 +10,7 @@ import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
-import Viewer from "../state/viewer"
+import Viewer from "../state/Viewer"
 import brim from "../brim"
 import submitSearch from "./submitSearch"
 

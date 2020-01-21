@@ -11,7 +11,7 @@ import Search from "../Search"
 import SearchBar from "../SearchBar"
 import Spaces from "../Spaces"
 import Tabs from "../Tabs"
-import Viewer from "../viewer"
+import Viewer from "../Viewer"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {

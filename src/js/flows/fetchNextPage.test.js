@@ -4,7 +4,7 @@ import {fetchNextPage} from "./fetchNextPage"
 import MockBoomClient from "../test/MockBoomClient"
 import Search from "../state/Search"
 import Tabs from "../state/Tabs"
-import Viewer from "../state/viewer"
+import Viewer from "../state/Viewer"
 import initTestStore from "../test/initTestStore"
 import tab from "../state/Tab"
 

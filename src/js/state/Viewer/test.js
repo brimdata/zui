@@ -1,7 +1,7 @@
 /* @flow */
 
 import Tabs from "../Tabs"
-import Viewer from "../viewer"
+import Viewer from "../Viewer"
 import initTestStore from "../../test/initTestStore"
 
 let store
