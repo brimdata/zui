@@ -3,8 +3,6 @@
 import {createSelector} from "reselect"
 
 import type {State} from "../types"
-import {contains} from "../../lib/Tuple"
-import {getStarredLogs} from "../reducers/starredLogs"
 import {toHistory} from "./reducer"
 import Log from "../../models/Log"
 
@@ -44,19 +42,10 @@ const build = createSelector<State, void, *, *>(getHistory, (history) => {
   return log ? new Log(log.tuple, log.descriptor) : null
 })
 
-const getIsStarred = createSelector<State, void, *, *, *>(
-  build,
-  getStarredLogs,
-  (log, starred) => {
-    return log ? contains(starred, log.tuple) : false
-  }
-)
-
 export default {
   getLogDetails,
   getPosition,
   getPrevPosition,
-  getIsStarred,
   build,
   getIsGoingBack,
   getNextExists,

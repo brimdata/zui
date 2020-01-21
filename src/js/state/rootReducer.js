@@ -15,7 +15,6 @@ import Packets from "./Packets"
 import Spaces from "./Spaces"
 import Tabs from "./Tabs"
 import Viewer from "./Viewer"
-import starredLogs from "./reducers/starredLogs"
 import view from "./reducers/view"
 
 export default combineReducers<*, *>({
@@ -31,7 +30,6 @@ export default combineReducers<*, *>({
   spaces: Spaces.reducer,
   logDetails: LogDetails.reducer,
   boomd: Boomd.reducer,
-  starredLogs,
   packets: Packets.reducer,
   version: () => VERSION
 })

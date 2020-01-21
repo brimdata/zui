@@ -2,7 +2,6 @@
 
 import {connect} from "react-redux"
 import React from "react"
-import classNames from "classnames"
 
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../state/Spaces/types"
@@ -10,7 +9,7 @@ import {XRightPaneExpander} from "./RightPaneExpander"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
 import {reactElementProps} from "../test/integration"
-import {setRightSidebarWidth, starLog, unstarLog} from "../state/actions"
+import {setRightSidebarWidth} from "../state/actions"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
 import Log from "../models/Log"
@@ -25,13 +24,11 @@ import Pane, {
   PaneBody
 } from "./Pane"
 import RightPaneCollapser from "./RightPaneCollapser"
-import Star from "./icons/star-sm.svg"
 import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
 import * as view from "../state/reducers/view"
 
 type StateProps = {|
-  isStarred: boolean,
   currentLog: Log,
   prevExists: boolean,
   nextExists: boolean,
@@ -49,12 +46,6 @@ type S = {
 export default class RightPane extends React.Component<Props, S> {
   state = {showCollapse: true}
 
-  toggleStar = () => {
-    this.props.isStarred
-      ? this.props.dispatch(unstarLog(this.props.currentLog.tuple))
-      : this.props.dispatch(starLog(this.props.currentLog.tuple))
-  }
-
   onDrag = (e: MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
@@ -71,7 +62,6 @@ export default class RightPane extends React.Component<Props, S> {
       nextExists,
       isOpen,
       width,
-      isStarred,
       currentLog,
       space
     } = this.props
@@ -95,17 +85,13 @@ export default class RightPane extends React.Component<Props, S> {
                 <button
                   className="panel-button back-button"
                   disabled={!prevExists}
-                  onClick={() =>
-                    this.props.dispatch(LogDetails.back())
-                  }
+                  onClick={() => this.props.dispatch(LogDetails.back())}
                 >
                   <Back />
                 </button>
                 <button
                   className="panel-button forward-button"
-                  onClick={() =>
-                    this.props.dispatch(LogDetails.forward())
-                  }
+                  onClick={() => this.props.dispatch(LogDetails.forward())}
                   disabled={!nextExists}
                 >
                   <Forward />
@@ -125,14 +111,6 @@ export default class RightPane extends React.Component<Props, S> {
                   PCAPS
                 </button>
               )}
-              <button
-                className={classNames("panel-button", "star-button", {
-                  starred: isStarred
-                })}
-                onClick={this.toggleStar}
-              >
-                <Star />
-              </button>
             </Right>
           </PaneHeader>
         )}
@@ -150,7 +128,6 @@ const stateToProps = (state) => ({
   width: view.getRightSidebarWidth(state),
   prevExists: LogDetails.getHistory(state).prevExists(),
   nextExists: LogDetails.getHistory(state).nextExists(),
-  isStarred: LogDetails.getIsStarred(state),
   currentLog: LogDetails.build(state),
   space: Tab.space(state)
 })

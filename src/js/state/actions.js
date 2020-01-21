@@ -1,6 +1,5 @@
 /* @flow */
 import type {InvestigationView} from "./reducers/view"
-import type {Tuple} from "../types"
 
 export function setCurrentSpaceName(space: string) {
   return {
@@ -8,20 +7,6 @@ export function setCurrentSpaceName(space: string) {
     space
   }
 }
-
-export const starLog = (tuple: Tuple) => ({
-  type: "LOG_STAR",
-  tuple
-})
-
-export const unstarLog = (tuple: Tuple) => ({
-  type: "LOG_UNSTAR",
-  tuple
-})
-
-export const clearStarredLogs = () => ({
-  type: "STARRED_LOGS_CLEAR"
-})
 
 export const showRightSidebar = () => ({
   type: "RIGHT_SIDEBAR_SHOW"
