@@ -5,7 +5,6 @@ import {
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
-import {goBack, goForward} from "../thunks/searchBar"
 import Field from "../../models/Field"
 import Search from "../Search"
 import SearchBar from "./"
@@ -299,7 +298,7 @@ test("goBack", () => {
     SearchBar.changeSearchBarInput("goodbye"),
     Search.setSpanArgsFromDates([new Date(3), new Date(4)]),
     submitSearch(),
-    goBack()
+    SearchBar.goBack()
   ])
 
   expect(Tab.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
@@ -317,12 +316,12 @@ test("goForward", () => {
     SearchBar.changeSearchBarInput("hello again"),
     Search.setSpanArgsFromDates([new Date(5), new Date(6)]),
     submitSearch(),
-    goBack(),
-    goBack(),
-    goBack(),
-    goBack(),
-    goBack(),
-    goForward()
+    SearchBar.goBack(),
+    SearchBar.goBack(),
+    SearchBar.goBack(),
+    SearchBar.goBack(),
+    SearchBar.goBack(),
+    SearchBar.goForward()
   ])
 
   expect(SearchBar.getSearchBarInputValue(state)).toBe("goodbye")

@@ -3,7 +3,6 @@ import {ipcRenderer} from "electron"
 
 import type {Store} from "../state/types"
 import {clearState} from "./initPersistance"
-import {goBack, goForward} from "../state/thunks/searchBar"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import View from "../state/View"
@@ -44,10 +43,10 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("back", () => {
-    store.dispatch(goBack())
+    store.dispatch(SearchBar.goBack())
   })
 
   ipcRenderer.on("forward", () => {
-    store.dispatch(goForward())
+    store.dispatch(SearchBar.goForward())
   })
 }
