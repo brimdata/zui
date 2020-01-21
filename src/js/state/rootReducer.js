@@ -14,8 +14,8 @@ import Notice from "./Notice"
 import Packets from "./Packets"
 import Spaces from "./Spaces"
 import Tabs from "./Tabs"
+import View from "./View"
 import Viewer from "./Viewer"
-import view from "./reducers/view"
 
 export default combineReducers<*, *>({
   errors: Errors.reducer,
@@ -26,7 +26,7 @@ export default combineReducers<*, *>({
   handlers: Handlers.reducer,
   tabs: Tabs.reducer,
   investigation: Investigation.reducer,
-  view,
+  view: View.reducer,
   spaces: Spaces.reducer,
   logDetails: LogDetails.reducer,
   boomd: Boomd.reducer,

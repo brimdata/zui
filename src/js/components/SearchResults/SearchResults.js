@@ -9,7 +9,6 @@ import type {Space} from "../../state/Spaces/types"
 import type {ViewerDimens} from "../../types"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
-import {getTimeZone} from "../../state/reducers/view"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
@@ -20,6 +19,7 @@ import NoResults from "./NoResults"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
 import TableColumns from "../../models/TableColumns"
+import View from "../../state/View"
 import Viewer from "../../state/Viewer"
 import ViewerComponent from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
@@ -124,7 +124,7 @@ function stateToProps(state: State) {
     isFetching: Viewer.getStatus(state) === "FETCHING",
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
-    timeZone: getTimeZone(state),
+    timeZone: View.getTimeZone(state),
     selectedLog: LogDetails.build(state),
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),

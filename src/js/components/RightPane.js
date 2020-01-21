@@ -9,7 +9,6 @@ import {XRightPaneExpander} from "./RightPaneExpander"
 import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
 import {reactElementProps} from "../test/integration"
-import {setRightSidebarWidth} from "../state/actions"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
 import Log from "../models/Log"
@@ -25,8 +24,8 @@ import Pane, {
 } from "./Pane"
 import RightPaneCollapser from "./RightPaneCollapser"
 import Tab from "../state/Tab"
+import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
-import * as view from "../state/reducers/view"
 
 type StateProps = {|
   currentLog: Log,
@@ -49,7 +48,7 @@ export default class RightPane extends React.Component<Props, S> {
   onDrag = (e: MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
-    this.props.dispatch(setRightSidebarWidth(Math.min(width, max)))
+    this.props.dispatch(View.setRightSidebarWidth(Math.min(width, max)))
   }
 
   onPacketsClick = () => {
@@ -124,8 +123,8 @@ export default class RightPane extends React.Component<Props, S> {
 }
 
 const stateToProps = (state) => ({
-  isOpen: view.getRightSidebarIsOpen(state),
-  width: view.getRightSidebarWidth(state),
+  isOpen: View.getRightSidebarIsOpen(state),
+  width: View.getRightSidebarWidth(state),
   prevExists: LogDetails.getHistory(state).prevExists(),
   nextExists: LogDetails.getHistory(state).nextExists(),
   currentLog: LogDetails.build(state),

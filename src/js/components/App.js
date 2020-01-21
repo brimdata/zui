@@ -5,13 +5,13 @@ import React, {useState} from "react"
 import classNames from "classnames"
 
 import {XLatestError} from "./LatestError"
-import {getTimeZone} from "../state/reducers/view"
 import ClusterGate from "./Login/ClusterGate"
+import View from "../state/View"
 import brim from "../brim"
 import useListener from "./hooks/useListener"
 
 export default function App() {
-  brim.time.setZone(useSelector(getTimeZone))
+  brim.time.setZone(useSelector(View.getTimeZone))
   let [mouse, setMouse] = useState(true)
 
   useListener(document, "mousedown", () => setMouse(true))

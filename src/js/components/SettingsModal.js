@@ -4,18 +4,17 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import {Label} from "./Typography"
-import {getTimeZone} from "../state/reducers/view"
 import {reactElementProps} from "../test/integration"
-import {setTimeZone} from "../state/actions"
 import Boomd from "../state/Boomd"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import Toggle from "./Toggle"
+import View from "../state/View"
 import brim from "../brim"
 
 export default function SettingsModal() {
   let dispatch = useDispatch()
-  let timeZone = useSelector(getTimeZone)
+  let timeZone = useSelector(View.getTimeZone)
   let useBoomIndex = useSelector(Boomd.usingIndex)
   let useBoomCache = useSelector(Boomd.usingCache)
 
@@ -31,7 +30,7 @@ export default function SettingsModal() {
           <div className="setting-panel">
             <Label>Timezone:</Label>
             <select
-              onChange={(e) => dispatch(setTimeZone(e.target.value))}
+              onChange={(e) => dispatch(View.setTimeZone(e.target.value))}
               value={timeZone}
             >
               {brim.time.getZoneNames().map((name) => (

@@ -7,32 +7,27 @@ import classNames from "classnames"
 import {LinkButton} from "./Typography"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {
-  getInvestigationView,
-  getLeftSidebarIsOpen,
-  getLeftSidebarWidth
-} from "../state/reducers/view"
-import {setInvestigationView, setLeftSidebarWidth} from "../state/actions"
 import FilterTree from "./FilterTree"
 import Investigation from "../state/Investigation"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
+import View from "../state/View"
 
 export function LeftPane() {
   let [showCollapse, setShowCollapse] = useState(true)
-  let view = useSelector(getInvestigationView)
-  let isOpen = useSelector(getLeftSidebarIsOpen)
-  let width = useSelector(getLeftSidebarWidth)
+  let view = useSelector(View.getInvestigationView)
+  let isOpen = useSelector(View.getLeftSidebarIsOpen)
+  let width = useSelector(View.getLeftSidebarWidth)
   let dispatch = useDispatch()
 
   function onDrag(e: MouseEvent) {
     const width = e.clientX
     const max = window.innerWidth
-    dispatch(setLeftSidebarWidth(Math.min(width, max)))
+    dispatch(View.setLeftSidebarWidth(Math.min(width, max)))
   }
 
   function onViewChange(name) {
-    dispatch(setInvestigationView(name))
+    dispatch(View.setInvestigationView(name))
   }
 
   function onClearAll() {

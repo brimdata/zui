@@ -13,7 +13,7 @@ import type {NoticeState} from "./Notice/types"
 import type {PacketsState} from "./Packets/types"
 import type {SpacesState} from "./Spaces/types"
 import type {TabsState} from "./Tabs/types"
-import type {View} from "./reducers/view"
+import type {ViewState} from "./View/types"
 import BoomClient from "../services/BoomClient"
 
 export type GetState = () => State
@@ -30,7 +30,7 @@ export type State = {
   spaces: SpacesState,
   boomd: BoomdState,
   logDetails: LogDetailsState,
-  view: View,
+  view: ViewState,
   investigation: InvestigationState,
   modal: ModalState,
   notice: NoticeState,

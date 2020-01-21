@@ -4,9 +4,9 @@ import React, {useEffect, useRef, useState} from "react"
 
 import {SPAN_TIME_FMT} from "./SpanControls"
 import type {TimeArg} from "../../state/Search/types"
-import {getTimeZone} from "../../state/reducers/view"
 import {isString} from "../../lib/is"
 import Form from "../form/Form"
+import View from "../../state/View"
 import brim from "../../brim"
 import lib from "../../lib"
 
@@ -17,7 +17,7 @@ type Props = {
 
 export default function TimeInput({timeArg, onSubmit}: Props) {
   let el = useRef()
-  let zone = useSelector(getTimeZone)
+  let zone = useSelector(View.getTimeZone)
   let initValue = isString(timeArg)
     ? timeArg
     : brim.time(timeArg).format(SPAN_TIME_FMT)

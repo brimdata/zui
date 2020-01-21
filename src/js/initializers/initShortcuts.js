@@ -4,9 +4,9 @@ import {ipcRenderer} from "electron"
 import type {Store} from "../state/types"
 import {clearState} from "./initPersistance"
 import {goBack, goForward} from "../state/thunks/searchBar"
-import {toggleLeftSidebar, toggleRightSidebar} from "../state/actions"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
+import View from "../state/View"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
@@ -27,11 +27,11 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("toggleLeftSidebar", () => {
-    store.dispatch(toggleLeftSidebar())
+    store.dispatch(View.toggleLeftSidebar())
   })
 
   ipcRenderer.on("toggleRightSidebar", () => {
-    store.dispatch(toggleRightSidebar())
+    store.dispatch(View.toggleRightSidebar())
   })
 
   ipcRenderer.on("resetState", () => {

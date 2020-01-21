@@ -11,12 +11,12 @@ import {
 } from "../../flows/searchBar/actions"
 import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
-import {showRightSidebar} from "../../state/actions"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import Modal from "../../state/Modal"
 import SearchBar from "../../state/SearchBar"
+import View from "../../state/View"
 import action from "./action"
 import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
@@ -38,7 +38,7 @@ function buildActions() {
       label: "Open details",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(showRightSidebar())
+        dispatch(View.showRightSidebar())
         dispatch(viewLogDetail(log))
       }
     }),

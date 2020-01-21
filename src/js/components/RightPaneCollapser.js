@@ -4,16 +4,15 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
-import {getRightSidebarWidth} from "../state/reducers/view"
-import {hideRightSidebar} from "../state/actions"
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
+import View from "../state/View"
 import lib from "../lib"
 
 export default function RightPaneCollapser() {
   let dispatch = useDispatch()
   let [show, setShow] = useState(false)
-  let width = useSelector(getRightSidebarWidth)
+  let width = useSelector(View.getRightSidebarWidth)
 
   useEffect(() => {
     let watcher = new MouseoverWatch()
@@ -29,7 +28,7 @@ export default function RightPaneCollapser() {
   })
 
   function onClick() {
-    dispatch(hideRightSidebar())
+    dispatch(View.hideRightSidebar())
   }
 
   return (
