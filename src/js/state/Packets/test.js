@@ -23,10 +23,7 @@ test("requesting packets", () => {
 
 test("receiving packets", () => {
   const uid = "123"
-  const state = reduce([
-    Packets.request(uid),
-    Packets.receive(uid, "123.pcap")
-  ])
+  const state = reduce([Packets.request(uid), Packets.receive(uid, "123.pcap")])
 
   expect(Packets.getDownloads(state)[0]).toEqual({
     uid,
