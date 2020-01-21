@@ -125,7 +125,7 @@ function stateToProps(state: State) {
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
     timeZone: getTimeZone(state),
-    selectedLog: LogDetails.buildLogDetail(state),
+    selectedLog: LogDetails.build(state),
     logs: Viewer.getLogs(state),
     program: getSearchProgram(state),
     space: Tab.space(state)

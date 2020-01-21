@@ -8,7 +8,7 @@ import type {
 } from "./types"
 
 export default {
-  pushLogDetail: ({
+  push: ({
     tuple,
     descriptor
   }: {
@@ -20,11 +20,11 @@ export default {
     descriptor
   }),
 
-  backLogDetail: (): LOG_DETAIL_BACK => ({
+  back: (): LOG_DETAIL_BACK => ({
     type: "LOG_DETAIL_BACK"
   }),
 
-  forwardLogDetail: (): LOG_DETAIL_FORWARD => ({
+  forward: (): LOG_DETAIL_FORWARD => ({
     type: "LOG_DETAIL_FORWARD"
   })
 }

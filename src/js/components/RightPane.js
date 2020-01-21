@@ -96,7 +96,7 @@ export default class RightPane extends React.Component<Props, S> {
                   className="panel-button back-button"
                   disabled={!prevExists}
                   onClick={() =>
-                    this.props.dispatch(LogDetails.backLogDetail())
+                    this.props.dispatch(LogDetails.back())
                   }
                 >
                   <Back />
@@ -104,7 +104,7 @@ export default class RightPane extends React.Component<Props, S> {
                 <button
                   className="panel-button forward-button"
                   onClick={() =>
-                    this.props.dispatch(LogDetails.forwardLogDetail())
+                    this.props.dispatch(LogDetails.forward())
                   }
                   disabled={!nextExists}
                 >
@@ -148,10 +148,10 @@ export default class RightPane extends React.Component<Props, S> {
 const stateToProps = (state) => ({
   isOpen: view.getRightSidebarIsOpen(state),
   width: view.getRightSidebarWidth(state),
-  prevExists: LogDetails.getLogDetailHistory(state).prevExists(),
-  nextExists: LogDetails.getLogDetailHistory(state).nextExists(),
-  isStarred: LogDetails.getLogDetailIsStarred(state),
-  currentLog: LogDetails.buildLogDetail(state),
+  prevExists: LogDetails.getHistory(state).prevExists(),
+  nextExists: LogDetails.getHistory(state).nextExists(),
+  isStarred: LogDetails.getIsStarred(state),
+  currentLog: LogDetails.build(state),
   space: Tab.space(state)
 })
 

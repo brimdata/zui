@@ -20,19 +20,17 @@ const getPrevPosition = (state: State) => {
   return state.logDetails.prevPosition
 }
 
-const getLogDetailHistory = createSelector<State, void, *, *>(
+const getHistory = createSelector<State, void, *, *>(
   getLogDetails,
   (logDetails) => toHistory(logDetails)
 )
 
-const getPrevExists = createSelector<State, void, *, *>(
-  getLogDetailHistory,
-  (history) => history.prevExists()
+const getPrevExists = createSelector<State, void, *, *>(getHistory, (history) =>
+  history.prevExists()
 )
 
-const getNextExists = createSelector<State, void, *, *>(
-  getLogDetailHistory,
-  (history) => history.nextExists()
+const getNextExists = createSelector<State, void, *, *>(getHistory, (history) =>
+  history.nextExists()
 )
 
 const getIsGoingBack = createSelector<State, void, *, *, *>(
@@ -41,16 +39,13 @@ const getIsGoingBack = createSelector<State, void, *, *, *>(
   (position, prevPosition) => prevPosition - position < 0
 )
 
-const buildLogDetail = createSelector<State, void, *, *>(
-  getLogDetailHistory,
-  (history) => {
-    const log = history.getCurrent()
-    return log ? new Log(log.tuple, log.descriptor) : null
-  }
-)
+const build = createSelector<State, void, *, *>(getHistory, (history) => {
+  const log = history.getCurrent()
+  return log ? new Log(log.tuple, log.descriptor) : null
+})
 
-const getLogDetailIsStarred = createSelector<State, void, *, *, *>(
-  buildLogDetail,
+const getIsStarred = createSelector<State, void, *, *, *>(
+  build,
   getStarredLogs,
   (log, starred) => {
     return log ? contains(starred, log.tuple) : false
@@ -61,10 +56,10 @@ export default {
   getLogDetails,
   getPosition,
   getPrevPosition,
-  getLogDetailIsStarred,
-  buildLogDetail,
+  getIsStarred,
+  build,
   getIsGoingBack,
   getNextExists,
   getPrevExists,
-  getLogDetailHistory
+  getHistory
 }

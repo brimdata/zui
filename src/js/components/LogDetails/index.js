@@ -11,7 +11,7 @@ import NoSelection from "./NoSelection"
 import UidPanel from "./UidPanel"
 
 export default function LogDetails() {
-  let log = useSelector(LogDetails.buildLogDetail)
+  let log = useSelector(LogDetails.build)
   let isGoingBack = useSelector(LogDetails.getIsGoingBack)
 
   if (!log) return <NoSelection />
