@@ -9,12 +9,12 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../flows/searchBar/actions"
-import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import Modal from "../../state/Modal"
+import Packets from "../../state/Packets"
 import SearchBar from "../../state/SearchBar"
 import View from "../../state/View"
 import action from "./action"
@@ -124,7 +124,7 @@ function buildActions() {
       label: "Download PCAPS",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(fetchPackets(log)).then(open)
+        dispatch(Packets.fetch(log)).then(open)
       }
     }),
     sortAsc: action({

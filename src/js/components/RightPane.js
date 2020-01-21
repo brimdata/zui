@@ -6,7 +6,6 @@ import React from "react"
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../state/Spaces/types"
 import {XRightPaneExpander} from "./RightPaneExpander"
-import {fetchPackets} from "../state/thunks/packets"
 import {open} from "../lib/System"
 import {reactElementProps} from "../test/integration"
 import Back from "./icons/back-arrow.svg"
@@ -14,6 +13,7 @@ import Forward from "./icons/forward-arrow.svg"
 import Log from "../models/Log"
 import LogDetails from "../state/LogDetails"
 import LogDetailsComponent from "./LogDetails"
+import Packets from "../state/Packets"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -52,7 +52,7 @@ export default class RightPane extends React.Component<Props, S> {
   }
 
   onPacketsClick = () => {
-    this.props.dispatch(fetchPackets(this.props.currentLog)).then(open)
+    this.props.dispatch(Packets.fetch(this.props.currentLog)).then(open)
   }
 
   render() {
