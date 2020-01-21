@@ -1,8 +1,8 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import {getSearchRecord} from "../state/selectors/searchRecord"
 import {validateProgram} from "../state/thunks/searchBar"
 import History from "../state/History"
+import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
@@ -19,7 +19,7 @@ export default function submitSearch(save: boolean = true): Thunk {
     if (!dispatch(validateProgram())) return
 
     const state = getState()
-    if (save) dispatch(History.push(getSearchRecord(state)))
+    if (save) dispatch(History.push(Search.getRecord(state)))
     let tabId = Tabs.getActive(state)
     let tabData = {
       program: SearchBar.getSearchProgram(state),

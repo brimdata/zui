@@ -4,7 +4,7 @@ import type {Cluster} from "../state/Clusters/types"
 import type {Span} from "./BoomClient/types"
 import type {Thunk} from "../state/types"
 import {ZqVersionError} from "../models/Errors"
-import {getBoomOptions} from "../state/selectors/boom"
+import Boomd from "../state/Boomd"
 import ErrorFactory from "../models/ErrorFactory"
 import Errors from "../state/Errors"
 import Notice from "../state/Notice"
@@ -16,7 +16,7 @@ export function fetchSearch(program: string, span: Span, space: string): Thunk {
   return (dispatch, getState, boom) => {
     dispatch(Notice.clearSearchError())
     return boom
-      .setOptions(getBoomOptions(getState()))
+      .setOptions(Boomd.getOptions(getState()))
       .search(program, {searchSpan: span, searchSpace: space})
       .error((e) => handleError(e, dispatch))
   }
@@ -73,7 +73,7 @@ export function inspectSearch(zql: string): Thunk {
     let [from, to] = Tab.getSpan(getState())
     let searchSpan = [brim.time(from).toDate(), brim.time(to).toDate()]
     let searchSpace = Tab.spaceName(getState())
-    boom.setOptions(getBoomOptions(getState()))
+    boom.setOptions(Boomd.getOptions(getState()))
     try {
       return boom.inspectSearch(zql, {searchSpan, searchSpace})
     } catch {
@@ -84,7 +84,7 @@ export function inspectSearch(zql: string): Thunk {
 
 function promise(requestFunc): Thunk {
   return function(dispatch, getState, boom) {
-    boom.setOptions(getBoomOptions(getState()))
+    boom.setOptions(Boomd.getOptions(getState()))
     return new Promise((resolve, reject) => {
       requestFunc(boom)
         .done((...args) => {

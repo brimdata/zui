@@ -4,13 +4,13 @@ import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
 
-import {getSearchRecord} from "../state/selectors/searchRecord"
 import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
 import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
 import Modal from "../state/Modal"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import ThreeDotButton from "./ThreeDotButton"
@@ -91,7 +91,7 @@ function Menu() {
 }
 
 function ActionButton() {
-  let next = useSelector(getSearchRecord)
+  let next = useSelector(Search.getRecord)
   let prev = useSelector(Tab.currentEntry)
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
