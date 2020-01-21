@@ -1,15 +1,10 @@
 /* @flow */
 
 import {downloadsDir} from "../../lib/System"
-import {
-  errorPackets,
-  hideDownloads,
-  receivePackets,
-  requestPackets,
-  showDownloads
-} from "../actions"
+import {hideDownloads, showDownloads} from "../actions"
 import BoomClient from "../../services/BoomClient"
 import Log from "../../models/Log"
+import Packets from "../Packets"
 import Tab from "../Tab"
 
 export const fetchPackets = (log: Log) => (
@@ -17,7 +12,7 @@ export const fetchPackets = (log: Log) => (
   getState: Function,
   boom: BoomClient
 ) => {
-  dispatch(requestPackets(log.get("uid")))
+  dispatch(Packets.requestPackets(log.get("uid")))
   dispatch(showDownloads())
   const state = getState()
   const space = Tab.spaceName(state)
@@ -37,11 +32,11 @@ export const fetchPackets = (log: Log) => (
       destDir
     })
     .then((file) => {
-      dispatch(receivePackets(log.get("uid"), file))
+      dispatch(Packets.receivePackets(log.get("uid"), file))
       return file
     })
     .catch((error) => {
-      dispatch(errorPackets(log.get("uid"), error))
+      dispatch(Packets.errorPackets(log.get("uid"), error))
     })
     .finally(() => {
       setTimeout(() => dispatch(hideDownloads()), 5000)

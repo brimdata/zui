@@ -17,23 +17,6 @@ export const removeNotification = (index: number) => ({
   index
 })
 
-export const requestPackets = (uid: string) => ({
-  type: "PACKETS_REQUEST",
-  uid
-})
-
-export const receivePackets = (uid: string, fileName: string) => ({
-  type: "PACKETS_RECEIVE",
-  uid,
-  fileName
-})
-
-export const errorPackets = (uid: string, error: string) => ({
-  type: "PACKETS_ERROR",
-  error,
-  uid
-})
-
 export const clearSearchBar = () => ({
   type: "SEARCH_BAR_CLEAR"
 })
