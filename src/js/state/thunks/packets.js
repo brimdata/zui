@@ -12,7 +12,7 @@ export const fetchPackets = (log: Log) => (
   getState: Function,
   boom: BoomClient
 ) => {
-  dispatch(Packets.requestPackets(log.get("uid")))
+  dispatch(Packets.request(log.get("uid")))
   dispatch(showDownloads())
   const state = getState()
   const space = Tab.spaceName(state)
@@ -32,11 +32,11 @@ export const fetchPackets = (log: Log) => (
       destDir
     })
     .then((file) => {
-      dispatch(Packets.receivePackets(log.get("uid"), file))
+      dispatch(Packets.receive(log.get("uid"), file))
       return file
     })
     .catch((error) => {
-      dispatch(Packets.errorPackets(log.get("uid"), error))
+      dispatch(Packets.error(log.get("uid"), error))
     })
     .finally(() => {
       setTimeout(() => dispatch(hideDownloads()), 5000)

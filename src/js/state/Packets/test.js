@@ -12,7 +12,7 @@ beforeEach(() => {
 const reduce = (actions) => store.dispatchAll(actions)
 
 test("requesting packets", () => {
-  const state = reduce([Packets.requestPackets("123")])
+  const state = reduce([Packets.request("123")])
 
   expect(Packets.getDownloads(state)[0]).toEqual({
     uid: "123",
@@ -24,8 +24,8 @@ test("requesting packets", () => {
 test("receiving packets", () => {
   const uid = "123"
   const state = reduce([
-    Packets.requestPackets(uid),
-    Packets.receivePackets(uid, "123.pcap")
+    Packets.request(uid),
+    Packets.receive(uid, "123.pcap")
   ])
 
   expect(Packets.getDownloads(state)[0]).toEqual({
@@ -38,8 +38,8 @@ test("receiving packets", () => {
 test("error with the packets", () => {
   const uid = "123"
   const state = reduce([
-    Packets.requestPackets(uid),
-    Packets.errorPackets(uid, "boom goes the dyno")
+    Packets.request(uid),
+    Packets.error(uid, "boom goes the dyno")
   ])
 
   expect(Packets.getDownloads(state)[0]).toEqual({

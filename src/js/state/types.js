@@ -10,6 +10,7 @@ import type {InvestigationState} from "./Investigation/types"
 import type {LogDetailsState} from "./LogDetails/types"
 import type {ModalState} from "./Modal/types"
 import type {NoticeState} from "./Notice/types"
+import type {PacketsState} from "./Packets/types"
 import type {SpacesState} from "./Spaces/types"
 import type {TabsState} from "./Tabs/types"
 import type {View} from "./reducers/view"
@@ -33,5 +34,6 @@ export type State = {
   investigation: InvestigationState,
   modal: ModalState,
   notice: NoticeState,
-  tabs: TabsState
+  tabs: TabsState,
+  packets: PacketsState
 }
