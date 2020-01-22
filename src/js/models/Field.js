@@ -18,7 +18,7 @@ export default class Field {
   }
 
   toBrimField() {
-    return brim.field(this)
+    return brim.field({name: this.name, type: this.type, value: this.value})
   }
 
   queryableValue() {

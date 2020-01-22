@@ -1,16 +1,16 @@
 /* @flow */
 
+import type {FieldData} from "../../types/records"
 import type {Thunk} from "../../state/types"
 import {
   getSearchBar,
   getSearchBarInputValue
 } from "../../state/SearchBar/selectors"
 import {onlyWhitespace} from "../../lib/Str"
-import Field from "../../models/Field"
 import SearchBar from "../../state/SearchBar"
 import brim, {type $Field} from "../../brim"
 
-export function appendQueryInclude(field: Field): Thunk {
+export function appendQueryInclude(field: FieldData): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -23,7 +23,7 @@ export function appendQueryInclude(field: Field): Thunk {
   }
 }
 
-export function appendQueryExclude(field: Field): Thunk {
+export function appendQueryExclude(field: FieldData): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -36,7 +36,7 @@ export function appendQueryExclude(field: Field): Thunk {
   }
 }
 
-export function appendQueryCountBy(field: Field): Thunk {
+export function appendQueryCountBy(field: FieldData): Thunk {
   return function(dispatch, getState) {
     let {current, pinned} = getSearchBar(getState())
     let query = [...pinned, current].join(" ")

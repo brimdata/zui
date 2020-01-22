@@ -11,7 +11,7 @@ export default function FieldCell({field}: Props) {
   return (
     <div
       className={classNames("field-cell", field.name, field.type, {
-        [`${field.value}-bg-color`]: field.name === "_path",
+        [`${field.stringValue()}-bg-color`]: field.name === "_path",
         null: field.value === null
       })}
     >

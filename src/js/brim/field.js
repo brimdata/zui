@@ -24,6 +24,10 @@ function field({name, type, value}: FieldData): $Field {
       if (this.type === "string") quote = true
       return quote ? `"${this.value}"` : this.value
     },
+    stringValue(): string {
+      if (value === null) return "null"
+      else return value
+    },
     compound() {
       return COMPOUND_FIELD_RGX.test(type)
     },

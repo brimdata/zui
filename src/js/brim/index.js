@@ -1,4 +1,5 @@
 /* @flow */
+import type {FieldValue} from "../types/records"
 import type {ReturnType} from "../types"
 import ast from "./ast"
 import compoundField from "./compoundField"
@@ -23,7 +24,8 @@ import time from "./time"
 export type $Field = {
   name: string,
   type: string,
-  value: string,
+  value: FieldValue,
+  stringValue: () => string,
   queryableValue: () => string,
   compound: () => boolean,
   toCompound: () => $CompoundField,

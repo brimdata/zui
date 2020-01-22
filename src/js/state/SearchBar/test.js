@@ -5,7 +5,6 @@ import {
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
-import Field from "../../models/Field"
 import Search from "../Search"
 import SearchBar from "./"
 import Tab from "../Tab"
@@ -161,14 +160,14 @@ test("search bar submit", () => {
 })
 
 test("append an include field", () => {
-  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const field = {name: "_path", type: "string", value: "conn"}
   const state = store.dispatchAll([appendQueryInclude(field)])
 
   expect(SearchBar.getSearchBarInputValue(state)).toBe('_path="conn"')
 })
 
 test("append an include field when some text already exists", () => {
-  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const field = {name: "_path", type: "string", value: "conn"}
   let state = store.dispatchAll([
     SearchBar.changeSearchBarInput("text"),
     appendQueryInclude(field)
@@ -177,13 +176,13 @@ test("append an include field when some text already exists", () => {
 })
 
 test("append an exclude field", () => {
-  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const field = {name: "_path", type: "string", value: "conn"}
   let state = store.dispatchAll([appendQueryExclude(field)])
   expect(SearchBar.getSearchBarInputValue(state)).toBe('_path!="conn"')
 })
 
 test("append an exclude field when some text already exists", () => {
-  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const field = {name: "_path", type: "string", value: "conn"}
   let state = store.dispatchAll([
     SearchBar.changeSearchBarInput("text"),
     appendQueryExclude(field)
@@ -192,13 +191,13 @@ test("append an exclude field when some text already exists", () => {
 })
 
 test("append a count by field", () => {
-  const field = new Field({name: "_path", type: "string", value: "conn"})
+  const field = {name: "_path", type: "string", value: "conn"}
   let state = store.dispatchAll([appendQueryCountBy(field)])
   expect(SearchBar.getSearchBarInputValue(state)).toBe("* | count() by _path")
 })
 
 test("append a count to an existing query", () => {
-  const field = new Field({name: "query", type: "string", value: "heyyo"})
+  const field = {name: "query", type: "string", value: "heyyo"}
   let state = store.dispatchAll([
     SearchBar.changeSearchBarInput("dns"),
     appendQueryCountBy(field)
@@ -207,7 +206,7 @@ test("append a count to an existing query", () => {
 })
 
 test("append a count to an existing query with a pin", () => {
-  const field = new Field({name: "query", type: "string", value: "heyyo"})
+  const field = {name: "query", type: "string", value: "heyyo"}
   let state = store.dispatchAll([
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),
