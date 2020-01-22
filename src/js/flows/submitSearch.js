@@ -1,6 +1,7 @@
 /* @flow */
 import type {Thunk} from "../state/types"
 import History from "../state/History"
+import Notice from "../state/Notice"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
@@ -28,6 +29,7 @@ export default function submitSearch(save: boolean = true): Thunk {
       tabId
     }
     dispatch(Viewer.clear(tabId))
+    dispatch(Notice.dismiss())
 
     switch (searchArgs.type(tabData)) {
       case "analytic":
