@@ -17,11 +17,11 @@ function field({name, type, value}: FieldData): $Field {
     type,
     value,
     queryableValue() {
+      if (this.value === null) return "null"
       let WHITE_SPACE = /\s+/
       let COMMA = /,/
       let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value))
       if (this.type === "string") quote = true
-
       return quote ? `"${this.value}"` : this.value
     },
     compound() {
