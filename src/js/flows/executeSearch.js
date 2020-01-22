@@ -1,13 +1,13 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import {getBoomOptions} from "../state/selectors/boom"
+import Boomd from "../state/Boomd"
+import Handlers from "../state/Handlers"
 import brim, {type $Search} from "../brim"
-import handlers from "../state/handlers"
 import whenIdle from "../lib/whenIdle"
 
 export default function executeSearch(search: $Search): Thunk {
   return function(dispatch, getState, boom) {
-    boom.setOptions(getBoomOptions(getState()))
+    boom.setOptions(Boomd.getOptions(getState()))
 
     let buffer = brim.flatRecordsBuffer()
     let count = 0
@@ -57,7 +57,7 @@ export default function executeSearch(search: $Search): Thunk {
         search.emit("status", "SUCCESS")
         search.emit("end", id, count)
       }
-      dispatch(handlers.remove(search.getId()))
+      dispatch(Handlers.remove(search.getId()))
     }
 
     function streamed(payload) {
@@ -73,7 +73,7 @@ export default function executeSearch(search: $Search): Thunk {
       }
     }
 
-    dispatch(handlers.abort(search.getId(), false))
+    dispatch(Handlers.abort(search.getId(), false))
 
     let handler = boom
       .search(search.program, {
@@ -84,7 +84,7 @@ export default function executeSearch(search: $Search): Thunk {
       .error(errored)
       .stream(streamed)
 
-    dispatch(handlers.register(search.getId(), handler))
+    dispatch(Handlers.register(search.getId(), handler))
     return () => handler.abort(false)
   }
 }

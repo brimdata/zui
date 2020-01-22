@@ -4,22 +4,19 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import {Label} from "./Typography"
-import {enableCache, enableIndex} from "../state/thunks/boomd"
-import {getTimeZone} from "../state/reducers/view"
-import {getUseBoomCache, getUseBoomIndex} from "../state/reducers/boomd"
-import {setTimeZone} from "../state/actions"
+import {reactElementProps} from "../test/integration"
+import Boomd from "../state/Boomd"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import Toggle from "./Toggle"
+import View from "../state/View"
 import brim from "../brim"
-
-import {reactElementProps} from "../test/integration"
 
 export default function SettingsModal() {
   let dispatch = useDispatch()
-  let timeZone = useSelector(getTimeZone)
-  let useBoomIndex = useSelector(getUseBoomIndex)
-  let useBoomCache = useSelector(getUseBoomCache)
+  let timeZone = useSelector(View.getTimeZone)
+  let useBoomIndex = useSelector(Boomd.usingIndex)
+  let useBoomCache = useSelector(Boomd.usingCache)
 
   return (
     <ModalBox
@@ -33,7 +30,7 @@ export default function SettingsModal() {
           <div className="setting-panel">
             <Label>Timezone:</Label>
             <select
-              onChange={(e) => dispatch(setTimeZone(e.target.value))}
+              onChange={(e) => dispatch(View.setTimeZone(e.target.value))}
               value={timeZone}
             >
               {brim.time.getZoneNames().map((name) => (
@@ -47,7 +44,7 @@ export default function SettingsModal() {
             <Label>Enable Analytics Cache:</Label>
             <Toggle
               checked={useBoomCache}
-              onChange={() => dispatch(enableCache(!useBoomCache))}
+              onChange={() => dispatch(Boomd.enableCache(!useBoomCache))}
               // Passthrough props with {...reactElementProps()} didn't work here.
               // I had to set this directly. Feel free to improve.
               dataTestLocator="useCacheToggle"
@@ -58,7 +55,7 @@ export default function SettingsModal() {
             <Label>Enable Index Lookups:</Label>
             <Toggle
               checked={useBoomIndex}
-              onChange={() => dispatch(enableIndex(!useBoomIndex))}
+              onChange={() => dispatch(Boomd.enableIndex(!useBoomIndex))}
               dataTestLocator="useIndexToggle"
             />
           </div>

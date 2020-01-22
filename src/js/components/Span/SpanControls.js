@@ -6,7 +6,7 @@ import classNames from "classnames"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
-import tab from "../../state/tab"
+import tab from "../../state/Tab"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 

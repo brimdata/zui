@@ -3,37 +3,33 @@
 import {combineReducers} from "redux"
 
 import {VERSION} from "../initializers/initPersistance"
-import {errorsReducer} from "./errors"
-import boomd from "./reducers/boomd"
-import clustersReducer from "./clusters/reducer"
-import handlers from "./handlers"
-import investigation from "./reducers/investigation"
-import logDetails from "./reducers/logDetails"
-import modal from "./modal"
-import notice from "./notice"
-import packets from "./reducers/packets"
-import spacesReducer from "./spaces/reducer"
-import starredLogs from "./reducers/starredLogs"
-import tabs from "./tabs"
-import tasks from "./tasks"
-import view from "./reducers/view"
-import viewerReducer from "./viewer/reducer"
+import Boomd from "./Boomd"
+import Clusters from "./Clusters"
+import Errors from "./Errors"
+import Handlers from "./Handlers"
+import Investigation from "./Investigation"
+import LogDetails from "./LogDetails"
+import Modal from "./Modal"
+import Notice from "./Notice"
+import Packets from "./Packets"
+import Spaces from "./Spaces"
+import Tabs from "./Tabs"
+import View from "./View"
+import Viewer from "./Viewer"
 
 export default combineReducers<*, *>({
-  errors: errorsReducer,
-  viewer: viewerReducer,
-  clusters: clustersReducer,
-  modal: modal.reducer,
-  notice: notice.reducer,
-  tasks: tasks.reducer,
-  handlers: handlers.reducer,
-  tabs: tabs.reducer,
-  investigation,
-  view,
-  spaces: spacesReducer,
-  logDetails,
-  boomd,
-  starredLogs,
-  packets,
+  errors: Errors.reducer,
+  viewer: Viewer.reducer,
+  clusters: Clusters.reducer,
+  modal: Modal.reducer,
+  notice: Notice.reducer,
+  handlers: Handlers.reducer,
+  tabs: Tabs.reducer,
+  investigation: Investigation.reducer,
+  view: View.reducer,
+  spaces: Spaces.reducer,
+  logDetails: LogDetails.reducer,
+  boomd: Boomd.reducer,
+  packets: Packets.reducer,
   version: () => VERSION
 })

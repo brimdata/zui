@@ -6,9 +6,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 
 import type {Dispatch} from "../state/types"
-import {showRightSidebar} from "../state/actions"
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
+import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
 import lib from "../lib"
 
@@ -33,7 +33,7 @@ export default class RightPaneExpander extends React.Component<Props, State> {
   }
 
   onClick = () => {
-    this.props.dispatch(showRightSidebar())
+    this.props.dispatch(View.showRightSidebar())
   }
 
   render() {

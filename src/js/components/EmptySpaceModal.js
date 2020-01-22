@@ -3,7 +3,7 @@ import {useSelector} from "react-redux"
 import React from "react"
 
 import ModalBox from "./ModalBox/ModalBox"
-import Tab from "../state/tab"
+import Tab from "../state/Tab"
 import TextContent from "./TextContent"
 
 export default function EmptySpaceModal() {

@@ -16,7 +16,7 @@ import search from "./search"
 import space from "./space"
 import span from "./span"
 import syntax from "./syntax"
-import tab from "./tab"
+import tab from "./brimTab"
 import table from "./table"
 import time from "./time"
 

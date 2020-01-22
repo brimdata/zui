@@ -1,7 +1,7 @@
 /* @flow */
 
 import type {Column} from "../types"
-import type {ColumnSettingsMap, TableColumn} from "../state/columns/types"
+import type {ColumnSettingsMap, TableColumn} from "../state/Columns/types"
 import Log from "./Log"
 import brim from "../brim"
 import columnKey from "../lib/columnKey"

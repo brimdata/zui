@@ -1,13 +1,12 @@
 /* @flow */
 
-import {appendViewerRecords, spliceViewer} from "../state/viewer/actions"
 import {fetchNextPage} from "./fetchNextPage"
-import {setCurrentSpaceName} from "../state/actions"
 import MockBoomClient from "../test/MockBoomClient"
+import Search from "../state/Search"
+import Tabs from "../state/Tabs"
+import Viewer from "../state/Viewer"
 import initTestStore from "../test/initTestStore"
-import search from "../state/search"
-import tab from "../state/tab"
-import tabs from "../state/tabs"
+import tab from "../state/Tab"
 
 const records = [
   [
@@ -28,12 +27,12 @@ let store, boom, tabId
 beforeEach(() => {
   boom = new MockBoomClient().stub("search")
   store = initTestStore(boom)
-  tabId = tabs.getActive(store.getState())
+  tabId = Tabs.getActive(store.getState())
   store.dispatchAll([
-    setCurrentSpaceName("default"),
-    search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
+    Search.setSpace("default"),
+    Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     tab.computeSpan(),
-    appendViewerRecords(tabId, records)
+    Viewer.appendRecords(tabId, records)
   ])
   store.clearActions()
 })
@@ -61,7 +60,7 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
 
 test("#fetchNextPage when there is only 1 event", () => {
   const search = jest.spyOn(boom, "search")
-  store.dispatch(spliceViewer(tabId, 1))
+  store.dispatch(Viewer.splice(tabId, 1))
   store.dispatch(fetchNextPage())
 
   expect(search).toHaveBeenCalledWith(

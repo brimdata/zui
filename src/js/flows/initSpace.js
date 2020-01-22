@@ -1,25 +1,21 @@
 /* @flow */
 import {NoSpacesError} from "../models/Errors"
 import type {Thunk} from "../state/types"
-import {
-  changeSearchBarInput,
-  removeAllSearchBarPins,
-  setCurrentSpaceName
-} from "../state/actions"
-import {clearViewer} from "../state/viewer/actions"
 import {fetchSpace, fetchSpaces} from "../services/boom"
 import ErrorFactory from "../models/ErrorFactory"
-import Spaces from "../state/spaces"
-import Tab from "../state/tab"
+import Modal from "../state/Modal"
+import Notice from "../state/Notice"
+import Search from "../state/Search"
+import SearchBar from "../state/SearchBar"
+import Spaces from "../state/Spaces"
+import Tab from "../state/Tab"
+import Tabs from "../state/Tabs"
+import Viewer from "../state/Viewer"
 import brim from "../brim"
-import modal from "../state/modal"
-import notice from "../state/notice"
-import search from "../state/search"
 import submitSearch from "./submitSearch"
-import tabs from "../state/tabs"
 
 export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
-  let tabId = tabs.getActive(getState())
+  let tabId = Tabs.getActive(getState())
   let clusterId = Tab.clusterId(getState())
 
   return dispatch(fetchSpaces())
@@ -30,13 +26,13 @@ export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
     .then(() => dispatch(submitSearch()))
-    .catch((error) => dispatch(notice.set(ErrorFactory.create(error))))
+    .catch((error) => dispatch(Notice.set(ErrorFactory.create(error))))
 }
 
 function checkDataExists(dispatch, data, tabId) {
   if (brim.space(data).empty()) {
-    dispatch(clearViewer(tabId))
-    dispatch(modal.show("nodata"))
+    dispatch(Viewer.clear(tabId))
+    dispatch(Modal.show("nodata"))
   }
 }
 
@@ -51,13 +47,13 @@ function getCurrentSpaceName(spaces, desired) {
 
 function setSpace(dispatch, data, clusterId) {
   dispatch(Spaces.setDetail(clusterId, data))
-  dispatch(setCurrentSpaceName(data.name))
+  dispatch(Search.setSpace(data.name))
   return data
 }
 
 function setSearchDefaults(dispatch, data) {
-  dispatch(search.setSpanArgs(brim.space(data).defaultSpanArgs()))
-  dispatch(removeAllSearchBarPins())
-  dispatch(changeSearchBarInput(""))
+  dispatch(Search.setSpanArgs(brim.space(data).defaultSpanArgs()))
+  dispatch(SearchBar.removeAllSearchBarPins())
+  dispatch(SearchBar.changeSearchBarInput(""))
   return data
 }

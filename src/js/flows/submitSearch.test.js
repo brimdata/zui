@@ -1,10 +1,10 @@
 /* @flow */
 
-import {changeSearchBarInput, setCurrentSpaceName} from "../state/actions"
 import MockBoomClient from "../test/MockBoomClient"
-import Search from "../state/search"
-import Spaces from "../state/spaces"
-import Tab from "../state/tab"
+import Search from "../state/Search"
+import SearchBar from "../state/SearchBar"
+import Spaces from "../state/Spaces"
+import Tab from "../state/Tab"
 import brim from "../brim"
 import initTestStore from "../test/initTestStore"
 import submitSearch from "./submitSearch"
@@ -43,9 +43,9 @@ test("fetching a regular search", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
+    Search.setSpace("ranch-logs"),
     initTimeWindow(),
-    changeSearchBarInput("_path=conn")
+    SearchBar.changeSearchBarInput("_path=conn")
   ])
 
   store.clearActions()
@@ -59,8 +59,8 @@ test("not saving a search to history", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
-    changeSearchBarInput("_path=conn")
+    Search.setSpace("ranch-logs"),
+    SearchBar.changeSearchBarInput("_path=conn")
   ])
 
   store.clearActions()
@@ -74,9 +74,9 @@ test("fetching an analytic search", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
+    Search.setSpace("ranch-logs"),
     initTimeWindow(),
-    changeSearchBarInput("_path=conn | count()")
+    SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
 
   store.clearActions()
@@ -90,9 +90,9 @@ test("fetching an analytic search without history", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
+    Search.setSpace("ranch-logs"),
     initTimeWindow(),
-    changeSearchBarInput("_path=conn | count()")
+    SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
 
   store.clearActions()
@@ -106,10 +106,10 @@ test("fetching an zoom search", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
+    Search.setSpace("ranch-logs"),
     initTimeWindow(),
     Search.setSpanFocus(brim.time.convertToSpan([new Date(0), new Date(1)])),
-    changeSearchBarInput("_path=conn | count()")
+    SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
 
   store.clearActions()
@@ -123,9 +123,9 @@ test("fetching an zoom search without history", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
+    Search.setSpace("ranch-logs"),
     initTimeWindow(),
-    changeSearchBarInput("_path=conn | count()"),
+    SearchBar.changeSearchBarInput("_path=conn | count()"),
     submitSearch()
   ])
 
@@ -140,8 +140,8 @@ test("a bad search query", () => {
   const actions = [
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    setCurrentSpaceName("ranch-logs"),
-    changeSearchBarInput("_ath="),
+    Search.setSpace("ranch-logs"),
+    SearchBar.changeSearchBarInput("_ath="),
     submitSearch()
   ]
   actions.forEach(store.dispatch)

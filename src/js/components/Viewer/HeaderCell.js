@@ -3,9 +3,9 @@ import {useDispatch} from "react-redux"
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import type {TableColumn} from "../../state/columns/types"
+import type {TableColumn} from "../../state/Columns/types"
 import {appendQuerySortBy} from "../../flows/searchBar/actions"
-import {updateColumns} from "../../state/columns/actions"
+import Columns from "../../state/Columns"
 import IconAsc from "../icons/icon-asc.svg"
 import IconDesc from "../icons/icon-desc.svg"
 import columnKey from "../../lib/columnKey"
@@ -37,7 +37,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
     if (start !== null) {
       const moved = e.clientX - start
       const update = {[columnKey(column)]: {width: oldWidth + moved}}
-      dispatch(updateColumns(tableId, update))
+      dispatch(Columns.updateColumns(tableId, update))
     }
   }
 

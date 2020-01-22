@@ -2,20 +2,14 @@
 import {ipcRenderer} from "electron"
 
 import type {Store} from "../state/types"
-import {
-  changeSearchBarInput,
-  pinSearchBar,
-  removeAllSearchBarPins,
-  toggleLeftSidebar,
-  toggleRightSidebar
-} from "../state/actions"
 import {clearState} from "./initPersistance"
-import {goBack, goForward} from "../state/thunks/searchBar"
-import modal from "../state/modal"
+import Modal from "../state/Modal"
+import SearchBar from "../state/SearchBar"
+import View from "../state/View"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
-    store.dispatch(pinSearchBar())
+    store.dispatch(SearchBar.pinSearchBar())
   })
 
   ipcRenderer.on("focusSearchBar", () => {
@@ -27,16 +21,16 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("clearPins", () => {
-    store.dispatch(removeAllSearchBarPins())
-    store.dispatch(changeSearchBarInput(""))
+    store.dispatch(SearchBar.removeAllSearchBarPins())
+    store.dispatch(SearchBar.changeSearchBarInput(""))
   })
 
   ipcRenderer.on("toggleLeftSidebar", () => {
-    store.dispatch(toggleLeftSidebar())
+    store.dispatch(View.toggleLeftSidebar())
   })
 
   ipcRenderer.on("toggleRightSidebar", () => {
-    store.dispatch(toggleRightSidebar())
+    store.dispatch(View.toggleRightSidebar())
   })
 
   ipcRenderer.on("resetState", () => {
@@ -45,14 +39,14 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("showPreferences", () => {
-    store.dispatch(modal.show("settings"))
+    store.dispatch(Modal.show("settings"))
   })
 
   ipcRenderer.on("back", () => {
-    store.dispatch(goBack())
+    store.dispatch(SearchBar.goBack())
   })
 
   ipcRenderer.on("forward", () => {
-    store.dispatch(goForward())
+    store.dispatch(SearchBar.goForward())
   })
 }

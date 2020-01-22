@@ -3,7 +3,7 @@ import {isEqual} from "lodash"
 import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
-import type {TimeArg} from "../../state/search/types"
+import type {TimeArg} from "../../state/Search/types"
 import {isString} from "../../lib/is"
 import Animate from "../Animate"
 import MenuBarButton from "../MenuBarButton"

@@ -2,10 +2,10 @@
 
 import {isEqual} from "lodash"
 
-import type {Investigation} from "../../state/reducers/investigation"
+import type {InvestigationState} from "../../state/Investigation/types"
 import Tree from "../../models/Tree"
 
-export function createInvestigationTree(investigation: Investigation) {
+export function createInvestigationTree(investigation: InvestigationState) {
   let tree = new Tree({data: "ROOT", children: []})
 
   for (let finding of investigation) {

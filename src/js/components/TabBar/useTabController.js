@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {useEffect, useRef, useState} from "react"
 import onIdle from "on-idle"
 
-import Tabs from "../../state/tabs"
+import Tabs from "../../state/Tabs"
 
 export default function(count: number, calcWidths: Function) {
   let trueActiveId = useSelector(Tabs.getActive)

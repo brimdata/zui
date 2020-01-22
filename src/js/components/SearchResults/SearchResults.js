@@ -5,27 +5,23 @@ import {isEmpty} from "lodash"
 import React from "react"
 
 import type {DispatchProps, State} from "../../state/types"
-import type {Space} from "../../state/spaces/types"
+import type {Space} from "../../state/Spaces/types"
 import type {ViewerDimens} from "../../types"
-import {buildLogDetail} from "../../state/selectors/logDetails"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
-import {getCurrentTableColumns} from "../../state/columns/selector"
-import {getSearchProgram} from "../../state/selectors/searchBar"
-import {getTimeZone} from "../../state/reducers/view"
-import {
-  getViewerEndStatus,
-  getViewerLogs,
-  getViewerStatus
-} from "../../state/viewer/selector"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
+import Columns from "../../state/Columns"
 import Log from "../../models/Log"
+import LogDetails from "../../state/LogDetails"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
-import Tab from "../../state/tab"
+import SearchBar from "../../state/SearchBar"
+import Tab from "../../state/Tab"
 import TableColumns from "../../models/TableColumns"
-import Viewer from "../Viewer/Viewer"
+import View from "../../state/View"
+import Viewer from "../../state/Viewer"
+import ViewerComponent from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
@@ -109,7 +105,7 @@ export default function SearchResults(props: Props) {
 
   return (
     <div>
-      <Viewer
+      <ViewerComponent
         logs={logs}
         renderRow={renderRow}
         chunker={chunker}
@@ -125,13 +121,13 @@ export default function SearchResults(props: Props) {
 
 function stateToProps(state: State) {
   return {
-    isFetching: getViewerStatus(state) === "FETCHING",
-    isIncomplete: getViewerEndStatus(state) === "INCOMPLETE",
-    tableColumns: getCurrentTableColumns(state),
-    timeZone: getTimeZone(state),
-    selectedLog: buildLogDetail(state),
-    logs: getViewerLogs(state),
-    program: getSearchProgram(state),
+    isFetching: Viewer.getStatus(state) === "FETCHING",
+    isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
+    tableColumns: Columns.getCurrentTableColumns(state),
+    timeZone: View.getTimeZone(state),
+    selectedLog: LogDetails.build(state),
+    logs: Viewer.getLogs(state),
+    program: SearchBar.getSearchProgram(state),
     space: Tab.space(state)
   }
 }

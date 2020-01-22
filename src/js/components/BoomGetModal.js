@@ -4,13 +4,12 @@ import {useSelector} from "react-redux"
 import React, {useState} from "react"
 
 import {InputCheckbox} from "./form/Inputs"
-
-import {getSearchProgram} from "../state/selectors/searchBar"
-import {getUseBoomCache, getUseBoomIndex} from "../state/reducers/boomd"
 import {reactElementProps} from "../test/integration"
+import Boomd from "../state/Boomd"
 import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
-import Tab from "../state/tab"
+import SearchBar from "../state/SearchBar"
+import Tab from "../state/Tab"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
@@ -40,11 +39,11 @@ export default function BoomGetModal() {
 
 function BoomGetModalContents() {
   let [includeCreds, setIncludeCreds] = useState(false)
-  let program = useSelector(getSearchProgram)
+  let program = useSelector(SearchBar.getSearchProgram)
   let {username, password} = useSelector(Tab.cluster)
   let space = useSelector(Tab.spaceName)
-  let useCache = useSelector(getUseBoomCache)
-  let useIndex = useSelector(getUseBoomIndex)
+  let useCache = useSelector(Boomd.usingCache)
+  let useIndex = useSelector(Boomd.usingIndex)
 
   let s = () => `-s ${space} `
   let u = () => (includeCreds ? `-u ${username} ` : "")

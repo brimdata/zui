@@ -1,8 +1,8 @@
 /* @flow */
 
 import type {State} from "../state/types"
-import {getBoomOptions} from "../state/selectors/boom"
 import BoomClient from "../services/BoomClient"
+import Boomd from "../state/Boomd"
 
 export default (state: ?State) => {
   const boom = new BoomClient({
@@ -10,7 +10,7 @@ export default (state: ?State) => {
   })
 
   if (state) {
-    boom.setOptions(getBoomOptions(state))
+    boom.setOptions(Boomd.getOptions(state))
   }
 
   return boom

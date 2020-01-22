@@ -2,7 +2,7 @@
 
 import type {$Field} from "../brim"
 import type {$Menu} from "../electron/menu"
-import type {SpanArgs} from "../state/search/types"
+import type {SpanArgs} from "../state/Search/types"
 import type {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import Log from "../models/Log"

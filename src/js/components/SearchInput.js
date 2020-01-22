@@ -4,26 +4,25 @@ import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
 
-import {changeSearchBarInput} from "../state/actions"
-import {getSearchBarInputValue} from "../state/selectors/searchBar"
-import {getSearchRecord} from "../state/selectors/searchRecord"
 import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
+import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
+import Modal from "../state/Modal"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import Search from "../state/Search"
+import SearchBar from "../state/SearchBar"
+import Tab from "../state/Tab"
 import ThreeDotButton from "./ThreeDotButton"
-import handlers from "../state/handlers"
-import modal from "../state/modal"
 import submitSearch from "../flows/submitSearch"
-import tab from "../state/tab"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
   let history = useRef(new InputHistory<string>())
-  let inputValue = useSelector(getSearchBarInputValue)
+  let inputValue = useSelector(SearchBar.getSearchBarInputValue)
 
   function changeTo(value: string) {
-    dispatch(changeSearchBarInput(value))
+    dispatch(SearchBar.changeSearchBarInput(value))
   }
 
   function submit() {
@@ -71,15 +70,15 @@ export default function SearchInput() {
 
 function Menu() {
   let dispatch = useDispatch()
-  let isFetching = useSelector(tab.isFetching)
+  let isFetching = useSelector(Tab.isFetching)
 
   let menu = [
-    {label: "Debug query", click: () => dispatch(modal.show("debug"))},
-    {label: "Copy for curl", click: () => dispatch(modal.show("curl"))},
-    {label: "Copy for boom get", click: () => dispatch(modal.show("boom-get"))},
+    {label: "Debug query", click: () => dispatch(Modal.show("debug"))},
+    {label: "Copy for curl", click: () => dispatch(Modal.show("curl"))},
+    {label: "Copy for boom get", click: () => dispatch(Modal.show("boom-get"))},
     {
       label: "Kill search",
-      click: () => dispatch(handlers.abortAll()),
+      click: () => dispatch(Handlers.abortAll()),
       disabled: !isFetching
     }
   ]
@@ -92,8 +91,8 @@ function Menu() {
 }
 
 function ActionButton() {
-  let next = useSelector(getSearchRecord)
-  let prev = useSelector(tab.currentEntry)
+  let next = useSelector(Search.getRecord)
+  let prev = useSelector(Tab.currentEntry)
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
   let onClick = () => dispatch(submitSearch())

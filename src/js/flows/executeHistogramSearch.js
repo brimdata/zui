@@ -3,7 +3,7 @@ import type {SearchArgs} from "./searchArgs"
 import type {Thunk} from "../state/types"
 import {addEveryCountProc} from "../searches/histogramSearch"
 import brim from "../brim"
-import chart from "../state/chart"
+import chart from "../state/Chart"
 import executeSearch from "./executeSearch"
 
 export default function executeHistogramSearch({

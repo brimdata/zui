@@ -2,9 +2,9 @@
 
 import type {Thunk} from "redux-thunk"
 
-import {pushLogDetail} from "../state/actions"
 import Log from "../models/Log"
+import LogDetails from "../state/LogDetails"
 
 export const viewLogDetail = (log: Log): Thunk => (dispatch) => {
-  dispatch(pushLogDetail(log))
+  dispatch(LogDetails.push(log))
 }

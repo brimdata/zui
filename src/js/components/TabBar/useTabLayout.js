@@ -2,7 +2,7 @@
 import {useEffect, useRef} from "react"
 import {useSprings} from "react-spring"
 
-import type {TabState} from "../../state/tab/types"
+import type {TabState} from "../../state/Tab/types"
 import lib from "../../lib"
 import useDrag from "../hooks/useDrag"
 import useFirst from "../hooks/useFirst"

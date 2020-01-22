@@ -1,7 +1,7 @@
 /* @flow */
 
+import Handlers from "../state/Handlers"
 import MockBoomClient from "../test/MockBoomClient"
-import handlers from "../state/handlers"
 import initTestStore from "../test/initTestStore"
 
 describe("boomSearches reducer", () => {
@@ -21,9 +21,9 @@ describe("boomSearches reducer", () => {
     req2.setAbort(killFunc)
 
     store.dispatchAll([
-      handlers.register("Histogram", req1),
-      handlers.register("Logs", req2),
-      handlers.abortAll()
+      Handlers.register("Histogram", req1),
+      Handlers.register("Logs", req2),
+      Handlers.abortAll()
     ])
 
     expect(killFunc).toHaveBeenCalledTimes(2)
@@ -38,9 +38,9 @@ describe("boomSearches reducer", () => {
     req2.setAbort(killFunc)
 
     store.dispatchAll([
-      handlers.register("Histogram", req1),
-      handlers.register("Logs", req2),
-      handlers.abort("Histogram")
+      Handlers.register("Histogram", req1),
+      Handlers.register("Logs", req2),
+      Handlers.abort("Histogram")
     ])
 
     expect(killFunc).toHaveBeenCalledTimes(1)
@@ -50,7 +50,7 @@ describe("boomSearches reducer", () => {
     let req = boom.mockRequest()
     let killFunc = jest.spyOn(req, "abort")
 
-    store.dispatchAll([handlers.register("KillMe", req), handlers.abortAll()])
+    store.dispatchAll([Handlers.register("KillMe", req), Handlers.abortAll()])
 
     expect(killFunc).toHaveBeenCalled()
   })
@@ -60,8 +60,8 @@ describe("boomSearches reducer", () => {
     let killFunc = jest.spyOn(req, "abort")
 
     store.dispatchAll([
-      handlers.register("Cancel Me", req),
-      handlers.abortAll(false)
+      Handlers.register("Cancel Me", req),
+      Handlers.abortAll(false)
     ])
 
     expect(killFunc).toHaveBeenCalledWith(false)

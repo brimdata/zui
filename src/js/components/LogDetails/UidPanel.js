@@ -10,7 +10,7 @@ import {uidCorrelation} from "../../searches/programs"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import Tab from "../../state/tab"
+import Tab from "../../state/Tab"
 import brim from "../../brim"
 import executeSearch from "../../flows/executeSearch"
 

@@ -1,10 +1,10 @@
 /* @flow */
 import React from "react"
 
-import {changeSearchBarInput} from "../state/actions"
 import BoomGetModal from "./BoomGetModal"
+import Modal from "../state/Modal"
+import SearchBar from "../state/SearchBar"
 import logInto from "../test/helpers/loginTo"
-import modal from "../state/modal"
 import provide from "../test/helpers/provide"
 import submitSearch from "../flows/submitSearch"
 
@@ -12,9 +12,9 @@ test("renders with boom get command", async () => {
   let {store} = await logInto("cluster1", "space1")
 
   store.dispatchAll([
-    changeSearchBarInput("hi"),
+    SearchBar.changeSearchBarInput("hi"),
     submitSearch(),
-    modal.show("boom-get")
+    Modal.show("boom-get")
   ])
 
   let wrapper = provide(store, <BoomGetModal />)
@@ -24,5 +24,5 @@ test("renders with boom get command", async () => {
   wrapper.find("input[value='Copy']").simulate("click")
   wrapper.find("input[value='Done']").simulate("click")
 
-  expect(modal.getName(store.getState())).toBe("")
+  expect(Modal.getName(store.getState())).toBe("")
 })

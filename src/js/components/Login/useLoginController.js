@@ -4,11 +4,11 @@ import {useEffect, useState} from "react"
 
 import {ipcRenderer} from "electron"
 
-import type {Cluster} from "../../state/clusters/types"
+import type {Cluster} from "../../state/Clusters/types"
 import type {FormData} from "./types"
-import {connectCluster} from "../../state/clusters/thunks"
+import {connectCluster} from "../../state/Clusters/flows"
 import {showContextMenu} from "../../lib/System"
-import Clusters from "../../state/clusters"
+import Clusters from "../../state/Clusters"
 import brim from "../../brim"
 
 export default function useLoginController() {

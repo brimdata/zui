@@ -5,10 +5,9 @@ import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
 import type {Dispatch} from "../state/types"
-import {getLeftSidebarWidth} from "../state/reducers/view"
-import {hideLeftSidebar} from "../state/actions"
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
+import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
 
 type Props = {
@@ -23,7 +22,7 @@ type OwnProps = {
 export function LeftPaneCollapser() {
   let dispatch = useDispatch()
   let [show, setShow] = useState(false)
-  let width = useSelector(getLeftSidebarWidth)
+  let width = useSelector(View.getLeftSidebarWidth)
 
   useEffect(() => {
     let watcher = new MouseoverWatch()
@@ -38,7 +37,7 @@ export function LeftPaneCollapser() {
   })
 
   function onClick() {
-    dispatch(hideLeftSidebar())
+    dispatch(View.hideLeftSidebar())
   }
 
   return (

@@ -3,7 +3,7 @@
 import React from "react"
 
 import {XHistoryStepper} from "./HistoryStepper"
-import {XSearchBar} from "./SearchBar"
+import {XSearchBar} from "./SearchBarComponent"
 import ClusterPicker from "./ClusterPicker"
 import SpacePicker from "./SpacePicker"
 import SpanControls from "./Span/SpanControls"

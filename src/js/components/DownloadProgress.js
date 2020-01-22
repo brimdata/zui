@@ -5,9 +5,9 @@ import React from "react"
 import classNames from "classnames"
 
 import type {Dispatch, State} from "../state/types"
-import * as packets from "../state/reducers/packets"
-import * as view from "../state/reducers/view"
 import {reactElementProps} from "../test/integration"
+import Packets from "../state/Packets"
+import View from "../state/View"
 
 type Props = {
   downloads: *[],
@@ -54,8 +54,8 @@ const message = ({complete, error}) =>
     : "Downloading"
 
 const stateToProps = (state: State) => ({
-  downloads: packets.getDownloads(state),
-  downloadsIsOpen: view.getDownloadsIsOpen(state)
+  downloads: Packets.getDownloads(state),
+  downloadsIsOpen: View.getDownloadsIsOpen(state)
 })
 
 export const XDownloadProgress = connect<

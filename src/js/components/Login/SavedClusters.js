@@ -1,7 +1,7 @@
 /* @flow */
 import React from "react"
 
-import type {Cluster} from "../../state/clusters/types"
+import type {Cluster} from "../../state/Clusters/types"
 
 type Props = {
   saved: Cluster[],

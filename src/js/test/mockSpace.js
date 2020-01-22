@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Space} from "../state/spaces/types"
+import type {Space} from "../state/Spaces/types"
 
 export default (props: $Shape<Space> = {}): Space => ({
   name: "default",

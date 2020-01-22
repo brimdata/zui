@@ -1,35 +1,33 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import {clearViewer} from "../state/viewer/actions"
-import {getSearchProgram} from "../state/selectors/searchBar"
-import {getSearchRecord} from "../state/selectors/searchRecord"
-import {submittingSearchBar} from "../state/actions"
-import {validateProgram} from "../state/thunks/searchBar"
-import History from "../state/history"
-import Tab from "../state/tab"
+import History from "../state/History"
+import Search from "../state/Search"
+import SearchBar from "../state/SearchBar"
+import Tab from "../state/Tab"
+import Tabs from "../state/Tabs"
+import Viewer from "../state/Viewer"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
 import searchArgs from "./searchArgs"
-import tabs from "../state/tabs"
 
 export default function submitSearch(save: boolean = true): Thunk {
   return function(dispatch, getState) {
-    dispatch(submittingSearchBar())
+    dispatch(SearchBar.submittingSearchBar())
     dispatch(Tab.computeSpan())
 
-    if (!dispatch(validateProgram())) return
+    if (!dispatch(SearchBar.validate())) return
 
     const state = getState()
-    if (save) dispatch(History.push(getSearchRecord(state)))
-    let tabId = tabs.getActive(state)
+    if (save) dispatch(History.push(Search.getRecord(state)))
+    let tabId = Tabs.getActive(state)
     let tabData = {
-      program: getSearchProgram(state),
+      program: SearchBar.getSearchProgram(state),
       span: Tab.getSpanAsDates(state),
       spanFocus: Tab.getSpanFocusAsDates(state),
       space: Tab.spaceName(state),
       tabId
     }
-    dispatch(clearViewer(tabId))
+    dispatch(Viewer.clear(tabId))
 
     switch (searchArgs.type(tabData)) {
       case "analytic":

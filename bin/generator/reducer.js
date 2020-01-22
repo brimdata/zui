@@ -1,10 +1,11 @@
 /* @flow */
 
-const {startCase, camelCase} = require("lodash")
+const {camelCase, upperFirst} = require("lodash")
 
 const {write} = require("../utils/file")
 
-export function handleReducer(name: string) {
+export function handleReducer(input: string) {
+  let name = upperFirst(camelCase(input))
   write(`src/js/state/${name}/index.js`, indexStub())
   write(`src/js/state/${name}/reducer.js`, reducerStub(name))
   write(`src/js/state/${name}/actions.js`, actionsStub())
@@ -15,16 +16,12 @@ export function handleReducer(name: string) {
   )
 }
 
-function classCase(name) {
-  return startCase(camelCase(name))
-}
-
 function actionType(name) {
-  return `${classCase(name)}Action`
+  return `${name}Action`
 }
 
 function stateType(name) {
-  return `${classCase(name)}State`
+  return `${name}State`
 }
 
 function indexStub() {

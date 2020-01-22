@@ -9,21 +9,18 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../flows/searchBar/actions"
-import {
-  changeSearchBarInput,
-  clearSearchBar,
-  showRightSidebar
-} from "../../state/actions"
-import {fetchPackets} from "../../state/thunks/packets"
 import {open} from "../../lib/System"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
+import Modal from "../../state/Modal"
+import Packets from "../../state/Packets"
+import SearchBar from "../../state/SearchBar"
+import View from "../../state/View"
 import action from "./action"
 import brim from "../../brim"
-import modal from "../../state/modal"
 import submitSearch from "../../flows/submitSearch"
-import tab from "../../state/tab"
+import tab from "../../state/Tab"
 import virusTotal from "../../services/virusTotal"
 
 function buildActions() {
@@ -41,7 +38,7 @@ function buildActions() {
       label: "Open details",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(showRightSidebar())
+        dispatch(View.showRightSidebar())
         dispatch(viewLogDetail(log))
       }
     }),
@@ -58,8 +55,8 @@ function buildActions() {
       label: "New search with this value",
       listener(dispatch, field) {
         field = FieldFactory.create(field)
-        dispatch(clearSearchBar())
-        dispatch(changeSearchBarInput(field.queryableValue()))
+        dispatch(SearchBar.clearSearchBar())
+        dispatch(SearchBar.changeSearchBarInput(field.queryableValue()))
         dispatch(submitSearch())
       }
     }),
@@ -84,8 +81,8 @@ function buildActions() {
           .string()
 
         if (newProgram) {
-          dispatch(clearSearchBar())
-          dispatch(changeSearchBarInput(newProgram))
+          dispatch(SearchBar.clearSearchBar())
+          dispatch(SearchBar.changeSearchBarInput(newProgram))
           dispatch(submitSearch())
         }
       }
@@ -127,7 +124,7 @@ function buildActions() {
       label: "Download PCAPS",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(fetchPackets(log)).then(open)
+        dispatch(Packets.fetch(log)).then(open)
       }
     }),
     sortAsc: action({
@@ -175,7 +172,7 @@ function buildActions() {
       name: "cell-menu-who-is",
       label: "Whois Lookup",
       listener(dispatch, field) {
-        dispatch(modal.show("whois", {addr: field.value}))
+        dispatch(Modal.show("whois", {addr: field.value}))
       }
     })
   }

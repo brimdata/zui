@@ -2,18 +2,18 @@
 
 import {type Store as ReduxStore} from "redux"
 
-import type {Boomd} from "./reducers/boomd"
-import type {ClustersState} from "./clusters/types"
-import type {ErrorsState} from "./errors"
-import type {HandlersState} from "./handlers"
-import type {Investigation} from "./reducers/investigation"
-import type {LogDetails} from "./reducers/logDetails"
-import type {ModalState} from "./modal/types"
-import type {NoticeState} from "./notice"
-import type {SpacesState} from "./spaces/types"
-import type {TabsState} from "./tabs/types"
-import type {TasksState} from "./tasks"
-import type {View} from "./reducers/view"
+import type {BoomdState} from "./Boomd/types"
+import type {ClustersState} from "./Clusters/types"
+import type {ErrorsState} from "./Errors/types"
+import type {HandlersState} from "./Handlers/types"
+import type {InvestigationState} from "./Investigation/types"
+import type {LogDetailsState} from "./LogDetails/types"
+import type {ModalState} from "./Modal/types"
+import type {NoticeState} from "./Notice/types"
+import type {PacketsState} from "./Packets/types"
+import type {SpacesState} from "./Spaces/types"
+import type {TabsState} from "./Tabs/types"
+import type {ViewState} from "./View/types"
 import BoomClient from "../services/BoomClient"
 
 export type GetState = () => State
@@ -28,12 +28,12 @@ export type State = {
   clusters: ClustersState,
   errors: ErrorsState,
   spaces: SpacesState,
-  boomd: Boomd,
-  tasks: TasksState,
-  logDetails: LogDetails,
-  view: View,
-  investigation: Investigation,
+  boomd: BoomdState,
+  logDetails: LogDetailsState,
+  view: ViewState,
+  investigation: InvestigationState,
   modal: ModalState,
   notice: NoticeState,
-  tabs: TabsState
+  tabs: TabsState,
+  packets: PacketsState
 }

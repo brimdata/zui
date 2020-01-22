@@ -4,16 +4,12 @@ import {useDispatch} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import type {Finding} from "../../state/reducers/investigation"
+import type {Finding} from "../../state/Investigation/types"
 import {RemoveButton} from "../Buttons"
-import {
-  changeSearchBarInput,
-  deleteFindingByTs,
-  setCurrentSpaceName,
-  setSearchBarPins
-} from "../../state/actions"
 import FindingProgram from "./FindingProgram"
-import search from "../../state/search"
+import Investigation from "../../state/Investigation"
+import Search from "../../state/Search"
+import SearchBar from "../../state/SearchBar"
 import submitSearch from "../../flows/submitSearch"
 
 type Props = {finding: Finding}
@@ -22,16 +18,16 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   let dispatch = useDispatch()
 
   function onClick() {
-    dispatch(setSearchBarPins(finding.search.pins))
-    dispatch(changeSearchBarInput(finding.search.program))
-    dispatch(setCurrentSpaceName(finding.search.space))
-    dispatch(search.setSpanArgs(finding.search.spanArgs))
-    dispatch(search.setSpanFocus(null))
+    dispatch(SearchBar.setSearchBarPins(finding.search.pins))
+    dispatch(SearchBar.changeSearchBarInput(finding.search.program))
+    dispatch(Search.setSpace(finding.search.space))
+    dispatch(Search.setSpanArgs(finding.search.spanArgs))
+    dispatch(Search.setSpanFocus(null))
     dispatch(submitSearch(false))
   }
 
   function onRemove() {
-    dispatch(deleteFindingByTs(finding.ts))
+    dispatch(Investigation.deleteFindingByTs(finding.ts))
   }
 
   return (

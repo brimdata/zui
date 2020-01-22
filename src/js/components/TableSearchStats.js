@@ -3,12 +3,12 @@
 import {useSelector} from "react-redux"
 import React from "react"
 
-import {getViewerStats} from "../state/viewer/selector"
 import {reactElementProps} from "../test/integration"
+import Viewer from "../state/Viewer"
 import * as fmt from "../lib/fmt"
 
 export default function TableSearchStatus() {
-  let stats = useSelector(getViewerStats) || {}
+  let stats = useSelector(Viewer.getStats) || {}
 
   const {bytesRead, startTime, updateTime} = stats
   return (

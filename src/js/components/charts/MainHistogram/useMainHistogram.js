@@ -7,19 +7,19 @@ import * as d3 from "d3"
 import type {DateTuple} from "../../../lib/TimeWindow"
 import type {Pen, HistogramChart} from "../types"
 import {innerHeight, innerWidth} from "../dimens"
+import Chart from "../../../state/Chart"
 import EmptyMessage from "../../EmptyMessage"
 import HistogramTooltip from "../../HistogramTooltip"
 import LoadingMessage from "../../LoadingMessage"
 import barStacks from "../pens/barStacks"
 import brim from "../../../brim"
-import chart from "../../../state/chart"
 import focusBar from "../pens/focusBar"
 import format from "./format"
 import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
-import search from "../../../state/search"
+import search from "../../../state/Search"
 import submitSearch from "../../../flows/submitSearch"
-import tab from "../../../state/tab"
+import tab from "../../../state/Tab"
 import time from "../../../brim/time"
 import useConst from "../../hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
@@ -28,8 +28,8 @@ import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 
 export default function(width: number, height: number): HistogramChart {
-  let records = useSelector(chart.getRecords)
-  let status = useSelector(chart.getStatus)
+  let records = useSelector(Chart.getRecords)
+  let status = useSelector(Chart.getStatus)
   let span = useSelector(tab.getSpanAsDates)
   let innerSpan = useSelector(tab.getSpanFocusAsDates)
 
