@@ -64,7 +64,7 @@ export default function Viewer(props: Props) {
   })
 
   return (
-    <div className="viewer" style={{width: props.dimens.viewWidth}}>
+    <div className="viewer">
       <Header
         columns={props.tableColumns}
         dimens={props.dimens}

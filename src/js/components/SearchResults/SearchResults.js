@@ -104,18 +104,16 @@ export default function SearchResults(props: Props) {
   if (isEmpty(logs)) return <NoResults width={props.width} />
 
   return (
-    <div>
-      <ViewerComponent
-        logs={logs}
-        renderRow={renderRow}
-        chunker={chunker}
-        dimens={dimens}
-        tableColumns={props.tableColumns}
-        timeZone={props.timeZone}
-        onLastChunk={onLastChunk}
-        renderEnd={renderEnd}
-      />
-    </div>
+    <ViewerComponent
+      logs={logs}
+      renderRow={renderRow}
+      chunker={chunker}
+      dimens={dimens}
+      tableColumns={props.tableColumns}
+      timeZone={props.timeZone}
+      onLastChunk={onLastChunk}
+      renderEnd={renderEnd}
+    />
   )
 }
 

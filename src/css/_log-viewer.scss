@@ -1,5 +1,7 @@
 .viewer {
-  overflow: hidden;
+  overflow: visible;
+  height: 0;
+  width: 0;
 }
 
 .viewer .view {
