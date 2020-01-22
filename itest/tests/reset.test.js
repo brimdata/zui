@@ -17,7 +17,7 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
-import {selectors} from "../../src/js/test/integration"
+import {dataSets, selectors} from "../../src/js/test/integration"
 
 describe("Reset state tests", () => {
   let app
@@ -44,7 +44,7 @@ describe("Reset state tests", () => {
         expect(results).toBeTruthy()
       })
       .then(() => setSpan(app, "Whole Space"))
-      .then(() => setSpace(app, "hq_integration"))
+      .then(() => setSpace(app, dataSets.hq_integration.spaceName))
       .then(() => resetState(app))
       .then(() => waitForLoginAvailable(app))
       // This call is safe because of the waitForLoginAvailable call above.
@@ -61,7 +61,7 @@ describe("Reset state tests", () => {
       })
       .then(() => getCurrentSpace(app))
       .then((val) => {
-        expect(val).toBe("corelight")
+        expect(val).toBe(dataSets.corelight.spaceName)
         done()
       })
       .catch((err) => {

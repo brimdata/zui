@@ -139,7 +139,11 @@ export const dataSets = {
       setDurationUid: fieldFixture("uid4"),
       unsetDurationConnLog: logFixture("unsetDurationConn"),
       unsetDurationUid: fieldFixture("uid1")
-    }
+    },
+    spaceName: "corelight-zeek-bulk"
+  },
+  hq_integration: {
+    spaceName: "hq_integration-zeek-bulk"
   }
 }
 

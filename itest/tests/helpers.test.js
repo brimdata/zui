@@ -20,7 +20,7 @@ import {
   writeSearch
 } from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
-import {selectors} from "../../src/js/test/integration"
+import {dataSets, selectors} from "../../src/js/test/integration"
 
 const extractCurlPost = (command) => JSON.parse(command.split("'")[1])
 
@@ -178,11 +178,13 @@ describe("Debug and search helpers", () => {
 
   stdTest("space change reflected in Copy for curl command", (done) => {
     logIn(app)
-      .then(() => setSpace(app, "hq_integration"))
+      .then(() => setSpace(app, dataSets.hq_integration.spaceName))
       .then(() => openCopyForCurl(app))
       .then(() => getCopyForCurl(app))
       .then((curlCommand) => {
-        expect(extractCurlPost(curlCommand).space).toBe("hq_integration")
+        expect(extractCurlPost(curlCommand).space).toBe(
+          dataSets.hq_integration.spaceName
+        )
         done()
       })
       .catch((err) => {
