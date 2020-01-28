@@ -25,6 +25,7 @@ module.exports = {
       "every",
       "kebabCase"
     ],
+    "react-spring": ["useTrail", "useSpring", "useSprings"],
     "react-router-dom": ["Redirect"],
     "react-redux": ["useDispatch"]
   }
