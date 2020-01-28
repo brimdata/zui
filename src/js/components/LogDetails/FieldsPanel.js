@@ -57,11 +57,13 @@ export default function FieldsPanel({log}: {log: Log}) {
         <tbody>
           {log.descriptor.map((column, index) => (
             <tr key={index}>
-              <th
-                onMouseEnter={(e) => enter(e, column)}
-                onMouseLeave={() => setShow(false)}
-              >
-                {column.name}
+              <th>
+                <span
+                  onMouseEnter={(e) => enter(e, column)}
+                  onMouseLeave={() => setShow(false)}
+                >
+                  {column.name}
+                </span>
               </th>
               <td onContextMenu={onContextMenu(log, index)}>
                 <FieldCell field={fieldAt(log, index)} />
