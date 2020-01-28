@@ -12,14 +12,3 @@
   user-select: none;
   box-shadow: $box-shadow;
 }
-
-.tip {
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: $space-xs;
-  border-radius: 3px;
-  width: 200px;
-  .stats {
-    float: right;
-  }
-}

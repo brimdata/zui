@@ -3,8 +3,8 @@
 import {useSelector} from "react-redux"
 import React, {useState} from "react"
 
-import {Paragraph, Stats} from "../Typography"
 import {showContextMenu} from "../../lib/System"
+import ColumnDescription from "./ColumnDescription"
 import Columns from "../../state/Columns"
 import FieldCell from "../FieldCell"
 import Log from "../../models/Log"
@@ -12,8 +12,6 @@ import PanelHeading from "./PanelHeading"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
 import Table from "../Tables/Table"
-import Tip from "../Tip"
-import ZeekDocs from "../../services/ZeekDocs"
 import menu from "../../electron/menu"
 
 export default function FieldsPanel({log}: {log: Log}) {
@@ -24,7 +22,6 @@ export default function FieldsPanel({log}: {log: Log}) {
   let columns = tableColumns.getColumns().map((c) => c.name)
 
   const fieldAt = (log, index) => log.getFieldAt(index).toBrimField()
-
   const onContextMenu = (log, index) => {
     let field = fieldAt(log, index)
     let m = menu.fieldContextMenu(program, columns, space)(field, log, false)
@@ -32,11 +29,10 @@ export default function FieldsPanel({log}: {log: Log}) {
   }
 
   // Tooltip code
-
-  let [show, setShow] = useState(false)
-  let [hovered, setHovered] = useState({})
+  let [show, setShow] = useState(true)
+  let [hovered, setHovered] = useState({name: "conn_state", type: "string"})
   let [anchor, setAnchor] = useState(null)
-  let _path = log.get("_path")
+  let path = log.get("_path")
 
   function enter(e, column) {
     setHovered(column)
@@ -47,12 +43,12 @@ export default function FieldsPanel({log}: {log: Log}) {
   return (
     <div className="fields-table-panel detail-panel">
       <PanelHeading>Fields</PanelHeading>
-      <Tip show={show} anchor={anchor}>
-        <Paragraph>
-          {hovered.name} <Stats>{hovered.type}</Stats>
-        </Paragraph>
-        <Paragraph>{ZeekDocs.describe(_path, hovered.name)}</Paragraph>
-      </Tip>
+      <ColumnDescription
+        show={show}
+        anchor={anchor}
+        column={hovered}
+        path={path}
+      />
       <Table className="vertical-table">
         <tbody>
           {log.descriptor.map((column, index) => (

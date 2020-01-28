@@ -1,0 +1,25 @@
+.column-description {
+  .tip-title {
+    p {
+      margin: 0;
+    }
+    p:first-child {
+      font-weight: bold;
+    }
+    p:last-child {
+      font-style: italic;
+    }
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tip-body {
+    overflow-y: auto;
+    max-height: 260px;
+    word-wrap: break-word;
+
+    p {
+      margin: 0px;
+    }
+  }
+}
