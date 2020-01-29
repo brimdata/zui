@@ -1,0 +1,17 @@
+.tip {
+  background: transparentize($gray-9, 0.1);
+  width: 180px;
+  color: white;
+  font-size: 11px;
+  border-radius: 8px;
+  font-family: system-ui;
+
+  .tip-title {
+    height: 22px;
+    line-height: 22px;
+    background: $gray-9;
+    border-radius: 8px 8px 0 0;
+    padding: 0 10px;
+    text-align: center;
+  }
+}

@@ -20,6 +20,7 @@ import syntax from "./syntax"
 import tab from "./brimTab"
 import table from "./table"
 import time from "./time"
+import zeekLogInfo from "./zeekLogInfo"
 
 export type $Field = {
   name: string,
@@ -64,5 +65,6 @@ export default {
   search,
   randomHash,
   entries,
-  tab
+  tab,
+  zeekLogInfo
 }

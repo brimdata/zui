@@ -43,7 +43,19 @@
   table {
     width: 100%;
   }
-  th {
+  .table td {
+    padding: 3px 6px;
+  }
+  .table th {
+    cursor: default;
+    user-select: none;
     min-width: 120px;
+    padding: 0 6px;
+    span {
+      display: inline-block;
+      line-height: 22px;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
   }
 }
