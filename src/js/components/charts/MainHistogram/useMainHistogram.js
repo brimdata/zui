@@ -93,7 +93,13 @@ export default function(width: number, height: number): HistogramChart {
     let oneCharWidth = 5.5366666667
     let chars = d3.format(",")(maxY).length
     let yAxisWidth = chars * oneCharWidth + 3
-    let margins = {left: yAxisWidth + 8, right: 0, top: 3, bottom: 16}
+    let minWidth = 38
+    let margins = {
+      left: Math.max(minWidth, yAxisWidth + 8),
+      right: 0,
+      top: 3,
+      bottom: 16
+    }
 
     return {
       data,
