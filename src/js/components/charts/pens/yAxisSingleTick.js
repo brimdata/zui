@@ -27,12 +27,7 @@ export default function(): Pen {
         `translate(${chart.margins.left}, ${chart.margins.top})`
       )
       .style("opacity", "1")
-      .call(
-        d3
-          .axisRight(chart.yScale)
-          .ticks(1)
-          .tickValues(chart.yScale.domain().map(d3.format("d")))
-      )
+      .call(d3.axisLeft(chart.yScale).tickValues(chart.yScale.domain()))
       .selectAll(".tick")
       .each(function() {
         let {width, height, x, y} = this.querySelector("text").getBBox()

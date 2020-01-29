@@ -89,7 +89,11 @@ export default function(width: number, height: number): HistogramChart {
   return useMemo<HistogramChart>(() => {
     let logs = records.map((r) => brim.interop.recordToLog(brim.record(r)))
     let data = format(logs, span)
-    let margins = {left: 0, right: 0, top: 3, bottom: 16}
+    let maxY = d3.max(data.points, (d) => d.count) || 0
+    let oneCharWidth = 5.5366666667
+    let chars = d3.format(",")(maxY).length
+    let yAxisWidth = chars * oneCharWidth + 3
+    let margins = {left: yAxisWidth + 8, right: 0, top: 3, bottom: 16}
 
     return {
       data,
@@ -104,7 +108,7 @@ export default function(width: number, height: number): HistogramChart {
       yScale: d3
         .scaleLinear()
         .range([innerHeight(height, margins), 0])
-        .domain([0, d3.max(data.points, (d) => d.count) || 0]),
+        .domain([0, maxY]),
       xScale: d3
         .scaleUtc()
         .range([0, innerWidth(width, margins)])
