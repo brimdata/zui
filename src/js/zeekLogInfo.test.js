@@ -1,7 +1,4 @@
 /* @flow */
-import http from "http"
-
-import ZeekLogDescriptions from "./services/zeekLogDescriptions"
 import brim from "./brim"
 
 test("describe conn uid", () => {
@@ -20,26 +17,4 @@ test("known path", () => {
 test("unknown path", () => {
   let path = brim.zeekLogInfo("nopath")
   expect(path.isKnown()).toBe(false)
-})
-
-describe("doc urls", () => {
-  const stripSuffix = (s) => s.replace("_log", "")
-  const buildUrl = (s) => [s, brim.zeekLogInfo(s).docsUrl()]
-  const request = (path, url) =>
-    new Promise((good, bad) => {
-      http
-        // $FlowFixMe
-        .request(url, {method: "HEAD"}, (res) => {
-          if (res.statusCode === 200) good()
-          else bad(`${res.statusCode}: ${path}${url}`)
-        })
-        .end()
-    })
-
-  Object.keys(ZeekLogDescriptions)
-    .map(stripSuffix)
-    .map(buildUrl)
-    .forEach(([path, url]) => {
-      test(`doc url responds 200 for ${path}`, () => request(path, url))
-    })
 })
