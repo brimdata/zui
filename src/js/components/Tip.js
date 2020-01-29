@@ -1,7 +1,7 @@
 /* @flow */
 
 import {animated, useSpring} from "react-spring"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import ReactDOM from "react-dom"
 import classNames from "classnames"
 
@@ -17,17 +17,13 @@ type Props = {
   className?: string
 }
 
-export default function Tip({
-  show: showProp,
-  children,
-  anchor,
-  className
-}: Props) {
-  let [show, setShow] = useState(showProp)
+export default function Tip({show, children, anchor, className}: Props) {
+  let [over, setOver] = useState(false)
   let [popper, setRef] = useCallbackRef()
   let style = useTipPosition(anchor, popper)
-  let [status, entered, exited] = useEntrance(show, 100, 300)
-  let immediate = (name) => name === "transform"
+  let [status, entered, exited] = useEntrance(over || show, 100, 300)
+
+  const immediate = (name) => name === "transform"
   let configs = {
     in: {opacity: 1, immediate},
     entering: {opacity: 1, onRest: entered, immediate},
@@ -36,10 +32,8 @@ export default function Tip({
   }
   let spring = useSpring({...configs[status], ...style})
 
-  useEffect(() => setShow(showProp), [showProp])
-
-  const onMouseEnter = () => setShow(true)
-  const onMouseLeave = () => setShow(false)
+  const onMouseEnter = () => setOver(true)
+  const onMouseLeave = () => setOver(false)
 
   if (status === "out") return null
   else

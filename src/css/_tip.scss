@@ -14,20 +14,4 @@
     padding: 0 10px;
     text-align: center;
   }
-
-  .tip-body {
-    padding: 10px;
-  }
-
-  .tip-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px;
-    border-radius: 0 0 8px 8px;
-
-    a {
-      text-decoration: underline;
-      cursor: pointer;
-      color: $blue-light;
-    }
-  }
 }

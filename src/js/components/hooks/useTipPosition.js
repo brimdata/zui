@@ -13,6 +13,13 @@ export default function useTipPosition(
 
     let {left, top} = anchor.getBoundingClientRect()
     let width = tip.clientWidth
+    let height = tip.clientHeight
+
+    if (top + height > window.innerHeight) {
+      // Clamp to the bottom
+      let diff = top + height - window.innerHeight
+      top -= diff
+    }
 
     setStyle({
       transform: `translate3d(${left - width - pad}px, ${top}px, 0)`
