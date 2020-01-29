@@ -2194,9 +2194,9 @@ export default {
       desc: `Records the state history of connections as a string of letters.  The meaning of those letters is:
 
 * "s": a SYN w/o the ACK bit set
-* "h": a SYN+ACK (\"handshake\")
+* "h": a SYN+ACK ("handshake")
 * "a": a pure ACK
-* "d": packet with payload (\"data\")
+* "d": packet with payload ("data")
 * "f": packet with FIN bit set
 * "r": packet with RST bit set
 * "c": packet with a bad checksum (applies to UDP too)
@@ -2207,7 +2207,7 @@ export default {
 * "q": multi-flag packet (SYN+FIN or SYN+RST bits set)
 * "^": connection direction was flipped by Zeek's heuristic
 
-        If the event comes from the originator, the letter is in upper-case; if it comes from the responder, it's in lower-case.  The 'a', 'd', 'i' and 'q' flags are recorded a maximum of one time in either direction regardless of how many are actually seen.  'f', 'h', 'r' and 's' can be recorded multiple times for either direction if the associated sequence number differs from the last-seen packet of the same flag type. 'c', 'g', 't' and 'w' are recorded in a logarithmic fashion: the second instance represents that the event was seen (at least) 10 times; the third instance, 100 times; etc.`
+If the event comes from the originator, the letter is in upper-case; if it comes from the responder, it's in lower-case.  The 'a', 'd', 'i' and 'q' flags are recorded a maximum of one time in either direction regardless of how many are actually seen.  'f', 'h', 'r' and 's' can be recorded multiple times for either direction if the associated sequence number differs from the last-seen packet of the same flag type. 'c', 'g', 't' and 'w' are recorded in a logarithmic fashion: the second instance represents that the event was seen (at least) 10 times; the third instance, 100 times; etc.`
     },
     {
       name: "orig_pkts",
