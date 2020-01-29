@@ -17,7 +17,6 @@ export default function({onDragEnd}: Props = {}): Pen {
   let startPos = null
   let xAxis
   let dragArea
-  const getXPos = () => d3.mouse(xAxis.node())[0]
 
   function mount(svg) {
     xAxis = d3
@@ -33,6 +32,10 @@ export default function({onDragEnd}: Props = {}): Pen {
   }
 
   function draw(chart, redraw) {
+    function getXPos() {
+      return d3.mouse(xAxis.node())[0]
+    }
+
     function addListeners() {
       d3.select("body")
         .on("mousemove", drag, {passive: true})
