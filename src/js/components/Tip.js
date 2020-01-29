@@ -1,7 +1,7 @@
 /* @flow */
 
 import {animated, useSpring} from "react-spring"
-import React, {useEffect, useRef, useState} from "react"
+import React, {useState} from "react"
 import ReactDOM from "react-dom"
 import classNames from "classnames"
 
