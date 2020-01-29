@@ -109,7 +109,8 @@ export default function(width: number, height: number): HistogramChart {
       state: {
         isFetching: status === "FETCHING",
         selection: innerSpan,
-        isEmpty: data.points.length === 0
+        isEmpty: data.points.length === 0,
+        isDragging: false
       },
       yScale: d3
         .scaleLinear()

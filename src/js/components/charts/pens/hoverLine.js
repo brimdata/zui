@@ -24,26 +24,27 @@ export default function(): Pen {
   function draw(chart) {
     line.attr("height", innerHeight(chart.height, chart.margins) + overflow * 2)
 
+    function hide() {
+      line.style("display", "none")
+    }
+
+    function show() {
+      if (chart.state.isDragging) return hide()
+
+      const [x] = d3.mouse(this)
+      if (x < chart.margins.left) {
+        line.style("display", "none")
+      } else {
+        line
+          .attr("transform", `translate(${x}, ${chart.margins.top - overflow})`)
+          .style("display", "block")
+      }
+    }
+
     d3.select(svg)
-      .on("mouseout.hoverline", function() {
-        line.style("display", "none")
-      })
-      .on("mousemove.hoverline", function() {
-        const [x] = d3.mouse(this)
-        if (x < chart.margins.left) {
-          line.style("display", "none")
-        } else {
-          line
-            .attr(
-              "transform",
-              `translate(${x}, ${chart.margins.top - overflow})`
-            )
-            .style("display", "block")
-        }
-      })
-      .on("mousedown.hoverline", function() {
-        line.style("display", "none")
-      })
+      .on("mouseout.hoverline", hide)
+      .on("mousemove.hoverline", show)
+      .on("mousedown.hoverline", hide)
   }
 
   return {mount, draw}

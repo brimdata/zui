@@ -57,9 +57,9 @@ export default function({onDragEnd}: Props = {}): Pen {
 
     function dragEnd() {
       if (startPos === null || startSpan === null) return
-      let span = draggedSpan(chart, startPos, startSpan)
-      onDragEnd(span)
       removeListeners()
+      onDragEnd(draggedSpan(chart, startPos, startSpan))
+      chart.state.isDragging = false
       startPos = null
       startSpan = null
     }
@@ -77,6 +77,7 @@ export default function({onDragEnd}: Props = {}): Pen {
     function dragStart() {
       startPos = getXPos()
       startSpan = chart.data.span
+      chart.state.isDragging = true
       addListeners()
     }
 

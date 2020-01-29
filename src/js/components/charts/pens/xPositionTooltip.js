@@ -35,6 +35,8 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
 
   function draw(chart) {
     function show() {
+      if (chart.state.isDragging) return hide()
+
       let [left] = mouse(this)
       let point = getPointAt(left, chart)
 
