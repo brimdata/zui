@@ -61,7 +61,9 @@ function getWrapper(container) {
   switch (container) {
     case "set":
       return ["{", "}"]
-    case "vector":
+    case "vector": // DELETE after vector-array is merged
+      return ["[", "]"]
+    case "array":
       return ["[", "]"]
     default:
       return [null, null]
