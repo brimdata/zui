@@ -21,7 +21,8 @@ export type Pen = {|
 type HistogramState = {
   selection?: ?Span,
   isFetching?: boolean,
-  isEmpty?: boolean
+  isEmpty?: boolean,
+  isDragging: boolean
 }
 
 export type HistogramData = {|

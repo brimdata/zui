@@ -1,5 +1,6 @@
 /* @flow */
 
+import {isEqual} from "lodash"
 import {render} from "react-dom"
 import {select, mouse} from "d3"
 import React from "react"
@@ -15,6 +16,8 @@ type Args = {
 export default function({wrapperClassName, render: Component}: Args): Pen {
   let div
   let svg
+  let lastPoint
+
   function hide() {
     div.style.opacity = "0"
   }
@@ -32,11 +35,17 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
 
   function draw(chart) {
     function show() {
+      if (chart.state.isDragging) return hide()
+
       let [left] = mouse(this)
       let point = getPointAt(left, chart)
+
       if (point && point.count) {
         positionTooltip(div, this, 30)
-        render(<Component {...getProps(point)} />, div)
+        if (!isEqual(lastPoint, point)) {
+          render(<Component {...getProps(point)} />, div)
+        }
+        lastPoint = point
       } else {
         hide()
       }

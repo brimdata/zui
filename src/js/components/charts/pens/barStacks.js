@@ -63,14 +63,21 @@ export default function(): Pen {
       width = Math.max(Math.floor(b - a), 1)
     }
 
+    function clampWidth(d) {
+      // Keep the chart from overflowing the x axis
+      let x = chart.xScale(d.data.ts)
+      if (x > 0) return width
+      else return Math.max(0, width + x)
+    }
+
     bars
       .enter()
       .append("rect")
       .attr("y", innerH)
       .attr("height", 0)
       .merge(bars)
-      .attr("width", width)
-      .attr("x", (d) => chart.xScale(d.data.ts))
+      .attr("width", clampWidth)
+      .attr("x", (d) => Math.max(0, chart.xScale(d.data.ts)))
       .transition(t)
       .attr("y", (d) => chart.yScale(d[1]))
       .attr("height", (d) => chart.yScale(d[0]) - chart.yScale(d[1]))
