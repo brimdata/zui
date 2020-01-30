@@ -4,7 +4,8 @@ import {ONE_CHAR} from "./field"
 import {isArray} from "../lib/is"
 import brim, {type $CompoundField} from "./"
 
-export const COMPOUND_FIELD_RGX = /^(set|vector)\[(\w+)\]$/
+// DELETE vector after vector-array is merged
+export const COMPOUND_FIELD_RGX = /^(set|vector|array)\[(\w+)\]$/
 type $T = $CompoundField
 
 function compoundField(name: string, type: string, value: ?(FieldValue[])): $T {
