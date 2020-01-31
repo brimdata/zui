@@ -1,4 +1,5 @@
 /* @flow */
+import type {DateTuple} from "../../lib/TimeWindow"
 import type {Span, Ts} from "../../brim"
 
 export type SearchState = {
@@ -9,6 +10,14 @@ export type SearchState = {
   clusterId: string
 }
 
+export type SearchArgs = {
+  tableProgram: string,
+  chartProgram: string,
+  span: DateTuple,
+  space: string,
+  type: SearchType
+}
+export type SearchType = "zoom" | "analytics" | "events"
 export type TimeArg = string | Ts
 export type SpanArgs = [TimeArg, TimeArg]
 

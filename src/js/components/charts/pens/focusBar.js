@@ -6,8 +6,7 @@ import {getPointAt} from "../getPointAt"
 import brim from "../../../brim"
 
 type Props = {
-  onFocus: Function,
-  onBlur: Function
+  onFocus: Function
 }
 
 export default function({onFocus}: Props): Pen {
@@ -18,7 +17,7 @@ export default function({onFocus}: Props): Pen {
   }
 
   function draw(chart) {
-    d3.select(svg).on("click", () => {
+    d3.select(svg).on("click.focusbar", () => {
       let data = getPointAt(d3.event.offsetX, chart)
       if (data) {
         let {number, unit} = chart.data.interval

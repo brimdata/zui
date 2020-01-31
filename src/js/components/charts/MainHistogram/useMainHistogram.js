@@ -75,6 +75,7 @@ export default function(width: number, height: number): HistogramChart {
         <LoadingMessage show={chart.state.isFetching} message="Chart Loading" />
       )),
       focusBar({onFocus}),
+
       xPositionTooltip({
         wrapperClassName: "histogram-tooltip-wrapper",
         render: HistogramTooltip

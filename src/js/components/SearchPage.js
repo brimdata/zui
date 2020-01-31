@@ -12,7 +12,6 @@ import {XRightPane} from "./RightPane"
 import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
 import {checkVersions} from "../services/boom"
-import {getKey} from "../lib/finding"
 import {hasAnalytics} from "../lib/Program"
 import {initSpace} from "../flows/initSpace"
 import {useResizeObserver} from "./hooks/useResizeObserver"
@@ -23,7 +22,6 @@ import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
-import Investigation from "../state/Investigation"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 import SearchBar from "../state/SearchBar"
 import SettingsModal from "./SettingsModal"
@@ -33,8 +31,6 @@ import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
   let logsTab = !hasAnalytics(useSelector(SearchBar.getSearchProgram))
-  let finding = useSelector(Investigation.getCurrentFinding)
-  let renderKey = finding && getKey(finding)
   let results = useResizeObserver()
   let dispatch = useDispatch()
   useSearchShortcuts()
@@ -56,7 +52,7 @@ export default function SearchPage() {
             <ControlBar />
             {logsTab && (
               <div className="search-page-header-charts">
-                <MainHistogramChart key={renderKey} />
+                <MainHistogramChart />
               </div>
             )}
             <ColumnChooser />

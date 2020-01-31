@@ -9,38 +9,33 @@ import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
-import searchArgs from "./searchArgs"
 
 export default function submitSearch(save: boolean = true): Thunk {
   return function(dispatch, getState) {
+    let prevArgs = Search.getArgs(getState())
     dispatch(SearchBar.submittingSearchBar())
     dispatch(Tab.computeSpan())
-
     if (!dispatch(SearchBar.validate())) return
 
     const state = getState()
+
     if (save) dispatch(History.push(Search.getRecord(state)))
     let tabId = Tabs.getActive(state)
-    let tabData = {
-      program: SearchBar.getSearchProgram(state),
-      span: Tab.getSpanAsDates(state),
-      spanFocus: Tab.getSpanFocusAsDates(state),
-      space: Tab.spaceName(state),
-      tabId
-    }
+    let args = Search.getArgs(state)
+
     dispatch(Viewer.clear(tabId))
     dispatch(Notice.dismiss())
 
-    switch (searchArgs.type(tabData)) {
-      case "analytic":
-        dispatch(executeTableSearch(searchArgs.analytics(tabData)))
+    switch (args.type) {
+      case "analytics":
+        dispatch(executeTableSearch(tabId, args))
         break
       case "zoom":
-        dispatch(executeTableSearch(searchArgs.zoom(tabData)))
+        dispatch(executeTableSearch(tabId, args))
         break
       default:
-        dispatch(executeTableSearch(searchArgs.events(tabData)))
-        dispatch(executeHistogramSearch(tabData))
+        dispatch(executeTableSearch(tabId, args))
+        dispatch(executeHistogramSearch(tabId, args, prevArgs))
     }
   }
 }
