@@ -10,8 +10,7 @@ type Props = {
   onBlur: Function
 }
 
-export default function({onFocus, onBlur}: Props): Pen {
-  let focused = false
+export default function({onFocus}: Props): Pen {
   let svg
 
   function mount(el) {
@@ -21,8 +20,7 @@ export default function({onFocus, onBlur}: Props): Pen {
   function draw(chart) {
     d3.select(svg).on("click", () => {
       let data = getPointAt(d3.event.offsetX, chart)
-      if (data && !focused) {
-        focused = true
+      if (data) {
         let {number, unit} = chart.data.interval
         onFocus([
           data.ts,
@@ -31,11 +29,9 @@ export default function({onFocus, onBlur}: Props): Pen {
             .add(number, unit)
             .toDate()
         ])
-      } else {
-        focused = false
-        onBlur()
       }
     })
+    // Clicking the focus bar off is handled in another pen.
   }
 
   return {draw, mount}

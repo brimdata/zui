@@ -51,13 +51,9 @@ export default function(width: number, height: number): HistogramChart {
       dispatch(submitSearch(false))
     }
 
-    function onBlur() {
-      dispatch(search.setSpanFocus(null))
-      dispatch(submitSearch(false))
-    }
-
     function onSelectionClear() {
       dispatch(search.setSpanFocus(null))
+      dispatch(submitSearch(false))
     }
 
     function onSelectionClick(span) {
@@ -78,7 +74,7 @@ export default function(width: number, height: number): HistogramChart {
       reactComponent((chart) => (
         <LoadingMessage show={chart.state.isFetching} message="Chart Loading" />
       )),
-      focusBar({onFocus, onBlur}),
+      focusBar({onFocus}),
       xPositionTooltip({
         wrapperClassName: "histogram-tooltip-wrapper",
         render: HistogramTooltip
