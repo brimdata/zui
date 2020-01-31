@@ -4,10 +4,9 @@ import React from "react"
 
 import {NetworkError} from "../models/Errors"
 import {capitalize} from "../lib/Str"
-import {initSpace} from "../flows/initSpace"
+import NetworkErrorNotice from "./NetworkErrorNotice"
 import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
-import Tab from "../state/Tab"
 import useEscapeKey from "./hooks/useEscapeKey"
 
 export default function ErrorNotice() {
@@ -29,24 +28,13 @@ function ErrorMessage({error}) {
 }
 
 function getComponent(error) {
-  if (error instanceof NetworkError) return Network
+  if (error instanceof NetworkError) return NetworkErrorNotice
   else if (error) return Default
   else return None
 }
 
 function None() {
   return null
-}
-
-function Network({error}) {
-  let dispatch = useDispatch()
-  let space = useSelector(Tab.spaceName)
-  return (
-    <p>
-      {error.message()} <a onClick={() => dispatch(initSpace(space))}>Retry</a>
-      <a onClick={() => dispatch(Notice.dismiss())}>Dismiss</a>
-    </p>
-  )
 }
 
 function Default({error}) {
