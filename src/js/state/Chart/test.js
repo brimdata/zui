@@ -11,8 +11,16 @@ beforeEach(() => {
 })
 
 let records = [
-  [{name: "id", type: "string", value: "1"}],
-  [{name: "id", type: "string", value: "2"}]
+  [
+    {name: "ts", type: "string", value: "0"},
+    {name: "_path", type: "string", value: "conn"},
+    {name: "count", type: "string", value: "500"}
+  ],
+  [
+    {name: "ts", type: "string", value: "100"},
+    {name: "_path", type: "string", value: "dns"},
+    {name: "count", type: "string", value: "300"}
+  ]
 ]
 
 test("chart records append", () => {
@@ -21,7 +29,22 @@ test("chart records append", () => {
     chart.appendRecords(tabId, [records[1]])
   ])
 
-  expect(chart.getRecords(state)).toEqual(records)
+  expect(chart.getData(state)).toEqual({
+    keys: ["conn", "dns"],
+    table: {"0": {conn: 500}, "100000": {dns: 300}}
+  })
+})
+
+test("chart records remains unique", () => {
+  let state = store.dispatchAll([
+    chart.appendRecords(tabId, [records[0]]),
+    chart.appendRecords(tabId, [records[0]])
+  ])
+
+  expect(chart.getData(state)).toEqual({
+    keys: ["conn"],
+    table: {"0": {conn: 500}}
+  })
 })
 
 test("chart records status", () => {
@@ -38,5 +61,5 @@ test("chart records clear", () => {
   ])
 
   expect(chart.getStatus(state)).toBe("INIT")
-  expect(chart.getRecords(state)).toEqual([])
+  expect(chart.getData(state)).toEqual({keys: [], table: {}})
 })

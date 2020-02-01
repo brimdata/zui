@@ -4,7 +4,7 @@ import type {TabState} from "../Tab/types"
 import activeTabSelect from "../Tab/activeTabSelect"
 
 export default {
-  getRecords: activeTabSelect((tab: TabState) => tab.chart.records),
+  getData: activeTabSelect((tab: TabState) => tab.chart.data),
   getStatus: activeTabSelect((tab: TabState) => tab.chart.status),
   isFetching: (tab: TabState) => tab.chart.status === "FETCHING"
 }

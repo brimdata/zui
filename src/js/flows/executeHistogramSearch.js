@@ -17,7 +17,9 @@ export default function executeHistogramSearch(
       .search(args.chartProgram, args.span, args.space)
       .id("Histogram")
       .status((status) => dispatch(chart.setStatus(tabId, status)))
-      .chan(0, (records) => dispatch(chart.appendRecords(tabId, records)))
+      .chan(0, (records) => {
+        dispatch(chart.appendRecords(tabId, records))
+      })
       .error((error) => dispatch(Notice.set(ErrorFactory.create(error))))
 
     if (shouldClear(args, prevArgs)) dispatch(chart.clear(tabId))

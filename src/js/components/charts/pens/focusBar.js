@@ -17,19 +17,23 @@ export default function({onFocus}: Props): Pen {
   }
 
   function draw(chart) {
-    d3.select(svg).on("click.focusbar", () => {
-      let data = getPointAt(d3.event.offsetX, chart)
-      if (data) {
-        let {number, unit} = chart.data.interval
-        onFocus([
-          data.ts,
-          brim
-            .time(data.ts)
-            .add(number, unit)
-            .toDate()
-        ])
-      }
-    })
+    if (chart.state.isDragging) {
+      d3.select(svg).on("click.focusbar", null)
+    } else {
+      d3.select(svg).on("click.focusbar", () => {
+        let data = getPointAt(d3.event.offsetX, chart)
+        if (data) {
+          let {number, unit} = chart.data.interval
+          onFocus([
+            data.ts,
+            brim
+              .time(data.ts)
+              .add(number, unit)
+              .toDate()
+          ])
+        }
+      })
+    }
     // Clicking the focus bar off is handled in another pen.
   }
 

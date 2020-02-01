@@ -28,7 +28,7 @@ import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 
 export default function(width: number, height: number): HistogramChart {
-  let records = useSelector(Chart.getRecords)
+  let chartData = useSelector(Chart.getData)
   let status = useSelector(Chart.getStatus)
   let span = useSelector(tab.getSpanAsDates)
   let innerSpan = useSelector(tab.getSpanFocusAsDates)
@@ -84,8 +84,7 @@ export default function(width: number, height: number): HistogramChart {
   })
 
   return useMemo<HistogramChart>(() => {
-    let logs = records.map((r) => brim.interop.recordToLog(brim.record(r)))
-    let data = format(logs, span)
+    let data = format(chartData, span)
     let maxY = d3.max(data.points, (d) => d.count) || 0
     let oneCharWidth = 5.5366666667
     let chars = d3.format(",")(maxY).length
@@ -119,5 +118,5 @@ export default function(width: number, height: number): HistogramChart {
         .domain(span),
       pens
     }
-  }, [records, status, span, innerSpan, width, height])
+  }, [chartData, status, span, innerSpan, width, height])
 }

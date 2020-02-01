@@ -1,9 +1,13 @@
 /* @flow */
-import type {RecordData} from "../../types/records"
 import type {SearchStatus} from "../../types/searches"
 
+export type ChartData = {
+  keys: string[],
+  table: {[string]: {[string]: number}}
+}
+
 export type ChartState = {
-  records: RecordData[],
+  data: ChartData,
   status: SearchStatus
 }
 
@@ -15,7 +19,7 @@ export type CHART_STATUS = {
 
 export type CHART_RECORDS = {
   type: "CHART_RECORDS",
-  records: RecordData[],
+  data: ChartData,
   tabId: string
 }
 
