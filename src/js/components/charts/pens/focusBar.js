@@ -6,12 +6,10 @@ import {getPointAt} from "../getPointAt"
 import brim from "../../../brim"
 
 type Props = {
-  onFocus: Function,
-  onBlur: Function
+  onFocus: Function
 }
 
-export default function({onFocus, onBlur}: Props): Pen {
-  let focused = false
+export default function({onFocus}: Props): Pen {
   let svg
 
   function mount(el) {
@@ -19,23 +17,22 @@ export default function({onFocus, onBlur}: Props): Pen {
   }
 
   function draw(chart) {
-    d3.select(svg).on("click", () => {
-      let data = getPointAt(d3.event.offsetX, chart)
-      if (data && !focused) {
-        focused = true
-        let {number, unit} = chart.data.interval
-        onFocus([
-          data.ts,
-          brim
-            .time(data.ts)
-            .add(number, unit)
-            .toDate()
-        ])
-      } else {
-        focused = false
-        onBlur()
-      }
-    })
+    d3.select(svg)
+      .select(".brush")
+      .on("click.focusbar", () => {
+        let data = getPointAt(d3.event.offsetX, chart)
+        if (data) {
+          let {number, unit} = chart.data.interval
+          onFocus([
+            data.ts,
+            brim
+              .time(data.ts)
+              .add(number, unit)
+              .toDate()
+          ])
+        }
+      })
+    // Clicking the focus bar off is handled x axis brush
   }
 
   return {draw, mount}

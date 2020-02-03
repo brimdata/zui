@@ -37,11 +37,11 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
     function show() {
       if (chart.state.isDragging) return hide()
 
-      let [left] = mouse(this)
+      let [left] = mouse(svg)
       let point = getPointAt(left, chart)
 
       if (point && point.count) {
-        positionTooltip(div, this, 30)
+        positionTooltip(div, svg, 30)
         if (!isEqual(lastPoint, point)) {
           render(<Component {...getProps(point)} />, div)
         }
@@ -52,6 +52,7 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
     }
 
     select(svg)
+      .select(".brush")
       .on("mouseout.tooltip", hide)
       .on("mousemove.tooltip", show)
   }
@@ -71,7 +72,7 @@ const getProps = (point) => {
 
 export const positionTooltip = (
   el: HTMLElement,
-  parent: HTMLElement,
+  parent: Element,
   padding: number
 ) => {
   const [left] = mouse(parent)

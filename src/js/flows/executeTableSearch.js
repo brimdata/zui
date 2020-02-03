@@ -1,7 +1,7 @@
 /* @flow */
 
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
-import type {SearchArgs} from "./searchArgs"
+import type {SearchArgs} from "../state/Search/types"
 import type {Thunk} from "../state/types"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
@@ -9,15 +9,13 @@ import Viewer from "../state/Viewer"
 import brim from "../brim"
 import executeSearch from "./executeSearch"
 
-export default function executeTableSearch({
-  program,
-  span,
-  space,
-  tabId
-}: SearchArgs): Thunk {
+export default function executeTableSearch(
+  tabId: string,
+  args: SearchArgs
+): Thunk {
   return function(dispatch) {
     let table = brim
-      .search(program, span, space)
+      .search(args.tableProgram, args.span, args.space)
       .id("Table")
       .status((status) => dispatch(Viewer.setStatus(tabId, status)))
       .chan(0, (records, types) => {

@@ -28,7 +28,7 @@ import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 
 export default function(width: number, height: number): HistogramChart {
-  let records = useSelector(Chart.getRecords)
+  let chartData = useSelector(Chart.getData)
   let status = useSelector(Chart.getStatus)
   let span = useSelector(tab.getSpanAsDates)
   let innerSpan = useSelector(tab.getSpanFocusAsDates)
@@ -51,13 +51,9 @@ export default function(width: number, height: number): HistogramChart {
       dispatch(submitSearch(false))
     }
 
-    function onBlur() {
-      dispatch(search.setSpanFocus(null))
-      dispatch(submitSearch(false))
-    }
-
     function onSelectionClear() {
       dispatch(search.setSpanFocus(null))
+      dispatch(submitSearch(false))
     }
 
     function onSelectionClick(span) {
@@ -78,7 +74,8 @@ export default function(width: number, height: number): HistogramChart {
       reactComponent((chart) => (
         <LoadingMessage show={chart.state.isFetching} message="Chart Loading" />
       )),
-      focusBar({onFocus, onBlur}),
+      focusBar({onFocus}),
+
       xPositionTooltip({
         wrapperClassName: "histogram-tooltip-wrapper",
         render: HistogramTooltip
@@ -87,8 +84,7 @@ export default function(width: number, height: number): HistogramChart {
   })
 
   return useMemo<HistogramChart>(() => {
-    let logs = records.map((r) => brim.interop.recordToLog(brim.record(r)))
-    let data = format(logs, span)
+    let data = format(chartData, span)
     let maxY = d3.max(data.points, (d) => d.count) || 0
     let oneCharWidth = 5.5366666667
     let chars = d3.format(",")(maxY).length
@@ -96,7 +92,7 @@ export default function(width: number, height: number): HistogramChart {
     let minWidth = 38
     let margins = {
       left: Math.max(minWidth, yAxisWidth + 8),
-      right: 0,
+      right: 8,
       top: 3,
       bottom: 16
     }
@@ -122,5 +118,5 @@ export default function(width: number, height: number): HistogramChart {
         .domain(span),
       pens
     }
-  }, [records, status, span, innerSpan, width, height])
+  }, [chartData, status, span, innerSpan, width, height])
 }
