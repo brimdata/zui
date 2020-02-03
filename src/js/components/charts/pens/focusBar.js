@@ -17,10 +17,9 @@ export default function({onFocus}: Props): Pen {
   }
 
   function draw(chart) {
-    if (chart.state.isDragging) {
-      d3.select(svg).on("click.focusbar", null)
-    } else {
-      d3.select(svg).on("click.focusbar", () => {
+    d3.select(svg)
+      .select(".brush")
+      .on("click.focusbar", () => {
         let data = getPointAt(d3.event.offsetX, chart)
         if (data) {
           let {number, unit} = chart.data.interval
@@ -33,8 +32,7 @@ export default function({onFocus}: Props): Pen {
           ])
         }
       })
-    }
-    // Clicking the focus bar off is handled in another pen.
+    // Clicking the focus bar off is handled x axis brush
   }
 
   return {draw, mount}

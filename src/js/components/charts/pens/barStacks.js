@@ -4,7 +4,7 @@ import * as d3 from "d3"
 
 import type {Pen} from "../types"
 import {d3ElementAttr, itestLocator} from "../../../test/integration"
-import {innerHeight} from "../dimens"
+import {innerHeight, innerWidth} from "../dimens"
 import brim from "../../../brim"
 
 export default function(): Pen {
@@ -65,9 +65,16 @@ export default function(): Pen {
 
     function clampWidth(d) {
       // Keep the chart from overflowing the x axis
+      let chartWidth = innerWidth(chart.width, chart.margins)
       let x = chart.xScale(d.data.ts)
-      if (x > 0) return width
-      else return Math.max(0, width + x)
+      if (x < 0)
+        // The leftmost bar has overflowed
+        return Math.max(0, width + x)
+      else if (x + width > chartWidth)
+        // Right most bar has overflowed
+        return Math.max(0, width - (x + width - chartWidth))
+      // The bar is within the bounds
+      else return width
     }
 
     bars

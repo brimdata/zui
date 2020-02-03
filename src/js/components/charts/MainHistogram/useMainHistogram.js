@@ -92,7 +92,7 @@ export default function(width: number, height: number): HistogramChart {
     let minWidth = 38
     let margins = {
       left: Math.max(minWidth, yAxisWidth + 8),
-      right: 0,
+      right: 8,
       top: 3,
       bottom: 16
     }
