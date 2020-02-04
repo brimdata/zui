@@ -29,27 +29,8 @@ jobs:
       - run:
           name: Unit Tests
           command: npm test -- --maxWorkers=2 --ci
-  integration_tests:
-    docker:
-      # Built from https://github.com/looky-cloud/rug/blob/master/.circleci/Dockerfile.
-      - image: gcr.io/quixotic-strand-159502/rug@sha256:17e41daf787aaee9cc7ab2e08b87dac6d904f7112b24245a631f90a8d1991160
-        auth:
-          username: _json_key
-          password: $GCLOUD_SERVICE_KEY
-    steps:
-      - checkout
-      - run:
-          name: Integration tests
-          command: ./.circleci/rug-component.sh
-      - store_artifacts:
-          path: /var/tmp/looky/logs
-      - store_artifacts:
-          path: /home/circleci/.npm/_logs
 workflows:
   version: 2
   main:
     jobs:
       - build
-      - integration_tests:
-          requires:
-            - build
