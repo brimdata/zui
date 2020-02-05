@@ -1,3 +1,22 @@
+@mixin label-normal {
+  font-family: system-ui;
+  letter-spacing: -0.08;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+@mixin heading-1 {
+  font-family: system-ui;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+@mixin heading-2 {
+  font-family: system-ui;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .paragraph {
   font-family: $body-font;
   font-weight: normal;

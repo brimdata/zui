@@ -18,11 +18,21 @@ async function main() {
 
   let winState = windowState()
   let win = browserWindow(winState)
+  let welcome
 
   app.on("ready", () => {
     installExtensions()
     winState.load()
-    win.create()
+    // win.create()
+    welcome = new BrowserWindow({
+      titleBarStyle: "hidden",
+      width: 600,
+      height: 400,
+      webPreferences: {
+        nodeIntegration: true
+      }
+    })
+    welcome.loadFile("welcome.html")
   })
 
   app.on("activate", () => {
@@ -40,6 +50,11 @@ async function main() {
   ipcMain.on("close-window", () => {
     let win = BrowserWindow.getFocusedWindow()
     if (win) win.close()
+  })
+
+  ipcMain.handle("pcaps:ingest", (event, args) => {
+    console.log("RECEIVED", args)
+    return "DONE"
   })
 
   app.on("window-all-closed", () => {

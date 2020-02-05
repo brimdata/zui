@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Brim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="dist/css/main.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src https: file: http: ws: data: 'unsafe-inline'"
+    />
+  </head>
+  <body>
+    <script>
+      require("./dist/js/welcome.js")
+      let isDev = require("./dist/js/electron/isDev.js")
+
+      if (isDev) {
+        let script = document.createElement("script")
+        script.src = "http://localhost:35729/livereload.js?snipver=1"
+        document.body.appendChild(script)
+      }
+    </script>
+  </body>
+</html>
