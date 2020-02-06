@@ -4,7 +4,6 @@ import isEqual from "lodash/isEqual"
 import md5 from "md5"
 
 import type {Descriptor, Tuple, TupleSet} from "../types"
-import type {FieldValue} from "../types/records"
 import {inBounds} from "../lib/Array"
 import {isString} from "../lib/is"
 import brim, {type $Field} from "../brim"
@@ -48,7 +47,7 @@ export default class Log {
     const direction = dir === "asc" ? 1 : -1
 
     logs.sort((a, b) =>
-      a.get(name) > b.get(name) ? direction : direction * -1
+      a.getString(name) > b.getString(name) ? direction : direction * -1
     )
 
     return logs
@@ -101,7 +100,7 @@ export default class Log {
   }
 
   isPath(pathName: string) {
-    return this.get("_path") === pathName
+    return this.getString("_path") === pathName
   }
 
   constructor(tuple: Tuple, descriptor: Descriptor) {
@@ -113,8 +112,10 @@ export default class Log {
     return this.descriptor.findIndex((field) => field.name === name)
   }
 
-  get(name: string): FieldValue {
-    return this.tuple[this.getIndex(name)]
+  getString(name: string): string {
+    let f = this.getField(name)
+    if (f) return f.stringValue()
+    else return ""
   }
 
   getField(fieldName: string): ?$Field {
@@ -186,7 +187,7 @@ export default class Log {
 
   correlationId() {
     let name
-    switch (this.get("_path")) {
+    switch (this.getString("_path")) {
       case "files":
         name = "conn_uids"
         break

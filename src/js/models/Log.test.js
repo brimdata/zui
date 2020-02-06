@@ -81,7 +81,7 @@ describe(".sort", () => {
     logs = [conn(), dns(), http()]
   })
 
-  const getTs = (t) => t.get("ts")
+  const getTs = (t) => t.getString("ts")
 
   test("asc", () => {
     Log.sort(logs, "ts", "asc")
