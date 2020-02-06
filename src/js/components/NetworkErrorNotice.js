@@ -11,8 +11,8 @@ type Props = {
   error: AppError
 }
 
-const BACKOFF = [2, 4, 8, 16]
-const MAX_BACKOFF = 32
+const BACKOFF = [16, 32, 64]
+const MAX_BACKOFF = 128
 
 export default function NetworkErrorNotice({error}: Props) {
   let dispatch = useDispatch()

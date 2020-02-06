@@ -30,7 +30,7 @@ export default function window(state: Keep) {
   }
 
   return {
-    create() {
+    create(params: Object = {}) {
       let {
         position: [x, y],
         size: [width, height]
@@ -51,7 +51,7 @@ export default function window(state: Keep) {
       win.on("closed", this.destroy)
       win.on("resize", this.saveSize)
       win.on("move", this.savePosition)
-      win.loadFile("index.html")
+      win.loadFile("index.html", {query: params})
     },
 
     switchTo(newName: WindowName) {

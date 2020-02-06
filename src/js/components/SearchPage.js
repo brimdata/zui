@@ -19,6 +19,7 @@ import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
+import IngestProgress from "./IngestProgress"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
@@ -53,6 +54,7 @@ export default function SearchPage() {
         </div>
         <XRightPane />
       </div>
+      <IngestProgress />
       <ErrorNotice />
       <XDownloadProgress />
       <WhoisModal />

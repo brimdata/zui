@@ -5,7 +5,7 @@ import React, {useState} from "react"
 import classNames from "classnames"
 
 import {XLatestError} from "./LatestError"
-import ClusterGate from "./Login/ClusterGate"
+import SearchPage from "./SearchPage"
 import View from "../state/View"
 import brim from "../brim"
 import useListener from "./hooks/useListener"
@@ -26,7 +26,7 @@ export default function App() {
     >
       <div className="title-bar-drag-area" />
       <XLatestError />
-      <ClusterGate />
+      <SearchPage />
     </div>
   )
 }

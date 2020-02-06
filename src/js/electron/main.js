@@ -26,6 +26,7 @@ async function main() {
     // win.create()
     welcome = new BrowserWindow({
       titleBarStyle: "hidden",
+      resizable: false,
       width: 600,
       height: 400,
       webPreferences: {
@@ -39,7 +40,22 @@ async function main() {
     if (!win.exists()) win.create()
   })
 
+  ipcMain.handle("redirect:search", (e, space) => {
+    BrowserWindow.fromWebContents(e.sender).close()
+    if (!win.exists())
+      win.create({
+        space,
+        id: "zqd",
+        host: "localhost",
+        port: "9867",
+        username: "",
+        password: ""
+      })
+    win.switchTo("search")
+  })
+
   ipcMain.on("open-search-window", () => {
+    if (!win.exists()) win.create()
     win.switchTo("search")
   })
 
