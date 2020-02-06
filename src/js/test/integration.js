@@ -1,7 +1,7 @@
 /* @flow */
 
-import Field from "../models/Field"
 import Log from "../models/Log"
+import brim, {type $Field} from "../brim"
 
 // These fixtures are intermediate representation of test data needed to send
 // native menu data to Electron. They shouldn't be directly exposed to tests as
@@ -38,19 +38,35 @@ const FIXTURES = {
 const logFixture = (name: string): Log => {
   let string = FIXTURES.logs[name]
   if (string) {
-    return Log.fromString(string)
+    return logFromFixture(string)
   } else {
     throw new Error("Unknown log fixture: " + name)
   }
 }
 
-const fieldFixture = (name: string): Field => {
+const fieldFixture = (name: string): $Field => {
   let string = FIXTURES.fields[name]
   if (string) {
-    return Field.fromString(string)
+    return fieldFromFixture(string)
   } else {
     throw new Error("Unknown field fixture: " + name)
   }
+}
+
+function fieldFromFixture(string) {
+  let [front, value] = string.split("\t")
+  let [name, type] = front.split(":")
+  return brim.field({name, type, value})
+}
+
+function logFromFixture(string) {
+  let [front, back] = string.split("\t\t")
+  let descriptor = front.split("\t").map((val) => {
+    let [name, type] = val.split(":")
+    return {name, type}
+  })
+  let tuple = back.split("\t")
+  return new Log(tuple, descriptor)
 }
 
 export const itestLocator = "data-test-locator"

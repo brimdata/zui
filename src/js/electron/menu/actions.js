@@ -1,6 +1,5 @@
 /* @flow */
 
-import {TimeField} from "../../models/Field"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -11,7 +10,6 @@ import {
 } from "../../flows/searchBar/actions"
 import {open} from "../../lib/System"
 import {viewLogDetail} from "../../flows/viewLogDetail"
-import FieldFactory from "../../models/FieldFactory"
 import Log from "../../models/Log"
 import Modal from "../../state/Modal"
 import Packets from "../../state/Packets"
@@ -54,7 +52,7 @@ function buildActions() {
       name: "cell-menu-fresh-include",
       label: "New search with this value",
       listener(dispatch, field) {
-        field = FieldFactory.create(field)
+        field = brim.field(field)
         dispatch(SearchBar.clearSearchBar())
         dispatch(SearchBar.changeSearchBarInput(field.queryableValue()))
         dispatch(submitSearch())
@@ -63,9 +61,9 @@ function buildActions() {
     fromTime: action({
       name: "cell-menu-from-time",
       label: 'Use as "start" time',
-      listener(dispatch, field) {
-        field = FieldFactory.create(field)
-        if (field instanceof TimeField) {
+      listener(dispatch, fieldData) {
+        let field = brim.field(fieldData)
+        if (field.type === "time") {
           dispatch(tab.setFrom(brim.time(field.toDate()).toTs()))
           dispatch(submitSearch())
         }
@@ -146,9 +144,9 @@ function buildActions() {
     toTime: action({
       name: "cell-menu-to-time",
       label: 'Use as "end" time',
-      listener(dispatch, field) {
-        field = FieldFactory.create(field)
-        if (field instanceof TimeField) {
+      listener(dispatch, fieldData) {
+        let field = brim.field(fieldData)
+        if (field.type === "time") {
           dispatch(
             tab.setTo(
               brim

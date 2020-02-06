@@ -10,6 +10,9 @@ import brim, {type $Field} from "./"
 export const ONE_CHAR = 7.39
 export const FIELD_PAD = 14
 export const PATH_PAD = 12
+const WHITE_SPACE = /\s+/
+const COMMA = /,/
+const STRING_TYPE = /^b?string$/
 
 function field({name, type, value}: FieldData): $Field {
   return {
@@ -17,11 +20,17 @@ function field({name, type, value}: FieldData): $Field {
     type,
     value,
     queryableValue() {
+      if (this.compound()) {
+        return this.toCompound()
+          .items()
+          .map(field)
+          .map((f) => f.queryableValue())
+          .join(" ")
+      }
       if (this.value === null) return "null"
-      let WHITE_SPACE = /\s+/
-      let COMMA = /,/
+      if (this.type === "bool") return this.value === "T" ? "true" : "false"
       let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value))
-      if (this.type === "string") quote = true
+      if (STRING_TYPE.test(this.type)) quote = true
       return quote ? `"${this.value}"` : this.value
     },
     stringValue(): string {

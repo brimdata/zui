@@ -1,9 +1,9 @@
 /* @flow */
 import {Application} from "spectron"
 
+import type {$Field} from "../../src/js/brim"
 import {LOG} from "./log"
 import type {Space} from "../../src/js/state/Spaces/types"
-import Field from "../../src/js/models/Field"
 import Log from "../../src/js/models/Log"
 import menu from "../../src/js/electron/menu"
 
@@ -24,12 +24,12 @@ export default function contextMenuShim(
       return this
     },
 
-    click(label: string, field: Field, log: Log) {
+    click(label: string, field: $Field, log: Log) {
       LOG.debug(
         'Creating menu from log entry on field "' + field.toString() + '"...'
       )
       let ipcMenu = menu.fieldContextMenu(program, columns, space)(
-        field.toBrimField(),
+        field,
         log,
         false
       )

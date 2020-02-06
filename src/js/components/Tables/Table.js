@@ -2,9 +2,9 @@
 
 import React from "react"
 
+import type {$Field} from "../../brim"
 import type {Column, RightClickBuilder} from "../../types"
 import {showContextMenu} from "../../lib/System"
-import Field from "../../models/Field"
 import FieldCell from "../FieldCell"
 import Log from "../../models/Log"
 
@@ -18,18 +18,18 @@ export function TableHeader({column}: {column: Column}) {
 
 type Props = {
   log: Log,
-  field: Field,
+  field: $Field,
   rightClick?: RightClickBuilder
 }
 
 export function TableData({field, log, rightClick}: Props) {
   function onContextMenu() {
-    rightClick && showContextMenu(rightClick(field.toBrimField(), log, false))
+    rightClick && showContextMenu(rightClick(field, log, false))
   }
 
   return (
     <td onContextMenu={onContextMenu} className={`${field.type} ${field.name}`}>
-      <FieldCell field={field.toBrimField()} />
+      <FieldCell field={field} />
     </td>
   )
 }
