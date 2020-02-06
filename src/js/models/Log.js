@@ -4,7 +4,9 @@ import isEqual from "lodash/isEqual"
 import md5 from "md5"
 
 import type {Descriptor, Tuple, TupleSet} from "../types"
+import type {FieldValue} from "../types/records"
 import {inBounds} from "../lib/Array"
+import {isString} from "../lib/is"
 import brim, {type $Field} from "../brim"
 
 type BuildArgs = {
@@ -151,7 +153,7 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {type, name, value} = field
-      if (value && (type === "time" || type === "interval")) {
+      if (isString(value) && (type === "time" || type === "interval")) {
         return parseInt(value.split(".")[0])
       } else {
         throw new Error(`${name} is not a time type`)
@@ -163,7 +165,7 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {name, type, value} = field
-      if (value && (type === "time" || type === "interval")) {
+      if (isString(value) && (type === "time" || type === "interval")) {
         return parseInt(value.split(".")[1] + "000")
       } else {
         throw new Error(`${name} is not a time type`)
