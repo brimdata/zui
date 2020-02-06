@@ -24,10 +24,12 @@ export default {
     value
   }),
 
-  changeSearchBarInput: (value: string): SEARCH_BAR_INPUT_CHANGE => ({
-    type: "SEARCH_BAR_INPUT_CHANGE",
-    value
-  }),
+  changeSearchBarInput: (value: string): SEARCH_BAR_INPUT_CHANGE => {
+    return {
+      type: "SEARCH_BAR_INPUT_CHANGE",
+      value: value
+    }
+  },
 
   pinSearchBar: (): SEARCH_BAR_PIN => ({
     type: "SEARCH_BAR_PIN"

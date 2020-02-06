@@ -5,8 +5,6 @@ import md5 from "md5"
 
 import type {Descriptor, Tuple, TupleSet} from "../types"
 import {inBounds} from "../lib/Array"
-import Field from "./Field"
-import FieldFactory from "./FieldFactory"
 import brim, {type $Field} from "../brim"
 
 type BuildArgs = {
@@ -44,16 +42,6 @@ export default class Log {
     return tuples.map<Log>((tuple) => new Log(tuple, descriptor))
   }
 
-  static fromString(string: string) {
-    let [front, back] = string.split("\t\t")
-    let descriptor = front.split("\t").map((val) => {
-      let [name, type] = val.split(":")
-      return {name, type}
-    })
-    let tuple = back.split("\t")
-    return new Log(tuple, descriptor)
-  }
-
   static sort(logs: Log[], name: string, dir: "asc" | "desc" = "asc") {
     const direction = dir === "asc" ? 1 : -1
 
@@ -69,7 +57,7 @@ export default class Log {
     return isEqual(a.tuple, b.tuple)
   }
 
-  filter(func: (Field) => boolean) {
+  filter(func: ($Field) => boolean) {
     const tuple = []
     const descriptor = []
     this.getFields()
@@ -78,6 +66,7 @@ export default class Log {
         tuple.push(value)
         descriptor.push({name, type})
       })
+    // $FlowFixMe
     return new Log(tuple, descriptor)
   }
 
@@ -126,24 +115,30 @@ export default class Log {
     return this.tuple[this.getIndex(name)]
   }
 
-  getField(fieldName: string) {
+  getField(fieldName: string): ?$Field {
     const index = this.getIndex(fieldName)
     if (inBounds(this.tuple, index)) {
       return this.getFieldAt(index)
     }
   }
 
-  getFieldAt(index: number) {
+  mustGetField(fieldName: string): $Field {
+    let index = this.getIndex(fieldName)
+    if (index === -1) throw new Error("Cannot find field: " + fieldName)
+    return this.getFieldAt(index)
+  }
+
+  getFieldAt(index: number): $Field {
     if (index !== -1 && index < this.tuple.length) {
       const value = this.tuple[index]
       const {name, type} = this.descriptor[index]
-      return FieldFactory.create({value, name, type})
+      return brim.field({value, name, type})
     } else {
       throw "Index out of bounds"
     }
   }
 
-  getFields(): Field[] {
+  getFields(): $Field[] {
     const fields = []
     for (let i = 0; i < this.descriptor.length; ++i) {
       const field = this.getFieldAt(i)
@@ -156,7 +151,7 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {type, name, value} = field
-      if (type === "time" || type === "interval") {
+      if (value && (type === "time" || type === "interval")) {
         return parseInt(value.split(".")[0])
       } else {
         throw new Error(`${name} is not a time type`)
@@ -168,7 +163,7 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {name, type, value} = field
-      if (type === "time" || type === "interval") {
+      if (value && (type === "time" || type === "interval")) {
         return parseInt(value.split(".")[1] + "000")
       } else {
         throw new Error(`${name} is not a time type`)
@@ -177,9 +172,13 @@ export default class Log {
   }
 
   cast(name: string) {
-    const field = this.getField(name)
+    let field = this.getField(name)
     if (field) {
-      return field.cast()
+      if (field.value === null) return null
+      if (field.type === "time") return field.toDate()
+      if (field.type === "interval") return parseFloat(field.value)
+      if (field.type === "count") return parseInt(field.value)
+      return field.value
     }
   }
 

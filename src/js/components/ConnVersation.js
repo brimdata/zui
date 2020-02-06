@@ -67,12 +67,15 @@ const Host = ({className, title, ip, port, log}) => {
     space
   )
 
+  if (!ip) return null
+  if (!port) return null
+
   function onIpContextMenu() {
-    showContextMenu(rightClick(ip.toBrimField(), log, false))
+    showContextMenu(rightClick(ip, log, false))
   }
 
   function onPortContextMenu() {
-    showContextMenu(rightClick(port.toBrimField(), log, false))
+    showContextMenu(rightClick(port, log, false))
   }
 
   return (
@@ -80,7 +83,7 @@ const Host = ({className, title, ip, port, log}) => {
       <Fieldset>{title}</Fieldset>
       <p
         onContextMenu={onIpContextMenu}
-        className={`ip ${ip.value.length > 16 ? "small" : ""}`}
+        className={`ip ${ip.value && ip.value.length > 16 ? "small" : ""}`}
       >
         {ip.value}
       </p>

@@ -21,7 +21,7 @@ export default function FieldsPanel({log}: {log: Log}) {
   let space = useSelector(Tab.space)
   let columns = tableColumns.getColumns().map((c) => c.name)
 
-  const fieldAt = (log, index) => log.getFieldAt(index).toBrimField()
+  const fieldAt = (log, index) => log.getFieldAt(index)
   const onContextMenu = (log, index) => {
     let field = fieldAt(log, index)
     let m = menu.fieldContextMenu(program, columns, space)(field, log, false)
