@@ -4,6 +4,7 @@ import {isEqual} from "lodash"
 
 import {COMPOUND_FIELD_RGX} from "./compoundField"
 import type {FieldData} from "../types/records"
+import {isArray} from "../lib/is"
 import {withCommas} from "../lib/fmt"
 import brim, {type $Field} from "./"
 
@@ -35,6 +36,7 @@ function field({name, type, value}: FieldData): $Field {
     },
     stringValue(): string {
       if (value === null) return "null"
+      else if (isArray(value)) return value.join(",")
       else return value
     },
     compound() {
@@ -53,11 +55,11 @@ function field({name, type, value}: FieldData): $Field {
       } else if (value === null) {
         return "⦻"
       } else if (type === "count") {
-        return withCommas(value)
+        return withCommas(value.toString())
       } else if (isEqual(value, {})) {
         return ""
       } else {
-        return value
+        return value.toString()
       }
     },
     guessWidth() {

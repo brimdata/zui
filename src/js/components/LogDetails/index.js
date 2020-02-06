@@ -23,7 +23,7 @@ export default function LogDetailComponent() {
         <FieldsPanel log={log} />
         {log.correlationId() && <UidPanel log={log} />}
         <ConnPanel log={log} />
-        {log.get("md5") && <Md5Panel log={log} />}
+        {log.getString("md5") && <Md5Panel log={log} />}
       </div>
     </NavAnimation>
   )

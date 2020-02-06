@@ -3,7 +3,7 @@
 import type {CHART_CLEAR, CHART_RECORDS, CHART_STATUS} from "./types"
 import type {RecordData} from "../../types/records"
 import type {SearchStatus} from "../../types/searches"
-import {toDate} from "../../lib/TimeField"
+import {isString} from "../../lib/is"
 import MergeHash from "../../models/MergeHash"
 import UniqArray from "../../models/UniqArray"
 
@@ -22,19 +22,23 @@ export default {
 }
 
 function histogramFormat(records) {
-  let keys = new UniqArray()
-  let hash = new MergeHash()
+  let paths = new UniqArray()
+  let table = new MergeHash()
 
   records.forEach((r) => {
-    let ts = toDate(r[0].value || "0").getTime()
-    let path = r[1].value || ""
-    let count = parseInt(r[2].value)
-    keys.push(path)
-    hash.merge(ts, {[path]: count})
+    let [ts, path, count] = r.map((f) => f.value)
+
+    if (isString(ts) && isString(path) && isString(count)) {
+      let key = new Date(+ts * 1000).getTime()
+      let value = {[path]: parseInt(count)}
+
+      table.merge(key, value)
+      paths.push(path)
+    }
   })
 
   return {
-    table: hash.toJSON(),
-    keys: keys.toArray()
+    table: table.toJSON(),
+    keys: paths.toArray()
   }
 }

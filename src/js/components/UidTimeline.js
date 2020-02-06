@@ -76,7 +76,7 @@ function createScale(logs) {
 
 function PathRow({log, current, position, ...rest}) {
   let ts = log.cast("ts")
-  let path = log.get("_path")
+  let path = log.getString("_path")
   return (
     <div className="waterfall-row" {...rest}>
       <div className="data-label">{brim.time(ts).format("HH:mm:ss.SSS")}</div>
@@ -95,7 +95,7 @@ function PathRow({log, current, position, ...rest}) {
 
 function captionText(logs: Log[], queryForAll) {
   let limit = logs.length === UID_CORRELATION_LIMIT
-  let conn = logs.find((l) => l.get("_path") === "conn")
+  let conn = logs.find((l) => l.getString("_path") === "conn")
 
   if (limit)
     return (

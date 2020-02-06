@@ -18,7 +18,7 @@ test("viewing a log detail", () => {
   let state = store.dispatchAll([LogDetails.push({tuple, descriptor})])
   const log = LogDetails.build(state)
 
-  expect(log && log.get("letter")).toEqual("a")
+  expect(log && log.getString("letter")).toEqual("a")
 })
 
 test("viewing 2 logs", () => {
@@ -29,7 +29,7 @@ test("viewing 2 logs", () => {
   ])
 
   const log = LogDetails.build(state)
-  expect(log && log.get("letter")).toBe("b")
+  expect(log && log.getString("letter")).toBe("b")
 })
 
 test("going back to the first log", () => {
@@ -41,7 +41,7 @@ test("going back to the first log", () => {
   ])
 
   const log = LogDetails.build(state)
-  expect(log && log.get("letter")).toBe("a")
+  expect(log && log.getString("letter")).toBe("a")
 })
 
 test("going back and then forward", () => {
@@ -54,5 +54,5 @@ test("going back and then forward", () => {
   ])
 
   const log = LogDetails.build(state)
-  expect(log && log.get("letter")).toBe("b")
+  expect(log && log.getString("letter")).toBe("b")
 })

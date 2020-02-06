@@ -31,7 +31,7 @@ const ConnVersation = ({log}: Props) => {
         ip={log.getField("id.orig_h")}
         port={log.getField("id.orig_p")}
       />
-      <ConnHistory history={log.get("history")} />
+      <ConnHistory history={log.getString("history")} />
       <Host
         title="Responder"
         className="responder"
@@ -100,6 +100,6 @@ const Host = ({className, title, ip, port, log}) => {
 }
 
 ConnVersation.shouldShow = (log) =>
-  every(ORIG_FIELDS, (field) => log.get(field))
+  every(ORIG_FIELDS, (field) => log.getString(field))
 
 export default ConnVersation

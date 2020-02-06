@@ -5,6 +5,7 @@ import md5 from "md5"
 
 import type {Descriptor, Tuple, TupleSet} from "../types"
 import {inBounds} from "../lib/Array"
+import {isString} from "../lib/is"
 import brim, {type $Field} from "../brim"
 
 type BuildArgs = {
@@ -46,7 +47,7 @@ export default class Log {
     const direction = dir === "asc" ? 1 : -1
 
     logs.sort((a, b) =>
-      a.get(name) > b.get(name) ? direction : direction * -1
+      a.getString(name) > b.getString(name) ? direction : direction * -1
     )
 
     return logs
@@ -99,7 +100,7 @@ export default class Log {
   }
 
   isPath(pathName: string) {
-    return this.get("_path") === pathName
+    return this.getString("_path") === pathName
   }
 
   constructor(tuple: Tuple, descriptor: Descriptor) {
@@ -111,8 +112,10 @@ export default class Log {
     return this.descriptor.findIndex((field) => field.name === name)
   }
 
-  get(name: string) {
-    return this.tuple[this.getIndex(name)]
+  getString(name: string): string {
+    let f = this.getField(name)
+    if (f) return f.stringValue()
+    else return ""
   }
 
   getField(fieldName: string): ?$Field {
@@ -151,7 +154,7 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {type, name, value} = field
-      if (value && (type === "time" || type === "interval")) {
+      if (isString(value) && (type === "time" || type === "interval")) {
         return parseInt(value.split(".")[0])
       } else {
         throw new Error(`${name} is not a time type`)
@@ -163,7 +166,7 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {name, type, value} = field
-      if (value && (type === "time" || type === "interval")) {
+      if (isString(value) && (type === "time" || type === "interval")) {
         return parseInt(value.split(".")[1] + "000")
       } else {
         throw new Error(`${name} is not a time type`)
@@ -184,7 +187,7 @@ export default class Log {
 
   correlationId() {
     let name
-    switch (this.get("_path")) {
+    switch (this.getString("_path")) {
       case "files":
         name = "conn_uids"
         break

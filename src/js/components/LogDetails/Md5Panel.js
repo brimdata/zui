@@ -21,7 +21,7 @@ import executeSearch from "../../flows/executeSearch"
 import menu from "../../electron/menu"
 
 export const Md5Panel = ({log}: {log: Log}) => {
-  let logMd5 = log.get("md5")
+  let logMd5 = log.getString("md5")
   let dispatch = useDispatch()
   let space = useSelector(Tab.spaceName)
   let span = useSelector(Tab.getSpanAsDates)

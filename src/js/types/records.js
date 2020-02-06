@@ -3,7 +3,7 @@
 import type {$Field} from "../brim"
 import type {Column} from "./"
 
-export type FieldValue = string | null
+export type FieldValue = string | null | FieldValue[]
 
 export type FieldData = {
   name: string,

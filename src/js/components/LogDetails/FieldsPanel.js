@@ -32,7 +32,7 @@ export default function FieldsPanel({log}: {log: Log}) {
   let [show, setShow] = useState(false)
   let [hovered, setHovered] = useState({name: "", type: ""})
   let [anchor, setAnchor] = useState(null)
-  let path = log.get("_path")
+  let path = log.getString("_path")
 
   function enter(e, column) {
     setHovered(column)
