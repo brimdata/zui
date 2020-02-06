@@ -113,7 +113,7 @@ export default class Log {
     return this.descriptor.findIndex((field) => field.name === name)
   }
 
-  get(name: string) {
+  get(name: string): FieldValue {
     return this.tuple[this.getIndex(name)]
   }
 
