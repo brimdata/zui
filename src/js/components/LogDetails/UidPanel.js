@@ -50,6 +50,6 @@ export default function UidPanel({log}: {log: Log}) {
 }
 
 const uidOrder = (logs: Log[]) => {
-  const findConn = (log) => log.get("_path") === "conn"
+  const findConn = (log) => log.getString("_path") === "conn"
   return toFront(Log.sort(logs, "ts"), findConn)
 }

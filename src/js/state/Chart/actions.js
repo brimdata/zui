@@ -22,19 +22,23 @@ export default {
 }
 
 function histogramFormat(records) {
-  let keys = new UniqArray()
-  let hash = new MergeHash()
+  let paths = new UniqArray()
+  let table = new MergeHash()
 
   records.forEach((r) => {
-    let [ts, path, count] = r
+    let [ts, path, count] = r.map((f) => f.value)
+
     if (isString(ts) && isString(path) && isString(count)) {
-      let key = new Date(ts).getTime()
-      hash.merge(key, {[path]: parseInt(count)})
+      let key = new Date(+ts * 1000).getTime()
+      let value = {[path]: parseInt(count)}
+
+      table.merge(key, value)
+      paths.push(path)
     }
   })
 
   return {
-    table: hash.toJSON(),
-    keys: keys.toArray()
+    table: table.toJSON(),
+    keys: paths.toArray()
   }
 }

@@ -23,7 +23,7 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
 function nextPageArgs(logs, span) {
   let spliceIndex = 0
   if (!isEmpty(logs)) {
-    let index = indexOfLastChange(logs, (log) => log.get("ts"))
+    let index = indexOfLastChange(logs, (log) => log.getString("ts"))
 
     if (index >= 0) {
       const prevTs = logs[index].getField("ts").toDate()
