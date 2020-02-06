@@ -3,11 +3,18 @@
 import "regenerator-runtime/runtime"
 
 import {BrowserWindow, app, ipcMain} from "electron"
+import path from "path"
 
 import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
 import browserWindow from "./browserWindow"
 import windowState from "./windowState"
+import {ZQD} from "../zqd/zqd"
+
+// XXX this should be configureable via build settings
+const dataRoot = "./data"
+const spaceDir = path.join(dataRoot, "spaces")
+const tmpDir = path.join(dataRoot, "tmp")
 
 async function main() {
   // Disable Warnings in the Console
@@ -18,6 +25,7 @@ async function main() {
 
   let winState = windowState()
   let win = browserWindow(winState)
+  let zqd
   let welcome
 
   app.on("ready", () => {
@@ -66,6 +74,15 @@ async function main() {
   ipcMain.on("close-window", () => {
     let win = BrowserWindow.getFocusedWindow()
     if (win) win.close()
+  })
+
+  ipcMain.handle("zqd:info", () => {
+    if (!zqd) {
+      zqd = new ZQD(spaceDir)
+      zqd.start()
+    }
+    const addr = zqd.addr()
+    return {addr}
   })
 
   ipcMain.handle("pcaps:ingest", (event, args) => {
