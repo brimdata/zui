@@ -2,6 +2,8 @@
   .text-content {
     display: flex;
     flex-direction: column;
+    min-height: 0;
+
     pre {
       flex: 1;
       overflow: auto;

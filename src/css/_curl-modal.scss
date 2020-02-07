@@ -2,10 +2,15 @@
   .text-content {
     display: flex;
     flex-direction: column;
+    min-height: 0;
     pre {
       flex: 1;
       overflow: auto;
       user-select: all;
     }
   }
+}
+
+.boom-get-modal {
+  min-height: 200px;
 }
