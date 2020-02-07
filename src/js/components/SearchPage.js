@@ -9,11 +9,9 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
 import {checkVersions} from "../services/boom"
 import {initSpace} from "../flows/initSpace"
-import {useResizeObserver} from "./hooks/useResizeObserver"
 import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
@@ -22,13 +20,13 @@ import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
 import SearchHeaderChart from "./SearchHeaderChart"
+import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
 import TabBar from "./TabBar/TabBar"
 import WhoisModal from "./WhoisModal"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
-  let results = useResizeObserver()
   let dispatch = useDispatch()
   useSearchShortcuts()
 
@@ -50,12 +48,7 @@ export default function SearchPage() {
             <SearchHeaderChart />
             <ColumnChooser />
           </div>
-          <div className="search-results" ref={results.ref}>
-            <XSearchResults
-              width={results.rect.width}
-              height={results.rect.height}
-            />
-          </div>
+          <SearchResults />
           <XStatusBar />
         </div>
         <XRightPane />
