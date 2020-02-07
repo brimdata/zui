@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import React, {useEffect} from "react"
 
 import {ipcRenderer} from "electron"
@@ -9,12 +9,9 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import {XSearchResults} from "./SearchResults/SearchResults"
 import {XStatusBar} from "./StatusBar"
 import {checkVersions} from "../services/boom"
-import {hasAnalytics} from "../lib/Program"
 import {initSpace} from "../flows/initSpace"
-import {useResizeObserver} from "./hooks/useResizeObserver"
 import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
@@ -22,16 +19,14 @@ import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
-import MainHistogramChart from "./charts/MainHistogram/Chart"
-import SearchBar from "../state/SearchBar"
+import SearchHeaderChart from "./SearchHeaderChart"
+import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
 import TabBar from "./TabBar/TabBar"
 import WhoisModal from "./WhoisModal"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
-  let logsTab = !hasAnalytics(useSelector(SearchBar.getSearchProgram))
-  let results = useResizeObserver()
   let dispatch = useDispatch()
   useSearchShortcuts()
 
@@ -50,19 +45,10 @@ export default function SearchPage() {
           <div className="search-page-header">
             <TabBar />
             <ControlBar />
-            {logsTab && (
-              <div className="search-page-header-charts">
-                <MainHistogramChart />
-              </div>
-            )}
+            <SearchHeaderChart />
             <ColumnChooser />
           </div>
-          <div className="search-results" ref={results.ref}>
-            <XSearchResults
-              width={results.rect.width}
-              height={results.rect.height}
-            />
-          </div>
+          <SearchResults />
           <XStatusBar />
         </div>
         <XRightPane />
