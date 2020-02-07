@@ -2,11 +2,14 @@
 
 import ZQL from "zq/zql/zql.js"
 
+import {TUPLE_PROCS} from "./ast"
 import {trim} from "../lib/Str"
 import brim, {type $Field, type $Log} from "./"
 import stdlib from "../stdlib"
 
-export default function(p: string = "") {
+export default function(p: string = "", pins: string[] = []) {
+  p = concatPins(p, pins)
+
   return {
     exclude(field: $Field) {
       p = insertFilter(p, brim.syntax.exclude(field))
@@ -94,6 +97,13 @@ export default function(p: string = "") {
 
     string() {
       return p
+    },
+
+    hasAnalytics() {
+      for (let proc of this.ast().getProcs()) {
+        if (!TUPLE_PROCS.includes(proc.op)) return true
+      }
+      return false
     }
   }
 }
@@ -113,4 +123,8 @@ function filterEnd(string) {
   } else {
     return pos
   }
+}
+
+function concatPins(program, pins) {
+  return [...pins, program].map((s) => trim(s)).join(" ")
 }

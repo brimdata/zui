@@ -52,7 +52,7 @@ function fieldExprToName(expr) {
 }
 
 function getProcs(ast) {
-  if (!ast) return []
+  if (!ast || ast.error) return []
   let list = []
   collectProcs(ast, list)
   return list

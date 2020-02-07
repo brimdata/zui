@@ -2,21 +2,12 @@
 
 import ZQL from "zq/zql/zql.js"
 
-import {HEAD_PROC, TAIL_PROC, TUPLE_PROCS} from "../brim/ast"
+import {HEAD_PROC, TAIL_PROC} from "../brim/ast"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
 import brim from "../brim"
 
 export type Program = string
-
-export const hasAnalytics = (string: Program) => {
-  const [ast] = parse(string)
-
-  for (let proc of brim.ast(ast).getProcs()) {
-    if (!TUPLE_PROCS.includes(proc.op)) return true
-  }
-  return false
-}
 
 export const parse = (string: Program) => {
   let ast = null

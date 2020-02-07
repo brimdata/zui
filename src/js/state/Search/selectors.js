@@ -4,9 +4,10 @@ import type {SearchArgs, SearchType} from "./types"
 import type {SearchRecord} from "../../types"
 import type {State} from "../types"
 import {addEveryCountProc} from "../../searches/histogramSearch"
-import {addHeadProc, hasAnalytics} from "../../lib/Program"
+import {addHeadProc} from "../../lib/Program"
 import SearchBar from "../SearchBar"
 import Tab from "../Tab"
+import brim from "../../brim"
 
 export default {
   getRecord: (state: State): SearchRecord => {
@@ -37,7 +38,7 @@ export default {
 }
 
 function getArgsType(program, spanFocus): SearchType {
-  if (hasAnalytics(program)) return "analytics"
+  if (brim.program(program).hasAnalytics()) return "analytics"
   else if (spanFocus) return "zoom"
   return "events"
 }

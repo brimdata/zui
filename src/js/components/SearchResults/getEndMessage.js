@@ -1,8 +1,8 @@
 /* @flow */
 
 import {ANALYTIC_MAX_RESULTS} from "../../flows/config"
-import {hasAnalytics} from "../../lib/Program"
 import {withCommas} from "../../lib/fmt"
+import brim from "../../brim"
 
 const EOF = "End of results 🎉"
 const TRUNCATED_ANALYTICS = `Showing first ${withCommas(
@@ -10,7 +10,7 @@ const TRUNCATED_ANALYTICS = `Showing first ${withCommas(
 )} results`
 
 export default function getEndMessage(program: string, size: number) {
-  if (hasAnalytics(program) && size === ANALYTIC_MAX_RESULTS) {
+  if (brim.program(program).hasAnalytics() && size === ANALYTIC_MAX_RESULTS) {
     return TRUNCATED_ANALYTICS
   } else {
     return EOF
