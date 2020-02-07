@@ -35,10 +35,13 @@
   .modal-header {
     font-size: $font-size-4;
     margin-bottom: 20px;
+    flex: 0 0 auto;
+    min-height: 0;
   }
 
   .modal-body {
     display: flex;
+    min-height: 0;
     flex-direction: column;
   }
 
