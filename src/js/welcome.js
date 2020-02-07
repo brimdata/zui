@@ -12,6 +12,9 @@ import initDOM from "./initializers/initDOM"
 import lib from "./lib"
 
 initDOM()
+ipcRenderer.invoke("zqd:info").then((result) => {
+  console.log("zqd.started", result)
+})
 
 function SelectPcaps() {
   function onChange(e) {
@@ -20,6 +23,7 @@ function SelectPcaps() {
     ipcRenderer.invoke("pcaps:ingest", {space, paths}).then(() => {
       ipcRenderer.invoke("redirect:search", space)
     })
+    ipcRenderer.send("pcaps:ingest", {space, paths})
   }
 
   return (

@@ -10,11 +10,11 @@ import {installExtensions} from "./extensions"
 import browserWindow from "./browserWindow"
 import windowState from "./windowState"
 import {ZQD} from "../zqd/zqd"
+import {IngestProcess} from "../zqd/ingest"
 
 // XXX this should be configureable via build settings
 const dataRoot = "./data"
 const spaceDir = path.join(dataRoot, "spaces")
-const tmpDir = path.join(dataRoot, "tmp")
 
 async function main() {
   // Disable Warnings in the Console
@@ -82,12 +82,16 @@ async function main() {
       zqd.start()
     }
     const addr = zqd.addr()
-    return {addr}
+    return Promise.resolve({addr})
   })
 
-  ipcMain.handle("pcaps:ingest", (event, args) => {
-    console.log("RECEIVED", args)
-    return "DONE"
+  ipcMain.on("pcaps:ingest", (event, arg) => {
+    let proc = new IngestProcess(spaceDir, arg.paths)
+    proc.on("space_updated", (payload) => {
+      event.reply("pcaps:update", payload)
+    })
+    proc.start()
+    event.reply("pcaps:update", "hoal")
   })
 
   app.on("window-all-closed", () => {

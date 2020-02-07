@@ -1,5 +1,5 @@
 /* @flow */
-import ingest from "../src/js/zqd/ingest"
+import {IngestProcess} from "../src/js/zqd/ingest"
 import fs from "fs"
 
 const root = "./data"
@@ -8,21 +8,21 @@ fs.mkdirSync(root, {recursive: true, mode: 0o755})
 
 async function main() {
   let args = process.argv.slice(2)
-  let {promise: proc, cancel} = ingest(root, args)
-  process.on("SIGINT", () => {
-    cancel()
-  })
-  console.log("got proc")
-
-  try {
-    await proc
-    console.log("hi")
-  } catch (error) {
-    console.log("error", error)
-  } finally {
-    console.log("finally")
+  let proc = new IngestProcess(root, args)
+  let spacedir = await proc.start()
+  const abort = () => {
+    proc.kill()
+    process.off("SIGINT", abort)
   }
-
+  process.on("SIGINT", abort)
+  proc.on("space_updated", (event) => {
+    console.log("space_updated", event)
+  })
+  await new Promise((resolve, reject) => {
+    proc.on("error", reject)
+    proc.on("complete", resolve)
+  })
+  console.log("process.exit")
   process.exit(0)
 }
 
