@@ -129,6 +129,6 @@
     "reselect": "^4.0.0",
     "source-map-support": "^0.5.16",
     "valid-url": "^1.0.9",
-    "zq": "mccanne/zq#fed1adc9cda9790e39febd25ec274fbd75bf2323"
+    "zq": "brimsec/zq#5089912087f76e15de268811e4e5aa67746d2cb3"
   }
 }
