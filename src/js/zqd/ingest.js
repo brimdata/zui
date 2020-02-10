@@ -2,13 +2,11 @@
 import fs from "fs"
 import path from "path"
 import os from "os"
-import util from "util"
 import {execFile, ChildProcess, spawn} from "child_process"
 import EventEmitter from "events"
 import {Timeout} from "timers"
 import rimraf from "rimraf"
 
-const setTimeoutPromise = util.promisify(setTimeout)
 const zqTimeoutDur = 4000
 
 export class IngestProcess extends EventEmitter {

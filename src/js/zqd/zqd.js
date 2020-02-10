@@ -1,8 +1,6 @@
 /* @flow */
-import * as path from "path"
 import {mkdirSync} from "fs"
 import {spawn, ChildProcess} from "child_process"
-import {ipcMain} from "electron"
 
 import * as cmd from "../stdlib/cmd"
 
