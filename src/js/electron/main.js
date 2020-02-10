@@ -86,7 +86,9 @@ async function main() {
 
   ipcMain.handle("pcaps:ingest", (event, arg) => {
     let update = (payload) => event.sender.send("pcaps:update", payload)
-    new IngestProcess(spaceDir, arg.paths).on("space_updated", update).start()
+    let proc = new IngestProcess(spaceDir, arg.paths)
+    proc.on("space_updated", update)
+    proc.start()
     return "INGEST STARTED"
   })
 

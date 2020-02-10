@@ -3,10 +3,10 @@ import fs from "fs"
 import path from "path"
 import os from "os"
 import util from "util"
-import {execFile, ChildProcess} from "child_process"
-import {PassThrough} from "stream"
+import {execFile, ChildProcess, spawn} from "child_process"
 import EventEmitter from "events"
 import {Timeout} from "timers"
+import rimraf from "rimraf"
 
 const setTimeoutPromise = util.promisify(setTimeout)
 const zqTimeoutDur = 4000
@@ -30,18 +30,21 @@ export class IngestProcess extends EventEmitter {
     this.pcaps = pcaps
   }
 
-  async start(): Promise<string> {
-    this.zeek = await startZeek(this.tmpdir, this.pcaps)
-    this.zeek.on("close", this.zeekExit)
-    // do an initial zq slurp before returning
-    await this.runZQ()
-    // start zq update loop after zqTimeoutDur
-    this.timeout = setTimeout(this.loop, zqTimeoutDur)
+  start(): string {
+    this.zeek = startZeek(this.tmpdir, this.pcaps)
+    // event 'started' is emitted once data starts flowing out of mergecap. This
+    // is a good time to start the zq writer loop.
+    this.zeek.once("started", this.loop)
+    this.zeek.on("exit", this.zeekExit)
     return this.space
   }
 
   loop = async () => {
     await this.runZQ()
+    if (!this.timeout) {
+      // setup timeout loop
+      this.timeout = setTimeout(this.loop, zqTimeoutDur)
+    }
     this.timeout.refresh()
   }
 
@@ -67,7 +70,9 @@ export class IngestProcess extends EventEmitter {
   zeekExit = async () => {
     let zeek = this.zeek
     this.zeek = undefined
-    this.timeout.unref()
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
     if (this.zqCancel) {
       this.zqCancel()
     }
@@ -76,6 +81,8 @@ export class IngestProcess extends EventEmitter {
       return
     }
     await this.runZQ()
+    // delete tmpdir
+    rimraf.sync(this.tmpdir, {recursive: true})
     this.emit("complete")
   }
 
@@ -85,20 +92,24 @@ export class IngestProcess extends EventEmitter {
   }
 }
 
-function startZeek(
-  tmpdir: string,
-  pcaps: Array<string>
-): Promise<ChildProcess> {
-  return new Promise((resolve, reject) => {
-    const mergecap = execFile("mergecap", ["-w", "-", ...pcaps])
-    const zeek = execFile("zeek", ["-r", "-"], {
-      cwd: tmpdir,
-      stdio: [mergecap.stdout, "pipe", "inherit"]
-    })
-    zeek.on("error", reject)
-    // once merge cap has started sending data, resolve.
-    mergecap.stdout.once("data", () => resolve(zeek))
+function startZeek(tmpdir: string, pcaps: Array<string>): ChildProcess {
+  const mergecap = spawn("mergecap", ["-w", "-", ...pcaps])
+  const zeek = spawn("zeek", ["-r", "-"], {cwd: tmpdir})
+  mergecap.stdout.once("data", () => {
+    // XXX this isn't a good indicator that data is ready to slurp. Should
+    // probably just watch for file events.
+    zeek.emit("started")
   })
+  mergecap.stdout.pipe(zeek.stdin).on("error", (err) => {
+    // error EPIPE most likely means the main process recieved a SIGINT signal
+    // and mergecap attempted to write on a closed zeek process. We can safely
+    // ignore this error.
+    if (err.code == "EPIPE") {
+      return
+    }
+    throw err
+  })
+  return zeek
 }
 
 function startZQ(tmpdir: string, dst: string): [Promise<void>, () => void] {
