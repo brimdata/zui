@@ -9,7 +9,9 @@ import {ipcRenderer} from "electron"
 import Brand from "./components/Login/Brand"
 import PcapFileInput from "./components/PcapFileInput"
 import initDOM from "./initializers/initDOM"
+import ipc from "./electron/ipc"
 import lib from "./lib"
+import route from "./electron/ipc/route"
 
 initDOM()
 ipcRenderer.invoke("zqd:info").then((result) => {
@@ -25,9 +27,10 @@ function SelectPcaps() {
 
   function onChange(e) {
     let paths = Array.from(e.target.files).map((f) => f.path)
-    let space = "corelight"
-    ipcRenderer.invoke("pcaps:ingest", {space, paths}).then(() => {
-      ipcRenderer.invoke("redirect:search", space)
+    let space = "Untitled"
+
+    route(ipc.zqd.ingest(space, paths)).then((result) => {
+      console.log("RESULT", result)
     })
     ipcRenderer.send("pcaps:ingest", {space, paths})
   }
