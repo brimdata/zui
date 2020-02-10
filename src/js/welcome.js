@@ -1,7 +1,7 @@
 /* @flow */
 import "regenerator-runtime/runtime"
 
-import React from "react"
+import React, {useEffect} from "react"
 import ReactDOM from "react-dom"
 
 import {ipcRenderer} from "electron"
@@ -17,6 +17,12 @@ ipcRenderer.invoke("zqd:info").then((result) => {
 })
 
 function SelectPcaps() {
+  useEffect(() => {
+    ipcRenderer.on("pcaps:update", (e, args) => {
+      console.log(args)
+    })
+  }, [])
+
   function onChange(e) {
     let paths = Array.from(e.target.files).map((f) => f.path)
     let space = "corelight"

@@ -81,17 +81,13 @@ async function main() {
       zqd = new ZQD(spaceDir)
       zqd.start()
     }
-    const addr = zqd.addr()
-    return Promise.resolve({addr})
+    return {addr: zqd.addr()}
   })
 
-  ipcMain.on("pcaps:ingest", (event, arg) => {
-    let proc = new IngestProcess(spaceDir, arg.paths)
-    proc.on("space_updated", (payload) => {
-      event.reply("pcaps:update", payload)
-    })
-    proc.start()
-    event.reply("pcaps:update", "hoal")
+  ipcMain.handle("pcaps:ingest", (event, arg) => {
+    let update = (payload) => event.sender.send("pcaps:update", payload)
+    new IngestProcess(spaceDir, arg.paths).on("space_updated", update).start()
+    return "INGEST STARTED"
   })
 
   app.on("window-all-closed", () => {
