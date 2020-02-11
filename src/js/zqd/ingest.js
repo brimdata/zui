@@ -101,9 +101,6 @@ function startZeek(tmpdir: string, pcaps: Array<string>): ChildProcess {
     encoding: "buffer"
   })
   const zeek = spawn("zeek", ["-r", "-"], {cwd: tmpdir})
-  // XXX this isn't a good indicator that data is ready to slurp. Should
-  // probably just watch for file events.
-  mergecap.stdout.once("data", () => zeek.emit("started"))
   mergecap.stdout.pipe(zeek.stdin).on("error", (err) => {
     // error EPIPE most likely means the main process recieved a SIGINT signal
     // and mergecap attempted to write on a closed zeek process. We can safely
