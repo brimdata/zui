@@ -2,11 +2,13 @@
 
 import {BrowserWindow} from "electron"
 
-import tron, {type $WindowManager} from "./"
+import type {ReturnType} from "../../types"
+import tron from "./"
 
 export type WindowName = "welcome" | "search" | "login"
+export type $WindowManager = ReturnType<typeof windowManager>
 
-export default function windowManager(): $WindowManager {
+export default function windowManager() {
   let state = tron.windowState()
   let windows = {}
 
@@ -16,8 +18,8 @@ export default function windowManager(): $WindowManager {
       this.openWindow("welcome")
     },
 
-    openWindow(name: string) {
-      let ref = tron.window(name, {}, state)
+    openWindow(name: string, params: Object) {
+      let ref = tron.window(name, params, state)
       windows[ref.id] = {ref, name}
     },
 

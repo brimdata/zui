@@ -1,5 +1,5 @@
 /* @flow */
-import type {$WindowManager} from "../tron"
+import type {$WindowManager} from "../tron/windowManager"
 import windowsMainHandler from "./windows/mainHandler"
 import zqdMainHandler from "./zqd/mainHandler"
 

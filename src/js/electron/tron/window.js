@@ -23,7 +23,8 @@ export default function window(
     x,
     y,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      experimentalFeatures: true
     }
   })
     .on("move", (e) => set("position", e.sender.getPosition()))

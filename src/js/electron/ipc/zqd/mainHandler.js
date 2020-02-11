@@ -24,7 +24,8 @@ export default function zqdMainHandler() {
     let update = (payload) => e.sender.send("pcaps:update", payload)
     let proc = new IngestProcess(spaceDir, paths)
     proc.on("space_updated", update)
-    proc.start()
-    return "INGEST STARTED"
+    let space = proc.start()
+    console.log("SPACE", space)
+    return space
   })
 }

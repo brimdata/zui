@@ -1,38 +1,29 @@
 /* @flow */
 import "regenerator-runtime/runtime"
 
-import React, {useEffect} from "react"
+import React from "react"
 import ReactDOM from "react-dom"
-
-import {ipcRenderer} from "electron"
 
 import Brand from "./components/Login/Brand"
 import PcapFileInput from "./components/PcapFileInput"
 import initDOM from "./initializers/initDOM"
+import invoke from "./electron/ipc/invoke"
 import ipc from "./electron/ipc"
 import lib from "./lib"
-import route from "./electron/ipc/route"
 
 initDOM()
-ipcRenderer.invoke("zqd:info").then((result) => {
-  console.log("zqd.started", result)
-})
+
+let zqdAddr = "localhost:9867"
+invoke(ipc.zqd.info()).then(({addr}) => (zqdAddr = addr))
 
 function SelectPcaps() {
-  useEffect(() => {
-    ipcRenderer.on("pcaps:update", (e, args) => {
-      console.log(args)
-    })
-  }, [])
-
   function onChange(e) {
     let paths = Array.from(e.target.files).map((f) => f.path)
-    let space = "Untitled"
 
-    route(ipc.zqd.ingest(space, paths)).then((result) => {
-      console.log("RESULT", result)
+    invoke(ipc.zqd.ingest("not-working", paths)).then((space) => {
+      let [host, port] = zqdAddr.split(":")
+      invoke(ipc.windows.redirect("search", {host, port, space}))
     })
-    ipcRenderer.send("pcaps:ingest", {space, paths})
   }
 
   return (
