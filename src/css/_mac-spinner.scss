@@ -1,0 +1,49 @@
+$mac-spinner-duration: 800ms;
+$mac-spinner-color: $aqua;
+$mac-spinner-size: 24px;
+
+.mac-spinner {
+  width: $mac-spinner-size;
+  height: $mac-spinner-size;
+  position: relative;
+  transform: scale(0.8);
+
+  .bar-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translate(50%, $mac-spinner-size / 4);
+  }
+
+  .bar {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 2px;
+    height: $mac-spinner-size / 4;
+    background: $mac-spinner-color;
+    transform-origin: bottom center;
+    border-radius: 2px;
+    animation: opacity-pulse 1000ms 100ms infinite;
+  }
+
+  @for $i from 1 through 12 {
+    .bar:nth-child(#{$i}) {
+      transform: rotate(($i - 1) * 30deg) translateY(-$mac-spinner-size / 4);
+      animation: opacity-pulse
+        $mac-spinner-duration
+        ($i * $mac-spinner-duration / 12)
+        infinite;
+    }
+  }
+}
+
+@keyframes opacity-pulse {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.1;
+  }
+}
