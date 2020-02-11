@@ -116,8 +116,9 @@ function startZQ(tmpdir: string, dst: string): [Promise<void>, () => void] {
   const query = "sort -limit 1000000000 ts"
   const files = logfiles(tmpdir)
   const args = ["-f", "bzng", query, ...files]
-  const zq = execFile("zq", args)
-  zq.stdout.pipe(fs.createWriteStream(path.join(dst, "all.bzng")))
+  const zq = execFile("zq", args, {encoding: "buffer"})
+  const w = fs.createWriteStream(path.join(dst, "all.bzng"))
+  zq.stdout.pipe(w)
   let p = new Promise((resolve, reject) => {
     zq.on("close", resolve)
     zq.on("error", reject)
