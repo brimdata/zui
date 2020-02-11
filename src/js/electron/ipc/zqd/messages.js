@@ -1,5 +1,5 @@
 /* @flow */
-import type {ZqdInfoMsg, ZqdIngestMsg} from "../types"
+import type {ZqdInfoMsg, ZqdIngestMsg, ZqdSubscribeMsg} from "../types"
 
 export default {
   info: (): ZqdInfoMsg => ({
@@ -11,6 +11,12 @@ export default {
       channel: "zqd:ingest",
       space,
       paths
+    }
+  },
+
+  subscribe(): ZqdSubscribeMsg {
+    return {
+      channel: "zqd:subscribe"
     }
   }
 }
