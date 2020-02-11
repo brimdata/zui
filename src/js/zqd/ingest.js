@@ -1,7 +1,7 @@
 /* @flow */
 import rimraf from "rimraf"
 
-import {execFile, ChildProcess, spawn} from "child_process"
+import {ChildProcess, spawn} from "child_process"
 import EventEmitter from "events"
 import fs from "fs"
 import os from "os"
@@ -30,11 +30,15 @@ export class IngestProcess extends EventEmitter {
 
   start(): string {
     this.zeek = startZeek(this.tmpdir, this.pcaps)
-    // event 'started' is emitted once data starts flowing out of mergecap. This
-    // is a good time to start the zq writer loop.
-    let {zeek} = this
-    zeek.once("started", this.loop)
-    zeek.on("exit", this.zeekExit)
+    this.zeek.on("exit", this.zeekExit)
+    // Once files start hitting tmpdir start the zq writer loop.
+    let watcher = fs.watch(this.tmpdir)
+    watcher.on("change", (event) => {
+      if (event == "rename") {
+        this.loop()
+        watcher.close()
+      }
+    })
     return this.space
   }
 
@@ -93,13 +97,13 @@ export class IngestProcess extends EventEmitter {
 }
 
 function startZeek(tmpdir: string, pcaps: Array<string>): ChildProcess {
-  const mergecap = spawn("mergecap", ["-w", "-", ...pcaps])
-  const zeek = spawn("zeek", ["-r", "-"], {cwd: tmpdir})
-  mergecap.stdout.once("data", () => {
-    // XXX this isn't a good indicator that data is ready to slurp. Should
-    // probably just watch for file events.
-    zeek.emit("started")
+  const mergecap = spawn("mergecap", ["-w", "-", ...pcaps], {
+    encoding: "buffer"
   })
+  const zeek = spawn("zeek", ["-r", "-"], {cwd: tmpdir})
+  // XXX this isn't a good indicator that data is ready to slurp. Should
+  // probably just watch for file events.
+  mergecap.stdout.once("data", () => zeek.emit("started"))
   mergecap.stdout.pipe(zeek.stdin).on("error", (err) => {
     // error EPIPE most likely means the main process recieved a SIGINT signal
     // and mergecap attempted to write on a closed zeek process. We can safely
@@ -115,12 +119,15 @@ function startZeek(tmpdir: string, pcaps: Array<string>): ChildProcess {
 function startZQ(tmpdir: string, dst: string): [Promise<void>, () => void] {
   const query = "sort -limit 1000000000 ts"
   const files = logfiles(tmpdir)
-  const args = ["-f", "bzng", query, ...files]
-  const zq = execFile("zq", args, {encoding: "buffer"})
-  const w = fs.createWriteStream(path.join(dst, "all.bzng"))
+  const tmpfile = path.join(dst, "all.bzng.tmp")
+  const w = fs.createWriteStream(tmpfile)
+  const zq = spawn("zq", ["-f", "bzng", query, ...files], {encoding: "buffer"})
   zq.stdout.pipe(w)
   let p = new Promise((resolve, reject) => {
-    zq.on("close", resolve)
+    w.on("close", () => {
+      fs.renameSync(tmpfile, path.join(dst, "all.bzng"))
+      resolve()
+    })
     zq.on("error", reject)
   })
   return [p, zq.kill]
