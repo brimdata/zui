@@ -1,11 +1,11 @@
 /* @flow */
-import fs from "fs"
-import path from "path"
-import os from "os"
+import rimraf from "rimraf"
+
 import {execFile, ChildProcess, spawn} from "child_process"
 import EventEmitter from "events"
-import {Timeout} from "timers"
-import rimraf from "rimraf"
+import fs from "fs"
+import os from "os"
+import path from "path"
 
 const zqTimeoutDur = 4000
 
@@ -17,7 +17,7 @@ export class IngestProcess extends EventEmitter {
   spacedir: string
   space: string
   pcaps: Array<string>
-  timeout: Timeout
+  timeout: *
 
   constructor(spaceRoot: string, pcaps: Array<string>) {
     super()
@@ -32,8 +32,9 @@ export class IngestProcess extends EventEmitter {
     this.zeek = startZeek(this.tmpdir, this.pcaps)
     // event 'started' is emitted once data starts flowing out of mergecap. This
     // is a good time to start the zq writer loop.
-    this.zeek.once("started", this.loop)
-    this.zeek.on("exit", this.zeekExit)
+    let {zeek} = this
+    zeek.once("started", this.loop)
+    zeek.on("exit", this.zeekExit)
     return this.space
   }
 
@@ -43,6 +44,7 @@ export class IngestProcess extends EventEmitter {
       // setup timeout loop
       this.timeout = setTimeout(this.loop, zqTimeoutDur)
     }
+    // $FlowFixMe
     this.timeout.refresh()
   }
 
@@ -129,9 +131,16 @@ function createspace(dir: string): [string, string] {
   return [spacedir, name]
 }
 
-function logfiles(dir: string): Array<string> {
-  let files = fs.readdirSync(dir, {withFileTypes: true})
-  return files.reduce((acc, file) => {
+type Dirent = {
+  name: string,
+  isFile: () => boolean
+}
+
+function logfiles(dir: string): string[] {
+  let files = fs.readdirSync(dir, {encoding: "utf-8", withFileTypes: true})
+
+  // $FlowFixMe
+  return files.reduce((acc, file: Dirent) => {
     if (file.isFile()) {
       acc.push(path.join(dir, file.name))
     }
