@@ -8,7 +8,8 @@ export type ViewState = {
   leftSidebarWidth: number,
   rightSidebarWidth: number,
   timeZone: string,
-  investigationView: InvestigationView
+  investigationView: InvestigationView,
+  isIngesting: boolean
 }
 
 export type ViewAction =
@@ -24,6 +25,12 @@ export type ViewAction =
   | DOWNLOADS_SHOW
   | DOWNLOADS_HIDE
   | INVESTIGATION_VIEW_SET
+  | INGESTING_SET
+
+export type INGESTING_SET = {
+  type: "INGESTING_SET",
+  value: boolean
+}
 
 export type RIGHT_SIDEBAR_SHOW = {
   type: "RIGHT_SIDEBAR_SHOW"

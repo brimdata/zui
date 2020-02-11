@@ -10,7 +10,8 @@ const init: ViewState = {
   rightSidebarWidth: 450,
   resultsTab: null,
   timeZone: "UTC",
-  investigationView: "linear"
+  investigationView: "linear",
+  isIngesting: false
 }
 
 export default function reducer(
@@ -18,6 +19,11 @@ export default function reducer(
   action: ViewAction
 ): ViewState {
   switch (action.type) {
+    case "INGESTING_SET":
+      return {
+        ...state,
+        isIngesting: action.value
+      }
     case "LEFT_SIDEBAR_SHOW":
       return {
         ...state,

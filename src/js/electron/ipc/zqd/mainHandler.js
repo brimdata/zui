@@ -19,13 +19,21 @@ export default function zqdMainHandler() {
       zqd = new ZQD(spaceDir)
       zqd.start()
     }
-    return {addr: zqd.addr()}
+    let addr = zqd.addr()
+    console.log("zqd started on: ", addr)
+    return {addr}
   })
 
   ipcMain.handle("zqd:ingest", (e, {paths}: ZqdIngestMsg) => {
     proc = new IngestProcess(spaceDir, paths)
-    proc.on("space_updated", ({done}) => done && (proc = null))
-    return proc.start()
+    let space = proc.start()
+    proc.on("space_updated", ({done}) => {
+      console.log("zqd:ingest:update", {space, done})
+      if (done) proc = null
+    })
+
+    console.log("zqd:ingest", {space, paths})
+    return space
   })
 
   ipcMain.handle("zqd:subscribe", (e) => {

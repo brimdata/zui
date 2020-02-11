@@ -17,7 +17,6 @@ import submitSearch from "./submitSearch"
 export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
   let tabId = Tabs.getActive(getState())
   let clusterId = Tab.clusterId(getState())
-
   return dispatch(fetchSpaces())
     .then(checkSpacesExist)
     .then((spaces) => getCurrentSpaceName(spaces, desired))
@@ -37,6 +36,7 @@ function checkDataExists(dispatch, data, tabId) {
 }
 
 function checkSpacesExist(spaces) {
+  console.log(spaces)
   if (spaces.length === 0) throw new NoSpacesError()
   else return spaces
 }
