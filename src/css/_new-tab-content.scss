@@ -1,25 +1,37 @@
 .new-tab-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
+
   .logo {
+    margin-top: 20px;
     svg {
       display: block;
-      margin: 10px auto;
+      margin: 0 auto;
+    }
+
+    .brim-text {
+      margin-top: 3px;
     }
   }
 
   section {
     width: 400px;
-    margin: 50px auto;
+    margin: 20px auto;
+    min-height: 0;
+    flex-shrink: 0;
 
     &:last-child {
-      margin-bottom: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     @for $i from 1 through 3 {
       &:nth-child(#{$i}) {
         opacity: 0;
-        animation: fade-in 720ms ($i - 1) * 240ms forwards;
+        animation: fade-in 640ms ($i) * 120ms forwards;
       }
     }
   }

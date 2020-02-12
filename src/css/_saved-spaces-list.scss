@@ -1,5 +1,6 @@
 .saved-spaces-list {
   user-select: none;
+  overflow: auto;
 
   a {
     @include label-normal;

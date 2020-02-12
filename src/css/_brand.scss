@@ -4,10 +4,6 @@
   margin-top: 50px;
   margin-bottom: 24px;
 
-  svg {
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.19));
-  }
-
   h1 {
     @include heading-2;
     margin: 0;
@@ -18,4 +14,8 @@
     margin: 0;
     font-size: $font-size-1;
   }
+}
+
+.brand-volcano {
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.19));
 }

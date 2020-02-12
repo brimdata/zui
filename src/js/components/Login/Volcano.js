@@ -3,7 +3,13 @@ import React from "react"
 
 export default function Volcano() {
   return (
-    <svg width="98px" height="74px" viewBox="0 0 98 74" version="1.1">
+    <svg
+      width="98px"
+      height="74px"
+      viewBox="0 0 98 74"
+      version="1.1"
+      className="brand-volcano"
+    >
       <defs>
         <linearGradient
           x1="50%"
