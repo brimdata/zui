@@ -10,5 +10,10 @@ export default {
       name,
       params
     }
+  },
+  close(): WindowsCloseMsg {
+    return {
+      channel: "windows:close"
+    }
   }
 }
