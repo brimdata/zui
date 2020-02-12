@@ -1,10 +1,21 @@
 /* @noflow */
 
+import type {$WindowManager} from "../tron/windowManager"
 import config from "../config"
 import lib from "../../lib"
 
-export default function searchAppMenu(send: Function) {
+export default function searchAppMenu(send: Function, manager: $WindowManager) {
   let template = [
+    {
+      label: "File",
+      submenu: [
+        {
+          label: "New Window",
+          accelerator: "CmdOrCtrl+N",
+          click: () => manager.openWindow("welcome", {})
+        }
+      ]
+    },
     {
       label: "Edit",
       submenu: [
@@ -127,7 +138,7 @@ export default function searchAppMenu(send: Function) {
     })
 
     // Edit menu
-    template[2].submenu.push(
+    template[3].submenu.push(
       {type: "separator"},
       {
         label: "Speech",
@@ -136,7 +147,7 @@ export default function searchAppMenu(send: Function) {
     )
 
     // Window menu
-    template[5].submenu.concat([
+    template[6].submenu.concat([
       {role: "close"},
       {role: "minimize"},
       {role: "zoom"},

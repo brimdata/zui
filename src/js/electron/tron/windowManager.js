@@ -3,6 +3,7 @@
 import {BrowserWindow} from "electron"
 
 import type {ReturnType} from "../../types"
+import menu from "../menu"
 import tron from "./"
 
 export type WindowName = "welcome" | "search" | "login"
@@ -18,8 +19,11 @@ export default function windowManager() {
       this.openWindow("welcome")
     },
 
-    openWindow(name: string, params: Object) {
-      let ref = tron.window(name, params, state)
+    openWindow(name: WindowName, params: Object) {
+      let manager = this
+      let ref = tron
+        .window(name, params, state)
+        .on("focus", (e) => menu.setMenu(name, e.sender, manager))
       windows[ref.id] = {ref, name}
     },
 

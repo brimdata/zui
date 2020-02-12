@@ -2,11 +2,12 @@
 import {BrowserWindow} from "electron"
 
 import type {WindowKeep} from "./windowState"
+import {type WindowName} from "./windowManager"
 
 export type WindowParams = {}
 
 export default function window(
-  name: string,
+  name: WindowName,
   params: WindowParams,
   state: WindowKeep
 ) {
@@ -15,7 +16,7 @@ export default function window(
   let [x, y] = get("position")
   let [width, height] = get("size")
 
-  return new BrowserWindow({
+  let win = new BrowserWindow({
     titleBarStyle: "hidden",
     resizable: true,
     width,
@@ -30,7 +31,10 @@ export default function window(
     .on("move", (e) => set("position", e.sender.getPosition()))
     .on("resize", (e) => set("size", e.sender.getSize()))
     .on("closed", () => state.save())
-    .loadFile(`${name}.html`, {query: params})
+
+  win.loadFile(`${name}.html`, {query: params})
+
+  return win
 }
 
 function stateSetter(state, name) {
