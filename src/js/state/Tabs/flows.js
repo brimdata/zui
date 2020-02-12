@@ -6,10 +6,9 @@ import Tabs from "./"
 import brim from "../../brim"
 
 export default {
-  new: (): Thunk => (dispatch, getState) => {
-    let {search} = Tabs.getActiveTab(getState())
+  new: (): Thunk => (dispatch, _getState) => {
     let id = brim.randomHash()
-    dispatch(Tabs.add(id, search))
+    dispatch(Tabs.add(id))
     dispatch(Tabs.activate(id))
     let el = document.getElementById("main-search-input")
     if (el) el.focus()

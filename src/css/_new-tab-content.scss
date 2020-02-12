@@ -1,0 +1,43 @@
+.new-tab-content {
+  flex: 1;
+  overflow: auto;
+  .logo {
+    svg {
+      display: block;
+      margin: 10px auto;
+    }
+  }
+
+  section {
+    width: 400px;
+    margin: 50px auto;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @for $i from 1 through 3 {
+      &:nth-child(#{$i}) {
+        opacity: 0;
+        animation: fade-in 720ms ($i - 1) * 240ms forwards;
+      }
+    }
+  }
+
+  label {
+    display: block;
+    @include label-bold;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    transform: translate(0, -50px) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 1;
+  }
+}

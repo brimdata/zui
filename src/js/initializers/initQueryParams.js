@@ -17,5 +17,5 @@ export default function(store: Store) {
   }
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Search.setCluster(cluster.id))
-  store.dispatch(Search.setSpace(space))
+  // store.dispatch(Search.setSpace(space))
 }

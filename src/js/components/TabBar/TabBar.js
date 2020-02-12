@@ -42,6 +42,7 @@ export default function TabBar() {
             style={layout.getStyle(tab.id)}
             removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
             active={tab.id === ctl.activeId}
+            isNew={!tab.search.space}
           />
         ))}
         <AddTab onClick={ctl.onAddClick} left={width * count} />

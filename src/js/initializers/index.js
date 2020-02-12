@@ -11,9 +11,9 @@ import initStore from "./initStore"
 
 export default () => {
   initDOM()
-  const state = initState()
-  const boom = initBoom(state)
-  const store = initStore(state, boom)
+  const _state = initState()
+  const boom = initBoom(undefined)
+  const store = initStore(undefined, boom)
   initPersistance(store)
   initShortcuts(store)
   initMenuActionListeners(store.dispatch)

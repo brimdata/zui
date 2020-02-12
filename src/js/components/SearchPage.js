@@ -7,7 +7,6 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import {XStatusBar} from "./StatusBar"
 import {initSpace} from "../flows/initSpace"
 import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
@@ -17,6 +16,7 @@ import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
 import IngestProgress from "./IngestProgress"
+import NewTabContent from "./NewTabContent"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
@@ -31,7 +31,7 @@ export default function SearchPage() {
   useSearchShortcuts()
 
   useEffect(() => {
-    dispatch(initSpace(space))
+    // dispatch(initSpace(space))
     return () => dispatch(Handlers.abortAll())
   }, [])
 
@@ -40,14 +40,14 @@ export default function SearchPage() {
       <div className="search-page">
         <LeftPane />
         <div className="search-page-main">
-          <div className="search-page-header">
-            <TabBar />
-            <ControlBar />
-            <SearchHeaderChart />
-            <ColumnChooser />
-          </div>
-          <SearchResults />
-          <XStatusBar />
+          <TabBar />
+          {space && (
+            <>
+              <SearchPageHeader />
+              <SearchResults />
+            </>
+          )}
+          {!space && <NewTabContent />}
         </div>
         <XRightPane />
       </div>
@@ -60,6 +60,16 @@ export default function SearchPage() {
       <SettingsModal />
       <EmptySpaceModal />
       <BoomGetModal />
+    </div>
+  )
+}
+
+function SearchPageHeader() {
+  return (
+    <div className="search-page-header">
+      <ControlBar />
+      <SearchHeaderChart />
+      <ColumnChooser />
     </div>
   )
 }

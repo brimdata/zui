@@ -178,4 +178,8 @@ $tab-border-radius-bottom: 6px;
       }
     }
   }
+
+  &.is-new.active {
+    background: white;
+  }
 }
