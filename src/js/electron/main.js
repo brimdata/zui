@@ -1,5 +1,6 @@
 /* @flow */
 // $FlowFixMe
+console.time("init")
 import "regenerator-runtime/runtime"
 
 import {app} from "electron"

@@ -11,7 +11,6 @@ export default function NoResults({width}: Props) {
   return (
     <div className="no-results" style={{width}}>
       <Fieldset>No Result Data</Fieldset>
-      <Dots />
     </div>
   )
 }

@@ -19,11 +19,18 @@ export default function windowManager() {
       this.openWindow("welcome")
     },
 
-    openWindow(name: WindowName, params: Object) {
+    openWindow(name: WindowName, params: Object, query: Object) {
+      let win = BrowserWindow.getFocusedWindow()
+      if (win && windows[win.id].name === name) {
+        let [x, y] = win.getPosition()
+        x += 20
+        y += 20
+        params = {...params, x, y}
+      }
       let manager = this
       let ref = tron
-        .window(name, params, state)
-        .on("focus", (e) => menu.setMenu(name, e.sender, manager))
+        .window(name, params, query, state)
+        .on("focus", (e) => menu.setMenu(name, manager))
       windows[ref.id] = {ref, name}
     },
 

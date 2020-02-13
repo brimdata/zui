@@ -21,15 +21,16 @@ function getBuilder(name) {
   }
 }
 
-function setMenu(
-  name: WindowName,
-  browserWindow: BrowserWindow,
-  manager: $WindowManager
-) {
+function setMenu(name: WindowName, manager: $WindowManager) {
   let builder = getBuilder(name)
 
+  function send(...args) {
+    let win = BrowserWindow.getFocusedWindow()
+    if (win && win.webContents) win.webContents.send(...args)
+  }
+
   if (builder) {
-    let template = builder(browserWindow.webContents.send, manager)
+    let template = builder(send, manager)
     Menu.setApplicationMenu(Menu.buildFromTemplate(template))
   }
 }

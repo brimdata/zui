@@ -1,6 +1,6 @@
 .ingest-progress {
   position: fixed;
-  background: transparentize($white-3, 0.1);
+  background: $chrome-gradient;
   box-shadow: inset 0 0 0px 0.5px rgba(0, 0, 0, 0.2),
     0px 1px 5px 0px rgba(0, 0, 0, 0.1);
 

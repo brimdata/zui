@@ -21,18 +21,13 @@
     margin: 20px auto;
     min-height: 0;
     flex-shrink: 0;
+    opacity: 0;
+    animation: fade-in 300ms forwards;
 
     &:last-child {
       flex: 1;
       display: flex;
       flex-direction: column;
-    }
-
-    @for $i from 1 through 3 {
-      &:nth-child(#{$i}) {
-        opacity: 0;
-        animation: fade-in 640ms ($i) * 120ms forwards;
-      }
     }
   }
 
@@ -45,11 +40,9 @@
 
 @keyframes fade-in {
   from {
-    transform: translate(0, -50px) scale(0.8);
     opacity: 0;
   }
   to {
-    transform: translate(0px, 0px) scale(1);
     opacity: 1;
   }
 }

@@ -2,7 +2,6 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect} from "react"
 
-import {refreshSpaces} from "../flows/space/thunks"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
@@ -13,7 +12,7 @@ export default function SavedSpacesList() {
   let spaces = useSelector(Spaces.names(clusterId))
 
   useEffect(() => {
-    dispatch(refreshSpaces())
+    dispatch(Spaces.refreshNames())
   }, [])
 
   function onClick(space) {

@@ -12,7 +12,7 @@ export default function searchAppMenu(send: Function, manager: $WindowManager) {
         {
           label: "New Window",
           accelerator: "CmdOrCtrl+N",
-          click: () => manager.openWindow("welcome", {})
+          click: () => manager.openWindow("search", {})
         }
       ]
     },

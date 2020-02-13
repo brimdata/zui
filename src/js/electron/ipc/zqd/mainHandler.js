@@ -5,7 +5,6 @@ import path from "path"
 import {IngestProcess} from "../../../zqd/ingest"
 import {ZQD} from "../../../zqd/zqd"
 import type {ZqdIngestMsg} from "../types"
-import ipc from ".."
 
 const dataRoot = "./data"
 const spaceDir = path.join(dataRoot, "spaces")
@@ -13,15 +12,19 @@ const spaceDir = path.join(dataRoot, "spaces")
 export default function zqdMainHandler() {
   let zqd = null
   let proc = null
+  if (!zqd) {
+    zqd = new ZQD(spaceDir)
+    zqd.start()
+    console.log("zqd started on: ", zqd.addr())
+  }
 
   ipcMain.handle("zqd:info", () => {
-    if (!zqd) {
-      zqd = new ZQD(spaceDir)
-      zqd.start()
+    if (zqd) {
+      let addr = zqd.addr()
+      return {addr}
+    } else {
+      throw new Error("ZQD not yet started")
     }
-    let addr = zqd.addr()
-    console.log("zqd started on: ", addr)
-    return {addr}
   })
 
   ipcMain.handle("zqd:ingest", (e, {paths}: ZqdIngestMsg) => {

@@ -8,7 +8,8 @@ export type WindowParams = {}
 
 export default function window(
   name: WindowName,
-  params: WindowParams,
+  params: WindowParams = {},
+  query: Object = {},
   state: WindowKeep
 ) {
   let set = stateSetter(state, name)
@@ -26,13 +27,14 @@ export default function window(
     webPreferences: {
       nodeIntegration: true,
       experimentalFeatures: true
-    }
+    },
+    ...params
   })
     .on("move", (e) => set("position", e.sender.getPosition()))
     .on("resize", (e) => set("size", e.sender.getSize()))
     .on("closed", () => state.save())
 
-  win.loadFile(`${name}.html`, {query: params})
+  win.loadFile(`${name}.html`, {query})
 
   return win
 }

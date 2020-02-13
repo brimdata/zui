@@ -14,8 +14,8 @@ import ipc from "./electron/ipc"
 import lib from "./lib"
 
 const store = init()
-store.dispatch(View.setIsIngesting(true))
 
+store.dispatch(View.setIsIngesting(true))
 invoke(ipc.zqd.subscribe()).then(() => {
   store.dispatch(View.setIsIngesting(false))
 })

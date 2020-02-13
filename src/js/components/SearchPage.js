@@ -7,7 +7,6 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import {initSpace} from "../flows/initSpace"
 import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
@@ -31,7 +30,6 @@ export default function SearchPage() {
   useSearchShortcuts()
 
   useEffect(() => {
-    // dispatch(initSpace(space))
     return () => dispatch(Handlers.abortAll())
   }, [])
 

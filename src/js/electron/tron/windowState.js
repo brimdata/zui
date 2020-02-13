@@ -4,7 +4,7 @@ import type {Keep} from "../../lib/keep"
 import config from "../config"
 import lib from "../../lib"
 
-type WindowName = "welcome" | "login" | "search"
+type WindowName = "welcome" | "login" | "search" | "blank"
 type WindowData = {
   [WindowName]: {
     size: [number, number],
@@ -25,6 +25,10 @@ export default function windowState(): WindowKeep {
     },
     welcome: {
       size: [600, 400],
+      position: "center"
+    },
+    blank: {
+      size: [1000, 800],
       position: "center"
     }
   }
