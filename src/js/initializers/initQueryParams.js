@@ -3,7 +3,7 @@
 import type {Store} from "../state/types"
 import Clusters from "../state/Clusters"
 import Search from "../state/Search"
-import Spaces from "../state/Spaces"
+import refreshSpaceInfo from "../flows/refreshSpaceInfo"
 
 export default function(store: Store) {
   var urlSearchParams = new URLSearchParams(global.location.search)
@@ -20,6 +20,6 @@ export default function(store: Store) {
   store.dispatch(Search.setCluster(cluster.id))
   if (space) {
     store.dispatch(Search.setSpace(space))
-    store.dispatch(Spaces.refreshInfo())
+    store.dispatch(refreshSpaceInfo())
   }
 }

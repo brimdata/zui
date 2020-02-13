@@ -9,7 +9,8 @@ import RampRight from "../../icons/ramp-right.svg"
 type Props = {
   title: string,
   removeTab: Function,
-  active: boolean
+  active: boolean,
+  isNew: boolean
 }
 
 const SearchTab = React.forwardRef<Props, HTMLDivElement>(function SearchTab(

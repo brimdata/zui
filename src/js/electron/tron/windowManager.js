@@ -30,7 +30,7 @@ export default function windowManager() {
       let manager = this
       let ref = tron
         .window(name, params, query, state)
-        .on("focus", (e) => menu.setMenu(name, manager))
+        .on("focus", () => menu.setMenu(name, manager))
       windows[ref.id] = {ref, name}
     },
 

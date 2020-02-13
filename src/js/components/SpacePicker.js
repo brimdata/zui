@@ -4,11 +4,11 @@ import React, {useEffect, useState} from "react"
 
 import {initSpace} from "../flows/initSpace"
 import {reactElementProps} from "../test/integration"
-import {refreshSpaces} from "../flows/space/thunks"
 import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default function SpacePicker() {
   let currentSpace = useSelector(Tab.spaceName) || "No spaces"
@@ -43,7 +43,7 @@ export default function SpacePicker() {
       <MenuBarButton
         {...reactElementProps("spaces_button")}
         dropdown
-        onClick={() => dispatch(refreshSpaces())}
+        onClick={() => dispatch(refreshSpaceNames())}
       >
         {space}
       </MenuBarButton>

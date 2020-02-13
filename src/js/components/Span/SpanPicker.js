@@ -5,7 +5,7 @@ import React from "react"
 import {reactElementProps} from "../../test/integration"
 import MenuBarButton from "../MenuBarButton"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
-import Spaces from "../../state/Spaces"
+import refreshSpaceInfo from "../../flows/refreshSpaceInfo"
 import useSpanPickerMenu from "../useSpanPickerMenu"
 
 export default function SpanPicker() {
@@ -21,7 +21,7 @@ export default function SpanPicker() {
         dropdown
         {...reactElementProps("span_button")}
         className="time-span-menu"
-        onClick={() => dispatch(Spaces.refreshInfo())}
+        onClick={() => dispatch(refreshSpaceInfo())}
       />
     </PopMenuPointy>
   )

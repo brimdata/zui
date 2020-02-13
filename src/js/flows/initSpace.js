@@ -36,7 +36,6 @@ function checkDataExists(dispatch, data, tabId) {
 }
 
 function checkSpacesExist(spaces) {
-  console.log(spaces)
   if (spaces.length === 0) throw new NoSpacesError()
   else return spaces
 }

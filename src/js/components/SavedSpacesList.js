@@ -5,6 +5,7 @@ import React, {useEffect} from "react"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default function SavedSpacesList() {
   let dispatch = useDispatch()
@@ -12,7 +13,7 @@ export default function SavedSpacesList() {
   let spaces = useSelector(Spaces.names(clusterId))
 
   useEffect(() => {
-    dispatch(Spaces.refreshNames())
+    dispatch(refreshSpaceNames())
   }, [])
 
   function onClick(space) {

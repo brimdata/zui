@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import {Dots} from "../Login/Dots"
 import {Fieldset} from "../Typography"
 
 type Props = {width: number}

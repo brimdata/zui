@@ -4,7 +4,6 @@ import {BrowserWindow, Menu} from "electron"
 import type {$WindowManager, WindowName} from "../tron/windowManager"
 import actions from "./actions"
 import fieldContextMenu from "./fieldContextMenu"
-import loginAppMenu from "./loginAppMenu"
 import searchAppMenu from "./searchAppMenu"
 
 export type $MenuItem =
@@ -39,7 +38,6 @@ export default {
   setMenu,
   actions,
   fieldContextMenu,
-  loginAppMenu,
   searchAppMenu,
   separator: () => ({type: "separator"})
 }
