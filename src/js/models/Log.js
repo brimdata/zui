@@ -154,10 +154,13 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {type, name, value} = field
-      if (isString(value) && (type === "time" || type === "interval")) {
+      if (
+        isString(value) &&
+        (type === "time" || type === "interval" || type === "duration")
+      ) {
         return parseInt(value.split(".")[0])
       } else {
-        throw new Error(`${name} is not a time type`)
+        throw new Error(`${name} is not a time, interval, or duration type`)
       }
     }
   }
@@ -166,10 +169,13 @@ export default class Log {
     const field = this.getField(fieldName)
     if (field) {
       const {name, type, value} = field
-      if (isString(value) && (type === "time" || type === "interval")) {
+      if (
+        isString(value) &&
+        (type === "time" || type === "interval" || type === "duration")
+      ) {
         return parseInt(value.split(".")[1] + "000")
       } else {
-        throw new Error(`${name} is not a time type`)
+        throw new Error(`${name} is not a time, interval, or duration type`)
       }
     }
   }
