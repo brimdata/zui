@@ -8,6 +8,8 @@ export type IpcMsg =
   | ZqdIngestMsg
   | ZqdInfoMsg
   | ZqdSubscribeMsg
+  | MainStoreInitMsg
+  | MainStoreDispatchMsg
 
 export type WindowsRedirectMsg = {
   channel: "windows:redirect",
@@ -31,4 +33,12 @@ export type ZqdInfoMsg = {
 
 export type ZqdSubscribeMsg = {
   channel: "zqd:subscribe"
+}
+
+export type MainStoreInitMsg = {
+  channel: "mainStore:init"
+}
+
+export type MainStoreDispatchMsg = {
+  channel: "mainStore:dispatch"
 }
