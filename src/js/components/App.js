@@ -7,7 +7,7 @@ import classNames from "classnames"
 import {ipcRenderer} from "electron"
 
 import {XLatestError} from "./LatestError"
-import SearchPage from "./SearchPage"
+import ClusterGate from "./Login/ClusterGate"
 import View from "../state/View"
 import brim from "../brim"
 import useListener from "./hooks/useListener"
@@ -32,7 +32,7 @@ export default function App() {
     >
       <div className="title-bar-drag-area" />
       <XLatestError />
-      <SearchPage />
+      <ClusterGate />
     </div>
   )
 }

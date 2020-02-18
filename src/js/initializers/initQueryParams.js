@@ -1,9 +1,9 @@
 /* @flow */
 
 import type {Store} from "../state/types"
+import {initSpace} from "../flows/initSpace"
 import Clusters from "../state/Clusters"
 import Search from "../state/Search"
-import refreshSpaceInfo from "../flows/refreshSpaceInfo"
 
 export default function(store: Store) {
   var urlSearchParams = new URLSearchParams(global.location.search)
@@ -18,8 +18,5 @@ export default function(store: Store) {
 
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Search.setCluster(cluster.id))
-  if (space) {
-    store.dispatch(Search.setSpace(space))
-    store.dispatch(refreshSpaceInfo())
-  }
+  store.dispatch(initSpace(space))
 }

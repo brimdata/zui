@@ -18,6 +18,7 @@ export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
   let tabId = Tabs.getActive(getState())
   let clusterId = Tab.clusterId(getState())
   return dispatch(fetchSpaces())
+    .then((val) => (val === null ? [] : val))
     .then(checkSpacesExist)
     .then((spaces) => getCurrentSpaceName(spaces, desired))
     .then((name) => dispatch(fetchSpace(name)))
@@ -25,7 +26,10 @@ export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
     .then(() => dispatch(submitSearch()))
-    .catch((error) => dispatch(Notice.set(ErrorFactory.create(error))))
+    .catch((error) => {
+      console.error(error)
+      dispatch(Notice.set(ErrorFactory.create(error)))
+    })
 }
 
 function checkDataExists(dispatch, data, tabId) {

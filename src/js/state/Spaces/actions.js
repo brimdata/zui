@@ -6,7 +6,7 @@ export default {
   setNames: (clusterId: string, names: string[]): SPACES_NAMES => ({
     type: "SPACES_NAMES",
     clusterId,
-    names
+    names: names || []
   }),
 
   setDetail: (clusterId: string, space: Space): SPACES_DETAIL => ({

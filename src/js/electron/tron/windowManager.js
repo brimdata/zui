@@ -17,7 +17,6 @@ export default function windowManager() {
     init() {
       state.load()
       this.openWindow("search")
-      this.openWindow("search")
     },
 
     openWindow(name: WindowName, params: Object, query: Object) {

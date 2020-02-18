@@ -11,10 +11,11 @@ import Tab from "../state/Tab"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default function SpacePicker() {
-  let currentSpace = useSelector(Tab.spaceName) || "No spaces"
-  let [space, setSpace] = useState(currentSpace)
   let clusterId = useSelector(Tab.clusterId)
   let spaces = useSelector(Spaces.names(clusterId))
+  let currentSpace = useSelector(Tab.spaceName) || "Choose a space"
+  if (spaces.length === 0) currentSpace = "No Spaces"
+  let [space, setSpace] = useState(currentSpace)
   let dispatch = useDispatch()
 
   useEffect(() => {
@@ -31,8 +32,9 @@ export default function SpacePicker() {
     click: () => onSpaceChange(space)
   }))
 
-  if (template.length === 0)
+  if (template.length === 0) {
     template = [{label: "No spaces in this cluster", disabled: true}]
+  }
 
   return (
     <PopMenuPointy

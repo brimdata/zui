@@ -66,7 +66,7 @@ export const clearState = () => {
 }
 
 export default (store: *) => {
-  window.store = store
+  global.store = store
   store.subscribe(
     throttle(() => {
       saveState(store.getState())
@@ -74,4 +74,4 @@ export default (store: *) => {
   )
 }
 
-window.clearState = clearState
+global.clearState = clearState
