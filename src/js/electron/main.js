@@ -1,13 +1,14 @@
 /* @flow */
 // $FlowFixMe
+console.time("init")
 import "regenerator-runtime/runtime"
 
-import {BrowserWindow, app, ipcMain} from "electron"
+import {app} from "electron"
 
 import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
-import browserWindow from "./browserWindow"
-import windowState from "./windowState"
+import setupMainHandlers from "./ipc/setupMainHandlers"
+import tron from "./tron"
 
 async function main() {
   // Disable Warnings in the Console
@@ -16,30 +17,20 @@ async function main() {
 
   if (handleSquirrelEvent(app)) return
 
-  let winState = windowState()
-  let win = browserWindow(winState)
+  let winMan = tron.windowManager()
+  setupMainHandlers(winMan)
 
   app.on("ready", () => {
     installExtensions()
-    winState.load()
-    win.create()
+    winMan.init()
+  })
+
+  app.on("quit", () => {
+    console.log("QUIT")
   })
 
   app.on("activate", () => {
-    if (!win.exists()) win.create()
-  })
-
-  ipcMain.on("open-search-window", () => {
-    win.switchTo("search")
-  })
-
-  ipcMain.on("open-login-window", () => {
-    win.switchTo("login")
-  })
-
-  ipcMain.on("close-window", () => {
-    let win = BrowserWindow.getFocusedWindow()
-    if (win) win.close()
+    // if (!win.exists()) win.create()
   })
 
   app.on("window-all-closed", () => {

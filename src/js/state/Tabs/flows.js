@@ -9,7 +9,7 @@ export default {
   new: (): Thunk => (dispatch, getState) => {
     let {search} = Tabs.getActiveTab(getState())
     let id = brim.randomHash()
-    dispatch(Tabs.add(id, search))
+    dispatch(Tabs.add(id, {...search, space: ""}))
     dispatch(Tabs.activate(id))
     let el = document.getElementById("main-search-input")
     if (el) el.focus()
@@ -18,7 +18,8 @@ export default {
   closeActive: (): Thunk => (dispatch, getState) => {
     let tabs = Tabs.getData(getState())
     if (tabs.length === 1) {
-      ipcRenderer.send("close-window")
+      console.log("yo")
+      ipcRenderer.invoke("windows:close")
     } else {
       let id = Tabs.getActive(getState())
       dispatch(Tabs.remove(id))

@@ -1,0 +1,53 @@
+.saved-spaces-list {
+  user-select: none;
+  overflow: auto;
+
+  a {
+    @include label-normal;
+    display: block;
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    cursor: default;
+    &:last-child {
+      .line {
+        display: none;
+      }
+    }
+
+    &:hover {
+      background: linear-gradient(
+        to right,
+        transparentize($white-5, 0.7),
+        transparentize($white-5, 0.95)
+      );
+    }
+
+    &:active {
+      background: linear-gradient(
+        to right,
+        transparentize($white-5, 0.5),
+        transparentize($white-5, 0.95)
+      );
+      transition: color 700ms 50ms;
+      color: lighten($aqua, 35%);
+    }
+  }
+
+  .name {
+    display: block;
+    padding: 10px;
+  }
+
+  .line {
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    transform: scaleY(0.5);
+    background: linear-gradient(
+      to right,
+      $white-5,
+      transparentize($white-5, 0.7)
+    );
+  }
+}

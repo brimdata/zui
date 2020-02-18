@@ -3,15 +3,10 @@
 import {useDispatch} from "react-redux"
 import React, {useEffect} from "react"
 
-import {ipcRenderer} from "electron"
-
 import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import {XStatusBar} from "./StatusBar"
-import {checkVersions} from "../services/boom"
-import {initSpace} from "../flows/initSpace"
 import BoomGetModal from "./BoomGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
@@ -19,6 +14,7 @@ import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
+import IngestProgress from "./IngestProgress"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
@@ -31,9 +27,6 @@ export default function SearchPage() {
   useSearchShortcuts()
 
   useEffect(() => {
-    ipcRenderer.send("open-search-window")
-    dispatch(initSpace("default"))
-    setTimeout(() => dispatch(checkVersions()), 500)
     return () => dispatch(Handlers.abortAll())
   }, [])
 
@@ -42,17 +35,13 @@ export default function SearchPage() {
       <div className="search-page">
         <LeftPane />
         <div className="search-page-main">
-          <div className="search-page-header">
-            <TabBar />
-            <ControlBar />
-            <SearchHeaderChart />
-            <ColumnChooser />
-          </div>
+          <TabBar />
+          <SearchPageHeader />
           <SearchResults />
-          <XStatusBar />
         </div>
         <XRightPane />
       </div>
+      <IngestProgress />
       <ErrorNotice />
       <XDownloadProgress />
       <WhoisModal />
@@ -61,6 +50,16 @@ export default function SearchPage() {
       <SettingsModal />
       <EmptySpaceModal />
       <BoomGetModal />
+    </div>
+  )
+}
+
+function SearchPageHeader() {
+  return (
+    <div className="search-page-header">
+      <ControlBar />
+      <SearchHeaderChart />
+      <ColumnChooser />
     </div>
   )
 }

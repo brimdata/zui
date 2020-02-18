@@ -2,7 +2,7 @@
 import brim, {type Span} from "./"
 
 function spanOf(num, unit) {
-  let from = brim.time().toTs()
+  let from = brim.time({ns: 0, sec: 0}).toTs()
   return brim.span(
     ([
       from,

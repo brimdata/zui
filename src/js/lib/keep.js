@@ -4,14 +4,14 @@ import {has, set, get} from "lodash"
 
 import lib from "./"
 
-export type Keep = {
-  set: (string, *) => Keep,
+export type Keep<T> = {
+  set: (string, *) => Keep<T>,
   get: (string) => *,
   save: () => Promise<*>,
   load: () => void
 }
 
-export default function keep<T>(path: string, init: T): Keep {
+export default function keep<T>(path: string, init: T): Keep<T> {
   let data: T = {...init}
 
   function keyErrorMsg(key) {
@@ -41,7 +41,7 @@ export default function keep<T>(path: string, init: T): Keep {
         try {
           let string = file.readSync()
           let json = JSON.parse(string)
-          data = json
+          data = {...data, ...json}
         } catch (e) {
           console.error(e)
         }

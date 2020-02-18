@@ -1,11 +1,21 @@
 $page-background-color: $white-3;
 $page-border-color: $white-4;
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .search-page-wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
+  animation: fadein 300ms;
 }
 
 .title-bar .pane-header {

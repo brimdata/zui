@@ -9,15 +9,20 @@ import RampRight from "../../icons/ramp-right.svg"
 type Props = {
   title: string,
   removeTab: Function,
-  active: boolean
+  active: boolean,
+  isNew: boolean
 }
 
 const SearchTab = React.forwardRef<Props, HTMLDivElement>(function SearchTab(
-  {title, active, removeTab, ...rest},
+  {title, active, removeTab, isNew, ...rest},
   ref
 ) {
   return (
-    <div ref={ref} {...rest} className={classNames("tab", {active})}>
+    <div
+      ref={ref}
+      {...rest}
+      className={classNames("tab", {active, "is-new": isNew})}
+    >
       <div className="tab-content">
         <p className="title">{title}</p>
         <CloseButton onClick={removeTab} />

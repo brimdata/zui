@@ -1,0 +1,35 @@
+.pcap-file-input {
+  position: relative;
+
+  .pcap-file {
+    position: absolute;
+    left: 50px;
+    top: 35px;
+  }
+
+  .upload-arrow {
+    position: absolute;
+    left: 54px;
+    top: 20px;
+    animation: updown 1200ms ease-in-out infinite alternate;
+  }
+}
+
+input[type="file"] {
+  border: 2px dashed $brand-orange;
+  border-radius: 16px;
+  background: transparentize($brand-blue-light, 0.95);
+  display: flex;
+  width: 100%;
+  padding: 40px 3px 40px 100px;
+}
+
+@keyframes updown {
+  from {
+    transform: translateY(5px);
+  }
+
+  to {
+    transform: translateY(-5px);
+  }
+}

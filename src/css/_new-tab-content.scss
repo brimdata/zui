@@ -1,0 +1,48 @@
+.new-tab-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  .logo {
+    margin-top: 20px;
+    svg {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .brim-text {
+      margin-top: 3px;
+    }
+  }
+
+  section {
+    width: 400px;
+    margin: 20px auto;
+    min-height: 0;
+    flex-shrink: 0;
+    opacity: 0;
+    animation: fade-in 300ms forwards;
+
+    &:last-child {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  label {
+    display: block;
+    @include label-bold;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

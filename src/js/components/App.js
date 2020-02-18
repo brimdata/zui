@@ -1,8 +1,10 @@
 /* @flow */
 
 import {useSelector} from "react-redux"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import classNames from "classnames"
+
+import {ipcRenderer} from "electron"
 
 import {XLatestError} from "./LatestError"
 import ClusterGate from "./Login/ClusterGate"
@@ -16,6 +18,10 @@ export default function App() {
 
   useListener(document, "mousedown", () => setMouse(true))
   useListener(document, "keydown", () => setMouse(false))
+
+  useEffect(() => {
+    ipcRenderer.invoke("windows:ready")
+  }, [])
 
   return (
     <div

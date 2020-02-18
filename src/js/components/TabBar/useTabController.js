@@ -4,9 +4,12 @@ import {useEffect, useRef, useState} from "react"
 import onIdle from "on-idle"
 
 import Tabs from "../../state/Tabs"
+import invoke from "../../electron/ipc/invoke"
+import ipc from "../../electron/ipc"
 
 export default function(count: number, calcWidths: Function) {
   let trueActiveId = useSelector(Tabs.getActive)
+  let tabCount = useSelector(Tabs.getCount)
   let [activeId, setActive] = useState(trueActiveId)
   let removedByClick = useRef(false)
   let dispatch = useDispatch()
@@ -28,8 +31,12 @@ export default function(count: number, calcWidths: Function) {
 
     onRemoveClick(event: MouseEvent, id: string) {
       event.stopPropagation()
-      removedByClick.current = true
-      dispatch(Tabs.remove(id))
+      if (tabCount === 1) {
+        invoke(ipc.windows.close())
+      } else {
+        removedByClick.current = true
+        dispatch(Tabs.remove(id))
+      }
     },
 
     onTabClick(id: string) {

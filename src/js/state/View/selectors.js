@@ -17,5 +17,7 @@ export default {
 
   getInvestigationView: (state: State) => {
     return state.view.investigationView
-  }
+  },
+
+  getIsIngesting: (state: State) => state.view.isIngesting
 }
