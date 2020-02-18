@@ -41,7 +41,7 @@ export default function keep<T>(path: string, init: T): Keep<T> {
         try {
           let string = file.readSync()
           let json = JSON.parse(string)
-          data = json
+          data = {...data, ...json}
         } catch (e) {
           console.error(e)
         }
