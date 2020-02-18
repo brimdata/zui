@@ -15,20 +15,6 @@ beforeEach(async () => {
   jest.useFakeTimers()
 })
 
-test("zq version mismatch", () => {
-  boom.stub("serverVersion", {zq: "0.0.0"})
-
-  let el = provide(store, <SearchPage cluster={cluster} />)
-  jest.runAllTimers()
-
-  expect(el.text()).toContain("Server and client zq versions do not match")
-  expect(el.text()).toContain("0.0.0")
-})
-
-test("zq version match", () => {
-  boom.stub("serverVersion", boom.clientVersion())
-
-  let el = provide(store, <SearchPage cluster={cluster} />)
-  jest.runAllTimers()
-  expect(el.text()).not.toContain("Server and client zq versions do not match")
+test("Render the search page", () => {
+  provide(store, <SearchPage cluster={cluster} />)
 })
