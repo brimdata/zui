@@ -1,5 +1,6 @@
 .new-tab-content {
-  background: linear-gradient(to bottom right, #f0f7ff, #ffece6);
+  animation: fadein 300ms;
+  background: linear-gradient(to bottom right, #f0f7ff, #fff8f5);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -22,7 +23,7 @@
 
     section {
       flex: 1;
-      padding: 24px;
+      padding: 0 24px;
     }
 
     .separator {
@@ -39,6 +40,6 @@
   label {
     display: block;
     @include label-section;
-    margin-bottom: 10px;
+    margin-bottom: 24px;
   }
 }
