@@ -2,7 +2,7 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: circleci/node:10.11.0-jessie-browsers
+      - image: brimsec/ci:0.0.1-zeek-mergecap
     steps:
       - checkout
       - run:
