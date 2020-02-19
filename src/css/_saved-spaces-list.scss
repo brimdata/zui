@@ -4,14 +4,16 @@
 
   a {
     @include label-normal;
-    display: block;
+    display: flex;
+    align-items: center;
     position: relative;
     color: inherit;
     text-decoration: none;
     cursor: default;
+    padding-left: 10px;
     &:last-child {
       .line {
-        display: none;
+        // display: none;
       }
     }
 
@@ -43,6 +45,8 @@
     position: absolute;
     height: 1px;
     width: 100%;
+    left: 0;
+    top: 0;
     transform: scaleY(0.5);
     background: linear-gradient(
       to right,

@@ -18,7 +18,6 @@ export default {
   closeActive: (): Thunk => (dispatch, getState) => {
     let tabs = Tabs.getData(getState())
     if (tabs.length === 1) {
-      console.log("yo")
       ipcRenderer.invoke("windows:close")
     } else {
       let id = Tabs.getActive(getState())
