@@ -19,6 +19,9 @@
         transparentize($white-5, 0.7),
         transparentize($white-5, 0.95)
       );
+      .line {
+        display: none;
+      }
     }
 
     &:active {
