@@ -1,32 +1,36 @@
 /* @flow */
-import {useDispatch, useSelector} from "react-redux"
-import React, {useEffect} from "react"
+import {useDispatch} from "react-redux"
+import React from "react"
 
+import os from "os"
+
+import {useGlobalDispatch, useGlobalSelector} from "../state/GlobalContext"
 import FileFill from "../icons/FileFill"
+import RecentFiles from "../state/RecentFiles"
 import Search from "../state/Search"
-import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
-import refreshSpaceNames from "../flows/refreshSpaceNames"
+
+let homedir = os.homedir()
 
 export default function SavedSpacesList() {
   let dispatch = useDispatch()
-  let clusterId = useSelector(Tab.clusterId)
-  let spaces = useSelector(Spaces.names(clusterId))
-
-  useEffect(() => {
-    dispatch(refreshSpaceNames())
-  }, [])
+  let globalDispatch = useGlobalDispatch()
+  let files = useGlobalSelector(RecentFiles.getPaths)
 
   function onClick(space) {
     dispatch(Search.setSpace(space))
+    globalDispatch(RecentFiles.open(space))
+  }
+
+  function format(file) {
+    return file.replace(homedir, "~")
   }
 
   return (
     <div className="saved-spaces-list">
-      {spaces.map((s) => (
-        <a onClick={() => onClick(s)} key={s} href="#">
-          <FileFill />
-          <span className="name">{s}</span>
+      {files.map((file) => (
+        <a onClick={() => onClick(file)} key={file} href="#">
+          <FileFill className="file-icon" />
+          <span className="name">{format(file)}</span>
           <div className="line" />
         </a>
       ))}

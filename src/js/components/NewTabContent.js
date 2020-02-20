@@ -2,8 +2,10 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
+import {useGlobalDispatch} from "../state/GlobalContext"
 import LogoType from "../icons/LogoType"
 import PcapFileInput from "./PcapFileInput"
+import RecentFiles from "../state/RecentFiles"
 import SavedSpacesList from "./SavedSpacesList"
 import Search from "../state/Search"
 import View from "../state/View"
@@ -12,7 +14,10 @@ import ipc from "../electron/ipc"
 
 export default function NewTabContent() {
   let dispatch = useDispatch()
+  let gDispatch = useGlobalDispatch()
   function onChange(e, paths) {
+    gDispatch(RecentFiles.open(paths[0]))
+
     invoke(ipc.zqd.ingest("HelloWorld!", paths)).then((space) => {
       dispatch(View.setIsIngesting(true))
       invoke(ipc.zqd.subscribe()).then(() => {
