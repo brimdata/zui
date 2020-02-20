@@ -2,9 +2,7 @@
 
 import type {RecentFilesAction, RecentFilesState} from "./types"
 
-const init: RecentFilesState = {
-  "~/this/is/a/recent/file": 0
-}
+const init: RecentFilesState = {}
 
 export default function reducer(
   state: RecentFilesState = init,

@@ -2,7 +2,7 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
-import {useGlobalDispatch} from "../state/GlobalContext"
+import {useGlobalDispatch, useGlobalSelector} from "../state/GlobalContext"
 import LogoType from "../icons/LogoType"
 import PcapFileInput from "./PcapFileInput"
 import RecentFiles from "../state/RecentFiles"
@@ -15,6 +15,9 @@ import ipc from "../electron/ipc"
 export default function NewTabContent() {
   let dispatch = useDispatch()
   let gDispatch = useGlobalDispatch()
+  let files = useGlobalSelector(RecentFiles.getPaths)
+  let filesPresent = files.length !== 0
+
   function onChange(e, paths) {
     gDispatch(RecentFiles.open(paths[0]))
 
@@ -35,11 +38,15 @@ export default function NewTabContent() {
         </div>
       </section>
       <div className="input-methods">
-        <section>
-          <label>Recent Files</label>
-          <SavedSpacesList />
-        </section>
-        <div className="separator" />
+        {filesPresent && (
+          <>
+            <section>
+              <label>Recent Files</label>
+              <SavedSpacesList />
+            </section>
+            <div className="separator" />
+          </>
+        )}
         <section>
           <label>Open File</label>
           <PcapFileInput onChange={onChange} />
