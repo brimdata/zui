@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  padding: 0 24px;
 
   .logo {
     margin: 60px auto;
@@ -17,18 +18,17 @@
   .input-methods {
     margin: 20px auto;
     display: flex;
-    width: 100%;
-    max-width: 672px;
     min-height: 300px;
 
     section {
-      flex: 1;
-      padding: 0 24px;
+      min-width: 360px;
+      max-width: 360px;
     }
 
     .separator {
-      width: 1px;
+      min-width: 1px;
       height: 100%;
+      margin: 0 24px;
       background: linear-gradient(
         to bottom,
         $white-5,

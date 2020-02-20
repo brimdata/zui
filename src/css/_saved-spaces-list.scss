@@ -1,6 +1,7 @@
 .saved-spaces-list {
   user-select: none;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   a {
     @include label-normal;
@@ -11,11 +12,6 @@
     text-decoration: none;
     cursor: default;
     padding-left: 10px;
-    &:last-child {
-      .line {
-        // display: none;
-      }
-    }
 
     &:hover {
       background: linear-gradient(
@@ -34,6 +30,10 @@
       transition: color 700ms 50ms;
       color: lighten($aqua, 35%);
     }
+  }
+
+  .file-icon {
+    flex-shrink: 0;
   }
 
   .name {
