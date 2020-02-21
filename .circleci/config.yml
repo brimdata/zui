@@ -1,10 +1,9 @@
-version: 2.0
-jobs:
-  build:
-    docker:
-      - image: brimsec/ci:0.0.1-zeek-mergecap
+version: 2.1
+commands:
+  # Assumes a checkout is already available
+  npm_install:
+    description: Cached NPM Install
     steps:
-      - checkout
       - run:
           name: Set Node Version File
           command: node --version > nodeversion
@@ -17,12 +16,24 @@ jobs:
           key: dependency-cache-node-{{ checksum "nodeversion" }}-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run:
-          name: Format
-          command: npm run format-check
+  build:
+    description: Build
+    steps:
       - run:
           name: Build
           command: npm run build
+
+jobs:
+  build:
+    docker:
+      - image: brimsec/ci:0.0.1-zeek-mergecap
+    steps:
+      - checkout
+      - npm_install
+      - run:
+          name: Format
+          command: npm run format-check
+      - build
       - run:
           name: Lint
           command: npm run lint
@@ -32,11 +43,19 @@ jobs:
       - run:
           name: Unit Tests
           command: npm test -- --maxWorkers=2 --ci
+  integration_tests:
+    docker:
+      - image: brimsec/ci:0.0.1-zeek-mergecap
+    steps:
+      - checkout
+      - npm_install
+      - build
       - run:
           name: Get ZQD
           command: |
-            git clone https://github.com/brimsec/zq
+            git clone --single-branch https://github.com/brimsec/zq
             pushd zq
+            git reset --hard da56b01d87a9745c90d09e960163ecba33eab55a
             make install
       - run:
           name: Integration Tests
@@ -50,3 +69,6 @@ workflows:
   main:
     jobs:
       - build
+      - integration_tests:
+          requires:
+            - build
