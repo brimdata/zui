@@ -32,6 +32,19 @@ jobs:
       - run:
           name: Unit Tests
           command: npm test -- --maxWorkers=2 --ci
+      - run:
+          name: Get ZQD
+          command: |
+            git clone https://github.com/brimsec/zq
+            pushd zq
+            make install
+      - run:
+          name: Integration Tests
+          command: npm run itest -- itest/tests/smoke.test.js
+      - store_artifacts:
+          path: /home/circleci/project/logs
+      - store_artifacts:
+          path: /home/circleci/.npm/_logs
 workflows:
   version: 2
   main:
