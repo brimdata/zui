@@ -4,8 +4,8 @@ import {isEqual} from "lodash"
 
 import type {Finding, InvestigationAction, InvestigationState} from "./types"
 import type {SearchRecord} from "../../types"
+import {type Ts} from "../../brim"
 import {last} from "../../lib/Array"
-import brim, {type Ts} from "../../brim"
 
 const init: InvestigationState = []
 
@@ -15,14 +15,17 @@ export default function reducer(
 ): InvestigationState {
   switch (a.type) {
     case "HISTORY_PUSH":
-      return createFinding(state, a.entry)
+      return createFinding(state, a.entry, a.ts)
     case "FINDING_CREATE":
       return [...state, a.finding]
     case "FINDING_UPDATE":
       return updateLatest(state, a.finding)
     case "FINDING_DELETE":
-      // $FlowFixMe
-      return state.filter((f): boolean => !a.ts.includes(f.ts))
+      return state.filter((f) => {
+        // $FlowFixMe
+        for (let ts of a.ts) if (isEqual(ts, f.ts)) return false
+        return true
+      })
     case "INVESTIGATION_CLEAR":
       return []
     default:
@@ -40,11 +43,7 @@ function updateLatest(state: InvestigationState, updates: $Shape<Finding>) {
   }
 }
 
-function createFinding(
-  state,
-  search: SearchRecord,
-  ts: Ts = brim.time().toTs()
-) {
+function createFinding(state, search: SearchRecord, ts: Ts) {
   if (sameRecord(last(state), {ts, search})) {
     return state
   } else {

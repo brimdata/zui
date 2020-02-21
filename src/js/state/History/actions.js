@@ -7,6 +7,7 @@ import type {
   HISTORY_PUSH
 } from "./types"
 import type {SearchRecord} from "../../types"
+import brim, {type Ts} from "../../brim"
 
 export default {
   back: (): HISTORY_BACK => ({
@@ -18,8 +19,9 @@ export default {
   clear: (): HISTORY_CLEAR => ({
     type: "HISTORY_CLEAR"
   }),
-  push: (record: SearchRecord): HISTORY_PUSH => ({
+  push: (record: SearchRecord, ts: Ts = brim.time().toTs()): HISTORY_PUSH => ({
     type: "HISTORY_PUSH",
-    entry: record
+    entry: record,
+    ts: ts
   })
 }

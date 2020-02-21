@@ -34,7 +34,8 @@ jest.mock("electron", function() {
     },
     ipcRenderer: {
       send: jest.fn(),
-      on: jest.fn()
+      on: jest.fn(),
+      invoke: () => Promise.resolve()
     }
   }
 
