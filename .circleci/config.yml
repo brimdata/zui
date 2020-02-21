@@ -5,13 +5,16 @@ jobs:
       - image: circleci/node:10.11.0-jessie-browsers
     steps:
       - checkout
+      - run:
+          name: Set Node Version File
+          command: node --version > nodeversion
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-node-{{ checksum "nodeversion" }}-{{ checksum "package.json" }}
       - run:
           name: Install Dependencies
           command: npm install --no-audit
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-node-{{ checksum "nodeversion" }}-{{ checksum "package.json" }}
           paths:
             - ./node_modules
       - run:
