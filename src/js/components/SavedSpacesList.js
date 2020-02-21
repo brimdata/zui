@@ -4,7 +4,7 @@ import React from "react"
 
 import os from "os"
 
-import {useGlobalDispatch, useGlobalSelector} from "../state/GlobalContext"
+import {globalDispatch, useGlobalSelector} from "../state/GlobalContext"
 import FileFill from "../icons/FileFill"
 import RecentFiles from "../state/RecentFiles"
 import Search from "../state/Search"
@@ -13,7 +13,6 @@ let homedir = os.homedir()
 
 export default function SavedSpacesList() {
   let dispatch = useDispatch()
-  let globalDispatch = useGlobalDispatch()
   let files = useGlobalSelector(RecentFiles.getPaths)
 
   function onClick(space) {

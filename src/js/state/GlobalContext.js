@@ -8,7 +8,7 @@ import ipc from "../electron/ipc"
 const GlobalContext = React.createContext<*>(null)
 
 export const useGlobalSelector = createSelectorHook(GlobalContext)
-export const useGlobalDispatch = () => (action: *) =>
+export const globalDispatch = (action: Object) =>
   invoke(ipc.globalStore.dispatch(action))
 
 export default GlobalContext

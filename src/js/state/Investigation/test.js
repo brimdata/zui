@@ -3,12 +3,15 @@
 import History from "../History"
 import Investigation from "./"
 import brim from "../../brim"
-import initTestStore from "../../test/initTestStore"
+import createGlobalStore from "../createGlobalStore"
 
 let store
 beforeEach(() => {
-  store = initTestStore()
+  store = createGlobalStore()
 })
+
+const dispatch = (a) => store.dispatch(a)
+const select = (selector) => selector(store.getState())
 
 function get() {
   return Investigation.getInvestigation(store.getState())
@@ -50,20 +53,23 @@ test("when a new search is recorded", () => {
 
 test("when a search is many times twice", () => {
   expect(get()).toHaveLength(0)
-  store.dispatchAll([
-    History.push(search1),
-    History.push(search1),
-    History.push(search1)
-  ])
+
+  dispatch(History.push(search1))
+  dispatch(History.push(search1))
+  dispatch(History.push(search1))
+
   expect(get()).toHaveLength(1)
 })
 
 test("when a search is different", () => {
   expect(get()).toHaveLength(0)
-  let state = store.dispatchAll([History.push(search1), History.push(search2)])
+
+  dispatch(History.push(search1))
+  dispatch(History.push(search2))
+
   expect(get()).toHaveLength(2)
 
-  expect(Investigation.getCurrentFinding(state)).toEqual({
+  expect(select(Investigation.getCurrentFinding)).toEqual({
     ts: {
       ns: expect.any(Number),
       sec: expect.any(Number)
@@ -73,11 +79,10 @@ test("when a search is different", () => {
 })
 
 test("delete a single finding by ts", () => {
-  let state = store.dispatchAll([History.push(search1), History.push(search2)])
-  let {ts} = Investigation.getCurrentFinding(state)
-
-  state = store.dispatchAll([Investigation.deleteFindingByTs(ts)])
-
+  dispatch(History.push(search1, brim.time(new Date(0)).toTs()))
+  dispatch(History.push(search2, brim.time(new Date(1)).toTs()))
+  let {ts} = select(Investigation.getCurrentFinding)
+  dispatch(Investigation.deleteFindingByTs(ts))
   expect(get()[0]).toEqual({
     ts: {
       ns: expect.any(Number),
@@ -88,9 +93,11 @@ test("delete a single finding by ts", () => {
 })
 
 test("removing several records with multiple ts", () => {
-  store.dispatchAll([History.push(search1), History.push(search2)])
+  dispatch(History.push(search1))
+  dispatch(History.push(search2))
+
   let multiTs = get().map((finding) => finding.ts)
-  store.dispatchAll([Investigation.deleteFindingByTs(multiTs)])
+  dispatch(Investigation.deleteFindingByTs(multiTs))
 
   expect(get().length).toBe(0)
 })

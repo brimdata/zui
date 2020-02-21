@@ -1,5 +1,6 @@
 /* @flow */
 import type {Thunk} from "../state/types"
+import {globalDispatch} from "../state/GlobalContext"
 import History from "../state/History"
 import Notice from "../state/Notice"
 import Search from "../state/Search"
@@ -7,6 +8,7 @@ import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
+import brim from "../brim"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
 
@@ -19,7 +21,11 @@ export default function submitSearch(save: boolean = true): Thunk {
 
     const state = getState()
 
-    if (save) dispatch(History.push(Search.getRecord(state)))
+    if (save) {
+      let action = History.push(Search.getRecord(state), brim.time().toTs())
+      dispatch(action)
+      globalDispatch(action)
+    }
     let tabId = Tabs.getActive(state)
     let args = Search.getArgs(state)
 

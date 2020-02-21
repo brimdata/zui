@@ -7,6 +7,7 @@ import classNames from "classnames"
 import {LinkButton} from "./Typography"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
+import {globalDispatch} from "../state/GlobalContext"
 import FilterTree from "./FilterTree"
 import Investigation from "../state/Investigation"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
@@ -22,7 +23,7 @@ export function LeftPane() {
 
   function onDrag(e: MouseEvent) {
     const width = e.clientX
-    const max = window.innerWidth
+    const max = global.innerWidth
     dispatch(View.setLeftSidebarWidth(Math.min(width, max)))
   }
 
@@ -31,7 +32,7 @@ export function LeftPane() {
   }
 
   function onClearAll() {
-    dispatch(Investigation.clearInvestigation())
+    globalDispatch(Investigation.clearInvestigation())
   }
 
   if (!isOpen) return <XLeftPaneExpander />
