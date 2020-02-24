@@ -14,7 +14,6 @@ export default function SpacePicker() {
   let clusterId = useSelector(Tab.clusterId)
   let spaces = useSelector(Spaces.names(clusterId))
   let currentSpace = useSelector(Tab.spaceName) || "Choose a space"
-  if (spaces.length === 0) currentSpace = "No Spaces"
   let [space, setSpace] = useState(currentSpace)
   let dispatch = useDispatch()
 

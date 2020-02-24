@@ -17,7 +17,7 @@ export default function PcapFileInput({onChange}: Props) {
     <div className="pcap-file-input">
       <PcapFileSvg className="pcap-file" />
       <ArrowOrangeSvg className="upload-arrow" />
-      <input type="file" multiple onChange={_onChange} />
+      <input type="file" onChange={_onChange} />
     </div>
   )
 }
