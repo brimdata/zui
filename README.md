@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/looky-cloud/desktop.svg?style=svg&circle-token=8fb219d4419937d21fb70c99c89157bff05c2ecc)](https://circleci.com/gh/looky-cloud/desktop)
+[![CircleCI](https://circleci.com/gh/brimsec/brim.svg?style=svg&circle-token=8fb219d4419937d21fb70c99c89157bff05c2ecc)](https://circleci.com/gh/brimsec/brim)
 
 # Brim Desktop Application
 
@@ -6,11 +6,11 @@ The desktop app for the Boom backend built with Electron and React.
 
 ## Setup
 
-It's expected that `node v12.12.0` and `git` are installed. See [Auth Setup](#auth-setup) below for possible additional steps.
+It's expected that `node v12.12.0` and `git` are installed.
 
 ```bash
-git clone https://github.com/looky-cloud/desktop.git
-cd desktop
+git clone https://github.com/brimsec/brim
+cd brim
 npm install
 npm start
 ```
