@@ -6,6 +6,7 @@ import classNames from "classnames"
 
 import type {Finding} from "../../state/Investigation/types"
 import {RemoveButton} from "../Buttons"
+import {globalDispatch} from "../../state/GlobalContext"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
 import Search from "../../state/Search"
@@ -27,7 +28,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   }
 
   function onRemove() {
-    dispatch(Investigation.deleteFindingByTs(finding.ts))
+    globalDispatch(Investigation.deleteFindingByTs(finding.ts))
   }
 
   return (

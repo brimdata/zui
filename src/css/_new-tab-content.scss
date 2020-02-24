@@ -1,48 +1,45 @@
 .new-tab-content {
+  animation: fadein 300ms;
+  background: linear-gradient(to bottom right, #f0f7ff, #fff8f5);
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: auto;
+  padding: 0 24px;
 
   .logo {
-    margin-top: 20px;
+    margin: 60px auto;
     svg {
       display: block;
       margin: 0 auto;
     }
-
-    .brim-text {
-      margin-top: 3px;
-    }
   }
 
-  section {
-    width: 400px;
+  .input-methods {
     margin: 20px auto;
-    min-height: 0;
-    flex-shrink: 0;
-    opacity: 0;
-    animation: fade-in 300ms forwards;
+    display: flex;
+    min-height: 300px;
 
-    &:last-child {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    section {
+      min-width: 360px;
+      max-width: 360px;
+    }
+
+    .separator {
+      min-width: 1px;
+      height: 100%;
+      margin: 0 24px;
+      background: linear-gradient(
+        to bottom,
+        $white-5,
+        transparentize($white-5, 0.7)
+      );
     }
   }
 
   label {
     display: block;
-    @include label-bold;
-    margin-bottom: 10px;
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+    @include label-section;
+    margin-bottom: 24px;
   }
 }

@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect} from "react"
 
 import {DebugModal} from "./DebugModal"
@@ -15,15 +15,18 @@ import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
 import IngestProgress from "./IngestProgress"
+import NewTabContent from "./NewTabContent"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
+import Tab from "../state/Tab"
 import TabBar from "./TabBar/TabBar"
 import WhoisModal from "./WhoisModal"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
   let dispatch = useDispatch()
+  let space = useSelector(Tab.spaceName)
   useSearchShortcuts()
 
   useEffect(() => {
@@ -36,8 +39,16 @@ export default function SearchPage() {
         <LeftPane />
         <div className="search-page-main">
           <TabBar />
-          <SearchPageHeader />
-          <SearchResults />
+          <div className="search-page-header">
+            <ControlBar />
+            {space && (
+              <>
+                <SearchHeaderChart />
+                <ColumnChooser />
+              </>
+            )}
+          </div>
+          {space ? <SearchResults /> : <NewTabContent />}
         </div>
         <XRightPane />
       </div>
@@ -50,16 +61,6 @@ export default function SearchPage() {
       <SettingsModal />
       <EmptySpaceModal />
       <BoomGetModal />
-    </div>
-  )
-}
-
-function SearchPageHeader() {
-  return (
-    <div className="search-page-header">
-      <ControlBar />
-      <SearchHeaderChart />
-      <ColumnChooser />
     </div>
   )
 }

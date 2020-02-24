@@ -1,42 +1,52 @@
 /* @flow */
-import {useDispatch} from "react-redux"
 import React from "react"
 
+import {useGlobalSelector} from "../state/GlobalContext"
+import LogoType from "../icons/LogoType"
 import PcapFileInput from "./PcapFileInput"
+import RecentFiles from "../state/RecentFiles"
 import SavedSpacesList from "./SavedSpacesList"
-import Search from "../state/Search"
-import View from "../state/View"
-import Volcano from "./Login/Volcano"
-import invoke from "../electron/ipc/invoke"
-import ipc from "../electron/ipc"
 
 export default function NewTabContent() {
-  let dispatch = useDispatch()
-  function onChange(e, paths) {
-    invoke(ipc.zqd.ingest("HelloWorld!", paths)).then((space) => {
-      dispatch(View.setIsIngesting(true))
-      invoke(ipc.zqd.subscribe()).then(() => {
-        dispatch(View.setIsIngesting(false))
-      })
-      dispatch(Search.setSpace(space))
-    })
+  let files = useGlobalSelector(RecentFiles.getPaths)
+  let filesPresent = files.length !== 0
+
+  function onChange(_e, _paths) {
+    alert("New Feature: This feature is still in progress")
+    return
+    // globalDispatch(RecentFiles.open(paths[0]))
+    //
+    // invoke(ipc.zqd.ingest("HelloWorld!", paths)).then((space) => {
+    //   dispatch(View.setIsIngesting(true))
+    //   invoke(ipc.zqd.subscribe()).then(() => {
+    //     dispatch(View.setIsIngesting(false))
+    //   })
+    //   dispatch(Search.setSpace(space))
+    // })
   }
 
   return (
     <div className="new-tab-content">
       <section>
         <div className="logo">
-          <Volcano />
+          <LogoType />
         </div>
       </section>
-      <section>
-        <label>Open PCAPs</label>
-        <PcapFileInput onChange={onChange} />
-      </section>
-      <section>
-        <label>Open Saved Space</label>
-        <SavedSpacesList />
-      </section>
+      <div className="input-methods">
+        {filesPresent && (
+          <>
+            <section>
+              <label>Recent Files</label>
+              <SavedSpacesList />
+            </section>
+            <div className="separator" />
+          </>
+        )}
+        <section>
+          <label>Open File</label>
+          <PcapFileInput onChange={onChange} />
+        </section>
+      </div>
     </div>
   )
 }

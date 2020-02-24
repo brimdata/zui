@@ -1,3 +1,11 @@
+@mixin label-section {
+  font-family: system-ui;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 @mixin label-bold {
   font-family: system-ui;
   letter-spacing: -0.08;
@@ -8,9 +16,10 @@
 
 @mixin label-normal {
   font-family: system-ui;
-  letter-spacing: -0.08;
+  letter-spacing: 0;
   font-size: 13px;
   line-height: 16px;
+  font-weight: 500;
 }
 
 @mixin label-small {
