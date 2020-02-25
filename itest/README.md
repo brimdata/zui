@@ -1,25 +1,14 @@
 # Integration Tests
 
-The purpose of the integration tests is to test Brim and `boomd`
+The purpose of the integration tests is to test Brim and ZQD
 interactions. The test strategy is to focus on these interactions in the
 tests and not exhaustively test the product this way. Note that some
-tests are better suited as Brim unit tests, boom.git system tests, or
-tests that use the `boom` CLI.
+tests are better suited as Brim unit tests or tests written in zq.git.
 
 # Requirements
 
 1. `npm install`
-1. Running boomd
-1. A space called `corelight` with the corelight data set loaded
-1. A space called `hq_integration` with the hq\_integration data set
-   loaded.
-
-See
-[this](https://lookylabs.atlassian.net/wiki/spaces/PROD/pages/70483972/Test+Data+Sets)
-for data set information.
-
-This is taken care of by [rug](https://github.com/looky-cloud/rug) in
-CI. See its documentation for more details.
+1. `npm run build`
 
 # To Run
 
@@ -30,7 +19,7 @@ Parallelization is not supported, so `jest --runInBand` is forced in
 
 You can also run individual files like:
 
-`npm run itest -- itest/tests/helpers.test.js`
+`npm run itest -- itest/tests/smoke.test.js`
 
 See `npm run itest -- --help` for more, or see [Jest
 docs](https://jestjs.io/docs/en/24.6/getting-started).
@@ -79,3 +68,6 @@ Don't forget to `git add` any changes to snapshots. You must add
 mikesbrown as a reviewer when changing snapshots. [Jest
 docs](https://jestjs.io/docs/en/24.6/snapshot-testing#1-treat-snapshots-as-code)
 even say to review these as carefully as code.
+
+If you want to patch JSON by hand, you're on your own to make Jest
+happy, but you should still include mikesbrown as a reviewer.
