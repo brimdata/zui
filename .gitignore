@@ -5,3 +5,5 @@ coverage
 logs
 junit.xml
 data
+.DS_Store
+.idea

@@ -6,7 +6,7 @@ The desktop app for the Boom backend built with Electron and React.
 
 ## Setup
 
-It's expected that `node v12.12.0` and `git` are installed.
+It's expected that `node v12.12.0` and `git` are installed. You will also need `zeek` (`brew install zeek`), `mergecap` (comes with `brew install wireshark`), as well as `zq` and `zqd` which can be built from source following the instructions [here](https://github.com/brimsec/zq). 
 
 ```bash
 git clone https://github.com/brimsec/brim
