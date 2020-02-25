@@ -31,7 +31,8 @@
     "clean": "node scripts/clean",
     "release": "node scripts/release --win32 --darwin",
     "prerelease": "npm run build",
-    "prebuild": "npm run clean"
+    "prebuild": "npm run clean",
+    "postinstall": "node scripts/download-zqd"
   },
   "jest": {
     "notify": false,
@@ -73,6 +74,7 @@
     "babel-plugin-source-map-support": "^2.1.1",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
+    "cross-unzip": "^0.2.1",
     "electron": "^7.1.8",
     "electron-devtools-installer": "^2.2.4",
     "electron-installer-dmg": "^3.0.0",
@@ -87,6 +89,7 @@
     "eslint-plugin-react": "^7.17.0",
     "flow-bin": "^0.98.0",
     "flow-typed": "^2.6.2",
+    "got": "^10.6.0",
     "jest": "^24.9.0",
     "jest-junit": "^6.4.0",
     "livereload": "^0.8.2",
@@ -95,6 +98,7 @@
     "prettier": "^1.19.1",
     "prettier-eslint": "^8.8.2",
     "spectron": "^9.0.0",
+    "tmp": "^0.1.0",
     "whatwg-fetch": "^3.0.0",
     "winston": "^3.2.1"
   },

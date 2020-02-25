@@ -5,3 +5,4 @@ coverage
 logs
 junit.xml
 data
+zdeps
