@@ -56,15 +56,12 @@ describe("pcaps api", () => {
   })
 
   test("post pcaps", () => {
-    expect(client.inspect().pcaps.post({space: "default"})).toEqual({
+    expect(
+      client.inspect().pcaps.post({space: "default", file: "~/my/capture.pcap"})
+    ).toEqual({
       method: "POST",
-      path: "/space/default/pcaps"
+      path: "/space/default/pcaps",
+      body: expect.any(String)
     })
   })
-})
-
-test.only("hitting the actual endpoint", () => {
-  let client = zealot.client("localhost")
-
-  client.spaces.list()
 })
