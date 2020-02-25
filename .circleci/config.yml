@@ -59,7 +59,7 @@ jobs:
             make install
       - run:
           name: Integration Tests
-          command: npm run itest -- itest/tests/smoke.test.js
+          command: npm run itest
       - store_artifacts:
           path: /home/circleci/project/logs
       - store_artifacts:
