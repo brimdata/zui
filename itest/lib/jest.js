@@ -39,7 +39,7 @@ export const handleError = async (
   done.fail && done.fail(realError)
 }
 
-// PROD-692: Put tests in a wrapper that prints what test is being run. This is
+// Put tests in a wrapper that prints what test is being run. This is
 // to eagerly print to the console where the run is so that hangs and other
 // failures are easier to diagnose. Without this, Jest is pretty silent and
 // it's hard to know what went wrong in a CI run. This MUST be paired with jest
