@@ -22,8 +22,8 @@ export const newAppInstance = (name: string, idx: number) =>
   new Application({
     path: electronPath,
     args: [path.join(__dirname, "..", "..")],
-    // PROD-853: Spectron will choose a random debugging port in the 9000-9999
-    // range. Since boomd uses 9867, set this to 9999.
+    // Some version of Spectron choose a random debugging port in the 9000-9999
+    // range. Since zqd uses 9867, set this to 9999.
     chromeDriverArgs: ["remote-debugging-port=9999"],
     startTimeout: 60000,
     waitTimeout: 60000,
@@ -31,7 +31,7 @@ export const newAppInstance = (name: string, idx: number) =>
       name + idx.toString() + "-chromedriver.log"
     ),
     webdriverLogPath: workspaceLogfile(name + "-webdriverLogFiles"),
-    // PROD-831: Latest compatible spectron and webdriverio lead to the
+    // Latest compatible spectron and webdriverio lead to the
     // following:
     //  console.warn node_modules/webdriverio/build/lib/helpers/deprecationWarning.js:12
     //    WARNING: the "<cmd>" command will be deprecated soon. If you have further questions, reach out in the WebdriverIO Gitter support channel (https://gitter.im/webdriverio/webdriverio).
@@ -52,40 +52,6 @@ export const newAppInstance = (name: string, idx: number) =>
 export const startApp = async (app: Application) => {
   await appStep("starting app", () => app.start())
   return await resetState(app)
-}
-
-export const waitForLoginAvailable = (app: Application) => {
-  // Wait for login elements to exist. In most cases this is taken care of for
-  // you in logIn() however if you need to inspect those elements before
-  // logging in, use this first.
-  const waitForHostname = () => {
-    return app.client.waitForVisible(selectors.login.host)
-  }
-
-  const waitForButton = () => {
-    return app.client.waitForVisible(selectors.login.button)
-  }
-  return appStep("wait for hostname, port, and login widget", () =>
-    waitForHostname().then(() => waitForButton())
-  )
-}
-
-export const logIn = (app: Application) => {
-  // Wait for necessary login widgets and then log in. Then make sure the app
-  // is ostensibly ready before continuing. This method is suitable for most
-  // test procedures.
-  return waitForLoginAvailable(app)
-    .then(() =>
-      appStep("fill out login page and log in", () =>
-        // WebdriverV4 doesn't return promises for these methods. Instead they can
-        // be chained together.
-        app.client
-          .setValue(selectors.login.host, "localhost:9867")
-          .click(selectors.login.button)
-      )
-    )
-    .then(() => waitForSearch(app))
-    .then(() => waitForHistogram(app))
 }
 
 export const resetState = (app: Application) =>
