@@ -3,7 +3,7 @@
 .*/dist/.*
 .*/coverage/.*
 .*/__snapshots__/.*
-.*/scripts/.*
+.*/scripts/download-zqd/.*
 
 [include]
 

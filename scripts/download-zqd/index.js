@@ -29,7 +29,7 @@ const platformDefs = {
 async function download(url, targetfile) {
   await fs.mkdirp(path.dirname(targetfile))
   const writeStream = fs.createWriteStream(targetfile)
-  return await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const gotStream = got.stream(url)
     gotStream.pipe(writeStream)
     gotStream.on("error", err => {
@@ -45,7 +45,7 @@ async function download(url, targetfile) {
 
 async function unzipTo(zipfile, dir) {
   await fs.mkdirp(dir)
-  return await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     unzip(zipfile, dir, err => {
       if (err) {
         reject(err)
