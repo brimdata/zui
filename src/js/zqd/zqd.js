@@ -3,12 +3,13 @@
 import {pathExistsSync, mkdirp} from "fs-extra"
 import {spawn, ChildProcess} from "child_process"
 import {join, resolve} from "path"
+import {app} from "electron"
 
 import * as cmd from "../stdlib/cmd"
 import electronIsDev from "../electron/isDev"
 
 // Path and filename for the zqd executable.
-const zqdPath = ["zdeps"]
+const zqdPath = join(app.getAppPath(), "zdeps")
 const platformDefs = {
   darwin: {
     zqdBin: "zqd"
@@ -34,7 +35,7 @@ function zqdCommand(): string {
     return plat.zqdBin
   }
 
-  const zqdBin = resolve(join(...zqdPath, plat.zqdBin))
+  const zqdBin = resolve(join(zqdPath, plat.zqdBin))
   if (!pathExistsSync(zqdBin)) {
     throw new Error("zqd binary not present at " + zqdBin)
   }
