@@ -7,7 +7,7 @@ import {app} from "electron"
 
 import fixPath from "fix-path"
 
-// inherit shell PATH environment to access zeek, zk, zkd, and other binaries
+// inherit shell PATH environment to access zeek, zq, and mergecap binaries.
 fixPath()
 
 import {handleSquirrelEvent} from "./squirrel"
