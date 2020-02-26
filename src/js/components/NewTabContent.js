@@ -36,7 +36,7 @@ export default function NewTabContent() {
         throw "Not Implemented"
       })
       .then(() => console.log("IT IS WORKING!"))
-      .catch((e) => {
+      .catch(() => {
         alert("NEW FEATURE IN PROGRESS")
       })
   }
