@@ -1,13 +1,14 @@
 /* @flow */
-import {ipcMain} from "electron"
+import {ipcMain, app} from "electron"
 import path from "path"
 
 import {IngestProcess} from "../../../zqd/ingest"
 import {ZQD} from "../../../zqd/zqd"
 import type {ZqdIngestMsg} from "../types"
 
-const dataRoot = "./data"
-const spaceDir = path.join(dataRoot, "spaces")
+const appRoot = app.getPath("appData")
+const dataRoot = "data"
+const spaceDir = path.join(appRoot, dataRoot, "spaces")
 
 export default function zqdMainHandler() {
   let zqd = null
