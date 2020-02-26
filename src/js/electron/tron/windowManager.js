@@ -3,6 +3,7 @@
 import {BrowserWindow} from "electron"
 
 import type {ReturnType} from "../../types"
+import brim from "../../brim"
 import menu from "../menu"
 import tron from "./"
 
@@ -19,7 +20,11 @@ export default function windowManager() {
       this.openWindow("search")
     },
 
-    openWindow(name: WindowName, params: Object, query: Object) {
+    getInitialState(id: string) {
+      return "Data for: " + id
+    },
+
+    openWindow(name: WindowName, params: Object, query: Object = {}) {
       let win = BrowserWindow.getFocusedWindow()
       if (win && windows[win.id].name === name) {
         let [x, y] = win.getPosition()
@@ -28,6 +33,7 @@ export default function windowManager() {
         params = {...params, x, y}
       }
       let manager = this
+      query.id = brim.randomHash()
       let ref = tron
         .window(name, params, query, state)
         .on("focus", () => menu.setMenu(name, manager))

@@ -7,7 +7,7 @@ import Search from "../state/Search"
 
 export default function(store: Store) {
   var urlSearchParams = new URLSearchParams(global.location.search)
-  let {space, host, port} = Object.fromEntries(urlSearchParams.entries())
+  let {space, host, port, id} = Object.fromEntries(urlSearchParams.entries())
   let cluster = {
     id: "zqd",
     host: host || "localhost",
@@ -15,7 +15,7 @@ export default function(store: Store) {
     username: "",
     password: ""
   }
-
+  global.windowId = id
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Search.setCluster(cluster.id))
   if (space) store.dispatch(initSpace(space))
