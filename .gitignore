@@ -6,3 +6,5 @@ logs
 junit.xml
 data
 zdeps
+.DS_Store
+.idea
