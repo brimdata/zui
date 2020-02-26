@@ -1,6 +1,6 @@
 /* @flow */
 
-import {pathExistsSync, mkdirSync} from "fs-extra"
+import {pathExistsSync, mkdirp} from "fs-extra"
 import {spawn, ChildProcess} from "child_process"
 import {join, resolve} from "path"
 
@@ -78,8 +78,4 @@ export class ZQD {
       this.zqd.kill("SIGTERM")
     }
   }
-}
-
-function mkdirp(dir: string) {
-  mkdirSync(dir, {recursive: true, mode: 0o755})
 }

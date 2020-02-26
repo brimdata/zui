@@ -5,6 +5,11 @@ import "regenerator-runtime/runtime"
 
 import {app} from "electron"
 
+import fixPath from "fix-path"
+
+// inherit shell PATH environment to access zeek, zk, zkd, and other binaries
+fixPath()
+
 import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
 import setupMainHandlers from "./ipc/setupMainHandlers"
