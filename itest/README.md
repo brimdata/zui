@@ -5,6 +5,12 @@ interactions. The test strategy is to focus on these interactions in the
 tests and not exhaustively test the product this way. Note that some
 tests are better suited as Brim unit tests or tests written in zq.git.
 
+The tests use Jest and Spectron.
+
+* https://jestjs.io
+* https://www.electronjs.org/spectron
+* https://github.com/electron-userland/spectron
+
 # Requirements
 
 1. `npm install`
