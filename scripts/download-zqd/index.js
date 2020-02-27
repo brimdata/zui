@@ -7,7 +7,7 @@ const tmp = require("tmp")
 const { unzip } = require("cross-unzip")
 
 // zqd version to download & use.
-const zqdVersion = "v0.2.0"
+const zqdVersion = "v0.3.0"
 
 // Path and filename for the zqd executable.
 const zqdPath = ["zdeps"]
