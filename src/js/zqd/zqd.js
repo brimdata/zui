@@ -57,11 +57,14 @@ export class ZQD {
   start() {
     mkdirpSync(this.root)
     const opts = {
-      cwd: this.root,
       stdio: "inherit"
     }
 
-    this.zqd = spawn(zqdCommand(), ["listen", "-l", this.addr()], opts)
+    this.zqd = spawn(
+      zqdCommand(),
+      ["listen", "-l", this.addr(), "-datadir", this.root],
+      opts
+    )
     this.zqd.on("error", (err) => {
       // XXX should notify renderers of error
       console.log("zqd spawn error", err)
