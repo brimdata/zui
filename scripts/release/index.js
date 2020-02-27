@@ -1,6 +1,6 @@
 /* @noflow */
 
-const notarize = require("electron-notarize").notarize;
+const notarize = require("electron-notarize").notarize
 const program = require("commander")
 const pack = require("./pack")
 const install = require("./install")
@@ -12,7 +12,7 @@ program
   .option("--notarize", "Notarize package (macOS only)", false)
   .action(function(cmd) {
       if (cmd.darwin) {
-          p = pack.darwin(cmd.sign || cmd.notarize)
+          let p = pack.darwin(cmd.sign || cmd.notarize)
           if (cmd.notarize) p.then(() => notarize({
             appBundleId: "com.electron.brim",
             appPath: "dist/packages/Brim-darwin-x64/Brim.app",
