@@ -9,9 +9,19 @@ let opts = {
 }
 
 module.exports = {
-  darwin: function() {
+  darwin: function(sign) {
+    var osxSign = false
+    if (sign) {
+      osxSign = {
+        identity: "Developer ID",
+        hardenedRuntime: true,
+        entitlements: "scripts/release/entitlements.mac.plist",
+        entitlementsInherit: "scripts/release/entitlements.mac.plist"
+      }
+    }
     return packager({
       ...opts,
+      osxSign: osxSign,
       platform: "darwin",
       icon: "dist/static/AppIcon.icns"
     }).then(() => {
