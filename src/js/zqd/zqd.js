@@ -60,7 +60,11 @@ export class ZQD {
       stdio: "inherit"
     }
 
-    this.zqd = spawn(zqdCommand(), ["listen", "-l", this.addr(), "-datadir", this.root], opts)
+    this.zqd = spawn(
+      zqdCommand(),
+      ["listen", "-l", this.addr(), "-datadir", this.root],
+      opts
+    )
     this.zqd.on("error", (err) => {
       // XXX should notify renderers of error
       console.log("zqd spawn error", err)
