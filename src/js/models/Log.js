@@ -177,7 +177,7 @@ export default class Log {
         if (v.length === 2) {
           let frac = v[1]
           let digits = frac.length
-          return parseInt(frac) * Math.pow(10,9-digits)
+          return parseInt(frac) * Math.pow(10, 9 - digits)
         }
         return 0
       } else {
