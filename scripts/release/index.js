@@ -14,7 +14,7 @@ program
       if (cmd.darwin) {
           let p = pack.darwin(cmd.sign || cmd.notarize)
           if (cmd.notarize) p.then(() => notarize({
-            appBundleId: "com.electron.brim",
+            appBundleId: "com.brimsecurity.brim",
             appPath: "dist/packages/Brim-darwin-x64/Brim.app",
             appleId: process.env.MACOS_APPLEID_USER,
             appleIdPassword: process.env.MACOS_APPLEID_PASSWORD,
