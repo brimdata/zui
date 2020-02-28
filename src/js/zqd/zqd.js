@@ -47,7 +47,7 @@ export class ZQD {
   root: string
 
   constructor(rootDir: string) {
-    let not = cmd.notExists("zeek", "zq", "mergecap")
+    let not = cmd.notExists("zeek")
     if (not.length > 0) {
       throw new Error("missing required executables: " + not.join(", "))
     }
@@ -61,7 +61,8 @@ export class ZQD {
     }
 
     this.zqd = spawn(
-      zqdCommand(),
+      // zqdCommand(),
+      "zqd",
       ["listen", "-l", this.addr(), "-datadir", this.root],
       opts
     )

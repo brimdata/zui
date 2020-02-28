@@ -1,15 +1,18 @@
 /* @flow */
 import React from "react"
 import fsExtra from "fs-extra"
+import {useDispatch} from "react-redux"
 
 import {useGlobalSelector} from "../state/GlobalContext"
 import LogoType from "../icons/LogoType"
 import PcapFileInput from "./PcapFileInput"
 import RecentFiles from "../state/RecentFiles"
+import {initSpace} from "../flows/initSpace"
 import SavedSpacesList from "./SavedSpacesList"
 import zealot from "../services/zealot"
 
 export default function NewTabContent() {
+  let dispatch = useDispatch()
   let files = useGlobalSelector(RecentFiles.getPaths)
   let filesPresent = files.length !== 0
 
@@ -17,9 +20,10 @@ export default function NewTabContent() {
     if (!file) return
     let dir = file + ".brim"
     let client = zealot.client("localhost:9867")
+    let space
     fsExtra
       .ensureDir(dir)
-      .then(() => client.spaces.create({dir}))
+      .then(() => client.spaces.create({data_dir: dir}))
       .catch((e) => {
         console.error(
           `POST /space with {dir: '${dir}'} is not ready yet. Response was:`,
@@ -27,7 +31,10 @@ export default function NewTabContent() {
         )
         return {name: "Not-Implemented"}
       })
-      .then(({name}) => client.pcaps.post({space: name, path: file}))
+      .then(({name}) => {
+        space = name
+        return client.pcaps.post({space, path: file})
+      })
       .catch((e) => {
         console.error(
           `POST /space/<name>/pcaps with {path: '${file}'} is not ready yet. Response was:`,
@@ -35,7 +42,7 @@ export default function NewTabContent() {
         )
         throw "Not Implemented"
       })
-      .then(() => console.log("IT IS WORKING!"))
+      .then(() => dispatch(initSpace(space)))
       .catch(() => {
         alert("NEW FEATURE IN PROGRESS")
       })
