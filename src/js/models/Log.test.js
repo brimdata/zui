@@ -54,13 +54,13 @@ test("getSec on a duration field", () => {
 test("getNs on a time field", () => {
   const log = conn()
   // "1425612054.369843"
-  expect(log.getNs("ts")).toEqual(369843000)
+  expect(log.getNs("ts")).toEqual(3698430000)
 })
 
 test("getNs on an inverval field", () => {
   const log = conn()
   // "2.000293"
-  expect(log.getNs("duration")).toEqual(293000)
+  expect(log.getNs("duration")).toEqual(2930000)
 })
 
 test("getSec on non time field", () => {
