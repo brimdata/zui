@@ -173,7 +173,7 @@ export default class Log {
         isString(value) &&
         (type === "time" || type === "interval" || type === "duration")
       ) {
-        return parseInt(value.split(".")[1] + "000")
+        return parseInt(value.split(".")[1] + "0000")
       } else {
         throw new Error(`${name} is not a time, interval, or duration type`)
       }
