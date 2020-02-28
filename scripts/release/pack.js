@@ -1,4 +1,4 @@
-/* @flow */
+/* @noflow */
 const packager = require("electron-packager")
 
 let opts = {
