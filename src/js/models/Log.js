@@ -173,7 +173,13 @@ export default class Log {
         isString(value) &&
         (type === "time" || type === "interval" || type === "duration")
       ) {
-        return parseInt(value.split(".")[1] + "0000")
+        let v = value.split(".")
+        if (v.length === 2) {
+          let frac = v[1]
+          let digits = frac.length
+          return parseInt(frac) * Math.pow(10,9-digits)
+        }
+        return 0
       } else {
         throw new Error(`${name} is not a time, interval, or duration type`)
       }
