@@ -61,8 +61,7 @@ export class ZQD {
     }
 
     this.zqd = spawn(
-      // zqdCommand(),
-      "zqd",
+      zqdCommand(),
       ["listen", "-l", this.addr(), "-datadir", this.root],
       opts
     )
