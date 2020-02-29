@@ -4,25 +4,25 @@ const fs = require("fs-extra")
 const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
-const { unzip } = require("cross-unzip")
+const {unzip} = require("cross-unzip")
 
 // zqd version to download & use.
-const zqdVersion = "v0.3.0"
+const zqdVersion = "v0.4.0"
 
 // Path and filename for the zqd executable.
 const zqdPath = ["zdeps"]
 const platformDefs = {
-  "linux": {
+  linux: {
     zqdBin: "zqd",
-    osarch: "linux-amd64",
+    osarch: "linux-amd64"
   },
-  "win32": {
+  win32: {
     zqdBin: "zqd.exe",
-    osarch: "windows-amd64",
+    osarch: "windows-amd64"
   },
-  "darwin": {
+  darwin: {
     zqdBin: "zqd",
-    osarch: "darwin-amd64",
+    osarch: "darwin-amd64"
   }
 }
 
@@ -32,13 +32,13 @@ async function download(url, targetfile) {
   return new Promise((resolve, reject) => {
     const gotStream = got.stream(url)
     gotStream.pipe(writeStream)
-    gotStream.on("error", err => {
+    gotStream.on("error", (err) => {
       if (writeStream.destroy) {
         writeStream.destroy(err)
       }
       reject(err)
     })
-    writeStream.on("error", err => reject(err))
+    writeStream.on("error", (err) => reject(err))
     writeStream.on("close", () => resolve())
   })
 }
@@ -46,7 +46,7 @@ async function download(url, targetfile) {
 async function unzipTo(zipfile, dir) {
   await fs.mkdirp(dir)
   return new Promise((resolve, reject) => {
-    unzip(zipfile, dir, err => {
+    unzip(zipfile, dir, (err) => {
       if (err) {
         reject(err)
       } else {
@@ -55,7 +55,6 @@ async function unzipTo(zipfile, dir) {
     })
   })
 }
-
 
 function zqdArtifactPaths(version) {
   if (!(process.platform in platformDefs)) {
@@ -71,7 +70,7 @@ function zqdArtifactPaths(version) {
     artifactFile,
     artifactUrl,
     relativeBinPath,
-    binName: plat.zqdBin,
+    binName: plat.zqdBin
   }
 }
 
@@ -98,7 +97,7 @@ async function zqdDownload(version, destPath) {
   return destBinLocation
 }
 
-zqdDownload(zqdVersion,zqdPath)
+zqdDownload(zqdVersion, zqdPath)
   .then((location) => {
     console.log("zqd " + zqdVersion + " downloaded to " + location)
   })
