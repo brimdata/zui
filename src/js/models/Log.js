@@ -151,24 +151,33 @@ export default class Log {
   }
 
   getSec(fieldName: string): number | void {
+    let _makeused = function(s) {
+      return s
+    }
     const field = this.getField(fieldName)
     if (field) {
       const {type, name, value} = field
+      _makeused(name)
       if (
         isString(value) &&
         (type === "time" || type === "interval" || type === "duration")
       ) {
         return parseInt(value.split(".")[0])
-      } else {
-        throw new Error(`${name} is not a time, interval, or duration type`)
       }
     }
+    // XXX return 0 if the requested field isn't present because certain handlers
+    // above do not check for existence of the field or catch this error
+    return 0
   }
 
   getNs(fieldName: string): number | void {
+    let _makeused = function(s) {
+      return s
+    }
     const field = this.getField(fieldName)
     if (field) {
       const {name, type, value} = field
+      _makeused(name)
       if (
         isString(value) &&
         (type === "time" || type === "interval" || type === "duration")
@@ -179,11 +188,11 @@ export default class Log {
           let digits = frac.length
           return parseInt(frac) * Math.pow(10, 9 - digits)
         }
-        return 0
-      } else {
-        throw new Error(`${name} is not a time, interval, or duration type`)
       }
     }
+    // XXX return 0 if the requested field isn't present because certain handlers
+    // above do not check for existence of the field or catch this error
+    return 0
   }
 
   cast(name: string) {
