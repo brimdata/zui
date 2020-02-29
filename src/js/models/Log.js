@@ -151,13 +151,9 @@ export default class Log {
   }
 
   getSec(fieldName: string): number | void {
-    let _makeused = function(s) {
-      return s
-    }
     const field = this.getField(fieldName)
     if (field) {
-      const {type, name, value} = field
-      _makeused(name)
+      const {type, value} = field
       if (
         isString(value) &&
         (type === "time" || type === "interval" || type === "duration")
@@ -171,13 +167,9 @@ export default class Log {
   }
 
   getNs(fieldName: string): number | void {
-    let _makeused = function(s) {
-      return s
-    }
     const field = this.getField(fieldName)
     if (field) {
-      const {name, type, value} = field
-      _makeused(name)
+      const {type, value} = field
       if (
         isString(value) &&
         (type === "time" || type === "interval" || type === "duration")
