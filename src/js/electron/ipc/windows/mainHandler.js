@@ -6,9 +6,13 @@ import type {$WindowManager} from "../../tron/windowManager"
 let started = false
 
 export default function(manager: $WindowManager) {
+  ipcMain.handle("windows:initialState", (_e, {id}) => {
+    return manager.getInitialState(id)
+  })
+
   ipcMain.handle("windows:redirect", (e, args) => {
     BrowserWindow.fromWebContents(e.sender).close()
-    manager.openWindow(args.name, {}, args.params)
+    manager.openWindow(args.name, args.params)
   })
 
   ipcMain.handle("windows:close", () => {
@@ -20,5 +24,14 @@ export default function(manager: $WindowManager) {
       console.timeEnd("init")
       started = true
     }
+  })
+
+  ipcMain.handle("windows:saveState", (e, id, state) => {
+    let win = BrowserWindow.fromWebContents(e.sender)
+    manager.setState(id, {
+      size: win.getSize(),
+      position: win.getPosition(),
+      state
+    })
   })
 }
