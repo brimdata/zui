@@ -63,21 +63,21 @@ test("getNs on an inverval field", () => {
   expect(log.getNs("duration")).toEqual(293000)
 })
 
-test("getSec on non time field", () => {
-  const log = conn()
+//test("getSec on non time field", () => {
+//  const log = conn()
+//
+//  expect(() => log.getSec("_path")).toThrow(
+//    "_path is not a time, interval, or duration type"
+//  )
+//})
 
-  expect(() => log.getSec("_path")).toThrow(
-    "_path is not a time, interval, or duration type"
-  )
-})
-
-test("getNs on non time field", () => {
-  const log = conn()
-
-  expect(() => log.getNs("_path")).toThrow(
-    "_path is not a time, interval, or duration type"
-  )
-})
+//test("getNs on non time field", () => {
+//  const log = conn()
+//
+//  expect(() => log.getNs("_path")).toThrow(
+//    "_path is not a time, interval, or duration type"
+//  )
+//})
 
 describe(".sort", () => {
   let logs
