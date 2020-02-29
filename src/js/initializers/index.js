@@ -6,21 +6,21 @@ import initBoom from "./initBoom"
 import initDOM from "./initDOM"
 import initGlobalStore from "./initGlobalStore"
 import initMenuActionListeners from "./initMenuActionListeners"
-import initQueryParams from "./initQueryParams"
+import initQueryParams, {getQueryParams} from "./initQueryParams"
 import initShortcuts from "./initShortcuts"
 import initStore from "./initStore"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
 
+let {id} = getQueryParams()
+
 export default () => {
   return Promise.all([
-    invoke(ipc.windows.initialState("abc123")),
+    invoke(ipc.windows.initialState(id)),
     initGlobalStore()
   ]).then(([initialState, globalStore]) => {
-    console.log(initialState)
-
     let boom = initBoom(undefined)
-    let store = initStore(undefined, boom)
+    let store = initStore(initialState, boom)
     initDOM()
     initShortcuts(store)
     initMenuActionListeners(store.dispatch)

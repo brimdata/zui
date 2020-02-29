@@ -7,7 +7,7 @@ let started = false
 
 export default function(manager: $WindowManager) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
-    return manager.getInitialState(id)
+    return manager.getWindow(id).state
   })
 
   ipcMain.handle("windows:redirect", (e, args) => {
@@ -28,7 +28,7 @@ export default function(manager: $WindowManager) {
 
   ipcMain.handle("windows:saveState", (e, id, state) => {
     let win = BrowserWindow.fromWebContents(e.sender)
-    manager.setState(id, {
+    manager.updateWindow(id, {
       size: win.getSize(),
       position: win.getPosition(),
       state

@@ -3,6 +3,7 @@
 import {BrowserWindow} from "electron"
 
 import type {ReturnType} from "../../types"
+import type {SessionState} from "./session"
 import type {WindowParams} from "./window"
 import brim from "../../brim"
 import menu from "../menu"
@@ -11,36 +12,29 @@ import tron from "./"
 export type WindowName = "welcome" | "search" | "login"
 export type $WindowManager = ReturnType<typeof windowManager>
 
-type WindowState = {
+export type WindowsState = {[string]: WindowState}
+
+export type WindowState = {|
+  ref: BrowserWindow,
+  name: string,
   size?: [number, number],
   position?: [number, number],
   state?: Object,
   lastFocused?: number
-}
-
-export type AppState = {
-  order: string[],
-  states: {
-    size: [number, number],
-    position: [number, number],
-    state: Object
-  }
-}
+|}
 
 export default function windowManager() {
-  let windows = {}
-  let appState: AppState = {}
+  let windows: WindowsState = {}
   let isQuitting = false
 
   return {
-    init(state: ?AppState) {
-      if (state) {
-        for (let id of state.order) {
-          let {size, position} = state.states[id]
-          this.openWindow("search", {size, position, query: {id}})
-        }
-      } else {
-        this.openWindow("search")
+    init(session: ?SessionState) {
+      console.log(session)
+      if (!session) return this.openWindow("search")
+      for (let id of session.order) {
+        let {size, position, state} = session.windows[id]
+        this.openWindow("search", {size, position, id})
+        this.updateWindow(id, {state})
       }
     },
 
@@ -48,31 +42,23 @@ export default function windowManager() {
       isQuitting = true
     },
 
-    getState() {
-      let order = getWindowOrder(windows)
-      let states = order.reduce(
-        (obj, id) => ({
-          ...obj,
-          [id]: appState[id]
-        }),
-        {}
-      )
-      return {
-        order,
-        states
+    getWindows() {
+      return windows
+    },
+
+    count(): number {
+      return Object.keys(windows).length
+    },
+
+    updateWindow(id: string, data: $Shape<WindowState>) {
+      windows = {
+        ...windows,
+        [id]: {...windows[id], ...data}
       }
     },
 
-    setState(id: string, data: WindowState) {
-      let prev = appState[id]
-      appState = {
-        ...appState,
-        [id]: {...prev, ...data}
-      }
-    },
-
-    getInitialState(id: string) {
-      return "Data for: " + id
+    getWindow(id: string): WindowState {
+      return windows[id]
     },
 
     openWindow(name: WindowName, winParams: $Shape<WindowParams> = {}) {
@@ -108,13 +94,4 @@ function defaultWindowParams(params: $Shape<WindowParams>): WindowParams {
     query: {},
     ...params
   }
-}
-
-function getWindowOrder(windows): string[] {
-  return (
-    Object.entries(windows)
-      // $FlowFixMe
-      .sort((a, b) => a[1].lastFocused - b[1].lastFocused)
-      .map((e) => e[0])
-  )
 }

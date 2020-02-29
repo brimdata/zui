@@ -1,7 +1,6 @@
 /* @flow */
-// $FlowFixMe
-import lib from "../lib"
 
+// $FlowFixMe
 console.time("init")
 import "regenerator-runtime/runtime"
 
@@ -16,9 +15,6 @@ import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
 import setupMainHandlers from "./ipc/setupMainHandlers"
 import tron from "./tron"
-import path from "path"
-
-let file = path.join(app.getPath("userData"), "appState.json")
 
 async function main() {
   // Disable Warnings in the Console
@@ -28,48 +24,30 @@ async function main() {
   if (handleSquirrelEvent(app)) return
 
   let winMan = tron.windowManager()
+  let session = tron.session()
+
   setupMainHandlers(winMan)
 
   app.on("ready", () => {
     installExtensions()
-    let appState = loadAppState()
-    winMan.init(appState)
-    // Read the appState.json and create the windows from it.
+    winMan.init(session.load())
   })
 
   app.on("before-quit", () => {
-    console.log("BEFORE QUIT")
     winMan.isQuitting()
   })
 
   app.on("quit", () => {
-    let appState = winMan.getState()
-    lib
-      .file(file)
-      .write(JSON.stringify(appState))
-      .then(() => {
-        console.log("WROTE TO FILE")
-      })
+    session.save(winMan.getWindows())
   })
 
   app.on("activate", () => {
-    // if (!win.exists()) win.create()
+    if (!winMan.count() === 0) winMan.init()
   })
 
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit()
   })
-}
-
-function loadAppState() {
-  let contents = lib.file(file).readSync()
-  try {
-    return JSON.parse(contents)
-  } catch (e) {
-    console.error("Unable to load appState.json")
-    console.error(e)
-    return undefined
-  }
 }
 
 main()
