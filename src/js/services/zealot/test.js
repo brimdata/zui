@@ -45,13 +45,13 @@ describe("spaces api", () => {
   })
 })
 
-describe("pcaps api", () => {
+describe("packets api", () => {
   let client = zealot.client("localhost:9867")
 
   test("get pcaps", () => {
     expect(client.inspect().pcaps.get({space: "hi"})).toEqual({
       method: "GET",
-      path: "/space/hi/pcaps"
+      path: "/space/hi/packet"
     })
   })
 
@@ -60,7 +60,7 @@ describe("pcaps api", () => {
       client.inspect().pcaps.post({space: "default", file: "~/my/capture.pcap"})
     ).toEqual({
       method: "POST",
-      path: "/space/default/pcaps",
+      path: "/space/default/packet",
       body: expect.any(String)
     })
   })
