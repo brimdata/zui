@@ -1,36 +1,26 @@
-.ingest-progress {
-  position: fixed;
-  background: $chrome-gradient;
-  box-shadow: inset 0 0 0px 0.5px rgba(0, 0, 0, 0.2),
-    0px 1px 5px 0px rgba(0, 0, 0, 0.1);
+.ingest-progress-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  animation: fadein 300ms;
+  margin-top: 20%;
+}
 
-  border-radius: 5px;
-  bottom: 8px;
-  right: 8px;
+.ingest-progress {
   padding: 8px;
   user-select: none;
-
   display: flex;
   align-items: center;
-
-  .icon {
-    margin-right: 8px;
-    height: 24px;
-    width: 20px;
-    svg {
-      height: 100%;
-      width: 100%;
-
-      path {
-        stroke: $white-9 !important;
-      }
-    }
-  }
 
   p {
     margin: 0;
     margin-right: 8px;
-    @include label-small;
+    @include label-normal;
+  }
+
+  .mac-spinner {
+    transform: scale(0.6);
   }
 
   .progress-indicator {
