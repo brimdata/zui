@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/brimsec/brim.svg?style=svg&circle-token=8fb219d4419937d21fb70c99c89157bff05c2ecc)](https://circleci.com/gh/brimsec/brim)
+![Brim CI](https://github.com/brimsec/brim/workflows/Brim%20CI/badge.svg)
 
 # Brim Desktop Application
 
