@@ -5,9 +5,7 @@ const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
 const {unzip} = require("cross-unzip")
-
-// zqd version to download & use.
-const zqdVersion = "v0.4.0"
+const brimPackage = require("../../package.json")
 
 // Path and filename for the zqd executable.
 const zqdPath = ["zdeps"]
@@ -97,11 +95,15 @@ async function zqdDownload(version, destPath) {
   return destBinLocation
 }
 
-zqdDownload(zqdVersion, zqdPath)
-  .then((location) => {
-    console.log("zqd " + zqdVersion + " downloaded to " + location)
-  })
-  .catch((err) => {
+async function main() {
+  try {
+    const version = brimPackage.dependencies.zq.split("#")[1]
+    const location = await zqdDownload(version, zqdPath)
+    console.log("zqd " + version + " downloaded to " + location)
+  } catch(err) {
     console.error("zqd setup: ", err)
     process.exit(1)
-  })
+  }
+}
+
+main()
