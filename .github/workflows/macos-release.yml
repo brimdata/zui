@@ -1,0 +1,53 @@
+name: Brim macOS release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: macos-10.15
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+    - run: npm install --no-audit
+    - run: npm run build
+    - name: create build keychain and import Developer ID certificate into it
+      run: |
+        security create-keychain -p password build
+        security default-keychain -s build
+        security unlock-keychain -p password build
+        f=$(mktemp)
+        echo ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }} | base64 -d > $f
+        security import $f -k build -A -T /usr/bin/codesign -T /usr/bin/security -f pkcs12  -P ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
+        rm $f
+        security set-key-partition-list -S apple-tool:,apple: -k password build
+        security find-identity -p codesigning -v
+    - name: build signed and notarized package
+      run: |
+        node ./scripts/release --darwin --notarize
+      env:
+        APPLEID_USER: ${{ secrets.APPLEID_USER }}
+        APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+    - name: upload release assets
+      uses: svenstaro/upload-release-action@1.1.0
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: dist/installers/Brim.dmg
+        asset_name: Brim.dmg
+        file_glob: true
+        overwrite: true
