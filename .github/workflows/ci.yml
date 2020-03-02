@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        os: [macos-10.15, ubuntu-18.04]
+        os: [ubuntu-18.04]
     steps:
     - uses: actions/checkout@v2
     - name: setup node version ${{ matrix.node-version }}
@@ -37,7 +37,7 @@ jobs:
       matrix:
         node-version: [12.x]
         os: [ubuntu-18.04]
-    needs: build
+#    needs: build
     steps:
     - uses: actions/checkout@v2
     - name: setup node version ${{ matrix.node-version }}
