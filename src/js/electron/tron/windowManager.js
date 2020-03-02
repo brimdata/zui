@@ -29,7 +29,6 @@ export default function windowManager() {
 
   return {
     init(session: ?SessionState) {
-      console.log(session)
       if (!session) return this.openWindow("search")
       for (let id of session.order) {
         let {size, position, state} = session.windows[id]
@@ -69,8 +68,10 @@ export default function windowManager() {
       let ref = tron
         .window(name, params)
         .on("focus", () => {
-          windows[id].lastFocused = new Date().getTime()
-          menu.setMenu(name, manager)
+          if (!isQuitting) {
+            windows[id].lastFocused = new Date().getTime()
+            menu.setMenu(name, manager)
+          }
         })
         .on("closed", () => {
           if (!isQuitting) {
