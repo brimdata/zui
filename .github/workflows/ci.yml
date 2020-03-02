@@ -1,0 +1,74 @@
+name: Brim CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [12.x]
+        os: [macos-10.15, ubuntu-18.04]
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup node version ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+    - run: npm install --no-audit
+    - run: npm run format-check
+    - run: npm run build
+    - run: npm run lint
+    - run: npm run flow
+    - run: npm test -- --maxWorkers=2 --ci
+
+  integration_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [12.x]
+        os: [ubuntu-18.04]
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup node version ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - uses: actions/setup-go@v1
+      with:
+        go-version: '1.13'
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+    - run: npm install --no-audit
+    - run: npm run build
+    - name: install wireshark and zeek
+      run: |
+        sudo sh -c "echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/security:zeek.list"
+        wget -nv https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key -O Release.key
+        sudo apt-key add - < Release.key
+        sudo apt-get update
+        sudo apt-get install wireshark-common zeek
+    - name: Get ZQD
+      run: |
+        git clone --single-branch https://github.com/brimsec/zq
+        pushd zq
+        git reset --hard da56b01d87a9745c90d09e960163ecba33eab55a
+        make install
+    - run: npm run itest
