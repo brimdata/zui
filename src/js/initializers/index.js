@@ -1,22 +1,37 @@
 /* @flow */
 
+import {ipcRenderer} from "electron"
+
 import initBoom from "./initBoom"
 import initDOM from "./initDOM"
+import initGlobalStore from "./initGlobalStore"
 import initMenuActionListeners from "./initMenuActionListeners"
-import initPersistance from "./initPersistance"
-import initQueryParams from "./initQueryParams"
+import initQueryParams, {getQueryParams} from "./initQueryParams"
 import initShortcuts from "./initShortcuts"
-import initState from "./initState"
 import initStore from "./initStore"
+import invoke from "../electron/ipc/invoke"
+import ipc from "../electron/ipc"
+
+let {id} = getQueryParams()
 
 export default () => {
-  initDOM()
-  const _state = initState()
-  const boom = initBoom(undefined)
-  const store = initStore(undefined, boom)
-  initPersistance(store)
-  initShortcuts(store)
-  initMenuActionListeners(store.dispatch)
-  initQueryParams(store)
-  return store
+  return Promise.all([
+    invoke(ipc.windows.initialState(id)),
+    initGlobalStore()
+  ]).then(([initialState, globalStore]) => {
+    let boom = initBoom(undefined)
+    let store = initStore(initialState, boom)
+    initDOM()
+    initShortcuts(store)
+    initMenuActionListeners(store.dispatch)
+    initQueryParams(store)
+
+    global.getState = store.getState
+
+    return {store, globalStore}
+  })
+}
+
+global.onbeforeunload = () => {
+  ipcRenderer.invoke("windows:saveState", global.windowId, global.getState())
 }

@@ -22,7 +22,7 @@ function SelectPcaps() {
 
     invoke(ipc.zqd.ingest("not-working", paths)).then((space) => {
       let [host, port] = zqdAddr.split(":")
-      invoke(ipc.windows.redirect("search", {host, port, space}))
+      invoke(ipc.windows.redirect("search", {query: {host, port, space}}))
     })
   }
 

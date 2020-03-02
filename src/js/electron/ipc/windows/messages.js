@@ -1,10 +1,14 @@
 /* @flow */
 import type {WindowName} from "../../tron/windowManager"
 import type {WindowParams} from "../../tron/window"
-import type {WindowsCloseMsg, WindowsRedirectMsg} from "../types"
+import type {
+  WindowsCloseMsg,
+  WindowsRedirectMsg,
+  WindowsInitialStateMsg
+} from "../types"
 
 export default {
-  redirect(name: WindowName, params: WindowParams): WindowsRedirectMsg {
+  redirect(name: WindowName, params: $Shape<WindowParams>): WindowsRedirectMsg {
     return {
       channel: "windows:redirect",
       name,
@@ -14,6 +18,12 @@ export default {
   close(): WindowsCloseMsg {
     return {
       channel: "windows:close"
+    }
+  },
+  initialState(id: string): WindowsInitialStateMsg {
+    return {
+      channel: "windows:initialState",
+      id
     }
   }
 }

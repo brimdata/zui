@@ -1,54 +1,35 @@
 /* @flow */
 import {BrowserWindow} from "electron"
 
-import type {WindowKeep} from "./windowState"
 import {type WindowName} from "./windowManager"
 
-export type WindowParams = {}
+export type WindowParams = {
+  size: [number, number],
+  position?: [number, number],
+  query: Object,
+  id: string
+}
 
-export default function window(
-  name: WindowName,
-  params: WindowParams = {},
-  query: Object = {},
-  state: WindowKeep
-) {
-  let set = stateSetter(state, name)
-  let get = stateGetter(state, name)
-  let [x, y] = get("position")
-  let [width, height] = get("size")
-
+export default function window(name: WindowName, params: WindowParams) {
+  let {size, position, query, id} = params
   let win = new BrowserWindow({
     titleBarStyle: "hidden",
     resizable: true,
-    width,
-    height,
-    x,
-    y,
     webPreferences: {
       nodeIntegration: true,
       experimentalFeatures: true
-    },
-    ...params
+    }
   })
-    .on("move", (e) => set("position", e.sender.getPosition()))
-    .on("resize", (e) => set("size", e.sender.getSize()))
-    .on("closed", () => state.save())
 
-  win.loadFile(`${name}.html`, {query})
+  if (size) {
+    win.setSize(...size)
+  }
+  if (position) {
+    win.setPosition(...position)
+  } else {
+    win.center()
+  }
+  win.loadFile(`${name}.html`, {query: {...query, id}})
 
   return win
-}
-
-function stateSetter(state, name) {
-  return (field, value) => {
-    try {
-      state.set(name + "." + field, value)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-}
-
-function stateGetter(state, name) {
-  return (field) => state.get(name + "." + field)
 }

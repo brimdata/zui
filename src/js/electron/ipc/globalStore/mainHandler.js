@@ -1,13 +1,12 @@
 /* @flow */
 import {ipcMain} from "electron"
 
-import createGlobalStore from "../../../state/createGlobalStore"
 import ipc from ".."
 import sendTo from "../sendTo"
 
-export default function() {
+export default function(store: *) {
   let windows = new Map()
-  let store = createGlobalStore()
+  // XXX We need to clean up these windows when they close
 
   ipcMain.handle("globalStore:init", (e) => {
     windows.set(e.sender.id, e.sender)
@@ -18,7 +17,6 @@ export default function() {
   })
 
   ipcMain.handle("globalStore:dispatch", (e, {action}) => {
-    console.log("DISPATCH", action)
     store.dispatch(action)
     for (let [_id, web] of windows) {
       sendTo(web, ipc.globalStore.dispatch(action))

@@ -9,20 +9,19 @@ import App from "./components/App"
 import AppErrorBoundary from "./components/AppErrorBoundary"
 import GlobalContext from "./state/GlobalContext"
 import View from "./state/View"
-import init from "./initializers"
-import initGlobalStore from "./initializers/initGlobalStore"
+import initializers from "./initializers"
 import invoke from "./electron/ipc/invoke"
 import ipc from "./electron/ipc"
 import lib from "./lib"
 
-const store = init()
+initializers().then(({globalStore, store}) => {
+  // put this somewhere else
+  store.dispatch(View.setIsIngesting(true))
+  invoke(ipc.zqd.subscribe()).then(() => {
+    store.dispatch(View.setIsIngesting(false))
+  })
+  //
 
-store.dispatch(View.setIsIngesting(true))
-invoke(ipc.zqd.subscribe()).then(() => {
-  store.dispatch(View.setIsIngesting(false))
-})
-
-initGlobalStore().then((globalStore) => {
   ReactDOM.render(
     <AppErrorBoundary dispatch={store.dispatch}>
       <Provider store={globalStore} context={GlobalContext}>
