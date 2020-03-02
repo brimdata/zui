@@ -16,8 +16,8 @@ program
           if (cmd.notarize) p.then(() => notarize({
             appBundleId: "com.brimsecurity.brim",
             appPath: "dist/packages/Brim-darwin-x64/Brim.app",
-            appleId: process.env.MACOS_APPLEID_USER,
-            appleIdPassword: process.env.MACOS_APPLEID_PASSWORD,
+            appleId: process.env.APPLEID_USER,
+            appleIdPassword: process.env.APPLEID_PASSWORD,
           }))
           p.then(() => install.darwin())
       }
