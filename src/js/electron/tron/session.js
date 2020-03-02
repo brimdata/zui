@@ -3,6 +3,7 @@
 import {app} from "electron"
 import path from "path"
 
+import type {GlobalState} from "../../state/globalReducer"
 import type {WindowsState, WindowState} from "./windowManager"
 import lib from "../../lib"
 
@@ -17,12 +18,13 @@ export type SessionState = {|
       size: [number, number],
       state: Object
     }
-  }
+  },
+  globalState: GlobalState
 |}
 
 export default function session() {
   return {
-    save(windows: WindowsState) {
+    save(windows: WindowsState, globalState: GlobalState) {
       let groupById = (all, id) => ({
         ...all,
         [id]: getWindowData(windows[id])
@@ -31,19 +33,20 @@ export default function session() {
       let fileContents = JSON.stringify(
         ({
           order,
-          windows: order.reduce(groupById, {})
+          windows: order.reduce(groupById, {}),
+          globalState
         }: SessionState)
       )
       lib.file(SESSION_STATE_FILE).write(fileContents)
     },
 
-    load() {
+    load(): ?SessionState {
       let contents
 
       try {
         contents = lib.file(SESSION_STATE_FILE).readSync()
       } catch {
-        return
+        return undefined
       }
 
       try {
