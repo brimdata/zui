@@ -12,18 +12,18 @@ export type WindowParams = {
 
 export default function window(name: WindowName, params: WindowParams) {
   let {size, position, query, id} = params
-  let [width, height] = size
   let win = new BrowserWindow({
     titleBarStyle: "hidden",
     resizable: true,
-    width,
-    height,
     webPreferences: {
       nodeIntegration: true,
       experimentalFeatures: true
     }
   })
 
+  if (size) {
+    win.setSize(...size)
+  }
   if (position) {
     win.setPosition(...position)
   } else {

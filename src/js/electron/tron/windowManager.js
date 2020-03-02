@@ -9,7 +9,7 @@ import brim from "../../brim"
 import menu from "../menu"
 import tron from "./"
 
-export type WindowName = "welcome" | "search" | "login"
+export type WindowName = "welcome" | "search"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {[string]: WindowState}
@@ -31,8 +31,8 @@ export default function windowManager() {
     init(session: ?SessionState) {
       if (!session) return this.openWindow("search")
       for (let id of session.order) {
-        let {size, position, state} = session.windows[id]
-        this.openWindow("search", {size, position, id})
+        let {name, size, position, state} = session.windows[id]
+        this.openWindow(name, {size, position, id})
         this.updateWindow(id, {state})
       }
     },
