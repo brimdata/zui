@@ -66,4 +66,20 @@ npm run check  # Runs all the above at once except for itests
 npm run release
 ```
 
-This creates installers for both Windows and MacOS that can be found in `./dist/installers`.
+This creates installers for both Windows and macOS that can be found in `./dist/installers`.
+
+To create a [notarized](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution) macOS release:
+
+```bash
+npm run build
+APPLEID_USER=<user> APPLEID_PASSWORD=<app-specific-password> node ./scripts/release --darwin --notarize
+```
+
+Where `APPLEID_USER` is the apple ID user name, and `APPLEID_PASSWORD` is an app-specific password created for notarization (details [here](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow)). This will also sign the contents of the package, which requires a [Developer ID](https://developer.apple.com/developer-id/) certificate to be present in your keychain. 
+
+Notarization can take some time to complete ("typically less than an hour"). If you want to check on the status of the notarization request, run:
+
+```bash
+xcrun altool --notarization-history 0 -u <user> -p <app-specific-password>
+```
+
