@@ -11,11 +11,6 @@ import "regenerator-runtime/runtime"
 
 import {app} from "electron"
 
-import fixPath from "fix-path"
-
-// inherit shell PATH environment to access zeek, zq, and mergecap binaries.
-fixPath()
-
 import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
 import tron from "./tron"
