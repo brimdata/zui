@@ -32,12 +32,14 @@ jobs:
     - run: npm test -- --maxWorkers=2 --ci
 
   integration_test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-18.04
+    container:
+      image: brimsec/ci:0.0.1-zeek-mergecap
+      options: --user root # circleci dockerfile that we derive from has USER circleci, which then can't write to mounted volumes
     strategy:
       matrix:
         node-version: [12.x]
-        os: [ubuntu-18.04]
-#    needs: build
+    needs: build
     steps:
     - uses: actions/checkout@v2
     - name: setup node version ${{ matrix.node-version }}
@@ -58,17 +60,11 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - run: npm install --no-audit
     - run: npm run build
-    - name: install wireshark and zeek
-      run: |
-        sudo sh -c "echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/security:zeek.list"
-        wget -nv https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key -O Release.key
-        sudo apt-key add - < Release.key
-        sudo apt-get update
-        sudo apt-get install wireshark-common zeek
     - name: Get ZQD
       run: |
         git clone --single-branch https://github.com/brimsec/zq
-        pushd zq
+        cd zq
         git reset --hard da56b01d87a9745c90d09e960163ecba33eab55a
         make install
-    - run: npm run itest
+    - run: |
+        npm run itest
