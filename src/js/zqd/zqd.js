@@ -63,7 +63,7 @@ export class ZQD {
     })
     const opts = {
       stdio: "inherit",
-      env: zqdEnvironment()
+      env: zqdEnvironment
     }
 
     this.zqd = spawn(
