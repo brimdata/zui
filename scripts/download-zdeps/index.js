@@ -7,19 +7,12 @@ const tmp = require("tmp")
 const {unzip} = require("cross-unzip")
 const brimPackage = require("../../package.json")
 
-// Path and filename for the zqd executable.
-const zqdPath = ["zdeps"]
+const zdepsPath = path.resolve("zdeps")
+
 const platformDefs = {
-  linux: {
-    zqdBin: "zqd",
-    osarch: "linux-amd64"
-  },
-  win32: {
-    zqdBin: "zqd.exe",
-    osarch: "windows-amd64"
-  },
   darwin: {
     zqdBin: "zqd",
+    zeekBin: "zeek",
     osarch: "darwin-amd64"
   }
 }
@@ -76,8 +69,7 @@ function zqdArtifactPaths(version) {
 // directory. Returns the absolute path of the zqd binary file.
 async function zqdDownload(version, destPath) {
   const paths = zqdArtifactPaths(version)
-  const destdir = path.join(...destPath)
-  const destBinLocation = path.resolve(path.join(destdir, paths.binName))
+  const destBinLocation = path.join(destPath, paths.binName)
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {
@@ -86,7 +78,7 @@ async function zqdDownload(version, destPath) {
     await unzipTo(destArchive, tmpdir.name)
 
     const zqdBinPath = path.join(tmpdir.name, paths.relativeBinPath)
-    fs.mkdirpSync(destdir)
+    fs.mkdirpSync(destPath)
     fs.moveSync(zqdBinPath, destBinLocation, {overwrite: true})
   } finally {
     tmpdir.removeCallback()
@@ -95,13 +87,53 @@ async function zqdDownload(version, destPath) {
   return destBinLocation
 }
 
+async function zeekDownload(version, zdepsPath) {
+  if (!(process.platform in platformDefs)) {
+    throw new Error("unsupported platform")
+  }
+  const plat = platformDefs[process.platform]
+
+  const artifactFile = `zeek-${version}.${plat.osarch}.zip`
+  const artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
+  const zeekPath = path.join(zdepsPath, "zeek")
+  const zeekBinPath = path.join(zdepsPath, "zeek", plat.zeekBin)
+
+  const tmpdir = tmp.dirSync({unsafeCleanup: true})
+  try {
+    const destArchive = path.join(tmpdir.name, artifactFile)
+    await download(artifactUrl, destArchive)
+
+    fs.removeSync(zeekPath)
+    await unzipTo(destArchive, zdepsPath)
+    if (!fs.pathExistsSync(zeekPath)) {
+      throw new Error("zeek artifact zip file has unexpected layout")
+    }
+    if (!fs.pathExistsSync(zeekBinPath)) {
+      throw new Error("zeek executable not found in download")
+    }
+  } finally {
+    tmpdir.removeCallback()
+  }
+
+  return zeekBinPath
+}
+
 async function main() {
   try {
-    const version = brimPackage.dependencies.zq.split("#")[1]
-    const location = await zqdDownload(version, zqdPath)
-    console.log("zqd " + version + " downloaded to " + location)
+    // We encode the zeek version here for now to avoid the unncessary
+    // git clone if it were in package.json.
+    const zeekVersion = "vBrimReleaseWorkflowTest-brim"
+
+    const zeekLocation = await zeekDownload(zeekVersion, zdepsPath)
+    console.log("zeek " + zeekVersion + " downloaded to " + zeekLocation)
+
+    // zqd version comes from package.json ("brimsec/zq#<version>")
+    const zqdVersion = brimPackage.dependencies.zq.split("#")[1]
+
+    const zqdLocation = await zqdDownload(zqdVersion, zdepsPath)
+    console.log("zqd " + zqdVersion + " downloaded to " + zqdLocation)
   } catch(err) {
-    console.error("zqd setup: ", err)
+    console.error("zdeps setup: ", err)
     process.exit(1)
   }
 }

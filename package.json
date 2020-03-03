@@ -32,7 +32,7 @@
     "release": "node scripts/release --win32 --darwin",
     "prerelease": "npm run build",
     "prebuild": "npm run clean",
-    "postinstall": "node scripts/download-zqd"
+    "postinstall": "node scripts/download-zdeps"
   },
   "jest": {
     "notify": false,
