@@ -125,12 +125,14 @@ async function zeekDownload(version, zdepsPath) {
 
 async function main() {
   try {
-    // We encode the zeek version here for now to avoid the unncessary
-    // git clone if it were in package.json.
-    const zeekVersion = "vBrimReleaseWorkflowTest-brim"
-
-    const zeekLocation = await zeekDownload(zeekVersion, zdepsPath)
-    console.log("zeek " + zeekVersion + " downloaded to " + zeekLocation)
+    // XXX: Linux zeek artifact support is WIP.
+    if (process.platform == "darwin") {
+      // We encode the zeek version here for now to avoid the unncessary
+      // git clone if it were in package.json.
+      const zeekVersion = "v3.0.2-brim-mac1"
+      const zeekLocation = await zeekDownload(zeekVersion, zdepsPath)
+      console.log("zeek " + zeekVersion + " downloaded to " + zeekLocation)
+    }
 
     // zqd version comes from package.json ("brimsec/zq#<version>")
     const zqdVersion = brimPackage.dependencies.zq.split("#")[1]
