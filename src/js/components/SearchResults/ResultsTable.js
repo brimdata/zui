@@ -75,6 +75,10 @@ export default function ResultsTable(props: Props) {
         highlight={Log.isSame(logs[index], props.selectedLog)}
         dimens={dimens}
         onClick={() => props.dispatch(viewLogDetail(logs[index]))}
+        onDoubleClick={() => {
+          props.dispatch(viewLogDetail(logs[index]))
+          props.dispatch(View.showRightSidebar())
+        }}
         rightClick={menu.fieldContextMenu(
           props.program,
           props.tableColumns.getColumns().map((c) => c.name),
