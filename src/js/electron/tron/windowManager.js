@@ -41,7 +41,7 @@ export default function windowManager() {
       isQuitting = true
     },
 
-    getWindows() {
+    getWindows(): WindowsState {
       return windows
     },
 
