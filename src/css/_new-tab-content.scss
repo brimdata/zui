@@ -39,7 +39,7 @@
 
   label {
     display: block;
-    @include label-section;
+    @include heading-section;
     margin-bottom: 24px;
   }
 }

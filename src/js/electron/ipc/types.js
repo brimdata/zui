@@ -5,6 +5,7 @@ import type {WindowParams} from "../tron/window"
 export type IpcMsg =
   | WindowsRedirectMsg
   | WindowsCloseMsg
+  | WindowsInitialStateMsg
   | ZqdIngestMsg
   | ZqdInfoMsg
   | ZqdSubscribeMsg
@@ -19,6 +20,11 @@ export type WindowsRedirectMsg = {
 
 export type WindowsCloseMsg = {
   channel: "windows:close"
+}
+
+export type WindowsInitialStateMsg = {
+  channel: "windows:initialState",
+  id: string
 }
 
 export type ZqdIngestMsg = {
