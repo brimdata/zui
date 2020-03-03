@@ -16,7 +16,7 @@ export default function fieldContextMenu(
     const isTime = field.type === "time"
     const isConn = log.isPath("conn")
     const isGroupBy = hasGroupByProc(program)
-    const isAddr = ["ip"].includes(field.type)
+    const isIp = ["ip"].includes(field.type)
     const hasCol = columns.includes(field.name)
     const sameCols = isEqual(
       log.descriptor.map((d) => d.name).sort(),
@@ -66,9 +66,9 @@ export default function fieldContextMenu(
       menu.actions.pcaps.menuItem([log], {enabled: isConn && hasPackets}),
       menu.actions.detail.menuItem([log], {enabled: true}),
       menu.separator(),
-      menu.actions.whoisRightclick.menuItem([field], {enabled: isAddr}),
+      menu.actions.whoisRightclick.menuItem([field], {enabled: isIp}),
       menu.actions.virusTotalRightclick.menuItem([field], {
-        enabled: virusTotal || isAddr
+        enabled: virusTotal || isIp
       }),
       menu.separator(),
       menu.actions.logResult.menuItem([field, log], {enabled: true})
