@@ -2,34 +2,26 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
-import os from "os"
-
-import {globalDispatch, useGlobalSelector} from "../state/GlobalContext"
+import {initSpace} from "../flows/initSpace"
 import FileFill from "../icons/FileFill"
-import RecentFiles from "../state/RecentFiles"
-import Search from "../state/Search"
 
-let homedir = os.homedir()
+type Props = {|
+  files: string[]
+|}
 
-export default function SavedSpacesList() {
+export default function SavedSpacesList({files}: Props) {
   let dispatch = useDispatch()
-  let files = useGlobalSelector(RecentFiles.getPaths)
 
   function onClick(space) {
-    dispatch(Search.setSpace(space))
-    globalDispatch(RecentFiles.open(space))
-  }
-
-  function format(file) {
-    return file.replace(homedir, "~")
+    dispatch(initSpace(space))
   }
 
   return (
     <div className="saved-spaces-list">
       {files.map((file) => (
-        <a onClick={() => onClick(file)} key={file} href="#">
+        <a className="item" onClick={() => onClick(file)} key={file} href="#">
           <FileFill className="file-icon" />
-          <span className="name">{format(file)}</span>
+          <span className="name">{file}</span>
           <div className="line" />
         </a>
       ))}

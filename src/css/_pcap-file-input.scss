@@ -17,11 +17,17 @@
 
 input[type="file"] {
   border: 2px dashed $brand-orange;
-  border-radius: 16px;
+  border-radius: 4px;
+  background: white;
+  background: white;
+  box-shadow: inset 0 0 2px 0px rgba(0, 0, 0, 0.3);
+
   background: transparentize($brand-blue-light, 0.95);
+  background: white;
   display: flex;
   width: 100%;
   padding: 40px 3px 40px 100px;
+  @include label-normal;
 }
 
 @keyframes updown {

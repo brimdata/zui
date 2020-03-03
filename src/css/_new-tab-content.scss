@@ -17,12 +17,16 @@
 
   .input-methods {
     margin: 20px auto;
+    margin-bottom: 50px;
     display: flex;
     min-height: 300px;
 
     section {
       min-width: 360px;
       max-width: 360px;
+      min-height: 0px;
+      display: flex;
+      flex-direction: column;
     }
 
     .separator {

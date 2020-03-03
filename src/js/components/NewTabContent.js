@@ -1,24 +1,30 @@
 /* @flow */
-import {useDispatch} from "react-redux"
-import React, {useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useEffect, useState} from "react"
 import fsExtra from "fs-extra"
 
 import {initSpace} from "../flows/initSpace"
-import {useGlobalSelector} from "../state/GlobalContext"
 import ErrorFactory from "../models/ErrorFactory"
 import IngestProgress from "./IngestProgress"
 import LogoType from "../icons/LogoType"
 import Notice from "../state/Notice"
 import PcapFileInput from "./PcapFileInput"
-import RecentFiles from "../state/RecentFiles"
 import SavedSpacesList from "./SavedSpacesList"
+import Spaces from "../state/Spaces"
+import Tab from "../state/Tab"
+import refreshSpaceNames from "../flows/refreshSpaceNames"
 import zealot from "../services/zealot"
 
 export default function NewTabContent() {
   let dispatch = useDispatch()
-  let files = useGlobalSelector(RecentFiles.getPaths)
+  let id = useSelector(Tab.clusterId)
+  let files = useSelector(Spaces.names(id))
   let filesPresent = files.length !== 0
   let [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    dispatch(refreshSpaceNames())
+  }, [])
 
   function onChange(_e, [file]) {
     if (!file) return
@@ -53,7 +59,7 @@ export default function NewTabContent() {
               <>
                 <section>
                   <label>Recent Files</label>
-                  <SavedSpacesList />
+                  <SavedSpacesList files={files} />
                 </section>
                 <div className="separator" />
               </>
