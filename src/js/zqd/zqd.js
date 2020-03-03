@@ -7,6 +7,9 @@ import {app} from "electron"
 
 import * as cmd from "../stdlib/cmd"
 import electronIsDev from "../electron/isDev"
+import type {ReturnType} from "../types"
+
+export type $ZQD = ReturnType<typeof ZQD>
 
 // Path and filename for the zqd executable.
 const zqdPath = join(app.getAppPath(), "zdeps")
