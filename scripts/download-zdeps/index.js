@@ -14,6 +14,11 @@ const platformDefs = {
     zqdBin: "zqd",
     zeekBin: "zeek",
     osarch: "darwin-amd64"
+  },
+  linux: {
+    zqdBin: "zqd",
+    zeekBin: "zeek",
+    osarch: "linux-amd64"
   }
 }
 
