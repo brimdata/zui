@@ -28,6 +28,7 @@ beforeEach(() => {
     log: log,
     timeZone: "UTC",
     onClick: () => {},
+    onDoubleClick: () => {},
     rightClick: () => []
   }
 })

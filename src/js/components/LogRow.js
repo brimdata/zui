@@ -19,6 +19,7 @@ type Props = {
   log: Log,
   columns: TableColumns,
   onClick: () => void,
+  onDoubleClick: () => void,
   rightClick: RightClickBuilder
 }
 
@@ -55,6 +56,7 @@ export default class LogRow extends React.Component<Props> {
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
         style={Styler.row(dimens)}
         onClick={this.props.onClick}
+        onDoubleClick={this.props.onDoubleClick}
       >
         {columns.map(renderCell)}
       </div>
@@ -87,6 +89,7 @@ export default class LogRow extends React.Component<Props> {
         className={classNames("log-row", {highlight, even: index % 2 == 0})}
         style={Styler.row(dimens)}
         onClick={this.props.onClick}
+        onDoubleClick={this.props.onDoubleClick}
       >
         {columns.getVisible().map(renderCell)}
       </div>
