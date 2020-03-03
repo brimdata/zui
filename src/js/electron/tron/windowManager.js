@@ -29,7 +29,8 @@ export default function windowManager() {
 
   return {
     init(session: ?SessionState) {
-      if (!session) return this.openWindow("search")
+      if (!session || (session && session.order.length === 0))
+        return this.openWindow("search")
       for (let id of session.order) {
         let {name, size, position, state} = session.windows[id]
         this.openWindow(name, {size, position, id})
