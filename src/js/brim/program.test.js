@@ -64,6 +64,15 @@ describe("drill down", () => {
     .row(["192.168.0.54", "udp", "WPAD", "24"])
     .toLogs()[0]
 
+  test("when there is no leading filter", () => {
+    let program = brim
+      .program("count() by id.orig_h")
+      .drillDown(result)
+      .string()
+
+    expect(program).toBe("id.orig_h=192.168.0.54")
+  })
+
   test("combines keys in the group by proc", () => {
     let program = brim
       .program("_path=dns | count() by id.orig_h, proto, query | sort -r")
@@ -337,6 +346,38 @@ describe("Parallelizing multiple programs", () => {
       parallelizeProcs([a, b, c, "_path=conn"])
     }).toThrow(
       "Filters must be the same in all programs: md5=123, md5=123, md5=123, _path=conn"
+    )
+  })
+})
+
+describe("extracting the first filter", () => {
+  test("*", () => {
+    expect(brim.program("*").filter()).toEqual("*")
+  })
+
+  test("_path=conn", () => {
+    expect(brim.program("_path=conn").filter()).toEqual("_path=conn")
+  })
+
+  test("_path=conn | sum(duration)", () => {
+    expect(brim.program("_path=conn | sum(duration)").filter()).toEqual(
+      "_path=conn"
+    )
+  })
+
+  test("_path=conn | filter a", () => {
+    // This is questionable. We'd need another way to extract the filter if we
+    // want the result of this to be _path=conn | filter a
+    expect(brim.program("_path=conn | filter a").filter()).toEqual("_path=conn")
+  })
+
+  test("count()", () => {
+    expect(brim.program("count()").filter()).toEqual("*")
+  })
+
+  test("dns | count() | filter num > 1", () => {
+    expect(brim.program("dns | count() | filter num > 1").filter()).toEqual(
+      "dns"
     )
   })
 })

@@ -1,8 +1,9 @@
 /* @flow */
 
+import {isEqual} from "lodash"
 import ZQL from "zq/zql/zql.js"
 
-import {TUPLE_PROCS} from "./ast"
+import {EVERYTHING_FILTER, TUPLE_PROCS} from "./ast"
 import {trim} from "../lib/Str"
 import brim, {type $Field, type $Log} from "./"
 import stdlib from "../stdlib"
@@ -86,8 +87,13 @@ export default function(p: string = "", pins: string[] = []) {
     },
 
     filter() {
-      let [f] = p.split("|")
-      return trim(f)
+      let proc = this.ast().proc("FilterProc")
+      if (proc && isEqual(proc.filter, EVERYTHING_FILTER)) {
+        return "*"
+      } else {
+        let [f] = p.split("|")
+        return trim(f)
+      }
     },
 
     procs() {
