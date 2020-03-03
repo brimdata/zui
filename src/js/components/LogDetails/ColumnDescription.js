@@ -18,14 +18,15 @@ type Props = {
 export default function ColumnDescription({show, anchor, column, path}: Props) {
   let info = brim.zeekLogInfo(path)
   let md = new MarkdownIt()
+  let {desc, type} = info.describeColumn(column.name)
   const createBody = () => ({
-    __html: md.render(info.describeColumn(column.name))
+    __html: md.render(desc)
   })
 
   return (
     <Tip show={show} anchor={anchor} className="column-description">
       <div className="tip-title">
-        <p>{column.name}</p> <p>{column.type}</p>
+        <p>{column.name}</p> <p>{type}</p>
       </div>
       <div className="tip-body">
         <p dangerouslySetInnerHTML={createBody()}></p>

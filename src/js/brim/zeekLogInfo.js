@@ -76,7 +76,10 @@ function knownPath(path: string, info: ZeekInfo) {
     describeColumn: (name: string) => {
       let firstPartOfName = name.split(".")[0]
       let field = info.find((f) => f.name === firstPartOfName) || {}
-      return field.desc || "No description found."
+      return {
+        desc: field.desc || "No description found.",
+        type: field.type || ""
+      }
     }
   }
 }
@@ -85,6 +88,9 @@ function unknownPath(): ZeekLogInfoClass {
   return {
     isKnown: () => false,
     docsUrl: () => "",
-    describeColumn: (name: string) => `No docs for ${name}.`
+    describeColumn: (name: string) => ({
+      desc: `No docs for ${name}.`,
+      type: ""
+    })
   }
 }
