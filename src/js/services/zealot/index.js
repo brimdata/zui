@@ -1,25 +1,59 @@
 /* @flow */
 
+import {
+  type FetchArgs,
+  type FetchGenerator,
+  type FetchPromise,
+  fetchGenerator,
+  fetchPromise
+} from "./fetcher"
 import defaults from "./defaults"
-import deliver from "./deliver"
 import pcapsApi, {type PcapsGetArgs, type PcapsPostArgs} from "./pcapsApi"
 import searchApi from "./searchApi"
 import spacesApi, {type SpacesCreateArgs} from "./spacesApi"
 
-type ZealotSearchArgs = {}
+export type TimeArg = string | Date
+export type ZealotSearchArgs = {
+  from: TimeArg,
+  to: TimeArg,
+  space: string
+}
 
 function client(hostUrl: string) {
   let host = defaults.host(hostUrl)
   let searchArgs = defaults.searchArgs()
   let debug = false
 
-  function send(args: Object) {
+  function debugging() {
     if (debug) {
       debug = false
-      return args
+      return true
     } else {
-      return deliver(host, args)
+      return false
     }
+  }
+
+  function send(args: FetchArgs): FetchPromise {
+    // $FlowFixMe
+    if (debugging()) return args
+    return fetchPromise(host, args)
+  }
+
+  function sendStream(args: FetchArgs): FetchGenerator {
+    // $FlowFixMe
+    if (debugging()) return args
+    return fetchGenerator(host, args)
+  }
+
+  async function sendCollectedStream(args: FetchArgs): FetchPromise {
+    // $FlowFixMe
+    if (debugging()) return args
+    let records = []
+    for await (let payload of fetchGenerator(host, args)) {
+      if (payload.type === "SearchRecords")
+        records = records.concat(payload.records)
+    }
+    return records
   }
 
   return {
@@ -32,8 +66,13 @@ function client(hostUrl: string) {
       post: (args: PcapsPostArgs) => send(pcapsApi.post(args)),
       get: (args: PcapsGetArgs) => send(pcapsApi.get(args))
     },
-    search(zql: string, args: Object = {}) {
-      return send(searchApi(zql, {...args, ...searchArgs}))
+    search(zql: string, args: ZealotSearchArgs = {}) {
+      let options = {...searchArgs, ...args}
+      return sendCollectedStream(searchApi(zql, options))
+    },
+    searchStream(zql: string, args: ZealotSearchArgs = {}) {
+      let options = {...searchArgs, ...args}
+      return sendStream(searchApi(zql, options))
     },
     searchDefaults(args: ZealotSearchArgs) {
       searchArgs = {
