@@ -37,11 +37,11 @@ export default function fieldContextMenu(
 
     return [
       menu.actions.include.menuItem([field], {
-        enabled: !isTime && hasCol,
+        enabled: hasCol,
         visible: !compound
       }),
       menu.actions.exclude.menuItem([field], {
-        enabled: !isTime && hasCol,
+        enabled: hasCol,
         visible: !compound
       }),
       menu.actions.in.menuItem([field], {
@@ -55,7 +55,7 @@ export default function fieldContextMenu(
       menu.actions.groupByDrillDown.menuItem([program, log], {
         enabled: isGroupBy && sameCols
       }),
-      menu.actions.countBy.menuItem([field], {enabled: !isTime && !isGroupBy}),
+      menu.actions.countBy.menuItem([field], {enabled: !isGroupBy}),
       menu.separator(),
       menu.actions.sortAsc.menuItem([field], {enabled: hasCol}),
       menu.actions.sortDesc.menuItem([field], {enabled: hasCol}),
