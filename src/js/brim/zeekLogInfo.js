@@ -54,7 +54,7 @@ const specialUrls = {
 }
 
 type ZeekLogInfoClass = ReturnType<typeof knownPath>
-type ZeekInfo = {name: string, desc: string}[]
+type ZeekInfo = {name: string, desc: string, type: string}[]
 
 export default function zeekLogInfo(path: string): ZeekLogInfoClass {
   let key = `${path}_log`
@@ -73,12 +73,12 @@ function knownPath(path: string, info: ZeekInfo) {
         ? specialUrls[path]
         : `http://docs.zeek.org/en/stable/scripts/base/protocols/${path}/main.zeek.html`
     },
-    describeColumn: (name: string) => {
-      let firstPartOfName = name.split(".")[0]
+    describeColumn: (col: {name: string, type: string}) => {
+      let firstPartOfName = col.name.split(".")[0]
       let field = info.find((f) => f.name === firstPartOfName) || {}
       return {
         desc: field.desc || "No description found.",
-        type: field.type || ""
+        type: field.type || col.type
       }
     }
   }
@@ -88,9 +88,9 @@ function unknownPath(): ZeekLogInfoClass {
   return {
     isKnown: () => false,
     docsUrl: () => "",
-    describeColumn: (name: string) => ({
-      desc: `No docs for ${name}.`,
-      type: ""
+    describeColumn: (col: {name: string, type: string}) => ({
+      desc: `No docs for ${col.name}.`,
+      type: col.type
     })
   }
 }
