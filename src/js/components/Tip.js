@@ -21,7 +21,7 @@ export default function Tip({show, children, anchor, className}: Props) {
   let [over, setOver] = useState(false)
   let [popper, setRef] = useCallbackRef()
   let style = useTipPosition(anchor, popper)
-  let [status, entered, exited] = useEntrance(over || show, 100, 300)
+  let [status, entered, exited] = useEntrance(over || show, 100, 100)
 
   const immediate = (name) => name === "transform"
   let configs = {
@@ -30,7 +30,11 @@ export default function Tip({show, children, anchor, className}: Props) {
     exiting: {opacity: 0, onRest: exited, immediate},
     out: {opacity: 0, immediate}
   }
-  let spring = useSpring({...configs[status], ...style})
+  let spring = useSpring({
+    ...configs[status],
+    ...style,
+    config: {duration: 100}
+  })
 
   const onMouseEnter = () => setOver(true)
   const onMouseLeave = () => setOver(false)
