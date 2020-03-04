@@ -127,7 +127,7 @@ async function main() {
   try {
     // We encode the zeek version here for now to avoid the unncessary
     // git clone if it were in package.json.
-    const zeekVersion = "v3.0.2-brim-linux1"
+    const zeekVersion = "v3.0.2-brim1"
     const zeekLocation = await zeekDownload(zeekVersion, zdepsPath)
     console.log("zeek " + zeekVersion + " downloaded to " + zeekLocation)
 
