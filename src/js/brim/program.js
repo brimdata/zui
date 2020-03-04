@@ -3,7 +3,7 @@
 import {isEqual} from "lodash"
 import ZQL from "zq/zql/zql.js"
 
-import {EVERYTHING_FILTER, TUPLE_PROCS} from "./ast"
+import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
 import {trim} from "../lib/Str"
 import brim, {type $Field, type $Log} from "./"
 import stdlib from "../stdlib"
@@ -87,7 +87,7 @@ export default function(p: string = "", pins: string[] = []) {
     },
 
     filter() {
-      let proc = this.ast().proc("FilterProc")
+      let proc = this.ast().proc(FILTER_PROC)
       if (proc && isEqual(proc.filter, EVERYTHING_FILTER)) {
         return "*"
       } else {
