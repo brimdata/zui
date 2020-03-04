@@ -36,7 +36,7 @@ async function main() {
 
   zqdMainHandler()
   windowsMainHandler(winMan)
-  globalStoreMainHandler(store)
+  globalStoreMainHandler(store, winMan)
 
   app.on("ready", () => {
     installExtensions()
