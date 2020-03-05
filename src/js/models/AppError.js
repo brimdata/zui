@@ -43,6 +43,10 @@ export default class AppError {
     return "Unknown error"
   }
 
+  getJSON(): Object {
+    return JSON.parse(JSON.stringify(this))
+  }
+
   details(): string[] {
     return []
   }

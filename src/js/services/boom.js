@@ -100,6 +100,6 @@ function promise(requestFunc): Thunk {
 }
 
 function handleError(e, dispatch) {
-  dispatch(Notice.set(ErrorFactory.create(e)))
+  dispatch(Notice.set(e))
   dispatch(Errors.createError(e))
 }
