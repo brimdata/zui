@@ -9,12 +9,12 @@ export type FetchPromise = Promise<Object>
 export type FetchArgs = {method: string, path: string, body?: string}
 
 export function fetchPromise(host: string, args: FetchArgs): FetchPromise {
-  return doFetch(host, args).then((resp) => {
+  return doFetch(host, args).then((resp) =>
     resp
       .text()
       .then(tryJson)
       .then((content) => (resp.ok ? content : Promise.reject(content)))
-  })
+  )
 }
 
 export async function* fetchGenerator(
