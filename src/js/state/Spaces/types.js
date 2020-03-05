@@ -10,7 +10,10 @@ export type SpacesState = {
   }
 }
 
-export type SpacesAction = SPACES_NAMES | SPACES_DETAIL
+export type SpacesAction =
+  | SPACES_NAMES
+  | SPACES_DETAIL
+  | SPACES_PACKET_POST_STATUS
 
 export type Space = {
   name: string,

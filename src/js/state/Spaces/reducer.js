@@ -4,7 +4,7 @@ import type {SpacesAction, SpacesState} from "./types"
 
 const init: SpacesState = {}
 
-function spacesReducer(state, action) {
+function spacesReducer(state, action: SpacesAction) {
   switch (action.type) {
     case "SPACES_NAMES":
       return {
@@ -15,6 +15,7 @@ function spacesReducer(state, action) {
       return {
         ...state,
         [action.space.name]: {
+          ...state[action.space.name],
           ...action.space
         }
       }

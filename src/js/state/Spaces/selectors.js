@@ -13,6 +13,8 @@ export default {
 
   raw: (state: State) => state.spaces,
 
-  getPacketPostStatus: (clusterId: string, name: string) => (state: State) =>
-    state.spaces[clusterId][name].packet_post_status
+  getPacketPostStatus: (clusterId: string, name: string) => (state: State) => {
+    let space = state.spaces[clusterId][name]
+    if (space) return space.packet_post_status
+  }
 }
