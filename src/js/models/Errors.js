@@ -35,7 +35,7 @@ export class NetworkError extends AppError {
   }
 
   message() {
-    return "The server could not be reached."
+    return "The local server process could not be reached."
   }
 }
 
