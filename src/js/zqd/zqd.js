@@ -4,12 +4,15 @@ import {pathExistsSync, mkdirSync} from "fs-extra"
 import {spawn, ChildProcess} from "child_process"
 import {join, resolve} from "path"
 import {app} from "electron"
+import _merge from "lodash/merge"
 
 import * as cmd from "../stdlib/cmd"
 import electronIsDev from "../electron/isDev"
 
-// Path and filename for the zqd executable.
+// Paths for the zqd and zeek programs.
 const zqdPath = join(app.getAppPath(), "zdeps")
+const zqdZeekPath = join(zqdPath, "zeek")
+
 const platformDefs = {
   darwin: {
     zqdBin: "zqd"
@@ -47,17 +50,20 @@ export class ZQD {
   root: string
 
   constructor(rootDir: string) {
-    let not = cmd.notExists("zeek")
-    if (not.length > 0) {
-      throw new Error("missing required executables: " + not.join(", "))
-    }
     this.root = rootDir
   }
 
   start() {
-    mkdirpSync(this.root)
+    mkdirSync(this.root, {recursive: true, mode: 0o755})
+
+    // PATH must include both the zqd and zeek bin directories, as zqd depends
+    // on have zeek in its PATH.
+    const zqdEnvironment = _merge({}, process.env, {
+      PATH: [zqdPath, zqdZeekPath, process.env.PATH].join(":")
+    })
     const opts = {
-      stdio: "inherit"
+      stdio: "inherit",
+      env: zqdEnvironment
     }
 
     this.zqd = spawn(
@@ -82,8 +88,4 @@ export class ZQD {
       this.zqd.kill("SIGTERM")
     }
   }
-}
-
-function mkdirpSync(dir: string) {
-  mkdirSync(dir, {recursive: true, mode: 0o755})
 }
