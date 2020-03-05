@@ -26,3 +26,26 @@ test("setting the space detail", () => {
 
   expect(Spaces.get("cluster1", "default")(state)).toEqual(mock)
 })
+
+test("setting the packet post status", () => {
+  let update = {
+    start_time: {sec: 1583434879, ns: 377382000},
+    update_time: {sec: 1583434881, ns: 668859000},
+    packet_total_size: 160083122,
+    packet_read_size: 160083122
+  }
+
+  store.dispatch(Spaces.setPacketPostStatus("cluster1", "default", update))
+
+  let status = Spaces.getPacketPostStatus(
+    "cluster1",
+    "default"
+  )(store.getState())
+
+  expect(status).toEqual({
+    start_time: {sec: 1583434879, ns: 377382000},
+    update_time: {sec: 1583434881, ns: 668859000},
+    packet_total_size: 160083122,
+    packet_read_size: 160083122
+  })
+})

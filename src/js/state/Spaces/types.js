@@ -16,7 +16,15 @@ export type Space = {
   name: string,
   min_time: Ts,
   max_time: Ts,
-  packet_support: boolean
+  packet_support: boolean,
+  packet_post_status?: ?PacketPostStatus
+}
+
+export type PacketPostStatus = {
+  start_time: Ts,
+  update_time: Ts,
+  packet_total_size: number,
+  packet_read_size: number
 }
 
 export type SpaceDetailPayload = {|
@@ -36,4 +44,11 @@ export type SPACES_DETAIL = {
   type: "SPACES_DETAIL",
   clusterId: string,
   space: SpaceDetailPayload
+}
+
+export type SPACES_PACKET_POST_STATUS = {
+  type: "SPACES_PACKET_POST_STATUS",
+  clusterId: string,
+  space: string,
+  status: PacketPostStatus
 }

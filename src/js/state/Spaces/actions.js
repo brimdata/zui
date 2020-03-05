@@ -19,5 +19,16 @@ export default {
     type: "SPACES_DETAIL",
     clusterId,
     space
+  }),
+
+  setPacketPostStatus: (
+    clusterId: string,
+    space: string,
+    status: PacketPostStatus
+  ): SPACES_PACKET_POST_STATUS => ({
+    type: "SPACES_PACKET_POST_STATUS",
+    clusterId,
+    space,
+    status
   })
 }

@@ -11,5 +11,8 @@ export default {
   get: (clusterId: string, name: string) => (state: State) =>
     state.spaces[clusterId][name],
 
-  raw: (state: State) => state.spaces
+  raw: (state: State) => state.spaces,
+
+  getPacketPostStatus: (clusterId: string, name: string) => (state: State) =>
+    state.spaces[clusterId][name].packet_post_status
 }

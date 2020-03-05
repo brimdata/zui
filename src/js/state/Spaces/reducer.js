@@ -4,26 +4,40 @@ import type {SpacesAction, SpacesState} from "./types"
 
 const init: SpacesState = {}
 
-export default function reducer(
-  state: SpacesState = init,
-  action: SpacesAction
-): SpacesState {
+function spacesReducer(state, action) {
   switch (action.type) {
     case "SPACES_NAMES":
       return {
         ...state,
-        [action.clusterId]: replaceNames(action, state[action.clusterId])
+        ...replaceNames(action, state)
       }
     case "SPACES_DETAIL":
       return {
         ...state,
-        [action.clusterId]: {
-          ...state[action.clusterId],
-          [action.space.name]: action.space
+        [action.space.name]: {
+          ...action.space
+        }
+      }
+    case "SPACES_PACKET_POST_STATUS":
+      return {
+        ...state,
+        [action.space]: {
+          ...state[action.space],
+          packet_post_status: action.status
         }
       }
     default:
       return state
+  }
+}
+
+export default function reducer(
+  state: SpacesState = init,
+  action: SpacesAction
+): SpacesState {
+  return {
+    ...state,
+    [action.clusterId]: spacesReducer(state[action.clusterId] || {}, action)
   }
 }
 
