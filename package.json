@@ -29,7 +29,7 @@
     "format-check": "npm run format && git diff --exit-code -- src itest",
     "check": "npm-run-all -p format-check lint flow test",
     "clean": "node scripts/clean",
-    "release": "node scripts/release --win32 --darwin",
+    "release": "node scripts/release --darwin",
     "prerelease": "npm run build",
     "prebuild": "npm run clean",
     "postinstall": "node scripts/download-zdeps"
