@@ -19,6 +19,13 @@ export type Space = {
   packet_support: boolean
 }
 
+export type SpaceDetailPayload = {|
+  name: string,
+  min_time: Ts,
+  max_time: Ts,
+  packet_support: boolean
+|}
+
 export type SPACES_NAMES = {
   type: "SPACES_NAMES",
   clusterId: string,
@@ -28,5 +35,5 @@ export type SPACES_NAMES = {
 export type SPACES_DETAIL = {
   type: "SPACES_DETAIL",
   clusterId: string,
-  space: Space
+  space: SpaceDetailPayload
 }
