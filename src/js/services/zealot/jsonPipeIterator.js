@@ -19,7 +19,7 @@ export default async function* jsonPipeIterator(
       yield JSON.parse(line)
       start = end + NEW_LINE.length
     }
-
     leftover = chunk.substring(start)
   }
+  if (leftover) yield JSON.parse(leftover)
 }
