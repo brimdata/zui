@@ -46,8 +46,6 @@ function client(hostUrl: string) {
   }
 
   async function sendCollectedStream(args: FetchArgs): FetchPromise {
-    // $FlowFixMe
-    if (debugging()) return args
     let records = []
     for await (let payload of fetchGenerator(host, args)) {
       if (payload.type === "SearchRecords")
@@ -68,11 +66,15 @@ function client(hostUrl: string) {
     },
     search(zql: string, args: ZealotSearchArgs = {}) {
       let options = {...searchArgs, ...args}
+      let sendArgs = searchApi(zql, options)
+      if (debugging()) return sendArgs
       return sendCollectedStream(searchApi(zql, options))
     },
     searchStream(zql: string, args: ZealotSearchArgs = {}) {
       let options = {...searchArgs, ...args}
-      return sendStream(searchApi(zql, options))
+      let sendArgs = searchApi(zql, options)
+      if (debugging()) return sendArgs
+      return sendStream(sendArgs)
     },
     searchDefaults(args: ZealotSearchArgs) {
       searchArgs = {
