@@ -1,9 +1,7 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
-import fsExtra from "fs-extra"
 
-import {initSpace} from "../flows/initSpace"
 import ErrorFactory from "../models/ErrorFactory"
 import IngestProgress from "./IngestProgress"
 import LogoType from "../icons/LogoType"
@@ -12,8 +10,8 @@ import PcapFileInput from "./PcapFileInput"
 import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import openPacket from "../flows/openPacket"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
-import zealot from "../services/zealot"
 
 export default function NewTabContent() {
   let dispatch = useDispatch()
@@ -28,20 +26,10 @@ export default function NewTabContent() {
 
   function onChange(_e, [file]) {
     if (!file) return
-    let dir = file + ".brim"
-    let client = zealot.client("localhost:9867")
-    let space
     setLoading(true)
-    fsExtra
-      .ensureDir(dir)
-      .then(() => client.spaces.create({data_dir: dir}))
-      .then(({name}) => {
-        space = name
-        return client.pcaps.post({space, path: file})
-      })
-      .finally(() => setLoading(false))
-      .then(() => dispatch(initSpace(space)))
-      .catch((e) => dispatch(Notice.set(ErrorFactory.create(e))))
+    dispatch(openPacket(file)).catch((e) =>
+      dispatch(Notice.set(ErrorFactory.create(e)))
+    )
   }
 
   return (

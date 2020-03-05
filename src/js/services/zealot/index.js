@@ -61,7 +61,7 @@ function client(hostUrl: string) {
       create: (args: SpacesCreateArgs) => send(spacesApi.create(args))
     },
     pcaps: {
-      post: (args: PcapsPostArgs) => send(pcapsApi.post(args)),
+      post: (args: PcapsPostArgs) => sendStream(pcapsApi.post(args)),
       get: (args: PcapsGetArgs) => send(pcapsApi.get(args))
     },
     search(zql: string, args: ZealotSearchArgs = {}) {

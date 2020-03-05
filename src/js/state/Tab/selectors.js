@@ -16,6 +16,7 @@ import Tabs from "../Tabs"
 import Viewer from "../Viewer"
 import activeTabSelect from "./activeTabSelect"
 import brim, {type Span} from "../../brim"
+import zealot from "../../services/zealot"
 
 const clusterId = activeTabSelect((tab) => tab.search.clusterId)
 
@@ -23,6 +24,18 @@ const cluster = createSelector<State, void, ?Cluster, string, ClustersState>(
   clusterId,
   Clusters.raw,
   (id, obj) => obj[id]
+)
+
+const clusterUrl = createSelector<State, void, string, ?Cluster>(
+  cluster,
+  (c) => {
+    if (c) return c.host + ":" + c.port
+    else return "localhost:9867"
+  }
+)
+
+const getZealot = createSelector<State, void, *, string>(clusterUrl, (url) =>
+  zealot.client(url)
 )
 
 const space = createSelector<State, void, ?Space, TabState, SpacesState>(
@@ -81,6 +94,8 @@ const getSpanFocusAsDates = createSelector<State, void, ?DateTuple, ?Span>(
 export default {
   clusterId,
   cluster,
+  clusterUrl,
+  getZealot,
   spaceName: activeTabSelect((tab) => tab.search.space),
   space,
   currentEntry: activeTabSelect(History.current),

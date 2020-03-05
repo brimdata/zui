@@ -1,7 +1,6 @@
 /* @flow */
 import {NoSpacesError} from "../models/Errors"
 import type {Thunk} from "../state/types"
-import {fetchSpace, fetchSpaces} from "../services/boom"
 import ErrorFactory from "../models/ErrorFactory"
 import Modal from "../state/Modal"
 import Notice from "../state/Notice"
@@ -14,14 +13,19 @@ import Viewer from "../state/Viewer"
 import brim from "../brim"
 import submitSearch from "./submitSearch"
 
-export const initSpace = (desired: string): Thunk => (dispatch, getState) => {
+export const initSpace = (desired: string, clientDep?: *): Thunk => (
+  dispatch,
+  getState
+) => {
   let tabId = Tabs.getActive(getState())
   let clusterId = Tab.clusterId(getState())
-  return dispatch(fetchSpaces())
+  let client = clientDep || Tab.getZealot(getState())
+  return client.spaces
+    .list()
     .then((val) => (val === null ? [] : val))
     .then(checkSpacesExist)
     .then((spaces) => getCurrentSpaceName(spaces, desired))
-    .then((name) => dispatch(fetchSpace(name)))
+    .then((name) => client.spaces.get(name))
     .then((data) => setSpace(dispatch, data, clusterId))
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
