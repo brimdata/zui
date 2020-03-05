@@ -1,7 +1,6 @@
 /* @flow */
 import Spaces from "./"
 import initTestStore from "../../test/initTestStore"
-import mockSpace from "../../test/mockSpace"
 
 let store
 beforeEach(() => {
@@ -17,7 +16,12 @@ test("setting the names", () => {
 })
 
 test("setting the space detail", () => {
-  let mock = mockSpace()
+  let mock = {
+    name: "default",
+    min_time: {sec: 1425564900, ns: 0},
+    max_time: {sec: 1428917793, ns: 750000000},
+    packet_support: true
+  }
   let state = store.dispatchAll([Spaces.setDetail("cluster1", mock)])
 
   expect(Spaces.get("cluster1", "default")(state)).toEqual(mock)

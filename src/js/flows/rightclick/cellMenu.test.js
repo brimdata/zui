@@ -4,7 +4,6 @@ import type {MenuItem} from "electron"
 
 import {conn, dns, weird} from "../../test/mockLogs"
 import menu from "../../electron/menu"
-import mockSpace from "../../test/mockSpace"
 
 function menuText(menu: MenuItem) {
   return menu
@@ -14,7 +13,12 @@ function menuText(menu: MenuItem) {
 }
 
 describe("Log Right Click", () => {
-  const space = mockSpace()
+  const space = {
+    name: "default",
+    min_time: {sec: 1425564900, ns: 0},
+    max_time: {sec: 1428917793, ns: 750000000},
+    packet_support: true
+  }
   const program = "*"
 
   test("conn log with pcap support", () => {
@@ -85,7 +89,12 @@ describe("Log Right Click", () => {
 
 describe("Analysis Right Click", () => {
   const program = "* | count() by id.orig_h"
-  const space = mockSpace()
+  const space = {
+    name: "default",
+    min_time: {sec: 1425564900, ns: 0},
+    max_time: {sec: 1428917793, ns: 750000000},
+    packet_support: true
+  }
 
   test("address field", () => {
     const log = conn()
