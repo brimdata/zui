@@ -13,9 +13,9 @@ export default class AppError {
     return false
   }
 
-  constructor(e?: RawError) {
+  constructor(e?: RawError, ts?: Date) {
     this.raw = e
-    this.ts = new Date()
+    this.ts = ts || new Date()
   }
 
   title() {
