@@ -16,15 +16,6 @@ import {installExtensions} from "./extensions"
 import tron from "./tron"
 import path from "path"
 import {ZQD} from "../zqd/zqd"
-import electronIsDev from "./isDev"
-
-function appRoot() {
-  if (electronIsDev) {
-    return app.getAppPath()
-  } else {
-    return app.getPath("userData")
-  }
-}
 
 async function main() {
   // Disable Warnings in the Console
@@ -40,7 +31,7 @@ async function main() {
     sessionState ? sessionState.globalState : undefined
   )
 
-  const spaceDir = path.join(appRoot(), "data", "spaces")
+  const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
   const zqd = new ZQD(spaceDir)
 
   zqdMainHandler(zqd)
