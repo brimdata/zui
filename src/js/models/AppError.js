@@ -44,7 +44,10 @@ export default class AppError {
   }
 
   getJSON(): Object {
-    return JSON.parse(JSON.stringify(this))
+    return {
+      raw: this.raw,
+      ts: this.ts.toJSON()
+    }
   }
 
   details(): string[] {

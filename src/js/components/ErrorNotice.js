@@ -8,12 +8,10 @@ import NetworkErrorNotice from "./NetworkErrorNotice"
 import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
 import useEscapeKey from "./hooks/useEscapeKey"
-import ErrorFactory from "../models/ErrorFactory"
 
 export default function ErrorNotice() {
   let error = useSelector(Notice.getError)
   let visible = useSelector(Notice.getVisible)
-  error = error && ErrorFactory.create(error)
 
   return (
     <NoticeBanner show={visible}>

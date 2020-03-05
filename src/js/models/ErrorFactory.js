@@ -11,7 +11,6 @@ function compareKeys(a, b) {
 
 export default class ErrorFactory {
   static create(error: RawError): AppError {
-    if (!error) return null
     if (error instanceof AppError) return error
 
     for (let E of KNOWN_ERRORS) {
@@ -20,7 +19,7 @@ export default class ErrorFactory {
 
     // if raw error has same keys as AppError, then rebuild
     if (compareKeys(error, new AppError())) {
-      return new AppError(error.raw, error.ts)
+      return new AppError(error.raw, new Date(error.ts))
     }
 
     return new AppError(error)
