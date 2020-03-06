@@ -1,5 +1,5 @@
 /* @flow */
-import type {SpaceDetailPayload} from "../state/Spaces/types"
+import type {SpaceDetailPayload} from "../services/zealot/types"
 import type {Thunk} from "../state/types"
 import {fetchSpace} from "../services/boom"
 import Spaces from "../state/Spaces"

@@ -1,5 +1,6 @@
 /* @flow */
 
+import type {SpaceDetailPayload} from "../../services/zealot/types"
 import type {Ts} from "../../brim"
 
 export type SpacesState = {
@@ -10,32 +11,15 @@ export type SpacesState = {
   }
 }
 
-export type SpacesAction =
-  | SPACES_NAMES
-  | SPACES_DETAIL
-  | SPACES_PACKET_POST_STATUS
+export type SpacesAction = SPACES_NAMES | SPACES_DETAIL | SPACES_INGEST_PROGRESS
 
 export type Space = {
   name: string,
   min_time: Ts,
   max_time: Ts,
   packet_support: boolean,
-  packet_post_status?: ?PacketPostStatus
+  ingest_progress: number | null
 }
-
-export type PacketPostStatus = {
-  start_time: Ts,
-  update_time: Ts,
-  packet_total_size: number,
-  packet_read_size: number
-}
-
-export type SpaceDetailPayload = {|
-  name: string,
-  min_time: Ts,
-  max_time: Ts,
-  packet_support: boolean
-|}
 
 export type SPACES_NAMES = {
   type: "SPACES_NAMES",
@@ -49,9 +33,9 @@ export type SPACES_DETAIL = {
   space: SpaceDetailPayload
 }
 
-export type SPACES_PACKET_POST_STATUS = {
-  type: "SPACES_PACKET_POST_STATUS",
+export type SPACES_INGEST_PROGRESS = {
+  type: "SPACES_INGEST_PROGRESS",
   clusterId: string,
   space: string,
-  status: PacketPostStatus
+  value: number | null
 }

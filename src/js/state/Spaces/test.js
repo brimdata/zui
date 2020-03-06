@@ -1,4 +1,5 @@
 /* @flow */
+import type {SpaceDetailPayload} from "../../services/zealot/types"
 import Spaces from "./"
 import initTestStore from "../../test/initTestStore"
 
@@ -7,18 +8,11 @@ beforeEach(() => {
   store = initTestStore()
 })
 
-let mock = {
+let detail: SpaceDetailPayload = {
   name: "default",
   min_time: {sec: 1425564900, ns: 0},
   max_time: {sec: 1428917793, ns: 750000000},
   packet_support: true
-}
-
-let update = {
-  start_time: {sec: 1583434879, ns: 377382000},
-  update_time: {sec: 1583434881, ns: 668859000},
-  packet_total_size: 160083122,
-  packet_read_size: 160083122
 }
 
 test("setting the names", () => {
@@ -30,26 +24,21 @@ test("setting the names", () => {
 })
 
 test("setting the space detail", () => {
-  let state = store.dispatchAll([Spaces.setDetail("cluster1", mock)])
+  let state = store.dispatchAll([Spaces.setDetail("cluster1", detail)])
 
-  expect(Spaces.get("cluster1", "default")(state)).toEqual(mock)
+  expect(Spaces.get("cluster1", "default")(state)).toEqual(detail)
 })
 
-test("setting the packet post status", () => {
+test("setting the ingest_progress", () => {
   store.dispatchAll([
-    Spaces.setPacketPostStatus("cluster1", mock.name, update),
-    Spaces.setDetail("cluster1", mock)
+    Spaces.setIngestProgress("cluster1", detail.name, 0.5),
+    Spaces.setDetail("cluster1", detail)
   ])
 
-  let status = Spaces.getPacketPostStatus(
+  let value = Spaces.getIngestProgress(
     "cluster1",
-    mock.name
+    detail.name
   )(store.getState())
 
-  expect(status).toEqual({
-    start_time: {sec: 1583434879, ns: 377382000},
-    update_time: {sec: 1583434881, ns: 668859000},
-    packet_total_size: 160083122,
-    packet_read_size: 160083122
-  })
+  expect(value).toEqual(0.5)
 })

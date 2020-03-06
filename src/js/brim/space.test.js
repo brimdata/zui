@@ -5,7 +5,8 @@ let space = {
   name: "myspace",
   min_time: {sec: 1425565512, ns: 943615000},
   max_time: {sec: 1428917684, ns: 732650001},
-  packet_support: true
+  packet_support: true,
+  ingest_progress: null
 }
 
 test("default time span is 30 mins before max time", () => {

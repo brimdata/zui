@@ -1,12 +1,7 @@
 /* @flow */
 
-import type {
-  PacketPostStatus,
-  SPACES_DETAIL,
-  SPACES_NAMES,
-  SPACES_PACKET_POST_STATUS,
-  SpaceDetailPayload
-} from "./types"
+import type {SPACES_DETAIL, SPACES_NAMES, SPACES_INGEST_PROGRESS} from "./types"
+import type {SpaceDetailPayload} from "../../services/zealot/types"
 
 export default {
   setNames: (clusterId: string, names: string[]): SPACES_NAMES => ({
@@ -21,14 +16,14 @@ export default {
     space
   }),
 
-  setPacketPostStatus: (
+  setIngestProgress: (
     clusterId: string,
     space: string,
-    status: PacketPostStatus
-  ): SPACES_PACKET_POST_STATUS => ({
-    type: "SPACES_PACKET_POST_STATUS",
+    value: number | null
+  ): SPACES_INGEST_PROGRESS => ({
+    type: "SPACES_INGEST_PROGRESS",
     clusterId,
     space,
-    status
+    value
   })
 }

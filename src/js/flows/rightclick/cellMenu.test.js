@@ -17,7 +17,8 @@ describe("Log Right Click", () => {
     name: "default",
     min_time: {sec: 1425564900, ns: 0},
     max_time: {sec: 1428917793, ns: 750000000},
-    packet_support: true
+    packet_support: true,
+    ingest_progress: null
   }
   const program = "*"
 
@@ -93,7 +94,8 @@ describe("Analysis Right Click", () => {
     name: "default",
     min_time: {sec: 1425564900, ns: 0},
     max_time: {sec: 1428917793, ns: 750000000},
-    packet_support: true
+    packet_support: true,
+    ingest_progress: null
   }
 
   test("address field", () => {

@@ -19,12 +19,12 @@ function spacesReducer(state, action: SpacesAction) {
           ...action.space
         }
       }
-    case "SPACES_PACKET_POST_STATUS":
+    case "SPACES_INGEST_PROGRESS":
       return {
         ...state,
         [action.space]: {
           ...state[action.space],
-          packet_post_status: action.status
+          ingest_progress: action.value
         }
       }
     default:

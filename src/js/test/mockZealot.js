@@ -12,7 +12,7 @@ export default {
       })
   },
   pcaps: {
-    post: function*() {
+    post: function*(): Generator<*, void, void> {
       yield {type: "TaskStart"}
       yield {
         type: "PacketPostStatus",
