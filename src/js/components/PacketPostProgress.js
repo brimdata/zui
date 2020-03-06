@@ -10,6 +10,7 @@ export default function PacketPostProgress() {
   let id = useSelector(Tab.clusterId)
   let name = useSelector(Tab.spaceName)
   let value = useSelector(Spaces.getIngestProgress(id, name))
+
   if (value === null) return null
 
   return (

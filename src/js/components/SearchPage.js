@@ -18,6 +18,7 @@ import NewTabContent from "./NewTabContent"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
+import StatusBar from "./StatusBar"
 import Tab from "../state/Tab"
 import TabBar from "./TabBar/TabBar"
 import WhoisModal from "./WhoisModal"
@@ -25,7 +26,8 @@ import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
   let dispatch = useDispatch()
-  let space = useSelector(Tab.spaceName)
+  let space = useSelector(Tab.space)
+  let queryable = space && space.name && space.ingest_progress === null
   useSearchShortcuts()
 
   useEffect(() => {
@@ -39,15 +41,16 @@ export default function SearchPage() {
         <div className="search-page-main">
           <TabBar />
           <div className="search-page-header">
-            <ControlBar />
-            {space && (
+            {queryable && (
               <>
+                <ControlBar />
                 <SearchHeaderChart />
                 <ColumnChooser />
               </>
             )}
           </div>
-          {space ? <SearchResults /> : <NewTabContent />}
+          {queryable ? <SearchResults /> : <NewTabContent />}
+          <StatusBar />
         </div>
         <XRightPane />
       </div>

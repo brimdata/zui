@@ -28,6 +28,7 @@
   width: 0%;
   background: $blue;
   height: 100%;
+  transition: width 1000ms;
 }
 
 @keyframes fake-loading {

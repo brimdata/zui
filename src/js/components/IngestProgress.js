@@ -7,7 +7,7 @@ export default function IngestProgress() {
   return (
     <div className="ingest-progress-wrapper">
       <div className="ingest-progress">
-        <p>Processing PCAPs...</p>
+        <p>Wating for space to become queryable...</p>
         <MacSpinner />
       </div>
     </div>

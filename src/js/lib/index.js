@@ -41,7 +41,8 @@ export default {
     let copy = [...array]
     copy.splice(dest, 0, copy.splice(src, 1)[0])
     return copy
-  }
+  },
+  sleep: (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
 }
 
 export type TimeUnit =

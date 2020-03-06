@@ -4,6 +4,7 @@
   border-top: 1px solid $chrome-border;
   position: relative;
   overflow: hidden;
+  height: 24px;
 
   p {
     transition: color 1750ms;
@@ -35,6 +36,7 @@
   align-items: center;
   position: relative;
   z-index: 1;
+  height: 24px;
 }
 
 .status-bar.loading {
