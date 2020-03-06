@@ -18,4 +18,4 @@ export type ModalName =
   | "whois"
   | "curl"
   | "nodata"
-  | "boom-get"
+  | "zq-get"

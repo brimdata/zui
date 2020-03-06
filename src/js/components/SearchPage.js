@@ -7,7 +7,7 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import BoomGetModal from "./BoomGetModal"
+import ZQGetModal from "./ZQGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
@@ -58,7 +58,7 @@ export default function SearchPage() {
       <CurlModal />
       <SettingsModal />
       <EmptySpaceModal />
-      <BoomGetModal />
+      <ZQGetModal />
     </div>
   )
 }
