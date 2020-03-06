@@ -16,7 +16,7 @@ module.exports = {
         identity: "Developer ID",
         hardenedRuntime: true,
         entitlements: "scripts/release/entitlements.mac.plist",
-        entitlementsInherit: "scripts/release/entitlements.mac.plist"
+        "entitlements-inherit": "scripts/release/entitlements.mac.plist"
       }
     }
     return packager({
