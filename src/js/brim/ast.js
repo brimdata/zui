@@ -82,4 +82,4 @@ export const TUPLE_PROCS = [
   SEQUENTIAL_PROC
 ]
 export const COMPOUND_PROCS = [PARALLEL_PROC, SEQUENTIAL_PROC]
-export const EVERYTHING_FILTER = {op: "BooleanLiteral", value: true}
+export const EVERYTHING_FILTER = {op: "MatchAll"}

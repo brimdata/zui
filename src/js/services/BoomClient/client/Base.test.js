@@ -24,8 +24,7 @@ test("#inspectSearch", () => {
           {
             op: "FilterProc",
             filter: {
-              op: "BooleanLiteral",
-              value: true
+              op: "MatchAll"
             }
           },
           {
