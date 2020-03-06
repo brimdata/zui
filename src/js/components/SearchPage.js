@@ -40,15 +40,13 @@ export default function SearchPage() {
         <LeftPane />
         <div className="search-page-main">
           <TabBar />
-          <div className="search-page-header">
-            {queryable && (
-              <>
-                <ControlBar />
-                <SearchHeaderChart />
-                <ColumnChooser />
-              </>
-            )}
-          </div>
+          {queryable && (
+            <div className="search-page-header">
+              <ControlBar />
+              <SearchHeaderChart />
+              <ColumnChooser />
+            </div>
+          )}
           {queryable ? <SearchResults /> : <NewTabContent />}
           <StatusBar />
         </div>
