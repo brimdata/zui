@@ -33,5 +33,12 @@ export default () => {
 }
 
 global.onbeforeunload = () => {
+  const state = global.getState()
+
+  // remove state pieces which we are not interested in persisting
+  delete state.errors
+  delete state.notice
+  delete state.handlers
+
   ipcRenderer.invoke("windows:saveState", global.windowId, global.getState())
 }

@@ -13,9 +13,9 @@ export default class AppError {
     return false
   }
 
-  constructor(e?: RawError) {
+  constructor(e?: RawError, ts?: Date) {
     this.raw = e
-    this.ts = new Date()
+    this.ts = ts || new Date()
   }
 
   title() {
@@ -41,6 +41,13 @@ export default class AppError {
     if (this.raw && this.raw.toString) return this.raw.toString()
 
     return "Unknown error"
+  }
+
+  getJSON(): Object {
+    return {
+      raw: this.raw,
+      ts: this.ts.toJSON()
+    }
   }
 
   details(): string[] {

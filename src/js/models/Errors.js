@@ -99,7 +99,7 @@ export class ZqVersionError extends AppError {
 
 export class SearchError extends AppError {
   static is(e: RawError) {
-    return e.type === "SEARCH_ERROR"
+    return e && e.type === "SEARCH_ERROR"
   }
 
   message() {

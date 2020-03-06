@@ -5,7 +5,6 @@ import type {Span} from "./BoomClient/types"
 import type {Thunk} from "../state/types"
 import {ZqVersionError} from "../models/Errors"
 import Boomd from "../state/Boomd"
-import ErrorFactory from "../models/ErrorFactory"
 import Errors from "../state/Errors"
 import Notice from "../state/Notice"
 import Tab from "../state/Tab"
@@ -100,6 +99,6 @@ function promise(requestFunc): Thunk {
 }
 
 function handleError(e, dispatch) {
-  dispatch(Notice.set(ErrorFactory.create(e)))
+  dispatch(Notice.set(e))
   dispatch(Errors.createError(e))
 }
