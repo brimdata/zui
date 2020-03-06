@@ -1,0 +1,16 @@
+.packet-post-progress {
+  display: flex;
+  justify: flex-end;
+  align-items: center;
+  padding: 0 10px;
+
+  .progress-indicator {
+    width: 100px;
+  }
+
+  label {
+    @include label-small;
+    white-space: nowrap;
+    margin: 0 10px;
+  }
+}
