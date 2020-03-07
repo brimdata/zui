@@ -36,7 +36,8 @@ const dataAttrs = {
   useCacheToggle: "useCacheToggle",
   useIndexToggle: "useIndexToggle",
   viewer_header: "viewer_header",
-  viewer_results: "viewer_results"
+  viewer_results: "viewer_results",
+  file_input: "file_input"
 }
 
 // The purpose of this section is to have a single source of truth for
@@ -140,6 +141,9 @@ export const selectors = {
     resultCellContaining: genSelectorForTextUnderElement("viewer_results"),
     rightClickMenu: dataAttrSelector("logCellMenu"),
     rightClickMenuItem: genSelectorForTextUnderElement("logCellMenu")
+  },
+  new_tab: {
+    file_input: dataAttrSelector("file_input")
   }
 }
 
