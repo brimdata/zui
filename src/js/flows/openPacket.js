@@ -5,6 +5,8 @@ import fsExtra from "fs-extra"
 import type {PacketPostStatusPayload} from "../services/zealot/types"
 import type {Thunk} from "../state/types"
 import {initSpace} from "./initSpace"
+import ErrorFactory from "../models/ErrorFactory"
+import Notice from "../state/Notice"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
@@ -35,6 +37,11 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
       return name
     })
     .then((name) => dispatch(initSpace(name, client)))
+    .catch((e) => {
+      // Delete the space from the backend here...
+      dispatch(Search.setSpace(""))
+      dispatch(Notice.set(ErrorFactory.create(e)))
+    })
 }
 
 function extractFrom(status: PacketPostStatusPayload): number {

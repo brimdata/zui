@@ -33,9 +33,7 @@ export default function NewTabContent() {
 
   function onChange(_e, [file]) {
     if (!file) return
-    dispatch(openPacket(file)).catch((e) =>
-      dispatch(Notice.set(ErrorFactory.create(e)))
-    )
+    dispatch(openPacket(file))
   }
 
   return (

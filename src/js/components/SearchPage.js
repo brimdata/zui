@@ -20,6 +20,7 @@ import SettingsModal from "./SettingsModal"
 import StatusBar from "./StatusBar"
 import Tab from "../state/Tab"
 import TabBar from "./TabBar/TabBar"
+import Tabs from "../state/Tabs"
 import WhoisModal from "./WhoisModal"
 import ZQGetModal from "./ZQGetModal"
 import useSearchShortcuts from "./useSearchShortcuts"
@@ -27,6 +28,7 @@ import useSearchShortcuts from "./useSearchShortcuts"
 export default function SearchPage() {
   let dispatch = useDispatch()
   let space = useSelector(Tab.space)
+  let tabId = useSelector(Tabs.getActive)
   let queryable = space && space.name && space.ingest_progress === null
   useSearchShortcuts()
 
@@ -47,7 +49,11 @@ export default function SearchPage() {
               <ColumnChooser />
             </div>
           )}
-          {queryable ? <SearchResults /> : <NewTabContent />}
+          {queryable ? (
+            <SearchResults key={tabId} />
+          ) : (
+            <NewTabContent key={tabId} />
+          )}
           <StatusBar />
         </div>
         <XRightPane />
