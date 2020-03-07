@@ -2,10 +2,8 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect} from "react"
 
-import ErrorFactory from "../models/ErrorFactory"
 import IngestProgress from "./IngestProgress"
 import LogoType from "../icons/LogoType"
-import Notice from "../state/Notice"
 import PcapFileInput from "./PcapFileInput"
 import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
