@@ -5,6 +5,7 @@ const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
 const {unzip} = require("cross-unzip")
+const {execSync} = require("child_process")
 const brimPackage = require("../../package.json")
 
 const zdepsPath = path.resolve("zdeps")
@@ -123,6 +124,31 @@ async function zeekDownload(version, zdepsPath) {
   return zeekBinPath
 }
 
+// Build the zqd binary inside the node_modules/zq directory via "make build".
+async function zqdDevBuild(destPath) {
+  if (!(process.platform in platformDefs)) {
+    throw new Error("unsupported platform")
+  }
+  const plat = platformDefs[process.platform]
+  const destBinLocation = path.join(destPath, plat.zqdBin)
+
+  const zqPackageDir = path.join(__dirname, "..", "..", "node_modules", "zq")
+  const zqBuiltBin = path.join(zqPackageDir, "dist", plat.zqdBin)
+
+  execSync("make build", {
+    stdio: "inherit",
+    cwd: zqPackageDir
+  })
+
+  if (!fs.pathExistsSync(zqBuiltBin)) {
+    throw new Error("zqd binary not built")
+  }
+
+  fs.moveSync(zqBuiltBin, destBinLocation, {overwrite: true})
+
+  return destBinLocation
+}
+
 async function main() {
   try {
     // We encode the zeek version here for now to avoid the unncessary
@@ -131,11 +157,19 @@ async function main() {
     const zeekLocation = await zeekDownload(zeekVersion, zdepsPath)
     console.log("zeek " + zeekVersion + " downloaded to " + zeekLocation)
 
-    // zqd version comes from package.json ("brimsec/zq#<version>")
+    // The zq dependency should be a git tag or commit. Any tag that
+    // begins with "v*" is expected to be a released artifact, and will
+    // be downloaded from the zq repo release artifacts. Otherwise,
+    // attempt to build it (via "make build"); this assumes that go tooling
+    // is available.
     const zqdVersion = brimPackage.dependencies.zq.split("#")[1]
-
-    const zqdLocation = await zqdDownload(zqdVersion, zdepsPath)
-    console.log("zqd " + zqdVersion + " downloaded to " + zqdLocation)
+    if (zqdVersion.startsWith("v")) {
+      const zqdLocation = await zqdDownload(zqdVersion, zdepsPath)
+      console.log("downloaded zqd " + zqdVersion + " to " + zqdLocation)
+    } else {
+      const zqdLocation = await zqdDevBuild(zdepsPath)
+      console.log("built zqd " + zqdVersion + " to " + zqdLocation)
+    }
   } catch (err) {
     console.error("zdeps setup: ", err)
     process.exit(1)
