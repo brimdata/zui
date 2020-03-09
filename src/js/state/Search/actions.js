@@ -12,14 +12,14 @@ import type {
 import brim, {type Span} from "../../brim"
 
 export default {
-  setSpace(space: string): SEARCH_SPACE_SET {
-    return {type: "SEARCH_SPACE_SET", space}
+  setSpace(space: string, tabId?: string): SEARCH_SPACE_SET {
+    return {type: "SEARCH_SPACE_SET", space, tabId}
   },
   setSpan(span: Span): SEARCH_SPAN_SET {
     return {type: "SEARCH_SPAN_SET", span}
   },
-  setSpanArgs(spanArgs: SpanArgs): SEARCH_SPAN_ARGS_SET {
-    return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
+  setSpanArgs(spanArgs: SpanArgs, tabId?: string): SEARCH_SPAN_ARGS_SET {
+    return {type: "SEARCH_SPAN_ARGS_SET", spanArgs, tabId}
   },
   setSpanArgsFromDates(dates: DateTuple): SEARCH_SPAN_ARGS_SET {
     let spanArgs = brim.dateTuple(dates).toSpan()

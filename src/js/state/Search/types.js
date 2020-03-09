@@ -35,7 +35,8 @@ export type SEARCH_CLUSTER_SET = {
 }
 export type SEARCH_SPACE_SET = {
   type: "SEARCH_SPACE_SET",
-  space: string
+  space: string,
+  tabId?: string
 }
 export type SEARCH_SPAN_SET = {
   type: "SEARCH_SPAN_SET",
@@ -43,7 +44,8 @@ export type SEARCH_SPAN_SET = {
 }
 export type SEARCH_SPAN_ARGS_SET = {
   type: "SEARCH_SPAN_ARGS_SET",
-  spanArgs: SpanArgs
+  spanArgs: SpanArgs,
+  tabId?: string
 }
 export type SEARCH_SPAN_FOCUS_SET = {
   type: "SEARCH_SPAN_FOCUS_SET",
