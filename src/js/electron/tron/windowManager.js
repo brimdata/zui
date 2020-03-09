@@ -9,7 +9,7 @@ import brim from "../../brim"
 import menu from "../menu"
 import tron from "./"
 
-export type WindowName = "welcome" | "search"
+export type WindowName = "search"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {[string]: WindowState}
