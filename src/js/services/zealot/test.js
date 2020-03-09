@@ -6,7 +6,7 @@ describe("search api", () => {
   test("the search params", () => {
     expect(client.inspect().search("count()")).toEqual({
       method: "POST",
-      path: "/search",
+      path: "/search?format=zjson",
       body: expect.any(String)
     })
   })

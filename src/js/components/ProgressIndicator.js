@@ -2,15 +2,19 @@
 
 import React from "react"
 
-import CloseButton from "./CloseButton"
+type Props = {
+  percent: number
+}
 
-export default function ProgressIndicator() {
+export default function ProgressIndicator({percent}: Props) {
+  let style = {
+    width: Math.floor(percent * 100) + "%"
+  }
   return (
     <div className="progress-indicator">
       <div className="progress-track">
-        <div className="progress-fill" />
+        <div className="progress-fill" style={style} />
       </div>
-      <CloseButton />
     </div>
   )
 }

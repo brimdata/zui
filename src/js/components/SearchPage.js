@@ -7,7 +7,6 @@ import {DebugModal} from "./DebugModal"
 import {LeftPane} from "./LeftPane"
 import {XDownloadProgress} from "./DownloadProgress"
 import {XRightPane} from "./RightPane"
-import ZQGetModal from "./ZQGetModal"
 import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
@@ -18,14 +17,19 @@ import NewTabContent from "./NewTabContent"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
+import StatusBar from "./StatusBar"
 import Tab from "../state/Tab"
 import TabBar from "./TabBar/TabBar"
+import Tabs from "../state/Tabs"
 import WhoisModal from "./WhoisModal"
+import ZQGetModal from "./ZQGetModal"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
   let dispatch = useDispatch()
-  let space = useSelector(Tab.spaceName)
+  let space = useSelector(Tab.space)
+  let tabId = useSelector(Tabs.getActive)
+  let queryable = space && space.name && space.ingest_progress === null
   useSearchShortcuts()
 
   useEffect(() => {
@@ -38,16 +42,19 @@ export default function SearchPage() {
         <LeftPane />
         <div className="search-page-main">
           <TabBar />
-          <div className="search-page-header">
-            <ControlBar />
-            {space && (
-              <>
-                <SearchHeaderChart />
-                <ColumnChooser />
-              </>
-            )}
-          </div>
-          {space ? <SearchResults /> : <NewTabContent />}
+          {queryable && (
+            <div className="search-page-header">
+              <ControlBar />
+              <SearchHeaderChart />
+              <ColumnChooser />
+            </div>
+          )}
+          {queryable ? (
+            <SearchResults key={tabId} />
+          ) : (
+            <NewTabContent key={tabId} />
+          )}
+          <StatusBar />
         </div>
         <XRightPane />
       </div>

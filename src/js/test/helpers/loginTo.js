@@ -6,6 +6,7 @@ import MockBoomClient from "../MockBoomClient"
 import Search from "../../state/Search"
 import fixtures from "../fixtures"
 import initTestStore from "../initTestStore"
+import mockZealot from "../mockZealot"
 
 export default async function loginTo(clusterName: string, spaceName: string) {
   let boom = new MockBoomClient()
@@ -20,7 +21,7 @@ export default async function loginTo(clusterName: string, spaceName: string) {
 
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Search.setCluster(cluster.id))
-  return store.dispatch(initSpace(space.name)).then(() => {
+  return store.dispatch(initSpace(space.name, mockZealot)).then(() => {
     return {store, boom, cluster}
   })
 }

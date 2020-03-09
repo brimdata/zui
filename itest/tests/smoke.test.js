@@ -2,13 +2,9 @@
 
 import {basename} from "path"
 
-import {
-  newAppInstance,
-  resetState,
-  startApp,
-  waitForSearch
-} from "../lib/app.js"
 import {handleError, stdTest} from "../lib/jest.js"
+import {newAppInstance, resetState, startApp} from "../lib/app.js"
+import {waitForNewTab} from "../lib/app"
 
 describe("Smoke test", () => {
   let app
@@ -25,14 +21,12 @@ describe("Smoke test", () => {
     }
   })
 
-  stdTest("show a sane window; log in and see Search", (done) => {
-    waitForSearch(app)
-      .then((val) => {
-        expect(val).toBeDefined()
+  stdTest("show the new tab page when you log in", (done) => {
+    waitForNewTab(app)
+      .then(() => {
+        console.log("nice!")
         done()
       })
-      .catch((err) => {
-        handleError(app, err, done)
-      })
+      .catch((err) => handleError(app, err, done))
   })
 })

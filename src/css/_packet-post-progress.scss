@@ -1,0 +1,15 @@
+.packet-post-progress {
+  width: 100%;
+  display: flex;
+  justify: flex-end;
+  align-items: center;
+  padding: 0 10px;
+  height: 24px;
+
+  label {
+    @include label-small;
+    line-height: 24px;
+    white-space: nowrap;
+    margin-right: 10px;
+  }
+}

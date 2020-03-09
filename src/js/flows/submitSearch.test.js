@@ -19,15 +19,7 @@ const spaceInfo = {
   name: "ranch-logs",
   min_time: {sec: 1425564900, ns: 0},
   max_time: {sec: 1428917793, ns: 750000000},
-  size: 4580591172,
-  packet_support: true,
-  compression: "none",
-  flush_timeout: 500,
-  close_timeout: 5000,
-  slab_threshold: 131072,
-  slab_fanout: 8,
-  max_writers: 150,
-  path: "./"
+  packet_support: true
 }
 
 const initTimeWindow = () => (dispatch: Function, getState: Function) => {

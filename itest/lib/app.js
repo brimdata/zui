@@ -70,6 +70,12 @@ export const waitForSearch = (app: Application) => {
   )
 }
 
+export const waitForNewTab = (app: Application) => {
+  return appStep("wait for new tab to appear", () =>
+    app.client.waitForVisible(selectors.new_tab.file_input)
+  )
+}
+
 export const waitForHistogram = (app: Application) => {
   return appStep("wait for base histogram element hierarchy", () =>
     app.client

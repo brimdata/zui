@@ -11,5 +11,10 @@ export default {
   get: (clusterId: string, name: string) => (state: State) =>
     state.spaces[clusterId][name],
 
-  raw: (state: State) => state.spaces
+  raw: (state: State) => state.spaces,
+
+  getIngestProgress: (clusterId: string, name: string) => (state: State) => {
+    let space = state.spaces[clusterId][name]
+    if (space) return space.ingest_progress
+  }
 }

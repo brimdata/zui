@@ -4,6 +4,7 @@
   border-top: 1px solid $chrome-border;
   position: relative;
   overflow: hidden;
+  height: 26px;
 
   p {
     transition: color 1750ms;
@@ -15,54 +16,5 @@
 
   .label {
     transition: border-left-color 1750ms;
-  }
-}
-
-.status-bar-bg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  opacity: 0;
-  transition: opacity 1750ms;
-  animation: pulse-green-bg 1750ms ease-in-out infinite alternate;
-}
-
-.status-bar-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-}
-
-.status-bar.loading {
-  .status-bar-bg {
-    opacity: 1;
-    transition: none;
-  }
-
-  p {
-    color: white;
-    transition: none;
-  }
-
-  .label {
-    border-left-color: $green-dark;
-    transition: none;
-  }
-
-  .burst {
-    background-color: white !important;
-  }
-}
-
-@keyframes pulse-green-bg {
-  from {
-    background-color: $green;
-  }
-  to {
-    background-color: $green;
   }
 }
