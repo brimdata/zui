@@ -32,6 +32,9 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
         if (type === "PacketPostStatus") setProgress(extractFrom(status))
       }
       setProgress(1)
+      // The progress bar has a transition of 1 second. I think people are
+      // psychologically comforted when they see the progress bar complete.
+      // That is why we sleep here.
       await lib.sleep(1500)
       setProgress(null)
       return name
