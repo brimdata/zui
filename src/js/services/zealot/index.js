@@ -58,7 +58,8 @@ function client(hostUrl: string) {
     spaces: {
       list: () => send(spacesApi.list()),
       get: (name: string) => send(spacesApi.get(name)),
-      create: (args: SpacesCreateArgs) => send(spacesApi.create(args))
+      create: (args: SpacesCreateArgs) => send(spacesApi.create(args)),
+      delete: (name: string) => send(spacesApi.delete(name))
     },
     pcaps: {
       post: (args: PcapsPostArgs) => sendStream(pcapsApi.post(args)),
