@@ -34,19 +34,17 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
       for await (let {type, ...status} of stream) {
         if (type === "PacketPostStatus") setProgress(extractFrom(status))
       }
-      setProgress(1)
+      let data = await client.spaces.get(name)
+      dispatch(Spaces.setDetail(clusterId, data))
+      dispatch(Search.setSpanArgs(brim.space(data).defaultSpanArgs(), tabId))
+      dispatch(Search.setSpace(data.name, tabId))
+
       // The progress bar has a transition of 1 second. I think people are
       // psychologically comforted when they see the progress bar complete.
       // That is why we sleep here.
+      setProgress(1)
       await lib.sleep(1500)
       setProgress(null)
-      return name
-    })
-    .then((name) => client.spaces.get(name))
-    .then((data) => {
-      dispatch(Spaces.setDetail(clusterId, data))
-      dispatch(Search.setSpace(data.name, tabId))
-      dispatch(Search.setSpanArgs(brim.space(data).defaultSpanArgs(), tabId))
     })
     .catch((e) => {
       // Delete the space from the backend here...
