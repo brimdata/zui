@@ -58,7 +58,7 @@ export default function NewTabContent() {
               <label>Open File</label>
               <PcapFileInput onChange={onChange} />
               <p className="accepted-files">
-                Accepted file formats: pcap, pcapng
+                Accepted formats are <b>.pcap</b> and <b>.pcapng</b>.
               </p>
             </section>
           </div>
