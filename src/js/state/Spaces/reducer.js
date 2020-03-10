@@ -27,6 +27,14 @@ function spacesReducer(state, action: SpacesAction) {
           ingest_progress: action.value
         }
       }
+    case "SPACES_IS_QUERYABLE":
+      return {
+        ...state,
+        [action.space]: {
+          ...state[action.space],
+          is_queryable: action.value
+        }
+      }
     default:
       return state
   }

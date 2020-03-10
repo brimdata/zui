@@ -30,7 +30,7 @@ export default function SearchPage() {
   let dispatch = useDispatch()
   let space = useSelector(Tab.space)
   let tabId = useSelector(Tabs.getActive)
-  let queryable = space && space.name && space.ingest_progress === null
+  let queryable = space && space.name && space.is_queryable
   let firstVisit = !useSelector(Tab.currentEntry)
 
   useSearchShortcuts()
