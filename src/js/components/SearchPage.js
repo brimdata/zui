@@ -23,6 +23,7 @@ import TabBar from "./TabBar/TabBar"
 import Tabs from "../state/Tabs"
 import WhoisModal from "./WhoisModal"
 import ZQGetModal from "./ZQGetModal"
+import submitSearch from "../flows/submitSearch"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function SearchPage() {
@@ -30,7 +31,13 @@ export default function SearchPage() {
   let space = useSelector(Tab.space)
   let tabId = useSelector(Tabs.getActive)
   let queryable = space && space.name && space.ingest_progress === null
+  let firstVisit = !useSelector(Tab.currentEntry)
+
   useSearchShortcuts()
+
+  useEffect(() => {
+    if (queryable && firstVisit) dispatch(submitSearch())
+  }, [queryable, firstVisit])
 
   useEffect(() => {
     return () => dispatch(Handlers.abortAll())
