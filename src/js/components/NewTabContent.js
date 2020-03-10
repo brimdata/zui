@@ -48,7 +48,7 @@ export default function NewTabContent() {
             {filesPresent && (
               <>
                 <section>
-                  <label>Recent Files</label>
+                  <label>Recent Spaces</label>
                   <SavedSpacesList files={files} />
                 </section>
                 <div className="separator" />
@@ -57,6 +57,9 @@ export default function NewTabContent() {
             <section>
               <label>Open File</label>
               <PcapFileInput onChange={onChange} />
+              <p className="accepted-files">
+                Accepted file formats: pcap, pcapng
+              </p>
             </section>
           </div>
         </>

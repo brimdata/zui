@@ -22,8 +22,9 @@
     min-height: 300px;
 
     section {
-      min-width: 360px;
+      flex: 1;
       max-width: 360px;
+      min-width: 180px;
       min-height: 0px;
       display: flex;
       flex-direction: column;
@@ -45,5 +46,9 @@
     display: block;
     @include heading-section;
     margin-bottom: 24px;
+  }
+
+  .accepted-files {
+    @include label-small;
   }
 }
