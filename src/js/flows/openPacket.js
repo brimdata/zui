@@ -10,6 +10,11 @@ import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
+<<<<<<< HEAD
+=======
+import brim from "../brim"
+import deleteSpace from "./deleteSpace"
+>>>>>>> feat: Delete space if pcap post fails
 import lib from "../lib"
 import zealot from "../services/zealot"
 
@@ -19,11 +24,13 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
   let clusterId = Tab.clusterId(getState())
   let tabId = Tabs.getActive(getState())
   let client = clientDep || zealot.client(url)
+  let spaceName
 
   return fsExtra
     .ensureDir(dir)
     .then(() => client.spaces.create({data_dir: dir}))
     .then(async ({name}) => {
+      spaceName = name
       dispatch(Search.setSpace(name, tabId))
       let stream = client.pcaps.post({space: name, path: file})
       let setProgress = (n) =>
@@ -44,9 +51,14 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
       setProgress(null)
     })
     .catch((e) => {
-      // Delete the space from the backend here...
-      dispatch(Search.setSpace(""))
-      dispatch(Notice.set(ErrorFactory.create(e)))
+      dispatch(deleteSpace(spaceName))
+        .then(() => {
+          dispatch(Search.setSpace(""))
+          dispatch(Notice.set(ErrorFactory.create(e)))
+        })
+        .catch((e) => {
+          dispatch(Notice.set(ErrorFactory.create(e)))
+        })
     })
 }
 
