@@ -12,10 +12,10 @@ import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
 
-export default function ZQGetModal() {
+export default function ZQModal() {
   function copyToClip(_, e) {
     clickFeedback(e.target, "Copied")
-    var node = document.getElementById("zq-get-code")
+    var node = document.getElementById("zq-code")
     if (node) lib.doc.copyToClipboard(node.textContent)
   }
 
@@ -25,17 +25,17 @@ export default function ZQGetModal() {
         {label: "Copy", click: copyToClip},
         {label: "Done", click: (closeModal) => closeModal()}
       ]}
-      name="zq-get"
-      className="zq-get-modal"
-      title="ZQ Get Command"
-      {...reactElementProps("zqGetModal")}
+      name="zq"
+      className="zq-modal"
+      title="zq command"
+      {...reactElementProps("zqModal")}
     >
-      <ZQDGetModalContents />
+      <ZQModalContents />
     </ModalBox>
   )
 }
 
-function ZQDGetModalContents() {
+function ZQModalContents() {
   let program = useSelector(SearchBar.getSearchProgram)
   const bzng = join(useSelector(Tab.spaceName), "all.bzng")
 
@@ -43,7 +43,7 @@ function ZQDGetModalContents() {
 
   return (
     <TextContent>
-      <pre id="zq-get-code">{cmd}</pre>
+      <pre id="zq-code">{cmd}</pre>
     </TextContent>
   )
 }

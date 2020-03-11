@@ -1,15 +1,12 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState} from "react"
+import React from "react"
 
-import {InputCheckbox} from "./form/Inputs"
 import {inspectSearch} from "../services/boom"
 import {reactElementProps} from "../test/integration"
-import Form from "./form/Form"
 import ModalBox from "./ModalBox/ModalBox"
 import SearchBar from "../state/SearchBar"
-import Tab from "../state/Tab"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
@@ -38,7 +35,7 @@ export default function CurlModalBox() {
       buttons={buttons}
       name="curl"
       className="curl-modal"
-      title="Curl Command"
+      title="curl command"
       {...reactElementProps("curlModal")}
     >
       <CurlModalContents />
@@ -48,20 +45,14 @@ export default function CurlModalBox() {
 
 function CurlModalContents() {
   let dispatch = useDispatch()
-  let [includeCreds, setIncludeCreds] = useState(false)
   let program = useSelector(SearchBar.getSearchProgram)
-  let {username, password} = useSelector(Tab.cluster)
   let info = dispatch(inspectSearch(program))
 
-  function getCreds() {
-    if (includeCreds) return `-u ${username}:${password}`
-    else return ""
-  }
   return (
     <TextContent>
       {info && (
         <pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
-          curl -X {info.method} {getCreds()} -d &apos;
+          curl -X {info.method} -d &apos;
           {JSON.stringify(info.body, null, 2)}
           &apos; {info.url}
         </pre>
@@ -71,13 +62,6 @@ function CurlModalContents() {
           Invalid ZQL: &apos;{program}&apos;
         </pre>
       )}
-      <Form>
-        <InputCheckbox
-          label="Include Credentials:"
-          checked={includeCreds}
-          onChange={(e) => setIncludeCreds(e.target.checked)}
-        />
-      </Form>
     </TextContent>
   )
 }
