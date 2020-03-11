@@ -15,6 +15,8 @@ export default function window(name: WindowName, params: WindowParams) {
   let win = new BrowserWindow({
     titleBarStyle: "hidden",
     resizable: true,
+    minWidth: 480,
+    minHeight: 100,
     webPreferences: {
       nodeIntegration: true,
       experimentalFeatures: true
