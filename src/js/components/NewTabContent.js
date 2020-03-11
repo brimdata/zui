@@ -6,6 +6,7 @@ import IngestProgress from "./IngestProgress"
 import LogoType from "../icons/LogoType"
 import PcapFileInput from "./PcapFileInput"
 import SavedSpacesList from "./SavedSpacesList"
+import SpaceDeletedNotice from "./SpaceDeletedNotice"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import openPacket from "../flows/openPacket"
@@ -36,6 +37,7 @@ export default function NewTabContent() {
 
   return (
     <div className="new-tab-content">
+      <SpaceDeletedNotice />
       {space && <IngestProgress percent={percent} />}
       {!space && (
         <>
