@@ -1,9 +1,9 @@
 /* @flow */
 import React from "react"
 
-import {reactElementProps} from "../test/integration"
 import ArrowOrangeSvg from "../icons/arrow-orange.svg"
 import PcapFileSvg from "../icons/pcap-file.svg"
+import {reactElementProps} from "../test/integration"
 
 type Props = {
   onChange: Function
@@ -23,7 +23,7 @@ export default function PcapFileInput({onChange}: Props) {
         type="file"
         title=""
         onChange={_onChange}
-        {...reactElementProps("file_input")}
+        {...reactElementProps("pcapsFileInput")}
       />
     </div>
   )

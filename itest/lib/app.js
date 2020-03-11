@@ -1,6 +1,6 @@
 /* @flow */
 import {Application} from "spectron"
-import * as path from "path"
+import path from "path"
 
 import {LOG} from "./log"
 import {downloadsDir} from "../../src/js/lib/System"
@@ -51,7 +51,6 @@ export const newAppInstance = (name: string, idx: number) =>
 
 export const startApp = async (app: Application) => {
   await appStep("starting app", () => app.start())
-  return await resetState(app)
 }
 
 export const resetState = (app: Application) =>
@@ -72,7 +71,7 @@ export const waitForSearch = (app: Application) => {
 
 export const waitForNewTab = (app: Application) => {
   return appStep("wait for new tab to appear", () =>
-    app.client.waitForVisible(selectors.new_tab.file_input)
+    app.client.waitForVisible(selectors.pcaps.fileInput)
   )
 }
 
@@ -103,7 +102,7 @@ export const getSearchText = (app: Application): Promise<string> =>
 export const startSearch = (app: Application) =>
   appStep("click the search button", () => app.client.keys("Enter"))
 
-export const searchDisplay = async (app: Application) => {
+export const searchDisplayHeaders = async (app: Application) => {
   // This stinks. We have to use getHTML because headers that are off the
   // screen return as empty strings if you use getText. This isn't required of
   // actual results.
@@ -115,18 +114,22 @@ export const searchDisplay = async (app: Application) => {
   // The hack is to split this and extract just the text.
   const _trim = (s: string) => s.split(">")[1].split("<")[0]
 
-  const headerResults = () => {
-    return appStep("get search fields", () =>
-      app.client
-        .waitForVisible(selectors.viewer.headers)
-        .then(() => app.client.getHTML(selectors.viewer.headers))
-    ).then((headers) => {
-      if (typeof headers === "string") {
-        headers = [headers]
-      }
-      return headers.map((h) => _trim(h))
-    })
-  }
+  return appStep("get search fields", () =>
+    app.client
+      .waitForVisible(selectors.viewer.headers)
+      .then(() => app.client.getHTML(selectors.viewer.headers))
+  ).then((headers) => {
+    if (typeof headers === "string") {
+      headers = [headers]
+    }
+    return headers.map((h) => _trim(h))
+  })
+}
+
+export const searchDisplay = async (
+  app: Application,
+  includeHeaders: boolean = true
+) => {
   const searchResults = () =>
     appStep("get search tuples", () =>
       app.client
@@ -134,7 +137,10 @@ export const searchDisplay = async (app: Application) => {
         .then(() => app.client.getText(selectors.viewer.results))
     )
 
-  let headers = await headerResults()
+  let headers = ""
+  if (includeHeaders) {
+    headers = await searchDisplayHeaders(app)
+  }
   let search = await searchResults()
   // $FlowFixMe
   return headers.concat(search)
@@ -277,4 +283,19 @@ export const toggleOptimizations = async (app: Application) => {
     ])
   )
   await app.client.click(selectors.settings.button)
+}
+
+export const pcapIngestSample = async (app: Application) => {
+  // Ingest a PCAP and wait until we see derived records.
+  const pcapFile = path.normalize(path.join(__dirname, "..", "sample.pcap"))
+
+  await appStep("wait for pcap file input", () =>
+    app.client.waitForVisible(selectors.pcaps.fileInput)
+  )
+  await appStep("choose file", () =>
+    app.client.chooseFile(selectors.pcaps.fileInput, pcapFile)
+  )
+  await appStep("wait for viewer to appear", () =>
+    app.client.waitForVisible(selectors.viewer.results_base)
+  )
 }

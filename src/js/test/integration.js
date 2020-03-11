@@ -24,6 +24,7 @@ const dataAttrs = {
   optionsButton: "optionsButton",
   optionsMenu: "optionsMenu",
   pcapsButton: "pcapsButton",
+  pcapsFileInput: "pcapsFileInput",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -36,8 +37,7 @@ const dataAttrs = {
   useCacheToggle: "useCacheToggle",
   useIndexToggle: "useIndexToggle",
   viewer_header: "viewer_header",
-  viewer_results: "viewer_results",
-  file_input: "file_input"
+  viewer_results: "viewer_results"
 }
 
 // The purpose of this section is to have a single source of truth for
@@ -109,7 +109,8 @@ export const selectors = {
     menuItem: genSelectorForTextUnderElement("optionsMenu")
   },
   pcaps: {
-    button: dataAttrSelector("pcapsButton")
+    button: dataAttrSelector("pcapsButton"),
+    fileInput: dataAttrSelector("pcapsFileInput")
   },
   search: {
     button: dataAttrSelector("search_button"),
@@ -141,9 +142,6 @@ export const selectors = {
     resultCellContaining: genSelectorForTextUnderElement("viewer_results"),
     rightClickMenu: dataAttrSelector("logCellMenu"),
     rightClickMenuItem: genSelectorForTextUnderElement("logCellMenu")
-  },
-  new_tab: {
-    file_input: dataAttrSelector("file_input")
   }
 }
 
