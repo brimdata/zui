@@ -1,7 +1,7 @@
 /* @flow */
 import React from "react"
 
-import ZQGetModal from "./ZQGetModal"
+import ZQModal from "./ZQModal"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import logInto from "../test/helpers/loginTo"
@@ -14,10 +14,10 @@ test("renders with zq get command", async () => {
   store.dispatchAll([
     SearchBar.changeSearchBarInput("hi"),
     submitSearch(),
-    Modal.show("zq-get")
+    Modal.show("zq")
   ])
 
-  let wrapper = provide(store, <ZQGetModal />)
+  let wrapper = provide(store, <ZQModal />)
   wrapper.find("input[value='Copy']").simulate("click")
   wrapper.find("input[value='Done']").simulate("click")
 

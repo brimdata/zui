@@ -75,7 +75,7 @@ function Menu() {
   let menu = [
     {label: "Debug query", click: () => dispatch(Modal.show("debug"))},
     {label: "Copy for curl", click: () => dispatch(Modal.show("curl"))},
-    {label: "Copy for zq", click: () => dispatch(Modal.show("zq-get"))},
+    {label: "Copy for zq", click: () => dispatch(Modal.show("zq"))},
     {
       label: "Kill search",
       click: () => dispatch(Handlers.abortAll()),

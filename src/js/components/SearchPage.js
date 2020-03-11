@@ -22,7 +22,7 @@ import Tab from "../state/Tab"
 import TabBar from "./TabBar/TabBar"
 import Tabs from "../state/Tabs"
 import WhoisModal from "./WhoisModal"
-import ZQGetModal from "./ZQGetModal"
+import ZQModal from "./ZQModal"
 import submitSearch from "../flows/submitSearch"
 import useSearchShortcuts from "./useSearchShortcuts"
 
@@ -72,7 +72,7 @@ export default function SearchPage() {
       <CurlModal />
       <SettingsModal />
       <EmptySpaceModal />
-      <ZQGetModal />
+      <ZQModal />
     </div>
   )
 }
