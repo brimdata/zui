@@ -26,7 +26,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: brimsec/ci:0.0.1-zeek-mergecap
+      - image: circleci/node:12-buster-browsers
     steps:
       - checkout
       - npm_install
