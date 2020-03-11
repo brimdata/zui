@@ -1,14 +1,11 @@
 .notice-banner {
   @include error-bg;
-  position: absolute;
-  z-index: 1;
+
   padding: $space-s $space-m;
-  top: 22px;
-  left: 50%;
+
   font-size: 14px;
   white-space: nowrap;
   margin: 0;
-  max-width: 90%;
 
   p {
     margin: 0;
@@ -36,5 +33,13 @@
       font-size: 10px;
       margin-bottom: 3px;
     }
+  }
+
+  &.fixed {
+    position: absolute;
+    z-index: 1;
+    top: 22px;
+    left: 50%;
+    max-width: 90%;
   }
 }
