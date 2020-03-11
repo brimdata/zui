@@ -16,7 +16,7 @@ export default function fieldContextMenu(
     const isTime = field.type === "time"
     const isConn = log.isPath("conn")
     const isGroupBy = hasGroupByProc(program)
-    const isIp = ["ip"].includes(field.type)
+    const isIp = ["ip", "set[ip]"].includes(field.type)
     const hasCol = columns.includes(field.name)
     const sameCols = isEqual(
       log.descriptor.map((d) => d.name).sort(),
