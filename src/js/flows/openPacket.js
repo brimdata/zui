@@ -40,13 +40,13 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
           setProgress(extractFrom(status))
 
           if (!isQueryable && status.packet_read_size > 0) {
-            setIsQueryable((isQueryable = true))
             const data = await client.spaces.get(name)
             dispatch(Spaces.setDetail(clusterId, data))
             dispatch(
               Search.setSpanArgs(brim.space(data).defaultSpanArgs(), tabId)
             )
             dispatch(Search.setSpace(data.name, tabId))
+            setIsQueryable((isQueryable = true))
           } else if (isQueryable) {
             const data = await client.spaces.get(name)
             dispatch(Spaces.setDetail(clusterId, data))

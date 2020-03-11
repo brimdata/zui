@@ -34,7 +34,7 @@ export default {
 
   setIsQueryable: (
     clusterId: string,
-    space: SpaceDetailPayload,
+    space: string,
     value: boolean
   ): SPACES_IS_QUERYABLE => ({
     type: "SPACES_IS_QUERYABLE",
