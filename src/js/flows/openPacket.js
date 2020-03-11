@@ -51,14 +51,16 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
       setProgress(null)
     })
     .catch((e) => {
-      dispatch(deleteSpace(spaceName))
-        .then(() => {
-          dispatch(Search.setSpace(""))
-          dispatch(Notice.set(ErrorFactory.create(e)))
-        })
-        .catch((e) => {
-          dispatch(Notice.set(ErrorFactory.create(e)))
-        })
+      if (spaceName) {
+        dispatch(deleteSpace(spaceName))
+          .then(() => {
+            dispatch(Search.setSpace(""))
+            throw e
+          })
+          .catch((e) => {
+            dispatch(Notice.set(ErrorFactory.create(e)))
+          })
+      }
     })
 }
 
