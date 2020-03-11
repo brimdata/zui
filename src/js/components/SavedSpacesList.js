@@ -2,6 +2,8 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
+import {remote} from "electron"
+
 import {initSpace} from "../flows/initSpace"
 import Folder from "../icons/Folder"
 import TrashBin from "../icons/TrashBin"
@@ -21,8 +23,18 @@ export default function SavedSpacesList({files}: Props) {
 
   const onDelete = (space) => (e) => {
     e.preventDefault()
-    let ok = confirm(`Are you sure you want to delete ${space}?`)
-    if (ok) dispatch(deleteSpace(space))
+    remote.dialog
+      .showMessageBox({
+        type: "warning",
+        title: "Delete Space",
+        message: `Are you sure you want to delete ${space}?`,
+        detail:
+          "This will delete the created .brim folder, but will preserve the original pcap.",
+        buttons: ["Ok", "Cancel"]
+      })
+      .then(({response}) => {
+        if (response === 0) dispatch(deleteSpace(space))
+      })
   }
 
   return (
