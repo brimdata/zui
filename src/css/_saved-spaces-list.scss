@@ -7,8 +7,7 @@
   overflow-y: auto;
   min-height: 0px;
   position: relative;
-  margin: 0;
-  margin-bottom: 50px;
+  margin: 0 0 50px;
   padding: 0;
 
   &:before {
@@ -40,7 +39,7 @@
         display: none;
       }
       .delete-link {
-        display: inherit;
+        display: flex;
       }
     }
 
@@ -82,7 +81,6 @@
   }
 
   .delete-link {
-    display: flex;
     display: none;
     height: 30px;
     width: 30px;
