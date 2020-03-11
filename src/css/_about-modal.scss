@@ -1,0 +1,36 @@
+.about-logo {
+  display: flex;
+  justify-content: center;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: $blue;
+    cursor: pointer;
+    @include label-normal;
+  }
+
+  section {
+    display: flex;
+    margin: 10px 0;
+  }
+
+  label {
+    margin-right: 10px;
+    @include label-bold;
+  }
+}
+
+.octocat-small {
+  width: 15px;
+  margin: 0 3px;
+}

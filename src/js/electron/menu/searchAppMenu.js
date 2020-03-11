@@ -120,7 +120,7 @@ export default function searchAppMenu(send: Function, manager: $WindowManager) {
       label: "Brim",
       submenu: [
         {
-          label: "about",
+          label: "About",
           click() {
             send("showAbout")
           }

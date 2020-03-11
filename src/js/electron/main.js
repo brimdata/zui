@@ -38,13 +38,6 @@ async function main() {
   windowsMainHandler(winMan)
   globalStoreMainHandler(store, winMan)
 
-  // MASON - rm me
-  app.setAboutPanelOptions({
-    applicationName: app.getName(),
-    applicationVersion: app.getVersion(),
-    copyright: "masoncopyright"
-  })
-
   app.on("ready", () => {
     installExtensions()
     winMan.init(sessionState)
