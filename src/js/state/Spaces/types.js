@@ -11,19 +11,14 @@ export type SpacesState = {
   }
 }
 
-export type SpacesAction =
-  | SPACES_NAMES
-  | SPACES_DETAIL
-  | SPACES_INGEST_PROGRESS
-  | SPACES_IS_QUERYABLE
+export type SpacesAction = SPACES_NAMES | SPACES_DETAIL | SPACES_INGEST_PROGRESS
 
 export type Space = {
   name: string,
   min_time: Ts,
   max_time: Ts,
   packet_support: boolean,
-  ingest_progress: number | null,
-  is_queryable: boolean
+  ingest_progress: number | null
 }
 
 export type SPACES_NAMES = {
@@ -43,11 +38,4 @@ export type SPACES_INGEST_PROGRESS = {
   clusterId: string,
   space: string,
   value: number | null
-}
-
-export type SPACES_IS_QUERYABLE = {
-  type: "SPACES_IS_QUERYABLE",
-  clusterId: string,
-  space: string,
-  value: boolean
 }
