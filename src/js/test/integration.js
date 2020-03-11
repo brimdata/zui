@@ -24,6 +24,7 @@ const dataAttrs = {
   optionsButton: "optionsButton",
   optionsMenu: "optionsMenu",
   pcapsButton: "pcapsButton",
+  pcapFileInput: "pcapFileInput",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -109,7 +110,8 @@ export const selectors = {
     menuItem: genSelectorForTextUnderElement("optionsMenu")
   },
   pcaps: {
-    button: dataAttrSelector("pcapsButton")
+    button: dataAttrSelector("pcapsButton"),
+    fileInput: dataAttrSelector("pcapFileInput")
   },
   search: {
     button: dataAttrSelector("search_button"),
@@ -141,9 +143,6 @@ export const selectors = {
     resultCellContaining: genSelectorForTextUnderElement("viewer_results"),
     rightClickMenu: dataAttrSelector("logCellMenu"),
     rightClickMenuItem: genSelectorForTextUnderElement("logCellMenu")
-  },
-  new_tab: {
-    file_input: dataAttrSelector("file_input")
   }
 }
 
