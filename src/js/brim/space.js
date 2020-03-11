@@ -23,12 +23,22 @@ export default function space(info: Space) {
       }
     },
     empty() {
+      if (!info.min_time || !info.max_time) return true
       return (
         info.min_time.sec === 0 &&
         info.min_time.ns === 0 &&
         info.max_time.sec === 0 &&
         info.max_time.ns === 0
       )
+    },
+    everythingSpan() {
+      let {min_time, max_time} = info
+      let from = brim.time(min_time).toTs()
+      let to = brim
+        .time(max_time)
+        .add(1, "ms")
+        .toTs()
+      return [from, to]
     }
   }
 }
