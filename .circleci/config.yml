@@ -51,13 +51,6 @@ jobs:
       - npm_install
       - build
       - run:
-          name: Get ZQD
-          command: |
-            git clone --single-branch https://github.com/brimsec/zq
-            pushd zq
-            git reset --hard da56b01d87a9745c90d09e960163ecba33eab55a
-            make install
-      - run:
           name: Integration Tests
           command: npm run itest
       - store_artifacts:
