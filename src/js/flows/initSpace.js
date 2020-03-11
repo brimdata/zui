@@ -59,7 +59,7 @@ function setSpace(dispatch, data, clusterId) {
 }
 
 function setSearchDefaults(dispatch, data) {
-  dispatch(Search.setSpanArgs(brim.space(data).defaultSpanArgs()))
+  dispatch(Search.setSpanArgs(brim.space(data).everythingSpan()))
   dispatch(SearchBar.removeAllSearchBarPins())
   dispatch(SearchBar.changeSearchBarInput(""))
   return data

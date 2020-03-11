@@ -14,6 +14,7 @@ import EmptySpaceModal from "./EmptySpaceModal"
 import ErrorNotice from "./ErrorNotice"
 import Handlers from "../state/Handlers"
 import NewTabContent from "./NewTabContent"
+import Search from "../state/Search"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
 import SettingsModal from "./SettingsModal"
@@ -23,6 +24,7 @@ import TabBar from "./TabBar/TabBar"
 import Tabs from "../state/Tabs"
 import WhoisModal from "./WhoisModal"
 import ZQModal from "./ZQModal"
+import brim from "../brim"
 import submitSearch from "../flows/submitSearch"
 import useSearchShortcuts from "./useSearchShortcuts"
 
@@ -30,13 +32,16 @@ export default function SearchPage() {
   let dispatch = useDispatch()
   let space = useSelector(Tab.space)
   let tabId = useSelector(Tabs.getActive)
-  let queryable = space && space.name && space.is_queryable
+  let queryable = space && !brim.space(space).empty()
   let firstVisit = !useSelector(Tab.currentEntry)
 
   useSearchShortcuts()
 
   useEffect(() => {
-    if (queryable && firstVisit) dispatch(submitSearch())
+    if (queryable && firstVisit) {
+      dispatch(Search.setSpanArgs(brim.space(space).everythingSpan()))
+      dispatch(submitSearch())
+    }
   }, [queryable, firstVisit])
 
   useEffect(() => {
