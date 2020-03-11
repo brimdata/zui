@@ -24,7 +24,7 @@ const dataAttrs = {
   optionsButton: "optionsButton",
   optionsMenu: "optionsMenu",
   pcapsButton: "pcapsButton",
-  pcapFileInput: "pcapFileInput",
+  pcapsFileInput: "pcapsFileInput",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -110,7 +110,7 @@ export const selectors = {
   },
   pcaps: {
     button: dataAttrSelector("pcapsButton"),
-    fileInput: dataAttrSelector("pcapFileInput")
+    fileInput: dataAttrSelector("pcapsFileInput")
   },
   search: {
     button: dataAttrSelector("search_button"),

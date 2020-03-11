@@ -51,11 +51,6 @@ export const newAppInstance = (name: string, idx: number) =>
 
 export const startApp = async (app: Application) => {
   await appStep("starting app", () => app.start())
-
-  // XXX(alfred): This resetState causes the app to asynchoronously
-  // refresh, interfering with the subsequent command. We need a
-  // synchronous reset.
-  // return await resetState(app)
 }
 
 export const resetState = (app: Application) =>

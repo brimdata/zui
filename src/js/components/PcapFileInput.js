@@ -23,7 +23,7 @@ export default function PcapFileInput({onChange}: Props) {
         type="file"
         title=""
         onChange={_onChange}
-        {...reactElementProps("pcapFileInput")}
+        {...reactElementProps("pcapsFileInput")}
       />
     </div>
   )
