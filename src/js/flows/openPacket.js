@@ -29,15 +29,28 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
       let stream = client.pcaps.post({space: name, path: file})
       let setProgress = (n) =>
         dispatch(Spaces.setIngestProgress(clusterId, name, n))
+      let setIsQueryable = (v) =>
+        dispatch(Spaces.setIsQueryable(clusterId, name, v))
 
       setProgress(0)
+      setIsQueryable(false)
+      let first = true
       for await (let {type, ...status} of stream) {
-        if (type === "PacketPostStatus") setProgress(extractFrom(status))
+        if (type === "PacketPostStatus") {
+          setProgress(extractFrom(status))
+          const data = await client.spaces.get(name)
+          dispatch(Spaces.setDetail(clusterId, data))
+
+          if (first) {
+            dispatch(
+              Search.setSpanArgs(brim.space(data).defaultSpanArgs(), tabId)
+            )
+            dispatch(Search.setSpace(data.name, tabId))
+            setIsQueryable(true)
+            first = false
+          }
+        }
       }
-      let data = await client.spaces.get(name)
-      dispatch(Spaces.setDetail(clusterId, data))
-      dispatch(Search.setSpanArgs(brim.space(data).defaultSpanArgs(), tabId))
-      dispatch(Search.setSpace(data.name, tabId))
 
       // The progress bar has a transition of 1 second. I think people are
       // psychologically comforted when they see the progress bar complete.
