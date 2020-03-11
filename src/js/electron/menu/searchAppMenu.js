@@ -119,7 +119,12 @@ export default function searchAppMenu(send: Function, manager: $WindowManager) {
     template.unshift({
       label: "Brim",
       submenu: [
-        {role: "about"},
+        {
+          label: "about",
+          click() {
+            send("showAbout")
+          }
+        },
         {type: "separator"},
         {
           label: "Preferences...",

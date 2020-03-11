@@ -19,3 +19,4 @@ export type ModalName =
   | "curl"
   | "nodata"
   | "zq"
+  | "about"

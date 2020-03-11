@@ -27,6 +27,7 @@ import ZQModal from "./ZQModal"
 import brim from "../brim"
 import submitSearch from "../flows/submitSearch"
 import useSearchShortcuts from "./useSearchShortcuts"
+import AboutModal from "./AboutModal"
 
 export default function SearchPage() {
   let dispatch = useDispatch()
@@ -78,6 +79,7 @@ export default function SearchPage() {
       <SettingsModal />
       <EmptySpaceModal />
       <ZQModal />
+      <AboutModal />
     </div>
   )
 }
