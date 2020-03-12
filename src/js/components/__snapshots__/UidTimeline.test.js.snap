@@ -28,7 +28,7 @@ exports[`shapshot 1`] = `
           },
           Object {
             "name": "id.orig_h",
-            "type": "ip",
+            "type": "addr",
           },
           Object {
             "name": "id.orig_p",
@@ -36,7 +36,7 @@ exports[`shapshot 1`] = `
           },
           Object {
             "name": "id.resp_h",
-            "type": "ip",
+            "type": "addr",
           },
           Object {
             "name": "id.resp_p",
@@ -157,7 +157,7 @@ exports[`shapshot 1`] = `
           },
           Object {
             "name": "id.orig_h",
-            "type": "ip",
+            "type": "addr",
           },
           Object {
             "name": "id.orig_p",
@@ -165,7 +165,7 @@ exports[`shapshot 1`] = `
           },
           Object {
             "name": "id.resp_h",
-            "type": "ip",
+            "type": "addr",
           },
           Object {
             "name": "id.resp_p",
@@ -301,7 +301,7 @@ exports[`shapshot 1`] = `
           },
           Object {
             "name": "id.orig_h",
-            "type": "ip",
+            "type": "addr",
           },
           Object {
             "name": "id.orig_p",
@@ -309,7 +309,7 @@ exports[`shapshot 1`] = `
           },
           Object {
             "name": "id.resp_h",
-            "type": "ip",
+            "type": "addr",
           },
           Object {
             "name": "id.resp_p",
