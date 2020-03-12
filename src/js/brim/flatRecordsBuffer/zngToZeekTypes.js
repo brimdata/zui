@@ -1,21 +1,21 @@
 /* @flow */
 import {isString} from "../../lib/is"
 
-type ZngType = {name: string, type: ZngType | string}[]
+type ZngRecordType = {name: string, type: ZngRecordType | string}[]
 
-export default function zngToZeekTypes(zng: ZngType): ZngType {
+export default function zngToZeekTypes(zng: ZngRecordType): ZngRecordType {
   return zng.map((t) => ({
     name: t.name,
     type: recursiveReplace(t.type)
   }))
 }
 
-function recursiveReplace(zng: ZngType | string): ZngType | string {
-  if (isString(zng)) return getAlias(zng)
+function recursiveReplace(zng: ZngRecordType | string): ZngRecordType | string {
+  if (isString(zng)) return getZeekType(zng)
   else return zngToZeekTypes(zng)
 }
 
-function getAlias(type: string): string {
+function getZeekType(type: string): string {
   switch (type) {
     case "byte":
     case "int16":
