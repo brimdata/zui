@@ -59,6 +59,9 @@ export const resetState = (app: Application) =>
 export const showPreferences = (app: Application) =>
   appStep("show preferences", () => app.webContents.send("showPreferences"))
 
+export const showAbout = (app: Application) =>
+  appStep("show about", () => app.webContents.send("showAbout"))
+
 export const waitForSearch = (app: Application) => {
   return appStep(
     "wait for main search input to appear and then get its value",
