@@ -10,11 +10,7 @@ import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
-<<<<<<< HEAD
-=======
-import brim from "../brim"
 import deleteSpace from "./deleteSpace"
->>>>>>> feat: Delete space if pcap post fails
 import lib from "../lib"
 import zealot from "../services/zealot"
 
