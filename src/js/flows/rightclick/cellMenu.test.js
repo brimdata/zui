@@ -2,7 +2,7 @@
 
 import type {MenuItem} from "electron"
 
-import {conn, dns, weird} from "../../test/mockLogs"
+import {conn, dns} from "../../test/mockLogs"
 import menu from "../../electron/menu"
 
 function menuText(menu: MenuItem) {
@@ -59,19 +59,6 @@ describe("Log Right Click", () => {
 
     expect(menuText(ctxMenu)).toMatch(/virustotal/i)
     expect(menuText(ctxMenu)).toMatch(/count by/i)
-  })
-
-  test("time field for weird log", () => {
-    const log = weird()
-    const field = log.mustGetField("ts")
-    const ctxMenu = menu.fieldContextMenu(
-      program,
-      log.descriptor.map((c) => c.name),
-      space
-    )(field, log, false)
-
-    expect(menuText(ctxMenu)).toMatch(/"start" time/i)
-    expect(menuText(ctxMenu)).toMatch(/"end" time/i)
   })
 
   test("time field for conn log", () => {
