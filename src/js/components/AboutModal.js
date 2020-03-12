@@ -15,8 +15,9 @@ export default function AboutModal() {
   return (
     <ModalBox
       name="about"
-      title="About"
-      buttons="Close"
+      title=""
+      buttons={[]}
+      className="about-modal"
       {...reactElementProps("aboutModal")}
     >
       <div className="about-logo">

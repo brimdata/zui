@@ -1,36 +1,40 @@
-.about-logo {
-  display: flex;
-  justify-content: center;
-}
+.about-modal {
+  width: 370px;
 
-.about-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-
-  p {
-    margin: 0;
-  }
-
-  a {
-    color: $blue;
-    cursor: pointer;
-    @include label-normal;
-  }
-
-  section {
+  .about-logo {
     display: flex;
-    margin: 10px 0;
+    justify-content: center;
   }
 
-  label {
-    margin-right: 10px;
-    @include label-bold;
-  }
-}
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    @include label-normal;
 
-.octocat-small {
-  width: 15px;
-  margin: 0 3px;
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: $blue;
+      cursor: pointer;
+    }
+
+    section {
+      display: flex;
+      margin: 10px 0;
+    }
+
+    label {
+      margin-right: 10px;
+      @include label-bold;
+    }
+  }
+
+  .octocat-small {
+    width: 15px;
+    margin: 0 3px;
+  }
 }
