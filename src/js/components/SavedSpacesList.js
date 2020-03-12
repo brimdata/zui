@@ -2,8 +2,12 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
+import {remote} from "electron"
+
 import {initSpace} from "../flows/initSpace"
-import FileFill from "../icons/FileFill"
+import Folder from "../icons/Folder"
+import TrashBin from "../icons/TrashBin"
+import deleteSpace from "../flows/deleteSpace"
 
 type Props = {|
   files: string[]
@@ -12,19 +16,41 @@ type Props = {|
 export default function SavedSpacesList({files}: Props) {
   let dispatch = useDispatch()
 
-  function onClick(space) {
+  const onClick = (space) => (e) => {
+    e.preventDefault()
     dispatch(initSpace(space))
   }
 
+  const onDelete = (space) => (e) => {
+    e.preventDefault()
+    remote.dialog
+      .showMessageBox({
+        type: "warning",
+        title: "Delete Space",
+        message: `Are you sure you want to delete ${space}?`,
+        detail:
+          "This will delete the created .brim folder, but will preserve the original pcap file.",
+        buttons: ["OK", "Cancel"]
+      })
+      .then(({response}) => {
+        if (response === 0) dispatch(deleteSpace(space))
+      })
+  }
+
   return (
-    <div className="saved-spaces-list">
+    <menu className="saved-spaces-list">
       {files.map((file) => (
-        <a className="item" onClick={() => onClick(file)} key={file} href="#">
-          <FileFill className="file-icon" />
-          <span className="name">{file}</span>
+        <li key={file} className="item">
+          <a href="#" onClick={onClick(file)} className="space-link">
+            <Folder className="space-icon" />
+            <span className="name">{file}</span>
+          </a>
+          <a href="#" onClick={onDelete(file)} className="delete-link">
+            <TrashBin className="delete-icon" />
+          </a>
           <div className="line" />
-        </a>
+        </li>
       ))}
-    </div>
+    </menu>
   )
 }

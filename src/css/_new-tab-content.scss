@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
-  padding: 0 24px;
+  padding: 0 70px;
 
   .logo {
     margin: 60px auto;
@@ -15,22 +15,31 @@
     }
   }
 
+  .space-deleted {
+    margin: 10px auto;
+  }
+
   .input-methods {
     margin: 20px auto;
     margin-bottom: 50px;
     display: flex;
+    width: 100%;
+    justify-content: center;
     min-height: 300px;
 
     section {
-      min-width: 360px;
-      max-width: 360px;
+      flex: 1;
       min-height: 0px;
+      min-width: 200px;
+      max-width: 460px;
       display: flex;
       flex-direction: column;
     }
 
     .separator {
       min-width: 1px;
+      max-width: 1px;
+      width: 1px;
       height: 100%;
       margin: 0 24px;
       background: linear-gradient(
@@ -45,5 +54,9 @@
     display: block;
     @include heading-section;
     margin-bottom: 24px;
+  }
+
+  .accepted-files {
+    @include label-small;
   }
 }

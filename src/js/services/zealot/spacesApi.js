@@ -20,5 +20,11 @@ export default {
       method: "POST",
       body: JSON.stringify(args)
     }
+  },
+  delete(name: string) {
+    return {
+      path: `/space/${name}`,
+      method: "DELETE"
+    }
   }
 }

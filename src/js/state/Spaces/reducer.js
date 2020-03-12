@@ -8,7 +8,6 @@ function spacesReducer(state, action: SpacesAction) {
   switch (action.type) {
     case "SPACES_NAMES":
       return {
-        ...state,
         ...replaceNames(action, state)
       }
     case "SPACES_DETAIL":

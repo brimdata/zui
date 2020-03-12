@@ -11,7 +11,7 @@ describe("search api", () => {
     })
   })
 
-  test("search dfeaults", () => {
+  test("search defaults", () => {
     client.searchDefaults({
       space: "corelight",
       from: "Jan 1, 2019",
@@ -41,6 +41,13 @@ describe("spaces api", () => {
     expect(client.inspect().spaces.create()).toEqual({
       method: "POST",
       path: "/space"
+    })
+  })
+
+  test("delete a space with a name", () => {
+    expect(client.inspect().spaces.delete("my-space")).toEqual({
+      method: "DELETE",
+      path: "/space/my-space"
     })
   })
 })

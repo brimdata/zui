@@ -23,6 +23,16 @@ test("setting the names", () => {
   expect(Spaces.names("cluster1")(state)).toEqual(["default", "hq_integration"])
 })
 
+test("space names removing", () => {
+  let selector = Spaces.names("cluster1")
+  let state = store.dispatchAll([
+    Spaces.setNames("cluster1", ["default", "hq_integration"]),
+    Spaces.setNames("cluster1", ["default"])
+  ])
+
+  expect(selector(state)).toEqual(["default"])
+})
+
 test("setting the space detail", () => {
   let state = store.dispatchAll([Spaces.setDetail("cluster1", detail)])
 
