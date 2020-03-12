@@ -1,4 +1,5 @@
 /* @flow */
+import {COMPOUND_FIELD_RGX} from "../compoundField"
 import {isString} from "../../lib/is"
 
 type ZngRecordType = {name: string, type: ZngRecordType | string}[]
@@ -16,6 +17,17 @@ function recursiveReplace(zng: ZngRecordType | string): ZngRecordType | string {
 }
 
 function getZeekType(type: string): string {
+  let match = type.match(COMPOUND_FIELD_RGX)
+  if (match) {
+    let [_, container, itemType] = match
+    let zeekType = getSingleZeekType(itemType)
+    return `${container}[${zeekType}]`
+  } else {
+    return getSingleZeekType(type)
+  }
+}
+
+function getSingleZeekType(type) {
   switch (type) {
     case "byte":
     case "int16":

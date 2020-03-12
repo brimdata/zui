@@ -70,6 +70,18 @@ test("all other types passthrough", () => {
   ])
 })
 
+test("sets", () => {
+  expect(zngToZeekTypes([{name: "one", type: "set[ip]"}])).toEqual([
+    {name: "one", type: "set[addr]"}
+  ])
+})
+
+test("array", () => {
+  expect(zngToZeekTypes([{name: "one", type: "array[ip]"}])).toEqual([
+    {name: "one", type: "array[addr]"}
+  ])
+})
+
 test("nested types", () => {
   let newTypes = zngToZeekTypes([
     {

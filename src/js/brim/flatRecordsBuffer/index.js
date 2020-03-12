@@ -33,7 +33,6 @@ export default function flatRecordBuffers() {
       let chan = this.getChannel(id)
       let flatRecords = records.map((r) => {
         if (r.type) types[r.id] = zngToZeekTypes(r.type)
-
         return nestedRecord(r.values, types[r.id]).flatten()
       })
       chan.add(flatRecords)
