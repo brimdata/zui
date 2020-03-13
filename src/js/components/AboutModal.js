@@ -11,6 +11,7 @@ import {remote} from "electron"
 
 export default function AboutModal() {
   const appVersion = remote.app.getVersion()
+  const year = new Date().getFullYear()
 
   return (
     <ModalBox
@@ -52,7 +53,7 @@ export default function AboutModal() {
             </a>
           </section>
           <section>
-            <p>Copyright 2020 Brim Security, Inc.</p>
+            <p>Copyright {year} Brim Security, Inc.</p>
           </section>
         </div>
       </TextContent>
