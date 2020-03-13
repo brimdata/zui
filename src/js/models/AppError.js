@@ -35,6 +35,9 @@ export default class AppError {
       if (this.raw.error) {
         return this.raw.error
       }
+      if (this.raw.message) {
+        return this.raw.message
+      }
       return JSON.stringify(this.raw)
     }
 

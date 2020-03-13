@@ -12,14 +12,12 @@ import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import deleteSpace from "./deleteSpace"
 import lib from "../lib"
-import zealot from "../services/zealot"
 
 export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
   let dir = file + ".brim"
-  let url = Tab.clusterUrl(getState())
   let clusterId = Tab.clusterId(getState())
   let tabId = Tabs.getActive(getState())
-  let client = clientDep || zealot.client(url)
+  let client = clientDep || Tab.getZealot(getState())
   let spaceName
 
   return fsExtra
@@ -37,6 +35,9 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
         if (type === "PacketPostStatus") {
           setProgress(extractFrom(status))
           dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
+        }
+        if (type === "TaskEnd" && status.error) {
+          throw status.error
         }
       }
       setProgress(1)
