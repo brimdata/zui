@@ -46,6 +46,14 @@ export default function AboutModal() {
               Repository
             </a>
           </section>
+          <section>
+            <a onClick={() => open("./acknowledgements.txt")}>
+              Acknowledgements
+            </a>
+          </section>
+          <section>
+            <p>Copyright 2020 Brim Security, Inc.</p>
+          </section>
         </div>
       </TextContent>
     </ModalBox>
