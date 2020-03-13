@@ -3,6 +3,7 @@
 import {isArray} from "../../lib/is"
 import channel, {type $Channel} from "./channel"
 import nestedRecord from "./nestedRecord"
+import zngToZeekTypes from "./zngToZeekTypes"
 
 export type RawColumn = {name: string, type: string | RawColumn[]}
 export type RawValue = string | null | RawValue[]
@@ -31,7 +32,7 @@ export default function flatRecordBuffers() {
     add(id: number, records: RawRecord[]) {
       let chan = this.getChannel(id)
       let flatRecords = records.map((r) => {
-        if (r.type) types[r.id] = r.type
+        if (r.type) types[r.id] = zngToZeekTypes(r.type)
         return nestedRecord(r.values, types[r.id]).flatten()
       })
       chan.add(flatRecords)
