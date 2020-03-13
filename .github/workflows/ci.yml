@@ -1,0 +1,72 @@
+name: Brim CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [12.x]
+        os: [ubuntu-18.04]
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup node version ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+    - run: npm install --no-audit
+    - run: npm run format-check
+    - run: npm run build
+    - run: npm run lint
+    - run: npm run flow
+    - run: npm test -- --maxWorkers=2 --ci
+
+  integration_test:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node-version: [12.x]
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup node version ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+    - run: npm install --no-audit
+    - run: npm run build
+    - name: Integration Tests
+      uses: GabrielBB/xvfb-action@v1.0
+      with:
+        run: npm run itest -- --ci --forceExit
+      env:
+        # WORKSPACE represents a top-level place for test infra code to
+        # find and put things. That avoids proliferation of env
+        # variables of directories. It's used to dump logs into the
+        # correct place so that CI can reliably find them for
+        # collection.
+        WORKSPACE: /var/tmp/brimsec
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: artifacts
+        path: /var/tmp/brimsec/logs
