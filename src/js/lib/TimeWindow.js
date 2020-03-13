@@ -53,8 +53,11 @@ export const shift = (
   ]
 }
 
-export const spanOfLast = (number: number, unit: TimeUnit) => {
-  const now = new Date()
+export const spanOfLast = (
+  number: number,
+  unit: TimeUnit,
+  now: Date = new Date()
+) => {
   return [
     brim
       .time(now)
