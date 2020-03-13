@@ -8,10 +8,12 @@ import LogoType from "../icons/LogoType"
 import Octocat from "../icons/Octocat"
 import {open} from "../lib/System"
 import {remote} from "electron"
+import {join} from "path"
 
 export default function AboutModal() {
   const appVersion = remote.app.getVersion()
   const year = new Date().getFullYear()
+  const ackFilePath = join(remote.app.getAppPath(), "acknowledgements.txt")
 
   return (
     <ModalBox
@@ -48,9 +50,7 @@ export default function AboutModal() {
             </a>
           </section>
           <section>
-            <a onClick={() => open("./acknowledgements.txt")}>
-              Acknowledgements
-            </a>
+            <a onClick={() => open(ackFilePath)}>Acknowledgements</a>
           </section>
           <section>
             <p>Copyright {year} Brim Security, Inc.</p>
