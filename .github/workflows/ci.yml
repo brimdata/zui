@@ -59,6 +59,11 @@ jobs:
       with:
         run: npm run itest -- --ci --forceExit
       env:
+        # WORKSPACE represents a top-level place for test infra code to
+        # find and put things. That avoids proliferation of env
+        # variables of directories. It's used to dump logs into the
+        # correct place so that CI can reliably find them for
+        # collection.
         WORKSPACE: /var/tmp/brimsec
     - uses: actions/upload-artifact@v1
       if: failure()
