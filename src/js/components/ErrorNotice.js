@@ -1,4 +1,5 @@
 /* @flow */
+import {upperFirst} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
@@ -38,7 +39,7 @@ function None() {
 
 function Default({error}: {error: BrimError}) {
   let dispatch = useDispatch()
-  let msg = capitalizeFirst(error.message)
+  let msg = upperFirst(error.message)
   let details = error.details
   return (
     <>
@@ -54,9 +55,4 @@ function Default({error}: {error: BrimError}) {
       )}
     </>
   )
-}
-
-function capitalizeFirst(str) {
-  if (str.length === 0) return str
-  return str[0].toUpperCase() + str.slice(1)
 }
