@@ -1,6 +1,5 @@
 /* @flow */
 
-import AppError from "../../models/AppError"
 import Errors from "./"
 import initTestStore from "../../test/initTestStore"
 
@@ -12,7 +11,11 @@ beforeEach(() => {
 test("ERROR_CREATE", () => {
   let state = store.dispatchAll([Errors.createError("Bug")])
 
-  expect(Errors.getErrors(state)[0]).toEqual(expect.any(AppError))
+  expect(Errors.getErrors(state)[0]).toEqual({
+    type: "AppError",
+    message: "Bug",
+    details: []
+  })
 })
 
 test("ERRORS_CLEAR", () => {
