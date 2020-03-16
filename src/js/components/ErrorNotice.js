@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import type {BrimError} from "../errors/types"
-import {capitalize} from "../lib/Str"
 import NetworkErrorNotice from "./NetworkErrorNotice"
 import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
