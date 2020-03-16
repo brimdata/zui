@@ -1,7 +1,10 @@
 /* @flow */
+import http from "http"
 import https from "https"
 
 import {retry} from "../lib/control"
+import ZeekLogDescriptions from "../../src/js/services/zeekLogDescriptions"
+import brim from "../../src/js/brim"
 import virusTotal from "../../src/js/services/virusTotal"
 
 test("ping virus total for a success", () => {
@@ -17,4 +20,26 @@ test("ping virus total for a success", () => {
   }
 
   return retry(makeRequest, 5)
+})
+
+describe("doc urls", () => {
+  const stripSuffix = (s) => s.replace("_log", "")
+  const buildUrl = (s) => [s, brim.zeekLogInfo(s).docsUrl()]
+  const request = (path, url) =>
+    new Promise((good, bad) => {
+      http
+        // $FlowFixMe
+        .request(url, {method: "HEAD"}, (res) => {
+          if (res.statusCode === 200) good()
+          else bad(`${res.statusCode}: ${path}${url}`)
+        })
+        .end()
+    })
+
+  Object.keys(ZeekLogDescriptions)
+    .map(stripSuffix)
+    .map(buildUrl)
+    .forEach(([path, url]) => {
+      test(`doc url responds 200 for ${path}`, () => request(path, url))
+    })
 })
