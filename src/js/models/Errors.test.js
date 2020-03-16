@@ -33,8 +33,11 @@ describe("ErrorFactory#create", () => {
       const errors = TEST_CASES[klass]
 
       errors.forEach((error) => {
-        expect(ErrorFactory.create(error).constructor.name).toBe(klass)
-        expect(ErrorFactory.create("Negative").constructor.name).not.toBe(klass)
+        let brimError = ErrorFactory.create(error)
+        expect(brimError.type).toBe(klass)
+
+        let negative = ErrorFactory.create("Negative")
+        expect(negative).not.toBe(klass)
       })
     })
   })

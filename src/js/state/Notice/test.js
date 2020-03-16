@@ -14,11 +14,26 @@ test("init state", () => {
   expect(notice.getVisible(state)).toBe(false)
 })
 
-test("set", () => {
+test("set an app error", () => {
   let e = new AppError()
   let state = store.dispatchAll([notice.set(e)])
+  let brimError = {
+    type: "AppError",
+    message: "Unknown error",
+    details: []
+  }
+  expect(notice.getError(state)).toEqual(brimError)
+  expect(notice.getVisible(state)).toBe(true)
+})
 
-  expect(notice.getError(state)).toEqual(e)
+test("set a brim error", () => {
+  let brimError = {
+    type: "IngestError",
+    message: "Pcap is too large to ingest",
+    details: ["sort limit reached (10)"]
+  }
+  let state = store.dispatchAll([notice.set(brimError)])
+  expect(notice.getError(state)).toEqual(brimError)
   expect(notice.getVisible(state)).toBe(true)
 })
 
@@ -33,7 +48,11 @@ test("clear", () => {
 test("dismiss", () => {
   let e = new AppError()
   let state = store.dispatchAll([notice.set(e), notice.dismiss()])
-
-  expect(notice.getError(state)).toEqual(e)
+  let brimError = {
+    type: "AppError",
+    message: "Unknown error",
+    details: []
+  }
+  expect(notice.getError(state)).toEqual(brimError)
   expect(notice.getVisible(state)).toBe(false)
 })

@@ -2,6 +2,8 @@
 
 import startCase from "lodash/startCase"
 
+import type {BrimError} from "../errors/types"
+
 export type RawError = *
 export type ErrorContext = *
 
@@ -35,6 +37,9 @@ export default class AppError {
       if (this.raw.error) {
         return this.raw.error
       }
+      if (this.raw.message) {
+        return this.raw.message
+      }
       return JSON.stringify(this.raw)
     }
 
@@ -52,5 +57,14 @@ export default class AppError {
 
   details(): string[] {
     return []
+  }
+
+  toBrimError(): BrimError {
+    return {
+      // $FlowFixMe
+      type: this.constructor.name,
+      message: this.message(),
+      details: this.details()
+    }
   }
 }

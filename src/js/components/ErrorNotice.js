@@ -1,9 +1,9 @@
 /* @flow */
+import {upperFirst} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
-import {NetworkError} from "../models/Errors"
-import {capitalize} from "../lib/Str"
+import type {BrimError} from "../errors/types"
 import NetworkErrorNotice from "./NetworkErrorNotice"
 import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
@@ -20,15 +20,15 @@ export default function ErrorNotice() {
   )
 }
 
-function ErrorMessage({error}) {
+function ErrorMessage({error}: {error: BrimError}) {
   let Component = getComponent(error)
   let dispatch = useDispatch()
   useEscapeKey(() => dispatch(Notice.dismiss()))
   return <Component error={error} />
 }
 
-function getComponent(error) {
-  if (error instanceof NetworkError) return NetworkErrorNotice
+function getComponent(error: BrimError) {
+  if (error.type === "NetworkError") return NetworkErrorNotice
   else if (error) return Default
   else return None
 }
@@ -37,16 +37,16 @@ function None() {
   return null
 }
 
-function Default({error}) {
+function Default({error}: {error: BrimError}) {
   let dispatch = useDispatch()
-  let msg = capitalize(error.message())
-  let details = error.details()
+  let msg = upperFirst(error.message)
+  let details = error.details
   return (
     <>
       <p>
         {msg} <a onClick={() => dispatch(Notice.dismiss())}>Dismiss</a>
       </p>
-      {details.length > 0 && (
+      {details && details.length > 0 && (
         <div className="error-details">
           {details.map((string, i) => (
             <p key={i}>{string}</p>

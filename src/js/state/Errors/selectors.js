@@ -1,11 +1,12 @@
 /* @flow */
 import {map} from "lodash"
+
+import type {BrimError} from "../../errors/types"
 import type {State} from "../types"
 import ErrorFactory from "../../models/ErrorFactory"
-import AppError from "../../models/AppError"
 
 export default {
-  getErrors(state: State): AppError[] {
+  getErrors(state: State): BrimError[] {
     return map(state.errors, (err) => ErrorFactory.create(err))
   }
 }

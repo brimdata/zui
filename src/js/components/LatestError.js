@@ -2,16 +2,16 @@
 import {connect} from "react-redux"
 import React from "react"
 
+import type {BrimError} from "../errors/types"
 import type {State} from "../state/types"
 import {first} from "../lib/Array"
 import {reactElementProps} from "../test/integration"
-import AppError from "../models/AppError"
 import Errors from "../state/Errors"
 
-type Props = {|error: AppError|}
+type Props = {|error: BrimError|}
 
 export function LatestError({error}: Props) {
-  let message = error ? `${error.title()}: ${error.message()}` : ""
+  let message = error ? `${error.type}: ${error.message}` : ""
 
   return (
     <div className="latest-error" {...reactElementProps("notification")}>
