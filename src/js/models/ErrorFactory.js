@@ -1,5 +1,6 @@
 /* @flow */
 
+import type {BrimError} from "../errors/types"
 import {KNOWN_ERRORS} from "./Errors"
 import AppError, {type RawError} from "./AppError"
 
@@ -10,18 +11,20 @@ function compareKeys(a, b) {
 }
 
 export default class ErrorFactory {
-  static create(error: RawError): AppError {
-    if (error instanceof AppError) return error
+  static create(error: RawError): BrimError {
+    if (error.type && error.message) return error
+
+    if (error instanceof AppError) return error.toBrimError()
 
     for (let E of KNOWN_ERRORS) {
-      if (E.is(error)) return new E(error)
+      if (E.is(error)) return new E(error).toBrimError()
     }
 
     // if raw error has same keys as AppError, then rebuild
     if (compareKeys(error, new AppError())) {
-      return new AppError(error.raw, new Date(error.ts))
+      return new AppError(error.raw, new Date(error.ts)).toBrimError()
     }
 
-    return new AppError(error)
+    return new AppError(error).toBrimError()
   }
 }

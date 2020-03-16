@@ -2,13 +2,13 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
+import type {BrimError} from "../errors/types"
 import {initSpace} from "../flows/initSpace"
-import AppError from "../models/AppError"
 import Notice from "../state/Notice"
 import Tab from "../state/Tab"
 
 type Props = {
-  error: AppError
+  error: BrimError
 }
 
 const BACKOFF = [16, 32, 64]
@@ -48,7 +48,7 @@ export default function NetworkErrorNotice({error}: Props) {
   } else {
     return (
       <p>
-        {error.message()} Retrying in {count} seconds.
+        {error.message} Retrying in {count} seconds.
         <a onClick={retry}>Retry Now</a>
         <a onClick={dismiss}>Dismiss</a>
       </p>
