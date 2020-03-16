@@ -11,6 +11,7 @@ import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import deleteSpace from "./deleteSpace"
+import errors from "../errors"
 import lib from "../lib"
 
 export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
@@ -37,7 +38,7 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
           dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
         }
         if (type === "TaskEnd" && status.error) {
-          throw status.error
+          throw errors.pcapIngest(status.error.error)
         }
       }
       setProgress(1)
