@@ -110,10 +110,10 @@ export const searchDisplayHeaders = async (app: Application) => {
   // screen return as empty strings if you use getText. This isn't required of
   // actual results.
   // See http://v4.webdriver.io/api/property/getText.html
-  // app.browserWindow.maximize() fixes the problem on my laptop but not CircleCI.
+  // app.browserWindow.maximize() fixes the problem on my laptop but not CI.
   // But what we get back includes the width which can be non-deterministic:
   // <div class="header-cell" style="width: 192px;">ts<div class="col-resizer"></div></div>
-  // That style width will vary on my laptop vs. CircleCI.
+  // That style width will vary on my laptop vs. CI.
   // The hack is to split this and extract just the text.
   const _trim = (s: string) => s.split(">")[1].split("<")[0]
 
