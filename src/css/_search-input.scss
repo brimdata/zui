@@ -41,4 +41,11 @@
       background: $blue-dark;
     }
   }
+
+  .search-spinner {
+    animation: fadein 300ms;
+    position: absolute;
+    right: 37px + 8px;
+    top: 4px;
+  }
 }
