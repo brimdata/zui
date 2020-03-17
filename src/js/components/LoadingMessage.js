@@ -4,7 +4,6 @@ import React from "react"
 import classNames from "classnames"
 
 import {Fieldset} from "./Typography"
-import LoadingBurst from "./LoadingBurst"
 
 type Props = {
   className?: string,
@@ -20,7 +19,6 @@ export default class LoadingMessage extends React.Component<Props> {
           visible: this.props.show
         })}
       >
-        <LoadingBurst show={true} />
         <Fieldset>{this.props.message || "Loading"}</Fieldset>
       </div>
     )
