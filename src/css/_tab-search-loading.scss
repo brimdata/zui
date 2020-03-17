@@ -1,0 +1,26 @@
+.tab-search-loading {
+  animation: fadein 300ms;
+  background: $gray-to-white;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .message {
+    padding: 8px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+
+    p {
+      margin: 0;
+      margin-right: 8px;
+      @include label-normal;
+    }
+
+    .mac-spinner {
+      transform: scale(0.6);
+    }
+  }
+}

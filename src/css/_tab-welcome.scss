@@ -1,6 +1,6 @@
-.new-tab-content {
+.tab-welcome {
   animation: fadein 300ms;
-  background: linear-gradient(#f0f0f0, white);
+  background: $gray-to-white;
   flex: 1;
   display: flex;
   flex-direction: column;
