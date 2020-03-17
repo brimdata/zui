@@ -14,7 +14,7 @@ export default function AboutModal() {
   const appVersion = remote.app.getVersion()
   const year = new Date().getFullYear()
   const pathRoot = remote.app.getAppPath()
-  const ackFilePath = join(pathRoot, "acknowledgements.txt")
+  const ackFilePath = join(pathRoot, "acknowledgments.txt")
   const licFilePath = join(pathRoot, "license.txt")
 
   return (
@@ -55,7 +55,7 @@ export default function AboutModal() {
             <a onClick={() => open(licFilePath)}>License</a>
           </section>
           <section>
-            <a onClick={() => open(ackFilePath)}>Acknowledgements</a>
+            <a onClick={() => open(ackFilePath)}>Acknowledgments</a>
           </section>
           <section>
             <p>Copyright {year} Brim Security, Inc.</p>
