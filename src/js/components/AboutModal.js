@@ -13,7 +13,9 @@ import {join} from "path"
 export default function AboutModal() {
   const appVersion = remote.app.getVersion()
   const year = new Date().getFullYear()
-  const ackFilePath = join(remote.app.getAppPath(), "acknowledgements.txt")
+  const pathRoot = remote.app.getAppPath()
+  const ackFilePath = join(pathRoot, "acknowledgements.txt")
+  const licFilePath = join(pathRoot, "license.txt")
 
   return (
     <ModalBox
@@ -48,6 +50,9 @@ export default function AboutModal() {
             <a onClick={() => open("https://github.com/brimsec/brim")}>
               Repository
             </a>
+          </section>
+          <section>
+            <a onClick={() => open(licFilePath)}>License</a>
           </section>
           <section>
             <a onClick={() => open(ackFilePath)}>Acknowledgements</a>

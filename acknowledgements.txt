@@ -1,1 +1,11 @@
-Placeholder
+We want to thank the following people for their well written libraries/scripts and Google, Salesforce and University of California, Berkeley for being catalyst of these innovations :
+
+1. Aaron Brown, Aaron Eppert, Alan, Albert Zaharovits, Alexey Mokeev, Andrew Woodford, Anthony Kasza, Arne Welzel, Bernhard Amann, Chris Mavrakis, Christian Kreibich, Christian Struck, Chung Min Kim, Dale Lakes, Daniel Thayer, Dev Bali, Devin Trejo, Dominik Charousset, Don Appleman, Frerich Raabe, Gilbert Clark, Gregor Maier, Henri DF, Hilko Bengen, Hui Lin, James Swaro, Jan Grashoefer,Jay Wren, Jeannette Dopheide, Jeff Barber, Jeffrey Bencteux, Jimmy Jones, Johanna Amann, John E. Rollinson, Jon Siwek, Jon Zeolla, Josh Liburdi, Julien Wallior, Justin Azoff, Justin Oursler, Katrina LaCurts, Keith J. Jones, Kris Nielander, Liang Zhu, Liviu Valsan, Luke Valenta, Mareq, Mark Taylor, Martin van Hensbergen, Matthias Vallentin, Mauro Palumbo, Max Kellermann, Michael Dopheide, Michal Purzynski, Mike Smiley, Palumbo Mauro, Pavel Ershov, Pete Nelson, Philippe Antoine, Pierre LALET, Rafael Bonilla, Richard van den Berg, Robert Clark, Robin Sommer, Ryan Denniston, Scott Runnels, Seth Hall, Sheharbano Khattak, Simon Hardy-Francis, Soumya Basu, Stephen Hosom, Stu H, Tim Shelton, Tim Wojtulewicz, Valerio G, Vern Paxson, Vicente Jimenez Aguilar, Vitaly Repin, Vlad Grigorescu, Vladimir Ruzanov, Yun Zheng Hu, Zeke Medley, ZekeMedley, Zhongjie Wang, anthonykasza, balintm, dina, fatema, hugo, jadinm, jatkinosn, jshlbrd, jsiwek, mathiasfischer, mauro, sfinlon, wglodek, william for their contributions to Zeek.
+
+2. Graeme Connell and Andreas Krennmair for the library go.packet
+
+3. Nick Fitzgerald, Larry Battle, Rouslan Placella, Clinton Wood, Dien Luong, Golo Roden, James Messinger and sslmda for their Glob to Regular Expression tool
+
+4. John Althouse, Jeff Atkinson, Josh Atkins, Brandon Dixon, Ryan Persaud, Phil Hagen, Rakesh Passa, sysopfb, Nate Rosenblum, Sebastian Willenborg, weslambert, Ryan Guest, Marcus LaFerrera, Luciano. Mammino, Jon Siwek, Jeff Geiger for JA3 and JA3S fingerprinting script contribution
+
+5. Ben Reardon, Adel Karimi, Tristan Steele  for HASSH script contribution
