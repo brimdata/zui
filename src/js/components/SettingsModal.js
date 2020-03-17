@@ -5,18 +5,14 @@ import React from "react"
 
 import {Label} from "./Typography"
 import {reactElementProps} from "../test/integration"
-import Boomd from "../state/Boomd"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
-import Toggle from "./Toggle"
 import View from "../state/View"
 import brim from "../brim"
 
 export default function SettingsModal() {
   let dispatch = useDispatch()
   let timeZone = useSelector(View.getTimeZone)
-  let useBoomIndex = useSelector(Boomd.usingIndex)
-  let useBoomCache = useSelector(Boomd.usingCache)
 
   return (
     <ModalBox
@@ -39,25 +35,6 @@ export default function SettingsModal() {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="setting-panel">
-            <Label>Enable Analytics Cache:</Label>
-            <Toggle
-              checked={useBoomCache}
-              onChange={() => dispatch(Boomd.enableCache(!useBoomCache))}
-              // Passthrough props with {...reactElementProps()} didn't work here.
-              // I had to set this directly. Feel free to improve.
-              dataTestLocator="useCacheToggle"
-            />
-          </div>
-
-          <div className="setting-panel">
-            <Label>Enable Index Lookups:</Label>
-            <Toggle
-              checked={useBoomIndex}
-              onChange={() => dispatch(Boomd.enableIndex(!useBoomIndex))}
-              dataTestLocator="useIndexToggle"
-            />
           </div>
         </div>
       </TextContent>
