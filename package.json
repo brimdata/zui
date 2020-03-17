@@ -3,7 +3,7 @@
   "description": "Brim Desktop App",
   "repository": "https://github.com/brimsec/brim",
   "license": "ISC",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "dist/js/electron/main.js",
   "author": "Brim Security, Inc.",
   "bin": {
