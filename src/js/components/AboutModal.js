@@ -9,9 +9,13 @@ import Octocat from "../icons/Octocat"
 import {remote} from "electron"
 import {join} from "path"
 import open from "../lib/open"
+import electronIsDev from "../electron/isDev"
+import {execSync} from "child_process"
 
 export default function AboutModal() {
-  const appVersion = remote.app.getVersion()
+  const appVersion = electronIsDev
+    ? execSync("git describe --tags --dirty").toString()
+    : remote.app.getVersion()
   const year = new Date().getFullYear()
   const pathRoot = remote.app.getAppPath()
   const ackFilePath = join(pathRoot, "acknowledgments.txt")
