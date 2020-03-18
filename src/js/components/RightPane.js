@@ -52,7 +52,9 @@ export default class RightPane extends React.Component<Props, S> {
   }
 
   onPacketsClick = () => {
-    this.props.dispatch(Packets.fetch(this.props.currentLog)).then(open)
+    this.props
+      .dispatch(Packets.fetch(this.props.currentLog))
+      .then((pcapFile) => open(pcapFile, {newWindow: true}))
   }
 
   render() {

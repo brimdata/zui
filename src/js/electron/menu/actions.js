@@ -122,7 +122,9 @@ function buildActions() {
       label: "Download PCAPS",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(Packets.fetch(log)).then(open, {newWindow: true})
+        dispatch(Packets.fetch(log)).then((pcapFile) =>
+          open(pcapFile, {newWindow: true})
+        )
       }
     }),
     sortAsc: action({
