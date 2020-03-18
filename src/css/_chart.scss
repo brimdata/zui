@@ -10,6 +10,8 @@
 
   .loading-message,
   .no-chart-data {
+    @include label-small;
+    margin: 0;
     position: absolute;
     user-select: none;
     pointer-events: none;

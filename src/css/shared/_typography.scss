@@ -6,6 +6,14 @@
   letter-spacing: 1px;
 }
 
+@mixin heading-list {
+  font-family: system-ui;
+  font-weight: 700;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 @mixin label-bold {
   font-family: system-ui;
   letter-spacing: -0.08;
@@ -27,6 +35,15 @@
   letter-spacing: -0.08;
   font-size: 11px;
   line-height: 13px;
+  font-weight: 400;
+}
+
+@mixin label-small-bold {
+  font-family: system-ui;
+  letter-spacing: -0.08;
+  font-size: 11px;
+  line-height: 13px;
+  font-weight: 500;
 }
 
 @mixin heading-1 {
@@ -42,10 +59,7 @@
 }
 
 .paragraph {
-  font-family: $body-font;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 20px;
+  @include label-normal;
   margin: 0;
 }
 
