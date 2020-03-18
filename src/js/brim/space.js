@@ -1,5 +1,6 @@
 /* @flow */
 import type {Space} from "../state/Spaces/types"
+import {isNumber} from "../lib/is"
 import brim from "./"
 
 export default function space(info: Space) {
@@ -39,6 +40,12 @@ export default function space(info: Space) {
         .add(1, "ms")
         .toTs()
       return [from, to]
+    },
+    ingesting() {
+      return isNumber(info.ingest_progress)
+    },
+    queryable() {
+      return !(this.ingesting() && this.empty())
     }
   }
 }

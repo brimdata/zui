@@ -1,13 +1,10 @@
 /* @flow */
-import {useSelector} from "react-redux"
 import React from "react"
 
 import ModalBox from "./ModalBox/ModalBox"
-import Tab from "../state/Tab"
 import TextContent from "./TextContent"
 
 export default function EmptySpaceModal() {
-  let space = useSelector(Tab.spaceName)
   return (
     <ModalBox
       title="Empty Space"
@@ -16,11 +13,7 @@ export default function EmptySpaceModal() {
       buttons="Ok"
     >
       <TextContent>
-        <p>
-          There is no data in this space. Use the boom cli to ingest zeek logs
-          into this space.
-        </p>
-        <pre>boom post -s {space} /path/to/zeek/*.log</pre>
+        <p>There is no data in this space.</p>
       </TextContent>
     </ModalBox>
   )
