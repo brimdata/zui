@@ -14,7 +14,7 @@ const wslToWindowsPath = async (path) => {
   return stdout.trim()
 }
 
-export default async function open(target, options) {
+export default async function open(target: string, options?: Object) {
   if (typeof target !== "string") {
     throw new TypeError("Expected a `target`")
   }
