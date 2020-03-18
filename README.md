@@ -11,7 +11,7 @@ specialists. Brim makes it easy to search and analyze data from:
 Brim is especially useful to security and network operators that need to handle large packet captures,
 especially those that are cumbersome for Wireshark, tshark, or other packet analyzers.
 
-<a href="https://www.youtube.com/watch?v=XkHFLP_uYxk" rel="nofollow"><img src="/brimsec/brim/raw/public-readme/docs/media/brim-and-wireshark.gif?raw=true" alt="Brim and Wireshark large pcap file comparison" style="max-width:100%;"></a>
+<a href="https://www.youtube.com/watch?v=XkHFLP_uYxk" rel="nofollow" target="_blank"><img src="/brimsec/brim/raw/public-readme/docs/media/brim-and-wireshark.gif?raw=true" alt="Brim and Wireshark large pcap file comparison" style="max-width:100%;"></a>
 
 Brim is built from open source components, including:
 
