@@ -8,7 +8,7 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../flows/searchBar/actions"
-import {open} from "../../lib/System"
+import open from "../../lib/open"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Log from "../../models/Log"
 import Modal from "../../state/Modal"
@@ -122,7 +122,7 @@ function buildActions() {
       label: "Download PCAPS",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(Packets.fetch(log)).then(open)
+        dispatch(Packets.fetch(log)).then(open, {newWindow: true})
       }
     }),
     sortAsc: action({
