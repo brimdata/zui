@@ -14,6 +14,7 @@ module.exports = {
     if (sign) {
       osxSign = {
         identity: "Developer ID",
+        "gatekeeper-assess": false,
         hardenedRuntime: true,
         entitlements: "scripts/release/entitlements.mac.plist",
         "entitlements-inherit": "scripts/release/entitlements.mac.plist"
