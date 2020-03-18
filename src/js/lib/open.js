@@ -1,4 +1,5 @@
 /* @flow */
+// code from https://github.com/sindresorhus/open/releases/tag/v6.0.0
 "use strict"
 const {promisify} = require("util")
 const path = require("path")
