@@ -18,10 +18,6 @@ import path from "path"
 import {ZQD} from "../zqd/zqd"
 
 async function main() {
-  // Disable Warnings in the Console
-  delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS
-  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
-
   if (handleSquirrelEvent(app)) return
   let session = tron.session()
   let winMan = tron.windowManager()
