@@ -15,9 +15,24 @@ npm install
 npm start
 ```
 
-Running `npm start` will compile files from `./src` to `./dist` and open the app. When a file is changed, it will recompile it and reload the app.
+`npm install` will download all required dependencies, including zqd and zeek. Running `npm start` will compile files from `./src` to `./dist` and open the app. When a file is changed, it will recompile it and reload the app.
 
 On subsequent updates, `git pull` then `npm install`.
+
+### zqd
+
+`zqd`, from the [zq](https://github.com/brimsec/zq) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
+
+When developing features that need a non-released zqd instance, you can:
+
+- change the `brimsec/zq` dependency in package.json to refer to a branch or git commit, either in `brimsec/zq` or some fork. If the dependency doesn't look like an official tagged zq repository, the Brim npm postinstall step will try to build and use zqd from the specified commit.
+- Or, you can build zqd yourself, and make it accessible via PATH, then run `brim_zqd_from_path=1 npm start`.
+
+### zeek
+
+Brim uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [zng format](https://github.com/brimsec/zq/blob/master/zng/docs/spec.md). As an npm postinstall step, a [zeek artifact](https://github.com/brimsec/zeek/releases) (an archive with a zeek binary and other configuration files) is downloaded and stored in the `./zdeps` directory.
+
+zqd runs zeek as needed to ingest packet capture data. zqd expects that a `zeek` command is available in its PATH; Brim ensures this is true for the zeek artifact under `./zdeps`.
 
 ## Tests
 
@@ -70,7 +85,6 @@ npm run release
 
 Any platform artifacts created will be found under `./dist/installers`.
 
-
 ### MacOS Notarization
 
 [Notarized](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution)
@@ -82,11 +96,10 @@ npm run build
 APPLEID_USER=<user> APPLEID_PASSWORD=<app-specific-password> node ./scripts/release --darwin --notarize
 ```
 
-Where `APPLEID_USER` is the apple ID user name, and `APPLEID_PASSWORD` is an app-specific password created for notarization (details [here](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow)). This will also sign the contents of the package, which requires a [Developer ID](https://developer.apple.com/developer-id/) certificate to be present in your keychain. 
+Where `APPLEID_USER` is the apple ID user name, and `APPLEID_PASSWORD` is an app-specific password created for notarization (details [here](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow)). This will also sign the contents of the package, which requires a [Developer ID](https://developer.apple.com/developer-id/) certificate to be present in your keychain.
 
 Notarization can take some time to complete ("typically less than an hour"). If you want to check on the status of the notarization request, run:
 
 ```bash
 xcrun altool --notarization-history 0 -u <user> -p <app-specific-password>
 ```
-
