@@ -1,8 +1,10 @@
 [![CircleCI](https://circleci.com/gh/brimsec/brim.svg?style=svg&circle-token=8fb219d4419937d21fb70c99c89157bff05c2ecc)](https://circleci.com/gh/brimsec/brim)
 
-# Brim Desktop Application
+# Brim Development
 
-The desktop app for the Boom backend built with Electron and React.
+Thank you for contributing to Brim! Feel free to [post an issue](https://github.com/brimsec/brim/issues), fork the repo, or send us a pull request.
+
+Brim is early in its life cycle and will be expanding quickly.  Please star and/or watch the repo so you can follow and track our progress.
 
 ## Setup
 
