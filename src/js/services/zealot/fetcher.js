@@ -12,8 +12,16 @@ function parseResponse(resp) {
   switch (resp.headers.get("Content-Type")) {
     case "application/ndjson":
     case "application/json":
-      return resp.json()
+      try {
+        return resp.json()
+      } catch {
+        console.error("Unable to parse json content, parsing as text instead")
+        return resp.text()
+      }
+    case "text/html; charset=UTF-8":
+      return resp.text()
     default:
+      console.error("unknown Content-Type, parsing as text")
       return resp.text()
   }
 }
