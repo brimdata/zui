@@ -22,7 +22,7 @@ Brim is built from open source components, including:
 ## Installing Brim
 
 The easiest way to install Brim is to download the installation package for
-your platfrom from the latest
+your platform from the latest
 [release](https://github.com/brimsec/brim/releases).
 
 ## Development and contributing
