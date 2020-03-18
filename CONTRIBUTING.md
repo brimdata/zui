@@ -32,7 +32,7 @@ When developing features that need a non-released zqd instance, you can:
 
 ### zeek
 
-Brim uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [zng format](https://github.com/brimsec/zq/blob/master/zng/docs/spec.md). As an npm postinstall step, a [zeek artifact](https://github.com/brimsec/zeek/releases) (an archive with a zeek binary and other configuration files) is downloaded and stored in the `./zdeps` directory.
+Brim uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimsec/zq/blob/master/zng/docs/spec.md) format. As an npm postinstall step, a [zeek artifact](https://github.com/brimsec/zeek/releases) (an archive with a zeek binary and other configuration files) is downloaded and stored in the `./zdeps` directory.
 
 zqd runs zeek as needed to ingest packet capture data. zqd expects that a `zeek` command is available in its PATH; Brim ensures this is true for the zeek artifact under `./zdeps`.
 

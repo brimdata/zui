@@ -29,3 +29,7 @@ your platfrom from the latest
 
 We'd love your help! Please see the [contributing guide](CONTRIBUTING.md) for
 development information like building and testing Brim.
+
+## Join the Community
+
+Join our [Public Slack](https://join.slack.com/t/brimsec/shared_invite/enQtOTMwMDczODg2ODgyLTk1NTdjOTQxNmI0OGYwOThiYzNlNDc5OWI5NjczZDljNDdmZGZjNGI3NTNiOWRiNzJkMzg4OTEwZWM0Y2NiYWQ) workspace for announcements, Q&A, and to trade tips!
