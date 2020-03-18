@@ -55,6 +55,24 @@ async function main() {
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit()
   })
+
+  app.on("web-contents-created", (event, contents) => {
+    contents.on("will-attach-webview", (e) => {
+      e.preventDefault()
+      console.error("Security Warning: Prevented creation of webview")
+    })
+
+    contents.on("will-navigate", (e, url) => {
+      if (contents.getURL() === url) return // Allow reloads
+      e.preventDefault()
+      console.error(`Security Warning: Prevented navigation to ${url}`)
+    })
+
+    contents.on("new-window", (e) => {
+      e.preventDefault()
+      console.error("Security Warning: Prevented new window from renderer")
+    })
+  })
 }
 
 main()
