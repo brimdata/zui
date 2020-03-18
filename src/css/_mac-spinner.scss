@@ -24,16 +24,14 @@ $mac-spinner-size: 24px;
     background: $mac-spinner-color;
     transform-origin: bottom center;
     border-radius: 2px;
-    animation: opacity-pulse 1000ms 100ms infinite;
+    opacity: 0.05;
+    animation: opacity-pulse $mac-spinner-duration infinite linear;
   }
 
   @for $i from 1 through 12 {
     .bar:nth-child(#{$i}) {
       transform: rotate(($i - 1) * 30deg) translateY(-$mac-spinner-size / 4);
-      animation: opacity-pulse
-        $mac-spinner-duration
-        ($i * $mac-spinner-duration / 12)
-        infinite;
+      animation-delay: ($i - 1) * ($mac-spinner-duration / 12);
     }
   }
 }
@@ -44,6 +42,6 @@ $mac-spinner-size: 24px;
   }
 
   to {
-    opacity: 0.1;
+    opacity: 0.01;
   }
 }

@@ -8,6 +8,7 @@ import {reactElementProps} from "../test/integration"
 import Animate from "./Animate"
 import Handlers from "../state/Handlers"
 import InputHistory from "../models/InputHistory"
+import MacSpinner from "./MacSpinner"
 import Modal from "../state/Modal"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import Search from "../state/Search"
@@ -15,11 +16,13 @@ import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import ThreeDotButton from "./ThreeDotButton"
 import submitSearch from "../flows/submitSearch"
+import useDelayedMount from "./hooks/useDelayedMount"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
   let history = useRef(new InputHistory<string>())
   let inputValue = useSelector(SearchBar.getSearchBarInputValue)
+  let isFetching = useSelector(Tab.isFetching)
 
   function changeTo(value: string) {
     dispatch(SearchBar.changeSearchBarInput(value))
@@ -62,8 +65,19 @@ export default function SearchInput() {
         autoComplete="off"
         {...reactElementProps("search_input")}
       />
+      <SearchSpinner show={isFetching} />
       <ActionButton />
       <Menu />
+    </div>
+  )
+}
+
+function SearchSpinner({show}) {
+  let ready = useDelayedMount(show, 100)
+  if (!ready) return null
+  return (
+    <div className="search-spinner">
+      <MacSpinner />
     </div>
   )
 }
