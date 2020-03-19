@@ -10,7 +10,6 @@ export type FetchArgs = {method: string, path: string, body?: string}
 
 function parseResponse(resp) {
   switch (resp.headers.get("Content-Type")) {
-    case "application/ndjson":
     case "application/json":
       try {
         return resp.json()
