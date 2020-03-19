@@ -3,8 +3,6 @@
 import React from "react"
 import classNames from "classnames"
 
-import {Fieldset} from "./Typography"
-
 type Props = {
   className?: string,
   show: boolean,
@@ -19,7 +17,7 @@ export default class LoadingMessage extends React.Component<Props> {
           visible: this.props.show
         })}
       >
-        <Fieldset>{this.props.message || "Loading"}</Fieldset>
+        {this.props.message || "Loading"}
       </div>
     )
   }

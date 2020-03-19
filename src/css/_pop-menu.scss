@@ -27,10 +27,8 @@ $pop-menu-padding: $space-s;
   }
 
   li {
-    font-size: 14px;
-    font-family: $body-font;
+    @include label-normal;
     padding: $space-xxs 36px;
-    color: $gray-7;
     list-style-type: none;
     display: block;
     white-space: nowrap;

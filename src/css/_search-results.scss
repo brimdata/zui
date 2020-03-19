@@ -9,11 +9,9 @@
 .no-results {
   text-align: center;
   margin-top: 100px;
-
-  .fieldset {
-    color: $white-9;
-    display: inline-block;
-  }
+  color: $white-9;
+  display: inline-block;
+  @include label-small;
 
   circle {
     fill: $white-9 !important;

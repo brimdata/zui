@@ -12,13 +12,14 @@
   top: 48px;
   right: 12px;
   bottom: 48px;
-  border-radius: 3px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
 
   .fieldset {
     margin: 24px auto;
     text-align: center;
+    @include heading-section;
   }
 
   hr {
@@ -51,9 +52,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    cursor: default;
     .label {
-      cursor: pointer;
+      cursor: default;
     }
     &:hover {
       text-decoration: line-through;
@@ -75,8 +76,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 36px;
-    cursor: pointer;
-    color: $gray-4;
+    cursor: default;
+    @include label-normal;
 
     &:hover {
       background-color: #f5f5f7;
@@ -85,7 +86,6 @@
 
   .show-all .paragraph {
     color: #545866;
-    font-weight: bold;
     text-decoration: underline;
   }
 
@@ -98,7 +98,7 @@
     li.visible {
       font-weight: normal;
       background: inherit;
-      color: $gray-7;
+      color: $aqua;
       &:hover {
         background: $white-3;
       }

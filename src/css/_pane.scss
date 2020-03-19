@@ -37,11 +37,9 @@ $pane-header-background-color: $white-5;
 }
 
 .pane-title {
-  font-weight: normal;
-  font-size: 12px;
+  @include label-normal;
   text-align: center;
   margin: 0;
-  font-weight: 700;
 }
 
 .pane-body {
