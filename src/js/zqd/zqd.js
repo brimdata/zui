@@ -26,7 +26,7 @@ const platformDefs = {
 }
 
 function writeZqdConfigFile(): string {
-  const logDir = join(app.getAppPath(), "logs")
+  const logDir = app.getPath("logs")
   mkdirSync(logDir, {recursive: true, mode: 0o755})
 
   const zqdLogFile = join(logDir, "zqd-core.log")
@@ -44,7 +44,7 @@ loggers:
     mode: rotate
 `
 
-  const confFile = join(app.getAppPath(), "zdeps", "zqd-config.yaml")
+  const confFile = join(app.getPath("temp"), "zqd-config.yaml")
   outputFileSync(confFile, data)
   return confFile
 }
