@@ -40,8 +40,7 @@ export async function* fetchGenerator(
   args: FetchArgs
 ): FetchGenerator {
   let resp = await doFetch(host, args)
-  const content = await parseResponse(resp)
-  if (!resp.ok) throw new Error(content)
+  if (!resp.ok) throw new Error(await parseResponse(resp))
   let {body} = resp
   if (body) {
     for await (let json of jsonPipeIterator(textIterator(body))) {
