@@ -6,9 +6,9 @@ import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import LogoType from "../icons/LogoType"
 import Octocat from "../icons/Octocat"
-import {open} from "../lib/System"
 import {remote} from "electron"
 import {join} from "path"
+import open from "../lib/open"
 
 export default function AboutModal() {
   const appVersion = remote.app.getVersion()

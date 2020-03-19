@@ -4,7 +4,7 @@ import MarkdownIt from "markdown-it"
 import React from "react"
 
 import type {Column} from "../../types"
-import {open} from "../../lib/System"
+import open from "../../lib/open"
 import Tip from "../Tip"
 import brim from "../../brim"
 
