@@ -12,7 +12,6 @@ import open from "../../lib/open"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Log from "../../models/Log"
 import Modal from "../../state/Modal"
-import Packets from "../../state/Packets"
 import SearchBar from "../../state/SearchBar"
 import View from "../../state/View"
 import action from "./action"
@@ -20,6 +19,7 @@ import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
 import tab from "../../state/Tab"
 import virusTotal from "../../services/virusTotal"
+import {downloadPcap} from "../../flows/downloadPcap"
 
 function buildActions() {
   return {
@@ -122,9 +122,7 @@ function buildActions() {
       label: "Download PCAPS",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(Packets.fetch(log)).then((pcapFile) =>
-          open(pcapFile, {newWindow: true})
-        )
+        dispatch(downloadPcap(log))
       }
     }),
     sortAsc: action({
