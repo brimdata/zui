@@ -1,7 +1,12 @@
 /* @flow */
 import lib from "./"
+import tmp from "tmp"
 
-const tmpFile = "/tmp/file-test.json"
+let tmpFile
+
+beforeAll(() => {
+  tmpFile = tmp.fileSync().name
+})
 
 afterAll(() => {
   return lib

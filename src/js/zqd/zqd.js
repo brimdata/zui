@@ -57,10 +57,14 @@ export class ZQD {
     mkdirSync(this.root, {recursive: true, mode: 0o755})
 
     // PATH must include both the zqd and zeek bin directories, as zqd depends
-    // on have zeek in its PATH.
-    const zqdEnvironment = _merge({}, process.env, {
-      PATH: [zqdPath, zqdZeekPath, process.env.PATH].join(":")
-    })
+    // on having zeek available in its environment PATH.
+    const sep = process.platform == "win32" ? ";" : ":"
+    const pathKey = process.platform == "win32" ? "Path" : "PATH"
+    const zqdEnvironment = _merge({}, process.env)
+    zqdEnvironment[pathKey] = [zqdPath, zqdZeekPath, process.env[pathKey]].join(
+      sep
+    )
+
     const opts = {
       stdio: "inherit",
       env: zqdEnvironment

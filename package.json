@@ -11,8 +11,8 @@
   },
   "scripts": {
     "start": "npm-run-all -s clean build:* -p electron watch:*",
-    "test": "TZ=US/Pacific jest",
-    "itest": "TZ=US/Pacific jest --config=itest/config.json --runInBand --verbose",
+    "test": "jest",
+    "itest": "jest --config=itest/config.json --runInBand --verbose",
     "electron": "electron .",
     "build": "npm-run-all -p build:*",
     "watch": "npm-run-all -p watch:*",
@@ -24,7 +24,7 @@
     "watch:static": "npm run build:static -- --watch",
     "watch:reload": "livereload dist",
     "lint": "eslint .",
-    "format": "prettier '{src,itest}/**/*.{js,scss}' --write --loglevel warn",
+    "format": "prettier {src,itest}/**/*.{js,scss} --write --loglevel warn",
     "flow": "flow",
     "format-check": "npm run format && git diff --exit-code -- src itest",
     "check": "npm-run-all -p format-check lint flow test",
@@ -101,7 +101,8 @@
     "spectron": "^9.0.0",
     "tmp": "^0.1.0",
     "whatwg-fetch": "^3.0.0",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "win-7zip": "^0.1.0"
   },
   "dependencies": {
     "animejs": "^3.1.0",

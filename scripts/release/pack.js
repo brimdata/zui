@@ -33,8 +33,7 @@ module.exports = {
     return packager({
       ...opts,
       platform: "win32",
-      icon: "dist/static/AppIcon.ico",
-      asar: true
+      icon: "dist/static/AppIcon.ico"
     }).then(() => {
       console.log("Built package for win32 in " + opts.out)
     })

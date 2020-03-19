@@ -13,13 +13,15 @@ const zdepsPath = path.resolve("zdeps")
 const platformDefs = {
   darwin: {
     zqdBin: "zqd",
-    zeekBin: "zeek",
     osarch: "darwin-amd64"
   },
   linux: {
     zqdBin: "zqd",
-    zeekBin: "zeek",
     osarch: "linux-amd64"
+  },
+  win32: {
+    zqdBin: "zqd.exe",
+    osarch: "windows-amd64"
   }
 }
 
@@ -98,11 +100,19 @@ async function zeekDownload(version, zdepsPath) {
     throw new Error("unsupported platform")
   }
   const plat = platformDefs[process.platform]
-
-  const artifactFile = `zeek-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
   const zeekPath = path.join(zdepsPath, "zeek")
-  const zeekBinPath = path.join(zdepsPath, "zeek", plat.zeekBin)
+
+  let artifactFile, artifactUrl
+
+  if (process.platform == "win32") {
+    // Special casing for zeek on windows as it's not yet created automatically
+    // like linux/mac.
+    artifactFile = "zeek.zip"
+    artifactUrl = "https://storage.googleapis.com/brimsec/zeek-windows/zeek.zip"
+  } else {
+    artifactFile = `zeek-${version}.${plat.osarch}.zip`
+    artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
+  }
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {
@@ -114,14 +124,15 @@ async function zeekDownload(version, zdepsPath) {
     if (!fs.pathExistsSync(zeekPath)) {
       throw new Error("zeek artifact zip file has unexpected layout")
     }
-    if (!fs.pathExistsSync(zeekBinPath)) {
-      throw new Error("zeek executable not found in download")
-    }
   } finally {
     tmpdir.removeCallback()
   }
 
-  return zeekBinPath
+  if (process.platform == "win32") {
+    console.log("zeek windows artifact downloaded to " + zeekPath)
+  } else {
+    console.log("zeek " + version + " downloaded to " + zeekPath)
+  }
 }
 
 // Build the zqd binary inside the node_modules/zq directory via "make build".
@@ -154,8 +165,7 @@ async function main() {
     // We encode the zeek version here for now to avoid the unncessary
     // git clone if it were in package.json.
     const zeekVersion = "v3.0.2-brim1"
-    const zeekLocation = await zeekDownload(zeekVersion, zdepsPath)
-    console.log("zeek " + zeekVersion + " downloaded to " + zeekLocation)
+    await zeekDownload(zeekVersion, zdepsPath)
 
     // The zq dependency should be a git tag or commit. Any tag that
     // begins with "v*" is expected to be a released artifact, and will
