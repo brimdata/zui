@@ -39,7 +39,7 @@ export default function TabWelcome() {
           <>
             <section>
               <label>Recent Spaces</label>
-              <SavedSpacesList files={files} />
+              <SavedSpacesList clusterID={id} files={files} />
             </section>
             <div className="separator" />
           </>

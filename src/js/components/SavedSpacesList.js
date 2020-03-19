@@ -10,14 +10,16 @@ import TrashBin from "../icons/TrashBin"
 import deleteSpace from "../flows/deleteSpace"
 import Tab from "../state/Tab"
 import Spaces from "../state/Spaces/selectors"
+import {isNumber} from "lodash"
+import ProgressIndicator from "./ProgressIndicator"
 
 type Props = {|
-  files: string[]
+  files: string[],
+  clusterID: string
 |}
 
-export default function SavedSpacesList({files}: Props) {
+export default function SavedSpacesList({files, clusterID}: Props) {
   let dispatch = useDispatch()
-  let id = useSelector(Tab.clusterId)
 
   const onClick = (space) => (e) => {
     e.preventDefault()
@@ -40,24 +42,31 @@ export default function SavedSpacesList({files}: Props) {
       })
   }
 
-  const renderTrashBin = (space) => {
-    const spaceProgress = useSelector(Spaces.getIngestProgress(id, space))
-  }
-
   return (
     <menu className="saved-spaces-list">
-      {files.map((file) => (
-        <li key={file} className="item">
-          <a href="#" onClick={onClick(file)} className="space-link">
-            <Folder className="space-icon" />
-            <span className="name">{file}</span>
-          </a>
+      {files.map((file) => {
+        const value = useSelector(Spaces.getIngestProgress(clusterID, file))
+        const trashOrProgress = isNumber(value) ? (
+          <div className="small-progress-bar">
+            <ProgressIndicator percent={value} />
+          </div>
+        ) : (
           <a href="#" onClick={onDelete(file)} className="delete-link">
             <TrashBin className="delete-icon" />
           </a>
-          <div className="line" />
-        </li>
-      ))}
+        )
+
+        return (
+          <li key={file}>
+            <a href="#" onClick={onClick(file)} className="space-link">
+              <Folder className="space-icon" />
+              <span className="name">{file}</span>
+            </a>
+            {trashOrProgress}
+            <div className="line" />
+          </li>
+        )
+      })}
     </menu>
   )
 }
