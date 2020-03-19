@@ -13,9 +13,14 @@ import electronIsDev from "../electron/isDev"
 import {execSync} from "child_process"
 
 export default function AboutModal() {
-  const appVersion = electronIsDev
-    ? execSync("git describe --tags --dirty").toString()
-    : remote.app.getVersion()
+  let appVersion = remote.app.getVersion()
+  if (electronIsDev) {
+    try {
+      appVersion = execSync("git describe --tags --dirty").toString()
+    } catch {
+      // swallow this catch and just use release version as is if no git
+    }
+  }
   const year = new Date().getFullYear()
   const pathRoot = remote.app.getAppPath()
   const ackFilePath = join(pathRoot, "acknowledgments.txt")
