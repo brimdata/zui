@@ -5,7 +5,14 @@ import type {RecordData} from "../types/records"
 import type {SearchStats, SearchStatus} from "../types/searches"
 import randomHash from "./randomHash"
 
-type EventNames = "stats" | "status" | "end" | "start" | "error" | number
+type EventNames =
+  | "stats"
+  | "status"
+  | "end"
+  | "start"
+  | "error"
+  | "warnings"
+  | number
 
 export default function search(
   program: string,
@@ -48,6 +55,10 @@ export default function search(
     },
     error(func: (string) => void) {
       callbacks.set("error", func)
+      return this
+    },
+    warnings(func: (string[]) => void) {
+      callbacks.set("warnings", func)
       return this
     },
     emit(event: EventNames, ...data: *) {
