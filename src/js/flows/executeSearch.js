@@ -60,6 +60,10 @@ export default function executeSearch(search: $Search): Thunk {
       dispatch(Handlers.remove(search.getId()))
     }
 
+    function warnings(payload) {
+      search.emit("warnings", payload.warnings)
+    }
+
     function streamed(payload) {
       switch (payload.type) {
         case "TaskStart":
@@ -70,6 +74,8 @@ export default function executeSearch(search: $Search): Thunk {
           return stats(payload)
         case "TaskEnd":
           return ended(payload)
+        case "SearchWarnings":
+          return warnings(payload)
       }
     }
 
