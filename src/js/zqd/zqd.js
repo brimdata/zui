@@ -1,6 +1,6 @@
 /* @flow */
 
-import {pathExistsSync, mkdirSync} from "fs-extra"
+import {outputFileSync, pathExistsSync, mkdirSync} from "fs-extra"
 import {spawn, ChildProcess} from "child_process"
 import {join, resolve} from "path"
 import {app} from "electron"
@@ -23,6 +23,30 @@ const platformDefs = {
   win32: {
     zqdBin: "zqd.exe"
   }
+}
+
+function writeZqdConfigFile(): string {
+  const logDir = app.getPath("logs")
+  mkdirSync(logDir, {recursive: true, mode: 0o755})
+
+  const zqdLogFile = join(logDir, "zqd-core.log")
+  const accessLogFile = join(logDir, "zqd-access.log")
+
+  const data = `
+loggers:
+  - name: zqd
+    level: info
+    path: ${zqdLogFile}
+    mode: rotate
+  - name: http.access
+    level: info
+    path: ${accessLogFile}
+    mode: rotate
+`
+
+  const confFile = join(app.getPath("temp"), "zqd-config.yaml")
+  outputFileSync(confFile, data)
+  return confFile
 }
 
 function zqdCommand(): string {
@@ -66,9 +90,11 @@ export class ZQD {
       env: zqdEnvironment
     }
 
+    const confFile = writeZqdConfigFile()
+
     this.zqd = spawn(
       zqdCommand(),
-      ["listen", "-l", this.addr(), "-datadir", this.root],
+      ["listen", "-l", this.addr(), "-datadir", this.root, "-config", confFile],
       opts
     )
     this.zqd.on("error", (err) => {
