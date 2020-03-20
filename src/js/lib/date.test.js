@@ -23,6 +23,10 @@ describe("parseInZone", () => {
   })
 
   test("reference date in all zones", () => {
+    if (process.platform == "win32") {
+      // XXX Skipping until we can better test timezone changes on windows.
+      return
+    }
     names.forEach((zone) => {
       // This is very odd, it does 4 minutes and 30 sec instead of 5
       if (zone === "Africa/Monrovia") return
@@ -39,6 +43,10 @@ describe("parseInZone", () => {
   })
 
   test("casual date in all zones", () => {
+    if (process.platform == "win32") {
+      // XXX Skipping until we can better test timezone changes on windows.
+      return
+    }
     names.forEach((zone) => {
       let ref = new Date(0)
       let date = lib.date.parseInZone(casualDate, zone, ref)
