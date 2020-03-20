@@ -11,8 +11,8 @@
   },
   "scripts": {
     "start": "npm-run-all -s clean build:* -p electron watch:*",
-    "test": "TZ=US/Pacific jest",
-    "itest": "TZ=US/Pacific jest --config=itest/config.json --runInBand --verbose",
+    "test": "jest",
+    "itest": "jest --config=itest/config.json --runInBand --verbose",
     "electron": "electron .",
     "build": "npm-run-all -p build:*",
     "watch": "npm-run-all -p watch:*",
@@ -51,7 +51,8 @@
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "globalSetup": "./src/js/test/globalSetup.js"
   },
   "prettier": {
     "semi": false,
