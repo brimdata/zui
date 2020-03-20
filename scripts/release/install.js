@@ -35,7 +35,9 @@ module.exports = {
         appDirectory: "./dist/packages/Brim-Win32-x64",
         outputDirectory: out,
         authors: "Brim Security, Inc.",
-        exe: "Brim.exe"
+        exe: "Brim.exe",
+        setupExe: "Brim-Setup.exe",
+        noMsi: true
       })
       .then(() => {
         console.log("Built installer for win32 in " + out)
