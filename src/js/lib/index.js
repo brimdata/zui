@@ -11,6 +11,7 @@ import file from "./file"
 import keep from "./keep"
 import obj from "./obj"
 import win from "./win"
+import open from "./open"
 
 let array = {
   wrap(item: *) {
@@ -28,6 +29,7 @@ export default {
   win,
   array,
   animation,
+  open,
   date,
   on: (...args: *) => document.addEventListener(...args),
   off: (...args: *) => document.removeEventListener(...args),

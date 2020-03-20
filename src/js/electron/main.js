@@ -18,10 +18,6 @@ import path from "path"
 import {ZQD} from "../zqd/zqd"
 
 async function main() {
-  // Disable Warnings in the Console
-  delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS
-  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
-
   if (handleSquirrelEvent(app)) return
   let session = tron.session()
   let winMan = tron.windowManager()
@@ -58,6 +54,24 @@ async function main() {
 
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit()
+  })
+
+  app.on("web-contents-created", (event, contents) => {
+    contents.on("will-attach-webview", (e) => {
+      e.preventDefault()
+      console.error("Security Warning: Prevented creation of webview")
+    })
+
+    contents.on("will-navigate", (e, url) => {
+      if (contents.getURL() === url) return // Allow reloads
+      e.preventDefault()
+      console.error(`Security Warning: Prevented navigation to ${url}`)
+    })
+
+    contents.on("new-window", (e) => {
+      e.preventDefault()
+      console.error("Security Warning: Prevented new window from renderer")
+    })
   })
 }
 

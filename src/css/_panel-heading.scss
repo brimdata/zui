@@ -17,14 +17,7 @@
 }
 
 .panel-title {
-  margin-right: 6px;
-  font-size: 12px;
-  text-transform: uppercase;
-  font-weight: normal;
-  padding: 3px 12px;
-  color: white;
-  background-color: $gray-5;
-  border-right: 6px solid $gray-5;
-  border-radius: 0 12px 12px 0;
-  box-shadow: $box-shadow;
+  margin-left: 24px;
+  color: $slate;
+  @include heading-list;
 }

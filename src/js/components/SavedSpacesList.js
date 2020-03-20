@@ -8,12 +8,15 @@ import {initSpace} from "../flows/initSpace"
 import Folder from "../icons/Folder"
 import TrashBin from "../icons/TrashBin"
 import deleteSpace from "../flows/deleteSpace"
+import {isNumber} from "lodash"
+import ProgressIndicator from "./ProgressIndicator"
+import type {Space} from "../state/Spaces/types"
 
 type Props = {|
-  files: string[]
+  spaces: Space[]
 |}
 
-export default function SavedSpacesList({files}: Props) {
+export default function SavedSpacesList({spaces}: Props) {
   let dispatch = useDispatch()
 
   const onClick = (space) => (e) => {
@@ -39,18 +42,29 @@ export default function SavedSpacesList({files}: Props) {
 
   return (
     <menu className="saved-spaces-list">
-      {files.map((file) => (
-        <li key={file} className="item">
-          <a href="#" onClick={onClick(file)} className="space-link">
-            <Folder className="space-icon" />
-            <span className="name">{file}</span>
-          </a>
-          <a href="#" onClick={onDelete(file)} className="delete-link">
-            <TrashBin className="delete-icon" />
-          </a>
-          <div className="line" />
-        </li>
-      ))}
+      {spaces.map(({ingest_progress, name}) => {
+        const trashOrProgress =
+          ingest_progress && isNumber(ingest_progress) ? (
+            <div className="small-progress-bar">
+              <ProgressIndicator percent={ingest_progress} />
+            </div>
+          ) : (
+            <a href="#" onClick={onDelete(name)} className="delete-link">
+              <TrashBin className="delete-icon" />
+            </a>
+          )
+
+        return (
+          <li key={name}>
+            <a href="#" onClick={onClick(name)} className="space-link">
+              <Folder className="space-icon" />
+              <span className="name">{name}</span>
+            </a>
+            {trashOrProgress}
+            <div className="line" />
+          </li>
+        )
+      })}
     </menu>
   )
 }

@@ -6,14 +6,12 @@ import React from "react"
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../state/Spaces/types"
 import {XRightPaneExpander} from "./RightPaneExpander"
-import {open} from "../lib/System"
 import {reactElementProps} from "../test/integration"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
 import Log from "../models/Log"
 import LogDetails from "../state/LogDetails"
 import LogDetailsComponent from "./LogDetails"
-import Packets from "../state/Packets"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -26,6 +24,7 @@ import RightPaneCollapser from "./RightPaneCollapser"
 import Tab from "../state/Tab"
 import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
+import {downloadPcap} from "../flows/downloadPcap"
 
 type StateProps = {|
   currentLog: Log,
@@ -52,7 +51,7 @@ export default class RightPane extends React.Component<Props, S> {
   }
 
   onPacketsClick = () => {
-    this.props.dispatch(Packets.fetch(this.props.currentLog)).then(open)
+    this.props.dispatch(downloadPcap(this.props.currentLog))
   }
 
   render() {
