@@ -1,5 +1,7 @@
 /* @flow */
 
+import setTZ from "set-tz"
+
 export default () => {
-  process.env.TZ = "US/Pacific"
+  setTZ("America/Los_Angeles")
 }
