@@ -12,11 +12,12 @@ import SearchBar from "../SearchBar"
 import Spaces from "../Spaces"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
+import {globalDispatch} from "../GlobalContext"
 
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
     return d(testConnection(cluster)).then((spaces) => {
-      d(Spaces.setNames(cluster.id, spaces))
+      globalDispatch(Spaces.setNames(cluster.id, spaces))
       d(Search.setCluster(cluster.id))
       d(initSpace("default"))
     })

@@ -12,6 +12,7 @@ import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
 import submitSearch from "./submitSearch"
+import {globalDispatch} from "../state/GlobalContext"
 
 export const initSpace = (desired: string, clientDep?: *): Thunk => (
   dispatch,
@@ -53,7 +54,7 @@ function getCurrentSpaceName(spaces, desired) {
 }
 
 function setSpace(dispatch, data, clusterId) {
-  dispatch(Spaces.setDetail(clusterId, data))
+  globalDispatch(Spaces.setDetail(clusterId, data))
   dispatch(Search.setSpace(data.name))
   return data
 }

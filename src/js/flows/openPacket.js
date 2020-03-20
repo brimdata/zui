@@ -13,8 +13,13 @@ import Tabs from "../state/Tabs"
 import deleteSpace from "./deleteSpace"
 import errors from "../errors"
 import lib from "../lib"
+import {globalDispatch} from "../state/GlobalContext"
 
-export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
+export default (
+  file: string,
+  clientDep: *,
+  gDispatch: Function = globalDispatch
+): Thunk => (dispatch, getState) => {
   let dir = file + ".brim"
   let clusterId = Tab.clusterId(getState())
   let tabId = Tabs.getActive(getState())
@@ -29,13 +34,13 @@ export default (file: string, clientDep: *): Thunk => (dispatch, getState) => {
       dispatch(Search.setSpace(name, tabId))
       let stream = client.pcaps.post({space: name, path: file})
       let setProgress = (n) =>
-        dispatch(Spaces.setIngestProgress(clusterId, name, n))
+        gDispatch(Spaces.setIngestProgress(clusterId, name, n))
 
       setProgress(0)
       for await (let {type, ...status} of stream) {
         if (type === "PacketPostStatus") {
           setProgress(extractFrom(status))
-          dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
+          gDispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
         }
         if (type === "TaskEnd" && status.error) {
           throw errors.pcapIngest(status.error.error)
