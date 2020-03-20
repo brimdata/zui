@@ -14,8 +14,8 @@ import refreshSpaceNames from "../flows/refreshSpaceNames"
 export default function TabWelcome() {
   let dispatch = useDispatch()
   let id = useSelector(Tab.clusterId)
-  let files = useSelector(Spaces.names(id))
-  let filesPresent = files.length !== 0
+  let spaces = useSelector(Spaces.listSpacesByClusterId(id))
+  let spacesPresent = spaces.length !== 0
 
   useEffect(() => {
     dispatch(refreshSpaceNames())
@@ -35,11 +35,11 @@ export default function TabWelcome() {
         </div>
       </section>
       <div className="input-methods">
-        {filesPresent && (
+        {spacesPresent && (
           <>
             <section>
               <label>Recent Spaces</label>
-              <SavedSpacesList files={files} />
+              <SavedSpacesList spaces={spaces} />
             </section>
             <div className="separator" />
           </>

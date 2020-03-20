@@ -1,6 +1,6 @@
 /* @flow */
 
-import {keys} from "lodash"
+import {keys, values} from "lodash"
 
 import type {State} from "../types"
 
@@ -12,6 +12,9 @@ export default {
     state.spaces[clusterId][name],
 
   raw: (state: State) => state.spaces,
+
+  listSpacesByClusterId: (clusterId: string) => (state: State) =>
+    values(state.spaces[clusterId]),
 
   getIngestProgress: (clusterId: string, name: string) => (state: State) => {
     let space = state.spaces[clusterId][name]
