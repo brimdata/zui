@@ -29,6 +29,10 @@ export default () => {
     global.getState = store.getState
     global.getGlobalState = globalStore.getState
 
+    ipcRenderer.on("globalStore:dispatch", (e, {action}) => {
+      store.dispatch(action)
+    })
+
     return {store, globalStore}
   })
 }

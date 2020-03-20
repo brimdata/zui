@@ -17,7 +17,6 @@ import Viewer from "../Viewer"
 import activeTabSelect from "./activeTabSelect"
 import brim, {type Span} from "../../brim"
 import zealot from "../../services/zealot"
-import {useSelector} from "react-redux"
 
 const clusterId = activeTabSelect((tab) => tab.search.clusterId)
 
