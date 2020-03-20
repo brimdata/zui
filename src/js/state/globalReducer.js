@@ -6,7 +6,6 @@ import type {RecentFilesState} from "./RecentFiles/types"
 import type {SpacesState} from "./Spaces/types"
 import {VERSION} from "../initializers/initPersistance"
 import Investigation from "./Investigation"
-import RecentFiles from "./RecentFiles"
 import Spaces from "./Spaces"
 
 export type GlobalState = {
@@ -17,7 +16,6 @@ export type GlobalState = {
 
 export default combineReducers<*, *>({
   investigation: Investigation.reducer,
-  recentFiles: RecentFiles.reducer,
   spaces: Spaces.reducer,
   version: () => VERSION
 })

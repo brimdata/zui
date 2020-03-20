@@ -7,6 +7,7 @@ import TabSearch from "./TabSearch"
 import TabSearchLoading from "./TabSearchLoading"
 import TabWelcome from "./TabWelcome"
 import brim from "../brim"
+import Spaces from "../state/Spaces/selectors"
 
 export default function TabContent() {
   let space = useSelector(Tab.space)

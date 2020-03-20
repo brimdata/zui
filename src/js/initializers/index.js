@@ -20,13 +20,14 @@ export default () => {
     initGlobalStore()
   ]).then(([initialState, globalStore]) => {
     let boom = initBoom(undefined)
-    let store = initStore(initialState, boom)
+    let store = initStore({...initialState, ...globalStore.getState()}, boom)
     initDOM()
     initShortcuts(store)
     initMenuActionListeners(store.dispatch)
     initQueryParams(store)
 
     global.getState = store.getState
+    global.getGlobalState = globalStore.getState
 
     return {store, globalStore}
   })
