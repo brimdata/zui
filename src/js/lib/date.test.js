@@ -22,7 +22,7 @@ describe("parseInZone", () => {
     })
   })
 
-  test.skip("reference date in all zones", () => {
+  test("reference date in all zones", () => {
     names.forEach((zone) => {
       // This is very odd, it does 4 minutes and 30 sec instead of 5
       if (zone === "Africa/Monrovia") return
@@ -38,7 +38,7 @@ describe("parseInZone", () => {
     })
   })
 
-  test.skip("casual date in all zones", () => {
+  test("casual date in all zones", () => {
     names.forEach((zone) => {
       let ref = new Date(0)
       let date = lib.date.parseInZone(casualDate, zone, ref)
