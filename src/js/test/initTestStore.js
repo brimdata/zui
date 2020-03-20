@@ -16,9 +16,9 @@ type TestStore = {
   getState: () => State
 }
 
-export default (boom: * = new MockBoomClient().stub("send")): TestStore =>
+export default (boom: * = new MockBoomClient().stub("send")): TestStore => {
   // $FlowFixMe
-  createStore(
+  return createStore(
     rootReducer,
     undefined,
     compose(
@@ -27,6 +27,7 @@ export default (boom: * = new MockBoomClient().stub("send")): TestStore =>
       applyActionHistory()
     )
   )
+}
 
 function applyDispatchAll() {
   return (createStore) => (...args) => {

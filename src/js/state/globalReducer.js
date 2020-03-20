@@ -2,7 +2,6 @@
 import {combineReducers} from "redux"
 
 import type {InvestigationState} from "./Investigation/types"
-import type {RecentFilesState} from "./RecentFiles/types"
 import type {SpacesState} from "./Spaces/types"
 import {VERSION} from "../initializers/initPersistance"
 import Investigation from "./Investigation"
@@ -10,7 +9,6 @@ import Spaces from "./Spaces"
 
 export type GlobalState = {
   investigation: InvestigationState,
-  recentFiles: RecentFilesState,
   spaces: SpacesState
 }
 
