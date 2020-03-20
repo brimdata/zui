@@ -32,7 +32,10 @@ let mockClient = {
 
 test("opening a packet", async () => {
   let store = initTestStore()
-  await store.dispatch(openPacket("~/Desktop/packet.pcap", mockClient))
+  let globalDispatch = store.dispatch
+  await store.dispatch(
+    openPacket("~/Desktop/packet.pcap", mockClient, globalDispatch)
+  )
 
   let state = store.getState()
   expect(Tab.spaceName(state)).toEqual("dataSpace")
