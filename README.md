@@ -32,4 +32,4 @@ development information like building and testing Brim.
 
 ## Join the Community
 
-Join our [Public Slack](https://join.slack.com/t/brimsec/shared_invite/enQtOTMwMDczODg2ODgyLTk1NTdjOTQxNmI0OGYwOThiYzNlNDc5OWI5NjczZDljNDdmZGZjNGI3NTNiOWRiNzJkMzg4OTEwZWM0Y2NiYWQ) workspace for announcements, Q&A, and to trade tips!
+Join our [Public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg) workspace for announcements, Q&A, and to trade tips!
