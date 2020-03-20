@@ -51,7 +51,8 @@
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "globalSetup": "./src/js/test/globalSetup.js"
   },
   "prettier": {
     "semi": false,
