@@ -11,11 +11,12 @@ import Tab from "../state/Tab"
 import openPacket from "../flows/openPacket"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 import {compact} from "lodash"
+import {useGlobalSelector} from "../state/GlobalContext"
 
 export default function TabWelcome() {
   let dispatch = useDispatch()
   let id = useSelector(Tab.clusterId)
-  let spaces = compact(useSelector(Spaces.listSpacesByClusterId(id)))
+  let spaces = compact(useGlobalSelector(Spaces.listSpacesByClusterId(id)))
   let spacesPresent = spaces.length !== 0
 
   useEffect(() => {

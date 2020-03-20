@@ -9,10 +9,11 @@ import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
+import {useGlobalSelector} from "../state/GlobalContext"
 
 export default function SpacePicker() {
   let clusterId = useSelector(Tab.clusterId)
-  let spaces = useSelector(Spaces.names(clusterId))
+  let spaces = useGlobalSelector(Spaces.names(clusterId))
   let currentSpace = useSelector(Tab.spaceName) || "Choose a space"
   let [space, setSpace] = useState(currentSpace)
   let dispatch = useDispatch()
