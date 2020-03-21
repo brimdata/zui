@@ -4,13 +4,13 @@ import React from "react"
 
 import {remote} from "electron"
 
+import type {Space} from "../state/Spaces/types"
 import {initSpace} from "../flows/initSpace"
 import Folder from "../icons/Folder"
-import TrashBin from "../icons/TrashBin"
-import deleteSpace from "../flows/deleteSpace"
-import {isNumber} from "lodash"
 import ProgressIndicator from "./ProgressIndicator"
-import type {Space} from "../state/Spaces/types"
+import TrashBin from "../icons/TrashBin"
+import brim from "../brim"
+import deleteSpace from "../flows/deleteSpace"
 
 type Props = {|
   spaces: Space[]
@@ -42,23 +42,22 @@ export default function SavedSpacesList({spaces}: Props) {
 
   return (
     <menu className="saved-spaces-list">
-      {spaces.map(({ingest_progress, name}) => {
-        const trashOrProgress =
-          ingest_progress && isNumber(ingest_progress) ? (
-            <div className="small-progress-bar">
-              <ProgressIndicator percent={ingest_progress} />
-            </div>
-          ) : (
-            <a href="#" onClick={onDelete(name)} className="delete-link">
-              <TrashBin className="delete-icon" />
-            </a>
-          )
+      {spaces.map(brim.space).map((s) => {
+        const trashOrProgress = s.ingesting() ? (
+          <div className="small-progress-bar">
+            <ProgressIndicator percent={s.ingestProgress()} />
+          </div>
+        ) : (
+          <a href="#" onClick={onDelete(s.name())} className="delete-link">
+            <TrashBin className="delete-icon" />
+          </a>
+        )
 
         return (
-          <li key={name}>
-            <a href="#" onClick={onClick(name)} className="space-link">
+          <li key={s.name()}>
+            <a href="#" onClick={onClick(s.name())} className="space-link">
               <Folder className="space-icon" />
-              <span className="name">{name}</span>
+              <span className="name">{s.name()}</span>
             </a>
             {trashOrProgress}
             <div className="line" />
