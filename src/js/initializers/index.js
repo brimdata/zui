@@ -11,6 +11,7 @@ import initShortcuts from "./initShortcuts"
 import initStore from "./initStore"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
+import onBeforeUnload from "../flows/onBeforeUnload"
 
 let {id} = getQueryParams()
 
@@ -33,17 +34,11 @@ export default () => {
       store.dispatch(action)
     })
 
+    global.onbeforeunload = (e) => {
+      setTimeout(() => store.dispatch(onBeforeUnload()))
+      e.returnValue = false
+    }
+
     return {store, globalStore}
   })
-}
-
-global.onbeforeunload = () => {
-  const state = global.getState()
-
-  // remove state pieces which we are not interested in persisting
-  delete state.errors
-  delete state.notice
-  delete state.handlers
-
-  ipcRenderer.invoke("windows:saveState", global.windowId, global.getState())
 }
