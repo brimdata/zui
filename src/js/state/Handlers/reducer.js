@@ -1,6 +1,7 @@
 /* @flow */
+import {values} from "lodash"
 
-import type {HandlersAction, HandlersState} from "./types"
+import type {Handler, HandlersAction, HandlersState} from "./types"
 
 export default function reducer(
   state: HandlersState = {},
@@ -10,22 +11,26 @@ export default function reducer(
     case "HANDLERS_REGISTER":
       return {...state, [action.id]: action.handler}
     case "HANDLERS_ABORT":
-      var handler = state[action.id]
-      if (handler) handler.abort(action.emit)
-      var abortState = {...state}
-      delete abortState[action.id]
-      return abortState
+      tryAbort(state[action.id])
+      return remove(state, action.id)
     case "HANDLERS_ABORT_ALL":
-      for (var [_id, handle] of Object.entries(state)) {
-        // $FlowFixMe
-        handle.abort(action.emit)
-      }
+      for (let handler of values(state)) tryAbort(handler, action.emit)
       return {}
     case "HANDLERS_REMOVE":
-      var removeState = {...state}
-      delete removeState[action.id]
-      return removeState
+      return remove(state, action.id)
     default:
       return state
   }
+}
+
+function tryAbort(handler: Handler, emit: boolean = true) {
+  if (handler && handler.type === "SEARCH") {
+    handler.abort(emit)
+  }
+}
+
+function remove(state, id) {
+  var nextState = {...state}
+  delete nextState[id]
+  return nextState
 }
