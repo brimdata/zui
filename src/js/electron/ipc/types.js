@@ -6,6 +6,7 @@ export type IpcMsg =
   | WindowsRedirectMsg
   | WindowsCloseMsg
   | WindowsInitialStateMsg
+  | WindowsDestroyMsg
   | ZqdIngestMsg
   | ZqdInfoMsg
   | ZqdSubscribeMsg
@@ -25,6 +26,10 @@ export type WindowsCloseMsg = {
 export type WindowsInitialStateMsg = {
   channel: "windows:initialState",
   id: string
+}
+
+export type WindowsDestroyMsg = {
+  channel: "windows:destroy"
 }
 
 export type ZqdIngestMsg = {

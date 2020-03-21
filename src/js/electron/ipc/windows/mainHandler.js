@@ -34,4 +34,8 @@ export default function(manager: $WindowManager) {
       state
     })
   })
+
+  ipcMain.handle("windows:destroy", () => {
+    manager.destroyWindow()
+  })
 }

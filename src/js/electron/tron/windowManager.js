@@ -85,6 +85,11 @@ export default function windowManager() {
     closeWindow() {
       let win = BrowserWindow.getFocusedWindow()
       if (win) win.close()
+    },
+
+    destroyWindow() {
+      let win = BrowserWindow.getFocusedWindow()
+      if (win) win.destroy()
     }
   }
 }

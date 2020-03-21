@@ -3,8 +3,9 @@ import type {WindowName} from "../../tron/windowManager"
 import type {WindowParams} from "../../tron/window"
 import type {
   WindowsCloseMsg,
-  WindowsRedirectMsg,
-  WindowsInitialStateMsg
+  WindowsDestroyMsg,
+  WindowsInitialStateMsg,
+  WindowsRedirectMsg
 } from "../types"
 
 export default {
@@ -18,6 +19,11 @@ export default {
   close(): WindowsCloseMsg {
     return {
       channel: "windows:close"
+    }
+  },
+  destroy(): WindowsDestroyMsg {
+    return {
+      channel: "windows:destroy"
     }
   },
   initialState(id: string): WindowsInitialStateMsg {
