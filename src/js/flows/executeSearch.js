@@ -81,7 +81,7 @@ export default function executeSearch(search: $Search): Thunk {
 
     dispatch(Handlers.abort(search.getId(), false))
 
-    let handler = boom
+    let boomRequest = boom
       .search(search.program, {
         searchSpan: search.span,
         searchSpace: search.space
@@ -89,6 +89,11 @@ export default function executeSearch(search: $Search): Thunk {
       .onAbort(aborted)
       .error(errored)
       .stream(streamed)
+
+    let handler = {
+      type: "SEARCH",
+      abort: (emit: boolean = true) => boomRequest.abort(emit)
+    }
 
     dispatch(Handlers.register(search.getId(), handler))
     return () => handler.abort(false)

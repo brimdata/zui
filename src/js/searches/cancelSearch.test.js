@@ -12,6 +12,13 @@ describe("boomSearches reducer", () => {
     store = initTestStore(boom)
   })
 
+  function createHandler(boom) {
+    return {
+      type: "SEARCH",
+      abort: (val) => boom.abort(val)
+    }
+  }
+
   test("#abort all", () => {
     let killFunc = jest.fn()
     let req1 = boom.mockRequest()
@@ -21,8 +28,8 @@ describe("boomSearches reducer", () => {
     req2.setAbort(killFunc)
 
     store.dispatchAll([
-      Handlers.register("Histogram", req1),
-      Handlers.register("Logs", req2),
+      Handlers.register("Histogram", createHandler(req1)),
+      Handlers.register("Logs", createHandler(req2)),
       Handlers.abortAll()
     ])
 
@@ -38,8 +45,8 @@ describe("boomSearches reducer", () => {
     req2.setAbort(killFunc)
 
     store.dispatchAll([
-      Handlers.register("Histogram", req1),
-      Handlers.register("Logs", req2),
+      Handlers.register("Histogram", createHandler(req1)),
+      Handlers.register("Logs", createHandler(req2)),
       Handlers.abort("Histogram")
     ])
 
@@ -50,7 +57,10 @@ describe("boomSearches reducer", () => {
     let req = boom.mockRequest()
     let killFunc = jest.spyOn(req, "abort")
 
-    store.dispatchAll([Handlers.register("KillMe", req), Handlers.abortAll()])
+    store.dispatchAll([
+      Handlers.register("KillMe", createHandler(req)),
+      Handlers.abortAll()
+    ])
 
     expect(killFunc).toHaveBeenCalled()
   })
@@ -60,7 +70,7 @@ describe("boomSearches reducer", () => {
     let killFunc = jest.spyOn(req, "abort")
 
     store.dispatchAll([
-      Handlers.register("Cancel Me", req),
+      Handlers.register("Cancel Me", createHandler(req)),
       Handlers.abortAll(false)
     ])
 
