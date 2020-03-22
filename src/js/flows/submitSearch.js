@@ -2,6 +2,7 @@
 import type {Thunk} from "../state/types"
 import {globalDispatch} from "../state/GlobalContext"
 import History from "../state/History"
+import Investigation from "../state/Investigation"
 import Notice from "../state/Notice"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
@@ -22,9 +23,10 @@ export default function submitSearch(save: boolean = true): Thunk {
     const state = getState()
 
     if (save) {
-      let action = History.push(Search.getRecord(state), brim.time().toTs())
-      dispatch(action)
-      globalDispatch(action)
+      let record = Search.getRecord(state)
+      let ts = brim.time().toTs()
+      dispatch(History.push(record, ts))
+      globalDispatch(Investigation.push(record, ts))
     }
     let tabId = Tabs.getActive(state)
     let args = Search.getArgs(state)

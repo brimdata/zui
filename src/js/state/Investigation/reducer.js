@@ -14,7 +14,7 @@ export default function reducer(
   a: InvestigationAction
 ): InvestigationState {
   switch (a.type) {
-    case "HISTORY_PUSH":
+    case "INVESTIGATION_PUSH":
       return createFinding(state, a.entry, a.ts)
     case "FINDING_CREATE":
       return [...state, a.finding]
