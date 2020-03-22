@@ -12,7 +12,6 @@ export default function SearchHeaderChart() {
 
   if (searchRecord) {
     let {program, pins} = searchRecord
-    console.log(brim.program(program, pins).string())
     chartable = !brim.program(program, pins).hasAnalytics()
   }
 
