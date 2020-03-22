@@ -5,6 +5,7 @@ import {BrowserWindow} from "electron"
 import type {ReturnType} from "../../types"
 import type {SessionState} from "./session"
 import type {WindowParams} from "./window"
+import {isBoolean} from "../../lib/is"
 import brim from "../../brim"
 import menu from "../menu"
 import tron from "./"
@@ -38,8 +39,9 @@ export default function windowManager() {
       }
     },
 
-    isQuitting() {
-      isQuitting = true
+    isQuitting(val: ?boolean) {
+      if (isBoolean(val)) isQuitting = val
+      else return isQuitting
     },
 
     getWindows(): WindowsState {
