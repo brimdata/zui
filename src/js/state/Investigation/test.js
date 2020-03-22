@@ -1,6 +1,5 @@
 /* @flow */
 
-import History from "../History"
 import Investigation from "./"
 import brim from "../../brim"
 import createGlobalStore from "../createGlobalStore"
@@ -47,16 +46,16 @@ test("new finding", () => {
 
 test("when a new search is recorded", () => {
   expect(get()).toHaveLength(0)
-  store.dispatch(History.push(search1))
+  store.dispatch(Investigation.push(search1))
   expect(get()).toHaveLength(1)
 })
 
 test("when a search is many times twice", () => {
   expect(get()).toHaveLength(0)
 
-  dispatch(History.push(search1))
-  dispatch(History.push(search1))
-  dispatch(History.push(search1))
+  dispatch(Investigation.push(search1))
+  dispatch(Investigation.push(search1))
+  dispatch(Investigation.push(search1))
 
   expect(get()).toHaveLength(1)
 })
@@ -64,8 +63,8 @@ test("when a search is many times twice", () => {
 test("when a search is different", () => {
   expect(get()).toHaveLength(0)
 
-  dispatch(History.push(search1))
-  dispatch(History.push(search2))
+  dispatch(Investigation.push(search1))
+  dispatch(Investigation.push(search2))
 
   expect(get()).toHaveLength(2)
 
@@ -79,8 +78,8 @@ test("when a search is different", () => {
 })
 
 test("delete a single finding by ts", () => {
-  dispatch(History.push(search1, brim.time(new Date(0)).toTs()))
-  dispatch(History.push(search2, brim.time(new Date(1)).toTs()))
+  dispatch(Investigation.push(search1, brim.time(new Date(0)).toTs()))
+  dispatch(Investigation.push(search2, brim.time(new Date(1)).toTs()))
   let {ts} = select(Investigation.getCurrentFinding)
   dispatch(Investigation.deleteFindingByTs(ts))
   expect(get()[0]).toEqual({
@@ -93,8 +92,8 @@ test("delete a single finding by ts", () => {
 })
 
 test("removing several records with multiple ts", () => {
-  dispatch(History.push(search1))
-  dispatch(History.push(search2))
+  dispatch(Investigation.push(search1))
+  dispatch(Investigation.push(search2))
 
   let multiTs = get().map((finding) => finding.ts)
   dispatch(Investigation.deleteFindingByTs(multiTs))

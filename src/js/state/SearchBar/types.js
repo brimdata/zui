@@ -62,5 +62,6 @@ export type SEARCH_BAR_PARSE_ERROR = {
 }
 
 export type SEARCH_BAR_SUBMIT = {
-  type: "SEARCH_BAR_SUBMIT"
+  type: "SEARCH_BAR_SUBMIT",
+  ts: number
 }

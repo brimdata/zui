@@ -17,6 +17,7 @@ import Tab from "../state/Tab"
 import ThreeDotButton from "./ThreeDotButton"
 import submitSearch from "../flows/submitSearch"
 import useDelayedMount from "./hooks/useDelayedMount"
+import usePrevious from "./hooks/usePrevious"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -105,8 +106,9 @@ function Menu() {
 }
 
 function ActionButton() {
+  let ts = useSelector(Tab.getSearchTs)
   let next = useSelector(Search.getRecord)
-  let prev = useSelector(Tab.currentEntry)
+  let prev = usePrevious(next, [ts])
   let show = !isEqual(next, prev)
   let dispatch = useDispatch()
   let onClick = () => dispatch(submitSearch())

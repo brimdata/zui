@@ -1,6 +1,5 @@
 /* @flow */
 
-import type {HISTORY_PUSH} from "../History/types"
 import type {SearchRecord} from "../../types"
 import type {Ts} from "../../brim"
 import Log from "../../models/Log"
@@ -11,7 +10,7 @@ export type InvestigationAction =
   | FINDING_UPDATE
   | FINDING_DELETE
   | INVESTIGATION_CLEAR
-  | HISTORY_PUSH
+  | INVESTIGATION_PUSH
 
 export type Finding = {
   ts: Ts,
@@ -25,3 +24,8 @@ export type FINDING_CREATE = {type: "FINDING_CREATE", finding: $Shape<Finding>}
 export type FINDING_UPDATE = {type: "FINDING_UPDATE", finding: $Shape<Finding>}
 export type FINDING_DELETE = {type: "FINDING_DELETE", ts: Ts[] | Ts}
 export type INVESTIGATION_CLEAR = {type: "INVESTIGATION_CLEAR"}
+export type INVESTIGATION_PUSH = {
+  type: "INVESTIGATION_PUSH",
+  entry: SearchRecord,
+  ts: Ts
+}

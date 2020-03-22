@@ -5,12 +5,22 @@ import type {
   FINDING_DELETE,
   FINDING_UPDATE,
   Finding,
-  INVESTIGATION_CLEAR
+  INVESTIGATION_CLEAR,
+  INVESTIGATION_PUSH
 } from "./types"
-import type {Ts} from "../../brim"
+import type {SearchRecord} from "../../types"
 import {isArray} from "../../lib/is"
+import brim, {type Ts} from "../../brim"
 
 export default {
+  push: (
+    record: SearchRecord,
+    ts: Ts = brim.time().toTs()
+  ): INVESTIGATION_PUSH => ({
+    type: "INVESTIGATION_PUSH",
+    entry: record,
+    ts: ts
+  }),
   createFinding: (finding: $Shape<Finding>): FINDING_CREATE => ({
     type: "FINDING_CREATE",
     finding

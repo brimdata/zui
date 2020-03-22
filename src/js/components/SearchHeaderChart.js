@@ -2,16 +2,17 @@
 import {useSelector} from "react-redux"
 import React from "react"
 
-import Investigation from "../state/Investigation"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
+import Tab from "../state/Tab"
 import brim from "../brim"
 
 export default function SearchHeaderChart() {
-  let finding = useSelector(Investigation.getCurrentFinding)
+  let searchRecord = useSelector(Tab.currentEntry)
   let chartable = true
 
-  if (finding) {
-    let {program, pins} = finding.search
+  if (searchRecord) {
+    let {program, pins} = searchRecord
+    console.log(brim.program(program, pins).string())
     chartable = !brim.program(program, pins).hasAnalytics()
   }
 
