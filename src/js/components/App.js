@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
@@ -13,16 +13,19 @@ import ErrorNotice from "./ErrorNotice"
 import SettingsModal from "./SettingsModal"
 import View from "../state/View"
 import brim from "../brim"
+import refreshSpaceNames from "../flows/refreshSpaceNames"
 import useListener from "./hooks/useListener"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
   let [mouse, setMouse] = useState(true)
+  let dispatch = useDispatch()
 
   useListener(document, "mousedown", () => setMouse(true))
   useListener(document, "keydown", () => setMouse(false))
 
   useEffect(() => {
+    dispatch(refreshSpaceNames())
     ipcRenderer.invoke("windows:ready")
   }, [])
 

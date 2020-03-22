@@ -40,7 +40,7 @@ async function main() {
   })
 
   app.on("before-quit", () => {
-    winMan.isQuitting()
+    winMan.isQuitting(true)
   })
 
   app.on("quit", () => {
@@ -53,7 +53,7 @@ async function main() {
   })
 
   app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") app.quit()
+    if (process.platform !== "darwin" || winMan.isQuitting()) app.quit()
   })
 
   app.on("web-contents-created", (event, contents) => {

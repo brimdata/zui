@@ -1,8 +1,18 @@
 /* @flow */
 
-import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
+export type HandlersState = {[string]: Handler}
 
-export type HandlersState = {[string]: BoomRequest}
+export type Handler = SearchHandler | IngestHandler
+
+export type SearchHandler = {
+  type: "SEARCH",
+  abort: (boolean) => void
+}
+
+export type IngestHandler = {
+  type: "INGEST",
+  spaceName: string
+}
 
 export type HandlersAction =
   | HANDLERS_REGISTER
@@ -13,7 +23,7 @@ export type HandlersAction =
 export type HANDLERS_REGISTER = {
   type: "HANDLERS_REGISTER",
   id: string,
-  handler: BoomRequest
+  handler: Handler
 }
 export type HANDLERS_ABORT = {
   type: "HANDLERS_ABORT",

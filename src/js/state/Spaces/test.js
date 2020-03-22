@@ -52,3 +52,30 @@ test("setting the ingest_progress", () => {
 
   expect(value).toEqual(0.5)
 })
+
+test("getting the spaces without details", () => {
+  let state = store.dispatchAll([
+    Spaces.setNames("cluster1", ["space-a", "space-b"])
+  ])
+  let spaces = Spaces.getSpaces("cluster1")(state)
+
+  expect(spaces).toEqual([{name: "space-a"}, {name: "space-b"}])
+})
+
+test("getting the spaces with details, others not", () => {
+  let state = store.dispatchAll([
+    Spaces.setNames("cluster1", ["space-a", "space-b"]),
+    Spaces.setDetail("cluster1", {...detail, name: "space-a"})
+  ])
+  let spaces = Spaces.getSpaces("cluster1")(state)
+
+  expect(spaces).toEqual([
+    {
+      name: "space-a",
+      max_time: {ns: 750000000, sec: 1428917793},
+      min_time: {ns: 0, sec: 1425564900},
+      packet_support: true
+    },
+    {name: "space-b"}
+  ])
+})

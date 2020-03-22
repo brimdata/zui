@@ -5,6 +5,7 @@ import {BrowserWindow} from "electron"
 import type {ReturnType} from "../../types"
 import type {SessionState} from "./session"
 import type {WindowParams} from "./window"
+import {isBoolean} from "../../lib/is"
 import brim from "../../brim"
 import menu from "../menu"
 import tron from "./"
@@ -38,8 +39,9 @@ export default function windowManager() {
       }
     },
 
-    isQuitting() {
-      isQuitting = true
+    isQuitting(val: ?boolean) {
+      if (isBoolean(val)) isQuitting = val
+      else return isQuitting
     },
 
     getWindows(): WindowsState {
@@ -74,7 +76,17 @@ export default function windowManager() {
             menu.setMenu(name, manager)
           }
         })
+        .on("close", (e) => {
+          e.preventDefault()
+          e.sender.webContents.send("close")
+        })
         .on("closed", () => {
+          console.log(
+            "WindowManager: closed window",
+            id,
+            "quitting:",
+            isQuitting
+          )
           if (!isQuitting) {
             delete windows[id]
           }
@@ -85,6 +97,11 @@ export default function windowManager() {
     closeWindow() {
       let win = BrowserWindow.getFocusedWindow()
       if (win) win.close()
+    },
+
+    destroyWindow() {
+      let win = BrowserWindow.getFocusedWindow()
+      if (win) win.destroy()
     }
   }
 }

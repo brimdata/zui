@@ -2,6 +2,7 @@
 
 import {ipcRenderer} from "electron"
 
+import closeWindow from "../flows/closeWindow"
 import initBoom from "./initBoom"
 import initDOM from "./initDOM"
 import initGlobalStore from "./initGlobalStore"
@@ -11,6 +12,7 @@ import initShortcuts from "./initShortcuts"
 import initStore from "./initStore"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
+import refreshWindow from "../flows/refreshWindow"
 
 let {id} = getQueryParams()
 
@@ -21,29 +23,19 @@ export default () => {
   ]).then(([initialState, globalStore]) => {
     let boom = initBoom(undefined)
     let store = initStore({...initialState, ...globalStore.getState()}, boom)
+    let dispatch = store.dispatch
     initDOM()
     initShortcuts(store)
-    initMenuActionListeners(store.dispatch)
+    initMenuActionListeners(dispatch)
     initQueryParams(store)
 
     global.getState = store.getState
     global.getGlobalState = globalStore.getState
 
-    ipcRenderer.on("globalStore:dispatch", (e, {action}) => {
-      store.dispatch(action)
-    })
+    ipcRenderer.on("globalStore:dispatch", (e, {action}) => dispatch(action))
+    ipcRenderer.on("close", () => dispatch(closeWindow()))
+    global.onbeforeunload = () => dispatch(refreshWindow())
 
     return {store, globalStore}
   })
-}
-
-global.onbeforeunload = () => {
-  const state = global.getState()
-
-  // remove state pieces which we are not interested in persisting
-  delete state.errors
-  delete state.notice
-  delete state.handlers
-
-  ipcRenderer.invoke("windows:saveState", global.windowId, global.getState())
 }

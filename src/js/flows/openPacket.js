@@ -4,16 +4,18 @@ import fsExtra from "fs-extra"
 
 import type {PacketPostStatusPayload} from "../services/zealot/types"
 import type {Thunk} from "../state/types"
+import {globalDispatch} from "../state/GlobalContext"
 import ErrorFactory from "../models/ErrorFactory"
+import Handlers from "../state/Handlers"
 import Notice from "../state/Notice"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
+import brim from "../brim"
 import deleteSpace from "./deleteSpace"
 import errors from "../errors"
 import lib from "../lib"
-import {globalDispatch} from "../state/GlobalContext"
 
 export default (
   file: string,
@@ -25,6 +27,7 @@ export default (
   let tabId = Tabs.getActive(getState())
   let client = clientDep || Tab.getZealot(getState())
   let spaceName
+  let handlerId = brim.randomHash()
 
   return fsExtra
     .ensureDir(dir)
@@ -33,6 +36,12 @@ export default (
       spaceName = name
       dispatch(Search.setSpace(name, tabId))
       let stream = client.pcaps.post({space: name, path: file})
+      dispatch(
+        Handlers.register(handlerId, {
+          type: "INGEST",
+          spaceName
+        })
+      )
       let setProgress = (n) =>
         gDispatch(Spaces.setIngestProgress(clusterId, name, n))
 
@@ -65,6 +74,7 @@ export default (
           })
       }
     })
+    .finally(() => dispatch(Handlers.remove(handlerId)))
 }
 
 function extractFrom(status: PacketPostStatusPayload): number {

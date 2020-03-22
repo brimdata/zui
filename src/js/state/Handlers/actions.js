@@ -4,12 +4,12 @@ import type {
   HANDLERS_ABORT,
   HANDLERS_ABORT_ALL,
   HANDLERS_REGISTER,
-  HANDLERS_REMOVE
+  HANDLERS_REMOVE,
+  Handler
 } from "./types"
-import BoomRequest from "../../services/BoomClient/lib/BoomRequest"
 
 export default {
-  register(id: string, handler: BoomRequest): HANDLERS_REGISTER {
+  register(id: string, handler: Handler): HANDLERS_REGISTER {
     return {type: "HANDLERS_REGISTER", id, handler}
   },
 
