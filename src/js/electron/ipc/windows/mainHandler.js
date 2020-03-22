@@ -38,4 +38,8 @@ export default function(manager: $WindowManager) {
   ipcMain.handle("windows:destroy", () => {
     manager.destroyWindow()
   })
+
+  ipcMain.handle("windows:log", (e, {id, args}) => {
+    console.log(`[${id}]: `, ...args)
+  })
 }

@@ -15,7 +15,9 @@ export default function(store: *, winMan: $WindowManager) {
   ipcMain.handle("globalStore:dispatch", (e, {action}) => {
     store.dispatch(action)
     for (let win of getWindows(winMan)) {
-      sendTo(win.ref.webContents, ipc.globalStore.dispatch(action))
+      if (!win.ref.isDestroyed()) {
+        sendTo(win.ref.webContents, ipc.globalStore.dispatch(action))
+      }
     }
   })
 }
