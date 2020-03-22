@@ -1,10 +1,13 @@
 /* @flow */
 // code from https://github.com/sindresorhus/open/releases/tag/v6.0.0
 "use strict"
-const {promisify} = require("util")
-const path = require("path")
-const childProcess = require("child_process")
+require("regenerator-runtime/runtime")
+
 const isWsl = require("is-wsl")
+
+const {promisify} = require("util")
+const childProcess = require("child_process")
+const path = require("path")
 
 const pExecFile = promisify(childProcess.execFile)
 
