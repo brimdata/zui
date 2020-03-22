@@ -1,5 +1,6 @@
 /* @flow */
 import type {DateTuple} from "../../lib/TimeWindow"
+import type {SEARCH_BAR_SUBMIT} from "../SearchBar/types"
 import type {Span, Ts} from "../../brim"
 
 export type SearchState = {
@@ -7,7 +8,8 @@ export type SearchState = {
   spanArgs: SpanArgs,
   spanFocus: ?Span,
   space: string,
-  clusterId: string
+  clusterId: string,
+  ts: number
 }
 
 export type SearchArgs = {
@@ -28,6 +30,7 @@ export type SearchActions =
   | SEARCH_CLEAR
   | SEARCH_SPACE_SET
   | SEARCH_CLUSTER_SET
+  | SEARCH_BAR_SUBMIT
 
 export type SEARCH_CLUSTER_SET = {
   type: "SEARCH_CLUSTER_SET",

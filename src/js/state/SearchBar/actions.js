@@ -59,7 +59,8 @@ export default {
     error
   }),
 
-  submittingSearchBar: (): SEARCH_BAR_SUBMIT => ({
-    type: "SEARCH_BAR_SUBMIT"
+  submittingSearchBar: (ts: Date = new Date()): SEARCH_BAR_SUBMIT => ({
+    type: "SEARCH_BAR_SUBMIT",
+    ts: ts.getTime()
   })
 }
