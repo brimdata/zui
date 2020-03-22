@@ -76,7 +76,17 @@ export default function windowManager() {
             menu.setMenu(name, manager)
           }
         })
+        .on("close", (e) => {
+          e.preventDefault()
+          e.sender.webContents.send("close")
+        })
         .on("closed", () => {
+          console.log(
+            "WindowManager: closed window",
+            id,
+            "quitting:",
+            isQuitting
+          )
           if (!isQuitting) {
             delete windows[id]
           }

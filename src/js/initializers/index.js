@@ -2,6 +2,7 @@
 
 import {ipcRenderer} from "electron"
 
+import closeWindow from "../flows/closeWindow"
 import initBoom from "./initBoom"
 import initDOM from "./initDOM"
 import initGlobalStore from "./initGlobalStore"
@@ -11,7 +12,7 @@ import initShortcuts from "./initShortcuts"
 import initStore from "./initStore"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
-import onBeforeUnload from "../flows/onBeforeUnload"
+import refreshWindow from "../flows/refreshWindow"
 
 let {id} = getQueryParams()
 
@@ -22,22 +23,18 @@ export default () => {
   ]).then(([initialState, globalStore]) => {
     let boom = initBoom(undefined)
     let store = initStore({...initialState, ...globalStore.getState()}, boom)
+    let dispatch = store.dispatch
     initDOM()
     initShortcuts(store)
-    initMenuActionListeners(store.dispatch)
+    initMenuActionListeners(dispatch)
     initQueryParams(store)
 
     global.getState = store.getState
     global.getGlobalState = globalStore.getState
 
-    ipcRenderer.on("globalStore:dispatch", (e, {action}) => {
-      store.dispatch(action)
-    })
-
-    global.onbeforeunload = (e) => {
-      setTimeout(() => store.dispatch(onBeforeUnload()))
-      e.returnValue = false
-    }
+    ipcRenderer.on("globalStore:dispatch", (e, {action}) => dispatch(action))
+    ipcRenderer.on("close", () => dispatch(closeWindow()))
+    global.onbeforeunload = () => dispatch(refreshWindow())
 
     return {store, globalStore}
   })
