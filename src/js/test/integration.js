@@ -16,6 +16,7 @@ const dataAttrs = {
   debugProgram: "debugProgram",
   downloadMessage: "downloadMessage",
   histogram: "histogram-chart",
+  ingestProgress: "ingestProgress",
   killHistogramSearch: "killHistogramSearch",
   killViewerSearch: "killViewerSearch",
   logCellMenu: "logCellMenu",
@@ -133,6 +134,9 @@ export const selectors = {
     button: dataAttrSelector("span_button"),
     menu: dataAttrSelector("span_menu"),
     menuItem: genSelectorForTextUnderElement("span_menu")
+  },
+  status: {
+    ingestProgress: dataAttrSelector("ingestProgress")
   },
   viewer: {
     header_base: dataAttrSelector("viewer_header"),
