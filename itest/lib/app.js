@@ -301,4 +301,10 @@ export const pcapIngestSample = async (app: Application) => {
   await appStep("wait for viewer to appear", () =>
     app.client.waitForVisible(selectors.viewer.results_base)
   )
+  await appStep("wait for ingest to finish", () =>
+    retryUntil(
+      () => app.client.isExisting(selectors.status.ingestProgress),
+      (ingesting) => ingesting === false
+    )
+  )
 }
