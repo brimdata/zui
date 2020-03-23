@@ -2,8 +2,8 @@ name: Brim Windows release
 
 on:
   push:
-    branches:
-      - windows
+    tags:
+      - v*
 
 jobs:
   build:
