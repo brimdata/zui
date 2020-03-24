@@ -108,7 +108,7 @@ async function zeekDownload(version, zdepsPath) {
     // Special casing for zeek on windows as it's not yet created automatically
     // like linux/mac.
     artifactFile = "zeek.zip"
-    artifactUrl = "https://storage.googleapis.com/brimsec/zeek-windows/zeek.zip"
+    artifactUrl = "https://storage.googleapis.com/brimsec/zeek-windows/zeek-20200624.zip"
   } else {
     artifactFile = `zeek-${version}.${plat.osarch}.zip`
     artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
