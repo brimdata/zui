@@ -103,8 +103,8 @@
     "spectron": "^9.0.0",
     "tmp": "^0.1.0",
     "whatwg-fetch": "^3.0.0",
-    "winston": "^3.2.1",
-    "win-7zip": "^0.1.0"
+    "win-7zip": "^0.1.0",
+    "winston": "^3.2.1"
   },
   "dependencies": {
     "animejs": "^3.1.0",

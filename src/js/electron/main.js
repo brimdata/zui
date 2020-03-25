@@ -9,13 +9,51 @@ import zqdMainHandler from "./ipc/zqd/mainHandler"
 console.time("init")
 import "regenerator-runtime/runtime"
 
-import {app} from "electron"
+import {app, autoUpdater, dialog} from "electron"
 
 import {handleSquirrelEvent} from "./squirrel"
 import {installExtensions} from "./extensions"
 import tron from "./tron"
 import path from "path"
 import {ZQD} from "../zqd/zqd"
+import electronIsDev from "./isDev"
+
+function setupAutoUpdater() {
+  const feedURL = path.join(
+    "https://update.electronjs.org/brimsec/brim",
+    process.platform,
+    app.getVersion()
+  )
+  autoUpdater.setFeedURL(feedURL)
+
+  autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
+    const dialogOpts = {
+      type: "info",
+      buttons: ["Restart", "Later"],
+      title: "Application Update",
+      // releaseNotes are not available for windows, so use name instead
+      message: process.platform === "win32" ? releaseNotes : releaseName,
+      detail:
+        "A new version of Brim has been downloaded. Restart the application to apply the update."
+    }
+
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    })
+  })
+
+  autoUpdater.on("error", (err) => {
+    console.error("There was a problem updating the application: " + err)
+  })
+
+  // check for updates immediately on startup
+  autoUpdater.checkForUpdates()
+
+  // then check for updates every 10 minutes
+  setInterval(() => {
+    autoUpdater.checkForUpdates()
+  }, 10 * 60 * 1000)
+}
 
 async function main() {
   if (handleSquirrelEvent(app)) return
@@ -33,6 +71,15 @@ async function main() {
   zqdMainHandler(zqd)
   windowsMainHandler(winMan)
   globalStoreMainHandler(store, winMan)
+
+  // autoUpdater should not run in dev, and will fail if the code has not been signed
+  if (!electronIsDev) {
+    try {
+      setupAutoUpdater()
+    } catch (err) {
+      console.error("Failed to initiate autoUpdater: " + err)
+    }
+  }
 
   app.on("ready", () => {
     installExtensions()
