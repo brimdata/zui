@@ -38,6 +38,7 @@ export default {
       })
       .catch((error) => {
         dispatch(Packets.error(log.getString("uid"), error))
+        throw error
       })
       .finally(() => {
         setTimeout(() => dispatch(View.hideDownloads()), 5000)
