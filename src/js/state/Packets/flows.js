@@ -18,6 +18,8 @@ export default {
     const state = getState()
     const space = Tab.spaceName(state)
     const destDir = downloadsDir()
+
+    console.log("DEBUG: ", space, destDir, log.getFields())
     return boom.packets
       .get({
         ts_sec: log.getSec("ts"),
