@@ -69,33 +69,18 @@ export default function windowManager() {
     },
 
     openWindow(name: WindowName, winParams: $Shape<WindowParams> = {}) {
-      let manager = this
       let params = defaultWindowParams(winParams)
       let id = params.id
 
       let ref = tron
         .window(name, params)
         .on("focus", () => {
-          if (!isQuitting) {
-            windows[id].lastFocused = new Date().getTime()
-            menu.setMenu(name, manager)
-          }
-        })
-        .on("close", (e) => {
-          e.preventDefault()
-          e.sender.webContents.send("close")
+          if (!isQuitting) windows[id].lastFocused = new Date().getTime()
         })
         .on("closed", () => {
-          console.log(
-            "WindowManager: closed window",
-            id,
-            "quitting:",
-            isQuitting
-          )
-          if (!isQuitting) {
-            delete windows[id]
-          }
+          if (!isQuitting) delete windows[id]
         })
+
       windows[id] = {ref, name, lastFocused: new Date().getTime()}
     },
 

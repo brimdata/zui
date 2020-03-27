@@ -4,7 +4,7 @@ import type {$WindowManager} from "../tron/windowManager"
 import config from "../config"
 import lib from "../../lib"
 
-export default function searchAppMenu(send: Function, manager: $WindowManager) {
+export default function appMenu(send: Function, manager: $WindowManager) {
   let template = [
     {
       label: "File",
@@ -120,9 +120,9 @@ export default function searchAppMenu(send: Function, manager: $WindowManager) {
       label: "Brim",
       submenu: [
         {
-          label: "About",
+          label: "About Brim",
           click() {
-            send("showAbout")
+            manager.openAbout()
           }
         },
         {type: "separator"},

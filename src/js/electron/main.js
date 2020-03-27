@@ -3,6 +3,7 @@
 // $FlowFixMe
 import createGlobalStore from "../state/createGlobalStore"
 import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
+import menu from "./menu"
 import windowsMainHandler from "./ipc/windows/mainHandler"
 import zqdMainHandler from "./ipc/zqd/mainHandler"
 
@@ -21,7 +22,6 @@ async function main() {
   if (handleSquirrelEvent(app)) return
   let session = tron.session()
   let winMan = tron.windowManager()
-
   let sessionState = session.load()
   let store = createGlobalStore(
     sessionState ? sessionState.globalState : undefined
@@ -30,6 +30,7 @@ async function main() {
   const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
   const zqd = new ZQD(spaceDir)
 
+  menu.setMenu(winMan)
   zqdMainHandler(zqd)
   windowsMainHandler(winMan)
   globalStoreMainHandler(store, winMan)

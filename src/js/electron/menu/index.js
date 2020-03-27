@@ -1,27 +1,18 @@
 /* @flow */
 import {BrowserWindow, Menu} from "electron"
 
-import type {$WindowManager, WindowName} from "../tron/windowManager"
+import type {$WindowManager} from "../tron/windowManager"
 import actions from "./actions"
+import appMenu from "./appMenu"
 import fieldContextMenu from "./fieldContextMenu"
-import searchAppMenu from "./searchAppMenu"
 
 export type $MenuItem =
   | {click: Function, label: string, enabled: boolean}
   | {type: "separator"}
 export type $Menu = $MenuItem[]
 
-function getBuilder(name) {
-  switch (name) {
-    case "search":
-      return searchAppMenu
-    default:
-      return null
-  }
-}
-
-function setMenu(name: WindowName, manager: $WindowManager) {
-  let builder = getBuilder(name)
+function setMenu(manager: $WindowManager) {
+  let builder = appMenu
 
   function send(...args) {
     let win = BrowserWindow.getFocusedWindow()
@@ -38,6 +29,5 @@ export default {
   setMenu,
   actions,
   fieldContextMenu,
-  searchAppMenu,
   separator: () => ({type: "separator"})
 }
