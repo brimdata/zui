@@ -44,7 +44,7 @@ async function main() {
   })
 
   app.on("quit", () => {
-    session.save(winMan.getWindows(), store.getState())
+    session.save(winMan.getState(), store.getState())
     zqd.close()
   })
 

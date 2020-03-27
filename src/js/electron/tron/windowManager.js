@@ -44,8 +44,13 @@ export default function windowManager() {
       else return isQuitting
     },
 
-    getWindows(): WindowsState {
+    getState(): WindowsState {
       return windows
+    },
+
+    getWindows(): WindowState[] {
+      // $FlowFixMe
+      return Object.values(windows)
     },
 
     count(): number {
