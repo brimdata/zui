@@ -33,11 +33,11 @@ export default (
             method,
             auth: `${username}:${password}`
           })
-          .on("response", (resp) => {
+          .on("response", async (resp) => {
             if (resp.statusCode === 200) {
               resp.pipe(file)
             } else {
-              reject(resp.statusMessage)
+              reject(await string(resp))
             }
           })
           .on("error", (e) => {
@@ -47,3 +47,12 @@ export default (
       })
     })
   })
+
+async function string(stream) {
+  stream.setEncoding("utf-8")
+  let data = ""
+  for await (let chunk of stream) {
+    data += chunk
+  }
+  return data
+}
