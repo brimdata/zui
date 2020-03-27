@@ -7,10 +7,9 @@ import type {SessionState} from "./session"
 import type {WindowParams} from "./window"
 import {isBoolean} from "../../lib/is"
 import brim from "../../brim"
-import menu from "../menu"
 import tron from "./"
 
-export type WindowName = "search"
+export type WindowName = "search" | "about"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {[string]: WindowState}
@@ -82,6 +81,15 @@ export default function windowManager() {
         })
 
       windows[id] = {ref, name, lastFocused: new Date().getTime()}
+    },
+
+    openAbout() {
+      let about = this.getWindows().find((w) => w.name === "about")
+      if (about) {
+        about.ref.focus()
+      } else {
+        this.openWindow("about")
+      }
     },
 
     closeWindow() {
