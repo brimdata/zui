@@ -2,7 +2,7 @@
 
 * Ensure bundled zeek can run on MacOS version 10.10 and beyond. (#513)
 * Update zq to v0.8.0. (#516)
-* Fix an issue where a pcap slice failed and the downloading notification never dismissed. (#514)
+* Fix an issue where a pcap slice error was not being caught. (#514)
 
 ## v0.5.3
 
