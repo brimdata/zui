@@ -15,7 +15,7 @@
     "itest": "jest --config=itest/config.json --runInBand --verbose",
     "electron": "electron .",
     "build": "npm-run-all -p build:*",
-    "watch": "npm-run-all -p watch:*",
+    "watch": "npm-run-all -s clean build:* watch:*",
     "build:js": "babel src/js -d dist/js --verbose",
     "build:css": "node-sass-chokidar src/css --output dist/css",
     "build:static": "cpx \"src/static/**\" dist/static",
