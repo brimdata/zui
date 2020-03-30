@@ -44,11 +44,19 @@ jobs:
         APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
     - name: run gatekeeper assessment on notarized package
       run: spctl --assess --type execute --verbose --ignore-cache --no-cache dist/packages/Brim-darwin-x64/Brim.app
-    - name: upload release assets
+    - name: upload release dmg
       uses: svenstaro/upload-release-action@1.1.0
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}
-        file: dist/installers/*
-        file_glob: true
+        file: dist/installers/Brim.dmg
+        asset_name: Brim.dmg
+        overwrite: true
+    - name: upload release zip
+      uses: svenstaro/upload-release-action@1.1.0
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: dist/installers/Brim-darwin-autoupdater.zip
+        asset_name: Brim-darwin-autoupdater.zip
         overwrite: true
