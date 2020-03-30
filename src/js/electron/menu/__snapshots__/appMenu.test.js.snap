@@ -238,6 +238,13 @@ Array [
         "click": [Function],
         "label": "Settings",
       },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "click": [Function],
+        "label": "Exit",
+      },
     ],
   },
   Object {
