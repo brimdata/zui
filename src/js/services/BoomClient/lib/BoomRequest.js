@@ -46,11 +46,12 @@ export default class BoomRequest {
   }
 
   emitError(error: Error | string) {
+    this.status = "error"
     if (typeof error === "string") {
       this.emit("error", error)
+      return
     }
 
-    this.status = "error"
     if (this.isAbortError(error)) {
       if (this.emitAbort) this.emit("abort", error)
     } else {
