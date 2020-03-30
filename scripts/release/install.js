@@ -3,26 +3,40 @@ const fs = require("fs")
 const os = require("os")
 const installer = require("electron-winstaller")
 const createDMG = require("electron-installer-dmg")
+const createZip = require("electron-installer-zip")
 const path = require("path")
 
 const out = "./dist/installers"
+const appPath = "dist/packages/Brim-darwin-x64/Brim.app"
 
 module.exports = {
-  darwin: function() {
+  darwin: async function() {
     console.log("Building installer for darwin")
-    createDMG(
+    await createDMG(
       {
         overwrite: true,
-        appPath: "dist/packages/Brim-darwin-x64/Brim.app",
+        appPath,
         name: "Brim",
         out
       },
       (err) => {
-        if (!err) {
-          console.log("Built installer for darwin in " + out)
-        } else {
-          console.log("Error builing darwin installer " + err)
+        if (err) {
+          throw new Error("Error builing darwin installer " + err)
         }
+        console.log("Built installer for darwin in " + out)
+      }
+    )
+
+    await createZip(
+      {
+        dir: appPath,
+        out: path.join(out, "Brim-darwin-autoupdater.zip")
+      },
+      (err) => {
+        if (err) {
+          throw new Error("Error zipping darwin package: " + err)
+        }
+        console.log("Zip for darwin package written in " + out)
       }
     )
   },
