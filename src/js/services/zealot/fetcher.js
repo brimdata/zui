@@ -8,7 +8,7 @@ export type FetchGenerator = AsyncGenerator<Object, void, void>
 export type FetchPromise = Promise<Object>
 export type FetchArgs = {method: string, path: string, body?: string}
 
-function parseResponse(resp) {
+export function parseResponse(resp: Response): Promise<*> {
   switch (resp.headers.get("Content-Type")) {
     case "application/json":
       try {

@@ -2,6 +2,7 @@
 
 import BoomRequest from "../lib/BoomRequest"
 import NdJsonDecoder from "../lib/NdJsonDecoder"
+import {parseResponse} from "../../zealot/fetcher"
 
 export function send(req: BoomRequest) {
   let {url, method, body, headers} = req
@@ -10,10 +11,7 @@ export function send(req: BoomRequest) {
   fetch(url, {method, body, headers, signal: control.signal})
     .then((resp) => {
       if (!resp.ok) {
-        resp
-          .json()
-          .then((j) => req.emitError(j))
-          .catch((e) => req.emitError(e))
+        parseResponse(resp).then((e) => req.emitError(e))
       } else if (req.streaming) {
         const text = new TextDecoder()
         const ndJson = new NdJsonDecoder((payload) => req.emitStream(payload))
@@ -37,10 +35,9 @@ export function send(req: BoomRequest) {
         }
         pull()
       } else {
-        resp
-          .json()
-          .then((data) => req.emitDone(data))
-          .catch((e) => req.emitError(e))
+        parseResponse(resp).then((data) => {
+          typeof data === "string" ? req.emitError(data) : req.emitDone(data)
+        })
       }
     })
     .catch((error) => req.emitError(error))
