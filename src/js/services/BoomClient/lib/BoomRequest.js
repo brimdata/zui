@@ -45,7 +45,11 @@ export default class BoomRequest {
     this.emit("stream", payload)
   }
 
-  emitError(error: Error) {
+  emitError(error: Error | string) {
+    if (typeof error === "string") {
+      this.emit("error", error)
+    }
+
     this.status = "error"
     if (this.isAbortError(error)) {
       if (this.emitAbort) this.emit("abort", error)
