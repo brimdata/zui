@@ -35,9 +35,9 @@ export function send(req: BoomRequest) {
         }
         pull()
       } else {
-        parseResponse(resp)
-          .then((data) => req.emitDone(data))
-          .catch((e) => req.emitError(e))
+        parseResponse(resp).then((data) => {
+          typeof data === "string" ? req.emitError(data) : req.emitDone(data)
+        })
       }
     })
     .catch((error) => req.emitError(error))
