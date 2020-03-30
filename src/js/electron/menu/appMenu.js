@@ -32,6 +32,11 @@ export default function appMenu(
     }
   }
 
+  const closeWindow = {
+    label: "Close Window",
+    click: () => manager.closeWindow()
+  }
+
   const preferences = {
     label: platform === "darwin" ? "Preferences" : "Settings",
     click() {
@@ -67,7 +72,7 @@ export default function appMenu(
   }
 
   function fileSubmenu() {
-    let submenu = [newWindow]
+    let submenu = [newWindow, __, closeWindow]
     if (!mac) {
       submenu.push(__, preferences, __, exit)
     }
