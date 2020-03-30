@@ -7,6 +7,7 @@ import {downloadsDir} from "../../src/js/lib/System"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
 import {workspaceLogfile} from "../lib/log"
+import {isCI, repoDir} from "../lib/env"
 
 const electronPath = require("electron")
 
@@ -17,11 +18,11 @@ const appStep = async (stepMessage, f) => {
   return result
 }
 
-export const newAppInstance = (name: string, idx: number) =>
+export const newAppInstance = (name: string, idx: number): Application => {
+  const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
+
   // https://github.com/electron-userland/spectron#new-applicationoptions
-  new Application({
-    path: electronPath,
-    args: [path.join(__dirname, "..", "..")],
+  let appArgs = {
     // Some version of Spectron choose a random debugging port in the 9000-9999
     // range. Since zqd uses 9867, set this to 9999.
     chromeDriverArgs: ["remote-debugging-port=9999"],
@@ -47,7 +48,17 @@ export const newAppInstance = (name: string, idx: number) =>
     webdriverOptions: {
       deprecationWarnings: false
     }
-  })
+  }
+
+  if (isCI() && process.platform === "darwin") {
+    appArgs = {...appArgs, path: macInstallPath}
+    LOG.debug("Chose installed MacOS app location")
+  } else {
+    appArgs = {...appArgs, path: electronPath, args: [repoDir()]}
+    LOG.debug("Chose working copy app location")
+  }
+  return new Application(appArgs)
+}
 
 export const startApp = async (app: Application) => {
   await appStep("starting app", () => app.start())
