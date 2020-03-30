@@ -62,6 +62,7 @@ function aboutWindow() {
       nodeIntegration: true
     }
   })
+  win.setMenu(null)
   win.center()
   win.loadFile("about.html")
   return win
