@@ -4,7 +4,7 @@ const fs = require("fs-extra")
 const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
-const {unzip} = require("cross-unzip")
+const extract = require("extract-zip")
 const {execSync} = require("child_process")
 const brimPackage = require("../../package.json")
 
@@ -45,7 +45,7 @@ async function download(url, targetfile) {
 async function unzipTo(zipfile, dir) {
   await fs.mkdirp(dir)
   return new Promise((resolve, reject) => {
-    unzip(zipfile, dir, (err) => {
+    extract(zipfile, { dir: dir} , (err) => {
       if (err) {
         reject(err)
       } else {
