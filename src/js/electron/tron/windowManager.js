@@ -7,10 +7,9 @@ import type {SessionState} from "./session"
 import type {WindowParams} from "./window"
 import {isBoolean} from "../../lib/is"
 import brim from "../../brim"
-import menu from "../menu"
 import tron from "./"
 
-export type WindowName = "search"
+export type WindowName = "search" | "about"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {[string]: WindowState}
@@ -44,8 +43,13 @@ export default function windowManager() {
       else return isQuitting
     },
 
-    getWindows(): WindowsState {
+    getState(): WindowsState {
       return windows
+    },
+
+    getWindows(): WindowState[] {
+      // $FlowFixMe
+      return Object.values(windows)
     },
 
     count(): number {
@@ -64,34 +68,28 @@ export default function windowManager() {
     },
 
     openWindow(name: WindowName, winParams: $Shape<WindowParams> = {}) {
-      let manager = this
       let params = defaultWindowParams(winParams)
       let id = params.id
 
       let ref = tron
         .window(name, params)
         .on("focus", () => {
-          if (!isQuitting) {
-            windows[id].lastFocused = new Date().getTime()
-            menu.setMenu(name, manager)
-          }
-        })
-        .on("close", (e) => {
-          e.preventDefault()
-          e.sender.webContents.send("close")
+          if (!isQuitting) windows[id].lastFocused = new Date().getTime()
         })
         .on("closed", () => {
-          console.log(
-            "WindowManager: closed window",
-            id,
-            "quitting:",
-            isQuitting
-          )
-          if (!isQuitting) {
-            delete windows[id]
-          }
+          if (!isQuitting) delete windows[id]
         })
+
       windows[id] = {ref, name, lastFocused: new Date().getTime()}
+    },
+
+    openAbout() {
+      let about = this.getWindows().find((w) => w.name === "about")
+      if (about) {
+        about.ref.focus()
+      } else {
+        this.openWindow("about")
+      }
     },
 
     closeWindow() {

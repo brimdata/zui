@@ -11,6 +11,17 @@ export type WindowParams = {
 }
 
 export default function window(name: WindowName, params: WindowParams) {
+  switch (name) {
+    case "search":
+      return searchWindow(params)
+    case "about":
+      return aboutWindow()
+    default:
+      throw new Error(`Unknown window name: ${name}`)
+  }
+}
+
+function searchWindow(params) {
   let {size, position, query, id} = params
   let win = new BrowserWindow({
     titleBarStyle: "hidden",
@@ -21,6 +32,10 @@ export default function window(name: WindowName, params: WindowParams) {
       nodeIntegration: true,
       experimentalFeatures: true
     }
+  }).on("close", (e) => {
+    // Close handled by the search renderer
+    e.preventDefault()
+    e.sender.webContents.send("close")
   })
 
   if (size) {
@@ -31,7 +46,24 @@ export default function window(name: WindowName, params: WindowParams) {
   } else {
     win.center()
   }
-  win.loadFile(`${name}.html`, {query: {...query, id}})
+  win.loadFile("search.html", {query: {...query, id}})
 
+  return win
+}
+
+function aboutWindow() {
+  let win = new BrowserWindow({
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+    width: 360,
+    height: 360,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+  win.setMenu(null)
+  win.center()
+  win.loadFile("about.html")
   return win
 }

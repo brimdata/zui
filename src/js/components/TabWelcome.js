@@ -2,7 +2,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect} from "react"
 
-import LogoType from "../icons/LogoType"
+import BrimTextLogo from "./BrimTextLogo"
 import PcapFileInput from "./PcapFileInput"
 import SavedSpacesList from "./SavedSpacesList"
 import SpaceDeletedNotice from "./SpaceDeletedNotice"
@@ -30,9 +30,7 @@ export default function TabWelcome() {
     <div className="tab-welcome">
       <SpaceDeletedNotice />
       <section>
-        <div className="logo">
-          <LogoType />
-        </div>
+        <BrimTextLogo />
       </section>
       <div className="input-methods">
         {spacesPresent && (
