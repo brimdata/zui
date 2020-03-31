@@ -26,6 +26,16 @@ test("add tab with data and activate", () => {
   expect(tab.search.spanArgs).toEqual(["now", "now-1m"])
 })
 
+test("cannot activate tab that does not exist in data", () => {
+  let state = store.dispatchAll([
+    Tabs.add("1"),
+    Tabs.activate("1"),
+    Tabs.activate("does-not-exist")
+  ])
+  let tab = Tabs.getActiveTab(state)
+  expect(tab.id).toBe("1")
+})
+
 test("remove tab", () => {
   let state = store.dispatchAll([Tabs.add("1"), Tabs.remove("1")])
   expect(Tabs.getCount(state)).toBe(1)
