@@ -55,6 +55,14 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - run: npm install --no-audit
     - run: npm run build
+    - name: Build and Install MacOS DMG
+      if: runner.os == 'macOS'
+      run: |
+        set -x
+        node scripts/release --darwin
+        hdiutil attach dist/installers/Brim.dmg
+        cp -R /Volumes/Brim/Brim.app /Applications
+        hdiutil detach /Volumes/Brim
     - name: Integration Tests
       uses: GabrielBB/xvfb-action@v1.0
       with:
