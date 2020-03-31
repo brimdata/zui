@@ -21,12 +21,13 @@ export default class Packets extends SubClient {
       const dest = `${args.destDir}/packets-${args.ts_sec +
         args.ts_ns / 1e9}.pcap`
       const method = "GET"
-      const path = `/space/${args.space}/packet?${params.toString()}`
+      const path = `/space/${encodeURIComponent(
+        args.space
+      )}/packet?${params.toString()}`
 
       const {host, port, ...rest} = this.base.options
 
       if (!host || !port) throw "Missing host/port"
-
       return download({...rest, host, port, path, method}, dest)
     } catch (e) {
       return Promise.reject(e)
