@@ -48,6 +48,17 @@ Array [
         "click": [Function],
         "label": "New Window",
       },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "click": [Function],
+        "label": "Close Tab",
+      },
+      Object {
+        "click": [Function],
+        "label": "Close Window",
+      },
     ],
   },
   Object {
@@ -237,6 +248,21 @@ Array [
       Object {
         "click": [Function],
         "label": "Settings",
+      },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "click": [Function],
+        "label": "Close Tab",
+      },
+      Object {
+        "click": [Function],
+        "label": "Close Window",
+      },
+      Object {
+        "click": [Function],
+        "label": "Exit",
       },
     ],
   },

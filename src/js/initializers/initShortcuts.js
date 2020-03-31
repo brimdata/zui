@@ -5,6 +5,7 @@ import type {Store} from "../state/types"
 import {clearState} from "./initPersistance"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
+import Tabs from "../state/Tabs"
 import View from "../state/View"
 
 export default (store: Store) => {
@@ -52,5 +53,9 @@ export default (store: Store) => {
 
   ipcRenderer.on("forward", () => {
     store.dispatch(SearchBar.goForward())
+  })
+
+  ipcRenderer.on("closeTab", () => {
+    store.dispatch(Tabs.closeActive())
   })
 }

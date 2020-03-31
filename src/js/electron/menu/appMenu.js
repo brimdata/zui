@@ -1,6 +1,6 @@
 /* @noflow */
 
-import {shell} from "electron"
+import {shell, app} from "electron"
 
 import type {$WindowManager} from "../tron/windowManager"
 import config from "../config"
@@ -12,6 +12,7 @@ export default function appMenu(
   platform: string = process.platform
 ) {
   const mac = platform === "darwin"
+  const __ = {type: "separator"}
 
   const newWindow = {
     label: "New Window",
@@ -19,11 +20,26 @@ export default function appMenu(
     click: () => manager.openWindow("search", {})
   }
 
+  const exit = {
+    label: "Exit",
+    click: () => app.quit()
+  }
+
   const aboutBrim = {
     label: "About Brim",
     click() {
       manager.openAbout()
     }
+  }
+
+  const closeWindow = {
+    label: "Close Window",
+    click: () => manager.closeWindow()
+  }
+
+  const closeTab = {
+    label: "Close Tab",
+    click: () => send("closeTab")
   }
 
   const preferences = {
@@ -48,31 +64,31 @@ export default function appMenu(
     label: "Brim",
     submenu: [
       aboutBrim,
-      {type: "separator"},
+      __,
       preferences,
       {role: "services", submenu: []},
-      {type: "separator"},
+      __,
       {role: "hide"},
       {role: "hideothers"},
       {role: "unhide"},
-      {type: "separator"},
+      __,
       {role: "quit"}
     ]
   }
 
   function fileSubmenu() {
-    let submenu = [newWindow]
-    if (!mac) {
-      submenu.push({type: "separator"}, preferences)
+    if (mac) {
+      return [newWindow, __, closeTab, closeWindow]
+    } else {
+      return [newWindow, __, preferences, __, closeTab, closeWindow, exit]
     }
-    return submenu
   }
 
   function editSubmenu() {
     let submenu = [
       {role: "undo"},
       {role: "redo"},
-      {type: "separator"},
+      __,
       {role: "cut"},
       {role: "copy"},
       {role: "paste"},
@@ -81,13 +97,10 @@ export default function appMenu(
       {role: "selectall"}
     ]
     if (mac) {
-      submenu.push(
-        {type: "separator"},
-        {
-          label: "Speech",
-          submenu: [{role: "startspeaking"}, {role: "stopspeaking"}]
-        }
-      )
+      submenu.push(__, {
+        label: "Speech",
+        submenu: [{role: "startspeaking"}, {role: "stopspeaking"}]
+      })
     }
     return submenu
   }
@@ -95,13 +108,9 @@ export default function appMenu(
   function windowSubmenu() {
     let submenu = [{role: "minimize"}, resetState]
     if (mac) {
-      submenu.push(
-        {role: "close"},
-        {role: "minimize"},
-        {role: "zoom"},
-        {type: "separator"},
-        {role: "front"}
-      )
+      submenu.push({role: "close"}, {role: "minimize"}, {role: "zoom"}, __, {
+        role: "front"
+      })
     }
     return submenu
   }
@@ -123,7 +132,7 @@ export default function appMenu(
         accelerator: "CmdOrCtrl+L",
         click: () => send("focusSearchBar")
       },
-      {type: "separator"},
+      __,
       {
         label: "Back",
         accelerator: "CmdOrCtrl+Left",
@@ -142,11 +151,11 @@ export default function appMenu(
       {role: "reload"},
       {role: "forcereload"},
       {role: "toggledevtools"},
-      {type: "separator"},
+      __,
       {role: "resetzoom"},
       {role: "zoomin"},
       {role: "zoomout"},
-      {type: "separator"},
+      __,
       {
         label: "Toggle Search History",
         accelerator: "CmdOrCtrl+[",
@@ -157,7 +166,7 @@ export default function appMenu(
         accelerator: "CmdOrCtrl+]",
         click: () => send("toggleRightSidebar")
       },
-      {type: "separator"},
+      __,
       {role: "togglefullscreen"}
     ]
   }
@@ -187,7 +196,7 @@ export default function appMenu(
     ]
 
     if (!mac) {
-      submenu.push({type: "separator"}, aboutBrim)
+      submenu.push(__, aboutBrim)
     }
     return submenu
   }
