@@ -56,6 +56,8 @@
   color: $white-1;
   user-select: none;
   transition: background 150ms;
+  display: flex;
+  flex-direction: row;
 
   .program {
     display: flex;
@@ -89,5 +91,12 @@
       margin-right: $space-xxs;
       font-size: 9px;
     }
+  }
+
+  svg {
+    fill: $yellow;
+    height: 16px;
+    width: 16px;
+    margin-right: 12px;
   }
 }
