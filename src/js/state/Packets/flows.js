@@ -1,6 +1,6 @@
 /* @flow */
+import {remote} from "electron"
 
-import {downloadsDir} from "../../lib/System"
 import BoomClient from "../../services/BoomClient"
 import Log from "../../models/Log"
 import Packets from "../Packets"
@@ -17,7 +17,7 @@ export default {
     dispatch(View.showDownloads())
     const state = getState()
     const space = Tab.spaceName(state)
-    const destDir = downloadsDir()
+    const destDir = remote.app.getPath("temp")
     return boom.packets
       .get({
         ts_sec: log.getSec("ts"),

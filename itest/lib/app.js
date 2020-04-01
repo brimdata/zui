@@ -3,11 +3,10 @@ import {Application} from "spectron"
 import path from "path"
 
 import {LOG} from "./log"
-import {downloadsDir} from "../../src/js/lib/System"
+import {isCI, repoDir} from "../lib/env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
 import {workspaceLogfile} from "../lib/log"
-import {isCI, repoDir} from "../lib/env"
 
 const electronPath = require("electron")
 
@@ -275,8 +274,6 @@ export const waitUntilDownloadFinished = async (app: Application) =>
       (text) => text == "Download Complete" || text.includes("Download error")
     )
   })
-
-export const pcapsDir = () => downloadsDir()
 
 export const toggleOptimizations = async (app: Application) => {
   // Stateless toggle of optimizations. If you use this twice after reset
