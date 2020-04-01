@@ -1,7 +1,7 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {useState} from "react"
 import classNames from "classnames"
 
 import type {Finding} from "../../state/Investigation/types"
@@ -16,6 +16,8 @@ import Warning from "../icons/warning-sm.svg"
 import Spaces from "../../state/Spaces/selectors"
 import {includes} from "lodash"
 import Tab from "../../state/Tab"
+import Tooltip from "../Tooltip"
+import {getTooltipStyle} from "../../lib/MenuStyler"
 
 type Props = {finding: Finding}
 
@@ -35,17 +37,40 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     globalDispatch(Investigation.deleteFindingByTs(finding.ts))
   }
 
-  function spaceExists() {
+  function renderWarning() {
+    let [hover, setHover] = useState(false)
+    let [tooltipStyle, setTooltipStyle] = useState({})
+    let {name, type} = field
+
+    function handleMouseEnter(e) {
+      setHover(true)
+      setTooltipStyle(getTooltipStyle(e.currentTarget))
+    }
+
+    function handleMouseLeave() {
+      setHover(false)
+    }
+
     const clusterID = useSelector(Tab.clusterId)
     const spaces = useSelector(Spaces.names(clusterID))
-    return includes(spaces, finding.search.space)
+    const body = (
+      <div>
+        <Warning />
+        <Tooltip style={tooltipStyle}>
+          <span className="field-name">{name}</span>
+        </Tooltip>
+      </div>
+    )
+
+    if (includes(spaces, finding.search.space)) return body
+    return null
   }
 
   return (
     <div className={classNames("finding-card-wrapper")}>
       <div className="finding-card" onClick={onClick}>
         <FindingProgram search={finding.search} />
-        {!spaceExists() ? <Warning /> : null}
+        {renderWarning()}
       </div>
       <RemoveButton className="gutter-button-style" onClick={onRemove} />
     </div>
