@@ -11,6 +11,7 @@ import MouseoverWatch from "../lib/MouseoverWatch"
 import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
 import lib from "../lib"
+import Layout from "../state/Layout/actions"
 
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}
@@ -33,7 +34,7 @@ export default class RightPaneExpander extends React.Component<Props, State> {
   }
 
   onClick = () => {
-    this.props.dispatch(View.showRightSidebar())
+    this.props.dispatch(Layout.showRightSidebar())
   }
 
   render() {

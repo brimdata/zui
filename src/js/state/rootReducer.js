@@ -28,7 +28,6 @@ export default combineReducers<*, *>({
   investigation: Investigation.reducer,
   view: View.reducer,
   spaces: Spaces.reducer,
-  logDetails: LogDetails.reducer,
   boomd: Boomd.reducer,
   packets: Packets.reducer,
   version: () => VERSION

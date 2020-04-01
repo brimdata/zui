@@ -8,6 +8,8 @@ import historyReducer from "../History/reducer"
 import searchBarReducer from "../SearchBar/reducer"
 import searchReducer from "../Search/reducer"
 import viewerReducer from "../Viewer/reducer"
+import logDetailsReducer from "../LogDetails/reducer"
+import layoutReducer from "../Layout/reducer"
 
 export default combineReducers<*, *>({
   id: (state: string = brim.randomHash(), _) => state,
@@ -16,5 +18,7 @@ export default combineReducers<*, *>({
   viewer: viewerReducer,
   chart: chartReducer,
   columns: columnsReducer,
-  history: historyReducer
+  history: historyReducer,
+  logDetails: logDetailsReducer,
+  layout: layoutReducer
 })

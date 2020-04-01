@@ -26,6 +26,7 @@ import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
+import Layout from "../../state/Layout/actions"
 
 type StateProps = {|
   logs: Log[],
@@ -77,7 +78,7 @@ export default function ResultsTable(props: Props) {
         onClick={() => props.dispatch(viewLogDetail(logs[index]))}
         onDoubleClick={() => {
           props.dispatch(viewLogDetail(logs[index]))
-          props.dispatch(View.showRightSidebar())
+          props.dispatch(Layout.showRightSidebar())
         }}
         rightClick={menu.fieldContextMenu(
           props.program,

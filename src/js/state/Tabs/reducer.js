@@ -84,7 +84,9 @@ function tabAction({type}) {
     type.startsWith("VIEWER_") ||
     type.startsWith("CHART_") ||
     type.startsWith("COLUMNS_") ||
-    type.startsWith("HISTORY_")
+    type.startsWith("HISTORY_") ||
+    type.startsWith("LOG_DETAIL_") ||
+    type.startsWith("LAYOUT_")
   )
 }
 

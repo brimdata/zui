@@ -20,6 +20,7 @@ import submitSearch from "../../flows/submitSearch"
 import tab from "../../state/Tab"
 import virusTotal from "../../services/virusTotal"
 import {downloadPcap} from "../../flows/downloadPcap"
+import Layout from "../../state/Layout/actions"
 
 function buildActions() {
   return {
@@ -36,7 +37,7 @@ function buildActions() {
       label: "Open details",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(View.showRightSidebar())
+        dispatch(Layout.showRightSidebar())
         dispatch(viewLogDetail(log))
       }
     }),

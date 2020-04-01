@@ -8,11 +8,12 @@ import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
 import View from "../state/View"
 import lib from "../lib"
+import Layout from "../state/Layout/selectors"
 
 export default function RightPaneCollapser() {
   let dispatch = useDispatch()
   let [show, setShow] = useState(false)
-  let width = useSelector(View.getRightSidebarWidth)
+  let width = useSelector(Layout.getRightSidebarWidth)
 
   useEffect(() => {
     let watcher = new MouseoverWatch()
