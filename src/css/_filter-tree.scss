@@ -4,6 +4,18 @@ $filter-tree-line-color: $gray-5;
   height: 100%;
   color: $white-1;
 
+  svg {
+    fill: $yellow;
+    height: 16px;
+    width: 16px;
+    margin-right: 12px;
+  }
+
+  .filter-tree-parent {
+    display: flex;
+    flex-direction: row;
+  }
+
   .remove-button {
     position: absolute;
     top: 5px;

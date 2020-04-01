@@ -1,6 +1,6 @@
 /* @flow */
 
-import {isEqual} from "lodash"
+import {includes, isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
@@ -13,12 +13,20 @@ import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
 import SearchBar from "../state/SearchBar"
 import submitSearch from "../flows/submitSearch"
+import Tab from "../state/Tab"
+import Spaces from "../state/Spaces/selectors"
+import get from "lodash/get"
+import Warning from "./icons/warning-sm.svg"
+import ReactTooltip from "react-tooltip"
+import Search from "../state/Search"
 
 export default function FilterTree() {
   let dispatch = useDispatch()
   let investigation = useSelector(Investigation.getInvestigation)
   let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
+  const clusterID = useSelector(Tab.clusterId)
+  const spaces = useSelector(Spaces.names(clusterID))
 
   function renderNode(node: Node, i: number) {
     function onNodeClick() {
@@ -31,6 +39,8 @@ export default function FilterTree() {
           editing: null
         })
       )
+      const nodeSpace = get(node, ["data", "finding", "search", "space"], "")
+      dispatch(Search.setSpace(nodeSpace))
       dispatch(submitSearch(false))
     }
 
@@ -45,10 +55,26 @@ export default function FilterTree() {
       active: nodeIsActive(pinnedFilters, previous, node)
     })
 
+    function renderWarning() {
+      const findingSpace = get(node, ["data", "finding", "search", "space"], "")
+      const tip = `'${findingSpace}' space no longer exists`
+
+      const body = (
+        <div data-tip={tip} data-effect="solid" data-place="right">
+          <Warning />
+          <ReactTooltip />
+        </div>
+      )
+
+      if (!includes(spaces, findingSpace)) return body
+      return null
+    }
+
     return (
       <div key={i} className={className}>
         <div className="filter-tree-parent" onClick={onNodeClick}>
           <FilterNode filter={node.data.filter} />
+          {renderWarning()}
           <RemoveButton
             className="gutter-button-style"
             onClick={onNodeRemove}
