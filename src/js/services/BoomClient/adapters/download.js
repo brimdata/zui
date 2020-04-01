@@ -25,25 +25,29 @@ export default (
       file.on("error", reject)
       file.on("finish", () => resolve(dest))
       file.on("open", () => {
-        http
-          .request({
-            hostname,
-            port,
-            path,
-            method,
-            auth: `${username}:${password}`
-          })
-          .on("response", async (resp) => {
-            if (resp.statusCode === 200) {
-              resp.pipe(file)
-            } else {
-              reject(await string(resp))
-            }
-          })
-          .on("error", (e) => {
-            reject(e)
-          })
-          .end()
+        try {
+          http
+            .request({
+              hostname,
+              port,
+              path,
+              method,
+              auth: `${username}:${password}`
+            })
+            .on("response", async (resp) => {
+              if (resp.statusCode === 200) {
+                resp.pipe(file)
+              } else {
+                reject(await string(resp))
+              }
+            })
+            .on("error", (e) => {
+              reject(e)
+            })
+            .end()
+        } catch (e) {
+          reject(e)
+        }
       })
     })
   })
