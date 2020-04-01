@@ -6,6 +6,7 @@ import type {SearchBarState} from "../SearchBar/types"
 import type {SearchState} from "../Search/types"
 import type {ViewerState} from "../Viewer/types"
 import type {LayoutState} from "../Layout/types"
+import type {LogDetailsState} from "../LogDetails/types"
 
 export type TabState = {
   id: string,
@@ -15,5 +16,6 @@ export type TabState = {
   chart: ChartState,
   columns: ColumnsState,
   history: HistoryState,
-  layout: LayoutState
+  layout: LayoutState,
+  logDetails: LogDetailsState
 }

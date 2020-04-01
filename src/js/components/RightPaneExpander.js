@@ -8,10 +8,9 @@ import ReactDOM from "react-dom"
 import type {Dispatch} from "../state/types"
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
-import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
 import lib from "../lib"
-import Layout from "../state/Layout/actions"
+import Layout from "../state/Layout"
 
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}

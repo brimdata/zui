@@ -22,10 +22,9 @@ import Pane, {
 } from "./Pane"
 import RightPaneCollapser from "./RightPaneCollapser"
 import Tab from "../state/Tab"
-import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
 import {downloadPcap} from "../flows/downloadPcap"
-import Layout from "../state/Layout/selectors"
+import Layout from "../state/Layout"
 
 type StateProps = {|
   currentLog: Log,
@@ -48,7 +47,7 @@ export default class RightPane extends React.Component<Props, S> {
   onDrag = (e: MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
-    this.props.dispatch(View.setRightSidebarWidth(Math.min(width, max)))
+    this.props.dispatch(Layout.setRightSidebarWidth(Math.min(width, max)))
   }
 
   onPacketsClick = () => {

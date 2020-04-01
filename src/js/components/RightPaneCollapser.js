@@ -6,9 +6,8 @@ import classNames from "classnames"
 
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
-import View from "../state/View"
 import lib from "../lib"
-import Layout from "../state/Layout/selectors"
+import Layout from "../state/Layout"
 
 export default function RightPaneCollapser() {
   let dispatch = useDispatch()
@@ -29,7 +28,7 @@ export default function RightPaneCollapser() {
   })
 
   function onClick() {
-    dispatch(View.hideRightSidebar())
+    dispatch(Layout.hideRightSidebar())
   }
 
   return (
