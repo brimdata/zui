@@ -33,14 +33,15 @@ function writeZqdConfigFile(): string {
   const accessLogFile = join(logDir, "zqd-access.log")
 
   const data = `
-loggers:
-  - name: zqd
-    level: info
-    path: ${zqdLogFile}
-    mode: rotate
+logger:
+  type: waterfall
+  children:
   - name: http.access
     level: info
     path: ${accessLogFile}
+    mode: rotate
+  - level: info
+    path: ${zqdLogFile}
     mode: rotate
 `
 
