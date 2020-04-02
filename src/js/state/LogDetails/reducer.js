@@ -3,14 +3,14 @@
 import type {LogDetailsAction, LogDetailsState} from "./types"
 import LogDetailHistory from "../../models/LogDetailHistory"
 
-const init: LogDetailsState = {
+const init = (): LogDetailsState => ({
   logs: [],
   position: 0,
   prevPosition: -1
-}
+})
 
 export default function reducer(
-  state: LogDetailsState = init,
+  state: LogDetailsState = init(),
   action: LogDetailsAction
 ): LogDetailsState {
   let history
@@ -48,9 +48,5 @@ export default function reducer(
 }
 
 export const toHistory = ({logs, position}: LogDetailsState) => {
-  return new LogDetailHistory(logs, position)
-}
-
-export const toState = ({entries, position}: LogDetailHistory) => {
-  return {logs: entries, position}
+  return new LogDetailHistory([...logs], position)
 }
