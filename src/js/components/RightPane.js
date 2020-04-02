@@ -51,7 +51,7 @@ export default class RightPane extends React.Component<Props, S> {
   }
 
   onPacketsClick = () => {
-    this.props.dispatch(downloadPcap(this.props.currentLog, this.props.space))
+    this.props.dispatch(downloadPcap(this.props.currentLog))
   }
 
   render() {
