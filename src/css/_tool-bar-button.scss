@@ -1,0 +1,54 @@
+@mixin tool-bar-button-style {
+  user-select: none;
+  background: linear-gradient(#ffffff, 0.5px, #fefefe 2px, #f6f6f6);
+  &:active {
+    background: linear-gradient(#fefefe, 0.5px, #f3f3f3 2px);
+  }
+  border: none;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.1),
+    0 0.5px 0 0 rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.tool-bar-button-wrapper {
+  text-align: center;
+  label {
+    @include label-small;
+    color: $slate;
+  }
+}
+
+.tool-bar-button {
+  @include tool-bar-button-style;
+  -webkit-app-region: no-drag;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0;
+
+  .icon {
+    margin-left: 8px;
+    display: flex;
+    svg {
+      fill: $slate;
+      height: 16px;
+    }
+  }
+
+  .label {
+    @include label-small;
+    display: flex;
+    line-height: 16px;
+    height: 16px;
+    padding: 0 8px;
+  }
+
+  .dropdown-arrow {
+    margin-right: 8px;
+    display: flex;
+    height: 16px;
+    stroke: $slate;
+    stroke-width: 3px;
+    transition: transform 500ms;
+  }
+}

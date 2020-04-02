@@ -3,11 +3,10 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
 import {initSpace} from "../flows/initSpace"
-import {reactElementProps} from "../test/integration"
-import MenuBarButton from "./MenuBarButton"
-import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import Folder from "../icons/Folder"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import ToolBarButton from "./ToolBarButton"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default function SpacePicker() {
@@ -23,7 +22,7 @@ export default function SpacePicker() {
 
   function onSpaceChange(val) {
     setSpace(val)
-    dispatch(initSpace(val))
+    setTimeout(() => dispatch(initSpace(val)))
   }
 
   let template = spaces.map((space) => ({
@@ -36,18 +35,12 @@ export default function SpacePicker() {
   }
 
   return (
-    <PopMenuPointy
-      template={template}
-      position="bottom center"
-      {...reactElementProps("spacesMenu")}
-    >
-      <MenuBarButton
-        {...reactElementProps("spaces_button")}
-        dropdown
-        onClick={() => dispatch(refreshSpaceNames())}
-      >
-        {space}
-      </MenuBarButton>
-    </PopMenuPointy>
+    <ToolBarButton
+      icon={<Folder />}
+      label={space}
+      menu={template}
+      onClick={() => dispatch(refreshSpaceNames())}
+      name="Space"
+    />
   )
 }

@@ -4,19 +4,13 @@ import React from "react"
 
 import {XHistoryStepper} from "./HistoryStepper"
 import {XSearchBar} from "./SearchBarComponent"
-import ClusterPicker from "./ClusterPicker"
-import SpacePicker from "./SpacePicker"
-import SpanControls from "./Span/SpanControls"
+import ToolBar from "./ToolBar"
 
 export default function ControlBar() {
   return (
     <div className="control-bar">
       <div className="row-1">
-        <div className="group">
-          <ClusterPicker />
-          <SpacePicker />
-        </div>
-        <SpanControls />
+        <ToolBar />
       </div>
       <div className="row-2">
         <XHistoryStepper />

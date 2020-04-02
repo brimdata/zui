@@ -7,7 +7,7 @@ import appMenu from "./appMenu"
 import fieldContextMenu from "./fieldContextMenu"
 
 export type $MenuItem =
-  | {click: Function, label: string, enabled: boolean}
+  | {click?: Function, label: string, enabled?: boolean}
   | {type: "separator"}
 export type $Menu = $MenuItem[]
 
