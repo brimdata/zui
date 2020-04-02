@@ -41,11 +41,12 @@ module.exports = {
     )
   },
 
-  win32: function() {
+  win32: function(opts) {
     console.log("Building installer for win32")
     fixWindowsInstallerDeps()
     return installer
       .createWindowsInstaller({
+        ...opts,
         appDirectory: "./dist/packages/Brim-Win32-x64",
         outputDirectory: out,
         authors: "Brim Security, Inc.",
@@ -56,8 +57,10 @@ module.exports = {
       .then(() => {
         console.log("Built installer for win32 in " + out)
       })
-      .catch((e) => {
-        console.log("Error building win32 installer: " + e.message)
+      .catch(() => {
+        // Exception caught above is not printed below, as a bubbling
+        // up exception may contain a passphrase.
+        console.log("Error building win32 installer")
       })
   }
 }

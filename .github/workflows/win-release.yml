@@ -25,7 +25,19 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - run: npm install --no-audit
     - run: npm run build
-    - run: node .\scripts\release --win32
+    - name: Build Signed Release
+      shell: bash
+      run: |
+        f=$(mktemp)
+        echo -ne "${WIN32_SIGNING_PFX_BASE64}" > "${f}"
+        CERT=$(mktemp)
+        # We just need the name; certutil complains if the dest exists.
+        rm -f "${CERT}"
+        certutil -decode "${f}" "${CERT}"
+        node ./scripts/release --win32 --win32CertificateFile "${CERT}" --win32CertificatePassword "${WIN32_SIGNING_PASSPHRASE}"
+      env:
+        WIN32_SIGNING_PASSPHRASE: ${{ secrets.WIN32_SIGNING_PASSPHRASE }}
+        WIN32_SIGNING_PFX_BASE64: ${{ secrets.WIN32_SIGNING_PFX_BASE64 }}
     - name: upload release assets
       uses: svenstaro/upload-release-action@1.1.0
       with:

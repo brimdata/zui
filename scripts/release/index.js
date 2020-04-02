@@ -10,6 +10,8 @@ program
   .option("--darwin", "Release for macOS")
   .option("--sign", "Sign package (macOS only)", false)
   .option("--notarize", "Notarize package (macOS only)", false)
+  .option("--win32CertificateFile <win32CertificateFile>", "PFX signing cert (win32 only)", false)
+  .option("--win32CertificatePassword <win32CertificatePassword>", "PFX password (win32 only)", false)
   .action(function(cmd) {
       if (cmd.darwin) {
           let p = pack.darwin(cmd.sign || cmd.notarize)
@@ -21,6 +23,10 @@ program
           }))
           p.then(() => install.darwin())
       }
-    if (cmd.win32) pack.win32().then(() => install.win32())
+    if (cmd.win32) pack.win32().then(
+        () => install.win32({
+            certificateFile: cmd.win32CertificateFile,
+            certificatePassword: cmd.win32CertificatePassword
+        }))
   })
   .parse(process.argv)
