@@ -13,7 +13,7 @@ const getActiveTab = createSelector<State, void, TabState, TabsState>(
   (state) => state.tabs,
   (tabs) => {
     let tab = tabs.data.find((t) => t.id === tabs.active)
-    if (!tab) throw "Can't find active tab"
+    if (!tab) throw new Error("Can't find active tab")
     return tab
   }
 )

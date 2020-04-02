@@ -19,9 +19,13 @@ export default function reducer(state: TabsState = init, action: TabActions) {
 
   switch (action.type) {
     case "TABS_ACTIVATE":
-      return {
-        ...state,
-        active: action.id
+      if (state.data.map((t) => t.id).includes(action.id))
+        return {
+          ...state,
+          active: action.id
+        }
+      else {
+        return state
       }
     case "TABS_REMOVE":
       if (state.data.length === 1) return state
