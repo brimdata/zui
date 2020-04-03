@@ -6,7 +6,7 @@ import {initSpace} from "../flows/initSpace"
 import Folder from "../icons/Folder"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
-import ToolBarButton from "./ToolBarButton"
+import ToolbarButton from "./ToolbarButton"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 import usePopupMenu from "./hooks/usePopupMenu"
 
@@ -40,7 +40,7 @@ export default function SpacePicker() {
   }
 
   return (
-    <ToolBarButton
+    <ToolbarButton
       icon={<Folder />}
       text={space}
       onClick={onClick}

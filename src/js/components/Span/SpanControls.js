@@ -27,18 +27,26 @@ export default function SpanControls() {
 
   return (
     <div className={classNames("time-span-pickers")}>
-      <TimeButton
-        timeArg={from}
-        prevTimeArg={prev && prev[0]}
-        onChange={fromChange}
-      />
+      <div className="toolbar-button-wrapper">
+        <TimeButton
+          timeArg={from}
+          prevTimeArg={prev && prev[0]}
+          onChange={fromChange}
+        />
+        <label>From</label>
+      </div>
       <SpanDuration spanArgs={[from, to]} />
-      <TimeButton
-        timeArg={to}
-        prevTimeArg={prev && prev[1]}
-        onChange={toChange}
-      />
-      <SpanPicker />
+      <div className="toolbar-button-wrapper">
+        <TimeButton
+          timeArg={to}
+          prevTimeArg={prev && prev[1]}
+          onChange={toChange}
+        />
+        <label>To</label>
+      </div>
+      <div className="toolbar-button-wrapper">
+        <SpanPicker />
+      </div>
     </div>
   )
 }

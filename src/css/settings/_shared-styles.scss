@@ -1,4 +1,4 @@
-@mixin tool-bar-button-style {
+@mixin toolbar-button-style {
   background: linear-gradient(#ffffff, 0.5px, #fefefe 2px, #f6f6f6);
   &:active:not(:disabled) {
     background: linear-gradient(#fefefe, 0.5px, #f3f3f3 2px);
