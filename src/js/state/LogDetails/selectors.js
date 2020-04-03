@@ -5,18 +5,20 @@ import {createSelector} from "reselect"
 import type {State} from "../types"
 import {toHistory} from "./reducer"
 import Log from "../../models/Log"
+import activeTabSelect from "../Tab/activeTabSelect"
+import type {TabState} from "../Tab/types"
 
-const getLogDetails = (state: State) => {
+const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails
-}
+})
 
-const getPosition = (state: State) => {
+const getPosition = activeTabSelect((state: TabState) => {
   return state.logDetails.position
-}
+})
 
-const getPrevPosition = (state: State) => {
+const getPrevPosition = activeTabSelect((state: TabState) => {
   return state.logDetails.prevPosition
-}
+})
 
 const getHistory = createSelector<State, void, *, *>(
   getLogDetails,

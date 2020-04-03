@@ -13,13 +13,13 @@ import {viewLogDetail} from "../../flows/viewLogDetail"
 import Log from "../../models/Log"
 import Modal from "../../state/Modal"
 import SearchBar from "../../state/SearchBar"
-import View from "../../state/View"
 import action from "./action"
 import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
 import tab from "../../state/Tab"
 import virusTotal from "../../services/virusTotal"
 import {downloadPcap} from "../../flows/downloadPcap"
+import Layout from "../../state/Layout/actions"
 
 function buildActions() {
   return {
@@ -36,7 +36,7 @@ function buildActions() {
       label: "Open details",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
-        dispatch(View.showRightSidebar())
+        dispatch(Layout.showRightSidebar())
         dispatch(viewLogDetail(log))
       }
     }),

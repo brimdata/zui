@@ -7,6 +7,7 @@ import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import View from "../state/View"
+import Layout from "../state/Layout"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
@@ -31,7 +32,7 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("toggleRightSidebar", () => {
-    store.dispatch(View.toggleRightSidebar())
+    store.dispatch(Layout.toggleRightSidebar())
   })
 
   ipcRenderer.on("resetState", () => {

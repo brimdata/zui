@@ -20,12 +20,6 @@ test("timeZone defaults to UTC", () => {
   expect(View.getTimeZone(state)).toBe("UTC")
 })
 
-test("setting right side bar width", () => {
-  const state = reduce([View.setRightSidebarWidth(299)])
-
-  expect(View.getRightSidebarWidth(state)).toBe(299)
-})
-
 test("setting left side bar width", () => {
   const state = reduce([View.setLeftSidebarWidth(1299)])
 

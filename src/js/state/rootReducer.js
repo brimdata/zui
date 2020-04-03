@@ -8,7 +8,6 @@ import Clusters from "./Clusters"
 import Errors from "./Errors"
 import Handlers from "./Handlers"
 import Investigation from "./Investigation"
-import LogDetails from "./LogDetails"
 import Modal from "./Modal"
 import Notice from "./Notice"
 import Packets from "./Packets"
@@ -28,7 +27,6 @@ export default combineReducers<*, *>({
   investigation: Investigation.reducer,
   view: View.reducer,
   spaces: Spaces.reducer,
-  logDetails: LogDetails.reducer,
   boomd: Boomd.reducer,
   packets: Packets.reducer,
   version: () => VERSION

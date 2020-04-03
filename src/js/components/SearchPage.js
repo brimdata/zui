@@ -28,7 +28,7 @@ export default function SearchPage() {
           <TabContent key={tabId} />
           <StatusBar />
         </div>
-        <XRightPane />
+        <XRightPane key={tabId} />
       </div>
     </div>
   )
