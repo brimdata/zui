@@ -34,7 +34,6 @@ export default function TabSearch() {
       <div className="search-page-header">
         <ControlBar />
         <SearchHeaderChart />
-        <ColumnChooser />
       </div>
       <SearchResults />
       <WhoisModal />

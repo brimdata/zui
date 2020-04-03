@@ -3,8 +3,9 @@
 import React from "react"
 
 import {XColumnChooserMenu} from "./ColumnChooserMenu"
+import ColumnsIcon from "../icons/ColumnsIcon"
 import DropMenu from "./DropMenu"
-import MenuBarButton from "./MenuBarButton"
+import ToolbarButton from "./ToolbarButton"
 
 type Props = {}
 
@@ -18,7 +19,10 @@ export default class ColumnChooser extends React.Component<Props> {
           menu={XColumnChooserMenu}
           dim={true}
         >
-          <MenuBarButton>Columns</MenuBarButton>
+          <div>
+            <ToolbarButton icon={<ColumnsIcon />} />
+            <label>Columns</label>
+          </div>
         </DropMenu>
       </div>
     )

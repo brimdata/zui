@@ -1,6 +1,8 @@
 /* @flow */
 import React from "react"
 
+import ColumnChooser from "./ColumnChooser"
+import ColumnsIcon from "../icons/ColumnsIcon"
 import Sharkfin from "../icons/Sharkfin"
 import SpacePicker from "./SpacePicker"
 import SpanControls from "./Span/SpanControls"
@@ -14,6 +16,7 @@ export default function Toolbar() {
         <ToolbarButton icon={<Sharkfin />} disabled />
         <label>Packets</label>
       </div>
+      <ColumnChooser />
       <SpanControls />
     </div>
   )
