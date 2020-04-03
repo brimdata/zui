@@ -10,8 +10,14 @@ import {adjustSelectedLogIndex} from "../flows/adjustSelectedLogIndex"
 export default function() {
   let dispatch = useDispatch()
   useEffect(() => {
-    Mousetrap.bind("down", () => dispatch(adjustSelectedLogIndex(1)))
-    Mousetrap.bind("up", () => dispatch(adjustSelectedLogIndex(-1)))
+    Mousetrap.bind("down", (e) => {
+      e.preventDefault()
+      dispatch(adjustSelectedLogIndex(1))
+    })
+    Mousetrap.bind("up", (e) => {
+      e.preventDefault()
+      dispatch(adjustSelectedLogIndex(-1))
+    })
     Mousetrap.bind("mod+t", () => dispatch(Tabs.new()))
     Mousetrap.bind("mod+w", () => dispatch(Tabs.closeActive()))
     Mousetrap.bind("ctrl+tab", () => dispatch(Tabs.activateNext()))
