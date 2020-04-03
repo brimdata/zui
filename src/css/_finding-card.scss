@@ -46,7 +46,7 @@
   }
 
   .remove-button {
-    top: $space-xs;
+    top: $space-xxs;
     right: 6px;
   }
 }
@@ -58,6 +58,7 @@
   transition: background 150ms;
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   .program {
     display: flex;
@@ -93,10 +94,16 @@
     }
   }
 
-  svg {
-    fill: $yellow;
-    height: 16px;
-    width: 16px;
-    margin-right: 12px;
+  .warning-body {
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: $yellow;
+      height: 11px;
+      width: 11px;
+      margin-right: 12px;
+      margin-bottom: 3px;
+    }
   }
 }

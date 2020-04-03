@@ -4,21 +4,25 @@ $filter-tree-line-color: $gray-5;
   height: 100%;
   color: $white-1;
 
-  svg {
-    fill: $yellow;
-    height: 16px;
-    width: 16px;
-    margin-right: 12px;
+  .warning-body {
+    display: flex;
+    align-items: center;
+    svg {
+      fill: $yellow;
+      height: 11px;
+      width: 11px;
+      margin-right: 12px;
+      margin-bottom: 3px;
+    }
   }
-
   .filter-tree-parent {
     display: flex;
     flex-direction: row;
+    padding: 3px 0;
   }
 
   .remove-button {
     position: absolute;
-    top: 5px;
     right: 12px;
     opacity: 0;
   }

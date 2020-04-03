@@ -58,16 +58,19 @@ export default function FilterTree() {
     function renderWarning() {
       const findingSpace = get(node, ["data", "finding", "search", "space"], "")
       const tip = `'${findingSpace}' space no longer exists`
+      if (includes(spaces, findingSpace)) return null
 
-      const body = (
-        <div data-tip={tip} data-effect="solid" data-place="right">
+      return (
+        <div
+          className="warning-body"
+          data-tip={tip}
+          data-effect="solid"
+          data-place="right"
+        >
           <Warning />
           <ReactTooltip />
         </div>
       )
-
-      if (!includes(spaces, findingSpace)) return body
-      return null
     }
 
     return (

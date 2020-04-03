@@ -43,15 +43,19 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     const findingSpace = get(finding, ["search", "space"], "")
     const tip = `'${findingSpace}' space no longer exists`
 
-    const body = (
-      <div data-tip={tip} data-effect="solid" data-place="right">
+    if (includes(spaces, findingSpace)) return null
+
+    return (
+      <div
+        className="warning-body"
+        data-tip={tip}
+        data-effect="solid"
+        data-place="right"
+      >
         <Warning />
         <ReactTooltip />
       </div>
     )
-
-    if (!includes(spaces, findingSpace)) return body
-    return null
   }
 
   return (
