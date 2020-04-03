@@ -1,18 +1,20 @@
 /* @flow */
-import React from "react"
+import * as React from "react"
 import classNames from "classnames"
 
+import ClockIcon from "../icons/ClockIcon"
 import DropdownArrow from "../icons/DropdownArrow"
 
 type Props = {
   children: *,
   dropdown?: boolean,
-  className?: string
+  className?: string,
+  icon?: React.Node
 }
 
 // $FlowFixMe
 const MenuBarButton = React.forwardRef(function MenuBarButton(
-  {className, children, dropdown, ...props}: Props,
+  {className, children, dropdown, icon, ...props}: Props,
   ref
 ) {
   return (
@@ -21,6 +23,12 @@ const MenuBarButton = React.forwardRef(function MenuBarButton(
       className={classNames(className, "toolbar-button")}
       {...props}
     >
+      {!!icon && (
+        <span className="icon">
+          <ClockIcon />
+        </span>
+      )}
+
       <span className="text">{children}</span>
       {dropdown && <DropdownArrow />}
     </button>

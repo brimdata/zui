@@ -13,4 +13,14 @@
     margin-top: 3px;
     color: $slate;
   }
+
+  .toolbar-group {
+    display: flex;
+    & > * {
+      margin-right: 8px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }

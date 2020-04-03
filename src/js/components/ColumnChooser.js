@@ -12,7 +12,7 @@ type Props = {}
 export default class ColumnChooser extends React.Component<Props> {
   render() {
     return (
-      <div className="column-chooser-wrapper">
+      <div className="columns-button">
         <DropMenu
           position="right-wall"
           value="columns"
