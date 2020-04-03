@@ -22,6 +22,7 @@
 
   .text {
     @include label-small;
+    color: $gray-5;
     display: flex;
     line-height: 16px;
     height: 16px;
@@ -31,7 +32,7 @@
   .dropdown-arrow {
     display: flex;
     height: 16px;
-    stroke: $slate;
+    fill: $gray-5;
     stroke-width: 3px;
     transition: transform 500ms;
     margin: 0 4px;
