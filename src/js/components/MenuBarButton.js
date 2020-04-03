@@ -21,7 +21,7 @@ const MenuBarButton = React.forwardRef(function MenuBarButton(
       className={classNames(className, "toolbar-button")}
       {...props}
     >
-      <span className="label">{children}</span>
+      <span className="text">{children}</span>
       {dropdown && <DropdownArrow />}
     </button>
   )

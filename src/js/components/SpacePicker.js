@@ -40,11 +40,14 @@ export default function SpacePicker() {
   }
 
   return (
-    <ToolbarButton
-      icon={<Folder />}
-      text={space}
-      onClick={onClick}
-      name="Space"
-    />
+    <div>
+      <ToolbarButton
+        icon={<Folder />}
+        text={space}
+        onClick={onClick}
+        dropdown
+      />
+      <label>Space</label>
+    </div>
   )
 }

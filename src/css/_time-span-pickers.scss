@@ -8,11 +8,7 @@
   .time-span-menu {
     @include toolbar-button-style;
     justify-content: center;
-    .label {
-      display: none;
-    }
     min-width: 0px;
-    width: 27px;
   }
 
   .span-duration {
@@ -39,7 +35,7 @@
 
 .time-picker-button {
   position: relative;
-  .menu-bar-button {
+  .toolbar-button {
     position: relative;
     min-width: 60px;
   }
@@ -100,7 +96,7 @@
 
 .stepper {
   width: 20px;
-  height: 16px;
+  height: 18px;
   background: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;

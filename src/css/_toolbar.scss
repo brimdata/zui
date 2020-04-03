@@ -3,4 +3,14 @@
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
+  user-select: none;
+
+  label {
+    @include label-small;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 3px;
+    color: $slate;
+  }
 }

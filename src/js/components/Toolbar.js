@@ -10,7 +10,10 @@ export default function Toolbar() {
   return (
     <div className="toolbar">
       <SpacePicker />
-      <ToolbarButton name="Packets" icon={<Sharkfin />} disabled />
+      <div>
+        <ToolbarButton icon={<Sharkfin />} disabled />
+        <label>Packets</label>
+      </div>
       <SpanControls />
     </div>
   )

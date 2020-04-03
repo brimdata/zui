@@ -27,7 +27,7 @@ export default function SpanControls() {
 
   return (
     <div className={classNames("time-span-pickers")}>
-      <div className="toolbar-button-wrapper">
+      <div>
         <TimeButton
           timeArg={from}
           prevTimeArg={prev && prev[0]}
@@ -36,7 +36,7 @@ export default function SpanControls() {
         <label>From</label>
       </div>
       <SpanDuration spanArgs={[from, to]} />
-      <div className="toolbar-button-wrapper">
+      <div>
         <TimeButton
           timeArg={to}
           prevTimeArg={prev && prev[1]}
@@ -44,9 +44,7 @@ export default function SpanControls() {
         />
         <label>To</label>
       </div>
-      <div className="toolbar-button-wrapper">
-        <SpanPicker />
-      </div>
+      <SpanPicker />
     </div>
   )
 }

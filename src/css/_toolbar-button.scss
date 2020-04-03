@@ -1,34 +1,6 @@
-.toolbar-button-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 4px;
-  &:first-of-type {
-    margin-left: 0;
-  }
-  &:last-of-type {
-    margin-right: 0;
-  }
-  user-select: none;
-
-  label {
-    margin-top: 3px;
-    @include label-small;
-    color: $slate;
-  }
-
-  &.disabled {
-    label {
-      opacity: 0.5;
-    }
-    svg {
-      opacity: 0.25;
-    }
-  }
-}
-
 .toolbar-button {
   @include toolbar-button-style;
+  user-select: none;
   width: 100%;
   min-width: 48px;
   -webkit-app-region: no-drag;
@@ -62,5 +34,14 @@
     stroke-width: 3px;
     transition: transform 500ms;
     margin: 0 4px;
+  }
+
+  &:disabled {
+    .icon {
+      opacity: 0.25;
+    }
+    & + label {
+      opacity: 0.5;
+    }
   }
 }
