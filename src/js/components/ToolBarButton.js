@@ -12,7 +12,9 @@ type Props = {
   icon?: React.Node,
   menu?: $Menu,
   name?: string,
-  onClick?: Function
+  onClick?: Function,
+  className?: string,
+  disabled: boolean
 }
 
 export default function ToolBarButton({
@@ -21,36 +23,32 @@ export default function ToolBarButton({
   menu,
   name,
   onClick,
+  className,
+  disabled,
   ...rest
 }: Props) {
-  let hasIcon = !!icon
-  let hasLabel = !!label
-  let hasMenu = !!menu
-  let hasName = !!name
-  let [openMenu, isOpen] = usePopupMenu(menu || [])
+  let openMenu = usePopupMenu(menu || [])
 
   function _onClick(e) {
     onClick && onClick(e)
-    hasMenu && openMenu(e.currentTarget)
+    !!menu && openMenu(e.currentTarget)
   }
 
   return (
-    <div className="tool-bar-button-wrapper">
+    <div
+      className={classNames("tool-bar-button-wrapper", className, {disabled})}
+    >
       <button
-        {...rest}
         onClick={_onClick}
-        className={classNames("tool-bar-button", {
-          open: isOpen,
-          icon: hasIcon,
-          label: hasLabel,
-          menu: hasMenu
-        })}
+        className="tool-bar-button"
+        disabled={disabled}
+        {...rest}
       >
-        {hasIcon && <span className="icon">{icon}</span>}
-        {hasLabel && <span className="label">{label}</span>}
-        {hasMenu && <DropdownArrow />}
+        {!!icon && <span className="icon">{icon}</span>}
+        {!!label && <span className="label">{label}</span>}
+        {!!menu && <DropdownArrow />}
       </button>
-      {hasName && <label>{name}</label>}
+      {!!name && <label>{name}</label>}
     </div>
   )
 }

@@ -1,6 +1,4 @@
 /* @flow */
-import {useState} from "react"
-
 import {remote} from "electron"
 
 import type {$Menu} from "../../electron/menu"
@@ -8,9 +6,7 @@ import type {$Menu} from "../../electron/menu"
 const margin = 8
 
 export default function usePopupMenu(template: $Menu) {
-  let [isOpen, setIsOpen] = useState(false)
-
-  function open(target: HTMLElement) {
+  function openMenu(target: HTMLElement) {
     let menu = remote.Menu.buildFromTemplate(template)
     if (target) {
       let {top, left, height} = target.getBoundingClientRect()
@@ -18,9 +14,7 @@ export default function usePopupMenu(template: $Menu) {
     } else {
       menu.popup()
     }
-    setIsOpen(true)
-    menu.on("menu-will-close", () => setIsOpen(false))
   }
 
-  return [open, isOpen]
+  return openMenu
 }
