@@ -8,6 +8,7 @@ import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import ToolBarButton from "./ToolBarButton"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
+import usePopupMenu from "./hooks/usePopupMenu"
 
 export default function SpacePicker() {
   let clusterId = useSelector(Tab.clusterId)
@@ -15,31 +16,34 @@ export default function SpacePicker() {
   let currentSpace = useSelector(Tab.spaceName) || "Choose a space"
   let [space, setSpace] = useState(currentSpace)
   let dispatch = useDispatch()
+  let template = spaces.map((space) => ({
+    label: space,
+    click: () => onSpaceChange(space)
+  }))
+  if (template.length === 0) {
+    template = [{label: "No spaces in this cluster", disabled: true}]
+  }
+  let openMenu = usePopupMenu(template)
 
   useEffect(() => {
     setSpace(currentSpace)
   }, [currentSpace])
+
+  function onClick(e) {
+    openMenu(e.currentTarget)
+    dispatch(refreshSpaceNames())
+  }
 
   function onSpaceChange(val) {
     setSpace(val)
     setTimeout(() => dispatch(initSpace(val)))
   }
 
-  let template = spaces.map((space) => ({
-    label: space,
-    click: () => onSpaceChange(space)
-  }))
-
-  if (template.length === 0) {
-    template = [{label: "No spaces in this cluster", disabled: true}]
-  }
-
   return (
     <ToolBarButton
       icon={<Folder />}
-      label={space}
-      menu={template}
-      onClick={() => dispatch(refreshSpaceNames())}
+      text={space}
+      onClick={onClick}
       name="Space"
     />
   )

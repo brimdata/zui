@@ -3,50 +3,34 @@ import classNames from "classnames"
 
 import * as React from "React"
 
-import type {$Menu} from "../electron/menu"
 import DropdownArrow from "../icons/DropdownArrow"
-import usePopupMenu from "./hooks/usePopupMenu"
 
-type Props = {
-  label?: string,
+type Props = {|
+  text?: string,
   icon?: React.Node,
-  menu?: $Menu,
-  name?: string,
-  onClick?: Function,
+  dropdown?: boolean,
   className?: string,
-  disabled: boolean
-}
+  disabled?: boolean,
+  name?: string
+|}
 
 export default function ToolBarButton({
-  label,
+  text,
   icon,
-  menu,
   name,
-  onClick,
   className,
   disabled,
+  dropdown,
   ...rest
 }: Props) {
-  let openMenu = usePopupMenu(menu || [])
-
-  function _onClick(e) {
-    onClick && onClick(e)
-    !!menu && openMenu(e.currentTarget)
-  }
-
   return (
     <div
       className={classNames("tool-bar-button-wrapper", className, {disabled})}
     >
-      <button
-        onClick={_onClick}
-        className="tool-bar-button"
-        disabled={disabled}
-        {...rest}
-      >
+      <button className="tool-bar-button" disabled={disabled} {...rest}>
         {!!icon && <span className="icon">{icon}</span>}
-        {!!label && <span className="label">{label}</span>}
-        {!!menu && <DropdownArrow />}
+        {!!text && <span className="text">{text}</span>}
+        {!!dropdown && <DropdownArrow />}
       </button>
       {!!name && <label>{name}</label>}
     </div>
