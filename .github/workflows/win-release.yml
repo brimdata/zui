@@ -26,15 +26,15 @@ jobs:
       shell: bash
       run: |
         f=$(mktemp)
-        echo -ne "${WIN32_SIGNING_PFX_BASE64}" > "${f}"
+        echo -ne "${WINDOWS_SIGNING_PFX_BASE64}" > "${f}"
         CERT=$(mktemp)
         # We just need the name; certutil complains if the dest exists.
         rm -f "${CERT}"
         certutil -decode "${f}" "${CERT}"
-        node ./scripts/release --win32 --win32CertificateFile "${CERT}" --win32CertificatePassword "${WIN32_SIGNING_PASSPHRASE}"
+        node ./scripts/release --win32 --windowsCertificateFile "${CERT}" --windowsCertificatePassword "${WINDOWS_SIGNING_PASSPHRASE}"
       env:
-        WIN32_SIGNING_PASSPHRASE: ${{ secrets.WIN32_SIGNING_PASSPHRASE }}
-        WIN32_SIGNING_PFX_BASE64: ${{ secrets.WIN32_SIGNING_PFX_BASE64 }}
+        WINDOWS_SIGNING_PASSPHRASE: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
+        WINDOWS_SIGNING_PFX_BASE64: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
     - name: upload release assets
       uses: svenstaro/upload-release-action@1.1.0
       with:
