@@ -2,6 +2,8 @@
 import React from "react"
 import classNames from "classnames"
 
+import DropdownArrow from "../icons/DropdownArrow"
+
 type Props = {
   children: *,
   dropdown?: boolean,
@@ -16,39 +18,13 @@ const MenuBarButton = React.forwardRef(function MenuBarButton(
   return (
     <button
       ref={ref}
-      className={classNames(className, "menu-bar-button")}
+      className={classNames(className, "toolbar-button")}
       {...props}
     >
-      {children}
-      {dropdown && <Arrow />}
+      <span className="label">{children}</span>
+      {dropdown && <DropdownArrow />}
     </button>
   )
 })
 
 export default MenuBarButton
-
-function Arrow() {
-  return (
-    <svg
-      className="dropdown-arrow"
-      width="9px"
-      height="9px"
-      viewBox="0 0 9 9"
-      version="1.1"
-    >
-      <g
-        stroke="none"
-        strokeWidth="1"
-        fill="none"
-        fillRule="evenodd"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <polyline
-          stroke="#31353D"
-          points="1 3 4.28395062 6.73745006 7.56790123 3"
-        />
-      </g>
-    </svg>
-  )
-}

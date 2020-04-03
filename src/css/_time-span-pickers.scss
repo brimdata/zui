@@ -3,33 +3,42 @@
   z-index: 1;
   position: relative;
   display: flex;
+  align-items: flex-start;
 
   .time-span-menu {
-    margin-left: 3px;
-    svg {
-      margin: 0;
+    @include toolbar-button-style;
+    justify-content: center;
+    .label {
+      display: none;
     }
+    min-width: 0px;
+    width: 27px;
+  }
+
+  .span-duration {
+    margin-top: 5px;
   }
 }
 
 .time-picker-button-input {
   position: relative;
   display: flex;
+  align-items: flex-start;
+
   input {
+    @include label-small;
     margin: 0;
-    width: 164px;
-    height: 16px;
+    width: 135px;
+    height: 22px;
     border-radius: 3px;
     border: none;
-    font-family: $data-font;
     padding-left: 8px;
-    line-height: 16px;
+    line-height: 22px;
   }
 }
 
 .time-picker-button {
   position: relative;
-
   .menu-bar-button {
     position: relative;
     min-width: 60px;

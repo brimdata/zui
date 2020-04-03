@@ -9,8 +9,8 @@ import refreshSpaceInfo from "../../flows/refreshSpaceInfo"
 import useSpanPickerMenu from "../useSpanPickerMenu"
 
 export default function SpanPicker() {
-  let dispatch = useDispatch()
   let menu = useSpanPickerMenu()
+  let dispatch = useDispatch()
   return (
     <PopMenuPointy
       template={menu}

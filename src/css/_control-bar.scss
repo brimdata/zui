@@ -7,29 +7,9 @@
   padding-right: 6px;
 
   .row-1 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     margin-left: 68px + 16px;
     margin-right: 16px;
     margin-bottom: 6px;
-
-    .thin-picker {
-      margin-left: 6px;
-    }
-
-    * > div {
-      diplay: flex;
-      align-items: center;
-    }
-
-    .group {
-      display: flex;
-      align-items: center;
-      & > * {
-        margin-right: 6px;
-      }
-    }
   }
 
   .row-2 {
