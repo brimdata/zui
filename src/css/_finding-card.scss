@@ -46,7 +46,7 @@
   }
 
   .remove-button {
-    top: $space-xs;
+    top: $space-xxs;
     right: 6px;
   }
 }
@@ -56,6 +56,9 @@
   color: $white-1;
   user-select: none;
   transition: background 150ms;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   .program {
     display: flex;
@@ -88,6 +91,19 @@
     .stats {
       margin-right: $space-xxs;
       font-size: 9px;
+    }
+  }
+
+  .warning-body {
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: $yellow;
+      height: 11px;
+      width: 11px;
+      margin-right: 12px;
+      margin-bottom: 3px;
     }
   }
 }

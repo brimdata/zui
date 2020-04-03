@@ -1,6 +1,6 @@
 /* @flow */
 
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
@@ -12,6 +12,12 @@ import Investigation from "../../state/Investigation"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import submitSearch from "../../flows/submitSearch"
+import Warning from "../icons/warning-sm.svg"
+import Spaces from "../../state/Spaces/selectors"
+import {includes} from "lodash"
+import Tab from "../../state/Tab"
+import get from "lodash/get"
+import ReactTooltip from "react-tooltip"
 
 type Props = {finding: Finding}
 
@@ -31,10 +37,32 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     globalDispatch(Investigation.deleteFindingByTs(finding.ts))
   }
 
+  function renderWarning() {
+    const clusterID = useSelector(Tab.clusterId)
+    const spaces = useSelector(Spaces.names(clusterID))
+    const findingSpace = get(finding, ["search", "space"], "")
+    const tip = `'${findingSpace}' space no longer exists`
+
+    if (includes(spaces, findingSpace)) return null
+
+    return (
+      <div
+        className="warning-body"
+        data-tip={tip}
+        data-effect="solid"
+        data-place="right"
+      >
+        <Warning />
+        <ReactTooltip />
+      </div>
+    )
+  }
+
   return (
     <div className={classNames("finding-card-wrapper")}>
       <div className="finding-card" onClick={onClick}>
         <FindingProgram search={finding.search} />
+        {renderWarning()}
       </div>
       <RemoveButton className="gutter-button-style" onClick={onRemove} />
     </div>
