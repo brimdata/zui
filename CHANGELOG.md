@@ -1,6 +1,6 @@
 ## v0.6.0
 
-* Add auto-updater (#515)
+* Add auto-update for MacOS (#515)
 * Fix error message presentation via content-type inspection (#519)
 * Add menu options for **Help > About** and **File > Settings** in Windows (#521)
 * Add menu options for **File > Close Tab**, **File > Close Window**, and **File > Exit** (Windows only) (#522)
