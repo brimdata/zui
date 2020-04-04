@@ -17,10 +17,16 @@ export type LogDetailsAction =
   | LOG_DETAIL_PUSH
   | LOG_DETAIL_BACK
   | LOG_DETAIL_FORWARD
+  | LOG_DETAIL_UPDATE
 
 export type LOG_DETAIL_PUSH = {
   type: "LOG_DETAIL_PUSH",
   record: RecordData
+}
+
+export type LOG_DETAIL_UPDATE = {
+  type: "LOG_DETAIL_UPDATE",
+  updates: $Shape<LogDetails>
 }
 
 export type LOG_DETAIL_BACK = {

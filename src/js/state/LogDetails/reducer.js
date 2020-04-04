@@ -23,6 +23,15 @@ export default function reducer(
         position: history.position,
         prevPosition: state.position
       }
+    case "LOG_DETAIL_UPDATE":
+      history = toHistory(state)
+      var entry = history.getCurrent()
+      Object.assign(entry, action.updates)
+      return {
+        entries: history.entries,
+        position: history.position,
+        prevPosition: state.position
+      }
 
     case "LOG_DETAIL_FORWARD":
       history = toHistory(state)

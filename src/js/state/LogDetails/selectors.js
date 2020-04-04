@@ -41,7 +41,7 @@ const getIsGoingBack = createSelector<State, void, *, *, *>(
 )
 
 const build = createSelector<State, void, *, *>(getHistory, (history) => {
-  const entry = history.getCurrent()
+  let entry = history.getCurrent()
   if (entry && entry.log) {
     let record = brim.record(entry.log)
     return interop.recordToLog(record)
@@ -50,7 +50,13 @@ const build = createSelector<State, void, *, *>(getHistory, (history) => {
   }
 })
 
+const getUidLogs = createSelector<State, void, *, *>(getHistory, (history) => {
+  let entry = history.getCurrent()
+  return entry ? entry.uidLogs : []
+})
+
 export default {
+  getUidLogs,
   getLogDetails,
   getPosition,
   getPrevPosition,

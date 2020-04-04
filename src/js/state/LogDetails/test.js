@@ -57,3 +57,14 @@ test("going back and then forward", () => {
   const log = LogDetails.build(state)
   expect(log && log.getString("letter")).toBe("b")
 })
+
+test("updating the current log detail", () => {
+  const state = store.dispatchAll([
+    LogDetails.push(record),
+    LogDetails.update({uidLogs: [record, record2]})
+  ])
+
+  expect(LogDetails.getUidLogs(state)).toEqual([record, record2])
+  const log = LogDetails.build(state)
+  expect(log && log.getString("letter")).toBe("a")
+})
