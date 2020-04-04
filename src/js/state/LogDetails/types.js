@@ -1,12 +1,16 @@
 /* @flow */
 
-import type {Descriptor, Tuple} from "../../types"
-import Log from "../../models/Log"
+import type {RecordData} from "../../types/records"
 
 export type LogDetailsState = {
-  logs: Log[],
+  entries: LogDetails[],
   position: number,
   prevPosition: number
+}
+
+export type LogDetails = {
+  log: RecordData,
+  uidLogs: RecordData[]
 }
 
 export type LogDetailsAction =
@@ -16,8 +20,7 @@ export type LogDetailsAction =
 
 export type LOG_DETAIL_PUSH = {
   type: "LOG_DETAIL_PUSH",
-  tuple: Tuple,
-  descriptor: Descriptor
+  record: RecordData
 }
 
 export type LOG_DETAIL_BACK = {

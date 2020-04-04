@@ -3,10 +3,11 @@
 import {createSelector} from "reselect"
 
 import type {State} from "../types"
-import {toHistory} from "./reducer"
-import Log from "../../models/Log"
-import activeTabSelect from "../Tab/activeTabSelect"
 import type {TabState} from "../Tab/types"
+import {toHistory} from "./reducer"
+import activeTabSelect from "../Tab/activeTabSelect"
+import brim from "../../brim"
+import interop from "../../brim/interop"
 
 const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails
@@ -40,8 +41,13 @@ const getIsGoingBack = createSelector<State, void, *, *, *>(
 )
 
 const build = createSelector<State, void, *, *>(getHistory, (history) => {
-  const log = history.getCurrent()
-  return log ? new Log(log.tuple, log.descriptor) : null
+  const entry = history.getCurrent()
+  if (entry && entry.log) {
+    let record = brim.record(entry.log)
+    return interop.recordToLog(record)
+  } else {
+    return null
+  }
 })
 
 export default {

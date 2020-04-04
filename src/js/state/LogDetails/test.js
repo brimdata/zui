@@ -3,10 +3,14 @@
 import LogDetails from "./"
 import initTestStore from "../../test/initTestStore"
 
-const tuple = ["1", "a"]
-const descriptor = [
-  {name: "_td", type: "integer"},
-  {name: "letter", type: "string"}
+const record = [
+  {name: "_td", type: "integer", value: "1"},
+  {name: "letter", type: "string", value: "a"}
+]
+
+const record2 = [
+  {name: "_td", type: "integer", value: "1"},
+  {name: "letter", type: "string", value: "b"}
 ]
 
 let store
@@ -15,17 +19,16 @@ beforeEach(() => {
 })
 
 test("viewing a log detail", () => {
-  let state = store.dispatchAll([LogDetails.push({tuple, descriptor})])
+  let state = store.dispatchAll([LogDetails.push(record)])
   const log = LogDetails.build(state)
 
   expect(log && log.getString("letter")).toEqual("a")
 })
 
 test("viewing 2 logs", () => {
-  const tuple2 = ["1", "b"]
   let state = store.dispatchAll([
-    LogDetails.push({tuple, descriptor}),
-    LogDetails.push({tuple: tuple2, descriptor})
+    LogDetails.push(record),
+    LogDetails.push(record2)
   ])
 
   const log = LogDetails.build(state)
@@ -33,10 +36,9 @@ test("viewing 2 logs", () => {
 })
 
 test("going back to the first log", () => {
-  const tuple2 = ["1", "b"]
   let state = store.dispatchAll([
-    LogDetails.push({tuple, descriptor}),
-    LogDetails.push({tuple: tuple2, descriptor}),
+    LogDetails.push(record),
+    LogDetails.push(record2),
     LogDetails.back()
   ])
 
@@ -45,10 +47,9 @@ test("going back to the first log", () => {
 })
 
 test("going back and then forward", () => {
-  const tuple2 = ["1", "b"]
   const state = store.dispatchAll([
-    LogDetails.push({tuple, descriptor}),
-    LogDetails.push({tuple: tuple2, descriptor}),
+    LogDetails.push(record),
+    LogDetails.push(record2),
     LogDetails.back(),
     LogDetails.forward()
   ])

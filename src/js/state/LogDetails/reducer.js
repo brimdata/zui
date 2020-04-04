@@ -1,10 +1,10 @@
 /* @flow */
 
-import type {LogDetailsAction, LogDetailsState} from "./types"
+import type {LogDetails, LogDetailsAction, LogDetailsState} from "./types"
 import LogDetailHistory from "../../models/LogDetailHistory"
 
 const init = (): LogDetailsState => ({
-  logs: [],
+  entries: [],
   position: 0,
   prevPosition: -1
 })
@@ -17,9 +17,9 @@ export default function reducer(
   switch (action.type) {
     case "LOG_DETAIL_PUSH":
       history = toHistory(state)
-      history.save({tuple: action.tuple, descriptor: action.descriptor})
+      history.save({log: action.record, uidLogs: []})
       return {
-        logs: history.entries,
+        entries: history.entries,
         position: history.position,
         prevPosition: state.position
       }
@@ -28,7 +28,7 @@ export default function reducer(
       history = toHistory(state)
       history.goForward()
       return {
-        logs: history.entries,
+        entries: history.entries,
         position: history.position,
         prevPosition: state.position
       }
@@ -37,7 +37,7 @@ export default function reducer(
       history = toHistory(state)
       history.goBack()
       return {
-        logs: history.entries,
+        entries: history.entries,
         position: history.position,
         prevPosition: state.position
       }
@@ -47,6 +47,6 @@ export default function reducer(
   }
 }
 
-export const toHistory = ({logs, position}: LogDetailsState) => {
-  return new LogDetailHistory([...logs], position)
+export const toHistory = ({entries, position}: LogDetailsState) => {
+  return new LogDetailHistory<LogDetails>([...entries], position)
 }

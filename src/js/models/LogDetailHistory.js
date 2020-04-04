@@ -1,9 +1,9 @@
 /* @flow */
-export default class History {
-  entries: *[]
+export default class History<T> {
+  entries: T[]
   position: number
 
-  constructor(entries: *[] = [], position: number = 0) {
+  constructor(entries: T[] = [], position: number = 0) {
     this.entries = entries
     this.position = position
   }
@@ -13,7 +13,7 @@ export default class History {
     this.position = 0
   }
 
-  save(entry: *) {
+  save(entry: T) {
     this.entries.push(entry)
     this.position = 0
   }
@@ -36,7 +36,7 @@ export default class History {
     return this.entries[this.entries.length - 1]
   }
 
-  getCurrent() {
+  getCurrent(): ?T {
     if (!this.entries.length) return null
     const index = this.entries.length - 1 - this.position
     return this.entries[index]

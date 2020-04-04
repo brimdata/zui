@@ -1,23 +1,16 @@
 /* @flow */
 
-import type {Descriptor, Tuple} from "../../types"
 import type {
   LOG_DETAIL_BACK,
   LOG_DETAIL_FORWARD,
   LOG_DETAIL_PUSH
 } from "./types"
+import type {RecordData} from "../../types/records"
 
 export default {
-  push: ({
-    tuple,
-    descriptor
-  }: {
-    tuple: Tuple,
-    descriptor: Descriptor
-  }): LOG_DETAIL_PUSH => ({
+  push: (record: RecordData): LOG_DETAIL_PUSH => ({
     type: "LOG_DETAIL_PUSH",
-    tuple,
-    descriptor
+    record
   }),
 
   back: (): LOG_DETAIL_BACK => ({
