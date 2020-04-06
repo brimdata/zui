@@ -42,6 +42,13 @@ export default class History<T> {
     return this.entries[index]
   }
 
+  updateCurrent(updates: $Shape<T>) {
+    if (!this.entries.length) return null
+    const index = this.entries.length - 1 - this.position
+    let entry = this.entries[index]
+    this.entries[index] = {...entry, ...updates}
+  }
+
   goBack() {
     if (this.prevExists()) {
       this.position += 1

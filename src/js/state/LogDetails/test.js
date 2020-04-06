@@ -67,4 +67,8 @@ test("updating the current log detail", () => {
   expect(LogDetails.getUidLogs(state)).toEqual([record, record2])
   const log = LogDetails.build(state)
   expect(log && log.getString("letter")).toBe("a")
+
+  store.dispatch(LogDetails.update({uidStatus: "FETCHING"}))
+
+  expect(LogDetails.getUidStatus(store.getState())).toBe("FETCHING")
 })

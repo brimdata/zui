@@ -1,6 +1,7 @@
 /* @flow */
 
 import type {RecordData} from "../../types/records"
+import type {SearchStatus} from "../../types/searches"
 
 export type LogDetailsState = {
   entries: LogDetails[],
@@ -10,7 +11,8 @@ export type LogDetailsState = {
 
 export type LogDetails = {
   log: RecordData,
-  uidLogs: RecordData[]
+  uidLogs: RecordData[],
+  uidStatus: SearchStatus
 }
 
 export type LogDetailsAction =

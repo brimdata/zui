@@ -55,7 +55,16 @@ const getUidLogs = createSelector<State, void, *, *>(getHistory, (history) => {
   return entry ? entry.uidLogs : []
 })
 
+const getUidStatus = createSelector<State, void, *, *>(
+  getHistory,
+  (history) => {
+    let entry = history.getCurrent()
+    return entry ? entry.uidStatus : "INIT"
+  }
+)
+
 export default {
+  getUidStatus,
   getUidLogs,
   getLogDetails,
   getPosition,
