@@ -6,12 +6,14 @@ import React from "react"
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../state/Spaces/types"
 import {XRightPaneExpander} from "./RightPaneExpander"
-import {reactElementProps} from "../test/integration"
+import {downloadPcap} from "../flows/downloadPcap"
 import Back from "./icons/back-arrow.svg"
 import Forward from "./icons/forward-arrow.svg"
+import Layout from "../state/Layout"
 import Log from "../models/Log"
 import LogDetails from "../state/LogDetails"
 import LogDetailsComponent from "./LogDetails"
+import PacketsButton from "./PacketsButton"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -23,8 +25,7 @@ import Pane, {
 import RightPaneCollapser from "./RightPaneCollapser"
 import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
-import {downloadPcap} from "../flows/downloadPcap"
-import Layout from "../state/Layout"
+import window from "../electron/tron/window"
 
 type StateProps = {|
   currentLog: Log,
@@ -100,15 +101,9 @@ export default class RightPane extends React.Component<Props, S> {
               <PaneTitle>Log Details</PaneTitle>
             </Center>
             <Right>
-              {packetsAvailable && (
-                <button
-                  className="panel-button text"
-                  onClick={this.onPacketsClick}
-                  {...reactElementProps("pcapsButton")}
-                >
-                  PCAPS
-                </button>
-              )}
+              <div className="toolbar">
+                <PacketsButton label={false} />
+              </div>
             </Right>
           </PaneHeader>
         )}

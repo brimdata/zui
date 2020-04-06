@@ -4,12 +4,15 @@ import React, {useState} from "react"
 import ReactTooltip from "react-tooltip"
 
 import {downloadPcap} from "../flows/downloadPcap"
+import {reactElementProps} from "../test/integration"
 import LogDetails from "../state/LogDetails"
 import Sharkfin from "../icons/Sharkfin"
 import ToolbarButton from "./ToolbarButton"
 import useDebouncedEffect from "./hooks/useDebouncedEffect"
 
-export default function PacketsButton() {
+type Props = {label: boolean}
+
+export default function PacketsButton({label}: Props) {
   let dispatch = useDispatch()
   let conn = useSelector(LogDetails.getConnLog)
   let [disabled, setDisabled] = useState(!conn)
@@ -19,10 +22,14 @@ export default function PacketsButton() {
     if (conn) dispatch(downloadPcap(conn))
   }
 
+  let tip = disabled
+    ? "No connection record found."
+    : "Open packets from this connection."
+
   return (
     <div
       className="packets-button"
-      data-tip="Open pcaps from this connection."
+      data-tip={tip}
       data-place="bottom"
       data-effect="solid"
       data-delay-show={300}
@@ -31,8 +38,10 @@ export default function PacketsButton() {
         icon={<Sharkfin />}
         disabled={disabled}
         onClick={onClick}
+        {...reactElementProps("pcapsButton")}
       />
-      <label>Packets</label>
+      {label && <label>Packets</label>}
+
       <ReactTooltip />
     </div>
   )
