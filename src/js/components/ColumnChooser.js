@@ -1,6 +1,7 @@
 /* @flow */
 
 import React from "react"
+import ReactTooltip from "react-tooltip"
 
 import {XColumnChooserMenu} from "./ColumnChooserMenu"
 import ColumnsIcon from "../icons/ColumnsIcon"
@@ -19,9 +20,15 @@ export default class ColumnChooser extends React.Component<Props> {
           menu={XColumnChooserMenu}
           dim={true}
         >
-          <div>
+          <div
+            data-tip="Show or hide columns in the table."
+            data-place="bottom"
+            data-effect="solid"
+            data-delay-show={300}
+          >
             <ToolbarButton icon={<ColumnsIcon />} />
             <label>Columns</label>
+            <ReactTooltip />
           </div>
         </DropMenu>
       </div>

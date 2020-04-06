@@ -1,6 +1,7 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
 import React, {useState} from "react"
+import ReactTooltip from "react-tooltip"
 
 import {downloadPcap} from "../flows/downloadPcap"
 import LogDetails from "../state/LogDetails"
@@ -19,13 +20,20 @@ export default function PacketsButton() {
   }
 
   return (
-    <div className="packets-button">
+    <div
+      className="packets-button"
+      data-tip="Open pcaps from this connection."
+      data-place="bottom"
+      data-effect="solid"
+      data-delay-show={300}
+    >
       <ToolbarButton
         icon={<Sharkfin />}
         disabled={disabled}
         onClick={onClick}
       />
       <label>Packets</label>
+      <ReactTooltip />
     </div>
   )
 }
