@@ -25,7 +25,6 @@ import Pane, {
 import RightPaneCollapser from "./RightPaneCollapser"
 import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
-import window from "../electron/tron/window"
 
 type StateProps = {|
   currentLog: Log,
@@ -56,16 +55,7 @@ export default class RightPane extends React.Component<Props, S> {
   }
 
   render() {
-    const {
-      prevExists,
-      nextExists,
-      isOpen,
-      width,
-      currentLog,
-      space
-    } = this.props
-    const packetsAvailable =
-      currentLog && currentLog.isPath("conn") && space && space.packet_support
+    const {prevExists, nextExists, isOpen, width, currentLog} = this.props
 
     if (!isOpen) return <XRightPaneExpander />
 
