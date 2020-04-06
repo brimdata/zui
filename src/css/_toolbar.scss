@@ -5,6 +5,13 @@
   width: 100%;
   user-select: none;
 
+  & > * {
+    margin-right: 8px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
   label {
     @include label-small;
     display: flex;
@@ -22,5 +29,10 @@
         margin-right: 0;
       }
     }
+  }
+
+  .packets-button .toolbar-button svg {
+    stroke: none;
+    fill: $brand-blue-light;
   }
 }
