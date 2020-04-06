@@ -2,9 +2,11 @@
 
 import {createSelector} from "reselect"
 
+import type {RecordData} from "../../types/records"
 import type {State} from "../types"
 import type {TabState} from "../Tab/types"
 import {toHistory} from "./reducer"
+import Log from "../../models/Log"
 import activeTabSelect from "../Tab/activeTabSelect"
 import brim from "../../brim"
 import interop from "../../brim/interop"
@@ -63,7 +65,18 @@ const getUidStatus = createSelector<State, void, *, *>(
   }
 )
 
+const getConnLog = createSelector<State, void, ?Log, RecordData[]>(
+  getUidLogs,
+  (uids) => {
+    return uids
+      .map(brim.record)
+      .map(brim.interop.recordToLog)
+      .find((log) => log.getString("_path") === "conn")
+  }
+)
+
 export default {
+  getConnLog,
   getUidStatus,
   getUidLogs,
   getLogDetails,

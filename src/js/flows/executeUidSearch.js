@@ -1,5 +1,7 @@
 /* @flow */
 
+import {isEmpty} from "lodash"
+
 import type {Thunk} from "../state/types"
 import {uidCorrelation} from "../searches/programs"
 import Log from "../models/Log"
@@ -9,10 +11,13 @@ import brim from "../brim"
 import executeSearch from "./executeSearch"
 
 export default (log: Log): Thunk => (dispatch, getState) => {
+  let uid = log.correlationId()
+  if (isEmpty(uid)) return
+
   let state = getState()
   let span = Tab.getSpanAsDates(state)
   let space = Tab.spaceName(state)
-  let program = uidCorrelation(log.correlationId())
+  let program = uidCorrelation(uid)
   let results = []
 
   const onStatus = (uidStatus) => dispatch(LogDetails.update({uidStatus}))
