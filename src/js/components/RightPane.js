@@ -92,7 +92,7 @@ export default class RightPane extends React.Component<Props, S> {
             </Center>
             <Right>
               <div className="toolbar">
-                <PacketsButton label={false} />
+                <PacketsButton label={false} id="detail-packets" />
               </div>
             </Right>
           </PaneHeader>

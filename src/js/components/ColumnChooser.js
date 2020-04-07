@@ -1,9 +1,9 @@
 /* @flow */
 
 import React from "react"
-import ReactTooltip from "react-tooltip"
 
 import {XColumnChooserMenu} from "./ColumnChooserMenu"
+import BrimTooltip from "./BrimTooltip"
 import ColumnsIcon from "../icons/ColumnsIcon"
 import DropMenu from "./DropMenu"
 import ToolbarButton from "./ToolbarButton"
@@ -24,11 +24,12 @@ export default class ColumnChooser extends React.Component<Props> {
             data-tip="Show or hide columns in the table."
             data-place="bottom"
             data-effect="solid"
-            data-delay-show={300}
+            data-delay-show={500}
+            data-for="columns"
           >
             <ToolbarButton icon={<ColumnsIcon />} />
             <label>Columns</label>
-            <ReactTooltip />
+            <BrimTooltip id="columns" />
           </div>
         </DropMenu>
       </div>

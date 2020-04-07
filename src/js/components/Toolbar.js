@@ -11,7 +11,7 @@ export default function Toolbar() {
     <div className="toolbar">
       <SpacePicker />
       <div className="toolbar-group">
-        <PacketsButton label />
+        <PacketsButton label id="toolbar-packets" />
         <ColumnChooser />
       </div>
       <SpanControls />
