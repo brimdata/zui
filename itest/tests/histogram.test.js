@@ -84,8 +84,6 @@ describe("Histogram tests", () => {
         // we must wait until the components of the histogram are rendered. This
         // means we must wait for a number of g elements and rect elements. Those
         // elements depend on both the dataset itself and the product's behavior.
-        // For example, these values will change if the default time window
-        // changes from the last 30 minutes.
         LOG.debug("Getting number of distinct _paths")
         let pathClasses = await retryUntil(
           () => app.client.getAttribute(selectors.histogram.gElem, "class"),
@@ -100,7 +98,6 @@ describe("Histogram tests", () => {
         // attribute. We ensure all the values are positive in a REASONABLE
         // range. We do NOT validate absolutely correct attribute values (which
         // sets the size of a bar). That's best done with unit testing.
-        // because I got this pattern to work.
         LOG.debug("Getting all rect elements")
         let allRectValues = await Promise.all(
           pathClasses.map(
@@ -125,10 +122,8 @@ describe("Histogram tests", () => {
           })
         })
         LOG.debug("Ensured all rect elements' attributes are sane")
-        LOG.debug("Switching to 'Whole Space'")
         // Now set to "Whole Space" to make sure this histogram is redrawn.
         await setSpan(app, "Whole Space")
-        LOG.debug("Switched to 'Whole Space'")
         // Just count a higher number of _paths, not all ~1500 rect elements.
         LOG.debug("Checking rect elements in Whole Space")
         await retryUntil(
