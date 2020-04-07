@@ -1,7 +1,7 @@
 /* @flow */
 import classNames from "classnames"
 
-import * as React from "React"
+import * as React from "react"
 
 import DropdownArrow from "../icons/DropdownArrow"
 
