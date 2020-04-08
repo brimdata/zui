@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Histogram tests histogram deep inspection 1`] = `
+Array [
+  "capture_loss-bg-color",
+  "conn-bg-color",
+  "dns-bg-color",
+  "files-bg-color",
+  "ssl-bg-color",
+  "stats-bg-color",
+  "weird-bg-color",
+  "x509-bg-color",
+]
+`;
