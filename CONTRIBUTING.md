@@ -2,7 +2,7 @@
 
 # Brim Development
 
-Thank you for contributing to Brim! Feel free to [post an issue](https://github.com/brimsec/brim/issues), fork the repo, or send us a pull request.
+Thank you for contributing to Brim! Feel free to [open an issue](TROUBLESHOOTING.md##opening-an-issue), fork the repo, or send us a pull request.
 
 Brim is early in its life cycle and will be expanding quickly.  Please star and/or watch the repo so you can follow and track our progress.
 

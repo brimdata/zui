@@ -25,6 +25,11 @@ The easiest way to install Brim is to download the installation package for
 your platform from the latest
 [release](https://github.com/brimsec/brim/releases).
 
+## Having a problem?
+
+Please review the [troubleshooting guide](TROUBLESHOOTING.md) to review
+common problems and helpful tips before opening an issiue.
+
 ## Development and contributing
 
 We'd love your help! Please see the [contributing guide](CONTRIBUTING.md) for
