@@ -1,0 +1,49 @@
+.toolbar-button {
+  @include toolbar-button-style;
+  user-select: none;
+  width: 100%;
+  min-width: 48px;
+  -webkit-app-region: no-drag;
+  height: 22px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .icon {
+    display: flex;
+    margin: 0 4px;
+    svg {
+      fill: $gray-5;
+      height: 16px;
+      width: 16px;
+    }
+  }
+
+  .text {
+    @include label-small;
+    color: $gray-5;
+    display: flex;
+    line-height: 16px;
+    height: 16px;
+    padding: 0 4px;
+  }
+
+  .dropdown-arrow {
+    display: flex;
+    height: 16px;
+    stroke: $gray-5;
+    stroke-width: 3px;
+    transition: transform 500ms;
+    margin: 0 4px;
+  }
+
+  &:disabled {
+    .icon {
+      opacity: 0.25;
+    }
+    & + label {
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 /* @flow */
 import {isEqual} from "lodash"
-import React, {useEffect, useState} from "react"
+import * as React from "react"
+import {useEffect, useState} from "react"
 import classNames from "classnames"
 
 import type {TimeArg} from "../../state/Search/types"
@@ -16,10 +17,16 @@ import useFuzzyHover from "../hooks/useFuzzyHover"
 type Props = {
   timeArg: TimeArg,
   prevTimeArg: ?TimeArg,
-  onChange: Function
+  onChange: Function,
+  icon?: React.Node
 }
 
-export default function TimeButton({timeArg, prevTimeArg, onChange}: Props) {
+export default function TimeButton({
+  timeArg,
+  prevTimeArg,
+  onChange,
+  icon
+}: Props) {
   let [[x, y], setPosition] = useState([0, 0])
   let [unit, setUnit] = useState("month")
   let [editing, setEditing] = useState(false)
@@ -94,7 +101,7 @@ export default function TimeButton({timeArg, prevTimeArg, onChange}: Props) {
         onDown={onDown}
         style={{transform: `translate(${x}px, ${y}px)`}}
       />
-      <MenuBarButton onFocus={() => setEditing(true)}>
+      <MenuBarButton onFocus={() => setEditing(true)} icon={icon}>
         {isString(timeArg) ? (
           brim.relTime(timeArg).format()
         ) : (

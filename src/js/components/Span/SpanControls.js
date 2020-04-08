@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
+import ClockIcon from "../../icons/ClockIcon"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
@@ -27,17 +28,24 @@ export default function SpanControls() {
 
   return (
     <div className={classNames("time-span-pickers")}>
-      <TimeButton
-        timeArg={from}
-        prevTimeArg={prev && prev[0]}
-        onChange={fromChange}
-      />
+      <div>
+        <TimeButton
+          timeArg={from}
+          prevTimeArg={prev && prev[0]}
+          onChange={fromChange}
+          icon={<ClockIcon />}
+        />
+        <label>From</label>
+      </div>
       <SpanDuration spanArgs={[from, to]} />
-      <TimeButton
-        timeArg={to}
-        prevTimeArg={prev && prev[1]}
-        onChange={toChange}
-      />
+      <div>
+        <TimeButton
+          timeArg={to}
+          prevTimeArg={prev && prev[1]}
+          onChange={toChange}
+        />
+        <label>To</label>
+      </div>
       <SpanPicker />
     </div>
   )

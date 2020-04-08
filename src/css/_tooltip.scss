@@ -12,3 +12,9 @@
   user-select: none;
   box-shadow: $box-shadow;
 }
+
+.__react_component_tooltip.brim-tooltip {
+  @include label-small;
+  transition: opacity 150ms;
+  padding: 3px 8px;
+}

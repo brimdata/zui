@@ -1,39 +1,22 @@
 /* @flow */
 
-import {useDispatch, useSelector} from "react-redux"
-import React, {useEffect, useState} from "react"
+import {useSelector} from "react-redux"
+import React from "react"
 
 import {XUidTimeline} from "../UidTimeline"
 import {reactElementProps} from "../../test/integration"
 import {toFront} from "../../lib/Array"
-import {uidCorrelation} from "../../searches/programs"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
+import LogDetails from "../../state/LogDetails"
 import PanelHeading from "./PanelHeading"
-import Tab from "../../state/Tab"
 import brim from "../../brim"
-import executeSearch from "../../flows/executeSearch"
 
 export default function UidPanel({log}: {log: Log}) {
-  let dispatch = useDispatch()
-  let [logs, setLogs] = useState([])
-  let [status, setStatus] = useState("INIT")
-  let span = useSelector(Tab.getSpanAsDates)
-  let space = useSelector(Tab.spaceName)
-  let program = uidCorrelation(log.correlationId())
-
-  useEffect(() => {
-    let uid = brim
-      .search(program, span, space)
-      .id("UidTimeline")
-      .status(setStatus)
-      .chan(0, (records) => {
-        setLogs(
-          logs.concat(records.map(brim.record).map(brim.interop.recordToLog))
-        )
-      })
-    return dispatch(executeSearch(uid))
-  }, [])
+  let status = useSelector(LogDetails.getUidStatus)
+  let logs = useSelector(LogDetails.getUidLogs)
+    .map(brim.record)
+    .map(brim.interop.recordToLog)
 
   return (
     <div

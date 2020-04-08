@@ -2,34 +2,14 @@
   position: relative;
   z-index: 1;
   margin-bottom: 8px;
-  padding-top: 20px;
+  padding-top: 12px;
   padding-left: 6px;
   padding-right: 6px;
 
   .row-1 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     margin-left: 68px + 16px;
     margin-right: 16px;
-    margin-bottom: 6px;
-
-    .thin-picker {
-      margin-left: 6px;
-    }
-
-    * > div {
-      diplay: flex;
-      align-items: center;
-    }
-
-    .group {
-      display: flex;
-      align-items: center;
-      & > * {
-        margin-right: 6px;
-      }
-    }
+    margin-bottom: 8px;
   }
 
   .row-2 {

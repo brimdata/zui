@@ -1,4 +1,6 @@
 /* @flow */
+import fsExtra from "fs-extra"
+
 import Tab from "../state/Tab"
 import initTestStore from "../test/initTestStore"
 import openPacket from "./openPacket"
@@ -34,7 +36,7 @@ test("opening a packet", async () => {
   let store = initTestStore()
   let globalDispatch = store.dispatch
   await store.dispatch(
-    openPacket("~/Desktop/packet.pcap", mockClient, globalDispatch)
+    openPacket("tmp/packet.pcap", mockClient, globalDispatch)
   )
 
   let state = store.getState()
@@ -46,4 +48,6 @@ test("opening a packet", async () => {
     packet_support: true,
     ingest_progress: null
   })
+
+  return fsExtra.remove("tmp")
 })

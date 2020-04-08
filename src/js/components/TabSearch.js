@@ -4,7 +4,6 @@ import React, {useEffect} from "react"
 
 import {DebugModal} from "./DebugModal"
 import {XDownloadProgress} from "./DownloadProgress"
-import ColumnChooser from "./ColumnChooser"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
@@ -34,7 +33,6 @@ export default function TabSearch() {
       <div className="search-page-header">
         <ControlBar />
         <SearchHeaderChart />
-        <ColumnChooser />
       </div>
       <SearchResults />
       <WhoisModal />
