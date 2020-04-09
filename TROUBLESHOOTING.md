@@ -150,7 +150,7 @@ a link to it in your issue.
 # Opening an Issue
 
 Before/when [opening a new issue](https://github.com/brimsec/brim/issues/new/choose),
-you can help us out by doing the following.
+you can help us out by doing the following:
 
 * Review the [common problems](#common-problems) above see if you're hitting one of those.
 * Browse the existing [open issues](https://github.com/brimsec/brim/issues?q=is%3Aissue+is%3Aopen). If you confirm you're hitting one of those, please add a comment to it rather than opening a new issue.
