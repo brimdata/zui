@@ -33,9 +33,9 @@ may help us get to the bottom of it faster if you include the debug info from
 
 ## I've clicked in Brim to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark
 
-[Zeek](https://zeek.org/) (which is used by Brim to create the summary logs
-you query before extracting flows) and Wireshark for the most part treat flows
-similarly. But we're aware of some subtle differences that you may notice, and
+Brim uses [Zeek](https://zeek.org/) to create summary logs from pcaps. 
+Zeek and Wireshark for the most part treat flows similarly. But we're aware 
+of some subtle differences that you may notice, and
 there may be other differences of which we're not yet aware.
 
 In Wireshark, you can right-click on a TCP/UDP packet and select _Follow TCP
