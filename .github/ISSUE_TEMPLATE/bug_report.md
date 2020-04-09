@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-Please make sure you've reviewed the [troubleshooting guide](/TROUBLESHOOTING.md)
-before opening a new issue. Thanks!
+Before opening a new issue, please make sure you've reviewed the troubleshooting guide:
+https://github.com/brimsec/brim/blob/master/TROUBLESHOOTING.md
 
 **Describe the bug**
 [A description of what the bug is]
