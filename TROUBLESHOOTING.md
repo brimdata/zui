@@ -83,7 +83,7 @@ or email us at support@brimsecurity.com so we can chat further.
 
 # Gathering Info
 
-Before [opening an issue](#opening-an-issue), or during debug on a
+Before [opening an issue](#opening-an-issue), or while debugging a
 previously-opened issue, there's detail you can gather that may help us more
 quickly provide you with a resolution.
 
