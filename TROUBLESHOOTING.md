@@ -79,7 +79,7 @@ differences:
 
 If you find yourself running into these issues or others of a similar nature,
 please reach out to us on our [public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg)
-or email us at support@brimsecurity.com so we can chat further.
+or [open an issue](#opening-an-issue) and we'll try to help.
 
 # Gathering Info
 
@@ -94,8 +94,7 @@ may be of a sensitive nature such that you don't feel you can attach it
 directly to a public GitHub Issue. If you can crop, blur, or otherwise modify
 the information before attaching, please do. If you feel you could share such
 information only privately, please notify us on [public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg)
-and we can arrange to receive it from you in a private 1-on-1 chat, or email
-us at support@brimsecurity.com.
+and we can arrange to receive it from you in a private 1-on-1 chat.
 
 ## Screenshots/Videos
 
