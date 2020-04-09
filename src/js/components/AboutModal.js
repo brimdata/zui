@@ -24,7 +24,7 @@ export default function AboutModal() {
   const year = new Date().getFullYear()
   const pathRoot = remote.app.getAppPath()
   const ackFilePath = join(pathRoot, "acknowledgments.txt")
-  const licFilePath = join(pathRoot, "LICENSE")
+  const licFilePath = join(pathRoot, "LICENSE.txt")
 
   return (
     <ModalBox

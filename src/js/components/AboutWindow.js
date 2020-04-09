@@ -23,7 +23,7 @@ export default function AboutWindow() {
   const year = new Date().getFullYear()
   const pathRoot = remote.app.getAppPath()
   const ackFilePath = join(pathRoot, "acknowledgments.txt")
-  const licFilePath = join(pathRoot, "LICENSE")
+  const licFilePath = join(pathRoot, "LICENSE.txt")
 
   return (
     <div className="about-window">
