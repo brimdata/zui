@@ -9,7 +9,8 @@ import Spaces from "./Spaces"
 
 export type GlobalState = {
   investigation: InvestigationState,
-  spaces: SpacesState
+  spaces: SpacesState,
+  version: string
 }
 
 export default combineReducers<*, *>({

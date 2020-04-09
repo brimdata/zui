@@ -5,7 +5,12 @@ import throttle from "lodash/throttle"
 
 import type {State} from "../state/types"
 
-export const VERSION = "5"
+export const VERSION = "6"
+
+export function isCurrentVersion(state: *) {
+  return state && state.version === VERSION
+}
+
 const KEY = "BRIM_STATE"
 const PERSIST = [
   "tabs",
