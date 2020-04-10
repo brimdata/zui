@@ -1,9 +1,13 @@
 /* @flow */
 
+import {writeFileSync} from "fs"
+import crypto from "crypto"
+import path from "path"
+
 import {Application} from "spectron"
 
 import {selectors} from "../../src/js/test/integration"
-import {LOG} from "./log"
+import {LOG, LOGDIR} from "./log"
 
 export const TestTimeout = 300000
 // https://jestjs.io/docs/en/troubleshooting#unresolved-promises
@@ -15,6 +19,17 @@ export const handleError = async (
   initialError: Error,
   done: *
 ) => {
+  try {
+    let image = await app.browserWindow.capturePage()
+    let filePath = path.join(
+      LOGDIR,
+      "failure-" + crypto.randomBytes(4).toString("hex") + ".png"
+    )
+    writeFileSync(filePath, image)
+    LOG.info(`wrote out screen shot to "${filePath}"`)
+  } catch (e) {
+    LOG.error("unable to take screen shot: " + e)
+  }
   let realError = undefined
   let notificationError = undefined
   LOG.error(`handleError: Test hit exception: ${initialError.message}`)
