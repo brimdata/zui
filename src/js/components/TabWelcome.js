@@ -8,7 +8,7 @@ import SavedSpacesList from "./SavedSpacesList"
 import SpaceDeletedNotice from "./SpaceDeletedNotice"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
-import openPacket from "../flows/openPacket"
+import ingestFiles from "../flows/ingestFiles"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default function TabWelcome() {
@@ -21,9 +21,9 @@ export default function TabWelcome() {
     dispatch(refreshSpaceNames())
   }, [])
 
-  function onChange(_e, [file]) {
-    if (!file) return
-    dispatch(openPacket(file))
+  function onChange(_e, files) {
+    if (!files.length) return
+    dispatch(ingestFiles(files))
   }
 
   return (
