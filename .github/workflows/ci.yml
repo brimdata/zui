@@ -19,6 +19,9 @@ jobs:
       id: set-npm-cache-dir
       run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
     - name: Clear Extraneous Runner Cache
+      # The macos Github runner has 1G of NPM cache that we don't need.
+      # Clear it before we create our own cache to prevent slower build
+      # times. See https://github.com/brimsec/brim/pull/590
       run: |
           cachedir=${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
           rm -rf "${cachedir:?}"
