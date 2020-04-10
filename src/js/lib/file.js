@@ -86,6 +86,10 @@ export default function file(p: string) {
           else good()
         })
       })
+    },
+
+    dirName(): string {
+      return path.basename(path.dirname(p))
     }
   }
 }
