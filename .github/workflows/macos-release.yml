@@ -14,12 +14,20 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - name: Set NPM Cache Directory
+      id: set-npm-cache-dir
+      run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
+    - name: Clear Extraneous Runner Cache
+      run: |
+          cachedir=${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+          rm -rf "${cachedir:?}"
+      shell: bash
     - name: Cache node modules
       uses: actions/cache@v1
       env:
-        cache-name: cache-node-modules
+        cache-name: cache-node-modules3
       with:
-        path: ~/.npm
+        path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
