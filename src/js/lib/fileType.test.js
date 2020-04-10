@@ -6,8 +6,8 @@ import lib from "./"
 
 const testFile = (name) => path.join(__dirname, "../../../itest/", name)
 const pcap = testFile("sample.pcap")
-const zeek = testFile("sample.zeek.log")
-const json = testFile("sample.json.zeek.log")
+const zeek = testFile("sample.tsv")
+const json = testFile("sample.ndjson")
 
 test("a pcap file", async () => {
   expect(await lib.fileType(pcap)).toBe("pcap")
