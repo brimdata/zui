@@ -13,14 +13,17 @@ const zdepsPath = path.resolve("zdeps")
 const platformDefs = {
   darwin: {
     zqdBin: "zqd",
+    zqBin: "zq",
     osarch: "darwin-amd64"
   },
   linux: {
     zqdBin: "zqd",
+    zqBin: "zq",
     osarch: "linux-amd64"
   },
   win32: {
     zqdBin: "zqd.exe",
+    zqBin: "zq.exe",
     osarch: "windows-amd64"
   }
 }
@@ -45,7 +48,7 @@ async function download(url, targetfile) {
 async function unzipTo(zipfile, dir) {
   await fs.mkdirp(dir)
   return new Promise((resolve, reject) => {
-    extract(zipfile, { dir: dir} , (err) => {
+    extract(zipfile, {dir: dir}, (err) => {
       if (err) {
         reject(err)
       } else {
@@ -56,28 +59,24 @@ async function unzipTo(zipfile, dir) {
 }
 
 function zqdArtifactPaths(version) {
-  if (!(process.platform in platformDefs)) {
-    throw new Error("unsupported platform")
-  }
   const plat = platformDefs[process.platform]
 
   const artifactFile = `zq-${version}.${plat.osarch}.zip`
   const artifactUrl = `https://github.com/brimsec/zq/releases/download/${version}/${artifactFile}`
-  const relativeBinPath = path.join(`zq-${version}.${plat.osarch}`, plat.zqdBin)
+  const internalTopDir = `zq-${version}.${plat.osarch}`
 
   return {
     artifactFile,
     artifactUrl,
-    relativeBinPath,
-    binName: plat.zqdBin
+    internalTopDir
   }
 }
 
 // Download and extract the zqd binary for this platform to the specified
 // directory. Returns the absolute path of the zqd binary file.
-async function zqdDownload(version, destPath) {
+async function zqArtifactsDownload(version, destPath) {
+  const plat = platformDefs[process.platform]
   const paths = zqdArtifactPaths(version)
-  const destBinLocation = path.join(destPath, paths.binName)
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {
@@ -85,14 +84,18 @@ async function zqdDownload(version, destPath) {
     await download(paths.artifactUrl, destArchive)
     await unzipTo(destArchive, tmpdir.name)
 
-    const zqdBinPath = path.join(tmpdir.name, paths.relativeBinPath)
     fs.mkdirpSync(destPath)
-    fs.moveSync(zqdBinPath, destBinLocation, {overwrite: true})
+
+    for (let f of [plat.zqdBin, plat.zqBin]) {
+      fs.moveSync(
+        path.join(tmpdir.name, paths.internalTopDir, f),
+        path.join(destPath, f),
+        {overwrite: true}
+      )
+    }
   } finally {
     tmpdir.removeCallback()
   }
-
-  return destBinLocation
 }
 
 async function zeekDownload(version, zdepsPath) {
@@ -108,7 +111,8 @@ async function zeekDownload(version, zdepsPath) {
     // Special casing for zeek on windows as it's not yet created automatically
     // like linux/mac.
     artifactFile = "zeek.zip"
-    artifactUrl = "https://storage.googleapis.com/brimsec/zeek-windows/zeek-20200403.zip"
+    artifactUrl =
+      "https://storage.googleapis.com/brimsec/zeek-windows/zeek-20200403.zip"
   } else {
     artifactFile = `zeek-${version}.${plat.osarch}.zip`
     artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
@@ -136,28 +140,24 @@ async function zeekDownload(version, zdepsPath) {
 }
 
 // Build the zqd binary inside the node_modules/zq directory via "make build".
-async function zqdDevBuild(destPath) {
+async function zqDevBuild(destPath) {
   if (!(process.platform in platformDefs)) {
     throw new Error("unsupported platform")
   }
   const plat = platformDefs[process.platform]
-  const destBinLocation = path.join(destPath, plat.zqdBin)
 
   const zqPackageDir = path.join(__dirname, "..", "..", "node_modules", "zq")
-  const zqBuiltBin = path.join(zqPackageDir, "dist", plat.zqdBin)
 
   execSync("make build", {
     stdio: "inherit",
     cwd: zqPackageDir
   })
 
-  if (!fs.pathExistsSync(zqBuiltBin)) {
-    throw new Error("zqd binary not built")
+  for (let f of [plat.zqdBin, plat.zqBin]) {
+    fs.moveSync(path.join(zqPackageDir, "dist", f), path.join(destPath, f), {
+      overwrite: true
+    })
   }
-
-  fs.moveSync(zqBuiltBin, destBinLocation, {overwrite: true})
-
-  return destBinLocation
 }
 
 async function main() {
@@ -174,11 +174,11 @@ async function main() {
     // is available.
     const zqdVersion = brimPackage.dependencies.zq.split("#")[1]
     if (zqdVersion.startsWith("v")) {
-      const zqdLocation = await zqdDownload(zqdVersion, zdepsPath)
-      console.log("downloaded zqd " + zqdVersion + " to " + zqdLocation)
+      await zqArtifactsDownload(zqdVersion, zdepsPath)
+      console.log("downloaded zq artifacts version " + zqdVersion)
     } else {
-      const zqdLocation = await zqdDevBuild(zdepsPath)
-      console.log("built zqd " + zqdVersion + " to " + zqdLocation)
+      await zqDevBuild(zdepsPath)
+      console.log("built zq artifacts version " + zqdVersion)
     }
   } catch (err) {
     console.error("zdeps setup: ", err)
