@@ -1,5 +1,6 @@
 ## v0.6.0
 
+* Update zq to v0.9.0 (#551)
 * Add auto-update for MacOS (#515)
 * Fix error message presentation via content-type inspection (#519)
 * Add menu options for **Help > About** and **File > Settings** in Windows (#521)
