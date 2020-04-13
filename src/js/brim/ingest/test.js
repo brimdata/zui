@@ -1,6 +1,7 @@
 /* @flow */
-import ingest from "./ingest"
 import path from "path"
+
+import ingest from "./"
 
 test("one pcap", () => {
   let data = ingest.getParams([{type: "pcap", path: "/work/my.pcap"}])
