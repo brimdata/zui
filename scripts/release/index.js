@@ -10,23 +10,36 @@ program
   .option("--darwin", "Release for macOS")
   .option("--sign", "Sign package (macOS only)", false)
   .option("--notarize", "Notarize package (macOS only)", false)
-  .option("--windowsCertificateFile <windowsCertificateFile>", "PFX signing cert (win32 only)", false)
-  .option("--windowsCertificatePassword <windowsCertificatePassword>", "PFX password (win32 only)", false)
+  .option(
+    "--windowsCertificateFile <windowsCertificateFile>",
+    "PFX signing cert (win32 only)",
+    false
+  )
+  .option(
+    "--windowsCertificatePassword <windowsCertificatePassword>",
+    "PFX password (win32 only)",
+    false
+  )
   .action(function(cmd) {
-      if (cmd.darwin) {
-          let p = pack.darwin(cmd.sign || cmd.notarize)
-          if (cmd.notarize) p.then(() => notarize({
+    if (cmd.darwin) {
+      let p = pack.darwin(cmd.sign || cmd.notarize)
+      if (cmd.notarize)
+        p.then(() =>
+          notarize({
             appBundleId: "com.brimsecurity.brim",
             appPath: "dist/packages/Brim-darwin-x64/Brim.app",
             appleId: process.env.APPLEID_USER,
-            appleIdPassword: process.env.APPLEID_PASSWORD,
-          }))
-          p.then(() => install.darwin())
-      }
-    if (cmd.win32) pack.win32().then(
-        () => install.win32({
-            certificateFile: cmd.windowsCertificateFile,
-            certificatePassword: cmd.windowsCertificatePassword
-        }))
+            appleIdPassword: process.env.APPLEID_PASSWORD
+          })
+        )
+      p.then(() => install.darwin())
+    }
+    if (cmd.win32)
+      pack.win32().then(() =>
+        install.win32({
+          certificateFile: cmd.windowsCertificateFile,
+          certificatePassword: cmd.windowsCertificatePassword
+        })
+      )
   })
   .parse(process.argv)
