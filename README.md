@@ -1,4 +1,4 @@
-![Brim CI](https://github.com/brimsec/brim/workflows/Brim%20CI/badge.svg)
+[![Brim CI](https://github.com/brimsec/brim/workflows/Brim%20CI/badge.svg)](https://github.com/brimsec/brim/actions?query=workflow%3A%22Brim+CI%22+branch%3Amaster)
 
 # Brim
 
