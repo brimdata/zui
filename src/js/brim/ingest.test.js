@@ -1,11 +1,12 @@
 /* @flow */
 import ingest from "./ingest"
+import path from "path"
 
 test("one pcap", () => {
   let data = ingest.getParams([{type: "pcap", path: "/work/my.pcap"}])
 
   expect(data).toEqual({
-    dataDir: "/work/my.pcap.brim",
+    dataDir: path.join("/work", "my.pcap.brim"),
     endpoint: "pcap",
     paths: ["/work/my.pcap"]
   })
@@ -15,7 +16,7 @@ test("one zeek log", () => {
   let data = ingest.getParams([{type: "zeek", path: "/work/zeek.log"}])
 
   expect(data).toEqual({
-    dataDir: "/work/zeek.log.brim",
+    dataDir: path.join("/work", "zeek.log.brim"),
     endpoint: "zeek",
     paths: ["/work/zeek.log"]
   })
@@ -31,7 +32,7 @@ test("two zeek logs in same dir", () => {
   )
 
   expect(data).toEqual({
-    dataDir: "/home/.brim/work.brim",
+    dataDir: path.join("/home", ".brim", "work.brim"),
     endpoint: "zeek",
     paths: ["/work/zeek-1.log", "/work/zeek-2.log"]
   })
@@ -48,7 +49,7 @@ test("two zeek logs in different dir", () => {
   )
 
   expect(data).toEqual({
-    dataDir: "/home/.brim/zeek_1969-12-31_16:00:00.brim",
+    dataDir: path.join("/home", ".brim", "zeek_1969-12-31_16:00:00.brim"),
     endpoint: "zeek",
     paths: ["/work/day-1/zeek.log", "/work/day-2/zeek.log"]
   })
