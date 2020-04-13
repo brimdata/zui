@@ -2,7 +2,7 @@
 const path = require("path")
 const {createLogger, format, transports} = require("winston")
 
-const LOGDIR = path.join(process.env.WORKSPACE || "", "logs")
+export const LOGDIR = path.join(process.env.WORKSPACE || "", "logs")
 
 export const workspaceLogfile = (name: string) => path.join(LOGDIR, name)
 
