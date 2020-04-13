@@ -8,10 +8,11 @@ import animation from "./animation"
 import date from "./date"
 import doc from "./doc"
 import file from "./file"
+import fileType from "./fileType"
 import keep from "./keep"
 import obj from "./obj"
-import win from "./win"
 import open from "./open"
+import win from "./win"
 
 let array = {
   wrap(item: *) {
@@ -23,6 +24,7 @@ let array = {
 
 export default {
   file,
+  fileType,
   keep,
   obj,
   doc,
