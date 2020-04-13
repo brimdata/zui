@@ -1,35 +1,54 @@
 /* @flow */
-import path from "path"
+import fsExtra from "fs-extra"
 
+import Tab from "../state/Tab"
 import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
+import itestFile from "../test/itestFile"
 
-const testFile = (name) => path.join(__dirname, "../../../itest/", name)
-const pcap = testFile("sample.pcap")
-// const zeek = testFile("sample.zeek.log")
-// const json = testFile("sample.json.zeek.log")
-// const unknown = testFile("setup.js")
-
-let store
-let client = {
+let mockClient = {
   spaces: {
-    create: () => Promise.resolve({name: "darkhorse"}),
-    delete: () => Promise.resolve(),
-    get: () => Promise.resolve({})
+    create: () => Promise.resolve({name: "dataSpace"}),
+    list: () => Promise.resolve(["dataSpace"]),
+    get: () =>
+      Promise.resolve({
+        name: "dataSpace",
+        min_time: {ns: 0, sec: 0},
+        max_time: {ns: 1, sec: 1},
+        packet_support: true
+      })
   },
   pcaps: {
     post: function*() {
-      yield {type: "PacketPostStatus"}
+      yield {type: "TaskStart"}
+      yield {
+        type: "PacketPostStatus",
+        start_time: {sec: 0, ns: 0},
+        update_time: {sec: 1, ns: 1},
+        packet_total_size: 100,
+        packet_read_size: 1
+      }
       yield {type: "TaskEnd"}
     }
   }
 }
 
-beforeEach(() => {
-  store = initTestStore()
-})
+test("opening a packet", async () => {
+  let store = initTestStore()
+  let globalDispatch = store.dispatch
+  await store.dispatch(
+    ingestFiles([itestFile("sample.pcap")], mockClient, globalDispatch)
+  )
 
-test("run code", () => {
-  let paths = [pcap]
-  return store.dispatch(ingestFiles(paths, client))
+  let state = store.getState()
+  expect(Tab.spaceName(state)).toEqual("dataSpace")
+  expect(Tab.space(state)).toEqual({
+    name: "dataSpace",
+    min_time: {ns: 0, sec: 0},
+    max_time: {ns: 1, sec: 1},
+    packet_support: true,
+    ingest_progress: null
+  })
+
+  return fsExtra.remove("tmp")
 })
