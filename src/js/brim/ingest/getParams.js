@@ -36,7 +36,7 @@ export default function getParams(
   }
 
   function getDataDir() {
-    if (files.oneFile()) return files.first().path
+    if (files.oneFile()) return path.normalize(files.first().path)
 
     let dirName = files.inSameDir() ? files.dirName() : generateDirName(now)
 
