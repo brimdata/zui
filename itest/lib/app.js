@@ -1,8 +1,12 @@
 /* @flow */
-import {Application} from "spectron"
+
+import {writeFileSync} from "fs"
+import crypto from "crypto"
 import path from "path"
 
-import {LOG} from "./log"
+import {Application} from "spectron"
+
+import {LOG, LOGDIR} from "./log"
 import {isCI, repoDir} from "../lib/env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
@@ -315,4 +319,18 @@ export const pcapIngestSample = async (app: Application) => {
       (ingesting) => ingesting === false
     )
   )
+}
+
+export const takeScreenshot = async (app: Application) => {
+  try {
+    let image = await app.browserWindow.capturePage()
+    let filePath = path.join(
+      LOGDIR,
+      "failure-" + crypto.randomBytes(4).toString("hex") + ".png"
+    )
+    writeFileSync(filePath, image)
+    LOG.info(`wrote out screen shot to "${filePath}"`)
+  } catch (e) {
+    LOG.error("unable to take screen shot: " + e)
+  }
 }
