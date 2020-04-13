@@ -29,7 +29,7 @@ async function isZeekJson(file) {
 }
 
 async function isZeekAscii(file) {
-  for await (let line of firstLines(file, 4)) {
+  for await (let line of firstLines(file, 1)) {
     if (!isZeekHeader(line)) return false
   }
   return true
@@ -45,7 +45,7 @@ async function isPcap(file) {
 }
 
 function isZeekHeader(line) {
-  return /^#\w+\s+\S+/.test(line)
+  return /^#separator \S+/.test(line)
 }
 
 function isJson(line) {

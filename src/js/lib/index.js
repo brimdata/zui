@@ -8,7 +8,6 @@ import animation from "./animation"
 import date from "./date"
 import doc from "./doc"
 import file from "./file"
-import fileType from "./fileType"
 import keep from "./keep"
 import obj from "./obj"
 import open from "./open"
@@ -25,7 +24,6 @@ let array = {
 
 export default {
   file,
-  fileType,
   keep,
   obj,
   doc,
