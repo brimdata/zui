@@ -35,9 +35,13 @@ export default function reducer(
   state: SpacesState = init,
   action: SpacesAction
 ): SpacesState {
-  return {
-    ...state,
-    [action.clusterId]: spacesReducer(state[action.clusterId] || {}, action)
+  if (action.type.startsWith("SPACES_")) {
+    return {
+      ...state,
+      [action.clusterId]: spacesReducer(state[action.clusterId] || {}, action)
+    }
+  } else {
+    return state
   }
 }
 

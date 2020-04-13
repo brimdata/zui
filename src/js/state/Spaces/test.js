@@ -79,3 +79,8 @@ test("getting the spaces with details, others not", () => {
     {name: "space-b"}
   ])
 })
+
+test("only cares about spaces actions", () => {
+  store.dispatch({type: "NON_SPACE"})
+  expect(Spaces.raw(store.getState())).toEqual({})
+})
