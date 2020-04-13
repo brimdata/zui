@@ -1,3 +1,12 @@
+## v0.7.0
+
+* Introduce versioning of app state (**NOTE**: prior state such as Search History will be lost on upgrade to this version) (#587)
+* Update zq to v0.10.0 (#605)
+* Up/down arrow keys now affect event highlighting & Log Details contents (#550)
+* Use Wireshark icon in toolbar and Log Details view to open pcaps (#562)
+* Enable the pcap button for any Zeek event that can be linked to a `conn` event (#562)
+* Fix the "About" box link so it will open on Windows (#583)
+
 ## v0.6.0
 
 * Update zq to v0.9.0 (#551)
