@@ -117,6 +117,10 @@ const trackProgress = (client, dispatch, clusterId) => {
         dispatch(Spaces.setIngestProgress(clusterId, name, n))
       }
 
+      async function updateSpaceDetails() {
+        dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
+      }
+
       function toPercent(status): number {
         if (status.packet_total_size === 0) return 1
         else return status.packet_read_size / status.packet_total_size
@@ -124,15 +128,17 @@ const trackProgress = (client, dispatch, clusterId) => {
 
       setProgress(0)
       for await (let {type, ...status} of stream) {
-        if (type === "PacketPostStatus") {
-          setProgress(toPercent(status))
-          dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
-        }
-        if (type === "LogPostStatus") {
-          dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
-        }
-        if (type === "TaskEnd" && status.error) {
-          throw errors.pcapIngest(status.error.error)
+        switch (type) {
+          case "PacketPostStatus":
+            setProgress(toPercent(status))
+            if (status.snapshot_count > 0) updateSpaceDetails()
+            break
+          case "LogPostStatus":
+            updateSpaceDetails()
+            break
+          case "TaskEnd":
+            if (status.error) throw errors.pcapIngest(status.error.error)
+            break
         }
       }
       setProgress(1)

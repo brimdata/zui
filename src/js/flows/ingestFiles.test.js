@@ -23,6 +23,7 @@ let mockClient = {
       yield {type: "TaskStart"}
       yield {
         type: "PacketPostStatus",
+        snapshot_count: 1,
         start_time: {sec: 0, ns: 0},
         update_time: {sec: 1, ns: 1},
         packet_total_size: 100,
