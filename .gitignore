@@ -4,6 +4,6 @@ releases
 coverage
 logs
 junit.xml
-data
 zdeps
-.idea
+.idea/
+run/

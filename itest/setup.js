@@ -4,3 +4,8 @@
 // async / await in tests.
 // $FlowFixMe
 import "regenerator-runtime/runtime"
+
+// This signals the path setup in main.js to not override the userData
+// directory it sees on startup, so that we can store complete application
+// state and logs for each individual integration test.
+process.env.BRIM_ITEST = "true"

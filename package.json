@@ -113,6 +113,7 @@
     "d3": "^5.15.0",
     "electron-dl": "^3.0.0",
     "electron-installer-zip": "^0.1.2",
+    "electron-log": "^4.1.1",
     "extract-zip": "^1.6.7",
     "fs-extra": "^7.0.0",
     "is-wsl": "^2.1.1",

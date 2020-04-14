@@ -1,10 +1,11 @@
 /* @flow */
 
-import {outputFileSync, pathExistsSync, mkdirSync} from "fs-extra"
+import {outputFileSync, pathExistsSync, mkdirpSync} from "fs-extra"
 import {spawn, ChildProcess} from "child_process"
 import {join, resolve} from "path"
 import {app} from "electron"
 import _merge from "lodash/merge"
+import log from "electron-log"
 
 import * as cmd from "../stdlib/cmd"
 import electronIsDev from "../electron/isDev"
@@ -27,10 +28,13 @@ const platformDefs = {
 
 function writeZqdConfigFile(): string {
   const logDir = app.getPath("logs")
-  mkdirSync(logDir, {recursive: true, mode: 0o755})
+  mkdirpSync(logDir, {recursive: true, mode: 0o755})
 
   const zqdLogFile = join(logDir, "zqd-core.log")
   const accessLogFile = join(logDir, "zqd-access.log")
+
+  log.info("zqd core log at ", zqdLogFile)
+  log.info("zqd access log at ", accessLogFile)
 
   const data = `
 logger:
@@ -45,7 +49,9 @@ logger:
     mode: rotate
 `
 
-  const confFile = join(app.getPath("temp"), "zqd-config.yaml")
+  const confFile = join(app.getPath("userData"), "zqd-config.yaml")
+  log.info("zqd config at ", confFile)
+
   outputFileSync(confFile, data)
   return confFile
 }
@@ -79,7 +85,7 @@ export class ZQD {
   }
 
   start() {
-    mkdirSync(this.root, {recursive: true, mode: 0o755})
+    mkdirpSync(this.root, {recursive: true, mode: 0o755})
 
     // PATH must include both the zqd and zeek bin directories, as zqd depends
     // on having zeek available in its environment PATH.
@@ -97,14 +103,21 @@ export class ZQD {
 
     const confFile = writeZqdConfigFile()
 
-    this.zqd = spawn(
-      zqdCommand(),
-      ["listen", "-l", this.addr(), "-datadir", this.root, "-config", confFile],
-      opts
-    )
+    const args = [
+      "listen",
+      "-l",
+      this.addr(),
+      "-datadir",
+      this.root,
+      "-config",
+      confFile
+    ]
+    log.info("spawning zqd: ", args.join(" "))
+
+    this.zqd = spawn(zqdCommand(), args, opts)
     this.zqd.on("error", (err) => {
       // XXX should notify renderers of error
-      console.log("zqd spawn error", err)
+      log.error("zqd spawn error", err)
     })
   }
 

@@ -7,7 +7,11 @@ import type {GlobalState} from "../../state/globalReducer"
 import type {WindowsState, WindowState} from "./windowManager"
 import lib from "../../lib"
 
-const SESSION_STATE_FILE = path.join(app.getPath("userData"), "appState.json")
+function sessionStateFile() {
+  // This can't be a const because we adjust the userData path first
+  // thing inside main().
+  return path.join(app.getPath("userData"), "appState.json")
+}
 
 export type SessionState = {|
   order: string[],
@@ -37,14 +41,14 @@ export default function session() {
           globalState
         }: SessionState)
       )
-      lib.file(SESSION_STATE_FILE).write(fileContents)
+      lib.file(sessionStateFile()).write(fileContents)
     },
 
     load(): ?SessionState {
       let contents
 
       try {
-        contents = lib.file(SESSION_STATE_FILE).readSync()
+        contents = lib.file(sessionStateFile()).readSync()
       } catch {
         return undefined
       }
