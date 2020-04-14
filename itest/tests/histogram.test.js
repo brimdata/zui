@@ -6,7 +6,8 @@ import {
   newAppInstance,
   pcapIngestSample,
   startApp,
-  setSpan
+  setSpan,
+  waitForResults
 } from "../lib/app.js"
 import {retryUntil} from "../lib/control.js"
 import {handleError, stdTest} from "../lib/jest.js"
@@ -65,31 +66,30 @@ describe("Histogram tests", () => {
     LOG.debug("Pre-login")
     pcapIngestSample(app)
       .then(async () => {
-        LOG.debug("Checking number of histogram rect elements")
-        let result = await retryUntil(
+        LOG.debug("Checking a histogram appears")
+        // Verify that a histogram of at least *partial data* is
+        // present.
+        await retryUntil(
           () => app.client.$$(selectors.histogram.rectElem),
-          (rectElements) =>
-            rectElements.length ===
-            dataSets.sample.histogram.defaultTotalRectCount
+          (rectElements) => rectElements.length > 0
         ).catch(() => {
-          throw new Error(
-            "Histogram did not render the expected number of rect elements"
-          )
+          throw new Error("Initial histogram did not render any rect elements")
         })
         LOG.debug("Got number of histogram rect elements")
-        return result
-      })
-      .then(async () => {
         // Assuming we properly loaded data into a default space, we
         // we must wait until the components of the histogram are rendered. This
         // means we must wait for a number of g elements and rect elements. Those
         // elements depend on both the dataset itself and the product's behavior.
-        LOG.debug("Getting number of distinct _paths")
+        // Set to "Whole Space" to make sure this entire histogram is redrawn.
+        await setSpan(app, "Whole Space")
+        await waitForResults(app)
+        // Just count a higher number of _paths, not all ~1500 rect elements.
+        LOG.debug("Checking rect elements in Whole Space")
         let pathClasses = await retryUntil(
           () => app.client.getAttribute(selectors.histogram.gElem, "class"),
           (pathClasses) =>
             pathClasses.length ===
-            dataSets.sample.histogram.defaultDistinctPaths
+            dataSets.sample.histogram.wholeSpaceDistinctPaths
         )
         LOG.debug("Got number of distinct _paths")
         expect(pathClasses.sort()).toMatchSnapshot()
@@ -109,7 +109,7 @@ describe("Histogram tests", () => {
           // Whereas we just counted g elements before, this breaks down rect
           // elements within their g parent, ensuring rect elements are of the
           // proper _path.
-          dataSets.sample.histogram.defaultDistinctPaths
+          dataSets.sample.histogram.wholeSpaceDistinctPaths
         )
         LOG.debug("Ensuring all rect elements' attributes are sane")
         allRectValues.forEach((pathClass) => {
@@ -117,21 +117,11 @@ describe("Histogram tests", () => {
           expect(pathClass.length).toBe(4)
           pathClass.forEach((attr) => {
             expect(attr.length).toBe(
-              dataSets.sample.histogram.defaultRectsPerClass
+              dataSets.sample.histogram.wholeSpaceRectsPerClass
             )
           })
         })
         LOG.debug("Ensured all rect elements' attributes are sane")
-        // Now set to "Whole Space" to make sure this histogram is redrawn.
-        await setSpan(app, "Whole Space")
-        // Just count a higher number of _paths, not all ~1500 rect elements.
-        LOG.debug("Checking rect elements in Whole Space")
-        await retryUntil(
-          () => app.client.getAttribute(selectors.histogram.gElem, "class"),
-          (pathClasses) =>
-            pathClasses.length ===
-            dataSets.sample.histogram.wholeSpaceDistinctPaths
-        )
         done()
       })
       .catch((err) => {

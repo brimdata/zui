@@ -300,6 +300,11 @@ export const toggleOptimizations = async (app: Application) => {
   await app.client.click(selectors.settings.button)
 }
 
+export const waitForResults = (app: Application) =>
+  appStep("wait for results viewer to appear", () =>
+    app.client.waitForVisible(selectors.viewer.results_base)
+  )
+
 export const pcapIngestSample = async (app: Application) => {
   // Ingest a PCAP and wait until we see derived records.
   const pcapFile = path.normalize(path.join(__dirname, "..", "sample.pcap"))
@@ -310,15 +315,15 @@ export const pcapIngestSample = async (app: Application) => {
   await appStep("choose file", () =>
     app.client.chooseFile(selectors.pcaps.fileInput, pcapFile)
   )
-  await appStep("wait for viewer to appear", () =>
-    app.client.waitForVisible(selectors.viewer.results_base)
-  )
+
   await appStep("wait for ingest to finish", () =>
     retryUntil(
       () => app.client.isExisting(selectors.status.ingestProgress),
       (ingesting) => ingesting === false
     )
   )
+
+  await waitForResults(app)
 }
 
 export const takeScreenshot = async (app: Application) => {
