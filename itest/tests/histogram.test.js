@@ -66,7 +66,9 @@ describe("Histogram tests", () => {
     LOG.debug("Pre-login")
     pcapIngestSample(app)
       .then(async () => {
-        LOG.debug("Checking number of histogram rect elements")
+        LOG.debug("Checking a histogram appears")
+        // Verify that a histogram of at least *partial data* is
+        // present.
         await retryUntil(
           () => app.client.$$(selectors.histogram.rectElem),
           (rectElements) => rectElements.length > 0
