@@ -316,14 +316,14 @@ export const pcapIngestSample = async (app: Application) => {
     app.client.chooseFile(selectors.pcaps.fileInput, pcapFile)
   )
 
-  await waitForResults(app)
-
   await appStep("wait for ingest to finish", () =>
     retryUntil(
       () => app.client.isExisting(selectors.status.ingestProgress),
       (ingesting) => ingesting === false
     )
   )
+
+  await waitForResults(app)
 }
 
 export const takeScreenshot = async (app: Application) => {
