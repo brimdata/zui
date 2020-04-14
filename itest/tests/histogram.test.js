@@ -6,7 +6,8 @@ import {
   newAppInstance,
   pcapIngestSample,
   startApp,
-  setSpan
+  setSpan,
+  waitForResults
 } from "../lib/app.js"
 import {retryUntil} from "../lib/control.js"
 import {handleError, stdTest} from "../lib/jest.js"
@@ -79,6 +80,7 @@ describe("Histogram tests", () => {
         // elements depend on both the dataset itself and the product's behavior.
         // Set to "Whole Space" to make sure this entire histogram is redrawn.
         await setSpan(app, "Whole Space")
+        await waitForResults(app)
         // Just count a higher number of _paths, not all ~1500 rect elements.
         LOG.debug("Checking rect elements in Whole Space")
         let pathClasses = await retryUntil(
