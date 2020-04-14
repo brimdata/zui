@@ -49,8 +49,13 @@ export default (
       for await (let {type, ...status} of stream) {
         if (type === "PacketPostStatus") {
           setProgress(extractFrom(status))
-          gDispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
+          if (status.snapshot_count > 0) {
+            gDispatch(
+              Spaces.setDetail(clusterId, await client.spaces.get(name))
+            )
+          }
         }
+
         if (type === "TaskEnd" && status.error) {
           throw errors.pcapIngest(status.error.error)
         }
