@@ -66,7 +66,7 @@ describe("Histogram tests", () => {
     pcapIngestSample(app)
       .then(async () => {
         LOG.debug("Checking number of histogram rect elements")
-        let result = await retryUntil(
+        await retryUntil(
           () => app.client.$$(selectors.histogram.rectElem),
           (rectElements) =>
             rectElements.length ===
@@ -77,9 +77,6 @@ describe("Histogram tests", () => {
           )
         })
         LOG.debug("Got number of histogram rect elements")
-        return result
-      })
-      .then(async () => {
         // Assuming we properly loaded data into a default space, we
         // we must wait until the components of the histogram are rendered. This
         // means we must wait for a number of g elements and rect elements. Those
