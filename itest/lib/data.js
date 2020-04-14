@@ -7,7 +7,6 @@ export const dataSets = {
   // last 30 minutes to last hour, some of these numbers may become invalid.
   sample: {
     histogram: {
-      defaultDistinctPaths: 8,
       defaultRectsPerClass: 11,
       defaultTotalRectCount: 8 * 11,
       rectAttrMin: 0,

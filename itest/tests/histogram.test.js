@@ -77,12 +77,15 @@ describe("Histogram tests", () => {
         // we must wait until the components of the histogram are rendered. This
         // means we must wait for a number of g elements and rect elements. Those
         // elements depend on both the dataset itself and the product's behavior.
-        LOG.debug("Getting number of distinct _paths")
+        // Set to "Whole Space" to make sure this entire histogram is redrawn.
+        await setSpan(app, "Whole Space")
+        // Just count a higher number of _paths, not all ~1500 rect elements.
+        LOG.debug("Checking rect elements in Whole Space")
         let pathClasses = await retryUntil(
           () => app.client.getAttribute(selectors.histogram.gElem, "class"),
           (pathClasses) =>
             pathClasses.length ===
-            dataSets.sample.histogram.defaultDistinctPaths
+            dataSets.sample.histogram.wholeSpaceDistinctPaths
         )
         LOG.debug("Got number of distinct _paths")
         expect(pathClasses.sort()).toMatchSnapshot()
@@ -102,7 +105,7 @@ describe("Histogram tests", () => {
           // Whereas we just counted g elements before, this breaks down rect
           // elements within their g parent, ensuring rect elements are of the
           // proper _path.
-          dataSets.sample.histogram.defaultDistinctPaths
+          dataSets.sample.histogram.wholeSpaceDistinctPaths
         )
         LOG.debug("Ensuring all rect elements' attributes are sane")
         allRectValues.forEach((pathClass) => {
@@ -115,16 +118,6 @@ describe("Histogram tests", () => {
           })
         })
         LOG.debug("Ensured all rect elements' attributes are sane")
-        // Now set to "Whole Space" to make sure this histogram is redrawn.
-        await setSpan(app, "Whole Space")
-        // Just count a higher number of _paths, not all ~1500 rect elements.
-        LOG.debug("Checking rect elements in Whole Space")
-        await retryUntil(
-          () => app.client.getAttribute(selectors.histogram.gElem, "class"),
-          (pathClasses) =>
-            pathClasses.length ===
-            dataSets.sample.histogram.wholeSpaceDistinctPaths
-        )
         done()
       })
       .catch((err) => {
