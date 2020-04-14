@@ -22,6 +22,7 @@
 
   .text {
     @include label-small;
+    white-space: nowrap;
     color: $gray-5;
     display: flex;
     line-height: 16px;
