@@ -7,11 +7,11 @@ export const dataSets = {
   // last 30 minutes to last hour, some of these numbers may become invalid.
   sample: {
     histogram: {
-      defaultRectsPerClass: 11,
       defaultTotalRectCount: 8 * 11,
       rectAttrMin: 0,
       rectAttrMax: 1000,
-      wholeSpaceDistinctPaths: 8
+      wholeSpaceDistinctPaths: 8,
+      wholeSpaceRectsPerClass: 11
     },
     spaceName: "sample.pcap.brim"
   }

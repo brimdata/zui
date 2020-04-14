@@ -117,7 +117,7 @@ describe("Histogram tests", () => {
           expect(pathClass.length).toBe(4)
           pathClass.forEach((attr) => {
             expect(attr.length).toBe(
-              dataSets.sample.histogram.defaultRectsPerClass
+              dataSets.sample.histogram.wholeSpaceRectsPerClass
             )
           })
         })
