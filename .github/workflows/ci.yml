@@ -100,5 +100,5 @@ jobs:
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
-        name: artifacts
+        name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
         path: /var/tmp/brimsec/logs
