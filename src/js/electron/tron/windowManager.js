@@ -8,8 +8,11 @@ import type {WindowParams} from "./window"
 import {isBoolean} from "../../lib/is"
 import brim from "../../brim"
 import tron from "./"
+import sendTo from "../ipc/sendTo"
+import ipc from "../ipc"
+import type {NewTabSearchParams} from "../ipc/windows/messages"
 
-export type WindowName = "search" | "about"
+export type WindowName = "search" | "about" | "detail"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {[string]: WindowState}
@@ -62,11 +65,32 @@ export default function windowManager() {
         [id]: {...windows[id], ...data}
       }
     },
-
     getWindow(id: string): WindowState {
       return windows[id]
     },
+    openSearchTab(searchParams: NewTabSearchParams) {
+      let isNewWin = true
+      const existingWin = this.getWindows()
+        .sort((a, b) => a.lastFocused - b.lastFocused)
+        .find((w) => w.name === "search")
+      if (existingWin) {
+        isNewWin = false
+        sendTo(
+          existingWin.ref.webContents,
+          ipc.windows.newSearchTab({...searchParams, isNewWin})
+        )
+        existingWin.ref.focus()
+        return
+      }
 
+      const {win} = this.openWindow("search", {})
+      win.ref.webContents.once("did-finish-load", () => {
+        sendTo(
+          win.ref.webContents,
+          ipc.windows.newSearchTab({...searchParams, isNewWin})
+        )
+      })
+    },
     openWindow(name: WindowName, winParams: $Shape<WindowParams> = {}) {
       let params = defaultWindowParams(winParams)
       let id = params.id
@@ -80,7 +104,10 @@ export default function windowManager() {
           if (!isQuitting) delete windows[id]
         })
 
-      windows[id] = {ref, name, lastFocused: new Date().getTime()}
+      const win = {ref, name, lastFocused: new Date().getTime()}
+      windows[id] = win
+
+      return {id, win}
     },
 
     openAbout() {

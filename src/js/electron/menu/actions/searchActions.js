@@ -7,24 +7,24 @@ import {
   appendQueryInclude,
   appendQueryNotIn,
   appendQuerySortBy
-} from "../../flows/searchBar/actions"
-import open from "../../lib/open"
-import {viewLogDetail} from "../../flows/viewLogDetail"
-import Log from "../../models/Log"
-import Modal from "../../state/Modal"
-import SearchBar from "../../state/SearchBar"
+} from "../../../flows/searchBar/actions"
+import open from "../../../lib/open"
+import {viewLogDetail} from "../../../flows/viewLogDetail"
+import Log from "../../../models/Log"
+import Modal from "../../../state/Modal"
+import SearchBar from "../../../state/SearchBar"
 import action from "./action"
-import brim from "../../brim"
-import submitSearch from "../../flows/submitSearch"
-import tab from "../../state/Tab"
-import virusTotal from "../../services/virusTotal"
-import {downloadPcap} from "../../flows/downloadPcap"
-import Layout from "../../state/Layout/actions"
+import brim from "../../../brim"
+import submitSearch from "../../../flows/submitSearch"
+import tab from "../../../state/Tab"
+import virusTotal from "../../../services/virusTotal"
+import {downloadPcap} from "../../../flows/downloadPcap"
+import Layout from "../../../state/Layout/actions"
 
-function buildActions() {
+function buildSearchActions() {
   return {
     countBy: action({
-      name: "cell-menu-count-by",
+      name: "search-cell-menu-count-by",
       label: "Count by field",
       listener(dispatch, field) {
         dispatch(appendQueryCountBy(field))
@@ -32,16 +32,16 @@ function buildActions() {
       }
     }),
     detail: action({
-      name: "cell-menu-detail",
+      name: "search-cell-menu-detail",
       label: "Open details",
       listener(dispatch, log) {
-        log = new Log(log.tuple, log.descriptor)
         dispatch(Layout.showRightSidebar())
+        log = new Log(log.tuple, log.descriptor)
         dispatch(viewLogDetail(log))
       }
     }),
     exclude: action({
-      name: "cell-menu-exclude",
+      name: "search-cell-menu-exclude",
       label: "Filter != value",
       listener(dispatch, field) {
         dispatch(appendQueryExclude(field))
@@ -49,7 +49,7 @@ function buildActions() {
       }
     }),
     freshInclude: action({
-      name: "cell-menu-fresh-include",
+      name: "search-cell-menu-fresh-include",
       label: "New search with this value",
       listener(dispatch, field) {
         field = brim.field(field)
@@ -59,7 +59,7 @@ function buildActions() {
       }
     }),
     fromTime: action({
-      name: "cell-menu-from-time",
+      name: "search-cell-menu-from-time",
       label: 'Use as "start" time',
       listener(dispatch, fieldData) {
         let field = brim.field(fieldData)
@@ -70,7 +70,7 @@ function buildActions() {
       }
     }),
     groupByDrillDown: action({
-      name: "cell-menu-pivot-to-logs",
+      name: "search-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
       listener(dispatch, program, log) {
         let newProgram = brim
@@ -86,7 +86,7 @@ function buildActions() {
       }
     }),
     include: action({
-      name: "cell-menu-include",
+      name: "search-cell-menu-include",
       label: "Filter = value",
       listener(dispatch, field) {
         dispatch(appendQueryInclude(field))
@@ -94,7 +94,7 @@ function buildActions() {
       }
     }),
     in: action({
-      name: "cell-menu-in",
+      name: "search-cell-menu-in",
       label: "Filter in field",
       listener(dispatch, {name, value, type}) {
         dispatch(appendQueryIn(brim.field({name, type, value})))
@@ -102,7 +102,7 @@ function buildActions() {
       }
     }),
     notIn: action({
-      name: "cell-menu-not-in",
+      name: "search-cell-menu-not-in",
       label: "Filter not in field",
       listener(dispatch, {name, value, type}) {
         dispatch(appendQueryNotIn(brim.field({name, type, value})))
@@ -110,7 +110,7 @@ function buildActions() {
       }
     }),
     logResult: action({
-      name: "cell-menu-log-result",
+      name: "search-cell-menu-log-result",
       label: "Log result to console",
       listener(_dispatch, field, log) {
         console.log(JSON.stringify(log))
@@ -118,7 +118,7 @@ function buildActions() {
       }
     }),
     pcaps: action({
-      name: "cell-menu-pcaps",
+      name: "search-cell-menu-pcaps",
       label: "Download PCAPS",
       listener(dispatch, log) {
         log = new Log(log.tuple, log.descriptor)
@@ -126,7 +126,7 @@ function buildActions() {
       }
     }),
     sortAsc: action({
-      name: "cell-menu-sort-asc",
+      name: "search-cell-menu-sort-asc",
       label: "Sort A...Z",
       listener(dispatch, field) {
         dispatch(appendQuerySortBy(field.name, "asc"))
@@ -134,7 +134,7 @@ function buildActions() {
       }
     }),
     sortDesc: action({
-      name: "cell-menu-sort-desc",
+      name: "search-cell-menu-sort-desc",
       label: "Sort Z...A",
       listener(dispatch, field) {
         dispatch(appendQuerySortBy(field.name, "desc"))
@@ -142,7 +142,7 @@ function buildActions() {
       }
     }),
     toTime: action({
-      name: "cell-menu-to-time",
+      name: "search-cell-menu-to-time",
       label: 'Use as "end" time',
       listener(dispatch, fieldData) {
         let field = brim.field(fieldData)
@@ -160,14 +160,14 @@ function buildActions() {
       }
     }),
     virusTotalRightclick: action({
-      name: "cell-menu-virus-total",
+      name: "search-cell-menu-virus-total",
       label: "VirusTotal Lookup",
       listener(_dispatch, field) {
         open(virusTotal.url(field.value))
       }
     }),
     whoisRightclick: action({
-      name: "cell-menu-who-is",
+      name: "search-cell-menu-who-is",
       label: "Whois Lookup",
       listener(dispatch, field) {
         dispatch(Modal.show("whois", {addr: field.value}))
@@ -176,4 +176,4 @@ function buildActions() {
   }
 }
 
-export default buildActions()
+export default buildSearchActions()

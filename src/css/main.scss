@@ -105,7 +105,6 @@
 @import "tab-bar";
 @import "tab";
 @import "tab-spinner";
-@import "tip";
 @import "column-description";
 @import "brand";
 @import "empty-search-page";
@@ -121,3 +120,7 @@
 @import "toolbar-button";
 @import "load-files-input";
 @import "ingest-warnings-modal";
+@import "log-detail-window";
+
+/* Common */
+@import "history-buttons";

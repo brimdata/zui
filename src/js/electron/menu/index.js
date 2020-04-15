@@ -4,7 +4,8 @@ import {BrowserWindow, Menu} from "electron"
 import type {$WindowManager} from "../tron/windowManager"
 import actions from "./actions"
 import appMenu from "./appMenu"
-import fieldContextMenu from "./fieldContextMenu"
+import searchFieldContextMenu from "./searchFieldContextMenu"
+import detailFieldContextMenu from "./detailFieldContextMenu"
 
 export type $MenuItem =
   | {click?: Function, label: string, enabled?: boolean}
@@ -28,6 +29,7 @@ function setMenu(manager: $WindowManager) {
 export default {
   setMenu,
   actions,
-  fieldContextMenu,
+  searchFieldContextMenu,
+  detailFieldContextMenu,
   separator: () => ({type: "separator"})
 }

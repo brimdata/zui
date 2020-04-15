@@ -28,7 +28,7 @@ export default function contextMenuShim(
       LOG.debug(
         'Creating menu from log entry on field "' + field.toString() + '"...'
       )
-      let ipcMenu = menu.fieldContextMenu(program, columns, space)(
+      let ipcMenu = menu.searchFieldContextMenu(program, columns, space)(
         field,
         log,
         false

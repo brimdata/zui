@@ -6,14 +6,10 @@ import React from "react"
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../state/Spaces/types"
 import {XRightPaneExpander} from "./RightPaneExpander"
-import {downloadPcap} from "../flows/downloadPcap"
-import Back from "./icons/back-arrow.svg"
-import Forward from "./icons/forward-arrow.svg"
 import Layout from "../state/Layout"
 import Log from "../models/Log"
 import LogDetails from "../state/LogDetails"
 import LogDetailsComponent from "./LogDetails"
-import PacketsButton from "./PacketsButton"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -22,9 +18,12 @@ import Pane, {
   Center,
   PaneBody
 } from "./Pane"
-import RightPaneCollapser from "./RightPaneCollapser"
 import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
+import HistoryButtons from "./common/HistoryButtons"
+import CloseButton from "./CloseButton"
+import ExpandWindow from "../icons/ExpandWindow"
+import {openLogDetailsWindow} from "../flows/openLogDetailsWindow"
 
 type StateProps = {|
   currentLog: Log,
@@ -50,10 +49,6 @@ export default class RightPane extends React.Component<Props, S> {
     this.props.dispatch(Layout.setRightSidebarWidth(Math.min(width, max)))
   }
 
-  onPacketsClick = () => {
-    this.props.dispatch(downloadPcap(this.props.currentLog))
-  }
-
   render() {
     const {prevExists, nextExists, isOpen, width, currentLog} = this.props
 
@@ -70,37 +65,31 @@ export default class RightPane extends React.Component<Props, S> {
         {currentLog && (
           <PaneHeader>
             <Left>
-              <div className="history-buttons">
-                <button
-                  className="panel-button back-button"
-                  disabled={!prevExists}
-                  onClick={() => this.props.dispatch(LogDetails.back())}
-                >
-                  <Back />
-                </button>
-                <button
-                  className="panel-button forward-button"
-                  onClick={() => this.props.dispatch(LogDetails.forward())}
-                  disabled={!nextExists}
-                >
-                  <Forward />
-                </button>
-              </div>
+              <HistoryButtons
+                prevExists={prevExists}
+                nextExists={nextExists}
+                backFunc={() => this.props.dispatch(LogDetails.back())}
+                forwardFunc={() => this.props.dispatch(LogDetails.forward())}
+              />
             </Left>
-            <Center>
+            <Center className="log-detail-center">
               <PaneTitle>Log Details</PaneTitle>
+              <ExpandWindow
+                onClick={() => this.props.dispatch(openLogDetailsWindow())}
+                className="panel-button"
+              />
             </Center>
             <Right>
-              <div className="toolbar">
-                <PacketsButton label={false} id="detail-packets" />
-              </div>
+              <CloseButton
+                className="panel-button close-button"
+                onClick={() => this.props.dispatch(Layout.hideRightSidebar())}
+              />
             </Right>
           </PaneHeader>
         )}
         <PaneBody>
           <LogDetailsComponent />
         </PaneBody>
-        <RightPaneCollapser />
       </Pane>
     )
   }

@@ -18,3 +18,11 @@
   transition: opacity 150ms;
   padding: 3px 8px;
 }
+
+.brim-tooltip-show-hover {
+  pointer-events: auto !important;
+  &:hover {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}

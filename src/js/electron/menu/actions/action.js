@@ -1,7 +1,7 @@
 /* @flow */
 import {BrowserWindow, ipcRenderer, MenuItem} from "electron"
 
-import type {Dispatch} from "../../state/types"
+import type {Dispatch} from "../../../state/types"
 
 type Props = {
   name: string,

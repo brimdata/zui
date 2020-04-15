@@ -12,9 +12,14 @@ import PanelHeading from "./PanelHeading"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
 import Table from "../Tables/Table"
-import menu from "../../electron/menu"
+import BrimTooltip from "../BrimTooltip"
 
-export default function FieldsPanel({log}: {log: Log}) {
+type Props = {
+  log: Log,
+  contextMenu: Function
+}
+
+export default function FieldsPanel({log, contextMenu}: Props) {
   log = log.exclude("_td")
   let program = useSelector(SearchBar.getSearchProgram)
   let tableColumns = useSelector(Columns.getCurrentTableColumns)
@@ -24,42 +29,38 @@ export default function FieldsPanel({log}: {log: Log}) {
   const fieldAt = (log, index) => log.getFieldAt(index)
   const onContextMenu = (log, index) => {
     let field = fieldAt(log, index)
-    let m = menu.fieldContextMenu(program, columns, space)(field, log, false)
+    let m = contextMenu(program, columns, space)(field, log, false)
     return () => showContextMenu(m)
   }
 
   // Tooltip code
-  let [show, setShow] = useState(false)
   let [hovered, setHovered] = useState({name: "", type: ""})
-  let [anchor, setAnchor] = useState(null)
   let path = log.getString("_path")
 
   function enter(e, column) {
     setHovered(column)
-    setAnchor(e.currentTarget)
-    setShow(true)
   }
 
   return (
     <div className="fields-table-panel detail-panel">
       <PanelHeading>Fields</PanelHeading>
-      <ColumnDescription
-        show={show}
-        anchor={anchor}
-        column={hovered}
-        path={path}
-      />
       <Table className="vertical-table">
         <tbody>
           {log.descriptor.map((column, index) => (
             <tr key={index}>
               <th>
                 <span
+                  data-tip="column-description"
+                  data-place="right"
+                  data-effect="solid"
+                  data-delay-show={500}
                   onMouseEnter={(e) => enter(e, column)}
-                  onMouseLeave={() => setShow(false)}
                 >
                   {column.name}
                 </span>
+                <BrimTooltip className="brim-tooltip-show-hover">
+                  <ColumnDescription column={hovered} path={path} />
+                </BrimTooltip>
               </th>
               <td onContextMenu={onContextMenu(log, index)}>
                 <FieldCell field={fieldAt(log, index)} />
