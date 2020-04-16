@@ -3,7 +3,6 @@
 import type {
   DOWNLOADS_HIDE,
   DOWNLOADS_SHOW,
-  INGESTING_SET,
   INVESTIGATION_VIEW_SET,
   InvestigationView,
   LEFT_SIDEBAR_HIDE,
@@ -47,10 +46,5 @@ export default {
   setInvestigationView: (view: InvestigationView): INVESTIGATION_VIEW_SET => ({
     type: "INVESTIGATION_VIEW_SET",
     view
-  }),
-
-  setIsIngesting: (value: boolean): INGESTING_SET => ({
-    type: "INGESTING_SET",
-    value
   })
 }

@@ -27,10 +27,7 @@ export const newAppInstance = (name: string, idx: number): Application => {
 
   // https://github.com/electron-userland/spectron#new-applicationoptions
   let appArgs = {
-    // Some version of Spectron choose a random debugging port in the 9000-9999
-    // range. Since zqd uses 9867, set this to 9999.
     chromeDriverArgs: [
-      "--remote-debugging-port=9999",
       `--user-data-dir=${userDataDir}`
     ],
     startTimeout: 60000,
