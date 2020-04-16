@@ -97,8 +97,7 @@ export default function windowManager() {
       if (win) win.close()
     },
 
-    destroyWindow() {
-      let win = BrowserWindow.getFocusedWindow()
+    destroyWindow(win: BrowserWindow) {
       if (win) win.destroy()
     }
   }

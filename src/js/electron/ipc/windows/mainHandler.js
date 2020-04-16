@@ -35,8 +35,9 @@ export default function(manager: $WindowManager) {
     })
   })
 
-  ipcMain.handle("windows:destroy", () => {
-    manager.destroyWindow()
+  ipcMain.handle("windows:destroy", (e) => {
+    let win = BrowserWindow.fromWebContents(e.sender)
+    manager.destroyWindow(win)
   })
 
   ipcMain.handle("windows:log", (e, {id, args}) => {
