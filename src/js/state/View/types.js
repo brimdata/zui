@@ -6,8 +6,7 @@ export type ViewState = {
   downloadsIsOpen: boolean,
   leftSidebarWidth: number,
   timeZone: string,
-  investigationView: InvestigationView,
-  isIngesting: boolean
+  investigationView: InvestigationView
 }
 
 export type ViewAction =
@@ -19,12 +18,6 @@ export type ViewAction =
   | DOWNLOADS_SHOW
   | DOWNLOADS_HIDE
   | INVESTIGATION_VIEW_SET
-  | INGESTING_SET
-
-export type INGESTING_SET = {
-  type: "INGESTING_SET",
-  value: boolean
-}
 
 export type LEFT_SIDEBAR_SHOW = {
   type: "LEFT_SIDEBAR_SHOW"

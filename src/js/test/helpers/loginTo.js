@@ -4,6 +4,7 @@ import {initSpace} from "../../flows/initSpace"
 import Clusters from "../../state/Clusters"
 import MockBoomClient from "../MockBoomClient"
 import Search from "../../state/Search"
+import Spaces from "../../state/Spaces"
 import fixtures from "../fixtures"
 import initTestStore from "../initTestStore"
 import mockZealot from "../mockZealot"
@@ -21,6 +22,7 @@ export default async function loginTo(clusterName: string, spaceName: string) {
 
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Search.setCluster(cluster.id))
+  store.dispatch(Spaces.setDetail(cluster.id, space))
   return store.dispatch(initSpace(space.name, mockZealot)).then(() => {
     return {store, boom, cluster}
   })

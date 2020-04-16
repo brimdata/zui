@@ -7,9 +7,6 @@ export type IpcMsg =
   | WindowsCloseMsg
   | WindowsInitialStateMsg
   | WindowsDestroyMsg
-  | ZqdIngestMsg
-  | ZqdInfoMsg
-  | ZqdSubscribeMsg
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
 
@@ -30,20 +27,6 @@ export type WindowsInitialStateMsg = {
 
 export type WindowsDestroyMsg = {
   channel: "windows:destroy"
-}
-
-export type ZqdIngestMsg = {
-  channel: "zqd:ingest",
-  space: string,
-  paths: string[]
-}
-
-export type ZqdInfoMsg = {
-  channel: "zqd:info"
-}
-
-export type ZqdSubscribeMsg = {
-  channel: "zqd:subscribe"
 }
 
 export type GlobalStoreInitMsg = {
