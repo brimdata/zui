@@ -27,7 +27,7 @@ export function retry(
 export const retryUntil = (
   f: PromiseFunc,
   cond_f: (*) => boolean,
-  attempts: number = 5,
+  attempts: number = 60,
   delay: number = 1000
 ) =>
   // Retry f until a condition is met. cond_f receives the value from f after
