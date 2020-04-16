@@ -33,8 +33,8 @@ function writeZqdConfigFile(): string {
   const zqdLogFile = join(logDir, "zqd-core.log")
   const accessLogFile = join(logDir, "zqd-access.log")
 
-  log.info("zqd core log at ", zqdLogFile)
-  log.info("zqd access log at ", accessLogFile)
+  log.info("zqd core log", zqdLogFile)
+  log.info("zqd access log", accessLogFile)
 
   const data = `
 logger:
@@ -50,7 +50,7 @@ logger:
 `
 
   const confFile = join(app.getPath("userData"), "zqd-config.yaml")
-  log.info("zqd config at ", confFile)
+  log.info("zqd config", confFile)
 
   outputFileSync(confFile, data)
   return confFile
@@ -112,7 +112,7 @@ export class ZQD {
       "-config",
       confFile
     ]
-    log.info("spawning zqd: ", args.join(" "))
+    log.info("spawning zqd:", zqdCommand(), args.join(" "))
 
     this.zqd = spawn(zqdCommand(), args, opts)
     this.zqd.on("error", (err) => {

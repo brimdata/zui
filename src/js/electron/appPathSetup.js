@@ -20,8 +20,6 @@ function appPathSetup() {
     // via the user-data-dir chromeDriver command line argument,
     // so don't override it.
   }
-  // We don't have cross-user state sharing, so use userData for appData.
-  app.setPath("appData", path.join(app.getPath("userData"), "appData"))
   // Logs go under userData, to make finding logs consistent across platforms.
   app.setPath("logs", path.join(app.getPath("userData"), "logs"))
 
@@ -29,15 +27,9 @@ function appPathSetup() {
     return path.join(app.getPath("logs"), variables.fileName)
   }
 
+  // prettier-ignore
   log.info(
-    "app paths: getAppPath",
-    app.getAppPath(),
-    "appData",
-    app.getPath("appData"),
-    "userData",
-    app.getPath("userData"),
-    "logs",
-    app.getPath("logs")
+    `app paths: getAppPath=${app.getAppPath()} userData=${app.getPath("userData" )} logs=${app.getPath("logs")}`
   )
 }
 
