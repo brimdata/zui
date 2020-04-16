@@ -22,7 +22,7 @@ function appPathSetup() {
   }
   // We don't have cross-user state sharing, so use userData for appData.
   app.setPath("appData", path.join(app.getPath("userData"), "appData"))
-  // Logs go under userData, to make finding logs consisten across platforms.
+  // Logs go under userData, to make finding logs consistent across platforms.
   app.setPath("logs", path.join(app.getPath("userData"), "logs"))
 
   log.transports.file.resolvePath = (variables) => {
