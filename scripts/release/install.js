@@ -2,6 +2,7 @@
 const fs = require("fs")
 const os = require("os")
 const installer = require("electron-winstaller")
+const debInstaller = require("electron-installer-debian")
 const createDMG = require("electron-installer-dmg")
 const createZip = require("electron-installer-zip")
 const path = require("path")
@@ -62,6 +63,23 @@ module.exports = {
         // up exception may contain a passphrase.
         console.log("Error building win32 installer")
       })
+  },
+
+  debian: function() {
+    console.log("Building installer for debian")
+    return debInstaller({
+      src: "./dist/packages/Brim-linux-x64",
+      dest: out,
+      arch: "amd64",
+      rename: (dest) => {
+        return path.join(dest, "<%= name %>_<%= arch %>.deb")
+      },
+      options: {
+        homepage: "https://www.brimsecurity.com",
+        icon: "./dist/static/AppIcon.png",
+        maintainer: "Brim Security, Inc. <support@brimsecurity.com>"
+      }
+    })
   }
 }
 

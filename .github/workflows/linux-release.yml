@@ -1,0 +1,46 @@
+name: Brim linux release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Set NPM Cache Directory
+      id: set-npm-cache-dir
+      run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
+    - name: Clear Extraneous Runner Cache
+      run: |
+          cachedir=${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+          rm -rf "${cachedir:?}"
+      shell: bash
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules3
+      with:
+        path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+    - run: npm install --no-audit
+    - run: npm run build
+    - name: build package
+      run: |
+        node ./scripts/release --linux
+    - name: upload release artifact
+      uses: svenstaro/upload-release-action@1.1.0
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: dist/installers/brim_amd64.deb
+        asset_name: brim_amd64.deb
+        overwrite: true
