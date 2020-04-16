@@ -4,6 +4,7 @@
     "!**/flow-typed/**",
     "!**/test/**"
   ],
+  "globalSetup": "<rootDir>/globalSetup.js",
   "reporters": [
     "default",
     "jest-junit"
