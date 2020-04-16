@@ -1,9 +1,10 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect} from "react"
+import remote from "electron"
 
 import BrimTextLogo from "./BrimTextLogo"
-import PcapFileInput from "./PcapFileInput"
+import LoadFilesInput from "./LoadFilesInput"
 import SavedSpacesList from "./SavedSpacesList"
 import SpaceDeletedNotice from "./SpaceDeletedNotice"
 import Spaces from "../state/Spaces"
@@ -43,11 +44,27 @@ export default function TabWelcome() {
           </>
         )}
         <section>
-          <label>Open File</label>
-          <PcapFileInput onChange={onChange} />
-          <p className="accepted-files">
-            Accepted formats are <b>.pcap</b> and <b>.pcapng</b>.
-          </p>
+          <label>Load Files</label>
+          <LoadFilesInput onChange={onChange} />
+          <footer>
+            <p>
+              <b>Accepted formats:</b> .pcap, .pcapng, and{" "}
+              <a
+                onClick={() =>
+                  remote.shell.openExternal(
+                    "https://docs.zeek.org/en/current/scripts/base/frameworks/logging/writers/ascii.zeek.html"
+                  )
+                }
+              >
+                Zeek ASCII/JSON
+              </a>
+              .
+            </p>
+            <p>
+              <b>Note:</b> Multiple Zeek logs can be loaded at once, but only
+              one pcap.
+            </p>
+          </footer>
         </section>
       </div>
     </div>
