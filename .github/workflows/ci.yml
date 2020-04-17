@@ -101,4 +101,4 @@ jobs:
       if: failure()
       with:
         name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
-        path: /var/tmp/brimsec/logs
+        path: /var/tmp/brimsec/itest

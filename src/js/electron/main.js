@@ -1,5 +1,9 @@
 /* @flow */
 
+import {appPathSetup} from "./appPathSetup"
+// app path and log setup should happen before other imports.
+appPathSetup()
+
 // $FlowFixMe
 import createGlobalStore from "../state/createGlobalStore"
 import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
@@ -19,6 +23,7 @@ import path from "path"
 import {ZQD} from "../zqd/zqd"
 import electronIsDev from "./isDev"
 import {setupAutoUpdater} from "./autoUpdater"
+import log from "electron-log"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
@@ -42,7 +47,7 @@ async function main() {
     try {
       setupAutoUpdater()
     } catch (err) {
-      console.error("Failed to initiate autoUpdater: " + err)
+      log.error("Failed to initiate autoUpdater: " + err)
     }
   }
 
@@ -71,18 +76,18 @@ async function main() {
   app.on("web-contents-created", (event, contents) => {
     contents.on("will-attach-webview", (e) => {
       e.preventDefault()
-      console.error("Security Warning: Prevented creation of webview")
+      log.error("Security Warning: Prevented creation of webview")
     })
 
     contents.on("will-navigate", (e, url) => {
       if (contents.getURL() === url) return // Allow reloads
       e.preventDefault()
-      console.error(`Security Warning: Prevented navigation to ${url}`)
+      log.error(`Security Warning: Prevented navigation to ${url}`)
     })
 
     contents.on("new-window", (e) => {
       e.preventDefault()
-      console.error("Security Warning: Prevented new window from renderer")
+      log.error("Security Warning: Prevented new window from renderer")
     })
   })
 }

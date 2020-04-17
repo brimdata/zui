@@ -1,18 +1,16 @@
 /* @flow */
 
-import {writeFileSync} from "fs"
+import {writeFileSync, mkdirpSync} from "fs-extra"
 import crypto from "crypto"
 import path from "path"
-
+import electronPath from "electron"
 import {Application} from "spectron"
 
-import {LOG, LOGDIR} from "./log"
+import {itestDir} from "./env"
+import {LOG} from "./log"
 import {isCI, repoDir} from "../lib/env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
-import {workspaceLogfile} from "../lib/log"
-
-const electronPath = require("electron")
 
 const appStep = async (stepMessage, f) => {
   LOG.debug(`Starting step "${stepMessage}"`)
@@ -23,15 +21,16 @@ const appStep = async (stepMessage, f) => {
 
 export const newAppInstance = (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
+  const userDataDir = path.resolve(path.join(itestDir(), name, idx.toString()))
+  mkdirpSync(userDataDir)
 
   // https://github.com/electron-userland/spectron#new-applicationoptions
   let appArgs = {
+    chromeDriverArgs: [`--user-data-dir=${userDataDir}`],
     startTimeout: 60000,
     waitTimeout: 60000,
-    chromeDriverLogPath: workspaceLogfile(
-      name + idx.toString() + "-chromedriver.log"
-    ),
-    webdriverLogPath: workspaceLogfile(name + "-webdriverLogFiles"),
+    chromeDriverLogPath: path.join(userDataDir, "chromedriver.log"),
+    webdriverLogPath: path.join(userDataDir, "webdriverLogFiles"),
     // Latest compatible spectron and webdriverio lead to the
     // following:
     //  console.warn node_modules/webdriverio/build/lib/helpers/deprecationWarning.js:12
@@ -52,10 +51,10 @@ export const newAppInstance = (name: string, idx: number): Application => {
 
   if (isCI() && process.platform === "darwin") {
     appArgs = {...appArgs, path: macInstallPath}
-    LOG.debug("Chose installed MacOS app location")
+    LOG.debug("Chose installed MacOS app location", macInstallPath)
   } else {
     appArgs = {...appArgs, path: electronPath, args: [repoDir()]}
-    LOG.debug("Chose working copy app location")
+    LOG.debug("Chose working copy app location", electronPath)
   }
   return new Application(appArgs)
 }
@@ -327,7 +326,7 @@ export const takeScreenshot = async (app: Application) => {
   try {
     let image = await app.browserWindow.capturePage()
     let filePath = path.join(
-      LOGDIR,
+      itestDir(),
       "failure-" + crypto.randomBytes(4).toString("hex") + ".png"
     )
     writeFileSync(filePath, image)

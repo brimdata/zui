@@ -2,8 +2,7 @@ node_modules
 dist
 releases
 coverage
-logs
 junit.xml
-data
 zdeps
 .idea
+run

@@ -1,5 +1,5 @@
 /* @flow */
 const fs = require("fs-extra")
 
-fs.remove("dist")
-console.log("Removed dist folder")
+fs.removeSync("dist")
+fs.removeSync("run")
