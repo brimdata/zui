@@ -23,6 +23,11 @@ export default {
     let clus = getCluster(state, clusterId)
     let space = clus[name]
     if (space) return space.ingest_progress
+  },
+  getIngestWarnings: (clusterId: string, name: string) => (state: State) => {
+    let cluster = getCluster(state, clusterId)
+    let space = cluster[name]
+    return space.ingest_warnings || []
   }
 }
 

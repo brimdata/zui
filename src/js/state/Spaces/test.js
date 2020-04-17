@@ -84,3 +84,27 @@ test("only cares about spaces actions", () => {
   store.dispatch({type: "NON_SPACE"})
   expect(Spaces.raw(store.getState())).toEqual({})
 })
+
+test("ingest warnings", () => {
+  let state = store.dispatchAll([
+    Spaces.setDetail("cluster1", detail),
+    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 1"),
+    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 2")
+  ])
+
+  expect(Spaces.getIngestWarnings("cluster1", detail.name)(state)).toEqual([
+    "Problem 1",
+    "Problem 2"
+  ])
+})
+
+test("clear warnings", () => {
+  let state = store.dispatchAll([
+    Spaces.setDetail("cluster1", detail),
+    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 1"),
+    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 2"),
+    Spaces.clearIngestWarnings("cluster1", detail.name)
+  ])
+
+  expect(Spaces.getIngestWarnings("cluster1", detail.name)(state)).toEqual([])
+})
