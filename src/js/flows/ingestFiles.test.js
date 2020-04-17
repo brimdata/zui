@@ -1,6 +1,7 @@
 /* @flow */
 import fsExtra from "fs-extra"
 
+import Notice from "../state/Notice"
 import Tab from "../state/Tab"
 import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
@@ -18,6 +19,7 @@ let mockClient = {
         packet_support: true
       })
   },
+  logs: {post: function*() {}},
   pcaps: {
     post: function*() {
       yield {type: "TaskStart"}
@@ -51,5 +53,47 @@ test("opening a packet", async () => {
     ingest_progress: null
   })
 
+  return fsExtra.remove("tmp")
+})
+
+test("when there is an error", async () => {
+  let store = initTestStore()
+  let globalDispatch = store.dispatch
+  mockClient.pcaps.post = function*() {
+    yield {type: "TaskEnd", error: {error: "Boom"}}
+  }
+
+  await store.dispatch(
+    ingestFiles([itestFile("sample.pcap")], mockClient, globalDispatch)
+  )
+
+  let state = store.getState()
+  expect(Tab.spaceName(state)).toEqual("")
+  expect(Notice.getError(state)).toEqual({
+    details: ["Detail: Boom"],
+    message: "Unable to generate full summary logs from PCAP",
+    type: "PCAPIngestError"
+  })
+  return fsExtra.remove("tmp")
+})
+
+test("a zeek ingest error", async () => {
+  let store = initTestStore()
+  let globalDispatch = store.dispatch
+  mockClient.logs.post = function*() {
+    yield {type: "TaskEnd", error: {error: "Boom"}}
+  }
+
+  await store.dispatch(
+    ingestFiles([itestFile("sample.tsv")], mockClient, globalDispatch)
+  )
+
+  let state = store.getState()
+  expect(Tab.spaceName(state)).toEqual("")
+  expect(Notice.getError(state)).toEqual({
+    details: ["Detail: Boom"],
+    message: "Unable to load these logs",
+    type: "LogsIngestError"
+  })
   return fsExtra.remove("tmp")
 })

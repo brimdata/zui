@@ -105,14 +105,14 @@ const setSpace = (dispatch, tabId) => ({
   do({name}) {
     dispatch(Search.setSpace(name, tabId))
   },
-  undo({name}) {
-    dispatch(Search.setSpace(name, tabId))
+  undo() {
+    dispatch(Search.setSpace("", tabId))
   }
 })
 
 const trackProgress = (client, dispatch, clusterId) => {
   return {
-    async do({name, stream}) {
+    async do({name, stream, endpoint}) {
       function setProgress(n) {
         dispatch(Spaces.setIngestProgress(clusterId, name, n))
       }
@@ -137,7 +137,13 @@ const trackProgress = (client, dispatch, clusterId) => {
             updateSpaceDetails()
             break
           case "TaskEnd":
-            if (status.error) throw errors.pcapIngest(status.error.error)
+            if (status.error) {
+              if (endpoint === "pcap") {
+                throw errors.pcapIngest(status.error.error)
+              } else {
+                throw errors.logsIngest(status.error.error)
+              }
+            }
             break
         }
       }
