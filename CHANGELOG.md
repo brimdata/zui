@@ -1,5 +1,5 @@
 ## v0.8.0
-* Update zq to v0.11.1 (#640)
+* Update zq to [v0.11.1](https://github.com/brimsec/zq/releases/tag/v0.11.1) (fixes an issue that was causing the histogram to draw incorrectly) (#640)
 
 ## v0.7.0
 
