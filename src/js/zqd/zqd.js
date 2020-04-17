@@ -81,9 +81,11 @@ export class ZQD {
   start() {
     mkdirSync(this.root, {recursive: true, mode: 0o755})
 
-    // We saw errors on command.com vs powershell when we tried to clone
+    // We saw errors on cmd.com vs powershell when we tried to clone
     // process.env and then determine whether to use "PATH" or "Path".
-    // Directly altering process.env is safe and less error prone.
+    // Windows environment variables are case-insensitive; see the
+    // process.env docs. Directly altering process.env is safe and
+    // less error prone.
     const sep = process.platform == "win32" ? ";" : ":"
     process.env["PATH"] = [zqdPath, zqdZeekPath, process.env["PATH"]].join(sep)
 
