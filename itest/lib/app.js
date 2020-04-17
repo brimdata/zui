@@ -3,15 +3,14 @@
 import {writeFileSync, mkdirpSync} from "fs-extra"
 import crypto from "crypto"
 import path from "path"
-
+import electronPath from "electron"
 import {Application} from "spectron"
 
-import {LOG, LOGDIR} from "./log"
+import {itestDir} from "./env"
+import {LOG} from "./log"
 import {isCI, repoDir} from "../lib/env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
-
-const electronPath = require("electron")
 
 const appStep = async (stepMessage, f) => {
   LOG.debug(`Starting step "${stepMessage}"`)
@@ -22,7 +21,7 @@ const appStep = async (stepMessage, f) => {
 
 export const newAppInstance = (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
-  const userDataDir = path.resolve(path.join(LOGDIR, name, idx.toString()))
+  const userDataDir = path.resolve(path.join(itestDir(), name, idx.toString()))
   mkdirpSync(userDataDir)
 
   // https://github.com/electron-userland/spectron#new-applicationoptions
@@ -327,7 +326,7 @@ export const takeScreenshot = async (app: Application) => {
   try {
     let image = await app.browserWindow.capturePage()
     let filePath = path.join(
-      LOGDIR,
+      itestDir(),
       "failure-" + crypto.randomBytes(4).toString("hex") + ".png"
     )
     writeFileSync(filePath, image)
