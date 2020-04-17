@@ -87,18 +87,14 @@ export class ZQD {
   start() {
     mkdirpSync(this.root, {recursive: true, mode: 0o755})
 
-    // PATH must include both the zqd and zeek bin directories, as zqd depends
-    // on having zeek available in its environment PATH.
+    // We saw errors on command.com vs powershell when we tried to clone
+    // process.env and then determine whether to use "PATH" or "Path".
+    // Directly altering process.env is safe and less error prone.
     const sep = process.platform == "win32" ? ";" : ":"
-    const pathKey = process.platform == "win32" ? "Path" : "PATH"
-    const zqdEnvironment = _merge({}, process.env)
-    zqdEnvironment[pathKey] = [zqdPath, zqdZeekPath, process.env[pathKey]].join(
-      sep
-    )
+    process.env["PATH"] = [zqdPath, zqdZeekPath, process.env["PATH"]].join(sep)
 
     const opts = {
-      stdio: "inherit",
-      env: zqdEnvironment
+      stdio: "inherit"
     }
 
     const confFile = writeZqdConfigFile()
