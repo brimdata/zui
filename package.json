@@ -77,7 +77,6 @@
     "cpx": "^1.5.0",
     "electron": "^7.1.9",
     "electron-devtools-installer": "^2.2.4",
-    "electron-installer-debian": "^3.0.0",
     "electron-installer-dmg": "^3.0.0",
     "electron-notarize": "^0.2.1",
     "electron-packager": "^14.1.1",
@@ -143,5 +142,8 @@
     "source-map-support": "^0.5.16",
     "valid-url": "^1.0.9",
     "zq": "brimsec/zq#v0.11.1"
+  },
+  "optionalDependencies": {
+    "electron-installer-debian": "^3.0.0"
   }
 }
