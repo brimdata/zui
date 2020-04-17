@@ -1,3 +1,6 @@
+## v0.8.0
+* Update zq to v0.11.1 (#640)
+
 ## v0.7.0
 
 * Introduce versioning of app state (**NOTE**: prior state such as Search History will be lost on upgrade to this version) (#587)
