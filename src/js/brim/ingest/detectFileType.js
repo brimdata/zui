@@ -1,5 +1,4 @@
 /* @flow */
-
 import fs from "fs"
 import readline from "readline"
 
@@ -8,13 +7,15 @@ const PCAP_2_HEX = "a1b2c3d4"
 const PCAPNG_HEX = "0a0d0d0a"
 const PCAP_HEXES = [PCAP_1_HEX, PCAP_2_HEX, PCAPNG_HEX]
 
-type IngestableType = "pcap" | "zeek" | "unknown"
+export type IngestFileType = "pcap" | "json" | "zeek" | "unknown"
 
-export default async function fileType(path: string): Promise<IngestableType> {
+export default async function(path: string): Promise<IngestFileType> {
   if (await isPcap(path)) {
     return "pcap"
-  } else if ((await isZeekAscii(path)) || (await isZeekJson(path))) {
+  } else if (await isZeekAscii(path)) {
     return "zeek"
+  } else if (await isZeekJson(path)) {
+    return "json"
   } else {
     return "unknown"
   }

@@ -8,10 +8,10 @@ import animation from "./animation"
 import date from "./date"
 import doc from "./doc"
 import file from "./file"
-import fileType from "./fileType"
 import keep from "./keep"
 import obj from "./obj"
 import open from "./open"
+import transaction from "./transaction"
 import win from "./win"
 
 let array = {
@@ -24,7 +24,6 @@ let array = {
 
 export default {
   file,
-  fileType,
   keep,
   obj,
   doc,
@@ -33,6 +32,7 @@ export default {
   animation,
   open,
   date,
+  transaction,
   on: (...args: *) => document.addEventListener(...args),
   off: (...args: *) => document.removeEventListener(...args),
   // $FlowFixMe Everytime I use filter it doesn't like it

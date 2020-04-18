@@ -8,6 +8,7 @@ import {
   fetchPromise
 } from "./fetcher"
 import defaults from "./defaults"
+import logsApi, {type LogsPostArgs} from "./logsApi"
 import pcapsApi, {type PcapsGetArgs, type PcapsPostArgs} from "./pcapsApi"
 import searchApi from "./searchApi"
 import spacesApi, {type SpacesCreateArgs} from "./spacesApi"
@@ -64,6 +65,9 @@ function client(hostUrl: string) {
     pcaps: {
       post: (args: PcapsPostArgs) => sendStream(pcapsApi.post(args)),
       get: (args: PcapsGetArgs) => send(pcapsApi.get(args))
+    },
+    logs: {
+      post: (args: LogsPostArgs) => sendStream(logsApi.post(args))
     },
     search(zql: string, args: ZealotSearchArgs = {}) {
       let options = {...searchArgs, ...args}

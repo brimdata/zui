@@ -52,7 +52,7 @@ describe("spaces api", () => {
   })
 })
 
-describe("packets api", () => {
+describe("ingest api", () => {
   let client = zealot.client("localhost:9867")
 
   test("get pcaps", () => {
@@ -70,5 +70,23 @@ describe("packets api", () => {
       path: "/space/default/packet",
       body: expect.any(String)
     })
+  })
+
+  test("post zeek", () => {
+    let paths = ["~/zeek/1.log", "~/zeek/2.log"]
+    expect(client.inspect().logs.post({space: "default", paths})).toEqual({
+      method: "POST",
+      path: "/space/default/log",
+      body: JSON.stringify({paths})
+    })
+  })
+
+  test("post zeek json with default types", () => {
+    let paths = ["~/zeek/1.log", "~/zeek/2.log"]
+    let data = client
+      .inspect()
+      .logs.post({space: "default", paths, types: "default"})
+
+    expect(JSON.parse(data.body).json_types_config).toEqual(expect.any(Object))
   })
 })

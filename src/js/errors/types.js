@@ -1,6 +1,9 @@
 /* @flow */
 
-export type BrimErrorType = "PCAPIngestError" | "NetworkError"
+export type BrimErrorType =
+  | "PCAPIngestError"
+  | "NetworkError"
+  | "LogsIngestError"
 
 export type BrimError = {
   type: BrimErrorType,

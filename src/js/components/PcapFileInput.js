@@ -21,6 +21,7 @@ export default function PcapFileInput({onChange}: Props) {
       <ArrowOrangeSvg className="upload-arrow" />
       <input
         type="file"
+        multiple
         title=""
         onChange={_onChange}
         {...reactElementProps("pcapsFileInput")}
