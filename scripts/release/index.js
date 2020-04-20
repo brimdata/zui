@@ -8,6 +8,7 @@ const install = require("./install")
 program
   .option("--win32", "Release for Windows")
   .option("--darwin", "Release for macOS")
+  .option("--linux", "Release for Linux")
   .option("--sign", "Sign package (macOS only)", false)
   .option("--notarize", "Notarize package (macOS only)", false)
   .option(
@@ -41,5 +42,6 @@ program
           certificatePassword: cmd.windowsCertificatePassword
         })
       )
+    if (cmd.linux) pack.linux().then(install.debian)
   })
   .parse(process.argv)

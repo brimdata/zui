@@ -37,5 +37,13 @@ module.exports = {
     }).then(() => {
       console.log("Built package for win32 in " + opts.out)
     })
+  },
+  linux: function() {
+    return packager({
+      ...opts,
+      platform: "linux"
+    }).then(() => {
+      console.log("Built package for linux in " + opts.out)
+    })
   }
 }
