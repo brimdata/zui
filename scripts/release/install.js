@@ -88,7 +88,7 @@ module.exports = {
   },
 
   redhat: function() {
-    console.log("Building installer for redhat")
+    console.log("Building rpm package installer")
     return installerRedhat({
       ...defaultLinuxOpts,
       ext: "rpm",

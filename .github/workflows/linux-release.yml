@@ -35,9 +35,8 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - run: npm install --no-audit
     - run: npm run build
-    - name: build package
-      run: |
-        node ./scripts/release --linux
+    - name: build packages
+      run: node ./scripts/release --linux
     - name: upload release artifact
       uses: svenstaro/upload-release-action@1.1.0
       with:
