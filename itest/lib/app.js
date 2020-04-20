@@ -88,7 +88,7 @@ export const waitForSearch = (app: Application) => {
 
 export const waitForNewTab = (app: Application) => {
   return appStep("wait for new tab to appear", () =>
-    app.client.waitForVisible(selectors.pcaps.fileInput)
+    app.client.waitForVisible(selectors.ingest.filesButton)
   )
 }
 
@@ -313,10 +313,10 @@ export const pcapIngestSample = async (app: Application) => {
   const pcapFile = path.normalize(path.join(__dirname, "..", "sample.pcap"))
 
   await appStep("wait for pcap file input", () =>
-    app.client.waitForVisible(selectors.pcaps.fileInput)
+    app.client.waitForVisible(selectors.ingest.filesButton)
   )
   await appStep("choose file", () =>
-    app.client.chooseFile(selectors.pcaps.fileInput, pcapFile)
+    app.client.chooseFile(selectors.ingest.filesInput, pcapFile)
   )
 
   await appStep("wait for ingest to finish", () =>

@@ -56,7 +56,7 @@ export default function LoadFilesInput({onChange}: Props) {
         multiple
         title=""
         onChange={_onChange}
-        {...reactElementProps("pcapsFileInput")}
+        {...reactElementProps("ingestFilesInput")}
       />
       <div className="radiation">
         <div />
@@ -65,7 +65,11 @@ export default function LoadFilesInput({onChange}: Props) {
       </div>
       <div className="content">
         <div className="controls">
-          <ToolbarButton text="Choose Files" onClick={openDialog} />
+          <ToolbarButton
+            text="Choose Files"
+            onClick={openDialog}
+            {...reactElementProps("ingestFilesButton")}
+          />
           <p>Or drag & drop them here.</p>
         </div>
         <div className="file-types">
