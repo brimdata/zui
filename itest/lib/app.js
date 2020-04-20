@@ -21,6 +21,7 @@ const appStep = async (stepMessage, f) => {
 
 export const newAppInstance = (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
+  const debianInstallPath = "/usr/bin/brim"
   const userDataDir = path.resolve(path.join(itestDir(), name, idx.toString()))
   mkdirpSync(userDataDir)
 
@@ -52,6 +53,9 @@ export const newAppInstance = (name: string, idx: number): Application => {
   if (isCI() && process.platform === "darwin") {
     appArgs = {...appArgs, path: macInstallPath}
     LOG.debug("Chose installed MacOS app location", macInstallPath)
+  } else if (isCI() && process.platform === "linux") {
+    appArgs = {...appArgs, path: debianInstallPath, args: [repoDir()]}
+    LOG.debug("Chose working copy app location", electronPath)
   } else {
     appArgs = {...appArgs, path: electronPath, args: [repoDir()]}
     LOG.debug("Chose working copy app location", electronPath)
