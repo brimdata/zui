@@ -66,7 +66,7 @@ module.exports = {
   },
 
   debian: function() {
-    console.log("Building installer for debian")
+    console.log("Building deb package installer")
     return debInstaller({
       src: "./dist/packages/Brim-linux-x64",
       dest: out,
