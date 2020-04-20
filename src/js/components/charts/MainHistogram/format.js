@@ -28,7 +28,6 @@ export default function(data: ChartData, span: DateTuple): HistogramData {
         ts,
         paths: {
           ...defaults,
-          // $FlowFixMe fixed in 0.115.0
           ...data.table[ms]
         },
         count: Object.values(data.table[ms]).reduce(

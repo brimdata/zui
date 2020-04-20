@@ -23,7 +23,6 @@ export default function reducer(
 function merge(a, b) {
   return {
     keys: uniq<string>(a.keys.concat(b.keys)),
-    // $FlowFixMe fixed in 0.115.0
     table: {...a.table, ...b.table}
   }
 }

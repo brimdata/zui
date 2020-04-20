@@ -29,7 +29,6 @@ export default function(
     case "VIEWER_STATS":
       return {...state, stats: action.stats}
     case "VIEWER_COLUMNS":
-      // $FlowFixMe fixed in 0.115.0
       return {...state, columns: {...state.columns, ...action.columns}}
     default:
       return state
