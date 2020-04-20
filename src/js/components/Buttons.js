@@ -16,7 +16,7 @@ export const ButtonGroup = ({children}: Children) => (
 )
 
 export const ThinButton = ({children, ...rest}: Children) => (
-  <button className="thin-button" {...rest}>
+  <button {...rest} className="thin-button">
     {children}
   </button>
 )
@@ -24,7 +24,7 @@ export const ThinButton = ({children, ...rest}: Children) => (
 export class ThinPicker extends React.Component<{}> {
   render() {
     return (
-      <MenuBarButton className="thin-picker" {...this.props}>
+      <MenuBarButton {...this.props} className="thin-picker">
         <Caret />
       </MenuBarButton>
     )
@@ -44,7 +44,7 @@ export function ExpandButton({
   open: boolean
 }) {
   return (
-    <div className={classNames("expand-button", className, {open})} {...props}>
+    <div {...props} className={classNames("expand-button", className, {open})}>
       <Caret />
     </div>
   )
@@ -52,7 +52,7 @@ export function ExpandButton({
 
 export function RemoveButton({className, ...props}: Props) {
   return (
-    <div className={classNames("remove-button", className)} {...props}>
+    <div {...props} className={classNames("remove-button", className)}>
       <X />
     </div>
   )

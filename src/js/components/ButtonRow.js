@@ -9,7 +9,7 @@ type Props = {
 
 export default function ButtonRow({children, className, ...props}: Props) {
   return (
-    <div className={classNames("button-row", className)} {...props}>
+    <div {...props} className={classNames("button-row", className)}>
       {children}
     </div>
   )

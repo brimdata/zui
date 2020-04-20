@@ -11,9 +11,9 @@ const ThreeDotButton = React.forwardRef(function ThreeDotButton(
 ) {
   return (
     <button
+      {...props}
       ref={ref}
       className={classNames(className, "three-dot-button")}
-      {...props}
     >
       <div className="dot dot-1" />
       <div className="dot dot-2" />

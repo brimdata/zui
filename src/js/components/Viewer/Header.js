@@ -29,7 +29,7 @@ export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
   if (dimens.rowWidth === "auto") return null
   else
     return (
-      <header style={Styler.header(dimens, scrollLeft)} {...rest}>
+      <header {...rest} style={Styler.header(dimens, scrollLeft)}>
         {columns.getVisible().map((column) => (
           <HeaderCell
             key={columnKey(column)}

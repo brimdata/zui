@@ -1,15 +1,16 @@
 /* @flow */
 
 import React from "react"
-import X from "./icons/x-md.svg"
 import classNames from "classnames"
+
+import X from "./icons/x-md.svg"
 
 type Props = {
   light?: boolean
 }
 
 const CloseButton = ({light, ...rest}: Props) => (
-  <button className={classNames("close-button", {light})} {...rest}>
+  <button {...rest} className={classNames("close-button", {light})}>
     <X />
   </button>
 )

@@ -19,8 +19,8 @@ const SearchTab = React.forwardRef<Props, HTMLDivElement>(function SearchTab(
 ) {
   return (
     <div
-      ref={ref}
       {...rest}
+      ref={ref}
       className={classNames("tab", {active, "is-new": isNew})}
     >
       <div className="tab-content">

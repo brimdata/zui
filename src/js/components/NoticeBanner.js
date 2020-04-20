@@ -29,8 +29,8 @@ export default function NoticeBanner({
   return (
     <Animate show={show} enter={enter} exit={exit}>
       <div
-        className={classNames("notice-banner", "fixed", className)}
         {...rest}
+        className={classNames("notice-banner", "fixed", className)}
       >
         {children}
       </div>

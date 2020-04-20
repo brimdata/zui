@@ -2,11 +2,11 @@
 import * as React from "react"
 import classNames from "classnames"
 
-type Props = {
+type Props = {|
   children: React.Node,
   className?: string,
   onSubmit?: Function
-}
+|}
 
 export default function Form({children, className, onSubmit, ...props}: Props) {
   function onFormSubmit(e) {
