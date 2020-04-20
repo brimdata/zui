@@ -18,14 +18,14 @@ jobs:
       id: set-npm-cache-dir
       run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
     - name: Clear Extraneous Runner Cache
-      run: |
-          cachedir=${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-          rm -rf "${cachedir:?}"
+      run: rm -rf "${NPM_CACHE:?}"
+      env:
+        NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
       shell: bash
     - name: Cache node modules
       uses: actions/cache@v1
       env:
-        cache-name: cache-node-modules3
+        cache-name: cache-node-modules-ci-v4
       with:
         path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
