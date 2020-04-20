@@ -5,10 +5,19 @@ import type {DateTuple} from "../../../lib/TimeWindow"
 import type {HistogramData} from "../../charts/types"
 import histogramInterval from "../../../lib/histogramInterval"
 
+export type HistogramDataPoint = {
+  ts: Date,
+  paths: {[string]: number},
+  count: number
+}
+
 export default function(data: ChartData, span: DateTuple): HistogramData {
   let interval = histogramInterval(span)
 
-  let defaults = data.keys.reduce((obj, path) => ({...obj, [path]: 0}), {})
+  let defaults: {[string]: number} = data.keys.reduce(
+    (obj, path) => ({...obj, [path]: 0}),
+    {}
+  )
 
   let bins = []
   Object.keys(data.table).map((ms) => {
@@ -17,8 +26,11 @@ export default function(data: ChartData, span: DateTuple): HistogramData {
     if (ts >= span[0] && ts < span[1]) {
       bins.push({
         ts,
-        ...defaults,
-        ...data.table[ms],
+        paths: {
+          ...defaults,
+          // $FlowFixMe fixed in 0.115.0
+          ...data.table[ms]
+        },
         count: Object.values(data.table[ms]).reduce(
           (c, sum) => parseInt(sum) + c,
           0

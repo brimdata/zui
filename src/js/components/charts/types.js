@@ -26,7 +26,7 @@ type HistogramState = {
 }
 
 export type HistogramData = {|
-  points: {ts: Date, [string]: number}[],
+  points: {ts: Date, paths: {[string]: number}, count: number}[],
   keys: string[],
   interval: Interval,
   span: Span

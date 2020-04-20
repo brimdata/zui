@@ -36,6 +36,7 @@ export default async function open(target: string, options?: Object) {
 
   if (Array.isArray(options.app)) {
     appArguments = options.app.slice(1)
+    // $FlowFixMe
     options.app = options.app[0]
   }
 

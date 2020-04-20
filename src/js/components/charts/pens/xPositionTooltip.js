@@ -1,10 +1,12 @@
 /* @flow */
 
+import {Element} from "react-tooltip"
 import {isEqual} from "lodash"
 import {render} from "react-dom"
 import {select, mouse} from "d3"
 import React from "react"
 
+import type {HistogramDataPoint} from "../MainHistogram/format"
 import type {Pen} from "../types"
 import {getPointAt} from "../getPointAt"
 
@@ -60,11 +62,11 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
   return {mount, draw}
 }
 
-const getProps = (point) => {
+const getProps = (point: HistogramDataPoint) => {
   const segments = []
-  for (let key in point) {
-    if (["ts", "count"].includes(key)) continue
-    if (point[key] !== 0) segments.push([key, point[key]])
+  let paths = point.paths
+  for (let key in paths) {
+    if (paths[key] !== 0) segments.push([key, paths[key]])
   }
 
   return {ts: point.ts, segments}
