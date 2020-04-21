@@ -54,8 +54,8 @@ export const newAppInstance = (name: string, idx: number): Application => {
     appArgs = {...appArgs, path: macInstallPath}
     LOG.debug("Chose installed MacOS app location", macInstallPath)
   } else if (isCI() && process.platform === "linux") {
-    appArgs = {...appArgs, path: debianInstallPath, args: [repoDir()]}
-    LOG.debug("Chose working copy app location", electronPath)
+    appArgs = {...appArgs, path: linuxInstallPath}
+    LOG.debug("Chose installed Linux app location", linuxInstallPath)
   } else {
     appArgs = {...appArgs, path: electronPath, args: [repoDir()]}
     LOG.debug("Chose working copy app location", electronPath)
