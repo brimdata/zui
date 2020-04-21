@@ -21,7 +21,7 @@ const appStep = async (stepMessage, f) => {
 
 export const newAppInstance = (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
-  const debianInstallPath = "/usr/bin/brim"
+  const linuxInstallPath = "/usr/bin/brim"
   const userDataDir = path.resolve(path.join(itestDir(), name, idx.toString()))
   mkdirpSync(userDataDir)
 
