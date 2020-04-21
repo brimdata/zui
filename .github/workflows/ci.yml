@@ -84,6 +84,12 @@ jobs:
         hdiutil attach dist/installers/Brim.dmg
         cp -R /Volumes/Brim/Brim.app /Applications
         hdiutil detach /Volumes/Brim
+    - name: Build and Install Debian Pkg
+      if: runner.os == 'Linux'
+      run: |
+        set -x
+        node scripts/release --linux
+        sudo dpkg --force-depends -i ./dist/installers/brim_amd64.deb
     - name: Integration Tests (Linux)
       if: runner.os == 'Linux'
       run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
