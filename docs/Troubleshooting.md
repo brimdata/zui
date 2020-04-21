@@ -4,11 +4,11 @@ If you're having a problem with Brim, please browse the following sections
 before you [open an issue](#opening-an-issue).
 
 - [Common Problems](#common-problems)
-  * [I've clicked to open a packet capture in Brim, but it failed to open](#i-ve-clicked-to-open-a-packet-capture-in-brim--but-it-failed-to-open)
-  * [I've clicked in Brim to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark](#i-ve-clicked-in-brim-to-extract-a-flow-from-my-pcap-into-wireshark--but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
+  * [I've clicked to open a packet capture in Brim, but it failed to open](#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open)
+  * [I've clicked in Brim to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark](#ive-clicked-in-brim-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
 - [Gathering Info](#gathering-info)
-  * [Sensitive Information (important!)](#sensitive-information--important--)
-  * [Screenshots/Videos](#screenshots-videos)
+  * [Sensitive Information (important!)](#sensitive-information-important)
+  * [Screenshots/Videos](#screenshotsvideos)
   * [Developer Tools](#developer-tools)
   * [Sample Packet Captures](#sample-packet-captures)
   * [Large Files](#large-files)
