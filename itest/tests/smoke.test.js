@@ -56,7 +56,7 @@ describe("Smoke test", () => {
     const searchZql =
       "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
 
-    ingestFile(app, path.normalize(path.join(__dirname, "..", "sample.tsv")))
+    ingestFile(app, path.normalize(path.join(__dirname, "..", "sample2.tsv")))
       .then(async () => {
         await writeSearch(app, searchZql)
         await startSearch(app)
