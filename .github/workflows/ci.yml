@@ -10,6 +10,7 @@ jobs:
         node-version: [12.x]
         os: [macos-10.15, ubuntu-18.04, windows-2019]
     steps:
+    - run: git config --global core.autocrlf false
     - uses: actions/checkout@v2
     - name: setup node version ${{ matrix.node-version }}
       uses: actions/setup-node@v1
