@@ -175,9 +175,9 @@ export const setSpace = (app: Application, space: string) =>
   appStep(`set space to "${space}"`, () =>
     app.client
       .waitForVisible(selectors.spaces.button)
-      .then(() => app.client.click(selectors.spaces.button))
+      .then(() => click(app, selectors.spaces.button))
       .then(() => app.client.waitForVisible(selectors.spaces.menuItem(space)))
-      .then(() => app.client.click(selectors.spaces.menuItem(space)))
+      .then(() => click(app, selectors.spaces.menuItem(space)))
   )
 
 const getSearchStat = (app: Application, selector: string) =>
@@ -199,14 +199,14 @@ export const setSpan = (app: Application, span: string) => {
     appStep("click span selector", () =>
       app.client
         .waitForVisible(selectors.span.button)
-        .then(() => app.client.click(selectors.span.button))
+        .then(() => click(app, selectors.span.button))
     )
 
   const clickSpan = () =>
     appStep(`select span ${span}`, () =>
       app.client
         .waitForVisible(selectors.span.menuItem(span))
-        .then(() => app.client.click(selectors.span.menuItem(span)))
+        .then(() => click(app, selectors.span.menuItem(span)))
     )
 
   return clickSpanButton().then(() => clickSpan())
@@ -297,11 +297,11 @@ export const toggleOptimizations = async (app: Application) => {
   )
   await appStep("toggle optimizations", () =>
     Promise.all([
-      app.client.click(selectors.settings.useCacheToggle),
-      app.client.click(selectors.settings.useIndexToggle)
+      click(app, selectors.settings.useCacheToggle),
+      click(app, selectors.settings.useIndexToggle)
     ])
   )
-  await app.client.click(selectors.settings.button)
+  await click(app, selectors.settings.button)
 }
 
 export const waitForResults = (app: Application) =>
