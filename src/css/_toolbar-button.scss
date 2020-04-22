@@ -14,7 +14,7 @@
     display: flex;
     margin: 0 4px;
     svg {
-      fill: $gray-5;
+      fill: lighten($aqua, 15%);
       height: 16px;
       width: 16px;
     }
@@ -23,7 +23,7 @@
   .text {
     @include label-small;
     white-space: nowrap;
-    color: $gray-5;
+    color: $aqua;
     display: flex;
     line-height: 16px;
     height: 16px;

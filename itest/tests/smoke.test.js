@@ -2,16 +2,16 @@
 
 import path from "path"
 
+import {handleError, stdTest} from "../lib/jest.js"
+import {ingestFile, pcapIngestSample} from "../lib/app"
 import {
   newAppInstance,
-  pcapIngestSample,
   searchDisplay,
   startApp,
   startSearch,
   waitForNewTab,
   writeSearch
 } from "../lib/app.js"
-import {handleError, stdTest} from "../lib/jest.js"
 
 describe("Smoke test", () => {
   let app
@@ -29,10 +29,7 @@ describe("Smoke test", () => {
 
   stdTest("show the new tab page when you log in", (done) => {
     waitForNewTab(app)
-      .then(() => {
-        console.log("nice!")
-        done()
-      })
+      .then(() => done())
       .catch((err) => handleError(app, err, done))
   })
 
@@ -41,6 +38,25 @@ describe("Smoke test", () => {
       "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
 
     pcapIngestSample(app)
+      .then(async () => {
+        await writeSearch(app, searchZql)
+        await startSearch(app)
+        return searchDisplay(app)
+      })
+      .then((results) => {
+        expect(results).toMatchSnapshot()
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
+
+  stdTest("log ingest", (done) => {
+    const searchZql =
+      "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
+
+    ingestFile(app, path.normalize(path.join(__dirname, "..", "sample2.tsv")))
       .then(async () => {
         await writeSearch(app, searchZql)
         await startSearch(app)

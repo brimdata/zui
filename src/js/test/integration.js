@@ -25,7 +25,8 @@ const dataAttrs = {
   optionsButton: "optionsButton",
   optionsMenu: "optionsMenu",
   pcapsButton: "pcapsButton",
-  pcapsFileInput: "pcapsFileInput",
+  ingestFilesInput: "ingestFilesInput",
+  ingestFilesButton: "ingestFilesButton",
   search_input: "search_input",
   search_button: "search_button",
   search_time: "search_time",
@@ -109,9 +110,12 @@ export const selectors = {
     menu: dataAttrSelector("optionsMenu"),
     menuItem: genSelectorForTextUnderElement("optionsMenu")
   },
+  ingest: {
+    filesInput: dataAttrSelector("ingestFilesInput"),
+    filesButton: dataAttrSelector("ingestFilesButton")
+  },
   pcaps: {
-    button: dataAttrSelector("pcapsButton"),
-    fileInput: dataAttrSelector("pcapsFileInput")
+    button: dataAttrSelector("pcapsButton")
   },
   search: {
     button: dataAttrSelector("search_button"),

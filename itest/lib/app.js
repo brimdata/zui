@@ -1,14 +1,15 @@
 /* @flow */
 
 import {writeFileSync, mkdirpSync} from "fs-extra"
-import crypto from "crypto"
-import path from "path"
-import electronPath from "electron"
-import {Application} from "spectron"
 
-import {itestDir} from "./env"
+import {Application} from "spectron"
+import crypto from "crypto"
+import electronPath from "electron"
+import path from "path"
+
 import {LOG} from "./log"
 import {isCI, repoDir} from "../lib/env"
+import {itestDir} from "./env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
 
@@ -88,7 +89,7 @@ export const waitForSearch = (app: Application) => {
 
 export const waitForNewTab = (app: Application) => {
   return appStep("wait for new tab to appear", () =>
-    app.client.waitForVisible(selectors.pcaps.fileInput)
+    app.client.waitForVisible(selectors.ingest.filesButton)
   )
 }
 
@@ -310,13 +311,18 @@ export const waitForResults = (app: Application) =>
 
 export const pcapIngestSample = async (app: Application) => {
   // Ingest a PCAP and wait until we see derived records.
-  const pcapFile = path.normalize(path.join(__dirname, "..", "sample.pcap"))
+  await ingestFile(
+    app,
+    path.normalize(path.join(__dirname, "..", "sample.pcap"))
+  )
+}
 
+export const ingestFile = async (app: Application, file: string) => {
   await appStep("wait for pcap file input", () =>
-    app.client.waitForVisible(selectors.pcaps.fileInput)
+    app.client.waitForVisible(selectors.ingest.filesButton)
   )
   await appStep("choose file", () =>
-    app.client.chooseFile(selectors.pcaps.fileInput, pcapFile)
+    app.client.chooseFile(selectors.ingest.filesInput, file)
   )
 
   await appStep("wait for ingest to finish", () =>

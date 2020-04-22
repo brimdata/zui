@@ -1,0 +1,76 @@
+#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	capture_loss
+#fields	ts	ts_delta	peer	gaps	acks	percent_lost
+#types	time	interval	string	count	count	double
+1582646597.838527	11.854892	zeek	0	6	0
+#path	conn
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service	duration	orig_bytes	resp_bytes	conn_state	local_orig	local_resp	missed_bytes	history	orig_pkts	orig_ip_bytes	resp_pkts	resp_ip_bytes	tunnel_parents
+#types	time	string	addr	port	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
+1582646595.986756	C2R3JkuuTTIGK19qc	192.168.1.110	57540	172.217.1.138	443	tcp	-	0.060027	39	39	OTH	-	-	0	DdA	2	143	1	91	-
+1582646595.784014	C3VEo73SXxkHhcHKU4	192.168.1.110	57572	172.217.6.138	443	tcp	-	0.053917	63	0	SF	-	-	0	DFafA	4	271	3	156	-
+1582646595.481957	CoOPs92Iyj2nOHibT2	192.168.1.179	51524	192.168.1.255	15600	udp	-	-	-	-	S0	-	-	0	D	1	63	0	0	-
+#path	files
+#fields	ts	fuid	tx_hosts	rx_hosts	conn_uids	source	depth	analyzers	mime_type	filename	duration	local_orig	is_orig	seen_bytes	total_bytes	missing_bytes	overflow_bytes	timedout	parent_fuid	md5	sha1	sha256	extracted	extracted_cutoff	extracted_size
+#types	time	string	set[addr]	set[addr]	set[string]	string	count	set[string]	string	string	interval	bool	bool	count	count	count	count	bool	string	string	string	string	string	bool	count
+1582646594.050188	FMa5RD1f8J80UyJKQe	209.216.230.240	192.168.1.110	CWLoOg3brEEgReLKm9	SSL	0	MD5,SHA1	application/ocsp-response	-	0	-	F	471	-	0	0	F	-	fca4341c673e74dc3e330e1640e9b7d4	570304f7776ed6ca29464404554fb927395328e6	-	-	-	-
+1582646594.050187	FXkLzR25cwYgeI5yI7	209.216.230.240	192.168.1.110	CWLoOg3brEEgReLKm9	SSL	0	MD5,SHA1,X509	application/x-x509-user-cert	-	0	-	F	1711	-	0	0	F	-	d16bf2ff6647cb8bccce2594e9237e50	987050ffb905cad3a79a8596c2120db97c03a165	-	-	-	-
+1582646594.050187	Frbo5s1CRsV02JUoSe	209.216.230.240	192.168.1.110	CWLoOg3brEEgReLKm9	SSL	0	MD5,SHA1,X509	application/x-x509-ca-cert	-	0	-	F	1176	-	0	0	F	-	345eff15b7a49add451b65a7f4bdc6ae	1fb86b1168ec743154062e8c9cc5b171a4b7ccb4	-	-	-	-
+1582646594.050187	F1VUER3CattO8PiHWc	209.216.230.240	192.168.1.110	CWLoOg3brEEgReLKm9	SSL	0	MD5,SHA1,X509	application/x-x509-ca-cert	-	0	-	F	947	-	0	0	F	-	79e4a9840d7d3a96d7c04fe2434c892e	a8985d3a65e5e5c4b2d7d66d40c6dd2fb19c5436	-	-	-	-
+#path	x509
+#fields	ts	id	certificate.version	certificate.serial	certificate.subject	certificate.issuer	certificate.not_valid_before	certificate.not_valid_after	certificate.key_alg	certificate.sig_alg	certificate.key_type	certificate.key_length	certificate.exponent	certificate.curve	san.dns	san.uri	san.email	san.ip	basic_constraints.ca	basic_constraints.path_len
+#types	time	string	count	string	string	string	time	time	string	string	string	count	string	string	vector[string]	vector[string]	vector[string]	vector[addr]	bool	count
+1582646594.050187	FXkLzR25cwYgeI5yI7	3	074FE902C6B7D619884E1CA1854D9178	CN=news.ycombinator.com,O=Y Combinator\\, Inc.,L=San Francisco,ST=California,C=US	CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US	1562569200.000000	1631300400.000000	rsaEncryption	sha256WithRSAEncryption	rsa	2048	65537	-	news.ycombinator.com	-	-	-	F	-
+#path	ssl
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	version	cipher	curve	server_name	resumed	last_alert	next_protocol	established	cert_chain_fuids	client_cert_chain_fuids	subject	issuer	client_subject	client_issuer	validation_status
+#types	time	string	addr	port	addr	port	string	string	string	string	bool	string	string	bool	vector[string]	vector[string]	string	string	string	string	string
+1582646594.021637	CWLoOg3brEEgReLKm9	192.168.1.110	57640	209.216.230.240	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384	secp256r1	news.ycombinator.com	F	-	http/1.1	T	FXkLzR25cwYgeI5yI7,Frbo5s1CRsV02JUoSe,F1VUER3CattO8PiHWc	(empty)	CN=news.ycombinator.com,O=Y Combinator\\, Inc.,L=San Francisco,ST=California,C=US	CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US	-	-	ok
+#path	conn
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service	duration	orig_bytes	resp_bytes	conn_state	local_orig	local_resp	missed_bytes	history	orig_pkts	orig_ip_bytes	resp_pkts	resp_ip_bytes	tunnel_parents
+#types	time	string	addr	port	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
+1582646593.996366	CWLoOg3brEEgReLKm9	192.168.1.110	57640	209.216.230.240	443	tcp	ssl	0.104626	1088	6425	S1	-	-	0	ShADda	10	1620	8	6849	-
+1582646593.978298	CwFCMX3bAnu2EkwCP8	192.168.1.110	51848	192.168.1.254	53	udp	dns	0.016907	38	54	SF	-	-	0	Dd	1	66	1	82	-
+#path	dns
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	trans_id	rtt	query	qclass	qclass_name	qtype	qtype_name	rcode	rcode_name	AA	TC	RD	RA	Z	answers	TTLs	rejected
+#types	time	string	addr	port	addr	port	enum	count	interval	string	count	string	count	string	count	string	bool	bool	bool	bool	count	vector[string]	vector[interval]	bool
+1582646593.978298	CwFCMX3bAnu2EkwCP8	192.168.1.110	51848	192.168.1.254	53	udp	47856	0.016907	news.ycombinator.com	1	C_INTERNET	1	A	0	NOERROR	F	F	T	T	0	209.216.230.240	35	F
+#path	conn
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service	duration	orig_bytes	resp_bytes	conn_state	local_orig	local_resp	missed_bytes	history	orig_pkts	orig_ip_bytes	resp_pkts	resp_ip_bytes	tunnel_parents
+#types	time	string	addr	port	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
+1582646592.860963	Cwj1LL1ZNV32kV51	192.168.1.110	57635	17.125.252.5	443	tcp	-	0.593878	699	305	OTH	-	-	0	DadA	5	899	5	505	-
+1582646591.275550	CeABm32sQZ0XK5R0Ei	192.168.1.110	54375	192.168.1.254	53	udp	dns	0.017946	46	62	SF	-	-	0	Dd	1	74	1	90	-
+#path	dns
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	trans_id	rtt	query	qclass	qclass_name	qtype	qtype_name	rcode	rcode_name	AA	TC	RD	RA	Z	answers	TTLs	rejected
+#types	time	string	addr	port	addr	port	enum	count	interval	string	count	string	count	string	count	string	bool	bool	bool	bool	count	vector[string]	vector[interval]	bool
+1582646591.275550	CeABm32sQZ0XK5R0Ei	192.168.1.110	54375	192.168.1.254	53	udp	28084	0.017946	11.client-channel.google.com	1	C_INTERNET	1	A	0	NOERROR	F	F	T	T	0	173.194.201.189	213	F
+#path	conn
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service	duration	orig_bytes	resp_bytes	conn_state	local_orig	local_resp	missed_bytes	history	orig_pkts	orig_ip_bytes	resp_pkts	resp_ip_bytes	tunnel_parents
+#types	time	string	addr	port	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
+1582646590.938093	C3sZRZ2fbp2LEPQCV8	192.168.1.110	55351	18.205.93.211	443	tcp	-	0.088679	215	193	OTH	-	-	0	DadA	2	319	2	297	-
+1582646590.264455	CEa7rg2Kml2ISkjRbi	192.168.1.110	57332	64.233.179.189	443	tcp	-	1.079187	363	382	OTH	-	-	0	^dADa	7	727	7	746	-
+1582646589.440467	CUGuT43y1XPeVPq2xa	192.168.1.179	47783	192.168.1.255	15600	udp	-	-	-	-	S0	-	-	0	D	1	63	0	0	-
+1582646588.807682	CAQrsO32Xhm46afAt1	192.168.1.110	55354	52.37.243.173	443	tcp	-	0.761817	114	56	OTH	-	-	0	DdAa	3	270	2	160	-
+1582646588.472700	CS3tkdGVpmAS3FXQf	192.168.1.110	57487	192.30.253.125	443	tcp	-	0.077944	28	24	OTH	-	-	0	^dADa	2	132	2	128	-
+1582646588.449312	CYmTs62B6PEW6sjEGb	192.168.1.110	57326	173.194.201.189	443	tcp	-	1.152367	403	380	OTH	-	-	0	^dADa	7	767	7	744	-
+1582646588.334796	CKByYw0NdP9paYRBi	192.168.1.110	55346	52.37.243.173	443	tcp	-	1.230297	114	56	OTH	-	-	0	DdAa	3	270	2	160	-
+1582646588.210507	CeTsLy2fPgUrUudmj	192.168.1.110	55344	52.37.243.173	443	tcp	-	0.034261	56	56	OTH	-	-	0	DadA	2	160	2	160	-
+1582646587.715839	CGTfY214HtgOQpdW28	192.168.1.110	55747	13.52.5.22	443	tcp	-	0.017643	39	39	OTH	-	-	0	DdA	2	143	1	91	-
+1582646587.715728	CYvYjv3UUcYRbhnmL5	192.168.1.110	55635	18.246.31.137	443	tcp	-	0.040702	39	39	OTH	-	-	0	DdA	2	143	1	91	-
+#path	weird
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	name	addl	notice	peer
+#types	time	string	addr	port	addr	port	string	string	bool	string
+1582646586.880512	-	-	-	-	-	unknown_protocol	2	F	zeek
+#path	conn
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service	duration	orig_bytes	resp_bytes	conn_state	local_orig	local_resp	missed_bytes	history	orig_pkts	orig_ip_bytes	resp_pkts	resp_ip_bytes	tunnel_parents
+#types	time	string	addr	port	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
+1582646586.154443	C2gSK1vEKMlYwQAG7	192.168.1.110	57591	172.217.9.142	443	tcp	-	0.216412	2511	3263	OTH	-	-	0	DadA	11	3083	9	3731	-
+#path	stats
+#fields	ts	peer	mem	pkts_proc	bytes_recv	pkts_dropped	pkts_link	pkt_lag	events_proc	events_queued	active_tcp_conns	active_udp_conns	active_icmp_conns	tcp_conns	udp_conns	icmp_conns	timers	active_timers	files	active_files	dns_requests	active_dns_requests	reassem_tcp_size	reassem_file_size	reassem_frag_size	reassem_unknown_size
+#types	time	string	count	count	count	count	count	interval	count	count	count	count	count	count	count	count	count	count	count	count	count	count	count	count	count	count
+1582646585.983635	zeek	68	1	1001	-	-	-	402	11	1	0	0	1	0	0	37	33	0	0	0	0	992	0	0	0
+#path	conn
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service	duration	orig_bytes	resp_bytes	conn_state	local_orig	local_resp	missed_bytes	history	orig_pkts	orig_ip_bytes	resp_pkts	resp_ip_bytes	tunnel_parents
+#types	time	string	addr	port	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
+1582646585.983635	Ct69B94Av1HARYcCw6	192.168.1.110	56625	172.217.9.142	443	tcp	-	11.317514	2801	1306	OTH	-	-	0	DadA	16	3633	16	2138	-

@@ -1,0 +1,169 @@
+@mixin radiation-circle {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: #3f425f;
+  opacity: 0.03;
+  border-radius: 50%;
+}
+
+@keyframes updown {
+  from {
+    transform: translateY(5px);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+.load-files-input {
+  min-width: 360px;
+  position: relative;
+  border-radius: 16px;
+  border: 2px dashed $brand-orange;
+  box-shadow: inset 0 0 2px 0px rgba(0, 0, 0, 0.3);
+  background: white;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  padding: 22px;
+  box-shadow: none;
+  user-select: none;
+  & > * {
+    pointer-events: none;
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .controls {
+    z-index: 1;
+
+    button {
+      width: auto;
+      pointer-events: all;
+    }
+    p {
+      @include label-small;
+      color: $slate;
+    }
+  }
+
+  .file-types {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    svg {
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
+    }
+  }
+
+  .zeek-files-stack {
+    position: relative;
+    margin-left: 22px;
+    height: 64px;
+    width: 54px;
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      &:nth-child(2) {
+        top: 2px;
+        left: 3px;
+      }
+      &:nth-child(3) {
+        top: 2 * 2px;
+        left: 2 * 3px;
+      }
+    }
+  }
+
+  .radiation {
+    z-index: 0;
+    right: -190px;
+    top: -50%;
+    height: 300px;
+    width: 300px;
+    position: absolute;
+    div {
+      @include radiation-circle;
+      &:nth-child(1) {
+        transform: translateX(-25px) scale(1.1);
+      }
+      &:nth-child(2) {
+        transform: translateX(-50px) scale(1.2);
+      }
+    }
+  }
+
+  input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .drag-over-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    opacity: 0;
+    border-radius: 14px;
+    svg {
+      fill: white;
+      margin-right: 12px;
+      height: 16px;
+      width: 16px;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+      @include heading-section;
+      animation: updown 1200ms ease-in-out infinite alternate;
+      color: white;
+    }
+  }
+
+  &.dragging {
+    transition: all 1s;
+    border-style: solid;
+    box-shadow: 0 8px 16px -1px rgba(0, 0, 0, 0.5);
+    .content {
+      transition: opacity 1s;
+      opacity: 0;
+    }
+    .drag-over-content {
+      transition: opacity 1s;
+      opacity: 1;
+      p {
+        animation: updown 1200ms ease-in-out infinite alternate;
+      }
+    }
+    .radiation {
+      z-index: 1;
+      transition: transform 1000ms;
+      transform: scale(3.3);
+      div {
+        transition: opacity 1500ms;
+        opacity: 1;
+      }
+    }
+    button {
+      pointer-events: none;
+    }
+  }
+}

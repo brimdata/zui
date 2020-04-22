@@ -7,6 +7,12 @@
   overflow: auto;
   padding: 0 70px;
 
+  a {
+    color: $blue-dark;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
   .brim-text-logo {
     margin: 60px auto;
   }
@@ -50,9 +56,12 @@
     display: block;
     @include heading-section;
     margin-bottom: 24px;
+    user-select: none;
+    padding-left: 2px;
   }
 
-  .accepted-files {
+  footer {
+    padding-left: 2px;
     @include label-small;
   }
 }
