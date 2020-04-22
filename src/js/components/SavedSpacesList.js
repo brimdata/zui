@@ -48,16 +48,16 @@ export default function SavedSpacesList({spaces}: Props) {
             <ProgressIndicator percent={s.ingestProgress()} />
           </div>
         ) : (
-          <a href="#" onClick={onDelete(s.name())} className="delete-link">
+          <a href="#" onClick={onDelete(s.name)} className="delete-link">
             <TrashBin className="delete-icon" />
           </a>
         )
 
         return (
-          <li key={s.name()}>
-            <a href="#" onClick={onClick(s.name())} className="space-link">
+          <li key={s.name}>
+            <a href="#" onClick={onClick(s.name)} className="space-link">
               <Folder className="space-icon" />
-              <span className="name">{s.name()}</span>
+              <span className="name">{s.name}</span>
             </a>
             {trashOrProgress}
             <div className="line" />

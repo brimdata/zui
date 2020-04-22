@@ -5,12 +5,7 @@ import brim from "./"
 
 export default function space(info: Space) {
   return {
-    name() {
-      return info.name
-    },
-    data() {
-      return info
-    },
+    ...info,
     defaultSpanArgs() {
       if (recentDataExists(info.max_time)) {
         return ["now-30m", "now"]
