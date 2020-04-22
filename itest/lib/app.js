@@ -172,13 +172,10 @@ export const getCurrentSpace = (app: Application) =>
   )
 
 export const setSpace = (app: Application, space: string) =>
-  appStep(`set space to "${space}"`, () =>
-    app.client
-      .waitForVisible(selectors.spaces.button)
-      .then(() => click(app, selectors.spaces.button))
-      .then(() => app.client.waitForVisible(selectors.spaces.menuItem(space)))
-      .then(() => click(app, selectors.spaces.menuItem(space)))
-  )
+  appStep(`set space to "${space}"`, async () => {
+    await click(app, selectors.spaces.button)
+    await click(app, selectors.spaces.menuItem(space))
+  })
 
 const getSearchStat = (app: Application, selector: string) =>
   appStep(`get search stats for selector "${selector}"`, () =>
@@ -194,22 +191,17 @@ export const getSearchSpeed = (app: Application) =>
 export const getSearchTime = (app: Application) =>
   getSearchStat(app, selectors.search.time)
 
-export const setSpan = (app: Application, span: string) => {
+export const setSpan = async (app: Application, span: string) => {
   const clickSpanButton = () =>
-    appStep("click span selector", () =>
-      app.client
-        .waitForVisible(selectors.span.button)
-        .then(() => click(app, selectors.span.button))
-    )
+    appStep("click span selector", () => click(app, selectors.span.button))
 
   const clickSpan = () =>
     appStep(`select span ${span}`, () =>
-      app.client
-        .waitForVisible(selectors.span.menuItem(span))
-        .then(() => click(app, selectors.span.menuItem(span)))
+      click(app, selectors.span.menuItem(span))
     )
 
-  return clickSpanButton().then(() => clickSpan())
+  await clickSpanButton()
+  await clickSpan()
 }
 
 export const click = (app: Application, selector: string) =>
