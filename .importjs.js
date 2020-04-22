@@ -23,7 +23,8 @@ module.exports = {
       "isEqual",
       "isEmpty",
       "every",
-      "kebabCase"
+      "kebabCase",
+      "camelCase"
     ],
     "react-spring": ["useTrail", "useSpring", "useSprings"],
     "react-router-dom": ["Redirect"],
