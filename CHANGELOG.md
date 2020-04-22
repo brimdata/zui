@@ -45,6 +45,6 @@ This is the same as v0.5.1, but addresses a CI issue that stopped the creation o
 
 ## v0.5.1
 
-* Initial (beta) Windows release creation and support. Windows releases are currently unsigned (unlike our Mac releases). See [README-Windows](README-Windows.md) for details.
+* Initial (beta) Windows release creation and support. Windows releases are currently unsigned (unlike our Mac releases). See [Microsoft Windows beta limitations](wiki/Microsoft-Windows-beta-limitations) for details.
 * Warn on close if there are still active pcap ingests.
 * Fix some issues saving search history.
