@@ -14,7 +14,8 @@
     margin-right: 12px;
   }
 
-  .label {
-    transition: border-left-color 1750ms;
+  label {
+    display: block;
+    padding: 0 4px;
   }
 }
