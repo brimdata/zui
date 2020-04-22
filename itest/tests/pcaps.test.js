@@ -1,4 +1,4 @@
-/* @noflow */
+/* @flow */
 
 import {readFileSync, readdirSync, unlinkSync} from "fs"
 import md5 from "md5"
