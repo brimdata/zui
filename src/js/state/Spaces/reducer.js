@@ -26,6 +26,25 @@ function spacesReducer(state, action: SpacesAction) {
           ingest_progress: action.value
         }
       }
+    case "SPACES_INGEST_WARNING_APPEND":
+      return {
+        ...state,
+        [action.space]: {
+          ...state[action.space],
+          ingest_warnings: [
+            ...(state[action.space].ingest_warnings || []),
+            action.warning
+          ]
+        }
+      }
+    case "SPACES_INGEST_WARNING_CLEAR":
+      return {
+        ...state,
+        [action.space]: {
+          ...state[action.space],
+          ingest_warnings: []
+        }
+      }
     default:
       return state
   }

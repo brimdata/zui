@@ -11,14 +11,20 @@ export type SpacesState = {
   }
 }
 
-export type SpacesAction = SPACES_NAMES | SPACES_DETAIL | SPACES_INGEST_PROGRESS
+export type SpacesAction =
+  | SPACES_NAMES
+  | SPACES_DETAIL
+  | SPACES_INGEST_PROGRESS
+  | SPACES_INGEST_WARNING_APPEND
+  | SPACES_INGEST_WARNING_CLEAR
 
 export type Space = {
   name: string,
   min_time: Ts,
   max_time: Ts,
   packet_support: boolean,
-  ingest_progress: number | null
+  ingest_progress: number | null,
+  ingest_warnings: string[]
 }
 
 export type SPACES_NAMES = {
@@ -38,4 +44,17 @@ export type SPACES_INGEST_PROGRESS = {
   clusterId: string,
   space: string,
   value: number | null
+}
+
+export type SPACES_INGEST_WARNING_APPEND = {
+  type: "SPACES_INGEST_WARNING_APPEND",
+  warning: string,
+  space: string,
+  clusterId: string
+}
+
+export type SPACES_INGEST_WARNING_CLEAR = {
+  type: "SPACES_INGEST_WARNING_CLEAR",
+  space: string,
+  clusterId: string
 }

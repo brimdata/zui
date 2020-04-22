@@ -11,15 +11,16 @@ function menuText(menu: MenuItem) {
     .map((item) => item.label)
     .join(", ")
 }
+const space = {
+  name: "default",
+  min_time: {sec: 1425564900, ns: 0},
+  max_time: {sec: 1428917793, ns: 750000000},
+  packet_support: true,
+  ingest_progress: null,
+  ingest_warnings: []
+}
 
 describe("Log Right Click", () => {
-  const space = {
-    name: "default",
-    min_time: {sec: 1425564900, ns: 0},
-    max_time: {sec: 1428917793, ns: 750000000},
-    packet_support: true,
-    ingest_progress: null
-  }
   const program = "*"
 
   test("conn log with pcap support", () => {
@@ -77,13 +78,6 @@ describe("Log Right Click", () => {
 
 describe("Analysis Right Click", () => {
   const program = "* | count() by id.orig_h"
-  const space = {
-    name: "default",
-    min_time: {sec: 1425564900, ns: 0},
-    max_time: {sec: 1428917793, ns: 750000000},
-    packet_support: true,
-    ingest_progress: null
-  }
 
   test("address field", () => {
     const log = conn()
