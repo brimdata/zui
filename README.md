@@ -27,7 +27,7 @@ your platform from the latest
 
 ## Having a problem?
 
-Please browse the [wiki](wiki) to review common problems and helpful tips before [opening an issue](wiki/Troubleshooting#opening-an-issue).
+Please browse the [wiki](wiki) to review common problems and helpful tips before [opening an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue).
 
 ## Development and contributing
 
