@@ -204,15 +204,24 @@ export const setSpan = async (app: Application, span: string) => {
   await clickSpan()
 }
 
+const waitForClickable = async (app: Application, selector: string) => {
+  // In testing, it's been shown than there is no need to scroll to
+  // elements to make them be visible, as long as the element's
+  // container allows scrolling.
+  await appStep(`wait for element to be visible: "${selector}"`, () =>
+    app.client.waitForVisible(selector)
+  )
+}
+
 export const click = (app: Application, selector: string) =>
   appStep(`click on selector "${selector}"`, () =>
-    app.client.waitForVisible(selector).then(() => app.client.click(selector))
+    waitForClickable(app, selector).then(() => app.client.click(selector))
   )
 
 export const rightClick = (app: Application, selector: string) =>
   appStep(`right-click on selector "${selector}"`, () =>
     app.client
-      .waitForVisible(selector)
+      .waitForClickable(app, selector)
       .then(() => app.client.rightClick(selector))
   )
 
