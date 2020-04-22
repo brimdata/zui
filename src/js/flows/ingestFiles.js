@@ -121,6 +121,10 @@ const trackProgress = (client, dispatch, clusterId) => {
         dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
       }
 
+      function appendWarning(warning) {
+        dispatch(Spaces.appendIngestWarning(clusterId, name, warning))
+      }
+
       function toPercent(status): number {
         if (status.packet_total_size === 0) return 1
         else return status.packet_read_size / status.packet_total_size
@@ -135,6 +139,9 @@ const trackProgress = (client, dispatch, clusterId) => {
             break
           case "LogPostStatus":
             updateSpaceDetails()
+            break
+          case "LogPostWarning":
+            appendWarning(status.warning)
             break
           case "TaskEnd":
             if (status.error) {
