@@ -16,7 +16,7 @@ export default function IngestWarningsModal() {
   return (
     <ModalBox
       name="ingest-warnings"
-      className="whois-modal"
+      className="ingest-warnings-modal"
       title="Ingest Warnings"
       buttons="Done"
     >
