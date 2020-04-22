@@ -87,6 +87,6 @@ describe("ingest api", () => {
       .inspect()
       .logs.post({space: "default", paths, types: "default"})
 
-    expect(JSON.parse(data.body).json_types_config).toEqual(expect.any(Object))
+    expect(JSON.parse(data.body).json_type_config).toEqual(expect.any(Object))
   })
 })

@@ -25,7 +25,7 @@ function getBody(paths, types) {
     return `
       {
         "paths": ${JSON.stringify(paths)},
-        "json_types_config": ${DEFAULT_TYPES}
+        "json_type_config": ${DEFAULT_TYPES}
       }`
   } else {
     return JSON.stringify({paths})
