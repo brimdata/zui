@@ -15,8 +15,8 @@ export default {
   raw: (state: State) => state.spaces,
   getSpaces: (clusterId: string) => (state: State): Space[] => {
     let clus = getCluster(state, clusterId)
-    return Object.entries(clus).map(([name, info]) => {
-      return {name, ...info}
+    return Object.keys(clus).map((key) => {
+      return {name: key, ...clus[key]}
     })
   },
   getIngestProgress: (clusterId: string, name: string) => (state: State) => {
@@ -26,6 +26,6 @@ export default {
   }
 }
 
-function getCluster(state, id) {
+function getCluster(state, id): {[string]: Space} {
   return state.spaces[id] || {}
 }

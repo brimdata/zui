@@ -28,7 +28,7 @@ export default function PopMenuPointy({
         style={menu.style}
       >
         <PopMenuPointer style={menu.pointerStyle} />
-        <PopMenuList template={template} {...props} />
+        <PopMenuList {...props} template={template} />
       </PopMenuWrapper>
       {menu.anchor}
     </>

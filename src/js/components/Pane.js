@@ -1,5 +1,6 @@
 /* @flow */
 import React from "react"
+
 import DragAnchor from "./DragAnchor"
 
 type Props = {
@@ -30,15 +31,15 @@ export default class Pane extends React.Component<Props> {
 type Pass = {}
 
 export const PaneHeader = (props: Pass) => (
-  <header className="pane-header" {...props} />
+  <header {...props} className="pane-header" />
 )
 
 export const PaneTitle = (props: Pass) => (
-  <h3 className="pane-title" {...props} />
+  <h3 {...props} className="pane-title" />
 )
 export const PaneBody = (props: Pass) => (
-  <div className="pane-body" {...props} />
+  <div {...props} className="pane-body" />
 )
-export const Left = (props: Pass) => <div className="left" {...props} />
-export const Right = (props: Pass) => <div className="right" {...props} />
-export const Center = (props: Pass) => <div className="center" {...props} />
+export const Left = (props: Pass) => <div {...props} className="left" />
+export const Right = (props: Pass) => <div {...props} className="right" />
+export const Center = (props: Pass) => <div {...props} className="center" />

@@ -11,9 +11,9 @@ type Props = {
 export default function BrimTooltip({className, children, ...rest}: Props) {
   return (
     <ReactTooltip
+      {...rest}
       insecure={false}
       className={classNames("brim-tooltip", className)}
-      {...rest}
     >
       {children}
     </ReactTooltip>

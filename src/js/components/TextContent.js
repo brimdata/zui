@@ -9,7 +9,7 @@ type Props = {
 
 export default function TextContent({children, className, ...props}: Props) {
   return (
-    <div className={classNames("text-content", className)} {...props}>
+    <div {...props} className={classNames("text-content", className)}>
       {children}
     </div>
   )

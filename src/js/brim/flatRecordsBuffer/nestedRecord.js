@@ -27,7 +27,7 @@ function zip(values, columns) {
   })
 }
 
-function flattenRecord(record, prefix) {
+function flattenRecord(record, prefix): FieldData[] {
   // $FlowFixMe
   return record.reduce(
     // $FlowFixMe
@@ -36,7 +36,8 @@ function flattenRecord(record, prefix) {
   )
 }
 
-function flatFields({name, value, type}, prefix = ""): FieldData[] {
+// $FlowFixMe
+function flatFields({name, value, type}, prefix = "") {
   // $FlowFixMe
   return type === "record"
     ? flattenRecord(value, `${name}.`)

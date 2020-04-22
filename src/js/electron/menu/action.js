@@ -9,10 +9,10 @@ type Props = {
   listener: Function
 }
 
-type Options = {
+type Options = {|
   enabled?: boolean,
   visible?: boolean
-}
+|}
 
 export default function action({name, label, listener}: Props) {
   return {

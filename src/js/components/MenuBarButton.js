@@ -19,9 +19,9 @@ const MenuBarButton = React.forwardRef(function MenuBarButton(
 ) {
   return (
     <button
+      {...props}
       ref={ref}
       className={classNames(className, "toolbar-button")}
-      {...props}
     >
       {!!icon && (
         <span className="icon">

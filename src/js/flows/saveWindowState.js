@@ -6,7 +6,7 @@ import rpc from "../electron/rpc"
 
 export default (): Thunk => (_, getState) => {
   rpc.log("Saving window state")
-  let state = {...getState()}
+  let state = Object.assign({}, getState())
   // remove state pieces which we are not interested in persisting
   delete state.errors
   delete state.notice

@@ -18,7 +18,11 @@ export default function(): Pen {
   }
 
   function draw(chart) {
-    const series = d3.stack().keys(chart.data.keys)(chart.data.points)
+    const series = d3
+      .stack()
+      .keys(chart.data.keys)
+      .value((d, key) => d.paths[key])(chart.data.points)
+
     const barGroups = chartG
       .attr(
         "transform",

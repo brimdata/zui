@@ -23,7 +23,7 @@ export default function ToolbarButton({
 }: Props) {
   let cn = classNames("toolbar-button", className)
   return (
-    <button className={cn} disabled={disabled} {...rest}>
+    <button {...rest} className={cn} disabled={disabled}>
       {!!icon && <span className="icon">{icon}</span>}
       {!!text && <span className="text">{text}</span>}
       {!!dropdown && <DropdownArrow />}

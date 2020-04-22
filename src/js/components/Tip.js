@@ -32,6 +32,7 @@ export default function Tip({show, children, anchor, className}: Props) {
   }
   let spring = useSpring({
     ...configs[status],
+    // $FlowFixMe this component should be deleted in favor of react-tooltip
     ...style,
     config: {duration: 100}
   })
