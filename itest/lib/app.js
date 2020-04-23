@@ -207,10 +207,17 @@ export const setSpan = async (app: Application, span: string) => {
 const waitForClickable = async (app: Application, selector: string) => {
   // In testing, it's been shown than there is no need to scroll to
   // elements to make them be visible, as long as the element's
-  // container allows scrolling.
+  // container allows scrolling. However, some Internet searches suggest
+  // scrolling to the element before trying to click in order to avoid
+  // problems like those described in
+  // https://github.com/brimsec/brim/issues/668
+  await appStep(`wait for element to exist: "${selector}"`, () =>
+    app.client.waitForExist(selector)
+  )
   await appStep(`wait for element to be visible: "${selector}"`, () =>
     app.client.waitForVisible(selector)
   )
+  await appStep(`scroll to: "${selector}"`, () => app.client.scroll(selector))
 }
 
 export const click = (app: Application, selector: string) =>
