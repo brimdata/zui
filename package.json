@@ -60,6 +60,9 @@
     "arrowParens": "always"
   },
   "devDependencies": {
+    "@actions/artifact": "^0.3.1",
+    "@actions/core": "^1.2.3",
+    "@actions/glob": "^0.1.0",
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
     "@babel/node": "^7.7.7",

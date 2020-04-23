@@ -17,6 +17,7 @@ const defaultLinuxOpts = {
     return path.join(dest, "<%= name %>_<%= arch %>.<%= ext %>")
   },
   options: {
+    name: "brim",
     homepage: "https://www.brimsecurity.com",
     icon: "./dist/static/AppIcon.png",
     maintainer: "Brim Security, Inc. <support@brimsecurity.com>"
