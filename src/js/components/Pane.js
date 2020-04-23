@@ -30,7 +30,7 @@ export default class Pane extends React.Component<Props> {
 }
 
 type Pass = {
-  classNames?: string
+  className?: string
 }
 
 export const PaneHeader = (props: Pass) => (
