@@ -1,14 +1,27 @@
 /* @noflow */
 const fs = require("fs")
 const os = require("os")
-const installer = require("electron-winstaller")
-const debInstaller = require("electron-installer-debian")
+const installerWin = require("electron-winstaller")
+const installerDebian = require("electron-installer-debian")
+const installerRedhat = require("electron-installer-redhat")
 const createDMG = require("electron-installer-dmg")
 const createZip = require("electron-installer-zip")
 const path = require("path")
 
 const out = "./dist/installers"
 const appPath = "dist/packages/Brim-darwin-x64/Brim.app"
+const defaultLinuxOpts = {
+  src: "./dist/packages/Brim-linux-x64",
+  dest: out,
+  rename: (dest) => {
+    return path.join(dest, "<%= name %>_<%= arch %>.<%= ext %>")
+  },
+  options: {
+    homepage: "https://www.brimsecurity.com",
+    icon: "./dist/static/AppIcon.png",
+    maintainer: "Brim Security, Inc. <support@brimsecurity.com>"
+  }
+}
 
 module.exports = {
   darwin: async function() {
@@ -45,7 +58,7 @@ module.exports = {
   win32: function(opts) {
     console.log("Building installer for win32")
     fixWindowsInstallerDeps()
-    return installer
+    return installerWin
       .createWindowsInstaller({
         ...opts,
         appDirectory: "./dist/packages/Brim-Win32-x64",
@@ -67,18 +80,19 @@ module.exports = {
 
   debian: function() {
     console.log("Building deb package installer")
-    return debInstaller({
-      src: "./dist/packages/Brim-linux-x64",
-      dest: out,
-      arch: "amd64",
-      rename: (dest) => {
-        return path.join(dest, "<%= name %>_<%= arch %>.deb")
-      },
-      options: {
-        homepage: "https://www.brimsecurity.com",
-        icon: "./dist/static/AppIcon.png",
-        maintainer: "Brim Security, Inc. <support@brimsecurity.com>"
-      }
+    return installerDebian({
+      ...defaultLinuxOpts,
+      ext: "deb",
+      arch: "amd64"
+    })
+  },
+
+  redhat: function() {
+    console.log("Building rpm package installer")
+    return installerRedhat({
+      ...defaultLinuxOpts,
+      ext: "rpm",
+      arch: "x86_64"
     })
   }
 }

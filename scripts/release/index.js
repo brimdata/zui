@@ -42,6 +42,7 @@ program
           certificatePassword: cmd.windowsCertificatePassword
         })
       )
-    if (cmd.linux) pack.linux().then(install.debian)
+    if (cmd.linux)
+      pack.linux().then(() => Promise.all([install.debian(), install.redhat()]))
   })
   .parse(process.argv)
