@@ -221,16 +221,16 @@ const waitForClickable = async (app: Application, selector: string) => {
 }
 
 export const click = (app: Application, selector: string) =>
-  appStep(`click on selector "${selector}"`, () =>
-    waitForClickable(app, selector).then(() => app.client.click(selector))
-  )
+  appStep(`click on selector "${selector}"`, async () => {
+    await waitForClickable(app, selector)
+    await app.client.click(selector)
+  })
 
 export const rightClick = (app: Application, selector: string) =>
-  appStep(`right-click on selector "${selector}"`, () =>
-    app.client
-      .waitForClickable(app, selector)
-      .then(() => app.client.rightClick(selector))
-  )
+  appStep(`right-click on selector "${selector}"`, async () => {
+    await app.client.waitForClickable(app, selector)
+    await app.client.rightClick(selector)
+  })
 
 export const openDebugQuery = async (app: Application) => {
   await click(app, selectors.options.button)
