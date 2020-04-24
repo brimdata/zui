@@ -50,7 +50,8 @@ test("opening a packet", async () => {
     min_time: {ns: 0, sec: 0},
     max_time: {ns: 1, sec: 1},
     packet_support: true,
-    ingest_progress: null
+    ingest_progress: null,
+    ingest_warnings: []
   })
 
   return fsExtra.remove("tmp")

@@ -1,54 +1,36 @@
 /* @flow */
 
 import type {SpacesAction, SpacesState} from "./types"
+import produce from "immer"
 
 const init: SpacesState = {}
 
-function spacesReducer(state, action: SpacesAction) {
+const spacesReducer = produce((draft, action: SpacesAction) => {
   switch (action.type) {
     case "SPACES_NAMES":
-      return {
-        ...replaceNames(action, state)
-      }
+      return action.names.reduce((next, name) => {
+        next[name] = draft[name]
+        return next
+      }, {})
+
     case "SPACES_DETAIL":
-      return {
-        ...state,
-        [action.space.name]: {
-          ...state[action.space.name],
-          ...action.space
-        }
-      }
+      var {name} = action.space
+      draft[name] = {...draft[name], ...action.space}
+      break
+
     case "SPACES_INGEST_PROGRESS":
-      return {
-        ...state,
-        [action.space]: {
-          ...state[action.space],
-          ingest_progress: action.value
-        }
-      }
+      getSpace(draft, action.space).ingest_progress = action.value
+      break
+
     case "SPACES_INGEST_WARNING_APPEND":
-      return {
-        ...state,
-        [action.space]: {
-          ...state[action.space],
-          ingest_warnings: [
-            ...(state[action.space].ingest_warnings || []),
-            action.warning
-          ]
-        }
-      }
+      getSpace(draft, action.space).ingest_warnings.push(action.warning)
+      break
+
     case "SPACES_INGEST_WARNING_CLEAR":
-      return {
-        ...state,
-        [action.space]: {
-          ...state[action.space],
-          ingest_warnings: []
-        }
-      }
-    default:
-      return state
+      draft[action.space].ingest_warnings = []
+      break
   }
-}
+})
 
 export default function reducer(
   state: SpacesState = init,
@@ -64,9 +46,10 @@ export default function reducer(
   }
 }
 
-function replaceNames({names}, spaces) {
-  let prev = spaces || {}
-  let next = {}
-  names.forEach((name) => (next[name] = prev[name]))
-  return next
+function getSpace(state, name) {
+  let space = state[name] ? state[name] : {}
+  if (!space.ingest_warnings) space.ingest_warnings = []
+  if (!space.ingest_progress) space.ingest_progress = null
+  state[name] = space
+  return state[name]
 }
