@@ -8,6 +8,7 @@ import {
   newAppInstance,
   pcapIngestSample,
   searchDisplay,
+  setSpan,
   startApp,
   startSearch,
   waitForResults,
@@ -41,6 +42,7 @@ describe("Query tests", () => {
   })
 
   beforeEach(async () => {
+    await setSpan(app, "Whole Space")
     await writeSearch(app, "")
     await waitForResults(app)
   })
