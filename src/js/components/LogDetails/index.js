@@ -10,6 +10,7 @@ import LogDetails from "../../state/LogDetails"
 import NavAnimation from "./NavAnimation"
 import NoSelection from "./NoSelection"
 import UidPanel from "./UidPanel"
+import menu from "../../electron/menu"
 
 export default function LogDetailComponent() {
   let log = useSelector(LogDetails.build)
@@ -20,10 +21,12 @@ export default function LogDetailComponent() {
   return (
     <NavAnimation log={log} prev={isGoingBack}>
       <div className="log-detail">
-        <FieldsPanel log={log} />
+        <FieldsPanel log={log} contextMenu={menu.searchFieldContextMenu} />
         {log.correlationId() && <UidPanel log={log} />}
-        <ConnPanel log={log} />
-        {log.getString("md5") && <Md5Panel log={log} />}
+        <ConnPanel log={log} contextMenu={menu.searchFieldContextMenu} />
+        {log.getString("md5") && (
+          <Md5Panel log={log} contextMenu={menu.searchFieldContextMenu} />
+        )}
       </div>
     </NavAnimation>
   )

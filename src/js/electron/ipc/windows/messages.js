@@ -5,20 +5,40 @@ import type {
   WindowsCloseMsg,
   WindowsDestroyMsg,
   WindowsInitialStateMsg,
-  WindowsRedirectMsg
+  WindowsOpenMsg,
+  WindowsNewSearchTabMsg
 } from "../types"
+import type {State} from "../../../state/types"
+import type {SpanArgs} from "../../../state/Search/types"
+
+export type NewTabSearchParams = {
+  program: string,
+  span: SpanArgs,
+  space: string
+}
 
 export default {
-  redirect(name: WindowName, params: $Shape<WindowParams>): WindowsRedirectMsg {
+  open(
+    name: WindowName,
+    params: $Shape<WindowParams>,
+    state: State
+  ): WindowsOpenMsg {
     return {
-      channel: "windows:redirect",
+      channel: "windows:open",
       name,
-      params
+      params,
+      state
     }
   },
   close(): WindowsCloseMsg {
     return {
       channel: "windows:close"
+    }
+  },
+  newSearchTab(params: Object): WindowsNewSearchTabMsg {
+    return {
+      channel: "windows:newSearchTab",
+      params
     }
   },
   destroy(): WindowsDestroyMsg {

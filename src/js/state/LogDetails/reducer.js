@@ -50,6 +50,9 @@ export default function reducer(
         prevPosition: state.position
       }
 
+    case "LOG_DETAIL_CLEAR":
+      return init()
+
     default:
       return state
   }

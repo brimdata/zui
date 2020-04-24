@@ -5,17 +5,14 @@ import React from "react"
 
 import type {Column} from "../../types"
 import open from "../../lib/open"
-import Tip from "../Tip"
 import brim from "../../brim"
 
 type Props = {
-  show: boolean,
-  anchor: ?HTMLElement,
   column: Column,
   path: string
 }
 
-export default function ColumnDescription({show, anchor, column, path}: Props) {
+export default function ColumnDescription({column, path}: Props) {
   let info = brim.zeekLogInfo(path)
   let md = new MarkdownIt()
   let col = info.describeColumn(column)
@@ -24,7 +21,7 @@ export default function ColumnDescription({show, anchor, column, path}: Props) {
   })
 
   return (
-    <Tip show={show} anchor={anchor} className="column-description">
+    <div className="column-description">
       <div className="tip-title">
         <p>{column.name}</p> <p>{col.type}</p>
       </div>
@@ -36,6 +33,6 @@ export default function ColumnDescription({show, anchor, column, path}: Props) {
           <a onClick={() => open(info.docsUrl())}>Link to Docs</a>
         </div>
       )}
-    </Tip>
+    </div>
   )
 }

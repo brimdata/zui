@@ -8,12 +8,17 @@ let started = false
 
 export default function(manager: $WindowManager) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
-    return manager.getWindow(id).state
+    const window = manager.getWindow(id)
+
+    return window.state
   })
 
-  ipcMain.handle("windows:redirect", (e, args) => {
-    BrowserWindow.fromWebContents(e.sender).close()
-    manager.openWindow(args.name, args.params)
+  ipcMain.handle("windows:open", (e, args) => {
+    const {id} = manager.openWindow(args.name, args.params)
+
+    manager.updateWindow(id, {state: args.state})
+
+    return id
   })
 
   ipcMain.handle("windows:close", () => {
@@ -25,6 +30,10 @@ export default function(manager: $WindowManager) {
       console.timeEnd("init")
       started = true
     }
+  })
+
+  ipcMain.handle("windows:newSearchTab", (e, params) => {
+    manager.openSearchTab(params.params)
   })
 
   ipcMain.handle("windows:saveState", (e, id, state) => {

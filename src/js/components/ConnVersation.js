@@ -12,16 +12,16 @@ import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
-import menu from "../electron/menu"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
 const RESP_FIELDS = ["resp_bytes", "resp_pkts", "resp_ip_bytes", "local_resp"]
 
 type Props = {
-  log: Log
+  log: Log,
+  contextMenu: Function
 }
 
-const ConnVersation = ({log}: Props) => {
+const ConnVersation = ({log, contextMenu}: Props) => {
   return (
     <div className="conn-versation">
       <Host
@@ -30,6 +30,7 @@ const ConnVersation = ({log}: Props) => {
         log={log.only(...ORIG_FIELDS)}
         ip={log.getField("id.orig_h")}
         port={log.getField("id.orig_p")}
+        contextMenu={contextMenu}
       />
       <ConnHistory history={log.getString("history")} />
       <Host
@@ -38,6 +39,7 @@ const ConnVersation = ({log}: Props) => {
         log={log.only(...RESP_FIELDS)}
         ip={log.getField("id.resp_h")}
         port={log.getField("id.resp_p")}
+        contextMenu={contextMenu}
       />
     </div>
   )
@@ -57,11 +59,11 @@ const ConnHistory = ({history = ""}) => (
   </div>
 )
 
-const Host = ({className, title, ip, port, log}) => {
+const Host = ({className, title, ip, port, log, contextMenu}) => {
   let program = useSelector(SearchBar.getSearchProgram)
   let tableColumns = useSelector(Columns.getCurrentTableColumns)
   let space = useSelector(Tab.space)
-  let rightClick = menu.fieldContextMenu(
+  let rightClick = contextMenu(
     program,
     tableColumns.getColumns().map((c) => c.name),
     space

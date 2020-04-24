@@ -14,6 +14,7 @@ import initStore from "./initStore"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
 import refreshWindow from "../flows/refreshWindow"
+import initNewSearchTab from "./initNewSearchTab"
 
 let {id} = getQueryParams()
 
@@ -30,7 +31,7 @@ export default () => {
     let store = initStore(initState, boom)
     let dispatch = store.dispatch
 
-    initDOM()
+    initDOM("app-root")
     initShortcuts(store)
     initMenuActionListeners(dispatch)
     initQueryParams(store)
@@ -39,6 +40,9 @@ export default () => {
     global.getGlobalState = globalStore.getState
 
     ipcRenderer.on("globalStore:dispatch", (e, {action}) => dispatch(action))
+    ipcRenderer.on("windows:newSearchTab", (e, {params}) => {
+      initNewSearchTab(store, dispatch, params)
+    })
     ipcRenderer.on("close", () => dispatch(closeWindow()))
     global.onbeforeunload = () => dispatch(refreshWindow())
 

@@ -45,14 +45,16 @@
   background: white;
   min-width: 280px;
 
+  .log-detail-center {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .pane-header {
     background: $white-3;
     border-bottom: 1px solid $white-5;
-  }
-
-  .history-buttons {
-    display: flex;
-    align-items: center;
   }
 
   .star-button {
@@ -67,6 +69,13 @@
     svg {
       stroke: $white-9;
       fill: $yellow;
+    }
+  }
+
+  .close-button {
+    svg {
+      height: 10px;
+      width: 10px;
     }
   }
 }

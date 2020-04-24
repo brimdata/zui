@@ -26,7 +26,7 @@ describe("Log Right Click", () => {
   test("conn log with pcap support", () => {
     const log = conn()
     const field = log.mustGetField("id.orig_h")
-    const ctxMenu = menu.fieldContextMenu(
+    const ctxMenu = menu.searchFieldContextMenu(
       program,
       log.descriptor.map((c) => c.name),
       space
@@ -40,7 +40,7 @@ describe("Log Right Click", () => {
 
     const log = conn()
     const field = log.mustGetField("id.orig_h")
-    const ctxMenu = menu.fieldContextMenu(
+    const ctxMenu = menu.searchFieldContextMenu(
       program,
       log.descriptor.map((c) => c.name),
       space
@@ -52,7 +52,7 @@ describe("Log Right Click", () => {
   test("dns log", () => {
     const log = dns()
     const field = log.mustGetField("query")
-    const ctxMenu = menu.fieldContextMenu(
+    const ctxMenu = menu.searchFieldContextMenu(
       program,
       log.descriptor.map((c) => c.name),
       space
@@ -65,7 +65,7 @@ describe("Log Right Click", () => {
   test("time field for conn log", () => {
     const log = conn()
     const field = log.mustGetField("ts")
-    const ctxMenu = menu.fieldContextMenu(
+    const ctxMenu = menu.searchFieldContextMenu(
       program,
       log.descriptor.map((c) => c.name),
       space
@@ -82,7 +82,7 @@ describe("Analysis Right Click", () => {
   test("address field", () => {
     const log = conn()
     const field = log.mustGetField("id.orig_h")
-    const ctxMenu = menu.fieldContextMenu(
+    const ctxMenu = menu.searchFieldContextMenu(
       program,
       log.descriptor.map((c) => c.name),
       space
@@ -94,7 +94,7 @@ describe("Analysis Right Click", () => {
   test("non-address field", () => {
     const log = conn()
     const field = log.mustGetField("proto")
-    const ctxMenu = menu.fieldContextMenu(
+    const ctxMenu = menu.searchFieldContextMenu(
       "* | count() by proto",
       log.descriptor.map((c) => c.name),
       space
@@ -106,7 +106,7 @@ describe("Analysis Right Click", () => {
   test("group by proc", () => {
     const log = conn()
     const field = log.mustGetField("proto")
-    const ctxMenu = menu.fieldContextMenu(
+    const ctxMenu = menu.searchFieldContextMenu(
       "* | group by proto",
       log.descriptor.map((c) => c.name),
       space

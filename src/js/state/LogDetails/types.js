@@ -20,6 +20,7 @@ export type LogDetailsAction =
   | LOG_DETAIL_BACK
   | LOG_DETAIL_FORWARD
   | LOG_DETAIL_UPDATE
+  | LOG_DETAIL_CLEAR
 
 export type LOG_DETAIL_PUSH = {
   type: "LOG_DETAIL_PUSH",
@@ -37,4 +38,8 @@ export type LOG_DETAIL_BACK = {
 
 export type LOG_DETAIL_FORWARD = {
   type: "LOG_DETAIL_FORWARD"
+}
+
+export type LOG_DETAIL_CLEAR = {
+  type: "LOG_DETAIL_CLEAR"
 }

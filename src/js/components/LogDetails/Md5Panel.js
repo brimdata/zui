@@ -18,9 +18,14 @@ import PanelHeading from "./PanelHeading"
 import Tab from "../../state/Tab"
 import brim from "../../brim"
 import executeSearch from "../../flows/executeSearch"
-import menu from "../../electron/menu"
 
-export const Md5Panel = ({log}: {log: Log}) => {
+export const Md5Panel = ({
+  log,
+  contextMenu
+}: {
+  log: Log,
+  contextMenu: Function
+}) => {
   let logMd5 = log.getString("md5")
   let dispatch = useDispatch()
   let space = useSelector(Tab.spaceName)
@@ -63,18 +68,14 @@ export const Md5Panel = ({log}: {log: Log}) => {
       <PanelHeading status={status}>Md5 Correlation</PanelHeading>
       <AsyncTable
         logs={md5}
-        rightClick={menu.fieldContextMenu(
-          md5Correlation(logMd5),
-          getColumns(md5),
-          space
-        )}
+        rightClick={contextMenu(md5Correlation(logMd5), getColumns(md5), space)}
         name="md5 count"
         status={status}
         expect={1}
       />
       <AsyncTable
         logs={filenames}
-        rightClick={menu.fieldContextMenu(
+        rightClick={contextMenu(
           filenameCorrelation(logMd5),
           getColumns(filenames),
           space
@@ -86,7 +87,7 @@ export const Md5Panel = ({log}: {log: Log}) => {
       <div className="two-column">
         <AsyncTable
           logs={tx}
-          rightClick={menu.fieldContextMenu(
+          rightClick={contextMenu(
             txHostsCorrelation(logMd5),
             getColumns(tx),
             space
@@ -97,7 +98,7 @@ export const Md5Panel = ({log}: {log: Log}) => {
         />
         <AsyncTable
           logs={rx}
-          rightClick={menu.fieldContextMenu(
+          rightClick={contextMenu(
             rxHostsCorrelation(logMd5),
             getColumns(rx),
             space

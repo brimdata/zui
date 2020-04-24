@@ -7,7 +7,7 @@ import {hasGroupByProc} from "../../lib/Program"
 import Log from "../../models/Log"
 import menu from "./"
 
-export default function fieldContextMenu(
+export default function detailFieldContextMenu(
   program: string,
   columns: string[],
   space: Space
@@ -35,43 +35,45 @@ export default function fieldContextMenu(
       "query"
     ].includes(field.name)
 
+    const detailMenuActions = menu.actions.detail
+
     return [
-      menu.actions.include.menuItem([field], {
+      detailMenuActions.include.menuItem([field], {
         enabled: hasCol,
         visible: !compound
       }),
-      menu.actions.exclude.menuItem([field], {
+      detailMenuActions.exclude.menuItem([field], {
         enabled: hasCol,
         visible: !compound
       }),
-      menu.actions.in.menuItem([field], {
+      detailMenuActions.in.menuItem([field], {
         visible: !!compound
       }),
-      menu.actions.notIn.menuItem([field], {
+      detailMenuActions.notIn.menuItem([field], {
         visible: !!compound
       }),
-      menu.actions.freshInclude.menuItem([field], {enabled: true}),
+      detailMenuActions.freshInclude.menuItem([field], {enabled: true}),
       menu.separator(),
-      menu.actions.groupByDrillDown.menuItem([program, log], {
+      detailMenuActions.groupByDrillDown.menuItem([program, log], {
         enabled: isGroupBy && sameCols
       }),
-      menu.actions.countBy.menuItem([field], {enabled: !isGroupBy}),
+      detailMenuActions.countBy.menuItem([field], {enabled: !isGroupBy}),
       menu.separator(),
-      menu.actions.sortAsc.menuItem([field], {enabled: hasCol}),
-      menu.actions.sortDesc.menuItem([field], {enabled: hasCol}),
+      detailMenuActions.sortAsc.menuItem([field], {enabled: hasCol}),
+      detailMenuActions.sortDesc.menuItem([field], {enabled: hasCol}),
       menu.separator(),
-      menu.actions.fromTime.menuItem([field], {enabled: isTime}),
-      menu.actions.toTime.menuItem([field], {enabled: isTime}),
+      detailMenuActions.fromTime.menuItem([field], {enabled: isTime}),
+      detailMenuActions.toTime.menuItem([field], {enabled: isTime}),
       menu.separator(),
-      menu.actions.pcaps.menuItem([log], {enabled: isConn && hasPackets}),
-      menu.actions.detail.menuItem([log], {enabled: true}),
+      detailMenuActions.pcaps.menuItem([log], {enabled: isConn && hasPackets}),
+      detailMenuActions.detail.menuItem([log], {enabled: true}),
       menu.separator(),
-      menu.actions.whoisRightclick.menuItem([field], {enabled: isIp}),
-      menu.actions.virusTotalRightclick.menuItem([field], {
+      detailMenuActions.whoisRightclick.menuItem([field], {enabled: isIp}),
+      detailMenuActions.virusTotalRightclick.menuItem([field], {
         enabled: virusTotal || isIp
       }),
       menu.separator(),
-      menu.actions.logResult.menuItem([field, log], {enabled: true})
+      detailMenuActions.logResult.menuItem([field, log], {enabled: true})
     ]
   }
 }

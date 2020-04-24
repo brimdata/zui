@@ -1,19 +1,23 @@
 /* @flow */
 import type {WindowName} from "../tron/windowManager"
 import type {WindowParams} from "../tron/window"
+import type {NewTabSearchParams} from "./windows/messages"
+import type {State} from "../../state/types"
 
 export type IpcMsg =
-  | WindowsRedirectMsg
+  | WindowsOpenMsg
   | WindowsCloseMsg
   | WindowsInitialStateMsg
   | WindowsDestroyMsg
+  | WindowsNewSearchTabMsg
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
 
-export type WindowsRedirectMsg = {
-  channel: "windows:redirect",
+export type WindowsOpenMsg = {
+  channel: "windows:open",
   name: WindowName,
-  params: WindowParams
+  params: WindowParams,
+  state: State
 }
 
 export type WindowsCloseMsg = {
@@ -27,6 +31,11 @@ export type WindowsInitialStateMsg = {
 
 export type WindowsDestroyMsg = {
   channel: "windows:destroy"
+}
+
+export type WindowsNewSearchTabMsg = {
+  channel: "windows:newSearchTab",
+  params: NewTabSearchParams
 }
 
 export type GlobalStoreInitMsg = {

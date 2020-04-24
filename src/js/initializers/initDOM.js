@@ -1,7 +1,7 @@
 /* @flow */
 
-export default function() {
-  appendDivId("app-root")
+export default function(windowDivId: string) {
+  appendDivId(windowDivId)
   appendDivId("notification-root")
   appendDivId("modal-root")
   appendDivId("tooltip-root")
@@ -9,7 +9,7 @@ export default function() {
   appendDivId("measure-layer")
 }
 
-function appendDivId(id) {
+function appendDivId(id: string) {
   let div = document.createElement("div")
   div.id = id
   if (document.body) document.body.appendChild(div)
