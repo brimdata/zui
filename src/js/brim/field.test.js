@@ -13,6 +13,13 @@ test("string does quote", () => {
   expect(f.queryableValue()).toEqual('"d,n,s"')
 })
 
+test("string escapes double quotes", () => {
+  let f = brim.field({name: "service", type: "string", value: '"test"'})
+
+  // "test", as a value of type 'string', should return "\"test\"" to escape the inner double quotes
+  expect(f.queryableValue()).toEqual('"\\"test\\""')
+})
+
 describe("#queryableValue", () => {
   const fn = (data: any) => brim.field(data).queryableValue()
 
