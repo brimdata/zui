@@ -7,6 +7,7 @@ import {XDownloadProgress} from "./DownloadProgress"
 import ControlBar from "./ControlBar"
 import CurlModal from "./CurlModal"
 import EmptySpaceModal from "./EmptySpaceModal"
+import IngestWarningsModal from "./IngestWarningsModal"
 import Search from "../state/Search"
 import SearchHeaderChart from "./SearchHeaderChart"
 import SearchResults from "./SearchResults/SearchResults"
@@ -41,6 +42,7 @@ export default function TabSearch() {
       <EmptySpaceModal />
       <ZQModal />
       <XDownloadProgress />
+      <IngestWarningsModal />
     </>
   )
 }

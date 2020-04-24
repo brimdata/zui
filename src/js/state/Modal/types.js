@@ -20,3 +20,4 @@ export type ModalName =
   | "nodata"
   | "zq"
   | "about"
+  | "ingest-warnings"
