@@ -16,7 +16,7 @@ test("string does quote", () => {
 test("string escapes double quotes", () => {
   let f = brim.field({name: "service", type: "string", value: '"test"'})
 
-  // '"test"', as a string, should return "\"test\"" to escape the inner double quotes
+  // "test", as a value of type 'string', should return "\"test\"" to escape the inner double quotes
   expect(f.queryableValue()).toEqual('"\\"test\\""')
 })
 
