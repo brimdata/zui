@@ -14,6 +14,8 @@ export const PATH_PAD = 12
 const WHITE_SPACE = /\s+/
 const COMMA = /,/
 const STRING_TYPE = /^b?string$/
+const DOUBLE_QUOTE = /"/g
+const ESCAPED_DOUBLE_QUOTE = '\\"'
 
 function field({name, type, value}: FieldData): $Field {
   return {
@@ -32,7 +34,8 @@ function field({name, type, value}: FieldData): $Field {
       if (this.type === "bool") return this.value === "T" ? "true" : "false"
       let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value))
       if (STRING_TYPE.test(this.type)) quote = true
-      return quote ? `"${this.value}"` : this.value
+      const str = this.value.replace(DOUBLE_QUOTE, ESCAPED_DOUBLE_QUOTE)
+      return quote ? `"${str}"` : str
     },
     stringValue(): string {
       if (value === null) return "null"
