@@ -33,6 +33,7 @@ describe("Query tests", () => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await startApp(app)
     await pcapIngestSample(app)
+    await setSpan(app, "Whole Space")
   })
 
   afterAll(async () => {
@@ -42,7 +43,6 @@ describe("Query tests", () => {
   })
 
   beforeEach(async () => {
-    await setSpan(app, "Whole Space")
     await writeSearch(app, "")
     await waitForResults(app)
   })
