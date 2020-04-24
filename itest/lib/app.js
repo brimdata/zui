@@ -223,13 +223,33 @@ const waitForClickable = async (app: Application, selector: string) => {
 export const click = (app: Application, selector: string) =>
   appStep(`click on selector "${selector}"`, async () => {
     await waitForClickable(app, selector)
-    await app.client.click(selector)
+    try {
+      await retryUntil(
+        () => app.client.click(selector),
+        (success) => success
+      )
+    } catch (e) {
+      LOG.debug("trying to execute script for click: " + e)
+      await app.client.selectorExecute(selector, (elem) => {
+        elem.click()
+      })
+    }
   })
 
 export const rightClick = (app: Application, selector: string) =>
   appStep(`right-click on selector "${selector}"`, async () => {
     await app.client.waitForClickable(app, selector)
-    await app.client.rightClick(selector)
+    try {
+      await retryUntil(
+        () => app.client.rightClick(selector),
+        (success) => success
+      )
+    } catch (e) {
+      LOG.debug("trying to execute script for rightClick: " + e)
+      await app.client.selectorExecute(selector, (elem) => {
+        elem.rightClick()
+      })
+    }
   })
 
 export const openDebugQuery = async (app: Application) => {
@@ -372,7 +392,17 @@ const waitForClickableButtonAndClick = async (
 
   // We can use app.client.click() here because we've done the necessary
   // waiting.
-  await app.client.click(selector)
+  try {
+    await retryUntil(
+      () => app.client.click(selector),
+      (success) => success
+    )
+  } catch (e) {
+    LOG.debug("trying to execute script for click: " + e)
+    await app.client.selectorExecute(selector, (elem) => {
+      elem.click()
+    })
+  }
 }
 
 export const clickPcapButton = async (app: Application) => {
