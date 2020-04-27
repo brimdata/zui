@@ -30,6 +30,11 @@ export default {
     let space = cluster[name]
     if (space) return space.ingest.warnings
     else return []
+  },
+  getIngestSnapshot: (clusterId: string, name: string) => (state: State) => {
+    let cluster = getCluster(state, clusterId)
+    let space = cluster[name]
+    if (space) return space.ingest.snapshot
   }
 }
 

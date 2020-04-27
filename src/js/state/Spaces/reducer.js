@@ -3,7 +3,7 @@
 import produce from "immer"
 
 import brim from "../../brim"
-import type {SpacesAction, SpacesState} from "./types"
+import type {Space, SpacesAction, SpacesState} from "./types"
 
 const init: SpacesState = {}
 
@@ -25,15 +25,19 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
       break
 
     case "SPACES_INGEST_PROGRESS":
-      getSpace(draft, action.space).ingest.progress = action.value
+      getSpace(draft, action.name).ingest.progress = action.value
       break
 
     case "SPACES_INGEST_WARNING_APPEND":
-      getSpace(draft, action.space).ingest.warnings.push(action.warning)
+      getSpace(draft, action.name).ingest.warnings.push(action.warning)
       break
 
     case "SPACES_INGEST_WARNING_CLEAR":
-      getSpace(draft, action.space).ingest.warnings = []
+      getSpace(draft, action.name).ingest.warnings = []
+      break
+
+    case "SPACES_INGEST_SNAPSHOT":
+      getSpace(draft, action.name).ingest.snapshot = action.count
       break
 
     case "SPACES_REMOVE":
@@ -56,7 +60,7 @@ export default function reducer(
   }
 }
 
-function defaults(name, data = {}) {
+function defaults(name, data: $Shape<Space> = {}): Space {
   let defaults = {
     name,
     min_time: {ns: 0, sec: 0},
@@ -65,6 +69,7 @@ function defaults(name, data = {}) {
     ingest: {
       progress: null,
       warnings: [],
+      snapshot: null,
       ...data.ingest
     }
   }

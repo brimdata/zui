@@ -62,10 +62,8 @@ test("setting the ingest progress throws error if no space yet", () => {
 })
 
 test("setting the ingest progress", () => {
-  store.dispatchAll([
-    Spaces.setDetail("cluster1", detail),
-    Spaces.setIngestProgress("cluster1", detail.name, 0.5)
-  ])
+  let actions = Spaces.actionsFor("cluster1", detail.name)
+  store.dispatchAll([actions.create(), actions.setIngestProgress(0.5)])
 
   let value = Spaces.getIngestProgress(
     "cluster1",
@@ -106,10 +104,11 @@ test("only cares about spaces actions", () => {
 })
 
 test("ingest warnings", () => {
+  let actions = Spaces.actionsFor("cluster1", detail.name)
   let state = store.dispatchAll([
-    Spaces.setDetail("cluster1", detail),
-    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 1"),
-    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 2")
+    actions.create(),
+    actions.appendIngestWarning("Problem 1"),
+    actions.appendIngestWarning("Problem 2")
   ])
 
   expect(Spaces.getIngestWarnings("cluster1", detail.name)(state)).toEqual([
@@ -119,21 +118,32 @@ test("ingest warnings", () => {
 })
 
 test("clear warnings", () => {
+  let actions = Spaces.actionsFor("cluster1", detail.name)
   let state = store.dispatchAll([
-    Spaces.setDetail("cluster1", detail),
-    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 1"),
-    Spaces.appendIngestWarning("cluster1", detail.name, "Problem 2"),
-    Spaces.clearIngestWarnings("cluster1", detail.name)
+    actions.create(),
+    actions.appendIngestWarning("Problem 1"),
+    actions.appendIngestWarning("Problem 2"),
+    actions.clearIngestWarnings()
   ])
 
   expect(Spaces.getIngestWarnings("cluster1", detail.name)(state)).toEqual([])
 })
 
 test("remove space", () => {
-  let state = store.dispatchAll([
-    Spaces.setDetail("cluster1", detail),
-    Spaces.remove("cluster1", detail.name)
-  ])
+  let actions = Spaces.actionsFor("cluster1", detail.name)
+
+  let state = store.dispatchAll([actions.create(), actions.remove()])
 
   expect(Spaces.getSpaces("cluster1")(state)).toEqual([])
+})
+
+test("setting the spanshot counter", () => {
+  let actions = Spaces.actionsFor("cluster1", detail.name)
+
+  let state = store.dispatchAll([
+    actions.create(),
+    actions.setIngestSnapshot(1)
+  ])
+
+  expect(Spaces.getIngestSnapshot("cluster1", detail.name)(state)).toBe(1)
 })

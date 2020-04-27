@@ -6,6 +6,7 @@ import type {
   SPACES_INGEST_WARNING_APPEND,
   SPACES_INGEST_WARNING_CLEAR,
   SPACES_NAMES,
+  SPACES_REMOVE,
   Space
 } from "./types"
 
@@ -30,32 +31,32 @@ export default {
 
   setIngestProgress: (
     clusterId: string,
-    space: string,
+    name: string,
     value: number | null
   ): SPACES_INGEST_PROGRESS => ({
     type: "SPACES_INGEST_PROGRESS",
     clusterId,
-    space,
+    name,
     value
   }),
 
   appendIngestWarning: (
     clusterId: string,
-    space: string,
+    name: string,
     warning: string
   ): SPACES_INGEST_WARNING_APPEND => ({
     type: "SPACES_INGEST_WARNING_APPEND",
     clusterId,
-    space,
+    name,
     warning
   }),
 
   clearIngestWarnings: (
     clusterId: string,
-    space: string
+    name: string
   ): SPACES_INGEST_WARNING_CLEAR => ({
     type: "SPACES_INGEST_WARNING_CLEAR",
     clusterId,
-    space
+    name
   })
 }
