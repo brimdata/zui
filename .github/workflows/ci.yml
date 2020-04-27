@@ -82,10 +82,12 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         set -x
+        source lib/bash/common.bash
         node scripts/release --darwin
         hdiutil attach dist/installers/Brim.dmg
         cp -R /Volumes/Brim/Brim.app /Applications
-        hdiutil detach /Volumes/Brim
+        retry_until_success 60 1 hdiutil detach /Volumes/Brim
+      shell: bash
     - name: Build and Install Debian Pkg
       if: runner.os == 'Linux'
       run: |
