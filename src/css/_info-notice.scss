@@ -24,8 +24,7 @@
   align-items: center;
   @include label-normal;
   bottom: 48px;
-  animation: popup 5s infinite;
-
+  animation: popup 2s;
   button {
     margin: 0 6px;
   }
