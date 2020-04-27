@@ -192,16 +192,10 @@ export const getSearchTime = (app: Application) =>
   getSearchStat(app, selectors.search.time)
 
 export const setSpan = async (app: Application, span: string) => {
-  const clickSpanButton = () =>
-    appStep("click span selector", () => click(app, selectors.span.button))
-
-  const clickSpan = () =>
-    appStep(`select span ${span}`, () =>
-      click(app, selectors.span.menuItem(span))
-    )
-
-  await clickSpanButton()
-  await clickSpan()
+  await appStep("click span selector", () => click(app, selectors.span.button))
+  await appStep(`select span ${span}`, () =>
+    click(app, selectors.span.menuItem(span))
+  )
 }
 
 const waitForClickable = async (app: Application, selector: string) => {
