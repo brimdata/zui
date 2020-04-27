@@ -8,6 +8,7 @@ import {
   newAppInstance,
   pcapIngestSample,
   searchDisplay,
+  setSpan,
   startApp,
   startSearch,
   waitForResults,
@@ -32,6 +33,7 @@ describe("Query tests", () => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await startApp(app)
     await pcapIngestSample(app)
+    await setSpan(app, "Whole Space")
   })
 
   afterAll(async () => {

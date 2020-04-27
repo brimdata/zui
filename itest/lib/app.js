@@ -172,13 +172,10 @@ export const getCurrentSpace = (app: Application) =>
   )
 
 export const setSpace = (app: Application, space: string) =>
-  appStep(`set space to "${space}"`, () =>
-    app.client
-      .waitForVisible(selectors.spaces.button)
-      .then(() => app.client.click(selectors.spaces.button))
-      .then(() => app.client.waitForVisible(selectors.spaces.menuItem(space)))
-      .then(() => app.client.click(selectors.spaces.menuItem(space)))
-  )
+  appStep(`set space to "${space}"`, async () => {
+    await click(app, selectors.spaces.button)
+    await click(app, selectors.spaces.menuItem(space))
+  })
 
 const getSearchStat = (app: Application, selector: string) =>
   appStep(`get search stats for selector "${selector}"`, () =>
@@ -194,35 +191,60 @@ export const getSearchSpeed = (app: Application) =>
 export const getSearchTime = (app: Application) =>
   getSearchStat(app, selectors.search.time)
 
-export const setSpan = (app: Application, span: string) => {
-  const clickSpanButton = () =>
-    appStep("click span selector", () =>
-      app.client
-        .waitForVisible(selectors.span.button)
-        .then(() => app.client.click(selectors.span.button))
-    )
+export const setSpan = async (app: Application, span: string) => {
+  await appStep("click span selector", () => click(app, selectors.span.button))
+  await appStep(`select span ${span}`, () =>
+    click(app, selectors.span.menuItem(span))
+  )
+}
 
-  const clickSpan = () =>
-    appStep(`select span ${span}`, () =>
-      app.client
-        .waitForVisible(selectors.span.menuItem(span))
-        .then(() => app.client.click(selectors.span.menuItem(span)))
-    )
-
-  return clickSpanButton().then(() => clickSpan())
+const waitForClickable = async (app: Application, selector: string) => {
+  // In testing, it's been shown than there is no need to scroll to
+  // elements to make them be visible, as long as the element's
+  // container allows scrolling. However, some Internet searches suggest
+  // scrolling to the element before trying to click in order to avoid
+  // problems like those described in
+  // https://github.com/brimsec/brim/issues/668
+  await appStep(`wait for element to exist: "${selector}"`, () =>
+    app.client.waitForExist(selector)
+  )
+  await appStep(`wait for element to be visible: "${selector}"`, () =>
+    app.client.waitForVisible(selector)
+  )
+  await appStep(`scroll to: "${selector}"`, () => app.client.scroll(selector))
 }
 
 export const click = (app: Application, selector: string) =>
-  appStep(`click on selector "${selector}"`, () =>
-    app.client.waitForVisible(selector).then(() => app.client.click(selector))
-  )
+  appStep(`click on selector "${selector}"`, async () => {
+    await waitForClickable(app, selector)
+    try {
+      await retryUntil(
+        () => app.client.click(selector),
+        (success) => success
+      )
+    } catch (e) {
+      LOG.debug("trying to execute script for click: " + e)
+      await app.client.selectorExecute(selector, (elem) => {
+        elem.click()
+      })
+    }
+  })
 
 export const rightClick = (app: Application, selector: string) =>
-  appStep(`right-click on selector "${selector}"`, () =>
-    app.client
-      .waitForVisible(selector)
-      .then(() => app.client.rightClick(selector))
-  )
+  appStep(`right-click on selector "${selector}"`, async () => {
+    await app.client.waitForClickable(app, selector)
+    try {
+      await retryUntil(
+        () => app.client.rightClick(selector),
+        (success) => success
+      )
+    } catch (e) {
+      LOG.debug("trying to execute script for rightClick: " + e)
+      await app.client.selectorExecute(selector, (elem) => {
+        elem.rightClick()
+      })
+    }
+  })
 
 export const openDebugQuery = async (app: Application) => {
   await click(app, selectors.options.button)
@@ -297,11 +319,11 @@ export const toggleOptimizations = async (app: Application) => {
   )
   await appStep("toggle optimizations", () =>
     Promise.all([
-      app.client.click(selectors.settings.useCacheToggle),
-      app.client.click(selectors.settings.useIndexToggle)
+      click(app, selectors.settings.useCacheToggle),
+      click(app, selectors.settings.useIndexToggle)
     ])
   )
-  await app.client.click(selectors.settings.button)
+  await click(app, selectors.settings.button)
 }
 
 export const waitForResults = (app: Application) =>
@@ -353,10 +375,8 @@ const waitForClickableButtonAndClick = async (
   app: Application,
   selector: string
 ) => {
-  await appStep(`wait for button ${selector} to be visible`, () =>
-    app.client.waitForVisible(selector)
-  )
-
+  await waitForClickable(app, selector)
+  // In addition to waitForClickable above, buttons must also be enabled.
   await appStep(`wait for button ${selector} to be enabled`, () =>
     retryUntil(
       () => app.client.getAttribute(selectors.pcaps.button, "disabled"),
@@ -364,7 +384,19 @@ const waitForClickableButtonAndClick = async (
     )
   )
 
-  await click(app, selector)
+  // We can use app.client.click() here because we've done the necessary
+  // waiting.
+  try {
+    await retryUntil(
+      () => app.client.click(selector),
+      (success) => success
+    )
+  } catch (e) {
+    LOG.debug("trying to execute script for click: " + e)
+    await app.client.selectorExecute(selector, (elem) => {
+      elem.click()
+    })
+  }
 }
 
 export const clickPcapButton = async (app: Application) => {
