@@ -54,7 +54,8 @@ test("opening a packet", async () => {
     packet_support: true,
     ingest: {
       progress: null,
-      warnings: []
+      warnings: [],
+      snapshot: 1
     }
   })
 

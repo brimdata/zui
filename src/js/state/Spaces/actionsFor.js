@@ -8,7 +8,7 @@ import actions from "./actions"
 
 export default function actionsFor(clusterId: string, name: string) {
   return {
-    setIngestProgress: (value: number) => {
+    setIngestProgress: (value: number | null) => {
       return actions.setIngestProgress(clusterId, name, value)
     },
     appendIngestWarning: (warning: string) => {

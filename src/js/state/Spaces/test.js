@@ -50,7 +50,8 @@ test("setting the space detail adds the defaults", () => {
     max_time: {sec: 1428917793, ns: 750000000},
     ingest: {
       progress: null,
-      warnings: []
+      warnings: [],
+      snapshot: null
     }
   })
 })
@@ -86,14 +87,14 @@ test("getting the spaces with details, others not", () => {
       max_time: {ns: 750000000, sec: 1428917793},
       min_time: {ns: 0, sec: 1425564900},
       packet_support: true,
-      ingest: {warnings: [], progress: null}
+      ingest: {warnings: [], progress: null, snapshot: null}
     },
     {
       name: "space-b",
       max_time: {ns: 0, sec: 0},
       min_time: {ns: 0, sec: 0},
       packet_support: false,
-      ingest: {warnings: [], progress: null}
+      ingest: {warnings: [], progress: null, snapshot: null}
     }
   ])
 })

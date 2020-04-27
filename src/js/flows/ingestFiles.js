@@ -111,16 +111,10 @@ const setSpace = (dispatch, tabId) => ({
 const trackProgress = (client, dispatch, clusterId) => {
   return {
     async do({name, stream, endpoint}) {
-      function setProgress(n) {
-        dispatch(Spaces.setIngestProgress(clusterId, name, n))
-      }
+      let space = Spaces.actionsFor(clusterId, name)
 
       async function updateSpaceDetails() {
         dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
-      }
-
-      function appendWarning(warning) {
-        dispatch(Spaces.appendIngestWarning(clusterId, name, warning))
       }
 
       function toPercent(status): number {
@@ -128,18 +122,17 @@ const trackProgress = (client, dispatch, clusterId) => {
         else return status.packet_read_size / status.packet_total_size
       }
 
-      setProgress(0)
+      dispatch(space.setIngestProgress(0))
       for await (let {type, ...status} of stream) {
         switch (type) {
           case "PacketPostStatus":
-            setProgress(toPercent(status))
+          case "LogPostStatus":
+            dispatch(space.setIngestProgress(toPercent(status)))
+            dispatch(space.setIngestSnapshot(status.snapshot_count))
             if (status.snapshot_count > 0) updateSpaceDetails()
             break
-          case "LogPostStatus":
-            updateSpaceDetails()
-            break
           case "LogPostWarning":
-            appendWarning(status.warning)
+            dispatch(space.appendIngestWarning(status.warning))
             break
           case "TaskEnd":
             if (status.error) {
@@ -152,12 +145,12 @@ const trackProgress = (client, dispatch, clusterId) => {
             break
         }
       }
-      setProgress(1)
+      dispatch(space.setIngestProgress(1))
       // // The progress bar has a transition of 1 second. I think people are
       // // psychologically comforted when they see the progress bar complete.
       // // That is why we sleep here.
       await lib.sleep(1500)
-      setProgress(null)
+      dispatch(space.setIngestProgress(null))
     }
   }
 }
