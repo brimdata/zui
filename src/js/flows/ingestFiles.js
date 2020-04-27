@@ -61,7 +61,12 @@ const createDir = () => ({
 const createSpace = (client, dispatch, clusterId) => ({
   async do(params) {
     let {name} = await client.spaces.create({data_dir: params.dataDir})
-    dispatch(Spaces.setDetail(clusterId, {name}))
+    dispatch(
+      Spaces.setDetail(clusterId, {
+        name,
+        ingest: {progress: 0, snapshot: 0, warnings: []}
+      })
+    )
     return {...params, name}
   },
   async undo({name}) {
