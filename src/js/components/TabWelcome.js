@@ -1,9 +1,11 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect} from "react"
+
 import remote from "electron"
 
 import BrimTextLogo from "./BrimTextLogo"
+import History from "../state/History"
 import LoadFilesInput from "./LoadFilesInput"
 import SavedSpacesList from "./SavedSpacesList"
 import SpaceDeletedNotice from "./SpaceDeletedNotice"
@@ -20,6 +22,7 @@ export default function TabWelcome() {
 
   useEffect(() => {
     dispatch(refreshSpaceNames())
+    dispatch(History.clear())
   }, [])
 
   function onChange(_e, files) {
