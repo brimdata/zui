@@ -29,7 +29,7 @@ export default (
     await lib.transaction([
       validateInput(paths),
       createDir(),
-      createSpace(client),
+      createSpace(client, gDispatch, clusterId),
       registerHandler(dispatch, requestId),
       postFiles(client),
       setSpace(dispatch, tabId),
@@ -58,13 +58,15 @@ const createDir = () => ({
   }
 })
 
-const createSpace = (client) => ({
+const createSpace = (client, dispatch, clusterId) => ({
   async do(params) {
     let {name} = await client.spaces.create({data_dir: params.dataDir})
+    dispatch(Spaces.setDetail(clusterId, {name}))
     return {...params, name}
   },
   async undo({name}) {
     await client.spaces.delete(name)
+    dispatch(Spaces.remove(clusterId, name))
   }
 })
 

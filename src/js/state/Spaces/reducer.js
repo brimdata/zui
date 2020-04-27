@@ -4,7 +4,6 @@ import produce from "immer"
 
 import brim from "../../brim"
 import type {SpacesAction, SpacesState} from "./types"
-import {isNumber} from "../../lib/is"
 
 const init: SpacesState = {}
 
@@ -12,7 +11,7 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
   switch (action.type) {
     case "SPACES_NAMES":
       return action.names.reduce((next, name) => {
-        next[name] = draft[name]
+        next[name] = defaults(name, draft[name])
         return next
       }, {})
 
@@ -22,19 +21,23 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
       // time. In the future brim.Span type should mimic the formatted
       // transmitted over the wire.
       var space = brim.interop.spacePayloadToSpace(action.space)
-      draft[name] = {...draft[name], ...space}
+      draft[name] = defaults(name, {...draft[name], ...space})
       break
 
     case "SPACES_INGEST_PROGRESS":
-      getSpace(draft, action.space).ingest_progress = action.value
+      getSpace(draft, action.space).ingest.progress = action.value
       break
 
     case "SPACES_INGEST_WARNING_APPEND":
-      getSpace(draft, action.space).ingest_warnings.push(action.warning)
+      getSpace(draft, action.space).ingest.warnings.push(action.warning)
       break
 
     case "SPACES_INGEST_WARNING_CLEAR":
-      draft[action.space].ingest_warnings = []
+      getSpace(draft, action.space).ingest.warnings = []
+      break
+
+    case "SPACES_REMOVE":
+      delete draft[action.name]
       break
   }
 })
@@ -53,10 +56,22 @@ export default function reducer(
   }
 }
 
+function defaults(name, data = {}) {
+  let defaults = {
+    name,
+    min_time: {ns: 0, sec: 0},
+    max_time: {ns: 0, sec: 0},
+    packet_support: false,
+    ingest: {
+      progress: null,
+      warnings: [],
+      ...data.ingest
+    }
+  }
+  return {...defaults, ...data}
+}
+
 function getSpace(state, name) {
-  let space = state[name] ? state[name] : {}
-  if (!space.ingest_warnings) space.ingest_warnings = []
-  if (!isNumber(space.ingest_progress)) space.ingest_progress = null
-  state[name] = space
-  return state[name]
+  if (state[name]) return state[name]
+  else throw new Error("No space exists with name: " + name)
 }

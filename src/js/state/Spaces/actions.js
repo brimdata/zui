@@ -5,9 +5,9 @@ import type {
   SPACES_INGEST_PROGRESS,
   SPACES_INGEST_WARNING_APPEND,
   SPACES_INGEST_WARNING_CLEAR,
-  SPACES_NAMES
+  SPACES_NAMES,
+  Space
 } from "./types"
-import type {SpaceDetailPayload} from "../../services/zealot/types"
 
 export default {
   setNames: (clusterId: string, names: string[]): SPACES_NAMES => ({
@@ -16,10 +16,16 @@ export default {
     names: names || []
   }),
 
-  setDetail: (clusterId: string, space: SpaceDetailPayload): SPACES_DETAIL => ({
+  setDetail: (clusterId: string, space: $Shape<Space>): SPACES_DETAIL => ({
     type: "SPACES_DETAIL",
     clusterId,
     space
+  }),
+
+  remove: (clusterId: string, name: string): SPACES_REMOVE => ({
+    type: "SPACES_REMOVE",
+    clusterId,
+    name
   }),
 
   setIngestProgress: (

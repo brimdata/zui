@@ -35,21 +35,36 @@ test("space names removing", () => {
   expect(selector(state)).toEqual(["default"])
 })
 
-test("setting the space detail", () => {
+test("setting the space detail adds the defaults", () => {
   let state = store.dispatchAll([Spaces.setDetail("cluster1", detail)])
 
   expect(Spaces.get("cluster1", "default")(state)).toEqual({
     name: "default",
-    max_time: {ns: 750000000, sec: 1428917793},
-    min_time: {ns: 0, sec: 1425564900},
-    packet_support: true
+    // <<<<<<< HEAD
+    //     max_time: {ns: 750000000, sec: 1428917793},
+    //     min_time: {ns: 0, sec: 1425564900},
+    //     packet_support: true
+    // =======
+    packet_support: true,
+    min_time: {sec: 1425564900, ns: 0},
+    max_time: {sec: 1428917793, ns: 750000000},
+    ingest: {
+      progress: null,
+      warnings: []
+    }
   })
 })
 
-test("setting the ingest_progress", () => {
+test("setting the ingest progress throws error if no space yet", () => {
+  expect(() => {
+    store.dispatchAll([Spaces.setIngestProgress("cluster1", detail.name, 0.5)])
+  }).toThrow("No space exists with name: default")
+})
+
+test("setting the ingest progress", () => {
   store.dispatchAll([
-    Spaces.setIngestProgress("cluster1", detail.name, 0.5),
-    Spaces.setDetail("cluster1", detail)
+    Spaces.setDetail("cluster1", detail),
+    Spaces.setIngestProgress("cluster1", detail.name, 0.5)
   ])
 
   let value = Spaces.getIngestProgress(
@@ -58,15 +73,6 @@ test("setting the ingest_progress", () => {
   )(store.getState())
 
   expect(value).toEqual(0.5)
-})
-
-test("getting the spaces without details", () => {
-  let state = store.dispatchAll([
-    Spaces.setNames("cluster1", ["space-a", "space-b"])
-  ])
-  let spaces = Spaces.getSpaces("cluster1")(state)
-
-  expect(spaces).toEqual([{name: "space-a"}, {name: "space-b"}])
 })
 
 test("getting the spaces with details, others not", () => {
@@ -81,9 +87,16 @@ test("getting the spaces with details, others not", () => {
       name: "space-a",
       max_time: {ns: 750000000, sec: 1428917793},
       min_time: {ns: 0, sec: 1425564900},
-      packet_support: true
+      packet_support: true,
+      ingest: {warnings: [], progress: null}
     },
-    {name: "space-b"}
+    {
+      name: "space-b",
+      max_time: {ns: 0, sec: 0},
+      min_time: {ns: 0, sec: 0},
+      packet_support: false,
+      ingest: {warnings: [], progress: null}
+    }
   ])
 })
 
@@ -114,4 +127,13 @@ test("clear warnings", () => {
   ])
 
   expect(Spaces.getIngestWarnings("cluster1", detail.name)(state)).toEqual([])
+})
+
+test("remove space", () => {
+  let state = store.dispatchAll([
+    Spaces.setDetail("cluster1", detail),
+    Spaces.remove("cluster1", detail.name)
+  ])
+
+  expect(Spaces.getSpaces("cluster1")(state)).toEqual([])
 })
