@@ -1,7 +1,7 @@
 /* @flow */
 
 import {useSelector} from "react-redux"
-import React from "react"
+import React, {useState} from "react"
 
 import {Md5Panel} from "./Md5Panel"
 import ConnPanel from "./ConnPanel"
@@ -11,10 +11,15 @@ import NavAnimation from "./NavAnimation"
 import NoSelection from "./NoSelection"
 import UidPanel from "./UidPanel"
 import menu from "../../electron/menu"
+import useDebouncedEffect from "../hooks/useDebouncedEffect"
 
 export default function LogDetailComponent() {
-  let log = useSelector(LogDetails.build)
+  let currentLog = useSelector(LogDetails.build)
   let isGoingBack = useSelector(LogDetails.getIsGoingBack)
+
+  let [log, setLog] = useState(currentLog)
+
+  useDebouncedEffect(() => setLog(currentLog), 50, [currentLog])
 
   if (!log) return <NoSelection />
 

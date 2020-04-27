@@ -1,7 +1,7 @@
 /* @flow */
 
 import {useSelector} from "react-redux"
-import React from "react"
+import React, {useState} from "react"
 
 import {XUidTimeline} from "../UidTimeline"
 import {reactElementProps} from "../../test/integration"
@@ -11,12 +11,17 @@ import Log from "../../models/Log"
 import LogDetails from "../../state/LogDetails"
 import PanelHeading from "./PanelHeading"
 import brim from "../../brim"
+import useDebouncedEffect from "../hooks/useDebouncedEffect"
 
 export default function UidPanel({log}: {log: Log}) {
   let status = useSelector(LogDetails.getUidStatus)
-  let logs = useSelector(LogDetails.getUidLogs)
+  let currentLogs = useSelector(LogDetails.getUidLogs)
     .map(brim.record)
     .map(brim.interop.recordToLog)
+
+  let [logs, setLogs] = useState(currentLogs)
+
+  useDebouncedEffect(() => setLogs(currentLogs), 50, [currentLogs])
 
   return (
     <div
