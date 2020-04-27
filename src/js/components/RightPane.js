@@ -51,9 +51,8 @@ export default class RightPane extends React.Component<Props, S> {
 
   render() {
     const {prevExists, nextExists, isOpen, width, currentLog} = this.props
-
+    if (!this.props.space) return null
     if (!isOpen) return <XRightPaneExpander />
-
     return (
       <Pane
         isOpen={isOpen}
