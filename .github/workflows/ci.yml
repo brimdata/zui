@@ -143,7 +143,8 @@ jobs:
         node scripts/release --darwin
         hdiutil attach dist/installers/Brim.dmg
         cp -R /Volumes/Brim/Brim.app /Applications
-        retry_until_success 60 1 hdiutil detach /Volumes/Brim
+        retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
+      shell: bash
     - name: Download Linux packages
       if: runner.os == 'Linux'
       uses: actions/download-artifact@v1
