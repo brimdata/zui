@@ -1,5 +1,4 @@
 /* @flow */
-import http from "http"
 import https from "https"
 
 import {retry} from "../lib/control"
@@ -30,7 +29,7 @@ describe("doc urls", () => {
   const buildUrl = (s) => [s, brim.zeekLogInfo(s).docsUrl()]
   const request = (path, url) =>
     new Promise((good, bad) => {
-      http
+      https
         // $FlowFixMe
         .request(url, {method: "HEAD"}, (res) => {
           if (res.statusCode === 200) good()
