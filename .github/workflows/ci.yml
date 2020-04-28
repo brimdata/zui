@@ -49,7 +49,7 @@ jobs:
       run: |
         set -x
         node scripts/release --linux
-    - name: Persist rpm package
+    - name: Persist Linux packages
       if: runner.os == 'Linux'
       uses: actions/upload-artifact@v1
       with:
