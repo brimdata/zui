@@ -82,7 +82,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         set -x
-        source lib/bash/common.bash
+        source scripts/lib/common.bash
         node scripts/release --darwin
         hdiutil attach dist/installers/Brim.dmg
         cp -R /Volumes/Brim/Brim.app /Applications
