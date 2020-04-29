@@ -23,6 +23,10 @@ export default function fileList(files: FileListData) {
       return files.map((f) => f.path)
     },
 
+    any(type: string) {
+      return !!files.find((f) => f.type === type)
+    },
+
     allPcap() {
       return files.every((f) => f.type === "pcap")
     },

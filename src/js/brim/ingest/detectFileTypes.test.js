@@ -16,8 +16,8 @@ test("add file types", async () => {
   expect(types).toEqual([
     {type: "pcap", path: pcap},
     {type: "pcap", path: pcapng},
-    {type: "zeek", path: zeek},
-    {type: "json", path: json},
-    {type: "unknown", path: unknown}
+    {type: "log", path: zeek},
+    {type: "log", path: json},
+    {type: "log", path: unknown}
   ])
 })

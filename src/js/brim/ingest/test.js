@@ -14,11 +14,11 @@ test("one pcap", () => {
 })
 
 test("one zeek log", () => {
-  let data = ingest.getParams([{type: "zeek", path: "/work/zeek.log"}])
+  let data = ingest.getParams([{type: "log", path: "/work/zeek.log"}])
 
   expect(data).toEqual({
     dataDir: path.join("/work", "zeek.log.brim"),
-    endpoint: "zeek",
+    endpoint: "log",
     paths: ["/work/zeek.log"]
   })
 })
@@ -26,15 +26,15 @@ test("one zeek log", () => {
 test("two zeek logs in same dir", () => {
   let data = ingest.getParams(
     [
-      {type: "zeek", path: "/work/zeek-1.log"},
-      {type: "zeek", path: "/work/zeek-2.log"}
+      {type: "log", path: "/work/zeek-1.log"},
+      {type: "log", path: "/work/zeek-2.log"}
     ],
     "/home"
   )
 
   expect(data).toEqual({
     dataDir: path.join("/home", ".brim", "work.brim"),
-    endpoint: "zeek",
+    endpoint: "log",
     paths: ["/work/zeek-1.log", "/work/zeek-2.log"]
   })
 })
@@ -42,8 +42,8 @@ test("two zeek logs in same dir", () => {
 test("two zeek logs in different dir", () => {
   let data = ingest.getParams(
     [
-      {type: "zeek", path: "/work/day-1/zeek.log"},
-      {type: "zeek", path: "/work/day-2/zeek.log"}
+      {type: "log", path: "/work/day-1/zeek.log"},
+      {type: "log", path: "/work/day-2/zeek.log"}
     ],
     "/home",
     new Date(0)
@@ -51,7 +51,7 @@ test("two zeek logs in different dir", () => {
 
   expect(data).toEqual({
     dataDir: path.join("/home", ".brim", "zeek_1969-12-31_16:00:00.brim"),
-    endpoint: "zeek",
+    endpoint: "log",
     paths: ["/work/day-1/zeek.log", "/work/day-2/zeek.log"]
   })
 })
@@ -70,10 +70,10 @@ test("two pcaps", () => {
 test("1 pcap and 1 zeek", () => {
   let data = ingest.getParams([
     {type: "pcap", path: "/pcap-1"},
-    {type: "zeek", path: "/zeek-1"}
+    {type: "log", path: "/zeek-1"}
   ])
 
   expect(data).toEqual({
-    error: "Only files of a single type (zeek or pcap) can be opened."
+    error: "Only one pcap can be opened at a time."
   })
 })

@@ -47,7 +47,9 @@ export default function StatusBar() {
             <label>Ingest failed with warnings.</label>
           )}
           <div
-            className={classNames("warnings", {disabled: isEmpty(warnings)})}
+            className={classNames("warnings", {
+              disabled: isEmpty(warnings) || !s.queryable()
+            })}
             onClick={onWarningsClick}
           >
             <Warning />
