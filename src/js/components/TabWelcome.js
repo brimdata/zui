@@ -5,8 +5,11 @@ import React, {useEffect} from "react"
 import remote from "electron"
 
 import BrimTextLogo from "./BrimTextLogo"
+import ErrorFactory from "../models/ErrorFactory"
 import History from "../state/History"
 import LoadFilesInput from "./LoadFilesInput"
+import Notice from "../state/Notice"
+import Prefs from "../state/Prefs"
 import SavedSpacesList from "./SavedSpacesList"
 import SpaceDeletedNotice from "./SpaceDeletedNotice"
 import Spaces from "../state/Spaces"
@@ -21,13 +24,16 @@ export default function TabWelcome() {
   let spacesPresent = spaces.length !== 0
 
   useEffect(() => {
+    dispatch(Prefs.setJSONTypeConfig("/Users/jkerr/Desktop/mytypes.json"))
     dispatch(refreshSpaceNames())
     dispatch(History.clear())
   }, [])
 
   function onChange(_e, files) {
     if (!files.length) return
-    dispatch(ingestFiles(files))
+    dispatch(ingestFiles(files)).catch((e) => {
+      dispatch(Notice.set(ErrorFactory.create(e.cause)))
+    })
   }
 
   return (

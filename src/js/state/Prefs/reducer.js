@@ -3,7 +3,7 @@
 import type {PrefsAction, PrefsState} from "./types"
 
 const init: PrefsState = {
-  jsonTypeConfig: "default"
+  jsonTypeConfig: ""
 }
 
 export default function reducer(

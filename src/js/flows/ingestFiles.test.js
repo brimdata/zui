@@ -1,18 +1,19 @@
 /* @flow */
 import fsExtra from "fs-extra"
 
-import Notice from "../state/Notice"
+import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
 import itestFile from "../test/itestFile"
+import lib from "../lib"
 
 let mockClient = {
   spaces: {
+    delete: () => Promise.resolve(),
     create: () => Promise.resolve({name: "dataSpace"}),
     list: () => Promise.resolve(["dataSpace"]),
-    delete: () => Promise.resolve(),
     get: () =>
       Promise.resolve({
         name: "dataSpace",
@@ -38,6 +39,10 @@ let mockClient = {
   }
 }
 
+afterEach(() => {
+  return fsExtra.remove("tmp")
+})
+
 test("opening a packet", async () => {
   let store = initTestStore()
   let globalDispatch = store.dispatch
@@ -58,8 +63,6 @@ test("opening a packet", async () => {
       snapshot: 1
     }
   })
-
-  return fsExtra.remove("tmp")
 })
 
 test("when there is an error", async () => {
@@ -68,21 +71,16 @@ test("when there is an error", async () => {
   mockClient.pcaps.post = function*() {
     yield {type: "TaskEnd", error: {error: "Boom"}}
   }
-
-  await store.dispatch(
-    ingestFiles([itestFile("sample.pcap")], mockClient, globalDispatch)
-  )
+  await expect(
+    store.dispatch(
+      ingestFiles([itestFile("sample.pcap")], mockClient, globalDispatch)
+    )
+  ).rejects.toEqual(expect.any(Error))
 
   let state = store.getState()
   let cluster = Tab.clusterId(state)
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
   expect(Tab.spaceName(state)).toEqual("")
-  expect(Notice.getError(state)).toEqual({
-    details: ["Detail: Boom"],
-    message: "Unable to generate full summary logs from PCAP",
-    type: "PCAPIngestError"
-  })
-  return fsExtra.remove("tmp")
 })
 
 test("a zeek ingest error", async () => {
@@ -92,16 +90,34 @@ test("a zeek ingest error", async () => {
     yield {type: "TaskEnd", error: {error: "Boom"}}
   }
 
-  await store.dispatch(
-    ingestFiles([itestFile("sample.tsv")], mockClient, globalDispatch)
-  )
+  await expect(
+    store.dispatch(
+      ingestFiles([itestFile("sample.tsv")], mockClient, globalDispatch)
+    )
+  ).rejects.toEqual(expect.any(Error))
 
   let state = store.getState()
   expect(Tab.spaceName(state)).toEqual("")
-  expect(Notice.getError(state)).toEqual({
-    details: ["Detail: Boom"],
-    message: "Unable to load these logs",
-    type: "LogsIngestError"
+})
+
+test("a json file with a custom types config", async () => {
+  let store = initTestStore()
+  let globalDispatch = store.dispatch
+  mockClient.logs.post = jest.fn(function*() {
+    yield {type: "LogPostStatus"}
+    yield {type: "TaskEnd"}
   })
-  return fsExtra.remove("tmp")
+
+  let contents = await lib.file(itestFile("sampleTypes.json")).read()
+  store.dispatch(Prefs.setJSONTypeConfig(itestFile("sampleTypes.json")))
+
+  await store.dispatch(
+    ingestFiles([itestFile("sample.ndjson")], mockClient, globalDispatch)
+  )
+
+  expect(mockClient.logs.post).toHaveBeenCalledWith({
+    paths: ["/Users/jkerr/work/brim/itest/sample.ndjson"],
+    space: "dataSpace",
+    types: contents
+  })
 })

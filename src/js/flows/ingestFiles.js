@@ -1,11 +1,11 @@
 /* @flow */
+import {isEmpty} from "lodash"
 import fsExtra from "fs-extra"
 
 import type {Dispatch, Thunk} from "../state/types"
 import {globalDispatch} from "../state/GlobalContext"
-import ErrorFactory from "../models/ErrorFactory"
 import Handlers from "../state/Handlers"
-import Notice from "../state/Notice"
+import Prefs from "../state/Prefs"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
@@ -19,26 +19,23 @@ export default (
   paths: string[],
   _client: *,
   gDispatch: Dispatch = globalDispatch
-): Thunk => async (dispatch, getState) => {
+): Thunk => (dispatch, getState) => {
   let client = _client || Tab.getZealot(getState())
   let clusterId = Tab.clusterId(getState())
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()
+  let jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
 
-  try {
-    await lib.transaction([
-      validateInput(paths),
-      createDir(),
-      createSpace(client, gDispatch, clusterId),
-      registerHandler(dispatch, requestId),
-      postFiles(client),
-      setSpace(dispatch, tabId),
-      trackProgress(client, gDispatch, clusterId),
-      unregisterHandler(dispatch, requestId)
-    ])
-  } catch (e) {
-    dispatch(Notice.set(ErrorFactory.create(e.cause)))
-  }
+  return lib.transaction([
+    validateInput(paths),
+    createDir(),
+    createSpace(client),
+    registerHandler(dispatch, requestId),
+    postFiles(client, jsonTypeConfigPath),
+    setSpace(dispatch, tabId),
+    trackProgress(client, gDispatch, clusterId),
+    unregisterHandler(dispatch, requestId)
+  ])
 }
 
 const validateInput = (paths) => ({
@@ -91,14 +88,17 @@ const unregisterHandler = (dispatch, id) => ({
   }
 })
 
-const postFiles = (client) => ({
+const postFiles = (client, jsonTypesPath) => ({
   async do(params) {
     let {name, endpoint, paths} = params
     let stream
     if (endpoint === "pcap") {
       stream = client.pcaps.post({space: name, path: paths[0]})
     } else {
-      stream = client.logs.post({space: name, paths, types: "default"})
+      let types = isEmpty(jsonTypesPath)
+        ? "default"
+        : await lib.file(jsonTypesPath).read()
+      stream = client.logs.post({space: name, paths, types})
     }
     return {...params, stream}
   }
