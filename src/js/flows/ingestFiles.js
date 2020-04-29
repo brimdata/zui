@@ -119,22 +119,25 @@ const trackProgress = (client, dispatch, clusterId) => {
       let space = Spaces.actionsFor(clusterId, name)
 
       async function updateSpaceDetails() {
-        dispatch(Spaces.setDetail(clusterId, await client.spaces.get(name)))
+        let details = await client.spaces.get(name)
+        dispatch(Spaces.setDetail(clusterId, details))
       }
 
       function toPercent(status): number {
         if (status.packet_total_size === 0) return 1
-        else return status.packet_read_size / status.packet_total_size
+        else return status.packet_read_size / status.packet_total_size || 0
       }
 
       dispatch(space.setIngestProgress(0))
       for await (let {type, ...status} of stream) {
         switch (type) {
           case "PacketPostStatus":
-          case "LogPostStatus":
             dispatch(space.setIngestProgress(toPercent(status)))
             dispatch(space.setIngestSnapshot(status.snapshot_count))
             if (status.snapshot_count > 0) updateSpaceDetails()
+            break
+          case "LogPostStatus":
+            updateSpaceDetails()
             break
           case "LogPostWarning":
             dispatch(space.appendIngestWarning(status.warning))
@@ -151,9 +154,10 @@ const trackProgress = (client, dispatch, clusterId) => {
         }
       }
       dispatch(space.setIngestProgress(1))
-      // // The progress bar has a transition of 1 second. I think people are
-      // // psychologically comforted when they see the progress bar complete.
-      // // That is why we sleep here.
+      // The progress bar has a transition of 1 second. I think people are
+      // psychologically comforted when they see the progress bar complete.
+      // That is why we sleep here. It should be moved into the search
+      // progress component
       await lib.sleep(1500)
       dispatch(space.setIngestProgress(null))
     }
