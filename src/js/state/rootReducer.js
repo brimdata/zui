@@ -11,6 +11,7 @@ import Investigation from "./Investigation"
 import Modal from "./Modal"
 import Notice from "./Notice"
 import Packets from "./Packets"
+import Prefs from "./Prefs"
 import Spaces from "./Spaces"
 import Tabs from "./Tabs"
 import View from "./View"
@@ -29,5 +30,6 @@ export default combineReducers<*, *>({
   spaces: Spaces.reducer,
   boomd: Boomd.reducer,
   packets: Packets.reducer,
+  prefs: Prefs.reducer,
   version: () => VERSION
 })
