@@ -1,6 +1,7 @@
 /* @flow */
 
 import moment from "moment-timezone"
+import bigInt, {type BigNumber} from "big-integer"
 
 import type {DateTuple} from "../lib/TimeWindow"
 import {type TimeUnit} from "../lib"
@@ -23,6 +24,12 @@ function time(val: Ts | Date = new Date()) {
       return ts
     },
 
+    toBigInt(): BigNumber {
+      return bigInt(ts.sec)
+        .times(1e9)
+        .plus(ts.ns)
+    },
+
     add(amount: number, unit: TimeUnit) {
       let ts = dateToTs(
         moment(this.toDate())
@@ -41,10 +48,26 @@ function time(val: Ts | Date = new Date()) {
       return brim.time(ts)
     },
 
+    addDur(dur: Ts) {
+      let added = this.toBigInt().add(time(dur).toBigInt())
+      return brim.time(fromBigInt(added))
+    },
+
+    subTs(diff: Ts) {
+      let dur = this.toBigInt().minus(time(diff).toBigInt())
+      return brim.time(fromBigInt(dur))
+    },
+
     format(fmt: string) {
       return moment(this.toDate()).format(fmt)
     }
   }
+}
+
+function fromBigInt(i: BigNumber): Ts {
+  let sec = i.over(1e9)
+  let ns = i.minus(sec.times(1e9))
+  return {sec: sec.toJSNumber(), ns: ns.toJSNumber()}
 }
 
 function dateToTs(date: Date): Ts {

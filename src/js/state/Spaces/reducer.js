@@ -2,6 +2,7 @@
 
 import produce from "immer"
 
+import brim, {type Ts} from "../../brim"
 import type {SpacesAction, SpacesState} from "./types"
 import {isNumber} from "../../lib/is"
 
@@ -17,7 +18,20 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
 
     case "SPACES_DETAIL":
       var {name} = action.space
-      draft[name] = {...draft[name], ...action.space}
+      var space = (action.space: any)
+      // XXX adapter hack to support span payloads from zqd as well as min/max
+      // time. In the future brim.Span type should mimic the formatted
+      // transmitted over the wire.
+      if (space.span) {
+        let span = action.space.span
+        let end = brim
+          .time(span.ts)
+          .addDur((span.dur: Ts))
+          .toTs()
+        space = {...space, min_time: span.ts, max_time: end}
+        delete space.span
+      }
+      draft[name] = {...draft[name], ...space}
       break
 
     case "SPACES_INGEST_PROGRESS":

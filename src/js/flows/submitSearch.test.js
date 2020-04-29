@@ -17,8 +17,10 @@ beforeEach(() => {
 
 const spaceInfo = {
   name: "ranch-logs",
-  min_time: {sec: 1425564900, ns: 0},
-  max_time: {sec: 1428917793, ns: 750000000},
+  span: {
+    ts: {sec: 1425564900, ns: 0},
+    dur: {sec: 3352893, ns: 750000000}
+  },
   packet_support: true
 }
 

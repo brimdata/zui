@@ -10,8 +10,10 @@ beforeEach(() => {
 
 let detail: SpaceDetailPayload = {
   name: "default",
-  min_time: {sec: 1425564900, ns: 0},
-  max_time: {sec: 1428917793, ns: 750000000},
+  span: {
+    ts: {sec: 1425564900, ns: 0},
+    dur: {sec: 3352893, ns: 750000000}
+  },
   packet_support: true
 }
 
@@ -36,7 +38,12 @@ test("space names removing", () => {
 test("setting the space detail", () => {
   let state = store.dispatchAll([Spaces.setDetail("cluster1", detail)])
 
-  expect(Spaces.get("cluster1", "default")(state)).toEqual(detail)
+  expect(Spaces.get("cluster1", "default")(state)).toEqual({
+    name: "default",
+    max_time: {ns: 750000000, sec: 1428917793},
+    min_time: {ns: 0, sec: 1425564900},
+    packet_support: true
+  })
 })
 
 test("setting the ingest_progress", () => {
