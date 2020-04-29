@@ -72,7 +72,7 @@ describe("ingest api", () => {
     })
   })
 
-  test("post zeek", () => {
+  test("post logs with no types", () => {
     let paths = ["~/zeek/1.log", "~/zeek/2.log"]
     expect(client.inspect().logs.post({space: "default", paths})).toEqual({
       method: "POST",
@@ -81,12 +81,34 @@ describe("ingest api", () => {
     })
   })
 
-  test("post zeek json with default types", () => {
+  test("post logs json with default types", () => {
     let paths = ["~/zeek/1.log", "~/zeek/2.log"]
     let data = client
       .inspect()
       .logs.post({space: "default", paths, types: "default"})
 
     expect(JSON.parse(data.body).json_type_config).toEqual(expect.any(Object))
+  })
+
+  test("post logs with types as a string ", () => {
+    let paths = ["~/zeek/1.log", "~/zeek/2.log"]
+    let types = '{"descriptors": [], "rules": []}'
+    let data = client.inspect().logs.post({space: "default", paths, types})
+
+    expect(JSON.parse(data.body).json_type_config).toEqual({
+      descriptors: [],
+      rules: []
+    })
+  })
+
+  test("post logs with types as an object", () => {
+    let paths = ["~/zeek/1.log", "~/zeek/2.log"]
+    let types = {descriptors: [], rules: []}
+    let data = client.inspect().logs.post({space: "default", paths, types})
+
+    expect(JSON.parse(data.body).json_type_config).toEqual({
+      descriptors: [],
+      rules: []
+    })
   })
 })
