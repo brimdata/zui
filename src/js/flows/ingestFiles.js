@@ -57,22 +57,29 @@ const validateInput = (paths) => ({
 
 const createDir = () => ({
   async do({dataDir}) {
-    await fsExtra.ensureDir(dataDir)
+    dataDir && (await fsExtra.ensureDir(dataDir))
   },
   async undo({dataDir}) {
-    await fsExtra.remove(dataDir)
+    dataDir && (await fsExtra.remove(dataDir))
   }
 })
 
 const createSpace = (client, dispatch, clusterId) => ({
   async do(params) {
-    let {name} = await client.spaces.create({data_dir: params.dataDir})
+    let createParams
+    if (params.dataDir) {
+      createParams = {data_dir: params.dataDir}
+    } else {
+      createParams = {name: params.name}
+    }
+    let {name} = await client.spaces.create(createParams)
     dispatch(
       Spaces.setDetail(clusterId, {
         name,
         ingest: {progress: 0, snapshot: 0, warnings: []}
       })
     )
+
     return {...params, name}
   },
   async undo({name}) {

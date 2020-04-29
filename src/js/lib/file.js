@@ -90,6 +90,10 @@ export default function file(p: string) {
 
     dirName(): string {
       return path.basename(path.dirname(p))
+    },
+
+    fileName(): string {
+      return path.basename(p)
     }
   }
 }
