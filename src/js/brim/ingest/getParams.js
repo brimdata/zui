@@ -1,7 +1,4 @@
 /* @flow */
-import os from "os"
-import path from "path"
-
 import type {IngestFileType} from "./detectFileType"
 import fileList, {type FileListData} from "./fileList"
 import time from "../time"
@@ -19,7 +16,6 @@ export type IngestParamsError = {
 
 export default function getParams(
   data: FileListData,
-  home: string = os.homedir(),
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
   let files = fileList(data)

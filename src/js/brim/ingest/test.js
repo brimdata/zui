@@ -1,56 +1,54 @@
 /* @flow */
-import path from "path"
-
 import ingest from "./"
 
-test("one pcap", () => {
+test("one pcap default", () => {
   let data = ingest.getParams([{type: "pcap", path: "/work/my.pcap"}])
 
   expect(data).toEqual({
-    dataDir: path.join("/work", "my.pcap.brim"),
+    dataDir: "",
+    name: "my.pcap.brim",
     endpoint: "pcap",
     paths: ["/work/my.pcap"]
   })
 })
 
-test("one zeek log", () => {
+test("one zeek log default", () => {
   let data = ingest.getParams([{type: "log", path: "/work/zeek.log"}])
 
   expect(data).toEqual({
-    dataDir: path.join("/work", "zeek.log.brim"),
+    name: "zeek.log.brim",
+    dataDir: "",
     endpoint: "log",
     paths: ["/work/zeek.log"]
   })
 })
 
-test("two zeek logs in same dir", () => {
-  let data = ingest.getParams(
-    [
-      {type: "log", path: "/work/zeek-1.log"},
-      {type: "log", path: "/work/zeek-2.log"}
-    ],
-    "/home"
-  )
+test("two zeek logs in same dir default", () => {
+  let data = ingest.getParams([
+    {type: "log", path: "/work/zeek-1.log"},
+    {type: "log", path: "/work/zeek-2.log"}
+  ])
 
   expect(data).toEqual({
-    dataDir: path.join("/home", ".brim", "work.brim"),
+    name: "work.brim",
+    dataDir: "",
     endpoint: "log",
     paths: ["/work/zeek-1.log", "/work/zeek-2.log"]
   })
 })
 
-test("two zeek logs in different dir", () => {
+test("two zeek logs in different dir default", () => {
   let data = ingest.getParams(
     [
       {type: "log", path: "/work/day-1/zeek.log"},
       {type: "log", path: "/work/day-2/zeek.log"}
     ],
-    "/home",
     new Date(0)
   )
 
   expect(data).toEqual({
-    dataDir: path.join("/home", ".brim", "zeek_1969-12-31_16:00:00.brim"),
+    name: "zeek_1969-12-31_16:00:00.brim",
+    dataDir: "",
     endpoint: "log",
     paths: ["/work/day-1/zeek.log", "/work/day-2/zeek.log"]
   })
