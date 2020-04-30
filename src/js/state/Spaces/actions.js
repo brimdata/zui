@@ -9,6 +9,7 @@ import type {
   SPACES_REMOVE,
   Space
 } from "./types"
+import type {SpaceDetailPayload} from "../../services/zealot/types"
 
 export default {
   setNames: (clusterId: string, names: string[]): SPACES_NAMES => ({
@@ -17,7 +18,10 @@ export default {
     names: names || []
   }),
 
-  setDetail: (clusterId: string, space: $Shape<Space>): SPACES_DETAIL => ({
+  setDetail: (
+    clusterId: string,
+    space: $Shape<Space> | SpaceDetailPayload
+  ): SPACES_DETAIL => ({
     type: "SPACES_DETAIL",
     clusterId,
     space

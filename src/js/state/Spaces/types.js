@@ -1,5 +1,6 @@
 /* @flow */
 
+import type {SpaceDetailPayload} from "../../services/zealot/types"
 import type {Ts} from "../../brim"
 
 export type SpacesState = {
@@ -42,7 +43,7 @@ export type SPACES_NAMES = {
 export type SPACES_DETAIL = {
   type: "SPACES_DETAIL",
   clusterId: string,
-  space: $Shape<Space>
+  space: $Shape<Space> | SpaceDetailPayload
 }
 
 export type SPACES_INGEST_PROGRESS = {

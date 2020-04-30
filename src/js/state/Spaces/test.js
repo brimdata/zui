@@ -40,11 +40,6 @@ test("setting the space detail adds the defaults", () => {
 
   expect(Spaces.get("cluster1", "default")(state)).toEqual({
     name: "default",
-    // <<<<<<< HEAD
-    //     max_time: {ns: 750000000, sec: 1428917793},
-    //     min_time: {ns: 0, sec: 1425564900},
-    //     packet_support: true
-    // =======
     packet_support: true,
     min_time: {sec: 1425564900, ns: 0},
     max_time: {sec: 1428917793, ns: 750000000},
