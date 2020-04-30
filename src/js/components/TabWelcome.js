@@ -48,7 +48,17 @@ export default function TabWelcome() {
           <LoadFilesInput onChange={onChange} />
           <footer>
             <p>
-              <b>Accepted formats:</b> .pcap, .pcapng, and{" "}
+              <b>Accepted formats:</b> .pcap, .pcapng,{" "}
+              <a
+                onClick={() =>
+                  remote.shell.openExternal(
+                    "https://github.com/brimsec/zq/blob/master/zng/docs/spec.md"
+                  )
+                }
+              >
+                .zng
+              </a>
+              , and{" "}
               <a
                 onClick={() =>
                   remote.shell.openExternal(
