@@ -48,7 +48,7 @@ function time(val: Ts | Date = new Date()) {
       return brim.time(ts)
     },
 
-    addDur(dur: Ts) {
+    addTs(dur: Ts) {
       let added = this.toBigInt().add(time(dur).toBigInt())
       return brim.time(fromBigInt(added))
     },

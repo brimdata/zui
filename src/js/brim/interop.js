@@ -21,7 +21,7 @@ export default {
       let span = space.span
       let end = brim
         .time(span.ts)
-        .addDur((span.dur: Ts))
+        .addTs((span.dur: Ts))
         .toTs()
       space = {...space, min_time: span.ts, max_time: end}
       delete space.span
