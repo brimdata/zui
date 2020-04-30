@@ -48,7 +48,17 @@ export default function TabWelcome() {
           <LoadFilesInput onChange={onChange} />
           <footer>
             <p>
-              <b>Accepted formats:</b> .pcap, .pcapng, and{" "}
+              <b>Accepted formats:</b> .pcap, .pcapng,{" "}
+              <a
+                onClick={() =>
+                  remote.shell.openExternal(
+                    "https://github.com/brimsec/zq/blob/master/zng/docs/spec.md"
+                  )
+                }
+              >
+                .zng
+              </a>
+              , and{" "}
               <a
                 onClick={() =>
                   remote.shell.openExternal(
@@ -61,8 +71,8 @@ export default function TabWelcome() {
               .
             </p>
             <p>
-              <b>Note:</b> Multiple Zeek logs can be loaded at once, but only
-              one pcap.
+              <b>Note:</b> Multiple zng and Zeek log files may be imported, but
+              only one pcap.
             </p>
           </footer>
         </section>
