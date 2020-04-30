@@ -10,6 +10,10 @@
   align-items: center;
   justify-content: center;
 
+  & > * {
+    pointer-events: none;
+  }
+
   .icon {
     display: flex;
     margin: 0 4px;
@@ -46,6 +50,16 @@
     }
     & + label {
       opacity: 0.5;
+    }
+  }
+
+  &.dragging {
+    background: $blue;
+    .text {
+      color: white;
+    }
+    .icon {
+      fill: white;
     }
   }
 }

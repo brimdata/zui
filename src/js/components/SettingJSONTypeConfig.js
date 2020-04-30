@@ -1,18 +1,21 @@
 /* @flow */
 import {useSelector} from "react-redux"
 import React, {useState} from "react"
+import classNames from "classnames"
 
 import {globalDispatch} from "../state/GlobalContext"
 import Prefs from "../state/Prefs"
 import ToolbarButton from "./ToolbarButton"
 import lib from "../lib"
 import useCallbackRef from "./hooks/useCallbackRef"
+import useDropzone from "./hooks/useDropzone"
 
 export default function SettingJSONTypeConfig() {
   let dispatch = globalDispatch
   let jsonTypeConfig = useSelector(Prefs.getJSONTypeConfig)
   let [picker, ref] = useCallbackRef()
   let [error, setError] = useState(null)
+  let [bindDropzone, dragging] = useDropzone(onDrop)
 
   function onChange(value) {
     dispatch(Prefs.setJSONTypeConfig(value || ""))
@@ -20,6 +23,12 @@ export default function SettingJSONTypeConfig() {
 
   function onPick(e) {
     let path = Array.from(e.target.files).map((f) => f.path)[0]
+    onChange(path)
+    validate(path)
+  }
+
+  function onDrop(e) {
+    let path = Array.from(e.dataTransfer.files).map((f) => f.path)[0]
     onChange(path)
     validate(path)
   }
@@ -48,8 +57,10 @@ export default function SettingJSONTypeConfig() {
       <label>JSON Type Config:</label>
       <div className="file-input-picker">
         <ToolbarButton
+          className={classNames({dragging})}
           text="Choose..."
           onClick={() => picker && picker.click()}
+          {...bindDropzone()}
         />
         <input
           type="text"
