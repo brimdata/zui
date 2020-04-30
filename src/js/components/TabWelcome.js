@@ -9,7 +9,6 @@ import ErrorFactory from "../models/ErrorFactory"
 import History from "../state/History"
 import LoadFilesInput from "./LoadFilesInput"
 import Notice from "../state/Notice"
-import Prefs from "../state/Prefs"
 import SavedSpacesList from "./SavedSpacesList"
 import SpaceDeletedNotice from "./SpaceDeletedNotice"
 import Spaces from "../state/Spaces"
@@ -24,7 +23,6 @@ export default function TabWelcome() {
   let spacesPresent = spaces.length !== 0
 
   useEffect(() => {
-    dispatch(Prefs.setJSONTypeConfig("/Users/jkerr/Desktop/mytypes.json"))
     dispatch(refreshSpaceNames())
     dispatch(History.clear())
   }, [])
