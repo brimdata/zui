@@ -19,6 +19,7 @@ export default function SettingsModal() {
       name="settings"
       title="Preferences"
       buttons="Ok"
+      className="settings-modal"
       {...reactElementProps("settingsModal")}
     >
       <TextContent>
