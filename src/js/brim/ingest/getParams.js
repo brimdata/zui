@@ -23,15 +23,9 @@ export default function getParams(
 ): IngestParams | IngestParamsError {
   let files = fileList(data)
 
-  if (files.multiple() && files.allPcap()) {
+  if (files.multiple() && files.any("pcap")) {
     return {
       error: "Only one pcap can be opened at a time."
-    }
-  }
-
-  if (files.multiple() && files.mixed()) {
-    return {
-      error: "Only files of a single type (zeek or pcap) can be opened."
     }
   }
 

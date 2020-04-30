@@ -1,7 +1,9 @@
 /* @flow */
 
-import type {SpacesAction, SpacesState} from "./types"
 import produce from "immer"
+
+import type {SpacesAction, SpacesState} from "./types"
+import {isNumber} from "../../lib/is"
 
 const init: SpacesState = {}
 
@@ -49,7 +51,7 @@ export default function reducer(
 function getSpace(state, name) {
   let space = state[name] ? state[name] : {}
   if (!space.ingest_warnings) space.ingest_warnings = []
-  if (!space.ingest_progress) space.ingest_progress = null
+  if (!isNumber(space.ingest_progress)) space.ingest_progress = null
   state[name] = space
   return state[name]
 }

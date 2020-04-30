@@ -90,12 +90,8 @@ const postFiles = (client) => ({
     let stream
     if (endpoint === "pcap") {
       stream = client.pcaps.post({space: name, path: paths[0]})
-    } else if (endpoint === "zeek") {
-      stream = client.logs.post({space: name, paths})
-    } else if (endpoint === "json") {
-      stream = client.logs.post({space: name, paths, types: "default"})
     } else {
-      throw new Error("Unknown file types")
+      stream = client.logs.post({space: name, paths, types: "default"})
     }
     return {...params, stream}
   }
