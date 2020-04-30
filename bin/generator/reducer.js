@@ -35,7 +35,8 @@ export default {
   ...actions,
   ...selectors,
   reducer
-}`
+}
+`
 }
 
 function reducerStub(name) {
@@ -54,7 +55,7 @@ export default function reducer(
       return state
   }
 }
-  `
+`
 }
 
 function actionsStub() {
