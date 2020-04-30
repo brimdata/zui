@@ -123,7 +123,7 @@ export default function windowManager() {
 
     openPreferences() {
       let win = this.getWindows()
-        .sort((a, b) => b.lastFocused - a.lastFocused)
+        .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
         .find((w) => w.name === "search")
 
       if (win) {
