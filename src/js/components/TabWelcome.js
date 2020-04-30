@@ -71,8 +71,8 @@ export default function TabWelcome() {
               .
             </p>
             <p>
-              <b>Note:</b> Multiple Zeek logs can be loaded at once, but only
-              one pcap.
+              <b>Note:</b> Multiple zng and Zeek log files may be imported, but
+              only one pcap.
             </p>
           </footer>
         </section>
