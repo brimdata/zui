@@ -31,8 +31,6 @@ export default function SavedSpacesList({spaces}: Props) {
         type: "warning",
         title: "Delete Space",
         message: `Are you sure you want to delete ${space}?`,
-        detail:
-          "This will delete the created .brim folder, but will preserve the original pcap file.",
         buttons: ["OK", "Cancel"]
       })
       .then(({response}) => {
