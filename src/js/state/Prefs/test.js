@@ -17,5 +17,5 @@ test("the default json type config", () => {
 test("set the json types config", () => {
   let state = store.dispatchAll([Prefs.setJSONTypeConfig("/my/types.json")])
 
-  expect(Prefs.getJSONTypeConfig(state)).toBe("")
+  expect(Prefs.getJSONTypeConfig(state)).toBe("/my/types.json")
 })
