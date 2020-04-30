@@ -30,7 +30,9 @@ export default function TabWelcome() {
   function onChange(_e, files) {
     if (!files.length) return
     dispatch(ingestFiles(files)).catch((e) => {
+      console.error(e)
       dispatch(Notice.set(ErrorFactory.create(e.cause)))
+      dispatch(refreshSpaceNames())
     })
   }
 
