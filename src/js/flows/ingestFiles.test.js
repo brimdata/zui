@@ -116,7 +116,7 @@ test("a json file with a custom types config", async () => {
   )
 
   expect(mockClient.logs.post).toHaveBeenCalledWith({
-    paths: ["/Users/jkerr/work/brim/itest/sample.ndjson"],
+    paths: [itestFile("sample.ndjson")],
     space: "dataSpace",
     types: contents
   })
