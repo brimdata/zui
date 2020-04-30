@@ -2,7 +2,7 @@
 
 import {connect} from "react-redux"
 import {isEmpty} from "lodash"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 
 import type {DispatchProps, State} from "../../state/types"
 import type {Space} from "../../state/Spaces/types"
@@ -13,7 +13,6 @@ import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
 import Log from "../../models/Log"
-import LogDetails from "../../state/LogDetails"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
 import SearchBar from "../../state/SearchBar"
@@ -28,6 +27,9 @@ import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import useDoubleClick from "../hooks/useDoubleClick"
+import Mousetrap from "mousetrap"
+import throttle from "lodash/throttle"
+import useDebouncedEffect from "../hooks/useDebouncedEffect"
 
 type StateProps = {|
   logs: Log[],
@@ -67,6 +69,39 @@ export default function ResultsTable(props: Props) {
     overScan: 1
   })
 
+  const adjustSelectedLogIndex = (indexDelta: number) => {
+    setSelectedNdx((currentNdx) => {
+      const newNdx = currentNdx + indexDelta
+      if (newNdx < 0 || newNdx > logs.length - 1) return currentNdx
+      return newNdx
+    })
+  }
+
+  useEffect(() => {
+    Mousetrap.bind(
+      "down",
+      throttle((e) => {
+        e.preventDefault()
+        adjustSelectedLogIndex(1)
+      }, 100)
+    )
+    Mousetrap.bind(
+      "up",
+      throttle((e) => {
+        e.preventDefault()
+        adjustSelectedLogIndex(-1)
+      }, 100)
+    )
+  }, [])
+
+  useDebouncedEffect(
+    () => {
+      props.dispatch(viewLogDetail(logs[selectedNdx]))
+    },
+    200,
+    [selectedNdx]
+  )
+
   const onSingleClick = () => {
     props.dispatch(viewLogDetail(logs[selectedNdx]))
   }
@@ -86,7 +121,7 @@ export default function ResultsTable(props: Props) {
         index={index}
         log={logs[index]}
         timeZone={props.timeZone}
-        highlight={Log.isSame(logs[index], props.selectedLog)}
+        highlight={Log.isSame(logs[index], logs[selectedNdx])}
         dimens={dimens}
         onClick={() => {
           setSelectedNdx(index)
@@ -140,7 +175,6 @@ function stateToProps(state: State) {
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
     timeZone: View.getTimeZone(state),
-    selectedLog: LogDetails.build(state),
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
     space: Tab.space(state),
