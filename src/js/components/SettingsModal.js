@@ -3,9 +3,9 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
-import {Label} from "./Typography"
 import {reactElementProps} from "../test/integration"
 import ModalBox from "./ModalBox/ModalBox"
+import SettingJSONTypeConfig from "./SettingJSONTypeConfig"
 import TextContent from "./TextContent"
 import View from "../state/View"
 import brim from "../brim"
@@ -19,12 +19,13 @@ export default function SettingsModal() {
       name="settings"
       title="Preferences"
       buttons="Ok"
+      className="settings-modal"
       {...reactElementProps("settingsModal")}
     >
       <TextContent>
         <div className="settings-form">
           <div className="setting-panel">
-            <Label>Timezone:</Label>
+            <label>Timezone:</label>
             <select
               onChange={(e) => dispatch(View.setTimeZone(e.target.value))}
               value={timeZone}
@@ -36,6 +37,7 @@ export default function SettingsModal() {
               ))}
             </select>
           </div>
+          <SettingJSONTypeConfig />
         </div>
       </TextContent>
     </ModalBox>

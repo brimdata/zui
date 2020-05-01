@@ -43,10 +43,8 @@ export default function appMenu(
   }
 
   const preferences = {
-    label: platform === "darwin" ? "Preferences" : "Settings",
-    click() {
-      send("showPreferences")
-    }
+    label: platform === "darwin" ? "Preferences..." : "Settings",
+    click: () => manager.openPreferences()
   }
 
   const resetState = {

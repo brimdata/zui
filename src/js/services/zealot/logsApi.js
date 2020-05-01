@@ -1,7 +1,10 @@
 /* @flow */
 
 import fsExtra from "fs-extra"
+
 import path from "path"
+
+import {isObject, isString} from "../../lib/is"
 
 export type LogsPostArgs = {space: string, paths: string[], types?: Object}
 
@@ -21,12 +24,15 @@ export default {
 }
 
 function getBody(paths, types) {
-  if (types === "default") {
+  if (isString(types)) {
+    let config = types === "default" ? DEFAULT_TYPES : types
     return `
       {
         "paths": ${JSON.stringify(paths)},
-        "json_type_config": ${DEFAULT_TYPES}
+        "json_type_config": ${config}
       }`
+  } else if (isObject(types)) {
+    return JSON.stringify({paths, json_type_config: types})
   } else {
     return JSON.stringify({paths})
   }

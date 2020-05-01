@@ -68,6 +68,7 @@ export default function windowManager() {
     getWindow(id: string): WindowState {
       return windows[id]
     },
+
     openSearchTab(searchParams: NewTabSearchParams) {
       let isNewWin = true
       const existingWin = this.getWindows()
@@ -91,6 +92,7 @@ export default function windowManager() {
         )
       })
     },
+
     openWindow(name: WindowName, winParams: $Shape<WindowParams> = {}) {
       let params = defaultWindowParams(winParams)
       let id = params.id
@@ -116,6 +118,22 @@ export default function windowManager() {
         about.ref.focus()
       } else {
         this.openWindow("about")
+      }
+    },
+
+    openPreferences() {
+      let win = this.getWindows()
+        .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
+        .find((w) => w.name === "search")
+
+      if (win) {
+        win.ref.webContents.send("showPreferences")
+      } else {
+        let {win} = this.openWindow("search", {})
+
+        win.ref.webContents.once("did-finish-load", () => {
+          win.ref.webContents.send("showPreferences")
+        })
       }
     },
 

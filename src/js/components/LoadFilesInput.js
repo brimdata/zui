@@ -1,5 +1,5 @@
 /* @flow */
-import React, {useState} from "react"
+import React from "react"
 import classNames from "classnames"
 
 import {reactElementProps} from "../test/integration"
@@ -8,47 +8,33 @@ import PcapFileIcon from "../icons/PcapFileIcon"
 import ToolbarButton from "./ToolbarButton"
 import ZeekFileIcon from "../icons/ZeekFileIcon"
 import useCallbackRef from "./hooks/useCallbackRef"
+import useDropzone from "./hooks/useDropzone"
 
 type Props = {
   onChange: (e: Event, string[]) => void
 }
 
 export default function LoadFilesInput({onChange}: Props) {
+  let [input, setInput] = useCallbackRef()
+
+  let [bindDropzone, dragging] = useDropzone((e) => {
+    let paths = Array.from(e.dataTransfer.files).map((f) => f.path)
+    onChange(e, paths)
+  })
+
   function _onChange(e) {
     let paths = Array.from(e.target.files).map((f) => f.path)
     onChange(e, paths)
   }
-  let [dragging, setDragging] = useState(false)
-  let [input, setInput] = useCallbackRef()
 
   function openDialog() {
     if (input) input.click()
   }
 
-  function onDragOver(e) {
-    e.preventDefault()
-  }
-
-  function onDrop(e) {
-    setDragging(false)
-    let paths = Array.from(e.dataTransfer.files).map((f) => f.path)
-    onChange(e, paths)
-  }
-
-  function onDragEnter(e) {
-    e.preventDefault()
-    setDragging(true)
-  }
-
-  function onDragLeave(e) {
-    e.preventDefault()
-    setDragging(false)
-  }
-
   return (
     <div
       className={classNames("load-files-input", {dragging})}
-      {...{onDragOver, onDrop, onDragEnter, onDragLeave}}
+      {...bindDropzone()}
     >
       <input
         ref={setInput}

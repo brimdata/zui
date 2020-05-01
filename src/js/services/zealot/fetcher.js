@@ -1,5 +1,6 @@
 /* @flow */
 
+import {isObject} from "../../lib/is"
 import {url} from "./utils"
 import jsonPipeIterator from "./jsonPipeIterator"
 import textIterator from "./textIterator"
@@ -39,7 +40,11 @@ export async function* fetchGenerator(
   args: FetchArgs
 ): FetchGenerator {
   let resp = await doFetch(host, args)
-  if (!resp.ok) throw new Error(await parseResponse(resp))
+  if (!resp.ok) {
+    let contents = await parseResponse(resp)
+    if (isObject(contents)) throw contents
+    else throw new Error(contents)
+  }
   let {body} = resp
   if (body) {
     for await (let json of jsonPipeIterator(textIterator(body))) {

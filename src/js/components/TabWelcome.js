@@ -5,8 +5,10 @@ import React, {useEffect} from "react"
 import remote from "electron"
 
 import BrimTextLogo from "./BrimTextLogo"
+import ErrorFactory from "../models/ErrorFactory"
 import History from "../state/History"
 import LoadFilesInput from "./LoadFilesInput"
+import Notice from "../state/Notice"
 import SavedSpacesList from "./SavedSpacesList"
 import SpaceDeletedNotice from "./SpaceDeletedNotice"
 import Spaces from "../state/Spaces"
@@ -27,7 +29,11 @@ export default function TabWelcome() {
 
   function onChange(_e, files) {
     if (!files.length) return
-    dispatch(ingestFiles(files))
+    dispatch(ingestFiles(files)).catch((e) => {
+      console.error(e)
+      dispatch(Notice.set(ErrorFactory.create(e.cause)))
+      dispatch(refreshSpaceNames())
+    })
   }
 
   return (
