@@ -1,10 +1,7 @@
 .notice-banner {
   @include error-bg;
-
   padding: $space-s $space-m;
-
   font-size: 14px;
-  white-space: nowrap;
   margin: 0;
 
   p {

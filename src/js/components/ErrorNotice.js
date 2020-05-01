@@ -48,9 +48,11 @@ function Default({error}: {error: BrimError}) {
       </p>
       {details && details.length > 0 && (
         <div className="error-details">
-          {details.map((string, i) => (
-            <p key={i}>{string}</p>
-          ))}
+          {details
+            .flatMap((s) => s.split("\n"))
+            .map((string, i) => (
+              <p key={i}>{string}</p>
+            ))}
         </div>
       )}
     </>
