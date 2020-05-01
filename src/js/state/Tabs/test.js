@@ -1,7 +1,8 @@
 /* @flow */
 import Search from "../Search"
-import initTestStore from "../../test/initTestStore"
+import Tab from "../Tab"
 import Tabs from "./"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {
@@ -146,4 +147,15 @@ test("reorder tabs does not throw error if invalid", () => {
   ])
 
   expect(Tabs.getData(state).map((t) => t.id)).toEqual([first])
+})
+
+test("reset tab", () => {
+  let state = store.dispatchAll([
+    Search.setSpace("myspace"),
+    Tabs.clearActive()
+  ])
+
+  let tab = Tabs.getActiveTab(state)
+  expect(tab.id).toEqual(Tabs.getActive(state))
+  expect(Tab.spaceName(state)).toEqual("")
 })

@@ -2,6 +2,7 @@
 import type {SearchState} from "../Search/types"
 import type {
   TABS_ACTIVATE,
+  TABS_ACTIVE_CLEAR,
   TABS_ADD,
   TABS_MOVE,
   TABS_ORDER,
@@ -30,5 +31,8 @@ export default {
   order: (indices: number[]): TABS_ORDER => ({
     type: "TABS_ORDER",
     indices
+  }),
+  clearActive: (): TABS_ACTIVE_CLEAR => ({
+    type: "TABS_ACTIVE_CLEAR"
   })
 }
