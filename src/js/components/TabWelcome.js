@@ -44,7 +44,7 @@ export default function TabWelcome() {
           </>
         )}
         <section>
-          <label>Load Files</label>
+          <label>Import Files</label>
           <LoadFilesInput onChange={onChange} />
           <footer>
             <p>
