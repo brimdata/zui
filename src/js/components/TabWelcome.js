@@ -6,14 +6,13 @@ import remote from "electron"
 
 import BrimTextLogo from "./BrimTextLogo"
 import ErrorFactory from "../models/ErrorFactory"
-import History from "../state/History"
 import LoadFilesInput from "./LoadFilesInput"
 import Notice from "../state/Notice"
 import SavedSpacesList from "./SavedSpacesList"
-import SpaceDeletedNotice from "./SpaceDeletedNotice"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import ingestFiles from "../flows/ingestFiles"
+import initNewTab from "../flows/initNewTab"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default function TabWelcome() {
@@ -23,8 +22,7 @@ export default function TabWelcome() {
   let spacesPresent = spaces.length !== 0
 
   useEffect(() => {
-    dispatch(refreshSpaceNames())
-    dispatch(History.clear())
+    dispatch(initNewTab())
   }, [])
 
   function onChange(_e, files) {
@@ -38,7 +36,6 @@ export default function TabWelcome() {
 
   return (
     <div className="tab-welcome">
-      <SpaceDeletedNotice />
       <section>
         <BrimTextLogo />
       </section>

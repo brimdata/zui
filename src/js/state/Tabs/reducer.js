@@ -42,6 +42,15 @@ export default function reducer(state: TabsState = init, action: TabActions) {
         ...state,
         data: orderTabs(state.data, action.indices)
       }
+    case "TABS_ACTIVE_CLEAR":
+      var index = state.data.findIndex((t) => t.id === state.active)
+      var tabs = [...state.data]
+      tabs[index] = tabReducer({id: state.active}, {type: "@INIT"})
+      return {
+        ...state,
+        data: tabs
+      }
+
     default:
       return state
   }
