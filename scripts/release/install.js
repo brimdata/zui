@@ -2,8 +2,6 @@
 const fs = require("fs")
 const os = require("os")
 const installerWin = require("electron-winstaller")
-const installerDebian = require("electron-installer-debian")
-const installerRedhat = require("electron-installer-redhat")
 const createDMG = require("electron-installer-dmg")
 const createZip = require("electron-installer-zip")
 const path = require("path")
@@ -81,6 +79,7 @@ module.exports = {
 
   debian: function() {
     console.log("Building deb package installer")
+    const installerDebian = require("electron-installer-debian")
     return installerDebian({
       ...defaultLinuxOpts,
       ext: "deb",
@@ -90,6 +89,7 @@ module.exports = {
 
   redhat: function() {
     console.log("Building rpm package installer")
+    const installerRedhat = require("electron-installer-redhat")
     return installerRedhat({
       ...defaultLinuxOpts,
       ext: "rpm",
