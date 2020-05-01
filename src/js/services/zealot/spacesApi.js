@@ -10,7 +10,7 @@ export default {
   },
   get(name: string) {
     return {
-      path: `/space/${name}`,
+      path: `/space/${encodeURIComponent(name)}`,
       method: "GET"
     }
   },
@@ -23,7 +23,7 @@ export default {
   },
   delete(name: string) {
     return {
-      path: `/space/${name}`,
+      path: `/space/${encodeURIComponent(name)}`,
       method: "DELETE"
     }
   }

@@ -7,13 +7,13 @@ export default {
   get({space}: PcapsGetArgs) {
     return {
       method: "GET",
-      path: `/space/${space}/packet`
+      path: `/space/${encodeURIComponent(space)}/packet`
     }
   },
   post({space, path}: PcapsPostArgs) {
     return {
       method: "POST",
-      path: `/space/${space}/packet`,
+      path: `/space/${encodeURIComponent(space)}/packet`,
       body: JSON.stringify({path})
     }
   }
