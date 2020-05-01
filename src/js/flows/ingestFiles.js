@@ -40,7 +40,16 @@ export default (
 
 const validateInput = (paths) => ({
   async do() {
-    let params = await ingest.detectFileTypes(paths).then(ingest.getParams)
+    let params = await ingest
+      .detectFileTypes(paths)
+      .then(ingest.getParams)
+      .catch((e) => {
+        if (e.message.startsWith("EISDIR"))
+          throw new Error(
+            "Importing directories is not yet supported. Select multiple files."
+          )
+        else throw e
+      })
     if (params.error) throw new Error(params.error)
     return params
   }
