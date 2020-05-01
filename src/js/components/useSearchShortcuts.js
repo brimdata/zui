@@ -5,26 +5,10 @@ import {useEffect} from "react"
 import Mousetrap from "mousetrap"
 
 import Tabs from "../state/Tabs"
-import throttle from "lodash/throttle"
-import {adjustSelectedLogIndex} from "../flows/adjustSelectedLogIndex"
 
 export default function() {
   let dispatch = useDispatch()
   useEffect(() => {
-    Mousetrap.bind(
-      "down",
-      throttle((e) => {
-        e.preventDefault()
-        dispatch(adjustSelectedLogIndex(1))
-      }, 200)
-    )
-    Mousetrap.bind(
-      "up",
-      throttle((e) => {
-        e.preventDefault()
-        dispatch(adjustSelectedLogIndex(-1))
-      }, 200)
-    )
     Mousetrap.bind("mod+t", () => dispatch(Tabs.new()))
     Mousetrap.bind("mod+w", (e) => {
       e.preventDefault()
