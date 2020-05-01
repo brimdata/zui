@@ -2,20 +2,21 @@
 
 import {ipcRenderer} from "electron"
 
+import {viewLogDetail} from "../flows/viewLogDetail"
+import LogDetails from "../state/LogDetails"
+import Search from "../state/Search/actions"
+import Tab from "../state/Tab"
+import brim from "../brim"
 import closeWindow from "../flows/closeWindow"
 import initBoom from "./initBoom"
+import initDOM from "./initDOM"
+import initMenuActionListeners from "./initMenuActionListeners"
 import initQueryParams, {getQueryParams} from "./initQueryParams"
 import initStore from "./initStore"
+import initUserInputClasses from "./initUserInputClasses"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
 import refreshWindow from "../flows/refreshWindow"
-import initDOM from "./initDOM"
-import {viewLogDetail} from "../flows/viewLogDetail"
-import LogDetails from "../state/LogDetails"
-import initMenuActionListeners from "./initMenuActionListeners"
-import Tab from "../state/Tab"
-import brim from "../brim"
-import Search from "../state/Search/actions"
 
 let {id} = getQueryParams()
 
@@ -30,6 +31,7 @@ export default () => {
     let dispatch = store.dispatch
 
     initDOM("detail-root")
+    initUserInputClasses()
     initQueryParams(store)
     initMenuActionListeners(dispatch)
 

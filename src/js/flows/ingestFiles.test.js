@@ -2,6 +2,7 @@
 import fsExtra from "fs-extra"
 
 import Notice from "../state/Notice"
+import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
@@ -11,6 +12,7 @@ let mockClient = {
   spaces: {
     create: () => Promise.resolve({name: "dataSpace"}),
     list: () => Promise.resolve(["dataSpace"]),
+    delete: () => Promise.resolve(),
     get: () =>
       Promise.resolve({
         name: "dataSpace",
@@ -50,8 +52,11 @@ test("opening a packet", async () => {
     min_time: {ns: 0, sec: 0},
     max_time: {ns: 1, sec: 1},
     packet_support: true,
-    ingest_progress: null,
-    ingest_warnings: []
+    ingest: {
+      progress: null,
+      warnings: [],
+      snapshot: 1
+    }
   })
 
   return fsExtra.remove("tmp")
@@ -69,6 +74,8 @@ test("when there is an error", async () => {
   )
 
   let state = store.getState()
+  let cluster = Tab.clusterId(state)
+  expect(Spaces.getSpaces(cluster)(state)).toEqual([])
   expect(Tab.spaceName(state)).toEqual("")
   expect(Notice.getError(state)).toEqual({
     details: ["Detail: Boom"],

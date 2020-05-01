@@ -3,6 +3,7 @@
 import type {MenuItem} from "electron"
 
 import {conn, dns} from "../../test/mockLogs"
+import fixtures from "../../test/fixtures"
 import menu from "../../electron/menu"
 
 function menuText(menu: MenuItem) {
@@ -11,14 +12,7 @@ function menuText(menu: MenuItem) {
     .map((item) => item.label)
     .join(", ")
 }
-const space = {
-  name: "default",
-  min_time: {sec: 1425564900, ns: 0},
-  max_time: {sec: 1428917793, ns: 750000000},
-  packet_support: true,
-  ingest_progress: null,
-  ingest_warnings: []
-}
+const space = fixtures("space1")
 
 describe("Log Right Click", () => {
   const program = "*"

@@ -5,7 +5,7 @@ import throttle from "lodash/throttle"
 
 import type {State} from "../state/types"
 
-export const VERSION = "6"
+export const VERSION = "7"
 
 export function isCurrentVersion(state: *) {
   return state && state.version === VERSION

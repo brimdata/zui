@@ -1,0 +1,34 @@
+.x-button {
+  background: none;
+  border: none;
+  width: 23px;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  padding: 0;
+  position: relative;
+  user-select: none;
+  border-radius: 2px;
+  outline: none;
+  svg {
+    width: 9px;
+    height: 9px;
+    fill: darken(white, 30%);
+  }
+
+  &:hover {
+    svg {
+      fill: white;
+    }
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    svg {
+      fill: darken(white, 30%);
+    }
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

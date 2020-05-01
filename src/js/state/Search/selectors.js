@@ -19,6 +19,15 @@ export default {
     }
   },
 
+  getCurrentRecord: (state: State): SearchRecord => {
+    return {
+      program: SearchBar.getSearchBar(state).current,
+      pins: SearchBar.getSearchBar(state).pinned,
+      spanArgs: Tab.getSpanArgs(state),
+      space: Tab.spaceName(state)
+    }
+  },
+
   getArgs: (state: State): SearchArgs => {
     let program = SearchBar.getSearchProgram(state)
     let span = Tab.getSpanAsDates(state)

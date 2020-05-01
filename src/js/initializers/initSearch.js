@@ -8,13 +8,14 @@ import initBoom from "./initBoom"
 import initDOM from "./initDOM"
 import initGlobalStore from "./initGlobalStore"
 import initMenuActionListeners from "./initMenuActionListeners"
+import initNewSearchTab from "./initNewSearchTab"
 import initQueryParams, {getQueryParams} from "./initQueryParams"
 import initShortcuts from "./initShortcuts"
 import initStore from "./initStore"
+import initUserInputClasses from "./initUserInputClasses"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
 import refreshWindow from "../flows/refreshWindow"
-import initNewSearchTab from "./initNewSearchTab"
 
 let {id} = getQueryParams()
 
@@ -32,6 +33,7 @@ export default () => {
     let dispatch = store.dispatch
 
     initDOM("app-root")
+    initUserInputClasses()
     initShortcuts(store)
     initMenuActionListeners(dispatch)
     initQueryParams(store)

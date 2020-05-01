@@ -20,15 +20,21 @@ export default {
     })
   },
   getIngestProgress: (clusterId: string, name: string) => (state: State) => {
-    let clus = getCluster(state, clusterId)
-    let space = clus[name]
-    if (space) return space.ingest_progress
+    let cluster = getCluster(state, clusterId)
+    let space = cluster[name]
+    if (space) return space.ingest.progress
+    else return null
   },
   getIngestWarnings: (clusterId: string, name: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
     let space = cluster[name]
-    if (space) return space.ingest_warnings || []
+    if (space) return space.ingest.warnings
     else return []
+  },
+  getIngestSnapshot: (clusterId: string, name: string) => (state: State) => {
+    let cluster = getCluster(state, clusterId)
+    let space = cluster[name]
+    if (space) return space.ingest.snapshot
   }
 }
 

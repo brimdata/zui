@@ -37,10 +37,10 @@ export default function space(info: Space) {
       return [from, to]
     },
     ingesting() {
-      return isNumber(info.ingest_progress)
+      return isNumber(info.ingest.progress)
     },
     ingestProgress() {
-      return isNumber(info.ingest_progress) ? info.ingest_progress : 0
+      return isNumber(info.ingest.progress) ? info.ingest.progress : 0
     },
     queryable() {
       return !(this.ingesting() && this.empty())
