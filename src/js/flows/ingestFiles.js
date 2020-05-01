@@ -29,7 +29,7 @@ export default (
   return lib.transaction([
     validateInput(paths),
     createDir(),
-    createSpace(client),
+    createSpace(client, gDispatch, clusterId),
     registerHandler(dispatch, requestId),
     postFiles(client, jsonTypeConfigPath),
     setSpace(dispatch, tabId),
