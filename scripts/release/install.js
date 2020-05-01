@@ -79,6 +79,9 @@ module.exports = {
 
   debian: function() {
     console.log("Building deb package installer")
+    // https://github.com/brimsec/brim/issues/724
+    // electron-installer-debian isn't available on Windows. It's an
+    // optionalDependency, so the require can't be module-scoped.
     const installerDebian = require("electron-installer-debian")
     return installerDebian({
       ...defaultLinuxOpts,
@@ -89,6 +92,9 @@ module.exports = {
 
   redhat: function() {
     console.log("Building rpm package installer")
+    // https://github.com/brimsec/brim/issues/724
+    // electron-installer-redhat isn't available on Windows. It's an
+    // optionalDependency, so the require can't be module-scoped.
     const installerRedhat = require("electron-installer-redhat")
     return installerRedhat({
       ...defaultLinuxOpts,
