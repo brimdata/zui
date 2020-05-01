@@ -123,20 +123,27 @@ const trackProgress = (client, dispatch, clusterId) => {
         dispatch(Spaces.setDetail(clusterId, details))
       }
 
-      function toPercent(status): number {
+      function packetPostStatusToPercent(status): number {
         if (status.packet_total_size === 0) return 1
         else return status.packet_read_size / status.packet_total_size || 0
+      }
+
+      function logPostStatusToPercent(status): number {
+        // log_total_size may not be present
+        if (!status.log_total_size) return 1
+        else return status.log_read_size / status.log_total_size
       }
 
       dispatch(space.setIngestProgress(0))
       for await (let {type, ...status} of stream) {
         switch (type) {
           case "PacketPostStatus":
-            dispatch(space.setIngestProgress(toPercent(status)))
+            dispatch(space.setIngestProgress(packetPostStatusToPercent(status)))
             dispatch(space.setIngestSnapshot(status.snapshot_count))
             if (status.snapshot_count > 0) updateSpaceDetails()
             break
           case "LogPostStatus":
+            dispatch(space.setIngestProgress(logPostStatusToPercent(status)))
             updateSpaceDetails()
             break
           case "LogPostWarning":
