@@ -83,7 +83,7 @@ export default function LoadFilesInput({onChange}: Props) {
       </div>
       <div className="drag-over-content">
         <p>
-          <Folder /> Drop to load...
+          <Folder /> Drop to import...
         </p>
       </div>
     </div>
