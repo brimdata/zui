@@ -14,7 +14,7 @@ export default class Spaces extends SubClient {
   get(name: string) {
     return this.base.send({
       method: "GET",
-      path: `/space/${name}`
+      path: `/space/${encodeURIComponent(name)}`
     })
   }
 
@@ -29,7 +29,7 @@ export default class Spaces extends SubClient {
   delete(name: string) {
     return this.base.send({
       method: "DELETE",
-      path: `/space/${name}`
+      path: `/space/${encodeURIComponent(name)}`
     })
   }
 }
