@@ -1,10 +1,10 @@
 /* @flow */
 import React from "react"
 
-import {InputSubmit} from "../form/Inputs"
 import type {ModalButton} from "./types"
 import {isArray, isString} from "../../lib/is"
 import ButtonRow from "../ButtonRow"
+import ToolbarButton from "../ToolbarButton"
 
 type Props = {
   template: void | string | ModalButton[],
@@ -29,10 +29,9 @@ export default function Buttons({template, closeModal}: Props) {
   return (
     <ButtonRow>
       {buttons.map((b) => (
-        <InputSubmit
+        <ToolbarButton
+          text={b.label}
           key={b.label}
-          value={b.label}
-          type="button"
           onClick={(e) => onClick(b, e)}
         />
       ))}
