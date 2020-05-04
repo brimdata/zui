@@ -6,6 +6,7 @@ before you [open an issue](#opening-an-issue).
 - [Common Problems](#common-problems)
   * [I've clicked to open a packet capture in Brim, but it failed to open](#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open)
   * [I've clicked in Brim to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark](#ive-clicked-in-brim-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
+  * [Brim seems unable to restart normally, such as after a bad crash](#brim-seems-unable-to-restart-normally-such-as-after-a-bad-crash)
 - [Gathering Info](#gathering-info)
   * [Sensitive Information (important!)](#sensitive-information-important)
   * [Screenshots/Videos](#screenshotsvideos)
@@ -80,6 +81,42 @@ differences:
 If you find yourself running into these issues or others of a similar nature,
 please reach out to us on our [public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg)
 or [open an issue](#opening-an-issue) and we'll try to help.
+
+## Brim seems unable to restart normally, such as after a bad crash
+
+Though we attempt to fix bad bugs in Brim soon after they're identified,
+occasionally you may encounter a new bug that crashes the app in a way that
+leaves it in a bad state. In these situations Brim will seem "stuck" such that
+neither selecting the **Reset State**/**Reload** options from the drop-down
+menu nor restarting Brim will clear the situation. Here is an example of such
+a crash from previous issue [#652](https://github.com/brimsec/brim/issues/652),
+which has since been fixed:
+
+![Issue #652 Crash](media/Crash-652.png)
+
+If you experience such a crash, please gather the error dump text and
+[open an issue](#opening-an-issue) with as much detail as possible regarding
+the steps you followed that led up to the crash.
+
+Then to clear the condition, exit Brim and delete the `appState.json` from
+your filesystem at the location shown below for your OS platform. Once deleted,
+restart Brim.
+
+|**OS Platform**|**Location**|
+|---------------|------------|
+| **Windows**   | `%APPDATA%\Brim\appState.json` |
+| **macOS**     | `$HOME/Library/Application Support/Brim/appState.json` | 
+| **Linux**     | `$HOME/.config/Brim/appState.json` | 
+
+This will clear some cached data from your previous use of Brim (e.g. the
+contents of the **History** panel), but the data for your Spaces will remain
+intact.
+
+Before resuming normal work in Brim, this would be a good opportunity to
+retrace your steps and confirm that you've captured the reproduction steps
+accuately in your [issue](#opening-an-issue), since you won't lose any history
+if you repro/crash Brim and clear it one more time. Your assistance in helping
+us squash these types of bad bugs is much appreciated. Thank you!
 
 # Gathering Info
 
