@@ -1,6 +1,7 @@
 /* @flow */
 import path from "path"
 import {app, autoUpdater, dialog} from "electron"
+import {Logger as LOG} from "winston"
 
 export function setupAutoUpdater() {
   const feedURL = path.join(
@@ -11,6 +12,7 @@ export function setupAutoUpdater() {
   autoUpdater.setFeedURL(feedURL)
 
   autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
+    LOG.debug("Update downloaded")
     const dialogOpts = {
       type: "info",
       buttons: ["Restart", "Later"],
@@ -27,11 +29,14 @@ export function setupAutoUpdater() {
   })
 
   autoUpdater.on("error", (err) => {
-    console.error("There was a problem updating the application: " + err)
+    LOG.debug("There was a problem updating the application: " + err)
   })
 
-  // check for updates immediately on startup
-  autoUpdater.checkForUpdates()
+  // check for updates 30s after startup
+  setTimeout(() => {
+    LOG.debug("beginning autoupdate")
+    autoUpdater.checkForUpdates()
+  }, 30 * 1000)
 
   // then check for updates once a day
   setInterval(() => {
