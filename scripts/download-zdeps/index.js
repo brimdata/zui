@@ -1,11 +1,11 @@
 /* @noflow */
 
+const child_process = require("child_process")
 const fs = require("fs-extra")
 const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
 const extract = require("extract-zip")
-const {execSync} = require("child_process")
 const brimPackage = require("../../package.json")
 
 const zdepsPath = path.resolve("zdeps")
@@ -148,15 +148,8 @@ async function zqDevBuild(destPath) {
 
   const zqPackageDir = path.join(__dirname, "..", "..", "node_modules", "zq")
 
-  execSync("make build", {
-    stdio: "inherit",
-    cwd: zqPackageDir
-  })
-
   for (let f of [plat.zqdBin, plat.zqBin]) {
-    fs.moveSync(path.join(zqPackageDir, "dist", f), path.join(destPath, f), {
-      overwrite: true
-    })
+    fs.copyFileSync(path.join(zqPackageDir, "dist", f), path.join(destPath, f))
   }
 }
 
@@ -178,7 +171,13 @@ async function main() {
       console.log("downloaded zq artifacts version " + zqdVersion)
     } else {
       await zqDevBuild(zdepsPath)
-      console.log("built zq artifacts version " + zqdVersion)
+      // Print the version inside zq derived during prepack as
+      // opposed to what's in package.json.
+      let realZqVersion = child_process
+        .execSync(path.join(zdepsPath, "zq") + " -version")
+        .toString()
+        .trim()
+      console.log("copied zq artifacts " + realZqVersion)
     }
   } catch (err) {
     console.error("zdeps setup: ", err)
