@@ -16,15 +16,15 @@ const zdepsDirectory = join(app.getAppPath(), "zdeps")
 const platformDefs = {
   darwin: {
     zqdBin: "zqd",
-    zeekBin: "zeek"
+    zeekRunnerBin: "zeekrunner"
   },
   linux: {
     zqdBin: "zqd",
-    zeekBin: "zeek"
+    zeekRunnerBin: "zeekrunner"
   },
   win32: {
     zqdBin: "zqd.exe",
-    zeekBin: "zeek.exe"
+    zeekRunnerBin: "zeekrunner.exe"
   }
 }
 
@@ -86,7 +86,7 @@ function zeekRunnerCommand(): string {
 
   let zeekRunner = process.env.BRIM_ZEEK_RUNNER
   if (!zeekRunner) {
-    zeekRunner = resolve(join(zdepsDirectory, "zeek", plat.zeekBin))
+    zeekRunner = resolve(join(zdepsDirectory, "zeek", plat.zeekRunnerBin))
   }
 
   if (!pathExistsSync(zeekRunner)) {
