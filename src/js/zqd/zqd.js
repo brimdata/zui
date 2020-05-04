@@ -11,18 +11,20 @@ import * as cmd from "../stdlib/cmd"
 import electronIsDev from "../electron/isDev"
 
 // Paths for the zqd and zeek programs.
-const zqdPath = join(app.getAppPath(), "zdeps")
-const zqdZeekPath = join(zqdPath, "zeek")
+const zdepsDirectory = join(app.getAppPath(), "zdeps")
 
 const platformDefs = {
   darwin: {
-    zqdBin: "zqd"
+    zqdBin: "zqd",
+    zeekBin: "zeek"
   },
   linux: {
-    zqdBin: "zqd"
+    zqdBin: "zqd",
+    zeekBin: "zeek"
   },
   win32: {
-    zqdBin: "zqd.exe"
+    zqdBin: "zqd.exe",
+    zeekBin: "zeek.exe"
   }
 }
 
@@ -69,11 +71,29 @@ function zqdCommand(): string {
     return plat.zqdBin
   }
 
-  const zqdBin = resolve(join(zqdPath, plat.zqdBin))
+  const zqdBin = resolve(join(zdepsDirectory, plat.zqdBin))
   if (!pathExistsSync(zqdBin)) {
     throw new Error("zqd binary not present at " + zqdBin)
   }
   return zqdBin
+}
+
+function zeekRunnerCommand(): string {
+  const plat = platformDefs[process.platform]
+  if (!plat) {
+    throw new Error("unsupported platform for zqd")
+  }
+
+  let zeekRunner = process.env.BRIM_ZEEK_RUNNER
+  if (!zeekRunner) {
+    zeekRunner = resolve(join(zdepsDirectory, "zeek", plat.zeekBin))
+  }
+
+  if (!pathExistsSync(zeekRunner)) {
+    throw new Error("zeek runner not present at " + zeekRunner)
+  }
+
+  return zeekRunner
 }
 
 export class ZQD {
@@ -86,14 +106,6 @@ export class ZQD {
 
   start() {
     mkdirpSync(this.root, {recursive: true, mode: 0o755})
-
-    // We saw errors on cmd.com vs powershell when we tried to clone
-    // process.env and then determine whether to use "PATH" or "Path".
-    // Windows environment variables are case-insensitive; see the
-    // process.env docs. Directly altering process.env is safe and
-    // less error prone.
-    const sep = process.platform == "win32" ? ";" : ":"
-    process.env["PATH"] = [zqdPath, zqdZeekPath, process.env["PATH"]].join(sep)
 
     const opts = {
       stdio: "inherit"
@@ -108,7 +120,9 @@ export class ZQD {
       "-datadir",
       this.root,
       "-config",
-      confFile
+      confFile,
+      "-zeekrunner",
+      zeekRunnerCommand()
     ]
     log.info("spawning zqd:", zqdCommand(), args.join(" "))
 
