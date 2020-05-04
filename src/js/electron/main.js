@@ -1,6 +1,7 @@
 /* @flow */
-
 import {appPathSetup} from "./appPathSetup"
+import userTasks from "./userTasks"
+
 // app path and log setup should happen before other imports.
 appPathSetup()
 
@@ -27,6 +28,7 @@ import log from "electron-log"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
+  userTasks(app)
   let session = tron.session()
   let winMan = tron.windowManager()
   let sessionState = session.load()
@@ -53,7 +55,11 @@ async function main() {
 
   app.on("ready", () => {
     installExtensions()
-    winMan.init(sessionState)
+    if (app.commandLine.hasSwitch("new-window")) {
+      winMan.openWindow("search")
+    } else {
+      winMan.init(sessionState)
+    }
   })
 
   app.on("before-quit", () => {

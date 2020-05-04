@@ -47,7 +47,14 @@ export default function windowManager() {
     },
 
     getState(): WindowsState {
-      return windows
+      let state = {}
+      for (let id in windows) {
+        let win = windows[id]
+        if (win.name === "search") {
+          state[id] = win
+        }
+      }
+      return state
     },
 
     getWindows(): WindowState[] {
