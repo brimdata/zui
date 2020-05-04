@@ -17,7 +17,7 @@ automated test infrastructure.
 The sections below describe the details regarding the versions we test with
 continuously as well as occasional ad hoc testing. We welcome you to
 [open an issue](Troubleshooting.md#opening-an-issue) on any problem you
-experience with Brim regardless of platform verison, but please understand
+experience with Brim regardless of platform version, but please understand
 that we may be limited in our ability to provide quick fixes (or any fix at
 all) for certain platforms, subject to availability.
 
@@ -36,7 +36,7 @@ Windows 10.
 Brim is written using tools that have their own platform limitations. Per the
 supported platform guidance for [Electron](https://www.electronjs.org/docs/tutorial/support#supported-platforms)
 and [Go](https://golang.org/doc/install#requirements), Windows versions
-_older_ _than_ Windows 7 or Windows Sevrer 2008R2 are not expected to work at
+_older_ _than_ Windows 7 or Windows Server 2008R2 are not expected to work at
 all.
 
 We've been informed anecdotally that users are running Brim successfully on
