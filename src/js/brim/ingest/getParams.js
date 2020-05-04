@@ -1,10 +1,8 @@
 /* @flow */
-import os from "os"
-import path from "path"
-
 import type {IngestFileType} from "./detectFileType"
 import fileList, {type FileListData} from "./fileList"
 import time from "../time"
+import lib from "../../lib"
 
 export type IngestParams = {
   dataDir: string,
@@ -18,8 +16,7 @@ export type IngestParamsError = {
 
 export default function getParams(
   data: FileListData,
-  home?: string = os.homedir(),
-  now?: Date = new Date()
+  now: Date = new Date()
 ): IngestParams | IngestParamsError {
   let files = fileList(data)
 
@@ -30,15 +27,22 @@ export default function getParams(
   }
 
   function getDataDir() {
-    if (files.oneFile()) return path.normalize(files.first().path)
+    // TODO: use user preferences when they exist https://github.com/brimsec/brim/issues/676
+    return ""
+  }
 
-    let dirName = files.inSameDir() ? files.dirName() : generateDirName(now)
+  function getSpaceName() {
+    let name
+    if (files.oneFile()) name = lib.file(files.first().path).fileName()
+    else if (files.inSameDir()) name = files.dirName()
+    else name = generateDirName(now)
 
-    return path.join(home, ".brim", dirName)
+    return name + ".brim"
   }
 
   return {
-    dataDir: getDataDir() + ".brim",
+    name: getSpaceName(),
+    dataDir: getDataDir(),
     endpoint: files.first().type,
     paths: files.paths()
   }

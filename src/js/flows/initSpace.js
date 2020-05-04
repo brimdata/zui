@@ -56,6 +56,7 @@ function getCurrentSpaceName(spaces, desired) {
 function setSpace(dispatch, data, clusterId) {
   globalDispatch(Spaces.setDetail(clusterId, data))
   dispatch(Search.setSpace(data.name))
+  data = brim.interop.spacePayloadToSpace(data)
   return data
 }
 
