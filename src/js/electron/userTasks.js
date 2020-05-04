@@ -4,16 +4,18 @@ import electronIsDev from "./isDev"
 import path from "path"
 
 export default function(app: *) {
-  app.setUserTasks([
-    {
-      program: process.execPath,
-      arguments: getArguments(),
-      iconPath: process.execPath,
-      iconIndex: 0,
-      title: "New Window",
-      description: "Create a new window"
-    }
-  ])
+  if (app.setUserTasks) {
+    app.setUserTasks([
+      {
+        program: process.execPath,
+        arguments: getArguments(),
+        iconPath: process.execPath,
+        iconIndex: 0,
+        title: "New Window",
+        description: "Create a new window"
+      }
+    ])
+  }
 }
 
 function getArguments() {
