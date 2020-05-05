@@ -29,7 +29,8 @@ export default function TabWelcome() {
   function onChange(_e, files) {
     if (!files.length) return
     dispatch(ingestFiles(files)).catch((e) => {
-      /(Failed to fetch)|(network error)/.test(e.cause.message)
+      let interruptError = /(Failed to fetch)|(network error)/
+      interruptError.test(e.cause.message)
         ? dispatch(Notice.set(errors.importInterrupt()))
         : dispatch(Notice.set(ErrorFactory.create(e.cause)))
 
