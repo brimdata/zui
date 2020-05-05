@@ -73,7 +73,7 @@ regressions.
 
 As we publish both `.deb` and `.rpm` installers, we do perform occasional ad
 hoc testing on Fedora to ensure the package installs and runs correctly on
-this RedHat-derived variant.
+this Red Hat-derived variant.
 
 Brim is written using tools that have their own platform limitations. Per the
 supported platform guidance for [Electron](https://www.electronjs.org/docs/tutorial/support#supported-platforms)
