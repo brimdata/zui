@@ -1,14 +1,12 @@
 /* @flow */
 import {app, autoUpdater, dialog} from "electron"
 import log from "electron-log"
-import url from "url"
 
 export function setupAutoUpdater() {
-  const feedURL = url.resolve(
-    "https://update.electronjs.org/brimsec/brim",
-    process.platform,
-    app.getVersion()
-  )
+  const feedURL = `https://update.electronjs.org/brimsec/brim/${
+    process.platform
+  }/${app.getVersion()}`
+  console.log(feedURL)
   autoUpdater.setFeedURL(feedURL)
 
   autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
