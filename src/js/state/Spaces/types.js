@@ -24,7 +24,7 @@ export type Space = {
   name: string,
   min_time: Ts,
   max_time: Ts,
-  packet_support: boolean,
+  pcap_support: boolean,
   ingest: SpaceIngest
 }
 

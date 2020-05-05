@@ -22,7 +22,7 @@ export default function detailFieldContextMenu(
       log.descriptor.map((d) => d.name).sort(),
       columns.sort()
     )
-    const hasPackets = space && space.packet_support
+    const hasPackets = space && space.pcap_support
     const virusTotal = [
       "hassh",
       "host",

@@ -58,7 +58,7 @@ describe("ingest api", () => {
   test("get pcaps", () => {
     expect(client.inspect().pcaps.get({space: "hi"})).toEqual({
       method: "GET",
-      path: "/space/hi/packet"
+      path: "/space/hi/pcap"
     })
   })
 
@@ -67,7 +67,7 @@ describe("ingest api", () => {
       client.inspect().pcaps.post({space: "default", file: "~/my/capture.pcap"})
     ).toEqual({
       method: "POST",
-      path: "/space/default/packet",
+      path: "/space/default/pcap",
       body: expect.any(String)
     })
   })

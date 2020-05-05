@@ -140,8 +140,8 @@ const trackProgress = (client, dispatch, clusterId) => {
       }
 
       function packetPostStatusToPercent(status): number {
-        if (status.packet_total_size === 0) return 1
-        else return status.packet_read_size / status.packet_total_size || 0
+        if (status.pcap_total_size === 0) return 1
+        else return status.pcap_read_size / status.pcap_total_size || 0
       }
 
       function logPostStatusToPercent(status): number {
@@ -153,7 +153,7 @@ const trackProgress = (client, dispatch, clusterId) => {
       dispatch(space.setIngestProgress(0))
       for await (let {type, ...status} of stream) {
         switch (type) {
-          case "PacketPostStatus":
+          case "PcapPostStatus":
             dispatch(space.setIngestProgress(packetPostStatusToPercent(status)))
             dispatch(space.setIngestSnapshot(status.snapshot_count))
             if (status.snapshot_count > 0) updateSpaceDetails()
