@@ -1,18 +1,16 @@
 /* @flow */
-import path from "path"
 import {app, autoUpdater, dialog} from "electron"
 import log from "electron-log"
 
 export function setupAutoUpdater() {
-  const feedURL =
-    "https://update.electronjs.org/brimsec/brim/" +
-    process.platform +
-    "/" +
+  const feedURL = URL.resolve(
+    "https://update.electronjs.org/brimsec/brim",
+    process.platform,
     app.getVersion()
+  )
   autoUpdater.setFeedURL(feedURL)
 
   autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
-    log.info("Update downloaded")
     const dialogOpts = {
       type: "info",
       buttons: ["Restart", "Later"],
@@ -34,7 +32,6 @@ export function setupAutoUpdater() {
 
   // check for updates 30s after startup
   setTimeout(() => {
-    log.info("beginning autoupdate")
     autoUpdater.checkForUpdates()
   }, 30 * 1000)
 
