@@ -65,13 +65,9 @@ to address them.
 
 ## Linux
 
-Our Linux test automation runs on Ubuntu 18.04, and therefore this is
-the platform on which we are best able to ensure quality and prevent
-regressions.
-
-As we publish both `.deb` and `.rpm` installers, we do perform occasional ad
-hoc testing on Fedora to ensure the package installs and runs correctly on
-this Red Hat-derived variant.
+Our Linux test automation runs on Ubuntu 18.04 (`.deb` package) and
+CentOS 8 (`.rpm` package), and therefore these are the platforms on which
+we are best able to ensure quality and prevent regressions.
 
 Brim is written using tools that have their own platform limitations. Per the
 supported platform guidance for [Electron](https://www.electronjs.org/docs/tutorial/support#supported-platforms)
