@@ -19,6 +19,8 @@ import {ipcRenderer} from "electron"
 import lib from "../lib"
 import useEventListener from "./hooks/useEventListener"
 
+import {reactElementProps} from "../test/integration"
+
 export default function HTMLContextMenu() {
   let [template, setTemplate] = useState(null)
   const openMenu = (e) => setTemplate(e.detail)
@@ -27,7 +29,7 @@ export default function HTMLContextMenu() {
 
   if (!template) return null
   return ReactDOM.createPortal(
-    <div className="html-context-menu">
+    <div className="html-context-menu" {...reactElementProps("contextMenu")}>
       <ul>
         {template.map((item, i) => (
           <HTMLMenuItem item={item} key={i} />
