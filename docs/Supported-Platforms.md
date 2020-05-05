@@ -23,8 +23,6 @@ all) for some platform versions.
 
 # Per-Platform Details
 
-The following details are current as of Brim `v0.9.0`.
-
 ## Windows
 
 Our Windows test automation runs on Windows Server 2019, and therefore this is
