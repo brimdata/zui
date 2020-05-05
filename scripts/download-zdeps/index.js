@@ -112,7 +112,7 @@ async function zeekDownload(version, zdepsPath) {
     // like linux/mac.
     artifactFile = "zeek-dev-zeek-runner.zip"
     artifactUrl =
-      "https://storage.cloud.google.com/brimsec/scratch/zeek-dev-zeek-runner.zip"
+      "https://storage.googleapis.com/brimsec/scratch/zeek-dev-zeek-runner.zip"
   } else {
     artifactFile = `zeek-${version}.${plat.osarch}.zip`
     artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
