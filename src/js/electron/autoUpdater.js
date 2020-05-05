@@ -6,7 +6,6 @@ export function setupAutoUpdater() {
   const feedURL = `https://update.electronjs.org/brimsec/brim/${
     process.platform
   }/${app.getVersion()}`
-  console.log(feedURL)
   autoUpdater.setFeedURL(feedURL)
 
   autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
