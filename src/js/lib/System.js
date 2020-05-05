@@ -2,10 +2,8 @@
 
 import {remote} from "electron"
 
-let test = true
-
 export function showContextMenu(template: Object) {
-  if (test) {
+  if (process.env.BRIM_ITEST === "true") {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})
     )
