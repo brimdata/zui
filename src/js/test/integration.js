@@ -8,6 +8,7 @@ const dataAttrs = {
   // are interested in. This is done by injecting custom data attributes [1]
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
+  contextMenu: "contextMenu",
   correlationPanel: "correlationPanel",
   curlCommand: "curlCommand",
   curlModal: "curlModal",
@@ -19,7 +20,6 @@ const dataAttrs = {
   ingestProgress: "ingestProgress",
   killHistogramSearch: "killHistogramSearch",
   killViewerSearch: "killViewerSearch",
-  logCellMenu: "logCellMenu",
   login: "login",
   notification: "notification-header",
   optionsButton: "optionsButton",
@@ -52,16 +52,16 @@ const _histogramSelector = `[${itestLocator}='${dataAttrs.histogram}']`
 const dataAttrSelector = (component: string) =>
   `[${itestLocator}='` + dataAttrs[component] + "']"
 
-// Use this to generate Xpaths to find elemnents containing text, all under a
+// Use this to generate Xpaths to find elements containing text, all under a
 // common dataAttrValue. For example the right-click Log Detail Cell menu that
 // produces an option for "Log details" is the element:
 //
-//   <ul class="menu-list" data-test-locator="logCellMenu">
+//   <div class="context-menu" data-test-locator="contextMenu">
 //
-// genSelectorForTextUnderElement("logCellMenu") returns a function that can be used to
+// genSelectorForTextUnderElement("contextMenu") returns a function that can be used to
 // generate Xpaths to specific items contained in that menu, i.e.,
 //
-//   genSelectorForTextUnderElement("logCellMenu")("Open details")
+//   genSelectorForTextUnderElement("contextMenu")("Open details")
 //
 // Xpaths are used because CSS selectors don't have the capability to evaluate
 // whether a child text node has particular content.
@@ -143,13 +143,13 @@ export const selectors = {
     ingestProgress: dataAttrSelector("ingestProgress")
   },
   viewer: {
+    contextMenu: dataAttrSelector("contextMenu"),
+    contextMenuItem: genSelectorForTextUnderElement("contextMenu"),
     header_base: dataAttrSelector("viewer_header"),
     headers: dataAttrSelector("viewer_header") + " .header-cell",
     results_base: dataAttrSelector("viewer_results"),
     results: dataAttrSelector("viewer_results") + " .field-cell",
-    resultCellContaining: genSelectorForTextUnderElement("viewer_results"),
-    rightClickMenu: dataAttrSelector("logCellMenu"),
-    rightClickMenuItem: genSelectorForTextUnderElement("logCellMenu")
+    resultCellContaining: genSelectorForTextUnderElement("viewer_results")
   }
 }
 
