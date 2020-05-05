@@ -110,7 +110,7 @@ async function zeekDownload(version, zdepsPath) {
   if (process.platform == "win32") {
     // Special casing for zeek on windows as it's not yet created automatically
     // like linux/mac.
-    artifactFile = "zeek.zip"
+    artifactFile = "zeek-dev-zeek-runner.zip"
     artifactUrl =
       "https://storage.cloud.google.com/brimsec/scratch/zeek-dev-zeek-runner.zip"
   } else {
