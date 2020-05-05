@@ -11,8 +11,7 @@ export default function ast(tree: Object) {
     },
     groupByKeys() {
       let g = this.proc("GroupByProc")
-      let keys = g ? g.keys : []
-      return keys.map<string>((k) => fieldExprToName(k))
+      return g ? g.keys : []
     },
     proc(name: string) {
       return getProcs(tree).find((p) => p.op === name)
