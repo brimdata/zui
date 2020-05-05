@@ -65,7 +65,7 @@ to address them.
 
 ## Linux
 
-Our Linux test automation run on Ubuntu 18.04 (`.deb` pacakage), and
+Our Linux test automation run on Ubuntu 18.04 (`.deb` package), and
 CentOS 8 (`.rpm` package), and therefore these are the platforms on which
 we are best able to ensure quality and prevent regressions.
 
