@@ -112,7 +112,7 @@ async function zeekDownload(version, zdepsPath) {
     // like linux/mac.
     artifactFile = "zeek.zip"
     artifactUrl =
-      "https://storage.googleapis.com/brimsec/zeek-windows/zeek-20200403.zip"
+      "https://storage.cloud.google.com/brimsec/scratch/zeek-dev-zeek-runner.zip"
   } else {
     artifactFile = `zeek-${version}.${plat.osarch}.zip`
     artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
@@ -157,7 +157,7 @@ async function main() {
   try {
     // We encode the zeek version here for now to avoid the unncessary
     // git clone if it were in package.json.
-    const zeekVersion = "v3.0.2-brim2"
+    const zeekVersion = "dev-zeek-runner"
     await zeekDownload(zeekVersion, zdepsPath)
 
     // The zq dependency should be a git tag or commit. Any tag that
