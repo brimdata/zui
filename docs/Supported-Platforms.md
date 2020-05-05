@@ -19,7 +19,7 @@ continuously as well as occasional ad hoc testing. We welcome you to
 [open an issue](Troubleshooting.md#opening-an-issue) on any problem you
 experience with Brim regardless of platform version, but please understand
 that we may be limited in our ability to provide quick fixes (or any fix at
-all) for certain platforms, subject to availability.
+all) for some platform versions.
 
 # Per-Platform Details
 
