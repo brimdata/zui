@@ -54,7 +54,7 @@ jobs:
       env:
         WINDOWS_SIGNING_PASSPHRASE: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
         WINDOWS_SIGNING_PFX_BASE64: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
-    - name: upload release assets
+    - name: upload release executable
       uses: svenstaro/upload-release-action@1.1.0
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -62,3 +62,20 @@ jobs:
         file: dist\installers\Brim-Setup.exe
         asset_name: Brim-Setup.exe
         overwrite: true
+    - name: upload RELEASES file
+      uses: svenstaro/upload-release-action@1.1.0
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: dist\installers\RELEASES
+        asset_name: RELEASES
+        overwrite: true
+    - name: upload nupkg assets
+      uses: svenstaro/upload-release-action@1.1.0
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: dist\installers\*.nupkg
+        overwrite: true
+        file_glob: true
+
