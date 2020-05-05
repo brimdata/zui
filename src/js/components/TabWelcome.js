@@ -11,6 +11,7 @@ import Notice from "../state/Notice"
 import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import errors from "../errors"
 import ingestFiles from "../flows/ingestFiles"
 import initNewTab from "../flows/initNewTab"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
@@ -28,9 +29,12 @@ export default function TabWelcome() {
   function onChange(_e, files) {
     if (!files.length) return
     dispatch(ingestFiles(files)).catch((e) => {
-      console.error(e)
-      dispatch(Notice.set(ErrorFactory.create(e.cause)))
+      /(Failed to fetch)|(network error)/.test(e.cause.message)
+        ? dispatch(Notice.set(errors.importInterrupt()))
+        : dispatch(Notice.set(ErrorFactory.create(e.cause)))
+
       dispatch(refreshSpaceNames())
+      console.error(e.message)
     })
   }
 
