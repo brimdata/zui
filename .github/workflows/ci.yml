@@ -39,9 +39,10 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - run: npm install --no-audit
-    - run: npm run format-check
+    # skipping format and lint checks
+    # - run: npm run format-check
     - run: npm run build
-    - run: npm run lint
+    # - run: npm run lint
     - run: npm run flow
     - run: npm test -- --maxWorkers=2 --ci
     - name: Build Linux Packages
