@@ -1,0 +1,36 @@
+.html-context-menu {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  max-height: 100vh;
+  background: white;
+  overflow: auto;
+  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.15);
+  user-select: none;
+  animation: fadein 300ms;
+
+  ul {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+    @include label-normal;
+  }
+
+  li {
+    margin: 0;
+    padding: 4px 20px;
+    &:hover {
+      background: darken(white, 2%);
+    }
+  }
+
+  li.disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  hr {
+    border-top: 0;
+  }
+}

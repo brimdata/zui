@@ -9,6 +9,7 @@ import {XLatestError} from "./LatestError"
 import AboutModal from "./AboutModal"
 import ClusterGate from "./Login/ClusterGate"
 import ErrorNotice from "./ErrorNotice"
+import HTMLContextMenu from "./HTMLContextMenu"
 import SettingsModal from "./SettingsModal"
 import View from "../state/View"
 import brim from "../brim"
@@ -33,6 +34,7 @@ export default function App() {
       <ErrorNotice />
       <SettingsModal />
       <AboutModal />
+      <HTMLContextMenu />
     </div>
   )
 }
