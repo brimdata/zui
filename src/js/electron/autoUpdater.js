@@ -1,13 +1,11 @@
 /* @flow */
-import path from "path"
 import {app, autoUpdater, dialog} from "electron"
+import log from "electron-log"
 
 export function setupAutoUpdater() {
-  const feedURL = path.join(
-    "https://update.electronjs.org/brimsec/brim",
-    process.platform,
-    app.getVersion()
-  )
+  const feedURL = `https://update.electronjs.org/brimsec/brim/${
+    process.platform
+  }/${app.getVersion()}`
   autoUpdater.setFeedURL(feedURL)
 
   autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
@@ -27,11 +25,13 @@ export function setupAutoUpdater() {
   })
 
   autoUpdater.on("error", (err) => {
-    console.error("There was a problem updating the application: " + err)
+    log.error("There was a problem updating the application: " + err)
   })
 
-  // check for updates immediately on startup
-  autoUpdater.checkForUpdates()
+  // check for updates 30s after startup
+  setTimeout(() => {
+    autoUpdater.checkForUpdates()
+  }, 30 * 1000)
 
   // then check for updates once a day
   setInterval(() => {
