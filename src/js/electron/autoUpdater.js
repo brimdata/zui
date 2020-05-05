@@ -1,9 +1,10 @@
 /* @flow */
 import {app, autoUpdater, dialog} from "electron"
 import log from "electron-log"
+import url from "url"
 
 export function setupAutoUpdater() {
-  const feedURL = URL.resolve(
+  const feedURL = url.resolve(
     "https://update.electronjs.org/brimsec/brim",
     process.platform,
     app.getVersion()
