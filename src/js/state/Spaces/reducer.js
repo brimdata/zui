@@ -65,7 +65,7 @@ function defaults(name, data: $Shape<Space> = {}): Space {
     name,
     min_time: {ns: 0, sec: 0},
     max_time: {ns: 0, sec: 0},
-    packet_support: false,
+    pcap_support: false,
     ingest: {
       progress: null,
       warnings: [],

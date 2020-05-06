@@ -21,7 +21,7 @@ const spaceInfo = {
     ts: {sec: 1425564900, ns: 0},
     dur: {sec: 3352893, ns: 750000000}
   },
-  packet_support: true
+  pcap_support: true
 }
 
 const initTimeWindow = () => (dispatch: Function, getState: Function) => {

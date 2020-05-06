@@ -17,11 +17,11 @@ export default function PacketsButton({label, id}: Props) {
   let dispatch = useDispatch()
   let conn = useSelector(LogDetails.getConnLog)
   let space = useSelector(Tab.space)
-  let [enabled, setEnabled] = useState(!!conn && space.packet_support)
+  let [enabled, setEnabled] = useState(!!conn && space.pcap_support)
 
-  useDebouncedEffect(() => setEnabled(!!conn && space.packet_support), 100, [
+  useDebouncedEffect(() => setEnabled(!!conn && space.pcap_support), 100, [
     conn,
-    space.packet_support
+    space.pcap_support
   ])
 
   function onClick() {
@@ -29,7 +29,7 @@ export default function PacketsButton({label, id}: Props) {
   }
 
   function getTip() {
-    if (!space.packet_support) return "This space has no packet support."
+    if (!space.pcap_support) return "This space has no pcap support."
     if (conn) return "Open packets from this connection."
     else return "No connection record found."
   }

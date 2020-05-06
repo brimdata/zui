@@ -30,7 +30,7 @@ describe("Log Right Click", () => {
   })
 
   test("conn log without pcap support", () => {
-    space.packet_support = false
+    space.pcap_support = false
 
     const log = conn()
     const field = log.mustGetField("id.orig_h")

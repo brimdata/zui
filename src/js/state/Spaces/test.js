@@ -14,7 +14,7 @@ let detail: SpaceDetailPayload = {
     ts: {sec: 1425564900, ns: 0},
     dur: {sec: 3352893, ns: 750000000}
   },
-  packet_support: true
+  pcap_support: true
 }
 
 test("setting the names", () => {
@@ -40,7 +40,7 @@ test("setting the space detail adds the defaults", () => {
 
   expect(Spaces.get("cluster1", "default")(state)).toEqual({
     name: "default",
-    packet_support: true,
+    pcap_support: true,
     min_time: {sec: 1425564900, ns: 0},
     max_time: {sec: 1428917793, ns: 750000000},
     ingest: {
@@ -81,14 +81,14 @@ test("getting the spaces with details, others not", () => {
       name: "space-a",
       max_time: {ns: 750000000, sec: 1428917793},
       min_time: {ns: 0, sec: 1425564900},
-      packet_support: true,
+      pcap_support: true,
       ingest: {warnings: [], progress: null, snapshot: null}
     },
     {
       name: "space-b",
       max_time: {ns: 0, sec: 0},
       min_time: {ns: 0, sec: 0},
-      packet_support: false,
+      pcap_support: false,
       ingest: {warnings: [], progress: null, snapshot: null}
     }
   ])

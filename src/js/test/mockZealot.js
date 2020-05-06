@@ -8,18 +8,18 @@ export default {
         name: "dataSpace",
         min_time: {ns: 0, sec: 0},
         max_time: {ns: 1, sec: 1},
-        packet_support: true
+        pcap_support: true
       })
   },
   pcaps: {
     post: function*(): Generator<*, void, void> {
       yield {type: "TaskStart"}
       yield {
-        type: "PacketPostStatus",
+        type: "PcapPostStatus",
         start_time: {sec: 0, ns: 0},
         update_time: {sec: 1, ns: 1},
-        packet_total_size: 100,
-        packet_read_size: 1
+        pcap_total_size: 100,
+        pcap_read_size: 1
       }
       yield {type: "TaskEnd"}
     }

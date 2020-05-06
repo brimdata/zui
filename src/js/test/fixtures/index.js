@@ -17,7 +17,7 @@ let fixtures = {
       sec: 1428917793,
       ns: 750000000
     },
-    packet_support: true,
+    pcap_support: true,
     ingest: {progress: null, warnings: []}
   }
 }

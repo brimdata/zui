@@ -3,7 +3,7 @@
   "description": "Brim Desktop App",
   "repository": "https://github.com/brimsec/brim",
   "license": "BSD-3-Clause",
-  "version": "0.9.1",
+  "version": "0.9.0",
   "main": "dist/js/electron/main.js",
   "author": "Brim Security, Inc.",
   "bin": {
@@ -146,7 +146,7 @@
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.16",
     "valid-url": "^1.0.9",
-    "zq": "git+https://github.com/brimsec/zq.git#v0.13.1"
+    "zq": "git+https://github.com/brimsec/zq.git#3de3c96be7a4efda0ab81486231c733c67f86448"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",

@@ -6,14 +6,14 @@ export type SpanPayload = {
   dur: Ts
 }
 
-export type PacketPostStatusPayload = {|
+export type PcapPostStatusPayload = {|
   span: SpanPayload,
-  packet_total_size: number,
-  packet_read_size: number
+  pcap_total_size: number,
+  pcap_read_size: number
 |}
 
 export type SpaceDetailPayload = {|
   name: string,
   span: SpanPayload,
-  packet_support: boolean
+  pcap_support: boolean
 |}

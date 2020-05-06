@@ -23,7 +23,7 @@ export default class Packets extends SubClient {
       const method = "GET"
       const path = `/space/${encodeURIComponent(
         args.space
-      )}/packet?${params.toString()}`
+      )}/pcap?${params.toString()}`
 
       const {host, port, ...rest} = this.base.options
 
