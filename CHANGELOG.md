@@ -1,3 +1,8 @@
+## v0.9.1
+
+* **NOTE**: Prior state such as Search History will be lost on upgrade to this version
+* Update zq to [v0.13.1](https://github.com/brimsec/zq/releases/tag/v0.13.1) (#756)
+
 ## v0.9.0
 
 * **NOTE**: Prior state such as Search History will be lost on upgrade to this version
