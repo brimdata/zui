@@ -9,4 +9,4 @@ jobs:
     name: Advance ZQ
     runs-on: ubuntu-18.04
     steps:
-      - run: jq < "${GITHUB_EVENT_PATH}"
+      - run: jq '.' "${GITHUB_EVENT_PATH}"
