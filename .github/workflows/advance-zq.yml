@@ -1,12 +1,143 @@
 name: Advance ZQ
 # This type must match the event type from zq.
 # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
+# These events only trigger on the Github default branch (usually
+# master).
 on:
   repository_dispatch:
     types: [zq-pr-merged]
 jobs:
   advance-zq:
     name: Advance ZQ
-    runs-on: ubuntu-18.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [12.x]
+        os: [ubuntu-18.04]
     steps:
+      # Only one of these should run at a time, and the checkout of brim
+      # has to be in the "protected section".
+      - name: Turnstyle
+        uses: softprops/turnstyle@v0.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Since we intend to push, we must have a full-depth checkout, a
+      # a writable token, and minimal git config settings to create
+      # commits.
+      - uses: actions/checkout@v2
+        with:
+          depth: 0
+          token: ${{ secrets.ZQ_UPDATE_PAT }}
+      - run: git config --local user.email 'automation@brimsecurity.com'
+      - run: git config --local user.name 'Brim Automation'
+
+      # This section gets event information.
       - run: jq '.' "${GITHUB_EVENT_PATH}"
+      - name: process pull request event
+        id: zq_pr
+        # $GITHUB_EVENT_PATH is the JSON we posted from zq.
+        # Variables for other steps get set as described here:
+        # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
+        # body can be multiline and must be escaped as described here:
+        # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
+        run: |
+          sha="$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")"
+          echo "::set-output name=sha::$sha"
+          branch="$(jq -r '.client_payload.branch' "${GITHUB_EVENT_PATH}")"
+          echo "::set-output name=branch::$branch"
+          number="$(jq -r '.client_payload.number' "${GITHUB_EVENT_PATH}")"
+          echo "::set-output name=number::$number"
+          title="$(jq -r '.client_payload.title' "${GITHUB_EVENT_PATH}")"
+          echo "::set-output name=title::$title"
+          body="$(jq -r '.client_payload.body' "${GITHUB_EVENT_PATH}")"
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
+          url="$(jq -r '.client_payload.url' "${GITHUB_EVENT_PATH}")"
+          echo "::set-output name=url::$url"
+          user="$(jq -r '.client_payload.user' "${GITHUB_EVENT_PATH}")"
+          echo "::set-output name=user::$user"
+
+      # This section runs typical CI, with an updated zq. Most of this
+      # is no different than the normal CI flow.
+      - name: setup node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Set NPM Cache Directory
+        id: set-npm-cache-dir
+        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
+      - name: Clear Extraneous Runner Cache
+        # Clear on-runner cache before we create our own cache to prevent
+        # slower build times. See https://github.com/brimsec/brim/pull/590
+        # and https://github.com/brimsec/brim/issues/641
+        run: rm -rf "${NPM_CACHE:?}"
+        env:
+          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+        shell: bash
+      - name: Cache node modules
+        uses: actions/cache@v1
+        # Change the cache name any time you want to start with a cleared
+        # cache.
+        env:
+          cache-name: cache-node-modules-ci-v4
+        with:
+          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+
+      - name: update zq
+        run: npm install https://github.com/brimsec/zq#${{ steps.zq_pr.outputs.sha }}
+
+      - run: npm install --no-audit
+      - run: npm run build
+      # Unit tests touch zq-produced *.js
+      - run: npm test -- --maxWorkers=2 --ci
+      - run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
+        env:
+          WORKSPACE: /var/tmp/brimsec
+
+      # This push logic is simple. If someone merges a different brim PR
+      # while this job is running, this push will fail. I anticipate
+      # this happening rarely, and it can be fixed by merging the
+      # resulting PR opened from the failure.
+      - name: Commit and push change
+        run: |
+          git diff
+          cat << EOF | git commit -a -F-
+          zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+
+          This is an auto-generated commit with a zq dependency update. The zq PR
+          ${{ steps.zq_pr.outputs.url }}, authored by @${{ steps.zq_pr.outputs.user }},
+          has been merged.
+
+          ${{ steps.zq_pr.outputs.title }}
+
+          ${{ steps.zq_pr.outputs.body }}
+          EOF
+          git push
+
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
+          path: /var/tmp/brimsec/itest
+
+      - name: Create Pull Request for Manual Inspection
+        if: failure()
+        uses: peter-evans/create-pull-request@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+          title: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+          body: |
+            This is an auto-generated PR with a zq dependency update needing manual attention. brimsec/zq#${{ steps.zq_pr.outputs.number }}, authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated automatically. Please see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} for the original failing run. If a Brim update is needed, you may use the branch on this PR to do so.
+
+            ----
+            #### ${{ steps.zq_pr.outputs.title }}
+            ${{ steps.zq_pr.outputs.body }}
+          branch: zqbot-${{ steps.zq_pr.outputs.branch }}
+          branch-suffix: short-commit-hash
