@@ -1,0 +1,12 @@
+name: Advance ZQ
+# This type must match the event type from zq.
+# https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
+on:
+  repository_dispatch:
+    types: [zq-pr-merged]
+jobs:
+  advance-zq:
+    name: Advance ZQ
+    runs-on: ubuntu-18.04
+    steps:
+      - run: jq < "${GITHUB_EVENT_PATH}"
