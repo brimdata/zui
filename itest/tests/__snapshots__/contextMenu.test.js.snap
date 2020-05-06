@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test search mods via right-clicks count by _path; sort asc 1`] = `
+Array [
+  "_path",
+  "count",
+  "capture_loss",
+  "1",
+  "conn",
+  "19",
+  "dns",
+  "2",
+  "files",
+  "4",
+  "ssl",
+  "1",
+  "stats",
+  "1",
+  "weird",
+  "1",
+  "x509",
+  "1",
+]
+`;

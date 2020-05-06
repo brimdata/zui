@@ -232,7 +232,7 @@ export const click = (app: Application, selector: string) =>
 
 export const rightClick = (app: Application, selector: string) =>
   appStep(`right-click on selector "${selector}"`, async () => {
-    await app.client.waitForClickable(app, selector)
+    await waitForClickable(app, selector)
     try {
       await retryUntil(
         () => app.client.rightClick(selector),
