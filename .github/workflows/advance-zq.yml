@@ -7,6 +7,77 @@ on:
 jobs:
   advance-zq:
     name: Advance ZQ
-    runs-on: ubuntu-18.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [12.x]
+        os: [ubuntu-18.04]
     steps:
+      # Change this if you want to make changes but not push to master.
+      - name: set branch to update
+        id: brim
+        # change "::master" below to test
+        run: "::set-output name=update_branch::master"
+
+      # This section gets event information.
       - run: jq '.' "${GITHUB_EVENT_PATH}"
+      - name: process pull request event
+        id: zq_pr
+        # $GITHUB_EVENT_PATH is the JSON we posted from zq.
+        run: |
+          sha=$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")
+          echo "::set-output name=sha::$sha"
+          branch=$(jq -r '.client_payload.branch' "${GITHUB_EVENT_PATH}")
+          echo "::set-output name=branch::$branch"
+          number=$(jq -r '.client_payload.number' "${GITHUB_EVENT_PATH}")
+          echo "::set-output name=number::$number"
+          title=$(jq -r '.client_payload.title' "${GITHUB_EVENT_PATH}")
+          echo "::set-output name=title::$title"
+          body=$(jq -r '.client_payload.body' "${GITHUB_EVENT_PATH}")
+          echo "::set-output name=body::$body"
+          url=$(jq -r '.client_payload.url' "${GITHUB_EVENT_PATH}")
+          echo "::set-output name=url::$url"
+          user=$(jq -r '.client_payload.user' "${GITHUB_EVENT_PATH}")
+          echo "::set-output name=user::$user"
+
+      # This section runs typical CI, with an updated zq. fetch-depth 0
+      # is needed to push.
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.brim.update_branch }}
+          fetch-depth: 0
+      - name: setup node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Set NPM Cache Directory
+        id: set-npm-cache-dir
+        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
+      - name: Clear Extraneous Runner Cache
+        # Clear on-runner cache before we create our own cache to prevent
+        # slower build times. See https://github.com/brimsec/brim/pull/590
+        # and https://github.com/brimsec/brim/issues/641
+        run: rm -rf "${NPM_CACHE:?}"
+        env:
+          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+        shell: bash
+      - name: Cache node modules
+        uses: actions/cache@v1
+        # Change the cache name any time you want to start with a cleared
+        # cache.
+        env:
+          cache-name: cache-node-modules-ci-v4
+        with:
+          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+
+      - name: update zq
+        run: npm install https://github.com/brimsec/zq#${{ steps.pr.outputs.sha }}
+
+      - run: npm install --no-audit
+      - run: npm run build
+      # Unit tests touch zq-produced *.js
+      - run: npm test -- --maxWorkers=2 --ci
+      - run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
