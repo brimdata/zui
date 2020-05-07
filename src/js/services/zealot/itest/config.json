@@ -1,0 +1,13 @@
+{
+  "rootDir": ".",
+  "collectCoverageFrom": [
+    "**/*.js",
+    "!**/flow-typed/**",
+    "!**/test/**"
+  ],
+  "verbose": true,
+  "globalSetup": "<rootDir>/globalSetup.js",
+  "setupFiles": [
+    "<rootDir>/setup.js"
+  ]
+}
