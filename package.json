@@ -146,7 +146,7 @@
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.16",
     "valid-url": "^1.0.9",
-    "zq": "git+https://github.com/brimsec/zq.git#590a0faf1f7dc52b364ebd41c2abba7172437618"
+    "zq": "git+https://github.com/brimsec/zq.git#96b45829a35c0ba9f95d307e86e8bf8193e8efea"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
