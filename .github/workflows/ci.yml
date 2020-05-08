@@ -15,7 +15,7 @@ jobs:
       - name: set branch to update
         id: brim
         # change "::master" below to test
-        run: "::set-output name=update_branch::fake-master-for-zq-updates"
+        run: echo "::set-output name=update_branch::fake-master-for-zq-updates"
 
       # This section gets event information.
       - run: jq '.' "fake-event.json"
