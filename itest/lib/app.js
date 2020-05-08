@@ -1,5 +1,6 @@
 /* @flow */
 
+import {existsSync} from "fs"
 import {writeFileSync, mkdirpSync} from "fs-extra"
 
 import {Application} from "spectron"
@@ -51,10 +52,17 @@ export const newAppInstance = (name: string, idx: number): Application => {
     }
   }
 
-  if (isCI() && process.platform === "darwin") {
+  // If we are CI, on a platform whose CI is expected to build releases,
+  // and a release is installed, point to that. Otherwise run out of
+  // dev. In some CI cases, we will not build releases and install them.
+  if (isCI() && process.platform === "darwin" && existsSync(macInstallPath)) {
     appArgs = {...appArgs, path: macInstallPath}
     LOG.debug("Chose installed MacOS app location", macInstallPath)
-  } else if (isCI() && process.platform === "linux") {
+  } else if (
+    isCI() &&
+    process.platform === "linux" &&
+    existsSync(linuxInstallPath)
+  ) {
     appArgs = {...appArgs, path: linuxInstallPath}
     LOG.debug("Chose installed Linux app location", linuxInstallPath)
   } else {
