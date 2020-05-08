@@ -18,7 +18,10 @@ jobs:
         run: echo "::set-output name=update_branch::fake-master-for-zq-updates"
 
       # This section gets event information.
-      - run: jq '.' "fake-event.json"
+      - run: |
+          pwd
+          ls
+          jq '.' fake-event.json
       - name: process pull request event
         id: zq_pr
         # $GITHUB_EVENT_PATH is the JSON we posted from zq.
