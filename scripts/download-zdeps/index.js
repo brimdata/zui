@@ -105,18 +105,8 @@ async function zeekDownload(version, zdepsPath) {
   const plat = platformDefs[process.platform]
   const zeekPath = path.join(zdepsPath, "zeek")
 
-  let artifactFile, artifactUrl
-
-  if (process.platform == "win32") {
-    // Special casing for zeek on windows as it's not yet created automatically
-    // like linux/mac.
-    artifactFile = "zeek.zip"
-    artifactUrl =
-      "https://storage.googleapis.com/brimsec/zeek-windows/zeek-20200403.zip"
-  } else {
-    artifactFile = `zeek-${version}.${plat.osarch}.zip`
-    artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
-  }
+  const artifactFile = `zeek-${version}.${plat.osarch}.zip`
+  const artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {
@@ -132,11 +122,7 @@ async function zeekDownload(version, zdepsPath) {
     tmpdir.removeCallback()
   }
 
-  if (process.platform == "win32") {
-    console.log("zeek windows artifact downloaded to " + zeekPath)
-  } else {
-    console.log("zeek " + version + " downloaded to " + zeekPath)
-  }
+  console.log("zeek " + version + " downloaded to " + zeekPath)
 }
 
 // Build the zqd binary inside the node_modules/zq directory via "make build".
@@ -157,7 +143,7 @@ async function main() {
   try {
     // We encode the zeek version here for now to avoid the unncessary
     // git clone if it were in package.json.
-    const zeekVersion = "v3.0.2-brim2"
+    const zeekVersion = "v3.0.2-brim3"
     await zeekDownload(zeekVersion, zdepsPath)
 
     // The zq dependency should be a git tag or commit. Any tag that

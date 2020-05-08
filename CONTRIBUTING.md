@@ -32,9 +32,11 @@ When developing features that need a non-released zqd instance, you can:
 
 ### zeek
 
-Brim uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimsec/zq/blob/master/zng/docs/spec.md) format. As an npm postinstall step, a [zeek artifact](https://github.com/brimsec/zeek/releases) (an archive with a zeek binary and other configuration files) is downloaded and stored in the `./zdeps` directory.
+Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimsec/zq/blob/master/zng/docs/spec.md) format.
 
-zqd runs zeek as needed to ingest packet capture data. zqd expects that a `zeek` command is available in its PATH; Brim ensures this is true for the zeek artifact under `./zdeps`.
+As an npm postinstall step, a [zeek artifact](https://github.com/brimsec/zeek/releases) is downloaded and expanded into the `./zdeps/zeek` directory. This artifact contains a zeek binary and associated scripts, and a "zeek runner" script or command that is called by zqd. zqd is passed the full path to the zeek runner via the `-zeekrunner` command line option. When a pcap file is ingested, zqd runs the zeek runner with no arguments and its working directory set to an output directory for the zeek TSV logs, and then feeds the pcap data to the zeek runner via stdin. zqd then internally converts the zeek TSV logs into ZNG format.
+
+An alternate Zeek setup may be used by overriding the zeek runner location. This may be done either by launching Brim with the `BRIM_ZEEK_RUNNER` environment variable set to the absolute path of a zeek runner script or commmand, or by setting a preference in the Brim UI (pending [brimsec/brim#741](https://github.com/brimsec/brim/issues/741)).
 
 ## Tests
 
