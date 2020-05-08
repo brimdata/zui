@@ -17,7 +17,7 @@ jobs:
       - name: set branch to update
         id: brim
         # change "::master" below to test
-        run: "::set-output name=update_branch::master"
+        run: "::set-output name=update_branch::fake-master-for-zq-updates"
 
       # This section gets event information.
       - run: jq '.' "${GITHUB_EVENT_PATH}"
