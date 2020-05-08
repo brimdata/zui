@@ -86,6 +86,9 @@ function zeekRunnerCommand(): string {
 
   let zeekRunner = process.env.BRIM_ZEEK_RUNNER
   if (!zeekRunner) {
+    // TODO: https://github.com/brimsec/brim/issues/741
+    // If the environment varible isn't set, allow the user to set
+    // a preferred zeekrunner location via preferences.
     zeekRunner = resolve(join(zdepsDirectory, "zeek", plat.zeekRunnerBin))
   }
 
