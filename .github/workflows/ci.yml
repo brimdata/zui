@@ -4,177 +4,79 @@ on: [push]
 
 jobs:
   build:
+  advance-zq:
+    name: Advance ZQ
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node-version: [12.x]
-        os: [macos-10.15, ubuntu-18.04, windows-2019]
+        os: [ubuntu-18.04]
     steps:
-    - run: git config --global core.autocrlf false
-    - uses: actions/checkout@v2
-    - name: setup node version ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Set NPM Cache Directory
-      id: set-npm-cache-dir
-      run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-    - name: Clear Extraneous Runner Cache
-      # Clear on-runner cache before we create our own cache to prevent
-      # slower build times. See https://github.com/brimsec/brim/pull/590
-      # and https://github.com/brimsec/brim/issues/641
-      run: rm -rf "${NPM_CACHE:?}"
-      env:
-        NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-      shell: bash
-    - name: Cache node modules
-      uses: actions/cache@v1
-      # Change the cache name any time you want to start with a cleared
-      # cache.
-      env:
-        cache-name: cache-node-modules-ci-v4
-      with:
-        path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-    - run: npm install --no-audit
-    - run: npm run format-check
-    - run: npm run build
-    - run: npm run lint
-    - run: npm run flow
-    - run: npm test -- --maxWorkers=2 --ci
-    - name: Build Linux Packages
-      if: runner.os == 'Linux'
-      run: |
-        set -x
-        node scripts/release --linux
-    - name: Persist Linux packages
-      if: runner.os == 'Linux'
-      uses: actions/upload-artifact@v1
-      with:
-        name: linux-release
-        path: ./dist/installers
+      # Change this if you want to make changes but not push to master.
+      - name: set branch to update
+        id: brim
+        # change "::master" below to test
+        run: "::set-output name=update_branch::fake-master-for-zq-updates"
 
-  integration_test_centos:
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        node-version: [12.x]
-    container:
-      image: centos:8
-      env:
-        # This environment variable causes chrome to run with no sandbox- needed
-        # whenever chrome is run as root.
-        APPVEYOR: true
-    needs: build
-    steps:
-    - run: dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio
-    - run: git config --global core.autocrlf false
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v1
-      with:
-        go-version: '1.13'
-    - name: setup node version ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Set NPM Cache Directory
-      id: set-npm-cache-dir
-      run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-    - name: Clear Extraneous Runner Cache
-      run: rm -rf "${NPM_CACHE:?}"
-      env:
-        NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-    - name: Cache node modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules-ci-v4
-      with:
-        path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-    - run: npm install --no-audit
-    - name: Download rpm package
-      uses: actions/download-artifact@v1
-      with:
-        name: linux-release
-    - name: Integration Tests (Centos 8)
-      run: |
-        dnf install -y ./linux-release/brim_x86_64.rpm
-        xvfb-run -d -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
+      # This section gets event information.
+      - run: jq '.' "fake-event.json"
+      - name: process pull request event
+        id: zq_pr
+        # $GITHUB_EVENT_PATH is the JSON we posted from zq.
+        run: |
+          sha=$(jq -r '.client_payload.merge_commit_sha' "fake-event.json")
+          echo "::set-output name=sha::$sha"
+          branch=$(jq -r '.client_payload.branch' "fake-event.json")
+          echo "::set-output name=branch::$branch"
+          number=$(jq -r '.client_payload.number' "fake-event.json")
+          echo "::set-output name=number::$number"
+          title=$(jq -r '.client_payload.title' "fake-event.json")
+          echo "::set-output name=title::$title"
+          body=$(jq -r '.client_payload.body' "fake-event.json")
+          echo "::set-output name=body::$body"
+          url=$(jq -r '.client_payload.url' "fake-event.json")
+          echo "::set-output name=url::$url"
+          user=$(jq -r '.client_payload.user' "fake-event.json")
+          echo "::set-output name=user::$user"
 
-  integration_test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node-version: [12.x]
-        os: [macos-10.15, ubuntu-18.04, windows-2019]
-    needs: build
-    steps:
-    - run: git config --global core.autocrlf false
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v1
-      with:
-        go-version: '1.13'
-    - name: setup node version ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Set NPM Cache Directory
-      id: set-npm-cache-dir
-      run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-    - name: Clear Extraneous Runner Cache
-      run: rm -rf "${NPM_CACHE:?}"
-      env:
-        NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-      shell: bash
-    - name: Cache node modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules-ci-v4
-      with:
-        path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-    - run: npm install --no-audit
-    - run: npm run build
-    - name: Build and Install MacOS DMG
-      if: runner.os == 'macOS'
-      run: |
-        set -x
-        source scripts/lib/common.bash
-        node scripts/release --darwin
-        hdiutil attach dist/installers/Brim.dmg
-        cp -R /Volumes/Brim/Brim.app /Applications
-        retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
-      shell: bash
-    - name: Download Linux packages
-      if: runner.os == 'Linux'
-      uses: actions/download-artifact@v1
-      with:
-        name: linux-release
-    - name: Integration Tests (Debian Linux)
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt install -y ./linux-release/brim_amd64.deb
-        xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
-      env:
-        # WORKSPACE represents a top-level place for test infra code to
-        # find and put things. That avoids proliferation of env
-        # variables of directories. It's used to dump logs into the
-        # correct place so that CI can reliably find them for
-        # collection.
-        WORKSPACE: /var/tmp/brimsec
-    - name: Integration Tests (non-Linux)
-      if: runner.os != 'Linux'
-      run: npm run itest -- --ci --forceExit
-      env:
-        WORKSPACE: /var/tmp/brimsec
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
-        path: /var/tmp/brimsec/itest
+      # This section runs typical CI, with an updated zq. fetch-depth 0
+      # is needed to push.
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.brim.update_branch }}
+          fetch-depth: 0
+      - name: setup node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Set NPM Cache Directory
+        id: set-npm-cache-dir
+        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
+      - name: Clear Extraneous Runner Cache
+        # Clear on-runner cache before we create our own cache to prevent
+        # slower build times. See https://github.com/brimsec/brim/pull/590
+        # and https://github.com/brimsec/brim/issues/641
+        run: rm -rf "${NPM_CACHE:?}"
+        env:
+          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+        shell: bash
+      - name: Cache node modules
+        uses: actions/cache@v1
+        # Change the cache name any time you want to start with a cleared
+        # cache.
+        env:
+          cache-name: cache-node-modules-ci-v4
+        with:
+          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+
+      - name: update zq
+        run: npm install https://github.com/brimsec/zq#${{ steps.zq_pr.outputs.sha }}
+
+      - run: npm install --no-audit
+      - run: npm run build
+      # Unit tests touch zq-produced *.js
+      - run: npm test -- --maxWorkers=2 --ci
+      - run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
