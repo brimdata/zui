@@ -3,7 +3,6 @@ name: Brim CI
 on: [push]
 
 jobs:
-  build:
   advance-zq:
     name: Advance ZQ
     runs-on: ${{ matrix.os }}
