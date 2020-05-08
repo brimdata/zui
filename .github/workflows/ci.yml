@@ -17,11 +17,7 @@ jobs:
         # change "::master" below to test
         run: echo "::set-output name=update_branch::fake-master-for-zq-updates"
 
-      # fetch-depth 0 is needed to push.
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ steps.brim.update_branch }}
-          fetch-depth: 0
 
       # This section gets event information.
       - run: jq '.' "fake-event.json"
