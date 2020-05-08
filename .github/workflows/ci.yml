@@ -17,11 +17,14 @@ jobs:
         # change "::master" below to test
         run: echo "::set-output name=update_branch::fake-master-for-zq-updates"
 
+      # fetch-depth 0 is needed to push.
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.brim.update_branch }}
+          fetch-depth: 0
+
       # This section gets event information.
-      - run: |
-          pwd
-          ls
-          jq '.' fake-event.json
+      - run: jq '.' "fake-event.json"
       - name: process pull request event
         id: zq_pr
         # $GITHUB_EVENT_PATH is the JSON we posted from zq.
@@ -41,12 +44,7 @@ jobs:
           user=$(jq -r '.client_payload.user' "fake-event.json")
           echo "::set-output name=user::$user"
 
-      # This section runs typical CI, with an updated zq. fetch-depth 0
-      # is needed to push.
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ steps.brim.update_branch }}
-          fetch-depth: 0
+      # This section runs typical CI, with an updated zq.
       - name: setup node version ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
