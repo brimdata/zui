@@ -17,7 +17,7 @@ import {globalDispatch} from "../GlobalContext"
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d) {
     return d(testConnection(cluster)).then((spaces) => {
-      globalDispatch(Spaces.setNames(cluster.id, spaces))
+      globalDispatch(Spaces.setSpaces(cluster.id, spaces))
       d(Search.setCluster(cluster.id))
       d(initSpace("default"))
     })

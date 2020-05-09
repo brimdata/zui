@@ -1,19 +1,19 @@
 /* @flow */
 
-export type PcapsGetArgs = {space: string}
-export type PcapsPostArgs = {space: string, path: string}
+export type PcapsGetArgs = {spaceID: string}
+export type PcapsPostArgs = {spaceID: string, path: string}
 
 export default {
-  get({space}: PcapsGetArgs) {
+  get({spaceID}: PcapsGetArgs) {
     return {
       method: "GET",
-      path: `/space/${encodeURIComponent(space)}/pcap`
+      path: `/space/${encodeURIComponent(spaceID)}/pcap`
     }
   },
-  post({space, path}: PcapsPostArgs) {
+  post({spaceID, path}: PcapsPostArgs) {
     return {
       method: "POST",
-      path: `/space/${encodeURIComponent(space)}/pcap`,
+      path: `/space/${encodeURIComponent(spaceID)}/pcap`,
       body: JSON.stringify({path})
     }
   }

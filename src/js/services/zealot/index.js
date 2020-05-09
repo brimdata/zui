@@ -17,7 +17,7 @@ export type TimeArg = string | Date
 export type ZealotSearchArgs = {
   from: TimeArg,
   to: TimeArg,
-  space: string
+  spaceID: string
 }
 
 function client(hostUrl: string) {
@@ -58,9 +58,10 @@ function client(hostUrl: string) {
   return {
     spaces: {
       list: () => send(spacesApi.list()),
-      get: (name: string) => send(spacesApi.get(name)),
+      get: (id: string) => send(spacesApi.get(id)),
       create: (args: SpacesCreateArgs) => send(spacesApi.create(args)),
-      delete: (name: string) => send(spacesApi.delete(name))
+      delete: (id: string) => send(spacesApi.delete(id)),
+      update: (name: string, id: string) => send(spacesApi.update(name, id))
     },
     pcaps: {
       post: (args: PcapsPostArgs) => sendStream(pcapsApi.post(args)),

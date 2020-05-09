@@ -15,14 +15,14 @@ export default function searchApi(zql: string, args: ZealotSearchArgs) {
 
 export function getSearchBody(
   zql: string,
-  {space, from, to}: ZealotSearchArgs
+  {spaceID, from, to}: ZealotSearchArgs
 ) {
   let proc = ZQL.parse(zql)
   let fromTs = getTime(from)
   let toTs = getTime(to)
   return {
     proc,
-    space,
+    spaceID,
     dir: -1,
     span: {
       ts: fromTs,

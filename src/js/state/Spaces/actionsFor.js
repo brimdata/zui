@@ -6,32 +6,35 @@ import type {
 } from "./types"
 import actions from "./actions"
 
-export default function actionsFor(clusterId: string, name: string) {
+export default function actionsFor(clusterId: string, spaceID: string) {
   return {
     setIngestProgress: (value: number | null) => {
-      return actions.setIngestProgress(clusterId, name, value)
+      return actions.setIngestProgress(clusterId, spaceID, value)
     },
     appendIngestWarning: (warning: string) => {
-      return actions.appendIngestWarning(clusterId, name, warning)
+      return actions.appendIngestWarning(clusterId, spaceID, warning)
     },
     clearIngestWarnings: () => {
-      return actions.clearIngestWarnings(clusterId, name)
+      return actions.clearIngestWarnings(clusterId, spaceID)
     },
-    setIngestSnapshot: (count: number): SPACES_INGEST_SNAPSHOT => ({
-      type: "SPACES_INGEST_SNAPSHOT",
-      clusterId,
-      name,
-      count
-    }),
+    setIngestSnapshot: (count: number): SPACES_INGEST_SNAPSHOT => {
+      console.log("spaceID: ", spaceID)
+      return {
+        type: "SPACES_INGEST_SNAPSHOT",
+        clusterId,
+        spaceID,
+        count
+      }
+    },
     remove: (): SPACES_REMOVE => ({
       type: "SPACES_REMOVE",
       clusterId,
-      name
+      spaceID
     }),
     create: (): SPACES_DETAIL => ({
       type: "SPACES_DETAIL",
       clusterId,
-      space: {name}
+      space: {spaceID}
     })
   }
 }

@@ -1,5 +1,6 @@
 /* @flow */
 export type SpacesCreateArgs = {name?: string, data_dir?: string}
+export type SpacesUpdateArgs = {name: string}
 
 export default {
   list() {
@@ -8,9 +9,9 @@ export default {
       method: "GET"
     }
   },
-  get(name: string) {
+  get(spaceID: string) {
     return {
-      path: `/space/${encodeURIComponent(name)}`,
+      path: `/space/${encodeURIComponent(spaceID)}`,
       method: "GET"
     }
   },
@@ -21,10 +22,17 @@ export default {
       body: JSON.stringify(args)
     }
   },
-  delete(name: string) {
+  delete(spaceID: string) {
     return {
-      path: `/space/${encodeURIComponent(name)}`,
+      path: `/space/${encodeURIComponent(spaceID)}`,
       method: "DELETE"
+    }
+  },
+  update(spaceID: string, args: SpacesUpdateArgs) {
+    return {
+      path: `/space/${encodeURIComponent(spaceID)}`,
+      method: "PUT",
+      body: JSON.stringify(args)
     }
   }
 }

@@ -1,24 +1,66 @@
 /* @flow */
-
+import path from "path"
 import zealot from "../../index"
+import {ztestDir} from "../env"
 
-describe("zealot client tests", () => {
+describe("zealot client spaces tests", () => {
   const client = zealot.client("localhost:9867")
-  const spaceName = "newSpace"
+  let spaceName = "newSpace"
   let spaceID
 
-  test("post space", async () => {
-    const spaceResp = await client.spaces.create({name: spaceName})
-    console.log("post resp is: ", spaceResp)
-    expect(spaceResp.name).toBe(spaceName)
-    expect(spaceResp.id).toBeDefined()
-    spaceID = spaceResp.id
+  const spacePath = (spaceID) => path.join(path.resolve(ztestDir()), spaceID)
+
+  const emptySpace = {
+    pcap_path: "",
+    pcap_size: 0,
+    pcap_support: false,
+    size: 0
+  }
+
+  test("create space", async () => {
+    const resp = await client.spaces.create({name: spaceName})
+    expect(resp.name).toBe(spaceName)
+    expect(resp.id).toBeDefined()
+    spaceID = resp.id
   })
 
   test("list spaces", async () => {
-    const listSpaceResp = await client.spaces.list()
-    console.log("list resp is: ", listSpaceResp)
-    expect(listSpaceResp).toHaveLength(1)
-    expect(listSpaceResp).toContainEqual({name: spaceName, id: spaceID})
+    const resp = await client.spaces.list()
+    expect(resp).toHaveLength(1)
+    expect(resp).toEqual([
+      {
+        ...emptySpace,
+        data_path: spacePath(spaceID),
+        name: spaceName,
+        id: spaceID
+      }
+    ])
+  })
+
+  // test("update space", async () => {
+  //   const newName = "updated space name"
+  //   const resp = await client.spaces.update(spaceID, {name: newName})
+  //   expect(resp).toEqual({
+  //     ...emptySpace,
+  //     data_path: spacePath(spaceID),
+  //     name: newName,
+  //     id: spaceID
+  //   })
+  //   spaceName = newName
+  // })
+
+  test("get space by id", async () => {
+    const resp = await client.spaces.get(spaceID)
+    expect(resp).toEqual({
+      ...emptySpace,
+      data_path: spacePath(spaceID),
+      name: spaceName,
+      id: spaceID
+    })
+  })
+
+  test("delete space", async () => {
+    const resp = await client.spaces.delete(spaceID)
+    expect(resp).toBe("")
   })
 })

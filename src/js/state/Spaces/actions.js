@@ -5,17 +5,17 @@ import type {
   SPACES_INGEST_PROGRESS,
   SPACES_INGEST_WARNING_APPEND,
   SPACES_INGEST_WARNING_CLEAR,
-  SPACES_NAMES,
+  SPACES_SET,
   SPACES_REMOVE,
   Space
 } from "./types"
 import type {SpaceDetailPayload} from "../../services/zealot/types"
 
 export default {
-  setNames: (clusterId: string, names: string[]): SPACES_NAMES => ({
-    type: "SPACES_NAMES",
+  setSpaces: (clusterId: string, spaces: Space[]): SPACES_SET => ({
+    type: "SPACES_SET",
     clusterId,
-    names: names || []
+    spaces: spaces || []
   }),
 
   setDetail: (
@@ -27,40 +27,40 @@ export default {
     space
   }),
 
-  remove: (clusterId: string, name: string): SPACES_REMOVE => ({
+  remove: (clusterId: string, spaceID: string): SPACES_REMOVE => ({
     type: "SPACES_REMOVE",
     clusterId,
-    name
+    spaceID
   }),
 
   setIngestProgress: (
     clusterId: string,
-    name: string,
+    spaceID: string,
     value: number | null
   ): SPACES_INGEST_PROGRESS => ({
     type: "SPACES_INGEST_PROGRESS",
     clusterId,
-    name,
+    spaceID,
     value
   }),
 
   appendIngestWarning: (
     clusterId: string,
-    name: string,
+    spaceID: string,
     warning: string
   ): SPACES_INGEST_WARNING_APPEND => ({
     type: "SPACES_INGEST_WARNING_APPEND",
     clusterId,
-    name,
+    spaceID,
     warning
   }),
 
   clearIngestWarnings: (
     clusterId: string,
-    name: string
+    spaceID: string
   ): SPACES_INGEST_WARNING_CLEAR => ({
     type: "SPACES_INGEST_WARNING_CLEAR",
     clusterId,
-    name
+    spaceID
   })
 }
