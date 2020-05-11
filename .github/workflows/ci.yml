@@ -17,8 +17,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - run: git config --local user.email 'automation@brimsecurity.com'
+      - run: git config --local user.name 'Brim Automation'
+
 
       # This section gets event information.
       - run: jq '.' "fake-event.json"
@@ -80,7 +81,7 @@ jobs:
         env:
           WORKSPACE: /var/tmp/brimsec
 
-      # push goes here
+      - run: git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/update-zq-and-test
 
       - uses: actions/upload-artifact@v1
         if: failure()
