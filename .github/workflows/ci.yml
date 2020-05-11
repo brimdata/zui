@@ -16,13 +16,9 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Change this if you want to make changes but not push to master.
-      - name: set branch to update
-        id: brim
-        # change "::master" below to test
-        run: echo "::set-output name=update_branch::fake-master-for-zq-updates"
-
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # This section gets event information.
       - run: jq '.' "fake-event.json"
