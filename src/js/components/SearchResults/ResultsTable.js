@@ -2,19 +2,23 @@
 
 import {connect} from "react-redux"
 import {isEmpty} from "lodash"
+import Mousetrap from "mousetrap"
 import React, {useEffect, useState} from "react"
+import throttle from "lodash/throttle"
 
 import type {DispatchProps, State} from "../../state/types"
 import type {Space} from "../../state/Spaces/types"
 import type {ViewerDimens} from "../../types"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
+import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
 import Log from "../../models/Log"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
+import Prefs from "../../state/Prefs"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
 import TableColumns from "../../models/TableColumns"
@@ -25,11 +29,8 @@ import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
-import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
-import useDoubleClick from "../hooks/useDoubleClick"
-import Mousetrap from "mousetrap"
-import throttle from "lodash/throttle"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
+import useDoubleClick from "../hooks/useDoubleClick"
 
 type StateProps = {|
   logs: Log[],
@@ -121,6 +122,7 @@ export default function ResultsTable(props: Props) {
         index={index}
         log={logs[index]}
         timeZone={props.timeZone}
+        timeFormat={props.timeFormat}
         highlight={Log.isSame(logs[index], logs[selectedNdx])}
         dimens={dimens}
         onClick={() => {
@@ -163,6 +165,7 @@ export default function ResultsTable(props: Props) {
       dimens={dimens}
       tableColumns={props.tableColumns}
       timeZone={props.timeZone}
+      timeFormat={props.timeFormat}
       onLastChunk={onLastChunk}
       renderEnd={renderEnd}
     />
@@ -175,6 +178,7 @@ function stateToProps(state: State) {
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
     timeZone: View.getTimeZone(state),
+    timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
     space: Tab.space(state),

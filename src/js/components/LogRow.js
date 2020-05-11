@@ -16,6 +16,7 @@ type Props = {
   highlight: boolean,
   index: number,
   timeZone: string,
+  timeFormat: string,
   log: Log,
   columns: TableColumns,
   onClick: () => void,
@@ -29,7 +30,8 @@ export default class LogRow extends React.Component<Props> {
       !isEqual(this.props.columns, nextProps.columns) ||
       this.props.highlight !== nextProps.highlight ||
       this.props.dimens.rowWidth !== nextProps.dimens.rowWidth ||
-      this.props.timeZone !== nextProps.timeZone
+      this.props.timeZone !== nextProps.timeZone ||
+      this.props.timeFormat !== nextProps.timeFormat
     )
   }
 
