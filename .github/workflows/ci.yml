@@ -11,6 +11,8 @@ jobs:
         node-version: [12.x]
         os: [ubuntu-18.04]
     steps:
+      # Only one of these should run at a time, and the checkout of brim
+      # has to be in the "protected section".
       - name: Turnstyle
         uses: softprops/turnstyle@v0.1.2
         env:
@@ -28,7 +30,7 @@ jobs:
         # $GITHUB_EVENT_PATH is the JSON we posted from zq.
         # Variables for other steps get set as described here:
         # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
-        # Body is escaped as described here:
+        # body can be multiline and must be escaped as described here:
         # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
         run: |
           sha="$(jq -r '.client_payload.merge_commit_sha' "fake-event.json")"
@@ -49,7 +51,8 @@ jobs:
           user="$(jq -r '.client_payload.user' "fake-event.json")"
           echo "::set-output name=user::$user"
 
-      # This section runs typical CI, with an updated zq.
+      # This section runs typical CI, with an updated zq. Most of this
+      # is no different than the normal CI flow.
       - name: setup node version ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
