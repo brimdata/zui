@@ -3,7 +3,8 @@
 import type {PrefsAction, PrefsState} from "./types"
 
 const init: PrefsState = {
-  jsonTypeConfig: ""
+  jsonTypeConfig: "",
+  timeFormat: ""
 }
 
 export default function reducer(
@@ -15,6 +16,11 @@ export default function reducer(
       return {
         ...state,
         jsonTypeConfig: action.path
+      }
+    case "PREFS_TIME_FORMAT_SET":
+      return {
+        ...state,
+        timeFormat: action.format
       }
     default:
       return state

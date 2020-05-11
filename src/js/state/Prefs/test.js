@@ -19,3 +19,9 @@ test("set the json types config", () => {
 
   expect(Prefs.getJSONTypeConfig(state)).toBe("/my/types.json")
 })
+
+test("set the preferred time format", () => {
+  let state = store.dispatchAll([Prefs.setTimeFormat("YYYY")])
+
+  expect(Prefs.getTimeFormat(state)).toEqual("YYYY")
+})
