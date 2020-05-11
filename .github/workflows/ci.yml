@@ -83,7 +83,7 @@ jobs:
 
       - run: git diff
       - run: git commit -am "update zq"
-      - run: git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/update-zq-and-test
+      - run: git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:update-zq-and-test
 
       - uses: actions/upload-artifact@v1
         if: failure()
