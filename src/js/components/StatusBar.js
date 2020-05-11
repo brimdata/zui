@@ -16,11 +16,11 @@ import brim from "../brim"
 
 export default function StatusBar() {
   let dispatch = useDispatch()
-  let id = useSelector(Tab.clusterId)
-  let name = useSelector(Tab.spaceName)
+  let clusterID = useSelector(Tab.clusterId)
+  let spaceID = useSelector(Tab.spaceID)
   let space = useSelector(Tab.space)
-  let value = useSelector(Spaces.getIngestProgress(id, name))
-  let warnings = useSelector(Spaces.getIngestWarnings(id, name))
+  let value = useSelector(Spaces.getIngestProgress(clusterID, spaceID))
+  let warnings = useSelector(Spaces.getIngestWarnings(clusterID, spaceID))
   if (!isNumber(value) && isEmpty(warnings)) return null
   let s = brim.space(space)
 

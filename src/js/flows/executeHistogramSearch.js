@@ -14,7 +14,7 @@ export default function executeHistogramSearch(
 ): Thunk {
   return function(dispatch) {
     let histogram = brim
-      .search(args.chartProgram, args.span, args.space)
+      .search(args.chartProgram, args.span, args.spaceID)
       .id("Histogram")
       .status((status) => dispatch(chart.setStatus(tabId, status)))
       .chan(0, (records) => {

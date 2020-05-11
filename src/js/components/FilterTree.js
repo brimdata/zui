@@ -56,9 +56,19 @@ export default function FilterTree() {
     })
 
     function renderWarning() {
-      const findingSpace = get(node, ["data", "finding", "search", "space"], "")
-      const tip = `'${findingSpace}' space no longer exists`
-      if (includes(spaces, findingSpace)) return null
+      const findingSpaceID = get(
+        node,
+        ["data", "finding", "search", "spaceID"],
+        ""
+      )
+      const findingSpaceName = get(
+        node,
+        ["data", "finding", "search", "spaceName"],
+        ""
+      )
+
+      const tip = `'${findingSpaceName}' space no longer exists`
+      if (includes(spaces, findingSpaceID)) return null
 
       return (
         <div

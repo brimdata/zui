@@ -7,7 +7,8 @@ import type {State} from "../types"
 
 export default {
   names: (clusterId: string) => (state: State) => {
-    return keys<string>(getCluster(state, clusterId))
+    const cluster = getCluster(state, clusterId)
+    return keys<string>(cluster)
   },
   get: (clusterId: string, spaceID: string) => (state: State) => {
     return getCluster(state, clusterId)[spaceID]
@@ -16,7 +17,7 @@ export default {
   getSpaces: (clusterId: string) => (state: State): Space[] => {
     let clus = getCluster(state, clusterId)
     return Object.keys(clus).map((key) => {
-      return {id: key, ...clus[key]}
+      return {...clus[key]}
     })
   },
   getIngestProgress: (clusterId: string, spaceID: string) => (state: State) => {

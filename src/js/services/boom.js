@@ -11,12 +11,16 @@ import Tab from "../state/Tab"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
 
-export function fetchSearch(program: string, span: Span, space: string): Thunk {
+export function fetchSearch(
+  program: string,
+  span: Span,
+  spaceID: string
+): Thunk {
   return (dispatch, getState, boom) => {
     dispatch(Notice.clearSearchError())
     return boom
       .setOptions(Boomd.getOptions(getState()))
-      .search(program, {searchSpan: span, searchSpace: space})
+      .search(program, {searchSpan: span, searchSpaceID: spaceID})
       .error((e) => handleError(e, dispatch))
   }
 }

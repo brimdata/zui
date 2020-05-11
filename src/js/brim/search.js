@@ -17,7 +17,7 @@ type EventNames =
 export default function search(
   program: string,
   span: DateTuple,
-  space: string
+  spaceID: string
 ) {
   let callbacks = new Map<EventNames, Function>()
   let id = randomHash()
@@ -25,7 +25,7 @@ export default function search(
   return {
     program,
     span,
-    space,
+    spaceID,
     getId() {
       return id
     },

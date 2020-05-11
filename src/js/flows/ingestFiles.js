@@ -72,11 +72,11 @@ const createSpace = (client, dispatch, clusterId) => ({
     } else {
       createParams = {name: params.name}
     }
-    let {id} = await client.spaces.create(createParams)
+    let {id, name} = await client.spaces.create(createParams)
     dispatch(
       Spaces.setDetail(clusterId, {
-        spaceID: id,
-        clusterId,
+        id,
+        name,
         ingest: {progress: 0, snapshot: 0, warnings: []}
       })
     )
@@ -122,14 +122,13 @@ const postFiles = (client, jsonTypesPath) => ({
 })
 
 const setSpace = (dispatch, tabId) => ({
-  do({spaceID}) {
-    dispatch(Search.setSpace(spaceID, tabId))
+  do({spaceID, name}) {
+    dispatch(Search.setSpace(spaceID, name, tabId))
   },
   undo() {
-    dispatch(Search.setSpace("", tabId))
+    dispatch(Search.setSpace("", "", tabId))
   }
 })
-
 const trackProgress = (client, dispatch, clusterId) => {
   return {
     async do({spaceID, stream, endpoint}) {

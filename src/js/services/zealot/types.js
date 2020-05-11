@@ -13,6 +13,7 @@ export type PcapPostStatusPayload = {|
 |}
 
 export type SpaceDetailPayload = {|
+  id: string,
   name: string,
   span: SpanPayload,
   pcap_support: boolean

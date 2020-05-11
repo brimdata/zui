@@ -89,7 +89,8 @@ export type SearchRecord = {
   program: string,
   pins: string[],
   spanArgs: SpanArgs,
-  space: string
+  spaceID: string,
+  spaceName: string
 }
 
 type _ReturnType<B, _F: (...args: any[]) => B> = B

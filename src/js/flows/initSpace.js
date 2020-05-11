@@ -57,7 +57,7 @@ function getCurrentSpaceID(spaces, desiredID) {
 
 function setSpace(dispatch, data, clusterId) {
   globalDispatch(Spaces.setDetail(clusterId, data))
-  dispatch(Search.setSpace(data.name))
+  dispatch(Search.setSpace(data.id, data.name))
   data = brim.interop.spacePayloadToSpace(data)
   return data
 }

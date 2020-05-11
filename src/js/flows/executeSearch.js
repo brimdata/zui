@@ -80,11 +80,10 @@ export default function executeSearch(search: $Search): Thunk {
     }
 
     dispatch(Handlers.abort(search.getId(), false))
-
     let boomRequest = boom
       .search(search.program, {
         searchSpan: search.span,
-        searchSpace: search.space
+        searchSpaceID: search.spaceID
       })
       .onAbort(aborted)
       .error(errored)

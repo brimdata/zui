@@ -18,7 +18,6 @@ export default function actionsFor(clusterId: string, spaceID: string) {
       return actions.clearIngestWarnings(clusterId, spaceID)
     },
     setIngestSnapshot: (count: number): SPACES_INGEST_SNAPSHOT => {
-      console.log("spaceID: ", spaceID)
       return {
         type: "SPACES_INGEST_SNAPSHOT",
         clusterId,

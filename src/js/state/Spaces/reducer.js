@@ -9,9 +9,9 @@ const init: SpacesState = {}
 
 const spacesReducer = produce((draft, action: SpacesAction) => {
   switch (action.type) {
-    case "SPACES_IDS":
+    case "SPACES_SET":
       return action.spaces.reduce((next, space) => {
-        next[space.id] = draft[space]
+        next[space.id] = defaults(space.id, space.name, draft[space.id])
         return next
       }, {})
 
@@ -21,8 +21,7 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
       // time. In the future brim.Span type should mimic the formatted
       // transmitted over the wire.
       var space = brim.interop.spacePayloadToSpace(action.space)
-      var def = defaults(name, id, {...draft[id], ...space})
-      draft[id] = def
+      draft[id] = defaults(id, name, {...draft[id], ...space})
       break
 
     case "SPACES_INGEST_PROGRESS":
@@ -78,8 +77,8 @@ function defaults(id, name, data: $Shape<Space> = {}): Space {
   return {...defaults, ...data}
 }
 
+// TODO: Mason - Why can this not find my shit??
 function getSpace(state, id) {
-  console.log("state is: ", state)
   if (state[id]) return state[id]
   else throw new Error("No space exists with id: " + id)
 }

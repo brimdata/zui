@@ -10,7 +10,8 @@ export const openNewSearchTab = (): Thunk => (dispatch, getState) => {
   const state = getState()
 
   const params = {
-    space: Tab.spaceName(state),
+    spaceName: Tab.spaceName(state),
+    spaceID: Tab.spaceID(state),
     span: Tab.getSpan(state),
     program: SearchBar.getSearchBarInputValue(state)
   }
