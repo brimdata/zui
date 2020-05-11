@@ -92,3 +92,19 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: /var/tmp/brimsec/itest
+
+      - name: Create Pull Request for Manual Inspection
+        if: failure()
+        uses: peter-evans/create-pull-request@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: zq update for "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+          title: zq update for "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+          body: |
+            This is an auto-generated PR with a zq dependency update needing manual attention. The upstream `zq` PR [#${{ steps.zq_pr.outputs.number }}](${{ steps.zq_pr.outputs.url }}), authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated in Brim. Please see https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} for the original failing run.
+
+            ----
+            #### ${{ steps.zq_pr.outputs.title }}.
+            ${{ steps.zq_pr.outputs.body }}
+          branch: zqbot-${{ steps.zq_pr.outputs.branch }}
+          branch-suffix: short-commit-hash
