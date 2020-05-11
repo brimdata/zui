@@ -1,65 +1,80 @@
 .settings-modal {
   min-width: 500px;
-}
+  background: #fcfcfc;
 
-.settings-form {
-  border: 1px solid $white-3;
-  border-radius: 3px;
+  .settings-form {
+    border: 1px solid $white-3;
+    border-radius: 3px;
 
-  select {
-    border: none;
-    height: 24px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    width: 240px;
-  }
-
-  label {
-    @include label-normal;
-  }
-
-  .file-input-picker {
-    display: flex;
-    align-items: center;
-    button {
-      width: auto;
-      margin-right: 3px;
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+      @include label-small;
     }
+
+    select {
+      border: none;
+      height: 24px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      width: 240px;
+    }
+
+    label {
+      @include label-normal;
+    }
+
     input {
       padding-left: 3px;
       height: 24px;
-      flex: 1;
       width: 240px;
+      border-radius: 4px;
+      line-height: 24px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .file-input-picker {
+      display: flex;
+      align-items: center;
+      button {
+        width: auto;
+        margin-right: 3px;
+      }
+      input {
+        flex: 1;
+      }
+    }
+
+    .setting-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      height: 48px;
+      border-bottom: 1px solid $white-3;
+      position: relative;
+
+      &:last-child {
+        border: none;
+      }
     }
   }
-}
 
-.setting-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  height: 48px;
-  border-bottom: 1px solid $white-3;
-  position: relative;
-
-  &:last-child {
-    border: none;
-  }
-
-  label.label {
-    font-weight: bold;
-    font-size: $font-size-1;
-  }
-
-  .error-message {
-    @include label-small;
-    background: $brand-orange;
-    color: white;
-    position: absolute;
-    left: 12px;
-    bottom: -15px;
-    padding: 1px 6px;
-    border-radius: 4px;
-    animation: fadein 500ms;
+  .errors {
+    h4 {
+      margin-bottom: 0.25rem;
+    }
+    ul {
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    a {
+      color: $red;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    p {
+      margin: 0;
+      @include label-small;
+    }
   }
 }
