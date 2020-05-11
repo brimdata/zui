@@ -40,12 +40,7 @@ describe("zealot client spaces tests", () => {
   test("update space", async () => {
     const newName = "updated space name"
     const resp = await client.spaces.update(spaceID, {name: newName})
-    expect(resp).toEqual({
-      ...emptySpace,
-      data_path: spacePath(spaceID),
-      name: newName,
-      id: spaceID
-    })
+    expect(resp).toEqual("")
     spaceName = newName
   })
 
