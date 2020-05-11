@@ -26,6 +26,10 @@ jobs:
       - name: process pull request event
         id: zq_pr
         # $GITHUB_EVENT_PATH is the JSON we posted from zq.
+        # Variables for other steps get set as described here:
+        # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
+        # Body is escaped as described here:
+        # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
         run: |
           sha="$(jq -r '.client_payload.merge_commit_sha' "fake-event.json")"
           echo "::set-output name=sha::$sha"
@@ -36,6 +40,9 @@ jobs:
           title="$(jq -r '.client_payload.title' "fake-event.json")"
           echo "::set-output name=title::$title"
           body="$(jq -r '.client_payload.body' "fake-event.json")"
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}"
           echo "::set-output name=body::$body"
           url="$(jq -r '.client_payload.url' "fake-event.json")"
           echo "::set-output name=url::$url"
@@ -111,10 +118,10 @@ jobs:
           commit-message: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
           title: zq update for "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
           body: |
-            This is an auto-generated PR with a zq dependency update needing manual attention. The `zq` PR [#${{ steps.zq_pr.outputs.number }}](${{ steps.zq_pr.outputs.url }}), authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated in Brim. Please see https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} for the original failing run.
+            This is an auto-generated PR with a zq dependency update needing manual attention. brimsec/zq#${{ steps.zq_pr.outputs.number }}, authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated automatically. Please see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} for the original failing run. If a Brim update is needed, you may use the branch on this PR to do so.
 
             ----
-            #### ${{ steps.zq_pr.outputs.title }}.
+            #### ${{ steps.zq_pr.outputs.title }}
             ${{ steps.zq_pr.outputs.body }}
           branch: zqbot-${{ steps.zq_pr.outputs.branch }}
           branch-suffix: short-commit-hash
