@@ -1,10 +1,10 @@
 /* @flow */
 import {useCallback, useState} from "react"
 
-export default function useCallbackRef() {
-  let [node, setNode] = useState(null)
+export default function useCallbackRef<T>(): [T | null, Function] {
+  let [node, setNode] = useState<T | null>(null)
 
-  let cb = useCallback((node: ?HTMLElement) => {
+  let cb = useCallback((node: T | null) => {
     if (node !== null) {
       setNode(node)
     }

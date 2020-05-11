@@ -36,6 +36,7 @@ type StateProps = {|
   logs: Log[],
   selectedLog: ?Log,
   timeZone: string,
+  timeFormat: string,
   isIncomplete: boolean,
   isFetching: boolean,
   tableColumns: TableColumns,
