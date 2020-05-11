@@ -2,13 +2,13 @@
     "action": "zq-pr-merged",
     "branch": "master",
     "client_payload": {
-        "body": "closes #644 \r\n\r\n",
-        "branch": "download-data",
-        "merge_commit_sha": "8052fbfd0972c67888144cf103f3ac42321c9c40",
-        "number": 743,
-        "title": "Add `/search?noctrl=true` query param to disable control messages",
-        "url": "https://github.com/brimsec/zq/pull/743",
-        "user": "henridf"
+        "body": "This commit adds support for multi-key indexes and refactors\r\nsignificant pieces of the zar/zdx machinery.\r\n\r\nThe zar index files are still stored as separate files but\r\na header has been added to the base layer to provide magic,\r\nversion, key fields, and customization of the btree child\r\nfield (since it is stored alongside the key fields in the\r\nindex and there can be a name collision).\r\n\r\nWe also reworked index searches to return result over a\r\nchannel so that results from a dir walk are easily managed.\r\n\r\nA bug is fixed where null values would end up in the index.\r\nIt does not make sense to index non-existent values.\r\n\r\nWe separated the zdx create command into create and convert,\r\nwhere the latter converts an existing sorted-key zng file\r\ninto a zdx and the former creates a sorted-key table using\r\nan in-memory map (this should be replaced eventually with\r\nzql proc code when we have a spill-capable group-by).\r\n\r\nThere is a new \"zdx seek\" command, which indexes just\r\nfirst records after the start-of-stream (sos), where the\r\nvalue alongside each key is the seek offset of the sos.\r\n\r\nWe also made the behavior of zar find more sensible with the\r\n-z option, when selecting between file-path output and zng output.\r\n\r\nTo make multi-key search work properly, we added a new comparator\r\nfunction, expr.KeyCompareFn, which stores the key in the\r\nclosure and returns a comparison result for an arbitrary record\r\nwith the stored key.  In this case, the key and the record\r\ncan be of different types and the respective key fields in\r\nno consistent order between the types.",
+        "branch": "zdx-multi-key",
+        "merge_commit_sha": "c7ac2d817e74f604496693112a4743e789c7a0a3",
+        "number": 749,
+        "title": "support multi-key indexes and clean up zar/zdx",
+        "url": "https://github.com/brimsec/zq/pull/749",
+        "user": "mccanne"
     },
     "organization": {
         "avatar_url": "https://avatars1.githubusercontent.com/u/52328826?v=4",
@@ -82,8 +82,8 @@
         "name": "brim",
         "node_id": "MDEwOlJlcG9zaXRvcnkxNDQyMTIwNzU=",
         "notifications_url": "https://api.github.com/repos/brimsec/brim/notifications{?since,all,participating}",
-        "open_issues": 45,
-        "open_issues_count": 45,
+        "open_issues": 41,
+        "open_issues_count": 41,
         "owner": {
             "avatar_url": "https://avatars1.githubusercontent.com/u/52328826?v=4",
             "events_url": "https://api.github.com/users/brimsec/events{/privacy}",
@@ -106,9 +106,9 @@
         },
         "private": false,
         "pulls_url": "https://api.github.com/repos/brimsec/brim/pulls{/number}",
-        "pushed_at": "2020-05-08T00:57:55Z",
+        "pushed_at": "2020-05-08T18:56:22Z",
         "releases_url": "https://api.github.com/repos/brimsec/brim/releases{/id}",
-        "size": 21390,
+        "size": 21214,
         "ssh_url": "git@github.com:brimsec/brim.git",
         "stargazers_count": 639,
         "stargazers_url": "https://api.github.com/repos/brimsec/brim/stargazers",
@@ -119,7 +119,7 @@
         "tags_url": "https://api.github.com/repos/brimsec/brim/tags",
         "teams_url": "https://api.github.com/repos/brimsec/brim/teams",
         "trees_url": "https://api.github.com/repos/brimsec/brim/git/trees{/sha}",
-        "updated_at": "2020-05-08T12:52:25Z",
+        "updated_at": "2020-05-08T18:02:57Z",
         "url": "https://api.github.com/repos/brimsec/brim",
         "watchers": 639,
         "watchers_count": 639
