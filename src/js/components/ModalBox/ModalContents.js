@@ -11,10 +11,10 @@ import useModalController from "./useModalController"
 
 // $FlowFixMe
 const ModalContents = React.forwardRef(function ModalContents(
-  {children, className, title, buttons, ...rest}: ModalContentsProps,
+  {children, className, title, buttons: template, ...rest}: ModalContentsProps,
   ref
 ) {
-  let {closeModal} = useModalController()
+  let {closeModal, buttons} = useModalController(template)
 
   return ReactDOM.createPortal(
     <div className="modal-overlay" ref={ref}>
