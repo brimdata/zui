@@ -27,19 +27,19 @@ jobs:
         id: zq_pr
         # $GITHUB_EVENT_PATH is the JSON we posted from zq.
         run: |
-          sha=$(jq -r '.client_payload.merge_commit_sha' "fake-event.json")
+          sha="$(jq -r '.client_payload.merge_commit_sha' "fake-event.json")"
           echo "::set-output name=sha::$sha"
-          branch=$(jq -r '.client_payload.branch' "fake-event.json")
+          branch="$(jq -r '.client_payload.branch' "fake-event.json")"
           echo "::set-output name=branch::$branch"
-          number=$(jq -r '.client_payload.number' "fake-event.json")
+          number="$(jq -r '.client_payload.number' "fake-event.json")"
           echo "::set-output name=number::$number"
-          title=$(jq -r '.client_payload.title' "fake-event.json")
+          title="$(jq -r '.client_payload.title' "fake-event.json")"
           echo "::set-output name=title::$title"
-          body=$(jq -r '.client_payload.body' "fake-event.json")
+          body="$(jq -r '.client_payload.body' "fake-event.json")"
           echo "::set-output name=body::$body"
-          url=$(jq -r '.client_payload.url' "fake-event.json")
+          url="$(jq -r '.client_payload.url' "fake-event.json")"
           echo "::set-output name=url::$url"
-          user=$(jq -r '.client_payload.user' "fake-event.json")
+          user="$(jq -r '.client_payload.user' "fake-event.json")"
           echo "::set-output name=user::$user"
 
       # This section runs typical CI, with an updated zq.
