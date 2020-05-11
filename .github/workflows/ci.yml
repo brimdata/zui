@@ -84,7 +84,17 @@ jobs:
       - name: Commit and push change
         run: |
           git diff
-          git commit -am "update zq"
+          cat << EOF | git commit -a -F-
+          zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+
+          This is an auto-generated commit with a zq dependency update. The zq PR
+          ${{ steps.zq_pr.outputs.url }}), authored by @${{ steps.zq_pr.outputs.user }},
+          has been merged.
+
+          ${{ steps.zq_pr.outputs.title }}
+
+          ${{ steps.zq_pr.outputs.body }}
+          EOF
           git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:update-zq-and-test
 
       - uses: actions/upload-artifact@v1
@@ -98,10 +108,10 @@ jobs:
         uses: peter-evans/create-pull-request@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: zq update for "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+          commit-message: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
           title: zq update for "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
           body: |
-            This is an auto-generated PR with a zq dependency update needing manual attention. The upstream `zq` PR [#${{ steps.zq_pr.outputs.number }}](${{ steps.zq_pr.outputs.url }}), authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated in Brim. Please see https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} for the original failing run.
+            This is an auto-generated PR with a zq dependency update needing manual attention. The `zq` PR [#${{ steps.zq_pr.outputs.number }}](${{ steps.zq_pr.outputs.url }}), authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated in Brim. Please see https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} for the original failing run.
 
             ----
             #### ${{ steps.zq_pr.outputs.title }}.
