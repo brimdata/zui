@@ -88,7 +88,7 @@ jobs:
           zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
 
           This is an auto-generated commit with a zq dependency update. The zq PR
-          ${{ steps.zq_pr.outputs.url }}), authored by @${{ steps.zq_pr.outputs.user }},
+          ${{ steps.zq_pr.outputs.url }}, authored by @${{ steps.zq_pr.outputs.user }},
           has been merged.
 
           ${{ steps.zq_pr.outputs.title }}
