@@ -11,6 +11,11 @@ jobs:
         node-version: [12.x]
         os: [ubuntu-18.04]
     steps:
+      - name: Turnstyle
+        uses: softprops/turnstyle@v0.1.2
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Change this if you want to make changes but not push to master.
       - name: set branch to update
         id: brim
