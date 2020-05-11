@@ -1,0 +1,63 @@
+/* @flow */
+
+export type FormFieldConfig = {
+  defaultValue: string,
+  name: string,
+  label: string,
+  check?: (string) => Promise<[boolean, string]> | [boolean, string],
+  submit: (string) => void
+}
+
+export type FormConfig = {
+  [string]: FormFieldConfig
+}
+
+export type FormError = {
+  label: string,
+  message: string,
+  input: HTMLInputElement
+}
+
+export default function form(element: HTMLFormElement, config: FormConfig) {
+  let errors = []
+  let fields = () => getFields(element, config)
+  return {
+    async isValid() {
+      errors = []
+      for (let field of fields()) {
+        let [passed, message] = await field.check()
+        if (!passed) errors.push(field.buildError(message))
+      }
+      return errors.length === 0
+    },
+    submit() {
+      fields().forEach((f) => f.submit())
+    },
+    getErrors() {
+      return errors
+    }
+  }
+}
+
+function getFields(el, config) {
+  let fields = []
+  for (let key in config) {
+    let {name, label, check, submit} = config[key]
+    let input = el.elements.namedItem(name)
+    if (!input) throw new Error(`No input with name="${name}"`)
+
+    // $FlowFixMe
+    let value = input.value
+    let safeCheck = check || ((_) => [true, ""])
+    let safeSubmit = submit || ((_) => {})
+
+    fields.push({
+      input,
+      check: () => safeCheck(value),
+      submit: () => safeSubmit(value),
+      // $FlowFixMe
+      buildError: (message): FormError => ({label, message, input})
+    })
+  }
+  return fields
+}

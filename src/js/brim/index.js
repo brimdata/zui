@@ -7,6 +7,7 @@ import dateTuple from "./dateTuple"
 import entries from "./entries"
 import field from "./field"
 import flatRecordsBuffer from "./flatRecordsBuffer"
+import form from "./form"
 import interop from "./interop"
 import log from "./log"
 import program from "./program"
@@ -60,6 +61,7 @@ export default {
   span,
   dateTuple,
   flatRecordsBuffer,
+  form,
   record,
   interop,
   search,
