@@ -6,9 +6,8 @@ import type {Space} from "./types"
 import type {State} from "../types"
 
 export default {
-  names: (clusterId: string) => (state: State) => {
-    const cluster = getCluster(state, clusterId)
-    return keys<string>(cluster)
+  ids: (clusterId: string) => (state: State) => {
+    return keys<string>(getCluster(state, clusterId))
   },
   get: (clusterId: string, spaceID: string) => (state: State) => {
     return getCluster(state, clusterId)[spaceID]

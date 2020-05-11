@@ -17,14 +17,12 @@ export default function actionsFor(clusterId: string, spaceID: string) {
     clearIngestWarnings: () => {
       return actions.clearIngestWarnings(clusterId, spaceID)
     },
-    setIngestSnapshot: (count: number): SPACES_INGEST_SNAPSHOT => {
-      return {
-        type: "SPACES_INGEST_SNAPSHOT",
-        clusterId,
-        spaceID,
-        count
-      }
-    },
+    setIngestSnapshot: (count: number): SPACES_INGEST_SNAPSHOT => ({
+      type: "SPACES_INGEST_SNAPSHOT",
+      clusterId,
+      spaceID,
+      count
+    }),
     remove: (): SPACES_REMOVE => ({
       type: "SPACES_REMOVE",
       clusterId,

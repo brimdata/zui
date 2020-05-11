@@ -77,7 +77,6 @@ function defaults(id, name, data: $Shape<Space> = {}): Space {
   return {...defaults, ...data}
 }
 
-// TODO: Mason - Why can this not find my shit??
 function getSpace(state, id) {
   if (state[id]) return state[id]
   else throw new Error("No space exists with id: " + id)

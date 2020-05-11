@@ -26,7 +26,7 @@ export default function FilterTree() {
   let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
   const clusterID = useSelector(Tab.clusterId)
-  const spaces = useSelector(Spaces.names(clusterID))
+  const spaceIDs = useSelector(Spaces.ids(clusterID))
 
   function renderNode(node: Node, i: number) {
     function onNodeClick() {
@@ -68,7 +68,7 @@ export default function FilterTree() {
       )
 
       const tip = `'${findingSpaceName}' space no longer exists`
-      if (includes(spaces, findingSpaceID)) return null
+      if (includes(spaceIDs, findingSpaceID)) return null
 
       return (
         <div
