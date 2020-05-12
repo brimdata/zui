@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux"
 import {useEffect} from "react"
 import Mousetrap from "mousetrap"
 
+import Modal from "../state/Modal"
 import Tabs from "../state/Tabs"
 
 export default function() {
@@ -20,6 +21,7 @@ export default function() {
       Mousetrap.bind(`mod+${i + 1}`, () => dispatch(Tabs.activateByIndex(i)))
     }
     Mousetrap.bind("mod+9", () => dispatch(Tabs.activateLast()))
+    Mousetrap.bind("mod+,", () => dispatch(Modal.show("settings")))
 
     return () => Mousetrap.reset()
   }, [])

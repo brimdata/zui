@@ -58,7 +58,7 @@ function time(val: Ts | Date = new Date()) {
       return brim.time(fromBigInt(dur))
     },
 
-    format(fmt: string) {
+    format(fmt: ?string) {
       return moment(this.toDate()).format(fmt)
     }
   }
@@ -87,6 +87,16 @@ time.setZone = function(name: string) {
 
 time.getZoneNames = function() {
   return moment.tz.names()
+}
+
+time.setDefaultFormat = function(format = "") {
+  if (format) {
+    moment.defaultFormat = format
+    moment.defaultFormatUtc = format
+  } else {
+    moment.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ"
+    moment.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]"
+  }
 }
 
 // Remove or move this later

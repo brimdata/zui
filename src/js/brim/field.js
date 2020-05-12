@@ -42,6 +42,7 @@ function field({name, type, value}: FieldData): $Field {
       else if (isArray(value)) return value.join(",")
       else return value
     },
+
     compound() {
       return COMPOUND_FIELD_RGX.test(type)
     },
@@ -59,6 +60,8 @@ function field({name, type, value}: FieldData): $Field {
         return "⦻"
       } else if (type === "count") {
         return withCommas(value.toString())
+      } else if (type === "time") {
+        return brim.time(this.toDate()).format()
       } else if (isEqual(value, {})) {
         return ""
       } else {
@@ -66,9 +69,7 @@ function field({name, type, value}: FieldData): $Field {
       }
     },
     guessWidth() {
-      if (type === "time") {
-        return 192
-      } else if (name === "_path") {
+      if (name === "_path") {
         return this.display().length * ONE_CHAR + FIELD_PAD + PATH_PAD
       } else if (this.compound()) {
         return this.toCompound().guessWidth()

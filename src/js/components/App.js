@@ -10,13 +10,15 @@ import AboutModal from "./AboutModal"
 import ClusterGate from "./Login/ClusterGate"
 import ErrorNotice from "./ErrorNotice"
 import HTMLContextMenu from "./HTMLContextMenu"
-import SettingsModal from "./SettingsModal"
+import Preferences from "./Preferences/Preferences"
+import Prefs from "../state/Prefs"
 import View from "../state/View"
 import brim from "../brim"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
+  brim.time.setDefaultFormat(useSelector(Prefs.getTimeFormat))
   let dispatch = useDispatch()
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function App() {
 
       {/* Global Modals */}
       <ErrorNotice />
-      <SettingsModal />
+      <Preferences />
       <AboutModal />
       <HTMLContextMenu />
     </div>
