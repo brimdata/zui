@@ -1,5 +1,6 @@
 /* @flow */
 import {appPathSetup} from "./appPathSetup"
+import Prefs from "../state/Prefs"
 import userTasks from "./userTasks"
 
 // app path and log setup should happen before other imports.
@@ -37,7 +38,8 @@ async function main() {
   )
 
   const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
-  const zqd = new ZQD(spaceDir)
+  const zeekRunner = Prefs.getZeekRunner(store.getState())
+  const zqd = new ZQD(spaceDir, zeekRunner)
 
   menu.setMenu(winMan)
   zqdMainHandler(zqd)
