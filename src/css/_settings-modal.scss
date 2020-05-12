@@ -77,4 +77,16 @@
       @include label-small;
     }
   }
+
+  .feedback {
+    position: absolute;
+    right: 24px;
+    top: -11px;
+    @include label-small;
+    background: $blue;
+    color: white;
+    padding: 0 6px;
+    border-radius: 3px 3px 0 0;
+    animation: fadein 300ms;
+  }
 }

@@ -15,6 +15,7 @@ export default function ZeekRunner({config}: Props) {
   let [picker, ref] = useCallbackRef()
   let [bindDropzone, dragging] = useDropzone(onDrop)
   let [value, setValue] = useState(config.defaultValue)
+  let showRestartMsg = value !== config.defaultValue
 
   function onChange(value) {
     setValue(value)
@@ -32,7 +33,7 @@ export default function ZeekRunner({config}: Props) {
 
   return (
     <div className="setting-panel">
-      <label>{config.label}: </label>
+      <label>{config.label}:</label>
       <div className="file-input-picker">
         <ToolbarButton
           className={classNames({dragging})}
@@ -53,6 +54,7 @@ export default function ZeekRunner({config}: Props) {
           style={{display: "none"}}
           onChange={onPick}
         />
+        {showRestartMsg ? <p className="feedback">Restart required.</p> : null}
       </div>
     </div>
   )
