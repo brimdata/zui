@@ -27,8 +27,8 @@ export default function usePreferencesForm(): FormConfig {
     zeekRunner: {
       name: "zeekRunner",
       label: "Zeek Runner",
-      defaultValue: "run zeek, run!",
-      submit: () => {},
+      defaultValue: useSelector(Prefs.getZeekRunner),
+      submit: (value) => globalDispatch(Prefs.setZeekRunner(value)),
       check: (path) => {
         if (path === "") return [true, ""]
         return lib
