@@ -1,21 +1,19 @@
 /* @flow */
 import React from "react"
 
-import {shell} from "electron"
-
 import type {FormFieldConfig} from "../../brim/form"
+import Link from "../common/Link"
 
 type Props = {config: FormFieldConfig}
 
-export default function TimeFormat({config}: Props) {
-  const openDocs = () =>
-    shell.openExternal("https://momentjs.com/docs/#/displaying/format/")
+const DOCS = "https://momentjs.com/docs/#/displaying/format/"
 
+export default function TimeFormat({config}: Props) {
   return (
     <div className="setting-panel">
       <div>
         <label>
-          {config.label}: <a onClick={openDocs}>(docs)</a>
+          {config.label}: <Link href={DOCS}>(docs)</Link>
         </label>
       </div>
       <input

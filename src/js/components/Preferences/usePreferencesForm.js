@@ -8,7 +8,7 @@ import Prefs from "../../state/Prefs"
 import View from "../../state/View"
 import lib from "../../lib"
 
-export default function(): FormConfig {
+export default function usePreferencesForm(): FormConfig {
   let dispatch = useDispatch()
   return {
     timeZone: {
@@ -23,6 +23,19 @@ export default function(): FormConfig {
       label: "Time Format",
       defaultValue: useSelector(Prefs.getTimeFormat),
       submit: (value) => globalDispatch(Prefs.setTimeFormat(value))
+    },
+    zeekRunner: {
+      name: "zeekRunner",
+      label: "Zeek Runner",
+      defaultValue: useSelector(Prefs.getZeekRunner),
+      submit: (value) => globalDispatch(Prefs.setZeekRunner(value)),
+      check: (path) => {
+        if (path === "") return [true, ""]
+        return lib
+          .file(path)
+          .exists()
+          .then((exists) => [exists, "file does not exist."])
+      }
     },
     jsonTypeConfig: {
       name: "jsonTypeConfig",

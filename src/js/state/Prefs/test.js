@@ -25,3 +25,9 @@ test("set the preferred time format", () => {
 
   expect(Prefs.getTimeFormat(state)).toEqual("YYYY")
 })
+
+test("set the zeek runner", () => {
+  let state = store.dispatchAll([Prefs.setZeekRunner("/run/zeek/run")])
+
+  expect(Prefs.getZeekRunner(state)).toEqual("/run/zeek/run")
+})

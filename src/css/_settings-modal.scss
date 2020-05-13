@@ -13,7 +13,6 @@
     }
 
     select {
-      border: none;
       height: 24px;
       border: 1px solid rgba(0, 0, 0, 0.1);
       width: 240px;
@@ -21,6 +20,7 @@
 
     label {
       @include label-normal;
+      user-select: none;
     }
 
     input {
@@ -76,5 +76,17 @@
       margin: 0;
       @include label-small;
     }
+  }
+
+  .feedback {
+    position: absolute;
+    right: 24px;
+    top: -11px;
+    @include label-small;
+    background: $blue;
+    color: white;
+    padding: 0 6px;
+    border-radius: 3px 3px 0 0;
+    animation: fadein 300ms;
   }
 }

@@ -1,59 +1,25 @@
 /* @flow */
-import React, {useState} from "react"
-import classNames from "classnames"
+import React from "react"
 
 import type {FormFieldConfig} from "../../brim/form"
-import ToolbarButton from "../ToolbarButton"
-import useCallbackRef from "../hooks/useCallbackRef"
-import useDropzone from "../hooks/useDropzone"
+import FileInput from "./FileInput"
+import Link from "../common/Link"
 
 type Props = {
   config: FormFieldConfig
 }
 
+export const JSON_TYPE_CONFIG_DOCS =
+  "https://github.com/brimsec/brim/wiki/Zeek-JSON-Import"
+
 export default function JSONTypeConfig({config}: Props) {
-  let [picker, ref] = useCallbackRef()
-  let [bindDropzone, dragging] = useDropzone(onDrop)
-  let [value, setValue] = useState(config.defaultValue)
-
-  function onChange(value) {
-    setValue(value)
-  }
-
-  function onPick(e) {
-    let path = Array.from(e.target.files).map((f) => f.path)[0]
-    onChange(path)
-  }
-
-  function onDrop(e) {
-    let path = Array.from(e.dataTransfer.files).map((f) => f.path)[0]
-    onChange(path)
-  }
-
+  let {name, label, defaultValue} = config
   return (
     <div className="setting-panel">
-      <label>{config.label}: </label>
-      <div className="file-input-picker">
-        <ToolbarButton
-          className={classNames({dragging})}
-          text="Choose..."
-          onClick={() => picker && picker.click()}
-          {...bindDropzone()}
-        />
-        <input
-          name={config.name}
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder="default"
-        />
-        <input
-          ref={ref}
-          type="file"
-          style={{display: "none"}}
-          onChange={onPick}
-        />
-      </div>
+      <label>
+        {label}: <Link href={JSON_TYPE_CONFIG_DOCS}>(docs)</Link>
+      </label>
+      <FileInput {...{name, defaultValue, placeholder: "default"}} />
     </div>
   )
 }

@@ -1,11 +1,12 @@
 /* @flow */
 
+import {isEmpty} from "lodash"
 import {outputFileSync, pathExistsSync, mkdirpSync} from "fs-extra"
-import {spawn, ChildProcess} from "child_process"
-import {join, resolve} from "path"
-import {app} from "electron"
-import _merge from "lodash/merge"
 import log from "electron-log"
+
+import {app} from "electron"
+import {join, resolve} from "path"
+import {spawn, ChildProcess} from "child_process"
 
 import * as cmd from "../stdlib/cmd"
 import electronIsDev from "../electron/isDev"
@@ -78,33 +79,29 @@ function zqdCommand(): string {
   return zqdBin
 }
 
-function zeekRunnerCommand(): string {
+function zeekRunnerCommand(zeekRunnerPref: string): string {
   const plat = platformDefs[process.platform]
   if (!plat) {
     throw new Error("unsupported platform for zqd")
   }
 
-  let zeekRunner = process.env.BRIM_ZEEK_RUNNER
-  if (!zeekRunner) {
-    // TODO: https://github.com/brimsec/brim/issues/741
-    // If the environment varible isn't set, allow the user to set
-    // a preferred zeekrunner location via preferences.
-    zeekRunner = resolve(join(zdepsDirectory, "zeek", plat.zeekRunnerBin))
-  }
+  const precedence = [
+    process.env.BRIM_ZEEK_RUNNER,
+    zeekRunnerPref,
+    resolve(join(zdepsDirectory, "zeek", plat.zeekRunnerBin))
+  ]
 
-  if (!pathExistsSync(zeekRunner)) {
-    throw new Error("zeek runner not present at " + zeekRunner)
-  }
-
-  return zeekRunner
+  return precedence.find((path) => !isEmpty(path)) || ""
 }
 
 export class ZQD {
   zqd: ChildProcess
   root: string
+  zeekRunner: string
 
-  constructor(rootDir: string) {
+  constructor(rootDir: string, zeekRunner: string) {
     this.root = rootDir
+    this.zeekRunner = zeekRunner
   }
 
   start() {
@@ -125,7 +122,7 @@ export class ZQD {
       "-config",
       confFile,
       "-zeekrunner",
-      zeekRunnerCommand()
+      zeekRunnerCommand(this.zeekRunner)
     ]
     log.info("spawning zqd:", zqdCommand(), args.join(" "))
 

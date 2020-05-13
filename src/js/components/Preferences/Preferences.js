@@ -9,6 +9,7 @@ import ModalBox from "../ModalBox/ModalBox"
 import TextContent from "../TextContent"
 import TimeFormat from "./TimeFormat"
 import Timezone from "./Timezone"
+import ZeekRunner from "./ZeekRunner"
 import brim from "../../brim"
 import useCallbackRef from "../hooks/useCallbackRef"
 import usePreferencesForm from "./usePreferencesForm"
@@ -46,6 +47,7 @@ export default function Preferences() {
         <form ref={setForm} className="settings-form">
           <Timezone config={prefsForm.timeZone} />
           <TimeFormat config={prefsForm.timeFormat} />
+          <ZeekRunner config={prefsForm.zeekRunner} />
           <JSONTypeConfig config={prefsForm.jsonTypeConfig} />
         </form>
       </TextContent>

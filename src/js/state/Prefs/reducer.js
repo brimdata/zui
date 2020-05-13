@@ -4,7 +4,8 @@ import type {PrefsAction, PrefsState} from "./types"
 
 const init: PrefsState = {
   jsonTypeConfig: "",
-  timeFormat: ""
+  timeFormat: "",
+  zeekRunner: ""
 }
 
 export default function reducer(
@@ -21,6 +22,11 @@ export default function reducer(
       return {
         ...state,
         timeFormat: action.format
+      }
+    case "PREFS_ZEEK_RUNNER_SET":
+      return {
+        ...state,
+        zeekRunner: action.zeekRunner
       }
     default:
       return state
