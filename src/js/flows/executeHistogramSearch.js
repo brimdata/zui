@@ -33,7 +33,7 @@ function shouldClear(args, prev) {
 
   if (
     args.chartProgram === prev.chartProgram &&
-    args.space === prev.space &&
+    args.spaceId === prev.spaceId &&
     duration(args.span) === duration(prev.span)
   ) {
     return false

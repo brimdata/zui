@@ -12,6 +12,7 @@ import logsApi, {type LogsPostArgs} from "./logsApi"
 import pcapsApi, {type PcapsGetArgs, type PcapsPostArgs} from "./pcapsApi"
 import searchApi from "./searchApi"
 import spacesApi, {type SpacesCreateArgs} from "./spacesApi"
+import type {SpacesUpdateArgs} from "./spacesApi"
 
 export type TimeArg = string | Date
 export type ZealotSearchArgs = {
@@ -61,7 +62,8 @@ function client(hostUrl: string) {
       get: (id: string) => send(spacesApi.get(id)),
       create: (args: SpacesCreateArgs) => send(spacesApi.create(args)),
       delete: (id: string) => send(spacesApi.delete(id)),
-      update: (name: string, id: string) => send(spacesApi.update(name, id))
+      update: (id: string, args: SpacesUpdateArgs) =>
+        send(spacesApi.update(id, args))
     },
     pcaps: {
       post: (args: PcapsPostArgs) => sendStream(pcapsApi.post(args)),

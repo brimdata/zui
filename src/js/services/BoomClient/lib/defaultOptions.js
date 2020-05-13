@@ -11,7 +11,7 @@ export default (): ClientOptions => ({
   enableIndex: true,
   timeout: 0,
   searchSpan: [new Date(new Date().getTime() - 30 * 60000), new Date()],
-  searchSpace: "default",
+  searchSpaceId: "default",
   searchQueryParams: {},
   adapter: "NodeRequest"
 })

@@ -20,7 +20,7 @@ test("#constructor with no options", () => {
     password: "",
     port: 9867,
     searchQueryParams: {},
-    searchSpace: "default",
+    searchSpaceId: "default",
     searchSpan: [expect.any(Date), expect.any(Date)],
     timeout: 0,
     username: ""

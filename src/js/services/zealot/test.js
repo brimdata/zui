@@ -13,7 +13,7 @@ describe("search api", () => {
 
   test("search defaults", () => {
     client.searchDefaults({
-      space: "corelight",
+      spaceId: "corelight",
       from: "Jan 1, 2019",
       to: "Jan 10, 2019"
     })

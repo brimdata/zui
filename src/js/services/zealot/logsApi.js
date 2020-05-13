@@ -17,7 +17,7 @@ export default {
   post({spaceId, paths, types}: LogsPostArgs) {
     return {
       method: "POST",
-      path: `/space/${encodeURIComponent(space)}/log`,
+      path: `/space/${encodeURIComponent(spaceId)}/log`,
       body: getBody(paths, types)
     }
   }

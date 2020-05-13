@@ -39,7 +39,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
 
   function renderWarning() {
     const clusterID = useSelector(Tab.clusterId)
-    const spaceIds = useSelector(Spaces.names(clusterID))
+    const spaceIds = useSelector(Spaces.ids(clusterID))
     const findingSpaceId = get(finding, ["search", "spaceId"], "")
     const findingSpaceName = get(finding, ["search", "spaceName"], "")
     const tip = `'${findingSpaceName}' space no longer exists`

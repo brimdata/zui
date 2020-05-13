@@ -151,7 +151,7 @@ test("reorder tabs does not throw error if invalid", () => {
 
 test("reset tab", () => {
   let state = store.dispatchAll([
-    Search.setSpace("myspace"),
+    Search.setSpace("myspaceid", "myspace"),
     Tabs.clearActive()
   ])
 

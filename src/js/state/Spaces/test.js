@@ -19,30 +19,48 @@ let detail: SpaceDetailPayload = {
   pcap_support: true
 }
 
-const detail2: SpaceDetailPayload = {
-  id: "defaultId2",
-  name: "defaultName2",
+const testSpace1: Space = {
+  id: "testId1",
+  name: "testName1",
   max_time: {ns: 0, sec: 0},
   min_time: {ns: 0, sec: 0},
-  pcap_support: false
+  pcap_support: false,
+  ingest: {
+    progress: null,
+    warnings: [],
+    snapshot: null
+  }
 }
 
-const testSpaces: Space[] = [{...detail}, {...detail2}]
+const testSpace2: Space = {
+  id: "testId2",
+  name: "testName2",
+  max_time: {ns: 0, sec: 0},
+  min_time: {ns: 0, sec: 0},
+  pcap_support: false,
+  ingest: {
+    progress: null,
+    warnings: [],
+    snapshot: null
+  }
+}
+
+const testSpaces: Space[] = [testSpace1, testSpace2]
 
 test("setting the spaces", () => {
   let state = store.dispatchAll([Spaces.setSpaces("cluster1", testSpaces)])
 
-  expect(Spaces.ids("cluster1")(state)).toEqual(["defaultId", "defaultId2"])
+  expect(Spaces.ids("cluster1")(state)).toEqual(["testId1", "testId2"])
 })
 
 test("space names removing", () => {
   let selector = Spaces.ids("cluster1")
   let state = store.dispatchAll([
     Spaces.setSpaces("cluster1", testSpaces),
-    Spaces.setSpaces("cluster1", [detail])
+    Spaces.setSpaces("cluster1", [testSpace2])
   ])
 
-  expect(selector(state)).toEqual(["defaultId"])
+  expect(selector(state)).toEqual(["testId2"])
 })
 
 test("setting the space detail adds the defaults", () => {
@@ -69,13 +87,16 @@ test("setting the ingest progress throws error if no space yet", () => {
 })
 
 test("setting the ingest progress", () => {
-  let actions = Spaces.actionsFor("cluster1", detail.id)
+  let actions = Spaces.actionsFor("cluster1", testSpace1.id)
   store.dispatchAll([
     Spaces.setSpaces("cluster1", testSpaces),
     actions.setIngestProgress(0.5)
   ])
 
-  let value = Spaces.getIngestProgress("cluster1", detail.id)(store.getState())
+  let value = Spaces.getIngestProgress(
+    "cluster1",
+    testSpace1.id
+  )(store.getState())
 
   expect(value).toEqual(0.5)
 })
@@ -88,6 +109,8 @@ test("getting the spaces with details, others not", () => {
   let spaces = Spaces.getSpaces("cluster1")(state)
 
   expect(spaces).toEqual([
+    {...testSpace1, ingest: {warnings: [], progress: null, snapshot: null}},
+    {...testSpace2, ingest: {warnings: [], progress: null, snapshot: null}},
     {
       name: "defaultName",
       id: "defaultId",
@@ -95,8 +118,7 @@ test("getting the spaces with details, others not", () => {
       min_time: {ns: 0, sec: 1425564900},
       pcap_support: true,
       ingest: {warnings: [], progress: null, snapshot: null}
-    },
-    {...detail2, ingest: {warnings: [], progress: null, snapshot: null}}
+    }
   ])
 })
 
@@ -106,36 +128,36 @@ test("only cares about spaces actions", () => {
 })
 
 test("ingest warnings", () => {
-  let actions = Spaces.actionsFor("cluster1", detail.id)
+  let actions = Spaces.actionsFor("cluster1", testSpace1.id)
   let state = store.dispatchAll([
-    Spaces.setSpaces("cluster1", [{...detail}]),
+    Spaces.setSpaces("cluster1", [testSpace1]),
     actions.appendIngestWarning("Problem 1"),
     actions.appendIngestWarning("Problem 2")
   ])
 
-  expect(Spaces.getIngestWarnings("cluster1", detail.id)(state)).toEqual([
+  expect(Spaces.getIngestWarnings("cluster1", testSpace1.id)(state)).toEqual([
     "Problem 1",
     "Problem 2"
   ])
 })
 
 test("clear warnings", () => {
-  let actions = Spaces.actionsFor("cluster1", detail.id)
+  let actions = Spaces.actionsFor("cluster1", testSpace1.id)
   let state = store.dispatchAll([
-    Spaces.setSpaces("cluster1", [{...detail}]),
+    Spaces.setSpaces("cluster1", [testSpace1]),
     actions.appendIngestWarning("Problem 1"),
     actions.appendIngestWarning("Problem 2"),
     actions.clearIngestWarnings()
   ])
 
-  expect(Spaces.getIngestWarnings("cluster1", detail.id)(state)).toEqual([])
+  expect(Spaces.getIngestWarnings("cluster1", testSpace1.id)(state)).toEqual([])
 })
 
 test("remove space", () => {
-  let actions = Spaces.actionsFor("cluster1", detail.id)
+  let actions = Spaces.actionsFor("cluster1", testSpace1.id)
 
   let state = store.dispatchAll([
-    Spaces.setSpaces("cluster1", [{...detail}]),
+    Spaces.setSpaces("cluster1", [testSpace1]),
     actions.remove()
   ])
 
@@ -143,12 +165,12 @@ test("remove space", () => {
 })
 
 test("setting the spanshot counter", () => {
-  let actions = Spaces.actionsFor("cluster1", detail.id)
+  let actions = Spaces.actionsFor("cluster1", testSpace1.id)
 
   let state = store.dispatchAll([
-    Spaces.setSpaces("cluster1", testSpaces),
+    Spaces.setSpaces("cluster1", [testSpace1]),
     actions.setIngestSnapshot(1)
   ])
 
-  expect(Spaces.getIngestSnapshot("cluster1", detail.id)(state)).toBe(1)
+  expect(Spaces.getIngestSnapshot("cluster1", testSpace1.id)(state)).toBe(1)
 })

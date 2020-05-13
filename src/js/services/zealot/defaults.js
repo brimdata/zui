@@ -6,7 +6,7 @@ export default {
     return {
       from: "now - 30d",
       to: "now",
-      space: "default"
+      spaceId: "default"
     }
   },
   host(hostUrl: string): string {

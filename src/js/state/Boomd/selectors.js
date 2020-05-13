@@ -11,7 +11,7 @@ export default {
     let credentials = Tab.cluster(state)
 
     let opts = {
-      searchSpace: Tab.getSpaceName(state),
+      searchSpaceId: Tab.getSpaceId(state),
       searchSpan: Tab.getSpanAsDates(state),
       adapter: "BrowserFetch",
       enableIndex: Boomd.usingIndex(state),

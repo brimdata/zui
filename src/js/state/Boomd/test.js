@@ -48,7 +48,7 @@ test("#getBoomOptions", () => {
       host: "boom.com",
       port: 123,
       password: "puppy",
-      searchSpace: "spaceName",
+      searchSpaceId: "spaceId",
       searchSpan: [
         new Date("1970-01-01T00:00:00.000Z"),
         new Date("1970-01-01T00:00:00.001Z")

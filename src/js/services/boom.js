@@ -75,10 +75,10 @@ export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
     let [from, to] = Tab.getSpan(getState())
     let searchSpan = [brim.time(from).toDate(), brim.time(to).toDate()]
-    let searchSpace = Tab.getSpaceName(getState())
+    let searchSpaceId = Tab.getSpaceId(getState())
     boom.setOptions(Boomd.getOptions(getState()))
     try {
-      return boom.inspectSearch(zql, {searchSpan, searchSpace})
+      return boom.inspectSearch(zql, {searchSpan, searchSpaceId})
     } catch {
       return null
     }

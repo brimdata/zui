@@ -31,7 +31,7 @@ export default function actionsFor(clusterId: string, spaceId: string) {
     create: (): SPACES_DETAIL => ({
       type: "SPACES_DETAIL",
       clusterId,
-      space: {spaceId}
+      space: {id: spaceId}
     })
   }
 }
