@@ -12,11 +12,12 @@ import lib from "../lib"
 let mockClient = {
   spaces: {
     delete: () => Promise.resolve(),
-    create: () => Promise.resolve({name: "dataSpace"}),
-    list: () => Promise.resolve(["dataSpace"]),
+    create: () => Promise.resolve({name: "sample.pcap.brim", id: "spaceId"}),
+    list: () => Promise.resolve(["sample.pcap.brim"]),
     get: () =>
       Promise.resolve({
-        name: "dataSpace",
+        name: "sample.pcap.brim",
+        id: "spaceId",
         min_time: {ns: 0, sec: 0},
         max_time: {ns: 1, sec: 1},
         pcap_support: true
@@ -51,9 +52,10 @@ test("opening a pcap", async () => {
   )
 
   let state = store.getState()
-  expect(Tab.getSpaceName(state)).toEqual("dataSpace")
+  expect(Tab.getSpaceName(state)).toEqual("sample.pcap.brim")
   expect(Tab.space(state)).toEqual({
-    name: "dataSpace",
+    name: "sample.pcap.brim",
+    id: "spaceId",
     min_time: {ns: 0, sec: 0},
     max_time: {ns: 1, sec: 1},
     pcap_support: true,
@@ -117,7 +119,7 @@ test("a json file with a custom types config", async () => {
 
   expect(mockClient.logs.post).toHaveBeenCalledWith({
     paths: [itestFile("sample.ndjson")],
-    space: "dataSpace",
+    space: "spaceId",
     types: contents
   })
 })

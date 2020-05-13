@@ -78,6 +78,7 @@ function defaults(id, name, data: $Shape<Space> = {}): Space {
 }
 
 function getSpace(state, id) {
+  console.log("spaces state is: ", state)
   if (state[id]) return state[id]
   else throw new Error("No space exists with id: " + id)
 }

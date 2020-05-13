@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "npm-run-all -s clean build:* -p electron watch:*",
-    "test": "jest",
+    "test": "jest --verbose",
     "itest:zealot": "jest --config=src/js/services/zealot/itest/config.json --runInBand",
     "itest": "jest --config=itest/config.json --runInBand --verbose",
     "electron": "electron .",
@@ -45,6 +45,7 @@
     "roots": [
       "./src/js"
     ],
+    "testPathIgnorePatterns": ["./src/js/services/zealot"],
     "collectCoverageFrom": [
       "**/*.js",
       "!**/flow-typed/**",
