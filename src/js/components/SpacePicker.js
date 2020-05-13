@@ -18,7 +18,7 @@ export default function SpacePicker() {
   let dispatch = useDispatch()
   let template = spaces.map(({id, name}) => ({
     label: name,
-    click: () => onSpaceChange(id)
+    click: () => onSpaceChange(id, name)
   }))
   if (template.length === 0) {
     template = [{label: "No spaces in this cluster", disabled: true}]
@@ -34,9 +34,9 @@ export default function SpacePicker() {
     dispatch(refreshSpaceNames())
   }
 
-  function onSpaceChange(val) {
-    setSpace(val)
-    setTimeout(() => dispatch(initSpace(val)))
+  function onSpaceChange(id, name) {
+    setSpace(name)
+    setTimeout(() => dispatch(initSpace(id)))
   }
 
   return (
