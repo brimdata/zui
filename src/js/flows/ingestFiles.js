@@ -115,7 +115,7 @@ const postFiles = (client, jsonTypesPath) => ({
       let types = isEmpty(jsonTypesPath)
         ? "default"
         : await lib.file(jsonTypesPath).read()
-      stream = client.logs.post({space: spaceId, paths, types})
+      stream = client.logs.post({spaceId, paths, types})
     }
     return {...params, stream}
   }
