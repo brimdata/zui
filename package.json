@@ -45,7 +45,9 @@
     "roots": [
       "./src/js"
     ],
-    "testPathIgnorePatterns": ["./src/js/services/zealot"],
+    "testPathIgnorePatterns": [
+      "./src/js/services/zealot"
+    ],
     "collectCoverageFrom": [
       "**/*.js",
       "!**/flow-typed/**",
