@@ -50,31 +50,31 @@ export type SPACES_DETAIL = {
 export type SPACES_INGEST_PROGRESS = {
   type: "SPACES_INGEST_PROGRESS",
   clusterId: string,
-  spaceID: string,
+  spaceId: string,
   value: number | null
 }
 
 export type SPACES_INGEST_WARNING_APPEND = {
   type: "SPACES_INGEST_WARNING_APPEND",
   warning: string,
-  spaceID: string,
+  spaceId: string,
   clusterId: string
 }
 
 export type SPACES_INGEST_WARNING_CLEAR = {
   type: "SPACES_INGEST_WARNING_CLEAR",
-  spaceID: string,
+  spaceId: string,
   clusterId: string
 }
 
 export type SPACES_REMOVE = {
   type: "SPACES_REMOVE",
   clusterId: string,
-  spaceID: string
+  spaceId: string
 }
 export type SPACES_INGEST_SNAPSHOT = {
   type: "SPACES_INGEST_SNAPSHOT",
   clusterId: string,
-  spaceID: string,
+  spaceId: string,
   count: number
 }

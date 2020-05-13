@@ -8,7 +8,7 @@ export type SearchState = {
   spanArgs: SpanArgs,
   spanFocus: ?Span,
   spaceName: string,
-  spaceID: string,
+  spaceId: string,
   clusterId: string,
   ts: number
 }
@@ -18,7 +18,7 @@ export type SearchArgs = {
   chartProgram: string,
   span: DateTuple,
   spaceName: string,
-  spaceID: string,
+  spaceId: string,
   type: SearchType
 }
 export type SearchType = "zoom" | "analytics" | "events"
@@ -40,7 +40,7 @@ export type SEARCH_CLUSTER_SET = {
 }
 export type SEARCH_SPACE_SET = {
   type: "SEARCH_SPACE_SET",
-  spaceID: string,
+  spaceId: string,
   spaceName: string,
   tabId?: string
 }

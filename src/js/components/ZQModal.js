@@ -37,7 +37,7 @@ export default function ZQModal() {
 
 function ZQModalContents() {
   let program = useSelector(SearchBar.getSearchProgram)
-  const zng = join(useSelector(Tab.spaceName), "all.zng")
+  const zng = join(useSelector(Tab.getSpaceName), "all.zng")
 
   const cmd = ["zq", "-f table", `"${program}"`, zng].join(" ")
 

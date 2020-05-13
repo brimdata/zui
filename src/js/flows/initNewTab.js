@@ -10,10 +10,10 @@ import refreshSpaceNames from "./refreshSpaceNames"
 export default (): Thunk => (dispatch, getState) => {
   let state = getState()
   let space = Tab.space(state)
-  let spaceID = Tab.spaceID(state)
-  let spaceName = Tab.spaceName(state)
+  let spaceId = Tab.getSpaceId(state)
+  let spaceName = Tab.getSpaceName(state)
   let id = Tab.clusterId(state)
-  let spaceIsDeleted = spaceID && !space
+  let spaceIsDeleted = spaceId && !space
 
   if (spaceIsDeleted) {
     dispatch(Tabs.clearActive())

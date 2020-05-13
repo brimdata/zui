@@ -9,9 +9,9 @@ export default {
       method: "GET"
     }
   },
-  get(spaceID: string) {
+  get(spaceId: string) {
     return {
-      path: `/space/${encodeURIComponent(spaceID)}`,
+      path: `/space/${encodeURIComponent(spaceId)}`,
       method: "GET"
     }
   },
@@ -22,15 +22,15 @@ export default {
       body: JSON.stringify(args)
     }
   },
-  delete(spaceID: string) {
+  delete(spaceId: string) {
     return {
-      path: `/space/${encodeURIComponent(spaceID)}`,
+      path: `/space/${encodeURIComponent(spaceId)}`,
       method: "DELETE"
     }
   },
-  update(spaceID: string, args: SpacesUpdateArgs) {
+  update(spaceId: string, args: SpacesUpdateArgs) {
     return {
-      path: `/space/${encodeURIComponent(spaceID)}`,
+      path: `/space/${encodeURIComponent(spaceId)}`,
       method: "PUT",
       body: JSON.stringify(args)
     }

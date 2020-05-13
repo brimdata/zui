@@ -26,8 +26,8 @@ export const initSpace = (desiredID: string, clientDep?: *): Thunk => (
     .list()
     .then((val) => (val === null ? [] : val))
     .then(checkSpacesExist)
-    .then((spaces) => getCurrentSpaceID(spaces, desiredID))
-    .then((spaceID) => client.spaces.get(spaceID))
+    .then((spaces) => getCurrentSpaceId(spaces, desiredID))
+    .then((spaceId) => client.spaces.get(spaceId))
     .then((data) => setSpace(dispatch, data, clusterId))
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
@@ -50,7 +50,7 @@ function checkSpacesExist(spaces) {
   else return spaces
 }
 
-function getCurrentSpaceID(spaces, desiredID) {
+function getCurrentSpaceId(spaces, desiredID) {
   const currentSpace = find(spaces, {id: desiredID}) || spaces[0]
   return currentSpace.id
 }

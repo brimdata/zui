@@ -89,7 +89,7 @@ export type SearchRecord = {
   program: string,
   pins: string[],
   spanArgs: SpanArgs,
-  spaceID: string,
+  spaceId: string,
   spaceName: string
 }
 

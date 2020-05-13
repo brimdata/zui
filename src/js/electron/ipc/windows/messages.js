@@ -14,7 +14,7 @@ import type {SpanArgs} from "../../../state/Search/types"
 export type NewTabSearchParams = {
   program: string,
   span: SpanArgs,
-  spaceID: string,
+  spaceId: string,
   spaceName: string
 }
 

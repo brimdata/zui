@@ -157,5 +157,5 @@ test("reset tab", () => {
 
   let tab = Tabs.getActiveTab(state)
   expect(tab.id).toEqual(Tabs.getActive(state))
-  expect(Tab.spaceName(state)).toEqual("")
+  expect(Tab.getSpaceName(state)).toEqual("")
 })

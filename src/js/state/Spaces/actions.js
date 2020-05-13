@@ -27,40 +27,40 @@ export default {
     space
   }),
 
-  remove: (clusterId: string, spaceID: string): SPACES_REMOVE => ({
+  remove: (clusterId: string, spaceId: string): SPACES_REMOVE => ({
     type: "SPACES_REMOVE",
     clusterId,
-    spaceID
+    spaceId
   }),
 
   setIngestProgress: (
     clusterId: string,
-    spaceID: string,
+    spaceId: string,
     value: number | null
   ): SPACES_INGEST_PROGRESS => ({
     type: "SPACES_INGEST_PROGRESS",
     clusterId,
-    spaceID,
+    spaceId,
     value
   }),
 
   appendIngestWarning: (
     clusterId: string,
-    spaceID: string,
+    spaceId: string,
     warning: string
   ): SPACES_INGEST_WARNING_APPEND => ({
     type: "SPACES_INGEST_WARNING_APPEND",
     clusterId,
-    spaceID,
+    spaceId,
     warning
   }),
 
   clearIngestWarnings: (
     clusterId: string,
-    spaceID: string
+    spaceId: string
   ): SPACES_INGEST_WARNING_CLEAR => ({
     type: "SPACES_INGEST_WARNING_CLEAR",
     clusterId,
-    spaceID
+    spaceId
   })
 }

@@ -11,14 +11,14 @@ import TextContent from "./TextContent"
 
 export default function IngestWarningsModal() {
   let id = useSelector(Tab.clusterId)
-  let spaceID = useSelector(Tab.spaceID)
-  let warnings = useSelector(Spaces.getIngestWarnings(id, spaceID))
+  let spaceId = useSelector(Tab.getSpaceId)
+  let warnings = useSelector(Spaces.getIngestWarnings(id, spaceId))
 
   let buttons = [{label: "Done", click: (done) => done()}]
   if (warnings.length) {
     buttons.unshift({
       label: "Clear Warnings",
-      click: () => globalDispatch(Spaces.clearIngestWarnings(id, spaceID))
+      click: () => globalDispatch(Spaces.clearIngestWarnings(id, spaceId))
     })
   }
 

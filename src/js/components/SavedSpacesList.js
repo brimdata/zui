@@ -24,7 +24,7 @@ export default function SavedSpacesList({spaces}: Props) {
     dispatch(initSpace(space))
   }
 
-  const onDelete = (spaceID, spaceName) => (e) => {
+  const onDelete = (spaceId, spaceName) => (e) => {
     e.preventDefault()
     remote.dialog
       .showMessageBox({
@@ -34,7 +34,7 @@ export default function SavedSpacesList({spaces}: Props) {
         buttons: ["OK", "Cancel"]
       })
       .then(({response}) => {
-        if (response === 0) dispatch(deleteSpace(spaceID))
+        if (response === 0) dispatch(deleteSpace(spaceId))
       })
   }
 

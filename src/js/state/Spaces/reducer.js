@@ -25,23 +25,23 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
       break
 
     case "SPACES_INGEST_PROGRESS":
-      getSpace(draft, action.spaceID).ingest.progress = action.value
+      getSpace(draft, action.spaceId).ingest.progress = action.value
       break
 
     case "SPACES_INGEST_WARNING_APPEND":
-      getSpace(draft, action.spaceID).ingest.warnings.push(action.warning)
+      getSpace(draft, action.spaceId).ingest.warnings.push(action.warning)
       break
 
     case "SPACES_INGEST_WARNING_CLEAR":
-      getSpace(draft, action.spaceID).ingest.warnings = []
+      getSpace(draft, action.spaceId).ingest.warnings = []
       break
 
     case "SPACES_INGEST_SNAPSHOT":
-      getSpace(draft, action.spaceID).ingest.snapshot = action.count
+      getSpace(draft, action.spaceId).ingest.snapshot = action.count
       break
 
     case "SPACES_REMOVE":
-      delete draft[action.spaceID]
+      delete draft[action.spaceId]
       break
   }
 })

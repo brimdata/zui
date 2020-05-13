@@ -16,7 +16,7 @@ export default (log: Log): Thunk => (dispatch, getState) => {
 
   let state = getState()
   let span = Tab.getSpanAsDates(state)
-  let spaceID = Tab.spaceID(state)
+  let spaceId = Tab.getSpaceId(state)
   let program = uidCorrelation(uid)
   let results = []
 
@@ -29,7 +29,7 @@ export default (log: Log): Thunk => (dispatch, getState) => {
   return dispatch(
     executeSearch(
       brim
-        .search(program, span, spaceID)
+        .search(program, span, spaceId)
         .id("UidTimeline")
         .status(onStatus)
         .chan(0, onResults)

@@ -36,7 +36,7 @@ export default class SearchRequest {
   }
 
   body() {
-    const {searchSpan, searchSpaceID: space} = this.options
+    const {searchSpan, searchSpaceId: space} = this.options
     const [from, to] = searchSpan
     const proc = this.ast()
     return {

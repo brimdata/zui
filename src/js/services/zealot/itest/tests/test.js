@@ -6,9 +6,9 @@ import {ztestDir} from "../env"
 describe("zealot client spaces tests", () => {
   const client = zealot.client("localhost:9867")
   let spaceName = "newSpace"
-  let spaceID
+  let spaceId
 
-  const spacePath = (spaceID) => path.join(path.resolve(ztestDir()), spaceID)
+  const spacePath = (spaceId) => path.join(path.resolve(ztestDir()), spaceId)
 
   const emptySpace = {
     pcap_path: "",
@@ -21,7 +21,7 @@ describe("zealot client spaces tests", () => {
     const resp = await client.spaces.create({name: spaceName})
     expect(resp.name).toBe(spaceName)
     expect(resp.id).toBeDefined()
-    spaceID = resp.id
+    spaceId = resp.id
   })
 
   test("list spaces", async () => {
@@ -30,32 +30,32 @@ describe("zealot client spaces tests", () => {
     expect(resp).toEqual([
       {
         ...emptySpace,
-        data_path: spacePath(spaceID),
+        data_path: spacePath(spaceId),
         name: spaceName,
-        id: spaceID
+        id: spaceId
       }
     ])
   })
 
   test("update space", async () => {
     const newName = "updated space name"
-    const resp = await client.spaces.update(spaceID, {name: newName})
+    const resp = await client.spaces.update(spaceId, {name: newName})
     expect(resp).toEqual("")
     spaceName = newName
   })
 
   test("get space by id", async () => {
-    const resp = await client.spaces.get(spaceID)
+    const resp = await client.spaces.get(spaceId)
     expect(resp).toEqual({
       ...emptySpace,
-      data_path: spacePath(spaceID),
+      data_path: spacePath(spaceId),
       name: spaceName,
-      id: spaceID
+      id: spaceId
     })
   })
 
   test("delete space", async () => {
-    const resp = await client.spaces.delete(spaceID)
+    const resp = await client.spaces.delete(spaceId)
     expect(resp).toBe("")
   })
 })

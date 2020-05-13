@@ -15,8 +15,8 @@ export default {
       program: SearchBar.getSearchBar(state).previous,
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
-      spaceName: Tab.spaceName(state),
-      spaceID: Tab.spaceID(state)
+      spaceName: Tab.getSpaceName(state),
+      spaceId: Tab.getSpaceId(state)
     }
   },
 
@@ -25,8 +25,8 @@ export default {
       program: SearchBar.getSearchBar(state).current,
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
-      spaceName: Tab.spaceName(state),
-      spaceID: Tab.spaceID(state)
+      spaceName: Tab.getSpaceName(state),
+      spaceId: Tab.getSpaceId(state)
     }
   },
 
@@ -34,8 +34,8 @@ export default {
     let program = SearchBar.getSearchProgram(state)
     let span = Tab.getSpanAsDates(state)
     let spanFocus = Tab.getSpanFocusAsDates(state)
-    let spaceID = Tab.spaceID(state)
-    let spaceName = Tab.spaceName(state)
+    let spaceId = Tab.getSpaceId(state)
+    let spaceName = Tab.getSpaceName(state)
     let type: SearchType = getArgsType(program, spanFocus)
     let perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE
 
@@ -43,7 +43,7 @@ export default {
       tableProgram: addHeadProc(program, perPage),
       chartProgram: addEveryCountProc(program, span),
       span: spanFocus || span,
-      spaceID,
+      spaceId,
       spaceName,
       type
     }

@@ -9,8 +9,8 @@ export default {
   ids: (clusterId: string) => (state: State) => {
     return keys<string>(getCluster(state, clusterId))
   },
-  get: (clusterId: string, spaceID: string) => (state: State) => {
-    return getCluster(state, clusterId)[spaceID]
+  get: (clusterId: string, spaceId: string) => (state: State) => {
+    return getCluster(state, clusterId)[spaceId]
   },
   raw: (state: State) => state.spaces,
   getSpaces: (clusterId: string) => (state: State): Space[] => {
@@ -19,21 +19,21 @@ export default {
       return {...clus[key]}
     })
   },
-  getIngestProgress: (clusterId: string, spaceID: string) => (state: State) => {
+  getIngestProgress: (clusterId: string, spaceId: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
-    let space = cluster[spaceID]
+    let space = cluster[spaceId]
     if (space) return space.ingest.progress
     else return null
   },
-  getIngestWarnings: (clusterId: string, spaceID: string) => (state: State) => {
+  getIngestWarnings: (clusterId: string, spaceId: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
-    let space = cluster[spaceID]
+    let space = cluster[spaceId]
     if (space) return space.ingest.warnings
     else return []
   },
-  getIngestSnapshot: (clusterId: string, spaceID: string) => (state: State) => {
+  getIngestSnapshot: (clusterId: string, spaceId: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
-    let space = cluster[spaceID]
+    let space = cluster[spaceId]
     if (space) return space.ingest.snapshot
   }
 }

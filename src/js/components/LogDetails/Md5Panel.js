@@ -28,7 +28,7 @@ export const Md5Panel = ({
 }) => {
   let logMd5 = log.getString("md5")
   let dispatch = useDispatch()
-  let spaceID = useSelector(Tab.spaceID)
+  let spaceId = useSelector(Tab.getSpaceId)
   let span = useSelector(Tab.getSpanAsDates)
   let [tx, setTx] = useState([])
   let [rx, setRx] = useState([])
@@ -48,7 +48,7 @@ export const Md5Panel = ({
 
   useEffect(() => {
     let s = brim
-      .search(program, span, spaceID)
+      .search(program, span, spaceId)
       .id("Md5")
       .status(setStatus)
       .chan(0, (records) => setFilenames(filenames.concat(toLogs(records))))
@@ -71,7 +71,7 @@ export const Md5Panel = ({
         rightClick={contextMenu(
           md5Correlation(logMd5),
           getColumns(md5),
-          spaceID
+          spaceId
         )}
         name="md5 count"
         status={status}
@@ -82,7 +82,7 @@ export const Md5Panel = ({
         rightClick={contextMenu(
           filenameCorrelation(logMd5),
           getColumns(filenames),
-          spaceID
+          spaceId
         )}
         name="filename, mime_type count"
         status={status}
@@ -94,7 +94,7 @@ export const Md5Panel = ({
           rightClick={contextMenu(
             txHostsCorrelation(logMd5),
             getColumns(tx),
-            spaceID
+            spaceId
           )}
           name="tx_hosts count"
           status={status}
@@ -105,7 +105,7 @@ export const Md5Panel = ({
           rightClick={contextMenu(
             rxHostsCorrelation(logMd5),
             getColumns(rx),
-            spaceID
+            spaceId
           )}
           name="rx_hosts count"
           status={status}

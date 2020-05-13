@@ -15,7 +15,7 @@ export type RequiredClientOptions = {
   enableIndex: boolean,
   timeout: number,
   searchSpan: Span,
-  searchSpaceID: string,
+  searchSpaceId: string,
   searchQueryParams: Object,
   adapter: "NodeRequest" | "BrowserFetch"
 }

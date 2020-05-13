@@ -17,7 +17,7 @@ export type TimeArg = string | Date
 export type ZealotSearchArgs = {
   from: TimeArg,
   to: TimeArg,
-  spaceID: string
+  spaceId: string
 }
 
 function client(hostUrl: string) {

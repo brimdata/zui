@@ -51,7 +51,7 @@ test("opening a pcap", async () => {
   )
 
   let state = store.getState()
-  expect(Tab.spaceName(state)).toEqual("dataSpace")
+  expect(Tab.getSpaceName(state)).toEqual("dataSpace")
   expect(Tab.space(state)).toEqual({
     name: "dataSpace",
     min_time: {ns: 0, sec: 0},
@@ -80,7 +80,7 @@ test("when there is an error", async () => {
   let state = store.getState()
   let cluster = Tab.clusterId(state)
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
-  expect(Tab.spaceName(state)).toEqual("")
+  expect(Tab.getSpaceName(state)).toEqual("")
 })
 
 test("a zeek ingest error", async () => {
@@ -97,7 +97,7 @@ test("a zeek ingest error", async () => {
   ).rejects.toEqual(expect.any(Error))
 
   let state = store.getState()
-  expect(Tab.spaceName(state)).toEqual("")
+  expect(Tab.getSpaceName(state)).toEqual("")
 })
 
 test("a json file with a custom types config", async () => {

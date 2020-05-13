@@ -13,7 +13,7 @@ import usePopupMenu from "./hooks/usePopupMenu"
 export default function SpacePicker() {
   let clusterId = useSelector(Tab.clusterId)
   let spaces = useSelector(Spaces.getSpaces(clusterId))
-  let currentSpace = useSelector(Tab.spaceName) || "Choose a space"
+  let currentSpace = useSelector(Tab.getSpaceName) || "Choose a space"
   let [space, setSpace] = useState(currentSpace)
   let dispatch = useDispatch()
   let template = spaces.map(({id, name}) => ({

@@ -2,6 +2,7 @@
 import type {SpaceDetailPayload} from "../../services/zealot/types"
 import Spaces from "./"
 import initTestStore from "../../test/initTestStore"
+import type {Space} from "./types"
 
 let store
 beforeEach(() => {
@@ -9,7 +10,8 @@ beforeEach(() => {
 })
 
 let detail: SpaceDetailPayload = {
-  name: "default",
+  id: "defaultID",
+  name: "defaultName",
   span: {
     ts: {sec: 1425564900, ns: 0},
     dur: {sec: 3352893, ns: 750000000}
@@ -17,22 +19,22 @@ let detail: SpaceDetailPayload = {
   pcap_support: true
 }
 
-test("setting the names", () => {
-  let state = store.dispatchAll([
-    Spaces.setNames("cluster1", ["default", "hq_integration"])
-  ])
+const spaces: Space[] = [{...detail}, {...detail, id: "defaultID2"}]
 
-  expect(Spaces.names("cluster1")(state)).toEqual(["default", "hq_integration"])
+test("setting the spaces", () => {
+  let state = store.dispatchAll([Spaces.setSpaces("cluster1", spaces)])
+
+  expect(Spaces.ids("cluster1")(state)).toEqual(["defaultID", "defaultID2"])
 })
 
 test("space names removing", () => {
-  let selector = Spaces.names("cluster1")
+  let selector = Spaces.ids("cluster1")
   let state = store.dispatchAll([
-    Spaces.setNames("cluster1", ["default", "hq_integration"]),
-    Spaces.setNames("cluster1", ["default"])
+    Spaces.setSpaces("cluster1", spaces),
+    Spaces.setSpaces("cluster1", [detail])
   ])
 
-  expect(selector(state)).toEqual(["default"])
+  expect(selector(state)).toEqual(["defaultID"])
 })
 
 test("setting the space detail adds the defaults", () => {

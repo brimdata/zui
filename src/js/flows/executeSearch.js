@@ -83,7 +83,7 @@ export default function executeSearch(search: $Search): Thunk {
     let boomRequest = boom
       .search(search.program, {
         searchSpan: search.span,
-        searchSpaceID: search.spaceID
+        searchSpaceId: search.spaceId
       })
       .onAbort(aborted)
       .error(errored)

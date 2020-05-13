@@ -43,7 +43,7 @@ const space = createSelector<State, void, ?Space, TabState, SpacesState>(
   Spaces.raw,
   (tab, spaces) => {
     let list = spaces[tab.search.clusterId]
-    if (list) return list[tab.search.spaceID]
+    if (list) return list[tab.search.spaceId]
     else return null
   }
 )
@@ -96,8 +96,8 @@ export default {
   cluster,
   clusterUrl,
   getZealot,
-  spaceName: activeTabSelect((tab) => tab.search.spaceName),
-  spaceID: activeTabSelect((tab) => tab.search.spaceID),
+  getSpaceName: activeTabSelect((tab) => tab.search.spaceName),
+  getSpaceId: activeTabSelect((tab) => tab.search.spaceId),
   space,
   currentEntry: activeTabSelect(History.current),
   canGoBack: activeTabSelect(History.canGoBack),

@@ -81,11 +81,11 @@ const createSpace = (client, dispatch, clusterId) => ({
       })
     )
 
-    return {...params, spaceID: id}
+    return {...params, spaceId: id}
   },
-  async undo({spaceID}) {
-    await client.spaces.delete(spaceID)
-    dispatch(Spaces.remove(clusterId, spaceID))
+  async undo({spaceId}) {
+    await client.spaces.delete(spaceId)
+    dispatch(Spaces.remove(clusterId, spaceId))
   }
 })
 
@@ -107,23 +107,23 @@ const unregisterHandler = (dispatch, id) => ({
 
 const postFiles = (client, jsonTypesPath) => ({
   async do(params) {
-    let {spaceID, endpoint, paths} = params
+    let {spaceId, endpoint, paths} = params
     let stream
     if (endpoint === "pcap") {
-      stream = client.pcaps.post({spaceID, path: paths[0]})
+      stream = client.pcaps.post({spaceId, path: paths[0]})
     } else {
       let types = isEmpty(jsonTypesPath)
         ? "default"
         : await lib.file(jsonTypesPath).read()
-      stream = client.logs.post({space: spaceID, paths, types})
+      stream = client.logs.post({space: spaceId, paths, types})
     }
     return {...params, stream}
   }
 })
 
 const setSpace = (dispatch, tabId) => ({
-  do({spaceID, name}) {
-    dispatch(Search.setSpace(spaceID, name, tabId))
+  do({spaceId, name}) {
+    dispatch(Search.setSpace(spaceId, name, tabId))
   },
   undo() {
     dispatch(Search.setSpace("", "", tabId))
@@ -131,11 +131,11 @@ const setSpace = (dispatch, tabId) => ({
 })
 const trackProgress = (client, dispatch, clusterId) => {
   return {
-    async do({spaceID, stream, endpoint}) {
-      let space = Spaces.actionsFor(clusterId, spaceID)
+    async do({spaceId, stream, endpoint}) {
+      let space = Spaces.actionsFor(clusterId, spaceId)
 
       async function updateSpaceDetails() {
-        let details = await client.spaces.get(spaceID)
+        let details = await client.spaces.get(spaceId)
         dispatch(Spaces.setDetail(clusterId, details))
       }
 
