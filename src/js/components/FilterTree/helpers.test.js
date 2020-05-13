@@ -9,7 +9,8 @@ function search(pins, program) {
     search: {
       pins,
       program,
-      space: "default",
+      spaceName: "default",
+      spaceId: "defaultId",
       spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpan()
     }
   }

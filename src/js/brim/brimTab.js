@@ -7,7 +7,7 @@ export default function(tab: TabState) {
   return {
     title() {
       return lib
-        .compact([tab.search.space || "New Tab", tab.searchBar.previous])
+        .compact([tab.search.spaceName || "New Tab", tab.searchBar.previous])
         .join(": ")
     }
   }

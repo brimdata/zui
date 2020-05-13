@@ -84,7 +84,8 @@ describe("selectors", () => {
 
     expect(Search.getArgs(state)).toEqual({
       chartProgram: "* | every 1sec count() by _path",
-      space: "",
+      spaceId: "",
+      spaceName: "",
       span: [new Date(0), new Date(1000)],
       tableProgram: "* | head 500",
       type: "events"

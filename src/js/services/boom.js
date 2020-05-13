@@ -11,12 +11,16 @@ import Tab from "../state/Tab"
 import brim from "../brim"
 import electronIsDev from "../electron/isDev"
 
-export function fetchSearch(program: string, span: Span, space: string): Thunk {
+export function fetchSearch(
+  program: string,
+  span: Span,
+  spaceId: string
+): Thunk {
   return (dispatch, getState, boom) => {
     dispatch(Notice.clearSearchError())
     return boom
       .setOptions(Boomd.getOptions(getState()))
-      .search(program, {searchSpan: span, searchSpace: space})
+      .search(program, {searchSpan: span, searchSpaceId: spaceId})
       .error((e) => handleError(e, dispatch))
   }
 }
@@ -71,10 +75,10 @@ export function inspectSearch(zql: string): Thunk {
   return function(_, getState, boom) {
     let [from, to] = Tab.getSpan(getState())
     let searchSpan = [brim.time(from).toDate(), brim.time(to).toDate()]
-    let searchSpace = Tab.spaceName(getState())
+    let searchSpaceId = Tab.getSpaceId(getState())
     boom.setOptions(Boomd.getOptions(getState()))
     try {
-      return boom.inspectSearch(zql, {searchSpan, searchSpace})
+      return boom.inspectSearch(zql, {searchSpan, searchSpaceId})
     } catch {
       return null
     }

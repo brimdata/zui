@@ -12,13 +12,13 @@ import usePopupMenu from "./hooks/usePopupMenu"
 
 export default function SpacePicker() {
   let clusterId = useSelector(Tab.clusterId)
-  let spaces = useSelector(Spaces.names(clusterId))
-  let currentSpace = useSelector(Tab.spaceName) || "Choose a space"
+  let spaces = useSelector(Spaces.getSpaces(clusterId))
+  let currentSpace = useSelector(Tab.getSpaceName) || "Choose a space"
   let [space, setSpace] = useState(currentSpace)
   let dispatch = useDispatch()
-  let template = spaces.map((space) => ({
-    label: space,
-    click: () => onSpaceChange(space)
+  let template = spaces.map(({id, name}) => ({
+    label: name,
+    click: () => onSpaceChange(id, name)
   }))
   if (template.length === 0) {
     template = [{label: "No spaces in this cluster", disabled: true}]
@@ -34,9 +34,9 @@ export default function SpacePicker() {
     dispatch(refreshSpaceNames())
   }
 
-  function onSpaceChange(val) {
-    setSpace(val)
-    setTimeout(() => dispatch(initSpace(val)))
+  function onSpaceChange(id, name) {
+    setSpace(name)
+    setTimeout(() => dispatch(initSpace(id)))
   }
 
   return (

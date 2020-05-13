@@ -12,11 +12,11 @@ import lib from "../lib"
 let mockClient = {
   spaces: {
     delete: () => Promise.resolve(),
-    create: () => Promise.resolve({name: "dataSpace"}),
-    list: () => Promise.resolve(["dataSpace"]),
+    create: () => Promise.resolve({name: "sample.pcap.brim", id: "spaceId"}),
     get: () =>
       Promise.resolve({
-        name: "dataSpace",
+        name: "sample.pcap.brim",
+        id: "spaceId",
         min_time: {ns: 0, sec: 0},
         max_time: {ns: 1, sec: 1},
         pcap_support: true
@@ -51,9 +51,10 @@ test("opening a pcap", async () => {
   )
 
   let state = store.getState()
-  expect(Tab.spaceName(state)).toEqual("dataSpace")
+  expect(Tab.getSpaceName(state)).toEqual("sample.pcap.brim")
   expect(Tab.space(state)).toEqual({
-    name: "dataSpace",
+    name: "sample.pcap.brim",
+    id: "spaceId",
     min_time: {ns: 0, sec: 0},
     max_time: {ns: 1, sec: 1},
     pcap_support: true,
@@ -80,7 +81,7 @@ test("when there is an error", async () => {
   let state = store.getState()
   let cluster = Tab.clusterId(state)
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
-  expect(Tab.spaceName(state)).toEqual("")
+  expect(Tab.getSpaceName(state)).toEqual("")
 })
 
 test("a zeek ingest error", async () => {
@@ -97,7 +98,7 @@ test("a zeek ingest error", async () => {
   ).rejects.toEqual(expect.any(Error))
 
   let state = store.getState()
-  expect(Tab.spaceName(state)).toEqual("")
+  expect(Tab.getSpaceName(state)).toEqual("")
 })
 
 test("a json file with a custom types config", async () => {
@@ -117,7 +118,7 @@ test("a json file with a custom types config", async () => {
 
   expect(mockClient.logs.post).toHaveBeenCalledWith({
     paths: [itestFile("sample.ndjson")],
-    space: "dataSpace",
+    spaceId: "spaceId",
     types: contents
   })
 })

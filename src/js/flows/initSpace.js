@@ -13,8 +13,9 @@ import Viewer from "../state/Viewer"
 import brim from "../brim"
 import submitSearch from "./submitSearch"
 import {globalDispatch} from "../state/GlobalContext"
+import find from "lodash/find"
 
-export const initSpace = (desired: string, clientDep?: *): Thunk => (
+export const initSpace = (desiredID: string, clientDep?: *): Thunk => (
   dispatch,
   getState
 ) => {
@@ -25,8 +26,8 @@ export const initSpace = (desired: string, clientDep?: *): Thunk => (
     .list()
     .then((val) => (val === null ? [] : val))
     .then(checkSpacesExist)
-    .then((spaces) => getCurrentSpaceName(spaces, desired))
-    .then((name) => client.spaces.get(name))
+    .then((spaces) => getCurrentSpaceId(spaces, desiredID))
+    .then((spaceId) => client.spaces.get(spaceId))
     .then((data) => setSpace(dispatch, data, clusterId))
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
@@ -49,13 +50,14 @@ function checkSpacesExist(spaces) {
   else return spaces
 }
 
-function getCurrentSpaceName(spaces, desired) {
-  return spaces.includes(desired) ? desired : spaces[0]
+function getCurrentSpaceId(spaces, desiredID) {
+  const currentSpace = find(spaces, {id: desiredID}) || spaces[0]
+  return currentSpace.id
 }
 
 function setSpace(dispatch, data, clusterId) {
   globalDispatch(Spaces.setDetail(clusterId, data))
-  dispatch(Search.setSpace(data.name))
+  dispatch(Search.setSpace(data.id, data.name))
   data = brim.interop.spacePayloadToSpace(data)
   return data
 }

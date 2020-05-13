@@ -151,11 +151,11 @@ test("reorder tabs does not throw error if invalid", () => {
 
 test("reset tab", () => {
   let state = store.dispatchAll([
-    Search.setSpace("myspace"),
+    Search.setSpace("myspaceid", "myspace"),
     Tabs.clearActive()
   ])
 
   let tab = Tabs.getActiveTab(state)
   expect(tab.id).toEqual(Tabs.getActive(state))
-  expect(Tab.spaceName(state)).toEqual("")
+  expect(Tab.getSpaceName(state)).toEqual("")
 })

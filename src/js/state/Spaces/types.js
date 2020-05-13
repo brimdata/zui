@@ -6,13 +6,13 @@ import type {Ts} from "../../brim"
 export type SpacesState = {
   // clusterId
   [string]: {
-    // spaceName
+    // spaceId
     [string]: Space
   }
 }
 
 export type SpacesAction =
-  | SPACES_NAMES
+  | SPACES_SET
   | SPACES_DETAIL
   | SPACES_INGEST_PROGRESS
   | SPACES_INGEST_WARNING_APPEND
@@ -22,6 +22,7 @@ export type SpacesAction =
 
 export type Space = {
   name: string,
+  id: string,
   min_time: Ts,
   max_time: Ts,
   pcap_support: boolean,
@@ -34,10 +35,10 @@ type SpaceIngest = {
   snapshot: number | null
 }
 
-export type SPACES_NAMES = {
-  type: "SPACES_NAMES",
+export type SPACES_SET = {
+  type: "SPACES_SET",
   clusterId: string,
-  names: string[]
+  spaces: Space[]
 }
 
 export type SPACES_DETAIL = {
@@ -49,31 +50,31 @@ export type SPACES_DETAIL = {
 export type SPACES_INGEST_PROGRESS = {
   type: "SPACES_INGEST_PROGRESS",
   clusterId: string,
-  name: string,
+  spaceId: string,
   value: number | null
 }
 
 export type SPACES_INGEST_WARNING_APPEND = {
   type: "SPACES_INGEST_WARNING_APPEND",
   warning: string,
-  name: string,
+  spaceId: string,
   clusterId: string
 }
 
 export type SPACES_INGEST_WARNING_CLEAR = {
   type: "SPACES_INGEST_WARNING_CLEAR",
-  name: string,
+  spaceId: string,
   clusterId: string
 }
 
 export type SPACES_REMOVE = {
   type: "SPACES_REMOVE",
   clusterId: string,
-  name: string
+  spaceId: string
 }
 export type SPACES_INGEST_SNAPSHOT = {
   type: "SPACES_INGEST_SNAPSHOT",
   clusterId: string,
-  name: string,
+  spaceId: string,
   count: number
 }

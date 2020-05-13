@@ -16,7 +16,7 @@ const MAX_BACKOFF = 128
 
 export default function NetworkErrorNotice({error}: Props) {
   let dispatch = useDispatch()
-  let space = useSelector(Tab.spaceName)
+  let space = useSelector(Tab.getSpaceName)
   let [count, setCount] = useState(0)
 
   const retry = () => dispatch(initSpace(space))

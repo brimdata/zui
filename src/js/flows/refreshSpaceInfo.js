@@ -8,7 +8,7 @@ import {globalDispatch} from "../state/GlobalContext"
 
 export default function refreshSpaceInfo(): Thunk {
   return () => (dispatch, getState) => {
-    let name = Tab.spaceName(getState())
+    let name = Tab.getSpaceName(getState())
     return dispatch(fetchSpace(name)).then((data: SpaceDetailPayload) => {
       let id = Tab.clusterId(getState())
       globalDispatch(Spaces.setDetail(id, data))

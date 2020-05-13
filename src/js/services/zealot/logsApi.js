@@ -6,7 +6,7 @@ import path from "path"
 
 import {isObject, isString} from "../../lib/is"
 
-export type LogsPostArgs = {space: string, paths: string[], types?: Object}
+export type LogsPostArgs = {spaceId: string, paths: string[], types?: Object}
 
 const DEFAULT_TYPES = fsExtra.readFileSync(
   path.join(__dirname, "..", "..", "..", "..", "config", "defaultTypes.json"),
@@ -14,10 +14,10 @@ const DEFAULT_TYPES = fsExtra.readFileSync(
 )
 
 export default {
-  post({space, paths, types}: LogsPostArgs) {
+  post({spaceId, paths, types}: LogsPostArgs) {
     return {
       method: "POST",
-      path: `/space/${encodeURIComponent(space)}/log`,
+      path: `/space/${encodeURIComponent(spaceId)}/log`,
       body: getBody(paths, types)
     }
   }

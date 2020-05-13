@@ -6,34 +6,34 @@ import type {Space} from "./types"
 import type {State} from "../types"
 
 export default {
-  names: (clusterId: string) => (state: State) => {
+  ids: (clusterId: string) => (state: State) => {
     return keys<string>(getCluster(state, clusterId))
   },
-  get: (clusterId: string, name: string) => (state: State) => {
-    return getCluster(state, clusterId)[name]
+  get: (clusterId: string, spaceId: string) => (state: State) => {
+    return getCluster(state, clusterId)[spaceId]
   },
   raw: (state: State) => state.spaces,
   getSpaces: (clusterId: string) => (state: State): Space[] => {
     let clus = getCluster(state, clusterId)
     return Object.keys(clus).map((key) => {
-      return {name: key, ...clus[key]}
+      return {...clus[key]}
     })
   },
-  getIngestProgress: (clusterId: string, name: string) => (state: State) => {
+  getIngestProgress: (clusterId: string, spaceId: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
-    let space = cluster[name]
+    let space = cluster[spaceId]
     if (space) return space.ingest.progress
     else return null
   },
-  getIngestWarnings: (clusterId: string, name: string) => (state: State) => {
+  getIngestWarnings: (clusterId: string, spaceId: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
-    let space = cluster[name]
+    let space = cluster[spaceId]
     if (space) return space.ingest.warnings
     else return []
   },
-  getIngestSnapshot: (clusterId: string, name: string) => (state: State) => {
+  getIngestSnapshot: (clusterId: string, spaceId: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
-    let space = cluster[name]
+    let space = cluster[spaceId]
     if (space) return space.ingest.snapshot
   }
 }

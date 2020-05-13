@@ -34,7 +34,7 @@ test("#getBoomOptions", () => {
     Search.setCluster("abc"),
     Search.setSpanArgsFromDates([new Date(0), new Date(1)]),
     Tab.computeSpan(),
-    Search.setSpace("work-zone"),
+    Search.setSpace("spaceId", "spaceName"),
     Boomd.useCache(true),
     Boomd.useIndex(false)
   ])
@@ -48,7 +48,7 @@ test("#getBoomOptions", () => {
       host: "boom.com",
       port: 123,
       password: "puppy",
-      searchSpace: "work-zone",
+      searchSpaceId: "spaceId",
       searchSpan: [
         new Date("1970-01-01T00:00:00.000Z"),
         new Date("1970-01-01T00:00:00.001Z")

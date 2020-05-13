@@ -4,11 +4,10 @@
 // then restart the app.
 
 function installExtensions() {
-  // if (isDev) {
   // const {
   //   default: install,
-  // REACT_DEVELOPER_TOOLS,
-  // REDUX_DEVTOOLS
+  //   REACT_DEVELOPER_TOOLS,
+  //   REDUX_DEVTOOLS
   // } = require("electron-devtools-installer")
   //
   // install(REACT_DEVELOPER_TOOLS)
@@ -20,7 +19,6 @@ function installExtensions() {
   //   .catch((err) => console.log("An error occurred: ", err))
   // BrowserWindow.removeDevToolsExtension("React Developer Tools")
   // BrowserWindow.removeDevToolsExtension("Redux DevTools")
-  // }
 }
 
 module.exports = {installExtensions}

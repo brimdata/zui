@@ -16,7 +16,7 @@ export default {
     dispatch(Packets.request(log.getString("uid")))
     dispatch(View.showDownloads())
     const state = getState()
-    const space = Tab.spaceName(state)
+    const spaceId = Tab.getSpaceId(state)
     const destDir = remote.app.getPath("temp")
     return boom.packets
       .get({
@@ -29,7 +29,7 @@ export default {
         src_port: log.getString("id.orig_p"),
         dst_host: log.getString("id.resp_h"),
         dst_port: log.getString("id.resp_p"),
-        space,
+        space: spaceId,
         destDir
       })
       .then((file) => {

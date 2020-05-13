@@ -7,7 +7,8 @@ beforeEach(() => {
   boom = new BoomClient({
     host: "boom.com",
     port: 123,
-    searchSpan: [new Date(0), new Date(1)]
+    searchSpan: [new Date(0), new Date(1)],
+    searchSpaceId: "defaultId"
   })
 })
 
@@ -38,7 +39,7 @@ test("#inspectSearch", () => {
           }
         ]
       },
-      space: "default",
+      space: "defaultId",
       dir: -1,
       span: {ts: {sec: 0, ns: 0}, dur: {sec: 0, ns: 1000000}}
     }

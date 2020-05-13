@@ -12,8 +12,12 @@ import type {
 import brim, {type Span} from "../../brim"
 
 export default {
-  setSpace(space: string, tabId?: string): SEARCH_SPACE_SET {
-    return {type: "SEARCH_SPACE_SET", space, tabId}
+  setSpace(
+    spaceId: string,
+    spaceName: string,
+    tabId?: string
+  ): SEARCH_SPACE_SET {
+    return {type: "SEARCH_SPACE_SET", spaceId, spaceName, tabId}
   },
   setSpan(span: Span): SEARCH_SPAN_SET {
     return {type: "SEARCH_SPAN_SET", span}

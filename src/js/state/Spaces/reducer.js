@@ -9,39 +9,39 @@ const init: SpacesState = {}
 
 const spacesReducer = produce((draft, action: SpacesAction) => {
   switch (action.type) {
-    case "SPACES_NAMES":
-      return action.names.reduce((next, name) => {
-        next[name] = defaults(name, draft[name])
+    case "SPACES_SET":
+      return action.spaces.reduce((next, space) => {
+        next[space.id] = defaults(space.id, space.name, draft[space.id])
         return next
       }, {})
 
     case "SPACES_DETAIL":
-      var {name} = action.space
+      var {id, name} = action.space
       // XXX adapter hack to support span payloads from zqd as well as min/max
       // time. In the future brim.Span type should mimic the formatted
       // transmitted over the wire.
       var space = brim.interop.spacePayloadToSpace(action.space)
-      draft[name] = defaults(name, {...draft[name], ...space})
+      draft[id] = defaults(id, name, {...draft[id], ...space})
       break
 
     case "SPACES_INGEST_PROGRESS":
-      getSpace(draft, action.name).ingest.progress = action.value
+      getSpace(draft, action.spaceId).ingest.progress = action.value
       break
 
     case "SPACES_INGEST_WARNING_APPEND":
-      getSpace(draft, action.name).ingest.warnings.push(action.warning)
+      getSpace(draft, action.spaceId).ingest.warnings.push(action.warning)
       break
 
     case "SPACES_INGEST_WARNING_CLEAR":
-      getSpace(draft, action.name).ingest.warnings = []
+      getSpace(draft, action.spaceId).ingest.warnings = []
       break
 
     case "SPACES_INGEST_SNAPSHOT":
-      getSpace(draft, action.name).ingest.snapshot = action.count
+      getSpace(draft, action.spaceId).ingest.snapshot = action.count
       break
 
     case "SPACES_REMOVE":
-      delete draft[action.name]
+      delete draft[action.spaceId]
       break
   }
 })
@@ -60,8 +60,9 @@ export default function reducer(
   }
 }
 
-function defaults(name, data: $Shape<Space> = {}): Space {
+function defaults(id, name, data: $Shape<Space> = {}): Space {
   let defaults = {
+    id,
     name,
     min_time: {ns: 0, sec: 0},
     max_time: {ns: 0, sec: 0},
@@ -76,7 +77,7 @@ function defaults(name, data: $Shape<Space> = {}): Space {
   return {...defaults, ...data}
 }
 
-function getSpace(state, name) {
-  if (state[name]) return state[name]
-  else throw new Error("No space exists with name: " + name)
+function getSpace(state, id) {
+  if (state[id]) return state[id]
+  else throw new Error("No space exists with id: " + id)
 }

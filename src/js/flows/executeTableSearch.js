@@ -16,7 +16,7 @@ export default function executeTableSearch(
 ): Thunk {
   return function(dispatch) {
     let table = brim
-      .search(args.tableProgram, args.span, args.space)
+      .search(args.tableProgram, args.span, args.spaceId)
       .id("Table")
       .status((status) => dispatch(Viewer.setStatus(tabId, status)))
       .chan(0, (records, types) => {

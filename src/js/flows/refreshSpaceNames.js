@@ -10,7 +10,7 @@ export default function refreshSpaceNames(): Thunk {
     return dispatch(fetchSpaces()).then((spaces) => {
       spaces = spaces || []
       let id = Tab.clusterId(getState())
-      globalDispatch(Spaces.setNames(id, spaces))
+      globalDispatch(Spaces.setSpaces(id, spaces))
     })
   }
 }

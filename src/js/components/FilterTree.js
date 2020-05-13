@@ -26,7 +26,7 @@ export default function FilterTree() {
   let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
   const clusterID = useSelector(Tab.clusterId)
-  const spaces = useSelector(Spaces.names(clusterID))
+  const spaceIds = useSelector(Spaces.ids(clusterID))
 
   function renderNode(node: Node, i: number) {
     function onNodeClick() {
@@ -39,8 +39,17 @@ export default function FilterTree() {
           editing: null
         })
       )
-      const nodeSpace = get(node, ["data", "finding", "search", "space"], "")
-      dispatch(Search.setSpace(nodeSpace))
+      const nodeSpaceId = get(
+        node,
+        ["data", "finding", "search", "spaceId"],
+        ""
+      )
+      const nodeSpaceName = get(
+        node,
+        ["data", "finding", "search", "spaceName"],
+        ""
+      )
+      dispatch(Search.setSpace(nodeSpaceId, nodeSpaceName))
       dispatch(submitSearch(false))
     }
 
@@ -56,9 +65,19 @@ export default function FilterTree() {
     })
 
     function renderWarning() {
-      const findingSpace = get(node, ["data", "finding", "search", "space"], "")
-      const tip = `'${findingSpace}' space no longer exists`
-      if (includes(spaces, findingSpace)) return null
+      const findingSpaceId = get(
+        node,
+        ["data", "finding", "search", "spaceId"],
+        ""
+      )
+      const findingSpaceName = get(
+        node,
+        ["data", "finding", "search", "spaceName"],
+        ""
+      )
+
+      const tip = `'${findingSpaceName}' space no longer exists`
+      if (includes(spaceIds, findingSpaceId)) return null
 
       return (
         <div

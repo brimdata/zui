@@ -72,19 +72,20 @@ const createSpace = (client, dispatch, clusterId) => ({
     } else {
       createParams = {name: params.name}
     }
-    let {name} = await client.spaces.create(createParams)
+    let {id, name} = await client.spaces.create(createParams)
     dispatch(
       Spaces.setDetail(clusterId, {
+        id,
         name,
         ingest: {progress: 0, snapshot: 0, warnings: []}
       })
     )
 
-    return {...params, name}
+    return {...params, spaceId: id}
   },
-  async undo({name}) {
-    await client.spaces.delete(name)
-    dispatch(Spaces.remove(clusterId, name))
+  async undo({spaceId}) {
+    await client.spaces.delete(spaceId)
+    dispatch(Spaces.remove(clusterId, spaceId))
   }
 })
 
@@ -106,36 +107,35 @@ const unregisterHandler = (dispatch, id) => ({
 
 const postFiles = (client, jsonTypesPath) => ({
   async do(params) {
-    let {name, endpoint, paths} = params
+    let {spaceId, endpoint, paths} = params
     let stream
     if (endpoint === "pcap") {
-      stream = client.pcaps.post({space: name, path: paths[0]})
+      stream = client.pcaps.post({spaceId, path: paths[0]})
     } else {
       let types = isEmpty(jsonTypesPath)
         ? "default"
         : await lib.file(jsonTypesPath).read()
-      stream = client.logs.post({space: name, paths, types})
+      stream = client.logs.post({spaceId, paths, types})
     }
     return {...params, stream}
   }
 })
 
 const setSpace = (dispatch, tabId) => ({
-  do({name}) {
-    dispatch(Search.setSpace(name, tabId))
+  do({spaceId, name}) {
+    dispatch(Search.setSpace(spaceId, name, tabId))
   },
   undo() {
-    dispatch(Search.setSpace("", tabId))
+    dispatch(Search.setSpace("", "", tabId))
   }
 })
-
 const trackProgress = (client, dispatch, clusterId) => {
   return {
-    async do({name, stream, endpoint}) {
-      let space = Spaces.actionsFor(clusterId, name)
+    async do({spaceId, stream, endpoint}) {
+      let space = Spaces.actionsFor(clusterId, spaceId)
 
       async function updateSpaceDetails() {
-        let details = await client.spaces.get(name)
+        let details = await client.spaces.get(spaceId)
         dispatch(Spaces.setDetail(clusterId, details))
       }
 
