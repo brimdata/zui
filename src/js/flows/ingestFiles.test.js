@@ -13,7 +13,6 @@ let mockClient = {
   spaces: {
     delete: () => Promise.resolve(),
     create: () => Promise.resolve({name: "sample.pcap.brim", id: "spaceId"}),
-    list: () => Promise.resolve(["sample.pcap.brim"]),
     get: () =>
       Promise.resolve({
         name: "sample.pcap.brim",
@@ -119,7 +118,7 @@ test("a json file with a custom types config", async () => {
 
   expect(mockClient.logs.post).toHaveBeenCalledWith({
     paths: [itestFile("sample.ndjson")],
-    space: "spaceId",
+    spaceId: "spaceId",
     types: contents
   })
 })
