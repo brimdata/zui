@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "npm-run-all -s clean build:* -p electron watch:*",
-    "test": "jest --verbose",
+    "test": "jest",
     "itest:zealot": "jest --config=src/js/services/zealot/itest/config.json --runInBand",
     "itest": "jest --config=itest/config.json --runInBand --verbose",
     "electron": "electron .",
@@ -149,7 +149,7 @@
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.16",
     "valid-url": "^1.0.9",
-    "zq": "git+https://github.com/brimsec/zq.git#e96c06d8855e47823e6a88d820261b2059cd1f3c"
+    "zq": "git+https://github.com/brimsec/zq.git#5f91910a566a833f1591911144bad0538c77ccdf"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
