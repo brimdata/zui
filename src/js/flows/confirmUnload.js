@@ -14,7 +14,11 @@ export default (): Thunk => (dispatch, getState) => {
     return Promise.resolve()
   } else {
     let clusterId = Tab.clusterId(getState())
-    let names = spaceIds.map((id) => Spaces.get(clusterId, id)(getState()).name)
+    let names = spaceIds.map((id) => {
+      let space = Spaces.get(clusterId, id)(getState())
+      if (space) return space.name
+      else return id
+    })
     return showIngestWarning(names)
   }
 }
