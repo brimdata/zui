@@ -90,8 +90,8 @@ const createSpace = (client, dispatch, clusterId) => ({
 })
 
 const registerHandler = (dispatch, id) => ({
-  do({name}) {
-    let handle = {type: "INGEST", spaceName: name}
+  do({spaceId}) {
+    let handle = {type: "INGEST", spaceId}
     dispatch(Handlers.register(id, handle))
   },
   undo() {

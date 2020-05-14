@@ -66,6 +66,22 @@ test("opening a pcap", async () => {
   })
 })
 
+test("register a handler with a space id", async () => {
+  let store = initTestStore()
+  let globalDispatch = store.dispatch
+  await store.dispatch(
+    ingestFiles([itestFile("sample.pcap")], mockClient, globalDispatch)
+  )
+
+  let handler = store.getActions().find((a) => a.type === "HANDLERS_REGISTER")
+
+  expect(handler).toEqual({
+    type: "HANDLERS_REGISTER",
+    handler: {type: "INGEST", spaceId: "spaceId"},
+    id: expect.any(String)
+  })
+})
+
 test("when there is an error", async () => {
   let store = initTestStore()
   let globalDispatch = store.dispatch
