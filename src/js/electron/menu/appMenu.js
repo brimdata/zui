@@ -1,14 +1,18 @@
 /* @noflow */
 
-import {shell, app} from "electron"
+import {shell, app, dialog} from "electron"
+import path from "path"
 
 import type {$WindowManager} from "../tron/windowManager"
 import config from "../config"
+import electronIsDev from "../isDev"
 import lib from "../../lib"
+import tron from "../tron"
 
 export default function appMenu(
   send: Function,
   manager: $WindowManager,
+  store: *,
   platform: string = process.platform
 ) {
   const mac = platform === "darwin"
@@ -199,6 +203,25 @@ export default function appMenu(
     return submenu
   }
 
+  const developerMenu = {
+    label: "Developer",
+    submenu: [
+      {
+        label: "Save Session for Testing Migrations",
+        click() {
+          let root = app.getAppPath()
+          let version = store.getState().version
+          let file = path.join(root, `src/js/test/states/${version}.json`)
+          tron.session().save(manager.getState(), store.getState(), file)
+          dialog.showMessageBox({
+            message: `Session has been saved`,
+            detail: file
+          })
+        }
+      }
+    ]
+  }
+
   let template = [
     {label: "File", submenu: fileSubmenu()},
     {label: "Edit", submenu: editSubmenu()},
@@ -208,5 +231,6 @@ export default function appMenu(
     {role: "help", submenu: helpSubmenu()}
   ]
   if (mac) template.unshift(brimMenu)
+  if (electronIsDev) template.push(developerMenu)
   return template
 }
