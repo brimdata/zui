@@ -4,8 +4,8 @@ import type {IngestHandler} from "./types"
 import type {State} from "../types"
 
 export default {
-  getIngestSpaceNames: (state: State): string[] => {
-    return getIngestHandlers(state).map((i) => i.spaceName)
+  getIngestSpaceIds: (state: State): string[] => {
+    return getIngestHandlers(state).map((i) => i.spaceId)
   }
 }
 

@@ -6,17 +6,17 @@ import rpc from "../electron/rpc"
 
 export default (): Thunk => (_, getState) => {
   let client = Tab.getZealot(getState())
-  let spaces = Handlers.getIngestSpaceNames(getState())
+  let spaceIds = Handlers.getIngestSpaceIds(getState())
   return Promise.all(
-    spaces.map((name) => {
-      rpc.log("starting delete for", name)
+    spaceIds.map((id) => {
+      rpc.log("starting delete for", id)
       return client.spaces
-        .delete(name)
+        .delete(id)
         .then(() => {
-          rpc.log("Deleted", name)
+          rpc.log("Deleted", id)
         })
         .catch((e) => {
-          rpc.log(`Unable to delete space: ${name}, reason: ${e}`)
+          rpc.log(`Unable to delete space: ${id}, reason: ${JSON.stringify(e)}`)
         })
     })
   )

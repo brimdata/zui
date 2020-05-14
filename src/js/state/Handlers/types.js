@@ -11,7 +11,7 @@ export type SearchHandler = {
 
 export type IngestHandler = {
   type: "INGEST",
-  spaceName: string
+  spaceId: string
 }
 
 export type HandlersAction =
