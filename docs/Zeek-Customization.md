@@ -35,7 +35,7 @@ command line options, or other configuration. A Brim preference is available to 
 to use. To use a different Zeek setup to generate logs from pcaps, you should provide a runner that references the
 desired Zeek setup.
 
-Below is the runner in Brim v0.10.0 that invokes the included Zeek bundle on Linux and macOS . It's a script located at the top of the builtin
+Below is the runner in Brim v0.10.0 that invokes the included Zeek bundle on Linux and macOS. It's a script located at the top of the builtin
 Zeek bundle's installation directory, so it refers to the Zeek executable and other paths relative to its own location.
 When a user imports a pcap file into Brim, the runner is executed with the pcap's data passed via stdin, and the 
 runner's working directory set to the desired output location for the Zeek logs. 
@@ -69,4 +69,3 @@ runner without altering its location, any changes will take effect on the next p
 You can specify the location of your Zeek runner via the setting in the **Preferences** menu:
 
 ![Zeek Runner Preference](media/Preferences-Zeek-Runner.png)
-
