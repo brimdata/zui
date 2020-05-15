@@ -6,7 +6,7 @@ import itestFile from "../../test/itestFile"
 const json = itestFile("sample.ndjson")
 const pcap = itestFile("sample.pcap")
 const pcapng = itestFile("sample.pcapng")
-const unknown = itestFile("setup.js")
+const unknown = itestFile("plain.txt")
 const zeek = itestFile("sample.tsv")
 
 test("add file types", async () => {
