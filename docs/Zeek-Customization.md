@@ -35,7 +35,7 @@ command line options, or other configuration. A Brim preference is available to 
 to use. To use a different Zeek setup to generate logs from pcaps, you should provide a runner that references the
 desired Zeek setup.
 
-Below is the runner used by Linux and macOS for Brim v0.10.0. It's a script located at the top of the builtin
+Below is the runner in Brim v0.10.0 that invokes the included Zeek bundle on Linux and macOS . It's a script located at the top of the builtin
 Zeek bundle's installation directory, so it refers to the Zeek executable and other paths relative to its own location.
 When a user imports a pcap file into Brim, the runner is executed with the pcap's data passed via stdin, and the 
 runner's working directory set to the desired output location for the Zeek logs. 
@@ -45,8 +45,8 @@ runner's working directory set to the desired output location for the Zeek logs.
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-export ZEEKPATH=$dir/share/zeek:$dir/share/zeek/policy:$dir/share/zeek/site
-export ZEEK_PLUGIN_PATH=$dir/lib/zeek/plugins
+export ZEEKPATH="$dir/share/zeek:$dir/share/zeek/policy:$dir/share/zeek/site"
+export ZEEK_PLUGIN_PATH="$dir/lib/zeek/plugins"
 
 # The packet filter and loaded scripts are disabled because they emit either
 # timeless logs or logs with timestamp set to execution time rather than time
