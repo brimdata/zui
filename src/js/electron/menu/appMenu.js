@@ -6,13 +6,15 @@ import path from "path"
 import type {$WindowManager} from "../tron/windowManager"
 import config from "../config"
 import electronIsDev from "../isDev"
+import formatSessionState from "../tron/formatSessionState"
 import lib from "../../lib"
-import tron from "../tron"
+import tron, {type Session} from "../tron"
 
 export default function appMenu(
   send: Function,
   manager: $WindowManager,
   store: *,
+  session: Session,
   platform: string = process.platform
 ) {
   const mac = platform === "darwin"
@@ -208,11 +210,13 @@ export default function appMenu(
     submenu: [
       {
         label: "Save Session for Testing Migrations",
-        click() {
+        async click() {
+          await manager.fetchWindowStates()
           let root = app.getAppPath()
-          let version = store.getState().version
+          let version = (await tron.migrations()).getLatestVersion()
           let file = path.join(root, `src/js/test/states/${version}.json`)
-          tron.session().save(manager.getState(), store.getState(), file)
+          let data = formatSessionState(manager.getState(), store.getState())
+          await session.save(data, file)
           dialog.showMessageBox({
             message: `Session has been saved`,
             detail: file

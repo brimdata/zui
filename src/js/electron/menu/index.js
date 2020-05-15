@@ -12,13 +12,15 @@ export type $MenuItem =
   | {type: "separator"}
 export type $Menu = $MenuItem[]
 
-function setMenu(manager: $WindowManager, store: *) {
+function setMenu(manager: $WindowManager, store: *, session: *) {
   function send(...args) {
     let win = BrowserWindow.getFocusedWindow()
     if (win && win.webContents) win.webContents.send(...args)
   }
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu(send, manager, store)))
+  Menu.setApplicationMenu(
+    Menu.buildFromTemplate(appMenu(send, manager, store, session))
+  )
 }
 
 export default {
