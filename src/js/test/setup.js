@@ -9,10 +9,17 @@ const enzyme = require("enzyme")
 
 jest.mock("electron", function() {
   class FakeBrowserWindow {
+    webContents: {send: *}
+    constructor() {
+      this.webContents = {send: jest.fn()}
+    }
     center() {}
     setMenu() {}
-    on() {}
+    on() {
+      return this
+    }
     loadFile() {}
+    setSize() {}
   }
 
   let electron = {
@@ -32,7 +39,8 @@ jest.mock("electron", function() {
     },
     BrowserWindow: FakeBrowserWindow,
     ipcMain: {
-      on: jest.fn()
+      on: jest.fn(),
+      once: jest.fn()
     },
     ipcRenderer: {
       send: jest.fn(),

@@ -3,11 +3,12 @@ import {ipcRenderer} from "electron"
 
 import type {Store} from "../state/types"
 import {clearState} from "./initPersistance"
+import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import View from "../state/View"
-import Layout from "../state/Layout"
+import getPersistable from "../state/getPersistable"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
@@ -38,6 +39,10 @@ export default (store: Store) => {
   ipcRenderer.on("resetState", () => {
     clearState()
     location.reload()
+  })
+
+  ipcRenderer.on("getState", (event, channel) => {
+    ipcRenderer.send(channel, getPersistable(store.getState()))
   })
 
   ipcRenderer.on("showPreferences", () => {
