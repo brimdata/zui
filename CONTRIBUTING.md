@@ -36,7 +36,7 @@ Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into
 
 As an npm postinstall step, a [zeek artifact](https://github.com/brimsec/zeek/releases) is downloaded and expanded into the `./zdeps/zeek` directory. This artifact contains a zeek binary and associated scripts, and a "zeek runner" script or command that is called by zqd. zqd is passed the full path to the zeek runner via the `-zeekrunner` command line option. When a pcap file is ingested, zqd runs the zeek runner with no arguments and its working directory set to an output directory for the zeek TSV logs, and then feeds the pcap data to the zeek runner via stdin. zqd then internally converts the zeek TSV logs into ZNG format.
 
-An alternate Zeek setup may be used by overriding the zeek runner location. This may be done either by launching Brim with the `BRIM_ZEEK_RUNNER` environment variable set to the absolute path of a zeek runner script or commmand, or by setting a preference in the Brim UI (pending [brimsec/brim#741](https://github.com/brimsec/brim/issues/741)).
+An alternate Zeek setup may be used by overriding the zeek runner location. This may be done either by launching Brim with the `BRIM_ZEEK_RUNNER` environment variable set to the absolute path of a zeek runner script or commmand, or by setting the "Zeek Runner" preference in the Brim UI. See the [Zeek Customization](https://github.com/brimsec/brim/wiki/Zeek-Customization) wiki article for additional details.
 
 ## Tests
 

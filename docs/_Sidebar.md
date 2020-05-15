@@ -3,3 +3,4 @@
 * [[Troubleshooting]]
 * [[Microsoft Windows beta limitations]]
 * [[Zeek JSON Import]]
+* [[Zeek Customization]]
