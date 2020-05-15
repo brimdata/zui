@@ -2,7 +2,6 @@
 import {ipcRenderer} from "electron"
 
 import type {Store} from "../state/types"
-import {clearState} from "./initPersistance"
 import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
@@ -37,8 +36,7 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("resetState", () => {
-    clearState()
-    location.reload()
+    /* Will implement soon */
   })
 
   ipcRenderer.on("getState", (event, channel) => {

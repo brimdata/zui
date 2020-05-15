@@ -2,7 +2,6 @@
 
 import {ipcRenderer} from "electron"
 
-import {isCurrentVersion} from "./initPersistance"
 import closeWindow from "../flows/closeWindow"
 import initBoom from "./initBoom"
 import initDOM from "./initDOM"
@@ -23,8 +22,7 @@ export default () => {
   return Promise.all([
     invoke(ipc.windows.initialState(id)),
     initGlobalStore()
-  ]).then(([prevState, globalStore]) => {
-    let windowState = isCurrentVersion(prevState) ? prevState : undefined
+  ]).then(([windowState, globalStore]) => {
     let globalState = globalStore.getState()
     let initState = {...windowState, ...globalState}
 
