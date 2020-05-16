@@ -14,9 +14,14 @@ jobs:
       matrix:
         node-version: [12.x]
         os: [ubuntu-18.04]
+    timeout-minutes: 30
     steps:
       # Only one of these should run at a time, and the checkout of brim
-      # has to be in the "protected section".
+      # has to be in the "protected section". This will poll every 60s
+      # forever. It will be timed out based on any change to
+      # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idtimeout-minutes
+      # It is not possible to time out this step and fail. It's only
+      # possible to time out this step and continue.
       - name: Turnstyle
         uses: softprops/turnstyle@v0.1.2
         env:
@@ -94,7 +99,6 @@ jobs:
 
       - run: npm install --no-audit
       - run: npm run build
-      # Unit tests touch zq-produced *.js
       - run: npm test -- --maxWorkers=2 --ci
       - run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
         env:
