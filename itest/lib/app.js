@@ -343,7 +343,7 @@ export const pcapIngestSample = async (app: Application) => {
   // Ingest a PCAP and wait until we see derived records.
   await ingestFile(
     app,
-    path.normalize(path.join(__dirname, "..", "sample.pcap"))
+    path.normalize(path.join(__dirname, "..", "testdata", "sample.pcap"))
   )
 }
 
