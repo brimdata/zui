@@ -28,27 +28,20 @@ export type SessionState = {|
 
 export default function session() {
   return {
-    save(windows: WindowsState, globalState: GlobalState) {
-      let groupById = (all, id) => ({
-        ...all,
-        [id]: getWindowData(windows[id])
-      })
-      let order = getWindowOrder(windows)
-      let fileContents = JSON.stringify(
-        ({
-          order,
-          windows: order.reduce(groupById, {}),
-          globalState
-        }: SessionState)
-      )
-      lib.file(sessionStateFile()).write(fileContents)
+    save(
+      windows: WindowsState,
+      state: GlobalState,
+      path: string = sessionStateFile()
+    ) {
+      let json = this.toJSON(windows, state)
+      return lib.file(path).write(JSON.stringify(json))
     },
 
-    load(): ?SessionState {
+    load(path: string = sessionStateFile()): ?SessionState {
       let contents
 
       try {
-        contents = lib.file(sessionStateFile()).readSync()
+        contents = lib.file(path).readSync()
       } catch {
         return undefined
       }
@@ -59,6 +52,19 @@ export default function session() {
         console.error("Unable to load session state")
         console.error(e)
         return undefined
+      }
+    },
+
+    toJSON(windows: WindowsState, globalState: GlobalState): SessionState {
+      let groupById = (all, id) => ({
+        ...all,
+        [id]: getWindowData(windows[id])
+      })
+      let order = getWindowOrder(windows)
+      return {
+        order,
+        windows: order.reduce(groupById, {}),
+        globalState
       }
     }
   }

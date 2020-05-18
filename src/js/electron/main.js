@@ -41,7 +41,7 @@ async function main() {
   const zeekRunner = Prefs.getZeekRunner(store.getState())
   const zqd = new ZQD(spaceDir, zeekRunner)
 
-  menu.setMenu(winMan)
+  menu.setMenu(winMan, store)
   zqdMainHandler(zqd)
   windowsMainHandler(winMan)
   globalStoreMainHandler(store, winMan)
