@@ -4,11 +4,11 @@ import {shell, app, dialog} from "electron"
 import path from "path"
 
 import type {$WindowManager} from "../tron/windowManager"
+import {type Session} from "../tron"
 import config from "../config"
 import electronIsDev from "../isDev"
 import formatSessionState from "../tron/formatSessionState"
 import lib from "../../lib"
-import tron, {type Session} from "../tron"
 
 export default function appMenu(
   send: Function,
