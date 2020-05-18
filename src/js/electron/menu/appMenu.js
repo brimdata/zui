@@ -213,7 +213,7 @@ export default function appMenu(
         async click() {
           await manager.fetchWindowStates()
           let root = app.getAppPath()
-          let version = (await tron.migrations()).getLatestVersion()
+          let version = session.getVersion()
           let file = path.join(root, `src/js/test/states/${version}.json`)
           let data = formatSessionState(manager.getState(), store.getState())
           await session.save(data, file)
