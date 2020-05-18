@@ -17,7 +17,7 @@ export type IngestParamsError = {
 
 export default function getParams(
   data: FileListData,
-  dataDir: string,
+  dataDir?: string,
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
   let files = fileList(data)

@@ -6,7 +6,8 @@ import type {
   WindowsDestroyMsg,
   WindowsInitialStateMsg,
   WindowsOpenMsg,
-  WindowsNewSearchTabMsg
+  WindowsNewSearchTabMsg,
+  WindowsOpenDirectorySelect
 } from "../types"
 import type {State} from "../../../state/types"
 import type {SpanArgs} from "../../../state/Search/types"

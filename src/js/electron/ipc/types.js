@@ -10,6 +10,7 @@ export type IpcMsg =
   | WindowsInitialStateMsg
   | WindowsDestroyMsg
   | WindowsNewSearchTabMsg
+  | WindowsOpenDirectorySelect
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
 
