@@ -7,6 +7,7 @@ import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import View from "../state/View"
+import exportResults from "../flows/exportResults"
 import getPersistable from "../state/getPersistable"
 
 export default (store: Store) => {
@@ -45,6 +46,10 @@ export default (store: Store) => {
 
   ipcRenderer.on("getState", (event, channel) => {
     ipcRenderer.send(channel, getPersistable(store.getState()))
+  })
+
+  ipcRenderer.on("exportResults", (e, filePath) => {
+    store.dispatch(exportResults(filePath))
   })
 
   ipcRenderer.on("showPreferences", () => {

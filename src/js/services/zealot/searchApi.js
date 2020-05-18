@@ -22,7 +22,7 @@ export function getSearchBody(
   let toTs = getTime(to)
   return {
     proc,
-    spaceId,
+    space: spaceId,
     dir: -1,
     span: {
       ts: fromTs,

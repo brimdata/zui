@@ -1,6 +1,6 @@
 /* @noflow */
 
-import {shell, app, dialog} from "electron"
+import {BrowserWindow, app, dialog, shell, MenuItem} from "electron"
 import path from "path"
 
 import type {$WindowManager} from "../tron/windowManager"
@@ -64,6 +64,25 @@ export default function appMenu(
     }
   }
 
+  const exportResults = {
+    label: "Export Results as ZNG...",
+    click: (_: MenuItem, win: BrowserWindow) => {
+      let filePath = "/Users/jkerr/Desktop/results.zng"
+      send("exportResults", filePath)
+      return
+      dialog
+        .showSaveDialog(win, {
+          title: "Export Results as ZNG",
+          buttonLabel: "Export",
+          defaultPath: "results.zng",
+          properties: ["createDirectory"]
+        })
+        .then(({canceled, filePath}) => {
+          if (!canceled && filePath) send("exportResults", filePath)
+        })
+    }
+  }
+
   const brimMenu = {
     label: "Brim",
     submenu: [
@@ -82,9 +101,19 @@ export default function appMenu(
 
   function fileSubmenu() {
     if (mac) {
-      return [newWindow, __, closeTab, closeWindow]
+      return [newWindow, __, exportResults, __, closeTab, closeWindow]
     } else {
-      return [newWindow, __, preferences, __, closeTab, closeWindow, exit]
+      return [
+        newWindow,
+        __,
+        exportResults,
+        __,
+        preferences,
+        __,
+        closeTab,
+        closeWindow,
+        exit
+      ]
     }
   }
 
