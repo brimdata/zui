@@ -31,3 +31,10 @@ test("set the zeek runner", () => {
 
   expect(Prefs.getZeekRunner(state)).toEqual("/run/zeek/run")
 })
+
+test("set the dataDir", () => {
+  const testDir = "/my/own/data/dir"
+  const state = store.dispatchAll([Prefs.setDataDir(testDir)])
+
+  expect(Prefs.getDataDir(state)).toEqual(testDir)
+})

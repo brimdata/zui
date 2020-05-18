@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, {useCallback, useState} from "react"
+import React, {useCallback, useState, useEffect} from "react"
 
 import {reactElementProps} from "../../test/integration"
 import FormErrors from "./FormErrors"
@@ -13,6 +13,7 @@ import ZeekRunner from "./ZeekRunner"
 import brim from "../../brim"
 import useCallbackRef from "../hooks/useCallbackRef"
 import usePreferencesForm from "./usePreferencesForm"
+import DataDirInput from "./DataDirInput"
 
 export default function Preferences() {
   let [f, setForm] = useCallbackRef<HTMLFormElement>()
@@ -25,6 +26,7 @@ export default function Preferences() {
       let form = brim.form(f, prefsForm)
 
       if (await form.isValid()) {
+        setErrors([])
         form.submit()
         closeModal()
       } else {
@@ -49,6 +51,7 @@ export default function Preferences() {
           <TimeFormat config={prefsForm.timeFormat} />
           <ZeekRunner config={prefsForm.zeekRunner} />
           <JSONTypeConfig config={prefsForm.jsonTypeConfig} />
+          <DataDirInput config={prefsForm.dataDir} />
         </form>
       </TextContent>
     </ModalBox>

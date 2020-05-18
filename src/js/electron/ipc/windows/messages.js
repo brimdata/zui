@@ -52,5 +52,10 @@ export default {
       channel: "windows:initialState",
       id
     }
+  },
+  openDirectorySelect(): WindowsOpenDirectorySelect {
+    return {
+      channel: "windows:openDirectorySelect"
+    }
   }
 }

@@ -1,6 +1,7 @@
 /* @flow */
 
 import type {
+  PREFS_DATA_DIR_SET,
   PREFS_JSON_TYPES_CONFIG_SET,
   PREFS_TIME_FORMAT_SET,
   PREFS_ZEEK_RUNNER_SET
@@ -20,5 +21,10 @@ export default {
   setZeekRunner: (zeekRunner: string): PREFS_ZEEK_RUNNER_SET => ({
     type: "PREFS_ZEEK_RUNNER_SET",
     zeekRunner
+  }),
+
+  setDataDir: (dataDir: string): PREFS_DATA_DIR_SET => ({
+    type: "PREFS_DATA_DIR_SET",
+    dataDir
   })
 }

@@ -38,6 +38,10 @@ export type WindowsNewSearchTabMsg = {
   params: NewTabSearchParams
 }
 
+export type WindowsOpenDirectorySelect = {
+  channel: "windows:openDirectorySelect"
+}
+
 export type GlobalStoreInitMsg = {
   channel: "globalStore:init"
 }

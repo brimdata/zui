@@ -18,19 +18,21 @@ export default function file(p: string) {
     },
 
     allFiles() {
-      return this.stats().then((stats) => {
-        if (stats.isDirectory()) {
-          return this.contents()
-            .then((files) =>
-              Promise.all(files.map((f) => file(path.join(p, f)).allFiles()))
-            )
-            .then((results) =>
-              results.reduce<string[]>((all, one) => all.concat(one), [])
-            )
-        } else {
-          return [p]
-        }
+      return this.isDirectory().then((isDir) => {
+        return isDir
+          ? this.contents()
+              .then((files) =>
+                Promise.all(files.map((f) => file(path.join(p, f)).allFiles()))
+              )
+              .then((results) =>
+                results.reduce<string[]>((all, one) => all.concat(one), [])
+              )
+          : [p]
       })
+    },
+
+    isDirectory() {
+      return this.stats().then((stats) => stats.isDirectory())
     },
 
     contents() {

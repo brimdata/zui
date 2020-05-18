@@ -59,6 +59,25 @@ export default function usePreferencesForm(): FormConfig {
             }
           })
       }
+    },
+    dataDir: {
+      name: "dataDir",
+      label: "Data Directory",
+      defaultValue: useSelector(Prefs.getDataDir),
+      submit: (value) => globalDispatch(Prefs.setDataDir(value)),
+      check: (path) => {
+        if (path === "") return [true, ""]
+        return lib
+          .file(path)
+          .isDirectory()
+          .then((isDir) => [isDir, "Selection must be a directory"])
+          .catch((e) => {
+            let msg = e.name + ": " + e.message
+            return /ENOENT/.test(msg)
+              ? [false, "Directory does not exist."]
+              : [false, msg]
+          })
+      }
     }
   }
 }
