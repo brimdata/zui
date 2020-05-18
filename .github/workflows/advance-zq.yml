@@ -109,7 +109,7 @@ jobs:
       - name: Commit and push change
         run: |
           git diff
-          cat << EOF | git commit -a -F-
+          cat << 'EOF' | git commit -a -F-
           zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
 
           This is an auto-generated commit with a zq dependency update. The zq PR
