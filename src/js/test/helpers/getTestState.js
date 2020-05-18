@@ -1,4 +1,6 @@
 /* @flow */
+import compact from "lodash/compact"
+
 import path from "path"
 
 import type {SessionState} from "../../electron/tron/formatSessionState"
@@ -20,9 +22,12 @@ App Menu => Developer => Save Session for Testing Migrations`)
 }
 
 export function getAllStates(sessionState: SessionState): Object[] {
+  if (!sessionState) return []
+
   let allStates = [sessionState.globalState]
   for (let key in sessionState.windows) {
     allStates.push(sessionState.windows[key].state)
   }
-  return allStates
+
+  return compact(allStates)
 }
