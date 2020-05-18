@@ -9,11 +9,10 @@ import {
   searchDisplay,
   startApp,
   startSearch,
-  waitForNewTab,
   writeSearch
 } from "../lib/app.js"
 
-describe("Smoke test", () => {
+describe("Ingest tests", () => {
   let app
   let testIdx = 0
   beforeEach(() => {
@@ -25,12 +24,6 @@ describe("Smoke test", () => {
     if (app && app.isRunning()) {
       return await app.stop()
     }
-  })
-
-  stdTest("show the new tab page when you log in", (done) => {
-    waitForNewTab(app)
-      .then(() => done())
-      .catch((err) => handleError(app, err, done))
   })
 
   stdTest("pcap ingest", (done) => {
