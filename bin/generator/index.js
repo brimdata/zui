@@ -1,12 +1,14 @@
 /* @flow */
 
-const program = require("commander")
+import cli from "commander"
 
-const {handleReducer} = require("./reducer")
-const {handleStyle} = require("./style")
-const {handleIcon} = require("./icon")
+import {handleIcon} from "./icon"
+import {handleMigration} from "./migration"
+import {handleReducer} from "./reducer"
+import {handleStyle} from "./style"
 
-program.command("style <name>").action(handleStyle)
-program.command("reducer <name>").action(handleReducer)
-program.command("icon <path>").action(handleIcon)
-program.parse(process.argv)
+cli.command("style <name>").action(handleStyle)
+cli.command("reducer <name>").action(handleReducer)
+cli.command("icon <path>").action(handleIcon)
+cli.command("migration <name>").action(handleMigration)
+cli.parse(process.argv)
