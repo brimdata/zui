@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Ingest tests log ingest 1`] = `
+exports[`Ingest tests ingest of sample.pcap 1`] = `
 Array [
   "ts",
   "id.orig_h",
@@ -101,7 +101,7 @@ Array [
 ]
 `;
 
-exports[`Ingest tests pcap ingest 1`] = `
+exports[`Ingest tests ingest of sample.tsv 1`] = `
 Array [
   "ts",
   "id.orig_h",

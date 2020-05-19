@@ -26,41 +26,25 @@ describe("Ingest tests", () => {
     }
   })
 
-  stdTest("pcap ingest", (done) => {
-    const searchZql =
-      "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
+  const searchZql =
+    "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
+  const sampleFiles = ["sample.pcap", "sample.tsv"]
 
-    ingestFile(app, "sample.pcap")
-      .then(async () => {
-        await writeSearch(app, searchZql)
-        await startSearch(app)
-        return searchDisplay(app)
-      })
-      .then((results) => {
-        expect(results).toMatchSnapshot()
-        done()
-      })
-      .catch((err) => {
-        handleError(app, err, done)
-      })
-  })
-
-  stdTest("log ingest", (done) => {
-    const searchZql =
-      "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
-
-    ingestFile(app, "sample.tsv")
-      .then(async () => {
-        await writeSearch(app, searchZql)
-        await startSearch(app)
-        return searchDisplay(app)
-      })
-      .then((results) => {
-        expect(results).toMatchSnapshot()
-        done()
-      })
-      .catch((err) => {
-        handleError(app, err, done)
-      })
+  sampleFiles.forEach((fileName) => {
+    stdTest(`ingest of ${fileName}`, (done) => {
+      ingestFile(app, fileName)
+        .then(async () => {
+          await writeSearch(app, searchZql)
+          await startSearch(app)
+          return searchDisplay(app)
+        })
+        .then((results) => {
+          expect(results).toMatchSnapshot()
+          done()
+        })
+        .catch((err) => {
+          handleError(app, err, done)
+        })
+    })
   })
 })
