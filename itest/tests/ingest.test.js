@@ -3,7 +3,6 @@
 import path from "path"
 
 import {handleError, stdTest} from "../lib/jest.js"
-import {testDataDir} from "../lib/env"
 import {ingestFile, pcapIngestSample} from "../lib/app"
 import {
   newAppInstance,
@@ -50,7 +49,7 @@ describe("Ingest tests", () => {
     const searchZql =
       "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
 
-    ingestFile(app, path.join(testDataDir(), "sample.tsv"))
+    ingestFile(app, "sample.tsv")
       .then(async () => {
         await writeSearch(app, searchZql)
         await startSearch(app)

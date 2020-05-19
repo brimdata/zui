@@ -345,11 +345,15 @@ export const pcapIngestSample = async (app: Application) => {
 }
 
 export const ingestFile = async (app: Application, file: string) => {
+  // Ingest a file inside the itest/testdata directory
   await appStep("wait for pcap file input", () =>
     app.client.waitForVisible(selectors.ingest.filesButton)
   )
   await appStep("choose file", () =>
-    app.client.chooseFile(selectors.ingest.filesInput, file)
+    app.client.chooseFile(
+      selectors.ingest.filesInput,
+      path.normalize(path.join(testDataDir(), file))
+    )
   )
 
   await appStep("wait for ingest to finish", () =>
