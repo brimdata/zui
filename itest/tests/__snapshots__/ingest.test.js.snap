@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Smoke test log ingest 1`] = `
+exports[`Ingest tests log ingest 1`] = `
 Array [
   "ts",
   "id.orig_h",
@@ -101,7 +101,7 @@ Array [
 ]
 `;
 
-exports[`Smoke test pcap ingest 1`] = `
+exports[`Ingest tests pcap ingest 1`] = `
 Array [
   "ts",
   "id.orig_h",
