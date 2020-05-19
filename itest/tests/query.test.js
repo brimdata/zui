@@ -5,8 +5,8 @@ import {basename} from "path"
 import {sprintf} from "sprintf-js"
 
 import {
+  ingestFile,
   newAppInstance,
-  pcapIngestSample,
   searchDisplay,
   setSpan,
   startApp,
@@ -32,7 +32,7 @@ describe("Query tests", () => {
   beforeAll(async () => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await startApp(app)
-    await pcapIngestSample(app)
+    await ingestFile(app, "sample.pcap")
     await setSpan(app, "Whole Space")
   })
 

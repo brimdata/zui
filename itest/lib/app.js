@@ -339,11 +339,6 @@ export const waitForResults = (app: Application) =>
     app.client.waitForVisible(selectors.viewer.results_base)
   )
 
-export const pcapIngestSample = async (app: Application) => {
-  // Ingest a PCAP and wait until we see derived records.
-  await ingestFile(app, path.join(testDataDir(), "sample.pcap"))
-}
-
 export const ingestFile = async (app: Application, file: string) => {
   // Ingest a file inside the itest/testdata directory
   await appStep("wait for pcap file input", () =>

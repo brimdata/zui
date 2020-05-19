@@ -8,8 +8,8 @@ import {LOG} from "../lib/log"
 import {
   click,
   clickPcapButton,
+  ingestFile,
   newAppInstance,
-  pcapIngestSample,
   pcapsDir,
   searchDisplay,
   startApp,
@@ -41,7 +41,7 @@ describe("Test PCAPs", () => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
     await startApp(app)
     await clearPcaps(app)
-    return pcapIngestSample(app)
+    return ingestFile(app, "sample.pcap")
   })
 
   afterEach(() => {
