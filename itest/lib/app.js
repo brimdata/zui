@@ -10,7 +10,7 @@ import path from "path"
 
 import {LOG} from "./log"
 import {isCI, repoDir} from "../lib/env"
-import {itestDir} from "./env"
+import {itestDir, testDataDir} from "./env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
 
@@ -341,10 +341,7 @@ export const waitForResults = (app: Application) =>
 
 export const pcapIngestSample = async (app: Application) => {
   // Ingest a PCAP and wait until we see derived records.
-  await ingestFile(
-    app,
-    path.normalize(path.join(__dirname, "..", "testdata", "sample.pcap"))
-  )
+  await ingestFile(app, path.join(testDataDir(), "sample.pcap"))
 }
 
 export const ingestFile = async (app: Application, file: string) => {

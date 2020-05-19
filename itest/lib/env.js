@@ -9,3 +9,6 @@ export const repoDir = (): string =>
 
 export const itestDir = (): string =>
   path.join(process.env.WORKSPACE || "run", "itest")
+
+export const testDataDir = (): string =>
+  path.resolve(path.join(repoDir(), "itest", "testdata"))
