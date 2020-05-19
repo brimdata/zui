@@ -28,7 +28,12 @@ describe("Ingest tests", () => {
 
   const searchZql =
     "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
-  const sampleFiles = ["sample.pcap", "sample.tsv"]
+  const sampleFiles = [
+    "sample.pcap",
+    "sample.pcapng",
+    "sample.tsv",
+    "sample.ndjson"
+  ]
 
   sampleFiles.forEach((fileName) => {
     stdTest(`ingest of ${fileName}`, (done) => {
