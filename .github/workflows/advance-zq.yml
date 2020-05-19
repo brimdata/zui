@@ -27,12 +27,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Since we intend to push, we must have a full-depth checkout, a
-      # a writable token, and minimal git config settings to create
-      # commits.
+      # Since we intend to push, we must have a a writable token and
+      # minimal git config settings to create commits.
       - uses: actions/checkout@v2
         with:
-          depth: 0
           token: ${{ secrets.ZQ_UPDATE_PAT }}
       - run: git config --local user.email 'automation@brimsecurity.com'
       - run: git config --local user.name 'Brim Automation'
@@ -111,7 +109,7 @@ jobs:
       - name: Commit and push change
         run: |
           git diff
-          cat << EOF | git commit -a -F-
+          cat << 'EOF' | git commit -a -F-
           zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
 
           This is an auto-generated commit with a zq dependency update. The zq PR
