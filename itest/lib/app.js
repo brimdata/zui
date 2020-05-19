@@ -341,6 +341,8 @@ export const waitForResults = (app: Application) =>
 
 export const ingestFile = async (app: Application, file: string) => {
   // Ingest a file inside the itest/testdata directory
+  await click(app, ".add-tab")
+
   await appStep("wait for pcap file input", () =>
     app.client.waitForVisible(selectors.ingest.filesButton)
   )
