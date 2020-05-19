@@ -15,12 +15,12 @@ import {
 describe("Ingest tests", () => {
   let app
   let testIdx = 0
-  beforeEach(() => {
+  beforeAll(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
     return startApp(app)
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     if (app && app.isRunning()) {
       return await app.stop()
     }
