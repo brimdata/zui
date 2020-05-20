@@ -4,6 +4,7 @@ import {
   type FetchArgs,
   type FetchGenerator,
   type FetchPromise,
+  doFetch,
   fetchGenerator,
   fetchPromise
 } from "./fetcher"
@@ -11,14 +12,18 @@ import defaults from "./defaults"
 import logsApi, {type LogsPostArgs} from "./logsApi"
 import pcapsApi, {type PcapsGetArgs, type PcapsPostArgs} from "./pcapsApi"
 import searchApi from "./searchApi"
-import spacesApi, {type SpacesCreateArgs} from "./spacesApi"
-import type {SpacesUpdateArgs} from "./spacesApi"
+import spacesApi, {
+  type SpacesCreateArgs,
+  type SpacesUpdateArgs
+} from "./spacesApi"
 
 export type TimeArg = string | Date
 export type ZealotSearchArgs = {
   from: TimeArg,
   to: TimeArg,
-  spaceId: string
+  spaceId: string,
+  format: "zjson" | "zng",
+  controlMessages: boolean
 }
 
 function client(hostUrl: string) {
@@ -82,9 +87,10 @@ function client(hostUrl: string) {
       let options = {...searchArgs, ...args}
       let sendArgs = searchApi(zql, options)
       if (debugging()) return sendArgs
-      return sendStream(sendArgs)
+      if (args.format === "zng") return doFetch(host, sendArgs)
+      else return sendStream(sendArgs)
     },
-    searchDefaults(args: ZealotSearchArgs) {
+    searchDefaults(args: $Shape<ZealotSearchArgs>) {
       searchArgs = {
         ...args,
         ...searchArgs

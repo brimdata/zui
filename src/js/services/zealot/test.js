@@ -18,6 +18,14 @@ describe("search api", () => {
       to: "Jan 10, 2019"
     })
   })
+
+  test("changing query params", () => {
+    let {path} = client
+      .inspect()
+      .search("*", {controlMessages: false, format: "zng"})
+
+    expect(path).toEqual(`/search?format=zng&noctrl=true`)
+  })
 })
 
 describe("spaces api", () => {
@@ -56,7 +64,7 @@ describe("ingest api", () => {
   let client = zealot.client("localhost:9867")
 
   test("get pcaps", () => {
-    expect(client.inspect().pcaps.get({space: "hi"})).toEqual({
+    expect(client.inspect().pcaps.get({spaceId: "hi"})).toEqual({
       method: "GET",
       path: "/space/hi/pcap"
     })
@@ -64,7 +72,9 @@ describe("ingest api", () => {
 
   test("post pcaps", () => {
     expect(
-      client.inspect().pcaps.post({space: "default", file: "~/my/capture.pcap"})
+      client
+        .inspect()
+        .pcaps.post({spaceId: "default", file: "~/my/capture.pcap"})
     ).toEqual({
       method: "POST",
       path: "/space/default/pcap",
@@ -74,7 +84,7 @@ describe("ingest api", () => {
 
   test("post logs with no types", () => {
     let paths = ["~/zeek/1.log", "~/zeek/2.log"]
-    expect(client.inspect().logs.post({space: "default", paths})).toEqual({
+    expect(client.inspect().logs.post({spaceId: "default", paths})).toEqual({
       method: "POST",
       path: "/space/default/log",
       body: JSON.stringify({paths})
@@ -93,7 +103,7 @@ describe("ingest api", () => {
   test("post logs with types as a string ", () => {
     let paths = ["~/zeek/1.log", "~/zeek/2.log"]
     let types = '{"descriptors": [], "rules": []}'
-    let data = client.inspect().logs.post({space: "default", paths, types})
+    let data = client.inspect().logs.post({spaceId: "default", paths, types})
 
     expect(JSON.parse(data.body).json_type_config).toEqual({
       descriptors: [],

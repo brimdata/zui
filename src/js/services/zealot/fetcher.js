@@ -45,6 +45,7 @@ export async function* fetchGenerator(
     if (isObject(contents)) throw contents
     else throw new Error(contents)
   }
+
   let {body} = resp
   if (body) {
     for await (let json of jsonPipeIterator(textIterator(body))) {
@@ -53,6 +54,6 @@ export async function* fetchGenerator(
   }
 }
 
-function doFetch(host, {method, path, body}) {
+export function doFetch(host: string, {method, path, body}: FetchArgs) {
   return fetch(url(host, path), {method, body})
 }
