@@ -34,6 +34,10 @@ $mac-spinner-size: 24px;
       animation-delay: ($i - 1) * ($mac-spinner-duration / 12);
     }
   }
+
+  &.light .bar {
+    background: white;
+  }
 }
 
 @keyframes opacity-pulse {
