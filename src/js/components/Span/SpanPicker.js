@@ -22,7 +22,7 @@ export default function SpanPicker() {
       position="bottom right"
       {...reactElementProps("span_menu")}
     >
-      <div>
+      <div title="Choose a preset time span">
         <ToolbarButton
           className="time-span-menu"
           dropdown
