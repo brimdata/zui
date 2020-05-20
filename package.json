@@ -46,7 +46,7 @@
       "./src/js"
     ],
     "testPathIgnorePatterns": [
-      "./src/js/services/zealot"
+      "./src/js/services/zealot/itest"
     ],
     "collectCoverageFrom": [
       "**/*.js",
