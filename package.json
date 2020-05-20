@@ -107,6 +107,7 @@
     "prettier-eslint": "^8.8.2",
     "set-tz": "^0.2.0",
     "spectron": "^9.0.0",
+    "spectron-fake-dialog": "0.0.1",
     "sprintf-js": "^1.0.3",
     "tmp": "^0.1.0",
     "whatwg-fetch": "^3.0.0",
