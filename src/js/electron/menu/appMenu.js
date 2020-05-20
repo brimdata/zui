@@ -67,9 +67,6 @@ export default function appMenu(
   const exportResults = {
     label: "Export Results as ZNG...",
     click: (_: MenuItem, win: BrowserWindow) => {
-      let filePath = "/Users/jkerr/Desktop/results.zng"
-      send("exportResults", filePath)
-      return
       dialog
         .showSaveDialog(win, {
           title: "Export Results as ZNG",
