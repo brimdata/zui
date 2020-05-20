@@ -7,7 +7,6 @@ import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import View from "../state/View"
-import exportResults from "../flows/exportResults"
 import getPersistable from "../state/getPersistable"
 
 export default (store: Store) => {

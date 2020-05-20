@@ -12,7 +12,7 @@ import useDebouncedEffect from "./hooks/useDebouncedEffect"
 
 type Props = {label: boolean, id: string}
 
-export default function PacketsButton({label, id}: Props) {
+export default function PacketsButton({label}: Props) {
   let dispatch = useDispatch()
   let conn = useSelector(LogDetails.getConnLog)
   let space = useSelector(Tab.space)
