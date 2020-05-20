@@ -72,7 +72,11 @@ export default function ExportButton() {
 
   return (
     <div title="Export search results to ZNG file">
-      <ToolbarButton icon={<ExportIcon />} onClick={onClick} />
+      <ToolbarButton
+        icon={<ExportIcon />}
+        onClick={onClick}
+        data-test-locator="export-results"
+      />
       <label>Export</label>
       {status !== "INIT" && <InfoNotice>{messages[status]}</InfoNotice>}
     </div>
