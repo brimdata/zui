@@ -42,8 +42,11 @@ jobs:
         # $GITHUB_EVENT_PATH is the JSON we posted from zq.
         # Variables for other steps get set as described here:
         # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
+        #
         # body can be multiline and must be escaped as described here:
         # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
+        #
+        # Rewrite bare PR numbers as zq PRs (https://github.com/brimsec/brim/issues/797)
         run: |
           sha="$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")"
           echo "::set-output name=sha::$sha"
@@ -52,8 +55,10 @@ jobs:
           number="$(jq -r '.client_payload.number' "${GITHUB_EVENT_PATH}")"
           echo "::set-output name=number::$number"
           title="$(jq -r '.client_payload.title' "${GITHUB_EVENT_PATH}")"
+          title="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimsec/zq$2$3,g; s,^(#\d+)(\W+),brimsec/zq$1$2,g; s,(\W+)(#\d+),$1brimsec/zq$2,g; s,^(#\d+)$,brimsec/zq$1,g;' <<< "${title}")"
           echo "::set-output name=title::$title"
           body="$(jq -r '.client_payload.body' "${GITHUB_EVENT_PATH}")"
+          body="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimsec/zq$2$3,g; s,^(#\d+)(\W+),brimsec/zq$1$2,g; s,(\W+)(#\d+),$1brimsec/zq$2,g; s,^(#\d+)$,brimsec/zq$1,g;' <<< "${body}")"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}"
