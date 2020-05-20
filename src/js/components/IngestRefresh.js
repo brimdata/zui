@@ -31,7 +31,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
 import History from "../state/History"
-import InfoNotice from "./InfoNotice"
+import IngestUpdateNotice from "./IngestUpdateNotice"
 import Search from "../state/Search"
 import Tab from "../state/Tab"
 import brim from "../brim"
@@ -69,7 +69,7 @@ export default function IngestRefresh() {
 
   if (!autoRefresh && snapshot !== snapshotAck) {
     return (
-      <InfoNotice
+      <IngestUpdateNotice
         onClick={(buttonIndex) => {
           ack()
           if (buttonIndex === 0) dispatch(submitSearch(false))
