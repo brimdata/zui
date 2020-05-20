@@ -48,10 +48,6 @@ export default (store: Store) => {
     ipcRenderer.send(channel, getPersistable(store.getState()))
   })
 
-  ipcRenderer.on("exportResults", (e, filePath) => {
-    store.dispatch(exportResults(filePath))
-  })
-
   ipcRenderer.on("showPreferences", () => {
     store.dispatch(Modal.show("settings"))
   })

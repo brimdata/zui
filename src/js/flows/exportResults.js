@@ -6,6 +6,7 @@ import type {Thunk} from "../state/types"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import brim from "../brim"
+import useSetTimeout from "../components/hooks/useSetTimeout"
 
 export default (filePath: string): Thunk => async (dispatch, getState) => {
   let zealot = Tab.getZealot(getState())

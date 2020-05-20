@@ -1,6 +1,6 @@
 /* @noflow */
 
-import {BrowserWindow, app, dialog, shell, MenuItem} from "electron"
+import {app, dialog, shell} from "electron"
 import path from "path"
 
 import type {$WindowManager} from "../tron/windowManager"
@@ -66,18 +66,7 @@ export default function appMenu(
 
   const exportResults = {
     label: "Export Results as ZNG...",
-    click: (_: MenuItem, win: BrowserWindow) => {
-      dialog
-        .showSaveDialog(win, {
-          title: "Export Results as ZNG",
-          buttonLabel: "Export",
-          defaultPath: "results.zng",
-          properties: ["createDirectory"]
-        })
-        .then(({canceled, filePath}) => {
-          if (!canceled && filePath) send("exportResults", filePath)
-        })
-    }
+    click: () => send("exportResults")
   }
 
   const brimMenu = {
