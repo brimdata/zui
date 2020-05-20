@@ -43,6 +43,7 @@ test("two zeek logs in different dir default", () => {
       {type: "log", path: "/work/day-1/zeek.log"},
       {type: "log", path: "/work/day-2/zeek.log"}
     ],
+    "",
     new Date(0)
   )
 

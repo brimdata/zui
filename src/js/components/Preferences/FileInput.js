@@ -5,18 +5,36 @@ import classNames from "classnames"
 import ToolbarButton from "../ToolbarButton"
 import useCallbackRef from "../hooks/useCallbackRef"
 import useDropzone from "../hooks/useDropzone"
+import invoke from "../../electron/ipc/invoke"
+import ipc from "../../electron/ipc"
+import {isEmpty} from "../../lib/Array"
 
 type Props = {|
   defaultValue: string,
   name: string,
   placeholder?: string,
-  onChange?: Function
+  onChange?: Function,
+  isDirInput?: boolean
 |}
 
 export default function FileInput(props: Props) {
   let [picker, ref] = useCallbackRef()
   let [bindDropzone, dragging] = useDropzone(onDrop)
   let [value, setValue] = useState(props.defaultValue)
+
+  function onClick() {
+    const {isDirInput} = props
+    isDirInput
+      ? invoke(ipc.windows.openDirectorySelect()).then(
+          ({canceled, filePaths}) => {
+            const path = canceled || isEmpty(filePaths) ? "" : filePaths[0]
+            setValue((currentVal) => {
+              return canceled ? currentVal : path
+            })
+          }
+        )
+      : picker && picker.click()
+  }
 
   function onChange(e) {
     setValue(e.target.value)
@@ -38,7 +56,7 @@ export default function FileInput(props: Props) {
       <ToolbarButton
         className={classNames({dragging})}
         text="Choose..."
-        onClick={() => picker && picker.click()}
+        onClick={onClick}
         {...bindDropzone()}
       />
       <input

@@ -10,6 +10,7 @@ export type IpcMsg =
   | WindowsInitialStateMsg
   | WindowsDestroyMsg
   | WindowsNewSearchTabMsg
+  | WindowsOpenDirectorySelect
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
 
@@ -36,6 +37,10 @@ export type WindowsDestroyMsg = {
 export type WindowsNewSearchTabMsg = {
   channel: "windows:newSearchTab",
   params: NewTabSearchParams
+}
+
+export type WindowsOpenDirectorySelect = {
+  channel: "windows:openDirectorySelect"
 }
 
 export type GlobalStoreInitMsg = {

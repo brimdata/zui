@@ -25,9 +25,10 @@ export default (
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()
   let jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
+  const dataDir = Prefs.getDataDir(getState())
 
   return lib.transaction([
-    validateInput(paths),
+    validateInput(paths, dataDir),
     createDir(),
     createSpace(client, gDispatch, clusterId),
     registerHandler(dispatch, requestId),
@@ -38,11 +39,11 @@ export default (
   ])
 }
 
-const validateInput = (paths) => ({
+const validateInput = (paths, dataDir) => ({
   async do() {
     let params = await ingest
       .detectFileTypes(paths)
-      .then(ingest.getParams)
+      .then((data) => ingest.getParams(data, dataDir))
       .catch((e) => {
         if (e.message.startsWith("EISDIR"))
           throw new Error(
@@ -68,7 +69,7 @@ const createSpace = (client, dispatch, clusterId) => ({
   async do(params) {
     let createParams
     if (params.dataDir) {
-      createParams = {data_dir: params.dataDir}
+      createParams = {data_path: params.dataDir}
     } else {
       createParams = {name: params.name}
     }

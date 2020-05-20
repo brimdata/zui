@@ -1,5 +1,5 @@
 /* @flow */
-export type SpacesCreateArgs = {name?: string, data_dir?: string}
+export type SpacesCreateArgs = {name?: string, data_path?: string}
 export type SpacesUpdateArgs = {name: string}
 
 export default {

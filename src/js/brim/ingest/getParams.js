@@ -3,6 +3,7 @@ import type {IngestFileType} from "./detectFileType"
 import fileList, {type FileListData} from "./fileList"
 import time from "../time"
 import lib from "../../lib"
+import path from "path"
 
 export type IngestParams = {
   dataDir: string,
@@ -16,6 +17,7 @@ export type IngestParamsError = {
 
 export default function getParams(
   data: FileListData,
+  dataDir?: string,
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
   let files = fileList(data)
@@ -27,8 +29,7 @@ export default function getParams(
   }
 
   function getDataDir() {
-    // TODO: use user preferences when they exist https://github.com/brimsec/brim/issues/676
-    return ""
+    return dataDir ? path.join(dataDir, getSpaceName()) : ""
   }
 
   function getSpaceName() {
