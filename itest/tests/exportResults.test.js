@@ -6,8 +6,8 @@ import path from "path"
 
 import {
   click,
+  ingestFile,
   newAppInstance,
-  pcapIngestSample,
   startApp,
   startSearch,
   writeSearch
@@ -20,10 +20,11 @@ describe("test exporting results", () => {
   let testIdx = 0
 
   beforeAll(async () => {
+    await fsExtra.remove("tmp")
     app = newAppInstance(path.basename(__filename), ++testIdx)
     dialog.apply(app)
     await startApp(app)
-    await pcapIngestSample(app)
+    await ingestFile(app, "sample.tsv")
     await fsExtra.ensureDir("tmp")
   })
 
