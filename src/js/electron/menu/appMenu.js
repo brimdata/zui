@@ -4,7 +4,7 @@ import {shell, app, dialog} from "electron"
 import path from "path"
 
 import type {$WindowManager} from "../tron/windowManager"
-import {type Session} from "../tron"
+import type {Session} from "../tron"
 import config from "../config"
 import electronIsDev from "../isDev"
 import formatSessionState from "../tron/formatSessionState"
