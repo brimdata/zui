@@ -4,8 +4,8 @@ import {basename} from "path"
 
 import {
   click,
+  ingestFile,
   newAppInstance,
-  pcapIngestSample,
   rightClick,
   searchDisplay,
   setSpan,
@@ -24,7 +24,7 @@ describe("Test search mods via right-clicks", () => {
   beforeAll(async () => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await startApp(app)
-    await pcapIngestSample(app)
+    await ingestFile(app, "sample.pcap")
     await setSpan(app, "Whole Space")
   })
 

@@ -10,7 +10,7 @@ import path from "path"
 
 import {LOG} from "./log"
 import {isCI, repoDir} from "../lib/env"
-import {itestDir} from "./env"
+import {itestDir, testDataDir} from "./env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
 
@@ -339,20 +339,18 @@ export const waitForResults = (app: Application) =>
     app.client.waitForVisible(selectors.viewer.results_base)
   )
 
-export const pcapIngestSample = async (app: Application) => {
-  // Ingest a PCAP and wait until we see derived records.
-  await ingestFile(
-    app,
-    path.normalize(path.join(__dirname, "..", "testdata", "sample.pcap"))
-  )
-}
-
 export const ingestFile = async (app: Application, file: string) => {
+  // Ingest a file inside the itest/testdata directory
+  await click(app, ".add-tab")
+
   await appStep("wait for pcap file input", () =>
     app.client.waitForVisible(selectors.ingest.filesButton)
   )
   await appStep("choose file", () =>
-    app.client.chooseFile(selectors.ingest.filesInput, file)
+    app.client.chooseFile(
+      selectors.ingest.filesInput,
+      path.normalize(path.join(testDataDir(), file))
+    )
   )
 
   await appStep("wait for ingest to finish", () =>
