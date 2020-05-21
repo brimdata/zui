@@ -36,7 +36,7 @@ export default function file(p: string) {
     },
 
     contents() {
-      return new Promise<*>((good, bad) => {
+      return new Promise<string[]>((good, bad) => {
         fs.readdir(p, (err, files) => {
           if (err) bad(err)
           else good(files)

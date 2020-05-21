@@ -1,12 +1,9 @@
 /* @flow */
 import {createStore} from "redux"
 
-import {isCurrentVersion} from "../initializers/initPersistance"
 import globalReducer, {type GlobalState} from "./globalReducer"
 
-export default function(prevState: GlobalState | void) {
-  let initState = isCurrentVersion(prevState) ? prevState : undefined
-
+export default function(initState: GlobalState | void) {
   // $FlowFixMe
   return createStore(globalReducer, initState)
 }

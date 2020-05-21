@@ -1,84 +1,81 @@
 /* @flow */
 
+import log from "electron-log"
+
 import {app} from "electron"
 import path from "path"
 
-import type {GlobalState} from "../../state/globalReducer"
-import type {WindowsState, WindowState} from "./windowManager"
+import type {SessionState} from "./formatSessionState"
+import {isNumber} from "../../lib/is"
 import lib from "../../lib"
+import tron from "./"
 
-function sessionStateFile() {
-  // This can't be a const because we adjust the userData path first
-  // thing inside main().
-  return path.join(app.getPath("userData"), "appState.json")
-}
+export default function session(path: string = sessionStateFile()) {
+  let version = 0
 
-export type SessionState = {|
-  order: string[],
-  windows: {
-    [string]: {
-      name: string,
-      position: [number, number],
-      size: [number, number],
-      state: Object
-    }
-  },
-  globalState: GlobalState
-|}
-
-export default function session() {
   return {
-    save(
-      windows: WindowsState,
-      state: GlobalState,
-      path: string = sessionStateFile()
-    ) {
-      let json = this.toJSON(windows, state)
-      return lib.file(path).write(JSON.stringify(json))
+    getVersion() {
+      return version
     },
 
-    load(path: string = sessionStateFile()): ?SessionState {
-      let contents
-
-      try {
-        contents = lib.file(path).readSync()
-      } catch {
-        return undefined
-      }
-
-      try {
-        return JSON.parse(contents)
-      } catch (e) {
-        console.error("Unable to load session state")
-        console.error(e)
-        return undefined
-      }
+    save(data: SessionState, p: string = path) {
+      return lib.file(p).write(JSON.stringify({version, data}))
     },
 
-    toJSON(windows: WindowsState, globalState: GlobalState): SessionState {
-      let groupById = (all, id) => ({
-        ...all,
-        [id]: getWindowData(windows[id])
-      })
-      let order = getWindowOrder(windows)
-      return {
-        order,
-        windows: order.reduce(groupById, {}),
-        globalState
+    load: async function(): Promise<?SessionState> {
+      let saved = await lib
+        .file(path)
+        .read()
+        .then(JSON.parse)
+        .then(migrate)
+        .catch(handleError)
+
+      if (saved) {
+        version = saved.version
+        return saved.data
+      } else {
+        return undefined
       }
     }
   }
 }
 
-function getWindowOrder(windows: WindowsState): string[] {
-  return (
-    Object.entries(windows)
-      // $FlowFixMe
-      .sort((a, b) => a[1].lastFocused - b[1].lastFocused)
-      .map((e) => e[0])
-  )
+function sessionStateFile() {
+  // This can't be a const because we adjust the
+  // userData path first thing inside main().
+  return path.join(app.getPath("userData"), "appState.json")
 }
 
-function getWindowData({name, state, size, position}: WindowState) {
-  return {name, state, size, position}
+type VersionedState = {version: number, data: SessionState}
+
+async function migrate(appState): Promise<VersionedState> {
+  let state = ensureVersioned(appState)
+  let migrations = await tron.migrations(state.version)
+  let pending = migrations.getPending().length
+
+  log.info(`migrations: currentVersion=${state.version} pending=${pending}`)
+
+  if (pending) {
+    log.info("migrations: running")
+    let nextState = migrations.runPending(state)
+    log.info(`migrations: currentVersion=${nextState.version}`)
+    return nextState
+  } else {
+    return state
+  }
+}
+
+function handleError(e) {
+  log.error("Unable to load session state")
+  log.error(e)
+  return undefined
+}
+
+function ensureVersioned(state) {
+  if (isNumber(state.version)) return state
+  else
+    return {
+      version: 0,
+      data: state
+    }
 }

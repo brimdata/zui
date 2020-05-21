@@ -1,16 +1,16 @@
 /* @flow */
 
-import {BrowserWindow} from "electron"
+import {BrowserWindow, ipcMain} from "electron"
 
+import type {NewTabSearchParams} from "../ipc/windows/messages"
 import type {ReturnType} from "../../types"
-import type {SessionState} from "./session"
+import type {SessionState} from "./formatSessionState"
 import type {WindowParams} from "./window"
 import {isBoolean} from "../../lib/is"
 import brim from "../../brim"
-import tron from "./"
-import sendTo from "../ipc/sendTo"
 import ipc from "../ipc"
-import type {NewTabSearchParams} from "../ipc/windows/messages"
+import sendTo from "../ipc/sendTo"
+import tron from "./"
 
 export type WindowName = "search" | "about" | "detail"
 export type $WindowManager = ReturnType<typeof windowManager>
@@ -57,6 +57,26 @@ export default function windowManager() {
       return state
     },
 
+    fetchWindowStates() {
+      return Promise.all(
+        Object.keys(windows).map((id) => {
+          return new Promise((resolve) => {
+            let win = windows[id]
+            let channel = brim.randomHash()
+            let timeout = setTimeout(() => resolve([id, undefined]), 5000)
+
+            ipcMain.once(channel, (event, state) => {
+              clearTimeout(timeout)
+              this.updateWindow(id, {state})
+              resolve([id, state])
+            })
+
+            win.ref.webContents.send("getState", channel)
+          })
+        })
+      )
+    },
+
     getWindows(): WindowState[] {
       // $FlowFixMe
       return Object.values(windows)
@@ -72,6 +92,7 @@ export default function windowManager() {
         [id]: {...windows[id], ...data}
       }
     },
+
     getWindow(id: string): WindowState {
       return windows[id]
     },

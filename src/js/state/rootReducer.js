@@ -2,7 +2,6 @@
 
 import {combineReducers} from "redux"
 
-import {VERSION} from "../initializers/initPersistance"
 import Boomd from "./Boomd"
 import Clusters from "./Clusters"
 import Errors from "./Errors"
@@ -30,6 +29,5 @@ export default combineReducers<*, *>({
   spaces: Spaces.reducer,
   boomd: Boomd.reducer,
   packets: Packets.reducer,
-  prefs: Prefs.reducer,
-  version: () => VERSION
+  prefs: Prefs.reducer
 })

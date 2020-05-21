@@ -1,6 +1,10 @@
 /* @flow */
-import lib from "../../lib"
+import compact from "lodash/compact"
+
 import path from "path"
+
+import type {SessionState} from "../../electron/tron/formatSessionState"
+import lib from "../../lib"
 
 export default (version: string) => {
   let name = `${version}.json`
@@ -15,4 +19,15 @@ To create test state, run the app and navigate to...
 App Menu => Developer => Save Session for Testing Migrations`)
   }
   return JSON.parse(contents)
+}
+
+export function getAllStates(sessionState: SessionState): Object[] {
+  if (!sessionState) return []
+
+  let allStates = [sessionState.globalState]
+  for (let key in sessionState.windows) {
+    allStates.push(sessionState.windows[key].state)
+  }
+
+  return compact(allStates)
 }

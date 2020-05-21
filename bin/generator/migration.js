@@ -15,8 +15,8 @@ export async function handleMigration(input: string) {
   let test = title + ".test.js"
   let dir = path.join(__dirname, "../../src/js/state/migrations")
 
-  let migration = await tron.migration()
-  let prevVersion = migration.latestVersion()
+  let migrations = await tron.migrations()
+  let prevVersion = migrations.getLatestVersion()
 
   write(path.join(dir, file), contents(name))
   write(path.join(dir, test), testContents(title, version, prevVersion))

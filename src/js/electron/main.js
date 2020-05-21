@@ -1,6 +1,7 @@
 /* @flow */
 import {appPathSetup} from "./appPathSetup"
 import Prefs from "../state/Prefs"
+import formatSessionState from "./tron/formatSessionState"
 import userTasks from "./userTasks"
 
 // app path and log setup should happen before other imports.
@@ -30,18 +31,16 @@ import log from "electron-log"
 async function main() {
   if (handleSquirrelEvent(app)) return
   userTasks(app)
-  let session = tron.session()
-  let winMan = tron.windowManager()
-  let sessionState = session.load()
-  let store = createGlobalStore(
-    sessionState ? sessionState.globalState : undefined
-  )
 
+  const session = tron.session()
+  const winMan = tron.windowManager()
+  const data = await session.load()
+  const store = createGlobalStore(data ? data.globalState : undefined)
   const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
   const zeekRunner = Prefs.getZeekRunner(store.getState())
   const zqd = new ZQD(spaceDir, zeekRunner)
 
-  menu.setMenu(winMan, store)
+  menu.setMenu(winMan, store, session)
   zqdMainHandler(zqd)
   windowsMainHandler(winMan)
   globalStoreMainHandler(store, winMan)
@@ -55,21 +54,26 @@ async function main() {
     }
   }
 
-  app.on("ready", () => {
+  function onReady() {
     installExtensions()
     if (app.commandLine.hasSwitch("new-window")) {
       winMan.openWindow("search")
     } else {
-      winMan.init(sessionState)
+      winMan.init(data)
     }
-  })
+  }
+
+  // The app might be ready by the time we get here due to async stuff above
+  if (app.isReady()) onReady()
+  else app.on("ready", onReady)
 
   app.on("before-quit", () => {
     winMan.isQuitting(true)
   })
 
   app.on("quit", () => {
-    session.save(winMan.getState(), store.getState())
+    let data = formatSessionState(winMan.getState(), store.getState())
+    session.save(data)
     zqd.close()
   })
 
