@@ -32,7 +32,7 @@ describe("test exporting results", () => {
     await fsExtra.remove("tmp")
   })
 
-  test("clicking the button", async (done) => {
+  test("clicking the button", async () => {
     let filePath = path.normalize("tmp/test-export-results.zng")
     dialog.mock([
       {
@@ -53,6 +53,5 @@ describe("test exporting results", () => {
 
     let stats = fsExtra.statSync(filePath)
     expect(stats.size).toBeGreaterThan(0)
-    done()
   })
 })

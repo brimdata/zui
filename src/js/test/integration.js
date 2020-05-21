@@ -1,7 +1,7 @@
 /* @flow */
 
 export const itestLocator = "data-test-locator"
-export const locator = (name: string) => `[${itestLocator}]="${name}"`
+export const locator = (name: string) => `[${itestLocator}="${name}"]`
 const dataAttrs = {
   // The purpose of this object is to have a single source of truth where tests
   // and code can identify and find specific elements that integration tests
