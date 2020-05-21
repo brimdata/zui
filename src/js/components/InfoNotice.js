@@ -2,6 +2,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
+import {reactElementProps} from "../test/integration"
 import lib from "../lib"
 
 type Props = {children: *}
@@ -9,7 +10,7 @@ type Props = {children: *}
 export default function InfoNotice({children}: Props) {
   return ReactDOM.createPortal(
     <div className="info-notice-wrapper">
-      <div className="info-notice" data-test-locator="info-notice">
+      <div className="info-notice" {...reactElementProps("infoNotice")}>
         {children}
       </div>
     </div>,

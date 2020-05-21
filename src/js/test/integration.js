@@ -8,6 +8,7 @@ const dataAttrs = {
   // are interested in. This is done by injecting custom data attributes [1]
   // into the DOM.
   // [1] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
+  infoNotice: "infoNotice",
   contextMenu: "contextMenu",
   correlationPanel: "correlationPanel",
   curlCommand: "curlCommand",
@@ -16,6 +17,7 @@ const dataAttrs = {
   debugModal: "debugModal",
   debugProgram: "debugProgram",
   downloadMessage: "downloadMessage",
+  exportResults: "exportResults",
   histogram: "histogram-chart",
   ingestProgress: "ingestProgress",
   killHistogramSearch: "killHistogramSearch",
@@ -79,6 +81,7 @@ const genSelectorForModalButton = (modalTestName: string) => (
 
 export const selectors = {
   downloadMessage: dataAttrSelector("downloadMessage"),
+  infoNotice: dataAttrSelector("infoNotice"),
   correlationPanel: {
     duration: dataAttrSelector("correlationPanel") + " .caption",
     pathTag: dataAttrSelector("correlationPanel") + " .path-tag",
@@ -94,6 +97,9 @@ export const selectors = {
     astError: dataAttrSelector("debugAst"),
     search: dataAttrSelector("debugProgram"),
     done: genSelectorForModalButton("debugModal")("Done")
+  },
+  export: {
+    button: dataAttrSelector("exportResults")
   },
   histogram: {
     topLevel: dataAttrSelector("histogram"),

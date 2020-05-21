@@ -5,6 +5,7 @@ import styled from "styled-components"
 
 import {remote} from "electron"
 
+import {reactElementProps} from "../test/integration"
 import ExportIcon from "../icons/ExportIcon"
 import InfoNotice from "./InfoNotice"
 import MacSpinner from "./MacSpinner"
@@ -75,9 +76,10 @@ export default function ExportButton() {
       <ToolbarButton
         icon={<ExportIcon />}
         onClick={onClick}
-        data-test-locator="export-results"
+        {...reactElementProps("exportResults")}
       />
       <label>Export</label>
+
       {status !== "INIT" && <InfoNotice>{messages[status]}</InfoNotice>}
     </div>
   )

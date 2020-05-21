@@ -12,8 +12,9 @@ import {
   startSearch,
   writeSearch
 } from "../lib/app"
-import {locator} from "../../src/js/test/integration"
 import {retryUntil} from "../lib/control"
+import {selectors} from "../../src/js/test/integration"
+import {stdTest} from "../lib/jest"
 
 describe("test exporting results", () => {
   let app
@@ -33,7 +34,7 @@ describe("test exporting results", () => {
     await fsExtra.remove("tmp")
   })
 
-  test("clicking the button", async () => {
+  stdTest("clicking the button", async (done) => {
     let filePath = path.normalize("tmp/test-export-results.zng")
     dialog.mock([
       {
@@ -46,13 +47,13 @@ describe("test exporting results", () => {
     ])
     await writeSearch(app, "")
     await startSearch(app)
-    await click(app, locator("export-results"))
+    await click(app, selectors.export.button)
     await retryUntil(
-      () => app.client.getText(locator("info-notice")),
+      () => app.client.getText(selectors.infoNotice),
       (text) => /export complete/i.test(text)
     )
-
     let stats = fsExtra.statSync(filePath)
     expect(stats.size).toBeGreaterThan(0)
+    done()
   })
 })
