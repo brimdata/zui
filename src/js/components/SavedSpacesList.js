@@ -11,12 +11,15 @@ import ProgressIndicator from "./ProgressIndicator"
 import TrashBin from "../icons/TrashBin"
 import brim from "../brim"
 import deleteSpace from "../flows/deleteSpace"
+import menu from "../electron/menu"
+import {showContextMenu} from "../lib/System"
 
 type Props = {|
-  spaces: Space[]
+  spaces: Space[],
+  spaceContextMenu: Function
 |}
 
-export default function SavedSpacesList({spaces}: Props) {
+export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
   let dispatch = useDispatch()
 
   const onClick = (space) => (e) => {
@@ -53,7 +56,14 @@ export default function SavedSpacesList({spaces}: Props) {
 
         return (
           <li key={s.id}>
-            <a href="#" onClick={onClick(s.id)} className="space-link">
+            <a
+              href="#"
+              onClick={onClick(s.id)}
+              onContextMenu={() => {
+                showContextMenu(spaceContextMenu(s.id))
+              }}
+              className="space-link"
+            >
               <Folder className="space-icon" />
               <span className="name">{s.name}</span>
             </a>

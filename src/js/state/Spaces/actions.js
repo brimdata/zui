@@ -7,7 +7,8 @@ import type {
   SPACES_INGEST_WARNING_CLEAR,
   SPACES_SET,
   SPACES_REMOVE,
-  Space
+  Space,
+  SPACES_RENAME
 } from "./types"
 import type {SpaceDetailPayload} from "../../services/zealot/types"
 
@@ -25,6 +26,17 @@ export default {
     type: "SPACES_DETAIL",
     clusterId,
     space
+  }),
+
+  rename: (
+    clusterId: string,
+    spaceId: string,
+    newName: string
+  ): SPACES_RENAME => ({
+    type: "SPACES_RENAME",
+    clusterId,
+    spaceId,
+    newName
   }),
 
   remove: (clusterId: string, spaceId: string): SPACES_REMOVE => ({

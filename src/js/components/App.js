@@ -15,6 +15,7 @@ import Prefs from "../state/Prefs"
 import View from "../state/View"
 import brim from "../brim"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
+import SpaceModal from "./SpaceModal"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -36,6 +37,7 @@ export default function App() {
       <ErrorNotice />
       <Preferences />
       <AboutModal />
+      <SpaceModal />
       <HTMLContextMenu />
     </div>
   )

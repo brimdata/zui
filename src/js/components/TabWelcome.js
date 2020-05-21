@@ -15,12 +15,14 @@ import errors from "../errors"
 import ingestFiles from "../flows/ingestFiles"
 import initNewTab from "../flows/initNewTab"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
+import menu from "../electron/menu"
 
 export default function TabWelcome() {
   let dispatch = useDispatch()
   let id = useSelector(Tab.clusterId)
   let spaces = useSelector(Spaces.getSpaces(id))
   let spacesPresent = spaces.length !== 0
+  const spaceContextMenu = menu.spaceContextMenu(id)
 
   useEffect(() => {
     dispatch(initNewTab())
@@ -47,8 +49,11 @@ export default function TabWelcome() {
         {spacesPresent && (
           <>
             <section>
-              <label>Recent Spaces</label>
-              <SavedSpacesList spaces={spaces} />
+              <label>Spaces</label>
+              <SavedSpacesList
+                spaces={spaces}
+                spaceContextMenu={spaceContextMenu}
+              />
             </section>
             <div className="separator" />
           </>

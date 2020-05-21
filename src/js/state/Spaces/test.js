@@ -174,3 +174,14 @@ test("setting the spanshot counter", () => {
 
   expect(Spaces.getIngestSnapshot("cluster1", testSpace1.id)(state)).toBe(1)
 })
+
+test("rename a space", () => {
+  const testRename = "renamed test space"
+
+  const state = store.dispatchAll([
+    Spaces.setSpaces("cluster1", [testSpace1]),
+    Spaces.rename("cluster1", testSpace1.id, testRename)
+  ])
+
+  expect(Spaces.get("cluster1", testSpace1.id)(state).name).toEqual(testRename)
+})

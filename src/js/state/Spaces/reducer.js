@@ -24,6 +24,10 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
       draft[id] = defaults(id, name, {...draft[id], ...space})
       break
 
+    case "SPACES_RENAME":
+      getSpace(draft, action.spaceId).name = action.newName
+      break
+
     case "SPACES_INGEST_PROGRESS":
       getSpace(draft, action.spaceId).ingest.progress = action.value
       break
