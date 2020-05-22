@@ -1,6 +1,7 @@
 /* @flow */
-import {BrowserWindow, dialog, ipcMain} from "electron"
 import log from "electron-log"
+
+import {BrowserWindow, dialog, ipcMain} from "electron"
 
 import type {$WindowManager} from "../../tron/windowManager"
 
@@ -59,5 +60,10 @@ export default function(manager: $WindowManager) {
     return await dialog.showOpenDialog(win, {
       properties: ["openDirectory"]
     })
+  })
+
+  ipcMain.handle("windows:showSaveDialog", async (e, args) => {
+    let win = BrowserWindow.fromWebContents(e.sender)
+    return dialog.showSaveDialog(win, args)
   })
 }

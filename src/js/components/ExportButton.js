@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux"
 import React, {useState} from "react"
 import styled from "styled-components"
 
-import {remote} from "electron"
+import {ipcRenderer} from "electron"
 
 import {reactElementProps} from "../test/integration"
 import ExportIcon from "../icons/ExportIcon"
@@ -37,7 +37,7 @@ const DoneMessage = ({onClick}) => (
 )
 
 function showDialog() {
-  return remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+  return ipcRenderer.invoke("windows:showSaveDialog", {
     title: "Export Results as ZNG",
     buttonLabel: "Export",
     defaultPath: "results.zng",
