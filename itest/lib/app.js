@@ -142,7 +142,7 @@ export const searchDisplayHeaders = async (
   // The hack is to split this and extract just the text.
   const _trim = (s: string) => s.split(">")[1].split("<")[0]
 
-  let headers = await appStep("get search fields", () =>
+  let headers = await appStep("get search headers", () =>
     app.client
       .waitForVisible(selectors.viewer.headers)
       .then(() => app.client.getHTML(selectors.viewer.headers))
@@ -157,19 +157,21 @@ export const searchDisplay = async (
   app: Application,
   includeHeaders: boolean = true
 ): Promise<string[]> => {
-  const searchResults = () =>
-    appStep("get search tuples", () =>
-      app.client
-        .waitForVisible(selectors.viewer.results)
-        .then(() => app.client.getText(selectors.viewer.results))
-    )
+  let searchResults = await appStep("get search records", async () => {
+    await app.client.waitForVisible(selectors.viewer.results)
+    return await app.client.getText(selectors.viewer.results)
+  })
 
-  let headers = []
-  if (includeHeaders) {
+  let headers
+  if (
+    includeHeaders &&
+    (await app.client.isVisible(selectors.viewer.headers))
+  ) {
     headers = await searchDisplayHeaders(app)
+  } else {
+    headers = []
   }
-  let search = await searchResults()
-  return headers.concat(search)
+  return headers.concat(searchResults)
 }
 
 export const getCurrentSpace = (app: Application) =>
