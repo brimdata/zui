@@ -33,7 +33,7 @@ describe("Query tests", () => {
   beforeAll(async () => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await startApp(app)
-    await ingestFile(app, "sample.pcap")
+    await ingestFile(app, "sample.tsv")
     await setSpan(app, "Whole Space")
   })
 
