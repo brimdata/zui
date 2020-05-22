@@ -15,14 +15,14 @@ export default function ZeekRunner({config}: Props) {
   let {name, label, defaultValue} = config
   let [showFeedback, setShowFeedback] = useState(false)
 
-  function onChange(e) {
-    setShowFeedback(e.target.value !== defaultValue)
+  function onChange(val) {
+    setShowFeedback(val !== defaultValue)
   }
 
   return (
     <div className="setting-panel">
       <label>
-        {config.label}: <Link href={DOCS}>(docs)</Link>
+        {label}: <Link href={DOCS}>(docs)</Link>
       </label>
       <FileInput
         name={name}

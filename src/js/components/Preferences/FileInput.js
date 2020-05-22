@@ -38,17 +38,19 @@ export default function FileInput(props: Props) {
 
   function onChange(e) {
     setValue(e.target.value)
-    props.onChange && props.onChange(e)
+    props.onChange && props.onChange(e.target.value)
   }
 
   function onPick(e) {
     let path = Array.from(e.target.files).map((f) => f.path)[0]
     setValue(path)
+    props.onChange && props.onChange(path)
   }
 
   function onDrop(e) {
     let path = Array.from(e.dataTransfer.files).map((f) => f.path)[0]
     setValue(path)
+    props.onChange && props.onChange(path)
   }
 
   return (
