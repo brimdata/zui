@@ -1,0 +1,773 @@
+{
+  "descriptors": {
+    "capture_loss_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "ts_delta",
+        "type": "duration"
+      },
+      {
+        "name": "peer",
+        "type": "bstring"
+      },
+      {
+        "name": "gaps",
+        "type": "uint64"
+      },
+      {
+        "name": "acks",
+        "type": "uint64"
+      },
+      {
+        "name": "percent_lost",
+        "type": "float64"
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ],
+    "conn_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "uid",
+        "type": "bstring"
+      },
+      {
+        "name": "id",
+        "type": [
+          {
+            "name": "orig_h",
+            "type": "ip"
+          },
+          {
+            "name": "orig_p",
+            "type": "port"
+          },
+          {
+            "name": "resp_h",
+            "type": "ip"
+          },
+          {
+            "name": "resp_p",
+            "type": "port"
+          }
+        ]
+      },
+      {
+        "name": "proto",
+        "type": "zenum"
+      },
+      {
+        "name": "service",
+        "type": "bstring"
+      },
+      {
+        "name": "duration",
+        "type": "duration"
+      },
+      {
+        "name": "orig_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "resp_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "conn_state",
+        "type": "bstring"
+      },
+      {
+        "name": "local_orig",
+        "type": "bool"
+      },
+      {
+        "name": "local_resp",
+        "type": "bool"
+      },
+      {
+        "name": "missed_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "history",
+        "type": "bstring"
+      },
+      {
+        "name": "orig_pkts",
+        "type": "uint64"
+      },
+      {
+        "name": "orig_ip_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "resp_pkts",
+        "type": "uint64"
+      },
+      {
+        "name": "resp_ip_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "tunnel_parents",
+        "type": "set[bstring]"
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ],
+    "dns_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "uid",
+        "type": "bstring"
+      },
+      {
+        "name": "id",
+        "type": [
+          {
+            "name": "orig_h",
+            "type": "ip"
+          },
+          {
+            "name": "orig_p",
+            "type": "port"
+          },
+          {
+            "name": "resp_h",
+            "type": "ip"
+          },
+          {
+            "name": "resp_p",
+            "type": "port"
+          }
+        ]
+      },
+      {
+        "name": "proto",
+        "type": "zenum"
+      },
+      {
+        "name": "trans_id",
+        "type": "uint64"
+      },
+      {
+        "name": "rtt",
+        "type": "duration"
+      },
+      {
+        "name": "query",
+        "type": "bstring"
+      },
+      {
+        "name": "qclass",
+        "type": "uint64"
+      },
+      {
+        "name": "qclass_name",
+        "type": "bstring"
+      },
+      {
+        "name": "qtype",
+        "type": "uint64"
+      },
+      {
+        "name": "qtype_name",
+        "type": "bstring"
+      },
+      {
+        "name": "rcode",
+        "type": "uint64"
+      },
+      {
+        "name": "rcode_name",
+        "type": "bstring"
+      },
+      {
+        "name": "AA",
+        "type": "bool"
+      },
+      {
+        "name": "TC",
+        "type": "bool"
+      },
+      {
+        "name": "RD",
+        "type": "bool"
+      },
+      {
+        "name": "RA",
+        "type": "bool"
+      },
+      {
+        "name": "Z",
+        "type": "uint64"
+      },
+      {
+        "name": "answers",
+        "type": "array[bstring]"
+      },
+      {
+        "name": "TTLs",
+        "type": "array[duration]"
+      },
+      {
+        "name": "rejected",
+        "type": "bool"
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ],
+    "files_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "fuid",
+        "type": "bstring"
+      },
+      {
+        "name": "tx_hosts",
+        "type": "set[ip]"
+      },
+      {
+        "name": "rx_hosts",
+        "type": "set[ip]"
+      },
+      {
+        "name": "conn_uids",
+        "type": "set[bstring]"
+      },
+      {
+        "name": "source",
+        "type": "bstring"
+      },
+      {
+        "name": "depth",
+        "type": "uint64"
+      },
+      {
+        "name": "analyzers",
+        "type": "set[bstring]"
+      },
+      {
+        "name": "mime_type",
+        "type": "bstring"
+      },
+      {
+        "name": "filename",
+        "type": "bstring"
+      },
+      {
+        "name": "duration",
+        "type": "duration"
+      },
+      {
+        "name": "local_orig",
+        "type": "bool"
+      },
+      {
+        "name": "is_orig",
+        "type": "bool"
+      },
+      {
+        "name": "seen_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "total_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "missing_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "overflow_bytes",
+        "type": "uint64"
+      },
+      {
+        "name": "timedout",
+        "type": "bool"
+      },
+      {
+        "name": "parent_fuid",
+        "type": "bstring"
+      },
+      {
+        "name": "md5",
+        "type": "bstring"
+      },
+      {
+        "name": "sha1",
+        "type": "bstring"
+      },
+      {
+        "name": "sha256",
+        "type": "bstring"
+      },
+      {
+        "name": "extracted",
+        "type": "bstring"
+      },
+      {
+        "name": "extracted_cutoff",
+        "type": "bool"
+      },
+      {
+        "name": "extracted_size",
+        "type": "uint64"
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ],
+    "ssl_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "uid",
+        "type": "bstring"
+      },
+      {
+        "name": "id",
+        "type": [
+          {
+            "name": "orig_h",
+            "type": "ip"
+          },
+          {
+            "name": "orig_p",
+            "type": "port"
+          },
+          {
+            "name": "resp_h",
+            "type": "ip"
+          },
+          {
+            "name": "resp_p",
+            "type": "port"
+          }
+        ]
+      },
+      {
+        "name": "version",
+        "type": "bstring"
+      },
+      {
+        "name": "cipher",
+        "type": "bstring"
+      },
+      {
+        "name": "curve",
+        "type": "bstring"
+      },
+      {
+        "name": "server_name",
+        "type": "bstring"
+      },
+      {
+        "name": "resumed",
+        "type": "bool"
+      },
+      {
+        "name": "last_alert",
+        "type": "bstring"
+      },
+      {
+        "name": "next_protocol",
+        "type": "bstring"
+      },
+      {
+        "name": "established",
+        "type": "bool"
+      },
+      {
+        "name": "cert_chain_fuids",
+        "type": "array[bstring]"
+      },
+      {
+        "name": "client_cert_chain_fuids",
+        "type": "array[bstring]"
+      },
+      {
+        "name": "subject",
+        "type": "bstring"
+      },
+      {
+        "name": "issuer",
+        "type": "bstring"
+      },
+      {
+        "name": "client_subject",
+        "type": "bstring"
+      },
+      {
+        "name": "client_issuer",
+        "type": "bstring"
+      },
+      {
+        "name": "validation_status",
+        "type": "bstring"
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ],
+    "stats_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "peer",
+        "type": "bstring"
+      },
+      {
+        "name": "mem",
+        "type": "uint64"
+      },
+      {
+        "name": "pkts_proc",
+        "type": "uint64"
+      },
+      {
+        "name": "bytes_recv",
+        "type": "uint64"
+      },
+      {
+        "name": "pkts_dropped",
+        "type": "uint64"
+      },
+      {
+        "name": "pkts_link",
+        "type": "uint64"
+      },
+      {
+        "name": "pkt_lag",
+        "type": "duration"
+      },
+      {
+        "name": "events_proc",
+        "type": "uint64"
+      },
+      {
+        "name": "events_queued",
+        "type": "uint64"
+      },
+      {
+        "name": "active_tcp_conns",
+        "type": "uint64"
+      },
+      {
+        "name": "active_udp_conns",
+        "type": "uint64"
+      },
+      {
+        "name": "active_icmp_conns",
+        "type": "uint64"
+      },
+      {
+        "name": "tcp_conns",
+        "type": "uint64"
+      },
+      {
+        "name": "udp_conns",
+        "type": "uint64"
+      },
+      {
+        "name": "icmp_conns",
+        "type": "uint64"
+      },
+      {
+        "name": "timers",
+        "type": "uint64"
+      },
+      {
+        "name": "active_timers",
+        "type": "uint64"
+      },
+      {
+        "name": "files",
+        "type": "uint64"
+      },
+      {
+        "name": "active_files",
+        "type": "uint64"
+      },
+      {
+        "name": "dns_requests",
+        "type": "uint64"
+      },
+      {
+        "name": "active_dns_requests",
+        "type": "uint64"
+      },
+      {
+        "name": "reassem_tcp_size",
+        "type": "uint64"
+      },
+      {
+        "name": "reassem_file_size",
+        "type": "uint64"
+      },
+      {
+        "name": "reassem_frag_size",
+        "type": "uint64"
+      },
+      {
+        "name": "reassem_unknown_size",
+        "type": "uint64"
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ],
+    "weird_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "uid",
+        "type": "bstring"
+      },
+      {
+        "name": "id",
+        "type": [
+          {
+            "name": "orig_h",
+            "type": "ip"
+          },
+          {
+            "name": "orig_p",
+            "type": "port"
+          },
+          {
+            "name": "resp_h",
+            "type": "ip"
+          },
+          {
+            "name": "resp_p",
+            "type": "port"
+          }
+        ]
+      },
+      {
+        "name": "name",
+        "type": "bstring"
+      },
+      {
+        "name": "addl",
+        "type": "bstring"
+      },
+      {
+        "name": "notice",
+        "type": "bool"
+      },
+      {
+        "name": "peer",
+        "type": "bstring"
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ],
+    "x509_log": [
+      {
+        "name": "_path",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "id",
+        "type": "bstring"
+      },
+      {
+        "name": "certificate",
+        "type": [
+          {
+            "name": "version",
+            "type": "uint64"
+          },
+          {
+            "name": "serial",
+            "type": "bstring"
+          },
+          {
+            "name": "subject",
+            "type": "bstring"
+          },
+          {
+            "name": "issuer",
+            "type": "bstring"
+          },
+          {
+            "name": "not_valid_before",
+            "type": "time"
+          },
+          {
+            "name": "not_valid_after",
+            "type": "time"
+          },
+          {
+            "name": "key_alg",
+            "type": "bstring"
+          },
+          {
+            "name": "sig_alg",
+            "type": "bstring"
+          },
+          {
+            "name": "key_type",
+            "type": "bstring"
+          },
+          {
+            "name": "key_length",
+            "type": "uint64"
+          },
+          {
+            "name": "exponent",
+            "type": "bstring"
+          },
+          {
+            "name": "curve",
+            "type": "bstring"
+          }
+        ]
+      },
+      {
+        "name": "san",
+        "type": [
+          {
+            "name": "dns",
+            "type": "array[bstring]"
+          },
+          {
+            "name": "uri",
+            "type": "array[bstring]"
+          },
+          {
+            "name": "email",
+            "type": "array[bstring]"
+          },
+          {
+            "name": "ip",
+            "type": "array[ip]"
+          }
+        ]
+      },
+      {
+        "name": "basic_constraints",
+        "type": [
+          {
+            "name": "ca",
+            "type": "bool"
+          },
+          {
+            "name": "path_len",
+            "type": "uint64"
+          }
+        ]
+      },
+      {
+        "name": "_write_ts",
+        "type": "time"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "descriptor": "capture_loss_log",
+      "name": "_path",
+      "value": "capture_loss"
+    },
+    {
+      "descriptor": "conn_log",
+      "name": "_path",
+      "value": "conn"
+    },
+    {
+      "descriptor": "dns_log",
+      "name": "_path",
+      "value": "dns"
+    },
+    {
+      "descriptor": "files_log",
+      "name": "_path",
+      "value": "files"
+    },
+    {
+      "descriptor": "ssl_log",
+      "name": "_path",
+      "value": "ssl"
+    },
+    {
+      "descriptor": "stats_log",
+      "name": "_path",
+      "value": "stats"
+    },
+    {
+      "descriptor": "weird_log",
+      "name": "_path",
+      "value": "weird"
+    },
+    {
+      "descriptor": "x509_log",
+      "name": "_path",
+      "value": "x509"
+    }
+  ]
+}
