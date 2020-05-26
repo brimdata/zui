@@ -11,7 +11,7 @@
       },
       {
         "name": "ts_delta",
-        "type": "duration"
+        "type": "float64"
       },
       {
         "name": "peer",
@@ -78,7 +78,7 @@
       },
       {
         "name": "duration",
-        "type": "duration"
+        "type": "float64"
       },
       {
         "name": "orig_bytes",
@@ -177,7 +177,7 @@
       },
       {
         "name": "rtt",
-        "type": "duration"
+        "type": "float64"
       },
       {
         "name": "query",
@@ -233,7 +233,7 @@
       },
       {
         "name": "TTLs",
-        "type": "array[duration]"
+        "type": "array[float64]"
       },
       {
         "name": "rejected",
@@ -291,7 +291,7 @@
       },
       {
         "name": "duration",
-        "type": "duration"
+        "type": "float64"
       },
       {
         "name": "local_orig",
@@ -488,7 +488,7 @@
       },
       {
         "name": "pkt_lag",
-        "type": "duration"
+        "type": "float64"
       },
       {
         "name": "events_proc",
