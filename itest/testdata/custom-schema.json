@@ -61,7 +61,7 @@
       },
       {
         "name": "proto",
-        "type": "zenum"
+        "type": "string"
       },
       {
         "name": "service",
@@ -151,7 +151,7 @@
       },
       {
         "name": "proto",
-        "type": "zenum"
+        "type": "string"
       },
       {
         "name": "trans_id",
