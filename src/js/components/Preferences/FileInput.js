@@ -22,7 +22,8 @@ export default function FileInput(props: Props) {
   let [bindDropzone, dragging] = useDropzone(onDrop)
   let [value, setValue] = useState(props.defaultValue)
 
-  function onClick() {
+  function onClick(e) {
+    e && e.preventDefault()
     const {isDirInput} = props
     isDirInput
       ? invoke(ipc.windows.openDirectorySelect()).then(
