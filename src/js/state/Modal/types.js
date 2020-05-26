@@ -21,3 +21,4 @@ export type ModalName =
   | "zq"
   | "about"
   | "ingest-warnings"
+  | "space"

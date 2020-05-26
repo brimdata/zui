@@ -14,6 +14,7 @@ export type SpacesState = {
 export type SpacesAction =
   | SPACES_SET
   | SPACES_DETAIL
+  | SPACES_RENAME
   | SPACES_INGEST_PROGRESS
   | SPACES_INGEST_WARNING_APPEND
   | SPACES_INGEST_WARNING_CLEAR
@@ -45,6 +46,13 @@ export type SPACES_DETAIL = {
   type: "SPACES_DETAIL",
   clusterId: string,
   space: $Shape<Space> | SpaceDetailPayload
+}
+
+export type SPACES_RENAME = {
+  type: "SPACES_RENAME",
+  clusterId: string,
+  spaceId: string,
+  newName: string
 }
 
 export type SPACES_INGEST_PROGRESS = {

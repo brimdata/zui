@@ -6,6 +6,7 @@ import actions from "./actions"
 import appMenu from "./appMenu"
 import detailFieldContextMenu from "./detailFieldContextMenu"
 import searchFieldContextMenu from "./searchFieldContextMenu"
+import spaceContextMenu from "./spaceContextMenu"
 
 export type $MenuItem =
   | {click?: Function, label: string, enabled?: boolean}
@@ -28,5 +29,6 @@ export default {
   actions,
   searchFieldContextMenu,
   detailFieldContextMenu,
+  spaceContextMenu,
   separator: () => ({type: "separator"})
 }
