@@ -15,8 +15,6 @@
   color: white;
   border-radius: 8px;
   height: 32px;
-  padding: 0px 4px;
-  padding-left: 24px;
   box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.4),
     inset 0 0 0 0.5px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -24,11 +22,13 @@
   @include label-normal;
   bottom: 48px;
   animation: popup 2s;
-  button {
-    margin: 0 6px;
-  }
+
   .x-button {
-    margin-left: 12px;
+    margin-right: 6px;
+  }
+
+  p {
+    margin: 0 12px;
   }
 }
 

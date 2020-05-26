@@ -28,7 +28,7 @@ export default function SpanControls() {
 
   return (
     <div className={classNames("time-span-pickers")}>
-      <div>
+      <div title="Click to set the start time for the search">
         <TimeButton
           timeArg={from}
           prevTimeArg={prev && prev[0]}
@@ -38,7 +38,7 @@ export default function SpanControls() {
         <label>From</label>
       </div>
       <SpanDuration spanArgs={[from, to]} />
-      <div>
+      <div title="Click to set the start time for the search">
         <TimeButton
           timeArg={to}
           prevTimeArg={prev && prev[1]}

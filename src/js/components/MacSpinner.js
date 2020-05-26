@@ -1,9 +1,12 @@
 /* @flow */
 import React from "react"
+import classNames from "classnames"
 
-export default function MacSpinner() {
+type Props = {light?: boolean}
+
+export default function MacSpinner({light}: Props) {
   return (
-    <div className="mac-spinner">
+    <div className={classNames("mac-spinner", {light})}>
       <div className="bar-container">
         <div className="bar" />
         <div className="bar" />

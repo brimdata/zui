@@ -6,10 +6,10 @@ import closeWindow from "../flows/closeWindow"
 import initBoom from "./initBoom"
 import initDOM from "./initDOM"
 import initGlobalStore from "./initGlobalStore"
+import initIpcListeners from "./initIpcListeners"
 import initMenuActionListeners from "./initMenuActionListeners"
 import initNewSearchTab from "./initNewSearchTab"
 import initQueryParams, {getQueryParams} from "./initQueryParams"
-import initShortcuts from "./initShortcuts"
 import initStore from "./initStore"
 import initUserInputClasses from "./initUserInputClasses"
 import invoke from "../electron/ipc/invoke"
@@ -32,7 +32,7 @@ export default () => {
 
     initDOM("app-root")
     initUserInputClasses()
-    initShortcuts(store)
+    initIpcListeners(store)
     initMenuActionListeners(dispatch)
     initQueryParams(store)
 

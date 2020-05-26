@@ -2,20 +2,16 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
-import XButton from "./XButton"
+import {reactElementProps} from "../test/integration"
 import lib from "../lib"
 
-type Props = {|onClick: (number) => void|}
+type Props = {children: *}
 
-export default function InfoNotice({onClick}: Props) {
+export default function InfoNotice({children}: Props) {
   return ReactDOM.createPortal(
     <div className="info-notice-wrapper">
-      <div className="info-notice">
-        More data is now available.
-        <button className="bevel-button" onClick={() => onClick(0)}>
-          Refresh
-        </button>
-        <XButton onClick={() => onClick(1)} />
+      <div className="info-notice" {...reactElementProps("infoNotice")}>
+        {children}
       </div>
     </div>,
     lib.doc.id("tooltip-root")

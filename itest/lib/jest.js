@@ -49,7 +49,7 @@ export const handleError = async (
 // buffered and printed later.
 export const stdTest = (
   descr: string,
-  f: (done: *) => void,
+  f: (done: *) => void | Promise<void>,
   timeout: number = TestTimeout
 ) => {
   test(

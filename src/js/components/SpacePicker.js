@@ -40,7 +40,7 @@ export default function SpacePicker() {
   }
 
   return (
-    <div>
+    <div title="Open an different space">
       <ToolbarButton
         icon={<Folder />}
         text={space}

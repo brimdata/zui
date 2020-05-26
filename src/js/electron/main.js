@@ -104,4 +104,6 @@ async function main() {
   })
 }
 
-main()
+main().then(() => {
+  if (process.env.BRIM_ITEST === "true") require("./itest")
+})

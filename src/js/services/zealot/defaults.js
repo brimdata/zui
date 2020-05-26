@@ -6,7 +6,9 @@ export default {
     return {
       from: "now - 30d",
       to: "now",
-      spaceId: "default"
+      spaceId: "default",
+      format: "zjson",
+      controlMessages: true
     }
   },
   host(hostUrl: string): string {

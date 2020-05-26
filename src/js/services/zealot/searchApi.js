@@ -8,9 +8,20 @@ import brim from "../../brim"
 export default function searchApi(zql: string, args: ZealotSearchArgs) {
   return {
     method: "POST",
-    path: "/search?format=zjson",
+    path: `/search?${getQueryParams(args)}`,
     body: JSON.stringify(getSearchBody(zql, args))
   }
+}
+
+function getQueryParams(args) {
+  let p = new URLSearchParams()
+  p.set("format", args.format)
+
+  if (args.controlMessages === false) {
+    p.set("noctrl", "true")
+  }
+
+  return p.toString()
 }
 
 export function getSearchBody(
@@ -22,7 +33,7 @@ export function getSearchBody(
   let toTs = getTime(to)
   return {
     proc,
-    spaceId,
+    space: spaceId,
     dir: -1,
     span: {
       ts: fromTs,

@@ -1,6 +1,6 @@
 /* @noflow */
 
-import {shell, app, dialog} from "electron"
+import {app, dialog, shell} from "electron"
 import path from "path"
 
 import type {$WindowManager} from "../tron/windowManager"
@@ -64,6 +64,11 @@ export default function appMenu(
     }
   }
 
+  const exportResults = {
+    label: "Export Results as ZNG...",
+    click: () => send("exportResults")
+  }
+
   const brimMenu = {
     label: "Brim",
     submenu: [
@@ -82,9 +87,19 @@ export default function appMenu(
 
   function fileSubmenu() {
     if (mac) {
-      return [newWindow, __, closeTab, closeWindow]
+      return [newWindow, __, exportResults, __, closeTab, closeWindow]
     } else {
-      return [newWindow, __, preferences, __, closeTab, closeWindow, exit]
+      return [
+        newWindow,
+        __,
+        exportResults,
+        __,
+        preferences,
+        __,
+        closeTab,
+        closeWindow,
+        exit
+      ]
     }
   }
 

@@ -4,7 +4,6 @@ import React, {useState} from "react"
 
 import {downloadPcap} from "../flows/downloadPcap"
 import {reactElementProps} from "../test/integration"
-import BrimTooltip from "./BrimTooltip"
 import LogDetails from "../state/LogDetails"
 import Sharkfin from "../icons/Sharkfin"
 import Tab from "../state/Tab"
@@ -13,7 +12,7 @@ import useDebouncedEffect from "./hooks/useDebouncedEffect"
 
 type Props = {label: boolean, id: string}
 
-export default function PacketsButton({label, id}: Props) {
+export default function PacketsButton({label}: Props) {
   let dispatch = useDispatch()
   let conn = useSelector(LogDetails.getConnLog)
   let space = useSelector(Tab.space)
@@ -28,21 +27,14 @@ export default function PacketsButton({label, id}: Props) {
     if (conn) dispatch(downloadPcap(conn))
   }
 
-  function getTip() {
+  function getTitle() {
     if (!space.pcap_support) return "This space has no pcap support."
     if (conn) return "Open packets from this connection."
     else return "No connection record found."
   }
 
   return (
-    <div
-      className="packets-button"
-      data-tip=""
-      data-place="bottom"
-      data-effect="solid"
-      data-delay-show={500}
-      data-for={id}
-    >
+    <div className="packets-button" title={getTitle()}>
       <ToolbarButton
         icon={<Sharkfin />}
         disabled={!enabled}
@@ -50,7 +42,6 @@ export default function PacketsButton({label, id}: Props) {
         {...reactElementProps("pcapsButton")}
       />
       {label && <label>Packets</label>}
-      <BrimTooltip id={id}>{getTip()}</BrimTooltip>
     </div>
   )
 }
