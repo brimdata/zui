@@ -28,10 +28,6 @@
       {
         "name": "percent_lost",
         "type": "float64"
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ],
     "conn_log": [
@@ -127,10 +123,6 @@
       {
         "name": "tunnel_parents",
         "type": "set[string]"
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ],
     "dns_log": [
@@ -238,10 +230,6 @@
       {
         "name": "rejected",
         "type": "bool"
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ],
     "files_log": [
@@ -348,10 +336,6 @@
       {
         "name": "extracted_size",
         "type": "uint64"
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ],
     "ssl_log": [
@@ -447,10 +431,6 @@
       {
         "name": "validation_status",
         "type": "string"
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ],
     "stats_log": [
@@ -561,10 +541,6 @@
       {
         "name": "reassem_unknown_size",
         "type": "uint64"
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ],
     "weird_log": [
@@ -616,10 +592,6 @@
       {
         "name": "peer",
         "type": "string"
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ],
     "x509_log": [
@@ -721,10 +693,6 @@
             "type": "uint64"
           }
         ]
-      },
-      {
-        "name": "_write_ts",
-        "type": "time"
       }
     ]
   },
