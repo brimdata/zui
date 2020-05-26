@@ -51,20 +51,13 @@
         "name": "src_port",
         "type": "uint16"
       },
-
       {
         "name": "dst_ip",
         "type": "string"
       },
-
       {
-        "name": "id",
-        "type": [
-          {
-            "name": "resp_p",
-            "type": "port"
-          }
-        ]
+        "name": "dst_port",
+        "type": "uint16"
       },
       {
         "name": "proto",
@@ -153,13 +146,8 @@
         "type": "string"
       },
       {
-        "name": "id",
-        "type": [
-          {
-            "name": "resp_p",
-            "type": "port"
-          }
-        ]
+        "name": "dst_port",
+        "type": "uint16"
       },
       {
         "name": "proto",
@@ -366,13 +354,8 @@
         "type": "string"
       },
       {
-        "name": "id",
-        "type": [
-          {
-            "name": "resp_p",
-            "type": "port"
-          }
-        ]
+        "name": "dst_port",
+        "type": "uint16"
       },
       {
         "name": "version",
@@ -571,13 +554,8 @@
         "type": "string"
       },
       {
-        "name": "id",
-        "type": [
-         {
-            "name": "resp_p",
-            "type": "port"
-          }
-        ]
+        "name": "dst_port",
+        "type": "uint16"
       },
       {
         "name": "name",
