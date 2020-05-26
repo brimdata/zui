@@ -25,7 +25,11 @@ export default function form(element: HTMLFormElement, config: FormConfig) {
     async isValid() {
       errors = []
       for (let field of fields()) {
-        let [passed, message] = await field.check()
+        let check = await field.check()
+        if (!Array.isArray(check))
+          throw new Error(`${field.name} check did not return an array`)
+
+        let [passed, message] = check
         if (!passed) errors.push(field.buildError(message))
       }
       return errors.length === 0
@@ -52,6 +56,7 @@ function getFields(el, config) {
     let safeSubmit = submit || ((_) => {})
 
     fields.push({
+      name,
       input,
       check: () => safeCheck(value),
       submit: () => safeSubmit(value),

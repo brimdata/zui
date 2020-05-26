@@ -48,6 +48,7 @@ export default function usePreferencesForm(): FormConfig {
           .file(path)
           .read()
           .then((text) => JSON.parse(text))
+          .then(() => [true, ""])
           .catch((e) => {
             let msg = e.name + ": " + e.message
             if (/SyntaxError/.test(msg)) {
