@@ -128,7 +128,9 @@ export const getSearchText = (app: Application): Promise<string> =>
 export const startSearch = (app: Application) =>
   appStep("click the search button", () => app.client.keys("Enter"))
 
-export const searchDisplayHeaders = async (app: Application) => {
+export const searchDisplayHeaders = async (
+  app: Application
+): Promise<string[]> => {
   // This stinks. We have to use getHTML because headers that are off the
   // screen return as empty strings if you use getText. This isn't required of
   // actual results.
@@ -140,36 +142,36 @@ export const searchDisplayHeaders = async (app: Application) => {
   // The hack is to split this and extract just the text.
   const _trim = (s: string) => s.split(">")[1].split("<")[0]
 
-  return appStep("get search fields", () =>
+  let headers = await appStep("get search headers", () =>
     app.client
       .waitForVisible(selectors.viewer.headers)
       .then(() => app.client.getHTML(selectors.viewer.headers))
-  ).then((headers) => {
-    if (typeof headers === "string") {
-      headers = [headers]
-    }
-    return headers.map((h) => _trim(h))
-  })
+  )
+  if (typeof headers === "string") {
+    headers = [headers]
+  }
+  return headers.map((h) => _trim(h))
 }
 
 export const searchDisplay = async (
   app: Application,
   includeHeaders: boolean = true
-) => {
-  const searchResults = () =>
-    appStep("get search tuples", () =>
-      app.client
-        .waitForVisible(selectors.viewer.results)
-        .then(() => app.client.getText(selectors.viewer.results))
-    )
+): Promise<string[]> => {
+  let searchResults = await appStep("get search records", async () => {
+    await app.client.waitForVisible(selectors.viewer.results)
+    return await app.client.getText(selectors.viewer.results)
+  })
 
-  let headers = ""
-  if (includeHeaders) {
+  let headers
+  if (
+    includeHeaders &&
+    (await app.client.isVisible(selectors.viewer.headers))
+  ) {
     headers = await searchDisplayHeaders(app)
+  } else {
+    headers = []
   }
-  let search = await searchResults()
-  // $FlowFixMe
-  return headers.concat(search)
+  return headers.concat(searchResults)
 }
 
 export const getCurrentSpace = (app: Application) =>

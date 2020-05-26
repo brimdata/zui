@@ -22,7 +22,8 @@ const simpleQueries = [
   "_path=conn | count()",
   "_path=conn | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts",
   "* | every 2s count() | sort ts",
-  "* | every 2s count() by _path | sort ts, _path"
+  "* | every 2s count() by _path | sort ts, _path",
+  "_path=x509 or _path=ssl | sort _path"
 ]
 
 describe("Query tests", () => {
@@ -32,7 +33,7 @@ describe("Query tests", () => {
   beforeAll(async () => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await startApp(app)
-    await ingestFile(app, "sample.pcap")
+    await ingestFile(app, "sample.tsv")
     await setSpan(app, "Whole Space")
   })
 
