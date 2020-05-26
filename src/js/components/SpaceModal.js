@@ -26,7 +26,7 @@ export default function SpaceModal() {
 const SpaceModalContents = () => {
   const {spaceId, clusterId} = useSelector(Modal.getArgs)
   const space = useSelector(Spaces.get(clusterId, spaceId))
-  const {name} = space || ""
+  const {name} = space || {name: ""}
   const [nameInput, setNameInput] = useState(name)
   const dispatch = useDispatch()
 
