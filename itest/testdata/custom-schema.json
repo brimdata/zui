@@ -237,11 +237,11 @@
       },
       {
         "name": "tx_hosts",
-        "type": "set[ip]"
+        "type": "set[string]"
       },
       {
         "name": "rx_hosts",
-        "type": "set[ip]"
+        "type": "set[string]"
       },
       {
         "name": "conn_uids",
@@ -657,7 +657,7 @@
           },
           {
             "name": "ip",
-            "type": "array[ip]"
+            "type": "array[string]"
           }
         ]
       },
