@@ -48,6 +48,11 @@
         "type": "string"
       },
       {
+        "name": "src_port",
+        "type": "uint16"
+      },
+
+      {
         "name": "dst_ip",
         "type": "string"
       },
@@ -55,10 +60,6 @@
       {
         "name": "id",
         "type": [
-          {
-            "name": "orig_p",
-            "type": "port"
-          },
           {
             "name": "resp_p",
             "type": "port"
@@ -144,16 +145,16 @@
         "type": "string"
       },
       {
+        "name": "src_port",
+        "type": "uint16"
+      },
+      {
         "name": "dst_ip",
         "type": "string"
       },
       {
         "name": "id",
         "type": [
-          {
-            "name": "orig_p",
-            "type": "port"
-          },
           {
             "name": "resp_p",
             "type": "port"
@@ -357,16 +358,16 @@
         "type": "string"
       },
       {
+        "name": "src_port",
+        "type": "uint16"
+      },
+      {
         "name": "dst_ip",
         "type": "string"
       },
       {
         "name": "id",
         "type": [
-          {
-            "name": "orig_p",
-            "type": "port"
-          },
           {
             "name": "resp_p",
             "type": "port"
@@ -562,17 +563,17 @@
         "type": "string"
       },
       {
+        "name": "src_port",
+        "type": "uint16"
+      },
+      {
         "name": "dst_ip",
         "type": "string"
       },
       {
         "name": "id",
         "type": [
-          {
-            "name": "orig_p",
-            "type": "port"
-          },
-          {
+         {
             "name": "resp_p",
             "type": "port"
           }
