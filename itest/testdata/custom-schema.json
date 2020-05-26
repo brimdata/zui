@@ -48,15 +48,16 @@
         "type": "string"
       },
       {
+        "name": "dst_ip",
+        "type": "string"
+      },
+
+      {
         "name": "id",
         "type": [
           {
             "name": "orig_p",
             "type": "port"
-          },
-          {
-            "name": "resp_h",
-            "type": "ip"
           },
           {
             "name": "resp_p",
@@ -143,15 +144,15 @@
         "type": "string"
       },
       {
+        "name": "dst_ip",
+        "type": "string"
+      },
+      {
         "name": "id",
         "type": [
           {
             "name": "orig_p",
             "type": "port"
-          },
-          {
-            "name": "resp_h",
-            "type": "ip"
           },
           {
             "name": "resp_p",
@@ -356,15 +357,15 @@
         "type": "string"
       },
       {
+        "name": "dst_ip",
+        "type": "string"
+      },
+      {
         "name": "id",
         "type": [
           {
             "name": "orig_p",
             "type": "port"
-          },
-          {
-            "name": "resp_h",
-            "type": "ip"
           },
           {
             "name": "resp_p",
@@ -561,15 +562,15 @@
         "type": "string"
       },
       {
+        "name": "dst_ip",
+        "type": "string"
+      },
+      {
         "name": "id",
         "type": [
           {
             "name": "orig_p",
             "type": "port"
-          },
-          {
-            "name": "resp_h",
-            "type": "ip"
           },
           {
             "name": "resp_p",
