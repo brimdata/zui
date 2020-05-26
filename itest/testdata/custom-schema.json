@@ -15,7 +15,7 @@
       },
       {
         "name": "peer",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "gaps",
@@ -45,7 +45,7 @@
       },
       {
         "name": "uid",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "id",
@@ -74,7 +74,7 @@
       },
       {
         "name": "service",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "duration",
@@ -90,7 +90,7 @@
       },
       {
         "name": "conn_state",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "local_orig",
@@ -106,7 +106,7 @@
       },
       {
         "name": "history",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "orig_pkts",
@@ -126,7 +126,7 @@
       },
       {
         "name": "tunnel_parents",
-        "type": "set[bstring]"
+        "type": "set[string]"
       },
       {
         "name": "_write_ts",
@@ -144,7 +144,7 @@
       },
       {
         "name": "uid",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "id",
@@ -181,7 +181,7 @@
       },
       {
         "name": "query",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "qclass",
@@ -189,7 +189,7 @@
       },
       {
         "name": "qclass_name",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "qtype",
@@ -197,7 +197,7 @@
       },
       {
         "name": "qtype_name",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "rcode",
@@ -205,7 +205,7 @@
       },
       {
         "name": "rcode_name",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "AA",
@@ -229,7 +229,7 @@
       },
       {
         "name": "answers",
-        "type": "array[bstring]"
+        "type": "array[string]"
       },
       {
         "name": "TTLs",
@@ -255,7 +255,7 @@
       },
       {
         "name": "fuid",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "tx_hosts",
@@ -267,11 +267,11 @@
       },
       {
         "name": "conn_uids",
-        "type": "set[bstring]"
+        "type": "set[string]"
       },
       {
         "name": "source",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "depth",
@@ -279,15 +279,15 @@
       },
       {
         "name": "analyzers",
-        "type": "set[bstring]"
+        "type": "set[string]"
       },
       {
         "name": "mime_type",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "filename",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "duration",
@@ -323,23 +323,23 @@
       },
       {
         "name": "parent_fuid",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "md5",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "sha1",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "sha256",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "extracted",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "extracted_cutoff",
@@ -365,7 +365,7 @@
       },
       {
         "name": "uid",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "id",
@@ -390,19 +390,19 @@
       },
       {
         "name": "version",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "cipher",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "curve",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "server_name",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "resumed",
@@ -410,11 +410,11 @@
       },
       {
         "name": "last_alert",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "next_protocol",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "established",
@@ -422,31 +422,31 @@
       },
       {
         "name": "cert_chain_fuids",
-        "type": "array[bstring]"
+        "type": "array[string]"
       },
       {
         "name": "client_cert_chain_fuids",
-        "type": "array[bstring]"
+        "type": "array[string]"
       },
       {
         "name": "subject",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "issuer",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "client_subject",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "client_issuer",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "validation_status",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "_write_ts",
@@ -464,7 +464,7 @@
       },
       {
         "name": "peer",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "mem",
@@ -578,7 +578,7 @@
       },
       {
         "name": "uid",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "id",
@@ -603,11 +603,11 @@
       },
       {
         "name": "name",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "addl",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "notice",
@@ -615,7 +615,7 @@
       },
       {
         "name": "peer",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "_write_ts",
@@ -633,7 +633,7 @@
       },
       {
         "name": "id",
-        "type": "bstring"
+        "type": "string"
       },
       {
         "name": "certificate",
@@ -644,15 +644,15 @@
           },
           {
             "name": "serial",
-            "type": "bstring"
+            "type": "string"
           },
           {
             "name": "subject",
-            "type": "bstring"
+            "type": "string"
           },
           {
             "name": "issuer",
-            "type": "bstring"
+            "type": "string"
           },
           {
             "name": "not_valid_before",
@@ -664,15 +664,15 @@
           },
           {
             "name": "key_alg",
-            "type": "bstring"
+            "type": "string"
           },
           {
             "name": "sig_alg",
-            "type": "bstring"
+            "type": "string"
           },
           {
             "name": "key_type",
-            "type": "bstring"
+            "type": "string"
           },
           {
             "name": "key_length",
@@ -680,11 +680,11 @@
           },
           {
             "name": "exponent",
-            "type": "bstring"
+            "type": "string"
           },
           {
             "name": "curve",
-            "type": "bstring"
+            "type": "string"
           }
         ]
       },
@@ -693,15 +693,15 @@
         "type": [
           {
             "name": "dns",
-            "type": "array[bstring]"
+            "type": "array[string]"
           },
           {
             "name": "uri",
-            "type": "array[bstring]"
+            "type": "array[string]"
           },
           {
             "name": "email",
-            "type": "array[bstring]"
+            "type": "array[string]"
           },
           {
             "name": "ip",
