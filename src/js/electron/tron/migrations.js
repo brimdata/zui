@@ -21,7 +21,8 @@ export type Migrations = {
   run: (VersionedData, Migration[]) => VersionedData,
   getLatestVersion: () => number,
   getPending: () => Migration[],
-  getAll: () => Migration[]
+  getAll: () => Migration[],
+  setCurrentVersion: (number) => void
 }
 
 export default async function migrations(

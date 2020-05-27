@@ -1,5 +1,6 @@
 /* @flow */
 
+import {get} from "lodash"
 import log from "electron-log"
 
 import {app} from "electron"
@@ -29,7 +30,11 @@ export default function session(path: string = sessionStateFile()) {
         .read()
         .then(JSON.parse)
         .then((state) => migrate(state, migrator))
-        .catch(handleError)
+        .catch((e) => {
+          log.error("Unable to load session state")
+          log.error(e)
+          return freshState(migrator.getLatestVersion())
+        })
 
       if (saved) {
         version = saved.version
@@ -47,10 +52,16 @@ function sessionStateFile() {
   return path.join(app.getPath("userData"), "appState.json")
 }
 
-type VersionedState = {version: number, data: SessionState}
+type VersionedState = {version: number, data: ?SessionState}
 
 async function migrate(appState, migrator): Promise<VersionedState> {
   let state = ensureVersioned(appState)
+
+  if (!canMigrate(state)) {
+    log.info("migrations: unsupported version, using fresh state")
+    return freshState(migrator.getLatestVersion())
+  }
+
   migrator.setCurrentVersion(state.version)
   let pending = migrator.getPending().length
 
@@ -72,12 +83,6 @@ async function migrate(appState, migrator): Promise<VersionedState> {
   }
 }
 
-function handleError(e) {
-  log.error("Unable to load session state")
-  log.error(e)
-  return undefined
-}
-
 function ensureVersioned(state) {
   if (isNumber(state.version)) return state
   else
@@ -87,6 +92,14 @@ function ensureVersioned(state) {
     }
 }
 
-function freshState(version) {
+function canMigrate(state: VersionedState) {
+  const legacyVersion = get(state.data, "globalState.version")
+
+  if (!legacyVersion) return true // Already migrated up
+  if (legacyVersion === "7") return true // Release right before migration support
+  return false // Anything other than above is not migratable
+}
+
+function freshState(version): VersionedState {
   return {data: undefined, version}
 }
