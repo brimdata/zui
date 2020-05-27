@@ -56,10 +56,16 @@ async function migrate(appState): Promise<VersionedState> {
   log.info(`migrations: currentVersion=${state.version} pending=${pending}`)
 
   if (pending) {
-    log.info("migrations: running")
-    let nextState = migrations.runPending(state)
-    log.info(`migrations: currentVersion=${nextState.version}`)
-    return nextState
+    try {
+      log.info("migrations: running")
+      let nextState = migrations.runPending(state)
+      log.info(`migrations: currentVersion=${nextState.version}`)
+      return nextState
+    } catch (e) {
+      log.error("Unable to migrate data")
+      log.error(e)
+      return freshState(migrations.getLatestVersion())
+    }
   } else {
     return state
   }
@@ -78,4 +84,8 @@ function ensureVersioned(state) {
       version: 0,
       data: state
     }
+}
+
+function freshState(version) {
+  return {data: undefined, version}
 }
