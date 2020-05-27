@@ -69,9 +69,17 @@ const dataAttrSelector = (component: string) =>
 // whether a child text node has particular content.
 // https://stackoverflow.com/questions/1520429/is-there-a-css-selector-for-elements-containing-certain-text
 const genSelectorForTextUnderElement = (dataAttrValue: string) => (
-  menuItem: string
-) =>
-  `//*[@${itestLocator}='${dataAttrValue}']//*[contains(text(), '${menuItem}')]`
+  subItem: string
+) => {
+  if (subItem.includes("'")) {
+    if (subItem.includes('"')) {
+      throw new Error("unsupported xpath for `${subItem}`: mixed quotes")
+    } else {
+      return `//*[@${itestLocator}="${dataAttrValue}"]//*[contains(text(), "${subItem}")]`
+    }
+  }
+  return `//*[@${itestLocator}="${dataAttrValue}"]//*[contains(text(), '${subItem}')]`
+}
 
 // Use this to generate a function that can generate selectors to find elements
 // for modal buttons under the given modal data-test-locator name.
