@@ -26,6 +26,7 @@ const sampleFormElement = (): HTMLFormElement => {
 }
 
 test("isValid when true", async () => {
+  // $FlowFixMe
   let form = brim.form(sampleFormElement(), sampleConfig())
   expect(await form.isValid()).toBe(true)
 })
@@ -63,5 +64,15 @@ test("a missing field", () => {
 
   return expect(form.isValid()).rejects.toEqual(
     new Error(`No input with name="missing"`)
+  )
+})
+
+test("when check returns undefined", () => {
+  let config = sampleConfig()
+  config.username.check = () => {}
+  let form = brim.form(sampleFormElement(), config)
+
+  return expect(form.isValid()).rejects.toEqual(
+    new Error(`username check did not return an array`)
   )
 })
