@@ -23,11 +23,12 @@ export default function session(path: string = sessionStateFile()) {
     },
 
     load: async function(): Promise<?SessionState> {
-      let saved = await lib
+      const migrator = await tron.migrations()
+      const saved = await lib
         .file(path)
         .read()
         .then(JSON.parse)
-        .then(migrate)
+        .then((state) => migrate(state, migrator))
         .catch(handleError)
 
       if (saved) {
@@ -48,23 +49,23 @@ function sessionStateFile() {
 
 type VersionedState = {version: number, data: SessionState}
 
-async function migrate(appState): Promise<VersionedState> {
+async function migrate(appState, migrator): Promise<VersionedState> {
   let state = ensureVersioned(appState)
-  let migrations = await tron.migrations(state.version)
-  let pending = migrations.getPending().length
+  migrator.setCurrentVersion(state.version)
+  let pending = migrator.getPending().length
 
   log.info(`migrations: currentVersion=${state.version} pending=${pending}`)
 
   if (pending) {
     try {
       log.info("migrations: running")
-      let nextState = migrations.runPending(state)
+      let nextState = migrator.runPending(state)
       log.info(`migrations: currentVersion=${nextState.version}`)
       return nextState
     } catch (e) {
       log.error("Unable to migrate data")
       log.error(e)
-      return freshState(migrations.getLatestVersion())
+      return freshState(migrator.getLatestVersion())
     }
   } else {
     return state
