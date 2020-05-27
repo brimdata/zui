@@ -14,7 +14,8 @@ type Props = {|
   name: string,
   placeholder?: string,
   onChange?: Function,
-  isDirInput?: boolean
+  isDirInput?: boolean,
+  textInputProps?: Object
 |}
 
 export default function FileInput(props: Props) {
@@ -68,6 +69,7 @@ export default function FileInput(props: Props) {
         value={value}
         onChange={onChange}
         placeholder={props.placeholder}
+        {...props.textInputProps}
       />
       <input
         ref={ref}

@@ -14,7 +14,7 @@ import {itestDir, testDataDir} from "./env"
 import {retryUntil} from "./control"
 import {selectors} from "../../src/js/test/integration"
 
-const appStep = async (stepMessage, f) => {
+export const appStep = async (stepMessage: string, f: Function) => {
   LOG.debug(`Starting step "${stepMessage}"`)
   let result = await f()
   LOG.debug(`Finished step "${stepMessage}"`)

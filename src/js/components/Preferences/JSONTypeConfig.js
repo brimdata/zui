@@ -2,6 +2,7 @@
 import React from "react"
 
 import type {FormFieldConfig} from "../../brim/form"
+import {jsonTypeConfigInput} from "../../test/locators"
 import FileInput from "./FileInput"
 import Link from "../common/Link"
 
@@ -19,7 +20,10 @@ export default function JSONTypeConfig({config}: Props) {
       <label>
         {label}: <Link href={JSON_TYPE_CONFIG_DOCS}>(docs)</Link>
       </label>
-      <FileInput {...{name, defaultValue, placeholder: "default"}} />
+      <FileInput
+        {...{name, defaultValue, placeholder: "default"}}
+        textInputProps={jsonTypeConfigInput.props}
+      />
     </div>
   )
 }
