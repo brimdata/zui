@@ -50,6 +50,9 @@ Our macOS test automation runs on Catalina 10.15, and therefore this is
 the platform on which we are best able to ensure quality and prevent
 regressions.
 
+macOS versions prior to 10.14 will not be able import pcaps, as our builtin Zeek
+bundle for macOS relies on features first available in macOS 10.14.
+
 Brim is written using tools that have their own platform limitations. Per the
 supported platform guidance for [Electron](https://www.electronjs.org/docs/tutorial/support#supported-platforms) 
 and [Go](https://golang.org/doc/install#requirements), macOS versions _older_
