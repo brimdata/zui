@@ -36,6 +36,10 @@ export default (name: string) => {
       )
     },
 
+    clickAppMenuItem(id: string) {
+      return app.mainProcess.emit("spectron:clickAppMenuItem", id)
+    },
+
     writeSearch(input: string) {
       return writeSearch(app, input)
     },

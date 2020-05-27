@@ -49,6 +49,7 @@ export default function appMenu(
   }
 
   const preferences = {
+    id: "preferences",
     label: platform === "darwin" ? "Preferences..." : "Settings",
     click: () => manager.openPreferences()
   }
