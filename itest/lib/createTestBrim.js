@@ -48,8 +48,8 @@ export default (name: string) => {
       return startSearch(app)
     },
 
-    click(locator: string) {
-      return click(app, locator)
+    click(locator: Locator) {
+      return click(app, locator.css)
     },
 
     waitForText(locator: string, regex: RegExp) {

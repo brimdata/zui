@@ -6,6 +6,7 @@ import path from "path"
 
 import {selectors} from "../../src/js/test/integration"
 import {stdTest} from "../lib/jest"
+import {toolbarExportButton} from "../../src/js/test/locators"
 import createTestBrim from "../lib/createTestBrim"
 
 const filePath = path.join(os.tmpdir(), "results.zng")
@@ -19,7 +20,7 @@ describe("exporting tests", () => {
     await brim.mockSaveDialog({canceled: false, filePath})
     await brim.writeSearch("")
     await brim.startSearch()
-    await brim.click(selectors.export.button)
+    await brim.click(toolbarExportButton)
     await brim.waitForText(selectors.infoNotice, /export complete/i)
 
     expect(fsExtra.statSync(filePath).size).toBeGreaterThan(0)
@@ -29,7 +30,7 @@ describe("exporting tests", () => {
 
   stdTest("canceling the export", async (done) => {
     await brim.mockSaveDialog({canceled: true, filePath: undefined})
-    await brim.click(selectors.export.button)
+    await brim.click(toolbarExportButton)
     await brim.wait(1)
 
     expect(await fsExtra.pathExists(filePath)).toBe(false)
