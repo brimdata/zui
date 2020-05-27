@@ -27,6 +27,7 @@ export type Migrations = {
 export default async function migrations(
   currentVersion: string | number = 0
 ): Promise<Migrations> {
+  let cv = parseInt(currentVersion)
   // $FlowFixMe
   let files = await lib.file(dir).contents()
   let migrations = files
@@ -52,13 +53,15 @@ export default async function migrations(
     },
 
     getPending() {
-      return migrations.filter<Migration>(
-        (m) => parseInt(m.version) > parseInt(currentVersion)
-      )
+      return migrations.filter<Migration>((m) => parseInt(m.version) > cv)
     },
 
     getAll() {
       return migrations
+    },
+
+    setCurrentVersion(version: number) {
+      cv = version
     }
   }
 }
