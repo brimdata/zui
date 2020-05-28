@@ -57,12 +57,8 @@ export default (name: string) => {
       return app.mainProcess.emit("spectron:clickAppMenuItem", id)
     },
 
-    writeSearch(input: string) {
-      return writeSearch(app, input)
-    },
-
-    startSearch() {
-      return startSearch(app)
+    search(input: string) {
+      return writeSearch(app, input).then(() => startSearch(app))
     },
 
     click(locator: Locator) {

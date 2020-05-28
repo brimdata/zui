@@ -18,8 +18,7 @@ describe("exporting tests", () => {
 
   stdTest("clicking the export button", async (done) => {
     await brim.mockSaveDialog({canceled: false, filePath})
-    await brim.writeSearch("")
-    await brim.startSearch()
+    await brim.search("")
     await brim.click(toolbarExportButton)
     await brim.waitForText(selectors.infoNotice, /export complete/i)
 
