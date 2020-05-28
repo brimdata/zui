@@ -12,7 +12,7 @@ function toNodeReadable(reader) {
   return new stream.Readable({
     // #$FlowFixMe
     read: async function() {
-      let {done, value} = await reader.read()
+      const {done, value} = await reader.read()
       this.push(done ? null : value)
     }
   })
@@ -22,7 +22,7 @@ function cutColumns(program, columns) {
   if (columns.allVisible()) {
     return program
   } else {
-    let names = columns.getVisible().map((c) => c.name)
+    const names = columns.getVisible().map((c) => c.name)
     return brim
       .program(program)
       .cut(...names)
@@ -31,27 +31,27 @@ function cutColumns(program, columns) {
 }
 
 export default (filePath: string): Thunk => async (dispatch, getState) => {
-  let zealot = Tab.getZealot(getState())
-  let spaceId = Tab.getSpaceId(getState())
-  let baseProgram = SearchBar.getSearchProgram(getState())
-  let columns = Columns.getCurrentTableColumns(getState())
-  let program = cutColumns(baseProgram, columns)
-  let [from, to] = Tab.getSpan(getState())
+  const zealot = Tab.getZealot(getState())
+  const spaceId = Tab.getSpaceId(getState())
+  const baseProgram = SearchBar.getSearchProgram(getState())
+  const columns = Columns.getCurrentTableColumns(getState())
+  const program = cutColumns(baseProgram, columns)
+  const [from, to] = Tab.getSpan(getState())
     .map(brim.time)
     .map((t) => t.toDate())
 
   return new Promise(async (resolve, reject) => {
     // $FlowFixMe
-    let resp = await zealot.searchStream(program, {
+    const resp = await zealot.searchStream(program, {
       from,
       to,
       spaceId,
       format: "zng",
       controlMessages: false
     })
-    let webReadable = resp.body.getReader()
-    let data = toNodeReadable(webReadable).on("error", reject)
-    let file = fs
+    const webReadable = resp.body.getReader()
+    const data = toNodeReadable(webReadable).on("error", reject)
+    const file = fs
       .createWriteStream(filePath)
       .on("error", reject)
       .on("close", resolve)
