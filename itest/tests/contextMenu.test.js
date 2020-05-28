@@ -105,7 +105,7 @@ describe("type-wise Filter = value searches", () => {
   run("string", STRINGS)
 
   stdTest(`FilterEq unset/${UNSET} string`, (done) => {
-    writeSearch(app, `_path=string scalar!=${UNSET} | cut id, scalar`)
+    writeSearch(app, `_path=string | cut id, scalar | sort -r id | head 10`)
       .then(async () => {
         await startSearch(app)
         await waitForResults(app)
