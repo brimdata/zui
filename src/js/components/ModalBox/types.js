@@ -9,7 +9,8 @@ export type ModalBoxProps = {
   title: string,
   name: ModalName,
   className?: string,
-  buttons: ModalButtonTemplate
+  buttons: ModalButtonTemplate,
+  onClose?: Function
 }
 
 export type ModalContentsProps = {

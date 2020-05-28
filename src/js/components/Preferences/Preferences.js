@@ -3,6 +3,7 @@
 import React, {useCallback, useState} from "react"
 
 import {reactElementProps} from "../../test/integration"
+import DataDirInput from "./DataDirInput"
 import FormErrors from "./FormErrors"
 import JSONTypeConfig from "./JSONTypeConfig"
 import ModalBox from "../ModalBox/ModalBox"
@@ -13,12 +14,13 @@ import ZeekRunner from "./ZeekRunner"
 import brim from "../../brim"
 import useCallbackRef from "../hooks/useCallbackRef"
 import usePreferencesForm from "./usePreferencesForm"
-import DataDirInput from "./DataDirInput"
 
 export default function Preferences() {
   let [f, setForm] = useCallbackRef<HTMLFormElement>()
   let [errors, setErrors] = useState([])
   let prefsForm = usePreferencesForm()
+
+  const onClose = () => setErrors([])
 
   const onSubmit = useCallback(
     async (closeModal) => {
@@ -38,6 +40,7 @@ export default function Preferences() {
 
   return (
     <ModalBox
+      onClose={onClose}
       name="settings"
       title="Preferences"
       buttons={[{label: "OK", click: onSubmit}]}
