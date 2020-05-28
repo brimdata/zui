@@ -26,6 +26,10 @@ export default (name: string) => {
   })
 
   return {
+    getApp() {
+      return app
+    },
+
     ingest(file: string) {
       return ingestFile(app, file)
     },

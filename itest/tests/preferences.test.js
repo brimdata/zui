@@ -3,9 +3,9 @@ import path from "path"
 
 import {
   defaultModalButton,
-  jsonTypeConfigInput,
-  viewerResults
+  jsonTypeConfigInput
 } from "../../src/js/test/locators"
+import {searchDisplay} from "../lib/app"
 import {stdTest} from "../lib/jest"
 import {testDataDir} from "../lib/env"
 import createTestBrim from "../lib/createTestBrim"
@@ -21,10 +21,10 @@ describe("Preferences Modal Tests", () => {
     await brim.click(defaultModalButton)
     await brim.ingest("custom-sample.ndjson")
     await brim.search(
-      "_path=conn proto=tcp | cut ts, src_ip, src_port, dst_ip, dst_port, proto | sort ts"
+      "_path=conn proto=tcp | cut ts, src_ip, src_port, dst_ip, dst_port, proto | sort ts | head 10"
     )
 
-    expect(await brim.getText(viewerResults)).toMatchSnapshot()
+    expect(await searchDisplay(brim.getApp())).toMatchSnapshot()
     done()
   })
 })
