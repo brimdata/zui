@@ -1,5 +1,6 @@
 /* @flow */
 
+import {get} from "lodash"
 import log from "electron-log"
 
 import {app} from "electron"
@@ -23,12 +24,17 @@ export default function session(path: string = sessionStateFile()) {
     },
 
     load: async function(): Promise<?SessionState> {
-      let saved = await lib
+      const migrator = await tron.migrations()
+      const saved = await lib
         .file(path)
         .read()
         .then(JSON.parse)
-        .then(migrate)
-        .catch(handleError)
+        .then((state) => migrate(state, migrator))
+        .catch((e) => {
+          log.error("Unable to load session state")
+          log.error(e)
+          return freshState(migrator.getLatestVersion())
+        })
 
       if (saved) {
         version = saved.version
@@ -46,29 +52,35 @@ function sessionStateFile() {
   return path.join(app.getPath("userData"), "appState.json")
 }
 
-type VersionedState = {version: number, data: SessionState}
+type VersionedState = {version: number, data: ?SessionState}
 
-async function migrate(appState): Promise<VersionedState> {
+async function migrate(appState, migrator): Promise<VersionedState> {
   let state = ensureVersioned(appState)
-  let migrations = await tron.migrations(state.version)
-  let pending = migrations.getPending().length
+
+  if (!canMigrate(state)) {
+    log.info("migrations: unsupported version, using fresh state")
+    return freshState(migrator.getLatestVersion())
+  }
+
+  migrator.setCurrentVersion(state.version)
+  let pending = migrator.getPending().length
 
   log.info(`migrations: currentVersion=${state.version} pending=${pending}`)
 
   if (pending) {
-    log.info("migrations: running")
-    let nextState = migrations.runPending(state)
-    log.info(`migrations: currentVersion=${nextState.version}`)
-    return nextState
+    try {
+      log.info("migrations: running")
+      let nextState = migrator.runPending(state)
+      log.info(`migrations: currentVersion=${nextState.version}`)
+      return nextState
+    } catch (e) {
+      log.error("Unable to migrate data")
+      log.error(e)
+      return freshState(migrator.getLatestVersion())
+    }
   } else {
     return state
   }
-}
-
-function handleError(e) {
-  log.error("Unable to load session state")
-  log.error(e)
-  return undefined
 }
 
 function ensureVersioned(state) {
@@ -78,4 +90,16 @@ function ensureVersioned(state) {
       version: 0,
       data: state
     }
+}
+
+function canMigrate(state: VersionedState) {
+  const legacyVersion = get(state.data, "globalState.version")
+
+  if (!legacyVersion) return true // Already migrated up
+  if (legacyVersion === "7") return true // Release right before migration support
+  return false // Anything other than above is not migratable
+}
+
+function freshState(version): VersionedState {
+  return {data: undefined, version}
 }
