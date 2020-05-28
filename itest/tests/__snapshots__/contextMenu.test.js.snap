@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`type-wise Filter = value searches FilterEq ensure ingest 1`] = `
+Array [
+  "_path",
+  "count",
+  "addr",
+  "11",
+  "string",
+  "48",
+]
+`;
+
 exports[`type-wise Filter = value searches FilterEq unset/⦻ string 1`] = `
 Array [
   "id",

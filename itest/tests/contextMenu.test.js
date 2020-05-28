@@ -61,6 +61,18 @@ describe("type-wise Filter = value searches", () => {
     }
   })
 
+  stdTest("FilterEq ensure ingest", (done) => {
+    writeSearch(app, `* | count() by _path | sort _path`)
+      .then(async () => {
+        await startSearch(app)
+        expect(await searchDisplay(app)).toMatchSnapshot()
+        done()
+      })
+      .catch((err) => {
+        handleError(app, err, done)
+      })
+  })
+
   const run = (path: string, values: string[]) => {
     let testIdx = 0
     let testId: string
