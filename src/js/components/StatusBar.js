@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
+import {ingestProgressBar} from "../test/locators"
 import {isNumber} from "../lib/is"
 import {reactElementProps} from "../test/integration"
 import Modal from "../state/Modal"
@@ -42,7 +43,9 @@ export default function StatusBar() {
       >
         <label>{getMessage()}</label>
         <div className="group">
-          {s.ingesting() && <ProgressIndicator percent={value} />}
+          {s.ingesting() && (
+            <ProgressIndicator {...ingestProgressBar.props} percent={value} />
+          )}
           {!s.ingesting() && s.empty() && (
             <label>Ingest failed with warnings.</label>
           )}

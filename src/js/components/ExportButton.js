@@ -5,7 +5,7 @@ import styled from "styled-components"
 
 import {ipcRenderer} from "electron"
 
-import {reactElementProps} from "../test/integration"
+import {toolbarExportButton} from "../test/locators"
 import ExportIcon from "../icons/ExportIcon"
 import InfoNotice from "./InfoNotice"
 import MacSpinner from "./MacSpinner"
@@ -74,9 +74,9 @@ export default function ExportButton() {
   return (
     <div title="Export search results to ZNG file">
       <ToolbarButton
+        {...toolbarExportButton.props}
         icon={<ExportIcon />}
         onClick={onClick}
-        {...reactElementProps("exportResults")}
       />
       <label>Export</label>
 

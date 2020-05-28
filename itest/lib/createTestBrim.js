@@ -1,5 +1,7 @@
 /* @flow */
+import type {Locator} from "../../src/js/test/createLocator"
 import {
+  appStep,
   click,
   ingestFile,
   newAppInstance,
@@ -24,6 +26,10 @@ export default (name: string) => {
   })
 
   return {
+    getApp() {
+      return app
+    },
+
     ingest(file: string) {
       return ingestFile(app, file)
     },
@@ -36,16 +42,31 @@ export default (name: string) => {
       )
     },
 
-    writeSearch(input: string) {
-      return writeSearch(app, input)
+    setValue(locator: Locator, value: string) {
+      return appStep(`set input ${locator.css} to ${value}`, () =>
+        app.client
+          .waitForVisible(locator.css)
+          .then(() => app.client.setValue(locator.css, value))
+      )
     },
 
-    startSearch() {
-      return startSearch(app)
+    getText(locator: Locator) {
+      return appStep(`get text from ${locator.css}`, async () => {
+        await app.client.waitForVisible(locator.css)
+        return await app.client.getText(locator.css)
+      })
     },
 
-    click(locator: string) {
-      return click(app, locator)
+    clickAppMenuItem(id: string) {
+      return app.mainProcess.emit("spectron:clickAppMenuItem", id)
+    },
+
+    search(input: string) {
+      return writeSearch(app, input).then(() => startSearch(app))
+    },
+
+    click(locator: Locator) {
+      return click(app, locator.css)
     },
 
     waitForText(locator: string, regex: RegExp) {
@@ -53,6 +74,18 @@ export default (name: string) => {
         () => app.client.getText(locator),
         (s) => regex.test(s)
       )
+    },
+
+    waitUntil(fn: () => boolean, opts?: Object) {
+      return app.client.waitUntil(fn, opts)
+    },
+
+    isVisible(locator: Locator) {
+      return app.client.isVisible(locator.css)
+    },
+
+    isNotVisible(locator: Locator) {
+      return app.client.isVisible(locator.css).then((v) => !v)
     },
 
     wait(ms: number) {
