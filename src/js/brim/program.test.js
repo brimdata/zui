@@ -381,3 +381,14 @@ describe("extracting the first filter", () => {
     )
   })
 })
+
+describe("cut", () => {
+  test("cut some fields", () => {
+    expect(
+      brim
+        .program("my filter")
+        .cut("ts", "_path")
+        .string()
+    ).toBe("my filter | cut ts, _path")
+  })
+})
