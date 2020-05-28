@@ -9,8 +9,9 @@ import {
 } from "../../src/js/test/locators"
 import {stdTest} from "../lib/jest"
 import createTestBrim from "../lib/createTestBrim"
+import testDataDir from "../lib/env"
 
-const config = path.join(__dirname, "../testdata/custom-schema.json")
+const config = path.join(testDataDir(), "custom-schema.json")
 
 describe("Preferences Modal Tests", () => {
   const brim = createTestBrim("preferences.test")
