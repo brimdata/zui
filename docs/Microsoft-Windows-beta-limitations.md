@@ -1,13 +1,13 @@
 # Windows Limitations (beta notice)
 
-Brim support on Windows is currently at beta quality. There's two
-significant known limitations:
+Brim support on Windows is currently at beta quality. Two details worthy of
+note:
 
-1. Generation of Zeek logs from pcaps is slower than we'd like it to be. This
-is related to the lack of formal support for Zeek on Windows. We got it
-working with [our own Zeek port](https://github.com/brimsec/zeek/tree/master/brim/windows),
-but the best we could do in our first attempt uses 32-bit
-[Cygwin](https://www.cygwin.com/). We'll be working to improve this over time.
+1. Due to lack of formal support for Zeek on Windows, generation of Zeek logs
+from pcaps is performed with
+[our own Zeek port](https://github.com/brimsec/zeek). Issue
+[zeek/951](https://github.com/zeek/zeek/issues/951) tracks the effort to
+upstream our changes.
 
 2. We sign the Windows installer we create with every new Brim release;
 however, you may still see a Microsoft Defender SmartScreen popup when you run
