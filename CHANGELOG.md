@@ -1,3 +1,20 @@
+## v0.10.0
+* Update zq to [v0.14.0](https://github.com/brimsec/zq/releases/tag/v0.14.0)
+* Update Zeek to [v3.2.0-dev-brim2](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim2), with the following platform specific changes:
+   * Windows: importing pcaps is much faster than previous releases
+   * macOS: importing pcaps no longer works on macOS versions prior to 10.14. (#819)
+   * Linux: support importing pcapng formatted captures
+* Allow processing of pcaps with a custom Zeek version (#771, #732, #807, #783, [wiki](https://github.com/brimsec/brim/wiki/Zeek-Customization))
+* Format timestamps as IS08601 by default, and add a **Preferences** option to change format (#766)
+* Fix an issue where spaces were not deleted when quitting during pcap import (#780)
+* Migrate app state (such as Search History) upon upgrading rather than clearing it, starting with upgrades from [v0.9.1](https://github.com/brimsec/brim/releases/tag/v0.9.1) (#787, #793, #782, #821, #823)
+* Add a **Preferences** option to change the Data Directory location (#794)
+* Allow exporting of search results to a ZNG file (#802, #827)
+* Fix an issue where clicking the **Choose** buttons in the **Preferences** menu would hang the app (#816)
+* Add the ability to rename a Space via right-click (#806, #831)
+* Fix an issue where a JSON typing configuration could not be selected in **Preferences** (#818)
+* Fix an issue where old error messages were left behind after exiting **Preferences** (#829)
+
 ## v0.9.1
 
 * **NOTE**: Prior state such as Search History will be lost on upgrade to this version
