@@ -32,6 +32,14 @@ export default function(p: string = "", pins: string[] = []) {
       return this
     },
 
+    cut(...fields: string[]) {
+      p = stdlib
+        .string(p)
+        .append(" | cut " + fields.join(", "))
+        .self()
+      return this
+    },
+
     drillDown(log: $Log) {
       let filter = this.filter()
       let newFilters = this.ast()
