@@ -75,10 +75,9 @@ describe("type-wise Filter = value searches", () => {
 
   const run = (path: string, values: string[]) => {
     let testIdx = 0
-    let testId: string
     FIELDS.forEach((fieldName) => {
       values.forEach((s) => {
-        testId = sprintf("%04d", testIdx++)
+        let testId = sprintf("%04d", testIdx++)
         stdTest(`FilterEq${testId}: ${path} ${fieldName}="${s}"`, (done) => {
           writeSearch(
             app,
