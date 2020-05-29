@@ -25,20 +25,21 @@ export default function session(path: string = sessionStateFile()) {
 
     load: async function(): Promise<?SessionState> {
       const migrator = await tron.migrations()
-      const saved = await lib
-        .file(path)
-        .read()
-        .then(JSON.parse)
-        .then((state) => migrate(state, migrator))
-        .catch((e) => {
-          log.error("Unable to load session state")
-          log.error(e)
-          return freshState(migrator.getLatestVersion())
-        })
+      const file = lib.file(path)
 
-      if (saved) {
-        version = saved.version
-        return saved.data
+      version = migrator.getLatestVersion()
+
+      if (await file.exists()) {
+        return await file
+          .read()
+          .then(JSON.parse)
+          .then((state) => migrate(state, migrator))
+          .then((state) => state.data)
+          .catch((e) => {
+            log.error("Unable to load session state")
+            log.error(e)
+            return undefined
+          })
       } else {
         return undefined
       }
