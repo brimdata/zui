@@ -1,6 +1,9 @@
 ## v0.10.0
 * Update zq to [v0.14.0](https://github.com/brimsec/zq/releases/tag/v0.14.0)
-* Update Zeek to [v3.2.0-dev-brim2](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim2). This release runs faster on Windows, but also makes it such that pcap import no longer works on macOS versions prior to 10.14. (#819)
+* Update Zeek to [v3.2.0-dev-brim2](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim2), with the following platform specific changes:
+   * Windows: importing pcaps is much faster than previous releases
+   * macOS: importing pcaps no longer works on macOS versions prior to 10.14. (#819)
+   * Linux: support importing pcapng formatted captures
 * Allow processing of pcaps with a custom Zeek version (#771, #732, #807, #783, [wiki](https://github.com/brimsec/brim/wiki/Zeek-Customization))
 * Format timestamps as IS08601 by default, and add a **Preferences** option to change format (#766)
 * Fix an issue where spaces were not deleted when quitting during pcap import (#780)
