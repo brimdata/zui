@@ -8,7 +8,10 @@ import {last} from "../../lib/Array"
 import Modal from "../../state/Modal"
 import useEventListener from "../hooks/useEventListener"
 
-export default function useModalController(template: ModalButtonTemplate) {
+export default function useModalController(
+  template: ModalButtonTemplate,
+  onClose?: Function
+) {
   let dispatch = useDispatch()
   let buttons = []
 
@@ -22,6 +25,7 @@ export default function useModalController(template: ModalButtonTemplate) {
 
   function closeModal() {
     dispatch(Modal.hide())
+    onClose && onClose()
   }
 
   function keyDown(e) {

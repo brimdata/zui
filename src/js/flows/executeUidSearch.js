@@ -11,6 +11,7 @@ import brim from "../brim"
 import executeSearch from "./executeSearch"
 
 export default (log: Log): Thunk => (dispatch, getState) => {
+  if (!log) return
   let uid = log.correlationId()
   if (isEmpty(uid)) return
 
