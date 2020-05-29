@@ -1,24 +1,387 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test search mods via right-clicks count by _path; sort asc 1`] = `
+exports[`type-wise Filter = value searches FilterEq ensure ingest 1`] = `
 Array [
   "_path",
   "count",
-  "capture_loss",
+  "addr",
+  "11",
+  "string",
+  "48",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq unset/⦻ string 1`] = `
+Array [
+  "id",
+  "scalar",
+  "61",
+  "⦻",
+  "60",
+  "⦻",
+  "59",
+  "⦻",
+  "58",
+  "⦻",
+  "53",
+  "⦻",
+  "52",
+  "⦻",
+  "51",
+  "⦻",
+  "50",
+  "⦻",
+  "49",
+  "⦻",
+  "48",
+  "⦻",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0000: addr scalar="1.1.1.1" 1`] = `
+Array [
+  "id",
+  "scalar",
   "1",
-  "conn",
+  "1.1.1.1",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0000: string scalar="mystr" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "14",
+  "mystr",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0001: addr scalar="fe80::58d2:2d09:e8cb:a8ad" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "3",
+  "fe80::58d2:2d09:e8cb:a8ad",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0001: string scalar="\\x2d" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "16",
+  "\\\\x2d",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0002: addr scalar="::" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "2",
+  "::",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0002: string scalar="\\x09" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "17",
+  "\\\\x09",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0003: addr record.scalar="1.1.1.1" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "5",
+  "1.1.1.1",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0003: string scalar=""" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "18",
+  "\\"",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0004: addr record.scalar="fe80::58d2:2d09:e8cb:a8ad" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "7",
+  "fe80::58d2:2d09:e8cb:a8ad",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0004: string scalar="'" 1`] = `
+Array [
+  "id",
+  "scalar",
   "19",
-  "dns",
-  "2",
-  "files",
-  "4",
-  "ssl",
-  "1",
-  "stats",
-  "2",
-  "weird",
-  "1",
-  "x509",
-  "1",
+  "'",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0005: addr record.scalar="::" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "6",
+  "::",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0005: string scalar="," 1`] = `
+Array [
+  "id",
+  "scalar",
+  "20",
+  ",",
+  "21",
+  ",",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0006: string scalar=";" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "22",
+  ";",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0007: string scalar="∫£œßü™" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "23",
+  "∫£œßü™",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0008: string scalar=""mystr"" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "24",
+  "\\"mystr\\"",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0009: string scalar="'mystr'" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "25",
+  "'mystr'",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0010: string scalar="*" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "26",
+  "*",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0011: string scalar=""*"" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "27",
+  "\\"*\\"",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0012: string scalar="1.1.1.1" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "28",
+  "1.1.1.1",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0013: string scalar=" " 1`] = `
+Array [
+  "id",
+  "scalar",
+  "54",
+  "",
+  "55",
+  "",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0014: string scalar="null" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "57",
+  "null",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0015: string scalar="⦻" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "56",
+  "⦻",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0016: string record.scalar="mystr" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "29",
+  "mystr",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0017: string record.scalar="\\x2d" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "31",
+  "\\\\x2d",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0018: string record.scalar="\\x09" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "32",
+  "\\\\x09",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0019: string record.scalar=""" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "33",
+  "\\"",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0020: string record.scalar="'" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "34",
+  "'",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0021: string record.scalar="," 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "35",
+  ",",
+  "36",
+  ",",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0022: string record.scalar=";" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "37",
+  ";",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0023: string record.scalar="∫£œßü™" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "38",
+  "∫£œßü™",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0024: string record.scalar=""mystr"" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "39",
+  "\\"mystr\\"",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0025: string record.scalar="'mystr'" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "40",
+  "'mystr'",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0026: string record.scalar="*" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "41",
+  "*",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0027: string record.scalar=""*"" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "42",
+  "\\"*\\"",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0028: string record.scalar="1.1.1.1" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "43",
+  "1.1.1.1",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0029: string record.scalar=" " 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "59",
+  "",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0030: string record.scalar="null" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "61",
+  "null",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0031: string record.scalar="⦻" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "60",
+  "⦻",
 ]
 `;
