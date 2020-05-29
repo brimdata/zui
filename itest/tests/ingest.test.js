@@ -32,7 +32,8 @@ describe("Ingest tests", () => {
     "sample.pcap",
     "sample.pcapng",
     "sample.tsv",
-    "sample.ndjson"
+    "sample.ndjson",
+    "sample.zng"
   ]
 
   sampleFiles.forEach((fileName) => {
