@@ -11,19 +11,12 @@ import path from "path"
 function appPathSetup() {
   if (electronIsDev) {
     // isDev is true for general dev execution and integration tests.
-    let hasDataDirArg = false
     // The only known instance of isDev being true and --user-data-dir
     // being set is under Spectron.
-    for (const arg of process.argv) {
-      if (arg.startsWith("--user-data-dir")) {
-        hasDataDirArg = true
-        break
-      }
-    }
     // We don't override for integration tests as they set userData
     // via the user-data-dir chromeDriver command line argument,
     // so don't override it.
-    if (!hasDataDirArg) {
+    if (!app.commandLine.hasSwitch("user-data-dir")) {
       // For general developer execution, put state and logs under a
       // "run" directory in the git directory.
       app.setPath("userData", path.join(app.getAppPath(), "run"))
