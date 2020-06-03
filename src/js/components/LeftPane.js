@@ -13,18 +13,19 @@ import Investigation from "../state/Investigation"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
 import View from "../state/View"
+import Layout from "../state/Layout"
 
 export function LeftPane() {
   let [showCollapse, setShowCollapse] = useState(true)
   let view = useSelector(View.getInvestigationView)
-  let isOpen = useSelector(View.getLeftSidebarIsOpen)
-  let width = useSelector(View.getLeftSidebarWidth)
+  let isOpen = useSelector(Layout.getLeftSidebarIsOpen)
+  let width = useSelector(Layout.getLeftSidebarWidth)
   let dispatch = useDispatch()
 
   function onDrag(e: MouseEvent) {
     const width = e.clientX
     const max = global.innerWidth
-    dispatch(View.setLeftSidebarWidth(Math.min(width, max)))
+    dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
   }
 
   function onViewChange(name) {
