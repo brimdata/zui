@@ -1,5 +1,7 @@
 /* @flow */
 import type {
+  INVESTIGATION_VIEW_SET,
+  InvestigationView,
   LAYOUT_LEFT_SIDEBAR_HIDE,
   LAYOUT_LEFT_SIDEBAR_SHOW,
   LAYOUT_LEFT_SIDEBAR_TOGGLE,
@@ -43,5 +45,10 @@ export default {
 
   toggleLeftSidebar: (): LAYOUT_LEFT_SIDEBAR_TOGGLE => ({
     type: "LAYOUT_LEFT_SIDEBAR_TOGGLE"
+  }),
+
+  setInvestigationView: (view: InvestigationView): INVESTIGATION_VIEW_SET => ({
+    type: "INVESTIGATION_VIEW_SET",
+    view
   })
 }

@@ -5,8 +5,7 @@ import type {ViewAction, ViewState} from "./types"
 const init: ViewState = {
   downloadsIsOpen: false,
   resultsTab: null,
-  timeZone: "UTC",
-  investigationView: "linear"
+  timeZone: "UTC"
 }
 
 export default function reducer(
@@ -28,11 +27,6 @@ export default function reducer(
       return {
         ...state,
         downloadsIsOpen: false
-      }
-    case "INVESTIGATION_VIEW_SET":
-      return {
-        ...state,
-        investigationView: action.view
       }
     default:
       return state

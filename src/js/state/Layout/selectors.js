@@ -18,5 +18,9 @@ export default {
 
   getLeftSidebarIsOpen: activeTabSelect(
     (state: TabState) => state.layout.leftSidebarIsOpen
+  ),
+
+  getInvestigationView: activeTabSelect(
+    (state: TabState) => state.layout.investigationView
   )
 }

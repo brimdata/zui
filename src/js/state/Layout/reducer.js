@@ -6,7 +6,8 @@ const init: LayoutState = {
   rightSidebarIsOpen: false,
   rightSidebarWidth: 450,
   leftSidebarIsOpen: false,
-  leftSidebarWidth: 350
+  leftSidebarWidth: 350,
+  investigationView: "linear"
 }
 
 export default function reducer(
@@ -53,6 +54,11 @@ export default function reducer(
       return {
         ...state,
         leftSidebarWidth: action.width
+      }
+    case "INVESTIGATION_VIEW_SET":
+      return {
+        ...state,
+        investigationView: action.view
       }
     default:
       return state

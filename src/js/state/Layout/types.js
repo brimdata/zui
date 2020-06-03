@@ -1,10 +1,12 @@
 /* @flow */
 
+export type InvestigationView = "tree" | "linear"
 export type LayoutState = {
   rightSidebarWidth: number,
   rightSidebarIsOpen: boolean,
   leftSidebarWidth: number,
-  leftSidebarIsOpen: boolean
+  leftSidebarIsOpen: boolean,
+  investigationView: InvestigationView
 }
 
 export type LayoutAction =
@@ -16,6 +18,7 @@ export type LayoutAction =
   | LAYOUT_LEFT_SIDEBAR_HIDE
   | LAYOUT_LEFT_SIDEBAR_TOGGLE
   | LAYOUT_LEFT_SIDEBAR_WIDTH_SET
+  | INVESTIGATION_VIEW_SET
 
 export type LAYOUT_RIGHT_SIDEBAR_SHOW = {
   type: "LAYOUT_RIGHT_SIDEBAR_SHOW"
@@ -49,4 +52,9 @@ export type LAYOUT_LEFT_SIDEBAR_TOGGLE = {
 export type LAYOUT_LEFT_SIDEBAR_WIDTH_SET = {
   type: "LAYOUT_LEFT_SIDEBAR_WIDTH_SET",
   width: number
+}
+
+export type INVESTIGATION_VIEW_SET = {
+  type: "INVESTIGATION_VIEW_SET",
+  view: InvestigationView
 }
