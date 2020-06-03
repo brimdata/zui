@@ -12,12 +12,11 @@ import FilterTree from "./FilterTree"
 import Investigation from "../state/Investigation"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
-import View from "../state/View"
 import Layout from "../state/Layout"
 
 export function LeftPane() {
   let [showCollapse, setShowCollapse] = useState(true)
-  let view = useSelector(View.getInvestigationView)
+  let view = useSelector(Layout.getInvestigationView)
   let isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   let width = useSelector(Layout.getLeftSidebarWidth)
   let dispatch = useDispatch()
@@ -29,7 +28,7 @@ export function LeftPane() {
   }
 
   function onViewChange(name) {
-    dispatch(View.setInvestigationView(name))
+    dispatch(Layout.setInvestigationView(name))
   }
 
   function onClearAll() {
