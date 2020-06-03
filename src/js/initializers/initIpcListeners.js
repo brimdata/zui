@@ -6,7 +6,6 @@ import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
-import View from "../state/View"
 import getPersistable from "../state/getPersistable"
 
 export default (store: Store) => {
@@ -28,7 +27,7 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("toggleLeftSidebar", () => {
-    store.dispatch(View.toggleLeftSidebar())
+    store.dispatch(Layout.toggleLeftSidebar())
   })
 
   ipcRenderer.on("toggleRightSidebar", () => {

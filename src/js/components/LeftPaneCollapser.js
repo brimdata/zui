@@ -7,8 +7,8 @@ import classNames from "classnames"
 import type {Dispatch} from "../state/types"
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
-import View from "../state/View"
 import dispatchToProps from "../lib/dispatchToProps"
+import Layout from "../state/Layout"
 
 type Props = {
   show: boolean,
@@ -22,7 +22,7 @@ type OwnProps = {
 export function LeftPaneCollapser() {
   let dispatch = useDispatch()
   let [show, setShow] = useState(false)
-  let width = useSelector(View.getLeftSidebarWidth)
+  let width = useSelector(Layout.getLeftSidebarWidth)
 
   useEffect(() => {
     let watcher = new MouseoverWatch()
@@ -37,7 +37,7 @@ export function LeftPaneCollapser() {
   })
 
   function onClick() {
-    dispatch(View.hideLeftSidebar())
+    dispatch(Layout.hideLeftSidebar())
   }
 
   return (

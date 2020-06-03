@@ -10,5 +10,13 @@ export default {
 
   getRightSidebarIsOpen: activeTabSelect(
     (state: TabState) => state.layout.rightSidebarIsOpen
+  ),
+
+  getLeftSidebarWidth: activeTabSelect(
+    (state: TabState) => state.layout.leftSidebarWidth
+  ),
+
+  getLeftSidebarIsOpen: activeTabSelect(
+    (state: TabState) => state.layout.leftSidebarIsOpen
   )
 }

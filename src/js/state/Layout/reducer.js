@@ -4,7 +4,9 @@ import type {LayoutState, LayoutAction} from "./types"
 
 const init: LayoutState = {
   rightSidebarIsOpen: false,
-  rightSidebarWidth: 450
+  rightSidebarWidth: 450,
+  leftSidebarIsOpen: false,
+  leftSidebarWidth: 350
 }
 
 export default function reducer(
@@ -31,6 +33,26 @@ export default function reducer(
       return {
         ...state,
         rightSidebarWidth: action.width
+      }
+    case "LAYOUT_LEFT_SIDEBAR_SHOW":
+      return {
+        ...state,
+        leftSidebarIsOpen: true
+      }
+    case "LAYOUT_LEFT_SIDEBAR_HIDE":
+      return {
+        ...state,
+        leftSidebarIsOpen: false
+      }
+    case "LAYOUT_LEFT_SIDEBAR_TOGGLE":
+      return {
+        ...state,
+        leftSidebarIsOpen: !state.leftSidebarIsOpen
+      }
+    case "LAYOUT_LEFT_SIDEBAR_WIDTH_SET":
+      return {
+        ...state,
+        leftSidebarWidth: action.width
       }
     default:
       return state

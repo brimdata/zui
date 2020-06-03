@@ -14,3 +14,9 @@ test("setting right side bar width", () => {
 
   expect(Layout.getRightSidebarWidth(state)).toBe(299)
 })
+
+test("setting left side bar width", () => {
+  const state = reduce([Layout.setLeftSidebarWidth(299)])
+
+  expect(Layout.getLeftSidebarWidth(state)).toBe(299)
+})
