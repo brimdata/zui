@@ -13,7 +13,7 @@ import Tabs from "../state/Tabs"
 import useSearchShortcuts from "./useSearchShortcuts"
 import styled from "styled-components"
 
-const ColumnLayout = styled.div`
+const ColumnLayout: React$ComponentType<any> = styled.div`
   display: flex;
   overflow: hidden;
   flex-grow: 1;
@@ -21,7 +21,7 @@ const ColumnLayout = styled.div`
   position: relative;
 `
 
-const RowLayout = styled.div`
+const RowLayout: React$ComponentType<any> = styled.div`
   display: flex;
   overflow: hidden;
   flex-grow: 1;
@@ -29,12 +29,12 @@ const RowLayout = styled.div`
   position: relative;
 `
 
-const SearchPageMain = styled.div`
+const SearchPageMain: React$ComponentType<any> = styled.div`
   display: flex;
   height: 100%;
 `
 
-const SearchPageWrapper = styled.div`
+const SearchPageWrapper: React$ComponentType<any> = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -59,10 +59,10 @@ export default function SearchPage() {
             <ColumnLayout>
               <TabContent key={tabId} />
             </ColumnLayout>
+            <XRightPane key={tabId} />
           </RowLayout>
           <StatusBar />
         </ColumnLayout>
-        <XRightPane key={tabId} />
       </SearchPageMain>
     </SearchPageWrapper>
   )
