@@ -11,6 +11,36 @@ import TabBar from "./TabBar/TabBar"
 import TabContent from "./TabContent"
 import Tabs from "../state/Tabs"
 import useSearchShortcuts from "./useSearchShortcuts"
+import styled from "styled-components"
+
+const ColumnLayout = styled.div`
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-flow: column;
+  position: relative;
+`
+
+const RowLayout = styled.div`
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-flow: row;
+  position: relative;
+`
+
+const SearchPageMain = styled.div`
+  display: flex;
+  height: 100%;
+`
+
+const SearchPageWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: fadein 300ms;
+`
 
 export default function SearchPage() {
   let dispatch = useDispatch()
@@ -20,16 +50,20 @@ export default function SearchPage() {
   useEffect(() => () => dispatch(Handlers.abortAll()), [])
 
   return (
-    <div className="search-page-wrapper">
-      <div className="search-page">
-        <LeftPane />
-        <div className="search-page-main">
+    <SearchPageWrapper>
+      <SearchPageMain>
+        <ColumnLayout>
           <TabBar />
-          <TabContent key={tabId} />
+          <RowLayout>
+            <LeftPane />
+            <ColumnLayout>
+              <TabContent key={tabId} />
+            </ColumnLayout>
+          </RowLayout>
           <StatusBar />
-        </div>
+        </ColumnLayout>
         <XRightPane key={tabId} />
-      </div>
-    </div>
+      </SearchPageMain>
+    </SearchPageWrapper>
   )
 }
