@@ -8,13 +8,14 @@ import path from "path"
 
 import zealot from "../../src/js/services/zealot"
 
+import {retryUntil} from "../lib/control"
 import {nodeZqDistDir} from "../lib/env"
 import {handleError, stdTest} from "../lib/jest.js"
 import {
+  click,
   ingestFile,
   newAppInstance,
   startApp,
-  waitForNewTab,
   waitForResults
 } from "../lib/app"
 
@@ -22,6 +23,7 @@ describe("Zar tests", () => {
   let app
   let testIdx = 0
   const ZAR = path.join(nodeZqDistDir(), "zar")
+  const ZAR_SPACE_NAME = "sample.zar"
   beforeEach(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
     return startApp(app)
@@ -43,15 +45,10 @@ describe("Zar tests", () => {
         const client = zealot.client("localhost:9867")
 
         const sampleSpace = (await client.spaces.list())[0]
-        const zarSpace = await client.spaces.create({name: "sample.zar"})
+        const zarSpace = await client.spaces.create({name: ZAR_SPACE_NAME})
 
         const zngFile = path.join(sampleSpace.data_path, "all.zng")
         const zarRoot = zarSpace.data_path
-
-        // Now that the spaces are read, stop the app so we can convert
-        // zarSpace to an archive store and let the app read it when it
-        // restarts.
-        await app.stop()
 
         // Create a zar archive inside the space and index some
         // interesting stuff.
@@ -62,20 +59,18 @@ describe("Zar tests", () => {
           )
         )
 
+        // Make sure zqd identifies both spaces.
+        retryUntil(
+          () => client.spaces.list(),
+          (spaces) => spaces.length === 2
+        )
+
         // Restart the app so that it reads the new space.
-        await startApp(app)
-        // There's inconsistency here on what page is presented when the
-        // app restarts. Sometimes, it's the results viewer for
-        // sample.tsv.brim. Other times, it's the new tab page. Instead
-        // of forking off the flow further, I'm stopping any testing at
-        // this point.
-        // TODO: Understand why different pages appear when the app is
-        // restarted.
-        try {
-          await waitForResults(app)
-        } catch {
-          await waitForNewTab(app)
-        }
+        await app.browserWindow.reload()
+        await click(app, ".add-tab")
+        await app.client.waitForVisible(
+          `//*[@class="space-link"]/*[text()="${ZAR_SPACE_NAME}"]`
+        )
         done()
       })
       .catch((err) => {
