@@ -10,7 +10,8 @@ import AppErrorBoundary from "./components/AppErrorBoundary"
 import GlobalContext from "./state/GlobalContext"
 import initializers from "./initializers/initSearch"
 import lib from "./lib"
-import theme from "../src/css/theme"
+import theme from "./style-theme"
+import {ThemeProvider} from "styled-components"
 
 initializers().then(({globalStore, store}) => {
   ReactDOM.render(

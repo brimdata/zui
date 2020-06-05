@@ -1,43 +1,78 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState} from "react"
-import classNames from "classnames"
-
-import {LinkButton} from "./Typography"
+import React, {useState, Node} from "react"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import {globalDispatch} from "../state/GlobalContext"
 import FilterTree from "./FilterTree"
-import Investigation from "../state/Investigation"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
-import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
+import Pane from "./Pane"
 import Layout from "../state/Layout"
 import BookIcon from "../icons/BookSvgIcon"
 import styled from "styled-components"
+import usePopupMenu from "./hooks/usePopupMenu"
+import ToolbarButton from "./ToolbarButton"
 
-type DropdownSectionProps = {
-  title: string,
-  Icon: React$ComponentType,
-  show: boolean,
-  children: *
-}
-
-const DropdownArrow = ({className}) => {
+const DropdownArrow = (props) => {
   return (
-    <svg className={className} viewBox="0 0 18 12">
-      <polygon points="18 6 0 12 2.66453526e-15 0" />
+    <svg className={props.className} onClick={props.onClick} viewBox="0 0 8 8">
+      <polygon points="0 0 8 4 0 8" />
     </svg>
   )
 }
 
-const StyledDropdownArrow = styled(DropdownArrow)`
-  fill: $gray;
-  width: 10px;
-  transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
+const SectionHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: ${(props) => props.theme.colors.coconut};
+  height: 32px;
+  align-items: center;
+  justify-content: flex-start;
+  border-top: 1px solid ${(props) => props.theme.colors.cloudy};
+  border-bottom: 1px solid ${(props) => props.theme.colors.cloudy};
 `
 
-const DropdownSection = ({title, Icon, children}: DropdownSectionProps) => {
+const IconWrapper = styled.div`
+  svg {
+    width: 14px;
+    fill: ${(props) => props.theme.colors.aqua};
+    margin: 0 8px;
+  }
+`
+
+const Title = styled.label`
+  ${(props) => props.theme.typography.headingSection}
+`
+
+const StyledDropdownArrow = styled(DropdownArrow)`
+  fill: ${(props) => props.theme.colors.lead};
+  width: 12px;
+  margin-left: 12px;
+  transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
+  transition: transform 150ms;
+  cursor: pointer;
+`
+
+const ViewSelectWrapper = styled.div`
+  display: flex;
+  margin-left: auto;
+  margin-right: 15px;
+  cursor: pointer;
+`
+
+type DropdownHeaderProps = {
+  icon: Node,
+  title: string,
+  viewSelect?: Node,
+  children: *
+}
+
+const DropdownHeader = ({
+  icon,
+  title,
+  viewSelect,
+  children
+}: DropdownHeaderProps) => {
   const [show, setShow] = useState(true)
 
   const onClick = () => {
@@ -46,35 +81,28 @@ const DropdownSection = ({title, Icon, children}: DropdownSectionProps) => {
 
   return (
     <section>
-      <div onClick={onClick}>
-        <StyledDropdownArrow show={show} />
-        <Icon />
-        <span>{title}</span>
-      </div>
+      <SectionHeader>
+        <StyledDropdownArrow onClick={onClick} show={show} />
+        <IconWrapper>{icon}</IconWrapper>
+        <Title>{title}</Title>
+        <ViewSelectWrapper>{viewSelect}</ViewSelectWrapper>
+      </SectionHeader>
       {show && children}
     </section>
   )
 }
 
 export function LeftPane() {
-  let [showCollapse, setShowCollapse] = useState(true)
-  let view = useSelector(Layout.getInvestigationView)
-  let isOpen = useSelector(Layout.getLeftSidebarIsOpen)
-  let width = useSelector(Layout.getLeftSidebarWidth)
-  let dispatch = useDispatch()
+  const [showCollapse, setShowCollapse] = useState(true)
+  const view = useSelector(Layout.getInvestigationView)
+  const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
+  const width = useSelector(Layout.getLeftSidebarWidth)
+  const dispatch = useDispatch()
 
   function onDrag(e: MouseEvent) {
     const width = e.clientX
     const max = global.innerWidth
     dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
-  }
-
-  function onViewChange(name) {
-    dispatch(Layout.setInvestigationView(name))
-  }
-
-  function onClearAll() {
-    globalDispatch(Investigation.clearInvestigation())
   }
 
   if (!isOpen) return <XLeftPaneExpander />
@@ -89,49 +117,39 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
-      <DropdownSection title="HISTORY" Icon={BookIcon} show={false}>
-        <div className="investigation-pane-body">
-          <InvestigationHeader
-            view={view}
-            onViewChange={onViewChange}
-            onClearAll={onClearAll}
-          />
-          <InvestigationView view={view} />
-        </div>
-      </DropdownSection>
+      <DropdownHeader
+        icon={<BookIcon />}
+        title="History"
+        viewSelect={<ViewSelect />}
+      >
+        <InvestigationView view={view} />
+      </DropdownHeader>
       <XLeftPaneCollapser show={showCollapse} />
     </Pane>
   )
 }
 
-function InvestigationHeader({view, onViewChange, onClearAll}) {
-  function treeView() {
-    onViewChange("tree")
+const ViewSelect = () => {
+  const dispatch = useDispatch()
+  const currentView = useSelector(Layout.getInvestigationView)
+  const template = [
+    {
+      label: "Linear",
+      click: () => dispatch(Layout.setInvestigationView("linear"))
+    },
+    {
+      label: "Tree",
+      click: () => dispatch(Layout.setInvestigationView("tree"))
+    }
+  ]
+
+  const openMenu = usePopupMenu(template)
+
+  const onClick = (e) => {
+    openMenu(e.currentTarget)
   }
 
-  function linearView() {
-    onViewChange("linear")
-  }
-
-  return (
-    <header className="investigation-header">
-      <nav className="investigation-view-options">
-        <LinkButton
-          className={classNames({selected: view === "tree"})}
-          onClick={treeView}
-        >
-          Tree
-        </LinkButton>
-        <LinkButton
-          className={classNames({selected: view === "linear"})}
-          onClick={linearView}
-        >
-          Linear
-        </LinkButton>
-      </nav>
-      <LinkButton onClick={onClearAll}>Clear</LinkButton>
-    </header>
-  )
+  return <ToolbarButton text={currentView} onClick={onClick} dropdown />
 }
 
 function InvestigationView({view}) {
