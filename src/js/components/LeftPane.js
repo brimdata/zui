@@ -13,6 +13,48 @@ import Investigation from "../state/Investigation"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Pane, {PaneHeader, PaneTitle, Left, Right, Center} from "./Pane"
 import Layout from "../state/Layout"
+import BookIcon from "../icons/BookSvgIcon"
+import styled from "styled-components"
+
+type DropdownSectionProps = {
+  title: string,
+  Icon: React$ComponentType,
+  show: boolean,
+  children: *
+}
+
+const DropdownArrow = ({className}) => {
+  return (
+    <svg className={className} viewBox="0 0 18 12">
+      <polygon points="18 6 0 12 2.66453526e-15 0" />
+    </svg>
+  )
+}
+
+const StyledDropdownArrow = styled(DropdownArrow)`
+  fill: $gray;
+  width: 10px;
+  transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
+`
+
+const DropdownSection = ({title, Icon, children}: DropdownSectionProps) => {
+  const [show, setShow] = useState(true)
+
+  const onClick = () => {
+    setShow(!show)
+  }
+
+  return (
+    <section>
+      <div onClick={onClick}>
+        <StyledDropdownArrow show={show} />
+        <Icon />
+        <span>{title}</span>
+      </div>
+      {show && children}
+    </section>
+  )
+}
 
 export function LeftPane() {
   let [showCollapse, setShowCollapse] = useState(true)
@@ -47,30 +89,18 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
-      <InvestigationTitleBar onClearAll={onClearAll} />
-      <div className="investigation-pane-body">
-        <InvestigationHeader
-          view={view}
-          onViewChange={onViewChange}
-          onClearAll={onClearAll}
-        />
-        <InvestigationView view={view} />
-      </div>
-
+      <DropdownSection title="HISTORY" Icon={BookIcon} show={false}>
+        <div className="investigation-pane-body">
+          <InvestigationHeader
+            view={view}
+            onViewChange={onViewChange}
+            onClearAll={onClearAll}
+          />
+          <InvestigationView view={view} />
+        </div>
+      </DropdownSection>
       <XLeftPaneCollapser show={showCollapse} />
     </Pane>
-  )
-}
-
-function InvestigationTitleBar() {
-  return (
-    <PaneHeader>
-      <Left />
-      <Center>
-        <PaneTitle>History</PaneTitle>
-      </Center>
-      <Right />
-    </PaneHeader>
   )
 }
 
