@@ -134,6 +134,7 @@
     "moment-timezone": "^0.5.27",
     "mousetrap": "^1.6.3",
     "on-idle": "^3.1.4",
+    "polished": "^3.6.4",
     "prismjs": "^1.18.0",
     "react": "^16.12.0",
     "react-day-picker": "^7.4.0",
