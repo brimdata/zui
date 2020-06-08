@@ -19,6 +19,8 @@ $filter-tree-line-color: $gray-5;
     display: flex;
     flex-direction: row;
     padding: 3px 0;
+    border-radius: 5px;
+    margin-right: 3px;
   }
 
   .remove-button {
@@ -29,10 +31,14 @@ $filter-tree-line-color: $gray-5;
 }
 
 .filter-tree-parent:hover {
-  background: $gray-6;
+  background: $white-3;
   cursor: pointer;
   .remove-button {
     opacity: 1;
+    background-color: $white-9;
+    &:hover {
+      background-color: $gray-1;
+    }
   }
 }
 
@@ -75,7 +81,7 @@ $filter-tree-line-color: $gray-5;
     margin-left: 6px;
     box-shadow: none;
     p {
-      color: inherit;
+      color: $gray-9;
     }
 
     &:before {
