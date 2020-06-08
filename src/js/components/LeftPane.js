@@ -1,7 +1,7 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState, Node} from "react"
+import React, {useState, type Node} from "react"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import FilterTree from "./FilterTree"
