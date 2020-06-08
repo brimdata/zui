@@ -29,6 +29,7 @@ const SectionHeader = styled.div`
   justify-content: flex-start;
   border-top: 1px solid ${(props) => props.theme.colors.cloudy};
   border-bottom: 1px solid ${(props) => props.theme.colors.cloudy};
+  margin-bottom: 10px;
 `
 
 const Title = styled.label`
