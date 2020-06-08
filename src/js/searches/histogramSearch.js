@@ -14,5 +14,8 @@ export function addEveryCountProc(program: string, span: Span) {
   }
   const {number, unit} = histogramInterval(span)
 
-  return program + ` | every ${number}${BOOM_INTERVALS[unit]} count() by _path`
+  return (
+    program +
+    ` | every ${number}${BOOM_INTERVALS[unit]} count() by _path -sorted -1`
+  )
 }
