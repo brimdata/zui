@@ -55,7 +55,7 @@ export default function reducer(
         ...state,
         leftSidebarWidth: action.width
       }
-    case "INVESTIGATION_VIEW_SET":
+    case "LAYOUT_INVESTIGATION_VIEW_SET":
       return {
         ...state,
         investigationView: action.view

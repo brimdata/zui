@@ -10,6 +10,20 @@ const headingSection = css`
   letter-spacing: 1px;
 `
 
+const labelSmall = css`
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  line-height: 13px;
+  font-weight: 400;
+`
+
+const labelNormal = css`
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+`
+
 const theme = {
   colors: {
     white: "#FFFFFF",
@@ -26,7 +40,9 @@ const theme = {
     cello: "#324862"
   },
   typography: {
-    headingSection
+    headingSection,
+    labelSmall,
+    labelNormal
   }
 }
 

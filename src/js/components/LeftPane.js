@@ -11,9 +11,9 @@ import Layout from "../state/Layout"
 import BookIcon from "../icons/BookSvgIcon"
 import styled from "styled-components"
 import usePopupMenu from "./hooks/usePopupMenu"
-import ToolbarButton from "./ToolbarButton"
+import DropdownArrow from "../icons/DropdownArrow"
 
-const DropdownArrow = (props) => {
+const Arrow = (props) => {
   return (
     <svg className={props.className} onClick={props.onClick} viewBox="0 0 8 8">
       <polygon points="0 0 8 4 0 8" />
@@ -30,6 +30,7 @@ const SectionHeader = styled.div`
   justify-content: flex-start;
   border-top: 1px solid ${(props) => props.theme.colors.cloudy};
   border-bottom: 1px solid ${(props) => props.theme.colors.cloudy};
+  margin-bottom: 10px;
 `
 
 const IconWrapper = styled.div`
@@ -44,7 +45,7 @@ const Title = styled.label`
   ${(props) => props.theme.typography.headingSection}
 `
 
-const StyledDropdownArrow = styled(DropdownArrow)`
+const StyledArrow = styled(Arrow)`
   fill: ${(props) => props.theme.colors.lead};
   width: 12px;
   margin-left: 12px;
@@ -58,6 +59,20 @@ const ViewSelectWrapper = styled.div`
   margin-left: auto;
   margin-right: 15px;
   cursor: pointer;
+`
+
+const StyledViewSelect = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-transform: capitalize;
+  color: ${(props) => props.theme.colors.slate};
+  ${(props) => props.theme.typography.labelMedium}
+
+  svg {
+    stroke: ${(props) => props.theme.colors.slate};
+    margin-left: 5px;
+  }
 `
 
 type DropdownHeaderProps = {
@@ -82,7 +97,7 @@ const DropdownHeader = ({
   return (
     <section>
       <SectionHeader>
-        <StyledDropdownArrow onClick={onClick} show={show} />
+        <StyledArrow onClick={onClick} show={show} />
         <IconWrapper>{icon}</IconWrapper>
         <Title>{title}</Title>
         <ViewSelectWrapper>{viewSelect}</ViewSelectWrapper>
@@ -149,7 +164,12 @@ const ViewSelect = () => {
     openMenu(e.currentTarget)
   }
 
-  return <ToolbarButton text={currentView} onClick={onClick} dropdown />
+  return (
+    <StyledViewSelect onClick={onClick}>
+      {currentView}
+      <DropdownArrow />
+    </StyledViewSelect>
+  )
 }
 
 function InvestigationView({view}) {
