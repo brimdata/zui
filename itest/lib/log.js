@@ -12,7 +12,7 @@ export const LOG = createLogger({
   level: "info",
   format: format.combine(
     format.timestamp({
-      format: "YYYY-MM-DD HH:mm:ss"
+      format: "YYYY-MM-DD HH:mm:ss.SSS"
     }),
     format.printf(({level, message, timestamp}) => {
       return `[${timestamp} ${level}]: ${message}`
