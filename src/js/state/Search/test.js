@@ -83,7 +83,7 @@ describe("selectors", () => {
     let state = store.getState()
 
     expect(Search.getArgs(state)).toEqual({
-      chartProgram: "* | every 1sec count() by _path",
+      chartProgram: "* | every 1sec count() by _path -sorted -1",
       spaceId: "",
       spaceName: "",
       span: [new Date(0), new Date(1000)],
