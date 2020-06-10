@@ -15,6 +15,7 @@ import {
   click,
   ingestFile,
   newAppInstance,
+  reload,
   startApp,
   waitForResults
 } from "../lib/app"
@@ -40,8 +41,9 @@ describe("Zar tests", () => {
       .then(async () => {
         await waitForResults(app)
 
-        // Figure out underlying space directories. One will be a
-        // zarRoot. The other will be used to read zng into zar.
+        // Use zealot to
+        // 1. Create a new space
+        // 2. Find the path to sample.tsv.brim's all.zng
         const client = zealot.client("localhost:9867")
 
         const sampleSpace = (await client.spaces.list())[0]
@@ -65,8 +67,8 @@ describe("Zar tests", () => {
           (spaces) => spaces.length === 2
         )
 
-        // Restart the app so that it reads the new space.
-        await app.browserWindow.reload()
+        // Reload the app so that it reads the new space.
+        await reload(app)
         await click(app, ".add-tab")
         await app.client.waitForVisible(
           `//*[@class="space-link"]/*[text()="${ZAR_SPACE_NAME}"]`

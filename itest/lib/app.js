@@ -410,3 +410,7 @@ const waitForClickableButtonAndClick = async (
 export const clickPcapButton = async (app: Application) => {
   await waitForClickableButtonAndClick(app, selectors.pcaps.button)
 }
+
+export const reload = async (app: Application) => {
+  await appStep("app reload", () => app.browserWindow.reload())
+}
