@@ -29,7 +29,7 @@ test("#inspectSearch", () => {
             }
           },
           {
-            op: "ReducerProc",
+            op: "ReduceProc",
             reducers: [
               {
                 op: "Count",
