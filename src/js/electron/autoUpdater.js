@@ -33,8 +33,8 @@ const autoUpdateLinux = async () => {
       type: "info",
       buttons: ["Get Update", "Later"],
       title: "Application Update",
-      message: "A new version of Brim is available",
-      detail: "Download and install the latest update"
+      message: "A new version of Brim is available.",
+      detail: `Brim version ${latestVersion} is available for download; you are running v${currentVersion}.`
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
