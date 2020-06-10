@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 Before opening a new issue, please make sure you've reviewed the troubleshooting guide:
-https://github.com/brimsec/brim/blob/master/TROUBLESHOOTING.md
+https://github.com/brimsec/brim/wiki/Troubleshooting
 
 **Describe the bug**
 [A description of what the bug is]

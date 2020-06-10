@@ -16,7 +16,7 @@ automated test infrastructure.
 
 The sections below describe the details regarding the versions we test with
 continuously as well as occasional ad hoc testing. We welcome you to
-[open an issue](Troubleshooting#opening-an-issue) on any problem you
+[open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue) on any problem you
 experience with Brim regardless of platform version, but please understand
 that we may be limited in our ability to provide quick fixes (or any fix at
 all) for some platform versions.
