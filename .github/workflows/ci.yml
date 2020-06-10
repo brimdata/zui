@@ -178,3 +178,9 @@ jobs:
       with:
         name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
         path: /var/tmp/brimsec/itest
+
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
