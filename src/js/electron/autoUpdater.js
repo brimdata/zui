@@ -1,11 +1,59 @@
 /* @flow */
 import {app, autoUpdater, dialog} from "electron"
 import log from "electron-log"
+import get from "lodash/get"
+import semver from "semver"
+import got from "got"
+import open from "../lib/open"
+
+const getFeedURLForPlatform = (platform) => {
+  return `https://update.electronjs.org/brimsec/brim/${platform}/${app.getVersion()}`
+}
+
+const autoUpdateLinux = async () => {
+  // Check for updates for MacOS and if there are then we assume there is also one for linux
+  const url = getFeedURLForPlatform("darwin-x64")
+  try {
+    const currentVersion = app.getVersion()
+    if (!semver.valid(currentVersion))
+      throw "Invalid current version format: " + currentVersion
+
+    const resp = await got(url).json()
+
+    const latestVersion = get(resp, "name", "")
+    if (!semver.valid(latestVersion))
+      throw "Invalid latest version format: " + latestVersion
+
+    if (semver.gte(currentVersion, latestVersion)) {
+      // up to date
+      return
+    }
+
+    const dialogOpts = {
+      type: "info",
+      buttons: ["Get Update", "Later"],
+      title: "Application Update",
+      message: "A new version of Brim is available",
+      detail: "Download and install the latest update"
+    }
+
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      const navUrl = `https://github.com/brimsec/brim/releases/tag/${latestVersion}`
+      if (returnValue.response === 0) open(navUrl)
+    })
+  } catch (err) {
+    throw "Error checking for linux updates: " + err
+  }
+}
 
 export function setupAutoUpdater() {
-  const feedURL = `https://update.electronjs.org/brimsec/brim/${
-    process.platform
-  }/${app.getVersion()}`
+  if (process.platform === "linux") {
+    autoUpdateLinux().catch((err) => log.error(err))
+    return
+  }
+
+  const feedURL = getFeedURLForPlatform(process.platform)
+
   autoUpdater.setFeedURL(feedURL)
 
   autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
