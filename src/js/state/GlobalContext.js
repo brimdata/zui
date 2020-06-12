@@ -7,7 +7,7 @@ import ipc from "../electron/ipc"
 const GlobalContext = React.createContext<*>(null)
 
 export const globalDispatch = (action: Object) => {
-  invoke(ipc.globalStore.dispatch(action))
+  return invoke(ipc.globalStore.dispatch(action))
 }
 
 export default GlobalContext
