@@ -1,14 +1,5 @@
 /* @flow */
-import initStore from "./initStore"
 import initTestStore from "../test/initTestStore"
-
-test("initStore runs", () => {
-  const store = initStore()
-
-  expect(store.hasOwnProperty("getState")).toBe(true)
-  expect(store.hasOwnProperty("dispatch")).toBe(true)
-  expect(store.hasOwnProperty("subscribe")).toBe(true)
-})
 
 test("initTestStore works with thunk and action log", () => {
   const store = initTestStore()

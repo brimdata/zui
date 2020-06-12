@@ -7,10 +7,10 @@ import ReactDOM from "react-dom"
 
 import App from "./components/App"
 import AppErrorBoundary from "./components/AppErrorBoundary"
-import initializers from "./initializers/initSearch"
+import initialize from "./initializers/initialize"
 import lib from "./lib"
 
-initializers().then(({store}) => {
+initialize().then((store) => {
   ReactDOM.render(
     <AppErrorBoundary dispatch={store.dispatch}>
       <Provider store={store}>

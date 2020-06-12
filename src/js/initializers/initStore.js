@@ -5,13 +5,27 @@ import {createStore, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
 import type {Action, Dispatch, State} from "../state/types"
-import BoomClient from "../services/BoomClient"
+import getUrlSearchParams from "../lib/getUrlSearchParams"
+import initBoom from "./initBoom"
+import invoke from "../electron/ipc/invoke"
+import ipc from "../electron/ipc"
 import rootReducer from "../state/rootReducer"
 
-export default (initialState?: State, boom?: BoomClient) =>
-  //$FlowFixMe
-  createStore<State, Action, Dispatch>(
+function getInitialState(windowId) {
+  return Promise.all([
+    invoke(ipc.windows.initialState(windowId)),
+    invoke(ipc.globalStore.init()).then(({initialState}) => initialState)
+  ]).then(([winState, globalState]) => ({...winState, ...globalState}))
+}
+
+export default async () => {
+  const windowId = getUrlSearchParams().id
+  const initialState = await getInitialState(windowId)
+  const boom = initBoom(undefined)
+
+  return createStore<State, Action, Dispatch>(
     rootReducer,
     initialState,
     composeWithDevTools(applyMiddleware(reduxThunk.withExtraArgument(boom)))
   )
+}
