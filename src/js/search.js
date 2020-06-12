@@ -7,17 +7,14 @@ import ReactDOM from "react-dom"
 
 import App from "./components/App"
 import AppErrorBoundary from "./components/AppErrorBoundary"
-import GlobalContext from "./state/GlobalContext"
 import initializers from "./initializers/initSearch"
 import lib from "./lib"
 
-initializers().then(({globalStore, store}) => {
+initializers().then(({store}) => {
   ReactDOM.render(
     <AppErrorBoundary dispatch={store.dispatch}>
-      <Provider store={globalStore} context={GlobalContext}>
-        <Provider store={store}>
-          <App />
-        </Provider>
+      <Provider store={store}>
+        <App />
       </Provider>
     </AppErrorBoundary>,
     lib.doc.id("app-root")
