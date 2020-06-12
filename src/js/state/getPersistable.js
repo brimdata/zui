@@ -5,6 +5,7 @@ export default function getPersistable(state: *) {
   delete persist.errors
   delete persist.notice
   delete persist.handlers
+  delete persist.spaces
 
   return persist
 }
