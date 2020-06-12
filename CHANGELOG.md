@@ -1,3 +1,8 @@
+## v0.11.0
+* Update zq to [v0.15.0](https://github.com/brimsec/zq/releases/tag/v0.15.0), which fixes [an issue with ZNG export](https://github.com/brimsec/brim/issues/814#issuecomment-636130351)
+* Update Zeek to [v3.2.0-dev-brim3](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim3), which adds [JA3](https://github.com/salesforce/ja3) and [HASSH](https://github.com/salesforce/hassh) support for pcaps imported into Brim (#861)
+* Provide notification on Linux when a new Brim version is available for download (#870)
+
 ## v0.10.0
 * Update zq to [v0.14.0](https://github.com/brimsec/zq/releases/tag/v0.14.0)
 * Update Zeek to [v3.2.0-dev-brim2](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim2), with the following platform specific changes:
