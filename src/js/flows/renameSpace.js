@@ -16,8 +16,7 @@ export default (clusterId: string, spaceId: string, name: string): Thunk => (
   zClient.spaces.update(spaceId, {name}).then(() => {
     dispatch(Spaces.rename(clusterId, spaceId, name))
     tabs.forEach((t) => {
-      if (t.search.spaceId === spaceId)
-        dispatch(Search.setSpace(spaceId, name, t.id))
+      if (t.search.spaceId === spaceId) dispatch(Search.setSpace(spaceId, t.id))
     })
   })
 }

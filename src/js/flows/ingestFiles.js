@@ -123,11 +123,11 @@ const postFiles = (client, jsonTypesPath) => ({
 })
 
 const setSpace = (dispatch, tabId) => ({
-  do({spaceId, name}) {
-    dispatch(Search.setSpace(spaceId, name, tabId))
+  do({spaceId}) {
+    dispatch(Search.setSpace(spaceId, tabId))
   },
   undo() {
-    dispatch(Search.setSpace("", "", tabId))
+    dispatch(Search.setSpace("", tabId))
   }
 })
 const trackProgress = (client, dispatch, clusterId) => {

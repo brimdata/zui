@@ -1,8 +1,11 @@
 /* @flow */
 
+import {includes} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
+import ReactTooltip from "react-tooltip"
 import classNames from "classnames"
+import get from "lodash/get"
 
 import type {Finding} from "../../state/Investigation/types"
 import {RemoveButton} from "../Buttons"
@@ -11,13 +14,10 @@ import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
-import submitSearch from "../../flows/submitSearch"
-import Warning from "../icons/warning-sm.svg"
 import Spaces from "../../state/Spaces/selectors"
-import {includes} from "lodash"
 import Tab from "../../state/Tab"
-import get from "lodash/get"
-import ReactTooltip from "react-tooltip"
+import Warning from "../icons/warning-sm.svg"
+import submitSearch from "../../flows/submitSearch"
 
 type Props = {finding: Finding}
 
@@ -27,7 +27,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
     dispatch(SearchBar.changeSearchBarInput(finding.search.program))
-    dispatch(Search.setSpace(finding.search.spaceId, finding.search.spaceName))
+    dispatch(Search.setSpace(finding.search.spaceId))
     dispatch(Search.setSpanArgs(finding.search.spanArgs))
     dispatch(Search.setSpanFocus(null))
     dispatch(submitSearch(false))

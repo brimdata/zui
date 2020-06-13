@@ -3,15 +3,14 @@ import type {DateTuple} from "../../lib/TimeWindow"
 import type {SEARCH_BAR_SUBMIT} from "../SearchBar/types"
 import type {Span, Ts} from "../../brim"
 
-export type SearchState = {
+export type SearchState = {|
   span: Span,
   spanArgs: SpanArgs,
   spanFocus: ?Span,
-  spaceName: string,
   spaceId: string,
   clusterId: string,
   ts: number
-}
+|}
 
 export type SearchArgs = {
   tableProgram: string,
@@ -41,7 +40,6 @@ export type SEARCH_CLUSTER_SET = {
 export type SEARCH_SPACE_SET = {
   type: "SEARCH_SPACE_SET",
   spaceId: string,
-  spaceName: string,
   tabId?: string
 }
 export type SEARCH_SPAN_SET = {

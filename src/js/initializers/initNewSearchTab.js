@@ -13,7 +13,7 @@ export default function(store: Store, dispatch: Dispatch, params: Object) {
     dispatch(Tabs.new())
   }
 
-  dispatch(Search.setSpace(spaceId, spaceName))
+  dispatch(Search.setSpace(spaceId))
   dispatch(Search.setSpanArgs(span))
   dispatch(SearchBar.removeAllSearchBarPins())
   dispatch(SearchBar.changeSearchBarInput(program))

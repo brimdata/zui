@@ -29,7 +29,7 @@ beforeEach(() => {
   store = initTestStore(boom)
   tabId = Tabs.getActive(store.getState())
   store.dispatchAll([
-    Search.setSpace("defaultId", "default"),
+    Search.setSpace("defaultId"),
     Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     tab.computeSpan(),
     Viewer.appendRecords(tabId, records)

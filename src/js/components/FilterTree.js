@@ -44,12 +44,8 @@ export default function FilterTree() {
         ["data", "finding", "search", "spaceId"],
         ""
       )
-      const nodeSpaceName = get(
-        node,
-        ["data", "finding", "search", "spaceName"],
-        ""
-      )
-      dispatch(Search.setSpace(nodeSpaceId, nodeSpaceName))
+      const nodeSpaceName = "fix me"
+      dispatch(Search.setSpace(nodeSpaceId))
       dispatch(submitSearch(false))
     }
 

@@ -96,7 +96,9 @@ export default {
   cluster,
   clusterUrl,
   getZealot,
-  getSpaceName: activeTabSelect((tab) => tab.search.spaceName),
+  getSpaceName: activeTabSelect((tab, state) =>
+    Spaces.getName(tab.search.clusterId, tab.search.spaceId)(state)
+  ),
   getSpaceId: activeTabSelect((tab) => tab.search.spaceId),
   space,
   currentEntry: activeTabSelect(History.current),
