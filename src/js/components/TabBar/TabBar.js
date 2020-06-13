@@ -6,6 +6,7 @@ import React, {useEffect, useState} from "react"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import AddTab from "./AddTab"
 import SearchTab from "./SearchTab"
+import Spaces from "../../state/Spaces"
 import Tabs from "../../state/Tabs"
 import brim from "../../brim"
 import lib from "../../lib"
@@ -17,6 +18,7 @@ const MAX_WIDTH = 240
 
 export default function TabBar() {
   let tabs = useSelector(Tabs.getData)
+  let spaces = useSelector(Spaces.raw)
   let count = tabs.length
   let {ref, rect} = useResizeObserver()
   let [width, setWidth] = useState(0)
@@ -26,7 +28,6 @@ export default function TabBar() {
   let ctl = useTabController(count, calcWidth)
 
   useEffect(() => calcWidth(), [rect.width])
-
   return (
     <div className="tab-bar">
       <div className="tabs-container" ref={ref} onMouseLeave={ctl.onMouseLeave}>
@@ -38,7 +39,7 @@ export default function TabBar() {
               onChange: (indices) => ctl.onTabMove(indices)
             })}
             key={tab.id}
-            title={brim.tab(tab).title()}
+            title={brim.tab(tab, spaces).title()}
             style={layout.getStyle(tab.id)}
             removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
             active={tab.id === ctl.activeId}
