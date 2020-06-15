@@ -61,4 +61,4 @@ global.SVGElement.prototype.getTotalLength = () => 0
 enzyme.configure({adapter: new Adapter()})
 //$FlowFixMe
 document.execCommand = jest.fn()
-initDOM()
+initDOM("app-root")
