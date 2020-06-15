@@ -3,7 +3,9 @@
 import {includes, isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
+import ReactTooltip from "react-tooltip"
 import classNames from "classnames"
+import get from "lodash/get"
 
 import {Node} from "../models/Node"
 import {RemoveButton} from "./Buttons"
@@ -11,22 +13,25 @@ import {createInvestigationTree} from "./FilterTree/helpers"
 import {globalDispatch} from "../state/GlobalContext"
 import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
-import SearchBar from "../state/SearchBar"
-import submitSearch from "../flows/submitSearch"
-import Tab from "../state/Tab"
-import Spaces from "../state/Spaces/selectors"
-import get from "lodash/get"
-import Warning from "./icons/warning-sm.svg"
-import ReactTooltip from "react-tooltip"
 import Search from "../state/Search"
+import SearchBar from "../state/SearchBar"
+import Spaces from "../state/Spaces/selectors"
+import Tab from "../state/Tab"
+import Warning from "./icons/warning-sm.svg"
+import submitSearch from "../flows/submitSearch"
 
 export default function FilterTree() {
   let dispatch = useDispatch()
   let investigation = useSelector(Investigation.getInvestigation)
   let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
-  const clusterID = useSelector(Tab.clusterId)
-  const spaceIds = useSelector(Spaces.ids(clusterID))
+  const clusterId = useSelector(Tab.clusterId)
+  const spaces = useSelector(Spaces.raw)[clusterId] || {}
+  const spaceIds = Object.keys(spaces)
+
+  function getSpaceName(id) {
+    return (spaces[id] && spaces[id].name) || ""
+  }
 
   function renderNode(node: Node, i: number) {
     function onNodeClick() {
@@ -44,7 +49,6 @@ export default function FilterTree() {
         ["data", "finding", "search", "spaceId"],
         ""
       )
-      const nodeSpaceName = "fix me"
       dispatch(Search.setSpace(nodeSpaceId))
       dispatch(submitSearch(false))
     }
@@ -66,11 +70,7 @@ export default function FilterTree() {
         ["data", "finding", "search", "spaceId"],
         ""
       )
-      const findingSpaceName = get(
-        node,
-        ["data", "finding", "search", "spaceName"],
-        ""
-      )
+      const findingSpaceName = getSpaceName(findingSpaceId)
 
       const tip = `'${findingSpaceName}' space no longer exists`
       if (includes(spaceIds, findingSpaceId)) return null

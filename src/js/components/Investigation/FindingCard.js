@@ -22,7 +22,14 @@ import submitSearch from "../../flows/submitSearch"
 type Props = {finding: Finding}
 
 export default React.memo<Props>(function FindingCard({finding}: Props) {
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const clusterId = useSelector(Tab.clusterId)
+  const spaces = useSelector(Spaces.raw)[clusterId] || {}
+  const spaceIds = useSelector(Spaces.ids(clusterId))
+
+  function getSpaceName(id) {
+    return (spaces[id] && spaces[id].name) || ""
+  }
 
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
@@ -38,10 +45,8 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   }
 
   function renderWarning() {
-    const clusterID = useSelector(Tab.clusterId)
-    const spaceIds = useSelector(Spaces.ids(clusterID))
     const findingSpaceId = get(finding, ["search", "spaceId"], "")
-    const findingSpaceName = get(finding, ["search", "spaceName"], "")
+    const findingSpaceName = getSpaceName(findingSpaceId)
     const tip = `'${findingSpaceName}' space no longer exists`
 
     if (includes(spaceIds, findingSpaceId)) return null

@@ -27,17 +27,17 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
     dispatch(initSpace(space))
   }
 
-  const onDelete = (spaceId, spaceName) => (e) => {
+  const onDelete = (id, name) => (e) => {
     e.preventDefault()
     remote.dialog
       .showMessageBox({
         type: "warning",
         title: "Delete Space",
-        message: `Are you sure you want to delete ${spaceName}?`,
+        message: `Are you sure you want to delete ${name}?`,
         buttons: ["OK", "Cancel"]
       })
       .then(({response}) => {
-        if (response === 0) dispatch(deleteSpace(spaceId))
+        if (response === 0) dispatch(deleteSpace(id))
       })
   }
 
