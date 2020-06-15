@@ -24,12 +24,7 @@ type Props = {finding: Finding}
 export default React.memo<Props>(function FindingCard({finding}: Props) {
   const dispatch = useDispatch()
   const clusterId = useSelector(Tab.clusterId)
-  const spaces = useSelector(Spaces.raw)[clusterId] || {}
   const spaceIds = useSelector(Spaces.ids(clusterId))
-
-  function getSpaceName(id) {
-    return (spaces[id] && spaces[id].name) || ""
-  }
 
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
@@ -46,8 +41,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
 
   function renderWarning() {
     const findingSpaceId = get(finding, ["search", "spaceId"], "")
-    const findingSpaceName = getSpaceName(findingSpaceId)
-    const tip = `'${findingSpaceName}' space no longer exists`
+    const tip = "This space no longer exists"
 
     if (includes(spaceIds, findingSpaceId)) return null
 

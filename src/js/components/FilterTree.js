@@ -26,12 +26,7 @@ export default function FilterTree() {
   let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
   const clusterId = useSelector(Tab.clusterId)
-  const spaces = useSelector(Spaces.raw)[clusterId] || {}
-  const spaceIds = Object.keys(spaces)
-
-  function getSpaceName(id) {
-    return (spaces[id] && spaces[id].name) || ""
-  }
+  const spaceIds = useSelector(Spaces.ids(clusterId))
 
   function renderNode(node: Node, i: number) {
     function onNodeClick() {
@@ -70,9 +65,8 @@ export default function FilterTree() {
         ["data", "finding", "search", "spaceId"],
         ""
       )
-      const findingSpaceName = getSpaceName(findingSpaceId)
 
-      const tip = `'${findingSpaceName}' space no longer exists`
+      const tip = "This space no longer exists"
       if (includes(spaceIds, findingSpaceId)) return null
 
       return (

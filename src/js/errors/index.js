@@ -5,9 +5,10 @@ import pcapIngest from "./pcapIngest"
 export default {
   pcapIngest,
   logsIngest,
-  spaceDeleted: (name: string) => ({
+  spaceDeleted: (id: string) => ({
     type: "SpaceDeletedError",
-    message: `The space "${name}" previously on this tab has been deleted.`
+    message: `The space previously on this tab has been deleted.`,
+    details: [`id: ${id}`]
   }),
   importInterrupt: () => ({
     type: "ImportInterruptError",
