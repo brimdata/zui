@@ -4,10 +4,17 @@ import {css} from "styled-components"
 
 const headingSection = css`
   font-family: system-ui, sans-serif;
-  font-weight: 500;
   font-size: 13px;
-  text-transform: uppercase;
+  font-weight: 500;
   letter-spacing: 1px;
+`
+
+const headingList = css`
+  font-family: system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 `
 
 const labelSmall = css`
@@ -41,6 +48,7 @@ const theme = {
   },
   typography: {
     headingSection,
+    headingList,
     labelSmall,
     labelNormal
   }

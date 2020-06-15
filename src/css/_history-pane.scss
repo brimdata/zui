@@ -1,5 +1,6 @@
 .history-pane {
   background: $white-1;
+  overflow-y: scroll;
 
   .pane-header {
     background: $white-3;
