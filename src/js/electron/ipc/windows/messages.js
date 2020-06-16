@@ -1,4 +1,6 @@
 /* @flow */
+import type {SpanArgs} from "../../../state/Search/types"
+import type {State} from "../../../state/types"
 import type {WindowName} from "../../tron/windowManager"
 import type {WindowParams} from "../../tron/window"
 import type {
@@ -9,14 +11,12 @@ import type {
   WindowsNewSearchTabMsg,
   WindowsOpenDirectorySelect
 } from "../types"
-import type {State} from "../../../state/types"
-import type {SpanArgs} from "../../../state/Search/types"
 
 export type NewTabSearchParams = {
   program: string,
   span: SpanArgs,
   spaceId: string,
-  spaceName: string
+  isNewWin?: boolean
 }
 
 export default {
@@ -37,7 +37,7 @@ export default {
       channel: "windows:close"
     }
   },
-  newSearchTab(params: Object): WindowsNewSearchTabMsg {
+  newSearchTab(params: NewTabSearchParams): WindowsNewSearchTabMsg {
     return {
       channel: "windows:newSearchTab",
       params

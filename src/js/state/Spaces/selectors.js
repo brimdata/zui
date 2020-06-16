@@ -12,6 +12,10 @@ export default {
   get: (clusterId: string, spaceId: string) => (state: State) => {
     return getCluster(state, clusterId)[spaceId]
   },
+  getName: (clusterId: string, spaceId: string) => (state: State) => {
+    const space = getCluster(state, clusterId)[spaceId]
+    return space ? space.name : ""
+  },
   raw: (state: State) => state.spaces,
   getSpaces: (clusterId: string) => (state: State): Space[] => {
     let clus = getCluster(state, clusterId)

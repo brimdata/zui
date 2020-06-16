@@ -34,7 +34,7 @@ test("#getBoomOptions", () => {
     Search.setCluster("abc"),
     Search.setSpanArgsFromDates([new Date(0), new Date(1)]),
     Tab.computeSpan(),
-    Search.setSpace("spaceId", "spaceName"),
+    Search.setSpace("spaceId"),
     Boomd.useCache(true),
     Boomd.useIndex(false)
   ])

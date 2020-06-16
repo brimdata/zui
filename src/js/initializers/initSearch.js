@@ -14,6 +14,7 @@ import initStore from "./initStore"
 import initUserInputClasses from "./initUserInputClasses"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
+import refreshSpaceNames from "../flows/refreshSpaceNames"
 import refreshWindow from "../flows/refreshWindow"
 
 let {id} = getQueryParams()
@@ -22,7 +23,7 @@ export default () => {
   return Promise.all([
     invoke(ipc.windows.initialState(id)),
     initGlobalStore()
-  ]).then(([windowState, globalStore]) => {
+  ]).then(async ([windowState, globalStore]) => {
     let globalState = globalStore.getState()
     let initState = {...windowState, ...globalState}
 
@@ -45,6 +46,8 @@ export default () => {
     })
     ipcRenderer.on("close", () => dispatch(closeWindow()))
     global.onbeforeunload = () => dispatch(refreshWindow())
+
+    await dispatch(refreshSpaceNames())
 
     return {store, globalStore}
   })

@@ -38,7 +38,7 @@ test("fetching a regular search", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id", "ranch-logs"),
+    Search.setSpace("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn")
   ])
@@ -54,7 +54,7 @@ test("not saving a search to history", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id", "ranch-logs"),
+    Search.setSpace("ranch-id"),
     SearchBar.changeSearchBarInput("_path=conn")
   ])
 
@@ -69,7 +69,7 @@ test("fetching an analytic search", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id", "ranch-logs"),
+    Search.setSpace("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
@@ -85,7 +85,7 @@ test("fetching an analytic search without history", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id", "ranch-logs"),
+    Search.setSpace("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
@@ -101,7 +101,7 @@ test("fetching an zoom search", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id", "ranch-logs"),
+    Search.setSpace("ranch-id"),
     initTimeWindow(),
     Search.setSpanFocus(brim.time.convertToSpan([new Date(0), new Date(1)])),
     SearchBar.changeSearchBarInput("_path=conn | count()")
@@ -118,7 +118,7 @@ test("fetching an zoom search without history", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id", "ranch-logs"),
+    Search.setSpace("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()"),
     submitSearch()
@@ -135,7 +135,7 @@ test("a bad search query", () => {
   const actions = [
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id", "ranch-logs"),
+    Search.setSpace("ranch-id"),
     SearchBar.changeSearchBarInput("_ath="),
     submitSearch()
   ]
