@@ -5,6 +5,8 @@
   padding-top: $space-xs;
   padding-left: $space-l;
   color: white;
+  border-radius: 5px;
+  margin: 1px 3px;
 
   &.open {
     background: $gray-6;
@@ -33,7 +35,7 @@
   }
 
   &:hover {
-    background: transparentize(white, 0.97);
+    background-color: $white-3;
   }
 
   &:active {
@@ -46,19 +48,26 @@
   }
 
   .remove-button {
+    background-color: $white-9;
+    stroke-width: 3px;
     top: $space-xxs;
     right: 6px;
+
+    &:hover {
+      background-color: $gray-1;
+    }
   }
 }
 
 .finding-card {
   cursor: pointer;
-  color: $white-1;
+  color: $gray-5;
   user-select: none;
   transition: background 150ms;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
 
   .program {
     display: flex;
@@ -76,6 +85,7 @@
   }
 
   .pin {
+    color: $white-1;
     font-size: 9px;
     line-height: 13px;
     background: $green;

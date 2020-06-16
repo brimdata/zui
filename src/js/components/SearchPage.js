@@ -27,6 +27,8 @@ const RowLayout: React$ComponentType<any> = styled.div`
   flex-grow: 1;
   flex-flow: row;
   position: relative;
+  box-shadow: inset 0px 1px 1px ${(props) => props.theme.colors.lead};
+  padding-top: 1px;
 `
 
 const SearchPageMain: React$ComponentType<any> = styled.div`

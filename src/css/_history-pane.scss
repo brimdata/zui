@@ -1,21 +1,14 @@
 .history-pane {
-  background: $gray-7;
+  background: $white-1;
+  overflow-y: scroll;
 
   .pane-header {
-    background: $gray-8;
-    border-bottom: 1px solid $gray-5;
+    background: $white-3;
+    border-top: 1px solid $white-6;
+    border-bottom: 1px solid $white-6;
 
     .pane-title {
-      color: white;
-    }
-  }
-  .clear-button {
-    width: auto;
-    cursor: pointer;
-    color: white;
-    &:hover {
-      background: $red;
-      color: white;
+      @include label-bold;
     }
   }
 }
