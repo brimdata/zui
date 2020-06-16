@@ -1,14 +1,9 @@
 /* @flow */
 import type {Locator} from "../../src/js/test/createLocator"
-import {
-  appStep,
-  click,
-  ingestFile,
-  newAppInstance,
-  startApp,
-  startSearch,
-  writeSearch
-} from "./app"
+import appStep from "./appStep/api"
+// TODO in a future PR: remove direct logStep uses here.
+import logStep from "./appStep/util/logStep"
+import newAppInstance from "./newAppInstance"
 import {retryUntil} from "./control"
 import lib from "../../src/js/lib"
 
@@ -18,7 +13,7 @@ export default (name: string) => {
 
   beforeAll(async () => {
     app = await newAppInstance(name, ++testIdx)
-    await startApp(app)
+    await appStep.startApp(app)
   })
 
   afterAll(async () => {
@@ -31,7 +26,7 @@ export default (name: string) => {
     },
 
     ingest(file: string) {
-      return ingestFile(app, file)
+      return appStep.ingestFile(app, file)
     },
 
     mockSaveDialog(value: {canceled: boolean, filePath: ?string}) {
@@ -43,7 +38,7 @@ export default (name: string) => {
     },
 
     setValue(locator: Locator, value: string) {
-      return appStep(`set input ${locator.css} to ${value}`, () =>
+      return logStep(`set input ${locator.css} to ${value}`, () =>
         app.client
           .waitForVisible(locator.css)
           .then(() => app.client.setValue(locator.css, value))
@@ -51,7 +46,7 @@ export default (name: string) => {
     },
 
     getText(locator: Locator) {
-      return appStep(`get text from ${locator.css}`, async () => {
+      return logStep(`get text from ${locator.css}`, async () => {
         await app.client.waitForVisible(locator.css)
         return await app.client.getText(locator.css)
       })
@@ -62,11 +57,11 @@ export default (name: string) => {
     },
 
     search(input: string) {
-      return writeSearch(app, input).then(() => startSearch(app))
+      return appStep.search(app, input)
     },
 
     click(locator: Locator) {
-      return click(app, locator.css)
+      return appStep.click(app, locator.css)
     },
 
     waitForText(locator: string, regex: RegExp) {

@@ -5,19 +5,10 @@ import md5 from "md5"
 import path from "path"
 
 import {LOG} from "../lib/log"
-import {
-  click,
-  clickPcapButton,
-  ingestFile,
-  newAppInstance,
-  pcapsDir,
-  searchDisplay,
-  startApp,
-  startSearch,
-  waitForSearch,
-  waitUntilDownloadFinished,
-  writeSearch
-} from "../lib/app"
+import appStep from "../lib/appStep/api"
+import {pcapsDir} from "../lib/appStep/api/savePcap"
+import {runSearch} from "../lib/appStep/api/search"
+import newAppInstance from "../lib/newAppInstance"
 import {selectors} from "../../src/js/test/integration"
 import {handleError, stdTest} from "../lib/jest"
 
@@ -39,9 +30,9 @@ describe("Test PCAPs", () => {
 
   beforeEach(async () => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
-    await startApp(app)
+    await appStep.startApp(app)
     await clearPcaps(app)
-    return ingestFile(app, "sample.pcap")
+    return appStep.ingestFile(app, "sample.pcap")
   })
 
   afterEach(() => {
@@ -53,17 +44,13 @@ describe("Test PCAPs", () => {
   stdTest(
     "pcap button downloads deterministically-formed pcap file",
     (done) => {
-      writeSearch(
+      runSearch(
         app,
         "_path=ssl id.orig_h=192.168.1.110 id.resp_h=209.216.230.240 id.resp_p=443"
       )
         .then(async () => {
-          await startSearch(app)
-          await waitForSearch(app)
-          await searchDisplay(app)
-          await click(app, selectors.viewer.resultCellContaining("ssl"))
-          await clickPcapButton(app)
-          let downloadText = await waitUntilDownloadFinished(app)
+          await appStep.click(app, selectors.viewer.resultCellContaining("ssl"))
+          let downloadText = await appStep.savePcap(app)
           expect(downloadText).toBe("Download Complete")
           const fileBasename = "packets-1582646593.996366.pcap"
           let pcapAbspath = path.join(await pcapsDir(app), fileBasename)
@@ -79,14 +66,10 @@ describe("Test PCAPs", () => {
   )
 
   stdTest("pcap download works for null duration", (done) => {
-    writeSearch(app, "duration=null id.orig_p=47783")
+    runSearch(app, "duration=null id.orig_p=47783")
       .then(async () => {
-        await startSearch(app)
-        await waitForSearch(app)
-        await searchDisplay(app)
-        await click(app, selectors.viewer.resultCellContaining("conn"))
-        await clickPcapButton(app)
-        let downloadText = await waitUntilDownloadFinished(app)
+        await appStep.click(app, selectors.viewer.resultCellContaining("conn"))
+        let downloadText = await appStep.savePcap(app)
         expect(downloadText).toBe("Download Complete")
         const fileBasename = "packets-1582646589.440467.pcap"
         let pcapAbspath = path.join(await pcapsDir(app), fileBasename)

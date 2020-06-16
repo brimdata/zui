@@ -3,18 +3,9 @@
 import {basename} from "path"
 import {sprintf} from "sprintf-js"
 
-import {
-  click,
-  ingestFile,
-  newAppInstance,
-  rightClick,
-  searchDisplay,
-  setSpan,
-  startApp,
-  startSearch,
-  waitForResults,
-  writeSearch
-} from "../lib/app.js"
+import {getResults, runSearch} from "../lib/appStep/api/search"
+import appStep from "../lib/appStep/api"
+import newAppInstance from "../lib/newAppInstance"
 import {handleError, stdTest} from "../lib/jest.js"
 import {selectors} from "../../src/js/test/integration"
 
@@ -50,9 +41,9 @@ describe("type-wise Filter = value searches", () => {
 
   beforeAll(async () => {
     app = newAppInstance(basename(__filename) + "-types", 0)
-    await startApp(app)
-    await ingestFile(app, "types.tsv")
-    await setSpan(app, "Whole Space")
+    await appStep.startApp(app)
+    await appStep.ingestFile(app, "types.tsv")
+    await appStep.setSpan(app, "Whole Space")
   })
 
   afterAll(async () => {
@@ -62,10 +53,10 @@ describe("type-wise Filter = value searches", () => {
   })
 
   stdTest("FilterEq ensure ingest", (done) => {
-    writeSearch(app, `* | count() by _path | sort _path`)
-      .then(async () => {
-        await startSearch(app)
-        expect(await searchDisplay(app)).toMatchSnapshot()
+    appStep
+      .search(app, `* | count() by _path | sort _path`)
+      .then((results) => {
+        expect(results).toMatchSnapshot()
         done()
       })
       .catch((err) => {
@@ -79,19 +70,20 @@ describe("type-wise Filter = value searches", () => {
       values.forEach((s) => {
         let testId = sprintf("%04d", testIdx++)
         stdTest(`FilterEq${testId}: ${path} ${fieldName}="${s}"`, (done) => {
-          writeSearch(
+          runSearch(
             app,
             `_path=${path} ${fieldName}!=null | cut id, ${fieldName}`
           )
             .then(async () => {
-              await startSearch(app)
-              await waitForResults(app)
-              rightClick(app, selectors.viewer.resultCellContaining(s))
-              await click(
+              await appStep.rightClick(
+                app,
+                selectors.viewer.resultCellContaining(s)
+              )
+              await appStep.click(
                 app,
                 selectors.viewer.contextMenuItem("Filter = value")
               )
-              expect(await searchDisplay(app)).toMatchSnapshot()
+              expect(await getResults(app)).toMatchSnapshot()
               done()
             })
             .catch((err) => {
@@ -104,13 +96,17 @@ describe("type-wise Filter = value searches", () => {
   run("string", STRINGS)
 
   stdTest(`FilterEq unset/${UNSET} string`, (done) => {
-    writeSearch(app, `_path=string | cut id, scalar | sort -r id | head 10`)
+    runSearch(app, `_path=string | cut id, scalar | sort -r id | head 10`)
       .then(async () => {
-        await startSearch(app)
-        await waitForResults(app)
-        rightClick(app, selectors.viewer.resultCellContaining(UNSET))
-        await click(app, selectors.viewer.contextMenuItem("Filter = value"))
-        expect(await searchDisplay(app)).toMatchSnapshot()
+        await appStep.rightClick(
+          app,
+          selectors.viewer.resultCellContaining(UNSET)
+        )
+        await appStep.click(
+          app,
+          selectors.viewer.contextMenuItem("Filter = value")
+        )
+        expect(await getResults(app)).toMatchSnapshot()
         done()
       })
       .catch((err) => {

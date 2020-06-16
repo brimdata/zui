@@ -5,7 +5,7 @@ import {
   defaultModalButton,
   jsonTypeConfigInput
 } from "../../src/js/test/locators"
-import {searchDisplay} from "../lib/app"
+import {getResults} from "../lib/appStep/api/search"
 import {stdTest} from "../lib/jest"
 import {testDataDir} from "../lib/env"
 import createTestBrim from "../lib/createTestBrim"
@@ -24,7 +24,7 @@ describe("Preferences Modal Tests", () => {
       "_path=conn proto=tcp | cut ts, src_ip, src_port, dst_ip, dst_port, proto | sort ts | head 10"
     )
 
-    expect(await searchDisplay(brim.getApp())).toMatchSnapshot()
+    expect(await getResults(brim.getApp())).toMatchSnapshot()
     done()
   })
 })

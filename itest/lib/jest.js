@@ -2,7 +2,7 @@
 
 import {Application} from "spectron"
 
-import {takeScreenshot} from "./app"
+import appStep from "./appStep/api"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "./log"
 
@@ -16,7 +16,7 @@ export const handleError = async (
   initialError: Error,
   done: *
 ) => {
-  takeScreenshot(app)
+  appStep.takeScreenshot(app)
   let realError = undefined
   let notificationError = undefined
   LOG.error(`handleError: Test hit exception: ${initialError.message}`)

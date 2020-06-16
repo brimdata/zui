@@ -3,21 +3,15 @@
 import path from "path"
 
 import {handleError, stdTest} from "../lib/jest.js"
-import {
-  ingestFile,
-  newAppInstance,
-  searchDisplay,
-  startApp,
-  startSearch,
-  writeSearch
-} from "../lib/app"
+import appStep from "../lib/appStep/api"
+import newAppInstance from "../lib/newAppInstance"
 
 describe("Ingest tests", () => {
   let app
   let testIdx = 0
   beforeAll(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
-    return startApp(app)
+    return appStep.startApp(app)
   })
 
   afterAll(async () => {
@@ -38,13 +32,10 @@ describe("Ingest tests", () => {
 
   sampleFiles.forEach((fileName) => {
     stdTest(`ingest of ${fileName}`, (done) => {
-      ingestFile(app, fileName)
+      appStep
+        .ingestFile(app, fileName)
         .then(async () => {
-          await writeSearch(app, searchZql)
-          await startSearch(app)
-          return searchDisplay(app)
-        })
-        .then((results) => {
+          const results = await appStep.search(app, searchZql)
           expect(results).toMatchSnapshot()
           done()
         })
