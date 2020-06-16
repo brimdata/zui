@@ -355,6 +355,21 @@ export const ingestFile = async (app: Application, file: string) => {
     )
   )
 
+  try {
+    await appStep("wait for ingest to start", () =>
+      retryUntil(
+        () => app.client.isExisting(selectors.status.ingestProgress),
+        (ingesting) => ingesting === true,
+        100,
+        100
+      )
+    )
+  } catch {
+    LOG.debug(
+      "ingest never appeared; let's hope it finished and ended before we could observe it"
+    )
+  }
+
   await appStep("wait for ingest to finish", () =>
     retryUntil(
       () => app.client.isExisting(selectors.status.ingestProgress),
@@ -409,4 +424,8 @@ const waitForClickableButtonAndClick = async (
 
 export const clickPcapButton = async (app: Application) => {
   await waitForClickableButtonAndClick(app, selectors.pcaps.button)
+}
+
+export const reload = async (app: Application) => {
+  await appStep("app reload", () => app.browserWindow.reload())
 }
