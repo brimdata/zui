@@ -152,7 +152,6 @@ export function LeftPane() {
   const spacesHeight = useSelector(Layout.getSpacesHeight)
 
   const paneRef = useRef()
-
   const paneHeight = useRef(0)
 
   function onDragPane(e: MouseEvent) {
