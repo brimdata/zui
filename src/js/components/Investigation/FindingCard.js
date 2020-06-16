@@ -18,6 +18,16 @@ import Spaces from "../../state/Spaces/selectors"
 import Tab from "../../state/Tab"
 import Warning from "../icons/warning-sm.svg"
 import submitSearch from "../../flows/submitSearch"
+import MagnifyingGlass from "../../icons/MagnifyingGlass"
+import styled from "styled-components"
+
+const StyledMagnifyingGlass = styled(MagnifyingGlass)`
+    fill: ${(props) => props.theme.colors.lead};
+    min-width: 13px;
+    width: 13px;
+    margin-right: 3px;
+  }
+`
 
 type Props = {finding: Finding}
 
@@ -61,6 +71,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   return (
     <div className={classNames("finding-card-wrapper")}>
       <div className="finding-card" onClick={onClick}>
+        <StyledMagnifyingGlass />
         <FindingProgram search={finding.search} />
         {renderWarning()}
       </div>

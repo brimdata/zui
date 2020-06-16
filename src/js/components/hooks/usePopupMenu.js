@@ -10,7 +10,7 @@ export default function usePopupMenu(template: $Menu) {
     let menu = remote.Menu.buildFromTemplate(template)
     if (target) {
       let {top, left, height} = target.getBoundingClientRect()
-      menu.popup({x: left, y: top + height + margin})
+      menu.popup({x: Math.round(left), y: Math.round(top + height + margin)})
     } else {
       menu.popup()
     }

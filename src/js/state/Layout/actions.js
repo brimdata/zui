@@ -1,6 +1,6 @@
 /* @flow */
 import type {
-  INVESTIGATION_VIEW_SET,
+  LAYOUT_INVESTIGATION_VIEW_SET,
   InvestigationView,
   LAYOUT_LEFT_SIDEBAR_HIDE,
   LAYOUT_LEFT_SIDEBAR_SHOW,
@@ -47,8 +47,10 @@ export default {
     type: "LAYOUT_LEFT_SIDEBAR_TOGGLE"
   }),
 
-  setInvestigationView: (view: InvestigationView): INVESTIGATION_VIEW_SET => ({
-    type: "INVESTIGATION_VIEW_SET",
+  setInvestigationView: (
+    view: InvestigationView
+  ): LAYOUT_INVESTIGATION_VIEW_SET => ({
+    type: "LAYOUT_INVESTIGATION_VIEW_SET",
     view
   })
 }
