@@ -11,6 +11,10 @@ import Layout from "../state/Layout"
 import styled from "styled-components"
 import usePopupMenu from "./hooks/usePopupMenu"
 import DropdownArrow from "../icons/DropdownArrow"
+import SavedSpacesList from "./SavedSpacesList"
+import Tab from "../state/Tab"
+import Spaces from "../state/Spaces"
+import menu from "../electron/menu"
 
 const Arrow = (props) => {
   return (
@@ -29,7 +33,6 @@ const SectionHeader = styled.div`
   justify-content: flex-start;
   border-top: 1px solid ${(props) => props.theme.colors.cloudy};
   border-bottom: 1px solid ${(props) => props.theme.colors.cloudy};
-  margin-bottom: 10px;
 `
 
 const Title = styled.label`
@@ -110,10 +113,15 @@ function InvestigationTree() {
 export function LeftPane() {
   const [showCollapse, setShowCollapse] = useState(true)
   const [showHistory, setShowHistory] = useState(true)
+  const [showSpaces, setShowSpaces] = useState(true)
   const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
   const dispatch = useDispatch()
+  const id = useSelector(Tab.clusterId)
+  const spaces = useSelector(Spaces.getSpaces(id))
+  const spacesPresent = spaces.length !== 0
+  const spaceContextMenu = menu.spaceContextMenu(id)
 
   function onDrag(e: MouseEvent) {
     const width = e.clientX
@@ -133,6 +141,21 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
+      <section>
+        <SectionHeader>
+          <StyledArrow
+            onClick={() => setShowSpaces(!showSpaces)}
+            show={showSpaces}
+          />
+          <Title>Spaces</Title>
+        </SectionHeader>
+        {showSpaces && spacesPresent && (
+          <SavedSpacesList
+            spaces={spaces}
+            spaceContextMenu={spaceContextMenu}
+          />
+        )}
+      </section>
       <section>
         <SectionHeader>
           <StyledArrow

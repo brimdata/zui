@@ -5,7 +5,7 @@ import type {LayoutState, LayoutAction} from "./types"
 const init: LayoutState = {
   rightSidebarIsOpen: false,
   rightSidebarWidth: 450,
-  leftSidebarIsOpen: false,
+  leftSidebarIsOpen: true,
   leftSidebarWidth: 350,
   investigationView: "linear"
 }
