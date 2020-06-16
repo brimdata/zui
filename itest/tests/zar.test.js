@@ -56,8 +56,18 @@ describe("Zar tests", () => {
         // interesting stuff.
         execSync(`"${ZAR}" import -s 1024B -R "${zarRoot}" "${zngFile}"`)
         await Promise.all(
-          [":ip", ":port", "uid", "_path"].map((index) =>
-            exec(`"${ZAR}" index -R "${zarRoot}" ${index}`)
+          [":ip", ":port", "uid", "_path"].map(
+            (index) =>
+              new Promise((resolve, reject) => {
+                const cmd = `"${ZAR}" index -R "${zarRoot}" ${index}`
+                exec(cmd, (error, stdout, stderr) => {
+                  if (error) {
+                    reject(`${cmd}: ${stderr}`)
+                  } else {
+                    resolve(0)
+                  }
+                })
+              })
           )
         )
 
