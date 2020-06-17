@@ -10,13 +10,13 @@ import startApp from "./startApp"
 import takeScreenshot from "./takeScreenshot"
 
 export default {
-  click: click,
-  rightClick: rightClick,
-  ingestFile: ingestFile,
-  reload: reload,
-  savePcap: savePcap,
-  search: search,
-  setSpan: setSpan,
-  startApp: startApp,
-  takeScreenshot: takeScreenshot
+  click,
+  rightClick,
+  ingestFile,
+  reload,
+  savePcap,
+  search,
+  setSpan,
+  startApp,
+  takeScreenshot
 }
