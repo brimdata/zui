@@ -15,7 +15,6 @@ export default async () => {
 
   // View the latest log and clear log detail history
   const log = LogDetails.build(store.getState())
-  console.log(log)
   store.dispatch(LogDetails.clear())
   log && store.dispatch(viewLogDetail(log))
 
