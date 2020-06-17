@@ -4,16 +4,8 @@ import {basename} from "path"
 
 import {sprintf} from "sprintf-js"
 
-import {
-  ingestFile,
-  newAppInstance,
-  searchDisplay,
-  setSpan,
-  startApp,
-  startSearch,
-  waitForResults,
-  writeSearch
-} from "../lib/app.js"
+import appStep from "../lib/appStep/api"
+import newAppInstance from "../lib/newAppInstance"
 import {handleError, stdTest} from "../lib/jest.js"
 
 const simpleQueries = [
@@ -32,9 +24,9 @@ describe("Query tests", () => {
 
   beforeAll(async () => {
     app = newAppInstance(basename(__filename), ++testIdx)
-    await startApp(app)
-    await ingestFile(app, "sample.tsv")
-    await setSpan(app, "Whole Space")
+    await appStep.startApp(app)
+    await appStep.ingestFile(app, "sample.tsv")
+    await appStep.setSpan(app, "Whole Space")
   })
 
   afterAll(async () => {
@@ -43,20 +35,12 @@ describe("Query tests", () => {
     }
   })
 
-  beforeEach(async () => {
-    await writeSearch(app, "")
-    await waitForResults(app)
-  })
-
   for (let i = 0; i < simpleQueries.length; i++) {
     let zql = simpleQueries[i]
     let testId = sprintf("%03d", i)
     stdTest(`query${testId}: "${zql}"`, (done) => {
-      writeSearch(app, zql)
-        .then(async () => {
-          await startSearch(app)
-          return searchDisplay(app)
-        })
+      appStep
+        .search(app, zql)
         .then((results) => {
           expect(results).toMatchSnapshot()
           done()

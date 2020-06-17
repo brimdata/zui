@@ -11,14 +11,8 @@ import zealot from "../../src/js/services/zealot"
 import {retryUntil} from "../lib/control"
 import {nodeZqDistDir} from "../lib/env"
 import {handleError, stdTest} from "../lib/jest.js"
-import {
-  click,
-  ingestFile,
-  newAppInstance,
-  reload,
-  startApp,
-  waitForResults
-} from "../lib/app"
+import appStep from "../lib/appStep/api"
+import newAppInstance from "../lib/newAppInstance"
 
 describe("Zar tests", () => {
   let app
@@ -27,7 +21,7 @@ describe("Zar tests", () => {
   const ZAR_SPACE_NAME = "sample.zar"
   beforeEach(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
-    return startApp(app)
+    return appStep.startApp(app)
   })
 
   afterEach(async () => {
@@ -37,10 +31,9 @@ describe("Zar tests", () => {
   })
 
   stdTest(`Brim starts when a Zar space is present`, (done) => {
-    ingestFile(app, "sample.tsv")
+    appStep
+      .ingestFile(app, "sample.tsv")
       .then(async () => {
-        await waitForResults(app)
-
         // Use zealot to
         // 1. Create a new space
         // 2. Find the path to sample.tsv.brim's all.zng
@@ -78,8 +71,8 @@ describe("Zar tests", () => {
         )
 
         // Reload the app so that it reads the new space.
-        await reload(app)
-        await click(app, ".add-tab")
+        await appStep.reload(app)
+        await appStep.click(app, ".add-tab")
         await app.client.waitForVisible(
           `//*[@class="space-link"]/*[text()="${ZAR_SPACE_NAME}"]`
         )

@@ -2,13 +2,8 @@
 
 import {basename} from "path"
 
-import {
-  ingestFile,
-  newAppInstance,
-  startApp,
-  setSpan,
-  waitForResults
-} from "../lib/app.js"
+import appStep from "../lib/appStep/api"
+import newAppInstance from "../lib/newAppInstance"
 import {retryUntil} from "../lib/control.js"
 import {handleError, stdTest} from "../lib/jest.js"
 import {dataSets} from "../lib/data.js"
@@ -51,7 +46,7 @@ describe("Histogram tests", () => {
   let testIdx = 0
   beforeEach(() => {
     app = newAppInstance(basename(__filename), ++testIdx)
-    return startApp(app)
+    return appStep.startApp(app)
   })
 
   afterEach(async () => {
@@ -64,7 +59,8 @@ describe("Histogram tests", () => {
     // This is a data-sensitive test that assumes the histogram has particular
     // data loaded. There are inline comments that explain the test's flow.
     LOG.debug("Pre-login")
-    ingestFile(app, "sample.pcap")
+    appStep
+      .ingestFile(app, "sample.pcap")
       .then(async () => {
         LOG.debug("Checking a histogram appears")
         // Verify that a histogram of at least *partial data* is
@@ -81,8 +77,7 @@ describe("Histogram tests", () => {
         // means we must wait for a number of g elements and rect elements. Those
         // elements depend on both the dataset itself and the product's behavior.
         // Set to "Whole Space" to make sure this entire histogram is redrawn.
-        await setSpan(app, "Whole Space")
-        await waitForResults(app)
+        await appStep.setSpan(app, "Whole Space")
         // Just count a higher number of _paths, not all ~1500 rect elements.
         LOG.debug("Checking rect elements in Whole Space")
         let pathClasses = await retryUntil(
