@@ -11,18 +11,18 @@ export default function FindingProgram({search}: Props) {
   if (isEmpty(search.pins) && isEmpty(search.program))
     return (
       <div className="program">
-        <Mono>*</Mono>
+        <p>*</p>
       </div>
     )
 
   return (
     <div className="program">
       {search.pins.map((text, i) => (
-        <Mono className="pin" key={i}>
+        <p className="pin" key={i}>
           {text}
-        </Mono>
+        </p>
       ))}
-      <Mono>{search.program}</Mono>
+      <p>{search.program}</p>
     </div>
   )
 }

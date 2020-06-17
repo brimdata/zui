@@ -15,7 +15,11 @@ $page-border-color: $white-4;
   border-color: transparent;
 }
 
-.pane-left,
+.pane-left {
+  min-width: 215px;
+  flex-shrink: 0;
+}
+
 .pane-right {
   min-width: 240px;
   flex-shrink: 0;

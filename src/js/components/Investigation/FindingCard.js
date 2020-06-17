@@ -25,7 +25,8 @@ const StyledMagnifyingGlass = styled(MagnifyingGlass)`
     fill: ${(props) => props.theme.colors.lead};
     min-width: 13px;
     width: 13px;
-    margin-right: 3px;
+    min-height: 13px;
+    height: 13px;
   }
 `
 
@@ -70,8 +71,8 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   }
 
   return (
-    <div className={classNames("finding-card-wrapper")}>
-      <div className="finding-card" onClick={onClick}>
+    <div className={classNames("finding-card-wrapper")} onClick={onClick}>
+      <div className="finding-card">
         <StyledMagnifyingGlass />
         <FindingProgram search={finding.search} />
         {renderWarning()}

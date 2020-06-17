@@ -24,6 +24,10 @@ const Arrow = (props) => {
   )
 }
 
+const StyledSection = styled.section`
+  min-height: 240px;
+`
+
 const SectionHeader = styled.div`
   display: flex;
   flex-direction: row;
@@ -141,7 +145,7 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
-      <section>
+      <StyledSection>
         <SectionHeader>
           <StyledArrow
             onClick={() => setShowSpaces(!showSpaces)}
@@ -149,14 +153,14 @@ export function LeftPane() {
           />
           <Title>Spaces</Title>
         </SectionHeader>
-        {showSpaces && spacesPresent && (
+        {showSpaces && (
           <SavedSpacesList
             spaces={spaces}
             spaceContextMenu={spaceContextMenu}
           />
         )}
-      </section>
-      <section>
+      </StyledSection>
+      <StyledSection>
         <SectionHeader>
           <StyledArrow
             onClick={() => setShowHistory(!showHistory)}
@@ -166,7 +170,7 @@ export function LeftPane() {
           <ViewSelect />
         </SectionHeader>
         {showHistory && <InvestigationView view={view} />}
-      </section>
+      </StyledSection>
       <XLeftPaneCollapser show={showCollapse} />
     </Pane>
   )
