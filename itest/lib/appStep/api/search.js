@@ -6,12 +6,6 @@ import logStep from "../util/logStep"
 import waitForResults from "../util//waitForResults"
 import {selectors} from "../../../../src/js/test/integration"
 
-export default async (app: Application, searchText: string) => {
-  // Run a search and return results.
-  await runSearch(app, searchText)
-  return await getResults(app)
-}
-
 export const runSearch = async (app: Application, searchText: string) => {
   // Run a search and wait for results to appear. Do not return results.
   // This is suitable for setting up the app to do something else
@@ -71,4 +65,10 @@ export const getResults = async (
     headers = []
   }
   return headers.concat(searchResults)
+}
+
+export default async (app: Application, searchText: string) => {
+  // Run a search and return results.
+  await runSearch(app, searchText)
+  return await getResults(app)
 }
