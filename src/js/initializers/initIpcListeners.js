@@ -8,6 +8,7 @@ import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import View from "../state/View"
 import getPersistable from "../state/getPersistable"
+import initNewSearchTab from "./initNewSearchTab"
 
 export default (store: Store) => {
   ipcRenderer.on("pinSearch", () => {
@@ -66,4 +67,12 @@ export default (store: Store) => {
   ipcRenderer.on("closeTab", () => {
     store.dispatch(Tabs.closeActive())
   })
+
+  ipcRenderer.on("windows:newSearchTab", (e, {params}) => {
+    initNewSearchTab(store, params)
+  })
+
+  ipcRenderer.on("globalStore:dispatch", (e, {action}) =>
+    store.dispatch(action)
+  )
 }

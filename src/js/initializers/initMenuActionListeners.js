@@ -1,15 +1,15 @@
 /* @flow */
-import type {Dispatch} from "../state/types"
+import type {Store} from "../state/types"
 import menu from "../electron/menu"
 
-export default function(dispatch: Dispatch) {
+export default function(store: Store) {
   for (let name in menu.actions.search) {
-    menu.actions.search[name].listen(dispatch)
+    menu.actions.search[name].listen(store.dispatch)
   }
   for (let name in menu.actions.detail) {
-    menu.actions.detail[name].listen(dispatch)
+    menu.actions.detail[name].listen(store.dispatch)
   }
   for (let name in menu.actions.space) {
-    menu.actions.space[name].listen(dispatch)
+    menu.actions.space[name].listen(store.dispatch)
   }
 }

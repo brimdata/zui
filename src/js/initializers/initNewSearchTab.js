@@ -1,26 +1,22 @@
 /* @flow */
 
-import type {Dispatch, Store} from "../state/types"
 import type {NewTabSearchParams} from "../electron/ipc/windows/messages"
+import type {Store} from "../state/types"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
-import Tabs from "../state/Tabs/flows"
+import Tabs from "../state/Tabs"
 import submitSearch from "../flows/submitSearch"
 
-export default function(
-  store: Store,
-  dispatch: Dispatch,
-  params: NewTabSearchParams
-) {
+export default function(store: Store, params: NewTabSearchParams) {
   const {spaceId, span, program, isNewWin} = params
 
   if (!isNewWin) {
-    dispatch(Tabs.new())
+    store.dispatch(Tabs.new())
   }
 
-  dispatch(Search.setSpace(spaceId))
-  dispatch(Search.setSpanArgs(span))
-  dispatch(SearchBar.removeAllSearchBarPins())
-  dispatch(SearchBar.changeSearchBarInput(program))
-  dispatch(submitSearch())
+  store.dispatch(Search.setSpace(spaceId))
+  store.dispatch(Search.setSpanArgs(span))
+  store.dispatch(SearchBar.removeAllSearchBarPins())
+  store.dispatch(SearchBar.changeSearchBarInput(program))
+  store.dispatch(submitSearch())
 }

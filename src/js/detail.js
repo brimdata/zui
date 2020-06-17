@@ -19,6 +19,6 @@ initDetail().then((store) => {
         <WhoisModal />
       </Provider>
     </AppErrorBoundary>,
-    lib.doc.id("detail-root")
+    lib.doc.id("app-root")
   )
 })

@@ -24,7 +24,7 @@ export default function reducer(
 }
 
 function tryAbort(handler: Handler, emit: boolean = true) {
-  if (handler && handler.type === "SEARCH") {
+  if (handler && handler.type === "SEARCH" && handler.abort) {
     handler.abort(emit)
   }
 }
