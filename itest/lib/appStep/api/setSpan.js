@@ -14,5 +14,5 @@ export default async (app: Application, span: string) => {
   await logStep(`select span ${span}`, () =>
     click(app, selectors.span.menuItem(span))
   )
-  await waitForResults(app)
+  return waitForResults(app)
 }

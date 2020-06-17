@@ -39,7 +39,7 @@ export default async (app: Application, file: string) => {
     )
   }
 
-  await logStep("wait for ingest to finish", () =>
+  return logStep("wait for ingest to finish", () =>
     retryUntil(
       () => app.client.isExisting(selectors.status.ingestProgress),
       (ingesting) => ingesting === false

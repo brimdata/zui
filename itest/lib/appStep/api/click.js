@@ -20,20 +20,20 @@ const waitForClickable = async (app: Application, selector: string) => {
   await logStep(`wait for element to be visible: "${selector}"`, () =>
     app.client.waitForVisible(selector)
   )
-  await logStep(`scroll to: "${selector}"`, () => app.client.scroll(selector))
+  return logStep(`scroll to: "${selector}"`, () => app.client.scroll(selector))
 }
 
 export const click = (app: Application, selector: string) =>
   logStep(`click on selector "${selector}"`, async () => {
     await waitForClickable(app, selector)
     try {
-      await retryUntil(
+      return retryUntil(
         () => app.client.click(selector),
         (success) => success
       )
     } catch (e) {
       LOG.debug("trying to execute script for click: " + e)
-      await app.client.selectorExecute(selector, (elem) => {
+      return app.client.selectorExecute(selector, (elem) => {
         elem.click()
       })
     }
@@ -43,13 +43,13 @@ export const rightClick = (app: Application, selector: string) =>
   logStep(`right-click on selector "${selector}"`, async () => {
     await waitForClickable(app, selector)
     try {
-      await retryUntil(
+      return retryUntil(
         () => app.client.rightClick(selector),
         (success) => success
       )
     } catch (e) {
       LOG.debug("trying to execute script for rightClick: " + e)
-      await app.client.selectorExecute(selector, (elem) => {
+      return app.client.selectorExecute(selector, (elem) => {
         elem.rightClick()
       })
     }
@@ -71,13 +71,13 @@ export const waitForClickableButtonAndClick = async (
   // We can use app.client.click() here because we've done the necessary
   // waiting.
   try {
-    await retryUntil(
+    return retryUntil(
       () => app.client.click(selector),
       (success) => success
     )
   } catch (e) {
     LOG.debug("trying to execute script for click: " + e)
-    await app.client.selectorExecute(selector, (elem) => {
+    return app.client.selectorExecute(selector, (elem) => {
       elem.click()
     })
   }

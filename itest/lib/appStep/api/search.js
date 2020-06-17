@@ -16,7 +16,7 @@ export const runSearch = async (app: Application, searchText: string) => {
       .then(() => app.client.setValue(selectors.search.input, searchText))
   )
   await logStep("click the search button", () => app.client.keys("Enter"))
-  await waitForResults(app)
+  return waitForResults(app)
 }
 
 export const getResults = async (
@@ -52,7 +52,7 @@ export const getResults = async (
 
   let searchResults = await logStep("get search records", async () => {
     await app.client.waitForVisible(selectors.viewer.results)
-    return await app.client.getText(selectors.viewer.results)
+    return app.client.getText(selectors.viewer.results)
   })
 
   let headers
@@ -70,5 +70,5 @@ export const getResults = async (
 export default async (app: Application, searchText: string) => {
   // Run a search and return results.
   await runSearch(app, searchText)
-  return await getResults(app)
+  return getResults(app)
 }
