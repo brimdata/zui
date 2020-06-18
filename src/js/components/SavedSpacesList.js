@@ -7,9 +7,10 @@ import ProgressIndicator from "./ProgressIndicator"
 import brim from "../brim"
 import menu from "../electron/menu"
 import {showContextMenu} from "../lib/System"
-import File from "../icons/File"
 import Tab from "../state/Tab"
 import EmptySection from "./common/EmptySection"
+import FileFilled from "../icons/FileFilled"
+import FileBorder from "../icons/FileBorder"
 
 type Props = {|
   spaces: Space[],
@@ -28,7 +29,7 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
   if (spaces.length === 0)
     return (
       <EmptySection
-        icon={<File />}
+        icon={<FileFilled />}
         message="You have no spaces yet. Create a space by importing data."
       />
     )
@@ -55,7 +56,7 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
                 s.id === currentSpaceId ? "current-space-link" : ""
               }`}
             >
-              <File className="space-icon" />
+              <FileBorder className="space-icon" />
               <span className="name">{s.name}</span>
               {progress}
             </a>
