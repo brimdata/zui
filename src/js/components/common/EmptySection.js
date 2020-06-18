@@ -11,7 +11,6 @@ const EmptyWrapper = (styled.div`
 
   svg {
     fill: ${(props) => props.theme.colors.cloudy};
-    stroke: ${(props) => props.theme.colors.cloudy};
   }
 
   p {
