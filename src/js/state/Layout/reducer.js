@@ -6,7 +6,7 @@ const init: LayoutState = {
   rightSidebarIsOpen: false,
   rightSidebarWidth: 450,
   leftSidebarIsOpen: true,
-  leftSidebarWidth: 215,
+  leftSidebarWidth: 270,
   investigationView: "linear"
 }
 

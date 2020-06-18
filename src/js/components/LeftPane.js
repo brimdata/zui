@@ -25,7 +25,14 @@ const Arrow = (props) => {
 }
 
 const StyledSection = styled.section`
+  height: 50%;
   min-height: 240px;
+  overflow: hidden;
+`
+
+const SectionContents = styled.div`
+  height: 100%;
+  overflow-y: scroll;
 `
 
 const SectionHeader = styled.div`
@@ -152,12 +159,14 @@ export function LeftPane() {
           />
           <Title>Spaces</Title>
         </SectionHeader>
-        {showSpaces && (
-          <SavedSpacesList
-            spaces={spaces}
-            spaceContextMenu={spaceContextMenu}
-          />
-        )}
+        <SectionContents>
+          {showSpaces && (
+            <SavedSpacesList
+              spaces={spaces}
+              spaceContextMenu={spaceContextMenu}
+            />
+          )}
+        </SectionContents>
       </StyledSection>
       <StyledSection>
         <SectionHeader>
@@ -168,7 +177,9 @@ export function LeftPane() {
           <Title>History</Title>
           <ViewSelect />
         </SectionHeader>
-        {showHistory && <InvestigationView view={view} />}
+        <SectionContents>
+          {showHistory && <InvestigationView view={view} />}
+        </SectionContents>
       </StyledSection>
       <XLeftPaneCollapser show={showCollapse} />
     </Pane>
