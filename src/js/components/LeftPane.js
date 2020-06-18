@@ -124,7 +124,6 @@ export function LeftPane() {
   const dispatch = useDispatch()
   const id = useSelector(Tab.clusterId)
   const spaces = useSelector(Spaces.getSpaces(id))
-  const spacesPresent = spaces.length !== 0
   const spaceContextMenu = menu.spaceContextMenu(id)
 
   function onDrag(e: MouseEvent) {

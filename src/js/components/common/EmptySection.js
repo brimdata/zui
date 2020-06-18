@@ -1,9 +1,8 @@
 /* @flow */
-import React, {type Node} from "react"
-
+import React, {type Node, type ComponentType} from "react"
 import styled from "styled-components"
 
-const EmptyWrapper = styled.div`
+const EmptyWrapper = (styled.div`
   display: flex;
   min-width: 100%;
   flex-direction: column;
@@ -21,7 +20,7 @@ const EmptyWrapper = styled.div`
     text-align: center;
     margin: 16px 14px 0;
   }
-`
+`: ComponentType<*>)
 
 type EmptySectionProps = {
   icon: Node,

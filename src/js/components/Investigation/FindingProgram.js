@@ -2,7 +2,6 @@
 import {isEmpty} from "lodash"
 import React from "react"
 
-import {Mono} from "../Typography"
 import type {SearchRecord} from "../../types"
 
 type Props = {search: SearchRecord}
