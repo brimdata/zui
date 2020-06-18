@@ -2,15 +2,34 @@
 
 import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {type ComponentType} from "react"
 
 import {disconnectCluster, switchCluster} from "../state/Clusters/flows"
 import Clusters from "../state/Clusters"
-import MenuBarButton from "./MenuBarButton"
 import PopMenuPointy from "./PopMenu/PopMenuPointy"
 import Tab from "../state/Tab"
+import styled from "styled-components"
+import DropdownArrow from "../icons/DropdownArrow"
 
-export default function CluterPicker() {
+const ClusterPickerWrapper = (styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 11px 12px;
+
+  label {
+    ${(props) => props.theme.typography.labelBold};
+    color: ${(props) => props.theme.colors.aqua};
+  }
+
+  svg {
+    height: 11px;
+    width: 11px;
+    stroke: ${(props) => props.theme.colors.slate};
+    margin-left: 6px;
+  }
+`: ComponentType<*>)
+
+export default function ClusterPicker() {
   const current = useSelector(Tab.cluster)
   const clusters = useSelector(Clusters.all)
   const dispatch = useDispatch()
@@ -32,14 +51,15 @@ export default function CluterPicker() {
   })
 
   return (
-    <div className="cluster-picker">
+    <ClusterPickerWrapper>
       <PopMenuPointy template={template} position="bottom center">
         <div>
-          <MenuBarButton dropdown>
-            <strong>{current.host}</strong>:{current.port}
-          </MenuBarButton>
+          <label>
+            {current.host}:{current.port}
+          </label>
+          <DropdownArrow />
         </div>
       </PopMenuPointy>
-    </div>
+    </ClusterPickerWrapper>
   )
 }

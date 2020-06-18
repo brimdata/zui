@@ -31,6 +31,14 @@ const labelNormal = css`
   font-weight: 500;
 `
 
+const labelBold = css`
+  font-family: system-ui, sans-serif;
+  letter-spacing: -0.08;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+`
+
 const theme = {
   colors: {
     white: "#FFFFFF",
@@ -50,7 +58,8 @@ const theme = {
     headingSection,
     headingList,
     labelSmall,
-    labelNormal
+    labelNormal,
+    labelBold
   }
 }
 

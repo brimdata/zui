@@ -16,6 +16,7 @@ import Tab from "../state/Tab"
 import Spaces from "../state/Spaces"
 import menu from "../electron/menu"
 import useDrag from "./hooks/useDrag"
+import ClusterPicker from "./ClusterPicker"
 
 const Arrow = (props) => {
   return (
@@ -194,6 +195,7 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
+      <ClusterPicker />
       <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
         <SectionHeader>
           <StyledArrow
