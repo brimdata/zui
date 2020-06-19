@@ -153,7 +153,7 @@
     "source-map-support": "^0.5.16",
     "styled-components": "^5.1.0",
     "valid-url": "^1.0.9",
-    "zq": "git+https://github.com/brimsec/zq.git#44935c070698afe12966e7f1a3718d733a5a0b81"
+    "zq": "git+https://github.com/brimsec/zq.git#ec93c69681f948277b838415942288b46be65fe2"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
