@@ -14,7 +14,7 @@ jobs:
       matrix:
         node-version: [12.x]
         os: [ubuntu-18.04]
-    timeout-minutes: 120
+    timeout-minutes: 60
     steps:
       # Only one of these should run at a time, and the checkout of brim
       # has to be in the "protected section". This will poll every 60s
@@ -105,7 +105,7 @@ jobs:
       - run: npm test -- --maxWorkers=2 --ci
       - name: Integration Tests
         run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
-        timeout-minutes: 90
+        timeout-minutes: 30
         env:
           WORKSPACE: /var/tmp/brimsec
 

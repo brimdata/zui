@@ -20,7 +20,7 @@ export default (name: string, idx: number): Application => {
   let appArgs = {
     chromeDriverArgs: [`--user-data-dir=${userDataDir}`],
     startTimeout: 60000,
-    waitTimeout: 60000,
+    waitTimeout: 15000,
     chromeDriverLogPath: path.join(userDataDir, "chromedriver.log"),
     webdriverLogPath: path.join(userDataDir, "webdriverLogFiles"),
     // Latest compatible spectron and webdriverio lead to the
