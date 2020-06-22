@@ -12,36 +12,9 @@
       @include label-small;
     }
 
+    input,
     select {
-      height: 24px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
       width: 240px;
-    }
-
-    label {
-      @include label-normal;
-      user-select: none;
-    }
-
-    input {
-      padding-left: 3px;
-      height: 24px;
-      width: 240px;
-      border-radius: 4px;
-      line-height: 24px;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-    }
-
-    .file-input-picker {
-      display: flex;
-      align-items: center;
-      button {
-        width: auto;
-        margin-right: 3px;
-      }
-      input {
-        flex: 1;
-      }
     }
 
     .setting-panel {
