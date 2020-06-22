@@ -1,0 +1,25 @@
+.tab-sign-in {
+  height: 100%;
+  background: linear-gradient(to bottom, $snow 50%, white);
+
+  .brim-text-logo {
+    display: block;
+    margin: 0 auto 48px auto;
+  }
+
+  .sign-in-form {
+    margin: 0 auto;
+    margin-top: 10vh;
+    width: 240px;
+
+    .buttons {
+      margin-top: 48px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      min-width: 80px;
+    }
+  }
+}

@@ -18,7 +18,7 @@ export default async function(store: Store) {
   }
   global.windowId = id
   store.dispatch(Clusters.add(cluster))
-  store.dispatch(Search.setCluster(cluster.id))
-  await store.dispatch(refreshSpaceNames())
-  if (space) store.dispatch(initSpace(space))
+  store.dispatch(Search.setCluster(""))
+  // await store.dispatch(refreshSpaceNames())
+  // if (space) store.dispatch(initSpace(space))
 }

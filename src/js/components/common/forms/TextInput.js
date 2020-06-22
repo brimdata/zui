@@ -2,5 +2,6 @@
 import React from "react"
 
 export default function TextInput(props: *) {
-  return <input {...props} type="text" className="text-input" />
+  const type = props.type || "text"
+  return <input {...props} type={type} className="text-input" />
 }
