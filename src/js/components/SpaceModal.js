@@ -1,12 +1,14 @@
 /* @flow */
+import {useDispatch, useSelector} from "react-redux"
 import React, {useState, useEffect} from "react"
 
-import ModalBox from "./ModalBox/ModalBox"
-import {useDispatch, useSelector} from "react-redux"
 import {reactElementProps} from "../test/integration"
+import InputField from "./common/forms/InputField"
+import InputLabel from "./common/forms/InputLabel"
 import Modal from "../state/Modal"
+import ModalBox from "./ModalBox/ModalBox"
 import Spaces from "../state/Spaces"
-import {Input} from "./form/Inputs"
+import TextInput from "./common/forms/TextInput"
 import renameSpace from "../flows/renameSpace"
 
 export default function SpaceModal() {
@@ -42,14 +44,17 @@ export default function SpaceModal() {
 const SpaceModalContents = ({value, onChange}) => {
   return (
     <div className="space-modal-contents">
-      <Input
-        autoFocus
-        label="Space Name"
-        value={value}
-        onChange={(e) => {
-          onChange(e.target.value)
-        }}
-      />
+      <InputField>
+        <InputLabel>New Name:</InputLabel>
+        <TextInput
+          autoFocus
+          label="Space Name"
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value)
+          }}
+        />
+      </InputField>
     </div>
   )
 }
