@@ -121,8 +121,6 @@ export default function FilterTree() {
       />
     )
 
-  console.log("mason: ", !!tree.getRoot().children.length)
-
   return (
     <div className="filter-tree">{tree.getRoot().children.map(renderNode)}</div>
   )

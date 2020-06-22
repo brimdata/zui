@@ -1,7 +1,7 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState} from "react"
+import React, {useState, useRef} from "react"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import FilterTree from "./FilterTree"
@@ -15,6 +15,7 @@ import SavedSpacesList from "./SavedSpacesList"
 import Tab from "../state/Tab"
 import Spaces from "../state/Spaces"
 import menu from "../electron/menu"
+import useDrag from "./hooks/useDrag"
 
 const Arrow = (props) => {
   return (
@@ -25,13 +26,14 @@ const Arrow = (props) => {
 }
 
 const StyledSection = styled.section`
-  height: 50%;
-  min-height: 240px;
   overflow: hidden;
+  position: relative;
+  min-height: 24px;
 `
 
 const SectionContents = styled.div`
   height: 100%;
+  display: ${(props) => (props.show ? "block" : "none")};
   overflow-y: scroll;
 `
 
@@ -78,6 +80,17 @@ const StyledViewSelect = styled.div`
   }
 `
 
+const DragAnchor = styled.div`
+  position: absolute;
+  background: transparent;
+  pointer-events: all !important;
+  width: 100%;
+  height: 9px;
+  bottom: -4px;
+  top: unset;
+  cursor: row-resize;
+`
+
 const ViewSelect = () => {
   const dispatch = useDispatch()
   const currentView = useSelector(Layout.getInvestigationView)
@@ -122,22 +135,48 @@ function InvestigationTree() {
 }
 
 export function LeftPane() {
+  const dispatch = useDispatch()
   const [showCollapse, setShowCollapse] = useState(true)
   const [showHistory, setShowHistory] = useState(true)
   const [showSpaces, setShowSpaces] = useState(true)
+  const [spacesHeight, setSpacesHeight] = useState(1)
+  const [historyHeight, setHistoryHeight] = useState(1)
   const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
-  const dispatch = useDispatch()
   const id = useSelector(Tab.clusterId)
   const spaces = useSelector(Spaces.getSpaces(id))
   const spaceContextMenu = menu.spaceContextMenu(id)
 
-  function onDrag(e: MouseEvent) {
+  const spacesRef = useRef()
+  const historyRef = useRef()
+  const paneRef = useRef()
+
+  const paneHeight = useRef(0)
+
+  function onDragPane(e: MouseEvent) {
     const width = e.clientX
     const max = global.innerWidth
     dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
   }
+
+  function onDragSpaces({dy, type}) {
+    let newSpacesHeight
+    switch (type) {
+      case "down":
+        paneHeight.current = paneRef.current
+          ? paneRef.current.getBoundingClientRect().height
+          : 0
+        break
+      case "move":
+        newSpacesHeight = spacesHeight + dy / (paneHeight.current / 2)
+        setSpacesHeight(newSpacesHeight)
+        setHistoryHeight(2 - newSpacesHeight)
+        break
+    }
+  }
+
+  const dragFunc = useDrag(onDragSpaces)
 
   if (!isOpen) return <XLeftPaneExpander />
 
@@ -146,12 +185,16 @@ export function LeftPane() {
       isOpen={isOpen}
       position="left"
       width={width}
-      onDrag={onDrag}
+      ref={paneRef}
+      onDrag={onDragPane}
       className="history-pane"
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
-      <StyledSection>
+      <StyledSection
+        ref={spacesRef}
+        style={{flex: showSpaces ? spacesHeight : 0}}
+      >
         <SectionHeader>
           <StyledArrow
             onClick={() => setShowSpaces(!showSpaces)}
@@ -159,16 +202,15 @@ export function LeftPane() {
           />
           <Title>Spaces</Title>
         </SectionHeader>
-        <SectionContents>
-          {showSpaces && (
-            <SavedSpacesList
-              spaces={spaces}
-              spaceContextMenu={spaceContextMenu}
-            />
-          )}
+        <SectionContents show={showSpaces}>
+          <SavedSpacesList
+            spaces={spaces}
+            spaceContextMenu={spaceContextMenu}
+          />
         </SectionContents>
+        {showSpaces && <DragAnchor {...dragFunc()} />}
       </StyledSection>
-      <StyledSection>
+      <StyledSection ref={historyRef} style={{flex: historyHeight}}>
         <SectionHeader>
           <StyledArrow
             onClick={() => setShowHistory(!showHistory)}
@@ -177,8 +219,8 @@ export function LeftPane() {
           <Title>History</Title>
           <ViewSelect />
         </SectionHeader>
-        <SectionContents>
-          {showHistory && <InvestigationView view={view} />}
+        <SectionContents show={showHistory}>
+          <InvestigationView view={view} />
         </SectionContents>
       </StyledSection>
       <XLeftPaneCollapser show={showCollapse} />

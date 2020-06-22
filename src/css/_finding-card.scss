@@ -7,6 +7,7 @@
   margin: 0 2px;
   border-radius: 5px;
   cursor: pointer;
+  justify-content: space-between;
 
   &.open {
     background: $gray-6;
@@ -28,6 +29,7 @@
 
   .gutter-button-style {
     opacity: 0;
+    position: relative;
   }
 
   &:hover .gutter-button-style {
