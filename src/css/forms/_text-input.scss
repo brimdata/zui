@@ -1,0 +1,11 @@
+.text-input {
+  @include label-normal;
+  @include input-border;
+  @include input-focus;
+  width: 100%;
+  color: $aqua;
+  background: $ivory;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: none;
+}

@@ -1,0 +1,10 @@
+.select-input {
+  height: 24px;
+  width: 100%;
+  @include label-normal;
+  @include input-border;
+  @include input-focus;
+  color: $aqua;
+  background: $ivory;
+  border: none;
+}
