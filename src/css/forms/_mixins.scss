@@ -1,0 +1,12 @@
+@mixin input-focus {
+  &:focus,
+  &:active {
+    z-index: 1;
+    box-shadow: 0 0 0 2px $havelock;
+    outline: none !important;
+  }
+}
+
+@mixin input-border {
+  box-shadow: inset 0 0 0 0.5px $lead, inset 0 0 0 1px white;
+}

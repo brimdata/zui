@@ -1,0 +1,20 @@
+.file-input {
+  @include input-border;
+  display: flex;
+  align-items: stretch;
+  border-radius: 4px;
+
+  button {
+    @include white-button-bg;
+    margin: 1px 0 1px 1px;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    &:focus {
+      z-index: 1;
+    }
+  }
+
+  .text-input {
+    border-radius: 0 4px 4px 0;
+  }
+}
