@@ -1,4 +1,5 @@
 {
+  "bail": 10,
   "collectCoverageFrom": [
     "**/*.js",
     "!**/flow-typed/**",
