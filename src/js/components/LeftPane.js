@@ -150,8 +150,6 @@ export function LeftPane() {
   const historyHeight = useSelector(Layout.getHistoryHeight)
   const spacesHeight = useSelector(Layout.getSpacesHeight)
 
-  const spacesRef = useRef()
-  const historyRef = useRef()
   const paneRef = useRef()
 
   const paneHeight = useRef(0)
@@ -193,10 +191,7 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
-      <StyledSection
-        ref={spacesRef}
-        style={{flex: showSpaces ? spacesHeight : 0}}
-      >
+      <StyledSection style={{flex: showSpaces ? spacesHeight : 0}}>
         <SectionHeader>
           <StyledArrow
             onClick={() => dispatch(Layout.toggleSpaces())}
@@ -212,7 +207,7 @@ export function LeftPane() {
         </SectionContents>
         {showSpaces && <DragAnchor {...dragFunc()} />}
       </StyledSection>
-      <StyledSection ref={historyRef} style={{flex: historyHeight}}>
+      <StyledSection style={{flex: historyHeight}}>
         <SectionHeader>
           <StyledArrow
             onClick={() => dispatch(Layout.toggleHistory())}
