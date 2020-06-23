@@ -137,16 +137,18 @@ function InvestigationTree() {
 export function LeftPane() {
   const dispatch = useDispatch()
   const [showCollapse, setShowCollapse] = useState(true)
-  const [showHistory, setShowHistory] = useState(true)
-  const [showSpaces, setShowSpaces] = useState(true)
-  const [spacesHeight, setSpacesHeight] = useState(1)
-  const [historyHeight, setHistoryHeight] = useState(1)
+
   const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
   const id = useSelector(Tab.clusterId)
   const spaces = useSelector(Spaces.getSpaces(id))
   const spaceContextMenu = menu.spaceContextMenu(id)
+
+  const showHistory = useSelector(Layout.getHistoryIsOpen)
+  const showSpaces = useSelector(Layout.getSpacesIsOpen)
+  const historyHeight = useSelector(Layout.getHistoryHeight)
+  const spacesHeight = useSelector(Layout.getSpacesHeight)
 
   const spacesRef = useRef()
   const historyRef = useRef()
@@ -170,8 +172,8 @@ export function LeftPane() {
         break
       case "move":
         newSpacesHeight = spacesHeight + dy / (paneHeight.current / 2)
-        setSpacesHeight(newSpacesHeight)
-        setHistoryHeight(2 - newSpacesHeight)
+        dispatch(Layout.setSpacesHeight(newSpacesHeight))
+        dispatch(Layout.setHistoryHeight(2 - newSpacesHeight))
         break
     }
   }
@@ -197,7 +199,7 @@ export function LeftPane() {
       >
         <SectionHeader>
           <StyledArrow
-            onClick={() => setShowSpaces(!showSpaces)}
+            onClick={() => dispatch(Layout.toggleSpaces())}
             show={showSpaces}
           />
           <Title>Spaces</Title>
@@ -213,7 +215,7 @@ export function LeftPane() {
       <StyledSection ref={historyRef} style={{flex: historyHeight}}>
         <SectionHeader>
           <StyledArrow
-            onClick={() => setShowHistory(!showHistory)}
+            onClick={() => dispatch(Layout.toggleHistory())}
             show={showHistory}
           />
           <Title>History</Title>

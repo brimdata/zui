@@ -7,7 +7,11 @@ const init: LayoutState = {
   rightSidebarWidth: 450,
   leftSidebarIsOpen: true,
   leftSidebarWidth: 270,
-  investigationView: "linear"
+  investigationView: "linear",
+  historyIsOpen: true,
+  spacesIsOpen: true,
+  historyHeight: 1,
+  spacesHeight: 1
 }
 
 export default function reducer(
@@ -59,6 +63,26 @@ export default function reducer(
       return {
         ...state,
         investigationView: action.view
+      }
+    case "LAYOUT_HISTORY_HEIGHT_SET":
+      return {
+        ...state,
+        historyHeight: action.height
+      }
+    case "LAYOUT_SPACES_HEIGHT_SET":
+      return {
+        ...state,
+        spacesHeight: action.height
+      }
+    case "LAYOUT_SPACES_TOGGLE":
+      return {
+        ...state,
+        spacesIsOpen: !state.spacesIsOpen
+      }
+    case "LAYOUT_HISTORY_TOGGLE":
+      return {
+        ...state,
+        historyIsOpen: !state.historyIsOpen
       }
     default:
       return state
