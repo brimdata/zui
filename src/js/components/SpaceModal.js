@@ -48,7 +48,6 @@ const SpaceModalContents = ({value, onChange}) => {
         <InputLabel>New Name</InputLabel>
         <TextInput
           autoFocus
-          label="Space Name"
           value={value}
           onChange={(e) => {
             onChange(e.target.value)
