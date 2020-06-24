@@ -29,6 +29,8 @@ const StyledSection = styled.section`
   overflow: hidden;
   position: relative;
   min-height: 24px;
+  flex-basis: 0%;
+  flex-shrink: 1;
 `
 
 const SectionContents = styled.div`
@@ -46,6 +48,7 @@ const SectionHeader = styled.div`
   justify-content: flex-start;
   border-top: 1px solid ${(props) => props.theme.colors.cloudy};
   border-bottom: 1px solid ${(props) => props.theme.colors.cloudy};
+  user-select: none;
 `
 
 const Title = styled.label`
@@ -60,14 +63,12 @@ const StyledArrow = styled(Arrow)`
   margin-left: 12px;
   transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
   transition: transform 150ms;
-  cursor: pointer;
 `
 
 const StyledViewSelect = styled.div`
   display: flex;
   margin-left: auto;
   margin-right: 15px;
-  cursor: pointer;
   flex-direction: row;
   align-items: center;
   text-transform: capitalize;
@@ -164,6 +165,7 @@ export function LeftPane() {
     let newSpacesHeight
     switch (type) {
       case "down":
+        document.body.style.cursor = "row-resize"
         paneHeight.current = paneRef.current
           ? paneRef.current.getBoundingClientRect().height
           : 0
@@ -173,6 +175,8 @@ export function LeftPane() {
         dispatch(Layout.setSpacesHeight(newSpacesHeight))
         dispatch(Layout.setHistoryHeight(2 - newSpacesHeight))
         break
+      case "up":
+        document.body.style.cursor = ""
     }
   }
 
@@ -191,7 +195,7 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
-      <StyledSection style={{flex: showSpaces ? spacesHeight : 0}}>
+      <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
         <SectionHeader>
           <StyledArrow
             onClick={() => dispatch(Layout.toggleSpaces())}
@@ -207,7 +211,7 @@ export function LeftPane() {
         </SectionContents>
         {showSpaces && <DragAnchor {...dragFunc()} />}
       </StyledSection>
-      <StyledSection style={{flex: historyHeight}}>
+      <StyledSection style={{flexGrow: historyHeight}}>
         <SectionHeader>
           <StyledArrow
             onClick={() => dispatch(Layout.toggleHistory())}
