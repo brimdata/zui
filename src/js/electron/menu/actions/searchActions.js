@@ -101,6 +101,21 @@ function buildSearchActions() {
         dispatch(submitSearch())
       }
     }),
+    jumpToTime: action({
+      name: "search-cell-menu-show-context",
+      label: "View in full context",
+      listener(dispatch, fieldData) {
+        let field = brim.field(fieldData)
+        let brimTime = brim.time(field.toDate())
+        if (field.type === "time") {
+          dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))
+          dispatch(tab.setTo(brimTime.add(1, "minutes").toTs()))
+          SearchBar.clearSearchBar()
+          dispatch(SearchBar.changeSearchBarInput(""))
+          dispatch(submitSearch())
+        }
+      }
+    }),
     notIn: action({
       name: "search-cell-menu-not-in",
       label: "Filter not in field",
