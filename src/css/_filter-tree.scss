@@ -22,6 +22,7 @@ $filter-tree-line-color: $gray-5;
     padding: 3px 0;
     border-radius: 5px;
     margin-right: 3px;
+    height: 25px;
   }
 
   .remove-button {
@@ -82,7 +83,10 @@ $filter-tree-line-color: $gray-5;
     margin-left: 6px;
     box-shadow: none;
     p {
-      color: $gray-9;
+      @include label-small;
+      color: $aqua;
+      padding: 2px;
+      margin: 0 2px;
     }
 
     &:before {
