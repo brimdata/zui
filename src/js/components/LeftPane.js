@@ -16,6 +16,7 @@ import Tab from "../state/Tab"
 import Spaces from "../state/Spaces"
 import menu from "../electron/menu"
 import useDrag from "./hooks/useDrag"
+import ClusterPicker from "./ClusterPicker"
 
 const Arrow = (props) => {
   return (
@@ -31,6 +32,7 @@ const StyledSection = styled.section`
   min-height: 24px;
   flex-basis: 0%;
   flex-shrink: 1;
+  padding-bottom: 24px;
 `
 
 const SectionContents = styled.div`
@@ -152,7 +154,6 @@ export function LeftPane() {
   const spacesHeight = useSelector(Layout.getSpacesHeight)
 
   const paneRef = useRef()
-
   const paneHeight = useRef(0)
 
   function onDragPane(e: MouseEvent) {
@@ -195,6 +196,7 @@ export function LeftPane() {
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
+      <ClusterPicker />
       <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
         <SectionHeader>
           <StyledArrow
