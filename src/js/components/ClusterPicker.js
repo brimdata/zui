@@ -1,20 +1,14 @@
 /* @flow */
-
-import {isEqual} from "lodash"
-import {useDispatch, useSelector} from "react-redux"
 import React, {type ComponentType} from "react"
-
-import {disconnectCluster, switchCluster} from "../state/Clusters/flows"
-import Clusters from "../state/Clusters"
-import PopMenuPointy from "./PopMenu/PopMenuPointy"
+import {useSelector} from "react-redux"
 import Tab from "../state/Tab"
 import styled from "styled-components"
-import DropdownArrow from "../icons/DropdownArrow"
 
 const ClusterPickerWrapper = (styled.div`
   display: flex;
   flex-direction: column;
   margin: 11px 12px;
+  user-select: none;
 
   label {
     ${(props) => props.theme.typography.labelBold};
@@ -31,35 +25,12 @@ const ClusterPickerWrapper = (styled.div`
 
 export default function ClusterPicker() {
   const current = useSelector(Tab.cluster)
-  const clusters = useSelector(Clusters.all)
-  const dispatch = useDispatch()
-
-  let template = clusters.map((cluster) => ({
-    label: cluster.host + ":" + cluster.port,
-    click: () => {
-      dispatch(switchCluster(cluster))
-    },
-    disabled: isEqual(cluster, current)
-  }))
-
-  template.push({type: "divider"})
-  template.push({
-    label: "New connection...",
-    click: () => {
-      dispatch(disconnectCluster())
-    }
-  })
 
   return (
     <ClusterPickerWrapper>
-      <PopMenuPointy template={template} position="bottom center">
-        <div>
-          <label>
-            {current.host}:{current.port}
-          </label>
-          <DropdownArrow />
-        </div>
-      </PopMenuPointy>
+      <label>
+        {current.host}:{current.port}
+      </label>
     </ClusterPickerWrapper>
   )
 }

@@ -32,6 +32,7 @@ const StyledSection = styled.section`
   min-height: 24px;
   flex-basis: 0%;
   flex-shrink: 1;
+  padding-bottom: 24px;
 `
 
 const SectionContents = styled.div`
