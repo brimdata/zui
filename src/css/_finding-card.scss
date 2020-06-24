@@ -1,12 +1,12 @@
 .finding-card-wrapper {
-  display: block;
-  position: relative;
-  padding: $space-xxs;
-  padding-top: $space-xs;
-  padding-left: $space-l;
+  display: flex;
+  align-items: center;
+  height: 25px;
   color: white;
+  padding-left: 22px;
+  margin: 0 2px;
   border-radius: 5px;
-  margin: 1px 3px;
+  justify-content: space-between;
 
   &.open {
     background: $gray-6;
@@ -28,6 +28,7 @@
 
   .gutter-button-style {
     opacity: 0;
+    position: relative;
   }
 
   &:hover .gutter-button-style {
@@ -50,7 +51,6 @@
   .remove-button {
     background-color: $white-9;
     stroke-width: 3px;
-    top: $space-xxs;
     right: 6px;
 
     &:hover {
@@ -60,7 +60,6 @@
 }
 
 .finding-card {
-  cursor: pointer;
   color: $gray-5;
   user-select: none;
   transition: background 150ms;
@@ -71,25 +70,21 @@
 
   .program {
     display: flex;
-    margin-bottom: 2px;
     flex-wrap: wrap;
+    margin-left: 6px;
+    color: $aqua;
 
     p {
-      font-size: 9px;
-      line-height: 13px;
+      @include label-small;
       display: inline-block;
-      margin-right: 4px;
-      margin-bottom: 2px;
-      transition: font-weight 250ms;
+      padding: 2px 4px;
+      margin: 0 2px;
     }
   }
 
   .pin {
     color: $white-1;
-    font-size: 9px;
-    line-height: 13px;
     background: $green;
-    padding: 0 4px;
     border-radius: 3px;
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.1);
   }

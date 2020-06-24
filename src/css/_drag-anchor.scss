@@ -16,6 +16,14 @@
   right: -4px;
 }
 
+.drag-anchor-bottom {
+  width: 100%;
+  height: 9px;
+  bottom: -4px;
+  top: unset;
+  cursor: row-resize;
+}
+
 body.dragging {
   user-select: none;
   pointer-events: none;

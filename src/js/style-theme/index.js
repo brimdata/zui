@@ -20,7 +20,7 @@ const headingList = css`
 const labelSmall = css`
   font-family: system-ui, sans-serif;
   font-size: 11px;
-  line-height: 13px;
+  line-height: 17px;
   font-weight: 400;
 `
 

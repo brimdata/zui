@@ -19,6 +19,8 @@ import get from "lodash/get"
 import Warning from "./icons/warning-sm.svg"
 import ReactTooltip from "react-tooltip"
 import Search from "../state/Search"
+import BookIcon from "../icons/BookSvgIcon"
+import EmptySection from "./common/EmptySection"
 
 export default function FilterTree() {
   let dispatch = useDispatch()
@@ -110,6 +112,14 @@ export default function FilterTree() {
   }
 
   let tree = createInvestigationTree(investigation)
+
+  if (tree.getRoot().children.length === 0)
+    return (
+      <EmptySection
+        icon={<BookIcon />}
+        message="As you search through your data, your history will appear here."
+      />
+    )
 
   return (
     <div className="filter-tree">{tree.getRoot().children.map(renderNode)}</div>

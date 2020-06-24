@@ -1,28 +1,18 @@
 /* @flow */
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import React, {useEffect} from "react"
-
 import remote from "electron"
-
 import BrimTextLogo from "./BrimTextLogo"
 import ErrorFactory from "../models/ErrorFactory"
 import LoadFilesInput from "./LoadFilesInput"
 import Notice from "../state/Notice"
-import SavedSpacesList from "./SavedSpacesList"
-import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import errors from "../errors"
 import ingestFiles from "../flows/ingestFiles"
 import initNewTab from "../flows/initNewTab"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
-import menu from "../electron/menu"
 
 export default function TabWelcome() {
   let dispatch = useDispatch()
-  let id = useSelector(Tab.clusterId)
-  let spaces = useSelector(Spaces.getSpaces(id))
-  let spacesPresent = spaces.length !== 0
-  const spaceContextMenu = menu.spaceContextMenu(id)
 
   useEffect(() => {
     dispatch(initNewTab())
@@ -46,18 +36,6 @@ export default function TabWelcome() {
         <BrimTextLogo />
       </section>
       <div className="input-methods">
-        {spacesPresent && (
-          <>
-            <section>
-              <label>Spaces</label>
-              <SavedSpacesList
-                spaces={spaces}
-                spaceContextMenu={spaceContextMenu}
-              />
-            </section>
-            <div className="separator" />
-          </>
-        )}
         <section>
           <label>Import Files</label>
           <LoadFilesInput onChange={onChange} />

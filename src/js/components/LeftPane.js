@@ -1,7 +1,7 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState} from "react"
+import React, {useState, useRef} from "react"
 import {XLeftPaneCollapser} from "./LeftPaneCollapser"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import FilterTree from "./FilterTree"
@@ -11,6 +11,11 @@ import Layout from "../state/Layout"
 import styled from "styled-components"
 import usePopupMenu from "./hooks/usePopupMenu"
 import DropdownArrow from "../icons/DropdownArrow"
+import SavedSpacesList from "./SavedSpacesList"
+import Tab from "../state/Tab"
+import Spaces from "../state/Spaces"
+import menu from "../electron/menu"
+import useDrag from "./hooks/useDrag"
 
 const Arrow = (props) => {
   return (
@@ -19,6 +24,20 @@ const Arrow = (props) => {
     </svg>
   )
 }
+
+const StyledSection = styled.section`
+  overflow: hidden;
+  position: relative;
+  min-height: 24px;
+  flex-basis: 0%;
+  flex-shrink: 1;
+`
+
+const SectionContents = styled.div`
+  height: 100%;
+  display: ${(props) => (props.show ? "block" : "none")};
+  overflow-y: scroll;
+`
 
 const SectionHeader = styled.div`
   display: flex;
@@ -29,6 +48,7 @@ const SectionHeader = styled.div`
   justify-content: flex-start;
   border-top: 1px solid ${(props) => props.theme.colors.cloudy};
   border-bottom: 1px solid ${(props) => props.theme.colors.cloudy};
+  user-select: none;
 `
 
 const Title = styled.label`
@@ -43,14 +63,12 @@ const StyledArrow = styled(Arrow)`
   margin-left: 12px;
   transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
   transition: transform 150ms;
-  cursor: pointer;
 `
 
 const StyledViewSelect = styled.div`
   display: flex;
   margin-left: auto;
   margin-right: 15px;
-  cursor: pointer;
   flex-direction: row;
   align-items: center;
   text-transform: capitalize;
@@ -61,6 +79,17 @@ const StyledViewSelect = styled.div`
     stroke: ${(props) => props.theme.colors.slate};
     margin-left: 5px;
   }
+`
+
+const DragAnchor = styled.div`
+  position: absolute;
+  background: transparent;
+  pointer-events: all !important;
+  width: 100%;
+  height: 9px;
+  bottom: -4px;
+  top: unset;
+  cursor: row-resize;
 `
 
 const ViewSelect = () => {
@@ -107,18 +136,51 @@ function InvestigationTree() {
 }
 
 export function LeftPane() {
+  const dispatch = useDispatch()
   const [showCollapse, setShowCollapse] = useState(true)
-  const [showHistory, setShowHistory] = useState(true)
+
   const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
-  const dispatch = useDispatch()
+  const id = useSelector(Tab.clusterId)
+  const spaces = useSelector(Spaces.getSpaces(id))
+  const spaceContextMenu = menu.spaceContextMenu(id)
 
-  function onDrag(e: MouseEvent) {
+  const showHistory = useSelector(Layout.getHistoryIsOpen)
+  const showSpaces = useSelector(Layout.getSpacesIsOpen)
+  const historyHeight = useSelector(Layout.getHistoryHeight)
+  const spacesHeight = useSelector(Layout.getSpacesHeight)
+
+  const paneRef = useRef()
+
+  const paneHeight = useRef(0)
+
+  function onDragPane(e: MouseEvent) {
     const width = e.clientX
     const max = global.innerWidth
     dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
   }
+
+  function onDragSpaces({dy, type}) {
+    let newSpacesHeight
+    switch (type) {
+      case "down":
+        document.body && (document.body.style.cursor = "row-resize")
+        paneHeight.current = paneRef.current
+          ? paneRef.current.getBoundingClientRect().height
+          : 0
+        break
+      case "move":
+        newSpacesHeight = spacesHeight + dy / (paneHeight.current / 2)
+        dispatch(Layout.setSpacesHeight(newSpacesHeight))
+        dispatch(Layout.setHistoryHeight(2 - newSpacesHeight))
+        break
+      case "up":
+        document.body && (document.body.style.cursor = "")
+    }
+  }
+
+  const dragFunc = useDrag(onDragSpaces)
 
   if (!isOpen) return <XLeftPaneExpander />
 
@@ -127,22 +189,41 @@ export function LeftPane() {
       isOpen={isOpen}
       position="left"
       width={width}
-      onDrag={onDrag}
+      ref={paneRef}
+      onDrag={onDragPane}
       className="history-pane"
       onMouseEnter={() => setShowCollapse(true)}
       onMouseLeave={() => setShowCollapse(false)}
     >
-      <section>
+      <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
         <SectionHeader>
           <StyledArrow
-            onClick={() => setShowHistory(!showHistory)}
+            onClick={() => dispatch(Layout.toggleSpaces())}
+            show={showSpaces}
+          />
+          <Title>Spaces</Title>
+        </SectionHeader>
+        <SectionContents show={showSpaces}>
+          <SavedSpacesList
+            spaces={spaces}
+            spaceContextMenu={spaceContextMenu}
+          />
+        </SectionContents>
+        {showSpaces && <DragAnchor {...dragFunc()} />}
+      </StyledSection>
+      <StyledSection style={{flexGrow: historyHeight}}>
+        <SectionHeader>
+          <StyledArrow
+            onClick={() => dispatch(Layout.toggleHistory())}
             show={showHistory}
           />
           <Title>History</Title>
           <ViewSelect />
         </SectionHeader>
-        {showHistory && <InvestigationView view={view} />}
-      </section>
+        <SectionContents show={showHistory}>
+          <InvestigationView view={view} />
+        </SectionContents>
+      </StyledSection>
       <XLeftPaneCollapser show={showCollapse} />
     </Pane>
   )
