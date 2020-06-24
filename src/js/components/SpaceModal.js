@@ -45,7 +45,7 @@ const SpaceModalContents = ({value, onChange}) => {
   return (
     <div className="space-modal-contents">
       <InputField>
-        <InputLabel>New Name:</InputLabel>
+        <InputLabel>New Name</InputLabel>
         <TextInput
           autoFocus
           label="Space Name"

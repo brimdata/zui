@@ -19,7 +19,7 @@ export default function JSONTypeConfig({config}: Props) {
   return (
     <div className="setting-panel">
       <InputLabel>
-        {label}: <Link href={JSON_TYPE_CONFIG_DOCS}>(docs)</Link>
+        {label} <Link href={JSON_TYPE_CONFIG_DOCS}>docs</Link>
       </InputLabel>
       <FileInput
         {...{name, defaultValue, placeholder: "default"}}

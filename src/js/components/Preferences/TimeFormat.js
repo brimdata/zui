@@ -15,7 +15,7 @@ export default function TimeFormat({config}: Props) {
     <div className="setting-panel">
       <div>
         <InputLabel>
-          {config.label}: <Link href={DOCS}>(docs)</Link>
+          {config.label} <Link href={DOCS}>docs</Link>
         </InputLabel>
       </div>
       <TextInput

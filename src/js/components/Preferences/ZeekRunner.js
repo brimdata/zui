@@ -23,7 +23,7 @@ export default function ZeekRunner({config}: Props) {
   return (
     <div className="setting-panel">
       <InputLabel>
-        {label}: <Link href={DOCS}>(docs)</Link>
+        {label} <Link href={DOCS}>docs</Link>
       </InputLabel>
       <FileInput
         name={name}

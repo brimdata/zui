@@ -37,7 +37,7 @@ function DebugModalContents() {
         (AST).
       </p>
       <InputField>
-        <InputLabel>Query:</InputLabel>
+        <InputLabel>Query</InputLabel>
         <TextInput
           autoFocus
           value={program}
