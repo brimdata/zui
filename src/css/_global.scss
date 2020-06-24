@@ -49,14 +49,10 @@ code {
   :focus {
     outline: none;
   }
-
-  input[type="text"]:focus {
-    outline: auto 5px -webkit-focus-ring-color;
-  }
 }
 
 .using-keyboard {
   :focus {
-    outline: auto 5px -webkit-focus-ring-color;
+    outline: auto 5px $havelock;
   }
 }

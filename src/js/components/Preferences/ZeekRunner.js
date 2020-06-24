@@ -2,7 +2,8 @@
 import React, {useState} from "react"
 
 import type {FormFieldConfig} from "../../brim/form"
-import FileInput from "./FileInput"
+import FileInput from "../common/forms/FileInput"
+import InputLabel from "../common/forms/InputLabel"
 import Link from "../common/Link"
 
 type Props = {
@@ -21,9 +22,9 @@ export default function ZeekRunner({config}: Props) {
 
   return (
     <div className="setting-panel">
-      <label>
-        {label}: <Link href={DOCS}>(docs)</Link>
-      </label>
+      <InputLabel>
+        {label} <Link href={DOCS}>docs</Link>
+      </InputLabel>
       <FileInput
         name={name}
         defaultValue={defaultValue}

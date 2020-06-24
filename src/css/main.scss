@@ -16,6 +16,9 @@
 @import "shared/zeek-colors";
 @import "shared/effects";
 
+/* Forms */
+@import "forms/main";
+
 /* Specific */
 @import "global";
 @import "buttons";
@@ -32,7 +35,6 @@
 @import "no-events-found";
 @import "form-inputs";
 @import "search-bar";
-@import "time-picker";
 @import "day-picker";
 @import "filter-node";
 @import "filter-tree";

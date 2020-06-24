@@ -24,6 +24,7 @@
 
   input {
     @include label-small;
+    @include input-focus;
     margin: 0;
     width: 135px;
     height: 22px;

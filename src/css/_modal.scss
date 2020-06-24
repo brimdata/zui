@@ -17,8 +17,8 @@
 
 .modal-contents {
   -webkit-app-region: no-drag;
-  background: linear-gradient(to bottom, $white-1, $white-2);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  background: white;
+  box-shadow: 12px 12px 48px transparentize($aqua, 0.45);
   padding: 20px 20px 0 20px;
   border-radius: 5px;
   position: relative;

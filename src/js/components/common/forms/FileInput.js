@@ -1,13 +1,13 @@
 /* @flow */
+import {isEmpty} from "lodash"
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import ToolbarButton from "../ToolbarButton"
-import useCallbackRef from "../hooks/useCallbackRef"
-import useDropzone from "../hooks/useDropzone"
-import invoke from "../../electron/ipc/invoke"
-import ipc from "../../electron/ipc"
-import {isEmpty} from "../../lib/Array"
+import TextInput from "./TextInput"
+import invoke from "../../../electron/ipc/invoke"
+import ipc from "../../../electron/ipc"
+import useCallbackRef from "../../hooks/useCallbackRef"
+import useDropzone from "../../hooks/useDropzone"
 
 type Props = {|
   defaultValue: string,
@@ -56,14 +56,15 @@ export default function FileInput(props: Props) {
   }
 
   return (
-    <div className="file-input-picker">
-      <ToolbarButton
+    <div className="file-input">
+      <button
         className={classNames({dragging})}
-        text="Choose..."
         onClick={onClick}
         {...bindDropzone()}
-      />
-      <input
+      >
+        Choose...
+      </button>
+      <TextInput
         name={props.name}
         type="text"
         value={value}

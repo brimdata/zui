@@ -3,12 +3,13 @@ import {useSelector} from "react-redux"
 import Prism from "prismjs"
 import React, {useState} from "react"
 
-import {Input} from "./form/Inputs"
 import {reactElementProps} from "../test/integration"
-import Form from "./form/Form"
+import InputField from "./common/forms/InputField"
+import InputLabel from "./common/forms/InputLabel"
 import ModalBox from "./ModalBox/ModalBox"
 import SearchBar from "../state/SearchBar"
 import TextContent from "./TextContent"
+import TextInput from "./common/forms/TextInput"
 import brim from "../brim"
 
 export function DebugModal() {
@@ -35,15 +36,15 @@ function DebugModalContents() {
         Type a query in the text box to see the parsed abstract syntax tree
         (AST).
       </p>
-      <Form>
-        <Input
-          label="Query"
-          className="mono"
+      <InputField>
+        <InputLabel>Query</InputLabel>
+        <TextInput
+          autoFocus
           value={program}
           onChange={(e) => setProgram(e.target.value)}
           {...reactElementProps("debugProgram")}
         />
-      </Form>
+      </InputField>
       <pre
         className="language-js"
         dangerouslySetInnerHTML={{__html: formatAst(program)}}

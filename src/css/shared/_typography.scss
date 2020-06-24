@@ -16,23 +16,23 @@
 
 @mixin label-bold {
   font-family: system-ui;
-  letter-spacing: -0.08;
+  letter-spacing: -0.08px;
   font-size: 13px;
-  line-height: 16px;
+  line-height: 18px;
   font-weight: 600;
 }
 
 @mixin label-normal {
   font-family: system-ui;
-  letter-spacing: 0;
+  letter-spacing: -0.08px;
   font-size: 13px;
-  line-height: 16px;
-  font-weight: 500;
+  line-height: 18px;
+  font-weight: 400;
 }
 
 @mixin label-small {
   font-family: system-ui;
-  letter-spacing: -0.08;
+  letter-spacing: -0.08px;
   font-size: 11px;
   line-height: 13px;
   font-weight: 400;
@@ -40,10 +40,10 @@
 
 @mixin label-small-bold {
   font-family: system-ui;
-  letter-spacing: -0.08;
+  letter-spacing: 0.07px;
   font-size: 11px;
-  line-height: 13px;
-  font-weight: 500;
+  line-height: 17px;
+  font-weight: 700;
 }
 
 @mixin heading-1 {
@@ -180,9 +180,6 @@
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(2px);
   }
-}
-
-.mono {
 }
 
 .white-1 {

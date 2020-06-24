@@ -38,7 +38,7 @@ export default function SpanControls() {
         <label>From</label>
       </div>
       <SpanDuration spanArgs={[from, to]} />
-      <div title="Click to set the start time for the search">
+      <div title="Click to set the end time for the search">
         <TimeButton
           timeArg={to}
           prevTimeArg={prev && prev[1]}

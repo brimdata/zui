@@ -17,7 +17,7 @@ export default function ModalBox({name, children, ...props}: ModalBoxProps) {
       })
       .add({
         targets: document.querySelector(".modal-overlay"),
-        backgroundColor: ["rgba(0,0,0,0.0)", "rgba(0,0,0,0.4)"],
+        backgroundColor: ["rgba(38,37,36,0.0)", "rgba(38,37,36,0.15)"],
         easing: "linear"
       })
       .add(

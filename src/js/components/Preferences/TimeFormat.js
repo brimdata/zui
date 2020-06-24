@@ -2,7 +2,9 @@
 import React from "react"
 
 import type {FormFieldConfig} from "../../brim/form"
+import InputLabel from "../common/forms/InputLabel"
 import Link from "../common/Link"
+import TextInput from "../common/forms/TextInput"
 
 type Props = {config: FormFieldConfig}
 
@@ -12,11 +14,11 @@ export default function TimeFormat({config}: Props) {
   return (
     <div className="setting-panel">
       <div>
-        <label>
-          {config.label}: <Link href={DOCS}>(docs)</Link>
-        </label>
+        <InputLabel>
+          {config.label} <Link href={DOCS}>docs</Link>
+        </InputLabel>
       </div>
-      <input
+      <TextInput
         name={config.name}
         type="text"
         placeholder="ISO-8601"
