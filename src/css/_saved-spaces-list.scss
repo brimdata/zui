@@ -57,6 +57,8 @@
     height: 25px;
     margin: 0 2px;
     width: 95%;
+    padding-left: 22px;
+    cursor: default;
 
     .using-keyboard &:focus {
       outline: none;
@@ -65,6 +67,10 @@
       svg {
         fill: white;
       }
+    }
+
+    &:hover {
+      background: #f0f0f0;
     }
   }
 
@@ -86,6 +92,10 @@
       .progress-fill {
         background-color: $white-1;
       }
+    }
+
+    &:hover {
+      background: $blue;
     }
   }
 
