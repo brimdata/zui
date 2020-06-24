@@ -165,7 +165,7 @@ export function LeftPane() {
     let newSpacesHeight
     switch (type) {
       case "down":
-        document.body.style.cursor = "row-resize"
+        document.body && (document.body.style.cursor = "row-resize")
         paneHeight.current = paneRef.current
           ? paneRef.current.getBoundingClientRect().height
           : 0
@@ -176,7 +176,7 @@ export function LeftPane() {
         dispatch(Layout.setHistoryHeight(2 - newSpacesHeight))
         break
       case "up":
-        document.body.style.cursor = ""
+        document.body && (document.body.style.cursor = "")
     }
   }
 
