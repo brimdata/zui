@@ -54,11 +54,6 @@ export default function Viewer(props: Props) {
     if (!Chunker.isEqual(next, chunks)) setChunks(next)
   }
 
-  // function scrollToMiddle() {
-  //   let view = ref.current
-  //   view.scrollTo(0, view.scrollHeight / 2)
-  // }
-
   useEffect(() => {
     let view = ref.current
     if (!view) return
@@ -67,7 +62,9 @@ export default function Viewer(props: Props) {
       props.onLastChunk && props.onLastChunk()
     }
 
-    // scrollToMiddle()
+    if (props.scrollToMiddle) {
+      view.scrollTo(0, view.scrollHeight / 2)
+    }
   })
 
   return (
