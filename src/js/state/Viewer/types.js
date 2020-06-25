@@ -21,6 +21,7 @@ export type ViewerState = {|
 |}
 
 export type ViewerAction =
+  | VIEWER_SCROLL_TO_MIDDLE
   | VIEWER_CLEAR
   | VIEWER_SPLICE
   | VIEWER_STATUS
@@ -28,6 +29,11 @@ export type ViewerAction =
   | VIEWER_COLUMNS
   | VIEWER_END_STATUS
   | VIEWER_STATS
+
+export type VIEWER_SCROLL_TO_MIDDLE = {
+  type: "VIEWER_SCROLL_TO_MIDDLE",
+  doScroll: boolean
+}
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",

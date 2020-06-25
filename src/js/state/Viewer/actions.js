@@ -17,6 +17,10 @@ import type {
 import {hashDescriptorKeys} from "./hashDescriptorKeys"
 
 export default {
+  scrollToMiddle(doScroll: boolean) {
+    return {type: "VIEWER_SCROLL_TO_MIDDLE", doScroll}
+  },
+
   clear(tabId: string): VIEWER_CLEAR {
     return {type: "VIEWER_CLEAR", tabId}
   },

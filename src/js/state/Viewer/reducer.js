@@ -8,6 +8,7 @@ const init: ViewerState = {
   endStatus: "INCOMPLETE",
   status: "INIT",
   columns: {},
+  scrollMiddle: false,
   stats: {updateTime: 0, startTime: 0, bytesRead: 0}
 }
 
@@ -16,6 +17,8 @@ export default function(
   action: ViewerAction
 ): ViewerState {
   switch (action.type) {
+    case "VIEWER_SCROLL_TO_MIDDLE":
+      return {...state, scrollMiddle: action.doScroll}
     case "VIEWER_RECORDS":
       return {...state, records: concat(state.records, action.records)}
     case "VIEWER_CLEAR":
