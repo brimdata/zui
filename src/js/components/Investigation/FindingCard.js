@@ -20,6 +20,7 @@ import get from "lodash/get"
 import ReactTooltip from "react-tooltip"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import styled from "styled-components"
+import usePopupMenu from "../hooks/usePopupMenu"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
     fill: ${(props) => props.theme.colors.lead};
@@ -34,6 +35,7 @@ type Props = {finding: Finding}
 
 export default React.memo<Props>(function FindingCard({finding}: Props) {
   let dispatch = useDispatch()
+  const findingSpaceName = get(finding, ["search", "spaceName"], "")
 
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
@@ -52,7 +54,6 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     const clusterID = useSelector(Tab.clusterId)
     const spaceIds = useSelector(Spaces.ids(clusterID))
     const findingSpaceId = get(finding, ["search", "spaceId"], "")
-    const findingSpaceName = get(finding, ["search", "spaceName"], "")
     const tip = `'${findingSpaceName}' space no longer exists`
 
     if (includes(spaceIds, findingSpaceId)) return null
@@ -70,8 +71,25 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     )
   }
 
+  const template = [
+    {
+      label: "Clear History",
+      click: () => globalDispatch(Investigation.clearInvestigation())
+    }
+  ]
+
+  const openMenu = usePopupMenu(template)
+  const onContextMenu = () => {
+    openMenu()
+  }
+
   return (
-    <div className={classNames("finding-card-wrapper")} onClick={onClick}>
+    <div
+      className={classNames("finding-card-wrapper")}
+      onClick={onClick}
+      onContextMenu={onContextMenu}
+      title={findingSpaceName}
+    >
       <div className="finding-card">
         <StyledMagnifyingGlass />
         <FindingProgram search={finding.search} />
