@@ -37,7 +37,6 @@ type StateProps = {|
   selectedLog: ?Log,
   timeZone: string,
   timeFormat: string,
-  scrollToMiddle: boolean,
   isIncomplete: boolean,
   isFetching: boolean,
   tableColumns: TableColumns,
@@ -168,7 +167,6 @@ export default function ResultsTable(props: Props) {
       tableColumns={props.tableColumns}
       timeZone={props.timeZone}
       timeFormat={props.timeFormat}
-      scrollToMiddle={props.scrollToMiddle}
       onLastChunk={onLastChunk}
       renderEnd={renderEnd}
     />
@@ -180,7 +178,6 @@ function stateToProps(state: State) {
     isFetching: Viewer.getStatus(state) === "FETCHING",
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
-    scrollToMiddle: Viewer.getScrollMiddle(state),
     timeZone: View.getTimeZone(state),
     timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),

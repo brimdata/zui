@@ -20,7 +20,6 @@ import tab from "../../../state/Tab"
 import virusTotal from "../../../services/virusTotal"
 import {downloadPcap} from "../../../flows/downloadPcap"
 import Layout from "../../../state/Layout/actions"
-import Viewer from "../../../state/Viewer"
 
 function buildSearchActions() {
   return {
@@ -114,8 +113,12 @@ function buildSearchActions() {
           SearchBar.clearSearchBar()
           dispatch(SearchBar.changeSearchBarInput(""))
           dispatch(submitSearch())
-          dispatch(Viewer.scrollToMiddle(true))
         }
+        // Scroll to right element
+        setTimeout(() => {
+          let el = document.getElementsByClassName("view")[0]
+          el.scrollTo(0, el.scrollHeight / 2)
+        }, 1000)
       }
     }),
     notIn: action({

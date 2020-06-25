@@ -36,11 +36,6 @@ export default {
     (viewer) => viewer.status
   ),
 
-  getScrollMiddle: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.scrollMiddle
-  ),
-
   getEndStatus: createSelector<State, void, *, ViewerState>(
     getViewer,
     (viewer) => viewer.endStatus

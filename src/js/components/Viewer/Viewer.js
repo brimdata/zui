@@ -61,10 +61,6 @@ export default function Viewer(props: Props) {
     if (props.chunker.lastChunk() == chunks[chunks.length - 1]) {
       props.onLastChunk && props.onLastChunk()
     }
-
-    if (props.scrollToMiddle) {
-      view.scrollTo(0, view.scrollHeight / 2)
-    }
   })
 
   return (
