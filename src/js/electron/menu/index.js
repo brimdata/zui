@@ -9,7 +9,7 @@ import searchFieldContextMenu from "./searchFieldContextMenu"
 import spaceContextMenu from "./spaceContextMenu"
 
 export type $MenuItem =
-  | {click?: Function, label: string, enabled?: boolean}
+  | {click?: Function, label: string, enabled?: boolean, type?: string}
   | {type: "separator"}
 export type $Menu = $MenuItem[]
 

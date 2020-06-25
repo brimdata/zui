@@ -1,8 +1,7 @@
 /* @flow */
 
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState, useRef} from "react"
-import {XLeftPaneCollapser} from "./LeftPaneCollapser"
+import React, {useRef} from "react"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import FilterTree from "./FilterTree"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
@@ -139,7 +138,6 @@ function InvestigationTree() {
 
 export function LeftPane() {
   const dispatch = useDispatch()
-  const [showCollapse, setShowCollapse] = useState(true)
 
   const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
@@ -193,8 +191,6 @@ export function LeftPane() {
       ref={paneRef}
       onDrag={onDragPane}
       className="history-pane"
-      onMouseEnter={() => setShowCollapse(true)}
-      onMouseLeave={() => setShowCollapse(false)}
     >
       <ClusterPicker />
       <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
@@ -226,7 +222,6 @@ export function LeftPane() {
           <InvestigationView view={view} />
         </SectionContents>
       </StyledSection>
-      <XLeftPaneCollapser show={showCollapse} />
     </Pane>
   )
 }

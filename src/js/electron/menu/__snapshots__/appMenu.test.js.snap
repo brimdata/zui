@@ -178,12 +178,12 @@ Array [
       Object {
         "accelerator": "CmdOrCtrl+[",
         "click": [Function],
-        "label": "Toggle Search History",
+        "label": "Toggle Left Pane",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
         "click": [Function],
-        "label": "Toggle Log Details",
+        "label": "Toggle Right Pane",
       },
       Object {
         "type": "separator",
@@ -377,12 +377,12 @@ Array [
       Object {
         "accelerator": "CmdOrCtrl+[",
         "click": [Function],
-        "label": "Toggle Search History",
+        "label": "Toggle Left Pane",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
         "click": [Function],
-        "label": "Toggle Log Details",
+        "label": "Toggle Right Pane",
       },
       Object {
         "type": "separator",
