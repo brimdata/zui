@@ -177,12 +177,12 @@ export default function appMenu(
       {role: "zoomout"},
       __,
       {
-        label: "Toggle Search History",
+        label: "Toggle Left Pane",
         accelerator: "CmdOrCtrl+[",
         click: () => send("toggleLeftSidebar")
       },
       {
-        label: "Toggle Log Details",
+        label: "Toggle Right Pane",
         accelerator: "CmdOrCtrl+]",
         click: () => send("toggleRightSidebar")
       },
