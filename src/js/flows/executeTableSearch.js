@@ -12,6 +12,7 @@ import executeSearch from "./executeSearch"
 
 export default function executeTableSearch(
   tabId: string,
+  resolve: Function,
   args: SearchArgs
 ): Thunk {
   return function(dispatch) {
@@ -28,10 +29,10 @@ export default function executeTableSearch(
       )
       .stats((stats) => dispatch(Viewer.setStats(tabId, stats)))
       .error((error) => dispatch(Notice.set(ErrorFactory.create(error))))
-      .end((_id, count) =>
+      .end((_id, count) => {
+        resolve()
         dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
-      )
-
+      })
     dispatch(Viewer.setStatus(tabId, "FETCHING"))
     dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
     return dispatch(executeSearch(table))

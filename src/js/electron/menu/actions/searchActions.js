@@ -20,6 +20,7 @@ import tab from "../../../state/Tab"
 import virusTotal from "../../../services/virusTotal"
 import {downloadPcap} from "../../../flows/downloadPcap"
 import Layout from "../../../state/Layout/actions"
+import scrollToLog from "../../../flows/scrollToLog"
 
 function buildSearchActions() {
   return {
@@ -104,21 +105,17 @@ function buildSearchActions() {
     jumpToTime: action({
       name: "search-cell-menu-show-context",
       label: "View in full context",
-      listener(dispatch, fieldData) {
+      listener(dispatch, fieldData, log) {
         let field = brim.field(fieldData)
         let brimTime = brim.time(field.toDate())
         if (field.type === "time") {
           dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))
           dispatch(tab.setTo(brimTime.add(1, "minutes").toTs()))
-          SearchBar.clearSearchBar()
-          dispatch(SearchBar.changeSearchBarInput(""))
-          dispatch(submitSearch())
+          dispatch(SearchBar.clearSearchBar())
+          dispatch(submitSearch()).then(() => {
+            dispatch(scrollToLog(log))
+          })
         }
-        // Scroll to right element
-        setTimeout(() => {
-          let el = document.getElementsByClassName("view")[0]
-          el.scrollTo(0, el.scrollHeight / 2)
-        }, 1000)
       }
     }),
     notIn: action({

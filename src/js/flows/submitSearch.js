@@ -37,16 +37,18 @@ export default function submitSearch(
     dispatch(Viewer.clear(tabId))
     dispatch(Notice.dismiss())
 
-    switch (args.type) {
-      case "analytics":
-        dispatch(executeTableSearch(tabId, args))
-        break
-      case "zoom":
-        dispatch(executeTableSearch(tabId, args))
-        break
-      default:
-        dispatch(executeTableSearch(tabId, args))
-        dispatch(executeHistogramSearch(tabId, args, prevArgs))
-    }
+    return new Promise(function(resolve) {
+      switch (args.type) {
+        case "analytics":
+          dispatch(executeTableSearch(tabId, resolve, args))
+          break
+        case "zoom":
+          dispatch(executeTableSearch(tabId, resolve, args))
+          break
+        default:
+          dispatch(executeTableSearch(tabId, resolve, args))
+          dispatch(executeHistogramSearch(tabId, args, prevArgs))
+      }
+    })
   }
 }

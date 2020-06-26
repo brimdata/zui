@@ -17,7 +17,9 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   let [spliceIndex, span] = nextPageArgs(logs, args.span)
 
   dispatch(Viewer.splice(tabId, spliceIndex))
-  dispatch(executeTableSearch(tabId, {...args, span}))
+  return new Promise((resolve) => {
+    dispatch(executeTableSearch(tabId, resolve, {...args, span}))
+  })
 }
 
 function nextPageArgs(logs, span) {
