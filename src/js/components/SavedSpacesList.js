@@ -11,6 +11,7 @@ import Tab from "../state/Tab"
 import EmptySection from "./common/EmptySection"
 import FileFilled from "../icons/FileFilled"
 import FileBorder from "../icons/FileBorder"
+import classNames from "classnames"
 
 type Props = {|
   spaces: Space[],
@@ -52,9 +53,9 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
                 !s.ingesting() &&
                   showContextMenu(spaceContextMenu(s.id, s.name))
               }}
-              className={`space-link${
-                s.id === currentSpaceId ? " current-space-link" : ""
-              }`}
+              className={classNames("space-link", {
+                "current-space-link": s.id === currentSpaceId
+              })}
             >
               <FileBorder className="space-icon" />
               <span className="name">{s.name}</span>
