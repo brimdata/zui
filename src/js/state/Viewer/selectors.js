@@ -49,5 +49,15 @@ export default {
   getStats: createSelector<State, void, *, ViewerState>(
     getViewer,
     (viewer) => viewer.stats
+  ),
+
+  getScrollX: createSelector<State, void, *, ViewerState>(
+    getViewer,
+    (viewer) => viewer.scrollX
+  ),
+
+  getScrollY: createSelector<State, void, *, ViewerState>(
+    getViewer,
+    (viewer) => viewer.scrollY
   )
 }

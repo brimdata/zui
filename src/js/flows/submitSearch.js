@@ -22,7 +22,7 @@ export default function submitSearch(
     let prevArgs = Search.getArgs(getState())
     dispatch(SearchBar.submittingSearchBar(ts))
     dispatch(Tab.computeSpan())
-    if (!dispatch(SearchBar.validate())) return
+    if (!dispatch(SearchBar.validate())) return Promise.reject()
 
     const state = getState()
 
@@ -39,14 +39,12 @@ export default function submitSearch(
 
     switch (args.type) {
       case "analytics":
-        dispatch(executeTableSearch(tabId, args))
-        break
+        return dispatch(executeTableSearch(tabId, args))
       case "zoom":
-        dispatch(executeTableSearch(tabId, args))
-        break
+        return dispatch(executeTableSearch(tabId, args))
       default:
-        dispatch(executeTableSearch(tabId, args))
         dispatch(executeHistogramSearch(tabId, args, prevArgs))
+        return dispatch(executeTableSearch(tabId, args))
     }
   }
 }

@@ -8,6 +8,8 @@ const init: ViewerState = {
   endStatus: "INCOMPLETE",
   status: "INIT",
   columns: {},
+  scrollY: 0,
+  scrollX: 0,
   stats: {updateTime: 0, startTime: 0, bytesRead: 0}
 }
 
@@ -30,6 +32,8 @@ export default function(
       return {...state, stats: action.stats}
     case "VIEWER_COLUMNS":
       return {...state, columns: {...state.columns, ...action.columns}}
+    case "VIEWER_SCROLL":
+      return {...state, scrollY: action.scrollY, scrollX: action.scrollX}
     default:
       return state
   }

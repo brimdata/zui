@@ -64,6 +64,7 @@ export default function searchFieldContextMenu(
       menu.separator(),
       searchMenuActions.fromTime.menuItem([field], {enabled: isTime}),
       searchMenuActions.toTime.menuItem([field], {enabled: isTime}),
+      searchMenuActions.jumpToTime.menuItem([field, log], {enabled: isTime}),
       menu.separator(),
       searchMenuActions.pcaps.menuItem([log], {enabled: isConn && hasPackets}),
       searchMenuActions.detail.menuItem([log], {enabled: true}),

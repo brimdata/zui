@@ -20,6 +20,9 @@ import tab from "../../../state/Tab"
 import virusTotal from "../../../services/virusTotal"
 import {downloadPcap} from "../../../flows/downloadPcap"
 import Layout from "../../../state/Layout/actions"
+import scrollToLog from "../../../flows/scrollToLog"
+import Notice from "../../../state/Notice"
+import ErrorFactory from "../../../models/ErrorFactory"
 
 function buildSearchActions() {
   return {
@@ -99,6 +102,27 @@ function buildSearchActions() {
       listener(dispatch, {name, value, type}) {
         dispatch(appendQueryIn(brim.field({name, type, value})))
         dispatch(submitSearch())
+      }
+    }),
+    jumpToTime: action({
+      name: "search-cell-menu-show-context",
+      label: "View in full context",
+      listener(dispatch, fieldData, log) {
+        let field = brim.field(fieldData)
+        let brimTime = brim.time(field.toDate())
+        if (field.type === "time") {
+          dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))
+          dispatch(tab.setTo(brimTime.add(1, "minutes").toTs()))
+          dispatch(SearchBar.clearSearchBar())
+          dispatch(submitSearch())
+            .then(() => {
+              dispatch(scrollToLog(log))
+            })
+            .catch((error) => {
+              console.error(error)
+              dispatch(Notice.set(ErrorFactory.create(error)))
+            })
+        }
       }
     }),
     notIn: action({
