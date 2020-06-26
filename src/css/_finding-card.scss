@@ -67,18 +67,24 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  width: 90%;
 
   .program {
     display: flex;
-    flex-wrap: wrap;
     margin-left: 6px;
     color: $aqua;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     p {
       @include label-small;
       display: inline-block;
       padding: 2px 4px;
       margin: 0 2px;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 

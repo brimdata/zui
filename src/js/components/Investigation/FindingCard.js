@@ -20,6 +20,7 @@ import Warning from "../icons/warning-sm.svg"
 import submitSearch from "../../flows/submitSearch"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import styled from "styled-components"
+import usePopupMenu from "../hooks/usePopupMenu"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
     fill: ${(props) => props.theme.colors.lead};
@@ -36,6 +37,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   const dispatch = useDispatch()
   const clusterId = useSelector(Tab.clusterId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
+  const findingSpaceName = get(finding, ["search", "spaceName"], "")
 
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
@@ -69,8 +71,25 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     )
   }
 
+  const template = [
+    {
+      label: "Clear History",
+      click: () => globalDispatch(Investigation.clearInvestigation())
+    }
+  ]
+
+  const openMenu = usePopupMenu(template)
+  const onContextMenu = () => {
+    openMenu()
+  }
+
   return (
-    <div className={classNames("finding-card-wrapper")} onClick={onClick}>
+    <div
+      className={classNames("finding-card-wrapper")}
+      onClick={onClick}
+      onContextMenu={onContextMenu}
+      title={findingSpaceName}
+    >
       <div className="finding-card">
         <StyledMagnifyingGlass />
         <FindingProgram search={finding.search} />

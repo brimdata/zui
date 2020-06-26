@@ -81,11 +81,16 @@ $filter-tree-line-color: $gray-5;
     position: relative;
     margin-left: 6px;
     box-shadow: none;
+    max-width: 80%;
+
     p {
       @include label-small;
       color: $aqua;
       padding: 2px;
       margin: 0 2px;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     &:before {

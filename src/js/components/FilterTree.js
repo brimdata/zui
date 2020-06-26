@@ -21,6 +21,7 @@ import Warning from "./icons/warning-sm.svg"
 import submitSearch from "../flows/submitSearch"
 import BookIcon from "../icons/BookSvgIcon"
 import EmptySection from "./common/EmptySection"
+import usePopupMenu from "./hooks/usePopupMenu"
 
 export default function FilterTree() {
   let dispatch = useDispatch()
@@ -31,6 +32,12 @@ export default function FilterTree() {
   const spaceIds = useSelector(Spaces.ids(clusterId))
 
   function renderNode(node: Node, i: number) {
+    const findingSpaceName = get(
+      node,
+      ["data", "finding", "search", "spaceName"],
+      ""
+    )
+
     function onNodeClick() {
       dispatch(
         SearchBar.restoreSearchBar({
@@ -84,9 +91,26 @@ export default function FilterTree() {
       )
     }
 
+    const template = [
+      {
+        label: "Clear History",
+        click: () => globalDispatch(Investigation.clearInvestigation())
+      }
+    ]
+
+    const openMenu = usePopupMenu(template)
+    const onContextMenu = () => {
+      openMenu()
+    }
+
     return (
       <div key={i} className={className}>
-        <div className="filter-tree-parent" onClick={onNodeClick}>
+        <div
+          className="filter-tree-parent"
+          onClick={onNodeClick}
+          onContextMenu={onContextMenu}
+          title={findingSpaceName}
+        >
           <FilterNode filter={node.data.filter} />
           {renderWarning()}
           <RemoveButton
