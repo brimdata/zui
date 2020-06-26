@@ -52,8 +52,8 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
                 !s.ingesting() &&
                   showContextMenu(spaceContextMenu(s.id, s.name))
               }}
-              className={`space-link ${
-                s.id === currentSpaceId ? "current-space-link" : ""
+              className={`space-link${
+                s.id === currentSpaceId ? " current-space-link" : ""
               }`}
             >
               <FileBorder className="space-icon" />
