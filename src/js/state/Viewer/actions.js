@@ -47,5 +47,9 @@ export default {
       columns: hashDescriptorKeys(desc),
       tabId
     }
+  },
+
+  setScroll(scrollX: number, scrollY: number) {
+    return {type: "VIEWER_SCROLL", scrollY, scrollX}
   }
 }

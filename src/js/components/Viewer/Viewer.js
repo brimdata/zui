@@ -21,7 +21,9 @@ type Props = {
   renderRow: RowRenderer,
   logs: Log[],
   onLastChunk?: Function,
-  renderEnd: () => *
+  renderEnd: () => *,
+  scrollX: number,
+  scrollY: number
 }
 
 export default function Viewer(props: Props) {
@@ -62,6 +64,12 @@ export default function Viewer(props: Props) {
       props.onLastChunk && props.onLastChunk()
     }
   })
+
+  useEffect(() => {
+    let view = ref.current
+    if (!view) return
+    view.scrollTo(props.scrollX, props.scrollY)
+  }, [props.scrollX, props.scrollY])
 
   return (
     <div className="viewer">

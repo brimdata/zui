@@ -41,7 +41,9 @@ type StateProps = {|
   isFetching: boolean,
   tableColumns: TableColumns,
   program: string,
-  space: Space
+  space: Space,
+  scrollX: number,
+  scrollY: number
 |}
 
 type OwnProps = {|
@@ -169,6 +171,8 @@ export default function ResultsTable(props: Props) {
       timeFormat={props.timeFormat}
       onLastChunk={onLastChunk}
       renderEnd={renderEnd}
+      scrollX={props.scrollX}
+      scrollY={props.scrollY}
     />
   )
 }
@@ -183,6 +187,8 @@ function stateToProps(state: State) {
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
     space: Tab.space(state),
+    scrollX: Viewer.getScrollX(state),
+    scrollY: Viewer.getScrollY(state),
     state
   }
 }

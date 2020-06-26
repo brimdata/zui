@@ -17,7 +17,9 @@ export type ViewerState = {|
   columns: ViewerColumns,
   endStatus: ViewerStatus,
   status: SearchStatus,
-  stats: ViewerStats
+  stats: ViewerStats,
+  scrollX: number,
+  scrollY: number
 |}
 
 export type ViewerAction =
@@ -28,6 +30,7 @@ export type ViewerAction =
   | VIEWER_COLUMNS
   | VIEWER_END_STATUS
   | VIEWER_STATS
+  | VIEWER_SCROLL
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",
@@ -68,4 +71,10 @@ export type VIEWER_STATS = {
   type: "VIEWER_STATS",
   stats: ViewerStats,
   tabId: string
+}
+
+export type VIEWER_SCROLL = {
+  type: "VIEWER_SCROLL",
+  scrollY: number,
+  scrollX: number
 }
