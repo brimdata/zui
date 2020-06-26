@@ -21,6 +21,8 @@ import virusTotal from "../../../services/virusTotal"
 import {downloadPcap} from "../../../flows/downloadPcap"
 import Layout from "../../../state/Layout/actions"
 import scrollToLog from "../../../flows/scrollToLog"
+import Notice from "../../../state/Notice"
+import ErrorFactory from "../../../models/ErrorFactory"
 
 function buildSearchActions() {
   return {
@@ -112,9 +114,14 @@ function buildSearchActions() {
           dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))
           dispatch(tab.setTo(brimTime.add(1, "minutes").toTs()))
           dispatch(SearchBar.clearSearchBar())
-          dispatch(submitSearch()).then(() => {
-            dispatch(scrollToLog(log))
-          })
+          dispatch(submitSearch())
+            .then(() => {
+              dispatch(scrollToLog(log))
+            })
+            .catch((error) => {
+              console.error(error)
+              dispatch(Notice.set(ErrorFactory.create(error)))
+            })
         }
       }
     }),

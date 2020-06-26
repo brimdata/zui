@@ -31,7 +31,9 @@ export const initSpace = (desiredID: string, clientDep?: *): Thunk => (
     .then((data) => setSpace(dispatch, data, clusterId))
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))
-    .then(() => dispatch(submitSearch()))
+    .then(() => {
+      dispatch(submitSearch())
+    })
     .catch((error) => {
       console.error(error)
       dispatch(Notice.set(ErrorFactory.create(error)))

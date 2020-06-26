@@ -12,30 +12,34 @@ import executeSearch from "./executeSearch"
 
 export default function executeTableSearch(
   tabId: string,
-  resolve: Function,
   args: SearchArgs
 ): Thunk {
   return function(dispatch) {
-    let table = brim
-      .search(args.tableProgram, args.span, args.spaceId)
-      .id("Table")
-      .status((status) => dispatch(Viewer.setStatus(tabId, status)))
-      .chan(0, (records, types) => {
-        dispatch(Viewer.appendRecords(tabId, records))
-        dispatch(Viewer.updateColumns(tabId, types))
-      })
-      .warnings((warnings) =>
-        dispatch(SearchBar.errorSearchBarParse(warnings[0]))
-      )
-      .stats((stats) => dispatch(Viewer.setStats(tabId, stats)))
-      .error((error) => dispatch(Notice.set(ErrorFactory.create(error))))
-      .end((_id, count) => {
-        resolve()
-        dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
-      })
-    dispatch(Viewer.setStatus(tabId, "FETCHING"))
-    dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
-    return dispatch(executeSearch(table))
+    return new Promise((resolve, reject) => {
+      let table = brim
+        .search(args.tableProgram, args.span, args.spaceId)
+        .id("Table")
+        .status((status) => dispatch(Viewer.setStatus(tabId, status)))
+        .chan(0, (records, types) => {
+          dispatch(Viewer.appendRecords(tabId, records))
+          dispatch(Viewer.updateColumns(tabId, types))
+        })
+        .warnings((warnings) =>
+          dispatch(SearchBar.errorSearchBarParse(warnings[0]))
+        )
+        .stats((stats) => dispatch(Viewer.setStats(tabId, stats)))
+        .error((error) => {
+          dispatch(Notice.set(ErrorFactory.create(error)))
+          reject(error)
+        })
+        .end((_id, count) => {
+          dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
+          resolve()
+        })
+      dispatch(Viewer.setStatus(tabId, "FETCHING"))
+      dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
+      return dispatch(executeSearch(table))
+    })
   }
 }
 
