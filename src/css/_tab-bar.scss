@@ -11,7 +11,7 @@ $tab-bg-color: #3f425f;
   align-items: flex-end;
   overflow: hidden;
   position: relative;
-  box-shadow: inset 0px -0.5px 0px 0px rgba(0, 0, 0, 0.5);
+  border-bottom: 3px solid $white-3;
 
   .tabs-container {
     width: 100%;

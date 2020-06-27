@@ -8,6 +8,7 @@ $pane-header-background-color: $white-5;
   background: $pane-background-color;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .pane-header {

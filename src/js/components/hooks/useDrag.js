@@ -4,13 +4,16 @@ import lib from "../../lib"
 export default function useDrag(handler: Function) {
   return (args: Object) => {
     let startX = 0
+    let startY = 0
 
     function onMouseDown(event: MouseEvent) {
       startX = event.clientX
+      startY = event.clientY
       handler({
         event,
         args,
         dx: 0,
+        dy: 0,
         type: "down"
       })
       lib.on("mousemove", onMove)
@@ -22,6 +25,7 @@ export default function useDrag(handler: Function) {
         event,
         args,
         dx: event.clientX - startX,
+        dy: event.clientY - startY,
         type: "move"
       })
       if (res === false) {
@@ -35,6 +39,7 @@ export default function useDrag(handler: Function) {
         event,
         args,
         dx: event.clientX - startX,
+        dy: event.clientY - startY,
         type: "up"
       })
       lib.off("mousemove", onMove)

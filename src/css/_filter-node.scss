@@ -1,5 +1,4 @@
 .filter-node {
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   background: $filter-node-background;
@@ -22,7 +21,6 @@
 
   .remove-button {
     @include button-reset;
-    background-color: #dcdcdc;
     display: none;
     height: 20px;
     width: 20px;

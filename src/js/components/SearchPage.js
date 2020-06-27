@@ -11,6 +11,38 @@ import TabBar from "./TabBar/TabBar"
 import TabContent from "./TabContent"
 import Tabs from "../state/Tabs"
 import useSearchShortcuts from "./useSearchShortcuts"
+import styled from "styled-components"
+
+const ColumnLayout: React$ComponentType<any> = styled.div`
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-flow: column;
+  position: relative;
+`
+
+const RowLayout: React$ComponentType<any> = styled.div`
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-flow: row;
+  position: relative;
+  box-shadow: inset 0px 1px 1px ${(props) => props.theme.colors.lead};
+  padding-top: 1px;
+`
+
+const SearchPageMain: React$ComponentType<any> = styled.div`
+  display: flex;
+  height: 100%;
+`
+
+const SearchPageWrapper: React$ComponentType<any> = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: fadein 300ms;
+`
 
 export default function SearchPage() {
   let dispatch = useDispatch()
@@ -20,16 +52,20 @@ export default function SearchPage() {
   useEffect(() => () => dispatch(Handlers.abortAll()), [])
 
   return (
-    <div className="search-page-wrapper">
-      <div className="search-page">
-        <LeftPane />
-        <div className="search-page-main">
+    <SearchPageWrapper>
+      <SearchPageMain>
+        <ColumnLayout>
           <TabBar />
-          <TabContent key={tabId} />
+          <RowLayout>
+            <LeftPane />
+            <ColumnLayout>
+              <TabContent key={tabId} />
+            </ColumnLayout>
+            <XRightPane key={tabId} />
+          </RowLayout>
           <StatusBar />
-        </div>
-        <XRightPane key={tabId} />
-      </div>
-    </div>
+        </ColumnLayout>
+      </SearchPageMain>
+    </SearchPageWrapper>
   )
 }

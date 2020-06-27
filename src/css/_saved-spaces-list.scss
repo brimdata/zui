@@ -1,13 +1,12 @@
 .saved-spaces-list {
   background: white;
-  box-shadow: inset 0 0 2px 0px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   user-select: none;
   overflow-x: hidden;
   overflow-y: auto;
   min-height: 0px;
   position: relative;
-  margin: 0 0 50px;
+  margin: 2px 0 5px;
   padding: 0;
 
   &:before {
@@ -35,12 +34,6 @@
         transparentize($white-5, 0.7),
         transparentize($white-5, 0.95)
       );
-      .line {
-        display: none;
-      }
-      .delete-link {
-        display: flex;
-      }
     }
 
     &:active {
@@ -55,14 +48,17 @@
   }
 
   .space-link {
-    @include label-normal;
+    @include label-small;
+    color: $aqua;
     display: flex;
     align-items: center;
-    color: inherit;
     text-decoration: none;
-    cursor: default;
-    padding-left: 12px;
     flex: 1;
+    height: 25px;
+    margin: 0 2px;
+    width: 95%;
+    padding-left: 22px;
+    cursor: default;
 
     .using-keyboard &:focus {
       outline: none;
@@ -72,53 +68,51 @@
         fill: white;
       }
     }
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+
+  .current-space-link {
+    outline: none;
+    background: $blue;
+    color: white;
+    border-radius: 5px;
+
+    .space-icon {
+      fill: white;
+      stroke: white;
+    }
+
+    .small-progress-bar {
+      .progress-track {
+        background-color: rgba(0, 0, 0, 0.15);
+      }
+      .progress-fill {
+        background-color: $white-1;
+      }
+    }
+
+    &:hover {
+      background: $blue;
+    }
   }
 
   .space-icon {
-    width: 16px;
-    height: 16px;
+    fill: $slate;
+    stroke: $slate;
+    width: 13px;
+    height: 13px;
     flex-shrink: 0;
-  }
-
-  .delete-link {
-    display: none;
-    height: 30px;
-    width: 30px;
-    cursor: default;
-    position: absolute;
-    right: 2px;
-    fill: $red;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: radial-gradient(white, white 50%, transparent);
-
-    svg {
-      scale: 0.8;
-    }
-
-    &:active {
-      fill: darken($red, 15%);
-    }
   }
 
   .name {
     display: block;
-    padding: 10px;
-  }
-
-  .line {
-    position: absolute;
-    height: 1px;
-    width: 100%;
-    left: 0;
-    top: 0;
-    transform: scaleY(0.5);
-    background: linear-gradient(
-      to right,
-      $white-5,
-      transparentize($white-5, 0.7)
-    );
+    padding-left: 6px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .small-progress-bar {
