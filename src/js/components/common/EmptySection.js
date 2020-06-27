@@ -8,6 +8,7 @@ const EmptyWrapper = (styled.div`
   flex-direction: column;
   align-items: center;
   margin: 26px 0;
+  user-select: none;
 
   svg {
     fill: ${(props) => props.theme.colors.cloudy};
