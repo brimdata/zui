@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Descriptors} from "../../types"
+import type {Descriptors, ScrollPosition} from "../../types"
 import type {RecordData} from "../../types/records"
 import type {SearchStatus} from "../../types/searches"
 import type {
@@ -49,7 +49,7 @@ export default {
     }
   },
 
-  setScroll(scrollX: number, scrollY: number) {
-    return {type: "VIEWER_SCROLL", scrollY, scrollX}
+  setScroll(scrollPos: ScrollPosition) {
+    return {type: "VIEWER_SCROLL", scrollPos}
   }
 }

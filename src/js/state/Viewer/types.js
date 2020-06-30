@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Descriptor} from "../../types"
+import type {Descriptor, ScrollPosition} from "../../types"
 import type {RecordData} from "../../types/records"
 import type {SearchStatus} from "../../types/searches"
 
@@ -18,8 +18,7 @@ export type ViewerState = {|
   endStatus: ViewerStatus,
   status: SearchStatus,
   stats: ViewerStats,
-  scrollX: number,
-  scrollY: number
+  scrollPos: ScrollPosition
 |}
 
 export type ViewerAction =
@@ -75,6 +74,5 @@ export type VIEWER_STATS = {
 
 export type VIEWER_SCROLL = {
   type: "VIEWER_SCROLL",
-  scrollY: number,
-  scrollX: number
+  scrollPos: ScrollPosition
 }
