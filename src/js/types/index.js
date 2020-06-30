@@ -85,6 +85,11 @@ export type LongTimeUnit =
   | "day"
   | "month"
 
+export type ScrollPosition = {
+  x: number,
+  y: number
+}
+
 export type SearchRecord = {
   program: string,
   pins: string[],

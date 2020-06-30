@@ -2,7 +2,7 @@
 
 import React, {useEffect, useRef, useState} from "react"
 
-import type {RowRenderer, ViewerDimens} from "../../types"
+import type {RowRenderer, ScrollPosition, ViewerDimens} from "../../types"
 import {reactElementProps} from "../../test/integration"
 import Chunk from "./Chunk"
 import Chunker from "./Chunker"
@@ -22,8 +22,7 @@ type Props = {
   logs: Log[],
   onLastChunk?: Function,
   renderEnd: () => *,
-  scrollX: number,
-  scrollY: number
+  scrollPos: ScrollPosition
 }
 
 export default function Viewer(props: Props) {
@@ -68,8 +67,10 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     let view = ref.current
     if (!view) return
-    view.scrollTo(props.scrollX, props.scrollY)
-  }, [props.scrollX, props.scrollY])
+    if (props.scrollPos) {
+      view.scrollTo(props.scrollPos.x, props.scrollPos.y)
+    }
+  }, [props.scrollPos.x, props.scrollPos.y])
 
   return (
     <div className="viewer">

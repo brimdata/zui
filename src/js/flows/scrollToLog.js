@@ -9,6 +9,6 @@ export default (log: Log): Thunk => (dispatch, getState) => {
   const logs = Viewer.getLogs(state)
   const index = logs.findIndex((log2) => Log.isSame(log2, log))
   const rowHeight = 25 // pixels
-  const scrollY = index * rowHeight
-  dispatch(Viewer.setScroll(0, scrollY))
+  const scrollPos = {x: 0, y: index * rowHeight}
+  dispatch(Viewer.setScroll(scrollPos))
 }
