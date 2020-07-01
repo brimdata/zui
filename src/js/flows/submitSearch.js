@@ -26,9 +26,16 @@ export default function submitSearch(
 
     const state = getState()
 
+    let view = document.getElementsByClassName("view")[0]
+
     if (save) {
       let record = Search.getRecord(state)
-      dispatch(History.push(record, time.toTs()))
+      let scrollPos = {x: 0, y: 0}
+      if (view) {
+        scrollPos.x = view.scrollLeft
+        scrollPos.y = view.scrollTop
+      }
+      dispatch(History.push(record, time.toTs(), scrollPos))
       globalDispatch(Investigation.push(record, time.toTs()))
     }
     let tabId = Tabs.getActive(state)
