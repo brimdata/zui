@@ -4,20 +4,27 @@ import isEqual from "lodash/isEqual"
 
 type Args = {
   position: number,
-  entries: *[]
+  entries: *[],
+  scrollPositions: *[]
 }
 
-export default function({entries: initEntries, position}: Args) {
+export default function({
+  entries: initEntries,
+  position,
+  scrollPositions: initScrollPositions = []
+}: Args) {
   let entries = [...initEntries]
+  let scrollPositions = [...initScrollPositions]
 
   if (position < -1 || position >= entries.length) {
     throw new Error("Position out of bounds")
   }
 
   return {
-    push(entry: *) {
+    push(entry: *, scrollPos: *) {
       if (!isEqual(entry, this.getCurrentEntry())) {
         entries.splice(position + 1, entries.length, entry)
+        scrollPositions.splice(position + 1, scrollPositions.length, scrollPos)
         position = entries.length - 1
       }
       return this
@@ -43,7 +50,7 @@ export default function({entries: initEntries, position}: Args) {
       return entries[position]
     },
     data() {
-      return {position, entries}
+      return {position, entries, scrollPositions}
     }
   }
 }

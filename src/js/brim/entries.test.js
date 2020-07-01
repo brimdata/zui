@@ -4,12 +4,12 @@ import brim from "./"
 
 let history
 beforeEach(() => {
-  history = brim.entries({entries: [], position: -1})
+  history = brim.entries({entries: [], position: -1, scrollPositions: []})
 })
 
 test("#constructor throws error if position is out of bounds", () => {
   expect(() => {
-    brim.entries({entries: ["a"], position: 999})
+    brim.entries({entries: ["a"], position: 999, scrollPositions: {x: 0, y: 0}})
   }).toThrow("Position out of bounds")
 })
 

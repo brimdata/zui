@@ -5,7 +5,8 @@ import brim from "../../brim"
 
 const init: HistoryState = {
   position: -1,
-  entries: []
+  entries: [],
+  scrollPositions: []
 }
 
 export default function reducer(
@@ -19,7 +20,7 @@ export default function reducer(
     case "HISTORY_PUSH":
       return brim
         .entries(state)
-        .push(action.entry)
+        .push(action.entry, action.scrollPos)
         .data()
 
     case "HISTORY_BACK":
