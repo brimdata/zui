@@ -9,6 +9,8 @@ export default {
   current: (state: TabState) => state.history.entries[state.history.position],
   canGoBack: (state: TabState) => brim.entries(state.history).canGoBack(),
   canGoForward: (state: TabState) => brim.entries(state.history).canGoForward(),
+  getScrollPos: (state: TabState) =>
+    state.history.scrollPositions[state.history.position],
   first: activeTabSelect((state: TabState) => state.history.entries[0]),
   count: activeTabSelect((state: TabState) => state.history.entries.length)
 }

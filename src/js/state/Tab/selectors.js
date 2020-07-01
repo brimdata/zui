@@ -104,6 +104,7 @@ export default {
   currentEntry: activeTabSelect(History.current),
   canGoBack: activeTabSelect(History.canGoBack),
   canGoForward: activeTabSelect(History.canGoForward),
+  scrollPos: activeTabSelect(History.getScrollPos),
   isFetching: activeTabSelect<boolean>(tabIsFetching),
   getSearchTs: activeTabSelect<number>((tab) => tab.search.ts),
   getSpan,

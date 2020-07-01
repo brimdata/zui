@@ -24,7 +24,11 @@ export default function({
     push(entry: *, scrollPos: *) {
       if (!isEqual(entry, this.getCurrentEntry())) {
         entries.splice(position + 1, entries.length, entry)
-        scrollPositions.splice(position + 1, scrollPositions.length, scrollPos)
+        scrollPositions.splice(position + 1, scrollPositions.length, {
+          x: 0,
+          y: 0
+        })
+        scrollPositions[position] = scrollPos
         position = entries.length - 1
       }
       return this

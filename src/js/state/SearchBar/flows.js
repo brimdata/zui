@@ -10,18 +10,23 @@ import SearchBar from "../SearchBar"
 import Tab from "../Tab"
 import brim from "../../brim"
 import submitSearch from "../../flows/submitSearch"
+import Viewer from "../Viewer/actions"
 
 export default {
   goBack: (): Thunk => (dispatch, getState) => {
     dispatch(History.back())
     dispatch(Search.restore(Tab.currentEntry(getState())))
-    dispatch(submitSearch(false))
+    dispatch(submitSearch(false)).then(() => {
+      dispatch(Viewer.setScroll(Tab.scrollPos(getState())))
+    })
   },
 
   goForward: (): Thunk => (dispatch, getState) => {
     dispatch(History.forward())
     dispatch(Search.restore(Tab.currentEntry(getState())))
-    dispatch(submitSearch(false))
+    dispatch(submitSearch(false)).then(() => {
+      dispatch(Viewer.setScroll(Tab.scrollPos(getState())))
+    })
   },
 
   validate: (): Thunk => (dispatch, getState) => {

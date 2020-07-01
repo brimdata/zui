@@ -9,7 +9,11 @@ beforeEach(() => {
 
 test("#constructor throws error if position is out of bounds", () => {
   expect(() => {
-    brim.entries({entries: ["a"], position: 999, scrollPositions: {x: 0, y: 0}})
+    brim.entries({
+      entries: ["a"],
+      position: 999,
+      scrollPositions: [{x: 0, y: 0}]
+    })
   }).toThrow("Position out of bounds")
 })
 
