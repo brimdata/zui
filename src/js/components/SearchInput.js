@@ -92,6 +92,10 @@ function Menu() {
     {label: "Copy for curl", click: () => dispatch(Modal.show("curl"))},
     {label: "Copy for zq", click: () => dispatch(Modal.show("zq"))},
     {
+      label: "Syntax docs",
+      click: () => open("https://github.com/brimsec/zq/tree/master/zql/docs")
+    },
+    {
       label: "Kill search",
       click: () => dispatch(Handlers.abortAll()),
       disabled: !isFetching
