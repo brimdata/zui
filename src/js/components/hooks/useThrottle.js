@@ -7,6 +7,12 @@ export default function(value: *, wait: number) {
   let pending = useRef(false)
   let nextValue = useRef(null)
 
+  const cancel = () => {
+    if (timeout.current) {
+      clearTimeout(timeout.current)
+    }
+  }
+
   useEffect(() => {
     if (!timeout.current) {
       setState(value)
@@ -28,5 +34,5 @@ export default function(value: *, wait: number) {
     }
   }, [value])
 
-  return state
+  return [state, cancel]
 }
