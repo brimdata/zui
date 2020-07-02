@@ -37,7 +37,7 @@ const StyledSection = styled.section`
 const SectionContents = styled.div`
   height: 100%;
   display: ${(props) => (props.show ? "block" : "none")};
-  overflow-y: scroll;
+  overflow-y: auto;
 `
 
 const SectionHeader = styled.div`
