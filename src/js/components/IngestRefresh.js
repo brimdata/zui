@@ -39,18 +39,27 @@ import submitSearch from "../flows/submitSearch"
 import useThrottle from "./hooks/useThrottle"
 
 export default function IngestRefresh() {
-  let dispatch = useDispatch()
-  let historyCount = useSelector(History.count)
-  let firstSearch = useSelector(History.first)
-  let nextSearch = useSelector(Search.getCurrentRecord)
-  let space = useSelector(Tab.space)
-  let snapshot = useThrottle(space.ingest.snapshot, 3000)
-  let [snapshotAck, setSnapshotAck] = useState(snapshot)
-  let ack = () => setSnapshotAck(snapshot)
-  let autoRefresh =
+  const dispatch = useDispatch()
+  const historyCount = useSelector(History.count)
+  const firstSearch = useSelector(History.first)
+  const nextSearch = useSelector(Search.getCurrentRecord)
+  const currentSpace = useSelector(Tab.space)
+  const [space, setSpace] = useState(currentSpace)
+  const [snapshot, cancelSnapshot] = useThrottle(space.ingest.snapshot, 3000)
+  const [snapshotAck, setSnapshotAck] = useState(snapshot)
+  const ack = () => setSnapshotAck(snapshot)
+  const autoRefresh =
     historyCount === 1 &&
     isEqual(firstSearch, nextSearch) &&
     snapshot !== snapshotAck
+
+  useEffect(() => {
+    if (currentSpace.id !== space.id) {
+      cancelSnapshot()
+      ack()
+    }
+    setSpace(currentSpace)
+  }, [currentSpace])
 
   useEffect(() => {
     ack()
