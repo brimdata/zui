@@ -9,7 +9,8 @@ const init: ViewerState = {
   status: "INIT",
   columns: {},
   scrollPos: {x: 0, y: 0},
-  stats: {updateTime: 0, startTime: 0, bytesRead: 0}
+  stats: {updateTime: 0, startTime: 0, bytesRead: 0},
+  columnHeadersView: "AUTO"
 }
 
 export default function(
@@ -17,10 +18,12 @@ export default function(
   action: ViewerAction
 ): ViewerState {
   switch (action.type) {
+    case "VIEWER_SET_COLUMN_HEADERS":
+      return {...state, columnHeadersView: action.view}
     case "VIEWER_RECORDS":
       return {...state, records: concat(state.records, action.records)}
     case "VIEWER_CLEAR":
-      return {...init}
+      return {...init, columnHeadersView: state.columnHeadersView}
     case "VIEWER_SPLICE":
       return {...state, records: splice(state.records, action.index)}
     case "VIEWER_END_STATUS":

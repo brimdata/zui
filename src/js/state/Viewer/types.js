@@ -6,6 +6,8 @@ import type {SearchStatus} from "../../types/searches"
 
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
+export type ColumnHeadersViewState = "AUTO" | "ON" | "OFF"
+
 export type ViewerColumns = {[string]: Descriptor}
 export type ViewerStats = {
   updateTime: number,
@@ -18,7 +20,8 @@ export type ViewerState = {|
   endStatus: ViewerStatus,
   status: SearchStatus,
   stats: ViewerStats,
-  scrollPos: ScrollPosition
+  scrollPos: ScrollPosition,
+  columnHeadersView: ColumnHeadersViewState
 |}
 
 export type ViewerAction =
@@ -30,6 +33,7 @@ export type ViewerAction =
   | VIEWER_END_STATUS
   | VIEWER_STATS
   | VIEWER_SCROLL
+  | VIEWER_SET_COLUMN_HEADERS
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",
@@ -75,4 +79,9 @@ export type VIEWER_STATS = {
 export type VIEWER_SCROLL = {
   type: "VIEWER_SCROLL",
   scrollPos: ScrollPosition
+}
+
+export type VIEWER_SET_COLUMN_HEADERS = {
+  type: "VIEWER_SET_COLUMN_HEADERS",
+  view: ColumnHeadersViewState
 }

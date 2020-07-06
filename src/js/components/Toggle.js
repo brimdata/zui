@@ -3,7 +3,7 @@
 import React from "react"
 import classNames from "classnames"
 
-type Props = {checked: boolean, onChange: () => *, dataTestLocator: string}
+type Props = {checked: boolean, onChange: () => *}
 
 export default class Toggle extends React.Component<Props> {
   render() {
@@ -13,7 +13,7 @@ export default class Toggle extends React.Component<Props> {
         onClick={this.props.onChange}
         // Pass-through props didn't work here. I had to set this directly.
         // Feel free to improve.
-        data-test-locator={this.props.dataTestLocator}
+        {...this.props}
       >
         <div className="bar" />
         <div className="knob" />

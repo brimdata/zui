@@ -51,5 +51,9 @@ export default {
 
   setScroll(scrollPos: ScrollPosition) {
     return {type: "VIEWER_SCROLL", scrollPos}
+  },
+
+  setColumnHeadersView(view: string) {
+    return {type: "VIEWER_SET_COLUMN_HEADERS", view}
   }
 }

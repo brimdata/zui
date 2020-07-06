@@ -3,7 +3,6 @@
 import {CSSTransition} from "react-transition-group"
 import {connect} from "react-redux"
 import React from "react"
-import classNames from "classnames"
 
 import type {DispatchProps, State} from "../state/types"
 import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
@@ -12,13 +11,65 @@ import CloseButton from "./CloseButton"
 import Columns from "../state/Columns"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
+import Viewer from "../state/Viewer"
+import styled from "styled-components"
+import Checkbox from "./common/Checkbox"
+import usePopupMenu from "./hooks/usePopupMenu"
+import DropdownArrow from "../icons/DropdownArrow"
+
+const ControlListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 36px;
+  cursor: default;
+
+  p {
+    text-decoration: underline;
+    color: ${(props) => props.theme.colors.havelock};
+  }
+`
+
+const ColumnListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 36px;
+  cursor: default;
+  ${(props) => props.theme.typography.labelNormal}
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.ivory};
+  }
+`
+
+const StyledLabel = styled.label`
+  ${(props) => props.theme.typography.labelNormal}
+`
+
+const StyledViewSelect = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  border-radius: 3px;
+  border: 1px solid ${(props) => props.theme.colors.cloudy};
+  background-color: ${(props) => props.theme.colors.ivory};
+  padding: 3px 10px;
+  font-size: 12px;
+  svg {
+    stroke: ${(props) => props.theme.colors.slate};
+    margin-left: 8px;
+  }
+`
 
 type OwnProps = {|
   onClose: () => *
 |}
 
 type StateProps = {|
-  tableColumns: TableColumns
+  tableColumns: TableColumns,
+  showColumnHeaders: boolean
 |}
 
 type Props = {|
@@ -36,7 +87,12 @@ export default class ColumnChooserMenu extends React.Component<Props> {
     return this.props.tableColumns.allVisible()
   }
 
-  showAllColumns = (e: Event) => {
+  deselectAllColumns = (e: Event) => {
+    e.stopPropagation()
+    this.props.dispatch(Columns.hideAllColumns(this.props.tableColumns))
+  }
+
+  selectAllColumns = (e: Event) => {
     e.stopPropagation()
     this.props.dispatch(Columns.showAllColumns(this.props.tableColumns))
   }
@@ -44,29 +100,37 @@ export default class ColumnChooserMenu extends React.Component<Props> {
   onColumnClick(e: Event, column: TableColumn) {
     e.stopPropagation()
     if (column.isVisible) {
-      if (this.allVisible()) {
-        this.props.dispatch(Columns.hideAllColumns(this.props.tableColumns))
-        this.props.dispatch(Columns.showColumn(this.tableId(), column))
-      } else if (this.props.tableColumns.visibleCount() === 1) {
-        this.props.dispatch(Columns.showAllColumns(this.props.tableColumns))
-      } else {
-        this.props.dispatch(Columns.hideColumn(this.tableId(), column))
-      }
+      this.props.dispatch(Columns.hideColumn(this.tableId(), column))
     } else {
       this.props.dispatch(Columns.showColumn(this.tableId(), column))
     }
   }
 
-  className() {
-    return classNames("column-chooser-menu", {
-      "all-visible": this.props.tableColumns.allVisible()
-    })
-  }
-
   render() {
+    const {columnHeadersView} = this.props
     const columns = this.props.tableColumns.getColumns()
     const count = this.props.tableColumns.visibleCount()
-    const allVisible = this.props.tableColumns.allVisible()
+
+    const template = [
+      {
+        label: "On",
+        click: () => this.props.dispatch(Viewer.setColumnHeadersView("ON"))
+      },
+      {
+        label: "Off",
+        click: () => this.props.dispatch(Viewer.setColumnHeadersView("OFF"))
+      },
+      {
+        label: "Auto",
+        click: () => this.props.dispatch(Viewer.setColumnHeadersView("AUTO"))
+      }
+    ]
+
+    const openMenu = usePopupMenu(template)
+    const onClick = () => {
+      openMenu()
+    }
+
     return (
       <CSSTransition
         classNames="slide-in-right"
@@ -74,28 +138,39 @@ export default class ColumnChooserMenu extends React.Component<Props> {
         in={true}
         appear
       >
-        <div className={this.className()} onClick={(e) => e.stopPropagation()}>
+        <div
+          className="column-chooser-menu"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Fieldset>Column Chooser</Fieldset>
           <hr />
           <CloseButton light onClick={this.props.onClose} />
-          {!allVisible && (
-            <div className="count" onClick={this.showAllColumns}>
-              <Label>{count}</Label>
-            </div>
-          )}
+          <div className="count" onClick={this.showAllColumns}>
+            <Label>{count}</Label>
+          </div>
           <ul>
-            <li className="show-all" onClick={this.showAllColumns}>
-              <Paragraph>Show All</Paragraph>
-            </li>
+            <ControlListItem>
+              <StyledLabel>Headers</StyledLabel>
+              <StyledViewSelect onClick={onClick}>
+                {columnHeadersView.toLowerCase()}
+                <DropdownArrow />
+              </StyledViewSelect>
+            </ControlListItem>
+            <ControlListItem>
+              <Paragraph onClick={this.selectAllColumns}>Select All</Paragraph>
+              <Paragraph onClick={this.deselectAllColumns}>
+                Deselect All
+              </Paragraph>
+            </ControlListItem>
             {columns.map((c) => (
-              <li
-                className={classNames({visible: c.isVisible})}
-                key={`${c.name}-${c.type}`}
-                onClick={(e) => this.onColumnClick(e, c)}
-              >
-                <Paragraph>{c.name}</Paragraph>
+              <ColumnListItem key={`${c.name}-${c.type}`}>
+                <Checkbox
+                  label={c.name}
+                  checked={c.isVisible}
+                  onChange={(e) => this.onColumnClick(e, c)}
+                />
                 <Subscript>{c.type}</Subscript>
-              </li>
+              </ColumnListItem>
             ))}
           </ul>
         </div>
@@ -105,7 +180,8 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 }
 
 const stateToProps = (state: State) => ({
-  tableColumns: Columns.getCurrentTableColumns(state)
+  tableColumns: Columns.getCurrentTableColumns(state),
+  columnHeadersView: Viewer.getColumnHeadersView(state)
 })
 
 export const XColumnChooserMenu = connect<Props, OwnProps, _, _, _, _>(

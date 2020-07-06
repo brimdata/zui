@@ -9,7 +9,6 @@ import Log from "../models/Log"
 import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
 import TableColumns from "../models/TableColumns"
-import columnOrder from "../lib/columnOrder"
 
 type Props = {
   dimens: ViewerDimens,
@@ -20,7 +19,8 @@ type Props = {
   log: Log,
   columns: TableColumns,
   onClick: () => void,
-  rightClick: RightClickBuilder
+  rightClick: RightClickBuilder,
+  showColumnHeaders: boolean
 }
 
 export default class LogRow extends React.Component<Props> {
@@ -31,35 +31,8 @@ export default class LogRow extends React.Component<Props> {
       this.props.highlight !== nextProps.highlight ||
       this.props.dimens.rowWidth !== nextProps.dimens.rowWidth ||
       this.props.timeZone !== nextProps.timeZone ||
-      this.props.timeFormat !== nextProps.timeFormat
-    )
-  }
-
-  renderAutoLayout() {
-    const {dimens, highlight, index, log, rightClick} = this.props
-    const columns = columnOrder(log.descriptor)
-    const renderCell = (column, colIndex) => {
-      const field = log.field(column.name)
-      if (field) {
-        return (
-          <LogCell
-            rightClick={rightClick}
-            key={`${index}-${colIndex}`}
-            field={field}
-            log={log}
-            style={{width: "auto"}}
-          />
-        )
-      }
-    }
-    return (
-      <div
-        className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={Styler.row(dimens)}
-        onClick={this.props.onClick}
-      >
-        {columns.map(renderCell)}
-      </div>
+      this.props.timeFormat !== nextProps.timeFormat ||
+      this.props.showColumnHeaders !== nextProps.showColumnHeaders
     )
   }
 
@@ -96,8 +69,43 @@ export default class LogRow extends React.Component<Props> {
   }
 
   render() {
-    return this.props.dimens.rowWidth !== "auto"
-      ? this.renderFixedLayout()
-      : this.renderAutoLayout()
+    const {
+      dimens,
+      highlight,
+      index,
+      log,
+      rightClick,
+      columns,
+      showColumnHeaders
+    } = this.props
+    const renderCell = (column, colIndex) => {
+      const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
+      const field = log.field(column.name)
+      const key = `${index}-${colIndex}`
+      if (field) {
+        return (
+          <LogCell
+            rightClick={rightClick}
+            key={key}
+            field={field}
+            log={log}
+            style={{width}}
+          />
+        )
+      }
+      if (showColumnHeaders) {
+        return <div className="log-cell" key={key} style={{width}} />
+      }
+    }
+
+    return (
+      <div
+        className={classNames("log-row", {highlight, even: index % 2 == 0})}
+        style={Styler.row(dimens)}
+        onClick={this.props.onClick}
+      >
+        {columns.getVisible().map(renderCell)}
+      </div>
+    )
   }
 }

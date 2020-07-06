@@ -18,8 +18,8 @@ type Props = {
 }
 
 export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
-  let program = useSelector(SearchBar.getSearchProgram)
-  let sorts = useMemo(() => {
+  const program = useSelector(SearchBar.getSearchProgram)
+  const sorts = useMemo(() => {
     return brim
       .program(program)
       .ast()
@@ -27,17 +27,17 @@ export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
   }, [program])
 
   if (dimens.rowWidth === "auto") return null
-  else
-    return (
-      <header {...rest} style={Styler.header(dimens, scrollLeft)}>
-        {columns.getVisible().map((column) => (
-          <HeaderCell
-            key={columnKey(column)}
-            column={column}
-            tableId={columns.id}
-            sorts={sorts}
-          />
-        ))}
-      </header>
-    )
+
+  return (
+    <header {...rest} style={Styler.header(dimens, scrollLeft)}>
+      {columns.getVisible().map((column) => (
+        <HeaderCell
+          key={columnKey(column)}
+          column={column}
+          tableId={columns.id}
+          sorts={sorts}
+        />
+      ))}
+    </header>
+  )
 }

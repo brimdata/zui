@@ -63,61 +63,6 @@
     padding-bottom: 12px;
     height: 100%;
   }
-
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 36px;
-    cursor: default;
-    @include label-normal;
-
-    &:hover {
-      background-color: #f5f5f7;
-    }
-  }
-
-  .show-all .paragraph {
-    color: #545866;
-    text-decoration: underline;
-  }
-
-  &.all-visible {
-    .show-all .paragraph {
-      color: #c5c7d1;
-      font-weight: normal;
-      text-decoration: none;
-    }
-    li.visible {
-      font-weight: normal;
-      background: inherit;
-      color: $aqua;
-      &:hover {
-        background: $white-3;
-      }
-    }
-  }
-
-  li {
-  }
-
-  li.show-all {
-    background: none;
-    color: $gray-9;
-
-    &:hover {
-      background: $white-3;
-    }
-  }
-
-  li.visible {
-    background: $blue;
-    color: white;
-
-    &:hover {
-      background: $blue-light;
-    }
-  }
 }
 
 .slide-in-right-appear {
