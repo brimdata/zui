@@ -44,7 +44,7 @@ Code that boots up in the browser window. It creates the redux store, adds ipc l
 
 **/lib**
 
-Generic structures that are helpful to have like `file`, `doc`, `win`,`is`,`transaction`. They have no knowledge of "Brim" and could be copy and pasted into another project.
+Generic structures that are helpful to have like `file`, `doc`, `win`,`is`,`transaction`. They are independent and could be used in another project.
 
 **/models**
 
