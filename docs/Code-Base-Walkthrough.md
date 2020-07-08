@@ -76,7 +76,7 @@ Test helpers and test data. Actual unit tests should go next to the files they e
 
 **/types**
 
-A place for generic flow types that are used throughout the app. If you need to create a type that is specific to a component or a class, then define and export it from there.
+A place for generic flow types that are used throughout the app. If you need to create a type that is specific to a component or a class, define and export it from here.
 
 **/zqd**
 
