@@ -36,7 +36,7 @@ A place for known app errors to be built.
 
 **/flows**
 
-Business logic for the app like `submitSearch` `createSpace` `exportResults`. These files contain redux thunks which allow them to access the state and dispatch actions.
+Business logic for the app like `submitSearch` `createSpace` `exportResults`. These files contain redux thunks which allow them to access state and dispatch actions.
 
 **/initializers**
 
