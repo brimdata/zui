@@ -181,7 +181,7 @@ Do not make new components using the React "Class" component API. Instead use th
 
 **Animation**
 
-There is no solid convention on how to create animations. We've attempted `anime.js`, `react-spring.js`, native Web Animations , and css animation/transition properties. New code can use any method they prefer and seems appropriate. I'd say avoid react-spring because there are lots of API changes coming in v9. In the future, for drag and drop (like dragging around the tabs), I'd like to try out `react-beautiful-dnd`. I think that could replace our usage of `react-spring` and make the code much more readable.
+There is no solid convention on how to create animations. We've attempted `anime.js`, `react-spring.js`, native Web Animations, and css animation/transition properties. New code can use any method they prefer and seems appropriate. Avoid react-spring because there are lots of API changes coming in v9. In the future, for drag and drop (like dragging around the tabs), we'd like to try out `react-beautiful-dnd`, which could replace our usage of `react-spring` and make the code more readable.
 
 **API Client**
 
