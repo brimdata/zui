@@ -156,7 +156,7 @@ Tests go right next to file they are testing with a `.test.js` suffix. Tests can
 * Utility classes
 * React Components
 
-However, it's not very easy to test React components in unit tests, so we don't have many. The integration tests help with coverage there.
+However, it's not easy to test React components in unit tests, so we don't have many. The integration tests help with coverage there.
 
 **Hooks**
 
