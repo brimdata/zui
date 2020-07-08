@@ -6,6 +6,10 @@ Thank you for contributing to Brim! Feel free to [open an issue](https://github.
 
 Brim is early in its life cycle and will be expanding quickly.  Please star and/or watch the repo so you can follow and track our progress.
 
+## Code Base Walkthrough
+
+Before you start, review the [Code Base Walkthrough](https://github.com/brimsec/brim/wiki/Code-Base-Walkthrough). This doc provides an overview of the directory structure, libraries used, and other useful details for new developers.
+
 ## Setup
 
 You should have `node v12.12.0` and `git` installed. You can start a local instance of Brim via:
