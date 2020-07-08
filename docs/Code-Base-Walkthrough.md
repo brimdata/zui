@@ -6,7 +6,7 @@ Thanks for contributing to Brim! Here are a few pointers to help you understand 
 
 A very high level overview of the boot process goes like this:
 
-The first file that get's run is `src/js/electron/main.js`. From there it will create a BrowserWindow and load the `search.html` file. That then loads JavaScript in  `src/js/search.js`. It creates the DOM needed to mount React, then renders the `src/js/components/App.js` component.
+The first file that gets run is `src/js/electron/main.js`. From there it will create a BrowserWindow and load the `search.html` file. That then loads JavaScript in  `src/js/search.js`. It creates the DOM needed to mount React, then renders the `src/js/components/App.js` component.
 
 
 
