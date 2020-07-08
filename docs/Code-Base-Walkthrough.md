@@ -52,7 +52,7 @@ Legacy location for domain specific structures.
 
 **/searches**
 
-Deprecated, used to be a place to issue the different types of searches within the app. These have been moved to `/flows`.
+Deprecated, this held logic to issue different types of searches within the app, now available in `/flows`.
 
 **/services**
 
