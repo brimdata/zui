@@ -64,7 +64,7 @@ All the redux reducers, actions, and selectors go in this directory. It's organi
 
 **/stdlib**
 
-Deprecated, put generic structures in `lib`.
+Deprecated, generic structures should now live in `lib`.
 
 **/style-theme**
 
