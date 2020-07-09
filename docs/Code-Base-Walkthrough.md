@@ -1,5 +1,16 @@
 Thanks for contributing to Brim! Here are a few pointers to help you understand the code base and feel confident making changes.
 
+- [Video](#video)
+- [Entry Point](#entry-point)
+- [Directory Structure](#directory-structure)
+- [Libraries](#libraries)
+- [Patterns](#patterns)
+- [Diverging Patterns](#diverging-patterns)
+- [Migrations](#migrations)
+
+## Video
+
+A [YouTube video](https://www.youtube.com/watch?v=CPel0iu1pig) is available that provides a detailed walk-through of the material covered in this outline.
 
 
 ## Entry Point
@@ -198,3 +209,7 @@ bin/gen migration addScrollPositionToViewer
 ```
 
 This creates a file in `src/js/state/migrations` with a function that can manipulate the persisted state from the previous version.
+
+## Questions?
+
+We appreciate your interest in improving Brim. If you've got questions that aren't answered here or in the [video](#video), please join our [public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg) workspace and ask!
