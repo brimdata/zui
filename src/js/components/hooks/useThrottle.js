@@ -10,6 +10,8 @@ export default function(value: *, wait: number) {
   const cancel = () => {
     if (timeout.current) {
       clearTimeout(timeout.current)
+      timeout.current = undefined
+      pending.current = false
     }
   }
 

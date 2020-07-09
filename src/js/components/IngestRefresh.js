@@ -56,7 +56,7 @@ export default function IngestRefresh() {
   useEffect(() => {
     if (currentSpace.id !== space.id) {
       cancelSnapshot()
-      ack()
+      setSnapshotAck(currentSpace.ingest.snapshot)
     }
     setSpace(currentSpace)
   }, [currentSpace])
