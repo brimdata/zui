@@ -1,5 +1,5 @@
 $tab-hover-color: rgba(255, 255, 255, 0.1);
-$tab-bg-color: #3f425f;
+$tab-bg-color: $cello;
 
 .tab-bar {
   display: flex;
@@ -11,7 +11,7 @@ $tab-bg-color: #3f425f;
   align-items: flex-end;
   overflow: hidden;
   position: relative;
-  border-bottom: 3px solid $white-3;
+  border-bottom: 3px solid $snow;
 
   .tabs-container {
     width: 100%;
