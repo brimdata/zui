@@ -38,7 +38,7 @@ const autoUpdateLinux = async () => {
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      const navUrl = `https://github.com/brimsec/brim/releases/tag/${latestVersion}`
+      const navUrl = "https://www.brimsecurity.com/download/"
       if (returnValue.response === 0) open(navUrl)
     })
   } catch (err) {
