@@ -45,11 +45,11 @@ Now get the app into a state that you want to test against. In this example, we 
 
 When ready, go to the App Menu and click `Developer => Save Session for Testing Migrations`.
 
-<img src="media/save-session-menu-item.png" alt="Save Session Menu Item" style="zoom:50%;" />
+<img src="media/save-session-menu-item.png" alt="Save Session Menu Item" width="500" />
 
 This will save the session state and inform you where the file is.
 
-<img src="media/session-saved-popup.png" alt="Session Saved Popup" style="zoom:50%;" />
+<img src="media/session-saved-popup.png" alt="Session Saved Popup" width="500" />
 
 The name of the json file is just today's date, so it might be helpful to rename it to the version that you're targeting like `v0.13.1.json`
 
@@ -82,7 +82,5 @@ test("202007101024_addNicknameToConnection", () => {
   })
 })
 ```
-
-
 
 Once you've got that test passing, you're home free. The app will see the new migration and run it automatically next time someone upgrades.
