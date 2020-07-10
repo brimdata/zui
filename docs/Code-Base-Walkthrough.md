@@ -12,18 +12,15 @@ Thanks for contributing to Brim! Here are a few pointers to help you understand 
 
 A [YouTube video](https://www.youtube.com/watch?v=CPel0iu1pig) is available that provides a detailed walk-through of the material covered in this outline.
 
-
 ## Entry Point
 
 A very high level overview of the boot process goes like this:
 
-The first file executed is `src/js/electron/main.js`. It will create a BrowserWindow and load the `search.html` file, which loads JavaScript in  `src/js/search.js`. `src/js/search.js` creates the DOM needed to mount React, then renders the `src/js/components/App.js` component.
-
-
+The first file executed is `src/js/electron/main.js`. It will create a BrowserWindow and load the `search.html` file, which loads JavaScript in `src/js/search.js`. `src/js/search.js` creates the DOM needed to mount React, then renders the `src/js/components/App.js` component.
 
 ## Directory Structure
 
-All these directories assume you are in `src/js/`. 
+All these directories assume you are in `src/js/`.
 
 **search.js, about.js, detail.js**
 
@@ -33,7 +30,7 @@ These are the entry points for the three types of windows in the App.
 
 Domain specific structures like `log`, `field`, `record`, and `program`.
 
-**/components** 
+**/components**
 
 All React components used within the app.
 
@@ -93,15 +90,13 @@ A place for generic flow types that are used throughout the app. If you need to 
 
 Code that runs the backend zqd process on localhost.
 
-
-
 ## Libraries
 
 We are an Electron app, so [electron](https://www.electronjs.org/docs) is the core library we use. For those unfamiliar, it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/tutorial/application-architecture) in an Electron app.
 
 Additionally, we rely heavily on the node modules listed here:
 
-**JavaScript** 
+**JavaScript**
 
 - [Flow Type Checker](https://flow.org/) Check for errors with `npm run flow`
 - [ESLint](https://eslint.org/) Check for errors with `npm run lint`
@@ -109,13 +104,13 @@ Additionally, we rely heavily on the node modules listed here:
 
 **Rendering**
 
-- [React](https://reactjs.org/docs/getting-started.html) 
+- [React](https://reactjs.org/docs/getting-started.html)
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html) We make use of the hooks api extensively
 - [Styled Components](https://styled-components.com/) For CSS in JS
 
 **State Management**
 
-- [Redux](https://redux.js.org/introduction/getting-started) 
+- [Redux](https://redux.js.org/introduction/getting-started)
 - [Redux Thunk](https://github.com/reduxjs/redux-thunk) A small utility to allow for async actions
 - [Immer](https://immerjs.github.io/immer/docs/introduction) Used in reducers to work with immutable state in a more convenient way
 
@@ -125,19 +120,17 @@ Additionally, we rely heavily on the node modules listed here:
 - [Spectron](https://www.electronjs.org/spectron) Used for integration testing `npm run itest`
 - [Enzyme](https://enzymejs.github.io/enzyme/docs/api/) Used only a little for testing Components
 
-
-
 ## Patterns
 
 **Closures over Classes**
 
-For utility classes and domain models, we've been using functions that return objects with methods and data, rather than the `Class`. Prefer this style over classes if possible. 
+For utility classes and domain models, we've been using functions that return objects with methods and data, rather than the `Class`. Prefer this style over classes if possible.
 
 ```js
 // Closure for example (preferred)
 function createLog(data) {
   return {
-    getField: (name) => data.find(f => f.name === name)
+    getField: (name) => data.find((f) => f.name === name)
   }
 }
 ```
@@ -148,31 +141,28 @@ Class Log {
   constructor(data) {
     this.data = data
   }
-  
+
   getFieid(name) {
     return this.data.find(f => f.name === name)
   }
 }
 ```
 
-
-
 **Testing**
 
 Tests go right next to file they are testing with a `.test.js` suffix. Tests can accompany:
 
-* State slices (actions, selectors)
-* Business logic
-* Domain classes
-* Utility classes
-* React Components
+- State slices (actions, selectors)
+- Business logic
+- Domain classes
+- Utility classes
+- React Components
 
 However, it's not easy to test React components in unit tests, so we don't have many. The integration tests help with coverage there.
 
 **Hooks**
 
 There are some useful, generic hooks located in `src/js/components/hooks`.
-
 
 ## Diverging Patterns
 
@@ -198,8 +188,6 @@ There is no solid convention on how to create animations. We've attempted `anime
 
 Use the `zealot` client to communicate with the backend. This is used for searching, getting the list of spaces, ingesting into a space, and more. We are transitioning away from using the `BoomClient` for this purpose.
 
-
-
 ## Migrations
 
 Because we persist state on a user's computer, if they upgrade Brim and we've changed the expected state, we need to migrate the old state. If any of the reducers in `src/js/state` are changed, we need to write a migration. There is a tool we built to help with this. You can run, for example:
@@ -209,6 +197,8 @@ bin/gen migration addScrollPositionToViewer
 ```
 
 This creates a file in `src/js/state/migrations` with a function that can manipulate the persisted state from the previous version.
+
+See the [[Adding Migrations]] page for a more detailed guide.
 
 ## Questions?
 
