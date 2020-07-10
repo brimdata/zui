@@ -1,0 +1,15 @@
+/* @flow */
+
+import {getAllStates} from "../../test/helpers/getTestState"
+
+export default function addScrollXyToViewer(state: *) {
+  for (const s of getAllStates(state)) {
+    if (!s.tabs) continue
+    for (const t of s.tabs.data) {
+      t.viewer.scrollX = 0
+      t.viewer.scrollY = 0
+    }
+  }
+
+  return state
+}

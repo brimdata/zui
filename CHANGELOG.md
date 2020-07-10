@@ -1,3 +1,9 @@
+## v0.13.0
+* Update zq to [v0.17.0](https://github.com/brimsec/zq/releases/tag/v0.17.0)
+* Add a "View in context" right-click option to zoom out to unfiltered data (#894)
+* Rework left panel to include Space selection and have it open by default (#903, #857, #909, #913)
+* "New version" notification on Linux now points to the Brim website download page (#914)
+
 ## v0.12.0
 * Update zq to [v0.16.0](https://github.com/brimsec/zq/releases/tag/v0.16.0)
 

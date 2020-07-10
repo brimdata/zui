@@ -8,7 +8,7 @@ Brim is early in its life cycle and will be expanding quickly.  Please star and/
 
 ## Code Base Walkthrough
 
-Before you start, review the [Code Base Walkthrough](https://github.com/brimsec/brim/wiki/Code-Base-Walkthrough). This doc provides an overview of the directory structure, libraries used, and other useful details for new developers.
+Before you start, review the [Code Base Walkthrough](https://github.com/brimsec/brim/wiki/Code-Base-Walkthrough). This doc provides an overview of the directory structure, libraries used, and other useful details for new developers. A [YouTube video](https://www.youtube.com/watch?v=CPel0iu1pig) is also available that provides a detailed walk-through of the material.
 
 ## Setup
 
