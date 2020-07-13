@@ -7,7 +7,7 @@
 .*/scripts/release/.*
 <PROJECT_ROOT>/zealot/.*
 <PROJECT_ROOT>/.vscode/.*
-<PROJECT_ROOT>/src/js/services/zealot.js
+<PROJECT_ROOT>/src/js/services/zealot.js$
 
 [include]
 

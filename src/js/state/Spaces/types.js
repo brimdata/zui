@@ -1,6 +1,5 @@
 /* @flow */
 
-import type {SpaceDetailPayload} from "../../services/zealot/types"
 import type {Ts} from "../../brim"
 
 export type SpacesState = {
@@ -45,7 +44,7 @@ export type SPACES_SET = {
 export type SPACES_DETAIL = {
   type: "SPACES_DETAIL",
   clusterId: string,
-  space: $Shape<Space> | SpaceDetailPayload
+  space: $Shape<Space>
 }
 
 export type SPACES_RENAME = {

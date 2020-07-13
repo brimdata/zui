@@ -1,5 +1,4 @@
 /* @flow */
-import type {SpaceDetailPayload} from "../../services/zealot/types"
 import Spaces from "./"
 import initTestStore from "../../test/initTestStore"
 import type {Space} from "./types"
@@ -9,7 +8,7 @@ beforeEach(() => {
   store = initTestStore()
 })
 
-let detail: SpaceDetailPayload = {
+let detail = {
   id: "defaultId",
   name: "defaultName",
   span: {
