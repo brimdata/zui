@@ -109,16 +109,16 @@ const unregisterHandler = (dispatch, id) => ({
 const postFiles = (client, jsonTypesPath) => ({
   async do(params) {
     let {spaceId, endpoint, paths} = params
-    let stream
+    let resp
     if (endpoint === "pcap") {
-      stream = client.pcaps.post({spaceId, path: paths[0]})
+      resp = await client.pcaps.post({spaceId, path: paths[0]})
     } else {
       let types = isEmpty(jsonTypesPath)
         ? "default"
         : await lib.file(jsonTypesPath).read()
-      stream = client.logs.post({spaceId, paths, types})
+      resp = await client.logs.post({spaceId, paths, types})
     }
-    return {...params, stream}
+    return {...params, resp}
   }
 })
 
@@ -130,9 +130,10 @@ const setSpace = (dispatch, tabId) => ({
     dispatch(Search.setSpace("", tabId))
   }
 })
+
 const trackProgress = (client, dispatch, clusterId) => {
   return {
-    async do({spaceId, stream, endpoint}) {
+    async do({spaceId, resp, endpoint}) {
       let space = Spaces.actionsFor(clusterId, spaceId)
 
       async function updateSpaceDetails() {
@@ -152,7 +153,7 @@ const trackProgress = (client, dispatch, clusterId) => {
       }
 
       dispatch(space.setIngestProgress(0))
-      for await (let {type, ...status} of stream) {
+      for await (let {type, ...status} of resp.iterator()) {
         switch (type) {
           case "PcapPostStatus":
             dispatch(space.setIngestProgress(packetPostStatusToPercent(status)))
