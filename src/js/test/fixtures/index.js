@@ -8,6 +8,7 @@ let fixtures = {
     password: ""
   },
   space1: {
+    id: "1",
     name: "default",
     min_time: {
       sec: 1425564900,
