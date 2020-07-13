@@ -5,8 +5,14 @@ effective use of the Brim desktop application and related tools.
 
 ## Support Resources
 * [[Supported Platforms]]
-* [[Troubleshooting]]
 * [[Microsoft Windows beta limitations]]
+* [[Troubleshooting]]
+
+## User Documentation
+
 * [[Zeek JSON Import]]
 * [[Zeek Customization]]
+
+## Developer Resources
+
 * [[Code Base Walkthrough]]
