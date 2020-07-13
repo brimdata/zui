@@ -1,5 +1,5 @@
 /* @flow */
-import brim from "./brim"
+import brim from "./"
 
 test("describe conn uid", () => {
   let path = brim.zeekLogInfo("conn")
