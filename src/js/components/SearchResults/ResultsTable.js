@@ -99,7 +99,7 @@ export default function ResultsTable(props: Props) {
 
   useDebouncedEffect(
     () => {
-      props.dispatch(viewLogDetail(logs[selectedNdx]))
+      if (logs[selectedNdx]) props.dispatch(viewLogDetail(logs[selectedNdx]))
     },
     200,
     [selectedNdx]
