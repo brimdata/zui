@@ -42,14 +42,14 @@ export default (filePath: string): Thunk => async (dispatch, getState) => {
 
   return new Promise(async (resolve, reject) => {
     // $FlowFixMe
-    const resp = await zealot.searchStream(program, {
+    const resp = await zealot.search(program, {
       from,
       to,
       spaceId,
       format: "zng",
       controlMessages: false
     })
-    const webReadable = resp.body.getReader()
+    const webReadable = resp.origResp.body.getReader()
     const data = toNodeReadable(webReadable).on("error", reject)
     const file = fs
       .createWriteStream(filePath)
