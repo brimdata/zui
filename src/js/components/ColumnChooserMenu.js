@@ -16,6 +16,7 @@ import styled from "styled-components"
 import Checkbox from "./common/Checkbox"
 import usePopupMenu from "./hooks/usePopupMenu"
 import DropdownArrow from "../icons/DropdownArrow"
+import type {ColumnHeadersViewState} from "../state/Viewer/types"
 
 const ControlListItem = styled.li`
   display: flex;
@@ -69,7 +70,7 @@ type OwnProps = {|
 
 type StateProps = {|
   tableColumns: TableColumns,
-  showColumnHeaders: boolean
+  columnHeadersView: ColumnHeadersViewState
 |}
 
 type Props = {|

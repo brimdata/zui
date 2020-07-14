@@ -19,8 +19,7 @@ type Props = {
   log: Log,
   columns: TableColumns,
   onClick: () => void,
-  rightClick: RightClickBuilder,
-  showColumnHeaders: boolean
+  rightClick: RightClickBuilder
 }
 
 export default class LogRow extends React.Component<Props> {
@@ -31,53 +30,12 @@ export default class LogRow extends React.Component<Props> {
       this.props.highlight !== nextProps.highlight ||
       this.props.dimens.rowWidth !== nextProps.dimens.rowWidth ||
       this.props.timeZone !== nextProps.timeZone ||
-      this.props.timeFormat !== nextProps.timeFormat ||
-      this.props.showColumnHeaders !== nextProps.showColumnHeaders
-    )
-  }
-
-  renderFixedLayout() {
-    const {highlight, columns, log, dimens, index, rightClick} = this.props
-    const renderCell = (column, colIndex) => {
-      const field = log.field(column.name)
-      const style = {width: column.width || 300}
-      const key = `${index}-${colIndex}`
-
-      if (field) {
-        return (
-          <LogCell
-            rightClick={rightClick}
-            key={key}
-            field={field}
-            log={log}
-            style={style}
-          />
-        )
-      } else {
-        return <div className="log-cell" key={key} style={style} />
-      }
-    }
-    return (
-      <div
-        className={classNames("log-row", {highlight, even: index % 2 == 0})}
-        style={Styler.row(dimens)}
-        onClick={this.props.onClick}
-      >
-        {columns.getVisible().map(renderCell)}
-      </div>
+      this.props.timeFormat !== nextProps.timeFormat
     )
   }
 
   render() {
-    const {
-      dimens,
-      highlight,
-      index,
-      log,
-      rightClick,
-      columns,
-      showColumnHeaders
-    } = this.props
+    const {dimens, highlight, index, log, rightClick, columns} = this.props
     const renderCell = (column, colIndex) => {
       const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
       const field = log.field(column.name)
@@ -93,7 +51,7 @@ export default class LogRow extends React.Component<Props> {
           />
         )
       }
-      if (showColumnHeaders) {
+      if (dimens.rowWidth !== "auto") {
         return <div className="log-cell" key={key} style={{width}} />
       }
     }

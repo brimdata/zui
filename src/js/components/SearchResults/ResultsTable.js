@@ -130,7 +130,6 @@ export default function ResultsTable(props: Props) {
     return (
       <LogRow
         columns={props.tableColumns}
-        showColumnHeaders={props.showColumnHeaders}
         key={index}
         index={index}
         log={logs[index]}
