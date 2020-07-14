@@ -45,7 +45,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(Search.setSpace(finding.search.spaceId))
     dispatch(Search.setSpanArgs(finding.search.spanArgs))
     dispatch(Search.setSpanFocus(null))
-    dispatch(submitSearch(false))
+    dispatch(submitSearch({history: false, investigation: false}))
   }
 
   function onRemove() {

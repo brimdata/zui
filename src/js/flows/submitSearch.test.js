@@ -59,7 +59,7 @@ test("not saving a search to history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch(false))
+  store.dispatch(submitSearch({history: false, investigation: false}))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
@@ -91,7 +91,7 @@ test("fetching an analytic search without history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch(false))
+  store.dispatch(submitSearch({history: false, investigation: false}))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
@@ -125,7 +125,7 @@ test("fetching an zoom search without history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch(false))
+  store.dispatch(submitSearch({history: false, investigation: false}))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })

@@ -14,7 +14,7 @@ import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
 
 export default function submitSearch(
-  save: boolean = true,
+  save: Object = {history: true, investigation: true},
   ts: Date = new Date()
 ): Thunk {
   return function(dispatch, getState) {
@@ -26,11 +26,14 @@ export default function submitSearch(
 
     const state = getState()
 
-    if (save) {
-      let record = Search.getRecord(state)
+    let record = Search.getRecord(state)
+    if (save.history) {
       dispatch(History.push(record, time.toTs()))
+    }
+    if (save.investigation) {
       globalDispatch(Investigation.push(record, time.toTs()))
     }
+
     let tabId = Tabs.getActive(state)
     let args = Search.getArgs(state)
 

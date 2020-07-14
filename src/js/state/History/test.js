@@ -22,6 +22,7 @@ beforeEach(() => {
 test("pushing history", () => {
   const state = store.getState()
   const entry = Tab.currentEntry(state)
+  console.log(entry.scrollPos)
   expect(entry.program).toEqual("third")
 })
 
@@ -62,6 +63,22 @@ test("back, back, push, back", () => {
   ])
   const entry = Tab.currentEntry(state)
   expect(entry.program).toEqual("first")
+})
+
+test("update scroll position in history", () => {
+  let state = store.dispatchAll([History.update({x: 10, y: 15})])
+  const entry = Tab.currentEntry(state)
+  expect(entry.scrollPos).toEqual({x: 10, y: 15})
+})
+
+test("update scroll position, back, forward", () => {
+  let state = store.dispatchAll([
+    History.update({x: 22, y: 33}),
+    History.back(),
+    History.forward()
+  ])
+  const entry = Tab.currentEntry(state)
+  expect(entry.scrollPos).toEqual({x: 22, y: 33})
 })
 
 test("clearing history", () => {

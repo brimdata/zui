@@ -58,7 +58,7 @@ describe("reducer", () => {
 
     let now = new Date()
     expect(ts).toBe(0)
-    store.dispatch(submitSearch(true, now))
+    store.dispatch(submitSearch({history: true, investigation: true}, now))
     expect(Tab.getSearchTs(store.getState())).toBe(now.getTime())
   })
 
@@ -67,7 +67,7 @@ describe("reducer", () => {
 
     let now = new Date()
     expect(ts).toBe(0)
-    store.dispatch(submitSearch(false, now))
+    store.dispatch(submitSearch({history: false, investigation: false}, now))
     expect(Tab.getSearchTs(store.getState())).toBe(now.getTime())
   })
 })

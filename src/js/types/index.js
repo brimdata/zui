@@ -95,7 +95,8 @@ export type SearchRecord = {
   pins: string[],
   spanArgs: SpanArgs,
   spaceId: string,
-  spaceName: string
+  spaceName: string,
+  scrollPos?: ScrollPosition
 }
 
 type _ReturnType<B, _F: (...args: any[]) => B> = B
