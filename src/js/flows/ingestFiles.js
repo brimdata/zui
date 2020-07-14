@@ -114,8 +114,11 @@ const postFiles = (client, jsonTypesPath) => ({
       resp = await client.pcaps.post({spaceId, path: paths[0]})
     } else {
       let types = isEmpty(jsonTypesPath)
-        ? "default"
-        : await lib.file(jsonTypesPath).read()
+        ? undefined
+        : await lib
+            .file(jsonTypesPath)
+            .read()
+            .then(JSON.parse)
       resp = await client.logs.post({spaceId, paths, types})
     }
     return {...params, resp}

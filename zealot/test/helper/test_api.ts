@@ -1,6 +1,9 @@
 import { Zealot } from "../../types.ts";
 import { createZealot } from "../../zealot.ts";
+import { join } from "https://deno.land/std/path/mod.ts";
 const ZQD_ROOT = "../zqd";
+const ZEEK_RUNNER = join(Deno.cwd(), "../zdeps/zeek/zeekrunner");
+const ZQD_RUNNER = join(Deno.cwd(), "../zdeps/zqd");
 
 function createDataDir() {
   try {
@@ -28,7 +31,7 @@ async function kill(zqd: Deno.Process, client: Zealot) {
 
 async function start() {
   return Deno.run({
-    cmd: ["zqd", "listen", "-zeekrunner", "zeek"],
+    cmd: [ZQD_RUNNER, "listen", "-zeekrunner", ZEEK_RUNNER],
     cwd: ZQD_ROOT,
     stdout: "null",
     stderr: "null",
@@ -80,5 +83,9 @@ async function withZqd(fn: (zealot: Zealot) => any) {
 }
 
 export function testApi(name: string, fn: (z: Zealot) => any) {
-  return Deno.test(name, () => withZqd(fn));
+  return Deno.test({
+    name,
+    only: name.startsWith("ONLY"),
+    fn: () => withZqd(fn),
+  });
 }

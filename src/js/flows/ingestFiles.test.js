@@ -158,6 +158,6 @@ test("a json file with a custom types config", async () => {
   expect(client.logs.post).toHaveBeenCalledWith({
     paths: [itestFile("sample.ndjson")],
     spaceId: "spaceId",
-    types: contents
+    types: JSON.parse(contents)
   })
 })
