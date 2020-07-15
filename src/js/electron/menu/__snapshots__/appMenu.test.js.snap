@@ -225,6 +225,10 @@ Array [
     "submenu": Array [
       Object {
         "click": [Function],
+        "label": "Query Syntax Docs",
+      },
+      Object {
+        "click": [Function],
         "label": "Slack Support Channel",
       },
       Object {
@@ -407,6 +411,10 @@ Array [
   Object {
     "role": "help",
     "submenu": Array [
+      Object {
+        "click": [Function],
+        "label": "Query Syntax Docs",
+      },
       Object {
         "click": [Function],
         "label": "Slack Support Channel",
