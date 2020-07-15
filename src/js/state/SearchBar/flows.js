@@ -18,7 +18,7 @@ export default {
     const record = Tab.currentEntry(getState())
     dispatch(Search.restore(record))
     dispatch(submitSearch({history: false, investigation: false})).then(() => {
-      dispatch(Viewer.setScroll(record.scrollPos))
+      if (record.scrollPos) dispatch(Viewer.setScroll(record.scrollPos))
     })
   },
 
@@ -27,7 +27,7 @@ export default {
     const record = Tab.currentEntry(getState())
     dispatch(Search.restore(record))
     dispatch(submitSearch({history: false, investigation: false})).then(() => {
-      dispatch(Viewer.setScroll(record.scrollPos))
+      if (record.scrollPos) dispatch(Viewer.setScroll(record.scrollPos))
     })
   },
 

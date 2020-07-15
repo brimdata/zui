@@ -5,7 +5,7 @@ import type {ScrollPosition} from "../types"
 
 type Args = {
   position: number,
-  entries: *[]
+  entries: any[]
 }
 
 export default function({entries: initEntries, position}: Args) {
@@ -16,7 +16,7 @@ export default function({entries: initEntries, position}: Args) {
   }
 
   return {
-    push(entry: *) {
+    push(entry: any) {
       if (!isEqual(entry, this.getCurrentEntry())) {
         entries.splice(position + 1, entries.length, entry)
         position = entries.length - 1

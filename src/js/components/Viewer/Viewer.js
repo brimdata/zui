@@ -39,7 +39,7 @@ export default function Viewer(props: Props) {
   function onScrollStop() {
     let view = ref.current
     lib.doc.id("tooltip-root").style.display = "block"
-    dispatch(History.update({x: view.scrollLeft, y: view.scrollTop}))
+    if (view) dispatch(History.update({x: view.scrollLeft, y: view.scrollTop}))
   }
 
   let scrollHooks = useConst(null, () =>
