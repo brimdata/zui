@@ -70,6 +70,9 @@ jobs:
 
       # This section runs typical CI, with an updated zq. Most of this
       # is no different than the normal CI flow.
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.14'
       - name: setup node version ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
