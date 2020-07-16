@@ -1,3 +1,4 @@
 /* @flow */
 
 declare export function createZealot(string): any
+declare export function createZealotMock(): any

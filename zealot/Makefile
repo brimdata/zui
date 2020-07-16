@@ -3,4 +3,4 @@ test:
 	deno test --allow-net --allow-run --allow-read --allow-write
 
 bundle:
-	deno bundle zealot.ts ../src/js/services/zealot.js
+	deno bundle mod.ts ../src/js/services/zealot.js

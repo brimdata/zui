@@ -17,10 +17,8 @@ import lib from "../lib"
 
 export default (
   paths: string[],
-  _client: *,
   gDispatch: Dispatch = globalDispatch
-): Thunk => (dispatch, getState) => {
-  let client = _client || Tab.getZealot(getState())
+): Thunk => (dispatch, getState, {zealot}) => {
   let clusterId = Tab.clusterId(getState())
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()
@@ -30,11 +28,11 @@ export default (
   return lib.transaction([
     validateInput(paths, dataDir),
     createDir(),
-    createSpace(client, gDispatch, clusterId),
+    createSpace(zealot, gDispatch, clusterId),
     registerHandler(dispatch, requestId),
-    postFiles(client, jsonTypeConfigPath),
+    postFiles(zealot, jsonTypeConfigPath),
     setSpace(dispatch, tabId),
-    trackProgress(client, gDispatch, clusterId),
+    trackProgress(zealot, gDispatch, clusterId),
     unregisterHandler(dispatch, requestId)
   ])
 }
@@ -109,9 +107,9 @@ const unregisterHandler = (dispatch, id) => ({
 const postFiles = (client, jsonTypesPath) => ({
   async do(params) {
     let {spaceId, endpoint, paths} = params
-    let resp
+    let stream
     if (endpoint === "pcap") {
-      resp = await client.pcaps.post({spaceId, path: paths[0]})
+      stream = await client.pcaps.post({spaceId, path: paths[0]})
     } else {
       let types = isEmpty(jsonTypesPath)
         ? undefined
@@ -119,9 +117,9 @@ const postFiles = (client, jsonTypesPath) => ({
             .file(jsonTypesPath)
             .read()
             .then(JSON.parse)
-      resp = await client.logs.post({spaceId, paths, types})
+      stream = await client.logs.post({spaceId, paths, types})
     }
-    return {...params, resp}
+    return {...params, stream}
   }
 })
 
@@ -136,7 +134,7 @@ const setSpace = (dispatch, tabId) => ({
 
 const trackProgress = (client, dispatch, clusterId) => {
   return {
-    async do({spaceId, resp, endpoint}) {
+    async do({spaceId, stream, endpoint}) {
       let space = Spaces.actionsFor(clusterId, spaceId)
 
       async function updateSpaceDetails() {
@@ -156,7 +154,7 @@ const trackProgress = (client, dispatch, clusterId) => {
       }
 
       dispatch(space.setIngestProgress(0))
-      for await (let {type, ...status} of resp.iterator()) {
+      for await (let {type, ...status} of stream) {
         switch (type) {
           case "PcapPostStatus":
             dispatch(space.setIngestProgress(packetPostStatusToPercent(status)))

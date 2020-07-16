@@ -62,3 +62,8 @@ enzyme.configure({adapter: new Adapter()})
 //$FlowFixMe
 document.execCommand = jest.fn()
 initDOM()
+
+process.on("unhandledRejection", (reason, p) => {
+  console.log("Unhandled Rejection at: Promise", p, "reason:", reason)
+  // application specific logging, throwing an error, or other logic here
+})

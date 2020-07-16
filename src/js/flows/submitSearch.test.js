@@ -1,6 +1,6 @@
 /* @flow */
 
-import MockBoomClient from "../test/MockBoomClient"
+import {createZealotMock} from "../services/zealot"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
@@ -9,10 +9,11 @@ import brim from "../brim"
 import initTestStore from "../test/initTestStore"
 import submitSearch from "./submitSearch"
 
-let store, boom
+let store, zealot
 beforeEach(() => {
-  boom = new MockBoomClient({host: "localhost", port: 123})
-  store = initTestStore(boom)
+  zealot = createZealotMock()
+  store = initTestStore(zealot)
+  zealot.stubStream("search", [{type: "TaskStart"}, {type: "TaskEnd"}])
 })
 
 const spaceInfo = {
@@ -33,8 +34,7 @@ const initTimeWindow = () => (dispatch: Function, getState: Function) => {
   }
 }
 
-test("fetching a regular search", () => {
-  boom.stub("search")
+test("fetching a regular search", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
@@ -44,13 +44,12 @@ test("fetching a regular search", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch())
+  await store.dispatch(submitSearch())
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
-test("not saving a search to history", () => {
-  boom.stub("search")
+test("not saving a search to history", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
@@ -59,13 +58,12 @@ test("not saving a search to history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch({history: false, investigation: false}))
+  await store.dispatch(submitSearch({history: false, investigation: false}))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
-test("fetching an analytic search", () => {
-  boom.stub("search")
+test("fetching an analytic search", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
@@ -75,13 +73,12 @@ test("fetching an analytic search", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch())
+  await store.dispatch(submitSearch())
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
-test("fetching an analytic search without history", () => {
-  boom.stub("search")
+test("fetching an analytic search without history", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
@@ -91,13 +88,12 @@ test("fetching an analytic search without history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch({history: false, investigation: false}))
+  await store.dispatch(submitSearch({history: false, investigation: false}))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
-test("fetching an zoom search", () => {
-  boom.stub("search")
+test("fetching an zoom search", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
@@ -108,13 +104,12 @@ test("fetching an zoom search", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch())
+  await store.dispatch(submitSearch())
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
-test("fetching an zoom search without history", () => {
-  boom.stub("search")
+test("fetching an zoom search without history", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
@@ -125,21 +120,20 @@ test("fetching an zoom search without history", () => {
   ])
 
   store.clearActions()
-  store.dispatch(submitSearch({history: false, investigation: false}))
+  await store.dispatch(submitSearch({history: false, investigation: false}))
 
   expect(store.getActions().map((a) => a.type)).toMatchSnapshot()
 })
 
 test("a bad search query", () => {
-  boom.stub("search")
-  const actions = [
+  store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
     Search.setSpace("ranch-id"),
-    SearchBar.changeSearchBarInput("_ath="),
-    submitSearch()
-  ]
-  actions.forEach(store.dispatch)
+    SearchBar.changeSearchBarInput("_ath=")
+  ])
+
+  store.dispatch(submitSearch()).catch((e) => e)
 
   expect(store.getActions().map((action) => action.type)).toEqual(
     expect.arrayContaining(["SEARCH_BAR_PARSE_ERROR"])

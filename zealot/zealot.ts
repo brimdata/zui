@@ -8,34 +8,57 @@ import {
   PcapsPostArgs,
   PcapsGetArgs,
   LogsPostArgs,
+  ZealotArgs,
 } from "./types.ts";
 
-export function createZealot(hostUrl: string) {
+export function createZealot(
+  hostUrl: string,
+  args: ZealotArgs = { fetcher: createFetcher },
+) {
   const host = getHost(hostUrl);
-  const { promise, response } = createFetcher(host);
+  const { promise, stream } = args.fetcher(host);
+
   let searchArgs: SearchArgs = getDefaultSearchArgs();
 
   return {
     setSearchOptions: (args: Partial<SearchArgs>) => {
       searchArgs = { ...searchArgs, ...args };
     },
-    status: () => promise({ method: "GET", path: "/status" }),
-    search: (zql: string, args?: Partial<SearchArgs>) =>
-      response(search(zql, { ...searchArgs, ...args })),
+    status: () => {
+      return promise({ method: "GET", path: "/status" });
+    },
+    search: (zql: string, args?: Partial<SearchArgs>) => {
+      return stream(search(zql, { ...searchArgs, ...args }));
+    },
     spaces: {
-      list: () => promise(spaces.list()),
-      get: (id: string) => promise(spaces.get(id)),
-      create: (args: SpaceArgs) => promise(spaces.create(args)),
-      delete: (id: string) => promise(spaces.delete(id)),
-      update: (id: string, args: Partial<SpaceArgs>) =>
-        promise(spaces.update(id, args)),
+      list: () => {
+        return promise(spaces.list());
+      },
+      get: (id: string) => {
+        return promise(spaces.get(id));
+      },
+      create: (args: SpaceArgs) => {
+        return promise(spaces.create(args));
+      },
+      delete: (id: string) => {
+        return promise(spaces.delete(id));
+      },
+      update: (id: string, args: Partial<SpaceArgs>) => {
+        return promise(spaces.update(id, args));
+      },
     },
     pcaps: {
-      post: (args: PcapsPostArgs) => response(pcaps.post(args)),
-      get: (args: PcapsGetArgs) => promise(pcaps.get(args)),
+      post: (args: PcapsPostArgs) => {
+        return stream(pcaps.post(args));
+      },
+      get: (args: PcapsGetArgs) => {
+        return promise(pcaps.get(args));
+      },
     },
     logs: {
-      post: (args: LogsPostArgs) => response(logs.post(args)),
+      post: (args: LogsPostArgs) => {
+        return stream(logs.post(args));
+      },
     },
   };
 }

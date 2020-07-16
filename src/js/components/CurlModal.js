@@ -1,9 +1,8 @@
 /* @flow */
 
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import React from "react"
 
-import {inspectSearch} from "../services/boom"
 import {reactElementProps} from "../test/integration"
 import ModalBox from "./ModalBox/ModalBox"
 import SearchBar from "../state/SearchBar"
@@ -44,10 +43,8 @@ export default function CurlModalBox() {
 }
 
 function CurlModalContents() {
-  let dispatch = useDispatch()
   let program = useSelector(SearchBar.getSearchProgram)
-  let info = dispatch(inspectSearch(program))
-
+  const info = {method: "POST", url: "Fixme", body: "fixme"}
   return (
     <TextContent>
       {info && (

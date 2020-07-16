@@ -1,24 +1,24 @@
 /* @flow */
 import {remote} from "electron"
 
-import BoomClient from "../../services/BoomClient"
+import type {Thunk} from "../types"
 import Log from "../../models/Log"
 import Packets from "../Packets"
 import Tab from "../Tab"
 import View from "../View"
 
 export default {
-  fetch: (log: Log) => (
+  fetch: (log: Log): Thunk => (
     dispatch: Function,
     getState: Function,
-    boom: BoomClient
+    {zealot}
   ) => {
     dispatch(Packets.request(log.getString("uid")))
     dispatch(View.showDownloads())
     const state = getState()
     const spaceId = Tab.getSpaceId(state)
     const destDir = remote.app.getPath("temp")
-    return boom.packets
+    return zealot.packets
       .get({
         ts_sec: log.getSec("ts"),
         ts_ns: log.getNs("ts"),

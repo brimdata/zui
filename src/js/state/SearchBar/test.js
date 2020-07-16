@@ -5,6 +5,7 @@ import {
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
+import {createZealotMock} from "../../services/zealot"
 import Search from "../Search"
 import SearchBar from "./"
 import Tab from "../Tab"
@@ -13,7 +14,9 @@ import submitSearch from "../../flows/submitSearch"
 
 let store
 beforeEach(() => {
-  store = initTestStore()
+  store = initTestStore(
+    createZealotMock().stubStream("search", [{type: "TaskEnd"}])
+  )
 })
 
 test("input value changed", () => {
@@ -110,10 +113,10 @@ test("search pin edit then submiting", () => {
     SearchBar.changeSearchBarInput("second"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("third"),
-    submitSearch(),
+    SearchBar.submittingSearchBar(),
     SearchBar.editSearchBarPin(0),
     SearchBar.changeSearchBarInput("first (edited)"),
-    submitSearch()
+    SearchBar.submittingSearchBar()
   ])
 
   expect(SearchBar.getSearchBar(state)).toEqual(

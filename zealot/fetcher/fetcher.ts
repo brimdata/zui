@@ -1,14 +1,15 @@
 import { url } from "../util/utils.ts";
-import { createResponse } from "./response.ts";
 import { parseContentType } from "./contentType.ts";
 import { Enhancer } from "../types.ts";
+import { createIterator } from "./iterator.ts";
+import { createStream } from "./stream.ts";
 
 export type FetchArgs = {
   path: string;
   method: string;
   body?: string;
   enhancers?: Enhancer[];
-}
+};
 
 export function createFetcher(host: string) {
   return {
@@ -18,14 +19,16 @@ export function createFetcher(host: string) {
       const content = await parseContentType(resp);
       return resp.ok ? content : Promise.reject(content);
     },
-    async response(args: FetchArgs) {
+    async stream(args: FetchArgs) {
       const { path, method, body } = args;
       const ctl = new AbortController();
       const resp = await fetch(
         url(host, path),
         { method, body, signal: ctl.signal },
       );
-      return createResponse(resp, ctl, args);
+      const abort = () => ctl.abort();
+      const iterator = createIterator(resp, args);
+      return createStream(iterator, abort, resp);
     },
   };
 }

@@ -1,4 +1,10 @@
-import { spy, testApi, assertEquals, assert, assertCalledWith } from "./helper/mod.ts";
+import {
+  spy,
+  testApi,
+  assertEquals,
+  assert,
+  assertCalledWith,
+} from "./helper/mod.ts";
 import { join } from "https://deno.land/std/path/mod.ts";
 import { Zealot } from "../types.ts";
 import { uniq } from "../util/utils.ts";
@@ -31,6 +37,21 @@ testApi("search#records", async (zealot) => {
   assertEquals(results[0].values.splice(0, 2), ["stats", "1582646585.983635"]);
 });
 
+testApi("search#iterator", async (zealot) => {
+  await setup(zealot);
+
+  const stream = await zealot.search("* | sort ts");
+  const types = [];
+  for await (const payload of stream) {
+    types.push(payload.type);
+  }
+
+  assertEquals(
+    uniq(types),
+    ["TaskStart", "SearchRecords", "SearchEnd", "SearchStats", "TaskEnd"],
+  );
+});
+
 testApi("search#callbacks start and end", async (zealot) => {
   await setup(zealot);
   const resp = await zealot.search("*");
@@ -47,8 +68,8 @@ testApi("search#callbacks start and end", async (zealot) => {
       .error(reject);
   });
 
-  assertCalledWith(start, {task_id: 0, type: "TaskStart"})
-  assertCalledWith(end, { task_id: 0 , type: "TaskEnd"} );
+  assertCalledWith(start, { task_id: 0, type: "TaskStart" });
+  assertCalledWith(end, { task_id: 0, type: "TaskEnd" });
 });
 
 testApi("search#callbacks record", async (zealot) => {

@@ -1,13 +1,12 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import {fetchSpaces} from "../services/boom"
+import {globalDispatch} from "../state/GlobalContext"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
-import {globalDispatch} from "../state/GlobalContext"
 
 export default function refreshSpaceNames(): Thunk {
-  return (dispatch, getState) => {
-    return dispatch(fetchSpaces()).then((spaces) => {
+  return (dispatch, getState, {zealot}) => {
+    return zealot.spaces.list().then((spaces) => {
       spaces = spaces || []
       let id = Tab.clusterId(getState())
       return globalDispatch(Spaces.setSpaces(id, spaces))

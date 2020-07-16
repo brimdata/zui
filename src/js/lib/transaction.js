@@ -66,7 +66,7 @@ class TransactionError extends Error {
     super(
       `${failMessage(step, steps)} (${undoMsg(undoErrs)})\nCause: ${
         cause.message
-      }`
+      }\n`
     )
     this.cause = cause
     this.stack = cause.stack

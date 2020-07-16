@@ -1,14 +1,11 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import Boomd from "../state/Boomd"
 import Handlers from "../state/Handlers"
 import brim, {type $Search} from "../brim"
 import whenIdle from "../lib/whenIdle"
 
 export default function executeSearch(search: $Search): Thunk {
-  return function(dispatch, getState, boom) {
-    boom.setOptions(Boomd.getOptions(getState()))
-
+  return async function(dispatch, getState, {zealot}) {
     let buffer = brim.flatRecordsBuffer()
     let count = 0
 
@@ -23,8 +20,8 @@ export default function executeSearch(search: $Search): Thunk {
 
     let flushBufferLazy = whenIdle(flushBuffer)
 
-    function started(id) {
-      search.emit("start", id)
+    function started({task_id}) {
+      search.emit("start", task_id)
       search.emit("status", "FETCHING")
     }
 
@@ -36,11 +33,6 @@ export default function executeSearch(search: $Search): Thunk {
       count += payload.records.length
       buffer.add(payload.channel_id, payload.records)
       flushBufferLazy()
-    }
-
-    function aborted() {
-      flushBufferLazy.cancel()
-      search.emit("status", "ABORT")
     }
 
     function errored(e) {
@@ -64,36 +56,25 @@ export default function executeSearch(search: $Search): Thunk {
       search.emit("warnings", payload.warnings)
     }
 
-    function streamed(payload) {
-      switch (payload.type) {
-        case "TaskStart":
-          return started(payload.task_id)
-        case "SearchRecords":
-          return records(payload)
-        case "SearchStats":
-          return stats(payload)
-        case "TaskEnd":
-          return ended(payload)
-        case "SearchWarnings":
-          return warnings(payload)
-      }
-    }
-
     dispatch(Handlers.abort(search.getId(), false))
-    let boomRequest = boom
-      .search(search.program, {
-        searchSpan: search.span,
-        searchSpaceId: search.spaceId
-      })
-      .onAbort(aborted)
+    const stream = await zealot.search(search.program, {
+      from: search.span[0],
+      to: search.span[1],
+      spaceId: search.spaceId
+    })
+    stream
+      .callbacks()
+      .start(started)
+      .records(records)
+      .stats(stats)
+      .end(ended)
+      .warnings(warnings)
       .error(errored)
-      .stream(streamed)
 
     let handler = {
       type: "SEARCH",
-      abort: (emit: boolean = true) => boomRequest.abort(emit)
+      abort: (emit: boolean = true) => stream.abort(emit)
     }
-
     dispatch(Handlers.register(search.getId(), handler))
     return () => handler.abort(false)
   }

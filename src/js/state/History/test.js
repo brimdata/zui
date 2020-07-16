@@ -1,5 +1,6 @@
 /* @flow */
 
+import {createZealotMock} from "../../services/zealot"
 import History from "./"
 import SearchBar from "../SearchBar"
 import Tab from "../Tab"
@@ -8,7 +9,8 @@ import submitSearch from "../../flows/submitSearch"
 
 let store
 beforeEach(() => {
-  store = initTestStore()
+  const zealot = createZealotMock().stubStream("search", [])
+  store = initTestStore(zealot)
   store.dispatchAll([
     SearchBar.changeSearchBarInput("first"),
     submitSearch(),

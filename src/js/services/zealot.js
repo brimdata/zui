@@ -264,34 +264,35 @@ System.register("zealot/fetcher/iterator", ["zealot/util/utils", "zealot/fetcher
         }
     };
 });
-System.register("zealot/fetcher/response", ["zealot/fetcher/iterator", "zealot/fetcher/callbacks"], function (exports_6, context_6) {
+System.register("zealot/fetcher/stream", ["zealot/fetcher/callbacks"], function (exports_6, context_6) {
     "use strict";
-    var iterator_ts_1, callbacks_ts_1;
+    var callbacks_ts_1;
     var __moduleName = context_6 && context_6.id;
     async function emitCallbacks(iterator, callbacks) {
         try {
-            for await (const payload of iterator)
+            for await (const payload of iterator) {
                 callbacks.emit(payload.type, payload);
+            }
         }
         catch (e) {
             callbacks.emit("error", e);
         }
     }
-    function createResponse(resp, abortCtl, args) {
+    function createStream(iterator, abort, origResp) {
         return {
-            origResp: resp,
-            abort: () => abortCtl.abort(),
-            iterator: () => iterator_ts_1.createIterator(resp, args),
+            origResp,
+            abort,
+            [Symbol.asyncIterator]: () => iterator,
             array: async () => {
                 const all = [];
-                for await (const payload of iterator_ts_1.createIterator(resp, args)) {
+                for await (const payload of iterator) {
                     all.push(payload);
                 }
                 return all;
             },
             records: async () => {
                 let records = [];
-                for await (let payload of iterator_ts_1.createIterator(resp, args)) {
+                for await (let payload of iterator) {
                     if (payload.type === "SearchRecords") {
                         records = records.concat(payload.records);
                     }
@@ -300,18 +301,14 @@ System.register("zealot/fetcher/response", ["zealot/fetcher/iterator", "zealot/f
             },
             callbacks: () => {
                 const cbs = callbacks_ts_1.createCallbacks();
-                const iterator = iterator_ts_1.createIterator(resp, args);
                 emitCallbacks(iterator, cbs);
                 return cbs;
             },
         };
     }
-    exports_6("createResponse", createResponse);
+    exports_6("createStream", createStream);
     return {
         setters: [
-            function (iterator_ts_1_1) {
-                iterator_ts_1 = iterator_ts_1_1;
-            },
             function (callbacks_ts_1_1) {
                 callbacks_ts_1 = callbacks_ts_1_1;
             }
@@ -380,9 +377,9 @@ System.register("zealot/util/utils", [], function (exports_8, context_8) {
         }
     };
 });
-System.register("zealot/fetcher/fetcher", ["zealot/util/utils", "zealot/fetcher/response", "zealot/fetcher/contentType"], function (exports_9, context_9) {
+System.register("zealot/fetcher/fetcher", ["zealot/util/utils", "zealot/fetcher/contentType", "zealot/fetcher/iterator", "zealot/fetcher/stream"], function (exports_9, context_9) {
     "use strict";
-    var utils_ts_2, response_ts_1, contentType_ts_2;
+    var utils_ts_2, contentType_ts_2, iterator_ts_1, stream_ts_1;
     var __moduleName = context_9 && context_9.id;
     function createFetcher(host) {
         return {
@@ -392,11 +389,13 @@ System.register("zealot/fetcher/fetcher", ["zealot/util/utils", "zealot/fetcher/
                 const content = await contentType_ts_2.parseContentType(resp);
                 return resp.ok ? content : Promise.reject(content);
             },
-            async response(args) {
+            async stream(args) {
                 const { path, method, body } = args;
                 const ctl = new AbortController();
                 const resp = await fetch(utils_ts_2.url(host, path), { method, body, signal: ctl.signal });
-                return response_ts_1.createResponse(resp, ctl, args);
+                const abort = () => ctl.abort();
+                const iterator = iterator_ts_1.createIterator(resp, args);
+                return stream_ts_1.createStream(iterator, abort, resp);
             },
         };
     }
@@ -406,11 +405,14 @@ System.register("zealot/fetcher/fetcher", ["zealot/util/utils", "zealot/fetcher/
             function (utils_ts_2_1) {
                 utils_ts_2 = utils_ts_2_1;
             },
-            function (response_ts_1_1) {
-                response_ts_1 = response_ts_1_1;
-            },
             function (contentType_ts_2_1) {
                 contentType_ts_2 = contentType_ts_2_1;
+            },
+            function (iterator_ts_1_1) {
+                iterator_ts_1 = iterator_ts_1_1;
+            },
+            function (stream_ts_1_1) {
+                stream_ts_1 = stream_ts_1_1;
             }
         ],
         execute: function () {
@@ -13319,29 +13321,49 @@ System.register("zealot/zealot", ["zealot/fetcher/fetcher", "zealot/api/mod", "z
     "use strict";
     var fetcher_ts_1, mod_ts_2, host_ts_1, search_args_ts_1;
     var __moduleName = context_25 && context_25.id;
-    function createZealot(hostUrl) {
+    function createZealot(hostUrl, args = { fetcher: fetcher_ts_1.createFetcher }) {
         const host = host_ts_1.getHost(hostUrl);
-        const { promise, response } = fetcher_ts_1.createFetcher(host);
+        const { promise, stream } = args.fetcher(host);
         let searchArgs = search_args_ts_1.getDefaultSearchArgs();
         return {
             setSearchOptions: (args) => {
                 searchArgs = { ...searchArgs, ...args };
             },
-            status: () => promise({ method: "GET", path: "/status" }),
-            search: (zql, args) => response(mod_ts_2.search(zql, { ...searchArgs, ...args })),
+            status: () => {
+                return promise({ method: "GET", path: "/status" });
+            },
+            search: (zql, args) => {
+                return stream(mod_ts_2.search(zql, { ...searchArgs, ...args }));
+            },
             spaces: {
-                list: () => promise(mod_ts_2.spaces.list()),
-                get: (id) => promise(mod_ts_2.spaces.get(id)),
-                create: (args) => promise(mod_ts_2.spaces.create(args)),
-                delete: (id) => promise(mod_ts_2.spaces.delete(id)),
-                update: (id, args) => promise(mod_ts_2.spaces.update(id, args)),
+                list: () => {
+                    return promise(mod_ts_2.spaces.list());
+                },
+                get: (id) => {
+                    return promise(mod_ts_2.spaces.get(id));
+                },
+                create: (args) => {
+                    return promise(mod_ts_2.spaces.create(args));
+                },
+                delete: (id) => {
+                    return promise(mod_ts_2.spaces.delete(id));
+                },
+                update: (id, args) => {
+                    return promise(mod_ts_2.spaces.update(id, args));
+                },
             },
             pcaps: {
-                post: (args) => response(mod_ts_2.pcaps.post(args)),
-                get: (args) => promise(mod_ts_2.pcaps.get(args)),
+                post: (args) => {
+                    return stream(mod_ts_2.pcaps.post(args));
+                },
+                get: (args) => {
+                    return promise(mod_ts_2.pcaps.get(args));
+                },
             },
             logs: {
-                post: (args) => response(mod_ts_2.logs.post(args)),
+                post: (args) => {
+                    return stream(mod_ts_2.logs.post(args));
+                },
             },
         };
     }
@@ -13365,6 +13387,95 @@ System.register("zealot/zealot", ["zealot/fetcher/fetcher", "zealot/api/mod", "z
         }
     };
 });
+// @ts-nocheck
+System.register("zealot/zealot_mock", ["zealot/zealot", "zealot/fetcher/stream"], function (exports_26, context_26) {
+    "use strict";
+    var zealot_ts_1, stream_ts_2;
+    var __moduleName = context_26 && context_26.id;
+    function fakeFetcher() {
+        return {
+            promise: ({ method, path }) => {
+                throw new Error(`NoNetwork: You must stub: ${method} ${path}`);
+            },
+            stream: ({ method, path }) => {
+                throw new Error(`NoNetwork: You must stub: ${method} ${path}`);
+            },
+        };
+    }
+    function promise(response) {
+        return Promise.resolve(response);
+    }
+    function stream(response) {
+        async function* iterator() {
+            if (response) {
+                for (const payload of response)
+                    yield payload;
+            }
+        }
+        const cancel = () => { };
+        const resp = {};
+        return stream_ts_2.createStream(iterator(), cancel, resp);
+    }
+    function createZealotMock() {
+        const mock = zealot_ts_1.createZealot("unit.test", { fetcher: fakeFetcher });
+        const calls = [];
+        function stub(method, output, wrapper) {
+            const [resource, action] = method.split(".");
+            const fn = (input) => {
+                calls.push({ method, args: input });
+                return wrapper(output);
+            };
+            if (action) {
+                mock[resource][action] = fn;
+            }
+            else {
+                mock[resource] = fn;
+            }
+            return mock;
+        }
+        mock.stubStream = (method, output) => stub(method, output, stream);
+        mock.stubPromise = (method, output) => stub(method, output, promise);
+        mock.calls = (method) => calls.filter((c) => c.method === method);
+        return mock;
+    }
+    exports_26("createZealotMock", createZealotMock);
+    return {
+        setters: [
+            function (zealot_ts_1_1) {
+                zealot_ts_1 = zealot_ts_1_1;
+            },
+            function (stream_ts_2_1) {
+                stream_ts_2 = stream_ts_2_1;
+            }
+        ],
+        execute: function () {
+        }
+    };
+});
+System.register("zealot/mod", ["zealot/zealot", "zealot/zealot_mock"], function (exports_27, context_27) {
+    "use strict";
+    var __moduleName = context_27 && context_27.id;
+    function exportStar_2(m) {
+        var exports = {};
+        for (var n in m) {
+            if (n !== "default") exports[n] = m[n];
+        }
+        exports_27(exports);
+    }
+    return {
+        setters: [
+            function (zealot_ts_2_1) {
+                exportStar_2(zealot_ts_2_1);
+            },
+            function (zealot_mock_ts_1_1) {
+                exportStar_2(zealot_mock_ts_1_1);
+            }
+        ],
+        execute: function () {
+        }
+    };
+});
 
-const __exp = __instantiate("zealot/zealot", false);
+const __exp = __instantiate("zealot/mod", false);
 export const createZealot = __exp["createZealot"];
+export const createZealotMock = __exp["createZealotMock"];

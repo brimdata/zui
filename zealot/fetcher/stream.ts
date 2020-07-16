@@ -5,27 +5,33 @@ import { FetchArgs } from "./fetcher.ts";
 
 async function emitCallbacks(iterator: ZIterator, callbacks: ZCallbacks) {
   try {
-    for await (const payload of iterator) callbacks.emit(payload.type, payload);
+    for await (const payload of iterator) {
+      callbacks.emit(payload.type, payload);
+    }
   } catch (e) {
     callbacks.emit("error", e);
   }
 }
 
-export function createResponse(resp: Response, abortCtl: AbortController, args: FetchArgs) {
+export function createStream(
+  iterator: ZIterator,
+  abort: Function,
+  origResp: Response,
+) {
   return {
-    origResp: resp,
-    abort: () => abortCtl.abort(),
-    iterator: () => createIterator(resp, args),
+    origResp,
+    abort,
+    [Symbol.asyncIterator]: () => iterator,
     array: async () => {
       const all = [];
-      for await (const payload of createIterator(resp, args)) {
+      for await (const payload of iterator) {
         all.push(payload);
       }
       return all;
     },
     records: async () => {
       let records: Record[] = [];
-      for await (let payload of createIterator(resp, args)) {
+      for await (let payload of iterator) {
         if (payload.type === "SearchRecords") {
           records = records.concat(payload.records);
         }
@@ -34,7 +40,6 @@ export function createResponse(resp: Response, abortCtl: AbortController, args: 
     },
     callbacks: () => {
       const cbs = createCallbacks();
-      const iterator = createIterator(resp, args);
       emitCallbacks(iterator, cbs);
       return cbs;
     },

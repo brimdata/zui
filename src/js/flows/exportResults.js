@@ -30,8 +30,11 @@ function cutColumns(program, columns) {
   }
 }
 
-export default (filePath: string): Thunk => async (dispatch, getState) => {
-  const zealot = Tab.getZealot(getState())
+export default (filePath: string): Thunk => async (
+  dispatch,
+  getState,
+  {zealot}
+) => {
   const spaceId = Tab.getSpaceId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())

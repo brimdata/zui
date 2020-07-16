@@ -4,7 +4,7 @@ import {createStore, compose, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
 import type {Action, State} from "../state/types"
-import MockBoomClient from "./MockBoomClient"
+import {createZealotMock} from "../services/zealot"
 import rootReducer from "../state/rootReducer"
 
 type TestStore = {
@@ -16,14 +16,14 @@ type TestStore = {
   getState: () => State
 }
 
-export default (boom: * = new MockBoomClient().stub("send")): TestStore => {
+export default (zealot: * = createZealotMock()): TestStore => {
   // $FlowFixMe
   return createStore(
     rootReducer,
     undefined,
     compose(
       applyDispatchAll(),
-      applyMiddleware(reduxThunk.withExtraArgument(boom)),
+      applyMiddleware(reduxThunk.withExtraArgument({zealot})),
       applyActionHistory()
     )
   )

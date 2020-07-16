@@ -32,7 +32,7 @@ test("failure", async () => {
     ])
   } catch (e) {
     expect(e.message).toBe(
-      "Transaction failed at step 3 of 3 (Undos succeeded)\nCause: Bam"
+      "Transaction failed at step 3 of 3 (Undos succeeded)\nCause: Bam\n"
     )
     expect(e.cause.message).toBe("Bam")
   }
@@ -50,7 +50,7 @@ test("if undo throws", async () => {
     ])
   } catch (e) {
     expect(e.message).toBe(
-      "Transaction failed at step 3 of 3 (Undos failed at step 2)\nCause: Bam"
+      "Transaction failed at step 3 of 3 (Undos failed at step 2)\nCause: Bam\n"
     )
     expect(e.undoErrors.map((e) => e.message)).toEqual([
       "Undo 2 Failed: Undo Bam"

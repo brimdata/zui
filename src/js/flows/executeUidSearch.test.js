@@ -1,14 +1,15 @@
 /* @flow */
 import {conn} from "../test/mockLogs"
+import {createZealotMock} from "../services/zealot"
 import executeUidSearch from "./executeUidSearch"
 import initTestStore from "../test/initTestStore"
 
 let store
 beforeEach(() => {
-  store = initTestStore()
+  store = initTestStore(createZealotMock().stubStream("search", []))
 })
 
-test("dispatches request", () => {
+test("dispatches request", async () => {
   let log = conn()
-  store.dispatch(executeUidSearch(log))
+  await store.dispatch(executeUidSearch(log))
 })
