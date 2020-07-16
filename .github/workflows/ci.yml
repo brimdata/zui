@@ -20,6 +20,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.14'
     - name: Set NPM Cache Directory
       id: set-npm-cache-dir
       run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
@@ -76,9 +79,9 @@ jobs:
     - run: dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio
     - run: git config --global core.autocrlf false
     - uses: actions/checkout@v2
-    - uses: actions/setup-go@v1
+    - uses: actions/setup-go@v2
       with:
-        go-version: '1.13'
+        go-version: '1.14'
     - name: setup node version ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -119,9 +122,9 @@ jobs:
     steps:
     - run: git config --global core.autocrlf false
     - uses: actions/checkout@v2
-    - uses: actions/setup-go@v1
+    - uses: actions/setup-go@v2
       with:
-        go-version: '1.13'
+        go-version: '1.14'
     - name: setup node version ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
