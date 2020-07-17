@@ -4,6 +4,7 @@ import {
   assertEquals,
   assert,
   assertCalledWith,
+  Spy,
 } from "./helper/mod.ts";
 import { join } from "https://deno.land/std/path/mod.ts";
 import { Zealot } from "../types.ts";
@@ -118,14 +119,16 @@ testApi("search#flat_records", async (zealot) => {
   assertEquals(firstType.length, 22);
 });
 
-testApi("search#abort", async (zealot) => {
+testApi("search with abortController", async (zealot) => {
   await setup(zealot);
-  /* Even though abort is called here, it appears the request is still going through.
-     This may just be a bug with the Deno implementation. Calling abort should throw
-     an AbortError in the fetch promise, but I don't see that happening here. */
-  const resp = await zealot.search("*");
-  resp.abort();
-  await resp.array();
+  const onAbort = spy();
+  const ctl = new AbortController();
+  ctl.signal.onabort = onAbort;
+  const resp = await zealot.search("*", { signal: ctl.signal });
+  ctl.abort();
+  resp.origResp.body?.cancel();
+
+  assertEquals(onAbort.calls.length, 1);
 });
 
 testApi("search#transformZeek", async (zealot) => {

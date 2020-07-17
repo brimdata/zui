@@ -278,10 +278,9 @@ System.register("zealot/fetcher/stream", ["zealot/fetcher/callbacks"], function 
             callbacks.emit("error", e);
         }
     }
-    function createStream(iterator, abort, origResp) {
+    function createStream(iterator, origResp) {
         return {
             origResp,
-            abort,
             [Symbol.asyncIterator]: () => iterator,
             array: async () => {
                 const all = [];
@@ -384,18 +383,16 @@ System.register("zealot/fetcher/fetcher", ["zealot/util/utils", "zealot/fetcher/
     function createFetcher(host) {
         return {
             async promise(args) {
-                const { path, method, body } = args;
-                const resp = await fetch(utils_ts_2.url(host, path), { method, body });
+                const { path, method, body, signal } = args;
+                const resp = await fetch(utils_ts_2.url(host, path), { method, body, signal });
                 const content = await contentType_ts_2.parseContentType(resp);
                 return resp.ok ? content : Promise.reject(content);
             },
             async stream(args) {
-                const { path, method, body } = args;
-                const ctl = new AbortController();
-                const resp = await fetch(utils_ts_2.url(host, path), { method, body, signal: ctl.signal });
-                const abort = () => ctl.abort();
+                const { path, method, body, signal } = args;
+                const resp = await fetch(utils_ts_2.url(host, path), { method, body, signal });
                 const iterator = iterator_ts_1.createIterator(resp, args);
-                return stream_ts_1.createStream(iterator, abort, resp);
+                return stream_ts_1.createStream(iterator, resp);
             },
         };
     }
@@ -12952,6 +12949,7 @@ System.register("zealot/api/search", ["node_modules/zq/zql/zql.es", "zealot/util
             path: `/search?${getQueryParams(args)}`,
             body: JSON.stringify(getSearchBody(zql, args)),
             enhancers: args.enhancers || [],
+            signal: args.signal,
         };
     }
     exports_16("default", searchApi);

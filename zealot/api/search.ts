@@ -1,13 +1,15 @@
 import ZQL from "../../node_modules/zq/zql/zql.es.js";
 import { createSpan } from "../util/span.ts";
 import { SearchArgs } from "../types.ts";
+import { FetchArgs } from "../fetcher/fetcher.ts";
 
-export default function searchApi(zql: string, args: SearchArgs) {
+export default function searchApi(zql: string, args: SearchArgs): FetchArgs {
   return {
     method: "POST",
     path: `/search?${getQueryParams(args)}`,
     body: JSON.stringify(getSearchBody(zql, args)),
     enhancers: args.enhancers || [],
+    signal: args.signal,
   };
 }
 

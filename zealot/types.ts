@@ -22,6 +22,7 @@ export interface SearchArgs {
   format: "zjson" | "zng";
   controlMessages: boolean;
   enhancers: Enhancer[];
+  signal?: AbortSignal;
 }
 
 export interface SpaceStorageArgs {

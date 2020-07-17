@@ -15,12 +15,10 @@ async function emitCallbacks(iterator: ZIterator, callbacks: ZCallbacks) {
 
 export function createStream(
   iterator: ZIterator,
-  abort: Function,
   origResp: Response,
 ) {
   return {
     origResp,
-    abort,
     [Symbol.asyncIterator]: () => iterator,
     array: async () => {
       const all = [];
