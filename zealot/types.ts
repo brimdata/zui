@@ -86,10 +86,13 @@ export interface Field {
 }
 
 export type FlatRecord = Field[];
+export type FlatType = { name: string; type: string };
 
 export interface SearchRecordsPayload {
   type: "SearchRecords";
   records: Record[];
+  flat_records: FlatRecord[];
+  flat_types: { [id: number]: FlatType[] };
 }
 
 export interface SearchWarningsPayload {
@@ -112,6 +115,9 @@ export interface TaskStartPayload {
 export interface TaskEndPayload {
   type: "TaskEnd";
   task_id: number;
+  total_records: number;
 }
 
-export type Payload = SearchRecordsPayload | TaskEndPayload;
+export type Payload =
+  | SearchRecordsPayload
+  | TaskEndPayload;

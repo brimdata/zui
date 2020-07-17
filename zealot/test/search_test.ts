@@ -93,7 +93,7 @@ testApi("search#originResponse format=zng", async (zealot) => {
     "*",
     { format: "zng", controlMessages: false },
   );
-  // @ts-ignoreh
+  // @ts-ignore
   for await (const chunk of resp.origResp.body) {
     assertEquals(chunk instanceof Uint8Array, true);
   }
@@ -111,11 +111,11 @@ testApi("search#flat_records", async (zealot) => {
     resp.callbacks().records(records).end(resolve).error(reject);
   });
 
-  const firstRecord = records.calls[0].args[0].records[0][0];
-  const firstType: any = Object.values(records.calls[0].args[0].types)[0];
+  const firstRecord = records.calls[0].args[0].flat_records[0][0];
+  const firstType: any = Object.values(records.calls[0].args[0].flat_types)[0];
   assertEquals(firstRecord, { name: "_path", type: "string", value: "conn" });
   assertEquals(firstType[0], { name: "_path", type: "string" });
-  assertEquals(firstType.length, 19);
+  assertEquals(firstType.length, 22);
 });
 
 testApi("search#abort", async (zealot) => {
