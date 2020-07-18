@@ -32,13 +32,14 @@ export default function executeTableSearch(
           dispatch(Notice.set(ErrorFactory.create(error)))
           reject(error)
         })
+        .abort(resolve)
         .end((_id, count) => {
           dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
           resolve()
         })
       dispatch(Viewer.setStatus(tabId, "FETCHING"))
       dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
-      return dispatch(executeSearch(table))
+      dispatch(executeSearch(table))
     })
   }
 }

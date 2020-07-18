@@ -4,8 +4,12 @@ import Handlers from "../state/Handlers"
 import brim, {type $Search} from "../brim"
 import whenIdle from "../lib/whenIdle"
 
+function abortError(e) {
+  return /user aborted/i.test(e.message)
+}
+
 export default function executeSearch(search: $Search): Thunk {
-  return async function(dispatch, getState, {zealot}) {
+  return function(dispatch, getState, {zealot}) {
     let buffer = brim.flatRecordsBuffer()
     let count = 0
 
@@ -38,7 +42,11 @@ export default function executeSearch(search: $Search): Thunk {
     function errored(e) {
       flushBufferLazy.cancel()
       search.emit("status", "ERROR")
-      search.emit("error", e)
+      if (abortError(e)) {
+        search.emit("abort")
+      } else {
+        search.emit("error", e)
+      }
     }
 
     function ended({id, error}) {
@@ -57,26 +65,34 @@ export default function executeSearch(search: $Search): Thunk {
     }
 
     dispatch(Handlers.abort(search.getId(), false))
-    const stream = await zealot.search(search.program, {
-      from: search.span[0],
-      to: search.span[1],
-      spaceId: search.spaceId
-    })
-    stream
-      .callbacks()
-      .start(started)
-      .records(records)
-      .stats(stats)
-      .end(ended)
-      .warnings(warnings)
-      .error(errored)
+    const ctl = new AbortController()
+    zealot
+      .search(search.program, {
+        from: search.span[0],
+        to: search.span[1],
+        spaceId: search.spaceId,
+        signal: ctl.signal
+      })
+      .then((stream) => {
+        stream
+          .callbacks()
+          .start(started)
+          .records(records)
+          .stats(stats)
+          .end(ended)
+          .warnings(warnings)
+          .error(errored)
+      })
+      .catch(errored)
 
-    let handler = {
-      type: "SEARCH",
-      abort: (emit: boolean = true) => stream.abort(emit)
-    }
-    dispatch(Handlers.register(search.getId(), handler))
-    return () => handler.abort(false)
+    dispatch(
+      Handlers.register(search.getId(), {
+        type: "SEARCH",
+        abort: () => ctl.abort()
+      })
+    )
+
+    return () => ctl.abort()
   }
 }
 

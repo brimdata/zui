@@ -11,6 +11,7 @@ type EventNames =
   | "end"
   | "start"
   | "error"
+  | "abort"
   | "warnings"
   | number
 
@@ -55,6 +56,10 @@ export default function search(
     },
     error(func: (string) => void) {
       callbacks.set("error", func)
+      return this
+    },
+    abort(func: () => void) {
+      callbacks.set("abort", func)
       return this
     },
     warnings(func: (string[]) => void) {
