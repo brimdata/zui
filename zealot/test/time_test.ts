@@ -1,6 +1,6 @@
-import { assertEquals } from "./helper/mod.ts";
-import {createTime} from "../util/time.ts";
-import {createSpan} from "../util/span.ts";
+import { assertEquals, testApi } from "./helper/mod.ts";
+import { createTime } from "../util/time.ts";
+import { createSpan } from "../util/span.ts";
 
 Deno.test("Date constructor", () => {
   const t = createTime(new Date(1));
@@ -38,4 +38,9 @@ Deno.test("createSpan", () => {
   const span = createSpan(from, to);
 
   assertEquals(span, { ts: { sec: 0, ns: 0 }, dur: { sec: 0, ns: 1000000 } });
+});
+
+Deno.test("FracSec constructor", () => {
+  const t = createTime("1425612054.369843");
+  assertEquals(t.toTs(), { sec: 1425612054, ns: 369843000 });
 });

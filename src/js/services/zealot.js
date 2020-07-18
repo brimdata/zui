@@ -215,6 +215,8 @@ System.register("zealot/fetcher/contentType", [], function (exports_4, context_4
             case "text/html; charset=UTF-8":
             case "text/plain; charset=utf-8":
                 return resp.text();
+            case "application/vnd.tcpdump.pcap":
+                return resp;
             default:
                 console.error(`unknown Content-Type: '${type}', parsing as text`);
                 return resp.text();
@@ -298,6 +300,15 @@ System.register("zealot/fetcher/stream", ["zealot/fetcher/callbacks"], function 
                 }
                 return records;
             },
+            flatRecords: async () => {
+                let records = [];
+                for await (let payload of iterator) {
+                    if (payload.type === "SearchRecords") {
+                        records = records.concat(payload.flat_records);
+                    }
+                }
+                return records;
+            },
             callbacks: () => {
                 const cbs = callbacks_ts_1.createCallbacks();
                 emitCallbacks(iterator, cbs);
@@ -355,6 +366,10 @@ System.register("zealot/util/utils", [], function (exports_8, context_8) {
         return typeof thing === "bigint";
     }
     exports_8("isBigInt", isBigInt);
+    function isFracSec(thing) {
+        return isString(thing) && /^\d+\.\d+$/.test(thing);
+    }
+    exports_8("isFracSec", isFracSec);
     function isTs(thing) {
         return isObject(thing) && hasOwnProperty(thing, "sec") &&
             isNumber(thing.sec) && hasOwnProperty(thing, "ns") && isNumber(thing.ns);
@@ -4269,10 +4284,22 @@ System.register("zealot/api/pcaps", [], function (exports_12, context_12) {
         setters: [],
         execute: function () {
             exports_12("default", {
-                get({ spaceId }) {
+                get(args) {
+                    const params = new URLSearchParams();
+                    params.set("ts_sec", args.ts_sec.toString());
+                    params.set("ts_ns", args.ts_ns.toString());
+                    params.set("duration_sec", args.duration_sec.toString());
+                    params.set("duration_ns", args.duration_ns.toString());
+                    params.set("proto", args.proto);
+                    params.set("src_host", args.src_host);
+                    params.set("src_port", args.src_port);
+                    params.set("dst_host", args.dst_host);
+                    params.set("dst_port", args.dst_port);
+                    const query = params.toString();
+                    console.log(`/space/${encodeURIComponent(args.spaceId)}/pcap?${query}`);
                     return {
                         method: "GET",
-                        path: `/space/${encodeURIComponent(spaceId)}/pcap`,
+                        path: `/space/${encodeURIComponent(args.spaceId)}/pcap?${query}`,
                     };
                 },
                 post({ spaceId, path }) {
@@ -12880,6 +12907,12 @@ System.register("zealot/util/time", ["zealot/util/utils"], function (exports_14,
     "use strict";
     var utils_ts_3;
     var __moduleName = context_14 && context_14.id;
+    function fracSecToNs(string) {
+        const [sec, frac] = string.split(".");
+        const secNs = BigInt(parseInt(sec)) * BigInt(1e9);
+        const fracNs = BigInt(parseInt(frac) * Math.pow(10, 9 - frac.length));
+        return secNs + fracNs;
+    }
     function convertToNs(val) {
         if (utils_ts_3.isDate(val))
             return BigInt(val.getTime()) * BigInt(1e6);
@@ -12887,6 +12920,8 @@ System.register("zealot/util/time", ["zealot/util/utils"], function (exports_14,
             return val;
         if (utils_ts_3.isTs(val))
             return BigInt(1e9) * BigInt(val.sec) + BigInt(val.ns);
+        if (utils_ts_3.isFracSec(val))
+            return fracSecToNs(val);
         throw new Error(`Unknown time format: ${val}`);
     }
     function createTime(val = new Date()) {

@@ -51,7 +51,7 @@ export function createZealot(
       post: (args: PcapsPostArgs) => {
         return stream(pcaps.post(args));
       },
-      get: (args: PcapsGetArgs) => {
+      get: (args: PcapsGetArgs): Promise<Response> => {
         return promise(pcaps.get(args));
       },
     },

@@ -31,6 +31,10 @@ export function isBigInt(thing: unknown): thing is bigint {
   return typeof thing === "bigint";
 }
 
+export function isFracSec(thing: unknown): thing is string {
+  return isString(thing) && /^\d+\.\d+$/.test(thing);
+}
+
 export function isTs(thing: unknown): thing is Ts {
   return isObject(thing) && hasOwnProperty(thing, "sec") &&
     isNumber(thing.sec) && hasOwnProperty(thing, "ns") && isNumber(thing.ns);

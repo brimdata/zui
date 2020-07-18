@@ -2,9 +2,8 @@ import {
   spy,
   testApi,
   assertEquals,
-  assert,
   assertCalledWith,
-  Spy,
+  testFile,
 } from "./helper/mod.ts";
 import { join } from "https://deno.land/std/path/mod.ts";
 import { Zealot } from "../types.ts";
@@ -13,7 +12,7 @@ import { zngToZeek, flatRecords, totalRecords } from "../enhancers/mod.ts";
 
 async function setup(zealot: Zealot) {
   const space = await zealot.spaces.create({ name: "space1" });
-  const log = join(Deno.cwd(), "test/data/sample.tsv");
+  const log = testFile("sample.tsv");
   const resp = await zealot.logs.post({ paths: [log], spaceId: space.id });
   await resp.array();
 

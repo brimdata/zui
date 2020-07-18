@@ -1,6 +1,6 @@
 import { createIterator } from "./iterator.ts";
 import { createCallbacks } from "./callbacks.ts";
-import { Record, ZCallbacks, ZIterator } from "../types.ts";
+import { Record, ZCallbacks, ZIterator, FlatRecord } from "../types.ts";
 import { FetchArgs } from "./fetcher.ts";
 
 async function emitCallbacks(iterator: ZIterator, callbacks: ZCallbacks) {
@@ -32,6 +32,15 @@ export function createStream(
       for await (let payload of iterator) {
         if (payload.type === "SearchRecords") {
           records = records.concat(payload.records);
+        }
+      }
+      return records;
+    },
+    flatRecords: async () => {
+      let records: FlatRecord[] = [];
+      for await (let payload of iterator) {
+        if (payload.type === "SearchRecords") {
+          records = records.concat(payload.flat_records);
         }
       }
       return records;
