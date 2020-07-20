@@ -27,7 +27,7 @@ function stream(response: Payload[]) {
   }
   const cancel = () => {};
   const resp = {};
-  return createStream(iterator(), cancel, resp);
+  return Promise.resolve(createStream(iterator(), cancel, resp));
 }
 
 export function createZealotMock() {

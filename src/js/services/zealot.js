@@ -13427,7 +13427,7 @@ System.register("zealot/zealot_mock", ["zealot/zealot", "zealot/fetcher/stream"]
         }
         const cancel = () => { };
         const resp = {};
-        return stream_ts_2.createStream(iterator(), cancel, resp);
+        return Promise.resolve(stream_ts_2.createStream(iterator(), cancel, resp));
     }
     function createZealotMock() {
         const mock = zealot_ts_1.createZealot("unit.test", { fetcher: fakeFetcher });
