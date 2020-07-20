@@ -23,6 +23,9 @@ jobs:
     - uses: actions/setup-go@v2
       with:
         go-version: '1.14'
+    - uses: denolib/setup-deno@v2
+      with:
+        deno-version: v1.x
     - name: Set NPM Cache Directory
       id: set-npm-cache-dir
       run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
@@ -51,6 +54,8 @@ jobs:
     - run: npm run lint
     - run: npm run flow
     - run: npm test -- --maxWorkers=2 --ci
+    - run: make test
+      working-directory: ./zealot
     - name: Build Linux Packages
       if: runner.os == 'Linux'
       run: |
