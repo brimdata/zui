@@ -4296,7 +4296,6 @@ System.register("zealot/api/pcaps", [], function (exports_12, context_12) {
                     params.set("dst_host", args.dst_host);
                     params.set("dst_port", args.dst_port);
                     const query = params.toString();
-                    console.log(`/space/${encodeURIComponent(args.spaceId)}/pcap?${query}`);
                     return {
                         method: "GET",
                         path: `/space/${encodeURIComponent(args.spaceId)}/pcap?${query}`,
@@ -13430,9 +13429,7 @@ System.register("zealot/zealot_mock", ["zealot/zealot", "zealot/fetcher/stream"]
                     yield payload;
             }
         }
-        const cancel = () => { };
-        const resp = {};
-        return Promise.resolve(stream_ts_2.createStream(iterator(), cancel, resp));
+        return Promise.resolve(stream_ts_2.createStream(iterator(), {}));
     }
     function createZealotMock() {
         const mock = zealot_ts_1.createZealot("unit.test", { fetcher: fakeFetcher });

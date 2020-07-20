@@ -13,7 +13,6 @@ export default {
     params.set("dst_host", args.dst_host);
     params.set("dst_port", args.dst_port);
     const query = params.toString();
-    console.log(`/space/${encodeURIComponent(args.spaceId)}/pcap?${query}`);
     return {
       method: "GET",
       path: `/space/${encodeURIComponent(args.spaceId)}/pcap?${query}`,

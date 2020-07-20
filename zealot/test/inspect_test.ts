@@ -1,7 +1,7 @@
 import { test, assertEquals } from "./helper/mod.ts";
 import { createZealot } from "../zealot.ts";
 
-test("ONLY inspect search", () => {
+test("inspect search", () => {
   const zealot = createZealot("test.me");
 
   const { method, path, body } = zealot.inspect.search(

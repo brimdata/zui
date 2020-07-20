@@ -1,15 +1,14 @@
-// @ts-nocheck
-
 import { createZealot } from "./zealot.ts";
 import { FetchArgs } from "./fetcher/fetcher.ts";
 import { createStream } from "./fetcher/stream.ts";
+import { Payload } from "./types.ts";
 
 function fakeFetcher() {
   return {
-    promise: ({ method, path }) => {
+    promise: ({ method, path }: FetchArgs) => {
       throw new Error(`NoNetwork: You must stub: ${method} ${path}`);
     },
-    stream: ({ method, path }) => {
+    stream: ({ method, path }: FetchArgs) => {
       throw new Error(`NoNetwork: You must stub: ${method} ${path}`);
     },
   };
@@ -25,32 +24,42 @@ function stream(response: Payload[]) {
       for (const payload of response) yield payload;
     }
   }
-  const cancel = () => {};
-  const resp = {};
-  return Promise.resolve(createStream(iterator(), cancel, resp));
+
+  return Promise.resolve(createStream(iterator(), {} as Response));
 }
 
 export function createZealotMock() {
   const mock = createZealot("unit.test", { fetcher: fakeFetcher });
-  const calls = [];
+  const calls: any[] = [];
 
-  function stub(method, output, wrapper) {
+  function stub(
+    method: string,
+    output: any,
+    wrapper: typeof stream | typeof promise,
+  ) {
     const [resource, action] = method.split(".");
-    const fn = (input) => {
+    const fn = (input: any) => {
       calls.push({ method, args: input });
       return wrapper(output);
     };
     if (action) {
+      // @ts-ignore
       mock[resource][action] = fn;
     } else {
+      // @ts-ignore
       mock[resource] = fn;
     }
     return mock;
   }
 
-  mock.stubStream = (method, output) => stub(method, output, stream);
-  mock.stubPromise = (method, output) => stub(method, output, promise);
-  mock.calls = (method) => calls.filter((c) => c.method === method);
+  // @ts-ignore
+  mock.stubStream = (method: string, output: any) =>
+    stub(method, output, stream);
+  // @ts-ignore
+  mock.stubPromise = (method: string, output: any) =>
+    stub(method, output, promise);
+  // @ts-ignore
+  mock.calls = (method: string) => calls.filter((c) => c.method === method);
 
   return mock;
 }
