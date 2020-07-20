@@ -9,7 +9,6 @@ import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
-import program from "../brim/program"
 
 export default function CurlModalBox() {
   function copyToClip(_, e) {
