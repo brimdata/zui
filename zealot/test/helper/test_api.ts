@@ -24,7 +24,8 @@ async function kill(zqd: Deno.Process, client: Zealot) {
   zqd.close();
   await until(
     () => client.status().then(() => false).catch(() => true),
-    1000,
+    10_000,
+    100,
     "Unable to kill zqd process",
   );
 }
@@ -38,7 +39,12 @@ async function start() {
   });
 }
 
-async function until(fn: () => Promise<boolean>, timeout: number, msg: string) {
+async function until(
+  fn: () => Promise<boolean>,
+  timeout: number,
+  wait: number,
+  msg: string,
+) {
   return new Promise(async (resolve, reject) => {
     const id = setTimeout(
       () => reject(new Error("Timed out: " + msg)),
@@ -51,10 +57,10 @@ async function until(fn: () => Promise<boolean>, timeout: number, msg: string) {
           clearTimeout(id);
           resolve();
         } else {
-          setTimeout(check, 10);
+          setTimeout(check, wait);
         }
       } catch {
-        setTimeout(check, 10);
+        setTimeout(check, wait);
       }
     }
     check();
@@ -73,6 +79,7 @@ async function withZqd(fn: (zealot: Zealot) => any) {
         .then((ok: string) => ok === "ok")
         .catch(() => false),
     10_000,
+    1,
     "Unable to start zqd",
   );
   try {
