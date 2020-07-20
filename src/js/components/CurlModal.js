@@ -1,14 +1,15 @@
 /* @flow */
 
-import {useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import React from "react"
 
+import {inspectSearch} from "../flows/inspectSearch"
 import {reactElementProps} from "../test/integration"
 import ModalBox from "./ModalBox/ModalBox"
-import SearchBar from "../state/SearchBar"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
+import program from "../brim/program"
 
 export default function CurlModalBox() {
   function copyToClip(_, e) {
@@ -43,18 +44,19 @@ export default function CurlModalBox() {
 }
 
 function CurlModalContents() {
-  let program = useSelector(SearchBar.getSearchProgram)
-  const info = {method: "POST", url: "Fixme", body: "fixme"}
+  const dispatch = useDispatch()
+  const {search, host, program} = dispatch(inspectSearch())
   return (
     <TextContent>
-      {info && (
+      {search && (
         <pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
-          curl -X {info.method} -d &apos;
-          {JSON.stringify(info.body, null, 2)}
-          &apos; {info.url}
+          curl -X {search.method} -d &apos;
+          {JSON.stringify(JSON.parse(search.body), null, 2)}
+          &apos; http://{host}
+          {search.path}
         </pre>
       )}
-      {!info && (
+      {!search && (
         <pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
           Invalid ZQL: &apos;{program}&apos;
         </pre>

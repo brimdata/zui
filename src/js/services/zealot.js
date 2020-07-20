@@ -13379,6 +13379,11 @@ System.register("zealot/zealot", ["zealot/fetcher/fetcher", "zealot/api/mod", "z
                     return stream(mod_ts_2.logs.post(args));
                 },
             },
+            inspect: {
+                search: (zql, args) => {
+                    return mod_ts_2.search(zql, { ...searchArgs, ...args });
+                },
+            },
         };
     }
     exports_25("createZealot", createZealot);

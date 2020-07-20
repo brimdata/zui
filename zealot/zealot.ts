@@ -60,5 +60,10 @@ export function createZealot(
         return stream(logs.post(args));
       },
     },
+    inspect: {
+      search: (zql: string, args?: Partial<SearchArgs>) => {
+        return search(zql, { ...searchArgs, ...args });
+      },
+    },
   };
 }
