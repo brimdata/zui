@@ -423,3 +423,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  * POSSIBILITY OF SUCH DAMAGE.
  */
 # End brimsec/zeek/src/windows/strptime.c
+
+# Begin https://dev.maxmind.com/geoip/geoip2/geolite2/
+This product includes GeoLite2 data created by MaxMind, available from
+https://www.maxmind.com.
+# End https://dev.maxmind.com/geoip/geoip2/geolite2/
