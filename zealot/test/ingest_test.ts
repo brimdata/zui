@@ -1,6 +1,7 @@
 import { join } from "https://deno.land/std/path/mod.ts";
 import { testApi, assertEquals } from "./helper/mod.ts";
 import { uniq } from "../util/utils.ts";
+import { Payload } from "../types.ts";
 
 testApi("ingest log", async (zealot) => {
   const space = await zealot.spaces.create({ name: "space1" });
@@ -8,10 +9,10 @@ testApi("ingest log", async (zealot) => {
   const resp = await zealot.logs.post({ paths: [log], spaceId: space.id });
   const messages = await resp.array();
 
-  assertEquals(messages, [
-    { type: "TaskStart", task_id: 0 },
-    { type: "LogPostStatus", log_total_size: 9655, log_read_size: 9655 },
-    { type: "TaskEnd", task_id: 0 },
+  assertEquals(uniq(messages.map((m: Payload) => m.type)), [
+    "TaskStart",
+    "LogPostStatus",
+    "TaskEnd",
   ]);
 });
 
