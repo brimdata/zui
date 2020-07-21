@@ -48,12 +48,12 @@ export default function(width: number, height: number): HistogramChart {
 
     function onFocus(dates: DateTuple) {
       dispatch(search.setSpanFocus(time.convertToSpan(dates)))
-      dispatch(submitSearch(false))
+      dispatch(submitSearch({history: false, investigation: false}))
     }
 
     function onSelectionClear() {
       dispatch(search.setSpanFocus(null))
-      dispatch(submitSearch(false))
+      dispatch(submitSearch({history: false, investigation: false}))
     }
 
     function onSelectionClick(span) {

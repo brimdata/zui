@@ -51,13 +51,8 @@ export default {
     (viewer) => viewer.stats
   ),
 
-  getScrollX: createSelector<State, void, *, ViewerState>(
+  getScrollPos: createSelector<State, void, *, ViewerState>(
     getViewer,
-    (viewer) => viewer.scrollX
-  ),
-
-  getScrollY: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.scrollY
+    (viewer) => viewer.scrollPos
   )
 }

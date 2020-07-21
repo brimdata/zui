@@ -72,7 +72,7 @@ export default function IngestRefresh() {
   useEffect(() => {
     if (autoRefresh) {
       ack()
-      dispatch(submitSearch(false))
+      dispatch(submitSearch({history: false, investigation: false}))
     }
   }, [autoRefresh])
 
@@ -81,7 +81,8 @@ export default function IngestRefresh() {
       <IngestUpdateNotice
         onClick={(buttonIndex) => {
           ack()
-          if (buttonIndex === 0) dispatch(submitSearch(false))
+          if (buttonIndex === 0)
+            dispatch(submitSearch({history: false, investigation: false}))
         }}
       />
     )

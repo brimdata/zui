@@ -85,12 +85,18 @@ export type LongTimeUnit =
   | "day"
   | "month"
 
+export type ScrollPosition = {
+  x: number,
+  y: number
+}
+
 export type SearchRecord = {
   program: string,
   pins: string[],
   spanArgs: SpanArgs,
   spaceId: string,
-  spaceName: string
+  spaceName: string,
+  scrollPos?: ScrollPosition
 }
 
 type _ReturnType<B, _F: (...args: any[]) => B> = B

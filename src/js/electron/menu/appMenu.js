@@ -194,6 +194,14 @@ export default function appMenu(
   function helpSubmenu() {
     let submenu = [
       {
+        label: "Query Syntax Docs",
+        click() {
+          shell.openExternal(
+            "https://github.com/brimsec/zq/tree/master/zql/docs"
+          )
+        }
+      },
+      {
         label: "Slack Support Channel",
         click() {
           shell.openExternal(

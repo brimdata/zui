@@ -2,7 +2,7 @@
 
 import React, {useEffect, useRef, useState} from "react"
 
-import type {RowRenderer, ViewerDimens} from "../../types"
+import type {RowRenderer, ScrollPosition, ViewerDimens} from "../../types"
 import {reactElementProps} from "../../test/integration"
 import Chunk from "./Chunk"
 import Chunker from "./Chunker"
@@ -13,6 +13,8 @@ import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
 import lib from "../../lib"
 import useConst from "../hooks/useConst"
+import {useDispatch} from "react-redux"
+import History from "../../state/History"
 
 type Props = {
   chunker: Chunker,
@@ -22,11 +24,11 @@ type Props = {
   logs: Log[],
   onLastChunk?: Function,
   renderEnd: () => *,
-  scrollX: number,
-  scrollY: number
+  scrollPos: ScrollPosition
 }
 
 export default function Viewer(props: Props) {
+  const dispatch = useDispatch()
   let [scrollLeft, setScrollLeft] = useState(0)
   let [chunks, setChunks] = useState(props.chunker.visibleChunks(0))
   let ref = useRef()
@@ -35,7 +37,9 @@ export default function Viewer(props: Props) {
   }
 
   function onScrollStop() {
+    let view = ref.current
     lib.doc.id("tooltip-root").style.display = "block"
+    if (view) dispatch(History.update({x: view.scrollLeft, y: view.scrollTop}))
   }
 
   let scrollHooks = useConst(null, () =>
@@ -68,8 +72,10 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     let view = ref.current
     if (!view) return
-    view.scrollTo(props.scrollX, props.scrollY)
-  }, [props.scrollX, props.scrollY])
+    if (props.scrollPos) {
+      view.scrollTo(props.scrollPos.x, props.scrollPos.y)
+    }
+  }, [props.scrollPos])
 
   return (
     <div className="viewer">

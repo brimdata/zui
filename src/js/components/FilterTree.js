@@ -54,7 +54,7 @@ export default function FilterTree() {
         ""
       )
       dispatch(Search.setSpace(nodeSpaceId))
-      dispatch(submitSearch(false))
+      dispatch(submitSearch({history: false, investigation: false}))
     }
 
     function onNodeRemove(e) {

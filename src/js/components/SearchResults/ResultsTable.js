@@ -8,7 +8,7 @@ import throttle from "lodash/throttle"
 
 import type {DispatchProps, State} from "../../state/types"
 import type {Space} from "../../state/Spaces/types"
-import type {ViewerDimens} from "../../types"
+import type {ScrollPosition, ViewerDimens} from "../../types"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
@@ -42,8 +42,7 @@ type StateProps = {|
   tableColumns: TableColumns,
   program: string,
   space: Space,
-  scrollX: number,
-  scrollY: number
+  scrollPos: ScrollPosition
 |}
 
 type OwnProps = {|
@@ -171,8 +170,7 @@ export default function ResultsTable(props: Props) {
       timeFormat={props.timeFormat}
       onLastChunk={onLastChunk}
       renderEnd={renderEnd}
-      scrollX={props.scrollX}
-      scrollY={props.scrollY}
+      scrollPos={props.scrollPos}
     />
   )
 }
@@ -187,8 +185,7 @@ function stateToProps(state: State) {
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
     space: Tab.space(state),
-    scrollX: Viewer.getScrollX(state),
-    scrollY: Viewer.getScrollY(state),
+    scrollPos: Viewer.getScrollPos(state),
     state
   }
 }

@@ -34,6 +34,12 @@ export default function reducer(
         .goForward()
         .data()
 
+    case "HISTORY_UPDATE":
+      return brim
+        .entries(state)
+        .update({scrollPos: action.scrollPos})
+        .data()
+
     default:
       return state
   }

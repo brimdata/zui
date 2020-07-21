@@ -4,7 +4,7 @@ import isEqual from "lodash/isEqual"
 
 type Args = {
   position: number,
-  entries: *[]
+  entries: any[]
 }
 
 export default function({entries: initEntries, position}: Args) {
@@ -15,11 +15,15 @@ export default function({entries: initEntries, position}: Args) {
   }
 
   return {
-    push(entry: *) {
+    push(entry: any) {
       if (!isEqual(entry, this.getCurrentEntry())) {
         entries.splice(position + 1, entries.length, entry)
         position = entries.length - 1
       }
+      return this
+    },
+    update(updates: *) {
+      entries[position] = {...entries[position], ...updates}
       return this
     },
     goBack() {
