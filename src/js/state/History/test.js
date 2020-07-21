@@ -24,7 +24,6 @@ beforeEach(() => {
 test("pushing history", () => {
   const state = store.getState()
   const entry = Tab.currentEntry(state)
-  console.log(entry.scrollPos)
   expect(entry.program).toEqual("third")
 })
 
