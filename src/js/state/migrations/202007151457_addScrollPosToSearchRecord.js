@@ -7,6 +7,8 @@ export default function addScrollPosToSearchRecord(state: *) {
     if (!s.tabs) continue
     for (const t of s.tabs.data) {
       t.viewer.scrollPos = {x: 0, y: 0}
+      delete t.viewer.scrollX
+      delete t.viewer.scrollY
     }
   }
   return state

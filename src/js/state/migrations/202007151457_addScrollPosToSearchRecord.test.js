@@ -15,6 +15,8 @@ test("migrating 202007151457_addScrollPosToSearchRecord", () => {
     for (const tab of win.state.tabs.data) {
       expect(tab.viewer.scrollPos.x).toBe(0)
       expect(tab.viewer.scrollPos.y).toBe(0)
+      expect(tab.viewer.scrollX).toBeUndefined()
+      expect(tab.viewer.scrollY).toBeUndefined()
     }
   }
 })
