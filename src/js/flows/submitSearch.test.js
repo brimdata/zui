@@ -1,6 +1,6 @@
 /* @flow */
 
-import {createZealotMock} from "../services/zealot"
+import {createZealotMock} from "zealot"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"

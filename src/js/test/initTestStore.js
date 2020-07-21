@@ -4,7 +4,7 @@ import {createStore, compose, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
 import type {Action, State} from "../state/types"
-import {createZealotMock} from "../services/zealot"
+import {createZealotMock} from "zealot"
 import rootReducer from "../state/rootReducer"
 
 type TestStore = {

@@ -6,7 +6,7 @@ global.fetch = require("node-fetch")
 import {exec, execSync} from "child_process"
 import path from "path"
 
-import {createZealot} from "../../src/js/services/zealot"
+import {createZealot} from "zealot"
 
 import {retryUntil} from "../lib/control"
 import {nodeZqDistDir} from "../lib/env"

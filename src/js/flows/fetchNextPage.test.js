@@ -1,6 +1,6 @@
 /* @flow */
 
-import {createZealotMock} from "../services/zealot"
+import {createZealotMock} from "zealot"
 import {fetchNextPage} from "./fetchNextPage"
 import Search from "../state/Search"
 import Tabs from "../state/Tabs"

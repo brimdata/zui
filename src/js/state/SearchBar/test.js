@@ -5,7 +5,7 @@ import {
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
-import {createZealotMock} from "../../services/zealot"
+import {createZealotMock} from "zealot"
 import Search from "../Search"
 import SearchBar from "./"
 import Tab from "../Tab"

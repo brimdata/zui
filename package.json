@@ -20,7 +20,6 @@
     "build:js": "babel src/js -d dist/js --verbose",
     "build:css": "node-sass-chokidar src/css --output dist/css",
     "build:static": "cpx \"src/static/**\" dist/static",
-    "build:zealot": "cd zealot && make bundle",
     "watch:js": "npm run build:js -- --watch --skip-initial-build",
     "watch:css": "npm run build:css -- --watch --skip-initial",
     "watch:static": "npm run build:static -- --watch",
@@ -34,7 +33,9 @@
     "release": "node scripts/release --darwin",
     "prerelease": "npm run build",
     "prebuild": "npm run clean",
-    "postinstall": "node scripts/download-zdeps"
+    "postinstall": "npm-run-all -p deps:*",
+    "deps:zdeps": "node scripts/download-zdeps",
+    "deps:zealot": "cd zealot && make bundle"
   },
   "jest": {
     "notify": false,
@@ -45,9 +46,6 @@
     "testURL": "http://localhost",
     "roots": [
       "./src/js"
-    ],
-    "testPathIgnorePatterns": [
-      "./src/js/services/zealot/itest"
     ],
     "collectCoverageFrom": [
       "**/*.js",
@@ -154,6 +152,7 @@
     "source-map-support": "^0.5.16",
     "styled-components": "^5.1.0",
     "valid-url": "^1.0.9",
+    "zealot": "./zealot",
     "zq": "git+https://github.com/brimsec/zq.git#c6841d4caaf9874d2f5c46ac39475bd67a73b945"
   },
   "optionalDependencies": {

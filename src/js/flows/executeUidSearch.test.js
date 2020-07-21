@@ -1,6 +1,6 @@
 /* @flow */
 import {conn} from "../test/mockLogs"
-import {createZealotMock} from "../services/zealot"
+import {createZealotMock} from "zealot"
 import executeUidSearch from "./executeUidSearch"
 import initTestStore from "../test/initTestStore"
 

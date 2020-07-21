@@ -1,6 +1,6 @@
 /* @flow */
 
-import {createZealotMock} from "../../services/zealot"
+import {createZealotMock} from "zealot"
 import {initSpace} from "../../flows/initSpace"
 import Clusters from "../../state/Clusters"
 import Search from "../../state/Search"

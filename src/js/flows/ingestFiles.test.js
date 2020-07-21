@@ -1,7 +1,7 @@
 /* @flow */
 import fsExtra from "fs-extra"
 
-import {createZealotMock} from "../services/zealot"
+import {createZealotMock} from "zealot"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"

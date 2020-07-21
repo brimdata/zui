@@ -5,7 +5,7 @@ import {createStore, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
 import type {Action, Dispatch, State} from "../state/types"
-import {createZealot} from "../services/zealot"
+import {createZealot} from "zealot"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"

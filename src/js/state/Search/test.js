@@ -1,6 +1,6 @@
 /* @flow */
 
-import {createZealotMock} from "../../services/zealot"
+import {createZealotMock} from "zealot"
 import Search from "./"
 import Tab from "../Tab"
 import brim from "../../brim"
