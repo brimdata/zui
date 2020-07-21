@@ -20,6 +20,7 @@
     "build:js": "babel src/js -d dist/js --verbose",
     "build:css": "node-sass-chokidar src/css --output dist/css",
     "build:static": "cpx \"src/static/**\" dist/static",
+    "build:zealot": "cd zealot && make bundle",
     "watch:js": "npm run build:js -- --watch --skip-initial-build",
     "watch:css": "npm run build:css -- --watch --skip-initial",
     "watch:static": "npm run build:static -- --watch",
