@@ -37,7 +37,7 @@ export default function reducer(
     case "HISTORY_UPDATE":
       return brim
         .entries(state)
-        .update(action.scrollPos)
+        .update({scrollPos: action.scrollPos})
         .data()
 
     default:

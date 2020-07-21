@@ -1,7 +1,6 @@
 /* @flow */
 
 import isEqual from "lodash/isEqual"
-import type {ScrollPosition} from "../types"
 
 type Args = {
   position: number,
@@ -23,8 +22,8 @@ export default function({entries: initEntries, position}: Args) {
       }
       return this
     },
-    update(scrollPos: ScrollPosition) {
-      this.getCurrentEntry().scrollPos = scrollPos
+    update(updates: *) {
+      entries[position] = {...entries[position], ...updates}
       return this
     },
     goBack() {
