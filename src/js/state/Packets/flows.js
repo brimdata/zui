@@ -1,4 +1,5 @@
 /* @flow */
+import {join} from "path"
 import {remote} from "electron"
 
 import type {Thunk} from "../types"
@@ -31,7 +32,7 @@ export default {
       spaceId
     }
     const destDir = remote.app.getPath("temp")
-    const dest = `${destDir}packets-${args.ts_sec + args.ts_ns / 1e9}.pcap`
+    const dest = join(destDir, `packets-${args.ts_sec + args.ts_ns / 1e9}.pcap`)
     return zealot.pcaps
       .get(args)
       .then((resp) => saveToFile(resp, dest))
