@@ -20,6 +20,16 @@ test("coverts to an array of nested records", () => {
   expect(buffer.channels()[0].records()).toMatchSnapshot()
 })
 
+test("triple nested", () => {
+  let buffer = brim.flatRecordsBuffer()
+  buffer.add(0, tripleNest)
+  expect(buffer.channels()[0].records()).toEqual([[{
+    name: "a.b.c",
+    type: "addr",
+    value: "192.168.0.1"
+  }]])
+})
+
 let records = [
   {
     id: 0,
@@ -89,4 +99,14 @@ let nestedRecords = [
       null
     ]
   }
+]
+
+const tripleNest = [
+  {
+    id: 0,
+    type: [
+      {name: "a", type: [{name: "b", type: [{name: "c", type: "addr"}]}]},
+    ],
+    values: [[["192.168.0.1"]]]
+  },
 ]
