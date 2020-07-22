@@ -79,7 +79,7 @@ jobs:
         # This environment variable causes chrome to run with no sandbox- needed
         # whenever chrome is run as root.
         APPVEYOR: true
-    # needs: build
+    needs: build
     steps:
     - run: dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio unzip
     - run: git config --global core.autocrlf false
