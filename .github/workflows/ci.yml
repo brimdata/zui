@@ -111,6 +111,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - run: npm install --no-audit
+    - run: npm run deps:zealot
     - name: Download rpm package
       uses: actions/download-artifact@v1
       with:
