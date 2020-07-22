@@ -6,7 +6,8 @@ global.fetch = require("node-fetch")
 import {exec, execSync} from "child_process"
 import path from "path"
 
-import {createZealot} from "zealot"
+// $FlowFixMe
+import {createZealot} from "../../zealot/index"
 
 import {retryUntil} from "../lib/control"
 import {nodeZqDistDir} from "../lib/env"
