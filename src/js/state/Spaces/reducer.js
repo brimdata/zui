@@ -71,6 +71,7 @@ function defaults(id, name, data: $Shape<Space> = {}): Space {
     min_time: {ns: 0, sec: 0},
     max_time: {ns: 0, sec: 0},
     pcap_support: false,
+    storage_kind: "filestore",
     ingest: {
       progress: null,
       warnings: [],

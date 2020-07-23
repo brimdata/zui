@@ -1,4 +1,4 @@
-import { SpaceArgs } from "../types.ts";
+import { SpaceArgs, SearchArgs } from "../types.ts";
 
 export default {
   list() {
