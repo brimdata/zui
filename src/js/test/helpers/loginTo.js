@@ -1,29 +1,26 @@
 /* @flow */
 
+import {createZealotMock} from "zealot"
 import {initSpace} from "../../flows/initSpace"
 import Clusters from "../../state/Clusters"
-import MockBoomClient from "../MockBoomClient"
 import Search from "../../state/Search"
 import Spaces from "../../state/Spaces"
 import fixtures from "../fixtures"
 import initTestStore from "../initTestStore"
-import mockZealot from "../mockZealot"
 
 export default async function loginTo(clusterName: string, spaceName: string) {
-  let boom = new MockBoomClient()
-  let store = initTestStore(boom)
+  let zealot = createZealotMock()
+  zealot.stubPromise("spaces.list", [{name: "dataSpace", id: "1"}])
+  zealot.stubPromise("spaces.get", {name: "dataSpace", id: "1"})
+  zealot.stubStream("search", [{type: "TaskStart"}, {type: "TaskEnd"}])
+  let store = initTestStore(zealot)
   let cluster = fixtures(clusterName)
   let space = fixtures(spaceName)
-
-  boom
-    .stub("spaces.list", [space.name])
-    .stub("spaces.get", space)
-    .stub("search")
 
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Search.setCluster(cluster.id))
   store.dispatch(Spaces.setDetail(cluster.id, space))
-  return store.dispatch(initSpace(space.name, mockZealot)).then(() => {
-    return {store, boom, cluster}
+  return store.dispatch(initSpace(space.name)).then(() => {
+    return {store, cluster}
   })
 }

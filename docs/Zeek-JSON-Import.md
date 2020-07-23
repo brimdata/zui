@@ -45,9 +45,9 @@ application and can be located on your filesystem at:
 
 |**OS Platform**|**Location**|
 |---------------|------------|
-| **Windows**   | `%LOCALAPPDATA%\Brim\app-[version]\resources\app\config\defaultTypes.json` |
-| **macOS**     | `/Applications/Brim.app/Contents/Resources/app/config/defaultTypes.json` | 
-| **Linux**     | `/usr/lib/brim/resources/app/config/defaultTypes.json` | 
+| **Windows**   | `%LOCALAPPDATA%\Brim\app-[version]\resources\app\zealot\config\json_types.ts` |
+| **macOS**     | `/Applications/Brim.app/Contents/Resources/app/zealot/config/json_types.ts` |
+| **Linux**     | `/usr/lib/brim/resources/app/zealot/config/json_types.ts` |
 
 Following a similar workflow as described in the `zq` documentation, you can
 copy this file to make modifications or generate a new one using the

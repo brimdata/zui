@@ -33,7 +33,9 @@
     "release": "node scripts/release --darwin",
     "prerelease": "npm run build",
     "prebuild": "npm run clean",
-    "postinstall": "node scripts/download-zdeps"
+    "postinstall": "npm-run-all -p deps:*",
+    "deps:zdeps": "node scripts/download-zdeps",
+    "deps:zealot": "cd zealot && make bundle"
   },
   "jest": {
     "notify": false,
@@ -44,9 +46,6 @@
     "testURL": "http://localhost",
     "roots": [
       "./src/js"
-    ],
-    "testPathIgnorePatterns": [
-      "./src/js/services/zealot/itest"
     ],
     "collectCoverageFrom": [
       "**/*.js",
@@ -153,6 +152,7 @@
     "source-map-support": "^0.5.16",
     "styled-components": "^5.1.0",
     "valid-url": "^1.0.9",
+    "zealot": "./zealot",
     "zq": "git+https://github.com/brimsec/zq.git#c6841d4caaf9874d2f5c46ac39475bd67a73b945"
   },
   "optionalDependencies": {

@@ -3,21 +3,17 @@
 import type {Cluster} from "./types"
 import type {Thunk} from "../types"
 import {initSpace} from "../../flows/initSpace"
-import {testConnection} from "../../services/boom"
 import Errors from "../Errors"
 import Handlers from "../Handlers"
 import History from "../History"
 import Search from "../Search"
 import SearchBar from "../SearchBar"
-import Spaces from "../Spaces"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
-import {globalDispatch} from "../GlobalContext"
 
 export function connectCluster(cluster: Cluster): Thunk {
-  return function(d) {
-    return d(testConnection(cluster)).then((spaces) => {
-      globalDispatch(Spaces.setSpaces(cluster.id, spaces))
+  return function(d, getState, {zealot}) {
+    return zealot.status().then(() => {
       d(Search.setCluster(cluster.id))
       d(initSpace("default"))
     })

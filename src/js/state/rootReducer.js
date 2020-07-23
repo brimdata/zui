@@ -2,7 +2,6 @@
 
 import {combineReducers} from "redux"
 
-import Boomd from "./Boomd"
 import Clusters from "./Clusters"
 import Errors from "./Errors"
 import Handlers from "./Handlers"
@@ -27,7 +26,6 @@ export default combineReducers<*, *>({
   investigation: Investigation.reducer,
   view: View.reducer,
   spaces: Spaces.reducer,
-  boomd: Boomd.reducer,
   packets: Packets.reducer,
   prefs: Prefs.reducer
 })

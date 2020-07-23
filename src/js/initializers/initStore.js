@@ -5,8 +5,8 @@ import {createStore, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
 import type {Action, Dispatch, State} from "../state/types"
+import {createZealot} from "zealot"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
-import initBoom from "./initBoom"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
 import rootReducer from "../state/rootReducer"
@@ -21,11 +21,14 @@ function getInitialState(windowId) {
 export default async () => {
   const windowId = getUrlSearchParams().id
   const initialState = await getInitialState(windowId)
-  const boom = initBoom(undefined)
 
   return createStore<State, Action, Dispatch>(
     rootReducer,
     initialState,
-    composeWithDevTools(applyMiddleware(reduxThunk.withExtraArgument(boom)))
+    composeWithDevTools(
+      applyMiddleware(
+        reduxThunk.withExtraArgument({zealot: createZealot("localhost:9867")})
+      )
+    )
   )
 }

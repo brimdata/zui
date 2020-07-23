@@ -1,7 +1,8 @@
 /* @flow */
 
 import type {Interval} from "../../types"
-import type {Span} from "../../services/BoomClient/types"
+
+export type DateSpan = [Date, Date]
 
 export type Margins = {
   top: number,
@@ -19,7 +20,7 @@ export type Pen = {|
 |}
 
 type HistogramState = {
-  selection?: ?Span,
+  selection?: ?DateSpan,
   isFetching?: boolean,
   isEmpty?: boolean,
   isDragging: boolean
@@ -29,7 +30,7 @@ export type HistogramData = {|
   points: {ts: Date, paths: {[string]: number}, count: number}[],
   keys: string[],
   interval: Interval,
-  span: Span
+  span: DateSpan
 |}
 
 export type HistogramChart = {|

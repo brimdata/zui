@@ -15,19 +15,19 @@ import submitSearch from "./submitSearch"
 import {globalDispatch} from "../state/GlobalContext"
 import find from "lodash/find"
 
-export const initSpace = (desiredID: string, clientDep?: *): Thunk => (
+export const initSpace = (desiredID: string): Thunk => (
   dispatch,
-  getState
+  getState,
+  {zealot}
 ) => {
   let tabId = Tabs.getActive(getState())
   let clusterId = Tab.clusterId(getState())
-  let client = clientDep || Tab.getZealot(getState())
-  return client.spaces
+  return zealot.spaces
     .list()
     .then((val) => (val === null ? [] : val))
     .then(checkSpacesExist)
     .then((spaces) => getCurrentSpaceId(spaces, desiredID))
-    .then((spaceId) => client.spaces.get(spaceId))
+    .then((spaceId) => zealot.spaces.get(spaceId))
     .then((data) => setSpace(dispatch, data, clusterId))
     .then((data) => setSearchDefaults(dispatch, data))
     .then((data) => checkDataExists(dispatch, data, tabId))

@@ -17,10 +17,8 @@ import lib from "../lib"
 
 export default (
   paths: string[],
-  _client: *,
   gDispatch: Dispatch = globalDispatch
-): Thunk => (dispatch, getState) => {
-  let client = _client || Tab.getZealot(getState())
+): Thunk => (dispatch, getState, {zealot}) => {
   let clusterId = Tab.clusterId(getState())
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()
@@ -30,11 +28,11 @@ export default (
   return lib.transaction([
     validateInput(paths, dataDir),
     createDir(),
-    createSpace(client, gDispatch, clusterId),
+    createSpace(zealot, gDispatch, clusterId),
     registerHandler(dispatch, requestId),
-    postFiles(client, jsonTypeConfigPath),
+    postFiles(zealot, jsonTypeConfigPath),
     setSpace(dispatch, tabId),
-    trackProgress(client, gDispatch, clusterId),
+    trackProgress(zealot, gDispatch, clusterId),
     unregisterHandler(dispatch, requestId)
   ])
 }
@@ -111,12 +109,15 @@ const postFiles = (client, jsonTypesPath) => ({
     let {spaceId, endpoint, paths} = params
     let stream
     if (endpoint === "pcap") {
-      stream = client.pcaps.post({spaceId, path: paths[0]})
+      stream = await client.pcaps.post({spaceId, path: paths[0]})
     } else {
       let types = isEmpty(jsonTypesPath)
-        ? "default"
-        : await lib.file(jsonTypesPath).read()
-      stream = client.logs.post({spaceId, paths, types})
+        ? undefined
+        : await lib
+            .file(jsonTypesPath)
+            .read()
+            .then(JSON.parse)
+      stream = await client.logs.post({spaceId, paths, types})
     }
     return {...params, stream}
   }
@@ -130,6 +131,7 @@ const setSpace = (dispatch, tabId) => ({
     dispatch(Search.setSpace("", tabId))
   }
 })
+
 const trackProgress = (client, dispatch, clusterId) => {
   return {
     async do({spaceId, stream, endpoint}) {

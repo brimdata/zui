@@ -1,7 +1,7 @@
 /* @flow */
 
+import {createZealotMock} from "zealot"
 import {fetchNextPage} from "./fetchNextPage"
-import MockBoomClient from "../test/MockBoomClient"
 import Search from "../state/Search"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
@@ -23,10 +23,11 @@ const records = [
   ]
 ]
 
-let store, boom, tabId
+let store, zealot, tabId
 beforeEach(() => {
-  boom = new MockBoomClient().stub("search")
-  store = initTestStore(boom)
+  zealot = createZealotMock()
+  zealot.stubStream("search", [])
+  store = initTestStore(zealot)
   tabId = Tabs.getActive(store.getState())
   store.dispatchAll([
     Search.setSpace("defaultId"),
@@ -46,27 +47,29 @@ test("#fetchNextPage dispatches splice", () => {
 })
 
 test("#fetchNextPage adds 1ms to ts of last change", () => {
-  const search = jest.spyOn(boom, "search")
+  const search = jest.spyOn(zealot, "search")
   store.dispatch(fetchNextPage())
 
   const lastChangeTs = records[1][1].value
   expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({
-      searchSpan: [new Date(0), new Date(+lastChangeTs * 1000 + 1)]
+      from: new Date(0),
+      to: new Date(+lastChangeTs * 1000 + 1)
     })
   )
 })
 
 test("#fetchNextPage when there is only 1 event", () => {
-  const search = jest.spyOn(boom, "search")
+  const search = jest.spyOn(zealot, "search")
   store.dispatch(Viewer.splice(tabId, 1))
   store.dispatch(fetchNextPage())
 
   expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({
-      searchSpan: [new Date(0), new Date(10 * 1000)]
+      from: new Date(0),
+      to: new Date(10 * 1000)
     })
   )
 })

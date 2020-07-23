@@ -1,5 +1,6 @@
 /* @flow */
 
+import {createZealotMock} from "zealot"
 import Search from "./"
 import Tab from "../Tab"
 import brim from "../../brim"
@@ -15,7 +16,7 @@ describe("reducer", () => {
   let store
 
   beforeEach(() => {
-    store = initTestStore()
+    store = initTestStore(createZealotMock().stubStream("search", []))
   })
 
   test("set span", () => {

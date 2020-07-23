@@ -23,6 +23,9 @@ jobs:
     - uses: actions/setup-go@v2
       with:
         go-version: '1.14'
+    - uses: denolib/setup-deno@v2
+      with:
+        deno-version: v1.x
     - name: Set NPM Cache Directory
       id: set-npm-cache-dir
       run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
@@ -51,6 +54,8 @@ jobs:
     - run: npm run lint
     - run: npm run flow
     - run: npm test -- --maxWorkers=2 --ci
+    - run: make test
+      working-directory: ./zealot
     - name: Build Linux Packages
       if: runner.os == 'Linux'
       run: |
@@ -76,12 +81,15 @@ jobs:
         APPVEYOR: true
     needs: build
     steps:
-    - run: dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio
+    - run: dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio unzip make
     - run: git config --global core.autocrlf false
     - uses: actions/checkout@v2
     - uses: actions/setup-go@v2
       with:
         go-version: '1.14'
+    - uses: denolib/setup-deno@v2
+      with:
+        deno-version: v1.x
     - name: setup node version ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -103,6 +111,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - run: npm install --no-audit
+    - run: npm run deps:zealot
     - name: Download rpm package
       uses: actions/download-artifact@v1
       with:
@@ -125,6 +134,9 @@ jobs:
     - uses: actions/setup-go@v2
       with:
         go-version: '1.14'
+    - uses: denolib/setup-deno@v2
+      with:
+        deno-version: v1.x
     - name: setup node version ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:

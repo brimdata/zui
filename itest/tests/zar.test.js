@@ -6,7 +6,7 @@ global.fetch = require("node-fetch")
 import {exec, execSync} from "child_process"
 import path from "path"
 
-import zealot from "../../src/js/services/zealot"
+import {createZealot} from "zealot"
 
 import {retryUntil} from "../lib/control"
 import {nodeZqDistDir} from "../lib/env"
@@ -37,7 +37,7 @@ describe("Zar tests", () => {
         // Use zealot to
         // 1. Create a new space
         // 2. Find the path to sample.tsv.brim's all.zng
-        const client = zealot.client("localhost:9867")
+        const client = createZealot("localhost:9867")
 
         const sampleSpace = (await client.spaces.list())[0]
         const zarSpace = await client.spaces.create({name: ZAR_SPACE_NAME})

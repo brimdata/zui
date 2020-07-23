@@ -1,5 +1,5 @@
 /* @flow */
-export type SearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "ABORTED" | "INIT"
+export type SearchStatus = "FETCHING" | "SUCCESS" | "ERROR" | "INIT"
 
 export type SearchStats = {
   updateTime: number,

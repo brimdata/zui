@@ -1,5 +1,6 @@
 /* @flow */
 
+import {createZealotMock} from "zealot"
 import History from "./"
 import SearchBar from "../SearchBar"
 import Tab from "../Tab"
@@ -8,7 +9,8 @@ import submitSearch from "../../flows/submitSearch"
 
 let store
 beforeEach(() => {
-  store = initTestStore()
+  const zealot = createZealotMock().stubStream("search", [])
+  store = initTestStore(zealot)
   store.dispatchAll([
     SearchBar.changeSearchBarInput("first"),
     submitSearch(),
@@ -22,7 +24,6 @@ beforeEach(() => {
 test("pushing history", () => {
   const state = store.getState()
   const entry = Tab.currentEntry(state)
-  console.log(entry.scrollPos)
   expect(entry.program).toEqual("third")
 })
 

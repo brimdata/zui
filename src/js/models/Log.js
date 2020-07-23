@@ -150,7 +150,7 @@ export default class Log {
     return fields
   }
 
-  getSec(fieldName: string): number | void {
+  getSec(fieldName: string): number {
     const field = this.getField(fieldName)
     if (field) {
       const {type, value} = field
@@ -166,7 +166,7 @@ export default class Log {
     return 0
   }
 
-  getNs(fieldName: string): number | void {
+  getNs(fieldName: string): number {
     const field = this.getField(fieldName)
     if (field) {
       const {type, value} = field

@@ -3,13 +3,12 @@
 import {isEqual} from "lodash"
 import * as d3 from "d3"
 
-import type {Pen} from "../types"
-import type {Span} from "../../../services/BoomClient/types"
+import type {DateSpan, Pen} from "../types"
 import {duration, shift} from "../../../lib/TimeWindow"
 import {innerWidth} from "../dimens"
 
 type Props = {
-  onDragEnd: (Span) => void
+  onDragEnd: (DateSpan) => void
 }
 
 export default function({onDragEnd}: Props = {}): Pen {

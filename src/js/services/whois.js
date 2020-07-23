@@ -1,4 +1,5 @@
 /* @flow */
+
 import {exec} from "child_process"
 
 export default function whois(addr: string) {

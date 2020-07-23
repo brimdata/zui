@@ -1,0 +1,29 @@
+{
+  "descriptors": {
+    "kerr": [
+      {
+        "name": "whoami",
+        "type": "string"
+      },
+      {
+        "name": "ts",
+        "type": "time"
+      },
+      {
+        "name": "name",
+        "type": "bstring"
+      },
+      {
+        "name": "age",
+        "type": "uint64"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "descriptor": "kerr",
+      "name": "whoami",
+      "value": "james"
+    }
+  ]
+}

@@ -1,14 +1,15 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import Boomd from "../state/Boomd"
 import Handlers from "../state/Handlers"
 import brim, {type $Search} from "../brim"
 import whenIdle from "../lib/whenIdle"
 
-export default function executeSearch(search: $Search): Thunk {
-  return function(dispatch, getState, boom) {
-    boom.setOptions(Boomd.getOptions(getState()))
+function abortError(e) {
+  return /user aborted/i.test(e.message)
+}
 
+export default function executeSearch(search: $Search): Thunk {
+  return function(dispatch, getState, {zealot}) {
     let buffer = brim.flatRecordsBuffer()
     let count = 0
 
@@ -23,8 +24,8 @@ export default function executeSearch(search: $Search): Thunk {
 
     let flushBufferLazy = whenIdle(flushBuffer)
 
-    function started(id) {
-      search.emit("start", id)
+    function started({task_id}) {
+      search.emit("start", task_id)
       search.emit("status", "FETCHING")
     }
 
@@ -38,15 +39,14 @@ export default function executeSearch(search: $Search): Thunk {
       flushBufferLazy()
     }
 
-    function aborted() {
-      flushBufferLazy.cancel()
-      search.emit("status", "ABORT")
-    }
-
     function errored(e) {
       flushBufferLazy.cancel()
       search.emit("status", "ERROR")
-      search.emit("error", e)
+      if (abortError(e)) {
+        search.emit("abort")
+      } else {
+        search.emit("error", e)
+      }
     }
 
     function ended({id, error}) {
@@ -64,38 +64,35 @@ export default function executeSearch(search: $Search): Thunk {
       search.emit("warnings", payload.warnings)
     }
 
-    function streamed(payload) {
-      switch (payload.type) {
-        case "TaskStart":
-          return started(payload.task_id)
-        case "SearchRecords":
-          return records(payload)
-        case "SearchStats":
-          return stats(payload)
-        case "TaskEnd":
-          return ended(payload)
-        case "SearchWarnings":
-          return warnings(payload)
-      }
-    }
-
     dispatch(Handlers.abort(search.getId(), false))
-    let boomRequest = boom
+    const ctl = new AbortController()
+    zealot
       .search(search.program, {
-        searchSpan: search.span,
-        searchSpaceId: search.spaceId
+        from: search.span[0],
+        to: search.span[1],
+        spaceId: search.spaceId,
+        signal: ctl.signal
       })
-      .onAbort(aborted)
-      .error(errored)
-      .stream(streamed)
+      .then((stream) => {
+        stream
+          .callbacks()
+          .start(started)
+          .records(records)
+          .stats(stats)
+          .end(ended)
+          .warnings(warnings)
+          .error(errored)
+      })
+      .catch(errored)
 
-    let handler = {
-      type: "SEARCH",
-      abort: (emit: boolean = true) => boomRequest.abort(emit)
-    }
+    dispatch(
+      Handlers.register(search.getId(), {
+        type: "SEARCH",
+        abort: () => ctl.abort()
+      })
+    )
 
-    dispatch(Handlers.register(search.getId(), handler))
-    return () => handler.abort(false)
+    return () => ctl.abort()
   }
 }
 

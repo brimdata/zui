@@ -1,9 +1,9 @@
 /* @flow */
 
-import type {Span} from "../services/BoomClient/types"
+import type {DateSpan} from "../components/charts/types"
 import histogramInterval from "../lib/histogramInterval"
 
-export function addEveryCountProc(program: string, span: Span) {
+export function addEveryCountProc(program: string, span: DateSpan) {
   const BOOM_INTERVALS = {
     millisecond: "ms",
     second: "sec",
