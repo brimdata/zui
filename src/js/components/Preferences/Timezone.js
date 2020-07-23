@@ -10,6 +10,8 @@ type Props = {config: FormFieldConfig}
 
 export default function Timezone({config}: Props) {
   let {label, name, defaultValue} = config
+  console.log("default value is: ", defaultValue)
+  console.log("name is: ", name)
   return (
     <div className="setting-panel">
       <InputLabel>{label}</InputLabel>

@@ -40,7 +40,7 @@ const StyledCheckbox = styled.div`
   height: 16px;
   background: ${(props) =>
     props.checked ? props.theme.colors.havelock : props.theme.colors.white};
-  border-radius: 2px;
+  border-radius: 3px;
   transition: all 150ms;
   border: 1px solid
     ${(props) =>
@@ -54,13 +54,14 @@ const StyledCheckbox = styled.div`
 type Props = {
   checked: boolean,
   label: string,
-  onChange: Function
+  onChange: Function,
+  className?: string
 }
 
 const Checkbox = ({className, checked, onChange, label, ...props}: Props) => (
   <label onChange={onChange}>
     <CheckboxContainer className={className}>
-      <HiddenCheckbox defaultChecked={checked} {...props} />
+      <HiddenCheckbox {...props} defaultChecked={checked} />
       <StyledCheckbox checked={checked}>
         <Icon viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />

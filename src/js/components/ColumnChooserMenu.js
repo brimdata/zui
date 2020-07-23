@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 import React from "react"
 
 import type {DispatchProps, State} from "../state/types"
-import {Fieldset, Paragraph, Subscript, Label} from "./Typography"
+import {Fieldset, Subscript, Label} from "./Typography"
 import type {TableColumn} from "../state/Columns/types"
 import CloseButton from "./CloseButton"
 import Columns from "../state/Columns"
@@ -14,9 +14,8 @@ import dispatchToProps from "../lib/dispatchToProps"
 import Viewer from "../state/Viewer"
 import styled from "styled-components"
 import Checkbox from "./common/Checkbox"
-import usePopupMenu from "./hooks/usePopupMenu"
-import DropdownArrow from "../icons/DropdownArrow"
 import type {ColumnHeadersViewState} from "../state/Viewer/types"
+import SelectInput from "./common/forms/SelectInput"
 
 const ControlListItem = styled.li`
   display: flex;
@@ -38,30 +37,18 @@ const ColumnListItem = styled.li`
   padding: 4px 36px;
   cursor: default;
   ${(props) => props.theme.typography.labelNormal}
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.ivory};
-  }
 `
 
 const StyledLabel = styled.label`
   ${(props) => props.theme.typography.labelNormal}
 `
 
-const StyledViewSelect = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: capitalize;
-  border-radius: 3px;
-  border: 1px solid ${(props) => props.theme.colors.cloudy};
-  background-color: ${(props) => props.theme.colors.ivory};
-  padding: 3px 10px;
-  font-size: 12px;
-  svg {
-    stroke: ${(props) => props.theme.colors.slate};
-    margin-left: 8px;
-  }
+const StyledSelectInput = styled(SelectInput)`
+  width: 60px;
+`
+
+const Paragraph = styled.p`
+  ${(props) => props.theme.typography.labelSmall}
 `
 
 type OwnProps = {|
@@ -112,24 +99,8 @@ export default class ColumnChooserMenu extends React.Component<Props> {
     const columns = this.props.tableColumns.getColumns()
     const count = this.props.tableColumns.visibleCount()
 
-    const template = [
-      {
-        label: "On",
-        click: () => this.props.dispatch(Viewer.setColumnHeadersView("ON"))
-      },
-      {
-        label: "Off",
-        click: () => this.props.dispatch(Viewer.setColumnHeadersView("OFF"))
-      },
-      {
-        label: "Auto",
-        click: () => this.props.dispatch(Viewer.setColumnHeadersView("AUTO"))
-      }
-    ]
-
-    const openMenu = usePopupMenu(template)
-    const onClick = () => {
-      openMenu()
+    const onChangeColumnView = (e) => {
+      this.props.dispatch(Viewer.setColumnHeadersView(e.target.value))
     }
 
     return (
@@ -146,16 +117,21 @@ export default class ColumnChooserMenu extends React.Component<Props> {
           <Fieldset>Column Chooser</Fieldset>
           <hr />
           <CloseButton light onClick={this.props.onClose} />
-          <div className="count" onClick={this.showAllColumns}>
+          <div className="count" onClick={this.selectAllColumns}>
             <Label>{count}</Label>
           </div>
           <ul>
             <ControlListItem>
               <StyledLabel>Headers</StyledLabel>
-              <StyledViewSelect onClick={onClick}>
-                {columnHeadersView.toLowerCase()}
-                <DropdownArrow />
-              </StyledViewSelect>
+              <StyledSelectInput
+                name="Headers"
+                value={columnHeadersView}
+                onChange={onChangeColumnView}
+              >
+                <option value="ON">On</option>
+                <option value="OFF">Off</option>
+                <option value="AUTO">Auto</option>
+              </StyledSelectInput>
             </ControlListItem>
             <ControlListItem>
               <Paragraph onClick={this.selectAllColumns}>Select All</Paragraph>
