@@ -40,6 +40,6 @@ function flattenRecord(record, prefix): FieldData[] {
 function flatFields({name, value, type}, prefix = "") {
   // $FlowFixMe
   return type === "record"
-    ? flattenRecord(value, `${name}.`)
+    ? flattenRecord(value, `${prefix}${name}.`)
     : [{name: prefix + name, type, value}]
 }

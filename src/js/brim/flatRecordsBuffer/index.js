@@ -62,7 +62,7 @@ export default function flatRecordBuffers() {
 function flattenType(descriptor, prefix = "") {
   return descriptor.reduce((flat, {name, type}) => {
     let cols = isArray(type)
-      ? flattenType(type, `${name}.`)
+      ? flattenType(type, `${prefix}${name}.`)
       : [{name: prefix + name, type}]
 
     return flat.concat(cols)
