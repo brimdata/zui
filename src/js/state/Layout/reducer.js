@@ -11,7 +11,8 @@ const init: LayoutState = {
   historyIsOpen: true,
   spacesIsOpen: true,
   historyHeight: 1,
-  spacesHeight: 1
+  spacesHeight: 1,
+  columnHeadersView: "AUTO"
 }
 
 export default function reducer(
@@ -84,6 +85,8 @@ export default function reducer(
         ...state,
         historyIsOpen: !state.historyIsOpen
       }
+    case "LAYOUT_SET_COLUMN_HEADERS":
+      return {...state, columnHeadersView: action.view}
     default:
       return state
   }

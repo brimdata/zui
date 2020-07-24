@@ -31,6 +31,8 @@ import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
 import useDoubleClick from "../hooks/useDoubleClick"
+import Layout from "../../state/Layout"
+import type {ColumnHeadersViewState} from "../../state/Layout/types"
 
 type StateProps = {|
   logs: Log[],
@@ -40,6 +42,7 @@ type StateProps = {|
   isIncomplete: boolean,
   isFetching: boolean,
   tableColumns: TableColumns,
+  columnHeadersView: ColumnHeadersViewState,
   program: string,
   space: Space,
   scrollPos: ScrollPosition
@@ -54,9 +57,17 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function ResultsTable(props: Props) {
   const [selectedNdx, setSelectedNdx] = useState(0)
-  let {logs} = props
+  let {logs, columnHeadersView} = props
+
+  let type
+  if (columnHeadersView === "AUTO") {
+    type = props.tableColumns.showHeader() ? "fixed" : "auto"
+  } else {
+    type = columnHeadersView === "ON" ? "fixed" : "auto"
+  }
+
   const dimens = buildViewerDimens({
-    type: props.tableColumns.showHeader() ? "fixed" : "auto",
+    type,
     height: props.height,
     width: props.width,
     size: logs.length,
@@ -180,6 +191,7 @@ function stateToProps(state: State) {
     isFetching: Viewer.getStatus(state) === "FETCHING",
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
+    columnHeadersView: Layout.getColumnHeadersView(state),
     timeZone: View.getTimeZone(state),
     timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),

@@ -20,3 +20,21 @@ test("setting left side bar width", () => {
 
   expect(Layout.getLeftSidebarWidth(state)).toBe(299)
 })
+
+test("set column headers view off", () => {
+  let state = store.dispatchAll([Layout.setColumnHeadersView("OFF")])
+
+  expect(Layout.getColumnHeadersView(state)).toBe("OFF")
+})
+
+test("set column headers view on", () => {
+  let state = store.dispatchAll([Layout.setColumnHeadersView("ON")])
+
+  expect(Layout.getColumnHeadersView(state)).toBe("ON")
+})
+
+test("set column headers view auto", () => {
+  let state = store.dispatchAll([Layout.setColumnHeadersView("AUTO")])
+
+  expect(Layout.getColumnHeadersView(state)).toBe("AUTO")
+})

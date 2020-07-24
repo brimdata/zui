@@ -20,28 +20,18 @@ export default class TableColumns {
     this.cols = columnOrder(columns)
       .map((col, index) => ({
         ...col,
-        ...TableColumns.columnDefaults(col, tableSetting, index),
+        ...TableColumns.columnDefaults(index),
         ...tableSetting[columnKey(col)]
       }))
       .sort((a, b) => (a.position > b.position ? 1 : -1))
   }
 
-  static columnDefaults(
-    col: Column,
-    settings: ColumnSettingsMap,
-    index: number
-  ) {
+  static columnDefaults(index: number) {
     return {
       width: undefined,
-      isVisible: TableColumns.visibilityDefault(settings),
+      isVisible: true,
       position: index
     }
-  }
-
-  static visibilityDefault(settings: ColumnSettingsMap) {
-    const values = Object.values(settings)
-    // $FlowFixMe
-    return values.every((v) => v.isVisible) || values.every((v) => !v.isVisible)
   }
 
   sumWidths() {

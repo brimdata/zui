@@ -38,5 +38,9 @@ export default {
 
   getInvestigationView: activeTabSelect(
     (state: TabState) => state.layout.investigationView
+  ),
+
+  getColumnHeadersView: activeTabSelect(
+    (state: TabState) => state.layout.columnHeadersView
   )
 }

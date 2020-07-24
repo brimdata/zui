@@ -55,7 +55,7 @@ async function main() {
   }
 
   function onReady() {
-    installExtensions()
+    if (electronIsDev) installExtensions()
     if (app.commandLine.hasSwitch("new-window")) {
       winMan.openWindow("search")
     } else {

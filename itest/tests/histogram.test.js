@@ -44,15 +44,17 @@ const verifyPathClassRect = (app, pathClass) =>
 describe("Histogram tests", () => {
   let app
   let testIdx = 0
-  beforeEach(() => {
+  beforeEach(async (done) => {
     app = newAppInstance(basename(__filename), ++testIdx)
-    return appStep.startApp(app)
+    await appStep.startApp(app)
+    done()
   })
 
-  afterEach(async () => {
+  afterEach(async (done) => {
     if (app && app.isRunning()) {
-      return await app.stop()
+      await app.stop()
     }
+    done()
   })
 
   stdTest("histogram deep inspection", (done) => {
