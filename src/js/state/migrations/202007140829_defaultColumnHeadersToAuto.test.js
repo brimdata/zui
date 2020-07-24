@@ -10,8 +10,8 @@ test("migrating 202007140829_defaultColumnHeadersToAuto", () => {
 
   // $FlowFixMe
   for (const {state} of Object.values(next.windows)) {
-    for (const {viewer} of state.tabs.data) {
-      expect(viewer.columnHeadersView).toEqual("AUTO")
+    for (const {layout} of state.tabs.data) {
+      expect(layout.columnHeadersView).toEqual("AUTO")
     }
   }
 })

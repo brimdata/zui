@@ -11,17 +11,17 @@ import CloseButton from "./CloseButton"
 import Columns from "../state/Columns"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
-import Viewer from "../state/Viewer"
 import styled from "styled-components"
 import Checkbox from "./common/Checkbox"
-import type {ColumnHeadersViewState} from "../state/Viewer/types"
 import SelectInput from "./common/forms/SelectInput"
+import Layout from "../state/Layout"
+import type {ColumnHeadersViewState} from "../state/Layout/types"
 
 const ControlListItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 36px;
+  padding: 4px 12px;
   cursor: default;
 
   p {
@@ -34,7 +34,7 @@ const ColumnListItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 36px;
+  padding: 4px 12px;
   cursor: default;
   ${(props) => props.theme.typography.labelNormal}
 `
@@ -100,7 +100,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
     const count = this.props.tableColumns.visibleCount()
 
     const onChangeColumnView = (e) => {
-      this.props.dispatch(Viewer.setColumnHeadersView(e.target.value))
+      this.props.dispatch(Layout.setColumnHeadersView(e.target.value))
     }
 
     return (
@@ -158,7 +158,7 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 
 const stateToProps = (state: State) => ({
   tableColumns: Columns.getCurrentTableColumns(state),
-  columnHeadersView: Viewer.getColumnHeadersView(state)
+  columnHeadersView: Layout.getColumnHeadersView(state)
 })
 
 export const XColumnChooserMenu = connect<Props, OwnProps, _, _, _, _>(

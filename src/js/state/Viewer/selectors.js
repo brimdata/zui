@@ -46,11 +46,6 @@ export default {
     (viewer) => viewer.columns
   ),
 
-  getColumnHeadersView: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.columnHeadersView
-  ),
-
   getStats: createSelector<State, void, *, ViewerState>(
     getViewer,
     (viewer) => viewer.stats

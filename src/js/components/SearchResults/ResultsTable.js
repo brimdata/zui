@@ -31,7 +31,8 @@ import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
 import useDoubleClick from "../hooks/useDoubleClick"
-import type {ColumnHeadersViewState} from "../../state/Viewer/types"
+import Layout from "../../state/Layout"
+import type {ColumnHeadersViewState} from "../../state/Layout/types"
 
 type StateProps = {|
   logs: Log[],
@@ -190,7 +191,7 @@ function stateToProps(state: State) {
     isFetching: Viewer.getStatus(state) === "FETCHING",
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
-    columnHeadersView: Viewer.getColumnHeadersView(state),
+    columnHeadersView: Layout.getColumnHeadersView(state),
     timeZone: View.getTimeZone(state),
     timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),

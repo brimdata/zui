@@ -1,5 +1,6 @@
 /* @flow */
 
+export type ColumnHeadersViewState = "AUTO" | "ON" | "OFF"
 export type InvestigationView = "tree" | "linear"
 export type LayoutState = {
   rightSidebarWidth: number,
@@ -10,7 +11,8 @@ export type LayoutState = {
   historyHeight: number,
   historyIsOpen: boolean,
   spacesHeight: number,
-  spacesIsOpen: boolean
+  spacesIsOpen: boolean,
+  columnHeadersView: ColumnHeadersViewState
 }
 
 export type LayoutAction =
@@ -27,6 +29,7 @@ export type LayoutAction =
   | LAYOUT_SPACES_HEIGHT_SET
   | LAYOUT_HISTORY_TOGGLE
   | LAYOUT_SPACES_TOGGLE
+  | LAYOUT_SET_COLUMN_HEADERS
 
 export type LAYOUT_RIGHT_SIDEBAR_SHOW = {
   type: "LAYOUT_RIGHT_SIDEBAR_SHOW"
@@ -83,4 +86,9 @@ export type LAYOUT_HISTORY_TOGGLE = {
 
 export type LAYOUT_SPACES_TOGGLE = {
   type: "LAYOUT_SPACES_TOGGLE"
+}
+
+export type LAYOUT_SET_COLUMN_HEADERS = {
+  type: "LAYOUT_SET_COLUMN_HEADERS",
+  view: ColumnHeadersViewState
 }

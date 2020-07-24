@@ -2,6 +2,9 @@
 
 import activeTabSelect from "../Tab/activeTabSelect"
 import type {TabState} from "../Tab/types"
+import {createSelector} from "reselect"
+import type {State} from "../types"
+import type {ViewerState} from "../Viewer/types"
 
 export default {
   getRightSidebarWidth: activeTabSelect(
@@ -38,5 +41,9 @@ export default {
 
   getInvestigationView: activeTabSelect(
     (state: TabState) => state.layout.investigationView
+  ),
+
+  getColumnHeadersView: activeTabSelect(
+    (state: TabState) => state.layout.columnHeadersView
   )
 }

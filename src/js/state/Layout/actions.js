@@ -74,5 +74,9 @@ export default {
   ): LAYOUT_INVESTIGATION_VIEW_SET => ({
     type: "LAYOUT_INVESTIGATION_VIEW_SET",
     view
-  })
+  }),
+
+  setColumnHeadersView(view: string) {
+    return {type: "LAYOUT_SET_COLUMN_HEADERS", view}
+  }
 }

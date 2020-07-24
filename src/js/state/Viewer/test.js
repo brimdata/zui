@@ -63,24 +63,6 @@ test("results limited", () => {
   expect(Viewer.getEndStatus(state)).toBe("LIMIT")
 })
 
-test("set column headers view off", () => {
-  let state = store.dispatchAll([Viewer.setColumnHeadersView("OFF")])
-
-  expect(Viewer.getColumnHeadersView(state)).toBe("OFF")
-})
-
-test("set column headers view on", () => {
-  let state = store.dispatchAll([Viewer.setColumnHeadersView("ON")])
-
-  expect(Viewer.getColumnHeadersView(state)).toBe("ON")
-})
-
-test("set column headers view auto", () => {
-  let state = store.dispatchAll([Viewer.setColumnHeadersView("AUTO")])
-
-  expect(Viewer.getColumnHeadersView(state)).toBe("AUTO")
-})
-
 test("update columns with same tds", () => {
   let descriptor1 = {"1": [{name: "hello", type: "string"}]}
   let descriptor2 = {"1": [{name: "world", type: "string"}]}
