@@ -8,7 +8,6 @@
 <PROJECT_ROOT>/zealot/.*
 <PROJECT_ROOT>/.vscode/.*
 
->>>>>>> Update flow config
 [include]
 
 [libs]
