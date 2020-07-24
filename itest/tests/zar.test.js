@@ -45,24 +45,8 @@ describe("Zar tests", () => {
         const zngFile = path.join(sampleSpace.data_path, "all.zng")
         const zarRoot = zarSpace.data_path
 
-        // Create a zar archive inside the space and index some
-        // interesting stuff.
+        // Create a zar archive inside the space.
         execSync(`"${ZAR}" import -s 1024B -R "${zarRoot}" "${zngFile}"`)
-        await Promise.all(
-          [":ip", ":port", "uid", "_path"].map(
-            (index) =>
-              new Promise((resolve, reject) => {
-                const cmd = `"${ZAR}" index -R "${zarRoot}" ${index}`
-                exec(cmd, (error, stdout, stderr) => {
-                  if (error) {
-                    reject(`${cmd}: ${stderr}`)
-                  } else {
-                    resolve(0)
-                  }
-                })
-              })
-          )
-        )
 
         // Make sure zqd identifies both spaces.
         retryUntil(
