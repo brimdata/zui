@@ -2,7 +2,6 @@
 
 import Layout from "./"
 import initTestStore from "../../test/initTestStore"
-import Viewer from "../Viewer"
 
 let store, reduce
 beforeEach(() => {
