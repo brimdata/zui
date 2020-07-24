@@ -49,9 +49,9 @@ describe("Histogram tests", () => {
     return appStep.startApp(app)
   })
 
-  afterEach(async () => {
+  afterEach(() => {
     if (app && app.isRunning()) {
-      return await app.stop()
+      return app.stop()
     }
   })
 
