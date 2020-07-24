@@ -6,7 +6,7 @@ import appStep from "./appStep/api"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "./log"
 
-export const TestTimeout = 300000
+export const TestTimeout = 600000
 // https://jestjs.io/docs/en/troubleshooting#unresolved-promises
 // https://jestjs.io/docs/en/jest-object#jestsettimeouttimeout
 jest.setTimeout(TestTimeout)

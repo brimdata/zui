@@ -39,16 +39,17 @@ const ADDRS = ["1.1.1.1", "fe80::58d2:2d09:e8cb:a8ad", "::"]
 describe("type-wise Filter = value searches", () => {
   let app
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     app = newAppInstance(basename(__filename) + "-types", 0)
     await appStep.startApp(app)
     await appStep.ingestFile(app, "types.tsv")
     await appStep.setSpan(app, "Whole Space")
+    done()
   })
 
-  afterAll(async () => {
+  afterAll(() => {
     if (app && app.isRunning()) {
-      await app.stop()
+      return app.stop()
     }
   })
 
