@@ -13,6 +13,13 @@ export default {
       method: "GET",
     };
   },
+  stat(spaceId: string, args: SearchArgs) {
+    return {
+      path: `/space/${encodeURIComponent(spaceId)}/archivestat?format=ndjson`,
+      method: "GET",
+      enhancers: args.enhancers
+    }
+  },
   create(args: SpaceArgs) {
     return {
       path: "/space",
