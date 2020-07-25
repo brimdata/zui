@@ -182,7 +182,7 @@ engine for querying your data). These are located in:
 | **macOS**     | `$HOME/Library/Application Support/Brim/logs` | 
 | **Linux**     | `$HOME/.config/Brim/logs` | 
 
-Pleae include a ZIP of the contents of this directory along with any issue
+Please include a ZIP of the contents of this directory along with any issue
 you open to report a bug.
 
 ## Sample Packet Captures
