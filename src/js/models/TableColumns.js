@@ -16,21 +16,23 @@ export default class TableColumns {
     columns: Column[] = [],
     tableSetting: ColumnSettingsMap = {}
   ) {
+    // $FlowFixMe
+    const defaultVisible = Object.values(tableSetting).every((c) => c.isVisible)
     this.id = id
     this.cols = columnOrder(columns)
       .map((col, index) => ({
         ...col,
-        ...TableColumns.columnDefaults(index),
+        ...TableColumns.columnDefaults(index, defaultVisible),
         ...tableSetting[columnKey(col)]
       }))
       .sort((a, b) => (a.position > b.position ? 1 : -1))
   }
 
-  static columnDefaults(index: number) {
+  static columnDefaults(position: number, isVisible: boolean) {
     return {
       width: undefined,
-      isVisible: true,
-      position: index
+      isVisible,
+      position
     }
   }
 
