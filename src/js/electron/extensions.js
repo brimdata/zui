@@ -1,26 +1,13 @@
 /* @flow */
-// Note that whenever these extensions need to be updated,
-// go and delete them from app.getPath("userData")/extensions,
-// then restart the app.
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} from "electron-devtools-installer"
 
-import {BrowserWindow} from "electron"
+import log from "electron-log"
 
-function installExtensions() {
-  const {
-    default: install,
-    REACT_DEVELOPER_TOOLS,
-    REDUX_DEVTOOLS
-  } = require("electron-devtools-installer")
-
-  install(REACT_DEVELOPER_TOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log("An error occurred: ", err))
-
-  install(REDUX_DEVTOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log("An error occurred: ", err))
-  BrowserWindow.removeDevToolsExtension("React Developer Tools")
-  BrowserWindow.removeDevToolsExtension("Redux DevTools")
+export function installExtensions() {
+  return installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
+    .then(() => log.info("Devtools loaded"))
+    .catch((err) => log.error("An error occurred: ", err))
 }
-
-module.exports = {installExtensions}
