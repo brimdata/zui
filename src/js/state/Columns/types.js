@@ -9,8 +9,8 @@ export type ColumnsState = {
 }
 
 export type ColumnSetting = {|
+  isVisible: boolean,
   width?: number,
-  isVisible?: boolean,
   position?: number
 |}
 

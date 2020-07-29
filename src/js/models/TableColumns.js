@@ -1,10 +1,9 @@
 /* @flow */
 
-import type {Column} from "../types"
+import type {$Column} from "../state/Columns/models/column"
 import type {ColumnSettingsMap, TableColumn} from "../state/Columns/types"
 import Log from "./Log"
 import brim from "../brim"
-import columnKey from "../lib/columnKey"
 import columnOrder from "../lib/columnOrder"
 
 export default class TableColumns {
@@ -13,27 +12,16 @@ export default class TableColumns {
 
   constructor(
     id: string,
-    columns: Column[] = [],
+    columns: $Column[] = [],
     tableSetting: ColumnSettingsMap = {}
   ) {
-    // $FlowFixMe
-    const defaultVisible = Object.values(tableSetting).every((c) => c.isVisible)
     this.id = id
     this.cols = columnOrder(columns)
-      .map((col, index) => ({
-        ...col,
-        ...TableColumns.columnDefaults(index, defaultVisible),
-        ...tableSetting[columnKey(col)]
+      .map(({name, type, key}, index) => ({
+        ...{name, type, position: index},
+        ...tableSetting[key]
       }))
       .sort((a, b) => (a.position > b.position ? 1 : -1))
-  }
-
-  static columnDefaults(position: number, isVisible: boolean) {
-    return {
-      width: undefined,
-      isVisible,
-      position
-    }
   }
 
   sumWidths() {

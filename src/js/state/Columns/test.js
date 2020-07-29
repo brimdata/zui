@@ -29,7 +29,7 @@ describe("Columns", () => {
         }
       }),
       Columns.updateColumns(tableId, {
-        "_path:string": {width: 100}
+        "_path:string": {isVisible: true, width: 100}
       })
     ])
 

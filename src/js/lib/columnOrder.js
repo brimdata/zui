@@ -1,10 +1,10 @@
 /* @flow */
 
-import type {Column} from "../types"
+import type {$Column} from "../state/Columns/models/column"
 
 const EXCLUDED = ["ts", "_td"]
 
-export default (cols: Column[]) => {
+export default (cols: $Column[]) => {
   // $FlowFixMe
   const orderedCols = cols.filter(({name}) => !EXCLUDED.includes(name))
   const ts = cols.find(({name}) => name === "ts")

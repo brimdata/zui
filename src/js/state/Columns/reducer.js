@@ -20,7 +20,6 @@ export default function(state: ColumnsState = init, action: ColumnsAction) {
         })
       })
     case "COLUMNS_HIDE_ALL":
-      console.log("HIDING ALL", action)
       return produce(state, (draft) => {
         forEachCol(draft, action.tableId, (c) => {
           c.isVisible = false

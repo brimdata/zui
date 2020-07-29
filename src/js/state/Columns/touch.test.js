@@ -21,7 +21,7 @@ beforeEach(() => {
 })
 
 test("visibility false when at least one is hidden", () => {
-  const prefName = "multi"
+  const prefName = "temp"
   const col = createColumn({name: "_path", type: "string"})
   const update = {[col.key]: {isVisible: false}}
 
@@ -37,7 +37,7 @@ test("visibility false when at least one is hidden", () => {
 })
 
 test("visibility true when no preferences exist", () => {
-  const prefName = "multi"
+  const prefName = "temp"
 
   store.dispatch(touch(columns))
   const prefs = Columns.getColumns(store.getState())[prefName]
@@ -50,7 +50,7 @@ test("visibility true when no preferences exist", () => {
 })
 
 test("visibility true when all are visible", () => {
-  const prefName = "multi"
+  const prefName = "temp"
   const col = createColumn({name: "_path", type: "string"})
   const col2 = createColumn({name: "duration", type: "interval"})
   const update = {

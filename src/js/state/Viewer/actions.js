@@ -1,7 +1,7 @@
 /* @flow */
 
-import type {Descriptors, ScrollPosition} from "../../types"
 import type {RecordData} from "../../types/records"
+import type {ScrollPosition} from "../../types"
 import type {SearchStatus} from "../../types/searches"
 import type {
   VIEWER_CLEAR,
@@ -11,10 +11,10 @@ import type {
   VIEWER_SPLICE,
   VIEWER_STATS,
   VIEWER_STATUS,
+  ViewerColumns,
   ViewerStats,
   ViewerStatus
 } from "./types"
-import {hashDescriptorKeys} from "./hashDescriptorKeys"
 
 export default {
   clear(tabId: string): VIEWER_CLEAR {
@@ -41,10 +41,10 @@ export default {
     return {type: "VIEWER_STATS", stats, tabId}
   },
 
-  updateColumns(tabId: string, desc: Descriptors): VIEWER_COLUMNS {
+  updateColumns(tabId: string, columns: ViewerColumns): VIEWER_COLUMNS {
     return {
       type: "VIEWER_COLUMNS",
-      columns: hashDescriptorKeys(desc),
+      columns,
       tabId
     }
   },
