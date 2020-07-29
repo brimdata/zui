@@ -8,6 +8,7 @@
 
 - [[Zeek JSON Import]]
 - [[Zeek Customization]]
+- [[Geolocation]]
 
 **Developer Resources**
 
