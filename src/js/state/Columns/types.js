@@ -1,6 +1,6 @@
 /* @flow */
 
-export type ColumnsAction = COLUMNS_UPDATE
+export type ColumnsAction = COLUMNS_UPDATE | COLUMNS_HIDE_ALL | COLUMNS_SHOW_ALL
 
 export type ColumnsState = {
   [string]: {
@@ -30,4 +30,14 @@ export type COLUMNS_UPDATE = {
   type: "COLUMNS_UPDATE",
   tableId: string,
   updates: ColumnUpdates
+}
+
+export type COLUMNS_SHOW_ALL = {
+  type: "COLUMNS_SHOW_ALL",
+  tableId: string
+}
+
+export type COLUMNS_HIDE_ALL = {
+  type: "COLUMNS_HIDE_ALL",
+  tableId: string
 }
