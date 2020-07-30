@@ -64,11 +64,15 @@ test("results limited", () => {
 })
 
 test("update columns with same tds", () => {
-  let descriptor1 = {"1": [{name: "hello", type: "string"}]}
-  let descriptor2 = {"1": [{name: "world", type: "string"}]}
+  let cols1 = {
+    "9d14c2039a78d76760aae879c7fd2c82": [{name: "hello", type: "string"}]
+  }
+  let cols2 = {
+    "71f1b421963d31952e15edf7e3957a81": [{name: "world", type: "string"}]
+  }
   let state = store.dispatchAll([
-    Viewer.updateColumns(tabId, descriptor1),
-    Viewer.updateColumns(tabId, descriptor2)
+    Viewer.updateColumns(tabId, cols1),
+    Viewer.updateColumns(tabId, cols2)
   ])
 
   expect(Viewer.getColumns(state)).toEqual({

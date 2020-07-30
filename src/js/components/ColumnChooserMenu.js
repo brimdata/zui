@@ -3,19 +3,19 @@
 import {CSSTransition} from "react-transition-group"
 import {connect} from "react-redux"
 import React from "react"
+import styled from "styled-components"
 
+import type {ColumnHeadersViewState} from "../state/Layout/types"
 import type {DispatchProps, State} from "../state/types"
 import {Fieldset, Subscript, Label} from "./Typography"
 import type {TableColumn} from "../state/Columns/types"
+import Checkbox from "./common/Checkbox"
 import CloseButton from "./CloseButton"
 import Columns from "../state/Columns"
+import Layout from "../state/Layout"
+import SelectInput from "./common/forms/SelectInput"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
-import styled from "styled-components"
-import Checkbox from "./common/Checkbox"
-import SelectInput from "./common/forms/SelectInput"
-import Layout from "../state/Layout"
-import type {ColumnHeadersViewState} from "../state/Layout/types"
 
 const ControlListItem = styled.li`
   display: flex;
@@ -77,12 +77,12 @@ export default class ColumnChooserMenu extends React.Component<Props> {
 
   deselectAllColumns = (e: Event) => {
     e.stopPropagation()
-    this.props.dispatch(Columns.hideAllColumns(this.props.tableColumns))
+    this.props.dispatch(Columns.hideAllColumns(this.tableId()))
   }
 
   selectAllColumns = (e: Event) => {
     e.stopPropagation()
-    this.props.dispatch(Columns.showAllColumns(this.props.tableColumns))
+    this.props.dispatch(Columns.showAllColumns(this.tableId()))
   }
 
   onColumnClick(e: Event, column: TableColumn) {

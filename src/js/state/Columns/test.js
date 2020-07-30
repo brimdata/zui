@@ -1,7 +1,6 @@
 /* @flow */
 
 import Columns from "./"
-import TableColumns from "../../models/TableColumns"
 import initTestStore from "../../test/initTestStore"
 
 const tableId = "test"
@@ -30,7 +29,7 @@ describe("Columns", () => {
         }
       }),
       Columns.updateColumns(tableId, {
-        "_path:string": {width: 100}
+        "_path:string": {isVisible: true, width: 100}
       })
     ])
 
@@ -70,21 +69,15 @@ describe("Columns", () => {
   })
 
   test("show all columns", () => {
-    const tableColumns = new TableColumns(
-      tableId,
-      [
-        {name: "a", type: "string"},
-        {name: "b", type: "string"},
-        {name: "c", type: "string"}
-      ],
-      {
+    store.dispatch(
+      Columns.updateColumns(tableId, {
         "a:string": {isVisible: false},
         "b:string": {isVisible: false},
         "c:string": {isVisible: false}
-      }
+      })
     )
 
-    const state = store.dispatchAll([Columns.showAllColumns(tableColumns)])
+    const state = store.dispatchAll([Columns.showAllColumns(tableId)])
 
     const table = Columns.getColumns(state)[tableId]
 
@@ -94,21 +87,15 @@ describe("Columns", () => {
   })
 
   test("hide all columns", () => {
-    const tableColumns = new TableColumns(
-      tableId,
-      [
-        {name: "a", type: "string"},
-        {name: "b", type: "string"},
-        {name: "c", type: "string"}
-      ],
-      {
+    store.dispatch(
+      Columns.updateColumns(tableId, {
         "a:string": {isVisible: true},
         "b:string": {isVisible: true},
-        "c:string": {isVisible: true}
-      }
+        "c:string": {isVisible: false}
+      })
     )
 
-    const state = store.dispatchAll([Columns.hideAllColumns(tableColumns)])
+    const state = store.dispatchAll([Columns.hideAllColumns(tableId)])
 
     const table = Columns.getColumns(state)[tableId]
 

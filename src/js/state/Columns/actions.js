@@ -1,7 +1,11 @@
 /* @flow */
-import type {COLUMNS_UPDATE, ColumnUpdates} from "./types"
+import type {
+  COLUMNS_HIDE_ALL,
+  COLUMNS_SHOW_ALL,
+  COLUMNS_UPDATE,
+  ColumnUpdates
+} from "./types"
 import type {Column} from "../../types"
-import TableColumns from "../../models/TableColumns"
 import columnKey from "../../lib/columnKey"
 
 function updateColumns(
@@ -29,30 +33,18 @@ const showColumn = (tableId: string, column: Column): COLUMNS_UPDATE =>
     }
   })
 
-const showAllColumns = (table: TableColumns): COLUMNS_UPDATE => {
-  return updateColumns(
-    table.id,
-    table.getColumns().reduce(
-      (updates, col) => ({
-        ...updates,
-        [columnKey(col)]: {isVisible: true}
-      }),
-      {}
-    )
-  )
+const showAllColumns = (tableId: string): COLUMNS_SHOW_ALL => {
+  return {
+    type: "COLUMNS_SHOW_ALL",
+    tableId
+  }
 }
 
-const hideAllColumns = (table: TableColumns): COLUMNS_UPDATE => {
-  return updateColumns(
-    table.id,
-    table.getColumns().reduce(
-      (updates, col) => ({
-        ...updates,
-        [columnKey(col)]: {isVisible: false}
-      }),
-      {}
-    )
-  )
+const hideAllColumns = (tableId: string): COLUMNS_HIDE_ALL => {
+  return {
+    type: "COLUMNS_HIDE_ALL",
+    tableId
+  }
 }
 
 export default {
