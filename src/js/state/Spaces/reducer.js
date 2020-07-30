@@ -11,7 +11,7 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
   switch (action.type) {
     case "SPACES_SET":
       return action.spaces.reduce((next, space) => {
-        next[space.id] = defaults(space.id, space.name, draft[space.id])
+        next[space.id] = defaults(space.id, space.name, draft[space.id], space)
         return next
       }, {})
 
@@ -21,7 +21,7 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
       // time. In the future brim.Span type should mimic the formatted
       // transmitted over the wire.
       var space = brim.interop.spacePayloadToSpace(action.space)
-      draft[id] = defaults(id, name, {...draft[id], ...space})
+      draft[id] = defaults(id, name, draft[id], space)
       break
 
     case "SPACES_RENAME":
@@ -64,7 +64,7 @@ export default function reducer(
   }
 }
 
-function defaults(id, name, data: $Shape<Space> = {}): Space {
+function defaults(id, name, data: $Shape<Space> = {}, rest): Space {
   let defaults = {
     id,
     name,
@@ -72,6 +72,7 @@ function defaults(id, name, data: $Shape<Space> = {}): Space {
     max_time: {ns: 0, sec: 0},
     pcap_support: false,
     storage_kind: "filestore",
+    ...rest,
     ingest: {
       progress: null,
       warnings: [],
