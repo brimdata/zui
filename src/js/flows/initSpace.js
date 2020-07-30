@@ -43,7 +43,6 @@ export const initSpace = (desiredID: string): Thunk => (
 function checkDataExists(dispatch, data, tabId) {
   if (brim.space(data).empty()) {
     dispatch(Viewer.clear(tabId))
-    dispatch(Modal.show("nodata"))
   }
 }
 
