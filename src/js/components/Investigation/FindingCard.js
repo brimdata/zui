@@ -48,7 +48,8 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(submitSearch({history: false, investigation: false}))
   }
 
-  function onRemove() {
+  function onRemove(e) {
+    e.stopPropagation()
     globalDispatch(Investigation.deleteFindingByTs(finding.ts))
   }
 
