@@ -71,16 +71,15 @@ const createSpace = (client, dispatch, clusterId) => ({
     } else {
       createParams = {name: params.name}
     }
-    let {id, name} = await client.spaces.create(createParams)
+    const space = await client.spaces.create(createParams)
     dispatch(
       Spaces.setDetail(clusterId, {
-        id,
-        name,
+        ...space,
         ingest: {progress: 0, snapshot: 0, warnings: []}
       })
     )
 
-    return {...params, spaceId: id}
+    return {...params, spaceId: space.id}
   },
   async undo({spaceId}) {
     await client.spaces.delete(spaceId)
