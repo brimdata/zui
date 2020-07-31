@@ -117,8 +117,8 @@
     "chrono-node": "^1.4.8",
     "classnames": "^2.2.6",
     "d3": "^5.16.0",
-    "electron-dl": "^3.0.1",
     "electron-devtools-installer": "^3.1.1",
+    "electron-dl": "^3.0.1",
     "electron-installer-zip": "^0.1.2",
     "electron-log": "^4.2.2",
     "extract-zip": "^1.6.7",
@@ -153,7 +153,7 @@
     "styled-components": "^5.1.1",
     "valid-url": "^1.0.9",
     "zealot": "./zealot",
-    "zq": "git+https://github.com/brimsec/zq.git#69703d4868062c5d58f96ad36d55a9f56b76cf61"
+    "zq": "git+https://github.com/brimsec/zq.git#240df323b51d38a0a184331ee4be25673e281eef"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
