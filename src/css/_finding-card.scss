@@ -13,30 +13,6 @@
   &:active {
     background: rgba(0, 0, 0, 0.08);
   }
-
-  .remove-button {
-    width: 24px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    margin-right: 8px;
-    opacity: 0;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.08);
-    }
-    &:active {
-      background: rgba(0, 0, 0, 0.1);
-    }
-
-    svg {
-      width: 8px;
-      height: 8px;
-      fill: $slate;
-    }
-  }
 }
 
 .finding-card {
