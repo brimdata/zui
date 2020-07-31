@@ -8,7 +8,6 @@ import classNames from "classnames"
 import get from "lodash/get"
 
 import {Node} from "../models/Node"
-import {RemoveButton} from "./Buttons"
 import {createInvestigationTree} from "./FilterTree/helpers"
 import {globalDispatch} from "../state/GlobalContext"
 import BookIcon from "../icons/BookSvgIcon"
