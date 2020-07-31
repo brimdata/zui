@@ -4,7 +4,7 @@ import React from "react"
 import styled from "styled-components"
 
 import type {Styled} from "../types/styled"
-import Search from "../state/Search"
+import {resetTab} from "../flows/initNewTab"
 
 const StyledAnchor: Styled<> = styled.a`
   margin-left: auto;
@@ -23,7 +23,7 @@ const StyledAnchor: Styled<> = styled.a`
 
 export default function AddSpaceButton() {
   const dispatch = useDispatch()
-  const onClick = () => dispatch(Search.setSpace(""))
+  const onClick = () => dispatch(resetTab())
 
   return (
     <StyledAnchor className="add-space" onClick={onClick}>
