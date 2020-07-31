@@ -2,8 +2,8 @@
 
 import produce from "immer"
 
-import brim from "../../brim"
 import type {Space, SpacesAction, SpacesState} from "./types"
+import brim from "../../brim"
 
 const init: SpacesState = {}
 
@@ -11,17 +11,17 @@ const spacesReducer = produce((draft, action: SpacesAction) => {
   switch (action.type) {
     case "SPACES_SET":
       return action.spaces.reduce((next, space) => {
-        next[space.id] = defaults(space.id, space.name, draft[space.id], space)
+        next[space.id] = defaults(space, draft[space.id])
         return next
       }, {})
 
     case "SPACES_DETAIL":
-      var {id, name} = action.space
+      var {id} = action.space
       // XXX adapter hack to support span payloads from zqd as well as min/max
       // time. In the future brim.Span type should mimic the formatted
       // transmitted over the wire.
       var space = brim.interop.spacePayloadToSpace(action.space)
-      draft[id] = defaults(id, name, draft[id], space)
+      draft[id] = defaults(space, draft[id])
       break
 
     case "SPACES_RENAME":
@@ -64,23 +64,22 @@ export default function reducer(
   }
 }
 
-function defaults(id, name, data: $Shape<Space> = {}, rest): Space {
-  let defaults = {
-    id,
-    name,
-    min_time: {ns: 0, sec: 0},
-    max_time: {ns: 0, sec: 0},
-    pcap_support: false,
-    storage_kind: "filestore",
-    ...rest,
+function defaults(next: Space, prev: Space): Space {
+  // It would be nice to not need to keep this ingest state in the space
+  // object. An separate ingest reducer would be good.
+  const space = brim.interop.spacePayloadToSpace(next)
+  const defaults = {min_time: {sec: 0, ns: 0}, max_time: {sec: 0, ns: 0}}
+  const defaultIngest = {progress: null, warnings: [], snapshot: null}
+  const prevIngest = prev && prev.ingest
+  return {
+    ...defaults,
+    ...space,
     ingest: {
-      progress: null,
-      warnings: [],
-      snapshot: null,
-      ...data.ingest
+      ...defaultIngest,
+      ...prevIngest,
+      ...space.ingest
     }
   }
-  return {...defaults, ...data}
 }
 
 function getSpace(state, id) {
