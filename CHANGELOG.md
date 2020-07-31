@@ -1,3 +1,15 @@
+## v0.14.0
+* Update zq to [v0.18.0](https://github.com/brimsec/zq/releases/tag/v0.18.0)
+* Add [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
+* Add developer documentation for [adding migrations](https://github.com/brimsec/brim/wiki/Adding-Migrations) (#921)
+* Restore the scroll position when going back to prior search results (#929)
+* Add the [Zealot Client](https://github.com/brimsec/brim/blob/master/zealot/README.md) for communicating with [`zqd`](https://github.com/brimsec/zq/tree/master/cmd/zqd) via the REST API (#934)
+* Add support documentation explaining where Brim stores debug logs (#939, #943)
+* Fix an issue where records nested more than one level deep were not working correctly in Brim (#937)
+* Improve the Column Chooser (#925, #953)
+* Fix an issue where deleting a History entry incorrectly triggered its execution (#951)
+* Expose React/Redux DevTools when in developer mode (#956)
+
 ## v0.13.1
 * Ensure left panel is open by default, even on upgrades (#918)
 
