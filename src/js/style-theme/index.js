@@ -39,6 +39,16 @@ const labelBold = css`
   font-weight: 600;
 `
 
+const hoverQuiet = css`
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.1);
+  }
+`
+
 const theme = {
   colors: {
     white: "#FFFFFF",
@@ -60,7 +70,8 @@ const theme = {
     labelSmall,
     labelNormal,
     labelBold
-  }
+  },
+  hoverQuiet
 }
 
 export default theme

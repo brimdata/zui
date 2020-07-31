@@ -1,76 +1,56 @@
 .finding-card-wrapper {
   display: flex;
   align-items: center;
-  height: 25px;
-  color: white;
+  height: 24px;
   padding-left: 22px;
-  margin: 0 2px;
-  border-radius: 5px;
-  justify-content: space-between;
-
-  &.open {
-    background: $gray-6;
-    box-shadow: 0 1px 2px -1px $gray-9, 0 -1px 2px -1px $gray-9;
-
-    &:hover,
-    &:nth-last-child(odd) {
-      background: $gray-6;
-    }
-
-    .program .mono {
-      font-weight: 700;
-    }
-  }
-
-  &:nth-last-child(odd) {
-    background: transparentize(white, 0.98);
-  }
-
-  .gutter-button-style {
-    opacity: 0;
-    position: relative;
-  }
-
-  &:hover .gutter-button-style {
-    opacity: 1;
-  }
+  width: 100%;
+  overflow: hidden;
 
   &:hover {
-    background-color: $white-3;
+    background-color: $coconut;
   }
 
   &:active {
-    background: transparentize(white, 0.94);
-  }
-
-  .expand-button {
-    left: 5px;
-    top: $space-xs;
+    background: rgba(0, 0, 0, 0.08);
   }
 
   .remove-button {
-    background-color: $white-9;
-    stroke-width: 3px;
-    right: 6px;
+    width: 24px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    margin-right: 8px;
+    opacity: 0;
 
     &:hover {
-      background-color: $gray-1;
+      background: rgba(0, 0, 0, 0.08);
+    }
+    &:active {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    svg {
+      width: 8px;
+      height: 8px;
+      fill: $slate;
     }
   }
 }
 
 .finding-card {
-  color: $gray-5;
+  flex: 1;
+  color: $aqua;
   user-select: none;
   transition: background 150ms;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  width: 90%;
+  overflow: hidden;
 
   .program {
     display: flex;
+    align-items: center;
     margin-left: 6px;
     color: $aqua;
     overflow-x: hidden;
@@ -79,30 +59,22 @@
 
     p {
       @include label-small;
+      line-height: 16px;
+      padding: 0 5px;
       display: inline-block;
-      padding: 2px 4px;
-      margin: 0 2px;
+      margin: 0;
+      margin-right: 1px;
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
   }
 
-  .pin {
+  p.pin {
     color: $white-1;
     background: $green;
     border-radius: 3px;
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  .footer {
-    color: $white-8;
-    display: flex;
-
-    .stats {
-      margin-right: $space-xxs;
-      font-size: 9px;
-    }
+    flex-shrink: 0;
   }
 
   .warning-body {

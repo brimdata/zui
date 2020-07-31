@@ -3,12 +3,13 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {useState} from "react"
 import styled from "styled-components"
 
+import type {Styled} from "../types/styled"
+import Link from "./common/Link"
 import SearchInput from "./common/forms/SearchInput"
-import SearchResults from "./SearchResults/SearchResults"
 import Tab from "../state/Tab"
 import submitArchiveSearch from "../flows/submitArchiveSearch"
 
-const Container = styled.div`
+const Container: Styled<> = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -28,16 +29,30 @@ const ResultsWrapper = styled.div`
   border-top: 1px solid var(--cloudy);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .search-results {
     flex: 1;
   }
 `
 
+const InfoCard = styled.div`
+  ${(p) => p.theme.typography.labelNormal}
+  background: var(--snow);
+  padding: 24px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.24);
+  width: 300px;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+`
+
 export default function TabArchiveSearch() {
   const dispatch = useDispatch()
   const space = useSelector(Tab.space)
-  const [pattern, setPattern] = useState("uri=/wordpress/wp-login.php")
+  const [pattern, setPattern] = useState("")
   const onSubmit = async (e) => {
     e.preventDefault()
     dispatch(submitArchiveSearch([pattern]))
@@ -50,12 +65,18 @@ export default function TabArchiveSearch() {
         <h4>{space.name}</h4>
         <SearchWrapper>
           <form onSubmit={onSubmit}>
-            <SearchInput value={pattern} onChange={onChange} />
+            <SearchInput autoFocus value={pattern} onChange={onChange} />
           </form>
         </SearchWrapper>
       </Header>
       <ResultsWrapper>
-        <SearchResults />
+        {/* <SearchResults /> */}
+        <InfoCard>
+          <p>Archive Search Is Comming Soon.</p>
+          <Link href="https://github.com/brimsec/zq/tree/master/cmd/zar">
+            Learn about ZAR
+          </Link>
+        </InfoCard>
       </ResultsWrapper>
     </Container>
   )

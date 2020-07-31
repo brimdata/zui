@@ -48,11 +48,6 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(submitSearch({history: false, investigation: false}))
   }
 
-  function onRemove(e) {
-    e.stopPropagation()
-    globalDispatch(Investigation.deleteFindingByTs(finding.ts))
-  }
-
   function renderWarning() {
     const findingSpaceId = get(finding, ["search", "spaceId"], "")
     const tip = "This space no longer exists"
@@ -74,7 +69,12 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
 
   const template = [
     {
-      label: "Clear History",
+      label: "Delete",
+      click: () => globalDispatch(Investigation.deleteFindingByTs(finding.ts))
+    },
+    {type: "separator"},
+    {
+      label: "Delete All",
       click: () => globalDispatch(Investigation.clearInvestigation())
     }
   ]
@@ -96,7 +96,6 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
         <FindingProgram search={finding.search} />
         {renderWarning()}
       </div>
-      <RemoveButton className="gutter-button-style" onClick={onRemove} />
     </div>
   )
 })
