@@ -131,14 +131,14 @@ const setSpace = (dispatch, tabId) => ({
   }
 })
 
-const trackProgress = (client, dispatch, clusterId) => {
+const trackProgress = (client, gDispatch, clusterId) => {
   return {
     async do({spaceId, stream, endpoint}) {
       let space = Spaces.actionsFor(clusterId, spaceId)
 
       async function updateSpaceDetails() {
         let details = await client.spaces.get(spaceId)
-        dispatch(Spaces.setDetail(clusterId, details))
+        gDispatch(Spaces.setDetail(clusterId, details))
       }
 
       function packetPostStatusToPercent(status): number {
@@ -152,20 +152,22 @@ const trackProgress = (client, dispatch, clusterId) => {
         else return status.log_read_size / status.log_total_size
       }
 
-      dispatch(space.setIngestProgress(0))
+      gDispatch(space.setIngestProgress(0))
       for await (let {type, ...status} of stream) {
         switch (type) {
           case "PcapPostStatus":
-            dispatch(space.setIngestProgress(packetPostStatusToPercent(status)))
-            dispatch(space.setIngestSnapshot(status.snapshot_count))
+            gDispatch(
+              space.setIngestProgress(packetPostStatusToPercent(status))
+            )
+            gDispatch(space.setIngestSnapshot(status.snapshot_count))
             if (status.snapshot_count > 0) updateSpaceDetails()
             break
           case "LogPostStatus":
-            dispatch(space.setIngestProgress(logPostStatusToPercent(status)))
+            gDispatch(space.setIngestProgress(logPostStatusToPercent(status)))
             updateSpaceDetails()
             break
           case "LogPostWarning":
-            dispatch(space.appendIngestWarning(status.warning))
+            gDispatch(space.appendIngestWarning(status.warning))
             break
           case "TaskEnd":
             if (status.error) {
@@ -178,13 +180,13 @@ const trackProgress = (client, dispatch, clusterId) => {
             break
         }
       }
-      dispatch(space.setIngestProgress(1))
+      gDispatch(space.setIngestProgress(1))
       // The progress bar has a transition of 1 second. I think people are
       // psychologically comforted when they see the progress bar complete.
       // That is why we sleep here. It should be moved into the search
       // progress component
       await lib.sleep(1500)
-      dispatch(space.setIngestProgress(null))
+      gDispatch(space.setIngestProgress(null))
     }
   }
 }
