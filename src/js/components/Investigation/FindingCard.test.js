@@ -33,11 +33,3 @@ test("Clicking the history submits the search", () => {
   store.clearActions()
   el.simulate("click")
   expect(getActionTypes()).toContain("SEARCH_BAR_SUBMIT")
-})
-
-test("Clicking remove does not submit the search", () => {
-  const el = provide(store, <FindingCard finding={finding} />)
-  store.clearActions()
-  el.find(".remove-button").simulate("click")
-  expect(getActionTypes()).not.toContain("SEARCH_BAR_SUBMIT")
-})
