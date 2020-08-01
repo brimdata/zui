@@ -33,3 +33,4 @@ test("Clicking the history submits the search", () => {
   store.clearActions()
   el.simulate("click")
   expect(getActionTypes()).toContain("SEARCH_BAR_SUBMIT")
+})
