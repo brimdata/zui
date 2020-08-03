@@ -8,6 +8,10 @@ import type {
   VIEWER_COLUMNS,
   VIEWER_END_STATUS,
   VIEWER_RECORDS,
+  VIEWER_SCROLL,
+  VIEWER_SELECT,
+  VIEWER_SELECT_MULTI,
+  VIEWER_SELECT_RANGE,
   VIEWER_SPLICE,
   VIEWER_STATUS,
   ViewerColumns,
@@ -43,7 +47,19 @@ export default {
     }
   },
 
-  setScroll(scrollPos: ScrollPosition) {
+  setScroll(scrollPos: ScrollPosition): VIEWER_SCROLL {
     return {type: "VIEWER_SCROLL", scrollPos}
+  },
+
+  select(index: number): VIEWER_SELECT {
+    return {type: "VIEWER_SELECT", index}
+  },
+
+  selectMulti(index: number): VIEWER_SELECT_MULTI {
+    return {type: "VIEWER_SELECT_MULTI", index}
+  },
+
+  selectRange(index: number): VIEWER_SELECT_RANGE {
+    return {type: "VIEWER_SELECT_RANGE", index}
   }
 }

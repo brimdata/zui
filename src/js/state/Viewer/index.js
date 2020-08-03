@@ -2,7 +2,7 @@
 
 import actions from "./actions"
 import reducer from "./reducer"
-import selectors from "./selectors"
+import * as selectors from "./selectors"
 
 export default {
   ...selectors,

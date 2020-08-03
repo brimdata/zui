@@ -7,13 +7,17 @@ import type {SearchStatus} from "../../types/searches"
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
 export type ViewerColumns = {[string]: Descriptor}
-
+export type ViewerSelectionData = {
+  rows: {[number]: boolean},
+  currentRange: [number, number]
+}
 export type ViewerState = {|
   records: RecordData[],
   columns: ViewerColumns,
   endStatus: ViewerStatus,
   status: SearchStatus,
-  scrollPos: ScrollPosition
+  scrollPos: ScrollPosition,
+  selection: ViewerSelectionData
 |}
 
 export type ViewerAction =
@@ -24,6 +28,9 @@ export type ViewerAction =
   | VIEWER_COLUMNS
   | VIEWER_END_STATUS
   | VIEWER_SCROLL
+  | VIEWER_SELECT
+  | VIEWER_SELECT_MULTI
+  | VIEWER_SELECT_RANGE
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",
@@ -63,4 +70,19 @@ export type VIEWER_COLUMNS = {
 export type VIEWER_SCROLL = {
   type: "VIEWER_SCROLL",
   scrollPos: ScrollPosition
+}
+
+export type VIEWER_SELECT = {
+  type: "VIEWER_SELECT",
+  index: number
+}
+
+export type VIEWER_SELECT_MULTI = {
+  type: "VIEWER_SELECT_MULTI",
+  index: number
+}
+
+export type VIEWER_SELECT_RANGE = {
+  type: "VIEWER_SELECT_RANGE",
+  index: number
 }
