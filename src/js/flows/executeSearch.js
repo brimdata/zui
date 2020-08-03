@@ -29,10 +29,6 @@ export default function executeSearch(search: $Search): Thunk {
       search.emit("status", "FETCHING")
     }
 
-    function stats(payload) {
-      search.emit("stats", transformStats(payload))
-    }
-
     function records(payload) {
       count += payload.records.length
       buffer.add(payload.channel_id, payload.records)
@@ -78,7 +74,6 @@ export default function executeSearch(search: $Search): Thunk {
           .callbacks()
           .start(started)
           .records(records)
-          .stats(stats)
           .end(ended)
           .warnings(warnings)
           .error(errored)
@@ -93,17 +88,5 @@ export default function executeSearch(search: $Search): Thunk {
     )
 
     return () => ctl.abort()
-  }
-}
-
-function transformStats(payload) {
-  return {
-    currentTs: brim.time(payload.current_ts).toFracSec(),
-    startTime: brim.time(payload.start_time).toFracSec(),
-    updateTime: brim.time(payload.update_time).toFracSec(),
-    bytesMatched: payload.bytes_matched,
-    bytesRead: payload.bytes_read,
-    tuplesMatched: payload.records_matched,
-    tuplesRead: payload.records_read
   }
 }

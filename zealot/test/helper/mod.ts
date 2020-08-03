@@ -1,7 +1,7 @@
 import { join } from "https://deno.land/std/path/mod.ts";
 
 export * from "https://deno.land/std/testing/asserts.ts";
-export * from "https://deno.land/x/mock/mod.ts";
+export {spy, Spy} from "https://deno.land/x/mock@v0.3.0/spy.ts";
 export * from "./test_api.ts";
 export * from "./assertCalledWith.ts";
 

@@ -9,10 +9,8 @@ import type {
   VIEWER_END_STATUS,
   VIEWER_RECORDS,
   VIEWER_SPLICE,
-  VIEWER_STATS,
   VIEWER_STATUS,
   ViewerColumns,
-  ViewerStats,
   ViewerStatus
 } from "./types"
 
@@ -35,10 +33,6 @@ export default {
 
   appendRecords(tabId: string, records: RecordData[]): VIEWER_RECORDS {
     return {type: "VIEWER_RECORDS", records, tabId}
-  },
-
-  setStats(tabId: string, stats: ViewerStats): VIEWER_STATS {
-    return {type: "VIEWER_STATS", stats, tabId}
   },
 
   updateColumns(tabId: string, columns: ViewerColumns): VIEWER_COLUMNS {

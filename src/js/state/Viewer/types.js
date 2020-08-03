@@ -7,17 +7,12 @@ import type {SearchStatus} from "../../types/searches"
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
 export type ViewerColumns = {[string]: Descriptor}
-export type ViewerStats = {
-  updateTime: number,
-  startTime: number,
-  bytesRead: number
-}
+
 export type ViewerState = {|
   records: RecordData[],
   columns: ViewerColumns,
   endStatus: ViewerStatus,
   status: SearchStatus,
-  stats: ViewerStats,
   scrollPos: ScrollPosition
 |}
 
@@ -28,7 +23,6 @@ export type ViewerAction =
   | VIEWER_RECORDS
   | VIEWER_COLUMNS
   | VIEWER_END_STATUS
-  | VIEWER_STATS
   | VIEWER_SCROLL
 
 export type VIEWER_RECORDS = {
@@ -63,12 +57,6 @@ export type VIEWER_STATUS = {
 export type VIEWER_COLUMNS = {
   type: "VIEWER_COLUMNS",
   columns: ViewerColumns,
-  tabId: string
-}
-
-export type VIEWER_STATS = {
-  type: "VIEWER_STATS",
-  stats: ViewerStats,
   tabId: string
 }
 
