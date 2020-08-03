@@ -46,11 +46,6 @@ export default {
     (viewer) => viewer.columns
   ),
 
-  getStats: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.stats
-  ),
-
   getScrollPos: createSelector<State, void, *, ViewerState>(
     getViewer,
     (viewer) => viewer.scrollPos

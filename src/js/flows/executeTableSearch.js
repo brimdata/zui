@@ -31,7 +31,6 @@ export default function executeTableSearch(
         .warnings((warnings) =>
           dispatch(SearchBar.errorSearchBarParse(warnings[0]))
         )
-        .stats((stats) => dispatch(Viewer.setStats(tabId, stats)))
         .error((error) => {
           dispatch(Notice.set(ErrorFactory.create(error)))
           reject(error)
