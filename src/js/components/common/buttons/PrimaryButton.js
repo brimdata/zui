@@ -1,10 +1,11 @@
 /* @flow */
-import {cssVar, darken} from "polished"
+import {darken} from "polished"
 import styled from "styled-components"
 
 import type {Styled} from "../../../types/styled"
+import {cssVar} from "../../../lib/cssVar"
 
-const bg = cssVar("--havelock")
+const bg = cssVar("--havelock", "blue")
 const bgGradient = darken(0.04, bg)
 const bgBorder = darken(0.1, bg)
 const bgActive = darken(0.08, bg)
