@@ -72,7 +72,7 @@ export default function TabArchiveSearch() {
       <ResultsWrapper>
         {/* <SearchResults /> */}
         <InfoCard>
-          <p>Archive search is comming soon.</p>
+          <p>Archive search is coming soon.</p>
           <Link href="https://github.com/brimsec/zq/tree/master/cmd/zar">
             Learn about ZAR
           </Link>
