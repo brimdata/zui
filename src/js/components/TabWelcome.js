@@ -6,6 +6,7 @@ import styled from "styled-components"
 import BrimTextLogo from "./BrimTextLogo"
 import TabCreateSpace from "./TabCreateSpace"
 import TabImport from "./TabImport"
+import electronIsDev from "../electron/isDev"
 import initNewTab from "../flows/initNewTab"
 
 const Nav = styled.nav`
@@ -48,15 +49,17 @@ export default function TabWelcome() {
         <BrimTextLogo />
       </section>
       <section>{content()}</section>
-      <Nav>
-        <Link active={page === "import"} onClick={() => setPage("import")}>
-          Import Files
-        </Link>{" "}
-        |
-        <Link active={page == "create"} onClick={() => setPage("create")}>
-          Create Empty Space
-        </Link>
-      </Nav>
+      {electronIsDev && (
+        <Nav>
+          <Link active={page === "import"} onClick={() => setPage("import")}>
+            Import Files
+          </Link>{" "}
+          |
+          <Link active={page == "create"} onClick={() => setPage("create")}>
+            Create Empty Space
+          </Link>
+        </Nav>
+      )}
     </div>
   )
 }
