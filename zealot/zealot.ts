@@ -1,5 +1,5 @@
 import { createFetcher } from "./fetcher/fetcher.ts";
-import { spaces, logs, pcaps, search } from "./api/mod.ts";
+import { spaces, logs, pcaps, search, archive } from "./api/mod.ts";
 import { getHost } from "./util/host.ts";
 import { getDefaultSearchArgs } from "./config/search_args.ts";
 import {
@@ -10,6 +10,7 @@ import {
   LogsPostArgs,
   ZealotArgs,
 } from "./types.ts";
+import { IndexSearchArgs } from "./api/archive.ts";
 
 export function createZealot(
   hostUrl: string,
@@ -30,12 +31,20 @@ export function createZealot(
     search: (zql: string, args?: Partial<SearchArgs>) => {
       return stream(search(zql, { ...searchArgs, ...args }));
     },
+    archive: {
+      search:  (args: IndexSearchArgs) => {
+        return stream({...archive.search(args), enhancers: searchArgs.enhancers} )
+      }
+    },
     spaces: {
       list: () => {
         return promise(spaces.list());
       },
       get: (id: string) => {
         return promise(spaces.get(id));
+      },
+      stat: (id: string, args?: Partial<SearchArgs>) => {
+        return stream(spaces.stat(id, {...searchArgs, ...args}))
       },
       create: (args: SpaceArgs) => {
         return promise(spaces.create(args));

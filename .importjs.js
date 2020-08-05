@@ -1,7 +1,9 @@
 module.exports = {
   excludes: ["./dist/**", "**/**.test.js"],
   aliases: {
-    anime: "animejs"
+    anime: "animejs",
+    styled: "styled-components",
+    produce: "immer"
   },
   namedExports: {
     electron: ["ipcMain", "ipcRenderer", "remote", "BrowserWindow"],

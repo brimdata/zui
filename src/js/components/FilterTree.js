@@ -8,9 +8,10 @@ import classNames from "classnames"
 import get from "lodash/get"
 
 import {Node} from "../models/Node"
-import {RemoveButton} from "./Buttons"
 import {createInvestigationTree} from "./FilterTree/helpers"
 import {globalDispatch} from "../state/GlobalContext"
+import BookIcon from "../icons/BookSvgIcon"
+import EmptySection from "./common/EmptySection"
 import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
 import Search from "../state/Search"
@@ -19,8 +20,6 @@ import Spaces from "../state/Spaces/selectors"
 import Tab from "../state/Tab"
 import Warning from "./icons/warning-sm.svg"
 import submitSearch from "../flows/submitSearch"
-import BookIcon from "../icons/BookSvgIcon"
-import EmptySection from "./common/EmptySection"
 import usePopupMenu from "./hooks/usePopupMenu"
 
 export default function FilterTree() {
@@ -57,12 +56,6 @@ export default function FilterTree() {
       dispatch(submitSearch({history: false, investigation: false}))
     }
 
-    function onNodeRemove(e) {
-      e.stopPropagation()
-      let multiTs = node.mapChildren((node) => node.data.finding.ts)
-      globalDispatch(Investigation.deleteFindingByTs(multiTs))
-    }
-
     let className = classNames("filter-tree-node", {
       pinned: nodeIsPinned(pinnedFilters, node),
       active: nodeIsActive(pinnedFilters, previous, node)
@@ -93,7 +86,15 @@ export default function FilterTree() {
 
     const template = [
       {
-        label: "Clear History",
+        label: "Delete",
+        click: () => {
+          let multiTs = node.mapChildren((node) => node.data.finding.ts)
+          globalDispatch(Investigation.deleteFindingByTs(multiTs))
+        }
+      },
+      {type: "separator"},
+      {
+        label: "Delete All",
         click: () => globalDispatch(Investigation.clearInvestigation())
       }
     ]
@@ -113,10 +114,6 @@ export default function FilterTree() {
         >
           <FilterNode filter={node.data.filter} />
           {renderWarning()}
-          <RemoveButton
-            className="gutter-button-style"
-            onClick={onNodeRemove}
-          />
         </div>
         <div className="filter-tree-children">
           {node.children.map(renderNode)}

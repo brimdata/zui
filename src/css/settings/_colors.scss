@@ -36,9 +36,7 @@ $green: #399c81;
 $green-dark: darken(#399c81, 15%);
 
 $red: #e65835;
-:root {
-  --red: #e65835;
-}
+
 $red-light: lighten($red, 15%);
 $red-dark: darken($red, 15%);
 
@@ -74,3 +72,21 @@ $table-stripe-hover: rgba(0, 0, 0, 0.06);
 $chrome-gradient: linear-gradient(to bottom, #f0efee, #e6e5e4);
 $gray-to-white: linear-gradient(#f0f0f0, white);
 $chrome-border: $white-5;
+
+:root {
+  // colors
+  --red: #e65835;
+  --azure: #2f629c;
+  --cello: #324862;
+  --havelock: #4b91e2;
+  --pecan: #9c692f;
+
+  // shades of gray
+  --snow: #fdfcfb;
+  --coconut: #f8f7f6;
+  --ivory: #f2f1f0;
+  --cloudy: #dedddc;
+  --lead: #aeadac;
+  --slate: #757371;
+  --aqua: #262524;
+}

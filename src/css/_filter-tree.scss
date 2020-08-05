@@ -4,6 +4,7 @@ $filter-tree-line-color: $gray-5;
   height: 100%;
   color: $white-1;
   margin-top: 10px;
+  user-select: none;
 
   .warning-body {
     display: flex;
@@ -18,29 +19,14 @@ $filter-tree-line-color: $gray-5;
   }
   .filter-tree-parent {
     display: flex;
-    flex-direction: row;
-    padding: 3px 0;
-    border-radius: 5px;
-    margin-right: 3px;
-    height: 25px;
-  }
-
-  .remove-button {
-    position: absolute;
-    right: 12px;
-    opacity: 0;
+    align-items: center;
+    margin: 0;
+    height: 24px;
   }
 }
 
 .filter-tree-parent:hover {
   background: $white-3;
-  .remove-button {
-    opacity: 1;
-    background-color: $white-9;
-    &:hover {
-      background-color: $gray-1;
-    }
-  }
 }
 
 .filter-tree-node {
@@ -79,12 +65,13 @@ $filter-tree-line-color: $gray-5;
   .filter-node {
     background: transparent;
     position: relative;
-    margin-left: 6px;
+    margin: 0 0 0 6px;
     box-shadow: none;
-    max-width: 80%;
+    height: 16px;
 
     p {
       @include label-small;
+      line-height: 16px;
       color: $aqua;
       padding: 2px;
       margin: 0 2px;

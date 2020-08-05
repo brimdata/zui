@@ -1,33 +1,46 @@
 /* @flow */
 import {useDispatch} from "react-redux"
-import React, {useEffect} from "react"
-import remote from "electron"
+import React, {useEffect, useState} from "react"
+import styled from "styled-components"
+
 import BrimTextLogo from "./BrimTextLogo"
-import ErrorFactory from "../models/ErrorFactory"
-import LoadFilesInput from "./LoadFilesInput"
-import Notice from "../state/Notice"
-import errors from "../errors"
-import ingestFiles from "../flows/ingestFiles"
+import TabCreateSpace from "./TabCreateSpace"
+import TabImport from "./TabImport"
+import electronIsDev from "../electron/isDev"
 import initNewTab from "../flows/initNewTab"
-import refreshSpaceNames from "../flows/refreshSpaceNames"
+
+const Nav = styled.nav`
+  margin-top: auto;
+  margin-bottom: 24px;
+  ${(p) => p.theme.typography.labelSmall}
+  text-align: center;
+  user-select: none;
+  a,
+  b {
+    padding: 0 6px;
+  }
+  b {
+    font-weight: 500;
+  }
+`
+
+const Link = ({active, onClick, children}) => {
+  if (active) return <b>{children}</b>
+  else return <a onClick={onClick}>{children}</a>
+}
 
 export default function TabWelcome() {
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const [page, setPage] = useState("import")
 
   useEffect(() => {
     dispatch(initNewTab())
   }, [])
 
-  function onChange(_e, files) {
-    if (!files.length) return
-    dispatch(ingestFiles(files)).catch((e) => {
-      ;/(Failed to fetch)|(network error)/.test(e.cause.message)
-        ? dispatch(Notice.set(errors.importInterrupt()))
-        : dispatch(Notice.set(ErrorFactory.create(e.cause)))
-
-      dispatch(refreshSpaceNames())
-      console.error(e.message)
-    })
+  function content() {
+    if (page === "import") return <TabImport />
+    if (page === "create") return <TabCreateSpace />
+    return null
   }
 
   return (
@@ -35,41 +48,18 @@ export default function TabWelcome() {
       <section>
         <BrimTextLogo />
       </section>
-      <div className="input-methods">
-        <section>
-          <label>Import Files</label>
-          <LoadFilesInput onChange={onChange} />
-          <footer>
-            <p>
-              <b>Accepted formats:</b> .pcap, .pcapng,{" "}
-              <a
-                onClick={() =>
-                  remote.shell.openExternal(
-                    "https://github.com/brimsec/zq/blob/master/zng/docs/spec.md"
-                  )
-                }
-              >
-                .zng
-              </a>
-              , and{" "}
-              <a
-                onClick={() =>
-                  remote.shell.openExternal(
-                    "https://docs.zeek.org/en/current/scripts/base/frameworks/logging/writers/ascii.zeek.html"
-                  )
-                }
-              >
-                Zeek ASCII/JSON
-              </a>
-              .
-            </p>
-            <p>
-              <b>Note:</b> Multiple zng and Zeek log files may be imported, but
-              only one pcap.
-            </p>
-          </footer>
-        </section>
-      </div>
+      <section>{content()}</section>
+      {electronIsDev && (
+        <Nav>
+          <Link active={page === "import"} onClick={() => setPage("import")}>
+            Import Files
+          </Link>{" "}
+          |
+          <Link active={page == "create"} onClick={() => setPage("create")}>
+            Create Empty Space
+          </Link>
+        </Nav>
+      )}
     </div>
   )
 }

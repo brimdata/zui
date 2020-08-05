@@ -1,4 +1,4 @@
-import { SpaceArgs } from "../types.ts";
+import { SpaceArgs, SearchArgs } from "../types.ts";
 
 export default {
   list() {
@@ -12,6 +12,13 @@ export default {
       path: `/space/${encodeURIComponent(spaceId)}`,
       method: "GET",
     };
+  },
+  stat(spaceId: string, args: SearchArgs) {
+    return {
+      path: `/space/${encodeURIComponent(spaceId)}/archivestat?format=ndjson`,
+      method: "GET",
+      enhancers: args.enhancers
+    }
   },
   create(args: SpaceArgs) {
     return {

@@ -1,17 +1,19 @@
 /* @flow */
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
+import classNames from "classnames"
+
 import type {Space} from "../state/Spaces/types"
 import {initSpace} from "../flows/initSpace"
+import {showContextMenu} from "../lib/System"
+import ArchiveBorderIcon from "../icons/ArchiveBorderIcon"
+import EmptySection from "./common/EmptySection"
+import FileBorder from "../icons/FileBorder"
+import FileFilled from "../icons/FileFilled"
 import ProgressIndicator from "./ProgressIndicator"
+import Tab from "../state/Tab"
 import brim from "../brim"
 import menu from "../electron/menu"
-import {showContextMenu} from "../lib/System"
-import Tab from "../state/Tab"
-import EmptySection from "./common/EmptySection"
-import FileFilled from "../icons/FileFilled"
-import FileBorder from "../icons/FileBorder"
-import classNames from "classnames"
 
 type Props = {|
   spaces: Space[],
@@ -21,7 +23,6 @@ type Props = {|
 export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
   const dispatch = useDispatch()
   const currentSpaceId = useSelector(Tab.getSpaceId)
-
   const onClick = (space) => (e) => {
     e.preventDefault()
     dispatch(initSpace(space))
@@ -37,33 +38,40 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
 
   return (
     <menu className="saved-spaces-list">
-      {spaces.map(brim.space).map((s) => {
-        const progress = s.ingesting() && (
-          <div className="small-progress-bar">
-            <ProgressIndicator percent={s.ingestProgress()} />
-          </div>
-        )
+      {spaces
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map(brim.space)
+        .map((s) => {
+          const progress = s.ingesting() && (
+            <div className="small-progress-bar">
+              <ProgressIndicator percent={s.ingestProgress()} />
+            </div>
+          )
+          return (
+            <li key={s.id}>
+              <a
+                href="#"
+                onClick={onClick(s.id)}
+                onContextMenu={() => {
+                  !s.ingesting() &&
+                    showContextMenu(spaceContextMenu(s.id, s.name))
+                }}
+                className={classNames("space-link", {
+                  "current-space-link": s.id === currentSpaceId
+                })}
+              >
+                {s.storage_kind === "archivestore" ? (
+                  <ArchiveBorderIcon className="space-icon" />
+                ) : (
+                  <FileBorder className="space-icon" />
+                )}
 
-        return (
-          <li key={s.id}>
-            <a
-              href="#"
-              onClick={onClick(s.id)}
-              onContextMenu={() => {
-                !s.ingesting() &&
-                  showContextMenu(spaceContextMenu(s.id, s.name))
-              }}
-              className={classNames("space-link", {
-                "current-space-link": s.id === currentSpaceId
-              })}
-            >
-              <FileBorder className="space-icon" />
-              <span className="name">{s.name}</span>
-              {progress}
-            </a>
-          </li>
-        )
-      })}
+                <span className="name">{s.name}</span>
+                {progress}
+              </a>
+            </li>
+          )
+        })}
     </menu>
   )
 }

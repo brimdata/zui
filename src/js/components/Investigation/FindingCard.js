@@ -6,20 +6,19 @@ import React from "react"
 import ReactTooltip from "react-tooltip"
 import classNames from "classnames"
 import get from "lodash/get"
+import styled from "styled-components"
 
 import type {Finding} from "../../state/Investigation/types"
-import {RemoveButton} from "../Buttons"
 import {globalDispatch} from "../../state/GlobalContext"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
+import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Spaces from "../../state/Spaces/selectors"
 import Tab from "../../state/Tab"
 import Warning from "../icons/warning-sm.svg"
 import submitSearch from "../../flows/submitSearch"
-import MagnifyingGlass from "../../icons/MagnifyingGlass"
-import styled from "styled-components"
 import usePopupMenu from "../hooks/usePopupMenu"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
@@ -48,11 +47,6 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     dispatch(submitSearch({history: false, investigation: false}))
   }
 
-  function onRemove(e) {
-    e.stopPropagation()
-    globalDispatch(Investigation.deleteFindingByTs(finding.ts))
-  }
-
   function renderWarning() {
     const findingSpaceId = get(finding, ["search", "spaceId"], "")
     const tip = "This space no longer exists"
@@ -74,7 +68,12 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
 
   const template = [
     {
-      label: "Clear History",
+      label: "Delete",
+      click: () => globalDispatch(Investigation.deleteFindingByTs(finding.ts))
+    },
+    {type: "separator"},
+    {
+      label: "Delete All",
       click: () => globalDispatch(Investigation.clearInvestigation())
     }
   ]
@@ -96,7 +95,6 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
         <FindingProgram search={finding.search} />
         {renderWarning()}
       </div>
-      <RemoveButton className="gutter-button-style" onClick={onRemove} />
     </div>
   )
 })

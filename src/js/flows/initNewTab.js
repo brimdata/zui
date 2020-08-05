@@ -6,13 +6,17 @@ import Tabs from "../state/Tabs"
 import refreshSpaceNames from "./refreshSpaceNames"
 
 export default (): Thunk => (dispatch, getState) => {
-  let state = getState()
-  let space = Tab.space(state)
-  let spaceId = Tab.getSpaceId(state)
-  let id = Tab.clusterId(state)
-  let spaceIsDeleted = spaceId && !space
+  const state = getState()
+  const space = Tab.space(state)
+  const spaceId = Tab.getSpaceId(state)
+  const spaceIsDeleted = spaceId && !space
 
-  if (spaceIsDeleted) {
+  if (spaceIsDeleted) dispatch(resetTab())
+}
+
+export function resetTab(): Thunk {
+  return (dispatch, getState) => {
+    const id = Tab.clusterId(getState())
     dispatch(Tabs.clearActive())
     dispatch(Search.setCluster(id))
     dispatch(refreshSpaceNames())

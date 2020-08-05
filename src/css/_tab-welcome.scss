@@ -21,9 +21,14 @@
     margin: 10px auto;
   }
 
+  section {
+    max-width: 460px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
   .input-methods {
-    margin: 20px auto;
-    margin-bottom: 50px;
+    margin: 0 auto 20px auto;
     display: flex;
     width: 100%;
     justify-content: center;
@@ -37,22 +42,9 @@
       display: flex;
       flex-direction: column;
     }
-
-    .separator {
-      min-width: 1px;
-      max-width: 1px;
-      width: 1px;
-      height: 100%;
-      margin: 0 24px;
-      background: linear-gradient(
-        to bottom,
-        $white-5,
-        transparentize($white-5, 0.7)
-      );
-    }
   }
 
-  label {
+  h2 {
     display: block;
     @include heading-section;
     margin-bottom: 24px;

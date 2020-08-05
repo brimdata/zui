@@ -1,12 +1,11 @@
 .saved-spaces-list {
   background: white;
-  border-radius: 4px;
   user-select: none;
   overflow-x: hidden;
   overflow-y: auto;
   min-height: 0px;
   position: relative;
-  margin: 2px 0 5px;
+  margin: 0;
   padding: 0;
 
   &:before {
@@ -29,21 +28,11 @@
     align-items: center;
 
     &:hover {
-      background: linear-gradient(
-        to right,
-        transparentize($white-5, 0.7),
-        transparentize($white-5, 0.95)
-      );
+      background-color: $coconut;
     }
 
     &:active {
-      background: linear-gradient(
-        to right,
-        transparentize($white-5, 0.5),
-        transparentize($white-5, 0.95)
-      );
-      transition: color 700ms 50ms;
-      color: lighten($aqua, 35%);
+      background: rgba(0, 0, 0, 0.08);
     }
   }
 
@@ -54,9 +43,8 @@
     align-items: center;
     text-decoration: none;
     flex: 1;
-    height: 25px;
-    margin: 0 2px;
-    width: 95%;
+    height: 24px;
+    width: 100%;
     padding-left: 22px;
     cursor: default;
 
@@ -68,17 +56,12 @@
         fill: white;
       }
     }
-
-    &:hover {
-      background: #f0f0f0;
-    }
   }
 
   .current-space-link {
     outline: none;
     background: $blue;
     color: white;
-    border-radius: 5px;
 
     .space-icon {
       fill: white;

@@ -2,20 +2,22 @@
 
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
+import styled from "styled-components"
+
 import {XLeftPaneExpander} from "./LeftPaneExpander"
+import AddSpaceButton from "./AddSpaceButton"
+import ClusterPicker from "./ClusterPicker"
+import DropdownArrow from "../icons/DropdownArrow"
 import FilterTree from "./FilterTree"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
-import Pane from "./Pane"
 import Layout from "../state/Layout"
-import styled from "styled-components"
-import usePopupMenu from "./hooks/usePopupMenu"
-import DropdownArrow from "../icons/DropdownArrow"
+import Pane from "./Pane"
 import SavedSpacesList from "./SavedSpacesList"
-import Tab from "../state/Tab"
 import Spaces from "../state/Spaces"
+import Tab from "../state/Tab"
 import menu from "../electron/menu"
 import useDrag from "./hooks/useDrag"
-import ClusterPicker from "./ClusterPicker"
+import usePopupMenu from "./hooks/usePopupMenu"
 
 const Arrow = (props) => {
   return (
@@ -43,42 +45,73 @@ const SectionContents = styled.div`
 const SectionHeader = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: ${(props) => props.theme.colors.coconut};
+  background-color: var(--coconut);
   height: 24px;
   align-items: center;
-  justify-content: flex-start;
-  border-top: 1px solid ${(props) => props.theme.colors.cloudy};
-  border-bottom: 1px solid ${(props) => props.theme.colors.cloudy};
+  justify-content: space-between;
   user-select: none;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    box-shadow: inset 0 0.5px 0 0 var(--cloudy);
+  }
+
+  &::after {
+    top: unset;
+    bottom: 0;
+    box-shadow: inset 0 -0.5px 0 0 var(--cloudy);
+  }
 `
 
 const Title = styled.label`
-  margin-left: 5px;
+  margin-left: 8px;
+  line-height: 24px;
 
   ${(props) => props.theme.typography.headingList}
 `
 
 const StyledArrow = styled(Arrow)`
-  fill: ${(props) => props.theme.colors.lead};
+  fill: var(--aqua);
+  opacity: 0.3;
   width: 8px;
+  height: 8px;
   margin-left: 12px;
   transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
   transition: transform 150ms;
 `
 
+const ClickRegion = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const StyledViewSelect = styled.div`
+  ${(props) => props.theme.typography.labelSmall}
+  ${(props) => props.theme.hoverQuiet}
   display: flex;
   margin-left: auto;
-  margin-right: 15px;
+  margin-right: 8px;
+  height: 18px;
+  padding: 0 8px;
+  line-height: 24px;
   flex-direction: row;
   align-items: center;
   text-transform: capitalize;
-  color: ${(props) => props.theme.colors.slate};
-  ${(props) => props.theme.typography.labelSmall}
+  border-radius: 3px;
+  color: var(--slate);
 
   svg {
-    stroke: ${(props) => props.theme.colors.slate};
-    margin-left: 5px;
+    stroke: var(--slate);
+    margin-left: 6px;
+    height: 8px;
+    width: 8px;
   }
 `
 
@@ -195,11 +228,11 @@ export function LeftPane() {
       <ClusterPicker />
       <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
         <SectionHeader>
-          <StyledArrow
-            onClick={() => dispatch(Layout.toggleSpaces())}
-            show={showSpaces}
-          />
-          <Title>Spaces</Title>
+          <ClickRegion onClick={() => dispatch(Layout.toggleSpaces())}>
+            <StyledArrow show={showSpaces} />
+            <Title>Spaces</Title>
+          </ClickRegion>
+          <AddSpaceButton />
         </SectionHeader>
         <SectionContents show={showSpaces}>
           <SavedSpacesList
@@ -211,11 +244,10 @@ export function LeftPane() {
       </StyledSection>
       <StyledSection style={{flexGrow: historyHeight}}>
         <SectionHeader>
-          <StyledArrow
-            onClick={() => dispatch(Layout.toggleHistory())}
-            show={showHistory}
-          />
-          <Title>History</Title>
+          <ClickRegion onClick={() => dispatch(Layout.toggleHistory())}>
+            <StyledArrow show={showHistory} />
+            <Title>History</Title>
+          </ClickRegion>
           <ViewSelect />
         </SectionHeader>
         <SectionContents show={showHistory}>

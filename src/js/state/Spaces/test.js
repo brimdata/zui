@@ -24,6 +24,7 @@ const testSpace1: Space = {
   max_time: {ns: 0, sec: 0},
   min_time: {ns: 0, sec: 0},
   pcap_support: false,
+  storage_kind: "filestore",
   ingest: {
     progress: null,
     warnings: [],
@@ -37,6 +38,7 @@ const testSpace2: Space = {
   max_time: {ns: 0, sec: 0},
   min_time: {ns: 0, sec: 0},
   pcap_support: false,
+  storage_kind: "filestore",
   ingest: {
     progress: null,
     warnings: [],

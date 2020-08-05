@@ -4,6 +4,7 @@ import type {Store} from "../state/types"
 import {initSpace} from "../flows/initSpace"
 import Clusters from "../state/Clusters"
 import Search from "../state/Search"
+import Tab from "../state/Tab"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 
@@ -20,5 +21,9 @@ export default async function(store: Store) {
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Search.setCluster(cluster.id))
   await store.dispatch(refreshSpaceNames())
-  if (space) store.dispatch(initSpace(space))
+
+  const lastId = Tab.getSpaceId(store.getState())
+  const spaceId = space || lastId
+
+  if (spaceId) store.dispatch(initSpace(spaceId))
 }

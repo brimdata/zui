@@ -5,6 +5,7 @@
   position: relative;
   overflow: hidden;
   height: 26px;
+  flex-shrink: 0;
 
   p {
     transition: color 1750ms;
