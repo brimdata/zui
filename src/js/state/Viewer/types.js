@@ -7,10 +7,10 @@ import type {SearchStatus} from "../../types/searches"
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
 export type ViewerColumns = {[string]: Descriptor}
-export type ViewerSelectionData = {
+export type ViewerSelectionData = {|
   rows: {[number]: boolean},
   currentRange: [number, number]
-}
+|}
 export type ViewerState = {|
   records: RecordData[],
   columns: ViewerColumns,
@@ -31,6 +31,11 @@ export type ViewerAction =
   | VIEWER_SELECT
   | VIEWER_SELECT_MULTI
   | VIEWER_SELECT_RANGE
+  | VIEWER_SELECT_NEXT
+  | VIEWER_SELECT_PREV
+  | VIEWER_SELECT_RANGE_NEXT
+  | VIEWER_SELECT_RANGE_PREV
+  | VIEWER_SELECT_ALL
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",
@@ -85,4 +90,24 @@ export type VIEWER_SELECT_MULTI = {
 export type VIEWER_SELECT_RANGE = {
   type: "VIEWER_SELECT_RANGE",
   index: number
+}
+
+export type VIEWER_SELECT_NEXT = {
+  type: "VIEWER_SELECT_NEXT"
+}
+
+export type VIEWER_SELECT_PREV = {
+  type: "VIEWER_SELECT_PREV"
+}
+
+export type VIEWER_SELECT_RANGE_NEXT = {
+  type: "VIEWER_SELECT_RANGE_NEXT"
+}
+
+export type VIEWER_SELECT_RANGE_PREV = {
+  type: "VIEWER_SELECT_RANGE_PREV"
+}
+
+export type VIEWER_SELECT_ALL = {
+  type: "VIEWER_SELECT_ALL"
 }

@@ -18,7 +18,7 @@ type Props = {
   timeFormat: string,
   log: Log,
   columns: TableColumns,
-  onClick: () => void,
+  onClick: Function,
   rightClick: RightClickBuilder
 }
 
