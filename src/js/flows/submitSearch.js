@@ -8,10 +8,10 @@ import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
-import Viewer from "../state/Viewer"
 import brim from "../brim"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
+import Viewer from "../state/Viewer"
 
 export default function submitSearch(
   save: Object = {history: true, investigation: true},
@@ -37,7 +37,7 @@ export default function submitSearch(
     let tabId = Tabs.getActive(state)
     let args = Search.getArgs(state)
 
-    dispatch(Viewer.clear(tabId))
+    if (shouldClearTable(args, prevArgs)) dispatch(Viewer.clear(tabId))
     dispatch(Notice.dismiss())
 
     switch (args.type) {
@@ -50,4 +50,14 @@ export default function submitSearch(
         return dispatch(executeTableSearch(tabId, args))
     }
   }
+}
+
+function shouldClearTable(args, prev) {
+  let duration = ([from, to]) => to - from
+
+  return !(
+    args.tableProgram === prev.tableProgram &&
+    args.spaceId === prev.spaceId &&
+    duration(args.span) === duration(prev.span)
+  )
 }
