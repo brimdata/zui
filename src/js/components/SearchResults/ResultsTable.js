@@ -3,7 +3,7 @@
 import {connect, useDispatch, useSelector} from "react-redux"
 import {isEmpty} from "lodash"
 import Mousetrap from "mousetrap"
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import throttle from "lodash/throttle"
 
 import type {ColumnHeadersViewState} from "../../state/Layout/types"

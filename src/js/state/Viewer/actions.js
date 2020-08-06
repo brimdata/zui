@@ -3,7 +3,6 @@
 import type {RecordData} from "../../types/records"
 import type {ScrollPosition} from "../../types"
 import type {SearchStatus} from "../../types/searches"
-import type {Thunk} from "../types"
 import type {
   VIEWER_CLEAR,
   VIEWER_COLUMNS,
@@ -18,7 +17,6 @@ import type {
   ViewerColumns,
   ViewerStatus
 } from "./types"
-import Viewer from "./"
 
 export const clear = (tabId: string): VIEWER_CLEAR => {
   return {type: "VIEWER_CLEAR", tabId}
