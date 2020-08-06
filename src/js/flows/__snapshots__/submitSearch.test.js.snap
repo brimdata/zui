@@ -82,7 +82,6 @@ exports[`fetching an zoom search without history 1`] = `
 Array [
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
-  "VIEWER_CLEAR",
   "NOTICE_DISMISS",
   "VIEWER_STATUS",
   "VIEWER_END_STATUS",
