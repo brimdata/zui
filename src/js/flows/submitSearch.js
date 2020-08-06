@@ -8,10 +8,10 @@ import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
+import Viewer from "../state/Viewer"
 import brim from "../brim"
 import executeHistogramSearch from "./executeHistogramSearch"
 import executeTableSearch from "./executeTableSearch"
-import Viewer from "../state/Viewer"
 
 export default function submitSearch(
   save: Object = {history: true, investigation: true},
