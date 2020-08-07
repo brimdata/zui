@@ -18,15 +18,17 @@ export default function submitSearch(
   ts: Date = new Date()
 ): Thunk {
   return function(dispatch, getState) {
-    let time = brim.time(ts)
-    let prevArgs = Search.getArgs(getState())
+    const time = brim.time(ts)
+    const prevArgs = Search.getArgs(getState())
+    const space = Tab.space(getState())
+    const isIngesting = space && brim.space(space).ingesting()
     dispatch(SearchBar.submittingSearchBar(ts))
     dispatch(Tab.computeSpan())
     if (!dispatch(SearchBar.validate())) return Promise.reject()
 
     const state = getState()
 
-    let record = Search.getRecord(state)
+    const record = Search.getRecord(state)
     if (save.history) {
       dispatch(History.push(record, time.toTs()))
     }
@@ -34,10 +36,11 @@ export default function submitSearch(
       globalDispatch(Investigation.push(record, time.toTs()))
     }
 
-    let tabId = Tabs.getActive(state)
-    let args = Search.getArgs(state)
+    const tabId = Tabs.getActive(state)
+    const args = Search.getArgs(state)
 
-    if (shouldClearTable(args, prevArgs)) dispatch(Viewer.clear(tabId))
+    if (shouldClearTable(args, prevArgs, isIngesting))
+      dispatch(Viewer.clear(tabId))
     dispatch(Notice.dismiss())
 
     switch (args.type) {
@@ -52,12 +55,13 @@ export default function submitSearch(
   }
 }
 
-function shouldClearTable(args, prev) {
-  let duration = ([from, to]) => to - from
+function shouldClearTable(args, prev, isIngesting) {
+  const duration = ([from, to]) => to - from
 
   return !(
     args.tableProgram === prev.tableProgram &&
     args.spaceId === prev.spaceId &&
-    duration(args.span) === duration(prev.span)
+    duration(args.span) === duration(prev.span) &&
+    isIngesting
   )
 }
