@@ -7,7 +7,7 @@ import Mousetrap from "mousetrap"
 import Viewer from "../../state/Viewer"
 import useCallbackRef from "../hooks/useCallbackRef"
 
-function useKeybindings() {
+function useKeybindings(multi) {
   const dispatch = useDispatch()
   const [focusParent, ref] = useCallbackRef()
 
@@ -20,6 +20,7 @@ function useKeybindings() {
     }
 
     function onShiftDown(e) {
+      if (!multi) return
       e.preventDefault()
       dispatch(Viewer.selectRangeNext())
     }
@@ -30,11 +31,13 @@ function useKeybindings() {
     }
 
     function onShiftUp(e) {
+      if (!multi) return
       e.preventDefault()
       dispatch(Viewer.selectRangePrev())
     }
 
     function selectAll(e) {
+      if (!multi) return
       e.preventDefault()
       dispatch(Viewer.selectAll())
     }
@@ -52,15 +55,17 @@ function useKeybindings() {
   return ref
 }
 
-export function useRowSelection() {
-  const parentRef = useKeybindings()
+type Args = {multi: boolean}
+
+export function useRowSelection({multi}: Args) {
+  const parentRef = useKeybindings(multi)
   const selection = useSelector(Viewer.getSelection)
   const dispatch = useDispatch()
 
   function clicked(e: KeyboardEvent, index: number) {
-    if (e.metaKey) {
+    if (multi && e.metaKey) {
       dispatch(Viewer.selectMulti(index))
-    } else if (e.shiftKey) {
+    } else if (multi && e.shiftKey) {
       dispatch(Viewer.selectRange(index))
     } else {
       dispatch(Viewer.select(index))

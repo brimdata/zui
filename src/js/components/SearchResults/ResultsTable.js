@@ -56,7 +56,7 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function ResultsTable(props: Props) {
   const dispatch = useDispatch()
-  const {parentRef, selection, clicked} = useRowSelection()
+  const {parentRef, selection, clicked} = useRowSelection({multi: false})
   const {logs, columnHeadersView} = props
 
   let type
