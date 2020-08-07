@@ -1,11 +1,16 @@
 /* @flow */
-export default function getPersistable(state: *) {
-  let persist = Object.assign({}, state)
-  // remove state pieces which we are not interested in persisting
-  delete persist.errors
-  delete persist.notice
-  delete persist.handlers
-  delete persist.spaces
+import produce from "immer"
 
-  return persist
+export default function getPersistable(state: *) {
+  return produce(state, (draft) => {
+    delete draft.errors
+    delete draft.notice
+    delete draft.handlers
+    delete draft.spaces
+
+    for (const tab of draft.tabs.data) {
+      delete tab.viewer
+      delete tab.chart
+    }
+  })
 }
