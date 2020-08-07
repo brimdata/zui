@@ -1,10 +1,8 @@
 /* @flow */
 
-import {connect, useDispatch, useSelector} from "react-redux"
+import {connect, useDispatch} from "react-redux"
 import {isEmpty} from "lodash"
-import Mousetrap from "mousetrap"
-import React, {useEffect} from "react"
-import throttle from "lodash/throttle"
+import React from "react"
 
 import type {ColumnHeadersViewState} from "../../state/Layout/types"
 import type {DispatchProps, State} from "../../state/types"
@@ -13,6 +11,7 @@ import type {Space} from "../../state/Spaces/types"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
+import {useRowSelection} from "./selection"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
@@ -57,8 +56,8 @@ type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function ResultsTable(props: Props) {
   const dispatch = useDispatch()
-  const selection = useSelector(Viewer.getSelection)
-  let {logs, columnHeadersView} = props
+  const {parentRef, selection, clicked} = useRowSelection()
+  const {logs, columnHeadersView} = props
 
   let type
   if (columnHeadersView === "AUTO") {
@@ -83,23 +82,6 @@ export default function ResultsTable(props: Props) {
     chunkSize: 5,
     overScan: 1
   })
-
-  useEffect(() => {
-    Mousetrap.bind(
-      ["down", "shift+down"],
-      throttle((e) => {
-        e.preventDefault()
-        dispatch(e.shiftKey ? Viewer.selectRangeNext() : Viewer.selectNext())
-      }, 25)
-    )
-    Mousetrap.bind(
-      ["up", "shift+up"],
-      throttle((e) => {
-        e.preventDefault()
-        dispatch(e.shiftKey ? Viewer.selectRangePrev() : Viewer.selectPrev())
-      }, 25)
-    )
-  }, [])
 
   useDebouncedEffect(
     () => {
@@ -128,13 +110,7 @@ export default function ResultsTable(props: Props) {
         highlight={selection.includes(index)}
         dimens={dimens}
         onClick={(e) => {
-          if (e.metaKey) {
-            dispatch(Viewer.selectMulti(index))
-          } else if (e.shiftKey) {
-            dispatch(Viewer.selectRange(index))
-          } else {
-            dispatch(Viewer.select(index))
-          }
+          clicked(e, index)
           clickHandler()
         }}
         rightClick={menu.searchFieldContextMenu(
@@ -167,6 +143,7 @@ export default function ResultsTable(props: Props) {
 
   return (
     <ViewerComponent
+      innerRef={parentRef}
       logs={logs}
       renderRow={renderRow}
       chunker={chunker}
