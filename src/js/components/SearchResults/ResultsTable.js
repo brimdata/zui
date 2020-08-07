@@ -92,12 +92,6 @@ export default function ResultsTable(props: Props) {
     [selection]
   )
 
-  const onDoubleClick = () => {
-    props.dispatch(openLogDetailsWindow())
-  }
-
-  const clickHandler = useDoubleClick(() => {}, onDoubleClick)
-
   function renderRow(index: number, dimens: ViewerDimens) {
     return (
       <LogRow
@@ -111,7 +105,10 @@ export default function ResultsTable(props: Props) {
         dimens={dimens}
         onClick={(e) => {
           clicked(e, index)
-          clickHandler()
+        }}
+        onDoubleClick={(e) => {
+          clicked(e, index)
+          props.dispatch(openLogDetailsWindow())
         }}
         rightClick={menu.searchFieldContextMenu(
           props.program,
