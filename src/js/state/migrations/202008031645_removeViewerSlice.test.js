@@ -14,6 +14,7 @@ test("migrating 202008031645_removeViewerSlice", () => {
     // $FlowFixMe
     for (const tab of win.state.tabs.data) {
       expect(tab.viewer).toBe(undefined)
+      expect(tab.chart).toBe(undefined)
     }
   }
 })
