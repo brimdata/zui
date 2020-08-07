@@ -21,6 +21,10 @@
   border: 1px solid transparent;
   height: 25px;
 
+  &.selected {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
   &:hover {
     z-index: 1;
     border: 1px dashed $gray-9;
