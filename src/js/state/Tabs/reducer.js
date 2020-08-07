@@ -15,7 +15,8 @@ let init = {
 }
 
 export default function reducer(state: TabsState = init, action: TabActions) {
-  if (tabAction(action)) return updateTab(state, action)
+  if (reduxAction(action)) return forwardToAllTabs(state, action)
+  if (tabAction(action)) return forwardToTab(state, action)
 
   switch (action.type) {
     case "TABS_ACTIVATE":
@@ -103,7 +104,7 @@ function tabAction({type}) {
   )
 }
 
-function updateTab(state, action: Object) {
+function forwardToTab(state, action: Object) {
   let {data, active} = state
   let id = action.tabId || active
   let index = indexOf(data, id)
@@ -118,4 +119,15 @@ function updateTab(state, action: Object) {
 
 function indexOf(data, id) {
   return data.findIndex((t) => t.id === id)
+}
+
+function reduxAction(action) {
+  return action.type.startsWith("@@")
+}
+
+function forwardToAllTabs(state, action) {
+  return {
+    ...state,
+    data: state.data.map<TabState>((tabState) => tabReducer(tabState, action))
+  }
 }
