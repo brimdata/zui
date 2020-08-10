@@ -31,12 +31,6 @@ import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
-<<<<<<< HEAD
-import useDoubleClick from "../hooks/useDoubleClick"
-=======
-import Layout from "../../state/Layout"
-import type {ColumnHeadersViewState} from "../../state/Layout/types"
->>>>>>> fix lint
 
 type StateProps = {|
   logs: Log[],

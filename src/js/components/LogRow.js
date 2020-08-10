@@ -54,14 +54,7 @@ const LogRow = (props: Props) => {
       )
     }
     if (dimens.rowWidth !== "auto") {
-      return (
-        <div
-          className="log-cell"
-          key={key}
-          style={{width}}
-          onClick={handleClick}
-        />
-      )
+      return <div className="log-cell" key={key} style={{width}} />
     }
   }
 
@@ -77,12 +70,12 @@ const LogRow = (props: Props) => {
 }
 
 export default memo<Props>(LogRow, (prevProps: Props, nextProps: Props) => {
-  return !(
-    !Log.isSame(prevProps.log, nextProps.log) ||
-    !isEqual(prevProps.columns, nextProps.columns) ||
-    prevProps.highlight !== nextProps.highlight ||
-    prevProps.dimens.rowWidth !== nextProps.dimens.rowWidth ||
-    prevProps.timeZone !== nextProps.timeZone ||
-    prevProps.timeFormat !== nextProps.timeFormat
+  return (
+    Log.isSame(prevProps.log, nextProps.log) &&
+    isEqual(prevProps.columns, nextProps.columns) &&
+    prevProps.highlight === nextProps.highlight &&
+    prevProps.dimens.rowWidth === nextProps.dimens.rowWidth &&
+    prevProps.timeZone === nextProps.timeZone &&
+    prevProps.timeFormat === nextProps.timeFormat
   )
 })
