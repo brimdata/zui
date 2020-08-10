@@ -10,8 +10,13 @@ import type {
   VIEWER_RECORDS,
   VIEWER_SCROLL,
   VIEWER_SELECT,
+  VIEWER_SELECT_ALL,
   VIEWER_SELECT_MULTI,
+  VIEWER_SELECT_NEXT,
+  VIEWER_SELECT_PREV,
   VIEWER_SELECT_RANGE,
+  VIEWER_SELECT_RANGE_NEXT,
+  VIEWER_SELECT_RANGE_PREV,
   VIEWER_SPLICE,
   VIEWER_STATUS,
   ViewerColumns,
@@ -74,22 +79,22 @@ export const selectRange = (index: number): VIEWER_SELECT_RANGE => {
   return {type: "VIEWER_SELECT_RANGE", index}
 }
 
-export const selectRangeNext = () => ({
+export const selectRangeNext = (): VIEWER_SELECT_RANGE_NEXT => ({
   type: "VIEWER_SELECT_RANGE_NEXT"
 })
 
-export const selectRangePrev = () => ({
+export const selectRangePrev = (): VIEWER_SELECT_RANGE_PREV => ({
   type: "VIEWER_SELECT_RANGE_PREV"
 })
 
-export const selectNext = () => ({
+export const selectNext = (): VIEWER_SELECT_NEXT => ({
   type: "VIEWER_SELECT_NEXT"
 })
 
-export const selectPrev = () => ({
+export const selectPrev = (): VIEWER_SELECT_PREV => ({
   type: "VIEWER_SELECT_PREV"
 })
 
-export const selectAll = () => ({
+export const selectAll = (): VIEWER_SELECT_ALL => ({
   type: "VIEWER_SELECT_ALL"
 })
