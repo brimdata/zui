@@ -1,5 +1,6 @@
 /* @flow */
-import React from "react"
+import React, {useEffect, useRef, useState} from "react"
+import classNames from "classnames"
 
 import type {$Field} from "../../brim"
 import type {$Menu} from "../../electron/menu"
@@ -13,10 +14,34 @@ type Props = {
 }
 
 export default function SingleField({field, menu}: Props) {
+  const [selected, setSelected] = useState(false)
+  const cell = useRef<any>()
+
+  function onClick(e) {
+    setSelected(true)
+    lib.win.selectText(e.currentTarget)
+  }
+
+  function onOutsideClick(e: MouseEvent) {
+    if (cell.current && cell.current.contains(e.target)) return
+    setSelected(false)
+    lib.off("click", onOutsideClick, false)
+  }
+
+  useEffect(() => {
+    if (selected) {
+      lib.on("click", onOutsideClick, false)
+    }
+    return () => {
+      lib.off("click", onOutsideClick, false)
+    }
+  }, [selected])
+
   return (
     <div
-      className="cell-value-item"
-      onClick={(e) => lib.win.selectText(e.currentTarget)}
+      ref={cell}
+      className={classNames("cell-value-item", {selected})}
+      onClick={onClick}
       onContextMenu={() => showContextMenu(menu)}
     >
       <FieldCell field={field} />

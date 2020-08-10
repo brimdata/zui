@@ -5,49 +5,58 @@ import {createSelector} from "reselect"
 import type {RecordData} from "../../types/records"
 import type {State} from "../types"
 import type {TabState} from "../Tab/types"
-import type {ViewerState} from "./types"
+import {type ViewerSelection, createSelection} from "./helpers/selection"
+import type {ViewerSelectionData, ViewerState} from "./types"
 import Log from "../../models/Log"
 import Tabs from "../Tabs"
 import brim from "../../brim"
 
-const getViewer = createSelector<State, void, ViewerState, TabState>(
+export const getViewer = createSelector<State, void, ViewerState, TabState>(
   Tabs.getActiveTab,
   (tab) => tab.viewer
 )
 
-const getViewerRecords = createSelector<State, void, *, ViewerState>(
+export const getViewerRecords = createSelector<State, void, *, ViewerState>(
   getViewer,
   (viewer) => viewer.records
 )
 
-export default {
-  getViewer,
+export const isFetching = (state: TabState) =>
+  state.viewer.status === "FETCHING"
+
+export const getLogs = createSelector<State, void, Log[], RecordData[]>(
   getViewerRecords,
+  (records) => records.map(brim.record).map(brim.interop.recordToLog)
+)
 
-  isFetching: (state: TabState) => state.viewer.status === "FETCHING",
+export const getStatus = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.status
+)
 
-  getLogs: createSelector<State, void, Log[], RecordData[]>(
-    getViewerRecords,
-    (records) => records.map(brim.record).map(brim.interop.recordToLog)
-  ),
+export const getEndStatus = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.endStatus
+)
 
-  getStatus: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.status
-  ),
+export const getColumns = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.columns
+)
 
-  getEndStatus: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.endStatus
-  ),
+export const getScrollPos = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.scrollPos
+)
 
-  getColumns: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.columns
-  ),
+export const getSelectionData = createSelector<State, void, *, ViewerState>(
+  getViewer,
+  (viewer) => viewer.selection
+)
 
-  getScrollPos: createSelector<State, void, *, ViewerState>(
-    getViewer,
-    (viewer) => viewer.scrollPos
-  )
-}
+export const getSelection = createSelector<
+  State,
+  void,
+  ViewerSelection,
+  ViewerSelectionData
+>(getSelectionData, (data) => createSelection(data))

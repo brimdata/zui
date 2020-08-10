@@ -3,7 +3,7 @@
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "./config"
 import type {SearchArgs} from "../state/Search/types"
 import type {Thunk} from "../state/types"
-import {hashDescriptorKeys} from "../state/Viewer/hashDescriptorKeys"
+import {hashDescriptorKeys} from "../state/Viewer/helpers/hashDescriptorKeys"
 import Columns from "../state/Columns"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"

@@ -1,20 +1,21 @@
 /* @flow */
 
-import {connect} from "react-redux"
+import {connect, useDispatch} from "react-redux"
 import {isEmpty} from "lodash"
-import Mousetrap from "mousetrap"
-import React, {useEffect, useState} from "react"
-import throttle from "lodash/throttle"
+import React from "react"
 
+import type {ColumnHeadersViewState} from "../../state/Layout/types"
 import type {DispatchProps, State} from "../../state/types"
-import type {Space} from "../../state/Spaces/types"
 import type {ScrollPosition, ViewerDimens} from "../../types"
+import type {Space} from "../../state/Spaces/types"
 import {endMessage} from "../Viewer/Styler"
 import {fetchNextPage} from "../../flows/fetchNextPage"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
+import {useRowSelection} from "./selection"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
+import Layout from "../../state/Layout"
 import Log from "../../models/Log"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
@@ -31,8 +32,6 @@ import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
 import useDoubleClick from "../hooks/useDoubleClick"
-import Layout from "../../state/Layout"
-import type {ColumnHeadersViewState} from "../../state/Layout/types"
 
 type StateProps = {|
   logs: Log[],
@@ -56,8 +55,9 @@ type OwnProps = {|
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function ResultsTable(props: Props) {
-  const [selectedNdx, setSelectedNdx] = useState(0)
-  let {logs, columnHeadersView} = props
+  const dispatch = useDispatch()
+  const {parentRef, selection, clicked} = useRowSelection({multi: false})
+  const {logs, columnHeadersView} = props
 
   let type
   if (columnHeadersView === "AUTO") {
@@ -83,49 +83,20 @@ export default function ResultsTable(props: Props) {
     overScan: 1
   })
 
-  const adjustSelectedLogIndex = (indexDelta: number) => {
-    setSelectedNdx((currentNdx) => {
-      const newNdx = currentNdx + indexDelta
-      if (newNdx < 0 || newNdx > logs.length - 1) return currentNdx
-      return newNdx
-    })
-  }
-
-  useEffect(() => {
-    Mousetrap.bind(
-      "down",
-      throttle((e) => {
-        e.preventDefault()
-        adjustSelectedLogIndex(1)
-      }, 100)
-    )
-    Mousetrap.bind(
-      "up",
-      throttle((e) => {
-        e.preventDefault()
-        adjustSelectedLogIndex(-1)
-      }, 100)
-    )
-  }, [])
-
   useDebouncedEffect(
     () => {
-      if (logs[selectedNdx]) props.dispatch(viewLogDetail(logs[selectedNdx]))
+      if (selection.isEmpty()) return
+      dispatch(viewLogDetail(logs[selection.currentRange[0]]))
     },
-    200,
-    [selectedNdx]
+    400,
+    [selection]
   )
 
-  const onSingleClick = () => {
-    props.dispatch(viewLogDetail(logs[selectedNdx]))
-  }
-
   const onDoubleClick = () => {
-    props.dispatch(viewLogDetail(logs[selectedNdx]))
     props.dispatch(openLogDetailsWindow())
   }
 
-  const clickHandler = useDoubleClick(onSingleClick, onDoubleClick)
+  const clickHandler = useDoubleClick(() => {}, onDoubleClick)
 
   function renderRow(index: number, dimens: ViewerDimens) {
     return (
@@ -136,10 +107,10 @@ export default function ResultsTable(props: Props) {
         log={logs[index]}
         timeZone={props.timeZone}
         timeFormat={props.timeFormat}
-        highlight={Log.isSame(logs[index], logs[selectedNdx])}
+        highlight={selection.includes(index)}
         dimens={dimens}
-        onClick={() => {
-          setSelectedNdx(index)
+        onClick={(e) => {
+          clicked(e, index)
           clickHandler()
         }}
         rightClick={menu.searchFieldContextMenu(
@@ -172,6 +143,7 @@ export default function ResultsTable(props: Props) {
 
   return (
     <ViewerComponent
+      innerRef={parentRef}
       logs={logs}
       renderRow={renderRow}
       chunker={chunker}

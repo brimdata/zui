@@ -24,7 +24,8 @@ type Props = {
   logs: Log[],
   onLastChunk?: Function,
   renderEnd: () => *,
-  scrollPos: ScrollPosition
+  scrollPos: ScrollPosition,
+  innerRef: *
 }
 
 export default function Viewer(props: Props) {
@@ -78,7 +79,7 @@ export default function Viewer(props: Props) {
   }, [props.scrollPos])
 
   return (
-    <div className="viewer">
+    <div className="viewer" ref={props.innerRef} tabIndex="0">
       <Header
         columns={props.tableColumns}
         dimens={props.dimens}

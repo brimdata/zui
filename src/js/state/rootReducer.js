@@ -13,11 +13,9 @@ import Prefs from "./Prefs"
 import Spaces from "./Spaces"
 import Tabs from "./Tabs"
 import View from "./View"
-import Viewer from "./Viewer"
 
 export default combineReducers<*, *>({
   errors: Errors.reducer,
-  viewer: Viewer.reducer,
   clusters: Clusters.reducer,
   modal: Modal.reducer,
   notice: Notice.reducer,
