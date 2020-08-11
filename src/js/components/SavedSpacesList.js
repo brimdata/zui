@@ -2,6 +2,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
+import styled from "styled-components"
 
 import type {Space} from "../state/Spaces/types"
 import {initSpace} from "../flows/initSpace"
@@ -19,6 +20,13 @@ type Props = {|
   spaces: Space[],
   spaceContextMenu: Function
 |}
+
+const NameWrap = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 2;
+  overflow: hidden;
+`
 
 export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
   const dispatch = useDispatch()
@@ -60,13 +68,15 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
                   "current-space-link": s.id === currentSpaceId
                 })}
               >
-                {s.storage_kind === "archivestore" ? (
-                  <ArchiveBorderIcon className="space-icon" />
-                ) : (
-                  <FileBorder className="space-icon" />
-                )}
+                <NameWrap>
+                  {s.storage_kind === "archivestore" ? (
+                    <ArchiveBorderIcon className="space-icon" />
+                  ) : (
+                    <FileBorder className="space-icon" />
+                  )}
 
-                <span className="name">{s.name}</span>
+                  <span className="name">{s.name}</span>
+                </NameWrap>
                 {progress}
               </a>
             </li>
