@@ -10,19 +10,21 @@ import Tabs from "../state/Tabs"
 export default function() {
   let dispatch = useDispatch()
   useEffect(() => {
-    Mousetrap.bind("mod+t", () => dispatch(Tabs.new()))
-    Mousetrap.bind("mod+w", (e) => {
-      e.preventDefault()
-      dispatch(Tabs.closeActive())
-    })
-    Mousetrap.bind("ctrl+tab", () => dispatch(Tabs.activateNext()))
-    Mousetrap.bind("ctrl+shift+tab", () => dispatch(Tabs.activatePrev()))
+    const bindings = new Mousetrap()
+      .bind("mod+t", () => dispatch(Tabs.new()))
+      .bind("mod+w", (e) => {
+        e.preventDefault()
+        dispatch(Tabs.closeActive())
+      })
+      .bind("ctrl+tab", () => dispatch(Tabs.activateNext()))
+      .bind("ctrl+shift+tab", () => dispatch(Tabs.activatePrev()))
     for (let i = 0; i < 8; ++i) {
-      Mousetrap.bind(`mod+${i + 1}`, () => dispatch(Tabs.activateByIndex(i)))
+      bindings.bind(`mod+${i + 1}`, () => dispatch(Tabs.activateByIndex(i)))
     }
-    Mousetrap.bind("mod+9", () => dispatch(Tabs.activateLast()))
-    Mousetrap.bind("mod+,", () => dispatch(Modal.show("settings")))
+    bindings
+      .bind("mod+9", () => dispatch(Tabs.activateLast()))
+      .bind("mod+,", () => dispatch(Modal.show("settings")))
 
-    return () => Mousetrap.reset()
+    return () => bindings.reset()
   }, [])
 }

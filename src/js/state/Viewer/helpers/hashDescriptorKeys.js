@@ -2,8 +2,8 @@
 
 import md5 from "md5"
 
-import type {Descriptor, Descriptors} from "../../types"
-import columnKey from "../../lib/columnKey"
+import type {Descriptor, Descriptors} from "../../../types"
+import columnKey from "../../../lib/columnKey"
 
 export function hashDescriptorKeys(desc: Descriptors) {
   let newObj = {}

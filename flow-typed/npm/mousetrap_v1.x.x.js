@@ -2,19 +2,22 @@
 // flow-typed version: c6154227d1/mousetrap_v1.x.x/flow_>=v0.25.x <=v0.103.x
 
 declare module "mousetrap" {
-  declare module.exports: {
-    stopCallback: (
+  declare class Mousetrap {
+    constructor(node?: HTMLElement): Mousetrap;
+    stopCallback (
       e: KeyboardEvent,
       element: Element,
       combo: string
-    ) => boolean,
+    ): boolean;
     bind(
       key: string | Array<string>,
       fn: (e: Event, combo?: string) => mixed,
       eventType?: string
-    ): void,
-    unbind(key: string | Array<string>): void,
-    trigger(key: string): void,
-    reset(): void
-  };
+    ): Mousetrap;
+    unbind(key: string | Array<string>): void;
+    trigger(key: string): void;
+    reset(): void;
+  }
+
+  declare module.exports: typeof Mousetrap
 }

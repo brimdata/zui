@@ -2,6 +2,9 @@
   overflow: visible;
   height: 0;
   width: 0;
+  *::selection {
+    background: transparent;
+  }
 }
 
 .viewer .view {
@@ -38,7 +41,10 @@
   }
 
   &.highlight {
-    background: $white-4;
+    background: $havelock;
+    .field-cell {
+      color: white;
+    }
   }
 }
 

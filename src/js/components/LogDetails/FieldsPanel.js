@@ -19,6 +19,8 @@ type Props = {
   contextMenu: Function
 }
 
+// This needs to be optimized for performance.
+
 export default function FieldsPanel({log, contextMenu}: Props) {
   log = log.exclude("_td")
   let program = useSelector(SearchBar.getSearchProgram)
@@ -58,9 +60,11 @@ export default function FieldsPanel({log, contextMenu}: Props) {
                 >
                   {column.name}
                 </span>
-                <BrimTooltip className="brim-tooltip-show-hover">
-                  <ColumnDescription column={hovered} path={path} />
-                </BrimTooltip>
+                {hovered.name.length > 0 && (
+                  <BrimTooltip className="brim-tooltip-show-hover">
+                    <ColumnDescription column={hovered} path={path} />
+                  </BrimTooltip>
+                )}
               </th>
               <td onContextMenu={onContextMenu(log, index)}>
                 <FieldCell field={fieldAt(log, index)} />
