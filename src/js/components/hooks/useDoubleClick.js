@@ -6,22 +6,28 @@ export default function useDoubleClick(
   doubleFunc: Function
 ) {
   const [clicks, setClicks] = useState(0)
+  const [event, setEvent] = useState(undefined)
 
+  const resetState = () => {
+    setClicks(0)
+    setEvent(undefined)
+  }
   useEffect(() => {
     let singleClickTimer
     if (clicks === 1) {
       singleClickTimer = setTimeout(function() {
-        singleFunc()
-        setClicks(0)
+        singleFunc(event)
+        resetState()
       }, 250)
     } else if (clicks === 2) {
-      doubleFunc()
-      setClicks(0)
+      doubleFunc(event)
+      resetState()
     }
     return () => clearTimeout(singleClickTimer)
   }, [clicks])
 
-  return () => {
+  return (e: MouseEvent) => {
+    setEvent(e)
     setClicks((clicks) => clicks + 1)
   }
 }

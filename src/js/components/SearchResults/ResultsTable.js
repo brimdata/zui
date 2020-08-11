@@ -31,7 +31,6 @@ import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
-import useDoubleClick from "../hooks/useDoubleClick"
 
 type StateProps = {|
   logs: Log[],
@@ -92,12 +91,6 @@ export default function ResultsTable(props: Props) {
     [selection]
   )
 
-  const onDoubleClick = () => {
-    props.dispatch(openLogDetailsWindow())
-  }
-
-  const clickHandler = useDoubleClick(() => {}, onDoubleClick)
-
   function renderRow(index: number, dimens: ViewerDimens) {
     return (
       <LogRow
@@ -110,8 +103,11 @@ export default function ResultsTable(props: Props) {
         highlight={selection.includes(index)}
         dimens={dimens}
         onClick={(e) => {
-          clicked(e, index)
-          clickHandler()
+          e && clicked(e, index)
+        }}
+        onDoubleClick={(e) => {
+          e && clicked(e, index)
+          props.dispatch(openLogDetailsWindow())
         }}
         rightClick={menu.searchFieldContextMenu(
           props.program,
