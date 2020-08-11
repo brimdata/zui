@@ -103,10 +103,10 @@ export default function ResultsTable(props: Props) {
         highlight={selection.includes(index)}
         dimens={dimens}
         onClick={(e) => {
-          clicked(e, index)
+          e && clicked(e, index)
         }}
         onDoubleClick={(e) => {
-          clicked(e, index)
+          e && clicked(e, index)
           props.dispatch(openLogDetailsWindow())
         }}
         rightClick={menu.searchFieldContextMenu(

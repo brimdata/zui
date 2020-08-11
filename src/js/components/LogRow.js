@@ -19,8 +19,8 @@ type Props = {
   timeFormat: string,
   log: Log,
   columns: TableColumns,
-  onClick: () => void,
-  onDoubleClick: () => void,
+  onClick: Function,
+  onDoubleClick: Function,
   rightClick: RightClickBuilder
 }
 
@@ -62,7 +62,9 @@ const LogRow = (props: Props) => {
     <div
       className={classNames("log-row", {highlight, even: index % 2 === 0})}
       style={Styler.row(dimens)}
-      onClick={handleClick}
+      onClick={(e) => {
+        handleClick(e)
+      }}
     >
       {columns.getVisible().map(renderCell)}
     </div>
