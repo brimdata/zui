@@ -2,10 +2,12 @@
 import {createZealotMock} from "zealot"
 import fsExtra from "fs-extra"
 
+import Clusters from "../state/Clusters"
 import Current from "../state/Current"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import fixtures from "../test/fixtures"
 import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
 import itestFile from "../test/itestFile"
@@ -39,7 +41,10 @@ beforeEach(() => {
     })
     .stubPromise("spaces.delete", true)
 
+  const conn = fixtures("cluster1")
   store = initTestStore(zealot)
+  store.dispatch(Clusters.add(conn))
+  store.dispatch(Current.setConnectionId(conn.id))
   globalDispatch = store.dispatch
 })
 
