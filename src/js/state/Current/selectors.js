@@ -45,3 +45,19 @@ export const getSpace = createSelector<State, void, Space, SpacesState, Id, Id>(
     return spaces[connId][spaceId]
   }
 )
+
+export const getSpaceSafe = (state: State) => {
+  try {
+    return getSpace(state)
+  } catch {
+    return null
+  }
+}
+
+export const getConnectionSafe = (state: State) => {
+  try {
+    return getConnection(state)
+  } catch {
+    return null
+  }
+}

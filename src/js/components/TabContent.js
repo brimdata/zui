@@ -9,7 +9,7 @@ import TabWelcome from "./TabWelcome"
 import brim from "../brim"
 
 export default function TabContent() {
-  const space = useSelector(Current.getSpace)
+  const space = useSelector(Current.getSpaceSafe)
 
   if (!space) {
     return <TabWelcome />
