@@ -1,6 +1,6 @@
 /* @flow */
-import type {SearchState} from "../Search/types"
 import type {
+  AddTabData,
   TABS_ACTIVATE,
   TABS_ACTIVE_CLEAR,
   TABS_ADD,
@@ -10,7 +10,7 @@ import type {
 } from "./types"
 
 export default {
-  add: (id: string, data?: $Shape<SearchState>): TABS_ADD => ({
+  add: (id: string, data?: AddTabData): TABS_ADD => ({
     type: "TABS_ADD",
     id,
     data
