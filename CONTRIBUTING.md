@@ -4,7 +4,7 @@
 
 Thank you for contributing to Brim!
 
-Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg) as well.
+Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/#Feel-Free-to-Ask), please [open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg) as well.
 
 Brim is early in its life cycle and will be expanding quickly.  Please star and/or watch the repo so you can follow and track our progress.
 
