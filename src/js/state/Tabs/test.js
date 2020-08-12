@@ -1,4 +1,5 @@
 /* @flow */
+import Current from "../Current"
 import Search from "../Search"
 import Tab from "../Tab"
 import Tabs from "./"
@@ -151,7 +152,7 @@ test("reorder tabs does not throw error if invalid", () => {
 
 test("reset tab", () => {
   let state = store.dispatchAll([
-    Search.setSpace("myspaceid"),
+    Current.setSpaceId("myspaceid"),
     Tabs.clearActive()
   ])
 

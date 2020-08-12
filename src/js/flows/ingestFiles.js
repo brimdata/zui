@@ -4,9 +4,9 @@ import fsExtra from "fs-extra"
 
 import type {Dispatch, Thunk} from "../state/types"
 import {globalDispatch} from "../state/GlobalContext"
+import Current from "../state/Current"
 import Handlers from "../state/Handlers"
 import Prefs from "../state/Prefs"
-import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
@@ -125,10 +125,10 @@ const postFiles = (client, jsonTypesPath) => ({
 
 const setSpace = (dispatch, tabId) => ({
   do({spaceId}) {
-    dispatch(Search.setSpace(spaceId, tabId))
+    dispatch(Current.setSpaceId(spaceId, tabId))
   },
   undo() {
-    dispatch(Search.setSpace("", tabId))
+    dispatch(Current.setSpaceId("", tabId))
   }
 })
 

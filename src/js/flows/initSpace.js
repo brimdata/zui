@@ -1,6 +1,7 @@
 /* @flow */
 import type {Thunk} from "../state/types"
 import {globalDispatch} from "../state/GlobalContext"
+import Current from "../state/Current"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
 import Search from "../state/Search"
@@ -21,7 +22,7 @@ export const initSpace = (spaceId: string): Thunk => (
     .then(brim.interop.spacePayloadToSpace)
     .then((space) => {
       globalDispatch(Spaces.setDetail(clusterId, space))
-      dispatch(Search.setSpace(space.id))
+      dispatch(Current.setSpaceId(space.id))
       dispatch(Search.setSpanArgs(brim.space(space).everythingSpan()))
       dispatch(SearchBar.removeAllSearchBarPins())
       dispatch(SearchBar.changeSearchBarInput(""))

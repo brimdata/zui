@@ -1,6 +1,8 @@
 /* @flow */
 
 import {createZealotMock} from "zealot"
+
+import Current from "../state/Current"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
@@ -38,7 +40,7 @@ test("fetching a regular search", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn")
   ])
@@ -53,7 +55,7 @@ test("not saving a search to history", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     SearchBar.changeSearchBarInput("_path=conn")
   ])
 
@@ -67,7 +69,7 @@ test("fetching an analytic search", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
@@ -82,7 +84,7 @@ test("fetching an analytic search without history", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
@@ -97,7 +99,7 @@ test("fetching an zoom search", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     Search.setSpanFocus(brim.time.convertToSpan([new Date(0), new Date(1)])),
     SearchBar.changeSearchBarInput("_path=conn | count()")
@@ -113,7 +115,7 @@ test("fetching an zoom search without history", async () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()"),
     submitSearch()
@@ -129,7 +131,7 @@ test("a bad search query", () => {
   store.dispatchAll([
     Search.setCluster("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     SearchBar.changeSearchBarInput("_ath=")
   ])
 

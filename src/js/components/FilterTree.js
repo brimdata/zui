@@ -11,10 +11,10 @@ import {Node} from "../models/Node"
 import {createInvestigationTree} from "./FilterTree/helpers"
 import {globalDispatch} from "../state/GlobalContext"
 import BookIcon from "../icons/BookSvgIcon"
+import Current from "../state/Current"
 import EmptySection from "./common/EmptySection"
 import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
-import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces/selectors"
 import Tab from "../state/Tab"
@@ -52,7 +52,7 @@ export default function FilterTree() {
         ["data", "finding", "search", "spaceId"],
         ""
       )
-      dispatch(Search.setSpace(nodeSpaceId))
+      dispatch(Current.setSpaceId(nodeSpaceId))
       dispatch(submitSearch({history: false, investigation: false}))
     }
 

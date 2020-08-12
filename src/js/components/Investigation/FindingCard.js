@@ -10,6 +10,7 @@ import styled from "styled-components"
 
 import type {Finding} from "../../state/Investigation/types"
 import {globalDispatch} from "../../state/GlobalContext"
+import Current from "../../state/Current"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
@@ -41,7 +42,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
     dispatch(SearchBar.changeSearchBarInput(finding.search.program))
-    dispatch(Search.setSpace(finding.search.spaceId))
+    dispatch(Current.setSpaceId(finding.search.spaceId))
     dispatch(Search.setSpanArgs(finding.search.spanArgs))
     dispatch(Search.setSpanFocus(null))
     dispatch(submitSearch({history: false, investigation: false}))

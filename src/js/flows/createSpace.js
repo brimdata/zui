@@ -1,6 +1,6 @@
 /* @flow */
 import type {Thunk} from "../state/types"
-import Search from "../state/Search"
+import Current from "../state/Current"
 import refreshSpaceNames from "./refreshSpaceNames"
 
 type Props = {
@@ -22,7 +22,7 @@ export const createSpace = ({name, kind, data_path}: Props): Thunk => async (
     })
     .then((space) =>
       dispatch(refreshSpaceNames()).then(() =>
-        dispatch(Search.setSpace(space.id))
+        dispatch(Current.setSpaceId(space.id))
       )
     )
 }

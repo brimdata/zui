@@ -1,7 +1,9 @@
 /* @flow */
 
 import {createZealotMock} from "zealot"
+
 import {fetchNextPage} from "./fetchNextPage"
+import Current from "../state/Current"
 import Search from "../state/Search"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
@@ -30,7 +32,7 @@ beforeEach(() => {
   store = initTestStore(zealot)
   tabId = Tabs.getActive(store.getState())
   store.dispatchAll([
-    Search.setSpace("defaultId"),
+    Current.setSpaceId("defaultId"),
     Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     tab.computeSpan(),
     Viewer.appendRecords(tabId, records)
