@@ -9,7 +9,6 @@ import Current from "../state/Current"
 import Link from "./common/Link"
 import ModalBox from "./ModalBox/ModalBox"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import TextContent from "./TextContent"
 
 export default function IngestWarningsModal() {

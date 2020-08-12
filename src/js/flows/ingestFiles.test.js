@@ -43,8 +43,7 @@ beforeEach(() => {
 
   const conn = fixtures("cluster1")
   store = initTestStore(zealot)
-  store.dispatch(Clusters.add(conn))
-  store.dispatch(Current.setConnectionId(conn.id))
+  store.dispatchAll([Clusters.add(conn), Current.setConnectionId(conn.id)])
   globalDispatch = store.dispatch
 })
 
@@ -55,7 +54,7 @@ afterEach(() => {
 test("opening a pcap", async () => {
   await store.dispatch(ingestFiles([itestFile("sample.pcap")], globalDispatch))
 
-  let state = store.getState()
+  const state = store.getState()
   expect(Tab.getSpaceName(state)).toEqual("sample.pcap.brim")
   expect(Current.getSpace(state)).toEqual({
     name: "sample.pcap.brim",
@@ -94,7 +93,7 @@ test("when there is an error", async () => {
   const cluster = Current.getConnectionId(state)
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
-  expect(Tab.getSpaceName(state)).toEqual("")
+  expect(Current.getSpaceId(state)).toEqual(null)
 })
 
 test("a zeek ingest error", async () => {
@@ -105,7 +104,7 @@ test("a zeek ingest error", async () => {
   ).rejects.toEqual(expect.any(Error))
 
   let state = store.getState()
-  expect(Tab.getSpaceName(state)).toEqual("")
+  expect(Current.getSpaceId(state)).toEqual(null)
 })
 
 test("a json file with a custom types config", async () => {

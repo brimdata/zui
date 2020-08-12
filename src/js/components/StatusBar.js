@@ -12,7 +12,6 @@ import Current from "../state/Current"
 import Modal from "../state/Modal"
 import ProgressIndicator from "./ProgressIndicator"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import Warning from "./icons/warning-sm.svg"
 import brim from "../brim"
 

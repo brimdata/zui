@@ -19,7 +19,6 @@ export default (
   gDispatch: Dispatch = globalDispatch
 ): Thunk => (dispatch, getState, {zealot}) => {
   let clusterId = Current.getConnectionId(getState())
-  if (!clusterId) return
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()
   let jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
@@ -128,7 +127,7 @@ const setSpace = (dispatch, tabId) => ({
     dispatch(Current.setSpaceId(spaceId, tabId))
   },
   undo() {
-    dispatch(Current.setSpaceId("", tabId))
+    dispatch(Current.setSpaceId(null, tabId))
   }
 })
 

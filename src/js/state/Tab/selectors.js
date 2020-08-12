@@ -2,44 +2,24 @@
 
 import {createSelector} from "reselect"
 
-import type {Cluster, ClustersState} from "../Clusters/types"
+import type {Cluster} from "../Clusters/types"
 import type {DateTuple} from "../../lib/TimeWindow"
-import type {Space, SpacesState} from "../Spaces/types"
 import type {SpanArgs} from "../Search/types"
 import type {State} from "../types"
 import type {TabState} from "./types"
 import Chart from "../Chart"
-import Clusters from "../Clusters"
+import Current from "../Current"
 import History from "../History"
-import Spaces from "../Spaces"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
 import activeTabSelect from "./activeTabSelect"
 import brim, {type Span} from "../../brim"
 
-const clusterId = activeTabSelect((tab) => tab.search.clusterId)
-
-const cluster = createSelector<State, void, ?Cluster, string, ClustersState>(
-  clusterId,
-  Clusters.raw,
-  (id, obj) => obj[id]
-)
-
 const clusterUrl = createSelector<State, void, string, ?Cluster>(
-  cluster,
+  Current.getConnection,
   (c) => {
     if (c) return c.host + ":" + c.port
     else return "localhost:9867"
-  }
-)
-
-const space = createSelector<State, void, ?Space, TabState, SpacesState>(
-  Tabs.getActiveTab,
-  Spaces.raw,
-  (tab, spaces) => {
-    let list = spaces[tab.search.clusterId]
-    if (list) return list[tab.search.spaceId]
-    else return null
   }
 )
 
@@ -87,14 +67,11 @@ const getSpanFocusAsDates = createSelector<State, void, ?DateTuple, ?Span>(
 )
 
 export default {
-  clusterId,
-  cluster,
   clusterUrl,
-  getSpaceName: activeTabSelect((tab, state) =>
-    Spaces.getName(tab.search.clusterId, tab.search.spaceId)(state)
-  ),
-  getSpaceId: activeTabSelect((tab) => tab.search.spaceId),
-  space,
+  getSpaceName: (state: State) => {
+    const s = Current.getSpace(state)
+    return s ? s.name : ""
+  },
   currentEntry: activeTabSelect(History.current),
   canGoBack: activeTabSelect(History.canGoBack),
   canGoForward: activeTabSelect(History.canGoForward),

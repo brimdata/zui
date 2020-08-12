@@ -1,9 +1,14 @@
 /* @flow */
 
 import {createZealotMock} from "zealot"
+
+import Clusters from "../Clusters"
+import Current from "../Current"
 import Search from "./"
+import Spaces from "../Spaces"
 import Tab from "../Tab"
 import brim from "../../brim"
+import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
 
@@ -17,6 +22,15 @@ describe("reducer", () => {
 
   beforeEach(() => {
     store = initTestStore(createZealotMock().stubStream("search", []))
+    const conn = fixtures("cluster1")
+    const space = fixtures("space1")
+
+    store.dispatchAll([
+      Clusters.add(conn),
+      Spaces.setDetail(conn.id, space),
+      Current.setConnectionId(conn.id),
+      Current.setSpaceId(space.id)
+    ])
   })
 
   test("set span", () => {
@@ -78,6 +92,15 @@ describe("selectors", () => {
 
   beforeEach(() => {
     store = initTestStore()
+    const conn = fixtures("cluster1")
+    const space = fixtures("space1")
+
+    store.dispatchAll([
+      Clusters.add(conn),
+      Spaces.setDetail(conn.id, space),
+      Current.setConnectionId(conn.id),
+      Current.setSpaceId(space.id)
+    ])
   })
 
   test("getArgs", () => {
@@ -85,8 +108,8 @@ describe("selectors", () => {
 
     expect(Search.getArgs(state)).toEqual({
       chartProgram: "* | every 1sec count() by _path",
-      spaceId: "",
-      spaceName: "",
+      spaceId: "1",
+      spaceName: "default",
       span: [new Date(0), new Date(1000)],
       tableProgram: "* | head 500",
       type: "events"

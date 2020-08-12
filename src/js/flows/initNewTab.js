@@ -1,7 +1,6 @@
 /* @flow */
 import type {Thunk} from "../state/types"
 import Current from "../state/Current"
-import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import refreshSpaceNames from "./refreshSpaceNames"
 

@@ -1,7 +1,6 @@
 /* @flow */
 import Current from "../Current"
 import Search from "../Search"
-import Tab from "../Tab"
 import Tabs from "./"
 import initTestStore from "../../test/initTestStore"
 
@@ -158,5 +157,5 @@ test("reset tab", () => {
 
   let tab = Tabs.getActiveTab(state)
   expect(tab.id).toEqual(Tabs.getActive(state))
-  expect(Tab.getSpaceName(state)).toEqual("")
+  expect(Current.getSpaceId(state)).toEqual(null)
 })

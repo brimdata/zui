@@ -12,22 +12,24 @@ import brim from "../../brim"
 
 export default {
   getRecord: (state: State): SearchRecord => {
+    const space = Current.getSpace(state)
     return {
       program: SearchBar.getSearchBar(state).previous,
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
-      spaceName: Tab.getSpaceName(state),
-      spaceId: Current.getSpaceId(state)
+      spaceName: space.name,
+      spaceId: space.id
     }
   },
 
   getCurrentRecord: (state: State): SearchRecord => {
+    const space = Current.getSpace(state)
     return {
       program: SearchBar.getSearchBar(state).current,
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
-      spaceName: Tab.getSpaceName(state),
-      spaceId: Current.getSpaceId(state)
+      spaceName: space.name,
+      spaceId: space.id
     }
   },
 
@@ -35,8 +37,7 @@ export default {
     let program = SearchBar.getSearchProgram(state)
     let span = Tab.getSpanAsDates(state)
     let spanFocus = Tab.getSpanFocusAsDates(state)
-    let spaceId = Current.getSpaceId(state)
-    let spaceName = Tab.getSpaceName(state)
+    let space = Current.getSpace(state)
     let type: SearchType = getArgsType(program, spanFocus)
     let perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE
 
@@ -44,8 +45,8 @@ export default {
       tableProgram: addHeadProc(program, perPage),
       chartProgram: addEveryCountProc(program, span),
       span: spanFocus || span,
-      spaceId,
-      spaceName,
+      spaceId: space.id,
+      spaceName: space.name,
       type
     }
   }

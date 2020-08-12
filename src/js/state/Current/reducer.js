@@ -1,9 +1,13 @@
 /* @flow */
 
-import type {CurrentAction, CurrentState} from "./types"
 import produce from "immer"
 
-const init: CurrentState = {}
+import type {CurrentAction, CurrentState} from "./types"
+
+const init = (): CurrentState => ({
+  spaceId: null,
+  connectionId: null
+})
 
 export default produce((draft: CurrentState, action: CurrentAction) => {
   switch (action.type) {
@@ -14,4 +18,4 @@ export default produce((draft: CurrentState, action: CurrentAction) => {
       draft.connectionId = action.id
       return
   }
-}, init)
+}, init())

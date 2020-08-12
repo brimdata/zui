@@ -4,7 +4,6 @@ import type {Store} from "../state/types"
 import {initSpace} from "../flows/initSpace"
 import Clusters from "../state/Clusters"
 import Current from "../state/Current"
-import Tab from "../state/Tab"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 
