@@ -6,6 +6,11 @@ import React from "react"
 import type {DispatchProps} from "../state/types"
 import type {Space} from "../state/Spaces/types"
 import {XRightPaneExpander} from "./RightPaneExpander"
+import {openLogDetailsWindow} from "../flows/openLogDetailsWindow"
+import CloseButton from "./CloseButton"
+import Current from "../state/Current"
+import ExpandWindow from "../icons/ExpandWindow"
+import HistoryButtons from "./common/HistoryButtons"
 import Layout from "../state/Layout"
 import Log from "../models/Log"
 import LogDetails from "../state/LogDetails"
@@ -18,12 +23,7 @@ import Pane, {
   Center,
   PaneBody
 } from "./Pane"
-import Tab from "../state/Tab"
 import dispatchToProps from "../lib/dispatchToProps"
-import HistoryButtons from "./common/HistoryButtons"
-import CloseButton from "./CloseButton"
-import ExpandWindow from "../icons/ExpandWindow"
-import {openLogDetailsWindow} from "../flows/openLogDetailsWindow"
 
 type StateProps = {|
   currentLog: Log,
@@ -100,7 +100,7 @@ const stateToProps = (state) => ({
   prevExists: LogDetails.getHistory(state).prevExists(),
   nextExists: LogDetails.getHistory(state).nextExists(),
   currentLog: LogDetails.build(state),
-  space: Tab.space(state)
+  space: Current.getSpace(state)
 })
 
 export const XRightPane = connect<Props, {||}, _, _, _, _>(

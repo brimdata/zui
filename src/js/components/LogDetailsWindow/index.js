@@ -2,24 +2,24 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
+import {Center, Left, PaneHeader, PaneTitle, Right} from "../Pane"
 import {Md5Panel} from "../LogDetails/Md5Panel"
 import ConnPanel from "../LogDetails/ConnPanel"
+import Current from "../../state/Current"
 import FieldsPanel from "../LogDetails/FieldsPanel"
-import LogDetails from "../../state/LogDetails"
-import UidPanel from "../LogDetails/UidPanel"
-import {Center, Left, PaneHeader, PaneTitle, Right} from "../Pane"
-import Tab from "../../state/Tab"
 import HistoryButtons from "../common/HistoryButtons"
-import PacketsButton from "../PacketsButton"
-import menu from "../../electron/menu"
+import LogDetails from "../../state/LogDetails"
 import NavAnimation from "../LogDetails/NavAnimation"
+import PacketsButton from "../PacketsButton"
+import UidPanel from "../LogDetails/UidPanel"
+import menu from "../../electron/menu"
 
 export default function LogDetailsWindow() {
   let dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).prevExists()
   const nextExists = useSelector(LogDetails.getHistory).nextExists()
   const log = useSelector(LogDetails.build)
-  const space = useSelector(Tab.space)
+  const space = useSelector(Current.getSpace)
   const isGoingBack = useSelector(LogDetails.getIsGoingBack)
 
   return (

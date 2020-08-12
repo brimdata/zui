@@ -4,9 +4,9 @@ import React, {useState} from "react"
 import styled from "styled-components"
 
 import type {Styled} from "../types/styled"
+import Current from "../state/Current"
 import Link from "./common/Link"
 import SearchInput from "./common/forms/SearchInput"
-import Tab from "../state/Tab"
 import submitArchiveSearch from "../flows/submitArchiveSearch"
 
 const Container: Styled<> = styled.div`
@@ -51,7 +51,7 @@ const InfoCard = styled.div`
 
 export default function TabArchiveSearch() {
   const dispatch = useDispatch()
-  const space = useSelector(Tab.space)
+  const space = useSelector(Current.getSpace)
   const [pattern, setPattern] = useState("")
   const onSubmit = async (e) => {
     e.preventDefault()

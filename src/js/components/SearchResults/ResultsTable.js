@@ -15,13 +15,13 @@ import {useRowSelection} from "./selection"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
+import Current from "../../state/Current"
 import Layout from "../../state/Layout"
 import Log from "../../models/Log"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
 import Prefs from "../../state/Prefs"
 import SearchBar from "../../state/SearchBar"
-import Tab from "../../state/Tab"
 import TableColumns from "../../models/TableColumns"
 import View from "../../state/View"
 import Viewer from "../../state/Viewer"
@@ -164,7 +164,7 @@ function stateToProps(state: State) {
     timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
-    space: Tab.space(state),
+    space: Current.getSpace(state),
     scrollPos: Viewer.getScrollPos(state),
     state
   }

@@ -7,7 +7,7 @@ import refreshSpaceNames from "./refreshSpaceNames"
 
 export default (): Thunk => (dispatch, getState) => {
   const state = getState()
-  const space = Tab.space(state)
+  const space = Current.getSpace(state)
   const spaceId = Current.getSpaceId(state)
   const spaceIsDeleted = spaceId && !space
 

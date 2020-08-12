@@ -30,10 +30,10 @@ import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
+import Current from "../state/Current"
 import History from "../state/History"
 import IngestUpdateNotice from "./IngestUpdateNotice"
 import Search from "../state/Search"
-import Tab from "../state/Tab"
 import brim from "../brim"
 import submitSearch from "../flows/submitSearch"
 import useThrottle from "./hooks/useThrottle"
@@ -44,7 +44,7 @@ export default function IngestRefresh() {
   const historyCount = useSelector(History.count)
   const firstSearch = useSelector(History.first)
   const nextSearch = useSelector(Search.getCurrentRecord)
-  const currentSpace = useSelector(Tab.space)
+  const currentSpace = useSelector(Current.getSpace)
   const [space, setSpace] = useState(currentSpace)
   const [snapshot, cancelSnapshot] = useThrottle(space.ingest.snapshot, 3000)
   const [snapshotAck, setSnapshotAck] = useState(snapshot)

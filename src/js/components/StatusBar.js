@@ -20,7 +20,7 @@ export default function StatusBar() {
   let dispatch = useDispatch()
   let clusterID = useSelector(Current.getConnectionId)
   let spaceId = useSelector(Current.getSpaceId)
-  let space = useSelector(Tab.space)
+  let space = useSelector(Current.getSpace)
   let value = useSelector(Spaces.getIngestProgress(clusterID, spaceId))
   let warnings = useSelector(Spaces.getIngestWarnings(clusterID, spaceId))
   if (!isNumber(value) && isEmpty(warnings)) return null

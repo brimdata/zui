@@ -7,9 +7,9 @@ import React from "react"
 import {Fieldset} from "./Typography"
 import {showContextMenu} from "../lib/System"
 import Columns from "../state/Columns"
+import Current from "../state/Current"
 import Log from "../models/Log"
 import SearchBar from "../state/SearchBar"
-import Tab from "../state/Tab"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
 
@@ -62,7 +62,7 @@ const ConnHistory = ({history = ""}) => (
 const Host = ({className, title, ip, port, log, contextMenu}) => {
   let program = useSelector(SearchBar.getSearchProgram)
   let tableColumns = useSelector(Columns.getCurrentTableColumns)
-  let space = useSelector(Tab.space)
+  let space = useSelector(Current.getSpace)
   let rightClick = contextMenu(
     program,
     tableColumns.getColumns().map((c) => c.name),
