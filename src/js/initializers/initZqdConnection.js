@@ -22,7 +22,7 @@ export default async function(store: Store) {
   store.dispatch(Current.setConnectionId(cluster.id))
   await store.dispatch(refreshSpaceNames())
 
-  const lastId = Tab.getSpaceId(store.getState())
+  const lastId = Current.getSpaceId(store.getState())
   const spaceId = space || lastId
 
   if (spaceId) store.dispatch(initSpace(spaceId))

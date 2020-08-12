@@ -11,7 +11,9 @@ import activeTabSelect from "../Tab/activeTabSelect"
 
 type Id = string | null
 
-export const getSpaceId = activeTabSelect((state) => state.current.spaceId)
+export const getSpaceId = activeTabSelect(
+  (state) => state.current.spaceId || ""
+)
 
 export const getConnectionId = activeTabSelect(
   (state) => state.current.connectionId

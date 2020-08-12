@@ -1,10 +1,10 @@
 /* @flow */
 import type {Thunk} from "../state/types"
+import Current from "../state/Current"
 import ErrorFactory from "../models/ErrorFactory"
 import Handlers from "../state/Handlers"
 import Notice from "../state/Notice"
 import SearchBar from "../state/SearchBar"
-import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
@@ -15,7 +15,7 @@ export default (patterns: string[]): Thunk => (
   getState,
   {zealot}
 ) => {
-  const spaceId = Tab.getSpaceId(getState())
+  const spaceId = Current.getSpaceId(getState())
   const tabId = Tabs.getActive(getState())
   const ctl = new AbortController()
   const handle = "ArchiveSearch"

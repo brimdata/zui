@@ -5,6 +5,7 @@ import type {SearchRecord} from "../../types"
 import type {State} from "../types"
 import {addEveryCountProc} from "../../searches/histogramSearch"
 import {addHeadProc} from "../../lib/Program"
+import Current from "../Current"
 import SearchBar from "../SearchBar"
 import Tab from "../Tab"
 import brim from "../../brim"
@@ -16,7 +17,7 @@ export default {
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
       spaceName: Tab.getSpaceName(state),
-      spaceId: Tab.getSpaceId(state)
+      spaceId: Current.getSpaceId(state)
     }
   },
 
@@ -26,7 +27,7 @@ export default {
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
       spaceName: Tab.getSpaceName(state),
-      spaceId: Tab.getSpaceId(state)
+      spaceId: Current.getSpaceId(state)
     }
   },
 
@@ -34,7 +35,7 @@ export default {
     let program = SearchBar.getSearchProgram(state)
     let span = Tab.getSpanAsDates(state)
     let spanFocus = Tab.getSpanFocusAsDates(state)
-    let spaceId = Tab.getSpaceId(state)
+    let spaceId = Current.getSpaceId(state)
     let spaceName = Tab.getSpaceName(state)
     let type: SearchType = getArgsType(program, spanFocus)
     let perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE

@@ -2,6 +2,7 @@
 import type {Thunk} from "../state/types"
 import {saveToFile} from "../lib/response"
 import Columns from "../state/Columns"
+import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import brim from "../brim"
@@ -19,7 +20,7 @@ function cutColumns(program, columns) {
 }
 
 export default (filePath: string): Thunk => (dispatch, getState, {zealot}) => {
-  const spaceId = Tab.getSpaceId(getState())
+  const spaceId = Current.getSpaceId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())
   const program = cutColumns(baseProgram, columns)

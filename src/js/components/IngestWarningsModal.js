@@ -14,7 +14,7 @@ import TextContent from "./TextContent"
 
 export default function IngestWarningsModal() {
   let id = useSelector(Current.getConnectionId)
-  let spaceId = useSelector(Tab.getSpaceId)
+  let spaceId = useSelector(Current.getSpaceId)
   let warnings = useSelector(Spaces.getIngestWarnings(id, spaceId))
 
   let buttons = [{label: "Done", click: (done) => done()}]

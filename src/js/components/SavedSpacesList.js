@@ -8,11 +8,11 @@ import type {Space} from "../state/Spaces/types"
 import {initSpace} from "../flows/initSpace"
 import {showContextMenu} from "../lib/System"
 import ArchiveBorderIcon from "../icons/ArchiveBorderIcon"
+import Current from "../state/Current"
 import EmptySection from "./common/EmptySection"
 import FileBorder from "../icons/FileBorder"
 import FileFilled from "../icons/FileFilled"
 import ProgressIndicator from "./ProgressIndicator"
-import Tab from "../state/Tab"
 import brim from "../brim"
 import menu from "../electron/menu"
 
@@ -30,7 +30,7 @@ const NameWrap = styled.div`
 
 export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
   const dispatch = useDispatch()
-  const currentSpaceId = useSelector(Tab.getSpaceId)
+  const currentSpaceId = useSelector(Current.getSpaceId)
   const onClick = (space) => (e) => {
     e.preventDefault()
     dispatch(initSpace(space))

@@ -7,7 +7,7 @@ import Tab from "../state/Tab"
 
 export default function refreshSpaceInfo(): Thunk {
   return () => (dispatch, getState, {zealot}) => {
-    const id = Tab.getSpaceId(getState())
+    const id = Current.getSpaceId(getState())
 
     return zealot.spaces.get(id).then((data: *) => {
       let id = Current.getConnectionId(getState())
