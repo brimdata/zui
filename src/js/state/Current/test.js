@@ -1,5 +1,8 @@
 /* @flow */
+import Clusters from "../Clusters"
 import Current from "./"
+import Spaces from "../Spaces"
+import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 
 let store
@@ -18,4 +21,39 @@ test("setting the connection id", () => {
   store.dispatch(Current.setConnectionId("a"))
 
   expect(Current.getConnectionId(store.getState())).toBe("a")
+})
+
+test("getting the actual connection", () => {
+  const conn = {
+    id: "myconn",
+    host: "www.myconn.com",
+    port: "123",
+    username: "",
+    password: ""
+  }
+  const state = store.dispatchAll([
+    Clusters.add(conn),
+    Current.setConnectionId("myconn")
+  ])
+
+  expect(Current.getConnection(state)).toEqual(conn)
+})
+
+test("getting the actual space", () => {
+  const space = fixtures("space1")
+  const conn = {
+    id: "myconn",
+    host: "www.myconn.com",
+    port: "123",
+    username: "",
+    password: ""
+  }
+  const state = store.dispatchAll([
+    Clusters.add(conn),
+    Spaces.setDetail("myconn", space),
+    Current.setConnectionId("myconn"),
+    Current.setSpaceId(space.id)
+  ])
+
+  expect(Current.getSpace(state)).toEqual(space)
 })
