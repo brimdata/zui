@@ -15,7 +15,7 @@ export default (clusterId: string, spaceId: string, name: string): Thunk => (
   return zealot.spaces.update(spaceId, {name}).then(() => {
     dispatch(Spaces.rename(clusterId, spaceId, name))
     tabs.forEach((t) => {
-      if (t.search.spaceId === spaceId)
+      if (t.current.spaceId === spaceId)
         dispatch(Current.setSpaceId(spaceId, t.id))
     })
   })

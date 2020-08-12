@@ -20,11 +20,11 @@ test("add tab with no data", () => {
 
 test("add tab with data and activate", () => {
   let state = store.dispatchAll([
-    Tabs.add("1", {spanArgs: ["now", "now-1m"]}),
+    Tabs.add("1", {connectionId: "a"}),
     Tabs.activate("1")
   ])
   let tab = Tabs.getActiveTab(state)
-  expect(tab.search.spanArgs).toEqual(["now", "now-1m"])
+  expect(tab.current.connectionId).toEqual("a")
 })
 
 test("cannot activate tab that does not exist in data", () => {

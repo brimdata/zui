@@ -11,7 +11,7 @@ export type TabActions =
   | TABS_ACTIVE_CLEAR
 
 export type AddTabData = {
-  connectionId: string
+  connectionId: string | null
 }
 
 export type TABS_ADD = {
