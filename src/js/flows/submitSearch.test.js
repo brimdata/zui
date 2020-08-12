@@ -38,7 +38,7 @@ const initTimeWindow = () => (dispatch: Function, getState: Function) => {
 
 test("fetching a regular search", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
     Current.setSpaceId("ranch-id"),
     initTimeWindow(),
@@ -53,7 +53,7 @@ test("fetching a regular search", async () => {
 
 test("not saving a search to history", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
     Current.setSpaceId("ranch-id"),
     SearchBar.changeSearchBarInput("_path=conn")
@@ -67,7 +67,7 @@ test("not saving a search to history", async () => {
 
 test("fetching an analytic search", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
     Current.setSpaceId("ranch-id"),
     initTimeWindow(),
@@ -82,7 +82,7 @@ test("fetching an analytic search", async () => {
 
 test("fetching an analytic search without history", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
     Current.setSpaceId("ranch-id"),
     initTimeWindow(),
@@ -97,7 +97,7 @@ test("fetching an analytic search without history", async () => {
 
 test("fetching an zoom search", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
     Current.setSpaceId("ranch-id"),
     initTimeWindow(),
@@ -113,7 +113,7 @@ test("fetching an zoom search", async () => {
 
 test("fetching an zoom search without history", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
     Current.setSpaceId("ranch-id"),
     initTimeWindow(),
@@ -129,7 +129,7 @@ test("fetching an zoom search without history", async () => {
 
 test("a bad search query", () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
     Current.setSpaceId("ranch-id"),
     SearchBar.changeSearchBarInput("_ath=")
