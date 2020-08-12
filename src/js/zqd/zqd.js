@@ -117,7 +117,7 @@ export class ZQD {
       "listen",
       "-l",
       this.addr(),
-      "-datadir",
+      "-data",
       this.root,
       "-config",
       confFile,
