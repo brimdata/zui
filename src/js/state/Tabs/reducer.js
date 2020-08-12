@@ -100,7 +100,8 @@ function tabAction({type}) {
     type.startsWith("COLUMNS_") ||
     type.startsWith("HISTORY_") ||
     type.startsWith("LOG_DETAIL_") ||
-    type.startsWith("LAYOUT_")
+    type.startsWith("LAYOUT_") ||
+    type.startsWith("CURRENT_")
   )
 }
 
