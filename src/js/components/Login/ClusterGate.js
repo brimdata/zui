@@ -2,12 +2,12 @@
 import {useSelector} from "react-redux"
 import React from "react"
 
+import Current from "../../state/Current"
 import LoginPage from "./LoginPage"
 import SearchPage from "../SearchPage"
-import Tab from "../../state/Tab"
 
 export default function ClusterGate() {
-  let cluster = useSelector(Tab.cluster)
+  let cluster = useSelector(Current.getConnection)
 
   if (!cluster) {
     return <LoginPage />

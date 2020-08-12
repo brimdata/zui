@@ -1,8 +1,9 @@
 /* @flow */
-import React, {type ComponentType} from "react"
 import {useSelector} from "react-redux"
-import Tab from "../state/Tab"
+import React, {type ComponentType} from "react"
 import styled from "styled-components"
+
+import Current from "../state/Current"
 
 const ClusterPickerWrapper = (styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const ClusterPickerWrapper = (styled.div`
 `: ComponentType<*>)
 
 export default function ClusterPicker() {
-  const current = useSelector(Tab.cluster)
+  const current = useSelector(Current.getConnection)
 
   return (
     <ClusterPickerWrapper>
