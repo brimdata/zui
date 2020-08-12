@@ -3,7 +3,6 @@ import {useSelector} from "react-redux"
 import React from "react"
 
 import Tab from "../state/Tab"
-import TabArchiveSearch from "./TabArchiveSearch"
 import TabSearch from "./TabSearch"
 import TabSearchLoading from "./TabSearchLoading"
 import TabWelcome from "./TabWelcome"
@@ -20,8 +19,5 @@ export default function TabContent() {
     return <TabSearchLoading />
   }
 
-  if (space.storage_kind === "archivestore") {
-    return <TabArchiveSearch />
-  }
   return <TabSearch />
 }
