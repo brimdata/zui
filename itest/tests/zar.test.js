@@ -42,7 +42,7 @@ describe("Zar tests", () => {
         const sampleSpace = (await client.spaces.list())[0]
         const zarSpace = await client.spaces.create({name: ZAR_SPACE_NAME})
 
-        const zngFile = path.join(sampleSpace.data_path, "all.zng")
+        const zngFile = sampleSpace.data_path + "/all.zng"
         const zarRoot = zarSpace.data_path
 
         // Create a zar archive inside the space.
