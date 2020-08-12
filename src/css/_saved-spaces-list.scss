@@ -38,9 +38,11 @@
 
   .space-link {
     @include label-small;
+    line-height: 18px;
     color: $aqua;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     text-decoration: none;
     flex: 1;
     height: 24px;
@@ -99,7 +101,7 @@
   }
 
   .small-progress-bar {
-    width: 100px;
+    flex: 1;
     margin: 0px 5px;
   }
 }
