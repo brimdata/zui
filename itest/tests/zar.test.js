@@ -57,9 +57,7 @@ describe("Zar tests", () => {
         // Reload the app so that it reads the new space.
         await appStep.reload(app)
         await appStep.click(app, ".add-tab")
-        await app.client.waitForVisible(
-          `//*[@class="space-link"]/*[text()="${ZAR_SPACE_NAME}"]`
-        )
+        await app.client.waitForVisible(`=${ZAR_SPACE_NAME}`)
         done()
       })
       .catch((err) => {
