@@ -5,6 +5,7 @@ import React from "react"
 
 import {JSON_TYPE_CONFIG_DOCS} from "./Preferences/JSONTypeConfig"
 import {globalDispatch} from "../state/GlobalContext"
+import Current from "../state/Current"
 import Link from "./common/Link"
 import ModalBox from "./ModalBox/ModalBox"
 import Spaces from "../state/Spaces"
@@ -12,7 +13,7 @@ import Tab from "../state/Tab"
 import TextContent from "./TextContent"
 
 export default function IngestWarningsModal() {
-  let id = useSelector(Tab.clusterId)
+  let id = useSelector(Current.getConnectionId)
   let spaceId = useSelector(Tab.getSpaceId)
   let warnings = useSelector(Spaces.getIngestWarnings(id, spaceId))
 

@@ -17,7 +17,7 @@ export default {
     return space ? space.name : ""
   },
   raw: (state: State) => state.spaces,
-  getSpaces: (clusterId: string) => (state: State): Space[] => {
+  getSpaces: (clusterId: string | null) => (state: State): Space[] => {
     let clus = getCluster(state, clusterId)
     return Object.keys(clus).map((key) => {
       return {...clus[key]}
@@ -47,5 +47,6 @@ export default {
 }
 
 function getCluster(state, id): {[string]: Space} {
+  if (!id) return {}
   return state.spaces[id] || {}
 }

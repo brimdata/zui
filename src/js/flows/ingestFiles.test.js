@@ -1,7 +1,8 @@
 /* @flow */
+import {createZealotMock} from "zealot"
 import fsExtra from "fs-extra"
 
-import {createZealotMock} from "zealot"
+import Current from "../state/Current"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
@@ -85,7 +86,7 @@ test("when there is an error", async () => {
   ).rejects.toEqual(expect.any(Error))
 
   const state = store.getState()
-  const cluster = Tab.clusterId(state)
+  const cluster = Current.getConnectionId(state)
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
   expect(Tab.getSpaceName(state)).toEqual("")

@@ -35,7 +35,7 @@ type Props = {finding: Finding}
 
 export default React.memo<Props>(function FindingCard({finding}: Props) {
   const dispatch = useDispatch()
-  const clusterId = useSelector(Tab.clusterId)
+  const clusterId = useSelector(Current.getConnectionId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
   const findingSpaceName = get(finding, ["search", "spaceName"], "")
 

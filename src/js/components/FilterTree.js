@@ -27,7 +27,7 @@ export default function FilterTree() {
   let investigation = useSelector(Investigation.getInvestigation)
   let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
-  const clusterId = useSelector(Tab.clusterId)
+  const clusterId = useSelector(Current.getConnectionId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
 
   function renderNode(node: Node, i: number) {

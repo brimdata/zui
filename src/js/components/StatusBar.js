@@ -8,6 +8,7 @@ import classNames from "classnames"
 import {ingestProgressBar} from "../test/locators"
 import {isNumber} from "../lib/is"
 import {reactElementProps} from "../test/integration"
+import Current from "../state/Current"
 import Modal from "../state/Modal"
 import ProgressIndicator from "./ProgressIndicator"
 import Spaces from "../state/Spaces"
@@ -17,7 +18,7 @@ import brim from "../brim"
 
 export default function StatusBar() {
   let dispatch = useDispatch()
-  let clusterID = useSelector(Tab.clusterId)
+  let clusterID = useSelector(Current.getConnectionId)
   let spaceId = useSelector(Tab.getSpaceId)
   let space = useSelector(Tab.space)
   let value = useSelector(Spaces.getIngestProgress(clusterID, spaceId))

@@ -8,7 +8,6 @@ import Current from "../state/Current"
 import Handlers from "../state/Handlers"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import brim from "../brim"
 import errors from "../errors"
@@ -19,7 +18,8 @@ export default (
   paths: string[],
   gDispatch: Dispatch = globalDispatch
 ): Thunk => (dispatch, getState, {zealot}) => {
-  let clusterId = Tab.clusterId(getState())
+  let clusterId = Current.getConnectionId(getState())
+  if (!clusterId) return
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()
   let jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())

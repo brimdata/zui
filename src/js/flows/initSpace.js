@@ -7,7 +7,6 @@ import Notice from "../state/Notice"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import brim from "../brim"
 import submitSearch from "./submitSearch"
 
@@ -16,7 +15,8 @@ export const initSpace = (spaceId: string): Thunk => (
   getState,
   {zealot}
 ) => {
-  const clusterId = Tab.clusterId(getState())
+  const clusterId = Current.getConnectionId(getState())
+  if (!clusterId) return
   return zealot.spaces
     .get(spaceId)
     .then(brim.interop.spacePayloadToSpace)
