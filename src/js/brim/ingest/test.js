@@ -6,7 +6,7 @@ test("one pcap default", () => {
 
   expect(data).toEqual({
     dataDir: "",
-    name: "my.pcap.brim",
+    name: "my.pcap",
     endpoint: "pcap",
     paths: ["/work/my.pcap"]
   })
@@ -16,7 +16,7 @@ test("one zeek log default", () => {
   let data = ingest.getParams([{type: "log", path: "/work/zeek.log"}])
 
   expect(data).toEqual({
-    name: "zeek.log.brim",
+    name: "zeek.log",
     dataDir: "",
     endpoint: "log",
     paths: ["/work/zeek.log"]
@@ -30,7 +30,7 @@ test("two zeek logs in same dir default", () => {
   ])
 
   expect(data).toEqual({
-    name: "work.brim",
+    name: "work",
     dataDir: "",
     endpoint: "log",
     paths: ["/work/zeek-1.log", "/work/zeek-2.log"]
@@ -44,11 +44,12 @@ test("two zeek logs in different dir default", () => {
       {type: "log", path: "/work/day-2/zeek.log"}
     ],
     "",
+    [],
     new Date(0)
   )
 
   expect(data).toEqual({
-    name: "zeek_1969-12-31_16:00:00.brim",
+    name: "zeek_1969-12-31_16:00:00",
     dataDir: "",
     endpoint: "log",
     paths: ["/work/day-1/zeek.log", "/work/day-2/zeek.log"]

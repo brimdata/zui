@@ -24,9 +24,10 @@ export default (
   let requestId = brim.randomHash()
   let jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
   const dataDir = Prefs.getDataDir(getState())
+  const spaceNames = Spaces.getSpaceNames(clusterId)(getState())
 
   return lib.transaction([
-    validateInput(paths, dataDir),
+    validateInput(paths, dataDir, spaceNames),
     createDir(),
     createSpace(zealot, gDispatch, clusterId),
     registerHandler(dispatch, requestId),
@@ -37,11 +38,11 @@ export default (
   ])
 }
 
-const validateInput = (paths, dataDir) => ({
+const validateInput = (paths, dataDir, spaceNames) => ({
   async do() {
     let params = await ingest
       .detectFileTypes(paths)
-      .then((data) => ingest.getParams(data, dataDir))
+      .then((data) => ingest.getParams(data, dataDir, spaceNames))
       .catch((e) => {
         if (e.message.startsWith("EISDIR"))
           throw new Error(
@@ -63,7 +64,7 @@ const createDir = () => ({
   }
 })
 
-const createSpace = (client, dispatch, clusterId) => ({
+const createSpace = (client, gDispatch, clusterId) => ({
   async do(params) {
     let createParams
     if (params.dataDir) {
@@ -72,7 +73,7 @@ const createSpace = (client, dispatch, clusterId) => ({
       createParams = {name: params.name}
     }
     const space = await client.spaces.create(createParams)
-    dispatch(
+    gDispatch(
       Spaces.setDetail(clusterId, {
         ...space,
         ingest: {progress: 0, snapshot: 0, warnings: []}
@@ -83,7 +84,7 @@ const createSpace = (client, dispatch, clusterId) => ({
   },
   async undo({spaceId}) {
     await client.spaces.delete(spaceId)
-    dispatch(Spaces.remove(clusterId, spaceId))
+    gDispatch(Spaces.remove(clusterId, spaceId))
   }
 })
 

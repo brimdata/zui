@@ -1,9 +1,11 @@
 /* @flow */
-import type {IngestFileType} from "./detectFileType"
-import fileList, {type FileListData} from "./fileList"
-import time from "../time"
-import lib from "../../lib"
 import path from "path"
+
+import type {IngestFileType} from "./detectFileType"
+import {getUniqName} from "../../lib/uniqName"
+import fileList, {type FileListData} from "./fileList"
+import lib from "../../lib"
+import time from "../time"
 
 export type IngestParams = {
   dataDir: string,
@@ -18,6 +20,7 @@ export type IngestParamsError = {
 export default function getParams(
   data: FileListData,
   dataDir?: string,
+  existingNames?: string[] = [],
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
   let files = fileList(data)
@@ -38,7 +41,7 @@ export default function getParams(
     else if (files.inSameDir()) name = files.dirName()
     else name = generateDirName(now)
 
-    return name + ".brim"
+    return getUniqName(name, existingNames)
   }
 
   return {

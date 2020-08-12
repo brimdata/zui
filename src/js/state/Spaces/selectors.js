@@ -23,6 +23,10 @@ export default {
       return {...clus[key]}
     })
   },
+  getSpaceNames: (clusterId: string) => (state: State): string[] => {
+    let clus = getCluster(state, clusterId)
+    return Object.keys(clus).map((key) => clus[key].name)
+  },
   getIngestProgress: (clusterId: string, spaceId: string) => (state: State) => {
     let cluster = getCluster(state, clusterId)
     let space = cluster[spaceId]
