@@ -11,7 +11,7 @@ export function url(host: string, path: string) {
   return `http://${host}${path}`;
 }
 
-export function isObject(thing: unknown): thing is {} {
+export function isObject(thing: unknown): thing is Object {
   return typeof thing === "object" && thing !== null;
 }
 

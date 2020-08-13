@@ -1,5 +1,5 @@
 import { createFetcher } from "./fetcher/fetcher.ts";
-import { spaces, logs, pcaps, search, archive } from "./api/mod.ts";
+import { spaces, logs, pcaps, search, archive, subspaces } from "./api/mod.ts";
 import { getHost } from "./util/host.ts";
 import { getDefaultSearchArgs } from "./config/search_args.ts";
 import {
@@ -9,6 +9,7 @@ import {
   PcapsGetArgs,
   LogsPostArgs,
   ZealotArgs,
+  SubspaceCreateArgs,
 } from "./types.ts";
 import { IndexSearchArgs } from "./api/archive.ts";
 
@@ -32,9 +33,11 @@ export function createZealot(
       return stream(search(zql, { ...searchArgs, ...args }));
     },
     archive: {
-      search:  (args: IndexSearchArgs) => {
-        return stream({...archive.search(args), enhancers: searchArgs.enhancers} )
-      }
+      search: (args: IndexSearchArgs) => {
+        return stream(
+          { ...archive.search(args), enhancers: searchArgs.enhancers },
+        );
+      },
     },
     spaces: {
       list: () => {
@@ -44,7 +47,7 @@ export function createZealot(
         return promise(spaces.get(id));
       },
       stat: (id: string, args?: Partial<SearchArgs>) => {
-        return stream(spaces.stat(id, {...searchArgs, ...args}))
+        return stream(spaces.stat(id, { ...searchArgs, ...args }));
       },
       create: (args: SpaceArgs) => {
         return promise(spaces.create(args));
@@ -54,6 +57,11 @@ export function createZealot(
       },
       update: (id: string, args: Partial<SpaceArgs>) => {
         return promise(spaces.update(id, args));
+      },
+    },
+    subspaces: {
+      create: (args: SubspaceCreateArgs) => {
+        return promise(subspaces.create(args));
       },
     },
     pcaps: {

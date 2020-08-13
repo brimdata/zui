@@ -35,6 +35,12 @@ export interface SpaceArgs {
   storage?: SpaceStorageArgs;
 }
 
+export interface SubspaceCreateArgs {
+  name: string;
+  logs: string[];
+  spaceId: string;
+}
+
 export interface PcapsPostArgs {
   spaceId: string;
   path: string;
