@@ -16,6 +16,8 @@ const COMMA = /,/
 const STRING_TYPE = /^b?string$/
 const DOUBLE_QUOTE = /"/g
 const ESCAPED_DOUBLE_QUOTE = '\\"'
+const BACK_SLASH = /\\/
+const ESCAPED_BACK_SLASH = "\\\\"
 
 function field({name, type, value}: FieldData): $Field {
   return {
@@ -34,7 +36,9 @@ function field({name, type, value}: FieldData): $Field {
       if (this.type === "bool") return this.value === "T" ? "true" : "false"
       let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value))
       if (STRING_TYPE.test(this.type)) quote = true
-      const str = this.value.replace(DOUBLE_QUOTE, ESCAPED_DOUBLE_QUOTE)
+      const str = this.value
+        .replace(BACK_SLASH, ESCAPED_BACK_SLASH)
+        .replace(DOUBLE_QUOTE, ESCAPED_DOUBLE_QUOTE)
       return quote ? `"${str}"` : str
     },
     stringValue(): string {

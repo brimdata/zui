@@ -20,6 +20,11 @@ test("string escapes double quotes", () => {
   expect(f.queryableValue()).toEqual('"\\"test\\""')
 })
 
+test("string escapes backslash", () => {
+  let f = brim.field({name: "sub", type: "string", value: "Networks,\\"})
+  expect(f.queryableValue()).toBe('"Networks,\\\\"')
+})
+
 describe("#queryableValue", () => {
   const fn = (data: any) => brim.field(data).queryableValue()
 
