@@ -77,8 +77,7 @@ to add extensions, or even make changes to the core Zeek C++ code if you choose.
 However, situations may arise when this is difficult. Some examples:
 
 1. **Microsoft Windows**. Zeek is not officially supported on Windows, and Brim's
-[fork of Zeek](https://github.com/brimsec/zeek) that includes limited Windows support is unfortunately not easy to compile
-outside of a customized build environment.
+[fork of Zeek](https://github.com/brimsec/zeek) that includes limited Windows support requires a complex build setup.
 2. **Minimal changes**. If you seek to only make minor Zeek script additions/changes, creating a full standalone Zeek install
 may seem like overkill.
 3. **Lack of expertise**. The Zeek install/build process may seem daunting to new users.
