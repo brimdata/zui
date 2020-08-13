@@ -112,7 +112,7 @@ PS C:\temp\zeek> Invoke-WebRequest -Uri "https://github.com/brimsec/zeek/release
 PS C:\temp\zeek> Expand-Archive zeek.zip
 ```
 
-3. **Add/modify the Zeek scripts as necessary.** In this case, we're going to be enabling the Zeek scripts from the
+3. **Add/modify the Zeek scripts as necessary.** In this case, we're going to add the Zeek scripts from the
 [zeek-log-all-http-headers](https://github.com/sethhall/zeek-log-all-http-headers) package. Since the scripts are in a GitHub
 repo, this can most easily be done if we have [`git`](https://git-scm.com/) installed and in our path. Customizations are
 added within/below the `zeek/share/zeek/site/` directory, so that's where we'll unpack them here.
