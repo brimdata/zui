@@ -37,6 +37,7 @@ export default function LoadFilesInput({onChange}: Props) {
       {...bindDropzone()}
     >
       <input
+        tabIndex="-1"
         ref={setInput}
         type="file"
         multiple
