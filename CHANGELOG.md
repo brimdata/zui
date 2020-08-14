@@ -1,6 +1,6 @@
 ## v0.15.0
 * Update zq to [v0.19.0](https://github.com/brimsec/zq/releases/tag/v0.19.0)
-* Update Zeek to [v3.2.0-dev-brim7](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim7) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data
+* Update Zeek to [v3.2.0-dev-brim7](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim7) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#999)
 * Use blue background color for clicked rows in main event view (#971)
 * Fix an issue with brief white flashes during import auto-refresh (#972, #995)
 * Fix an issue where double-clicking across two different rows acted like the second row had been double-clicked (#973)
