@@ -26,6 +26,8 @@ export default function(
       return {...init()}
     case "VIEWER_RECORDS":
       return {...state, records: concat(state.records, action.records)}
+    case "VIEWER_SET_RECORDS":
+      return {...state, records: action.records}
     case "VIEWER_SPLICE":
       return {...state, records: splice(state.records, action.index)}
     case "VIEWER_END_STATUS":

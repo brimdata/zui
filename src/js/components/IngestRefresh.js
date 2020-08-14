@@ -37,6 +37,7 @@ import Tab from "../state/Tab"
 import brim from "../brim"
 import submitSearch from "../flows/submitSearch"
 import useThrottle from "./hooks/useThrottle"
+import submitAutorefreshSearch from "../flows/submitAutorefreshSearch"
 
 export default function IngestRefresh() {
   const dispatch = useDispatch()
@@ -72,7 +73,7 @@ export default function IngestRefresh() {
   useEffect(() => {
     if (autoRefresh) {
       ack()
-      dispatch(submitSearch({history: false, investigation: false}))
+      dispatch(submitAutorefreshSearch())
     }
   }, [autoRefresh])
 

@@ -43,6 +43,12 @@ export type VIEWER_RECORDS = {
   tabId: string
 }
 
+export type VIEWER_SET_RECORDS = {
+  type: "VIEWER_SET_RECORDS",
+  records: RecordData[],
+  tabId: string
+}
+
 export type VIEWER_CLEAR = {
   type: "VIEWER_CLEAR",
   tabId: string

@@ -20,8 +20,6 @@ export default function submitSearch(
   return function(dispatch, getState) {
     const time = brim.time(ts)
     const prevArgs = Search.getArgs(getState())
-    const space = Tab.space(getState())
-    const isIngesting = space && brim.space(space).ingesting()
     dispatch(SearchBar.submittingSearchBar(ts))
     dispatch(Tab.computeSpan())
     if (!dispatch(SearchBar.validate())) return Promise.reject()
@@ -39,8 +37,7 @@ export default function submitSearch(
     const tabId = Tabs.getActive(state)
     const args = Search.getArgs(state)
 
-    if (shouldClearTable(args, prevArgs, isIngesting))
-      dispatch(Viewer.clear(tabId))
+    dispatch(Viewer.clear(tabId))
     dispatch(Notice.dismiss())
 
     switch (args.type) {
@@ -53,15 +50,4 @@ export default function submitSearch(
         return dispatch(executeTableSearch(tabId, args))
     }
   }
-}
-
-function shouldClearTable(args, prev, isIngesting) {
-  const duration = ([from, to]) => to - from
-
-  return !(
-    args.tableProgram === prev.tableProgram &&
-    args.spaceId === prev.spaceId &&
-    duration(args.span) === duration(prev.span) &&
-    isIngesting
-  )
 }

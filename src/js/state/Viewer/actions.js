@@ -52,6 +52,13 @@ export const appendRecords = (
   return {type: "VIEWER_RECORDS", records, tabId}
 }
 
+export const setRecords = (
+  tabId: string,
+  records: RecordData[]
+): VIEWER_RECORDS => {
+  return {type: "VIEWER_SET_RECORDS", records, tabId}
+}
+
 export const updateColumns = (
   tabId: string,
   columns: ViewerColumns
