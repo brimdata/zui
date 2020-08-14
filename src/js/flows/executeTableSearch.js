@@ -14,16 +14,26 @@ import executeSearch from "./executeSearch"
 
 export default function executeTableSearch(
   tabId: string,
-  args: SearchArgs
+  args: SearchArgs,
+  isBlocking: boolean = false
 ): Thunk {
   return function(dispatch) {
     return new Promise((resolve, reject) => {
+      const collectedColumns = {}
+      let collectedRecords = []
       let table = brim
         .search(args.tableProgram, args.span, args.spaceId)
         .id("Table")
         .status((status) => dispatch(Viewer.setStatus(tabId, status)))
         .chan(0, (records, types) => {
           const columns = hashDescriptorKeys(types)
+
+          if (isBlocking) {
+            Object.assign(collectedColumns, columns)
+            collectedRecords = collectedRecords.concat(records)
+            return
+          }
+
           dispatch(Viewer.appendRecords(tabId, records))
           dispatch(Viewer.updateColumns(tabId, columns))
           dispatch(Columns.touch(columns))
@@ -37,6 +47,11 @@ export default function executeTableSearch(
         })
         .abort(resolve)
         .end((_id, count) => {
+          if (isBlocking) {
+            dispatch(Viewer.setRecords(tabId, collectedRecords))
+            dispatch(Viewer.setColumns(tabId, collectedColumns))
+            dispatch(Columns.touch(collectedColumns))
+          }
           dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
           resolve()
         })
