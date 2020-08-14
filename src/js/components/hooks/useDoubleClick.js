@@ -26,7 +26,8 @@ export default function useDoubleClick(
     return () => clearTimeout(singleClickTimer)
   }, [clicks])
 
-  return (e: MouseEvent) => {
+  return (e: SyntheticEvent<HTMLElement>) => {
+    e.persist()
     setEvent(e)
     setClicks((clicks) => clicks + 1)
   }
