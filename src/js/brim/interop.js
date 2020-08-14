@@ -1,7 +1,8 @@
 /* @flow */
-import type {$Record, RecordData} from "../types/records"
-import brim, {type Ts} from "./"
+import type {$Record} from "./record"
+import type {RecordData} from "../types/records"
 import Log from "../models/Log"
+import brim, {type Ts} from "./"
 
 export default {
   recordToLog(record: $Record) {

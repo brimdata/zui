@@ -1,8 +1,5 @@
 /* @flow */
 
-import type {$Field} from "../brim"
-import type {Column} from "./"
-
 export type FieldValue = string | null | FieldValue[]
 
 export type FieldData = {
@@ -12,10 +9,3 @@ export type FieldData = {
 }
 
 export type RecordData = FieldData[]
-
-export type $Record = {|
-  columns: () => Column[],
-  values: () => FieldValue[],
-  data: () => RecordData,
-  field: (string) => ?$Field
-|}

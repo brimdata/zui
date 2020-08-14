@@ -1,7 +1,14 @@
 /* @flow */
-import type {$Record, FieldValue, RecordData} from "../types/records"
 import type {Column} from "../types"
-import brim from "./"
+import type {FieldValue, RecordData} from "../types/records"
+import brim, {type $Field} from "./"
+
+export type $Record = {|
+  columns: () => Column[],
+  values: () => FieldValue[],
+  data: () => RecordData,
+  find: (string) => ?$Field
+|}
 
 export default function record(data: RecordData): $Record {
   return {
@@ -14,7 +21,7 @@ export default function record(data: RecordData): $Record {
     data() {
       return data
     },
-    field(name: string) {
+    find(name: string) {
       let fieldData = data.find((field) => field.name === name)
       return fieldData ? brim.field(fieldData) : null
     }
