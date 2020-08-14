@@ -11,6 +11,7 @@ import SearchBar from "../state/SearchBar"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
 import executeSearch from "./executeSearch"
+import onIdle from "on-idle"
 
 export default function executeTableSearch(
   tabId: string,
@@ -20,7 +21,7 @@ export default function executeTableSearch(
   return function(dispatch) {
     return new Promise((resolve, reject) => {
       const collectedColumns = {}
-      const collectedRecords = []
+      let collectedRecords = []
       let table = brim
         .search(args.tableProgram, args.span, args.spaceId)
         .id("Table")
@@ -30,7 +31,7 @@ export default function executeTableSearch(
 
           if (isBlocking) {
             Object.assign(collectedColumns, columns)
-            collectedRecords.push(records)
+            collectedRecords = collectedRecords.concat(records)
             return
           }
 
@@ -48,9 +49,11 @@ export default function executeTableSearch(
         .abort(resolve)
         .end((_id, count) => {
           if (isBlocking) {
-            dispatch(Viewer.setRecords(tabId, collectedRecords))
-            dispatch(Viewer.updateColumns(tabId, collectedColumns))
-            dispatch(Columns.touch(collectedColumns))
+            onIdle(() => {
+              dispatch(Viewer.setRecords(tabId, collectedRecords))
+              dispatch(Viewer.updateColumns(tabId, collectedColumns))
+              dispatch(Columns.touch(collectedColumns))
+            })
           }
           dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
           resolve()
