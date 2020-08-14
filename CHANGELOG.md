@@ -1,3 +1,17 @@
+## v0.15.0
+* Update zq to [v0.19.0](https://github.com/brimsec/zq/releases/tag/v0.19.0)
+* Update Zeek to [v3.2.0-dev-brim7](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim7) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data
+* Use blue background color for clicked rows in main event view (#971)
+* Fix an issue with brief white flashes during import auto-refresh (#972, #995)
+* Fix an issue where double-clicking across two different rows acted like the second row had been double-clicked (#973)
+* Adjust the amount amount of space consumed by the import progress bar (#980)
+* Improve automatic Space naming during import (#984)
+   * The `.brim` suffix is no longer added
+   * If the presumed Space name already exists, a numeric suffix is added instead of rejecting the import due to the colliding Space name
+* Add [wiki docs](https://github.com/brimsec/brim/wiki/Zeek-Customization#creating-your-customized-zeek) for how to create a customized Zeek from Brim Zeek artifacts (#978)
+* Fix an issue where right-click operations on field values containing backslashes produced invalid ZQL (#993, #996)
+* Make links on the Import page tabbable (#997)
+
 ## v0.14.0
 * Update zq to [v0.18.0](https://github.com/brimsec/zq/releases/tag/v0.18.0)
 * Add [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
