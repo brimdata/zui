@@ -11,7 +11,6 @@ import SearchBar from "../state/SearchBar"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
 import executeSearch from "./executeSearch"
-import onIdle from "on-idle"
 
 export default function executeTableSearch(
   tabId: string,
@@ -49,11 +48,9 @@ export default function executeTableSearch(
         .abort(resolve)
         .end((_id, count) => {
           if (isBlocking) {
-            onIdle(() => {
-              dispatch(Viewer.setRecords(tabId, collectedRecords))
-              dispatch(Viewer.updateColumns(tabId, collectedColumns))
-              dispatch(Columns.touch(collectedColumns))
-            })
+            dispatch(Viewer.setRecords(tabId, collectedRecords))
+            dispatch(Viewer.setColumns(tabId, collectedColumns))
+            dispatch(Columns.touch(collectedColumns))
           }
           dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
           resolve()

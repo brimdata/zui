@@ -36,6 +36,8 @@ export default function(
       return {...state, status: action.status}
     case "VIEWER_COLUMNS":
       return {...state, columns: {...state.columns, ...action.columns}}
+    case "VIEWER_SET_COLUMNS":
+      return {...state, columns: {...action.columns}}
     case "VIEWER_SCROLL":
       return {...state, scrollPos: action.scrollPos}
     case "VIEWER_SELECT":

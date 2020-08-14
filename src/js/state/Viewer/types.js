@@ -27,6 +27,7 @@ export type ViewerAction =
   | VIEWER_RECORDS
   | VIEWER_SET_RECORDS
   | VIEWER_COLUMNS
+  | VIEWER_SET_COLUMNS
   | VIEWER_END_STATUS
   | VIEWER_SCROLL
   | VIEWER_SELECT
@@ -75,6 +76,12 @@ export type VIEWER_STATUS = {
 
 export type VIEWER_COLUMNS = {
   type: "VIEWER_COLUMNS",
+  columns: ViewerColumns,
+  tabId: string
+}
+
+export type VIEWER_SET_COLUMNS = {
+  type: "VIEWER_SET_COLUMNS",
   columns: ViewerColumns,
   tabId: string
 }

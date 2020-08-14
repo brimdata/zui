@@ -17,6 +17,7 @@ import type {
   VIEWER_SELECT_RANGE,
   VIEWER_SELECT_RANGE_NEXT,
   VIEWER_SELECT_RANGE_PREV,
+  VIEWER_SET_COLUMNS,
   VIEWER_SET_RECORDS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
@@ -66,6 +67,17 @@ export const updateColumns = (
 ): VIEWER_COLUMNS => {
   return {
     type: "VIEWER_COLUMNS",
+    columns,
+    tabId
+  }
+}
+
+export const setColumns = (
+  tabId: string,
+  columns: ViewerColumns
+): VIEWER_SET_COLUMNS => {
+  return {
+    type: "VIEWER_SET_COLUMNS",
     columns,
     tabId
   }
