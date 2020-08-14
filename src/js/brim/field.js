@@ -16,7 +16,7 @@ const COMMA = /,/
 const STRING_TYPE = /^b?string$/
 const DOUBLE_QUOTE = /"/g
 const ESCAPED_DOUBLE_QUOTE = '\\"'
-const BACK_SLASH = /\\/
+const BACK_SLASH = /\\/g
 const ESCAPED_BACK_SLASH = "\\\\"
 
 function field({name, type, value}: FieldData): $Field {
