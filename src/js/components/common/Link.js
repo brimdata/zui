@@ -11,7 +11,7 @@ export default function Link({href, children}: Props) {
     shell.openExternal(href)
   }
   return (
-    <a href={"" /* triggers underline style */} onClick={click}>
+    <a href={"" /* triggers underline style */} onClick={click} tabIndex="0">
       {children}
     </a>
   )
