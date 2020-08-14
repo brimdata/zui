@@ -17,6 +17,7 @@ import type {
   VIEWER_SELECT_RANGE,
   VIEWER_SELECT_RANGE_NEXT,
   VIEWER_SELECT_RANGE_PREV,
+  VIEWER_SET_RECORDS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
   ViewerColumns,
@@ -55,7 +56,7 @@ export const appendRecords = (
 export const setRecords = (
   tabId: string,
   records: RecordData[]
-): VIEWER_RECORDS => {
+): VIEWER_SET_RECORDS => {
   return {type: "VIEWER_SET_RECORDS", records, tabId}
 }
 
