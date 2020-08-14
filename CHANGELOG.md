@@ -4,7 +4,7 @@
 * Use blue background color for clicked rows in main event view (#971)
 * Fix an issue with brief white flashes during import auto-refresh (#972, #995)
 * Fix an issue where double-clicking across two different rows acted like the second row had been double-clicked (#973)
-* Adjust the amount amount of space consumed by the import progress bar (#980)
+* Adjust the amount of space consumed by the import progress bar (#980)
 * Improve automatic Space naming during import (#984)
    * The `.brim` suffix is no longer added
    * If the presumed Space name already exists, a numeric suffix is added instead of rejecting the import due to the colliding Space name
