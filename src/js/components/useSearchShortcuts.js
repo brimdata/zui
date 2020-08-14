@@ -10,7 +10,9 @@ import Tabs from "../state/Tabs"
 export default function() {
   let dispatch = useDispatch()
   useEffect(() => {
-    const bindings = new Mousetrap()
+    const el = document.documentElement
+    if (!el) throw new Error("No Document Element")
+    const bindings = new Mousetrap(el)
       .bind("mod+t", () => dispatch(Tabs.new()))
       .bind("mod+w", (e) => {
         e.preventDefault()
