@@ -15,7 +15,11 @@ import type {TabsState} from "./Tabs/types"
 import type {ViewState} from "./View/types"
 
 export type GetState = () => State
-export type Thunk = (Dispatch, GetState, {zealot: *}) => any
+export type Thunk = (
+  Dispatch,
+  GetState,
+  {zealot: *, globalDispatch: Dispatch}
+) => any
 export type Dispatch = Function
 export type Action = Object
 export type DispatchProps = {|dispatch: Dispatch|}

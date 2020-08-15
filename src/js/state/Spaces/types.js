@@ -27,7 +27,8 @@ export type Space = {
   max_time: Ts,
   pcap_support: boolean,
   storage_kind: "filestore" | "archivestore",
-  ingest: SpaceIngest
+  ingest: SpaceIngest,
+  parent_id?: string
 }
 
 type SpaceIngest = {

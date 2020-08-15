@@ -2,10 +2,11 @@
 
 import {composeWithDevTools} from "redux-devtools-extension"
 import {createStore, applyMiddleware} from "redux"
+import {createZealot} from "zealot"
 import reduxThunk from "redux-thunk"
 
 import type {Action, Dispatch, State} from "../state/types"
-import {createZealot} from "zealot"
+import {globalDispatch} from "../state/GlobalContext"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
@@ -27,7 +28,10 @@ export default async () => {
     initialState,
     composeWithDevTools(
       applyMiddleware(
-        reduxThunk.withExtraArgument({zealot: createZealot("localhost:9867")})
+        reduxThunk.withExtraArgument({
+          zealot: createZealot("localhost:9867"),
+          globalDispatch
+        })
       )
     )
   )

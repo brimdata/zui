@@ -28,6 +28,7 @@ module.exports = {
       "kebabCase",
       "camelCase"
     ],
+    zealot: ["createZealot", "createZealotMock"],
     "react-spring": ["useTrail", "useSpring", "useSprings"],
     "react-router-dom": ["Redirect"],
     "react-redux": ["useDispatch"]

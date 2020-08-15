@@ -29,7 +29,7 @@ export default function record(data: RecordData): $Record {
     get(name: string) {
       const f = this.find(name)
       if (f) return f
-      else throw new Error(`Missing Field: ${name}`)
+      else throw new Error(`Missing field: ${name}`)
     }
   }
 }

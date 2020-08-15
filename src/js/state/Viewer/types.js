@@ -42,7 +42,7 @@ export type ViewerAction =
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS",
   records: RecordData[],
-  tabId: string
+  tabId: ?string
 }
 
 export type VIEWER_SET_RECORDS = {
@@ -53,7 +53,7 @@ export type VIEWER_SET_RECORDS = {
 
 export type VIEWER_CLEAR = {
   type: "VIEWER_CLEAR",
-  tabId: string
+  tabId?: string
 }
 
 export type VIEWER_SPLICE = {
