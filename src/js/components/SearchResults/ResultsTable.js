@@ -107,7 +107,8 @@ export default function ResultsTable(props: Props) {
         }}
         onDoubleClick={(e) => {
           e && clicked(e, index)
-          props.dispatch(openLogDetailsWindow())
+          dispatch(viewLogDetail(logs[index]))
+          dispatch(openLogDetailsWindow())
         }}
         rightClick={menu.searchFieldContextMenu(
           props.program,
