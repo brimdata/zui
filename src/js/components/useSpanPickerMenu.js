@@ -10,7 +10,7 @@ import submitSearch from "../flows/submitSearch"
 
 export default function useSpanPickerMenu() {
   let dispatch = useDispatch()
-  let space = useSelector(Current.getSpace)
+  let space = useSelector(Current.mustGetSpace)
 
   function setSpan(span: DateTuple) {
     dispatch(Search.setSpanArgsFromDates(span))

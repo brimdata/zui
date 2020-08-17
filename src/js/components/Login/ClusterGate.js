@@ -7,7 +7,7 @@ import LoginPage from "./LoginPage"
 import SearchPage from "../SearchPage"
 
 export default function ClusterGate() {
-  let cluster = useSelector(Current.getConnectionSafe)
+  let cluster = useSelector(Current.getConnection)
 
   if (!cluster) {
     return <LoginPage />

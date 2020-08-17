@@ -18,7 +18,7 @@ export default (
   paths: string[],
   gDispatch: Dispatch = globalDispatch
 ): Thunk => (dispatch, getState, {zealot}) => {
-  let conn = Current.getConnection(getState())
+  let conn = Current.mustGetConnection(getState())
   let clusterId = conn.id
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()

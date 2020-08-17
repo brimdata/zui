@@ -19,7 +19,7 @@ export default function LogDetailsWindow() {
   const prevExists = useSelector(LogDetails.getHistory).prevExists()
   const nextExists = useSelector(LogDetails.getHistory).nextExists()
   const log = useSelector(LogDetails.build)
-  const space = useSelector(Current.getSpace)
+  const space = useSelector(Current.mustGetSpace)
   const isGoingBack = useSelector(LogDetails.getIsGoingBack)
 
   return (

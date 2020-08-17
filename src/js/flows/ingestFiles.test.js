@@ -56,7 +56,7 @@ test("opening a pcap", async () => {
 
   const state = store.getState()
   expect(Tab.getSpaceName(state)).toEqual("sample.pcap.brim")
-  expect(Current.getSpace(state)).toEqual({
+  expect(Current.mustGetSpace(state)).toEqual({
     name: "sample.pcap.brim",
     id: "spaceId",
     min_time: {ns: 0, sec: 0},

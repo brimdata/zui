@@ -10,7 +10,7 @@ import initialize from "./initialize"
 export default async () => {
   const store = await initialize()
   // Set the span to everything
-  const space = Current.getSpace(store.getState())
+  const space = Current.mustGetSpace(store.getState())
   space && store.dispatch(Search.setSpan(brim.space(space).everythingSpan()))
 
   // View the latest log and clear log detail history

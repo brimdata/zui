@@ -62,7 +62,7 @@ const ConnHistory = ({history = ""}) => (
 const Host = ({className, title, ip, port, log, contextMenu}) => {
   let program = useSelector(SearchBar.getSearchProgram)
   let tableColumns = useSelector(Columns.getCurrentTableColumns)
-  let space = useSelector(Current.getSpace)
+  let space = useSelector(Current.mustGetSpace)
   let rightClick = contextMenu(
     program,
     tableColumns.getColumns().map((c) => c.name),

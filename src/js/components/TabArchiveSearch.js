@@ -51,7 +51,7 @@ const InfoCard = styled.div`
 
 export default function TabArchiveSearch() {
   const dispatch = useDispatch()
-  const space = useSelector(Current.getSpace)
+  const space = useSelector(Current.mustGetSpace)
   const [pattern, setPattern] = useState("")
   const onSubmit = async (e) => {
     e.preventDefault()

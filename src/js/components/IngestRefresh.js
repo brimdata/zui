@@ -44,7 +44,7 @@ export default function IngestRefresh() {
   const historyCount = useSelector(History.count)
   const firstSearch = useSelector(History.first)
   const nextSearch = useSelector(Search.getCurrentRecord)
-  const currentSpace = useSelector(Current.getSpace)
+  const currentSpace = useSelector(Current.mustGetSpace)
   const [space, setSpace] = useState(currentSpace)
   const [snapshot, cancelSnapshot] = useThrottle(space.ingest.snapshot, 3000)
   const [snapshotAck, setSnapshotAck] = useState(snapshot)

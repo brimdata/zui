@@ -28,7 +28,7 @@ const spaceInfo = {
 }
 
 const initTimeWindow = () => (dispatch: Function, getState: Function) => {
-  let space = Current.getSpace(getState())
+  let space = Current.mustGetSpace(getState())
   if (space) {
     let {min_time, max_time} = space
     dispatch(Search.setSpanArgs([min_time, max_time]))

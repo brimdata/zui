@@ -69,7 +69,7 @@ const getSpanFocusAsDates = createSelector<State, void, ?DateTuple, ?Span>(
 export default {
   clusterUrl,
   getSpaceName: (state: State) => {
-    const s = Current.getSpace(state)
+    const s = Current.mustGetSpace(state)
     return s ? s.name : ""
   },
   currentEntry: activeTabSelect(History.current),

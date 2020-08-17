@@ -25,7 +25,7 @@ export default function FieldsPanel({log, contextMenu}: Props) {
   log = log.exclude("_td")
   let program = useSelector(SearchBar.getSearchProgram)
   let tableColumns = useSelector(Columns.getCurrentTableColumns)
-  let space = useSelector(Current.getSpace)
+  let space = useSelector(Current.mustGetSpace)
   let columns = tableColumns.getColumns().map((c) => c.name)
 
   const fieldAt = (log, index) => log.getFieldAt(index)

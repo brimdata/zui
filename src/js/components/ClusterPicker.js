@@ -25,7 +25,7 @@ const ClusterPickerWrapper = (styled.div`
 `: ComponentType<*>)
 
 export default function ClusterPicker() {
-  const current = useSelector(Current.getConnection)
+  const current = useSelector(Current.mustGetConnection)
 
   return (
     <ClusterPickerWrapper>

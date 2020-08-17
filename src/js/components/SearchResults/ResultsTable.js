@@ -164,7 +164,7 @@ function stateToProps(state: State) {
     timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
-    space: Current.getSpaceSafe(state),
+    space: Current.getSpace(state),
     scrollPos: Viewer.getScrollPos(state),
     state
   }

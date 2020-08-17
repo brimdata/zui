@@ -17,7 +17,7 @@ export const getConnectionId = activeTabSelect(
   (state) => state.current.connectionId
 )
 
-export const getConnection = createSelector<
+export const mustGetConnection = createSelector<
   State,
   void,
   Cluster,
@@ -30,33 +30,33 @@ export const getConnection = createSelector<
   return conns[id]
 })
 
-export const getSpace = createSelector<State, void, Space, SpacesState, Id, Id>(
-  Spaces.raw,
-  getConnectionId,
-  getSpaceId,
-  (spaces, connId, spaceId) => {
-    if (!connId) throw new Error("Current connection id is unset")
-    if (!spaceId) throw new Error("Current space id is unset")
-    if (!spaces[connId])
-      throw new Error(`No spaces in connection id: ${connId}`)
-    if (!spaces[connId][spaceId])
-      throw new Error(`Missing space id: ${spaceId}`)
+export const mustGetSpace = createSelector<
+  State,
+  void,
+  Space,
+  SpacesState,
+  Id,
+  Id
+>(Spaces.raw, getConnectionId, getSpaceId, (spaces, connId, spaceId) => {
+  if (!connId) throw new Error("Current connection id is unset")
+  if (!spaceId) throw new Error("Current space id is unset")
+  if (!spaces[connId]) throw new Error(`No spaces in connection id: ${connId}`)
+  if (!spaces[connId][spaceId]) throw new Error(`Missing space id: ${spaceId}`)
 
-    return spaces[connId][spaceId]
-  }
-)
+  return spaces[connId][spaceId]
+})
 
-export const getSpaceSafe = (state: State) => {
+export const getSpace = (state: State) => {
   try {
-    return getSpace(state)
+    return mustGetSpace(state)
   } catch {
     return null
   }
 }
 
-export const getConnectionSafe = (state: State) => {
+export const getConnection = (state: State) => {
   try {
-    return getConnection(state)
+    return mustGetConnection(state)
   } catch {
     return null
   }

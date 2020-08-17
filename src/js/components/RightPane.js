@@ -101,7 +101,7 @@ const stateToProps = (state) => {
     prevExists: LogDetails.getHistory(state).prevExists(),
     nextExists: LogDetails.getHistory(state).nextExists(),
     currentLog: LogDetails.build(state),
-    space: Current.getSpaceSafe(state)
+    space: Current.getSpace(state)
   }
 }
 

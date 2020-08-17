@@ -15,7 +15,7 @@ type Props = {label: boolean, id: string}
 export default function PacketsButton({label}: Props) {
   let dispatch = useDispatch()
   let conn = useSelector(LogDetails.getConnLog)
-  let space = useSelector(Current.getSpace)
+  let space = useSelector(Current.mustGetSpace)
   let [enabled, setEnabled] = useState(!!conn && space.pcap_support)
 
   useDebouncedEffect(() => setEnabled(!!conn && space.pcap_support), 100, [

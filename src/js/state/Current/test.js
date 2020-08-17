@@ -36,7 +36,7 @@ test("getting the actual connection", () => {
     Current.setConnectionId("myconn")
   ])
 
-  expect(Current.getConnection(state)).toEqual(conn)
+  expect(Current.mustGetConnection(state)).toEqual(conn)
 })
 
 test("getting the actual space", () => {
@@ -55,5 +55,5 @@ test("getting the actual space", () => {
     Current.setSpaceId(space.id)
   ])
 
-  expect(Current.getSpace(state)).toEqual(space)
+  expect(Current.mustGetSpace(state)).toEqual(space)
 })
