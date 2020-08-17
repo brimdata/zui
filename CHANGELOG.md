@@ -1,5 +1,6 @@
 ## v0.15.1
 * Update zq to [v0.19.1](https://github.com/brimsec/zq/releases/tag/v0.19.1) (fixes an issue with excess characters in Space names after upgrade)
+* Fix an issue where opening Log Detail as the first action in a freshly-launched Brim threw an error (#1006)
 
 ## v0.15.0
 * Update zq to [v0.19.0](https://github.com/brimsec/zq/releases/tag/v0.19.0)
