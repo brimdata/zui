@@ -19,8 +19,8 @@ export default (): Thunk => (dispatch, getState, {zealot}) => {
     return Promise.reject(new CreateSubspaceError("No selected logs"))
 
   try {
-    const logs = records.map((r) => r.get("_log").stringValue())
-    const keys = records.map((r) => r.get("key").stringValue())
+    const logs = records.map((r) => r.mustGet("_log").stringValue())
+    const keys = records.map((r) => r.mustGet("key").stringValue())
     const name = getUniqName(keys[0], names)
     return zealot.subspaces
       .create({name, spaceId, logs})
