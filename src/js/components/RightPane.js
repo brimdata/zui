@@ -95,19 +95,13 @@ export default class RightPane extends React.Component<Props, S> {
 }
 
 const stateToProps = (state) => {
-  let space
-  try {
-    space = Current.getSpace(state)
-  } catch {
-    space = null
-  }
   return {
     isOpen: Layout.getRightSidebarIsOpen(state),
     width: Layout.getRightSidebarWidth(state),
     prevExists: LogDetails.getHistory(state).prevExists(),
     nextExists: LogDetails.getHistory(state).nextExists(),
     currentLog: LogDetails.build(state),
-    space
+    space: Current.getSpaceSafe(state)
   }
 }
 
