@@ -7,9 +7,15 @@ import TabSearch from "./TabSearch"
 import TabSearchLoading from "./TabSearchLoading"
 import TabWelcome from "./TabWelcome"
 import brim from "../brim"
+import TabNewConnection from "./TabNewConnection"
 
 export default function TabContent() {
   const space = useSelector(Current.getSpace)
+  const cluster = useSelector(Current.getConnection)
+
+  if (!cluster) {
+    return <TabNewConnection />
+  }
 
   if (!space) {
     return <TabWelcome />

@@ -187,6 +187,8 @@ export function LeftPane() {
   const paneRef = useRef()
   const paneHeight = useRef(0)
 
+  if (!id) return null
+
   function onDragPane(e: MouseEvent) {
     const width = e.clientX
     const max = global.innerWidth

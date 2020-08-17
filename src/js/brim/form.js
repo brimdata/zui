@@ -1,11 +1,11 @@
 /* @flow */
 
 export type FormFieldConfig = {
-  defaultValue: string,
+  defaultValue?: string,
   name: string,
   label: string,
   check?: (string) => Promise<[boolean, string]> | [boolean, string],
-  submit: (string) => void
+  submit?: (string) => void
 }
 
 export type FormConfig = {
@@ -39,6 +39,9 @@ export default function form(element: HTMLFormElement, config: FormConfig) {
     },
     getErrors() {
       return errors
+    },
+    getData() {
+      return Object.fromEntries(fields().map((f) => [f.name, f.value]))
     }
   }
 }
@@ -58,6 +61,7 @@ function getFields(el, config) {
     fields.push({
       name,
       input,
+      value,
       check: () => safeCheck(value),
       submit: () => safeSubmit(value),
       // $FlowFixMe

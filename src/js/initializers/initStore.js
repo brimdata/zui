@@ -22,7 +22,6 @@ function getInitialState(windowId) {
 export default async () => {
   const windowId = getUrlSearchParams().id
   const initialState = await getInitialState(windowId)
-
   return createStore<State, Action, Dispatch>(
     rootReducer,
     initialState,
