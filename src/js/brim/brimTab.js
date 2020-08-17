@@ -11,7 +11,7 @@ export default function(tab: TabState, spaces: SpacesState) {
     title() {
       const name = get(
         spaces,
-        [tab.search.clusterId, tab.search.spaceId, "name"],
+        [tab.current.connectionId || "", tab.current.spaceId || "", "name"],
         "New Tab"
       )
       return lib.compact([name, tab.searchBar.previous]).join(": ")

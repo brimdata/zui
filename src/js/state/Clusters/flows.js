@@ -3,6 +3,7 @@
 import type {Cluster} from "./types"
 import type {Thunk} from "../types"
 import {initSpace} from "../../flows/initSpace"
+import Current from "../Current"
 import Errors from "../Errors"
 import Handlers from "../Handlers"
 import History from "../History"
@@ -14,7 +15,7 @@ import Viewer from "../Viewer"
 export function connectCluster(cluster: Cluster): Thunk {
   return function(d, getState, {zealot}) {
     return zealot.status().then(() => {
-      d(Search.setCluster(cluster.id))
+      d(Current.setConnectionId(cluster.id))
       d(initSpace("default"))
     })
   }
@@ -24,7 +25,7 @@ export function disconnectCluster(): Thunk {
   return function(dispatch, getState) {
     let tabId = Tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
-    dispatch(Search.setCluster(""))
+    dispatch(Current.setConnectionId(""))
   }
 }
 
@@ -32,7 +33,7 @@ export function switchCluster(cluster: Cluster): Thunk {
   return function(dispatch, getState) {
     let tabId = Tabs.getActive(getState())
     clearClusterState(dispatch, tabId)
-    dispatch(Search.setCluster(cluster.id))
+    dispatch(Current.setConnectionId(cluster.id))
     return dispatch(connectCluster(cluster))
   }
 }

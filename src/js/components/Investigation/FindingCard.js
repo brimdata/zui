@@ -10,13 +10,13 @@ import styled from "styled-components"
 
 import type {Finding} from "../../state/Investigation/types"
 import {globalDispatch} from "../../state/GlobalContext"
+import Current from "../../state/Current"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Spaces from "../../state/Spaces/selectors"
-import Tab from "../../state/Tab"
 import Warning from "../icons/warning-sm.svg"
 import submitSearch from "../../flows/submitSearch"
 import usePopupMenu from "../hooks/usePopupMenu"
@@ -34,14 +34,14 @@ type Props = {finding: Finding}
 
 export default React.memo<Props>(function FindingCard({finding}: Props) {
   const dispatch = useDispatch()
-  const clusterId = useSelector(Tab.clusterId)
+  const clusterId = useSelector(Current.getConnectionId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
   const findingSpaceName = get(finding, ["search", "spaceName"], "")
 
   function onClick() {
     dispatch(SearchBar.setSearchBarPins(finding.search.pins))
     dispatch(SearchBar.changeSearchBarInput(finding.search.program))
-    dispatch(Search.setSpace(finding.search.spaceId))
+    dispatch(Current.setSpaceId(finding.search.spaceId))
     dispatch(Search.setSpanArgs(finding.search.spanArgs))
     dispatch(Search.setSpanFocus(null))
     dispatch(submitSearch({history: false, investigation: false}))

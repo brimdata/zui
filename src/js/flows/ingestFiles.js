@@ -4,11 +4,10 @@ import fsExtra from "fs-extra"
 
 import type {Dispatch, Thunk} from "../state/types"
 import {globalDispatch} from "../state/GlobalContext"
+import Current from "../state/Current"
 import Handlers from "../state/Handlers"
 import Prefs from "../state/Prefs"
-import Search from "../state/Search"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import brim from "../brim"
 import errors from "../errors"
@@ -19,7 +18,8 @@ export default (
   paths: string[],
   gDispatch: Dispatch = globalDispatch
 ): Thunk => (dispatch, getState, {zealot}) => {
-  let clusterId = Tab.clusterId(getState())
+  let conn = Current.mustGetConnection(getState())
+  let clusterId = conn.id
   let tabId = Tabs.getActive(getState())
   let requestId = brim.randomHash()
   let jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
@@ -125,10 +125,10 @@ const postFiles = (client, jsonTypesPath) => ({
 
 const setSpace = (dispatch, tabId) => ({
   do({spaceId}) {
-    dispatch(Search.setSpace(spaceId, tabId))
+    dispatch(Current.setSpaceId(spaceId, tabId))
   },
   undo() {
-    dispatch(Search.setSpace("", tabId))
+    dispatch(Current.setSpaceId(null, tabId))
   }
 })
 

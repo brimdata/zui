@@ -4,9 +4,9 @@ import {remote} from "electron"
 
 import type {Thunk} from "../types"
 import {saveToFile} from "../../lib/response"
+import Current from "../Current"
 import Log from "../../models/Log"
 import Packets from "../Packets"
-import Tab from "../Tab"
 import View from "../View"
 
 export default {
@@ -18,7 +18,7 @@ export default {
     dispatch(Packets.request(log.getString("uid")))
     dispatch(View.showDownloads())
     const state = getState()
-    const spaceId = Tab.getSpaceId(state)
+    const spaceId = Current.getSpaceId(state)
     const args = {
       ts_sec: log.getSec("ts"),
       ts_ns: log.getNs("ts"),

@@ -1,6 +1,7 @@
 /* @flow */
 
 import {isEmpty} from "lodash"
+import produce from "immer"
 
 import type {TabActions, TabsState} from "./types"
 import type {TabState} from "../Tab/types"
@@ -59,8 +60,10 @@ export default function reducer(state: TabsState = init, action: TabActions) {
 
 function addTabData(stateData, {id, data}) {
   let initialState = tabReducer(undefined, {type: "INIT"})
-  let search = {...initialState.search, ...data}
-  let tab = {...initialState, ...{search}, id}
+  const tab = produce(initialState, (draft) => {
+    draft.id = id
+    if (data) draft.current.connectionId = data.connectionId
+  })
   return [...stateData, tab]
 }
 
@@ -100,7 +103,8 @@ function tabAction({type}) {
     type.startsWith("COLUMNS_") ||
     type.startsWith("HISTORY_") ||
     type.startsWith("LOG_DETAIL_") ||
-    type.startsWith("LAYOUT_")
+    type.startsWith("LAYOUT_") ||
+    type.startsWith("CURRENT_")
   )
 }
 

@@ -1,9 +1,14 @@
 /* @flow */
 
 import {createZealotMock} from "zealot"
+
+import Clusters from "../Clusters"
+import Current from "../Current"
 import History from "./"
 import SearchBar from "../SearchBar"
+import Spaces from "../Spaces"
 import Tab from "../Tab"
+import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
 
@@ -11,7 +16,14 @@ let store
 beforeEach(() => {
   const zealot = createZealotMock().stubStream("search", [])
   store = initTestStore(zealot)
+  const conn = fixtures("cluster1")
+  const space = fixtures("space1")
+
   store.dispatchAll([
+    Clusters.add(conn),
+    Spaces.setDetail(conn.id, space),
+    Current.setConnectionId(conn.id),
+    Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput("first"),
     submitSearch(),
     SearchBar.changeSearchBarInput("second"),

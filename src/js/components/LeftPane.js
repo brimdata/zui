@@ -7,6 +7,7 @@ import styled from "styled-components"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import AddSpaceButton from "./AddSpaceButton"
 import ClusterPicker from "./ClusterPicker"
+import Current from "../state/Current"
 import DropdownArrow from "../icons/DropdownArrow"
 import FilterTree from "./FilterTree"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
@@ -14,7 +15,6 @@ import Layout from "../state/Layout"
 import Pane from "./Pane"
 import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import menu from "../electron/menu"
 import useDrag from "./hooks/useDrag"
 import usePopupMenu from "./hooks/usePopupMenu"
@@ -175,7 +175,7 @@ export function LeftPane() {
   const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
-  const id = useSelector(Tab.clusterId)
+  const id = useSelector(Current.getConnectionId)
   const spaces = useSelector(Spaces.getSpaces(id))
   const spaceContextMenu = menu.spaceContextMenu(id)
 

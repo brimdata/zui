@@ -4,15 +4,15 @@ import {useSelector} from "react-redux"
 import React, {useState} from "react"
 
 import {showContextMenu} from "../../lib/System"
+import BrimTooltip from "../BrimTooltip"
 import ColumnDescription from "./ColumnDescription"
 import Columns from "../../state/Columns"
+import Current from "../../state/Current"
 import FieldCell from "../FieldCell"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
 import SearchBar from "../../state/SearchBar"
-import Tab from "../../state/Tab"
 import Table from "../Tables/Table"
-import BrimTooltip from "../BrimTooltip"
 
 type Props = {
   log: Log,
@@ -25,7 +25,7 @@ export default function FieldsPanel({log, contextMenu}: Props) {
   log = log.exclude("_td")
   let program = useSelector(SearchBar.getSearchProgram)
   let tableColumns = useSelector(Columns.getCurrentTableColumns)
-  let space = useSelector(Tab.space)
+  let space = useSelector(Current.mustGetSpace)
   let columns = tableColumns.getColumns().map((c) => c.name)
 
   const fieldAt = (log, index) => log.getFieldAt(index)

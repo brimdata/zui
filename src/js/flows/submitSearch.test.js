@@ -1,10 +1,11 @@
 /* @flow */
 
 import {createZealotMock} from "zealot"
+
+import Current from "../state/Current"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import brim from "../brim"
 import initTestStore from "../test/initTestStore"
 import submitSearch from "./submitSearch"
@@ -27,7 +28,7 @@ const spaceInfo = {
 }
 
 const initTimeWindow = () => (dispatch: Function, getState: Function) => {
-  let space = Tab.space(getState())
+  let space = Current.mustGetSpace(getState())
   if (space) {
     let {min_time, max_time} = space
     dispatch(Search.setSpanArgs([min_time, max_time]))
@@ -36,9 +37,9 @@ const initTimeWindow = () => (dispatch: Function, getState: Function) => {
 
 test("fetching a regular search", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn")
   ])
@@ -51,9 +52,9 @@ test("fetching a regular search", async () => {
 
 test("not saving a search to history", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     SearchBar.changeSearchBarInput("_path=conn")
   ])
 
@@ -65,9 +66,9 @@ test("not saving a search to history", async () => {
 
 test("fetching an analytic search", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
@@ -80,9 +81,9 @@ test("fetching an analytic search", async () => {
 
 test("fetching an analytic search without history", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()")
   ])
@@ -95,9 +96,9 @@ test("fetching an analytic search without history", async () => {
 
 test("fetching an zoom search", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     Search.setSpanFocus(brim.time.convertToSpan([new Date(0), new Date(1)])),
     SearchBar.changeSearchBarInput("_path=conn | count()")
@@ -111,9 +112,9 @@ test("fetching an zoom search", async () => {
 
 test("fetching an zoom search without history", async () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     initTimeWindow(),
     SearchBar.changeSearchBarInput("_path=conn | count()"),
     submitSearch()
@@ -127,9 +128,9 @@ test("fetching an zoom search without history", async () => {
 
 test("a bad search query", () => {
   store.dispatchAll([
-    Search.setCluster("1"),
+    Current.setConnectionId("1"),
     Spaces.setDetail("1", spaceInfo),
-    Search.setSpace("ranch-id"),
+    Current.setSpaceId("ranch-id"),
     SearchBar.changeSearchBarInput("_ath=")
   ])
 

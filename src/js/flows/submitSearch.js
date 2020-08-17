@@ -20,6 +20,7 @@ export default function submitSearch(
   return function(dispatch, getState) {
     const time = brim.time(ts)
     const prevArgs = Search.getArgs(getState())
+
     dispatch(SearchBar.submittingSearchBar(ts))
     dispatch(Tab.computeSpan())
     if (!dispatch(SearchBar.validate())) return Promise.reject()

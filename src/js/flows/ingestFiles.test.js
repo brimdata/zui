@@ -1,10 +1,13 @@
 /* @flow */
+import {createZealotMock} from "zealot"
 import fsExtra from "fs-extra"
 
-import {createZealotMock} from "zealot"
+import Clusters from "../state/Clusters"
+import Current from "../state/Current"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import fixtures from "../test/fixtures"
 import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
 import itestFile from "../test/itestFile"
@@ -38,7 +41,9 @@ beforeEach(() => {
     })
     .stubPromise("spaces.delete", true)
 
+  const conn = fixtures("cluster1")
   store = initTestStore(zealot)
+  store.dispatchAll([Clusters.add(conn), Current.setConnectionId(conn.id)])
   globalDispatch = store.dispatch
 })
 
@@ -49,9 +54,9 @@ afterEach(() => {
 test("opening a pcap", async () => {
   await store.dispatch(ingestFiles([itestFile("sample.pcap")], globalDispatch))
 
-  let state = store.getState()
+  const state = store.getState()
   expect(Tab.getSpaceName(state)).toEqual("sample.pcap.brim")
-  expect(Tab.space(state)).toEqual({
+  expect(Current.mustGetSpace(state)).toEqual({
     name: "sample.pcap.brim",
     id: "spaceId",
     min_time: {ns: 0, sec: 0},
@@ -85,10 +90,10 @@ test("when there is an error", async () => {
   ).rejects.toEqual(expect.any(Error))
 
   const state = store.getState()
-  const cluster = Tab.clusterId(state)
+  const cluster = Current.getConnectionId(state)
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
   expect(Spaces.getSpaces(cluster)(state)).toEqual([])
-  expect(Tab.getSpaceName(state)).toEqual("")
+  expect(Current.getSpaceId(state)).toEqual(null)
 })
 
 test("a zeek ingest error", async () => {
@@ -99,7 +104,7 @@ test("a zeek ingest error", async () => {
   ).rejects.toEqual(expect.any(Error))
 
   let state = store.getState()
-  expect(Tab.getSpaceName(state)).toEqual("")
+  expect(Current.getSpaceId(state)).toEqual(null)
 })
 
 test("a json file with a custom types config", async () => {

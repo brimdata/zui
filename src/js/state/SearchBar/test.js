@@ -1,14 +1,19 @@
 /* @flow */
 
+import {createZealotMock} from "zealot"
+
 import {
   appendQueryCountBy,
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
-import {createZealotMock} from "zealot"
+import Clusters from "../Clusters"
+import Current from "../Current"
 import Search from "../Search"
 import SearchBar from "./"
+import Spaces from "../Spaces"
 import Tab from "../Tab"
+import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 import submitSearch from "../../flows/submitSearch"
 
@@ -17,6 +22,15 @@ beforeEach(() => {
   store = initTestStore(
     createZealotMock().stubStream("search", [{type: "TaskEnd"}])
   )
+  const conn = fixtures("cluster1")
+  const space = fixtures("space1")
+
+  store.dispatchAll([
+    Clusters.add(conn),
+    Spaces.setDetail(conn.id, space),
+    Current.setConnectionId(conn.id),
+    Current.setSpaceId(space.id)
+  ])
 })
 
 test("input value changed", () => {

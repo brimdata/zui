@@ -4,9 +4,9 @@ import React, {useState} from "react"
 
 import {downloadPcap} from "../flows/downloadPcap"
 import {reactElementProps} from "../test/integration"
+import Current from "../state/Current"
 import LogDetails from "../state/LogDetails"
 import Sharkfin from "../icons/Sharkfin"
-import Tab from "../state/Tab"
 import ToolbarButton from "./ToolbarButton"
 import useDebouncedEffect from "./hooks/useDebouncedEffect"
 
@@ -15,7 +15,7 @@ type Props = {label: boolean, id: string}
 export default function PacketsButton({label}: Props) {
   let dispatch = useDispatch()
   let conn = useSelector(LogDetails.getConnLog)
-  let space = useSelector(Tab.space)
+  let space = useSelector(Current.mustGetSpace)
   let [enabled, setEnabled] = useState(!!conn && space.pcap_support)
 
   useDebouncedEffect(() => setEnabled(!!conn && space.pcap_support), 100, [

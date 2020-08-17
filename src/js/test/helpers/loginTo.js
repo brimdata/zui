@@ -1,9 +1,10 @@
 /* @flow */
 
 import {createZealotMock} from "zealot"
+
 import {initSpace} from "../../flows/initSpace"
 import Clusters from "../../state/Clusters"
-import Search from "../../state/Search"
+import Current from "../../state/Current"
 import Spaces from "../../state/Spaces"
 import fixtures from "../fixtures"
 import initTestStore from "../initTestStore"
@@ -18,7 +19,7 @@ export default async function loginTo(clusterName: string, spaceName: string) {
   let space = fixtures(spaceName)
 
   store.dispatch(Clusters.add(cluster))
-  store.dispatch(Search.setCluster(cluster.id))
+  store.dispatch(Current.setConnectionId(cluster.id))
   store.dispatch(Spaces.setDetail(cluster.id, space))
   return store.dispatch(initSpace(space.name)).then(() => {
     return {store, cluster}

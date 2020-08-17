@@ -2,6 +2,7 @@
 
 import type {NewTabSearchParams} from "../electron/ipc/windows/messages"
 import type {Store} from "../state/types"
+import Current from "../state/Current"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
@@ -14,7 +15,7 @@ export default function(store: Store, params: NewTabSearchParams) {
     store.dispatch(Tabs.new())
   }
 
-  store.dispatch(Search.setSpace(spaceId))
+  store.dispatch(Current.setSpaceId(spaceId))
   store.dispatch(Search.setSpanArgs(span))
   store.dispatch(SearchBar.removeAllSearchBarPins())
   store.dispatch(SearchBar.changeSearchBarInput(program))

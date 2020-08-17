@@ -11,6 +11,7 @@ import {
   txHostsCorrelation
 } from "../../searches/programs"
 import {parallelizeProcs} from "../../lib/Program"
+import Current from "../../state/Current"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
@@ -28,7 +29,7 @@ export const Md5Panel = ({
 }) => {
   let logMd5 = log.getString("md5")
   let dispatch = useDispatch()
-  let spaceId = useSelector(Tab.getSpaceId)
+  let spaceId = useSelector(Current.getSpaceId)
   let span = useSelector(Tab.getSpanAsDates)
   let [tx, setTx] = useState([])
   let [rx, setRx] = useState([])

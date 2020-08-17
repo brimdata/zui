@@ -11,13 +11,12 @@ import {Node} from "../models/Node"
 import {createInvestigationTree} from "./FilterTree/helpers"
 import {globalDispatch} from "../state/GlobalContext"
 import BookIcon from "../icons/BookSvgIcon"
+import Current from "../state/Current"
 import EmptySection from "./common/EmptySection"
 import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
-import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces/selectors"
-import Tab from "../state/Tab"
 import Warning from "./icons/warning-sm.svg"
 import submitSearch from "../flows/submitSearch"
 import usePopupMenu from "./hooks/usePopupMenu"
@@ -27,7 +26,7 @@ export default function FilterTree() {
   let investigation = useSelector(Investigation.getInvestigation)
   let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
-  const clusterId = useSelector(Tab.clusterId)
+  const clusterId = useSelector(Current.getConnectionId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
 
   function renderNode(node: Node, i: number) {
@@ -52,7 +51,7 @@ export default function FilterTree() {
         ["data", "finding", "search", "spaceId"],
         ""
       )
-      dispatch(Search.setSpace(nodeSpaceId))
+      dispatch(Current.setSpaceId(nodeSpaceId))
       dispatch(submitSearch({history: false, investigation: false}))
     }
 

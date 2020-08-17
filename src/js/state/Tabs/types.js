@@ -1,5 +1,4 @@
 /* @flow */
-import type {SearchState} from "../Search/types"
 import type {TabState} from "../Tab/types"
 
 export type TabsState = {active: string, data: TabState[]}
@@ -11,10 +10,14 @@ export type TabActions =
   | TABS_ORDER
   | TABS_ACTIVE_CLEAR
 
+export type AddTabData = {
+  connectionId: string | null
+}
+
 export type TABS_ADD = {
   type: "TABS_ADD",
   id: string,
-  data?: $Shape<SearchState>
+  data?: AddTabData
 }
 export type TABS_REMOVE = {type: "TABS_REMOVE", id: string}
 export type TABS_ACTIVATE = {type: "TABS_ACTIVATE", id: string}

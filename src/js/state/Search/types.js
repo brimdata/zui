@@ -7,8 +7,6 @@ export type SearchState = {|
   span: Span,
   spanArgs: SpanArgs,
   spanFocus: ?Span,
-  spaceId: string,
-  clusterId: string,
   ts: number
 |}
 
@@ -29,19 +27,8 @@ export type SearchActions =
   | SEARCH_SPAN_ARGS_SET
   | SEARCH_SPAN_FOCUS_SET
   | SEARCH_CLEAR
-  | SEARCH_SPACE_SET
-  | SEARCH_CLUSTER_SET
   | SEARCH_BAR_SUBMIT
 
-export type SEARCH_CLUSTER_SET = {
-  type: "SEARCH_CLUSTER_SET",
-  clusterId: string
-}
-export type SEARCH_SPACE_SET = {
-  type: "SEARCH_SPACE_SET",
-  spaceId: string,
-  tabId?: string
-}
 export type SEARCH_SPAN_SET = {
   type: "SEARCH_SPAN_SET",
   span: Span
