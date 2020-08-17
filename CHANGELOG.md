@@ -1,3 +1,6 @@
+## v0.15.1
+* Update zq to [v0.19.1](https://github.com/brimsec/zq/releases/tag/v0.19.1) (fixes an issue with excess characters in Space names after upgrade)
+
 ## v0.15.0
 * Update zq to [v0.19.0](https://github.com/brimsec/zq/releases/tag/v0.19.0)
 * Update Zeek to [v3.2.0-dev-brim7](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim7) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#999)
