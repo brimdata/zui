@@ -18,12 +18,17 @@ export function createZealot(
   args: ZealotArgs = { fetcher: createFetcher },
 ) {
   let host = getHost(hostUrl);
-  const { promise, stream } = args.fetcher(host);
+  let { promise, stream } = args.fetcher(host);
 
   let searchArgs: SearchArgs = getDefaultSearchArgs();
 
   return {
-    setHost: (hostUrl: string) => host = hostUrl,
+    setHost: (hostUrl: string) => {
+      host = hostUrl
+      const fetcher = args.fetcher(host)
+      promise = fetcher.promise
+      stream = fetcher.stream
+    },
     getHost: () => host,
     setSearchOptions: (args: Partial<SearchArgs>) => {
       searchArgs = { ...searchArgs, ...args };

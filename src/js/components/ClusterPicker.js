@@ -1,7 +1,13 @@
 /* @flow */
-import {useSelector} from "react-redux"
 import React, {type ComponentType} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import Tab from "../state/Tab"
+import Clusters from "../state/Clusters"
+import Search from "../state/Search"
 import styled from "styled-components"
+import {setConnection} from "../flows/setConnection"
+import usePopupMenu from "./hooks/usePopupMenu"
+import electronIsDev from "../electron/isDev"
 
 import Current from "../state/Current"
 
@@ -25,13 +31,37 @@ const ClusterPickerWrapper = (styled.div`
 `: ComponentType<*>)
 
 export default function ClusterPicker() {
+  const dispatch = useDispatch()
   const current = useSelector(Current.mustGetConnection)
+  const clusters = useSelector(Clusters.all)
+
+  const template = clusters.map((c) => {
+    const isCurrent = c.id === current.id
+    return {
+      type: "checkbox",
+      label: c.id,
+      checked: isCurrent,
+      click: isCurrent ? () => {} : () => dispatch(setConnection(c))
+    }
+  })
+
+  template.push(
+    {type: "separator"},
+    {
+      label: "+ New Connection",
+      click: () => dispatch(Search.setCluster(""))
+    }
+  )
+
+  const openMenu = usePopupMenu(template)
+
+  const onContextMenu = (e) => {
+    electronIsDev && openMenu(e.currentTarget)
+  }
 
   return (
-    <ClusterPickerWrapper>
-      <label>
-        {current.host}:{current.port}
-      </label>
+    <ClusterPickerWrapper onContextMenu={onContextMenu}>
+      <label>{current.id}</label>
     </ClusterPickerWrapper>
   )
 }

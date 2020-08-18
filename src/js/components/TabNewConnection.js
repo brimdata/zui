@@ -12,12 +12,14 @@ import ToolbarButton from "./ToolbarButton"
 import brim from "../brim"
 import useCallbackRef from "./hooks/useCallbackRef"
 import styled from "styled-components"
+import {useDispatch} from "react-redux"
+import {setConnection} from "../flows/setConnection"
 
 const TabNewConnectionWrapper = styled.div`
   height: 100%;
   background: linear-gradient(to bottom, var(--snow) 50%, white);
 
-  ${BrimTextLogo} {
+  .brim-text-logo {
     display: block;
     margin: 0 auto 48px auto;
   }
@@ -46,6 +48,7 @@ function toCluster({host, ...rest}): Cluster {
 }
 
 export default function TabSignIn() {
+  const dispatch = useDispatch()
   const [f, formRef] = useCallbackRef()
   const config = {
     host: {
@@ -59,7 +62,7 @@ export default function TabSignIn() {
     if (!f) return
     const form = brim.form(f, config)
     const cluster = toCluster(form.getData())
-    console.log(cluster)
+    dispatch(setConnection(cluster))
   }
 
   return (

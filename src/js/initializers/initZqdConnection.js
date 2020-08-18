@@ -11,10 +11,13 @@ export default async function(store: Store) {
   let {space, host, port, id} = getUrlSearchParams()
   global.windowId = id
 
+  const clusterHost = host || "localhost"
+  const clusterPort = port || "9867"
+  const clusterId = `${clusterHost}:${clusterPort}`
   let cluster = {
-    id: "zqd",
-    host: host || "localhost",
-    port: port || "9867",
+    id: clusterId,
+    host: clusterHost,
+    port: clusterPort,
     username: "",
     password: ""
   }
