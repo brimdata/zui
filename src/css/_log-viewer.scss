@@ -5,6 +5,9 @@
   *::selection {
     background: transparent;
   }
+  .using-keyboard &:focus {
+    outline: none;
+  }
 }
 
 .viewer .view {

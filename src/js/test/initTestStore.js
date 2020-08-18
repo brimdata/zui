@@ -17,16 +17,23 @@ type TestStore = {
 }
 
 export default (zealot: * = createZealotMock()): TestStore => {
-  // $FlowFixMe
-  return createStore(
+  let store
+
+  // This is so that tests can use globalDispatch without actually making
+  // electron ipc calls. In the tests, globalDispatch is an alias for dispatch.
+  const globalDispatch = (...args) => store.dispatch(...args)
+
+  store = createStore(
     rootReducer,
     undefined,
     compose(
       applyDispatchAll(),
-      applyMiddleware(reduxThunk.withExtraArgument({zealot})),
+      applyMiddleware(reduxThunk.withExtraArgument({zealot, globalDispatch})),
       applyActionHistory()
     )
   )
+  // $FlowFixMe
+  return store
 }
 
 function applyDispatchAll() {

@@ -20,7 +20,7 @@ test("add tab with no data", () => {
 
 test("add tab with data and activate", () => {
   let state = store.dispatchAll([
-    Tabs.add("1", {connectionId: "a"}),
+    Tabs.add("1", {connectionId: "a", spaceId: null}),
     Tabs.activate("1")
   ])
   let tab = Tabs.getActiveTab(state)

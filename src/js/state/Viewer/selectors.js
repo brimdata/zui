@@ -60,3 +60,13 @@ export const getSelection = createSelector<
   ViewerSelection,
   ViewerSelectionData
 >(getSelectionData, (data) => createSelection(data))
+
+export const getSelectedRecords = createSelector<
+  State,
+  void,
+  RecordData[],
+  ViewerSelection,
+  RecordData[]
+>(getSelection, getViewerRecords, (selection, records) =>
+  selection.getIndices().map((index) => records[index])
+)

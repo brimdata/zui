@@ -62,7 +62,10 @@ function addTabData(stateData, {id, data}) {
   let initialState = tabReducer(undefined, {type: "INIT"})
   const tab = produce(initialState, (draft) => {
     draft.id = id
-    if (data) draft.current.connectionId = data.connectionId
+    if (data) {
+      draft.current.connectionId = data.connectionId
+      draft.current.spaceId = data.spaceId
+    }
   })
   return [...stateData, tab]
 }
