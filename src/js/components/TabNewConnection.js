@@ -1,5 +1,5 @@
 /* @flow */
-import React from "react"
+import React, {useCallback, useState} from "react"
 
 import type {Cluster} from "../state/Clusters/types"
 import {reactElementProps} from "../test/integration"
@@ -14,6 +14,7 @@ import useCallbackRef from "./hooks/useCallbackRef"
 import styled from "styled-components"
 import {useDispatch} from "react-redux"
 import {setConnection} from "../flows/setConnection"
+import FormErrors from "./Preferences/FormErrors"
 
 const TabNewConnectionWrapper = styled.div`
   height: 100%;
@@ -39,6 +40,25 @@ const SignInForm = styled.div`
       min-width: 80px;
     }
   }
+
+  .errors {
+    h4 {
+      margin-bottom: 0.25rem;
+    }
+    ul {
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    a {
+      color: var(--red);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    p {
+      margin: 0;
+      ${(props) => props.theme.typography.labelSmall}
+    }
+  }
 `
 
 function toCluster({host, ...rest}): Cluster {
@@ -50,26 +70,39 @@ function toCluster({host, ...rest}): Cluster {
 export default function TabSignIn() {
   const dispatch = useDispatch()
   const [f, formRef] = useCallbackRef()
+  let [errors, setErrors] = useState([])
   const config = {
     host: {
       name: "host",
-      label: "Host:"
+      label: "Host:",
+      submit: (value) => dispatch(setConnection(toCluster({host: value})))
     }
   }
 
-  function onSubmit(e) {
-    e.preventDefault()
+  const onSubmit = useCallback(async () => {
     if (!f) return
-    const form = brim.form(f, config)
-    const cluster = toCluster(form.getData())
-    dispatch(setConnection(cluster))
-  }
+    let form = brim.form(f, config)
+
+    if (await form.isValid()) {
+      setErrors([])
+      form.submit()
+    } else {
+      setErrors(form.getErrors())
+    }
+  }, [f, config])
 
   return (
     <TabNewConnectionWrapper>
       <SignInForm {...reactElementProps("login")}>
-        <form ref={formRef} onSubmit={onSubmit}>
-          <BrimTextLogo />
+        <BrimTextLogo />
+        <FormErrors errors={errors} />
+        <form
+          ref={formRef}
+          onSubmit={(e) => {
+            e.preventDefault()
+            onSubmit()
+          }}
+        >
           <InputField>
             <InputLabel>{config.host.label}</InputLabel>
             <TextInput name={config.host.name} required autoFocus />

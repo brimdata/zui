@@ -32,7 +32,7 @@ const ClusterPickerWrapper = (styled.div`
 
 export default function ClusterPicker() {
   const dispatch = useDispatch()
-  const current = useSelector(Current.mustGetConnection)
+  const current = useSelector(Current.getConnection)
   const clusters = useSelector(Clusters.all)
 
   const template = clusters.map((c) => {
@@ -49,7 +49,7 @@ export default function ClusterPicker() {
     {type: "separator"},
     {
       label: "+ New Connection",
-      click: () => dispatch(Search.setCluster(""))
+      click: () => dispatch(Current.setConnectionId(""))
     }
   )
 
