@@ -1,9 +1,7 @@
 /* @flow */
 import React, {type ComponentType} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import Tab from "../state/Tab"
 import Clusters from "../state/Clusters"
-import Search from "../state/Search"
 import styled from "styled-components"
 import {setConnection} from "../flows/setConnection"
 import usePopupMenu from "./hooks/usePopupMenu"

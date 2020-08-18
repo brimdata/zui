@@ -39,9 +39,6 @@ export default function form(element: HTMLFormElement, config: FormConfig) {
     },
     getErrors() {
       return errors
-    },
-    getData() {
-      return Object.fromEntries(fields().map((f) => [f.name, f.value]))
     }
   }
 }

@@ -15,8 +15,9 @@ import styled from "styled-components"
 import {useDispatch} from "react-redux"
 import {setConnection} from "../flows/setConnection"
 import FormErrors from "./Preferences/FormErrors"
+import type {Styled} from "../types/styled"
 
-const TabNewConnectionWrapper = styled.div`
+const TabNewConnectionWrapper: Styled<> = styled.div`
   height: 100%;
   background: linear-gradient(to bottom, var(--snow) 50%, white);
 
