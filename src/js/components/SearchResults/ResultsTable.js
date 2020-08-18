@@ -15,13 +15,11 @@ import {useRowSelection} from "./selection"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
-import Current from "../../state/Current"
 import Layout from "../../state/Layout"
 import Log from "../../models/Log"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
 import Prefs from "../../state/Prefs"
-import SearchBar from "../../state/SearchBar"
 import TableColumns from "../../models/TableColumns"
 import View from "../../state/View"
 import Viewer from "../../state/Viewer"
@@ -29,7 +27,6 @@ import ViewerComponent from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
-import menu from "../../electron/menu"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
 
 type StateProps = {|
@@ -48,7 +45,8 @@ type StateProps = {|
 
 type OwnProps = {|
   height: number,
-  width: number
+  width: number,
+  createContextMenu: Function
 |}
 
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
@@ -110,11 +108,7 @@ export default function ResultsTable(props: Props) {
           dispatch(viewLogDetail(logs[index]))
           dispatch(openLogDetailsWindow())
         }}
-        rightClick={menu.searchFieldContextMenu(
-          props.program,
-          props.tableColumns.getColumns().map((c) => c.name),
-          props.space
-        )}
+        rightClick={props.createContextMenu}
       />
     )
   }
@@ -164,10 +158,7 @@ function stateToProps(state: State) {
     timeZone: View.getTimeZone(state),
     timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),
-    program: SearchBar.getSearchProgram(state),
-    space: Current.getSpace(state),
-    scrollPos: Viewer.getScrollPos(state),
-    state
+    scrollPos: Viewer.getScrollPos(state)
   }
 }
 
