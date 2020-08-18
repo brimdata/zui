@@ -3,9 +3,8 @@
 import {createZealotMock} from "zealot"
 
 import Clusters from "../state/Clusters"
-import Search from "../state/Search"
+import Current from "../state/Current"
 import Spaces from "../state/Spaces"
-import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import createSubspace from "./createSubspace"
@@ -36,8 +35,8 @@ beforeEach(() => {
   store.dispatchAll([
     Clusters.add(conn),
     Spaces.setDetail(conn.id, space),
-    Search.setCluster(conn.id),
-    Search.setSpace(space.id),
+    Current.setConnectionId(conn.id),
+    Current.setSpaceId(space.id),
     Viewer.appendRecords(undefined, records),
     Viewer.select(0)
   ])
@@ -57,7 +56,7 @@ test("The new tab is active", async () => {
 
 test("The subspace is the current space", async () => {
   await store.dispatch(createSubspace())
-  expect(select(Tab.getSpaceId)).toBe("2")
+  expect(select(Current.getSpaceId)).toBe("2")
 })
 
 test("The subspace is named the first key of the records", async () => {

@@ -6,7 +6,7 @@ import Tabs from "./"
 import brim from "../../brim"
 
 export default {
-  new: (spaceId?: string): Thunk => (dispatch, getState) => {
+  new: (spaceId?: string | null = null): Thunk => (dispatch, getState) => {
     const {
       current: {connectionId}
     } = Tabs.getActiveTab(getState())
