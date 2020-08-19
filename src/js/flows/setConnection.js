@@ -12,8 +12,7 @@ export const setConnection = (cluster: Cluster): Thunk => (
   getState,
   {createZealot}
 ) => {
-  const newHost = `${cluster.host}:${cluster.port}`
-  const zealot = createZealot(newHost)
+  const zealot = createZealot(cluster.id)
   return zealot
     .status()
     .then(() => {
@@ -24,6 +23,6 @@ export const setConnection = (cluster: Cluster): Thunk => (
       })
     })
     .catch((e) => {
-      dispatch(Notice.set(new Error(`Cannot connect to ${newHost}: ${e}`)))
+      dispatch(Notice.set(new Error(`Cannot connect to ${cluster.id}: ${e}`)))
     })
 }

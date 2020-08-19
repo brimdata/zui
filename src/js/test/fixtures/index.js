@@ -19,15 +19,24 @@ const space1 = (): Space => ({
 })
 
 const cluster1 = (): Cluster => ({
-  id: "cluster1",
+  id: "test:9867",
   host: "test",
   port: "9867",
   username: "",
   password: ""
 })
 
+const cluster2 = (): Cluster => ({
+  id: "test:9868",
+  host: "test",
+  port: "9868",
+  username: "",
+  password: ""
+})
+
 let fixtures = () => ({
   cluster1: cluster1(),
+  cluster2: cluster2(),
   space1: space1()
 })
 
