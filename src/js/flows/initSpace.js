@@ -13,10 +13,11 @@ import submitSearch from "./submitSearch"
 export const initSpace = (spaceId: string): Thunk => (
   dispatch,
   getState,
-  {zealot}
+  {createZealot}
 ) => {
   const clusterId = Current.getConnectionId(getState())
   if (!clusterId) return
+  const zealot = createZealot(clusterId)
   return zealot.spaces
     .get(spaceId)
     .then(brim.interop.spacePayloadToSpace)

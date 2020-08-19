@@ -10,10 +10,12 @@ export default function submitAutoRefreshSearch(): Thunk {
   return function(dispatch, getState) {
     const state = getState()
     const prevArgs = Search.getArgs(state)
+    console.log("prevArgs: ", prevArgs)
     if (!dispatch(SearchBar.validate())) return Promise.reject()
 
     const tabId = Tabs.getActive(state)
     const args = Search.getArgs(state)
+    console.log("args: ", args)
 
     switch (args.type) {
       case "analytics":

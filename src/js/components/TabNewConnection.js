@@ -68,7 +68,7 @@ function toCluster({host, ...rest}): Cluster {
   return {...rest, host: h, port: p || "9867", id: host}
 }
 
-export default function TabSignIn() {
+export default function TabNewConnection() {
   const dispatch = useDispatch()
   const [f, formRef] = useCallbackRef()
   let [errors, setErrors] = useState([])
@@ -112,7 +112,6 @@ export default function TabSignIn() {
             <ToolbarButton text="Connect" />
           </Buttons>
         </form>
-        <ErrorNotice />
       </SignInForm>
     </TabNewConnectionWrapper>
   )

@@ -39,7 +39,7 @@ export default function ClusterPicker() {
       type: "checkbox",
       label: c.id,
       checked: isCurrent,
-      click: isCurrent ? () => {} : () => dispatch(setConnection(c))
+      click: () => !isCurrent && dispatch(setConnection(c))
     }
   })
 

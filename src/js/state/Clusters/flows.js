@@ -13,7 +13,8 @@ import Tabs from "../Tabs"
 import Viewer from "../Viewer"
 
 export function connectCluster(cluster: Cluster): Thunk {
-  return function(d, getState, {zealot}) {
+  return function(d, getState, {createZealot}) {
+    const zealot = createZealot(Current.getConnectionId(getState()))
     return zealot.status().then(() => {
       d(Current.setConnectionId(cluster.id))
       d(initSpace("default"))

@@ -18,7 +18,7 @@ export type GetState = () => State
 export type Thunk = (
   Dispatch,
   GetState,
-  {zealot: *, globalDispatch: Dispatch}
+  {zealot: *, createZealot: Function, globalDispatch: Dispatch}
 ) => any
 export type Dispatch = Function
 export type Action = Object

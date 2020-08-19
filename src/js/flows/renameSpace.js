@@ -7,9 +7,10 @@ import Tabs from "../state/Tabs"
 export default (clusterId: string, spaceId: string, name: string): Thunk => (
   dispatch,
   getState,
-  {zealot}
+  {createZealot}
 ) => {
   const state = getState()
+  const zealot = createZealot(Current.getConnectionId(state))
   const tabs = Tabs.getData(state)
 
   return zealot.spaces.update(spaceId, {name}).then(() => {

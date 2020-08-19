@@ -2,8 +2,10 @@
 import type {Thunk} from "../state/types"
 import Handlers from "../state/Handlers"
 import rpc from "../electron/rpc"
+import Current from "../state/Current"
 
-export default (): Thunk => (_, getState, {zealot}) => {
+export default (): Thunk => (_, getState, {createZealot}) => {
+  const zealot = createZealot(Current.getConnectionId(getState()))
   let spaceIds = Handlers.getIngestSpaceIds(getState())
   return Promise.all(
     spaceIds.map((id) => {

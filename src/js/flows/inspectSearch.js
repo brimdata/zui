@@ -4,7 +4,12 @@ import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 
-export const inspectSearch = (): Thunk => (dispatch, getState, {zealot}) => {
+export const inspectSearch = (): Thunk => (
+  dispatch,
+  getState,
+  {createZealot}
+) => {
+  const zealot = createZealot(Current.getConnectionId(getState()))
   const program = SearchBar.getSearchProgram(getState())
   const [from, to] = Tab.getSpan(getState())
   const spaceId = Current.getSpaceId(getState())

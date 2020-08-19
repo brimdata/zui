@@ -19,7 +19,12 @@ function cutColumns(program, columns) {
   }
 }
 
-export default (filePath: string): Thunk => (dispatch, getState, {zealot}) => {
+export default (filePath: string): Thunk => (
+  dispatch,
+  getState,
+  {createZealot}
+) => {
+  const zealot = createZealot(Current.getConnectionId(getState()))
   const spaceId = Current.getSpaceId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())

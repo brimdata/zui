@@ -9,7 +9,6 @@ export default (): Thunk => (dispatch, getState) => {
   const space = Current.getSpace(state)
   const spaceId = Current.getSpaceId(state)
   const spaceIsDeleted = spaceId && !space
-
   if (spaceIsDeleted) dispatch(resetTab())
 }
 

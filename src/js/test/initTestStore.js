@@ -29,6 +29,13 @@ export default (zealot: * = createZealotMock()): TestStore => {
     compose(
       applyDispatchAll(),
       applyMiddleware(reduxThunk.withExtraArgument({zealot, globalDispatch})),
+      applyMiddleware(
+        reduxThunk.withExtraArgument({
+          zealot,
+          createZealot: createZealotMock,
+          globalDispatch
+        })
+      ),
       applyActionHistory()
     )
   )

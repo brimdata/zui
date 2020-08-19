@@ -7,25 +7,23 @@ import refreshSpaceNames from "./refreshSpaceNames"
 import {globalDispatch} from "../state/GlobalContext"
 import Notice from "../state/Notice"
 
-export const setConnection = (cluster: Cluster): Thunk => async (
+export const setConnection = (cluster: Cluster): Thunk => (
   dispatch,
   getState,
-  {zealot}
+  {createZealot}
 ) => {
-  const currentHost = zealot.getHost()
   const newHost = `${cluster.host}:${cluster.port}`
-  zealot.setHost(newHost)
+  const zealot = createZealot(newHost)
   return zealot
     .status()
     .then(() => {
+      dispatch(Clusters.add(cluster))
       globalDispatch(Clusters.add(cluster)).then(() => {
         dispatch(Current.setConnectionId(cluster.id))
         dispatch(refreshSpaceNames())
       })
     })
     .catch((e) => {
-      zealot.setHost(currentHost)
-      dispatch(Current.setConnectionId(currentHost))
       dispatch(Notice.set(new Error(`Cannot connect to ${newHost}: ${e}`)))
     })
 }

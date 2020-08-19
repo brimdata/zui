@@ -28,8 +28,8 @@ export default async () => {
     composeWithDevTools(
       applyMiddleware(
         reduxThunk.withExtraArgument({
-          zealot: createZealot("localhost:9867"),
-          globalDispatch
+          globalDispatch,
+          createZealot
         })
       )
     )

@@ -13,8 +13,9 @@ import whenIdle from "../lib/whenIdle"
 export default (patterns: string[]): Thunk => (
   dispatch,
   getState,
-  {zealot}
+  {createZealot}
 ) => {
+  const zealot = createZealot(Current.getConnectionId(getState()))
   const spaceId = Current.getSpaceId(getState())
   const tabId = Tabs.getActive(getState())
   const ctl = new AbortController()

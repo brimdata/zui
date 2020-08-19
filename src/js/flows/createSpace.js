@@ -12,8 +12,9 @@ type Props = {
 export const createSpace = ({name, kind, data_path}: Props): Thunk => async (
   dispatch,
   getState,
-  {zealot}
+  {createZealot}
 ) => {
+  const zealot = createZealot(Current.getConnectionId(getState()))
   return zealot.spaces
     .create({
       name,

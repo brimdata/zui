@@ -13,11 +13,12 @@ export default {
   fetch: (log: Log): Thunk => (
     dispatch: Function,
     getState: Function,
-    {zealot}
+    {createZealot}
   ) => {
     dispatch(Packets.request(log.getString("uid")))
     dispatch(View.showDownloads())
     const state = getState()
+    const zealot = createZealot(Current.getConnectionId(state))
     const spaceId = Current.getSpaceId(state)
     const args = {
       ts_sec: log.getSec("ts"),

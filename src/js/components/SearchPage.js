@@ -12,6 +12,7 @@ import TabContent from "./TabContent"
 import Tabs from "../state/Tabs"
 import useSearchShortcuts from "./useSearchShortcuts"
 import styled from "styled-components"
+import Current from "../state/Current"
 
 const ColumnLayout: React$ComponentType<any> = styled.div`
   display: flex;
