@@ -23,16 +23,17 @@ export default (zealot: * = createZealotMock()): TestStore => {
   // electron ipc calls. In the tests, globalDispatch is an alias for dispatch.
   const globalDispatch = (...args) => store.dispatch(...args)
 
+  const createZealot = () => zealot
+  // $FlowFixMe
   store = createStore(
     rootReducer,
     undefined,
     compose(
       applyDispatchAll(),
-      applyMiddleware(reduxThunk.withExtraArgument({zealot, globalDispatch})),
       applyMiddleware(
         reduxThunk.withExtraArgument({
           zealot,
-          createZealot: createZealotMock,
+          createZealot,
           globalDispatch
         })
       ),
