@@ -17,7 +17,7 @@ export default function window(name: WindowName, params: WindowParams) {
     case "about":
       return aboutWindow()
     case "detail":
-      return detailWindow(params)
+      return detailWindow({name, ...params})
     default:
       throw new Error(`Unknown window name: ${name}`)
   }
@@ -71,7 +71,7 @@ function aboutWindow() {
 }
 
 function detailWindow(params) {
-  let {size, position, query, id} = params
+  let {size, position, query, id, name} = params
   let win = new BrowserWindow({
     resizable: true,
     width: 360,
@@ -80,6 +80,7 @@ function detailWindow(params) {
       nodeIntegration: true
     }
   })
+
   if (size) {
     win.setSize(...size)
   }
@@ -89,7 +90,7 @@ function detailWindow(params) {
     win.center()
   }
 
-  win.loadFile("detail.html", {query: {...query, id}})
+  win.loadFile("detail.html", {query: {...query, id, name}})
 
   return win
 }
