@@ -139,16 +139,21 @@ export default class ColumnChooserMenu extends React.Component<Props> {
                 Deselect All
               </Paragraph>
             </ControlListItem>
-            {columns.map((c) => (
-              <ColumnListItem key={`${c.name}-${c.type}`}>
-                <Checkbox
-                  label={c.name}
-                  checked={c.isVisible}
-                  onChange={(e) => this.onColumnClick(e, c)}
-                />
-                <Subscript>{c.type}</Subscript>
-              </ColumnListItem>
-            ))}
+            {columns
+              .sort((a, b) => {
+                if (a.name < b.name) return -1
+                else return 1
+              })
+              .map((c) => (
+                <ColumnListItem key={`${c.name}-${c.type}`}>
+                  <Checkbox
+                    label={c.name}
+                    checked={c.isVisible}
+                    onChange={(e) => this.onColumnClick(e, c)}
+                  />
+                  <Subscript>{c.type}</Subscript>
+                </ColumnListItem>
+              ))}
           </ul>
         </div>
       </CSSTransition>
