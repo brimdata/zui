@@ -63,6 +63,15 @@
     padding-bottom: 12px;
     height: 100%;
   }
+
+  .search-input {
+    width: 100%;
+  }
+
+  #column-search {
+    width: 100%;
+  }
+
 }
 
 .slide-in-right-appear {
@@ -73,3 +82,4 @@
   transition: transform 150ms;
   transform: translate(0, 0);
 }
+

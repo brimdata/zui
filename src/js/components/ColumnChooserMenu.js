@@ -66,7 +66,11 @@ type Props = {|
   ...OwnProps
 |}
 
-export default class ColumnChooserMenu extends React.Component<Props> {
+export default class ColumnChooserMenu extends React.Component<Props, State> {
+  state: State = {
+    searchValue: ""
+  }
+
   tableId() {
     return this.props.tableColumns.id
   }
@@ -92,6 +96,10 @@ export default class ColumnChooserMenu extends React.Component<Props> {
     } else {
       this.props.dispatch(Columns.showColumn(this.tableId(), column))
     }
+  }
+
+  handleChange = (event) => {
+    this.setState({searchValue: event.target.value})
   }
 
   render() {
@@ -139,7 +147,25 @@ export default class ColumnChooserMenu extends React.Component<Props> {
                 Deselect All
               </Paragraph>
             </ControlListItem>
+            <ControlListItem>
+              <div className="search-input">
+                <input
+                  id="column-search"
+                  type="text"
+                  value={this.state.searchValue}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </ControlListItem>
             {columns
+              .filter((c) => {
+                if (this.state.searchValue === "") return true
+                return (
+                  c.name
+                    .toLowerCase()
+                    .search(new RegExp(this.state.searchValue, "g")) > -1
+                )
+              })
               .sort((a, b) => {
                 if (a.name < b.name) return -1
                 else return 1
