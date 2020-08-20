@@ -102,6 +102,10 @@ export default class ColumnChooserMenu extends React.Component<Props, State> {
     this.setState({searchValue: event.target.value})
   }
 
+  clearSearch = () => {
+    this.setState({searchValue: ""})
+  }
+
   render() {
     const {columnHeadersView} = this.props
     const columns = this.props.tableColumns.getColumns()
@@ -154,6 +158,10 @@ export default class ColumnChooserMenu extends React.Component<Props, State> {
                   type="text"
                   value={this.state.searchValue}
                   onChange={this.handleChange}
+                />
+                <CloseButton
+                  id="column-search-clear"
+                  onClick={this.clearSearch}
                 />
               </div>
             </ControlListItem>

@@ -66,10 +66,16 @@
 
   .search-input {
     width: 100%;
+    align-content: center;
   }
 
   #column-search {
     width: 100%;
+  }
+  #column-search-clear {
+    position: absolute;
+    right: -2px;
+    top: -2px;
   }
 
 }
