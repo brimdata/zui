@@ -18,6 +18,7 @@ import ThreeDotButton from "./ThreeDotButton"
 import submitSearch from "../flows/submitSearch"
 import useDelayedMount from "./hooks/useDelayedMount"
 import usePrevious from "./hooks/usePrevious"
+import {shell} from "electron"
 
 export default function SearchInput() {
   let dispatch = useDispatch()
@@ -93,7 +94,8 @@ function Menu() {
     {label: "Copy for zq", click: () => dispatch(Modal.show("zq"))},
     {
       label: "Syntax docs",
-      click: () => open("https://github.com/brimsec/zq/tree/master/zql/docs")
+      click: () =>
+        shell.openExternal("https://github.com/brimsec/zq/tree/master/zql/docs")
     },
     {
       label: "Kill search",
