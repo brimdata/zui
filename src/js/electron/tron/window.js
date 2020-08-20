@@ -17,7 +17,7 @@ export default function window(name: WindowName, params: WindowParams) {
     case "about":
       return aboutWindow()
     case "detail":
-      return detailWindow({name, ...params})
+      return detailWindow({...params, name})
     default:
       throw new Error(`Unknown window name: ${name}`)
   }
