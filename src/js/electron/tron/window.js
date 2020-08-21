@@ -17,7 +17,7 @@ export default function window(name: WindowName, params: WindowParams) {
     case "about":
       return aboutWindow()
     case "detail":
-      return detailWindow({...params})
+      return detailWindow(params)
     default:
       throw new Error(`Unknown window name: ${name}`)
   }
@@ -80,7 +80,6 @@ function detailWindow(params) {
       nodeIntegration: true
     }
   })
-
   if (size) {
     win.setSize(...size)
   }
