@@ -16,6 +16,7 @@ import Layout from "../state/Layout"
 import SelectInput from "./common/forms/SelectInput"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
+import SearchInput from "./common/forms/SearchInput"
 
 const ControlListItem = styled.li`
   display: flex;
@@ -66,8 +67,15 @@ type Props = {|
   ...OwnProps
 |}
 
-export default class ColumnChooserMenu extends React.Component<Props, State> {
-  state: State = {
+type LocalState = {
+  searchValue: string
+}
+
+export default class ColumnChooserMenu extends React.Component<
+  Props,
+  LocalState
+> {
+  state: LocalState = {
     searchValue: ""
   }
 
@@ -98,7 +106,7 @@ export default class ColumnChooserMenu extends React.Component<Props, State> {
     }
   }
 
-  handleChange = (event) => {
+  handleChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
     this.setState({searchValue: event.target.value})
   }
 
@@ -153,15 +161,11 @@ export default class ColumnChooserMenu extends React.Component<Props, State> {
             </ControlListItem>
             <ControlListItem>
               <div className="search-input">
-                <input
+                <SearchInput
                   id="column-search"
                   type="text"
                   value={this.state.searchValue}
                   onChange={this.handleChange}
-                />
-                <CloseButton
-                  id="column-search-clear"
-                  onClick={this.clearSearch}
                 />
               </div>
             </ControlListItem>
