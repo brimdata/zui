@@ -1,14 +1,10 @@
 /* @flow */
 import type {Thunk} from "../state/types"
 import refreshSpaceNames from "./refreshSpaceNames"
-import Current from "../state/Current"
+import {getZealot} from "./getZealot"
 
-const deleteSpace = (name: string): Thunk => (
-  dispatch,
-  getState,
-  {createZealot}
-) => {
-  const zealot = createZealot(Current.getConnectionId(getState()))
+const deleteSpace = (name: string): Thunk => (dispatch) => {
+  const zealot = dispatch(getZealot())
   return zealot.spaces.delete(name).then(() => {
     dispatch(refreshSpaceNames())
   })

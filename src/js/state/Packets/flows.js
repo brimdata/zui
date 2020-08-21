@@ -8,17 +8,14 @@ import Current from "../Current"
 import Log from "../../models/Log"
 import Packets from "../Packets"
 import View from "../View"
+import {getZealot} from "../../flows/getZealot"
 
 export default {
-  fetch: (log: Log): Thunk => (
-    dispatch: Function,
-    getState: Function,
-    {createZealot}
-  ) => {
+  fetch: (log: Log): Thunk => (dispatch: Function, getState: Function) => {
     dispatch(Packets.request(log.getString("uid")))
     dispatch(View.showDownloads())
     const state = getState()
-    const zealot = createZealot(Current.getConnectionId(state))
+    const zealot = dispatch(getZealot())
     const spaceId = Current.getSpaceId(state)
     const args = {
       ts_sec: log.getSec("ts"),

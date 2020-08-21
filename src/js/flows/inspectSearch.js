@@ -3,13 +3,10 @@ import type {Thunk} from "../state/types"
 import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
+import {getZealot} from "./getZealot"
 
-export const inspectSearch = (): Thunk => (
-  dispatch,
-  getState,
-  {createZealot}
-) => {
-  const zealot = createZealot(Current.getConnectionId(getState()))
+export const inspectSearch = (): Thunk => (dispatch, getState) => {
+  const zealot = dispatch(getZealot())
   const program = SearchBar.getSearchProgram(getState())
   const [from, to] = Tab.getSpan(getState())
   const spaceId = Current.getSpaceId(getState())

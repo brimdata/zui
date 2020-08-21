@@ -32,7 +32,6 @@ export default (zealot: * = createZealotMock()): TestStore => {
       applyDispatchAll(),
       applyMiddleware(
         reduxThunk.withExtraArgument({
-          zealot,
           createZealot,
           globalDispatch
         })

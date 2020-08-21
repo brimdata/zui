@@ -11,10 +11,11 @@ import Search from "../Search"
 import SearchBar from "../SearchBar"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
+import {getZealot} from "../../flows/getZealot"
 
 export function connectCluster(cluster: Cluster): Thunk {
-  return function(d, getState, {createZealot}) {
-    const zealot = createZealot(Current.getConnectionId(getState()))
+  return function(d) {
+    const zealot = d(getZealot())
     return zealot.status().then(() => {
       d(Current.setConnectionId(cluster.id))
       d(initSpace("default"))

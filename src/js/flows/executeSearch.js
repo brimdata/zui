@@ -3,15 +3,15 @@ import type {Thunk} from "../state/types"
 import Handlers from "../state/Handlers"
 import brim, {type $Search} from "../brim"
 import whenIdle from "../lib/whenIdle"
-import Current from "../state/Current"
+import {getZealot} from "./getZealot"
 
 function abortError(e) {
   return /user aborted/i.test(e.message)
 }
 
 export default function executeSearch(search: $Search): Thunk {
-  return function(dispatch, getState, {createZealot}) {
-    const zealot = createZealot(Current.getConnectionId(getState()))
+  return function(dispatch) {
+    const zealot = dispatch(getZealot())
     let buffer = brim.flatRecordsBuffer()
     let count = 0
 

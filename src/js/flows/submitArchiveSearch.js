@@ -9,13 +9,10 @@ import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
 import whenIdle from "../lib/whenIdle"
+import {getZealot} from "./getZealot"
 
-export default (patterns: string[]): Thunk => (
-  dispatch,
-  getState,
-  {createZealot}
-) => {
-  const zealot = createZealot(Current.getConnectionId(getState()))
+export default (patterns: string[]): Thunk => (dispatch, getState) => {
+  const zealot = dispatch(getZealot())
   const spaceId = Current.getSpaceId(getState())
   const tabId = Tabs.getActive(getState())
   const ctl = new AbortController()

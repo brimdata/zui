@@ -2,12 +2,10 @@
 import React, {useCallback, useState} from "react"
 
 import type {Cluster} from "../state/Clusters/types"
-import {reactElementProps} from "../test/integration"
 import BrimTextLogo from "./BrimTextLogo"
 import InputField from "./common/forms/InputField"
 import InputLabel from "./common/forms/InputLabel"
 import TextInput from "./common/forms/TextInput"
-import ToolbarButton from "./ToolbarButton"
 import brim from "../brim"
 import useCallbackRef from "./hooks/useCallbackRef"
 import styled from "styled-components"
@@ -15,9 +13,12 @@ import {useDispatch} from "react-redux"
 import {setConnection} from "../flows/setConnection"
 import FormErrors from "./Preferences/FormErrors"
 import type {Styled} from "../types/styled"
+import ModalBox from "./ModalBox/ModalBox"
+import TextContent from "./TextContent"
+import {isEmpty} from "lodash"
 
-const TabNewConnectionWrapper: Styled<> = styled.div`
-  height: 100%;
+const StyledModalBox: Styled<> = styled(ModalBox)`
+  min-width: 500px;
   background: linear-gradient(to bottom, var(--snow) 50%, white);
 
   .brim-text-logo {
@@ -28,7 +29,7 @@ const TabNewConnectionWrapper: Styled<> = styled.div`
 
 const Buttons = styled.div``
 const SignInForm = styled.div`
-  margin: 10vh auto 0;
+  margin: 50px auto;
   width: 240px;
 
   ${Buttons} {
@@ -67,51 +68,60 @@ function toCluster({host, ...rest}): Cluster {
   return {...rest, host: h, port: p || "9867", id: host}
 }
 
-export default function TabNewConnection() {
+export default function NewConnectionModal() {
   const dispatch = useDispatch()
-  const [f, formRef] = useCallbackRef()
+  const [f, formRef] = useCallbackRef<HTMLFormElement>()
   let [errors, setErrors] = useState([])
   const config = {
     host: {
       name: "host",
-      label: "Host:",
-      submit: (value) => dispatch(setConnection(toCluster({host: value})))
+      label: "Host",
+      submit: (value) => dispatch(setConnection(toCluster({host: value}))),
+      check: (value) => [!isEmpty(value), "must not be blank"]
     }
   }
 
-  const onSubmit = useCallback(async () => {
-    if (!f) return
-    let form = brim.form(f, config)
+  const onClose = () => setErrors([])
 
-    if (await form.isValid()) {
-      setErrors([])
-      form.submit()
-    } else {
-      setErrors(form.getErrors())
-    }
-  }, [f, config])
+  const onSubmit = useCallback(
+    async (closeModal) => {
+      if (!f) return
+      let form = brim.form(f, config)
+
+      if (await form.isValid()) {
+        form.submit()
+        closeModal()
+      } else {
+        setErrors(form.getErrors())
+      }
+    },
+    [f, config]
+  )
+
+  const buttons = [
+    {label: "Cancel", click: (closeModal) => closeModal()},
+    {label: "Connect", click: onSubmit}
+  ]
 
   return (
-    <TabNewConnectionWrapper>
-      <SignInForm {...reactElementProps("login")}>
-        <BrimTextLogo />
-        <FormErrors errors={errors} />
-        <form
-          ref={formRef}
-          onSubmit={(e) => {
-            e.preventDefault()
-            onSubmit()
-          }}
-        >
-          <InputField>
-            <InputLabel>{config.host.label}</InputLabel>
-            <TextInput name={config.host.name} required autoFocus />
-          </InputField>
-          <Buttons>
-            <ToolbarButton text="Connect" />
-          </Buttons>
-        </form>
-      </SignInForm>
-    </TabNewConnectionWrapper>
+    <StyledModalBox
+      title="New Connection"
+      name="new-connection"
+      buttons={buttons}
+      onClose={onClose}
+    >
+      <TextContent>
+        <SignInForm>
+          <form ref={formRef}>
+            <BrimTextLogo />
+            <FormErrors errors={errors} />
+            <InputField>
+              <InputLabel>{config.host.label}</InputLabel>
+              <TextInput name={config.host.name} autoFocus />
+            </InputField>
+          </form>
+        </SignInForm>
+      </TextContent>
+    </StyledModalBox>
   )
 }

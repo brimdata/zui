@@ -5,13 +5,15 @@ import Clusters from "../state/Clusters"
 import styled from "styled-components"
 import {setConnection} from "../flows/setConnection"
 import usePopupMenu from "./hooks/usePopupMenu"
-import electronIsDev from "../electron/isDev"
 
 import Current from "../state/Current"
+import Modal from "../state/Modal"
+import DropdownArrow from "../icons/DropdownArrow"
 
 const ClusterPickerWrapper = (styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   margin: 11px 12px;
   user-select: none;
 
@@ -47,19 +49,20 @@ export default function ClusterPicker() {
     {type: "separator"},
     {
       label: "+ New Connection",
-      click: () => dispatch(Current.setConnectionId(""))
+      click: () => dispatch(Modal.show("new-connection"))
     }
   )
 
   const openMenu = usePopupMenu(template)
 
-  const onContextMenu = (e) => {
-    electronIsDev && openMenu(e.currentTarget)
+  const onClick = (e) => {
+    openMenu(e.currentTarget)
   }
 
   return (
-    <ClusterPickerWrapper onContextMenu={onContextMenu}>
-      <label>{current.id}</label>
+    <ClusterPickerWrapper onClick={onClick}>
+      <label>{`${current.host}:${current.port}`}</label>
+      <DropdownArrow />
     </ClusterPickerWrapper>
   )
 }

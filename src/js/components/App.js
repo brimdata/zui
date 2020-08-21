@@ -15,6 +15,7 @@ import SpaceModal from "./SpaceModal"
 import View from "../state/View"
 import brim from "../brim"
 import SearchPage from "./SearchPage"
+import NewConnectionModal from "./NewConnectionModal"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -35,6 +36,7 @@ export default function App() {
       <Preferences />
       <AboutModal />
       <SpaceModal />
+      <NewConnectionModal />
       <HTMLContextMenu />
     </div>
   )

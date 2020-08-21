@@ -55,5 +55,5 @@ test("Error set when no connection", async () => {
   const err = select(Notice.getError)
   expect(err).not.toBe(null)
   // $FlowFixMe
-  expect(/Cannot connect to /i.test(err)).toBe(true)
+  expect(err.toString()).toMatch(/Cannot connect to /i)
 })
