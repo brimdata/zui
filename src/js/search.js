@@ -11,8 +11,12 @@ import initialize from "./initializers/initialize"
 import lib from "./lib"
 import theme from "./style-theme"
 import {ThemeProvider} from "styled-components"
+import refreshWindow from "./flows/refreshWindow"
 
 initialize().then((store) => {
+  global.onbeforeunload = () => {
+    store.dispatch(refreshWindow())
+  }
   ReactDOM.render(
     <AppErrorBoundary dispatch={store.dispatch}>
       <Provider store={store}>
