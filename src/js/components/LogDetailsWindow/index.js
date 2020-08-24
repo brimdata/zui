@@ -10,7 +10,7 @@ import FieldsPanel from "../LogDetails/FieldsPanel"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import NavAnimation from "../LogDetails/NavAnimation"
-import PacketsButton from "../PacketsButton"
+import PacketsButton from "../Toolbar/PacketsButton"
 import UidPanel from "../LogDetails/UidPanel"
 import menu from "../../electron/menu"
 

@@ -25,7 +25,7 @@ export type CHART_RECORDS = {
 
 export type CHART_CLEAR = {
   type: "CHART_CLEAR",
-  tabId: string
+  tabId?: string
 }
 
 export type ChartActions = CHART_STATUS | CHART_RECORDS | CHART_CLEAR

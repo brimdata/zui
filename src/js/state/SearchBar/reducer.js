@@ -9,7 +9,8 @@ const init: SearchBarState = {
   previous: "",
   pinned: [],
   editing: null,
-  error: null
+  error: null,
+  target: "events"
 }
 
 export default function reducer(
@@ -24,6 +25,12 @@ export default function reducer(
       return {
         ...state,
         ...action.value
+      }
+
+    case "SEARCH_BAR_TARGET_SET":
+      return {
+        ...state,
+        target: action.target
       }
 
     case "SEARCH_BAR_INPUT_CHANGE":

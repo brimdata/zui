@@ -129,7 +129,8 @@ const DragAnchor = styled.div`
 const ViewSelect = () => {
   const dispatch = useDispatch()
   const currentView = useSelector(Layout.getInvestigationView)
-  const template = [
+
+  const menu = usePopupMenu([
     {
       label: "Linear",
       click: () => dispatch(Layout.setInvestigationView("linear"))
@@ -138,16 +139,10 @@ const ViewSelect = () => {
       label: "Tree",
       click: () => dispatch(Layout.setInvestigationView("tree"))
     }
-  ]
-
-  const openMenu = usePopupMenu(template)
-
-  const onClick = (e) => {
-    openMenu(e.currentTarget)
-  }
+  ])
 
   return (
-    <StyledViewSelect onClick={onClick}>
+    <StyledViewSelect onClick={menu.onClick}>
       {currentView}
       <DropdownArrow />
     </StyledViewSelect>

@@ -18,13 +18,17 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
   return zealot.spaces
     .get(spaceId)
     .then(brim.interop.spacePayloadToSpace)
-    .then((space) => {
+    .then((data) => {
+      const space = brim.space(data)
       globalDispatch(Spaces.setDetail(clusterId, space))
       dispatch(Current.setSpaceId(space.id))
-      dispatch(Search.setSpanArgs(brim.space(space).everythingSpan()))
+      dispatch(Search.setSpanArgs(space.everythingSpan()))
       dispatch(SearchBar.removeAllSearchBarPins())
       dispatch(SearchBar.changeSearchBarInput(""))
-      dispatch(submitSearch({history: false, investigation: false}))
+      if (!space.hasIndex()) {
+        dispatch(SearchBar.setTarget("events"))
+      }
+      dispatch(submitSearch({history: true, investigation: false}))
     })
     .catch((error) => {
       console.error(error)

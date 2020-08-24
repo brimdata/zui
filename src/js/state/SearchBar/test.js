@@ -295,7 +295,8 @@ test("restore", () => {
     previous: "me",
     pinned: ["real", "quick"],
     editing: null,
-    error: null
+    error: null,
+    target: "events"
   }
   const state = store.dispatchAll([SearchBar.restoreSearchBar(slice)])
 
@@ -350,11 +351,26 @@ test("clearSearchBar", () => {
     SearchBar.clearSearchBar()
   ])
 
-  expect(SearchBar.getSearchBar(state)).toEqual({
-    current: "",
-    editing: null,
-    error: null,
-    pinned: [],
-    previous: ""
-  })
+  expect(SearchBar.getSearchBar(state)).toEqual(
+    expect.objectContaining({
+      current: "",
+      editing: null,
+      error: null,
+      pinned: [],
+      previous: ""
+    })
+  )
+})
+
+test("setTarget initial state", () => {
+  const state = store.getState()
+
+  expect(SearchBar.getTarget(state)).toBe("events")
+})
+
+test("setTarget to index", () => {
+  store.dispatch(SearchBar.setTarget("index"))
+  const state = store.getState()
+
+  expect(SearchBar.getTarget(state)).toBe("index")
 })

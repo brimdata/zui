@@ -21,7 +21,8 @@ let search1 = {
   pins: [],
   spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpan(),
   spaceId: "defaultId",
-  spaceName: "defaultName"
+  spaceName: "defaultName",
+  target: "events"
 }
 
 let search2 = {
@@ -29,7 +30,8 @@ let search2 = {
   pins: [],
   spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpan(),
   spaceId: "defaultId",
-  spaceName: "defaultName"
+  spaceName: "defaultName",
+  target: "events"
 }
 
 test("new finding", () => {

@@ -6,6 +6,7 @@ import chartReducer from "../Chart/reducer"
 import columnsReducer from "../Columns/reducer"
 import currentReducer from "../Current/reducer"
 import historyReducer from "../History/reducer"
+import lastReducer from "../Last/reducer"
 import layoutReducer from "../Layout/reducer"
 import logDetailsReducer from "../LogDetails/reducer"
 import searchBarReducer from "../SearchBar/reducer"
@@ -22,5 +23,6 @@ export default combineReducers<*, *>({
   columns: columnsReducer,
   history: historyReducer,
   logDetails: logDetailsReducer,
-  layout: layoutReducer
+  layout: layoutReducer,
+  last: lastReducer
 })

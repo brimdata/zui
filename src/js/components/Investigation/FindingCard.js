@@ -15,7 +15,6 @@ import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
-import SearchBar from "../../state/SearchBar"
 import Spaces from "../../state/Spaces/selectors"
 import Warning from "../icons/warning-sm.svg"
 import submitSearch from "../../flows/submitSearch"
@@ -39,11 +38,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
   const findingSpaceName = get(finding, ["search", "spaceName"], "")
 
   function onClick() {
-    dispatch(SearchBar.setSearchBarPins(finding.search.pins))
-    dispatch(SearchBar.changeSearchBarInput(finding.search.program))
-    dispatch(Current.setSpaceId(finding.search.spaceId))
-    dispatch(Search.setSpanArgs(finding.search.spanArgs))
-    dispatch(Search.setSpanFocus(null))
+    dispatch(Search.restore(finding.search))
     dispatch(submitSearch({history: true, investigation: false}))
   }
 
@@ -66,7 +61,7 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
     )
   }
 
-  const template = [
+  const menu = usePopupMenu([
     {
       label: "Delete",
       click: () => globalDispatch(Investigation.deleteFindingByTs(finding.ts))
@@ -76,18 +71,13 @@ export default React.memo<Props>(function FindingCard({finding}: Props) {
       label: "Delete All",
       click: () => globalDispatch(Investigation.clearInvestigation())
     }
-  ]
-
-  const openMenu = usePopupMenu(template)
-  const onContextMenu = () => {
-    openMenu()
-  }
+  ])
 
   return (
     <div
       className={classNames("finding-card-wrapper")}
       onClick={onClick}
-      onContextMenu={onContextMenu}
+      onContextMenu={() => menu.open()}
       title={findingSpaceName}
     >
       <div className="finding-card">

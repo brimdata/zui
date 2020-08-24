@@ -18,7 +18,7 @@ export default {
     data: histogramFormat(records),
     tabId
   }),
-  clear: (tabId: string): CHART_CLEAR => ({type: "CHART_CLEAR", tabId})
+  clear: (tabId?: string): CHART_CLEAR => ({type: "CHART_CLEAR", tabId})
 }
 
 function histogramFormat(records) {

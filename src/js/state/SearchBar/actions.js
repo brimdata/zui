@@ -11,7 +11,9 @@ import type {
   SEARCH_BAR_PIN_REMOVE_ALL,
   SEARCH_BAR_RESTORE,
   SEARCH_BAR_SUBMIT,
-  SearchBarState
+  SEARCH_BAR_TARGET_SET,
+  SearchBarState,
+  SearchTarget
 } from "./types"
 
 export default {
@@ -62,5 +64,10 @@ export default {
   submittingSearchBar: (ts: Date = new Date()): SEARCH_BAR_SUBMIT => ({
     type: "SEARCH_BAR_SUBMIT",
     ts: ts.getTime()
+  }),
+
+  setTarget: (target: SearchTarget): SEARCH_BAR_TARGET_SET => ({
+    type: "SEARCH_BAR_TARGET_SET",
+    target
   })
 }

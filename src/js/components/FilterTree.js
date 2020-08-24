@@ -15,113 +15,97 @@ import Current from "../state/Current"
 import EmptySection from "./common/EmptySection"
 import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
+import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces/selectors"
 import Warning from "./icons/warning-sm.svg"
 import submitSearch from "../flows/submitSearch"
 import usePopupMenu from "./hooks/usePopupMenu"
 
-export default function FilterTree() {
-  let dispatch = useDispatch()
-  let investigation = useSelector(Investigation.getInvestigation)
-  let pinnedFilters = useSelector(SearchBar.getSearchBarPins)
-  let previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
+type Props = {node: *, i: number}
+
+function NodeRow({node, i}: Props) {
+  const dispatch = useDispatch()
+  const pinnedFilters = useSelector(SearchBar.getSearchBarPins)
+  const previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
   const clusterId = useSelector(Current.getConnectionId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
+  const findingSpaceName = get(
+    node,
+    ["data", "finding", "search", "spaceName"],
+    ""
+  )
+  const menu = usePopupMenu([
+    {
+      label: "Delete",
+      click: () => {
+        let multiTs = node.mapChildren((node) => node.data.finding.ts)
+        globalDispatch(Investigation.deleteFindingByTs(multiTs))
+      }
+    },
+    {type: "separator"},
+    {
+      label: "Delete All",
+      click: () => globalDispatch(Investigation.clearInvestigation())
+    }
+  ])
 
-  function renderNode(node: Node, i: number) {
-    const findingSpaceName = get(
+  function onNodeClick() {
+    dispatch(Search.restore(node.data.finding.search))
+    dispatch(submitSearch({history: true, investigation: false}))
+  }
+
+  let className = classNames("filter-tree-node", {
+    pinned: nodeIsPinned(pinnedFilters, node),
+    active: nodeIsActive(pinnedFilters, previous, node)
+  })
+
+  function renderWarning() {
+    const findingSpaceId = get(
       node,
-      ["data", "finding", "search", "spaceName"],
+      ["data", "finding", "search", "spaceId"],
       ""
     )
 
-    function onNodeClick() {
-      dispatch(
-        SearchBar.restoreSearchBar({
-          pinned: getPinnedFilters(node),
-          current: node.data.filter,
-          previous: node.data.filter,
-          error: null,
-          editing: null
-        })
-      )
-      const nodeSpaceId = get(
-        node,
-        ["data", "finding", "search", "spaceId"],
-        ""
-      )
-      dispatch(Current.setSpaceId(nodeSpaceId))
-      dispatch(submitSearch({history: false, investigation: false}))
-    }
-
-    let className = classNames("filter-tree-node", {
-      pinned: nodeIsPinned(pinnedFilters, node),
-      active: nodeIsActive(pinnedFilters, previous, node)
-    })
-
-    function renderWarning() {
-      const findingSpaceId = get(
-        node,
-        ["data", "finding", "search", "spaceId"],
-        ""
-      )
-
-      const tip = "This space no longer exists"
-      if (includes(spaceIds, findingSpaceId)) return null
-
-      return (
-        <div
-          className="warning-body"
-          data-tip={tip}
-          data-effect="solid"
-          data-place="right"
-        >
-          <Warning />
-          <ReactTooltip />
-        </div>
-      )
-    }
-
-    const template = [
-      {
-        label: "Delete",
-        click: () => {
-          let multiTs = node.mapChildren((node) => node.data.finding.ts)
-          globalDispatch(Investigation.deleteFindingByTs(multiTs))
-        }
-      },
-      {type: "separator"},
-      {
-        label: "Delete All",
-        click: () => globalDispatch(Investigation.clearInvestigation())
-      }
-    ]
-
-    const openMenu = usePopupMenu(template)
-    const onContextMenu = () => {
-      openMenu()
-    }
+    const tip = "This space no longer exists"
+    if (includes(spaceIds, findingSpaceId)) return null
 
     return (
-      <div key={i} className={className}>
-        <div
-          className="filter-tree-parent"
-          onClick={onNodeClick}
-          onContextMenu={onContextMenu}
-          title={findingSpaceName}
-        >
-          <FilterNode filter={node.data.filter} />
-          {renderWarning()}
-        </div>
-        <div className="filter-tree-children">
-          {node.children.map(renderNode)}
-        </div>
+      <div
+        className="warning-body"
+        data-tip={tip}
+        data-effect="solid"
+        data-place="right"
+      >
+        <Warning />
+        <ReactTooltip />
       </div>
     )
   }
 
-  let tree = createInvestigationTree(investigation)
+  return (
+    <div key={i} className={className}>
+      <div
+        className="filter-tree-parent"
+        onClick={onNodeClick}
+        onContextMenu={() => menu.open()}
+        title={findingSpaceName}
+      >
+        <FilterNode filter={node.data.filter} />
+        {renderWarning()}
+      </div>
+      <div className="filter-tree-children">
+        {node.children.map((node, i) => (
+          <NodeRow node={node} i={i} key={i} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function FilterTree() {
+  const investigation = useSelector(Investigation.getInvestigation)
+  const tree = createInvestigationTree(investigation)
 
   if (tree.getRoot().children.length === 0)
     return (
@@ -132,7 +116,11 @@ export default function FilterTree() {
     )
 
   return (
-    <div className="filter-tree">{tree.getRoot().children.map(renderNode)}</div>
+    <div className="filter-tree">
+      {tree.getRoot().children.map((node, i) => (
+        <NodeRow node={node} i={i} key={i} />
+      ))}
+    </div>
   )
 }
 

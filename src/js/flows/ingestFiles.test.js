@@ -56,18 +56,20 @@ test("opening a pcap", async () => {
 
   const state = store.getState()
   expect(Tab.getSpaceName(state)).toEqual("sample.pcap.brim")
-  expect(Current.mustGetSpace(state)).toEqual({
-    name: "sample.pcap.brim",
-    id: "spaceId",
-    min_time: {ns: 0, sec: 0},
-    max_time: {ns: 1, sec: 1},
-    pcap_support: true,
-    ingest: {
-      progress: null,
-      warnings: [],
-      snapshot: 1
-    }
-  })
+  expect(Current.mustGetSpace(state)).toEqual(
+    expect.objectContaining({
+      name: "sample.pcap.brim",
+      id: "spaceId",
+      min_time: {ns: 0, sec: 0},
+      max_time: {ns: 1, sec: 1},
+      pcap_support: true,
+      ingest: {
+        progress: null,
+        warnings: [],
+        snapshot: 1
+      }
+    })
+  )
 })
 
 test("register a handler with a space id", async () => {

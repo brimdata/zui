@@ -7,12 +7,11 @@ import styled from "styled-components"
 import type {Space} from "../state/Spaces/types"
 import {initSpace} from "../flows/initSpace"
 import {showContextMenu} from "../lib/System"
-import ArchiveBorderIcon from "../icons/ArchiveBorderIcon"
 import Current from "../state/Current"
 import EmptySection from "./common/EmptySection"
-import FileBorder from "../icons/FileBorder"
 import FileFilled from "../icons/FileFilled"
 import ProgressIndicator from "./ProgressIndicator"
+import SpaceIcon from "./SpaceIcon"
 import brim from "../brim"
 import menu from "../electron/menu"
 
@@ -69,12 +68,7 @@ export default function SavedSpacesList({spaces, spaceContextMenu}: Props) {
                 })}
               >
                 <NameWrap>
-                  {s.storage_kind === "archivestore" ? (
-                    <ArchiveBorderIcon className="space-icon" />
-                  ) : (
-                    <FileBorder className="space-icon" />
-                  )}
-
+                  <SpaceIcon type={s.getType()} className="space-icon" />
                   <span className="name">{s.name}</span>
                 </NameWrap>
                 {progress}

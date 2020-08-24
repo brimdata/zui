@@ -24,7 +24,8 @@ const finding = {
     pins: [],
     spanArgs: [brim.time().toTs(), brim.time().toTs()],
     spaceId: "1",
-    spaceName: "space1"
+    spaceName: "space1",
+    target: "events"
   }
 }
 

@@ -10,11 +10,6 @@ $page-border-color: $white-4;
   }
 }
 
-.title-bar .pane-header {
-  background: $white-3;
-  border-color: transparent;
-}
-
 .pane-left {
   min-width: 230px;
   flex-shrink: 0;
@@ -27,19 +22,6 @@ $page-border-color: $white-4;
 
 .search-page-header,
 .search-results,
-.status-bar,
-.title-bar {
+.status-bar {
   min-width: 573px;
-}
-
-.search-page-header {
-  background: $chrome-gradient;
-  border-bottom: 1px solid $chrome-border;
-  z-index: 1;
-  -webkit-app-region: drag;
-}
-
-.search-page-header-charts {
-  -webkit-app-region: no-drag;
-  padding: 8px 0;
 }

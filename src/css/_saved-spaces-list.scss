@@ -68,6 +68,9 @@
     .space-icon {
       fill: white;
       stroke: white;
+      .chunk {
+        fill: white;
+      }
     }
 
     .small-progress-bar {
@@ -85,8 +88,6 @@
   }
 
   .space-icon {
-    fill: $slate;
-    stroke: $slate;
     width: 13px;
     height: 13px;
     flex-shrink: 0;

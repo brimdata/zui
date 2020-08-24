@@ -2,6 +2,7 @@
 
 exports[`fetching a regular search 1`] = `
 Array [
+  "LAST_SEARCH_SET",
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
   "HISTORY_PUSH",
@@ -27,6 +28,7 @@ Array [
 
 exports[`fetching an analytic search 1`] = `
 Array [
+  "LAST_SEARCH_SET",
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
   "HISTORY_PUSH",
@@ -45,6 +47,7 @@ Array [
 
 exports[`fetching an analytic search without history 1`] = `
 Array [
+  "LAST_SEARCH_SET",
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
   "VIEWER_CLEAR",
@@ -62,6 +65,7 @@ Array [
 
 exports[`fetching an zoom search 1`] = `
 Array [
+  "LAST_SEARCH_SET",
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
   "HISTORY_PUSH",
@@ -80,6 +84,7 @@ Array [
 
 exports[`fetching an zoom search without history 1`] = `
 Array [
+  "LAST_SEARCH_SET",
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
   "VIEWER_CLEAR",
@@ -101,6 +106,7 @@ Array [
 
 exports[`not saving a search to history 1`] = `
 Array [
+  "LAST_SEARCH_SET",
   "SEARCH_BAR_SUBMIT",
   "SEARCH_SPAN_SET",
   "VIEWER_CLEAR",

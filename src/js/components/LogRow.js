@@ -9,7 +9,6 @@ import Log from "../models/Log"
 import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
 import TableColumns from "../models/TableColumns"
-import useDoubleClick from "./hooks/useDoubleClick"
 
 type Props = {
   dimens: ViewerDimens,
@@ -36,8 +35,6 @@ const LogRow = (props: Props) => {
     onDoubleClick
   } = props
 
-  const handleClick = useDoubleClick(onClick, onDoubleClick)
-
   const renderCell = (column, colIndex) => {
     const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
     const field = log.field(column.name)
@@ -62,9 +59,8 @@ const LogRow = (props: Props) => {
     <div
       className={classNames("log-row", {highlight, even: index % 2 === 0})}
       style={Styler.row(dimens)}
-      onClick={(e) => {
-        handleClick(e)
-      }}
+      onClick={onClick}
+      onDoubleClick={onDoubleClick}
     >
       {columns.getVisible().map(renderCell)}
     </div>
