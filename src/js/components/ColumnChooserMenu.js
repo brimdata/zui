@@ -162,7 +162,7 @@ export default class ColumnChooserMenu extends React.Component<
             <ControlListItem>
               <div className="search-input">
                 <SearchInput
-                  id="column-search"
+                  autoFocus
                   type="text"
                   value={this.state.searchValue}
                   onChange={this.handleChange}
