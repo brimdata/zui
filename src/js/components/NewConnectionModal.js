@@ -17,6 +17,17 @@ import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import {isEmpty} from "lodash"
 
+const LabelWrapper: Styled<> = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+
+  p {
+    margin: 0 0 4px 4px;
+  }
+`
+
 const StyledModalBox: Styled<> = styled(ModalBox)`
   min-width: 500px;
   background: linear-gradient(to bottom, var(--snow) 50%, white);
@@ -64,8 +75,9 @@ const SignInForm = styled.div`
 
 function toCluster({host, ...rest}): Cluster {
   let [h, p] = host.split(":")
+  if (!p) p = "9867"
   // $FlowFixMe
-  return {...rest, host: h, port: p || "9867", id: host}
+  return {...rest, host: h, port: p, id: `${h}:${p}`}
 }
 
 export default function NewConnectionModal() {
@@ -76,7 +88,6 @@ export default function NewConnectionModal() {
     host: {
       name: "host",
       label: "Host",
-      submit: (value) => dispatch(setConnection(toCluster({host: value}))),
       check: (value) => [!isEmpty(value), "must not be blank"]
     }
   }
@@ -89,7 +100,16 @@ export default function NewConnectionModal() {
       let form = brim.form(f, config)
 
       if (await form.isValid()) {
-        form.submit()
+        const {host} = form.getFields().reduce((obj, field) => {
+          obj[field.name] = field.value
+          return obj
+        }, {})
+        try {
+          await dispatch(setConnection(toCluster({host})))
+        } catch (_) {
+          setErrors([{message: "Cannot connect to host"}])
+          return
+        }
         closeModal()
       } else {
         setErrors(form.getErrors())
@@ -116,7 +136,10 @@ export default function NewConnectionModal() {
             <BrimTextLogo />
             <FormErrors errors={errors} />
             <InputField>
-              <InputLabel>{config.host.label}</InputLabel>
+              <LabelWrapper>
+                <InputLabel>{config.host.label}</InputLabel>
+                <p>(port defaults to 9867 if omitted)</p>
+              </LabelWrapper>
               <TextInput name={config.host.name} autoFocus />
             </InputField>
           </form>

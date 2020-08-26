@@ -5,7 +5,6 @@ import {createZealotMock} from "zealot"
 import initTestStore from "../test/initTestStore"
 import Clusters from "../state/Clusters"
 import Current from "../state/Current"
-import Notice from "../state/Notice"
 import {setConnection} from "./setConnection"
 
 let store, zealot
@@ -34,26 +33,4 @@ test("Create a new connection, switch back", async () => {
   expect(clusterCount()).toBe(2)
   expect(select(Clusters.id(conn1.id))).toEqual(conn1)
   expect(select(Current.getConnectionId)).toBe(conn1.id)
-})
-
-test("Error set when no connection", async () => {
-  zealot.stubPromise("status", Promise.reject("Connection refused"))
-
-  expect(select(Notice.getError)).toBe(null)
-  expect(clusterCount()).toBe(1)
-  await store.dispatch(
-    setConnection({
-      id: "broken",
-      host: "h",
-      port: "p",
-      password: "p",
-      username: "u"
-    })
-  )
-  expect(clusterCount()).toBe(1)
-
-  const err = select(Notice.getError)
-  expect(err).not.toBe(null)
-  // $FlowFixMe
-  expect(err.toString()).toMatch(/Cannot connect to /i)
 })

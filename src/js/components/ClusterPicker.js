@@ -7,6 +7,7 @@ import {setConnection} from "../flows/setConnection"
 import usePopupMenu from "./hooks/usePopupMenu"
 
 import Current from "../state/Current"
+import Notice from "../state/Notice"
 import Modal from "../state/Modal"
 import DropdownArrow from "../icons/DropdownArrow"
 
@@ -41,7 +42,12 @@ export default function ClusterPicker() {
       type: "checkbox",
       label: c.id,
       checked: isCurrent,
-      click: () => !isCurrent && dispatch(setConnection(c))
+      click: () => {
+        if (isCurrent) return
+        dispatch(setConnection(c)).catch((e) => {
+          dispatch(Notice.set(e))
+        })
+      }
     }
   })
 

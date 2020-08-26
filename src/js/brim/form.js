@@ -13,9 +13,9 @@ export type FormConfig = {
 }
 
 export type FormError = {
-  label: string,
+  label?: string,
   message: string,
-  input: HTMLInputElement
+  input?: HTMLInputElement
 }
 
 export default function form(element: HTMLFormElement, config: FormConfig) {
@@ -39,6 +39,9 @@ export default function form(element: HTMLFormElement, config: FormConfig) {
     },
     getErrors() {
       return errors
+    },
+    getFields() {
+      return fields()
     }
   }
 }

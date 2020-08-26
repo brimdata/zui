@@ -5,7 +5,6 @@ import Clusters from "../state/Clusters"
 import type {Cluster} from "../state/Clusters/types"
 import refreshSpaceNames from "./refreshSpaceNames"
 import {globalDispatch} from "../state/GlobalContext"
-import Notice from "../state/Notice"
 
 export const setConnection = (cluster: Cluster): Thunk => (
   dispatch,
@@ -23,6 +22,6 @@ export const setConnection = (cluster: Cluster): Thunk => (
       })
     })
     .catch((e) => {
-      dispatch(Notice.set(new Error(`Cannot connect to ${cluster.id}: ${e}`)))
+      throw new Error(`Cannot connect to ${cluster.id}: ${e.message}`)
     })
 }
