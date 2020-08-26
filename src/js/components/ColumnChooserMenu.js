@@ -16,6 +16,7 @@ import Layout from "../state/Layout"
 import SelectInput from "./common/forms/SelectInput"
 import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
+import SearchInput from "./common/forms/SearchInput"
 
 const ControlListItem = styled.li`
   display: flex;
@@ -66,7 +67,18 @@ type Props = {|
   ...OwnProps
 |}
 
-export default class ColumnChooserMenu extends React.Component<Props> {
+type LocalState = {
+  searchValue: string
+}
+
+export default class ColumnChooserMenu extends React.Component<
+  Props,
+  LocalState
+> {
+  state: LocalState = {
+    searchValue: ""
+  }
+
   tableId() {
     return this.props.tableColumns.id
   }
@@ -92,6 +104,14 @@ export default class ColumnChooserMenu extends React.Component<Props> {
     } else {
       this.props.dispatch(Columns.showColumn(this.tableId(), column))
     }
+  }
+
+  handleChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
+    this.setState({searchValue: event.target.value})
+  }
+
+  clearSearch = () => {
+    this.setState({searchValue: ""})
   }
 
   render() {
@@ -139,16 +159,39 @@ export default class ColumnChooserMenu extends React.Component<Props> {
                 Deselect All
               </Paragraph>
             </ControlListItem>
-            {columns.map((c) => (
-              <ColumnListItem key={`${c.name}-${c.type}`}>
-                <Checkbox
-                  label={c.name}
-                  checked={c.isVisible}
-                  onChange={(e) => this.onColumnClick(e, c)}
+            <ControlListItem>
+              <div className="search-input">
+                <SearchInput
+                  autoFocus
+                  type="text"
+                  value={this.state.searchValue}
+                  onChange={this.handleChange}
                 />
-                <Subscript>{c.type}</Subscript>
-              </ColumnListItem>
-            ))}
+              </div>
+            </ControlListItem>
+            {columns
+              .filter((c) => {
+                if (this.state.searchValue === "") return true
+                return (
+                  c.name
+                    .toLowerCase()
+                    .search(new RegExp(this.state.searchValue, "g")) > -1
+                )
+              })
+              .sort((a, b) => {
+                if (a.name < b.name) return -1
+                else return 1
+              })
+              .map((c) => (
+                <ColumnListItem key={`${c.name}-${c.type}`}>
+                  <Checkbox
+                    label={c.name}
+                    checked={c.isVisible}
+                    onChange={(e) => this.onColumnClick(e, c)}
+                  />
+                  <Subscript>{c.type}</Subscript>
+                </ColumnListItem>
+              ))}
           </ul>
         </div>
       </CSSTransition>
