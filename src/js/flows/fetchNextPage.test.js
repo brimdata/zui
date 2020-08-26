@@ -7,11 +7,11 @@ import Clusters from "../state/Clusters"
 import Current from "../state/Current"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
+import Tab from "../state/Tab"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import fixtures from "../test/fixtures"
 import initTestStore from "../test/initTestStore"
-import tab from "../state/Tab"
 
 const records = [
   [
@@ -42,7 +42,7 @@ beforeEach(() => {
     Current.setConnectionId(conn.id),
     Current.setSpaceId(space.id),
     Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
-    tab.computeSpan(),
+    Tab.computeSpan(),
     Viewer.appendRecords(tabId, records)
   ])
   store.clearActions()
@@ -82,4 +82,12 @@ test("#fetchNextPage when there is only 1 event", () => {
       to: new Date(10 * 1000)
     })
   )
+})
+
+test("#fetchNextPage does not mutate the exisiting span", () => {
+  const before = [...Tab.getSpanAsDates(store.getState())]
+  store.dispatch(fetchNextPage())
+  const after = [...Tab.getSpanAsDates(store.getState())]
+
+  expect(before).toEqual(after)
 })

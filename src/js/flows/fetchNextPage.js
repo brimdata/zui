@@ -22,17 +22,17 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
 
 function nextPageArgs(logs, span) {
   let spliceIndex = 0
+  let nextSpan = [...span]
   if (!isEmpty(logs)) {
     let index = indexOfLastChange(logs, (log) => log.getString("ts"))
-
     if (index >= 0) {
       const prevTs = logs[index].getField("ts").toDate()
-      span[1] = brim
+      nextSpan[1] = brim
         .time(prevTs)
         .add(1, "ms")
         .toDate()
       spliceIndex = index + 1
     }
   }
-  return [spliceIndex, span]
+  return [spliceIndex, nextSpan]
 }
