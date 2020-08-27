@@ -50,8 +50,8 @@ Beyond that, the most comprehensive way to debug is to use the
 [zq](https://github.com/brimsec/zq) toolset at the command line to perform
 steps that are functionally equivalent to those initiated by the Brim
 application to extract flows from your pcap. This will allow you to better
-observe the individual steps in the packet extraction so you can report the
-point at which you see a failure. This consists of the following steps:
+observe the individual steps so you can report the point at which you see a
+failure. This consists of the following steps:
 
 1. Install the zq toolset by following the
 [installation steps in the zq README](https://github.com/brimsec/zq/blob/master/README.md#installation).
