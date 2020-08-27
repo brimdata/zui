@@ -225,7 +225,7 @@ Array [
     "submenu": Array [
       Object {
         "click": [Function],
-        "label": "Query Syntax Docs",
+        "label": "ZQL Syntax Docs",
       },
       Object {
         "click": [Function],
@@ -413,7 +413,7 @@ Array [
     "submenu": Array [
       Object {
         "click": [Function],
-        "label": "Query Syntax Docs",
+        "label": "ZQL Syntax Docs",
       },
       Object {
         "click": [Function],

@@ -93,7 +93,7 @@ function Menu() {
     {label: "Copy for curl", click: () => dispatch(Modal.show("curl"))},
     {label: "Copy for zq", click: () => dispatch(Modal.show("zq"))},
     {
-      label: "Syntax docs",
+      label: "ZQL syntax docs",
       click: () =>
         shell.openExternal("https://github.com/brimsec/zq/tree/master/zql/docs")
     },

@@ -194,7 +194,7 @@ export default function appMenu(
   function helpSubmenu() {
     let submenu = [
       {
-        label: "Query Syntax Docs",
+        label: "ZQL Syntax Docs",
         click() {
           shell.openExternal(
             "https://github.com/brimsec/zq/tree/master/zql/docs"
@@ -218,7 +218,9 @@ export default function appMenu(
       {
         label: "Submit Issue...",
         click() {
-          shell.openExternal("https://github.com/brimsec/brim/issues/new")
+          shell.openExternal(
+            "https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue"
+          )
         }
       }
     ]
