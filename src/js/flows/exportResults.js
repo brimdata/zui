@@ -6,6 +6,7 @@ import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import brim from "../brim"
+import {getZealot} from "./getZealot"
 
 function cutColumns(program, columns) {
   if (columns.allVisible()) {
@@ -19,7 +20,8 @@ function cutColumns(program, columns) {
   }
 }
 
-export default (filePath: string): Thunk => (dispatch, getState, {zealot}) => {
+export default (filePath: string): Thunk => (dispatch, getState) => {
+  const zealot = dispatch(getZealot())
   const spaceId = Current.getSpaceId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())

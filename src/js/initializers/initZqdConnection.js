@@ -9,14 +9,19 @@ import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default async function(store: Store) {
   let {space, host, port, id} = getUrlSearchParams()
+  global.windowId = id
+
+  const clusterHost = host || "localhost"
+  const clusterPort = port || "9867"
+  const clusterId = `${clusterHost}:${clusterPort}`
   let cluster = {
-    id: "zqd",
-    host: host || "localhost",
-    port: port || "9867",
+    id: clusterId,
+    host: clusterHost,
+    port: clusterPort,
     username: "",
     password: ""
   }
-  global.windowId = id
+
   store.dispatch(Clusters.add(cluster))
   store.dispatch(Current.setConnectionId(cluster.id))
   await store.dispatch(refreshSpaceNames())

@@ -13,16 +13,18 @@ import brim from "../brim"
 import errors from "../errors"
 import ingest from "../brim/ingest"
 import lib from "../lib"
+import {getZealot} from "./getZealot"
 
 export default (
   paths: string[],
   gDispatch: Dispatch = globalDispatch
-): Thunk => (dispatch, getState, {zealot}) => {
-  let conn = Current.mustGetConnection(getState())
-  let clusterId = conn.id
-  let tabId = Tabs.getActive(getState())
-  let requestId = brim.randomHash()
-  let jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
+): Thunk => (dispatch, getState) => {
+  const conn = Current.mustGetConnection(getState())
+  const clusterId = conn.id
+  const zealot = dispatch(getZealot())
+  const tabId = Tabs.getActive(getState())
+  const requestId = brim.randomHash()
+  const jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
   const dataDir = Prefs.getDataDir(getState())
   const spaceNames = Spaces.getSpaceNames(clusterId)(getState())
 

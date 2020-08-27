@@ -2,6 +2,7 @@
 import type {Thunk} from "../state/types"
 import Current from "../state/Current"
 import refreshSpaceNames from "./refreshSpaceNames"
+import {getZealot} from "./getZealot"
 
 type Props = {
   name: string,
@@ -10,10 +11,9 @@ type Props = {
 }
 
 export const createSpace = ({name, kind, data_path}: Props): Thunk => async (
-  dispatch,
-  getState,
-  {zealot}
+  dispatch
 ) => {
+  const zealot = dispatch(getZealot())
   return zealot.spaces
     .create({
       name,

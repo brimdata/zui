@@ -7,10 +7,12 @@ import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
 import refreshSpaceNames from "./refreshSpaceNames"
+import {getZealot} from "./getZealot"
 
 class CreateSubspaceError extends Error {}
 
-export default (): Thunk => (dispatch, getState, {zealot}) => {
+export default (): Thunk => (dispatch, getState) => {
+  const zealot = dispatch(getZealot())
   const spaceId = Current.getSpaceId(getState())
   const connectionId = Current.getConnectionId(getState())
   const names = Spaces.getSpaces(connectionId)(getState()).map((s) => s.name)

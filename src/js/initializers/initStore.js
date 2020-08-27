@@ -22,15 +22,14 @@ function getInitialState(windowId) {
 export default async () => {
   const windowId = getUrlSearchParams().id
   const initialState = await getInitialState(windowId)
-
   return createStore<State, Action, Dispatch>(
     rootReducer,
     initialState,
     composeWithDevTools(
       applyMiddleware(
         reduxThunk.withExtraArgument({
-          zealot: createZealot("localhost:9867"),
-          globalDispatch
+          globalDispatch,
+          createZealot
         })
       )
     )

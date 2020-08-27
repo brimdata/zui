@@ -1,26 +1,19 @@
 /* @flow */
 import type {ModalAction, ModalState} from "./types"
+import produce from "immer"
 
-const init: ModalState = {
+const init = (): ModalState => ({
   name: "",
   args: {}
-}
+})
 
-export default function(
-  state: ModalState = init,
-  action: ModalAction
-): ModalState {
+export default produce((draft: ModalState, action: ModalAction) => {
   switch (action.type) {
     case "MODAL_SHOW":
-      return {
-        name: action.name,
-        args: action.args
-      }
+      draft.name = action.name
+      draft.args = action.args
+      return
     case "MODAL_HIDE":
-      return {
-        ...init
-      }
-    default:
-      return state
+      return init()
   }
-}
+}, init())

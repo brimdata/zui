@@ -8,10 +8,11 @@ type Props = {errors: FormError[]}
 
 export default function FormErrors({errors}: Props) {
   if (isEmpty(errors)) return null
+  const hasInputFocus = errors.some((err) => err.label && err.input)
   return (
     <div className="errors">
       <h4>Form Errors</h4>
-      <p>Click name to focus input.</p>
+      {hasInputFocus && <p>Click name to focus input.</p>}
       <ul>
         {errors.map(({label, message, input}, i) => (
           <li key={i}>
