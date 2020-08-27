@@ -158,6 +158,7 @@
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
-    "electron-installer-redhat": "^3.0.0"
+    "electron-installer-redhat": "^3.0.0",
+    "node-pipe": "^0.1.1"
   }
 }
