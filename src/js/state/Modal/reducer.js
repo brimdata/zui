@@ -14,7 +14,6 @@ export default produce((draft: ModalState, action: ModalAction) => {
       draft.args = action.args
       return
     case "MODAL_HIDE":
-      Object.assign(draft, init())
-      return
+      return init()
   }
 }, init())
