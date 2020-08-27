@@ -1,15 +1,15 @@
 /* @flow */
-import React, {type ComponentType} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import Clusters from "../state/Clusters"
+import React, {type ComponentType} from "react"
 import styled from "styled-components"
-import {setConnection} from "../flows/setConnection"
-import usePopupMenu from "./hooks/usePopupMenu"
 
+import {setConnection} from "../flows/setConnection"
+import Clusters from "../state/Clusters"
 import Current from "../state/Current"
-import Notice from "../state/Notice"
-import Modal from "../state/Modal"
 import DropdownArrow from "../icons/DropdownArrow"
+import Modal from "../state/Modal"
+import Notice from "../state/Notice"
+import usePopupMenu from "./hooks/usePopupMenu"
 
 const ClusterPickerWrapper = (styled.div`
   display: flex;
@@ -59,14 +59,10 @@ export default function ClusterPicker() {
     }
   )
 
-  const openMenu = usePopupMenu(template)
-
-  const onClick = (e) => {
-    openMenu(e.currentTarget)
-  }
+  const menu = usePopupMenu(template)
 
   return (
-    <ClusterPickerWrapper onClick={onClick}>
+    <ClusterPickerWrapper onClick={menu.onClick}>
       <label>{`${current.host}:${current.port}`}</label>
       <DropdownArrow />
     </ClusterPickerWrapper>
