@@ -14,7 +14,6 @@ import program from "./program"
 import randomHash from "./randomHash"
 import record from "./record"
 import relTime from "./relTime"
-import search from "./search"
 import space from "./space"
 import span from "./span"
 import syntax from "./syntax"
@@ -37,7 +36,6 @@ export type $Field = {
 }
 
 export type $CompoundField = ReturnType<typeof compoundField>
-export type $Search = ReturnType<typeof search>
 export type $Log = ReturnType<typeof log>
 
 export type Ts = {
@@ -64,7 +62,6 @@ export default {
   form,
   record,
   interop,
-  search,
   randomHash,
   entries,
   tab,

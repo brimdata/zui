@@ -10,7 +10,6 @@ import Tab from "../Tab"
 import brim from "../../brim"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import submitSearch from "../../flows/submitSearch"
 
 let ts1 = {sec: 1, ns: 0}
 let ts2 = {sec: 2, ns: 1}
@@ -66,24 +65,6 @@ describe("reducer", () => {
     let to = brim.time(now).toTs()
 
     expect(Tab.getSpan(state)).toEqual([from, to])
-  })
-
-  test("search ts when saved to history", () => {
-    let ts = Tab.getSearchTs(store.getState())
-
-    let now = new Date()
-    expect(ts).toBe(0)
-    store.dispatch(submitSearch({history: true, investigation: true}, now))
-    expect(Tab.getSearchTs(store.getState())).toBe(now.getTime())
-  })
-
-  test("search ts when not saved to history", () => {
-    let ts = Tab.getSearchTs(store.getState())
-
-    let now = new Date()
-    expect(ts).toBe(0)
-    store.dispatch(submitSearch({history: false, investigation: false}, now))
-    expect(Tab.getSearchTs(store.getState())).toBe(now.getTime())
   })
 })
 

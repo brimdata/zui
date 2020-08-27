@@ -55,7 +55,7 @@ export const appendRecords = (
 }
 
 export const setRecords = (
-  tabId: string,
+  tabId?: string,
   records: RecordData[]
 ): VIEWER_SET_RECORDS => {
   return {type: "VIEWER_SET_RECORDS", records, tabId}

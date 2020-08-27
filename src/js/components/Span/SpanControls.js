@@ -5,6 +5,7 @@ import classNames from "classnames"
 
 import ClockIcon from "../../icons/ClockIcon"
 import Label from "../Toolbar/Label"
+import Last from "../../state/Last"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
@@ -14,9 +15,9 @@ import usePrevious from "../hooks/usePrevious"
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
 export default function SpanControls() {
-  let ts = useSelector(tab.getSearchTs)
+  let last = useSelector(Last.getSearch)
   let [from, to] = useSelector(tab.getSpanArgs)
-  let prev = usePrevious([from, to], [ts])
+  let prev = usePrevious([from, to], [last])
   let dispatch = useDispatch()
 
   function fromChange(arg) {

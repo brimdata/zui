@@ -1,12 +1,12 @@
 /* @flow */
 import React from "react"
 
+import {submitSearch} from "../flows/submitSearch/mod"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import ZQModal from "./ZQModal"
 import logInto from "../test/helpers/loginTo"
 import provide from "../test/helpers/provide"
-import submitSearch from "../flows/submitSearch"
 
 test("renders with zq get command", async () => {
   let {store} = await logInto("cluster1", "space1")

@@ -8,12 +8,12 @@ import isEqual from "lodash/isEqual"
 
 import type {DispatchProps} from "../state/types"
 import {UID_CORRELATION_LIMIT} from "../searches/programs"
+import {submitSearch} from "../flows/submitSearch/mod"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import Log from "../models/Log"
 import SearchBar from "../state/SearchBar"
 import brim from "../brim"
 import dispatchToProps from "../lib/dispatchToProps"
-import submitSearch from "../flows/submitSearch"
 
 type OwnProps = {|
   logs: Log[],

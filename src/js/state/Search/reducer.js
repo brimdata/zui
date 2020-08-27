@@ -7,8 +7,7 @@ export const initSearchState: SearchState = {
     {sec: 1, ns: 0}
   ],
   spanArgs: ["now - 5m", "now"],
-  spanFocus: null,
-  ts: 0
+  spanFocus: null
 }
 
 export default function reducer(
@@ -16,8 +15,6 @@ export default function reducer(
   action: SearchActions
 ) {
   switch (action.type) {
-    case "SEARCH_BAR_SUBMIT":
-      return {...state, ts: action.ts}
     case "SEARCH_SPAN_SET":
       return {...state, span: action.span}
     case "SEARCH_SPAN_ARGS_SET":

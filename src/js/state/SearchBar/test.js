@@ -7,6 +7,7 @@ import {
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import Clusters from "../Clusters"
 import Current from "../Current"
 import Search from "../Search"
@@ -15,7 +16,6 @@ import Spaces from "../Spaces"
 import Tab from "../Tab"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import submitSearch from "../../flows/submitSearch"
 
 let store
 beforeEach(() => {

@@ -29,6 +29,10 @@ export default function span(args: SpanArgs | Span) {
     toDateTuple(): DateTuple {
       return [brim.time(computed[0]).toDate(), brim.time(computed[1]).toDate()]
     },
+    getDuration() {
+      const [from, to] = this.toDateTuple()
+      return to - from
+    },
     formatAgo() {
       let [from, to] = this.toDateTuple()
       return moment.duration(moment(to).diff(moment(from))).humanize()

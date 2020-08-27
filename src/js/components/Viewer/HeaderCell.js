@@ -5,11 +5,11 @@ import classNames from "classnames"
 
 import type {TableColumn} from "../../state/Columns/types"
 import {appendQuerySortBy} from "../../flows/searchBar/actions"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import Columns from "../../state/Columns"
 import IconAsc from "../icons/icon-asc.svg"
 import IconDesc from "../icons/icon-desc.svg"
 import columnKey from "../../lib/columnKey"
-import submitSearch from "../../flows/submitSearch"
 
 let oldWidth = null
 let start = null

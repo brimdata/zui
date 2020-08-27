@@ -2,11 +2,11 @@
 
 import type {NewTabSearchParams} from "../electron/ipc/windows/messages"
 import type {Store} from "../state/types"
+import {submitSearch} from "../flows/submitSearch/mod"
 import Current from "../state/Current"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
-import submitSearch from "../flows/submitSearch"
 
 export default function(store: Store, params: NewTabSearchParams) {
   const {spaceId, span, program, isNewWin} = params
