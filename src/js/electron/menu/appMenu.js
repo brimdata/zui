@@ -218,7 +218,9 @@ export default function appMenu(
       {
         label: "Submit Issue...",
         click() {
-          shell.openExternal("https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue")
+          shell.openExternal(
+            "https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue"
+          )
         }
       }
     ]
