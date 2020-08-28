@@ -1,3 +1,15 @@
+## v0.16.0
+* Update zq to [v0.20.0](https://github.com/brimsec/zq/releases/tag/v0.20.0)
+* Update Zeek to [v3.2.0-dev-brim8](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim8) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1033)
+* Fix an issue where the Back button brought the user to the wrong place (#1011)
+* Fix an issue where opening/closing a Log Detail window during pcap import canceled the import (#1015)
+* Sort field names in the column chooser alphabetically (#1012)
+* Add a search tool in the column chooser to find field names (#1012)
+* Fix an issue where clicking a link to [ZQL docs](https://github.com/brimsec/zq/tree/master/zql/docs) opened an unusable window (#1030)
+* Expand the [wiki docs](https://github.com/brimsec/brim/wiki/Troubleshooting#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open) for troubleshooting pcap extraction issues (#1020)
+* Fix an issue where the Packets button was not activating after scrolling down in the main events view (#1027)
+* Add the ability to connect Brim to a remote [`zqd`](https://github.com/brimsec/zq/tree/master/cmd/zqd) (#1007)
+
 ## v0.15.1
 * Update zq to [v0.19.1](https://github.com/brimsec/zq/releases/tag/v0.19.1) (fixes an issue with excess characters in Space names after upgrade)
 * Fix an issue where opening Log Detail as the first action in a freshly-launched Brim threw an error (#1006)
