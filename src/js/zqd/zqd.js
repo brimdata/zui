@@ -125,6 +125,9 @@ export class ZQD {
       zeekRunnerCommand(this.zeekRunner)
     ]
 
+    // For unix systems, pass posix pipe read file descriptor into zqd process.
+    // In the event of Brim getting shutdown via `SIGKILL`, this will let zqd
+    // know that it has been orphaned and to shutdown.
     if (process.platform !== "win32") {
       const {readfd} = require("node-pipe").pipeSync()
       opts.stdio.push(readfd)
