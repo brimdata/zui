@@ -108,12 +108,12 @@ export class ZQD {
     mkdirpSync(this.root, {recursive: true, mode: 0o755})
 
     const opts = {
-      stdio: "inherit"
+      stdio: ["inherit", "inherit", "inherit"]
     }
 
     const confFile = writeZqdConfigFile()
 
-    const args = [
+    let args = [
       "listen",
       "-l",
       this.addr(),
@@ -124,6 +124,15 @@ export class ZQD {
       "-zeekrunner",
       zeekRunnerCommand(this.zeekRunner)
     ]
+
+    // For unix systems, pass posix pipe read file descriptor into zqd process.
+    // In the event of Brim getting shutdown via `SIGKILL`, this will let zqd
+    // know that it has been orphaned and to shutdown.
+    if (process.platform !== "win32") {
+      const {readfd} = require("node-pipe").pipeSync()
+      opts.stdio.push(readfd)
+      args.push(`-brimfd=${opts.stdio.length - 1}`)
+    }
     log.info("spawning zqd:", zqdCommand(), args.join(" "))
 
     this.zqd = spawn(zqdCommand(), args, opts)
