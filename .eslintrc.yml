@@ -1,4 +1,7 @@
-parser: babel-eslint
+parser: @typescript-eslint/parser
+
+plugins:
+  - @typescript-eslint
 
 parserOptions:
   ecmaFeatures:
@@ -14,8 +17,8 @@ env:
 
 extends:
   - eslint:recommended
+  - plugin:@typescript-eslint/recommended
   - plugin:react/recommended
-  - plugin:flowtype/recommended
   - plugin:jest/recommended
   - plugin:prettier/recommended
 
