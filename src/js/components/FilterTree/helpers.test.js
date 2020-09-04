@@ -11,7 +11,8 @@ function search(pins, program) {
       program,
       spaceName: "default",
       spaceId: "defaultId",
-      spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpan()
+      spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpan(),
+      target: "events"
     }
   }
 }

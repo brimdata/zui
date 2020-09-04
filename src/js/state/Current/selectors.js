@@ -8,6 +8,7 @@ import type {State} from "../types"
 import Clusters from "../Clusters"
 import Spaces from "../Spaces"
 import activeTabSelect from "../Tab/activeTabSelect"
+import brim from "../../brim"
 
 type Id = string | null
 
@@ -43,7 +44,7 @@ export const mustGetSpace = createSelector<
   if (!spaces[connId]) throw new Error(`No spaces in connection id: ${connId}`)
   if (!spaces[connId][spaceId]) throw new Error(`Missing space id: ${spaceId}`)
 
-  return spaces[connId][spaceId]
+  return brim.space(spaces[connId][spaceId])
 })
 
 export const getSpace = (state: State) => {

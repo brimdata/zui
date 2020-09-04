@@ -4,7 +4,7 @@ import React from "react"
 import type {ModalButton} from "./types"
 import {defaultModalButton} from "../../test/locators"
 import ButtonRow from "../ButtonRow"
-import ToolbarButton from "../ToolbarButton"
+import ToolbarButton from "../Toolbar/Button"
 
 type Props = {
   template: ModalButton[],

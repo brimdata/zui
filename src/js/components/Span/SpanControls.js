@@ -4,6 +4,7 @@ import React from "react"
 import classNames from "classnames"
 
 import ClockIcon from "../../icons/ClockIcon"
+import Label from "../Toolbar/Label"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
@@ -35,7 +36,7 @@ export default function SpanControls() {
           onChange={fromChange}
           icon={<ClockIcon />}
         />
-        <label>From</label>
+        <Label>From</Label>
       </div>
       <SpanDuration spanArgs={[from, to]} />
       <div title="Click to set the end time for the search">
@@ -44,7 +45,7 @@ export default function SpanControls() {
           prevTimeArg={prev && prev[1]}
           onChange={toChange}
         />
-        <label>To</label>
+        <Label>To</Label>
       </div>
       <SpanPicker />
     </div>

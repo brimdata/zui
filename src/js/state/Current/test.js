@@ -55,5 +55,5 @@ test("getting the actual space", () => {
     Current.setSpaceId(space.id)
   ])
 
-  expect(Current.mustGetSpace(state)).toEqual(space)
+  expect(Current.mustGetSpace(state)).toEqual(expect.objectContaining(space))
 })

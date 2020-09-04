@@ -1,13 +1,14 @@
 /* @flow */
 import type {Thunk} from "../state/types"
+import {createSpaceName} from "../brim/spaceName"
 import {getUniqName} from "../lib/uniqName"
+import {getZealot} from "./getZealot"
 import Current from "../state/Current"
 import Spaces from "../state/Spaces"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
 import refreshSpaceNames from "./refreshSpaceNames"
-import {getZealot} from "./getZealot"
 
 class CreateSubspaceError extends Error {}
 
@@ -23,7 +24,7 @@ export default (): Thunk => (dispatch, getState) => {
   try {
     const logs = records.map((r) => r.mustGet("_log").stringValue())
     const keys = records.map((r) => r.mustGet("key").stringValue())
-    const name = getUniqName(keys[0], names)
+    const name = getUniqName(createSpaceName(keys[0]), names)
     return zealot.subspaces
       .create({name, spaceId, logs})
       .then((space) =>

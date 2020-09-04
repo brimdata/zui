@@ -2,6 +2,7 @@
 
 import type {$Field} from "../brim"
 import type {$Menu} from "../electron/menu"
+import type {SearchTarget} from "../state/SearchBar/types"
 import type {SpanArgs} from "../state/Search/types"
 import type {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
@@ -96,7 +97,8 @@ export type SearchRecord = {
   spanArgs: SpanArgs,
   spaceId: string,
   spaceName: string,
-  scrollPos?: ScrollPosition
+  scrollPos?: ScrollPosition,
+  target: SearchTarget
 }
 
 type _ReturnType<B, _F: (...args: any[]) => B> = B

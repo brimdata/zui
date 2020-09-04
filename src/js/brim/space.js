@@ -6,6 +6,17 @@ import brim from "./"
 export default function space(info: Space) {
   return {
     ...info,
+    isArchive() {
+      return this.getType() === "archive"
+    },
+    hasIndex() {
+      return info.storage_kind !== "filestore"
+    },
+    getType() {
+      if (info.storage_kind === "filestore") return "space"
+      if (info.parent_id) return "subspace"
+      return "archive"
+    },
     defaultSpanArgs() {
       if (recentDataExists(info.max_time)) {
         return ["now-30m", "now"]

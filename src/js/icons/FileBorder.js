@@ -2,8 +2,11 @@
 
 import React from "react"
 
+import {cssVar} from "../lib/cssVar"
 import FileBorderSvg from "../../static/icons/file-border.svg"
 
+const blue = cssVar("--azure")
+
 export default function FileBorder(props: *) {
-  return <FileBorderSvg className="file-border-icon" {...props} />
+  return <FileBorderSvg {...props} fill={blue} stroke={blue} />
 }

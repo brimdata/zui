@@ -11,6 +11,7 @@ export default function getPersistable(state: *) {
     for (const tab of draft.tabs.data) {
       delete tab.viewer
       delete tab.chart
+      delete tab.last
     }
   })
 }

@@ -1,7 +1,6 @@
 @mixin button-reset {
   border: none;
   font-family: $body-font;
-  cursor: pointer;
 }
 
 @mixin button-shadow {

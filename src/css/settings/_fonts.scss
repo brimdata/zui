@@ -11,6 +11,10 @@ $font-size-4: 1.25rem;
 
 $line-height-2: 1.125rem;
 
+:root {
+  --mono-font: "Cartograph", monospace;
+}
+
 @font-face {
   font-family: "Cartograph";
   src: url(../static/fonts/CartographCF-Thin.otf);

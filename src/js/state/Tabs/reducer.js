@@ -107,7 +107,8 @@ function tabAction({type}) {
     type.startsWith("HISTORY_") ||
     type.startsWith("LOG_DETAIL_") ||
     type.startsWith("LAYOUT_") ||
-    type.startsWith("CURRENT_")
+    type.startsWith("CURRENT_") ||
+    type.startsWith("LAST_")
   )
 }
 

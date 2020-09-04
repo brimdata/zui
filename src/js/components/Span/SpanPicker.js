@@ -4,7 +4,7 @@ import React from "react"
 
 import {reactElementProps} from "../../test/integration"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
-import ToolbarButton from "../ToolbarButton"
+import ToolbarButton from "../Toolbar/Button"
 import refreshSpaceInfo from "../../flows/refreshSpaceInfo"
 import useSpanPickerMenu from "../useSpanPickerMenu"
 

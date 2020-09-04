@@ -48,14 +48,17 @@ type StateProps = {|
 
 type OwnProps = {|
   height: number,
-  width: number
+  width: number,
+  multiSelect: boolean
 |}
 
 type Props = {|...StateProps, ...DispatchProps, ...OwnProps|}
 
 export default function ResultsTable(props: Props) {
   const dispatch = useDispatch()
-  const {parentRef, selection, clicked} = useRowSelection({multi: false})
+  const {parentRef, selection, clicked} = useRowSelection({
+    multi: props.multiSelect
+  })
   const {logs, columnHeadersView} = props
 
   let type
@@ -102,11 +105,8 @@ export default function ResultsTable(props: Props) {
         timeFormat={props.timeFormat}
         highlight={selection.includes(index)}
         dimens={dimens}
-        onClick={(e) => {
-          e && clicked(e, index)
-        }}
-        onDoubleClick={(e) => {
-          e && clicked(e, index)
+        onClick={(e) => clicked(e, index)}
+        onDoubleClick={() => {
           dispatch(viewLogDetail(logs[index]))
           dispatch(openLogDetailsWindow())
         }}

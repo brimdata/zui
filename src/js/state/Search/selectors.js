@@ -18,7 +18,8 @@ export default {
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
       spaceName: space.name,
-      spaceId: space.id
+      spaceId: space.id,
+      target: SearchBar.getTarget(state)
     }
   },
 
@@ -29,7 +30,8 @@ export default {
       pins: SearchBar.getSearchBar(state).pinned,
       spanArgs: Tab.getSpanArgs(state),
       spaceName: space.name,
-      spaceId: space.id
+      spaceId: space.id,
+      target: SearchBar.getTarget(state)
     }
   },
 
