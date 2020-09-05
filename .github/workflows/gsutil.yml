@@ -15,5 +15,7 @@ jobs:
         PROJECT_ID: ${{ secrets.PROJECT_ID }}
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       with:
-       args: cp /etc/passwd gs://brimsec-releases/${{ env.SCRATCHDIR }}
-       cli: gsutil
+        args: rm -rf gs://brimsec-releases/foo
+        cli: gsutil
+#       args: cp /etc/passwd gs://brimsec-releases/${{ env.SCRATCHDIR }}
+#       cli: gsutil
