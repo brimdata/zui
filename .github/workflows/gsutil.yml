@@ -9,7 +9,8 @@ jobs:
   test:
     runs-on: ubuntu-18.04
     steps:
-    - run: ::set-env name=SCRATCHDIR::$(uuidgen)
+    - run: |
+      echo ::set-env name=SCRATCHDIR::$(uuidgen)
     - uses: actions-hub/gcloud@master
       env:
         PROJECT_ID: ${{ secrets.PROJECT_ID }}
