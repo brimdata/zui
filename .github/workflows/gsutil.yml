@@ -1,0 +1,18 @@
+name: gsutil test
+
+on:
+  push:
+    branches:
+      - gsutil-test
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions-hub/gcloud@master
+      env:
+        PROJECT_ID: ${{ secrets.PROJECT_ID }}
+        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      with:
+       args: cp /etc/passwd gs://brimsec-releases
+       cli: gsutil
