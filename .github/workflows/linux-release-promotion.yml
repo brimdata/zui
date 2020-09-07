@@ -1,0 +1,40 @@
+name: Brim linux release artifact promote to tagged
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  promote:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Extract tag name
+      run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/})"
+      id: extract_tag
+    - name: Delete destination folder on Google Cloud Storage bucket (if it exists)
+      uses: actions-hub/gcloud@master
+      env:
+        PROJECT_ID: ${{ secrets.PROJECT_ID }}
+        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      with:
+        args: rm -rf gs://brimsec-releases/${{ steps.extract_tag.outputs.tag }} || true
+        cli: gsutil
+    - name: Create a local scratch directory to hold release candidate artifacts
+      run: echo ::set-env name=SCRATCHDIR::$(mktemp -d)
+    - name: Download release candidate artifacts from Google Cloud Storage bucket
+      uses: actions-hub/gcloud@master
+      env:
+        PROJECT_ID: ${{ secrets.PROJECT_ID }}
+        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      with:
+        args: cp gs://brimsec-releases/rc-${{ steps.extract_tag.outputs.tag }}/* ${{ env.SCRATCHDIR }}
+        cli: gsutil
+    - name: Upload release candidate artifacts to GitHub Releases
+      uses: svenstaro/upload-release-action@1.1.0
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: ${{ env.SCRATCHDIR }}/*
+        file_glob: true
+        overwrite: true
