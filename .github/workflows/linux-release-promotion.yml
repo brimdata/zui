@@ -20,9 +20,10 @@ jobs:
       with:
         args: rm -rf gs://brimsec-releases/${{ steps.extract_tag.outputs.tag }} || true
         cli: gsutil
+    - name: Create a local scratch directory to hold release candidate artifacts
+      run: echo ::set-env name=SCRATCHDIR::$(mktemp -d)
     - name: Download release candidate artifacts from Google Cloud Storage bucket
       uses: actions-hub/gcloud@master
-      run: echo ::set-env name=SCRATCHDIR::$(mktemp -d)
       env:
         PROJECT_ID: ${{ secrets.PROJECT_ID }}
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
