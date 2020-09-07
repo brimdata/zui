@@ -20,5 +20,6 @@ jobs:
       with:
         args: rm -rf gs://brimsec-releases/v1.0 || true
         cli: gsutil
+      with:
         args: cp /etc/passwd gs://brimsec-releases/${{ steps.extract_branch.outputs.branch }}
         cli: gsutil
