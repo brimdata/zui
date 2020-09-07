@@ -22,6 +22,9 @@ jobs:
         cli: gsutil
     - name: Create a local scratch directory to hold release candidate artifacts
       run: echo ::set-env name=SCRATCHDIR::$(mktemp -d)
+    - name: Look in the scratch directory
+      run: echo "${{ env.SCRATCHDIR }}"
+      run: ls -alR ${{ env.SCRATCHDIR }}
     - name: Download release candidate artifacts from Google Cloud Storage bucket
       uses: actions-hub/gcloud@master
       env:
