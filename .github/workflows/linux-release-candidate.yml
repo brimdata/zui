@@ -46,7 +46,7 @@ jobs:
     - name: Extract branch name
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
-    - name: delete destination folder on GCP bucket (if it exists)
+    - name: delete destination folder on Google Cloud Storage bucket (if it exists)
       uses: actions-hub/gcloud@master
       env:
         PROJECT_ID: ${{ secrets.PROJECT_ID }}
