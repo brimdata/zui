@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - name: Extract tag name
-      run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tag/})"
+      run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/})"
       id: extract_tag
     - name: Delete destination folder on Google Cloud Storage bucket (if it exists)
       uses: actions-hub/gcloud@master
