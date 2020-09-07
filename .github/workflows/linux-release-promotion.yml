@@ -28,7 +28,6 @@ jobs:
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       with:
         args: cp gs://brimsec-releases/rc-${{ steps.extract_tag.outputs.tag }}/* ${{ env.SCRATCHDIR }}
-rm -rf gs://brimsec-releases/${{ steps.extract_tag.outputs.tag }} || true
         cli: gsutil
     - name: Upload release candidate artifacts to GitHub Releases
       uses: svenstaro/upload-release-action@1.1.0
