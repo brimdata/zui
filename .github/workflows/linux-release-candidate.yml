@@ -2,7 +2,7 @@ name: Brim linux release candidate creation
 
 on:
   branches:
-    - rc-v*
+    - 'rc-v*'
 
 jobs:
   build:
