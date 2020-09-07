@@ -3,7 +3,7 @@ name: gsutil test
 on:
   push:
     branches:
-      - gsutil-test
+      - do-not-run
 
 jobs:
   test:
