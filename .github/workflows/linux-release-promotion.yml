@@ -20,8 +20,6 @@ jobs:
       with:
         args: cp -r gs://brimsec-releases/rc-${{ steps.extract_tag.outputs.tag }} .
         cli: gsutil
-    - name: Print what we can see locally
-      run: ls -alR
     - name: Upload release candidate artifacts to GitHub Releases
       uses: svenstaro/upload-release-action@1.1.0
       with:
