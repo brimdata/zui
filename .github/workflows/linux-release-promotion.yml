@@ -25,6 +25,6 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}
-        file: ${{ steps.extract_tag.outputs.tag }}/*
+        file: rc-${{ steps.extract_tag.outputs.tag }}/*
         file_glob: true
         overwrite: true
