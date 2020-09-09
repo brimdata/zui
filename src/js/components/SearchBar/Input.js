@@ -6,9 +6,9 @@ import styled from "styled-components"
 import type {Styled} from "../../types/styled"
 import {cssVar} from "../../lib/cssVar"
 import {reactElementProps} from "../../test/integration"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import InputHistory from "../../models/InputHistory"
 import SearchBar from "../../state/SearchBar"
-import submitSearch from "../../flows/submitSearch"
 
 const StyledInput: Styled<> = styled.input`
   display: block;

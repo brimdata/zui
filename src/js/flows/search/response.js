@@ -1,9 +1,8 @@
 /* @flow */
-import type {DateTuple} from "../lib/TimeWindow"
-import type {Descriptors} from "../types"
-import type {RecordData} from "../types/records"
-import type {SearchStats, SearchStatus} from "../types/searches"
-import randomHash from "./randomHash"
+
+import type {Descriptors} from "../../types"
+import type {RecordData} from "../../types/records"
+import type {SearchStats, SearchStatus} from "../../types/searches"
 
 type EventNames =
   | "stats"
@@ -15,25 +14,10 @@ type EventNames =
   | "warnings"
   | number
 
-export default function search(
-  program: string,
-  span: DateTuple,
-  spaceId: string
-) {
-  let callbacks = new Map<EventNames, Function>()
-  let id = randomHash()
-
+export function createResponse() {
+  // Allow for multiple callbacks on one event
+  const callbacks = new Map<EventNames, Function>()
   return {
-    program,
-    span,
-    spaceId,
-    getId() {
-      return id
-    },
-    id(newId: string) {
-      id = newId
-      return this
-    },
     chan(num: number, func: (RecordData[], Descriptors) => void) {
       callbacks.set(num, func)
       return this
@@ -62,7 +46,7 @@ export default function search(
       callbacks.set("abort", func)
       return this
     },
-    warnings(func: (string[]) => void) {
+    warnings(func: (string) => void) {
       callbacks.set("warnings", func)
       return this
     },

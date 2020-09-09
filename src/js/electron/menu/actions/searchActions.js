@@ -8,21 +8,21 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../../flows/searchBar/actions"
-import open from "../../../lib/open"
+import {downloadPcap} from "../../../flows/downloadPcap"
+import {submitSearch} from "../../../flows/submitSearch/mod"
 import {viewLogDetail} from "../../../flows/viewLogDetail"
+import ErrorFactory from "../../../models/ErrorFactory"
+import Layout from "../../../state/Layout/actions"
 import Log from "../../../models/Log"
 import Modal from "../../../state/Modal"
+import Notice from "../../../state/Notice"
 import SearchBar from "../../../state/SearchBar"
 import action from "./action"
 import brim from "../../../brim"
-import submitSearch from "../../../flows/submitSearch"
+import open from "../../../lib/open"
+import scrollToLog from "../../../flows/scrollToLog"
 import tab from "../../../state/Tab"
 import virusTotal from "../../../services/virusTotal"
-import {downloadPcap} from "../../../flows/downloadPcap"
-import Layout from "../../../state/Layout/actions"
-import scrollToLog from "../../../flows/scrollToLog"
-import Notice from "../../../state/Notice"
-import ErrorFactory from "../../../models/ErrorFactory"
 
 function buildSearchActions() {
   return {

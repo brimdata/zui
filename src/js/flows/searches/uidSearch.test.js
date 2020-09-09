@@ -1,8 +1,9 @@
 /* @flow */
-import {conn} from "../test/mockLogs"
 import {createZealotMock} from "zealot"
-import executeUidSearch from "./executeUidSearch"
-import initTestStore from "../test/initTestStore"
+
+import {conn} from "../../test/mockLogs"
+import {uidSearch} from "./uidSearch"
+import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {
@@ -11,5 +12,5 @@ beforeEach(() => {
 
 test("dispatches request", async () => {
   let log = conn()
-  await store.dispatch(executeUidSearch(log))
+  await store.dispatch(uidSearch(log))
 })

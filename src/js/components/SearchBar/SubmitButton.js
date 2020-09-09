@@ -6,8 +6,8 @@ import React from "react"
 import styled from "styled-components"
 
 import type {Styled} from "../../types/styled"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
-import submitSearch from "../../flows/submitSearch"
 
 const start = "#6aa4e7"
 const end = "#4b91e2"

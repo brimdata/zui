@@ -2,6 +2,7 @@
 
 import {createZealotMock} from "zealot"
 
+import {submitSearch} from "../../flows/submitSearch/mod"
 import Clusters from "../Clusters"
 import Current from "../Current"
 import History from "./"
@@ -10,7 +11,6 @@ import Spaces from "../Spaces"
 import Tab from "../Tab"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import submitSearch from "../../flows/submitSearch"
 
 let store
 beforeEach(() => {

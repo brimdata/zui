@@ -10,6 +10,7 @@ import styled from "styled-components"
 
 import type {Finding} from "../../state/Investigation/types"
 import {globalDispatch} from "../../state/GlobalContext"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import Current from "../../state/Current"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
@@ -17,7 +18,6 @@ import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
 import Spaces from "../../state/Spaces/selectors"
 import Warning from "../icons/warning-sm.svg"
-import submitSearch from "../../flows/submitSearch"
 import usePopupMenu from "../hooks/usePopupMenu"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`

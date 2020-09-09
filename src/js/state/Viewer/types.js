@@ -48,7 +48,7 @@ export type VIEWER_RECORDS = {
 export type VIEWER_SET_RECORDS = {
   type: "VIEWER_SET_RECORDS",
   records: RecordData[],
-  tabId: string
+  tabId?: string
 }
 
 export type VIEWER_CLEAR = {

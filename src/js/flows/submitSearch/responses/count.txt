@@ -1,0 +1,13 @@
+{"type":"TaskStart","task_id":0}
+
+
+{"type":"SearchRecords","channel_id":0,"records":[{"id":46,"type":[{"name":"count","type":"uint64"}],"values":["8100"]}]}
+
+
+{"type":"SearchEnd","channel_id":0,"reason":"eof"}
+
+
+{"type":"SearchStats","start_time":{"sec":1598648691,"ns":566035000},"update_time":{"sec":1598648691,"ns":617932000},"bytes_read":4124856,"bytes_matched":3711103,"records_read":11308,"records_matched":8100}
+
+
+{"type":"TaskEnd","task_id":0}

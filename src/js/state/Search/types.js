@@ -6,8 +6,7 @@ import type {Span, Ts} from "../../brim"
 export type SearchState = {|
   span: Span,
   spanArgs: SpanArgs,
-  spanFocus: ?Span,
-  ts: number
+  spanFocus: ?Span
 |}
 
 export type SearchArgs = {

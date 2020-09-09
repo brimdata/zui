@@ -3,7 +3,7 @@ import React from "react"
 import styled from "styled-components"
 
 import type {Styled} from "../../types/styled"
-import {XPins} from "./Pins"
+import Pins from "./Pins"
 import Error from "./Error"
 import HistoryArrows from "./HistoryArrows"
 import Input from "./Input"
@@ -56,7 +56,7 @@ export function SearchBar() {
           <SubmitButton />
         </InputBackdrop>
         <Error />
-        <XPins />
+        <Pins />
       </Group>
     </Wrap>
   )

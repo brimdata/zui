@@ -30,14 +30,14 @@ import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
+import {submitSearch} from "../flows/submitSearch/mod"
 import Current from "../state/Current"
 import History from "../state/History"
 import IngestUpdateNotice from "./IngestUpdateNotice"
 import Search from "../state/Search"
 import brim from "../brim"
-import submitSearch from "../flows/submitSearch"
-import useThrottle from "./hooks/useThrottle"
 import submitAutoRefreshSearch from "../flows/submitAutoRefreshSearch"
+import useThrottle from "./hooks/useThrottle"
 
 export default function IngestRefresh() {
   const dispatch = useDispatch()

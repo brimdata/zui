@@ -1,60 +1,47 @@
 /* @flow */
 
-import {connect} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
-import type {Dispatch, State} from "../../state/types"
 import {fmtProgram} from "../../lib/Program"
 import FilterNode from "../FilterNode"
 import PinIcon from "../../icons/PinIcon"
 import SearchBar from "../../state/SearchBar"
 
-type StateProps = {|
-  editing: ?number,
-  previousValue: string,
-  pins: string[]
-|}
+export default function Pins() {
+  const dispatch = useDispatch()
+  const prevProgram = useSelector(SearchBar.getSearchBarPreviousInputValue)
+  const pins = useSelector(SearchBar.getSearchBarPins)
+  const editing = useSelector(SearchBar.getSearchBarEditingIndex)
 
-type DispatchProps = {|
-  dispatch: Dispatch
-|}
-
-type Props = {|
-  ...StateProps,
-  ...DispatchProps
-|}
-
-export default class Pins extends React.Component<Props> {
-  renderFilter = (filter: string, index: number) => {
+  function renderFilter(filter: string, index: number) {
     return (
       <FilterNode
         key={index}
         filter={filter}
-        focused={this.props.editing === index}
+        focused={editing === index}
         pending={index === -1}
         onClick={() => {
-          this.props.dispatch(SearchBar.editSearchBarPin(index))
+          dispatch(SearchBar.editSearchBarPin(index))
         }}
         onRemoveClick={(e) => {
           e.stopPropagation()
-          this.props.dispatch(SearchBar.removeSearchBarPin(index))
+          dispatch(SearchBar.removeSearchBarPin(index))
         }}
       />
     )
   }
 
-  renderPinButton() {
+  function renderPinButton() {
     return (
       <div className="pin-button-wrapper">
-        <span
-          onClick={() => this.props.dispatch(SearchBar.editSearchBarPin(null))}
-        >
-          {fmtProgram(this.props.previousValue)}
+        <span onClick={() => dispatch(SearchBar.editSearchBarPin(null))}>
+          {fmtProgram(prevProgram)}
         </span>
         <button
           className="pin-button"
           title="⌘K"
-          onClick={() => this.props.dispatch(SearchBar.pinSearchBar())}
+          onClick={() => dispatch(SearchBar.pinSearchBar())}
         >
           <PinIcon />
         </button>
@@ -62,24 +49,11 @@ export default class Pins extends React.Component<Props> {
     )
   }
 
-  render() {
-    if (this.props.pins.length === 0) return null
-    return (
-      <div className="pins">
-        {this.props.pins.map(this.renderFilter)}
-        {this.renderPinButton()}
-      </div>
-    )
-  }
+  if (pins.length === 0) return null
+  return (
+    <div className="pins">
+      {pins.map(renderFilter)}
+      {renderPinButton()}
+    </div>
+  )
 }
-
-const stateToProps = (state: State) => ({
-  pins: SearchBar.getSearchBarPins(state),
-  previousValue: SearchBar.getSearchBarPreviousInputValue(state),
-  editing: SearchBar.getSearchBarEditingIndex(state)
-})
-
-export const XPins = connect<Props, {||}, _, _, _, _>(
-  stateToProps,
-  (dispatch: Dispatch) => ({dispatch})
-)(Pins)

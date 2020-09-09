@@ -10,15 +10,13 @@ import {
   rxHostsCorrelation,
   txHostsCorrelation
 } from "../../searches/programs"
-import {parallelizeProcs} from "../../lib/Program"
+import {md5Search} from "../../flows/searches/md5Search"
 import Current from "../../state/Current"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import Tab from "../../state/Tab"
 import brim from "../../brim"
-import executeSearch from "../../flows/executeSearch"
 
 export const Md5Panel = ({
   log,
@@ -30,34 +28,26 @@ export const Md5Panel = ({
   let logMd5 = log.getString("md5")
   let dispatch = useDispatch()
   let spaceId = useSelector(Current.getSpaceId)
-  let span = useSelector(Tab.getSpanAsDates)
   let [tx, setTx] = useState([])
   let [rx, setRx] = useState([])
   let [md5, setMd5] = useState([])
   let [filenames, setFilenames] = useState([])
   let [status, setStatus] = useState("INIT")
-  let program = parallelizeProcs([
-    filenameCorrelation(logMd5),
-    md5Correlation(logMd5),
-    rxHostsCorrelation(logMd5),
-    txHostsCorrelation(logMd5)
-  ])
 
   function toLogs(records) {
     return records.map(brim.record).map(brim.interop.recordToLog)
   }
 
   useEffect(() => {
-    let s = brim
-      .search(program, span, spaceId)
-      .id("Md5")
+    const {response, abort} = dispatch(md5Search(logMd5))
+    response
       .status(setStatus)
       .chan(0, (records) => setFilenames(filenames.concat(toLogs(records))))
       .chan(1, (records) => setMd5(md5.concat(toLogs(records))))
       .chan(2, (records) => setRx(rx.concat(toLogs(records))))
       .chan(3, (records) => setTx(tx.concat(toLogs(records))))
 
-    return dispatch(executeSearch(s))
+    return abort
   }, [])
 
   function getColumns(logs) {

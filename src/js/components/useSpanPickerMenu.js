@@ -3,10 +3,10 @@
 import {useDispatch, useSelector} from "react-redux"
 
 import {type DateTuple, spanOfLast} from "../lib/TimeWindow"
+import {submitSearch} from "../flows/submitSearch/mod"
 import Current from "../state/Current"
 import Search from "../state/Search"
 import brim from "../brim"
-import submitSearch from "../flows/submitSearch"
 
 export default function useSpanPickerMenu() {
   let dispatch = useDispatch()

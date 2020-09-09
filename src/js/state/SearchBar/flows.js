@@ -3,14 +3,14 @@
 import {PARALLEL_PROC} from "../../brim/ast"
 import type {Thunk} from "../types"
 import {parse} from "../../lib/Program"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import Errors from "../Errors"
 import History from "../History"
 import Search from "../Search"
 import SearchBar from "../SearchBar"
 import Tab from "../Tab"
-import brim from "../../brim"
-import submitSearch from "../../flows/submitSearch"
 import Viewer from "../Viewer"
+import brim from "../../brim"
 
 export default {
   goBack: (): Thunk => (dispatch, getState) => {
