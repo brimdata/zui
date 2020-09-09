@@ -38,8 +38,8 @@ export default function usePopupMenu(template: $Menu, opts?: Options = {}) {
     setIsOpen(true)
   }
 
-  function onClick(e: SyntheticEvent<HTMLElement>) {
-    open(e.currentTarget)
+  function onClick(e?: SyntheticEvent<HTMLElement>) {
+    e ? open(e.currentTarget) : open()
   }
 
   return {
