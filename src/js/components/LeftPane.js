@@ -15,7 +15,6 @@ import Layout from "../state/Layout"
 import Pane from "./Pane"
 import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
-import menu from "../electron/menu"
 import useDrag from "./hooks/useDrag"
 import usePopupMenu from "./hooks/usePopupMenu"
 
@@ -172,7 +171,6 @@ export function LeftPane() {
   const width = useSelector(Layout.getLeftSidebarWidth)
   const id = useSelector(Current.getConnectionId)
   const spaces = useSelector(Spaces.getSpaces(id))
-  const spaceContextMenu = menu.spaceContextMenu(id)
 
   const showHistory = useSelector(Layout.getHistoryIsOpen)
   const showSpaces = useSelector(Layout.getSpacesIsOpen)
@@ -232,10 +230,7 @@ export function LeftPane() {
           <AddSpaceButton />
         </SectionHeader>
         <SectionContents show={showSpaces}>
-          <SavedSpacesList
-            spaces={spaces}
-            spaceContextMenu={spaceContextMenu}
-          />
+          <SavedSpacesList spaces={spaces} />
         </SectionContents>
         {showSpaces && <DragAnchor {...dragFunc()} />}
       </StyledSection>
