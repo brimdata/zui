@@ -1,7 +1,6 @@
-
 import lib from "../lib";
 
-export default function ast(tree: Object) {
+export default function ast(tree: any) {
   return {
     valid() {
       return !tree.error;
@@ -12,13 +11,13 @@ export default function ast(tree: Object) {
     groupByKeys() {
       let g = this.proc("GroupByProc");
       let keys = g ? g.keys : [];
-      return keys.map<string>(k => k.target);
+      return keys.map((k) => k.target);
     },
     proc(name: string) {
-      return getProcs(tree).find(p => p.op === name);
+      return getProcs(tree).find((p) => p.op === name);
     },
     procs(name: string): any[] {
-      return getProcs(tree).filter(p => p.op === name);
+      return getProcs(tree).filter((p) => p.op === name);
     },
     getProcs() {
       return getProcs(tree);
@@ -28,12 +27,12 @@ export default function ast(tree: Object) {
     },
     sorts() {
       return this.procs("SortProc").reduce((sorts, proc) => {
-        lib.array.wrap(proc.fields).forEach(field => {
+        lib.array.wrap(proc.fields).forEach((field) => {
           sorts[fieldExprToName(field)] = proc.sortdir === 1 ? "asc" : "desc";
         });
         return sorts;
       }, {});
-    }
+    },
   };
 }
 
@@ -48,7 +47,6 @@ function fieldExprToName(expr) {
     default:
       // XXX
       return "";
-
   }
 }
 
@@ -74,6 +72,13 @@ export const FILTER_PROC = "FilterProc";
 export const PARALLEL_PROC = "ParallelProc";
 export const SEQUENTIAL_PROC = "SequentialProc";
 export const SOURCE_PROC = "SourceProc";
-export const TUPLE_PROCS = [SOURCE_PROC, HEAD_PROC, TAIL_PROC, SORT_PROC, FILTER_PROC, SEQUENTIAL_PROC];
+export const TUPLE_PROCS = [
+  SOURCE_PROC,
+  HEAD_PROC,
+  TAIL_PROC,
+  SORT_PROC,
+  FILTER_PROC,
+  SEQUENTIAL_PROC,
+];
 export const COMPOUND_PROCS = [PARALLEL_PROC, SEQUENTIAL_PROC];
 export const EVERYTHING_FILTER = { op: "MatchAll" };

@@ -1,39 +1,40 @@
-
 import brim from "./";
+import { FormConfig } from "./form";
 
-const sampleConfig = () => ({
+const sampleConfig = (): FormConfig => ({
   username: {
     label: "Username",
     name: "username",
     defaultValue: "joe",
-    check: jest.fn(() => [true, "no error"]),
-    submit: jest.fn()
-  }
+    check: jest.fn((_) => [true, "no error"]),
+    submit: jest.fn(),
+  },
 });
 
 const sampleFormElement = (): HTMLFormElement => {
   let elements = {
     username: {
-      value: "joeshmoe"
-    }
+      value: "joeshmoe",
+    },
   };
-  // $FlowFixMe
   return {
+    // @ts-ignore
     elements: {
-      namedItem: name => elements[name]
-    }
+      namedItem: (name) => elements[name],
+    },
   };
 };
 
 test("isValid when true", async () => {
-  // $FlowFixMe
+  // @ts-ignore
   let form = brim.form(sampleFormElement(), sampleConfig());
   expect((await form.isValid())).toBe(true);
 });
 
 test("isValid when false", async () => {
-  let failure = jest.fn(value => [value === "ME", "Value is not ME"]);
+  let failure = jest.fn((value) => [value === "ME", "Value is not ME"]);
   let config = sampleConfig();
+  // @ts-ignore
   config.username.check = failure;
 
   let form = brim.form(sampleFormElement(), config);
@@ -42,7 +43,7 @@ test("isValid when false", async () => {
   expect(form.getErrors()).toEqual([{
     input: { value: "joeshmoe" },
     label: "Username",
-    message: "Value is not ME"
+    message: "Value is not ME",
   }]);
 });
 
@@ -60,13 +61,18 @@ test("a missing field", () => {
   config.username.name = "missing";
   let form = brim.form(sampleFormElement(), config);
 
-  return expect(form.isValid()).rejects.toEqual(new Error(`No input with name="missing"`));
+  return expect(form.isValid()).rejects.toEqual(
+    new Error(`No input with name="missing"`),
+  );
 });
 
 test("when check returns undefined", () => {
   let config = sampleConfig();
+  // @ts-ignore
   config.username.check = () => {};
   let form = brim.form(sampleFormElement(), config);
 
-  return expect(form.isValid()).rejects.toEqual(new Error(`username check did not return an array`));
+  return expect(form.isValid()).rejects.toEqual(
+    new Error(`username check did not return an array`),
+  );
 });

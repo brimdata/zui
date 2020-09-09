@@ -1,4 +1,3 @@
-
 import { $Record } from "./record";
 import { RecordData } from "../types/records";
 import Log from "../models/Log";
@@ -6,18 +5,18 @@ import brim, { Ts } from "./";
 
 export default {
   recordToLog(record: $Record) {
-    // $FlowFixMe
+    // @ts-ignore
     return new Log(record.values(), record.columns());
   },
   logToRecordData(log: Log): RecordData {
     return log.getFields().map(({
       name,
       type,
-      value
+      value,
     }) => ({
       name,
       type,
-      value
+      value,
     }));
   },
 
@@ -29,5 +28,5 @@ export default {
       delete space.span;
     }
     return space;
-  }
+  },
 };

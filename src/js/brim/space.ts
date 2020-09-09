@@ -1,7 +1,6 @@
-
 import { Space } from "../state/Spaces/types";
 import { isNumber } from "../lib/is";
-import brim from "./";
+import brim, { Ts } from "./";
 
 export default function space(info: Space) {
   return {
@@ -28,12 +27,13 @@ export default function space(info: Space) {
     },
     empty() {
       if (!info.min_time || !info.max_time) return true;
-      return (info.min_time.sec === 0 && info.min_time.ns === 0 && info.max_time.sec === 0 && info.max_time.ns === 0);
+      return (info.min_time.sec === 0 && info.min_time.ns === 0 &&
+        info.max_time.sec === 0 && info.max_time.ns === 0);
     },
     everythingSpan() {
       let {
         min_time,
-        max_time
+        max_time,
       } = info;
       let from = brim.time(min_time).toTs();
       let to = brim.time(max_time).add(1, "ms").toTs();
@@ -47,11 +47,11 @@ export default function space(info: Space) {
     },
     queryable() {
       return !(this.ingesting() && this.empty());
-    }
+    },
   };
 }
 
-function recentDataExists(ts) {
+function recentDataExists(ts: Ts) {
   let halfHour = 1000 * 60 * 30;
-  return new Date() - brim.time(ts).toDate() < halfHour;
+  return new Date().getTime() - brim.time(ts).toDate().getTime() < halfHour;
 }

@@ -1,31 +1,38 @@
+import React from "react"
 
-import React from "react";
-
-import { reactElementProps } from "../test/integration";
-import ModalBox from "./ModalBox/ModalBox";
-import TextContent from "./TextContent";
-import LogoType from "../icons/LogoType";
-import Octocat from "../icons/Octocat";
-import { remote } from "electron";
-import { join } from "path";
-import open from "../lib/open";
-import electronIsDev from "../electron/isDev";
-import { execSync } from "child_process";
+import {reactElementProps} from "../test/integration"
+import ModalBox from "./ModalBox/ModalBox"
+import TextContent from "./TextContent"
+import LogoType from "../icons/LogoType"
+import Octocat from "../icons/Octocat"
+import {remote} from "electron"
+import {join} from "path"
+import open from "../lib/open"
+import electronIsDev from "../electron/isDev"
+import {execSync} from "child_process"
 
 export default function AboutModal() {
-  let appVersion = remote.app.getVersion();
+  let appVersion = remote.app.getVersion()
   if (electronIsDev) {
     try {
-      appVersion = execSync("git describe --tags --dirty").toString();
-    } catch {// swallow this catch and just use release version as is if no git
+      appVersion = execSync("git describe --tags --dirty").toString()
+    } catch {
+      // swallow this catch and just use release version as is if no git
     }
   }
-  const year = new Date().getFullYear();
-  const pathRoot = remote.app.getAppPath();
-  const ackFilePath = join(pathRoot, "acknowledgments.txt");
-  const licFilePath = join(pathRoot, "LICENSE.txt");
+  const year = new Date().getFullYear()
+  const pathRoot = remote.app.getAppPath()
+  const ackFilePath = join(pathRoot, "acknowledgments.txt")
+  const licFilePath = join(pathRoot, "LICENSE.txt")
 
-  return <ModalBox name="about" title="" buttons={[]} className="about-modal" {...reactElementProps("aboutModal")}>
+  return (
+    <ModalBox
+      name="about"
+      title=""
+      buttons={[]}
+      className="about-modal"
+      {...reactElementProps("aboutModal")}
+    >
       <div className="about-logo">
         <div className="logo">
           <LogoType />
@@ -63,5 +70,6 @@ export default function AboutModal() {
           </section>
         </div>
       </TextContent>
-    </ModalBox>;
+    </ModalBox>
+  )
 }

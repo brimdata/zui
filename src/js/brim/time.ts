@@ -1,7 +1,5 @@
-
-
 import moment from "moment-timezone";
-import bigInt, { BigNumber } from "big-integer";
+import bigInt from "big-integer";
 
 import { DateTuple } from "../lib/TimeWindow";
 import { TimeUnit } from "../lib";
@@ -12,7 +10,7 @@ function time(val: Ts | Date = new Date()) {
   let ts = isDate(val) ? dateToTs(val) : val;
 
   return {
-    toDate() {
+    toDate(): Date {
       return new Date((ts.sec + ts.ns / 1e9) * 1e3);
     },
 
@@ -24,7 +22,7 @@ function time(val: Ts | Date = new Date()) {
       return ts;
     },
 
-    toBigInt(): BigNumber {
+    toBigInt(): bigInt.BigInteger {
       return bigInt(ts.sec).times(1e9).plus(ts.ns);
     },
 
@@ -48,13 +46,13 @@ function time(val: Ts | Date = new Date()) {
       return brim.time(fromBigInt(dur));
     },
 
-    format(fmt: string | null | undefined) {
+    format(fmt?: string) {
       return moment(this.toDate()).format(fmt);
-    }
+    },
   };
 }
 
-function fromBigInt(i: BigNumber): Ts {
+function fromBigInt(i: bigInt.BigInteger): Ts {
   let sec = i.over(1e9);
   let ns = i.minus(sec.times(1e9));
   return { sec: sec.toJSNumber(), ns: ns.toJSNumber() };
@@ -67,7 +65,7 @@ function dateToTs(date: Date): Ts {
   let ns = +(secFloat - sec).toFixed(3) * 1e9;
   return {
     sec,
-    ns
+    ns,
   };
 }
 

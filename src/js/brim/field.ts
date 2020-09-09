@@ -1,5 +1,3 @@
-
-
 import { isEqual } from "lodash";
 
 import { COMPOUND_FIELD_RGX } from "./compoundField";
@@ -22,7 +20,7 @@ const ESCAPED_BACK_SLASH = "\\\\";
 function field({
   name,
   type,
-  value
+  value,
 }: FieldData): $Field {
   return {
     name,
@@ -30,24 +28,31 @@ function field({
     value,
     queryableValue() {
       if (this.compound()) {
-        return this.toCompound().items().map(field).map(f => f.queryableValue()).join(" ");
+        return this.toCompound().items().map(field).map((f) =>
+          f.queryableValue()
+        ).join(" ");
       }
       if (this.value === null) return "null";
       if (this.type === "bool") return this.value === "T" ? "true" : "false";
-      let quote = [WHITE_SPACE, COMMA].some(reg => reg.test(this.value));
+      let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value));
       if (STRING_TYPE.test(this.type)) quote = true;
-      const str = this.value.replace(BACK_SLASH, ESCAPED_BACK_SLASH).replace(DOUBLE_QUOTE, ESCAPED_DOUBLE_QUOTE);
+      const str = this.value.replace(BACK_SLASH, ESCAPED_BACK_SLASH).replace(
+        DOUBLE_QUOTE,
+        ESCAPED_DOUBLE_QUOTE,
+      );
       return quote ? `"${str}"` : str;
     },
     stringValue(): string {
-      if (value === null) return "null";else if (isArray(value)) return value.join(",");else return value;
+      if (value === null) return "null";
+      else if (Array.isArray(value)) return value.join(",");
+      else return value;
     },
 
     compound() {
       return COMPOUND_FIELD_RGX.test(type);
     },
     toCompound() {
-      // $FlowFixMe
+      // @ts-ignore
       return brim.compoundField(name, type, value);
     },
     toDate() {
@@ -76,7 +81,7 @@ function field({
       } else {
         return Math.ceil(this.display().length * ONE_CHAR + FIELD_PAD);
       }
-    }
+    },
   };
 }
 

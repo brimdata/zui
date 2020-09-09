@@ -1,4 +1,3 @@
-
 import fs from "fs";
 
 const PCAP_1_HEX = "d4c3b2a1";
@@ -19,7 +18,11 @@ export default async function (path: string): Promise<IngestFileType> {
 async function isPcap(file) {
   let bytes = await firstBytes(file, 4);
   for (let hex of PCAP_HEXES) {
-    if (bytes instanceof Buffer && bytes.equals(Buffer.from(hex, "hex"))) return true;
+    if (
+      bytes instanceof Buffer && bytes.equals(Buffer.from(hex, "hex"))
+    ) {
+      return true;
+    }
   }
   return false;
 }

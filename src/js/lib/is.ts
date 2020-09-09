@@ -1,5 +1,3 @@
-
-
 export function whatIs(value: any) {
   if (isString(value)) return "String";
   if (isNumber(value)) return "Number";
@@ -17,46 +15,46 @@ export function whatIs(value: any) {
   throw `Unknown JS Type: ${JSON.stringify(value)}`;
 }
 
-export function isString(value: any) {
+export function isString(value: unknown): value is string {
   return typeof value === "string";
 }
 
-export function isNumber(value: any) {
+export function isNumber(value: unknown): value is number {
   return typeof value === "number" && isFinite(value);
 }
 
-export function isArray(value: any) {
+export function isArray(value: unknown): value is unknown[] {
   return Array.isArray(value);
 }
 
-export function isFunction(value: any) {
+export function isFunction(value: unknown): value is Function {
   return typeof value === "function";
 }
 
-export function isObject(value: any) {
+export function isObject(value: unknown): value is {} {
   return value && typeof value === "object" && value.constructor === Object;
 }
 
-export function isNull(value: any) {
+export function isNull(value: unknown): value is null {
   return value === null;
 }
 
-export function isBoolean(value: any) {
+export function isBoolean(value: unknown): value is boolean {
   return typeof value === "boolean";
 }
 
-export function isRegExp(value: any) {
+export function isRegExp(value: unknown): value is RegExp {
   return value && typeof value === "object" && value.constructor === RegExp;
 }
 
-export function isError(value: any) {
+export function isError(value: unknown): value is Error {
   return value instanceof Error && typeof value.message !== "undefined";
 }
 
-export function isDate(value: any) {
+export function isDate(value: unknown): value is Date {
   return value instanceof Date;
 }
 
-export function isSymbol(value: any) {
+export function isSymbol(value: unknown): value is Symbol {
   return typeof value === "symbol";
 }

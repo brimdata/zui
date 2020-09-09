@@ -1,4 +1,3 @@
-
 import moment from "moment";
 
 import { DateTuple } from "../lib/TimeWindow";
@@ -10,7 +9,8 @@ export default function span(args: SpanArgs | Span) {
   let computed = compute();
 
   function computeArg(arg: TimeArg, now: Date = new Date()): Ts {
-    if (isString(arg)) return brim.relTime(arg, now).toTs();else return arg;
+    if (isString(arg)) return brim.relTime(arg, now).toTs();
+    else return arg;
   }
 
   function compute(now: Date = new Date()): Span {
@@ -50,13 +50,13 @@ export default function span(args: SpanArgs | Span) {
       let obj = { yr, mth, wk, day, hr, min, sec, ms };
 
       for (let [unit, amount] of Object.entries(obj)) {
-        if (Number(amount) > 1) return `${parseInt(amount)} ${unit}`;
+        if (Number(amount) > 1) return `${parseInt(amount.toString())} ${unit}`;
       }
       return `${ms} ms`;
     },
     isValid() {
       let [from, to] = this.toDateTuple();
       return to > from;
-    }
+    },
   };
 }

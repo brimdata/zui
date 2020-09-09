@@ -1,5 +1,3 @@
-
-
 import brim from "./";
 
 const NOW = /^\s*now\s*$/i;
@@ -7,13 +5,13 @@ const AGO = /^\s*now\s*-\s*(\d+)\s*([smhdwMy])\s*$/i;
 
 type Op = null | "-";
 type Unit = "s" | "m" | "h" | "d" | "w" | "M" | "y";
-type Ast = {op: Op;amount: number;unit: Unit;};
+type Ast = { op: Op; amount: number; unit: Unit };
 
 export default function relTime(expr: string, now: Date = new Date()) {
   function parse(): Ast {
     if (AGO.test(expr)) {
       let match = expr.match(AGO);
-      // $FlowFixMe
+      // @ts-ignore
       return { op: "-", amount: Number(match[1]), unit: match[2] };
     }
 
@@ -32,7 +30,6 @@ export default function relTime(expr: string, now: Date = new Date()) {
         return time.subtract(ast.amount, ast.unit);
       default:
         return time;
-
     }
   }
 
@@ -58,7 +55,7 @@ export default function relTime(expr: string, now: Date = new Date()) {
       let {
         op,
         amount,
-        unit
+        unit,
       } = parse();
       if (op === null) return "Now";
 
@@ -69,12 +66,12 @@ export default function relTime(expr: string, now: Date = new Date()) {
         d: "day",
         w: "week",
         M: "month",
-        y: "year"
+        y: "year",
       };
       let fullUnit = map[unit] || "?";
       if (amount > 1) fullUnit += "s";
 
       return `${amount} ${fullUnit} ago`;
-    }
+    },
   };
 }
