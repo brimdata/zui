@@ -1,5 +1,3 @@
-
-
 import { existsSync } from "fs";
 import path from "path";
 
@@ -37,8 +35,10 @@ export default ((name: string, idx: number): Application => {
     // means this is something one of my dependencies must fix. Ignore the
     // warnings for now.
     webdriverOptions: {
-      deprecationWarnings: false
-    }
+      deprecationWarnings: false,
+    },
+    path: undefined,
+    args: undefined,
   };
 
   // If we are CI, on a platform whose CI is expected to build releases,
@@ -47,7 +47,9 @@ export default ((name: string, idx: number): Application => {
   if (isCI() && process.platform === "darwin" && existsSync(macInstallPath)) {
     appArgs = { ...appArgs, path: macInstallPath };
     LOG.debug("Chose installed MacOS app location", macInstallPath);
-  } else if (isCI() && process.platform === "linux" && existsSync(linuxInstallPath)) {
+  } else if (
+    isCI() && process.platform === "linux" && existsSync(linuxInstallPath)
+  ) {
     appArgs = { ...appArgs, path: linuxInstallPath };
     LOG.debug("Chose installed Linux app location", linuxInstallPath);
   } else {

@@ -1,5 +1,3 @@
-
-
 // This is needed to use zealot outside a browser.
 global.fetch = require("node-fetch");
 
@@ -30,7 +28,7 @@ describe("Zar tests", () => {
     }
   });
 
-  stdTest(`Brim starts when a Zar space is present`, done => {
+  stdTest(`Brim starts when a Zar space is present`, (done) => {
     appStep.ingestFile(app, "sample.tsv").then(async () => {
       // Use zealot to
       // 1. Create a new space
@@ -47,14 +45,14 @@ describe("Zar tests", () => {
       execSync(`"${ZAR}" import -s 1024B -R "${zarRoot}" "${zngFile}"`);
 
       // Make sure zqd identifies both spaces.
-      retryUntil(() => client.spaces.list(), spaces => spaces.length === 2);
+      retryUntil(() => client.spaces.list(), (spaces) => spaces.length === 2);
 
       // Reload the app so that it reads the new space.
       await appStep.reload(app);
       await appStep.click(app, ".add-tab");
       await app.client.waitForVisible(`=${ZAR_SPACE_NAME}`);
       done();
-    }).catch(err => {
+    }).catch((err) => {
       handleError(app, err, done);
     });
   });
