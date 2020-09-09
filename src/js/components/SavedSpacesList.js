@@ -93,7 +93,7 @@ const SpaceListItem = ({space}: {space: Space}) => {
         href="#"
         onClick={onClick}
         onContextMenu={() => {
-          !s.ingesting() && contextMenu.onClick()
+          !s.ingesting() && contextMenu.open()
         }}
         className={classNames("space-link", {
           "current-space-link": s.id === currentSpaceId
