@@ -1,25 +1,52 @@
+import {createSelector} from "reselect"
 
+import {SearchBarState, SearchTarget} from "./types"
+import {State} from "../types"
+import {TabState} from "../Tab/types"
+import Tabs from "../Tabs"
+import brim from "../../brim"
 
-import { createSelector } from "reselect";
+export const getSearchBar = createSelector<State, TabState, SearchBarState>(
+  Tabs.getActiveTab,
+  (tab) => tab.searchBar
+)
 
-import { SearchBarState, SearchTarget } from "./types";
-import { State } from "../types";
-import { TabState } from "../Tab/types";
-import Tabs from "../Tabs";
-import brim from "../../brim";
+export const getSearchBarInputValue = createSelector<
+  State,
+  SearchBarState,
+  string
+>(getSearchBar, (searchBar) => searchBar.current)
 
-export const getSearchBar = createSelector<State, void, SearchBarState, TabState>(Tabs.getActiveTab, tab => tab.searchBar);
+export const getSearchBarPins = createSelector<State, SearchBarState, string[]>(
+  getSearchBar,
+  (searchBar) => searchBar.pinned
+)
 
-export const getSearchBarInputValue = createSelector<State, void, string, SearchBarState>(getSearchBar, searchBar => searchBar.current);
+export const getSearchBarPreviousInputValue = createSelector<
+  State,
+  SearchBarState,
+  string
+>(getSearchBar, (searchBar) => searchBar.previous)
 
-export const getSearchBarPins = createSelector<State, void, string[], SearchBarState>(getSearchBar, searchBar => searchBar.pinned);
+export const getSearchBarEditingIndex = createSelector<
+  State,
+  SearchBarState,
+  number | null
+>(getSearchBar, (searchBar) => searchBar.editing)
 
-export const getSearchBarPreviousInputValue = createSelector<State, void, string, SearchBarState>(getSearchBar, searchBar => searchBar.previous);
+export const getSearchBarError = createSelector<
+  State,
+  SearchBarState,
+  string | null
+>(getSearchBar, (searchBar) => searchBar.error)
 
-export const getSearchBarEditingIndex = createSelector<State, void, number | null, SearchBarState>(getSearchBar, searchBar => searchBar.editing);
+export const getSearchProgram = createSelector<State, string[], string, string>(
+  getSearchBarPins,
+  getSearchBarPreviousInputValue,
+  (pinned, prev) => brim.program(prev, pinned).string() || "*"
+)
 
-export const getSearchBarError = createSelector<State, void, string | null, SearchBarState>(getSearchBar, searchBar => searchBar.error);
-
-export const getSearchProgram = createSelector<State, void, any, any, any>(getSearchBarPins, getSearchBarPreviousInputValue, (pinned, prev) => brim.program(prev, pinned).string() || "*");
-
-export const getTarget = createSelector<State, void, SearchTarget, SearchBarState>(getSearchBar, state => state.target);
+export const getTarget = createSelector<State, SearchBarState, SearchTarget>(
+  getSearchBar,
+  (state) => state.target
+)

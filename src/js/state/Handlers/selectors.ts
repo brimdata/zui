@@ -1,16 +1,16 @@
-
-
-import { HandlersState, IngestHandler } from "./types";
-import { State } from "../types";
+import {HandlersState, IngestHandler, Handler} from "./types"
+import {State} from "../types"
 
 export default {
   getIngestSpaceIds: (state: State): string[] => {
-    return getIngestHandlers(state).map(i => i.spaceId);
+    return getIngestHandlers(state).map((i) => i.spaceId)
   },
   get: (state: State): HandlersState => state.handlers
-};
+}
 
 function getIngestHandlers(state: State): IngestHandler[] {
-  // $FlowFixMe
-  return Object.values(state.handlers).filter(h => h.type === "INGEST");
+  // @ts-ignore
+  return Object.values(state.handlers).filter(
+    (h: Handler) => h.type === "INGEST"
+  )
 }
