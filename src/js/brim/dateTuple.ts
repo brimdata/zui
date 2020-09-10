@@ -1,11 +1,10 @@
-
-import { DateTuple } from "../lib/TimeWindow";
-import brim from "./";
+import {DateTuple} from "../lib/TimeWindow"
+import brim, {Span} from "./"
 
 export default function dateTuple(dt: DateTuple) {
   return {
-    toSpan() {
-      return [brim.time(dt[0]).toTs(), brim.time(dt[1]).toTs()];
+    toSpan(): Span {
+      return [brim.time(dt[0]).toTs(), brim.time(dt[1]).toTs()]
     }
-  };
+  }
 }

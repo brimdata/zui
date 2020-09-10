@@ -1,11 +1,14 @@
+import {useEffect} from "react"
 
-import { useEffect } from "react";
+import {ipcRenderer, IpcRendererEvent} from "electron"
 
-import { ipcRenderer } from "electron";
-
-export default function useIpcListener(channel: string, func: Function, deps?: any[]) {
+export default function useIpcListener(
+  channel: string,
+  func: (event: IpcRendererEvent, ...args: any[]) => void,
+  deps?: any[]
+) {
   useEffect(() => {
-    ipcRenderer.on(channel, func);
-    return () => ipcRenderer.removeListener(channel, func);
-  }, deps);
+    ipcRenderer.on(channel, func)
+    return () => ipcRenderer.removeListener(channel, func)
+  }, deps)
 }

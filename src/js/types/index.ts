@@ -1,99 +1,110 @@
+import {$Field} from "../brim"
+import {$Menu} from "../electron/menu"
+import {SearchTarget} from "../state/SearchBar/types"
+import {SpanArgs} from "../state/Search/types"
+import {TimeUnit} from "../lib"
+import AppError from "../models/AppError"
+import Log from "../models/Log"
+import {MenuItemConstructorOptions} from "electron"
 
+export type Notification =
+  | AppError
+  | {
+      type: string
+      data: Object
+      key: string
+    }
 
-import { $Field } from "../brim";
-import { $Menu } from "../electron/menu";
-import { SearchTarget } from "../state/SearchBar/types";
-import { SpanArgs } from "../state/Search/types";
-import { TimeUnit } from "../lib";
-import AppError from "../models/AppError";
-import Log from "../models/Log";
-
-export type Notification = AppError | {
-  type: string;
-  data: Object;
-  key: string;
-};
-
-export type Column = {type: string;name: string;};
-export type Descriptor = Column[];
+export type Column = {type: string; name: string}
+export type Descriptor = Column[]
 export type Descriptors = {
-  [key: string]: Descriptor;
-};
-export type Tuple = string[];
-export type Tuples = Tuple[];
-export type TupleSet = {descriptors: Descriptors;tuples: Tuples;};
+  [key: string]: Descriptor
+}
+export type Tuple = string[]
+export type Tuples = Tuple[]
+export type TupleSet = {descriptors: Descriptors; tuples: Tuples}
 
 export type ViewerDimens = {
-  rowHeight: number;
-  rowWidth: number | "auto";
-  viewHeight: number;
-  viewWidth: number;
-  listHeight: number;
-  listWidth: number | "auto";
-};
+  rowHeight: number
+  rowWidth: number | "auto"
+  viewHeight: number
+  viewWidth: number
+  listHeight: number
+  listWidth: number | "auto"
+}
 
-export type RowRenderer = (arg0: number, arg1: ViewerDimens) => any;
+export type RowRenderer = (arg0: number, arg1: ViewerDimens) => any
 
 export type HashCorrelation = {
-  name: "hash" | "tx" | "rx" | "md5";
-  data: {tuples: Tuple[];descriptor: Descriptor;};
-};
+  name: "hash" | "tx" | "rx" | "md5"
+  data: {tuples: Tuple[]; descriptor: Descriptor}
+}
 
 export type UidCorrelation = {
-  name: "uid";
-  data: Tuple[];
-};
+  name: "uid"
+  data: Tuple[]
+}
 
 export type BoomSearchStats = {
-  updateTime: number;
-  startTime: number;
-  bytesMatched: number;
-  bytesRead: number;
-  tuplesMatched: number;
-  tuplesRead: number;
-};
+  updateTime: number
+  startTime: number
+  bytesMatched: number
+  bytesRead: number
+  tuplesMatched: number
+  tuplesRead: number
+}
 
-export type Correlation = HashCorrelation | UidCorrelation;
+export type Correlation = HashCorrelation | UidCorrelation
 export type LogCorrelations = {
-  uid?: Tuple[];
-  md5?: {tuples: Tuple[];descriptor: Descriptor;};
-  tx?: {tuples: Tuple[];descriptor: Descriptor;};
-  rx?: {tuples: Tuple[];descriptor: Descriptor;};
-};
+  uid?: Tuple[]
+  md5?: {tuples: Tuple[]; descriptor: Descriptor}
+  tx?: {tuples: Tuple[]; descriptor: Descriptor}
+  rx?: {tuples: Tuple[]; descriptor: Descriptor}
+}
 
 export type RelatedLogs = {
-  [key: string]: Log[];
-};
+  [key: string]: Log[]
+}
 
-export type RightClickBuilder = (arg0: $Field, arg1: Log, arg2: boolean) => $Menu;
+export type RightClickBuilder = (
+  arg0: $Field,
+  arg1: Log,
+  arg2: boolean
+) => MenuItemConstructorOptions[]
 
 export type Results = {
-  tuples: Tuple[];
-  descriptor: Descriptor;
-};
+  tuples: Tuple[]
+  descriptor: Descriptor
+}
 
 export type Interval = {
-  number: number;
-  unit: LongTimeUnit;
-  roundingUnit: TimeUnit;
-};
+  number: number
+  unit: LongTimeUnit
+  roundingUnit: TimeUnit
+}
 
-export type LongTimeUnit = "millisecond" | "second" | "minute" | "hour" | "day" | "month";
+export type LongTimeUnit =
+  | "millisecond"
+  | "second"
+  | "minute"
+  | "hour"
+  | "day"
+  | "month"
 
 export type ScrollPosition = {
-  x: number;
-  y: number;
-};
+  x: number
+  y: number
+}
 
 export type SearchRecord = {
-  program: string;
-  pins: string[];
-  spanArgs: SpanArgs;
-  spaceId: string;
-  spaceName: string;
-  scrollPos?: ScrollPosition;
-  target: SearchTarget;
-};
+  program: string
+  pins: string[]
+  spanArgs: SpanArgs
+  spaceId: string
+  spaceName: string
+  scrollPos?: ScrollPosition
+  target: SearchTarget
+}
 
-type _ReturnType<B, _F extends (...args: any[]) => B> = B;
-export type ReturnType<F> = _ReturnType<any, F>;
+type _ReturnType<B, _F extends (...args: any[]) => B> = B
+export type ReturnType<F> = _ReturnType<any, F>

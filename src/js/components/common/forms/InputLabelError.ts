@@ -1,11 +1,8 @@
+import styled from "styled-components"
 
-import styled from "styled-components";
-
-import { Styled } from "../../../types/styled";
-
-const InputLabelError: Styled<> = styled.span`
+const InputLabelError = styled.span`
   color: var(--red);
   font-weight: 400;
-`;
+`
 
-export default InputLabelError;
+export default InputLabelError

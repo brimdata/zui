@@ -1,100 +1,110 @@
-import moment from "moment-timezone";
-import bigInt from "big-integer";
+import moment from "moment-timezone"
+import bigInt from "big-integer"
 
-import { DateTuple } from "../lib/TimeWindow";
-import { TimeUnit } from "../lib";
-import { isDate } from "../lib/is";
-import brim, { Ts } from "./";
+import {DateTuple} from "../lib/TimeWindow"
+import {TimeUnit} from "../lib"
+import {isDate} from "../lib/is"
+import brim, {Ts, Span} from "./"
 
 function time(val: Ts | Date = new Date()) {
-  let ts = isDate(val) ? dateToTs(val) : val;
+  const ts = isDate(val) ? dateToTs(val) : val
 
   return {
     toDate(): Date {
-      return new Date((ts.sec + ts.ns / 1e9) * 1e3);
+      return new Date((ts.sec + ts.ns / 1e9) * 1e3)
     },
 
     toFracSec() {
-      return ts.sec + ts.ns / 1e9;
+      return ts.sec + ts.ns / 1e9
     },
 
     toTs(): Ts {
-      return ts;
+      return ts
     },
 
     toBigInt(): bigInt.BigInteger {
-      return bigInt(ts.sec).times(1e9).plus(ts.ns);
+      return bigInt(ts.sec)
+        .times(1e9)
+        .plus(ts.ns)
     },
 
     add(amount: number, unit: TimeUnit) {
-      let ts = dateToTs(moment(this.toDate()).add(amount, unit).toDate());
-      return brim.time(ts);
+      const ts = dateToTs(
+        moment(this.toDate())
+          .add(amount, unit)
+          .toDate()
+      )
+      return brim.time(ts)
     },
 
     subtract(amount: number, unit: TimeUnit) {
-      let ts = dateToTs(moment(this.toDate()).subtract(amount, unit).toDate());
-      return brim.time(ts);
+      const ts = dateToTs(
+        moment(this.toDate())
+          .subtract(amount, unit)
+          .toDate()
+      )
+      return brim.time(ts)
     },
 
     addTs(dur: Ts) {
-      let added = this.toBigInt().add(time(dur).toBigInt());
-      return brim.time(fromBigInt(added));
+      const added = this.toBigInt().add(time(dur).toBigInt())
+      return brim.time(fromBigInt(added))
     },
 
     subTs(diff: Ts) {
-      let dur = this.toBigInt().minus(time(diff).toBigInt());
-      return brim.time(fromBigInt(dur));
+      const dur = this.toBigInt().minus(time(diff).toBigInt())
+      return brim.time(fromBigInt(dur))
     },
 
     format(fmt?: string) {
-      return moment(this.toDate()).format(fmt);
-    },
-  };
+      return moment(this.toDate()).format(fmt)
+    }
+  }
 }
 
 function fromBigInt(i: bigInt.BigInteger): Ts {
-  let sec = i.over(1e9);
-  let ns = i.minus(sec.times(1e9));
-  return { sec: sec.toJSNumber(), ns: ns.toJSNumber() };
+  const sec = i.over(1e9)
+  const ns = i.minus(sec.times(1e9))
+  return {sec: sec.toJSNumber(), ns: ns.toJSNumber()}
 }
 
 function dateToTs(date: Date): Ts {
-  let ms = date.getTime();
-  let secFloat = ms / 1000;
-  let sec = Math.floor(secFloat);
-  let ns = +(secFloat - sec).toFixed(3) * 1e9;
+  const ms = date.getTime()
+  const secFloat = ms / 1000
+  const sec = Math.floor(secFloat)
+  const ns = +(secFloat - sec).toFixed(3) * 1e9
   return {
     sec,
-    ns,
-  };
+    ns
+  }
 }
 
-time.setZone = function (name: string) {
-  moment.tz.setDefault(name);
-};
+time.setZone = function(name: string) {
+  moment.tz.setDefault(name)
+}
 
-time.getZoneNames = function () {
-  return moment.tz.names();
-};
+time.getZoneNames = function() {
+  return moment.tz.names()
+}
 
-time.setDefaultFormat = function (format = "") {
+time.setDefaultFormat = function(format = "") {
   if (format) {
-    moment.defaultFormat = format;
-    moment.defaultFormatUtc = format;
+    moment.defaultFormat = format
+    moment.defaultFormatUtc = format
   } else {
-    moment.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ";
-    moment.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]";
+    moment.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ"
+    moment.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]"
   }
-};
+}
 
 // Remove or move this later
-time.convertToSpan = function (tw: DateTuple | null | undefined) {
+time.convertToSpan = function(tw: DateTuple | null | undefined): Span | null {
   if (tw) {
-    let [from, to] = tw;
-    return [brim.time(from).toTs(), brim.time(to).toTs()];
+    const [from, to] = tw
+    return [brim.time(from).toTs(), brim.time(to).toTs()]
   } else {
-    return null;
+    return null
   }
-};
+}
 
-export default time;
+export default time

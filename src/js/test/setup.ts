@@ -1,29 +1,26 @@
+require("regenerator-runtime/runtime")
 
+import initDOM from "../initializers/initDOM"
 
-require("regenerator-runtime/runtime");
+const Adapter = require("enzyme-adapter-react-16")
+const enzyme = require("enzyme")
 
-import initDOM from "../initializers/initDOM";
-
-const Adapter = require("enzyme-adapter-react-16");
-const enzyme = require("enzyme");
-
-jest.mock("electron", function () {
+jest.mock("electron", function() {
   class FakeBrowserWindow {
-
-    webContents: {send: any;};
+    webContents: {send: any}
     constructor() {
-      this.webContents = { send: jest.fn() };
+      this.webContents = {send: jest.fn()}
     }
     center() {}
     setMenu() {}
     on() {
-      return this;
+      return this
     }
     loadFile() {}
     setSize() {}
   }
 
-  let electron = {
+  const electron = {
     app: {
       isPackaged: true,
       getName: () => "TestApp",
@@ -48,19 +45,18 @@ jest.mock("electron", function () {
       on: jest.fn(),
       invoke: () => Promise.resolve()
     }
-  };
+  }
 
-  return { ...electron, remote: electron };
-});
+  return {...electron, remote: electron}
+})
 
-global.DOMRectReadOnly = class DOMRectReadOnly {};
+global.DOMRectReadOnly = class DOMRectReadOnly {}
 global.ResizeObserver = class ResizeObserver {
-
   observe() {}
   disconnect() {}
-};
-global.SVGElement.prototype.getTotalLength = () => 0;
-enzyme.configure({ adapter: new Adapter() });
+}
+global.SVGElement.prototype.getTotalLength = () => 0
+enzyme.configure({adapter: new Adapter()})
 
-document.execCommand = jest.fn();
-initDOM();
+document.execCommand = jest.fn()
+initDOM()

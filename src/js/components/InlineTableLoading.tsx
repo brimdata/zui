@@ -1,17 +1,13 @@
-
-
-import React from "react";
+import React from "react"
 
 type Props = {
-  rows: number;
-  title?: string;
-};
+  rows: number
+  title?: string
+}
 
-const InlineTableLoading = ({
-  rows,
-  title = "Loading.."
-}: Props) => {
-  return <div className="inline-table inline-table-loading">
+const InlineTableLoading = ({rows, title = "Loading.."}: Props) => {
+  return (
+    <div className="inline-table inline-table-loading">
       <table>
         <thead>
           <tr>
@@ -19,12 +15,17 @@ const InlineTableLoading = ({
           </tr>
         </thead>
         <tbody>
-          {Array(rows).fill().map((_, index) => <tr key={index}>
+          {Array(rows)
+            .fill(0)
+            .map((_, index) => (
+              <tr key={index}>
                 <td />
-              </tr>)}
+              </tr>
+            ))}
         </tbody>
       </table>
-    </div>;
-};
+    </div>
+  )
+}
 
-export default InlineTableLoading;
+export default InlineTableLoading

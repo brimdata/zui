@@ -1,12 +1,11 @@
-
-import { State } from "../types";
+import {State} from "../types"
 
 export default {
   getName(state: State) {
-    return state.modal.name;
+    return state.modal.name
   },
 
-  getArgs(state: State) {
-    return state.modal.args;
+  getArgs(state: State): any {
+    return state.modal.args
   }
-};
+}

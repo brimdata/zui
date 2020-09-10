@@ -1,40 +1,49 @@
+import React, {ChangeEvent, MouseEvent} from "react"
+import classNames from "classnames"
 
-import React from "react";
-import classNames from "classnames";
-
-import { reactElementProps } from "../test/integration";
-import Folder from "../icons/Folder";
-import PcapFileIcon from "../icons/PcapFileIcon";
-import ToolbarButton from "./Toolbar/Button";
-import ZeekFileIcon from "../icons/ZeekFileIcon";
-import useCallbackRef from "./hooks/useCallbackRef";
-import useDropzone from "./hooks/useDropzone";
+import {reactElementProps} from "../test/integration"
+import Folder from "../icons/Folder"
+import PcapFileIcon from "../icons/PcapFileIcon"
+import ToolbarButton from "./Toolbar/Button"
+import ZeekFileIcon from "../icons/ZeekFileIcon"
+import useCallbackRef from "./hooks/useCallbackRef"
+import useDropzone from "./hooks/useDropzone"
 
 type Props = {
-  onChange: (e: Event, arg1: string[]) => void;
-};
+  onChange: (e, arg1: string[]) => void
+}
 
-export default function LoadFilesInput({
-  onChange
-}: Props) {
-  let [input, setInput] = useCallbackRef();
+export default function LoadFilesInput({onChange}: Props) {
+  let [input, setInput] = useCallbackRef()
 
-  let [bindDropzone, dragging] = useDropzone(e => {
-    let paths = Array.from(e.dataTransfer.files).map(f => f.path);
-    onChange(e, paths);
-  });
+  let [bindDropzone, dragging] = useDropzone((e: DragEvent) => {
+    let paths = Array.from(e.dataTransfer.files).map((f) => f.path)
+    onChange(e, paths)
+  })
 
-  function _onChange(e) {
-    let paths = Array.from(e.target.files).map(f => f.path);
-    onChange(e, paths);
+  function _onChange(e: ChangeEvent<HTMLInputElement>) {
+    let paths = Array.from(e.target.files).map((f) => f.path)
+    onChange(e, paths)
   }
 
-  function openDialog() {
-    if (input) input.click();
+  function openDialog(_: MouseEvent) {
+    if (input) input.click()
   }
 
-  return <div className={classNames("load-files-input", { dragging })} {...bindDropzone()}>
-      <input tabIndex="-1" ref={setInput} type="file" multiple title="" onChange={_onChange} {...reactElementProps("ingestFilesInput")} />
+  return (
+    <div
+      className={classNames("load-files-input", {dragging})}
+      {...bindDropzone()}
+    >
+      <input
+        tabIndex={-1}
+        ref={setInput}
+        type="file"
+        multiple
+        title=""
+        onChange={_onChange}
+        {...reactElementProps("ingestFilesInput")}
+      />
       <div className="radiation">
         <div />
         <div />
@@ -42,7 +51,11 @@ export default function LoadFilesInput({
       </div>
       <div className="content">
         <div className="controls">
-          <ToolbarButton text="Choose Files" onClick={openDialog} {...reactElementProps("ingestFilesButton")} />
+          <ToolbarButton
+            text="Choose Files"
+            onClick={openDialog}
+            {...reactElementProps("ingestFilesButton")}
+          />
           <p>Or drag & drop them here.</p>
         </div>
         <div className="file-types">
@@ -59,5 +72,6 @@ export default function LoadFilesInput({
           <Folder /> Drop to import...
         </p>
       </div>
-    </div>;
+    </div>
+  )
 }

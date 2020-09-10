@@ -1,29 +1,32 @@
+import {useDispatch} from "react-redux"
+import React from "react"
 
-import { useDispatch } from "react-redux";
-import React from "react";
-
-import ErrorFactory from "../models/ErrorFactory";
-import Link from "./common/Link";
-import LoadFilesInput from "./LoadFilesInput";
-import Notice from "../state/Notice";
-import errors from "../errors";
-import ingestFiles from "../flows/ingestFiles";
-import refreshSpaceNames from "../flows/refreshSpaceNames";
+import ErrorFactory from "../models/ErrorFactory"
+import Link from "./common/Link"
+import LoadFilesInput from "./LoadFilesInput"
+import Notice from "../state/Notice"
+import errors from "../errors"
+import ingestFiles from "../flows/ingestFiles"
+import refreshSpaceNames from "../flows/refreshSpaceNames"
+import {AppDispatch} from "../state/types"
 
 export default function TabImport() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>()
 
   function onChange(_e, files) {
-    if (!files.length) return;
-    dispatch(ingestFiles(files)).catch(e => {
-      ;/(Failed to fetch)|(network error)/.test(e.cause.message) ? dispatch(Notice.set(errors.importInterrupt())) : dispatch(Notice.set(ErrorFactory.create(e.cause)));
+    if (!files.length) return
+    dispatch(ingestFiles(files)).catch((e) => {
+      ;/(Failed to fetch)|(network error)/.test(e.cause.message)
+        ? dispatch(Notice.set(errors.importInterrupt()))
+        : dispatch(Notice.set(ErrorFactory.create(e.cause)))
 
-      dispatch(refreshSpaceNames());
-      console.error(e.message);
-    });
+      dispatch(refreshSpaceNames())
+      console.error(e.message)
+    })
   }
 
-  return <div className="input-methods">
+  return (
+    <div className="input-methods">
       <section>
         <h2>Import Files</h2>
         <LoadFilesInput onChange={onChange} />
@@ -45,5 +48,6 @@ export default function TabImport() {
           </p>
         </footer>
       </section>
-    </div>;
+    </div>
+  )
 }

@@ -1,17 +1,15 @@
+import {darken} from "polished"
+import styled from "styled-components"
 
-import { darken } from "polished";
-import styled from "styled-components";
+import {cssVar} from "../../../lib/cssVar"
 
-import { Styled } from "../../../types/styled";
-import { cssVar } from "../../../lib/cssVar";
+const bg = cssVar("--havelock", "blue")
+const bgGradient = darken(0.04, bg)
+const bgBorder = darken(0.1, bg)
+const bgActive = darken(0.08, bg)
 
-const bg = cssVar("--havelock", "blue");
-const bgGradient = darken(0.04, bg);
-const bgBorder = darken(0.1, bg);
-const bgActive = darken(0.08, bg);
-
-const PrimaryButton: Styled<> = styled.button`
-  ${props => props.theme.typography.labelNormal};
+const PrimaryButton = styled.button`
+  ${(props) => props.theme.typography.labelNormal};
   color: white;
   background: linear-gradient(${bg}, ${bgGradient});
   border: none;
@@ -29,6 +27,6 @@ const PrimaryButton: Styled<> = styled.button`
     background: ${bgActive};
     box-shadow: none;
   }
-`;
+`
 
-export default PrimaryButton;
+export default PrimaryButton

@@ -1,8 +1,7 @@
+import React, {ComponentType} from "react"
+import styled from "styled-components"
 
-import React, { Node, ComponentType } from "react";
-import styled from "styled-components";
-
-const EmptyWrapper = (styled.div`
+const EmptyWrapper = styled.div`
   display: flex;
   min-width: 100%;
   flex-direction: column;
@@ -11,30 +10,29 @@ const EmptyWrapper = (styled.div`
   user-select: none;
 
   svg {
-    fill: ${props => props.theme.colors.cloudy};
+    fill: ${(props) => props.theme.colors.cloudy};
   }
 
   p {
-    ${props => props.theme.typography.labelSmall};
-    color: ${props => props.theme.colors.slate};
+    ${(props) => props.theme.typography.labelSmall};
+    color: ${(props) => props.theme.colors.slate};
     text-align: center;
     margin: 16px 14px 0;
   }
-` as ComponentType<any>);
+` as ComponentType<any>
 
 type EmptySectionProps = {
-  icon: Node;
-  message: string;
-};
+  icon: any
+  message: string
+}
 
-const EmptySection = ({
-  icon,
-  message
-}: EmptySectionProps) => {
-  return <EmptyWrapper>
+const EmptySection = ({icon, message}: EmptySectionProps) => {
+  return (
+    <EmptyWrapper>
       {icon}
       <p>{message}</p>
-    </EmptyWrapper>;
-};
+    </EmptyWrapper>
+  )
+}
 
-export default EmptySection;
+export default EmptySection

@@ -1,19 +1,17 @@
+import React from "react"
+import classNames from "classnames"
 
-
-import React from "react";
-import classNames from "classnames";
-
-import X from "./icons/x-md.svg";
+import X from "./icons/x-md.svg"
 
 type Props = {
-  light?: boolean;
-};
+  light?: boolean
+  [key: string]: any
+}
 
-const CloseButton = ({
-  light,
-  ...rest
-}: Props) => <button {...rest} className={classNames("close-button", { light })}>
+const CloseButton = ({light, ...rest}: Props) => (
+  <button {...rest} className={classNames("close-button", {light})}>
     <X />
-  </button>;
+  </button>
+)
 
-export default CloseButton;
+export default CloseButton

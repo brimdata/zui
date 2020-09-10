@@ -1,5 +1,3 @@
-
-
 import { Interval } from "../../types";
 
 export type DateSpan = [Date, Date];
@@ -27,9 +25,13 @@ type HistogramState = {
 };
 
 export type HistogramData = {
-  points: {ts: Date;paths: {
+  points: {
+    ts: Date;
+    paths: {
       [key: string]: number;
-    };count: number;}[];
+    };
+    count: number;
+  }[];
   keys: string[];
   interval: Interval;
   span: DateSpan;
@@ -41,8 +43,8 @@ export type HistogramChart = {
   margins: Margins;
   data: HistogramData;
   state: HistogramState;
-  yScale: Function;
-  xScale: Function;
+  yScale: d3.ScaleLinear<any, any>;
+  xScale: d3.ScaleTime<any, any>;
   pens: Pen[];
 };
 

@@ -1,14 +1,11 @@
+import {useSelector} from "react-redux"
+import React from "react"
+import styled from "styled-components"
 
+import SearchBar from "../../state/SearchBar"
+import Warning from "../icons/warning-sm.svg"
 
-import { useSelector } from "react-redux";
-import React from "react";
-import styled from "styled-components";
-
-import { Styled } from "../../types/styled";
-import SearchBar from "../../state/SearchBar";
-import Warning from "../icons/warning-sm.svg";
-
-const Wrap: Styled<> = styled.div`
+const Wrap = styled.div`
   display: flex;
   align-items: center;
   color: white;
@@ -25,15 +22,17 @@ const Wrap: Styled<> = styled.div`
     width: 16px;
     margin-right: 12px;
   }
-`;
+`
 
 export default function Error() {
-  const error = useSelector(SearchBar.getSearchBarError);
-  if (!error) return null;
-  return <Wrap>
+  const error = useSelector(SearchBar.getSearchBarError)
+  if (!error) return null
+  return (
+    <Wrap>
       <div className="warning-icon">
         <Warning />
       </div>
       <span>{error}</span>
-    </Wrap>;
+    </Wrap>
+  )
 }

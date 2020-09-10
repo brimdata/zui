@@ -1,14 +1,13 @@
+import {useCallback, useState} from "react"
 
-import { useCallback, useState } from "react";
+export default function useCallbackRef() {
+  const [node, setNode] = useState(null)
 
-export default function useCallbackRef<T>(): [T | null, Function] {
-  let [node, setNode] = useState<T | null>(null);
-
-  let cb = useCallback((node: T | null) => {
+  const cb = useCallback((node) => {
     if (node !== null) {
-      setNode(node);
+      setNode(node)
     }
-  });
+  }, [])
 
-  return [node, cb];
+  return [node, cb]
 }

@@ -1,93 +1,108 @@
+import {connect} from "react-redux"
+import React from "react"
+import classNames from "classnames"
+import * as d3 from "d3"
+import isEqual from "lodash/isEqual"
 
-
-import { connect } from "react-redux";
-import React from "react";
-import classNames from "classnames";
-import * as d3 from "d3";
-import isEqual from "lodash/isEqual";
-
-import { DispatchProps } from "../state/types";
-import { UID_CORRELATION_LIMIT } from "../searches/programs";
-import { submitSearch } from "../flows/submitSearch/mod";
-import { viewLogDetail } from "../flows/viewLogDetail";
-import Log from "../models/Log";
-import SearchBar from "../state/SearchBar";
-import brim from "../brim";
-import dispatchToProps from "../lib/dispatchToProps";
+import {DispatchProps} from "../state/types"
+import {UID_CORRELATION_LIMIT} from "../searches/programs"
+import {submitSearch} from "../flows/submitSearch/mod"
+import {viewLogDetail} from "../flows/viewLogDetail"
+import Log from "../models/Log"
+import SearchBar from "../state/SearchBar"
+import brim from "../brim"
+import dispatchToProps from "../lib/dispatchToProps"
 
 type OwnProps = {
-  logs: Log[];
-  log: Log;
-};
+  logs: Log[]
+  log: Log
+}
 
-type Props = DispatchProps & OwnProps;
+type Props = DispatchProps & OwnProps
 
-export default function UidTimeline({
-  logs,
-  log,
-  dispatch
-}: Props) {
-  if (logs.length === 0) return null;
+export default function UidTimeline({logs, log, dispatch}: Props) {
+  if (logs.length === 0) return null
 
-  let xScale = createScale(logs);
+  let xScale = createScale(logs)
 
   function queryForAll() {
-    dispatch(SearchBar.clearSearchBar());
-    dispatch(SearchBar.changeSearchBarInput(log.correlationId()));
-    dispatch(submitSearch());
+    dispatch(SearchBar.clearSearchBar())
+    dispatch(SearchBar.changeSearchBarInput(log.correlationId()))
+    dispatch(submitSearch())
   }
 
-  return <div className="uid-waterfall">
-      {logs.map((currLog, i) => <PathRow key={i} log={currLog} current={isEqual(currLog, log)} position={xScale(currLog.cast("ts"))} onClick={() => dispatch(viewLogDetail(currLog))} />)}
+  return (
+    <div className="uid-waterfall">
+      {logs.map((currLog, i) => (
+        <PathRow
+          key={i}
+          log={currLog}
+          current={isEqual(currLog, log)}
+          position={xScale(currLog.cast("ts") as Date)}
+          onClick={() => dispatch(viewLogDetail(currLog))}
+        />
+      ))}
       <div className="caption">
         <p className="data-label">{captionText(logs, queryForAll)}</p>
       </div>
-    </div>;
+    </div>
+  )
 }
 
 function createScale(logs) {
-  let tss = [];
+  let tss = []
 
   for (let log of logs) {
-    tss.push(log.cast("ts"));
+    tss.push(log.cast("ts"))
   }
 
-  let [start, end] = d3.extent(tss);
-  if (start === end) end = brim.time(start).add(1, "ms").toDate();
+  let [start, end] = d3.extent(tss)
+  if (start === end)
+    end = brim
+      .time(start)
+      .add(1, "ms")
+      .toDate()
 
-  return d3.scaleTime().domain([start, end]).range([0, 100]);
+  return d3
+    .scaleTime()
+    .domain([start, end])
+    .range([0, 100])
 }
 
-function PathRow({
-  log,
-  current,
-  position,
-  ...rest
-}) {
-  let ts = log.cast("ts");
-  let path = log.getString("_path");
-  return <div className="waterfall-row" {...rest}>
+function PathRow({log, current, position, ...rest}) {
+  let ts = log.cast("ts")
+  let path = log.getString("_path")
+  return (
+    <div className="waterfall-row" {...rest}>
       <div className="data-label">{brim.time(ts).format("HH:mm:ss.SSS")}</div>
       <div className="slider">
         <div className="line" />
-        <span className={classNames("path-tag", `${path}-bg-color`, { current })} style={{ left: position + "%" }}>
+        <span
+          className={classNames("path-tag", `${path}-bg-color`, {current})}
+          style={{left: position + "%"}}
+        >
           {path}
         </span>
       </div>
-    </div>;
+    </div>
+  )
 }
 
 function captionText(logs: Log[], queryForAll) {
-  let limit = logs.length === UID_CORRELATION_LIMIT;
-  let conn = logs.find(l => l.getString("_path") === "conn");
+  let limit = logs.length === UID_CORRELATION_LIMIT
+  let conn = logs.find((l) => l.getString("_path") === "conn")
 
-  if (limit) return <>
+  if (limit)
+    return (
+      <>
         Limited to 100 events. <a onClick={queryForAll}>Query for all.</a>
-      </>;else if (conn) {
-    return `Duration: ${conn.cast("duration") || 0}s`;
+      </>
+    )
+  else if (conn) {
+    return `Duration: ${conn.cast("duration") || 0}s`
   } else {
-    return "Duration: 0s (No conn log)";
+    return "Duration: 0s (No conn log)"
   }
 }
 
-export const XUidTimeline = connect<Props, OwnProps, _, DispatchProps, _, _>(null, dispatchToProps)(UidTimeline);
+export const XUidTimeline = connect(null, dispatchToProps)(UidTimeline)

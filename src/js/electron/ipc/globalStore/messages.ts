@@ -1,12 +1,11 @@
-
-import { GlobalStoreDispatchMsg, GlobalStoreInitMsg } from "../types";
+import {GlobalStoreDispatchMsg, GlobalStoreInitMsg} from "../types"
 
 export default {
   init: (): GlobalStoreInitMsg => ({
     channel: "globalStore:init"
   }),
-  dispatch: (action: any): GlobalStoreDispatchMsg => ({
+  dispatch: (action: object): GlobalStoreDispatchMsg => ({
     channel: "globalStore:dispatch",
     action
   })
-};
+}

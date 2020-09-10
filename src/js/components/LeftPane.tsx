@@ -1,29 +1,29 @@
+import {useDispatch, useSelector} from "react-redux"
+import React, {useRef, HTMLProps} from "react"
+import styled from "styled-components"
 
+import {XLeftPaneExpander} from "./LeftPaneExpander"
+import AddSpaceButton from "./AddSpaceButton"
+import ClusterPicker from "./ClusterPicker"
+import Current from "../state/Current"
+import DropdownArrow from "../icons/DropdownArrow"
+import FilterTree from "./FilterTree"
+import InvestigationLinear from "./Investigation/InvestigationLinear"
+import Layout from "../state/Layout"
+import Pane from "./Pane"
+import SavedSpacesList from "./SavedSpacesList"
+import Spaces from "../state/Spaces"
+import menu from "../electron/menu"
+import useDrag from "./hooks/useDrag"
+import usePopupMenu from "./hooks/usePopupMenu"
 
-import { useDispatch, useSelector } from "react-redux";
-import React, { useRef } from "react";
-import styled from "styled-components";
-
-import { XLeftPaneExpander } from "./LeftPaneExpander";
-import AddSpaceButton from "./AddSpaceButton";
-import ClusterPicker from "./ClusterPicker";
-import Current from "../state/Current";
-import DropdownArrow from "../icons/DropdownArrow";
-import FilterTree from "./FilterTree";
-import InvestigationLinear from "./Investigation/InvestigationLinear";
-import Layout from "../state/Layout";
-import Pane from "./Pane";
-import SavedSpacesList from "./SavedSpacesList";
-import Spaces from "../state/Spaces";
-import menu from "../electron/menu";
-import useDrag from "./hooks/useDrag";
-import usePopupMenu from "./hooks/usePopupMenu";
-
-const Arrow = props => {
-  return <svg className={props.className} onClick={props.onClick} viewBox="0 0 8 8">
+const Arrow = (props) => {
+  return (
+    <svg className={props.className} onClick={props.onClick} viewBox="0 0 8 8">
       <polygon points="0 0 8 4 0 8" />
-    </svg>;
-};
+    </svg>
+  )
+}
 
 const StyledSection = styled.section`
   overflow: hidden;
@@ -32,13 +32,13 @@ const StyledSection = styled.section`
   flex-basis: 0%;
   flex-shrink: 1;
   padding-bottom: 24px;
-`;
+`
 
-const SectionContents = styled.div`
+const SectionContents = styled.div<{show: boolean}>`
   height: 100%;
-  display: ${props => props.show ? "block" : "none"};
+  display: ${(props) => (props.show ? "block" : "none")};
   overflow-y: auto;
-`;
+`
 
 const SectionHeader = styled.div`
   display: flex;
@@ -66,14 +66,14 @@ const SectionHeader = styled.div`
     bottom: 0;
     box-shadow: inset 0 -0.5px 0 0 var(--cloudy);
   }
-`;
+`
 
 const Title = styled.label`
   margin-left: 8px;
   line-height: 24px;
 
-  ${props => props.theme.typography.headingList}
-`;
+  ${(props) => props.theme.typography.headingList}
+`
 
 const StyledArrow = styled(Arrow)`
   fill: var(--aqua);
@@ -81,18 +81,18 @@ const StyledArrow = styled(Arrow)`
   width: 8px;
   height: 8px;
   margin-left: 12px;
-  transform: ${props => props.show ? `rotate(90deg)` : ""};
+  transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
   transition: transform 150ms;
-`;
+`
 
 const ClickRegion = styled.div`
   display: flex;
   align-items: center;
-`;
+`
 
 const StyledViewSelect = styled.div`
-  ${props => props.theme.typography.labelSmall}
-  ${props => props.theme.hoverQuiet}
+  ${(props) => props.theme.typography.labelSmall}
+  ${(props) => props.theme.hoverQuiet}
   display: flex;
   margin-left: auto;
   margin-right: 8px;
@@ -111,9 +111,9 @@ const StyledViewSelect = styled.div`
     height: 8px;
     width: 8px;
   }
-`;
+`
 
-const DragAnchor = styled.div`
+const DragAnchor = styled.div<HTMLProps<HTMLDivElement>>`
   position: absolute;
   background: transparent;
   pointer-events: all !important;
@@ -122,98 +122,106 @@ const DragAnchor = styled.div`
   bottom: -4px;
   top: unset;
   cursor: row-resize;
-`;
+`
 
 const ViewSelect = () => {
-  const dispatch = useDispatch();
-  const currentView = useSelector(Layout.getInvestigationView);
+  const dispatch = useDispatch()
+  const currentView = useSelector(Layout.getInvestigationView)
 
-  const menu = usePopupMenu([{
-    label: "Linear",
-    click: () => dispatch(Layout.setInvestigationView("linear"))
-  }, {
-    label: "Tree",
-    click: () => dispatch(Layout.setInvestigationView("tree"))
-  }]);
+  const menu = usePopupMenu([
+    {
+      label: "Linear",
+      click: () => dispatch(Layout.setInvestigationView("linear"))
+    },
+    {
+      label: "Tree",
+      click: () => dispatch(Layout.setInvestigationView("tree"))
+    }
+  ])
 
-  return <StyledViewSelect onClick={menu.onClick}>
+  return (
+    <StyledViewSelect onClick={menu.onClick}>
       {currentView}
       <DropdownArrow />
-    </StyledViewSelect>;
-};
+    </StyledViewSelect>
+  )
+}
 
-function InvestigationView({
-  view
-}) {
+function InvestigationView({view}) {
   switch (view) {
     case "tree":
-      return <InvestigationTree />;
+      return <InvestigationTree />
     case "linear":
-      return <InvestigationLinear />;
+      return <InvestigationLinear />
     default:
-      return null;
-
+      return null
   }
 }
 
 function InvestigationTree() {
-  return <FilterTree />;
+  return <FilterTree />
 }
 
 export function LeftPane() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const view = useSelector(Layout.getInvestigationView);
-  const isOpen = useSelector(Layout.getLeftSidebarIsOpen);
-  const width = useSelector(Layout.getLeftSidebarWidth);
-  const id = useSelector(Current.getConnectionId);
-  const spaces = useSelector(Spaces.getSpaces(id));
-  const spaceContextMenu = menu.spaceContextMenu(id);
+  const view = useSelector(Layout.getInvestigationView)
+  const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
+  const width = useSelector(Layout.getLeftSidebarWidth)
+  const id = useSelector(Current.getConnectionId)
+  const spaces = useSelector(Spaces.getSpaces(id))
+  const spaceContextMenu = menu.spaceContextMenu(id)
 
-  const showHistory = useSelector(Layout.getHistoryIsOpen);
-  const showSpaces = useSelector(Layout.getSpacesIsOpen);
-  const historyHeight = useSelector(Layout.getHistoryHeight);
-  const spacesHeight = useSelector(Layout.getSpacesHeight);
+  const showHistory = useSelector(Layout.getHistoryIsOpen)
+  const showSpaces = useSelector(Layout.getSpacesIsOpen)
+  const historyHeight = useSelector(Layout.getHistoryHeight)
+  const spacesHeight = useSelector(Layout.getSpacesHeight)
 
-  const paneRef = useRef();
-  const paneHeight = useRef(0);
+  const paneRef = useRef<HTMLDivElement>()
+  const paneHeight = useRef(0)
 
-  if (!id) return null;
+  if (!id) return null
 
   function onDragPane(e: MouseEvent) {
-    const width = e.clientX;
-    const max = global.innerWidth;
-    dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)));
+    const width = e.clientX
+    const max = window.innerWidth
+    dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
   }
 
-  function onDragSpaces({
-    dy,
-    type
-  }) {
-    let newSpacesHeight;
+  function onDragSpaces({dy, type}) {
+    let newSpacesHeight
     switch (type) {
       case "down":
-        document.body && (document.body.style.cursor = "row-resize");
-        paneHeight.current = paneRef.current ? paneRef.current.getBoundingClientRect().height : 0;
-        break;
+        document.body && (document.body.style.cursor = "row-resize")
+        paneHeight.current = paneRef.current
+          ? paneRef.current.getBoundingClientRect().height
+          : 0
+        break
       case "move":
-        newSpacesHeight = spacesHeight + dy / (paneHeight.current / 2);
-        dispatch(Layout.setSpacesHeight(newSpacesHeight));
-        dispatch(Layout.setHistoryHeight(2 - newSpacesHeight));
-        break;
+        newSpacesHeight = spacesHeight + dy / (paneHeight.current / 2)
+        dispatch(Layout.setSpacesHeight(newSpacesHeight))
+        dispatch(Layout.setHistoryHeight(2 - newSpacesHeight))
+        break
       case "up":
-        document.body && (document.body.style.cursor = "");
-
+        document.body && (document.body.style.cursor = "")
     }
   }
 
-  const dragFunc = useDrag(onDragSpaces);
+  const dragFunc = useDrag(onDragSpaces)
 
-  if (!isOpen) return <XLeftPaneExpander />;
+  if (!isOpen) return <XLeftPaneExpander />
 
-  return <Pane isOpen={isOpen} position="left" width={width} ref={paneRef} onDrag={onDragPane} className="history-pane">
+  return (
+    <Pane
+      isOpen={isOpen}
+      position="left"
+      width={width}
+      ref={paneRef}
+      onDrag={onDragPane}
+      className="history-pane"
+    >
       <ClusterPicker />
-      <StyledSection style={{ flexGrow: showSpaces ? spacesHeight : 0 }}>
+      <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
         <SectionHeader>
           <ClickRegion onClick={() => dispatch(Layout.toggleSpaces())}>
             <StyledArrow show={showSpaces} />
@@ -222,11 +230,14 @@ export function LeftPane() {
           <AddSpaceButton />
         </SectionHeader>
         <SectionContents show={showSpaces}>
-          <SavedSpacesList spaces={spaces} spaceContextMenu={spaceContextMenu} />
+          <SavedSpacesList
+            spaces={spaces}
+            spaceContextMenu={spaceContextMenu}
+          />
         </SectionContents>
         {showSpaces && <DragAnchor {...dragFunc()} />}
       </StyledSection>
-      <StyledSection style={{ flexGrow: historyHeight }}>
+      <StyledSection style={{flexGrow: historyHeight}}>
         <SectionHeader>
           <ClickRegion onClick={() => dispatch(Layout.toggleHistory())}>
             <StyledArrow show={showHistory} />
@@ -238,5 +249,6 @@ export function LeftPane() {
           <InvestigationView view={view} />
         </SectionContents>
       </StyledSection>
-    </Pane>;
+    </Pane>
+  )
 }

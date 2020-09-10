@@ -1,6 +1,5 @@
-
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const HiddenCheckbox = styled.input.attrs({
   type: "checkbox"
@@ -15,54 +14,51 @@ const HiddenCheckbox = styled.input.attrs({
   position: absolute;
   white-space: nowrap;
   width: 1px;
-`;
+`
 
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-`;
+`
 
 const Icon = styled.svg`
   fill: none;
-  stroke: ${props => props.theme.colors.white};
+  stroke: ${(props) => props.theme.colors.white};
   stroke-width: 3px;
-`;
+`
 
 const Label = styled.label`
   margin-left: 7px;
-  color: ${props => props.theme.colors.slate};
-  ${props => props.theme.typography.labelSmall}
-`;
+  color: ${(props) => props.theme.colors.slate};
+  ${(props) => props.theme.typography.labelSmall}
+`
 
-const StyledCheckbox = styled.div`
+const StyledCheckbox = styled.div<{checked: boolean}>`
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: ${props => props.checked ? props.theme.colors.havelock : props.theme.colors.white};
+  background: ${(props) =>
+    props.checked ? props.theme.colors.havelock : props.theme.colors.white};
   border-radius: 3px;
   transition: all 150ms;
   border: 1px solid
-    ${props => props.checked ? props.theme.colors.white : props.theme.colors.lead};
+    ${(props) =>
+      props.checked ? props.theme.colors.white : props.theme.colors.lead};
 
   ${Icon} {
-    visibility: ${props => props.checked ? "visible" : "hidden"};
+    visibility: ${(props) => (props.checked ? "visible" : "hidden")};
   }
-`;
+`
 
 type Props = {
-  checked: boolean;
-  label: string;
-  onChange: Function;
-  className?: string;
-};
+  checked: boolean
+  label: string
+  onChange: (event: React.FormEvent<HTMLLabelElement>) => void
+  className?: string
+}
 
-const Checkbox = ({
-  className,
-  checked,
-  onChange,
-  label,
-  ...props
-}: Props) => <label onChange={onChange}>
+const Checkbox = ({className, checked, onChange, label, ...props}: Props) => (
+  <label onChange={onChange}>
     <CheckboxContainer className={className}>
       <HiddenCheckbox {...props} defaultChecked={checked} />
       <StyledCheckbox checked={checked}>
@@ -72,6 +68,7 @@ const Checkbox = ({
       </StyledCheckbox>
       <Label>{label}</Label>
     </CheckboxContainer>
-  </label>;
+  </label>
+)
 
-export default Checkbox;
+export default Checkbox

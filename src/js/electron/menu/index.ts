@@ -1,23 +1,25 @@
+import {BrowserWindow, Menu, MenuItemConstructorOptions} from "electron"
 
-import { BrowserWindow, Menu } from "electron";
+import {$WindowManager} from "../tron/windowManager"
+import actions from "./actions"
+import appMenu from "./appMenu"
+import detailFieldContextMenu from "./detailFieldContextMenu"
+import searchFieldContextMenu from "./searchFieldContextMenu"
+import spaceContextMenu from "./spaceContextMenu"
 
-import { $WindowManager } from "../tron/windowManager";
-import actions from "./actions";
-import appMenu from "./appMenu";
-import detailFieldContextMenu from "./detailFieldContextMenu";
-import searchFieldContextMenu from "./searchFieldContextMenu";
-import spaceContextMenu from "./spaceContextMenu";
+export type $MenuItem = MenuItemConstructorOptions
 
-export type $MenuItem = {click?: Function;label: string;enabled?: boolean;type?: string;} | {type: "separator";};
-export type $Menu = $MenuItem[];
+export type $Menu = $MenuItem[]
 
 function setMenu(manager: $WindowManager, store: any, session: any) {
   function send(...args) {
-    let win = BrowserWindow.getFocusedWindow();
-    if (win && win.webContents) win.webContents.send(...args);
+    const win = BrowserWindow.getFocusedWindow()
+    if (win && win.webContents) win.webContents.send(...args)
   }
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu(send, manager, store, session)));
+  Menu.setApplicationMenu(
+    Menu.buildFromTemplate(appMenu(send, manager, store, session))
+  )
 }
 
 export default {
@@ -26,5 +28,5 @@ export default {
   searchFieldContextMenu,
   detailFieldContextMenu,
   spaceContextMenu,
-  separator: () => ({ type: "separator" })
-};
+  separator: (): MenuItemConstructorOptions => ({type: "separator"})
+}

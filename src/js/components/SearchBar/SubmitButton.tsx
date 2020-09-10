@@ -1,21 +1,18 @@
+import {darken} from "polished"
+import {useDispatch} from "react-redux"
+import React from "react"
+import styled from "styled-components"
 
+import {submitSearch} from "../../flows/submitSearch/mod"
+import MagnifyingGlass from "../../icons/MagnifyingGlass"
 
-import { darken } from "polished";
-import { useDispatch } from "react-redux";
-import React from "react";
-import styled from "styled-components";
+const start = "#6aa4e7"
+const end = "#4b91e2"
+const bg = `linear-gradient(${start}, ${end})`
+const bgHover = `linear-gradient(${darken(0.03, start)}, ${darken(0.03, end)})`
+const bgActive = darken(0.05, end)
 
-import { Styled } from "../../types/styled";
-import { submitSearch } from "../../flows/submitSearch/mod";
-import MagnifyingGlass from "../../icons/MagnifyingGlass";
-
-const start = "#6aa4e7";
-const end = "#4b91e2";
-const bg = `linear-gradient(${start}, ${end})`;
-const bgHover = `linear-gradient(${darken(0.03, start)}, ${darken(0.03, end)})`;
-const bgActive = darken(0.05, end);
-
-const Button: Styled<> = styled.button`
+const Button = styled.button`
   background: ${bg};
   box-shadow: inset 0 0 0 1px var(--havelock);
   border: none;
@@ -45,11 +42,13 @@ const Button: Styled<> = styled.button`
       fill: var(--cloudy);
     }
   }
-`;
+`
 
 export default function SubmitButton() {
-  const dispatch = useDispatch();
-  return <Button onClick={() => dispatch(submitSearch())}>
+  const dispatch = useDispatch()
+  return (
+    <Button onClick={() => dispatch(submitSearch())}>
       <MagnifyingGlass />
-    </Button>;
+    </Button>
+  )
 }

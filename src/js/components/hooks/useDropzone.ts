@@ -1,38 +1,48 @@
-
-import { useState } from "react";
+import {useState} from "react"
 
 /*
   When using this, all the children elements of the dropzone must have a
   css rule of pointer-events: none.
 */
-export default function useDropzone(dropCallback: Function) {
-  let [dragging, setDragging] = useState(false);
 
-  function onDragOver(e: Event) {
-    e.preventDefault();
+type DragProps = {
+  onDragOver: (DragEvent) => void
+  onDrop: (DragEvent) => void
+  onDragEnter: (DragEvent) => void
+  onDragLeave: (DragEvent) => void
+}
+
+type ReturnValue = [() => DragProps, boolean]
+
+export default function useDropzone(dropCallback: Function): ReturnValue {
+  const [dragging, setDragging] = useState(false)
+
+  function onDragOver(e) {
+    e.preventDefault()
   }
 
-  function onDrop(e: Event) {
-    setDragging(false);
-    dropCallback(e);
+  function onDrop(e: DragEvent) {
+    setDragging(false)
+    dropCallback(e)
   }
 
-  function onDragEnter(e: Event) {
-    e.preventDefault();
-    setDragging(true);
+  function onDragEnter(e) {
+    e.preventDefault()
+    setDragging(true)
   }
 
-  function onDragLeave(e: Event) {
-    e.preventDefault();
-    setDragging(false);
+  function onDragLeave(e) {
+    e.preventDefault()
+    setDragging(false)
   }
 
-  let bind = () => ({
-    onDragOver,
-    onDrop,
-    onDragEnter,
-    onDragLeave
-  });
-
-  return [bind, dragging];
+  return [
+    () => ({
+      onDragOver,
+      onDrop,
+      onDragEnter,
+      onDragLeave
+    }),
+    dragging
+  ]
 }

@@ -1,9 +1,8 @@
+import {createInvestigationTree} from "./helpers"
+import brim from "../../brim"
+import {Finding} from "src/js/state/Investigation/types"
 
-
-import { createInvestigationTree } from "./helpers";
-import brim from "../../brim";
-
-function search(pins, program) {
+function search(pins, program): Finding {
   return {
     ts: brim.time(new Date(0)).toTs(),
     search: {
@@ -14,11 +13,17 @@ function search(pins, program) {
       spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpan(),
       target: "events"
     }
-  };
+  }
 }
 
 test("Remove all pins and make a new current", () => {
-  let tree = createInvestigationTree([search(["a", "b"], "c"), search(["a", "b"], "d"), search(["a", "b"], "d"), search(["a"], "d"), search([], "e")]);
+  const tree = createInvestigationTree([
+    search(["a", "b"], "c"),
+    search(["a", "b"], "d"),
+    search(["a", "b"], "d"),
+    search(["a"], "d"),
+    search([], "e")
+  ])
 
-  expect(tree.toJSON()).toMatchSnapshot();
-});
+  expect(tree.toJSON()).toMatchSnapshot()
+})

@@ -1,53 +1,52 @@
-
-import lib from "../../lib";
+import lib from "../../lib"
 
 export default function useDrag(handler: Function) {
-  return (args: Object) => {
-    let startX = 0;
-    let startY = 0;
+  return (args: any = {}) => {
+    let startX = 0
+    let startY = 0
 
-    function onMouseDown(event: MouseEvent) {
-      startX = event.clientX;
-      startY = event.clientY;
+    function onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+      startX = event.clientX
+      startY = event.clientY
       handler({
         event,
         args,
         dx: 0,
         dy: 0,
         type: "down"
-      });
-      lib.on("mousemove", onMove);
-      lib.on("mouseup", onUp);
+      })
+      lib.on("mousemove", onMove)
+      lib.on("mouseup", onUp)
     }
 
-    function onMove(event) {
-      let res = handler({
+    function onMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+      const res = handler({
         event,
         args,
         dx: event.clientX - startX,
         dy: event.clientY - startY,
         type: "move"
-      });
+      })
       if (res === false) {
-        lib.off("mousemove", onMove);
-        lib.off("mouseup", onUp);
+        lib.off("mousemove", onMove)
+        lib.off("mouseup", onUp)
       }
     }
 
-    function onUp(event) {
+    function onUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
       handler({
         event,
         args,
         dx: event.clientX - startX,
         dy: event.clientY - startY,
         type: "up"
-      });
-      lib.off("mousemove", onMove);
-      lib.off("mouseup", onUp);
+      })
+      lib.off("mousemove", onMove)
+      lib.off("mouseup", onUp)
     }
 
     return {
       onMouseDown
-    };
-  };
+    }
+  }
 }

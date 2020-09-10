@@ -1,19 +1,23 @@
+import {Thunk} from "../state/types"
+import Current from "../state/Current"
+import Spaces from "../state/Spaces"
+import Tabs from "../state/Tabs"
+import {getZealot} from "./getZealot"
 
-import { Thunk } from "../state/types";
-import Current from "../state/Current";
-import Spaces from "../state/Spaces";
-import Tabs from "../state/Tabs";
-import { getZealot } from "./getZealot";
+export default (
+  clusterId: string,
+  spaceId: string,
+  name: string
+): Thunk<Promise<void>> => (dispatch, getState) => {
+  const state = getState()
+  const zealot = dispatch(getZealot())
+  const tabs = Tabs.getData(state)
 
-export default ((clusterId: string, spaceId: string, name: string): Thunk => (dispatch, getState) => {
-  const state = getState();
-  const zealot = dispatch(getZealot());
-  const tabs = Tabs.getData(state);
-
-  return zealot.spaces.update(spaceId, { name }).then(() => {
-    dispatch(Spaces.rename(clusterId, spaceId, name));
-    tabs.forEach(t => {
-      if (t.current.spaceId === spaceId) dispatch(Current.setSpaceId(spaceId, t.id));
-    });
-  });
-});
+  return zealot.spaces.update(spaceId, {name}).then(() => {
+    dispatch(Spaces.rename(clusterId, spaceId, name))
+    tabs.forEach((t) => {
+      if (t.current.spaceId === spaceId)
+        dispatch(Current.setSpaceId(spaceId, t.id))
+    })
+  })
+}

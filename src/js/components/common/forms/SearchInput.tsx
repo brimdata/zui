@@ -1,12 +1,10 @@
+import React from "react"
+import styled from "styled-components"
 
-import React from "react";
-import styled from "styled-components";
+import MagnifyingGlass from "../../../icons/MagnifyingGlass"
+import TextInput from "./TextInput"
 
-import { Styled } from "../../../types/styled";
-import MagnifyingGlass from "../../../icons/MagnifyingGlass";
-import TextInput from "./TextInput";
-
-const Wrapper: Styled<> = styled.div`
+const Wrapper = styled.div`
   position: relative;
   input {
     border-radius: 7px;
@@ -21,11 +19,13 @@ const Wrapper: Styled<> = styled.div`
     left: 9px;
     fill: var(--slate);
   }
-`;
+`
 
 export default function SearchInput(props: any) {
-  return <Wrapper>
+  return (
+    <Wrapper>
       <MagnifyingGlass />
       <TextInput {...props} />
-    </Wrapper>;
+    </Wrapper>
+  )
 }

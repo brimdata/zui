@@ -1,66 +1,62 @@
-
-
 export type FormFieldConfig = {
-  defaultValue?: string;
-  name: string;
-  label: string;
-  check?: (arg0: string) => Promise<[boolean, string]> | [boolean, string];
-  submit?: (arg0: string) => void;
-};
+  defaultValue?: string
+  name: string
+  label: string
+  check?: (arg0: string) => FormCheckResult
+  submit?: (arg0: string) => void
+}
 
 export type FormConfig = {
-  [key: string]: FormFieldConfig;
-};
+  [key: string]: FormFieldConfig
+}
+
+export type FormCheckResult = Promise<[boolean, string]> | [boolean, string]
 
 export type FormError = {
-  label?: string;
-  message: string;
-  input?: HTMLInputElement;
-};
+  label?: string
+  message: string
+  input?: HTMLInputElement
+}
 
 export default function form(element: HTMLFormElement, config: FormConfig) {
-  let errors = [];
-  let fields = () => getFields(element, config);
+  let errors = []
+  const fields = () => getFields(element, config)
   return {
     async isValid() {
-      errors = [];
-      for (let field of fields()) {
-        let check = await field.check();
-        if (!Array.isArray(check)) throw new Error(`${field.name} check did not return an array`);
+      errors = []
+      for (const field of fields()) {
+        const check = await field.check()
+        if (!Array.isArray(check))
+          throw new Error(`${field.name} check did not return an array`)
 
-        let [passed, message] = check;
-        if (!passed) errors.push(field.buildError(message));
+        const [passed, message] = check
+        if (!passed) errors.push(field.buildError(message))
       }
-      return errors.length === 0;
+      return errors.length === 0
     },
     submit() {
-      fields().forEach(f => f.submit());
+      fields().forEach((f) => f.submit())
     },
     getErrors() {
-      return errors;
+      return errors
     },
     getFields() {
-      return fields();
+      return fields()
     }
-  };
+  }
 }
 
 function getFields(el, config) {
-  let fields = [];
-  for (let key in config) {
-    let {
-      name,
-      label,
-      check,
-      submit
-    } = config[key];
-    let input = el.elements.namedItem(name);
-    if (!input) throw new Error(`No input with name="${name}"`);
+  const fields = []
+  for (const key in config) {
+    const {name, label, check, submit} = config[key]
+    const input = el.elements.namedItem(name)
+    if (!input) throw new Error(`No input with name="${name}"`)
 
     // $FlowFixMe
-    let value = input.value;
-    let safeCheck = check || (_ => [true, ""]);
-    let safeSubmit = submit || (_ => {});
+    const value = input.value
+    const safeCheck = check || ((_) => [true, ""])
+    const safeSubmit = submit || ((_) => {})
 
     fields.push({
       name,
@@ -69,8 +65,8 @@ function getFields(el, config) {
       check: () => safeCheck(value),
       submit: () => safeSubmit(value),
       // $FlowFixMe
-      buildError: (message): FormError => ({ label, message, input })
-    });
+      buildError: (message): FormError => ({label, message, input})
+    })
   }
-  return fields;
+  return fields
 }

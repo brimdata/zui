@@ -1,23 +1,22 @@
+import React from "react"
 
+import FindingCard from "./FindingCard"
+import brim from "../../brim"
+import loginTo from "../../test/helpers/loginTo"
+import provide from "../../test/helpers/provide"
+import {Finding} from "src/js/state/Investigation/types"
 
-import React from "react";
-
-import FindingCard from "./FindingCard";
-import brim from "../../brim";
-import loginTo from "../../test/helpers/loginTo";
-import provide from "../../test/helpers/provide";
-
-let store;
+let store
 beforeEach(async () => {
-  const setup = await loginTo("cluster1", "space1");
-  store = setup.store;
-});
+  const setup = await loginTo("cluster1", "space1")
+  store = setup.store
+})
 
 function getActionTypes() {
-  return store.getActions().map(a => a.type);
+  return store.getActions().map((a) => a.type)
 }
 
-const finding = {
+const finding: Finding = {
   ts: brim.time().toTs(),
   search: {
     program: "finding card test",
@@ -27,11 +26,11 @@ const finding = {
     spaceName: "space1",
     target: "events"
   }
-};
+}
 
 test("Clicking the history submits the search", () => {
-  const el = provide(store, <FindingCard finding={finding} />);
-  store.clearActions();
-  el.simulate("click");
-  expect(getActionTypes()).toContain("SEARCH_BAR_SUBMIT");
-});
+  const el = provide(store, <FindingCard finding={finding} />)
+  store.clearActions()
+  el.simulate("click")
+  expect(getActionTypes()).toContain("SEARCH_BAR_SUBMIT")
+})

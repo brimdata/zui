@@ -1,11 +1,9 @@
+import {darken} from "polished"
+import styled from "styled-components"
 
-import { darken } from "polished";
-import styled from "styled-components";
+import {cssVar} from "../../lib/cssVar"
 
-import { Styled } from "../../types/styled";
-import { cssVar } from "../../lib/cssVar";
-
-const Button: Styled<> = styled.button`
+const Button = styled.button`
   background: none;
   padding: 0;
   border: none;
@@ -40,6 +38,6 @@ const Button: Styled<> = styled.button`
   &:disabled svg {
     opacity: 0.24;
   }
-`;
+`
 
-export default Button;
+export default Button

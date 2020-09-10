@@ -1,9 +1,6 @@
+import styled from "styled-components"
 
-import styled from "styled-components";
-
-import { Styled } from "../../types/styled";
-
-const Input: Styled<> = styled.div`
+const Input = styled.div`
   display: block;
   outline: none;
   border: none;
@@ -19,6 +16,6 @@ const Input: Styled<> = styled.div`
   background: white;
   display: flex;
   align-items: center;
-`;
+`
 
-export default Input;
+export default Input

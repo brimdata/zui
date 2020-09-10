@@ -6,7 +6,7 @@ import {State} from "../types"
 import Clusters from "../Clusters"
 import Spaces from "../Spaces"
 import activeTabSelect from "../Tab/activeTabSelect"
-import brim from "../../brim"
+import brim, {Brim} from "../../brim"
 
 type Id = string | null
 
@@ -28,21 +28,20 @@ export const mustGetConnection = createSelector<
   return conns[id]
 })
 
-export const mustGetSpace = createSelector<State, SpacesState, Id, Id, Space>(
-  Spaces.raw,
-  getConnectionId,
-  getSpaceId,
-  (spaces, connId, spaceId) => {
-    if (!connId) throw new Error("Current connection id is unset")
-    if (!spaceId) throw new Error("Current space id is unset")
-    if (!spaces[connId])
-      throw new Error(`No spaces in connection id: ${connId}`)
-    if (!spaces[connId][spaceId])
-      throw new Error(`Missing space id: ${spaceId}`)
+export const mustGetSpace = createSelector<
+  State,
+  SpacesState,
+  Id,
+  Id,
+  Brim.Space
+>(Spaces.raw, getConnectionId, getSpaceId, (spaces, connId, spaceId) => {
+  if (!connId) throw new Error("Current connection id is unset")
+  if (!spaceId) throw new Error("Current space id is unset")
+  if (!spaces[connId]) throw new Error(`No spaces in connection id: ${connId}`)
+  if (!spaces[connId][spaceId]) throw new Error(`Missing space id: ${spaceId}`)
 
-    return brim.space(spaces[connId][spaceId])
-  }
-)
+  return brim.space(spaces[connId][spaceId])
+})
 
 export const getSpace = (state: State) => {
   try {

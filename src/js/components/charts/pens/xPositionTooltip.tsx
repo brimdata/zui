@@ -1,91 +1,97 @@
+import {isEqual} from "lodash"
+import {render} from "react-dom"
+import {select, mouse, ContainerElement} from "d3"
+import React from "react"
 
-
-import { Element } from "react-tooltip";
-import { isEqual } from "lodash";
-import { render } from "react-dom";
-import { select, mouse } from "d3";
-import React from "react";
-
-import { HistogramDataPoint } from "../MainHistogram/format";
-import { Pen } from "../types";
-import { getPointAt } from "../getPointAt";
+import {HistogramDataPoint} from "../MainHistogram/format"
+import {Pen} from "../types"
+import {getPointAt} from "../getPointAt"
 
 type Args = {
-  wrapperClassName: string;
-  render: any;
-};
+  wrapperClassName: string
+  render: any
+}
 
-export default function ({
-  wrapperClassName,
-  render: Component
-}: Args): Pen {
-  let div;
-  let svg;
-  let lastPoint;
+export default function({wrapperClassName, render: Component}: Args): Pen {
+  let div
+  let svg
+  let lastPoint
 
   function hide() {
-    div.style.opacity = "0";
+    div.style.opacity = "0"
   }
 
   function mount(el) {
-    svg = el;
-    div = document.createElement("div");
-    div.classList.add(wrapperClassName);
-    if (svg.parentNode) svg.parentNode.appendChild(div);
+    svg = el
+    div = document.createElement("div")
+    div.classList.add(wrapperClassName)
+    if (svg.parentNode) svg.parentNode.appendChild(div)
 
-    select(svg).select(".brush").on("mousedown.tooltip", hide);
+    select(svg)
+      .select(".brush")
+      .on("mousedown.tooltip", hide)
   }
 
   function draw(chart) {
     function show() {
-      if (chart.state.isDragging) return hide();
+      if (chart.state.isDragging) return hide()
 
-      let [left] = mouse(svg);
-      let point = getPointAt(left, chart);
+      let [left] = mouse(svg)
+      let point = getPointAt(left, chart)
 
       if (point && point.count) {
-        positionTooltip(div, svg, 30);
+        positionTooltip(div, svg, 30)
         if (!isEqual(lastPoint, point)) {
-          render(<Component {...getProps(point)} />, div);
+          render(<Component {...getProps(point)} />, div)
         }
-        lastPoint = point;
+        lastPoint = point
       } else {
-        hide();
+        hide()
       }
     }
 
-    select(svg).select(".brush").on("mouseout.tooltip", hide).on("mousemove.tooltip", show);
+    select(svg)
+      .select(".brush")
+      .on("mouseout.tooltip", hide)
+      .on("mousemove.tooltip", show)
   }
 
-  return { mount, draw };
+  return {mount, draw}
 }
 
 const getProps = (point: HistogramDataPoint) => {
-  const segments = [];
-  let paths = point.paths;
+  const segments = []
+  let paths = point.paths
   for (let key in paths) {
-    if (paths[key] !== 0) segments.push([key, paths[key]]);
+    if (paths[key] !== 0) segments.push([key, paths[key]])
   }
 
-  return { ts: point.ts, segments };
-};
+  return {ts: point.ts, segments}
+}
 
-export const positionTooltip = (el: HTMLElement, parent: Element, padding: number) => {
-  const [left] = mouse(parent);
-  const {
-    width
-  } = el.getBoundingClientRect();
-  const {
-    width: parentWidth
-  } = parent.getBoundingClientRect();
+export const positionTooltip = (
+  el: HTMLElement,
+  parent: ContainerElement,
+  padding: number
+) => {
+  const [left] = mouse(parent)
+  const {width} = el.getBoundingClientRect()
+  const {width: parentWidth} = parent.getBoundingClientRect()
 
-  select(el).style("left", xPosition(left, width, parentWidth, padding)).style("opacity", "1");
-};
+  select(el)
+    .style("left", xPosition(left, width, parentWidth, padding))
+    .style("opacity", "1")
+}
 
-export const xPosition = (left: number, width: number, parentWidth: number, padding: number) => {
+export const xPosition = (
+  left: number,
+  width: number,
+  parentWidth: number,
+  padding: number
+) => {
   if (left + width + padding >= parentWidth) {
-    return left - width - padding + "px";
+    return left - width - padding + "px"
   } else {
-    return left + padding + "px";
+    return left + padding + "px"
   }
-};
+}

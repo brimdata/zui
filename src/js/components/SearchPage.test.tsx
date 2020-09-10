@@ -1,19 +1,18 @@
+import React from "react"
 
-import React from "react";
+import SearchPage from "./SearchPage"
+import loginTo from "../test/helpers/loginTo"
+import provide from "../test/helpers/provide"
+import {TestStore} from "../test/initTestStore"
 
-import SearchPage from "./SearchPage";
-import loginTo from "../test/helpers/loginTo";
-import provide from "../test/helpers/provide";
-
-let store, cluster;
+let store: TestStore
 beforeEach(async () => {
-  jest.useRealTimers();
-  let setup = await loginTo("cluster1", "space1");
-  store = setup.store;
-  cluster = setup.cluster;
-  jest.useFakeTimers();
-});
+  jest.useRealTimers()
+  let setup = await loginTo("cluster1", "space1")
+  store = setup.store
+  jest.useFakeTimers()
+})
 
 test("Render the search page", () => {
-  provide(store, <SearchPage cluster={cluster} />);
-});
+  provide(store, <SearchPage />)
+})

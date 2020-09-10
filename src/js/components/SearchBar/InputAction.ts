@@ -1,11 +1,9 @@
+import {darken} from "polished"
+import styled from "styled-components"
 
-import { darken } from "polished";
-import styled from "styled-components";
+import {cssVar} from "../../lib/cssVar"
 
-import { Styled } from "../../types/styled";
-import { cssVar } from "../../lib/cssVar";
-
-const InputAction: Styled<> = styled.button`
+const InputAction = styled.button`
   background: none;
   padding: 0;
   border: none;
@@ -34,6 +32,6 @@ const InputAction: Styled<> = styled.button`
       fill: ${darken(0.1, cssVar("--lead"))};
     }
   }
-`;
+`
 
-export default InputAction;
+export default InputAction

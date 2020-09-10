@@ -1,9 +1,13 @@
+import {useEffect} from "react"
 
-import { useEffect } from "react";
-
-export default function useEventListener(el: Node, name: string, callback: Function, deps: any[] | null | undefined) {
+export default function useEventListener(
+  el: Node,
+  name: string,
+  callback: EventListenerOrEventListenerObject,
+  deps: any[] | null | undefined
+) {
   useEffect(() => {
-    el.addEventListener(name, callback, false);
-    return () => el.removeEventListener(name, callback, false);
-  }, deps);
+    el.addEventListener(name, callback, false)
+    return () => el.removeEventListener(name, callback, false)
+  }, deps)
 }

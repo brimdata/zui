@@ -1,12 +1,10 @@
+import {useDispatch} from "react-redux"
+import React from "react"
+import styled from "styled-components"
 
-import { useDispatch } from "react-redux";
-import React from "react";
-import styled from "styled-components";
+import {resetTab} from "../flows/initNewTab"
 
-import { Styled } from "../types/styled";
-import { resetTab } from "../flows/initNewTab";
-
-const StyledAnchor: Styled<> = styled.a`
+const StyledAnchor = styled.a`
   margin-left: auto;
   margin-right: 8px;
   background: rgba(0, 0, 0, 0);
@@ -18,14 +16,16 @@ const StyledAnchor: Styled<> = styled.a`
   font-weight: 300;
   font-size: 18px;
   color: var(--slate);
-  ${props => props.theme.hoverQuiet}
-`;
+  ${(props) => props.theme.hoverQuiet}
+`
 
 export default function AddSpaceButton() {
-  const dispatch = useDispatch();
-  const onClick = () => dispatch(resetTab());
+  const dispatch = useDispatch()
+  const onClick = () => dispatch(resetTab())
 
-  return <StyledAnchor className="add-space" onClick={onClick}>
+  return (
+    <StyledAnchor className="add-space" onClick={onClick}>
       +
-    </StyledAnchor>;
+    </StyledAnchor>
+  )
 }

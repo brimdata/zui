@@ -1,22 +1,20 @@
+import {CSSTransition} from "react-transition-group"
+import {connect} from "react-redux"
+import React, {FormEvent} from "react"
+import styled from "styled-components"
 
-
-import { CSSTransition } from "react-transition-group";
-import { connect } from "react-redux";
-import React from "react";
-import styled from "styled-components";
-
-import { ColumnHeadersViewState } from "../state/Layout/types";
-import { DispatchProps, State } from "../state/types";
-import { Fieldset, Subscript, Label } from "./Typography";
-import { TableColumn } from "../state/Columns/types";
-import Checkbox from "./common/Checkbox";
-import CloseButton from "./CloseButton";
-import Columns from "../state/Columns";
-import Layout from "../state/Layout";
-import SelectInput from "./common/forms/SelectInput";
-import TableColumns from "../models/TableColumns";
-import dispatchToProps from "../lib/dispatchToProps";
-import SearchInput from "./common/forms/SearchInput";
+import {ColumnHeadersViewState} from "../state/Layout/types"
+import {State, DispatchProps} from "../state/types"
+import {Fieldset, Subscript, Label} from "./Typography"
+import {TableColumn} from "../state/Columns/types"
+import Checkbox from "./common/Checkbox"
+import CloseButton from "./CloseButton"
+import Columns from "../state/Columns"
+import Layout from "../state/Layout"
+import SelectInput from "./common/forms/SelectInput"
+import TableColumns from "../models/TableColumns"
+import dispatchToProps from "../lib/dispatchToProps"
+import SearchInput from "./common/forms/SearchInput"
 
 const ControlListItem = styled.li`
   display: flex;
@@ -27,9 +25,9 @@ const ControlListItem = styled.li`
 
   p {
     text-decoration: underline;
-    color: ${props => props.theme.colors.havelock};
+    color: ${(props) => props.theme.colors.havelock};
   }
-`;
+`
 
 const ColumnListItem = styled.li`
   display: flex;
@@ -37,90 +35,96 @@ const ColumnListItem = styled.li`
   align-items: center;
   padding: 4px 12px;
   cursor: default;
-  ${props => props.theme.typography.labelNormal}
-`;
+  ${(props) => props.theme.typography.labelNormal}
+`
 
 const StyledLabel = styled.label`
-  ${props => props.theme.typography.labelNormal}
-`;
+  ${(props) => props.theme.typography.labelNormal}
+`
 
 const StyledSelectInput = styled(SelectInput)`
   width: 60px;
-`;
+`
 
 const Paragraph = styled.p`
-  ${props => props.theme.typography.labelSmall}
-`;
+  ${(props) => props.theme.typography.labelSmall}
+`
 
 type OwnProps = {
-  onClose: () => any;
-};
+  onClose: () => any
+}
 
-type StateProps = {
-  tableColumns: TableColumns;
-  columnHeadersView: ColumnHeadersViewState;
-};
+type StateProps = ReturnType<typeof stateToProps>
 
-type Props = StateProps & DispatchProps & OwnProps;
+type Props = StateProps & DispatchProps & OwnProps
 
 type LocalState = {
-  searchValue: string;
-};
+  searchValue: string
+}
 
-export default class ColumnChooserMenu extends React.Component<Props, LocalState> {
-
+export default class ColumnChooserMenu extends React.Component<
+  Props,
+  LocalState
+> {
   state: LocalState = {
     searchValue: ""
-  };
+  }
 
   tableId() {
-    return this.props.tableColumns.id;
+    return this.props.tableColumns.id
   }
 
   allVisible() {
-    return this.props.tableColumns.allVisible();
+    return this.props.tableColumns.allVisible()
   }
 
-  deselectAllColumns = (e: Event) => {
-    e.stopPropagation();
-    this.props.dispatch(Columns.hideAllColumns(this.tableId()));
-  };
+  deselectAllColumns = (e) => {
+    e.stopPropagation()
+    this.props.dispatch(Columns.hideAllColumns(this.tableId()))
+  }
 
-  selectAllColumns = (e: Event) => {
-    e.stopPropagation();
-    this.props.dispatch(Columns.showAllColumns(this.tableId()));
-  };
+  selectAllColumns = (e) => {
+    e.stopPropagation()
+    this.props.dispatch(Columns.showAllColumns(this.tableId()))
+  }
 
-  onColumnClick(e: Event, column: TableColumn) {
-    e.stopPropagation();
+  onColumnClick(e, column: TableColumn) {
+    e.stopPropagation()
     if (column.isVisible) {
-      this.props.dispatch(Columns.hideColumn(this.tableId(), column));
+      this.props.dispatch(Columns.hideColumn(this.tableId(), column))
     } else {
-      this.props.dispatch(Columns.showColumn(this.tableId(), column));
+      this.props.dispatch(Columns.showColumn(this.tableId(), column))
     }
   }
 
-  handleChange = (event: React.InputEvent<HTMLInputElement>) => {
-    this.setState({ searchValue: event.target.value });
-  };
+  handleChange = (event) => {
+    this.setState({searchValue: event.currentTarget.value})
+  }
 
   clearSearch = () => {
-    this.setState({ searchValue: "" });
-  };
+    this.setState({searchValue: ""})
+  }
 
   render() {
-    const {
-      columnHeadersView
-    } = this.props;
-    const columns = this.props.tableColumns.getColumns();
-    const count = this.props.tableColumns.visibleCount();
+    const {columnHeadersView} = this.props
+    const columns = this.props.tableColumns.getColumns()
+    const count = this.props.tableColumns.visibleCount()
 
-    const onChangeColumnView = e => {
-      this.props.dispatch(Layout.setColumnHeadersView(e.target.value));
-    };
+    const onChangeColumnView = (e) => {
+      this.props.dispatch(Layout.setColumnHeadersView(e.target.value))
+    }
 
-    return <CSSTransition classNames="slide-in-right" timeout={{ enter: 150, exit: 150 }} in={true} appear>
-        <div className="column-chooser-menu" onClick={e => e.stopPropagation()}>
+    return (
+      <CSSTransition
+        classNames="slide-in-right"
+        timeout={{enter: 150, exit: 150}}
+        in={true}
+        appear
+      >
+        <div
+          className="column-chooser-menu"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Fieldset>Column Chooser</Fieldset>
           <hr />
           <CloseButton light onClick={this.props.onClose} />
@@ -130,7 +134,11 @@ export default class ColumnChooserMenu extends React.Component<Props, LocalState
           <ul>
             <ControlListItem>
               <StyledLabel>Headers</StyledLabel>
-              <StyledSelectInput name="Headers" value={columnHeadersView} onChange={onChangeColumnView}>
+              <StyledSelectInput
+                name="Headers"
+                value={columnHeadersView}
+                onChange={onChangeColumnView}
+              >
                 <option value="ON">On</option>
                 <option value="OFF">Off</option>
                 <option value="AUTO">Auto</option>
@@ -144,27 +152,55 @@ export default class ColumnChooserMenu extends React.Component<Props, LocalState
             </ControlListItem>
             <ControlListItem>
               <div className="search-input">
-                <SearchInput autoFocus type="text" value={this.state.searchValue} onChange={this.handleChange} />
+                <SearchInput
+                  autoFocus
+                  type="text"
+                  value={this.state.searchValue}
+                  onChange={this.handleChange}
+                />
               </div>
             </ControlListItem>
-            {columns.filter(c => {
-            if (this.state.searchValue === "") return true;
-            return c.name.toLowerCase().search(new RegExp(this.state.searchValue, "g")) > -1;
-          }).sort((a, b) => {
-            if (a.name < b.name) return -1;else return 1;
-          }).map(c => <ColumnListItem key={`${c.name}-${c.type}`}>
-                  <Checkbox label={c.name} checked={c.isVisible} onChange={e => this.onColumnClick(e, c)} />
+            {columns
+              .filter((c) => {
+                if (this.state.searchValue === "") return true
+                return (
+                  c.name
+                    .toLowerCase()
+                    .search(new RegExp(this.state.searchValue, "g")) > -1
+                )
+              })
+              .sort((a, b) => {
+                if (a.name < b.name) return -1
+                else return 1
+              })
+              .map((c) => (
+                <ColumnListItem key={`${c.name}-${c.type}`}>
+                  <Checkbox
+                    label={c.name}
+                    checked={c.isVisible}
+                    onChange={(e) => this.onColumnClick(e, c)}
+                  />
                   <Subscript>{c.type}</Subscript>
-                </ColumnListItem>)}
+                </ColumnListItem>
+              ))}
           </ul>
         </div>
-      </CSSTransition>;
+      </CSSTransition>
+    )
   }
 }
 
 const stateToProps = (state: State) => ({
   tableColumns: Columns.getCurrentTableColumns(state),
   columnHeadersView: Layout.getColumnHeadersView(state)
-});
+})
 
-export const XColumnChooserMenu = connect<Props, OwnProps, _, _, _, _>(stateToProps, dispatchToProps)(ColumnChooserMenu);
+export const XColumnChooserMenu = connect<
+  StateProps,
+  DispatchProps,
+  OwnProps,
+  State
+>(
+  stateToProps,
+  dispatchToProps
+)(ColumnChooserMenu)

@@ -1,17 +1,16 @@
+import {isEmpty} from "lodash"
+import {ReactNode} from "react"
 
-import { isEmpty } from "lodash";
-import * as React from "react";
-
-type Props = {children: React.ReactNode;empty: React.ReactNode;array: any[];};
+type Props = {children: JSX.Element; empty: JSX.Element; array: any[]}
 
 export default function EmptyCheck({
   children,
   array,
   empty
-}: Props) {
+}: Props): JSX.Element {
   if (isEmpty(array)) {
-    return empty;
+    return empty
   } else {
-    return children;
+    return children
   }
 }

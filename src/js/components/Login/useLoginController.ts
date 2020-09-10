@@ -1,69 +1,71 @@
+import {useDispatch, useSelector} from "react-redux"
+import {useEffect, useState} from "react"
 
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import {ipcRenderer} from "electron"
 
-import { ipcRenderer } from "electron";
-
-import { Cluster } from "../../state/Clusters/types";
-import { FormData } from "./types";
-import { connectCluster } from "../../state/Clusters/flows";
-import { showContextMenu } from "../../lib/System";
-import Clusters from "../../state/Clusters";
-import brim from "../../brim";
+import {Cluster} from "../../state/Clusters/types"
+import {FormData} from "./types"
+import {connectCluster} from "../../state/Clusters/flows"
+import {showContextMenu} from "../../lib/System"
+import Clusters from "../../state/Clusters"
+import brim from "../../brim"
+import {AppDispatch} from "src/js/state/types"
 
 export default function useLoginController() {
   useEffect(() => {
-    ipcRenderer.send("open-login-window");
-  }, []);
+    ipcRenderer.send("open-login-window")
+  }, [])
 
-  let dispatch = useDispatch();
-  let [form, setForm] = useState<FormData>({
+  const dispatch = useDispatch<AppDispatch>()
+  const [form, setForm] = useState<FormData>({
     host: "",
     username: "",
     password: "",
     save: true
-  });
+  })
 
   function submitForm() {
-    let hostparts = form.host.split(":");
-    let host = hostparts[0];
-    let port = hostparts[1] || "9867";
-    let cluster = {
+    const hostparts = form.host.split(":")
+    const host = hostparts[0]
+    const port = hostparts[1] || "9867"
+    const cluster = {
       id: brim.randomHash(),
       host,
       port,
       username: form.username,
       password: form.password
-    };
+    }
     dispatch(connectCluster(cluster)).then(() => {
-      if (form.save) dispatch(Clusters.add(cluster));
-    });
+      if (form.save) dispatch(Clusters.add(cluster))
+    })
   }
 
   function onFormChange(e: any) {
     if (e.target.type === "checkbox") {
-      setForm({ ...form, [e.target.name]: e.target.checked });
+      setForm({...form, [e.target.name]: e.target.checked})
     } else {
-      setForm({ ...form, [e.target.name]: e.target.value });
+      setForm({...form, [e.target.name]: e.target.value})
     }
   }
 
   function submitSaved(creds: Cluster) {
-    let form = {
+    const form = {
       host: [creds.host, creds.port].join(":"),
       username: creds.username,
       password: creds.password,
       save: true
-    };
-    setForm(form);
-    dispatch(connectCluster(creds));
+    }
+    setForm(form)
+    dispatch(connectCluster(creds))
   }
 
   function showSavedMenu(cluster: Cluster) {
-    showContextMenu([{
-      label: "Remove",
-      click: () => dispatch(Clusters.remove(cluster.id))
-    }]);
+    showContextMenu([
+      {
+        label: "Remove",
+        click: () => dispatch(Clusters.remove(cluster.id))
+      }
+    ])
   }
 
   return {
@@ -73,5 +75,5 @@ export default function useLoginController() {
     submitSaved,
     showSavedMenu,
     saved: useSelector(Clusters.all)
-  };
+  }
 }

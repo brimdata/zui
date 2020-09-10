@@ -11,11 +11,13 @@ import {PrefsState} from "./Prefs/types"
 import {SpacesState} from "./Spaces/types"
 import {TabsState} from "./Tabs/types"
 import {ViewState} from "./View/types"
+import {createZealot} from "zealot"
 
 export type GetState = () => State
+export type Zealot = ReturnType<typeof createZealot>
 export type ThunkExtraArg = {
   zealot: any
-  createZealot: Function
+  createZealot: typeof createZealot
   globalDispatch: AppDispatch
 }
 
