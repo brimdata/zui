@@ -28,7 +28,7 @@
     "format": "prettier {src,itest,scripts}/**/*.{js,ts,tsx,scss} --write --loglevel warn",
     "tsc": "tsc",
     "format-check": "npm run format && git diff --exit-code -- src itest",
-    "check": "npm-run-all -p format-check lint flow test",
+    "check": "npm-run-all -p format-check lint test",
     "clean": "node scripts/clean",
     "release": "node scripts/release --darwin",
     "prerelease": "npm run build",
@@ -49,7 +49,6 @@
     ],
     "collectCoverageFrom": [
       "**/*.js",
-      "!**/flow-typed/**",
       "!**/test/**"
     ],
     "snapshotSerializers": [
@@ -110,11 +109,9 @@
     "enzyme-to-json": "^3.5.0",
     "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-flowtype": "^3.13.0",
     "eslint-plugin-jest": "^22.21.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
-    "flow-typed": "^3.2.0",
     "jest": "^24.9.0",
     "jest-junit": "^6.4.0",
     "livereload": "^0.9.1",

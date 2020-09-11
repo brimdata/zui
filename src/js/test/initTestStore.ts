@@ -22,7 +22,7 @@ export default (zealot: any = createZealotMock()): TestStore => {
   const globalDispatch = (...args) => store.dispatch(...args)
 
   const createZealot = () => zealot
-  // $FlowFixMe
+
   store = createStore(
     rootReducer,
     undefined,
@@ -37,7 +37,7 @@ export default (zealot: any = createZealotMock()): TestStore => {
       applyActionHistory()
     )
   )
-  // $FlowFixMe
+
   return store
 }
 

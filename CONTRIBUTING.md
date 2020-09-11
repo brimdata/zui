@@ -6,7 +6,7 @@ Thank you for contributing to Brim!
 
 Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg) as well.
 
-Brim is early in its life cycle and will be expanding quickly.  Please star and/or watch the repo so you can follow and track our progress.
+Brim is early in its life cycle and will be expanding quickly. Please star and/or watch the repo so you can follow and track our progress.
 
 ## Code Base Walkthrough
 
@@ -76,12 +76,12 @@ npx jest query.test.js -u # Only updates snapshots used in query.test.js
 
 ## Pull Requests
 
-Our CI server checks for code format diffs, flow type errors, eslint errors, unit test failures, and integration test failures. You can check all these things locally before pushing your branch.
+Our CI server checks for code format diffs, type errors, eslint errors, unit test failures, and integration test failures. You can check all these things locally before pushing your branch.
 
 ```bash
 npm run format # Prettier formats and saves the project files
 npm run lint   # Check eslint
-npm run flow   # Check flow
+npm run tsc    # Check the types
 npm test       # Unit tests with jest
 npm run itest  # Integration tests with jest & spectron
 

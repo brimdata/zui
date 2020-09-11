@@ -53,7 +53,6 @@ function getFields(el, config) {
     const input = el.elements.namedItem(name)
     if (!input) throw new Error(`No input with name="${name}"`)
 
-    // $FlowFixMe
     const value = input.value
     const safeCheck = check || ((_) => [true, ""])
     const safeSubmit = submit || ((_) => {})
@@ -64,7 +63,7 @@ function getFields(el, config) {
       value,
       check: () => safeCheck(value),
       submit: () => safeSubmit(value),
-      // $FlowFixMe
+
       buildError: (message): FormError => ({label, message, input})
     })
   }

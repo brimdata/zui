@@ -1,5 +1,3 @@
-/* @flow */
-
 import cli from "commander"
 
 import {handleIcon} from "./icon"

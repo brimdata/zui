@@ -69,7 +69,6 @@ function orderSprings(
   orderedIds: string[],
   map: Map<string, number>
 ): number[] {
-  // $FlowFixMe
   return orderedIds.map<number>((id) => map.get(id))
 }
 
@@ -118,7 +117,7 @@ export default function(tabs: TabState[], width: number) {
     if (interuptDrag.current) return false
 
     // This updates the positions of the tabs when you are dragging
-    // $FlowFixMe
+
     const dragSpringIndex: number = map.current.get(args.id)
     const dragIndex = ids.current.indexOf(args.id)
     const dragOverIndex = getHoverIndex(dragIndex, width, dx)

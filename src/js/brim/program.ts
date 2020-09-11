@@ -43,7 +43,7 @@ export default function(p = "", pins: string[] = []) {
       const newFilters = this.ast()
         .groupByKeys()
         .map((n) => log.field(n))
-        .filter((f) => !!f) // $FlowFixMe flow doesn't know I just took out all the nils
+        .filter((f) => !!f)
         .map(brim.syntax.include)
         .join(" ")
 

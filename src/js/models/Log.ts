@@ -67,7 +67,7 @@ export default class Log {
         tuple.push(value)
         descriptor.push({name, type})
       })
-    // $FlowFixMe
+
     return new Log(tuple, descriptor)
   }
 

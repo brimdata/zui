@@ -26,7 +26,7 @@ type Props = {
 function style(selector, key: string, value) {
   const el = document.querySelector(selector)
   if (!el) return
-  // $FlowFixMe
+
   el.style[key] = value
 }
 

@@ -7,9 +7,9 @@ tests are better suited as Brim unit tests or tests written in zq.git.
 
 The tests use Jest and Spectron.
 
-* https://jestjs.io
-* https://www.electronjs.org/spectron
-* https://github.com/electron-userland/spectron
+- https://jestjs.io
+- https://www.electronjs.org/spectron
+- https://github.com/electron-userland/spectron
 
 # Requirements
 
@@ -25,34 +25,34 @@ Parallelization is not supported, so `jest --runInBand` is forced in
 
 You can also run individual files like:
 
-`npm run itest -- itest/tests/smoke.test.js`
+`npm run itest -- itest/tests/smoke.test.ts`
 
 See `npm run itest -- --help` for more, or see [Jest
 docs](https://jestjs.io/docs/en/24.x/getting-started).
 
 # Code Layout
 
-* `itest/lib/app.js`: common tasks for performing actions in Brim
-* `itest/lib/control.js`: control flow functions
-* `itest/lib/jest.js`: Jest-specific adjustments to test behavior
-* `itest/lob/log.js`: System-wide logging setup
-* `itest/tests`: Tests, broken down by general feature/functionality
-* `src/js/test/integration.js`: Single source of truth to define
+- `itest/lib/app.ts`: common tasks for performing actions in Brim
+- `itest/lib/control.ts`: control flow functions
+- `itest/lib/jest.ts`: Jest-specific adjustments to test behavior
+- `itest/lob/log.ts`: System-wide logging setup
+- `itest/tests`: Tests, broken down by general feature/functionality
+- `src/js/test/integration.ts`: Single source of truth to define
   test and app interactions, like derivation of selectors.
 
 # Code and Commit Style
 
 Please use the same commit style as the rest of the code base. Code is
-expected to pass lint/flow/format. There is a CI check for this.
+expected to pass lint/typecheck/format. There is a CI check for this.
 
 # Adding a New Integration Test
 
 1. If the integration test needs to interact with one or more elements,
    ensure they are defined
-   1. At `src/js/test/integration.js`
+   1. At `src/js/test/integration.ts`
    1. In their source. In most cases you can import and use the
       `reactElementProps()` function.
-1. Add methods to `itest/lib/app.js` to interact with elements. For now
+1. Add methods to `itest/lib/app.ts` to interact with elements. For now
    I'm keeping these short. Recently I've begun to wrap them in
    `appStep()` for better debugging capabilties. The API to work with
    here is for [WebdriverIO v4](http://v4.webdriver.io/api.html).

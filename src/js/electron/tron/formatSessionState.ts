@@ -33,7 +33,7 @@ export default function(
 }
 
 function getWindowOrder(windows: WindowsState): string[] {
-  return Object.entries(windows) // $FlowFixMe
+  return Object.entries(windows)
     .sort((a, b) => a[1].lastFocused - b[1].lastFocused)
     .map((e) => e[0])
 }

@@ -1,5 +1,4 @@
-/* @flow
-
+/*
 TRANSACTION
 This function accepts an array of "steps". A step is an object with two
 function properties called "do" (required) and "undo" (optional).

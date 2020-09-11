@@ -1,10 +1,8 @@
-/* @flow */
-
 import {camelCase, kebabCase, upperFirst} from "lodash"
 
 import {write} from "../utils/file"
 
-export function handleIcon(input: string) {
+export function handleIcon(input) {
   let name = upperFirst(camelCase(input))
   let className = kebabCase(input) + "-icon"
   let importPath = `../../static/icons/${input}.svg`
@@ -13,8 +11,7 @@ export function handleIcon(input: string) {
 }
 
 function genContents(name, importPath, className) {
-  return `/* @flow */
-
+  return `
 import React from "react"
 
 import ${name}Svg from "${importPath}"

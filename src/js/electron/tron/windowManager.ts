@@ -77,7 +77,6 @@ export default function windowManager() {
     },
 
     getWindows(): WindowState[] {
-      // $FlowFixMe
       return Object.values(windows)
     },
 

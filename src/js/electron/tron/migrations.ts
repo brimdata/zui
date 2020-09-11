@@ -28,7 +28,7 @@ export default async function migrations(
   currentVersion: string | number = 0
 ): Promise<Migrations> {
   let cv = parseInt(currentVersion.toString())
-  // $FlowFixMe
+
   const files = await lib.file(dir).contents()
   const migrations = files
     .filter(excludeTests)
@@ -71,7 +71,6 @@ function excludeTests(file) {
 }
 
 function build(file): Migration {
-  // $FlowFixMe
   const migrate = require(path.join(dir, file)).default
   const [version] = file
     .replace(".js", "")

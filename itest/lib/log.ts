@@ -2,10 +2,6 @@ import path from "path"
 import {createLogger, format, transports} from "winston"
 import {itestDir} from "./env"
 
-// When the flow-typed update produces an error....
-// flow-typed/npm/winston_v3.x.x.js
-// [1] 124│     createLogger: <T>($winstonLoggerConfig<T>) => $winstonLogger<T>,
-
 export const LOG = createLogger({
   level: "info",
   format: format.combine(

@@ -1,5 +1,4 @@
-/* @flow
-
+/* 
   This is a component only used for integration tests. Since spectron cannot
   interact with the native right click menus, this component creates an
   html version of the right click menus with the same labels and click handlers

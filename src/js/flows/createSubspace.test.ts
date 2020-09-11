@@ -72,7 +72,6 @@ test("Sends the array of selected logs", async () => {
 })
 
 test("The list of spaces is updated", async () => {
-  // $FlowFixMe
   const count = () => select(Spaces.getSpaces(conn.id)).length
   expect(count()).toBe(1)
   await store.dispatch(createSubspace())

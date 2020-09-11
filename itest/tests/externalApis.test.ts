@@ -28,7 +28,7 @@ describe("doc urls", () => {
   const buildUrl = (s) => [s, brim.zeekLogInfo(s).docsUrl()]
   const request = (path, url) =>
     new Promise((good, bad) => {
-      https // $FlowFixMe
+      https
         .request(url, {method: "HEAD"}, (res) => {
           if (res.statusCode === 200) good()
           else bad(`${res.statusCode}: ${path}${url}`)

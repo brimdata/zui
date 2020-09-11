@@ -1,3 +1,0 @@
-#!/bin/sh
-
-npx flow --json | jq '.errors[] | .message[] | select(.context // "" | startswith("import")) | "\(.path):\(.line):\(.endline)"' | uniq | sed -e 's/"//g'

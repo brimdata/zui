@@ -84,7 +84,7 @@ Test helpers and test data. Actual unit tests should go next to the files they e
 
 **/types**
 
-A place for generic flow types that are used throughout the app. If you need to create a type that is specific to a component or a class, define and export it from here.
+A place for generic types that are used throughout the app. If you need to create a type that is specific to a component or a class, define and export it from here.
 
 **/zqd**
 
@@ -98,7 +98,7 @@ Additionally, we rely heavily on the node modules listed here:
 
 **JavaScript**
 
-- [Flow Type Checker](https://flow.org/) Check for errors with `npm run flow`
+- [TypeScript](https://www.typescriptlang.org/) Check for errors with `npm run tsc`
 - [ESLint](https://eslint.org/) Check for errors with `npm run lint`
 - [Prettier](https://prettier.io/docs/en/index.html) All code must be formatted with `npm run format`
 

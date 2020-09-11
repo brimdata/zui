@@ -51,7 +51,7 @@ export default function SearchPageTitle() {
   const space = useSelector(Current.mustGetSpace)
   const {size, name, min_time, max_time} = space
   const bytes = formatBytes(size, 1)
-  // $FlowFixMe
+
   const duration = brim.span([min_time, max_time]).shortFormat()
 
   return (

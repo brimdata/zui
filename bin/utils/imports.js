@@ -1,13 +1,11 @@
-/* @flow */
-
 const fs = require("fs")
 
 const {Importer} = require("import-js")
 
 const {write} = require("./file")
 
-export function fixImports(filename: string) {
-  fs.readFile(filename, "utf-8", (err: ?Error, fileContent: string) => {
+export function fixImports(filename) {
+  fs.readFile(filename, "utf-8", (err, fileContent) => {
     if (err) return
 
     let lines = fileContent.split("\n")

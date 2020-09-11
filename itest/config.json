@@ -1,16 +1,7 @@
 {
   "bail": 10,
-  "collectCoverageFrom": [
-    "**/*.js",
-    "!**/flow-typed/**",
-    "!**/test/**"
-  ],
-  "globalSetup": "<rootDir>/globalSetup.js",
-  "reporters": [
-    "default",
-    "jest-junit"
-  ],
-  "setupFiles": [
-    "<rootDir>/setup.js"
-  ]
+  "collectCoverageFrom": ["**/*.ts", "!**/test/**"],
+  "globalSetup": "<rootDir>/globalSetup.ts",
+  "reporters": ["default", "jest-junit"],
+  "setupFiles": ["<rootDir>/setup.ts"]
 }

@@ -13,6 +13,6 @@ export const openNewSearchTab = (): Thunk => (dispatch, getState) => {
     span: Tab.getSpan(state),
     program: SearchBar.getSearchBarInputValue(state)
   }
-  // $FlowFixMe
+
   invoke(ipc.windows.newSearchTab(params))
 }

@@ -1,4 +1,3 @@
-/* @flow */
 import {camelCase} from "lodash"
 import moment from "moment"
 
@@ -7,12 +6,12 @@ import path from "path"
 import {write} from "../utils/file"
 import tron from "../../src/js/electron/tron"
 
-export async function handleMigration(input: string) {
+export async function handleMigration(input) {
   let name = camelCase(input)
   let version = moment().format("YYYYMMDDHHmm")
   let title = version + "_" + name
-  let file = title + ".js"
-  let test = title + ".test.js"
+  let file = title + ".ts"
+  let test = title + ".test.ts"
   let dir = path.join(__dirname, "../../src/js/state/migrations")
 
   let migrations = await tron.migrations()
@@ -23,9 +22,8 @@ export async function handleMigration(input: string) {
 }
 
 function contents(name) {
-  return `/* @flow */
-
-export default function ${name}(state: *) {
+  return `
+export default function ${name}(state: any) {
   // Migrate state here
   return state
 }
@@ -33,8 +31,7 @@ export default function ${name}(state: *) {
 }
 
 function testContents(title, version, prevVersion) {
-  return `/* @flow */
-
+  return `
 import getTestState from "../../test/helpers/getTestState"
 import migrate from "./${title}"
 
