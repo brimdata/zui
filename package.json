@@ -41,7 +41,7 @@
     "notify": false,
     "notifyMode": "change",
     "setupFilesAfterEnv": [
-      "./src/js/test/setup.js"
+      "./src/js/test/setup.ts"
     ],
     "testURL": "http://localhost",
     "roots": [
@@ -55,7 +55,7 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
-    "globalSetup": "./src/js/test/globalSetup.js"
+    "globalSetup": "./src/js/test/globalSetup.ts"
   },
   "prettier": {
     "semi": false,
