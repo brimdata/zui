@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`table search sets the Columns columns 1`] = `
+Object {
+  "f85b7481593632c9884034d965640304": Object {
+    "_log:zfile": Object {
+      "isVisible": true,
+    },
+    "count:count": Object {
+      "isVisible": true,
+    },
+    "key:addr": Object {
+      "isVisible": true,
+    },
+  },
+}
+`;
+
+exports[`table search sets the viewer columns 1`] = `
+Object {
+  "f85b7481593632c9884034d965640304": Array [
+    Object {
+      "name": "key",
+      "type": "addr",
+    },
+    Object {
+      "name": "count",
+      "type": "count",
+    },
+    Object {
+      "name": "_log",
+      "type": "zfile",
+    },
+  ],
+}
+`;

@@ -1,0 +1,7 @@
+{"type":"TaskStart","task_id":0}
+
+
+{"type":"SearchRecords","channel_id":0,"records":[{"id":25,"type":[{"name":"key","type":"ip"},{"name":"count","type":"uint64"},{"name":"_log","type":"zfile"}],"aliases":[{"name":"zfile","type":"string"}],"values":["10.47.7.155","376","20180324/1521912990.158766.zng"]},{"id":25,"values":["10.47.7.155","225","20180324/1521912507.399929.zng"]},{"id":25,"values":["10.47.7.155","135","20180324/1521912075.114273.zng"]},{"id":25,"values":["10.47.7.155","27","20180324/1521911772.980384.zng"]}]}
+
+
+{"type":"TaskEnd","task_id":0}
