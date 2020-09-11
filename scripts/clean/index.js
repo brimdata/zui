@@ -1,4 +1,3 @@
-/* @flow */
-const fs = require("fs-extra")
+let fs = require("fs-extra")
 
 fs.removeSync("dist")
