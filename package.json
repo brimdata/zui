@@ -33,7 +33,7 @@
     "release": "node scripts/release --darwin",
     "prerelease": "npm run build",
     "prebuild": "npm run clean",
-    "postinstall": "# npm-run-all -s deps:*",
+    "postinstall": "npm-run-all -s deps:*",
     "deps:zdeps": "node scripts/download-zdeps",
     "deps:zealot": "cd zealot && make bundle"
   },
