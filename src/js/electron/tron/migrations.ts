@@ -67,13 +67,16 @@ export default async function migrations(
 }
 
 function excludeTests(file) {
-  return !/\.test\.js/.test(file)
+  return !/\.test\.(ts|js)/.test(file)
 }
 
 function build(file): Migration {
   // $FlowFixMe
   const migrate = require(path.join(dir, file)).default
-  const [version] = file.replace(".js", "").split("_")
+  const [version] = file
+    .replace(".js", "")
+    .replace(".ts", "")
+    .split("_")
   return {
     migrate,
     version: parseInt(version)

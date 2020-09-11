@@ -10,7 +10,7 @@ export const duration = (
   [from, to]: DateTuple,
   unit: TimeUnit = "ms",
   integer = false
-) => moment.duration(moment(to).diff(moment(from), "seconds", integer)).as(unit)
+) => moment.duration(moment(to).diff(moment(from), "ms", integer)).as(unit)
 
 export const humanDuration = ([from, to]: DateTuple) =>
   moment.duration(moment(to).diff(moment(from))).humanize()
