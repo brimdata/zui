@@ -1,3 +1,11 @@
+## v0.17.0
+* Update zq to [v0.21.0](https://github.com/brimsec/zq/releases/tag/v0.21.0)
+* Update Zeek to [v3.2.0-dev-brim9](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim9) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1071)
+* Fix an issue where abruptly killing Brim on Linux or macOS would leave behind an orphaned `zqd` process (#1031)
+* Add an option for executing index searches on Archive Spaces (#1024)
+* Fix an issue where right-clicking to delete a Space when the Brim window was not in focus caused an "Uncaught TypeError" (#1066)
+* Enable import of nanosecond pcap files (#1069)
+
 ## v0.16.0
 * Update zq to [v0.20.0](https://github.com/brimsec/zq/releases/tag/v0.20.0)
 * Update Zeek to [v3.2.0-dev-brim8](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim8) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1033)
