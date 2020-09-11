@@ -28,7 +28,7 @@ Array [
         "role": "hide",
       },
       Object {
-        "role": "hideothers",
+        "role": "hideOthers",
       },
       Object {
         "role": "unhide",
@@ -91,13 +91,13 @@ Array [
         "role": "paste",
       },
       Object {
-        "role": "pasteandmatchstyle",
+        "role": "pasteAndMatchStyle",
       },
       Object {
         "role": "delete",
       },
       Object {
-        "role": "selectall",
+        "role": "selectAll",
       },
       Object {
         "type": "separator",
@@ -106,10 +106,10 @@ Array [
         "label": "Speech",
         "submenu": Array [
           Object {
-            "role": "startspeaking",
+            "role": "startSpeaking",
           },
           Object {
-            "role": "stopspeaking",
+            "role": "stopSpeaking",
           },
         ],
       },
@@ -155,22 +155,22 @@ Array [
         "role": "reload",
       },
       Object {
-        "role": "forcereload",
+        "role": "forceReload",
       },
       Object {
-        "role": "toggledevtools",
+        "role": "toggleDevTools",
       },
       Object {
         "type": "separator",
       },
       Object {
-        "role": "resetzoom",
+        "role": "resetZoom",
       },
       Object {
-        "role": "zoomin",
+        "role": "zoomIn",
       },
       Object {
-        "role": "zoomout",
+        "role": "zoomOut",
       },
       Object {
         "type": "separator",
@@ -308,13 +308,13 @@ Array [
         "role": "paste",
       },
       Object {
-        "role": "pasteandmatchstyle",
+        "role": "pasteAndMatchStyle",
       },
       Object {
         "role": "delete",
       },
       Object {
-        "role": "selectall",
+        "role": "selectAll",
       },
     ],
   },
@@ -358,22 +358,22 @@ Array [
         "role": "reload",
       },
       Object {
-        "role": "forcereload",
+        "role": "forceReload",
       },
       Object {
-        "role": "toggledevtools",
+        "role": "toggleDevTools",
       },
       Object {
         "type": "separator",
       },
       Object {
-        "role": "resetzoom",
+        "role": "resetZoom",
       },
       Object {
-        "role": "zoomin",
+        "role": "zoomIn",
       },
       Object {
-        "role": "zoomout",
+        "role": "zoomOut",
       },
       Object {
         "type": "separator",
