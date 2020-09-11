@@ -12,6 +12,9 @@ type Props = {
   menu: $Menu
 }
 
+const on = document.addEventListener
+const off = document.removeEventListener
+
 export default function SingleField({field, menu}: Props) {
   const [selected, setSelected] = useState(false)
   const cell = useRef<any>()
@@ -24,15 +27,15 @@ export default function SingleField({field, menu}: Props) {
   function onOutsideClick(e: MouseEvent) {
     if (cell.current && cell.current.contains(e.target)) return
     setSelected(false)
-    lib.off("click", onOutsideClick, false)
+    off("click", onOutsideClick, false)
   }
 
   useEffect(() => {
     if (selected) {
-      lib.on("click", onOutsideClick, false)
+      on("click", onOutsideClick, false)
     }
     return () => {
-      lib.off("click", onOutsideClick, false)
+      off("click", onOutsideClick, false)
     }
   }, [selected])
 

@@ -29,8 +29,6 @@ export default {
   open,
   date,
   transaction,
-  on: document.addEventListener,
-  off: document.removeEventListener,
   compact: (array: any[]) => array.filter((item) => !!item),
   uniq,
   bounded: (num: number, [from, to]: [number, number]) => {

@@ -1,4 +1,5 @@
-import lib from "../../lib"
+const on = document.addEventListener
+const off = document.removeEventListener
 
 export default function useDrag(handler: Function) {
   return (args: any = {}) => {
@@ -15,8 +16,8 @@ export default function useDrag(handler: Function) {
         dy: 0,
         type: "down"
       })
-      lib.on("mousemove", onMove)
-      lib.on("mouseup", onUp)
+      on("mousemove", onMove)
+      on("mouseup", onUp)
     }
 
     function onMove(event: MouseEvent) {
@@ -28,8 +29,8 @@ export default function useDrag(handler: Function) {
         type: "move"
       })
       if (res === false) {
-        lib.off("mousemove", onMove)
-        lib.off("mouseup", onUp)
+        off("mousemove", onMove)
+        off("mouseup", onUp)
       }
     }
 
@@ -41,8 +42,8 @@ export default function useDrag(handler: Function) {
         dy: event.clientY - startY,
         type: "up"
       })
-      lib.off("mousemove", onMove)
-      lib.off("mouseup", onUp)
+      off("mousemove", onMove)
+      off("mouseup", onUp)
     }
 
     return {
