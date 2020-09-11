@@ -1,18 +1,17 @@
-
-import { ANALYTIC_MAX_RESULTS, PER_PAGE } from "../../flows/config";
-import { SearchArgs, SearchType } from "./types";
-import { SearchRecord } from "../../types";
-import { State } from "../types";
-import { addEveryCountProc } from "../../searches/histogramSearch";
-import { addHeadProc } from "../../lib/Program";
-import Current from "../Current";
-import SearchBar from "../SearchBar";
-import Tab from "../Tab";
-import brim from "../../brim";
+import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../../flows/config"
+import {SearchArgs, SearchType} from "./types"
+import {SearchRecord} from "../../types"
+import {State} from "../types"
+import {addEveryCountProc} from "../../searches/histogramSearch"
+import {addHeadProc} from "../../lib/Program"
+import Current from "../Current"
+import SearchBar from "../SearchBar"
+import Tab from "../Tab"
+import brim from "../../brim"
 
 export default {
   getRecord: (state: State): SearchRecord => {
-    const space = Current.mustGetSpace(state);
+    const space = Current.mustGetSpace(state)
     return {
       program: SearchBar.getSearchBar(state).previous,
       pins: SearchBar.getSearchBar(state).pinned,
@@ -20,11 +19,11 @@ export default {
       spaceName: space.name,
       spaceId: space.id,
       target: SearchBar.getTarget(state)
-    };
+    }
   },
 
   getCurrentRecord: (state: State): SearchRecord => {
-    const space = Current.mustGetSpace(state);
+    const space = Current.mustGetSpace(state)
     return {
       program: SearchBar.getSearchBar(state).current,
       pins: SearchBar.getSearchBar(state).pinned,
@@ -32,16 +31,16 @@ export default {
       spaceName: space.name,
       spaceId: space.id,
       target: SearchBar.getTarget(state)
-    };
+    }
   },
 
   getArgs: (state: State): SearchArgs => {
-    let program = SearchBar.getSearchProgram(state);
-    let span = Tab.getSpanAsDates(state);
-    let spanFocus = Tab.getSpanFocusAsDates(state);
-    let space = Current.mustGetSpace(state);
-    let type: SearchType = getArgsType(program, spanFocus);
-    let perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE;
+    let program = SearchBar.getSearchProgram(state)
+    let span = Tab.getSpanAsDates(state)
+    let spanFocus = Tab.getSpanFocusAsDates(state)
+    let space = Current.mustGetSpace(state)
+    let type: SearchType = getArgsType(program, spanFocus)
+    let perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE
 
     return {
       tableProgram: addHeadProc(program, perPage),
@@ -50,11 +49,12 @@ export default {
       spaceId: space.id,
       spaceName: space.name,
       type
-    };
+    }
   }
-};
+}
 
 function getArgsType(program, spanFocus): SearchType {
-  if (brim.program(program).hasAnalytics()) return "analytics";else if (spanFocus) return "zoom";
-  return "events";
+  if (brim.program(program).hasAnalytics()) return "analytics"
+  else if (spanFocus) return "zoom"
+  return "events"
 }

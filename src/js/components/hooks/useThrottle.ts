@@ -1,40 +1,39 @@
+import {useEffect, useRef, useState} from "react"
 
-import { useEffect, useRef, useState } from "react";
-
-export default function (value: any, wait: number) {
-  let [state, setState] = useState(value);
-  let timeout = useRef(null);
-  let pending = useRef(false);
-  let nextValue = useRef(null);
+export default function(value: any, wait: number) {
+  let [state, setState] = useState(value)
+  let timeout = useRef(null)
+  let pending = useRef(false)
+  let nextValue = useRef(null)
 
   const cancel = () => {
     if (timeout.current) {
-      clearTimeout(timeout.current);
-      timeout.current = undefined;
-      pending.current = false;
+      clearTimeout(timeout.current)
+      timeout.current = undefined
+      pending.current = false
     }
-  };
+  }
 
   useEffect(() => {
     if (!timeout.current) {
-      setState(value);
+      setState(value)
 
       let callback = () => {
         if (pending.current) {
-          pending.current = false;
-          setState(nextValue.current);
-          timeout.current = setTimeout(callback, wait);
+          pending.current = false
+          setState(nextValue.current)
+          timeout.current = setTimeout(callback, wait)
         } else {
-          timeout.current = undefined;
+          timeout.current = undefined
         }
-      };
+      }
 
-      timeout.current = setTimeout(callback, wait);
+      timeout.current = setTimeout(callback, wait)
     } else {
-      pending.current = true;
-      nextValue.current = value;
+      pending.current = true
+      nextValue.current = value
     }
-  }, [value]);
+  }, [value])
 
-  return [state, cancel];
+  return [state, cancel]
 }

@@ -1,3 +1,1 @@
-
-
-export default ((s: any) => s);
+export default (s: any) => s

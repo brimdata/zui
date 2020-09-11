@@ -1,23 +1,19 @@
-
-
-import { getAllStates } from "../../test/helpers/getTestState";
+import {getAllStates} from "../../test/helpers/getTestState"
 
 export default function setInvestigationSpaceToNameAndId(state: any) {
   for (const s of getAllStates(state)) {
-    if (!s.investigation) continue;
+    if (!s.investigation) continue
 
-    for (const {
-      search
-    } of s.investigation) {
-      const oldName = search.space;
+    for (const {search} of s.investigation) {
+      const oldName = search.space
       if (oldName) {
-        search.spaceName = oldName;
-        search.spaceId = oldName;
+        search.spaceName = oldName
+        search.spaceId = oldName
       }
 
-      delete search.space;
+      delete search.space
     }
   }
 
-  return state;
+  return state
 }

@@ -1,25 +1,23 @@
+import md5 from "md5"
 
-
-import md5 from "md5";
-
-import { Descriptor, Descriptors } from "../../../types";
-import columnKey from "../../../lib/columnKey";
+import {Descriptor, Descriptors} from "../../../types"
+import columnKey from "../../../lib/columnKey"
 
 export function hashDescriptorKeys(desc: Descriptors) {
-  let newObj = {};
+  let newObj = {}
 
   for (let td in desc) {
-    let columns = desc[td];
-    let hash = descriptorHash(columns);
+    let columns = desc[td]
+    let hash = descriptorHash(columns)
 
-    newObj[hash] = columns;
+    newObj[hash] = columns
   }
 
-  return newObj;
+  return newObj
 }
 
 function descriptorHash(desc: Descriptor) {
-  let string = desc.map(columnKey).join(" ");
+  let string = desc.map(columnKey).join(" ")
 
-  return md5(string);
+  return md5(string)
 }

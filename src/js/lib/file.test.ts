@@ -1,39 +1,41 @@
+import lib from "./"
+import tmp from "tmp"
 
-import lib from "./";
-import tmp from "tmp";
-
-let tmpFile;
+let tmpFile
 
 beforeAll(() => {
-  tmpFile = tmp.fileSync().name;
-});
+  tmpFile = tmp.fileSync().name
+})
 
 afterAll(() => {
-  return lib.file(tmpFile).remove().catch(_e => {});
-});
+  return lib
+    .file(tmpFile)
+    .remove()
+    .catch((_e) => {})
+})
 
 test("file exists", async () => {
-  let exists = await lib.file("no" + __filename).exists();
+  let exists = await lib.file("no" + __filename).exists()
 
-  expect(exists).toBe(false);
-});
+  expect(exists).toBe(false)
+})
 
 test("file exists true", async () => {
-  let exists = await lib.file(__filename).exists();
+  let exists = await lib.file(__filename).exists()
 
-  expect(exists).toBe(true);
-});
+  expect(exists).toBe(true)
+})
 
 test("file write", () => {
-  return lib.file(tmpFile).write("{}");
-});
+  return lib.file(tmpFile).write("{}")
+})
 
 test("file read", async () => {
-  let contents = await lib.file(tmpFile).read();
+  let contents = await lib.file(tmpFile).read()
 
-  expect(contents).toEqual("{}");
-});
+  expect(contents).toEqual("{}")
+})
 
 test("file remove", async () => {
-  return lib.file(tmpFile).remove();
-});
+  return lib.file(tmpFile).remove()
+})

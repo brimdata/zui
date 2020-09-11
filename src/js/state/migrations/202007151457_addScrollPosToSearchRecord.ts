@@ -1,15 +1,13 @@
-
-
-import { getAllStates } from "../../test/helpers/getTestState";
+import {getAllStates} from "../../test/helpers/getTestState"
 
 export default function addScrollPosToSearchRecord(state: any) {
   for (const s of getAllStates(state)) {
-    if (!s.tabs) continue;
+    if (!s.tabs) continue
     for (const t of s.tabs.data) {
-      t.viewer.scrollPos = { x: 0, y: 0 };
-      delete t.viewer.scrollX;
-      delete t.viewer.scrollY;
+      t.viewer.scrollPos = {x: 0, y: 0}
+      delete t.viewer.scrollX
+      delete t.viewer.scrollY
     }
   }
-  return state;
+  return state
 }

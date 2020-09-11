@@ -1,24 +1,23 @@
-
 export default {
   getWidth() {
-    return window.innerWidth;
+    return window.innerWidth
   },
 
   getHeight() {
-    return window.innerHeight;
+    return window.innerHeight
   },
 
   clearTextSelection() {
-    window.getSelection && window.getSelection().empty();
+    window.getSelection && window.getSelection().empty()
   },
 
   selectText(node: HTMLElement) {
     if (window.getSelection) {
-      const selection = window.getSelection();
-      const range = document.createRange();
-      range.selectNodeContents(node);
-      selection.removeAllRanges();
-      selection.addRange(range);
+      const selection = window.getSelection()
+      const range = document.createRange()
+      range.selectNodeContents(node)
+      selection.removeAllRanges()
+      selection.addRange(range)
     }
   }
-};
+}

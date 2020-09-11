@@ -1,6 +1,13 @@
-
-
-import { SPACES_DETAIL, SPACES_INGEST_PROGRESS, SPACES_INGEST_WARNING_APPEND, SPACES_INGEST_WARNING_CLEAR, SPACES_SET, SPACES_REMOVE, Space, SPACES_RENAME } from "./types";
+import {
+  SPACES_DETAIL,
+  SPACES_INGEST_PROGRESS,
+  SPACES_INGEST_WARNING_APPEND,
+  SPACES_INGEST_WARNING_CLEAR,
+  SPACES_SET,
+  SPACES_REMOVE,
+  Space,
+  SPACES_RENAME
+} from "./types"
 
 export default {
   setSpaces: (clusterId: string, spaces: Space[]): SPACES_SET => ({
@@ -15,7 +22,11 @@ export default {
     space
   }),
 
-  rename: (clusterId: string, spaceId: string, newName: string): SPACES_RENAME => ({
+  rename: (
+    clusterId: string,
+    spaceId: string,
+    newName: string
+  ): SPACES_RENAME => ({
     type: "SPACES_RENAME",
     clusterId,
     spaceId,
@@ -28,23 +39,34 @@ export default {
     spaceId
   }),
 
-  setIngestProgress: (clusterId: string, spaceId: string, value: number | null): SPACES_INGEST_PROGRESS => ({
+  setIngestProgress: (
+    clusterId: string,
+    spaceId: string,
+    value: number | null
+  ): SPACES_INGEST_PROGRESS => ({
     type: "SPACES_INGEST_PROGRESS",
     clusterId,
     spaceId,
     value
   }),
 
-  appendIngestWarning: (clusterId: string, spaceId: string, warning: string): SPACES_INGEST_WARNING_APPEND => ({
+  appendIngestWarning: (
+    clusterId: string,
+    spaceId: string,
+    warning: string
+  ): SPACES_INGEST_WARNING_APPEND => ({
     type: "SPACES_INGEST_WARNING_APPEND",
     clusterId,
     spaceId,
     warning
   }),
 
-  clearIngestWarnings: (clusterId: string, spaceId: string): SPACES_INGEST_WARNING_CLEAR => ({
+  clearIngestWarnings: (
+    clusterId: string,
+    spaceId: string
+  ): SPACES_INGEST_WARNING_CLEAR => ({
     type: "SPACES_INGEST_WARNING_CLEAR",
     clusterId,
     spaceId
   })
-};
+}

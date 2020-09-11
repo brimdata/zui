@@ -1,7 +1,6 @@
-
-import invoke from "../electron/ipc/invoke";
-import ipc from "../electron/ipc";
+import invoke from "../electron/ipc/invoke"
+import ipc from "../electron/ipc"
 
 export const globalDispatch = (action: Object) => {
-  return invoke(ipc.globalStore.dispatch(action));
-};
+  return invoke(ipc.globalStore.dispatch(action))
+}

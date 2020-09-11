@@ -1,6 +1,9 @@
-
-
-import { PREFS_DATA_DIR_SET, PREFS_JSON_TYPES_CONFIG_SET, PREFS_TIME_FORMAT_SET, PREFS_ZEEK_RUNNER_SET } from "./types";
+import {
+  PREFS_DATA_DIR_SET,
+  PREFS_JSON_TYPES_CONFIG_SET,
+  PREFS_TIME_FORMAT_SET,
+  PREFS_ZEEK_RUNNER_SET
+} from "./types"
 
 export default {
   setJSONTypeConfig: (path: string): PREFS_JSON_TYPES_CONFIG_SET => ({
@@ -22,4 +25,4 @@ export default {
     type: "PREFS_DATA_DIR_SET",
     dataDir
   })
-};
+}

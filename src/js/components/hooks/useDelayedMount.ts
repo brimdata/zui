@@ -1,20 +1,19 @@
-
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react"
 
 export default function useDelayedMount(show: boolean, delay: number) {
-  let [ready, setReady] = useState(false);
+  let [ready, setReady] = useState(false)
 
   useEffect(() => {
-    let id;
+    let id
     if (show) {
-      id = setTimeout(() => setReady(true), delay);
+      id = setTimeout(() => setReady(true), delay)
     } else {
-      setReady(false);
+      setReady(false)
     }
     return () => {
-      clearTimeout(id);
-    };
-  }, [show]);
+      clearTimeout(id)
+    }
+  }, [show])
 
-  return ready;
+  return ready
 }

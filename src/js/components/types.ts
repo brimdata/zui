@@ -1,5 +1,4 @@
-
 export type PassProps = {
-  children?: any;
-  className?: string;
-};
+  children?: any
+  className?: string
+}

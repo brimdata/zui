@@ -1,21 +1,20 @@
+import {render} from "react-dom"
 
-import { render } from "react-dom";
-
-import { Pen } from "../types";
+import {Pen} from "../types"
 
 export default function reactComponent(renderComponent: any): Pen {
-  let root;
+  let root
 
   function mount(el) {
-    root = document.createElement("div");
+    root = document.createElement("div")
     if (el.parentNode) {
-      el.parentNode.appendChild(root);
+      el.parentNode.appendChild(root)
     }
   }
 
   function draw(chart) {
-    render(renderComponent(chart), root);
+    render(renderComponent(chart), root)
   }
 
-  return { draw, mount };
+  return {draw, mount}
 }

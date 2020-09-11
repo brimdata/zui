@@ -1,63 +1,59 @@
-import brim from "./";
+import brim from "./"
 
-const NOW = /^\s*now\s*$/i;
-const AGO = /^\s*now\s*-\s*(\d+)\s*([smhdwMy])\s*$/i;
+const NOW = /^\s*now\s*$/i
+const AGO = /^\s*now\s*-\s*(\d+)\s*([smhdwMy])\s*$/i
 
-type Op = null | "-";
-type Unit = "s" | "m" | "h" | "d" | "w" | "M" | "y";
-type Ast = { op: Op; amount: number; unit: Unit };
+type Op = null | "-"
+type Unit = "s" | "m" | "h" | "d" | "w" | "M" | "y"
+type Ast = {op: Op; amount: number; unit: Unit}
 
 export default function relTime(expr: string, now: Date = new Date()) {
   function parse(): Ast {
     if (AGO.test(expr)) {
-      let match = expr.match(AGO);
+      let match = expr.match(AGO)
       // @ts-ignore
-      return { op: "-", amount: Number(match[1]), unit: match[2] };
+      return {op: "-", amount: Number(match[1]), unit: match[2]}
     }
 
     if (NOW.test(expr)) {
-      return { amount: 0, op: null, unit: "s" };
+      return {amount: 0, op: null, unit: "s"}
     }
 
-    throw new Error("Invalid relTime expression: " + expr);
+    throw new Error("Invalid relTime expression: " + expr)
   }
 
   function execute(ast: Ast) {
-    let time = brim.time(now);
+    let time = brim.time(now)
 
     switch (ast.op) {
       case "-":
-        return time.subtract(ast.amount, ast.unit);
+        return time.subtract(ast.amount, ast.unit)
       default:
-        return time;
+        return time
     }
   }
 
   return {
     isValid() {
       try {
-        parse();
-        return true;
+        parse()
+        return true
       } catch {
-        return false;
+        return false
       }
     },
 
     toTs() {
-      return execute(parse()).toTs();
+      return execute(parse()).toTs()
     },
 
     toAst() {
-      return parse();
+      return parse()
     },
 
     format() {
-      let {
-        op,
-        amount,
-        unit,
-      } = parse();
-      if (op === null) return "Now";
+      let {op, amount, unit} = parse()
+      if (op === null) return "Now"
 
       let map = {
         s: "second",
@@ -66,12 +62,12 @@ export default function relTime(expr: string, now: Date = new Date()) {
         d: "day",
         w: "week",
         M: "month",
-        y: "year",
-      };
-      let fullUnit = map[unit] || "?";
-      if (amount > 1) fullUnit += "s";
+        y: "year"
+      }
+      let fullUnit = map[unit] || "?"
+      if (amount > 1) fullUnit += "s"
 
-      return `${amount} ${fullUnit} ago`;
-    },
-  };
+      return `${amount} ${fullUnit} ago`
+    }
+  }
 }

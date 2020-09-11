@@ -1,19 +1,18 @@
-
-import { Thunk } from "../state/types";
-import { globalDispatch } from "../state/GlobalContext";
-import Current from "../state/Current";
-import Spaces from "../state/Spaces";
-import { getZealot } from "./getZealot";
+import {Thunk} from "../state/types"
+import {globalDispatch} from "../state/GlobalContext"
+import Current from "../state/Current"
+import Spaces from "../state/Spaces"
+import {getZealot} from "./getZealot"
 
 export default function refreshSpaceInfo(): Thunk {
   return () => (dispatch, getState) => {
-    const zealot = dispatch(getZealot());
-    const id = Current.getSpaceId(getState());
+    const zealot = dispatch(getZealot())
+    const id = Current.getSpaceId(getState())
 
     return zealot.spaces.get(id).then((data: any) => {
-      let id = Current.getConnectionId(getState());
-      if (!id) return;
-      globalDispatch(Spaces.setDetail(id, data));
-    });
-  };
+      let id = Current.getConnectionId(getState())
+      if (!id) return
+      globalDispatch(Spaces.setDetail(id, data))
+    })
+  }
 }

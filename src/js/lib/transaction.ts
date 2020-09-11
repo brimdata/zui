@@ -23,62 +23,62 @@ Once all steps have been undone, an TransactionError is thrown with all the
 errors it collected.
 */
 
-type Step = {do: Function;undo?: Function;};
-export default async function (steps: Step[]) {
-  let ctx;
-  let undoErrs = [];
+type Step = {do: Function; undo?: Function}
+export default async function(steps: Step[]) {
+  let ctx
+  let undoErrs = []
 
   for (let d = 0; d < steps.length; d++) {
     try {
-      let ret = await steps[d].do(ctx);
-      ctx = ret === undefined ? ctx : ret;
+      let ret = await steps[d].do(ctx)
+      ctx = ret === undefined ? ctx : ret
     } catch (doErr) {
       for (let u = d - 1; u >= 0; u--) {
-        let {
-          undo
-        } = steps[u];
-        if (!undo) continue;
+        let {undo} = steps[u]
+        if (!undo) continue
         try {
-          await undo(ctx);
+          await undo(ctx)
         } catch (undoErr) {
-          undoErrs.push(new UndoError(undoErr, u + 1));
+          undoErrs.push(new UndoError(undoErr, u + 1))
         }
       }
-      throw new TransactionError(doErr, d + 1, steps, undoErrs);
+      throw new TransactionError(doErr, d + 1, steps, undoErrs)
     }
   }
-  return ctx;
+  return ctx
 }
 
 class UndoError extends Error {
-
-  cause: Error;
-  step: number;
+  cause: Error
+  step: number
   constructor(cause, step) {
-    super(`Undo ${step} Failed: ${cause.message}`);
-    this.step = step;
-    this.stack = cause.stack;
+    super(`Undo ${step} Failed: ${cause.message}`)
+    this.step = step
+    this.stack = cause.stack
   }
 }
 
 class TransactionError extends Error {
-
-  cause: Error;
-  undoErrors: UndoError[];
+  cause: Error
+  undoErrors: UndoError[]
 
   constructor(cause, step, steps, undoErrs) {
-    super(`${failMessage(step, steps)} (${undoMsg(undoErrs)})\nCause: ${cause.message}\n`);
-    this.cause = cause;
-    this.stack = cause.stack;
-    this.undoErrors = undoErrs;
+    super(
+      `${failMessage(step, steps)} (${undoMsg(undoErrs)})\nCause: ${
+        cause.message
+      }\n`
+    )
+    this.cause = cause
+    this.stack = cause.stack
+    this.undoErrors = undoErrs
   }
 }
 
 function failMessage(step, steps) {
-  return `Transaction failed at step ${step} of ${steps.length}`;
+  return `Transaction failed at step ${step} of ${steps.length}`
 }
 
 function undoMsg(errs: UndoError[]) {
-  if (errs.length === 0) return "Undos succeeded";
-  return `Undos failed at step ${errs.map(e => e.step).join(", ")}`;
+  if (errs.length === 0) return "Undos succeeded"
+  return `Undos failed at step ${errs.map((e) => e.step).join(", ")}`
 }

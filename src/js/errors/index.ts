@@ -1,6 +1,5 @@
-
-import logsIngest from "./logsIngest";
-import pcapIngest from "./pcapIngest";
+import logsIngest from "./logsIngest"
+import pcapIngest from "./pcapIngest"
 
 export default {
   pcapIngest,
@@ -15,4 +14,4 @@ export default {
     message: "The import was interrupted.",
     details: ["To prevent this, keep your computer awake during the import."]
   })
-};
+}

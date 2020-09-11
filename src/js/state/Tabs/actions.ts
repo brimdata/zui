@@ -1,5 +1,12 @@
-
-import { AddTabData, TABS_ACTIVATE, TABS_ACTIVE_CLEAR, TABS_ADD, TABS_MOVE, TABS_ORDER, TABS_REMOVE } from "./types";
+import {
+  AddTabData,
+  TABS_ACTIVATE,
+  TABS_ACTIVE_CLEAR,
+  TABS_ADD,
+  TABS_MOVE,
+  TABS_ORDER,
+  TABS_REMOVE
+} from "./types"
 
 export default {
   add: (id: string, data?: AddTabData): TABS_ADD => ({
@@ -27,4 +34,4 @@ export default {
   clearActive: (): TABS_ACTIVE_CLEAR => ({
     type: "TABS_ACTIVE_CLEAR"
   })
-};
+}

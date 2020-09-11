@@ -1,5 +1,3 @@
-
-
 export const dataSets = {
   // The purpose of this object is to have a single source of truth about
   // bounds and metrics related to test data. These numbers are also dependent
@@ -14,4 +12,4 @@ export const dataSets = {
     },
     spaceName: "sample.pcap.brim"
   }
-};
+}

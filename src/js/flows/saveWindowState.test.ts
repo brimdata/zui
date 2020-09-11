@@ -1,12 +1,11 @@
-
-import initTestStore from "../test/initTestStore";
-import saveWindowState from "./saveWindowState";
+import initTestStore from "../test/initTestStore"
+import saveWindowState from "./saveWindowState"
 
 test("does not mutate state", () => {
-  let store = initTestStore();
-  let prevState = { ...store.getState() };
+  let store = initTestStore()
+  let prevState = {...store.getState()}
 
-  store.dispatch(saveWindowState());
+  store.dispatch(saveWindowState())
 
-  expect(store.getState()).toEqual(prevState);
-});
+  expect(store.getState()).toEqual(prevState)
+})

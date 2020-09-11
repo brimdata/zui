@@ -1,40 +1,38 @@
+import Layout from "./"
+import initTestStore from "../../test/initTestStore"
 
-
-import Layout from "./";
-import initTestStore from "../../test/initTestStore";
-
-let store, reduce;
+let store, reduce
 beforeEach(() => {
-  store = initTestStore();
-  reduce = store.dispatchAll;
-});
+  store = initTestStore()
+  reduce = store.dispatchAll
+})
 
 test("setting right side bar width", () => {
-  const state = reduce([Layout.setRightSidebarWidth(299)]);
+  const state = reduce([Layout.setRightSidebarWidth(299)])
 
-  expect(Layout.getRightSidebarWidth(state)).toBe(299);
-});
+  expect(Layout.getRightSidebarWidth(state)).toBe(299)
+})
 
 test("setting left side bar width", () => {
-  const state = reduce([Layout.setLeftSidebarWidth(299)]);
+  const state = reduce([Layout.setLeftSidebarWidth(299)])
 
-  expect(Layout.getLeftSidebarWidth(state)).toBe(299);
-});
+  expect(Layout.getLeftSidebarWidth(state)).toBe(299)
+})
 
 test("set column headers view off", () => {
-  let state = store.dispatchAll([Layout.setColumnHeadersView("OFF")]);
+  let state = store.dispatchAll([Layout.setColumnHeadersView("OFF")])
 
-  expect(Layout.getColumnHeadersView(state)).toBe("OFF");
-});
+  expect(Layout.getColumnHeadersView(state)).toBe("OFF")
+})
 
 test("set column headers view on", () => {
-  let state = store.dispatchAll([Layout.setColumnHeadersView("ON")]);
+  let state = store.dispatchAll([Layout.setColumnHeadersView("ON")])
 
-  expect(Layout.getColumnHeadersView(state)).toBe("ON");
-});
+  expect(Layout.getColumnHeadersView(state)).toBe("ON")
+})
 
 test("set column headers view auto", () => {
-  let state = store.dispatchAll([Layout.setColumnHeadersView("AUTO")]);
+  let state = store.dispatchAll([Layout.setColumnHeadersView("AUTO")])
 
-  expect(Layout.getColumnHeadersView(state)).toBe("AUTO");
-});
+  expect(Layout.getColumnHeadersView(state)).toBe("AUTO")
+})

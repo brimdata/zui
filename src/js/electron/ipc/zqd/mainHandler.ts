@@ -1,9 +1,8 @@
-
-import { ZQD } from "../../../zqd/zqd";
+import {ZQD} from "../../../zqd/zqd"
 
 export default function zqdMainHandler(zqd: ZQD) {
   if (zqd) {
-    zqd.start();
-    console.log("zqd started on: ", zqd.addr());
+    zqd.start()
+    console.log("zqd started on: ", zqd.addr())
   }
 }

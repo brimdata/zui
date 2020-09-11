@@ -1,23 +1,28 @@
+import {useEffect, useRef, useState} from "react"
 
-import { useEffect, useRef, useState } from "react";
-
-export default function useEntrance(show: boolean, enterDelay: number, exitDelay: number) {
-  let [status, setStatus] = useState<"in" | "out" | "exiting" | "entering">("out");
-  let outTimer = useRef(null);
-  let inTimer = useRef(null);
+export default function useEntrance(
+  show: boolean,
+  enterDelay: number,
+  exitDelay: number
+) {
+  let [status, setStatus] = useState<"in" | "out" | "exiting" | "entering">(
+    "out"
+  )
+  let outTimer = useRef(null)
+  let inTimer = useRef(null)
 
   useEffect(() => {
     if (show) {
-      clearTimeout(outTimer.current);
-      inTimer.current = setTimeout(() => setStatus("entering"), enterDelay);
+      clearTimeout(outTimer.current)
+      inTimer.current = setTimeout(() => setStatus("entering"), enterDelay)
     } else {
-      clearTimeout(inTimer.current);
-      outTimer.current = setTimeout(() => setStatus("exiting"), exitDelay);
+      clearTimeout(inTimer.current)
+      outTimer.current = setTimeout(() => setStatus("exiting"), exitDelay)
     }
-  }, [show]);
+  }, [show])
 
-  const entered = () => setStatus("in");
-  const exitted = () => setStatus("out");
+  const entered = () => setStatus("in")
+  const exitted = () => setStatus("out")
 
-  return [status, entered, exitted];
+  return [status, entered, exitted]
 }

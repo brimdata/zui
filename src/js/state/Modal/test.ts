@@ -1,25 +1,26 @@
+import initTestStore from "../../test/initTestStore"
+import Modal from "./"
 
-
-import initTestStore from "../../test/initTestStore";
-import Modal from "./";
-
-let store;
+let store
 beforeEach(() => {
-  store = initTestStore();
-});
+  store = initTestStore()
+})
 
 test("show modal", () => {
-  store.dispatch(Modal.show("whois", { addr: "129.3.2.1" }));
+  store.dispatch(Modal.show("whois", {addr: "129.3.2.1"}))
 
-  let state = store.getState();
+  let state = store.getState()
 
-  expect(Modal.getName(state)).toEqual("whois");
-  expect(Modal.getArgs(state)).toEqual({ addr: "129.3.2.1" });
-});
+  expect(Modal.getName(state)).toEqual("whois")
+  expect(Modal.getArgs(state)).toEqual({addr: "129.3.2.1"})
+})
 
 test("hide Modal", () => {
-  let state = store.dispatchAll([Modal.show("whois", { addr: "129.3.2.1" }), Modal.hide()]);
+  let state = store.dispatchAll([
+    Modal.show("whois", {addr: "129.3.2.1"}),
+    Modal.hide()
+  ])
 
-  expect(Modal.getName(state)).toBe("");
-  expect(Modal.getArgs(state)).toEqual({});
-});
+  expect(Modal.getName(state)).toBe("")
+  expect(Modal.getArgs(state)).toEqual({})
+})

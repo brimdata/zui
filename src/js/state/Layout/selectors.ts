@@ -1,26 +1,44 @@
-
-
-import activeTabSelect from "../Tab/activeTabSelect";
-import { TabState } from "../Tab/types";
+import activeTabSelect from "../Tab/activeTabSelect"
+import {TabState} from "../Tab/types"
 
 export default {
-  getRightSidebarWidth: activeTabSelect((state: TabState) => state.layout.rightSidebarWidth),
+  getRightSidebarWidth: activeTabSelect(
+    (state: TabState) => state.layout.rightSidebarWidth
+  ),
 
-  getRightSidebarIsOpen: activeTabSelect((state: TabState) => state.layout.rightSidebarIsOpen),
+  getRightSidebarIsOpen: activeTabSelect(
+    (state: TabState) => state.layout.rightSidebarIsOpen
+  ),
 
-  getLeftSidebarWidth: activeTabSelect((state: TabState) => state.layout.leftSidebarWidth),
+  getLeftSidebarWidth: activeTabSelect(
+    (state: TabState) => state.layout.leftSidebarWidth
+  ),
 
-  getHistoryIsOpen: activeTabSelect((state: TabState) => state.layout.historyIsOpen),
+  getHistoryIsOpen: activeTabSelect(
+    (state: TabState) => state.layout.historyIsOpen
+  ),
 
-  getSpacesIsOpen: activeTabSelect((state: TabState) => state.layout.spacesIsOpen),
+  getSpacesIsOpen: activeTabSelect(
+    (state: TabState) => state.layout.spacesIsOpen
+  ),
 
-  getHistoryHeight: activeTabSelect((state: TabState) => state.layout.historyHeight),
+  getHistoryHeight: activeTabSelect(
+    (state: TabState) => state.layout.historyHeight
+  ),
 
-  getSpacesHeight: activeTabSelect((state: TabState) => state.layout.spacesHeight),
+  getSpacesHeight: activeTabSelect(
+    (state: TabState) => state.layout.spacesHeight
+  ),
 
-  getLeftSidebarIsOpen: activeTabSelect((state: TabState) => state.layout.leftSidebarIsOpen),
+  getLeftSidebarIsOpen: activeTabSelect(
+    (state: TabState) => state.layout.leftSidebarIsOpen
+  ),
 
-  getInvestigationView: activeTabSelect((state: TabState) => state.layout.investigationView),
+  getInvestigationView: activeTabSelect(
+    (state: TabState) => state.layout.investigationView
+  ),
 
-  getColumnHeadersView: activeTabSelect((state: TabState) => state.layout.columnHeadersView)
-};
+  getColumnHeadersView: activeTabSelect(
+    (state: TabState) => state.layout.columnHeadersView
+  )
+}

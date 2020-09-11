@@ -1,17 +1,15 @@
-
-
-import { getAllStates } from "../../test/helpers/getTestState";
+import {getAllStates} from "../../test/helpers/getTestState"
 
 export default function addLayoutSidebarSectionState(state: any) {
   for (const s of getAllStates(state)) {
-    if (!s.tabs) continue;
+    if (!s.tabs) continue
     for (const tab of s.tabs.data) {
-      tab.layout.historyHeight = 1;
-      tab.layout.spacesHeight = 1;
-      tab.layout.historyIsOpen = true;
-      tab.layout.spacesIsOpen = true;
+      tab.layout.historyHeight = 1
+      tab.layout.spacesHeight = 1
+      tab.layout.historyIsOpen = true
+      tab.layout.spacesIsOpen = true
     }
   }
 
-  return state;
+  return state
 }

@@ -1,13 +1,11 @@
-
-
-import { css } from "styled-components";
+import {css} from "styled-components"
 
 const headingSection = css`
   font-family: system-ui, sans-serif;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
-`;
+`
 
 const headingList = css`
   font-family: system-ui, sans-serif;
@@ -15,21 +13,21 @@ const headingList = css`
   font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-`;
+`
 
 const labelSmall = css`
   font-family: system-ui, sans-serif;
   font-size: 11px;
   line-height: 17px;
   font-weight: 400;
-`;
+`
 
 const labelNormal = css`
   font-family: system-ui, sans-serif;
   font-size: 13px;
   line-height: 16px;
   font-weight: 500;
-`;
+`
 
 const labelBold = css`
   font-family: system-ui, sans-serif;
@@ -37,7 +35,7 @@ const labelBold = css`
   font-size: 13px;
   line-height: 16px;
   font-weight: 600;
-`;
+`
 
 const hoverQuiet = css`
   &:hover {
@@ -47,7 +45,7 @@ const hoverQuiet = css`
   &:active {
     background: rgba(0, 0, 0, 0.1);
   }
-`;
+`
 
 const theme = {
   colors: {
@@ -72,6 +70,6 @@ const theme = {
     labelBold
   },
   hoverQuiet
-};
+}
 
-export default theme;
+export default theme

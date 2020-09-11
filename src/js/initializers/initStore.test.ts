@@ -1,12 +1,11 @@
-
-import initTestStore from "../test/initTestStore";
+import initTestStore from "../test/initTestStore"
 
 test("initTestStore works with thunk and action log", () => {
-  const store = initTestStore();
+  const store = initTestStore()
 
-  store.dispatch({ type: "A" });
-  store.dispatch(dispatch => dispatch({ type: "B" }));
-  store.dispatch({ type: "C" });
+  store.dispatch({type: "A"})
+  store.dispatch((dispatch) => dispatch({type: "B"}))
+  store.dispatch({type: "C"})
 
-  expect(store.getActions().map(a => a.type)).toEqual(["A", "B", "C"]);
-});
+  expect(store.getActions().map((a) => a.type)).toEqual(["A", "B", "C"])
+})

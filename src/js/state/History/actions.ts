@@ -1,8 +1,12 @@
-
-
-import { HISTORY_BACK, HISTORY_CLEAR, HISTORY_FORWARD, HISTORY_PUSH, HISTORY_UPDATE } from "./types";
-import { ScrollPosition, SearchRecord } from "../../types";
-import brim, { Ts } from "../../brim";
+import {
+  HISTORY_BACK,
+  HISTORY_CLEAR,
+  HISTORY_FORWARD,
+  HISTORY_PUSH,
+  HISTORY_UPDATE
+} from "./types"
+import {ScrollPosition, SearchRecord} from "../../types"
+import brim, {Ts} from "../../brim"
 
 export default {
   back: (): HISTORY_BACK => ({
@@ -23,4 +27,4 @@ export default {
     type: "HISTORY_UPDATE",
     scrollPos: scrollPos
   })
-};
+}

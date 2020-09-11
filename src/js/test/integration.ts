@@ -1,7 +1,5 @@
-
-
-export const itestLocator = "data-test-locator";
-export const locator = (name: string) => `[${itestLocator}="${name}"]`;
+export const itestLocator = "data-test-locator"
+export const locator = (name: string) => `[${itestLocator}="${name}"]`
 const dataAttrs = {
   // The purpose of this object is to have a single source of truth where tests
   // and code can identify and find specific elements that integration tests
@@ -42,16 +40,17 @@ const dataAttrs = {
   useIndexToggle: "useIndexToggle",
   viewer_header: "viewer_header",
   viewer_results: "viewer_results"
-};
+}
 
 // The purpose of this section is to have a single source of truth for
 // interesting selectors. Tests shouldn't hardcode these in multiple places but
 // instead use what's defined here. Likewise if product moves stuff around,
 // these can be updated in one place.
 // The preferred convention is to use CSS selectors, not Xpaths.
-const _histogramSelector = `[${itestLocator}='${dataAttrs.histogram}']`;
+const _histogramSelector = `[${itestLocator}='${dataAttrs.histogram}']`
 
-const dataAttrSelector = (component: string) => `[${itestLocator}='` + dataAttrs[component] + "']";
+const dataAttrSelector = (component: string) =>
+  `[${itestLocator}='` + dataAttrs[component] + "']"
 
 // Use this to generate Xpaths to find elements containing text, all under a
 // common dataAttrValue. For example the right-click Log Detail Cell menu that
@@ -67,20 +66,24 @@ const dataAttrSelector = (component: string) => `[${itestLocator}='` + dataAttrs
 // Xpaths are used because CSS selectors don't have the capability to evaluate
 // whether a child text node has particular content.
 // https://stackoverflow.com/questions/1520429/is-there-a-css-selector-for-elements-containing-certain-text
-const genSelectorForTextUnderElement = (dataAttrValue: string) => (subItem: string) => {
+const genSelectorForTextUnderElement = (dataAttrValue: string) => (
+  subItem: string
+) => {
   if (subItem.includes("'")) {
     if (subItem.includes('"')) {
-      throw new Error("unsupported xpath for `${subItem}`: mixed quotes");
+      throw new Error("unsupported xpath for `${subItem}`: mixed quotes")
     } else {
-      return `//*[@${itestLocator}="${dataAttrValue}"]//*[contains(text(), "${subItem}")]`;
+      return `//*[@${itestLocator}="${dataAttrValue}"]//*[contains(text(), "${subItem}")]`
     }
   }
-  return `//*[@${itestLocator}="${dataAttrValue}"]//*[contains(text(), '${subItem}')]`;
-};
+  return `//*[@${itestLocator}="${dataAttrValue}"]//*[contains(text(), '${subItem}')]`
+}
 
 // Use this to generate a function that can generate selectors to find elements
 // for modal buttons under the given modal data-test-locator name.
-const genSelectorForModalButton = (modalTestName: string) => (buttonValue: string) => `[${itestLocator}='${modalTestName}'] input[value='${buttonValue}']`;
+const genSelectorForModalButton = (modalTestName: string) => (
+  buttonValue: string
+) => `[${itestLocator}='${modalTestName}'] input[value='${buttonValue}']`
 
 export const selectors = {
   downloadMessage: dataAttrSelector("downloadMessage"),
@@ -160,7 +163,7 @@ export const selectors = {
     results: dataAttrSelector("viewer_results") + " .field-cell",
     resultCellContaining: genSelectorForTextUnderElement("viewer_results")
   }
-};
+}
 
 // Use this function to add properties to react elements/components. The
 // dataAttrs object must define the key/value pair for the object. The key is
@@ -171,8 +174,8 @@ export const selectors = {
 export const reactElementProps = (component: string) => {
   return {
     [itestLocator]: dataAttrs[component]
-  };
-};
+  }
+}
 
 // This function is like reactElementProps except used to annotate D3 elements.
-export const d3ElementAttr = (component: string) => dataAttrs[component];
+export const d3ElementAttr = (component: string) => dataAttrs[component]

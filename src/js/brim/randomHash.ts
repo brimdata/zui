@@ -1,6 +1,5 @@
-
-import crypto from "crypto";
+import crypto from "crypto"
 
 export default function randomHash(): string {
-  return crypto.randomBytes(5).toString("hex");
+  return crypto.randomBytes(5).toString("hex")
 }

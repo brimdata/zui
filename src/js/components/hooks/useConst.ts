@@ -1,13 +1,11 @@
-
-
-import { useLayoutEffect, useRef } from "react";
+import {useLayoutEffect, useRef} from "react"
 
 export default function useConst<T>(init: T, fn: () => T): T {
-  let ref = useRef(init);
+  let ref = useRef(init)
 
   useLayoutEffect(() => {
-    ref.current = fn();
-  }, []);
+    ref.current = fn()
+  }, [])
 
-  return ref.current;
+  return ref.current
 }

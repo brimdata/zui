@@ -1,12 +1,10 @@
+import Clusters from "./"
+import initTestStore from "../../test/initTestStore"
 
-
-import Clusters from "./";
-import initTestStore from "../../test/initTestStore";
-
-let store;
+let store
 beforeEach(() => {
-  store = initTestStore();
-});
+  store = initTestStore()
+})
 
 let cluster = {
   id: "123",
@@ -14,22 +12,22 @@ let cluster = {
   port: "9867",
   username: "kerr",
   password: "123"
-};
+}
 
 test("addCluster", () => {
-  let state = store.dispatchAll([Clusters.add(cluster)]);
+  let state = store.dispatchAll([Clusters.add(cluster)])
 
-  expect(Clusters.id("123")(state)).toEqual(cluster);
-});
+  expect(Clusters.id("123")(state)).toEqual(cluster)
+})
 
 test("addCluster when it already exists", () => {
-  let state = store.dispatchAll([Clusters.add(cluster), Clusters.add(cluster)]);
+  let state = store.dispatchAll([Clusters.add(cluster), Clusters.add(cluster)])
 
-  expect(Clusters.all(state)).toEqual([cluster]);
-});
+  expect(Clusters.all(state)).toEqual([cluster])
+})
 
 test("removeCluster", () => {
-  let state = store.dispatchAll([Clusters.add(cluster), Clusters.remove("123")]);
+  let state = store.dispatchAll([Clusters.add(cluster), Clusters.remove("123")])
 
-  expect(Clusters.all(state)).toEqual([]);
-});
+  expect(Clusters.all(state)).toEqual([])
+})

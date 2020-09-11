@@ -1,7 +1,5 @@
+import path from "path"
 
-
-import path from "path";
-
-export default ((name: string) => {
-  return path.join(__dirname, "../../../itest/testdata", name);
-});
+export default (name: string) => {
+  return path.join(__dirname, "../../../itest/testdata", name)
+}

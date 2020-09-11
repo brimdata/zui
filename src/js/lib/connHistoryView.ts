@@ -1,5 +1,3 @@
-
-
 /*
 
   Records the state history of connections as a string of letters.
@@ -35,28 +33,31 @@ const TEXT_MAP = {
   h: "syn ack",
   a: "ack",
   s: "syn"
-};
+}
 
 type Flag = {
-  text: string;
-  direction: string;
-};
+  text: string
+  direction: string
+}
 
 export default function connHistoryView(historyString: string): Flag[] {
-  return historyString.split("").filter(hasView).map(char => ({
-    text: getText(char),
-    direction: getDirection(char)
-  }));
+  return historyString
+    .split("")
+    .filter(hasView)
+    .map((char) => ({
+      text: getText(char),
+      direction: getDirection(char)
+    }))
 }
 
 function hasView(char) {
-  return TEXT_MAP.hasOwnProperty(char.toLowerCase());
+  return TEXT_MAP.hasOwnProperty(char.toLowerCase())
 }
 
 function getText(char) {
-  return TEXT_MAP[char.toLowerCase()];
+  return TEXT_MAP[char.toLowerCase()]
 }
 
 function getDirection(char) {
-  return char === char.toUpperCase() ? "right" : "left";
+  return char === char.toUpperCase() ? "right" : "left"
 }

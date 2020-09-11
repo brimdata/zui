@@ -1,115 +1,113 @@
+import brim from "./"
 
-
-import brim from "./";
-
-let history;
+let history
 beforeEach(() => {
-  history = brim.entries({ entries: [], position: -1 });
-});
+  history = brim.entries({entries: [], position: -1})
+})
 
 test("#constructor throws error if position is out of bounds", () => {
   expect(() => {
-    brim.entries({ entries: ["a"], position: 999 });
-  }).toThrow("Position out of bounds");
-});
+    brim.entries({entries: ["a"], position: 999})
+  }).toThrow("Position out of bounds")
+})
 
 test("#push", () => {
-  history.push("a");
-  history.push("b");
-  expect(history.getEntries()).toEqual(["a", "b"]);
-});
+  history.push("a")
+  history.push("b")
+  expect(history.getEntries()).toEqual(["a", "b"])
+})
 
 test("#push checks for equality of the currentEntry", () => {
-  history.push("a");
-  history.push("a");
-  expect(history.getEntries()).toEqual(["a"]);
-});
+  history.push("a")
+  history.push("a")
+  expect(history.getEntries()).toEqual(["a"])
+})
 
 test("#goBack", () => {
-  history.push("a");
-  history.push("b");
-  history.goBack();
-  expect(history.getCurrentEntry()).toBe("a");
-});
+  history.push("a")
+  history.push("b")
+  history.goBack()
+  expect(history.getCurrentEntry()).toBe("a")
+})
 
 test("#goForward", () => {
-  history.push("a");
-  history.push("b");
-  history.goBack();
-  history.goForward();
-  expect(history.getCurrentEntry()).toBe("b");
-});
+  history.push("a")
+  history.push("b")
+  history.goBack()
+  history.goForward()
+  expect(history.getCurrentEntry()).toBe("b")
+})
 
 test("#canGoBack when empty", () => {
-  expect(history.canGoBack()).toBe(false);
-});
+  expect(history.canGoBack()).toBe(false)
+})
 
 test("#canGoBack when one item", () => {
-  history.push("a");
-  expect(history.canGoBack()).toBe(false);
-});
+  history.push("a")
+  expect(history.canGoBack()).toBe(false)
+})
 
 test("#canGoBack when two", () => {
-  history.push("a");
-  history.push("b");
-  expect(history.canGoBack()).toBe(true);
-});
+  history.push("a")
+  history.push("b")
+  expect(history.canGoBack()).toBe(true)
+})
 
 test("#canGoBack when backing up all the way", () => {
-  history.push("a");
-  history.push("b");
-  history.goBack();
-  expect(history.canGoBack()).toBe(false);
-});
+  history.push("a")
+  history.push("b")
+  history.goBack()
+  expect(history.canGoBack()).toBe(false)
+})
 
 test("#canGoForward when empty", () => {
-  expect(history.canGoForward()).toBe(false);
-});
+  expect(history.canGoForward()).toBe(false)
+})
 
 test("#canGoForward when one", () => {
-  history.push("a");
-  expect(history.canGoForward()).toBe(false);
-});
+  history.push("a")
+  expect(history.canGoForward()).toBe(false)
+})
 
 test("#canGoForward when two", () => {
-  history.push("a");
-  history.push("b");
-  expect(history.canGoForward()).toBe(false);
-});
+  history.push("a")
+  history.push("b")
+  expect(history.canGoForward()).toBe(false)
+})
 
 test("#canGoForward when two then back", () => {
-  history.push("a");
-  history.push("b");
-  history.goBack();
-  expect(history.canGoForward()).toBe(true);
-});
+  history.push("a")
+  history.push("b")
+  history.goBack()
+  expect(history.canGoForward()).toBe(true)
+})
 
 test("#push after going back", () => {
-  history.push("a");
-  history.push("b");
-  history.push("c");
-  history.goBack();
-  history.push("d");
-  expect(history.getEntries()).toEqual(["a", "b", "d"]);
-  expect(history.getCurrentEntry()).toEqual("d");
-});
+  history.push("a")
+  history.push("b")
+  history.push("c")
+  history.goBack()
+  history.push("d")
+  expect(history.getEntries()).toEqual(["a", "b", "d"])
+  expect(history.getCurrentEntry()).toEqual("d")
+})
 
 test("#goBack can be called many times", () => {
-  history.push("a");
-  history.goBack();
-  history.goBack();
-  history.goBack();
-  history.goBack();
-  history.goBack();
-  expect(history.getCurrentEntry()).toBe("a");
-});
+  history.push("a")
+  history.goBack()
+  history.goBack()
+  history.goBack()
+  history.goBack()
+  history.goBack()
+  expect(history.getCurrentEntry()).toBe("a")
+})
 
 test("#goForward can be called many times", () => {
-  history.push("a");
-  history.goForward();
-  history.goForward();
-  history.goForward();
-  history.goForward();
-  history.goForward();
-  expect(history.getCurrentEntry()).toBe("a");
-});
+  history.push("a")
+  history.goForward()
+  history.goForward()
+  history.goForward()
+  history.goForward()
+  history.goForward()
+  expect(history.getCurrentEntry()).toBe("a")
+})

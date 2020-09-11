@@ -1,56 +1,51 @@
-
-
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash/isEqual"
 
 type Args = {
-  position: number;
-  entries: any[];
-};
+  position: number
+  entries: any[]
+}
 
-export default function ({
-  entries: initEntries,
-  position
-}: Args) {
-  let entries = [...initEntries];
+export default function({entries: initEntries, position}: Args) {
+  let entries = [...initEntries]
 
   if (position < -1 || position >= entries.length) {
-    throw new Error("Position out of bounds");
+    throw new Error("Position out of bounds")
   }
 
   return {
     push(entry: any) {
       if (!isEqual(entry, this.getCurrentEntry())) {
-        entries.splice(position + 1, entries.length, entry);
-        position = entries.length - 1;
+        entries.splice(position + 1, entries.length, entry)
+        position = entries.length - 1
       }
-      return this;
+      return this
     },
     update(updates: any) {
-      entries[position] = { ...entries[position], ...updates };
-      return this;
+      entries[position] = {...entries[position], ...updates}
+      return this
     },
     goBack() {
-      if (this.canGoBack()) position -= 1;
-      return this;
+      if (this.canGoBack()) position -= 1
+      return this
     },
     goForward() {
-      if (this.canGoForward()) position += 1;
-      return this;
+      if (this.canGoForward()) position += 1
+      return this
     },
     canGoBack() {
-      return entries.length > 1 ? position !== 0 : false;
+      return entries.length > 1 ? position !== 0 : false
     },
     canGoForward() {
-      return entries.length > 1 ? position < entries.length - 1 : false;
+      return entries.length > 1 ? position < entries.length - 1 : false
     },
     getEntries() {
-      return entries;
+      return entries
     },
     getCurrentEntry() {
-      return entries[position];
+      return entries[position]
     },
     data() {
-      return { position, entries };
+      return {position, entries}
     }
-  };
+  }
 }

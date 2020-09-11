@@ -1,16 +1,15 @@
+import {createZealotMock} from "zealot"
 
-import { createZealotMock } from "zealot";
+import {conn} from "../../test/mockLogs"
+import {uidSearch} from "./uidSearch"
+import initTestStore from "../../test/initTestStore"
 
-import { conn } from "../../test/mockLogs";
-import { uidSearch } from "./uidSearch";
-import initTestStore from "../../test/initTestStore";
-
-let store;
+let store
 beforeEach(() => {
-  store = initTestStore(createZealotMock().stubStream("search", []));
-});
+  store = initTestStore(createZealotMock().stubStream("search", []))
+})
 
 test("dispatches request", async () => {
-  let log = conn();
-  await store.dispatch(uidSearch(log));
-});
+  let log = conn()
+  await store.dispatch(uidSearch(log))
+})

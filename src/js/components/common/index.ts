@@ -1,7 +1,5 @@
-
-
-import HistoryButtons from "./HistoryButtons";
+import HistoryButtons from "./HistoryButtons"
 
 export default {
   HistoryButtons
-};
+}

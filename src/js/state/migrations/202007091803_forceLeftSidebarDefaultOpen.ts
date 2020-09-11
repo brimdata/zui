@@ -1,15 +1,13 @@
-
-
-import { getAllStates } from "../../test/helpers/getTestState";
+import {getAllStates} from "../../test/helpers/getTestState"
 
 export default function forceLeftSidebarDefaultOpen(state: any) {
   for (const s of getAllStates(state)) {
-    if (!s.tabs) continue;
+    if (!s.tabs) continue
     for (const t of s.tabs.data) {
-      t.layout.leftSidebarIsOpen = true;
-      t.layout.leftSidebarWidth = 230;
+      t.layout.leftSidebarIsOpen = true
+      t.layout.leftSidebarWidth = 230
     }
   }
 
-  return state;
+  return state
 }

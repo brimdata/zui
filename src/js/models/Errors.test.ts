@@ -1,38 +1,43 @@
-
-import ErrorFactory from "./ErrorFactory";
+import ErrorFactory from "./ErrorFactory"
 
 const TEST_CASES = {
-  UnauthorizedError: [new Error("Need boom credentials"), "anything with unauthorized in it", { type: "UNAUTHORIZED", error: "unauthorized" }],
+  UnauthorizedError: [
+    new Error("Need boom credentials"),
+    "anything with unauthorized in it",
+    {type: "UNAUTHORIZED", error: "unauthorized"}
+  ],
 
-  InternalServerError: [{ type: "INTERNAL_ERROR", error: "Fun Time" }],
+  InternalServerError: [{type: "INTERNAL_ERROR", error: "Fun Time"}],
 
   NetworkError: ["Failed to fetch"],
 
   NoSpacesError: ["NoSpaces"],
 
-  NotFoundError: [{ type: "NOT_FOUND" }],
+  NotFoundError: [{type: "NOT_FOUND"}],
 
-  SpaceNotFoundError: [{ type: "SPACE_NOT_FOUND", error: "space james not found" }],
+  SpaceNotFoundError: [
+    {type: "SPACE_NOT_FOUND", error: "space james not found"}
+  ],
 
   InvalidUrlError: ["Failed to parse URL"],
 
-  SearchError: [{ type: "SEARCH_ERROR" }]
-};
+  SearchError: [{type: "SEARCH_ERROR"}]
+}
 
 describe("ErrorFactory#create", () => {
-  const ErrorClasses = Object.keys(TEST_CASES);
+  const ErrorClasses = Object.keys(TEST_CASES)
 
-  ErrorClasses.forEach(klass => {
+  ErrorClasses.forEach((klass) => {
     test(`${klass}`, () => {
-      const errors = TEST_CASES[klass];
+      const errors = TEST_CASES[klass]
 
-      errors.forEach(error => {
-        let brimError = ErrorFactory.create(error);
-        expect(brimError.type).toBe(klass);
+      errors.forEach((error) => {
+        let brimError = ErrorFactory.create(error)
+        expect(brimError.type).toBe(klass)
 
-        let negative = ErrorFactory.create("Negative");
-        expect(negative).not.toBe(klass);
-      });
-    });
-  });
-});
+        let negative = ErrorFactory.create("Negative")
+        expect(negative).not.toBe(klass)
+      })
+    })
+  })
+})

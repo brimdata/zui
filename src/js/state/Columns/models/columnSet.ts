@@ -1,25 +1,24 @@
+import {uniqBy, keys} from "lodash"
 
-import { uniqBy, keys } from "lodash";
-
-import { $Column, createColumn } from "./column";
-import { ViewerColumns } from "../../Viewer/types";
+import {$Column, createColumn} from "./column"
+import {ViewerColumns} from "../../Viewer/types"
 
 export function createColumnSet(c: ViewerColumns) {
   return {
     getName() {
-      const types = keys(c);
+      const types = keys(c)
       if (types.length === 0) {
-        return "none";
+        return "none"
       } else if (types.length === 1) {
-        return types[0];
+        return types[0]
       } else {
-        return "temp";
+        return "temp"
       }
     },
     getUniqColumns() {
-      let allCols = [];
-      for (const id in c) allCols = [...allCols, ...c[id]].map(createColumn);
-      return uniqBy<$Column>(allCols, "key");
+      let allCols = []
+      for (const id in c) allCols = [...allCols, ...c[id]].map(createColumn)
+      return uniqBy<$Column>(allCols, "key")
     }
-  };
+  }
 }

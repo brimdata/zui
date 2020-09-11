@@ -1,12 +1,10 @@
-
-
-import getTestState from "../../test/helpers/getTestState";
-import migrate from "./202005181158_spacesStateId";
+import getTestState from "../../test/helpers/getTestState"
+import migrate from "./202005181158_spacesStateId"
 
 test("migrating 202005181158_spacesStateId", () => {
-  let prev = getTestState("v0.9.1");
+  let prev = getTestState("v0.9.1")
 
-  let next = migrate(prev);
+  let next = migrate(prev)
 
   expect(next.globalState.spaces).toEqual({
     zqd: {
@@ -32,5 +30,5 @@ test("migrating 202005181158_spacesStateId", () => {
         size: 50281455
       }
     }
-  });
-});
+  })
+})

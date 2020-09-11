@@ -1,7 +1,5 @@
+import {Column} from "../types"
 
-
-import { Column } from "../types";
-
-export default ((col: Column) => {
-  return `${col.name}:${col.type}`;
-});
+export default (col: Column) => {
+  return `${col.name}:${col.type}`
+}

@@ -1,12 +1,11 @@
+import log from "electron-log"
 
-import log from "electron-log";
-
-export default (() => {
+export default () => {
   beforeAll(() => {
-    log.transports.console.level = false;
-  });
+    log.transports.console.level = false
+  })
 
   afterAll(() => {
-    log.transports.console.level = "silly";
-  });
-});
+    log.transports.console.level = "silly"
+  })
+}

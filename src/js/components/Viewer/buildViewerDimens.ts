@@ -1,17 +1,15 @@
-
-
-import { ViewerDimens } from "../../types";
+import {ViewerDimens} from "../../types"
 
 type Args = {
-  sumColumnWidths: number;
-  width: number;
-  height: number;
-  rowHeight: number;
-  size: number;
-  type: "fixed" | "auto";
-};
+  sumColumnWidths: number
+  width: number
+  height: number
+  rowHeight: number
+  size: number
+  type: "fixed" | "auto"
+}
 
-export default (({
+export default ({
   width,
   type,
   sumColumnWidths,
@@ -27,7 +25,7 @@ export default (({
       listHeight: rowHeight * size,
       rowWidth: Math.max(sumColumnWidths, width),
       rowHeight
-    };
+    }
   } else {
     return {
       viewWidth: width,
@@ -36,6 +34,6 @@ export default (({
       listHeight: rowHeight * size,
       rowWidth: "auto",
       rowHeight
-    };
+    }
   }
-});
+}

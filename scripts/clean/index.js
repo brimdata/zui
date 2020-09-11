@@ -1,3 +1,3 @@
-let fs = require("fs-extra");
+let fs = require("fs-extra")
 
-fs.removeSync("dist");
+fs.removeSync("dist")

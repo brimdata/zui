@@ -1,24 +1,20 @@
+import {Descriptor} from "../types"
+import {inBounds} from "../lib/Array"
+import brim, {$Field} from "./"
 
-import { Descriptor } from "../types";
-import { inBounds } from "../lib/Array";
-import brim, { $Field } from "./";
-
-export default function (tuple: string[], descriptor: Descriptor) {
+export default function(tuple: string[], descriptor: Descriptor) {
   return {
     tuple,
     descriptor,
     field(name: string): null | $Field {
-      let index = descriptor.findIndex(d => d.name === name);
+      let index = descriptor.findIndex((d) => d.name === name)
       if (inBounds(this.tuple, index)) {
-        let {
-          name,
-          type
-        } = descriptor[index];
-        let value = tuple[index];
-        return brim.field({ name, type, value });
+        let {name, type} = descriptor[index]
+        let value = tuple[index]
+        return brim.field({name, type, value})
       } else {
-        return null;
+        return null
       }
     }
-  };
+  }
 }

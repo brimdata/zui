@@ -1,6 +1,4 @@
-
-
-import { PACKETS_ERROR, PACKETS_RECEIVE, PACKETS_REQUEST } from "./types";
+import {PACKETS_ERROR, PACKETS_RECEIVE, PACKETS_REQUEST} from "./types"
 
 export default {
   request: (uid: string): PACKETS_REQUEST => ({
@@ -19,4 +17,4 @@ export default {
     error,
     uid
   })
-};
+}

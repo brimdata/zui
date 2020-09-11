@@ -1,8 +1,6 @@
-
-
-import { TabState } from "../Tab/types";
-import activeTabSelect from "../Tab/activeTabSelect";
-import brim from "../../brim";
+import {TabState} from "../Tab/types"
+import activeTabSelect from "../Tab/activeTabSelect"
+import brim from "../../brim"
 
 export default {
   prev: (state: TabState) => state.history.entries[state.history.position - 1],
@@ -11,4 +9,4 @@ export default {
   canGoForward: (state: TabState) => brim.entries(state.history).canGoForward(),
   first: activeTabSelect((state: TabState) => state.history.entries[0]),
   count: activeTabSelect((state: TabState) => state.history.entries.length)
-};
+}

@@ -1,7 +1,5 @@
+import {Dispatch} from "../state/types"
 
-
-import { Dispatch } from "../state/types";
-
-export default ((dispatch: Dispatch) => ({
+export default (dispatch: Dispatch) => ({
   dispatch
-}));
+})

@@ -1,6 +1,18 @@
-
-
-import { SEARCH_BAR_CLEAR, SEARCH_BAR_INPUT_CHANGE, SEARCH_BAR_PARSE_ERROR, SEARCH_BAR_PIN, SEARCH_BAR_PINS_SET, SEARCH_BAR_PIN_EDIT, SEARCH_BAR_PIN_REMOVE, SEARCH_BAR_PIN_REMOVE_ALL, SEARCH_BAR_RESTORE, SEARCH_BAR_SUBMIT, SEARCH_BAR_TARGET_SET, SearchBarState, SearchTarget } from "./types";
+import {
+  SEARCH_BAR_CLEAR,
+  SEARCH_BAR_INPUT_CHANGE,
+  SEARCH_BAR_PARSE_ERROR,
+  SEARCH_BAR_PIN,
+  SEARCH_BAR_PINS_SET,
+  SEARCH_BAR_PIN_EDIT,
+  SEARCH_BAR_PIN_REMOVE,
+  SEARCH_BAR_PIN_REMOVE_ALL,
+  SEARCH_BAR_RESTORE,
+  SEARCH_BAR_SUBMIT,
+  SEARCH_BAR_TARGET_SET,
+  SearchBarState,
+  SearchTarget
+} from "./types"
 
 export default {
   clearSearchBar: (): SEARCH_BAR_CLEAR => ({
@@ -16,7 +28,7 @@ export default {
     return {
       type: "SEARCH_BAR_INPUT_CHANGE",
       value: value
-    };
+    }
   },
 
   pinSearchBar: (): SEARCH_BAR_PIN => ({
@@ -56,4 +68,4 @@ export default {
     type: "SEARCH_BAR_TARGET_SET",
     target
   })
-};
+}

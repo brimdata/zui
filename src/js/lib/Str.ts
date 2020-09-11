@@ -1,22 +1,20 @@
-
-
-import _trim from "lodash/trim";
-import _capitalize from "lodash/capitalize";
+import _trim from "lodash/trim"
+import _capitalize from "lodash/capitalize"
 
 export const onlyWhitespace = (value: string) => {
-  return /^\s*$/.test(value);
-};
+  return /^\s*$/.test(value)
+}
 
 export const escapeSpaces = (value: string) => {
   if (/\s+/.test(value)) {
-    return `"${value}"`;
+    return `"${value}"`
   } else {
-    return value;
+    return value
   }
-};
+}
 
 export const trim = (value: string) => {
-  return _trim(value);
-};
+  return _trim(value)
+}
 
-export const capitalize = _capitalize;
+export const capitalize = _capitalize

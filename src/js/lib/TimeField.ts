@@ -1,5 +1,3 @@
-
-
 export const toDate = (value: string) => {
-  return new Date(+value * 1000);
-};
+  return new Date(+value * 1000)
+}
