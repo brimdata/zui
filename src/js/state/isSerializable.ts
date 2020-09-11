@@ -16,9 +16,9 @@ export default function isSerializable(object: Object) {
 }
 
 function traverse(object, cb) {
-  for (let key in object) {
-    let value = object[key]
-    if (isArray(value)) for (let item of value) traverse(item, cb)
+  for (const key in object) {
+    const value = object[key]
+    if (isArray(value)) for (const item of value) traverse(item, cb)
     else if (isObject(value)) traverse(value, cb)
     else cb(value)
   }

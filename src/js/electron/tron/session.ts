@@ -54,7 +54,7 @@ function sessionStateFile() {
 type VersionedState = {version: number; data: SessionState | null | undefined}
 
 async function migrate(appState, migrator): Promise<VersionedState> {
-  let state = ensureVersioned(appState)
+  const state = ensureVersioned(appState)
 
   if (!canMigrate(state)) {
     log.info("migrations: unsupported version, using fresh state")
@@ -62,14 +62,14 @@ async function migrate(appState, migrator): Promise<VersionedState> {
   }
 
   migrator.setCurrentVersion(state.version)
-  let pending = migrator.getPending().length
+  const pending = migrator.getPending().length
 
   log.info(`migrations: currentVersion=${state.version} pending=${pending}`)
 
   if (pending) {
     try {
       log.info("migrations: running")
-      let nextState = migrator.runPending(state)
+      const nextState = migrator.runPending(state)
       log.info(`migrations: currentVersion=${nextState.version}`)
       return nextState
     } catch (e) {

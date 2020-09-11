@@ -6,7 +6,7 @@ beforeEach(() => {
   store = initTestStore()
 })
 
-let cluster = {
+const cluster = {
   id: "123",
   host: "boom.com",
   port: "9867",
@@ -15,19 +15,25 @@ let cluster = {
 }
 
 test("addCluster", () => {
-  let state = store.dispatchAll([Clusters.add(cluster)])
+  const state = store.dispatchAll([Clusters.add(cluster)])
 
   expect(Clusters.id("123")(state)).toEqual(cluster)
 })
 
 test("addCluster when it already exists", () => {
-  let state = store.dispatchAll([Clusters.add(cluster), Clusters.add(cluster)])
+  const state = store.dispatchAll([
+    Clusters.add(cluster),
+    Clusters.add(cluster)
+  ])
 
   expect(Clusters.all(state)).toEqual([cluster])
 })
 
 test("removeCluster", () => {
-  let state = store.dispatchAll([Clusters.add(cluster), Clusters.remove("123")])
+  const state = store.dispatchAll([
+    Clusters.add(cluster),
+    Clusters.remove("123")
+  ])
 
   expect(Clusters.all(state)).toEqual([])
 })

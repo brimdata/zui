@@ -27,11 +27,11 @@ export default function TimeButton({
   onChange,
   icon
 }: Props) {
-  let [[x, y], setPosition] = useState([0, 0])
-  let [unit, setUnit] = useState<TimeUnit>("month")
-  let [editing, setEditing] = useState(false)
-  let fuzzy = useFuzzyHover(0, 150)
-  let dirty = !!prevTimeArg && !isEqual(timeArg, prevTimeArg)
+  const [[x, y], setPosition] = useState([0, 0])
+  const [unit, setUnit] = useState<TimeUnit>("month")
+  const [editing, setEditing] = useState(false)
+  const fuzzy = useFuzzyHover(0, 150)
+  const dirty = !!prevTimeArg && !isEqual(timeArg, prevTimeArg)
 
   useEffect(() => {
     if (editing === false) fuzzy.mouseLeave()
@@ -39,9 +39,9 @@ export default function TimeButton({
 
   function updatePosition(e) {
     fuzzy.mouseEnter()
-    let {width, x, y} = e.currentTarget.getBoundingClientRect()
-    let stepperWidth = 20
-    let centeredX = x + width / 2 - stepperWidth / 2
+    const {width, x, y} = e.currentTarget.getBoundingClientRect()
+    const stepperWidth = 20
+    const centeredX = x + width / 2 - stepperWidth / 2
     setUnit(e.currentTarget.dataset.unit)
     setPosition([centeredX, y])
   }
@@ -114,7 +114,7 @@ export default function TimeButton({
 }
 
 function ChangedDot({show, onClick}) {
-  let enter = {scale: [0, 1]}
+  const enter = {scale: [0, 1]}
   return (
     <Animate show={show} enter={enter}>
       <div className="changed-dot" onClick={onClick} />
@@ -124,7 +124,7 @@ function ChangedDot({show, onClick}) {
 
 type TDProps = {ts: Ts; onMouseEnter: (e: React.MouseEvent) => void}
 function TimeDisplay({ts, onMouseEnter}: TDProps) {
-  let t = brim.time(ts)
+  const t = brim.time(ts)
   return (
     <>
       <TimePiece data-unit="month" onMouseEnter={onMouseEnter}>

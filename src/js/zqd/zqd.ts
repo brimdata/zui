@@ -129,6 +129,7 @@ export class ZQD {
     // In the event of Brim getting shutdown via `SIGKILL`, this will let zqd
     // know that it has been orphaned and to shutdown.
     if (process.platform !== "win32") {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const {readfd} = require("node-pipe").pipeSync()
       opts.stdio.push(readfd)
       args.push(`-brimfd=${opts.stdio.length - 1}`)

@@ -43,8 +43,8 @@ const SearchPageWrapper = styled.div`
 `
 
 export default function SearchPage() {
-  let dispatch = useDispatch()
-  let tabId = useSelector(Tabs.getActive)
+  const dispatch = useDispatch()
+  const tabId = useSelector(Tabs.getActive)
 
   useSearchShortcuts()
   useEffect(() => () => dispatch(Handlers.abortAll()), [])

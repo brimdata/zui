@@ -5,7 +5,7 @@ import {innerHeight} from "../dimens"
 
 export default function(): Pen {
   let line
-  let overflow = 10
+  const overflow = 10
   let svg
 
   function mount(el) {

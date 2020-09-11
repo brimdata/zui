@@ -2,28 +2,18 @@ import {connect, useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 import classNames from "classnames"
 
-import {Dispatch} from "../state/types"
 import CircleChevron from "./CircleChevron"
 import MouseoverWatch from "../lib/MouseoverWatch"
 import dispatchToProps from "../lib/dispatchToProps"
 import Layout from "../state/Layout"
 
-type Props = {
-  show: boolean
-  dispatch: Dispatch
-}
-
-type OwnProps = {
-  show: boolean
-}
-
 export function LeftPaneCollapser() {
-  let dispatch = useDispatch()
-  let [show, setShow] = useState(false)
-  let width = useSelector(Layout.getLeftSidebarWidth)
+  const dispatch = useDispatch()
+  const [show, setShow] = useState(false)
+  const width = useSelector(Layout.getLeftSidebarWidth)
 
   useEffect(() => {
-    let watcher = new MouseoverWatch()
+    const watcher = new MouseoverWatch()
       .addListener()
       .condition(([x]) => x < width)
       .onEnter(() => setShow(true))

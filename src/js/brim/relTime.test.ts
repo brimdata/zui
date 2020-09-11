@@ -1,6 +1,6 @@
 import brim from "./"
 
-let validResults = {
+const validResults = {
   "now-10m": {op: "-", amount: 10, unit: "m"},
   "now - 100s": {op: "-", amount: 100, unit: "s"},
   "now - 60m": {op: "-", amount: 60, unit: "m"},
@@ -11,18 +11,18 @@ let validResults = {
   "now -  12 y ": {op: "-", amount: 12, unit: "y"}
 }
 
-for (let [string, expectedAst] of Object.entries(validResults)) {
+for (const [string, expectedAst] of Object.entries(validResults)) {
   test("toAst => " + string, () => {
-    let ast = brim.relTime(string).toAst()
+    const ast = brim.relTime(string).toAst()
 
     expect(ast).toEqual(expectedAst)
   })
 }
 
 test("case insensitivity", () => {
-  let a = ["now", "NOW", "NoW", "   Now", "now   ", " now "]
+  const a = ["now", "NOW", "NoW", "   Now", "now   ", " now "]
   a.forEach((string) => {
-    let ast = brim.relTime(string).toAst()
+    const ast = brim.relTime(string).toAst()
 
     expect(ast).toEqual({
       op: null,
@@ -43,7 +43,7 @@ test("isValid when false", () => {
 })
 
 test("isValid when true", () => {
-  for (let string in validResults) {
+  for (const string in validResults) {
     expect(brim.relTime(string).isValid()).toBe(true)
   }
 })

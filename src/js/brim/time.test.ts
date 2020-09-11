@@ -1,7 +1,7 @@
 import brim from "./"
 
 test("date to ts", () => {
-  let ts = brim.time(new Date(1)).toTs()
+  const ts = brim.time(new Date(1)).toTs()
 
   expect(ts).toEqual({
     ns: 1000000,
@@ -12,7 +12,7 @@ test("date to ts", () => {
 })
 
 test("add", () => {
-  let ts = brim
+  const ts = brim
     .time(new Date(1))
     .add(1, "ms")
     .toTs()
@@ -24,7 +24,7 @@ test("add", () => {
 })
 
 test("subtract", () => {
-  let ts = brim
+  const ts = brim
     .time(new Date(1))
     .subtract(1, "second")
     .toTs()

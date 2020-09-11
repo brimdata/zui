@@ -24,14 +24,14 @@ export const Md5Panel = ({
   log: Log
   contextMenu: Function
 }) => {
-  let logMd5 = log.getString("md5")
-  let dispatch = useDispatch<AppDispatch>()
-  let spaceId = useSelector(Current.getSpaceId)
-  let [tx, setTx] = useState([])
-  let [rx, setRx] = useState([])
-  let [md5, setMd5] = useState([])
-  let [filenames, setFilenames] = useState([])
-  let [status, setStatus] = useState("INIT")
+  const logMd5 = log.getString("md5")
+  const dispatch = useDispatch<AppDispatch>()
+  const spaceId = useSelector(Current.getSpaceId)
+  const [tx, setTx] = useState([])
+  const [rx, setRx] = useState([])
+  const [md5, setMd5] = useState([])
+  const [filenames, setFilenames] = useState([])
+  const [status, setStatus] = useState("INIT")
 
   function toLogs(records) {
     return records.map(brim.record).map(brim.interop.recordToLog)

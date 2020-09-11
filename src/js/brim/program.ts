@@ -6,7 +6,7 @@ import {trim} from "../lib/Str"
 import brim, {$Field, $Log} from "./"
 import stdlib from "../stdlib"
 
-export default function(p: string = "", pins: string[] = []) {
+export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
 
   return {
@@ -40,7 +40,7 @@ export default function(p: string = "", pins: string[] = []) {
 
     drillDown(log: $Log) {
       let filter = this.filter()
-      let newFilters = this.ast()
+      const newFilters = this.ast()
         .groupByKeys()
         .map((n) => log.field(n))
         .filter((f) => !!f) // $FlowFixMe flow doesn't know I just took out all the nils
@@ -92,17 +92,17 @@ export default function(p: string = "", pins: string[] = []) {
     },
 
     filter() {
-      let proc = this.ast().proc(FILTER_PROC)
+      const proc = this.ast().proc(FILTER_PROC)
       if (proc && isEqual(proc.filter, EVERYTHING_FILTER)) {
         return "*"
       } else {
-        let [f] = p.split("|")
+        const [f] = p.split("|")
         return trim(f)
       }
     },
 
     procs() {
-      let [_, ...procs] = p.split("|")
+      const [_, ...procs] = p.split("|")
       return procs.join("|")
     },
 
@@ -111,7 +111,7 @@ export default function(p: string = "", pins: string[] = []) {
     },
 
     hasAnalytics() {
-      for (let proc of this.ast().getProcs()) {
+      for (const proc of this.ast().getProcs()) {
         if (!TUPLE_PROCS.includes(proc.op)) return true
       }
       return false
@@ -128,7 +128,7 @@ function insertFilter(program, filter) {
 }
 
 function filterEnd(string) {
-  let pos = string.indexOf("|")
+  const pos = string.indexOf("|")
   if (pos < 0) {
     return string.length
   } else {

@@ -8,15 +8,15 @@ beforeEach(() => {
 })
 
 test("init state", () => {
-  let state = store.getState()
+  const state = store.getState()
   expect(notice.getError(state)).toEqual(null)
   expect(notice.getVisible(state)).toBe(false)
 })
 
 test("set an app error", () => {
-  let e = new AppError()
-  let state = store.dispatchAll([notice.set(e)])
-  let brimError = {
+  const e = new AppError()
+  const state = store.dispatchAll([notice.set(e)])
+  const brimError = {
     type: "AppError",
     message: "Unknown error",
     details: []
@@ -26,28 +26,28 @@ test("set an app error", () => {
 })
 
 test("set a brim error", () => {
-  let brimError = {
+  const brimError = {
     type: "IngestError",
     message: "Pcap is too large to ingest",
     details: ["sort limit reached (10)"]
   }
-  let state = store.dispatchAll([notice.set(brimError)])
+  const state = store.dispatchAll([notice.set(brimError)])
   expect(notice.getError(state)).toEqual(brimError)
   expect(notice.getVisible(state)).toBe(true)
 })
 
 test("clear", () => {
-  let e = new AppError()
-  let state = store.dispatchAll([notice.set(e), notice.clear()])
+  const e = new AppError()
+  const state = store.dispatchAll([notice.set(e), notice.clear()])
 
   expect(notice.getError(state)).toEqual(null)
   expect(notice.getVisible(state)).toBe(true)
 })
 
 test("dismiss", () => {
-  let e = new AppError()
-  let state = store.dispatchAll([notice.set(e), notice.dismiss()])
-  let brimError = {
+  const e = new AppError()
+  const state = store.dispatchAll([notice.set(e), notice.dismiss()])
+  const brimError = {
     type: "AppError",
     message: "Unknown error",
     details: []

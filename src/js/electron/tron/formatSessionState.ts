@@ -18,12 +18,12 @@ export default function(
   windows: WindowsState,
   globalState: GlobalState
 ): SessionState {
-  let groupById = (all, id) => ({
+  const groupById = (all, id) => ({
     ...all,
     [id]: getWindowData(windows[id])
   })
 
-  let order = getWindowOrder(windows)
+  const order = getWindowOrder(windows)
 
   return {
     order,

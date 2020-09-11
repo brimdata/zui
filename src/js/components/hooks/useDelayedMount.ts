@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react"
 
 export default function useDelayedMount(show: boolean, delay: number) {
-  let [ready, setReady] = useState(false)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     let id

@@ -1,5 +1,5 @@
 import {isEmpty} from "lodash"
-import React, {useState, ChangeEvent, HTMLProps} from "react"
+import React, {useState, HTMLProps} from "react"
 import classNames from "classnames"
 
 type Props = {
@@ -11,8 +11,8 @@ type Props = {
 } & HTMLProps<HTMLInputElement>
 
 export function Input({label, ...inputProps}: Props) {
-  let [focus, setFocus] = useState(false)
-  let [empty, setEmpty] = useState(isEmpty(inputProps.defaultValue))
+  const [focus, setFocus] = useState(false)
+  const [empty, setEmpty] = useState(isEmpty(inputProps.defaultValue))
 
   function onFocus() {
     setFocus(true)
@@ -27,7 +27,7 @@ export function Input({label, ...inputProps}: Props) {
     setEmpty(isEmpty(e.target.value))
   }
 
-  let classes = classNames("input", inputProps.type, {focus, empty})
+  const classes = classNames("input", inputProps.type, {focus, empty})
 
   return (
     <div className={classes}>
@@ -43,7 +43,7 @@ export function Input({label, ...inputProps}: Props) {
 }
 
 export function InputCheckbox({label, ...inputProps}: Props) {
-  let [focus, setFocus] = useState(false)
+  const [focus, setFocus] = useState(false)
 
   function onFocus() {
     setFocus(true)
@@ -53,7 +53,7 @@ export function InputCheckbox({label, ...inputProps}: Props) {
     setFocus(false)
   }
 
-  let classes = classNames("input-checkbox", {focus})
+  const classes = classNames("input-checkbox", {focus})
 
   return (
     <div className={classes}>

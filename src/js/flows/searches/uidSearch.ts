@@ -12,13 +12,13 @@ const id = "UidTimeline"
 
 export const uidSearch = (log: Log): Thunk => (dispatch, getState) => {
   if (!log) return
-  let uid = log.correlationId()
+  const uid = log.correlationId()
   if (isEmpty(uid)) return
 
-  let state = getState()
-  let [from, to] = Tab.getSpanAsDates(state)
-  let spaceId = Current.getSpaceId(state)
-  let query = uidCorrelation(uid)
+  const state = getState()
+  const [from, to] = Tab.getSpanAsDates(state)
+  const spaceId = Current.getSpaceId(state)
+  const query = uidCorrelation(uid)
 
   if (!spaceId) return
 

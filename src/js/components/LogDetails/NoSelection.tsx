@@ -1,8 +1,7 @@
+import React from "react"
 
-
-import React from "react";
-
-const NoSelection = () => <div className="empty-message-wrapper">
+const NoSelection = () => (
+  <div className="empty-message-wrapper">
     <div className="empty-message">
       <h3>No Log Selected</h3>
       <p>Click a log line to view details.</p>
@@ -10,6 +9,7 @@ const NoSelection = () => <div className="empty-message-wrapper">
         Toggle this pane with <code>Cmd + ]</code>.
       </p>
     </div>
-  </div>;
+  </div>
+)
 
-export default NoSelection;
+export default NoSelection

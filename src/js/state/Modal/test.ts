@@ -9,14 +9,14 @@ beforeEach(() => {
 test("show modal", () => {
   store.dispatch(Modal.show("whois", {addr: "129.3.2.1"}))
 
-  let state = store.getState()
+  const state = store.getState()
 
   expect(Modal.getName(state)).toEqual("whois")
   expect(Modal.getArgs(state)).toEqual({addr: "129.3.2.1"})
 })
 
 test("hide Modal", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     Modal.show("whois", {addr: "129.3.2.1"}),
     Modal.hide()
   ])

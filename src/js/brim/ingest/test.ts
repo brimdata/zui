@@ -1,7 +1,7 @@
 import ingest from "./"
 
 test("one pcap default", () => {
-  let data = ingest.getParams([{type: "pcap", path: "/work/my.pcap"}])
+  const data = ingest.getParams([{type: "pcap", path: "/work/my.pcap"}])
 
   expect(data).toEqual({
     dataDir: "",
@@ -12,7 +12,7 @@ test("one pcap default", () => {
 })
 
 test("one zeek log default", () => {
-  let data = ingest.getParams([{type: "log", path: "/work/zeek.log"}])
+  const data = ingest.getParams([{type: "log", path: "/work/zeek.log"}])
 
   expect(data).toEqual({
     name: "zeek.log",
@@ -23,7 +23,7 @@ test("one zeek log default", () => {
 })
 
 test("two zeek logs in same dir default", () => {
-  let data = ingest.getParams([
+  const data = ingest.getParams([
     {type: "log", path: "/work/zeek-1.log"},
     {type: "log", path: "/work/zeek-2.log"}
   ])
@@ -37,7 +37,7 @@ test("two zeek logs in same dir default", () => {
 })
 
 test("two zeek logs in different dir default", () => {
-  let data = ingest.getParams(
+  const data = ingest.getParams(
     [
       {type: "log", path: "/work/day-1/zeek.log"},
       {type: "log", path: "/work/day-2/zeek.log"}
@@ -56,7 +56,7 @@ test("two zeek logs in different dir default", () => {
 })
 
 test("two pcaps", () => {
-  let data = ingest.getParams([
+  const data = ingest.getParams([
     {type: "pcap", path: "/pcap-1"},
     {type: "pcap", path: "/pcap-2"}
   ])
@@ -67,7 +67,7 @@ test("two pcaps", () => {
 })
 
 test("1 pcap and 1 zeek", () => {
-  let data = ingest.getParams([
+  const data = ingest.getParams([
     {type: "pcap", path: "/pcap-1"},
     {type: "log", path: "/zeek-1"}
   ])

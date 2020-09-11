@@ -1,13 +1,13 @@
 import anime from "animejs"
 
 export default function clickFeedback(el: Element, text: string) {
-  let rect = el.getBoundingClientRect()
-  let div = document.createElement("div")
+  const rect = el.getBoundingClientRect()
+  const div = document.createElement("div")
   div.className = "click-feedback"
   div.innerHTML = text
 
   if (document.body) document.body.append(div)
-  let {width} = div.getBoundingClientRect()
+  const {width} = div.getBoundingClientRect()
 
   anime
     .timeline({targets: div, duration: 500})

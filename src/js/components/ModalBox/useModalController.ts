@@ -10,7 +10,7 @@ export default function useModalController(
   template: ModalButtonTemplate,
   onClose?: Function
 ) {
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
   let buttons = []
 
   if (isString(template)) {
@@ -35,7 +35,7 @@ export default function useModalController(
     if (e.key === "Enter") {
       e.stopPropagation()
       e.preventDefault()
-      let b = last(buttons)
+      const b = last(buttons)
       if (b) {
         b.click(closeModal, e)
       } else {

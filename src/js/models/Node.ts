@@ -81,6 +81,7 @@ export class Node {
 
   getIndexPath() {
     const indexPath = []
+    // eslint-disable-next-line
     let node = this
     while (node && !node.isRoot()) {
       indexPath.unshift(node.childIndex())

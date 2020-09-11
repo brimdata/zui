@@ -2,7 +2,7 @@ import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 
-import {Dispatch, State} from "../state/types"
+import {State} from "../state/types"
 import {reactElementProps} from "../test/integration"
 import Packets from "../state/Packets"
 import View from "../state/View"

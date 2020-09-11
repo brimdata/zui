@@ -7,7 +7,7 @@ import ModalContents from "./ModalContents"
 import modal from "../../state/Modal"
 
 export default function ModalBox({name, children, ...props}: ModalBoxProps) {
-  let active = useSelector(modal.getName)
+  const active = useSelector(modal.getName)
 
   function enter(anime, el) {
     return anime

@@ -4,11 +4,11 @@ import {Descriptor, Descriptors} from "../../../types"
 import columnKey from "../../../lib/columnKey"
 
 export function hashDescriptorKeys(desc: Descriptors) {
-  let newObj = {}
+  const newObj = {}
 
-  for (let td in desc) {
-    let columns = desc[td]
-    let hash = descriptorHash(columns)
+  for (const td in desc) {
+    const columns = desc[td]
+    const hash = descriptorHash(columns)
 
     newObj[hash] = columns
   }
@@ -17,7 +17,7 @@ export function hashDescriptorKeys(desc: Descriptors) {
 }
 
 function descriptorHash(desc: Descriptor) {
-  let string = desc.map(columnKey).join(" ")
+  const string = desc.map(columnKey).join(" ")
 
   return md5(string)
 }

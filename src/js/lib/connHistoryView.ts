@@ -51,7 +51,7 @@ export default function connHistoryView(historyString: string): Flag[] {
 }
 
 function hasView(char) {
-  return TEXT_MAP.hasOwnProperty(char.toLowerCase())
+  return Object.keys(TEXT_MAP).includes(char.toLowerCase())
 }
 
 function getText(char) {

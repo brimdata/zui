@@ -14,16 +14,16 @@ import useCallbackRef from "../hooks/useCallbackRef"
 import usePreferencesForm from "./usePreferencesForm"
 
 export default function Preferences() {
-  let [f, setForm] = useCallbackRef()
-  let [errors, setErrors] = useState([])
-  let prefsForm = usePreferencesForm()
+  const [f, setForm] = useCallbackRef()
+  const [errors, setErrors] = useState([])
+  const prefsForm = usePreferencesForm()
 
   const onClose = () => setErrors([])
 
   const onSubmit = useCallback(
     async (closeModal) => {
       if (!f) return
-      let form = brim.form(f, prefsForm)
+      const form = brim.form(f, prefsForm)
 
       if (await form.isValid()) {
         setErrors([])

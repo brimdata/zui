@@ -22,7 +22,7 @@ export default class Tree {
   getNodeAt(indexPath: number[]) {
     let node = this.getRoot()
     if (node) {
-      for (var index of indexPath) node = node.children[index]
+      for (const index of indexPath) node = node.children[index]
     }
     return node
   }
@@ -67,9 +67,9 @@ export default class Tree {
   }
 
   bfSearch(callback: Function) {
-    let queue = [this.getRoot()]
+    const queue = [this.getRoot()]
     while (queue.length != 0) {
-      let node = queue.shift()
+      const node = queue.shift()
       if (node) {
         callback(node)
         node.children.forEach((c) => queue.push(c))

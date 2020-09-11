@@ -1,5 +1,3 @@
-
-
 /* INGEST AUTO REFRESH
 
 If the tab history is empty, this component submits the current search. This
@@ -26,60 +24,68 @@ The snapshot is acknowledged when any of these events happen:
 * The user presses the "x" button on the message box.
 */
 
-import { isEqual } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import {isEqual} from "lodash"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useEffect, useState} from "react"
 
-import { submitSearch } from "../flows/submitSearch/mod";
-import Current from "../state/Current";
-import History from "../state/History";
-import IngestUpdateNotice from "./IngestUpdateNotice";
-import Search from "../state/Search";
-import brim from "../brim";
-import submitAutoRefreshSearch from "../flows/submitAutoRefreshSearch";
-import useThrottle from "./hooks/useThrottle";
+import {submitSearch} from "../flows/submitSearch/mod"
+import Current from "../state/Current"
+import History from "../state/History"
+import IngestUpdateNotice from "./IngestUpdateNotice"
+import Search from "../state/Search"
+import brim from "../brim"
+import submitAutoRefreshSearch from "../flows/submitAutoRefreshSearch"
+import useThrottle from "./hooks/useThrottle"
 
 export default function IngestRefresh() {
-  const dispatch = useDispatch();
-  const historyCount = useSelector(History.count);
-  const firstSearch = useSelector(History.first);
-  const nextSearch = useSelector(Search.getCurrentRecord);
-  const currentSpace = useSelector(Current.mustGetSpace);
-  const [space, setSpace] = useState(currentSpace);
-  const [snapshot, cancelSnapshot] = useThrottle(space.ingest.snapshot, 3000);
-  const [snapshotAck, setSnapshotAck] = useState(snapshot);
-  const ack = () => setSnapshotAck(snapshot);
-  const autoRefresh = historyCount === 1 && isEqual(firstSearch, nextSearch) && snapshot !== snapshotAck;
+  const dispatch = useDispatch()
+  const historyCount = useSelector(History.count)
+  const firstSearch = useSelector(History.first)
+  const nextSearch = useSelector(Search.getCurrentRecord)
+  const currentSpace = useSelector(Current.mustGetSpace)
+  const [space, setSpace] = useState(currentSpace)
+  const [snapshot, cancelSnapshot] = useThrottle(space.ingest.snapshot, 3000)
+  const [snapshotAck, setSnapshotAck] = useState(snapshot)
+  const ack = () => setSnapshotAck(snapshot)
+  const autoRefresh =
+    historyCount === 1 &&
+    isEqual(firstSearch, nextSearch) &&
+    snapshot !== snapshotAck
 
   useEffect(() => {
     if (currentSpace.id !== space.id) {
-      cancelSnapshot();
-      setSnapshotAck(currentSpace.ingest.snapshot);
+      cancelSnapshot()
+      setSnapshotAck(currentSpace.ingest.snapshot)
     }
-    setSpace(currentSpace);
-  }, [currentSpace]);
+    setSpace(currentSpace)
+  }, [currentSpace])
 
   useEffect(() => {
-    ack();
+    ack()
     if (historyCount === 0) {
-      dispatch(Search.setSpanArgs(brim.space(space).everythingSpan()));
-      dispatch(submitSearch());
+      dispatch(Search.setSpanArgs(brim.space(space).everythingSpan()))
+      dispatch(submitSearch())
     }
-  }, [historyCount]);
+  }, [historyCount])
 
   useEffect(() => {
     if (autoRefresh) {
-      ack();
-      dispatch(submitAutoRefreshSearch());
+      ack()
+      dispatch(submitAutoRefreshSearch())
     }
-  }, [autoRefresh]);
+  }, [autoRefresh])
 
   if (!autoRefresh && snapshot !== snapshotAck) {
-    return <IngestUpdateNotice onClick={buttonIndex => {
-      ack();
-      if (buttonIndex === 0) dispatch(submitSearch({ history: false, investigation: false }));
-    }} />;
+    return (
+      <IngestUpdateNotice
+        onClick={(buttonIndex) => {
+          ack()
+          if (buttonIndex === 0)
+            dispatch(submitSearch({history: false, investigation: false}))
+        }}
+      />
+    )
   } else {
-    return null;
+    return null
   }
 }

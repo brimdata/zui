@@ -1,17 +1,16 @@
+import {useSelector} from "react-redux"
+import React from "react"
 
-import { useSelector } from "react-redux";
-import React from "react";
-
-import Current from "../../state/Current";
-import LoginPage from "./LoginPage";
-import SearchPage from "../SearchPage";
+import Current from "../../state/Current"
+import LoginPage from "./LoginPage"
+import SearchPage from "../SearchPage"
 
 export default function ClusterGate() {
-  let cluster = useSelector(Current.getConnection);
+  const cluster = useSelector(Current.getConnection)
 
   if (!cluster) {
-    return <LoginPage />;
+    return <LoginPage />
   } else {
-    return <SearchPage />;
+    return <SearchPage />
   }
 }

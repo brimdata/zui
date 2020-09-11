@@ -10,7 +10,7 @@ export default function Dimens({
   render,
   ...props
 }: Props & HTMLProps<HTMLDivElement>) {
-  let {rect, ref} = useResizeObserver()
+  const {rect, ref} = useResizeObserver()
   return (
     <div {...props} ref={ref}>
       {render(rect)}

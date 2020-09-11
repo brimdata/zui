@@ -10,6 +10,6 @@ beforeEach(() => {
 })
 
 test("dispatches request", async () => {
-  let log = conn()
+  const log = conn()
   await store.dispatch(uidSearch(log))
 })

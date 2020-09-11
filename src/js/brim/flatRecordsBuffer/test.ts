@@ -1,25 +1,25 @@
 import brim from ".."
 
 test("coverts to an array of records", () => {
-  let buffer = brim.flatRecordsBuffer()
+  const buffer = brim.flatRecordsBuffer()
   buffer.add(0, records)
   expect(buffer.channels()[0].records()).toMatchSnapshot()
 })
 
 test("flattens the columns", () => {
-  let buffer = brim.flatRecordsBuffer()
+  const buffer = brim.flatRecordsBuffer()
   buffer.add(0, nestedRecords)
   expect(buffer.columns()).toMatchSnapshot()
 })
 
 test("coverts to an array of nested records", () => {
-  let buffer = brim.flatRecordsBuffer()
+  const buffer = brim.flatRecordsBuffer()
   buffer.add(0, nestedRecords)
   expect(buffer.channels()[0].records()).toMatchSnapshot()
 })
 
 test("triple nested", () => {
-  let buffer = brim.flatRecordsBuffer()
+  const buffer = brim.flatRecordsBuffer()
   buffer.add(0, tripleNest)
   expect(buffer.channels()[0].records()).toEqual([
     [
@@ -32,7 +32,7 @@ test("triple nested", () => {
   ])
 })
 
-let records = [
+const records = [
   {
     id: 0,
     type: [
@@ -47,7 +47,7 @@ let records = [
   {id: 0, values: ["1428917640.000000000", "conn", "1"]}
 ]
 
-let nestedRecords = [
+const nestedRecords = [
   {
     id: 10,
     type: [

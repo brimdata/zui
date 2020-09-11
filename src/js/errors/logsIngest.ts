@@ -9,7 +9,7 @@ export default function(err: string): BrimError {
 }
 
 function getDetails(err) {
-  let details = [`Detail: ${err}`]
+  const details = [`Detail: ${err}`]
   if (/sort limit/.test(err)) {
     details.push("Reached internal line count limit")
   }

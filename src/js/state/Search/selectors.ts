@@ -35,12 +35,12 @@ export default {
   },
 
   getArgs: (state: State): SearchArgs => {
-    let program = SearchBar.getSearchProgram(state)
-    let span = Tab.getSpanAsDates(state)
-    let spanFocus = Tab.getSpanFocusAsDates(state)
-    let space = Current.mustGetSpace(state)
-    let type: SearchType = getArgsType(program, spanFocus)
-    let perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE
+    const program = SearchBar.getSearchProgram(state)
+    const span = Tab.getSpanAsDates(state)
+    const spanFocus = Tab.getSpanFocusAsDates(state)
+    const space = Current.mustGetSpace(state)
+    const type: SearchType = getArgsType(program, spanFocus)
+    const perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE
 
     return {
       tableProgram: addHeadProc(program, perPage),

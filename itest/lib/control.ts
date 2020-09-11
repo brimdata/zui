@@ -1,10 +1,6 @@
 type PromiseFunc = () => Promise<any>
 
-export function retry(
-  f: PromiseFunc,
-  attempts: number = 100,
-  delay: number = 100
-) {
+export function retry(f: PromiseFunc, attempts = 100, delay = 100) {
   return new Promise<any>((resolve, reject) => {
     f()
       .then((ret) => resolve(ret))
@@ -25,8 +21,8 @@ export function retry(
 export const retryUntil = (
   f: PromiseFunc,
   cond_f: (arg0: any) => boolean,
-  attempts: number = 15,
-  delay: number = 1000
+  attempts = 15,
+  delay = 1000
 ) =>
   // Retry f until a condition is met. cond_f receives the value from f after
   // it is resolved and is responsible for examining and returning a boolean to

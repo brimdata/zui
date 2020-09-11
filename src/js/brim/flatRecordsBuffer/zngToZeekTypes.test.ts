@@ -1,7 +1,7 @@
 import zngToZeekTypes from "./zngToZeekTypes"
 
 test("convert to int", () => {
-  let newTypes = zngToZeekTypes([
+  const newTypes = zngToZeekTypes([
     {name: "one", type: "byte"},
     {name: "two", type: "int16"},
     {name: "three", type: "int32"},
@@ -81,7 +81,7 @@ test("array", () => {
 })
 
 test("nested types", () => {
-  let newTypes = zngToZeekTypes([
+  const newTypes = zngToZeekTypes([
     {
       name: "id",
       type: [

@@ -6,19 +6,19 @@ export function animatePopMenu(menu: any, position: string) {
   }
 }
 
-let settings = {
+const settings = {
   duration: 100,
   easing: "cubic-bezier(0,0,1,1)"
 }
 
-let popUp = [
+const popUp = [
   {transform: "scale(1) translateY(-18px)", opacity: 0.25},
   {transform: "scale(1) translateY(2px)", opacity: 0.5, offset: 0.25},
   {opacity: 1},
   {transform: "scale(1) translateY(0px)"}
 ]
 
-let popDown = [
+const popDown = [
   {transform: "scale(1) translateY(18px)", opacity: 0.25},
   {transform: "scale(1) translateY(-2px)", opacity: 0.5, offset: 0.25},
   {opacity: 1},

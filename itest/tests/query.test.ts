@@ -34,8 +34,8 @@ describe("Query tests", () => {
   })
 
   for (let i = 0; i < simpleQueries.length; i++) {
-    let zql = simpleQueries[i]
-    let testId = sprintf("%03d", i)
+    const zql = simpleQueries[i]
+    const testId = sprintf("%03d", i)
     stdTest(`query${testId}: "${zql}"`, (done) => {
       appStep
         .search(app, zql)

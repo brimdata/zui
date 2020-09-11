@@ -51,26 +51,26 @@ function joinProcs(procs: string[]) {
 }
 
 export function joinParts(filter: string, proc: string) {
-  let f = fmtProgram(filter)
+  const f = fmtProgram(filter)
   return [f, proc].join(" | ")
 }
 
 export function splitParts(program: string) {
-  let [_, ...procs] = program.split("|")
-  let p = trim(procs.join("|"))
+  const [_, ...procs] = program.split("|")
+  const p = trim(procs.join("|"))
 
-  let [filter] = program.split("|")
-  let f = trim(filter)
+  const [filter] = program.split("|")
+  const f = trim(filter)
 
   return [f, p]
 }
 
 export function parallelizeProcs(programs: string[]) {
-  let filters = []
-  let procs = []
+  const filters = []
+  const procs = []
 
-  for (let program of programs) {
-    let [filter, proc] = splitParts(program)
+  for (const program of programs) {
+    const [filter, proc] = splitParts(program)
     filters.push(filter)
     procs.push(proc)
   }

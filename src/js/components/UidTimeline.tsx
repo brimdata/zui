@@ -23,7 +23,7 @@ type Props = DispatchProps & OwnProps
 export default function UidTimeline({logs, log, dispatch}: Props) {
   if (logs.length === 0) return null
 
-  let xScale = createScale(logs)
+  const xScale = createScale(logs)
 
   function queryForAll() {
     dispatch(SearchBar.clearSearchBar())
@@ -50,9 +50,9 @@ export default function UidTimeline({logs, log, dispatch}: Props) {
 }
 
 function createScale(logs) {
-  let tss = []
+  const tss = []
 
-  for (let log of logs) {
+  for (const log of logs) {
     tss.push(log.cast("ts"))
   }
 
@@ -70,8 +70,8 @@ function createScale(logs) {
 }
 
 function PathRow({log, current, position, ...rest}) {
-  let ts = log.cast("ts")
-  let path = log.getString("_path")
+  const ts = log.cast("ts")
+  const path = log.getString("_path")
   return (
     <div className="waterfall-row" {...rest}>
       <div className="data-label">{brim.time(ts).format("HH:mm:ss.SSS")}</div>
@@ -89,8 +89,8 @@ function PathRow({log, current, position, ...rest}) {
 }
 
 function captionText(logs: Log[], queryForAll) {
-  let limit = logs.length === UID_CORRELATION_LIMIT
-  let conn = logs.find((l) => l.getString("_path") === "conn")
+  const limit = logs.length === UID_CORRELATION_LIMIT
+  const conn = logs.find((l) => l.getString("_path") === "conn")
 
   if (limit)
     return (

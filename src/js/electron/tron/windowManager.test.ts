@@ -1,7 +1,7 @@
 import tron from "./"
 
 test("fetchWindowStates", () => {
-  let manager = tron.windowManager()
+  const manager = tron.windowManager()
   manager.openWindow("search")
   manager.fetchWindowStates()
 })

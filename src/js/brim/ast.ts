@@ -9,8 +9,8 @@ export default function ast(tree: any) {
       return tree.error || null
     },
     groupByKeys() {
-      let g = this.proc("GroupByProc")
-      let keys = g ? g.keys : []
+      const g = this.proc("GroupByProc")
+      const keys = g ? g.keys : []
       return keys.map((k) => k.target)
     },
     proc(name: string) {
@@ -52,14 +52,14 @@ function fieldExprToName(expr) {
 
 function getProcs(ast) {
   if (!ast || ast.error) return []
-  let list = []
+  const list = []
   collectProcs(ast, list)
   return list
 }
 
 function collectProcs(proc, list) {
   if (COMPOUND_PROCS.includes(proc.op)) {
-    for (let p of proc.procs) collectProcs(p, list)
+    for (const p of proc.procs) collectProcs(p, list)
   } else {
     list.push(proc)
   }

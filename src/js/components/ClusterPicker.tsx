@@ -11,7 +11,7 @@ import Notice from "../state/Notice"
 import usePopupMenu from "./hooks/usePopupMenu"
 import {Cluster} from "../state/Clusters/types"
 import {AppDispatch} from "../state/types"
-import {MenuItem, MenuItemConstructorOptions} from "electron"
+import {MenuItemConstructorOptions} from "electron"
 
 const ClusterPickerWrapper = styled.div`
   display: flex;

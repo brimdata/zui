@@ -12,8 +12,8 @@ export type RawRecord = {
 }
 
 export default function flatRecordBuffers() {
-  let channels = new Map<number, $Channel>()
-  let types = {}
+  const channels = new Map<number, $Channel>()
+  const types = {}
 
   return {
     getChannel(id: number) {
@@ -28,15 +28,15 @@ export default function flatRecordBuffers() {
     },
 
     add(id: number, records: RawRecord[]) {
-      let chan = this.getChannel(id)
-      let flatRecords = records.map((r) => {
+      const chan = this.getChannel(id)
+      const flatRecords = records.map((r) => {
         if (r.type) types[r.id] = zngToZeekTypes(r.type)
         return nestedRecord(r.values, types[r.id]).flatten()
       })
       chan.add(flatRecords)
     },
 
-    empty(chanId: number = 0) {
+    empty(chanId = 0) {
       return this.getChannel(chanId).empty()
     },
 
@@ -51,7 +51,7 @@ export default function flatRecordBuffers() {
       return Array.from<$Channel>(channels.values())
     },
 
-    clearRecords(chanId: number = 0) {
+    clearRecords(chanId = 0) {
       this.getChannel(chanId).clear()
     }
   }
@@ -59,7 +59,7 @@ export default function flatRecordBuffers() {
 
 function flattenType(descriptor, prefix = "") {
   return descriptor.reduce((flat, {name, type}) => {
-    let cols = isArray(type)
+    const cols = isArray(type)
       ? flattenType(type, `${prefix}${name}.`)
       : [{name: prefix + name, type}]
 

@@ -1,9 +1,9 @@
 import {useRef, useState} from "react"
 
 export default function useFuzzyHover(enterDelay: number, exitDelay: number) {
-  let [hovering, setHovering] = useState(false)
-  let exitId = useRef(null)
-  let enterId = useRef(null)
+  const [hovering, setHovering] = useState(false)
+  const exitId = useRef(null)
+  const enterId = useRef(null)
 
   function mouseEnter() {
     cancelExit()

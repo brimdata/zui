@@ -1,36 +1,36 @@
+import React, {useState} from "react"
 
-import React, { useState } from "react";
-
-import { FormFieldConfig } from "../../brim/form";
-import FileInput from "../common/forms/FileInput";
-import InputLabel from "../common/forms/InputLabel";
-import Link from "../common/Link";
+import {FormFieldConfig} from "../../brim/form"
+import FileInput from "../common/forms/FileInput"
+import InputLabel from "../common/forms/InputLabel"
+import Link from "../common/Link"
 
 type Props = {
-  config: FormFieldConfig;
-};
+  config: FormFieldConfig
+}
 
-const DOCS = "https://github.com/brimsec/brim/wiki/Zeek-Customization";
+const DOCS = "https://github.com/brimsec/brim/wiki/Zeek-Customization"
 
-export default function ZeekRunner({
-  config
-}: Props) {
-  let {
-    name,
-    label,
-    defaultValue
-  } = config;
-  let [showFeedback, setShowFeedback] = useState(false);
+export default function ZeekRunner({config}: Props) {
+  const {name, label, defaultValue} = config
+  const [showFeedback, setShowFeedback] = useState(false)
 
   function onChange(val) {
-    setShowFeedback(val !== defaultValue);
+    setShowFeedback(val !== defaultValue)
   }
 
-  return <div className="setting-panel">
+  return (
+    <div className="setting-panel">
       <InputLabel>
         {label} <Link href={DOCS}>docs</Link>
       </InputLabel>
-      <FileInput name={name} defaultValue={defaultValue} onChange={onChange} placeholder="default" />
+      <FileInput
+        name={name}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        placeholder="default"
+      />
       {showFeedback ? <p className="feedback">Restart required.</p> : null}
-    </div>;
+    </div>
+  )
 }

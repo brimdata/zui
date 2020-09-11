@@ -32,10 +32,10 @@ describe("ErrorFactory#create", () => {
       const errors = TEST_CASES[klass]
 
       errors.forEach((error) => {
-        let brimError = ErrorFactory.create(error)
+        const brimError = ErrorFactory.create(error)
         expect(brimError.type).toBe(klass)
 
-        let negative = ErrorFactory.create("Negative")
+        const negative = ErrorFactory.create("Negative")
         expect(negative).not.toBe(klass)
       })
     })

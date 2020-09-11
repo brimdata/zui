@@ -2,9 +2,9 @@ import getTestState from "../../test/helpers/getTestState"
 import migrate from "./202005261448_setInvestigationSpaceToNameAndId"
 
 test("migrating 202005261448_setInvestigationSpaceToNameAndId", () => {
-  let prev = getTestState("v0.9.1")
+  const prev = getTestState("v0.9.1")
 
-  let next = migrate(prev)
+  const next = migrate(prev)
 
   expect(next.globalState.investigation).toEqual([
     {

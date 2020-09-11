@@ -6,7 +6,7 @@ import {viewerSearch} from "./searches/viewerSearch"
 import Search from "../state/Search"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
-import brim, {Span} from "../brim"
+import brim from "../brim"
 import {DateTuple} from "../lib/TimeWindow"
 import Log from "../models/Log"
 

@@ -3,7 +3,7 @@ import {isEqual} from "lodash"
 import {Finding} from "../state/Investigation/types"
 
 export function getKey(finding: Finding) {
-  let {sec, ns} = finding.ts
+  const {sec, ns} = finding.ts
   return `${sec}.${ns}`
 }
 

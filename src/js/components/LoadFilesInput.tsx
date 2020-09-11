@@ -14,15 +14,15 @@ type Props = {
 }
 
 export default function LoadFilesInput({onChange}: Props) {
-  let [input, setInput] = useCallbackRef()
+  const [input, setInput] = useCallbackRef()
 
-  let [bindDropzone, dragging] = useDropzone((e: DragEvent) => {
-    let paths = Array.from(e.dataTransfer.files).map((f) => f.path)
+  const [bindDropzone, dragging] = useDropzone((e: DragEvent) => {
+    const paths = Array.from(e.dataTransfer.files).map((f) => f.path)
     onChange(e, paths)
   })
 
   function _onChange(e: ChangeEvent<HTMLInputElement>) {
-    let paths = Array.from(e.target.files).map((f) => f.path)
+    const paths = Array.from(e.target.files).map((f) => f.path)
     onChange(e, paths)
   }
 

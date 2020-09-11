@@ -1,6 +1,5 @@
 import anime, {AnimeInstance} from "animejs"
 
-import {whatIs} from "./is"
 import {isObject, isFunction} from "lodash"
 
 export default function animation(el: HTMLElement | null, opts: unknown) {

@@ -1,4 +1,4 @@
-import {app, autoUpdater, dialog, FeedURLOptions} from "electron"
+import {app, autoUpdater, dialog} from "electron"
 import log from "electron-log"
 import get from "lodash/get"
 import semver from "semver"

@@ -18,8 +18,8 @@ export default {
 
   spacePayloadToSpace(space: any) {
     if (space.span) {
-      let span = space.span
-      let end = brim
+      const span = space.span
+      const end = brim
         .time(span.ts)
         .addTs(span.dur as Ts)
         .toTs()

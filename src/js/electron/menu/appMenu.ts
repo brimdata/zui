@@ -1,6 +1,6 @@
 /* @noflow */
 
-import {app, dialog, shell, MenuItemConstructorOptions, Menu} from "electron"
+import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
 import path from "path"
 
 import {$WindowManager} from "../tron/windowManager"

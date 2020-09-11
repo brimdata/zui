@@ -9,8 +9,8 @@ import NoticeBanner from "./NoticeBanner"
 import useEscapeKey from "./hooks/useEscapeKey"
 
 export default function ErrorNotice() {
-  let error = useSelector(Notice.getError)
-  let visible = useSelector(Notice.getVisible)
+  const error = useSelector(Notice.getError)
+  const visible = useSelector(Notice.getVisible)
 
   return (
     <NoticeBanner show={visible}>
@@ -20,8 +20,8 @@ export default function ErrorNotice() {
 }
 
 function ErrorMessage({error}: {error: BrimError}) {
-  let Component = getComponent(error)
-  let dispatch = useDispatch()
+  const Component = getComponent(error)
+  const dispatch = useDispatch()
   useEscapeKey(() => dispatch(Notice.dismiss()))
   return <Component error={error} />
 }
@@ -37,9 +37,9 @@ function None() {
 }
 
 function Default({error}: {error: BrimError}) {
-  let dispatch = useDispatch()
-  let msg = upperFirst(error.message)
-  let details = error.details
+  const dispatch = useDispatch()
+  const msg = upperFirst(error.message)
+  const details = error.details
   return (
     <>
       <p>

@@ -14,7 +14,7 @@ export default class ErrorFactory {
 
     if (error instanceof AppError) return error.toBrimError()
 
-    for (let E of KNOWN_ERRORS) {
+    for (const E of KNOWN_ERRORS) {
       if (E.is(error)) return new E(error).toBrimError()
     }
 

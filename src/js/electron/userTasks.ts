@@ -18,7 +18,7 @@ export default function(app: any) {
 
 function getArguments() {
   if (electronIsDev) {
-    let appRoot = path.join(__dirname, "..", "..", "..")
+    const appRoot = path.join(__dirname, "..", "..", "..")
     return [appRoot, "--new-window"].join(" ")
   } else {
     return "--new-window"

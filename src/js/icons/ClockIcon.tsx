@@ -1,8 +1,7 @@
+import React from "react"
 
-import React from "react";
-
-import ClockIconSvg from "./clock-icon.svg";
+import ClockIconSvg from "./clock-icon.svg"
 
 export default function ClockIcon(props: any) {
-  return <ClockIconSvg {...props} />;
+  return <ClockIconSvg {...props} />
 }

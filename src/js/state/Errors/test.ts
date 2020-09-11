@@ -7,7 +7,7 @@ beforeEach(() => {
 })
 
 test("ERROR_CREATE", () => {
-  let state = store.dispatchAll([Errors.createError("Bug")])
+  const state = store.dispatchAll([Errors.createError("Bug")])
 
   expect(Errors.getErrors(state)[0]).toEqual({
     type: "AppError",
@@ -17,7 +17,7 @@ test("ERROR_CREATE", () => {
 })
 
 test("ERRORS_CLEAR", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     Errors.createError("Bug"),
     Errors.createError("Bug2"),
     Errors.clearErrors()

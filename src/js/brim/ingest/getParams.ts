@@ -23,7 +23,7 @@ export default function getParams(
   existingNames: string[] = [],
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
-  let files = fileList(data)
+  const files = fileList(data)
 
   if (files.multiple() && files.any("pcap")) {
     return {

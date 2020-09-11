@@ -88,7 +88,7 @@ function toCluster({host, ...rest}): Cluster {
 export default function NewConnectionModal() {
   const dispatch = useDispatch()
   const [f, formRef] = useCallbackRef()
-  let [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState([])
   const config: FormConfig = {
     host: {
       name: "host",
@@ -102,7 +102,7 @@ export default function NewConnectionModal() {
   const onSubmit = useCallback(
     async (closeModal) => {
       if (!f) return
-      let form = brim.form(f, config)
+      const form = brim.form(f, config)
 
       if (await form.isValid()) {
         const {host} = form.getFields().reduce((obj, field) => {

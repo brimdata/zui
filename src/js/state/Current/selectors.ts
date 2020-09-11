@@ -1,12 +1,12 @@
 import {createSelector} from "reselect"
 
 import {Cluster, ClustersState} from "../Clusters/types"
-import {Space, SpacesState} from "../Spaces/types"
+import {SpacesState} from "../Spaces/types"
 import {State} from "../types"
 import Clusters from "../Clusters"
 import Spaces from "../Spaces"
 import activeTabSelect from "../Tab/activeTabSelect"
-import brim, {Brim} from "../../brim"
+import brim, {BrimSpace} from "../../brim"
 
 type Id = string | null
 
@@ -33,7 +33,7 @@ export const mustGetSpace = createSelector<
   SpacesState,
   Id,
   Id,
-  Brim.Space
+  BrimSpace
 >(Spaces.raw, getConnectionId, getSpaceId, (spaces, connId, spaceId) => {
   if (!connId) throw new Error("Current connection id is unset")
   if (!spaceId) throw new Error("Current space id is unset")

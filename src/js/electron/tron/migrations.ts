@@ -73,7 +73,7 @@ function excludeTests(file) {
 function build(file): Migration {
   // $FlowFixMe
   const migrate = require(path.join(dir, file)).default
-  const [version, name] = file.replace(".js", "").split("_")
+  const [version] = file.replace(".js", "").split("_")
   return {
     migrate,
     version: parseInt(version)

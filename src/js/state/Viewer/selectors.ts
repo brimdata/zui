@@ -4,12 +4,7 @@ import {RecordData} from "../../types/records"
 import {State} from "../types"
 import {TabState} from "../Tab/types"
 import {ViewerSelection, createSelection} from "./helpers/selection"
-import {
-  ViewerSelectionData,
-  ViewerState,
-  ViewerStatus,
-  ViewerColumns
-} from "./types"
+import {ViewerSelectionData, ViewerState, ViewerColumns} from "./types"
 import Log from "../../models/Log"
 import Tabs from "../Tabs"
 import brim from "../../brim"

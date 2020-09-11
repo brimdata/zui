@@ -8,7 +8,7 @@ import logInto from "../test/helpers/loginTo"
 import provide from "../test/helpers/provide"
 
 test("renders with zq get command", async () => {
-  let {store} = await logInto("cluster1", "space1")
+  const {store} = await logInto("cluster1", "space1")
 
   store.dispatchAll([
     SearchBar.changeSearchBarInput("hi"),
@@ -16,7 +16,7 @@ test("renders with zq get command", async () => {
     Modal.show("zq")
   ])
 
-  let wrapper = provide(store, <ZQModal />)
+  const wrapper = provide(store, <ZQModal />)
   wrapper
     .find("button")
     .at(0)

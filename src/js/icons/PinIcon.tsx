@@ -1,9 +1,7 @@
+import React from "react"
 
-
-import React from "react";
-
-import PinSvg from "../../static/icons/pin.svg";
+import PinSvg from "../../static/icons/pin.svg"
 
 export default function PinIcon(props: any) {
-  return <PinSvg className="pin-icon" {...props} />;
+  return <PinSvg className="pin-icon" {...props} />
 }

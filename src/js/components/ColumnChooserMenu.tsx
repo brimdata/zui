@@ -1,9 +1,8 @@
 import {CSSTransition} from "react-transition-group"
 import {connect} from "react-redux"
-import React, {FormEvent} from "react"
+import React from "react"
 import styled from "styled-components"
 
-import {ColumnHeadersViewState} from "../state/Layout/types"
 import {State, DispatchProps} from "../state/types"
 import {Fieldset, Subscript, Label} from "./Typography"
 import {TableColumn} from "../state/Columns/types"
@@ -12,7 +11,6 @@ import CloseButton from "./CloseButton"
 import Columns from "../state/Columns"
 import Layout from "../state/Layout"
 import SelectInput from "./common/forms/SelectInput"
-import TableColumns from "../models/TableColumns"
 import dispatchToProps from "../lib/dispatchToProps"
 import SearchInput from "./common/forms/SearchInput"
 

@@ -11,11 +11,11 @@ import {selectors} from "../../src/js/test/integration"
 import {handleError, stdTest} from "../lib/jest"
 
 const clearPcaps = async (app) => {
-  let dir = await pcapsDir(app)
-  let files = readdirSync(dir)
+  const dir = await pcapsDir(app)
+  const files = readdirSync(dir)
   files.forEach((fileBasename) => {
     if (fileBasename.match(/^packets-.+\.pcap$/)) {
-      let fileAbspath = path.join(dir, fileBasename)
+      const fileAbspath = path.join(dir, fileBasename)
       unlinkSync(fileAbspath)
       LOG.debug(`Unlinked file ${fileAbspath}`)
     }
@@ -48,10 +48,10 @@ describe("Test PCAPs", () => {
       )
         .then(async () => {
           await appStep.click(app, selectors.viewer.resultCellContaining("ssl"))
-          let downloadText = await appStep.savePcap(app)
+          const downloadText = await appStep.savePcap(app)
           expect(downloadText).toBe("Download Complete")
           const fileBasename = "packets-1582646593.996366.pcap"
-          let pcapAbspath = path.join(await pcapsDir(app), fileBasename)
+          const pcapAbspath = path.join(await pcapsDir(app), fileBasename)
           expect(md5(readFileSync(pcapAbspath))).toBe(
             "888453c81738fd8ade4c7f9888d86f86"
           )
@@ -67,10 +67,10 @@ describe("Test PCAPs", () => {
     runSearch(app, "duration=null id.orig_p=47783")
       .then(async () => {
         await appStep.click(app, selectors.viewer.resultCellContaining("conn"))
-        let downloadText = await appStep.savePcap(app)
+        const downloadText = await appStep.savePcap(app)
         expect(downloadText).toBe("Download Complete")
         const fileBasename = "packets-1582646589.440467.pcap"
-        let pcapAbspath = path.join(await pcapsDir(app), fileBasename)
+        const pcapAbspath = path.join(await pcapsDir(app), fileBasename)
         expect(md5(readFileSync(pcapAbspath))).toBe(
           "678442857027fdc5ad1e3418614dcdb8"
         )

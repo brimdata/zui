@@ -1,8 +1,7 @@
+import React from "react"
 
-import React from "react";
-
-import ExpandWindowSvg from "./expand-window-icon.svg";
+import ExpandWindowSvg from "./expand-window-icon.svg"
 
 export default function ExpandWindow(props: any) {
-  return <ExpandWindowSvg {...props} />;
+  return <ExpandWindowSvg {...props} />
 }

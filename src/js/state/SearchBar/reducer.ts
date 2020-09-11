@@ -38,7 +38,7 @@ export default function reducer(
           current: action.value
         }
       } else {
-        let newPins = [...state.pinned]
+        const newPins = [...state.pinned]
         newPins[state.editing] = action.value
         return {
           ...state,

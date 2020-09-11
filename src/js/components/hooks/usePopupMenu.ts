@@ -8,12 +8,6 @@ type Options = {
   placement?: "right" | "left"
 }
 
-type Args = {
-  callback?: () => void
-  x?: number
-  y?: number
-}
-
 export default function usePopupMenu(
   template: MenuItemConstructorOptions[],
   opts: Options = {}

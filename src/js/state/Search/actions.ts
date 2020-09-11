@@ -16,7 +16,7 @@ export default {
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs, tabId}
   },
   setSpanArgsFromDates(dates: DateTuple): SEARCH_SPAN_ARGS_SET {
-    let spanArgs = brim.dateTuple(dates).toSpan()
+    const spanArgs = brim.dateTuple(dates).toSpan()
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
   },
   setSpanFocus(spanFocus: Span | null | undefined): SEARCH_SPAN_FOCUS_SET {

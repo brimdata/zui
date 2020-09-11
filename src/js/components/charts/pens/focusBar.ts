@@ -19,9 +19,9 @@ export default function({onFocus}: Props): Pen {
     d3.select(svg)
       .select(".brush")
       .on("click.focusbar", () => {
-        let data = getPointAt(d3.event.offsetX, chart)
+        const data = getPointAt(d3.event.offsetX, chart)
         if (data) {
-          let {number, unit} = chart.data.interval
+          const {number, unit} = chart.data.interval
           onFocus([
             data.ts,
             brim

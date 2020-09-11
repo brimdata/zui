@@ -16,15 +16,15 @@ const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 240
 
 export default function TabBar() {
-  let tabs = useSelector(Tabs.getData)
-  let spaces = useSelector(Spaces.raw)
-  let count = tabs.length
-  let {ref, rect} = useResizeObserver()
-  let [width, setWidth] = useState(0)
-  let layout = useTabLayout(tabs, width)
+  const tabs = useSelector(Tabs.getData)
+  const spaces = useSelector(Spaces.raw)
+  const count = tabs.length
+  const {ref, rect} = useResizeObserver()
+  const [width, setWidth] = useState(0)
+  const layout = useTabLayout(tabs, width)
   const calcWidth = () =>
     setWidth(lib.bounded(rect.width / count, [0, MAX_WIDTH]))
-  let ctl = useTabController(count, calcWidth)
+  const ctl = useTabController(count, calcWidth)
 
   useEffect(() => calcWidth(), [rect.width])
   return (

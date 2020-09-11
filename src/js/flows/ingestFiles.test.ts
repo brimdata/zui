@@ -104,14 +104,14 @@ test("a zeek ingest error", async () => {
     store.dispatch(ingestFiles([itestFile("sample.tsv")], globalDispatch))
   ).rejects.toEqual(expect.any(Error))
 
-  let state = store.getState()
+  const state = store.getState()
   expect(Current.getSpaceId(state)).toEqual(null)
 })
 
 test("a json file with a custom types config", async () => {
   zealot.stubStream("logs.post", [{type: "LogPostStatus"}, {type: "TaskEnd"}])
 
-  let contents = await lib.file(itestFile("sampleTypes.json")).read()
+  const contents = await lib.file(itestFile("sampleTypes.json")).read()
   store.dispatch(Prefs.setJSONTypeConfig(itestFile("sampleTypes.json")))
 
   await store.dispatch(

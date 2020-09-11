@@ -15,15 +15,15 @@ type Props = {
 }
 
 export default function TimeInput({timeArg, onSubmit}: Props) {
-  let el = useRef<HTMLInputElement>()
-  let zone = useSelector(View.getTimeZone)
-  let initValue = isString(timeArg)
+  const el = useRef<HTMLInputElement>()
+  const zone = useSelector(View.getTimeZone)
+  const initValue = isString(timeArg)
     ? timeArg
     : brim.time(timeArg).format(SPAN_TIME_FMT)
 
-  let [value, setValue] = useState(initValue)
-  let [result, setResult] = useState(null)
-  let [error, setError] = useState(null)
+  const [value, setValue] = useState(initValue)
+  const [result, setResult] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if (el.current) el.current.focus()
@@ -32,7 +32,7 @@ export default function TimeInput({timeArg, onSubmit}: Props) {
   function onChange(e) {
     setValue(e.target.value)
 
-    let d = lib.date.parseInZone(e.target.value, zone)
+    const d = lib.date.parseInZone(e.target.value, zone)
     if (d === null) {
       setError("Unknown date format")
       setResult(null)

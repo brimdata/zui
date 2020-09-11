@@ -2,17 +2,17 @@ import brim from "../brim"
 import lib from "./"
 
 describe("parseInZone", () => {
-  let names = lib.date.zoneNames()
-  let fmt = "YYYY MM DD HH mm ss SSS"
+  const names = lib.date.zoneNames()
+  const fmt = "YYYY MM DD HH mm ss SSS"
 
-  let strictDate = "October 31, 2000 11:59pm"
-  let referenceDate = "5 minutes ago"
-  let casualDate = "Friday"
+  const strictDate = "October 31, 2000 11:59pm"
+  const referenceDate = "5 minutes ago"
+  const casualDate = "Friday"
 
   test("strict date in all zones", () => {
     names.forEach((zone) => {
-      let ts = lib.date.parseInZone(strictDate, zone)
-      let str = lib
+      const ts = lib.date.parseInZone(strictDate, zone)
+      const str = lib
         .date(brim.time(ts || new Date()).toDate())
         .zone(zone)
         .format(fmt)
@@ -26,9 +26,9 @@ describe("parseInZone", () => {
       // This is very odd, it does 4 minutes and 30 sec instead of 5
       if (zone === "Africa/Monrovia") return
 
-      let ref = new Date(0)
-      let date = lib.date.parseInZone(referenceDate, zone, ref)
-      let str = lib
+      const ref = new Date(0)
+      const date = lib.date.parseInZone(referenceDate, zone, ref)
+      const str = lib
         .date(brim.time(date || new Date()).toDate())
         .zone(zone)
         .format(fmt)
@@ -39,9 +39,9 @@ describe("parseInZone", () => {
 
   test("casual date in all zones", () => {
     names.forEach((zone) => {
-      let ref = new Date(0)
-      let date = lib.date.parseInZone(casualDate, zone, ref)
-      let str = brim
+      const ref = new Date(0)
+      const date = lib.date.parseInZone(casualDate, zone, ref)
+      const str = brim
         .time(date || new Date())
         .toDate()
         .toISOString()
@@ -51,19 +51,19 @@ describe("parseInZone", () => {
   })
 
   test("relative expression remains", () => {
-    let result = lib.date.parseInZone("now", "UTC")
+    const result = lib.date.parseInZone("now", "UTC")
 
     expect(result).toBe("now")
   })
 
   test("relative with subtraction", () => {
-    let result = lib.date.parseInZone("now - 5m", "UTC")
+    const result = lib.date.parseInZone("now - 5m", "UTC")
 
     expect(result).toBe("now - 5m")
   })
 
   test("invalid relative expression", () => {
-    let result = lib.date.parseInZone("nfopfow - 5m", "UTC")
+    const result = lib.date.parseInZone("nfopfow - 5m", "UTC")
 
     expect(result).toBe(null)
   })

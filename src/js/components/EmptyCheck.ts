@@ -1,5 +1,4 @@
 import {isEmpty} from "lodash"
-import {ReactNode} from "react"
 
 type Props = {children: JSX.Element; empty: JSX.Element; array: any[]}
 

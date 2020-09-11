@@ -4,11 +4,11 @@ import Notice from "./"
 
 export default {
   clearNetworkError: (): Thunk => (dispatch, getState) => {
-    let e = Notice.getError(getState())
+    const e = Notice.getError(getState())
     if (e instanceof NetworkError) dispatch(Notice.dismiss())
   },
   clearSearchError: (): Thunk => (dispatch, getState) => {
-    let e = Notice.getError(getState())
+    const e = Notice.getError(getState())
     if (e instanceof SearchError) dispatch(Notice.dismiss())
   }
 }

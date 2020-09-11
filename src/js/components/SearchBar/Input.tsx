@@ -27,9 +27,9 @@ const StyledInput = styled.input`
 `
 
 export default function Input() {
-  let dispatch = useDispatch()
-  let history = useRef(new InputHistory<string>())
-  let inputValue = useSelector(SearchBar.getSearchBarInputValue)
+  const dispatch = useDispatch()
+  const history = useRef(new InputHistory<string>())
+  const inputValue = useSelector(SearchBar.getSearchBarInputValue)
 
   function changeTo(value: string) {
     dispatch(SearchBar.changeSearchBarInput(value))

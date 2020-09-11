@@ -63,7 +63,7 @@ function buildSearchActions() {
       name: "search-cell-menu-from-time",
       label: 'Use as "start" time',
       listener(dispatch, fieldData) {
-        let field = brim.field(fieldData)
+        const field = brim.field(fieldData)
         if (field.type === "time") {
           dispatch(tab.setFrom(brim.time(field.toDate()).toTs()))
           dispatch(submitSearch())
@@ -74,7 +74,7 @@ function buildSearchActions() {
       name: "search-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
       listener(dispatch, program, log) {
-        let newProgram = brim
+        const newProgram = brim
           .program(program)
           .drillDown(brim.log(log.tuple, log.descriptor))
           .string()
@@ -106,8 +106,8 @@ function buildSearchActions() {
       name: "search-cell-menu-show-context",
       label: "View in full context",
       listener(dispatch, fieldData, log) {
-        let field = brim.field(fieldData)
-        let brimTime = brim.time(field.toDate())
+        const field = brim.field(fieldData)
+        const brimTime = brim.time(field.toDate())
         if (field.type === "time") {
           dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))
           dispatch(tab.setTo(brimTime.add(1, "minutes").toTs()))
@@ -167,7 +167,7 @@ function buildSearchActions() {
       name: "search-cell-menu-to-time",
       label: 'Use as "end" time',
       listener(dispatch, fieldData) {
-        let field = brim.field(fieldData)
+        const field = brim.field(fieldData)
         if (field.type === "time") {
           dispatch(
             tab.setTo(

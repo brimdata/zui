@@ -17,14 +17,14 @@ beforeEach(() => {
 })
 
 test("viewing a log detail", () => {
-  let state = store.dispatchAll([LogDetails.push(record)])
+  const state = store.dispatchAll([LogDetails.push(record)])
   const log = LogDetails.build(state)
 
   expect(log && log.getString("letter")).toEqual("a")
 })
 
 test("viewing 2 logs", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     LogDetails.push(record),
     LogDetails.push(record2)
   ])
@@ -34,7 +34,7 @@ test("viewing 2 logs", () => {
 })
 
 test("going back to the first log", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     LogDetails.push(record),
     LogDetails.push(record2),
     LogDetails.back()

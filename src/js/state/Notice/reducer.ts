@@ -1,6 +1,6 @@
 import {NoticeAction, NoticeState} from "./types"
 
-let init: NoticeState = {error: null, visible: false}
+const init: NoticeState = {error: null, visible: false}
 
 export default function reducer(
   state: NoticeState = init,

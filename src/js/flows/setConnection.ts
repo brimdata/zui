@@ -1,4 +1,3 @@
-import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import Clusters from "../state/Clusters"
 import {Cluster} from "../state/Clusters/types"

@@ -1,8 +1,7 @@
+import React from "react"
 
-import React from "react";
-
-import ColumnsIconSvg from "./columns-icon.svg";
+import ColumnsIconSvg from "./columns-icon.svg"
 
 export default function ColumnsIcon(props: any) {
-  return <ColumnsIconSvg {...props} />;
+  return <ColumnsIconSvg {...props} />
 }

@@ -2,7 +2,6 @@ import {isEqual} from "lodash"
 
 import {COMPOUND_FIELD_RGX} from "./compoundField"
 import {FieldData} from "../types/records"
-import {isArray} from "../lib/is"
 import {withCommas} from "../lib/fmt"
 import brim, {$Field} from "./"
 

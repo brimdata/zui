@@ -11,7 +11,7 @@ import createTestBrim from "../lib/createTestBrim"
 const filePath = path.join(os.tmpdir(), "results.zng")
 
 describe("exporting tests", () => {
-  let brim = createTestBrim("exportZngResults")
+  const brim = createTestBrim("exportZngResults")
 
   beforeAll(() => brim.ingest("sample.tsv"))
 

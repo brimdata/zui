@@ -1,7 +1,7 @@
 import errors from "./"
 
 test("pcapIngestError", () => {
-  let err = "fatal error on backend"
+  const err = "fatal error on backend"
 
   expect(errors.pcapIngest(err)).toEqual({
     type: "PCAPIngestError",
@@ -11,7 +11,7 @@ test("pcapIngestError", () => {
 })
 
 test("pcapIngestError (sort limit)", () => {
-  let err = "sort limit reached"
+  const err = "sort limit reached"
 
   expect(errors.pcapIngest(err)).toEqual({
     type: "PCAPIngestError",

@@ -4,14 +4,14 @@ import {InvestigationState} from "../../state/Investigation/types"
 import Tree from "../../models/Tree"
 
 export function createInvestigationTree(investigation: InvestigationState) {
-  let tree = new Tree({data: "ROOT", children: []})
+  const tree = new Tree({data: "ROOT", children: []})
 
-  for (let finding of investigation) {
+  for (const finding of investigation) {
     let node = tree.getRoot()
 
     eachFilter(finding.search, (filter) => {
       if (!node) return
-      let nextNode = node.children.find((child) =>
+      const nextNode = node.children.find((child) =>
         isEqual(child.data.filter, filter)
       )
       if (nextNode) {

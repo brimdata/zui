@@ -17,9 +17,9 @@ type Props = {
 }
 
 export default function FileInput(props: Props) {
-  let [picker, ref] = useCallbackRef()
-  let [bindDropzone, dragging] = useDropzone(onDrop)
-  let [value, setValue] = useState(props.defaultValue)
+  const [picker, ref] = useCallbackRef()
+  const [bindDropzone, dragging] = useDropzone(onDrop)
+  const [value, setValue] = useState(props.defaultValue)
 
   function update(path) {
     props.onChange && props.onChange(path)

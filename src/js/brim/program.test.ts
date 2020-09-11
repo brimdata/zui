@@ -9,10 +9,10 @@ import {
 import brim from "./"
 
 describe("excluding and including", () => {
-  let field = brim.field({name: "uid", type: "string", value: "123"})
+  const field = brim.field({name: "uid", type: "string", value: "123"})
 
   test("excluding a field", () => {
-    let program = brim
+    const program = brim
       .program("_path=weird")
       .exclude(field)
       .string()
@@ -21,7 +21,7 @@ describe("excluding and including", () => {
   })
 
   test("excluding a field with a pipe", () => {
-    let program = brim
+    const program = brim
       .program(
         'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
       )
@@ -34,7 +34,7 @@ describe("excluding and including", () => {
   })
 
   test("excluding a field with two pipes", () => {
-    let program = brim
+    const program = brim
       .program("_path=weird | sort | filter 1")
       .exclude(field)
       .string()
@@ -43,7 +43,7 @@ describe("excluding and including", () => {
   })
 
   test("including a field with two pipes", () => {
-    let program = brim
+    const program = brim
       .program("_path=weird | sort | filter 1")
       .include(field)
       .string()
@@ -53,7 +53,7 @@ describe("excluding and including", () => {
 })
 
 describe("drill down", () => {
-  let result = brim
+  const result = brim
     .table()
     .col("id.orig_h", "addr")
     .col("proto", "enum")
@@ -63,7 +63,7 @@ describe("drill down", () => {
     .toLogs()[0]
 
   test("when there is no leading filter", () => {
-    let program = brim
+    const program = brim
       .program("count() by id.orig_h")
       .drillDown(result)
       .string()
@@ -72,7 +72,7 @@ describe("drill down", () => {
   })
 
   test("combines keys in the group by proc", () => {
-    let program = brim
+    const program = brim
       .program("_path=dns | count() by id.orig_h, proto, query | sort -r")
       .drillDown(result)
       .string()
@@ -92,7 +92,7 @@ describe("drill down", () => {
   })
 
   test("easy peasy", () => {
-    let program = brim
+    const program = brim
       .program("names james | count() by proto")
       .drillDown(result)
       .string()
@@ -101,7 +101,7 @@ describe("drill down", () => {
   })
 
   test("count by and filter the same", () => {
-    let result = brim.log(
+    const result = brim.log(
       ["123", "1"],
       [
         {type: "string", name: "md5"},
@@ -109,7 +109,7 @@ describe("drill down", () => {
       ]
     )
 
-    let program = brim
+    const program = brim
       .program("md5=123 | count() by md5 | sort -r | head 5")
       .drillDown(result)
       .string()
@@ -118,7 +118,7 @@ describe("drill down", () => {
   })
 
   test("filter query", () => {
-    let result = brim.log(
+    const result = brim.log(
       ["9f51ef98c42df4430a978e4157c43dd5", "21"],
       [
         {name: "md5", type: "string"},
@@ -126,7 +126,7 @@ describe("drill down", () => {
       ]
     )
 
-    let program = brim
+    const program = brim
       .program(
         '_path=files filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
       )
@@ -141,8 +141,8 @@ describe("drill down", () => {
 
 describe("count by", () => {
   test("empty program", () => {
-    let field = brim.field({name: "_path", type: "string", value: "conn"})
-    let program = brim
+    const field = brim.field({name: "_path", type: "string", value: "conn"})
+    const program = brim
       .program()
       .countBy(field)
       .string()
@@ -151,8 +151,8 @@ describe("count by", () => {
   })
 
   test("append a count to an existing query", () => {
-    let field = brim.field({name: "query", type: "string", value: "heyyo"})
-    let program = brim
+    const field = brim.field({name: "query", type: "string", value: "heyyo"})
+    const program = brim
       .program("dns")
       .countBy(field)
       .string()
@@ -163,7 +163,7 @@ describe("count by", () => {
 
 describe("sort by", () => {
   test("sort asc does not yet exist", () => {
-    let program = brim
+    const program = brim
       .program("* | count() by _path")
       .sortBy("count", "asc")
       .string()
@@ -172,7 +172,7 @@ describe("sort by", () => {
   })
 
   test("sort desc does not yet exist", () => {
-    let program = brim
+    const program = brim
       .program("* | count() by _path")
       .sortBy("count", "desc")
       .string()
@@ -181,7 +181,7 @@ describe("sort by", () => {
   })
 
   test("sort asc when one already exists", () => {
-    let program = brim
+    const program = brim
       .program("* | sort name")
       .sortBy("count", "asc")
       .string()
@@ -190,7 +190,7 @@ describe("sort by", () => {
   })
 
   test("sort desc when one already exists", () => {
-    let program = brim
+    const program = brim
       .program("* | sort name")
       .sortBy("count", "desc")
       .string()
@@ -296,7 +296,7 @@ describe("#hasHeadCount", () => {
 })
 
 describe("Get Parts of Program", () => {
-  let program = "md5=123 _path=files | count() by md5 | sort -r | head 1"
+  const program = "md5=123 _path=files | count() by md5 | sort -r | head 1"
 
   test("get filter part", () => {
     expect(splitParts(program)[0]).toBe("md5=123 _path=files")
@@ -316,8 +316,8 @@ describe("Get Parts of Program", () => {
 })
 
 describe("Join Parts of Program", () => {
-  let filter = "md5=123"
-  let proc = "count() by _path"
+  const filter = "md5=123"
+  const proc = "count() by _path"
 
   test("#joinParts", () => {
     expect(joinParts(filter, proc)).toBe("md5=123 | count() by _path")
@@ -329,9 +329,9 @@ describe("Join Parts of Program", () => {
 })
 
 describe("Parallelizing multiple programs", () => {
-  let a = "md5=123 | count()"
-  let b = "md5=123 | head 5"
-  let c = "md5=123 | count() by _path"
+  const a = "md5=123 | count()"
+  const b = "md5=123 | head 5"
+  const c = "md5=123 | count() by _path"
 
   test("#parallelizeProcs when programs have same filter", () => {
     expect(parallelizeProcs([a, b, c])).toEqual(

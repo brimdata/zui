@@ -1,4 +1,4 @@
-import React, {HTMLProps} from "react"
+import React from "react"
 
 import ArchiveBorderIcon from "../icons/ArchiveBorderIcon"
 import FileBorder from "../icons/FileBorder"

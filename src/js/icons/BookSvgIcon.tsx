@@ -1,9 +1,7 @@
+import React from "react"
 
-
-import React from "react";
-
-import BookSvg from "../../static/icons/book.svg";
+import BookSvg from "../../static/icons/book.svg"
 
 export default function BookIcon(props: any) {
-  return <BookSvg className="book-icon" {...props} />;
+  return <BookSvg className="book-icon" {...props} />
 }

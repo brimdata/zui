@@ -16,8 +16,8 @@ export default async function(path: string): Promise<IngestFileType> {
 }
 
 async function isPcap(file) {
-  let bytes = await firstBytes(file, 4)
-  for (let hex of PCAP_HEXES) {
+  const bytes = await firstBytes(file, 4)
+  for (const hex of PCAP_HEXES) {
     if (bytes instanceof Buffer && bytes.equals(Buffer.from(hex, "hex"))) {
       return true
     }
@@ -27,10 +27,10 @@ async function isPcap(file) {
 
 function firstBytes(file, n) {
   return new Promise((res, rej) => {
-    let stream = fs.createReadStream(file, {start: 0, end: n - 1})
+    const stream = fs.createReadStream(file, {start: 0, end: n - 1})
     stream
       .on("readable", () => {
-        let buffer = stream.read(n)
+        const buffer = stream.read(n)
         stream.close()
         res(buffer)
       })

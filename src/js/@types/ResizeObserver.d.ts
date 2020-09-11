@@ -236,7 +236,3 @@ interface ResizeObserverEntryBoxSize {
    */
   inlineSize: number
 }
-
-interface Window {
-  ResizeObserver: typeof ResizeObserver
-}

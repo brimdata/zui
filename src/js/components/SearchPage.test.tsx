@@ -8,7 +8,7 @@ import {TestStore} from "../test/initTestStore"
 let store: TestStore
 beforeEach(async () => {
   jest.useRealTimers()
-  let setup = await loginTo("cluster1", "space1")
+  const setup = await loginTo("cluster1", "space1")
   store = setup.store
   jest.useFakeTimers()
 })

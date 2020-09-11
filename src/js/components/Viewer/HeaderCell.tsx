@@ -12,8 +12,8 @@ import columnKey from "../../lib/columnKey"
 
 let oldWidth = null
 let start = null
-let add = document.addEventListener
-let remove = document.removeEventListener
+const add = document.addEventListener
+const remove = document.removeEventListener
 
 type Props = {
   column: TableColumn
@@ -24,15 +24,15 @@ type Props = {
 }
 
 function style(selector, key: string, value) {
-  let el = document.querySelector(selector)
+  const el = document.querySelector(selector)
   if (!el) return
   // $FlowFixMe
   el.style[key] = value
 }
 
 export default function HeaderCell({column, tableId, sorts}: Props) {
-  let dispatch = useDispatch()
-  let [active, setActive] = useState(false)
+  const dispatch = useDispatch()
+  const [active, setActive] = useState(false)
 
   function onMouseMove(e: MouseEvent) {
     if (start !== null) {
@@ -62,7 +62,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
     setActive(true)
   }
 
-  let sorted = sorts[column.name] || ""
+  const sorted = sorts[column.name] || ""
   function onClick() {
     dispatch(appendQuerySortBy(column.name, sorted === "asc" ? "desc" : "asc"))
     dispatch(submitSearch())

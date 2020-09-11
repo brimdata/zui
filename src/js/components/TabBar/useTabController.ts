@@ -7,11 +7,11 @@ import invoke from "../../electron/ipc/invoke"
 import ipc from "../../electron/ipc"
 
 export default function(count: number, calcWidths: Function) {
-  let trueActiveId = useSelector(Tabs.getActive)
-  let tabCount = useSelector(Tabs.getCount)
-  let [activeId, setActive] = useState(trueActiveId)
-  let removedByClick = useRef(false)
-  let dispatch = useDispatch()
+  const trueActiveId = useSelector(Tabs.getActive)
+  const tabCount = useSelector(Tabs.getCount)
+  const [activeId, setActive] = useState(trueActiveId)
+  const removedByClick = useRef(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!removedByClick.current) calcWidths()

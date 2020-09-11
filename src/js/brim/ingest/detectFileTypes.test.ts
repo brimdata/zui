@@ -8,8 +8,8 @@ const unknown = itestFile("plain.txt")
 const zeek = itestFile("sample.tsv")
 
 test("add file types", async () => {
-  let paths = [pcap, pcapng, zeek, json, unknown]
-  let types = await ingest.detectFileTypes(paths)
+  const paths = [pcap, pcapng, zeek, json, unknown]
+  const types = await ingest.detectFileTypes(paths)
 
   expect(types).toEqual([
     {type: "pcap", path: pcap},

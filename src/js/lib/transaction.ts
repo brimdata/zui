@@ -26,15 +26,15 @@ errors it collected.
 type Step = {do: Function; undo?: Function}
 export default async function(steps: Step[]) {
   let ctx
-  let undoErrs = []
+  const undoErrs = []
 
   for (let d = 0; d < steps.length; d++) {
     try {
-      let ret = await steps[d].do(ctx)
+      const ret = await steps[d].do(ctx)
       ctx = ret === undefined ? ctx : ret
     } catch (doErr) {
       for (let u = d - 1; u >= 0; u--) {
-        let {undo} = steps[u]
+        const {undo} = steps[u]
         if (!undo) continue
         try {
           await undo(ctx)

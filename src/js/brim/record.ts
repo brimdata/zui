@@ -22,7 +22,7 @@ export default function record(data: RecordData): $Record {
       return data
     },
     get(name: string) {
-      let fieldData = data.find((field) => field.name === name)
+      const fieldData = data.find((field) => field.name === name)
       return fieldData ? brim.field(fieldData) : null
     },
     mustGet(name: string) {

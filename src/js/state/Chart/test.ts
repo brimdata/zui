@@ -8,7 +8,7 @@ beforeEach(() => {
   tabId = Tabs.getActive(store.getState())
 })
 
-let records = [
+const records = [
   [
     {name: "ts", type: "string", value: "0"},
     {name: "_path", type: "string", value: "conn"},
@@ -22,7 +22,7 @@ let records = [
 ]
 
 test("chart records append", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     chart.appendRecords(tabId, [records[0]]),
     chart.appendRecords(tabId, [records[1]])
   ])
@@ -34,7 +34,7 @@ test("chart records append", () => {
 })
 
 test("chart records remains unique", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     chart.appendRecords(tabId, [records[0]]),
     chart.appendRecords(tabId, [records[0]])
   ])
@@ -46,13 +46,13 @@ test("chart records remains unique", () => {
 })
 
 test("chart records status", () => {
-  let state = store.dispatchAll([chart.setStatus(tabId, "SUCCESS")])
+  const state = store.dispatchAll([chart.setStatus(tabId, "SUCCESS")])
 
   expect(chart.getStatus(state)).toBe("SUCCESS")
 })
 
 test("chart records clear", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     chart.appendRecords(tabId, records),
     chart.setStatus(tabId, "SUCCESS"),
     chart.clear(tabId)

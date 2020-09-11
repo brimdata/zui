@@ -79,7 +79,7 @@ export function inBounds(array: any[], index: number) {
 }
 
 export function fillWithIndex(desiredLength: number) {
-  let arr = []
+  const arr = []
   for (let i = 0; i < desiredLength; ++i) arr.push(i)
   return arr
 }
@@ -97,9 +97,9 @@ export function concat(array1: any[], array2: any[]) {
 export const sortBy = _sortBy
 
 export function swap(array: any[], from: number, to: number) {
-  let item1 = array[from]
-  let item2 = array[to]
-  let copy = [...array]
+  const item1 = array[from]
+  const item2 = array[to]
+  const copy = [...array]
   copy[to] = item1
   copy[from] = item2
   return copy

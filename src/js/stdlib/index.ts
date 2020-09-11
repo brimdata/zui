@@ -1,4 +1,4 @@
-function string(s: string = "") {
+function string(s = "") {
   return {
     replace(pattern: string | RegExp, replacement: string) {
       s = s.replace(pattern, replacement)

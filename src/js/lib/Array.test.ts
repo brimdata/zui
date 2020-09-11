@@ -105,7 +105,7 @@ describe("#toFront", () => {
 })
 
 test("swap", () => {
-  let a = [0, 1, 2, 3, 4, 5]
+  const a = [0, 1, 2, 3, 4, 5]
 
   expect(swap(a, 4, 2)).toEqual([0, 1, 4, 3, 2, 5])
 })

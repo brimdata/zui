@@ -30,7 +30,7 @@ export default function(): Pen {
       .data(series, (d) => d.key)
 
     const t = d3.transition().duration(100)
-    let innerH = innerHeight(chart.height, chart.margins)
+    const innerH = innerHeight(chart.height, chart.margins)
     barGroups
       .exit()
       .selectAll("rect")
@@ -67,8 +67,8 @@ export default function(): Pen {
 
     function clampWidth(d) {
       // Keep the chart from overflowing the x axis
-      let chartWidth = innerWidth(chart.width, chart.margins)
-      let x = chart.xScale(d.data.ts)
+      const chartWidth = innerWidth(chart.width, chart.margins)
+      const x = chart.xScale(d.data.ts)
       if (x < 0)
         // The leftmost bar has overflowed
         return Math.max(0, width + x)

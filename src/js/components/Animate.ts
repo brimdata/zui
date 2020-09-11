@@ -11,10 +11,10 @@ type Props = {
 }
 
 export default function Animate({show, enter, exit, children}: Props) {
-  let [state, setState] = useState(show ? "in" : "out")
-  let el = useRef()
-  let enterAni = useRef<any>()
-  let exitAni = useRef<any>()
+  const [state, setState] = useState(show ? "in" : "out")
+  const el = useRef()
+  const enterAni = useRef<any>()
+  const exitAni = useRef<any>()
 
   useLayoutEffect(() => {
     switch (state) {

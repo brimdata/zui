@@ -11,7 +11,7 @@ import SavedClusters from "./SavedClusters"
 import useLoginController from "./useLoginController"
 
 export default function LoginPage() {
-  let login = useLoginController()
+  const login = useLoginController()
 
   return (
     <div className="login">

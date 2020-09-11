@@ -36,9 +36,9 @@ export function appendQueryExclude(field: FieldData): Thunk {
 
 export function appendQueryCountBy(field: FieldData): Thunk {
   return function(dispatch, getState) {
-    let {current, pinned} = getSearchBar(getState())
-    let query = [...pinned, current].join(" ")
-    let program = onlyWhitespace(query) ? "*" : current
+    const {current, pinned} = getSearchBar(getState())
+    const query = [...pinned, current].join(" ")
+    const program = onlyWhitespace(query) ? "*" : current
 
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -56,9 +56,9 @@ export function appendQuerySortBy(
   direction: "asc" | "desc"
 ): Thunk {
   return function(dispatch, getState) {
-    let {current, pinned} = getSearchBar(getState())
-    let query = [...pinned, current].join(" ")
-    let program = onlyWhitespace(query) ? "*" : current
+    const {current, pinned} = getSearchBar(getState())
+    const query = [...pinned, current].join(" ")
+    const program = onlyWhitespace(query) ? "*" : current
 
     dispatch(
       SearchBar.changeSearchBarInput(

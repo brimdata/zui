@@ -20,7 +20,7 @@ const ModalContents = React.forwardRef<HTMLDivElement, ModalContentsProps>(
     }: ModalContentsProps,
     ref
   ) {
-    let {closeModal, buttons} = useModalController(template, onClose)
+    const {closeModal, buttons} = useModalController(template, onClose)
 
     return ReactDOM.createPortal(
       <div className="modal-overlay" ref={ref}>

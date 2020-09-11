@@ -12,13 +12,13 @@ type Props = {
 }
 
 export default function CompoundField({field, log, menuBuilder}: Props) {
-  let compound = field.toCompound()
-  let render = []
+  const compound = field.toCompound()
+  const render = []
 
   for (let i = 0; i < compound.length; ++i) {
-    let item = compound.item(i)
+    const item = compound.item(i)
     if (item) {
-      let menu = menuBuilder(item, log, true)
+      const menu = menuBuilder(item, log, true)
       render.push(<SingleField key={i} field={item} menu={menu} />)
     }
     if (i !== compound.length - 1) {
@@ -45,7 +45,7 @@ type WrapperProps = {
 }
 
 function Wrapper({type, children}: WrapperProps) {
-  let [open, close] = getWrapper(type)
+  const [open, close] = getWrapper(type)
   return (
     <>
       <Extra value={open} />

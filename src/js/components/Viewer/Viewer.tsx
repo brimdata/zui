@@ -30,26 +30,26 @@ type Props = {
 
 export default function Viewer(props: Props) {
   const dispatch = useDispatch()
-  let [scrollLeft, setScrollLeft] = useState(0)
-  let [chunks, setChunks] = useState(props.chunker.visibleChunks(0))
-  let ref = useRef<HTMLDivElement>()
+  const [scrollLeft, setScrollLeft] = useState(0)
+  const [chunks, setChunks] = useState(props.chunker.visibleChunks(0))
+  const ref = useRef<HTMLDivElement>()
   function onScrollStart() {
     lib.doc.id("tooltip-root").style.display = "none"
   }
 
   function onScrollStop() {
-    let view = ref.current
+    const view = ref.current
     lib.doc.id("tooltip-root").style.display = "block"
     if (view) dispatch(History.update({x: view.scrollLeft, y: view.scrollTop}))
   }
 
-  let scrollHooks = useConst(null, () =>
+  const scrollHooks = useConst(null, () =>
     ScrollHooks.create(onScrollStart, onScrollStop)
   )
 
   function onScroll() {
     scrollHooks && scrollHooks()
-    let view = ref.current
+    const view = ref.current
     if (view) {
       updateChunks(view.scrollTop)
       setScrollLeft(view.scrollLeft)
@@ -62,7 +62,7 @@ export default function Viewer(props: Props) {
   }
 
   useEffect(() => {
-    let view = ref.current
+    const view = ref.current
     if (!view) return
     updateChunks(view.scrollTop)
     if (props.chunker.lastChunk() == chunks[chunks.length - 1]) {
@@ -71,7 +71,7 @@ export default function Viewer(props: Props) {
   })
 
   useEffect(() => {
-    let view = ref.current
+    const view = ref.current
     if (!view) return
     if (props.scrollPos) {
       view.scrollTo(props.scrollPos.x, props.scrollPos.y)

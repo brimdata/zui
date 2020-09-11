@@ -1,10 +1,9 @@
+import React from "react"
+import classNames from "classnames"
 
-import React from "react";
-import classNames from "classnames";
+import Animate from "./Animate"
 
-import Animate from "./Animate";
-
-type Props = {show: boolean;children: any;className?: string;};
+type Props = {show: boolean; children: any; className?: string}
 
 export default function NoticeBanner({
   show,
@@ -12,23 +11,28 @@ export default function NoticeBanner({
   className,
   ...rest
 }: Props) {
-  let enter = {
+  const enter = {
     translateY: ["-120%", 0],
     translateX: ["-50%", "-50%"],
     scale: [0.8, 1],
     duration: 300,
     easing: "easeOutSine"
-  };
-  let exit = {
+  }
+  const exit = {
     opacity: [1, 0],
     scale: [1, 0.7],
     translateY: [0, "-80%"],
     easing: "easeOutSine",
     duration: 300
-  };
-  return <Animate show={show} enter={enter} exit={exit}>
-      <div {...rest} className={classNames("notice-banner", "fixed", className)}>
+  }
+  return (
+    <Animate show={show} enter={enter} exit={exit}>
+      <div
+        {...rest}
+        className={classNames("notice-banner", "fixed", className)}
+      >
         {children}
       </div>
-    </Animate>;
+    </Animate>
+  )
 }

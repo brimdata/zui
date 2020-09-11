@@ -2,7 +2,7 @@ import isEqual from "lodash/isEqual"
 import moment from "moment"
 
 import {TimeUnit} from "./"
-import brim, {Span} from "../brim"
+import brim from "../brim"
 
 export type DateTuple = [Date, Date]
 

@@ -10,7 +10,7 @@ type Ast = {op: Op; amount: number; unit: Unit}
 export default function relTime(expr: string, now: Date = new Date()) {
   function parse(): Ast {
     if (AGO.test(expr)) {
-      let match = expr.match(AGO)
+      const match = expr.match(AGO)
       // @ts-ignore
       return {op: "-", amount: Number(match[1]), unit: match[2]}
     }
@@ -23,7 +23,7 @@ export default function relTime(expr: string, now: Date = new Date()) {
   }
 
   function execute(ast: Ast) {
-    let time = brim.time(now)
+    const time = brim.time(now)
 
     switch (ast.op) {
       case "-":
@@ -52,10 +52,10 @@ export default function relTime(expr: string, now: Date = new Date()) {
     },
 
     format() {
-      let {op, amount, unit} = parse()
+      const {op, amount, unit} = parse()
       if (op === null) return "Now"
 
-      let map = {
+      const map = {
         s: "second",
         m: "minute",
         h: "hour",

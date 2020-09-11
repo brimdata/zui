@@ -1,26 +1,28 @@
+import {CSSTransition, TransitionGroup} from "react-transition-group"
+import React from "react"
+import classNames from "classnames"
 
+import Log from "../../models/Log"
 
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import React from "react";
-import classNames from "classnames";
+type Props = {log: Log; prev: boolean; children: any}
 
-import Log from "../../models/Log";
-
-type Props = {log: Log;prev: boolean;children: any;};
-
-const NavAnimation = ({
-  log,
-  prev,
-  children
-}: Props) => <TransitionGroup className={classNames("log-detail-wrapper", {
-  prev
-})}>
-    <CSSTransition key={log.id()} classNames="log-detail" timeout={{
-    enter: 250,
-    exit: 250
-  }}>
+const NavAnimation = ({log, prev, children}: Props) => (
+  <TransitionGroup
+    className={classNames("log-detail-wrapper", {
+      prev
+    })}
+  >
+    <CSSTransition
+      key={log.id()}
+      classNames="log-detail"
+      timeout={{
+        enter: 250,
+        exit: 250
+      }}
+    >
       {children}
     </CSSTransition>
-  </TransitionGroup>;
+  </TransitionGroup>
+)
 
-export default NavAnimation;
+export default NavAnimation

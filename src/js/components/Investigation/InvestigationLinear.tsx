@@ -8,11 +8,11 @@ import EmptySection from "../common/EmptySection"
 import BookIcon from "../../icons/BookSvgIcon"
 
 export default React.memo<{}>(function InvestigationLinear() {
-  let findings = useFindings()
+  const findings = useFindings()
 
-  let cards = []
+  const cards = []
 
-  findings.forEach((f, i) => {
+  findings.forEach((f) => {
     cards.push(<FindingCard key={getKey(f)} finding={f} />)
   })
 

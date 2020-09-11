@@ -1,11 +1,11 @@
 import {getAllStates} from "../../test/helpers/getTestState"
 
 export default function searchStateSpaceId(state: any) {
-  for (let s of getAllStates(state)) {
+  for (const s of getAllStates(state)) {
     if (!s.tabs) continue
 
-    for (let tab of s.tabs.data) {
-      let oldName = tab.search.space
+    for (const tab of s.tabs.data) {
+      const oldName = tab.search.space
       tab.search.spaceName = oldName
       tab.search.spaceId = oldName
       delete tab.search.space

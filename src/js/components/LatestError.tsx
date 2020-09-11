@@ -10,7 +10,7 @@ import Errors from "../state/Errors"
 type Props = {error: BrimError}
 
 export function LatestError({error}: Props) {
-  let message = error ? `${error.type}: ${error.message}` : ""
+  const message = error ? `${error.type}: ${error.message}` : ""
 
   return (
     <div className="latest-error" {...reactElementProps("notification")}>

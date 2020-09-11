@@ -1,5 +1,4 @@
 import {$Field} from "../brim"
-import {$Menu} from "../electron/menu"
 import {SearchTarget} from "../state/SearchBar/types"
 import {SpanArgs} from "../state/Search/types"
 import {TimeUnit} from "../lib"
@@ -11,7 +10,7 @@ export type Notification =
   | AppError
   | {
       type: string
-      data: Object
+      data: any
       key: string
     }
 

@@ -13,7 +13,7 @@ export default function reducer(
       tryAbort(state[action.id])
       return remove(state, action.id)
     case "HANDLERS_ABORT_ALL":
-      for (let handler of values(state)) tryAbort(handler, action.emit)
+      for (const handler of values(state)) tryAbort(handler, action.emit)
 
       return {}
     case "HANDLERS_REMOVE":
@@ -23,14 +23,14 @@ export default function reducer(
   }
 }
 
-function tryAbort(handler: Handler, emit: boolean = true) {
+function tryAbort(handler: Handler, emit = true) {
   if (handler && handler.type === "SEARCH" && handler.abort) {
     handler.abort(emit)
   }
 }
 
 function remove(state, id) {
-  var nextState = {...state}
+  const nextState = {...state}
   delete nextState[id]
   return nextState
 }

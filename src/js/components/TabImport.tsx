@@ -16,7 +16,8 @@ export default function TabImport() {
   function onChange(_e, files) {
     if (!files.length) return
     dispatch(ingestFiles(files)).catch((e) => {
-      ;/(Failed to fetch)|(network error)/.test(e.cause.message)
+      const regex = /(Failed to fetch)|(network error)/
+      regex.test(e.cause.message)
         ? dispatch(Notice.set(errors.importInterrupt()))
         : dispatch(Notice.set(ErrorFactory.create(e.cause)))
 
@@ -28,7 +29,7 @@ export default function TabImport() {
   return (
     <div className="input-methods">
       <section>
-        <h2>Import Files</h2>
+        <h2>Import Files</h2>
         <LoadFilesInput onChange={onChange} />
         <footer>
           <p>

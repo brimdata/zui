@@ -5,11 +5,11 @@ export default function useEntrance(
   enterDelay: number,
   exitDelay: number
 ) {
-  let [status, setStatus] = useState<"in" | "out" | "exiting" | "entering">(
+  const [status, setStatus] = useState<"in" | "out" | "exiting" | "entering">(
     "out"
   )
-  let outTimer = useRef(null)
-  let inTimer = useRef(null)
+  const outTimer = useRef(null)
+  const inTimer = useRef(null)
 
   useEffect(() => {
     if (show) {

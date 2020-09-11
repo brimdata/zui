@@ -33,29 +33,29 @@ export default function span(args: SpanArgs | Span) {
       return to - from
     },
     formatAgo() {
-      let [from, to] = this.toDateTuple()
+      const [from, to] = this.toDateTuple()
       return moment.duration(moment(to).diff(moment(from))).humanize()
     },
     shortFormat() {
-      let [from, to] = this.toDateTuple()
-      let diff = moment.duration(moment(to).diff(moment(from)))
-      let ms = diff.asMilliseconds()
-      let sec = diff.asSeconds()
-      let min = diff.asMinutes()
-      let hr = diff.asHours()
-      let day = diff.asDays()
-      let wk = diff.asWeeks()
-      let mth = diff.asMonths()
-      let yr = diff.asYears()
-      let obj = {yr, mth, wk, day, hr, min, sec, ms}
+      const [from, to] = this.toDateTuple()
+      const diff = moment.duration(moment(to).diff(moment(from)))
+      const ms = diff.asMilliseconds()
+      const sec = diff.asSeconds()
+      const min = diff.asMinutes()
+      const hr = diff.asHours()
+      const day = diff.asDays()
+      const wk = diff.asWeeks()
+      const mth = diff.asMonths()
+      const yr = diff.asYears()
+      const obj = {yr, mth, wk, day, hr, min, sec, ms}
 
-      for (let [unit, amount] of Object.entries(obj)) {
+      for (const [unit, amount] of Object.entries(obj)) {
         if (Number(amount) > 1) return `${parseInt(amount.toString())} ${unit}`
       }
       return `${ms} ms`
     },
     isValid() {
-      let [from, to] = this.toDateTuple()
+      const [from, to] = this.toDateTuple()
       return to > from
     }
   }

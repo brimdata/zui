@@ -1,7 +1,7 @@
 import {FieldValue} from "../types/records"
 import {ONE_CHAR} from "./field"
 import {isArray} from "../lib/is"
-import brim, {$CompoundField} from "./"
+import brim from "./"
 
 export const COMPOUND_FIELD_RGX = /^(set|array)\[(\w+)\]$/
 

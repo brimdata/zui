@@ -7,12 +7,12 @@ export function layoutPopMenu(
   menu: HTMLElement,
   position: string
 ) {
-  let aRect = anchor.getBoundingClientRect()
-  let mRect = menu.getBoundingClientRect()
-  let pad = 20
+  const aRect = anchor.getBoundingClientRect()
+  const mRect = menu.getBoundingClientRect()
+  const pad = 20
   let styles = getPopMenuStyles(position, aRect, mRect, pad)
 
-  let truePosition = getPopMenuPosition(position, {
+  const truePosition = getPopMenuPosition(position, {
     ...styles.wrapper,
     width: mRect.width,
     height: mRect.height

@@ -19,7 +19,7 @@ export default function ToolbarButton({
   className,
   ...rest
 }: Props) {
-  let cn = classNames("toolbar-button", className)
+  const cn = classNames("toolbar-button", className)
   return (
     <button {...rest} className={cn} disabled={disabled} type="button">
       {!!icon && <span className="icon">{icon}</span>}

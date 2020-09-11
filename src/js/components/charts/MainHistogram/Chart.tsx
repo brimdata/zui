@@ -21,6 +21,6 @@ const MainHistogramSvg = React.memo(function MainHistogramSvg({
   width,
   height
 }: Props) {
-  let chart = useMainHistogram(width, height)
+  const chart = useMainHistogram(width, height)
   return <ChartSVG chart={chart} />
 })

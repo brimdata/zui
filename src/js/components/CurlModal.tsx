@@ -7,18 +7,17 @@ import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
-import {ThunkDispatch} from "redux-thunk"
 import {AppDispatch} from "../state/types"
 
 export default function CurlModalBox() {
   function copyToClip(_, e) {
     clickFeedback(e.target, "Copied")
 
-    var node = document.getElementById("copy-to-curl-code")
+    const node = document.getElementById("copy-to-curl-code")
     if (node) lib.doc.copyToClipboard(node.textContent)
   }
 
-  let buttons = [
+  const buttons = [
     {
       label: "Copy",
       click: copyToClip

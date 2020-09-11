@@ -16,10 +16,10 @@ function recursiveReplace(zng: ZngRecordType | string): ZngRecordType | string {
 }
 
 function getZeekType(type: string): string {
-  let match = type.match(COMPOUND_FIELD_RGX)
+  const match = type.match(COMPOUND_FIELD_RGX)
   if (match) {
-    let [_, container, itemType] = match
-    let zeekType = getSingleZeekType(itemType)
+    const [_, container, itemType] = match
+    const zeekType = getSingleZeekType(itemType)
     return `${container}[${zeekType}]`
   } else {
     return getSingleZeekType(type)

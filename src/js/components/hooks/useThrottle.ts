@@ -1,10 +1,10 @@
 import {useEffect, useRef, useState} from "react"
 
 export default function(value: any, wait: number) {
-  let [state, setState] = useState(value)
-  let timeout = useRef(null)
-  let pending = useRef(false)
-  let nextValue = useRef(null)
+  const [state, setState] = useState(value)
+  const timeout = useRef(null)
+  const pending = useRef(false)
+  const nextValue = useRef(null)
 
   const cancel = () => {
     if (timeout.current) {
@@ -18,7 +18,7 @@ export default function(value: any, wait: number) {
     if (!timeout.current) {
       setState(value)
 
-      let callback = () => {
+      const callback = () => {
         if (pending.current) {
           pending.current = false
           setState(nextValue.current)

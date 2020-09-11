@@ -4,7 +4,7 @@ export function getPopMenuStyles(
   wrapperRect: Object,
   pad: number
 ) {
-  let reduce = reducer(position, anchorRect, wrapperRect, pad)
+  const reduce = reducer(position, anchorRect, wrapperRect, pad)
 
   return {
     wrapper: reduce(wrapperStyler),
@@ -14,7 +14,7 @@ export function getPopMenuStyles(
 
 function reducer(position, a, w, pad) {
   return function(styler) {
-    let styles = styler(a, w, pad)
+    const styles = styler(a, w, pad)
 
     return position.split(/\s+/).reduce(
       (style, pos) => ({
@@ -37,8 +37,8 @@ function wrapperStyler(a, w, pad) {
 }
 
 function pointerStyler(a, w, _pad) {
-  let width = 32
-  let floor = (n) => Math.max(n, 0)
+  const width = 32
+  const floor = (n) => Math.max(n, 0)
   return {
     center: {left: w.width / 2 - width / 2},
     right: {right: floor(a.width / 2 - width / 2)},

@@ -19,7 +19,7 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
   }
 
   render() {
-    let {error} = this.state
+    const {error} = this.state
     if (!error) return this.props.children
 
     return (

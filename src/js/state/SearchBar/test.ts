@@ -14,7 +14,6 @@ import Spaces from "../Spaces"
 import Tab from "../Tab"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import {SearchRecord} from "src/js/types"
 import {SearchBarState} from "./types"
 
 let store

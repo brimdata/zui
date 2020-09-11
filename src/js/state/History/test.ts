@@ -38,13 +38,13 @@ test("pushing history", () => {
 })
 
 test("moving back changes the position", () => {
-  let state = store.dispatchAll([History.back()])
+  const state = store.dispatchAll([History.back()])
   const entry = Tab.currentEntry(state)
   expect(entry.program).toEqual("second")
 })
 
 test("going forward in history", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     History.back(),
     History.back(),
     History.forward()
@@ -54,7 +54,7 @@ test("going forward in history", () => {
 })
 
 test("going back in history then pushing new history", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     History.back(),
     History.back(),
     SearchBar.changeSearchBarInput("fourth"),
@@ -65,7 +65,7 @@ test("going back in history then pushing new history", () => {
 })
 
 test("back, back, push, back", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     History.back(),
     History.back(),
     SearchBar.changeSearchBarInput("fourth"),
@@ -77,13 +77,13 @@ test("back, back, push, back", () => {
 })
 
 test("update scroll position in history", () => {
-  let state = store.dispatchAll([History.update({x: 10, y: 15})])
+  const state = store.dispatchAll([History.update({x: 10, y: 15})])
   const entry = Tab.currentEntry(state)
   expect(entry.scrollPos).toEqual({x: 10, y: 15})
 })
 
 test("update scroll position, back, forward", () => {
-  let state = store.dispatchAll([
+  const state = store.dispatchAll([
     History.update({x: 22, y: 33}),
     History.back(),
     History.forward()
@@ -93,6 +93,6 @@ test("update scroll position, back, forward", () => {
 })
 
 test("clearing history", () => {
-  let state = store.dispatchAll([History.clear()])
+  const state = store.dispatchAll([History.clear()])
   expect(Tab.currentEntry(state)).toBe(undefined)
 })

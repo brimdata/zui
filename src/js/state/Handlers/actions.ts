@@ -11,7 +11,7 @@ export default {
     return {type: "HANDLERS_REGISTER", id, handler}
   },
 
-  abort(id: string, emit: boolean = true): HANDLERS_ABORT {
+  abort(id: string, emit = true): HANDLERS_ABORT {
     return {type: "HANDLERS_ABORT", id, emit}
   },
 
@@ -19,7 +19,7 @@ export default {
     return {type: "HANDLERS_REMOVE", id}
   },
 
-  abortAll(emit: boolean = true): HANDLERS_ABORT_ALL {
+  abortAll(emit = true): HANDLERS_ABORT_ALL {
     return {type: "HANDLERS_ABORT_ALL", emit}
   }
 }

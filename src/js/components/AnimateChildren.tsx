@@ -1,4 +1,4 @@
-import React, {ReactNode, HTMLProps, ReactChildren, ReactChild} from "react"
+import React, {HTMLProps} from "react"
 
 function move(diff) {
   return [
@@ -32,13 +32,13 @@ export default class AnimateChildren extends React.Component<Props> {
   }
 
   getSnapshotBeforeUpdate({children}: Props) {
-    let cache = {}
-    let parent = this.parent.current
+    const cache = {}
+    const parent = this.parent.current
     if (!parent) return
 
     React.Children.forEach(children, (child, i) => {
-      let el = parent.children[i]
-      let key = child.key
+      const el = parent.children[i]
+      const key = child.key
       cache[key] = el.getBoundingClientRect()
     })
 
@@ -46,18 +46,18 @@ export default class AnimateChildren extends React.Component<Props> {
   }
 
   componentDidUpdate(_p: Props, _s: any, cache: Object) {
-    let {children} = this.props
-    let parent = this.parent.current
+    const {children} = this.props
+    const parent = this.parent.current
     if (!parent) return
 
     React.Children.forEach(children, (child, i) => {
-      let el = parent.children[i]
-      let key = child.key
-      let curr = el.getBoundingClientRect()
-      let prev = cache[key]
+      const el = parent.children[i]
+      const key = child.key
+      const curr = el.getBoundingClientRect()
+      const prev = cache[key]
 
       if (prev) {
-        let diff = prev.top - curr.top
+        const diff = prev.top - curr.top
         if (diff) animate(el, move(diff))
       } else {
         animate(el, enter())
@@ -66,7 +66,7 @@ export default class AnimateChildren extends React.Component<Props> {
   }
 
   render() {
-    let {children, ...rest} = this.props
+    const {children, ...rest} = this.props
     return (
       <div {...rest} ref={this.parent}>
         {children}

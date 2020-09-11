@@ -1,7 +1,7 @@
 import {ClusterAction, ClustersState} from "./types"
 import {deleteKey} from "../../lib/obj"
 
-let init: ClustersState = {}
+const init: ClustersState = {}
 
 export default function(state: ClustersState = init, action: ClusterAction) {
   switch (action.type) {

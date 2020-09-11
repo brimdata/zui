@@ -41,9 +41,7 @@ export type Ts = {
   sec: number
 }
 
-export declare namespace Brim {
-  export type Space = ReturnType<typeof space>
-}
+export type BrimSpace = ReturnType<typeof space>
 
 export type Span = [Ts, Ts]
 

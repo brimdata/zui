@@ -1,4 +1,3 @@
-import AppError from "../../models/AppError"
 import {BrimError} from "src/js/errors/types"
 
 export type NoticeState = {

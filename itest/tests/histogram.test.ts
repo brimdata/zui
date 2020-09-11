@@ -80,7 +80,7 @@ describe("Histogram tests", () => {
         await appStep.setSpan(app, "Whole Space")
         // Just count a higher number of _paths, not all ~1500 rect elements.
         LOG.debug("Checking rect elements in Whole Space")
-        let pathClasses = await retryUntil(
+        const pathClasses = await retryUntil(
           () => app.client.getAttribute(selectors.histogram.gElem, "class"),
           (pathClasses) =>
             pathClasses.length ===
@@ -94,7 +94,7 @@ describe("Histogram tests", () => {
         // range. We do NOT validate absolutely correct attribute values (which
         // sets the size of a bar). That's best done with unit testing.
         LOG.debug("Getting all rect elements")
-        let allRectValues = await Promise.all(
+        const allRectValues = await Promise.all(
           pathClasses.map(
             async (pathClass) => await verifyPathClassRect(app, pathClass)
           )

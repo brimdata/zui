@@ -36,8 +36,8 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
     function show() {
       if (chart.state.isDragging) return hide()
 
-      let [left] = mouse(svg)
-      let point = getPointAt(left, chart)
+      const [left] = mouse(svg)
+      const point = getPointAt(left, chart)
 
       if (point && point.count) {
         positionTooltip(div, svg, 30)
@@ -61,8 +61,8 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
 
 const getProps = (point: HistogramDataPoint) => {
   const segments = []
-  let paths = point.paths
-  for (let key in paths) {
+  const paths = point.paths
+  for (const key in paths) {
     if (paths[key] !== 0) segments.push([key, paths[key]])
   }
 

@@ -10,7 +10,7 @@ export default function refreshSpaceInfo(): Thunk {
     const id = Current.getSpaceId(getState())
 
     return zealot.spaces.get(id).then((data: any) => {
-      let id = Current.getConnectionId(getState())
+      const id = Current.getConnectionId(getState())
       if (!id) return
       globalDispatch(Spaces.setDetail(id, data))
     })

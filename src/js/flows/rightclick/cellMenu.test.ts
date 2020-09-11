@@ -1,4 +1,4 @@
-import {MenuItem, MenuItemConstructorOptions} from "electron"
+import {MenuItemConstructorOptions} from "electron"
 
 import {conn, dns} from "../../test/mockLogs"
 import fixtures from "../../test/fixtures"

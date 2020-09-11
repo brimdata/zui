@@ -3,7 +3,7 @@ import {RawColumn, RawValue} from "./"
 import {isString} from "../../lib/is"
 
 export default function(values: RawValue[], columns: RawColumn[]) {
-  let data = zip(values, columns)
+  const data = zip(values, columns)
 
   return {
     data() {
@@ -18,7 +18,7 @@ export default function(values: RawValue[], columns: RawColumn[]) {
 function zip(values, columns) {
   // $FlowFixMe
   return values.map((value, index) => {
-    let {name, type} = columns[index]
+    const {name, type} = columns[index]
     // $FlowFixMe
     return isString(type)
       ? {name, type, value}

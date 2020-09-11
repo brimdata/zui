@@ -2,9 +2,9 @@ import getTestState from "../../test/helpers/getTestState"
 import migrate from "./202005181158_spacesStateId"
 
 test("migrating 202005181158_spacesStateId", () => {
-  let prev = getTestState("v0.9.1")
+  const prev = getTestState("v0.9.1")
 
-  let next = migrate(prev)
+  const next = migrate(prev)
 
   expect(next.globalState.spaces).toEqual({
     zqd: {

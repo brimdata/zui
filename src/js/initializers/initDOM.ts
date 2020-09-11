@@ -9,20 +9,20 @@ export default function() {
 }
 
 function appendDivId(id: string) {
-  let div = document.createElement("div")
+  const div = document.createElement("div")
   div.id = id
   if (document.body) document.body.appendChild(div)
 }
 
 function detectInputType() {
   document.addEventListener("mousedown", () => {
-    let el = document.body
+    const el = document.body
     if (!el) return
     el.classList.add("using-mouse")
     el.classList.remove("using-keyboard")
   })
   document.addEventListener("keydown", () => {
-    let el = document.body
+    const el = document.body
     if (!el) return
     el.classList.add("using-keyboard")
     el.classList.remove("using-mouse")

@@ -1,9 +1,7 @@
+import React from "react"
 
-
-import React from "react";
-
-import PinBorderSvg from "../../static/icons/pin-border.svg";
+import PinBorderSvg from "../../static/icons/pin-border.svg"
 
 export default function PinBorderIcon(props: any) {
-  return <PinBorderSvg className="pin-border-icon" {...props} />;
+  return <PinBorderSvg className="pin-border-icon" {...props} />
 }

@@ -1,8 +1,8 @@
 import brim from "./"
 
 export default function table() {
-  let descriptor = []
-  let tuples = []
+  const descriptor = []
+  const tuples = []
 
   return {
     col(name: string, type: string) {

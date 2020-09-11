@@ -2,7 +2,6 @@ import Investigation from "./"
 import brim from "../../brim"
 import createGlobalStore from "../createGlobalStore"
 import {SearchRecord} from "src/js/types"
-import {Finding} from "./types"
 
 let store
 beforeEach(() => {

@@ -1,9 +1,7 @@
+import React from "react"
 
-
-import React from "react";
-
-import MagnifyingGlassSvg from "../../static/icons/magnifying-glass.svg";
+import MagnifyingGlassSvg from "../../static/icons/magnifying-glass.svg"
 
 export default function MagnifyingGlass(props: any) {
-  return <MagnifyingGlassSvg className="magnifying-glass-icon" {...props} />;
+  return <MagnifyingGlassSvg className="magnifying-glass-icon" {...props} />
 }

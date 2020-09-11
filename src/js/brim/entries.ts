@@ -6,7 +6,7 @@ type Args = {
 }
 
 export default function({entries: initEntries, position}: Args) {
-  let entries = [...initEntries]
+  const entries = [...initEntries]
 
   if (position < -1 || position >= entries.length) {
     throw new Error("Position out of bounds")

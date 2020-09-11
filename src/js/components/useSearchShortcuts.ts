@@ -6,7 +6,7 @@ import Modal from "../state/Modal"
 import Tabs from "../state/Tabs"
 
 export default function() {
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
   useEffect(() => {
     const el = document.documentElement
     if (!el) throw new Error("No Document Element")

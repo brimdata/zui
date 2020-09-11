@@ -14,10 +14,10 @@ beforeEach(() => fsExtra.ensureDir("tmp"))
 afterEach(() => fsExtra.remove("tmp"))
 
 test("session loading with migrations", async () => {
-  let state = initTestStore().getState()
-  let migrations = await tron.migrations()
-  let session = tron.session(file)
-  let data = formatSessionState({}, state)
+  const state = initTestStore().getState()
+  const migrations = await tron.migrations()
+  const session = tron.session(file)
+  const data = formatSessionState({}, state)
 
   await session.save(data)
   await session.load()
