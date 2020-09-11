@@ -6,7 +6,8 @@ import SubspaceBorderIcon from "../icons/SubspaceBorderIcon"
 
 type Props = {
   type: "archive" | "subspace" | "space"
-} & HTMLProps<SVGElement>
+  className?: string
+}
 
 export default function SpaceIcon({type, ...rest}: Props) {
   switch (type) {

@@ -1,23 +1,24 @@
-import { $Shape } from "utility-types";
-
-
-import { FINDING_CREATE, FINDING_DELETE, FINDING_UPDATE, Finding, INVESTIGATION_CLEAR, INVESTIGATION_PUSH } from "./types";
-import { SearchRecord } from "../../types";
-import { isArray } from "../../lib/is";
-import brim, { Ts } from "../../brim";
+import {
+  FINDING_DELETE,
+  FINDING_UPDATE,
+  Finding,
+  INVESTIGATION_CLEAR,
+  INVESTIGATION_PUSH
+} from "./types"
+import {SearchRecord} from "../../types"
+import {isArray} from "../../lib/is"
+import brim, {Ts} from "../../brim"
 
 export default {
-  push: (record: SearchRecord, ts: Ts = brim.time().toTs()): INVESTIGATION_PUSH => ({
+  push: (
+    record: SearchRecord,
+    ts: Ts = brim.time().toTs()
+  ): INVESTIGATION_PUSH => ({
     type: "INVESTIGATION_PUSH",
     entry: record,
     ts: ts
   }),
-  createFinding: (finding: $Shape<Finding>): FINDING_CREATE => ({
-    type: "FINDING_CREATE",
-    finding
-  }),
-
-  updateFinding: (finding: $Shape<Finding>): FINDING_UPDATE => ({
+  updateFinding: (finding: Partial<Finding>): FINDING_UPDATE => ({
     type: "FINDING_UPDATE",
     finding
   }),
@@ -30,4 +31,4 @@ export default {
   clearInvestigation: (): INVESTIGATION_CLEAR => ({
     type: "INVESTIGATION_CLEAR"
   })
-};
+}

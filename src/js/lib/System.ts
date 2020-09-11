@@ -1,11 +1,12 @@
+import {remote, MenuItemConstructorOptions} from "electron"
 
-
-import { remote } from "electron";
-
-export function showContextMenu(template: Object) {
+export function showContextMenu(template: MenuItemConstructorOptions[]) {
   if (process.env.BRIM_ITEST === "true") {
-    document.dispatchEvent(new CustomEvent("nativeContextMenu", { detail: template }));
+    document.dispatchEvent(
+      new CustomEvent("nativeContextMenu", {detail: template})
+    )
   } else {
-    new remote.Menu.buildFromTemplate(template).popup();
+    // @ts-ignore
+    new remote.Menu.buildFromTemplate(template).popup()
   }
 }

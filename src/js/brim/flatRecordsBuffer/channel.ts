@@ -1,27 +1,25 @@
+import {RecordData} from "../../types/records"
 
-import { RecordData } from "../../types/records";
-import { ReturnType } from "../../types";
-
-export type $Channel = ReturnType<typeof channel>;
+export type $Channel = ReturnType<typeof channel>
 
 export default function channel(id: number) {
-  let records: RecordData[] = [];
+  let records: RecordData[] = []
 
   return {
     add(more: RecordData[]) {
-      records = records.concat(more);
+      records = records.concat(more)
     },
     id() {
-      return id;
+      return id
     },
     records() {
-      return records;
+      return records
     },
     empty() {
-      return records.length === 0;
+      return records.length === 0
     },
     clear() {
-      records = [];
+      records = []
     }
-  };
+  }
 }

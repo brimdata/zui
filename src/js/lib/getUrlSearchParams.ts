@@ -1,5 +1,12 @@
+interface BrimSearchParams {
+  id: string
+  space?: string
+  host?: string
+  port?: string
+}
 
-export default function getUrlSearchParams(): Object {
-  var urlSearchParams = new URLSearchParams(global.location.search);
-  return Object.fromEntries(urlSearchParams.entries());
+export default function getUrlSearchParams(): BrimSearchParams {
+  const urlSearchParams = new URLSearchParams(window.location.search)
+  // @ts-ignore
+  return Object.fromEntries(urlSearchParams.entries())
 }

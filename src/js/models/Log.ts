@@ -1,237 +1,230 @@
+import isEqual from "lodash/isEqual"
+import md5 from "md5"
 
-
-import isEqual from "lodash/isEqual";
-import md5 from "md5";
-
-import { Descriptor, Tuple, TupleSet } from "../types";
-import { inBounds } from "../lib/Array";
-import { isString } from "../lib/is";
-import brim, { $Field } from "../brim";
+import {Descriptor, Tuple, TupleSet} from "../types"
+import {inBounds} from "../lib/Array"
+import {isString} from "../lib/is"
+import brim, {$Field} from "../brim"
 
 type BuildArgs = {
-  tuples: Tuple[];
-  descriptor: Descriptor;
-};
+  tuples: Tuple[]
+  descriptor: Descriptor
+}
 
 export default class Log {
+  tuple: Tuple
+  descriptor: Descriptor
 
-  tuple: Tuple;
-  descriptor: Descriptor;
+  static fromTupleSet({tuples, descriptors}: TupleSet) {
+    return tuples.map((t) => {
+      const [td, ...tuple] = t
+      const [_, ...descriptor] = descriptors[td]
 
-  static fromTupleSet({
-    tuples,
-    descriptors
-  }: TupleSet) {
-    return tuples.map(t => {
-      let [td, ...tuple] = t;
-      let [_, ...descriptor] = descriptors[td];
-
-      return new Log(tuple, descriptor);
-    });
+      return new Log(tuple, descriptor)
+    })
   }
 
-  static buildAll(tuples: Tuple[], descriptors: {
-    [key: string]: Descriptor;
-  }, space: string) {
-    const logs = [];
-    tuples.forEach(tuple => {
-      const descriptor = descriptors[space + "." + tuple[0]];
-      if (descriptor) logs.push(new Log(tuple, descriptor));
-    });
-    return logs;
+  static buildAll(
+    tuples: Tuple[],
+    descriptors: {
+      [key: string]: Descriptor
+    },
+    space: string
+  ) {
+    const logs = []
+    tuples.forEach((tuple) => {
+      const descriptor = descriptors[space + "." + tuple[0]]
+      if (descriptor) logs.push(new Log(tuple, descriptor))
+    })
+    return logs
   }
 
-  static build({
-    descriptor,
-    tuples
-  }: BuildArgs) {
-    return tuples.map<Log>(tuple => new Log(tuple, descriptor));
+  static build({descriptor, tuples}: BuildArgs) {
+    return tuples.map<Log>((tuple) => new Log(tuple, descriptor))
   }
 
   static sort(logs: Log[], name: string, dir: "asc" | "desc" = "asc") {
-    const direction = dir === "asc" ? 1 : -1;
+    const direction = dir === "asc" ? 1 : -1
 
-    logs.sort((a, b) => a.getString(name) > b.getString(name) ? direction : direction * -1);
+    logs.sort((a, b) =>
+      a.getString(name) > b.getString(name) ? direction : direction * -1
+    )
 
-    return logs;
+    return logs
   }
 
   static isSame(a: Log | null | undefined, b: Log | null | undefined) {
-    if (!a || !b) return false;
-    return isEqual(a.tuple, b.tuple);
+    if (!a || !b) return false
+    return isEqual(a.tuple, b.tuple)
   }
 
   filter(func: (arg0: $Field) => boolean) {
-    const tuple = [];
-    const descriptor = [];
-    this.getFields().filter(func).forEach(({
-      name,
-      value,
-      type
-    }) => {
-      tuple.push(value);
-      descriptor.push({ name, type });
-    });
+    const tuple = []
+    const descriptor = []
+    this.getFields()
+      .filter(func)
+      .forEach(({name, value, type}) => {
+        tuple.push(value)
+        descriptor.push({name, type})
+      })
     // $FlowFixMe
-    return new Log(tuple, descriptor);
+    return new Log(tuple, descriptor)
   }
 
   // Temp duplication while we migrate to using brim.log
   field(name: string): $Field | null | undefined {
-    let index = this.descriptor.findIndex(d => d.name === name);
+    const index = this.descriptor.findIndex((d) => d.name === name)
     if (inBounds(this.tuple, index)) {
-      let {
-        name,
-        type
-      } = this.descriptor[index];
-      let value = this.tuple[index];
-      return brim.field({ name, type, value });
+      const {name, type} = this.descriptor[index]
+      const value = this.tuple[index]
+      return brim.field({name, type, value})
     } else {
-      return null;
+      return null
     }
   }
 
   exclude(...names: string[]) {
-    return this.filter(field => !names.includes(field.name));
+    return this.filter((field) => !names.includes(field.name))
   }
 
   only(...names: string[]) {
-    return this.filter(field => names.includes(field.name));
+    return this.filter((field) => names.includes(field.name))
   }
 
   map(func: any) {
-    return this.getFields().map<any>(func);
+    return this.getFields().map<any>(func)
   }
 
   id() {
-    return md5(this.tuple.join());
+    return md5(this.tuple.join())
   }
 
   isPath(pathName: string) {
-    return this.getString("_path") === pathName;
+    return this.getString("_path") === pathName
   }
 
   constructor(tuple: Tuple, descriptor: Descriptor) {
-    this.tuple = tuple;
-    this.descriptor = descriptor;
+    this.tuple = tuple
+    this.descriptor = descriptor
   }
 
   getIndex(name: string) {
-    return this.descriptor.findIndex(field => field.name === name);
+    return this.descriptor.findIndex((field) => field.name === name)
   }
 
   getString(name: string): string {
-    let f = this.getField(name);
-    if (f) return f.stringValue();else return "";
+    const f = this.getField(name)
+    if (f) return f.stringValue()
+    else return ""
   }
 
   getField(fieldName: string): $Field | null | undefined {
-    const index = this.getIndex(fieldName);
+    const index = this.getIndex(fieldName)
     if (inBounds(this.tuple, index)) {
-      return this.getFieldAt(index);
+      return this.getFieldAt(index)
     }
   }
 
   mustGetField(fieldName: string): $Field {
-    let index = this.getIndex(fieldName);
-    if (index === -1) throw new Error("Cannot find field: " + fieldName);
-    return this.getFieldAt(index);
+    const index = this.getIndex(fieldName)
+    if (index === -1) throw new Error("Cannot find field: " + fieldName)
+    return this.getFieldAt(index)
   }
 
   getFieldAt(index: number): $Field {
     if (index !== -1 && index < this.tuple.length) {
-      const value = this.tuple[index];
-      const {
-        name,
-        type
-      } = this.descriptor[index];
-      return brim.field({ value, name, type });
+      const value = this.tuple[index]
+      const {name, type} = this.descriptor[index]
+      return brim.field({value, name, type})
     } else {
-      throw "Index out of bounds";
+      throw "Index out of bounds"
     }
   }
 
   getFields(): $Field[] {
-    const fields = [];
+    const fields = []
     for (let i = 0; i < this.descriptor.length; ++i) {
-      const field = this.getFieldAt(i);
-      if (field) fields.push(field);
+      const field = this.getFieldAt(i)
+      if (field) fields.push(field)
     }
-    return fields;
+    return fields
   }
 
   getSec(fieldName: string): number {
-    const field = this.getField(fieldName);
+    const field = this.getField(fieldName)
     if (field) {
-      const {
-        type,
-        value
-      } = field;
-      if (isString(value) && (type === "time" || type === "interval" || type === "duration")) {
-        return parseInt(value.split(".")[0]);
+      const {type, value} = field
+      if (
+        isString(value) &&
+        (type === "time" || type === "interval" || type === "duration")
+      ) {
+        return parseInt(value.split(".")[0])
       }
     }
     // XXX return 0 if the requested field isn't present because certain handlers
     // above do not check for existence of the field or catch this error
-    return 0;
+    return 0
   }
 
   getNs(fieldName: string): number {
-    const field = this.getField(fieldName);
+    const field = this.getField(fieldName)
     if (field) {
-      const {
-        type,
-        value
-      } = field;
-      if (isString(value) && (type === "time" || type === "interval" || type === "duration")) {
-        let v = value.split(".");
+      const {type, value} = field
+      if (
+        isString(value) &&
+        (type === "time" || type === "interval" || type === "duration")
+      ) {
+        const v = value.split(".")
         if (v.length === 2) {
-          let frac = v[1];
-          let digits = frac.length;
-          return parseInt(frac) * Math.pow(10, 9 - digits);
+          const frac = v[1]
+          const digits = frac.length
+          return parseInt(frac) * Math.pow(10, 9 - digits)
         }
       }
     }
     // XXX return 0 if the requested field isn't present because certain handlers
     // above do not check for existence of the field or catch this error
-    return 0;
+    return 0
   }
 
   cast(name: string) {
-    let field = this.getField(name);
+    const field = this.getField(name)
     if (field) {
-      if (field.value === null) return null;
-      if (field.type === "time") return field.toDate();
-      if (field.type === "interval") return parseFloat(field.value);
-      if (field.type === "count") return parseInt(field.value);
-      return field.value;
+      if (field.value === null) return null
+      if (field.type === "time") return field.toDate()
+      if (field.type === "interval") return parseFloat(field.value as string)
+      if (field.type === "count") return parseInt(field.value as string)
+      return field.value
     }
   }
 
   correlationId() {
-    let name;
+    let name
     switch (this.getString("_path")) {
       case "files":
-        name = "conn_uids";
-        break;
+        name = "conn_uids"
+        break
       case "dhcp":
-        name = "uids";
-        break;
+        name = "uids"
+        break
       default:
-        name = "uid";
-        break;
-
+        name = "uid"
+        break
     }
 
-    let field = this.getField(name);
+    const field = this.getField(name)
     if (field) {
-      return field.queryableValue();
+      return field.queryableValue()
     } else {
-      return "";
+      return ""
     }
   }
 
   toString() {
-    return this.descriptor.map(col => [col.name, col.type].join(":")).join("\t") + "\t\t" + this.tuple.join("\t");
+    return (
+      this.descriptor.map((col) => [col.name, col.type].join(":")).join("\t") +
+      "\t\t" +
+      this.tuple.join("\t")
+    )
   }
 }

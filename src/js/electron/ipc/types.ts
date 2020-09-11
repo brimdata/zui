@@ -16,7 +16,7 @@ export type IpcMsg =
 export type WindowsOpenMsg = {
   channel: "windows:open"
   name: WindowName
-  params: WindowParams
+  params: Partial<WindowParams>
   state: State
 }
 

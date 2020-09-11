@@ -1,8 +1,11 @@
-import { $Shape } from "utility-types";
-
-
-import { LOG_DETAIL_BACK, LOG_DETAIL_CLEAR, LOG_DETAIL_FORWARD, LOG_DETAIL_PUSH, LogDetails } from "./types";
-import { RecordData } from "../../types/records";
+import {
+  LOG_DETAIL_BACK,
+  LOG_DETAIL_CLEAR,
+  LOG_DETAIL_FORWARD,
+  LOG_DETAIL_PUSH,
+  LogDetails
+} from "./types"
+import {RecordData} from "../../types/records"
 
 export default {
   push: (record: RecordData): LOG_DETAIL_PUSH => ({
@@ -18,7 +21,7 @@ export default {
     type: "LOG_DETAIL_FORWARD"
   }),
 
-  update: (updates: $Shape<LogDetails>) => ({
+  update: (updates: Partial<LogDetails>) => ({
     type: "LOG_DETAIL_UPDATE",
     updates
   }),
@@ -26,4 +29,4 @@ export default {
   clear: (): LOG_DETAIL_CLEAR => ({
     type: "LOG_DETAIL_CLEAR"
   })
-};
+}

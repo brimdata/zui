@@ -1,5 +1,4 @@
-import { ReturnType } from "../types";
-import zeekLogDescriptions from "../services/zeekLogDescriptions";
+import zeekLogDescriptions from "../services/zeekLogDescriptions"
 
 const specialUrls = {
   netcontrol_drop:
@@ -49,48 +48,50 @@ const specialUrls = {
   netcontrol:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/netcontrol/main.zeek.html#type-NetControl::Info",
   smb_files:
-    "https://docs.zeek.org/en/current/scripts/base/protocols/smb/main.zeek.html#type-SMB::FileInfo",
-};
+    "https://docs.zeek.org/en/current/scripts/base/protocols/smb/main.zeek.html#type-SMB::FileInfo"
+}
 
-type ZeekLogInfoClass = ReturnType<typeof knownPath>;
-type ZeekInfo = { name: string; desc: string; type: string }[];
+type ZeekLogInfoClass = ReturnType<typeof knownPath>
+type ZeekInfo = {name: string; desc: string; type: string}[]
 
 export default function zeekLogInfo(path: string): ZeekLogInfoClass {
-  let key = `${path}_log`;
+  const key = `${path}_log`
   return key in zeekLogDescriptions
     ? knownPath(path, zeekLogDescriptions[key])
-    : unknownPath();
+    : unknownPath()
 }
 
 function knownPath(path: string, info: ZeekInfo) {
   return {
     isKnown: () => {
-      return true;
+      return true
     },
     docsUrl: () => {
       return path in specialUrls
         ? specialUrls[path]
-        : `https://docs.zeek.org/en/current/scripts/base/protocols/${path}/main.zeek.html`;
+        : `https://docs.zeek.org/en/current/scripts/base/protocols/${path}/main.zeek.html`
     },
-    describeColumn: (col: { name: string; type: string }) => {
-      let firstPartOfName = col.name.split(".")[0];
-      let field = info.find((f) => f.name === firstPartOfName) ||
-        { desc: undefined, type: undefined };
+    describeColumn: (col: {name: string; type: string}) => {
+      const firstPartOfName = col.name.split(".")[0]
+      const field = info.find((f) => f.name === firstPartOfName) || {
+        desc: undefined,
+        type: undefined
+      }
       return {
         desc: field.desc || "No description found.",
-        type: field.type || col.type,
-      };
-    },
-  };
+        type: field.type || col.type
+      }
+    }
+  }
 }
 
 function unknownPath(): ZeekLogInfoClass {
   return {
     isKnown: () => false,
     docsUrl: () => "",
-    describeColumn: (col: { name: string; type: string }) => ({
+    describeColumn: (col: {name: string; type: string}) => ({
       desc: `No docs for ${col.name}.`,
-      type: col.type,
-    }),
-  };
+      type: col.type
+    })
+  }
 }

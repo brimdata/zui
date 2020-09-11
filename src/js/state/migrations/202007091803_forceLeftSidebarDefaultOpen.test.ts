@@ -1,22 +1,18 @@
-
-
-import getTestState from "../../test/helpers/getTestState";
-import migrate from "./202007091803_forceLeftSidebarDefaultOpen";
+import getTestState from "../../test/helpers/getTestState"
+import migrate from "./202007091803_forceLeftSidebarDefaultOpen"
 
 test("migrating 202007091803_forceLeftSidebarDefaultOpen", () => {
-  const {
-    data
-  } = getTestState("v0.12.0");
+  const {data} = getTestState("v0.12.0")
 
-  const next = migrate(data);
+  const next = migrate(data)
 
-  const windows = Object.values(next.windows);
+  const windows = Object.values(next.windows)
 
   for (const win of windows) {
-    // $FlowFixMe
+    // @ts-ignore
     for (const tab of win.state.tabs.data) {
-      expect(tab.layout.leftSidebarIsOpen).toBe(true);
-      expect(tab.layout.leftSidebarWidth).toBe(230);
+      expect(tab.layout.leftSidebarIsOpen).toBe(true)
+      expect(tab.layout.leftSidebarWidth).toBe(230)
     }
   }
-});
+})

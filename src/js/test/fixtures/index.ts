@@ -1,11 +1,11 @@
-
-import { Cluster } from "../../state/Clusters/types";
-import { Space } from "../../state/Spaces/types";
+import {Cluster} from "../../state/Clusters/types"
+import {Space} from "../../state/Spaces/types"
 
 const space1 = (): Space => ({
   id: "1",
   name: "default",
   storage_kind: "filestore",
+  size: 99,
   min_time: {
     sec: 1425564900,
     ns: 0
@@ -15,8 +15,8 @@ const space1 = (): Space => ({
     ns: 750000000
   },
   pcap_support: true,
-  ingest: { progress: null, warnings: [], snapshot: null }
-});
+  ingest: {progress: null, warnings: [], snapshot: null}
+})
 
 const cluster1 = (): Cluster => ({
   id: "test:9867",
@@ -24,7 +24,7 @@ const cluster1 = (): Cluster => ({
   port: "9867",
   username: "",
   password: ""
-});
+})
 
 const cluster2 = (): Cluster => ({
   id: "test:9868",
@@ -32,19 +32,19 @@ const cluster2 = (): Cluster => ({
   port: "9868",
   username: "",
   password: ""
-});
+})
 
-let fixtures = () => ({
+const fixtures = () => ({
   cluster1: cluster1(),
   cluster2: cluster2(),
   space1: space1()
-});
+})
 
-export default function (name: string) {
-  const f = fixtures();
+export default function(name: string) {
+  const f = fixtures()
   if (name in f) {
-    return f[name];
+    return f[name]
   } else {
-    throw new Error("Unknown fixture: " + name);
+    throw new Error("Unknown fixture: " + name)
   }
 }

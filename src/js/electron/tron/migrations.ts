@@ -1,81 +1,81 @@
+import path from "path"
 
-import path from "path";
+import {last} from "../../lib/Array"
+import lib from "../../lib"
 
-import { last } from "../../lib/Array";
-import lib from "../../lib";
-
-let dir = path.join(__dirname, "../../state/migrations");
+const dir = path.join(__dirname, "../../state/migrations")
 
 type Migration = {
-  version: number;
-  migrate: Function;
-};
+  version: number
+  migrate: Function
+}
 
 type VersionedData = {
-  version: number;
-  data: any;
-};
+  version: number
+  data: any
+}
 
 export type Migrations = {
-  runPending: (arg0: any) => any;
-  run: (arg0: VersionedData, arg1: Migration[]) => VersionedData;
-  getLatestVersion: () => number;
-  getPending: () => Migration[];
-  getAll: () => Migration[];
-  setCurrentVersion: (arg0: number) => void;
-};
+  runPending: (arg0: any) => any
+  run: (arg0: VersionedData, arg1: Migration[]) => VersionedData
+  getLatestVersion: () => number
+  getPending: () => Migration[]
+  getAll: () => Migration[]
+  setCurrentVersion: (arg0: number) => void
+}
 
-export default async function migrations(currentVersion: string | number = 0): Promise<Migrations> {
-  let cv = parseInt(currentVersion);
+export default async function migrations(
+  currentVersion: string | number = 0
+): Promise<Migrations> {
+  let cv = parseInt(currentVersion.toString())
   // $FlowFixMe
-  let files = await lib.file(dir).contents();
-  let migrations = files.filter(excludeTests).map(build).sort((a, b) => a.version - b.version);
+  const files = await lib.file(dir).contents()
+  const migrations = files
+    .filter(excludeTests)
+    .map(build)
+    .sort((a, b) => a.version - b.version)
 
   return {
     runPending(state: VersionedData) {
-      return this.run(state, this.getPending());
+      return this.run(state, this.getPending())
     },
 
     run(state: VersionedData, migrations: Migration[]) {
-      for (let {
-        version,
-        migrate
-      } of migrations) {
-        state.data = migrate(state.data);
-        state.version = version;
+      for (const {version, migrate} of migrations) {
+        state.data = migrate(state.data)
+        state.version = version
       }
-      return state;
+      return state
     },
 
     getLatestVersion() {
-      return last(migrations).version || 0;
+      return last(migrations).version || 0
     },
 
     getPending() {
-      return migrations.filter<Migration>(m => parseInt(m.version) > cv);
+      return migrations.filter((m: Migration) => m.version > cv)
     },
 
     getAll() {
-      return migrations;
+      return migrations
     },
 
     setCurrentVersion(version: number) {
-      cv = version;
+      cv = version
     }
-  };
+  }
 }
 
 function excludeTests(file) {
-  return !/\.test\.js/.test(file);
+  return !/\.test\.js/.test(file)
 }
 
 function build(file): Migration {
   // $FlowFixMe
-  let migrate = require(path.join(dir, file)).default;
-  let [version, name] = file.replace(".js", "").split("_");
+  const migrate = require(path.join(dir, file)).default
+  const [version, name] = file.replace(".js", "").split("_")
   return {
     migrate,
-    name,
     version: parseInt(version)
-  };
+  }
 }

@@ -1,20 +1,19 @@
+import React, {HTMLProps} from "react"
+import styled from "styled-components"
 
+import SubspaceBorderSvg from "../../static/icons/subspace-border.svg"
 
-import React from "react";
-import styled from "styled-components";
+type Props = HTMLProps<SVGElement>
 
-import { Styled } from "../types/styled";
-import SubspaceBorderSvg from "../../static/icons/subspace-border.svg";
-
-function Icon(props: any) {
-  return <SubspaceBorderSvg {...props} />;
+function Icon(props: Props) {
+  return <SubspaceBorderSvg {...props} />
 }
 
-const SubspaceBorderIcon: Styled<> = styled(Icon)`
+const SubspaceBorderIcon = styled(Icon)<Props>`
   fill: var(--aqua);
   .chunk {
     fill: var(--azure);
   }
-`;
+`
 
-export default SubspaceBorderIcon;
+export default SubspaceBorderIcon

@@ -4,6 +4,7 @@ import {getZealot} from "../getZealot"
 import {handle} from "./handler"
 import Handlers from "../../state/Handlers"
 import {SearchResponse} from "./response"
+import {Handler} from "src/js/state/Handlers/types"
 
 type Args = {
   query: string
@@ -31,7 +32,7 @@ export function search({
   return (dispatch) => {
     const zealot = dispatch(getZealot())
     const ctl = new AbortController()
-    const searchHandle = {type: "SEARCH", abort: () => ctl.abort()}
+    const searchHandle: Handler = {type: "SEARCH", abort: () => ctl.abort()}
     const req =
       target === "index"
         ? zealot.archive.search({

@@ -1,10 +1,9 @@
+import {Thunk} from "../state/types"
+import deletePartialSpaces from "./deletePartialSpaces"
+import saveWindowState from "./saveWindowState"
 
-import { Thunk } from "../state/types";
-import deletePartialSpaces from "./deletePartialSpaces";
-import saveWindowState from "./saveWindowState";
-
-export default ((): Thunk => dispatch => {
+export default (): Thunk<Promise<void>> => (dispatch) => {
   return dispatch(deletePartialSpaces()).then(() => {
-    return dispatch(saveWindowState());
-  });
-});
+    return dispatch(saveWindowState())
+  })
+}

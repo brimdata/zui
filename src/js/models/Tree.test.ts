@@ -1,135 +1,159 @@
-
-import Tree from "./Tree";
+import Tree from "./Tree"
 
 const exampleTree = {
   data: "David",
-  children: [{
-    data: "James",
-    children: [{
-      data: "Abe",
+  children: [
+    {
+      data: "James",
+      children: [
+        {
+          data: "Abe",
+          children: []
+        }
+      ]
+    },
+    {
+      data: "Chloe",
+      children: [
+        {
+          data: "Max",
+          children: []
+        }
+      ]
+    },
+    {
+      data: "Gavin",
       children: []
-    }]
-  }, {
-    data: "Chloe",
-    children: [{
-      data: "Max",
+    },
+    {
+      data: "Marsali",
       children: []
-    }]
-  }, {
-    data: "Gavin",
-    children: []
-  }, {
-    data: "Marsali",
-    children: []
-  }]
-};
+    }
+  ]
+}
 
 test("build the tree by adding children", () => {
-  let tree = new Tree({ data: "David", children: [] });
+  const tree = new Tree({data: "David", children: []})
 
-  let root = tree.getRoot();
+  const root = tree.getRoot()
 
-  root.addChild("James").addChild("Abe");
-  root.addChild("Chloe").addChild("Max");
-  root.addChild("Gavin");
-  root.addChild("Marsali");
+  root.addChild("James").addChild("Abe")
+  root.addChild("Chloe").addChild("Max")
+  root.addChild("Gavin")
+  root.addChild("Marsali")
 
-  expect(tree.toJSON()).toEqual(exampleTree);
-});
+  expect(tree.toJSON()).toEqual(exampleTree)
+})
 
 test("load up a tree from JSON", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  expect(tree.getRoot().data).toEqual("David");
-});
+  expect(tree.getRoot().data).toEqual("David")
+})
 
 test("depth first search from left", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  const names = [];
-  tree.dfSearch(node => names.push(node.data));
+  const names = []
+  tree.dfSearch((node) => names.push(node.data))
 
-  expect(names).toEqual(["David", "James", "Abe", "Chloe", "Max", "Gavin", "Marsali"]);
-});
+  expect(names).toEqual([
+    "David",
+    "James",
+    "Abe",
+    "Chloe",
+    "Max",
+    "Gavin",
+    "Marsali"
+  ])
+})
 
 test("bredth first search from left", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  const names = [];
-  tree.bfSearch(node => names.push(node.data));
+  const names = []
+  tree.bfSearch((node) => names.push(node.data))
 
-  expect(names).toEqual(["David", "James", "Chloe", "Gavin", "Marsali", "Abe", "Max"]);
-});
+  expect(names).toEqual([
+    "David",
+    "James",
+    "Chloe",
+    "Gavin",
+    "Marsali",
+    "Abe",
+    "Max"
+  ])
+})
 
 test("find", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  const node = tree.find("Chloe");
+  const node = tree.find("Chloe")
 
-  expect(node && node.data).toEqual("Chloe");
-});
+  expect(node && node.data).toEqual("Chloe")
+})
 
 test("parentCount", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  const chloe = tree.find("Chloe");
-  const abe = tree.find("Abe");
-  expect(chloe && chloe.parentCount()).toBe(1);
-  expect(abe && abe.parentCount()).toBe(2);
-});
+  const chloe = tree.find("Chloe")
+  const abe = tree.find("Abe")
+  expect(chloe && chloe.parentCount()).toBe(1)
+  expect(abe && abe.parentCount()).toBe(2)
+})
 
 test("getNodeAt empty indexPath", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  expect(tree.getNodeAt([]).data).toBe("David");
-});
+  expect(tree.getNodeAt([]).data).toBe("David")
+})
 
 test("getNodeAt with one item", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  expect(tree.getNodeAt([1]).data).toBe("Chloe");
-});
+  expect(tree.getNodeAt([1]).data).toBe("Chloe")
+})
 
 test("getNodeAt with two indexes", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  expect(tree.getNodeAt([0, 0]).data).toBe("Abe");
-});
+  expect(tree.getNodeAt([0, 0]).data).toBe("Abe")
+})
 
 test("getIndexPath", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([1, 0]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([1, 0])
 
-  expect(node.getIndexPath()).toEqual([1, 0]);
-});
+  expect(node.getIndexPath()).toEqual([1, 0])
+})
 
 test("getIndexPath when []", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([])
 
-  expect(node.getIndexPath()).toEqual([]);
-});
+  expect(node.getIndexPath()).toEqual([])
+})
 
 test("getIndexPath when one level", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([0]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([0])
 
-  expect(node.getIndexPath()).toEqual([0]);
-});
+  expect(node.getIndexPath()).toEqual([0])
+})
 
 test("isInPath when outmost node", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([1, 0]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([1, 0])
 
-  expect(node.isInPath([1, 0])).toBe(true);
-});
+  expect(node.isInPath([1, 0])).toBe(true)
+})
 
 test("isInPath when inner node", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([1, 0]);
-  const parent = node.parent;
-  expect(parent && parent.isInPath([1, 0])).toBe(true);
-});
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([1, 0])
+  const parent = node.parent
+  expect(parent && parent.isInPath([1, 0])).toBe(true)
+})
 
 // indexPath: [3, 0] // no
 //            [3]    // yes
@@ -142,92 +166,100 @@ test("isInPath when inner node", () => {
 // context: [3, 1]
 
 test("isInPath ownPath is longer that passed In", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([0, 0]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([0, 0])
 
-  expect(node.isInPath([0])).toBe(false);
-});
+  expect(node.isInPath([0])).toBe(false)
+})
 
 test("isInPath when exactly the same", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([0, 0]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([0, 0])
 
-  expect(node.isInPath([0, 0])).toBe(true);
-});
+  expect(node.isInPath([0, 0])).toBe(true)
+})
 
 test("isInPath when passed in path is longer than own", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([0]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([0])
 
-  expect(node.isInPath([0, 9, 9])).toBe(true);
-});
+  expect(node.isInPath([0, 9, 9])).toBe(true)
+})
 
 test("isInPath when root", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  expect(tree.getRoot().isInPath([9, 9, 9])).toBe(true);
-});
+  expect(tree.getRoot().isInPath([9, 9, 9])).toBe(true)
+})
 
 test("isInPath when first", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  expect(tree.getNodeAt([2]).isInPath([2])).toBe(true);
-});
+  expect(tree.getNodeAt([2]).isInPath([2])).toBe(true)
+})
 
 test("isLastChild returns false", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([0]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([0])
 
-  expect(node.isLastChild()).toBe(false);
-});
+  expect(node.isLastChild()).toBe(false)
+})
 
 test("isLastChild returns true", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([3]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([3])
 
-  expect(node.isLastChild()).toBe(true);
-});
+  expect(node.isLastChild()).toBe(true)
+})
 
 test("isLastChild when root", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([])
 
-  expect(node.isLastChild()).toBe(true);
-});
+  expect(node.isLastChild()).toBe(true)
+})
 
 test("remove node", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([1]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([1])
 
-  expect(tree.root.children.length).toBe(4);
-  expect(tree.contains(node)).toBe(true);
-  tree.remove(node);
-  expect(tree.contains(node)).toBe(false);
-  expect(tree.root.children.length).toBe(3);
-});
+  expect(tree.root.children.length).toBe(4)
+  expect(tree.contains(node)).toBe(true)
+  tree.remove(node)
+  expect(tree.contains(node)).toBe(false)
+  expect(tree.root.children.length).toBe(3)
+})
 
 test("removing the root node throws an error", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([]);
-  expect(() => tree.remove(node)).toThrow("Not able to remove the root node");
-});
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([])
+  expect(() => tree.remove(node)).toThrow("Not able to remove the root node")
+})
 
 test("removing a node that does not exist in the tree", () => {
-  const tree = new Tree(exampleTree);
-  const node = tree.getNodeAt([1]);
+  const tree = new Tree(exampleTree)
+  const node = tree.getNodeAt([1])
 
-  expect(tree.root.children.length).toBe(4);
-  expect(tree.contains(node)).toBe(true);
+  expect(tree.root.children.length).toBe(4)
+  expect(tree.contains(node)).toBe(true)
 
-  tree.remove(node);
-  tree.remove(node);
+  tree.remove(node)
+  tree.remove(node)
 
-  expect(tree.contains(node)).toBe(false);
-  expect(tree.root.children.length).toBe(3);
-});
+  expect(tree.contains(node)).toBe(false)
+  expect(tree.root.children.length).toBe(3)
+})
 
 test("mapChildren", () => {
-  const tree = new Tree(exampleTree);
+  const tree = new Tree(exampleTree)
 
-  expect(tree.getRoot().mapChildren(n => n.data)).toEqual(["David", "James", "Abe", "Chloe", "Max", "Gavin", "Marsali"]);
-});
+  expect(tree.getRoot().mapChildren((n) => n.data)).toEqual([
+    "David",
+    "James",
+    "Abe",
+    "Chloe",
+    "Max",
+    "Gavin",
+    "Marsali"
+  ])
+})

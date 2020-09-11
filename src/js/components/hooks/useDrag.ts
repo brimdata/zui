@@ -5,7 +5,7 @@ export default function useDrag(handler: Function) {
     let startX = 0
     let startY = 0
 
-    function onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    function onMouseDown(event: React.MouseEvent) {
       startX = event.clientX
       startY = event.clientY
       handler({
@@ -19,7 +19,7 @@ export default function useDrag(handler: Function) {
       lib.on("mouseup", onUp)
     }
 
-    function onMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    function onMove(event: MouseEvent) {
       const res = handler({
         event,
         args,
@@ -33,7 +33,7 @@ export default function useDrag(handler: Function) {
       }
     }
 
-    function onUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    function onUp(event: MouseEvent) {
       handler({
         event,
         args,

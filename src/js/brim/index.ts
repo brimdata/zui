@@ -1,5 +1,4 @@
 import {FieldValue} from "../types/records"
-import {ReturnType} from "../types"
 import ast from "./ast"
 import compoundField from "./compoundField"
 import dateTuple from "./dateTuple"

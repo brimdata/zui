@@ -11,7 +11,13 @@ export default class Chunker {
     return a[0] === b[0] && a[a.length - 1] === b[b.length - 1]
   }
 
-  constructor(opts: Chunker) {
+  constructor(opts: {
+    size: number
+    rowHeight: number
+    height: number
+    chunkSize: number
+    overScan: number
+  }) {
     this.size = opts.size
     this.rowHeight = opts.rowHeight
     this.height = opts.height

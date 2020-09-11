@@ -1,14 +1,18 @@
+import onIdle from "on-idle"
 
-import onIdle from "on-idle";
+interface IdleFunc {
+  (...args: any): any
+  cancel: () => void
+}
 
-export default function whenIdle(func: Function) {
-  let _cancel = () => {};
+export default function whenIdle(func: Function): IdleFunc {
+  let _cancel = () => {}
 
-  let lazy = function (...args: any) {
-    _cancel();
-    _cancel = onIdle(() => func(...args));
-  };
+  const lazy = function(...args: any) {
+    _cancel()
+    _cancel = onIdle(() => func(...args))
+  }
 
-  lazy.cancel = _cancel;
-  return lazy;
+  lazy.cancel = _cancel
+  return lazy
 }

@@ -4,7 +4,6 @@ import Log from "../../models/Log"
 
 export type InvestigationState = Finding[]
 export type InvestigationAction =
-  | FINDING_CREATE
   | FINDING_UPDATE
   | FINDING_DELETE
   | INVESTIGATION_CLEAR
@@ -18,9 +17,8 @@ export type Finding = {
   logs?: Log[]
 }
 
-export type FINDING_CREATE = {type: "FINDING_CREATE"; finding: Partial<Finding>}
 export type FINDING_UPDATE = {type: "FINDING_UPDATE"; finding: Partial<Finding>}
-export type FINDING_DELETE = {type: "FINDING_DELETE"; ts: Ts[] | Ts}
+export type FINDING_DELETE = {type: "FINDING_DELETE"; ts: Ts[]}
 export type INVESTIGATION_CLEAR = {type: "INVESTIGATION_CLEAR"}
 export type INVESTIGATION_PUSH = {
   type: "INVESTIGATION_PUSH"

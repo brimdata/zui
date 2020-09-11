@@ -105,6 +105,3 @@ export type SearchRecord = {
   scrollPos?: ScrollPosition
   target: SearchTarget
 }
-
-type _ReturnType<B, _F extends (...args: any[]) => B> = B
-export type ReturnType<F> = _ReturnType<any, F>

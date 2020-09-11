@@ -1,35 +1,42 @@
-
-
-import Handlers from "../state/Handlers";
-import initTestStore from "../test/initTestStore";
+import Handlers from "../state/Handlers"
+import {SearchHandler} from "../state/Handlers/types"
+import initTestStore from "../test/initTestStore"
 
 describe("Handlers reducer", () => {
-  let store;
+  let store
 
   beforeEach(() => {
-    store = initTestStore();
-  });
+    store = initTestStore()
+  })
 
-  function createHandler(abortFn) {
+  function createHandler(abortFn): SearchHandler {
     return {
       type: "SEARCH",
       abort: abortFn
-    };
+    }
   }
 
   test("#abort all", () => {
-    let killFunc = jest.fn();
+    const killFunc = jest.fn()
 
-    store.dispatchAll([Handlers.register("Histogram", createHandler(killFunc)), Handlers.register("Logs", createHandler(killFunc)), Handlers.abortAll()]);
+    store.dispatchAll([
+      Handlers.register("Histogram", createHandler(killFunc)),
+      Handlers.register("Logs", createHandler(killFunc)),
+      Handlers.abortAll()
+    ])
 
-    expect(killFunc).toHaveBeenCalledTimes(2);
-  });
+    expect(killFunc).toHaveBeenCalledTimes(2)
+  })
 
   test("#abort", () => {
-    let killFunc = jest.fn();
+    const killFunc = jest.fn()
 
-    store.dispatchAll([Handlers.register("Histogram", createHandler(killFunc)), Handlers.register("Logs", createHandler(killFunc)), Handlers.abort("Histogram")]);
+    store.dispatchAll([
+      Handlers.register("Histogram", createHandler(killFunc)),
+      Handlers.register("Logs", createHandler(killFunc)),
+      Handlers.abort("Histogram")
+    ])
 
-    expect(killFunc).toHaveBeenCalledTimes(1);
-  });
-});
+    expect(killFunc).toHaveBeenCalledTimes(1)
+  })
+})

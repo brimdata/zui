@@ -12,9 +12,9 @@ export type $MenuItem = MenuItemConstructorOptions
 export type $Menu = $MenuItem[]
 
 function setMenu(manager: $WindowManager, store: any, session: any) {
-  function send(...args) {
+  function send(channel, ...args) {
     const win = BrowserWindow.getFocusedWindow()
-    if (win && win.webContents) win.webContents.send(...args)
+    if (win && win.webContents) win.webContents.send(channel, ...args)
   }
 
   Menu.setApplicationMenu(
