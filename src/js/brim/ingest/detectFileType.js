@@ -4,7 +4,8 @@ import fs from "fs"
 const PCAP_1_HEX = "d4c3b2a1"
 const PCAP_2_HEX = "a1b2c3d4"
 const PCAPNG_HEX = "0a0d0d0a"
-const PCAP_HEXES = [PCAP_1_HEX, PCAP_2_HEX, PCAPNG_HEX]
+const PCAPNANO_HEX = "4d3cb2a1"
+const PCAP_HEXES = [PCAP_1_HEX, PCAP_2_HEX, PCAPNG_HEX, PCAPNANO_HEX]
 
 export type IngestFileType = "pcap" | "log"
 
