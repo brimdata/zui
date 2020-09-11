@@ -25,7 +25,7 @@
     "watch:static": "npm run build:static -- --watch",
     "watch:reload": "livereload dist",
     "lint": "eslint .",
-    "format": "prettier {src,itest,scripts}/**/*.{js,scss} --write --loglevel warn",
+    "format": "prettier {src,itest,scripts}/**/*.{js,ts,tsx,scss} --write --loglevel warn",
     "tsc": "tsc",
     "format-check": "npm run format && git diff --exit-code -- src itest",
     "check": "npm-run-all -p format-check lint flow test",
