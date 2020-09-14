@@ -4,46 +4,46 @@ import {Finding, InvestigationAction, InvestigationState} from "./types"
 import {SearchRecord} from "../../types"
 import {Ts} from "../../brim"
 import {last} from "../../lib/Array"
+import produce from "immer"
 
-const init: InvestigationState = []
+const init = (): InvestigationState => ({})
 
-export default function reducer(
-  state: InvestigationState = init,
-  a: InvestigationAction
-): InvestigationState {
+export default produce((draft, a: InvestigationAction) => {
   switch (a.type) {
     case "INVESTIGATION_PUSH":
-      return createFinding(state, a.entry, a.ts)
-    case "FINDING_UPDATE":
-      return updateLatest(state, a.finding)
-    case "FINDING_DELETE":
-      return state.filter((f) => {
-        for (const ts of a.ts) if (isEqual(ts, f.ts)) return false
-        return true
-      })
-    case "INVESTIGATION_CLEAR":
-      return []
-    default:
-      return state
-  }
-}
+      if (!draft[a.clusterId]) draft[a.clusterId] = {}
+      if (!draft[a.clusterId][a.spaceId]) draft[a.clusterId][a.spaceId] = []
 
-function updateLatest(state: InvestigationState, updates: Partial<Finding>) {
-  const finding = last(state)
-  if (finding) {
-    state[state.length - 1] = {...finding, ...updates}
-    return [...state]
-  } else {
-    return state
+      draft[a.clusterId][a.spaceId] = createFinding(
+        draft[a.clusterId][a.spaceId],
+        a.entry,
+        a.ts
+      )
+      return
+    case "FINDING_DELETE":
+      if (!draft[a.clusterId] || !draft[a.clusterId][a.spaceId]) return
+
+      draft[a.clusterId][a.spaceId] = draft[a.clusterId][a.spaceId].filter(
+        (f) => {
+          for (const ts of a.ts) if (isEqual(ts, f.ts)) return false
+          return true
+        }
+      )
+      return
+    case "INVESTIGATION_CLEAR":
+      if (!draft[a.clusterId] || !draft[a.clusterId][a.spaceId]) return
+
+      draft[a.clusterId][a.spaceId] = []
+      return
   }
-}
+}, init())
 
 function createFinding(state, search: SearchRecord, ts: Ts) {
   if (sameRecord(last(state), {ts, search})) {
     return state
-  } else {
-    return [...state, {ts, search}]
   }
+
+  return [...state, {ts, search}]
 }
 
 function sameRecord(a: Finding, b: Finding) {
