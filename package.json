@@ -17,7 +17,7 @@
     "electron": "electron .",
     "build": "npm-run-all -p build:*",
     "watch": "npm-run-all -s clean build:* watch:*",
-    "build:js": "babel src/js -d dist/js --extensions '.ts,.tsx'",
+    "build:js": "babel src/js -d dist/js --extensions \".ts,.tsx\"",
     "build:css": "node-sass-chokidar src/css --output dist/css",
     "build:static": "cpx \"src/static/**\" dist/static",
     "watch:js": "npm run build:js -- --watch --skip-initial-build",
@@ -35,7 +35,7 @@
     "prebuild": "npm run clean",
     "postinstall": "npm-run-all -s deps:*",
     "deps:zdeps": "node scripts/download-zdeps",
-    "deps:zealot": "cd zealot && make bundle"
+    "deps:zealot": "babel zealot/bundle.js -o zealot/index.js --presets=@babel/preset-env"
   },
   "jest": {
     "notify": false,
@@ -172,7 +172,7 @@
     "source-map-support": "^0.5.19",
     "styled-components": "^5.1.1",
     "valid-url": "^1.0.9",
-    "zealot": "./zealot",
+    "zealot": "file:zealot",
     "zq": "git+https://github.com/brimsec/zq.git#2742f1833298e6a19f77359504a47b4aeed61c0a"
   },
   "optionalDependencies": {
