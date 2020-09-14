@@ -1,7 +1,6 @@
-import {includes, isEqual} from "lodash"
+import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
-import ReactTooltip from "react-tooltip"
 import classNames from "classnames"
 import get from "lodash/get"
 
@@ -16,18 +15,14 @@ import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
-import Spaces from "../state/Spaces/selectors"
-import Warning from "./icons/warning-sm.svg"
 import usePopupMenu from "./hooks/usePopupMenu"
 
-type Props = {node: any; i: number}
+type Props = {node: any; i: number; connId: string; spaceId: string}
 
-function NodeRow({node, i}: Props) {
+function NodeRow({node, i, connId, spaceId}: Props) {
   const dispatch = useDispatch()
   const pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   const previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
-  const clusterId = useSelector(Current.getConnectionId)
-  const spaceIds = useSelector(Spaces.ids(clusterId))
   const findingSpaceName = get(
     node,
     ["data", "finding", "search", "spaceName"],
@@ -38,13 +33,16 @@ function NodeRow({node, i}: Props) {
       label: "Delete",
       click: () => {
         const multiTs = node.mapChildren((node) => node.data.finding.ts)
-        globalDispatch(Investigation.deleteFindingByTs(multiTs))
+        globalDispatch(
+          Investigation.deleteFindingByTs(connId, spaceId, multiTs)
+        )
       }
     },
     {type: "separator"},
     {
       label: "Delete All",
-      click: () => globalDispatch(Investigation.clearInvestigation())
+      click: () =>
+        globalDispatch(Investigation.clearSpaceInvestigation(connId, spaceId))
     }
   ])
 
@@ -58,29 +56,6 @@ function NodeRow({node, i}: Props) {
     active: nodeIsActive(pinnedFilters, previous, node)
   })
 
-  function renderWarning() {
-    const findingSpaceId = get(
-      node,
-      ["data", "finding", "search", "spaceId"],
-      ""
-    )
-
-    const tip = "This space no longer exists"
-    if (includes(spaceIds, findingSpaceId)) return null
-
-    return (
-      <div
-        className="warning-body"
-        data-tip={tip}
-        data-effect="solid"
-        data-place="right"
-      >
-        <Warning />
-        <ReactTooltip />
-      </div>
-    )
-  }
-
   return (
     <div key={i} className={className}>
       <div
@@ -90,11 +65,16 @@ function NodeRow({node, i}: Props) {
         title={findingSpaceName}
       >
         <FilterNode filter={node.data.filter} />
-        {renderWarning()}
       </div>
       <div className="filter-tree-children">
         {node.children.map((node, i) => (
-          <NodeRow node={node} i={i} key={i} />
+          <NodeRow
+            node={node}
+            connId={connId}
+            spaceId={spaceId}
+            i={i}
+            key={i}
+          />
         ))}
       </div>
     </div>
@@ -102,7 +82,11 @@ function NodeRow({node, i}: Props) {
 }
 
 export default function FilterTree() {
-  const investigation = useSelector(Investigation.getInvestigation)
+  const currentConnId = useSelector(Current.getConnectionId)
+  const currentSpaceId = useSelector(Current.getSpaceId)
+  const investigation = useSelector(
+    Investigation.getInvestigation(currentConnId, currentSpaceId)
+  )
   const tree = createInvestigationTree(investigation)
 
   if (tree.getRoot().children.length === 0)
@@ -116,7 +100,13 @@ export default function FilterTree() {
   return (
     <div className="filter-tree">
       {tree.getRoot().children.map((node, i) => (
-        <NodeRow node={node} i={i} key={i} />
+        <NodeRow
+          connId={currentConnId}
+          spaceId={currentSpaceId}
+          node={node}
+          i={i}
+          key={i}
+        />
       ))}
     </div>
   )

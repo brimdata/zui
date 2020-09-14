@@ -7,6 +7,7 @@ import Notice from "../../state/Notice"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
+import Current from "../../state/Current"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
@@ -33,7 +34,9 @@ export function submitSearch(
       if (query === "*") return Promise.resolve()
     }
 
-    dispatch(saveToHistory(record, save, ts))
+    const connId = Current.getConnectionId(getState())
+    const spaceId = Current.getSpaceId(getState())
+    dispatch(saveToHistory(connId, spaceId, record, save, ts))
 
     if (record.target === "index") {
       const promise = dispatch(viewerSearch({query, from, to, target: "index"}))

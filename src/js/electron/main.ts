@@ -25,6 +25,7 @@ import {ZQD} from "../zqd/zqd"
 import electronIsDev from "./isDev"
 import {setupAutoUpdater} from "./autoUpdater"
 import log from "electron-log"
+import * as util from "util"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
@@ -71,6 +72,10 @@ async function main() {
 
   app.on("quit", () => {
     const data = formatSessionState(winMan.getState(), store.getState())
+    console.log(
+      "data is: ",
+      util.inspect(data, false, null, true /* enable colors */)
+    )
     session.save(data)
     zqd.close()
   })
