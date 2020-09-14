@@ -35,7 +35,7 @@
     "prebuild": "npm run clean",
     "postinstall": "npm-run-all -s deps:*",
     "deps:zdeps": "node scripts/download-zdeps",
-    "deps:zealot": "babel zealot/bundle.js -o zealot/index.js --presets=@babel/preset-env"
+    "deps:zealot": "cd zealot && npm run bundle && babel bundle.js -o index.js --presets=@babel/preset-env"
   },
   "jest": {
     "notify": false,
