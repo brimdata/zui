@@ -1,4 +1,3 @@
-/* @flow */
 const util = require("util")
 
 const exec = util.promisify(require("child_process").exec)
@@ -12,7 +11,6 @@ async function bash(script) {
 
 function safeRequire(file) {
   try {
-    // $FlowFixMe
     return require(file)
   } catch (_e) {
     console.log("Unable to load file: ", file)

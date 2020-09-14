@@ -1,18 +1,15 @@
-/* @flow */
 const fs = require("fs")
 const path = require("path")
 let file = fs.readFileSync("./coverage/coverage-final.json", "utf-8")
 
 function report(info) {
   let covered = 0
-  // $FlowFixMe
   let statements = Object.values(info.s)
   for (let hits of statements) if (hits !== 0) covered += 1
   return [covered, statements.length]
 }
 
 function htmlPath(info) {
-  // $FlowFixMe
   let shortPath = info.path.replace(/^.*\/src\/(.*)$/, "$1")
   return path.join("coverage/lcov-report/" + shortPath) + ".html"
 }

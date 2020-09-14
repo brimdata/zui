@@ -1,3 +1,0 @@
-#!/bin/sh
-
-npx flow --json | jq '.errors[] | .message[0].path' | uniq | sed -e 's/"//g'

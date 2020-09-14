@@ -1,5 +1,3 @@
-/* @flow */
-
 const program = require("commander")
 
 const {printSelectors} = require("./selectors")

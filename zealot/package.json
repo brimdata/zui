@@ -3,5 +3,10 @@
   "version": "0.0.0",
   "main": "index.js",
   "author": "Brim Security, Inc.",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "test": "deno test --allow-net --allow-run --allow-read --allow-write",
+    "prebundle": "deno cache --reload mod.ts",
+    "bundle": "deno bundle mod.ts bundle.js"
+  }
 }

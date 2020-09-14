@@ -11,16 +11,14 @@ brew install deno
 ### Run Tests
 
 ```
-make test
+npm test
 ```
 
 ### Create Bundle
 
 ```
-make bundle
+npm run bundle
 ```
-
-This bundles all the exports from `./zealot.ts` in the root of this directory and copies the resulting file to `../src/js/services/zealot.js`. The output is a browser compliant version of JavaScript. To use it in Brim, simply import it.
 
 ### Usage
 
@@ -34,8 +32,8 @@ zealot.spaces.create({name: "my_space"})
 zealot.spaces.list()
 
 const resp = await zealot.search("192.4.53.101 | count()", {
-  spaceId: "1", 
-  from: new Date(0), 
+  spaceId: "1",
+  from: new Date(0),
   to: new Date()
 })
 const records = await resp.records()
@@ -44,12 +42,14 @@ const records = await resp.records()
 An API call made with zealot can either return a Promise that resolves with the actual data from the HTTP request, or a Promise that resolves with a "Stream" object. Here is an example of each.
 
 **Promise\<Data\>**
+
 ```js
 const space = await zealot.spaces.get("sp_123abc")
 // => {name: "space123", id: "sp_123abc", data_dir: "...}
 ```
 
 **Promise\<Stream\>**
+
 ```js
 const stream = await zealot.search("_path=dns")
 // => interable stream with several ways to consume
