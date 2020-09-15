@@ -1,9 +1,9 @@
-name: Brim Windows release
+name: Brim Windows release candidate creation
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - rc-v*
 
 jobs:
   build:
@@ -57,28 +57,25 @@ jobs:
       env:
         WINDOWS_SIGNING_PASSPHRASE: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
         WINDOWS_SIGNING_PFX_BASE64: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
-    - name: upload release executable
-      uses: svenstaro/upload-release-action@1.1.0
+    - name: Extract branch name
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+      shell: bash
+    - name: Set up Python (needed for Google Cloud Platform)
+      uses: actions/setup-python@v2
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref }}
-        file: dist\installers\Brim-Setup.exe
-        asset_name: Brim-Setup.exe
-        overwrite: true
-    - name: upload RELEASES file
-      uses: svenstaro/upload-release-action@1.1.0
+        python-version: 3.7
+    - name: Setup Google Cloud Platform
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      env:
+        CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref }}
-        file: dist\installers\RELEASES
-        asset_name: RELEASES
-        overwrite: true
-    - name: upload nupkg assets
-      uses: svenstaro/upload-release-action@1.1.0
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref }}
-        file: dist\installers\*.nupkg
-        overwrite: true
-        file_glob: true
-
+        version: '290.0.1'
+        project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}
+    - name: Upload release artifacts to Google Cloud Storage bucket
+      env:
+        CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
+      run: |
+        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/windows/${{ steps.extract_branch.outputs.branch }} || true
+        gsutil mv dist\installers\ gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/windows/${{ steps.extract_branch.outputs.branch }}

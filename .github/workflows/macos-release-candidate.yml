@@ -1,9 +1,9 @@
-name: Brim macOS release
+name: Brim macOS release candidate creation
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - rc-v*
 
 jobs:
   build:
@@ -63,19 +63,16 @@ jobs:
         APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
     - name: run gatekeeper assessment on notarized package
       run: spctl --assess --type execute --verbose --ignore-cache --no-cache dist/packages/Brim-darwin-x64/Brim.app
-    - name: upload release dmg
-      uses: svenstaro/upload-release-action@1.1.0
+    - name: Extract branch name
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+    - name: Setup Google Cloud Platform
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref }}
-        file: dist/installers/Brim.dmg
-        asset_name: Brim.dmg
-        overwrite: true
-    - name: upload release zip
-      uses: svenstaro/upload-release-action@1.1.0
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref }}
-        file: dist/installers/Brim-darwin-autoupdater.zip
-        asset_name: Brim-darwin-autoupdater.zip
-        overwrite: true
+        version: '290.0.1'
+        project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}
+    - name: Upload release artifacts to Google Cloud Storage bucket
+      run: |
+        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/macos/${{ steps.extract_branch.outputs.branch }} || true
+        gsutil mv dist/installers gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/macos/${{ steps.extract_branch.outputs.branch }}

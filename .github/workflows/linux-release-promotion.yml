@@ -1,0 +1,30 @@
+name: Brim linux release artifact promote to tagged
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  promote:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Extract tag name
+      run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/})"
+      id: extract_tag
+    - name: Setup Google Cloud Platform
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}
+    - name: Copy artifacts from Google Cloud Storage bucket to GitHub Release page
+      run: gsutil cp -r gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/linux/rc-${{ steps.extract_tag.outputs.tag }} .
+    - name: Upload release candidate artifacts to GitHub Releases
+      uses: svenstaro/upload-release-action@1.1.0
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: rc-${{ steps.extract_tag.outputs.tag }}/*
+        file_glob: true
+        overwrite: true
