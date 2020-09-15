@@ -25,7 +25,6 @@ import {ZQD} from "../zqd/zqd"
 import electronIsDev from "./isDev"
 import {setupAutoUpdater} from "./autoUpdater"
 import log from "electron-log"
-import * as util from "util"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
