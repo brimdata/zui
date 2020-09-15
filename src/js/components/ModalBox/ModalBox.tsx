@@ -34,7 +34,7 @@ export default function ModalBox({name, children, ...props}: ModalBoxProps) {
   }
 
   return (
-    <Animate show={active === name} enter={enter} exit="reverse">
+    <Animate show={active === name} enter={enter}>
       <ModalContents {...props}>{children}</ModalContents>
     </Animate>
   )

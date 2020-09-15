@@ -89,6 +89,7 @@ export default function NewConnectionModal() {
   const dispatch = useDispatch()
   const [f, formRef] = useCallbackRef()
   const [errors, setErrors] = useState([])
+  const [isFetching, setIsFetching] = useState(false)
   const config: FormConfig = {
     host: {
       name: "host",
@@ -110,22 +111,25 @@ export default function NewConnectionModal() {
           return obj
         }, {})
         try {
+          setIsFetching(true)
           await dispatch(setConnection(toCluster({host})))
         } catch (_) {
           setErrors([{message: "Cannot connect to host"}])
           return
+        } finally {
+          setIsFetching(false)
         }
         closeModal()
       } else {
         setErrors(form.getErrors())
       }
     },
-    [f, config]
+    [f, config, setIsFetching]
   )
 
   const buttons = [
     {label: "Cancel", click: (closeModal) => closeModal()},
-    {label: "Connect", click: onSubmit}
+    {label: "Connect", click: onSubmit, showSpinner: isFetching}
   ]
 
   return (
