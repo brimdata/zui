@@ -33,7 +33,7 @@ export default produce((draft, a: InvestigationAction) => {
     case "INVESTIGATION_CLEAR":
       if (!draft[a.clusterId] || !draft[a.clusterId][a.spaceId]) return
 
-      draft[a.clusterId][a.spaceId] = []
+      delete draft[a.clusterId][a.spaceId]
       return
   }
 }, init())
