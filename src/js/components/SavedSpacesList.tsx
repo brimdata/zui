@@ -16,6 +16,8 @@ import usePopupMenu from "./hooks/usePopupMenu"
 import {remote} from "electron"
 import deleteSpace from "../flows/deleteSpace"
 import Modal from "../state/Modal/actions"
+import Spaces from "../state/Spaces"
+import deleteSpaces from "../flows/deleteSpaces"
 
 type Props = {
   spaces: Space[]
@@ -52,6 +54,7 @@ const SpaceListItem = ({space}: {space: Space}) => {
   const dispatch = useDispatch()
   const clusterId = useSelector(Current.getConnectionId)
   const currentSpaceId = useSelector(Current.getSpaceId)
+  const spaceIds = useSelector(Spaces.ids(clusterId))
   const s = brim.space(space)
 
   const onClick = (e) => {
@@ -77,6 +80,21 @@ const SpaceListItem = ({space}: {space: Space}) => {
           })
           .then(({response}) => {
             if (response === 0) dispatch(deleteSpace(s.id))
+          })
+      }
+    },
+    {
+      label: "Delete All",
+      click: () => {
+        remote.dialog
+          .showMessageBox({
+            type: "warning",
+            title: "Delete Spaces",
+            message: `Are you sure you want to delete all spaces for this connection?`,
+            buttons: ["OK", "Cancel"]
+          })
+          .then(({response}) => {
+            if (response === 0) dispatch(deleteSpaces(spaceIds))
           })
       }
     }
