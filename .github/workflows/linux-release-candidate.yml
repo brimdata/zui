@@ -1,9 +1,9 @@
-name: Brim linux release
+name: Brim linux release candidate creation
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - rc-v*
 
 jobs:
   build:
@@ -43,11 +43,16 @@ jobs:
     - run: npm run build
     - name: build packages
       run: node ./scripts/release --linux
-    - name: upload release artifact
-      uses: svenstaro/upload-release-action@1.1.0
+    - name: Extract branch name
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+    - name: Setup Google Cloud Platform
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref }}
-        file: dist/installers/*
-        file_glob: true
-        overwrite: true
+        version: '290.0.1'
+        project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}
+    - name: Upload release artifacts to Google Cloud Storage bucket
+      run: |
+        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/linux/${{ steps.extract_branch.outputs.branch }} || true
+        gsutil mv dist/installers gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/linux/${{ steps.extract_branch.outputs.branch }}
