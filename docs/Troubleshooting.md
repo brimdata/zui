@@ -150,6 +150,7 @@ differences:
 |[zeek/847](https://github.com/zeek/zeek/issues/847)|Zeek creates many conn records for DNS despite `udp_inactivity_timeout=0`|
 |[zeek/862](https://github.com/zeek/zeek/issues/862)|Retransmissions of unsuccessful close attempt keep getting flagged as new connections|
 |[zeek/864](https://github.com/zeek/zeek/issues/864)|Multi-section pcapng with overlapping timestamps creates excess `conn` events|
+|[zeek/1163](https://github.com/zeek/zeek/issues/1163)|Full precision of nanosecond timestamps is not preserved|
 
 If you find yourself running into these issues or others of a similar nature,
 please reach out to us on our [public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg)
