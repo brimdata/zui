@@ -83,13 +83,14 @@ const SpaceListItem = ({space}: {space: Space}) => {
           })
       }
     },
+    {type: "separator"},
     {
       label: "Delete All",
       click: () => {
         remote.dialog
           .showMessageBox({
             type: "warning",
-            title: "Delete Spaces",
+            title: "Delete All Spaces",
             message: `Are you sure you want to delete all spaces for this connection?`,
             buttons: ["OK", "Cancel"]
           })

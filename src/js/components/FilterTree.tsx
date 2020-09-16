@@ -16,6 +16,7 @@ import Investigation from "../state/Investigation"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import usePopupMenu from "./hooks/usePopupMenu"
+import {remote} from "electron"
 
 type Props = {node: any; i: number; connId: string; spaceId: string}
 
@@ -32,17 +33,41 @@ function NodeRow({node, i, connId, spaceId}: Props) {
     {
       label: "Delete",
       click: () => {
-        const multiTs = node.mapChildren((node) => node.data.finding.ts)
-        globalDispatch(
-          Investigation.deleteFindingByTs(connId, spaceId, multiTs)
-        )
+        remote.dialog
+          .showMessageBox({
+            type: "warning",
+            title: "Delete History Entry",
+            message:
+              "Deleting this history entry will also remove any of its sub-entries. Are you sure you would like to continue?",
+            buttons: ["OK", "Cancel"]
+          })
+          .then(({response}) => {
+            if (response === 0) {
+              const multiTs = node.mapChildren((node) => node.data.finding.ts)
+              globalDispatch(
+                Investigation.deleteFindingByTs(connId, spaceId, multiTs)
+              )
+            }
+          })
       }
     },
     {type: "separator"},
     {
       label: "Delete All",
       click: () =>
-        globalDispatch(Investigation.clearSpaceInvestigation(connId, spaceId))
+        remote.dialog
+          .showMessageBox({
+            type: "warning",
+            title: "Delete All History",
+            message: `Are you sure you want to delete all history entries for this space?`,
+            buttons: ["OK", "Cancel"]
+          })
+          .then(({response}) => {
+            if (response === 0)
+              globalDispatch(
+                Investigation.clearSpaceInvestigation(connId, spaceId)
+              )
+          })
     }
   ])
 

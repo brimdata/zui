@@ -4,7 +4,11 @@ import {getZealot} from "./getZealot"
 import Current from "../state/Current"
 import Investigation from "../state/Investigation"
 
-const deleteSpaces = (ids: string[]): Thunk => (dispatch, getState) => {
+const deleteSpaces = (ids: string[]): Thunk => (
+  dispatch,
+  getState,
+  {globalDispatch}
+) => {
   const zealot = dispatch(getZealot())
   const clusterId = Current.getConnectionId(getState())
   return Promise.all(
@@ -12,7 +16,7 @@ const deleteSpaces = (ids: string[]): Thunk => (dispatch, getState) => {
       return zealot.spaces
         .delete(id)
         .then(() => {
-          dispatch(Investigation.clearSpaceInvestigation(clusterId, id))
+          globalDispatch(Investigation.clearSpaceInvestigation(clusterId, id))
         })
         .catch((e) => {
           throw new Error(

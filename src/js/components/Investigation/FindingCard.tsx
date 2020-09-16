@@ -12,6 +12,8 @@ import Investigation from "../../state/Investigation"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
 import usePopupMenu from "../hooks/usePopupMenu"
+import {remote} from "electron"
+import deleteSpaces from "../../flows/deleteSpaces"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
     fill: ${(props) => props.theme.colors.lead};
@@ -41,15 +43,37 @@ export default React.memo<Props>(function FindingCard({
     {
       label: "Delete",
       click: () =>
-        globalDispatch(
-          Investigation.deleteFindingByTs(connId, spaceId, finding.ts)
-        )
+        remote.dialog
+          .showMessageBox({
+            type: "warning",
+            title: "Delete History Entry",
+            message: `Are you sure you want to delete this history entry?`,
+            buttons: ["OK", "Cancel"]
+          })
+          .then(({response}) => {
+            if (response === 0)
+              globalDispatch(
+                Investigation.deleteFindingByTs(connId, spaceId, finding.ts)
+              )
+          })
     },
     {type: "separator"},
     {
       label: "Delete All",
       click: () =>
-        globalDispatch(Investigation.clearSpaceInvestigation(connId, spaceId))
+        remote.dialog
+          .showMessageBox({
+            type: "warning",
+            title: "Delete All History",
+            message: `Are you sure you want to delete all history entries for this space?`,
+            buttons: ["OK", "Cancel"]
+          })
+          .then(({response}) => {
+            if (response === 0)
+              globalDispatch(
+                Investigation.clearSpaceInvestigation(connId, spaceId)
+              )
+          })
     }
   ])
 
