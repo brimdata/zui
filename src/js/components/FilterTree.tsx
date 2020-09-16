@@ -2,7 +2,6 @@ import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
-import get from "lodash/get"
 
 import {Node} from "../models/Node"
 import {createInvestigationTree} from "./FilterTree/helpers"
@@ -24,11 +23,6 @@ function NodeRow({node, i, connId, spaceId}: Props) {
   const dispatch = useDispatch()
   const pinnedFilters = useSelector(SearchBar.getSearchBarPins)
   const previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
-  const findingSpaceName = get(
-    node,
-    ["data", "finding", "search", "spaceName"],
-    ""
-  )
   const menu = usePopupMenu([
     {
       label: "Delete",
@@ -87,7 +81,6 @@ function NodeRow({node, i, connId, spaceId}: Props) {
         className="filter-tree-parent"
         onClick={onNodeClick}
         onContextMenu={() => menu.open()}
-        title={findingSpaceName}
       >
         <FilterNode filter={node.data.filter} />
       </div>

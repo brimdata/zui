@@ -1,7 +1,6 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 import classNames from "classnames"
-import get from "lodash/get"
 import styled from "styled-components"
 
 import {Finding} from "../../state/Investigation/types"
@@ -13,7 +12,6 @@ import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
 import usePopupMenu from "../hooks/usePopupMenu"
 import {remote} from "electron"
-import deleteSpaces from "../../flows/deleteSpaces"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
     fill: ${(props) => props.theme.colors.lead};
@@ -32,7 +30,6 @@ export default React.memo<Props>(function FindingCard({
   spaceId
 }: Props) {
   const dispatch = useDispatch()
-  const findingSpaceName = get(finding, ["search", "spaceName"], "")
 
   function onClick() {
     dispatch(Search.restore(finding.search))
@@ -82,7 +79,6 @@ export default React.memo<Props>(function FindingCard({
       className={classNames("finding-card-wrapper")}
       onClick={onClick}
       onContextMenu={() => menu.open()}
-      title={findingSpaceName}
     >
       <div className="finding-card">
         <StyledMagnifyingGlass />
