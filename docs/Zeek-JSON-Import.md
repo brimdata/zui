@@ -22,7 +22,7 @@ ideas for ways we might improve it, but we'll have a better sense of priority
 and how to go about it if we've heard from those who have tried it. Whether
 you've used this feature and it "just worked" or if you hit challenges and need
 help, please join our
-[public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg)
+[public Slack](https://www.brimsecurity.com/join-slack/)
 and tell us about it, or
 [open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
 

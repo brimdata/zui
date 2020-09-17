@@ -39,4 +39,4 @@ The following issues are currently being held open to gather interest:
 If you're interested in additional geolocation features, please follow the links to review these issues and click :+1: below the
 description on any of these features you'd like to see added. If you have additional feedback or ideas on this functionality,
 feel free to add a comment to the issues, or join our
-[public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg) and talk to us. Thanks!
+[public Slack](https://www.brimsecurity.com/join-slack/) and talk to us. Thanks!
