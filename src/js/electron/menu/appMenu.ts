@@ -207,9 +207,7 @@ export default function appMenu(
       {
         label: "Slack Support Channel",
         click() {
-          shell.openExternal(
-            "https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg"
-          )
+          shell.openExternal("https://www.brimsecurity.com/join-slack/")
         }
       },
       {

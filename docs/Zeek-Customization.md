@@ -174,6 +174,6 @@ a pcap to confirm it works in the app.
 If you're using a custom Zeek setup with Brim, we'd like to hear from you! Whether you've found an interesting 
 Zeek feature that could be useful to other Brim users, or are generating logs that match your existing Zeek setup, 
 or (especially) if you hit challenges and need help, please join our
-[public Slack](https://join.slack.com/t/brimsec/shared_invite/zt-cy34xoxg-hZiTKUT~1KdGjlaBIuUUdg)
+[public Slack](https://www.brimsecurity.com/join-slack/)
 and tell us about it, or
 [open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
