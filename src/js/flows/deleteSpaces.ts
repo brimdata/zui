@@ -1,32 +1,14 @@
 import {Thunk} from "../state/types"
 import refreshSpaceNames from "./refreshSpaceNames"
-import {getZealot} from "./getZealot"
-import Current from "../state/Current"
-import Investigation from "../state/Investigation"
+import deleteSpace from "./deleteSpace"
+import Notice from "../state/Notice"
 
-const deleteSpaces = (ids: string[]): Thunk => (
-  dispatch,
-  getState,
-  {globalDispatch}
-) => {
-  const zealot = dispatch(getZealot())
-  const clusterId = Current.getConnectionId(getState())
-  return Promise.all(
-    ids.map((id) => {
-      return zealot.spaces
-        .delete(id)
-        .then(() => {
-          globalDispatch(Investigation.clearSpaceInvestigation(clusterId, id))
-        })
-        .catch((e) => {
-          throw new Error(
-            `Unable to delete spaceId (${id}): ${JSON.stringify(e)}`
-          )
-        })
+const deleteSpaces = (ids: string[]): Thunk => (dispatch) => {
+  return Promise.all(ids.map((id) => dispatch(deleteSpace(id))))
+    .catch((e) => {
+      dispatch(Notice.set(new Error(`Error deleting spaces: ${e.message}`)))
     })
-  ).then(() => {
-    dispatch(refreshSpaceNames())
-  })
+    .finally(() => dispatch(refreshSpaceNames()))
 }
 
 export default deleteSpaces

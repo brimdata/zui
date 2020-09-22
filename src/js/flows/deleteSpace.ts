@@ -1,8 +1,8 @@
 import {Thunk} from "../state/types"
-import refreshSpaceNames from "./refreshSpaceNames"
 import {getZealot} from "./getZealot"
 import Current from "../state/Current"
 import Investigation from "../state/Investigation"
+import Spaces from "../state/Spaces"
 
 const deleteSpace = (id: string): Thunk => (
   dispatch,
@@ -13,7 +13,7 @@ const deleteSpace = (id: string): Thunk => (
   const clusterId = Current.getConnectionId(getState())
   return zealot.spaces.delete(id).then(() => {
     globalDispatch(Investigation.clearSpaceInvestigation(clusterId, id))
-    dispatch(refreshSpaceNames())
+    globalDispatch(Spaces.remove(clusterId, id))
   })
 }
 

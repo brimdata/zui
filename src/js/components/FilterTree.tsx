@@ -27,22 +27,10 @@ function NodeRow({node, i, connId, spaceId}: Props) {
     {
       label: "Delete",
       click: () => {
-        remote.dialog
-          .showMessageBox({
-            type: "warning",
-            title: "Delete History Entry",
-            message:
-              "Deleting this history entry will also remove any of its sub-entries. Are you sure you would like to continue?",
-            buttons: ["OK", "Cancel"]
-          })
-          .then(({response}) => {
-            if (response === 0) {
-              const multiTs = node.mapChildren((node) => node.data.finding.ts)
-              globalDispatch(
-                Investigation.deleteFindingByTs(connId, spaceId, multiTs)
-              )
-            }
-          })
+        const multiTs = node.mapChildren((node) => node.data.finding.ts)
+        globalDispatch(
+          Investigation.deleteFindingByTs(connId, spaceId, multiTs)
+        )
       }
     },
     {type: "separator"},

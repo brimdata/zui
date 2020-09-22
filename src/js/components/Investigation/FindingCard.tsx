@@ -40,19 +40,9 @@ export default React.memo<Props>(function FindingCard({
     {
       label: "Delete",
       click: () =>
-        remote.dialog
-          .showMessageBox({
-            type: "warning",
-            title: "Delete History Entry",
-            message: `Are you sure you want to delete this history entry?`,
-            buttons: ["OK", "Cancel"]
-          })
-          .then(({response}) => {
-            if (response === 0)
-              globalDispatch(
-                Investigation.deleteFindingByTs(connId, spaceId, finding.ts)
-              )
-          })
+        globalDispatch(
+          Investigation.deleteFindingByTs(connId, spaceId, finding.ts)
+        )
     },
     {type: "separator"},
     {
