@@ -31,7 +31,8 @@ function searchWindow(params) {
     minHeight: 100,
     webPreferences: {
       nodeIntegration: true,
-      experimentalFeatures: true
+      experimentalFeatures: true,
+      enableRemoteModule: true
     }
   }).on("close", (e: any) => {
     // Close handled by the search renderer
@@ -62,7 +63,8 @@ function aboutWindow() {
     width: 360,
     height: 360,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   })
   win.setMenu(null)
@@ -78,7 +80,8 @@ function detailWindow(params) {
     width: 360,
     height: 360,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   })
   if (size) {
