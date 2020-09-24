@@ -6,14 +6,25 @@ import AnimateChildren from "../AnimateChildren"
 import FindingCard from "./FindingCard"
 import EmptySection from "../common/EmptySection"
 import BookIcon from "../../icons/BookSvgIcon"
+import {useSelector} from "react-redux"
+import Current from "../../state/Current"
 
 export default React.memo<{}>(function InvestigationLinear() {
   const findings = useFindings()
+  const connId = useSelector(Current.getConnectionId)
+  const spaceId = useSelector(Current.getSpaceId)
 
   const cards = []
 
   findings.forEach((f) => {
-    cards.push(<FindingCard key={getKey(f)} finding={f} />)
+    cards.push(
+      <FindingCard
+        key={getKey(f)}
+        finding={f}
+        connId={connId}
+        spaceId={spaceId}
+      />
+    )
   })
 
   if (cards.length === 0)

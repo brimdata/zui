@@ -29,7 +29,10 @@ const finding: Finding = {
 }
 
 test("Clicking the history submits the search", () => {
-  const el = provide(store, <FindingCard finding={finding} />)
+  const el = provide(
+    store,
+    <FindingCard spaceId="1" connId="1" finding={finding} />
+  )
   store.clearActions()
   el.simulate("click")
   expect(getActionTypes()).toContain("SEARCH_BAR_SUBMIT")

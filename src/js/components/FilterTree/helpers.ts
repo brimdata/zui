@@ -1,9 +1,9 @@
 import {isEqual} from "lodash"
 
-import {InvestigationState} from "../../state/Investigation/types"
+import {Finding} from "../../state/Investigation/types"
 import Tree from "../../models/Tree"
 
-export function createInvestigationTree(investigation: InvestigationState) {
+export function createInvestigationTree(investigation: Finding[]) {
   const tree = new Tree({data: "ROOT", children: []})
 
   for (const finding of investigation) {

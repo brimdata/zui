@@ -1,12 +1,23 @@
 import {State} from "../types"
+import {Finding} from "./types"
 import {last} from "../../lib/Array"
 
-export default {
-  getInvestigation(state: State) {
-    return state.investigation
-  },
+type Id = string | null
 
-  getCurrentFinding(state: State) {
-    return last(state.investigation)
+export const getInvestigation = (connId: Id, spaceId: Id) => (
+  state: State
+): Finding[] => {
+  {
+    if (!state.investigation[connId] || !state.investigation[connId][spaceId])
+      return []
+
+    return state.investigation[connId][spaceId]
   }
+}
+
+export const getCurrentFinding = (connId: Id, spaceId: Id) => (
+  state: State
+) => {
+  if (!connId || !spaceId) return null
+  return last(state.investigation[connId][spaceId])
 }

@@ -57,13 +57,13 @@ test("does not save to history", async () => {
 })
 
 test("saves to investigation", async () => {
-  expect(select(Investigation.getInvestigation).length).toBe(0)
+  expect(select(Investigation.getInvestigation("1", "1")).length).toBe(0)
   await submit()
-  expect(select(Investigation.getInvestigation).length).toBe(1)
+  expect(select(Investigation.getInvestigation("1", "1")).length).toBe(1)
 })
 
 test("does not save to investigation", async () => {
-  expect(select(Investigation.getInvestigation).length).toBe(0)
+  expect(select(Investigation.getInvestigation("1", "1")).length).toBe(0)
   await submit({investigation: false, history: true})
-  expect(select(Investigation.getInvestigation).length).toBe(0)
+  expect(select(Investigation.getInvestigation("1", "1")).length).toBe(0)
 })
