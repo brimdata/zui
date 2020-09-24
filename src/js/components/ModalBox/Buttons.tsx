@@ -17,6 +17,8 @@ export default function Buttons({template, closeModal}: Props) {
         <ButtonItem
           key={b.label}
           text={b.label}
+          disabled={b.disabled}
+          icon={b.icon}
           isLast={i + 1 === a.length}
           onClick={(e) => b.click(closeModal, e)}
         />
@@ -29,18 +31,36 @@ type ButtonItemProps = {
   text: string
   onClick: (e: MouseEvent) => void
   isLast: boolean
+  disabled?: boolean
+  icon?: React.ReactNode
+  showSpinner?: boolean
 }
 
-function ButtonItem({text, onClick, isLast}: ButtonItemProps) {
+function ButtonItem({
+  text,
+  onClick,
+  isLast,
+  disabled = false,
+  icon = null
+}: ButtonItemProps) {
   if (isLast) {
     return (
       <ToolbarButton
         {...defaultModalButton.props}
         text={text}
+        icon={icon}
+        disabled={disabled}
         onClick={onClick}
       />
     )
-  } else {
-    return <ToolbarButton text={text} onClick={onClick} />
   }
+
+  return (
+    <ToolbarButton
+      text={text}
+      onClick={onClick}
+      disabled={disabled}
+      icon={icon}
+    />
+  )
 }
