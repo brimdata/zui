@@ -1,10 +1,12 @@
 import {ModalName} from "../../state/Modal/types"
 import {RefAttributes} from "react"
+import * as React from "react"
 
 export type ModalButton = {
   label: string
   click: Function
-  showSpinner?: boolean
+  icon?: React.ReactNode
+  disabled?: boolean
 }
 export type ModalButtonTemplate = void | string | ModalButton[]
 export type ModalBoxProps = {

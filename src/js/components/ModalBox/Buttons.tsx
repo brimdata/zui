@@ -4,7 +4,6 @@ import {ModalButton} from "./types"
 import {defaultModalButton} from "../../test/locators"
 import ButtonRow from "../ButtonRow"
 import ToolbarButton from "../Toolbar/Button"
-import MacSpinner from "../MacSpinner"
 
 type Props = {
   template: ModalButton[]
@@ -18,7 +17,8 @@ export default function Buttons({template, closeModal}: Props) {
         <ButtonItem
           key={b.label}
           text={b.label}
-          showSpinner={b.showSpinner}
+          disabled={b.disabled}
+          icon={b.icon}
           isLast={i + 1 === a.length}
           onClick={(e) => b.click(closeModal, e)}
         />
@@ -31,17 +31,25 @@ type ButtonItemProps = {
   text: string
   onClick: (e: MouseEvent) => void
   isLast: boolean
+  disabled?: boolean
+  icon?: React.ReactNode
   showSpinner?: boolean
 }
 
-function ButtonItem({text, onClick, isLast, showSpinner}: ButtonItemProps) {
+function ButtonItem({
+  text,
+  onClick,
+  isLast,
+  disabled = false,
+  icon = null
+}: ButtonItemProps) {
   if (isLast) {
     return (
       <ToolbarButton
         {...defaultModalButton.props}
         text={text}
-        icon={showSpinner ? <MacSpinner /> : null}
-        disabled={showSpinner}
+        icon={icon}
+        disabled={disabled}
         onClick={onClick}
       />
     )
@@ -51,8 +59,8 @@ function ButtonItem({text, onClick, isLast, showSpinner}: ButtonItemProps) {
     <ToolbarButton
       text={text}
       onClick={onClick}
-      disabled={showSpinner}
-      icon={showSpinner ? <MacSpinner /> : null}
+      disabled={disabled}
+      icon={icon}
     />
   )
 }

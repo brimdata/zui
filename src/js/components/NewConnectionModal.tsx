@@ -15,6 +15,7 @@ import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import {isEmpty} from "lodash"
 import {FormConfig} from "../brim/form"
+import MacSpinner from "./MacSpinner"
 
 const LabelWrapper = styled.div`
   display: flex;
@@ -124,12 +125,17 @@ export default function NewConnectionModal() {
         setErrors(form.getErrors())
       }
     },
-    [f, config, setIsFetching]
+    [f, config]
   )
 
   const buttons = [
     {label: "Cancel", click: (closeModal) => closeModal()},
-    {label: "Connect", click: onSubmit, showSpinner: isFetching}
+    {
+      label: isFetching ? "" : "Connect",
+      click: onSubmit,
+      icon: isFetching ? <MacSpinner /> : null,
+      disabled: isFetching
+    }
   ]
 
   return (
