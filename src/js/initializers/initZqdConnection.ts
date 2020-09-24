@@ -22,7 +22,9 @@ export default async function(store: Store) {
       username: "",
       password: ""
     }
-    await globalDispatch(Clusters.add(cluster))
+
+    store.dispatch(Clusters.add(cluster))
+    globalDispatch(Clusters.add(cluster))
     store.dispatch(Current.setConnectionId(cluster.id))
   }
 
