@@ -3,7 +3,7 @@ import {initSpace} from "../flows/initSpace"
 import Clusters from "../state/Clusters"
 import Current from "../state/Current"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
-import refreshConnectionsSpaceNames from "../flows/refreshConnectionsSpaceNames"
+import refreshSpacesForAllConnections from "../flows/refreshSpacesForAllConnections"
 import {globalDispatch} from "../state/GlobalContext"
 
 export default async function(store: Store) {
@@ -28,7 +28,7 @@ export default async function(store: Store) {
     store.dispatch(Current.setConnectionId(cluster.id))
   }
 
-  await store.dispatch(refreshConnectionsSpaceNames())
+  await store.dispatch(refreshSpacesForAllConnections())
 
   const lastId = Current.getSpaceId(store.getState())
   const spaceId = space || lastId

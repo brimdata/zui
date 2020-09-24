@@ -2,7 +2,9 @@ import {Thunk} from "../state/types"
 import Clusters from "../state/Clusters"
 import Spaces from "../state/Spaces"
 
-export default function refreshConnectionsSpaceNames(): Thunk<Promise<void[]>> {
+export default function refreshSpacesForAllConnections(): Thunk<
+  Promise<void[]>
+> {
   return (dispatch, getState, {globalDispatch, createZealot}) => {
     const clusters = Clusters.all(getState())
     return Promise.all(
