@@ -44,10 +44,6 @@ export default (store: Store) => {
     ipcRenderer.send(channel, getPersistable(store.getState()))
   })
 
-  ipcRenderer.on("getState", (event, channel) => {
-    ipcRenderer.send(channel, getPersistable(store.getState()))
-  })
-
   ipcRenderer.on("showPreferences", () => {
     store.dispatch(Modal.show("settings"))
   })
