@@ -1,3 +1,13 @@
+## v0.18.0
+* Update zq to [v0.22.0](https://github.com/brimsec/zq/releases/tag/v0.22.0)
+* Update Zeek to [v3.2.0-dev-brim10](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim10) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1096)
+* Move the code base from Flow to TypeScript (#1075)
+* Point to new Slack community URL https://www.brimsecurity.com/join-slack/ (#1089)
+* Show a spinner if there's delays closing the "new connection" modal (#1084)
+* Add a right-click option to delete all Spaces (#1078)
+* Organize History entries by unique Space/Connection combination (#1078)
+* Fix an issue where closing Brim after having searched a remote Space caused a "Space does not exist" error when Brim was relaunched (#1091)
+
 ## v0.17.0
 * Update zq to [v0.21.0](https://github.com/brimsec/zq/releases/tag/v0.21.0)
 * Update Zeek to [v3.2.0-dev-brim9](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim9) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1071)
