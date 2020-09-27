@@ -95,7 +95,13 @@ async function zqArtifactsDownload(version, destPath) {
 
     fs.mkdirpSync(destPath)
 
-    for (let f of [plat.zqdBin, plat.zqBin, plat.pcapBin, plat.zapiBin, plat.zarBin]) {
+    for (let f of [
+      plat.zqdBin,
+      plat.zqBin,
+      plat.pcapBin,
+      plat.zapiBin,
+      plat.zarBin
+    ]) {
       fs.moveSync(
         path.join(tmpdir.name, paths.internalTopDir, f),
         path.join(destPath, f),
@@ -143,7 +149,13 @@ async function zqDevBuild(destPath) {
 
   const zqPackageDir = path.join(__dirname, "..", "..", "node_modules", "zq")
 
-  for (let f of [plat.zqdBin, plat.zqBin, plat.pcapBin, plat.zapiBin, plat.zarBin]) {
+  for (let f of [
+    plat.zqdBin,
+    plat.zqBin,
+    plat.pcapBin,
+    plat.zapiBin,
+    plat.zarBin
+  ]) {
     fs.copyFileSync(path.join(zqPackageDir, "dist", f), path.join(destPath, f))
   }
 }
