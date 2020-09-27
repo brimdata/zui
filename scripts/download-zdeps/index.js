@@ -14,16 +14,25 @@ const platformDefs = {
   darwin: {
     zqdBin: "zqd",
     zqBin: "zq",
+    pcapBin: "pcap",
+    zapiBin: "zapi",
+    zarBin: "zar",
     osarch: "darwin-amd64"
   },
   linux: {
     zqdBin: "zqd",
     zqBin: "zq",
+    pcapBin: "pcap",
+    zapiBin: "zapi",
+    zarBin: "zar",
     osarch: "linux-amd64"
   },
   win32: {
     zqdBin: "zqd.exe",
     zqBin: "zq.exe",
+    pcapBin: "pcap.exe",
+    zapiBin: "zapi.exe",
+    zarBin: "zar.exe",
     osarch: "windows-amd64"
   }
 }
@@ -86,7 +95,7 @@ async function zqArtifactsDownload(version, destPath) {
 
     fs.mkdirpSync(destPath)
 
-    for (let f of [plat.zqdBin, plat.zqBin]) {
+    for (let f of [plat.zqdBin, plat.zqBin, plat.pcapBin, plat.zapiBin, plat.zarBin]) {
       fs.moveSync(
         path.join(tmpdir.name, paths.internalTopDir, f),
         path.join(destPath, f),
@@ -134,7 +143,7 @@ async function zqDevBuild(destPath) {
 
   const zqPackageDir = path.join(__dirname, "..", "..", "node_modules", "zq")
 
-  for (let f of [plat.zqdBin, plat.zqBin]) {
+  for (let f of [plat.zqdBin, plat.zqBin, plat.pcapBin, plat.zapiBin, plat.zarBin]) {
     fs.copyFileSync(path.join(zqPackageDir, "dist", f), path.join(destPath, f))
   }
 }
