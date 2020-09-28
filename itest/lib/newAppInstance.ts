@@ -12,6 +12,7 @@ export default (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
   const linuxInstallPath = "/usr/bin/brim"
   const userDataDir = path.resolve(path.join(itestDir(), name, idx.toString()))
+  console.log("creating dir: ", userDataDir)
   mkdirpSync(userDataDir)
 
   // https://github.com/electron-userland/spectron#new-applicationoptions

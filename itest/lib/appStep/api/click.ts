@@ -12,13 +12,15 @@ const waitForClickable = async (app: Application, selector: string) => {
   // scrolling to the element before trying to click in order to avoid
   // problems like those described in
   // https://github.com/brimsec/brim/issues/668
-  await logStep(`wait for element to exist: "${selector}"`, () =>
-    app.client.waitForExist(selector)
+  await logStep(`wait for element to exist: "${selector}"`, async () =>
+    (await app.client.$(selector)).waitForExist()
   )
-  await logStep(`wait for element to be visible: "${selector}"`, () =>
-    app.client.waitForVisible(selector)
+  await logStep(`wait for element to be visible: "${selector}"`, async () =>
+    (await app.client.$(selector)).waitForDisplayed()
   )
-  return logStep(`scroll to: "${selector}"`, () => app.client.scroll(selector))
+  return logStep(`scroll to: "${selector}"`, async () =>
+    (await app.client.$(selector)).scrollIntoView()
+  )
 }
 
 export const click = (app: Application, selector: string) =>
@@ -26,12 +28,12 @@ export const click = (app: Application, selector: string) =>
     await waitForClickable(app, selector)
     try {
       return retryUntil(
-        () => app.client.click(selector),
+        async () => (await app.client.$(selector)).click(),
         (success) => success
       )
     } catch (e) {
       LOG.debug("trying to execute script for click: " + e)
-      return app.client.selectorExecute(selector, (elem) => {
+      return (await app.client.$(selector)).execute((elem) => {
         elem.click()
       })
     }
