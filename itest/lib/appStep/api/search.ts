@@ -8,11 +8,11 @@ export const runSearch = async (app: Application, searchText: string) => {
   // Run a search and wait for results to appear. Do not return results.
   // This is suitable for setting up the app to do something else
   // after receiving results, like a context menu test.
-  await logStep("write to main search", () =>
-    app.client
-      .waitForVisible(selectors.search.input)
-      .then(() => app.client.setValue(selectors.search.input, searchText))
-  )
+  await logStep("write to main search", async () => {
+    const input = await app.client.$(selectors.search.input)
+    await input.waitForDisplayed()
+    return await input.setValue(searchText)
+  })
   await logStep("click the search button", () => app.client.keys("Enter"))
   return waitForResults(app)
 }
@@ -37,31 +37,41 @@ export const getResults = async (
     // The hack is to split this and extract just the text.
     const _trim = (s: string) => s.split(">")[1].split("<")[0]
 
-    let headers = await logStep("get search headers", () =>
-      app.client
-        .waitForVisible(selectors.viewer.headers)
-        .then(() => app.client.getHTML(selectors.viewer.headers))
-    )
-    if (typeof headers === "string") {
-      headers = [headers]
-    }
-    return headers.map((h) => _trim(h))
+    let headers = await logStep("get search headers", async () => {
+      const headers = await app.client.$$(selectors.viewer.headers)
+      return await Promise.all(
+        headers.map(async (h) => {
+          await h.waitForDisplayed()
+          return await h.getHTML()
+        })
+      )
+    })
+
+    return headers.map((h) => {
+      return _trim(h)
+    })
   }
 
   const searchResults = await logStep("get search records", async () => {
-    await app.client.waitForVisible(selectors.viewer.results)
-    return app.client.getText(selectors.viewer.results)
+    const results = await app.client.$$(selectors.viewer.results)
+    return await Promise.all(
+      results.map(async (r) => {
+        await r.waitForDisplayed()
+        return await r.getText()
+      })
+    )
   })
 
   let headers
   if (
     includeHeaders &&
-    (await app.client.isVisible(selectors.viewer.headers))
+    (await (await app.client.$(selectors.viewer.headers)).isDisplayed())
   ) {
     headers = await searchDisplayHeaders(app)
   } else {
     headers = []
   }
+
   return headers.concat(searchResults)
 }
 

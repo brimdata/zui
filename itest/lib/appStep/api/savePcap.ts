@@ -8,9 +8,9 @@ import {selectors} from "../../../../src/js/test/integration"
 export default async (app: Application) => {
   await waitForClickableButtonAndClick(app, selectors.pcaps.button)
   return logStep("wait for a download to finish", async () => {
-    await app.client.waitForVisible(selectors.downloadMessage)
+    await (await app.client.$(selectors.downloadMessage)).waitForDisplayed()
     return retryUntil(
-      () => app.client.getText(selectors.downloadMessage),
+      async () => (await app.client.$(selectors.downloadMessage)).getText(),
       (text) => text == "Download Complete" || text.includes("Download error")
     )
   })

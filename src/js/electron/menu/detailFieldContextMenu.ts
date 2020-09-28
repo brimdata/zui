@@ -31,8 +31,10 @@ export default function detailFieldContextMenu(
     ].includes(field.name)
 
     const detailMenuActions = menu.actions.detail
+
     const fieldData = field.serialize()
     const recordData = log.serialize()
+
     return [
       detailMenuActions.include.menuItem([fieldData], {
         enabled: hasCol,

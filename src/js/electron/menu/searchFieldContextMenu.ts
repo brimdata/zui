@@ -41,6 +41,7 @@ export default function searchFieldContextMenu(
 
     const fieldData = field.serialize()
     const recordData = log.serialize()
+
     return [
       searchMenuActions.include.menuItem([fieldData], {
         enabled: hasCol,
