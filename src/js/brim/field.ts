@@ -21,6 +21,9 @@ function field({name, type, value}: FieldData): $Field {
     name,
     type,
     value,
+    serialize() {
+      return {name, type, value}
+    },
     queryableValue() {
       if (this.compound()) {
         return this.toCompound()

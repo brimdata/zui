@@ -19,7 +19,7 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
     .then(brim.interop.spacePayloadToSpace)
     .then((data) => {
       const space = brim.space(data)
-      globalDispatch(Spaces.setDetail(clusterId, space))
+      globalDispatch(Spaces.setDetail(clusterId, data))
       dispatch(Current.setSpaceId(space.id))
       dispatch(Search.setSpanArgs(space.everythingSpan()))
       dispatch(SearchBar.removeAllSearchBarPins())

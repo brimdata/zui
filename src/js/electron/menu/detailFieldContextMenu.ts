@@ -36,43 +36,50 @@ export default function detailFieldContextMenu(
 
     const detailMenuActions = menu.actions.detail
 
+    const fieldData = field.serialize()
+    const logData = log.serialize()
+
     return [
-      detailMenuActions.include.menuItem([field], {
+      detailMenuActions.include.menuItem([fieldData], {
         enabled: hasCol,
         visible: !compound
       }),
-      detailMenuActions.exclude.menuItem([field], {
+      detailMenuActions.exclude.menuItem([fieldData], {
         enabled: hasCol,
         visible: !compound
       }),
-      detailMenuActions.in.menuItem([field], {
+      detailMenuActions.in.menuItem([fieldData], {
         visible: !!compound
       }),
-      detailMenuActions.notIn.menuItem([field], {
+      detailMenuActions.notIn.menuItem([fieldData], {
         visible: !!compound
       }),
-      detailMenuActions.freshInclude.menuItem([field], {enabled: true}),
+      detailMenuActions.freshInclude.menuItem([fieldData], {enabled: true}),
       menu.separator(),
-      detailMenuActions.groupByDrillDown.menuItem([program, log], {
+      detailMenuActions.groupByDrillDown.menuItem([program, logData], {
         enabled: isGroupBy && sameCols
       }),
-      detailMenuActions.countBy.menuItem([field], {enabled: !isGroupBy}),
+      detailMenuActions.countBy.menuItem([fieldData], {enabled: !isGroupBy}),
       menu.separator(),
-      detailMenuActions.sortAsc.menuItem([field], {enabled: hasCol}),
-      detailMenuActions.sortDesc.menuItem([field], {enabled: hasCol}),
+      detailMenuActions.sortAsc.menuItem([fieldData], {enabled: hasCol}),
+      detailMenuActions.sortDesc.menuItem([fieldData], {enabled: hasCol}),
       menu.separator(),
-      detailMenuActions.fromTime.menuItem([field], {enabled: isTime}),
-      detailMenuActions.toTime.menuItem([field], {enabled: isTime}),
+      detailMenuActions.fromTime.menuItem([fieldData], {enabled: isTime}),
+      detailMenuActions.toTime.menuItem([fieldData], {enabled: isTime}),
       menu.separator(),
-      detailMenuActions.pcaps.menuItem([log], {enabled: isConn && hasPackets}),
-      detailMenuActions.detail.menuItem([log], {enabled: true}),
+      detailMenuActions.pcaps.menuItem([logData], {
+        enabled: isConn && hasPackets
+      }),
+      detailMenuActions.detail.menuItem([logData], {enabled: true}),
       menu.separator(),
-      detailMenuActions.whoisRightclick.menuItem([field], {enabled: isIp}),
-      detailMenuActions.virusTotalRightclick.menuItem([field], {
+      detailMenuActions.whoisRightclick.menuItem([fieldData], {enabled: isIp}),
+      detailMenuActions.virusTotalRightclick.menuItem([fieldData], {
         enabled: virusTotal || isIp
       }),
       menu.separator(),
-      detailMenuActions.logResult.menuItem([field, log], {enabled: true})
+      detailMenuActions.logResult.menuItem([fieldData, logData], {
+        enabled: true
+      })
     ]
   }
 }

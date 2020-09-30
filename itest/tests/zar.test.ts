@@ -55,7 +55,7 @@ describe("Zar tests", () => {
         // Reload the app so that it reads the new space.
         await appStep.reload(app)
         await appStep.click(app, ".add-tab")
-        await app.client.waitForVisible(`=${ZAR_SPACE_NAME}`)
+        await (await app.client.$(`=${ZAR_SPACE_NAME}`)).waitForDisplayed()
         done()
       })
       .catch((err) => {

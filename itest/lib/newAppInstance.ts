@@ -12,8 +12,8 @@ export default (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
   const linuxInstallPath = "/usr/bin/brim"
   const userDataDir = path.resolve(path.join(itestDir(), name, idx.toString()))
-  console.log("creating dir: ", userDataDir)
   mkdirpSync(userDataDir)
+  mkdirpSync(path.resolve(userDataDir, "webdriverLogFiles"))
 
   // https://github.com/electron-userland/spectron#new-applicationoptions
   let appArgs = {
@@ -59,5 +59,6 @@ export default (name: string, idx: number): Application => {
     appArgs = {...appArgs, path: electronPath, args: [repoDir()]}
     LOG.debug("Chose working copy app location", electronPath)
   }
+
   return new Application(appArgs)
 }

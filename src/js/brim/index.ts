@@ -1,4 +1,4 @@
-import {FieldValue} from "../types/records"
+import {FieldData, FieldValue} from "../types/records"
 import ast from "./ast"
 import compoundField from "./compoundField"
 import dateTuple from "./dateTuple"
@@ -24,6 +24,7 @@ export type $Field = {
   name: string
   type: string
   value: FieldValue
+  serialize: () => FieldData
   stringValue: () => string
   queryableValue: () => string
   compound: () => boolean

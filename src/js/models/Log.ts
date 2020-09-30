@@ -58,6 +58,10 @@ export default class Log {
     return isEqual(a.tuple, b.tuple)
   }
 
+  serialize(): {tuple: Tuple; descriptor: Descriptor} {
+    return {tuple: this.tuple, descriptor: this.descriptor}
+  }
+
   filter(func: (arg0: $Field) => boolean) {
     const tuple = []
     const descriptor = []
