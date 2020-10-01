@@ -15,6 +15,10 @@ effective use of the Brim desktop application and related tools.
 - [[Zeek Customization]]
 - [[Geolocation]]
 
+## Cookbooks
+
+- [[Remote `zqd`]]
+
 ## Developer Resources
 
 - [[Code Base Walkthrough]]

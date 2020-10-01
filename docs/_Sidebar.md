@@ -10,6 +10,10 @@
 - [[Zeek Customization]]
 - [[Geolocation]]
 
+**Cookbooks**
+
+- [[Remote `zqd`]]
+
 **Developer Resources**
 
 - [[Code Base Walkthrough]]
