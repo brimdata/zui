@@ -11,6 +11,7 @@ export default function getPersistable(state: any) {
       delete tab.viewer
       delete tab.chart
       delete tab.last
+      delete tab.logDetails
     }
   })
 }
