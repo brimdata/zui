@@ -1,4 +1,4 @@
-import {createZealotMock} from "zealot"
+import {createZealotMock, zng} from "zealot"
 
 import {
   appendQueryCountBy,
@@ -16,11 +16,11 @@ import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 import {SearchBarState} from "./types"
 
-let store
+let store, mock
 beforeEach(() => {
-  store = initTestStore(
-    createZealotMock().stubStream("search", [{type: "TaskEnd"}])
-  )
+  mock = createZealotMock()
+  mock.stubStream("search", [], "always")
+  store = initTestStore(mock.zealot)
   const conn = fixtures("cluster1")
   const space = fixtures("space1")
 
@@ -176,14 +176,16 @@ test("search bar submit", () => {
 })
 
 test("append an include field", () => {
-  const field = {name: "_path", type: "string", value: "conn"}
+  const data = new zng.Primitive("string", "conn")
+  const field = new zng.Field("_path", data)
   const state = store.dispatchAll([appendQueryInclude(field)])
 
   expect(SearchBar.getSearchBarInputValue(state)).toBe('_path="conn"')
 })
 
 test("append an include field when some text already exists", () => {
-  const field = {name: "_path", type: "string", value: "conn"}
+  const data = new zng.Primitive("string", "conn")
+  const field = new zng.Field("_path", data)
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("text"),
     appendQueryInclude(field)
@@ -192,13 +194,15 @@ test("append an include field when some text already exists", () => {
 })
 
 test("append an exclude field", () => {
-  const field = {name: "_path", type: "string", value: "conn"}
+  const data = new zng.Primitive("string", "conn")
+  const field = new zng.Field("_path", data)
   const state = store.dispatchAll([appendQueryExclude(field)])
   expect(SearchBar.getSearchBarInputValue(state)).toBe('_path!="conn"')
 })
 
 test("append an exclude field when some text already exists", () => {
-  const field = {name: "_path", type: "string", value: "conn"}
+  const data = new zng.Primitive("string", "conn")
+  const field = new zng.Field("_path", data)
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("text"),
     appendQueryExclude(field)
@@ -207,13 +211,15 @@ test("append an exclude field when some text already exists", () => {
 })
 
 test("append a count by field", () => {
-  const field = {name: "_path", type: "string", value: "conn"}
+  const data = new zng.Primitive("string", "conn")
+  const field = new zng.Field("_path", data)
   const state = store.dispatchAll([appendQueryCountBy(field)])
   expect(SearchBar.getSearchBarInputValue(state)).toBe("* | count() by _path")
 })
 
 test("append a count to an existing query", () => {
-  const field = {name: "query", type: "string", value: "heyyo"}
+  const data = new zng.Primitive("string", "ho ho")
+  const field = new zng.Field("query", data)
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("dns"),
     appendQueryCountBy(field)
@@ -222,7 +228,8 @@ test("append a count to an existing query", () => {
 })
 
 test("append a count to an existing query with a pin", () => {
-  const field = {name: "query", type: "string", value: "heyyo"}
+  const data = new zng.Primitive("string", "heyo")
+  const field = new zng.Field("query", data)
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),

@@ -1,5 +1,3 @@
-import {Descriptors} from "../../types"
-import {RecordData} from "../../types/records"
 import {SearchStats, SearchStatus} from "../../types/searches"
 
 type EventNames =
@@ -16,7 +14,7 @@ export function createResponse() {
   // Allow for multiple callbacks on one event
   const callbacks = new Map<EventNames, Function>()
   return {
-    chan(num: number, func: (arg0: RecordData[], arg1: Descriptors) => void) {
+    chan(num: number, func: (records: any, schemas: any) => void) {
       callbacks.set(num, func)
       return this
     },

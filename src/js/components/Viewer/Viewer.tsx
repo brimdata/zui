@@ -5,7 +5,6 @@ import {reactElementProps} from "../../test/integration"
 import Chunk from "./Chunk"
 import Chunker from "./Chunker"
 import Header from "./Header"
-import Log from "../../models/Log"
 import ScrollHooks from "../../lib/ScrollHooks"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
@@ -13,13 +12,14 @@ import lib from "../../lib"
 import useConst from "../hooks/useConst"
 import {useDispatch} from "react-redux"
 import History from "../../state/History"
+import {zng} from "zealot"
 
 type Props = {
   chunker: Chunker
   dimens: ViewerDimens
   tableColumns: TableColumns
   renderRow: RowRenderer
-  logs: Log[]
+  logs: zng.Record[]
   onLastChunk?: Function
   renderEnd: () => any
   scrollPos: ScrollPosition

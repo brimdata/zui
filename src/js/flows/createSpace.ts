@@ -5,7 +5,7 @@ import {getZealot} from "./getZealot"
 
 type Props = {
   name: string
-  kind: string
+  kind: "archivestore" | "filestore"
   data_path: string
 }
 
@@ -13,7 +13,7 @@ export const createSpace = ({
   name,
   kind,
   data_path
-}: Props): Thunk<Promise<void>> => async (dispatch) => {
+}: Props): Thunk<Promise<void>> => (dispatch) => {
   const zealot = dispatch(getZealot())
   return zealot.spaces
     .create({
@@ -21,9 +21,9 @@ export const createSpace = ({
       storage: {kind},
       data_path: data_path.length ? data_path : undefined
     })
-    .then((space) =>
+    .then((space) => {
       dispatch(refreshSpaceNames()).then(() =>
         dispatch(Current.setSpaceId(space.id))
       )
-    )
+    })
 }

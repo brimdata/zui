@@ -6,17 +6,30 @@ import {Fieldset} from "./Typography"
 import {showContextMenu} from "../lib/System"
 import Columns from "../state/Columns"
 import Current from "../state/Current"
-import Log from "../models/Log"
 import SearchBar from "../state/SearchBar"
 import VerticalTable from "./Tables/VerticalTable"
 import connHistoryView from "../lib/connHistoryView"
+import {zng} from "zealot"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
 const RESP_FIELDS = ["resp_bytes", "resp_pkts", "resp_ip_bytes", "local_resp"]
 
 type Props = {
-  log: Log
+  log: zng.Record
   contextMenu: Function
+}
+
+function filter(record: zng.Record, names: string[]) {
+  const cols = []
+  const vals = []
+
+  names.forEach((n) => {
+    const i = record.getColumnNames().indexOf(n)
+    cols.push(record.type[i])
+    vals.push(record.value[i])
+  })
+
+  return new zng.Record(cols, vals)
 }
 
 const ConnVersation = ({log, contextMenu}: Props) => {
@@ -25,16 +38,16 @@ const ConnVersation = ({log, contextMenu}: Props) => {
       <Host
         title="Originator"
         className="originator"
-        log={log.only(...ORIG_FIELDS)}
+        log={filter(log, ORIG_FIELDS)}
         ip={log.getField("id.orig_h")}
         port={log.getField("id.orig_p")}
         contextMenu={contextMenu}
       />
-      <ConnHistory history={log.getString("history")} />
+      <ConnHistory history={log.get("history").toString()} />
       <Host
         title="Responder"
         className="responder"
-        log={log.only(...RESP_FIELDS)}
+        log={filter(log, RESP_FIELDS)}
         ip={log.getField("id.resp_h")}
         port={log.getField("id.resp_p")}
         contextMenu={contextMenu}
@@ -57,7 +70,16 @@ const ConnHistory = ({history = ""}) => (
   </div>
 )
 
-const Host = ({className, title, ip, port, log, contextMenu}) => {
+type HostProps = {
+  className: string
+  title: string
+  ip: zng.Field
+  port: zng.Field
+  log: zng.Record
+  contextMenu: Function
+}
+
+const Host = ({className, title, ip, port, log, contextMenu}: HostProps) => {
   const program = useSelector(SearchBar.getSearchProgram)
   const tableColumns = useSelector(Columns.getCurrentTableColumns)
   const space = useSelector(Current.mustGetSpace)
@@ -83,23 +105,19 @@ const Host = ({className, title, ip, port, log, contextMenu}) => {
       <Fieldset>{title}</Fieldset>
       <p
         onContextMenu={onIpContextMenu}
-        className={`ip ${ip.value && ip.value.length > 16 ? "small" : ""}`}
+        className={`ip ${ip.data.toString().length > 16 ? "small" : ""}`}
       >
-        {ip.value}
+        {ip.data.toString()}
       </p>
       <p onContextMenu={onPortContextMenu} className="port">
-        {port.value}
+        {port.data.toString()}
       </p>
-      <VerticalTable
-        descriptor={log.descriptor}
-        log={log}
-        rightClick={rightClick}
-      />
+      <VerticalTable descriptor={log.type} log={log} rightClick={rightClick} />
     </div>
   )
 }
 
-ConnVersation.shouldShow = (log) =>
-  every(ORIG_FIELDS, (field) => log.getString(field))
+ConnVersation.shouldShow = (log: zng.Record) =>
+  every(ORIG_FIELDS, (name) => log.has(name))
 
 export default ConnVersation

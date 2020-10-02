@@ -1,7 +1,33 @@
-import Log from "../models/Log"
+import {zng} from "zealot"
 
 export const dns = () =>
-  new Log(
+  new zng.Record(
+    [
+      {name: "_td", type: "int"},
+      {name: "_path", type: "string"},
+      {name: "ts", type: "time"},
+      {name: "uid", type: "string"},
+      {name: "id.orig_h", type: "addr"},
+      {name: "id.orig_p", type: "port"},
+      {name: "id.resp_h", type: "addr"},
+      {name: "id.resp_p", type: "port"},
+      {name: "proto", type: "enum"},
+      {name: "trans_id", type: "count"},
+      {name: "rtt", type: "interval"},
+      {name: "query", type: "string"},
+      {name: "qclass", type: "count"},
+      {name: "qclass_name", type: "string"},
+      {name: "qtype", type: "count"},
+      {name: "qtype_name", type: "string"},
+      {name: "rcode", type: "count"},
+      {name: "rcode_name", type: "string"},
+      {name: "AA", type: "bool"},
+      {name: "TC", type: "bool"},
+      {name: "RD", type: "bool"},
+      {name: "RA", type: "bool"},
+      {name: "Z", type: "count"},
+      {name: "rejected", type: "bool"}
+    ],
     [
       "8",
       "dns",
@@ -29,48 +55,47 @@ export const dns = () =>
       "_workstation._tcp.local,sniffer [ec:f4:bb:51:89:ec]._workstation._tcp.local",
       "4500.000000,4500.000000",
       "F"
-    ],
+    ]
+  )
+
+export const conn = () =>
+  new zng.Record(
     [
       {name: "_td", type: "int"},
       {name: "_path", type: "string"},
       {name: "ts", type: "time"},
       {name: "uid", type: "string"},
-      {name: "id.orig_h", type: "addr"},
-      {name: "id.orig_p", type: "port"},
-      {name: "id.resp_h", type: "addr"},
-      {name: "id.resp_p", type: "port"},
+      {
+        name: "id",
+        type: "record",
+        of: [
+          {name: "orig_h", type: "addr"},
+          {name: "orig_p", type: "port"},
+          {name: "resp_h", type: "addr"},
+          {name: "resp_p", type: "port"}
+        ]
+      },
       {name: "proto", type: "enum"},
-      {name: "trans_id", type: "count"},
-      {name: "rtt", type: "interval"},
-      {name: "query", type: "string"},
-      {name: "qclass", type: "count"},
-      {name: "qclass_name", type: "string"},
-      {name: "qtype", type: "count"},
-      {name: "qtype_name", type: "string"},
-      {name: "rcode", type: "count"},
-      {name: "rcode_name", type: "string"},
-      {name: "AA", type: "bool"},
-      {name: "TC", type: "bool"},
-      {name: "RD", type: "bool"},
-      {name: "RA", type: "bool"},
-      {name: "Z", type: "count"},
-      {name: "answers", type: "vector[string]"},
-      {name: "TTLs", type: "vector[interval]"},
-      {name: "rejected", type: "bool"}
-    ]
-  )
-
-export const conn = () =>
-  new Log(
+      {name: "service", type: "string"},
+      {name: "duration", type: "interval"},
+      {name: "orig_bytes", type: "count"},
+      {name: "resp_bytes", type: "count"},
+      {name: "conn_state", type: "string"},
+      {name: "local_orig", type: "bool"},
+      {name: "local_resp", type: "bool"},
+      {name: "missed_bytes", type: "count"},
+      {name: "history", type: "string"},
+      {name: "orig_pkts", type: "count"},
+      {name: "orig_ip_bytes", type: "count"},
+      {name: "resp_pkts", type: "count"},
+      {name: "resp_ip_bytes", type: "count"}
+    ],
     [
       "0",
       "conn",
       "1425612054.369843",
       "Cynwae4qh1GxM82hQ2",
-      "192.168.0.50",
-      "1900",
-      "239.255.255.250",
-      "1900",
+      ["192.168.0.50", "1900", "239.255.255.250", "1900"],
       "udp",
       "-",
       "2.000293",
@@ -86,7 +111,11 @@ export const conn = () =>
       "0",
       "0",
       "(empty)"
-    ],
+    ]
+  )
+
+export const http = () =>
+  new zng.Record(
     [
       {name: "_td", type: "int"},
       {name: "_path", type: "string"},
@@ -96,26 +125,22 @@ export const conn = () =>
       {name: "id.orig_p", type: "port"},
       {name: "id.resp_h", type: "addr"},
       {name: "id.resp_p", type: "port"},
-      {name: "proto", type: "enum"},
-      {name: "service", type: "string"},
-      {name: "duration", type: "interval"},
-      {name: "orig_bytes", type: "count"},
-      {name: "resp_bytes", type: "count"},
-      {name: "conn_state", type: "string"},
-      {name: "local_orig", type: "bool"},
-      {name: "local_resp", type: "bool"},
-      {name: "missed_bytes", type: "count"},
-      {name: "history", type: "string"},
-      {name: "orig_pkts", type: "count"},
-      {name: "orig_ip_bytes", type: "count"},
-      {name: "resp_pkts", type: "count"},
-      {name: "resp_ip_bytes", type: "count"},
-      {name: "tunnel_parents", type: "set[string]"}
-    ]
-  )
-
-export const http = () =>
-  new Log(
+      {name: "trans_depth", type: "count"},
+      {name: "method", type: "string"},
+      {name: "host", type: "string"},
+      {name: "uri", type: "string"},
+      {name: "referrer", type: "string"},
+      {name: "version", type: "string"},
+      {name: "user_agent", type: "string"},
+      {name: "request_body_len", type: "count"},
+      {name: "response_body_len", type: "count"},
+      {name: "status_code", type: "count"},
+      {name: "status_msg", type: "string"},
+      {name: "info_code", type: "count"},
+      {name: "info_msg", type: "string"},
+      {name: "username", type: "string"},
+      {name: "password", type: "string"}
+    ],
     [
       "10",
       "http",
@@ -148,44 +173,35 @@ export const http = () =>
       "FUPWLQXTNsTNvf33",
       "-",
       "text/html"
-    ],
-    [
-      {name: "_td", type: "int"},
-      {name: "_path", type: "string"},
-      {name: "ts", type: "time"},
-      {name: "uid", type: "string"},
-      {name: "id.orig_h", type: "addr"},
-      {name: "id.orig_p", type: "port"},
-      {name: "id.resp_h", type: "addr"},
-      {name: "id.resp_p", type: "port"},
-      {name: "trans_depth", type: "count"},
-      {name: "method", type: "string"},
-      {name: "host", type: "string"},
-      {name: "uri", type: "string"},
-      {name: "referrer", type: "string"},
-      {name: "version", type: "string"},
-      {name: "user_agent", type: "string"},
-      {name: "request_body_len", type: "count"},
-      {name: "response_body_len", type: "count"},
-      {name: "status_code", type: "count"},
-      {name: "status_msg", type: "string"},
-      {name: "info_code", type: "count"},
-      {name: "info_msg", type: "string"},
-      {name: "tags", type: "set[enum]"},
-      {name: "username", type: "string"},
-      {name: "password", type: "string"},
-      {name: "proxied", type: "set[string]"},
-      {name: "orig_fuids", type: "vector[string]"},
-      {name: "orig_filenames", type: "vector[string]"},
-      {name: "orig_mime_types", type: "vector[string]"},
-      {name: "resp_fuids", type: "vector[string]"},
-      {name: "resp_filenames", type: "vector[string]"},
-      {name: "resp_mime_types", type: "vector[string]"}
     ]
   )
 
 export const files = () =>
-  new Log(
+  new zng.Record(
+    [
+      {name: "_td", type: "int"},
+      {name: "_path", type: "string"},
+      {name: "ts", type: "time"},
+      {name: "fuid", type: "string"},
+      {name: "depth", type: "count"},
+      {name: "mime_type", type: "string"},
+      {name: "filename", type: "string"},
+      {name: "duration", type: "interval"},
+      {name: "local_orig", type: "bool"},
+      {name: "is_orig", type: "bool"},
+      {name: "seen_bytes", type: "count"},
+      {name: "total_bytes", type: "count"},
+      {name: "missing_bytes", type: "count"},
+      {name: "overflow_bytes", type: "count"},
+      {name: "timedout", type: "bool"},
+      {name: "parent_fuid", type: "string"},
+      {name: "md5", type: "string"},
+      {name: "sha1", type: "string"},
+      {name: "sha256", type: "string"},
+      {name: "extracted", type: "string"},
+      {name: "extracted_cutoff", type: "bool"},
+      {name: "extracted_size", type: "count"}
+    ],
     [
       "2",
       "files",
@@ -214,34 +230,5 @@ export const files = () =>
       "-",
       "-",
       "-"
-    ],
-    [
-      {name: "_td", type: "int"},
-      {name: "_path", type: "string"},
-      {name: "ts", type: "time"},
-      {name: "fuid", type: "string"},
-      {name: "tx_hosts", type: "set[ip]"},
-      {name: "rx_hosts", type: "set[ip]"},
-      {name: "conn_uids", type: "set[string]"},
-      {name: "source", type: "string"},
-      {name: "depth", type: "count"},
-      {name: "analyzers", type: "set[string]"},
-      {name: "mime_type", type: "string"},
-      {name: "filename", type: "string"},
-      {name: "duration", type: "interval"},
-      {name: "local_orig", type: "bool"},
-      {name: "is_orig", type: "bool"},
-      {name: "seen_bytes", type: "count"},
-      {name: "total_bytes", type: "count"},
-      {name: "missing_bytes", type: "count"},
-      {name: "overflow_bytes", type: "count"},
-      {name: "timedout", type: "bool"},
-      {name: "parent_fuid", type: "string"},
-      {name: "md5", type: "string"},
-      {name: "sha1", type: "string"},
-      {name: "sha256", type: "string"},
-      {name: "extracted", type: "string"},
-      {name: "extracted_cutoff", type: "bool"},
-      {name: "extracted_size", type: "count"}
     ]
   )

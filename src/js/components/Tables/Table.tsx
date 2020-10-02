@@ -1,10 +1,9 @@
 import React from "react"
 
-import {$Field} from "../../brim"
 import {Column, RightClickBuilder} from "../../types"
 import {showContextMenu} from "../../lib/System"
 import FieldCell from "../FieldCell"
-import Log from "../../models/Log"
+import {zng} from "zealot"
 
 export default function Table({className, ...props}: any) {
   return <table className={`table ${className}`} {...props} />
@@ -15,18 +14,20 @@ export function TableHeader({column}: {column: Column}) {
 }
 
 type Props = {
-  log: Log
-  field: $Field
+  log: zng.Record
+  field: zng.Field
   rightClick?: RightClickBuilder
 }
 
 export function TableData({field, log, rightClick}: Props) {
+  const {name, data} = field
+
   function onContextMenu() {
     rightClick && showContextMenu(rightClick(field, log, false))
   }
 
   return (
-    <td onContextMenu={onContextMenu} className={`${field.type} ${field.name}`}>
+    <td onContextMenu={onContextMenu} className={`${data.getType()} ${name}`}>
       <FieldCell field={field} />
     </td>
   )

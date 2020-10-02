@@ -17,8 +17,12 @@ export function createColumnSet(c: ViewerColumns) {
     },
     getUniqColumns() {
       let allCols = []
-      for (const id in c) allCols = [...allCols, ...c[id]].map(createColumn)
-      return uniqBy<$Column>(allCols, "key")
+      for (const id in c) {
+        let schema = c[id]
+        let columns = schema.flatten()
+        allCols = [...allCols, ...columns]
+      }
+      return uniqBy<$Column>(allCols.map(createColumn), "key")
     }
   }
 }

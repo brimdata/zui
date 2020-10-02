@@ -12,19 +12,17 @@ import {md5Search} from "../../flows/searches/md5Search"
 import Current from "../../state/Current"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
-import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
-import brim from "../../brim"
 import {AppDispatch} from "src/js/state/types"
+import {zng} from "zealot"
 
-export const Md5Panel = ({
-  log,
-  contextMenu
-}: {
-  log: Log
+type Props = {
+  log: zng.Record
   contextMenu: Function
-}) => {
-  const logMd5 = log.getString("md5")
+}
+
+export const Md5Panel = ({log, contextMenu}: Props) => {
+  const logMd5 = log.get("md5").toString()
   const dispatch = useDispatch<AppDispatch>()
   const spaceId = useSelector(Current.getSpaceId)
   const [tx, setTx] = useState([])
@@ -33,24 +31,20 @@ export const Md5Panel = ({
   const [filenames, setFilenames] = useState([])
   const [status, setStatus] = useState("INIT")
 
-  function toLogs(records) {
-    return records.map(brim.record).map(brim.interop.recordToLog)
-  }
-
   useEffect(() => {
     const {response, abort} = dispatch(md5Search(logMd5))
     response
       .status(setStatus)
-      .chan(0, (records) => setFilenames(filenames.concat(toLogs(records))))
-      .chan(1, (records) => setMd5(md5.concat(toLogs(records))))
-      .chan(2, (records) => setRx(rx.concat(toLogs(records))))
-      .chan(3, (records) => setTx(tx.concat(toLogs(records))))
+      .chan(0, (records) => setFilenames(records))
+      .chan(1, (records) => setMd5(records))
+      .chan(2, (records) => setRx(records))
+      .chan(3, (records) => setTx(records))
 
     return abort
   }, [])
 
   function getColumns(logs) {
-    return logs.length ? logs[0].descriptor.map((c) => c.name) : []
+    return logs.length ? logs[0].getColumnNames() : []
   }
 
   return (
@@ -102,20 +96,20 @@ export const Md5Panel = ({
   )
 }
 
-type Props = {
-  logs: Log[]
+type Props2 = {
+  logs: zng.Record[]
   expect: number
   name: string
   rightClick?: RightClickBuilder
 }
 
-function AsyncTable({logs, expect, name, rightClick}: Props) {
+function AsyncTable({logs, expect, name, rightClick}: Props2) {
   if (logs.length === 0) {
     return <InlineTableLoading title={`Loading ${name}...`} rows={expect} />
   } else {
     return (
       <HorizontalTable
-        descriptor={logs[0].descriptor}
+        descriptor={logs[0].getColumns()}
         logs={logs}
         rightClick={rightClick}
       />

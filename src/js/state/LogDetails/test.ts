@@ -1,15 +1,14 @@
 import LogDetails from "./"
 import initTestStore from "../../test/initTestStore"
+import {zjson, zng} from "zealot"
 
-const record = [
-  {name: "_td", type: "integer", value: "1"},
-  {name: "letter", type: "string", value: "a"}
-]
+const columns = [
+  {name: "_td", type: "count"},
+  {name: "letter", type: "string"}
+] as zjson.Column[]
 
-const record2 = [
-  {name: "_td", type: "integer", value: "1"},
-  {name: "letter", type: "string", value: "b"}
-]
+const record = new zng.Record(columns, ["1", "a"])
+const record2 = new zng.Record(columns, ["1", "b"])
 
 let store
 beforeEach(() => {
@@ -20,7 +19,7 @@ test("viewing a log detail", () => {
   const state = store.dispatchAll([LogDetails.push(record)])
   const log = LogDetails.build(state)
 
-  expect(log && log.getString("letter")).toEqual("a")
+  expect(log && log.get("letter").toString()).toEqual("a")
 })
 
 test("viewing 2 logs", () => {
@@ -30,7 +29,7 @@ test("viewing 2 logs", () => {
   ])
 
   const log = LogDetails.build(state)
-  expect(log && log.getString("letter")).toBe("b")
+  expect(log && log.get("letter").toString()).toBe("b")
 })
 
 test("going back to the first log", () => {
@@ -41,7 +40,7 @@ test("going back to the first log", () => {
   ])
 
   const log = LogDetails.build(state)
-  expect(log && log.getString("letter")).toBe("a")
+  expect(log && log.get("letter").toString()).toBe("a")
 })
 
 test("going back and then forward", () => {
@@ -53,20 +52,20 @@ test("going back and then forward", () => {
   ])
 
   const log = LogDetails.build(state)
-  expect(log && log.getString("letter")).toBe("b")
+  expect(log && log.get("letter").toString()).toBe("b")
 })
 
 test("updating the current log detail", () => {
   const state = store.dispatchAll([
     LogDetails.push(record),
-    LogDetails.update({uidLogs: [record, record2]})
+    LogDetails.updateUidLogs([record, record2])
   ])
 
   expect(LogDetails.getUidLogs(state)).toEqual([record, record2])
   const log = LogDetails.build(state)
-  expect(log && log.getString("letter")).toBe("a")
+  expect(log && log.get("letter").toString()).toBe("a")
 
-  store.dispatch(LogDetails.update({uidStatus: "FETCHING"}))
+  store.dispatch(LogDetails.updateUidStatus("FETCHING"))
 
   expect(LogDetails.getUidStatus(store.getState())).toBe("FETCHING")
 })

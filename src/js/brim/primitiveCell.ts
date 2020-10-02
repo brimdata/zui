@@ -1,9 +1,8 @@
 import {isEqual} from "lodash"
+import {zng} from "zealot"
 
-import {COMPOUND_FIELD_RGX} from "./compoundField"
-import {FieldData} from "../types/records"
 import {withCommas} from "../lib/fmt"
-import brim, {$Field} from "./"
+import brim from "./"
 
 export const ONE_CHAR = 7.39
 export const FIELD_PAD = 14
@@ -16,20 +15,21 @@ const ESCAPED_DOUBLE_QUOTE = '\\"'
 const BACK_SLASH = /\\/g
 const ESCAPED_BACK_SLASH = "\\\\"
 
-function field({name, type, value}: FieldData): $Field {
+interface PrimitiveField {
+  name: string
+  data: zng.Primitive
+}
+
+export function createPrimitiveCell({name, data}: PrimitiveField) {
+  const {type, value} = data
+
   return {
     name,
     type,
     value,
     queryableValue() {
-      if (this.compound()) {
-        return this.toCompound()
-          .items()
-          .map(field)
-          .map((f) => f.queryableValue())
-          .join(" ")
-      }
       if (this.value === null) return "null"
+      if (this.value === undefined) return "null"
       if (this.type === "bool") return this.value === "T" ? "true" : "false"
       let quote = [WHITE_SPACE, COMMA].some((reg) => reg.test(this.value))
       if (STRING_TYPE.test(this.type)) quote = true
@@ -44,16 +44,10 @@ function field({name, type, value}: FieldData): $Field {
       else return value
     },
 
-    compound() {
-      return COMPOUND_FIELD_RGX.test(type)
-    },
-    toCompound() {
-      // @ts-ignore
-      return brim.compoundField(name, type, value)
-    },
     toDate() {
       return new Date(+this.value * 1000)
     },
+
     display() {
       if (value === "(empty)") {
         return ""
@@ -65,20 +59,21 @@ function field({name, type, value}: FieldData): $Field {
         return brim.time(this.toDate()).format()
       } else if (isEqual(value, {})) {
         return ""
+      } else if (value === undefined) {
+        return ""
       } else {
         return value.toString()
       }
     },
+    compound() {
+      return false
+    },
     guessWidth() {
       if (name === "_path") {
         return this.display().length * ONE_CHAR + FIELD_PAD + PATH_PAD
-      } else if (this.compound()) {
-        return this.toCompound().guessWidth()
       } else {
         return Math.ceil(this.display().length * ONE_CHAR + FIELD_PAD)
       }
     }
   }
 }
-
-export default field

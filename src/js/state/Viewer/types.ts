@@ -1,11 +1,11 @@
-import {Descriptor, ScrollPosition} from "../../types"
-import {RecordData} from "../../types/records"
+import {zng} from "zealot"
+import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
 export type ViewerColumns = {
-  [key: string]: Descriptor
+  [key: string]: zng.Schema
 }
 export type ViewerSelectionData = {
   rows: {
@@ -14,7 +14,7 @@ export type ViewerSelectionData = {
   currentRange: [number, number]
 }
 export type ViewerState = {
-  records: RecordData[]
+  records: zng.Record[]
   columns: ViewerColumns
   endStatus: ViewerStatus
   status: SearchStatus
@@ -43,13 +43,13 @@ export type ViewerAction =
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS"
-  records: RecordData[]
+  records: zng.Record[]
   tabId: string | null | undefined
 }
 
 export type VIEWER_SET_RECORDS = {
   type: "VIEWER_SET_RECORDS"
-  records: RecordData[]
+  records: zng.Record[]
   tabId?: string
 }
 

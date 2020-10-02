@@ -3,29 +3,31 @@ import ZQL from "zq/zql/zql.js"
 
 import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
 import {trim} from "../lib/Str"
-import brim, {$Field, $Log} from "./"
+import brim from "./"
 import stdlib from "../stdlib"
+import {zng} from "zealot"
+import {Cell, createCell} from "./cell"
 
 export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
 
   return {
-    exclude(field: $Field) {
+    exclude(field: Cell) {
       p = insertFilter(p, brim.syntax.exclude(field))
       return this
     },
 
-    include(field: $Field) {
+    include(field: Cell) {
       p = insertFilter(p, brim.syntax.include(field))
       return this
     },
 
-    in(field: $Field) {
+    in(field: Cell) {
       p = insertFilter(p, brim.syntax.in(field))
       return this
     },
 
-    notIn(field: $Field) {
+    notIn(field: Cell) {
       p = insertFilter(p, brim.syntax.notIn(field))
       return this
     },
@@ -38,12 +40,13 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    drillDown(log: $Log) {
+    drillDown(log: zng.Record) {
       let filter = this.filter()
       const newFilters = this.ast()
         .groupByKeys()
-        .map((n) => log.field(n))
+        .map((n) => log.tryField(n))
         .filter((f) => !!f)
+        .map(createCell)
         .map(brim.syntax.include)
         .join(" ")
 
@@ -60,7 +63,7 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    countBy(field: $Field) {
+    countBy(field: Cell) {
       p = stdlib
         .string(p)
         .append(" | " + brim.syntax.countBy(field))

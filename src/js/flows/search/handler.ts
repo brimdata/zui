@@ -1,5 +1,4 @@
 import {createResponse} from "./response"
-import brim from "../../brim"
 import whenIdle from "../../lib/whenIdle"
 
 function abortError(e) {
@@ -8,16 +7,13 @@ function abortError(e) {
 
 export function handle(request: any) {
   const response = createResponse()
-  const buffer = brim.flatRecordsBuffer()
-  let count = 0
+  const channels = new Map<number, any>()
 
   function flushBuffer() {
-    for (const chan of buffer.channels()) {
-      if (!chan.empty()) {
-        response.emit(chan.id(), chan.records(), buffer.columns())
-        chan.clear()
-      }
+    for (const [id, data] of channels) {
+      response.emit(id, data.allRecords, data.schemas)
     }
+    channels.clear()
   }
 
   const flushBufferLazy = whenIdle(flushBuffer)
@@ -27,9 +23,11 @@ export function handle(request: any) {
     response.emit("status", "FETCHING")
   }
 
-  function records(payload) {
-    count += payload.records.length
-    buffer.add(payload.channel_id, payload.records)
+  function records({channel, allRecords, schemas}) {
+    channels.set(channel, {
+      allRecords,
+      schemas
+    })
     flushBufferLazy()
   }
 
@@ -62,7 +60,7 @@ export function handle(request: any) {
             } else {
               flushBuffer()
               response.emit("status", "SUCCESS")
-              response.emit("end", id, count)
+              response.emit("end", id)
               resolve()
             }
           })

@@ -1,8 +1,8 @@
 import {$Column} from "../state/Columns/models/column"
 import {ColumnSettingsMap, TableColumn} from "../state/Columns/types"
-import Log from "./Log"
-import brim from "../brim"
 import columnOrder from "../lib/columnOrder"
+import {createCell} from "../brim/cell"
+import {zng} from "zealot"
 
 export default class TableColumns {
   cols: TableColumn[]
@@ -31,20 +31,24 @@ export default class TableColumns {
     )
   }
 
-  setWidths(logs: Log[]) {
+  setWidths(logs: zng.Record[]) {
     const MAX_WIDTH = 500
     const resizeHandle = 5
     const sortIcon = 11
 
     this.cols.forEach((col) => {
       if (col.width) return
-      const colName = brim.field({value: col.name, name: "", type: ""})
+      const colName = createCell(
+        new zng.Field("", new zng.Primitive("string", col.name))
+      )
+
       let max = colName.guessWidth() + resizeHandle + sortIcon
 
       logs.forEach((log) => {
-        const field = log.field(col.name)
-        if (field) {
-          const len = field.guessWidth()
+        const data = log.try(col.name)
+        if (data) {
+          const cell = createCell(new zng.Field(name, data))
+          const len = cell.guessWidth()
           if (len > max) max = len
         }
       })

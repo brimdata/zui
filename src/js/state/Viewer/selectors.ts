@@ -1,15 +1,13 @@
 import {createSelector} from "reselect"
 
-import {RecordData} from "../../types/records"
 import {State} from "../types"
 import {TabState} from "../Tab/types"
 import {ViewerSelection, createSelection} from "./helpers/selection"
 import {ViewerSelectionData, ViewerState, ViewerColumns} from "./types"
-import Log from "../../models/Log"
 import Tabs from "../Tabs"
-import brim from "../../brim"
 import {ScrollPosition} from "src/js/types"
 import {SearchStatus} from "src/js/types/searches"
+import {zng} from "zealot"
 
 export const getViewer = createSelector<State, TabState, ViewerState>(
   Tabs.getActiveTab,
@@ -19,16 +17,14 @@ export const getViewer = createSelector<State, TabState, ViewerState>(
 export const getViewerRecords = createSelector<
   State,
   ViewerState,
-  RecordData[]
+  zng.Record[]
 >(getViewer, (viewer) => viewer.records)
 
 export const isFetching = (state: TabState) =>
   state.viewer.status === "FETCHING"
 
-export const getLogs = createSelector<State, RecordData[], Log[]>(
-  getViewerRecords,
-  (records) => records.map(brim.record).map(brim.interop.recordToLog)
-)
+export const getLogs = getViewerRecords
+export const getRecords = getViewerRecords
 
 export const getStatus = createSelector<State, ViewerState, SearchStatus>(
   getViewer,
@@ -65,8 +61,8 @@ export const getSelection = createSelector<
 export const getSelectedRecords = createSelector<
   State,
   ViewerSelection,
-  RecordData[],
-  RecordData[]
->(getSelection, getViewerRecords, (selection, records) =>
+  zng.Record[],
+  zng.Record[]
+>(getSelection, getRecords, (selection, records) =>
   selection.getIndices().map((index) => records[index])
 )

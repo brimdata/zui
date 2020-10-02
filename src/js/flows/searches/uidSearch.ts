@@ -4,15 +4,16 @@ import {Thunk} from "../../state/types"
 import {search} from "../search/mod"
 import {uidCorrelation} from "../../searches/programs"
 import Current from "../../state/Current"
-import Log from "../../models/Log"
 import LogDetails from "../../state/LogDetails"
 import Tab from "../../state/Tab"
+import {createZeekLog} from "../../brim/zeekLog"
+import {zng} from "zealot"
 
 const id = "UidTimeline"
 
-export const uidSearch = (log: Log): Thunk => (dispatch, getState) => {
+export const uidSearch = (log: zng.Record): Thunk => (dispatch, getState) => {
   if (!log) return
-  const uid = log.correlationId()
+  const uid = createZeekLog(log).correlationId()
   if (isEmpty(uid)) return
 
   const state = getState()
@@ -31,12 +32,8 @@ export const uidSearch = (log: Log): Thunk => (dispatch, getState) => {
 
 function handle(response) {
   return (dispatch) => {
-    let results = []
     response
-      .status((uidStatus) => dispatch(LogDetails.update({uidStatus})))
-      .chan(0, (records) => {
-        results = results.concat(records)
-        dispatch(LogDetails.update({uidLogs: results}))
-      })
+      .status((status) => dispatch(LogDetails.updateUidStatus(status)))
+      .chan(0, (records) => dispatch(LogDetails.updateUidLogs(records)))
   }
 }

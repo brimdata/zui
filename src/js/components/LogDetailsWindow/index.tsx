@@ -12,6 +12,7 @@ import NavAnimation from "../LogDetails/NavAnimation"
 import PacketsButton from "../Toolbar/PacketsButton"
 import UidPanel from "../LogDetails/UidPanel"
 import menu from "../../electron/menu"
+import {createZeekLog} from "../../brim/zeekLog"
 
 export default function LogDetailsWindow() {
   const dispatch = useDispatch()
@@ -20,7 +21,7 @@ export default function LogDetailsWindow() {
   const log = useSelector(LogDetails.build)
   const space = useSelector(Current.mustGetSpace)
   const isGoingBack = useSelector(LogDetails.getIsGoingBack)
-
+  const zeek = createZeekLog(log)
   return (
     <NavAnimation log={log} prev={isGoingBack}>
       <div className="log-detail-window">
@@ -47,9 +48,9 @@ export default function LogDetailsWindow() {
                 log={log}
                 contextMenu={menu.detailFieldContextMenu}
               />
-              {log.correlationId() && <UidPanel log={log} />}
+              {zeek.correlationId() && <UidPanel log={log} />}
               <ConnPanel log={log} contextMenu={menu.detailFieldContextMenu} />
-              {log.getString("md5") && (
+              {log.try("md5") && (
                 <Md5Panel log={log} contextMenu={menu.detailFieldContextMenu} />
               )}
             </div>
