@@ -17,7 +17,12 @@ export default (name: string, idx: number): Application => {
 
   // https://github.com/electron-userland/spectron#new-applicationoptions
   let appArgs = {
-    chromeDriverArgs: [`--user-data-dir=${userDataDir}`],
+    chromeDriverArgs: [
+      "--no-sandbox",
+      "--headless",
+      "--disable-dev-shm-usage",
+      `--user-data-dir=${userDataDir}`
+    ],
     startTimeout: 60000,
     waitTimeout: 15000,
     chromeDriverLogPath: path.join(userDataDir, "chromedriver.log"),
@@ -54,8 +59,6 @@ export default (name: string, idx: number): Application => {
     existsSync(linuxInstallPath)
   ) {
     appArgs = {...appArgs, path: linuxInstallPath}
-    // after upgrading
-    appArgs.chromeDriverArgs = ["--disable-dev-shm-usage", "--no-sandbox"]
     LOG.debug("Chose installed Linux app location", linuxInstallPath)
   } else {
     appArgs = {...appArgs, path: electronPath, args: [repoDir()]}
