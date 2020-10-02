@@ -38,7 +38,7 @@ export default function ast(tree: any) {
 
 function fieldExprToName(expr) {
   switch (expr.op) {
-    case "FieldRead":
+    case "Field":
       return expr.field
     case "FieldCall":
       return `${fieldExprToName(expr.field)}.${expr.param}`
