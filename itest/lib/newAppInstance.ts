@@ -54,7 +54,8 @@ export default (name: string, idx: number): Application => {
     existsSync(linuxInstallPath)
   ) {
     appArgs = {...appArgs, path: linuxInstallPath}
-    appArgs.chromeDriverArgs = ["--disable-dev-shm-usage"]
+    // after upgrading
+    appArgs.chromeDriverArgs = ["--disable-dev-shm-usage", "--no-sandbox"]
     LOG.debug("Chose installed Linux app location", linuxInstallPath)
   } else {
     appArgs = {...appArgs, path: electronPath, args: [repoDir()]}
