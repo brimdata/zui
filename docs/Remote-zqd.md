@@ -1,6 +1,12 @@
 # Remote `zqd`
 
-- TOC
+- [Summary](#summary)
+- [About Cookbooks](#about-cookbooks)
+- [Limitations](#limitations)
+- [Background: Brim & `zqd`](#background-brim--zqd)
+- [Starting a remote `zqd`](#starting-a-remote-zqd)
+- [Importing data](#importing-data)
+- [Accessing our remote `zqd`](#accessing-our-remote-zqd)
 
 # Summary
 
@@ -12,10 +18,10 @@ limitations.
 
 # About Cookbooks
 
-Brim cookbooks provide an opportunity to "test drive" new and/or experimental
+Brim cookbooks provide an opportunity to "test drive" new/experimental
 features in the Brim application and related zq tools. They also walk through
-some details of the "innards" of how Brim and zq tools function and therefore
-may inspire other creative ideas.
+some details of the details of how Brim and zq tools function and therefore
+may inspire other creative configurations.
 
 All efforts are made to disclose known caveats and limitations that are
 relevant to the configurations shown. However, due to the potential to
@@ -36,9 +42,9 @@ Before diving into the specifics of what's possible, here's an overview of
 some of the rough edges you may encounter as you work through the
 configurations described in this article.
 
-1. Logs and packet captures cannot be _imported_ from your local Brim to a
-remote `zqd`. Any data you wish to access remotely will need to have been
-staged at the remote location.
+1. Logs and packet captures cannot be imported from your local Brim app
+directly to a remote `zqd`. Any data you wish to access remotely will need to
+have been staged at the remote location.
 
 2. While the configuration potentially allows multiple remote users to access
 the same centrally stored logs and packet captures, there's currently no
@@ -49,7 +55,7 @@ data.
 3. The Brim application does not yet immediately reflect the availability of
 new data as soon as it's added to a remote location. The steps below provide
 guidance on how to "refresh" the Brim interface to ensure all remote data is
-available.
+visible.
 
 4. A known bug [brim/1099](https://github.com/brimsec/brim/issues/1099) will
 cause Brim to "hang" if configuration pointing to an inaccessible remote `zqd`
@@ -57,10 +63,10 @@ is present when the application is restarted.
 
 # Background: Brim & `zqd`
 
-Since it's presented as an icon you may double-click to start the app on your
-desktop, it's easy to see Brim as a simple standalone application. However, it
-actually includes some "backend" components that assist in providing the
-overall app experience.
+Since it's presented as an icon that can be double-clicked to start the app on
+your desktop, it's easy to think of Brim as a simple standalone application.
+However, it actually includes some "backend" components that assist in
+providing the overall app experience.
 
 One essential component is [`zqd`](https://github.com/brimsec/zq/tree/master/cmd/zqd),
 a server-style process that manages the storage and querying of imported
@@ -71,10 +77,10 @@ that's utilized by a "client", such as the Brim app and/or the
 
 ![Brim zapi and zqd](media/Brim-zapi-zqd.png)
 
-The location where `zqd` stores imported logs and packet capture data is known
-as the **Data Directory**. This location can be changed via a setting in Brim's
-**Preferences** menu. The default Data Directory locations on each platform are
-as follows:
+The location where `zqd` stores imported data is known as the
+**Data Directory**. This location can be changed via a setting in Brim's
+**Preferences** menu. The default Data Directory locations on each platform
+are as follows:
 
 |**OS Platform**|**Location**|
 |---------------|------------|
@@ -98,7 +104,7 @@ prepared to accept REST API requests.
 
 2. The inclusion of `localhost` in the option `-l localhost:9867` indicates
 this `zqd` is prepared to accept _only_ connections that arrive from a client
-running on the same host.
+running on the same local host.
 
 3. The `-data` option points to the Data Directory, which is the default
 location for macOS in this case.
@@ -108,14 +114,14 @@ creation of Zeek logs from imported packet captures as described in the
 [Zeek Customization](https://github.com/brimsec/brim/wiki/Zeek-Customization)
 article.
 
-5. The `-brimfd=3` is an option unique to when `zqd` is launched by Brim,
-which helps ensure that if Brim is killed abruptly, the `zqd` process will also
+5. The `-brimfd=3` is an option unique to when `zqd` is launched by Brim.
+This helps ensure that if Brim is killed abruptly, the `zqd` process will also
 be terminated (see [zq/1184](https://github.com/brimsec/zq/pull/1184) for
 details).
 
 6. We can see the full path to the `zqd` binary that's packaged with Brim. This
-binary and other dependencies typically launched by Brim can be found in
-the following location on each platform:
+binary and other dependencies that are typically launched by Brim can be found
+in the following location on each platform:
 
    |**OS Platform**|**Location**|
    |---------------|------------|
@@ -123,17 +129,17 @@ the following location on each platform:
    | **macOS**     | `/Applications/Brim.app/Contents/Resources/app/zdeps` |
    | **Linux**     | `/usr/lib/brim/resources/app/zdeps`                   |
 
-Now that we know Brim is simply connecting to `zqd` locally, we can build on
-this approach to instead start a remote `zqd` and connect to it to access the
-logs and packet captures stored there.
+Now that we know Brim is simply connecting to `zqd` locally, we can vary this
+approach to instead start a remote `zqd` and connect to it to access the logs
+and packet captures stored there.
 
 # Starting a remote `zqd`
 
 For our example remote host, we'll use a Linux Ubuntu 18.04 VM running in
 Amazon AWS. Because Brim interacts with `zqd` over a REST API that is still
-evolving, care should be taken to ensure the version being installed on the
-remote side matches the version being run locally. In this cookbook we'll use
-Brim v0.19.0.
+evolving, care should be taken to ensure the Brim version being installed on
+the remote side matches the version being run locally. In this cookbook we'll
+use Brim v0.19.0.
 
 Even though our VM on AWS has no graphical interface, we'll install the full
 Brim package because it includes a compatible `zqd` binary as well as an
@@ -144,18 +150,31 @@ ubuntu# wget https://github.com/brimsec/brim/releases/download/v0.19.0/brim_amd6
 ubuntu# sudo sudo apt install -y ./brim_amd64.deb
 ```
 
+---
 
-We can then attempt to start Brim. Since there's no desktop environment,
-there's no "app" to see. However, this will allow it to create config
-directories.
+* **Variation:** Rather than the full Brim package, we could instead have
+[downloaded a zq package](https://www.brimsecurity.com/download/). The zq
+package includes the `zqd` and `zapi` binaries that could be used to construct
+command lines similar to those shown below. However, the zq tools do not
+include an embedded Zeek, so such a configuration would either lack the
+ability to import packet data, or would require the creation of a separate Zeek
+installation and runnner that could be enabled via the steps described in the
+[Zeek Customization](https://github.com/brimsec/brim/wiki/Zeek-Customization)
+article.
+
+---
+
+We can now attempt to start Brim. Since there's no desktop environment on this
+VM, there's no "app" interface to see. However, this attempted launch will
+allow it to create config and data directories in standard locations.
 
 ```
-$ brim
+ubuntu# brim
 22:24:54.396 › app paths: getAppPath=/usr/lib/brim/resources/app userData=/home/ubuntu/.config/Brim logs=/home/ubuntu/.config/Brim/logs
 ```
 
-If we open another shell to the VM, we can use the same technique we employed
-earlier on a local laptop to observe the spawned `zqd` command line and use it
+If we open another shell on the VM, we can use the same technique we employed
+earlier on our Mac laptop to observe the spawned `zqd` command line and use it
 as a basis for our further config.
 
 ```
@@ -163,9 +182,9 @@ ubuntu# ps auxww | grep zqd
 ubuntu    1311  0.0  2.4 1182692 24688 pts/0   SLl+ 22:29   0:00 /usr/lib/brim/resources/app/zdeps/zqd listen -l localhost:9867 -data /home/ubuntu/.config/Brim/data/spaces -config /home/ubuntu/.config/Brim/zqd-config.yaml -zeekrunner /usr/lib/brim/resources/app/zdeps/zeek/zeekrunner -brimfd=3
 ```
 
-Now we can stop Brim & `zqd` by hitting Control-C in the shell where we'd
-started `brim`. Next we'll start `zqd` ourselves with a couple changes from
-the one we just saw, as follows:
+Now we can stop the app and `zqd` by hitting Control-C in the shell where we'd
+started `brim`. Then we'll start `zqd` manually with a couple modifications
+from the command line we just saw, as follows:
 
 ```
 ubuntu# /usr/lib/brim/resources/app/zdeps/zqd listen \
@@ -181,11 +200,11 @@ Building on what we learned earlier, the two adjustments we made:
 `:9867` specification, `zqd` is now prepared to accept remote connections as
 well.
 
-2. The `-brimfd=3` was dropped, since we're now what will be controlling the
+2. The `-brimfd=3` was dropped, since we're now the ones controlling the
 start/stop of `zqd` rather than the Brim app.
 
 At this point `zqd` is ready to accept remote connections. However, the network
-between clients and our `zqd` needs to permit connectivity. You'll need to
+between clients and our `zqd` needs to permit this connectivity. You'll need to
 perform whatever firewall/VPN configuration is necessary for your environment
 to enable this. In our specific AWS example, one way to achieve this is via a
 [Security Group](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html)
