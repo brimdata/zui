@@ -1,21 +1,22 @@
 import {createZealotMock} from "zealot"
 
-import {response} from "./submitSearch/responses/mod"
 import Current from "../state/Current"
 import Spaces from "../state/Spaces"
 import fixtures from "../test/fixtures"
+import responses from "../test/responses"
 import initTestStore from "../test/initTestStore"
 import submitAutoRefreshSearch from "./submitAutoRefreshSearch"
 
-const anyResp = response("dns.txt")
+const viewer = responses("dns.txt")
+const histogram = responses("count_by_path.txt")
 const space = fixtures("space1")
 
 let store, zealot, dispatch
 beforeEach(() => {
   zealot = createZealotMock()
-  store = initTestStore(zealot)
+  store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
-  zealot.stubStream("search", anyResp)
+  zealot.stubStream("search", histogram).stubStream("search", viewer)
   store.dispatchAll([
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),

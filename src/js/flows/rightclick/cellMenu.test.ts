@@ -17,10 +17,10 @@ describe("Log Right Click", () => {
 
   test("conn log with pcap support", () => {
     const log = conn()
-    const field = log.mustGetField("id.orig_h")
+    const field = log.getField("id.orig_h")
     const ctxMenu = menu.searchFieldContextMenu(
       program,
-      log.descriptor.map((c) => c.name),
+      log.getColumnNames(),
       space
     )(field, log, false)
 
@@ -31,10 +31,10 @@ describe("Log Right Click", () => {
     space.pcap_support = false
 
     const log = conn()
-    const field = log.mustGetField("id.orig_h")
+    const field = log.getField("id.orig_h")
     const ctxMenu = menu.searchFieldContextMenu(
       program,
-      log.descriptor.map((c) => c.name),
+      log.getColumnNames(),
       space
     )(field, log, false)
 
@@ -43,10 +43,10 @@ describe("Log Right Click", () => {
 
   test("dns log", () => {
     const log = dns()
-    const field = log.mustGetField("query")
+    const field = log.getField("query")
     const ctxMenu = menu.searchFieldContextMenu(
       program,
-      log.descriptor.map((c) => c.name),
+      log.getColumnNames(),
       space
     )(field, log, false)
 
@@ -56,10 +56,10 @@ describe("Log Right Click", () => {
 
   test("time field for conn log", () => {
     const log = conn()
-    const field = log.mustGetField("ts")
+    const field = log.getField("ts")
     const ctxMenu = menu.searchFieldContextMenu(
       program,
-      log.descriptor.map((c) => c.name),
+      log.getColumnNames(),
       space
     )(field, log, false)
 
@@ -73,10 +73,10 @@ describe("Analysis Right Click", () => {
 
   test("address field", () => {
     const log = conn()
-    const field = log.mustGetField("id.orig_h")
+    const field = log.getField("id.orig_h")
     const ctxMenu = menu.searchFieldContextMenu(
       program,
-      log.descriptor.map((c) => c.name),
+      log.getColumnNames(),
       space
     )(field, log, false)
 
@@ -85,10 +85,10 @@ describe("Analysis Right Click", () => {
 
   test("non-address field", () => {
     const log = conn()
-    const field = log.mustGetField("proto")
+    const field = log.getField("proto")
     const ctxMenu = menu.searchFieldContextMenu(
       "* | count() by proto",
-      log.descriptor.map((c) => c.name),
+      log.getColumnNames(),
       space
     )(field, log, false)
 
@@ -97,10 +97,10 @@ describe("Analysis Right Click", () => {
 
   test("group by proc", () => {
     const log = conn()
-    const field = log.mustGetField("proto")
+    const field = log.getField("proto")
     const ctxMenu = menu.searchFieldContextMenu(
       "* | group by proto",
-      log.descriptor.map((c) => c.name),
+      log.getColumnNames(),
       space
     )(field, log, false)
 

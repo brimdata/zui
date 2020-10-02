@@ -5,7 +5,7 @@ import Clusters from "../state/Clusters"
 import Current from "../state/Current"
 import {setConnection} from "./setConnection"
 
-let store, zealot
+let store, mock
 const select = (selector) => selector(store.getState())
 
 const clusterCount = () => select(Clusters.all).length
@@ -13,10 +13,12 @@ const conn1 = fixtures("cluster1")
 const conn2 = fixtures("cluster2")
 
 beforeEach(() => {
-  zealot = createZealotMock()
+  mock = createZealotMock()
     .stubPromise("status", "ok")
     .stubPromise("spaces.list", [])
-  store = initTestStore(zealot)
+    .stubPromise("status", "ok")
+    .stubPromise("spaces.list", [])
+  store = initTestStore(mock.zealot)
   store.dispatchAll([Clusters.add(conn1), Current.setConnectionId(conn1.id)])
 })
 

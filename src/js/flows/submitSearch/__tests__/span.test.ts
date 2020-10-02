@@ -1,6 +1,5 @@
 import {createZealotMock} from "zealot"
 
-import {response} from "../responses/mod"
 import {submitSearch} from "../mod"
 import Current from "../../../state/Current"
 import Search from "../../../state/Search"
@@ -9,18 +8,20 @@ import Spaces from "../../../state/Spaces"
 import Tab from "../../../state/Tab"
 import brim from "../../../brim"
 import fixtures from "../../../test/fixtures"
+import responses from "../../../test/responses"
 import initTestStore from "../../../test/initTestStore"
 
-const dnsResp = response("dns.txt")
+const dnsResp = responses("dns.txt")
+const countByPathResp = responses("count_by_path.txt")
 const space = fixtures("space1")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
   zealot = createZealotMock()
-  store = initTestStore(zealot)
+  store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("search", dnsResp)
+  zealot.stubStream("search", countByPathResp).stubStream("search", dnsResp)
   store.dispatchAll([
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),
@@ -48,7 +49,7 @@ test("Computes the span", async () => {
 test("a zoomed search", async () => {
   const zoom = brim.time.convertToSpan([new Date(0), new Date(1)])
   dispatch(Search.setSpanFocus(zoom))
-  const spy = jest.spyOn(zealot, "search")
+  const spy = jest.spyOn(zealot.zealot, "search")
   await submit()
   expect(spy.mock.calls[0]).toEqual([
     expect.any(String),

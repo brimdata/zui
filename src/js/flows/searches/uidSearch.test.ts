@@ -6,7 +6,7 @@ import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {
-  store = initTestStore(createZealotMock().stubStream("search", []))
+  store = initTestStore(createZealotMock().stubStream("search", []).zealot)
 })
 
 test("dispatches request", async () => {
