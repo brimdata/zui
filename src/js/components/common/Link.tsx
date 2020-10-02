@@ -1,8 +1,8 @@
-import React, {ReactChildren} from "react"
+import React from "react"
 
 import {shell} from "electron"
 
-type Props = {href?: string; children: ReactChildren; onClick?: Function}
+type Props = {href?: string; children: JSX.Element | string; onClick?: Function}
 
 export default function Link({href, onClick, children}: Props) {
   const click = (e) => {
