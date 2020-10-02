@@ -8,7 +8,7 @@ const Wrap = styled.div`
   padding: 24px;
   padding-top: 54px;
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #f8eee3, #fae1e0);
+  background: var(--error-gradient);
 `
 
 const WindowDragArea = styled.div`
