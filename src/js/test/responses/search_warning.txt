@@ -1,0 +1,17 @@
+{"type":"TaskStart","task_id":0}
+
+
+{"type":"SearchWarning","warning":"Cut field boo not present in input"}
+
+
+{"type":"SearchEnd","channel_id":0,"reason":"eof"}
+
+
+{"type":"SearchEnd","channel_id":0,"reason":"eof"}
+
+
+{"type":"SearchStats","start_time":{"sec":1601417687,"ns":158961000},"update_time":{"sec":1601417687,"ns":159563000},"bytes_read":3523,"bytes_matched":3523,"records_read":30,"records_matched":30}
+
+
+{"type":"TaskEnd","task_id":0}
+
