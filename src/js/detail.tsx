@@ -9,15 +9,20 @@ import initDetail from "./initializers/initDetail"
 import lib from "./lib"
 import LogDetailsWindow from "./components/LogDetailsWindow"
 import WhoisModal from "./components/WhoisModal"
+import StartupError from "./components/StartupError"
 
-initDetail().then((store) => {
-  ReactDOM.render(
-    <AppErrorBoundary dispatch={store.dispatch}>
-      <Provider store={store}>
-        <LogDetailsWindow />
-        <WhoisModal />
-      </Provider>
-    </AppErrorBoundary>,
-    lib.doc.id("app-root")
-  )
-})
+initDetail()
+  .then((store) => {
+    ReactDOM.render(
+      <AppErrorBoundary dispatch={store.dispatch}>
+        <Provider store={store}>
+          <LogDetailsWindow />
+          <WhoisModal />
+        </Provider>
+      </AppErrorBoundary>,
+      lib.doc.id("app-root")
+    )
+  })
+  .catch((e) => {
+    ReactDOM.render(<StartupError error={e} />, lib.doc.id("app-root"))
+  })
