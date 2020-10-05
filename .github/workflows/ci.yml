@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        os: [ubuntu-18.04]
+        os: [macos-10.15, ubuntu-18.04, windows-2019]
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
@@ -75,13 +75,16 @@ jobs:
         node-version: [12.x]
     container:
       image: centos:8
-      options: --user 1001
       env:
         # This environment variable causes chrome to run with no sandbox- needed
         # whenever chrome is run as root.
         APPVEYOR: true
     needs: build
     steps:
+      - run: |
+          createuser itest
+          gpasswd -a itest wheel
+          su itest
       - run: sudo dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio unzip make
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
