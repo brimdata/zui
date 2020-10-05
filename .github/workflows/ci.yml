@@ -86,7 +86,6 @@ jobs:
           adduser itest
           echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
           chmod 0440 /etc/sudoers.d/user
-          su itest
       - run: sudo dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio unzip make
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
@@ -123,10 +122,9 @@ jobs:
         with:
           name: linux-release
       - name: Integration Tests (Centos 8)
-        run: |
-          su itest
-          dnf install -y ./linux-release/brim_x86_64.rpm
-          whoami
+        run: su itest && \
+          dnf install -y ./linux-release/brim_x86_64.rpm && \
+          whoami && \
           xvfb-run -d -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
 
 #  integration_test:
