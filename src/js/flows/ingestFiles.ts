@@ -170,6 +170,7 @@ const trackProgress = (client, gDispatch, clusterId) => {
             updateSpaceDetails()
             break
           case "LogPostWarning":
+          case "PcapPostWarning":
             gDispatch(space.appendIngestWarning(status.warning))
             break
           case "TaskEnd":
