@@ -15,7 +15,8 @@ const zdepsDirectory = join(app.getAppPath(), "zdeps")
 const platformDefs = {
   darwin: {
     zqdBin: "zqd",
-    zeekRunnerBin: "zeekrunner"
+    zeekRunnerBin: "zeekrunner",
+    suricataRunnerBin: "suricatarunner"
   },
   linux: {
     zqdBin: "zqd",
@@ -23,7 +24,8 @@ const platformDefs = {
   },
   win32: {
     zqdBin: "zqd.exe",
-    zeekRunnerBin: "zeekrunner.exe"
+    zeekRunnerBin: "zeekrunner.exe",
+    suricataRunnerBin: "suricatarunner.exe"
   }
 }
 
@@ -93,6 +95,18 @@ function zeekRunnerCommand(zeekRunnerPref: string): string {
   return precedence.find((path) => !isEmpty(path)) || ""
 }
 
+function suricataRunnerCommand(): string {
+  const plat = platformDefs[process.platform]
+  if (!plat) {
+    throw new Error("unsupported platform for zqd")
+  }
+  if (!plat.suricataRunnerBin) {
+    return ""
+  }
+  const path = resolve(join(zdepsDirectory, "suricata", plat.suricataRunnerBin))
+  return !isEmpty(path) ? path : ""
+}
+
 export class ZQD {
   zqd: ChildProcess
   root: string
@@ -122,7 +136,9 @@ export class ZQD {
       "-config",
       confFile,
       "-zeekrunner",
-      zeekRunnerCommand(this.zeekRunner)
+      zeekRunnerCommand(this.zeekRunner),
+      "-suricatarunner",
+      suricataRunnerCommand()
     ]
 
     // For unix systems, pass posix pipe read file descriptor into zqd process.
