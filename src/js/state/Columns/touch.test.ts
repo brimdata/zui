@@ -3,17 +3,19 @@ import Columns from "./"
 import actions from "./actions"
 import initTestStore from "../../test/initTestStore"
 import touch from "./touch"
+import {zng} from "zealot"
 
 const columns = {
-  "1": [
+  "1": new zng.Schema([
     {name: "_path", type: "string"},
     {name: "duration", type: "interval"}
-  ],
-  "2": [
+  ]),
+  "2": new zng.Schema([
     {name: "_path", type: "string"},
     {name: "ts", type: "time"}
-  ]
+  ])
 }
+
 let store
 beforeEach(() => {
   store = initTestStore()

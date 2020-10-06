@@ -1,14 +1,14 @@
 import React, {useEffect, useRef, useState} from "react"
 import classNames from "classnames"
 
-import {$Field} from "../../brim"
 import {$Menu} from "../../electron/menu"
 import {showContextMenu} from "../../lib/System"
 import FieldCell from "../FieldCell"
 import lib from "../../lib"
+import {zng} from "zealot"
 
 type Props = {
-  field: $Field
+  field: zng.Field
   menu: $Menu
 }
 

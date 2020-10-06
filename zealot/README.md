@@ -8,18 +8,6 @@ The Zealot Client is responsible for communicating with the zqd process via the 
 brew install deno
 ```
 
-### Run Tests
-
-```
-npm test
-```
-
-### Create Bundle
-
-```
-npm run bundle
-```
-
 ### Usage
 
 ```js
@@ -67,11 +55,7 @@ const payloads = await stream.array()
 const records = await stream.records()
 // => [{id: 1, type: [{name: "_path, type: "string"}, ...], values: ["dns"...]} ...]
 
-// 4. Collect, concat, and flatten the records
-const flatRecords = await stream.flatRecords()
-// => [[{name: "_path", type: "string", value: "dns"}...]...]
-
-// 5. Setup callbacks that are called when payloads arrive
+// 4. Setup callbacks that are called when payloads arrive
 stream.callbacks()
   .start(payload => {...})
   .end(payload => {...})

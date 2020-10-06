@@ -1,10 +1,9 @@
-import {$Field} from "../brim"
 import {SearchTarget} from "../state/SearchBar/types"
 import {SpanArgs} from "../state/Search/types"
 import {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
-import Log from "../models/Log"
 import {MenuItemConstructorOptions} from "electron"
+import {zng} from "zealot"
 
 export type Notification =
   | AppError
@@ -62,13 +61,13 @@ export type LogCorrelations = {
 }
 
 export type RelatedLogs = {
-  [key: string]: Log[]
+  [key: string]: zng.Record[]
 }
 
 export type RightClickBuilder = (
-  arg0: $Field,
-  arg1: Log,
-  arg2: boolean
+  field: zng.Field,
+  record: zng.Record,
+  compound: boolean
 ) => MenuItemConstructorOptions[]
 
 export type Results = {

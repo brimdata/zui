@@ -1,26 +1,22 @@
 import {isEqual} from "lodash"
 
-import {$Field} from "../../brim"
 import {Space} from "../../state/Spaces/types"
 import {hasGroupByProc} from "../../lib/Program"
-import Log from "../../models/Log"
 import menu from "./"
+import {zng} from "zealot"
 
 export default function detailFieldContextMenu(
   program: string,
   columns: string[],
   space: Space
 ) {
-  return function(field: $Field, log: Log, compound: boolean) {
-    const isTime = field.type === "time"
-    const isConn = log.isPath("conn")
+  return function(field: zng.Field, log: zng.Record, compound: boolean) {
+    const isTime = field.data.getType() === "time"
+    const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
-    const isIp = ["addr", "set[addr]"].includes(field.type)
+    const isIp = ["addr", "set[addr]"].includes(field.data.getType())
     const hasCol = columns.includes(field.name)
-    const sameCols = isEqual(
-      log.descriptor.map((d) => d.name).sort(),
-      columns.sort()
-    )
+    const sameCols = isEqual(log.getColumnNames().sort(), columns.sort())
     const hasPackets = space && space.pcap_support
     const virusTotal = [
       "hassh",
@@ -35,44 +31,49 @@ export default function detailFieldContextMenu(
     ].includes(field.name)
 
     const detailMenuActions = menu.actions.detail
-
+    const fieldData = field.serialize()
+    const recordData = log.serialize()
     return [
-      detailMenuActions.include.menuItem([field], {
+      detailMenuActions.include.menuItem([fieldData], {
         enabled: hasCol,
         visible: !compound
       }),
-      detailMenuActions.exclude.menuItem([field], {
+      detailMenuActions.exclude.menuItem([fieldData], {
         enabled: hasCol,
         visible: !compound
       }),
-      detailMenuActions.in.menuItem([field], {
+      detailMenuActions.in.menuItem([fieldData], {
         visible: !!compound
       }),
-      detailMenuActions.notIn.menuItem([field], {
+      detailMenuActions.notIn.menuItem([fieldData], {
         visible: !!compound
       }),
-      detailMenuActions.freshInclude.menuItem([field], {enabled: true}),
+      detailMenuActions.freshInclude.menuItem([fieldData], {enabled: true}),
       menu.separator(),
-      detailMenuActions.groupByDrillDown.menuItem([program, log], {
+      detailMenuActions.groupByDrillDown.menuItem([program, recordData], {
         enabled: isGroupBy && sameCols
       }),
-      detailMenuActions.countBy.menuItem([field], {enabled: !isGroupBy}),
+      detailMenuActions.countBy.menuItem([fieldData], {enabled: !isGroupBy}),
       menu.separator(),
-      detailMenuActions.sortAsc.menuItem([field], {enabled: hasCol}),
-      detailMenuActions.sortDesc.menuItem([field], {enabled: hasCol}),
+      detailMenuActions.sortAsc.menuItem([fieldData], {enabled: hasCol}),
+      detailMenuActions.sortDesc.menuItem([fieldData], {enabled: hasCol}),
       menu.separator(),
-      detailMenuActions.fromTime.menuItem([field], {enabled: isTime}),
-      detailMenuActions.toTime.menuItem([field], {enabled: isTime}),
+      detailMenuActions.fromTime.menuItem([fieldData], {enabled: isTime}),
+      detailMenuActions.toTime.menuItem([fieldData], {enabled: isTime}),
       menu.separator(),
-      detailMenuActions.pcaps.menuItem([log], {enabled: isConn && hasPackets}),
-      detailMenuActions.detail.menuItem([log], {enabled: true}),
+      detailMenuActions.pcaps.menuItem([recordData], {
+        enabled: isConn && hasPackets
+      }),
+      detailMenuActions.detail.menuItem([recordData], {enabled: true}),
       menu.separator(),
-      detailMenuActions.whoisRightclick.menuItem([field], {enabled: isIp}),
-      detailMenuActions.virusTotalRightclick.menuItem([field], {
+      detailMenuActions.whoisRightclick.menuItem([fieldData], {enabled: isIp}),
+      detailMenuActions.virusTotalRightclick.menuItem([fieldData], {
         enabled: virusTotal || isIp
       }),
       menu.separator(),
-      detailMenuActions.logResult.menuItem([field, log], {enabled: true})
+      detailMenuActions.logResult.menuItem([fieldData, recordData], {
+        enabled: true
+      })
     ]
   }
 }

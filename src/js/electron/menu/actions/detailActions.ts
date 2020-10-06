@@ -8,7 +8,6 @@ import {
 } from "../../../flows/searchBar/actions"
 import open from "../../../lib/open"
 import {viewLogDetail} from "../../../flows/viewLogDetail"
-import Log from "../../../models/Log"
 import Modal from "../../../state/Modal"
 import SearchBar from "../../../state/SearchBar"
 import action from "./action"
@@ -17,53 +16,58 @@ import tab from "../../../state/Tab"
 import virusTotal from "../../../services/virusTotal"
 import {downloadPcap} from "../../../flows/downloadPcap"
 import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
+import {zng} from "zealot"
+import {createCell} from "../../../brim/cell"
 
 function buildDetailActions() {
   return {
     countBy: action({
       name: "detail-cell-menu-count-by",
       label: "Count by field",
-      listener(dispatch, field) {
+      listener(dispatch, data: zng.SerializedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryCountBy(field))
+        dispatch(appendQueryCountBy(zng.Field.deserialize(data)))
         dispatch(openNewSearchTab())
       }
     }),
     detail: action({
       name: "detail-cell-menu-detail",
       label: "View details",
-      listener(dispatch, log) {
-        log = new Log(log.tuple, log.descriptor)
-        dispatch(viewLogDetail(log))
+      listener(dispatch, log: zng.SerializedRecord) {
+        dispatch(viewLogDetail(zng.Record.deserialize(log)))
       }
     }),
     exclude: action({
       name: "detail-cell-menu-exclude",
       label: "Filter != value in new search",
-      listener(dispatch, field) {
+      listener(dispatch, field: zng.SerializedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryExclude(field))
+        dispatch(appendQueryExclude(zng.Field.deserialize(field)))
         dispatch(openNewSearchTab())
       }
     }),
     freshInclude: action({
       name: "detail-cell-menu-fresh-include",
       label: "New search with this value",
-      listener(dispatch, field) {
-        field = brim.field(field)
+      listener(dispatch, field: zng.SerializedField) {
+        const cell = createCell(zng.Field.deserialize(field))
         dispatch(SearchBar.clearSearchBar())
-        dispatch(SearchBar.changeSearchBarInput(field.queryableValue()))
+        dispatch(SearchBar.changeSearchBarInput(cell.queryableValue()))
         dispatch(openNewSearchTab())
       }
     }),
     fromTime: action({
       name: "detail-cell-menu-from-time",
       label: 'Use as "start" time in new search',
-      listener(dispatch, fieldData) {
-        const field = brim.field(fieldData)
-        if (field.type === "time") {
+      listener(dispatch, data: zng.SerializedField) {
+        const field = zng.Field.deserialize(data)
+        if (field.data.type === "time") {
           dispatch(SearchBar.clearSearchBar())
-          dispatch(tab.setFrom(brim.time(field.toDate()).toTs()))
+          dispatch(
+            tab.setFrom(
+              brim.time((field.data as zng.Primitive).toDate()).toTs()
+            )
+          )
           dispatch(openNewSearchTab())
         }
       }
@@ -71,10 +75,10 @@ function buildDetailActions() {
     groupByDrillDown: action({
       name: "detail-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
-      listener(dispatch, program, log) {
+      listener(dispatch, program, log: zng.SerializedRecord) {
         const newProgram = brim
           .program(program)
-          .drillDown(brim.log(log.tuple, log.descriptor))
+          .drillDown(zng.Record.deserialize(log))
           .string()
 
         if (newProgram) {
@@ -87,27 +91,27 @@ function buildDetailActions() {
     include: action({
       name: "detail-cell-menu-include",
       label: "Filter = value in new search",
-      listener(dispatch, field) {
+      listener(dispatch, field: zng.SerializedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryInclude(field))
+        dispatch(appendQueryInclude(zng.Field.deserialize(field)))
         dispatch(openNewSearchTab())
       }
     }),
     in: action({
       name: "detail-cell-menu-in",
       label: "Filter in field in new search",
-      listener(dispatch, {name, value, type}) {
+      listener(dispatch, field: zng.SerializedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryIn(brim.field({name, type, value})))
+        dispatch(appendQueryIn(createCell(zng.Field.deserialize(field))))
         dispatch(openNewSearchTab())
       }
     }),
     notIn: action({
       name: "detail-cell-menu-not-in",
       label: "Filter not in field in new search",
-      listener(dispatch, {name, value, type}) {
+      listener(dispatch, field: zng.SerializedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryNotIn(brim.field({name, type, value})))
+        dispatch(appendQueryNotIn(createCell(zng.Field.deserialize(field))))
         dispatch(openNewSearchTab())
       }
     }),
@@ -122,15 +126,14 @@ function buildDetailActions() {
     pcaps: action({
       name: "detail-cell-menu-pcaps",
       label: "Download PCAPS",
-      listener(dispatch, log) {
-        log = new Log(log.tuple, log.descriptor)
-        dispatch(downloadPcap(log))
+      listener(dispatch, log: zng.SerializedRecord) {
+        dispatch(downloadPcap(zng.Record.deserialize(log)))
       }
     }),
     sortAsc: action({
       name: "detail-cell-menu-sort-asc",
       label: "Sort A...Z",
-      listener(dispatch, field) {
+      listener(dispatch, field: zng.SerializedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(field.name, "asc"))
         dispatch(openNewSearchTab())
@@ -139,7 +142,7 @@ function buildDetailActions() {
     sortDesc: action({
       name: "detail-cell-menu-sort-desc",
       label: "Sort Z...A",
-      listener(dispatch, field) {
+      listener(dispatch, field: zng.SerializedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(field.name, "desc"))
         dispatch(openNewSearchTab())
@@ -148,14 +151,14 @@ function buildDetailActions() {
     toTime: action({
       name: "detail-cell-menu-to-time",
       label: 'Use as "end" time',
-      listener(dispatch, fieldData) {
-        const field = brim.field(fieldData)
-        if (field.type === "time") {
+      listener(dispatch, data: zng.SerializedField) {
+        const field = zng.Field.deserialize(data)
+        if (field.data.type === "time") {
           dispatch(SearchBar.clearSearchBar())
           dispatch(
             tab.setTo(
               brim
-                .time(field.toDate())
+                .time((field.data as zng.Primitive).toDate())
                 .add(1, "ms")
                 .toTs()
             )
@@ -167,15 +170,17 @@ function buildDetailActions() {
     virusTotalRightclick: action({
       name: "detail-cell-menu-virus-total",
       label: "VirusTotal Lookup",
-      listener(_dispatch, field) {
-        open(virusTotal.url(field.value))
+      listener(_dispatch, data: zng.SerializedField) {
+        const field = zng.Field.deserialize(data)
+        open(virusTotal.url(field.data.toString()))
       }
     }),
     whoisRightclick: action({
       name: "detail-cell-menu-who-is",
       label: "Whois Lookup",
-      listener(dispatch, field) {
-        dispatch(Modal.show("whois", {addr: field.value}))
+      listener(dispatch, data: zng.SerializedField) {
+        const field = zng.Field.deserialize(data)
+        dispatch(Modal.show("whois", {addr: field.data.getValue()}))
       }
     })
   }

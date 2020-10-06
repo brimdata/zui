@@ -1,9 +1,8 @@
 import {ChartData, CHART_CLEAR, CHART_RECORDS, CHART_STATUS} from "./types"
-import {RecordData} from "../../types/records"
 import {SearchStatus} from "../../types/searches"
-import {isString} from "../../lib/is"
 import MergeHash from "../../models/MergeHash"
 import UniqArray from "../../models/UniqArray"
+import {zng} from "zealot"
 
 export default {
   setStatus: (tabId: string, status: SearchStatus): CHART_STATUS => ({
@@ -11,7 +10,7 @@ export default {
     status,
     tabId
   }),
-  appendRecords: (tabId: string, records: RecordData[]): CHART_RECORDS => ({
+  appendRecords: (tabId: string, records: zng.Record[]): CHART_RECORDS => ({
     type: "CHART_RECORDS",
     data: histogramFormat(records),
     tabId
@@ -19,19 +18,22 @@ export default {
   clear: (tabId?: string): CHART_CLEAR => ({type: "CHART_CLEAR", tabId})
 }
 
-function histogramFormat(records): ChartData {
+function histogramFormat(records: zng.Record[]): ChartData {
   const paths = new UniqArray()
   const table = new MergeHash()
 
   records.forEach((r) => {
-    const [ts, path, count] = r.map((f) => f.value)
+    const [ts, path, count] = r.getValue() as zng.Primitive[]
 
-    if (isString(ts) && isString(path) && isString(count)) {
-      const key = new Date(+ts * 1000).getTime()
-      const value = {[path]: parseInt(count)}
+    try {
+      const pathName = path.toString()
+      const key = ts.toDate().getTime()
+      const val = {[path.toString()]: count.toInt()}
 
-      table.merge(key, value)
-      paths.push(path)
+      table.merge(key, val)
+      paths.push(pathName)
+    } catch (e) {
+      console.log("Error rendering histogram: " + e.toString())
     }
   })
 

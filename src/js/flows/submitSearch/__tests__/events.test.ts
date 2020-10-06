@@ -1,6 +1,5 @@
-import {createZealotMock} from "zealot"
+import {createZealotMock, zng} from "zealot"
 
-import {response} from "../responses/mod"
 import {submitSearch} from "../mod"
 import Chart from "../../../state/Chart"
 import Columns from "../../../state/Columns"
@@ -11,19 +10,20 @@ import Spaces from "../../../state/Spaces"
 import Viewer from "../../../state/Viewer"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
+import responses from "../../../test/responses"
 
-const countByPathResp = response("count_by_path.txt")
-const dnsResp = response("dns.txt")
+const countByPathResp = responses("count_by_path.txt")
+const dnsResp = responses("dns.txt")
 const space = fixtures("space1")
-const warningResp = response("search_warning.txt")
+const warningResp = responses("search_warning.txt")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
   zealot = createZealotMock()
-  store = initTestStore(zealot)
+  store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("search", dnsResp)
+
   store.dispatchAll([
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),
@@ -33,11 +33,12 @@ beforeEach(() => {
     SearchBar.changeSearchBarInput("query")
   ])
 })
-const submit = (...args) => dispatch(submitSearch(...args))
+
+const submit = (...args) => dispatch(submitSearch(...args)).catch((e) => e)
 
 describe("table search", () => {
   beforeEach(() => {
-    zealot.stubStream("search", response("dns.txt"))
+    zealot.stubStream("search", countByPathResp).stubStream("search", dnsResp)
   })
 
   test("zealot gets two requests", async () => {
@@ -51,13 +52,13 @@ describe("table search", () => {
 
   test("the table gets populated", async () => {
     await submit()
-    expect(select(Viewer.getViewerRecords).length).toBe(500)
+    expect(select(Viewer.getViewerRecords).length).toBe(2)
   })
 
   test("the table gets cleared", async () => {
     dispatch(
       Viewer.setRecords(undefined, [
-        [{name: "clear", type: "string", value: "me"}]
+        new zng.Record([{name: "clear", type: "string"}], ["me"])
       ])
     )
     await submit()
@@ -72,7 +73,7 @@ describe("table search", () => {
     expect(select(Viewer.getEndStatus)).toBe("FETCHING")
     await promise
     expect(select(Viewer.getStatus)).toBe("SUCCESS")
-    expect(select(Viewer.getEndStatus)).toBe("INCOMPLETE")
+    expect(select(Viewer.getEndStatus)).toBe("COMPLETE")
   })
 
   test("registers a table request then cleans it up", async () => {
@@ -102,25 +103,27 @@ describe("table search", () => {
   })
 
   test("the chart status updates", async () => {
-    zealot.stubStream("search", countByPathResp)
     const promise = submit()
     expect(select(Chart.getStatus)).toBe("FETCHING")
     await promise
     expect(select(Chart.getStatus)).toBe("SUCCESS")
   })
 
-  test("registers historgram request then cleans it up", async () => {
-    zealot.stubStream("search", countByPathResp)
+  test("registers historgram request then cleans it up", async (done) => {
     const promise = submit()
     expect(select(Handlers.get)["Histogram"]).toEqual(
       expect.objectContaining({type: "SEARCH"})
     )
     await promise
-    expect(select(Handlers.get)["Histogram"]).toBe(undefined)
+    // The promise only waits for the table, might be good to return two
+    // promises so people can decide what they want to wait for.
+    setTimeout(() => {
+      expect(select(Handlers.get)["Histogram"]).toBe(undefined)
+      done()
+    })
   })
 
   test("aborts previous histogram request", async () => {
-    zealot.stubStream("search", countByPathResp)
     const abort = jest.fn()
     dispatch(Handlers.register("Histogram", {type: "SEARCH", abort}))
     await submit()
@@ -128,13 +131,16 @@ describe("table search", () => {
   })
 
   test("populates the chart", async () => {
-    zealot.stubStream("search", countByPathResp)
     await submit()
     expect(select(Chart.getData)).toMatchSnapshot()
   })
+})
 
+describe("search with warnings", () => {
   test("search warnings", async () => {
-    zealot.stubStream("search", warningResp)
+    zealot
+      .stubStream("search", countByPathResp)
+      .stubStream("search", warningResp)
     await submit()
     expect(select(SearchBar.getSearchBarError)).toBe(
       "Cut field boo not present in input"

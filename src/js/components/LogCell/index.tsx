@@ -1,17 +1,16 @@
 import React, {useState} from "react"
 import classNames from "classnames"
 
-import {$Field} from "../../brim"
 import {RightClickBuilder} from "../../types"
 import {getTooltipStyle} from "../../lib/MenuStyler"
 import CompoundField from "./CompoundField"
-import Log from "../../models/Log"
 import SingleField from "./SingleField"
 import Tooltip from "../Tooltip"
+import {zng} from "zealot"
 
 type Props = {
-  field: $Field
-  log: Log
+  field: zng.Field
+  log: zng.Record
   style?: Object
   rightClick: RightClickBuilder
 }
@@ -19,7 +18,7 @@ type Props = {
 export default function LogCell({field, style, rightClick, log}: Props) {
   const [hover, setHover] = useState(false)
   const [tooltipStyle, setTooltipStyle] = useState({})
-  const {name, type} = field
+  const {name, data} = field
 
   function handleMouseEnter(e) {
     setHover(true)
@@ -29,10 +28,9 @@ export default function LogCell({field, style, rightClick, log}: Props) {
   function handleMouseLeave() {
     setHover(false)
   }
-
   return (
     <div
-      className={classNames(`log-cell ${type}`, {hover})}
+      className={classNames(`log-cell ${data.getType()}`, {hover})}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={style}
@@ -47,12 +45,23 @@ export default function LogCell({field, style, rightClick, log}: Props) {
   )
 }
 
-function FieldSwitch(props) {
-  if (props.field.compound()) {
-    return <CompoundField {...props} />
-  } else {
-    const {field, log, menuBuilder} = props
+type FieldSwitchProps = {
+  field: zng.Field
+  log: zng.Record
+  menuBuilder: RightClickBuilder
+}
+
+function FieldSwitch({field, log, menuBuilder}: FieldSwitchProps) {
+  if (field.data instanceof zng.Primitive) {
     const menu = menuBuilder(field, log, false)
     return <SingleField field={field} menu={menu} />
+  } else {
+    return (
+      <CompoundField
+        field={field as zng.ContainerField}
+        log={log}
+        menuBuilder={menuBuilder}
+      />
+    )
   }
 }

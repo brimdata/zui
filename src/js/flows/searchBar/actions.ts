@@ -1,4 +1,3 @@
-import {FieldData} from "../../types/records"
 import {Thunk} from "../../state/types"
 import {
   getSearchBar,
@@ -6,35 +5,37 @@ import {
 } from "../../state/SearchBar/selectors"
 import {onlyWhitespace} from "../../lib/Str"
 import SearchBar from "../../state/SearchBar"
-import brim, {$Field} from "../../brim"
+import brim from "../../brim"
+import {zng} from "zealot"
+import {Cell, createCell} from "../../brim/cell"
 
-export function appendQueryInclude(field: FieldData): Thunk {
+export function appendQueryInclude(field: zng.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .include(brim.field(field))
+          .include(createCell(field))
           .string()
       )
     )
   }
 }
 
-export function appendQueryExclude(field: FieldData): Thunk {
+export function appendQueryExclude(field: zng.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .exclude(brim.field(field))
+          .exclude(createCell(field))
           .string()
       )
     )
   }
 }
 
-export function appendQueryCountBy(field: FieldData): Thunk {
+export function appendQueryCountBy(field: zng.Field): Thunk {
   return function(dispatch, getState) {
     const {current, pinned} = getSearchBar(getState())
     const query = [...pinned, current].join(" ")
@@ -44,7 +45,7 @@ export function appendQueryCountBy(field: FieldData): Thunk {
       SearchBar.changeSearchBarInput(
         brim
           .program(program)
-          .countBy(brim.field(field))
+          .countBy(createCell(field))
           .string()
       )
     )
@@ -71,7 +72,7 @@ export function appendQuerySortBy(
   }
 }
 
-export function appendQueryIn(field: $Field): Thunk {
+export function appendQueryIn(field: Cell): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -84,7 +85,7 @@ export function appendQueryIn(field: $Field): Thunk {
   }
 }
 
-export function appendQueryNotIn(field: $Field): Thunk {
+export function appendQueryNotIn(field: Cell): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(

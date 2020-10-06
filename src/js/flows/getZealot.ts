@@ -1,5 +1,6 @@
+import {Zealot} from "zealot"
 import Current from "../state/Current"
-import {Thunk, Zealot} from "../state/types"
+import {Thunk} from "../state/types"
 
 export const getZealot = (): Thunk<Zealot> => (
   _dispatch,

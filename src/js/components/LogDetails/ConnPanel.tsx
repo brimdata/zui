@@ -1,11 +1,11 @@
 import React from "react"
 
 import ConnVersation from "../ConnVersation"
-import Log from "../../models/Log"
 import PanelHeading from "./PanelHeading"
+import {zng} from "zealot"
 
 type Props = {
-  log: Log
+  log: zng.Record
   contextMenu: Function
 }
 

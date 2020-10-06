@@ -1,4 +1,4 @@
-import {createZealotMock} from "zealot"
+import {createZealotMock, zng} from "zealot"
 
 import {fetchNextPage} from "./fetchNextPage"
 import Clusters from "../state/Clusters"
@@ -11,26 +11,33 @@ import Viewer from "../state/Viewer"
 import fixtures from "../test/fixtures"
 import initTestStore from "../test/initTestStore"
 
-const records = [
-  [
-    {name: "_td", type: "string", value: "1"},
-    {name: "ts", type: "time", value: "100"}
-  ],
-  [
-    {name: "_td", type: "string", value: "1"},
-    {name: "ts", type: "time", value: "200"}
-  ],
-  [
-    {name: "_td", type: "string", value: "1"},
-    {name: "ts", type: "time", value: "300"}
-  ]
-]
+const records = zng.createRecords([
+  {
+    id: 1,
+    schema: {
+      type: "record",
+      of: [
+        {name: "td", type: "string"},
+        {name: "ts", type: "time"}
+      ]
+    },
+    values: ["1", "100"]
+  },
+  {
+    id: 1,
+    values: ["1", "200"]
+  },
+  {
+    id: 1,
+    values: ["1", "300"]
+  }
+])
 
 let store, zealot, tabId
 beforeEach(() => {
   zealot = createZealotMock()
   zealot.stubStream("search", [])
-  store = initTestStore(zealot)
+  store = initTestStore(zealot.zealot)
   tabId = Tabs.getActive(store.getState())
   const conn = fixtures("cluster1")
   const space = fixtures("space1")
@@ -55,10 +62,14 @@ test("#fetchNextPage dispatches splice", () => {
 })
 
 test("#fetchNextPage adds 1ms to ts of last change", () => {
-  const search = jest.spyOn(zealot, "search")
+  const search = jest.spyOn(zealot.zealot, "search")
   store.dispatch(fetchNextPage())
 
-  const lastChangeTs = records[1][1].value
+  const data = records[1].at(1)
+  // This should be fixed so that all data have a value field or getValue method
+  if (!("value" in data)) throw new Error("boom")
+
+  const lastChangeTs = data.value
   expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({
@@ -69,7 +80,7 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
 })
 
 test("#fetchNextPage when there is only 1 event", () => {
-  const search = jest.spyOn(zealot, "search")
+  const search = jest.spyOn(zealot.zealot, "search")
   store.dispatch(Viewer.splice(tabId, 1))
   store.dispatch(fetchNextPage())
 

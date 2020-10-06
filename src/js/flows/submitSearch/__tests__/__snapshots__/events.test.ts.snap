@@ -3,464 +3,57 @@
 exports[`table search populates the chart 1`] = `
 Object {
   "keys": Array [
-    "stats",
-    "dns",
+    "capture_loss",
     "conn",
-    "x509",
     "files",
+    "x509",
     "ssl",
+    "dns",
+    "weird",
+    "stats",
   ],
   "table": Object {
-    "1585846140000": Object {
-      "conn": 4,
-      "dns": 35,
+    "1582646585000": Object {
+      "conn": 1,
       "stats": 1,
     },
-    "1585846200000": Object {
-      "conn": 15,
-      "dns": 47,
-    },
-    "1585846260000": Object {
-      "conn": 61,
-      "dns": 99,
-      "x509": 1,
-    },
-    "1585846320000": Object {
-      "conn": 15,
-      "dns": 48,
-    },
-    "1585846380000": Object {
-      "conn": 12,
-      "dns": 96,
-    },
-    "1585846440000": Object {
-      "conn": 7,
-      "dns": 53,
-      "stats": 1,
-    },
-    "1585846500000": Object {
-      "conn": 63,
-      "dns": 114,
-      "x509": 3,
-    },
-    "1585846560000": Object {
-      "conn": 12,
-      "dns": 42,
-      "x509": 5,
-    },
-    "1585846620000": Object {
-      "conn": 18,
-      "dns": 86,
-    },
-    "1585846680000": Object {
-      "conn": 7,
-      "dns": 7,
-    },
-    "1585846740000": Object {
-      "conn": 15,
-      "dns": 52,
-      "stats": 1,
-    },
-    "1585846800000": Object {
-      "conn": 7,
-      "dns": 37,
-    },
-    "1585846860000": Object {
-      "conn": 16,
-      "dns": 46,
-      "x509": 3,
-    },
-    "1585846920000": Object {
-      "conn": 6,
-      "dns": 38,
-      "x509": 1,
-    },
-    "1585846980000": Object {
-      "conn": 11,
-      "dns": 44,
-    },
-    "1585847040000": Object {
-      "conn": 13,
-      "dns": 42,
-      "stats": 1,
-      "x509": 1,
-    },
-    "1585847100000": Object {
-      "conn": 17,
-      "dns": 54,
-      "x509": 8,
-    },
-    "1585847160000": Object {
-      "conn": 18,
-      "dns": 54,
-    },
-    "1585847220000": Object {
-      "conn": 3,
-      "dns": 7,
-    },
-    "1585847280000": Object {
-      "conn": 22,
-      "dns": 110,
-    },
-    "1585847340000": Object {
-      "conn": 3,
-      "dns": 71,
-      "stats": 1,
-    },
-    "1585847400000": Object {
-      "conn": 21,
-      "dns": 83,
-    },
-    "1585847460000": Object {
-      "conn": 16,
-      "dns": 109,
-    },
-    "1585847520000": Object {
-      "conn": 6,
-      "dns": 26,
-    },
-    "1585847580000": Object {
-      "conn": 15,
-      "dns": 50,
-      "x509": 2,
-    },
-    "1585847640000": Object {
-      "conn": 4,
-      "dns": 14,
-      "stats": 1,
-    },
-    "1585847700000": Object {
-      "conn": 42,
-      "dns": 66,
-      "files": 1,
-      "ssl": 1,
-      "x509": 16,
-    },
-    "1585847760000": Object {
-      "conn": 19,
-      "dns": 136,
-    },
-    "1585847820000": Object {
-      "conn": 11,
-      "dns": 47,
-    },
-    "1585847880000": Object {
-      "conn": 13,
-      "dns": 136,
-    },
-    "1585847940000": Object {
-      "conn": 5,
-      "dns": 45,
-      "stats": 1,
-    },
-    "1585848000000": Object {
-      "conn": 16,
-      "dns": 83,
-    },
-    "1585848060000": Object {
-      "conn": 17,
-      "dns": 107,
-      "x509": 1,
-    },
-    "1585848120000": Object {
-      "conn": 22,
-      "dns": 94,
-      "x509": 1,
-    },
-    "1585848180000": Object {
-      "conn": 21,
-      "dns": 86,
-      "x509": 3,
-    },
-    "1585848240000": Object {
-      "conn": 14,
-      "dns": 79,
-      "stats": 1,
-    },
-    "1585848300000": Object {
-      "conn": 16,
-      "dns": 86,
-    },
-    "1585848360000": Object {
-      "conn": 10,
-      "dns": 101,
-    },
-    "1585848420000": Object {
-      "conn": 11,
-      "dns": 67,
-    },
-    "1585848480000": Object {
-      "conn": 12,
-      "dns": 74,
-    },
-    "1585848540000": Object {
-      "conn": 17,
-      "dns": 110,
-      "stats": 1,
-    },
-    "1585848600000": Object {
-      "conn": 10,
-      "dns": 72,
-    },
-    "1585848660000": Object {
-      "conn": 21,
-      "dns": 104,
-    },
-    "1585848720000": Object {
-      "conn": 5,
-      "dns": 38,
-    },
-    "1585848780000": Object {
-      "conn": 15,
-      "dns": 48,
-    },
-    "1585848840000": Object {
-      "conn": 6,
-      "dns": 37,
-      "stats": 1,
-    },
-    "1585848900000": Object {
-      "conn": 15,
-      "dns": 73,
-    },
-    "1585848960000": Object {
-      "conn": 5,
-      "dns": 33,
-    },
-    "1585849020000": Object {
-      "conn": 13,
-      "dns": 51,
-    },
-    "1585849080000": Object {
-      "conn": 9,
-      "dns": 41,
-    },
-    "1585849140000": Object {
-      "conn": 10,
-      "dns": 41,
-      "stats": 1,
-    },
-    "1585849200000": Object {
-      "conn": 5,
-      "dns": 37,
-    },
-    "1585849260000": Object {
-      "conn": 8,
-      "dns": 36,
-    },
-    "1585849320000": Object {
-      "conn": 10,
-      "dns": 51,
-    },
-    "1585849380000": Object {
-      "conn": 11,
-      "dns": 44,
-      "x509": 1,
-    },
-    "1585849440000": Object {
-      "conn": 10,
-      "dns": 42,
-      "stats": 1,
-    },
-    "1585849500000": Object {
-      "conn": 8,
-      "dns": 40,
-    },
-    "1585849560000": Object {
-      "conn": 13,
-      "dns": 42,
-    },
-    "1585849620000": Object {
-      "conn": 7,
-      "dns": 31,
-    },
-    "1585849680000": Object {
-      "conn": 8,
-      "dns": 39,
-    },
-    "1585849740000": Object {
-      "conn": 5,
-      "dns": 35,
-      "stats": 1,
-    },
-    "1585849800000": Object {
-      "conn": 8,
-      "dns": 41,
-    },
-    "1585849860000": Object {
-      "conn": 13,
-      "dns": 53,
-    },
-    "1585849920000": Object {
-      "conn": 13,
-      "dns": 26,
-    },
-    "1585849980000": Object {
-      "conn": 5,
-      "dns": 35,
-    },
-    "1585850040000": Object {
-      "conn": 49,
-      "dns": 88,
-      "stats": 1,
-      "x509": 8,
-    },
-    "1585850100000": Object {
-      "conn": 27,
-      "dns": 69,
-    },
-    "1585850160000": Object {
-      "conn": 34,
-      "dns": 176,
-      "x509": 1,
-    },
-    "1585850220000": Object {
-      "conn": 12,
-      "dns": 54,
-    },
-    "1585850280000": Object {
-      "conn": 17,
-      "dns": 86,
-      "x509": 2,
-    },
-    "1585850340000": Object {
-      "conn": 9,
-      "dns": 79,
-      "stats": 1,
-    },
-    "1585850400000": Object {
-      "conn": 14,
-      "dns": 85,
-    },
-    "1585850460000": Object {
-      "conn": 13,
-      "dns": 78,
-    },
-    "1585850520000": Object {
-      "conn": 10,
-      "dns": 44,
-    },
-    "1585850580000": Object {
-      "conn": 19,
-      "dns": 87,
-      "x509": 3,
-    },
-    "1585850640000": Object {
-      "conn": 11,
-      "dns": 74,
-      "stats": 1,
-    },
-    "1585850700000": Object {
-      "conn": 13,
-      "dns": 42,
-      "x509": 1,
-    },
-    "1585850760000": Object {
-      "conn": 15,
-      "dns": 93,
-      "x509": 1,
-    },
-    "1585850820000": Object {
-      "conn": 10,
-      "dns": 70,
-    },
-    "1585850880000": Object {
-      "conn": 11,
-      "dns": 84,
-    },
-    "1585850940000": Object {
-      "conn": 7,
-      "dns": 39,
-      "stats": 1,
-    },
-    "1585851000000": Object {
-      "conn": 15,
-      "dns": 64,
-    },
-    "1585851060000": Object {
-      "conn": 14,
-      "dns": 87,
-    },
-    "1585851120000": Object {
-      "conn": 15,
-      "dns": 65,
-    },
-    "1585851180000": Object {
-      "conn": 10,
-      "dns": 71,
-    },
-    "1585851240000": Object {
-      "conn": 22,
-      "dns": 82,
-      "stats": 1,
-      "x509": 3,
-    },
-    "1585851300000": Object {
-      "conn": 31,
-      "dns": 106,
-    },
-    "1585851360000": Object {
-      "conn": 22,
-      "dns": 149,
-    },
-    "1585851420000": Object {
-      "conn": 14,
-      "dns": 86,
-    },
-    "1585851480000": Object {
-      "conn": 10,
-      "dns": 46,
-    },
-    "1585851540000": Object {
-      "conn": 10,
-      "dns": 34,
-      "stats": 1,
-    },
-    "1585851600000": Object {
-      "conn": 23,
-      "dns": 59,
-    },
-    "1585851660000": Object {
-      "conn": 12,
-      "dns": 71,
-      "x509": 1,
-    },
-    "1585851720000": Object {
-      "conn": 13,
-      "dns": 49,
-      "x509": 1,
-    },
-    "1585851780000": Object {
-      "conn": 10,
-      "dns": 42,
-    },
-    "1585851840000": Object {
-      "conn": 8,
-      "dns": 38,
-      "stats": 1,
-    },
-    "1585851900000": Object {
-      "conn": 17,
-      "dns": 48,
-    },
-    "1585851960000": Object {
-      "conn": 16,
-      "dns": 81,
-      "x509": 2,
-    },
-    "1585852020000": Object {
-      "conn": 12,
-      "dns": 80,
-    },
-    "1585852080000": Object {
-      "conn": 58,
-      "dns": 121,
-      "x509": 4,
-    },
-    "1585852140000": Object {
+    "1582646586000": Object {
+      "conn": 1,
+      "weird": 1,
+    },
+    "1582646587000": Object {
       "conn": 2,
-      "dns": 15,
-      "stats": 1,
+    },
+    "1582646588000": Object {
+      "conn": 5,
+    },
+    "1582646589000": Object {
+      "conn": 1,
+    },
+    "1582646590000": Object {
+      "conn": 2,
+    },
+    "1582646591000": Object {
+      "conn": 1,
+      "dns": 1,
+    },
+    "1582646592000": Object {
+      "conn": 1,
+    },
+    "1582646593000": Object {
+      "conn": 2,
+      "dns": 1,
+    },
+    "1582646594000": Object {
+      "files": 4,
+      "ssl": 1,
+      "x509": 1,
+    },
+    "1582646595000": Object {
+      "conn": 3,
+    },
+    "1582646597000": Object {
+      "capture_loss": 1,
     },
   },
 }
@@ -468,7 +61,7 @@ Object {
 
 exports[`table search sets the Columns columns 1`] = `
 Object {
-  "temp": Object {
+  "7247fae6fe9d9e9087c6394e7aba3004": Object {
     "AA:bool": Object {
       "isVisible": true,
     },
@@ -481,7 +74,7 @@ Object {
     "TC:bool": Object {
       "isVisible": true,
     },
-    "TTLs:array[interval]": Object {
+    "TTLs:array": Object {
       "isVisible": true,
     },
     "Z:count": Object {
@@ -490,124 +83,7 @@ Object {
     "_path:string": Object {
       "isVisible": true,
     },
-    "active_dns_requests:count": Object {
-      "isVisible": true,
-    },
-    "active_files:count": Object {
-      "isVisible": true,
-    },
-    "active_icmp_conns:count": Object {
-      "isVisible": true,
-    },
-    "active_tcp_conns:count": Object {
-      "isVisible": true,
-    },
-    "active_timers:count": Object {
-      "isVisible": true,
-    },
-    "active_udp_conns:count": Object {
-      "isVisible": true,
-    },
-    "answers:array[string]": Object {
-      "isVisible": true,
-    },
-    "basic_constraints.ca:bool": Object {
-      "isVisible": true,
-    },
-    "basic_constraints.path_len:count": Object {
-      "isVisible": true,
-    },
-    "bytes_recv:count": Object {
-      "isVisible": true,
-    },
-    "certificate.curve:string": Object {
-      "isVisible": true,
-    },
-    "certificate.exponent:string": Object {
-      "isVisible": true,
-    },
-    "certificate.issuer:string": Object {
-      "isVisible": true,
-    },
-    "certificate.key_alg:string": Object {
-      "isVisible": true,
-    },
-    "certificate.key_length:count": Object {
-      "isVisible": true,
-    },
-    "certificate.key_type:string": Object {
-      "isVisible": true,
-    },
-    "certificate.not_valid_after:time": Object {
-      "isVisible": true,
-    },
-    "certificate.not_valid_before:time": Object {
-      "isVisible": true,
-    },
-    "certificate.serial:string": Object {
-      "isVisible": true,
-    },
-    "certificate.sig_alg:string": Object {
-      "isVisible": true,
-    },
-    "certificate.subject:string": Object {
-      "isVisible": true,
-    },
-    "certificate.version:count": Object {
-      "isVisible": true,
-    },
-    "conn_state:string": Object {
-      "isVisible": true,
-    },
-    "dns_requests:count": Object {
-      "isVisible": true,
-    },
-    "duration:interval": Object {
-      "isVisible": true,
-    },
-    "events_proc:count": Object {
-      "isVisible": true,
-    },
-    "events_queued:count": Object {
-      "isVisible": true,
-    },
-    "files:count": Object {
-      "isVisible": true,
-    },
-    "geo.orig.city:string": Object {
-      "isVisible": true,
-    },
-    "geo.orig.country_code:string": Object {
-      "isVisible": true,
-    },
-    "geo.orig.latitude:double": Object {
-      "isVisible": true,
-    },
-    "geo.orig.longitude:double": Object {
-      "isVisible": true,
-    },
-    "geo.orig.region:string": Object {
-      "isVisible": true,
-    },
-    "geo.resp.city:string": Object {
-      "isVisible": true,
-    },
-    "geo.resp.country_code:string": Object {
-      "isVisible": true,
-    },
-    "geo.resp.latitude:double": Object {
-      "isVisible": true,
-    },
-    "geo.resp.longitude:double": Object {
-      "isVisible": true,
-    },
-    "geo.resp.region:string": Object {
-      "isVisible": true,
-    },
-    "history:string": Object {
-      "isVisible": true,
-    },
-    "icmp_conns:count": Object {
+    "answers:array": Object {
       "isVisible": true,
     },
     "id.orig_h:addr": Object {
@@ -620,45 +96,6 @@ Object {
       "isVisible": true,
     },
     "id.resp_p:port": Object {
-      "isVisible": true,
-    },
-    "id:string": Object {
-      "isVisible": true,
-    },
-    "local_orig:bool": Object {
-      "isVisible": true,
-    },
-    "local_resp:bool": Object {
-      "isVisible": true,
-    },
-    "mem:count": Object {
-      "isVisible": true,
-    },
-    "missed_bytes:count": Object {
-      "isVisible": true,
-    },
-    "orig_bytes:count": Object {
-      "isVisible": true,
-    },
-    "orig_ip_bytes:count": Object {
-      "isVisible": true,
-    },
-    "orig_pkts:count": Object {
-      "isVisible": true,
-    },
-    "peer:string": Object {
-      "isVisible": true,
-    },
-    "pkt_lag:interval": Object {
-      "isVisible": true,
-    },
-    "pkts_dropped:count": Object {
-      "isVisible": true,
-    },
-    "pkts_link:count": Object {
-      "isVisible": true,
-    },
-    "pkts_proc:count": Object {
       "isVisible": true,
     },
     "proto:enum": Object {
@@ -685,64 +122,16 @@ Object {
     "rcode_name:string": Object {
       "isVisible": true,
     },
-    "reassem_file_size:count": Object {
-      "isVisible": true,
-    },
-    "reassem_frag_size:count": Object {
-      "isVisible": true,
-    },
-    "reassem_tcp_size:count": Object {
-      "isVisible": true,
-    },
-    "reassem_unknown_size:count": Object {
-      "isVisible": true,
-    },
     "rejected:bool": Object {
       "isVisible": true,
     },
-    "resp_bytes:count": Object {
-      "isVisible": true,
-    },
-    "resp_ip_bytes:count": Object {
-      "isVisible": true,
-    },
-    "resp_pkts:count": Object {
-      "isVisible": true,
-    },
     "rtt:interval": Object {
-      "isVisible": true,
-    },
-    "san.dns:array[string]": Object {
-      "isVisible": true,
-    },
-    "san.email:array[string]": Object {
-      "isVisible": true,
-    },
-    "san.ip:array[addr]": Object {
-      "isVisible": true,
-    },
-    "san.uri:array[string]": Object {
-      "isVisible": true,
-    },
-    "service:string": Object {
-      "isVisible": true,
-    },
-    "tcp_conns:count": Object {
-      "isVisible": true,
-    },
-    "timers:count": Object {
       "isVisible": true,
     },
     "trans_id:count": Object {
       "isVisible": true,
     },
     "ts:time": Object {
-      "isVisible": true,
-    },
-    "tunnel_parents:set[string]": Object {
-      "isVisible": true,
-    },
-    "udp_conns:count": Object {
       "isVisible": true,
     },
     "uid:string": Object {
@@ -754,433 +143,117 @@ Object {
 
 exports[`table search sets the viewer columns 1`] = `
 Object {
-  "2e9b31b9a9d6cb2eb3b66223b10bfbe3": Array [
-    Object {
-      "name": "_path",
-      "type": "string",
-    },
-    Object {
-      "name": "ts",
-      "type": "time",
-    },
-    Object {
-      "name": "peer",
-      "type": "string",
-    },
-    Object {
-      "name": "mem",
-      "type": "count",
-    },
-    Object {
-      "name": "pkts_proc",
-      "type": "count",
-    },
-    Object {
-      "name": "bytes_recv",
-      "type": "count",
-    },
-    Object {
-      "name": "pkts_dropped",
-      "type": "count",
-    },
-    Object {
-      "name": "pkts_link",
-      "type": "count",
-    },
-    Object {
-      "name": "pkt_lag",
-      "type": "interval",
-    },
-    Object {
-      "name": "events_proc",
-      "type": "count",
-    },
-    Object {
-      "name": "events_queued",
-      "type": "count",
-    },
-    Object {
-      "name": "active_tcp_conns",
-      "type": "count",
-    },
-    Object {
-      "name": "active_udp_conns",
-      "type": "count",
-    },
-    Object {
-      "name": "active_icmp_conns",
-      "type": "count",
-    },
-    Object {
-      "name": "tcp_conns",
-      "type": "count",
-    },
-    Object {
-      "name": "udp_conns",
-      "type": "count",
-    },
-    Object {
-      "name": "icmp_conns",
-      "type": "count",
-    },
-    Object {
-      "name": "timers",
-      "type": "count",
-    },
-    Object {
-      "name": "active_timers",
-      "type": "count",
-    },
-    Object {
-      "name": "files",
-      "type": "count",
-    },
-    Object {
-      "name": "active_files",
-      "type": "count",
-    },
-    Object {
-      "name": "dns_requests",
-      "type": "count",
-    },
-    Object {
-      "name": "active_dns_requests",
-      "type": "count",
-    },
-    Object {
-      "name": "reassem_tcp_size",
-      "type": "count",
-    },
-    Object {
-      "name": "reassem_file_size",
-      "type": "count",
-    },
-    Object {
-      "name": "reassem_frag_size",
-      "type": "count",
-    },
-    Object {
-      "name": "reassem_unknown_size",
-      "type": "count",
-    },
-  ],
-  "9325d3ffbe0fc2ef032aa5d3a187bdfe": Array [
-    Object {
-      "name": "_path",
-      "type": "string",
-    },
-    Object {
-      "name": "ts",
-      "type": "time",
-    },
-    Object {
-      "name": "uid",
-      "type": "string",
-    },
-    Object {
-      "name": "id.orig_h",
-      "type": "addr",
-    },
-    Object {
-      "name": "id.orig_p",
-      "type": "port",
-    },
-    Object {
-      "name": "id.resp_h",
-      "type": "addr",
-    },
-    Object {
-      "name": "id.resp_p",
-      "type": "port",
-    },
-    Object {
-      "name": "proto",
-      "type": "enum",
-    },
-    Object {
-      "name": "service",
-      "type": "string",
-    },
-    Object {
-      "name": "duration",
-      "type": "interval",
-    },
-    Object {
-      "name": "orig_bytes",
-      "type": "count",
-    },
-    Object {
-      "name": "resp_bytes",
-      "type": "count",
-    },
-    Object {
-      "name": "conn_state",
-      "type": "string",
-    },
-    Object {
-      "name": "local_orig",
-      "type": "bool",
-    },
-    Object {
-      "name": "local_resp",
-      "type": "bool",
-    },
-    Object {
-      "name": "missed_bytes",
-      "type": "count",
-    },
-    Object {
-      "name": "history",
-      "type": "string",
-    },
-    Object {
-      "name": "orig_pkts",
-      "type": "count",
-    },
-    Object {
-      "name": "orig_ip_bytes",
-      "type": "count",
-    },
-    Object {
-      "name": "resp_pkts",
-      "type": "count",
-    },
-    Object {
-      "name": "resp_ip_bytes",
-      "type": "count",
-    },
-    Object {
-      "name": "tunnel_parents",
-      "type": "set[string]",
-    },
-    Object {
-      "name": "geo.orig.country_code",
-      "type": "string",
-    },
-    Object {
-      "name": "geo.orig.region",
-      "type": "string",
-    },
-    Object {
-      "name": "geo.orig.city",
-      "type": "string",
-    },
-    Object {
-      "name": "geo.orig.latitude",
-      "type": "double",
-    },
-    Object {
-      "name": "geo.orig.longitude",
-      "type": "double",
-    },
-    Object {
-      "name": "geo.resp.country_code",
-      "type": "string",
-    },
-    Object {
-      "name": "geo.resp.region",
-      "type": "string",
-    },
-    Object {
-      "name": "geo.resp.city",
-      "type": "string",
-    },
-    Object {
-      "name": "geo.resp.latitude",
-      "type": "double",
-    },
-    Object {
-      "name": "geo.resp.longitude",
-      "type": "double",
-    },
-  ],
-  "cedf1959cfb9adffd84415b0b7ca1b99": Array [
-    Object {
-      "name": "_path",
-      "type": "string",
-    },
-    Object {
-      "name": "ts",
-      "type": "time",
-    },
-    Object {
-      "name": "uid",
-      "type": "string",
-    },
-    Object {
-      "name": "id.orig_h",
-      "type": "addr",
-    },
-    Object {
-      "name": "id.orig_p",
-      "type": "port",
-    },
-    Object {
-      "name": "id.resp_h",
-      "type": "addr",
-    },
-    Object {
-      "name": "id.resp_p",
-      "type": "port",
-    },
-    Object {
-      "name": "proto",
-      "type": "enum",
-    },
-    Object {
-      "name": "trans_id",
-      "type": "count",
-    },
-    Object {
-      "name": "rtt",
-      "type": "interval",
-    },
-    Object {
-      "name": "query",
-      "type": "string",
-    },
-    Object {
-      "name": "qclass",
-      "type": "count",
-    },
-    Object {
-      "name": "qclass_name",
-      "type": "string",
-    },
-    Object {
-      "name": "qtype",
-      "type": "count",
-    },
-    Object {
-      "name": "qtype_name",
-      "type": "string",
-    },
-    Object {
-      "name": "rcode",
-      "type": "count",
-    },
-    Object {
-      "name": "rcode_name",
-      "type": "string",
-    },
-    Object {
-      "name": "AA",
-      "type": "bool",
-    },
-    Object {
-      "name": "TC",
-      "type": "bool",
-    },
-    Object {
-      "name": "RD",
-      "type": "bool",
-    },
-    Object {
-      "name": "RA",
-      "type": "bool",
-    },
-    Object {
-      "name": "Z",
-      "type": "count",
-    },
-    Object {
-      "name": "answers",
-      "type": "array[string]",
-    },
-    Object {
-      "name": "TTLs",
-      "type": "array[interval]",
-    },
-    Object {
-      "name": "rejected",
-      "type": "bool",
-    },
-  ],
-  "fcaf93fcf3f0980e52f3d00f13b5ecc0": Array [
-    Object {
-      "name": "_path",
-      "type": "string",
-    },
-    Object {
-      "name": "ts",
-      "type": "time",
-    },
-    Object {
-      "name": "id",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.version",
-      "type": "count",
-    },
-    Object {
-      "name": "certificate.serial",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.subject",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.issuer",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.not_valid_before",
-      "type": "time",
-    },
-    Object {
-      "name": "certificate.not_valid_after",
-      "type": "time",
-    },
-    Object {
-      "name": "certificate.key_alg",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.sig_alg",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.key_type",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.key_length",
-      "type": "count",
-    },
-    Object {
-      "name": "certificate.exponent",
-      "type": "string",
-    },
-    Object {
-      "name": "certificate.curve",
-      "type": "string",
-    },
-    Object {
-      "name": "san.dns",
-      "type": "array[string]",
-    },
-    Object {
-      "name": "san.uri",
-      "type": "array[string]",
-    },
-    Object {
-      "name": "san.email",
-      "type": "array[string]",
-    },
-    Object {
-      "name": "san.ip",
-      "type": "array[addr]",
-    },
-    Object {
-      "name": "basic_constraints.ca",
-      "type": "bool",
-    },
-    Object {
-      "name": "basic_constraints.path_len",
-      "type": "count",
-    },
-  ],
+  "7247fae6fe9d9e9087c6394e7aba3004": Schema {
+    "columns": Array [
+      Object {
+        "name": "_path",
+        "type": "string",
+      },
+      Object {
+        "name": "ts",
+        "type": "time",
+      },
+      Object {
+        "name": "uid",
+        "type": "string",
+      },
+      Object {
+        "name": "id",
+        "of": Array [
+          Object {
+            "name": "orig_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "orig_p",
+            "type": "port",
+          },
+          Object {
+            "name": "resp_h",
+            "type": "addr",
+          },
+          Object {
+            "name": "resp_p",
+            "type": "port",
+          },
+        ],
+        "type": "record",
+      },
+      Object {
+        "name": "proto",
+        "type": "enum",
+      },
+      Object {
+        "name": "trans_id",
+        "type": "count",
+      },
+      Object {
+        "name": "rtt",
+        "type": "interval",
+      },
+      Object {
+        "name": "query",
+        "type": "string",
+      },
+      Object {
+        "name": "qclass",
+        "type": "count",
+      },
+      Object {
+        "name": "qclass_name",
+        "type": "string",
+      },
+      Object {
+        "name": "qtype",
+        "type": "count",
+      },
+      Object {
+        "name": "qtype_name",
+        "type": "string",
+      },
+      Object {
+        "name": "rcode",
+        "type": "count",
+      },
+      Object {
+        "name": "rcode_name",
+        "type": "string",
+      },
+      Object {
+        "name": "AA",
+        "type": "bool",
+      },
+      Object {
+        "name": "TC",
+        "type": "bool",
+      },
+      Object {
+        "name": "RD",
+        "type": "bool",
+      },
+      Object {
+        "name": "RA",
+        "type": "bool",
+      },
+      Object {
+        "name": "Z",
+        "type": "count",
+      },
+      Object {
+        "name": "answers",
+        "of": "string",
+        "type": "array",
+      },
+      Object {
+        "name": "TTLs",
+        "of": "interval",
+        "type": "array",
+      },
+      Object {
+        "name": "rejected",
+        "type": "bool",
+      },
+    ],
+  },
 }
 `;

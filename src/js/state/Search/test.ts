@@ -18,7 +18,7 @@ describe("reducer", () => {
   let store
 
   beforeEach(() => {
-    store = initTestStore(createZealotMock().stubStream("search", []))
+    store = initTestStore(createZealotMock().stubStream("search", []).zealot)
     const conn = fixtures("cluster1")
     const space = fixtures("space1")
 

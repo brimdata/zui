@@ -1,7 +1,6 @@
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../config"
 import {SearchTarget} from "../../state/SearchBar/types"
 import {Thunk} from "../../state/types"
-import {hashDescriptorKeys} from "../../state/Viewer/helpers/hashDescriptorKeys"
 import {search} from "../search/mod"
 import Columns from "../../state/Columns"
 import Current from "../../state/Current"
@@ -10,6 +9,9 @@ import Notice from "../../state/Notice"
 import SearchBar from "../../state/SearchBar"
 import Tabs from "../../state/Tabs"
 import Viewer from "../../state/Viewer"
+import {zng} from "zealot"
+import md5 from "md5"
+import {SearchResponse} from "../search/response"
 
 type Args = {
   query: string
@@ -36,14 +38,14 @@ export function viewerSearch(args: Args): Thunk<Promise<void>> {
 }
 
 function handle(
-  response: any,
+  response: SearchResponse,
   tabId: string,
   isBlocking = false,
   append = false
 ): Thunk {
   return function(dispatch) {
-    const collectedColumns = {}
-    let collectedRecords = []
+    let allColumns = {}
+    let allRecords = []
 
     if (!append && !isBlocking) {
       dispatch(Viewer.clear(tabId))
@@ -54,16 +56,20 @@ function handle(
 
     response
       .status((status) => dispatch(Viewer.setStatus(tabId, status)))
-      .chan(0, (records, types) => {
-        const columns = hashDescriptorKeys(types)
+      .chan(0, (records, schemas: Map<number, zng.Schema>) => {
+        const columns = {}
+        for (let schema of schemas.values()) {
+          const hash = md5(JSON.stringify(schema.columns))
+          columns[hash] = schema
+        }
 
         if (isBlocking) {
-          Object.assign(collectedColumns, columns)
-          collectedRecords = collectedRecords.concat(records)
+          allColumns = columns
+          allRecords = records
           return
         }
 
-        dispatch(Viewer.appendRecords(tabId, records))
+        dispatch(Viewer.setRecords(tabId, records))
         dispatch(Viewer.updateColumns(tabId, columns))
         dispatch(Columns.touch(columns))
       })
@@ -73,9 +79,9 @@ function handle(
       })
       .end((_id, count) => {
         if (isBlocking) {
-          dispatch(Viewer.setRecords(tabId, collectedRecords))
-          dispatch(Viewer.setColumns(tabId, collectedColumns))
-          dispatch(Columns.touch(collectedColumns))
+          dispatch(Viewer.setRecords(tabId, allRecords))
+          dispatch(Viewer.setColumns(tabId, allColumns))
+          dispatch(Columns.touch(allColumns))
         }
         dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
       })

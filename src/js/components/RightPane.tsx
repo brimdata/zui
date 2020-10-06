@@ -10,7 +10,6 @@ import Current from "../state/Current"
 import ExpandWindow from "../icons/ExpandWindow"
 import HistoryButtons from "./common/HistoryButtons"
 import Layout from "../state/Layout"
-import Log from "../models/Log"
 import LogDetails from "../state/LogDetails"
 import LogDetailsComponent from "./LogDetails"
 import Pane, {
@@ -22,9 +21,10 @@ import Pane, {
   PaneBody
 } from "./Pane"
 import dispatchToProps from "../lib/dispatchToProps"
+import {zng} from "zealot"
 
 type StateProps = {
-  currentLog: Log
+  currentLog: zng.Record
   prevExists: boolean
   nextExists: boolean
   isOpen: boolean

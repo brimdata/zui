@@ -3,14 +3,15 @@ import {
   LOG_DETAIL_CLEAR,
   LOG_DETAIL_FORWARD,
   LOG_DETAIL_PUSH,
-  LogDetails
+  LOG_DETAIL_UPDATE
 } from "./types"
-import {RecordData} from "../../types/records"
+import {zng} from "zealot"
+import {SearchStatus} from "src/js/types/searches"
 
 export default {
-  push: (record: RecordData): LOG_DETAIL_PUSH => ({
+  push: (record: zng.Record): LOG_DETAIL_PUSH => ({
     type: "LOG_DETAIL_PUSH",
-    record
+    record: record.serialize()
   }),
 
   back: (): LOG_DETAIL_BACK => ({
@@ -21,10 +22,21 @@ export default {
     type: "LOG_DETAIL_FORWARD"
   }),
 
-  update: (updates: Partial<LogDetails>) => ({
-    type: "LOG_DETAIL_UPDATE",
-    updates
-  }),
+  updateUidLogs: (records: zng.Record[]): LOG_DETAIL_UPDATE => {
+    return {
+      type: "LOG_DETAIL_UPDATE",
+      updates: {
+        uidLogs: records.map((r) => r.serialize())
+      }
+    }
+  },
+
+  updateUidStatus: (uidStatus: SearchStatus): LOG_DETAIL_UPDATE => {
+    return {
+      type: "LOG_DETAIL_UPDATE",
+      updates: {uidStatus}
+    }
+  },
 
   clear: (): LOG_DETAIL_CLEAR => ({
     type: "LOG_DETAIL_CLEAR"

@@ -1,6 +1,7 @@
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
 import initTestStore from "../../test/initTestStore"
+import {zng} from "zealot"
 
 let store
 let tabId
@@ -10,9 +11,9 @@ beforeEach(() => {
   tabId = Tabs.getActive(store.getState())
 })
 
-const conn = [{name: "ts", type: "time", value: "1"}]
-const dns = [{name: "ts", type: "time", value: "2"}]
-const http = [{name: "ts", type: "time", value: "3"}]
+const conn = new zng.Record([{name: "ts", type: "time"}], ["1"])
+const dns = new zng.Record([{name: "ts", type: "time"}], ["2"])
+const http = new zng.Record([{name: "ts", type: "time"}], ["3"])
 
 test("adding logs to the viewer", () => {
   const state = store.dispatchAll([
@@ -63,10 +64,14 @@ test("results limited", () => {
 
 test("update columns with same tds", () => {
   const cols1 = {
-    "9d14c2039a78d76760aae879c7fd2c82": [{name: "hello", type: "string"}]
+    "9d14c2039a78d76760aae879c7fd2c82": new zng.Schema([
+      {name: "hello", type: "string"}
+    ])
   }
   const cols2 = {
-    "71f1b421963d31952e15edf7e3957a81": [{name: "world", type: "string"}]
+    "71f1b421963d31952e15edf7e3957a81": new zng.Schema([
+      {name: "world", type: "string"}
+    ])
   }
   const state = store.dispatchAll([
     Viewer.updateColumns(tabId, cols1),
@@ -74,7 +79,11 @@ test("update columns with same tds", () => {
   ])
 
   expect(Viewer.getColumns(state)).toEqual({
-    "9d14c2039a78d76760aae879c7fd2c82": [{name: "hello", type: "string"}],
-    "71f1b421963d31952e15edf7e3957a81": [{name: "world", type: "string"}]
+    "9d14c2039a78d76760aae879c7fd2c82": new zng.Schema([
+      {name: "hello", type: "string"}
+    ]),
+    "71f1b421963d31952e15edf7e3957a81": new zng.Schema([
+      {name: "world", type: "string"}
+    ])
   })
 })
