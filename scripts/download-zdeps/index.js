@@ -141,6 +141,33 @@ async function zeekDownload(version, zdepsPath) {
   console.log("zeek " + version + " downloaded to " + zeekPath)
 }
 
+async function suricataDownload(version, zdepsPath) {
+  if (!(process.platform in platformDefs)) {
+    throw new Error("unsupported platform")
+  }
+  const plat = platformDefs[process.platform]
+  const suricataPath = path.join(zdepsPath, "suricata")
+
+  const artifactFile = `suricata-${version}.${plat.osarch}.zip`
+  const artifactUrl = `https://storage.googleapis.com/brimsec/suricata/${artifactFile}`
+
+  const tmpdir = tmp.dirSync({unsafeCleanup: true})
+  try {
+    const destArchive = path.join(tmpdir.name, artifactFile)
+    await download(artifactUrl, destArchive)
+
+    fs.removeSync(suricataPath)
+    await unzipTo(destArchive, zdepsPath)
+    if (!fs.pathExistsSync(suricataPath)) {
+      throw new Error("suricata artifact zip file has unexpected layout")
+    }
+  } finally {
+    tmpdir.removeCallback()
+  }
+
+  console.log("suricata " + version + " downloaded to " + suricataPath)
+}
+
 // Build the zqd binary inside the node_modules/zq directory via "make build".
 async function zqDevBuild(destPath) {
   if (!(process.platform in platformDefs)) {
@@ -163,10 +190,12 @@ async function zqDevBuild(destPath) {
 
 async function main() {
   try {
-    // We encode the zeek version here for now to avoid the unncessary
+    // We encode the versions here for now to avoid the unncessary
     // git clone if it were in package.json.
     const zeekVersion = zqPackage.brimDependencies.zeekTag
+    const suricataVersion = zqPackage.brimDependencies.suricataTag
     await zeekDownload(zeekVersion, zdepsPath)
+    await suricataDownload(suricataVersion, zdepsPath)
 
     // The zq dependency should be a git tag or commit. Any tag that
     // begins with "v*" is expected to be a released artifact, and will

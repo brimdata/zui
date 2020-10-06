@@ -23,6 +23,32 @@ export default function usePreferencesForm(): FormConfig {
       defaultValue: useSelector(Prefs.getTimeFormat),
       submit: (value) => globalDispatch(Prefs.setTimeFormat(value))
     },
+    suricataRunner: {
+      name: "suricataRunner",
+      label: "Suricata Runner",
+      defaultValue: useSelector(Prefs.getSuricataRunner),
+      submit: (value) => globalDispatch(Prefs.setSuricataRunner(value)),
+      check: (path) => {
+        if (path === "") return [true, ""]
+        return lib
+          .file(path)
+          .exists()
+          .then((exists) => [exists, "file does not exist."])
+      }
+    },
+    suricataUpdater: {
+      name: "suricataUpdater",
+      label: "Suricata Updater",
+      defaultValue: useSelector(Prefs.getSuricataUpdater),
+      submit: (value) => globalDispatch(Prefs.setSuricataUpdater(value)),
+      check: (path) => {
+        if (path === "") return [true, ""]
+        return lib
+          .file(path)
+          .exists()
+          .then((exists) => [exists, "file does not exist."])
+      }
+    },
     zeekRunner: {
       name: "zeekRunner",
       label: "Zeek Runner",
