@@ -164,7 +164,7 @@ async function main() {
   try {
     // We encode the zeek version here for now to avoid the unncessary
     // git clone if it were in package.json.
-    const zeekVersion = "v3.2.1-brim1"
+    const zeekVersion = "v3.2.1-brim2"
     await zeekDownload(zeekVersion, zdepsPath)
 
     // The zq dependency should be a git tag or commit. Any tag that
