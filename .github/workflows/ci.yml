@@ -87,6 +87,7 @@ jobs:
           echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
           chmod 0440 /etc/sudoers.d/user
       - run: sudo dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio unzip make
+      - run: sudo dnf --enablerepo=PowerTools install -y mesa-libgbm-devel
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -127,82 +128,82 @@ jobs:
           whoami && \
           xvfb-run -d -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
 
-#  integration_test:
-#    runs-on: ${{ matrix.os }}
-#    strategy:
-#      matrix:
-#        node-version: [12.x]
-#        os: [macos-10.15, ubuntu-18.04, windows-2019]
-#    needs: build
-#    steps:
-#      - run: git config --global core.autocrlf false
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-go@v2
-#        with:
-#          go-version: "1.14"
-#      - uses: denolib/setup-deno@v2
-#        with:
-#          deno-version: v1.x
-#      - name: setup node version ${{ matrix.node-version }}
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#      - name: Set NPM Cache Directory
-#        id: set-npm-cache-dir
-#        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-#      - name: Clear Extraneous Runner Cache
-#        run: rm -rf "${NPM_CACHE:?}"
-#        env:
-#          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-#        shell: bash
-#      - name: Cache node modules
-#        uses: actions/cache@v1
-#        env:
-#          cache-name: cache-node-modules-ci-v4
-#        with:
-#          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-#          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-#          restore-keys: |
-#            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-#      - run: npm install --no-audit
-#      - run: npm run build
-#      - name: Build and Install MacOS DMG
-#        if: runner.os == 'macOS'
-#        run: |
-#          set -x
-#          source scripts/lib/common.bash
-#          node scripts/release --darwin
-#          hdiutil attach dist/installers/Brim.dmg
-#          cp -R /Volumes/Brim/Brim.app /Applications
-#          retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
-#        shell: bash
-#      - name: Download Linux packages
-#        if: runner.os == 'Linux'
-#        uses: actions/download-artifact@v1
-#        with:
-#          name: linux-release
-#      - name: Integration Tests (Debian Linux)
-#        if: runner.os == 'Linux'
-#        run: |
-#          sudo apt install -y ./linux-release/brim_amd64.deb
-#          xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
-#        env:
-#          # WORKSPACE represents a top-level place for test infra code to
-#          # find and put things. That avoids proliferation of env
-#          # variables of directories. It's used to dump logs into the
-#          # correct place so that CI can reliably find them for
-#          # collection.
-#          WORKSPACE: /var/tmp/brimsec
-#      - name: Integration Tests (non-Linux)
-#        if: runner.os != 'Linux'
-#        run: npm run itest -- --ci --forceExit
-#        env:
-#          WORKSPACE: /var/tmp/brimsec
-#      - uses: actions/upload-artifact@v1
-#        if: failure()
-#        with:
-#          name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
-#          path: /var/tmp/brimsec/itest
+  #  integration_test:
+  #    runs-on: ${{ matrix.os }}
+  #    strategy:
+  #      matrix:
+  #        node-version: [12.x]
+  #        os: [macos-10.15, ubuntu-18.04, windows-2019]
+  #    needs: build
+  #    steps:
+  #      - run: git config --global core.autocrlf false
+  #      - uses: actions/checkout@v2
+  #      - uses: actions/setup-go@v2
+  #        with:
+  #          go-version: "1.14"
+  #      - uses: denolib/setup-deno@v2
+  #        with:
+  #          deno-version: v1.x
+  #      - name: setup node version ${{ matrix.node-version }}
+  #        uses: actions/setup-node@v1
+  #        with:
+  #          node-version: ${{ matrix.node-version }}
+  #      - name: Set NPM Cache Directory
+  #        id: set-npm-cache-dir
+  #        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
+  #      - name: Clear Extraneous Runner Cache
+  #        run: rm -rf "${NPM_CACHE:?}"
+  #        env:
+  #          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+  #        shell: bash
+  #      - name: Cache node modules
+  #        uses: actions/cache@v1
+  #        env:
+  #          cache-name: cache-node-modules-ci-v4
+  #        with:
+  #          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
+  #          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+  #          restore-keys: |
+  #            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+  #      - run: npm install --no-audit
+  #      - run: npm run build
+  #      - name: Build and Install MacOS DMG
+  #        if: runner.os == 'macOS'
+  #        run: |
+  #          set -x
+  #          source scripts/lib/common.bash
+  #          node scripts/release --darwin
+  #          hdiutil attach dist/installers/Brim.dmg
+  #          cp -R /Volumes/Brim/Brim.app /Applications
+  #          retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
+  #        shell: bash
+  #      - name: Download Linux packages
+  #        if: runner.os == 'Linux'
+  #        uses: actions/download-artifact@v1
+  #        with:
+  #          name: linux-release
+  #      - name: Integration Tests (Debian Linux)
+  #        if: runner.os == 'Linux'
+  #        run: |
+  #          sudo apt install -y ./linux-release/brim_amd64.deb
+  #          xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
+  #        env:
+  #          # WORKSPACE represents a top-level place for test infra code to
+  #          # find and put things. That avoids proliferation of env
+  #          # variables of directories. It's used to dump logs into the
+  #          # correct place so that CI can reliably find them for
+  #          # collection.
+  #          WORKSPACE: /var/tmp/brimsec
+  #      - name: Integration Tests (non-Linux)
+  #        if: runner.os != 'Linux'
+  #        run: npm run itest -- --ci --forceExit
+  #        env:
+  #          WORKSPACE: /var/tmp/brimsec
+  #      - uses: actions/upload-artifact@v1
+  #        if: failure()
+  #        with:
+  #          name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
+  #          path: /var/tmp/brimsec/itest
 
   markdown-link-check:
     runs-on: ubuntu-latest
