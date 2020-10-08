@@ -82,7 +82,10 @@ jobs:
     needs: build
     steps:
       - run: dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio unzip make
-      - run: sudo dnf --enablerepo=PowerTools install -y mesa-libgbm-devel
+      - run: dnf --enablerepo=PowerTools install -y mesa-libgbm-devel
+      - run: dnf install -y atk.x86_64 cups-libs.x86_64 gtk3.x86_64 libXcomposite.x86_64 libXcursor.x86_64 libXdamage.x86_64 libXext.x86_64 libXi.x86_64 libXrandr.x86_64 libXScrnSaver.x86_64 libXtst.x86_64 pango.x86_64 xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-fonts-cyrillic xorg-x11-fonts-misc xorg-x11-fonts-Type1 xorg-x11-utils
+      - run: dnf group install -y "Development Tools"
+      - run: dnf install -y python3
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
