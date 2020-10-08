@@ -15,14 +15,9 @@ export default (name: string, idx: number): Application => {
   mkdirpSync(userDataDir)
   mkdirpSync(path.resolve(userDataDir, "webdriverLogFiles"))
 
-  // https://github.com/electron-userland/spectron#new-applicationoptions
+  // https://github.com/electron- userland/spectron#new-applicationoptions
   let appArgs = {
-    chromeDriverArgs: [
-      "--no-sandbox",
-      "--headless",
-      "--disable-dev-shm-usage",
-      `--user-data-dir=${userDataDir}`
-    ],
+    chromeDriverArgs: ["no-sandbox", `user-data-dir=${userDataDir}`],
     startTimeout: 60000,
     waitTimeout: 15000,
     chromeDriverLogPath: path.join(userDataDir, "chromedriver.log"),
