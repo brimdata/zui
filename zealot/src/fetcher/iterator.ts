@@ -1,10 +1,9 @@
 import {isObject} from "../util/utils"
-import {pipeJson} from "./pipeJson"
-import {pipeText} from "./pipeText"
 import {parseContentType} from "./contentType"
 import {Enhancer, ZIterator} from "../types"
 import {FetchArgs} from "./fetcher"
 import * as zqd from "../zqd"
+import {eachLine} from "../ndjson/lines"
 
 export async function* createIterator(
   resp: Response,
@@ -18,7 +17,7 @@ export async function* createIterator(
 
   const enhancers = (args.enhancers || []).map((fn: Enhancer) => fn())
 
-  for await (let json of pipeJson(pipeText(resp.body))) {
+  for await (let json of eachLine(resp.body)) {
     yield enhancers.reduce(
       (payload: zqd.Payload, fn: (p: zqd.Payload) => any) => fn(payload),
       json

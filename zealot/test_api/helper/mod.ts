@@ -3,6 +3,7 @@ export * from "https://deno.land/std/testing/asserts.ts"
 export * from "https://deno.land/x/mock@v0.4.0/spy.ts"
 export * from "./test_api.ts"
 export * from "./assertCalledWith.ts"
+export * from "./fake_zqd.ts"
 import * as zealot from "../../dist/index.es.js"
 
 export function test(name: string, fn: () => void | Promise<void>) {
