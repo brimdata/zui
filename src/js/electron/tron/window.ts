@@ -1,4 +1,5 @@
-import {BrowserWindow} from "electron"
+import {screen, BrowserWindow} from "electron"
+import {getWindowDimens} from "../dimens"
 
 import {WindowName} from "./windowManager"
 
@@ -24,11 +25,21 @@ export default function window(name: WindowName, params: WindowParams) {
 
 function searchWindow(params) {
   const {size, position, query, id} = params
+  const desired = {
+    x: position[0],
+    y: position[1],
+    width: size[0],
+    height: size[1]
+  }
+  const defaults = {x: undefined, y: undefined, width: 1250, height: 750}
+  const screens = screen.getAllDisplays().map((s) => s.workArea)
+  const dimens = getWindowDimens(desired, defaults, screens)
   const win = new BrowserWindow({
     titleBarStyle: "hidden",
     resizable: true,
     minWidth: 480,
     minHeight: 100,
+    ...dimens,
     webPreferences: {
       nodeIntegration: true,
       experimentalFeatures: true,
@@ -40,16 +51,6 @@ function searchWindow(params) {
     e.sender.webContents.send("close")
   })
 
-  if (size) {
-    const [width, height] = size
-    win.setSize(width, height)
-  }
-  if (position) {
-    const [x, y] = position
-    win.setPosition(x, y)
-  } else {
-    win.center()
-  }
   win.loadFile("search.html", {query: {...query, id}})
 
   return win
