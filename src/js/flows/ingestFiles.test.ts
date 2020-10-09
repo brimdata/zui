@@ -129,4 +129,19 @@ describe("error case", () => {
     expect(Spaces.getSpaces(cluster)(state)).toEqual([])
     expect(Current.getSpaceId(state)).toEqual(null)
   })
+
+  test("pcap post warning", async () => {
+    zealot.stubStream("pcaps.post", [
+      {type: "PcapPostWarning", warning: "Some pcap warning"}
+    ])
+
+    await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+
+    const state = store.getState()
+    const connId = Current.getConnectionId(state)
+    const spaceId = Current.getSpaceId(state)
+    expect(Spaces.getIngestWarnings(connId, spaceId)(state)).toEqual([
+      "Some pcap warning"
+    ])
+  })
 })
