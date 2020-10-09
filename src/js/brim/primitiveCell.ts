@@ -27,6 +27,9 @@ export function createPrimitiveCell({name, data}: PrimitiveField) {
     name,
     type,
     value,
+    serialize() {
+      return {name, type, value}
+    },
     queryableValue() {
       if (this.value === null) return "null"
       if (this.value === undefined) return "null"

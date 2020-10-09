@@ -4,8 +4,8 @@ import logStep from "../util//logStep"
 import {selectors} from "../../../../src/js/test/integration"
 
 export const waitForNewTab = (app: Application) =>
-  logStep("wait for new tab to appear", () =>
-    app.client.waitForVisible(selectors.ingest.filesButton)
+  logStep("wait for new tab to appear", async () =>
+    (await app.client.$(selectors.ingest.filesButton)).waitForDisplayed()
   )
 
 export default async (app: Application) => {

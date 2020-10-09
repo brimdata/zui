@@ -8,29 +8,20 @@ import {dataSets} from "../lib/data"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "../lib/log"
 
-const verifySingleRectAttr = (app, pathClass, attr) =>
+const verifySingleRectAttr = async (app, pathClass, attr) => {
   // We needn't wait on this selector: the stack has verifyPathClassRect()
   // calling this after a retryUntil() succeeds in which the number of distinct
   // _path g classes are present.
-  app.client.getAttribute(`.${pathClass} rect`, attr).then((vals) => {
-    // Handle case of a single rect, in which case webdriver doesn't return an
-    // array of 1 item but instead a scalar
-    if (typeof vals === "string") {
-      vals = [vals]
-    }
-    if (!Array.isArray(vals)) {
-      throw new Error(
-        `expected Array for ${pathClass} attr ${attr}; got ${vals}`
-      )
-    }
-    vals.forEach((val) => {
-      expect(Number(val)).toBeGreaterThanOrEqual(
-        dataSets.sample.histogram.rectAttrMin
-      )
-      expect(Number(val)).toBeLessThan(dataSets.sample.histogram.rectAttrMax)
-    })
-    return vals
+  const els = await app.client.$$(`.${pathClass} rect`)
+  const vals = await Promise.all(els.map((el) => el.getAttribute(attr)))
+  vals.forEach((val) => {
+    expect(Number(val)).toBeGreaterThanOrEqual(
+      dataSets.sample.histogram.rectAttrMin
+    )
+    expect(Number(val)).toBeLessThan(dataSets.sample.histogram.rectAttrMax)
   })
+  return vals
+}
 
 const verifyPathClassRect = (app, pathClass) =>
   Promise.all(
@@ -81,7 +72,12 @@ describe("Histogram tests", () => {
         // Just count a higher number of _paths, not all ~1500 rect elements.
         LOG.debug("Checking rect elements in Whole Space")
         const pathClasses = await retryUntil(
-          () => app.client.getAttribute(selectors.histogram.gElem, "class"),
+          async () =>
+            Promise.all(
+              (await app.client.$$(selectors.histogram.gElem)).map((g) =>
+                g.getAttribute("class")
+              )
+            ),
           (pathClasses) =>
             pathClasses.length ===
             dataSets.sample.histogram.wholeSpaceDistinctPaths
@@ -95,9 +91,7 @@ describe("Histogram tests", () => {
         // sets the size of a bar). That's best done with unit testing.
         LOG.debug("Getting all rect elements")
         const allRectValues = await Promise.all(
-          pathClasses.map(
-            async (pathClass) => await verifyPathClassRect(app, pathClass)
-          )
+          pathClasses.map((pathClass) => verifyPathClassRect(app, pathClass))
         )
         LOG.debug("Got all rect elements")
         expect(allRectValues.length).toBe(
