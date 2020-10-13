@@ -2,10 +2,8 @@ import {Application} from "spectron"
 import path from "path"
 
 import {testDataDir} from "../../env"
-import {retryUntil} from "../../control"
 import {click} from "./click"
 import logStep from "../util/logStep"
-import {LOG} from "../../log"
 import {selectors} from "../../../../src/js/test/integration"
 import {popNoticeLocator} from "../../../../src/js/test/locators"
 
@@ -16,6 +14,7 @@ export default async (app: Application, file: string) => {
   await logStep("wait for pcap file input", async () =>
     (await app.client.$(selectors.ingest.filesButton)).waitForDisplayed()
   )
+
   await logStep("choose file", async () => {
     const fileInput = await app.client.$(selectors.ingest.filesInput)
     const remoteFile = await app.client.uploadFile(
