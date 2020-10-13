@@ -4,7 +4,7 @@ import Current from "../state/Current"
 import Investigation from "../state/Investigation"
 import Spaces from "../state/Spaces"
 
-const deleteSpace = (id: string): Thunk => (
+const deleteSpace = (id: string): Thunk<Promise<void>> => (
   dispatch,
   getState,
   {globalDispatch}

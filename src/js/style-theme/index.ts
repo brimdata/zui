@@ -26,7 +26,7 @@ const labelNormal = css`
   font-family: system-ui, sans-serif;
   font-size: 13px;
   line-height: 16px;
-  font-weight: 500;
+  font-weight: 400;
 `
 
 const labelBold = css`
