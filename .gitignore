@@ -8,3 +8,4 @@ zealot/bundle.js
 .idea
 run
 .vscode
+.DS_Store
