@@ -21,9 +21,9 @@ export default function searchFieldContextMenu(
     const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
     const isIp = ["addr", "set[addr]"].includes(field.data.getType())
-
     const hasCol = columns.includes(field.name)
-    const sameCols = isEqual(log.type.map((d) => d.name).sort(), columns.sort())
+    const flatColNames = log.flatten().getColumnNames()
+    const sameCols = isEqual(flatColNames.sort(), columns.sort())
     const hasPackets = space && space.pcap_support
     const virusTotal = [
       "hassh",
