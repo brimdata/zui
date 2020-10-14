@@ -20,47 +20,21 @@
   }
 
   .remove-button {
-    @include button-reset;
     display: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    position: absolute;
-    right: -8px;
-    top: -8px;
-    padding: 0;
-    justify-content: center;
-    background-color: $gray-9;
-    transform: scale(1);
-    border: 1px solid white;
-
-    &:hover {
-      @include shadow-flat;
-      transition: all 150ms;
-      transform: scale(1.1);
-    }
-
-    &:active {
-      background-color: $gray-5;
-      transform: scale(1);
-    }
-
-    &:hover {
-      svg {
-        transform: scale(1.1);
-      }
-    }
-
-    svg {
-      width: 6px;
-      height: 6px;
-      stroke: white;
-      fill: white;
-    }
   }
 
   &:hover .remove-button {
     display: flex;
+    .circle {
+      fill: $wet-cement;
+      opacity: 0.5;
+    }
+    &:hover .circle {
+      opacity: 0.8;
+    }
+    &:active .circle {
+      opacity: 1;
+    }
   }
 
   &.focused {

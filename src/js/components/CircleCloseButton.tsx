@@ -34,9 +34,9 @@ const Wrap = styled.button`
   }
 `
 
-export function CircleCloseButton({onClick}) {
+export function CircleCloseButton({onClick, ...rest}) {
   return (
-    <Wrap onClick={onClick}>
+    <Wrap onClick={onClick} {...rest}>
       <CircleCloseSvg />
     </Wrap>
   )
