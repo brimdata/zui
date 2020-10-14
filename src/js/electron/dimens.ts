@@ -1,6 +1,29 @@
 const SCREEN_PADDING = 50
 
-export function getWindowDimens(saved, defaults, screens) {
+export type Dimens = {
+  x: number | undefined
+  y: number | undefined
+  width: number
+  height: number
+}
+
+export function dimensFromSizePosition(
+  size: [number, number],
+  position: [number, number] | undefined
+): Dimens {
+  return {
+    x: position && position[0],
+    y: position && position[0],
+    width: size && size[0],
+    height: size && size[1]
+  }
+}
+
+export function getWindowDimens(
+  saved: Partial<Dimens>,
+  defaults: Dimens,
+  screens: Electron.Rectangle[]
+) {
   const bounds = screens.find((screen) =>
     intersects(pad(screen, SCREEN_PADDING), saved)
   )

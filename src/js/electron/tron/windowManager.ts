@@ -8,25 +8,31 @@ import brim from "../../brim"
 import ipc from "../ipc"
 import sendTo from "../ipc/sendTo"
 import tron from "./"
+import {SearchWindow} from "./searchWindow"
+import {dimensFromSizePosition} from "../dimens"
 
 export type WindowName = "search" | "about" | "detail"
 export type $WindowManager = ReturnType<typeof windowManager>
 
-export type WindowsState = {
-  [key: string]: WindowState
-}
-
 export type WindowState = {
-  ref: BrowserWindow
-  name: string
+  name: Window
   size?: [number, number]
   position?: [number, number]
   state?: Object
   lastFocused?: number
 }
 
+export interface BrimWindow {
+  ref: BrowserWindow
+  id: string
+  lastFocused: number
+  name: WindowName
+}
+
 export default function windowManager() {
-  let windows: WindowsState = {}
+  let windows: {
+    [id: string]: BrimWindow
+  } = {}
   let isQuitting = false
 
   return {
@@ -50,7 +56,7 @@ export default function windowManager() {
       for (const id in windows) {
         const win = windows[id]
         if (win.name === "search") {
-          state[id] = win
+          state[id] = win.serialize()
         }
       }
       return state
@@ -76,7 +82,7 @@ export default function windowManager() {
       )
     },
 
-    getWindows(): WindowState[] {
+    getWindows(): BrimWindow[] {
       return Object.values(windows)
     },
 
@@ -120,6 +126,23 @@ export default function windowManager() {
     },
 
     openWindow(name: WindowName, winParams: Partial<WindowParams> = {}) {
+      function register(window) {
+        window.ref
+          .on("focus", () => {
+            if (!isQuitting) window.touchLastFocused()
+          })
+          .on("closed", () => {
+            if (!isQuitting) delete windows[window]
+          })
+        windows[window.id] = window
+      }
+
+      if (name === "search") {
+        const {size, position} = winParams
+        const dimens = dimensFromSizePosition(size, position)
+        register(new SearchWindow(dimens, winParams.query))
+        return
+      }
       const params = defaultWindowParams(winParams)
       const id = params.id
 
