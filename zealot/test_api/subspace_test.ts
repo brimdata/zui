@@ -19,6 +19,6 @@ testApi("creating a subspace", async (zealot) => {
         spaceId: parent.id
       }),
     Error,
-    "log filter id1 not a data filename"
+    "log filter id1 not a chunk file name"
   )
 })
