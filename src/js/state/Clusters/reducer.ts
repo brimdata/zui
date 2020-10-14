@@ -17,5 +17,9 @@ export default produce((draft: ClustersState, action: ClusterAction) => {
       if (!draft[action.id]) return
       draft[action.id].status = action.status
       return
+    case "CLUSTER_SET_NAME":
+      if (!draft[action.id]) return
+      draft[action.id].name = action.name
+      return
   }
 }, init())

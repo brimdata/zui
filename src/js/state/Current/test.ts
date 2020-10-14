@@ -26,6 +26,7 @@ test("setting the connection id", () => {
 test("getting the actual connection", () => {
   const conn: Cluster = {
     id: "myconn",
+    name: "myconn",
     host: "www.myconn.com",
     port: "123",
     username: "",
@@ -44,6 +45,7 @@ test("getting the actual space", () => {
   const space = fixtures("space1")
   const conn: Cluster = {
     id: "myconn",
+    name: "myconn",
     host: "www.myconn.com",
     port: "123",
     username: "",

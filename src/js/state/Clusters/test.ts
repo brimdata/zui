@@ -9,6 +9,7 @@ beforeEach(() => {
 
 const cluster: Cluster = {
   id: "123",
+  name: "123",
   host: "boom.com",
   port: "9867",
   username: "kerr",

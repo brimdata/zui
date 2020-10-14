@@ -5,10 +5,12 @@ import getUrlSearchParams from "../lib/getUrlSearchParams"
 import {Cluster} from "../state/Clusters/types"
 
 const setupConnection = (host, port) => (dispatch, _, {globalDispatch}) => {
+  const hostPort = [host, port].join(":")
   const cluster: Cluster = {
     host,
     port,
-    id: [host, port].join(":"),
+    id: hostPort,
+    name: hostPort,
     username: "",
     password: "",
     status: "initial"
