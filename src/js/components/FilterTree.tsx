@@ -16,13 +16,15 @@ import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import usePopupMenu from "./hooks/usePopupMenu"
 import {remote} from "electron"
+import Last from "../state/Last"
 
 type Props = {node: any; i: number; connId: string; spaceId: string}
 
 function NodeRow({node, i, connId, spaceId}: Props) {
   const dispatch = useDispatch()
-  const pinnedFilters = useSelector(SearchBar.getSearchBarPins)
-  const previous = useSelector(SearchBar.getSearchBarPreviousInputValue)
+  const last = useSelector(Last.getSearch)
+  const pinnedFilters = last?.pins || []
+  const previous = last?.program || ""
   const menu = usePopupMenu([
     {
       label: "Delete",
