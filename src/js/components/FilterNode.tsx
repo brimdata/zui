@@ -1,7 +1,6 @@
 import React, {MouseEvent} from "react"
 import styled from "styled-components"
 import {CircleCloseButton} from "./CircleCloseButton"
-import X from "./icons/x-md.svg"
 
 type Props = {
   filter: string
