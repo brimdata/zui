@@ -15,6 +15,12 @@ const headingList = css`
   text-transform: uppercase;
 `
 
+const headingPage = css`
+  font-family: system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+`
+
 const labelSmall = css`
   font-family: system-ui, sans-serif;
   font-size: 11px;
@@ -65,6 +71,7 @@ const theme = {
   typography: {
     headingSection,
     headingList,
+    headingPage,
     labelSmall,
     labelNormal,
     labelBold

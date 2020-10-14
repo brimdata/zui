@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react"
 import {BrimError} from "../errors/types"
 import {initSpace} from "../flows/initSpace"
 import Notice from "../state/Notice"
-import Tab from "../state/Tab"
+import Current from "../state/Current"
 
 type Props = {
   error: BrimError
@@ -15,10 +15,10 @@ const MAX_BACKOFF = 128
 
 export default function NetworkErrorNotice({error}: Props) {
   const dispatch = useDispatch()
-  const space = useSelector(Tab.getSpaceName)
+  const spaceId = useSelector(Current.getSpaceId)
   const [count, setCount] = useState(0)
 
-  const retry = () => dispatch(initSpace(space))
+  const retry = () => dispatch(initSpace(spaceId))
   const dismiss = () => dispatch(Notice.dismiss())
 
   useEffect(() => {

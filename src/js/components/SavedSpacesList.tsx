@@ -20,9 +20,11 @@ import Spaces from "../state/Spaces"
 import deleteSpaces from "../flows/deleteSpaces"
 import {popNotice} from "./PopNotice"
 import {AppDispatch} from "../state/types"
+import {ClusterStatus} from "../state/Clusters/types"
 
 type Props = {
   spaces: Space[]
+  connStatus: ClusterStatus
 }
 
 const NameWrap = styled.div`
@@ -31,26 +33,6 @@ const NameWrap = styled.div`
   flex: 2;
   overflow: hidden;
 `
-
-export default function SavedSpacesList({spaces}: Props) {
-  if (spaces.length === 0)
-    return (
-      <EmptySection
-        icon={<FileFilled />}
-        message="You have no spaces yet. Create a space by importing data."
-      />
-    )
-
-  return (
-    <menu className="saved-spaces-list">
-      {spaces
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .map((space) => {
-          return <SpaceListItem key={space.id} space={space} />
-        })}
-    </menu>
-  )
-}
 
 const SpaceListItem = ({space}: {space: Space}) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -132,5 +114,27 @@ const SpaceListItem = ({space}: {space: Space}) => {
         {progress}
       </a>
     </li>
+  )
+}
+
+export default function SavedSpacesList({spaces, connStatus}: Props) {
+  if (connStatus === "disconnected")
+    return <EmptySection message="Unable to connect to service" />
+  if (spaces.length === 0)
+    return (
+      <EmptySection
+        icon={<FileFilled />}
+        message="You have no spaces yet. Create a space by importing data."
+      />
+    )
+
+  return (
+    <menu className="saved-spaces-list">
+      {spaces
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map((space) => {
+          return <SpaceListItem key={space.id} space={space} />
+        })}
+    </menu>
   )
 }
