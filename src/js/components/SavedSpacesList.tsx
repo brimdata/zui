@@ -18,6 +18,8 @@ import deleteSpace from "../flows/deleteSpace"
 import Modal from "../state/Modal/actions"
 import Spaces from "../state/Spaces"
 import deleteSpaces from "../flows/deleteSpaces"
+import {popNotice} from "./PopNotice"
+import {AppDispatch} from "../state/types"
 
 type Props = {
   spaces: Space[]
@@ -51,7 +53,7 @@ export default function SavedSpacesList({spaces}: Props) {
 }
 
 const SpaceListItem = ({space}: {space: Space}) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const clusterId = useSelector(Current.getConnectionId)
   const currentSpaceId = useSelector(Current.getSpaceId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
@@ -79,7 +81,10 @@ const SpaceListItem = ({space}: {space: Space}) => {
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
-            if (response === 0) dispatch(deleteSpace(s.id))
+            if (response === 0)
+              dispatch(deleteSpace(s.id)).then(() => {
+                popNotice(`Deleted space "${s.name}"`)
+              })
           })
       }
     },
@@ -95,7 +100,10 @@ const SpaceListItem = ({space}: {space: Space}) => {
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
-            if (response === 0) dispatch(deleteSpaces(spaceIds))
+            if (response === 0)
+              dispatch(deleteSpaces(spaceIds)).then(() => {
+                popNotice("Deleted all spaces")
+              })
           })
       }
     }
