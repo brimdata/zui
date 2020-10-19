@@ -1,4 +1,4 @@
-import {BrowserWindow, ipcMain} from "electron"
+import {BrowserWindow, ipcMain, screen} from "electron"
 
 import {NewTabSearchParams} from "../ipc/windows/messages"
 import {SessionState} from "./formatSessionState"
@@ -8,6 +8,8 @@ import brim from "../../brim"
 import ipc from "../ipc"
 import sendTo from "../ipc/sendTo"
 import tron from "./"
+import {stack} from "../window/dimens"
+import {last} from "lodash"
 
 export type WindowName = "search" | "about" | "detail"
 export type $WindowManager = ReturnType<typeof windowManager>
@@ -22,7 +24,7 @@ export type WindowState = {
   size?: [number, number]
   position?: [number, number]
   state?: Object
-  lastFocused?: number
+  lastFocused: number
 }
 
 export default function windowManager() {
@@ -31,12 +33,14 @@ export default function windowManager() {
 
   return {
     init(session?: SessionState | null | undefined) {
-      if (!session || (session && session.order.length === 0))
-        return this.openWindow("search")
-      for (const id of session.order) {
-        const {name, size, position, state} = session.windows[id]
-        this.openWindow(name, {size, position, id})
-        this.updateWindow(id, {state})
+      if (!session || (session && session.order.length === 0)) {
+        this.openWindow("search")
+      } else {
+        for (const id of session.order) {
+          const {name, size, position, state} = session.windows[id]
+          this.openWindow(name, {size, position, id})
+          this.updateWindow(id, {state})
+        }
       }
     },
 
@@ -77,7 +81,9 @@ export default function windowManager() {
     },
 
     getWindows(): WindowState[] {
-      return Object.values(windows)
+      return Object.values(windows).sort(
+        (a, b) => a.lastFocused - b.lastFocused
+      )
     },
 
     count(): number {
@@ -120,7 +126,9 @@ export default function windowManager() {
     },
 
     openWindow(name: WindowName, winParams: Partial<WindowParams> = {}) {
-      const params = defaultWindowParams(winParams)
+      const lastWin = last<WindowState>(this.getWindows())
+
+      const params = defaultWindowParams(winParams, lastWin && lastWin.ref)
       const id = params.id
 
       const ref = tron
@@ -170,13 +178,41 @@ export default function windowManager() {
 
     destroyWindow(win: BrowserWindow) {
       if (win) win.destroy()
+    },
+
+    moveToCurrentDisplay() {
+      const point = screen.getCursorScreenPoint()
+      const bounds = screen.getDisplayNearestPoint(point).workArea
+      const {x, y} = bounds
+
+      let prev = [x, y]
+      this.getWindows().forEach(({ref: win}: WindowState) => {
+        const [width, height] = win.getSize()
+        const [x, y] = prev
+        const next = stack({x, y, width, height}, bounds, 25)
+        win.setBounds(next)
+        prev = [next.x, next.y]
+      })
     }
   }
 }
 
-function defaultWindowParams(params: Partial<WindowParams>): WindowParams {
+function defaultWindowParams(
+  params: Partial<WindowParams>,
+  lastWin?: BrowserWindow
+): WindowParams {
+  let {position, size} = params
+  if (lastWin && !position && !size) {
+    const prev = lastWin.getBounds()
+    const bounds = screen.getDisplayNearestPoint({x: prev.x, y: prev.y})
+    const dimens = stack(prev, bounds.workArea, 25)
+    position = [dimens.x, dimens.y]
+    size = [dimens.width, dimens.height]
+  }
+
   return {
-    size: [1000, 800],
+    size,
+    position,
     id: brim.randomHash(),
     query: {},
     ...params
