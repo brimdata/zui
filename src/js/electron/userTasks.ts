@@ -18,7 +18,7 @@ export default function(app: any) {
         iconPath: process.execPath,
         iconIndex: 0,
         title: "Move Brim to Current Display",
-        description: "Move brim windows to the current display."
+        description: "Move Brim windows to the current display"
       }
     ])
   }
