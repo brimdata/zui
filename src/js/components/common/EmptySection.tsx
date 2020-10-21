@@ -22,14 +22,14 @@ const EmptyWrapper = styled.div`
 ` as ComponentType<any>
 
 type EmptySectionProps = {
-  icon: any
+  icon?: any
   message: string
 }
 
 const EmptySection = ({icon, message}: EmptySectionProps) => {
   return (
     <EmptyWrapper>
-      {icon}
+      {icon || null}
       <p>{message}</p>
     </EmptyWrapper>
   )

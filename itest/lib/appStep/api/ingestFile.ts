@@ -24,6 +24,7 @@ export default async (app: Application, file: string) => {
   })
 
   const notice = await app.client.$(popNoticeLocator.css)
+  app.client.waitUntil(() => notice.isExisting())
   app.client.waitUntil(() =>
     notice.getText().then((text) => text === "Import complete.")
   )

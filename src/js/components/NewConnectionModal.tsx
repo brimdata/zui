@@ -9,13 +9,13 @@ import brim from "../brim"
 import useCallbackRef from "./hooks/useCallbackRef"
 import styled from "styled-components"
 import {useDispatch} from "react-redux"
-import {setConnection} from "../flows/setConnection"
 import FormErrors from "./Preferences/FormErrors"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 import {isEmpty} from "lodash"
 import {FormConfig} from "../brim/form"
 import MacSpinner from "./MacSpinner"
+import {initConnection} from "../flows/initConnection"
 
 const LabelWrapper = styled.div`
   display: flex;
@@ -82,7 +82,8 @@ function toCluster({host, ...rest}): Cluster {
     port: p,
     id: `${h}:${p}`,
     username: undefined,
-    password: undefined
+    password: undefined,
+    status: "initial"
   }
 }
 
@@ -113,8 +114,8 @@ export default function NewConnectionModal() {
         }, {})
         try {
           setIsFetching(true)
-          await dispatch(setConnection(toCluster({host})))
-        } catch (_) {
+          await dispatch(initConnection(toCluster({host})))
+        } catch {
           setErrors([{message: "Cannot connect to host"}])
           return
         } finally {
