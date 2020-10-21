@@ -5,9 +5,7 @@ import {State} from "../../state/types"
 
 export type IpcMsg =
   | WindowsOpenMsg
-  | WindowsCloseMsg
   | WindowsInitialStateMsg
-  | WindowsDestroyMsg
   | WindowsNewSearchTabMsg
   | WindowsOpenDirectorySelect
   | GlobalStoreInitMsg
@@ -20,17 +18,9 @@ export type WindowsOpenMsg = {
   state: State
 }
 
-export type WindowsCloseMsg = {
-  channel: "windows:close"
-}
-
 export type WindowsInitialStateMsg = {
   channel: "windows:initialState"
   id: string
-}
-
-export type WindowsDestroyMsg = {
-  channel: "windows:destroy"
 }
 
 export type WindowsNewSearchTabMsg = {

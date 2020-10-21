@@ -1,35 +1,46 @@
-import {BrowserWindow, ipcMain, screen} from "electron"
+import {BrowserWindow, screen} from "electron"
 
 import {NewTabSearchParams} from "../ipc/windows/messages"
 import {SessionState} from "./formatSessionState"
 import {WindowParams} from "./window"
-import {isBoolean} from "../../lib/is"
 import brim from "../../brim"
 import ipc from "../ipc"
 import sendTo from "../ipc/sendTo"
 import tron from "./"
-import {stack} from "../window/dimens"
+import {dimensFromSizePosition, stack} from "../window/dimens"
 import {last} from "lodash"
+import {SearchWindow} from "../window/SearchWindow"
 
 export type WindowName = "search" | "about" | "detail"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {
-  [key: string]: WindowState
+  [key: string]: BrimWindow
 }
 
-export type WindowState = {
-  ref: BrowserWindow
-  name: string
-  size?: [number, number]
-  position?: [number, number]
-  state?: Object
+export interface SerializedWindow {
+  id: string
+  name: WindowName
+  position: [number, number]
+  size: [number, number]
   lastFocused: number
+  state: any
+}
+
+export interface BrimWindow {
+  ref: BrowserWindow
+  name: WindowName
+  id: string
+  lastFocused: number
+  initialState: any
+  serialize: () => Promise<SerializedWindow>
+  confirmClose: () => Promise<boolean>
+  prepareClose: () => Promise<void>
+  close: () => void
 }
 
 export default function windowManager() {
   let windows: WindowsState = {}
-  let isQuitting = false
 
   return {
     init(session?: SessionState | null | undefined) {
@@ -38,49 +49,38 @@ export default function windowManager() {
       } else {
         for (const id of session.order) {
           const {name, size, position, state} = session.windows[id]
-          this.openWindow(name, {size, position, id})
-          this.updateWindow(id, {state})
+          this.openWindow(name, {size, position, id}, state)
         }
       }
     },
 
-    isQuitting(val?: boolean | null | undefined) {
-      if (isBoolean(val)) isQuitting = val
-      else return isQuitting
-    },
-
-    getState(): WindowsState {
-      const state = {}
-      for (const id in windows) {
-        const win = windows[id]
-        if (win.name === "search") {
-          state[id] = win
-        }
-      }
-      return state
-    },
-
-    fetchWindowStates() {
+    serialize(): Promise<SerializedWindow[]> {
       return Promise.all(
-        Object.keys(windows).map((id) => {
-          return new Promise((resolve) => {
-            const win = windows[id]
-            const channel = brim.randomHash()
-            const timeout = setTimeout(() => resolve([id, undefined]), 5000)
-
-            ipcMain.once(channel, (event, state) => {
-              clearTimeout(timeout)
-              this.updateWindow(id, {state})
-              resolve([id, state])
-            })
-
-            win.ref.webContents.send("getState", channel)
-          })
-        })
+        this.getWindows()
+          .filter((w) => w.name === "search")
+          .map((w: BrimWindow) => w.serialize())
       )
     },
 
-    getWindows(): WindowState[] {
+    confirmQuit(): Promise<boolean> {
+      return Promise.all<boolean[]>(
+        this.getWindows().map((w: BrimWindow) => w.confirmClose())
+      )
+        .then((oks) => oks.every((ok) => ok))
+        .catch(() => false)
+    },
+
+    prepareQuit(): Promise<void[]> {
+      return Promise.all(
+        this.getWindows().map((w: BrimWindow) => w.prepareClose())
+      )
+    },
+
+    quit() {
+      this.getWindows().forEach((w: BrimWindow) => w.close())
+    },
+
+    getWindows(): BrimWindow[] {
       return Object.values(windows).sort(
         (a, b) => a.lastFocused - b.lastFocused
       )
@@ -90,14 +90,7 @@ export default function windowManager() {
       return Object.keys(windows).length
     },
 
-    updateWindow(id: string, data: Partial<WindowState>) {
-      windows = {
-        ...windows,
-        [id]: {...windows[id], ...data}
-      }
-    },
-
-    getWindow(id: string): WindowState {
+    getWindow(id: string): BrimWindow {
       return windows[id]
     },
 
@@ -125,25 +118,59 @@ export default function windowManager() {
       })
     },
 
-    openWindow(name: WindowName, winParams: Partial<WindowParams> = {}) {
-      const lastWin = last<WindowState>(this.getWindows())
-
+    openWindow(
+      name: WindowName,
+      winParams: Partial<WindowParams> = {},
+      initialState: any = undefined
+    ): BrimWindow {
+      const lastWin = last<BrimWindow>(this.getWindows())
       const params = defaultWindowParams(winParams, lastWin && lastWin.ref)
       const id = params.id
 
-      const ref = tron
-        .window(name, params)
-        .on("focus", () => {
-          if (!isQuitting) windows[id].lastFocused = new Date().getTime()
+      if (name === "search") {
+        const {size, position, query, id} = params
+        const dimens = dimensFromSizePosition(size, position)
+        const win = new SearchWindow(dimens, query, initialState, id)
+        windows[id] = win
+        win.ref.on("closed", () => {
+          delete windows[id]
         })
-        .on("closed", () => {
-          if (!isQuitting) delete windows[id]
-        })
+        return win
+      } else {
+        const ref = tron
+          .window(name, params)
+          .on("focus", () => {
+            windows[id].lastFocused = new Date().getTime()
+          })
+          .on("closed", () => {
+            delete windows[id]
+          })
 
-      const win = {ref, name, lastFocused: new Date().getTime()}
-      windows[id] = win
-
-      return {id, win}
+        const win = {
+          id,
+          ref,
+          name,
+          lastFocused: new Date().getTime(),
+          initialState,
+          close: () => Promise.resolve(),
+          async confirmClose() {
+            return true
+          },
+          async prepareClose() {},
+          async serialize() {
+            return {
+              id,
+              name,
+              lastFocused: this.lastFocused,
+              state: "Fill this in later",
+              position: ref.getPosition() as [number, number],
+              size: ref.getSize() as [number, number]
+            }
+          }
+        }
+        windows[id] = win
+        return win
+      }
     },
 
     openAbout() {
@@ -176,17 +203,13 @@ export default function windowManager() {
       if (win) win.close()
     },
 
-    destroyWindow(win: BrowserWindow) {
-      if (win) win.destroy()
-    },
-
     moveToCurrentDisplay() {
       const point = screen.getCursorScreenPoint()
       const bounds = screen.getDisplayNearestPoint(point).workArea
       const {x, y} = bounds
 
       let prev = [x, y]
-      this.getWindows().forEach(({ref: win}: WindowState) => {
+      this.getWindows().forEach(({ref: win}: BrimWindow) => {
         const [width, height] = win.getSize()
         const [x, y] = prev
         const next = stack({x, y, width, height}, bounds, 25)

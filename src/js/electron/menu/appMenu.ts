@@ -238,11 +238,13 @@ export default function appMenu(
       {
         label: "Save Session for Testing Migrations",
         async click() {
-          await manager.fetchWindowStates()
           const root = app.getAppPath()
           const version = session.getVersion()
           const file = path.join(root, `src/js/test/states/${version}.json`)
-          const data = formatSessionState(manager.getState(), store.getState())
+          const data = formatSessionState(
+            await manager.serialize(),
+            store.getState()
+          )
           await session.save(data, file)
           dialog.showMessageBox({
             message: `Session has been saved`,

@@ -18,6 +18,12 @@ jest.mock("electron", function() {
     }
     loadFile() {}
     setSize() {}
+    getSize() {
+      return [100, 100]
+    }
+    getPosition() {
+      return [0, 0]
+    }
   }
 
   const electron = {
@@ -38,7 +44,8 @@ jest.mock("electron", function() {
     BrowserWindow: FakeBrowserWindow,
     ipcMain: {
       on: jest.fn(),
-      once: jest.fn()
+      once: jest.fn(),
+      removeAllListeners: jest.fn()
     },
     ipcRenderer: {
       send: jest.fn(),

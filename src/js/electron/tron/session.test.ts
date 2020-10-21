@@ -17,7 +17,7 @@ test("session loading with migrations", async () => {
   const state = initTestStore().getState()
   const migrations = await tron.migrations()
   const session = tron.session(file)
-  const data = formatSessionState({}, state)
+  const data = formatSessionState([], state)
 
   await session.save(data)
   await session.load()
