@@ -215,3 +215,14 @@ test("when window is bigger than screen", () => {
     height: 800
   })
 })
+
+test("moving to current display", () => {
+  const _screen1 = {x: 0, y: 0, width: 1920, height: 1160}
+  const screen2 = {x: 1920, y: 77, width: 1600, height: 860}
+  const window = {width: 1250, height: 750}
+
+  const {width, height} = window
+  const {x, y} = screen2
+  const next = stack({x, y, width, height}, screen2, 25)
+  expect(next).toEqual({x: 1920 + 25, y: 77 + 25, width: 1250, height: 750})
+})

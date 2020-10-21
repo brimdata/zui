@@ -79,10 +79,9 @@ export function stack(prev: Rectangle, screen: Rectangle, distance: number) {
 
   const width = Math.min(prev.width, screen.width)
   const height = Math.min(prev.height, screen.height)
-
   return {
-    x: boundedLine(prev.x + distance, width, screen.width),
-    y: boundedLine(prev.y + distance, height, screen.height),
+    x: boundedLine(prev.x + distance, width, screen.x + screen.width),
+    y: boundedLine(prev.y + distance, height, screen.y + screen.height),
     width,
     height
   }
