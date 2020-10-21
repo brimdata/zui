@@ -41,7 +41,7 @@ export default function ClusterPicker() {
     const isCurrent = c.id === current.id
     return {
       type: "checkbox",
-      label: c.id,
+      label: c.name,
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
@@ -64,7 +64,7 @@ export default function ClusterPicker() {
 
   return (
     <ClusterPickerWrapper onClick={menu.onClick}>
-      <label>{`${current.host}:${current.port}`}</label>
+      <label>{`${current.name}`}</label>
       <DropdownArrow />
     </ClusterPickerWrapper>
   )

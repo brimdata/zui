@@ -43,6 +43,10 @@ const SignInForm = styled.div`
   margin: 50px auto;
   width: 240px;
 
+  ${InputField} {
+    margin-bottom: 12px;
+  }
+
   ${Buttons} {
     margin-top: 48px;
     display: flex;
@@ -73,14 +77,17 @@ const SignInForm = styled.div`
   }
 `
 
-function toCluster({host, ...rest}): Cluster {
+function toCluster({host, name}): Cluster {
+  // set defaults
   let [h, p] = host.split(":")
   if (!p) p = "9867"
+  const hostPort = `${h}:${p}`
   return {
-    ...rest,
     host: h,
     port: p,
-    id: `${h}:${p}`,
+    id: hostPort,
+    // default name to use host:port if not provided
+    name: name || hostPort,
     username: undefined,
     password: undefined,
     status: "initial"
@@ -97,6 +104,10 @@ export default function NewConnectionModal() {
       name: "host",
       label: "Host",
       check: (value) => [!isEmpty(value), "must not be blank"]
+    },
+    name: {
+      name: "name",
+      label: "Name"
     }
   }
 
@@ -108,13 +119,13 @@ export default function NewConnectionModal() {
       const form = brim.form(f, config)
 
       if (await form.isValid()) {
-        const {host} = form.getFields().reduce((obj, field) => {
+        const {host, name} = form.getFields().reduce((obj, field) => {
           obj[field.name] = field.value
           return obj
         }, {})
         try {
           setIsFetching(true)
-          await dispatch(initConnection(toCluster({host})))
+          await dispatch(initConnection(toCluster({host, name})))
         } catch {
           setErrors([{message: "Cannot connect to host"}])
           return
@@ -153,10 +164,17 @@ export default function NewConnectionModal() {
             <FormErrors errors={errors} />
             <InputField>
               <LabelWrapper>
+                <InputLabel>{config.name.label}</InputLabel>
+                <p>(defaults to host if omitted)</p>
+              </LabelWrapper>
+              <TextInput name={config.name.name} autoFocus />
+            </InputField>
+            <InputField>
+              <LabelWrapper>
                 <InputLabel>{config.host.label}</InputLabel>
                 <p>(port defaults to 9867 if omitted)</p>
               </LabelWrapper>
-              <TextInput name={config.host.name} autoFocus />
+              <TextInput name={config.host.name} />
             </InputField>
           </form>
         </SignInForm>

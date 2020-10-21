@@ -1,5 +1,6 @@
 export type Cluster = {
   id: string
+  name: string
   host: string
   port: string
   username: string
