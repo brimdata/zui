@@ -160,17 +160,17 @@ export default function NewConnectionModal() {
             <FormErrors errors={errors} />
             <InputField>
               <LabelWrapper>
-                <InputLabel>{config.host.label}</InputLabel>
-                <p>(port defaults to 9867 if omitted)</p>
-              </LabelWrapper>
-              <TextInput name={config.host.name} autoFocus />
-            </InputField>
-            <InputField>
-              <LabelWrapper>
                 <InputLabel>{config.name.label}</InputLabel>
                 <p>(defaults to host if omitted)</p>
               </LabelWrapper>
               <TextInput name={config.name.name} autoFocus />
+            </InputField>
+            <InputField>
+              <LabelWrapper>
+                <InputLabel>{config.host.label}</InputLabel>
+                <p>(port defaults to 9867 if omitted)</p>
+              </LabelWrapper>
+              <TextInput name={config.host.name} />
             </InputField>
           </form>
         </SignInForm>
