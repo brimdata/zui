@@ -9,8 +9,5 @@ export default {
   },
   setStatus(id: string, status: ClusterStatus) {
     return {type: "CLUSTER_SET_STATUS", id, status}
-  },
-  setName(id: string, name: string) {
-    return {type: "CLUSTER_SET_NAME", id, name}
   }
 }
