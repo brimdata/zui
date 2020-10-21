@@ -20,7 +20,7 @@ const Wrap = styled.section`
 `
 
 const FormWrap = styled.form`
-  .input-field {
+  ${InputField} {
     margin-bottom: 18px;
   }
 `

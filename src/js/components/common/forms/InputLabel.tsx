@@ -1,10 +1,8 @@
-import React from "react"
-import classNames from "classnames"
+import styled from "styled-components"
 
-export default function InputLabel({children, className, ...rest}: any) {
-  return (
-    <label {...rest} className={classNames(className, "input-label")}>
-      {children}
-    </label>
-  )
-}
+const Label = styled.label`
+  ${(p) => p.theme.typography.labelBold};
+  color: var(--aqua);
+`
+
+export default Label

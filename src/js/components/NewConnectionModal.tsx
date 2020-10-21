@@ -43,6 +43,10 @@ const SignInForm = styled.div`
   margin: 50px auto;
   width: 240px;
 
+  ${InputField} {
+    margin-bottom: 12px;
+  }
+
   ${Buttons} {
     margin-top: 48px;
     display: flex;
