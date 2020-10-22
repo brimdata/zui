@@ -71,17 +71,18 @@ export function center(inner: Rectangle, outer: Rectangle): Rectangle {
 }
 
 export function stack(prev: Rectangle, screen: Rectangle, distance: number) {
-  const boundedLine = (point, length, max) => {
-    if (length >= max) return 0
-    if (point + length < max) return point
-    return (point + length) % max
-  }
-
   const width = Math.min(prev.width, screen.width)
   const height = Math.min(prev.height, screen.height)
+
+  const moveCoord = (point, length, max) => {
+    if (length === max) return 0
+    if (point + distance + length < max) return point + distance
+    return (point + distance + length) % max
+  }
+
   return {
-    x: boundedLine(prev.x + distance, width, screen.x + screen.width),
-    y: boundedLine(prev.y + distance, height, screen.y + screen.height),
+    x: moveCoord(prev.x - screen.x, width, screen.width) + screen.x,
+    y: moveCoord(prev.y - screen.y, height, screen.height) + screen.y,
     width,
     height
   }
