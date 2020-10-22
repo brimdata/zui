@@ -52,13 +52,22 @@ async function main() {
     }
   }
 
+  app.on("second-instance", (e, argv) => {
+    for (let arg of argv) {
+      switch (arg) {
+        case "--new-window":
+          winMan.openWindow("search")
+          break
+        case "--move-to-current-display":
+          winMan.moveToCurrentDisplay()
+          break
+      }
+    }
+  })
+
   async function onReady() {
     if (electronIsDev) await installExtensions()
-    if (app.commandLine.hasSwitch("new-window")) {
-      winMan.openWindow("search")
-    } else {
-      winMan.init(data)
-    }
+    winMan.init(data)
   }
 
   // The app might be ready by the time we get here due to async stuff above
@@ -101,7 +110,11 @@ async function main() {
     })
   })
 }
-
-main().then(() => {
-  if (process.env.BRIM_ITEST === "true") require("./itest")
-})
+const gotTheLock = app.requestSingleInstanceLock()
+if (gotTheLock) {
+  main().then(() => {
+    if (process.env.BRIM_ITEST === "true") require("./itest")
+  })
+} else {
+  app.quit()
+}

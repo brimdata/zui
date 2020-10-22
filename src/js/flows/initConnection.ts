@@ -4,7 +4,7 @@ import {Cluster} from "../state/Clusters/types"
 import refreshSpaceNames from "./refreshSpaceNames"
 import {globalDispatch} from "../state/GlobalContext"
 
-export const setConnection = (cluster: Cluster) => (
+export const initConnection = (cluster: Cluster) => (
   dispatch,
   getState,
   {createZealot}
@@ -13,13 +13,15 @@ export const setConnection = (cluster: Cluster) => (
   return zealot
     .status()
     .then(() => {
-      dispatch(Clusters.add(cluster))
-      globalDispatch(Clusters.add(cluster)).then(() => {
+      const connectedCluster: Cluster = {...cluster, status: "connected"}
+      dispatch(Clusters.add(connectedCluster))
+      globalDispatch(Clusters.add(connectedCluster)).then(() => {
         dispatch(Current.setConnectionId(cluster.id))
         dispatch(refreshSpaceNames())
       })
     })
     .catch((e) => {
-      throw new Error(`Cannot connect to ${cluster.id}: ${e.message}`)
+      dispatch(Clusters.setStatus(cluster.id, "disconnected"))
+      throw e
     })
 }

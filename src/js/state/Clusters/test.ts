@@ -1,17 +1,20 @@
 import Clusters from "./"
 import initTestStore from "../../test/initTestStore"
+import {Cluster} from "./types"
 
 let store
 beforeEach(() => {
   store = initTestStore()
 })
 
-const cluster = {
+const cluster: Cluster = {
   id: "123",
+  name: "123",
   host: "boom.com",
   port: "9867",
   username: "kerr",
-  password: "123"
+  password: "123",
+  status: "initial"
 }
 
 test("addCluster", () => {

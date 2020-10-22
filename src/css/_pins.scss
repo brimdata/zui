@@ -38,29 +38,28 @@
 
   .pin-button {
     @include button-reset;
-    background-color: #dcdcdc;
+    background-color: $cloudy;
     &:hover {
-      background: darken(#dcdcdc, 5%);
+      background: darken($cloudy, 5%);
     }
 
     &:active,
     .active {
-      background: darken(#dcdcdc, 10%);
+      background: darken($cloudy, 10%);
     }
     min-height: 17px;
     border-radius: 0px 3px 3px 0px;
     padding: 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     align-self: flex-start;
 
     svg {
-      transform: rotate(45deg);
-      fill: $gray-9;
-      stroke: $gray-9;
-      width: 12px;
-      height: 12px;
+      fill: lighten($aqua, 15%);
+      stroke: none;
+      width: 10px;
+      height: 10px;
       margin: 0 6px;
     }
   }

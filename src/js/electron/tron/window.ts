@@ -1,4 +1,6 @@
 import {BrowserWindow} from "electron"
+import {dimensFromSizePosition} from "../window/dimens"
+import {SearchWindow} from "../window/SearchWindow"
 
 import {WindowName} from "./windowManager"
 
@@ -24,33 +26,14 @@ export default function window(name: WindowName, params: WindowParams) {
 
 function searchWindow(params) {
   const {size, position, query, id} = params
-  const win = new BrowserWindow({
-    titleBarStyle: "hidden",
-    resizable: true,
-    minWidth: 480,
-    minHeight: 100,
-    webPreferences: {
-      nodeIntegration: true,
-      experimentalFeatures: true,
-      enableRemoteModule: true
-    }
-  }).on("close", (e: any) => {
+  const dimens = dimensFromSizePosition(size, position)
+  const win = new SearchWindow(dimens, query, id).ref
+
+  win.on("close", (e: any) => {
     // Close handled by the search renderer
     e.preventDefault()
     e.sender.webContents.send("close")
   })
-
-  if (size) {
-    const [width, height] = size
-    win.setSize(width, height)
-  }
-  if (position) {
-    const [x, y] = position
-    win.setPosition(x, y)
-  } else {
-    win.center()
-  }
-  win.loadFile("search.html", {query: {...query, id}})
 
   return win
 }

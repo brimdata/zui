@@ -174,6 +174,7 @@ export function LeftPane() {
   const showSpaces = useSelector(Layout.getSpacesIsOpen)
   const historyHeight = useSelector(Layout.getHistoryHeight)
   const spacesHeight = useSelector(Layout.getSpacesHeight)
+  const conn = useSelector(Current.getConnection)
 
   const paneRef = useRef<HTMLDivElement>()
   const paneHeight = useRef(0)
@@ -228,7 +229,7 @@ export function LeftPane() {
           <AddSpaceButton />
         </SectionHeader>
         <SectionContents show={showSpaces}>
-          <SavedSpacesList spaces={spaces} />
+          <SavedSpacesList spaces={spaces} connStatus={conn.status} />
         </SectionContents>
         {showSpaces && <DragAnchor {...dragFunc()} />}
       </StyledSection>

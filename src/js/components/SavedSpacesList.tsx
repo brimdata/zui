@@ -18,9 +18,13 @@ import deleteSpace from "../flows/deleteSpace"
 import Modal from "../state/Modal/actions"
 import Spaces from "../state/Spaces"
 import deleteSpaces from "../flows/deleteSpaces"
+import {popNotice} from "./PopNotice"
+import {AppDispatch} from "../state/types"
+import {ClusterStatus} from "../state/Clusters/types"
 
 type Props = {
   spaces: Space[]
+  connStatus: ClusterStatus
 }
 
 const NameWrap = styled.div`
@@ -30,28 +34,8 @@ const NameWrap = styled.div`
   overflow: hidden;
 `
 
-export default function SavedSpacesList({spaces}: Props) {
-  if (spaces.length === 0)
-    return (
-      <EmptySection
-        icon={<FileFilled />}
-        message="You have no spaces yet. Create a space by importing data."
-      />
-    )
-
-  return (
-    <menu className="saved-spaces-list">
-      {spaces
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .map((space) => {
-          return <SpaceListItem key={space.id} space={space} />
-        })}
-    </menu>
-  )
-}
-
 const SpaceListItem = ({space}: {space: Space}) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const clusterId = useSelector(Current.getConnectionId)
   const currentSpaceId = useSelector(Current.getSpaceId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
@@ -79,7 +63,10 @@ const SpaceListItem = ({space}: {space: Space}) => {
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
-            if (response === 0) dispatch(deleteSpace(s.id))
+            if (response === 0)
+              dispatch(deleteSpace(s.id)).then(() => {
+                popNotice(`Deleted space "${s.name}"`)
+              })
           })
       }
     },
@@ -95,7 +82,10 @@ const SpaceListItem = ({space}: {space: Space}) => {
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
-            if (response === 0) dispatch(deleteSpaces(spaceIds))
+            if (response === 0)
+              dispatch(deleteSpaces(spaceIds)).then(() => {
+                popNotice("Deleted all spaces")
+              })
           })
       }
     }
@@ -124,5 +114,27 @@ const SpaceListItem = ({space}: {space: Space}) => {
         {progress}
       </a>
     </li>
+  )
+}
+
+export default function SavedSpacesList({spaces, connStatus}: Props) {
+  if (connStatus === "disconnected")
+    return <EmptySection message="Unable to connect to service" />
+  if (spaces.length === 0)
+    return (
+      <EmptySection
+        icon={<FileFilled />}
+        message="You have no spaces yet. Create a space by importing data."
+      />
+    )
+
+  return (
+    <menu className="saved-spaces-list">
+      {spaces
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map((space) => {
+          return <SpaceListItem key={space.id} space={space} />
+        })}
+    </menu>
   )
 }

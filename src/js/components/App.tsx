@@ -14,6 +14,7 @@ import View from "../state/View"
 import brim from "../brim"
 import SearchPage from "./SearchPage"
 import NewConnectionModal from "./NewConnectionModal"
+import {PopNotice} from "./PopNotice"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -36,6 +37,7 @@ export default function App() {
       <SpaceModal />
       <NewConnectionModal />
       <HTMLContextMenu />
+      <PopNotice />
     </div>
   )
 }

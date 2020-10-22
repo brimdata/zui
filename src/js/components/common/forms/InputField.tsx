@@ -1,10 +1,11 @@
-import React from "react"
-import classNames from "classnames"
+import styled from "styled-components"
+import InputLabel from "./InputLabel"
 
-export default function InputField({children, className, ...rest}: any) {
-  return (
-    <div {...rest} className={classNames(className, "input-field")}>
-      {children}
-    </div>
-  )
-}
+const InputField = styled.div`
+  ${InputLabel} {
+    display: block;
+    margin-bottom: 4px;
+  }
+`
+
+export default InputField

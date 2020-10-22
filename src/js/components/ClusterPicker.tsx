@@ -2,16 +2,15 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {ComponentType} from "react"
 import styled from "styled-components"
 
-import {setConnection} from "../flows/setConnection"
 import Clusters from "../state/Clusters"
 import Current from "../state/Current"
 import DropdownArrow from "../icons/DropdownArrow"
 import Modal from "../state/Modal"
-import Notice from "../state/Notice"
 import usePopupMenu from "./hooks/usePopupMenu"
 import {Cluster} from "../state/Clusters/types"
 import {AppDispatch} from "../state/types"
 import {MenuItemConstructorOptions} from "electron"
+import {initConnection} from "../flows/initConnection"
 
 const ClusterPickerWrapper = styled.div`
   display: flex;
@@ -42,12 +41,12 @@ export default function ClusterPicker() {
     const isCurrent = c.id === current.id
     return {
       type: "checkbox",
-      label: c.id,
+      label: c.name,
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(setConnection(c)).catch((e) => {
-          dispatch(Notice.set(e))
+        dispatch(initConnection(c)).catch(() => {
+          dispatch(Current.setConnectionId(c.id))
         })
       }
     }
@@ -65,7 +64,7 @@ export default function ClusterPicker() {
 
   return (
     <ClusterPickerWrapper onClick={menu.onClick}>
-      <label>{`${current.host}:${current.port}`}</label>
+      <label>{`${current.name}`}</label>
       <DropdownArrow />
     </ClusterPickerWrapper>
   )

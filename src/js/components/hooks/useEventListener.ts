@@ -1,7 +1,7 @@
 import {useEffect} from "react"
 
 export default function useEventListener(
-  el: Node,
+  el: EventTarget,
   name: string,
   callback: EventListenerOrEventListenerObject,
   deps: any[] | null | undefined

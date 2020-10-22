@@ -1,5 +1,6 @@
 import React, {MouseEvent} from "react"
-import X from "./icons/x-md.svg"
+import styled from "styled-components"
+import {CircleCloseButton} from "./CircleCloseButton"
 
 type Props = {
   filter: string
@@ -8,6 +9,16 @@ type Props = {
   onClick?: (e: MouseEvent) => void
   onRemoveClick?: (e: MouseEvent) => void
 }
+
+const ButtonWrap = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  .circle {
+    color: --wet-cement;
+  }
+`
 
 export default class FilterNode extends React.PureComponent<Props> {
   render() {
@@ -20,9 +31,12 @@ export default class FilterNode extends React.PureComponent<Props> {
       <div className={classNames.join(" ")} onClick={this.props.onClick}>
         <p>{this.props.filter}</p>
         {this.props.onRemoveClick && (
-          <button className="remove-button" onClick={this.props.onRemoveClick}>
-            <X />
-          </button>
+          <ButtonWrap>
+            <CircleCloseButton
+              onClick={this.props.onRemoveClick}
+              className="remove-button"
+            />
+          </ButtonWrap>
         )}
       </div>
     )

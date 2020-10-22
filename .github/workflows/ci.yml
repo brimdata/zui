@@ -164,16 +164,18 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - run: npm install --no-audit
       - run: npm run build
-      - name: Build and Install MacOS DMG
-        if: runner.os == 'macOS'
-        run: |
-          set -x
-          source scripts/lib/common.bash
-          node scripts/release --darwin
-          hdiutil attach dist/installers/Brim.dmg
-          cp -R /Volumes/Brim/Brim.app /Applications
-          retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
-        shell: bash
+      # Disabling using built & installed app for now;
+      # see brim#1145
+      #      - name: Build and Install MacOS DMG
+      #        if: runner.os == 'macOS'
+      #        run: |
+      #          set -x
+      #          source scripts/lib/common.bash
+      #          node scripts/release --darwin
+      #          hdiutil attach dist/installers/Brim.dmg
+      #          cp -R /Volumes/Brim/Brim.app /Applications
+      #          retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
+      #        shell: bash
       - name: Download Linux packages
         if: runner.os == 'Linux'
         uses: actions/download-artifact@v1
@@ -202,8 +204,3 @@ jobs:
           name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: /var/tmp/brimsec/itest
 
-  markdown-link-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
