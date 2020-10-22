@@ -4,7 +4,11 @@ import {initSpace} from "./initSpace"
 import Clusters from "../state/Clusters"
 import {Thunk} from "../state/types"
 
-export const initCurrentTab = (): Thunk => async (dispatch, getState) => {
+export const initCurrentTab = (): Thunk => async (
+  dispatch,
+  getState,
+  {globalDispatch}
+) => {
   const state = getState()
   const conn = Current.getConnection(state)
   const spaceId = Current.getSpaceId(state)
@@ -14,8 +18,8 @@ export const initCurrentTab = (): Thunk => async (dispatch, getState) => {
     if (spaceId) {
       dispatch(initSpace(spaceId))
     }
-    dispatch(Clusters.setStatus(conn.id, "connected"))
+    globalDispatch(Clusters.setStatus(conn.id, "connected"))
   } catch {
-    dispatch(Clusters.setStatus(conn.id, "disconnected"))
+    globalDispatch(Clusters.setStatus(conn.id, "disconnected"))
   }
 }
