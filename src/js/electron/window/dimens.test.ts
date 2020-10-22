@@ -226,3 +226,38 @@ test("moving to current display", () => {
   const next = stack({x, y, width, height}, screen2, 25)
   expect(next).toEqual({x: 1920 + 25, y: 77 + 25, width: 1250, height: 750})
 })
+
+test("moving to current display when display is smaller", () => {
+  const _screen1 = {x: 0, y: 0, width: 1920, height: 1160}
+  const screen2 = {x: 1920, y: 77, width: 1600, height: 860}
+  const window = {width: 1920, height: 1160}
+
+  const {width, height} = window
+  const {x, y} = screen2
+  const next = stack({x, y, width, height}, screen2, 25)
+  expect(next).toEqual({x: 1920, y: 77, width: 1600, height: 860})
+})
+
+test("stacking windows that overflow in positive space", () => {
+  const screen = {x: 1000, y: 1000, width: 1000, height: 1000}
+  const prev = {width: 800, height: 800, x: 1200, y: 1200}
+
+  expect(stack(prev, screen, 25)).toEqual({
+    x: 1025,
+    y: 1025,
+    width: 800,
+    height: 800
+  })
+})
+
+test("stacking windows that overflow in negative space", () => {
+  const screen = {x: -1000, y: -1000, width: 1000, height: 1000}
+  const prev = {width: 800, height: 800, x: -800, y: -800}
+
+  expect(stack(prev, screen, 25)).toEqual({
+    x: -975,
+    y: -975,
+    width: 800,
+    height: 800
+  })
+})
