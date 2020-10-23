@@ -100,9 +100,7 @@ const SpaceListItem = ({space}: {space: Space}) => {
       <a
         href="#"
         onClick={onClick}
-        onContextMenu={() => {
-          !s.ingesting() && contextMenu.open()
-        }}
+        onContextMenu={() => contextMenu.open()}
         className={classNames("space-link", {
           "current-space-link": s.id === currentSpaceId
         })}

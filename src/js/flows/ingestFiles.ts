@@ -32,9 +32,9 @@ export default (paths: string[]): Thunk<Promise<void>> => (
     validateInput(paths, dataDir, spaceNames),
     createDir(),
     createSpace(zealot, globalDispatch, clusterId),
+    setSpace(dispatch, tabId),
     registerHandler(dispatch, requestId),
     postFiles(zealot, jsonTypeConfigPath),
-    setSpace(dispatch, tabId),
     trackProgress(zealot, globalDispatch, clusterId),
     unregisterHandler(dispatch, requestId)
   ])

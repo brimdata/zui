@@ -1,14 +1,30 @@
 import {ipcRenderer} from "electron"
 
-import {Store} from "../state/types"
+import {AppDispatch, Store} from "../state/types"
 import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import getPersistable from "../state/getPersistable"
 import initNewSearchTab from "./initNewSearchTab"
+import confirmUnload from "../flows/confirmUnload"
+import deletePartialSpaces from "../flows/deletePartialSpaces"
 
 export default (store: Store) => {
+  const dispatch = store.dispatch as AppDispatch
+
+  ipcRenderer.on("confirmClose", async (e, replyChannel) => {
+    const confirmed = await dispatch(confirmUnload())
+      .then(() => true)
+      .catch(() => false)
+    ipcRenderer.send(replyChannel, confirmed)
+  })
+
+  ipcRenderer.on("prepareClose", async (e, replyChannel) => {
+    await dispatch(deletePartialSpaces())
+    ipcRenderer.send(replyChannel)
+  })
+
   ipcRenderer.on("pinSearch", () => {
     store.dispatch(SearchBar.pinSearchBar())
   })

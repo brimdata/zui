@@ -10,13 +10,13 @@ import AppErrorBoundary from "./components/AppErrorBoundary"
 import StartupError from "./components/StartupError"
 import initialize from "./initializers/initialize"
 import lib from "./lib"
-import refreshWindow from "./flows/refreshWindow"
 import theme from "./style-theme"
+import deletePartialSpaces from "./flows/deletePartialSpaces"
 
 initialize()
   .then((store) => {
     window.onbeforeunload = () => {
-      store.dispatch(refreshWindow())
+      store.dispatch(deletePartialSpaces())
     }
     ReactDOM.render(
       <AppErrorBoundary dispatch={store.dispatch}>

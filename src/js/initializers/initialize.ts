@@ -1,4 +1,3 @@
-import initCleanup from "./initCleanup"
 import initDOM from "./initDOM"
 import initGlobals from "./initGlobals"
 import initIpcListeners from "./initIpcListeners"
@@ -12,7 +11,6 @@ export default async function initialize() {
   initConnectionStatuses(store)
   initDOM()
   initGlobals(store)
-  initCleanup(store)
   initIpcListeners(store)
   initMenuActionListeners(store)
   initConnectionParams(store)

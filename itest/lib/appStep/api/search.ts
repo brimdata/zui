@@ -21,58 +21,17 @@ export const getResults = async (
   app: Application,
   includeHeaders = true
 ): Promise<string[]> => {
-  // Return search current search results. This is useful for getting
-  // the current results by doing a search through other means, like a
-  // context menu-built search.
-
-  const searchDisplayHeaders = async (app: Application): Promise<string[]> => {
-    // This stinks. We have to use getHTML because headers that are off the
-    // screen return as empty strings if you use getText. This isn't required of
-    // actual results.
-    // See http://v4.webdriver.io/api/property/getText.html
-    // app.browserWindow.maximize() fixes the problem on my laptop but not CI.
-    // But what we get back includes the width which can be non-deterministic:
-    // <div class="header-cell" style="width: 192px;">ts<div class="col-resizer"></div></div>
-    // That style width will vary on my laptop vs. CI.
-    // The hack is to split this and extract just the text.
-    const _trim = (s: string) => s.split(">")[1].split("<")[0]
-
-    let headers = await logStep("get search headers", async () => {
-      const headers = await app.client.$$(selectors.viewer.headers)
-      return await Promise.all(
-        headers.map(async (h) => {
-          await h.waitForDisplayed()
-          return await h.getHTML()
-        })
-      )
-    })
-
-    return headers.map((h) => {
-      return _trim(h)
-    })
+  const viewer = await app.client.$(".viewer")
+  const html = await viewer.getHTML()
+  document.body.innerHTML = html
+  const rows = document.querySelectorAll(".field-cell")
+  let results = Array.from(rows).map((c) => c.textContent.trim())
+  if (includeHeaders) {
+    const header = document.querySelectorAll(".header-cell")
+    const headerCells = Array.from(header).map((h) => h.textContent.trim())
+    results = headerCells.concat(results)
   }
-
-  const searchResults = await logStep("get search records", async () => {
-    const results = await app.client.$$(selectors.viewer.results)
-    return await Promise.all(
-      results.map(async (r) => {
-        await r.waitForDisplayed()
-        return await r.getText()
-      })
-    )
-  })
-
-  let headers
-  if (
-    includeHeaders &&
-    (await (await app.client.$(selectors.viewer.headers)).isDisplayed())
-  ) {
-    headers = await searchDisplayHeaders(app)
-  } else {
-    headers = []
-  }
-
-  return headers.concat(searchResults)
+  return results
 }
 
 export default async (app: Application, searchText: string) => {

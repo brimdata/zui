@@ -1,10 +1,10 @@
 import {GlobalState} from "../../state/globalReducer"
-import {WindowState, WindowsState} from "./windowManager"
+import {SerializedWindow} from "./windowManager"
 
 export type SessionState = {
   order: string[]
   windows: {
-    [key: string]: {
+    [id: string]: {
       name: string
       position: [number, number]
       size: [number, number]
@@ -15,29 +15,27 @@ export type SessionState = {
 }
 
 export default function(
-  windows: WindowsState,
+  windows: SerializedWindow[],
   globalState: GlobalState
 ): SessionState {
-  const groupById = (all, id) => ({
+  const groupById = (all, window) => ({
     ...all,
-    [id]: getWindowData(windows[id])
+    [window.id]: getWindowData(window)
   })
 
   const order = getWindowOrder(windows)
 
   return {
     order,
-    windows: order.reduce(groupById, {}),
+    windows: windows.reduce(groupById, {}),
     globalState
   }
 }
 
-function getWindowOrder(windows: WindowsState): string[] {
-  return Object.entries(windows)
-    .sort((a, b) => a[1].lastFocused - b[1].lastFocused)
-    .map((e) => e[0])
+function getWindowOrder(windows: SerializedWindow[]): string[] {
+  return windows.map((e) => e.id)
 }
 
-function getWindowData({name, state, size, position}: WindowState) {
+function getWindowData({name, state, size, position}: SerializedWindow) {
   return {name, state, size, position}
 }
