@@ -4,7 +4,6 @@ import {ModalButton} from "./types"
 import {defaultModalButton} from "../../test/locators"
 import ButtonRow from "../ButtonRow"
 import ToolbarButton from "../Toolbar/Button"
-import {is} from "immer/dist/utils/common"
 
 type Props = {
   template: ModalButton[]

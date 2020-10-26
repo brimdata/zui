@@ -9,6 +9,7 @@ import Modal from "../../state/Modal"
 import ConnectionForm from "./ConnectionForm"
 import ConnectionDetail from "./ConnectionDetail"
 import Current from "../../state/Current"
+import Spaces from "../../state/Spaces"
 
 const StyledFormErrors = styled(FormErrors)`
   h4 {
@@ -31,7 +32,6 @@ const StyledFormErrors = styled(FormErrors)`
 
 const StyledModalBox = styled(ModalBox)`
   width: 400px;
-  background: linear-gradient(to bottom, var(--snow) 50%, white);
 
   ${StyledFormErrors} {
     display: flex;
@@ -46,6 +46,8 @@ const ConnectionModal = () => {
   const [errors, setErrors] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const conn = useSelector(Current.getConnection)
+  const spaceIds = useSelector(Spaces.ids(conn.id))
+  const spaceCount = spaceIds.length
 
   const editButton = {
     label: "Edit",
@@ -61,9 +63,10 @@ const ConnectionModal = () => {
   const okButton = {label: "OK", click: (closeModal) => closeModal()}
   const saveButton = {
     label: isSubmitting ? "" : "Save",
-    icon: isSubmitting ? <MacSpinner /> : null,
+    icon: isSubmitting ? <MacSpinner light /> : null,
     click: () => setIsSubmitting(true),
-    disabled: isSubmitting
+    disabled: isSubmitting,
+    isPrimary: true
   }
 
   const buttons =
@@ -92,7 +95,7 @@ const ConnectionModal = () => {
     >
       <TextContent>
         {mode === "detail" ? (
-          <ConnectionDetail conn={conn} />
+          <ConnectionDetail conn={conn} spaceCount={spaceCount} />
         ) : (
           <>
             <StyledFormErrors errors={errors} />

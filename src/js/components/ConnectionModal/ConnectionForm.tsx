@@ -13,13 +13,18 @@ import {isEmpty} from "lodash"
 
 const Buttons = styled.div``
 const SignInForm = styled.div`
-  margin: 25px auto;
+  margin: 0 auto 25px;
 
   ${InputField} {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 0 0 20px;
+    padding-left: 20px;
+
+    input {
+      background: white;
+    }
   }
 
   ${InputLabel} {
@@ -38,7 +43,7 @@ const SignInForm = styled.div`
 `
 
 const StyledTextInput = styled(TextInput)`
-  width: 300px;
+  width: 280px;
 `
 
 type Props = {

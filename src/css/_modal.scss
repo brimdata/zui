@@ -17,7 +17,8 @@
 
 .modal-contents {
   -webkit-app-region: no-drag;
-  background: white;
+  backdrop-filter: blur(25px);
+  background: rgba(246,247,249, 0.3);
   box-shadow: 12px 12px 48px transparentize($aqua, 0.45);
   padding: 20px 20px 0 20px;
   border-radius: 5px;
@@ -33,6 +34,8 @@
   transform: translateZ(0);
 
   .modal-header {
+    @include heading-section;
+    text-transform: uppercase;
     margin-bottom: 20px;
     flex: 0 0 auto;
     min-height: 0;

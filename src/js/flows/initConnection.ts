@@ -11,9 +11,13 @@ export const initConnection = (cluster: Cluster) => (
 ): Promise<void> => {
   const zealot = createZealot(cluster.id)
   return zealot
-    .status()
-    .then(() => {
-      const connectedCluster: Cluster = {...cluster, status: "connected"}
+    .version()
+    .then(({version}) => {
+      const connectedCluster: Cluster = {
+        ...cluster,
+        status: "connected",
+        version
+      }
       dispatch(Clusters.add(connectedCluster))
       globalDispatch(Clusters.add(connectedCluster)).then(() => {
         dispatch(Current.setConnectionId(cluster.id))

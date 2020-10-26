@@ -1,5 +1,5 @@
 import React from "react"
-import {Cluster, ClusterStatus} from "../../state/Clusters/types"
+import {Cluster} from "../../state/Clusters/types"
 import styled from "styled-components"
 import StatusLight from "./StatusLight"
 
@@ -16,9 +16,10 @@ const StyledConnectionDetail = styled.div`
 
 const ConnectionFields = styled.div`
   display: flex;
+  background: white;
   flex-direction: column;
   border: 1px solid var(--cloudy);
-  border-radius: 8px;
+  border-radius: 10px;
   width: 100%;
 `
 
@@ -69,10 +70,11 @@ const Field = ({label, value}: FieldProps) => {
 
 type Props = {
   conn: Cluster
+  spaceCount: number
 }
 
-const ConnectionDetail = ({conn}: Props) => {
-  const {name, host, port, status} = conn
+const ConnectionDetail = ({conn, spaceCount}: Props) => {
+  const {name, host, port, status, version = "unknown"} = conn
   return (
     <StyledConnectionDetail>
       <h1>{name}</h1>
@@ -82,8 +84,8 @@ const ConnectionDetail = ({conn}: Props) => {
       </Status>
       <ConnectionFields>
         <Field label="Host" value={[host, port].join(":")} />
-        <Field label="ZQD Version" value="placeholder 1" />
-        <Field label="Spaces" value="placeholder 2" />
+        <Field label="ZQD Version" value={version} />
+        <Field label="Spaces" value={`${spaceCount}`} />
       </ConnectionFields>
     </StyledConnectionDetail>
   )

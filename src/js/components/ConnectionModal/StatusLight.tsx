@@ -7,7 +7,7 @@ const StatusLight = ({...props}: any) => {
     <svg {...props} viewBox="0 0 100 100" width="10">
       <defs>
         <filter id="f1" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
         </filter>
       </defs>
       <circle cx="50" cy="50" r="40" strokeWidth="3" filter="url(#f1)" />
