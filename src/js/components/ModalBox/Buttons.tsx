@@ -4,6 +4,7 @@ import {ModalButton} from "./types"
 import {defaultModalButton} from "../../test/locators"
 import ButtonRow from "../ButtonRow"
 import ToolbarButton from "../Toolbar/Button"
+import {is} from "immer/dist/utils/common"
 
 type Props = {
   template: ModalButton[]
@@ -21,6 +22,7 @@ export default function Buttons({template, closeModal}: Props) {
           icon={b.icon}
           isLast={i + 1 === a.length}
           onClick={(e) => b.click(closeModal, e)}
+          isPrimary={b.isPrimary}
         />
       ))}
     </ButtonRow>
@@ -34,6 +36,7 @@ type ButtonItemProps = {
   disabled?: boolean
   icon?: React.ReactNode
   showSpinner?: boolean
+  isPrimary?: boolean
 }
 
 function ButtonItem({
@@ -41,7 +44,8 @@ function ButtonItem({
   onClick,
   isLast,
   disabled = false,
-  icon = null
+  icon = null,
+  isPrimary = false
 }: ButtonItemProps) {
   if (isLast) {
     return (
@@ -51,6 +55,7 @@ function ButtonItem({
         icon={icon}
         disabled={disabled}
         onClick={onClick}
+        isPrimary={isPrimary}
       />
     )
   }
@@ -61,6 +66,7 @@ function ButtonItem({
       onClick={onClick}
       disabled={disabled}
       icon={icon}
+      isPrimary={isPrimary}
     />
   )
 }

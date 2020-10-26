@@ -7,6 +7,7 @@ export type ModalButton = {
   click: Function
   icon?: React.ReactNode
   disabled?: boolean
+  isPrimary?: boolean
 }
 export type ModalButtonTemplate = void | string | ModalButton[]
 export type ModalBoxProps = {

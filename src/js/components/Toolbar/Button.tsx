@@ -17,6 +17,7 @@ export default function ToolbarButton({
   disabled,
   dropdown,
   className,
+  isPrimary,
   ...rest
 }: Props) {
   const cn = classNames("toolbar-button", className)
