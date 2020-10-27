@@ -12,9 +12,11 @@ import initialize from "./initializers/initialize"
 import lib from "./lib"
 import theme from "./style-theme"
 import deletePartialSpaces from "./flows/deletePartialSpaces"
+import {initConnectionStatuses} from "./initializers/initConnectionStatuses"
 
 initialize()
   .then((store) => {
+    initConnectionStatuses(store)
     window.onbeforeunload = () => {
       store.dispatch(deletePartialSpaces())
     }
