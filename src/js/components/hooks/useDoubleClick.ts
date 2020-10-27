@@ -26,7 +26,6 @@ export default function useDoubleClick(
   }, [clicks])
 
   return (e: React.SyntheticEvent<HTMLElement>) => {
-    e.persist()
     setEvent(e)
     setClicks((clicks) => clicks + 1)
   }
