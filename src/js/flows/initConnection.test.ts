@@ -14,9 +14,9 @@ const conn2 = fixtures("cluster2")
 
 beforeEach(() => {
   mock = createZealotMock()
-    .stubPromise("status", "ok")
+    .stubPromise("version", "1")
     .stubPromise("spaces.list", [])
-    .stubPromise("status", "ok")
+    .stubPromise("version", "1")
     .stubPromise("spaces.list", [])
   store = initTestStore(mock.zealot)
   store.dispatchAll([Clusters.add(conn1), Current.setConnectionId(conn1.id)])

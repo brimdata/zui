@@ -1,8 +1,8 @@
 import Current from "../state/Current"
-import refreshSpaceNames from "./refreshSpaceNames"
 import {initSpace} from "./initSpace"
 import Clusters from "../state/Clusters"
 import {Thunk} from "../state/types"
+import {initConnection} from "./initConnection"
 
 export const initCurrentTab = (): Thunk => async (
   dispatch,
@@ -14,7 +14,7 @@ export const initCurrentTab = (): Thunk => async (
   const spaceId = Current.getSpaceId(state)
 
   try {
-    await dispatch(refreshSpaceNames())
+    await dispatch(initConnection(conn))
     if (spaceId) {
       dispatch(initSpace(spaceId))
     }

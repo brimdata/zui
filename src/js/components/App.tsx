@@ -14,7 +14,9 @@ import View from "../state/View"
 import brim from "../brim"
 import SearchPage from "./SearchPage"
 import {PopNotice} from "./PopNotice"
-import ConnectionModal from "./ConnectionModal"
+import NewConnectionModal from "./ConnectionModals/NewConnectionModal"
+import EditConnectionModal from "./ConnectionModals/EditConnectionModal"
+import ViewConnectionModal from "./ConnectionModals/ViewConnectionModal"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -35,7 +37,9 @@ export default function App() {
       <Preferences />
       <AboutModal />
       <SpaceModal />
-      <ConnectionModal />
+      <NewConnectionModal />
+      <EditConnectionModal />
+      <ViewConnectionModal />
       <HTMLContextMenu />
       <PopNotice />
     </div>

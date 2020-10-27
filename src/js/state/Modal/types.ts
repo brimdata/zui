@@ -21,4 +21,5 @@ export type ModalName =
   | "ingest-warnings"
   | "space"
   | "new-connection"
-  | "connection"
+  | "edit-connection"
+  | "view-connection"

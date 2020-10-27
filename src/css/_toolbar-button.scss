@@ -69,11 +69,11 @@
 }
 
 .toolbar-button-primary {
-  background: linear-gradient(#4B91E2, #3A87DF);
+  background: linear-gradient(#4b91e2, #3a87df);
   .text {
-    color: white
+    color: white;
   }
   &:active:not(:disabled) {
-    background: darken($havelock, 15%)
+    background: darken($havelock, 15%);
   }
 }

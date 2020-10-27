@@ -56,12 +56,12 @@ export default function ClusterPicker() {
     {type: "separator"},
     {
       label: "+ New Connection",
-      click: () => dispatch(Modal.show("connection", {mode: "new"}))
+      click: () => dispatch(Modal.show("new-connection"))
     },
     {type: "separator"},
     {
       label: "Details",
-      click: () => dispatch(Modal.show("connection", {mode: "detail"}))
+      click: () => dispatch(Modal.show("view-connection"))
     }
   )
 

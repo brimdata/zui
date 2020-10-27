@@ -21,7 +21,6 @@ export default function Buttons({template, closeModal}: Props) {
           icon={b.icon}
           isLast={i + 1 === a.length}
           onClick={(e) => b.click(closeModal, e)}
-          isPrimary={b.isPrimary}
         />
       ))}
     </ButtonRow>
@@ -35,7 +34,6 @@ type ButtonItemProps = {
   disabled?: boolean
   icon?: React.ReactNode
   showSpinner?: boolean
-  isPrimary?: boolean
 }
 
 function ButtonItem({
@@ -43,8 +41,7 @@ function ButtonItem({
   onClick,
   isLast,
   disabled = false,
-  icon = null,
-  isPrimary = false
+  icon = null
 }: ButtonItemProps) {
   if (isLast) {
     return (
@@ -54,7 +51,6 @@ function ButtonItem({
         icon={icon}
         disabled={disabled}
         onClick={onClick}
-        isPrimary={isPrimary}
       />
     )
   }
@@ -65,7 +61,6 @@ function ButtonItem({
       onClick={onClick}
       disabled={disabled}
       icon={icon}
-      isPrimary={isPrimary}
     />
   )
 }
