@@ -1,4 +1,8 @@
-import {join, fromFileUrl, dirname} from "https://deno.land/std/path/mod.ts"
+import {
+  join,
+  fromFileUrl,
+  dirname
+} from "https://deno.land/std@0.70.0/path/mod.ts"
 import {withZqd} from "../test_api/helper/test_api.ts"
 
 const DIR = dirname(fromFileUrl(import.meta.url))

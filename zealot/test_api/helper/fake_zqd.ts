@@ -1,5 +1,4 @@
-import {serve} from "https://deno.land/std/http/server.ts"
-
+import {serve} from "https://deno.land/std@0.70.0/http/server.ts"
 export function createFakeZqd(port: number) {
   const responses: string[] = []
   const server = serve({port})
