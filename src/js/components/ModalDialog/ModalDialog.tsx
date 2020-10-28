@@ -19,8 +19,8 @@ const Overlay = styled.div`
 `
 
 const Background = styled.div`
-  --blur-color: hsla(28, 5%, 85%, 0.5);
-  --blur-shadow: hsla(28, 5%, 20%, 0.5);
+  --blur-color: hsla(32, 5%, 85%, 0.5);
+  --blur-shadow: hsla(32, 5%, 20%, 0.5);
 
   pointer-events: all;
   display: flex;
