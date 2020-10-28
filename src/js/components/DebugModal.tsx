@@ -1,36 +1,36 @@
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import Prism from "prismjs"
 import React, {useState} from "react"
 
 import {reactElementProps} from "../test/integration"
 import InputField from "./common/forms/InputField"
 import InputLabel from "./common/forms/InputLabel"
-import ModalBox from "./ModalBox/ModalBox"
 import SearchBar from "../state/SearchBar"
-import TextContent from "./TextContent"
 import TextInput from "./common/forms/TextInput"
 import brim from "../brim"
+import Modal from "../state/Modal"
+import {ModalDialog, Pre} from "./ModalDialog/ModalDialog"
+import {Content, Footer, Scrollable, Title} from "./ModalDialog/Content"
+import ToolbarButton from "./Toolbar/Button"
 
 export function DebugModal() {
-  return (
-    <ModalBox
-      name="debug"
-      title="Debug Query"
-      buttons="Done"
-      className="debug-modal"
-      {...reactElementProps("debugModal")}
-    >
-      <DebugModalContents />
-    </ModalBox>
-  )
+  const dispatch = useDispatch()
+  const name = useSelector(Modal.getName)
+  const onClosed = () => dispatch(Modal.hide())
+  if (name === "debug") {
+    return <ModalDialog onClosed={onClosed}>{DebugModalContents}</ModalDialog>
+  } else {
+    return null
+  }
 }
 
-function DebugModalContents() {
+function DebugModalContents({onClose}) {
   const searchProgram = useSelector(SearchBar.getSearchProgram)
   const [program, setProgram] = useState(searchProgram)
 
   return (
-    <TextContent>
+    <Content>
+      <Title>Debug Query</Title>
       <p>
         Type a query in the text box to see the parsed abstract syntax tree
         (AST).
@@ -44,12 +44,17 @@ function DebugModalContents() {
           {...reactElementProps("debugProgram")}
         />
       </InputField>
-      <pre
-        className="language-js"
-        dangerouslySetInnerHTML={{__html: formatAst(program)}}
-        {...reactElementProps("debugAst")}
-      />
-    </TextContent>
+      <Scrollable>
+        <Pre
+          className="language-js"
+          dangerouslySetInnerHTML={{__html: formatAst(program)}}
+          {...reactElementProps("debugAst")}
+        />
+      </Scrollable>
+      <Footer>
+        <ToolbarButton text="Done" onClick={onClose} />
+      </Footer>
+    </Content>
   )
 }
 

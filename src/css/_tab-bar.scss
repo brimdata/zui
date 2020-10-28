@@ -12,6 +12,8 @@ $tab-bg-color: $cello;
   overflow: hidden;
   position: relative;
   border-bottom: 3px solid $snow;
+  box-shadow: 0 1px 1px var(--lead);
+  z-index: 2;
 
   .tabs-container {
     width: 100%;
