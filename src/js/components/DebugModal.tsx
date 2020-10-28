@@ -9,8 +9,14 @@ import SearchBar from "../state/SearchBar"
 import TextInput from "./common/forms/TextInput"
 import brim from "../brim"
 import Modal from "../state/Modal"
-import {ModalDialog, Pre} from "./ModalDialog/ModalDialog"
-import {Content, Footer, Scrollable, Title} from "./ModalDialog/Content"
+import {
+  ModalDialog,
+  Pre,
+  Content,
+  Footer,
+  Scrollable,
+  Title
+} from "./ModalDialog/ModalDialog"
 import ToolbarButton from "./Toolbar/Button"
 
 export function DebugModal() {

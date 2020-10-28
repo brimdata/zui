@@ -19,8 +19,8 @@ const Overlay = styled.div`
 `
 
 const Background = styled.div`
-  --blur-color: rgba(228, 229, 231, 0.65);
-  --blue-shadow: rgba(6, 15, 24, 0.42);
+  --blur-color: hsla(28, 5%, 85%, 0.5);
+  --blur-shadow: hsla(28, 5%, 20%, 0.5);
 
   pointer-events: all;
   display: flex;
@@ -30,8 +30,9 @@ const Background = styled.div`
   max-width: 80%;
   max-height: 80%;
   background: var(--blur-color);
-  backdrop-filter: blur(13px);
-  box-shadow: 0 2px 6px 2px var(--blue-shadow);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 0 1px hsla(28, 5%, 20%, 0.75),
+    0 12px 45px hsla(28, 5%, 20%, 0.6);
   border-radius: 0 0 2px 2px;
   opacity: 1;
 
