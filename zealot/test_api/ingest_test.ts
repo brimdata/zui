@@ -1,4 +1,4 @@
-import {join} from "https://deno.land/std/path/mod.ts"
+import {join} from "https://deno.land/std@0.70.0/path/mod.ts"
 import {testApi, assertEquals, uniq} from "./helper/mod.ts"
 
 testApi("ingest log", async (zealot) => {
