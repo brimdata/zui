@@ -11,21 +11,24 @@ import {useDispatch} from "react-redux"
 import {Cluster} from "../../state/Clusters/types"
 import {isEmpty} from "lodash"
 import MacSpinner from "../MacSpinner"
-import {Footer} from "../ModalDialog/ModalDialog"
 import ToolbarButton from "../Toolbar/Button"
 
 const SignInForm = styled.div`
-  margin: 0 auto 25px;
+  margin: 0 auto 24px;
+  padding-left: 24px;
 
   ${InputField} {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 0 20px;
-    padding-left: 20px;
+    margin: 0 0 18px;
 
     input {
-      background: white;
+      background: rgba(255, 255, 255, 0.83);
+    }
+
+    &:last-child {
+      margin: 0;
     }
   }
 
@@ -37,7 +40,7 @@ const SignInForm = styled.div`
 
 const Errors = styled.ul`
   list-style: none;
-  margin-top: 1rem;
+  margin: 0 0 12px;
   line-height: 1.5;
 
   a {
@@ -52,11 +55,14 @@ const Errors = styled.ul`
   }
 `
 
-const StyledFooter = styled(Footer)`
+const StyledFooter = styled.footer`
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
+  background: transparent;
+  margin-bottom: 12px;
   button {
-    margin-left: 5px;
+    margin-left: 12px;
   }
 `
 
@@ -143,13 +149,15 @@ const ConnectionForm = ({onClose, conn}: Props) => {
 
   return (
     <>
-      <Errors>
-        {errors.map(({label, message, input}, i) => (
-          <li key={i}>
-            <a onClick={() => input.focus()}>{label}</a> {message}
-          </li>
-        ))}
-      </Errors>
+      {errors.length > 0 && (
+        <Errors>
+          {errors.map(({label, message, input}, i) => (
+            <li key={i}>
+              <a onClick={() => input.focus()}>{label}</a> {message}
+            </li>
+          ))}
+        </Errors>
+      )}
       <SignInForm>
         <form ref={setFormRef}>
           <InputField>

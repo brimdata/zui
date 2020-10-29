@@ -1,5 +1,5 @@
 import React from "react"
-import {Content, ModalDialog, Title} from "../ModalDialog/ModalDialog"
+import {Content, ModalDialog, SmallTitle} from "../ModalDialog/ModalDialog"
 import ConnectionForm from "./ConnectionForm"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "../../state/Current"
@@ -10,7 +10,7 @@ const EditConnectionModalContents = ({onClose}) => {
 
   return (
     <Content>
-      <Title>Edit Connection</Title>
+      <SmallTitle>Edit Connection</SmallTitle>
       <ConnectionForm onClose={onClose} conn={conn} />
     </Content>
   )

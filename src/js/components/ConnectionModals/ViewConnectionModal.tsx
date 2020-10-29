@@ -1,5 +1,5 @@
 import React from "react"
-import {Content, Footer, ModalDialog} from "../ModalDialog/ModalDialog"
+import {Content, ModalDialog, Title} from "../ModalDialog/ModalDialog"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "../../state/Current"
 import Spaces from "../../state/Spaces"
@@ -9,14 +9,19 @@ import styled from "styled-components"
 import StatusLight from "./StatusLight"
 
 const StyledContent = styled(Content)`
+  padding-top: 24px;
+  min-width: 330px;
   width: 100%;
 `
 
-const StyledFooter = styled(Footer)`
+const StyledFooter = styled.footer`
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
+  margin-bottom: 12px;
+
   button {
-    margin-left: 5px;
+    margin-left: 12px;
   }
 `
 
@@ -25,19 +30,16 @@ const StyledConnectionDetail = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-bottom: 20px;
-
-  h1 {
-    margin-bottom: 10px;
-  }
 `
 
 const ConnectionFields = styled.div`
   display: flex;
-  background: white;
+  background: rgba(255, 255, 255, 0.75);
   flex-direction: column;
-  border: 1px solid var(--cloudy);
-  border-radius: 10px;
+  border-radius: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-bottom: 24px;
   width: 100%;
 `
 
@@ -47,28 +49,42 @@ const FieldWrapper = styled.div`
   align-items: center;
   padding-right: 12px;
   margin-left: 12px;
-  border-bottom: 1px solid var(--cloudy);
-  &:last-child {
-    border: none;
+  height: 30px;
+  position: relative;
+
+  &:last-child:after {
+    display: none;
+  }
+
+  &:after {
+    width: 100%;
+    height: 1px;
+    box-shadow: 0 0.5px 0 var(--aqua);
+    opacity: 0.1;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
   }
 
   label {
-    ${(p) => p.theme.typography.labelBold}
+    ${(p) => p.theme.typography.labelNormal}
   }
 
   p {
     color: var(--slate);
-    ${(p) => p.theme.typography.labelSmall};
+    ${(p) => p.theme.typography.labelNormal};
+    margin: 0;
   }
 `
 
 const Status = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 24px;
   p {
     text-transform: capitalize;
-    margin: 5px;
+    margin: 0 0 0 6px;
   }
 `
 
@@ -101,7 +117,7 @@ const ViewConnectionModalContents = ({onClose}) => {
   return (
     <StyledContent>
       <StyledConnectionDetail>
-        <h1>{name}</h1>
+        <Title>{name}</Title>
         <Status>
           <StatusLight status={status} />
           <p>{status}</p>

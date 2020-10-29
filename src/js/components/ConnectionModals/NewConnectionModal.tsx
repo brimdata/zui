@@ -1,5 +1,5 @@
 import React from "react"
-import {Content, ModalDialog, Title} from "../ModalDialog/ModalDialog"
+import {Content, ModalDialog, SmallTitle} from "../ModalDialog/ModalDialog"
 import ConnectionForm from "./ConnectionForm"
 import Modal from "../../state/Modal"
 import {useDispatch, useSelector} from "react-redux"
@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux"
 const NewConnectionModalContents = ({onClose}) => {
   return (
     <Content>
-      <Title>New Connection</Title>
+      <SmallTitle>New Connection</SmallTitle>
       <ConnectionForm onClose={onClose} />
     </Content>
   )
