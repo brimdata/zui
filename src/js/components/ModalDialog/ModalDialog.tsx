@@ -64,7 +64,7 @@ export const Content = styled.div`
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding-top: 24px;
+  padding-top: 18px;
   & > * {
     padding-left: 12px;
     padding-right: 12px;
@@ -73,6 +73,12 @@ export const Content = styled.div`
 
 export const Title = styled.h2`
   ${(p) => p.theme.typography.headingPage}
+  margin-bottom: 12px;
+`
+
+export const SmallTitle = styled.h2`
+  ${(p) => p.theme.typography.headingList}
+  margin-bottom: 24px;
 `
 
 export const Scrollable = styled.div`
