@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import Prism from "prismjs"
 import React, {useState} from "react"
 
@@ -8,9 +8,7 @@ import InputLabel from "./common/forms/InputLabel"
 import SearchBar from "../state/SearchBar"
 import TextInput from "./common/forms/TextInput"
 import brim from "../brim"
-import Modal from "../state/Modal"
 import {
-  ModalDialog,
   Pre,
   Content,
   Footer,
@@ -18,24 +16,15 @@ import {
   Title
 } from "./ModalDialog/ModalDialog"
 import ToolbarButton from "./Toolbar/Button"
+import useEnterKey from "./hooks/useEnterKey"
 
-export function DebugModal() {
-  const dispatch = useDispatch()
-  const name = useSelector(Modal.getName)
-  const onClosed = () => dispatch(Modal.hide())
-  if (name === "debug") {
-    return <ModalDialog onClosed={onClosed}>{DebugModalContents}</ModalDialog>
-  } else {
-    return null
-  }
-}
-
-function DebugModalContents({onClose}) {
+export function DebugModal({onClose}) {
+  useEnterKey(onClose)
   const searchProgram = useSelector(SearchBar.getSearchProgram)
   const [program, setProgram] = useState(searchProgram)
 
   return (
-    <Content>
+    <Content width={600}>
       <Title>Debug Query</Title>
       <p>
         Type a query in the text box to see the parsed abstract syntax tree

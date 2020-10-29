@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import ReactDOM from "react-dom"
 import {CSSTransition} from "react-transition-group"
 import styled from "styled-components"
 import doc from "../../lib/doc"
+import useEscapeKey from "../hooks/useEscapeKey"
+import {useFreezeBody} from "../hooks/useFreezeBody"
 
 const Overlay = styled.div`
   position: fixed;
@@ -59,9 +61,11 @@ const Background = styled.div`
   }
 `
 
-export const Content = styled.div`
+export const Content = styled.div<{width: number}>`
   ${(p) => p.theme.typography.labelNormal}
   min-height: 0;
+  min-width: 100%;
+  width: ${(p) => (p.width && p.width + "px") || "100%"};
   display: flex;
   flex-direction: column;
   padding-top: 18px;
@@ -86,7 +90,7 @@ export const Scrollable = styled.div`
 `
 
 export const Footer = styled.footer`
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: row-reverse;
   padding: 6px 12px;
@@ -94,6 +98,19 @@ export const Footer = styled.footer`
 
 export const Pre = styled.pre`
   font-size: 11px;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding: 12px 24px;
+`
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  & > * {
+    margin-right: 8px;
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
 `
 
 interface ChildProps {
@@ -109,16 +126,8 @@ export function ModalDialog(props: Props) {
   const [show, setShow] = useState(true)
   const onClose = () => setShow(false)
 
-  useEffect(() => {
-    if (show) {
-      document.body.style.pointerEvents = "none"
-    } else {
-      document.body.style.pointerEvents = ""
-    }
-    return () => {
-      document.body.style.pointerEvents = ""
-    }
-  }, [show])
+  useFreezeBody(show)
+  useEscapeKey(onClose)
 
   return ReactDOM.createPortal(
     <Overlay>

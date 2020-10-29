@@ -11,7 +11,10 @@ test("renders with zq get command", async () => {
 
   store.dispatchAll([SearchBar.changeSearchBarInput("hi"), Modal.show("zq")])
 
-  const wrapper = provide(store, <ZQModal />)
+  const wrapper = provide(
+    store,
+    <ZQModal onClose={() => store.dispatch(Modal.hide())} />
+  )
   wrapper
     .find("button")
     .at(0)

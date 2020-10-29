@@ -20,6 +20,7 @@ const bg = cssVar("--wet-cement") as string
 const shadow = transparentize(0.65, bg)
 
 const Content = styled.div<{timeout: {appear: number; exit: number}}>`
+  pointer-events: all;
   white-space: nowrap;
   user-select: none;
   background: var(--wet-cement);
