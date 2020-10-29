@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React from "react"
 import {Content, ModalDialog, Title} from "../ModalDialog/ModalDialog"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "../../state/Current"
