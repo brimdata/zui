@@ -37,9 +37,17 @@ export default function ClusterPicker() {
   const current = useSelector(Current.getConnection)
   const clusters = useSelector(Clusters.all)
 
-  const template: MenuItemConstructorOptions[] = clusters.map((c: Cluster) => {
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: "Get Info",
+      click: () => dispatch(Modal.show("view-connection"))
+    },
+    {type: "separator"}
+  ]
+
+  clusters.forEach((c: Cluster) => {
     const isCurrent = c.id === current.id
-    return {
+    template.push({
       type: "checkbox",
       label: c.name,
       checked: isCurrent,
@@ -49,19 +57,14 @@ export default function ClusterPicker() {
           dispatch(Current.setConnectionId(c.id))
         })
       }
-    }
+    })
   })
 
   template.push(
     {type: "separator"},
     {
-      label: "+ New Connection",
+      label: "New Connection...",
       click: () => dispatch(Modal.show("new-connection"))
-    },
-    {type: "separator"},
-    {
-      label: "Details",
-      click: () => dispatch(Modal.show("view-connection"))
     }
   )
 

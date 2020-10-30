@@ -8,6 +8,7 @@ import Modal from "../../state/Modal"
 import styled from "styled-components"
 import StatusLight from "./StatusLight"
 import EditConnectionModal from "./EditConnectionModal"
+import useEnterKey from "../hooks/useEnterKey"
 
 const StyledContent = styled(Content)`
   padding-top: 24px;
@@ -107,6 +108,7 @@ const ViewConnectionModalContents = ({onClose, onEdit}) => {
   const conn = useSelector(Current.getConnection)
   const spaceIds = useSelector(Spaces.ids(conn.id))
   const spaceCount = spaceIds.length
+  useEnterKey(onClose)
 
   const {name, host, port, status, version = "unknown"} = conn
 

@@ -12,6 +12,7 @@ import {Cluster} from "../../state/Clusters/types"
 import {isEmpty} from "lodash"
 import MacSpinner from "../MacSpinner"
 import ToolbarButton from "../Toolbar/Button"
+import useEventListener from "../hooks/useEventListener"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -89,7 +90,8 @@ const ConnectionForm = ({onClose, conn}: Props) => {
     },
     name: {
       name: "name",
-      label: "Name"
+      label: "Name",
+      check: (value) => [!isEmpty(value), "must not be blank"]
     }
   }
 
@@ -102,8 +104,7 @@ const ConnectionForm = ({onClose, conn}: Props) => {
       host: h,
       port: p,
       id: hostPort,
-      // default name to use host:port if not provided
-      name: name || hostPort,
+      name: name,
       username: undefined,
       password: undefined,
       status: "initial"
@@ -143,6 +144,16 @@ const ConnectionForm = ({onClose, conn}: Props) => {
     setErrors([])
     onClose()
   }
+
+  function keyUp(e) {
+    if (e.key === "Enter") {
+      e.stopPropagation()
+      e.preventDefault()
+      onSave()
+    }
+  }
+
+  useEventListener(document, "keyup", keyUp, [formRef])
 
   const defaultName = (conn && conn.name) || ""
   const defaultHost = (conn && [conn.host, conn.port].join(":")) || ""
