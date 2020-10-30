@@ -130,8 +130,8 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        os: [macos-10.15, ubuntu-18.04, windows-2019]
-    needs: build
+        os: [macos-10.15]
+    # needs: build
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
@@ -193,6 +193,8 @@ jobs:
           # correct place so that CI can reliably find them for
           # collection.
           WORKSPACE: /var/tmp/brimsec
+      - name: Look at port 9867
+        run: lsof -nP -i TCP:9867
       - name: Integration Tests (non-Linux)
         if: runner.os != 'Linux'
         run: npm run itest -- --ci --forceExit
@@ -203,4 +205,3 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: /var/tmp/brimsec/itest
-
