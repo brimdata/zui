@@ -15,7 +15,6 @@ import brim from "../brim"
 import SearchPage from "./SearchPage"
 import {PopNotice} from "./PopNotice"
 import NewConnectionModal from "./ConnectionModals/NewConnectionModal"
-import EditConnectionModal from "./ConnectionModals/EditConnectionModal"
 import ViewConnectionModal from "./ConnectionModals/ViewConnectionModal"
 
 export default function App() {
@@ -38,7 +37,6 @@ export default function App() {
       <AboutModal />
       <SpaceModal />
       <NewConnectionModal />
-      <EditConnectionModal />
       <ViewConnectionModal />
       <HTMLContextMenu />
       <PopNotice />
