@@ -15,14 +15,11 @@ export function handleQuit(manager: $WindowManager, store, session, zqd) {
         formatSessionState(await manager.serialize(), store.getState())
       )
       manager.quit()
+      await zqd.close()
       app.quit()
     } else {
       quitting = false
     }
-  })
-
-  app.on("quit", () => {
-    zqd.close()
   })
 
   app.on("window-all-closed", () => {

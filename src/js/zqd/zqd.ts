@@ -150,9 +150,34 @@ export class ZQD {
     return "localhost:9867"
   }
 
-  close() {
+  async close(): Promise<void> {
     if (this.zqd) {
+      // give zqd 5 seconds to exit
+      let giveUp = false
+      setTimeout(() => {
+        giveUp = true
+      }, 5000)
+
       this.zqd.kill("SIGTERM")
+      while (!giveUp && (await isUp())) {
+        await new Promise((res) => setTimeout(res, 500))
+      }
+
+      if (giveUp) {
+        log.error("gave up waiting for zqd to shutdown")
+      } else {
+        log.info("zqd has shutdown")
+      }
     }
+  }
+}
+
+async function isUp() {
+  try {
+    const response = await fetch("http://localhost:9867/status")
+    const text = await response.text()
+    return text === "ok"
+  } catch (e) {
+    return false
   }
 }

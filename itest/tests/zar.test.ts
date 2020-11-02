@@ -17,14 +17,14 @@ describe("Zar tests", () => {
   let testIdx = 0
   const ZAR = path.join(nodeZqDistDir(), "zar")
   const ZAR_SPACE_NAME = "sample.zar"
-  beforeEach(() => {
+  beforeAll(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
     return appStep.startApp(app)
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     if (app && app.isRunning()) {
-      return await app.stop()
+      await app.stop()
     }
   })
 

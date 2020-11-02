@@ -19,7 +19,8 @@ export const initCurrentTab = (): Thunk => async (
       dispatch(initSpace(spaceId))
     }
     globalDispatch(Clusters.setStatus(conn.id, "connected"))
-  } catch {
+  } catch (e) {
+    console.error("Connection failed: ", e)
     globalDispatch(Clusters.setStatus(conn.id, "disconnected"))
   }
 }
