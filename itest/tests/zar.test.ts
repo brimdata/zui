@@ -11,6 +11,7 @@ import {nodeZqDistDir} from "../lib/env"
 import {handleError, stdTest} from "../lib/jest"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
+import {quitBrim} from "../lib/stop"
 
 describe("Zar tests", () => {
   let app
@@ -22,11 +23,7 @@ describe("Zar tests", () => {
     return appStep.startApp(app)
   })
 
-  afterEach(async () => {
-    if (app && app.isRunning()) {
-      return await app.stop()
-    }
-  })
+  afterEach(() => quitBrim(app))
 
   stdTest(`Brim starts when a Zar space is present`, (done) => {
     appStep

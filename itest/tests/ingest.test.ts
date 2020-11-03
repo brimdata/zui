@@ -12,11 +12,7 @@ describe("Ingest tests", () => {
     return appStep.startApp(app)
   })
 
-  afterAll(async () => {
-    if (app && app.isRunning()) {
-      return await app.stop()
-    }
-  })
+  afterAll(() => quitBrim(app))
 
   const searchZql =
     "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"

@@ -5,6 +5,7 @@ import {sprintf} from "sprintf-js"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
 import {handleError, stdTest} from "../lib/jest"
+import {quitBrim} from "../lib/stop"
 
 const simpleQueries = [
   "* | count()",
@@ -27,11 +28,7 @@ describe("Query tests", () => {
     await appStep.setSpan(app, "Whole Space")
   })
 
-  afterAll(async () => {
-    if (app && app.isRunning()) {
-      await app.stop()
-    }
-  })
+  afterAll(() => quitBrim(app))
 
   for (let i = 0; i < simpleQueries.length; i++) {
     const zql = simpleQueries[i]

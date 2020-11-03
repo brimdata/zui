@@ -9,6 +9,7 @@ import {runSearch} from "../lib/appStep/api/search"
 import newAppInstance from "../lib/newAppInstance"
 import {selectors} from "../../src/js/test/integration"
 import {handleError, stdTest} from "../lib/jest"
+import {quitBrim} from "../lib/stop"
 
 const clearPcaps = async (app) => {
   const dir = await pcapsDir(app)
@@ -33,11 +34,7 @@ describe("Test PCAPs", () => {
     return appStep.ingestFile(app, "sample.pcap")
   })
 
-  afterEach(() => {
-    if (app && app.isRunning()) {
-      return app.stop()
-    }
-  })
+  afterEach(() => quitBrim(app))
 
   stdTest(
     "pcap button downloads deterministically-formed pcap file",

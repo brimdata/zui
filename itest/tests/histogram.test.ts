@@ -6,22 +6,18 @@ import {retryUntil} from "../lib/control"
 import {handleError, stdTest} from "../lib/jest"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "../lib/log"
+import {quitBrim} from "../lib/stop"
 
 describe("Histogram tests", () => {
   let app
   let testIdx = 0
-  beforeEach(async (done) => {
+  beforeAll(async (done) => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await appStep.startApp(app)
     done()
   })
 
-  afterEach(async (done) => {
-    if (app && app.isRunning()) {
-      await app.stop()
-    }
-    done()
-  })
+  afterAll(() => quitBrim(app))
 
   stdTest("histogram deep inspection", (done) => {
     LOG.debug("Pre-login")

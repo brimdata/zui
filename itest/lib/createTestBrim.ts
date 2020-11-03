@@ -5,6 +5,7 @@ import logStep from "./appStep/util/logStep"
 import newAppInstance from "./newAppInstance"
 import {retryUntil} from "./control"
 import lib from "../../src/js/lib"
+import {quitBrim} from "./stop"
 
 export default (name: string) => {
   let app
@@ -15,9 +16,7 @@ export default (name: string) => {
     await appStep.startApp(app)
   })
 
-  afterAll(async () => {
-    if (app && app.isRunning()) await app.stop()
-  })
+  afterAll(() => quitBrim(app))
 
   return {
     getApp() {

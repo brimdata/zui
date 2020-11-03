@@ -6,6 +6,7 @@ import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
 import {handleError, stdTest} from "../lib/jest"
 import {selectors} from "../../src/js/test/integration"
+import {quitBrim} from "../lib/stop"
 
 // Fields we can test in types.tsv
 const FIELDS = ["scalar", "record.scalar"]
@@ -45,11 +46,7 @@ describe("type-wise Filter = value searches", () => {
     done()
   })
 
-  afterAll(() => {
-    if (app && app.isRunning()) {
-      return app.stop()
-    }
-  })
+  afterAll(() => quitBrim(app))
 
   stdTest("FilterEq ensure ingest", (done) => {
     appStep
