@@ -3,6 +3,7 @@ import path from "path"
 import {handleError, stdTest} from "../lib/jest"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
+import {quitBrim} from "../lib/stop"
 
 describe("Ingest tests", () => {
   let app
