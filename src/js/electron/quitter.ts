@@ -1,4 +1,5 @@
 import {app} from "electron"
+import log from "electron-log"
 import formatSessionState from "./tron/formatSessionState"
 import {$WindowManager} from "./tron/windowManager"
 
@@ -6,6 +7,7 @@ export function handleQuit(manager: $WindowManager, store, session, zqd) {
   let quitting = false
 
   app.on("before-quit", async (e) => {
+    log.debug("before-quit: quitting = ", quitting)
     if (quitting) return
     e.preventDefault()
     quitting = true
@@ -22,6 +24,7 @@ export function handleQuit(manager: $WindowManager, store, session, zqd) {
   })
 
   app.on("quit", () => {
+    log.debug("closing zqd")
     zqd.close()
   })
 
