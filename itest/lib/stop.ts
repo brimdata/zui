@@ -3,9 +3,8 @@ import fetch from "node-fetch"
 export async function quitBrim(app) {
   if (app && app.isRunning()) {
     await app.stop()
-    console.log("app stopped, waiting for zqd")
+    console.log("app stopped, waiting for zqd....")
     while (await isUp()) {
-      console.log("zqd is up")
       await new Promise((go) => setTimeout(go, 500))
     }
     console.log("zqd is down")
