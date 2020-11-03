@@ -7,13 +7,13 @@ import doc from "../lib/doc"
 import {CircleCloseButton} from "./CircleCloseButton"
 
 const Wrap = styled.div`
-  display: flex;
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
+  display: flex;
   justify-content: center;
-  height: 100px;
+  height: 112px;
 `
 
 const bg = cssVar("--wet-cement") as string

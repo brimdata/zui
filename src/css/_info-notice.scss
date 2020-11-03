@@ -1,11 +1,13 @@
 .info-notice-wrapper {
-  display: flex;
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
+  display: flex;
   justify-content: center;
-  height: 100px;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 24px;
 }
 
 .info-notice {
@@ -20,7 +22,7 @@
   display: flex;
   align-items: center;
   @include label-normal;
-  bottom: 48px;
+  margin-bottom: 12px;
   animation: popup 2s;
 
   .x-button {
