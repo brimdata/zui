@@ -29,6 +29,9 @@ export function createZealot(
     status: () => {
       return promise({method: "GET", path: "/status"})
     },
+    version: () => {
+      return promise({method: "GET", path: "/version"})
+    },
     search: (zql: string, args?: Partial<SearchArgs>) => {
       return stream(search(zql, {...searchArgs, ...args}))
     },

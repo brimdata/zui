@@ -9,17 +9,23 @@ type Props = {
   dropdown?: boolean
   disabled?: boolean
   className?: string
+  isPrimary?: boolean
 } & React.HTMLProps<HTMLButtonElement>
 
-export default function ToolbarButton({
+const ToolbarButton = ({
   text,
   icon,
   disabled,
   dropdown,
   className,
+  isPrimary,
   ...rest
-}: Props) {
-  const cn = classNames("toolbar-button", className)
+}: Props) => {
+  const cn = classNames(
+    "toolbar-button",
+    isPrimary && "toolbar-button-primary",
+    className
+  )
   return (
     <button {...rest} className={cn} disabled={disabled} type="button">
       {!!icon && <span className="icon">{icon}</span>}
@@ -28,3 +34,5 @@ export default function ToolbarButton({
     </button>
   )
 }
+
+export default ToolbarButton

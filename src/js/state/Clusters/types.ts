@@ -6,6 +6,7 @@ export type Cluster = {
   username: string
   password: string
   status: ClusterStatus
+  version?: string
 }
 
 export type ClusterStatus = "initial" | "connected" | "disconnected"

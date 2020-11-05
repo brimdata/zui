@@ -67,3 +67,13 @@
     }
   }
 }
+
+.toolbar-button-primary {
+  background: linear-gradient(#4b91e2, #3a87df);
+  .text {
+    color: white;
+  }
+  &:active:not(:disabled) {
+    background: darken($havelock, 15%);
+  }
+}

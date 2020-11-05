@@ -17,9 +17,10 @@ export default (name: string, idx: number): Application => {
 
   // https://github.com/electron-userland/spectron#new-applicationoptions
   let appArgs = {
-    chromeDriverArgs: ["--no-sandbox", `--user-data-dir=${userDataDir}`],
+    chromeDriverArgs: [`--user-data-dir=${userDataDir}`],
     startTimeout: 60000,
-    waitTimeout: 15000,
+    waitTimeout: 25000,
+    quitTimeout: 10000,
     chromeDriverLogPath: path.join(userDataDir, "chromedriver.log"),
     webdriverLogPath: path.join(userDataDir, webdriverLogDir),
     // Latest compatible spectron and webdriverio lead to the
