@@ -61,7 +61,7 @@ const Background = styled.div`
   }
 `
 
-export const Content = styled.div<{width: number}>`
+export const Content = styled.div<{width?: number}>`
   ${(p) => p.theme.typography.labelNormal}
   min-height: 0;
   min-width: 100%;
