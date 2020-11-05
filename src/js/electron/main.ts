@@ -76,7 +76,7 @@ async function main() {
   else app.on("ready", onReady)
 
   app.on("activate", () => {
-    if (!(winMan.count() === 0)) winMan.init()
+    if (winMan.count() === 0) winMan.init()
   })
 
   app.on("web-contents-created", (event, contents) => {
