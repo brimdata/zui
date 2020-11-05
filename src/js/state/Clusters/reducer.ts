@@ -13,9 +13,5 @@ export default produce((draft: ClustersState, action: ClusterAction) => {
     case "CLUSTER_REMOVE":
       delete draft[action.id]
       return
-    case "CLUSTER_SET_STATUS":
-      if (!draft[action.id]) return
-      draft[action.id].status = action.status
-      return
   }
 }, init())

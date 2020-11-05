@@ -13,8 +13,7 @@ const cluster: Cluster = {
   host: "boom.com",
   port: "9867",
   username: "kerr",
-  password: "123",
-  status: "initial"
+  password: "123"
 }
 
 test("addCluster", () => {
