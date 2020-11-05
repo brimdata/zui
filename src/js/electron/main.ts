@@ -25,14 +25,15 @@ import electronIsDev from "./isDev"
 import {setupAutoUpdater} from "./autoUpdater"
 import log from "electron-log"
 import {handleQuit} from "./quitter"
+import {Brim} from "./brim"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
   userTasks(app)
-
   const session = tron.session()
-  const winMan = tron.windowManager()
   const data = await session.load()
+  const brim = new Brim(data)
+  const winMan = brim.windows
   const store = createGlobalStore(data ? data.globalState : undefined)
   const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
   const zeekRunner = Prefs.getZeekRunner(store.getState())
@@ -66,18 +67,8 @@ async function main() {
     }
   })
 
-  async function onReady() {
-    if (electronIsDev) await installExtensions()
-    winMan.init(data)
-  }
-
-  // The app might be ready by the time we get here due to async stuff above
-  if (app.isReady()) onReady()
-  else app.on("ready", onReady)
-
-  app.on("activate", () => {
-    if (winMan.count() === 0) winMan.init()
-  })
+  app.whenReady().then(() => brim.start())
+  app.on("activate", () => brim.activate())
 
   app.on("web-contents-created", (event, contents) => {
     contents.on("will-attach-webview", (e) => {
