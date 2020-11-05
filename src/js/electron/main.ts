@@ -17,7 +17,6 @@ import "regenerator-runtime/runtime"
 import {app} from "electron"
 
 import {handleSquirrelEvent} from "./squirrel"
-import {installExtensions} from "./extensions"
 import tron from "./tron"
 import path from "path"
 import {ZQD} from "../zqd/zqd"
