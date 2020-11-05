@@ -7,16 +7,20 @@ import ZQModal from "./ZQModal"
 import CurlModal from "./CurlModal"
 import React from "react"
 import {ModalDialog} from "./ModalDialog/ModalDialog"
+import NewConnectionModal from "./ConnectionModals/NewConnectionModal"
+import ViewConnectionModal from "./ConnectionModals/ViewConnectionModal"
 
 const MODALS = {
   debug: DebugModal,
   whois: WhoisModal,
   curl: CurlModal,
   zq: ZQModal,
-  "ingest-warnings": IngestWarningsModal
+  "ingest-warnings": IngestWarningsModal,
+  "new-connection": NewConnectionModal,
+  "view-connection": ViewConnectionModal
 }
 
-export function SearchPageModals() {
+export function Modals() {
   const name = useSelector(Modal.getName)
   const dispatch = useDispatch()
   const modal = MODALS[name]

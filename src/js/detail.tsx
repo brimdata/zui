@@ -9,7 +9,7 @@ import initDetail from "./initializers/initDetail"
 import lib from "./lib"
 import LogDetailsWindow from "./components/LogDetailsWindow"
 import StartupError from "./components/StartupError"
-import {SearchPageModals} from "./components/SearchPageModals"
+import {Modals} from "./components/Modals"
 import {ThemeProvider} from "styled-components"
 import theme from "./style-theme"
 
@@ -21,7 +21,7 @@ initDetail()
         <Provider store={store}>
           <ThemeProvider theme={theme}>
             <LogDetailsWindow />
-            <SearchPageModals />
+            <Modals />
           </ThemeProvider>
         </Provider>
       </AppErrorBoundary>,
