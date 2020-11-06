@@ -124,7 +124,9 @@ export default function windowManager() {
       winParams: Partial<WindowParams> = {},
       initialState: any = undefined
     ): BrimWindow {
-      const lastWin = last<BrimWindow>(this.getWindows())
+      const lastWin = last<BrimWindow>(
+        this.getWindows().filter((w) => w.name === name)
+      )
       const params = defaultWindowParams(winParams, lastWin && lastWin.ref)
       const id = params.id
 
