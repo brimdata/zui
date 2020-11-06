@@ -5,45 +5,51 @@ import {JSON_TYPE_CONFIG_DOCS} from "./Preferences/JSONTypeConfig"
 import {globalDispatch} from "../state/GlobalContext"
 import Current from "../state/Current"
 import Link from "./common/Link"
-import ModalBox from "./ModalBox/ModalBox"
 import Spaces from "../state/Spaces"
-import TextContent from "./TextContent"
+import useEnterKey from "./hooks/useEnterKey"
+import {
+  ButtonGroup,
+  Content,
+  Footer,
+  Pre,
+  Scrollable,
+  Title
+} from "./ModalDialog/ModalDialog"
+import ToolbarButton from "./Toolbar/Button"
 
-export default function IngestWarningsModal() {
+export default function IngestWarningsModal({onClose}) {
+  useEnterKey(onClose)
   const id = useSelector(Current.getConnectionId)
   const spaceId = useSelector(Current.getSpaceId)
   const warnings = useSelector(Spaces.getIngestWarnings(id, spaceId))
-
-  const buttons = [{label: "Done", click: (done) => done()}]
-  if (warnings.length) {
-    buttons.unshift({
-      label: "Clear Warnings",
-      click: () => globalDispatch(Spaces.clearIngestWarnings(id, spaceId))
-    })
-  }
+  const onClear = () => globalDispatch(Spaces.clearIngestWarnings(id, spaceId))
 
   return (
-    <ModalBox
-      name="ingest-warnings"
-      className="ingest-warnings-modal"
-      title="Ingest Warnings"
-      buttons={buttons}
-    >
-      <TextContent>
-        {warnings.length ? (
-          <>
-            <p>
-              If you are trying to import JSON logs, please review the{" "}
-              <Link href={JSON_TYPE_CONFIG_DOCS}>
-                JSON type configuration docs.
-              </Link>
-            </p>
-            <pre className="output">{warnings.join("\n")}</pre>
-          </>
-        ) : (
-          <p>Warnings cleared.</p>
-        )}
-      </TextContent>
-    </ModalBox>
+    <Content width={800}>
+      <Title>Ingest Warnings</Title>
+      {warnings.length ? (
+        <>
+          <p>
+            If you are trying to import JSON logs, please review the{" "}
+            <Link href={JSON_TYPE_CONFIG_DOCS}>
+              JSON type configuration docs.
+            </Link>
+          </p>
+          <Scrollable>
+            <Pre>{warnings.join("\n")}</Pre>
+          </Scrollable>
+        </>
+      ) : (
+        <p>Warnings cleared.</p>
+      )}
+      <Footer>
+        <ButtonGroup>
+          {warnings.length > 0 && (
+            <ToolbarButton text="Clear Warnings" onClick={onClear} />
+          )}
+          <ToolbarButton text="Done" onClick={onClose} />
+        </ButtonGroup>
+      </Footer>
+    </Content>
   )
 }

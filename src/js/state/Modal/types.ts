@@ -15,7 +15,6 @@ export type ModalName =
   | "settings"
   | "whois"
   | "curl"
-  | "nodata"
   | "zq"
   | "about"
   | "ingest-warnings"

@@ -1,10 +1,9 @@
 import React, {useState} from "react"
-import {Content, ModalDialog, Title} from "../ModalDialog/ModalDialog"
-import {useDispatch, useSelector} from "react-redux"
+import {Content, Title} from "../ModalDialog/ModalDialog"
+import {useSelector} from "react-redux"
 import Current from "../../state/Current"
 import Spaces from "../../state/Spaces"
 import ToolbarButton from "../Toolbar/Button"
-import Modal from "../../state/Modal"
 import styled from "styled-components"
 import StatusLight from "./StatusLight"
 import EditConnectionModal from "./EditConnectionModal"
@@ -104,7 +103,7 @@ const Field = ({label, value}: FieldProps) => {
   )
 }
 
-const ViewConnectionModalContents = ({onClose, onEdit}) => {
+const ViewConnection = ({onClose, onEdit}) => {
   const conn = useSelector(Current.getConnection)
   const spaceIds = useSelector(Spaces.ids(conn.id))
   const spaceCount = spaceIds.length
@@ -134,29 +133,14 @@ const ViewConnectionModalContents = ({onClose, onEdit}) => {
   )
 }
 
-const ViewModalSwitch = ({onClose}) => {
+const ViewConnectionModal = ({onClose}) => {
   const [editing, setEditing] = useState(false)
 
   if (editing) {
     return <EditConnectionModal onClose={() => setEditing(false)} />
   } else {
-    return (
-      <ViewConnectionModalContents
-        onClose={onClose}
-        onEdit={() => setEditing(true)}
-      />
-    )
+    return <ViewConnection onClose={onClose} onEdit={() => setEditing(true)} />
   }
-}
-
-const ViewConnectionModal = () => {
-  const dispatch = useDispatch()
-  const name = useSelector(Modal.getName)
-  const onClose = () => dispatch(Modal.hide())
-  if (name === "view-connection")
-    return <ModalDialog onClosed={onClose}>{ViewModalSwitch}</ModalDialog>
-
-  return null
 }
 
 export default ViewConnectionModal

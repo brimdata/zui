@@ -8,16 +8,21 @@ import AppErrorBoundary from "./components/AppErrorBoundary"
 import initDetail from "./initializers/initDetail"
 import lib from "./lib"
 import LogDetailsWindow from "./components/LogDetailsWindow"
-import WhoisModal from "./components/WhoisModal"
 import StartupError from "./components/StartupError"
+import {Modals} from "./components/Modals"
+import {ThemeProvider} from "styled-components"
+import theme from "./style-theme"
 
 initDetail()
   .then((store) => {
     ReactDOM.render(
       <AppErrorBoundary dispatch={store.dispatch}>
+        <div id="modal-dialog-root" />
         <Provider store={store}>
-          <LogDetailsWindow />
-          <WhoisModal />
+          <ThemeProvider theme={theme}>
+            <LogDetailsWindow />
+            <Modals />
+          </ThemeProvider>
         </Provider>
       </AppErrorBoundary>,
       lib.doc.id("app-root")
