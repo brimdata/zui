@@ -10,6 +10,9 @@ import {
 } from "../types"
 
 export type NewTabSearchParams = {
+  host: string
+  port: string
+  connId: string
   program: string
   span: SpanArgs
   spaceId: string

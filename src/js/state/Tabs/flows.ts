@@ -3,12 +3,14 @@ import {ipcRenderer} from "electron"
 import {Thunk} from "../types"
 import Tabs from "./"
 import brim from "../../brim"
+import Current from "../Current"
 
 export default {
-  new: (spaceId: string | null = null): Thunk => (dispatch, getState) => {
-    const {
-      current: {connectionId}
-    } = Tabs.getActiveTab(getState())
+  new: (spaceId: string | null = null, connId?: string): Thunk => (
+    dispatch,
+    getState
+  ) => {
+    const connectionId = connId || Current.getConnectionId(getState())
     const id = brim.randomHash()
     dispatch(Tabs.add(id, {connectionId, spaceId}))
     dispatch(Tabs.activate(id))

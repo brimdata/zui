@@ -9,6 +9,7 @@ import styled from "styled-components"
 import StatusLight from "./StatusLight"
 import EditConnectionModal from "./EditConnectionModal"
 import useEnterKey from "../hooks/useEnterKey"
+import ConnectionStatuses from "../../state/ConnectionStatuses"
 
 const StyledContent = styled(Content)`
   padding-top: 24px;
@@ -107,18 +108,18 @@ const Field = ({label, value}: FieldProps) => {
 const ViewConnectionModalContents = ({onClose, onEdit}) => {
   const conn = useSelector(Current.getConnection)
   const spaceIds = useSelector(Spaces.ids(conn.id))
+  const {name, host, port, version = "unknown", id} = conn
+  const connStatus = useSelector(ConnectionStatuses.get(id))
   const spaceCount = spaceIds.length
   useEnterKey(onClose)
-
-  const {name, host, port, status, version = "unknown"} = conn
 
   return (
     <StyledContent>
       <StyledConnectionDetail>
         <Title>{name}</Title>
         <Status>
-          <StatusLight status={status} />
-          <p>{status}</p>
+          <StatusLight status={connStatus} />
+          <p>{connStatus || "unknown"}</p>
         </Status>
         <ConnectionFields>
           <Field label="Host" value={[host, port].join(":")} />

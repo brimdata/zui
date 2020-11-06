@@ -7,12 +7,13 @@ import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 
 export default function(store: Store, params: NewTabSearchParams) {
-  const {spaceId, span, program, isNewWin} = params
+  const {connId, spaceId, span, program, isNewWin} = params
 
   if (!isNewWin) {
-    store.dispatch(Tabs.new())
+    store.dispatch(Tabs.new(spaceId, connId))
   }
 
+  store.dispatch(Current.setConnectionId(connId))
   store.dispatch(Current.setSpaceId(spaceId))
   store.dispatch(Search.setSpanArgs(span))
   store.dispatch(SearchBar.removeAllSearchBarPins())

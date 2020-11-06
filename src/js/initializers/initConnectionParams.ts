@@ -12,8 +12,7 @@ const setupConnection = (host, port) => (dispatch, _, {globalDispatch}) => {
     id: hostPort,
     name: hostPort,
     username: "",
-    password: "",
-    status: "initial"
+    password: ""
   }
   dispatch(Clusters.add(cluster))
   globalDispatch(Clusters.add(cluster))
