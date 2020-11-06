@@ -26,7 +26,6 @@ export default function TabContent() {
   const conn = useSelector(Current.getConnection)
   const connStatus = useSelector(ConnectionStatuses.get(conn.id))
 
-  console.log("connStatus is: ", connStatus)
   useEffect(() => {
     if (!connStatus) {
       dispatch(initCurrentTab())

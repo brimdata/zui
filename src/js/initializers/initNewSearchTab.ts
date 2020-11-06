@@ -10,7 +10,7 @@ export default function(store: Store, params: NewTabSearchParams) {
   const {connId, spaceId, span, program, isNewWin} = params
 
   if (!isNewWin) {
-    store.dispatch(Tabs.new(spaceId, connId))
+    store.dispatch(Tabs.new())
   }
 
   store.dispatch(Current.setConnectionId(connId))

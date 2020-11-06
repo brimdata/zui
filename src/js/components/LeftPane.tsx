@@ -15,6 +15,7 @@ import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
 import useDrag from "./hooks/useDrag"
 import usePopupMenu from "./hooks/usePopupMenu"
+import ConnectionStatuses from "../state/ConnectionStatuses"
 
 const Arrow = (props) => {
   return (
@@ -168,13 +169,13 @@ export function LeftPane() {
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
   const id = useSelector(Current.getConnectionId)
+  const connStatus = useSelector(ConnectionStatuses.get(id))
   const spaces = useSelector(Spaces.getSpaces(id))
 
   const showHistory = useSelector(Layout.getHistoryIsOpen)
   const showSpaces = useSelector(Layout.getSpacesIsOpen)
   const historyHeight = useSelector(Layout.getHistoryHeight)
   const spacesHeight = useSelector(Layout.getSpacesHeight)
-  const conn = useSelector(Current.getConnection)
 
   const paneRef = useRef<HTMLDivElement>()
   const paneHeight = useRef(0)
@@ -229,7 +230,7 @@ export function LeftPane() {
           <AddSpaceButton />
         </SectionHeader>
         <SectionContents show={showSpaces}>
-          <SavedSpacesList spaces={spaces} connStatus={conn.status} />
+          <SavedSpacesList spaces={spaces} connStatus={connStatus} />
         </SectionContents>
         {showSpaces && <DragAnchor {...dragFunc()} />}
       </StyledSection>
