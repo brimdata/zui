@@ -30,8 +30,7 @@ test("getting the actual connection", () => {
     host: "www.myconn.com",
     port: "123",
     username: "",
-    password: "",
-    status: "connected"
+    password: ""
   }
   const state = store.dispatchAll([
     Clusters.add(conn),
@@ -49,8 +48,7 @@ test("getting the actual space", () => {
     host: "www.myconn.com",
     port: "123",
     username: "",
-    password: "",
-    status: "connected"
+    password: ""
   }
   const state = store.dispatchAll([
     Clusters.add(conn),

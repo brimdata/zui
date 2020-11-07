@@ -12,6 +12,7 @@ import {SpacesState} from "./Spaces/types"
 import {TabsState} from "./Tabs/types"
 import {ViewState} from "./View/types"
 import {createZealot, Zealot} from "zealot"
+import {ConnectionStatusesState} from "./ConnectionStatuses/types"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -39,4 +40,5 @@ export type State = {
   tabs: TabsState
   packets: PacketsState
   prefs: PrefsState
+  connectionStatuses: ConnectionStatusesState
 }

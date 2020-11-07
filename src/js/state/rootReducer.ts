@@ -1,6 +1,7 @@
 import {combineReducers} from "redux"
 
 import Clusters from "./Clusters"
+import ConnectionStatuses from "./ConnectionStatuses"
 import Errors from "./Errors"
 import Handlers from "./Handlers"
 import Investigation from "./Investigation"
@@ -23,5 +24,6 @@ export default combineReducers<any, any>({
   view: View.reducer,
   spaces: Spaces.reducer,
   packets: Packets.reducer,
-  prefs: Prefs.reducer
+  prefs: Prefs.reducer,
+  connectionStatuses: ConnectionStatuses.reducer
 })

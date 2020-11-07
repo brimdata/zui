@@ -10,6 +10,7 @@ import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
 import ConnectionError from "./ConnectionError"
 import {initCurrentTab} from "../flows/initCurrentTab"
+import ConnectionStatuses from "../state/ConnectionStatuses"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -23,19 +24,22 @@ export default function TabContent() {
   const dispatch = useDispatch()
   const space = useSelector(Current.getSpace)
   const conn = useSelector(Current.getConnection)
+  const connStatus = useSelector(ConnectionStatuses.get(conn.id))
 
   useEffect(() => {
-    if (conn.status === "initial") dispatch(initCurrentTab())
-  }, [])
+    if (!connStatus) {
+      dispatch(initCurrentTab())
+    }
+  }, [connStatus])
 
-  if (conn.status === "initial")
+  if (!connStatus)
     return (
       <SpinnerWrap>
         <MacSpinner />
       </SpinnerWrap>
     )
 
-  if (conn.status === "disconnected") return <ConnectionError conn={conn} />
+  if (connStatus === "disconnected") return <ConnectionError conn={conn} />
 
   if (!space) {
     return <TabWelcome />

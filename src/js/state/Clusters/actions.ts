@@ -1,4 +1,4 @@
-import {CLUSTER_ADD, CLUSTER_REMOVE, Cluster, ClusterStatus} from "./types"
+import {CLUSTER_ADD, CLUSTER_REMOVE, Cluster} from "./types"
 
 export default {
   add(cluster: Cluster): CLUSTER_ADD {
@@ -6,8 +6,5 @@ export default {
   },
   remove(id: string): CLUSTER_REMOVE {
     return {type: "CLUSTER_REMOVE", id}
-  },
-  setStatus(id: string, status: ClusterStatus) {
-    return {type: "CLUSTER_SET_STATUS", id, status}
   }
 }

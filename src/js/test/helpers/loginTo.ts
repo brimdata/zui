@@ -14,6 +14,7 @@ export default async function loginTo(
 ): Promise<{store: TestStore; cluster: Cluster; zealot: ZealotMock}> {
   const mock = createZealotMock()
   mock
+    .stubPromise("version", {version: "1"}, "always")
     .stubPromise("spaces.list", [{name: "dataSpace", id: "1"}], "always")
     .stubPromise("spaces.get", {name: "dataSpace", id: "1"}, "always")
     .stubStream(

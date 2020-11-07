@@ -1,14 +1,9 @@
 import Current from "../state/Current"
 import {initSpace} from "./initSpace"
-import Clusters from "../state/Clusters"
 import {Thunk} from "../state/types"
 import {initConnection} from "./initConnection"
 
-export const initCurrentTab = (): Thunk => async (
-  dispatch,
-  getState,
-  {globalDispatch}
-) => {
+export const initCurrentTab = (): Thunk => async (dispatch, getState) => {
   const state = getState()
   const conn = Current.getConnection(state)
   const spaceId = Current.getSpaceId(state)
@@ -18,9 +13,7 @@ export const initCurrentTab = (): Thunk => async (
     if (spaceId) {
       dispatch(initSpace(spaceId))
     }
-    globalDispatch(Clusters.setStatus(conn.id, "connected"))
   } catch (e) {
     console.error("Connection failed: ", e)
-    globalDispatch(Clusters.setStatus(conn.id, "disconnected"))
   }
 }

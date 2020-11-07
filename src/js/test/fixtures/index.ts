@@ -24,8 +24,7 @@ const cluster1 = (): Cluster => ({
   host: "test",
   port: "9867",
   username: "",
-  password: "",
-  status: "connected"
+  password: ""
 })
 
 const cluster2 = (): Cluster => ({
@@ -34,8 +33,7 @@ const cluster2 = (): Cluster => ({
   host: "test",
   port: "9868",
   username: "",
-  password: "",
-  status: "connected"
+  password: ""
 })
 
 const fixtures = () => ({

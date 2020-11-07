@@ -20,11 +20,11 @@ import Spaces from "../state/Spaces"
 import deleteSpaces from "../flows/deleteSpaces"
 import {popNotice} from "./PopNotice"
 import {AppDispatch} from "../state/types"
-import {ClusterStatus} from "../state/Clusters/types"
+import {ConnectionStatus} from "../state/ConnectionStatuses/types"
 
 type Props = {
   spaces: Space[]
-  connStatus: ClusterStatus
+  connStatus: ConnectionStatus | void
 }
 
 const NameWrap = styled.div`
