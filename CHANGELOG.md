@@ -1,3 +1,37 @@
+## v0.19.0
+* **NOTE** - Due to the ZNG storage format change described in the
+[`zq` v0.23.0 release notes](https://github.com/brimsec/zq/releases/tag/v0.23.0),
+when you first launch the new version of Brim, a one-time bulk background
+update of the stored data for all of your existing Spaces will automatically
+begin. If you click to access a Space while migration is in progress, an
+animated "spinner" will be visible in the right of the Search bar. Once
+migration is complete for a Space, the bar chart will be filled in and the
+first splash of events will be shown and you can begin working with your Space
+as usual.
+
+---
+
+* Update zq to [v0.23.0](https://github.com/brimsec/zq/releases/tag/v0.23.0)
+* Update Zeek to [v3.2.1-brim3](https://github.com/brimsec/zeek/releases/tag/v3.2.1-brim3) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1193)
+* Binaries for [`pcap`](https://github.com/brimsec/zq/blob/master/cmd/pcap/README.md), [`zapi`](https://github.com/brimsec/zq/blob/master/cmd/zapi/README.md), and [`zar`](https://github.com/brimsec/zq/blob/master/ppl/cmd/zar/README.md) are now bundled with Brim (#1098)
+* Fix an issue where Brim presented a blank white screen when it failed to initialize (#1035)
+* Improve how Brim handles ZJSON responses from `zqd` (#1108)
+* Upgrade to Electron v10.1.4 and WebdriverIO v6.6.7 (#1106, #1159)
+* Fix an issue where accidental non-NDJSON data in an NDJSON response stream resulted in confusing error messages (#1111)
+* Ensure pcap import warnings are presented to the user (#1112)
+* Add an "Import complete" pop-up notification (#1134, #1185)
+* Fix an issue where "Pivot to logs" was grayed out when right-clicking on an entry containing a dotted record field (#1142)
+* Fix an issue where pinned entries in the History panel were sometimes inconsistently created (#1143)
+* Add a "Move to Current Display" option on Windows to move Brim windows from an inaccessible external display (#1148, #1158, #1164)
+* Fix an issue where executing rapid-fire queries caused excess disruptive "The user aborted a request" notifications (#1155)
+* Fix an issue where launching Brim with config pointing to an inaccessible remote `zqd` caused a blank white screen (#1150, #1163)
+* Allow for naming remote connections and editing their settings (#1157, #1167)
+* Fix an issue where a Space couldn't be deleted if `zqd` went down during data import (#1146)
+* Improve presentation of modals, such as Debug Query (#1171, #1184, #1175)
+* Fix an issue on macOS where clicking the Brim dock icon opened additional windows (#1189)
+* Fix an issue where opening the Log Detail window caused the main window to spin (#1196)
+
+
 ## v0.18.0
 * Update zq to [v0.22.0](https://github.com/brimsec/zq/releases/tag/v0.22.0)
 * Update Zeek to [v3.2.0-dev-brim10](https://github.com/brimsec/zeek/releases/tag/v3.2.0-dev-brim10) to take advantage of latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1096)
