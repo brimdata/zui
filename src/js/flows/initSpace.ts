@@ -3,12 +3,11 @@ import {getZealot} from "./getZealot"
 import {globalDispatch} from "../state/GlobalContext"
 import {submitSearch} from "./submitSearch/mod"
 import Current from "../state/Current"
-import ErrorFactory from "../models/ErrorFactory"
-import Notice from "../state/Notice"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
 import brim from "../brim"
+import {handleZealotError} from "./handleZealotError"
 
 export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
   const clusterId = Current.getConnectionId(getState())
@@ -30,7 +29,6 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
       dispatch(submitSearch({history: true, investigation: false}))
     })
     .catch((error) => {
-      console.error(error)
-      dispatch(Notice.set(ErrorFactory.create(error)))
+      dispatch(handleZealotError(error))
     })
 }
