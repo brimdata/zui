@@ -7,7 +7,7 @@
 * Upgrade to Electron v10.1.4 and WebdriverIO v6.6.7 (#1106, #1159)
 * Fix an issue where accidental non-NDJSON data in an NDJSON response stream resulted in confusing error messages (#1111)
 * Ensure pcap import warnings are presented to the user (#1112)
-* Add an "Import complete" pop-up notifiation (#1134, #1185)
+* Add an "Import complete" pop-up notification (#1134, #1185)
 * Fix an issue where "Pivot to logs" was grayed out when right-clicking on an entry containing a dotted record field (#1142)
 * Fix an issue where pinned entries in the History panel were sometimes inconsistently created (#1143)
 * Add a "Move to Current Display" option on Windows to move Brim windows from an inaccessible external display (#1148, #1158, #1164)
@@ -17,6 +17,8 @@
 * Fix an issue where a Space couldn't be deleted if `zqd` went down during data import (#1146)
 * Improve presentation of modals, such as Debug Query (#1171, #1184, #1175)
 * Fix an issue on macOS where clicking the Brim dock icon opened additional windows (#1189)
+* Fix an issue where opening the Log Detail window caused the main window to spin (#1196)
+
 
 ## v0.18.0
 * Update zq to [v0.22.0](https://github.com/brimsec/zq/releases/tag/v0.22.0)
