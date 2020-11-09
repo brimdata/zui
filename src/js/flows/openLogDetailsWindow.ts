@@ -11,6 +11,9 @@ export const openLogDetailsWindow = (): Thunk => (dispatch, getState) => {
       delete tab.columns
       delete tab.viewer
     }
+
+    // handlers cannot be serialized to plain js objects
+    delete draft.handlers
   })
   invoke(
     ipc.windows.open("detail", {size: [700, 600], query: {host, port}}, state)

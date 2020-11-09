@@ -97,7 +97,7 @@ export default function windowManager() {
     openSearchTab(searchParams: NewTabSearchParams) {
       let isNewWin = true
       const existingWin = this.getWindows()
-        .sort((a, b) => a.lastFocused - b.lastFocused)
+        .sort((a, b) => b.lastFocused - a.lastFocused)
         .find((w) => w.name === "search")
       if (existingWin) {
         isNewWin = false
@@ -109,7 +109,8 @@ export default function windowManager() {
         return
       }
 
-      const {win} = this.openWindow("search", {})
+      const {host, port} = searchParams
+      const win = this.openWindow("search", {query: {host, port}})
       win.ref.webContents.once("did-finish-load", () => {
         sendTo(
           win.ref.webContents,
@@ -123,7 +124,9 @@ export default function windowManager() {
       winParams: Partial<WindowParams> = {},
       initialState: any = undefined
     ): BrimWindow {
-      const lastWin = last<BrimWindow>(this.getWindows())
+      const lastWin = last<BrimWindow>(
+        this.getWindows().filter((w) => w.name === name)
+      )
       const params = defaultWindowParams(winParams, lastWin && lastWin.ref)
       const id = params.id
 
@@ -190,10 +193,10 @@ export default function windowManager() {
       if (win) {
         win.ref.webContents.send("showPreferences")
       } else {
-        const {win} = this.openWindow("search", {})
+        const newWin = this.openWindow("search", {})
 
-        win.ref.webContents.once("did-finish-load", () => {
-          win.ref.webContents.send("showPreferences")
+        newWin.ref.webContents.once("did-finish-load", () => {
+          newWin.ref.webContents.send("showPreferences")
         })
       }
     },

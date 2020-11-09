@@ -5,6 +5,7 @@ export default function getPersistable(state: any) {
     delete draft.errors
     delete draft.notice
     delete draft.handlers
+    delete draft.connectionStatuses
 
     for (const tab of draft.tabs.data) {
       delete tab.viewer

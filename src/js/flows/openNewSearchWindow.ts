@@ -8,7 +8,13 @@ import {Thunk} from "../state/types"
 export const openNewSearchTab = (): Thunk => (dispatch, getState) => {
   const state = getState()
 
+  const conn = Current.getConnection(state)
+  const {host, port, id} = conn
+
   const params = {
+    host,
+    port,
+    connId: id,
     spaceId: Current.getSpaceId(state),
     span: Tab.getSpan(state),
     program: SearchBar.getSearchBarInputValue(state)

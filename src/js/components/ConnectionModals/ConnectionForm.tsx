@@ -106,8 +106,7 @@ const ConnectionForm = ({onClose, conn}: Props) => {
       id: hostPort,
       name: name,
       username: undefined,
-      password: undefined,
-      status: "initial"
+      password: undefined
     }
   }
 
