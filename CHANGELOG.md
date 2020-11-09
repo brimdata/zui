@@ -1,4 +1,16 @@
 ## v0.19.0
+* **NOTE** - Due to the ZNG storage format change described in the
+[`zq` v0.23.0 release notes](https://github.com/brimsec/zq/releases/tag/v0.23.0),
+when you first launch the new version of Brim, a one-time bulk background
+update of the stored data for all of your existing Spaces will automatically
+begin. If you click to access a Space while migration is in progress, an
+animated "spinner" will be visible in the right of the Search bar. Once
+migration is complete for a Space, the bar chart will be filled in and the
+first splash of events will be shown and you can begin working with your Space
+as usual.
+
+---
+
 * Update zq to [v0.23.0](https://github.com/brimsec/zq/releases/tag/v0.23.0)
 * Update Zeek to [v3.2.1-brim3](https://github.com/brimsec/zeek/releases/tag/v3.2.1-brim3) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1193)
 * Binaries for [`pcap`](https://github.com/brimsec/zq/blob/master/cmd/pcap/README.md), [`zapi`](https://github.com/brimsec/zq/blob/master/cmd/zapi/README.md), and [`zar`](https://github.com/brimsec/zq/blob/master/ppl/cmd/zar/README.md) are now bundled with Brim (#1098)
