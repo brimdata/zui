@@ -7,7 +7,8 @@ import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Spaces from "../state/Spaces"
 import brim from "../brim"
-import {handleZealotError} from "./handleZealotError"
+import ErrorFactory from "../models/ErrorFactory"
+import Notice from "../state/Notice"
 
 export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
   const clusterId = Current.getConnectionId(getState())
@@ -26,9 +27,14 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
       if (!space.hasIndex()) {
         dispatch(SearchBar.setTarget("events"))
       }
-      dispatch(submitSearch({history: true, investigation: false}))
+      dispatch(submitSearch({history: true, investigation: false})).catch(
+        (e) => {
+          dispatch(Notice.set(ErrorFactory.create(e)))
+          throw e
+        }
+      )
     })
     .catch((error) => {
-      dispatch(handleZealotError(error))
+      console.error(error)
     })
 }
