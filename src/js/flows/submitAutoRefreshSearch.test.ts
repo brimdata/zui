@@ -6,6 +6,7 @@ import fixtures from "../test/fixtures"
 import responses from "../test/responses"
 import initTestStore from "../test/initTestStore"
 import submitAutoRefreshSearch from "./submitAutoRefreshSearch"
+import Clusters from "../state/Clusters"
 
 const viewer = responses("dns.txt")
 const histogram = responses("count_by_path.txt")
@@ -18,6 +19,14 @@ beforeEach(() => {
   dispatch = store.dispatch
   zealot.stubStream("search", histogram).stubStream("search", viewer)
   store.dispatchAll([
+    Clusters.add({
+      host: "testHost",
+      id: "1",
+      name: "testName",
+      password: "",
+      port: "9867",
+      username: ""
+    }),
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),
     Current.setSpaceId(space.id)

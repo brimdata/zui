@@ -9,8 +9,7 @@ export const getZealot = (): Thunk<Zealot> => (
   getState,
   {createZealot}
 ) => {
-  const conn = Current.getConnection(getState())
-  if (!conn) return null
+  const conn = Current.mustGetConnection(getState())
 
   const {host, port} = conn
   const hostPort = [host, port].join(":")
