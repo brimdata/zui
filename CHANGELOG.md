@@ -30,7 +30,7 @@ as usual.
 * Improve presentation of modals, such as Debug Query (#1171, #1184, #1175)
 * Fix an issue on macOS where clicking the Brim dock icon opened additional windows (#1189)
 * Fix an issue where opening the Log Detail window caused the main window to spin (#1196)
-
+* Fix an issue on Windows where closing the last Brim window left lingering processes and Brim unable to start afterwards (#1205)
 
 ## v0.18.0
 * Update zq to [v0.22.0](https://github.com/brimsec/zq/releases/tag/v0.22.0)
