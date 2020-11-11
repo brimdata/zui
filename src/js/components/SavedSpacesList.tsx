@@ -24,7 +24,7 @@ import {ConnectionStatus} from "../state/ConnectionStatuses/types"
 
 type Props = {
   spaces: Space[]
-  connStatus: ConnectionStatus | void
+  connStatus: ConnectionStatus
 }
 
 const NameWrap = styled.div`

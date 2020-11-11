@@ -4,17 +4,8 @@ import {Thunk} from "../state/types"
 import ErrorFactory from "../models/ErrorFactory"
 import ConnectionStatuses from "../state/ConnectionStatuses"
 
-export const getZealot = (): Thunk<Zealot> => (
-  dispatch,
-  getState,
-  {createZealot}
-) => {
-  const conn = Current.mustGetConnection(getState())
-
-  const {host, port} = conn
-  const hostPort = [host, port].join(":")
-
-  const wrappedFetcher = (hostPort: string) => {
+const createBrimFetcher = (dispatch, getState) => {
+  return (hostPort: string) => {
     const {promise, stream} = createFetcher(hostPort)
 
     const wrappedPromise = (args: FetchArgs): Promise<any> => {
@@ -33,8 +24,16 @@ export const getZealot = (): Thunk<Zealot> => (
 
     return {promise: wrappedPromise, stream}
   }
+}
 
-  return createZealot(hostPort, {
-    fetcher: wrappedFetcher
+export const getZealot = (): Thunk<Zealot> => (
+  dispatch,
+  getState,
+  {createZealot}
+) => {
+  const conn = Current.mustGetConnection(getState())
+
+  return createZealot(conn.getAddress(), {
+    fetcher: createBrimFetcher(dispatch, getState)
   })
 }

@@ -27,14 +27,13 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
       if (!space.hasIndex()) {
         dispatch(SearchBar.setTarget("events"))
       }
-      dispatch(submitSearch({history: true, investigation: false})).catch(
-        (e) => {
-          dispatch(Notice.set(ErrorFactory.create(e)))
-          throw e
-        }
-      )
+      dispatch(submitSearch({history: true, investigation: false}))
     })
     .catch((error) => {
       console.error(error)
+      const e = ErrorFactory.create(error)
+      if (e.type === "NetworkError") return
+
+      dispatch(Notice.set(ErrorFactory.create(e)))
     })
 }
