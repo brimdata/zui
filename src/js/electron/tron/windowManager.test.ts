@@ -54,3 +54,24 @@ test("confirm quit is true", async () => {
   const ok = await manager.confirmQuit()
   expect(ok).toBe(true)
 })
+
+test("when all closed resolves", (done) => {
+  const manager = tron.windowManager()
+  let pending = true
+  manager.whenAllClosed().then(() => (pending = false))
+  setTimeout(() => {
+    expect(pending).toBe(false)
+    done()
+  })
+})
+
+test("when all closed waits until windows are done", (done) => {
+  const manager = tron.windowManager()
+  manager.openWindow("search")
+  let pending = true
+  manager.whenAllClosed().then(() => (pending = false))
+  setTimeout(() => {
+    expect(pending).toBe(true)
+    done()
+  })
+})

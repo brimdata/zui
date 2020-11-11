@@ -1,15 +1,15 @@
 import {BrowserWindow, screen} from "electron"
-
-import {NewTabSearchParams} from "../ipc/windows/messages"
-import {SessionState} from "./formatSessionState"
-import {WindowParams} from "./window"
+import {last} from "lodash"
 import brim from "../../brim"
 import ipc from "../ipc"
 import sendTo from "../ipc/sendTo"
-import tron from "./"
+import {NewTabSearchParams} from "../ipc/windows/messages"
 import {dimensFromSizePosition, stack} from "../window/dimens"
-import {last} from "lodash"
 import {SearchWindow} from "../window/SearchWindow"
+import tron from "./"
+import {SessionState} from "./formatSessionState"
+import {WindowParams} from "./window"
+import log from "electron-log"
 
 export type WindowName = "search" | "about" | "detail"
 export type $WindowManager = ReturnType<typeof windowManager>
@@ -54,6 +54,16 @@ export default function windowManager() {
       }
     },
 
+    whenAllClosed() {
+      return new Promise((resolve) => {
+        const checkCount = () => {
+          if (this.count() === 0) resolve()
+          else setTimeout(checkCount, 0)
+        }
+        checkCount()
+      })
+    },
+
     serialize(): Promise<SerializedWindow[]> {
       return Promise.all(
         this.getWindows()
@@ -67,7 +77,10 @@ export default function windowManager() {
         this.getWindows().map((w: BrimWindow) => w.confirmClose())
       )
         .then((oks) => oks.every((ok) => ok))
-        .catch(() => false)
+        .catch((e) => {
+          log.error(e)
+          return true
+        })
     },
 
     prepareQuit(): Promise<void[]> {
