@@ -12,7 +12,7 @@ as usual.
 ---
 
 * Update zq to [v0.23.0](https://github.com/brimsec/zq/releases/tag/v0.23.0)
-* Update Zeek to [v3.2.1-brim3](https://github.com/brimsec/zeek/releases/tag/v3.2.1-brim3) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1193)
+* Update Zeek to [v3.2.1-brim4](https://github.com/brimsec/zeek/releases/tag/v3.2.1-brim4) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimsec/brim/wiki/Geolocation) data (#1202)
 * Binaries for [`pcap`](https://github.com/brimsec/zq/blob/master/cmd/pcap/README.md), [`zapi`](https://github.com/brimsec/zq/blob/master/cmd/zapi/README.md), and [`zar`](https://github.com/brimsec/zq/blob/master/ppl/cmd/zar/README.md) are now bundled with Brim (#1098)
 * Fix an issue where Brim presented a blank white screen when it failed to initialize (#1035)
 * Improve how Brim handles ZJSON responses from `zqd` (#1108)
