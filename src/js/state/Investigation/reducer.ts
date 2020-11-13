@@ -35,6 +35,9 @@ export default produce((draft, a: InvestigationAction) => {
 
       delete draft[a.clusterId][a.spaceId]
       return
+    case "INVESTIGATION_CONNECTION_CLEAR":
+      delete draft[a.connId]
+      return
   }
 }, init())
 

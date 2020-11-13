@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Content, Title} from "../ModalDialog/ModalDialog"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import Current from "../../state/Current"
 import Spaces from "../../state/Spaces"
 import ToolbarButton from "../Toolbar/Button"
@@ -9,6 +9,11 @@ import StatusLight from "./StatusLight"
 import EditConnectionModal from "./EditConnectionModal"
 import useEnterKey from "../hooks/useEnterKey"
 import ConnectionStatuses from "../../state/ConnectionStatuses"
+import {remote} from "electron"
+import Link from "../common/Link"
+import removeConnection from "../../flows/removeConnection"
+import ErrorFactory from "../../models/ErrorFactory"
+import Notice from "../../state/Notice"
 
 const StyledContent = styled(Content)`
   padding-top: 24px;
@@ -24,6 +29,11 @@ const StyledFooter = styled.footer`
 
   button {
     margin-left: 12px;
+  }
+
+  a {
+    flex: 1;
+    color: var(--havelock);
   }
 `
 
@@ -105,12 +115,38 @@ const Field = ({label, value}: FieldProps) => {
 }
 
 const ViewConnection = ({onClose, onEdit}) => {
+  const dispatch = useDispatch()
   const conn = useSelector(Current.getConnection)
-  const spaceIds = useSelector(Spaces.ids(conn.id))
-  const {name, host, port, version = "unknown", id} = conn
-  const connStatus = useSelector(ConnectionStatuses.get(id))
-  const spaceCount = spaceIds.length
+  const connId = conn ? conn.id : null
+  const spaceIds = useSelector(Spaces.ids(connId))
+  const connStatus = useSelector(ConnectionStatuses.get(connId))
+
   useEnterKey(onClose)
+
+  if (!conn) return null
+
+  const spaceCount = spaceIds.length
+  const {name, host, port, version = "unknown"} = conn
+
+  const onRemove = () => {
+    remote.dialog
+      .showMessageBox({
+        type: "warning",
+        title: "Remove Connection",
+        message: `Are you sure you want to remove ${name}?`,
+        buttons: ["OK", "Cancel"]
+      })
+      .then(({response}) => {
+        if (response === 0) {
+          onClose()
+          try {
+            dispatch(removeConnection(conn))
+          } catch (e) {
+            dispatch(Notice.set(ErrorFactory.create(e)))
+          }
+        }
+      })
+  }
 
   return (
     <StyledContent>
@@ -129,6 +165,7 @@ const ViewConnection = ({onClose, onEdit}) => {
       <StyledFooter>
         <ToolbarButton text="OK" onClick={onClose} />
         <ToolbarButton text="Edit" onClick={onEdit} />
+        <Link onClick={onRemove}>Remove</Link>
       </StyledFooter>
     </StyledContent>
   )

@@ -4,13 +4,14 @@ import {Cluster} from "../state/Clusters/types"
 import refreshSpaceNames from "./refreshSpaceNames"
 import {globalDispatch} from "../state/GlobalContext"
 import ConnectionStatuses from "../state/ConnectionStatuses"
+import brim from "../brim"
 
-export const initConnection = (cluster: Cluster) => (
+export const initConnection = (cluster: Cluster, isNew = false) => (
   dispatch,
   getState,
   {createZealot}
 ): Promise<void> => {
-  const zealot = createZealot(cluster.id)
+  const zealot = createZealot(brim.connection(cluster).getAddress())
   return zealot
     .version()
     .then(({version}) => {
@@ -26,7 +27,8 @@ export const initConnection = (cluster: Cluster) => (
       })
     })
     .catch((e) => {
-      dispatch(ConnectionStatuses.set(cluster.id, "disconnected"))
+      // if connection already exists and fails to connect, set status
+      !isNew && dispatch(ConnectionStatuses.set(cluster.id, "disconnected"))
       throw e
     })
 }

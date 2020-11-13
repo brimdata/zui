@@ -95,15 +95,14 @@ const ConnectionForm = ({onClose, conn}: Props) => {
     }
   }
 
-  const toCluster = ({host, name}): Cluster => {
+  const toCluster = ({id, host, name}): Cluster => {
     // set defaults
     let [h, p] = host.split(":")
     if (!p) p = "9867"
-    const hostPort = `${h}:${p}`
     return {
       host: h,
       port: p,
-      id: hostPort,
+      id: id || brim.randomHash(),
       name: name,
       username: undefined,
       password: undefined
@@ -127,7 +126,8 @@ const ConnectionForm = ({onClose, conn}: Props) => {
         return obj
       }, {})
       try {
-        await dispatch(initConnection(toCluster({host, name})))
+        const id = conn && conn.id
+        await dispatch(initConnection(toCluster({id, host, name}), true))
       } catch {
         setIsSubmitting(false)
         setErrors([{message: "Cannot connect to host"}])
