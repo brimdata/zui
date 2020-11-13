@@ -54,7 +54,7 @@ export default function ClusterPicker() {
       click: () => {
         if (isCurrent) return
         dispatch(initConnection(c)).catch(() => {
-          dispatch(Current.setConnectionId(current.id))
+          dispatch(Current.setConnectionId(c.id))
         })
       }
     })
