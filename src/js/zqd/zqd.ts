@@ -185,6 +185,9 @@ export class ZQD {
     }
     log.info("spawning zqd:", zqdCommand(), args.join(" "))
 
+    const suricataUserDir = join(app.getPath("userData"), "suricata")
+    process.env.BRIM_SURICATA_USER_DIR = suricataUserDir
+
     // @ts-ignore
     this.zqd = spawn(zqdCommand(), args, opts)
     this.zqd.on("error", (err) => {
