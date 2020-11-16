@@ -65,7 +65,7 @@ your desktop, it's easy to think of Brim as a simple standalone application.
 However, it actually includes some "backend" components that assist in
 providing the overall app experience.
 
-One essential component is [`zqd`](https://github.com/brimsec/zq/tree/master/cmd/zqd),
+One essential component is [`zqd`](https://github.com/brimsec/zq/tree/master/ppl/cmd/zqd),
 a server-style process that manages the storage and querying of imported
 log/packet data.  Operations in `zqd` are invoked via a
 [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
