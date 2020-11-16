@@ -4,10 +4,10 @@
 - [About Cookbooks](#about-cookbooks)
 - [Limitations](#limitations)
 - [Background: Brim & `zqd`](#background-brim--zqd)
-- [Starting a remote `zqd`](#starting-a-remote-zqd)
-- [Importing data](#importing-data)
-- [Accessing our remote `zqd`](#accessing-our-remote-zqd)
-- [Frequently asked questions](#frequently-asked-questions)
+- [Starting a Remote `zqd`](#starting-a-remote-zqd)
+- [Importing Data](#importing-data)
+- [Accessing Our Remote `zqd`](#accessing-our-remote-zqd)
+- [Frequently Asked Questions](#frequently-asked-questions)
 
 # Summary
 
@@ -130,7 +130,7 @@ Now that we know Brim is simply connecting to `zqd` locally, nexy we'll vary
 this approach to instead start a remote `zqd` and connect to it to access the
 logs and packet captures stored there.
 
-# Starting a remote `zqd`
+# Starting a Remote `zqd`
 
 For our example remote host, we'll use a Linux Ubuntu 18.04 VM running in
 Amazon AWS. Because Brim interacts with `zqd` over a REST API that is still
@@ -192,7 +192,7 @@ IP address.
 
 ![Brim zapi and zqd](media/Security-Group.png)
 
-# Importing data
+# Importing Data
 
 As mentioned in the [Limitations](#Limitations) above, it's not currently
 possible for remote Brim clients to import packet cpature data directly to a
@@ -250,7 +250,7 @@ wrccdc
   parent_id:    
 ```
 
-# Accessing our remote `zqd`
+# Accessing Our Remote `zqd`
 
 Now that we've got data imported into our remote `zqd`, we'll access it from
 the Brim app that's running on our Mac laptop.
@@ -284,7 +284,7 @@ Text still to be added when the features exist:
 * Deleting a remote connection ([brim/1191](https://github.com/brimsec/brim/issues/1191))
 * Importing logs to a remote `zqd` ([brim/1094](https://github.com/brimsec/brim/issues/1094))
 
-# Frequently asked questions
+# Frequently Asked Questions
 
 (Show the error messsage from a failed attempt to import a pcap to a remote
 `zqd` and reiterate that this is currently unsupported. Issue
