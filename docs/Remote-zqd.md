@@ -7,6 +7,7 @@
 - [Starting a remote `zqd`](#starting-a-remote-zqd)
 - [Importing data](#importing-data)
 - [Accessing our remote `zqd`](#accessing-our-remote-zqd)
+- [Frequently asked questions](#frequently-asked-questions)
 
 # Summary
 
@@ -283,7 +284,7 @@ Text still to be added when the features exist:
 * Deleting a remote connection ([brim/1191](https://github.com/brimsec/brim/issues/1191))
 * Importing logs to a remote `zqd` ([brim/1094](https://github.com/brimsec/brim/issues/1094))
 
-# FAQ
+# Frequently asked questions
 
 (Show the error messsage from a failed attempt to import a pcap to a remote
 `zqd` and reiterate that this is currently unsupported. Issue
