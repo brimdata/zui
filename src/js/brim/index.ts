@@ -13,6 +13,7 @@ import tab from "./brimTab"
 
 import time from "./time"
 import zeekLogInfo from "./zeekLogInfo"
+import connection from "./connection"
 
 export type Ts = {
   ns: number
@@ -20,6 +21,7 @@ export type Ts = {
 }
 
 export type BrimSpace = ReturnType<typeof space>
+export type BrimConnection = ReturnType<typeof connection>
 
 export type Span = [Ts, Ts]
 
@@ -37,5 +39,6 @@ export default {
   randomHash,
   entries,
   tab,
-  zeekLogInfo
+  zeekLogInfo,
+  connection
 }

@@ -2,7 +2,7 @@ export type ConnectionStatusesState = {
   [clusterId: string]: ConnectionStatus
 }
 
-export type ConnectionStatus = "connected" | "disconnected"
+export type ConnectionStatus = null | "connected" | "disconnected" | "retrying"
 
 export type ConnectionStatusesAction =
   | CONNECTION_STATUSES_SET
