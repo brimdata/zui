@@ -17,14 +17,14 @@ describe("Zar tests", () => {
   let testIdx = 0
   const ZAR = path.join(nodeZqDistDir(), "zar")
   const ZAR_SPACE_NAME = "sample.zar"
-  beforeEach(() => {
+  beforeAll(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
     return appStep.startApp(app)
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     if (app && app.isRunning()) {
-      return await app.stop()
+      await app.stop()
     }
   })
 
@@ -55,7 +55,7 @@ describe("Zar tests", () => {
         // Reload the app so that it reads the new space.
         await appStep.reload(app)
         await appStep.click(app, ".add-tab")
-        await app.client.waitForVisible(`=${ZAR_SPACE_NAME}`)
+        await (await app.client.$(`=${ZAR_SPACE_NAME}`)).waitForDisplayed()
         done()
       })
       .catch((err) => {

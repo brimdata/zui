@@ -1,28 +1,10 @@
-import {CSSTransition, TransitionGroup} from "react-transition-group"
 import React from "react"
-import classNames from "classnames"
+import {zng} from "zealot"
 
-import Log from "../../models/Log"
+type Props = {log: zng.Record; prev: boolean; children: any}
 
-type Props = {log: Log; prev: boolean; children: any}
-
-const NavAnimation = ({log, prev, children}: Props) => (
-  <TransitionGroup
-    className={classNames("log-detail-wrapper", {
-      prev
-    })}
-  >
-    <CSSTransition
-      key={log.id()}
-      classNames="log-detail"
-      timeout={{
-        enter: 250,
-        exit: 250
-      }}
-    >
-      {children}
-    </CSSTransition>
-  </TransitionGroup>
+const NavAnimation = ({children}: Props) => (
+  <div className="log-detail-wrapper">{children}</div>
 )
 
 export default NavAnimation

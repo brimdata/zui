@@ -1,19 +1,19 @@
-import {$Field} from "./"
+import {Cell} from "./cell"
 
 export default {
-  exclude(field: $Field) {
+  exclude(field: Cell) {
     return `${field.name}!=${field.queryableValue()}`
   },
-  include(field: $Field) {
+  include(field: Cell) {
     return `${field.name}=${field.queryableValue()}`
   },
-  in(field: $Field) {
+  in(field: Cell) {
     return `${field.queryableValue()} in ${field.name}`
   },
-  notIn(field: $Field) {
+  notIn(field: Cell) {
     return `!${field.queryableValue()} in ${field.name}`
   },
-  countBy(field: $Field) {
+  countBy(field: Cell) {
     return `count() by ${field.name}`
   },
   sortBy(name: string, direction: "asc" | "desc") {

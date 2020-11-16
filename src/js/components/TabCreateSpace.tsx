@@ -20,7 +20,7 @@ const Wrap = styled.section`
 `
 
 const FormWrap = styled.form`
-  .input-field {
+  ${InputField} {
     margin-bottom: 18px;
   }
 `
@@ -34,7 +34,7 @@ const SubmitWrap = styled.div`
 export default function TabCreateSpace() {
   const dispatch = useDispatch<AppDispatch>()
   const [name, setName] = useState("")
-  const [kind, setKind] = useState("filestore")
+  const [kind, setKind] = useState<"filestore" | "archivestore">("filestore")
   const [data_path, setDataPath] = useState("")
 
   const onSubmit = (e) => {

@@ -3,6 +3,7 @@ import Current from "./"
 import Spaces from "../Spaces"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
+import {Cluster} from "../Clusters/types"
 
 let store
 
@@ -23,8 +24,9 @@ test("setting the connection id", () => {
 })
 
 test("getting the actual connection", () => {
-  const conn = {
+  const conn: Cluster = {
     id: "myconn",
+    name: "myconn",
     host: "www.myconn.com",
     port: "123",
     username: "",
@@ -40,8 +42,9 @@ test("getting the actual connection", () => {
 
 test("getting the actual space", () => {
   const space = fixtures("space1")
-  const conn = {
+  const conn: Cluster = {
     id: "myconn",
+    name: "myconn",
     host: "www.myconn.com",
     port: "123",
     username: "",

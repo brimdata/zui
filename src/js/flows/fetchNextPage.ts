@@ -8,7 +8,7 @@ import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import brim from "../brim"
 import {DateTuple} from "../lib/TimeWindow"
-import Log from "../models/Log"
+import {zng} from "zealot"
 
 export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   const state = getState()
@@ -29,13 +29,17 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
   )
 }
 
-function nextPageArgs(logs: Log[], span: DateTuple): [number, DateTuple] {
+function nextPageArgs(
+  logs: zng.Record[],
+  span: DateTuple
+): [number, DateTuple] {
   let spliceIndex = 0
   const nextSpan: DateTuple = [...span]
   if (!isEmpty(logs)) {
-    const index = indexOfLastChange(logs, (log) => log.getString("ts"))
+    const index = indexOfLastChange(logs, (log) => log.try("ts")?.toString())
     if (index >= 0) {
-      const prevTs = logs[index].getField("ts").toDate()
+      const ts = logs[index].get("ts") as zng.Primitive
+      const prevTs = ts.toDate()
       nextSpan[1] = brim
         .time(prevTs)
         .add(1, "ms")

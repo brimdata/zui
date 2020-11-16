@@ -1,0 +1,17 @@
+{"type":"TaskStart","task_id":0}
+
+
+{"type":"SearchRecords","channel_id":0,"records":[{"id":40,"schema":{"of":[{"name":"ts","type":"time"},{"name":"_path","type":"string"},{"name":"count","type":"uint64"}],"type":"record"},"values":["1582646597","capture_loss","1"]},{"id":40,"values":["1582646595","conn","3"]},{"id":40,"values":["1582646594","files","4"]},{"id":40,"values":["1582646594","x509","1"]},{"id":40,"values":["1582646594","ssl","1"]},{"id":40,"values":["1582646593","conn","2"]},{"id":40,"values":["1582646593","dns","1"]},{"id":40,"values":["1582646592","conn","1"]},{"id":40,"values":["1582646591","conn","1"]},{"id":40,"values":["1582646591","dns","1"]},{"id":40,"values":["1582646590","conn","2"]},{"id":40,"values":["1582646589","conn","1"]},{"id":40,"values":["1582646588","conn","5"]},{"id":40,"values":["1582646587","conn","2"]},{"id":40,"values":["1582646586","weird","1"]},{"id":40,"values":["1582646586","conn","1"]}]}
+
+
+{"type":"SearchRecords","channel_id":0,"records":[{"id":40,"values":["1582646585","stats","1"]},{"id":40,"values":["1582646585","conn","1"]}]}
+
+
+{"type":"SearchEnd","channel_id":0,"reason":"eof"}
+
+
+{"type":"SearchStats","start_time":{"sec":1601417687,"ns":17231000},"update_time":{"sec":1601417687,"ns":19091000},"bytes_read":3523,"bytes_matched":3523,"records_read":30,"records_matched":30}
+
+
+{"type":"TaskEnd","task_id":0}
+

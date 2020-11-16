@@ -15,7 +15,6 @@ import Chunker from "../Viewer/Chunker"
 import Columns from "../../state/Columns"
 import Current from "../../state/Current"
 import Layout from "../../state/Layout"
-import Log from "../../models/Log"
 import LogRow from "../LogRow"
 import NoResults from "./NoResults"
 import Prefs from "../../state/Prefs"
@@ -29,9 +28,10 @@ import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
 import useDebouncedEffect from "../hooks/useDebouncedEffect"
+import {zng} from "zealot"
 
 type StateProps = {
-  logs: Log[]
+  logs: zng.Record[]
   timeZone: string
   timeFormat: string
   isIncomplete: boolean

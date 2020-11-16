@@ -1,8 +1,7 @@
 import {isEmpty} from "lodash"
 import fsExtra from "fs-extra"
 
-import {Dispatch, Thunk} from "../state/types"
-import {globalDispatch} from "../state/GlobalContext"
+import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import Handlers from "../state/Handlers"
 import Prefs from "../state/Prefs"
@@ -15,10 +14,11 @@ import lib from "../lib"
 import {getZealot} from "./getZealot"
 import {Handler} from "../state/Handlers/types"
 
-export default (
-  paths: string[],
-  gDispatch: Dispatch = globalDispatch
-): Thunk<Promise<void>> => (dispatch, getState) => {
+export default (paths: string[]): Thunk<Promise<void>> => (
+  dispatch,
+  getState,
+  {globalDispatch}
+) => {
   const conn = Current.mustGetConnection(getState())
   const clusterId = conn.id
   const zealot = dispatch(getZealot())
@@ -31,11 +31,11 @@ export default (
   return lib.transaction([
     validateInput(paths, dataDir, spaceNames),
     createDir(),
-    createSpace(zealot, gDispatch, clusterId),
+    createSpace(zealot, globalDispatch, clusterId),
+    setSpace(dispatch, tabId),
     registerHandler(dispatch, requestId),
     postFiles(zealot, jsonTypeConfigPath),
-    setSpace(dispatch, tabId),
-    trackProgress(zealot, gDispatch, clusterId),
+    trackProgress(zealot, globalDispatch, clusterId),
     unregisterHandler(dispatch, requestId)
   ])
 }
@@ -170,6 +170,7 @@ const trackProgress = (client, gDispatch, clusterId) => {
             updateSpaceDetails()
             break
           case "LogPostWarning":
+          case "PcapPostWarning":
             gDispatch(space.appendIngestWarning(status.warning))
             break
           case "TaskEnd":

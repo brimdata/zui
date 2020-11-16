@@ -20,6 +20,7 @@ const space1 = (): Space => ({
 
 const cluster1 = (): Cluster => ({
   id: "test:9867",
+  name: "testName1",
   host: "test",
   port: "9867",
   username: "",
@@ -28,6 +29,7 @@ const cluster1 = (): Cluster => ({
 
 const cluster2 = (): Cluster => ({
   id: "test:9868",
+  name: "testName2",
   host: "test",
   port: "9868",
   username: "",

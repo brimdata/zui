@@ -1,21 +1,6 @@
-import {$Record} from "./record"
-import {RecordData} from "../types/records"
-import Log from "../models/Log"
 import brim, {Ts} from "./"
 
 export default {
-  recordToLog(record: $Record) {
-    // @ts-ignore
-    return new Log(record.values(), record.columns())
-  },
-  logToRecordData(log: Log): RecordData {
-    return log.getFields().map(({name, type, value}) => ({
-      name,
-      type,
-      value
-    }))
-  },
-
   spacePayloadToSpace(space: any) {
     if (space.span) {
       const span = space.span

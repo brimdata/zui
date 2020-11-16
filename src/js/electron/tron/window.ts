@@ -11,8 +11,6 @@ export type WindowParams = {
 
 export default function window(name: WindowName, params: WindowParams) {
   switch (name) {
-    case "search":
-      return searchWindow(params)
     case "about":
       return aboutWindow()
     case "detail":
@@ -20,38 +18,6 @@ export default function window(name: WindowName, params: WindowParams) {
     default:
       throw new Error(`Unknown window name: ${name}`)
   }
-}
-
-function searchWindow(params) {
-  const {size, position, query, id} = params
-  const win = new BrowserWindow({
-    titleBarStyle: "hidden",
-    resizable: true,
-    minWidth: 480,
-    minHeight: 100,
-    webPreferences: {
-      nodeIntegration: true,
-      experimentalFeatures: true
-    }
-  }).on("close", (e: any) => {
-    // Close handled by the search renderer
-    e.preventDefault()
-    e.sender.webContents.send("close")
-  })
-
-  if (size) {
-    const [width, height] = size
-    win.setSize(width, height)
-  }
-  if (position) {
-    const [x, y] = position
-    win.setPosition(x, y)
-  } else {
-    win.center()
-  }
-  win.loadFile("search.html", {query: {...query, id}})
-
-  return win
 }
 
 function aboutWindow() {
@@ -62,7 +28,8 @@ function aboutWindow() {
     width: 360,
     height: 360,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   })
   win.setMenu(null)
@@ -78,7 +45,8 @@ function detailWindow(params) {
     width: 360,
     height: 360,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   })
   if (size) {

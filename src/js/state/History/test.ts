@@ -12,8 +12,9 @@ import initTestStore from "../../test/initTestStore"
 
 let store
 beforeEach(() => {
-  const zealot = createZealotMock().stubStream("search", [])
-  store = initTestStore(zealot)
+  const mock = createZealotMock().stubStream("search", [], "always")
+
+  store = initTestStore(mock.zealot)
   const conn = fixtures("cluster1")
   const space = fixtures("space1")
 

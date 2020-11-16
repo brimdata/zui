@@ -1,14 +1,16 @@
 import {uidSearch} from "./searches/uidSearch"
-import Log from "../models/Log"
 import LogDetails from "../state/LogDetails"
-import interop from "../brim/interop"
 import {Thunk} from "../state/types"
+import {zng} from "zealot"
+import {isEqual} from "lodash"
 
-export const viewLogDetail = (log: Log): Thunk => (dispatch, getState) => {
+export const viewLogDetail = (log: zng.Record): Thunk => (
+  dispatch,
+  getState
+) => {
   const current = LogDetails.build(getState())
-
-  if (!Log.isSame(log, current)) {
+  if (!isEqual(log, current)) {
     dispatch(uidSearch(log))
-    dispatch(LogDetails.push(interop.logToRecordData(log)))
+    dispatch(LogDetails.push(log))
   }
 }

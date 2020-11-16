@@ -1,16 +1,16 @@
 import React from "react"
 
 import {RowRenderer, ViewerDimens} from "../../types"
-import Log from "../../models/Log"
 import * as Styler from "./Styler"
 import TableColumns from "../../models/TableColumns"
+import {zng} from "zealot"
 
 type Props = {
   rowRenderer: RowRenderer
   columns: TableColumns
   dimens: ViewerDimens
   rows: number[]
-  logs: Log[]
+  logs: zng.Record[]
 }
 
 export default class Chunk extends React.Component<Props> {

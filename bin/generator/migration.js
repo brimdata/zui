@@ -4,7 +4,6 @@ import moment from "moment"
 import path from "path"
 
 import {write} from "../utils/file"
-import tron from "../../src/js/electron/tron"
 
 export async function handleMigration(input) {
   let name = camelCase(input)
@@ -14,11 +13,8 @@ export async function handleMigration(input) {
   let test = title + ".test.ts"
   let dir = path.join(__dirname, "../../src/js/state/migrations")
 
-  let migrations = await tron.migrations()
-  let prevVersion = migrations.getLatestVersion()
-
   write(path.join(dir, file), contents(name))
-  write(path.join(dir, test), testContents(title, version, prevVersion))
+  write(path.join(dir, test), testContents(title, version))
 }
 
 function contents(name) {
@@ -30,13 +26,13 @@ export default function ${name}(state: any) {
 `
 }
 
-function testContents(title, version, prevVersion) {
+function testContents(title, version) {
   return `
 import getTestState from "../../test/helpers/getTestState"
 import migrate from "./${title}"
 
 test("migrating ${title}", () => {
-  let prev = getTestState("${prevVersion}")
+  let prev = getTestState("v0.0.0 (replace with last version)")
 
   let next = migrate(prev)
 

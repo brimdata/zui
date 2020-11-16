@@ -1,22 +1,22 @@
 import React from "react"
 import classNames from "classnames"
 
-import {$Field} from "../../brim"
-import Log from "../../models/Log"
 import SingleField from "./SingleField"
+import {zng} from "zealot"
+import {createComplexCell} from "../../brim/complexCell"
 
 type Props = {
-  field: $Field
-  log: Log
+  field: zng.ContainerField
+  log: zng.Record
   menuBuilder: Function
 }
 
 export default function CompoundField({field, log, menuBuilder}: Props) {
-  const compound = field.toCompound()
+  const compound = createComplexCell(field as zng.ContainerField)
   const render = []
 
   for (let i = 0; i < compound.length; ++i) {
-    const item = compound.item(i)
+    const item = new zng.Field(field.name, field.data.at(i))
     if (item) {
       const menu = menuBuilder(item, log, true)
       render.push(<SingleField key={i} field={item} menu={menu} />)

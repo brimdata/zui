@@ -9,21 +9,26 @@ import errors from "../errors"
 import ingestFiles from "../flows/ingestFiles"
 import refreshSpaceNames from "../flows/refreshSpaceNames"
 import {AppDispatch} from "../state/types"
+import {popNotice} from "./PopNotice"
 
 export default function TabImport() {
   const dispatch = useDispatch<AppDispatch>()
 
   function onChange(_e, files) {
     if (!files.length) return
-    dispatch(ingestFiles(files)).catch((e) => {
-      const regex = /(Failed to fetch)|(network error)/
-      regex.test(e.cause.message)
-        ? dispatch(Notice.set(errors.importInterrupt()))
-        : dispatch(Notice.set(ErrorFactory.create(e.cause)))
+    dispatch(ingestFiles(files))
+      .then(() => {
+        popNotice("Import complete.")
+      })
+      .catch((e) => {
+        const regex = /(Failed to fetch)|(network error)/
+        regex.test(e.cause.message)
+          ? dispatch(Notice.set(errors.importInterrupt()))
+          : dispatch(Notice.set(ErrorFactory.create(e.cause)))
 
-      dispatch(refreshSpaceNames())
-      console.error(e.message)
-    })
+        dispatch(refreshSpaceNames())
+        console.error(e.message)
+      })
   }
 
   return (

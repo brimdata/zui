@@ -1,13 +1,13 @@
 import React from "react"
 import classNames from "classnames"
 
-import {Descriptor, RightClickBuilder} from "../../types"
-import Log from "../../models/Log"
+import {RightClickBuilder} from "../../types"
 import Table, {TableData, TableHeader} from "./Table"
+import {zjson, zng} from "zealot"
 
 type Props = {
-  descriptor: Descriptor
-  log: Log
+  descriptor: zjson.Column[]
+  log: zng.Record
   rightClick?: RightClickBuilder
   light?: boolean
 }
@@ -26,7 +26,7 @@ export default function VerticalTable({
             <TableHeader column={column} />
             <TableData
               log={log}
-              field={log.getFieldAt(index)}
+              field={new zng.Field(column.name, log.at(index))}
               rightClick={rightClick}
             />
           </tr>

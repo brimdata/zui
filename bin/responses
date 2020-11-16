@@ -1,0 +1,4 @@
+deno run -A zealot/scripts/search.ts "_path=dns" > src/js/test/responses/dns.txt
+deno run -A zealot/scripts/search.ts "every 1s count() by _path" > src/js/test/responses/count_by_path.txt
+deno run -A zealot/scripts/search.ts "cut boo" > src/js/test/responses/search_warning.txt
+deno run -A zealot/scripts/search.ts "count()" > src/js/test/responses/count.txt

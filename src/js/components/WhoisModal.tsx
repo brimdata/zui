@@ -1,25 +1,20 @@
 import {useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import ModalBox from "./ModalBox/ModalBox"
-import TextContent from "./TextContent"
 import modal from "../state/Modal"
 import whois from "../services/whois"
+import {
+  Content,
+  Footer,
+  Pre,
+  Scrollable,
+  Title
+} from "./ModalDialog/ModalDialog"
+import ToolbarButton from "./Toolbar/Button"
+import useEnterKey from "./hooks/useEnterKey"
 
-export default function WhoisModal() {
-  return (
-    <ModalBox
-      name="whois"
-      title="Whois Lookup"
-      className="whois-modal"
-      buttons="Done"
-    >
-      <WhoIsRequest />
-    </ModalBox>
-  )
-}
-
-function WhoIsRequest() {
+export default function WhoisModal({onClose}) {
+  useEnterKey(onClose)
   const [text, setText] = useState("...Fetching...")
   const {addr} = useSelector(modal.getArgs)
 
@@ -32,9 +27,15 @@ function WhoIsRequest() {
   }, [])
 
   return (
-    <TextContent>
-      <pre>{addr}</pre>
-      <pre className="output">{text}</pre>
-    </TextContent>
+    <Content width={600}>
+      <Title>Whois Lookup</Title>
+      <span>{addr}</span>
+      <Scrollable>
+        <Pre>{text}</Pre>
+      </Scrollable>
+      <Footer>
+        <ToolbarButton text="Done" onClick={onClose} />
+      </Footer>
+    </Content>
   )
 }

@@ -3,8 +3,6 @@ import {State} from "../../../state/types"
 import {WindowName} from "../../tron/windowManager"
 import {WindowParams} from "../../tron/window"
 import {
-  WindowsCloseMsg,
-  WindowsDestroyMsg,
   WindowsInitialStateMsg,
   WindowsOpenMsg,
   WindowsNewSearchTabMsg,
@@ -12,6 +10,9 @@ import {
 } from "../types"
 
 export type NewTabSearchParams = {
+  host: string
+  port: string
+  connId: string
   program: string
   span: SpanArgs
   spaceId: string
@@ -31,20 +32,10 @@ export default {
       state
     }
   },
-  close(): WindowsCloseMsg {
-    return {
-      channel: "windows:close"
-    }
-  },
   newSearchTab(params: NewTabSearchParams): WindowsNewSearchTabMsg {
     return {
       channel: "windows:newSearchTab",
       params
-    }
-  },
-  destroy(): WindowsDestroyMsg {
-    return {
-      channel: "windows:destroy"
     }
   },
   initialState(id: string): WindowsInitialStateMsg {

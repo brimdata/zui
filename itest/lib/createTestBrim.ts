@@ -40,17 +40,18 @@ export default (name: string) => {
     },
 
     setValue(locator: Locator, value: string) {
-      return logStep(`set input ${locator.css} to ${value}`, () =>
-        app.client
-          .waitForVisible(locator.css)
-          .then(() => app.client.setValue(locator.css, value))
-      )
+      return logStep(`set input ${locator.css} to ${value}`, async () => {
+        const el = await app.client.$(locator.css)
+        await el.waitForDisplayed()
+        return el.setValue(value)
+      })
     },
 
     getText(locator: Locator) {
       return logStep(`get text from ${locator.css}`, async () => {
-        await app.client.waitForVisible(locator.css)
-        return await app.client.getText(locator.css)
+        const el = await app.client.$(locator.css)
+        await el.waitForDisplayed()
+        return el.getText()
       })
     },
 
@@ -68,21 +69,17 @@ export default (name: string) => {
 
     waitForText(locator: string, regex: RegExp) {
       return retryUntil(
-        () => app.client.getText(locator),
+        async () => (await app.client.$(locator)).getText(),
         (s) => regex.test(s)
       )
     },
 
-    waitUntil(fn: () => boolean, opts?: Object) {
-      return app.client.waitUntil(fn, opts)
+    async isVisible(locator: Locator) {
+      return !!(await (await app.client.$(locator.css)).isDisplayed())
     },
 
-    isVisible(locator: Locator) {
-      return app.client.isVisible(locator.css)
-    },
-
-    isNotVisible(locator: Locator) {
-      return app.client.isVisible(locator.css).then((v) => !v)
+    async isNotVisible(locator: Locator) {
+      return !(await (await app.client.$(locator.css)).isDisplayed())
     },
 
     wait(ms: number) {

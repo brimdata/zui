@@ -11,7 +11,7 @@ let props
 beforeEach(() => {
   const log = conn()
   props = {
-    columns: new TableColumns("1", log.descriptor.map(createColumn), {
+    columns: new TableColumns("1", log.type.map(createColumn), {
       "1": {isVisible: true}
     }),
     dimens: {

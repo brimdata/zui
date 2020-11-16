@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`analytic search the table gets populated 1`] = `
+Array [
+  Record {
+    "type": Array [
+      Object {
+        "name": "count",
+        "type": "count",
+      },
+    ],
+    "value": Array [
+      "30",
+    ],
+  },
+]
+`;

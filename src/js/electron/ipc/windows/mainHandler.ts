@@ -10,15 +10,11 @@ export default function(manager: $WindowManager) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
     const window = manager.getWindow(id)
 
-    return window.state
+    return window.initialState
   })
 
   ipcMain.handle("windows:open", (e, args) => {
-    const {id} = manager.openWindow(args.name, args.params)
-
-    manager.updateWindow(id, {state: args.state})
-
-    return id
+    manager.openWindow(args.name, args.params, args.state)
   })
 
   ipcMain.handle("windows:close", () => {
@@ -34,20 +30,6 @@ export default function(manager: $WindowManager) {
 
   ipcMain.handle("windows:newSearchTab", (e, params) => {
     manager.openSearchTab(params.params)
-  })
-
-  ipcMain.handle("windows:saveState", (e, id, state) => {
-    const win = BrowserWindow.fromWebContents(e.sender)
-    manager.updateWindow(id, {
-      size: win.getSize() as [number, number],
-      position: win.getPosition() as [number, number],
-      state
-    })
-  })
-
-  ipcMain.handle("windows:destroy", (e) => {
-    const win = BrowserWindow.fromWebContents(e.sender)
-    manager.destroyWindow(win)
   })
 
   ipcMain.handle("windows:log", (e, {id, args}) => {

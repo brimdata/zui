@@ -1,20 +1,17 @@
 import {ClusterAction, ClustersState} from "./types"
-import {deleteKey} from "../../lib/obj"
+import produce from "immer"
 
 const init = (): ClustersState => {
   return {}
 }
 
-export default function(state: ClustersState = init(), action: ClusterAction) {
+export default produce((draft: ClustersState, action: ClusterAction) => {
   switch (action.type) {
     case "CLUSTER_ADD":
-      return {
-        ...state,
-        [action.cluster.id]: action.cluster
-      }
+      draft[action.cluster.id] = action.cluster
+      return
     case "CLUSTER_REMOVE":
-      return deleteKey(state, action.id)
-    default:
-      return state
+      delete draft[action.id]
+      return
   }
-}
+}, init())

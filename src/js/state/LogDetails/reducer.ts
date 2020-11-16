@@ -15,7 +15,11 @@ export default function reducer(
   switch (action.type) {
     case "LOG_DETAIL_PUSH":
       history = toHistory(state)
-      history.save({log: action.record, uidLogs: [], uidStatus: "INIT"})
+      history.save({
+        log: action.record,
+        uidLogs: [],
+        uidStatus: "INIT"
+      })
       return {
         entries: history.entries,
         position: history.position,

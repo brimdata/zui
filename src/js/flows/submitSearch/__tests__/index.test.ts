@@ -1,6 +1,5 @@
-import {createZealotMock} from "zealot"
+import {createZealotMock, zng} from "zealot"
 
-import {response} from "../responses/mod"
 import {submitSearch} from "../mod"
 import Columns from "../../../state/Columns"
 import Current from "../../../state/Current"
@@ -9,19 +8,20 @@ import SearchBar from "../../../state/SearchBar"
 import Spaces from "../../../state/Spaces"
 import Viewer from "../../../state/Viewer"
 import fixtures from "../../../test/fixtures"
+import responses from "../../../test/responses"
 import initTestStore from "../../../test/initTestStore"
 
-const indexResp = response("index_search.txt")
+const indexResp = responses("index_search.txt")
 const space = fixtures("space1")
-const warningResp = response("search_warning.txt")
+const warningResp = responses("search_warning.txt")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
   zealot = createZealotMock()
-  store = initTestStore(zealot)
+  store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("archive.search", indexResp)
+
   store.dispatchAll([
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),
@@ -32,7 +32,10 @@ beforeEach(() => {
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
-describe("table search", () => {
+describe("happy response", () => {
+  beforeEach(() => {
+    zealot.stubStream("archive.search", indexResp)
+  })
   test("zealot sends one request", async () => {
     await submit()
 
@@ -51,7 +54,7 @@ describe("table search", () => {
   test("the table gets cleared", async () => {
     dispatch(
       Viewer.setRecords(undefined, [
-        [{name: "clear", type: "string", value: "me"}]
+        new zng.Record([{name: "clear", type: "string"}], ["me"])
       ])
     )
     submit()
@@ -92,7 +95,9 @@ describe("table search", () => {
     await submit()
     expect(select(Columns.getColumns)).toMatchSnapshot()
   })
+})
 
+describe("warning response", () => {
   test("search warnings", async () => {
     zealot.stubStream("archive.search", warningResp)
     await submit()

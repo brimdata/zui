@@ -2,7 +2,7 @@ import {createStore, compose, applyMiddleware} from "redux"
 import reduxThunk from "redux-thunk"
 
 import {Action, State} from "../state/types"
-import {createZealotMock} from "zealot"
+import {createZealotMock, Zealot} from "zealot"
 import rootReducer from "../state/rootReducer"
 
 export type TestStore = {
@@ -14,14 +14,13 @@ export type TestStore = {
   getState: () => State
 }
 
-export default (zealot: any = createZealotMock()): TestStore => {
+export default (zealot?: Zealot): TestStore => {
   let store
-
+  const client = zealot || createZealotMock().zealot
   // This is so that tests can use globalDispatch without actually making
   // electron ipc calls. In the tests, globalDispatch is an alias for dispatch.
   const globalDispatch = (...args) => store.dispatch(...args)
-
-  const createZealot = () => zealot
+  const createZealot = () => client
 
   store = createStore(
     rootReducer,

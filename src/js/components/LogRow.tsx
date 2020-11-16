@@ -3,10 +3,10 @@ import classNames from "classnames"
 import isEqual from "lodash/isEqual"
 
 import {RightClickBuilder, ViewerDimens} from "../types"
-import Log from "../models/Log"
 import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
 import TableColumns from "../models/TableColumns"
+import {zng} from "zealot"
 
 type Props = {
   dimens: ViewerDimens
@@ -14,7 +14,7 @@ type Props = {
   index: number
   timeZone: string
   timeFormat: string
-  log: Log
+  log: zng.Record
   columns: TableColumns
   onClick: (e: MouseEvent) => void
   onDoubleClick: (e: MouseEvent) => void
@@ -35,9 +35,10 @@ const LogRow = (props: Props) => {
 
   const renderCell = (column, colIndex) => {
     const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
-    const field = log.field(column.name)
+    const field = log.tryField(column.name)
     const key = `${index}-${colIndex}`
-    if (field) {
+
+    if (field && field.data && !(field.data instanceof zng.Record)) {
       return (
         <LogCell
           rightClick={rightClick}
@@ -67,7 +68,7 @@ const LogRow = (props: Props) => {
 
 export default memo<Props>(LogRow, (prevProps: Props, nextProps: Props) => {
   return (
-    Log.isSame(prevProps.log, nextProps.log) &&
+    isEqual(prevProps.log, nextProps.log) &&
     isEqual(prevProps.columns, nextProps.columns) &&
     prevProps.highlight === nextProps.highlight &&
     prevProps.dimens.rowWidth === nextProps.dimens.rowWidth &&

@@ -1,6 +1,5 @@
-import {createZealotMock} from "zealot"
+import {createZealotMock, zng} from "zealot"
 
-import {response} from "../responses/mod"
 import {submitSearch} from "../mod"
 import Current from "../../../state/Current"
 import Handlers from "../../../state/Handlers"
@@ -9,18 +8,17 @@ import Spaces from "../../../state/Spaces"
 import Viewer from "../../../state/Viewer"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
+import responses from "../../../test/responses"
 
-const countResp = response("count.txt")
-const dnsResp = response("dns.txt")
+const countResp = responses("count.txt")
 const space = fixtures("space1")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
   zealot = createZealotMock()
-  store = initTestStore(zealot)
+  store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("search", dnsResp)
   store.dispatchAll([
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),
@@ -49,15 +47,13 @@ describe("analytic search", () => {
 
   test("the table gets populated", async () => {
     await submit()
-    expect(select(Viewer.getViewerRecords)).toEqual([
-      [{name: "count", type: "count", value: "8100"}]
-    ])
+    expect(select(Viewer.getViewerRecords)).toMatchSnapshot()
   })
 
   test("the table gets cleared", async () => {
     dispatch(
       Viewer.setRecords(undefined, [
-        [{name: "clear", type: "string", value: "me"}]
+        new zng.Record([{name: "clear", type: "string"}], ["me"])
       ])
     )
     submit()

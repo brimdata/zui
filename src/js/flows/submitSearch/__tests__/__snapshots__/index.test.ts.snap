@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`table search sets the Columns columns 1`] = `
+exports[`happy response sets the Columns columns 1`] = `
 Object {
-  "f85b7481593632c9884034d965640304": Object {
+  "2051e8f0746c0b2508aa62610c0b9973": Object {
     "_log:zfile": Object {
       "isVisible": true,
     },
@@ -16,21 +16,23 @@ Object {
 }
 `;
 
-exports[`table search sets the viewer columns 1`] = `
+exports[`happy response sets the viewer columns 1`] = `
 Object {
-  "f85b7481593632c9884034d965640304": Array [
-    Object {
-      "name": "key",
-      "type": "addr",
-    },
-    Object {
-      "name": "count",
-      "type": "count",
-    },
-    Object {
-      "name": "_log",
-      "type": "zfile",
-    },
-  ],
+  "2051e8f0746c0b2508aa62610c0b9973": Schema {
+    "columns": Array [
+      Object {
+        "name": "key",
+        "type": "addr",
+      },
+      Object {
+        "name": "count",
+        "type": "count",
+      },
+      Object {
+        "name": "_log",
+        "type": "zfile",
+      },
+    ],
+  },
 }
 `;

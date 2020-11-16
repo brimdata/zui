@@ -91,7 +91,7 @@ line (your timestamps will differ):
    ```
 
 Brim normally invokes steps similar to those shown above by making API calls
-to the [`zqd`](https://github.com/brimsec/zq/tree/master/cmd/zqd) process that
+to the [`zqd`](https://github.com/brimsec/zq/tree/master/ppl/cmd/zqd) process that
 is launched when Brim starts. Specifically, step #2 is performed when you import
 your pcap into Brim, then information from the generated Zeek `conn` records
 provide timestamps similar to those you gathered in step #3, and then the

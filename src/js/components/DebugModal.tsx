@@ -5,32 +5,27 @@ import React, {useState} from "react"
 import {reactElementProps} from "../test/integration"
 import InputField from "./common/forms/InputField"
 import InputLabel from "./common/forms/InputLabel"
-import ModalBox from "./ModalBox/ModalBox"
 import SearchBar from "../state/SearchBar"
-import TextContent from "./TextContent"
 import TextInput from "./common/forms/TextInput"
 import brim from "../brim"
+import {
+  Pre,
+  Content,
+  Footer,
+  Scrollable,
+  Title
+} from "./ModalDialog/ModalDialog"
+import ToolbarButton from "./Toolbar/Button"
+import useEnterKey from "./hooks/useEnterKey"
 
-export function DebugModal() {
-  return (
-    <ModalBox
-      name="debug"
-      title="Debug Query"
-      buttons="Done"
-      className="debug-modal"
-      {...reactElementProps("debugModal")}
-    >
-      <DebugModalContents />
-    </ModalBox>
-  )
-}
-
-function DebugModalContents() {
+export function DebugModal({onClose}) {
+  useEnterKey(onClose)
   const searchProgram = useSelector(SearchBar.getSearchProgram)
   const [program, setProgram] = useState(searchProgram)
 
   return (
-    <TextContent>
+    <Content width={600}>
+      <Title>Debug Query</Title>
       <p>
         Type a query in the text box to see the parsed abstract syntax tree
         (AST).
@@ -44,12 +39,17 @@ function DebugModalContents() {
           {...reactElementProps("debugProgram")}
         />
       </InputField>
-      <pre
-        className="language-js"
-        dangerouslySetInnerHTML={{__html: formatAst(program)}}
-        {...reactElementProps("debugAst")}
-      />
-    </TextContent>
+      <Scrollable>
+        <Pre
+          className="language-js"
+          dangerouslySetInnerHTML={{__html: formatAst(program)}}
+          {...reactElementProps("debugAst")}
+        />
+      </Scrollable>
+      <Footer>
+        <ToolbarButton text="Done" onClick={onClose} />
+      </Footer>
+    </Content>
   )
 }
 

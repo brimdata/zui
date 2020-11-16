@@ -36,7 +36,7 @@ All React components used within the app.
 
 **/electron**
 
-Code intended to run in [Electron's main process](https://www.electronjs.org/docs/tutorial/application-architecture). Also contains the app's entry point, `src/js/electron/main.js`.
+Code intended to run in [Electron's main process](https://www.electronjs.org/docs/tutorial/quick-start#main-and-renderer-processes). Also contains the app's entry point, `src/js/electron/main.js`.
 
 **/errors**
 
@@ -92,7 +92,7 @@ Code that runs the backend zqd process on localhost.
 
 ## Libraries
 
-We are an Electron app, so [electron](https://www.electronjs.org/docs) is the core library we use. For those unfamiliar, it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/tutorial/application-architecture) in an Electron app.
+We are an Electron app, so [electron](https://www.electronjs.org/docs) is the core library we use. For those unfamiliar, it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/tutorial/quick-start#main-and-renderer-processes) in an Electron app.
 
 Additionally, we rely heavily on the node modules listed here:
 

@@ -1,6 +1,5 @@
 import {SearchRecord} from "../../types"
 import {Ts} from "../../brim"
-import Log from "../../models/Log"
 
 export type InvestigationState = {
   [key: string]: {
@@ -15,9 +14,6 @@ export type InvestigationAction =
 export type Finding = {
   ts: Ts
   search: SearchRecord
-  resultCount?: number
-  note?: string
-  logs?: Log[]
 }
 
 export type FINDING_DELETE = {

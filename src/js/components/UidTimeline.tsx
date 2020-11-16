@@ -8,26 +8,26 @@ import {DispatchProps} from "../state/types"
 import {UID_CORRELATION_LIMIT} from "../searches/programs"
 import {submitSearch} from "../flows/submitSearch/mod"
 import {viewLogDetail} from "../flows/viewLogDetail"
-import Log from "../models/Log"
 import SearchBar from "../state/SearchBar"
 import brim from "../brim"
 import dispatchToProps from "../lib/dispatchToProps"
+import {zng} from "zealot"
+import {createZeekLog} from "../brim/zeekLog"
 
 type OwnProps = {
-  logs: Log[]
-  log: Log
+  logs: zng.Record[]
+  log: zng.Record
 }
 
 type Props = DispatchProps & OwnProps
 
 export default function UidTimeline({logs, log, dispatch}: Props) {
   if (logs.length === 0) return null
-
+  const zeek = createZeekLog(log)
   const xScale = createScale(logs)
-
   function queryForAll() {
     dispatch(SearchBar.clearSearchBar())
-    dispatch(SearchBar.changeSearchBarInput(log.correlationId()))
+    dispatch(SearchBar.changeSearchBarInput(zeek.correlationId()))
     dispatch(submitSearch())
   }
 
@@ -38,7 +38,7 @@ export default function UidTimeline({logs, log, dispatch}: Props) {
           key={i}
           log={currLog}
           current={isEqual(currLog, log)}
-          position={xScale(currLog.cast("ts") as Date)}
+          position={xScale((currLog.get("ts") as zng.Primitive).toDate())}
           onClick={() => dispatch(viewLogDetail(currLog))}
         />
       ))}
@@ -51,11 +51,9 @@ export default function UidTimeline({logs, log, dispatch}: Props) {
 
 function createScale(logs) {
   const tss = []
-
   for (const log of logs) {
-    tss.push(log.cast("ts"))
+    tss.push(log.get("ts").toDate())
   }
-
   let [start, end] = d3.extent(tss)
   if (start === end)
     end = brim
@@ -70,8 +68,8 @@ function createScale(logs) {
 }
 
 function PathRow({log, current, position, ...rest}) {
-  const ts = log.cast("ts")
-  const path = log.getString("_path")
+  const ts = log.get("ts").toDate()
+  const path = log.try("_path")?.toString()
   return (
     <div className="waterfall-row" {...rest}>
       <div className="data-label">{brim.time(ts).format("HH:mm:ss.SSS")}</div>
@@ -88,18 +86,18 @@ function PathRow({log, current, position, ...rest}) {
   )
 }
 
-function captionText(logs: Log[], queryForAll) {
+function captionText(logs: zng.Record[], queryForAll) {
   const limit = logs.length === UID_CORRELATION_LIMIT
-  const conn = logs.find((l) => l.getString("_path") === "conn")
-
+  const conn = logs.find((l) => l.try("_path")?.toString() === "conn")
   if (limit)
     return (
       <>
         Limited to 100 events. <a onClick={queryForAll}>Query for all.</a>
       </>
     )
-  else if (conn) {
-    return `Duration: ${conn.cast("duration") || 0}s`
+  else if (conn && conn.has("duration")) {
+    const dur = conn.get("duration") as zng.Primitive
+    return `Duration: ${dur.isSet() ? dur.toFloat() : 0}s`
   } else {
     return "Duration: 0s (No conn log)"
   }

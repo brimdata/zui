@@ -1,3 +1,4 @@
+import {zjson, zng} from "zealot"
 import {
   addHeadProc,
   getHeadCount,
@@ -7,9 +8,12 @@ import {
   splitParts
 } from "../lib/Program"
 import brim from "./"
+import {createCell} from "./cell"
 
 describe("excluding and including", () => {
-  const field = brim.field({name: "uid", type: "string", value: "123"})
+  const field = createCell(
+    new zng.Field("uid", new zng.Primitive("string", "123"))
+  )
 
   test("excluding a field", () => {
     const program = brim
@@ -21,11 +25,12 @@ describe("excluding and including", () => {
   })
 
   test("excluding a field with a pipe", () => {
+    const data = new zng.Primitive("string", "HTTP")
     const program = brim
       .program(
         'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
       )
-      .exclude(brim.field({name: "source", type: "string", value: "HTTP"}))
+      .exclude(createCell(new zng.Field("source", data)))
       .string()
 
     expect(program).toEqual(
@@ -53,14 +58,18 @@ describe("excluding and including", () => {
 })
 
 describe("drill down", () => {
-  const result = brim
-    .table()
-    .col("id.orig_h", "addr")
-    .col("proto", "enum")
-    .col("query", "string")
-    .col("count", "count")
-    .row(["192.168.0.54", "udp", "WPAD", "24"])
-    .toLogs()[0]
+  const columns = [
+    {name: "id", type: "record", of: [{name: "orig_h", type: "addr"}]},
+    {name: "proto", type: "enum"},
+    {name: "query", type: "string"},
+    {name: "count", type: "count"}
+  ] as zjson.Column[]
+  const result = new zng.Record(columns, [
+    ["192.168.0.54"],
+    "udp",
+    "WPAD",
+    "24"
+  ])
 
   test("when there is no leading filter", () => {
     const program = brim
@@ -101,12 +110,12 @@ describe("drill down", () => {
   })
 
   test("count by and filter the same", () => {
-    const result = brim.log(
-      ["123", "1"],
+    const result = new zng.Record(
       [
         {type: "string", name: "md5"},
         {type: "count", name: "count"}
-      ]
+      ],
+      ["123", "1"]
     )
 
     const program = brim
@@ -118,12 +127,12 @@ describe("drill down", () => {
   })
 
   test("filter query", () => {
-    const result = brim.log(
-      ["9f51ef98c42df4430a978e4157c43dd5", "21"],
+    const result = new zng.Record(
       [
         {name: "md5", type: "string"},
         {name: "count", type: "count"}
-      ]
+      ],
+      ["9f51ef98c42df4430a978e4157c43dd5", "21"]
     )
 
     const program = brim
@@ -141,7 +150,8 @@ describe("drill down", () => {
 
 describe("count by", () => {
   test("empty program", () => {
-    const field = brim.field({name: "_path", type: "string", value: "conn"})
+    const data = new zng.Primitive("string", "heyo")
+    const field = createCell(new zng.Field("_path", data))
     const program = brim
       .program()
       .countBy(field)
@@ -151,7 +161,8 @@ describe("count by", () => {
   })
 
   test("append a count to an existing query", () => {
-    const field = brim.field({name: "query", type: "string", value: "heyyo"})
+    const data = new zng.Primitive("string", "heyo")
+    const field = createCell(new zng.Field("query", data))
     const program = brim
       .program("dns")
       .countBy(field)

@@ -1,6 +1,5 @@
 import {createZealotMock} from "zealot"
 
-import {response} from "../responses/mod"
 import {submitSearch} from "../mod"
 import Current from "../../../state/Current"
 import History from "../../../state/History"
@@ -10,17 +9,19 @@ import SearchBar from "../../../state/SearchBar"
 import Spaces from "../../../state/Spaces"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
+import responses from "../../../test/responses"
 
-const dnsResp = response("dns.txt")
+const countByPathResp = responses("count_by_path.txt")
+const dnsResp = responses("dns.txt")
 const space = fixtures("space1")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
   zealot = createZealotMock()
-  store = initTestStore(zealot)
+  store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("search", dnsResp)
+  zealot.stubStream("search", countByPathResp).stubStream("search", dnsResp)
   store.dispatchAll([
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),

@@ -24,13 +24,25 @@ export default {
 
   getCurrentRecord: (state: State): SearchRecord => {
     const space = Current.mustGetSpace(state)
-    return {
-      program: SearchBar.getSearchBar(state).current,
-      pins: SearchBar.getSearchBar(state).pinned,
-      spanArgs: Tab.getSpanArgs(state),
-      spaceName: space.name,
-      spaceId: space.id,
-      target: SearchBar.getTarget(state)
+    const searchBar = SearchBar.getSearchBar(state)
+    if (searchBar.editing === null) {
+      return {
+        program: searchBar.current,
+        pins: SearchBar.getSearchBar(state).pinned,
+        spanArgs: Tab.getSpanArgs(state),
+        spaceName: space.name,
+        spaceId: space.id,
+        target: SearchBar.getTarget(state)
+      }
+    } else {
+      return {
+        program: searchBar.previous,
+        pins: SearchBar.getSearchBar(state).pinned,
+        spanArgs: Tab.getSpanArgs(state),
+        spaceName: space.name,
+        spaceId: space.id,
+        target: SearchBar.getTarget(state)
+      }
     }
   },
 

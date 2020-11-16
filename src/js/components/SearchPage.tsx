@@ -25,7 +25,6 @@ const RowLayout = styled.div`
   flex-grow: 1;
   flex-flow: row;
   position: relative;
-  box-shadow: inset 0px 1px 1px ${(props) => props.theme.colors.lead};
   padding-top: 1px;
 `
 
@@ -53,6 +52,7 @@ export default function SearchPage() {
     <SearchPageWrapper>
       <SearchPageMain>
         <ColumnLayout>
+          <div id="modal-dialog-root" />
           <TabBar />
           <RowLayout>
             <LeftPane />

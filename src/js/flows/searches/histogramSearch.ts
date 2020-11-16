@@ -8,6 +8,7 @@ import Notice from "../../state/Notice"
 import Search from "../../state/Search"
 import Tabs from "../../state/Tabs"
 import chart from "../../state/Chart"
+import {SearchResponse} from "../search/response"
 
 type Args = {
   query: string
@@ -30,7 +31,7 @@ export function histogramSearch({query, from, to}: Args): Thunk<Promise<void>> {
   }
 }
 
-function handle(response: any): Thunk {
+function handle(response: SearchResponse): Thunk {
   return function(dispatch, getState) {
     const tabId = Tabs.getActive(getState())
     const current = Search.getCurrentRecord(getState())

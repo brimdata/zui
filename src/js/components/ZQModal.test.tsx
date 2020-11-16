@@ -1,6 +1,5 @@
 import React from "react"
 
-import {submitSearch} from "../flows/submitSearch/mod"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import ZQModal from "./ZQModal"
@@ -10,13 +9,12 @@ import provide from "../test/helpers/provide"
 test("renders with zq get command", async () => {
   const {store} = await logInto("cluster1", "space1")
 
-  store.dispatchAll([
-    SearchBar.changeSearchBarInput("hi"),
-    submitSearch(),
-    Modal.show("zq")
-  ])
+  store.dispatchAll([SearchBar.changeSearchBarInput("hi"), Modal.show("zq")])
 
-  const wrapper = provide(store, <ZQModal />)
+  const wrapper = provide(
+    store,
+    <ZQModal onClose={() => store.dispatch(Modal.hide())} />
+  )
   wrapper
     .find("button")
     .at(0)

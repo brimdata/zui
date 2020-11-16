@@ -8,8 +8,8 @@ exports[`shapshot 1`] = `
     current={true}
     key="0"
     log={
-      Log {
-        "descriptor": Array [
+      Record {
+        "type": Array [
           Object {
             "name": "_td",
             "type": "int",
@@ -27,20 +27,26 @@ exports[`shapshot 1`] = `
             "type": "string",
           },
           Object {
-            "name": "id.orig_h",
-            "type": "addr",
-          },
-          Object {
-            "name": "id.orig_p",
-            "type": "port",
-          },
-          Object {
-            "name": "id.resp_h",
-            "type": "addr",
-          },
-          Object {
-            "name": "id.resp_p",
-            "type": "port",
+            "name": "id",
+            "of": Array [
+              Object {
+                "name": "orig_h",
+                "type": "addr",
+              },
+              Object {
+                "name": "orig_p",
+                "type": "port",
+              },
+              Object {
+                "name": "resp_h",
+                "type": "addr",
+              },
+              Object {
+                "name": "resp_p",
+                "type": "port",
+              },
+            ],
+            "type": "record",
           },
           Object {
             "name": "proto",
@@ -98,20 +104,18 @@ exports[`shapshot 1`] = `
             "name": "resp_ip_bytes",
             "type": "count",
           },
-          Object {
-            "name": "tunnel_parents",
-            "type": "set[string]",
-          },
         ],
-        "tuple": Array [
+        "value": Array [
           "0",
           "conn",
           "1425612054.369843",
           "Cynwae4qh1GxM82hQ2",
-          "192.168.0.50",
-          "1900",
-          "239.255.255.250",
-          "1900",
+          Array [
+            "192.168.0.50",
+            "1900",
+            "239.255.255.250",
+            "1900",
+          ],
           "udp",
           "-",
           "2.000293",
@@ -137,8 +141,8 @@ exports[`shapshot 1`] = `
     current={false}
     key="1"
     log={
-      Log {
-        "descriptor": Array [
+      Record {
+        "type": Array [
           Object {
             "name": "_td",
             "type": "int",
@@ -232,19 +236,11 @@ exports[`shapshot 1`] = `
             "type": "count",
           },
           Object {
-            "name": "answers",
-            "type": "vector[string]",
-          },
-          Object {
-            "name": "TTLs",
-            "type": "vector[interval]",
-          },
-          Object {
             "name": "rejected",
             "type": "bool",
           },
         ],
-        "tuple": Array [
+        "value": Array [
           "8",
           "dns",
           "1425565514.419939",
@@ -281,8 +277,8 @@ exports[`shapshot 1`] = `
     current={false}
     key="2"
     log={
-      Log {
-        "descriptor": Array [
+      Record {
+        "type": Array [
           Object {
             "name": "_td",
             "type": "int",
@@ -368,10 +364,6 @@ exports[`shapshot 1`] = `
             "type": "string",
           },
           Object {
-            "name": "tags",
-            "type": "set[enum]",
-          },
-          Object {
             "name": "username",
             "type": "string",
           },
@@ -379,36 +371,8 @@ exports[`shapshot 1`] = `
             "name": "password",
             "type": "string",
           },
-          Object {
-            "name": "proxied",
-            "type": "set[string]",
-          },
-          Object {
-            "name": "orig_fuids",
-            "type": "vector[string]",
-          },
-          Object {
-            "name": "orig_filenames",
-            "type": "vector[string]",
-          },
-          Object {
-            "name": "orig_mime_types",
-            "type": "vector[string]",
-          },
-          Object {
-            "name": "resp_fuids",
-            "type": "vector[string]",
-          },
-          Object {
-            "name": "resp_filenames",
-            "type": "vector[string]",
-          },
-          Object {
-            "name": "resp_mime_types",
-            "type": "vector[string]",
-          },
         ],
-        "tuple": Array [
+        "value": Array [
           "10",
           "http",
           "1425567042.047800",

@@ -5,16 +5,13 @@ import {XUidTimeline} from "../UidTimeline"
 import {reactElementProps} from "../../test/integration"
 import {toFront} from "../../lib/Array"
 import InlineTableLoading from "../InlineTableLoading"
-import Log from "../../models/Log"
 import LogDetails from "../../state/LogDetails"
 import PanelHeading from "./PanelHeading"
-import brim from "../../brim"
+import {zng} from "zealot"
 
-export default function UidPanel({log}: {log: Log}) {
+export default function UidPanel({log}: {log: zng.Record}) {
   const status = useSelector(LogDetails.getUidStatus)
   const logs = useSelector(LogDetails.getUidLogs)
-    .map(brim.record)
-    .map(brim.interop.recordToLog)
 
   return (
     <div
@@ -30,7 +27,19 @@ export default function UidPanel({log}: {log: Log}) {
   )
 }
 
-const uidOrder = (logs: Log[]) => {
-  const findConn = (log) => log.getString("_path") === "conn"
-  return toFront(Log.sort(logs, "ts"), findConn)
+const uidOrder = (logs: zng.Record[]) => {
+  const findConn = (log) => log.try("_path")?.toString() === "conn"
+  return toFront(sort(logs, "ts"), findConn)
+}
+
+function sort(logs: zng.Record[], name: string, dir: "asc" | "desc" = "asc") {
+  const direction = dir === "asc" ? 1 : -1
+
+  logs.sort((a, b) =>
+    a.try(name)?.toString() > b.try(name)?.toString()
+      ? direction
+      : direction * -1
+  )
+
+  return logs
 }
