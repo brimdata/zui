@@ -11,10 +11,10 @@
 # Summary
 
 By default, the Brim application leverages the local filesystem for holding
-imported logs and packet capture data. However, new features in Brim and
-related [zq tools](https://github.com/brimsec/zq) enable access to data stored
-remotely as well. This cookbook describes the available options and current
-limitations.
+imported logs and packet capture data. However, new features available in Brim
+starting with v0.20.0 and related [zq tools](https://github.com/brimsec/zq)
+starting with v0.24.0 enable access to data stored remotely as well. This
+cookbook describes the available options and current limitations.
 
 # About Cookbooks
 
@@ -42,9 +42,9 @@ Before diving into the specifics of what's possible, here's an overview of
 some of the rough edges you may encounter as you work through the
 configurations described in this article.
 
-1. Logs and packet captures cannot be imported from your local Brim app
-directly to a remote `zqd`. Any data you wish to access remotely will need to
-have been staged at the remote location.
+1. While logs can be imported from your local Brim app directly to a remote
+`zqd`, packet captures currently cannot. Any packet captures you wish to
+access remotely will need to have been staged at the remote location.
 
 2. While the configuration potentially allows multiple remote users to access
 the same centrally stored logs and packet captures, there's currently no
@@ -56,10 +56,6 @@ data.
 new data as soon as it's added to a remote location. The steps below provide
 guidance on how to "refresh" the Brim interface to ensure all remote data is
 visible.
-
-4. A known bug [brim/1099](https://github.com/brimsec/brim/issues/1099) will
-cause Brim to "hang" if configuration pointing to an inaccessible remote `zqd`
-is present when the application is restarted.
 
 # Background: Brim & `zqd`
 
@@ -139,14 +135,14 @@ For our example remote host, we'll use a Linux Ubuntu 18.04 VM running in
 Amazon AWS. Because Brim interacts with `zqd` over a REST API that is still
 evolving, care should be taken to ensure the Brim version being installed on
 the remote side matches the version being run locally. In this cookbook we'll
-use Brim v0.19.0.
+use Brim v0.20.0.
 
 Even though our VM on AWS has no graphical interface, we'll install the full
 Brim package because it includes a compatible `zqd` binary as well as an
 embedded Zeek that will prove useful if we want to import packet capture data.
 
 ```
-ubuntu# wget https://github.com/brimsec/brim/releases/download/v0.19.0/brim_amd64.deb
+ubuntu# wget https://github.com/brimsec/brim/releases/download/v0.20.0/brim_amd64.deb
 ubuntu# sudo sudo apt install -y ./brim_amd64.deb
 ```
 
@@ -200,8 +196,8 @@ Building on what we learned earlier, the two adjustments we made:
 `:9867` specification, `zqd` is now prepared to accept remote connections as
 well.
 
-2. The `-brimfd=3` was dropped, since we're now the ones controlling the
-start/stop of `zqd` rather than the Brim app.
+2. The `-brimfd=3` was dropped, since we're controlling the start/stop of `zqd`
+rather than the Brim app.
 
 At this point `zqd` is ready to accept remote connections. However, the network
 between clients and our `zqd` needs to permit this connectivity. You'll need to
@@ -216,12 +212,13 @@ IP address.
 # Importing data
 
 As mentioned in the [Limitations](#Limitations) above, it's not currently
-possible for remote clients to import their data directly to a remote `zqd`
-such as this. However we can use the `zapi` command line tool on our VM to
+possible for remote Brim clients to import packet cpature data directly to a
+remote `zqd`. However we can use the `zapi` command line tool on our VM to
 access this `zqd` directly via `localhost`.
 
-As sample data, we'll import a [wrccdc pcap](https://archive.wrccdc.org/pcaps/2018/)
-as well as the Zeek TSV logs from the [zq-sample-data](https://github.com/brimsec/zq-sample-data). From a separate shell on our Linux VM:
+As sample packet data, we'll import a
+[wrccdc pcap](https://archive.wrccdc.org/pcaps/2018/) from a separate shell on
+our Linux VM:
 
 ```
 ubuntu# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
@@ -229,7 +226,12 @@ ubuntu# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
 ubuntu# /usr/lib/brim/resources/app/zdeps/zapi -s wrccdc pcappost -f wrccdc.2018-03-23.010014000000000.pcap 
 100.0% 500.0MB/500.0MB
 /home/ubuntu/wrccdc.2018-03-23.010014000000000.pcap: pcap posted
+```
 
+While it's possible to import logs from the Brim app directly into a remote
+`zqd`, we can use `zapi` on our Linux VM for this as well.
+
+```
 ubtunu# git clone --quiet --depth=1 https://github.com/brimsec/zq-sample-data.git
 ubuntu# /usr/lib/brim/resources/app/zdeps/zapi -s sample post -f zq-sample-data/zeek-default/*
 100.0% 44.71MB/44.71MB
@@ -288,3 +290,7 @@ as usual.
 ![Opening a remote flow](media/Remote-Flow-Wireshark.png)
 
 Some additional tips...
+
+# FAQ
+
+Error message for attempt to immport packet capture to remote
