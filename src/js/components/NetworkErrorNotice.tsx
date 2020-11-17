@@ -1,10 +1,11 @@
 import {useDispatch, useSelector} from "react-redux"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 
 import {BrimError} from "../errors/types"
-import {initSpace} from "../flows/initSpace"
 import Notice from "../state/Notice"
 import Current from "../state/Current"
+import ConnectionStatuses from "../state/ConnectionStatuses"
+import {checkStatus} from "../flows/checkStatus"
 
 type Props = {
   error: BrimError
@@ -15,13 +16,31 @@ const MAX_BACKOFF = 128
 
 export default function NetworkErrorNotice({error}: Props) {
   const dispatch = useDispatch()
-  const spaceId = useSelector(Current.getSpaceId)
+  const connId = useSelector(Current.getConnectionId)
+  const status = useSelector(ConnectionStatuses.get(connId))
   const [count, setCount] = useState(0)
+  const statusRef = useRef(status)
+  const connRef = useRef(connId)
 
-  const retry = () => dispatch(initSpace(spaceId))
-  const dismiss = () => dispatch(Notice.dismiss())
+  const retry = () => {
+    setCount(0)
+    dispatch(checkStatus())
+  }
+  const dismiss = () => {
+    dispatch(Notice.dismiss())
+  }
 
   useEffect(() => {
+    if (connId === connRef.current) {
+      statusRef.current = status
+      if (status === "disconnected") dismiss()
+    }
+  }, [status, connId])
+
+  useEffect(() => {
+    connRef.current = connId
+    dispatch(ConnectionStatuses.set(connId, "retrying"))
+
     let id = null
     let attempt = 0
 
@@ -29,7 +48,7 @@ export default function NetworkErrorNotice({error}: Props) {
       setCount((count) => {
         if (count === 0) return BACKOFF[attempt] || MAX_BACKOFF
         if (count === 1) {
-          retry()
+          dispatch(checkStatus())
           attempt++
           return 0
         }
@@ -39,7 +58,12 @@ export default function NetworkErrorNotice({error}: Props) {
     }
     tick()
 
-    return () => clearTimeout(id)
+    return () => {
+      clearTimeout(id)
+      if (statusRef.current === "retrying") {
+        dispatch(ConnectionStatuses.set(connRef.current, "disconnected"))
+      }
+    }
   }, [])
 
   if (count === 0) {
