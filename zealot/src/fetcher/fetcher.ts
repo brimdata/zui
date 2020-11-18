@@ -8,7 +8,7 @@ import {createError} from "../util/error"
 export type FetchArgs = {
   path: string
   method: string
-  body?: string
+  body?: string | FormData
   enhancers?: Enhancer[]
   signal?: AbortSignal
 }

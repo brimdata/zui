@@ -61,7 +61,7 @@ export interface PcapsGetArgs {
 }
 
 export interface LogsPostArgs {
-  paths: string[]
+  files: File[] | FileList
   spaceId: string
   types?: any
 }

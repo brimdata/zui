@@ -1,12 +1,13 @@
 import {join} from "https://deno.land/std@0.70.0/path/mod.ts"
 import {testApi, assertEquals, uniq} from "./helper/mod.ts"
 
-testApi("ingest log", async (zealot) => {
+testApi("ONLY ingest log", async (zealot) => {
   const space = await zealot.spaces.create({name: "space1"})
   const log = join(Deno.cwd(), "data/sample.tsv")
-  const resp = await zealot.logs.post({paths: [log], spaceId: space.id})
+  const response = await Deno.readTextFile(log)
+  const f = new File([response], log)
+  const resp = await zealot.logs.post({files: [f], spaceId: space.id})
   const messages = await resp.array()
-
   assertEquals(uniq(messages.map((m: any) => m.type)), [
     "TaskStart",
     "LogPostStatus",
