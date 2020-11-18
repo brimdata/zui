@@ -1,17 +1,19 @@
 import {join} from "https://deno.land/std@0.70.0/path/mod.ts"
 import {testApi, assertEquals, uniq} from "./helper/mod.ts"
 
-testApi("ONLY ingest log", async (zealot) => {
+testApi("ingest log", async (zealot) => {
   const space = await zealot.spaces.create({name: "space1"})
   const log = join(Deno.cwd(), "data/sample.tsv")
   const response = await Deno.readTextFile(log)
   const f = new File([response], log)
   const resp = await zealot.logs.post({files: [f], spaceId: space.id})
   const messages = await resp.array()
-  assertEquals(uniq(messages.map((m: any) => m.type)), [
-    "TaskStart",
-    "LogPostStatus",
-    "TaskEnd"
+  assertEquals(messages, [
+    {
+      bytes_read: 9655,
+      type: "LogPostResponse",
+      warnings: null
+    }
   ])
 })
 
@@ -37,9 +39,11 @@ testApi("ingest pcap", async (zealot) => {
 testApi("ingest logs with custom type", async (zealot) => {
   const space = await zealot.spaces.create({name: "space1"})
   const log = join(Deno.cwd(), "data/custom-sample.ndjson")
+  const response = await Deno.readTextFile(log)
+  const f = new File([response], log)
   const typesFile = join(Deno.cwd(), "data/custom-schema.json")
   const types = await Deno.readTextFile(typesFile).then(JSON.parse)
-  const resp = await zealot.logs.post({paths: [log], spaceId: space.id, types})
+  const resp = await zealot.logs.post({files: [f], spaceId: space.id, types})
   await resp.array()
 
   const {span} = await zealot.spaces.get(space.id)

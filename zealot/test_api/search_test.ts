@@ -10,7 +10,9 @@ import {
 async function setup(zealot: any) {
   const space = await zealot.spaces.create({name: "space1"})
   const log = testFile("sample.tsv")
-  const resp = await zealot.logs.post({paths: [log], spaceId: space.id})
+  const response = await Deno.readTextFile(log)
+  const f = new File([response], log)
+  const resp = await zealot.logs.post({files: [f], spaceId: space.id})
   await resp.array()
 
   zealot.setSearchOptions({
