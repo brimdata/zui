@@ -67,7 +67,7 @@ const PageWrap = styled.div`
 `
 
 const StyledHeader = styled.h1`
-  margin: 110px 0 0 0;
+  margin: 96px 0 0 0;
   color: var(--aqua);
   ${(p) => p.theme.typography.headingPage}
 `

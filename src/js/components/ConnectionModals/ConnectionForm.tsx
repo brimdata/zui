@@ -127,7 +127,7 @@ const ConnectionForm = ({onClose, conn}: Props) => {
       }, {})
       try {
         const id = conn && conn.id
-        await dispatch(initConnection(toCluster({id, host, name}), true))
+        await dispatch(initConnection(toCluster({id, host, name})))
       } catch {
         setIsSubmitting(false)
         setErrors([{message: "Cannot connect to host"}])

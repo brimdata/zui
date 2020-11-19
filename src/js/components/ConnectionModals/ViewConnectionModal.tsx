@@ -32,8 +32,8 @@ const StyledFooter = styled.footer`
   }
 
   a {
-    flex: 1;
-    color: var(--havelock);
+    margin-right: auto;
+    color: var(--red);
   }
 `
 
@@ -125,6 +125,8 @@ const ViewConnection = ({onClose, onEdit}) => {
 
   if (!conn) return null
 
+  const isDefault = conn.id === "localhost:9867"
+
   const spaceCount = spaceIds.length
   const {name, host, port, version = "unknown"} = conn
 
@@ -165,7 +167,7 @@ const ViewConnection = ({onClose, onEdit}) => {
       <StyledFooter>
         <ToolbarButton text="OK" onClick={onClose} />
         <ToolbarButton text="Edit" onClick={onEdit} />
-        <Link onClick={onRemove}>Remove</Link>
+        {!isDefault && <Link onClick={onRemove}>Remove</Link>}
       </StyledFooter>
     </StyledContent>
   )

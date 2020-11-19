@@ -6,7 +6,7 @@ import {globalDispatch} from "../state/GlobalContext"
 import ConnectionStatuses from "../state/ConnectionStatuses"
 import brim from "../brim"
 
-export const initConnection = (cluster: Cluster, isNew = false) => (
+export const initConnection = (cluster: Cluster) => (
   dispatch,
   getState,
   {createZealot}
@@ -27,8 +27,7 @@ export const initConnection = (cluster: Cluster, isNew = false) => (
       })
     })
     .catch((e) => {
-      // if connection already exists and fails to connect, set status
-      !isNew && dispatch(ConnectionStatuses.set(cluster.id, "disconnected"))
+      dispatch(ConnectionStatuses.set(cluster.id, "disconnected"))
       throw e
     })
 }

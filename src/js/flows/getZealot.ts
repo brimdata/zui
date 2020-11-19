@@ -31,7 +31,7 @@ export const getZealot = (): Thunk<Zealot> => (
   getState,
   {createZealot}
 ) => {
-  const conn = Current.getConnection(getState())
+  const conn = Current.mustGetConnection(getState())
 
   return createZealot(conn.getAddress(), {
     fetcher: createBrimFetcher(dispatch, getState)

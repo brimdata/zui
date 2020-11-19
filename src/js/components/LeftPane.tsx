@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {useRef} from "react"
-import styled, {css} from "styled-components"
+import styled from "styled-components"
 
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import AddSpaceButton from "./AddSpaceButton"
@@ -128,16 +128,9 @@ const DragAnchor = styled.div`
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
   color: var(--slate);
-  margin: 191px 37px 0;
+  margin-top: 110px;
+  padding: 0 24px;
   text-align: center;
-`
-
-const StyledPane = styled(Pane)<{isEmpty: boolean}>`
-  ${(p) =>
-    p.isEmpty &&
-    css`
-      background: var(--snow);
-    `}
 `
 
 const ViewSelect = () => {
@@ -227,14 +220,13 @@ export function LeftPane() {
   if (!isOpen) return <XLeftPaneExpander />
 
   return (
-    <StyledPane
+    <Pane
       isOpen={isOpen}
       position="left"
       width={width}
       ref={paneRef}
       onDrag={onDragPane}
       className="history-pane"
-      isEmpty={!id}
     >
       {!id ? (
         <EmptyText>
@@ -270,6 +262,6 @@ export function LeftPane() {
           </StyledSection>
         </>
       )}
-    </StyledPane>
+    </Pane>
   )
 }
