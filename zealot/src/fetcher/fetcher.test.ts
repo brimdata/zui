@@ -1,7 +1,6 @@
 import "regenerator-runtime/runtime"
 import {createFetcher} from "./fetcher"
 import http from "http"
-import {timeDay} from "d3"
 
 let server: http.Server
 beforeEach(() => {

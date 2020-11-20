@@ -174,9 +174,11 @@ const trackProgress = (client, gDispatch, clusterId) => {
             break
           case "LogPostResponse":
             updateSpaceDetails()
-            status.warnings.forEach((warning) => {
-              gDispatch(space.appendIngestWarning(warning))
-            })
+            if (status.warnings) {
+              status.warnings.forEach((warning) => {
+                gDispatch(space.appendIngestWarning(warning))
+              })
+            }
             break
           case "LogPostWarning":
           case "PcapPostWarning":
