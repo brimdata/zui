@@ -36,6 +36,6 @@ test("Validates the zql", () => {
   submit().catch((e) => e)
 
   expect(select(SearchBar.getSearchBarError)).toMatch(
-    /Expected .* but end of input found\./
+    /Expected [\s\S]* but end of input found\./
   )
 })
