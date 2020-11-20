@@ -18,7 +18,7 @@ export function createZealot(
   args: ZealotArgs = {fetcher: createFetcher}
 ) {
   const host = getHost(hostUrl)
-  const {promise, stream} = args.fetcher(host)
+  const {promise, stream, upload} = args.fetcher(host)
 
   let searchArgs: SearchArgs = getDefaultSearchArgs()
 
@@ -78,7 +78,7 @@ export function createZealot(
     },
     logs: {
       post: (args: LogsPostArgs) => {
-        return stream(logs.post(args))
+        return upload(logs.post(args))
       }
     },
     inspect: {

@@ -4,6 +4,8 @@ import {Enhancer, ZealotPayload, ZReponse} from "../types"
 import {createIterator} from "./iterator"
 import {createStream} from "./stream"
 import {createError} from "../util/error"
+import {createPushableIterator} from "./pushable_iterator"
+import {parseLines} from "../ndjson/lines"
 
 export type FetchArgs = {
   path: string
@@ -21,7 +23,7 @@ export function createFetcher(host: string) {
       const content = await parseContentType(resp)
       return resp.ok ? content : Promise.reject(createError(content))
     },
-    async stream(args: FetchArgs) {
+    async stream(args: FetchArgs): Promise<ZReponse> {
       const {path, method, body, signal} = args
       const resp = await fetch(url(host, path), {method, body, signal})
       if (!resp.ok) {
@@ -30,6 +32,37 @@ export function createFetcher(host: string) {
       }
       const iterator = createIterator(resp, args)
       return createStream(iterator, resp)
+    },
+    async upload(args: FetchArgs): Promise<ZReponse> {
+      return new Promise((resolve) => {
+        const iterator = createPushableIterator<ZealotPayload>()
+        const xhr = new XMLHttpRequest()
+
+        xhr.upload.addEventListener("progress", (e) => {
+          if (!e.lengthComputable) return
+          iterator.push({
+            value: {type: "UploadProgress", progress: e.loaded / e.total},
+            done: false
+          })
+        })
+
+        xhr.addEventListener("load", async (e) => {
+          for (const value of parseLines(xhr.responseText))
+            iterator.push({value, done: false})
+        })
+
+        xhr.addEventListener("error", (e) => {
+          iterator.throw(new Error(xhr.responseText))
+        })
+
+        xhr.addEventListener("loadend", () => {
+          iterator.push({done: true, value: undefined})
+        })
+
+        xhr.open(args.method, url(host, args.path), true)
+        xhr.send(args.body)
+        resolve(createStream(iterator, xhr))
+      })
     }
   }
 }
