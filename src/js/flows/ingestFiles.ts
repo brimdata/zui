@@ -158,12 +158,6 @@ const trackProgress = (client, gDispatch, clusterId) => {
         else return status.pcap_read_size / status.pcap_total_size || 0
       }
 
-      function logPostStatusToPercent(status): number {
-        // log_total_size may not be present
-        if (!status.log_total_size) return 1
-        else return status.log_read_size / status.log_total_size
-      }
-
       gDispatch(space.setIngestProgress(0))
       for await (const {type, ...status} of stream) {
         switch (type) {
@@ -174,14 +168,13 @@ const trackProgress = (client, gDispatch, clusterId) => {
             gDispatch(space.setIngestSnapshot(status.snapshot_count))
             if (status.snapshot_count > 0) updateSpaceDetails()
             break
-          case "LogPostStatus":
-            gDispatch(space.setIngestProgress(logPostStatusToPercent(status)))
+          case "UploadProgress":
+            gDispatch(space.setIngestProgress(status.progress))
             updateSpaceDetails()
             break
           case "LogPostResponse":
-            console.log(status)
             updateSpaceDetails()
-            ;(status.warnings || []).forEach((warning) => {
+            status.warnings.forEach((warning) => {
               gDispatch(space.appendIngestWarning(warning))
             })
             break
@@ -197,7 +190,6 @@ const trackProgress = (client, gDispatch, clusterId) => {
                 throw errors.logsIngest(status.error.error)
               }
             }
-
             break
         }
       }
