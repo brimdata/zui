@@ -1,6 +1,6 @@
 import {url} from "../util/utils"
 import {parseContentType} from "./contentType"
-import {Enhancer} from "../types"
+import {Enhancer, ZealotPayload, ZReponse} from "../types"
 import {createIterator} from "./iterator"
 import {createStream} from "./stream"
 import {createError} from "../util/error"
