@@ -9,7 +9,8 @@ import {
   PcapsGetArgs,
   LogsPostArgs,
   ZealotArgs,
-  SubspaceCreateArgs
+  SubspaceCreateArgs,
+  LogsPostPathsArgs
 } from "./types"
 import {IndexSearchArgs} from "./api/archive"
 
@@ -79,6 +80,9 @@ export function createZealot(
     logs: {
       post: (args: LogsPostArgs) => {
         return upload(logs.post(args))
+      },
+      postPaths: (args: LogsPostPathsArgs) => {
+        return stream(logs.postPaths(args))
       }
     },
     inspect: {

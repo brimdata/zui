@@ -1,4 +1,4 @@
-import {LogsPostArgs} from "../types"
+import {LogsPostArgs, LogsPostPathsArgs} from "../types"
 import {getDefaultJsonTypeConfig} from "../config/json_types"
 
 export default {
@@ -7,6 +7,13 @@ export default {
       method: "POST",
       path: `/space/${encodeURIComponent(spaceId)}/log`,
       body: getBody(files, types)
+    }
+  },
+  postPaths({spaceId, paths, types}: LogsPostPathsArgs) {
+    return {
+      method: "POST",
+      path: `/space/${encodeURIComponent(spaceId)}/log/paths`,
+      body: getPathsBody(paths, types)
     }
   }
 }
@@ -18,4 +25,8 @@ function getBody(files: File[] | FileList, types = getDefaultJsonTypeConfig()) {
     data.append(file.name, file)
   }
   return data
+}
+
+function getPathsBody(paths: string[], types = getDefaultJsonTypeConfig()) {
+  return JSON.stringify({paths, json_type_config: types})
 }

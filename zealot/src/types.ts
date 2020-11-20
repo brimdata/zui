@@ -70,6 +70,12 @@ export interface LogsPostArgs {
   types?: any
 }
 
+export interface LogsPostPathsArgs {
+  paths: string[]
+  spaceId: string
+  types?: any
+}
+
 export interface Ts {
   sec: number
   ns: number
