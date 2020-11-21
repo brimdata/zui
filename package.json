@@ -176,7 +176,7 @@
     "styled-components": "^5.1.1",
     "valid-url": "^1.0.9",
     "zealot": "file:zealot",
-    "zq": "git+https://github.com/brimsec/zq.git#e01700de4434a993f3e28e0605e965baf54d965d"
+    "zq": "git+https://github.com/brimsec/zq.git#1813bdf8f7c85bdad6a4d2c6cb86fc97584dc73e"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
