@@ -24,6 +24,10 @@ export function createFetcher(host: string) {
     async stream(args: FetchArgs) {
       const {path, method, body, signal} = args
       const resp = await fetch(url(host, path), {method, body, signal})
+      if (!resp.ok) {
+        const content = await parseContentType(resp)
+        return Promise.reject(createError(content))
+      }
       const iterator = createIterator(resp, args)
       return createStream(iterator, resp)
     }
