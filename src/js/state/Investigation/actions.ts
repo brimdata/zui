@@ -1,4 +1,9 @@
-import {FINDING_DELETE, INVESTIGATION_CLEAR, INVESTIGATION_PUSH} from "./types"
+import {
+  FINDING_DELETE,
+  INVESTIGATION_CLEAR,
+  INVESTIGATION_PUSH,
+  INVESTIGATION_CONNECTION_CLEAR
+} from "./types"
 import {SearchRecord} from "../../types"
 import {isArray} from "../../lib/is"
 import brim, {Ts} from "../../brim"
@@ -35,5 +40,12 @@ export default {
     type: "INVESTIGATION_CLEAR",
     clusterId,
     spaceId
+  }),
+
+  clearConnectionInvestigation: (
+    connId: string
+  ): INVESTIGATION_CONNECTION_CLEAR => ({
+    type: "INVESTIGATION_CONNECTION_CLEAR",
+    connId
   })
 }

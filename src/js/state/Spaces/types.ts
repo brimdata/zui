@@ -17,7 +17,7 @@ export type SpacesAction =
   | SPACES_INGEST_WARNING_CLEAR
   | SPACES_REMOVE
   | SPACES_INGEST_SNAPSHOT
-
+  | SPACES_CONNECTION_REMOVE
 export type Space = {
   name: string
   id: string
@@ -80,6 +80,12 @@ export type SPACES_REMOVE = {
   clusterId: string
   spaceId: string
 }
+
+export type SPACES_CONNECTION_REMOVE = {
+  type: "SPACES_CONNECTION_REMOVE"
+  connId: string
+}
+
 export type SPACES_INGEST_SNAPSHOT = {
   type: "SPACES_INGEST_SNAPSHOT"
   clusterId: string

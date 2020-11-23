@@ -6,7 +6,8 @@ import {
   SPACES_SET,
   SPACES_REMOVE,
   Space,
-  SPACES_RENAME
+  SPACES_RENAME,
+  SPACES_CONNECTION_REMOVE
 } from "./types"
 
 export default {
@@ -37,6 +38,11 @@ export default {
     type: "SPACES_REMOVE",
     clusterId,
     spaceId
+  }),
+
+  removeForConnection: (connId: string): SPACES_CONNECTION_REMOVE => ({
+    type: "SPACES_CONNECTION_REMOVE",
+    connId
   }),
 
   setIngestProgress: (
