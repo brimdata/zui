@@ -34,7 +34,7 @@ export default (paths: string[]): Thunk<Promise<void>> => (
     createSpace(zealot, globalDispatch, clusterId),
     setSpace(dispatch, tabId),
     registerHandler(dispatch, requestId),
-    postFiles(zealot, jsonTypeConfigPath),
+    postFiles(zealot, conn, jsonTypeConfigPath),
     trackProgress(zealot, globalDispatch, clusterId),
     unregisterHandler(dispatch, requestId)
   ])
@@ -106,12 +106,19 @@ const unregisterHandler = (dispatch, id) => ({
   }
 })
 
-const postFiles = (client, jsonTypesPath) => ({
+const postFiles = (client, conn, jsonTypesPath) => ({
   async do(params) {
     const {spaceId, endpoint, paths} = params
     let stream
     if (endpoint === "pcap") {
-      stream = await client.pcaps.post({spaceId, path: paths[0]})
+      try {
+        stream = await client.pcaps.post({spaceId, path: paths[0]})
+      } catch (e) {
+        if (e.name == "item does not exist") {
+          e.message = "File " + e.message + " does not exist on " + conn.name
+        }
+        throw e
+      }
     } else {
       const types = isEmpty(jsonTypesPath)
         ? undefined

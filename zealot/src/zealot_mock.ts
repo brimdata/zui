@@ -4,6 +4,7 @@ import {createStream} from "./fetcher/stream"
 import * as zqd from "./zqd"
 import {zjson} from "./index"
 import {Zealot} from "./types"
+import {createError} from "./util/error"
 import {zngToZeek} from "./enhancers/mod"
 
 type StubMode = "always" | "once"
@@ -42,6 +43,7 @@ export interface ZealotMock {
     mode?: StubMode
   ) => ZealotMock
   stubPromise: (method: string, output: any, mode?: StubMode) => ZealotMock
+  stubError: (method: string, err: any, mode?: StubMode) => ZealotMock
   calls: (method: string) => {method: string; args: any}[]
   zealot: Zealot
 }
@@ -92,6 +94,10 @@ export function createZealotMock(): ZealotMock {
     },
     stubPromise(method: string, output: any, mode: StubMode = "once") {
       stub(method, output, promise, mode)
+      return this
+    },
+    stubError(method: string, err: any, mode: StubMode = "once") {
+      override(method, () => { throw createError(err) })
       return this
     },
     calls(method: string) {

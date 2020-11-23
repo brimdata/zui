@@ -144,4 +144,19 @@ describe("error case", () => {
       "Some pcap warning"
     ])
   })
+
+  test("pcap post file not found", async () => {
+    zealot.stubError("pcaps.post", {
+      type: "Error",
+      kind: "item does not exist",
+      error: "file:///Users/phil/pcap/hello.pcapng"
+    })
+    await expect(
+      store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+    ).rejects.toThrow(
+      new RegExp(
+        "File file:///Users/phil/pcap/hello.pcapng does not exist on testName1"
+      )
+    )
+  })
 })
