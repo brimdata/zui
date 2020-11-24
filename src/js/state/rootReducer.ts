@@ -12,6 +12,7 @@ import Prefs from "./Prefs"
 import Spaces from "./Spaces"
 import Tabs from "./Tabs"
 import View from "./View"
+import QueryLibrary from "./QueryLibrary"
 
 export default combineReducers<any, any>({
   errors: Errors.reducer,
@@ -25,5 +26,6 @@ export default combineReducers<any, any>({
   spaces: Spaces.reducer,
   packets: Packets.reducer,
   prefs: Prefs.reducer,
-  connectionStatuses: ConnectionStatuses.reducer
+  connectionStatuses: ConnectionStatuses.reducer,
+  queryLibrary: QueryLibrary.reducer
 })
