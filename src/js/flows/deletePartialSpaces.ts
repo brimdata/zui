@@ -2,8 +2,12 @@ import {Thunk} from "../state/types"
 import Handlers from "../state/Handlers"
 import rpc from "../electron/rpc"
 import {getZealot} from "./getZealot"
+import Current from "../state/Current"
 
 export default (): Thunk<Promise<any[]>> => (dispatch, getState) => {
+  const current = Current.getConnection(getState())
+  if (!current) return
+
   const zealot = dispatch(getZealot())
   const spaceIds = Handlers.getIngestSpaceIds(getState())
   return Promise.all(

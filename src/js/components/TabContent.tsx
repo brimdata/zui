@@ -11,6 +11,8 @@ import styled from "styled-components"
 import ConnectionError from "./ConnectionError"
 import {initCurrentTab} from "../flows/initCurrentTab"
 import ConnectionStatuses from "../state/ConnectionStatuses"
+import get from "lodash/get"
+import ConnectionChooserPage from "./ConnectionChooserPage"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -24,13 +26,16 @@ export default function TabContent() {
   const dispatch = useDispatch()
   const space = useSelector(Current.getSpace)
   const conn = useSelector(Current.getConnection)
-  const connStatus = useSelector(ConnectionStatuses.get(conn.id))
+  const id = get(conn, ["id"], "")
+  const connStatus = useSelector(ConnectionStatuses.get(id))
 
   useEffect(() => {
-    if (!connStatus) {
+    if (conn && !connStatus) {
       dispatch(initCurrentTab())
     }
-  }, [connStatus])
+  }, [conn, connStatus])
+
+  if (!conn) return <ConnectionChooserPage />
 
   if (!connStatus)
     return (
