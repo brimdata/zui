@@ -12,8 +12,13 @@
     "build:js": "rollup -c",
     "test": "npm-run-all test:*",
     "test:api": "cd test_api && deno test --allow-net --allow-run --allow-read --allow-write",
-    "test:unit": "node ../node_modules/jest/bin/jest.js src",
+    "test:unit": "node ../node_modules/jest/bin/jest.js",
     "clean": "rimraf dist"
+  },
+  "jest": {
+    "roots": [
+      "./src"
+    ]
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^6.0.0",

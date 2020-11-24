@@ -1,11 +1,6 @@
-const NEW_LINE = "\n\n\n"
+import {parse} from "./parse"
 
-class UnexpectedServerResponse extends Error {
-  constructor(msg: string) {
-    super(msg)
-    this.name = "UnexpectedServerResponse"
-  }
-}
+export const NEW_LINE = "\n\n\n"
 
 export async function* pipeJson(iterator: AsyncGenerator<string>) {
   let leftover = ""
@@ -24,14 +19,4 @@ export async function* pipeJson(iterator: AsyncGenerator<string>) {
   }
 
   if (leftover) yield parse(leftover)
-}
-
-function parse(string: string) {
-  try {
-    return JSON.parse(string)
-  } catch (e) {
-    throw new UnexpectedServerResponse(
-      `Expected ndjson but received "${string}"`
-    )
-  }
 }
