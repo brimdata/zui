@@ -12,18 +12,21 @@ class UnknownColumnError extends Error {
 
 export type SerializedRecord = {
   type: zjson.Record
-  value: zjson.Value[]
+  value: zjson.Value[] | null
 }
 
 export class Record implements ZngClass<Type[] | null> {
-  constructor(readonly type: zjson.Column[], readonly value: zjson.Value[]) {}
+  constructor(
+    readonly type: zjson.Column[],
+    readonly value: zjson.Value[] | null
+  ) {}
 
   static deserialize({type, value}: SerializedRecord): Record {
     return new Record(type.of, value)
   }
 
   isSet() {
-    return true
+    return this.value !== null
   }
 
   getType() {
@@ -31,6 +34,7 @@ export class Record implements ZngClass<Type[] | null> {
   }
 
   getValue() {
+    if (this.value === null) return null
     return this.type.map((_, i) => this.at(i))
   }
 
@@ -49,7 +53,7 @@ export class Record implements ZngClass<Type[] | null> {
   at(index: number) {
     const col = this.type[index]
     if (!col) throw new Error(`No column at index: ${index}`)
-    const val = this.value[index]
+    const val = this.value === null ? null : this.value[index]
     const type = "of" in col ? col : col.type
     return constructType(type, val)
   }
@@ -70,6 +74,7 @@ export class Record implements ZngClass<Type[] | null> {
   }
 
   private getOne(name: string): Type {
+    if (this.value === null) throw new Error("Record is unset")
     const col = this.type.find((c) => c.name == name)
     if (!col) {
       throw new UnknownColumnError(name, this.getColumnNames())
@@ -115,7 +120,8 @@ export class Record implements ZngClass<Type[] | null> {
         vals = vals.concat(nested.value)
       } else {
         cols.push({...column, name: prefix + column.name})
-        vals.push(this.value[index])
+        // For an unset record, supply an unset value for each column.
+        vals.push(this.value === null ? null : this.value[index])
       }
     })
     return new Record(cols, vals)
