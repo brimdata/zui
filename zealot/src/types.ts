@@ -8,9 +8,13 @@ export type Zealot = ReturnType<typeof createZealot>
 export type ZCallbacks = ReturnType<typeof createCallbacks>
 export type ZReponse = ReturnType<typeof createStream>
 export type ZFetcher = ReturnType<typeof createFetcher>
-export type ZIterator = AsyncGenerator<zqd.Payload>
+export type ZIterator = AsyncIterable<ZealotPayload>
 
-export type Enhancer = () => (payload: zqd.Payload) => any
+export type ZealotPayload =
+  | zqd.Payload
+  | {type: "UploadProgress"; progress: number}
+
+export type Enhancer = () => (payload: ZealotPayload) => any
 
 export interface ZealotArgs {
   fetcher: (host: string) => ZFetcher
@@ -61,6 +65,12 @@ export interface PcapsGetArgs {
 }
 
 export interface LogsPostArgs {
+  files: File[] | FileList
+  spaceId: string
+  types?: any
+}
+
+export interface LogsPostPathsArgs {
   paths: string[]
   spaceId: string
   types?: any

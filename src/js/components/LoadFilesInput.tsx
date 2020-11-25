@@ -10,20 +10,20 @@ import useCallbackRef from "./hooks/useCallbackRef"
 import useDropzone from "./hooks/useDropzone"
 
 type Props = {
-  onChange: (e, arg1: string[]) => void
+  onChange: (e, files: File[]) => void
 }
 
 export default function LoadFilesInput({onChange}: Props) {
   const [input, setInput] = useCallbackRef()
 
   const [bindDropzone, dragging] = useDropzone((e: DragEvent) => {
-    const paths = Array.from(e.dataTransfer.files).map((f) => f.path)
-    onChange(e, paths)
+    const files = Array.from(e.dataTransfer.files)
+    onChange(e, files)
   })
 
   function _onChange(e: ChangeEvent<HTMLInputElement>) {
-    const paths = Array.from(e.target.files).map((f) => f.path)
-    onChange(e, paths)
+    const files = Array.from(e.target.files)
+    onChange(e, files)
   }
 
   function openDialog(_: MouseEvent) {

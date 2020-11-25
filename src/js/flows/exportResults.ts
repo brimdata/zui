@@ -37,5 +37,5 @@ export default (filePath: string): Thunk => (dispatch, getState) => {
       format: "zng",
       controlMessages: false
     })
-    .then((resp) => saveToFile(resp.origResp, filePath))
+    .then((resp) => saveToFile(resp.origResp as Response, filePath))
 }

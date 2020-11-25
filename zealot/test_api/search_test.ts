@@ -10,7 +10,7 @@ import {
 async function setup(zealot: any) {
   const space = await zealot.spaces.create({name: "space1"})
   const log = testFile("sample.tsv")
-  const resp = await zealot.logs.post({paths: [log], spaceId: space.id})
+  const resp = await zealot.logs.postPaths({paths: [log], spaceId: space.id})
   await resp.array()
 
   zealot.setSearchOptions({

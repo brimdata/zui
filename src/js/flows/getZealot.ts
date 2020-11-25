@@ -6,7 +6,7 @@ import ConnectionStatuses from "../state/ConnectionStatuses"
 
 const createBrimFetcher = (dispatch, getState) => {
   return (hostPort: string) => {
-    const {promise, stream} = createFetcher(hostPort)
+    const {promise, ...rest} = createFetcher(hostPort)
 
     const wrappedPromise = (args: FetchArgs): Promise<any> => {
       return promise(args).catch((e) => {
@@ -22,7 +22,7 @@ const createBrimFetcher = (dispatch, getState) => {
       })
     }
 
-    return {promise: wrappedPromise, stream}
+    return {promise: wrappedPromise, ...rest}
   }
 }
 
