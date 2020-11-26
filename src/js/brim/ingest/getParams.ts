@@ -10,7 +10,7 @@ export type IngestParams = {
   name: string
   dataDir: string
   endpoint: IngestFileType
-  paths: string[]
+  files: File[]
 }
 
 export type IngestParamsError = {
@@ -37,7 +37,7 @@ export default function getParams(
 
   function getSpaceName() {
     let name
-    if (files.oneFile()) name = lib.file(files.first().path).fileName()
+    if (files.oneFile()) name = lib.file(files.first().file.path).fileName()
     else if (files.inSameDir()) name = files.dirName()
     else name = generateDirName(now)
 
@@ -48,7 +48,7 @@ export default function getParams(
     name: getSpaceName(),
     dataDir: getDataDir(),
     endpoint: files.first().type,
-    paths: files.paths()
+    files: files.files()
   }
 }
 

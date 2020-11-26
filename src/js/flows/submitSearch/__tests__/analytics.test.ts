@@ -9,6 +9,7 @@ import Viewer from "../../../state/Viewer"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
+import Clusters from "../../../state/Clusters"
 
 const countResp = responses("count.txt")
 const space = fixtures("space1")
@@ -20,6 +21,14 @@ beforeEach(() => {
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
   store.dispatchAll([
+    Clusters.add({
+      host: "testHost",
+      id: "1",
+      name: "testName",
+      password: "",
+      port: "9867",
+      username: ""
+    }),
     Current.setConnectionId("1"),
     Spaces.setDetail("1", space),
     Current.setSpaceId(space.id),

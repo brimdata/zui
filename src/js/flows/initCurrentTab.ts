@@ -9,7 +9,7 @@ export const initCurrentTab = (): Thunk => async (dispatch, getState) => {
   const spaceId = Current.getSpaceId(state)
 
   try {
-    await dispatch(initConnection(conn))
+    await dispatch(initConnection(conn.serialize()))
     if (spaceId) {
       dispatch(initSpace(spaceId))
     }

@@ -1,3 +1,4 @@
+import {ZealotPayload} from "../types"
 import * as zqd from "../zqd"
 import {createRecordsCallback, RecordsCallbackArgs} from "./records_callback"
 
@@ -8,7 +9,7 @@ export function createCallbacks() {
       callbacks.set(name, cb)
       return this
     },
-    emit: (name: string, payload: zqd.Payload) => {
+    emit: (name: string, payload: ZealotPayload) => {
       const cb = callbacks.get(name)
       if (cb) cb(payload)
     },

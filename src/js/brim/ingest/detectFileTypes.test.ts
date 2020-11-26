@@ -1,5 +1,5 @@
 import ingest from "./"
-import itestFile from "../../test/itestFile"
+import {itestFile} from "../../test/itestFile"
 
 const json = itestFile("sample.ndjson")
 const pcap = itestFile("sample.pcap")
@@ -8,14 +8,14 @@ const unknown = itestFile("plain.txt")
 const zeek = itestFile("sample.tsv")
 
 test("add file types", async () => {
-  const paths = [pcap, pcapng, zeek, json, unknown]
-  const types = await ingest.detectFileTypes(paths)
+  const files = [pcap, pcapng, zeek, json, unknown]
+  const types = await ingest.detectFileTypes(files)
 
   expect(types).toEqual([
-    {type: "pcap", path: pcap},
-    {type: "pcap", path: pcapng},
-    {type: "log", path: zeek},
-    {type: "log", path: json},
-    {type: "log", path: unknown}
+    {type: "pcap", file: pcap},
+    {type: "pcap", file: pcapng},
+    {type: "log", file: zeek},
+    {type: "log", file: json},
+    {type: "log", file: unknown}
   ])
 })

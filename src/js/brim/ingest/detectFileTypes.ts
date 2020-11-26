@@ -1,11 +1,11 @@
 import {FileListData} from "./fileList"
 import detectFileType from "./detectFileType"
 
-export default function(paths: string[]): Promise<FileListData> {
+export default function(files: File[]): Promise<FileListData> {
   return Promise.all(
-    paths.map(async (path) => {
-      const type = await detectFileType(path)
-      return {type, path}
+    files.map(async (file) => {
+      const type = await detectFileType(file.path)
+      return {type, file}
     })
   )
 }

@@ -13,8 +13,9 @@ import ingest from "../brim/ingest"
 import lib from "../lib"
 import {getZealot} from "./getZealot"
 import {Handler} from "../state/Handlers/types"
+import {IngestParams} from "../brim/ingest/getParams"
 
-export default (paths: string[]): Thunk<Promise<void>> => (
+export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
   getState,
   {globalDispatch}
@@ -29,21 +30,21 @@ export default (paths: string[]): Thunk<Promise<void>> => (
   const spaceNames = Spaces.getSpaceNames(clusterId)(getState())
 
   return lib.transaction([
-    validateInput(paths, dataDir, spaceNames),
+    validateInput(files, dataDir, spaceNames),
     createDir(),
     createSpace(zealot, globalDispatch, clusterId),
     setSpace(dispatch, tabId),
     registerHandler(dispatch, requestId),
-    postFiles(zealot, jsonTypeConfigPath),
+    postFiles(zealot, conn, jsonTypeConfigPath),
     trackProgress(zealot, globalDispatch, clusterId),
     unregisterHandler(dispatch, requestId)
   ])
 }
 
-const validateInput = (paths, dataDir, spaceNames) => ({
+const validateInput = (files: File[], dataDir, spaceNames) => ({
   async do() {
     const params = await ingest
-      .detectFileTypes(paths)
+      .detectFileTypes(files)
       .then((data) => ingest.getParams(data, dataDir, spaceNames))
       .catch((e) => {
         if (e.message.startsWith("EISDIR"))
@@ -58,16 +59,16 @@ const validateInput = (paths, dataDir, spaceNames) => ({
 })
 
 const createDir = () => ({
-  async do({dataDir}) {
+  async do({dataDir}: IngestParams) {
     dataDir && (await fsExtra.ensureDir(dataDir))
   },
-  async undo({dataDir}) {
+  async undo({dataDir}: IngestParams) {
     dataDir && (await fsExtra.remove(dataDir))
   }
 })
 
 const createSpace = (client, gDispatch, clusterId) => ({
-  async do(params) {
+  async do(params: IngestParams) {
     let createParams
     if (params.dataDir) {
       createParams = {data_path: params.dataDir}
@@ -84,14 +85,14 @@ const createSpace = (client, gDispatch, clusterId) => ({
 
     return {...params, spaceId: space.id}
   },
-  async undo({spaceId}) {
+  async undo({spaceId}: IngestParams & {spaceId: string}) {
     await client.spaces.delete(spaceId)
     gDispatch(Spaces.remove(clusterId, spaceId))
   }
 })
 
 const registerHandler = (dispatch, id) => ({
-  do({spaceId}) {
+  do({spaceId}: IngestParams & {spaceId: string}) {
     const handle: Handler = {type: "INGEST", spaceId}
     dispatch(Handlers.register(id, handle))
   },
@@ -106,12 +107,20 @@ const unregisterHandler = (dispatch, id) => ({
   }
 })
 
-const postFiles = (client, jsonTypesPath) => ({
-  async do(params) {
-    const {spaceId, endpoint, paths} = params
+const postFiles = (client, conn, jsonTypesPath) => ({
+  async do(params: IngestParams & {spaceId: string}) {
+    const {spaceId, endpoint, files} = params
+    const paths = files.map((f) => f.path)
     let stream
     if (endpoint === "pcap") {
-      stream = await client.pcaps.post({spaceId, path: paths[0]})
+      try {
+        stream = await client.pcaps.post({spaceId, path: paths[0]})
+      } catch (e) {
+        if (e.name == "item does not exist") {
+          e.message = "File " + e.message + " does not exist on " + conn.name
+        }
+        throw e
+      }
     } else {
       const types = isEmpty(jsonTypesPath)
         ? undefined
@@ -119,7 +128,7 @@ const postFiles = (client, jsonTypesPath) => ({
             .file(jsonTypesPath)
             .read()
             .then(JSON.parse)
-      stream = await client.logs.post({spaceId, paths, types})
+      stream = await client.logs.post({spaceId, files, types})
     }
     return {...params, stream}
   }
@@ -149,12 +158,6 @@ const trackProgress = (client, gDispatch, clusterId) => {
         else return status.pcap_read_size / status.pcap_total_size || 0
       }
 
-      function logPostStatusToPercent(status): number {
-        // log_total_size may not be present
-        if (!status.log_total_size) return 1
-        else return status.log_read_size / status.log_total_size
-      }
-
       gDispatch(space.setIngestProgress(0))
       for await (const {type, ...status} of stream) {
         switch (type) {
@@ -165,9 +168,17 @@ const trackProgress = (client, gDispatch, clusterId) => {
             gDispatch(space.setIngestSnapshot(status.snapshot_count))
             if (status.snapshot_count > 0) updateSpaceDetails()
             break
-          case "LogPostStatus":
-            gDispatch(space.setIngestProgress(logPostStatusToPercent(status)))
+          case "UploadProgress":
+            gDispatch(space.setIngestProgress(status.progress))
             updateSpaceDetails()
+            break
+          case "LogPostResponse":
+            updateSpaceDetails()
+            if (status.warnings) {
+              status.warnings.forEach((warning) => {
+                gDispatch(space.appendIngestWarning(warning))
+              })
+            }
             break
           case "LogPostWarning":
           case "PcapPostWarning":
@@ -181,7 +192,6 @@ const trackProgress = (client, gDispatch, clusterId) => {
                 throw errors.logsIngest(status.error.error)
               }
             }
-
             break
         }
       }

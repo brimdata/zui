@@ -15,7 +15,7 @@ const StatusLight = ({...props}: any) => {
   )
 }
 
-export default styled(StatusLight)<{status: ConnectionStatus | void}>`
+export default styled(StatusLight)<{status: ConnectionStatus}>`
   fill: ${(p) => {
     switch (p.status) {
       case "connected":

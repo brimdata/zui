@@ -34,8 +34,8 @@ const ClusterPickerWrapper = styled.div`
 
 export default function ClusterPicker() {
   const dispatch = useDispatch<AppDispatch>()
-  const current = useSelector(Current.getConnection)
   const clusters = useSelector(Clusters.all)
+  const current = useSelector(Current.getConnection)
 
   const template: MenuItemConstructorOptions[] = [
     {

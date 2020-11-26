@@ -96,7 +96,10 @@ export default function(p = "", pins: string[] = []) {
 
     filter() {
       const proc = this.ast().proc(FILTER_PROC)
-      if (proc && isEqual(proc.filter, EVERYTHING_FILTER)) {
+      if (
+        proc === undefined ||
+        (proc && isEqual(proc.filter, EVERYTHING_FILTER))
+      ) {
         return "*"
       } else {
         const [f] = p.split("|")

@@ -1,12 +1,12 @@
 import {createSelector} from "reselect"
 
-import {Cluster, ClustersState} from "../Clusters/types"
+import {ClustersState} from "../Clusters/types"
 import {SpacesState} from "../Spaces/types"
 import {State} from "../types"
 import Clusters from "../Clusters"
 import Spaces from "../Spaces"
 import activeTabSelect from "../Tab/activeTabSelect"
-import brim, {BrimSpace} from "../../brim"
+import brim, {BrimConnection, BrimSpace} from "../../brim"
 
 type Id = string | null
 
@@ -20,12 +20,12 @@ export const mustGetConnection = createSelector<
   State,
   ClustersState,
   Id,
-  Cluster
+  BrimConnection
 >(Clusters.raw, getConnectionId, (conns, id) => {
   if (!id) throw new Error("Current connection id is unset")
   if (!conns[id]) throw new Error(`Missing connection id: ${id}`)
 
-  return conns[id]
+  return brim.connection(conns[id])
 })
 
 export const mustGetSpace = createSelector<

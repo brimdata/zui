@@ -1,5 +1,5 @@
+import {ZealotPayload} from "../types"
 import * as zjson from "../zjson"
-import * as zqd from "../zqd"
 
 function fail(t: any): never {
   throw new Error("Unknown zjson Type: " + JSON.stringify(t))
@@ -64,7 +64,7 @@ function replaceSchema(r: zjson.Item) {
 }
 
 export function zngToZeek() {
-  return (p: zqd.Payload) => {
+  return (p: ZealotPayload) => {
     if (p.type == "SearchRecords") {
       return {...p, records: p.records.map(replaceSchema)}
     } else {

@@ -1,9 +1,8 @@
 import {createZealot} from "./zealot"
 import {FetchArgs} from "./fetcher/fetcher"
 import {createStream} from "./fetcher/stream"
-import * as zqd from "./zqd"
-import {zjson} from "./index"
-import {Zealot} from "./types"
+import {createError} from "./util/error"
+import {Zealot, ZealotPayload} from "./types"
 import {zngToZeek} from "./enhancers/mod"
 
 type StubMode = "always" | "once"
@@ -16,6 +15,9 @@ function fakeFetcher() {
     },
     stream: ({method, path}: FetchArgs) => {
       throw new Error(`NoNetwork: You must stub: ${method} ${path}`)
+    },
+    upload: ({method, path}: FetchArgs) => {
+      throw new Error(`NoNetwork: You must stub: ${method} ${path}`)
     }
   }
 }
@@ -24,7 +26,7 @@ function promise(response: any) {
   return Promise.resolve(response)
 }
 
-function stream(response: zqd.Payload[]) {
+function stream(response: ZealotPayload[]) {
   const enhance = zngToZeek()
   async function* iterator() {
     if (response) {
@@ -38,10 +40,11 @@ function stream(response: zqd.Payload[]) {
 export interface ZealotMock {
   stubStream: (
     method: string,
-    output: zqd.Payload[],
+    output: ZealotPayload[],
     mode?: StubMode
   ) => ZealotMock
   stubPromise: (method: string, output: any, mode?: StubMode) => ZealotMock
+  stubError: (method: string, err: any, mode?: StubMode) => ZealotMock
   calls: (method: string) => {method: string; args: any}[]
   zealot: Zealot
 }
@@ -92,6 +95,12 @@ export function createZealotMock(): ZealotMock {
     },
     stubPromise(method: string, output: any, mode: StubMode = "once") {
       stub(method, output, promise, mode)
+      return this
+    },
+    stubError(method: string, err: any, mode: StubMode = "once") {
+      override(method, () => {
+        throw createError(err)
+      })
       return this
     },
     calls(method: string) {

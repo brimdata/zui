@@ -13,7 +13,10 @@ async function emitCallbacks(iterator: ZIterator, callbacks: ZCallbacks) {
   }
 }
 
-export function createStream(iterator: ZIterator, origResp: Response) {
+export function createStream(
+  iterator: ZIterator,
+  origResp: Response | XMLHttpRequest
+) {
   return {
     origResp,
     [Symbol.asyncIterator]: () => iterator,

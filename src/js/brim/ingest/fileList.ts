@@ -1,46 +1,52 @@
 import {IngestFileType} from "./detectFileType"
 import lib from "../../lib"
 
-export type FileListData = {type: IngestFileType; path: string}[]
+export type FileListData = {type: IngestFileType; file: File}[]
 
-export default function fileList(files: FileListData) {
+export default function fileList(list: FileListData) {
   return {
     first() {
-      return files[0]
+      return list[0]
     },
 
     oneFile() {
-      return files.length === 1
+      return list.length === 1
     },
 
     multiple() {
-      return files.length > 1
+      return list.length > 1
     },
 
     paths(): string[] {
-      return files.map((f) => f.path)
+      return list.map((f) => f.file.path)
+    },
+
+    files(): File[] {
+      return list.map((f) => f.file)
     },
 
     any(type: string) {
-      return !!files.find((f) => f.type === type)
+      return !!list.find((f) => f.type === type)
     },
 
     allPcap() {
-      return files.every((f) => f.type === "pcap")
+      return list.every((f) => f.type === "pcap")
     },
 
     mixed() {
-      return !files.every((f) => f.type === files[0].type)
+      return !list.every((f) => f.type === list[0].type)
     },
 
     inSameDir() {
-      return files.every(
-        (f) => lib.file(f.path).dirName() === lib.file(files[0].path).dirName()
+      return list.every(
+        (item) =>
+          lib.file(item.file.path).dirName() ===
+          lib.file(list[0].file.path).dirName()
       )
     },
 
     dirName() {
-      return lib.file(files[0].path).dirName()
+      return lib.file(list[0].file.path).dirName()
     }
   }
 }

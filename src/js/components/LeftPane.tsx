@@ -16,6 +16,7 @@ import Spaces from "../state/Spaces"
 import useDrag from "./hooks/useDrag"
 import usePopupMenu from "./hooks/usePopupMenu"
 import ConnectionStatuses from "../state/ConnectionStatuses"
+import get from "lodash/get"
 
 const Arrow = (props) => {
   return (
@@ -124,6 +125,14 @@ const DragAnchor = styled.div`
   cursor: row-resize;
 `
 
+const EmptyText = styled.div`
+  ${(p) => p.theme.typography.labelNormal}
+  color: var(--slate);
+  margin-top: 110px;
+  padding: 0 24px;
+  text-align: center;
+`
+
 const ViewSelect = () => {
   const dispatch = useDispatch()
   const currentView = useSelector(Layout.getInvestigationView)
@@ -168,7 +177,8 @@ export function LeftPane() {
   const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
-  const id = useSelector(Current.getConnectionId)
+  const conn = useSelector(Current.getConnection)
+  const id = get(conn, ["id"], "")
   const connStatus = useSelector(ConnectionStatuses.get(id))
   const spaces = useSelector(Spaces.getSpaces(id))
 
@@ -179,8 +189,6 @@ export function LeftPane() {
 
   const paneRef = useRef<HTMLDivElement>()
   const paneHeight = useRef(0)
-
-  if (!id) return null
 
   function onDragPane(e: MouseEvent) {
     const width = e.clientX
@@ -220,32 +228,40 @@ export function LeftPane() {
       onDrag={onDragPane}
       className="history-pane"
     >
-      <ClusterPicker />
-      <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
-        <SectionHeader>
-          <ClickRegion onClick={() => dispatch(Layout.toggleSpaces())}>
-            <StyledArrow show={showSpaces} />
-            <Title>Spaces</Title>
-          </ClickRegion>
-          <AddSpaceButton />
-        </SectionHeader>
-        <SectionContents show={showSpaces}>
-          <SavedSpacesList spaces={spaces} connStatus={connStatus} />
-        </SectionContents>
-        {showSpaces && <DragAnchor {...dragFunc()} />}
-      </StyledSection>
-      <StyledSection style={{flexGrow: historyHeight}}>
-        <SectionHeader>
-          <ClickRegion onClick={() => dispatch(Layout.toggleHistory())}>
-            <StyledArrow show={showHistory} />
-            <Title>History</Title>
-          </ClickRegion>
-          <ViewSelect />
-        </SectionHeader>
-        <SectionContents show={showHistory}>
-          <InvestigationView view={view} />
-        </SectionContents>
-      </StyledSection>
+      {!id ? (
+        <EmptyText>
+          The connection previously on this tab has been removed.
+        </EmptyText>
+      ) : (
+        <>
+          <ClusterPicker />
+          <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
+            <SectionHeader>
+              <ClickRegion onClick={() => dispatch(Layout.toggleSpaces())}>
+                <StyledArrow show={showSpaces} />
+                <Title>Spaces</Title>
+              </ClickRegion>
+              <AddSpaceButton />
+            </SectionHeader>
+            <SectionContents show={showSpaces}>
+              <SavedSpacesList spaces={spaces} connStatus={connStatus} />
+            </SectionContents>
+            {showSpaces && <DragAnchor {...dragFunc()} />}
+          </StyledSection>
+          <StyledSection style={{flexGrow: historyHeight}}>
+            <SectionHeader>
+              <ClickRegion onClick={() => dispatch(Layout.toggleHistory())}>
+                <StyledArrow show={showHistory} />
+                <Title>History</Title>
+              </ClickRegion>
+              <ViewSelect />
+            </SectionHeader>
+            <SectionContents show={showHistory}>
+              <InvestigationView view={view} />
+            </SectionContents>
+          </StyledSection>
+        </>
+      )}
     </Pane>
   )
 }

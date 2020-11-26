@@ -37,7 +37,7 @@ test("getting the actual connection", () => {
     Current.setConnectionId("myconn")
   ])
 
-  expect(Current.mustGetConnection(state)).toEqual(conn)
+  expect(Current.mustGetConnection(state).serialize()).toEqual(conn)
 })
 
 test("getting the actual space", () => {
