@@ -138,7 +138,7 @@ test("remove query, group", () => {
   expect(getGroup(store.getState(), [0]).items).toEqual([testName1Group[2]])
 })
 
-test("move query, same group", () => {
+test("move query, same group, different group same depth", () => {
   store.dispatch(QueryLibrary.setAll(testLib))
 
   const testName1Group = getGroup(store.getState(), [0]).items
@@ -161,6 +161,20 @@ test("move query, same group", () => {
 
   expect(getGroup(store.getState(), [0]).items).toHaveLength(3)
   expect(getGroup(store.getState(), [0]).items).toEqual(testName1Group)
+
+  // move to "uncle's" group
+  store.dispatch(QueryLibrary.addItem(newGroup, [0]))
+
+  expect(getGroup(store.getState(), [0, 1]).items).toHaveLength(1)
+  expect(getGroup(store.getState(), [0, 3]).items).toHaveLength(0)
+
+  const testName4Query = getGroup(store.getState(), [0, 1]).items[0]
+
+  store.dispatch(QueryLibrary.moveItem([0, 1, 0], [0, 3, 0]))
+
+  expect(getGroup(store.getState(), [0, 1]).items).toHaveLength(0)
+  expect(getGroup(store.getState(), [0, 3]).items).toHaveLength(1)
+  expect(getGroup(store.getState(), [0, 3]).items[0]).toEqual(testName4Query)
 })
 
 test("move query, different group", () => {
