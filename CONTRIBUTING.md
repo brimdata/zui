@@ -51,7 +51,7 @@ An alternate Zeek setup may be used by overriding the zeek runner location. This
 
 Brim uses [Suricata](https://suricata-ids.org) to extract Suricata alert logs from packet captures. These alerts are also transformed into ZNG and combined with the zeek logs. Overall this feature's operation and configuration are similar to those of the Zeek feature. Here, the runner is passed to zqd with the `-suricatarunner` option, and it can be overridden via the Brim UI or the environment variable `BRIM_SURICATA_RUNNER`.
 
-The Suricata rules are updated every time Brim is launched. The update itself is started by zqd by invoking a suricata-update runner that is passed to it as `-suricataupdater`. The default updater uses the default Emerging Threads Open rules, like vanilla Suricata. A custom updater can be used; to do so change the updater path via the Brim UI or the environment variable `BRIM_SURICATA_UPDATER`.
+The Suricata rules are updated every time Brim is launched. The update itself is started by zqd by invoking a suricata-update runner that is passed to it as `-suricataupdater`. The default updater uses the default Emerging Threats Open rules, like vanilla Suricata. A custom updater can be used; to do so change the updater path via the Brim UI or the environment variable `BRIM_SURICATA_UPDATER`.
 
 ## Tests
 
