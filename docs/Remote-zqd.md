@@ -7,7 +7,7 @@
 - [Starting a Remote `zqd`](#starting-a-remote-zqd)
 - [Importing Data](#importing-data)
 - [Accessing Our Remote `zqd`](#accessing-our-remote-zqd)
-- [Frequently Asked Questions](#frequently-asked-questions)
+- [Contact us!](#contact-us)
 
 # Summary
 
@@ -45,7 +45,8 @@ described in this article.
 
 1. While **logs** can be imported from your local Brim app directly to a remote
 `zqd`, **packet captures** currently cannot. Any packet captures you wish to
-access remotely will need to have been staged at the remote location.
+access remotely will need to have been staged at the remote location. The steps
+below show how this is done.
 
 2. While the configuration potentially allows multiple remote users to access
 the same centrally stored logs and packet captures, there's currently no
@@ -126,7 +127,7 @@ in the following location on each platform:
    | **macOS**     | `/Applications/Brim.app/Contents/Resources/app/zdeps` |
    | **Linux**     | `/usr/lib/brim/resources/app/zdeps`                   |
 
-Now that we know Brim is simply connecting to `zqd` locally, nexy we'll vary
+Now that we know Brim is simply connecting to `zqd` locally, next we'll vary
 this approach to instead start a remote `zqd` and connect to it to access the
 logs and packet captures stored there.
 
@@ -143,19 +144,20 @@ Brim package because it includes the compatible `zqd` binary as well as an
 embedded Zeek that will prove useful if we want to import packet capture data.
 
 ```
-ubuntu# wget https://github.com/brimsec/brim/releases/download/v0.20.0/brim_amd64.deb
+ubuntu# wget --quiet https://github.com/brimsec/brim/releases/download/v0.20.0/brim_amd64.deb
+ubuntu# sudo apt update
 ubuntu# sudo apt install -y ./brim_amd64.deb
 ```
 
 ---
 
-* **Variation:** Rather than the full Brim package, we could instead have
-[downloaded a zq package](https://www.brimsecurity.com/download/). The zq
+* **Variation:** Rather than the full Brim package, we could instead
+[download a zq package](https://www.brimsecurity.com/download/). The zq
 package includes the `zqd` and `zapi` binaries that could be used to construct
 command lines similar to those shown below. However, the zq tools do not
 include an embedded Zeek, so such a configuration would either lack the
 ability to import packet data, or would require the creation of a separate Zeek
-installation and runnner that could be enabled via the steps described in the
+installation and runner that could be enabled via the steps described in the
 [Zeek Customization](https://github.com/brimsec/brim/wiki/Zeek-Customization)
 article.
 
@@ -163,7 +165,8 @@ article.
 
 Since there's no desktop environment on this VM, there's no "app" interface to
 see. Therefore we'll use the path information for the Linux platform shown
-above to start `zqd` manually with a couple modifications, as follows:
+in the table above to start `zqd` manually with a couple modifications, as
+follows:
 
 ```
 ubuntu# mkdir -p ~/.config/Brim/data/spaces
@@ -274,19 +277,34 @@ as usual.
 
 ![Opening a remote flow](media/Remote-Flow-Wireshark.png)
 
-Additional Spaces created on the remote `zqd` are not automatically shown in
-the Brim app. To trigger an immediate refresh, select **View > Reload** from
-the Brim drop-down menu.
+You can import logs (but not pcaps) directly from your Brim app to the remote
+`zqd` in the same manner as you've been doing it locally.
 
----
+![Importing logs to remote zqd](media/Remote-Log-Import.gif)
 
-Text still to be added when the features exist:
-* Deleting a remote connection ([brim/1191](https://github.com/brimsec/brim/issues/1191))
-* Importing logs to a remote `zqd` ([brim/1094](https://github.com/brimsec/brim/issues/1094))
+If you were to attempt to import pcaps directly to the remote `zqd`, you'd see
+an error pop up like the one shown below. This is due to the fact that pcap
+import is currently implemented by posting the local file path from Brim to
+`zqd`, so the import fails when the remote `zqd` doesn't find the pcap at that
+at that path on its filesystem.
 
-# Frequently Asked Questions
+![Failing pcap import to remote zqd](media/Remote-pcap-Import-Fail.gif)
 
-(Show the error messsage from a failed attempt to import a pcap to a remote
-`zqd` and reiterate that this is currently unsupported. Issue
-[brim/1221](https://github.com/brimsec/brim/issues/1221) is tracking whether we
-can improve this error message first.)
+While new Spaces you create by importing logs via Brim will show up
+immediately in your app, additional Spaces created on the remote end via `zapi`
+or by other users importing to the same remote `zqd` will not appear
+automatically in your Brim app. To trigger an immediate refresh, select
+**View > Reload** from the Brim drop-down menu.
+
+![Reload to view new Spaces](media/Reload-New-Spaces.gif)
+
+A remote connection can be deleted by selecting the **Get Info** option in the
+pull-down and clicking **Remove**.
+
+![Get connection info](media/Connection-Get-Info.png)
+
+# Contact us!
+
+If you have questions or feedback about this cookbook, we'd like to hear from
+you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/) or
+[open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
