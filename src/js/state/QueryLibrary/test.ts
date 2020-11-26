@@ -23,7 +23,7 @@ const testLib = {
           id: "testId2",
           name: "testName2",
           description: "testDescription2",
-          value: "testValue2",
+          zql: "testValue2",
           tags: ["testTag1", "testTag2"]
         },
         {
@@ -36,7 +36,7 @@ const testLib = {
               id: "testId4",
               name: "testName4",
               description: "testDescription4",
-              value: "testValue4",
+              zql: "testValue4",
               tags: ["testTag2"]
             }
           ]
@@ -46,7 +46,7 @@ const testLib = {
           id: "testId5",
           name: "testName5",
           description: "testDescription5",
-          value: "testValue5",
+          zql: "testValue5",
           tags: ["testTag1"]
         }
       ]
@@ -58,7 +58,7 @@ const newQuery = {
   id: "newQueryId",
   name: "newQueryName",
   description: "newQueryDescription",
-  value: "newQueryValue",
+  zql: "newQueryValue",
   tags: []
 }
 

@@ -1,6 +1,6 @@
 import {Group, Query, QueryLibraryAction, QueryLibraryState} from "./types"
 import produce from "immer"
-import {get, set, initial, last} from "lodash"
+import {get, set, initial, last, isEqual} from "lodash"
 import init from "./initial"
 
 export default produce(
@@ -71,7 +71,7 @@ const moveItem = (
   // cause an off by one issue since the destination index will be affected after
   // removal (e.g. an item cannot be moved to the end of its current group because of this).
   // For this situation we instead remove the item first, and then insert its copy
-  if (srcItemPath.length === destItemPath.length) {
+  if (isEqual(initial(srcItemPath), initial(destItemPath))) {
     removeItemFromGroup(draft, srcItemPath)
     addItemToGroup(
       draft,

@@ -3,7 +3,7 @@ export type QueryLibraryState = Group
 export interface Query {
   id: string
   name: string
-  value: string
+  zql: string
   description: string
   tags: string[]
 }
