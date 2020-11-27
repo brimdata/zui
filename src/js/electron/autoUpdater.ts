@@ -14,10 +14,12 @@ const autoUpdateLinux = async () => {
   const url = getFeedURLForPlatform("darwin-x64")
   try {
     const currentVersion = app.getVersion()
+    log.info({currentVersion})
     if (!semver.valid(currentVersion))
       throw "Invalid current version format: " + currentVersion
 
     const resp = await got(url).json()
+    log.info({resp})
 
     const latestVersion = get(resp, "name", "")
     if (!semver.valid(latestVersion))
