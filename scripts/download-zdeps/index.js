@@ -149,7 +149,7 @@ async function suricataDownload(version, zdepsPath) {
   const suricataPath = path.join(zdepsPath, "suricata")
 
   const artifactFile = `suricata-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://storage.googleapis.com/brimsec/suricata/${artifactFile}`
+  const artifactUrl = `https://github.com/brimsec/build-suricata/releases/download/${version}/${artifactFile}`
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {
