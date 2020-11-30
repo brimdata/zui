@@ -25,7 +25,7 @@ export class Record implements ZngClass<Type[] | null> {
     return new Record(type.of, value)
   }
 
-  isSet(): this is {value: zjson.Value[]} {
+  isSet() {
     return this.value !== null
   }
 
@@ -53,7 +53,7 @@ export class Record implements ZngClass<Type[] | null> {
   at(index: number) {
     const col = this.type[index]
     if (!col) throw new Error(`No column at index: ${index}`)
-    const val = this.isSet() ? this.value[index] : null
+    const val = this.isSet() ? this.value![index] : null
     const type = "of" in col ? col : col.type
     return constructType(type, val)
   }
@@ -79,7 +79,7 @@ export class Record implements ZngClass<Type[] | null> {
     if (!col) {
       throw new UnknownColumnError(name, this.getColumnNames())
     } else {
-      const val = this.value[this.type.indexOf(col)]
+      const val = this.value![this.type.indexOf(col)]
       const type = "of" in col ? col : col.type
       return constructType(type, val)
     }
@@ -121,7 +121,7 @@ export class Record implements ZngClass<Type[] | null> {
       } else {
         cols.push({...column, name: prefix + column.name})
         // For an unset record, supply an unset value for each column.
-        vals.push(this.isSet() ? this.value[index] : null)
+        vals.push(this.isSet() ? this.value![index] : null)
       }
     })
     return new Record(cols, vals)
