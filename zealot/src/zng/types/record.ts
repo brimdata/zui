@@ -25,7 +25,7 @@ export class Record implements ZngClass<Type[] | null> {
     return new Record(type.of, value)
   }
 
-  isSet() {
+  isSet(): this is {value: zjson.Value[]} {
     return this.value !== null
   }
 
