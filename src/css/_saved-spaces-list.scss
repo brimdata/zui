@@ -1,5 +1,4 @@
 .saved-spaces-list {
-  background: white;
   user-select: none;
   overflow-x: hidden;
   overflow-y: auto;
@@ -26,6 +25,7 @@
     list-style-type: none;
     display: flex;
     align-items: center;
+    border-radius: 4px;
 
     &:hover {
       background-color: $coconut;
@@ -52,7 +52,7 @@
 
     .using-keyboard &:focus {
       outline: none;
-      background: $blue;
+      background: var(--havelock);
       color: white;
       svg {
         fill: white;
@@ -62,7 +62,7 @@
 
   .current-space-link {
     outline: none;
-    background: $blue;
+    background: var(--havelock);
     color: white;
 
     .space-icon {
