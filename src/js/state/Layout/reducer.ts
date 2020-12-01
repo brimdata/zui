@@ -10,7 +10,8 @@ const init: LayoutState = {
   spacesIsOpen: true,
   historyHeight: 1,
   spacesHeight: 1,
-  columnHeadersView: "AUTO"
+  columnHeadersView: "AUTO",
+  sidebarSections: [{id: "spaces"}, {id: "history"}]
 }
 
 export default function reducer(
@@ -18,6 +19,11 @@ export default function reducer(
   action: LayoutAction
 ): LayoutState {
   switch (action.type) {
+    case "LAYOUT_SIDEBAR_SECTIONS_SET":
+      return {
+        ...state,
+        sidebarSections: action.sections
+      }
     case "LAYOUT_RIGHT_SIDEBAR_SHOW":
       return {
         ...state,
