@@ -10,10 +10,6 @@ import {
   LAYOUT_RIGHT_SIDEBAR_SHOW,
   LAYOUT_RIGHT_SIDEBAR_TOGGLE,
   LAYOUT_RIGHT_SIDEBAR_WIDTH_SET,
-  LAYOUT_HISTORY_HEIGHT_SET,
-  LAYOUT_SPACES_HEIGHT_SET,
-  LAYOUT_HISTORY_TOGGLE,
-  LAYOUT_SPACES_TOGGLE,
   LAYOUT_SIDEBAR_SECTIONS_SET
 } from "./types"
 
@@ -57,24 +53,6 @@ export default {
 
   toggleLeftSidebar: (): LAYOUT_LEFT_SIDEBAR_TOGGLE => ({
     type: "LAYOUT_LEFT_SIDEBAR_TOGGLE"
-  }),
-
-  setHistoryHeight: (height: number): LAYOUT_HISTORY_HEIGHT_SET => ({
-    type: "LAYOUT_HISTORY_HEIGHT_SET",
-    height
-  }),
-
-  setSpacesHeight: (height: number): LAYOUT_SPACES_HEIGHT_SET => ({
-    type: "LAYOUT_SPACES_HEIGHT_SET",
-    height
-  }),
-
-  toggleHistory: (): LAYOUT_HISTORY_TOGGLE => ({
-    type: "LAYOUT_HISTORY_TOGGLE"
-  }),
-
-  toggleSpaces: (): LAYOUT_SPACES_TOGGLE => ({
-    type: "LAYOUT_SPACES_TOGGLE"
   }),
 
   setInvestigationView: (

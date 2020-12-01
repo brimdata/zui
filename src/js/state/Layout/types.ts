@@ -8,10 +8,6 @@ export type LayoutState = {
   leftSidebarWidth: number
   leftSidebarIsOpen: boolean
   investigationView: InvestigationView
-  historyHeight: number
-  historyIsOpen: boolean
-  spacesHeight: number
-  spacesIsOpen: boolean
   columnHeadersView: ColumnHeadersViewState
   sidebarSections: SectionData[]
 }
@@ -26,10 +22,6 @@ export type LayoutAction =
   | LAYOUT_LEFT_SIDEBAR_TOGGLE
   | LAYOUT_LEFT_SIDEBAR_WIDTH_SET
   | LAYOUT_INVESTIGATION_VIEW_SET
-  | LAYOUT_HISTORY_HEIGHT_SET
-  | LAYOUT_SPACES_HEIGHT_SET
-  | LAYOUT_HISTORY_TOGGLE
-  | LAYOUT_SPACES_TOGGLE
   | LAYOUT_SET_COLUMN_HEADERS
   | LAYOUT_SIDEBAR_SECTIONS_SET
 
@@ -75,24 +67,6 @@ export type LAYOUT_LEFT_SIDEBAR_WIDTH_SET = {
 export type LAYOUT_INVESTIGATION_VIEW_SET = {
   type: "LAYOUT_INVESTIGATION_VIEW_SET"
   view: InvestigationView
-}
-
-export type LAYOUT_HISTORY_HEIGHT_SET = {
-  type: "LAYOUT_HISTORY_HEIGHT_SET"
-  height: number
-}
-
-export type LAYOUT_SPACES_HEIGHT_SET = {
-  type: "LAYOUT_SPACES_HEIGHT_SET"
-  height: number
-}
-
-export type LAYOUT_HISTORY_TOGGLE = {
-  type: "LAYOUT_HISTORY_TOGGLE"
-}
-
-export type LAYOUT_SPACES_TOGGLE = {
-  type: "LAYOUT_SPACES_TOGGLE"
 }
 
 export type LAYOUT_SET_COLUMN_HEADERS = {
