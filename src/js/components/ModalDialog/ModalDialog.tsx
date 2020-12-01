@@ -21,9 +21,6 @@ const Overlay = styled.div`
 `
 
 const Background = styled.div`
-  --blur-color: hsla(32, 5%, 85%, 0.5);
-  --blur-shadow: hsla(32, 5%, 20%, 0.5);
-
   pointer-events: all;
   display: flex;
   overflow: hidden;
@@ -31,8 +28,7 @@ const Background = styled.div`
   min-width: 300px;
   max-width: 80%;
   max-height: 80%;
-  background: var(--blur-color);
-  backdrop-filter: blur(24px);
+  background: var(--cloudy);
   box-shadow: 0 0 1px hsla(28, 5%, 20%, 0.75),
     0 12px 45px hsla(28, 5%, 20%, 0.6);
   border-radius: 0 0 2px 2px;
