@@ -7,7 +7,7 @@
 * Allow removal of remote Connection configs (#1226)
 * Fix an issue where importing logs containing `null` values for nested records caused a crash (#1241)
 * Add scaffolding for a future Query Library feature (#1239)
-* Fix an issue where Brim sometimes failed to load on remote VM sessions
+* Fix an issue where Brim sometimes failed to load on remote VM sessions (#1248)
 
 ## v0.19.0
 * **NOTE** - Due to the ZNG storage format change described in the
