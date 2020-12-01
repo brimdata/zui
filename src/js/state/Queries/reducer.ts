@@ -1,37 +1,34 @@
-import {Group, Query, QueryLibraryAction, QueryLibraryState} from "./types"
+import {Group, Query, QueriesAction, QueriesState} from "./types"
 import produce from "immer"
 import {get, set, initial, last, isEqual} from "lodash"
 import init from "./initial"
 
-export default produce(
-  (draft: QueryLibraryState, action: QueryLibraryAction) => {
-    switch (action.type) {
-      case "QLIB_SET_ALL":
-        return action.rootGroup
-      case "QLIB_ADD_ITEM":
-        addItemToGroup(draft, action.groupPath, action.item)
-        return
-      case "QLIB_REMOVE_ITEM":
-        removeItemFromGroup(draft, action.itemPath)
-        return
-      case "QLIB_EDIT_ITEM":
-        if (!get(draft, toItemPath(action.itemPath), null)) return
+export default produce((draft: QueriesState, action: QueriesAction) => {
+  switch (action.type) {
+    case "QUERIES_SET_ALL":
+      return action.rootGroup
+    case "QUERIES_ADD_ITEM":
+      addItemToGroup(draft, action.groupPath, action.item)
+      return
+    case "QUERIES_REMOVE_ITEM":
+      removeItemFromGroup(draft, action.itemPath)
+      return
+    case "QUERIES_EDIT_ITEM":
+      if (!get(draft, toItemPath(action.itemPath), null)) return
 
-        set(draft, toItemPath(action.itemPath), action.item)
-        return
-      case "QLIB_MOVE_ITEM":
-        moveItem(draft, action.srcItemPath, action.destItemPath)
-        return
-    }
-  },
-  init()
-)
+      set(draft, toItemPath(action.itemPath), action.item)
+      return
+    case "QUERIES_MOVE_ITEM":
+      moveItem(draft, action.srcItemPath, action.destItemPath)
+      return
+  }
+}, init())
 
 const toItemPath = (path: number[]): string =>
   path.map((pathNdx) => `items[${pathNdx}]`).join(".")
 
 const addItemToGroup = (
-  draft: QueryLibraryState,
+  draft: QueriesState,
   groupPath: number[],
   item: Query | Group,
   index?: number
@@ -47,10 +44,7 @@ const addItemToGroup = (
   parentGroup.items.splice(index, 0, item)
 }
 
-const removeItemFromGroup = (
-  draft: QueryLibraryState,
-  itemPath: number[]
-): void => {
+const removeItemFromGroup = (draft: QueriesState, itemPath: number[]): void => {
   const parentGroup = get(draft, toItemPath(initial(itemPath)), null)
   if (!parentGroup) return
 
@@ -58,7 +52,7 @@ const removeItemFromGroup = (
 }
 
 const moveItem = (
-  draft: QueryLibraryState,
+  draft: QueriesState,
   srcItemPath: number[],
   destItemPath: number[]
 ): void => {
