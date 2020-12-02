@@ -219,7 +219,7 @@ While it's possible to import logs from the Brim app directly into a remote
 logs from our [zq-sample-data](https://github.com/brimsec/zq-sample-data).
 
 ```
-ubtunu# git clone --quiet --depth=1 https://github.com/brimsec/zq-sample-data.git
+ubuntu# git clone --quiet --depth=1 https://github.com/brimsec/zq-sample-data.git
 ubuntu# /usr/lib/brim/resources/app/zdeps/zapi -s sample postpath -f zq-sample-data/zeek-default/*
 100.0% 44.71MB/44.71MB
 posted 44.71MB in 21.252418033s
