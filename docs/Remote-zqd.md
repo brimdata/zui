@@ -63,15 +63,17 @@ visible.
 
 Since it's presented as an icon that can be double-clicked to launch it on
 your desktop, it's easy to think of Brim as a simple standalone application.
-However, it actually includes some "backend" components that assist in
-providing the overall app experience.
+However, the overall app experience is powered by a distributed "backend"
+architecture that includes multiple components.
 
 One essential component is [`zqd`](https://github.com/brimsec/zq/tree/master/ppl/cmd/zqd),
 a server-style process that manages the storage and querying of imported
 log/packet data.  Operations in `zqd` are invoked via a
 [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
-that's utilized by a "client", such as the Brim app and/or the
-[`zapi`](https://github.com/brimsec/zq/tree/master/cmd/zapi) command line tool.
+that's utilized by a "client", such as the Brim app. The
+[`zapi`](https://github.com/brimsec/zq/tree/master/cmd/zapi) is also available
+as a command line client that can perform many of the same operations as the
+Brim app, and therefore may be useful in scripting and automation.
 
 ![Brim zapi and zqd](media/Brim-zapi-zqd.png)
 
@@ -154,10 +156,11 @@ ubuntu# sudo apt install -y ./brim_amd64.deb
 * **Variation:** Rather than the full Brim package, we could instead
 [download a zq package](https://www.brimsecurity.com/download/). The zq
 package includes the `zqd` and `zapi` binaries that could be used to construct
-command lines similar to those shown below. However, the zq tools do not
-include an embedded Zeek, so such a configuration would either lack the
-ability to import packet data, or would require the creation of a separate Zeek
-installation and runner that could be enabled via the steps described in the
+command lines similar to those shown below. However, as the zq tools are a
+general data platform, they do not include an embedded Zeek. This means such a
+configuration would either lack the ability to import packet data, or would
+require the creation of a separate Zeek installation and runner that could be
+enabled via the steps described in the
 [Zeek Customization](https://github.com/brimsec/brim/wiki/Zeek-Customization)
 article.
 
@@ -197,10 +200,10 @@ IP address.
 
 # Importing Data
 
-As mentioned in the [Limitations](#Limitations) above, it's not currently
-possible for remote Brim clients to import packet capture data directly to a
-remote `zqd`. However we can use the `zapi` command line tool on our VM to
-access this `zqd` directly via `localhost`.
+As mentioned in the [Limitations](#Limitations) above, it's not possible for
+remote Brim clients to import packet capture data directly to a remote `zqd`.
+However we can use the `zapi` command line tool on our VM to access this `zqd`
+directly via `localhost`.
 
 As sample packet data, we'll import a
 [wrccdc pcap](https://archive.wrccdc.org/pcaps/2018/) from a separate shell on
