@@ -198,7 +198,7 @@ IP address.
 # Importing Data
 
 As mentioned in the [Limitations](#Limitations) above, it's not currently
-possible for remote Brim clients to import packet cpature data directly to a
+possible for remote Brim clients to import packet capture data directly to a
 remote `zqd`. However we can use the `zapi` command line tool on our VM to
 access this `zqd` directly via `localhost`.
 
