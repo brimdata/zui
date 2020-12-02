@@ -298,8 +298,10 @@ automatically in your Brim app. To trigger an immediate refresh, select
 
 ![Reload to view new Spaces](media/Reload-New-Spaces.gif)
 
-A remote connection can be deleted by selecting the **Get Info** option in the
-pull-down and clicking **Remove**.
+A remote connection can be removed by selecting the **Get Info** option in the
+pull-down and clicking **Remove**. This only removes the config in your Brim
+app that references the remote `zqd`. It does not shutdown the remote `zqd` nor
+does it delete any data stored there.
 
 ![Get connection info](media/Connection-Get-Info.png)
 
