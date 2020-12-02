@@ -1,3 +1,14 @@
+## v0.20.0
+* Update zq to [v0.24.0](https://github.com/brimsec/zq/releases/tag/v0.24.0)
+* Begin bundling the same Zeek artifact referenced in [zq's `package.json`](https://github.com/brimsec/zq/blob/master/package.json) (#1215)
+* Support log imports over the network, such as to a remote `zqd` (#1195, #1228)
+* Fix an issue where an excess "Space does not exist" message was shown when clicking Retry after a `zqd` restart (#1200)
+* Improve the error message for failed attempts to import pcaps (#1235)
+* Allow removal of remote Connection configs (#1226)
+* Fix an issue where importing logs containing `null` values for nested records caused a crash (#1241)
+* Add scaffolding for a future Query Library feature (#1239)
+* Fix an issue where Brim sometimes failed to load on remote VM sessions (#1248)
+
 ## v0.19.0
 * **NOTE** - Due to the ZNG storage format change described in the
 [`zq` v0.23.0 release notes](https://github.com/brimsec/zq/releases/tag/v0.23.0),

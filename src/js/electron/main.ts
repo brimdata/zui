@@ -89,6 +89,8 @@ async function main() {
     })
   })
 }
+
+app.disableHardwareAcceleration()
 const gotTheLock = app.requestSingleInstanceLock()
 if (gotTheLock) {
   main().then(() => {
