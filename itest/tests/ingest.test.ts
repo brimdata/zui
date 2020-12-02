@@ -48,7 +48,10 @@ describe("Ingest tests", () => {
     appStep
       .ingestFile(app, "alerts.pcap")
       .then(async () => {
-        const results = await appStep.search(app, "event_type = alert | every 1s count()")
+        const results = await appStep.search(
+          app,
+          "event_type = alert | every 1s count()"
+        )
         expect(results).toMatchSnapshot()
         done()
       })
@@ -56,5 +59,4 @@ describe("Ingest tests", () => {
         handleError(app, err, done)
       })
   })
-
 })
