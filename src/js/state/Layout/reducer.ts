@@ -7,7 +7,7 @@ const init: LayoutState = {
   leftSidebarWidth: 230,
   investigationView: "linear",
   columnHeadersView: "AUTO",
-  sidebarSections: [{id: "spaces"}, {id: "history"}]
+  sidebarSections: [{id: "spaces"}, {id: "queries"}, {id: "history"}]
 }
 
 export default function reducer(
