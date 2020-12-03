@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Ingest tests ingest of alerts.pcap (suricata) 1`] = `
+Array [
+  "ts",
+  "count",
+  "2015-03-05T15:07:13Z",
+  "13",
+  "2015-03-05T15:04:28Z",
+  "2",
+]
+`;
+
 exports[`Ingest tests ingest of sample.azng 1`] = `
 Array [
   "ts",

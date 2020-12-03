@@ -35,8 +35,10 @@ async function main() {
   const winMan = brim.windows
   const store = createGlobalStore(data ? data.globalState : undefined)
   const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
+  const suricataRunner = Prefs.getSuricataRunner(store.getState())
+  const suricataUpdater = Prefs.getSuricataUpdater(store.getState())
   const zeekRunner = Prefs.getZeekRunner(store.getState())
-  const zqd = new ZQD(spaceDir, zeekRunner)
+  const zqd = new ZQD(spaceDir, suricataRunner, suricataUpdater, zeekRunner)
 
   menu.setMenu(winMan, store, session)
   zqdMainHandler(zqd)

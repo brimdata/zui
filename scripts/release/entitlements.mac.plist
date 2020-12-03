@@ -4,5 +4,9 @@
   <dict>
     <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
     <true/>
+
+    <!-- needed for suricata-update, which is pyinstaller-frozen. see https://github.com/pyinstaller/pyinstaller/issues/4629 -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
   </dict>
 </plist>

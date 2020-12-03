@@ -8,6 +8,8 @@ import ModalBox from "../ModalBox/ModalBox"
 import TextContent from "../TextContent"
 import TimeFormat from "./TimeFormat"
 import Timezone from "./Timezone"
+import SuricataRunner from "./SuricataRunner"
+import SuricataUpdater from "./SuricataUpdater"
 import ZeekRunner from "./ZeekRunner"
 import brim from "../../brim"
 import useCallbackRef from "../hooks/useCallbackRef"
@@ -50,6 +52,8 @@ export default function Preferences() {
         <form ref={setForm} className="settings-form">
           <Timezone config={prefsForm.timeZone} />
           <TimeFormat config={prefsForm.timeFormat} />
+          <SuricataRunner config={prefsForm.suricataRunner} />
+          <SuricataUpdater config={prefsForm.suricataUpdater} />
           <ZeekRunner config={prefsForm.zeekRunner} />
           <JSONTypeConfig config={prefsForm.jsonTypeConfig} />
           <DataDirInput config={prefsForm.dataDir} />

@@ -15,14 +15,20 @@ const zdepsDirectory = join(app.getAppPath(), "zdeps")
 const platformDefs = {
   darwin: {
     zqdBin: "zqd",
+    suricataRunnerBin: "suricatarunner",
+    suricataUpdaterBin: "suricataupdater",
     zeekRunnerBin: "zeekrunner"
   },
   linux: {
     zqdBin: "zqd",
+    suricataRunnerBin: "suricatarunner",
+    suricataUpdaterBin: "suricataupdater",
     zeekRunnerBin: "zeekrunner"
   },
   win32: {
     zqdBin: "zqd.exe",
+    suricataRunnerBin: "suricatarunner.exe",
+    suricataUpdaterBin: "suricataupdater.exe",
     zeekRunnerBin: "zeekrunner.exe"
   }
 }
@@ -78,6 +84,36 @@ function zqdCommand(): string {
   return zqdBin
 }
 
+function suricataRunnerCommand(suricataRunnerPref: string): string {
+  const plat = platformDefs[process.platform]
+  if (!plat) {
+    throw new Error("unsupported platform for zqd")
+  }
+
+  const precedence = [
+    process.env.BRIM_SURICATA_RUNNER,
+    suricataRunnerPref,
+    resolve(join(zdepsDirectory, "suricata", plat.suricataRunnerBin))
+  ]
+
+  return precedence.find((path) => !isEmpty(path)) || ""
+}
+
+function suricataUpdaterCommand(suricataUpdaterPref: string): string {
+  const plat = platformDefs[process.platform]
+  if (!plat) {
+    throw new Error("unsupported platform for zqd")
+  }
+
+  const precedence = [
+    process.env.BRIM_SURICATA_UPDATER,
+    suricataUpdaterPref,
+    resolve(join(zdepsDirectory, "suricata", plat.suricataUpdaterBin))
+  ]
+
+  return precedence.find((path) => !isEmpty(path)) || ""
+}
+
 function zeekRunnerCommand(zeekRunnerPref: string): string {
   const plat = platformDefs[process.platform]
   if (!plat) {
@@ -96,10 +132,19 @@ function zeekRunnerCommand(zeekRunnerPref: string): string {
 export class ZQD {
   zqd: ChildProcess
   root: string
+  suricataRunner: string
+  suricataUpdater: string
   zeekRunner: string
 
-  constructor(rootDir: string, zeekRunner: string) {
+  constructor(
+    rootDir: string,
+    suricataRunner: string,
+    suricataUpdater: string,
+    zeekRunner: string
+  ) {
     this.root = rootDir
+    this.suricataRunner = suricataRunner
+    this.suricataUpdater = suricataUpdater
     this.zeekRunner = zeekRunner
   }
 
@@ -121,6 +166,10 @@ export class ZQD {
       this.root,
       "-config",
       confFile,
+      "-suricatarunner",
+      suricataRunnerCommand(this.suricataRunner),
+      "-suricataupdater",
+      suricataUpdaterCommand(this.suricataUpdater),
       "-zeekrunner",
       zeekRunnerCommand(this.zeekRunner)
     ]
@@ -135,6 +184,9 @@ export class ZQD {
       args.push(`-brimfd=${opts.stdio.length - 1}`)
     }
     log.info("spawning zqd:", zqdCommand(), args.join(" "))
+
+    const suricataUserDir = join(app.getPath("userData"), "suricata")
+    process.env.BRIM_SURICATA_USER_DIR = suricataUserDir
 
     // @ts-ignore
     this.zqd = spawn(zqdCommand(), args, opts)
