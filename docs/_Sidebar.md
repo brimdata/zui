@@ -1,5 +1,6 @@
 **Support Resources**
 
+- [[Installation]]
 - [[Supported Platforms]]
 - [[Microsoft Windows beta limitations]]
 - [[Troubleshooting]]
