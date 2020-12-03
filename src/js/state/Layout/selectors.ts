@@ -2,6 +2,10 @@ import activeTabSelect from "../Tab/activeTabSelect"
 import {TabState} from "../Tab/types"
 
 export default {
+  getSidebarSections: activeTabSelect(
+    (state: TabState) => state.layout.sidebarSections
+  ),
+
   getRightSidebarWidth: activeTabSelect(
     (state: TabState) => state.layout.rightSidebarWidth
   ),
@@ -12,22 +16,6 @@ export default {
 
   getLeftSidebarWidth: activeTabSelect(
     (state: TabState) => state.layout.leftSidebarWidth
-  ),
-
-  getHistoryIsOpen: activeTabSelect(
-    (state: TabState) => state.layout.historyIsOpen
-  ),
-
-  getSpacesIsOpen: activeTabSelect(
-    (state: TabState) => state.layout.spacesIsOpen
-  ),
-
-  getHistoryHeight: activeTabSelect(
-    (state: TabState) => state.layout.historyHeight
-  ),
-
-  getSpacesHeight: activeTabSelect(
-    (state: TabState) => state.layout.spacesHeight
   ),
 
   getLeftSidebarIsOpen: activeTabSelect(

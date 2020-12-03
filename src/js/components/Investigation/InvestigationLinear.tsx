@@ -35,7 +35,5 @@ export default React.memo<{}>(function InvestigationLinear() {
       />
     )
 
-  return (
-    <AnimateChildren className="investigation-linear">{cards}</AnimateChildren>
-  )
+  return <AnimateChildren>{cards}</AnimateChildren>
 })

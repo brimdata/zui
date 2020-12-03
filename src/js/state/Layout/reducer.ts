@@ -6,11 +6,8 @@ const init: LayoutState = {
   leftSidebarIsOpen: true,
   leftSidebarWidth: 230,
   investigationView: "linear",
-  historyIsOpen: true,
-  spacesIsOpen: true,
-  historyHeight: 1,
-  spacesHeight: 1,
-  columnHeadersView: "AUTO"
+  columnHeadersView: "AUTO",
+  sidebarSections: [{id: "spaces"}, {id: "history"}]
 }
 
 export default function reducer(
@@ -18,6 +15,11 @@ export default function reducer(
   action: LayoutAction
 ): LayoutState {
   switch (action.type) {
+    case "LAYOUT_SIDEBAR_SECTIONS_SET":
+      return {
+        ...state,
+        sidebarSections: action.sections
+      }
     case "LAYOUT_RIGHT_SIDEBAR_SHOW":
       return {
         ...state,
@@ -62,26 +64,6 @@ export default function reducer(
       return {
         ...state,
         investigationView: action.view
-      }
-    case "LAYOUT_HISTORY_HEIGHT_SET":
-      return {
-        ...state,
-        historyHeight: action.height
-      }
-    case "LAYOUT_SPACES_HEIGHT_SET":
-      return {
-        ...state,
-        spacesHeight: action.height
-      }
-    case "LAYOUT_SPACES_TOGGLE":
-      return {
-        ...state,
-        spacesIsOpen: !state.spacesIsOpen
-      }
-    case "LAYOUT_HISTORY_TOGGLE":
-      return {
-        ...state,
-        historyIsOpen: !state.historyIsOpen
       }
     case "LAYOUT_SET_COLUMN_HEADERS":
       return {...state, columnHeadersView: action.view}

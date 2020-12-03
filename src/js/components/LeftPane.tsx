@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux"
-import React, {useRef} from "react"
+import React, {MouseEvent} from "react"
 import styled from "styled-components"
 
 import {XLeftPaneExpander} from "./LeftPaneExpander"
@@ -11,12 +11,12 @@ import FilterTree from "./FilterTree"
 import InvestigationLinear from "./Investigation/InvestigationLinear"
 import Layout from "../state/Layout"
 import Pane from "./Pane"
+import usePopupMenu from "./hooks/usePopupMenu"
+import get from "lodash/get"
+import {Sectional} from "../../pkg/sectional"
 import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
-import useDrag from "./hooks/useDrag"
-import usePopupMenu from "./hooks/usePopupMenu"
 import ConnectionStatuses from "../state/ConnectionStatuses"
-import get from "lodash/get"
 
 const Arrow = (props) => {
   return (
@@ -27,25 +27,22 @@ const Arrow = (props) => {
 }
 
 const StyledSection = styled.section`
-  overflow: hidden;
   position: relative;
   min-height: 24px;
-  flex-basis: 0%;
-  flex-shrink: 1;
-  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
 `
 
-const SectionContents = styled.div<{show: boolean}>`
-  height: 100%;
-  display: ${(props) => (props.show ? "block" : "none")};
+const SectionContents = styled.div`
+  flex: 1;
   overflow-y: auto;
 `
 
 const SectionHeader = styled.div`
   display: flex;
-  flex-direction: row;
   background-color: var(--coconut);
-  height: 24px;
+  min-height: 24px;
+  max-height: 24px;
   align-items: center;
   justify-content: space-between;
   user-select: none;
@@ -116,13 +113,11 @@ const StyledViewSelect = styled.div`
 
 const DragAnchor = styled.div`
   position: absolute;
-  background: transparent;
-  pointer-events: all !important;
   width: 100%;
-  height: 9px;
-  bottom: -4px;
-  top: unset;
-  cursor: row-resize;
+  height: 12px;
+  top: -6px;
+  left: 0;
+  z-index: 1;
 `
 
 const EmptyText = styled.div`
@@ -173,49 +168,23 @@ function InvestigationTree() {
 
 export function LeftPane() {
   const dispatch = useDispatch()
-
-  const view = useSelector(Layout.getInvestigationView)
   const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const width = useSelector(Layout.getLeftSidebarWidth)
+  const sections = useSelector(Layout.getSidebarSections).map((s) => ({
+    ...s,
+    min: 100,
+    closedSize: 24
+  }))
   const conn = useSelector(Current.getConnection)
   const id = get(conn, ["id"], "")
-  const connStatus = useSelector(ConnectionStatuses.get(id))
-  const spaces = useSelector(Spaces.getSpaces(id))
-
-  const showHistory = useSelector(Layout.getHistoryIsOpen)
-  const showSpaces = useSelector(Layout.getSpacesIsOpen)
-  const historyHeight = useSelector(Layout.getHistoryHeight)
-  const spacesHeight = useSelector(Layout.getSpacesHeight)
-
-  const paneRef = useRef<HTMLDivElement>()
-  const paneHeight = useRef(0)
+  const setSections = (sections) =>
+    dispatch(Layout.setSidebarSections(sections))
 
   function onDragPane(e: MouseEvent) {
     const width = e.clientX
     const max = window.innerWidth
     dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
   }
-
-  function onDragSpaces({dy, type}) {
-    let newSpacesHeight
-    switch (type) {
-      case "down":
-        document.body && (document.body.style.cursor = "row-resize")
-        paneHeight.current = paneRef.current
-          ? paneRef.current.getBoundingClientRect().height
-          : 0
-        break
-      case "move":
-        newSpacesHeight = spacesHeight + dy / (paneHeight.current / 2)
-        dispatch(Layout.setSpacesHeight(newSpacesHeight))
-        dispatch(Layout.setHistoryHeight(2 - newSpacesHeight))
-        break
-      case "up":
-        document.body && (document.body.style.cursor = "")
-    }
-  }
-
-  const dragFunc = useDrag(onDragSpaces)
 
   if (!isOpen) return <XLeftPaneExpander />
 
@@ -224,7 +193,6 @@ export function LeftPane() {
       isOpen={isOpen}
       position="left"
       width={width}
-      ref={paneRef}
       onDrag={onDragPane}
       className="history-pane"
     >
@@ -235,33 +203,71 @@ export function LeftPane() {
       ) : (
         <>
           <ClusterPicker />
-          <StyledSection style={{flexGrow: showSpaces ? spacesHeight : 0}}>
-            <SectionHeader>
-              <ClickRegion onClick={() => dispatch(Layout.toggleSpaces())}>
-                <StyledArrow show={showSpaces} />
-                <Title>Spaces</Title>
-              </ClickRegion>
-              <AddSpaceButton />
-            </SectionHeader>
-            <SectionContents show={showSpaces}>
-              <SavedSpacesList spaces={spaces} connStatus={connStatus} />
-            </SectionContents>
-            {showSpaces && <DragAnchor {...dragFunc()} />}
-          </StyledSection>
-          <StyledSection style={{flexGrow: historyHeight}}>
-            <SectionHeader>
-              <ClickRegion onClick={() => dispatch(Layout.toggleHistory())}>
-                <StyledArrow show={showHistory} />
-                <Title>History</Title>
-              </ClickRegion>
-              <ViewSelect />
-            </SectionHeader>
-            <SectionContents show={showHistory}>
-              <InvestigationView view={view} />
-            </SectionContents>
-          </StyledSection>
+          <Sectional sections={sections} onChange={setSections}>
+            {(data, provided) => {
+              if (data.id === "spaces")
+                return (
+                  <SpacesSection
+                    isOpen={data.isOpen}
+                    key={data.id}
+                    {...provided}
+                  />
+                )
+              if (data.id === "history")
+                return (
+                  <HistorySection
+                    isOpen={data.isOpen}
+                    key={data.id}
+                    {...provided}
+                  />
+                )
+              return null
+            }}
+          </Sectional>
         </>
       )}
     </Pane>
+  )
+}
+
+function SpacesSection({isOpen, style, resizeProps, toggleProps}) {
+  const conn = useSelector(Current.getConnection)
+  const id = get(conn, ["id"], "")
+  const connStatus = useSelector(ConnectionStatuses.get(id))
+  const spaces = useSelector(Spaces.getSpaces(id))
+
+  return (
+    <StyledSection style={style}>
+      <DragAnchor {...resizeProps} />
+      <SectionHeader>
+        <ClickRegion {...toggleProps}>
+          <StyledArrow show={isOpen} />
+          <Title>Spaces</Title>
+        </ClickRegion>
+        <AddSpaceButton />
+      </SectionHeader>
+      <SectionContents>
+        <SavedSpacesList spaces={spaces} connStatus={connStatus} />
+      </SectionContents>
+    </StyledSection>
+  )
+}
+
+function HistorySection({isOpen, style, resizeProps, toggleProps}) {
+  const view = useSelector(Layout.getInvestigationView)
+  return (
+    <StyledSection style={style}>
+      <DragAnchor {...resizeProps} />
+      <SectionHeader>
+        <ClickRegion {...toggleProps}>
+          <StyledArrow show={isOpen} />
+          <Title>History</Title>
+        </ClickRegion>
+        <ViewSelect />
+      </SectionHeader>
+      <SectionContents>
+        <InvestigationView view={view} />
+      </SectionContents>
+    </StyledSection>
   )
 }
