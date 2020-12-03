@@ -12,7 +12,7 @@
 
 **Cookbooks**
 
-- [[Remote `zqd`]]
+- [[Remote zqd]]
 
 **Developer Resources**
 
