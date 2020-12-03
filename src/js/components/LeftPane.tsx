@@ -17,6 +17,9 @@ import {Sectional} from "../../pkg/sectional"
 import SavedSpacesList from "./SavedSpacesList"
 import Spaces from "../state/Spaces"
 import ConnectionStatuses from "../state/ConnectionStatuses"
+import {TreeList} from "../../pkg/tree-list"
+import Queries from "../state/Queries"
+import Item from "./SideBar/Item"
 
 const Arrow = (props) => {
   return (
@@ -175,6 +178,7 @@ export function LeftPane() {
     min: 100,
     closedSize: 24
   }))
+
   const conn = useSelector(Current.getConnection)
   const id = get(conn, ["id"], "")
   const setSections = (sections) =>
@@ -208,6 +212,14 @@ export function LeftPane() {
               if (data.id === "spaces")
                 return (
                   <SpacesSection
+                    isOpen={data.isOpen}
+                    key={data.id}
+                    {...provided}
+                  />
+                )
+              if (data.id === "queries")
+                return (
+                  <QueriesSection
                     isOpen={data.isOpen}
                     key={data.id}
                     {...provided}
@@ -268,6 +280,44 @@ function HistorySection({isOpen, style, resizeProps, toggleProps}) {
       <SectionContents>
         <InvestigationView view={view} />
       </SectionContents>
+    </StyledSection>
+  )
+}
+
+function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
+  const root = useSelector(Queries.getRaw)
+
+  function onItemClick(e, item) {
+    console.log("clicked", item)
+  }
+
+  function onItemMove(source, destination) {
+    console.log("moved", source, destination)
+  }
+
+  function onItemContextMenu(e, item, selections) {
+    console.log("context menu", item, selections)
+  }
+
+  return (
+    <StyledSection style={style}>
+      <DragAnchor {...resizeProps} />
+      <SectionHeader>
+        <ClickRegion {...toggleProps}>
+          <StyledArrow show={isOpen} />
+          <Title>Queries</Title>
+        </ClickRegion>
+        <AddSpaceButton />
+      </SectionHeader>
+      <TreeList
+        root={root}
+        itemHeight={24}
+        onItemMove={onItemMove}
+        onItemClick={onItemClick}
+        onItemContextMenu={onItemContextMenu}
+      >
+        {Item}
+      </TreeList>
     </StyledSection>
   )
 }
