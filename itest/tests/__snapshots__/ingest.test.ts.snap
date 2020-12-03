@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Ingest tests ingest of alerts.pcap 1`] = `
+exports[`Ingest tests ingest of alerts.pcap (suricata) 1`] = `
 Array [
   "ts",
   "count",
