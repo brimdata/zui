@@ -5,6 +5,7 @@ effective use of the Brim desktop application and related tools.
 
 ## Support Resources
 
+- [[Installation]]
 - [[Supported Platforms]]
 - [[Microsoft Windows beta limitations]]
 - [[Troubleshooting]]
