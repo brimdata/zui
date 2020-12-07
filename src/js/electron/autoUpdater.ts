@@ -49,12 +49,9 @@ const autoUpdateLinux = async () => {
 
 export async function setupAutoUpdater() {
   if (process.platform === "linux") {
-    setTimeout(() => {
+    setUpdateRepeater(() => {
       autoUpdateLinux().catch((err) => log.error(err))
-    }, 30 * 1000)
-    setInterval(() => {
-      autoUpdateLinux().catch((err) => log.error(err))
-    }, 24 * 60 * 60 * 1000)
+    })
 
     return
   }
@@ -84,19 +81,20 @@ export async function setupAutoUpdater() {
     log.error("There was a problem updating the application: " + err)
   })
 
+  setUpdateRepeater(() => {
+    getLatestVersion()
+      .then((latestVersion) => {
+        if (semver.gte(app.getVersion(), latestVersion)) return
+
+        autoUpdater.checkForUpdates()
+      })
+      .catch((err) => log.error(err))
+  })
+}
+
+const setUpdateRepeater = (updateCb) => {
   // check for updates 30s after startup
-  setTimeout(async () => {
-    const latestVersion = await getLatestVersion()
-    if (semver.gte(app.getVersion(), latestVersion)) return
-
-    autoUpdater.checkForUpdates()
-  }, 30 * 1000)
-
+  setTimeout(updateCb, 30 * 1000)
   // then check for updates once a day
-  setInterval(async () => {
-    const latestVersion = await getLatestVersion()
-    if (semver.gte(app.getVersion(), latestVersion)) return
-
-    autoUpdater.checkForUpdates()
-  }, 24 * 60 * 60 * 1000)
+  setInterval(updateCb, 24 * 60 * 60 * 1000)
 }
