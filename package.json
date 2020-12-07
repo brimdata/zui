@@ -178,6 +178,7 @@
     "semver": "^7.3.2",
     "source-map-support": "^0.5.19",
     "styled-components": "^5.1.1",
+    "tree-model": "^1.0.7",
     "valid-url": "^1.0.9",
     "zealot": "file:zealot",
     "zq": "git+https://github.com/brimsec/zq.git#cc0fd85093d3ee57e949766625e05c59f278ee2b"
