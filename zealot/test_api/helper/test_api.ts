@@ -52,7 +52,7 @@ async function until(
   wait: number,
   msg: string
 ) {
-  return new Promise(async (resolve, reject) => {
+  return new Promise<void>(async (resolve, reject) => {
     const id = setTimeout(() => reject(new Error("Timed out: " + msg)), timeout)
     async function check() {
       try {
