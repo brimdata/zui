@@ -58,7 +58,7 @@ testApi("search#callbacks start and end", async (zealot: any) => {
   const start = spy()
   const end = spy()
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     resp
       .callbacks()
       .start(start)
