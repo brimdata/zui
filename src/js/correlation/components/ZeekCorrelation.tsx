@@ -1,27 +1,25 @@
-import {connect} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 import * as d3 from "d3"
 import isEqual from "lodash/isEqual"
+import {zng} from "../../../../zealot/dist"
+import brim from "../../brim"
+import {createZeekLog} from "../../brim/zeekLog"
+import {submitSearch} from "../../flows/submitSearch/mod"
+import {viewLogDetail} from "../../flows/viewLogDetail"
+import {UID_CORRELATION_LIMIT} from "../../searches/programs"
+import SearchBar from "../../state/SearchBar"
+import {BrimEvent} from "../models/BrimEvent"
+import {sort} from "../util/sort"
+import {useDispatch} from "react-redux"
 
-import {DispatchProps} from "../state/types"
-import {UID_CORRELATION_LIMIT} from "../searches/programs"
-import {submitSearch} from "../flows/submitSearch/mod"
-import {viewLogDetail} from "../flows/viewLogDetail"
-import SearchBar from "../state/SearchBar"
-import brim from "../brim"
-import dispatchToProps from "../lib/dispatchToProps"
-import {zng} from "zealot"
-import {createZeekLog} from "../brim/zeekLog"
-
-type OwnProps = {
+type Props = {
   logs: zng.Record[]
   log: zng.Record
 }
 
-type Props = DispatchProps & OwnProps
-
-export default function UidTimeline({logs, log, dispatch}: Props) {
+export default function ZeekCorrelation({logs, log}: Props) {
+  const dispatch = useDispatch()
   if (logs.length === 0) return null
   const zeek = createZeekLog(log)
   const xScale = createScale(logs)
@@ -33,7 +31,7 @@ export default function UidTimeline({logs, log, dispatch}: Props) {
 
   return (
     <div className="uid-waterfall">
-      {logs.map((currLog, i) => (
+      {sort(logs).map((currLog, i) => (
         <PathRow
           key={i}
           log={currLog}
@@ -68,18 +66,19 @@ function createScale(logs) {
 }
 
 function PathRow({log, current, position, ...rest}) {
-  const ts = log.get("ts").toDate()
-  const path = log.try("_path")?.toString()
+  const event = BrimEvent.build(log)
+  const ts = event.getTime()
+  const type = event.getType()
   return (
     <div className="waterfall-row" {...rest}>
       <div className="data-label">{brim.time(ts).format("HH:mm:ss.SSS")}</div>
       <div className="slider">
         <div className="line" />
         <span
-          className={classNames("path-tag", `${path}-bg-color`, {current})}
+          className={classNames("path-tag", `${type}-bg-color`, {current})}
           style={{left: position + "%"}}
         >
-          {path}
+          {type}
         </span>
       </div>
     </div>
@@ -102,5 +101,3 @@ function captionText(logs: zng.Record[], queryForAll) {
     return "Duration: 0s (No conn log)"
   }
 }
-
-export const XUidTimeline = connect(null, dispatchToProps)(UidTimeline)
