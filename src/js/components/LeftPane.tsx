@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux"
-import React, {MouseEvent, useRef} from "react"
+import React, {MouseEvent, useEffect, useRef, useState} from "react"
 import styled from "styled-components"
 
 import {XLeftPaneExpander} from "./LeftPaneExpander"
@@ -28,6 +28,9 @@ import Search from "../state/Search"
 import brim from "../brim"
 import lib from "../lib"
 import {popNotice} from "./PopNotice"
+import TreeModel from "tree-model"
+import {includes} from "lodash"
+import {Group, Query} from "../state/Queries/types"
 
 const Arrow = (props) => {
   return (
@@ -292,23 +295,45 @@ function HistorySection({isOpen, style, resizeProps, toggleProps}) {
   )
 }
 
+const filterQueriesByTag = (queriesRoot: Group, tag: string): Query[] => {
+  const queryResults = []
+  new TreeModel({childrenPropertyName: "items"})
+    .parse(queriesRoot)
+    .walk((n) => {
+      if (!n.model.tags) return true
+      if (includes(n.model.tags, tag)) queryResults.push(n.model)
+
+      return true
+    })
+
+  return queryResults
+}
+
 function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const dispatch = useDispatch()
-  const contextArgs = useRef(null)
+  const [contextArgs, setContextArgs] = useState(null)
+  const [selectedTag, setSelectedTag] = useState("All")
   const currentSpace = useSelector(Current.getSpace)
   const queriesRoot = useSelector(Queries.getRaw)
-  const multiSelected = contextArgs.current && contextArgs.current.selections
+  const [queries, setQueries] = useState(queriesRoot)
+  const tags = useSelector(Queries.getTags)
+  const hasMultiSelected = contextArgs && contextArgs.selections.length > 1
+
+  useEffect(() => {
+    setQueries(queriesRoot)
+  }, [queriesRoot])
+
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Run Query",
-      enabled: !multiSelected,
+      enabled: !hasMultiSelected,
       click: () => {
         if (!currentSpace)
           return dispatch(Notice.set(new Error("No space selected")))
 
         const {
           item: {value}
-        } = contextArgs.current
+        } = contextArgs
 
         dispatch(SearchBar.clearSearchBar())
         dispatch(SearchBar.changeSearchBarInput(value))
@@ -318,11 +343,11 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     },
     {
       label: "Copy Query",
-      enabled: !multiSelected,
+      enabled: !hasMultiSelected,
       click: () => {
         const {
           item: {value}
-        } = contextArgs.current
+        } = contextArgs
         lib.doc.copyToClipboard(value)
         popNotice("Query copied to clipboard")
       }
@@ -330,28 +355,29 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     {type: "separator"},
     {
       label: "Edit",
-      enabled: !multiSelected,
+      enabled: !hasMultiSelected,
       click: () => {
         // open edit modal
       }
     },
     {type: "separator"},
     {
-      label: multiSelected ? "Delete Selected" : "Delete",
+      label: hasMultiSelected ? "Delete Selected" : "Delete",
       click: () => {
         return remote.dialog
           .showMessageBox({
             type: "warning",
             title: "Confirm Delete Query Window",
-            message: `Are you sure you want to delete the ${contextArgs.current
-              .selections.length || ""} selected quer${
-              multiSelected ? "ies" : "y"
-            }?`,
+            message: `Are you sure you want to delete the ${(contextArgs.selections &&
+              contextArgs.selections.length) ||
+              ""} selected quer${hasMultiSelected ? "ies" : "y"}?`,
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
             if (response === 0) {
-              console.log("todo")
+              const {selections, item} = contextArgs
+              if (hasMultiSelected) dispatch(Queries.removeItems(selections))
+              else dispatch(Queries.removeItems([item]))
             }
           })
       }
@@ -361,17 +387,42 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const menu = usePopupMenu(template)
 
   function onItemClick(_, item) {
-    console.log("clicked", item)
+    if (!currentSpace)
+      return dispatch(Notice.set(new Error("No space selected")))
+
+    if (!item.value) return
+
+    dispatch(SearchBar.clearSearchBar())
+    dispatch(SearchBar.changeSearchBarInput(item.value))
   }
 
   function onItemMove(sourceItem, destIndex) {
-    console.log("moved", sourceItem, destIndex)
+    if (selectedTag !== "All") return
+    dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
   }
 
   function onItemContextMenu(_, item, selections) {
-    contextArgs.current = {item, selections}
-    menu.open()
+    setContextArgs({item, selections})
   }
+
+  function onTagSelect(tag) {
+    setSelectedTag(tag)
+    if (tag === "All") {
+      setQueries(queriesRoot)
+      return
+    }
+    setQueries({
+      id: "root",
+      name: "root",
+      items: filterQueriesByTag(queriesRoot, tag)
+    })
+  }
+
+  // trigger menu open after contextArgs have updated so it renders with fresh data
+  useEffect(() => {
+    if (!contextArgs) return
+    menu.open()
+  }, [contextArgs])
 
   return (
     <StyledSection style={style}>
@@ -381,11 +432,14 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <StyledArrow show={isOpen} />
           <Title>Queries</Title>
         </ClickRegion>
-        {/*change to add query*/}
-        <AddSpaceButton />
+        <TagsViewSelect
+          selected={selectedTag}
+          tags={["All", ...tags]}
+          onSelect={onTagSelect}
+        />
       </SectionHeader>
       <TreeList
-        root={queriesRoot}
+        root={queries}
         itemHeight={24}
         onItemMove={onItemMove}
         onItemClick={onItemClick}
@@ -394,5 +448,23 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
         {Item}
       </TreeList>
     </StyledSection>
+  )
+}
+
+const TagsViewSelect = ({selected, tags, onSelect}) => {
+  const template = tags.map((t) => ({
+    label: t,
+    click: () => onSelect(t),
+    type: "checkbox",
+    checked: selected === t
+  }))
+
+  const menu = usePopupMenu(template)
+
+  return (
+    <StyledViewSelect onClick={menu.onClick}>
+      {selected}
+      <DropdownArrow />
+    </StyledViewSelect>
   )
 }

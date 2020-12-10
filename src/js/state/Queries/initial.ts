@@ -9,21 +9,21 @@ const init = (): QueriesState => ({
       name: "Count by Path",
       value: "* | count() by _path",
       description: "",
-      tags: []
+      tags: ["test1"]
     },
     {
       id: "2",
       name: "Suricata",
       value: "event_type=alert",
       description: "",
-      tags: []
+      tags: ["test2"]
     },
     {
       id: "3",
       name: "Long connections",
       value: "_path=conn duration > 10",
       description: "",
-      tags: []
+      tags: ["test1", "test4"]
     }
   ]
 })
