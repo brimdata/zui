@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux"
-import React, {MouseEvent} from "react"
+import React, {MouseEvent, useRef} from "react"
 import styled from "styled-components"
 
 import {XLeftPaneExpander} from "./LeftPaneExpander"
@@ -20,6 +20,14 @@ import ConnectionStatuses from "../state/ConnectionStatuses"
 import {TreeList} from "../../pkg/tree-list"
 import Queries from "../state/Queries"
 import Item from "./SideBar/Item"
+import {MenuItemConstructorOptions, remote} from "electron"
+import SearchBar from "../state/SearchBar"
+import Notice from "../state/Notice"
+import {submitSearch} from "../flows/submitSearch/mod"
+import Search from "../state/Search"
+import brim from "../brim"
+import lib from "../lib"
+import {popNotice} from "./PopNotice"
 
 const Arrow = (props) => {
   return (
@@ -285,18 +293,84 @@ function HistorySection({isOpen, style, resizeProps, toggleProps}) {
 }
 
 function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
-  const root = useSelector(Queries.getRaw)
+  const dispatch = useDispatch()
+  const contextArgs = useRef(null)
+  const currentSpace = useSelector(Current.getSpace)
+  const queriesRoot = useSelector(Queries.getRaw)
+  const multiSelected = contextArgs.current && contextArgs.current.selections
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: "Run Query",
+      enabled: !multiSelected,
+      click: () => {
+        if (!currentSpace)
+          return dispatch(Notice.set(new Error("No space selected")))
 
-  function onItemClick(e, item) {
+        const {
+          item: {value}
+        } = contextArgs.current
+
+        dispatch(SearchBar.clearSearchBar())
+        dispatch(SearchBar.changeSearchBarInput(value))
+        dispatch(Search.setSpanArgs(brim.space(currentSpace).everythingSpan()))
+        dispatch(submitSearch())
+      }
+    },
+    {
+      label: "Copy Query",
+      enabled: !multiSelected,
+      click: () => {
+        const {
+          item: {value}
+        } = contextArgs.current
+        lib.doc.copyToClipboard(value)
+        popNotice("Query copied to clipboard")
+      }
+    },
+    {type: "separator"},
+    {
+      label: "Edit",
+      enabled: !multiSelected,
+      click: () => {
+        // open edit modal
+      }
+    },
+    {type: "separator"},
+    {
+      label: multiSelected ? "Delete Selected" : "Delete",
+      click: () => {
+        return remote.dialog
+          .showMessageBox({
+            type: "warning",
+            title: "Confirm Delete Query Window",
+            message: `Are you sure you want to delete the ${contextArgs.current
+              .selections.length || ""} selected quer${
+              multiSelected ? "ies" : "y"
+            }?`,
+            buttons: ["OK", "Cancel"]
+          })
+          .then(({response}) => {
+            if (response === 0) {
+              console.log("todo")
+            }
+          })
+      }
+    }
+  ]
+
+  const menu = usePopupMenu(template)
+
+  function onItemClick(_, item) {
     console.log("clicked", item)
   }
 
-  function onItemMove(source, destination) {
-    console.log("moved", source, destination)
+  function onItemMove(sourceItem, destIndex) {
+    console.log("moved", sourceItem, destIndex)
   }
 
-  function onItemContextMenu(e, item, selections) {
-    console.log("context menu", item, selections)
+  function onItemContextMenu(_, item, selections) {
+    contextArgs.current = {item, selections}
+    menu.open()
   }
 
   return (
@@ -307,10 +381,11 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <StyledArrow show={isOpen} />
           <Title>Queries</Title>
         </ClickRegion>
+        {/*change to add query*/}
         <AddSpaceButton />
       </SectionHeader>
       <TreeList
-        root={root}
+        root={queriesRoot}
         itemHeight={24}
         onItemMove={onItemMove}
         onItemClick={onItemClick}

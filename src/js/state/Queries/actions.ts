@@ -1,11 +1,11 @@
 import {
   Group,
+  Item,
   QUERIES_ADD_ITEM,
   QUERIES_EDIT_ITEM,
-  QUERIES_MOVE_ITEM,
-  QUERIES_REMOVE_ITEM,
-  QUERIES_SET_ALL,
-  Query
+  QUERIES_MOVE_ITEMS,
+  QUERIES_REMOVE_ITEMS,
+  QUERIES_SET_ALL
 } from "./types"
 
 export default {
@@ -13,26 +13,28 @@ export default {
     type: "QUERIES_SET_ALL",
     rootGroup
   }),
-  addItem: (item: Query | Group, groupPath: number[]): QUERIES_ADD_ITEM => ({
+  addItem: (item: Item, parentGroup: Group): QUERIES_ADD_ITEM => ({
     type: "QUERIES_ADD_ITEM",
     item,
-    groupPath
+    parentGroup
   }),
-  removeItem: (itemPath: number[]): QUERIES_REMOVE_ITEM => ({
-    type: "QUERIES_REMOVE_ITEM",
-    itemPath
+  removeItems: (items: Item[]): QUERIES_REMOVE_ITEMS => ({
+    type: "QUERIES_REMOVE_ITEMS",
+    items
   }),
-  editItem: (item: Query | Group, itemPath: number[]): QUERIES_EDIT_ITEM => ({
+  editItem: (item: Item, itemId: string): QUERIES_EDIT_ITEM => ({
     type: "QUERIES_EDIT_ITEM",
     item,
-    itemPath
+    itemId
   }),
-  moveItem: (
-    srcItemPath: number[],
-    destItemPath: number[]
-  ): QUERIES_MOVE_ITEM => ({
-    type: "QUERIES_MOVE_ITEM",
-    srcItemPath,
-    destItemPath
+  moveItems: (
+    items: Item[],
+    parentGroup: Group,
+    index: number
+  ): QUERIES_MOVE_ITEMS => ({
+    type: "QUERIES_MOVE_ITEMS",
+    items,
+    parentGroup,
+    index
   })
 }

@@ -31,14 +31,12 @@ export function useController(
       props.onItemContextMenu(
         e,
         item,
-        selector.getIndices().map((index) => items[index])
+        selector.getIndices().map((i) => items[i])
       )
     },
     onMove(result) {
       if (result.destination) {
-        const source = items[result.source.index]
-        const destination = items[result.destination.index]
-        props.onItemMove(source, destination)
+        props.onItemMove(items[result.source.index], result.destination.index)
       }
     },
     isSelected(index) {

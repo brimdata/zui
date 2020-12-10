@@ -7,21 +7,21 @@ const init = (): QueriesState => ({
     {
       id: "1",
       name: "Count by Path",
-      zql: "* | count() by _path",
+      value: "* | count() by _path",
       description: "",
       tags: []
     },
     {
       id: "2",
       name: "Suricata",
-      zql: "event_type=alert",
+      value: "event_type=alert",
       description: "",
       tags: []
     },
     {
       id: "3",
       name: "Long connections",
-      zql: "_path=conn duration > 10",
+      value: "_path=conn duration > 10",
       description: "",
       tags: []
     }
