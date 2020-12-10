@@ -11,6 +11,7 @@ import PinAction from "./PinAction"
 import Spinner from "./Spinner"
 import SubmitButton from "./SubmitButton"
 import TargetSelect from "./TargetSelect"
+import SaveAction from "./SaveAction"
 
 const Wrap = styled.div`
   width: 100%;
@@ -48,6 +49,7 @@ export function SearchBar() {
           <Input />
           <Spinner />
           <InputActions>
+            <SaveAction />
             <PinAction />
             <MenuAction />
           </InputActions>

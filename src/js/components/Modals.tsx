@@ -9,6 +9,8 @@ import React from "react"
 import {ModalDialog} from "./ModalDialog/ModalDialog"
 import NewConnectionModal from "./ConnectionModals/NewConnectionModal"
 import ViewConnectionModal from "./ConnectionModals/ViewConnectionModal"
+import NewQueryModal from "./QueriesModals/NewQueryModal"
+import EditQueryModal from "./QueriesModals/EditQueryModal"
 
 const MODALS = {
   debug: DebugModal,
@@ -17,7 +19,9 @@ const MODALS = {
   zq: ZQModal,
   "ingest-warnings": IngestWarningsModal,
   "new-connection": NewConnectionModal,
-  "view-connection": ViewConnectionModal
+  "view-connection": ViewConnectionModal,
+  "new-query": NewQueryModal,
+  "edit-query": EditQueryModal
 }
 
 export function Modals() {

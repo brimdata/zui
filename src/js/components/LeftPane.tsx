@@ -1,6 +1,7 @@
 import {useDispatch, useSelector} from "react-redux"
-import React, {MouseEvent, useEffect, useRef, useState} from "react"
+import React, {MouseEvent, useEffect, useState} from "react"
 import styled from "styled-components"
+import TreeModel from "tree-model"
 
 import {XLeftPaneExpander} from "./LeftPaneExpander"
 import AddSpaceButton from "./AddSpaceButton"
@@ -28,9 +29,9 @@ import Search from "../state/Search"
 import brim from "../brim"
 import lib from "../lib"
 import {popNotice} from "./PopNotice"
-import TreeModel from "tree-model"
-import {includes} from "lodash"
+import {includes, capitalize} from "lodash"
 import {Group, Query} from "../state/Queries/types"
+import Modal from "../state/Modal"
 
 const Arrow = (props) => {
   return (
@@ -113,7 +114,6 @@ const StyledViewSelect = styled.div`
   line-height: 24px;
   flex-direction: row;
   align-items: center;
-  text-transform: capitalize;
   border-radius: 3px;
   color: var(--slate);
 
@@ -159,7 +159,7 @@ const ViewSelect = () => {
 
   return (
     <StyledViewSelect onClick={menu.onClick}>
-      {currentView}
+      {capitalize(currentView)}
       <DropdownArrow />
     </StyledViewSelect>
   )
@@ -357,7 +357,10 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
       label: "Edit",
       enabled: !hasMultiSelected,
       click: () => {
-        // open edit modal
+        const {item} = contextArgs
+        // only edit queries
+        if ("items" in item) return
+        dispatch(Modal.show("edit-query", {query: item}))
       }
     },
     {type: "separator"},
@@ -458,6 +461,16 @@ const TagsViewSelect = ({selected, tags, onSelect}) => {
     type: "checkbox",
     checked: selected === t
   }))
+
+  template.unshift(
+    ...[
+      {
+        label: "Filter by tag",
+        enabled: false
+      },
+      {type: "separator"}
+    ]
+  )
 
   const menu = usePopupMenu(template)
 
