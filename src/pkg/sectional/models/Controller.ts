@@ -54,13 +54,14 @@ export default class Controller {
   }
 
   private distribute(extra: number) {
-    const unit = extra > 0 ? 1 : -1
+    let left = Math.round(extra)
     let prev
-    while (extra !== prev /* no change occurred */) {
-      prev = extra
+    const unitOfChange = left > 0 ? 1 : -1
+    while (prev !== left /* unable to distribute any more */) {
+      prev = left
       for (let child of this.sections) {
-        if (extra === 0) break
-        if (child.resize(unit) === 0) extra += -unit
+        if (left === 0) break
+        if (child.resize(unitOfChange) === 0) left += -unitOfChange
       }
     }
   }
