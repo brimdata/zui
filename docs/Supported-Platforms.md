@@ -4,6 +4,8 @@
 - [Per-Platform Details](#per-platform-details)
   * [Windows](#windows)
   * [macOS](#macos)
+    + [Software](#software)
+    + [Hardware](#hardware)
   * [Linux](#linux)
 - [Establishing Platform Supportability](#establishing-platform-supportability)
   * [Development Tools](#development-tools)
@@ -21,7 +23,7 @@ recommendations on which to run Brim:
    * Windows 10 or newer
    * Windows Server 2019 or newer
 * macOS
-   * macOS Catalina 10.15.7 or newer (Intel-based Mac hardware only)
+   * macOS Catalina 10.15.7 or newer (see [below](#hardware) for hardware considerations)
 * Linux
   * Ubuntu 18.04 or newer
   * CentOS 8.0 1905 or newer
@@ -51,23 +53,41 @@ on releases older than Windows 8.1.
 
 ## macOS
 
-Brim's macOS releases run on the Intel-based hardware that makes up the
-majority of Macs in use today. However, there is currently no support for
-running Brim on the recently-announced
-[M1-based hardware](https://www.apple.com/mac/m1/). Issue
-[brim/1266](https://github.com/brimsec/brim/issues/1266) tracks the addition
-of M1 support.
+### Software
 
 Brim's [test automation](#automated-testing) runs on Catalina 10.15 and
-therefore this is the platform on which we are best able to ensure quality and
-prevent regressions. Several Brim developers also run macOS Big Sur 11.0 and
-regularly perform ad hoc testing with it to reproduce reported issues.
+therefore this is the macOS version on which we are best able to ensure quality
+and prevent regressions. Several Brim developers also run macOS Big Sur 11.0
+and regularly perform ad hoc testing with it to reproduce reported issues.
 
 Basic [smoke testing](#smoke-testing) has also validated that Brim appears to
 work on macOS Mojave 10.14 as well. Similar testing has also confirmed that
 Brim does _not_ work on macOS High Sierra 10.13. Therefore, we do _not_
 recommend attempting to run Brim on macOS releases older than macOS Mojave
 10.14.
+
+### Hardware
+
+The build procedure for Brim's macOS releases creates binaries intended to
+run on the Intel-based Mac hardware that make up the majority of Macs in
+use today. Brim releases are not yet available that are built specifically for
+the recently-announced [M1-based hardware](https://www.apple.com/mac/m1/).
+However, Apple's [Rosetta 2](https://support.apple.com/en-us/HT211861) makes
+it possible to run Intel-targeted binaries on M1-based Macs, and
+[smoke testing](#smoke-testing) has indicated that current Brim releases can
+leverage this to run on M1-based Macs.
+
+Due to issues of
+[availability](https://github.com/actions/virtual-environments/issues/2187),
+our automated tests for macOS run today on Apple hardware that is Intel-based
+but not M1-based. Therefore if you have your choice of Mac hardware platform,
+Intel-based is more strongly recommended. However, as we know the M1-based Macs
+will become more popular in the future, please
+[open issues](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue)
+for problems you expereince with Brim on M1-based Macs as you would any other.
+If we should begin to accumulate bugs that are specific to M1-based hardware,
+this will help guide the prioritization of our goal to deliver M1-specific
+builds ([brim/1266](https://github.com/brimsec/brim/issues/1266)).
 
 ## Linux
 
