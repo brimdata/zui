@@ -33,6 +33,24 @@ test("distribute positive beyond max", () => {
   expect(views.at(3).size).toBe(700)
 })
 
+test("distribute a fractional amount", () => {
+  const data = {
+    size: 1000.1,
+    sections: [
+      {id: "1", min: 24, max: 100},
+      {id: "2", min: 24, max: 100},
+      {id: "3", min: 24, max: 100},
+      {id: "4", min: 24}
+    ]
+  }
+  const views = Controller.parse(data)
+
+  expect(views.at(0).size).toBe(100)
+  expect(views.at(1).size).toBe(100)
+  expect(views.at(2).size).toBe(100)
+  expect(views.at(3).size).toBe(700)
+})
+
 test("resize", () => {
   const data = {
     size: 800,

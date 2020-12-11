@@ -45,7 +45,7 @@
     ],
     "testURL": "http://localhost",
     "roots": [
-      "./src/js"
+      "./src"
     ],
     "collectCoverageFrom": [
       "**/*.js",
