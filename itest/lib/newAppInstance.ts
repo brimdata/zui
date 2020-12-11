@@ -19,7 +19,7 @@ export default (name: string, idx: number): Application => {
   let appArgs = {
     chromeDriverArgs: [`--user-data-dir=${userDataDir}`],
     startTimeout: 60000,
-    waitTimeout: 50000,
+    waitTimeout: 25000,
     quitTimeout: 10000,
     chromeDriverLogPath: path.join(userDataDir, "chromedriver.log"),
     webdriverLogPath: path.join(userDataDir, webdriverLogDir),
