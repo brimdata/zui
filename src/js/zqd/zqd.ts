@@ -99,20 +99,20 @@ function suricataRunnerCommand(suricataRunnerPref: string): string {
   return precedence.find((path) => !isEmpty(path)) || ""
 }
 
-// function suricataUpdaterCommand(suricataUpdaterPref: string): string {
-//   const plat = platformDefs[process.platform]
-//   if (!plat) {
-//     throw new Error("unsupported platform for zqd")
-//   }
+function suricataUpdaterCommand(suricataUpdaterPref: string): string {
+  const plat = platformDefs[process.platform]
+  if (!plat) {
+    throw new Error("unsupported platform for zqd")
+  }
 
-//   const precedence = [
-//     process.env.BRIM_SURICATA_UPDATER,
-//     suricataUpdaterPref,
-//     resolve(join(zdepsDirectory, "suricata", plat.suricataUpdaterBin))
-//   ]
+  const precedence = [
+    process.env.BRIM_SURICATA_UPDATER,
+    suricataUpdaterPref,
+    resolve(join(zdepsDirectory, "suricata", plat.suricataUpdaterBin))
+  ]
 
-//   return precedence.find((path) => !isEmpty(path)) || ""
-// }
+  return precedence.find((path) => !isEmpty(path)) || ""
+}
 
 function zeekRunnerCommand(zeekRunnerPref: string): string {
   const plat = platformDefs[process.platform]
@@ -168,8 +168,8 @@ export class ZQD {
       confFile,
       "-suricatarunner",
       suricataRunnerCommand(this.suricataRunner),
-      //      "-suricataupdater",
-      //      suricataUpdaterCommand(this.suricataUpdater),
+      "-suricataupdater",
+      suricataUpdaterCommand(this.suricataUpdater),
       "-zeekrunner",
       zeekRunnerCommand(this.zeekRunner)
     ]
