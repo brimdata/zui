@@ -42,3 +42,4 @@ $unknown-type-color: #afafaf;
 @include zeek-bg-color("stats", $green-light);
 @include zeek-bg-color("known_hosts", $orange);
 @include zeek-bg-color("known_services", darken($orange, 10%));
+@include zeek-bg-color("alert", $red);

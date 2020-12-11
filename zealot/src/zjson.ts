@@ -1,7 +1,7 @@
 export interface Item {
   id: number
   schema?: Schema
-  aliases?: string[]
+  aliases?: PrimitiveColumn[]
   values: Value[]
 }
 

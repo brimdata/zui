@@ -5,6 +5,7 @@ export type Payload =
   | SearchRecords
   | SearchWarnings
   | SearchStats
+  | SearchEnd
   | TaskStart
   | TaskEnd
   | PcapPostStatus
@@ -22,9 +23,18 @@ export type SearchWarnings = {
 
 export type SearchStats = {
   type: "SearchStats"
-  update_time: number
-  start_time: number
+  update_time: Ts
+  start_time: Ts
   bytes_read: number
+  bytes_matched: number
+  records_read: number
+  records_matched: number
+}
+
+export type SearchEnd = {
+  type: "SearchEnd"
+  channel_id: number
+  reason: string
 }
 
 export type TaskStart = {
