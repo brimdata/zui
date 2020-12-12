@@ -28,8 +28,11 @@ export class Primitive implements ZngClass<null | string> {
   }
 
   toFloat() {
-    if (this.value === null || this.type != "interval") {
+    if (this.type != "interval") {
       throw new Error(`Cannot make type: ${this.type} into a Float`)
+    }
+    if (this.value === null) {
+      return 0
     }
     return parseFloat(this.value)
   }

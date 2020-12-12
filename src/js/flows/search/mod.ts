@@ -5,14 +5,17 @@ import {handle} from "./handler"
 import Handlers from "../../state/Handlers"
 import {SearchResponse} from "./response"
 import {Handler} from "src/js/state/Handlers/types"
+import Current from "../../state/Current"
+import Tab from "../../state/Tab"
+import randomHash from "../../brim/randomHash"
 
 type Args = {
   query: string
-  from: Date
-  to: Date
-  spaceId: string
-  id: string
-  target: SearchTarget
+  from?: Date
+  to?: Date
+  spaceId?: string
+  id?: string
+  target?: SearchTarget
 }
 
 export type BrimSearch = {
@@ -26,13 +29,18 @@ export function search({
   from,
   to,
   spaceId,
-  id,
-  target
+  id = randomHash(),
+  target = "events"
 }: Args): Thunk<BrimSearch> {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const [defaultFrom, defaultTo] = Tab.getSpanAsDates(getState())
+    const defaultSpaceId = Current.getSpaceId(getState())
     const zealot = dispatch(getZealot())
     const ctl = new AbortController()
     const searchHandle: Handler = {type: "SEARCH", abort: () => ctl.abort()}
+    spaceId = spaceId || defaultSpaceId
+    to = to || defaultTo
+    from = from || defaultFrom
     const req =
       target === "index"
         ? zealot.archive.search({

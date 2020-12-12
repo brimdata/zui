@@ -15,7 +15,8 @@
     }
   }
 
-  &._path {
+  &._path,
+  &.event_type {
     @include path-tag;
   }
 

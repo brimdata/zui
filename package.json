@@ -45,7 +45,7 @@
     ],
     "testURL": "http://localhost",
     "roots": [
-      "./src/js"
+      "./src"
     ],
     "collectCoverageFrom": [
       "**/*.js",
@@ -180,7 +180,7 @@
     "styled-components": "^5.1.1",
     "valid-url": "^1.0.9",
     "zealot": "file:zealot",
-    "zq": "git+https://github.com/brimsec/zq.git#4c8b69702e1551b40994191140f62ace6712cceb"
+    "zq": "git+https://github.com/brimsec/zq.git#d62f4b1b65d17be7129808aa858868da682328dc"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
