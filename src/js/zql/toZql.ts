@@ -1,6 +1,7 @@
 import {zng} from "../../../zealot/dist"
 
 export function toZql(object: unknown): string {
+  console.log(object)
   if (object instanceof zng.Primitive) return toZqlZngPrimitive(object)
   if (typeof object === "string") return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)

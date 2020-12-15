@@ -32,6 +32,7 @@ export class Correlation {
         if (data instanceof zng.Primitive) {
           return data.toString()
         } else {
+          console.log(data)
           return data
             .getValue()
             .map((v) => v.toString())
