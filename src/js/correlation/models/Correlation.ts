@@ -24,7 +24,6 @@ export class Correlation {
   }
 
   getUid() {
-    console.log("r is: ", this.r)
     if (this.r.has("_path")) {
       const path = this.r.get("_path").toString()
       const name = get(specialUids, path, "uid")
@@ -36,6 +35,7 @@ export class Correlation {
           return data.toString()
         } else {
           const value = data.getValue()
+          console.log("value is: ", value)
           if (!value) return null
           return value.map((v) => v.toString()).join(" ")
         }

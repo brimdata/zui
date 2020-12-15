@@ -3,7 +3,8 @@ import isString from "lodash/isString"
 
 export function toZql(object: unknown): string {
   // TODO: remove me
-  console.log(`Can't convert object to ZQL: ${object}`)
+  console.log("object is: ")
+  console.log(object)
   if (object instanceof zng.Primitive) return toZqlZngPrimitive(object)
   if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)
