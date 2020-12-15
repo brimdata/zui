@@ -13,9 +13,16 @@ test("constructor max size", () => {
 })
 
 test("constructor max size when null", () => {
-  const args = {id: "1", size: 500, min: 50, max: null}
+  const args = {id: "1", size: 0, min: 50, max: undefined}
   const s = Section.parse(args)
-  expect(s.max).toEqual(Infinity)
+  expect(s.size).toBe(50)
+})
+
+test("serialize boomarang", () => {
+  const section = new Section("mysection")
+  const data = section.serialize()
+  const section2 = Section.parse(JSON.parse(JSON.stringify(data)))
+  expect(section2.serialize()).toEqual(data)
 })
 
 test("constructor max size when undefined", () => {
