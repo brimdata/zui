@@ -1,3 +1,39 @@
+## v0.21.0
+**NOTE** - The Brim v0.21.0 release includes initial support for the
+automatic generation of [Suricata](https://suricata-ids.org/) alerts from imported pcaps.
+The alert records may be isolated via a ZQL search `event_type=alert` and are
+also included automatically alongside relevant Zeek event context in the
+correlation visualization in the Log Detail view. The Suricata build that's
+packaged with Brim uses the
+[Emerging Threats Open ruleset](https://rules.emergingthreats.net/OPEN_download_instructions.html),
+and Brim triggers a download of the most recent set of these rules each
+time it is launched.
+
+There are two known issues found during testing that may be bugs in Suricata
+that impact the correctness of the alerts seen in Brim:
+   * When run on a system under heavy load, Suricata has sometimes been observed to generate fewer alerts than expected (or none at all) for a given pcap.
+   * Alerts may be generated with timestamps that are seconds/minutes further into the future beyond the end of the time range of the flow that triggered them.
+
+These issues are still being investigated and more information will be provided
+as they're better understood. More Suricata-related functionality is also
+planned in upcoming releases. For now, please
+[contact us on Slack](https://www.brimsecurity.com/join-slack/) or
+[open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue)
+if you have any questions or problems with the new Suricata support, including
+incidents of the issues described above.
+
+---
+
+* Update zq to [v0.25.0](https://github.com/brimsec/zq/releases/tag/v0.25.0)
+* Add Suricata support to generate alerts from imported pcaps (#1207)
+* Include Suricata alerts in the correlation visualization in the Log Detail view (#1262)
+* Update the [Supported Platforms](https://github.com/brimsec/brim/wiki/Supported-Platforms) article with detail from recent testing (#1267, #1273)
+* Add a [wiki doc](https://github.com/brimsec/brim/wiki/Remote-zqd) with details for using Brim with a remote `zqd` (#1222, #1252)
+* Add a [wiki doc](https://github.com/brimsec/brim/wiki/Installation) with basic Brim installation guidance (#1253, #1260)
+* Add a "Sectional" package in the code that allows a view to be split (#1247)
+* Add a "Tree list" package in the code for working with lists (rendering, drag & drop, etc.) (#1254)
+* Fix an issue where Brim would freeze during zoom-in/zoom-out (#1275)
+
 ## v0.20.0
 * Update zq to [v0.24.0](https://github.com/brimsec/zq/releases/tag/v0.24.0)
 * Begin bundling the same Zeek artifact referenced in [zq's `package.json`](https://github.com/brimsec/zq/blob/master/package.json) (#1215)
