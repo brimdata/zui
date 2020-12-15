@@ -13,6 +13,10 @@ import lib from "./lib"
 import theme from "./style-theme"
 import deletePartialSpaces from "./flows/deletePartialSpaces"
 
+// Just a demo to show absolute imports
+import {HELLO} from "ppl/javascript"
+HELLO
+
 initialize()
   .then((store) => {
     window.onbeforeunload = () => {
