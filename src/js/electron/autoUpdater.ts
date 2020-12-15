@@ -9,45 +9,50 @@ const getFeedURLForPlatform = (platform) => {
   return `https://update.electronjs.org/brimsec/brim/${platform}/${app.getVersion()}`
 }
 
-const autoUpdateLinux = async () => {
-  // Check for updates for MacOS and if there are then we assume there is also one for linux
+const getLatestVersion = async (): Promise<string> => {
+  // Check for updates for MacOS and if there are then we assume there is also one for our other supported OSs
   const url = getFeedURLForPlatform("darwin-x64")
-  try {
-    const currentVersion = app.getVersion()
-    if (!semver.valid(currentVersion))
-      throw "Invalid current version format: " + currentVersion
+  const resp = await got(url)
 
-    const resp = await got(url).json()
+  // the update server responds with a 204 and no body if the current version is the same as the
+  // latest version, but will otherwise return json naming the latest version published on github
+  // (even if it is behind the current version)
+  if (resp.statusCode === 204) return app.getVersion()
 
-    const latestVersion = get(resp, "name", "")
-    if (!semver.valid(latestVersion))
-      throw "Invalid latest version format: " + latestVersion
+  const body = JSON.parse(resp.body)
+  const latestVersion = get(body, "name", "")
+  if (!semver.valid(latestVersion))
+    log.error(new Error(`Invalid latest version format: ${latestVersion}`))
 
-    if (semver.gte(currentVersion, latestVersion)) {
-      // up to date
-      return
-    }
-
-    const dialogOpts = {
-      type: "info",
-      buttons: ["Get Update", "Later"],
-      title: "Application Update",
-      message: "A new version of Brim is available.",
-      detail: `Brim version ${latestVersion} is available for download; you are running v${currentVersion}.`
-    }
-
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      const navUrl = "https://www.brimsecurity.com/download/"
-      if (returnValue.response === 0) open(navUrl)
-    })
-  } catch (err) {
-    throw "Error checking for linux updates: " + err
-  }
+  return latestVersion
 }
 
-export function setupAutoUpdater() {
+const autoUpdateLinux = async () => {
+  const latestVersion = await getLatestVersion()
+
+  // up to date
+  if (semver.gte(app.getVersion(), latestVersion)) return
+
+  const dialogOpts = {
+    type: "info",
+    buttons: ["Get Update", "Later"],
+    title: "Application Update",
+    message: "A new version of Brim is available.",
+    detail: `Brim version ${latestVersion} is available for download; you are running v${app.getVersion()}.`
+  }
+
+  dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    const navUrl = "https://www.brimsecurity.com/download/"
+    if (returnValue.response === 0) open(navUrl)
+  })
+}
+
+export async function setupAutoUpdater() {
   if (process.platform === "linux") {
-    autoUpdateLinux().catch((err) => log.error(err))
+    setUpdateRepeater(() => {
+      autoUpdateLinux().catch((err) => log.error(err))
+    })
+
     return
   }
 
@@ -76,13 +81,20 @@ export function setupAutoUpdater() {
     log.error("There was a problem updating the application: " + err)
   })
 
-  // check for updates 30s after startup
-  setTimeout(() => {
-    autoUpdater.checkForUpdates()
-  }, 30 * 1000)
+  setUpdateRepeater(() => {
+    getLatestVersion()
+      .then((latestVersion) => {
+        if (semver.gte(app.getVersion(), latestVersion)) return
 
+        autoUpdater.checkForUpdates()
+      })
+      .catch((err) => log.error(err))
+  })
+}
+
+const setUpdateRepeater = (updateCb) => {
+  // check for updates 30s after startup
+  setTimeout(updateCb, 30 * 1000)
   // then check for updates once a day
-  setInterval(() => {
-    autoUpdater.checkForUpdates()
-  }, 24 * 60 * 60 * 1000)
+  setInterval(updateCb, 24 * 60 * 60 * 1000)
 }

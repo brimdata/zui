@@ -48,11 +48,9 @@ async function main() {
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed
   if (!electronIsDev) {
-    try {
-      setupAutoUpdater()
-    } catch (err) {
+    setupAutoUpdater().catch((err) => {
       log.error("Failed to initiate autoUpdater: " + err)
-    }
+    })
   }
 
   app.on("second-instance", (e, argv) => {
