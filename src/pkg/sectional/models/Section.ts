@@ -20,6 +20,7 @@ export default class Section {
     public isOpen: boolean = true,
     public closedSize: number = min
   ) {
+    if (!max) this.max = Infinity
     this.size = this.clamp(size)
   }
 
