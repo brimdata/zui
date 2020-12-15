@@ -1,3 +1,5 @@
+import {isNumber} from "lodash"
+
 export interface SectionData {
   id: string
   size?: number
@@ -20,6 +22,7 @@ export default class Section {
     public isOpen: boolean = true,
     public closedSize: number = min
   ) {
+    if (!isNumber(max)) this.max = Infinity
     this.size = this.clamp(size)
   }
 
@@ -66,7 +69,7 @@ export default class Section {
       id: this.id,
       size: this.size,
       min: this.min,
-      max: this.max,
+      max: this.max === Infinity ? undefined : this.max,
       isOpen: this.isOpen,
       closedSize: this.closedSize
     }

@@ -1,8 +1,7 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 import styled from "styled-components"
-
-import {resetTab} from "../flows/initNewTab"
+import {setSpaceId} from "../state/Current/actions"
 
 const StyledAnchor = styled.a`
   margin-left: auto;
@@ -21,7 +20,7 @@ const StyledAnchor = styled.a`
 
 export default function AddSpaceButton() {
   const dispatch = useDispatch()
-  const onClick = () => dispatch(resetTab())
+  const onClick = () => dispatch(setSpaceId(null))
 
   return (
     <StyledAnchor className="add-space" onClick={onClick}>
