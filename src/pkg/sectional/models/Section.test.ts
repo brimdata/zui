@@ -12,6 +12,18 @@ test("constructor max size", () => {
   expect(s.size).toBe(200)
 })
 
+test("constructor max size when null", () => {
+  const args = {id: "1", size: 500, min: 50, max: null}
+  const s = Section.parse(args)
+  expect(s.max).toEqual(Infinity)
+})
+
+test("constructor max size when undefined", () => {
+  const args = {id: "1", size: 500, min: 50, max: undefined}
+  const s = Section.parse(args)
+  expect(s.max).toEqual(Infinity)
+})
+
 test("resize -", () => {
   const args = {id: "1", size: 100, min: 50, max: 200}
   const s = Section.parse(args)
