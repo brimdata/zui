@@ -24,18 +24,20 @@ export class Correlation {
   }
 
   getUid() {
+    console.log("r is: ", this.r)
     if (this.r.has("_path")) {
       const path = this.r.get("_path").toString()
       const name = get(specialUids, path, "uid")
+      console.log("name is: ", this.r)
       if (this.r.has(name)) {
         const data = this.r.get(name)
+        console.log("data is: ", data)
         if (data instanceof zng.Primitive) {
           return data.toString()
         } else {
-          return data
-            .getValue()
-            .map((v) => v.toString())
-            .join(" ")
+          const value = data.getValue()
+          if (!value) return null
+          return value.map((v) => v.toString()).join(" ")
         }
       }
     }

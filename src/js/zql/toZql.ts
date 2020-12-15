@@ -1,8 +1,11 @@
 import {zng} from "../../../zealot/dist"
+import isString from "lodash/isString"
 
 export function toZql(object: unknown): string {
+  // TODO: remove me
+  console.log(`Can't convert object to ZQL: ${object}`)
   if (object instanceof zng.Primitive) return toZqlZngPrimitive(object)
-  if (typeof object === "string") return toZqlString(object)
+  if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)
   if (typeof object === "boolean") return toZqlBool(object)
 
@@ -29,6 +32,8 @@ function toZqlBool(bool: boolean) {
 }
 
 function toZqlZngPrimitive(data: zng.Primitive) {
+  // TODO: remove me
+  console.log({data})
   if (data.getType() === "string") return toZqlString(data.getValue())
   throw new Error(`Can't convert Zng Type: ${data.getType()} to zql`)
 }
