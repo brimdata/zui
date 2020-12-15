@@ -1,6 +1,6 @@
 ## v0.21.0
 **NOTE** - The Brim v0.21.0 release includes initial support for the
-generation of [Suricata](https://suricata-ids.org/) alerts from imported pcaps.
+automatic generation of [Suricata](https://suricata-ids.org/) alerts from imported pcaps.
 The alert records may be isolated via a ZQL search `event_type=alert` and are
 also included automatically alongside relevant Zeek event context in the
 correlation visualization in the Log Detail view. The Suricata build that's
