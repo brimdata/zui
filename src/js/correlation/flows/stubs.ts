@@ -1,4 +1,4 @@
-import {ZealotPayload} from "../../../../zealot/dist/types"
+import {ZealotPayload} from "zealot"
 
 export const uidAndCommunityResult: ZealotPayload[] = [
   {type: "TaskStart", task_id: 0},

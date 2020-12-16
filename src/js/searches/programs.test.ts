@@ -1,4 +1,4 @@
-import {zng} from "../../../zealot/dist"
+import {zng} from "zealot"
 import {connCorrelation} from "./programs"
 
 test("conn correlation", () => {

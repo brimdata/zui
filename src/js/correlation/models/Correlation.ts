@@ -1,5 +1,5 @@
 import {get, isString} from "lodash"
-import {zng} from "../../../../zealot/dist"
+import {zng} from "zealot"
 
 const specialUids = {
   files: "conn_uids",
@@ -29,7 +29,8 @@ export class Correlation {
       const name = get(specialUids, path, "uid")
       if (this.r.has(name)) {
         const data = this.r.get(name)
-        if (data.constructor && data.constructor.name === "Primitive") {
+        console.log("is primitive instance: ", data instanceof zng.Primitive)
+        if (data instanceof zng.Primitive) {
           return data.toString()
         } else {
           const value = data.getValue()

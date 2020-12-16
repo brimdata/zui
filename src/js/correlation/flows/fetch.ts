@@ -1,4 +1,4 @@
-import {zng} from "../../../../zealot/dist"
+import {zng} from "zealot"
 import {BrimSearch, search} from "../../flows/search/mod"
 import * as zql from "../../searches/programs"
 import {Correlation} from "../models/Correlation"

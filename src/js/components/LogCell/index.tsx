@@ -52,7 +52,7 @@ type FieldSwitchProps = {
 }
 
 function FieldSwitch({field, log, menuBuilder}: FieldSwitchProps) {
-  if (field.data.constructor && field.data.constructor.name === "Primitive") {
+  if (field.data instanceof zng.Primitive) {
     const menu = menuBuilder(field, log, false)
     return <SingleField field={field} menu={menu} />
   } else {

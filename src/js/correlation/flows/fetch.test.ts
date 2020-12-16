@@ -1,5 +1,5 @@
 import {last} from "lodash"
-import {zng} from "../../../../zealot/dist"
+import {zng} from "zealot"
 import loginTo from "../../test/helpers/loginTo"
 import {fetchCorrelation} from "./fetch"
 import * as stubs from "./stubs"

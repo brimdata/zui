@@ -1,4 +1,4 @@
-import {zng} from "../../../../zealot/dist"
+import {zng} from "zealot"
 import {UnknownEvent} from "./UnknownEvent"
 import {SuricataEvent} from "./SuricataEvent"
 import {ZeekEvent} from "./ZeekEvent"
