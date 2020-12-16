@@ -31,6 +31,7 @@ export class Correlation {
       if (this.r.has(name)) {
         const data = this.r.get(name)
         console.log("data is: ", data)
+        console.log("is primitive instance? ", data instanceof zng.Primitive)
         if (data instanceof zng.Primitive) {
           return data.toString()
         } else {
