@@ -1,4 +1,4 @@
-import {get} from "lodash"
+import {get, isString} from "lodash"
 import {zng} from "../../../../zealot/dist"
 
 const specialUids = {
@@ -27,17 +27,18 @@ export class Correlation {
     if (this.r.has("_path")) {
       const path = this.r.get("_path").toString()
       const name = get(specialUids, path, "uid")
-      console.log("name is: ", this.r)
       if (this.r.has(name)) {
         const data = this.r.get(name)
-        console.log("data is: ", data)
-        console.log("is primitive instance? ", data instanceof zng.Primitive)
-        if (data instanceof zng.Primitive) {
+        console.log(
+          "is primitive instance? ",
+          data.constructor && data.constructor.name === "Primitive"
+        )
+        if (data.constructor && data.constructor.name === "Primitive") {
           return data.toString()
         } else {
           const value = data.getValue()
-          console.log("value is: ", value)
           if (!value) return null
+          if (isString(value)) return value
           return value.map((v) => v.toString()).join(" ")
         }
       }
