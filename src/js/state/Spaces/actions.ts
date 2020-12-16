@@ -11,7 +11,7 @@ import {
 } from "./types"
 
 export default {
-  setSpaces: (clusterId: string, spaces: Space[]): SPACES_SET => ({
+  setSpaces: (clusterId: string, spaces: Partial<Space>[]): SPACES_SET => ({
     type: "SPACES_SET",
     clusterId,
     spaces: spaces || []
