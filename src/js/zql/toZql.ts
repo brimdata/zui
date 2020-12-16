@@ -2,7 +2,8 @@ import {zng} from "../../../zealot/dist"
 import isString from "lodash/isString"
 
 export function toZql(object: unknown): string {
-  if (object instanceof zng.Primitive) return toZqlZngPrimitive(object)
+  if (object.constructor && object.constructor.name === "Primitive")
+    return toZqlZngPrimitive(object as zng.Primitive)
   if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)
   if (typeof object === "boolean") return toZqlBool(object)

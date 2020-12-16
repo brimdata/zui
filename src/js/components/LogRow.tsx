@@ -38,7 +38,12 @@ const LogRow = (props: Props) => {
     const field = log.tryField(column.name)
     const key = `${index}-${colIndex}`
 
-    if (field && field.data && !(field.data instanceof zng.Record)) {
+    if (
+      field &&
+      field.data &&
+      field.data.constructor &&
+      field.data.constructor.name !== "Record"
+    ) {
       return (
         <LogCell
           rightClick={rightClick}

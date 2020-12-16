@@ -29,10 +29,6 @@ export class Correlation {
       const name = get(specialUids, path, "uid")
       if (this.r.has(name)) {
         const data = this.r.get(name)
-        console.log(
-          "is primitive instance? ",
-          data.constructor && data.constructor.name === "Primitive"
-        )
         if (data.constructor && data.constructor.name === "Primitive") {
           return data.toString()
         } else {

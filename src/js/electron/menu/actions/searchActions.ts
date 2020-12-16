@@ -203,7 +203,11 @@ function buildSearchActions() {
       label: "VirusTotal Lookup",
       listener(dispatch, data: zng.SerializedField) {
         const field = zng.Field.deserialize(data)
-        if (field.data instanceof zng.Primitive && field.data.isSet()) {
+        if (
+          field.data.constructor &&
+          field.data.constructor.name === "Primitive" &&
+          field.data.isSet()
+        ) {
           open(virusTotal.url(field.data.getValue() as string))
         }
       }
