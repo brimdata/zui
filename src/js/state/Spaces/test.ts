@@ -49,10 +49,13 @@ const testSpace2: Space = {
 
 const testSpaces: Space[] = [testSpace1, testSpace2]
 
-test("setting the spaces", () => {
-  const state = store.dispatchAll([Spaces.setSpaces("cluster1", testSpaces)])
+test("setting the spaces merges with previous data", () => {
+  const state = store.dispatchAll([
+    Spaces.setDetail("cluster1", testSpace1),
+    Spaces.setSpaces("cluster1", [{id: "testId1", name: "testName1"}])
+  ])
 
-  expect(Spaces.ids("cluster1")(state)).toEqual(["testId1", "testId2"])
+  expect(Spaces.get("cluster1", "testId1")(state)).toEqual(testSpace1)
 })
 
 test("space names removing", () => {

@@ -39,7 +39,7 @@ type SpaceIngest = {
 export type SPACES_SET = {
   type: "SPACES_SET"
   clusterId: string
-  spaces: Space[]
+  spaces: Partial<Space>[]
 }
 
 export type SPACES_DETAIL = {

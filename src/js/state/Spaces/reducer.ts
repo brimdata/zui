@@ -5,10 +5,12 @@ import brim from "../../brim"
 
 const init: SpacesState = {}
 
-const spacesReducer = produce((draft, action: SpacesAction) => {
+const spacesReducer = produce((draft, action: SpacesAction): {
+  [id: string]: Space
+} => {
   switch (action.type) {
     case "SPACES_SET":
-      return action.spaces.reduce((next, space) => {
+      return action.spaces.reduce<{[id: string]: Space}>((next, space) => {
         next[space.id] = defaults(space, draft[space.id])
         return next
       }, {})
@@ -65,7 +67,7 @@ export default function reducer(
   }
 }
 
-function defaults(next: Space, prev: Space): Space {
+function defaults(next: Partial<Space>, prev: Space): Space {
   // It would be nice to not need to keep this ingest state in the space
   // object. An separate ingest reducer would be good.
   const space = brim.interop.spacePayloadToSpace(next)
@@ -74,6 +76,7 @@ function defaults(next: Space, prev: Space): Space {
   const prevIngest = prev && prev.ingest
   return {
     ...defaults,
+    ...prev,
     ...space,
     ingest: {
       ...defaultIngest,
