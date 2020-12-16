@@ -1,5 +1,5 @@
 import {createFetcher, FetchArgs} from "./fetcher/fetcher"
-import {Zealot} from "./types"
+import {Zealot, ZealotPayload} from "./types"
 import {createTime} from "./util/time"
 import {createZealot} from "./zealot"
 import {createZealotMock, ZealotMock} from "./zealot_mock"
@@ -13,6 +13,7 @@ export {
   createZealotMock,
   createTime,
   Zealot,
+  ZealotPayload,
   ZealotMock,
   createFetcher,
   FetchArgs

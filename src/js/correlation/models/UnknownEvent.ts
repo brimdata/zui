@@ -1,4 +1,4 @@
-import {zng} from "../../../../zealot/dist"
+import {zng} from "zealot"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class UnknownEvent implements BrimEventInterface {

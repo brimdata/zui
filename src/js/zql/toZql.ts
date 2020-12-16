@@ -1,8 +1,9 @@
-import {zng} from "../../../zealot/dist"
+import {zng} from "zealot"
+import isString from "lodash/isString"
 
 export function toZql(object: unknown): string {
   if (object instanceof zng.Primitive) return toZqlZngPrimitive(object)
-  if (typeof object === "string") return toZqlString(object)
+  if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)
   if (typeof object === "boolean") return toZqlBool(object)
 

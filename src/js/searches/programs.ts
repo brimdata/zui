@@ -1,4 +1,4 @@
-import {zng} from "../../../zealot/dist"
+import {zng} from "zealot"
 import zql from "../zql"
 
 export function md5Correlation(md5: string) {

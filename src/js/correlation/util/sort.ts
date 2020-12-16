@@ -1,4 +1,4 @@
-import {zng} from "../../../../zealot/dist"
+import {zng} from "zealot"
 
 export const sort = (logs: zng.Record[]) => {
   const findConn = (log) => log.try("_path")?.toString() === "conn"

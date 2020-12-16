@@ -1,5 +1,5 @@
-import {get} from "lodash"
-import {zng} from "../../../../zealot/dist"
+import {get, isString} from "lodash"
+import {zng} from "zealot"
 
 const specialUids = {
   files: "conn_uids",
@@ -32,10 +32,10 @@ export class Correlation {
         if (data instanceof zng.Primitive) {
           return data.toString()
         } else {
-          return data
-            .getValue()
-            .map((v) => v.toString())
-            .join(" ")
+          const value = data.getValue()
+          if (!value) return null
+          if (isString(value)) return value
+          return value.map((v) => v.toString()).join(" ")
         }
       }
     }
