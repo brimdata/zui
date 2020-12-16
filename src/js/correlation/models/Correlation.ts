@@ -29,7 +29,6 @@ export class Correlation {
       const name = get(specialUids, path, "uid")
       if (this.r.has(name)) {
         const data = this.r.get(name)
-        console.log("is primitive instance: ", data instanceof zng.Primitive)
         if (data instanceof zng.Primitive) {
           return data.toString()
         } else {
