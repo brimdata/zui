@@ -33,6 +33,9 @@ incidents of the issues described above.
 * Add a "Sectional" package in the code that allows a view to be split (#1247)
 * Add a "Tree list" package in the code for working with lists (rendering, drag & drop, etc.) (#1254)
 * Fix an issue where Brim would freeze during zoom-in/zoom-out (#1275)
+* Fix an issue where autoupdate would install releases with version numbers "older" than the number of the one currently installed (#1244)
+* Fix an issue where the Space list would come up empty and Space details would show "NAN UNDEFINED" after a Brim restart (#1283, #1288)
+* Fix an issue on Windows where clicking records generated from an imported pcap produced error messages (#1287)
 
 ## v0.20.0
 * Update zq to [v0.24.0](https://github.com/brimsec/zq/releases/tag/v0.24.0)
