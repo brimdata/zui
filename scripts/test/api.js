@@ -1,7 +1,8 @@
 const {execSync} = require("child_process")
+const {exit, openStdin} = require("process")
 
 const DENO_TEST = "deno test --allow-net --allow-run --allow-read --allow-write"
-const ROLLUP = "npx rollup -c"
+const ROLLUP = "npx rollup -c --silent"
 
 const getCliOptions = () => {
   const [_n, _s, ...flags] = process.argv
@@ -10,15 +11,21 @@ const getCliOptions = () => {
   }
 }
 
-const run = (cmd, cwd) => {
+const run = (cmd, opts) => {
+  if (opts.if === false) return
+  if (opts.desc) console.log(opts.desc)
   try {
-    execSync(cmd, {cwd, stdio: "inherit"})
-  } catch (e) {
-    console.error(e)
+    execSync(cmd, {cwd: opts.cwd, stdio: "inherit"})
+  } catch (_) {
+    process.exit(1)
   }
 }
 
 const opts = getCliOptions()
 
-if (!opts.noBundle) run(ROLLUP)
-run(DENO_TEST, "test/api")
+run(ROLLUP, {
+  desc: "Bundling Zealot with Rollup (skip with --no-bundle)",
+  if: !opts.noBundle
+})
+
+run(DENO_TEST, {desc: "Testing with Deno", cwd: "test/api"})

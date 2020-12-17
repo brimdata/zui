@@ -16,6 +16,5 @@ export {
   ZealotPayload,
   ZealotMock,
   createFetcher,
-  FetchArgs,
-  ZealotPayload
+  FetchArgs
 }

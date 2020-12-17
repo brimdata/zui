@@ -1,4 +1,5 @@
 import typescript from "@rollup/plugin-typescript"
+import commonjs from "@rollup/plugin-commonjs"
 
 export default {
   input: "zealot/index.ts",
@@ -9,5 +10,8 @@ export default {
       sourcemap: true
     }
   ],
-  plugins: [typescript()]
+  plugins: [
+    typescript({module: "ES2020"}),
+    commonjs({extensions: [".js", ".ts"]})
+  ]
 }
