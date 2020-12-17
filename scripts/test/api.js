@@ -13,7 +13,9 @@ const getCliOptions = () => {
 const run = (cmd, cwd) => {
   try {
     execSync(cmd, {cwd, stdio: "inherit"})
-  } catch (e) {}
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 const opts = getCliOptions()
