@@ -1,5 +1,4 @@
 const {execSync} = require("child_process")
-const {exit, openStdin} = require("process")
 
 const DENO_TEST = "deno test --allow-net --allow-run --allow-read --allow-write"
 const ROLLUP = "npx rollup -c --silent"
