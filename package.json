@@ -34,8 +34,7 @@
     "release": "node scripts/release --darwin",
     "prebuild": "npm run clean",
     "prerelease": "npm run build",
-    "postinstall": "npm-run-all -s install:*",
-    "install:zdeps": "node scripts/download-zdeps"
+    "postinstall": "node scripts/post-install"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

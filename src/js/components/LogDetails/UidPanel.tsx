@@ -6,7 +6,7 @@ import InlineTableLoading from "../InlineTableLoading"
 import LogDetails from "../../state/LogDetails"
 import PanelHeading from "./PanelHeading"
 import {zng} from "zealot"
-import ZeekCorrelation from "../../correlation/components/ZeekCorrelation"
+import ZeekCorrelation from "ppl/correlation/components/ZeekCorrelation"
 
 export default function UidPanel({log}: {log: zng.Record}) {
   const status = useSelector(LogDetails.getUidStatus)

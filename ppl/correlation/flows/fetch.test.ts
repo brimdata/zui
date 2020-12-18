@@ -1,12 +1,8 @@
 import {last} from "lodash"
 import {zng} from "zealot"
-import loginTo from "../../test/helpers/loginTo"
+import loginTo from "src/js/test/helpers/loginTo"
 import {fetchCorrelation} from "./fetch"
 import * as stubs from "./stubs"
-
-/* Demo to show absolute paths work in tests */
-import {HELLO} from "ppl/javascript"
-HELLO
 
 const zeek = new zng.Record(
   [

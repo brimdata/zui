@@ -1,6 +1,6 @@
 import {zng} from "zealot"
-import {BrimSearch, search} from "../../flows/search/mod"
-import * as zql from "../../searches/programs"
+import {BrimSearch, search} from "src/js/flows/search/mod"
+import * as zql from "src/js/searches/programs"
 import {Correlation} from "../models/Correlation"
 
 const id = "RELATED_EVENTS"
