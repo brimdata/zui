@@ -92,6 +92,7 @@
     "eslint-plugin-jest": "^22.21.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
+    "glob": "^7.1.6",
     "jest": "^26.6.0",
     "jest-junit": "^6.4.0",
     "livereload": "^0.9.1",
