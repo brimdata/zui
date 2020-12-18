@@ -1,7 +1,6 @@
 /dist
 /node_modules
 /coverage
-/releases
 /run
 /bin
 /test/api
