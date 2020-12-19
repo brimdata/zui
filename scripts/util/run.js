@@ -1,13 +1,18 @@
-const {execSync} = require("child_process")
+const {bold} = require("chalk")
+const {spawn} = require("child_process")
 
-const run = (cmd, opts) => {
-  if (opts.if === false) return
-  if (opts.desc) console.log(opts.desc)
-  try {
-    execSync(cmd, {cwd: opts.cwd, stdio: "inherit"})
-  } catch (_) {
-    process.exit(1)
-  }
+function run(program, args, opts = {}) {
+  return new Promise((resolve) => {
+    if (opts.if === false) resolve()
+    if (opts.desc) console.log(bold(opts.desc))
+    const subprocess = spawn(program, [args], {
+      shell: true,
+      stdio: "inherit",
+      cwd: opts.cwd
+    })
+    subprocess.on("exit", resolve)
+    subprocess.on("error", (e) => process.exit(e.code))
+  })
 }
 
 module.exports = run
