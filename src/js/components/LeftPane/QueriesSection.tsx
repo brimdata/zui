@@ -20,6 +20,7 @@ import DropdownArrow from "../../icons/DropdownArrow"
 import {
   ClickRegion,
   DragAnchor,
+  SectionContents,
   SectionHeader,
   StyledArrow,
   StyledSection,
@@ -202,19 +203,21 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           />
         )}
       </SectionHeader>
-      {currentSpace ? (
-        <TreeList
-          root={queries}
-          itemHeight={24}
-          onItemMove={onItemMove}
-          onItemClick={onItemClick}
-          onItemContextMenu={onItemContextMenu}
-        >
-          {Item}
-        </TreeList>
-      ) : (
-        <EmptySection message="You must have a space selected to run queries." />
-      )}
+      <SectionContents>
+        {currentSpace ? (
+          <TreeList
+            root={queries}
+            itemHeight={24}
+            onItemMove={onItemMove}
+            onItemClick={onItemClick}
+            onItemContextMenu={onItemContextMenu}
+          >
+            {Item}
+          </TreeList>
+        ) : (
+          <EmptySection message="You must have a space selected to run queries." />
+        )}
+      </SectionContents>
     </StyledSection>
   )
 }
