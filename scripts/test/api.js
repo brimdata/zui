@@ -1,5 +1,5 @@
-const run = require("./util/run")
-const flags = require("./util/flags")
+const run = require("../util/run")
+const flags = require("../util/flags")
 
 run("npx rollup -c --silent", {
   desc: "Bundling Zealot with Rollup (skip with --no-bundle)",
