@@ -5,7 +5,6 @@ const {JS, SCSS, STATIC} = require("./util/commands")
 
 async function start() {
   if (!flags.noBuild) {
-    await run("node", "scripts/clean")
     await run("node", "scripts/build")
   } else {
     console.log(bold("Skipping build step"))
