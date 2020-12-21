@@ -7,7 +7,7 @@ import Modal from "../../state/Modal"
 import get from "lodash/get"
 
 const StyledContent = styled(Content)`
-  min-width: 360px;
+  min-width: 480px;
 `
 
 const EditQueryModal = ({onClose}) => {

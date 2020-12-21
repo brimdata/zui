@@ -25,13 +25,12 @@ import {MenuItemConstructorOptions, remote} from "electron"
 import SearchBar from "../state/SearchBar"
 import Notice from "../state/Notice"
 import {submitSearch} from "../flows/submitSearch/mod"
-import Search from "../state/Search"
-import brim from "../brim"
 import lib from "../lib"
 import {popNotice} from "./PopNotice"
 import {includes, capitalize} from "lodash"
 import {Group, Query} from "../state/Queries/types"
 import Modal from "../state/Modal"
+import EmptySection from "./common/EmptySection"
 
 const Arrow = (props) => {
   return (
@@ -323,22 +322,22 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     setQueries(queriesRoot)
   }, [queriesRoot])
 
+  const runQuery = (value) => {
+    dispatch(SearchBar.clearSearchBar())
+    dispatch(SearchBar.changeSearchBarInput(value))
+    dispatch(submitSearch())
+  }
+
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Run Query",
-      enabled: !hasMultiSelected,
+      enabled: !hasMultiSelected && !!currentSpace,
       click: () => {
-        if (!currentSpace)
-          return dispatch(Notice.set(new Error("No space selected")))
-
         const {
           item: {value}
         } = contextArgs
 
-        dispatch(SearchBar.clearSearchBar())
-        dispatch(SearchBar.changeSearchBarInput(value))
-        dispatch(Search.setSpanArgs(brim.space(currentSpace).everythingSpan()))
-        dispatch(submitSearch())
+        runQuery(value)
       }
     },
     {
@@ -395,8 +394,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
 
     if (!item.value) return
 
-    dispatch(SearchBar.clearSearchBar())
-    dispatch(SearchBar.changeSearchBarInput(item.value))
+    runQuery(item.value)
   }
 
   function onItemMove(sourceItem, destIndex) {
@@ -435,21 +433,27 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <StyledArrow show={isOpen} />
           <Title>Queries</Title>
         </ClickRegion>
-        <TagsViewSelect
-          selected={selectedTag}
-          tags={["All", ...tags]}
-          onSelect={onTagSelect}
-        />
+        {currentSpace && (
+          <TagsViewSelect
+            selected={selectedTag}
+            tags={["All", ...tags]}
+            onSelect={onTagSelect}
+          />
+        )}
       </SectionHeader>
-      <TreeList
-        root={queries}
-        itemHeight={24}
-        onItemMove={onItemMove}
-        onItemClick={onItemClick}
-        onItemContextMenu={onItemContextMenu}
-      >
-        {Item}
-      </TreeList>
+      {currentSpace ? (
+        <TreeList
+          root={queries}
+          itemHeight={24}
+          onItemMove={onItemMove}
+          onItemClick={onItemClick}
+          onItemContextMenu={onItemContextMenu}
+        >
+          {Item}
+        </TreeList>
+      ) : (
+        <EmptySection message="You must have a space selected to run queries." />
+      )}
     </StyledSection>
   )
 }
