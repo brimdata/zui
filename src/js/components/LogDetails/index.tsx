@@ -8,7 +8,7 @@ import LogDetails from "../../state/LogDetails"
 import NoSelection from "./NoSelection"
 import UidPanel from "./UidPanel"
 import menu from "../../electron/menu"
-import {Correlation} from "../../correlation/models/Correlation"
+import {Correlation} from "ppl/correlation/models/Correlation"
 
 export default function LogDetailComponent() {
   const record = useSelector(LogDetails.build)

@@ -14,9 +14,9 @@
     <div id="about-root" />
   </body>
   <script>
-    require("./dist/js/about")
+    require("./dist/src/js/about")
 
-    if (require("./dist/js/electron/isDev.js")) {
+    if (require("./dist/src/js/electron/isDev.js")) {
       let script = document.createElement("script")
       script.src = "http://localhost:35729/livereload.js?snipver=1"
       document.body.appendChild(script)

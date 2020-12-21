@@ -54,8 +54,7 @@ jobs:
       - run: npm run lint
       - run: npm run tsc
       - run: npm test -- --maxWorkers=2 --ci
-      - run: npm test
-        working-directory: ./zealot
+      - run: npm run test:api
       - name: Build Linux Packages
         if: runner.os == 'Linux'
         run: |
@@ -115,7 +114,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - run: npm install --no-audit
-      - run: npm run install:zealot
       - name: Download rpm package
         uses: actions/download-artifact@v1
         with:

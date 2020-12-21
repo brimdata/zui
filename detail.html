@@ -12,9 +12,9 @@
   </head>
   <body>
     <script>
-      require("./dist/js/detail.js")
+      require("./dist/src/js/detail.js")
 
-      if (require("./dist/js/electron/isDev.js")) {
+      if (require("./dist/src/js/electron/isDev.js")) {
         let script = document.createElement("script")
         script.src = "http://localhost:35729/livereload.js?snipver=1"
         document.body.appendChild(script)

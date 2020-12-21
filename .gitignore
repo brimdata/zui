@@ -4,7 +4,6 @@ releases
 coverage
 junit.xml
 zdeps
-zealot/bundle.js
 .idea
 run
 .vscode

@@ -49,7 +49,7 @@ export function handle(request: any) {
             flushBuffer()
             response.emit("status", "SUCCESS")
             response.emit("end", id)
-            resolve()
+            setTimeout(resolve)
           })
           .warnings(({warning}) => response.emit("warnings", warning))
           .error(errored)
