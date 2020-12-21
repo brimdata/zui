@@ -10,7 +10,7 @@ export type TreeListProps = {
     item: TreeItem,
     selections: TreeItem[]
   ) => void
-  onItemMove: (source: TreeItem, dest: TreeItem) => void
+  onItemMove: (sourceItem: TreeItem, destIndex: number) => void
   children: ItemRenderer
 }
 

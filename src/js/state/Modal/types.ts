@@ -21,3 +21,5 @@ export type ModalName =
   | "space"
   | "new-connection"
   | "view-connection"
+  | "new-query"
+  | "edit-query"
