@@ -1,3 +1,6 @@
+## v0.21.1
+* Update zq to [v0.26.0](https://github.com/brimsec/zq/releases/tag/v0.26.0), which fixes an issue that was causing pcap import failures, and also delivers other enhancements
+
 ## v0.21.0
 **NOTE** - The Brim v0.21.0 release includes initial support for the
 automatic generation of [Suricata](https://suricata-ids.org/) alerts from imported pcaps.
