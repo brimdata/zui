@@ -14,7 +14,8 @@ import {Query} from "../../state/Queries/types"
 import Queries from "../../state/Queries"
 import {cssVar} from "../../lib/cssVar"
 
-const SignInForm = styled.div`
+const QueryFormWrapper = styled.div`
+  width: 100%;
   margin: 0 auto 24px;
   padding-left: 24px;
 
@@ -28,8 +29,13 @@ const SignInForm = styled.div`
       background: rgba(255, 255, 255, 0.83);
     }
 
+    &:not(:first-child) {
+      margin-left: 30px;
+      margin-right: 30px;
+    }
+
     &:last-child {
-      margin: 0;
+      margin-bottom: 0;
     }
   }
 
@@ -68,7 +74,7 @@ const StyledFooter = styled.footer`
 `
 
 const StyledTextInput = styled(TextInput)`
-  width: 280px;
+  width: 350px;
 `
 
 const QueryValueInput = styled(TextInput)`
@@ -195,7 +201,7 @@ const QueryForm = ({onClose, query, value}: Props) => {
           ))}
         </Errors>
       )}
-      <SignInForm>
+      <QueryFormWrapper>
         <form ref={setFormRef}>
           <InputField>
             <QueryValueInput
@@ -226,7 +232,7 @@ const QueryForm = ({onClose, query, value}: Props) => {
             />
           </InputField>
         </form>
-      </SignInForm>
+      </QueryFormWrapper>
       <StyledFooter>
         <ToolbarButton isPrimary text="Save" onClick={onSave} />
         <ToolbarButton text="Cancel" onClick={onCancel} />

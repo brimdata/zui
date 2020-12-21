@@ -3,12 +3,12 @@ import {connect} from "react-redux"
 import React from "react"
 import ReactDOM from "react-dom"
 
-import {Dispatch} from "../state/types"
-import CircleChevron from "./CircleChevron"
-import MouseoverWatch from "../lib/MouseoverWatch"
-import dispatchToProps from "../lib/dispatchToProps"
-import lib from "../lib"
-import Layout from "../state/Layout"
+import {Dispatch} from "../../state/types"
+import CircleChevron from "../CircleChevron"
+import MouseoverWatch from "../../lib/MouseoverWatch"
+import dispatchToProps from "../../lib/dispatchToProps"
+import lib from "../../lib"
+import Layout from "../../state/Layout"
 
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}
