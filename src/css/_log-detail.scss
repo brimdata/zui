@@ -1,13 +1,7 @@
 .log-detail {
-  color: $gray-6;
-
-  .vertical-table {
-    th {
-      width: 130px;
-    }
-    td {
-      @include type-colors;
-    }
+  padding: 12px;
+  section {
+    margin-bottom: 24px;
   }
 }
 
@@ -25,37 +19,7 @@
 }
 
 .log-detail {
-  .path-tag {
-    @include path-tag;
-  }
-}
-
-.detail-panel {
-  max-width: 600px;
-  margin: 0 24px 24px 24px;
-
-  .panel-heading:first-child {
-    margin-top: 24px;
-  }
-}
-
-.fields-table-panel {
-  table {
-    width: 100%;
-  }
-  .table td {
-    padding: 3px 6px;
-  }
-  .table th {
-    cursor: default;
-    user-select: none;
-    min-width: 120px;
-    padding: 0 6px;
-    span {
-      display: inline-block;
-      line-height: 22px;
-      text-decoration: underline;
-      text-decoration-style: dotted;
-    }
+  dd {
+    @include type-colors;
   }
 }

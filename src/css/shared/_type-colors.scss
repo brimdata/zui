@@ -1,31 +1,26 @@
 @mixin type-colors {
-  &.string,
-  &.set\[string\] {
-    color: $gray-7;
-  }
-
   &.addr,
   &.set\[addr\] {
-    color: #4a90e2;
+    color: var(--ip);
   }
 
   &.port,
   &.set\[port\] {
-    color: $orange;
+    color: var(--port);
   }
 
   &.interval,
   &.set\[interval\] {
-    color: $purple;
+    color: var(--interval);
   }
 
   &.count,
   &.set\[count\] {
-    color: $red;
+    color: var(--count);
   }
 
   &.bool,
   &.set\[bool\] {
-    color: $blue-light;
+    color: var(--blue);
   }
 }

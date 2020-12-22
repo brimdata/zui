@@ -56,7 +56,7 @@ function time(val: Ts | Date = new Date()) {
       return brim.time(fromBigInt(dur))
     },
 
-    format(fmt?: string) {
+    format(fmt = "YYYY-MM-DDThh:mm:ss.SSS") {
       return moment(this.toDate()).format(fmt)
     }
   }

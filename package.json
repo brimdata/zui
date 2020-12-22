@@ -109,6 +109,7 @@
     "chrono-node": "^1.4.8",
     "classnames": "^2.2.6",
     "d3": "^5.16.0",
+    "date-fns": "^2.16.1",
     "electron-devtools-installer": "^3.1.1",
     "electron-dl": "^3.0.1",
     "electron-installer-zip": "^0.1.2",

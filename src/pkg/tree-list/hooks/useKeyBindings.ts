@@ -8,7 +8,9 @@ export function useKeyBindings(
   selector: Selector,
   setSelector: (s: Selector) => void
 ) {
+  const node = ref.current
   useEffect(() => {
+    if (!node) return
     const onShiftDown = (e) => {
       e.preventDefault()
       selector.selectRangeNext()
@@ -27,11 +29,11 @@ export function useKeyBindings(
       setSelector(selector.dup())
     }
 
-    const bindings = new Mousetrap(ref.current)
+    const bindings = new Mousetrap(node)
       .bind(["shift+down", "shift+meta+down"], throttle(onShiftDown, 25))
       .bind(["shift+up", "shift+meta+up"], throttle(onShiftUp, 25))
       .bind("meta+a", selectAll)
 
     return () => bindings.reset()
-  }, [selector])
+  }, [selector, node])
 }

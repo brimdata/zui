@@ -1,7 +1,6 @@
 import React from "react"
 
-import {Column, RightClickBuilder} from "../../types"
-import {showContextMenu} from "../../lib/System"
+import {Column} from "../../types"
 import FieldCell from "../FieldCell"
 import {zng} from "zealot"
 
@@ -14,16 +13,16 @@ export function TableHeader({column}: {column: Column}) {
 }
 
 type Props = {
-  log: zng.Record
+  record: zng.Record
   field: zng.Field
-  rightClick?: RightClickBuilder
+  onRightClick?: (f: zng.Field, r: zng.Record) => void
 }
 
-export function TableData({field, log, rightClick}: Props) {
+export function TableData({field, record, onRightClick}: Props) {
   const {name, data} = field
 
   function onContextMenu() {
-    rightClick && showContextMenu(rightClick(field, log, false))
+    onRightClick && onRightClick(field, record)
   }
 
   return (

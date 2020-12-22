@@ -6,6 +6,8 @@ import {ZeekEvent} from "./ZeekEvent"
 export interface BrimEventInterface {
   getType: () => string
   getTime: () => Date
+  getRecord: () => zng.Record
+  getEndTime: () => Date | null
 }
 
 export class BrimEvent {

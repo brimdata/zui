@@ -1,6 +1,6 @@
 import {connect, useDispatch} from "react-redux"
 import {isEmpty} from "lodash"
-import React from "react"
+import React, {useEffect} from "react"
 
 import {ColumnHeadersViewState} from "../../state/Layout/types"
 import {DispatchProps, State} from "../../state/types"
@@ -27,7 +27,6 @@ import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
 import menu from "../../electron/menu"
-import useDebouncedEffect from "../hooks/useDebouncedEffect"
 import {zng} from "zealot"
 
 type StateProps = {
@@ -82,14 +81,10 @@ export default function ResultsTable(props: Props) {
     overScan: 1
   })
 
-  useDebouncedEffect(
-    () => {
-      if (selection.isEmpty()) return
-      dispatch(viewLogDetail(logs[selection.currentRange[0]]))
-    },
-    400,
-    [selection]
-  )
+  useEffect(() => {
+    if (selection.isEmpty()) return
+    dispatch(viewLogDetail(logs[selection.currentRange[0]]))
+  }, [selection])
 
   function renderRow(index: number, dimens: ViewerDimens) {
     return (

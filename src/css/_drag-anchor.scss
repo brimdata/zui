@@ -6,6 +6,7 @@
   background: transparent;
   pointer-events: all !important;
   cursor: col-resize;
+  z-index: 99;
 }
 
 .drag-anchor-left {

@@ -5,12 +5,14 @@ import classNames from "classnames"
 type Props = {
   children?: any
   className?: string
+  id?: string
 }
 
-export default function BrimTooltip({className, children, ...rest}: Props) {
+export default function BrimTooltip({className, children, id, ...rest}: Props) {
   return (
     <ReactTooltip
       {...rest}
+      id={id}
       insecure={false}
       className={classNames("brim-tooltip", className)}
     >

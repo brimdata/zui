@@ -6,6 +6,7 @@ declare global {
       ResizeObserver: any
       SVGElement: any
       windowId: string
+      windowName: "search" | "detail" | "about"
       getState: () => any
     }
 

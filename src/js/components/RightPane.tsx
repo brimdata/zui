@@ -11,7 +11,7 @@ import ExpandWindow from "../icons/ExpandWindow"
 import HistoryButtons from "./common/HistoryButtons"
 import Layout from "../state/Layout"
 import LogDetails from "../state/LogDetails"
-import LogDetailsComponent from "./LogDetails"
+import DetailPane from "app/detail/Pane"
 import Pane, {
   PaneHeader,
   PaneTitle,
@@ -85,7 +85,7 @@ export default class RightPane extends React.Component<Props, S> {
           </PaneHeader>
         )}
         <PaneBody>
-          <LogDetailsComponent />
+          <DetailPane />
         </PaneBody>
       </Pane>
     )

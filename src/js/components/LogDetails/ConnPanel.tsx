@@ -1,21 +1,20 @@
 import React from "react"
 
 import ConnVersation from "../ConnVersation"
-import PanelHeading from "./PanelHeading"
 import {zng} from "zealot"
+import PanelHeading from "app/detail/PanelHeading"
 
 type Props = {
-  log: zng.Record
-  contextMenu: Function
+  record: zng.Record
 }
 
-const ConnPanel = ({log, contextMenu}: Props) => {
-  if (!ConnVersation.shouldShow(log)) return null
+const ConnPanel = ({record}: Props) => {
+  if (!ConnVersation.shouldShow(record)) return null
   return (
-    <div className="conn-versation-panel detail-panel">
+    <section className="conn-versation-panel detail-panel">
       <PanelHeading>Conn History</PanelHeading>
-      <ConnVersation log={log} contextMenu={contextMenu} />
-    </div>
+      <ConnVersation record={record} />
+    </section>
   )
 }
 

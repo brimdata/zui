@@ -9,8 +9,8 @@ import {submitSearch} from "src/js/flows/submitSearch/mod"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import {UID_CORRELATION_LIMIT} from "src/js/searches/programs"
 import SearchBar from "src/js/state/SearchBar"
-import {BrimEvent} from "../models/BrimEvent"
-import {sort} from "../util/sort"
+import {BrimEvent} from "./models/BrimEvent"
+import {sort} from "./util/sort"
 import {useDispatch} from "react-redux"
 
 type Props = {

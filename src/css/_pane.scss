@@ -8,7 +8,6 @@ $pane-header-background-color: $white-5;
   background: $pane-background-color;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
 }
 
 .pane-header {
@@ -45,7 +44,8 @@ $pane-header-background-color: $white-5;
 
 .pane-body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .pane-left {
