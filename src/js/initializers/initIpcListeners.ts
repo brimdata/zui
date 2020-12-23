@@ -64,6 +64,10 @@ export default (store: Store) => {
     store.dispatch(Modal.show("settings"))
   })
 
+  ipcRenderer.on("showExportResults", () => {
+    store.dispatch(Modal.show("export"))
+  })
+
   ipcRenderer.on("showAbout", () => {
     store.dispatch(Modal.show("about"))
   })

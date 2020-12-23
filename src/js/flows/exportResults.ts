@@ -28,7 +28,6 @@ export default (filePath: string, format: SearchFormat): Thunk => (
   const spaceId = Current.getSpaceId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())
-  console.log(columns.id)
   const program = cutColumns(baseProgram, columns)
   const [from, to] = Tab.getSpan(getState())
     .map(brim.time)

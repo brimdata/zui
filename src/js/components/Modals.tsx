@@ -22,8 +22,8 @@ const MODALS = {
   "new-connection": NewConnectionModal,
   "view-connection": ViewConnectionModal,
   "new-query": NewQueryModal,
-  "edit-query": EditQueryModal,
-  export: ExportModal
+  export: ExportModal,
+  "edit-query": EditQueryModal
 }
 
 export function Modals() {
