@@ -16,6 +16,7 @@ import {SearchFormat} from "../../../zealot"
 import InputLabel from "./common/forms/InputLabel"
 import Columns from "../state/Columns"
 import BrimTooltip from "./BrimTooltip"
+import {defaultModalButton} from "../test/locators"
 
 const RadioButtons = styled.div`
   display: flex;
@@ -108,6 +109,7 @@ const ExportModal = ({onClose}) => {
         <ButtonGroup>
           <ToolbarButton text="Close" onClick={onClose} />
           <ToolbarButton
+            {...defaultModalButton.props}
             isPrimary
             text={isExporting ? "" : "Export"}
             icon={isExporting ? <MacSpinner light /> : null}
