@@ -14,6 +14,8 @@ import XButton from "../XButton"
 import exportResults from "../../flows/exportResults"
 import useIpcListener from "../hooks/useIpcListener"
 import useSetTimeout from "../hooks/useSetTimeout"
+import {SearchFormat} from "zealot"
+import Modal from "src/js/state/Modal"
 
 const SpinnerWrap = styled.div`
   transform: scale(0.8);
@@ -36,11 +38,11 @@ const DoneMessage = ({onClick}) => (
   </>
 )
 
-function showDialog() {
+function showDialog(format: SearchFormat) {
   return ipcRenderer.invoke("windows:showSaveDialog", {
-    title: "Export Results as ZNG",
+    title: `Export Results as ${format.toUpperCase()}`,
     buttonLabel: "Export",
-    defaultPath: "results.zng",
+    defaultPath: `results.${format}`,
     properties: ["createDirectory"]
   })
 }
@@ -56,13 +58,17 @@ export default function ExportButton() {
     setStatus("INIT")
   }
 
-  async function onClick() {
-    const {canceled, filePath} = await showDialog()
+  async function doStuff() {
+    const {canceled, filePath} = await showDialog(format)
     if (canceled) return
     setStatus("EXPORTING")
-    await dispatch(exportResults(filePath))
+    await dispatch(exportResults(filePath, format))
     setStatus("DONE")
     setTimeout(dismiss, 3000)
+  }
+
+  const onClick = () => {
+    Modal.show("export")
   }
 
   const messages = {
@@ -72,7 +78,7 @@ export default function ExportButton() {
   }
 
   return (
-    <div title="Export search results to ZNG file">
+    <div title="Export search results to file">
       <ToolbarButton
         {...toolbarExportButton.props}
         icon={<ExportIcon />}
