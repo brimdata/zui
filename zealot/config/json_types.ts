@@ -3444,6 +3444,10 @@ export function getDefaultJsonTypeConfig() {
           type: "bstring"
         },
         {
+          "name": "source",
+          "type": "bstring"
+        },
+        {
           name: "_write_ts",
           type: "time"
         }
