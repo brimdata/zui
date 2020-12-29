@@ -6,7 +6,7 @@ import brim from "src/js/brim"
 import LogDetails from "src/js/state/LogDetails"
 import {ZeekEvent} from "./models/ZeekEvent"
 import EventTimeline from "./EventTimeline"
-import {TableWrap, ChartWrap} from "app/detail/Spacing"
+import {TableWrap, ChartWrap, Caption} from "app/detail/Spacing"
 import formatDur from "./util/formatDur"
 import PanelHeading from "app/detail/PanelHeading"
 import Panel from "app/detail/Panel"
@@ -66,6 +66,7 @@ export default memo(function RelatedConns({record}: Props) {
           </Data>
         </TableWrap>
       </Panel>
+      <Caption>Populated by community_id</Caption>
     </section>
   )
 })

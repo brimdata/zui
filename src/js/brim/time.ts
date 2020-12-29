@@ -56,7 +56,7 @@ function time(val: Ts | Date = new Date()) {
       return brim.time(fromBigInt(dur))
     },
 
-    format(fmt = "YYYY-MM-DDThh:mm:ss.SSS") {
+    format(fmt) {
       return moment(this.toDate()).format(fmt)
     }
   }
@@ -92,8 +92,8 @@ time.setDefaultFormat = function(format = "") {
     moment.defaultFormat = format
     moment.defaultFormatUtc = format
   } else {
-    moment.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ"
-    moment.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]"
+    moment.defaultFormat = "YYYY-MM-DDTHH:mm:ss.SSS"
+    moment.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss.SSS"
   }
 }
 

@@ -13,4 +13,5 @@ export const Caption = styled.p`
   font-style: italic;
   text-align: right;
   color: var(--slate);
+  margin-right: 4px;
 `

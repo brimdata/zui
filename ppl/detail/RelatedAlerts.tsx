@@ -6,7 +6,7 @@ import LogDetails from "src/js/state/LogDetails"
 
 import {SuricataEvent} from "./models/SuricataEvent"
 import EventTimeline from "./EventTimeline"
-import {ChartWrap, TableWrap} from "app/detail/Spacing"
+import {Caption, ChartWrap, TableWrap} from "app/detail/Spacing"
 import {Data, Name, Value} from "app/core/Data"
 import formatDur from "./util/formatDur"
 import PanelHeading from "app/detail/PanelHeading"
@@ -71,6 +71,7 @@ export default memo(function RelatedAlerts({record}: Props) {
           </Data>
         </TableWrap>
       </Panel>
+      <Caption>Populated by community_id</Caption>
     </section>
   )
 })
