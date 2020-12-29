@@ -1,23 +1,31 @@
 import {isEqual} from "lodash"
 
 import {Finding} from "../../state/Investigation/types"
-import Tree from "../../models/Tree"
+import TreeModel from "tree-model"
 
-export function createInvestigationTree(investigation: Finding[]) {
-  const tree = new Tree({data: "ROOT", children: []})
+export type InvestigationNode = TreeModel.Node<{
+  // filter can be a pin or program
+  filter: string
+  finding: Finding
+}>
+
+export function createInvestigationTree(
+  investigation: Finding[]
+): InvestigationNode {
+  const tree = new TreeModel().parse({filter: "ROOT", finding: null})
 
   for (const finding of investigation) {
-    let node = tree.getRoot()
+    let node = tree
 
     eachFilter(finding.search, (filter) => {
       if (!node) return
       const nextNode = node.children.find((child) =>
-        isEqual(child.data.filter, filter)
+        isEqual(child.model.filter, filter)
       )
       if (nextNode) {
         node = nextNode
       } else {
-        node = node.addChild({filter, finding})
+        node = node.addChild(new TreeModel().parse({filter, finding}))
       }
     })
   }
