@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 import {
   ButtonGroup,
   Content,
@@ -7,7 +7,6 @@ import {
   SmallTitle
 } from "./ModalDialog/ModalDialog"
 import ToolbarButton from "./Toolbar/Button"
-import MacSpinner from "./MacSpinner"
 import exportResults from "../flows/exportResults"
 import {popNotice} from "./PopNotice"
 import {ipcRenderer} from "electron"
@@ -15,33 +14,45 @@ import {useDispatch, useSelector} from "react-redux"
 import {SearchFormat} from "../../../zealot"
 import InputLabel from "./common/forms/InputLabel"
 import Columns from "../state/Columns"
-import BrimTooltip from "./BrimTooltip"
 import {defaultModalButton} from "../test/locators"
 
 const RadioButtons = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto 24px;
+  margin: 0 12px 24px;
+  padding: 0;
+  cursor: default;
 
   ${InputLabel} {
     margin-bottom: 6px;
   }
 `
 
-const RadioItem = styled.div`
+const RadioItem = styled.div<{isDisabled?: boolean}>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 3px;
+  margin-left: 12px;
+  ${(p) =>
+    p.isDisabled &&
+    css`
+      color: var(--slate);
+    `}
 
   input {
     margin: 0 6px 0 0;
   }
 `
 
-const StyledTooltip = styled.div`
-  width: 120px;
+const StyledFooter = styled(Footer)`
+  background: transparent;
+`
+
+const StyledInfo = styled.div`
+  width: 250px;
+  color: var(--red);
 `
 
 const showDialog = (format) => {
@@ -55,7 +66,6 @@ const showDialog = (format) => {
 
 const ExportModal = ({onClose}) => {
   const dispatch = useDispatch()
-  const [isExporting, setIsExporting] = useState(false)
   const [format, setFormat] = useState("zng")
   const columns = useSelector(Columns.getCurrentTableColumns)
   const isUniform = columns.id !== "temp" && columns.id !== "none"
@@ -63,16 +73,14 @@ const ExportModal = ({onClose}) => {
   const onExport = async () => {
     const {canceled, filePath} = await showDialog(format)
     if (canceled) return
-    setIsExporting(true)
-    await dispatch(exportResults(filePath, format as SearchFormat))
-    setIsExporting(false)
-    popNotice("Export Complete.")
     onClose()
+    await dispatch(exportResults(filePath, format as SearchFormat))
+    popNotice("Export Complete.")
   }
 
   return (
     <Content>
-      <SmallTitle>Export Search Results</SmallTitle>
+      <SmallTitle>Export Results</SmallTitle>
       <RadioButtons
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           setFormat(e.target.value)
@@ -81,43 +89,34 @@ const ExportModal = ({onClose}) => {
         <InputLabel>Format</InputLabel>
         <RadioItem>
           <input type="radio" value="zng" name="format" defaultChecked />
-          ZNG
+          zng
         </RadioItem>
-        <RadioItem
-          data-tip="csv-export-description"
-          data-place="right"
-          data-effect="solid"
-          data-delay-show={500}
-        >
+        <RadioItem isDisabled={!isUniform}>
           <input disabled={!isUniform} type="radio" value="csv" name="format" />
-          CSV
-          {!isUniform && (
-            <BrimTooltip className="brim-tooltip-show-hover">
-              <StyledTooltip>
-                CSV export requires uniform records but different types were
-                encountered in current search results
-              </StyledTooltip>
-            </BrimTooltip>
-          )}
+          csv
         </RadioItem>
+        {!isUniform && (
+          <StyledInfo>
+            CSV export requires uniform records but different types were
+            encountered in current search results.
+          </StyledInfo>
+        )}
         <RadioItem>
           <input type="radio" value="ndjson" name="format" />
-          NDJSON
+          ndjson
         </RadioItem>
       </RadioButtons>
-      <Footer>
+      <StyledFooter>
         <ButtonGroup>
           <ToolbarButton text="Close" onClick={onClose} />
           <ToolbarButton
             {...defaultModalButton.props}
             isPrimary
-            text={isExporting ? "" : "Export"}
-            icon={isExporting ? <MacSpinner light /> : null}
-            disabled={isExporting}
+            text={"Export"}
             onClick={onExport}
           />
         </ButtonGroup>
-      </Footer>
+      </StyledFooter>
     </Content>
   )
 }
