@@ -88,12 +88,24 @@ const ExportModal = ({onClose}) => {
       >
         <InputLabel>Format</InputLabel>
         <RadioItem>
-          <input type="radio" value="zng" name="format" defaultChecked />
-          zng
+          <input
+            type="radio"
+            id="zng"
+            value="zng"
+            name="format"
+            defaultChecked
+          />
+          <label htmlFor="zng">zng</label>
         </RadioItem>
         <RadioItem isDisabled={!isUniform}>
-          <input disabled={!isUniform} type="radio" value="csv" name="format" />
-          csv
+          <input
+            disabled={!isUniform}
+            type="radio"
+            id="csv"
+            value="csv"
+            name="format"
+          />
+          <label htmlFor="csv">csv</label>
         </RadioItem>
         {!isUniform && (
           <StyledInfo>
@@ -102,8 +114,8 @@ const ExportModal = ({onClose}) => {
           </StyledInfo>
         )}
         <RadioItem>
-          <input type="radio" value="ndjson" name="format" />
-          ndjson
+          <input type="radio" id="ndjson" value="ndjson" name="format" />
+          <label htmlFor="ndjson">ndjson</label>
         </RadioItem>
       </RadioButtons>
       <StyledFooter>
