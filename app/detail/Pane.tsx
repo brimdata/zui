@@ -31,7 +31,7 @@ const Content = memo<Props>(function Content({record}) {
   const event = useMemo(() => BrimEvent.build(record), [record])
   const isZeek = event instanceof ZeekEvent
   const isSuricata = event instanceof SuricataEvent
-  const {uid} = new Correlation(record).getIds()
+  const {uid, cid} = new Correlation(record).getIds()
   const isConn = isZeek && record.try("_path").toString() === "conn"
   const hasMd5 = isZeek && record.has("md5")
 
@@ -42,8 +42,8 @@ const Content = memo<Props>(function Content({record}) {
       </div>
       <div className="column">
         {isZeek && uid && <CorrelationPanel record={record} />}
-        {isSuricata && <RelatedAlerts record={record} />}
-        {isSuricata && <RelatedConns record={record} />}
+        {isSuricata && cid && <RelatedAlerts record={record} />}
+        {isSuricata && cid && <RelatedConns record={record} />}
         {isConn && <ConnPanel record={record} />}
         {hasMd5 && <Md5Panel record={record} />}
       </div>

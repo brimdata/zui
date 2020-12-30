@@ -9,13 +9,14 @@ import {zng} from "zealot"
 
 type Props = {
   field: zng.Field
+  record: zng.Record
   menu: $Menu
 }
 
 const on = document.addEventListener
 const off = document.removeEventListener
 
-export default function SingleField({field, menu}: Props) {
+export default function SingleField({field, menu, record}: Props) {
   const [selected, setSelected] = useState(false)
   const cell = useRef<any>()
 
@@ -46,7 +47,7 @@ export default function SingleField({field, menu}: Props) {
       onClick={onClick}
       onContextMenu={() => showContextMenu(menu)}
     >
-      <FieldCell field={field} />
+      <FieldCell field={field} record={record} />
     </div>
   )
 }

@@ -27,7 +27,7 @@ export function TableData({field, record, onRightClick}: Props) {
 
   return (
     <td onContextMenu={onContextMenu} className={`${data.getType()} ${name}`}>
-      <FieldCell field={field} />
+      <FieldCell field={field} record={record} />
     </td>
   )
 }

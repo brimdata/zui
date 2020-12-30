@@ -1,3 +1,4 @@
+import {cssVar} from "polished"
 import React from "react"
 import styled from "styled-components"
 
@@ -27,9 +28,9 @@ const Severity = styled.span`
 `
 
 const colors = {
-  3: "#FBC00E",
-  2: "#F4912F",
-  1: "#d0250b"
+  3: cssVar("--alert-3"),
+  2: cssVar("--alert-2"),
+  1: cssVar("--alert-1")
 }
 
 export default function SuricataTag({event, ...rest}) {

@@ -19,7 +19,7 @@ export default function CompoundField({field, log, menuBuilder}: Props) {
     const item = new zng.Field(field.name, field.data.at(i))
     if (item) {
       const menu = menuBuilder(item, log, true)
-      render.push(<SingleField key={i} field={item} menu={menu} />)
+      render.push(<SingleField key={i} field={item} menu={menu} record={log} />)
     }
     if (i !== compound.length - 1) {
       render.push(<Comma key={"comma-" + i} />)
