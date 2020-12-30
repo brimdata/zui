@@ -33,6 +33,11 @@ const LogRow = (props: Props) => {
     onDoubleClick
   } = props
 
+  if (log.has("event_type")) {
+    console.log(log.type)
+    console.log(columns)
+  }
+
   const renderCell = (column, colIndex) => {
     const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
     const field = log.tryField(column.name)
@@ -53,7 +58,6 @@ const LogRow = (props: Props) => {
       return <div className="log-cell" key={key} style={{width}} />
     }
   }
-
   return (
     <div
       className={classNames("log-row", {highlight, even: index % 2 === 0})}

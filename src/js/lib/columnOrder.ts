@@ -1,13 +1,13 @@
 import {$Column} from "../state/Columns/models/column"
 
-const EXCLUDED = ["ts", "_td"]
+const EXCLUDED = ["ts", "_td", "event_type"]
 
 export default (cols: $Column[]) => {
-  const orderedCols = cols.filter(({name}) => !EXCLUDED.includes(name))
+  let orderedCols = cols.filter(({name}) => !EXCLUDED.includes(name))
   const ts = cols.find(({name}) => name === "ts")
-  if (ts) {
-    return [ts, ...orderedCols]
-  } else {
-    return orderedCols
-  }
+  const eventType = cols.find(({name}) => name === "event_type")
+
+  if (eventType) orderedCols = [eventType, ...orderedCols]
+  if (ts) orderedCols = [ts, ...orderedCols]
+  return orderedCols
 }
