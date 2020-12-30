@@ -50,6 +50,7 @@ function TooltipAnchor({children}) {
   return (
     <span
       data-tip="column-description"
+      data-for="column-description"
       data-place="left"
       data-effect="solid"
       data-delay-show={500}
@@ -61,7 +62,7 @@ function TooltipAnchor({children}) {
 
 function Tooltip({field, record}) {
   return (
-    <BrimTooltip className="brim-tooltip-show-hover">
+    <BrimTooltip id="column-description" className="brim-tooltip-show-hover">
       <ColumnDescription
         column={field}
         path={record.try("_path")?.toString()}

@@ -1,69 +1,54 @@
 import {Data, Name, Value} from "app/core/Data"
-import {BrimEvent} from "ppl/detail/models/BrimEvent"
+import {BrimEvent, BrimEventInterface} from "ppl/detail/models/BrimEvent"
 import React, {memo, useMemo} from "react"
-import {useSelector} from "react-redux"
 import brim from "src/js/brim"
-import LogDetails from "src/js/state/LogDetails"
-import {ZeekEvent} from "./models/ZeekEvent"
 import EventTimeline from "./EventTimeline"
 import {TableWrap, ChartWrap, Caption} from "app/detail/Spacing"
 import formatDur from "./util/formatDur"
 import PanelHeading from "app/detail/PanelHeading"
 import Panel from "app/detail/Panel"
 import {zng} from "zealot"
-import zql from "src/js/zql"
 import EventLimit from "./EventLimit"
+import useSearch from "app/core/hooks/useSearch"
+import firstLast from "./util/firstLast"
+import zql from "src/js/zql"
 
 type Props = {
   record: zng.Record
 }
 
-export default memo(function RelatedConns({record}: Props) {
-  const query = useMemo(
-    () => zql`_path=conn community_id=${record.get("community_id")}`,
-    [record]
-  )
-  const logs = useSelector(LogDetails.getUidLogs)
-  const events = useMemo(
-    () =>
-      logs
-        .map(BrimEvent.build)
-        .filter((e) => e instanceof ZeekEvent)
-        .sort((a, b) => a.getTime().getTime() - b.getTime().getTime()),
-    [logs]
-  )
-  const first = events[0]
-  const last = events.length == 1 ? null : events[events.length - 1]
+const LIMIT = 100
+const getQuery = (r: zng.Record, limit?: number) => {
+  const cid = r.get("community_id")
+  const base = zql`_path=conn community_id=${cid} | sort ts`
+  return limit ? `${base} | head ${limit}` : base
+}
 
+export default memo(function RelatedConns({record}: Props) {
+  const [records, isFetching] = useSearch(getQuery(record, LIMIT), [record])
+  const events = useMemo(() => records.map(BrimEvent.build), [records])
+  const [first, last] = firstLast<BrimEventInterface>(events)
+  const data = [
+    ["Count", events.length],
+    ["First ts", first ? brim.time(first.getTime()).format() : "Not available"],
+    ["Last ts", last ? brim.time(last.getTime()).format() : "Not available"],
+    ["Duration", formatDur(first?.getTime(), last?.getTime())]
+  ]
   return (
     <section>
-      <PanelHeading>Related Connections</PanelHeading>
+      <PanelHeading isLoading={isFetching}>Related Connections</PanelHeading>
       <Panel>
         <ChartWrap>
           <EventTimeline events={events} />
-          <EventLimit query={query} count={events.length} />
+          <EventLimit query={getQuery(record)} count={events.length} />
         </ChartWrap>
         <TableWrap>
-          <Data>
-            <Name>Count</Name>
-            <Value>{events.length}</Value>
-          </Data>
-          <Data>
-            <Name>First ts</Name>
-            <Value>
-              {first ? brim.time(first.getTime()).format() : "Not available"}
-            </Value>
-          </Data>
-          <Data>
-            <Name>Last ts</Name>
-            <Value>
-              {last ? brim.time(last.getTime()).format() : "Not available"}
-            </Value>
-          </Data>
-          <Data>
-            <Name>Duration</Name>
-            <Value>{formatDur(first?.getTime(), last?.getTime())}</Value>
-          </Data>
+          {data.map(([name, value]) => (
+            <Data key={name}>
+              <Name>{name}</Name>
+              <Value>{value}</Value>
+            </Data>
+          ))}
         </TableWrap>
       </Panel>
       <Caption>Populated by community_id</Caption>
