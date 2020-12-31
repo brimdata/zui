@@ -1,7 +1,7 @@
 import React, {memo, ReactNode} from "react"
 import InlineTableLoading from "src/js/components/InlineTableLoading"
 import styled from "styled-components"
-import {ChartWrap} from "./Spacing"
+import {ChartWrap} from "./Shared"
 
 export const BG = styled.div`
   background: white;

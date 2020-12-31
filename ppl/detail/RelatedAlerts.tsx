@@ -3,7 +3,7 @@ import React, {memo, useMemo} from "react"
 import brim from "src/js/brim"
 
 import EventTimeline from "./EventTimeline"
-import {Caption, ChartWrap, TableWrap} from "app/detail/Spacing"
+import {Caption, ChartWrap, TableWrap} from "app/detail/Shared"
 import {Data, Name, Value} from "app/core/Data"
 import formatDur from "./util/formatDur"
 import PanelHeading from "app/detail/PanelHeading"

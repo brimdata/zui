@@ -1,4 +1,4 @@
-import {Caption} from "app/detail/Spacing"
+import {Caption} from "app/detail/Shared"
 import React, {memo, useCallback} from "react"
 import {useDispatch} from "react-redux"
 import Link from "src/js/components/common/Link"
