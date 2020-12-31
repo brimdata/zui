@@ -7,6 +7,7 @@ import {stdTest} from "../lib/jest"
 import {
   defaultModalButton,
   popNoticeLocator,
+  toastLocator,
   toolbarExportButton
 } from "../../src/js/test/locators"
 import createTestBrim from "../lib/createTestBrim"
@@ -23,7 +24,7 @@ describe("exporting tests", () => {
     await brim.search("")
     await brim.click(toolbarExportButton)
     await brim.click(defaultModalButton)
-    await brim.waitForText(popNoticeLocator.css, /export complete/i)
+    await brim.waitForHTMLText(toastLocator.css, /export complete/i)
 
     expect(fsExtra.statSync(filePath).size).toBeGreaterThan(0)
     await fsExtra.remove(filePath)

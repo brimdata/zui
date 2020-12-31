@@ -20,10 +20,10 @@ function cutColumns(program, columns) {
   }
 }
 
-export default (filePath: string, format: SearchFormat): Thunk => (
-  dispatch,
-  getState
-) => {
+export default (
+  filePath: string,
+  format: SearchFormat
+): Thunk<Promise<string>> => (dispatch, getState) => {
   const zealot = dispatch(getZealot())
   const spaceId = Current.getSpaceId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
@@ -41,7 +41,5 @@ export default (filePath: string, format: SearchFormat): Thunk => (
       format,
       controlMessages: false
     })
-    .then((resp) => {
-      saveToFile(resp.origResp as Response, filePath)
-    })
+    .then((resp) => saveToFile(resp.origResp as Response, filePath))
 }
