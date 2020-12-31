@@ -77,10 +77,8 @@ export default (name: string) => {
     // waitForHTMLText will seek out html instead of visible text, use for hidden elements
     waitForHTMLText(locator: string, regex: RegExp) {
       return retryUntil(
-        async () => (await app.client.$(locator)).getHTML(),
-        (s) => {
-          return regex.test(s)
-        }
+        async () => (await app.client.$(locator)).getHTML(false),
+        (s) => regex.test(s)
       )
     },
 
