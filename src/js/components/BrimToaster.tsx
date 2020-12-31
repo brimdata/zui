@@ -24,7 +24,6 @@ const BrimToaster = () => {
     setLastToast(last(toasts))
   }, [toasts])
 
-  console.log(lastToast)
   return (
     <>
       <HiddenToast {...toastLocator.props}>{lastToast?.message}</HiddenToast>
