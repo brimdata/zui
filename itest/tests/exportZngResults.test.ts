@@ -6,7 +6,6 @@ import path from "path"
 import {stdTest} from "../lib/jest"
 import {
   defaultModalButton,
-  popNoticeLocator,
   toastLocator,
   toolbarExportButton
 } from "../../src/js/test/locators"
