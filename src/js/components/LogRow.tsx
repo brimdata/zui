@@ -33,11 +33,6 @@ const LogRow = (props: Props) => {
     onDoubleClick
   } = props
 
-  if (log.has("event_type")) {
-    console.log(log.type)
-    console.log(columns)
-  }
-
   const renderCell = (column, colIndex) => {
     const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
     const field = log.tryField(column.name)
