@@ -20,11 +20,13 @@ export interface ZealotArgs {
   fetcher: (host: string) => ZFetcher
 }
 
+export type SearchFormat = "zjson" | "zng" | "ndjson" | "csv"
+
 export interface SearchArgs {
   from: Date | Ts | bigint
   to: Date | Ts | bigint
   spaceId: string
-  format: "zjson" | "zng"
+  format: SearchFormat
   controlMessages: boolean
   enhancers: Enhancer[]
   signal?: AbortSignal

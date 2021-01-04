@@ -5,6 +5,7 @@ import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import brim from "../brim"
+import {SearchFormat} from "zealot"
 import {getZealot} from "./getZealot"
 
 function cutColumns(program, columns) {
@@ -19,7 +20,10 @@ function cutColumns(program, columns) {
   }
 }
 
-export default (filePath: string): Thunk => (dispatch, getState) => {
+export default (
+  filePath: string,
+  format: SearchFormat
+): Thunk<Promise<string>> => (dispatch, getState) => {
   const zealot = dispatch(getZealot())
   const spaceId = Current.getSpaceId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
@@ -34,7 +38,7 @@ export default (filePath: string): Thunk => (dispatch, getState) => {
       from,
       to,
       spaceId,
-      format: "zng",
+      format,
       controlMessages: false
     })
     .then((resp) => saveToFile(resp.origResp as Response, filePath))

@@ -11,6 +11,7 @@ import NewConnectionModal from "./ConnectionModals/NewConnectionModal"
 import ViewConnectionModal from "./ConnectionModals/ViewConnectionModal"
 import NewQueryModal from "./QueriesModals/NewQueryModal"
 import EditQueryModal from "./QueriesModals/EditQueryModal"
+import ExportModal from "./ExportModal"
 
 const MODALS = {
   debug: DebugModal,
@@ -21,6 +22,7 @@ const MODALS = {
   "new-connection": NewConnectionModal,
   "view-connection": ViewConnectionModal,
   "new-query": NewQueryModal,
+  export: ExportModal,
   "edit-query": EditQueryModal
 }
 

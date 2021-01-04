@@ -54,7 +54,7 @@ Array [
       },
       Object {
         "click": [Function],
-        "label": "Export Results as ZNG...",
+        "label": "Export Results As...",
       },
       Object {
         "type": "separator",
@@ -259,7 +259,7 @@ Array [
       },
       Object {
         "click": [Function],
-        "label": "Export Results as ZNG...",
+        "label": "Export Results As...",
       },
       Object {
         "type": "separator",

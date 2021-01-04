@@ -66,8 +66,8 @@ export default function appMenu(
   }
 
   const exportResults: MenuItemConstructorOptions = {
-    label: "Export Results as ZNG...",
-    click: () => send("exportResults")
+    label: "Export Results As...",
+    click: () => send("showExportResults")
   }
 
   const brimMenu: MenuItemConstructorOptions = {

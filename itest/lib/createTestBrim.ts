@@ -74,6 +74,14 @@ export default (name: string) => {
       )
     },
 
+    // waitForHTMLText will seek out html instead of visible text, use for hidden elements
+    waitForHTMLText(locator: string, regex: RegExp) {
+      return retryUntil(
+        async () => (await app.client.$(locator)).getHTML(false),
+        (s) => regex.test(s)
+      )
+    },
+
     async isVisible(locator: Locator) {
       return !!(await (await app.client.$(locator.css)).isDisplayed())
     },
