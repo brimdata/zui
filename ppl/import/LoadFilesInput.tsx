@@ -1,13 +1,12 @@
 import React, {ChangeEvent, MouseEvent} from "react"
 import classNames from "classnames"
-
-import {reactElementProps} from "../test/integration"
-import Folder from "../icons/Folder"
-import PcapFileIcon from "../icons/PcapFileIcon"
-import ToolbarButton from "./Toolbar/Button"
-import ZeekFileIcon from "../icons/ZeekFileIcon"
-import useCallbackRef from "./hooks/useCallbackRef"
-import useDropzone from "./hooks/useDropzone"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
+import useDropzone from "src/js/components/hooks/useDropzone"
+import ToolbarButton from "src/js/components/Toolbar/Button"
+import Folder from "src/js/icons/Folder"
+import {reactElementProps} from "src/js/test/integration"
+import PcapFileIcon from "./PcapFileIcon"
+import ZeekFileIcon from "./ZeekFileIcon"
 
 type Props = {
   onChange: (e, files: File[]) => void

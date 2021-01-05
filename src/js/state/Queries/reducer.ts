@@ -1,6 +1,6 @@
 import {QueriesAction, QueriesState, Item} from "./types"
 import produce, {original} from "immer"
-import init from "./initial"
+import init from "ppl/queries/initial"
 import TreeModel from "tree-model"
 import {includes} from "lodash"
 

@@ -1,4 +1,4 @@
-import {QueriesState} from "./types"
+import {QueriesState} from "src/js/state/Queries/types"
 
 const init = (): QueriesState => ({
   id: "root",

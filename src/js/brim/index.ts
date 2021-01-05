@@ -12,7 +12,6 @@ import syntax from "./syntax"
 import tab from "./brimTab"
 
 import time from "./time"
-import zeekLogInfo from "./zeekLogInfo"
 import connection from "./connection"
 
 export type Ts = {
@@ -39,6 +38,5 @@ export default {
   randomHash,
   entries,
   tab,
-  zeekLogInfo,
   connection
 }

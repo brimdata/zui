@@ -1,11 +1,11 @@
 import {isEqual} from "lodash"
 
-import {Space} from "../../state/Spaces/types"
-import {hasGroupByProc} from "../../lib/Program"
-import menu from "./"
 import {RightClickBuilder} from "src/js/types"
 import {MenuItemConstructorOptions} from "electron"
 import {zng} from "zealot"
+import menu from "src/js/electron/menu"
+import {hasGroupByProc} from "src/js/lib/Program"
+import {Space} from "src/js/state/Spaces/types"
 
 export default function searchFieldContextMenu(
   program: string,

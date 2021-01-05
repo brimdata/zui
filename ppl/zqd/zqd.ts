@@ -6,8 +6,8 @@ import {app} from "electron"
 import {join, resolve} from "path"
 import {spawn, ChildProcess} from "child_process"
 
-import * as cmd from "../stdlib/cmd"
-import electronIsDev from "../electron/isDev"
+import * as cmd from "src/js/stdlib/cmd"
+import electronIsDev from "src/js/electron/isDev"
 
 // Paths for the zqd and zeek programs.
 const zdepsDirectory = join(app.getAppPath(), "zdeps")

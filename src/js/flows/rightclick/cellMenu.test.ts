@@ -2,8 +2,8 @@ import {MenuItemConstructorOptions} from "electron"
 
 import {conn, dns} from "../../test/mockLogs"
 import fixtures from "../../test/fixtures"
-import menu from "../../electron/menu"
 import {zng} from "zealot"
+import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 
 function menuText(menu: MenuItemConstructorOptions[]) {
   return menu
@@ -22,7 +22,7 @@ describe("Log Right Click", () => {
   test("conn log with pcap support", () => {
     const log = conn()
     const field = log.getField("id.orig_h")
-    const ctxMenu = menu.searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
       log,
       false
@@ -36,7 +36,7 @@ describe("Log Right Click", () => {
 
     const log = conn()
     const field = log.getField("id.orig_h")
-    const ctxMenu = menu.searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
       log,
       false
@@ -48,7 +48,7 @@ describe("Log Right Click", () => {
   test("dns log", () => {
     const log = dns()
     const field = log.getField("query")
-    const ctxMenu = menu.searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
       log,
       false
@@ -61,7 +61,7 @@ describe("Log Right Click", () => {
   test("time field for conn log", () => {
     const log = conn()
     const field = log.getField("ts")
-    const ctxMenu = menu.searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
       log,
       false
@@ -85,7 +85,7 @@ describe("Analysis Right Click", () => {
       ["300", ["192.168.0.51"]]
     )
     const field = log.getField("id.orig_h")
-    const ctxMenu = menu.searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
       log,
       false
@@ -103,7 +103,7 @@ describe("Analysis Right Click", () => {
       ["100", "tcp"]
     )
     const field = log.getField("proto")
-    const ctxMenu = menu.searchFieldContextMenu(
+    const ctxMenu = searchFieldContextMenu(
       "* | count() by proto",
       ["count", "proto"],
       space

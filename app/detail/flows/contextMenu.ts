@@ -1,5 +1,5 @@
-import detailFieldContextMenu from "src/js/electron/menu/detailFieldContextMenu"
-import searchFieldContextMenu from "src/js/electron/menu/searchFieldContextMenu"
+import detailFieldContextMenu from "ppl/menus/detailFieldContextMenu"
+import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import {showContextMenu} from "src/js/lib/System"
 import Columns from "src/js/state/Columns"
 import Current from "src/js/state/Current"

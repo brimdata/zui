@@ -1,7 +1,7 @@
-import brim from "./"
+import zeekLogInfo from "./logInfo"
 
 test("describe conn uid", () => {
-  const path = brim.zeekLogInfo("conn")
+  const path = zeekLogInfo("conn")
   const {desc, type} = path.describeColumn({name: "uid", type: "bstring"})
 
   expect(desc).toBe("A unique identifier of the connection.")
@@ -9,12 +9,12 @@ test("describe conn uid", () => {
 })
 
 test("known path", () => {
-  const path = brim.zeekLogInfo("conn")
+  const path = zeekLogInfo("conn")
 
   expect(path.isKnown()).toBe(true)
 })
 
 test("unknown path", () => {
-  const path = brim.zeekLogInfo("nopath")
+  const path = zeekLogInfo("nopath")
   expect(path.isKnown()).toBe(false)
 })
