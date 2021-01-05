@@ -12,6 +12,7 @@ import StartupError from "./components/StartupError"
 import {Modals} from "./components/Modals"
 import {ThemeProvider} from "styled-components"
 import theme from "./style-theme"
+import BrimTooltip from "./components/BrimTooltip"
 
 initDetail()
   .then((store) => {
@@ -22,6 +23,7 @@ initDetail()
           <ThemeProvider theme={theme}>
             <LogDetailsWindow />
             <Modals />
+            <BrimTooltip />
           </ThemeProvider>
         </Provider>
       </AppErrorBoundary>,
