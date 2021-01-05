@@ -2,7 +2,7 @@ const {camelCase, upperFirst} = require("lodash")
 
 const {write} = require("../utils/file")
 
-export function handleReducer(input) {
+function handleReducer(input) {
   let name = upperFirst(camelCase(input))
   write(`src/js/state/${name}/index.ts`, indexStub())
   write(`src/js/state/${name}/reducer.ts`, reducerStub(name))
@@ -73,3 +73,5 @@ export type ${stateType(name)} = {}
 export type ${actionType(name)} = {type: "STUB"}
 `
 }
+
+module.exports = {handleReducer}
