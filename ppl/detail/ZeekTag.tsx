@@ -10,7 +10,7 @@ const BG = styled.div`
   color: white;
   cursor: default;
   user-select: none;
-  justify-content: flex-end;
+  justify-content: center;
   min-width: fit-content;
 `
 
