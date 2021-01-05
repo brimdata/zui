@@ -9,10 +9,9 @@ import {
 import ToolbarButton from "./Toolbar/Button"
 import exportResults from "../flows/exportResults"
 import {ipcRenderer} from "electron"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import {SearchFormat} from "../../../zealot"
 import InputLabel from "./common/forms/InputLabel"
-import Columns from "../state/Columns"
 import {defaultModalButton} from "../test/locators"
 import {toast} from "react-hot-toast"
 
@@ -31,19 +30,9 @@ const RadioItem = styled.div<{isDisabled?: boolean}>`
   justify-content: flex-start;
   margin-bottom: 3px;
   margin-left: 8px;
-  ${(p) =>
-    p.isDisabled &&
-    css`
-      color: var(--slate);
-    `}
 
   input {
     margin: 0 6px 0 0;
-    ${(p) =>
-      p.isDisabled &&
-      css`
-        cursor: not-allowed;
-      `}
   }
 `
 
@@ -60,11 +49,6 @@ const StyledFooter = styled(Footer)`
   padding: 0;
 `
 
-const StyledInfo = styled.div`
-  color: var(--slate);
-  margin-left: 27px;
-`
-
 const showDialog = (format) => {
   return ipcRenderer.invoke("windows:showSaveDialog", {
     title: `Export Results as ${format.toUpperCase()}`,
@@ -77,8 +61,6 @@ const showDialog = (format) => {
 const ExportModal = ({onClose}) => {
   const dispatch = useDispatch()
   const [format, setFormat] = useState("zng")
-  const columns = useSelector(Columns.getCurrentTableColumns)
-  const isUniform = columns.id !== "temp" && columns.id !== "none"
 
   const onExport = async () => {
     const {canceled, filePath} = await showDialog(format)
@@ -123,22 +105,10 @@ const ExportModal = ({onClose}) => {
             <input type="radio" id="ndjson" value="ndjson" name="format" />
             <label htmlFor="ndjson">ndjson</label>
           </RadioItem>
-          <RadioItem isDisabled={!isUniform}>
-            <input
-              disabled={!isUniform}
-              type="radio"
-              id="csv"
-              value="csv"
-              name="format"
-            />
+          <RadioItem>
+            <input type="radio" id="csv" value="csv" name="format" />
             <label htmlFor="csv">csv</label>
           </RadioItem>
-          {!isUniform && (
-            <StyledInfo>
-              Requires uniform records, but results contain more than one record
-              type.
-            </StyledInfo>
-          )}
         </RadioButtons>
       </FormatContent>
       <StyledFooter>
