@@ -53,7 +53,6 @@ const LogRow = (props: Props) => {
       return <div className="log-cell" key={key} style={{width}} />
     }
   }
-
   return (
     <div
       className={classNames("log-row", {highlight, even: index % 2 === 0})}

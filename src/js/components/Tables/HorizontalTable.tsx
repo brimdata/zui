@@ -1,16 +1,19 @@
 import * as React from "react"
 
-import {RightClickBuilder} from "../../types"
 import Table, {TableData, TableHeader} from "./Table"
 import {zjson, zng} from "zealot"
 
 type Props = {
   descriptor: zjson.Column[]
   logs: zng.Record[]
-  rightClick?: RightClickBuilder
+  onRightClick?: (f: zng.Field, r: zng.Record) => void
 }
 
-export default function HorizontalTable({descriptor, logs, rightClick}: Props) {
+export default function HorizontalTable({
+  descriptor,
+  logs,
+  onRightClick
+}: Props) {
   return (
     <Table className="horizontal-table">
       <thead>
@@ -26,9 +29,9 @@ export default function HorizontalTable({descriptor, logs, rightClick}: Props) {
             {log.getFields().map((field, index) => (
               <TableData
                 field={field}
-                log={log}
+                record={log}
                 key={index}
-                rightClick={rightClick}
+                onRightClick={onRightClick}
               />
             ))}
           </tr>

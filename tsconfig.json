@@ -72,5 +72,5 @@
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "exclude": ["scripts", "test/api"]
+  "exclude": ["scripts", "test/api", "dist", "run"]
 }

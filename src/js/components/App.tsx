@@ -16,6 +16,7 @@ import SearchPage from "./SearchPage"
 import {PopNotice} from "./PopNotice"
 import {Modals} from "./Modals"
 import BrimToaster from "./BrimToaster"
+import BrimTooltip from "./BrimTooltip"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -40,6 +41,7 @@ export default function App() {
       <HTMLContextMenu />
       <BrimToaster />
       <PopNotice />
+      <BrimTooltip />
     </div>
   )
 }

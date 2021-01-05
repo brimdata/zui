@@ -1,21 +1,20 @@
 import React from "react"
 import classNames from "classnames"
 
-import {RightClickBuilder} from "../../types"
 import Table, {TableData, TableHeader} from "./Table"
 import {zjson, zng} from "zealot"
 
 type Props = {
   descriptor: zjson.Column[]
-  log: zng.Record
-  rightClick?: RightClickBuilder
+  record: zng.Record
+  onRightClick?: (f: zng.Field, r: zng.Record) => void
   light?: boolean
 }
 
 export default function VerticalTable({
   descriptor,
-  log,
-  rightClick,
+  record,
+  onRightClick,
   light
 }: Props) {
   return (
@@ -25,9 +24,9 @@ export default function VerticalTable({
           <tr key={index}>
             <TableHeader column={column} />
             <TableData
-              log={log}
-              field={new zng.Field(column.name, log.at(index))}
-              rightClick={rightClick}
+              record={record}
+              field={new zng.Field(column.name, record.at(index))}
+              onRightClick={onRightClick}
             />
           </tr>
         ))}

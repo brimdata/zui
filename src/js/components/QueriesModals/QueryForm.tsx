@@ -140,7 +140,6 @@ const QueryForm = ({onClose, query, value}: Props) => {
         }, {})
 
       const splitTags = tags ? tags.split(", ") : []
-      console.log({splitTags})
       const newQuery = {
         value,
         name,

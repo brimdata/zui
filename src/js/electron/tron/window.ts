@@ -44,6 +44,7 @@ function detailWindow(params) {
     resizable: true,
     width: 360,
     height: 360,
+    minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true

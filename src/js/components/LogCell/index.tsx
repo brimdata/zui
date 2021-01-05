@@ -54,7 +54,7 @@ type FieldSwitchProps = {
 function FieldSwitch({field, log, menuBuilder}: FieldSwitchProps) {
   if (field.data instanceof zng.Primitive) {
     const menu = menuBuilder(field, log, false)
-    return <SingleField field={field} menu={menu} />
+    return <SingleField field={field} menu={menu} record={log} />
   } else {
     return (
       <CompoundField
