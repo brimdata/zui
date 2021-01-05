@@ -1,24 +1,22 @@
 import log from "electron-log"
-
 import {BrowserWindow, dialog, ipcMain} from "electron"
-
-import {$WindowManager} from "../../tron/windowManager"
+import {Brim} from "../../brim"
 
 let started = false
 
-export default function(manager: $WindowManager) {
+export default function(brim: Brim) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
-    const window = manager.getWindow(id)
+    const window = brim.windows.getWindow(id)
 
     return window.initialState
   })
 
   ipcMain.handle("windows:open", (e, args) => {
-    manager.openWindow(args.name, args.params, args.state)
+    brim.windows.openWindow(args.name, args.params, args.state)
   })
 
   ipcMain.handle("windows:close", () => {
-    manager.closeWindow()
+    brim.windows.closeWindow()
   })
 
   ipcMain.handle("windows:ready", () => {
@@ -29,7 +27,7 @@ export default function(manager: $WindowManager) {
   })
 
   ipcMain.handle("windows:newSearchTab", (e, params) => {
-    manager.openSearchTab(params.params)
+    brim.windows.openSearchTab(params.params)
   })
 
   ipcMain.handle("windows:log", (e, {id, args}) => {

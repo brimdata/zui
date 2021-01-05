@@ -41,11 +41,18 @@ export default function session(path: string = sessionStateFile()) {
       } else {
         return undefined
       }
+    },
+
+    async delete() {
+      const file = lib.file(path)
+      if (await file.exists()) {
+        return file.remove()
+      }
     }
   }
 }
 
-function sessionStateFile() {
+export function sessionStateFile() {
   // This can't be a const because we adjust the
   // userData path first thing inside main().
   return path.join(app.getPath("userData"), "appState.json")

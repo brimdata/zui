@@ -3,18 +3,13 @@
 import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
 import path from "path"
 
-import {$WindowManager} from "../tron/windowManager"
-import {Session} from "../tron"
-import config from "../config"
 import electronIsDev from "../isDev"
 import formatSessionState from "../tron/formatSessionState"
-import lib from "../../lib"
+import {Brim} from "../brim"
 
-export default function appMenu(
+export default function(
   send: Function,
-  manager: $WindowManager,
-  store: any,
-  session: Session,
+  brim: Brim,
   platform: string = process.platform
 ): MenuItemConstructorOptions[] {
   const mac = platform === "darwin"
@@ -23,7 +18,7 @@ export default function appMenu(
   const newWindow: MenuItemConstructorOptions = {
     label: "New Window",
     accelerator: "CmdOrCtrl+N",
-    click: () => manager.openWindow("search", {})
+    click: () => brim.windows.openWindow("search", {})
   }
 
   const exit: MenuItemConstructorOptions = {
@@ -34,13 +29,13 @@ export default function appMenu(
   const aboutBrim: MenuItemConstructorOptions = {
     label: "About Brim",
     click() {
-      manager.openAbout()
+      brim.windows.openAbout()
     }
   }
 
   const closeWindow: MenuItemConstructorOptions = {
     label: "Close Window",
-    click: () => manager.closeWindow()
+    click: () => brim.windows.closeWindow()
   }
 
   const closeTab: MenuItemConstructorOptions = {
@@ -51,17 +46,18 @@ export default function appMenu(
   const preferences: MenuItemConstructorOptions = {
     id: "preferences",
     label: platform === "darwin" ? "Preferences..." : "Settings",
-    click: () => manager.openPreferences()
+    click: () => brim.windows.openPreferences()
   }
 
   const resetState: MenuItemConstructorOptions = {
     label: "Reset State",
-    click: () => {
-      send("resetState")
-      lib
-        .file(config.windowStateFile())
-        .remove()
-        .catch(() => {})
+    click: async () => {
+      const {response} = await dialog.showMessageBox({
+        message: "Are you sure?",
+        detail: "This will reset local app state, but retain workspace data.",
+        buttons: ["OK", "Cancel"]
+      })
+      if (response === 0) await brim.resetState()
     }
   }
 
@@ -239,13 +235,13 @@ export default function appMenu(
         label: "Save Session for Testing Migrations",
         async click() {
           const root = app.getAppPath()
-          const version = session.getVersion()
+          const version = brim.session.getVersion()
           const file = path.join(root, `src/js/test/states/${version}.json`)
           const data = formatSessionState(
-            await manager.serialize(),
-            store.getState()
+            await brim.windows.serialize(),
+            brim.store.getState()
           )
-          await session.save(data, file)
+          await brim.session.save(data, file)
           dialog.showMessageBox({
             message: `Session has been saved`,
             detail: file

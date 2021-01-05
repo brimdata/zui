@@ -24,6 +24,7 @@ jest.mock("electron", function() {
     getPosition() {
       return [0, 0]
     }
+    destroy() {}
   }
 
   const electron = {
@@ -32,7 +33,9 @@ jest.mock("electron", function() {
       getName: () => "TestApp",
       getPath: () => "/fake/path",
       getVersion: () => "test-version",
-      getAppPath: () => "fake/app/path"
+      getAppPath: () => "fake/app/path",
+      quit: jest.fn(),
+      relaunch: jest.fn()
     },
     getCurrentWebContents: jest.fn(() => ({
       send: jest.fn()
