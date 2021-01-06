@@ -14,6 +14,7 @@ import lib from "../lib"
 import {getZealot} from "./getZealot"
 import {Handler} from "../state/Handlers/types"
 import {IngestParams} from "../brim/ingest/getParams"
+import SystemTest from "../state/SystemTest"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -29,16 +30,21 @@ export default (files: File[]): Thunk<Promise<void>> => (
   const dataDir = Prefs.getDataDir(getState())
   const spaceNames = Spaces.getSpaceNames(clusterId)(getState())
 
-  return lib.transaction([
-    validateInput(files, dataDir, spaceNames),
-    createDir(),
-    createSpace(zealot, globalDispatch, clusterId),
-    setSpace(dispatch, tabId),
-    registerHandler(dispatch, requestId),
-    postFiles(zealot, conn, jsonTypeConfigPath),
-    trackProgress(zealot, globalDispatch, clusterId),
-    unregisterHandler(dispatch, requestId)
-  ])
+  dispatch(SystemTest.hook("import-start"))
+  return lib
+    .transaction([
+      validateInput(files, dataDir, spaceNames),
+      createDir(),
+      createSpace(zealot, globalDispatch, clusterId),
+      setSpace(dispatch, tabId),
+      registerHandler(dispatch, requestId),
+      postFiles(zealot, conn, jsonTypeConfigPath),
+      trackProgress(zealot, globalDispatch, clusterId),
+      unregisterHandler(dispatch, requestId)
+    ])
+    .then(() => {
+      dispatch(SystemTest.hook("import-complete"))
+    })
 }
 
 const validateInput = (files: File[], dataDir, spaceNames) => ({

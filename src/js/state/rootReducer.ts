@@ -13,6 +13,7 @@ import Spaces from "./Spaces"
 import Tabs from "./Tabs"
 import View from "./View"
 import Queries from "./Queries"
+import SystemTest from "./SystemTest"
 
 export default combineReducers<any, any>({
   errors: Errors.reducer,
@@ -27,5 +28,6 @@ export default combineReducers<any, any>({
   packets: Packets.reducer,
   prefs: Prefs.reducer,
   connectionStatuses: ConnectionStatuses.reducer,
-  queries: Queries.reducer
+  queries: Queries.reducer,
+  systemTest: SystemTest.reducer
 })

@@ -6,10 +6,10 @@ import path from "path"
 import {stdTest} from "../lib/jest"
 import {
   defaultModalButton,
-  toastLocator,
   toolbarExportButton
 } from "../../src/js/test/locators"
 import createTestBrim from "../lib/createTestBrim"
+import waitForHook from "itest/lib/appStep/api/waitForHook"
 
 const filePath = path.join(os.tmpdir(), "results.zng")
 
@@ -22,8 +22,9 @@ describe("exporting tests", () => {
     await brim.mockSaveDialog({canceled: false, filePath})
     await brim.search("")
     await brim.click(toolbarExportButton)
+    await waitForHook(brim.getApp(), "modal-entered")
     await brim.click(defaultModalButton)
-    await brim.waitForHTMLText(toastLocator.css, /export complete/i)
+    await waitForHook(brim.getApp(), "export-complete")
 
     expect(fsExtra.statSync(filePath).size).toBeGreaterThan(0)
     await fsExtra.remove(filePath)

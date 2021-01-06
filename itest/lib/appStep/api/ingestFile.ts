@@ -5,7 +5,7 @@ import {testDataDir} from "../../env"
 import {click} from "./click"
 import logStep from "../util/logStep"
 import {selectors} from "../../../../src/js/test/integration"
-import {popNoticeLocator} from "../../../../src/js/test/locators"
+import waitForHook from "./waitForHook"
 
 export default async (app: Application, file: string) => {
   // Ingest a file inside the itest/testdata directory
@@ -23,9 +23,5 @@ export default async (app: Application, file: string) => {
     await fileInput.addValue(remoteFile)
   })
 
-  const notice = await app.client.$(popNoticeLocator.css)
-  app.client.waitUntil(() => notice.isExisting())
-  app.client.waitUntil(() =>
-    notice.getText().then((text) => text === "Import complete.")
-  )
+  await waitForHook(app, "import-complete")
 }
