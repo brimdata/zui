@@ -17,6 +17,7 @@ import {PopNotice} from "./PopNotice"
 import {Modals} from "./Modals"
 import BrimToaster from "./BrimToaster"
 import BrimTooltip from "./BrimTooltip"
+import HookLog from "app/system-test/HookLog"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -42,6 +43,7 @@ export default function App() {
       <BrimToaster />
       <PopNotice />
       <BrimTooltip />
+      {process.env.BRIM_ITEST === "true" && <HookLog />}
     </div>
   )
 }
