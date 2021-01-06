@@ -1,11 +1,9 @@
-import {camelCase} from "lodash"
-import moment from "moment"
+const {camelCase} = require("lodash")
+const moment = require("moment")
+const path = require("path")
+const {write} = require("../utils/file")
 
-import path from "path"
-
-import {write} from "../utils/file"
-
-export async function handleMigration(input) {
+async function handleMigration(input) {
   let name = camelCase(input)
   let version = moment().format("YYYYMMDDHHmm")
   let title = version + "_" + name
@@ -32,11 +30,13 @@ import getTestState from "../../test/helpers/getTestState"
 import migrate from "./${title}"
 
 test("migrating ${title}", () => {
-  let prev = getTestState("v0.0.0 (replace with last version)")
+  let {data} = getTestState("v0.0.0 (replace with last version)")
 
-  let next = migrate(prev)
+  let next = migrate(data)
 
   expect(next).toBe("what you'd expect")
 })
 `
 }
+
+module.exports = {handleMigration}
