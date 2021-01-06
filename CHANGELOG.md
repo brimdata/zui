@@ -1,3 +1,11 @@
+## v0.22.0
+* Add a customizable "Query Library" panel of clickable Z queries for working with Zeek and Suricata logs (#1272)
+* Add the `source` field to the JSON typing config to prepare for Zeek v4.x `weird` events (#1307)
+* Allow the export of query results in NDJSON and CSV formats (#1302, #1328)
+* Add a correlation visualization in the Log Detail view for pivoting from a Suricata alert back to related Zeek `conn` events (#1310)
+* Re-style the Log Detail panel and window (#1310)
+* Update zq to [v0.27.0](https://github.com/brimsec/zq/releases/tag/v0.27.0) (follow that link for details of additional changes that may affect Brim)
+
 ## v0.21.1
 * Update zq to [v0.26.0](https://github.com/brimsec/zq/releases/tag/v0.26.0), which fixes an issue that was causing pcap import failures, and also delivers other enhancements
 
