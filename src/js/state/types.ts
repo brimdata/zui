@@ -14,6 +14,7 @@ import {ViewState} from "./View/types"
 import {createZealot, Zealot} from "zealot"
 import {ConnectionStatusesState} from "./ConnectionStatuses/types"
 import {QueriesState} from "./Queries/types"
+import {SystemTestState} from "./SystemTest"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -43,4 +44,5 @@ export type State = {
   prefs: PrefsState
   connectionStatuses: ConnectionStatusesState
   queries: QueriesState
+  systemTest: SystemTestState
 }
