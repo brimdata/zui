@@ -1,4 +1,4 @@
-import zeekLogDescriptions from "../services/zeekLogDescriptions"
+import zeekLogDescriptions from "./descriptions"
 
 const specialUrls = {
   netcontrol_drop:

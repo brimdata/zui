@@ -1,8 +1,8 @@
 import {isEqual} from "lodash"
+import menu from "src/js/electron/menu"
+import {hasGroupByProc} from "src/js/lib/Program"
+import {Space} from "src/js/state/Spaces/types"
 
-import {Space} from "../../state/Spaces/types"
-import {hasGroupByProc} from "../../lib/Program"
-import menu from "./"
 import {zng} from "zealot"
 
 export default function detailFieldContextMenu(

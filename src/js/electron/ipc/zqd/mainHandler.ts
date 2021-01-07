@@ -1,4 +1,4 @@
-import {ZQD} from "../../../zqd/zqd"
+import {ZQD} from "ppl/zqd/zqd"
 
 export default function zqdMainHandler(zqd: ZQD) {
   if (zqd) {

@@ -3,7 +3,7 @@ import React from "react"
 
 import {Column} from "../../types"
 import open from "../../lib/open"
-import brim from "../../brim"
+import zeekLogInfo from "ppl/zeek/logInfo"
 
 type Props = {
   column: Column
@@ -11,7 +11,7 @@ type Props = {
 }
 
 export default function ColumnDescription({column, path}: Props) {
-  const info = brim.zeekLogInfo(path)
+  const info = zeekLogInfo(path)
   const md = new MarkdownIt()
   const col = info.describeColumn(column)
   const createBody = () => ({

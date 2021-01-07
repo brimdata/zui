@@ -26,8 +26,8 @@ import ViewerComponent from "../Viewer/Viewer"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
 import dispatchToProps from "../../lib/dispatchToProps"
 import getEndMessage from "./getEndMessage"
-import menu from "../../electron/menu"
 import {zng} from "zealot"
+import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 
 type StateProps = {
   logs: zng.Record[]
@@ -102,7 +102,7 @@ export default function ResultsTable(props: Props) {
           dispatch(viewLogDetail(logs[index]))
           dispatch(openLogDetailsWindow())
         }}
-        rightClick={menu.searchFieldContextMenu(
+        rightClick={searchFieldContextMenu(
           props.program,
           props.tableColumns.getColumns().map((c) => c.name),
           props.space

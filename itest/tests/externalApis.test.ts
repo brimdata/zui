@@ -2,9 +2,9 @@ import https from "https"
 
 import {retry} from "../lib/control"
 import {TestTimeout} from "../lib/jest"
-import ZeekLogDescriptions from "../../src/js/services/zeekLogDescriptions"
-import brim from "../../src/js/brim"
+import ZeekLogDescriptions from "ppl/zeek/descriptions"
 import virusTotal from "../../src/js/services/virusTotal"
+import zeekLogInfo from "ppl/zeek/logInfo"
 
 jest.setTimeout(TestTimeout)
 
@@ -25,7 +25,7 @@ test("ping virus total for a success", () => {
 
 describe("doc urls", () => {
   const stripSuffix = (s) => s.replace("_log", "")
-  const buildUrl = (s) => [s, brim.zeekLogInfo(s).docsUrl()]
+  const buildUrl = (s) => [s, zeekLogInfo(s).docsUrl()]
   const request = (path, url) =>
     new Promise((good, bad) => {
       https

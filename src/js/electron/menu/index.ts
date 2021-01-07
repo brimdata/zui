@@ -3,8 +3,6 @@ import {BrowserWindow, Menu, MenuItemConstructorOptions} from "electron"
 import {$WindowManager} from "../tron/windowManager"
 import actions from "./actions"
 import appMenu from "./appMenu"
-import detailFieldContextMenu from "./detailFieldContextMenu"
-import searchFieldContextMenu from "./searchFieldContextMenu"
 
 export type $MenuItem = MenuItemConstructorOptions
 export type $Menu = $MenuItem[]
@@ -23,7 +21,5 @@ function setMenu(manager: $WindowManager, store: any, session: any) {
 export default {
   setMenu,
   actions,
-  searchFieldContextMenu,
-  detailFieldContextMenu,
   separator: (): MenuItemConstructorOptions => ({type: "separator"})
 }

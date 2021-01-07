@@ -3,7 +3,7 @@ import React from "react"
 
 import ErrorFactory from "../models/ErrorFactory"
 import Link from "./common/Link"
-import LoadFilesInput from "./LoadFilesInput"
+import LoadFilesInput from "ppl/import/LoadFilesInput"
 import Notice from "../state/Notice"
 import errors from "../errors"
 import ingestFiles from "../flows/ingestFiles"

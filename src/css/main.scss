@@ -13,7 +13,7 @@
 @import "shared/shadows";
 @import "shared/type-colors";
 @import "shared/typography";
-@import "shared/zeek-colors";
+@import "../../ppl/css/zeek-colors";
 @import "shared/effects";
 
 /* Forms */
@@ -107,7 +107,7 @@
 @import "tab-search-loading";
 @import "brim-text-logo";
 @import "toolbar-button";
-@import "load-files-input";
+@import "../../ppl/css/load-files-input";
 @import "ingest-warnings-modal";
 @import "log-detail-window";
 /* Common */
