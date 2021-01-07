@@ -1,4 +1,4 @@
-import {ZQD} from "../zqd/zqd"
+import {ZQD} from "ppl/zqd/zqd"
 import {Brim} from "./brim"
 import {installExtensions} from "./extensions"
 

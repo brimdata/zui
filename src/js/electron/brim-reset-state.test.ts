@@ -1,5 +1,5 @@
 import {app} from "electron"
-import {ZQD} from "../zqd/zqd"
+import {ZQD} from "ppl/zqd/zqd"
 import {Brim} from "./brim"
 import tron from "./tron"
 import windowManager from "./tron/windowManager"
