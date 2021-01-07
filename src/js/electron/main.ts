@@ -1,5 +1,6 @@
 import {appPathSetup} from "./appPathSetup"
 import userTasks from "./userTasks"
+import * as auth from "../auth"
 
 // app path and log setup should happen before other imports.
 appPathSetup()
@@ -51,6 +52,19 @@ async function main() {
 
   app.whenReady().then(() => brim.start())
   app.on("activate", () => brim.activate())
+
+  app.setAsDefaultProtocolClient("brim")
+  app.on("open-url", (event, url) => {
+    // event.preventDefault()
+    // handle the data
+    auth
+      .loadTokens(url)
+      .then(() => {
+        log.info("logged in!")
+        brim.start()
+      })
+      .catch((e) => log.error("error loading tokens: ", e))
+  })
 
   app.on("web-contents-created", (event, contents) => {
     contents.on("will-attach-webview", (e) => {

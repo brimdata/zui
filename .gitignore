@@ -8,3 +8,5 @@ zdeps
 run
 .vscode
 .DS_Store
+
+hidden
