@@ -20,6 +20,7 @@ import {setupAutoUpdater} from "./autoUpdater"
 import log from "electron-log"
 import {handleQuit} from "./quitter"
 import {Brim} from "./brim"
+import {Authenticator} from "../auth"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
@@ -55,13 +56,15 @@ async function main() {
 
   app.setAsDefaultProtocolClient("brim")
   app.on("open-url", (event, url) => {
-    // event.preventDefault()
+    event.preventDefault()
     // handle the data
-    auth
+    log.info("url is: ", url)
+    const authenticator = new Authenticator("https://app.brimsecurity.com")
+    authenticator
       .loadTokens(url)
       .then(() => {
         log.info("logged in!")
-        brim.start()
+        brim.activate()
       })
       .catch((e) => log.error("error loading tokens: ", e))
   })
