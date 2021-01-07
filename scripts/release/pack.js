@@ -22,7 +22,7 @@ module.exports = {
     }
     return packager({
       ...opts,
-      osxSign: osxSign,
+      osxSign,
       platform: "darwin",
       icon: "dist/static/AppIcon.icns",
       protocols: [

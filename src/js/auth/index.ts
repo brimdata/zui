@@ -4,127 +4,146 @@ import authVars from "../../../hidden/auth0"
 import keytar from "keytar"
 import os from "os"
 import got from "got"
-import log from "electron-log"
+import {shell} from "electron"
+import "regenerator-runtime/runtime"
 
-const {apiIdentifier, auth0Domain, clientId} = authVars
+const {auth0Domain, clientId, apiIdentifier} = authVars
 
-const redirectUri = "brim:///"
+export class Authenticator {
+  private accessToken: string
+  private refreshToken: string
+  private profile: any
 
-const keytarService = "brim-openid-oauth"
-const keytarAccount = os.userInfo().username
+  private clientId = clientId
+  private auth0Domain = auth0Domain
+  private apiIdentifier = apiIdentifier
+  private redirectUri = "brim:///"
 
-let accessToken = null
-let profile = null
-let refreshToken = null
+  private keytarServiceSuffix = "-brim-oath"
+  private keytarAccount = os.userInfo().username
 
-export function getAccessToken() {
-  return accessToken
-}
+  constructor() {}
 
-export function getProfile() {
-  return profile
-}
+  getAccessToken(): string {
+    return this.accessToken
+  }
 
-export function getAuthenticationURL() {
-  return (
-    "https://" +
-    auth0Domain +
-    "/authorize?" +
-    "audience=" +
-    apiIdentifier +
-    "&" +
-    "scope=openid profile offline_access&" +
-    "response_type=code&" +
-    "client_id=" +
-    clientId +
-    "&" +
-    "redirect_uri=" +
-    redirectUri
-  )
-}
+  // TODO: where will we use profile?
+  getProfile(): string {
+    return this.profile
+  }
 
-export async function refreshTokens() {
-  const refreshToken = await keytar.getPassword(keytarService, keytarAccount)
+  async login(): Promise<void> {
+    return shell.openExternal(
+      "https://" +
+        this.auth0Domain +
+        "/authorize?" +
+        "audience=" +
+        this.apiIdentifier +
+        "&" +
+        "scope=openid profile offline_access&" +
+        "response_type=code&" +
+        "client_id=" +
+        this.clientId +
+        "&" +
+        "redirect_uri=" +
+        this.redirectUri
+    )
+  }
 
-  if (refreshToken) {
+  private getKeytarService(): string {
+    return `${this.apiIdentifier}${this.keytarServiceSuffix}`
+  }
+
+  async refreshTokens(): Promise<void> {
+    this.refreshToken = await keytar.getPassword(
+      this.getKeytarService(),
+      this.keytarAccount
+    )
+
+    if (this.refreshToken) {
+      try {
+        const data = await got.post(`https://${this.auth0Domain}/oauth/token`, {
+          headers: {
+            "content-type": "application/json"
+          },
+          json: {
+            grant_type: "refresh_token",
+            client_id: this.clientId,
+            refresh_token: this.refreshToken
+          },
+          responseType: "json"
+        })
+
+        const {body} = data
+        // @ts-ignore
+        this.accessToken = body.access_token
+        // @ts-ignore
+        this.profile = jwtDecode(body.id_token)
+      } catch (error) {
+        await this.logout()
+
+        throw error
+      }
+    } else {
+      throw new Error("No available refresh token.")
+    }
+  }
+
+  async loadTokens(callbackURL): Promise<void> {
+    const urlParts = url.parse(callbackURL, true)
+    const query = urlParts.query
+
+    const exchangeOptions = {
+      grant_type: "authorization_code",
+      client_id: this.clientId,
+      code: query.code,
+      redirect_uri: this.redirectUri
+    }
+
+    const fetchUrl = `https://${this.auth0Domain}/oauth/token`
+
     try {
-      const data = await got.post(`https://${auth0Domain}/oauth/token`, {
+      const data = await got.post(fetchUrl, {
         headers: {
           "content-type": "application/json"
         },
-        json: {
-          grant_type: "refresh_token",
-          client_id: clientId,
-          refresh_token: refreshToken
-        },
+        json: exchangeOptions,
         responseType: "json"
       })
-
       const {body} = data
-      log.info("refresh data body is: ", body)
+
+      // TODO: define expected type for body
       // @ts-ignore
-      accessToken = body.access_token
+      this.accessToken = body.access_token
       // @ts-ignore
-      profile = jwtDecode(body.id_token)
+      this.profile = jwtDecode(body.id_token)
+      // @ts-ignore
+      this.refreshToken = body.refresh_token
+
+      if (this.refreshToken) {
+        console.log("setting password: ", this.getKeytarService())
+        await keytar.setPassword(
+          this.getKeytarService(),
+          this.keytarAccount,
+          this.refreshToken
+        )
+      }
     } catch (error) {
-      await logout()
+      await this.logout()
 
       throw error
     }
-  } else {
-    throw new Error("No available refresh token.")
-  }
-}
-
-export async function loadTokens(callbackURL) {
-  const urlParts = url.parse(callbackURL, true)
-  const query = urlParts.query
-
-  const exchangeOptions = {
-    grant_type: "authorization_code",
-    client_id: clientId,
-    code: query.code,
-    redirect_uri: redirectUri
   }
 
-  const fetchUrl = `https://${auth0Domain}/oauth/token`
-
-  try {
-    const data = await got.post(fetchUrl, {
-      headers: {
-        "content-type": "application/json"
-      },
-      json: exchangeOptions,
-      responseType: "json"
-    })
-    const {body} = data
-
-    log.info("loadToken data body is: ", body)
-
-    // @ts-ignore
-    accessToken = body.access_token
-    // @ts-ignore
-    profile = jwtDecode(body.id_token)
-    // @ts-ignore
-    refreshToken = body.refresh_token
-
-    if (refreshToken) {
-      await keytar.setPassword(keytarService, keytarAccount, refreshToken)
-    }
-  } catch (error) {
-    await logout()
-
-    throw error
+  async logout(): Promise<void> {
+    await keytar.deletePassword(this.getKeytarService(), this.keytarAccount)
+    this.accessToken = null
+    this.profile = null
+    this.refreshToken = null
   }
-}
 
-export async function logout() {
-  await keytar.deletePassword(keytarService, keytarAccount)
-  accessToken = null
-  profile = null
-  refreshToken = null
-}
-
-export function getLogOutUrl(): string {
-  return `https://${auth0Domain}/v2/logout`
+  // getLogOutUrl(): string {
+  //   return `https://${this.auth0Domain}/v2/logout`
+  // }
 }
