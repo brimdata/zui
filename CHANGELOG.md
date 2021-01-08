@@ -4,7 +4,7 @@
 * Allow the export of query results in NDJSON and CSV formats (#1302, #1328)
 * Add a correlation visualization in the Log Detail view for pivoting from a Suricata alert back to related Zeek `conn` events (#1310)
 * Re-style the Log Detail panel and window (#1310)
-* Ensure Suricta `event_type` field is displayed directly to the right of the `ts` timestamp field (#1339)
+* Ensure `_path` and `event_type` fields are always displayed directly to the right of the `ts` timestamp field (#1339)
 * Pull-down menu option **Window > Reset State** now clears app state after user confirmation (#1338)
 * Update zq to [v0.27.1](https://github.com/brimsec/zq/releases/tag/v0.27.1) (follow that link for details of additional changes that may affect Brim)
 
