@@ -74,5 +74,5 @@ jobs:
         service_account_key: ${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}
     - name: Upload release artifacts to Google Cloud Storage bucket
       run: |
-        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/macos/${{ steps.extract_branch.outputs.branch }} || true
-        gsutil mv dist/installers gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/macos/${{ steps.extract_branch.outputs.branch }}
+        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/macos || true
+        gsutil mv dist/installers gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/macos
