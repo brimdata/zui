@@ -39,11 +39,13 @@ export interface BrimWindow {
   close: () => void
 }
 
-export default function windowManager() {
+export default function windowManager(
+  session?: SessionState | null | undefined
+) {
   let windows: WindowsState = {}
 
   return {
-    init(session?: SessionState | null | undefined) {
+    init() {
       if (!session || (session && session.order.length === 0)) {
         this.openWindow("search")
       } else {

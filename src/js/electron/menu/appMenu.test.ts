@@ -1,34 +1,16 @@
 import appMenu from "./appMenu"
-import initTestStore from "../../test/initTestStore"
-import tron from "../tron"
-import {$WindowManager} from "../tron/windowManager"
+import {Brim} from "../brim"
 
 const mockSend = jest.fn()
-const mockWindownManager = {} as $WindowManager
-const mockStore = initTestStore()
 
 test("app menu mac", async () => {
-  const mockSession = await tron.session()
-  const menu = appMenu(
-    mockSend,
-    mockWindownManager,
-    mockStore,
-    mockSession,
-    "darwin"
-  )
+  const menu = appMenu(mockSend, new Brim(), "darwin")
 
   expect(menu).toMatchSnapshot()
 })
 
 test("app menu windows", async () => {
-  const mockSession = await tron.session()
+  const menu = appMenu(mockSend, new Brim(), "win32")
 
-  const menu = appMenu(
-    mockSend,
-    mockWindownManager,
-    mockStore,
-    mockSession,
-    "win32"
-  )
   expect(menu).toMatchSnapshot()
 })

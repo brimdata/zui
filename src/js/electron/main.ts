@@ -1,15 +1,12 @@
 import {appPathSetup} from "./appPathSetup"
-import Prefs from "../state/Prefs"
 import userTasks from "./userTasks"
 
 // app path and log setup should happen before other imports.
 appPathSetup()
 
-import createGlobalStore from "../state/createGlobalStore"
 import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
 import menu from "./menu"
 import windowsMainHandler from "./ipc/windows/mainHandler"
-import zqdMainHandler from "./ipc/zqd/mainHandler"
 
 console.time("init")
 import "regenerator-runtime/runtime"
@@ -17,9 +14,6 @@ import "regenerator-runtime/runtime"
 import {app} from "electron"
 
 import {handleSquirrelEvent} from "./squirrel"
-import tron from "./tron"
-import path from "path"
-import {ZQD} from "ppl/zqd/zqd"
 import electronIsDev from "./isDev"
 import {setupAutoUpdater} from "./autoUpdater"
 import log from "electron-log"
@@ -29,22 +23,11 @@ import {Brim} from "./brim"
 async function main() {
   if (handleSquirrelEvent(app)) return
   userTasks(app)
-  const session = tron.session()
-  const data = await session.load()
-  const brim = new Brim(data)
-  const winMan = brim.windows
-  const store = createGlobalStore(data ? data.globalState : undefined)
-  const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
-  const suricataRunner = Prefs.getSuricataRunner(store.getState())
-  const suricataUpdater = Prefs.getSuricataUpdater(store.getState())
-  const zeekRunner = Prefs.getZeekRunner(store.getState())
-  const zqd = new ZQD(spaceDir, suricataRunner, suricataUpdater, zeekRunner)
-
-  menu.setMenu(winMan, store, session)
-  zqdMainHandler(zqd)
-  windowsMainHandler(winMan)
-  globalStoreMainHandler(store, winMan)
-  handleQuit(winMan, store, session, zqd)
+  const brim = await Brim.boot()
+  menu.setMenu(brim)
+  windowsMainHandler(brim)
+  globalStoreMainHandler(brim)
+  handleQuit(brim)
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed
   if (!electronIsDev) {
@@ -57,10 +40,10 @@ async function main() {
     for (let arg of argv) {
       switch (arg) {
         case "--new-window":
-          winMan.openWindow("search")
+          brim.windows.openWindow("search")
           break
         case "--move-to-current-display":
-          winMan.moveToCurrentDisplay()
+          brim.windows.moveToCurrentDisplay()
           break
       }
     }

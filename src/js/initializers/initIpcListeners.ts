@@ -52,10 +52,6 @@ export default (store: Store) => {
     store.dispatch(Layout.toggleRightSidebar())
   })
 
-  ipcRenderer.on("resetState", () => {
-    /* Will implement soon */
-  })
-
   ipcRenderer.on("getState", (event, channel) => {
     ipcRenderer.send(channel, getPersistable(store.getState()))
   })
