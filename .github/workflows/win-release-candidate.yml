@@ -77,5 +77,5 @@ jobs:
       env:
         CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
       run: |
-        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/windows/${{ steps.extract_branch.outputs.branch }} || true
-        gsutil mv dist\installers\ gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/windows/${{ steps.extract_branch.outputs.branch }}
+        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/windows || true
+        gsutil mv dist\installers\ gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/windows
