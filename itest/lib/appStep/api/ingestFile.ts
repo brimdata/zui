@@ -23,5 +23,8 @@ export default async (app: Application, file: string) => {
     await fileInput.addValue(remoteFile)
   })
 
-  await waitForHook(app, "import-complete")
+  await waitForHook(app, "import-complete", {
+    timeout: 120 * 1000, // Give an import up to 2 minutes to complete (slow CI servers)
+    timeoutMsg: `The import-complete hook never appeared during import of: ${file}`
+  })
 }

@@ -1,7 +1,18 @@
+import {Application} from "spectron"
 import {HookName} from "src/js/state/SystemTest"
 import {hookLogLocator} from "src/js/test/locators"
 
-export default async function waitForHook(app, name: HookName) {
+type WaitUntilOptions = {
+  timeout?: number
+  timeoutMsg?: string
+  interval?: number
+}
+
+export default async function waitForHook(
+  app: Application,
+  name: HookName,
+  options?: WaitUntilOptions
+) {
   await app.client.waitUntil(async () => {
     const hooks = await app.client.$$(hookLogLocator.css)
     const lastHook = hooks[hooks.length - 1]
@@ -10,5 +21,5 @@ export default async function waitForHook(app, name: HookName) {
     } else {
       return false
     }
-  })
+  }, options)
 }
