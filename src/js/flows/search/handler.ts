@@ -1,4 +1,4 @@
-import {createResponse} from "./response"
+import {SearchResponse} from "./response"
 import whenIdle from "../../lib/whenIdle"
 
 function abortError(e) {
@@ -6,9 +6,9 @@ function abortError(e) {
 }
 
 export function handle(request: any) {
-  const response = createResponse()
+  const response = new SearchResponse()
   const channels = new Map<number, any>()
-  const promise = new Promise<any>((resolve, reject) => {
+  const promise = new Promise<void>((resolve, reject) => {
     function flushBuffer() {
       for (const [id, data] of channels) {
         response.emit(id, data.allRecords, data.schemas)
