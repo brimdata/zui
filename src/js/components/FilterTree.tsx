@@ -1,4 +1,4 @@
-import {isEqual, reduce, initial, tail} from "lodash"
+import {isEqual, reduce, initial, tail, take} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
@@ -31,14 +31,15 @@ const getPins = (node?: InvestigationNode): string[] => {
   return tail(initial(result))
 }
 
-const nodeIsPin = (node: InvestigationNode) => {
-  return node.hasChildren()
+const nodeIsActivePin = (node: InvestigationNode, prevPins: string[]) => {
+  const selected = [...getPins(node), node.model.filter]
+  return isEqual(selected, take(prevPins, selected.length))
 }
 
 const nodeIsActive = (
+  node: InvestigationNode,
   prevPins: string[],
-  prevProgram: string,
-  node?: InvestigationNode
+  prevProgram: string
 ) => {
   return (
     node &&
@@ -116,8 +117,8 @@ function NodeRow({node, i, connId, spaceId}: Props) {
   }
 
   const className = classNames("filter-tree-node", {
-    pinned: nodeIsPin(node),
-    active: nodeIsActive(prevPins, prevProgram, node)
+    pinned: nodeIsActivePin(node, prevPins),
+    active: nodeIsActive(node, prevPins, prevProgram)
   })
 
   return (
