@@ -160,31 +160,21 @@ or [open an issue](#opening-an-issue) and we'll try to help.
 
 Though we attempt to fix bad bugs in Brim soon after they're identified,
 occasionally you may encounter a new bug that crashes the app in a way that
-leaves it in a bad state. In these situations Brim will seem "stuck" such that
-neither selecting the **Reset State**/**Reload** options from the drop-down
-menu nor restarting Brim will clear the situation. Here is an example of such
-a crash from previous issue [#652](https://github.com/brimsec/brim/issues/652),
-which has since been fixed:
+leaves it in a bad state. In these situations Brim will seem "stuck" each time
+it starts, either at at a blank white screen (such as in previously-fixed issue
+[#1099](https://github.com/brimsec/brim/issues/1099)) or showing an error dump
+similar to the one below:
 
-![Issue #652 Crash](media/Crash-652.png)
+![Example crash from issue #652](media/Crash-652.png)
 
-If you experience such a crash, please gather the error dump text and
+If you experience such a crash, please gather any error dump text and
 [open an issue](#opening-an-issue) with as much detail as possible regarding
 the steps you followed that led up to the crash.
 
-Then to clear the condition, exit Brim and delete the `appState.json` from
-your filesystem at the location shown below for your OS platform. Once deleted,
-restart Brim.
-
-|**OS Platform**|**Location**|
-|---------------|------------|
-| **Windows**   | `%APPDATA%\Brim\appState.json` |
-| **macOS**     | `$HOME/Library/Application Support/Brim/appState.json` | 
-| **Linux**     | `$HOME/.config/Brim/appState.json` | 
-
-This will clear some cached data from your previous use of Brim (e.g. the
-contents of the **History** panel), but the data for your Spaces will remain
-intact.
+Then to clear the condition, click **Window > Reset State** from the Brim
+pull-down menu. This will clear some cached data from your previous use of Brim
+(e.g. the contents of the **History** panel), but the data for your Spaces will
+remain intact.
 
 Before resuming normal work in Brim, this would be a good opportunity to
 retrace your steps and confirm that you've captured the reproduction steps
