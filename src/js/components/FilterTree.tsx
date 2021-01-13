@@ -1,4 +1,4 @@
-import {isEqual, reduce, initial, tail, take} from "lodash"
+import {isEqual, initial, tail, take, map} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import classNames from "classnames"
@@ -18,14 +18,9 @@ import Last from "../state/Last"
 import {SearchRecord} from "../types"
 
 const getPins = (node?: InvestigationNode): string[] => {
-  const result = reduce(
-    node?.getPath(),
-    (res, n) => {
-      res.push(n.model.filter)
-      return res
-    },
-    []
-  )
+  const result = map(node?.getPath(), (n) => {
+    return n.model.filter
+  })
 
   // don't include root, or final path element as pin
   return tail(initial(result))
@@ -70,25 +65,14 @@ function NodeRow({node, i, connId, spaceId}: Props) {
   const prevProgram = last?.program || ""
   const menu = usePopupMenu([
     {
-      label: "Delete",
+      label: "Delete underlying entry",
       click: () => {
-        remote.dialog
-          .showMessageBox({
-            type: "warning",
-            title: "Delete History Entry",
-            message: `Are you sure you want to remove this entry and it's underlying query?`,
-            buttons: ["OK", "Cancel"]
-          })
-          .then(({response}) => {
-            if (response === 0) {
-              const multiTs = node
-                .all(() => true)
-                .map((node) => node.model.finding.ts)
-              globalDispatch(
-                Investigation.deleteFindingByTs(connId, spaceId, multiTs)
-              )
-            }
-          })
+        const multiTs = node
+          .all(() => true)
+          .map((node) => node.model.finding.ts)
+        globalDispatch(
+          Investigation.deleteFindingByTs(connId, spaceId, multiTs)
+        )
       }
     },
     {type: "separator"},
