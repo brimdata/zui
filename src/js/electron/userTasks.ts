@@ -26,7 +26,9 @@ export default function(app: any) {
 
 function getArguments(arg) {
   if (electronIsDev) {
-    const appRoot = path.join(__dirname, "..", "..", "..")
+    // This is not exactly reliable. Each time the directory changes, this will change.
+    // Thankfully, it's only run in dev mode.
+    const appRoot = path.join(__dirname, "..", "..", "..", "..")
     return [appRoot, arg].join(" ")
   } else {
     return arg
