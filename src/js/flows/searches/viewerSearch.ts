@@ -46,6 +46,7 @@ function handle(
   return function(dispatch) {
     let allColumns = {}
     let allRecords = []
+    let count = 0
 
     if (!append && !isBlocking) {
       dispatch(Viewer.clear(tabId))
@@ -57,6 +58,7 @@ function handle(
     response
       .status((status) => dispatch(Viewer.setStatus(tabId, status)))
       .chan(0, (records, schemas: Map<number, zng.Schema>) => {
+        count = records.length
         const columns = {}
         for (let schema of schemas.values()) {
           const hash = md5(JSON.stringify(schema.columns))
@@ -69,7 +71,12 @@ function handle(
           return
         }
 
-        dispatch(Viewer.setRecords(tabId, records))
+        if (append) {
+          dispatch(Viewer.appendRecords(tabId, records))
+        } else {
+          dispatch(Viewer.setRecords(tabId, records))
+        }
+
         dispatch(Viewer.updateColumns(tabId, columns))
         dispatch(Columns.touch(columns))
       })
@@ -77,7 +84,7 @@ function handle(
       .error((error) => {
         dispatch(Notice.set(ErrorFactory.create(error)))
       })
-      .end((_id, count) => {
+      .end(() => {
         if (isBlocking) {
           dispatch(Viewer.setRecords(tabId, allRecords))
           dispatch(Viewer.setColumns(tabId, allColumns))
