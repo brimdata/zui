@@ -38,23 +38,15 @@ function writeZqdConfigFile(): string {
   // @ts-ignore
   mkdirpSync(logDir, {recursive: true, mode: 0o755})
 
-  const zqdLogFile = join(logDir, "zqd-core.log")
-  const accessLogFile = join(logDir, "zqd-access.log")
+  const zqdLogFile = join(logDir, "zqd.log")
 
   log.info("zqd core log", zqdLogFile)
-  log.info("zqd access log", accessLogFile)
 
   const data = `
 logger:
-  type: waterfall
-  children:
-  - name: http.access
-    level: info
-    path: ${accessLogFile}
-    mode: rotate
-  - level: info
-    path: ${zqdLogFile}
-    mode: rotate
+  path: ${zqdLogFile}
+  level: info
+  mode: rotate
 `
 
   const confFile = join(app.getPath("userData"), "zqd-config.yaml")
