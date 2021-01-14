@@ -8,192 +8,177 @@ Object {
         Object {
           "children": Array [
             Object {
-              "children": Array [],
-              "data": Object {
-                "filter": "c",
-                "finding": Object {
-                  "search": Object {
-                    "pins": Array [
-                      "a",
-                      "b",
-                    ],
-                    "program": "c",
-                    "spaceId": "defaultId",
-                    "spaceName": "default",
-                    "spanArgs": Array [
-                      Object {
-                        "ns": 1000000,
-                        "sec": 0,
-                      },
-                      Object {
-                        "ns": 2000000,
-                        "sec": 0,
-                      },
-                    ],
-                    "target": "events",
-                  },
-                  "ts": Object {
-                    "ns": 0,
-                    "sec": 0,
-                  },
+              "filter": "c",
+              "finding": Object {
+                "search": Object {
+                  "pins": Array [
+                    "a",
+                    "b",
+                  ],
+                  "program": "c",
+                  "spaceId": "defaultId",
+                  "spaceName": "default",
+                  "spanArgs": Array [
+                    Object {
+                      "ns": 1000000,
+                      "sec": 0,
+                    },
+                    Object {
+                      "ns": 2000000,
+                      "sec": 0,
+                    },
+                  ],
+                  "target": "events",
+                },
+                "ts": Object {
+                  "ns": 0,
+                  "sec": 0,
                 },
               },
             },
             Object {
-              "children": Array [],
-              "data": Object {
-                "filter": "d",
-                "finding": Object {
-                  "search": Object {
-                    "pins": Array [
-                      "a",
-                      "b",
-                    ],
-                    "program": "d",
-                    "spaceId": "defaultId",
-                    "spaceName": "default",
-                    "spanArgs": Array [
-                      Object {
-                        "ns": 1000000,
-                        "sec": 0,
-                      },
-                      Object {
-                        "ns": 2000000,
-                        "sec": 0,
-                      },
-                    ],
-                    "target": "events",
-                  },
-                  "ts": Object {
-                    "ns": 0,
-                    "sec": 0,
-                  },
+              "filter": "d",
+              "finding": Object {
+                "search": Object {
+                  "pins": Array [
+                    "a",
+                    "b",
+                  ],
+                  "program": "d",
+                  "spaceId": "defaultId",
+                  "spaceName": "default",
+                  "spanArgs": Array [
+                    Object {
+                      "ns": 1000000,
+                      "sec": 0,
+                    },
+                    Object {
+                      "ns": 2000000,
+                      "sec": 0,
+                    },
+                  ],
+                  "target": "events",
+                },
+                "ts": Object {
+                  "ns": 0,
+                  "sec": 0,
                 },
               },
             },
           ],
-          "data": Object {
-            "filter": "b",
-            "finding": Object {
-              "search": Object {
-                "pins": Array [
-                  "a",
-                  "b",
-                ],
-                "program": "c",
-                "spaceId": "defaultId",
-                "spaceName": "default",
-                "spanArgs": Array [
-                  Object {
-                    "ns": 1000000,
-                    "sec": 0,
-                  },
-                  Object {
-                    "ns": 2000000,
-                    "sec": 0,
-                  },
-                ],
-                "target": "events",
-              },
-              "ts": Object {
-                "ns": 0,
-                "sec": 0,
-              },
+          "filter": "b",
+          "finding": Object {
+            "search": Object {
+              "pins": Array [
+                "a",
+                "b",
+              ],
+              "program": "c",
+              "spaceId": "defaultId",
+              "spaceName": "default",
+              "spanArgs": Array [
+                Object {
+                  "ns": 1000000,
+                  "sec": 0,
+                },
+                Object {
+                  "ns": 2000000,
+                  "sec": 0,
+                },
+              ],
+              "target": "events",
+            },
+            "ts": Object {
+              "ns": 0,
+              "sec": 0,
             },
           },
         },
         Object {
-          "children": Array [],
-          "data": Object {
-            "filter": "d",
-            "finding": Object {
-              "search": Object {
-                "pins": Array [
-                  "a",
-                ],
-                "program": "d",
-                "spaceId": "defaultId",
-                "spaceName": "default",
-                "spanArgs": Array [
-                  Object {
-                    "ns": 1000000,
-                    "sec": 0,
-                  },
-                  Object {
-                    "ns": 2000000,
-                    "sec": 0,
-                  },
-                ],
-                "target": "events",
-              },
-              "ts": Object {
-                "ns": 0,
-                "sec": 0,
-              },
+          "filter": "d",
+          "finding": Object {
+            "search": Object {
+              "pins": Array [
+                "a",
+              ],
+              "program": "d",
+              "spaceId": "defaultId",
+              "spaceName": "default",
+              "spanArgs": Array [
+                Object {
+                  "ns": 1000000,
+                  "sec": 0,
+                },
+                Object {
+                  "ns": 2000000,
+                  "sec": 0,
+                },
+              ],
+              "target": "events",
+            },
+            "ts": Object {
+              "ns": 0,
+              "sec": 0,
             },
           },
         },
       ],
-      "data": Object {
-        "filter": "a",
-        "finding": Object {
-          "search": Object {
-            "pins": Array [
-              "a",
-              "b",
-            ],
-            "program": "c",
-            "spaceId": "defaultId",
-            "spaceName": "default",
-            "spanArgs": Array [
-              Object {
-                "ns": 1000000,
-                "sec": 0,
-              },
-              Object {
-                "ns": 2000000,
-                "sec": 0,
-              },
-            ],
-            "target": "events",
-          },
-          "ts": Object {
-            "ns": 0,
-            "sec": 0,
-          },
+      "filter": "a",
+      "finding": Object {
+        "search": Object {
+          "pins": Array [
+            "a",
+            "b",
+          ],
+          "program": "c",
+          "spaceId": "defaultId",
+          "spaceName": "default",
+          "spanArgs": Array [
+            Object {
+              "ns": 1000000,
+              "sec": 0,
+            },
+            Object {
+              "ns": 2000000,
+              "sec": 0,
+            },
+          ],
+          "target": "events",
+        },
+        "ts": Object {
+          "ns": 0,
+          "sec": 0,
         },
       },
     },
     Object {
-      "children": Array [],
-      "data": Object {
-        "filter": "e",
-        "finding": Object {
-          "search": Object {
-            "pins": Array [],
-            "program": "e",
-            "spaceId": "defaultId",
-            "spaceName": "default",
-            "spanArgs": Array [
-              Object {
-                "ns": 1000000,
-                "sec": 0,
-              },
-              Object {
-                "ns": 2000000,
-                "sec": 0,
-              },
-            ],
-            "target": "events",
-          },
-          "ts": Object {
-            "ns": 0,
-            "sec": 0,
-          },
+      "filter": "e",
+      "finding": Object {
+        "search": Object {
+          "pins": Array [],
+          "program": "e",
+          "spaceId": "defaultId",
+          "spaceName": "default",
+          "spanArgs": Array [
+            Object {
+              "ns": 1000000,
+              "sec": 0,
+            },
+            Object {
+              "ns": 2000000,
+              "sec": 0,
+            },
+          ],
+          "target": "events",
+        },
+        "ts": Object {
+          "ns": 0,
+          "sec": 0,
         },
       },
     },
   ],
-  "data": "ROOT",
+  "filter": "ROOT",
+  "finding": null,
 }
 `;

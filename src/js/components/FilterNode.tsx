@@ -16,7 +16,7 @@ const ButtonWrap = styled.div`
   right: 0;
   transform: translate(50%, -50%);
   .circle {
-    color: --wet-cement;
+    color: var(--wet-cement);
   }
 `
 

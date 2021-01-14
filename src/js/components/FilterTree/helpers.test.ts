@@ -25,5 +25,5 @@ test("Remove all pins and make a new current", () => {
     search([], "e")
   ])
 
-  expect(tree.toJSON()).toMatchSnapshot()
+  expect(tree.model).toMatchSnapshot()
 })
