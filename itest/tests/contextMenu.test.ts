@@ -71,7 +71,7 @@ describe("type-wise Filter = value searches", () => {
         stdTest(`FilterEq${testId}: ${path} ${fieldName}="${s}"`, (done) => {
           runSearch(
             app,
-            `_path=${path} ${fieldName}!=null | cut id, ${fieldName}`
+            `_path=${path} ${fieldName}!=null | cut id, ${fieldName} | sort id`
           )
             .then(async () => {
               await appStep.rightClick(
