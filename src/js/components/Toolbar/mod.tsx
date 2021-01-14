@@ -8,6 +8,8 @@ import SearchPageTitle from "../SearchPageTitle"
 import SpanControls from "../Span/SpanControls"
 import SubspaceButton from "./SubspaceButton"
 import ViewButton from "./ViewButton"
+import Label from "./Label"
+import ViewToggle from "./view-toggle"
 
 const Wrap = styled.div`
   display: flex;
@@ -36,6 +38,10 @@ export function Toolbar() {
       </Group>
       <Group flex={2}>
         <Group>
+          <div style={{textAlign: "center"}}>
+            <ViewToggle options={["a", "b", "c"]} />
+            <Label>Summary</Label>
+          </div>
           <SubspaceButton />
           <PacketsButton label id="toolbar-packets" />
           <ExportButton />
