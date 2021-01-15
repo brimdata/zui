@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import styled from "styled-components"
 
 import ColumnsButton from "./ColumnsButton"
@@ -8,11 +8,6 @@ import SearchPageTitle from "../SearchPageTitle"
 import SpanControls from "../Span/SpanControls"
 import SubspaceButton from "./SubspaceButton"
 import ViewButton from "./ViewButton"
-import Label from "./Label"
-import Icon from "app/core/Icon"
-import {capitalize} from "lodash"
-import SwitchButton from "./switch-button"
-import Option from "./switch-button-option"
 import MainViewSwitch from "./main-view-switch"
 
 const Wrap = styled.div`
