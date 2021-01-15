@@ -2,6 +2,8 @@ import activeTabSelect from "../Tab/activeTabSelect"
 import {TabState} from "../Tab/types"
 
 export default {
+  getMainView: activeTabSelect((state: TabState) => state.layout.mainView),
+
   getSidebarSections: activeTabSelect(
     (state: TabState) => state.layout.sidebarSections
   ),

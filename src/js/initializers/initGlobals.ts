@@ -1,6 +1,7 @@
 import {Store} from "../state/types"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import path from "path"
+import Feature from "../state/Feature"
 
 export default function initGlobals(store: Store) {
   global.getState = store.getState
@@ -9,4 +10,6 @@ export default function initGlobals(store: Store) {
     | "search"
     | "about"
     | "detail"
+
+  global.feature = (name, status) => store.dispatch(Feature.set(name, status))
 }

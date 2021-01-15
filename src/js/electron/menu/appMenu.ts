@@ -6,6 +6,7 @@ import path from "path"
 import electronIsDev from "../isDev"
 import formatSessionState from "../tron/formatSessionState"
 import {Brim} from "../brim"
+import {click} from "itest/lib/appStep/api/click"
 
 export default function(
   send: Function,
@@ -231,6 +232,12 @@ export default function(
   const developerMenu = {
     label: "Developer",
     submenu: [
+      {
+        label: "Save Session Now",
+        async click() {
+          await brim.saveSession()
+        }
+      },
       {
         label: "Save Session for Testing Migrations",
         async click() {

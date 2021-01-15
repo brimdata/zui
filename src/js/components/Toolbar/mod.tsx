@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 
 import ColumnsButton from "./ColumnsButton"
@@ -9,7 +9,11 @@ import SpanControls from "../Span/SpanControls"
 import SubspaceButton from "./SubspaceButton"
 import ViewButton from "./ViewButton"
 import Label from "./Label"
-import ViewToggle from "./view-toggle"
+import Icon from "app/core/Icon"
+import {capitalize} from "lodash"
+import SwitchButton from "./switch-button"
+import Option from "./switch-button-option"
+import MainViewSwitch from "./main-view-switch"
 
 const Wrap = styled.div`
   display: flex;
@@ -38,10 +42,7 @@ export function Toolbar() {
       </Group>
       <Group flex={2}>
         <Group>
-          <div style={{textAlign: "center"}}>
-            <ViewToggle options={["a", "b", "c"]} />
-            <Label>Summary</Label>
-          </div>
+          <MainViewSwitch />
           <SubspaceButton />
           <PacketsButton label id="toolbar-packets" />
           <ExportButton />
