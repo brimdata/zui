@@ -4,12 +4,19 @@ on:
   push:
     branches:
       - rc-v*
+  schedule:
+    - cron: '5 8 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
+    - name: Extract branch name
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+      shell: bash
     - uses: actions/setup-go@v2
       with:
         go-version: '1.14'
@@ -42,6 +49,10 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+    - if: ${{ !startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
+      name: Set version string for ad hoc builds
+      run: echo "ADHOC_VERSION_STRING=$(npm version preminor --no-git-tag-version --preid master-${GITHUB_SHA:0:8})" >> $GITHUB_ENV
+      shell: bash
     - run: npm install --no-audit
     - run: npm run build
     - name: Build Signed Release
@@ -57,25 +68,50 @@ jobs:
       env:
         WINDOWS_SIGNING_PASSPHRASE: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
         WINDOWS_SIGNING_PFX_BASE64: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
-    - name: Extract branch name
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
-      shell: bash
     - name: Set up Python (needed for Google Cloud Platform)
       uses: actions/setup-python@v2
       with:
         python-version: 3.7
     - name: Setup Google Cloud Platform
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@master
       env:
         CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
       with:
         version: '290.0.1'
         project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
         service_account_key: ${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}
+    - if: ${{ startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
+      name: "Set bucket path (if this is a release candidate)"
+      run: echo "BUCKET_PATH=gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/windows" >> $GITHUB_ENV
+      shell: bash
+    - if: ${{ !startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
+      name: "Set bucket path (if this is an ad hoc build)"
+      run: echo "BUCKET_PATH=gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ env.ADHOC_VERSION_STRING  }}/windows" >> $GITHUB_ENV
+      shell: bash
+    - name: "Set publicly-available bucket path"
+      run: echo "PUBLIC_BUCKET_PATH=${BUCKET_PATH/gs:\/\//https://storage.googleapis.com/}" >> $GITHUB_ENV
+      shell: bash
     - name: Upload release artifacts to Google Cloud Storage bucket
       env:
         CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
       run: |
-        gsutil rm -rf gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/windows || true
-        gsutil mv dist\installers\ gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/windows
+        gsutil rm -rf ${{ env.BUCKET_path }} || true
+        gsutil cp -r dist\installers\ ${{ env.BUCKET_path }}
+    - name: Assemble Slack message that points to multiple artifacts
+      run: |
+        echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
+        echo "New Windows release available -" >> $GITHUB_ENV
+        for FILENAME in $(find dist/installers -type f -name \*.exe -exec basename {} \;)
+        do
+          echo "\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV
+        done
+        echo "EOF" >> $GITHUB_ENV
+      shell: bash
+    - name: Inform Slack users at Brim HQ of the new artifact
+      uses: tiloio/slack-webhook-action@v1.1.2
+      with:
+        slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_RELEASES }}
+        slack_json: '{
+                       "username": "release-automation",
+                       "text": "${{ env.SLACK_TEXT }}"
+                     }'
