@@ -31,3 +31,13 @@ export function getAllStates(sessionState: SessionState): any[] {
 
   return compact(allStates)
 }
+
+export function getAllTabs(sessionState: SessionState): any[] {
+  let tabs = []
+  for (const state of getAllStates(sessionState)) {
+    if (state.tabs) {
+      tabs = tabs.concat(state.tabs.data)
+    }
+  }
+  return tabs
+}
