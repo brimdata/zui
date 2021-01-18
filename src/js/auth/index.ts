@@ -1,28 +1,27 @@
 import jwtDecode from "jwt-decode"
 import url from "url"
-import authVars from "../../../hidden/auth0"
 import keytar from "keytar"
 import os from "os"
 import got from "got"
 import {shell} from "electron"
 import "regenerator-runtime/runtime"
 
-const {auth0Domain, clientId, apiIdentifier} = authVars
-
 export class Authenticator {
   private accessToken: string
   private refreshToken: string
   private profile: any
 
-  private clientId = clientId
-  private auth0Domain = auth0Domain
-  private apiIdentifier = apiIdentifier
+  private apiIdentifier = "https://app.brimsecurity.com"
   private redirectUri = "brim:///"
 
   private keytarServiceSuffix = "-brim-oath"
   private keytarAccount = os.userInfo().username
 
-  constructor() {}
+  constructor(
+    private workspaceUrl: string,
+    private clientId: string,
+    private auth0Domain: string
+  ) {}
 
   getAccessToken(): string {
     return this.accessToken
@@ -33,7 +32,7 @@ export class Authenticator {
     return this.profile
   }
 
-  async login(): Promise<void> {
+  login(): Promise<void> {
     return shell.openExternal(
       "https://" +
         this.auth0Domain +
@@ -52,7 +51,10 @@ export class Authenticator {
   }
 
   private getKeytarService(): string {
-    return `${this.apiIdentifier}${this.keytarServiceSuffix}`
+    const service = `${this.workspaceUrl}${this.keytarServiceSuffix}`
+    // TODO: MASON - remove me
+    console.log("keytar service is: ", service)
+    return service
   }
 
   async refreshTokens(): Promise<void> {
