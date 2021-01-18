@@ -4,6 +4,13 @@ export type Workspace = {
   host: string
   port: string
   version?: string
+  auth?: WorkspaceAuth
+}
+
+export type WorkspaceAuth = {
+  clientId: string
+  domain: string
+  accessToken?: string
 }
 
 export type WorkspacesState = {

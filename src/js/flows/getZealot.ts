@@ -4,13 +4,14 @@ import {Thunk} from "../state/types"
 import ErrorFactory from "../models/ErrorFactory"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {Authenticator} from "../auth"
-import {BrimConnection} from "../brim"
+import {BrimWorkspace} from "../brim"
 import {ZFetcher, ZReponse} from "../../../zealot/types"
 
-const getAuthHeaderForConn = async (conn: BrimConnection): Promise<string> => {
+const getAuthHeaderForConn = async (ws: BrimWorkspace): Promise<string> => {
   // TODO: store accessToken in redux and/or keychain, and use (also check if expired before use)
   // const authenticator = new Authenticator(`http://${conn.getAddress()}`)
-  const authenticator = new Authenticator()
+  // const {clientID, domain, accessToken} = ws.auth
+  const authenticator = new Authenticator("replace", "all", "this")
   let token
   try {
     await authenticator.refreshTokens()
@@ -30,11 +31,11 @@ const createBrimFetcher = (dispatch, getState) => {
     // const headers
 
     const wrappedPromise = async (args: FetchArgs): Promise<any> => {
-      const conn = Current.mustGetConnection(getState())
+      const conn = Current.mustGetWorkspace(getState())
 
       // TODO: add auth flag to each workspace/connection
       // if (conn.authEnabled)...
-      if (conn.getAddress() === "localhost:9868") {
+      if (conn.auth) {
         const value = await getAuthHeaderForConn(conn)
         if (args.headers) args.headers.append("Authorization", value)
         else args.headers = new Headers({Authorization: value})
@@ -61,11 +62,11 @@ const createBrimFetcher = (dispatch, getState) => {
     }
 
     const wrappedStream = async (args: FetchArgs): Promise<ZReponse> => {
-      const conn = Current.mustGetConnection(getState())
+      const ws = Current.mustGetWorkspace(getState())
 
       // if (conn.authEnabled)...
-      if (conn.getAddress() === "localhost:9868") {
-        const value = await getAuthHeaderForConn(conn)
+      if (ws.auth) {
+        const value = await getAuthHeaderForConn(ws)
         if (args.headers) args.headers.append("Authorization", value)
         else args.headers = new Headers({Authorization: value})
       }
