@@ -12,13 +12,17 @@ export const initWorkspace = (workspace: Workspace) => (
   {createZealot}
 ): Promise<void> => {
   const zealot = createZealot(brim.workspace(workspace).getAddress())
+  const connectedWorkspace: Workspace = {
+    ...workspace
+  }
   return zealot
     .version()
     .then(({version}) => {
-      const connectedWorkspace: Workspace = {
-        ...workspace,
-        version
-      }
+      connectedWorkspace.version = version
+      return zealot.authMethod()
+    })
+    .then((authMethod) => {
+      console.log({authMethod})
       dispatch(Workspaces.add(connectedWorkspace))
       dispatch(WorkspaceStatuses.set(workspace.id, "connected"))
       globalDispatch(Workspaces.add(connectedWorkspace)).then(() => {

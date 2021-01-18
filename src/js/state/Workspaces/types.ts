@@ -17,7 +17,10 @@ export type WorkspacesState = {
   [key: string]: Workspace
 }
 
-export type WorkspaceAction = WORKSPACE_REMOVE | WORKSPACE_ADD
+export type WorkspaceAction =
+  | WORKSPACE_REMOVE
+  | WORKSPACE_ADD
+  | WORKSPACE_SET_TOKEN
 
 export type WORKSPACE_REMOVE = {
   type: "WORKSPACE_REMOVE"
@@ -27,4 +30,10 @@ export type WORKSPACE_REMOVE = {
 export type WORKSPACE_ADD = {
   type: "WORKSPACE_ADD"
   workspace: Workspace
+}
+
+export type WORKSPACE_SET_TOKEN = {
+  type: "WORKSPACE_SET_TOKEN"
+  workspaceId: string
+  accessToken: string
 }
