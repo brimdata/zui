@@ -2,10 +2,10 @@ import React, {useState} from "react"
 
 import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
-import {Cluster} from "../state/Clusters/types"
 import ToolbarButton from "./Toolbar/Button"
 import {useDispatch} from "react-redux"
 import {initCurrentTab} from "../flows/initCurrentTab"
+import {Workspace} from "../state/Workspaces/types"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -32,7 +32,7 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  conn: Cluster
+  conn: Workspace
 }
 
 const ConnectionError = ({conn}: Props) => {

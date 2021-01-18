@@ -10,7 +10,7 @@ import Spaces from "../../../state/Spaces"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
-import Clusters from "../../../state/Clusters"
+import Workspaces from "../../../state/Workspaces"
 
 const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
@@ -24,7 +24,7 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
   zealot.stubStream("search", countByPathResp).stubStream("search", dnsResp)
   store.dispatchAll([
-    Clusters.add({
+    Workspaces.add({
       host: "testHost",
       id: "1",
       name: "testName",
@@ -32,7 +32,7 @@ beforeEach(() => {
       port: "9867",
       username: ""
     }),
-    Current.setConnectionId("1"),
+    Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
     Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput("dns"),

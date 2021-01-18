@@ -10,9 +10,9 @@ import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
 import ConnectionError from "./ConnectionError"
 import {initCurrentTab} from "../flows/initCurrentTab"
-import ConnectionStatuses from "../state/ConnectionStatuses"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import get from "lodash/get"
-import ConnectionChooserPage from "./ConnectionChooserPage"
+import WorkspaceChooserPage from "./WorkspaceChooserPage"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -25,9 +25,9 @@ const SpinnerWrap = styled.div`
 export default function TabContent() {
   const dispatch = useDispatch()
   const space = useSelector(Current.getSpace)
-  const conn = useSelector(Current.getConnection)
+  const conn = useSelector(Current.getWorkspace)
   const id = get(conn, ["id"], "")
-  const connStatus = useSelector(ConnectionStatuses.get(id))
+  const connStatus = useSelector(WorkspaceStatuses.get(id))
 
   useEffect(() => {
     if (conn && !connStatus) {
@@ -35,7 +35,7 @@ export default function TabContent() {
     }
   }, [conn, connStatus])
 
-  if (!conn) return <ConnectionChooserPage />
+  if (!conn) return <WorkspaceChooserPage />
 
   if (!connStatus)
     return (

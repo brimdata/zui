@@ -1,6 +1,6 @@
 import {createZealotMock, zjson, zng} from "zealot"
 
-import Clusters from "../state/Clusters"
+import Workspaces from "../state/Workspaces"
 import Current from "../state/Current"
 import Spaces from "../state/Spaces"
 import Tabs from "../state/Tabs"
@@ -11,7 +11,7 @@ import initTestStore from "../test/initTestStore"
 
 let store, mock
 const select = (selector) => selector(store.getState())
-const conn = fixtures("cluster1")
+const ws = fixtures("workspace1")
 const space = fixtures("space1")
 const subspace = {...space, id: "2", parent_id: 1, name: "subspace"}
 const cols = [
@@ -29,9 +29,9 @@ beforeEach(() => {
     .stubPromise("spaces.list", [space, subspace])
   store = initTestStore(mock.zealot)
   store.dispatchAll([
-    Clusters.add(conn),
-    Spaces.setDetail(conn.id, space),
-    Current.setConnectionId(conn.id),
+    Workspaces.add(ws),
+    Spaces.setDetail(ws.id, space),
+    Current.setWorkspaceId(ws.id),
     Current.setSpaceId(space.id),
     Viewer.appendRecords(undefined, records),
     Viewer.select(0)
@@ -70,7 +70,7 @@ test("Sends the array of selected logs", async () => {
 })
 
 test("The list of spaces is updated", async () => {
-  const count = () => select(Spaces.getSpaces(conn.id)).length
+  const count = () => select(Spaces.getSpaces(ws.id)).length
   expect(count()).toBe(1)
   await store.dispatch(createSubspace())
   expect(count()).toBe(2)

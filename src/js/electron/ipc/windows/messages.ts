@@ -12,7 +12,7 @@ import {
 export type NewTabSearchParams = {
   host: string
   port: string
-  connId: string
+  workspaceId: string
   program: string
   span: SpanArgs
   spaceId: string

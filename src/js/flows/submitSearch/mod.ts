@@ -34,9 +34,9 @@ export function submitSearch(
       if (query === "*") return Promise.resolve()
     }
 
-    const connId = Current.getConnectionId(getState())
+    const workspaceId = Current.getWorkspaceId(getState())
     const spaceId = Current.getSpaceId(getState())
-    dispatch(saveToHistory(connId, spaceId, record, save, ts))
+    dispatch(saveToHistory(workspaceId, spaceId, record, save, ts))
 
     if (record.target === "index") {
       const promise = dispatch(viewerSearch({query, from, to, target: "index"}))

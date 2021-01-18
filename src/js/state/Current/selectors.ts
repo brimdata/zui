@@ -1,31 +1,31 @@
 import {createSelector} from "reselect"
 
-import {ClustersState} from "../Clusters/types"
+import {WorkspacesState} from "../Workspaces/types"
 import {SpacesState} from "../Spaces/types"
 import {State} from "../types"
-import Clusters from "../Clusters"
+import Workspaces from "../Workspaces"
 import Spaces from "../Spaces"
 import activeTabSelect from "../Tab/activeTabSelect"
-import brim, {BrimConnection, BrimSpace} from "../../brim"
+import brim, {BrimWorkspace, BrimSpace} from "../../brim"
 
 type Id = string | null
 
 export const getSpaceId = activeTabSelect((state) => state.current.spaceId)
 
-export const getConnectionId = activeTabSelect(
-  (state) => state.current.connectionId
+export const getWorkspaceId = activeTabSelect(
+  (state) => state.current.workspaceId
 )
 
-export const mustGetConnection = createSelector<
+export const mustGetWorkspace = createSelector<
   State,
-  ClustersState,
+  WorkspacesState,
   Id,
-  BrimConnection
->(Clusters.raw, getConnectionId, (conns, id) => {
-  if (!id) throw new Error("Current connection id is unset")
-  if (!conns[id]) throw new Error(`Missing connection id: ${id}`)
+  BrimWorkspace
+>(Workspaces.raw, getWorkspaceId, (workspaces, id) => {
+  if (!id) throw new Error("Current workspace id is unset")
+  if (!workspaces[id]) throw new Error(`Missing workspace id: ${id}`)
 
-  return brim.connection(conns[id])
+  return brim.workspace(workspaces[id])
 })
 
 export const mustGetSpace = createSelector<
@@ -34,13 +34,15 @@ export const mustGetSpace = createSelector<
   Id,
   Id,
   BrimSpace
->(Spaces.raw, getConnectionId, getSpaceId, (spaces, connId, spaceId) => {
-  if (!connId) throw new Error("Current connection id is unset")
+>(Spaces.raw, getWorkspaceId, getSpaceId, (spaces, workspaceId, spaceId) => {
+  if (!workspaceId) throw new Error("Current workspace id is unset")
   if (!spaceId) throw new Error("Current space id is unset")
-  if (!spaces[connId]) throw new Error(`No spaces in connection id: ${connId}`)
-  if (!spaces[connId][spaceId]) throw new Error(`Missing space id: ${spaceId}`)
+  if (!spaces[workspaceId])
+    throw new Error(`No spaces in workspace id: ${workspaceId}`)
+  if (!spaces[workspaceId][spaceId])
+    throw new Error(`Missing space id: ${spaceId}`)
 
-  return brim.space(spaces[connId][spaceId])
+  return brim.space(spaces[workspaceId][spaceId])
 })
 
 export const getSpace = (state: State) => {
@@ -51,9 +53,9 @@ export const getSpace = (state: State) => {
   }
 }
 
-export const getConnection = (state: State) => {
+export const getWorkspace = (state: State) => {
   try {
-    return mustGetConnection(state)
+    return mustGetWorkspace(state)
   } catch {
     return null
   }

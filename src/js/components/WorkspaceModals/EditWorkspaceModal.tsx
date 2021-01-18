@@ -1,23 +1,23 @@
 import React from "react"
 import {Content, SmallTitle} from "../ModalDialog/ModalDialog"
-import ConnectionForm from "./ConnectionForm"
 import {useSelector} from "react-redux"
 import Current from "../../state/Current"
 import styled from "styled-components"
+import WorkspaceForm from "./WorkspaceForm"
 
 const StyledContent = styled(Content)`
   min-width: 360px;
 `
 
-const EditConnectionModal = ({onClose}) => {
-  const conn = useSelector(Current.getConnection)
+const EditWorkspaceModal = ({onClose}) => {
+  const workspace = useSelector(Current.getWorkspace)
 
   return (
     <StyledContent>
-      <SmallTitle>Edit Connection</SmallTitle>
-      <ConnectionForm onClose={onClose} conn={conn} />
+      <SmallTitle>Edit Workspace</SmallTitle>
+      <WorkspaceForm onClose={onClose} workspace={workspace} />
     </StyledContent>
   )
 }
 
-export default EditConnectionModal
+export default EditWorkspaceModal

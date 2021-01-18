@@ -10,7 +10,7 @@ export type TabActions =
   | TABS_ACTIVE_CLEAR
 
 export type AddTabData = {
-  connectionId: string | null
+  workspaceId: string | null
   spaceId: string | null
 }
 

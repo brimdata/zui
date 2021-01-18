@@ -3,7 +3,7 @@ import React, {MouseEvent} from "react"
 import styled from "styled-components"
 
 import {XLeftPaneExpander} from "./LeftPaneExpander"
-import ClusterPicker from "../ClusterPicker"
+import WorkspacePicker from "../WorkspacePicker"
 import Current from "../../state/Current"
 import Layout from "../../state/Layout"
 import Pane from "./../Pane"
@@ -31,8 +31,8 @@ export function LeftPane() {
     closedSize: 24
   }))
 
-  const conn = useSelector(Current.getConnection)
-  const id = get(conn, ["id"], "")
+  const ws = useSelector(Current.getWorkspace)
+  const id = get(ws, ["id"], "")
   const setSections = (sections) =>
     dispatch(Layout.setSidebarSections(sections))
 
@@ -54,11 +54,11 @@ export function LeftPane() {
     >
       {!id ? (
         <EmptyText>
-          The connection previously on this tab has been removed.
+          The workspace previously on this tab has been removed.
         </EmptyText>
       ) : (
         <>
-          <ClusterPicker />
+          <WorkspacePicker />
           <Sectional sections={sections} onChange={setSections}>
             {(data, provided) => {
               if (data.id === "spaces")

@@ -7,7 +7,7 @@ import brim from "../../brim"
 export type SaveOpts = {history: boolean; investigation: boolean}
 
 export function saveToHistory(
-  connId: string | null,
+  workspaceId: string | null,
   spaceId: string | null,
   record: SearchRecord,
   opts: SaveOpts,
@@ -19,7 +19,7 @@ export function saveToHistory(
     }
     if (opts.investigation) {
       globalDispatch(
-        Investigation.push(connId, spaceId, record, brim.time(ts).toTs())
+        Investigation.push(workspaceId, spaceId, record, brim.time(ts).toTs())
       )
     }
   }

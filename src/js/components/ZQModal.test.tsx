@@ -7,7 +7,7 @@ import logInto from "../test/helpers/loginTo"
 import provide from "../test/helpers/provide"
 
 test("renders with zq get command", async () => {
-  const {store} = await logInto("cluster1", "space1")
+  const {store} = await logInto("workspace1", "space1")
 
   store.dispatchAll([SearchBar.changeSearchBarInput("hi"), Modal.show("zq")])
 

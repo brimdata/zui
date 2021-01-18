@@ -1,19 +1,18 @@
-import {Cluster} from "../state/Clusters/types"
+import {Workspace} from "../state/Workspaces/types"
 
-export default function connection(conn: Cluster) {
+export default function workspace(ws: Workspace) {
   return {
-    ...conn,
+    ...ws,
     getAddress(): string {
       return [this.host, this.port].join(":")
     },
-    serialize(): Cluster {
+    serialize(): Workspace {
       return {
         host: this.host,
         id: this.id,
         name: this.name,
-        password: this.password,
         port: this.port,
-        username: this.username
+        auth: this.auth
       }
     }
   }

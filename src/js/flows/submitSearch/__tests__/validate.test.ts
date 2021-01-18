@@ -19,7 +19,7 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
   zealot.stubStream("search", dnsResp)
   store.dispatchAll([
-    Current.setConnectionId("1"),
+    Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
     Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput("dns"),

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import {ConnectionStatus} from "../../state/ConnectionStatuses/types"
+import {WorkspaceStatus} from "../../state/WorkspaceStatuses/types"
 
 const StatusLight = ({...props}: any) => {
   return (
@@ -15,7 +15,7 @@ const StatusLight = ({...props}: any) => {
   )
 }
 
-export default styled(StatusLight)<{status: ConnectionStatus}>`
+export default styled(StatusLight)<{status: WorkspaceStatus}>`
   fill: ${(p) => {
     switch (p.status) {
       case "connected":

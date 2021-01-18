@@ -11,7 +11,7 @@ import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
 
 export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
-  const clusterId = Current.getConnectionId(getState())
+  const clusterId = Current.getWorkspaceId(getState())
   if (!clusterId) return
   const zealot = dispatch(getZealot())
   return zealot.spaces

@@ -15,7 +15,7 @@ import brim from "../brim"
 
 export default function StatusBar() {
   const dispatch = useDispatch()
-  const clusterID = useSelector(Current.getConnectionId)
+  const clusterID = useSelector(Current.getWorkspaceId)
   const spaceId = useSelector(Current.getSpaceId)
   const space = useSelector(Current.getSpace)
   const value = useSelector(Spaces.getIngestProgress(clusterID, spaceId))

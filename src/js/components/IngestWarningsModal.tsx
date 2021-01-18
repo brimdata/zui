@@ -19,7 +19,7 @@ import ToolbarButton from "./Toolbar/Button"
 
 export default function IngestWarningsModal({onClose}) {
   useEnterKey(onClose)
-  const id = useSelector(Current.getConnectionId)
+  const id = useSelector(Current.getWorkspaceId)
   const spaceId = useSelector(Current.getSpaceId)
   const warnings = useSelector(Spaces.getIngestWarnings(id, spaceId))
   const onClear = () => globalDispatch(Spaces.clearIngestWarnings(id, spaceId))

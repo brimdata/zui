@@ -21,8 +21,8 @@ export default (files: File[]): Thunk<Promise<void>> => (
   getState,
   {globalDispatch}
 ) => {
-  const conn = Current.mustGetConnection(getState())
-  const clusterId = conn.id
+  const ws = Current.mustGetWorkspace(getState())
+  const clusterId = ws.id
   const zealot = dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
@@ -38,7 +38,7 @@ export default (files: File[]): Thunk<Promise<void>> => (
       createSpace(zealot, globalDispatch, clusterId),
       setSpace(dispatch, tabId),
       registerHandler(dispatch, requestId),
-      postFiles(zealot, conn, jsonTypeConfigPath),
+      postFiles(zealot, ws, jsonTypeConfigPath),
       trackProgress(zealot, globalDispatch, clusterId),
       unregisterHandler(dispatch, requestId)
     ])
@@ -113,7 +113,7 @@ const unregisterHandler = (dispatch, id) => ({
   }
 })
 
-const postFiles = (client, conn, jsonTypesPath) => ({
+const postFiles = (client, ws, jsonTypesPath) => ({
   async do(params: IngestParams & {spaceId: string}) {
     const {spaceId, endpoint, files} = params
     const paths = files.map((f) => f.path)
@@ -123,7 +123,7 @@ const postFiles = (client, conn, jsonTypesPath) => ({
         stream = await client.pcaps.post({spaceId, path: paths[0]})
       } catch (e) {
         if (e.name == "item does not exist") {
-          e.message = "File " + e.message + " does not exist on " + conn.name
+          e.message = "File " + e.message + " does not exist on " + ws.name
         }
         throw e
       }

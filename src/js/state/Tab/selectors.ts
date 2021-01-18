@@ -1,6 +1,6 @@
 import {createSelector} from "reselect"
 
-import {Cluster} from "../Clusters/types"
+import {Workspace} from "../Workspaces/types"
 import {DateTuple} from "../../lib/TimeWindow"
 import {SpanArgs} from "../Search/types"
 import {State} from "../types"
@@ -13,8 +13,8 @@ import Viewer from "../Viewer"
 import activeTabSelect from "./activeTabSelect"
 import brim, {Span} from "../../brim"
 
-const clusterUrl = createSelector<State, Cluster | null, string>(
-  Current.getConnection,
+const clusterUrl = createSelector<State, Workspace | null, string>(
+  Current.getWorkspace,
   (c) => {
     if (c) return c.host + ":" + c.port
     else return "localhost:9867"

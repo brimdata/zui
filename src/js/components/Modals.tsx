@@ -7,8 +7,8 @@ import ZQModal from "./ZQModal"
 import CurlModal from "./CurlModal"
 import React from "react"
 import {ModalDialog} from "./ModalDialog/ModalDialog"
-import NewConnectionModal from "./ConnectionModals/NewConnectionModal"
-import ViewConnectionModal from "./ConnectionModals/ViewConnectionModal"
+import NewWorkspaceModal from "./WorkspaceModals/NewWorkspaceModal"
+import ViewWorkspaceModal from "./WorkspaceModals/ViewWorkspaceModal"
 import NewQueryModal from "./QueriesModals/NewQueryModal"
 import EditQueryModal from "./QueriesModals/EditQueryModal"
 import ExportModal from "./ExportModal"
@@ -19,8 +19,8 @@ const MODALS = {
   curl: CurlModal,
   zq: ZQModal,
   "ingest-warnings": IngestWarningsModal,
-  "new-connection": NewConnectionModal,
-  "view-connection": ViewConnectionModal,
+  "new-workspace": NewWorkspaceModal,
+  "view-workspace": ViewWorkspaceModal,
   "new-query": NewQueryModal,
   export: ExportModal,
   "edit-query": EditQueryModal

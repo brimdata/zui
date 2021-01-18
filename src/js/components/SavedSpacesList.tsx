@@ -19,7 +19,7 @@ import Spaces from "../state/Spaces"
 import deleteSpaces from "../flows/deleteSpaces"
 import {popNotice} from "./PopNotice"
 import {AppDispatch} from "../state/types"
-import {ConnectionStatus} from "../state/ConnectionStatuses/types"
+import {ConnectionStatus} from "../state/WorkspaceStatuses/types"
 
 type Props = {
   spaces: Space[]
@@ -35,7 +35,7 @@ const NameWrap = styled.div`
 
 const SpaceListItem = ({space}: {space: Space}) => {
   const dispatch = useDispatch<AppDispatch>()
-  const clusterId = useSelector(Current.getConnectionId)
+  const clusterId = useSelector(Current.getWorkspaceId)
   const currentSpaceId = useSelector(Current.getSpaceId)
   const spaceIds = useSelector(Spaces.ids(clusterId))
   const s = brim.space(space)

@@ -5,14 +5,14 @@ import React, {useState} from "react"
 import styled from "styled-components"
 import {FormConfig} from "../../brim/form"
 import brim from "../../brim"
-import {initConnection} from "../../flows/initConnection"
+import {initWorkspace} from "../../flows/initWorkspace"
 import useCallbackRef from "../hooks/useCallbackRef"
 import {useDispatch} from "react-redux"
-import {Cluster} from "../../state/Clusters/types"
 import {isEmpty} from "lodash"
 import MacSpinner from "../MacSpinner"
 import ToolbarButton from "../Toolbar/Button"
 import useEventListener from "../hooks/useEventListener"
+import {Workspace} from "../../state/Workspaces/types"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -72,11 +72,11 @@ const StyledTextInput = styled(TextInput)`
 `
 
 type Props = {
-  conn?: Cluster
+  workspace?: Workspace
   onClose: () => void
 }
 
-const ConnectionForm = ({onClose, conn}: Props) => {
+const WorkspaceForm = ({onClose, workspace}: Props) => {
   const dispatch = useDispatch()
   const [errors, setErrors] = useState([])
   const [formRef, setFormRef] = useCallbackRef()
@@ -95,7 +95,7 @@ const ConnectionForm = ({onClose, conn}: Props) => {
     }
   }
 
-  const toCluster = ({id, host, name}): Cluster => {
+  const toWorkspace = ({id, host, name}): Workspace => {
     // set defaults
     let [h, p] = host.split(":")
     if (!p) p = "9867"
@@ -103,9 +103,7 @@ const ConnectionForm = ({onClose, conn}: Props) => {
       host: h,
       port: p,
       id: id || brim.randomHash(),
-      name: name,
-      username: undefined,
-      password: undefined
+      name: name
     }
   }
 
@@ -126,8 +124,8 @@ const ConnectionForm = ({onClose, conn}: Props) => {
         return obj
       }, {})
       try {
-        const id = conn && conn.id
-        await dispatch(initConnection(toCluster({id, host, name})))
+        const id = workspace && workspace.id
+        await dispatch(initWorkspace(toWorkspace({id, host, name})))
       } catch {
         setIsSubmitting(false)
         setErrors([{message: "Cannot connect to host"}])
@@ -154,8 +152,9 @@ const ConnectionForm = ({onClose, conn}: Props) => {
 
   useEventListener(document, "keyup", keyUp, [formRef])
 
-  const defaultName = (conn && conn.name) || ""
-  const defaultHost = (conn && [conn.host, conn.port].join(":")) || ""
+  const defaultName = (workspace && workspace.name) || ""
+  const defaultHost =
+    (workspace && [workspace.host, workspace.port].join(":")) || ""
 
   return (
     <>
@@ -201,4 +200,4 @@ const ConnectionForm = ({onClose, conn}: Props) => {
   )
 }
 
-export default ConnectionForm
+export default WorkspaceForm

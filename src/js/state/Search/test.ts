@@ -1,6 +1,6 @@
 import {createZealotMock} from "zealot"
 
-import Clusters from "../Clusters"
+import Workspaces from "../Workspaces"
 import Current from "../Current"
 import Search from "./"
 import Spaces from "../Spaces"
@@ -19,13 +19,13 @@ describe("reducer", () => {
 
   beforeEach(() => {
     store = initTestStore(createZealotMock().stubStream("search", []).zealot)
-    const conn = fixtures("cluster1")
+    const ws = fixtures("workspace1")
     const space = fixtures("space1")
 
     store.dispatchAll([
-      Clusters.add(conn),
-      Spaces.setDetail(conn.id, space),
-      Current.setConnectionId(conn.id),
+      Workspaces.add(ws),
+      Spaces.setDetail(ws.id, space),
+      Current.setWorkspaceId(ws.id),
       Current.setSpaceId(space.id)
     ])
   })
@@ -71,13 +71,13 @@ describe("selectors", () => {
 
   beforeEach(() => {
     store = initTestStore()
-    const conn = fixtures("cluster1")
+    const ws = fixtures("workspace1")
     const space = fixtures("space1")
 
     store.dispatchAll([
-      Clusters.add(conn),
-      Spaces.setDetail(conn.id, space),
-      Current.setConnectionId(conn.id),
+      Workspaces.add(ws),
+      Spaces.setDetail(ws.id, space),
+      Current.setWorkspaceId(ws.id),
       Current.setSpaceId(space.id)
     ])
   })

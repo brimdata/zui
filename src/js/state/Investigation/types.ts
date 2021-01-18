@@ -19,24 +19,24 @@ export type Finding = {
 
 export type FINDING_DELETE = {
   type: "FINDING_DELETE"
-  clusterId: string
+  workspaceId: string
   spaceId: string
   ts: Ts[]
 }
 export type INVESTIGATION_CLEAR = {
   type: "INVESTIGATION_CLEAR"
-  clusterId: string
+  workspaceId: string
   spaceId: string
 }
 
 export type INVESTIGATION_CONNECTION_CLEAR = {
   type: "INVESTIGATION_CONNECTION_CLEAR"
-  connId: string
+  workspaceId: string
 }
 
 export type INVESTIGATION_PUSH = {
   type: "INVESTIGATION_PUSH"
-  clusterId: string
+  workspaceId: string
   spaceId: string
   entry: SearchRecord
   ts: Ts

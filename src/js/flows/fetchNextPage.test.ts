@@ -1,7 +1,7 @@
 import {createZealotMock, zng} from "zealot"
 
 import {fetchNextPage} from "./fetchNextPage"
-import Clusters from "../state/Clusters"
+import Workspaces from "../state/Workspaces"
 import Current from "../state/Current"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
@@ -39,12 +39,12 @@ beforeEach(() => {
   zealot.stubStream("search", [])
   store = initTestStore(zealot.zealot)
   tabId = Tabs.getActive(store.getState())
-  const conn = fixtures("cluster1")
+  const ws = fixtures("workspace1")
   const space = fixtures("space1")
   store.dispatchAll([
-    Clusters.add(conn),
-    Spaces.setDetail(conn.id, space),
-    Current.setConnectionId(conn.id),
+    Workspaces.add(ws),
+    Spaces.setDetail(ws.id, space),
+    Current.setWorkspaceId(ws.id),
     Current.setSpaceId(space.id),
     Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     Tab.computeSpan(),

@@ -4,47 +4,53 @@ import {Space} from "./types"
 import {State} from "../types"
 
 export default {
-  ids: (clusterId: string) => (state: State) => {
-    return keys(getCluster(state, clusterId))
+  ids: (workspaceId: string) => (state: State) => {
+    return keys(getWorkspace(state, workspaceId))
   },
-  get: (clusterId: string, spaceId: string) => (state: State) => {
-    return getCluster(state, clusterId)[spaceId]
+  get: (workspaceId: string, spaceId: string) => (state: State) => {
+    return getWorkspace(state, workspaceId)[spaceId]
   },
-  getName: (clusterId: string, spaceId: string) => (state: State) => {
-    const space = getCluster(state, clusterId)[spaceId]
+  getName: (workspaceId: string, spaceId: string) => (state: State) => {
+    const space = getWorkspace(state, workspaceId)[spaceId]
     return space ? space.name : ""
   },
   raw: (state: State) => state.spaces,
-  getSpaces: (clusterId: string | null) => (state: State): Space[] => {
-    const clus = getCluster(state, clusterId)
-    return Object.keys(clus).map((key) => {
-      return {...clus[key]}
+  getSpaces: (workspaceId: string | null) => (state: State): Space[] => {
+    const ws = getWorkspace(state, workspaceId)
+    return Object.keys(ws).map((key) => {
+      return {...ws[key]}
     })
   },
-  getSpaceNames: (clusterId: string) => (state: State): string[] => {
-    const clus = getCluster(state, clusterId)
-    return Object.keys(clus).map((key) => clus[key].name)
+  getSpaceNames: (workspaceId: string) => (state: State): string[] => {
+    const ws = getWorkspace(state, workspaceId)
+    return Object.keys(ws).map((key) => ws[key].name)
   },
-  getIngestProgress: (clusterId: string, spaceId: string) => (state: State) => {
-    const cluster = getCluster(state, clusterId)
-    const space = cluster[spaceId]
+  getIngestProgress: (workspaceId: string, spaceId: string) => (
+    state: State
+  ) => {
+    const ws = getWorkspace(state, workspaceId)
+    const space = ws[spaceId]
     if (space) return space.ingest.progress
     else return null
   },
-  getIngestWarnings: (clusterId: string, spaceId: string) => (state: State) => {
-    const cluster = getCluster(state, clusterId)
-    const space = cluster[spaceId]
+  getIngestWarnings: (workspaceId: string, spaceId: string) => (
+    state: State
+  ) => {
+    const ws = getWorkspace(state, workspaceId)
+    const space = ws[spaceId]
     if (space) return space.ingest.warnings
     else return []
   },
-  getIngestSnapshot: (clusterId: string, spaceId: string) => (state: State) => {
-    const cluster = getCluster(state, clusterId)
-    const space = cluster[spaceId]
+  getIngestSnapshot: (workspaceId: string, spaceId: string) => (
+    state: State
+  ) => {
+    const ws = getWorkspace(state, workspaceId)
+    const space = ws[spaceId]
     if (space) return space.ingest.snapshot
   }
 }
 
-function getCluster(
+function getWorkspace(
   state,
   id
 ): {
