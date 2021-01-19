@@ -1,6 +1,6 @@
 import {appPathSetup} from "./appPathSetup"
 import userTasks from "./userTasks"
-import * as auth from "../auth"
+import workspace from "../brim/workspace"
 
 // app path and log setup should happen before other imports.
 appPathSetup()
@@ -21,6 +21,8 @@ import log from "electron-log"
 import {handleQuit} from "./quitter"
 import {Brim} from "./brim"
 import {Authenticator} from "../auth"
+import url from "url"
+import Workspaces from "../state/Workspaces"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
@@ -55,15 +57,22 @@ async function main() {
   app.on("activate", () => brim.activate())
 
   app.setAsDefaultProtocolClient("brim")
-  app.on("open-url", (event, url) => {
+  app.on("open-url", (event, cbUrl) => {
     event.preventDefault()
-    // handle the data
-    log.info("url is: ", url)
-    const authenticator = new Authenticator("https://app.brimsecurity.com")
+
+    const urlParts = url.parse(cbUrl, true)
+    const workspaceId = urlParts?.query?.state
+    const ws = Workspaces.id(workspaceId as string)(brim.store.getState())
+    console.log("ws is: ", ws)
+    const authenticator = new Authenticator(
+      workspace(ws).getAddress(),
+      ws.auth.clientId,
+      ws.auth.domain
+    )
     authenticator
-      .loadTokens(url)
-      .then(() => {
-        log.info("logged in!")
+      .loadTokens(cbUrl)
+      .then((token) => {
+        brim.store.dispatch(Workspaces.setWorkspaceToken(ws.id, token))
         brim.activate()
       })
       .catch((e) => log.error("error loading tokens: ", e))

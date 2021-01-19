@@ -12,9 +12,9 @@ export class Authenticator {
   private profile: any
 
   private apiIdentifier = "https://app.brimsecurity.com"
-  private redirectUri = "brim:///"
+  private redirectUri = "brim://callback"
 
-  private keytarServiceSuffix = "-brim-oath"
+  private keytarServiceSuffix = "-brim-oauth"
   private keytarAccount = os.userInfo().username
 
   constructor(
@@ -32,32 +32,33 @@ export class Authenticator {
     return this.profile
   }
 
-  login(): Promise<void> {
-    return shell.openExternal(
-      "https://" +
-        this.auth0Domain +
-        "/authorize?" +
-        "audience=" +
-        this.apiIdentifier +
-        "&" +
-        "scope=openid profile offline_access&" +
-        "response_type=code&" +
-        "client_id=" +
-        this.clientId +
-        "&" +
-        "redirect_uri=" +
-        this.redirectUri
-    )
+  login(state: string): Promise<void> {
+    const loginUrl =
+      this.auth0Domain +
+      "/authorize?" +
+      "audience=" +
+      this.apiIdentifier +
+      "&" +
+      "scope=openid profile offline_access&" +
+      "response_type=code&" +
+      "client_id=" +
+      this.clientId +
+      "&" +
+      "redirect_uri=" +
+      this.redirectUri +
+      "&" +
+      "state=" +
+      state
+
+    return shell.openExternal(loginUrl)
   }
 
   private getKeytarService(): string {
-    const service = `${this.workspaceUrl}${this.keytarServiceSuffix}`
-    // TODO: MASON - remove me
-    console.log("keytar service is: ", service)
+    const service = this.workspaceUrl + this.keytarServiceSuffix
     return service
   }
 
-  async refreshTokens(): Promise<void> {
+  async refreshTokens(): Promise<string> {
     this.refreshToken = await keytar.getPassword(
       this.getKeytarService(),
       this.keytarAccount
@@ -90,9 +91,11 @@ export class Authenticator {
     } else {
       throw new Error("No available refresh token.")
     }
+
+    return this.accessToken
   }
 
-  async loadTokens(callbackURL): Promise<void> {
+  async loadTokens(callbackURL): Promise<string> {
     const urlParts = url.parse(callbackURL, true)
     const query = urlParts.query
 
@@ -103,7 +106,7 @@ export class Authenticator {
       redirect_uri: this.redirectUri
     }
 
-    const fetchUrl = `https://${this.auth0Domain}/oauth/token`
+    const fetchUrl = `${this.auth0Domain}/oauth/token`
 
     try {
       const data = await got.post(fetchUrl, {
@@ -124,7 +127,6 @@ export class Authenticator {
       this.refreshToken = body.refresh_token
 
       if (this.refreshToken) {
-        console.log("setting password: ", this.getKeytarService())
         await keytar.setPassword(
           this.getKeytarService(),
           this.keytarAccount,
@@ -136,6 +138,8 @@ export class Authenticator {
 
       throw error
     }
+
+    return this.accessToken
   }
 
   async logout(): Promise<void> {
@@ -146,6 +150,6 @@ export class Authenticator {
   }
 
   // getLogOutUrl(): string {
-  //   return `https://${this.auth0Domain}/v2/logout`
+  //   return `${this.auth0Domain}/v2/logout`
   // }
 }
