@@ -122,3 +122,37 @@ Notarization can take some time to complete ("typically less than an hour"). If 
 ```bash
 xcrun altool --notarization-history 0 -u <user> -p <app-specific-password>
 ```
+
+## Licensing
+
+This repository contains source code that is licensed under either a
+BSD-3-Clause license or the Polyform Perimeter license - see the LICENSE.txt
+file for specifics.
+
+If you make a contribution to this repository, whether to source code licensed
+under the BSD-3-Clause license or the Polyform Perimeter license, you agree
+that you are licensing your contribution under the terms of the BSD-3-Clause
+license found in LICENSE.txt, and you agree that you have the right to license
+your contribution under those license terms. 
+
+### Why the two licenses?
+
+We want to prevent technology giants from using the Polyform Perimeter license
+covered code to create replacement offerings of our projects.
+
+The overwhelming majority of Brim or zqd users and developers will not be
+restricted by this license, including those using Brim or zqd in commercial
+settings.
+
+The use of the source-available Polyform Perimeter license prevents use
+cases like:
+* Marketing a work as a “as-a-service” style offering for server
+  components like zqd, while using material covered under the Polyform
+  Perimeter license
+* Marketing a work as a replacement for the Brim desktop application,
+  while using material covered under the Polyform Perimeter license
+
+We believe users and developers should have access to the source code for our
+project, and we need a sustainable business model to continue funding our
+work. Using the source-available Polyform Perimeter license on portions
+of the source code lets us realize both.
