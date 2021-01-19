@@ -7,18 +7,21 @@ import {Authenticator} from "../auth"
 import {BrimWorkspace} from "../brim"
 import {ZFetcher, ZReponse} from "../../../zealot/types"
 
-const getAuthHeaderForConn = async (ws: BrimWorkspace): Promise<string> => {
-  // TODO: store accessToken in redux and/or keychain, and use (also check if expired before use)
-  // const authenticator = new Authenticator(`http://${conn.getAddress()}`)
-  // const {clientID, domain, accessToken} = ws.auth
-  const authenticator = new Authenticator("replace", "all", "this")
+const getAuthHeaderForWorkspace = async (
+  ws: BrimWorkspace
+): Promise<string> => {
+  if (!ws.auth) return
+
+  const {clientId, domain, accessToken} = ws.auth
+  if (accessToken) return `Bearer ${accessToken}`
+
+  const authenticator = new Authenticator(ws.getAddress(), clientId, domain)
   let token
   try {
     await authenticator.refreshTokens()
     token = authenticator.getAccessToken()
   } catch {
-    await authenticator.login()
-    // TODO: How to come back here after login? or equivalent retry functionality
+    await authenticator.login(ws.id)
   }
 
   return `Bearer ${token}`
@@ -28,27 +31,9 @@ const createBrimFetcher = (dispatch, getState) => {
   return (hostPort: string): ZFetcher => {
     const {promise, stream, ...rest} = createFetcher(hostPort)
 
-    // const headers
-
     const wrappedPromise = async (args: FetchArgs): Promise<any> => {
-      const conn = Current.mustGetWorkspace(getState())
-
-      // TODO: add auth flag to each workspace/connection
-      // if (conn.authEnabled)...
-      if (conn.auth) {
-        const value = await getAuthHeaderForConn(conn)
-        if (args.headers) args.headers.append("Authorization", value)
-        else args.headers = new Headers({Authorization: value})
-      }
-
-      console.log({args})
-      console.log("headers in getZealot: ", args.headers && args.headers.keys())
-      if (args.headers) {
-        let keys = []
-        for (let k of args.headers.keys()) keys.push(k)
-        console.log("keys are: ", keys)
-      }
-      return promise(args).catch((e) => {
+      const ws = Current.mustGetWorkspace(getState())
+      return promise(await setWorkspaceAuthArgs(ws, args)).catch((e) => {
         if (ErrorFactory.create(e).type === "NetworkError") {
           dispatch(
             WorkspaceStatuses.set(
@@ -63,19 +48,26 @@ const createBrimFetcher = (dispatch, getState) => {
 
     const wrappedStream = async (args: FetchArgs): Promise<ZReponse> => {
       const ws = Current.mustGetWorkspace(getState())
-
-      // if (conn.authEnabled)...
-      if (ws.auth) {
-        const value = await getAuthHeaderForConn(ws)
-        if (args.headers) args.headers.append("Authorization", value)
-        else args.headers = new Headers({Authorization: value})
-      }
-
-      return stream(args)
+      return stream(await setWorkspaceAuthArgs(ws, args))
     }
 
     return {promise: wrappedPromise, stream: wrappedStream, ...rest}
   }
+}
+
+const setWorkspaceAuthArgs = async (
+  ws: BrimWorkspace,
+  args: FetchArgs
+): Promise<FetchArgs> => {
+  if (!ws.auth) return {...args}
+
+  const newArgs = {...args}
+
+  const value = await getAuthHeaderForWorkspace(ws)
+  if (newArgs.headers) newArgs.headers.append("Authorization", value)
+  else newArgs.headers = new Headers({Authorization: value})
+
+  return newArgs
 }
 
 export const getZealot = (): Thunk<Zealot> => (
