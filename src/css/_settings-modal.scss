@@ -52,13 +52,16 @@
 
   .feedback {
     position: absolute;
-    right: 24px;
-    top: -11px;
+    right: 12px;
+    top: 1px;
+    margin: 0;
     @include label-small;
+    line-height: 14px;
     background: $blue;
     color: white;
     padding: 0 6px;
-    border-radius: 3px 3px 0 0;
+    border-radius: 4px;
     animation: fadein 300ms;
+    z-index: 1;
   }
 }
