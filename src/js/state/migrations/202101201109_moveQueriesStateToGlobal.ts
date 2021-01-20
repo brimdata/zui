@@ -17,11 +17,12 @@ export default function moveQueriesStateToGlobal(state: any) {
     delete s.queries
   }
 
-  state.globalState.queries = {
-    id: "root",
-    name: "root",
-    items: mergedQueryItems
-  }
+  if (state)
+    state.globalState.queries = {
+      id: "root",
+      name: "root",
+      items: mergedQueryItems
+    }
 
   return state
 }
