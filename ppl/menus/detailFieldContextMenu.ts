@@ -1,3 +1,4 @@
+import {MenuItemConstructorOptions} from "electron/main"
 import {isEqual} from "lodash"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
@@ -10,7 +11,11 @@ export default function detailFieldContextMenu(
   columns: string[],
   space: Space
 ) {
-  return function(field: zng.Field, log: zng.Record, compound: boolean) {
+  return function(
+    field: zng.Field,
+    log: zng.Record,
+    compound: boolean
+  ): MenuItemConstructorOptions[] {
     const isTime = field.data.getType() === "time"
     const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
@@ -56,6 +61,8 @@ export default function detailFieldContextMenu(
         enabled: isGroupBy && sameCols
       }),
       detailMenuActions.countBy.menuItem([fieldData], {enabled: !isGroupBy}),
+      menu.separator(),
+      {role: "copy"},
       menu.separator(),
       detailMenuActions.sortAsc.menuItem([fieldData], {enabled: hasCol}),
       detailMenuActions.sortDesc.menuItem([fieldData], {enabled: hasCol}),
