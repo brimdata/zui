@@ -1,17 +1,19 @@
 import fsExtra from "fs-extra"
 
 import path from "path"
+import os from "os"
 
 import disableLogger from "../../test/helpers/disableLogger"
 import formatSessionState from "./formatSessionState"
 import initTestStore from "../../test/initTestStore"
 import tron from "./"
 
-const file = "tmp/appState.json"
-disableLogger()
+const dir = path.join(os.tmpdir(), "session.test.ts")
+const file = path.join(dir, "appState.json")
 
-beforeEach(() => fsExtra.ensureDir("tmp"))
-afterEach(() => fsExtra.remove("tmp"))
+disableLogger()
+beforeEach(() => fsExtra.ensureDir(dir))
+afterEach(() => fsExtra.remove(dir))
 
 test("session loading with migrations", async () => {
   const state = initTestStore().getState()

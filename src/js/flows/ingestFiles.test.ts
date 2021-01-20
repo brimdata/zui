@@ -33,10 +33,6 @@ beforeEach(() => {
   store.dispatchAll([Clusters.add(conn), Current.setConnectionId(conn.id)])
 })
 
-afterEach(() => {
-  return fsExtra.remove("tmp")
-})
-
 describe("success case", () => {
   beforeEach(() => {
     zealot.stubStream("pcaps.post", [
