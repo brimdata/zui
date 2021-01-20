@@ -1,5 +1,4 @@
 import {createZealotMock} from "zealot"
-import fsExtra from "fs-extra"
 
 import Clusters from "../state/Clusters"
 import Current from "../state/Current"
