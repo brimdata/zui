@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux"
-import React, {memo, useMemo} from "react"
+import React, {memo, useCallback, useMemo} from "react"
 
 import {reactElementProps} from "src/js/test/integration"
 import LogDetails from "src/js/state/LogDetails"
@@ -15,6 +15,7 @@ import {isEqual} from "lodash"
 import Panel from "app/detail/Panel"
 import {getCorrelationQuery} from "./flows/getCorrelationQuery"
 import EventLimit from "./EventLimit"
+import {showContextMenu} from "src/js/lib/System"
 
 export default memo(function UidPanel({record}: {record: zng.Record}) {
   const query = useMemo(() => getCorrelationQuery(record), [record])
@@ -33,6 +34,10 @@ export default memo(function UidPanel({record}: {record: zng.Record}) {
     return events.findIndex((e) => isEqual(e.getRecord(), record))
   }, [record, events])
 
+  const onContextMenu = useCallback(() => {
+    showContextMenu([{role: "copy"}])
+  }, [])
+
   return (
     <section {...reactElementProps("correlationPanel")}>
       <PanelHeading isLoading={isLoading}>Correlation</PanelHeading>
@@ -44,7 +49,9 @@ export default memo(function UidPanel({record}: {record: zng.Record}) {
         <TableWrap>
           <Data>
             <Name>Duration</Name>
-            <Value>{formatDur(conn?.getTime(), conn?.getEndTime())}</Value>
+            <Value onContextMenu={onContextMenu}>
+              {formatDur(conn?.getTime(), conn?.getEndTime())}
+            </Value>
           </Data>
         </TableWrap>
       </Panel>
