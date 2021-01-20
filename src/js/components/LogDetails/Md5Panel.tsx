@@ -32,7 +32,7 @@ export const Md5Panel = ({record}: Props) => {
       .chan(3, (records) => setTx(records))
 
     return abort
-  }, [])
+  }, [logMd5])
 
   function onRightClick(field, record) {
     dispatch(contextMenu(field, record))
