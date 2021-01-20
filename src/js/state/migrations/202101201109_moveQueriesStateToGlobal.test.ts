@@ -1,4 +1,4 @@
-import getTestState, {getAllStates} from "../../test/helpers/getTestState"
+import getTestState from "../../test/helpers/getTestState"
 import migrate from "./202101201109_moveQueriesStateToGlobal"
 import init from "../../../../ppl/queries/initial"
 
