@@ -12,7 +12,8 @@ const setupDefaultWorkspace = () => (dispatch, _, {globalDispatch}) => {
     host,
     port,
     id: hostPort,
-    name: hostPort
+    name: hostPort,
+    authType: "none"
   }
   dispatch(Workspaces.add(ws))
   globalDispatch(Workspaces.add(ws))

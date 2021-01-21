@@ -9,6 +9,10 @@ import getPersistable from "../state/getPersistable"
 import initNewSearchTab from "./initNewSearchTab"
 import confirmUnload from "../flows/confirmUnload"
 import deletePartialSpaces from "../flows/deletePartialSpaces"
+import {globalDispatch} from "../state/GlobalContext"
+import Workspaces from "../state/Workspaces"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
+import refreshSpaceNames from "../flows/refreshSpaceNames"
 
 export default (store: Store) => {
   const dispatch = store.dispatch as AppDispatch
@@ -84,6 +88,14 @@ export default (store: Store) => {
     initNewSearchTab(store, params)
   })
 
+  ipcRenderer.on("windows:authCallback", (e, {workspaceId, accessToken}) => {
+    dispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken))
+    globalDispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken)).then(
+      () => {
+        dispatch(WorkspaceStatuses.set(workspaceId, "connected"))
+      }
+    )
+  })
   ipcRenderer.on("globalStore:dispatch", (e, {action}) =>
     store.dispatch(action)
   )

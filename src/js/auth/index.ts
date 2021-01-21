@@ -18,10 +18,17 @@ export class Authenticator {
   private keytarAccount = os.userInfo().username
 
   constructor(
-    private workspaceUrl: string,
+    private workspaceId: string,
     private clientId: string,
     private auth0Domain: string
   ) {}
+
+  static serializeState(...stateItems: string[]): string {
+    return stateItems.join(",")
+  }
+  static deserializeState(state: string): string[] {
+    return state.split(",")
+  }
 
   getAccessToken(): string {
     return this.accessToken
@@ -54,7 +61,7 @@ export class Authenticator {
   }
 
   private getKeytarService(): string {
-    const service = this.workspaceUrl + this.keytarServiceSuffix
+    const service = this.workspaceId + this.keytarServiceSuffix
     return service
   }
 

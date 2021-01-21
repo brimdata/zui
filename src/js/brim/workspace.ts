@@ -12,7 +12,9 @@ export default function workspace(ws: Workspace) {
         id: this.id,
         name: this.name,
         port: this.port,
-        auth: this.auth
+        version: this.version,
+        authType: this.authType,
+        authData: this.authData
       }
     }
   }

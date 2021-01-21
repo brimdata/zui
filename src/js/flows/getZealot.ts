@@ -10,18 +10,20 @@ import {ZFetcher, ZReponse} from "../../../zealot/types"
 const getAuthHeaderForWorkspace = async (
   ws: BrimWorkspace
 ): Promise<string> => {
-  if (!ws.auth) return
-
-  const {clientId, domain, accessToken} = ws.auth
+  const {clientId, domain, accessToken} = ws.authData
+  // use existing accessToken if available
   if (accessToken) return `Bearer ${accessToken}`
 
   const authenticator = new Authenticator(ws.getAddress(), clientId, domain)
   let token
   try {
+    // else, attempt to use refresh token from keychain to automatically renew access token
     await authenticator.refreshTokens()
     token = authenticator.getAccessToken()
   } catch {
-    await authenticator.login(ws.id)
+    // else, user login flow must be initiated
+    console.log("must login now :(((")
+    // await authenticator.login(ws.id)
   }
 
   return `Bearer ${token}`
@@ -34,6 +36,7 @@ const createBrimFetcher = (dispatch, getState) => {
     const wrappedPromise = async (args: FetchArgs): Promise<any> => {
       const ws = Current.mustGetWorkspace(getState())
       return promise(await setWorkspaceAuthArgs(ws, args)).catch((e) => {
+        // TODO: Mason - if auth required and existing accessToken returns 401, refresh and try once more (i.e. refresh flow)
         if (ErrorFactory.create(e).type === "NetworkError") {
           dispatch(
             WorkspaceStatuses.set(
@@ -59,7 +62,7 @@ const setWorkspaceAuthArgs = async (
   ws: BrimWorkspace,
   args: FetchArgs
 ): Promise<FetchArgs> => {
-  if (!ws.auth) return {...args}
+  if (!ws.authType || ws.authType === "none") return {...args}
 
   const newArgs = {...args}
 

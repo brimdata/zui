@@ -8,6 +8,7 @@ export type IpcMsg =
   | WindowsInitialStateMsg
   | WindowsNewSearchTabMsg
   | WindowsOpenDirectorySelect
+  | WindowsAuthCallbackMsg
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
 
@@ -16,6 +17,12 @@ export type WindowsOpenMsg = {
   name: WindowName
   params: Partial<WindowParams>
   state: State
+}
+
+export type WindowsAuthCallbackMsg = {
+  channel: "windows:authCallback"
+  workspaceId: string
+  accessToken: string
 }
 
 export type WindowsInitialStateMsg = {

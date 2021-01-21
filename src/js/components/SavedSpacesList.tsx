@@ -116,7 +116,9 @@ const SpaceListItem = ({space}: {space: Space}) => {
 
 export default function SavedSpacesList({spaces, workspaceStatus}: Props) {
   if (workspaceStatus === "disconnected")
-    return <EmptySection message="Unable to connect to service" />
+    return <EmptySection message="Unable to connect to service." />
+  if (workspaceStatus === "authenticating" || workspaceStatus === "login")
+    return <EmptySection message="Login required to view spaces." />
   if (spaces.length === 0)
     return (
       <EmptySection
