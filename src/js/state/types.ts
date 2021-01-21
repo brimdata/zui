@@ -16,6 +16,7 @@ import {SystemTestState} from "./SystemTest"
 import {FeatureState} from "./Feature"
 import {WorkspacesState} from "./Workspaces/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
+import {BoardsState} from "./Boards/types"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -32,6 +33,7 @@ export type Dispatch = AppDispatch
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
+  boards: BoardsState
   handlers: HandlersState
   workspaces: WorkspacesState
   errors: ErrorsState
