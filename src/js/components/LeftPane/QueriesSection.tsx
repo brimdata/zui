@@ -27,6 +27,7 @@ import {
   StyledViewSelect,
   Title
 } from "./common"
+import {globalDispatch} from "../../state/GlobalContext"
 
 const filterQueriesByTag = (queriesRoot: Group, tag: string): Query[] => {
   const queryResults = []
@@ -140,8 +141,9 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           .then(({response}) => {
             if (response === 0) {
               const {selections, item} = contextArgs
-              if (hasMultiSelected) dispatch(Queries.removeItems(selections))
-              else dispatch(Queries.removeItems([item]))
+              if (hasMultiSelected)
+                globalDispatch(Queries.removeItems(selections))
+              else globalDispatch(Queries.removeItems([item]))
             }
           })
       }
@@ -161,7 +163,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
 
   function onItemMove(sourceItem, destIndex) {
     if (selectedTag !== "All") return
-    dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
+    globalDispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
   }
 
   function onItemContextMenu(_, item, selections) {
