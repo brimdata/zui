@@ -1,18 +1,21 @@
 import InputField from "../common/forms/InputField"
 import InputLabel from "../common/forms/InputLabel"
 import TextInput from "../common/forms/TextInput"
-import React, {useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import styled from "styled-components"
 import {FormConfig} from "../../brim/form"
 import brim from "../../brim"
 import {initWorkspace} from "../../flows/initWorkspace"
 import useCallbackRef from "../hooks/useCallbackRef"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {isEmpty} from "lodash"
 import MacSpinner from "../MacSpinner"
 import ToolbarButton from "../Toolbar/Button"
 import useEventListener from "../hooks/useEventListener"
 import {Workspace} from "../../state/Workspaces/types"
+import WorkspaceStatuses from "src/js/state/WorkspaceStatuses"
+import Current from "../../state/Current"
+import refreshSpaceNames from "../../flows/refreshSpaceNames"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -81,6 +84,27 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   const [errors, setErrors] = useState([])
   const [formRef, setFormRef] = useCallbackRef()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const {current: id} = useRef((workspace && workspace.id) || brim.randomHash())
+  const currentStatus = useSelector(WorkspaceStatuses.get(id))
+  const [prevStatus, setPrevStatus] = useState(currentStatus)
+  const [isAuthenticating, setIsAuthenticating] = useState(false)
+
+  useEffect(() => {
+    if (prevStatus === "authenticating") {
+      if (currentStatus === "connected") {
+        dispatch(Current.setWorkspaceId(id))
+        dispatch(refreshSpaceNames())
+        setIsSubmitting(false)
+        setErrors([])
+        onClose()
+      } else if (currentStatus === "disconnected") {
+        setIsSubmitting(false)
+        setErrors([{message: "Authentication Failed"}])
+      }
+    }
+
+    setPrevStatus(currentStatus)
+  }, [currentStatus])
 
   const config: FormConfig = {
     host: {
@@ -102,7 +126,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
     return {
       host: h,
       port: p,
-      id: id || brim.randomHash(),
+      id,
       name: name
     }
   }
@@ -124,9 +148,10 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
         return obj
       }, {})
       try {
-        const id = workspace && workspace.id
-        await dispatch(initWorkspace(toWorkspace({id, host, name})))
-      } catch {
+        if (await dispatch(initWorkspace(toWorkspace({id, host, name}), true)))
+          return
+      } catch (e) {
+        console.log("error is: ", e)
         setIsSubmitting(false)
         setErrors([{message: "Cannot connect to host"}])
         return
@@ -137,6 +162,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
       return
     }
 
+    // check if status is authenticating
     setIsSubmitting(false)
     setErrors([])
     onClose()

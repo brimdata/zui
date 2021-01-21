@@ -6,7 +6,8 @@ import {
   WindowsInitialStateMsg,
   WindowsOpenMsg,
   WindowsNewSearchTabMsg,
-  WindowsOpenDirectorySelect
+  WindowsOpenDirectorySelect,
+  WindowsAuthCallbackMsg
 } from "../types"
 
 export type NewTabSearchParams = {
@@ -47,6 +48,16 @@ export default {
   openDirectorySelect(): WindowsOpenDirectorySelect {
     return {
       channel: "windows:openDirectorySelect"
+    }
+  },
+  authCallback(
+    workspaceId: string,
+    accessToken: string
+  ): WindowsAuthCallbackMsg {
+    return {
+      channel: "windows:authCallback",
+      workspaceId,
+      accessToken
     }
   }
 }

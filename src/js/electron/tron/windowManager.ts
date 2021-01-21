@@ -1,5 +1,5 @@
 import {BrowserWindow, screen} from "electron"
-import {last} from "lodash"
+import {last, remove} from "lodash"
 import brim from "../../brim"
 import ipc from "../ipc"
 import sendTo from "../ipc/sendTo"
@@ -45,10 +45,15 @@ export default function windowManager(
   let windows: WindowsState = {}
 
   return {
-    init() {
+    init(winId?: string) {
       if (!session || (session && session.order.length === 0)) {
         this.openWindow("search")
       } else {
+        if (winId) {
+          // remove window id, when specified, and place it at end so it is opened last
+          const removedIds = remove(session.order, (id) => id === winId)
+          if (removedIds.length !== 0) session.order.push(winId)
+        }
         for (const id of session.order) {
           const {name, size, position, state} = session.windows[id]
           this.openWindow(name, {size, position, id}, state)

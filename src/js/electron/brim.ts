@@ -59,8 +59,8 @@ export class Brim {
     this.windows.init()
   }
 
-  activate() {
-    if (this.windows.count() === 0) this.windows.init()
+  activate(winId?: string) {
+    if (this.windows.count() === 0) this.windows.init(winId)
   }
 
   async resetState() {
