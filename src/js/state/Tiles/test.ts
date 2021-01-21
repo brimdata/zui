@@ -35,5 +35,10 @@ test("Removing a tile", () => {
   }
   d(Tiles.create(tile))
   d(Tiles.delete(tile.id))
+<<<<<<< HEAD
   expect(s(Tiles.get(tile.id))).toBe(undefined)
+=======
+
+  expect(s(Tiles.all)).toEqual([])
+>>>>>>> Create a Tiles slice in the state
 })
