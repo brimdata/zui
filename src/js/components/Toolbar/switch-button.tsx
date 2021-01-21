@@ -1,6 +1,5 @@
-import useLayoutMount from "app/core/hooks/useLayoutMount"
 import useLayoutUpdate from "app/core/hooks/useLayoutUpdate"
-import React, {useRef, useState} from "react"
+import React, {useLayoutEffect, useRef, useState} from "react"
 import styled from "styled-components"
 
 const PADDING = 2
@@ -64,7 +63,7 @@ export default function SwitchButton({value, onChange, children}: Props) {
   const index = children.findIndex((c) => c.props.value === value)
   const [props, moveTo] = useSpotlight(ref)
 
-  useLayoutMount(() => moveTo(index, false))
+  useLayoutEffect(() => moveTo(index, false), [])
   useLayoutUpdate(() => moveTo(index, true), [value, children])
 
   return (
