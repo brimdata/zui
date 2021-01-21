@@ -1,5 +1,4 @@
 import {createZealotMock} from "zealot"
-import fsExtra from "fs-extra"
 
 import Clusters from "../state/Clusters"
 import Current from "../state/Current"
@@ -31,10 +30,6 @@ beforeEach(() => {
   const conn = fixtures("cluster1")
   store = initTestStore(zealot.zealot)
   store.dispatchAll([Clusters.add(conn), Current.setConnectionId(conn.id)])
-})
-
-afterEach(() => {
-  return fsExtra.remove("tmp")
 })
 
 describe("success case", () => {
