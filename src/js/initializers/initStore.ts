@@ -1,13 +1,10 @@
-import {composeWithDevTools} from "redux-devtools-extension"
-import {createStore, applyMiddleware} from "redux"
 import {createZealot} from "zealot"
-import reduxThunk from "redux-thunk"
-
 import {globalDispatch} from "../state/GlobalContext"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
 import rootReducer from "../state/rootReducer"
+import {configureStore} from "@reduxjs/toolkit"
 
 function getInitialState(windowId) {
   return Promise.all([
@@ -19,16 +16,14 @@ function getInitialState(windowId) {
 export default async () => {
   const windowId = getUrlSearchParams().id
   const initialState = await getInitialState(windowId)
-  return createStore(
-    rootReducer,
-    initialState,
-    composeWithDevTools(
-      applyMiddleware(
-        reduxThunk.withExtraArgument({
-          globalDispatch,
-          createZealot
-        })
-      )
-    )
-  )
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: initialState,
+    middleware: (getDefaults) =>
+      getDefaults({
+        thunk: {
+          extraArgument: {globalDispatch, createZealot}
+        }
+      })
+  })
 }
