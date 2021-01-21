@@ -54,7 +54,8 @@ const showDialog = (format) => {
     title: `Export Results as ${format.toUpperCase()}`,
     buttonLabel: "Export",
     defaultPath: `results.${format}`,
-    properties: ["createDirectory"]
+    properties: ["createDirectory"],
+    showsTagField: false
   })
 }
 
