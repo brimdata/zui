@@ -8,17 +8,21 @@ import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
 import Workspaces from "./Workspaces"
 import {WorkspacesState} from "./Workspaces/types"
+import Boards from "./Boards"
+import {BoardsState} from "./Boards/types"
 
 export type GlobalState = {
   workspaces: WorkspacesState
   investigation: InvestigationState
   prefs: PrefsState
   queries: QueriesState
+  boards: BoardsState
 }
 
 export default combineReducers<any, any>({
   workspaces: Workspaces.reducer,
   investigation: Investigation.reducer,
   prefs: Prefs.reducer,
-  queries: Queries.reducer
+  queries: Queries.reducer,
+  boards: Boards.reducer
 })
