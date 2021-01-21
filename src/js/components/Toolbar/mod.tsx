@@ -8,6 +8,7 @@ import SearchPageTitle from "../SearchPageTitle"
 import SpanControls from "../Span/SpanControls"
 import SubspaceButton from "./SubspaceButton"
 import ViewButton from "./ViewButton"
+import MainViewSwitch from "./main-view-switch"
 
 const Wrap = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ export function Toolbar() {
       </Group>
       <Group flex={2}>
         <Group>
+          <MainViewSwitch />
           <SubspaceButton />
           <PacketsButton label id="toolbar-packets" />
           <ExportButton />

@@ -1,3 +1,5 @@
+import {FeatureName} from "../state/Feature"
+
 declare global {
   namespace NodeJS {
     interface Global {
@@ -8,6 +10,7 @@ declare global {
       windowId: string
       windowName: "search" | "detail" | "about"
       getState: () => any
+      feature: (name: FeatureName, value: boolean) => void
     }
 
     interface Process {

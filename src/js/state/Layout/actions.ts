@@ -10,10 +10,16 @@ import {
   LAYOUT_RIGHT_SIDEBAR_SHOW,
   LAYOUT_RIGHT_SIDEBAR_TOGGLE,
   LAYOUT_RIGHT_SIDEBAR_WIDTH_SET,
-  LAYOUT_SIDEBAR_SECTIONS_SET
+  LAYOUT_SIDEBAR_SECTIONS_SET,
+  MainView,
+  LAYOUT_MAIN_VIEW_SET
 } from "./types"
 
 export default {
+  setMainView: (view: MainView): LAYOUT_MAIN_VIEW_SET => ({
+    type: "LAYOUT_MAIN_VIEW_SET",
+    view
+  }),
   setSidebarSections: (
     sections: SectionData[]
   ): LAYOUT_SIDEBAR_SECTIONS_SET => ({

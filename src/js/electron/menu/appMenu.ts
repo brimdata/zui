@@ -232,6 +232,12 @@ export default function(
     label: "Developer",
     submenu: [
       {
+        label: "Save Session Now",
+        async click() {
+          await brim.saveSession()
+        }
+      },
+      {
         label: "Save Session for Testing Migrations",
         async click() {
           const root = app.getAppPath()

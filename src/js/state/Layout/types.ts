@@ -2,6 +2,7 @@ import {SectionData} from "../../../pkg/sectional"
 
 export type ColumnHeadersViewState = "AUTO" | "ON" | "OFF"
 export type InvestigationView = "tree" | "linear"
+export type MainView = "summary" | "search"
 export type LayoutState = {
   rightSidebarWidth: number
   rightSidebarIsOpen: boolean
@@ -10,6 +11,7 @@ export type LayoutState = {
   investigationView: InvestigationView
   columnHeadersView: ColumnHeadersViewState
   sidebarSections: SectionData[]
+  mainView: MainView
 }
 
 export type LayoutAction =
@@ -24,6 +26,12 @@ export type LayoutAction =
   | LAYOUT_INVESTIGATION_VIEW_SET
   | LAYOUT_SET_COLUMN_HEADERS
   | LAYOUT_SIDEBAR_SECTIONS_SET
+  | LAYOUT_MAIN_VIEW_SET
+
+export type LAYOUT_MAIN_VIEW_SET = {
+  type: "LAYOUT_MAIN_VIEW_SET"
+  view: MainView
+}
 
 export type LAYOUT_SIDEBAR_SECTIONS_SET = {
   type: "LAYOUT_SIDEBAR_SECTIONS_SET"

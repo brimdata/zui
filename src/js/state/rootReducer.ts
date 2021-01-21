@@ -14,6 +14,7 @@ import Tabs from "./Tabs"
 import View from "./View"
 import Queries from "./Queries"
 import SystemTest from "./SystemTest"
+import Feature from "./Feature"
 
 export default combineReducers<any, any>({
   errors: Errors.reducer,
@@ -29,5 +30,6 @@ export default combineReducers<any, any>({
   prefs: Prefs.reducer,
   connectionStatuses: ConnectionStatuses.reducer,
   queries: Queries.reducer,
-  systemTest: SystemTest.reducer
+  systemTest: SystemTest.reducer,
+  feature: Feature.reducer
 })
