@@ -1,5 +1,5 @@
 import {BrimEvent} from "ppl/detail/models/BrimEvent"
-import React, {memo, useMemo} from "react"
+import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
 
 import EventTimeline from "./EventTimeline"
@@ -14,6 +14,7 @@ import zql from "src/js/zql"
 import EventLimit from "./EventLimit"
 import firstLast from "./util/firstLast"
 import useSearch from "app/core/hooks/useSearch"
+import {showContextMenu} from "src/js/lib/System"
 
 type Props = {
   record: zng.Record
@@ -40,6 +41,11 @@ export default memo(function RelatedAlerts({record}: Props) {
     ["Last ts", last ? brim.time(last.getTime()).format() : "Not available"],
     ["Duration", formatDur(first?.getTime(), last?.getTime())]
   ]
+
+  const onContextMenu = useCallback(() => {
+    showContextMenu([{role: "copy"}])
+  }, [])
+
   return (
     <section>
       <PanelHeading isLoading={isLoading}>Related Alerts</PanelHeading>
@@ -52,7 +58,7 @@ export default memo(function RelatedAlerts({record}: Props) {
           {data.map(([name, value]) => (
             <Data key={name}>
               <Name>{name}</Name>
-              <Value>{value}</Value>
+              <Value onContextMenu={onContextMenu}>{value}</Value>
             </Data>
           ))}
         </TableWrap>

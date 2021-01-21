@@ -35,16 +35,18 @@ export const Data = styled.dl`
 
 export const Name = styled.dt`
   margin: 0;
-  margin-right: auto;
   white-space: nowrap;
 `
 
 export const Value = styled.dd`
+  flex: 1;
+  text-align: right;
   margin: 0 0 0 8px;
   color: var(--slate);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  user-select: all;
 
   &.addr,
   &.set\[addr\] {

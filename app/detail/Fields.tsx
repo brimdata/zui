@@ -29,15 +29,14 @@ const DataPanel = React.memo<DTProps>(function DataTable({
   return (
     <Panel>
       {fields.map((field, index) => (
-        <Data
-          key={index}
-          onMouseEnter={() => onHover(field)}
-          onContextMenu={() => onRightClick(field)}
-        >
+        <Data key={index} onMouseEnter={() => onHover(field)}>
           <Name>
             <TooltipAnchor>{field.name}</TooltipAnchor>
           </Name>
-          <Value className={field.data.getType()}>
+          <Value
+            className={field.data.getType()}
+            onContextMenu={() => onRightClick(field)}
+          >
             {createCell(field).display()}
           </Value>
         </Data>
@@ -80,10 +79,7 @@ export default memo(function Fields({record}: Props) {
   }, [])
 
   const onRightClick = useCallback(
-    (field) => {
-      window.getSelection().removeAllRanges()
-      dispatch(contextMenu(field, record))
-    },
+    (field) => dispatch(contextMenu(field, record)),
     [record]
   )
 

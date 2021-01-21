@@ -1,6 +1,6 @@
 import {Data, Name, Value} from "app/core/Data"
 import {BrimEvent, BrimEventInterface} from "ppl/detail/models/BrimEvent"
-import React, {memo, useMemo} from "react"
+import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
 import EventTimeline from "./EventTimeline"
 import {TableWrap, ChartWrap, Caption} from "app/detail/Shared"
@@ -12,6 +12,7 @@ import EventLimit from "./EventLimit"
 import useSearch from "app/core/hooks/useSearch"
 import firstLast from "./util/firstLast"
 import zql from "src/js/zql"
+import {showContextMenu} from "src/js/lib/System"
 
 type Props = {
   record: zng.Record
@@ -34,6 +35,11 @@ export default memo(function RelatedConns({record}: Props) {
     ["Last ts", last ? brim.time(last.getTime()).format() : "Not available"],
     ["Duration", formatDur(first?.getTime(), last?.getTime())]
   ]
+
+  const onContextMenu = useCallback(() => {
+    showContextMenu([{role: "copy"}])
+  }, [])
+
   return (
     <section>
       <PanelHeading isLoading={isFetching}>Related Connections</PanelHeading>
@@ -46,7 +52,7 @@ export default memo(function RelatedConns({record}: Props) {
           {data.map(([name, value]) => (
             <Data key={name}>
               <Name>{name}</Name>
-              <Value>{value}</Value>
+              <Value onContextMenu={onContextMenu}>{value}</Value>
             </Data>
           ))}
         </TableWrap>
