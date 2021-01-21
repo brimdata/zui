@@ -17,6 +17,7 @@ import {FeatureState} from "./Feature"
 import {WorkspacesState} from "./Workspaces/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 import {BoardsState} from "./Boards"
+import {TilesState} from "./Tiles"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -33,6 +34,7 @@ export type Dispatch = AppDispatch
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
+  tiles: TilesState
   boards: BoardsState
   handlers: HandlersState
   workspaces: WorkspacesState
