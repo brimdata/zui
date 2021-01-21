@@ -1,5 +1,5 @@
 export type WorkspaceStatusesState = {
-  [clusterId: string]: WorkspaceStatus
+  [workspaceId: string]: WorkspaceStatus
 }
 
 export type WorkspaceStatus = null | "connected" | "disconnected" | "retrying"

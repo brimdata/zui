@@ -28,9 +28,7 @@ beforeEach(() => {
       host: "testHost",
       id: "1",
       name: "testName",
-      password: "",
-      port: "9867",
-      username: ""
+      port: "9867"
     }),
     Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),

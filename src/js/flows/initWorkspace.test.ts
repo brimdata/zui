@@ -8,9 +8,9 @@ import {initWorkspace} from "./initWorkspace"
 let store, mock
 const select = (selector) => selector(store.getState())
 
-const clusterCount = () => select(Workspaces.all).length
-const conn1 = fixtures("workspace1")
-const conn2 = fixtures("cluster2")
+const workspaceCount = () => select(Workspaces.all).length
+const ws1 = fixtures("workspace1")
+const ws2 = fixtures("workspace2")
 
 beforeEach(() => {
   mock = createZealotMock()
@@ -19,18 +19,18 @@ beforeEach(() => {
     .stubPromise("version", "1")
     .stubPromise("spaces.list", [])
   store = initTestStore(mock.zealot)
-  store.dispatchAll([Workspaces.add(conn1), Current.setWorkspaceId(conn1.id)])
+  store.dispatchAll([Workspaces.add(ws1), Current.setWorkspaceId(ws1.id)])
 })
 
 test("Create a new workspace, switch back", async () => {
-  expect(clusterCount()).toBe(1)
-  await store.dispatch(initWorkspace(conn2))
-  expect(clusterCount()).toBe(2)
-  expect(select(Workspaces.id(conn2.id))).toEqual(conn2)
-  expect(select(Current.getWorkspaceId)).toBe(conn2.id)
+  expect(workspaceCount()).toBe(1)
+  await store.dispatch(initWorkspace(ws2))
+  expect(workspaceCount()).toBe(2)
+  expect(select(Workspaces.id(ws2.id))).toEqual(ws2)
+  expect(select(Current.getWorkspaceId)).toBe(ws2.id)
 
-  await store.dispatch(initWorkspace(conn1))
-  expect(clusterCount()).toBe(2)
-  expect(select(Workspaces.id(conn1.id))).toEqual(conn1)
-  expect(select(Current.getWorkspaceId)).toBe(conn1.id)
+  await store.dispatch(initWorkspace(ws1))
+  expect(workspaceCount()).toBe(2)
+  expect(select(Workspaces.id(ws1.id))).toEqual(ws1)
+  expect(select(Current.getWorkspaceId)).toBe(ws1.id)
 })

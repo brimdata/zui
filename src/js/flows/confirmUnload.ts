@@ -12,10 +12,10 @@ export default (): Thunk<Promise<void>> => (dispatch, getState) => {
   if (isEmpty(spaceIds)) {
     return Promise.resolve()
   } else {
-    const clusterId = Current.getWorkspaceId(getState())
-    if (!clusterId) return
+    const workspaceId = Current.getWorkspaceId(getState())
+    if (!workspaceId) return
     const names = spaceIds.map((id) => {
-      const space = Spaces.get(clusterId, id)(getState())
+      const space = Spaces.get(workspaceId, id)(getState())
       if (space) return space.name
       else return id
     })

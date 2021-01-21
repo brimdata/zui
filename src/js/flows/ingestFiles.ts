@@ -22,24 +22,24 @@ export default (files: File[]): Thunk<Promise<void>> => (
   {globalDispatch}
 ) => {
   const ws = Current.mustGetWorkspace(getState())
-  const clusterId = ws.id
+  const workspaceId = ws.id
   const zealot = dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
   const jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
   const dataDir = Prefs.getDataDir(getState())
-  const spaceNames = Spaces.getSpaceNames(clusterId)(getState())
+  const spaceNames = Spaces.getSpaceNames(workspaceId)(getState())
 
   dispatch(SystemTest.hook("import-start"))
   return lib
     .transaction([
       validateInput(files, dataDir, spaceNames),
       createDir(),
-      createSpace(zealot, globalDispatch, clusterId),
+      createSpace(zealot, globalDispatch, workspaceId),
       setSpace(dispatch, tabId),
       registerHandler(dispatch, requestId),
       postFiles(zealot, ws, jsonTypeConfigPath),
-      trackProgress(zealot, globalDispatch, clusterId),
+      trackProgress(zealot, globalDispatch, workspaceId),
       unregisterHandler(dispatch, requestId)
     ])
     .then(() => {
@@ -73,7 +73,7 @@ const createDir = () => ({
   }
 })
 
-const createSpace = (client, gDispatch, clusterId) => ({
+const createSpace = (client, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
     let createParams
     if (params.dataDir) {
@@ -83,7 +83,7 @@ const createSpace = (client, gDispatch, clusterId) => ({
     }
     const space = await client.spaces.create(createParams)
     gDispatch(
-      Spaces.setDetail(clusterId, {
+      Spaces.setDetail(workspaceId, {
         ...space,
         ingest: {progress: 0, snapshot: 0, warnings: []}
       })
@@ -93,7 +93,7 @@ const createSpace = (client, gDispatch, clusterId) => ({
   },
   async undo({spaceId}: IngestParams & {spaceId: string}) {
     await client.spaces.delete(spaceId)
-    gDispatch(Spaces.remove(clusterId, spaceId))
+    gDispatch(Spaces.remove(workspaceId, spaceId))
   }
 })
 
@@ -149,14 +149,14 @@ const setSpace = (dispatch, tabId) => ({
   }
 })
 
-const trackProgress = (client, gDispatch, clusterId) => {
+const trackProgress = (client, gDispatch, workspaceId) => {
   return {
     async do({spaceId, stream, endpoint}) {
-      const space = Spaces.actionsFor(clusterId, spaceId)
+      const space = Spaces.actionsFor(workspaceId, spaceId)
 
       async function updateSpaceDetails() {
         const details = await client.spaces.get(spaceId)
-        gDispatch(Spaces.setDetail(clusterId, details))
+        gDispatch(Spaces.setDetail(workspaceId, details))
       }
 
       function packetPostStatusToPercent(status): number {

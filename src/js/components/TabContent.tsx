@@ -25,26 +25,26 @@ const SpinnerWrap = styled.div`
 export default function TabContent() {
   const dispatch = useDispatch()
   const space = useSelector(Current.getSpace)
-  const conn = useSelector(Current.getWorkspace)
-  const id = get(conn, ["id"], "")
-  const connStatus = useSelector(WorkspaceStatuses.get(id))
+  const ws = useSelector(Current.getWorkspace)
+  const id = get(ws, ["id"], "")
+  const wsStatus = useSelector(WorkspaceStatuses.get(id))
 
   useEffect(() => {
-    if (conn && !connStatus) {
+    if (ws && !wsStatus) {
       dispatch(initCurrentTab())
     }
-  }, [conn, connStatus])
+  }, [ws, wsStatus])
 
-  if (!conn) return <WorkspaceChooserPage />
+  if (!ws) return <WorkspaceChooserPage />
 
-  if (!connStatus)
+  if (!wsStatus)
     return (
       <SpinnerWrap>
         <MacSpinner />
       </SpinnerWrap>
     )
 
-  if (connStatus === "disconnected") return <ConnectionError conn={conn} />
+  if (wsStatus === "disconnected") return <ConnectionError workspace={ws} />
 
   if (!space) {
     return <TabWelcome />

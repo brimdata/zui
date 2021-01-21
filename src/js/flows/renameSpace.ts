@@ -5,7 +5,7 @@ import Tabs from "../state/Tabs"
 import {getZealot} from "./getZealot"
 
 export default (
-  clusterId: string,
+  workspaceId: string,
   spaceId: string,
   name: string
 ): Thunk<Promise<void>> => (dispatch, getState, {globalDispatch}) => {
@@ -14,7 +14,7 @@ export default (
   const tabs = Tabs.getData(state)
 
   return zealot.spaces.update(spaceId, {name}).then(() => {
-    globalDispatch(Spaces.rename(clusterId, spaceId, name))
+    globalDispatch(Spaces.rename(workspaceId, spaceId, name))
     tabs.forEach((t) => {
       if (t.current.spaceId === spaceId)
         dispatch(Current.setSpaceId(spaceId, t.id))

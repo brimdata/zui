@@ -17,9 +17,9 @@ import {
 } from "./common"
 
 function SpacesSection({isOpen, style, resizeProps, toggleProps}) {
-  const conn = useSelector(Current.getWorkspace)
-  const id = get(conn, ["id"], "")
-  const connStatus = useSelector(WorkspaceStatuses.get(id))
+  const workspace = useSelector(Current.getWorkspace)
+  const id = get(workspace, ["id"], "")
+  const wsStatus = useSelector(WorkspaceStatuses.get(id))
   const spaces = useSelector(Spaces.getSpaces(id))
 
   return (
@@ -33,7 +33,7 @@ function SpacesSection({isOpen, style, resizeProps, toggleProps}) {
         <AddSpaceButton />
       </SectionHeader>
       <SectionContents>
-        <SavedSpacesList spaces={spaces} connStatus={connStatus} />
+        <SavedSpacesList spaces={spaces} workspaceStatus={wsStatus} />
       </SectionContents>
     </StyledSection>
   )
