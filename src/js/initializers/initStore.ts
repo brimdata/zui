@@ -23,7 +23,9 @@ export default async () => {
       getDefaults({
         thunk: {
           extraArgument: {globalDispatch, createZealot}
-        }
+        },
+        serializableCheck: false,
+        immutableCheck: false
       })
   })
 }

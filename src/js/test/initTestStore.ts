@@ -25,7 +25,9 @@ export default (zealot?: Zealot): TestStore => {
       getDefaultMiddleware({
         thunk: {
           extraArgument: {createZealot, globalDispatch}
-        }
+        },
+        serializableCheck: false,
+        immutableCheck: false
       }),
     enhancers: (defaultEnhancers) => [
       applyDispatchAll(),
