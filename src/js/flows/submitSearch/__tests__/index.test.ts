@@ -10,7 +10,7 @@ import Viewer from "../../../state/Viewer"
 import fixtures from "../../../test/fixtures"
 import responses from "../../../test/responses"
 import initTestStore from "../../../test/initTestStore"
-import Clusters from "../../../state/Clusters"
+import Workspaces from "../../../state/Workspaces"
 
 const indexResp = responses("index_search.txt")
 const space = fixtures("space1")
@@ -24,15 +24,13 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
 
   store.dispatchAll([
-    Clusters.add({
+    Workspaces.add({
       host: "testHost",
       id: "1",
       name: "testName",
-      password: "",
-      port: "9867",
-      username: ""
+      port: "9867"
     }),
-    Current.setConnectionId("1"),
+    Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
     Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput(":ip=192.168.0.1"),

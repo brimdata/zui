@@ -54,11 +54,11 @@ const reconstructSearch = (node: InvestigationNode): SearchRecord => {
 type Props = {
   node: InvestigationNode
   i: number
-  connId: string
+  workspaceId: string
   spaceId: string
 }
 
-function NodeRow({node, i, connId, spaceId}: Props) {
+function NodeRow({node, i, workspaceId, spaceId}: Props) {
   const dispatch = useDispatch()
   const last = useSelector(Last.getSearch)
   const prevPins = last?.pins || []
@@ -71,7 +71,7 @@ function NodeRow({node, i, connId, spaceId}: Props) {
           .all(() => true)
           .map((node) => node.model.finding.ts)
         globalDispatch(
-          Investigation.deleteFindingByTs(connId, spaceId, multiTs)
+          Investigation.deleteFindingByTs(workspaceId, spaceId, multiTs)
         )
       }
     },
@@ -89,7 +89,7 @@ function NodeRow({node, i, connId, spaceId}: Props) {
           .then(({response}) => {
             if (response === 0)
               globalDispatch(
-                Investigation.clearSpaceInvestigation(connId, spaceId)
+                Investigation.clearSpaceInvestigation(workspaceId, spaceId)
               )
           })
     }
@@ -118,7 +118,7 @@ function NodeRow({node, i, connId, spaceId}: Props) {
         {node.children.map((node, i) => (
           <NodeRow
             node={node}
-            connId={connId}
+            workspaceId={workspaceId}
             spaceId={spaceId}
             i={i}
             key={i}
@@ -130,10 +130,10 @@ function NodeRow({node, i, connId, spaceId}: Props) {
 }
 
 export default function FilterTree() {
-  const currentConnId = useSelector(Current.getConnectionId)
+  const currentWorkspaceId = useSelector(Current.getWorkspaceId)
   const currentSpaceId = useSelector(Current.getSpaceId)
   const investigation = useSelector(
-    Investigation.getInvestigation(currentConnId, currentSpaceId)
+    Investigation.getInvestigation(currentWorkspaceId, currentSpaceId)
   )
   const tree = createInvestigationTree(investigation)
 
@@ -149,7 +149,7 @@ export default function FilterTree() {
     <div className="filter-tree">
       {tree.children.map((node, i) => (
         <NodeRow
-          connId={currentConnId}
+          workspaceId={currentWorkspaceId}
           spaceId={currentSpaceId}
           node={node}
           i={i}

@@ -9,7 +9,7 @@ export default function(tab: TabState, spaces: SpacesState) {
     title() {
       const name = get(
         spaces,
-        [tab.current.connectionId || "", tab.current.spaceId || "", "name"],
+        [tab.current.workspaceId || "", tab.current.spaceId || "", "name"],
         "New Tab"
       )
       return lib.compact([name, tab.searchBar.previous]).join(": ")

@@ -11,15 +11,15 @@ import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
 
 export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
-  const clusterId = Current.getConnectionId(getState())
-  if (!clusterId) return
+  const workspaceId = Current.getWorkspaceId(getState())
+  if (!workspaceId) return
   const zealot = dispatch(getZealot())
   return zealot.spaces
     .get(spaceId)
     .then(brim.interop.spacePayloadToSpace)
     .then((data) => {
       const space = brim.space(data)
-      globalDispatch(Spaces.setDetail(clusterId, data))
+      globalDispatch(Spaces.setDetail(workspaceId, data))
       dispatch(Current.setSpaceId(space.id))
       dispatch(Search.setSpanArgs(space.everythingSpan()))
       dispatch(SearchBar.removeAllSearchBarPins())

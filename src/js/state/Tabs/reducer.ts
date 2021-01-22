@@ -62,7 +62,7 @@ function addTabData(stateData, {id, data}: {id: string; data: AddTabData}) {
   const tab = produce(initialState, (draft) => {
     draft.id = id
     if (data) {
-      draft.current.connectionId = data.connectionId
+      draft.current.workspaceId = data.workspaceId
       draft.current.spaceId = data.spaceId
     }
   })

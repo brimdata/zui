@@ -10,10 +10,10 @@ const deleteSpace = (id: string): Thunk<Promise<void>> => (
   {globalDispatch}
 ) => {
   const zealot = dispatch(getZealot())
-  const clusterId = Current.getConnectionId(getState())
+  const workspaceId = Current.getWorkspaceId(getState())
   return zealot.spaces.delete(id).then(() => {
-    globalDispatch(Investigation.clearSpaceInvestigation(clusterId, id))
-    globalDispatch(Spaces.remove(clusterId, id))
+    globalDispatch(Investigation.clearSpaceInvestigation(workspaceId, id))
+    globalDispatch(Spaces.remove(workspaceId, id))
   })
 }
 

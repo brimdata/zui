@@ -22,11 +22,11 @@ const StyledMagnifyingGlass = styled(MagnifyingGlass)`
   }
 `
 
-type Props = {finding: Finding; connId: string; spaceId: string}
+type Props = {finding: Finding; workspaceId: string; spaceId: string}
 
 export default React.memo<Props>(function FindingCard({
   finding,
-  connId,
+  workspaceId,
   spaceId
 }: Props) {
   const dispatch = useDispatch()
@@ -41,7 +41,7 @@ export default React.memo<Props>(function FindingCard({
       label: "Delete",
       click: () =>
         globalDispatch(
-          Investigation.deleteFindingByTs(connId, spaceId, finding.ts)
+          Investigation.deleteFindingByTs(workspaceId, spaceId, finding.ts)
         )
     },
     {type: "separator"},
@@ -58,7 +58,7 @@ export default React.memo<Props>(function FindingCard({
           .then(({response}) => {
             if (response === 0)
               globalDispatch(
-                Investigation.clearSpaceInvestigation(connId, spaceId)
+                Investigation.clearSpaceInvestigation(workspaceId, spaceId)
               )
           })
     }

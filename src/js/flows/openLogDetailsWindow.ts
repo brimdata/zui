@@ -1,11 +1,11 @@
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
-import {mustGetConnection} from "../state/Current/selectors"
+import {mustGetWorkspace} from "../state/Current/selectors"
 import {Thunk} from "../state/types"
 import produce from "immer"
 
 export const openLogDetailsWindow = (): Thunk => (dispatch, getState) => {
-  const {host, port} = mustGetConnection(getState())
+  const {host, port} = mustGetWorkspace(getState())
   const state = produce(getState(), (draft) => {
     for (let tab of draft.tabs.data) {
       delete tab.columns

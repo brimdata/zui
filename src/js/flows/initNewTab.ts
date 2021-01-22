@@ -13,9 +13,9 @@ export default (): Thunk => (dispatch, getState) => {
 
 export function resetTab(): Thunk {
   return (dispatch, getState) => {
-    const id = Current.getConnectionId(getState())
+    const id = Current.getWorkspaceId(getState())
     dispatch(Tabs.clearActive())
-    dispatch(Current.setConnectionId(id))
+    dispatch(Current.setWorkspaceId(id))
     dispatch(refreshSpaceNames())
   }
 }

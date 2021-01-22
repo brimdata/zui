@@ -7,10 +7,10 @@ import brim from "../../brim"
 export default {
   new: (spaceId: string | null = null): Thunk => (dispatch, getState) => {
     const {
-      current: {connectionId}
+      current: {workspaceId}
     } = Tabs.getActiveTab(getState())
     const id = brim.randomHash()
-    dispatch(Tabs.add(id, {connectionId, spaceId}))
+    dispatch(Tabs.add(id, {workspaceId, spaceId}))
     dispatch(Tabs.activate(id))
     const el = document.getElementById("main-search-input")
     if (el) el.focus()

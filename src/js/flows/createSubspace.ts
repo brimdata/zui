@@ -13,8 +13,8 @@ class CreateSubspaceError extends Error {}
 export default (): Thunk<Promise<void>> => (dispatch, getState) => {
   const zealot = dispatch(getZealot())
   const spaceId = Current.getSpaceId(getState())
-  const connectionId = Current.getConnectionId(getState())
-  const names = Spaces.getSpaces(connectionId)(getState()).map((s) => s.name)
+  const workspaceId = Current.getWorkspaceId(getState())
+  const names = Spaces.getSpaces(workspaceId)(getState()).map((s) => s.name)
   const records = Viewer.getSelectedRecords(getState())
   if (!records.length)
     return Promise.reject(new CreateSubspaceError("No selected logs"))

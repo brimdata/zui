@@ -21,25 +21,25 @@ export default (files: File[]): Thunk<Promise<void>> => (
   getState,
   {globalDispatch}
 ) => {
-  const conn = Current.mustGetConnection(getState())
-  const clusterId = conn.id
+  const ws = Current.mustGetWorkspace(getState())
+  const workspaceId = ws.id
   const zealot = dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
   const jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
   const dataDir = Prefs.getDataDir(getState())
-  const spaceNames = Spaces.getSpaceNames(clusterId)(getState())
+  const spaceNames = Spaces.getSpaceNames(workspaceId)(getState())
 
   dispatch(SystemTest.hook("import-start"))
   return lib
     .transaction([
       validateInput(files, dataDir, spaceNames),
       createDir(),
-      createSpace(zealot, globalDispatch, clusterId),
+      createSpace(zealot, globalDispatch, workspaceId),
       setSpace(dispatch, tabId),
       registerHandler(dispatch, requestId),
-      postFiles(zealot, conn, jsonTypeConfigPath),
-      trackProgress(zealot, globalDispatch, clusterId),
+      postFiles(zealot, ws, jsonTypeConfigPath),
+      trackProgress(zealot, globalDispatch, workspaceId),
       unregisterHandler(dispatch, requestId)
     ])
     .then(() => {
@@ -73,7 +73,7 @@ const createDir = () => ({
   }
 })
 
-const createSpace = (client, gDispatch, clusterId) => ({
+const createSpace = (client, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
     let createParams
     if (params.dataDir) {
@@ -83,7 +83,7 @@ const createSpace = (client, gDispatch, clusterId) => ({
     }
     const space = await client.spaces.create(createParams)
     gDispatch(
-      Spaces.setDetail(clusterId, {
+      Spaces.setDetail(workspaceId, {
         ...space,
         ingest: {progress: 0, snapshot: 0, warnings: []}
       })
@@ -93,7 +93,7 @@ const createSpace = (client, gDispatch, clusterId) => ({
   },
   async undo({spaceId}: IngestParams & {spaceId: string}) {
     await client.spaces.delete(spaceId)
-    gDispatch(Spaces.remove(clusterId, spaceId))
+    gDispatch(Spaces.remove(workspaceId, spaceId))
   }
 })
 
@@ -113,7 +113,7 @@ const unregisterHandler = (dispatch, id) => ({
   }
 })
 
-const postFiles = (client, conn, jsonTypesPath) => ({
+const postFiles = (client, ws, jsonTypesPath) => ({
   async do(params: IngestParams & {spaceId: string}) {
     const {spaceId, endpoint, files} = params
     const paths = files.map((f) => f.path)
@@ -123,7 +123,7 @@ const postFiles = (client, conn, jsonTypesPath) => ({
         stream = await client.pcaps.post({spaceId, path: paths[0]})
       } catch (e) {
         if (e.name == "item does not exist") {
-          e.message = "File " + e.message + " does not exist on " + conn.name
+          e.message = "File " + e.message + " does not exist on " + ws.name
         }
         throw e
       }
@@ -149,14 +149,14 @@ const setSpace = (dispatch, tabId) => ({
   }
 })
 
-const trackProgress = (client, gDispatch, clusterId) => {
+const trackProgress = (client, gDispatch, workspaceId) => {
   return {
     async do({spaceId, stream, endpoint}) {
-      const space = Spaces.actionsFor(clusterId, spaceId)
+      const space = Spaces.actionsFor(workspaceId, spaceId)
 
       async function updateSpaceDetails() {
         const details = await client.spaces.get(spaceId)
-        gDispatch(Spaces.setDetail(clusterId, details))
+        gDispatch(Spaces.setDetail(workspaceId, details))
       }
 
       function packetPostStatusToPercent(status): number {

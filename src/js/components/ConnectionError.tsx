@@ -2,10 +2,10 @@ import React, {useState} from "react"
 
 import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
-import {Cluster} from "../state/Clusters/types"
 import ToolbarButton from "./Toolbar/Button"
 import {useDispatch} from "react-redux"
 import {initCurrentTab} from "../flows/initCurrentTab"
+import {Workspace} from "../state/Workspaces/types"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -32,10 +32,10 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  conn: Cluster
+  workspace: Workspace
 }
 
-const ConnectionError = ({conn}: Props) => {
+const ConnectionError = ({workspace}: Props) => {
   const dispatch = useDispatch()
   const [isFetching, setIsFetching] = useState(false)
 
@@ -47,7 +47,7 @@ const ConnectionError = ({conn}: Props) => {
     setIsFetching(false)
   }
 
-  const {host, port} = conn
+  const {host, port} = workspace
   const errorMsg = isFetching
     ? "Attempting to connect..."
     : `The service at ${host}:${port} could not be reached.`

@@ -19,11 +19,11 @@ import Spaces from "../state/Spaces"
 import deleteSpaces from "../flows/deleteSpaces"
 import {popNotice} from "./PopNotice"
 import {AppDispatch} from "../state/types"
-import {ConnectionStatus} from "../state/ConnectionStatuses/types"
+import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
 
 type Props = {
   spaces: Space[]
-  connStatus: ConnectionStatus
+  workspaceStatus: WorkspaceStatus
 }
 
 const NameWrap = styled.div`
@@ -35,9 +35,9 @@ const NameWrap = styled.div`
 
 const SpaceListItem = ({space}: {space: Space}) => {
   const dispatch = useDispatch<AppDispatch>()
-  const clusterId = useSelector(Current.getConnectionId)
+  const workspaceId = useSelector(Current.getWorkspaceId)
   const currentSpaceId = useSelector(Current.getSpaceId)
-  const spaceIds = useSelector(Spaces.ids(clusterId))
+  const spaceIds = useSelector(Spaces.ids(workspaceId))
   const s = brim.space(space)
 
   const onClick = (e) => {
@@ -48,7 +48,7 @@ const SpaceListItem = ({space}: {space: Space}) => {
     {
       label: "Rename",
       click: () => {
-        dispatch(Modal.show("space", {clusterId, spaceId: s.id}))
+        dispatch(Modal.show("space", {workspaceId, spaceId: s.id}))
       }
     },
     {
@@ -77,7 +77,7 @@ const SpaceListItem = ({space}: {space: Space}) => {
           .showMessageBox({
             type: "warning",
             title: "Delete All Spaces",
-            message: `Are you sure you want to delete all spaces for this connection?`,
+            message: `Are you sure you want to delete all spaces for this workspace?`,
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
@@ -114,8 +114,8 @@ const SpaceListItem = ({space}: {space: Space}) => {
   )
 }
 
-export default function SavedSpacesList({spaces, connStatus}: Props) {
-  if (connStatus === "disconnected")
+export default function SavedSpacesList({spaces, workspaceStatus}: Props) {
+  if (workspaceStatus === "disconnected")
     return <EmptySection message="Unable to connect to service" />
   if (spaces.length === 0)
     return (

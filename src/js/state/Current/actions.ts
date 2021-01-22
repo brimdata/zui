@@ -4,7 +4,7 @@ export const setSpaceId = (id: string | null, tabId?: string) => ({
   tabId
 })
 
-export const setConnectionId = (id: string | null) => ({
-  type: "CURRENT_CONNECTION_SET",
+export const setWorkspaceId = (id: string | null) => ({
+  type: "CURRENT_WORKSPACE_SET",
   id
 })

@@ -11,7 +11,7 @@ import Viewer from "../../../state/Viewer"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
-import Clusters from "../../../state/Clusters"
+import Workspaces from "../../../state/Workspaces"
 
 const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
@@ -26,15 +26,13 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
 
   store.dispatchAll([
-    Clusters.add({
+    Workspaces.add({
       host: "testHost",
       id: "1",
       name: "testName",
-      password: "",
-      port: "9867",
-      username: ""
+      port: "9867"
     }),
-    Current.setConnectionId("1"),
+    Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
     Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput("dns"),

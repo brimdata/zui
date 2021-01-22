@@ -6,12 +6,12 @@ import Spaces from "../../state/Spaces"
 import ToolbarButton from "../Toolbar/Button"
 import styled from "styled-components"
 import StatusLight from "./StatusLight"
-import EditConnectionModal from "./EditConnectionModal"
+import EditWorkspaceModal from "./EditWorkspaceModal"
 import useEnterKey from "../hooks/useEnterKey"
-import ConnectionStatuses from "../../state/ConnectionStatuses"
+import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import {remote} from "electron"
 import Link from "../common/Link"
-import removeConnection from "../../flows/removeConnection"
+import removeWorkspace from "../../flows/removeWorkspace"
 import ErrorFactory from "../../models/ErrorFactory"
 import Notice from "../../state/Notice"
 
@@ -37,14 +37,14 @@ const StyledFooter = styled.footer`
   }
 `
 
-const StyledConnectionDetail = styled.div`
+const StyledWorkspaceDetail = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 `
 
-const ConnectionFields = styled.div`
+const WorkspaceFields = styled.div`
   display: flex;
   background: rgba(255, 255, 255, 0.75);
   flex-direction: column;
@@ -114,27 +114,27 @@ const Field = ({label, value}: FieldProps) => {
   )
 }
 
-const ViewConnection = ({onClose, onEdit}) => {
+const ViewWorkspace = ({onClose, onEdit}) => {
   const dispatch = useDispatch()
-  const conn = useSelector(Current.getConnection)
-  const connId = conn ? conn.id : null
-  const spaceIds = useSelector(Spaces.ids(connId))
-  const connStatus = useSelector(ConnectionStatuses.get(connId))
+  const workspace = useSelector(Current.getWorkspace)
+  const workspaceId = workspace ? workspace.id : null
+  const spaceIds = useSelector(Spaces.ids(workspaceId))
+  const wsStatus = useSelector(WorkspaceStatuses.get(workspaceId))
 
   useEnterKey(onClose)
 
-  if (!conn) return null
+  if (!workspace) return null
 
-  const isDefault = conn.id === "localhost:9867"
+  const isDefault = workspace.id === "localhost:9867"
 
   const spaceCount = spaceIds.length
-  const {name, host, port, version = "unknown"} = conn
+  const {name, host, port, version = "unknown"} = workspace
 
   const onRemove = () => {
     remote.dialog
       .showMessageBox({
         type: "warning",
-        title: "Remove Connection",
+        title: "Remove Workspace",
         message: `Are you sure you want to remove ${name}?`,
         buttons: ["OK", "Cancel"]
       })
@@ -142,7 +142,7 @@ const ViewConnection = ({onClose, onEdit}) => {
         if (response === 0) {
           onClose()
           try {
-            dispatch(removeConnection(conn))
+            dispatch(removeWorkspace(workspace))
           } catch (e) {
             dispatch(Notice.set(ErrorFactory.create(e)))
           }
@@ -152,18 +152,18 @@ const ViewConnection = ({onClose, onEdit}) => {
 
   return (
     <StyledContent>
-      <StyledConnectionDetail>
+      <StyledWorkspaceDetail>
         <Title>{name}</Title>
         <Status>
-          <StatusLight status={connStatus} />
-          <p>{connStatus || "unknown"}</p>
+          <StatusLight status={wsStatus} />
+          <p>{wsStatus || "unknown"}</p>
         </Status>
-        <ConnectionFields>
+        <WorkspaceFields>
           <Field label="Host" value={[host, port].join(":")} />
           <Field label="ZQD Version" value={version} />
           <Field label="Spaces" value={`${spaceCount}`} />
-        </ConnectionFields>
-      </StyledConnectionDetail>
+        </WorkspaceFields>
+      </StyledWorkspaceDetail>
       <StyledFooter>
         <ToolbarButton text="OK" onClick={onClose} />
         <ToolbarButton text="Edit" onClick={onEdit} />
@@ -173,14 +173,14 @@ const ViewConnection = ({onClose, onEdit}) => {
   )
 }
 
-const ViewConnectionModal = ({onClose}) => {
+const ViewWorkspaceModal = ({onClose}) => {
   const [editing, setEditing] = useState(false)
 
   if (editing) {
-    return <EditConnectionModal onClose={() => setEditing(false)} />
+    return <EditWorkspaceModal onClose={() => setEditing(false)} />
   } else {
-    return <ViewConnection onClose={onClose} onEdit={() => setEditing(true)} />
+    return <ViewWorkspace onClose={onClose} onEdit={() => setEditing(true)} />
   }
 }
 
-export default ViewConnectionModal
+export default ViewWorkspaceModal

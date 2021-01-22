@@ -2,13 +2,13 @@ import React from "react"
 
 import styled from "styled-components"
 import {useDispatch, useSelector} from "react-redux"
-import Clusters from "../state/Clusters"
+import Workspaces from "../state/Workspaces"
 import Current from "../state/Current"
-import {BrimConnection} from "../brim"
-import connection from "../brim/connection"
+import {BrimWorkspace} from "../brim"
+import workspace from "../brim/workspace"
 import DataStoreIcon from "../icons/DataStoreIcon"
 
-const StyledConnection = styled.li`
+const StyledWorkspace = styled.li`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -22,38 +22,38 @@ const StyledConnection = styled.li`
   }
 `
 
-const ConnInfo = styled.div`
+const WorkspaceInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
   margin: 0 12px;
 `
-const ConnName = styled.div`
+const WorkspaceName = styled.div`
   ${(p) => p.theme.typography.labelBold};
   color: var(--aqua);
   cursor: default;
 `
-const ConnAddress = styled.div`
+const WorkspaceAddress = styled.div`
   ${(p) => p.theme.typography.labelSmall};
   color: var(--slate);
   cursor: default;
 `
 
 type Props = {
-  conn: BrimConnection
+  workspace: BrimWorkspace
   onClick: () => void
 }
 
-const Connection = ({conn, onClick}: Props) => {
+const Workspace = ({workspace, onClick}: Props) => {
   return (
-    <StyledConnection onClick={onClick}>
+    <StyledWorkspace onClick={onClick}>
       <DataStoreIcon />
-      <ConnInfo>
-        <ConnName>{conn.name}</ConnName>
-        <ConnAddress>{conn.getAddress()}</ConnAddress>
-      </ConnInfo>
-    </StyledConnection>
+      <WorkspaceInfo>
+        <WorkspaceName>{workspace.name}</WorkspaceName>
+        <WorkspaceAddress>{workspace.getAddress()}</WorkspaceAddress>
+      </WorkspaceInfo>
+    </StyledWorkspace>
   )
 }
 
@@ -72,28 +72,28 @@ const StyledHeader = styled.h1`
   ${(p) => p.theme.typography.headingPage}
 `
 
-const Connections = styled.ul`
+const WorkspacesWrapper = styled.ul`
   padding: 0;
 `
 
-const ConnectionChooserPage = () => {
+const WorkspaceChooserPage = () => {
   const dispatch = useDispatch()
-  const conns = useSelector(Clusters.all)
+  const workspaces = useSelector(Workspaces.all)
 
   return (
     <PageWrap>
-      <StyledHeader>Choose a Connection</StyledHeader>
-      <Connections>
-        {conns.map((c) => (
-          <Connection
-            key={c.id}
-            conn={connection(c)}
-            onClick={() => dispatch(Current.setConnectionId(c.id))}
+      <StyledHeader>Choose a Workspace</StyledHeader>
+      <WorkspacesWrapper>
+        {workspaces.map((w) => (
+          <Workspace
+            key={w.id}
+            workspace={workspace(w)}
+            onClick={() => dispatch(Current.setWorkspaceId(w.id))}
           />
         ))}
-      </Connections>
+      </WorkspacesWrapper>
     </PageWrap>
   )
 }
 
-export default ConnectionChooserPage
+export default WorkspaceChooserPage

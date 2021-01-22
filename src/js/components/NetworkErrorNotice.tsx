@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react"
 import {BrimError} from "../errors/types"
 import Notice from "../state/Notice"
 import Current from "../state/Current"
-import ConnectionStatuses from "../state/ConnectionStatuses"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {checkStatus} from "../flows/checkStatus"
 
 type Props = {
@@ -16,11 +16,11 @@ const MAX_BACKOFF = 128
 
 export default function NetworkErrorNotice({error}: Props) {
   const dispatch = useDispatch()
-  const connId = useSelector(Current.getConnectionId)
-  const status = useSelector(ConnectionStatuses.get(connId))
+  const workspaceId = useSelector(Current.getWorkspaceId)
+  const status = useSelector(WorkspaceStatuses.get(workspaceId))
   const [count, setCount] = useState(0)
   const statusRef = useRef(status)
-  const connRef = useRef(connId)
+  const wsRef = useRef(workspaceId)
 
   const retry = () => {
     setCount(0)
@@ -31,15 +31,15 @@ export default function NetworkErrorNotice({error}: Props) {
   }
 
   useEffect(() => {
-    if (connId === connRef.current) {
+    if (workspaceId === wsRef.current) {
       statusRef.current = status
       if (status === "disconnected") dismiss()
     }
-  }, [status, connId])
+  }, [status, workspaceId])
 
   useEffect(() => {
-    connRef.current = connId
-    dispatch(ConnectionStatuses.set(connId, "retrying"))
+    wsRef.current = workspaceId
+    dispatch(WorkspaceStatuses.set(workspaceId, "retrying"))
 
     let id = null
     let attempt = 0
@@ -61,7 +61,7 @@ export default function NetworkErrorNotice({error}: Props) {
     return () => {
       clearTimeout(id)
       if (statusRef.current === "retrying") {
-        dispatch(ConnectionStatuses.set(connRef.current, "disconnected"))
+        dispatch(WorkspaceStatuses.set(wsRef.current, "disconnected"))
       }
     }
   }, [])

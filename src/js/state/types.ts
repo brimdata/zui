@@ -1,6 +1,5 @@
 import {Store as ReduxStore, Action as ReduxAction} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import {ClustersState} from "./Clusters/types"
 import {ErrorsState} from "./Errors/types"
 import {HandlersState} from "./Handlers/types"
 import {InvestigationState} from "./Investigation/types"
@@ -12,10 +11,11 @@ import {SpacesState} from "./Spaces/types"
 import {TabsState} from "./Tabs/types"
 import {ViewState} from "./View/types"
 import {createZealot, Zealot} from "zealot"
-import {ConnectionStatusesState} from "./ConnectionStatuses/types"
 import {QueriesState} from "./Queries/types"
 import {SystemTestState} from "./SystemTest"
 import {FeatureState} from "./Feature"
+import {WorkspacesState} from "./Workspaces/types"
+import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -33,7 +33,7 @@ export type Dispatch = AppDispatch
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
   handlers: HandlersState
-  clusters: ClustersState
+  workspaces: WorkspacesState
   errors: ErrorsState
   spaces: SpacesState
   view: ViewState
@@ -43,7 +43,7 @@ export type State = {
   tabs: TabsState
   packets: PacketsState
   prefs: PrefsState
-  connectionStatuses: ConnectionStatusesState
+  workspaceStatuses: WorkspaceStatusesState
   queries: QueriesState
   systemTest: SystemTestState
   feature: FeatureState

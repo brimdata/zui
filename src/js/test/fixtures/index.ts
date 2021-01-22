@@ -1,4 +1,4 @@
-import {Cluster} from "../../state/Clusters/types"
+import {Workspace} from "../../state/Workspaces/types"
 import {Space} from "../../state/Spaces/types"
 
 const space1 = (): Space => ({
@@ -18,27 +18,23 @@ const space1 = (): Space => ({
   ingest: {progress: null, warnings: [], snapshot: null}
 })
 
-const cluster1 = (): Cluster => ({
+const workspace1 = (): Workspace => ({
   id: "test:9867",
   name: "testName1",
   host: "test",
-  port: "9867",
-  username: "",
-  password: ""
+  port: "9867"
 })
 
-const cluster2 = (): Cluster => ({
+const workspace2 = (): Workspace => ({
   id: "test:9868",
   name: "testName2",
   host: "test",
-  port: "9868",
-  username: "",
-  password: ""
+  port: "9868"
 })
 
 const fixtures = () => ({
-  cluster1: cluster1(),
-  cluster2: cluster2(),
+  workspace1: workspace1(),
+  workspace2: workspace2(),
   space1: space1()
 })
 

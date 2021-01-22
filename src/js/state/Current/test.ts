@@ -1,9 +1,9 @@
-import Clusters from "../Clusters"
+import Workspaces from "../Workspaces"
 import Current from "./"
 import Spaces from "../Spaces"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import {Cluster} from "../Clusters/types"
+import {Workspace} from "../Workspaces/types"
 
 let store
 
@@ -17,43 +17,39 @@ test("setting the space id", () => {
   expect(Current.getSpaceId(store.getState())).toBe("1")
 })
 
-test("setting the connection id", () => {
-  store.dispatch(Current.setConnectionId("a"))
+test("setting the workspace id", () => {
+  store.dispatch(Current.setWorkspaceId("a"))
 
-  expect(Current.getConnectionId(store.getState())).toBe("a")
+  expect(Current.getWorkspaceId(store.getState())).toBe("a")
 })
 
-test("getting the actual connection", () => {
-  const conn: Cluster = {
-    id: "myconn",
-    name: "myconn",
-    host: "www.myconn.com",
-    port: "123",
-    username: "",
-    password: ""
+test("getting the actual workspace", () => {
+  const ws: Workspace = {
+    id: "myws",
+    name: "myws",
+    host: "www.myws.com",
+    port: "123"
   }
   const state = store.dispatchAll([
-    Clusters.add(conn),
-    Current.setConnectionId("myconn")
+    Workspaces.add(ws),
+    Current.setWorkspaceId("myws")
   ])
 
-  expect(Current.mustGetConnection(state).serialize()).toEqual(conn)
+  expect(Current.mustGetWorkspace(state).serialize()).toEqual(ws)
 })
 
 test("getting the actual space", () => {
   const space = fixtures("space1")
-  const conn: Cluster = {
-    id: "myconn",
-    name: "myconn",
-    host: "www.myconn.com",
-    port: "123",
-    username: "",
-    password: ""
+  const ws: Workspace = {
+    id: "myws",
+    name: "myws",
+    host: "www.myws.com",
+    port: "123"
   }
   const state = store.dispatchAll([
-    Clusters.add(conn),
-    Spaces.setDetail("myconn", space),
-    Current.setConnectionId("myconn"),
+    Workspaces.add(ws),
+    Spaces.setDetail("myws", space),
+    Current.setWorkspaceId("myws"),
     Current.setSpaceId(space.id)
   ])
 

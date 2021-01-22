@@ -10,9 +10,8 @@ import space from "./space"
 import span from "./span"
 import syntax from "./syntax"
 import tab from "./brimTab"
-
 import time from "./time"
-import connection from "./connection"
+import workspace from "./workspace"
 
 export type Ts = {
   ns: number
@@ -20,7 +19,7 @@ export type Ts = {
 }
 
 export type BrimSpace = ReturnType<typeof space>
-export type BrimConnection = ReturnType<typeof connection>
+export type BrimWorkspace = ReturnType<typeof workspace>
 
 export type Span = [Ts, Ts]
 
@@ -38,5 +37,5 @@ export default {
   randomHash,
   entries,
   tab,
-  connection
+  workspace
 }

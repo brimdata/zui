@@ -1,6 +1,6 @@
 import {createZealotMock} from "zealot"
 
-import Clusters from "../state/Clusters"
+import Workspaces from "../state/Workspaces"
 import Current from "../state/Current"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
@@ -27,9 +27,9 @@ beforeEach(() => {
     })
     .stubPromise("spaces.delete", true)
 
-  const conn = fixtures("cluster1")
+  const ws = fixtures("workspace1")
   store = initTestStore(zealot.zealot)
-  store.dispatchAll([Clusters.add(conn), Current.setConnectionId(conn.id)])
+  store.dispatchAll([Workspaces.add(ws), Current.setWorkspaceId(ws.id)])
 })
 
 describe("success case", () => {
@@ -119,9 +119,9 @@ describe("error case", () => {
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
-    const cluster = Current.getConnectionId(state)
-    expect(Spaces.getSpaces(cluster)(state)).toEqual([])
-    expect(Spaces.getSpaces(cluster)(state)).toEqual([])
+    const workspace = Current.getWorkspaceId(state)
+    expect(Spaces.getSpaces(workspace)(state)).toEqual([])
+    expect(Spaces.getSpaces(workspace)(state)).toEqual([])
     expect(Current.getSpaceId(state)).toEqual(null)
   })
 
@@ -133,9 +133,9 @@ describe("error case", () => {
     await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
 
     const state = store.getState()
-    const connId = Current.getConnectionId(state)
+    const wsId = Current.getWorkspaceId(state)
     const spaceId = Current.getSpaceId(state)
-    expect(Spaces.getIngestWarnings(connId, spaceId)(state)).toEqual([
+    expect(Spaces.getIngestWarnings(wsId, spaceId)(state)).toEqual([
       "Some pcap warning"
     ])
   })

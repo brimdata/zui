@@ -1,31 +1,31 @@
 import {SPACES_DETAIL, SPACES_INGEST_SNAPSHOT, SPACES_REMOVE} from "./types"
 import actions from "./actions"
 
-export default function actionsFor(clusterId: string, spaceId: string) {
+export default function actionsFor(workspaceId: string, spaceId: string) {
   return {
     setIngestProgress: (value: number | null) => {
-      return actions.setIngestProgress(clusterId, spaceId, value)
+      return actions.setIngestProgress(workspaceId, spaceId, value)
     },
     appendIngestWarning: (warning: string) => {
-      return actions.appendIngestWarning(clusterId, spaceId, warning)
+      return actions.appendIngestWarning(workspaceId, spaceId, warning)
     },
     clearIngestWarnings: () => {
-      return actions.clearIngestWarnings(clusterId, spaceId)
+      return actions.clearIngestWarnings(workspaceId, spaceId)
     },
     setIngestSnapshot: (count: number): SPACES_INGEST_SNAPSHOT => ({
       type: "SPACES_INGEST_SNAPSHOT",
-      clusterId,
+      workspaceId,
       spaceId,
       count
     }),
     remove: (): SPACES_REMOVE => ({
       type: "SPACES_REMOVE",
-      clusterId,
+      workspaceId,
       spaceId
     }),
     create: (): SPACES_DETAIL => ({
       type: "SPACES_DETAIL",
-      clusterId,
+      workspaceId,
       space: {id: spaceId}
     })
   }

@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux"
 import Current from "../../state/Current"
 import get from "lodash/get"
-import ConnectionStatuses from "../../state/ConnectionStatuses"
+import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import Spaces from "../../state/Spaces"
 import AddSpaceButton from "../AddSpaceButton"
 import SavedSpacesList from "../SavedSpacesList"
@@ -17,9 +17,9 @@ import {
 } from "./common"
 
 function SpacesSection({isOpen, style, resizeProps, toggleProps}) {
-  const conn = useSelector(Current.getConnection)
-  const id = get(conn, ["id"], "")
-  const connStatus = useSelector(ConnectionStatuses.get(id))
+  const workspace = useSelector(Current.getWorkspace)
+  const id = get(workspace, ["id"], "")
+  const wsStatus = useSelector(WorkspaceStatuses.get(id))
   const spaces = useSelector(Spaces.getSpaces(id))
 
   return (
@@ -33,7 +33,7 @@ function SpacesSection({isOpen, style, resizeProps, toggleProps}) {
         <AddSpaceButton />
       </SectionHeader>
       <SectionContents>
-        <SavedSpacesList spaces={spaces} connStatus={connStatus} />
+        <SavedSpacesList spaces={spaces} workspaceStatus={wsStatus} />
       </SectionContents>
     </StyledSection>
   )

@@ -9,7 +9,7 @@ import provide from "../test/helpers/provide"
 import {zng} from "zealot"
 
 test("no errors if space does not exist", async () => {
-  const {store} = await loginTo("cluster1", "space1")
+  const {store} = await loginTo("workspace1", "space1")
 
   store.dispatch(Layout.showRightSidebar())
   store.dispatch(Current.setSpaceId(null))

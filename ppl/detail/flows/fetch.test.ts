@@ -28,7 +28,7 @@ const cidZql = 'community_id="1:N7YGmWjwTmMKNhsZHBR618n3ReA=" | head 100'
 describe("zeek log when community_id is found", () => {
   let setup
   beforeEach(async () => {
-    setup = await loginTo("cluster1", "space1")
+    setup = await loginTo("workspace1", "space1")
     setup.zealot.stubStream("search", stubs.uidResult)
     setup.zealot.stubStream("search", stubs.uidAndCommunityResult)
   })
@@ -59,7 +59,7 @@ describe("zeek log when community_id is found", () => {
 describe("zeek log when community_id is not found", () => {
   let setup
   beforeEach(async () => {
-    setup = await loginTo("cluster1", "space1")
+    setup = await loginTo("workspace1", "space1")
     setup.zealot.stubStream("search", stubs.noCommunityIdInConn)
   })
 
@@ -87,7 +87,7 @@ describe("suricata alert when community_id found", () => {
   let setup
 
   beforeEach(async () => {
-    setup = await loginTo("cluster1", "space1")
+    setup = await loginTo("workspace1", "space1")
     setup.zealot.stubStream("search", stubs.alertResults)
   })
 

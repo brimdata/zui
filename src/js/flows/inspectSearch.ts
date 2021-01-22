@@ -19,7 +19,7 @@ export const inspectSearch = (): Thunk<ReturnValue> => (dispatch, getState) => {
   const program = SearchBar.getSearchProgram(getState())
   const [from, to] = Tab.getSpan(getState())
   const spaceId = Current.getSpaceId(getState())
-  const host = Tab.clusterUrl(getState())
+  const host = Tab.workspaceUrl(getState())
   let search
 
   try {

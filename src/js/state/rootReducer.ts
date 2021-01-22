@@ -1,7 +1,6 @@
 import {combineReducers} from "redux"
 
-import Clusters from "./Clusters"
-import ConnectionStatuses from "./ConnectionStatuses"
+import Workspaces from "./Workspaces"
 import Errors from "./Errors"
 import Handlers from "./Handlers"
 import Investigation from "./Investigation"
@@ -15,10 +14,11 @@ import View from "./View"
 import Queries from "./Queries"
 import SystemTest from "./SystemTest"
 import Feature from "./Feature"
+import WorkspaceStatuses from "./WorkspaceStatuses"
 
 export default combineReducers<any, any>({
   errors: Errors.reducer,
-  clusters: Clusters.reducer,
+  workspaces: Workspaces.reducer,
   modal: Modal.reducer,
   notice: Notice.reducer,
   handlers: Handlers.reducer,
@@ -28,8 +28,8 @@ export default combineReducers<any, any>({
   spaces: Spaces.reducer,
   packets: Packets.reducer,
   prefs: Prefs.reducer,
-  connectionStatuses: ConnectionStatuses.reducer,
   queries: Queries.reducer,
   systemTest: SystemTest.reducer,
-  feature: Feature.reducer
+  feature: Feature.reducer,
+  workspaceStatuses: WorkspaceStatuses.reducer
 })

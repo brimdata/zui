@@ -43,7 +43,7 @@ export class NoSpacesError extends AppError {
   }
 
   message() {
-    return "No spaces in this cluster."
+    return "No spaces in this workspace."
   }
 }
 

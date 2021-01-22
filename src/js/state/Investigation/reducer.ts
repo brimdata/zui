@@ -11,19 +11,19 @@ const init = (): InvestigationState => ({})
 export default produce((draft, a: InvestigationAction) => {
   switch (a.type) {
     case "INVESTIGATION_PUSH":
-      if (!draft[a.clusterId]) draft[a.clusterId] = {}
-      if (!draft[a.clusterId][a.spaceId]) draft[a.clusterId][a.spaceId] = []
+      if (!draft[a.workspaceId]) draft[a.workspaceId] = {}
+      if (!draft[a.workspaceId][a.spaceId]) draft[a.workspaceId][a.spaceId] = []
 
-      draft[a.clusterId][a.spaceId] = createFinding(
-        draft[a.clusterId][a.spaceId],
+      draft[a.workspaceId][a.spaceId] = createFinding(
+        draft[a.workspaceId][a.spaceId],
         a.entry,
         a.ts
       )
       return
     case "FINDING_DELETE":
-      if (!draft[a.clusterId] || !draft[a.clusterId][a.spaceId]) return
+      if (!draft[a.workspaceId] || !draft[a.workspaceId][a.spaceId]) return
 
-      draft[a.clusterId][a.spaceId] = draft[a.clusterId][a.spaceId].filter(
+      draft[a.workspaceId][a.spaceId] = draft[a.workspaceId][a.spaceId].filter(
         (f) => {
           for (const ts of a.ts) if (isEqual(ts, f.ts)) return false
           return true
@@ -31,12 +31,12 @@ export default produce((draft, a: InvestigationAction) => {
       )
       return
     case "INVESTIGATION_CLEAR":
-      if (!draft[a.clusterId] || !draft[a.clusterId][a.spaceId]) return
+      if (!draft[a.workspaceId] || !draft[a.workspaceId][a.spaceId]) return
 
-      delete draft[a.clusterId][a.spaceId]
+      delete draft[a.workspaceId][a.spaceId]
       return
-    case "INVESTIGATION_CONNECTION_CLEAR":
-      delete draft[a.connId]
+    case "INVESTIGATION_WORKSPACE_CLEAR":
+      delete draft[a.workspaceId]
       return
   }
 }, init())

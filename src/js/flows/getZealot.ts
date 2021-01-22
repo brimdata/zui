@@ -2,7 +2,7 @@ import {createFetcher, FetchArgs, Zealot} from "zealot"
 import Current from "../state/Current"
 import {Thunk} from "../state/types"
 import ErrorFactory from "../models/ErrorFactory"
-import ConnectionStatuses from "../state/ConnectionStatuses"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
 
 const createBrimFetcher = (dispatch, getState) => {
   return (hostPort: string) => {
@@ -12,8 +12,8 @@ const createBrimFetcher = (dispatch, getState) => {
       return promise(args).catch((e) => {
         if (ErrorFactory.create(e).type === "NetworkError") {
           dispatch(
-            ConnectionStatuses.set(
-              Current.getConnectionId(getState()),
+            WorkspaceStatuses.set(
+              Current.getWorkspaceId(getState()),
               "disconnected"
             )
           )
@@ -31,9 +31,9 @@ export const getZealot = (): Thunk<Zealot> => (
   getState,
   {createZealot}
 ) => {
-  const conn = Current.mustGetConnection(getState())
+  const ws = Current.mustGetWorkspace(getState())
 
-  return createZealot(conn.getAddress(), {
+  return createZealot(ws.getAddress(), {
     fetcher: createBrimFetcher(dispatch, getState)
   })
 }

@@ -8,7 +8,7 @@ export default function refreshSpaceNames(): Thunk<Promise<void>> {
     const zealot = dispatch(getZealot())
     return zealot.spaces.list().then((spaces) => {
       spaces = spaces || []
-      const id = Current.getConnectionId(getState())
+      const id = Current.getWorkspaceId(getState())
       if (id) globalDispatch(Spaces.setSpaces(id, spaces))
     })
   }

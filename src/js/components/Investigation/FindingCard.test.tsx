@@ -8,7 +8,7 @@ import {Finding} from "src/js/state/Investigation/types"
 
 let store
 beforeEach(async () => {
-  const setup = await loginTo("cluster1", "space1")
+  const setup = await loginTo("workspace1", "space1")
   store = setup.store
 })
 
@@ -31,7 +31,7 @@ const finding: Finding = {
 test("Clicking the history submits the search", () => {
   const el = provide(
     store,
-    <FindingCard spaceId="1" connId="1" finding={finding} />
+    <FindingCard spaceId="1" workspaceId="1" finding={finding} />
   )
   store.clearActions()
   el.simulate("click")

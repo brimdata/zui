@@ -27,6 +27,6 @@ test("migrating 202008191031_changeZqdClusterIdToHostPort", () => {
 
   for (const td of tabsData) {
     if (!td.current) continue
-    expect(td.current.connectionId).toBe(newId)
+    expect(td.current.workspaceId).toBe(newId)
   }
 })

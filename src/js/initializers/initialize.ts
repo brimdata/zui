@@ -3,7 +3,7 @@ import initGlobals from "./initGlobals"
 import initIpcListeners from "./initIpcListeners"
 import initMenuActionListeners from "./initMenuActionListeners"
 import initStore from "./initStore"
-import initConnectionParams from "./initConnectionParams"
+import initWorkspaceParams from "./initWorkspaceParams"
 
 export default async function initialize() {
   const store = await initStore()
@@ -11,6 +11,6 @@ export default async function initialize() {
   initGlobals(store)
   initIpcListeners(store)
   initMenuActionListeners(store)
-  initConnectionParams(store)
+  initWorkspaceParams(store)
   return store
 }

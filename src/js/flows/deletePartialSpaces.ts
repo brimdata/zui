@@ -5,7 +5,7 @@ import {getZealot} from "./getZealot"
 import Current from "../state/Current"
 
 export default (): Thunk<Promise<any[]>> => (dispatch, getState) => {
-  const current = Current.getConnection(getState())
+  const current = Current.getWorkspace(getState())
   if (!current) return
 
   const zealot = dispatch(getZealot())

@@ -2,17 +2,17 @@ import {useDispatch, useSelector} from "react-redux"
 import React, {ComponentType} from "react"
 import styled from "styled-components"
 
-import Clusters from "../state/Clusters"
+import Workspaces from "../state/Workspaces"
 import Current from "../state/Current"
 import DropdownArrow from "../icons/DropdownArrow"
 import Modal from "../state/Modal"
 import usePopupMenu from "./hooks/usePopupMenu"
-import {Cluster} from "../state/Clusters/types"
+import {Workspace} from "../state/Workspaces/types"
 import {AppDispatch} from "../state/types"
 import {MenuItemConstructorOptions} from "electron"
-import {initConnection} from "../flows/initConnection"
+import {initWorkspace} from "../flows/initWorkspace"
 
-const ClusterPickerWrapper = styled.div`
+const WorkspacePickerWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,29 +32,29 @@ const ClusterPickerWrapper = styled.div`
   }
 ` as ComponentType<any>
 
-export default function ClusterPicker() {
+export default function WorkspacePicker() {
   const dispatch = useDispatch<AppDispatch>()
-  const clusters = useSelector(Clusters.all)
-  const current = useSelector(Current.getConnection)
+  const workspaces = useSelector(Workspaces.all)
+  const current = useSelector(Current.getWorkspace)
 
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Get Info",
-      click: () => dispatch(Modal.show("view-connection"))
+      click: () => dispatch(Modal.show("view-workspace"))
     },
     {type: "separator"}
   ]
 
-  clusters.forEach((c: Cluster) => {
-    const isCurrent = c.id === current.id
+  workspaces.forEach((w: Workspace) => {
+    const isCurrent = w.id === current.id
     template.push({
       type: "checkbox",
-      label: c.name,
+      label: w.name,
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(initConnection(c)).catch(() => {
-          dispatch(Current.setConnectionId(c.id))
+        dispatch(initWorkspace(w)).catch(() => {
+          dispatch(Current.setWorkspaceId(w.id))
         })
       }
     })
@@ -63,17 +63,17 @@ export default function ClusterPicker() {
   template.push(
     {type: "separator"},
     {
-      label: "New Connection...",
-      click: () => dispatch(Modal.show("new-connection"))
+      label: "New Workspace...",
+      click: () => dispatch(Modal.show("new-workspace"))
     }
   )
 
   const menu = usePopupMenu(template)
 
   return (
-    <ClusterPickerWrapper onClick={menu.onClick}>
+    <WorkspacePickerWrapper onClick={menu.onClick}>
       <label>{`${current.name}`}</label>
       <DropdownArrow />
-    </ClusterPickerWrapper>
+    </WorkspacePickerWrapper>
   )
 }

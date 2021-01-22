@@ -7,72 +7,72 @@ import {
   SPACES_REMOVE,
   Space,
   SPACES_RENAME,
-  SPACES_CONNECTION_REMOVE
+  SPACES_WORKSPACE_REMOVE
 } from "./types"
 
 export default {
-  setSpaces: (clusterId: string, spaces: Partial<Space>[]): SPACES_SET => ({
+  setSpaces: (workspaceId: string, spaces: Partial<Space>[]): SPACES_SET => ({
     type: "SPACES_SET",
-    clusterId,
+    workspaceId,
     spaces: spaces || []
   }),
 
-  setDetail: (clusterId: string, space: any): SPACES_DETAIL => ({
+  setDetail: (workspaceId: string, space: any): SPACES_DETAIL => ({
     type: "SPACES_DETAIL",
-    clusterId,
+    workspaceId,
     space
   }),
 
   rename: (
-    clusterId: string,
+    workspaceId: string,
     spaceId: string,
     newName: string
   ): SPACES_RENAME => ({
     type: "SPACES_RENAME",
-    clusterId,
+    workspaceId,
     spaceId,
     newName
   }),
 
-  remove: (clusterId: string, spaceId: string): SPACES_REMOVE => ({
+  remove: (workspaceId: string, spaceId: string): SPACES_REMOVE => ({
     type: "SPACES_REMOVE",
-    clusterId,
+    workspaceId,
     spaceId
   }),
 
-  removeForConnection: (connId: string): SPACES_CONNECTION_REMOVE => ({
-    type: "SPACES_CONNECTION_REMOVE",
-    connId
+  removeForWorkspace: (workspaceId: string): SPACES_WORKSPACE_REMOVE => ({
+    type: "SPACES_WORKSPACE_REMOVE",
+    workspaceId
   }),
 
   setIngestProgress: (
-    clusterId: string,
+    workspaceId: string,
     spaceId: string,
     value: number | null
   ): SPACES_INGEST_PROGRESS => ({
     type: "SPACES_INGEST_PROGRESS",
-    clusterId,
+    workspaceId,
     spaceId,
     value
   }),
 
   appendIngestWarning: (
-    clusterId: string,
+    workspaceId: string,
     spaceId: string,
     warning: string
   ): SPACES_INGEST_WARNING_APPEND => ({
     type: "SPACES_INGEST_WARNING_APPEND",
-    clusterId,
+    workspaceId,
     spaceId,
     warning
   }),
 
   clearIngestWarnings: (
-    clusterId: string,
+    workspaceId: string,
     spaceId: string
   ): SPACES_INGEST_WARNING_CLEAR => ({
     type: "SPACES_INGEST_WARNING_CLEAR",
-    clusterId,
+    workspaceId,
     spaceId
   })
 }

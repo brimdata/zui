@@ -54,13 +54,16 @@ export default function reducer(
   state: SpacesState = init,
   action: SpacesAction
 ): SpacesState {
-  if (action.type === "SPACES_CONNECTION_REMOVE") {
-    delete state[action.connId]
+  if (action.type === "SPACES_WORKSPACE_REMOVE") {
+    delete state[action.workspaceId]
     return state
   } else if (action.type.startsWith("SPACES_")) {
     return {
       ...state,
-      [action.clusterId]: spacesReducer(state[action.clusterId] || {}, action)
+      [action.workspaceId]: spacesReducer(
+        state[action.workspaceId] || {},
+        action
+      )
     }
   } else {
     return state

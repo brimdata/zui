@@ -14,8 +14,8 @@ import {AppDispatch} from "../state/types"
 
 export default function SpaceModal() {
   const args = useSelector(Modal.getArgs) || {}
-  const {clusterId, spaceId} = args
-  const space = useSelector(Spaces.get(clusterId, spaceId))
+  const {workspaceId, spaceId} = args
+  const space = useSelector(Spaces.get(workspaceId, spaceId))
   const {name} = space || {name: ""}
   const [nameInput, setNameInput] = useState(name)
   const [error, setError] = useState(null)
@@ -27,7 +27,7 @@ export default function SpaceModal() {
 
   const onSubmit = () => {
     setError(null)
-    dispatch(renameSpace(clusterId, spaceId, nameInput))
+    dispatch(renameSpace(workspaceId, spaceId, nameInput))
       .then(() => {
         dispatch(Modal.hide())
       })

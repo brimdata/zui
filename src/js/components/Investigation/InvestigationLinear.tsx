@@ -11,7 +11,7 @@ import Current from "../../state/Current"
 
 export default React.memo<{}>(function InvestigationLinear() {
   const findings = useFindings()
-  const connId = useSelector(Current.getConnectionId)
+  const workspaceId = useSelector(Current.getWorkspaceId)
   const spaceId = useSelector(Current.getSpaceId)
 
   const cards = []
@@ -21,7 +21,7 @@ export default React.memo<{}>(function InvestigationLinear() {
       <FindingCard
         key={getKey(f)}
         finding={f}
-        connId={connId}
+        workspaceId={workspaceId}
         spaceId={spaceId}
       />
     )

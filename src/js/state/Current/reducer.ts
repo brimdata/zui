@@ -4,7 +4,7 @@ import {CurrentAction, CurrentState} from "./types"
 
 const init = (): CurrentState => ({
   spaceId: null,
-  connectionId: null
+  workspaceId: null
 })
 
 export default produce((draft: CurrentState, action: CurrentAction) => {
@@ -12,8 +12,8 @@ export default produce((draft: CurrentState, action: CurrentAction) => {
     case "CURRENT_SPACE_SET":
       draft.spaceId = action.id
       return
-    case "CURRENT_CONNECTION_SET":
-      draft.connectionId = action.id
+    case "CURRENT_WORKSPACE_SET":
+      draft.workspaceId = action.id
       return
   }
 }, init())

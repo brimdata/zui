@@ -1,17 +1,17 @@
 import {createZealotMock, ZealotMock} from "zealot"
 
 import {initSpace} from "../../flows/initSpace"
-import Clusters from "../../state/Clusters"
+import Workspaces from "../../state/Workspaces"
 import Current from "../../state/Current"
 import Spaces from "../../state/Spaces"
 import fixtures from "../fixtures"
 import initTestStore, {TestStore} from "../initTestStore"
-import {Cluster} from "src/js/state/Clusters/types"
+import {Workspace} from "../../state/Workspaces/types"
 
 export default async function loginTo(
-  clusterName: string,
+  workspaceName: string,
   spaceName: string
-): Promise<{store: TestStore; cluster: Cluster; zealot: ZealotMock}> {
+): Promise<{store: TestStore; workspace: Workspace; zealot: ZealotMock}> {
   const mock = createZealotMock()
   mock
     .stubPromise("version", {version: "1"}, "always")
@@ -26,13 +26,13 @@ export default async function loginTo(
       "always"
     )
   const store = initTestStore(mock.zealot)
-  const cluster = fixtures(clusterName)
+  const workspace = fixtures(workspaceName)
   const space = fixtures(spaceName)
 
-  store.dispatch(Clusters.add(cluster))
-  store.dispatch(Current.setConnectionId(cluster.id))
-  store.dispatch(Spaces.setDetail(cluster.id, space))
+  store.dispatch(Workspaces.add(workspace))
+  store.dispatch(Current.setWorkspaceId(workspace.id))
+  store.dispatch(Spaces.setDetail(workspace.id, space))
   return store.dispatch(initSpace(space.name)).then(() => {
-    return {store, cluster, zealot: mock}
+    return {store, workspace, zealot: mock}
   })
 }
