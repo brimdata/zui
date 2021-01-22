@@ -119,9 +119,9 @@ describe("error case", () => {
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
-    const cluster = Current.getWorkspaceId(state)
-    expect(Spaces.getSpaces(cluster)(state)).toEqual([])
-    expect(Spaces.getSpaces(cluster)(state)).toEqual([])
+    const workspace = Current.getWorkspaceId(state)
+    expect(Spaces.getSpaces(workspace)(state)).toEqual([])
+    expect(Spaces.getSpaces(workspace)(state)).toEqual([])
     expect(Current.getSpaceId(state)).toEqual(null)
   })
 

@@ -35,7 +35,7 @@ export default produce((draft, a: InvestigationAction) => {
 
       delete draft[a.workspaceId][a.spaceId]
       return
-    case "INVESTIGATION_CONNECTION_CLEAR":
+    case "INVESTIGATION_WORKSPACE_CLEAR":
       delete draft[a.workspaceId]
       return
   }

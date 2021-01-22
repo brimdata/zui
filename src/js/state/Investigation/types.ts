@@ -9,7 +9,7 @@ export type InvestigationState = {
 export type InvestigationAction =
   | FINDING_DELETE
   | INVESTIGATION_CLEAR
-  | INVESTIGATION_CONNECTION_CLEAR
+  | INVESTIGATION_WORKSPACE_CLEAR
   | INVESTIGATION_PUSH
 
 export type Finding = {
@@ -29,8 +29,8 @@ export type INVESTIGATION_CLEAR = {
   spaceId: string
 }
 
-export type INVESTIGATION_CONNECTION_CLEAR = {
-  type: "INVESTIGATION_CONNECTION_CLEAR"
+export type INVESTIGATION_WORKSPACE_CLEAR = {
+  type: "INVESTIGATION_WORKSPACE_CLEAR"
   workspaceId: string
 }
 

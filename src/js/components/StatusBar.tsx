@@ -15,11 +15,11 @@ import brim from "../brim"
 
 export default function StatusBar() {
   const dispatch = useDispatch()
-  const clusterID = useSelector(Current.getWorkspaceId)
+  const workspaceId = useSelector(Current.getWorkspaceId)
   const spaceId = useSelector(Current.getSpaceId)
   const space = useSelector(Current.getSpace)
-  const value = useSelector(Spaces.getIngestProgress(clusterID, spaceId))
-  const warnings = useSelector(Spaces.getIngestWarnings(clusterID, spaceId))
+  const value = useSelector(Spaces.getIngestProgress(workspaceId, spaceId))
+  const warnings = useSelector(Spaces.getIngestWarnings(workspaceId, spaceId))
   if (!isNumber(value) && isEmpty(warnings)) return null
   const s = brim.space(space)
 

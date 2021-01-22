@@ -40,7 +40,7 @@ export default {
     spaceId
   }),
 
-  removeForConnection: (workspaceId: string): SPACES_WORKSPACE_REMOVE => ({
+  removeForWorkspace: (workspaceId: string): SPACES_WORKSPACE_REMOVE => ({
     type: "SPACES_WORKSPACE_REMOVE",
     workspaceId
   }),

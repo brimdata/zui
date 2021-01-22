@@ -19,8 +19,8 @@ const removeWorkspace = (ws: Workspace): Thunk => (
 
   dispatch(Current.setSpaceId(null))
   dispatch(Current.setWorkspaceId(null))
-  dispatch(Investigation.clearConnectionInvestigation(id))
-  dispatch(Spaces.removeForConnection(id))
+  dispatch(Investigation.clearWorkspaceInvestigation(id))
+  dispatch(Spaces.removeForWorkspace(id))
   dispatch(WorkspaceStatuses.remove(id))
   globalDispatch(Workspaces.remove(id))
   popNotice(`Removed workspace "${name}"`)

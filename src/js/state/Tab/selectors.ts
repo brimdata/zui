@@ -13,7 +13,7 @@ import Viewer from "../Viewer"
 import activeTabSelect from "./activeTabSelect"
 import brim, {Span} from "../../brim"
 
-const clusterUrl = createSelector<State, Workspace | null, string>(
+const workspaceUrl = createSelector<State, Workspace | null, string>(
   Current.getWorkspace,
   (c) => {
     if (c) return c.host + ":" + c.port
@@ -65,7 +65,7 @@ const getSpanFocusAsDates = createSelector<
 })
 
 export default {
-  clusterUrl,
+  workspaceUrl,
   getSpaceName: (state: State) => {
     const s = Current.mustGetSpace(state)
     return s ? s.name : ""

@@ -2,7 +2,7 @@ import {
   FINDING_DELETE,
   INVESTIGATION_CLEAR,
   INVESTIGATION_PUSH,
-  INVESTIGATION_CONNECTION_CLEAR
+  INVESTIGATION_WORKSPACE_CLEAR
 } from "./types"
 import {SearchRecord} from "../../types"
 import {isArray} from "../../lib/is"
@@ -42,10 +42,10 @@ export default {
     spaceId
   }),
 
-  clearConnectionInvestigation: (
+  clearWorkspaceInvestigation: (
     workspaceId: string
-  ): INVESTIGATION_CONNECTION_CLEAR => ({
-    type: "INVESTIGATION_CONNECTION_CLEAR",
+  ): INVESTIGATION_WORKSPACE_CLEAR => ({
+    type: "INVESTIGATION_WORKSPACE_CLEAR",
     workspaceId
   })
 }
