@@ -20,10 +20,6 @@ export function createFetcher(host: string) {
   return {
     async promise(args: FetchArgs) {
       const {path, method, body, signal, headers} = args
-      console.log(
-        "headers has authorization: ",
-        headers && headers.has("Authorization")
-      )
       const resp = await fetch(url(host, path), {method, body, signal, headers})
       const content = await parseContentType(resp)
       return resp.ok ? content : Promise.reject(createError(content))
