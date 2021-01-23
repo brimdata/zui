@@ -12,7 +12,7 @@ import deletePartialSpaces from "../flows/deletePartialSpaces"
 import {globalDispatch} from "../state/GlobalContext"
 import Workspaces from "../state/Workspaces"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import refreshSpaceNames from "../flows/refreshSpaceNames"
+import {Authenticator} from "../auth0"
 
 export default (store: Store) => {
   const dispatch = store.dispatch as AppDispatch
@@ -89,6 +89,16 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("windows:authCallback", (e, {workspaceId, accessToken}) => {
+    const ws = Workspaces.id(workspaceId)(store.getState())
+    new Authenticator()
+      .loadTokens(cbUrl)
+      .then((token) => {
+        const win = brim.windows.getWindow(windowId)
+        sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
+      })
+      .catch((e) => {
+        log.error("error loading tokens: ", e)
+      })
     dispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken))
     globalDispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken)).then(
       () => {

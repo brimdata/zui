@@ -6,7 +6,7 @@ import ToolbarButton from "./Toolbar/Button"
 import {useDispatch, useSelector} from "react-redux"
 import {initCurrentTab} from "../flows/initCurrentTab"
 import {Workspace} from "../state/Workspaces/types"
-import {Authenticator as Auth} from "../auth"
+import {Authenticator as Auth} from "../auth0"
 import brim from "../brim"
 import {initWorkspace} from "../flows/initWorkspace"
 

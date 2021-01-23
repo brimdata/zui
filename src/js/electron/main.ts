@@ -20,7 +20,7 @@ import {setupAutoUpdater} from "./autoUpdater"
 import log from "electron-log"
 import {handleQuit} from "./quitter"
 import {Brim} from "./brim"
-import {Authenticator} from "../auth"
+import {Authenticator} from "../auth0"
 import url from "url"
 import Workspaces from "../state/Workspaces"
 import {globalDispatch} from "../state/GlobalContext"
@@ -69,30 +69,30 @@ async function main() {
 
     const urlParts = url.parse(cbUrl, true)
     // TODO: Mason - protect this parsing more
+    const code = urlParts.query.code
     const stateItems = (urlParts.query.state as string).split(",")
     const workspaceId = stateItems[0]
     const windowId = stateItems[1]
-    const ws = Workspaces.id(workspaceId as string)(brim.store.getState())
-    const authenticator = new Authenticator(
-      ws.id,
-      ws.authData.clientId,
-      ws.authData.domain
+    const win = brim.windows.getWindow(windowId)
+    brim.activate()
+    sendTo(
+      win.ref.webContents,
+      ipc.windows.authCallback(workspaceId, code as string)
     )
-    authenticator
-      .loadTokens(cbUrl)
-      .then((token) => {
-        const win = brim.windows.getWindow(windowId)
-        sendTo(
-          win.ref.webContents,
-          ipc.windows.authCallback(workspaceId, token)
-        )
-      })
-      .catch((e) => {
-        log.error("error loading tokens: ", e)
-      })
-      .finally(() => {
-        brim.activate()
-      })
+    // const authenticator = new Authenticator(
+    //   ws.id,
+    //   ws.authData.clientId,
+    //   ws.authData.domain
+    // )
+    // authenticator
+    //   .loadTokens(cbUrl)
+    //   .then((token) => {
+    //     const win = brim.windows.getWindow(windowId)
+    //     sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
+    //   })
+    //   .catch((e) => {
+    //     log.error("error loading tokens: ", e)
+    //   })
   })
 
   app.on("web-contents-created", (event, contents) => {
