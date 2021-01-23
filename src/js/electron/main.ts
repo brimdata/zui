@@ -1,6 +1,5 @@
 import {appPathSetup} from "./appPathSetup"
 import userTasks from "./userTasks"
-import workspace from "../brim/workspace"
 
 // app path and log setup should happen before other imports.
 appPathSetup()
@@ -20,11 +19,8 @@ import {setupAutoUpdater} from "./autoUpdater"
 import log from "electron-log"
 import {handleQuit} from "./quitter"
 import {Brim} from "./brim"
-import {Authenticator} from "../auth0"
+import {deserializeState} from "../auth0"
 import url from "url"
-import Workspaces from "../state/Workspaces"
-import {globalDispatch} from "../state/GlobalContext"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import sendTo from "./ipc/sendTo"
 import ipc from "./ipc"
 
@@ -63,36 +59,18 @@ async function main() {
   app.setAsDefaultProtocolClient("brim")
   app.on("open-url", (event, cbUrl) => {
     // TODO: Mason - refactor this to behave more like a router (i.e. handle by path)
-    // TODO: Mason - this is a macOS only event :( investigate more here https://discuss.atom.io/t/how-to-open-application-from-a-url-on-both-macos-and-windows/61004
-    // recommended to preventDefault by docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
+    // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
 
     const urlParts = url.parse(cbUrl, true)
-    // TODO: Mason - protect this parsing more
-    const code = urlParts.query.code
-    const stateItems = (urlParts.query.state as string).split(",")
-    const workspaceId = stateItems[0]
-    const windowId = stateItems[1]
+    const code = urlParts.query.code as string
+    const state = urlParts.query.state as string
+    const {workspaceId, windowId} = deserializeState(state)
     const win = brim.windows.getWindow(windowId)
+
     brim.activate()
-    sendTo(
-      win.ref.webContents,
-      ipc.windows.authCallback(workspaceId, code as string)
-    )
-    // const authenticator = new Authenticator(
-    //   ws.id,
-    //   ws.authData.clientId,
-    //   ws.authData.domain
-    // )
-    // authenticator
-    //   .loadTokens(cbUrl)
-    //   .then((token) => {
-    //     const win = brim.windows.getWindow(windowId)
-    //     sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
-    //   })
-    //   .catch((e) => {
-    //     log.error("error loading tokens: ", e)
-    //   })
+
+    sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
   })
 
   app.on("web-contents-created", (event, contents) => {

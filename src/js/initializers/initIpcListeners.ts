@@ -12,7 +12,10 @@ import deletePartialSpaces from "../flows/deletePartialSpaces"
 import {globalDispatch} from "../state/GlobalContext"
 import Workspaces from "../state/Workspaces"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {Authenticator} from "../auth0"
+import {toAccessTokenKey, toRefreshTokenKey} from "../auth0"
+import {getAuth0} from "../flows/getAuth0"
+import invoke from "../electron/ipc/invoke"
+import ipc from "../electron/ipc"
 
 export default (store: Store) => {
   const dispatch = store.dispatch as AppDispatch
@@ -88,24 +91,33 @@ export default (store: Store) => {
     initNewSearchTab(store, params)
   })
 
-  ipcRenderer.on("windows:authCallback", (e, {workspaceId, accessToken}) => {
-    const ws = Workspaces.id(workspaceId)(store.getState())
-    new Authenticator()
-      .loadTokens(cbUrl)
-      .then((token) => {
-        const win = brim.windows.getWindow(windowId)
-        sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
-      })
-      .catch((e) => {
-        log.error("error loading tokens: ", e)
-      })
-    dispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken))
-    globalDispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken)).then(
-      () => {
+  ipcRenderer.on("windows:authCallback", async (e, {workspaceId, code}) => {
+    const client = dispatch(getAuth0(workspaceId))
+
+    try {
+      const {accessToken, refreshToken} = await client.exchangeCode(code)
+
+      dispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken))
+      globalDispatch(
+        Workspaces.setWorkspaceToken(workspaceId, accessToken)
+      ).then(() => {
         dispatch(WorkspaceStatuses.set(workspaceId, "connected"))
-      }
-    )
+      })
+
+      // store both tokens in os default keychain
+      await invoke(
+        ipc.windows.setKeyStorage(toAccessTokenKey(workspaceId), accessToken)
+      )
+      await invoke(
+        ipc.windows.setKeyStorage(toRefreshTokenKey(workspaceId), refreshToken)
+      )
+    } catch (e) {
+      console.error("error exchanging code: ", e)
+
+      throw e
+    }
   })
+
   ipcRenderer.on("globalStore:dispatch", (e, {action}) =>
     store.dispatch(action)
   )
