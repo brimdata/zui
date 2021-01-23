@@ -3,7 +3,7 @@ import Current from "../state/Current"
 import {Thunk} from "../state/types"
 import ErrorFactory from "../models/ErrorFactory"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {Authenticator} from "../auth"
+import {Authenticator} from "../auth0"
 import {BrimWorkspace} from "../brim"
 import {ZFetcher, ZReponse} from "../../../zealot/types"
 

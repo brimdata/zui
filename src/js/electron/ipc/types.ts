@@ -9,6 +9,9 @@ export type IpcMsg =
   | WindowsNewSearchTabMsg
   | WindowsOpenDirectorySelect
   | WindowsAuthCallbackMsg
+  | WindowsSetKeyStorageMsg
+  | WindowsGetKeyStorageMsg
+  | WindowsDeleteKeyStorageMsg
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
 
@@ -22,7 +25,7 @@ export type WindowsOpenMsg = {
 export type WindowsAuthCallbackMsg = {
   channel: "windows:authCallback"
   workspaceId: string
-  accessToken: string
+  code: string
 }
 
 export type WindowsInitialStateMsg = {
@@ -37,6 +40,22 @@ export type WindowsNewSearchTabMsg = {
 
 export type WindowsOpenDirectorySelect = {
   channel: "windows:openDirectorySelect"
+}
+
+export type WindowsSetKeyStorageMsg = {
+  channel: "windows:setKeyStorage"
+  key: string
+  val: string
+}
+
+export type WindowsGetKeyStorageMsg = {
+  channel: "windows:getKeyStorage"
+  key: string
+}
+
+export type WindowsDeleteKeyStorageMsg = {
+  channel: "windows:deleteKeyStorage"
+  key: string
 }
 
 export type GlobalStoreInitMsg = {

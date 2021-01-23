@@ -4,7 +4,19 @@ import keytar from "keytar"
 import os from "os"
 import got from "got"
 import {shell} from "electron"
-import "regenerator-runtime/runtime"
+// import "regenerator-runtime/runtime"
+
+const audience = "https://app.brimsecurity.com"
+const redirectUri = "brim://auth0/callback"
+
+const keytarServiceSuffix = "brim-oauth"
+
+export const toAccessTokenKey = (id: string) =>
+  [id, "AT", keytarServiceSuffix].join("-")
+export const toRefreshTokenKey = (id: string) =>
+  [id, "RT", keytarServiceSuffix].join("-")
+
+const Auth0 = ()
 
 export class Authenticator {
   private accessToken: string

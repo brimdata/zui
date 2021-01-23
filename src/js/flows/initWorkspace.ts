@@ -5,7 +5,7 @@ import {globalDispatch} from "../state/GlobalContext"
 import {Workspace} from "../state/Workspaces/types"
 import brim from "../brim"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {Authenticator as Auth} from "../auth"
+import {Authenticator as Auth} from "../auth0"
 import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
 import {Dispatch} from "../state/types"
 

@@ -7,7 +7,10 @@ import {
   WindowsOpenMsg,
   WindowsNewSearchTabMsg,
   WindowsOpenDirectorySelect,
-  WindowsAuthCallbackMsg
+  WindowsAuthCallbackMsg,
+  WindowsSetKeyStorageMsg,
+  WindowsGetKeyStorageMsg,
+  WindowsDeleteKeyStorageMsg
 } from "../types"
 
 export type NewTabSearchParams = {
@@ -50,14 +53,30 @@ export default {
       channel: "windows:openDirectorySelect"
     }
   },
-  authCallback(
-    workspaceId: string,
-    accessToken: string
-  ): WindowsAuthCallbackMsg {
+  authCallback(workspaceId: string, code: string): WindowsAuthCallbackMsg {
     return {
       channel: "windows:authCallback",
       workspaceId,
-      accessToken
+      code
+    }
+  },
+  setKeyStorage(key: string, val: string): WindowsSetKeyStorageMsg {
+    return {
+      channel: "windows:setKeyStorage",
+      key,
+      val
+    }
+  },
+  getKeyStorage(key: string): WindowsGetKeyStorageMsg {
+    return {
+      channel: "windows:getKeyStorage",
+      key
+    }
+  },
+  deleteKeyStorage(key: string): WindowsDeleteKeyStorageMsg {
+    return {
+      channel: "windows:deleteKeyStorage",
+      key
     }
   }
 }
