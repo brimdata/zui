@@ -8,33 +8,38 @@ import HorizontalBarChart from "./horizontal-bar-chart"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import Number from "./number"
-import barChart from "./bar-chart"
-import horizontalBarChart from "./horizontal-bar-chart"
-import number from "./number"
-import table from "./table"
 import {TileFormat} from "./summary"
+import Tab from "src/js/state/Tab"
 
 const Wrap = styled.div``
 
 const BG = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: 4px;
-  box-shadow: 0 0 2px var(--lead);
   padding: 12px;
-  background-color: white;
   overflow: hidden;
+  border-radius: 3px;
+  background: white;
   display: flex;
   flex-direction: column;
 
   text {
     fill: var(--slate);
   }
+
+  .react-resizable-handle {
+    opacity: 0;
+  }
+
+  &:hover .react-resizable-handle {
+    opacity: 1;
+  }
 `
 
 const Title = styled.h2`
   ${(p) => p.theme.typography.headingList}
   margin-bottom: 24px;
+  cursor: move;
 `
 
 type Props = {
@@ -53,7 +58,8 @@ const Tile = forwardRef<HTMLDivElement, Props>(function Tile(
   ref
 ) {
   const space = useSelector(Current.getSpace)
-  const [records, _isFetching] = useSearch(query, [space])
+  const span = useSelector(Tab.getSpan)
+  const [records, _isFetching] = useSearch(query, [space, span])
   return (
     <Wrap ref={ref} {...rest}>
       <BG>

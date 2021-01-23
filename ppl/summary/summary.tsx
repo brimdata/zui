@@ -1,14 +1,16 @@
-import {isEqual} from "lodash"
-import React, {useState} from "react"
-import randomHash from "src/js/brim/randomHash"
+import React, {useMemo} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import Boards from "src/js/state/Boards"
+import Tiles from "src/js/state/Tiles"
 import styled from "styled-components"
+import updateTileLayout from "./flows/update-tile-layout"
 import Grid from "./grid"
 import Tile from "./tile"
 
 const BG = styled.div`
   height: 100%;
   overflow: auto;
-  background-color: var(--snow);
+  background-color: var(--coconut);
 `
 
 type BarChart = {
@@ -39,60 +41,40 @@ function getGridLayout(tiles) {
   return tiles.map((t) => ({i: t.id, ...t.layout}))
 }
 
-export default function Summary() {
-  const [tiles, setTiles] = useState<Tile[]>([
-    {
-      id: randomHash(),
-      title: "Non-Conn Zeek Log Types",
-      query: "_path != conn | count() by _path | sort -r count",
-      layout: {x: 0, y: 0, w: 6, h: 6},
-      format: {
-        type: "bar-chart",
-        x: "_path",
-        y: "count"
-      }
-    },
-    {
-      id: randomHash(),
-      title: "Total Records",
-      query: "count()",
-      layout: {x: 9, y: 0, w: 2, h: 2},
-      format: {type: "number"}
-    },
-    {
-      id: randomHash(),
-      title: "Total Alerts",
-      query: "event_type=alert | count()",
-      layout: {x: 6, y: 0, w: 2, h: 2},
-      format: {type: "number"}
-    },
-    {
-      id: randomHash(),
-      title: "Top Suricata Alerts by Severity",
-      query:
-        "event_type=alert | count() by alert.severity,alert.category,alert.signature | sort -r count | sort alert.severity",
-      layout: {x: 0, y: 6, w: 12, h: 6},
-      format: {type: "table"}
-    }
-  ])
+const Title = styled.h2`
+  margin: 12px;
+  ${(p) => p.theme.typography.headingPage}
+`
 
-  const onLayoutChange = (layout) => {
-    const next = layout.map(({x, y, h, w, i}) => {
-      const tile = tiles.find((t) => t.id === i)
-      return {...tile, layout: {x, y, h, w}}
-    })
-    if (!isEqual(tiles, next)) {
-      setTiles(next)
-    }
-  }
-
+const SummaryUI = ({title, tiles, onLayoutChange}) => {
   return (
     <BG>
+      <Title>{title}</Title>
       <Grid layout={getGridLayout(tiles)} onLayoutChange={onLayoutChange}>
         {tiles.map((t) => (
           <Tile key={t.id} title={t.title} format={t.format} query={t.query} />
         ))}
       </Grid>
     </BG>
+  )
+}
+
+export default function Summary() {
+  const dispatch = useDispatch()
+  const board = useSelector(Boards.all)[0]
+  const allTiles = useSelector(Tiles.entities)
+  const tiles = useMemo(() => {
+    return board.tiles.map((id) => allTiles[id])
+  }, [board.tiles, allTiles])
+  const onLayoutChange = (layout) => {
+    dispatch(updateTileLayout(layout))
+  }
+
+  return (
+    <SummaryUI
+      title={board.title}
+      tiles={tiles}
+      onLayoutChange={onLayoutChange}
+    />
   )
 }
