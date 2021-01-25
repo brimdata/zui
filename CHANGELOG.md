@@ -1,3 +1,44 @@
+## v0.23.0
+
+**NOTE** - Beginning with this release, a subset of the source code in the
+[github.com/brimsec/brim](https://github.com/brimsec/brim) GitHub repository is
+covered by a source-available style license, the
+[Polyform Perimeter License (PPL)](https://polyformproject.org/licenses/perimeter/1.0.0/).
+We've moved the PPL-covered code under a `ppl/` directory in the repository.
+The majority of our source code retains the existing BSD-3-Clause license.
+
+The overwhelming majority of Brim users and developers will not be impacted
+by this change, including those using Brim in commercial settings. The use of
+the source-available Polyform Perimeter license prevents use cases like
+marketing a work as a replacement for the Brim desktop application while using
+material covered under the PPL.
+
+In general, we are making this change to ensure technology giants can't use the
+PPL-covered code to make replacement offerings of our projects. We believe
+users and developers should have access to the source code for our projects,
+and we need a sustainable business model to continue funding our work. Using
+the source-available Polyform Perimeter license on portions of the source code
+lets us realize both. 
+
+For more detail regarding licensing, see the
+[CONTRIBUTING.md](https://github.com/brimsec/brim/blob/master/CONTRIBUTING.md)
+doc, and feel free to come talk to us on
+[Slack](https://www.brimsecurity.com/join-slack/) if you have additional
+questions.
+
+---
+
+* Revise the [Troubleshooting doc](https://github.com/brimsec/brim/wiki/Troubleshooting) to describe the use of the **Window > Reset State** pull-down menu option (#1350)
+* Fix an issue where scrolling to the bottom of the main window did not bring up additional events (#1348)
+* Fix an issue with inconsistently-created pinned items in the **History** panel (#1349)
+* Adjust the configuration for log generation in the embedded `zqd` (#1353)
+* Fix an issue where "Restart Required" notifications in the **Preferences** screen were not fully visible (#1368)
+* Fix an issue where results in the "MD5 correlation" visualization were not being updated after event tiles were clicked (#1369)
+* Disable the creation of macOS filesystem tags during **Export** operations (#1370)
+* Fix an issue on Linux where Query Library entries were being lost when exiting Brim (#1366)
+* Add a right-click option to **Copy** field contents into the paste buffer (#1367, #1381)
+* A "Connection" (such as to a [remote `zqd`](https://github.com/brimsec/brim/wiki/Remote-zqd)) is now known as a "Workspace" (#1372)
+
 ## v0.22.0
 * Add a customizable "Query Library" panel of clickable Z queries for working with Zeek and Suricata logs (#1272)
 * Add the `source` field to the JSON typing config to prepare for Zeek v4.x `weird` events (#1307)
