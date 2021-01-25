@@ -1,6 +1,7 @@
 .field-cell {
   @include type-colors;
   cursor: default;
+  user-select: all;
 
   &.time {
     span {
