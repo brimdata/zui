@@ -2,6 +2,7 @@ const {camelCase} = require("lodash")
 const moment = require("moment")
 const path = require("path")
 const {write} = require("../utils/file")
+const lastVersion = require("../../package.json").version
 
 async function handleMigration(input) {
   let name = camelCase(input)
@@ -25,14 +26,10 @@ export default function ${name}(state: any) {
 }
 
 function testContents(title, version) {
-  return `
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./${title}"
+  return `import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating ${title}", () => {
-  let {data} = getTestState("v0.0.0 (replace with last version)")
-
-  let next = migrate(data)
+test("migrating ${title}", async () => {
+  const next = await migrate({state: "${lastVersion}", to: "${version}"})
 
   expect(next).toBe("what you'd expect")
 })
