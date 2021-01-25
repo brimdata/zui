@@ -1,10 +1,7 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202008121645_moveDataFromSearchToCurrent"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202008121645_moveDataFromSearchToCurrent", () => {
-  const {data} = getTestState("v0.14.0")
-
-  const next = migrate(data)
+test("migrating 202008121645_moveDataFromSearchToCurrent", async () => {
+  const next = await migrate({state: "v0.14.0", to: "202008121645"})
 
   // @ts-ignore
   const tabs = Object.values(next.windows).flatMap((win) => win.state.tabs.data)

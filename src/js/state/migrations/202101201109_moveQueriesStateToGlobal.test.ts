@@ -1,18 +1,17 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202101201109_moveQueriesStateToGlobal"
+import getTestState from "src/js/test/helpers/getTestState"
+import {migrate} from "src/js/test/helpers/migrate"
+import moveQueriesStateToGlobal from "./202101201109_moveQueriesStateToGlobal"
 
 test("when there are no windows", () => {
   const {data} = getTestState("v0.22.0")
   data.windows = {}
   data.order = []
-  const next = migrate(data)
+  const next = moveQueriesStateToGlobal(data)
   expect(next.globalState.queries).toBe(undefined)
 })
 
-test("migrating 202101201109_moveQueriesStateToGlobal", () => {
-  let {data} = getTestState("v0.22.0")
-
-  let next = migrate(data)
+test("migrating 202101201109_moveQueriesStateToGlobal", async () => {
+  const next = await migrate({state: "v0.22.0", to: "202101201109"})
 
   // default/initial brim queries
   const expectedQueries = {

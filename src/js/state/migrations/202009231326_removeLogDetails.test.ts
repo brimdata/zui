@@ -1,10 +1,7 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202009231326_removeLogDetails"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202009231326_removeLogDetails", () => {
-  const {data} = getTestState("v0.15.1")
-
-  const next = migrate(data)
+test("migrating 202009231326_removeLogDetails", async () => {
+  const next = await migrate({state: "v0.15.1", to: "202009231326"})
 
   // @ts-ignore
   for (const {state} of Object.values(next.windows)) {

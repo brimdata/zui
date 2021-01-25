@@ -1,10 +1,7 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202008271352_addTargetToSearchRecord"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202008271352_addTargetToSearchRecord", () => {
-  const {data} = getTestState("v0.15.1")
-
-  const next = migrate(data)
+test("migrating 202008271352_addTargetToSearchRecord", async () => {
+  const next = await migrate({state: "v0.15.1", to: "202008271352"})
 
   // @ts-ignore
   for (const {state} of Object.values(next.windows)) {

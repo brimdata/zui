@@ -1,10 +1,7 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202009121941_refactorInvestigations"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202009121941_refactorInvestigations", () => {
-  const {data} = getTestState("v0.17.0")
-
-  const next = migrate(data)
+test("migrating 202009121941_refactorInvestigations", async () => {
+  const next = await migrate({state: "v0.17.0", to: "202009121941"})
   const space1 = "sp_1hWwRQKtTnWlkr7w57k91Ofw2Sr"
   const space2 = "sp_1hWwT27GJg9kHqgrVanqvvO5Ke5"
   const space3 = "sp_1hWwTowuLDqnmIE4u5SrYIPq86k"

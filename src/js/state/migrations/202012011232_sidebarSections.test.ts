@@ -1,9 +1,7 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202012011232_sidebarSections"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202012011232_sidebarSections", () => {
-  const {data} = getTestState("v0.17.0")
-  const next = migrate(data)
+test("migrating 202012011232_sidebarSections", async () => {
+  const next = await migrate({state: "v0.17.0", to: "202012011232"})
 
   const windows = Object.values(next.windows)
   // @ts-ignore

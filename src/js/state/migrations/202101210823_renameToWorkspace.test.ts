@@ -1,11 +1,9 @@
-import getTestState, {getAllStates} from "../../test/helpers/getTestState"
-import migrate from "./202101210823_renameToWorkspace"
+import {migrate} from "src/js/test/helpers/migrate"
+import {getAllStates} from "../../test/helpers/getTestState"
 
-test("migrating 202101210823_renameToWorkspace", () => {
+test("migrating 202101210823_renameToWorkspace", async () => {
   expect.assertions(16)
-  let {data} = getTestState("v0.21.1")
-
-  let next = migrate(data)
+  const next = await migrate({state: "v0.21.1", to: "202101210823"})
 
   expect(next.globalState.workspaces).toBeDefined()
   Object.values(next.globalState.workspaces).forEach((c: any) => {
