@@ -49,12 +49,12 @@ export default function(brim: Brim) {
   })
 
   ipcMain.handle("windows:setKeyStorage", async (e, {key, val}) => {
-    return keytar.setPassword(os.userInfo().username, key, val)
+    return keytar.setPassword(key, os.userInfo().username, val)
   })
-  ipcMain.handle("windows:getKeyStorage", async (e, key) => {
-    return keytar.getPassword(os.userInfo().username, key)
+  ipcMain.handle("windows:getKeyStorage", async (e, {key}) => {
+    return keytar.getPassword(key, os.userInfo().username)
   })
-  ipcMain.handle("windows:deleteKeyStorage", async (e, key) => {
-    return keytar.deletePassword(os.userInfo().username, key)
+  ipcMain.handle("windows:deleteKeyStorage", async (e, {key}) => {
+    return keytar.deletePassword(key, os.userInfo().username)
   })
 }

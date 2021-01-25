@@ -1,16 +1,13 @@
 import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import {Auth0Client} from "../auth0"
-import Workspaces from "../state/Workspaces"
+import {Workspace} from "../state/Workspaces/types"
 
-export const getAuth0 = (workspaceId?: string): Thunk<Auth0Client> => (
+export const getAuth0 = (ws?: Workspace): Thunk<Auth0Client> => (
   dispatch,
   getState
 ) => {
-  const ws = workspaceId
-    ? Workspaces.id(workspaceId)(getState())
-    : Current.mustGetWorkspace(getState())
-
+  if (!ws) ws = Current.getWorkspace(getState())
   if (!ws.authType || ws.authType !== "auth0") return null
   if (!ws.authData) throw new Error("authData missing from workspace")
 

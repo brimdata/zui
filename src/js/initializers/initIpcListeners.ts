@@ -92,7 +92,8 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("windows:authCallback", async (e, {workspaceId, code}) => {
-    const client = dispatch(getAuth0(workspaceId))
+    const workspace = Workspaces.id(workspaceId)(store.getState())
+    const client = dispatch(getAuth0(workspace))
 
     try {
       const {accessToken, refreshToken} = await client.exchangeCode(code)
