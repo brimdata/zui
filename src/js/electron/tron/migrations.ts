@@ -24,10 +24,15 @@ export type Migrations = {
   setCurrentVersion: (arg0: number) => void
 }
 
+type Args = {
+  from: string | number
+  to?: string | number
+}
+
 export default async function migrations(
-  currentVersion: string | number = 0
+  args: Args = {from: 0}
 ): Promise<Migrations> {
-  let cv = parseInt(currentVersion.toString())
+  let cv = parseInt(args.from.toString())
 
   const files = await lib.file(dir).contents()
   const migrations = files
@@ -53,7 +58,10 @@ export default async function migrations(
     },
 
     getPending() {
-      return migrations.filter((m: Migration) => m.version > cv)
+      const upperBound = args.to ? parseInt(args.to.toString()) : Infinity
+      return migrations.filter(
+        (m: Migration) => m.version > cv && m.version <= upperBound
+      )
     },
 
     getAll() {
