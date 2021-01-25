@@ -15,5 +15,12 @@ export default function getPersistable(state: State) {
       delete tab.last
       delete tab.logDetails
     }
+
+    for (const ws of Object.values(draft.workspaces)) {
+      if (ws.authType === "auth0" && ws.authData) {
+        // accessToken only persists in native os keychain
+        delete ws.authData.accessToken
+      }
+    }
   })
 }

@@ -5,9 +5,9 @@ import {globalDispatch} from "../state/GlobalContext"
 import {Workspace} from "../state/Workspaces/types"
 import brim from "../brim"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {Authenticator as Auth} from "../auth0"
 import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
 import {Dispatch} from "../state/types"
+import {getAuth0Token} from "./getAuth0Token"
 
 export const initWorkspace = (ws: Workspace, redirectToLogin = false) => async (
   dispatch,
@@ -51,43 +51,17 @@ export const initWorkspace = (ws: Workspace, redirectToLogin = false) => async (
         setupWorkspace(dispatch, workspace, "connected")
         return
       }
-      /*
 
-      // otherwise, need to retrieve accessToken. First check if login required by
-      // seeing if we have the refresh token
-      const refreshToken = await invoke(
-        ipc.windows.keyChain(auth.storageKey(ws.id))
+      // otherwise, need to retrieve accessToken. If login required, automatically redirect to browser
+      const accessToken = await dispatch(
+        getAuth0Token(workspace, redirectToLogin)
       )
-      if (refreshToken) {
-        // silent refresh
-        // setupWorkspace(dispatch, workspace, "connected")
-        // return
+      if (!accessToken) {
+        if (redirectToLogin) {
+          setupWorkspace(dispatch, workspace, "authenticating")
+          return true
+        } else setupWorkspace(dispatch, workspace, "login")
       }
-
-      // login is required
-      // if being created through "New Workspace..." flow automatically redirect, otherwise
-      // set connectionStatus to "login" so user may be informed and initiate login flow on their own
-      */
-      if (!redirectToLogin) {
-        setupWorkspace(dispatch, workspace, "login")
-        return
-      }
-      // otherwise, need to retrieve accessToken for first time
-      const {clientId, domain} = workspace.authData
-      // set workspaceId and windowId in "state" query param so that it may be
-      // received by the brim://callback handler after user completes authentication
-      // in their browser and is redirected back to Brim
-      const state = Auth.serializeState(workspace.id, global.windowId)
-      await new Auth(
-        brim.workspace(workspace).getAddress(),
-        clientId,
-        domain
-      ).login(state)
-
-      setupWorkspace(dispatch, workspace, "authenticating")
-
-      // return true to indicate to caller that login flow initiated
-      return true
     }
   } catch (e) {
     console.error("initWorkspace error: ", e)

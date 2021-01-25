@@ -2,9 +2,9 @@ import {shell} from "electron"
 
 // helpers for generating auth0 namespaces in os default keychain (facilitated by keytar)
 const keytarServiceSuffix = "brim-oauth"
-export const toAccessTokenKey = (id: string) =>
+export const toAccessTokenKey = (id: string): string =>
   [id, "AT", keytarServiceSuffix].join("-")
-export const toRefreshTokenKey = (id: string) =>
+export const toRefreshTokenKey = (id: string): string =>
   [id, "RT", keytarServiceSuffix].join("-")
 
 // helpers for formatting data to go into the 'state' query param
