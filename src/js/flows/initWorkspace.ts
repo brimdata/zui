@@ -60,11 +60,19 @@ export const initWorkspace = (ws: Workspace, redirectToLogin = false) => async (
         if (redirectToLogin) {
           setupWorkspace(dispatch, workspace, "authenticating")
           return true
-        } else setupWorkspace(dispatch, workspace, "login")
+        }
+
+        setupWorkspace(dispatch, workspace, "login")
+        return
       }
+
+      setupWorkspace(
+        dispatch,
+        {...workspace, authData: {...workspace.authData, accessToken}},
+        "connected"
+      )
     }
   } catch (e) {
-    console.error("initWorkspace error: ", e)
     dispatch(WorkspaceStatuses.set(workspace.id, "disconnected"))
     throw e
   }
