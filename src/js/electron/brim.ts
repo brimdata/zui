@@ -10,6 +10,7 @@ import {ZQD} from "ppl/zqd/zqd"
 import {app} from "electron"
 import path from "path"
 import {sessionStateFile} from "./tron/session"
+import {getGlobalPersistable} from "../state/getPersistable"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -71,7 +72,8 @@ export class Brim {
 
   async saveSession() {
     const windowState = await this.windows.serialize()
-    const mainState = this.store.getState()
+    const mainState = getGlobalPersistable(this.store.getState())
+
     await this.session.save(formatSessionState(windowState, mainState))
   }
 

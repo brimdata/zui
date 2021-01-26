@@ -44,6 +44,7 @@ export class Auth0Client {
     loginUrl.searchParams.append("response_type", "code")
     loginUrl.searchParams.append("client_id", this.clientId)
     loginUrl.searchParams.append("redirect_uri", this.redirectUri)
+    loginUrl.searchParams.append("prompt", "login")
     loginUrl.searchParams.append("state", state)
 
     return shell.openExternal(loginUrl.toString())
@@ -71,9 +72,7 @@ export class Auth0Client {
 
       return body.access_token
     } catch (error) {
-      await this.logout()
-
-      throw error
+      throw new Error("Failed to refresh access token: " + error)
     }
   }
 
@@ -102,16 +101,7 @@ export class Auth0Client {
 
       return {accessToken, refreshToken}
     } catch (error) {
-      await this.logout()
-
-      throw error
+      throw new Error("Failed to exchange code: " + error)
     }
-  }
-
-  async logout(): Promise<void> {
-    console.log("logout not implemented...")
-    // getLogOutUrl(): string {
-    //   return `${this.auth0Domain}/v2/logout`
-    // }
   }
 }
