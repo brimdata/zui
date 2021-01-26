@@ -9,7 +9,7 @@ import {QueriesState} from "./Queries/types"
 import Workspaces from "./Workspaces"
 import {WorkspacesState} from "./Workspaces/types"
 import Boards from "./Boards"
-import {BoardsState} from "./Boards/types"
+import {BoardsState} from "./Boards"
 
 export type GlobalState = {
   workspaces: WorkspacesState

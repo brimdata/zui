@@ -16,7 +16,7 @@ import {SystemTestState} from "./SystemTest"
 import {FeatureState} from "./Feature"
 import {WorkspacesState} from "./Workspaces/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
-import {BoardsState} from "./Boards/types"
+import {BoardsState} from "./Boards"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
