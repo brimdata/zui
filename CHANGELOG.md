@@ -35,9 +35,10 @@ questions.
 * Fix an issue where "Restart Required" notifications in the **Preferences** screen were not fully visible (#1368)
 * Fix an issue where results in the "MD5 correlation" visualization were not being updated after event tiles were clicked (#1369)
 * Disable the creation of macOS filesystem tags during **Export** operations (#1370)
-* Fix an issue on Linux where Query Library entries were being lost when exiting Brim (#1366)
+* Fix issues where Query Library entries were being lost when exiting/relaunching Brim (#1366, #1387)
 * Add a right-click option to **Copy** field contents into the paste buffer (#1367, #1381)
 * A "Connection" (such as to a [remote `zqd`](https://github.com/brimsec/brim/wiki/Remote-zqd)) is now known as a "Workspace" (#1372)
+* Revise the [Troubleshooting doc](https://github.com/brimsec/brim/wiki/Troubleshooting) with more detail regarding failues to open flows from pcaps (#1380)
 
 ## v0.22.0
 * Add a customizable "Query Library" panel of clickable Z queries for working with Zeek and Suricata logs (#1272)
