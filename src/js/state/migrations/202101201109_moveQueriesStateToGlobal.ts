@@ -4,6 +4,13 @@ export default function moveQueriesStateToGlobal(state: any) {
   // Migrate state here
   const mergedQueryMap = {}
   const mergedQueryItems = []
+  const windows = Object.values(state.windows)
+
+  if (windows.length === 0) {
+    state.globalState.queries = undefined
+    return state
+  }
+
   for (const s of getAllStates(state)) {
     if (!s.queries) continue
     s.queries.items.forEach((q) => {

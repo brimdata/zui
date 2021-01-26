@@ -42,7 +42,7 @@ export default async function migrations(
 
     run(state: VersionedData, migrations: Migration[]) {
       for (const {version, migrate} of migrations) {
-        state.data = migrate(state.data)
+        state.data = state.data ? migrate(state.data) : undefined
         state.version = version
       }
       return state
