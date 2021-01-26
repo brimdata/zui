@@ -15,8 +15,10 @@ import Queries from "./Queries"
 import SystemTest from "./SystemTest"
 import Feature from "./Feature"
 import WorkspaceStatuses from "./WorkspaceStatuses"
+import Boards from "./Boards"
 
 export default combineReducers<any, any>({
+  boards: Boards.reducer,
   errors: Errors.reducer,
   workspaces: Workspaces.reducer,
   modal: Modal.reducer,

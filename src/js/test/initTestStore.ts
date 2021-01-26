@@ -1,9 +1,7 @@
-import {createStore, compose, applyMiddleware} from "redux"
-import reduxThunk from "redux-thunk"
-
 import {Action, State} from "../state/types"
 import {createZealotMock, Zealot} from "zealot"
 import rootReducer from "../state/rootReducer"
+import {configureStore} from "@reduxjs/toolkit"
 
 export type TestStore = {
   dispatch: Function
@@ -21,22 +19,20 @@ export default (zealot?: Zealot): TestStore => {
   // electron ipc calls. In the tests, globalDispatch is an alias for dispatch.
   const globalDispatch = (...args) => store.dispatch(...args)
   const createZealot = () => client
-
-  store = createStore(
-    rootReducer,
-    undefined,
-    compose(
+  store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: {
+          extraArgument: {createZealot, globalDispatch}
+        }
+      }),
+    enhancers: (defaultEnhancers) => [
       applyDispatchAll(),
-      applyMiddleware(
-        reduxThunk.withExtraArgument({
-          createZealot,
-          globalDispatch
-        })
-      ),
+      ...defaultEnhancers,
       applyActionHistory()
-    )
-  )
-
+    ]
+  })
   return store
 }
 
