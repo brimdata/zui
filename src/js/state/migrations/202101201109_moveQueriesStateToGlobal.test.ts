@@ -1,6 +1,14 @@
 import getTestState from "../../test/helpers/getTestState"
 import migrate from "./202101201109_moveQueriesStateToGlobal"
 
+test("when there are no windows", () => {
+  const {data} = getTestState("v0.22.0")
+  data.windows = {}
+  data.order = []
+  const next = migrate(data)
+  expect(next.globalState.queries).toBe(undefined)
+})
+
 test("migrating 202101201109_moveQueriesStateToGlobal", () => {
   let {data} = getTestState("v0.22.0")
 
