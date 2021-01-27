@@ -1,9 +1,7 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202011060944_removeClustersStatus"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202011060944_removeClustersStatus", () => {
-  const {data} = getTestState("v0.17.0")
-  const next = migrate(data)
+test("migrating 202011060944_removeClustersStatus", async () => {
+  const next = await migrate({state: "v0.17.0", to: "202011060944"})
 
   const windows = Object.values(next.windows)
 

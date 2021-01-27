@@ -1,12 +1,9 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202008191031_changeZqdClusterIdToHostPort"
+import {getAllStates, getAllTabs} from "src/js/test/helpers/getTestState"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202008191031_changeZqdClusterIdToHostPort", () => {
-  const {data} = getTestState("v0.15.1")
-
-  const next = migrate(data)
-
-  const windows = Object.values(next.windows)
+test("migrating 202008191031_changeZqdClusterIdToHostPort", async () => {
+  const next = await migrate({state: "v0.15.1", to: "202008191031"})
+  expect.assertions(7)
 
   const oldId = "zqd"
   const newId = "localhost:9867"
@@ -17,16 +14,13 @@ test("migrating 202008191031_changeZqdClusterIdToHostPort", () => {
   }
 
   // @ts-ignore
-  for (const {state} of windows) {
+  for (const state of getAllStates(next)) {
+    if (!state.clusters) continue
     expect(state.clusters[newId]).toEqual(newValue)
     expect(Object.keys(state.clusters)).not.toContain(oldId)
   }
 
-  // @ts-ignore
-  const tabsData = windows.flatMap((win) => win.state.tabs.data)
-
-  for (const td of tabsData) {
-    if (!td.current) continue
-    expect(td.current.workspaceId).toBe(newId)
+  for (const tab of getAllTabs(next)) {
+    expect(tab.current.connectionId).toBe(newId)
   }
 })

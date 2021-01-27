@@ -1,13 +1,9 @@
-import Prefs from "../Prefs"
-import getTestState, {getAllStates} from "../../test/helpers/getTestState"
-import migrate from "./202011141515_addSuricataUpdaterPref"
+import {migrate} from "src/js/test/helpers/migrate"
+import {getAllStates} from "../../test/helpers/getTestState"
 
-test("migrating 202011141515_addSuricataUpdaterPref", () => {
-  const prev = getTestState("v0.17.0")
-
-  const next = migrate(prev)
-
+test("migrating 202011141515_addSuricataUpdaterPref", async () => {
+  const next = await migrate({state: "v0.17.0", to: "202011141515"})
   for (const state of getAllStates(next)) {
-    expect(Prefs.getSuricataUpdater(state)).toEqual("")
+    expect(state.prefs.suricataRunner).toEqual("")
   }
 })

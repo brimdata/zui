@@ -1,10 +1,7 @@
-import getTestState from "../../test/helpers/getTestState"
-import migrate from "./202007151457_addScrollPosToSearchRecord"
+import {migrate} from "src/js/test/helpers/migrate"
 
-test("migrating 202007151457_addScrollPosToSearchRecord", () => {
-  const {data} = getTestState("v0.13.1")
-
-  const next = migrate(data)
+test("migrating 202007151457_addScrollPosToSearchRecord", async () => {
+  const next = await migrate({state: "v0.13.1", to: "202007151457"})
 
   const windows = Object.values(next.windows)
 

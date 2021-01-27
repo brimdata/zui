@@ -1,10 +1,8 @@
-import getTestState, {getAllStates} from "../../test/helpers/getTestState"
-import migrate from "./202101051511_initQueryLibrary"
+import {migrate} from "src/js/test/helpers/migrate"
+import {getAllStates} from "../../test/helpers/getTestState"
 
-test("migrating 202101051511_initQueryLibrary", () => {
-  let {data} = getTestState("v0.21.1")
-
-  let next = migrate(data)
+test("migrating 202101051511_initQueryLibrary", async () => {
+  const next = await migrate({state: "v0.21.1", to: "202101051511"})
 
   for (const state of getAllStates(next)) {
     expect(state.queries).toBe(undefined)
