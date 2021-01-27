@@ -1,4 +1,5 @@
 import {createEntityAdapter, createSlice, PayloadAction} from "@reduxjs/toolkit"
+import {initialBoard} from "ppl/summary/flows/initial-state"
 import {State} from "../types"
 
 export type Board = {id: string; title: string; tiles: string[]}
@@ -8,7 +9,10 @@ const adapter = createEntityAdapter<Board>()
 const selectors = adapter.getSelectors((state: State) => state.boards)
 const slice = createSlice({
   name: "boards",
-  initialState: adapter.getInitialState(),
+  initialState: {
+    ids: [initialBoard.id],
+    entities: {[initialBoard.id]: initialBoard}
+  },
   reducers: {
     create: adapter.addOne,
     delete: adapter.removeOne,

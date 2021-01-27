@@ -10,6 +10,7 @@ import Workspaces from "./Workspaces"
 import {WorkspacesState} from "./Workspaces/types"
 import Boards from "./Boards"
 import {BoardsState} from "./Boards"
+import Tiles, {TilesState} from "./Tiles"
 
 export type GlobalState = {
   workspaces: WorkspacesState
@@ -17,6 +18,7 @@ export type GlobalState = {
   prefs: PrefsState
   queries: QueriesState
   boards: BoardsState
+  tiles: TilesState
 }
 
 export default combineReducers<any, any>({
@@ -24,5 +26,6 @@ export default combineReducers<any, any>({
   investigation: Investigation.reducer,
   prefs: Prefs.reducer,
   queries: Queries.reducer,
-  boards: Boards.reducer
+  boards: Boards.reducer,
+  tiles: Tiles.reducer
 })
