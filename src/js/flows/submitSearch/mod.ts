@@ -8,7 +8,6 @@ import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
 import Current from "../../state/Current"
-import Layout from "src/js/state/Layout"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
