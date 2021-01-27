@@ -1,3 +1,4 @@
+import Summary from "ppl/summary/summary"
 import React from "react"
 import {useSelector} from "react-redux"
 import Feature from "../state/Feature"
@@ -15,7 +16,7 @@ function TabMain() {
       case "search":
         return <SearchResults />
       case "summary":
-        return <h1>:: Summary ::</h1>
+        return <Summary />
       default:
         null
     }

@@ -36,7 +36,8 @@ const slice = createSlice({
   },
   reducers: {
     create: adapter.addOne,
-    delete: adapter.removeOne
+    delete: adapter.removeOne,
+    updateMany: adapter.updateMany
   }
 })
 
@@ -44,5 +45,6 @@ export default {
   reducer: slice.reducer,
   ...slice.actions,
   get: (id: string) => (state: State) => selectors.selectById(state, id),
-  all: selectors.selectAll
+  all: selectors.selectAll,
+  entities: selectors.selectEntities
 }

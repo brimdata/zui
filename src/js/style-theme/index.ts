@@ -54,6 +54,34 @@ const hoverQuiet = css`
   }
 `
 
+const typeStyles = css`
+  &.addr,
+  &.set\[addr\] {
+    color: var(--ip);
+  }
+
+  &.port,
+  &.set\[port\] {
+    color: var(--port);
+  }
+
+  &.interval,
+  &.set\[interval\] {
+    color: var(--interval);
+  }
+
+  &.count,
+  &.set\[count\] {
+    color: var(--count);
+    text-align: right;
+  }
+
+  &.bool,
+  &.set\[bool\] {
+    color: var(--blue);
+  }
+`
+
 const theme = {
   colors: {
     white: "#FFFFFF",
@@ -77,7 +105,8 @@ const theme = {
     headingPage,
     labelSmall,
     labelNormal,
-    labelBold
+    labelBold,
+    typeStyles
   },
   hoverQuiet
 }
