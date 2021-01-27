@@ -28,6 +28,13 @@ questions.
 
 ---
 
+**NOTICE for users who have added custom entries to their Query Library:**
+
+We've become aware of an issue in Brim v0.22.0 where custom entries in the Query Library will **not be saved** if you quit by closing all your Brim windows (i.e. hitting the "X" in the upper-right of the window on Windows/Linux, or clicking the "red stoplights" on macOS). They *are* saved if you quit via the pull-down menu (**File > Exit** on Windows/Linux, **Brim > Quit Brim** on macOS). Therefore, when closing Brim in prep for the v0.23.0 upgrade, make sure you quit via pull-down menu. When you're prompted to auto-update to v0.23.0 on Windows/macOS, select the option to Restart **Later** so that way you can quit via pull-down menu. We've fixed these issues so it should not be a problem in v0.23.0 and going forward. Sorry for the inconvenience!
+
+---
+
+* Update zq to [v0.28.0](https://github.com/brimsec/zq/releases/tag/v0.28.0)
 * Revise the [Troubleshooting doc](https://github.com/brimsec/brim/wiki/Troubleshooting) to describe the use of the **Window > Reset State** pull-down menu option (#1350)
 * Fix an issue where scrolling to the bottom of the main window did not bring up additional events (#1348)
 * Fix an issue with inconsistently-created pinned items in the **History** panel (#1349)
@@ -38,7 +45,7 @@ questions.
 * Fix issues where Query Library entries were being lost when exiting/relaunching Brim (#1366, #1387)
 * Add a right-click option to **Copy** field contents into the paste buffer (#1367, #1381)
 * A "Connection" (such as to a [remote `zqd`](https://github.com/brimsec/brim/wiki/Remote-zqd)) is now known as a "Workspace" (#1372)
-* Revise the [Troubleshooting doc](https://github.com/brimsec/brim/wiki/Troubleshooting) with more detail regarding failues to open flows from pcaps (#1380)
+* Revise the [Troubleshooting doc](https://github.com/brimsec/brim/wiki/Troubleshooting) with more detail regarding failures to open flows from pcaps (#1380)
 
 ## v0.22.0
 * Add a customizable "Query Library" panel of clickable Z queries for working with Zeek and Suricata logs (#1272)
