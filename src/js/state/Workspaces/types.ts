@@ -4,11 +4,11 @@ export type Workspace = {
   host: string
   port: string
   version?: string
-  authType?: AuthType
+  authType: AuthType
   authData?: AuthData
 }
 
-export type AuthType = "none" | "auth0"
+export type AuthType = "none" | "auth0" | ""
 
 export type AuthData = Auth0Data
 

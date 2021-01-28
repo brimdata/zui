@@ -91,34 +91,6 @@ export default (store: Store) => {
     initNewSearchTab(store, params)
   })
 
-  ipcRenderer.on("windows:authCallback", async (e, {workspaceId, code}) => {
-    const workspace = Workspaces.id(workspaceId)(store.getState())
-    const client = dispatch(getAuth0(workspace))
-
-    try {
-      const {accessToken, refreshToken} = await client.exchangeCode(code)
-
-      dispatch(Workspaces.setWorkspaceToken(workspaceId, accessToken))
-      globalDispatch(
-        Workspaces.setWorkspaceToken(workspaceId, accessToken)
-      ).then(() => {
-        dispatch(WorkspaceStatuses.set(workspaceId, "connected"))
-      })
-
-      // store both tokens in os default keychain
-      await invoke(
-        ipc.windows.setKeyStorage(toAccessTokenKey(workspaceId), accessToken)
-      )
-      await invoke(
-        ipc.windows.setKeyStorage(toRefreshTokenKey(workspaceId), refreshToken)
-      )
-    } catch (e) {
-      console.error("error exchanging code: ", e)
-
-      throw e
-    }
-  })
-
   ipcRenderer.on("globalStore:dispatch", (e, {action}) =>
     store.dispatch(action)
   )

@@ -5,8 +5,7 @@ import ErrorFactory from "../models/ErrorFactory"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {BrimWorkspace} from "../brim"
 import {ZFetcher, ZReponse} from "../../../zealot/types"
-import {getAuth0Token} from "./getAuth0Token"
-import Workspaces from "../state/Workspaces"
+import {refreshAuth0AccessToken} from "./refreshAuth0AccessToken"
 
 const createBrimFetcher = (dispatch, getState) => {
   return (hostPort: string): ZFetcher => {
@@ -20,11 +19,15 @@ const createBrimFetcher = (dispatch, getState) => {
 
       const newArgs = {...args}
 
-      const accessToken = await dispatch(getAuth0Token(ws, false))
+      let {accessToken} = ws.authData
       if (!accessToken) {
-        // inform user login required by updating status
-        dispatch(WorkspaceStatuses.set(ws.id, "login"))
-        throw new Error("User must login")
+        // attempt refresh
+        accessToken = dispatch(refreshAuth0AccessToken(ws))
+        if (!accessToken) {
+          // inform user login required by updating status
+          dispatch(WorkspaceStatuses.set(ws.id, "login"))
+          throw new Error("User must login")
+        }
       }
 
       const bearerToken = `Bearer ${accessToken}`
@@ -36,9 +39,7 @@ const createBrimFetcher = (dispatch, getState) => {
 
     const wrappedPromise = async (args: FetchArgs): Promise<any> => {
       const ws = Current.mustGetWorkspace(getState())
-      const newArgs = await setWorkspaceAuthArgs(ws, args)
-      return promise(newArgs).catch((e) => {
-        // TODO: Mason - if auth required and existing accessToken returns 401, refresh and try once more (i.e. refresh flow)
+      return promise(await setWorkspaceAuthArgs(ws, args)).catch((e) => {
         if (ErrorFactory.create(e).type === "NetworkError") {
           dispatch(
             WorkspaceStatuses.set(

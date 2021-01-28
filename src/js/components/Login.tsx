@@ -38,11 +38,16 @@ type Props = {
 const Login = ({ws}: Props) => {
   const dispatch = useDispatch()
   const [isFetching, setIsFetching] = useState(false)
+  const [cancelFunc, setCancelFunc] = useState(null)
 
   const onClick = async () => {
     setIsFetching(true)
+    setCancelFunc(await dispatch(initWorkspace(ws, setIsFetching)))
+  }
 
-    await dispatch(initWorkspace(ws, true))
+  const onCancel = () => {
+    cancelFunc()
+    setIsFetching(false)
   }
 
   return (
@@ -52,8 +57,8 @@ const Login = ({ws}: Props) => {
         {"This workspace requires authentication, please login to continue."}
       </StyledP>
       <StyledButton
-        onClick={onClick}
-        text={isFetching ? "" : "Login"}
+        onClick={isFetching ? onCancel : onClick}
+        text={isFetching ? "Cancel" : "Login"}
         icon={isFetching ? <MacSpinner /> : null}
       />
     </PageWrap>

@@ -87,7 +87,8 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   const {current: id} = useRef((workspace && workspace.id) || brim.randomHash())
   const currentStatus = useSelector(WorkspaceStatuses.get(id))
   const [prevStatus, setPrevStatus] = useState(currentStatus)
-  const [isAuthenticating, setIsAuthenticating] = useState(false)
+  const [cancelFunc, setCancelFunc] = useState(null)
+  const isNewWorkspace = !workspace
 
   useEffect(() => {
     if (prevStatus === "authenticating") {
@@ -119,20 +120,17 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
     }
   }
 
-  const toWorkspace = ({id, host, name}): Workspace => {
-    // set defaults
+  const toWorkspace = ({host, name}: Partial<Workspace>): Workspace => {
     let [h, p] = host.split(":")
     if (!p) p = "9867"
-    return {
-      host: h,
-      port: p,
-      id,
-      name: name
-    }
+    if (isNewWorkspace)
+      return {id, host: h, port: p || "9867", name, authType: ""}
+    return {...workspace, name}
   }
 
   const onCancel = () => {
     setErrors([])
+    if (cancelFunc) cancelFunc()
     onClose()
   }
 
@@ -148,8 +146,13 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
         return obj
       }, {})
       try {
-        if (await dispatch(initWorkspace(toWorkspace({id, host, name}), true)))
+        const cancel = await dispatch(
+          initWorkspace(toWorkspace({host, name}), setIsSubmitting)
+        )
+        if (cancel && isSubmitting) {
+          setCancelFunc(cancel)
           return
+        }
       } catch (e) {
         console.log("error is: ", e)
         setIsSubmitting(false)
@@ -162,7 +165,6 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
       return
     }
 
-    // check if status is authenticating
     setIsSubmitting(false)
     setErrors([])
     onClose()
@@ -203,19 +205,21 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
               autoFocus
             />
           </InputField>
-          <InputField>
-            <InputLabel>{config.host.label}</InputLabel>
-            <StyledTextInput
-              name={config.host.name}
-              defaultValue={defaultHost}
-            />
-          </InputField>
+          {isNewWorkspace && (
+            <InputField>
+              <InputLabel>{config.host.label}</InputLabel>
+              <StyledTextInput
+                name={config.host.name}
+                defaultValue={defaultHost}
+              />
+            </InputField>
+          )}
         </form>
       </SignInForm>
       <StyledFooter>
         <ToolbarButton
           isPrimary
-          text={isSubmitting ? "" : "Save"}
+          text={isSubmitting ? "" : isNewWorkspace ? "Connect" : "Save"}
           icon={isSubmitting ? <MacSpinner light /> : null}
           disabled={isSubmitting}
           onClick={onSave}
