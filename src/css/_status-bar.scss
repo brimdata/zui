@@ -1,7 +1,7 @@
 .status-bar {
   user-select: none;
-  background: $chrome-gradient;
-  border-top: 1px solid $chrome-border;
+  background: var(--ivory);
+  border-top: 1px solid var(--pane-border);
   position: relative;
   overflow: hidden;
   height: 26px;

@@ -64,7 +64,7 @@
   display: block;
 
   .tick line {
-    stroke: $white-5;
+    stroke: var(--cloudy);
   }
 
   .tick text {
@@ -77,27 +77,13 @@
   }
 
   .domain {
-    stroke: $white-5;
+    stroke: var(--cloudy);
   }
 
   text {
     font-family: $data-font;
     fill: $gray-1;
     font-size: 9px;
-  }
-
-  .y-axis-single-tick {
-    // transform: translateX(12px);
-    .tick,
-    .domain {
-      // display: none;
-    }
-    .tick:last-child {
-      // display: block;
-    }
-    .tick line {
-      display: none;
-    }
   }
 }
 

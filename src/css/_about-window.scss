@@ -42,7 +42,7 @@
 
     hr {
       border: none;
-      box-shadow: 0 0 0 0.5px $chrome-border;
+      box-shadow: 0 0 0 0.5px var(--pane-border);
       margin: 18px 0 12px 0;
     }
     footer {
