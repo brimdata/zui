@@ -34,7 +34,7 @@
     }
 
     &.error {
-      color: $white-9;
+      color: var(--lead);
     }
   }
 }

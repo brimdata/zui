@@ -57,21 +57,6 @@
     box-shadow: 0 0.5px 0px var(--cloudy);
   }
 
-  .star-button {
-    transition: background-color 0ms;
-    svg {
-      fill: none;
-    }
-  }
-
-  .star-button.starred {
-    background-color: $yellow;
-    svg {
-      stroke: $white-9;
-      fill: $yellow;
-    }
-  }
-
   .close-button {
     svg {
       height: 10px;

@@ -47,10 +47,10 @@ $pop-menu-padding: $space-s;
 
   .disabled {
     cursor: auto;
-    color: $white-9;
+    color: var(--lead);
     &:hover {
       background-color: inherit;
-      color: $white-9;
+      color: var(--lead);
     }
   }
 
