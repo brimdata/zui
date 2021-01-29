@@ -2,7 +2,7 @@
   white-space: nowrap;
   height: $bro-log-row-height;
   display: flex;
-  background: linear-gradient(white, $white-2);
+  background: linear-gradient(white, var(--snow));
   box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.7);
 }
 
@@ -52,7 +52,7 @@
 
   &:active,
   &.active {
-    background: $white-2;
+    background: var(--snow);
   }
 
   &.sorted {

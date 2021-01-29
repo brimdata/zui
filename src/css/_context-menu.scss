@@ -33,7 +33,7 @@ $br: 8px;
     cursor: pointer;
 
     &:hover {
-      background-color: $white-2;
+      background-color: var(--snow);
     }
   }
 

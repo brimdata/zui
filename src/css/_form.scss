@@ -46,7 +46,7 @@
     input {
       outline: none;
       border: 1px solid $gray-1;
-      background: $white-2;
+      background: var(--snow);
     }
 
     label {
@@ -105,7 +105,7 @@
   input:focus {
     outline: none;
     border: 1px solid $gray-1;
-    background: $white-2;
+    background: var(--snow);
   }
 }
 
@@ -115,7 +115,7 @@
     text-transform: uppercase;
     color: $gray-4;
     font-weight: bold;
-    background: linear-gradient($white-2, $white-3);
+    background: linear-gradient(var(--snow), $white-3);
     border-radius: 5px;
     font-family: $body-font;
     height: 24px;
