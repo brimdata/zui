@@ -32,7 +32,7 @@ $unknown-type-color: #afafaf;
 @include zeek-bg-color("rdp", #081d5b);
 @include zeek-bg-color("smb_files", #27eeff);
 @include zeek-bg-color("smb_mapping", #0511d4);
-@include zeek-bg-color("weird", $gray-4);
+@include zeek-bg-color("weird", #5e6373);
 @include zeek-bg-color("x509", $orange);
 @include zeek-bg-color("pe", $red);
 @include zeek-bg-color("dpd", $green-dark);

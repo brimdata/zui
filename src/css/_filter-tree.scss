@@ -98,7 +98,7 @@ $filter-tree-line-color: $gray-5;
   }
 
   &.active > .filter-tree-parent > .filter-node {
-    background: $gray-4;
+    background: var(--slate);
     p {
       color: $filter-node-foreground;
     }

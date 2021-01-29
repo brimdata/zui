@@ -91,11 +91,9 @@
   background: none;
   border: none;
   border-radius: 3px;
-  cursor: pointer;
 
   svg {
-    fill: $gray-4;
-    stroke: $gray-4;
+    fill: var(--slate);
     height: 100%;
     width: 100%;
   }
@@ -112,8 +110,7 @@
 
   &:disabled {
     svg {
-      fill: lighten($gray-4, 35%);
-      stroke: lighten($gray-4, 35%);
+      fill: var(--cloudy);
     }
     &:hover {
       background: none;
@@ -126,47 +123,6 @@
 
   &.text {
     width: auto;
-  }
-}
-
-.thin-button {
-  @include button-reset;
-  font-family: $data-font;
-  height: 14px;
-  background: #dcdcdc;
-  border-radius: 3px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
-  font-size: 11px;
-  line-height: 12px;
-  font-weight: bold;
-  cursor: pointer;
-
-  ˜ &:hover {
-    background: darken(#dcdcdc, 5%);
-  }
-
-  &:active,
-  .active {
-    background: darken(#dcdcdc, 10%);
-  }
-}
-
-.thin-picker {
-  width: 22px;
-  padding: 0 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 100ms;
-
-  svg {
-    fill: #4a4a4a;
-    width: 8px;
-    padding: 0;
-    margin: 0;
   }
 }
 
