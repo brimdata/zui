@@ -142,19 +142,19 @@
     height: 10px;
     width: 10px;
     stroke: none;
-    fill: lighten($gray-5, 30%);
+    fill: var(--slate);
     transition: fill 50ms;
   }
 
   &:hover {
     svg {
-      fill: $gray-5;
+      fill: var(--aqua);
     }
   }
 
   &:active {
     svg {
-      fill: $gray-9;
+      fill: var(--slate);
     }
   }
 }

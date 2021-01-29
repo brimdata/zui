@@ -24,7 +24,7 @@ $unknown-type-color: #afafaf;
 @include zeek-bg-color("sip", #006c7b);
 @include zeek-bg-color("smtp", #e2e317);
 @include zeek-bg-color("ssl", $gray-9);
-@include zeek-bg-color("ssh", $gray-5);
+@include zeek-bg-color("ssh", #535765);
 @include zeek-bg-color("syslog", #ddb81d);
 @include zeek-bg-color("tunnel", #007249);
 @include zeek-bg-color("dce_rpc", #929292);

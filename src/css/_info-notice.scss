@@ -13,7 +13,7 @@
 .info-notice {
   white-space: nowrap;
   user-select: none;
-  background: $gray-5;
+  background: var(--cello);
   color: white;
   border-radius: 8px;
   height: 32px;
