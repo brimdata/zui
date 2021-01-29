@@ -1,7 +1,7 @@
-import {Thunk} from "../state/types"
-import Current from "../state/Current"
-import Notice from "../state/Notice"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
+import {Thunk} from "../../state/types"
+import Current from "../../state/Current"
+import Notice from "../../state/Notice"
+import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 
 export const checkStatus = (): Thunk => (
   dispatch,

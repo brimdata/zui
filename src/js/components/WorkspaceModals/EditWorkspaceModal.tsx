@@ -15,7 +15,7 @@ const EditWorkspaceModal = ({onClose}) => {
   return (
     <StyledContent>
       <SmallTitle>Edit Workspace</SmallTitle>
-      <WorkspaceForm onClose={onClose} workspace={workspace} />
+      <WorkspaceForm onClose={onClose} workspace={workspace.serialize()} />
     </StyledContent>
   )
 }

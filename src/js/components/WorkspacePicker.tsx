@@ -10,7 +10,7 @@ import usePopupMenu from "./hooks/usePopupMenu"
 import {Workspace} from "../state/Workspaces/types"
 import {AppDispatch} from "../state/types"
 import {MenuItemConstructorOptions} from "electron"
-import {initWorkspace} from "../flows/initWorkspace"
+import {activateWorkspace} from "../flows/workspace/activateWorkspace"
 
 const WorkspacePickerWrapper = styled.div`
   display: flex;
@@ -53,9 +53,7 @@ export default function WorkspacePicker() {
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(initWorkspace(w)).catch(() => {
-          dispatch(Current.setWorkspaceId(w.id))
-        })
+        dispatch(activateWorkspace(w.id))
       }
     })
   })

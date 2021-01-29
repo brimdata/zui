@@ -11,9 +11,9 @@ import useEnterKey from "../hooks/useEnterKey"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import {remote} from "electron"
 import Link from "../common/Link"
-import removeWorkspace from "../../flows/removeWorkspace"
 import ErrorFactory from "../../models/ErrorFactory"
 import Notice from "../../state/Notice"
+import removeWorkspace from "../../flows/workspace/removeWorkspace"
 
 const StyledContent = styled(Content)`
   padding-top: 24px;
@@ -134,8 +134,8 @@ const ViewWorkspace = ({onClose, onEdit}) => {
     remote.dialog
       .showMessageBox({
         type: "warning",
-        title: "Remove Workspace",
-        message: `Are you sure you want to remove ${name}?`,
+        title: "Workspace Logout",
+        message: `Are you sure you want to log out of ${name}?`,
         buttons: ["OK", "Cancel"]
       })
       .then(({response}) => {
@@ -167,7 +167,7 @@ const ViewWorkspace = ({onClose, onEdit}) => {
       <StyledFooter>
         <ToolbarButton text="OK" onClick={onClose} />
         <ToolbarButton text="Edit" onClick={onEdit} />
-        {!isDefault && <Link onClick={onRemove}>Remove</Link>}
+        {!isDefault && <Link onClick={onRemove}>Logout</Link>}
       </StyledFooter>
     </StyledContent>
   )

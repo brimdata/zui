@@ -8,7 +8,7 @@ export type Workspace = {
   authData?: AuthData
 }
 
-export type AuthType = "none" | "auth0" | ""
+export type AuthType = "none" | "auth0"
 
 export type AuthData = Auth0Data
 

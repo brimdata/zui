@@ -1,16 +1,14 @@
-import {Thunk} from "../state/types"
-import {toAccessTokenKey, toRefreshTokenKey} from "../auth0"
+import {Thunk} from "../../state/types"
+import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0"
 import {getAuth0} from "./getAuth0"
-import invoke from "../electron/ipc/invoke"
-import ipc from "../electron/ipc"
-import {Workspace} from "../state/Workspaces/types"
-import {globalDispatch} from "../state/GlobalContext"
-import Workspaces from "../state/Workspaces"
+import invoke from "../../electron/ipc/invoke"
+import ipc from "../../electron/ipc"
+import {Workspace} from "../../state/Workspaces/types"
 import jwtDecode, {JwtPayload} from "jwt-decode"
 
-export const refreshAuth0AccessToken = (
+export const getAuthCredentials = (
   ws: Workspace
-): Thunk<Promise<string>> => async (dispatch) => {
+): Thunk<Promise<string | null>> => async (dispatch) => {
   if (!ws.authType || ws.authType !== "auth0" || !ws.authData)
     throw new Error("No auth data set for workspace")
 
@@ -22,9 +20,9 @@ export const refreshAuth0AccessToken = (
     // check that token is formatted properly and not expired
     try {
       const {exp} = jwtDecode<JwtPayload>(accessToken)
-      // if token has not expired, set and return it
+      // if token has not expired, return it
       if (Date.now() < exp * 1000) {
-        await globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+        console.log("token has not expired")
         return accessToken
       }
     } catch (e) {
@@ -39,7 +37,7 @@ export const refreshAuth0AccessToken = (
   )
   if (!refreshToken) {
     // login is required
-    return ""
+    return null
   }
 
   const client = dispatch(getAuth0(ws))
@@ -48,11 +46,10 @@ export const refreshAuth0AccessToken = (
   } catch (e) {
     // refreshToken failed (may have been rotated), log error and require user login
     console.error("unable to refresh token: ", e)
-    return ""
+    return null
   }
 
-  // successfully refreshed, update in keychain and in store, then return
+  // successfully refreshed, update in keychain and then return
   await invoke(ipc.windows.setKeyStorage(toAccessTokenKey(ws.id), accessToken))
-  await globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
   return accessToken
 }
