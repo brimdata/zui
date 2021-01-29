@@ -15,7 +15,7 @@ $pop-menu-padding: $space-s;
   z-index: 1;
   margin: 0;
   text-align: left;
-  background-color: $white-1;
+  background-color: white;
   position: relative;
   border-radius: 5px;
   display: inline-block;
@@ -63,7 +63,7 @@ $pop-menu-padding: $space-s;
   .pop-menu-pointer {
     margin: 0;
     padding: 0;
-    fill: $white-1;
+    fill: white;
     position: absolute;
     height: 16px;
   }

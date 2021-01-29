@@ -1,4 +1,3 @@
-$white-1: white;
 $white-2: darken(white, 2%);
 $white-3: darken(white, 6%);
 $white-4: darken(white, 10%);
@@ -63,7 +62,7 @@ $transparent-light: rgba(255, 255, 255, 0.2);
 // Color Uses
 
 $filter-node-background: $green;
-$filter-node-foreground: $white-1;
+$filter-node-foreground: white;
 $table-stripe-color: rgba(0, 0, 0, 0.02);
 $table-stripe-hover: rgba(0, 0, 0, 0.06);
 

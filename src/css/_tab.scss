@@ -115,7 +115,7 @@ $tab-border-radius-bottom: 6px;
     }
     &:hover {
       svg {
-        fill: $white-1;
+        fill: white;
       }
       &:after {
         transition: transform 100ms;
