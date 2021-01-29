@@ -34,7 +34,7 @@
     @extend .label;
     font-size: 9px;
     font-weight: bold;
-    color: $gray-6;
+    color: var(--slate);
   }
 
   td {
