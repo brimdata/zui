@@ -53,8 +53,8 @@
   }
 
   .pane-header {
-    background: $white-3;
-    border-bottom: 1px solid $white-5;
+    background: var(--ivory);
+    box-shadow: 0 0.5px 0px var(--cloudy);
   }
 
   .star-button {

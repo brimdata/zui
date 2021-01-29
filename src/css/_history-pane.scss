@@ -1,14 +1,4 @@
 .history-pane {
   background: var(--snow);
   overflow-x: unset;
-
-  .pane-header {
-    background: $white-3;
-    border-top: 1px solid $white-6;
-    border-bottom: 1px solid $white-6;
-
-    .pane-title {
-      @include label-bold;
-    }
-  }
 }

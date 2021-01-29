@@ -2,7 +2,6 @@
   min-width: 500px;
 
   .settings-form {
-    border: 1px solid $white-3;
     border-radius: 3px;
 
     a {
@@ -22,7 +21,7 @@
       justify-content: space-between;
       padding: 0 12px;
       height: 48px;
-      border-bottom: 1px solid $white-3;
+      border-bottom: 1px solid var(--ivory);
       position: relative;
 
       &:last-child {

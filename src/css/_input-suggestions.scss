@@ -18,7 +18,7 @@
     cursor: default;
 
     &:hover {
-      background: $white-3;
+      background: var(--hover-light-bg);
     }
 
     &.active,
