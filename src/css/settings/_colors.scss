@@ -1,7 +1,5 @@
 $gray-base: #535765;
 
-$gray-9: darken($gray-base, 20%);
-
 $brand-blue-light: #3a79c2;
 $brand-blue: #2f619c;
 $brand-orange: #ea6842;
@@ -61,7 +59,8 @@ $gray-to-white: linear-gradient(#f0f0f0, white);
   --green: #399c81;
   --green-bright: #4ef567;
   --azure: #2f629c;
-  --cello: #324862;
+  --cello: hsl(213, 32%, 29%);
+  --cello-transparent: hsla(213, 32%, 29%, 0.92);
   --havelock: #4b91e2;
   --pecan: #9c692f;
 
@@ -72,8 +71,8 @@ $gray-to-white: linear-gradient(#f0f0f0, white);
   --cloudy: #E2E6E9;
   --lead: #ABADAF;
   --slate: #717375;
-  --aqua: #242526;
   --wet-cement: #4c5661;
+  --aqua: #242526;
 
   --chrome-gradient: linear-gradient(to bottom, #f0f0f0, #eeedec);
   --error-gradient: linear-gradient(to bottom right, #f8eee3, #fae1e0);

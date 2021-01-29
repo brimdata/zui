@@ -27,7 +27,7 @@
 
   &:hover {
     z-index: 1;
-    border: 1px dashed $gray-9;
+    border: 1px dashed var(--lead);
   }
 }
 

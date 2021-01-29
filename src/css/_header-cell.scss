@@ -11,7 +11,7 @@
   height: $bro-log-row-height;
   line-height: $bro-log-row-height;
   padding: 0 6px;
-  color: $gray-9;
+  color: var(--aqua);
   user-select: none;
   transition: border 150ms;
   position: relative;
