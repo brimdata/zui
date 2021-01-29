@@ -29,7 +29,7 @@ interface Auth0Response {
 
 export class Auth0Client {
   private audience = "https://app.brimsecurity.com"
-  private redirectUri = "brim://callback"
+  private redirectUri = "brim://auth/auth0/callback"
   // 'offline_access' ensures we receive a refresh_token
   private scope = "openid offline_access"
 

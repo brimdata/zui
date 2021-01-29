@@ -1,17 +1,18 @@
-import Current from "../state/Current"
-import Workspaces from "../state/Workspaces"
-import refreshSpaceNames from "./refreshSpaceNames"
-import {globalDispatch} from "../state/GlobalContext"
-import {Workspace} from "../state/Workspaces/types"
-import brim from "../brim"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {refreshAuth0AccessToken} from "./refreshAuth0AccessToken"
+import Current from "../../state/Current"
+import Workspaces from "../../state/Workspaces"
+import refreshSpaceNames from "../refreshSpaceNames"
+import {globalDispatch} from "../../state/GlobalContext"
+import brim from "../../brim"
+import WorkspaceStatuses from "../../state/WorkspaceStatuses"
+import {getAuthCredentials} from "./getAuthCredentials"
 
-export const activateWorkspace = (ws: Workspace) => async (
+// TODO: Mason - this needs to handle itself better
+export const activateWorkspace = (workspaceId: string) => async (
   dispatch,
   getState,
   {createZealot}
 ): Promise<void> => {
+  const ws = Workspaces.id(workspaceId)(getState())
   const zealot = createZealot(brim.workspace(ws).getAddress())
 
   const workspace = {...ws}
@@ -43,21 +44,24 @@ export const activateWorkspace = (ws: Workspace) => async (
 
   // if auth is required, and method is auth0...
   if (workspace.authType === "auth0") {
-    // ...and we have logged in before
+    // ...and we already have the token
     if (workspace.authData.accessToken) {
       activate()
       return
     }
 
     // otherwise, need to refresh accessToken
-    const accessToken = await dispatch(refreshAuth0AccessToken(workspace))
+    const accessToken = await dispatch(getAuthCredentials(workspace))
     if (accessToken) {
+      await globalDispatch(
+        Workspaces.setWorkspaceToken(workspace.id, accessToken)
+      )
       activate()
       return
     }
 
     // otherwise login is required, send user to our 'login' page and let them initiate the flow there
-    dispatch(WorkspaceStatuses.set(workspace.id, "login"))
+    dispatch(WorkspaceStatuses.set(workspace.id, "login-required"))
     dispatch(Current.setWorkspaceId(ws.id))
     return
   }

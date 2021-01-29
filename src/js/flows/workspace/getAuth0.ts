@@ -1,7 +1,7 @@
-import {Thunk} from "../state/types"
-import Current from "../state/Current"
-import {Auth0Client} from "../auth0"
-import {Workspace} from "../state/Workspaces/types"
+import {Thunk} from "../../state/types"
+import Current from "../../state/Current"
+import {Auth0Client} from "../../auth0"
+import {Workspace} from "../../state/Workspaces/types"
 
 export const getAuth0 = (ws?: Workspace): Thunk<Auth0Client> => (
   dispatch,

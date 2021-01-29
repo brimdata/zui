@@ -1,11 +1,14 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 
 import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
 import ToolbarButton from "./Toolbar/Button"
 import {useDispatch} from "react-redux"
 import {Workspace} from "../state/Workspaces/types"
-import {initWorkspace} from "../flows/initWorkspace"
+import {login} from "../flows/workspace/login"
+import {activateWorkspace} from "../flows/workspace/activateWorkspace"
+import Workspaces from "../state/Workspaces"
+import {toast} from "react-hot-toast"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -40,13 +43,26 @@ const Login = ({ws}: Props) => {
   const [isFetching, setIsFetching] = useState(false)
   const [cancelFunc, setCancelFunc] = useState(null)
 
+  useEffect(() => () => cancelFunc && cancelFunc(), [cancelFunc])
+
   const onClick = async () => {
     setIsFetching(true)
-    setCancelFunc(await dispatch(initWorkspace(ws, setIsFetching)))
+    const cancel = await dispatch(
+      login(ws, (accessToken) => {
+        if (accessToken) {
+          dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+          dispatch(activateWorkspace(ws.id))
+        } else {
+          toast.error("Login failed")
+        }
+        setIsFetching(false)
+      })
+    )
+    setCancelFunc(() => cancel)
   }
 
   const onCancel = () => {
-    cancelFunc()
+    cancelFunc && cancelFunc()
     setIsFetching(false)
   }
 

@@ -5,7 +5,8 @@ import ErrorFactory from "../models/ErrorFactory"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {BrimWorkspace} from "../brim"
 import {ZFetcher, ZReponse} from "../../../zealot/types"
-import {refreshAuth0AccessToken} from "./refreshAuth0AccessToken"
+import {getAuthCredentials} from "./workspace/getAuthCredentials"
+import Workspaces from "../state/Workspaces"
 
 const createBrimFetcher = (dispatch, getState) => {
   return (hostPort: string): ZFetcher => {
@@ -22,12 +23,14 @@ const createBrimFetcher = (dispatch, getState) => {
       let {accessToken} = ws.authData
       if (!accessToken) {
         // attempt refresh
-        accessToken = dispatch(refreshAuth0AccessToken(ws))
+        accessToken = dispatch(getAuthCredentials(ws))
         if (!accessToken) {
           // inform user login required by updating status
-          dispatch(WorkspaceStatuses.set(ws.id, "login"))
+          dispatch(WorkspaceStatuses.set(ws.id, "login-required"))
           throw new Error("User must login")
         }
+
+        dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
       }
 
       const bearerToken = `Bearer ${accessToken}`

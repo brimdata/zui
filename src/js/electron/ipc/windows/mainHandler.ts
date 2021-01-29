@@ -49,6 +49,11 @@ export default function(brim: Brim) {
   })
 
   ipcMain.handle("windows:setKeyStorage", async (e, {key, val}) => {
+    log.info(
+      `key (as 'service'): ${key}, username (as 'account'): ${
+        os.userInfo().username
+      }, val (as 'password'): ${val}`
+    )
     return keytar.setPassword(key, os.userInfo().username, val)
   })
   ipcMain.handle("windows:getKeyStorage", async (e, {key}) => {

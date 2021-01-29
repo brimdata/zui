@@ -7,8 +7,7 @@ export type WorkspaceStatus =
   | "connected"
   | "disconnected"
   | "retrying"
-  | "authenticating"
-  | "login"
+  | "login-required"
 
 export type WorkspaceStatusesAction =
   | WORKSPACE_STATUSES_SET

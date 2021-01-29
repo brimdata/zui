@@ -1,8 +1,8 @@
-import fixtures from "../test/fixtures"
+import fixtures from "../../test/fixtures"
 import {createZealotMock} from "zealot"
-import initTestStore from "../test/initTestStore"
-import Workspaces from "../state/Workspaces"
-import Current from "../state/Current"
+import initTestStore from "../../test/initTestStore"
+import Workspaces from "../../state/Workspaces"
+import Current from "../../state/Current"
 import {initWorkspace} from "./initWorkspace"
 
 let store, mock
