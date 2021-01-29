@@ -75,7 +75,7 @@ export default function IngestRefresh() {
     }
   }, [autoRefresh])
 
-  if (true || (!autoRefresh && snapshot !== snapshotAck)) {
+  if (!autoRefresh && snapshot !== snapshotAck) {
     return (
       <IngestUpdateNotice
         onClick={(buttonIndex) => {

@@ -1,8 +1,9 @@
 .error-boundary {
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
-  background-color: $gray-7;
-  color: white;
+  background-color: var(--ivory);
+  padding: 24px;
+  line-height: 1.5;
 
   h1 {
     padding-top: $space-l;
@@ -22,6 +23,7 @@
   pre,
   li,
   code {
-    font-size: 12px;
+    overflow: auto;
+    font-size: 11px;
   }
 }

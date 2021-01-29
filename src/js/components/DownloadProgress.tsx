@@ -6,6 +6,7 @@ import {State} from "../state/types"
 import {reactElementProps} from "../test/integration"
 import Packets from "../state/Packets"
 import View from "../state/View"
+import {error} from "electron-log"
 
 type Props = {
   downloads: any[]
@@ -16,7 +17,6 @@ export default class DownloadProgress extends React.Component<Props> {
   render() {
     const {downloads, downloadsIsOpen} = this.props
     if (!downloadsIsOpen || downloads.length === 0) return null
-
     const {percentComplete, error} = downloads[0]
     const complete = percentComplete >= 1
 
