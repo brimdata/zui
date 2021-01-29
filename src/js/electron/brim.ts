@@ -11,6 +11,10 @@ import {app} from "electron"
 import path from "path"
 import {sessionStateFile} from "./tron/session"
 import {getGlobalPersistable} from "../state/getPersistable"
+import Workspaces from "../state/Workspaces"
+import keytar from "keytar"
+import os from "os"
+import {toAccessTokenKey, toRefreshTokenKey} from "../auth0"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -65,6 +69,12 @@ export class Brim {
   }
 
   async resetState() {
+    // clear keys from secrets storage
+    Workspaces.all(this.store.getState()).forEach((ws) => {
+      if (ws.authType !== "auth0") return
+      keytar.deletePassword(toRefreshTokenKey(ws.id), os.userInfo().username)
+      keytar.deletePassword(toAccessTokenKey(ws.id), os.userInfo().username)
+    })
     await this.session.delete()
     app.relaunch()
     this.quit({saveSession: false})

@@ -5,8 +5,8 @@ import {globalDispatch} from "../../state/GlobalContext"
 import brim from "../../brim"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import {getAuthCredentials} from "./getAuthCredentials"
+import {validateToken} from "../../auth0"
 
-// TODO: Mason - this needs to handle itself better
 export const activateWorkspace = (workspaceId: string) => async (
   dispatch,
   getState,
@@ -21,6 +21,7 @@ export const activateWorkspace = (workspaceId: string) => async (
     dispatch(WorkspaceStatuses.set(workspace.id, "connected"))
     dispatch(Current.setWorkspaceId(ws.id))
     dispatch(refreshSpaceNames())
+    dispatch()
   }
 
   try {
@@ -34,6 +35,7 @@ export const activateWorkspace = (workspaceId: string) => async (
     return
   }
   // update version
+  dispatch(Workspaces.add(workspace))
   await globalDispatch(Workspaces.add(workspace))
 
   // no auth required
@@ -45,7 +47,7 @@ export const activateWorkspace = (workspaceId: string) => async (
   // if auth is required, and method is auth0...
   if (workspace.authType === "auth0") {
     // ...and we already have the token
-    if (workspace.authData.accessToken) {
+    if (validateToken(workspace.authData.accessToken)) {
       activate()
       return
     }
@@ -53,6 +55,7 @@ export const activateWorkspace = (workspaceId: string) => async (
     // otherwise, need to refresh accessToken
     const accessToken = await dispatch(getAuthCredentials(workspace))
     if (accessToken) {
+      dispatch(Workspaces.setWorkspaceToken(workspace.id, accessToken))
       await globalDispatch(
         Workspaces.setWorkspaceToken(workspace.id, accessToken)
       )

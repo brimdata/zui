@@ -34,7 +34,7 @@ export default function TabContent() {
     if (ws && !wsStatus) {
       dispatch(initCurrentTab())
     }
-  }, [ws, wsStatus])
+  }, [wsStatus])
 
   if (!ws) return <WorkspaceChooserPage />
 

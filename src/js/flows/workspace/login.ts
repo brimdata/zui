@@ -18,15 +18,19 @@ export const login = (
   )
 
   const handleAuthCallback = async (e, {workspaceId, code}) => {
+    if (!code) {
+      cb(null)
+      return
+    }
     try {
       const {accessToken, refreshToken} = await client.exchangeCode(code)
 
       // store both tokens in os default keychain
       await invoke(
-        ipc.windows.setKeyStorage(toAccessTokenKey(workspaceId), accessToken)
+        ipc.secretsStorage.setKey(toAccessTokenKey(workspaceId), accessToken)
       )
       await invoke(
-        ipc.windows.setKeyStorage(toRefreshTokenKey(workspaceId), refreshToken)
+        ipc.secretsStorage.setKey(toRefreshTokenKey(workspaceId), refreshToken)
       )
 
       cb(accessToken)
@@ -37,11 +41,9 @@ export const login = (
     }
   }
 
-  console.log("setting listener...")
   ipcRenderer.once("windows:authCallback", handleAuthCallback)
 
   return () => {
-    console.log("cancelling listener...")
     ipcRenderer.removeListener("windows:authCallback", handleAuthCallback)
   }
 }

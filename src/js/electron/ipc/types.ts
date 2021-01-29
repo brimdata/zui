@@ -9,11 +9,11 @@ export type IpcMsg =
   | WindowsNewSearchTabMsg
   | WindowsOpenDirectorySelect
   | WindowsAuthCallbackMsg
-  | WindowsSetKeyStorageMsg
-  | WindowsGetKeyStorageMsg
-  | WindowsDeleteKeyStorageMsg
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
+  | SecretsStorageSetKeyMsg
+  | SecretsStorageGetKeyMsg
+  | SecretsStorageDeleteKeyMsg
 
 export type WindowsOpenMsg = {
   channel: "windows:open"
@@ -42,22 +42,6 @@ export type WindowsOpenDirectorySelect = {
   channel: "windows:openDirectorySelect"
 }
 
-export type WindowsSetKeyStorageMsg = {
-  channel: "windows:setKeyStorage"
-  key: string
-  val: string
-}
-
-export type WindowsGetKeyStorageMsg = {
-  channel: "windows:getKeyStorage"
-  key: string
-}
-
-export type WindowsDeleteKeyStorageMsg = {
-  channel: "windows:deleteKeyStorage"
-  key: string
-}
-
 export type GlobalStoreInitMsg = {
   channel: "globalStore:init"
 }
@@ -65,4 +49,20 @@ export type GlobalStoreInitMsg = {
 export interface GlobalStoreDispatchMsg {
   channel: "globalStore:dispatch"
   action: object
+}
+
+export type SecretsStorageSetKeyMsg = {
+  channel: "secretStorage:setKey"
+  key: string
+  val: string
+}
+
+export type SecretsStorageGetKeyMsg = {
+  channel: "secretStorage:getKey"
+  key: string
+}
+
+export type SecretsStorageDeleteKeyMsg = {
+  channel: "secretStorage:deleteKey"
+  key: string
 }

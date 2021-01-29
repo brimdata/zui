@@ -18,6 +18,7 @@ import {initWorkspace} from "../../flows/workspace/initWorkspace"
 import {getAuthCredentials} from "../../flows/workspace/getAuthCredentials"
 import {AppDispatch} from "../../state/types"
 import {login} from "../../flows/workspace/login"
+import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -96,7 +97,15 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
     host: {
       name: "host",
       label: "Host",
-      check: (value) => [!isEmpty(value), "must not be blank"]
+      check: (value) => {
+        if (isEmpty(value)) return [false, "must not be blank"]
+        let isValid = true
+        if (!isNewWorkspace && isDefaultWorkspace(workspace)) {
+          const {host, port} = workspace
+          isValid = value === host || value === [host, port].join(":")
+        }
+        return [isValid, "cannot change host of default workspace"]
+      }
     },
     name: {
       name: "name",
@@ -183,7 +192,6 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
         setCancelFunc(() => cancel)
         return
       } catch (e) {
-        console.log("error is: ", e)
         setIsSubmitting(false)
         setErrors([{message: "Cannot connect to host"}])
         return

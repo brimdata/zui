@@ -20,6 +20,11 @@ const setupDefaultWorkspace = () => (dispatch, _, {globalDispatch}) => {
   dispatch(Current.setWorkspaceId(ws.id))
 }
 
+export const isDefaultWorkspace = (ws: Workspace): boolean => {
+  const {host, port, id} = ws
+  return id === "localhost:9867" && host === "localhost" && port === "9867"
+}
+
 export default function(store: Store) {
   const {id} = getUrlSearchParams()
   global.windowId = id
