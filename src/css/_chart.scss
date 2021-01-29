@@ -82,7 +82,7 @@
 
   text {
     font-family: $data-font;
-    fill: $gray-1;
+    fill: var(--lead);
     font-size: 9px;
   }
 }
