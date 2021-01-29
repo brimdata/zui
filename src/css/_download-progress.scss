@@ -23,12 +23,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    &.progress {
-    }
-
-    &.complete {
-    }
   }
 
   .message {
@@ -36,22 +30,5 @@
     padding: 12px;
     white-space: nowrap;
     color: white;
-  }
-
-  .panel-button {
-    color: white;
-    margin-right: 12px;
-
-    &.open {
-      background: $green;
-    }
-
-    &.open:hover {
-      background: $gray-8;
-    }
-
-    &.cancel:hover {
-      background: $red;
-    }
   }
 }
