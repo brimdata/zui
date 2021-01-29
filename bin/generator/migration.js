@@ -29,7 +29,7 @@ function testContents(title, version) {
   return `import {migrate} from "src/js/test/helpers/migrate"
 
 test("migrating ${title}", async () => {
-  const next = await migrate({state: "${lastVersion}", to: "${version}"})
+  const next = await migrate({state: "v${lastVersion}", to: "${version}"})
 
   expect(next).toBe("what you'd expect")
 })

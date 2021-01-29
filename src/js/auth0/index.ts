@@ -1,4 +1,5 @@
 import {shell} from "electron"
+import jwtDecode, {JwtPayload} from "jwt-decode"
 
 // helpers for generating auth0 namespaces in os default keychain (facilitated by keytar)
 const keytarServiceSuffix = "brim-oauth"
@@ -20,6 +21,22 @@ export const deserializeState = (state: string): StateArgs => {
   if (stateArr.length < 2) return null
 
   return {workspaceId: stateArr[0], windowId: stateArr[1]}
+}
+
+export const validateToken = (token: string): boolean => {
+  if (!token) return false
+
+  try {
+    const {exp} = jwtDecode<JwtPayload>(token)
+    // if token has not expired, return it
+    if (Date.now() < exp * 1000) {
+      return true
+    }
+  } catch (e) {
+    console.error("invalid token: ", e)
+  }
+
+  return false
 }
 
 interface Auth0Response {

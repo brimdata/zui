@@ -1,8 +1,6 @@
 import log from "electron-log"
 import {BrowserWindow, dialog, ipcMain} from "electron"
 import {Brim} from "../../brim"
-import keytar from "keytar"
-import * as os from "os"
 
 let started = false
 
@@ -46,20 +44,5 @@ export default function(brim: Brim) {
   ipcMain.handle("windows:showSaveDialog", async (e, args) => {
     const win = BrowserWindow.fromWebContents(e.sender)
     return dialog.showSaveDialog(win, args)
-  })
-
-  ipcMain.handle("windows:setKeyStorage", async (e, {key, val}) => {
-    log.info(
-      `key (as 'service'): ${key}, username (as 'account'): ${
-        os.userInfo().username
-      }, val (as 'password'): ${val}`
-    )
-    return keytar.setPassword(key, os.userInfo().username, val)
-  })
-  ipcMain.handle("windows:getKeyStorage", async (e, {key}) => {
-    return keytar.getPassword(key, os.userInfo().username)
-  })
-  ipcMain.handle("windows:deleteKeyStorage", async (e, {key}) => {
-    return keytar.deletePassword(key, os.userInfo().username)
   })
 }

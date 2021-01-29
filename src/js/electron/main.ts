@@ -5,8 +5,9 @@ import userTasks from "./userTasks"
 appPathSetup()
 
 import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
-import menu from "./menu"
 import windowsMainHandler from "./ipc/windows/mainHandler"
+import secretsStorageMainHandler from "./ipc/secretsStorage/mainHandler"
+import menu from "./menu"
 
 console.time("init")
 import "regenerator-runtime/runtime"
@@ -29,8 +30,11 @@ async function main() {
   userTasks(app)
   const brim = await Brim.boot()
   menu.setMenu(brim)
+
   windowsMainHandler(brim)
   globalStoreMainHandler(brim)
+  secretsStorageMainHandler()
+
   handleQuit(brim)
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed
@@ -58,7 +62,6 @@ async function main() {
 
   app.setAsDefaultProtocolClient("brim")
   app.on("open-url", (event, cbUrl) => {
-    // TODO: Mason - refactor this to behave more like a router (i.e. handle by path)
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
 

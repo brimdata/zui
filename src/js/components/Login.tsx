@@ -9,6 +9,7 @@ import {login} from "../flows/workspace/login"
 import {activateWorkspace} from "../flows/workspace/activateWorkspace"
 import Workspaces from "../state/Workspaces"
 import {toast} from "react-hot-toast"
+import {globalDispatch} from "../state/GlobalContext"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -50,7 +51,7 @@ const Login = ({ws}: Props) => {
     const cancel = await dispatch(
       login(ws, (accessToken) => {
         if (accessToken) {
-          dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+          globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
           dispatch(activateWorkspace(ws.id))
         } else {
           toast.error("Login failed")

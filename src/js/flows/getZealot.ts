@@ -7,6 +7,8 @@ import {BrimWorkspace} from "../brim"
 import {ZFetcher, ZReponse} from "../../../zealot/types"
 import {getAuthCredentials} from "./workspace/getAuthCredentials"
 import Workspaces from "../state/Workspaces"
+import {validateToken} from "../auth0"
+import {globalDispatch} from "../state/GlobalContext"
 
 const createBrimFetcher = (dispatch, getState) => {
   return (hostPort: string): ZFetcher => {
@@ -21,16 +23,16 @@ const createBrimFetcher = (dispatch, getState) => {
       const newArgs = {...args}
 
       let {accessToken} = ws.authData
-      if (!accessToken) {
+      if (!validateToken(accessToken)) {
         // attempt refresh
-        accessToken = dispatch(getAuthCredentials(ws))
+        accessToken = await dispatch(getAuthCredentials(ws))
         if (!accessToken) {
           // inform user login required by updating status
           dispatch(WorkspaceStatuses.set(ws.id, "login-required"))
-          throw new Error("User must login")
+          return
         }
 
-        dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+        await globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
       }
 
       const bearerToken = `Bearer ${accessToken}`

@@ -9,21 +9,22 @@ import Investigation from "../../state/Investigation"
 import invoke from "../../electron/ipc/invoke"
 import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0"
 import ipc from "../../electron/ipc"
+import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
 
 const removeWorkspace = (ws: Workspace): Thunk => (
   dispatch,
   _getState,
   {globalDispatch}
 ) => {
-  const {name, id, host, port, authType} = ws
+  const {name, id, authType} = ws
 
-  if (host === "localhost" && port === "9867")
+  if (isDefaultWorkspace(ws))
     throw new Error("Cannot remove the default workspace")
 
   // remove creds from keychain
   if (authType === "auth0") {
-    invoke(ipc.windows.deleteKeyStorage(toAccessTokenKey(id)))
-    invoke(ipc.windows.deleteKeyStorage(toRefreshTokenKey(id)))
+    invoke(ipc.secretsStorage.deleteKey(toAccessTokenKey(id)))
+    invoke(ipc.secretsStorage.deleteKey(toRefreshTokenKey(id)))
   }
   dispatch(Current.setSpaceId(null))
   dispatch(Current.setWorkspaceId(null))
