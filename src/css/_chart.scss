@@ -3,8 +3,8 @@
   position: relative;
 
   .selection {
-    fill: $yellow;
-    stroke: $yellow-dark;
+    fill: var(--havelock);
+    stroke: var(--havelock);
     stroke-dasharray: 3px;
   }
 

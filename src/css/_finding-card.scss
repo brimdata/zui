@@ -52,17 +52,4 @@
     border-radius: 3px;
     flex-shrink: 0;
   }
-
-  .warning-body {
-    display: flex;
-    align-items: center;
-
-    svg {
-      fill: $yellow;
-      height: 11px;
-      width: 11px;
-      margin-right: 12px;
-      margin-bottom: 3px;
-    }
-  }
 }

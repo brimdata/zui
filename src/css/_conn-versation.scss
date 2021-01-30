@@ -70,13 +70,13 @@
     hr {
       flex: 1;
       border: none;
-      border-bottom: 1px solid $yellow;
+      border-bottom: 1px solid var(--yellow);
       margin: 0;
     }
 
     .triangle {
-      fill: $yellow;
-      stroke: $yellow;
+      fill: var(--yellow);
+      stroke: var(--yellow);
       width: 10px;
     }
   }

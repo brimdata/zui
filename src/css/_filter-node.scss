@@ -38,7 +38,7 @@
   }
 
   &.focused {
-    border: 1px solid $yellow;
+    border: 1px solid var(--yellow);
     background: $green-light;
   }
 }

@@ -130,17 +130,6 @@
   text-decoration: underline;
   cursor: pointer;
   color: var(--havelock);
-
-  &.yellow {
-    color: $yellow;
-
-    &:hover {
-      color: $yellow-dark;
-    }
-    &:active {
-      color: $yellow;
-    }
-  }
 }
 
 .bold {
