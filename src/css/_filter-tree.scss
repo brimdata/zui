@@ -72,7 +72,7 @@ $filter-tree-line-color: var(--cloudy);
     p {
       @include label-small;
       line-height: 16px;
-      color: $aqua;
+      color: var(--aqua);
       padding: 2px;
       margin: 0 2px;
       overflow-x: hidden;

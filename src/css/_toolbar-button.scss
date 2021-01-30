@@ -27,7 +27,7 @@
   .text {
     @include label-small;
     white-space: nowrap;
-    color: $aqua;
+    color: var(--aqua);
     display: flex;
     line-height: 16px;
     height: 16px;
@@ -74,6 +74,6 @@
     color: white;
   }
   &:active:not(:disabled) {
-    background: darken($havelock, 15%);
+    background: var(--azure);
   }
 }

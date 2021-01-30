@@ -44,7 +44,7 @@
   }
 
   &.highlight {
-    background: $havelock;
+    background: var(--havelock);
     .field-cell {
       color: white;
     }

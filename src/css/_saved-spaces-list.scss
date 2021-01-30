@@ -28,7 +28,7 @@
     border-radius: 4px;
 
     &:hover {
-      background-color: $coconut;
+      background-color: var(--coconut);
     }
 
     &:active {
@@ -39,7 +39,7 @@
   .space-link {
     @include label-small;
     line-height: 18px;
-    color: $aqua;
+    color: var(--aqua);
     display: flex;
     align-items: center;
     justify-content: space-between;

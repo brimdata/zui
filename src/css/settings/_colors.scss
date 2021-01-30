@@ -1,46 +1,21 @@
-$brand-blue-light: #3a79c2;
-$brand-blue: #2f619c;
-$brand-orange: #ea6842;
 
 $blue-light: lighten(#1da0f2, 15%);
 $blue: #1da0f2;
 $blue-dark: darken(#1da0f2, 15%);
-
 $yellow-light: lighten(#ffdd66, 15%);
 $yellow: #ffdd66;
 $yellow-dark: darken(#ffdd66, 15%);
-
 $green-light: lighten(#399c81, 15%);
 $green: #399c81;
 $green-dark: darken(#399c81, 15%);
-
 $red: #e65835;
-
 $red-light: lighten($red, 15%);
 $red-dark: darken($red, 15%);
-
 $pink: #ad3f95;
-
 $purple: #544aa6;
 $orange: #eeb457;
 
-$azure: #2f629c;
-$cello: #324862;
-$havelock: #4b91e2;
-$pecan: #9c692f;
-
-$snow: #fdfcfb;
-$coconut: #f8f7f6;
-$ivory: #f2f1f0;
-$cloudy: #dedddc;
-$lead: #aeadac;
-$slate: #757371;
-$aqua: #262524;
-$wet-cement: #4c5661;
-$transparent-light: rgba(255, 255, 255, 0.2);
-
 // Color Uses
-
 $filter-node-background: $green;
 $filter-node-foreground: white;
 $table-stripe-color: rgba(0, 0, 0, 0.02);
@@ -56,6 +31,7 @@ $gray-to-white: linear-gradient(#f0f0f0, white);
   --red: #cd1313;
   --green: #399c81;
   --green-bright: #4ef567;
+  --orange: #ea6842;
   --azure: #2f629c;
   --cello: hsl(213, 32%, 29%);
   --cello-transparent: hsla(213, 32%, 29%, 0.92);

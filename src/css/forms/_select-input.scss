@@ -4,7 +4,7 @@
   @include label-normal;
   @include input-border;
   @include input-focus;
-  color: $aqua;
-  background: $ivory;
+  color: var(--aqua);
+  background: var(--ivory);
   border: none;
 }
