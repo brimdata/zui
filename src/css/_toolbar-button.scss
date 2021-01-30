@@ -58,7 +58,7 @@
   }
 
   &.dragging {
-    background: $blue;
+    background: var(--havelock);
     .text {
       color: white;
     }

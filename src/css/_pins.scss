@@ -37,7 +37,8 @@
   }
 
   .pin-button {
-    @include button-reset;
+    border: none;
+    font-family: $body-font;
     background-color: var(--cloudy);
     min-height: 17px;
     border-radius: 0px 3px 3px 0px;

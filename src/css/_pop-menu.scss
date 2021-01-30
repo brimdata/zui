@@ -36,12 +36,8 @@ $pop-menu-padding: $space-s;
     user-select: none;
 
     &:hover {
-      background-color: $blue;
+      background-color: var(--havelock);
       color: white;
-    }
-
-    &:active {
-      background-color: $blue-light;
     }
   }
 
@@ -71,7 +67,7 @@ $pop-menu-padding: $space-s;
 
 .test-anchor {
   position: fixed;
-  background-color: $blue;
+  background-color: var(--havelock);
   height: 100px;
   width: 100px;
   border-radius: 50%;

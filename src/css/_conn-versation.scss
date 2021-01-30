@@ -23,7 +23,7 @@
   .port {
     margin: 0;
     color: white;
-    background: $blue;
+    background: var(--havelock);
     font-size: 12px;
     text-align: center;
     line-height: 20px;
@@ -36,7 +36,7 @@
   }
 
   .port {
-    background: $blue-light;
+    background: #65bef6;
   }
 
   .responder {

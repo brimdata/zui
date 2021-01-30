@@ -56,7 +56,7 @@
     margin: 0;
     @include label-small;
     line-height: 14px;
-    background: $blue;
+    background: var(--havelock);
     color: white;
     padding: 0 6px;
     border-radius: 4px;

@@ -129,16 +129,7 @@
   margin: 0;
   text-decoration: underline;
   cursor: pointer;
-
-  color: $blue;
-
-  &:hover {
-    color: darken($blue, 20%);
-  }
-
-  &:active {
-    color: darken($blue, 30%);
-  }
+  color: var(--havelock);
 
   &.yellow {
     color: $yellow;
