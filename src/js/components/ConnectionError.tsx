@@ -23,7 +23,7 @@ const StyledHeader = styled.h1`
 
 const StyledP = styled.p`
   margin: 18px 0 0 0;
-  color: ${(p) => p.theme.colors.aqua};
+  color: var(--aqua);
   ${(p) => p.theme.typography.labelNormal}
 `
 
