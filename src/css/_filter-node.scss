@@ -1,7 +1,7 @@
 .filter-node {
   display: inline-flex;
   align-items: center;
-  background: $filter-node-background;
+  background: var(--green);
   border-radius: 3px;
   margin-bottom: 3px;
   position: relative;
@@ -11,7 +11,7 @@
 
   p {
     font-family: $mono-font;
-    color: $filter-node-foreground;
+    color: white;
     font-size: 9px;
     line-height: 13px;
     padding: 0 4px;
@@ -39,6 +39,6 @@
 
   &.focused {
     border: 1px solid var(--yellow);
-    background: $green-light;
+    background: #5ec4a8;
   }
 }

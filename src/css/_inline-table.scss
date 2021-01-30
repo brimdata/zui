@@ -14,11 +14,11 @@
   }
 
   tbody tr:nth-child(odd) {
-    background: $table-stripe-color;
+    background: var(--table-stripe-bg);
   }
 
   tbody tr:hover {
-    background: $table-stripe-hover;
+    background: var(--hover-light-bg);
   }
 
   th,

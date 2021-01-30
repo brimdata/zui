@@ -39,7 +39,7 @@
       line-height: 1.5;
     }
     a {
-      color: $red;
+      color: var(--red);
       cursor: pointer;
       text-decoration: underline;
     }

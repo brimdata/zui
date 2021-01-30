@@ -1,25 +1,3 @@
-
-$green-light: lighten(#399c81, 15%);
-$green: #399c81;
-$green-dark: darken(#399c81, 15%);
-$red: #e65835;
-$red-light: lighten($red, 15%);
-$red-dark: darken($red, 15%);
-$pink: #ad3f95;
-$purple: #544aa6;
-$orange: #eeb457;
-
-// Color Uses
-$filter-node-background: $green;
-$filter-node-foreground: white;
-$table-stripe-color: rgba(0, 0, 0, 0.02);
-$table-stripe-hover: rgba(0, 0, 0, 0.06);
-
-// Gradients
-
-$chrome-gradient: linear-gradient(to bottom, #f0f0f0, #eeedec);
-$gray-to-white: linear-gradient(#f0f0f0, white);
-
 :root {
   // colors
   --red: #cd1313;
@@ -34,7 +12,7 @@ $gray-to-white: linear-gradient(#f0f0f0, white);
   --pecan: #9c692f;
 
   // shades of gray
-  --snow: #FCFCFC;
+  --snow: #fcfcfd;
   --coconut: #F7F7F8;
   --ivory: #F0F2F5;
   --cloudy: #E2E6E9;
@@ -42,9 +20,6 @@ $gray-to-white: linear-gradient(#f0f0f0, white);
   --slate: #717375;
   --wet-cement: #4c5661;
   --aqua: #242526;
-
-  --chrome-gradient: linear-gradient(to bottom, #f0f0f0, #eeedec);
-  --error-gradient: linear-gradient(to bottom right, #f8eee3, #fae1e0);
 
   // type colors
   --ip: #4a90e2;
@@ -58,9 +33,10 @@ $gray-to-white: linear-gradient(#f0f0f0, white);
   --alert-2: #f4912f;
   --alert-1: #d0250b;
 
-  // hover states
+  // backgrounds
   --hover-light-bg: rgba(0, 0, 0, 0.06);
+  --table-stripe-bg: rgba(0,0,0,0.02);
 
-  // border
+  // borders
   --pane-border: var(--cloudy)
 }

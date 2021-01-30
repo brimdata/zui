@@ -9,10 +9,10 @@
     padding-top: $space-l;
     display: flex;
     align-items: center;
-    color: $red;
+    color: var(--red);
 
     svg {
-      fill: $red;
+      fill: var(--red);
       margin: 0;
       height: 30px * 1.5;
       width: 30px * 1.5;

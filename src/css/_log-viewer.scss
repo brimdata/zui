@@ -36,11 +36,11 @@
   opacity: 1;
 
   &.even {
-    background: $table-stripe-color;
+    background: var(--table-stripe-bg);
   }
 
   &:hover {
-    background: $table-stripe-hover;
+    background: var(--hover-light-bg);
   }
 
   &.highlight {

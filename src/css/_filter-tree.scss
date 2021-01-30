@@ -80,16 +80,16 @@ $filter-tree-line-color: var(--cloudy);
   }
 
   &.pinned > .filter-tree-parent > .filter-node {
-    background: $filter-node-background;
+    background: var(--green);
     p {
-      color: $filter-node-foreground;
+      color: white;
     }
   }
 
   &.active > .filter-tree-parent > .filter-node {
     background: var(--slate);
     p {
-      color: $filter-node-foreground;
+      color: white;
     }
   }
 }

@@ -3,7 +3,7 @@
   background: var(--cello);
   
   &.complete .progress-value {
-    background-color: $green;
+    background-color: var(--green);
   }
 
   .progress-bar {

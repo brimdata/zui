@@ -48,7 +48,7 @@
 
   p.pin {
     color: white;
-    background: $green;
+    background: var(--green);
     border-radius: 3px;
     flex-shrink: 0;
   }

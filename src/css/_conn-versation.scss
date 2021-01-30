@@ -41,10 +41,10 @@
 
   .responder {
     .ip {
-      background: $green;
+      background: var(--green);
     }
     .port {
-      background: $green-light;
+      background: #5ec4a8;
     }
   }
 
