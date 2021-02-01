@@ -22,14 +22,16 @@ const workspace1 = (): Workspace => ({
   id: "test:9867",
   name: "testName1",
   host: "test",
-  port: "9867"
+  port: "9867",
+  authType: "none"
 })
 
 const workspace2 = (): Workspace => ({
   id: "test:9868",
   name: "testName2",
   host: "test",
-  port: "9868"
+  port: "9868",
+  authType: "none"
 })
 
 const fixtures = () => ({
