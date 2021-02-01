@@ -21,7 +21,6 @@ export const activateWorkspace = (workspaceId: string) => async (
     dispatch(WorkspaceStatuses.set(workspace.id, "connected"))
     dispatch(Current.setWorkspaceId(ws.id))
     dispatch(refreshSpaceNames())
-    dispatch()
   }
 
   try {
