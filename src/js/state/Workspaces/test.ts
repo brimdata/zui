@@ -11,7 +11,8 @@ const workspace: Workspace = {
   id: "123",
   name: "123",
   host: "boom.com",
-  port: "9867"
+  port: "9867",
+  authType: "none"
 }
 
 test("addWorkspace", () => {

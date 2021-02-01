@@ -24,12 +24,12 @@ beforeEach(() => {
 
 test("Create a new workspace, switch back", async () => {
   expect(workspaceCount()).toBe(1)
-  await store.dispatch(initWorkspace(ws2))
+  await store.dispatch(initWorkspace(ws2, "connected"))
   expect(workspaceCount()).toBe(2)
   expect(select(Workspaces.id(ws2.id))).toEqual(ws2)
   expect(select(Current.getWorkspaceId)).toBe(ws2.id)
 
-  await store.dispatch(initWorkspace(ws1))
+  await store.dispatch(initWorkspace(ws1, "connected"))
   expect(workspaceCount()).toBe(2)
   expect(select(Workspaces.id(ws1.id))).toEqual(ws1)
   expect(select(Current.getWorkspaceId)).toBe(ws1.id)
