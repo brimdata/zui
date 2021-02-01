@@ -8,13 +8,6 @@ import Tabs from "../state/Tabs"
 import initNewSearchTab from "./initNewSearchTab"
 import confirmUnload from "../flows/confirmUnload"
 import deletePartialSpaces from "../flows/deletePartialSpaces"
-import {globalDispatch} from "../state/GlobalContext"
-import Workspaces from "../state/Workspaces"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {toAccessTokenKey, toRefreshTokenKey} from "../auth0"
-import {getAuth0} from "../flows/getAuth0"
-import invoke from "../electron/ipc/invoke"
-import ipc from "../electron/ipc"
 import {getWindowPersistable} from "../state/getPersistable"
 
 export default (store: Store) => {
