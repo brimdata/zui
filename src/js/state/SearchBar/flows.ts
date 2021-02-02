@@ -1,4 +1,4 @@
-import ast, {PARALLEL_PROC} from "../../brim/ast"
+import {PARALLEL_PROC} from "../../brim/ast"
 import {Thunk} from "../types"
 import {parse} from "../../lib/Program"
 import {submitSearch} from "../../flows/submitSearch/mod"
