@@ -1,4 +1,4 @@
-import {PARALLEL_PROC} from "../../brim/ast"
+import ast, {PARALLEL_PROC} from "../../brim/ast"
 import {Thunk} from "../types"
 import {parse} from "../../lib/Program"
 import {submitSearch} from "../../flows/submitSearch/mod"
@@ -40,7 +40,7 @@ export default {
     if (brim.ast(ast).proc(PARALLEL_PROC)) {
       dispatch(
         SearchBar.errorSearchBarParse(
-          "Parallel procs are not supported in the app viewer."
+          "Parallel procs are not yet supported in Brim."
         )
       )
       return false
