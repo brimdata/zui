@@ -60,7 +60,7 @@ export function Sectional({sections, children, onChange}: Props) {
 
   return (
     <div ref={ref} style={{width: "100%", height: "100%"}}>
-      {sections.map((data, index) =>
+      {ctl.map((data, index) =>
         children(data, {
           style: getStyle(index),
           toggleProps: {
