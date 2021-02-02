@@ -74,3 +74,22 @@ describe("#groupByKeys", () => {
     expect(getGroupByKeys("* | count() by id.orig_h")).toEqual(["id.orig_h"])
   })
 })
+
+describe("#proc", () => {
+  test("get procs", () => {})
+  const procs = brim
+    .program("files | split ( => count() => head 1)")
+    .ast()
+    .getProcs()
+    .map((p) => p.op)
+
+  expect(procs).toEqual([
+    "SequentialProc",
+    "FilterProc",
+    "ParallelProc",
+    "SequentialProc",
+    "GroupByProc",
+    "SequentialProc",
+    "HeadProc"
+  ])
+})
