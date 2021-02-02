@@ -7,6 +7,7 @@ import Current from "../state/Current"
 import {BrimWorkspace} from "../brim"
 import workspace from "../brim/workspace"
 import DataStoreIcon from "../icons/DataStoreIcon"
+import {activateWorkspace} from "../flows/workspace/activateWorkspace"
 
 const StyledWorkspace = styled.li`
   display: flex;
@@ -88,7 +89,7 @@ const WorkspaceChooserPage = () => {
           <Workspace
             key={w.id}
             workspace={workspace(w)}
-            onClick={() => dispatch(Current.setWorkspaceId(w.id))}
+            onClick={() => dispatch(activateWorkspace(w.id))}
           />
         ))}
       </WorkspacesWrapper>

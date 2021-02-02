@@ -31,7 +31,7 @@ export default function TabContent() {
   const wsStatus = useSelector(WorkspaceStatuses.get(id))
 
   useEffect(() => {
-    if (ws && !wsStatus) {
+    if (!wsStatus) {
       dispatch(initCurrentTab())
     }
   }, [wsStatus])

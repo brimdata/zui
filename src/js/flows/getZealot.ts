@@ -29,7 +29,7 @@ const createBrimFetcher = (dispatch, getState) => {
         if (!accessToken) {
           // inform user login required by updating status
           dispatch(WorkspaceStatuses.set(ws.id, "login-required"))
-          return
+          return args
         }
 
         await globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))

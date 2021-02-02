@@ -71,7 +71,7 @@ async function main() {
     const {workspaceId, windowId} = deserializeState(state)
     const win = brim.windows.getWindow(windowId)
 
-    brim.activate()
+    brim.activate(windowId)
 
     sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
   })
