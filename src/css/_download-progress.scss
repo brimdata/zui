@@ -1,7 +1,7 @@
 .download-progress {
   position: relative;
   background: var(--cello);
-  
+
   &.complete .progress-value {
     background-color: var(--green);
   }
