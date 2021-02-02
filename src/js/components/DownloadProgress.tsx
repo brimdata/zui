@@ -6,7 +6,6 @@ import {State} from "../state/types"
 import {reactElementProps} from "../test/integration"
 import Packets from "../state/Packets"
 import View from "../state/View"
-import {error} from "electron-log"
 
 type Props = {
   downloads: any[]
