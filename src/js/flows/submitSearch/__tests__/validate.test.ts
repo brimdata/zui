@@ -39,3 +39,13 @@ test("Validates the zql", () => {
     /Expected [\s\S]* but end of input found\./
   )
 })
+
+test("Checks for parallel procs", () => {
+  dispatch(
+    SearchBar.changeSearchBarInput("files | split ( => count() => head 1)")
+  )
+  submit().catch((e) => e)
+  expect(select(SearchBar.getSearchBarError)).toMatch(
+    /Parallel procs are not yet supported in Brim./
+  )
+})
