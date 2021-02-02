@@ -74,6 +74,8 @@ jobs:
         node-version: [12.x]
     container:
       image: centos:8
+      ports:
+        - 8022:8022
       env:
         # This environment variable causes chrome to run with no sandbox- needed
         # whenever chrome is run as root.
