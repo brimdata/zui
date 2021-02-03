@@ -180,7 +180,7 @@ function buildDetailActions() {
       label: "Whois Lookup",
       listener(dispatch, data: zng.SerializedField) {
         const field = zng.Field.deserialize(data)
-        dispatch(Modal.show("whois", {addr: field.data.getValue()}))
+        dispatch(Modal.show("whois", {addr: field.data.value}))
       }
     })
   }
