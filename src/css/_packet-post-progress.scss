@@ -52,10 +52,10 @@
   .warnings.disabled {
     pointer-events: none;
     svg {
-      fill: $white-6;
+      fill: var(--cloudy);
     }
     label {
-      color: $white-6;
+      color: var(--cloudy);
     }
   }
 }

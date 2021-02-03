@@ -28,7 +28,7 @@
     border-radius: 4px;
 
     &:hover {
-      background-color: $coconut;
+      background-color: var(--coconut);
     }
 
     &:active {
@@ -39,7 +39,7 @@
   .space-link {
     @include label-small;
     line-height: 18px;
-    color: $aqua;
+    color: var(--aqua);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -78,12 +78,12 @@
         background-color: rgba(0, 0, 0, 0.15);
       }
       .progress-fill {
-        background-color: $white-1;
+        background-color: white;
       }
     }
 
     &:hover {
-      background: $blue;
+      background: var(--havelock);
     }
   }
 

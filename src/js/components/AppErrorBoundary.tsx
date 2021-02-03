@@ -31,15 +31,6 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
             Error
           </h1>
           <pre>{error.stack}</pre>
-          <h5>Possible Solutions</h5>
-          <ul>
-            <li>
-              Reload the pane <code>View -&gt; Reload</code>
-            </li>
-            <li>
-              Reset the state <code>Window -&gt; Reset State</code>
-            </li>
-          </ul>
         </div>
       </div>
     )

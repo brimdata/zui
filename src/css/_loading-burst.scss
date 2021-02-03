@@ -20,12 +20,12 @@
   }
 
   .burst-1 {
-    background: $green;
+    background: var(--green);
     animation: burst 1s infinite;
   }
 
   .burst-2 {
-    background: $green;
+    background: var(--green);
     animation: burst 1s 200ms infinite;
   }
 }

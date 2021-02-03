@@ -1,22 +1,11 @@
-$filter-tree-line-color: $gray-5;
+$filter-tree-line-color: var(--cloudy);
 
 .filter-tree {
   height: 100%;
-  color: $white-1;
+  color: white;
   margin-top: 10px;
   user-select: none;
 
-  .warning-body {
-    display: flex;
-    align-items: center;
-    svg {
-      fill: $yellow;
-      height: 11px;
-      width: 11px;
-      margin-right: 12px;
-      margin-bottom: 3px;
-    }
-  }
   .filter-tree-parent {
     display: flex;
     align-items: center;
@@ -26,7 +15,7 @@ $filter-tree-line-color: $gray-5;
 }
 
 .filter-tree-parent:hover {
-  background: $white-3;
+  background: var(--hover-light-bg);
 }
 
 .filter-tree-node {
@@ -72,7 +61,7 @@ $filter-tree-line-color: $gray-5;
     p {
       @include label-small;
       line-height: 16px;
-      color: $aqua;
+      color: var(--aqua);
       padding: 2px;
       margin: 0 2px;
       overflow-x: hidden;
@@ -91,16 +80,16 @@ $filter-tree-line-color: $gray-5;
   }
 
   &.pinned > .filter-tree-parent > .filter-node {
-    background: $filter-node-background;
+    background: var(--green);
     p {
-      color: $filter-node-foreground;
+      color: white;
     }
   }
 
   &.active > .filter-tree-parent > .filter-node {
-    background: $gray-4;
+    background: var(--slate);
     p {
-      color: $filter-node-foreground;
+      color: white;
     }
   }
 }

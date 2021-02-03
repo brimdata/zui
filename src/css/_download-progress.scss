@@ -1,10 +1,9 @@
 .download-progress {
   position: relative;
-  background: $gray-7;
-  border-top: 2px solid $gray-8;
+  background: var(--cello);
 
   &.complete .progress-value {
-    background-color: $green;
+    background-color: var(--green);
   }
 
   .progress-bar {
@@ -13,7 +12,7 @@
   }
 
   .progress-value {
-    background-color: $yellow;
+    background-color: var(--yellow);
     height: 100%;
     border-radius: 0 8px 8px 0;
     width: 0%;
@@ -24,12 +23,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    &.progress {
-    }
-
-    &.complete {
-    }
   }
 
   .message {
@@ -37,22 +30,5 @@
     padding: 12px;
     white-space: nowrap;
     color: white;
-  }
-
-  .panel-button {
-    color: white;
-    margin-right: 12px;
-
-    &.open {
-      background: $green;
-    }
-
-    &.open:hover {
-      background: $gray-8;
-    }
-
-    &.cancel:hover {
-      background: $red;
-    }
   }
 }

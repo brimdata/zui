@@ -6,7 +6,7 @@ import {Toolbar} from "./Toolbar/mod"
 import SearchHeaderChart from "./SearchHeaderChart"
 
 const Wrap = styled.div`
-  background: var(--chrome-gradient);
+  background: var(--ivory);
   z-index: 1;
   padding: 12px;
   user-select: none;

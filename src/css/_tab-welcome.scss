@@ -1,6 +1,6 @@
 .tab-welcome {
   animation: fadein 300ms;
-  background: linear-gradient(to bottom, white 25%, $snow);
+  background: linear-gradient(to bottom, white 25%, var(--snow));
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   padding: 0 70px;
 
   a {
-    color: $blue-dark;
+    color: var(--havelock);
     text-decoration: underline;
     cursor: pointer;
   }

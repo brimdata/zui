@@ -1,8 +1,8 @@
-$tab-inactive-color: $cloudy;
+$tab-inactive-color: var(--cloudy);
 $tab-hover-color: white;
-$tab-active-color: $aqua;
+$tab-active-color: var(--aqua);
 $tab-hover-bg: rgba(255, 255, 255, 0.1);
-$tab-active-bg: $snow;
+$tab-active-bg: var(--snow);
 $tab-transition-duration: 200ms;
 $tab-border-radius-top: 8px;
 $tab-border-radius-bottom: 6px;
@@ -115,7 +115,7 @@ $tab-border-radius-bottom: 6px;
     }
     &:hover {
       svg {
-        fill: $white-1;
+        fill: white;
       }
       &:after {
         transition: transform 100ms;

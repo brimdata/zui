@@ -23,7 +23,7 @@ const ControlListItem = styled.li`
 
   p {
     text-decoration: underline;
-    color: ${(props) => props.theme.colors.havelock};
+    color: var(--havelock);
   }
 `
 

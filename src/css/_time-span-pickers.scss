@@ -63,7 +63,7 @@
     position: absolute;
     width: 8px;
     height: 8px;
-    background: $blue;
+    background: var(--havelock);
     top: calc(50% - 4px);
     left: -4px;
     border-radius: 50%;

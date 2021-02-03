@@ -5,7 +5,7 @@
 html,
 body {
   font-family: $body-font;
-  color: $aqua;
+  color: var(--aqua);
   margin: 0;
   height: 100%;
   width: 100%;
@@ -53,6 +53,6 @@ code {
 
 .using-keyboard {
   :focus {
-    outline: auto 5px $havelock;
+    outline: auto 5px var(--havelock);
   }
 }

@@ -37,26 +37,20 @@
   }
 
   .pin-button {
-    @include button-reset;
-    background-color: $cloudy;
-    &:hover {
-      background: darken($cloudy, 5%);
-    }
-
-    &:active,
-    .active {
-      background: darken($cloudy, 10%);
-    }
+    border: none;
+    font-family: $body-font;
+    background-color: var(--cloudy);
     min-height: 17px;
     border-radius: 0px 3px 3px 0px;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    justify-content: center;
     align-self: flex-start;
 
     svg {
-      fill: lighten($aqua, 15%);
+      fill: var(--slate);
       stroke: none;
       width: 10px;
       height: 10px;

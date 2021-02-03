@@ -7,7 +7,7 @@
   overflow: hidden;
 
   &:hover {
-    background-color: $coconut;
+    background-color: var(--coconut);
   }
 
   &:active {
@@ -17,7 +17,7 @@
 
 .finding-card {
   flex: 1;
-  color: $aqua;
+  color: var(--aqua);
   user-select: none;
   transition: background 150ms;
   display: flex;
@@ -28,7 +28,7 @@
     display: flex;
     align-items: center;
     margin-left: 6px;
-    color: $aqua;
+    color: var(--aqua);
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -47,22 +47,9 @@
   }
 
   p.pin {
-    color: $white-1;
-    background: $green;
+    color: white;
+    background: var(--green);
     border-radius: 3px;
     flex-shrink: 0;
-  }
-
-  .warning-body {
-    display: flex;
-    align-items: center;
-
-    svg {
-      fill: $yellow;
-      height: 11px;
-      width: 11px;
-      margin-right: 12px;
-      margin-bottom: 3px;
-    }
   }
 }

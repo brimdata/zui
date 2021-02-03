@@ -23,13 +23,13 @@ const CheckboxContainer = styled.div`
 
 const Icon = styled.svg`
   fill: none;
-  stroke: ${(props) => props.theme.colors.white};
+  stroke: white;
   stroke-width: 3px;
 `
 
 const Label = styled.label`
   margin-left: 7px;
-  color: ${(props) => props.theme.colors.slate};
+  color: var(--slate);
   ${(props) => props.theme.typography.labelSmall}
 `
 
@@ -37,13 +37,10 @@ const StyledCheckbox = styled.div<{checked: boolean}>`
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: ${(props) =>
-    props.checked ? props.theme.colors.havelock : props.theme.colors.white};
+  background: ${(props) => (props.checked ? "var(--havelock)" : "white")};
   border-radius: 3px;
   transition: all 150ms;
-  border: 1px solid
-    ${(props) =>
-      props.checked ? props.theme.colors.white : props.theme.colors.lead};
+  border: 1px solid ${(props) => (props.checked ? "white" : "var(--lead)")};
 
   ${Icon} {
     visibility: ${(props) => (props.checked ? "visible" : "hidden")};

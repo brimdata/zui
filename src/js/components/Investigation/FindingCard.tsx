@@ -14,7 +14,7 @@ import usePopupMenu from "../hooks/usePopupMenu"
 import {remote} from "electron"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
-    fill: ${(props) => props.theme.colors.lead};
+    fill: var(--lead);
     min-width: 13px;
     width: 13px;
     min-height: 13px;

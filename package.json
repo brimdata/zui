@@ -131,7 +131,6 @@
     "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
-    "react-day-picker": "^7.4.8",
     "react-dom": "^16.13.1",
     "react-grid-layout": "^1.2.0",
     "react-hot-toast": "^1.0.1",

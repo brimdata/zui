@@ -15,7 +15,7 @@ $pop-menu-padding: $space-s;
   z-index: 1;
   margin: 0;
   text-align: left;
-  background-color: $white-1;
+  background-color: white;
   position: relative;
   border-radius: 5px;
   display: inline-block;
@@ -36,34 +36,30 @@ $pop-menu-padding: $space-s;
     user-select: none;
 
     &:hover {
-      background-color: $blue;
+      background-color: var(--havelock);
       color: white;
-    }
-
-    &:active {
-      background-color: $blue-light;
     }
   }
 
   .disabled {
     cursor: auto;
-    color: $white-9;
+    color: var(--lead);
     &:hover {
       background-color: inherit;
-      color: $white-9;
+      color: var(--lead);
     }
   }
 
   hr {
     border: none;
-    border-top: 1px solid $white-5;
+    border-top: 1px solid var(--cloudy);
     margin: 8px 0;
   }
 
   .pop-menu-pointer {
     margin: 0;
     padding: 0;
-    fill: $white-1;
+    fill: white;
     position: absolute;
     height: 16px;
   }
@@ -71,7 +67,7 @@ $pop-menu-padding: $space-s;
 
 .test-anchor {
   position: fixed;
-  background-color: $blue;
+  background-color: var(--havelock);
   height: 100px;
   width: 100px;
   border-radius: 50%;
