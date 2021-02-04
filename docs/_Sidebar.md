@@ -14,6 +14,7 @@
 **Cookbooks**
 
 - [[Remote zqd]]
+- [[Query Library Transfer]]
 
 **Developer Resources**
 
