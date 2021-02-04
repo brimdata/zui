@@ -24,3 +24,4 @@ export type ModalName =
   | "view-workspace"
   | "whois"
   | "zq"
+  | "columns"
