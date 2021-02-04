@@ -10,7 +10,7 @@ import useCallbackRef from "../hooks/useCallbackRef"
 import {useDispatch} from "react-redux"
 import {isEmpty} from "lodash"
 import MacSpinner from "../MacSpinner"
-import ToolbarButton from "../Toolbar/Button"
+import ToolbarButton from "../../../../app/toolbar/button"
 import useEventListener from "../hooks/useEventListener"
 import {Workspace} from "../../state/Workspaces/types"
 

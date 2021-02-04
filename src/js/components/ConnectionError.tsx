@@ -2,7 +2,7 @@ import React, {useState} from "react"
 
 import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
-import ToolbarButton from "./Toolbar/Button"
+import ToolbarButton from "../../../app/toolbar/button"
 import {useDispatch} from "react-redux"
 import {initCurrentTab} from "../flows/initCurrentTab"
 import {Workspace} from "../state/Workspaces/types"

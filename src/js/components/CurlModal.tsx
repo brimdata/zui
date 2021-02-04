@@ -14,7 +14,7 @@ import {
   Scrollable,
   Title
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "./Toolbar/Button"
+import ToolbarButton from "../../../app/toolbar/button"
 import useEnterKey from "./hooks/useEnterKey"
 
 export default function CurlModalBox({onClose}) {

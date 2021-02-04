@@ -6,7 +6,7 @@ import {
   Footer,
   SmallTitle
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "./Toolbar/Button"
+import ToolbarButton from "../../../app/toolbar/button"
 import exportResults from "../flows/exportResults"
 import {ipcRenderer} from "electron"
 import {useDispatch} from "react-redux"
