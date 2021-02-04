@@ -10,7 +10,6 @@ import MenuAction from "./MenuAction"
 import PinAction from "./PinAction"
 import Spinner from "./Spinner"
 import SubmitButton from "./SubmitButton"
-import TargetSelect from "./TargetSelect"
 import SaveAction from "./SaveAction"
 
 const Wrap = styled.div`
@@ -45,7 +44,8 @@ export function SearchBar() {
       <HistoryArrows />
       <Group flex={1}>
         <InputBackdrop>
-          <TargetSelect />
+          {/* Disabling target select for now to force search by events and disallow index searches */}
+          {/*<TargetSelect />*/}
           <Input />
           <Spinner />
           <InputActions>
