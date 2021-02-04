@@ -79,7 +79,7 @@ type Props = {
 const WorkspaceForm = ({onClose, workspace}: Props) => {
   const dispatch = useDispatch()
   const [errors, setErrors] = useState([])
-  const [formRef, setFormRef] = useCallbackRef()
+  const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const config: FormConfig = {

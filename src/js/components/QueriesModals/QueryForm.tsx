@@ -98,7 +98,7 @@ type Props = {
 const QueryForm = ({onClose, query, value}: Props) => {
   const dispatch = useDispatch()
   const [errors, setErrors] = useState([])
-  const [formRef, setFormRef] = useCallbackRef()
+  const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
   const queriesRoot = useSelector(Queries.getRaw)
 
   const config: FormConfig = {

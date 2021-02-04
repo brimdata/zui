@@ -17,7 +17,7 @@ type Props = {
 }
 
 export default function FileInput(props: Props) {
-  const [picker, ref] = useCallbackRef()
+  const [picker, ref] = useCallbackRef<HTMLButtonElement>()
   const [bindDropzone, dragging] = useDropzone(onDrop)
   const [value, setValue] = useState(props.defaultValue)
 
