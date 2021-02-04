@@ -14,6 +14,7 @@ import {SearchFormat} from "../../../zealot"
 import InputLabel from "./common/forms/InputLabel"
 import {defaultModalButton} from "../test/locators"
 import {toast} from "react-hot-toast"
+import {AppDispatch} from "../state/types"
 
 const RadioButtons = styled.div`
   display: flex;
@@ -60,22 +61,32 @@ const showDialog = (format) => {
 }
 
 const ExportModal = ({onClose}) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const [format, setFormat] = useState("zng")
 
   const onExport = async () => {
     const {canceled, filePath} = await showDialog(format)
     if (canceled) return
 
-    // do not wait to close modal
     toast.promise(
-      Promise.resolve(
-        dispatch(exportResults(filePath, format as SearchFormat))
-      ),
+      dispatch(exportResults(filePath, format as SearchFormat)),
       {
         loading: "Exporting...",
         success: "Export Complete",
         error: "Error Exporting"
+      },
+      {
+        loading: {
+          // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
+          // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
+          duration: 2 ** 31 - 1
+        },
+        success: {
+          duration: 3000
+        },
+        error: {
+          duration: 5000
+        }
       }
     )
 
