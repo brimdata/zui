@@ -45,7 +45,8 @@ export function SearchBar() {
       <HistoryArrows />
       <Group flex={1}>
         <InputBackdrop>
-          <TargetSelect />
+          {/* Disabling target select for now to force search by events and disallow index searches */}
+          {/*<TargetSelect />*/}
           <Input />
           <Spinner />
           <InputActions>
