@@ -5,8 +5,9 @@ import {Center, Left, PaneHeader, PaneTitle, Right} from "../Pane"
 import Current from "../../state/Current"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
-import PacketsButton from "../Toolbar/PacketsButton"
 import DetailPane from "app/detail/Pane"
+import usePackets from "app/toolbar/hooks/usePackets"
+import ToolbarAction from "app/toolbar/action"
 
 export default function LogDetailsWindow() {
   const dispatch = useDispatch()
@@ -28,10 +29,20 @@ export default function LogDetailsWindow() {
           <PaneTitle>Log details for space: {space.name}</PaneTitle>
         </Center>
         <Right>
-          <PacketsButton label={false} id="detail-window-packets" />
+          <PacketsButton />
         </Right>
       </PaneHeader>
       <DetailPane />
+    </div>
+  )
+}
+
+const PacketsButton = () => {
+  const packets = usePackets()
+  packets.label = undefined
+  return (
+    <div>
+      <ToolbarAction {...packets} />
     </div>
   )
 }
