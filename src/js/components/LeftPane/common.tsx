@@ -76,6 +76,8 @@ export const StyledViewSelect = styled.div`
   align-items: center;
   border-radius: 3px;
   color: var(--slate);
+  white-space: nowrap;
+  overflow: hidden;
 
   svg {
     stroke: var(--slate);
