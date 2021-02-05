@@ -40,8 +40,10 @@ function getGridLayout(tiles) {
 }
 
 const Title = styled.h2`
-  margin: 12px;
   ${(p) => p.theme.typography.headingPage}
+  margin: 24px 12px 12px 12px;
+  text-align: center;
+  user-select: none;
 `
 
 const SummaryUI = ({title, tiles, onLayoutChange}) => {

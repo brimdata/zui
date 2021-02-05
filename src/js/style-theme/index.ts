@@ -17,7 +17,7 @@ const headingList = css`
 
 const headingPage = css`
   font-family: system-ui, sans-serif;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 1.2;
   font-weight: 700;
 `
