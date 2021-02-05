@@ -15,6 +15,7 @@
 
 - [[Remote zqd]]
 - [[Query Library Transfer]]
+- [[Joining Data]]
 
 **Developer Resources**
 

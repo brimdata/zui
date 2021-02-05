@@ -20,6 +20,7 @@ effective use of the Brim desktop application and related tools.
 
 - [[Remote zqd]]
 - [[Query Library Transfer]]
+- [[Joining Data]]
 
 ## Developer Resources
 
