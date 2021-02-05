@@ -36,7 +36,7 @@ type Tile = {
 }
 
 function getGridLayout(tiles) {
-  return tiles.map((t) => ({i: t.id, ...t.layout}))
+  return tiles.map((t) => ({i: t.id, ...t.layout, static: true}))
 }
 
 const Title = styled.h2`

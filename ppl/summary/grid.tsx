@@ -6,7 +6,6 @@ import {ParentSize} from "@vx/responsive"
 
 const BG = styled.div`
   height: 100%;
-
   .react-grid-placeholder {
     opacity: 1;
     background: ${transparentize(0.99, cssVar("--havelock") as string)};

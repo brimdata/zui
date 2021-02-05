@@ -1,3 +1,4 @@
+import threeDots from "./three-dots.svg"
 import chart from "./chart.svg"
 import grid from "./grid.svg"
 import list from "./list.svg"
@@ -17,5 +18,6 @@ export default {
   export: exportIcon,
   columns,
   "chevron-down": chevronDown,
-  "double-chevron-right": doubleChevronRight
+  "double-chevron-right": doubleChevronRight,
+  "three-dots": threeDots
 }

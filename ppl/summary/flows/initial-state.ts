@@ -58,37 +58,37 @@ export const initialTiles: Tile[] = [
   {
     id: nanoid(),
     title: "Top Alerts by Severity",
-    query: `event_type=alert | cut src_ip, dest_ip, alert.severity, alert.signature| sort -r alert.severity | uniq -c | head 10`,
+    query: `event_type=alert | cut src_ip, dest_ip, alert.severity, alert.signature| sort -r alert.severity | uniq -c | sort -r _uniq | head 10`,
     layout: {x: 2, y: 0, w: 2, h: 9},
-    format: {type: "table"}
+    format: {type: "table", x: "_uniq"}
   },
   {
     id: nanoid(),
     title: "Severity 3 Alert Signatures by Source",
     query: `event_type=alert alert.severity=3 | count() by src_ip, alert.signature | sort -r count | head 10`,
     layout: {x: 0, y: 0, w: 2, h: 9},
-    format: {type: "table"}
+    format: {type: "table", x: "count"}
   },
   {
     id: nanoid(),
     title: "Severity 3 Alert Signatures by Destination",
     query: `event_type=alert alert.severity=3 | count() by dest_ip, alert.signature | sort -r count | head 10`,
     layout: {x: 2, y: 0, w: 2, h: 9},
-    format: {type: "table"}
+    format: {type: "table", x: "count"}
   },
   {
     id: nanoid(),
     title: "Severity 2 Alert Signatures by Source",
     query: `event_type=alert alert.severity=2 | count() by src_ip, alert.signature | sort -r count | head 10`,
     layout: {x: 0, y: 0, w: 2, h: 9},
-    format: {type: "table"}
+    format: {type: "table", x: "count"}
   },
   {
     id: nanoid(),
     title: "Severity 2 Alert Signatures by Destination",
     query: `event_type=alert alert.severity=2 | count() by dest_ip, alert.signature | sort -r count | head 10`,
     layout: {x: 2, y: 0, w: 2, h: 9},
-    format: {type: "table"}
+    format: {type: "table", x: "count"}
   }
 ]
 

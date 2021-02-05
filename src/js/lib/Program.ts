@@ -18,6 +18,10 @@ export const parse = (string: Program) => {
   return [ast, error]
 }
 
+export const removeHeadProc = (program: Program) => {
+  return program.replace(/\|\s*head\s+\d*/i, "")
+}
+
 export const addHeadProc = (program: Program, count: number) => {
   const [ast] = parse(program)
   if (brim.ast(ast).proc(HEAD_PROC)) return program

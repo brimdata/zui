@@ -9,9 +9,10 @@ type R = [zng.Record[], boolean]
 export default function useSearch(query: string, deps?: any[]): R {
   const dispatch = useDispatch<AppDispatch>()
   const [records, setRecords] = useState<zng.Record[]>([])
-  const [isFetching, setIsFetching] = useState<boolean>(false)
+  const [isFetching, setIsFetching] = useState<boolean>(true)
 
   useEffect(() => {
+    setIsFetching(true)
     const {response, abort} = dispatch(search({query}))
     response.chan(0, (records) => setRecords(records))
     response.status((status) => setIsFetching(status === "FETCHING"))
