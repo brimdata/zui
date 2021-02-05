@@ -27,8 +27,8 @@ export default function Grid({children, layout, onLayoutChange}) {
             layout={layout}
             onLayoutChange={onLayoutChange}
             className="layout"
-            cols={12}
-            rowHeight={48}
+            cols={4}
+            rowHeight={24}
             width={width}
             margin={[12, 12]}
           >

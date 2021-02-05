@@ -28,18 +28,15 @@ const BG = styled.div`
   }
 
   .react-resizable-handle {
+    // static for now
     opacity: 0;
-  }
-
-  &:hover .react-resizable-handle {
-    opacity: 1;
   }
 `
 
 const Title = styled.h2`
   ${(p) => p.theme.typography.headingList}
   margin-bottom: 24px;
-  cursor: move;
+  cursor: default;
 `
 
 type Props = {
@@ -74,7 +71,7 @@ const Tile = forwardRef<HTMLDivElement, Props>(function Tile(
   )
 })
 
-function Format({format, records}) {
+const Format = React.memo(function Format({format, records}) {
   switch (format.type) {
     case "bar-chart":
       return (
@@ -111,6 +108,6 @@ function Format({format, records}) {
     default:
       return null
   }
-}
+})
 
 export default Tile
