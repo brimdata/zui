@@ -35,7 +35,9 @@ const BG = styled.div`
 
 const Title = styled.h2`
   ${(p) => p.theme.typography.headingList}
-  margin-bottom: 24px;
+  font-size: 8px;
+  color: var(--slate);
+  margin-bottom: 18px;
   cursor: default;
 `
 
@@ -102,7 +104,7 @@ const Format = React.memo(function Format({format, records}) {
         </ParentSize>
       )
     case "table":
-      return <Table records={records} />
+      return <Table records={records} x={format.x} />
     case "number":
       return <Number record={records[0]} />
     default:

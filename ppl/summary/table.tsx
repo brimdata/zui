@@ -1,6 +1,8 @@
 import React from "react"
 import {createCell} from "src/js/brim/cell"
 import styled from "styled-components"
+import {scaleLinear} from "@vx/scale"
+import {cssVar, transparentize} from "polished"
 
 type GridProps = {templateColumns: string | undefined}
 
@@ -8,6 +10,7 @@ const Grid = styled.div<GridProps>`
   display: grid;
   grid-template-columns: ${(p: GridProps) => p.templateColumns};
   ${(p) => p.theme.typography.labelSmall}
+  position: relative;
 `
 
 const Row = styled.div`
@@ -66,18 +69,52 @@ const HeaderRow = styled(Row)`
     line-height: 24px;
   }
 `
+const count = cssVar("--havelock") as string
+
+const Bar = styled.div<{top: number; percent: number; opacity: number}>`
+  left: 1px;
+  top: ${(p) => p.top + 23 + 20}px;
+  position: absolute;
+  height: 2px;
+  width: ${(p) => p.percent}%;
+  opacity: ${(p) => p.opacity};
+  background: linear-gradient(
+    to right,
+    ${transparentize(0, count)},
+    ${transparentize(0, count)}
+  );
+`
 
 function getColSize(field) {
   if (field.data.getType() === "int") return "min-content"
   else return "auto"
 }
 
-export default function Table({records}) {
+function Bars({records, x}) {
+  if (!x) return null
+  const max = records[0]?.get(x).getValue()
+  const scale = scaleLinear({domain: [0, max], range: [0, 100]})
+  const opacityScale = scaleLinear({
+    domain: [0, records.length - 1],
+    range: [0.8, 0.05]
+  })
+  return records.map((rec, i) => (
+    <Bar
+      key={i}
+      top={i * 22}
+      percent={scale(rec.get(x).getValue())}
+      opacity={opacityScale(i)}
+    />
+  ))
+}
+
+export default function Table({records, x}) {
   const headers = records[0]?.flatten().getFields() || []
   const columns = headers.map(getColSize).join(" ")
 
   return (
     <Grid templateColumns={columns}>
+      <Bars records={records} x={x} />
       <HeaderRow>
         {headers.map((field, i) => (
           <HeaderCell className={field.data.getType()} key={i}>

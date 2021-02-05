@@ -18,6 +18,7 @@ type BarChart = {
 
 type Table = {
   type: "table"
+  x?: string
 }
 
 type Number = {

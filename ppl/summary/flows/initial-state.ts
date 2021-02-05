@@ -9,7 +9,8 @@ export const initialTiles: Tile[] = [
     query: `_path!="conn" _path!="capture_loss" _path!="reporter" | count() by _path | sort -r`,
     layout: {x: 0, y: 0, w: 2, h: 12},
     format: {
-      type: "table"
+      type: "table",
+      x: "count"
     }
   },
   {
@@ -17,14 +18,14 @@ export const initialTiles: Tile[] = [
     title: "Top DNS Queries",
     query: "_path=dns | count() by query | sort -r | head 10",
     layout: {x: 2, y: 0, w: 2, h: 12},
-    format: {type: "table"}
+    format: {type: "table", x: "count"}
   },
   {
     id: nanoid(),
     title: "Top Hosts by Throughput",
     query: `_path=conn | put total_bytes = orig_bytes + resp_bytes | sort -r total_bytes | cut id, orig_bytes, resp_bytes, total_bytes | head 10`,
     layout: {x: 0, y: 0, w: 4, h: 9},
-    format: {type: "table"}
+    format: {type: "table", x: "total_bytes"}
   },
   {
     id: nanoid(),
@@ -52,7 +53,7 @@ export const initialTiles: Tile[] = [
     title: "Alert Signature by Severity and Count",
     query: `event_type=alert | count() by alert.severity,alert.signature | sort -r alert.severity, count | head 10`,
     layout: {x: 0, y: 0, w: 2, h: 9},
-    format: {type: "table"}
+    format: {type: "table", x: "count"}
   },
   {
     id: nanoid(),
