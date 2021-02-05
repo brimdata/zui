@@ -39,41 +39,20 @@
     }
   }
 
-  // &.dark (default)
   .circle {
-    background-color: $gray-5;
+    background-color: white;
 
     &:hover {
-      background-color: lighten($gray-5, 2%);
+      background-color: darken(white, 3%);
     }
 
     &:active {
-      background-color: $gray-9;
-    }
-
-    svg {
-      fill: white;
-      stroke: white;
+      background-color: white;
     }
   }
 
-  &.light {
-    .circle {
-      background-color: white;
-
-      &:hover {
-        background-color: darken(white, 3%);
-      }
-
-      &:active {
-        background-color: white;
-      }
-    }
-
-    svg {
-      fill: $gray-5;
-      stroke: $gray-5;
-    }
+  svg {
+    fill: var(--slate);
   }
 
   &.left {

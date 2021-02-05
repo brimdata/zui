@@ -18,7 +18,7 @@
     cursor: default;
 
     &:hover {
-      background: $white-3;
+      background: var(--hover-light-bg);
     }
 
     &.active,
@@ -29,12 +29,12 @@
       &:last-child {
         border-radius: 0 0 3px 3px;
       }
-      background: $blue;
+      background: var(--havelock);
       color: white;
     }
 
     &.error {
-      color: $white-9;
+      color: var(--lead);
     }
   }
 }

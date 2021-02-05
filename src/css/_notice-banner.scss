@@ -15,7 +15,7 @@
     user-select: none;
 
     &:hover {
-      color: $gray-6;
+      color: var(--slate);
     }
 
     &:active {

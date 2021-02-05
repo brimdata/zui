@@ -16,7 +16,6 @@ export default class DownloadProgress extends React.Component<Props> {
   render() {
     const {downloads, downloadsIsOpen} = this.props
     if (!downloadsIsOpen || downloads.length === 0) return null
-
     const {percentComplete, error} = downloads[0]
     const complete = percentComplete >= 1
 

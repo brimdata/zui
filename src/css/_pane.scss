@@ -1,11 +1,5 @@
-$pane-background-color: $white-3;
-$pane-border-color: $white-5;
-$pane-header-height: 42px;
-$pane-header-background-color: $white-5;
-
 .pane {
   position: relative;
-  background: $pane-background-color;
   display: flex;
   flex-direction: column;
 }
@@ -13,13 +7,10 @@ $pane-header-background-color: $white-5;
 .pane-header {
   user-select: none;
   position: relative;
-  border-bottom: 1px solid $pane-border-color;
   svg {
-    fill: $gray-7;
-    stroke: $gray-7;
+    fill: var(--slate);
   }
   flex-shrink: 0;
-  height: $pane-header-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -49,9 +40,9 @@ $pane-header-background-color: $white-5;
 }
 
 .pane-left {
-  border-right: 1px solid $pane-border-color;
+  border-right: 1px solid var(--pane-border);
 }
 
 .pane-right {
-  border-left: 1px solid $pane-border-color;
+  border-left: 1px solid var(--pane-border);
 }

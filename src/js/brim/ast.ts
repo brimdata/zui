@@ -69,10 +69,9 @@ function getProcs(ast) {
 }
 
 function collectProcs(proc, list) {
+  list.push(proc)
   if (COMPOUND_PROCS.includes(proc.op)) {
     for (const p of proc.procs) collectProcs(p, list)
-  } else {
-    list.push(proc)
   }
 }
 

@@ -53,23 +53,8 @@
   }
 
   .pane-header {
-    background: $white-3;
-    border-bottom: 1px solid $white-5;
-  }
-
-  .star-button {
-    transition: background-color 0ms;
-    svg {
-      fill: none;
-    }
-  }
-
-  .star-button.starred {
-    background-color: $yellow;
-    svg {
-      stroke: $white-9;
-      fill: $yellow;
-    }
+    background: var(--ivory);
+    box-shadow: 0 0.5px 0px var(--cloudy);
   }
 
   .close-button {

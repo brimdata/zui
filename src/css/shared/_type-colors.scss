@@ -23,4 +23,8 @@
   &.set\[bool\] {
     color: var(--blue);
   }
+
+  &.null {
+    color: var(--cloudy);
+  }
 }

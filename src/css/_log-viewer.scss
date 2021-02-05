@@ -36,15 +36,15 @@
   opacity: 1;
 
   &.even {
-    background: $table-stripe-color;
+    background: var(--table-stripe-bg);
   }
 
   &:hover {
-    background: $table-stripe-hover;
+    background: var(--hover-light-bg);
   }
 
   &.highlight {
-    background: $havelock;
+    background: var(--havelock);
     .field-cell {
       color: white;
     }
@@ -54,7 +54,7 @@
 .viewer .end-message {
   text-align: center;
   font-size: 12px;
-  color: $white-9;
+  color: var(--lead);
   line-height: 100px;
 }
 

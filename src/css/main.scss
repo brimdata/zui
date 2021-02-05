@@ -1,7 +1,6 @@
 /* This file is for your main application css. */
 
 /* Third-party libs */
-@import "react-day-picker";
 @import "../../node_modules/react-grid-layout/css/styles";
 @import "../../node_modules/react-resizable/css/styles";
 /* Settings */
@@ -30,19 +29,12 @@
 @import "layout";
 @import "modal";
 @import "conn-versation";
-@import "uid-waterfall";
-@import "context-menu";
 @import "chart";
-@import "no-events-found";
-@import "form-inputs";
-@import "day-picker";
 @import "filter-node";
 @import "filter-tree";
-@import "space-switcher";
 @import "arrows";
 @import "log-viewer";
 @import "log-detail";
-@import "header";
 @import "control-bar";
 @import "pins";
 @import "search-page";
@@ -63,7 +55,6 @@
 @import "whois-modal";
 @import "status-bar";
 @import "portal";
-@import "menu-list";
 @import "message-box";
 @import "notice-banner";
 @import "circle-chevron";
@@ -72,25 +63,19 @@
 @import "loading-message";
 @import "loading-burst";
 @import "curl-modal";
-@import "toggle";
 @import "inline-table";
 @import "hash-correlation";
 @import "inline-table-loading";
 @import "table";
 @import "latest-error";
-@import "investigation-header";
 @import "finding-card";
 @import "span-duration";
-@import "finding-span-card";
 @import "expand-button";
-@import "finding-detail";
-@import "form";
 @import "pop-menu";
 @import "button-row";
 @import "debug-modal";
 @import "click-feedback";
 @import "header-cell";
-@import "menu-bar-button";
 @import "field-cell";
 @import "time-span-pickers";
 @import "input-suggestions";

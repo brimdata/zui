@@ -21,13 +21,13 @@ const WorkspacePickerWrapper = styled.div`
 
   label {
     ${(props) => props.theme.typography.labelBold};
-    color: ${(props) => props.theme.colors.aqua};
+    color: var(--aqua);
   }
 
   svg {
     height: 11px;
     width: 11px;
-    stroke: ${(props) => props.theme.colors.slate};
+    stroke: var(--slate);
     margin-left: 6px;
   }
 ` as ComponentType<any>

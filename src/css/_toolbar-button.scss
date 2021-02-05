@@ -18,7 +18,7 @@
     margin: 0 4px;
 
     svg {
-      fill: lighten($aqua, 15%);
+      fill: var(--slate);
       height: 16px;
       width: 16px;
     }
@@ -27,7 +27,7 @@
   .text {
     @include label-small;
     white-space: nowrap;
-    color: $aqua;
+    color: var(--aqua);
     display: flex;
     line-height: 16px;
     height: 16px;
@@ -38,7 +38,7 @@
   .dropdown-arrow {
     display: flex;
     height: 16px;
-    stroke: $gray-5;
+    stroke: var(--slate);
     stroke-width: 3px;
     transition: transform 500ms;
     margin: 0 4px;
@@ -58,7 +58,7 @@
   }
 
   &.dragging {
-    background: $blue;
+    background: var(--havelock);
     .text {
       color: white;
     }
@@ -74,6 +74,6 @@
     color: white;
   }
   &:active:not(:disabled) {
-    background: darken($havelock, 15%);
+    background: var(--azure);
   }
 }

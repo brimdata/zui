@@ -27,7 +27,7 @@
 
   &:hover {
     z-index: 1;
-    border: 1px dashed $gray-9;
+    border: 1px dashed var(--lead);
   }
 }
 
@@ -41,7 +41,7 @@
 .compound-field-extra {
   height: 25px;
   border: 1px solid transparent;
-  color: $white-7;
+  color: var(--lead);
 
   &.separator {
     margin-right: 6px;

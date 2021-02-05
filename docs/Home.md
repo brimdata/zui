@@ -19,6 +19,7 @@ effective use of the Brim desktop application and related tools.
 ## Cookbooks
 
 - [[Remote zqd]]
+- [[Query Library Transfer]]
 
 ## Developer Resources
 

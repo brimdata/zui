@@ -9,11 +9,7 @@
 .no-results {
   text-align: center;
   margin-top: 100px;
-  color: $white-9;
+  color: var(--lead);
   display: inline-block;
   @include label-small;
-
-  circle {
-    fill: $white-9 !important;
-  }
 }

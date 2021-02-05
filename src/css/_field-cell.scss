@@ -20,8 +20,4 @@
   &.event_type {
     @include path-tag;
   }
-
-  &.null {
-    color: $white-6;
-  }
 }

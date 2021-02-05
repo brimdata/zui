@@ -2,7 +2,6 @@
   min-width: 500px;
 
   .settings-form {
-    border: 1px solid $white-3;
     border-radius: 3px;
 
     a {
@@ -22,7 +21,7 @@
       justify-content: space-between;
       padding: 0 12px;
       height: 48px;
-      border-bottom: 1px solid $white-3;
+      border-bottom: 1px solid var(--ivory);
       position: relative;
 
       &:last-child {
@@ -40,7 +39,7 @@
       line-height: 1.5;
     }
     a {
-      color: $red;
+      color: var(--red);
       cursor: pointer;
       text-decoration: underline;
     }
@@ -57,7 +56,7 @@
     margin: 0;
     @include label-small;
     line-height: 14px;
-    background: $blue;
+    background: var(--havelock);
     color: white;
     padding: 0 6px;
     border-radius: 4px;

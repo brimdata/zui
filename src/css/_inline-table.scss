@@ -14,11 +14,11 @@
   }
 
   tbody tr:nth-child(odd) {
-    background: $table-stripe-color;
+    background: var(--table-stripe-bg);
   }
 
   tbody tr:hover {
-    background: $table-stripe-hover;
+    background: var(--hover-light-bg);
   }
 
   th,
@@ -34,7 +34,7 @@
     @extend .label;
     font-size: 9px;
     font-weight: bold;
-    color: $gray-6;
+    color: var(--slate);
   }
 
   td {

@@ -19,11 +19,11 @@ export default styled(StatusLight)<{status: WorkspaceStatus}>`
   fill: ${(p) => {
     switch (p.status) {
       case "connected":
-        return p.theme.colors.green
+        return "var(--green)"
       case "disconnected":
-        return p.theme.colors.red
+        return "var(--red)"
       default:
-        return p.theme.colors.lead
+        return "var(--lead)"
     }
   }};
 `

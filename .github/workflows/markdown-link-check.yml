@@ -1,16 +1,30 @@
 name: Markdown link check
 
 on:
+  schedule:
+    - cron: '5 8 * * *'
   pull_request:
-  push:
-    branches:
-      - master
+    paths:
+      - '**.md'
 
 jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          config-file: '.github/workflows/markdown-link-check-config.json'
+    - uses: actions/checkout@v1
+    - name: Extract branch name
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        config-file: .github/workflows/markdown-link-check-config.json
+    - name: Inform Slack users of link check failures
+      uses: tiloio/slack-webhook-action@v1.1.2
+      if: ${{ failure() && steps.extract_branch.outputs.branch == 'master' }}
+      with: 
+        slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_DOCS }}
+        slack_json: |
+          {
+            "username": "markdown-link-check",
+            "text": "Markdown link check failed: https://github.com/{{GITHUB_REPOSITORY}}/actions/runs/{{GITHUB_RUN_ID}}"
+          }

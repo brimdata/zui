@@ -1,13 +1,4 @@
 .inline-table-loading {
-  thead {
-    th {
-      color: $gray-1;
-      font-weight: normal;
-      font-size: 12px;
-      text-align: center;
-    }
-  }
-
   tr {
     height: 20px;
     &:hover {
@@ -41,12 +32,12 @@
 
   50% {
     transform: scaleX(1);
-    background-color: $table-stripe-color;
+    background-color: var(--table-stripe-bg);
   }
 
   60% {
     transform: scaleX(0.85);
-    background-color: $table-stripe-hover;
+    background-color: var(--hover-light-bg);
   }
 
   70% {

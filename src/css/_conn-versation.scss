@@ -10,7 +10,7 @@
   }
 
   .host {
-    border: 1px solid $white-5;
+    border: 1px solid var(--cloudy);
     border-radius: 3px;
   }
 
@@ -23,7 +23,7 @@
   .port {
     margin: 0;
     color: white;
-    background: $blue;
+    background: var(--havelock);
     font-size: 12px;
     text-align: center;
     line-height: 20px;
@@ -36,15 +36,15 @@
   }
 
   .port {
-    background: $blue-light;
+    background: #65bef6;
   }
 
   .responder {
     .ip {
-      background: $green;
+      background: var(--green);
     }
     .port {
-      background: $green-light;
+      background: #5ec4a8;
     }
   }
 
@@ -70,13 +70,13 @@
     hr {
       flex: 1;
       border: none;
-      border-bottom: 1px solid $yellow;
+      border-bottom: 1px solid var(--yellow);
       margin: 0;
     }
 
     .triangle {
-      fill: $yellow;
-      stroke: $yellow;
+      fill: var(--yellow);
+      stroke: var(--yellow);
       width: 10px;
     }
   }
