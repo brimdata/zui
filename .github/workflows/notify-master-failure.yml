@@ -6,6 +6,7 @@ on:
       - master
     workflows:
       - '**'
+      - '!Markdown link check'
     types:
       - completed
 
