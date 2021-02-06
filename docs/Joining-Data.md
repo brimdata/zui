@@ -4,9 +4,10 @@
 - [About Cookbooks](#about-cookbooks)
 - [Limitations](#limitations)
 - [Prepping Tools & Test Data](#prepping-tools--test-data)
-- [Joining Zeek SSL Records With SPL-SPT Data](#joining-zeek-ssl-records-with-spl-spt-data)
-- [Alternate Schemas For Non-Matches](#alternate-schemas-for-non-matches)
-- [Records Lacking a Join Key](#records-lacking-a-join-key)
+- [Examples](#examples)
+  * [Joining Zeek SSL Records With SPL-SPT Data](#joining-zeek-ssl-records-with-spl-spt-data)
+  * [Alternate Schemas For Non-Matches](#alternate-schemas-for-non-matches)
+  * [Records Lacking a Join Key](#records-lacking-a-join-key)
 - [Contact us!](#contact-us)
 
 # Summary
@@ -14,7 +15,7 @@
 While the out-of-the-box Zeek and Suricata data typically used in Brim is very
 useful on its own, you may want to further enrich it with additional data
 sources such as threat intelligence or domain/IP details. A common way to
-leverage such multiple sources in data technologies is to "join" them together.
+leverage multiple sources in data technologies is to "join" them together.
 
 The Z language includes a `join` processor that can be used for this. The
 processor is still new/experimental and represents the first of what will be
@@ -48,25 +49,24 @@ Before diving into the specifics of what's possible, here's an overview of
 some rough edges you may encounter as you work through the configurations
 described in this article.
 
-1. For those familiar with SQL, the current `join` implemention in Z can be
-thought of a similar to a [left outer join](https://en.wikipedia.org/wiki/Join_(SQL)#Left_outer_join)
+1. For those familiar with SQL, the current `join` implementation in Z can be
+thought of as similar to a [left outer join](https://en.wikipedia.org/wiki/Join_(SQL)#Left_outer_join)
 and hence applicable to use cases where that approach would apply.
 
 2. The current `join` implementation is a _merge_-style join that relies on
-each set of input records being sorted by the field being joined. The Z
+each stream of input records being sorted by the field being joined. The Z
 processors referenced in this cookbook employ "spill-to-disk" functionality
 that ensure they can perform the sort/join with arbitrarily large amounts of
 data without hitting memory limitations. However, we recognize the approach
 may not be as easy-to-use or performant as in-memory approaches that tools
 often use for smaller-scale joins. We hope that user feedback will help us
-confirm which other approaches to joining we should offer next in future
-releases.
+confirm which other approaches to joining we should add next.
 
 3. While the `join` processor is available in the Z language and hence
 usable from within Brim, the Brim app currently lacks mechanisms to easily
-unite and reference multiple diverse data sources in the same Space. While
-these mechanisms are planned for future releases, the approach described in
-this cookbook instead leverages the zq tools outside of Brim with the end result
+reference diverse external data sources in the same Space. While these
+mechanisms are planned for future releases, the approach described in this
+cookbook instead leverages the zq tools outside of Brim with the end result
 being the creation of a [ZNG](https://github.com/brimsec/zq/tree/master/zng/docs)-format
 log that can be imported into Brim if desired.
 
@@ -130,10 +130,12 @@ $ ls -l *.log
 -rw-rw-r-- 1 phil phil  5317 Jan 30 00:38 x509.log
 ```
 
-# Joining Zeek SSL Records With SPL-SPT Data
+# Examples
+
+## Joining Zeek SSL Records With SPL-SPT Data
 
 The [SPL-SPT README](https://github.com/micrictor/spl-spt/blob/master/README.md)
-explains that the tool operates on SSL connections. Looking inside the
+explains that the tool analyzes SSL connections. Looking inside the
 `ssl.log` and `spl.log`, we can indeed see that the same `uid` values appear
 in each, though not in the same order. This highlights the importance of
 sorting by `uid` before joining on it.
@@ -222,7 +224,7 @@ with the `join` processor in its current implementation. The following sections
 describe some variations where additional Z concepts may be applied to
 achieve ideal joins and data presentation.
 
-# Alternate Schemas For Non-Matches
+## Alternate Schemas For Non-Matches
 
 Our test data produced Zeek logs that had a 1-to-1 pairing between 24 Zeek
 `ssl` events and 24 `spl` events that described them. However, our experience
@@ -231,7 +233,7 @@ records with `uid` values that did match any records in our right-side `spl`
 data source.
 
 Using the logs we've already generated, we can see the effects of this by
-instead using the Zeek `conn` records as out left-hand data source, since there
+instead using the Zeek `conn` records as our left-hand data source, since there
 are many non-SSL flows that would have bypassed the SPL-SPT package.
 
 ```
@@ -349,7 +351,7 @@ headers need to reflect all fields expected in the output.
 
 Now that we're recognized this, we can make a small change to our Z to address
 it. By adding the [`fuse`](https://github.com/brimsec/zq/tree/master/zql/docs/processors#fuse)
-processor, we can ensure all the data is captured under a single, unifying
+processor, we can ensure all the data is captured under a single, unified
 schema.
 
 ```
@@ -363,13 +365,13 @@ $ zq -z join-uid-conn-fused.zs -P conn.log spl.log > conn-plus-spl-fused.zng
 ```
 
 Now when the ZNG is loaded into Brim, we immediately see the column headers
-and can "scroll right" to see the SPL-SPT fields are where we expect to see
+and can "scroll right" to confirm the SPL-SPT fields are where we expect to see
 them.
  
 ![Joined Zeek conn events (fused)](media/Joined-Zeek-conn-fused.png)
 
-If we compare our two events side-by-side again, we see a subtle difference
-from what we saw in the non-fused ZNG: Now the SPL-SPT fields on the
+If we compare our two example events side-by-side again, we see a subtle
+difference from what we saw in the non-fused ZNG: Now the SPL-SPT fields on the
 non-matching `conn` events _are_ present, but they're populated with explicit
 `null` values.
 
@@ -379,7 +381,7 @@ Both this approach and the non-fused one showed earlier are technically
 accurate representations of the data, but you may prefer one over the other
 depending on your use case.
 
-# Records Lacking a Join Key
+## Records Lacking a Join Key
 
 In the examples shown thus far, we've worked with individual Zeek log files
 that each contain only a single Zeek event type. However, most Brim users are
@@ -467,8 +469,8 @@ pe           1
 ```
 
 Of course, we know SPL-SPT only targets SSL traffic, so maybe we're curious
-to know if `join` even succeeded on any of the other Zeek event types. We can
-look for this by querying for non-null instances of our expected SPL-SPT
+to know if the `join` even succeeded on any of the other Zeek event types. We
+can look for this by querying for non-null instances of our expected SPL-SPT
 fields.
 
 ```
