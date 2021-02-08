@@ -1,24 +1,21 @@
+import {nanoid} from "@reduxjs/toolkit"
+import {isEmpty} from "lodash"
+import React, {useEffect, useRef, useState} from "react"
+import {useDispatch} from "react-redux"
+import styled from "styled-components"
+import brim, {BrimWorkspace} from "../../brim"
+import {FormConfig} from "../../brim/form"
+import {buildAndAuthenticateWorkspace} from "../../flows/workspace/buildAndAuthenticateWorkspace"
+import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
+import {AppDispatch} from "../../state/types"
+import {Workspace} from "../../state/Workspaces/types"
 import InputField from "../common/forms/InputField"
 import InputLabel from "../common/forms/InputLabel"
 import TextInput from "../common/forms/TextInput"
-import React, {useEffect, useRef, useState} from "react"
-import styled from "styled-components"
-import {FormConfig} from "../../brim/form"
-import brim from "../../brim"
 import useCallbackRef from "../hooks/useCallbackRef"
-import {useDispatch} from "react-redux"
-import {isEmpty} from "lodash"
+import useEventListener from "../hooks/useEventListener"
 import MacSpinner from "../MacSpinner"
 import ToolbarButton from "../../../../app/toolbar/button"
-import useEventListener from "../hooks/useEventListener"
-import {Workspace} from "../../state/Workspaces/types"
-import {remote} from "electron"
-import {buildWorkspace} from "../../flows/workspace/buildWorkspace"
-import {initWorkspace} from "../../flows/workspace/initWorkspace"
-import {getAuthCredentials} from "../../flows/workspace/getAuthCredentials"
-import {AppDispatch} from "../../state/types"
-import {login} from "../../flows/workspace/login"
-import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -68,6 +65,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   background: transparent;
   margin-bottom: 12px;
+
   button {
     margin-left: 12px;
   }
@@ -78,7 +76,7 @@ const StyledTextInput = styled(TextInput)`
 `
 
 type Props = {
-  workspace?: Workspace
+  workspace?: BrimWorkspace
   onClose: () => void
 }
 
@@ -87,11 +85,11 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   const [errors, setErrors] = useState([])
   const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const {current: id} = useRef((workspace && workspace.id) || brim.randomHash())
-  const [cancelFunc, setCancelFunc] = useState(null)
+  const {current: id} = useRef((workspace && workspace.id) || nanoid())
+  const ctlRef = useRef(new AbortController())
   const isNewWorkspace = !workspace
 
-  useEffect(() => () => cancelFunc && cancelFunc(), [cancelFunc])
+  useEffect(() => () => ctlRef.current.abort(), [])
 
   const config: FormConfig = {
     host: {
@@ -127,15 +125,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   }
 
   const onCancel = () => {
-    cancelFunc && cancelFunc()
-    setIsSubmitting(false)
-  }
-
-  const connectWorkspace = (ws) => {
-    dispatch(initWorkspace(ws, "connected"))
-    setIsSubmitting(false)
-    setErrors([])
-    onClose()
+    ctlRef.current.abort()
   }
 
   const onSave = async () => {
@@ -144,62 +134,47 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
 
     const form = brim.form(formRef, config)
 
-    if (await form.isValid()) {
-      const {host, name} = form.getFields().reduce((obj, field) => {
-        obj[field.name] = field.value
-        return obj
-      }, {})
-      try {
-        const ws = await dispatch(
-          buildWorkspace(setFields({hostPort: host, name}, workspace))
-        )
+    if (!(await form.isValid())) {
+      setErrors(form.getErrors)
+      setIsSubmitting(false)
+      return
+    }
 
-        if (ws.authType === "none") return connectWorkspace(ws)
+    const {host, name} = form.getFields().reduce((obj, field) => {
+      obj[field.name] = field.value
+      return obj
+    }, {})
+    const newWs = setFields(
+      {
+        hostPort: host,
+        name
+      },
+      workspace
+    )
 
-        const token = await dispatch(getAuthCredentials(ws))
-        if (token)
-          return connectWorkspace({
-            ...ws,
-            authData: {...ws.authData, accessToken: token}
-          })
+    try {
+      ctlRef.current = new AbortController()
+      const [cancelled, error] = await dispatch(
+        buildAndAuthenticateWorkspace(newWs, ctlRef.current.signal)
+      )
+      setIsSubmitting(false)
 
-        // must login, ask user
-        const dialogOpts = {
-          type: "info",
-          buttons: ["Continue", "Cancel"],
-          title: "Redirect to Browser",
-          message:
-            "This Workspace requires authentication. Continue to login with your browser?"
-        }
-        const dialogChoice = await remote.dialog.showMessageBox(dialogOpts)
-        if (dialogChoice.response === 1) {
-          setIsSubmitting(false)
-          return
-        }
-
-        // begin login
-        const cancel = await dispatch(
-          login(ws, (accessToken) => {
-            setIsSubmitting(false)
-            if (!accessToken) setErrors([{message: "Login failed"}])
-            else
-              connectWorkspace({
-                ...ws,
-                authData: {...ws.authData, accessToken}
-              })
-          })
-        )
-        setCancelFunc(() => cancel)
-        return
-      } catch (e) {
-        setIsSubmitting(false)
-        setErrors([{message: "Cannot connect to host"}])
+      if (error) {
+        setErrors([error.message])
         return
       }
+      setErrors([])
+
+      // user elected to cancel at dialog or mid-login
+      if (cancelled) return
+
+      // success
+      onClose()
+    } catch (e) {
+      console.error(e)
+      setIsSubmitting(false)
+      setErrors([{message: "Failed to add Workspace"}])
     }
-    setErrors(form.getErrors)
-    setIsSubmitting(false)
-    return
   }
 
   function keyUp(e) {

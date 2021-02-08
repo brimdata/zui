@@ -1,7 +1,7 @@
-import {WindowName} from "../tron/windowManager"
-import {WindowParams} from "../tron/window"
-import {NewTabSearchParams} from "./windows/messages"
 import {State} from "../../state/types"
+import {WindowParams} from "../tron/window"
+import {WindowName} from "../tron/windowManager"
+import {NewTabSearchParams} from "./windows/messages"
 
 export type IpcMsg =
   | WindowsOpenMsg
@@ -11,9 +11,9 @@ export type IpcMsg =
   | WindowsAuthCallbackMsg
   | GlobalStoreInitMsg
   | GlobalStoreDispatchMsg
-  | SecretsStorageSetKeyMsg
-  | SecretsStorageGetKeyMsg
-  | SecretsStorageDeleteKeyMsg
+  | SecretsSetKeyMsg
+  | SecretsGetKeyMsg
+  | SecretsDeleteKeyMsg
 
 export type WindowsOpenMsg = {
   channel: "windows:open"
@@ -51,18 +51,18 @@ export interface GlobalStoreDispatchMsg {
   action: object
 }
 
-export type SecretsStorageSetKeyMsg = {
-  channel: "secretStorage:setKey"
+export type SecretsSetKeyMsg = {
+  channel: "secrets:setKey"
   key: string
   val: string
 }
 
-export type SecretsStorageGetKeyMsg = {
-  channel: "secretStorage:getKey"
+export type SecretsGetKeyMsg = {
+  channel: "secrets:getKey"
   key: string
 }
 
-export type SecretsStorageDeleteKeyMsg = {
-  channel: "secretStorage:deleteKey"
+export type SecretsDeleteKeyMsg = {
+  channel: "secrets:deleteKey"
   key: string
 }

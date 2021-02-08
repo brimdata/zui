@@ -1,22 +1,24 @@
-import {Group, Query} from "../../state/Queries/types"
-import TreeModel from "tree-model"
-import {includes} from "lodash"
-import {useDispatch, useSelector} from "react-redux"
-import React, {useEffect, useState} from "react"
-import Current from "../../state/Current"
-import Queries from "../../state/Queries"
-import SearchBar from "../../state/SearchBar"
-import {submitSearch} from "../../flows/submitSearch/mod"
 import {MenuItemConstructorOptions, remote} from "electron"
-import lib from "../../lib"
-import {popNotice} from "../PopNotice"
-import Modal from "../../state/Modal"
-import usePopupMenu from "../hooks/usePopupMenu"
-import Notice from "../../state/Notice"
+import {includes} from "lodash"
+import React, {useEffect, useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import TreeModel from "tree-model"
 import {TreeList} from "../../../pkg/tree-list"
-import Item from "../SideBar/Item"
-import EmptySection from "../common/EmptySection"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import DropdownArrow from "../../icons/DropdownArrow"
+import MagnifyingGlass from "../../icons/MagnifyingGlass"
+import lib from "../../lib"
+import Current from "../../state/Current"
+import {globalDispatch} from "../../state/GlobalContext"
+import Modal from "../../state/Modal"
+import Notice from "../../state/Notice"
+import Queries from "../../state/Queries"
+import {Group, Query} from "../../state/Queries/types"
+import SearchBar from "../../state/SearchBar"
+import EmptySection from "../common/EmptySection"
+import usePopupMenu from "../hooks/usePopupMenu"
+import {popNotice} from "../PopNotice"
+import Item from "../SideBar/Item"
 import {
   ClickRegion,
   DragAnchor,
@@ -27,7 +29,6 @@ import {
   StyledViewSelect,
   Title
 } from "./common"
-import {globalDispatch} from "../../state/GlobalContext"
 
 const filterQueriesByTag = (queriesRoot: Group, tag: string): Query[] => {
   const queryResults = []
@@ -217,7 +218,10 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
             {Item}
           </TreeList>
         ) : (
-          <EmptySection message="You must have a space selected to run queries." />
+          <EmptySection
+            icon={<MagnifyingGlass />}
+            message="You must have a space selected to run queries."
+          />
         )}
       </SectionContents>
     </StyledSection>

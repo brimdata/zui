@@ -1,9 +1,9 @@
 import globalStoreMessages from "./globalStore/messages"
+import secretsMessages from "./secrets/messages"
 import windowsMessages from "./windows/messages"
-import secretsStorageMessages from "./secretsStorage/messages"
 
 export default {
   windows: windowsMessages,
   globalStore: globalStoreMessages,
-  secretsStorage: secretsStorageMessages
+  secrets: secretsMessages
 }

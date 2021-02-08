@@ -1,24 +1,22 @@
-import Current from "../../state/Current"
-import Workspaces from "../../state/Workspaces"
-import refreshSpaceNames from "../refreshSpaceNames"
-import {globalDispatch} from "../../state/GlobalContext"
+import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
+import Current from "../../state/Current"
+import {globalDispatch} from "../../state/GlobalContext"
+import Workspaces from "../../state/Workspaces"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
+import refreshSpaceNames from "../refreshSpaceNames"
 import {getAuthCredentials} from "./getAuthCredentials"
-import {validateToken} from "../../auth0"
 
 export const activateWorkspace = (workspaceId: string) => async (
   dispatch,
   getState,
   {createZealot}
 ): Promise<void> => {
-  const ws = Workspaces.id(workspaceId)(getState())
-  const zealot = createZealot(brim.workspace(ws).getAddress())
-
-  const workspace = {...ws}
+  const ws = brim.workspace(Workspaces.id(workspaceId)(getState()))
+  const zealot = createZealot(ws.getAddress())
 
   const activate = () => {
-    dispatch(WorkspaceStatuses.set(workspace.id, "connected"))
+    dispatch(WorkspaceStatuses.set(ws.id, "connected"))
     dispatch(Current.setWorkspaceId(ws.id))
     dispatch(refreshSpaceNames())
   }
@@ -26,47 +24,45 @@ export const activateWorkspace = (workspaceId: string) => async (
   try {
     // check version to test that zqd is available, update workspace version while doing so
     const {version} = await zealot.version()
-    workspace.version = version
+    ws.version = version
   } catch (e) {
     console.error(e)
-    dispatch(WorkspaceStatuses.set(workspace.id, "disconnected"))
-    dispatch(Current.setWorkspaceId(workspace.id))
+    dispatch(WorkspaceStatuses.set(ws.id, "disconnected"))
+    dispatch(Current.setWorkspaceId(ws.id))
     return
   }
   // update version
-  dispatch(Workspaces.add(workspace))
-  await globalDispatch(Workspaces.add(workspace))
+  dispatch(Workspaces.add(ws.serialize()))
+  await globalDispatch(Workspaces.add(ws.serialize()))
 
   // no auth required
-  if (workspace.authType === "none") {
+  if (ws.authType === "none") {
     activate()
     return
   }
 
   // if auth is required, and method is auth0...
-  if (workspace.authType === "auth0") {
+  if (ws.authType === "auth0") {
     // ...and we already have the token
-    if (validateToken(workspace.authData.accessToken)) {
+    if (validateToken(ws.authData.accessToken)) {
       activate()
       return
     }
 
     // otherwise, need to refresh accessToken
-    const accessToken = await dispatch(getAuthCredentials(workspace))
+    const accessToken = await dispatch(getAuthCredentials(ws))
     if (accessToken) {
-      dispatch(Workspaces.setWorkspaceToken(workspace.id, accessToken))
-      await globalDispatch(
-        Workspaces.setWorkspaceToken(workspace.id, accessToken)
-      )
+      dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+      await globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
       activate()
       return
     }
 
     // otherwise login is required, send user to our 'login' page and let them initiate the flow there
-    dispatch(WorkspaceStatuses.set(workspace.id, "login-required"))
+    dispatch(WorkspaceStatuses.set(ws.id, "login-required"))
     dispatch(Current.setWorkspaceId(ws.id))
     return
   }
 
-  throw new Error("unknown auth type: " + workspace.authType)
+  throw new Error("unknown auth type: " + ws.authType)
 }

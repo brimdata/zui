@@ -1,29 +1,23 @@
+import {app} from "electron"
+import log from "electron-log"
+import "regenerator-runtime/runtime"
 import {appPathSetup} from "./appPathSetup"
+import {setupAutoUpdater} from "./autoUpdater"
+import {Brim} from "./brim"
+import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
+import windowsMainHandler from "./ipc/windows/mainHandler"
+import secretsMainHandler from "./ipc/secrets/mainHandler"
+import electronIsDev from "./isDev"
+import menu from "./menu"
+import {handleQuit} from "./quitter"
+
+import {handleSquirrelEvent} from "./squirrel"
 import userTasks from "./userTasks"
 
 // app path and log setup should happen before other imports.
 appPathSetup()
 
-import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
-import windowsMainHandler from "./ipc/windows/mainHandler"
-import secretsStorageMainHandler from "./ipc/secretsStorage/mainHandler"
-import menu from "./menu"
-
 console.time("init")
-import "regenerator-runtime/runtime"
-
-import {app} from "electron"
-
-import {handleSquirrelEvent} from "./squirrel"
-import electronIsDev from "./isDev"
-import {setupAutoUpdater} from "./autoUpdater"
-import log from "electron-log"
-import {handleQuit} from "./quitter"
-import {Brim} from "./brim"
-import {deserializeState} from "../auth0"
-import url from "url"
-import sendTo from "./ipc/sendTo"
-import ipc from "./ipc"
 
 async function main() {
   if (handleSquirrelEvent(app)) return
@@ -33,7 +27,7 @@ async function main() {
 
   windowsMainHandler(brim)
   globalStoreMainHandler(brim)
-  secretsStorageMainHandler()
+  secretsMainHandler()
 
   handleQuit(brim)
 
@@ -61,19 +55,10 @@ async function main() {
   app.on("activate", () => brim.activate())
 
   app.setAsDefaultProtocolClient("brim")
-  app.on("open-url", (event, cbUrl) => {
+  app.on("open-url", (event, url) => {
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
-
-    const urlParts = url.parse(cbUrl, true)
-    const code = urlParts.query.code as string
-    const state = urlParts.query.state as string
-    const {workspaceId, windowId} = deserializeState(state)
-    const win = brim.windows.getWindow(windowId)
-
-    brim.activate(windowId)
-
-    sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
+    brim.openUrl(url)
   })
 
   app.on("web-contents-created", (event, contents) => {

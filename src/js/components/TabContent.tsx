@@ -1,19 +1,19 @@
-import {useDispatch, useSelector} from "react-redux"
+import get from "lodash/get"
 import React, {useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import styled from "styled-components"
+import brim from "../brim"
+import {initCurrentTab} from "../flows/initCurrentTab"
 
 import Current from "../state/Current"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
+import ConnectionError from "./ConnectionError"
+import Login from "./Login"
+import MacSpinner from "./MacSpinner"
 import TabSearch from "./TabSearch"
 import TabSearchLoading from "./TabSearchLoading"
 import TabWelcome from "./TabWelcome"
-import brim from "../brim"
-import MacSpinner from "./MacSpinner"
-import styled from "styled-components"
-import ConnectionError from "./ConnectionError"
-import {initCurrentTab} from "../flows/initCurrentTab"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import get from "lodash/get"
 import WorkspaceChooserPage from "./WorkspaceChooserPage"
-import Login from "./Login"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -46,7 +46,7 @@ export default function TabContent() {
     )
 
   if (wsStatus === "disconnected") return <ConnectionError workspace={ws} />
-  if (wsStatus === "login-required") return <Login ws={ws.serialize()} />
+  if (wsStatus === "login-required") return <Login workspace={ws} />
 
   if (!space) {
     return <TabWelcome />

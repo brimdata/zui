@@ -1,15 +1,15 @@
-import Workspaces from "../../state/Workspaces"
-import {Thunk} from "../../state/types"
+import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0/utils"
 import {popNotice} from "../../components/PopNotice"
+import ipc from "../../electron/ipc"
+import invoke from "../../electron/ipc/invoke"
+import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
+import Current from "../../state/Current"
+import Investigation from "../../state/Investigation"
+import Spaces from "../../state/Spaces"
+import {Thunk} from "../../state/types"
+import Workspaces from "../../state/Workspaces"
 import {Workspace} from "../../state/Workspaces/types"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
-import Current from "../../state/Current"
-import Spaces from "../../state/Spaces"
-import Investigation from "../../state/Investigation"
-import invoke from "../../electron/ipc/invoke"
-import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0"
-import ipc from "../../electron/ipc"
-import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
 
 const removeWorkspace = (ws: Workspace): Thunk => (
   dispatch,
@@ -23,8 +23,8 @@ const removeWorkspace = (ws: Workspace): Thunk => (
 
   // remove creds from keychain
   if (authType === "auth0") {
-    invoke(ipc.secretsStorage.deleteKey(toAccessTokenKey(id)))
-    invoke(ipc.secretsStorage.deleteKey(toRefreshTokenKey(id)))
+    invoke(ipc.secrets.deleteKey(toAccessTokenKey(id)))
+    invoke(ipc.secrets.deleteKey(toRefreshTokenKey(id)))
   }
   dispatch(Current.setSpaceId(null))
   dispatch(Current.setWorkspaceId(null))

@@ -8,22 +8,31 @@ const enzyme = require("enzyme")
 jest.mock("electron", function() {
   class FakeBrowserWindow {
     webContents: {send: any}
+
     constructor() {
       this.webContents = {send: jest.fn()}
     }
+
     center() {}
+
     setMenu() {}
+
     on() {
       return this
     }
+
     loadFile() {}
+
     setSize() {}
+
     getSize() {
       return [100, 100]
     }
+
     getPosition() {
       return [0, 0]
     }
+
     destroy() {}
   }
 
@@ -86,6 +95,7 @@ jest.mock("electron", function() {
 global.DOMRectReadOnly = class DOMRectReadOnly {}
 global.ResizeObserver = class ResizeObserver {
   observe() {}
+
   disconnect() {}
 }
 global.SVGElement.prototype.getTotalLength = () => 0

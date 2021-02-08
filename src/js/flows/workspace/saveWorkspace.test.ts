@@ -3,7 +3,8 @@ import {createZealotMock} from "zealot"
 import initTestStore from "../../test/initTestStore"
 import Workspaces from "../../state/Workspaces"
 import Current from "../../state/Current"
-import {initWorkspace} from "./initWorkspace"
+import {saveWorkspace} from "./saveWorkspace"
+import brim from "src/js/brim"
 
 let store, mock
 const select = (selector) => selector(store.getState())
@@ -24,12 +25,12 @@ beforeEach(() => {
 
 test("Create a new workspace, switch back", async () => {
   expect(workspaceCount()).toBe(1)
-  await store.dispatch(initWorkspace(ws2, "connected"))
+  await store.dispatch(saveWorkspace(brim.workspace(ws2), "connected"))
   expect(workspaceCount()).toBe(2)
   expect(select(Workspaces.id(ws2.id))).toEqual(ws2)
   expect(select(Current.getWorkspaceId)).toBe(ws2.id)
 
-  await store.dispatch(initWorkspace(ws1, "connected"))
+  await store.dispatch(saveWorkspace(brim.workspace(ws1), "connected"))
   expect(workspaceCount()).toBe(2)
   expect(select(Workspaces.id(ws1.id))).toEqual(ws1)
   expect(select(Current.getWorkspaceId)).toBe(ws1.id)

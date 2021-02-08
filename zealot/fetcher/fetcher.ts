@@ -34,7 +34,6 @@ export function createFetcher(host: string) {
       const iterator = createIterator(resp, args)
       return createStream(iterator, resp)
     },
-    // TODO: send auth in xml upload, when present
     async upload(args: FetchArgs): Promise<ZReponse> {
       return new Promise((resolve) => {
         const iterator = createPushableIterator<ZealotPayload>()
@@ -62,6 +61,10 @@ export function createFetcher(host: string) {
         })
 
         xhr.open(args.method, url(host, args.path), true)
+        if (args.headers) {
+          for (const [header, val] of args.headers.entries())
+            xhr.setRequestHeader(header, val)
+        }
         xhr.send(args.body)
         resolve(createStream(iterator, xhr))
       })

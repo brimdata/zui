@@ -1,11 +1,15 @@
-import {Workspace} from "../../state/Workspaces/types"
-import brim from "../../brim"
 import isEmpty from "lodash/isEmpty"
+import brim, {BrimWorkspace} from "../../brim"
 import {Thunk} from "../../state/types"
+import {Workspace} from "../../state/Workspaces/types"
 
 export const buildWorkspace = (
   ws: Partial<Workspace>
-): Thunk<Promise<Workspace>> => async (dispatch, getState, {createZealot}) => {
+): Thunk<Promise<BrimWorkspace>> => async (
+  dispatch,
+  getState,
+  {createZealot}
+) => {
   if (!ws.host || !ws.port || !ws.id || !ws.name)
     throw new Error("must provide host, port, id, and name to build workspace")
   const zealot = createZealot(brim.workspace(ws as Workspace).getAddress())
@@ -31,5 +35,5 @@ export const buildWorkspace = (
     }
   }
 
-  return workspace as Workspace
+  return brim.workspace(workspace as Workspace)
 }

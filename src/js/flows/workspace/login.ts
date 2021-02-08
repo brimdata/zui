@@ -1,49 +1,47 @@
-import {serializeState, toAccessTokenKey, toRefreshTokenKey} from "../../auth0"
-import {Workspace} from "../../state/Workspaces/types"
-import {getAuth0} from "./getAuth0"
 import {ipcRenderer} from "electron"
-import invoke from "../../electron/ipc/invoke"
+import {
+  serializeState,
+  toAccessTokenKey,
+  toRefreshTokenKey
+} from "../../auth0/utils"
+import {BrimWorkspace} from "../../brim"
 import ipc from "../../electron/ipc"
+import invoke from "../../electron/ipc/invoke"
+import {getAuth0} from "./getAuth0"
 
-export type CancelLoginListener = () => void
-
-export const login = (
-  ws: Workspace,
-  cb: (accessToken: string | null) => void
-) => async (dispatch): Promise<CancelLoginListener | null> => {
+export const login = (ws: BrimWorkspace, abortSignal: AbortSignal) => (
+  dispatch
+): Promise<string> => {
   const client = dispatch(getAuth0(ws))
 
-  await client.login(
-    serializeState({workspaceId: ws.id, windowId: global.windowId})
-  )
-
-  const handleAuthCallback = async (e, {workspaceId, code}) => {
-    if (!code) {
-      cb(null)
-      return
-    }
+  const handleAuth = (resolve, reject) => async (
+    event,
+    {workspaceId, code}
+  ) => {
+    if (!code) return reject("No code returned from login")
     try {
       const {accessToken, refreshToken} = await client.exchangeCode(code)
 
       // store both tokens in os default keychain
-      await invoke(
-        ipc.secretsStorage.setKey(toAccessTokenKey(workspaceId), accessToken)
-      )
-      await invoke(
-        ipc.secretsStorage.setKey(toRefreshTokenKey(workspaceId), refreshToken)
-      )
+      invoke(ipc.secrets.setKey(toAccessTokenKey(workspaceId), accessToken))
+      invoke(ipc.secrets.setKey(toRefreshTokenKey(workspaceId), refreshToken))
 
-      cb(accessToken)
+      resolve(accessToken)
     } catch (e) {
-      console.error("error exchanging code: ", e)
-      cb(null)
-      throw e
+      console.error("error exchanging code for tokens: ", e)
+      reject(e)
     }
   }
 
-  ipcRenderer.once("windows:authCallback", handleAuthCallback)
-
-  return () => {
-    ipcRenderer.removeListener("windows:authCallback", handleAuthCallback)
-  }
+  client.openLoginUrl(
+    serializeState({workspaceId: ws.id, windowId: global.windowId})
+  )
+  return new Promise<string>((res, rej) => {
+    const handleAuthCb = handleAuth(res, rej)
+    ipcRenderer.once("windows:authCallback", handleAuthCb)
+    abortSignal.addEventListener("abort", () => {
+      ipcRenderer.removeListener("windows:authCallback", handleAuthCb)
+      res()
+    })
+  })
 }

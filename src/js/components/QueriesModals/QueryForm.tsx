@@ -1,13 +1,14 @@
+import React, {useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {isEmpty, get} from "lodash"
+import {nanoid} from "@reduxjs/toolkit"
 import InputField from "../common/forms/InputField"
 import InputLabel from "../common/forms/InputLabel"
 import TextInput from "../common/forms/TextInput"
-import React, {useState} from "react"
 import styled from "styled-components"
 import {FormConfig} from "../../brim/form"
 import brim from "../../brim"
 import useCallbackRef from "../hooks/useCallbackRef"
-import {useDispatch, useSelector} from "react-redux"
-import {isEmpty, get} from "lodash"
 import ToolbarButton from "../../../../app/toolbar/button"
 import useEventListener from "../hooks/useEventListener"
 import {Query} from "../../state/Queries/types"
@@ -69,6 +70,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   background: transparent;
   margin-bottom: 12px;
+
   button {
     margin-left: 12px;
   }
@@ -164,7 +166,7 @@ const QueryForm = ({onClose, query, value}: Props) => {
         globalDispatch(
           Queries.addItem(
             {
-              id: brim.randomHash(),
+              id: nanoid(),
               ...newQuery
             },
             queriesRoot

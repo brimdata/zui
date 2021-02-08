@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from "react"
-
-import MacSpinner from "./MacSpinner"
-import styled from "styled-components"
-import ToolbarButton from "./Toolbar/Button"
-import {useDispatch} from "react-redux"
-import {Workspace} from "../state/Workspaces/types"
-import {login} from "../flows/workspace/login"
-import {activateWorkspace} from "../flows/workspace/activateWorkspace"
-import Workspaces from "../state/Workspaces"
+import React, {useEffect, useRef, useState} from "react"
 import {toast} from "react-hot-toast"
+import {useDispatch} from "react-redux"
+import styled from "styled-components"
+import {BrimWorkspace} from "../brim"
+import {activateWorkspace} from "../flows/workspace/activateWorkspace"
+import {login} from "../flows/workspace/login"
 import {globalDispatch} from "../state/GlobalContext"
+import {AppDispatch} from "../state/types"
+import Workspaces from "../state/Workspaces"
+
+import ToolbarButton from "../../../app/toolbar/button"
+import MacSpinner from "./MacSpinner"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -36,34 +37,35 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  ws: Workspace
+  workspace: BrimWorkspace
 }
 
-const Login = ({ws}: Props) => {
-  const dispatch = useDispatch()
+const Login = ({workspace}: Props) => {
+  const dispatch = useDispatch<AppDispatch>()
   const [isFetching, setIsFetching] = useState(false)
-  const [cancelFunc, setCancelFunc] = useState(null)
+  const ctlRef = useRef(new AbortController())
 
-  useEffect(() => () => cancelFunc && cancelFunc(), [cancelFunc])
+  useEffect(() => () => ctlRef.current.abort(), [])
 
   const onClick = async () => {
     setIsFetching(true)
-    const cancel = await dispatch(
-      login(ws, (accessToken) => {
-        if (accessToken) {
-          globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
-          dispatch(activateWorkspace(ws.id))
-        } else {
-          toast.error("Login failed")
-        }
-        setIsFetching(false)
-      })
-    )
-    setCancelFunc(() => cancel)
+    try {
+      ctlRef.current = new AbortController()
+      const accessToken = await dispatch(
+        login(workspace, ctlRef.current.signal)
+      )
+      await globalDispatch(
+        Workspaces.setWorkspaceToken(workspace.id, accessToken)
+      )
+      await dispatch(activateWorkspace(workspace.id))
+    } catch {
+      toast.error("Login failed")
+    }
+    setIsFetching(false)
   }
 
   const onCancel = () => {
-    cancelFunc && cancelFunc()
+    ctlRef.current.abort()
     setIsFetching(false)
   }
 

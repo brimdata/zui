@@ -1,18 +1,18 @@
 import {createFetcher, FetchArgs, Zealot} from "zealot"
-import Current from "../state/Current"
-import {Thunk} from "../state/types"
-import ErrorFactory from "../models/ErrorFactory"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {BrimWorkspace} from "../brim"
 import {ZFetcher, ZReponse} from "../../../zealot/types"
-import {getAuthCredentials} from "./workspace/getAuthCredentials"
-import Workspaces from "../state/Workspaces"
-import {validateToken} from "../auth0"
+import {validateToken} from "../auth0/utils"
+import {BrimWorkspace} from "../brim"
+import ErrorFactory from "../models/ErrorFactory"
+import Current from "../state/Current"
 import {globalDispatch} from "../state/GlobalContext"
+import {Thunk} from "../state/types"
+import Workspaces from "../state/Workspaces"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
+import {getAuthCredentials} from "./workspace/getAuthCredentials"
 
 const createBrimFetcher = (dispatch, getState) => {
   return (hostPort: string): ZFetcher => {
-    const {promise, stream, ...rest} = createFetcher(hostPort)
+    const {promise, stream, upload} = createFetcher(hostPort)
 
     const setWorkspaceAuthArgs = async (
       ws: BrimWorkspace,
@@ -62,7 +62,16 @@ const createBrimFetcher = (dispatch, getState) => {
       return stream(await setWorkspaceAuthArgs(ws, args))
     }
 
-    return {promise: wrappedPromise, stream: wrappedStream, ...rest}
+    const wrappedUpload = async (args: FetchArgs): Promise<ZReponse> => {
+      const ws = Current.mustGetWorkspace(getState())
+      return upload(await setWorkspaceAuthArgs(ws, args))
+    }
+
+    return {
+      promise: wrappedPromise,
+      stream: wrappedStream,
+      upload: wrappedUpload
+    }
   }
 }
 

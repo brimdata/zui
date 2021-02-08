@@ -1,9 +1,9 @@
-import {Thunk} from "../../state/types"
+import Auth0Client from "../../auth0"
+import {BrimWorkspace} from "../../brim"
 import Current from "../../state/Current"
-import {Auth0Client} from "../../auth0"
-import {Workspace} from "../../state/Workspaces/types"
+import {Thunk} from "../../state/types"
 
-export const getAuth0 = (ws?: Workspace): Thunk<Auth0Client> => (
+export const getAuth0 = (ws?: BrimWorkspace): Thunk<Auth0Client> => (
   dispatch,
   getState
 ) => {

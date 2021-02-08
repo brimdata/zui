@@ -1,50 +1,11 @@
 import {shell} from "electron"
-import jwtDecode, {JwtPayload} from "jwt-decode"
-
-// helpers for generating auth0 namespaces in os default keychain (facilitated by keytar)
-const keytarServiceSuffix = "brim-oauth"
-export const toAccessTokenKey = (id: string): string =>
-  [id, "AT", keytarServiceSuffix].join("-")
-export const toRefreshTokenKey = (id: string): string =>
-  [id, "RT", keytarServiceSuffix].join("-")
-
-// helpers for formatting data to go into the 'state' query param
-interface StateArgs {
-  workspaceId: string
-  windowId: string
-}
-export const serializeState = ({workspaceId, windowId}: StateArgs): string => {
-  return [workspaceId, windowId].join(",")
-}
-export const deserializeState = (state: string): StateArgs => {
-  const stateArr = state.split(",")
-  if (stateArr.length < 2) return null
-
-  return {workspaceId: stateArr[0], windowId: stateArr[1]}
-}
-
-export const validateToken = (token: string): boolean => {
-  if (!token) return false
-
-  try {
-    const {exp} = jwtDecode<JwtPayload>(token)
-    // if token has not expired, return it
-    if (Date.now() < exp * 1000) {
-      return true
-    }
-  } catch (e) {
-    console.error("invalid token: ", e)
-  }
-
-  return false
-}
 
 interface Auth0Response {
   access_token: string
   refresh_token?: string
 }
 
-export class Auth0Client {
+export default class Auth0Client {
   private audience = "https://app.brimsecurity.com"
   private redirectUri = "brim://auth/auth0/callback"
   // 'offline_access' ensures we receive a refresh_token
@@ -52,7 +13,7 @@ export class Auth0Client {
 
   constructor(private clientId: string, private auth0Domain: string) {}
 
-  login(state: string): Promise<void> {
+  openLoginUrl(state: string): Promise<void> {
     const loginUrl = new URL("authorize", this.auth0Domain)
 
     loginUrl.searchParams.append("audience", this.audience)
