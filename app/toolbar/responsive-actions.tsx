@@ -8,10 +8,12 @@ import styled from "styled-components"
 import Action, {ToolbarActionProps} from "./action"
 import Button from "./button"
 
+const GUTTER = 8
+
 const Wrap = styled.div`
   display: flex;
   flex: 1;
-  margin: 0 8px;
+  margin: 0 ${GUTTER}px;
 `
 
 const Actions = styled.div<{content: "center" | "flex-end"}>`
@@ -19,7 +21,7 @@ const Actions = styled.div<{content: "center" | "flex-end"}>`
   justify-content: ${(p) => p.content};
   flex: 1;
   & > * {
-    margin-right: 8px;
+    margin-right: ${GUTTER}px;
     &:last-child {
       margin-right: 0;
     }
@@ -30,7 +32,7 @@ const Menu = styled(Button)`
   padding-right: 3px;
   min-width: 22px;
   flex-shrink: 0;
-  margin-left: 4px;
+  margin-left: ${GUTTER / 2}px;
   .icon i svg {
     width: 9px;
     height: 9px;
@@ -63,7 +65,7 @@ export default function ResponsiveActions({actions}) {
       let total = 0
       let index = 0
       for (let childWidth of widths.current) {
-        total += childWidth + 8
+        total += childWidth + GUTTER
         if (total > width) break
         index++
       }
