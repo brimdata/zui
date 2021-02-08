@@ -21,7 +21,7 @@ export default function usePackets(): ToolbarActionProps {
   function getTitle() {
     if (!space.pcap_support) return "This space has no pcap support."
     if (conn) return "Open packets from this connection."
-    else return "No connection record found."
+    return "No connection record found."
   }
 
   return {
