@@ -25,6 +25,7 @@ export default function ColumnsModal() {
       onClick={onClose}
       appear
     >
+      {/* Don't reuse portal-overlay, it's a relic of the past */}
       <div className="portal-overlay">
         <div className="portal-item" style={style}>
           <XColumnChooserMenu onClose={onClose} />
