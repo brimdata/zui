@@ -6,6 +6,7 @@ export type Board = {id: string; title: string; tiles: string[]}
 export type BoardsState = ReturnType<typeof slice.reducer>
 
 const adapter = createEntityAdapter<Board>()
+// @ts-ignore Remove this once the security summary is merged
 const selectors = adapter.getSelectors((state: State) => state.boards)
 const slice = createSlice({
   name: "boards",

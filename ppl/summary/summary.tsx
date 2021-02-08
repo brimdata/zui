@@ -1,9 +1,6 @@
-import React, {useMemo} from "react"
-import {useDispatch, useSelector} from "react-redux"
-import Boards from "src/js/state/Boards"
-import Tiles from "src/js/state/Tiles"
+import React from "react"
 import styled from "styled-components"
-import updateTileLayout from "./flows/update-tile-layout"
+import {initialTiles} from "./flows/initial-state"
 import Grid from "./grid"
 import Tile from "./tile"
 
@@ -60,19 +57,14 @@ const SummaryUI = ({title, tiles, onLayoutChange}) => {
 }
 
 export default function Summary() {
-  const dispatch = useDispatch()
-  const board = useSelector(Boards.all)[0]
-  const allTiles = useSelector(Tiles.entities)
-  const tiles = useMemo(() => {
-    return board.tiles.map((id) => allTiles[id])
-  }, [board.tiles, allTiles])
-  const onLayoutChange = (layout) => {
-    dispatch(updateTileLayout(layout))
+  const tiles = initialTiles
+  const onLayoutChange = (_layout) => {
+    /* Will do later */
   }
 
   return (
     <SummaryUI
-      title={board.title}
+      title="Security Summary"
       tiles={tiles}
       onLayoutChange={onLayoutChange}
     />

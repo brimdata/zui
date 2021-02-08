@@ -24,6 +24,7 @@ export type Tile = {
 }
 
 const adapter = createEntityAdapter<Tile>()
+// @ts-ignore Remove this once the security summary is merged
 const selectors = adapter.getSelectors((s: State) => s.tiles)
 const slice = createSlice({
   name: "tiles",
