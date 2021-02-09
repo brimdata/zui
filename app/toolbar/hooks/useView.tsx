@@ -2,9 +2,9 @@ import {MenuItemConstructorOptions} from "electron"
 import {useDispatch, useSelector} from "react-redux"
 import {showContextMenu} from "src/js/lib/System"
 import Layout from "src/js/state/Layout"
-import {ToolbarActionProps} from "../action"
+import {ActionButtonProps} from "../action-button"
 
-export default function useView(): ToolbarActionProps {
+export default function useView(): ActionButtonProps {
   const dispatch = useDispatch()
   const leftIsOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const rightIsOpen = useSelector(Layout.getRightSidebarIsOpen)

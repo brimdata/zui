@@ -5,9 +5,9 @@ import {downloadPcap} from "src/js/flows/downloadPcap"
 import Current from "src/js/state/Current"
 import LogDetails from "src/js/state/LogDetails"
 import {reactElementProps} from "src/js/test/integration"
-import {ToolbarActionProps} from "../action"
+import {ActionButtonProps} from "../action-button"
 
-export default function usePackets(): ToolbarActionProps {
+export default function usePackets(): ActionButtonProps {
   const dispatch = useDispatch()
   const conn = useSelector(LogDetails.getConnLog)
   const space = useSelector(Current.mustGetSpace)

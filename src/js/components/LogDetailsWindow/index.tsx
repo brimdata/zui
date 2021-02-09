@@ -7,7 +7,7 @@ import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "app/detail/Pane"
 import usePackets from "app/toolbar/hooks/usePackets"
-import ToolbarAction from "app/toolbar/action"
+import ToolbarAction from "app/toolbar/action-button"
 
 export default function LogDetailsWindow() {
   const dispatch = useDispatch()

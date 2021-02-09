@@ -1,8 +1,8 @@
 import {useDispatch} from "react-redux"
 import Modal from "src/js/state/Modal"
-import {ToolbarActionProps} from "../action"
+import {ActionButtonProps} from "../action-button"
 
-export default function useColumns(): ToolbarActionProps {
+export default function useColumns(): ActionButtonProps {
   const dispatch = useDispatch()
 
   return {
