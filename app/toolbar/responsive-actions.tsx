@@ -1,31 +1,18 @@
-import useResizeCallback from "app/core/hooks/useResizeCallback"
+import useResizeEffect from "app/core/hooks/useResizeEffect"
 import Icon from "app/core/Icon"
-import {MenuItemConstructorOptions} from "electron/main"
-import React, {useCallback, useLayoutEffect, useRef, useState} from "react"
+import MeasureLayer from "app/core/MeasureLayer"
+import React, {RefCallback, useLayoutEffect, useState} from "react"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {showContextMenu} from "src/js/lib/System"
 import styled from "styled-components"
-import Action, {ToolbarActionProps} from "./action"
+import {toMenu, ActionButtonProps} from "./action-button"
+import ActionButtons, {GUTTER} from "./action-buttons"
 import Button from "./button"
-
-const GUTTER = 8
 
 const Wrap = styled.div`
   display: flex;
   flex: 1;
   margin: 0 ${GUTTER}px;
-`
-
-const Actions = styled.div<{content: "center" | "flex-end"}>`
-  display: flex;
-  justify-content: ${(p) => p.content};
-  flex: 1;
-  & > * {
-    margin-right: ${GUTTER}px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
 `
 
 const Menu = styled(Button)`
@@ -39,56 +26,64 @@ const Menu = styled(Button)`
   }
 `
 
-function toMenu(actions: ToolbarActionProps[]): MenuItemConstructorOptions[] {
-  return actions.map(({label, click, submenu, disabled}) => ({
-    label,
-    click,
-    submenu,
-    enabled: !disabled
-  }))
+function useWidthsCache(deps: any[]): [RefCallback<HTMLDivElement>, number[]] {
+  const [parent, setParent] = useCallbackRef<HTMLDivElement>()
+  const [widths, setWidths] = useState([])
+  useLayoutEffect(() => {
+    if (parent) {
+      setWidths(Array.from(parent.children).map((c) => c.clientWidth))
+    }
+  }, [parent, ...deps])
+  return [setParent, widths]
 }
 
-export default function ResponsiveActions({actions}) {
-  const [parent, setParent] = useCallbackRef()
-  const widths = useRef([])
-  const [splitIndex, setSplitIndex] = useState(100)
-
-  useLayoutEffect(() => {
-    if (!parent) return
-    widths.current = Array.from(parent.children).map(
-      (c) => c.getBoundingClientRect().width
-    )
-  }, [parent])
-
-  const onResize = useCallback(
+function useSplitIndex(
+  widths: number[]
+): [RefCallback<HTMLDivElement>, number] {
+  const [splitIndex, setSplitIndex] = useState(9999)
+  const [node, setNode] = useCallbackRef<HTMLDivElement>()
+  useResizeEffect(
+    node,
     ({width}) => {
       let total = 0
       let index = 0
-      for (let childWidth of widths.current) {
+      for (let childWidth of widths) {
         total += childWidth + GUTTER
         if (total > width) break
         index++
       }
       if (index !== splitIndex) setSplitIndex(index)
     },
-    [splitIndex]
+    [widths, splitIndex]
   )
+  return [setNode, splitIndex]
+}
 
-  const setResize = useResizeCallback(onResize)
+type Props = {
+  actions: ActionButtonProps[]
+  mainView: string
+}
+
+export default function ResponsiveActions({actions, mainView}: Props) {
+  const [setParent, widths] = useWidthsCache([actions.length, mainView])
+  const [setResize, splitIndex] = useSplitIndex(widths)
   const visible = [...actions]
   const hidden = visible.splice(splitIndex)
-  const setRef = (node) => {
-    setResize(node)
-    setParent(node)
-  }
   const allVisible = hidden.length === 0
+  const justify = allVisible ? "center" : "flex-end"
   return (
     <Wrap>
-      <Actions ref={setRef} content={allVisible ? "center" : "flex-end"}>
-        {visible.map((props, i) => (
-          <Action key={i} {...props} />
-        ))}
-      </Actions>
+      <MeasureLayer>
+        {/* Render all the actions to measure their widths */}
+        <ActionButtons
+          actions={actions}
+          innerRef={setParent}
+          justify={justify}
+        />
+      </MeasureLayer>
+      {/* Only visibly render the ones that fit */}
+      <ActionButtons actions={visible} innerRef={setResize} justify={justify} />
+      {/* Show the rest in a context menu */}
       {!allVisible && (
         <Menu
           icon={<Icon name="double-chevron-right" />}
