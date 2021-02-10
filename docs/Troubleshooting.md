@@ -7,6 +7,7 @@ before you [open an issue](#opening-an-issue).
   * [I've clicked to open a packet capture in Brim, but it failed to open](#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open)
   * [I've clicked in Brim to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark](#ive-clicked-in-brim-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
   * [Brim seems unable to restart normally, such as after a bad crash](#brim-seems-unable-to-restart-normally-such-as-after-a-bad-crash)
+  * [Brim shows "Connection Error: The service at localhost:9867 could not be reached"](#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached)
 - [Gathering Info](#gathering-info)
   * [Sensitive Information (important!)](#sensitive-information-important)
   * [Screenshots/Videos](#screenshotsvideos)
@@ -222,6 +223,130 @@ retrace your steps and confirm that you've captured the reproduction steps
 accuately in your [issue](#opening-an-issue), since you won't lose any history
 if you repro/crash Brim and clear it one more time. Your assistance in helping
 us squash these types of bad bugs is much appreciated. Thank you!
+
+## Brim shows "Connection Error: The service at localhost:9867 could not be reached"
+
+The following screenshot shows how this error is presented in Brim.
+
+![Service could not be reached](media/Conn-Err-could-not-be-reached.png)
+
+These failures are quite rare. Brim is regularly tested for successful
+installation in "out-of-the-box" configurations of all supported platforms, so
+it's likely that this type of failure may be due to some unique configuration
+on your system that's preventing normal operation. Therefore, even if the tips
+below help you get past the problem, it would be very helpful for you to still
+share the details with us so we can provide guidance to ensure other users
+avoid the problem in the future.
+
+To begin troubleshooting this, it helps to understand the "backend" of Brim.
+One essential component is [`zqd`](https://github.com/brimsec/zq/tree/master/ppl/cmd/zqd),
+a server-style process that manages the storage and querying of imported
+log/packet data. Operations in `zqd` are invoked via a
+[REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
+that's utilized by a "client", such as the Brim app. When run on your desktop,
+`zqd` is launched at startup by Brim and then listens for such API connections
+on local TCP port `9867`.
+
+![Brim connecting to zqd on 9867](media/Brim-zqd-9867.png)
+
+Therefore, this particular error message indicates that for some reason Brim
+was not able to successfully communicate with a `zqd` process via
+`localhost:9867`. In brief, the root cause is likely one of the following:
+
+1. [A `zqd` crash](#a-zqd-crash)
+2. [A failure to launch `zqd`](#a-failure-to-launch-zqd)
+3. [No local communications between Brim and `zqd`](#no-local-communications-between-brim-and-zqd)
+
+In all cases, you should plan to [open an issue](#opening-an-issue) with
+Brim/`zqd` logs attached, as these may include crash/failure details. However,
+for situations other than simple crashes, the problem may be related to
+anti-virus tools that could block the install/upgrade of software, and/or
+firewalls that block communications between unfamiliar processes. You may
+therefore need to work with your IT department to examine logs from such
+utilities and determine if settings can be adjusted to allow Brim to operate.
+
+The sections below describe additional debug you can perform to narrow down
+among the above root causes. Please include your findings from these steps in
+any issue you open, along with Brim/`zqd` logs and details on how you
+reproduced the error.
+
+### A `zqd` crash
+
+If you experience the error during normal operations in Brim (e.g. after you've
+attempted to execute a query in the middle of an otherwise healthy session),
+it's possible that the `zqd` process suffered a fatal crash. If you can
+reliably reproduce the crash by executing a particular query and/or with a
+particular data source, please include this detail in your issue along with
+attached logs.
+
+### A failure to launch `zqd`
+
+If you experience the error when launching Brim (perhaps after an auto-update
+to a new release), it's possible that system utilities prevented the `zqd`
+process from fully installing or starting. To narrow down if this is occurring,
+it may help to compare the current running state to that of a healthy
+installation.
+
+Once you're launched Brim and have observed the error message, check the
+running processes on your system and compare to the outputs shown below as
+appropriate for your platform.
+
+**Windows (Task Manager)**
+
+![Healthy Brim in Task Manager](media/Brim-Task-Manager.png)
+
+**Linux [`pstree`](https://man7.org/linux/man-pages/man1/pstree.1.html)**
+
+```
+$ pstree
+...
+        |      |                 |               |                 |-gnome-shell-+-Brim-+-Brim---Brim-+-Brim
+        |      |                 |               |                 |             |      |             `-4*[{Brim}]
+        |      |                 |               |                 |             |      |-Brim---Brim
+        |      |                 |               |                 |             |      |-Brim---4*[{Brim}]
+        |      |                 |               |                 |             |      |-Brim---10*[{Brim}]
+        |      |                 |               |                 |             |      |-zqd---9*[{zqd}]
+        |      |                 |               |                 |             |      `-30*[{Brim}]
+```
+
+**macOS [`pstree`](https://man7.org/linux/man-pages/man1/pstree.1.html)**
+
+```
+$ pstree
+...
+ |-+= 51968 phil /Applications/Brim.app/Contents/MacOS/Brim
+ | |--- 51969 phil /Applications/Brim.app/Contents/Frameworks/Brim Helper (GPU).app/Contents/MacOS/Brim Helper (GPU) --type=gpu-process --field-trial-handle=1718379636,14112076954270201284,13380727289785404389,131072 --enable-features=WebComponentsV0Enabled --disable-features=CookiesWithoutSameSiteMustBeSecure,SameSiteByDefaultCookies,SpareRendererForSitePerProcess --gpu-preferences=MAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAQAAAAAAAAAAAAAAAAAAAA6AAAABwAAADgAAAAAAAAAOgAAAAAAAAA8AAAAAAAAAD4AAAAAAAAAAABAAAAAAAACAEAAAAAAAAQAQAAAAAAABgBAAAAAAAAIAEAAAAAAAAoAQAAAAAAADABAAAAAAAAOAEAAAAAAABAAQAAAAAAAEgBAAAAAAAAUAEAAAAAAABYAQAAAAAAAGABAAAAAAAAaAEAAAAAAABwAQAAAAAAAHgBAAAAAAAAgAEAAAAAAACIAQAAAAAAAJABAAAAAAAAmAEAAAAAAACgAQAAAAAAAKgBAAAAAAAAsAEAAAAAAAC4AQAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAGAAAAEAAAAAAAAAAAAAAABwAAABAAAAAAAAAAAAAAAAgAAAAQAAAAAAAAAAAAAAAKAAAAEAAAAAAAAAAAAAAACwAAABAAAAAAAAAAAAAAAA0AAAAQAAAAAAAAAAEAAAAAAAAAEAAAAAAAAAABAAAABgAAABAAAAAAAAAAAQAAAAcAAAAQAAAAAAAAAAEAAAAIAAAAEAAAAAAAAAABAAAACgAAABAAAAAAAAAAAQAAAAsAAAAQAAAAAAAAAAEAAAANAAAAEAAAAAAAAAAEAAAAAAAAABAAAAAAAAAABAAAAAYAAAAQAAAAAAAAAAQAAAAHAAAAEAAAAAAAAAAEAAAACAAAABAAAAAAAAAABAAAAAoAAAAQAAAAAAAAAAQAAAALAAAAEAAAAAAAAAAEAAAADQAAABAAAAAAAAAABgAAAAAAAAAQAAAAAAAAAAYAAAAGAAAAEAAAAAAAAAAGAAAABwAAABAAAAAAAAAABgAAAAgAAAAQAAAAAAAAAAYAAAAKAAAAEAAAAAAAAAAGAAAACwAAABAAAAAAAAAABgAAAA0AAAA= --use-gl=swiftshader-webgl --shared-files
+ | |--- 51971 phil /Applications/Brim.app/Contents/Resources/app/zdeps/zqd listen -l localhost:9867 -data /Users/phil/Library/Application Support/Brim/data/spaces -config /Users/phil/Library/Application Support/Brim/zqd-config.yaml -suricatarunner /Applications/Brim.app/Contents/Resources/app/zdeps/suricata/suricatarunner -suricataupdater /Applications/Brim.app/Contents/Resources/app/zdeps/suricata/suricataupdater -zeekrunner /Applications/Brim.app/Contents/Resources/app/zdeps/zeek/zeekrunner -brimfd=3
+ | |--- 51972 phil /Applications/Brim.app/Contents/Frameworks/Brim Helper.app/Contents/MacOS/Brim Helper --type=utility --utility-sub-type=network.mojom.NetworkService --field-trial-handle=1718379636,14112076954270201284,13380727289785404389,131072 --enable-features=WebComponentsV0Enabled --disable-features=CookiesWithoutSameSiteMustBeSecure,SameSiteByDefaultCookies,SpareRendererForSitePerProcess --lang=en-US --service-sandbox-type=network --shared-files --seatbelt-client=46
+ | \--- 51973 phil /Applications/Brim.app/Contents/Frameworks/Brim Helper (Renderer).app/Contents/MacOS/Brim Helper (Renderer) --type=renderer --field-trial-handle=1718379636,14112076954270201284,13380727289785404389,131072 --enable-features=WebComponentsV0Enabled --disable-features=CookiesWithoutSameSiteMustBeSecure,SameSiteByDefaultCookies,SpareRendererForSitePerProcess --disable-gpu-compositing --lang=en-US --app-path=/Applications/Brim.app/Contents/Resources/app --enable-experimental-web-platform-features --node-integration --no-sandbox --no-zygote --enable-remote-module --background-color=#fff --enable-spellcheck --enable-websql --disable-electron-site-instance-overrides --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --no-v8-untrusted-code-mitigations --shared-files
+```
+
+If `zqd` is absent from these outputs, it's possibile that another process is
+already running that's listening on TCP port 9867. To confirm this, completely
+exit Brim and run `netstat -an` and look for instances of `:9867`.
+
+If no such process is found, examine the logs of system utilities (perhaps
+with assistance from an IT department) to look for indications of the `zqd`
+binary not having having been fully installed (such as during auto-update to a
+new release) or prevented from being launched.
+
+### No local communications between Brim and `zqd`
+
+If the process tables indicated `zqd` is running, the next thing to consider
+is the local network connectivity. In an "out-of-the-box" desktop environment,
+not only would Brim have been able to connect, but a direct connection from a
+browser to `http://localhost:9867` would cause the following informational
+message to be returned by `zqd`.
+
+![zqd listening](media/zqd-listening.png)
+
+It may help to use Wireshark to sniff TCP port 9867 traffic on your system's
+loopback interface while attempting to access this URL in your browser. This
+may help determine if packets are failing to make it to `zqd`, not being
+returned from `zqd`, and/or if some other process is getting in the way of the
+communications. It may be necessary to examine firewall logs (perhaps with
+assistance from an IT department) to look for evidence of the connection
+having been blocked.
 
 # Gathering Info
 
