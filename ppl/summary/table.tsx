@@ -17,6 +17,7 @@ const Row = styled.div`
   display: contents;
   cursor: default;
   position: relative;
+  padding-right: 12px;
 
   & > * {
     position: relative;
@@ -94,16 +95,12 @@ function Bars({records, x}) {
   if (!x) return null
   const max = records[0]?.get(x).getValue()
   const scale = scaleLinear({domain: [0, max], range: [0, 100]})
-  const opacityScale = scaleLinear({
-    domain: [0, records.length - 1],
-    range: [0.8, 0.05]
-  })
   return records.map((rec, i) => (
     <Bar
       key={i}
       top={i * 22}
       percent={scale(rec.get(x).getValue())}
-      opacity={opacityScale(i)}
+      opacity={1}
     />
   ))
 }
