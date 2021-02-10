@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import {initialTiles} from "./flows/initial-state"
 import Grid from "./grid"
-import Tile from "./tile"
+import Tile from "app/tile/tile"
 
 const BG = styled.div`
   height: 100%;
