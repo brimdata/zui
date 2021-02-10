@@ -79,3 +79,14 @@ test("getMostRecent when not empty", () => {
 
   expect(history.getMostRecent()).toBe("james")
 })
+
+test("save, save, goBack, save, goBack", () => {
+  const history = new History()
+  history.save("a")
+  history.save("b")
+  history.goBack()
+  expect(history.getCurrent()).toBe("a")
+  history.save("c")
+  history.goBack()
+  expect(history.getCurrent()).toBe("a")
+})

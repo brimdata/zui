@@ -13,7 +13,9 @@ export default class LogDetailHistory<T> {
   }
 
   save(entry: T) {
-    this.entries.push(entry)
+    const length = this.entries.length
+    const index = length - this.position
+    this.entries.splice(index, length, entry)
     this.position = 0
   }
 

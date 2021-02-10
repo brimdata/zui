@@ -65,7 +65,11 @@ test("going back, then push, then back", () => {
     LogDetails.back()
   ])
 
-  expect(LogDetails.build(state).get("letter")).toBe("a")
+  expect(
+    LogDetails.build(state)
+      .get("letter")
+      .toString()
+  ).toBe("a")
 })
 
 test("updating the current log detail", () => {
