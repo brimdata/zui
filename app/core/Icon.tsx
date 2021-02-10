@@ -3,8 +3,10 @@ import classNames from "classnames"
 import styled, {css} from "styled-components"
 import icons from "./icons"
 
+export type IconName = keyof typeof icons
+
 type Props = {
-  name: keyof typeof icons
+  name: IconName
   className?: string
   size?: number
   fill?: string
@@ -27,6 +29,7 @@ const Wrap = styled.i<{
 
 export default function Icon(props: Props) {
   const SVG = icons[props.name]
+  if (!SVG) throw new Error(`No Icon: "${props.name}"`)
   return (
     <Wrap
       className={classNames(props.className, `${props.name}-icon`)}

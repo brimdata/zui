@@ -15,7 +15,7 @@ import {
   Scrollable,
   Title
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "./Toolbar/Button"
+import ToolbarButton from "../../../app/toolbar/button"
 
 export default function IngestWarningsModal({onClose}) {
   useEnterKey(onClose)

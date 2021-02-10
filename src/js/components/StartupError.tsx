@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import {remote} from "electron"
 import Link from "./common/Link"
-import ToolbarButton from "./Toolbar/Button"
+import ToolbarButton from "../../../app/toolbar/button"
 
 const Wrap = styled.div`
   padding: 24px;

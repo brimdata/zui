@@ -10,7 +10,7 @@ import useCallbackRef from "../hooks/useCallbackRef"
 import {useDispatch} from "react-redux"
 import {isEmpty} from "lodash"
 import MacSpinner from "../MacSpinner"
-import ToolbarButton from "../Toolbar/Button"
+import ToolbarButton from "../../../../app/toolbar/button"
 import useEventListener from "../hooks/useEventListener"
 import {Workspace} from "../../state/Workspaces/types"
 
@@ -79,7 +79,7 @@ type Props = {
 const WorkspaceForm = ({onClose, workspace}: Props) => {
   const dispatch = useDispatch()
   const [errors, setErrors] = useState([])
-  const [formRef, setFormRef] = useCallbackRef()
+  const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const config: FormConfig = {

@@ -65,13 +65,14 @@ export class SearchWindow implements BrimWindow {
   }
 
   async serialize() {
+    this.initialState = await this.getStateFromWebContents()
     return {
       id: this.id,
       name: this.name,
       lastFocused: this.lastFocused,
       position: this.ref.getPosition() as [number, number],
       size: this.ref.getSize() as [number, number],
-      state: await this.getStateFromWebContents()
+      state: this.initialState
     }
   }
 

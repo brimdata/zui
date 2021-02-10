@@ -16,7 +16,7 @@ import useCallbackRef from "../hooks/useCallbackRef"
 import usePreferencesForm from "./usePreferencesForm"
 
 export default function Preferences() {
-  const [f, setForm] = useCallbackRef()
+  const [f, setForm] = useCallbackRef<HTMLFormElement>()
   const [errors, setErrors] = useState([])
   const prefsForm = usePreferencesForm()
 

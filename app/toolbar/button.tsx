@@ -1,7 +1,8 @@
 import * as React from "react"
 import classNames from "classnames"
 
-import DropdownArrow from "../../icons/DropdownArrow"
+import Icon from "app/core/Icon"
+import styled from "styled-components"
 
 type Props = {
   text?: string
@@ -11,6 +12,15 @@ type Props = {
   className?: string
   isPrimary?: boolean
 } & React.HTMLProps<HTMLButtonElement>
+
+const DropdownIcon = styled(Icon)`
+  width: 9px;
+  height: 9px;
+  display: flex;
+  justify-contents: center;
+  align-items: center;
+  margin: 0 4px;
+`
 
 const ToolbarButton = ({
   text,
@@ -30,7 +40,7 @@ const ToolbarButton = ({
     <button {...rest} className={cn} disabled={disabled} type="button">
       {!!icon && <span className="icon">{icon}</span>}
       {!!text && <span className="text">{text}</span>}
-      {!!dropdown && <DropdownArrow />}
+      {!!dropdown && <DropdownIcon name="chevron-down" />}
     </button>
   )
 }

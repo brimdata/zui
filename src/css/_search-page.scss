@@ -8,17 +8,11 @@
 }
 
 .pane-left {
-  min-width: 230px;
+  min-width: 150px;
   flex-shrink: 0;
 }
 
 .pane-right {
   min-width: 240px;
   flex-shrink: 0;
-}
-
-.search-page-header,
-.search-results,
-.status-bar {
-  min-width: 573px;
 }

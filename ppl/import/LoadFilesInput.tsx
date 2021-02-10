@@ -2,7 +2,7 @@ import React, {ChangeEvent, MouseEvent} from "react"
 import classNames from "classnames"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import useDropzone from "src/js/components/hooks/useDropzone"
-import ToolbarButton from "src/js/components/Toolbar/Button"
+import ToolbarButton from "app/toolbar/button"
 import Folder from "src/js/icons/Folder"
 import {reactElementProps} from "src/js/test/integration"
 import PcapFileIcon from "./PcapFileIcon"
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default function LoadFilesInput({onChange}: Props) {
-  const [input, setInput] = useCallbackRef()
+  const [input, setInput] = useCallbackRef<HTMLInputElement>()
 
   const [bindDropzone, dragging] = useDropzone((e: DragEvent) => {
     const files = Array.from(e.dataTransfer.files)

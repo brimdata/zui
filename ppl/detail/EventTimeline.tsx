@@ -7,9 +7,10 @@ import EventTag from "./EventTag"
 import brim from "src/js/brim"
 import {useDispatch} from "react-redux"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
-import useResizeCallback from "app/core/hooks/useResizeCallback"
+import useResizeEffect from "app/core/hooks/useResizeEffect"
 import ReactTooltip from "react-tooltip"
 import {isEqual} from "lodash"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 
 const Lane = styled.div`
   position: relative;
@@ -86,7 +87,8 @@ export default memo(function EventTimeline({events, current}: Props) {
   const dispatch = useDispatch()
   const [width, setWidth] = useState(0)
   const [lastItem, lastItemRef] = useContentRect()
-  const resizeRef = useResizeCallback(({width}) => setWidth(width))
+  const [node, resizeRef] = useCallbackRef()
+  useResizeEffect(node, ({width}) => setWidth(width))
   const scale = scaleTime()
     .domain(getDomain(events))
     .range([0, width - lastItem.width])

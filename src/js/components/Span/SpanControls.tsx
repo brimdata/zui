@@ -3,7 +3,7 @@ import React from "react"
 import classNames from "classnames"
 
 import ClockIcon from "../../icons/ClockIcon"
-import Label from "../Toolbar/Label"
+import Label from "../../../../app/toolbar/label"
 import Last from "../../state/Last"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"

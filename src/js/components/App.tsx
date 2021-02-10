@@ -18,6 +18,7 @@ import {Modals} from "./Modals"
 import BrimToaster from "./BrimToaster"
 import BrimTooltip from "./BrimTooltip"
 import HookLog from "app/system-test/HookLog"
+import ColumnsModal from "app/columns/columns-modal"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -39,6 +40,7 @@ export default function App() {
       <Modals />
       <AboutModal />
       <SpaceModal />
+      <ColumnsModal />
       <HTMLContextMenu />
       <BrimToaster />
       <PopNotice />

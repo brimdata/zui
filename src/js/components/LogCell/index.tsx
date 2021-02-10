@@ -2,7 +2,6 @@ import React, {useState} from "react"
 import classNames from "classnames"
 
 import {RightClickBuilder} from "../../types"
-import {getTooltipStyle} from "../../lib/MenuStyler"
 import CompoundField from "./CompoundField"
 import SingleField from "./SingleField"
 import Tooltip from "../Tooltip"
@@ -13,6 +12,12 @@ type Props = {
   log: zng.Record
   style?: Object
   rightClick: RightClickBuilder
+}
+
+const getTooltipStyle = (el: Element) => {
+  if (!el) return {}
+  const {top, left} = el.getBoundingClientRect()
+  return {top: top - 21, left: left + 4}
 }
 
 export default function LogCell({field, style, rightClick, log}: Props) {

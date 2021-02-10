@@ -11,13 +11,8 @@
   background: var(--snow);
 
   .pane-header {
-    background: #f0f0f0;
+    background: var(--ivory);
     border-bottom: 1px solid #dbdbdb;
-  }
-
-  .packets-button .toolbar-button svg {
-    stroke: none;
-    fill: var(--havelock);
   }
 
   .detail-pane-content {

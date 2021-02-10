@@ -1,18 +1,14 @@
+import {MenuItemConstructorOptions} from "electron"
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import {showContextMenu} from "src/js/lib/System"
+import Layout from "src/js/state/Layout"
+import {ActionButtonProps} from "../action-button"
 
-import Button from "./Button"
-import Label from "./Label"
-import Layout from "../../state/Layout"
-import View from "../../icons/View"
-import usePopupMenu from "../hooks/usePopupMenu"
-
-const ViewButton = () => {
+export default function useView(): ActionButtonProps {
   const dispatch = useDispatch()
   const leftIsOpen = useSelector(Layout.getLeftSidebarIsOpen)
   const rightIsOpen = useSelector(Layout.getRightSidebarIsOpen)
-
-  const menu = usePopupMenu([
+  const submenu = [
     {
       label: "Left Pane",
       type: "checkbox",
@@ -25,14 +21,15 @@ const ViewButton = () => {
       checked: rightIsOpen,
       click: () => dispatch(Layout.toggleRightSidebar())
     }
-  ])
+  ] as MenuItemConstructorOptions[]
 
-  return (
-    <div>
-      <Button icon={<View />} dropdown onClick={menu.onClick} />
-      <Label>View</Label>
-    </div>
-  )
+  return {
+    label: "View",
+    title: "Show or hide application panes",
+    icon: "view",
+    submenu,
+    click() {
+      showContextMenu(submenu)
+    }
+  }
 }
-
-export default ViewButton

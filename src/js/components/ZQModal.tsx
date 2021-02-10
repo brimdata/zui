@@ -15,7 +15,7 @@ import {
   Pre,
   Scrollable
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "./Toolbar/Button"
+import ToolbarButton from "../../../app/toolbar/button"
 import styled from "styled-components"
 import useEnterKey from "./hooks/useEnterKey"
 

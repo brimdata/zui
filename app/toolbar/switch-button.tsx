@@ -43,7 +43,7 @@ function useSpotlight(ref): [SpotlightProps, (i: number, a: boolean) => void] {
 }
 
 const BG = styled.div`
-  display: flex;
+  display: inline-flex;
   background: rgba(0, 0, 0, 0.03);
   box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.25);
   border-radius: 4px;

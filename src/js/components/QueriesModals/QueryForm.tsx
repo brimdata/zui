@@ -8,7 +8,7 @@ import brim from "../../brim"
 import useCallbackRef from "../hooks/useCallbackRef"
 import {useDispatch, useSelector} from "react-redux"
 import {isEmpty, get} from "lodash"
-import ToolbarButton from "../Toolbar/Button"
+import ToolbarButton from "../../../../app/toolbar/button"
 import useEventListener from "../hooks/useEventListener"
 import {Query} from "../../state/Queries/types"
 import Queries from "../../state/Queries"
@@ -98,7 +98,7 @@ type Props = {
 const QueryForm = ({onClose, query, value}: Props) => {
   const dispatch = useDispatch()
   const [errors, setErrors] = useState([])
-  const [formRef, setFormRef] = useCallbackRef()
+  const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
   const queriesRoot = useSelector(Queries.getRaw)
 
   const config: FormConfig = {

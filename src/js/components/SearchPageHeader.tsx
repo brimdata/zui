@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import {SearchBar} from "./SearchBar/mod"
-import {Toolbar} from "./Toolbar/mod"
+import {Toolbar} from "../../../app/toolbar/toolbar"
 import SearchHeaderChart from "./SearchHeaderChart"
 
 const Wrap = styled.div`

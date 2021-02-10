@@ -35,15 +35,6 @@
     white-space: nowrap;
   }
 
-  .dropdown-arrow {
-    display: flex;
-    height: 16px;
-    stroke: var(--slate);
-    stroke-width: 3px;
-    transition: transform 500ms;
-    margin: 0 4px;
-  }
-
   &:disabled {
     .icon {
       opacity: 0.25;
