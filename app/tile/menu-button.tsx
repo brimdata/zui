@@ -1,5 +1,4 @@
 import Icon from "app/core/Icon"
-import {dispatch} from "d3"
 import React from "react"
 import {useDispatch} from "react-redux"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
@@ -8,7 +7,6 @@ import {showContextMenu} from "src/js/lib/System"
 import Layout from "src/js/state/Layout"
 import SearchBar from "src/js/state/SearchBar"
 import styled from "styled-components"
-import {query} from "winston"
 
 const BG = styled.div`
   position: relative;
