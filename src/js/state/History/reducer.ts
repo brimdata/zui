@@ -1,8 +1,9 @@
+import {SearchRecord} from "src/js/types"
 import {HistoryAction, HistoryState} from "./types"
-import brim from "../../brim"
+import History from "app/core/models/history"
 
 const init: HistoryState = {
-  position: -1,
+  position: 0,
   entries: []
 }
 
@@ -10,33 +11,31 @@ export default function reducer(
   state: HistoryState = init,
   action: HistoryAction
 ): HistoryState {
+  let history: History<SearchRecord>
+
   switch (action.type) {
     case "HISTORY_CLEAR":
       return {...init}
 
     case "HISTORY_PUSH":
-      return brim
-        .entries(state)
-        .push(action.entry)
-        .data()
+      history = History.parse(state)
+      history.push(action.entry)
+      return history.serialize()
 
     case "HISTORY_BACK":
-      return brim
-        .entries(state)
-        .goBack()
-        .data()
+      history = History.parse(state)
+      history.back()
+      return history.serialize()
 
     case "HISTORY_FORWARD":
-      return brim
-        .entries(state)
-        .goForward()
-        .data()
+      history = History.parse(state)
+      history.forward()
+      return history.serialize()
 
     case "HISTORY_UPDATE":
-      return brim
-        .entries(state)
-        .update({scrollPos: action.scrollPos})
-        .data()
+      history = History.parse(state)
+      history.update({scrollPos: action.scrollPos})
+      return history.serialize()
 
     default:
       return state

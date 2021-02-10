@@ -1,56 +1,39 @@
 import {LogDetails, LogDetailsAction, LogDetailsState} from "./types"
-import LogDetailHistory from "../../models/LogDetailHistory"
+import History from "app/core/models/history"
 
 const init = (): LogDetailsState => ({
   entries: [],
-  position: 0,
-  prevPosition: -1
+  position: 0
 })
 
 export default function reducer(
   state: LogDetailsState = init(),
   action: LogDetailsAction
 ): LogDetailsState {
-  let history
+  let history: History<LogDetails>
   switch (action.type) {
     case "LOG_DETAIL_PUSH":
       history = toHistory(state)
-      history.save({
+      history.push({
         log: action.record,
         uidLogs: [],
         uidStatus: "INIT"
       })
-      return {
-        entries: history.entries,
-        position: history.position,
-        prevPosition: state.position
-      }
+      return history.serialize()
     case "LOG_DETAIL_UPDATE":
       history = toHistory(state)
-      history.updateCurrent(action.updates)
-      return {
-        entries: history.entries,
-        position: history.position,
-        prevPosition: state.position
-      }
+      history.update(action.updates)
+      return history.serialize()
 
     case "LOG_DETAIL_FORWARD":
       history = toHistory(state)
-      history.goForward()
-      return {
-        entries: history.entries,
-        position: history.position,
-        prevPosition: state.position
-      }
+      history.forward()
+      return history.serialize()
 
     case "LOG_DETAIL_BACK":
       history = toHistory(state)
-      history.goBack()
-      return {
-        entries: history.entries,
-        position: history.position,
-        prevPosition: state.position
-      }
+      history.back()
+      return history.serialize()
 
     case "LOG_DETAIL_CLEAR":
       return init()
@@ -60,6 +43,10 @@ export default function reducer(
   }
 }
 
-export const toHistory = ({entries, position}: LogDetailsState) => {
-  return new LogDetailHistory<LogDetails>([...entries], position)
+export type LogDetailHistory = History<LogDetails>
+export const toHistory = ({
+  entries,
+  position
+}: LogDetailsState): LogDetailHistory => {
+  return new History<LogDetails>([...entries], position)
 }

@@ -96,8 +96,8 @@ const stateToProps = (state) => {
   return {
     isOpen: Layout.getRightSidebarIsOpen(state),
     width: Layout.getRightSidebarWidth(state),
-    prevExists: LogDetails.getHistory(state).prevExists(),
-    nextExists: LogDetails.getHistory(state).nextExists(),
+    prevExists: LogDetails.getHistory(state).canGoBack(),
+    nextExists: LogDetails.getHistory(state).canGoForward(),
     currentLog: LogDetails.build(state),
     space: Current.getSpace(state)
   }

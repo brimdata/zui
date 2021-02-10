@@ -2,51 +2,25 @@ import {createSelector} from "reselect"
 
 import {State} from "../types"
 import {TabState} from "../Tab/types"
-import {toHistory} from "./reducer"
+import {LogDetailHistory, toHistory} from "./reducer"
 import activeTabSelect from "../Tab/activeTabSelect"
-import {LogDetailsState, LogDetails} from "./types"
-import LogDetailHistory from "src/js/models/LogDetailHistory"
+import {LogDetailsState} from "./types"
 import {SearchStatus} from "src/js/types/searches"
 import {zng} from "zealot"
-type History = LogDetailHistory<LogDetails>
 
 const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails
 })
 
-const getPosition = activeTabSelect((state: TabState) => {
-  return state.logDetails.position
-})
-
-const getPrevPosition = activeTabSelect((state: TabState) => {
-  return state.logDetails.prevPosition
-})
-
-const getHistory = createSelector<State, LogDetailsState, History>(
+const getHistory = createSelector<State, LogDetailsState, LogDetailHistory>(
   getLogDetails,
   (logDetails) => toHistory(logDetails)
 )
 
-const getPrevExists = createSelector<State, History, boolean>(
-  getHistory,
-  (history) => history.prevExists()
-)
-
-const getNextExists = createSelector<State, History, boolean>(
-  getHistory,
-  (history) => history.nextExists()
-)
-
-const getIsGoingBack = createSelector<State, number, number, boolean>(
-  getPosition,
-  getPrevPosition,
-  (position, prevPosition) => prevPosition - position < 0
-)
-
-const build = createSelector<State, History, zng.Record | null>(
+const build = createSelector<State, LogDetailHistory, zng.Record | null>(
   getHistory,
   (history) => {
-    const entry = history.getCurrent()
+    const entry = history.current()
     if (entry && entry.log) {
       return zng.Record.deserialize(entry.log)
     } else {
@@ -55,20 +29,20 @@ const build = createSelector<State, History, zng.Record | null>(
   }
 )
 
-const getUidLogs = createSelector<State, History, zng.Record[]>(
+const getUidLogs = createSelector<State, LogDetailHistory, zng.Record[]>(
   getHistory,
   (history) => {
-    const entry = history.getCurrent()
+    const entry = history.current()
     return entry
       ? entry.uidLogs.map((data) => zng.Record.deserialize(data))
       : []
   }
 )
 
-const getUidStatus = createSelector<State, History, SearchStatus>(
+const getUidStatus = createSelector<State, LogDetailHistory, SearchStatus>(
   getHistory,
   (history) => {
-    const entry = history.getCurrent()
+    const entry = history.current()
     return entry ? entry.uidStatus : "INIT"
   }
 )
@@ -84,12 +58,6 @@ export default {
   getConnLog,
   getUidStatus,
   getUidLogs,
-  getLogDetails,
-  getPosition,
-  getPrevPosition,
   build,
-  getIsGoingBack,
-  getNextExists,
-  getPrevExists,
   getHistory
 }

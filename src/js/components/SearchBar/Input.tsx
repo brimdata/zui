@@ -5,8 +5,8 @@ import styled from "styled-components"
 import {cssVar} from "../../lib/cssVar"
 import {reactElementProps} from "../../test/integration"
 import {submitSearch} from "../../flows/submitSearch/mod"
-import InputHistory from "../../models/InputHistory"
 import SearchBar from "../../state/SearchBar"
+import History from "app/core/models/history"
 
 const StyledInput = styled.input`
   display: block;
@@ -28,7 +28,7 @@ const StyledInput = styled.input`
 
 export default function Input() {
   const dispatch = useDispatch()
-  const history = useRef(new InputHistory<string>())
+  const history = useRef(new History<string>())
   const inputValue = useSelector(SearchBar.getSearchBarInputValue)
 
   function changeTo(value: string) {
@@ -49,12 +49,12 @@ export default function Input() {
       history.current.push(e.currentTarget.value)
     }
     if (e.key === "ArrowUp") {
-      history.current.goBack()
-      changeTo(history.current.getCurrentEntry())
+      history.current.back()
+      changeTo(history.current.current())
     }
     if (e.key === "ArrowDown") {
-      history.current.goForward()
-      changeTo(history.current.getCurrentEntry())
+      history.current.forward()
+      changeTo(history.current.current())
     }
   }
 
