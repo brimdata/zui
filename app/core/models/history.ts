@@ -2,7 +2,7 @@ import {isEqual} from "lodash"
 
 export default class History<Entry> {
   static parse<T>({entries, position}) {
-    return new History<T>(entries, position)
+    return new History<T>([...entries], position)
   }
 
   constructor(private array: Entry[] = [], private index: number = 0) {}
@@ -55,7 +55,7 @@ export default class History<Entry> {
 
   serialize() {
     return {
-      entries: [...this.array],
+      entries: this.array,
       position: this.index
     }
   }
