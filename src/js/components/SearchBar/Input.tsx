@@ -7,6 +7,7 @@ import {reactElementProps} from "../../test/integration"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import SearchBar from "../../state/SearchBar"
 import History from "app/core/models/history"
+import CmdHistory from "app/core/models/cmd-history"
 
 const StyledInput = styled.input`
   display: block;
@@ -25,10 +26,11 @@ const StyledInput = styled.input`
     outline: none;
   }
 `
+// create a tiny little history closure
 
 export default function Input() {
   const dispatch = useDispatch()
-  const history = useRef(new History<string>())
+  const history = useRef(new CmdHistory([], 0, 1000))
   const inputValue = useSelector(SearchBar.getSearchBarInputValue)
 
   function changeTo(value: string) {
@@ -48,13 +50,11 @@ export default function Input() {
       submit()
       history.current.push(e.currentTarget.value)
     }
-    if (e.key === "ArrowUp") {
-      history.current.back()
-      changeTo(history.current.current())
+    if (e.key === "ArrowUp" && !history.current.empty()) {
+      changeTo(history.current.back())
     }
-    if (e.key === "ArrowDown") {
-      history.current.forward()
-      changeTo(history.current.current())
+    if (e.key === "ArrowDown" && !history.current.empty()) {
+      changeTo(history.current.forward())
     }
   }
 
