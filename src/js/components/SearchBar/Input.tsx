@@ -25,7 +25,6 @@ const StyledInput = styled.input`
     outline: none;
   }
 `
-// create a tiny little history closure
 
 export default function Input() {
   const dispatch = useDispatch()
