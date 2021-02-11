@@ -17,7 +17,7 @@ export type ZealotPayload =
 export type Enhancer = () => (payload: ZealotPayload) => any
 
 export interface ZealotArgs {
-  fetcher: (host: string, auth?: string) => ZFetcher
+  fetcher: (host: string) => ZFetcher
 }
 
 export type SearchFormat = "zjson" | "zng" | "ndjson" | "csv"
