@@ -321,7 +321,7 @@ $ pstree
  | \--- 51973 phil /Applications/Brim.app/Contents/Frameworks/Brim Helper (Renderer).app/Contents/MacOS/Brim Helper (Renderer) --type=renderer --field-trial-handle=1718379636,14112076954270201284,13380727289785404389,131072 --enable-features=WebComponentsV0Enabled --disable-features=CookiesWithoutSameSiteMustBeSecure,SameSiteByDefaultCookies,SpareRendererForSitePerProcess --disable-gpu-compositing --lang=en-US --app-path=/Applications/Brim.app/Contents/Resources/app --enable-experimental-web-platform-features --node-integration --no-sandbox --no-zygote --enable-remote-module --background-color=#fff --enable-spellcheck --enable-websql --disable-electron-site-instance-overrides --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --no-v8-untrusted-code-mitigations --shared-files
 ```
 
-If `zqd` is absent from these outputs, it's possibile that another process is
+If `zqd` is absent from these outputs, it's possible that another process is
 already running that's listening on TCP port 9867. To confirm this, completely
 exit Brim and run `netstat -an` and look for instances of `:9867`.
 
