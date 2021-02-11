@@ -110,6 +110,7 @@ jobs:
       - run: npm run build
       - run: npm test -- --maxWorkers=2 --ci
       - name: Integration Tests
+        id: testIntegration
         run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
         timeout-minutes: 30
         env:
@@ -136,7 +137,7 @@ jobs:
           git push
 
       - uses: actions/upload-artifact@v1
-        if: failure()
+        if: failure() && steps.testIntegration.conclusion == "failure"
         with:
           name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: /var/tmp/brimsec/itest
