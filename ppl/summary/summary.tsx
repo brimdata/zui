@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import {initialTiles} from "./flows/initial-state"
 import Grid from "./grid"
-import Tile from "./tile"
+import Tile from "app/tile/tile"
 
 const BG = styled.div`
   height: 100%;
@@ -18,6 +18,7 @@ type BarChart = {
 
 type Table = {
   type: "table"
+  x?: string
 }
 
 type Number = {
@@ -35,12 +36,14 @@ type Tile = {
 }
 
 function getGridLayout(tiles) {
-  return tiles.map((t) => ({i: t.id, ...t.layout}))
+  return tiles.map((t) => ({i: t.id, ...t.layout, static: true}))
 }
 
 const Title = styled.h2`
-  margin: 12px;
   ${(p) => p.theme.typography.headingPage}
+  margin: 24px 12px 12px 12px;
+  text-align: center;
+  user-select: none;
 `
 
 const SummaryUI = ({title, tiles, onLayoutChange}) => {

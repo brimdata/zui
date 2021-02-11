@@ -6,7 +6,6 @@ import {ParentSize} from "@vx/responsive"
 
 const BG = styled.div`
   height: 100%;
-
   .react-grid-placeholder {
     opacity: 1;
     background: ${transparentize(0.99, cssVar("--havelock") as string)};
@@ -27,8 +26,8 @@ export default function Grid({children, layout, onLayoutChange}) {
             layout={layout}
             onLayoutChange={onLayoutChange}
             className="layout"
-            cols={12}
-            rowHeight={48}
+            cols={4}
+            rowHeight={24}
             width={width}
             margin={[12, 12]}
           >

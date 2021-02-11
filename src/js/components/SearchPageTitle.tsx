@@ -50,9 +50,9 @@ const Stat = styled.span`
 export default function SearchPageTitle() {
   const space = useSelector(Current.mustGetSpace)
   const {size, name, min_time, max_time} = space
-  const bytes = formatBytes(size, 1)
-
-  const duration = brim.span([min_time, max_time]).shortFormat()
+  const bytes = size ? formatBytes(size, 1) : ""
+  const span = brim.span([min_time, max_time])
+  const duration = span.getDuration() ? span.shortFormat() : ""
 
   return (
     <Wrap>
