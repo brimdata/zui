@@ -6,7 +6,6 @@ import {cssVar} from "../../lib/cssVar"
 import {reactElementProps} from "../../test/integration"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import SearchBar from "../../state/SearchBar"
-import History from "app/core/models/history"
 import CmdHistory from "app/core/models/cmd-history"
 
 const StyledInput = styled.input`
