@@ -287,7 +287,7 @@ process from fully installing or starting. To narrow down if this is occurring,
 it may help to compare the current running state to that of a healthy
 installation.
 
-Once you're launched Brim and have observed the error message, check the
+Once you've launched Brim and have observed the error message, check the
 running processes on your system and compare to the outputs shown below as
 appropriate for your platform.
 
