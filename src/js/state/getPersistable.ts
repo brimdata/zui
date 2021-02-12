@@ -1,7 +1,19 @@
 import produce from "immer"
 import {State} from "./types"
+import {GlobalState} from "./globalReducer"
 
-export default function getPersistable(state: State) {
+export function getGlobalPersistable(state: GlobalState) {
+  return produce(state, (draft: GlobalState) => {
+    for (const ws of Object.values(draft.workspaces)) {
+      if (ws.authType === "auth0" && ws.authData) {
+        // accessToken only persists in native os keychain
+        delete ws.authData.accessToken
+      }
+    }
+  })
+}
+
+export function getWindowPersistable(state: State) {
   return produce(state, (draft: State) => {
     delete draft.errors
     delete draft.notice
@@ -14,6 +26,13 @@ export default function getPersistable(state: State) {
       delete tab.chart
       delete tab.last
       delete tab.logDetails
+    }
+
+    for (const ws of Object.values(draft.workspaces)) {
+      if (ws.authType === "auth0" && ws.authData) {
+        // accessToken only persists in native os keychain
+        delete ws.authData.accessToken
+      }
     }
   })
 }

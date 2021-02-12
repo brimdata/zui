@@ -22,9 +22,15 @@ module.exports = {
     }
     return packager({
       ...opts,
-      osxSign: osxSign,
+      osxSign,
       platform: "darwin",
-      icon: "dist/static/AppIcon.icns"
+      icon: "dist/static/AppIcon.icns",
+      protocols: [
+        {
+          name: "Brim",
+          schemes: ["brim"]
+        }
+      ]
     }).then(() => {
       console.log("Built package for darwin in " + opts.out)
     })

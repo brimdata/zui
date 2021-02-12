@@ -2,7 +2,12 @@ export type WorkspaceStatusesState = {
   [workspaceId: string]: WorkspaceStatus
 }
 
-export type WorkspaceStatus = null | "connected" | "disconnected" | "retrying"
+export type WorkspaceStatus =
+  | null
+  | "connected"
+  | "disconnected"
+  | "retrying"
+  | "login-required"
 
 export type WorkspaceStatusesAction =
   | WORKSPACE_STATUSES_SET

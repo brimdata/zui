@@ -5,10 +5,10 @@ import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
-import getPersistable from "../state/getPersistable"
 import initNewSearchTab from "./initNewSearchTab"
 import confirmUnload from "../flows/confirmUnload"
 import deletePartialSpaces from "../flows/deletePartialSpaces"
+import {getWindowPersistable} from "../state/getPersistable"
 
 export default (store: Store) => {
   const dispatch = store.dispatch as AppDispatch
@@ -53,7 +53,7 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("getState", (event, channel) => {
-    ipcRenderer.send(channel, getPersistable(store.getState()))
+    ipcRenderer.send(channel, getWindowPersistable(store.getState()))
   })
 
   ipcRenderer.on("showPreferences", () => {

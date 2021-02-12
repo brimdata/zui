@@ -28,8 +28,8 @@ export default combineReducers<any, any>({
   spaces: Spaces.reducer,
   packets: Packets.reducer,
   prefs: Prefs.reducer,
-  queries: Queries.reducer,
   systemTest: SystemTest.reducer,
   feature: Feature.reducer,
-  workspaceStatuses: WorkspaceStatuses.reducer
+  workspaceStatuses: WorkspaceStatuses.reducer,
+  queries: Queries.reducer
 })

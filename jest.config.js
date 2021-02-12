@@ -1,4 +1,9 @@
 module.exports = {
+  globals: {
+    "ts-jest": {
+      babelConfig: true
+    }
+  },
   setupFilesAfterEnv: ["./src/js/test/setup.ts"],
   testURL: "http://localhost",
   // Having the /test/unit as a root allows us to put the __mocks__ folder

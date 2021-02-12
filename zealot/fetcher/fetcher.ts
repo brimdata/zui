@@ -11,6 +11,7 @@ export type FetchArgs = {
   path: string
   method: string
   body?: string | FormData
+  headers?: Headers
   enhancers?: Enhancer[]
   signal?: AbortSignal
 }
@@ -18,14 +19,14 @@ export type FetchArgs = {
 export function createFetcher(host: string) {
   return {
     async promise(args: FetchArgs) {
-      const {path, method, body, signal} = args
-      const resp = await fetch(url(host, path), {method, body, signal})
+      const {path, method, body, signal, headers} = args
+      const resp = await fetch(url(host, path), {method, body, signal, headers})
       const content = await parseContentType(resp)
       return resp.ok ? content : Promise.reject(createError(content))
     },
     async stream(args: FetchArgs): Promise<ZReponse> {
-      const {path, method, body, signal} = args
-      const resp = await fetch(url(host, path), {method, body, signal})
+      const {path, method, body, signal, headers} = args
+      const resp = await fetch(url(host, path), {method, body, signal, headers})
       if (!resp.ok) {
         const content = await parseContentType(resp)
         return Promise.reject(createError(content))
@@ -60,6 +61,10 @@ export function createFetcher(host: string) {
         })
 
         xhr.open(args.method, url(host, args.path), true)
+        if (args.headers) {
+          for (const [header, val] of args.headers.entries())
+            xhr.setRequestHeader(header, val)
+        }
         xhr.send(args.body)
         resolve(createStream(iterator, xhr))
       })

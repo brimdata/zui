@@ -1,16 +1,16 @@
-import {useDispatch, useSelector} from "react-redux"
+import {MenuItemConstructorOptions} from "electron"
 import React, {ComponentType} from "react"
+import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
+import {activateWorkspace} from "../flows/workspace/activateWorkspace"
+import DropdownArrow from "../icons/DropdownArrow"
+import Current from "../state/Current"
+import Modal from "../state/Modal"
+import {AppDispatch} from "../state/types"
 
 import Workspaces from "../state/Workspaces"
-import Current from "../state/Current"
-import DropdownArrow from "../icons/DropdownArrow"
-import Modal from "../state/Modal"
-import usePopupMenu from "./hooks/usePopupMenu"
 import {Workspace} from "../state/Workspaces/types"
-import {AppDispatch} from "../state/types"
-import {MenuItemConstructorOptions} from "electron"
-import {initWorkspace} from "../flows/initWorkspace"
+import usePopupMenu from "./hooks/usePopupMenu"
 
 const WorkspacePickerWrapper = styled.div`
   display: flex;
@@ -53,9 +53,7 @@ export default function WorkspacePicker() {
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(initWorkspace(w)).catch(() => {
-          dispatch(Current.setWorkspaceId(w.id))
-        })
+        dispatch(activateWorkspace(w.id))
       }
     })
   })
@@ -63,7 +61,7 @@ export default function WorkspacePicker() {
   template.push(
     {type: "separator"},
     {
-      label: "New Workspace...",
+      label: "Add Workspace...",
       click: () => dispatch(Modal.show("new-workspace"))
     }
   )

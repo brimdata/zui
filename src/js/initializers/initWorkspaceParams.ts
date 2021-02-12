@@ -12,11 +12,17 @@ const setupDefaultWorkspace = () => (dispatch, _, {globalDispatch}) => {
     host,
     port,
     id: hostPort,
-    name: hostPort
+    name: hostPort,
+    authType: "none"
   }
   dispatch(Workspaces.add(ws))
   globalDispatch(Workspaces.add(ws))
   dispatch(Current.setWorkspaceId(ws.id))
+}
+
+export const isDefaultWorkspace = (ws: Workspace): boolean => {
+  const {host, port, id} = ws
+  return id === "localhost:9867" && host === "localhost" && port === "9867"
 }
 
 export default function(store: Store) {

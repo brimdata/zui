@@ -1,12 +1,11 @@
 import React from "react"
-
-import styled from "styled-components"
 import {useDispatch, useSelector} from "react-redux"
-import Workspaces from "../state/Workspaces"
-import Current from "../state/Current"
+import styled from "styled-components"
 import {BrimWorkspace} from "../brim"
 import workspace from "../brim/workspace"
+import {activateWorkspace} from "../flows/workspace/activateWorkspace"
 import DataStoreIcon from "../icons/DataStoreIcon"
+import Workspaces from "../state/Workspaces"
 
 const StyledWorkspace = styled.li`
   display: flex;
@@ -88,7 +87,7 @@ const WorkspaceChooserPage = () => {
           <Workspace
             key={w.id}
             workspace={workspace(w)}
-            onClick={() => dispatch(Current.setWorkspaceId(w.id))}
+            onClick={() => dispatch(activateWorkspace(w.id))}
           />
         ))}
       </WorkspacesWrapper>

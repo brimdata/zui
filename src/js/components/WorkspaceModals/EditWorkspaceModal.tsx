@@ -1,8 +1,8 @@
 import React from "react"
-import {Content, SmallTitle} from "../ModalDialog/ModalDialog"
 import {useSelector} from "react-redux"
-import Current from "../../state/Current"
 import styled from "styled-components"
+import Current from "../../state/Current"
+import {Content, SmallTitle} from "../ModalDialog/ModalDialog"
 import WorkspaceForm from "./WorkspaceForm"
 
 const StyledContent = styled(Content)`

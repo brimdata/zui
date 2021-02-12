@@ -13,6 +13,7 @@ import Notice from "../state/Notice"
 export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
   const workspaceId = Current.getWorkspaceId(getState())
   if (!workspaceId) return
+
   const zealot = dispatch(getZealot())
   return zealot.spaces
     .get(spaceId)

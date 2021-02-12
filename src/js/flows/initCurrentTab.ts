@@ -1,7 +1,8 @@
 import Current from "../state/Current"
 import {initSpace} from "./initSpace"
 import {Thunk} from "../state/types"
-import {initWorkspace} from "./initWorkspace"
+import {activateWorkspace} from "./workspace/activateWorkspace"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
 
 export const initCurrentTab = (): Thunk => async (dispatch, getState) => {
   const state = getState()
@@ -9,8 +10,9 @@ export const initCurrentTab = (): Thunk => async (dispatch, getState) => {
   const spaceId = Current.getSpaceId(state)
 
   try {
-    await dispatch(initWorkspace(ws.serialize()))
-    if (spaceId) {
+    await dispatch(activateWorkspace(ws.id))
+    const wsStatus = WorkspaceStatuses.get(ws.id)(getState())
+    if (wsStatus === "connected" && spaceId) {
       dispatch(initSpace(spaceId))
     }
   } catch (e) {

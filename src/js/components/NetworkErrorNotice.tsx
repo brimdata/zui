@@ -5,7 +5,7 @@ import {BrimError} from "../errors/types"
 import Notice from "../state/Notice"
 import Current from "../state/Current"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {checkStatus} from "../flows/checkStatus"
+import {checkStatus} from "../flows/workspace/checkStatus"
 
 type Props = {
   error: BrimError

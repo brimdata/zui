@@ -13,5 +13,10 @@ export default produce((draft: WorkspacesState, action: WorkspaceAction) => {
     case "WORKSPACE_REMOVE":
       delete draft[action.id]
       return
+    case "WORKSPACE_SET_AUTH0_TOKEN":
+      if (draft[action.workspaceId] && draft[action.workspaceId].authData) {
+        draft[action.workspaceId].authData.accessToken = action.accessToken
+      }
+      return
   }
 }, init())

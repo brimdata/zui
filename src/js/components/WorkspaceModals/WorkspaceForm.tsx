@@ -1,18 +1,21 @@
+import {nanoid} from "@reduxjs/toolkit"
+import {isEmpty} from "lodash"
+import React, {useEffect, useRef, useState} from "react"
+import {useDispatch} from "react-redux"
+import styled from "styled-components"
+import brim, {BrimWorkspace} from "../../brim"
+import {FormConfig} from "../../brim/form"
+import {buildAndAuthenticateWorkspace} from "../../flows/workspace/buildAndAuthenticateWorkspace"
+import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
+import {AppDispatch} from "../../state/types"
+import {Workspace} from "../../state/Workspaces/types"
 import InputField from "../common/forms/InputField"
 import InputLabel from "../common/forms/InputLabel"
 import TextInput from "../common/forms/TextInput"
-import React, {useState} from "react"
-import styled from "styled-components"
-import {FormConfig} from "../../brim/form"
-import brim from "../../brim"
-import {initWorkspace} from "../../flows/initWorkspace"
 import useCallbackRef from "../hooks/useCallbackRef"
-import {useDispatch} from "react-redux"
-import {isEmpty} from "lodash"
+import useEventListener from "../hooks/useEventListener"
 import MacSpinner from "../MacSpinner"
 import ToolbarButton from "../../../../app/toolbar/button"
-import useEventListener from "../hooks/useEventListener"
-import {Workspace} from "../../state/Workspaces/types"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -62,6 +65,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   background: transparent;
   margin-bottom: 12px;
+
   button {
     margin-left: 12px;
   }
@@ -72,21 +76,34 @@ const StyledTextInput = styled(TextInput)`
 `
 
 type Props = {
-  workspace?: Workspace
+  workspace?: BrimWorkspace
   onClose: () => void
 }
 
 const WorkspaceForm = ({onClose, workspace}: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const [errors, setErrors] = useState([])
   const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const {current: id} = useRef((workspace && workspace.id) || nanoid())
+  const ctlRef = useRef(new AbortController())
+  const isNewWorkspace = !workspace
+
+  useEffect(() => () => ctlRef.current.abort(), [])
 
   const config: FormConfig = {
     host: {
       name: "host",
       label: "Host",
-      check: (value) => [!isEmpty(value), "must not be blank"]
+      check: (value) => {
+        if (isEmpty(value)) return [false, "must not be blank"]
+        let isValid = true
+        if (!isNewWorkspace && isDefaultWorkspace(workspace)) {
+          const {host, port} = workspace
+          isValid = value === host || value === [host, port].join(":")
+        }
+        return [isValid, "cannot change host of default workspace"]
+      }
     },
     name: {
       name: "name",
@@ -95,21 +112,20 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
     }
   }
 
-  const toWorkspace = ({id, host, name}): Workspace => {
-    // set defaults
-    let [h, p] = host.split(":")
-    if (!p) p = "9867"
-    return {
-      host: h,
-      port: p,
-      id: id || brim.randomHash(),
-      name: name
-    }
+  const setFields = ({hostPort, name}, ws?: Workspace): Partial<Workspace> => {
+    let [host, port] = hostPort.split(":")
+    if (!port) port = "9867"
+    if (ws) return {...ws, host, port, name}
+    return {id, host, port, name}
+  }
+
+  const onClickClose = () => {
+    setErrors([])
+    onClose()
   }
 
   const onCancel = () => {
-    setErrors([])
-    onClose()
+    ctlRef.current.abort()
   }
 
   const onSave = async () => {
@@ -118,28 +134,47 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
 
     const form = brim.form(formRef, config)
 
-    if (await form.isValid()) {
-      const {host, name} = form.getFields().reduce((obj, field) => {
-        obj[field.name] = field.value
-        return obj
-      }, {})
-      try {
-        const id = workspace && workspace.id
-        await dispatch(initWorkspace(toWorkspace({id, host, name})))
-      } catch {
-        setIsSubmitting(false)
-        setErrors([{message: "Cannot connect to host"}])
-        return
-      }
-    } else {
+    if (!(await form.isValid())) {
       setErrors(form.getErrors)
       setIsSubmitting(false)
       return
     }
 
-    setIsSubmitting(false)
-    setErrors([])
-    onClose()
+    const {host, name} = form.getFields().reduce((obj, field) => {
+      obj[field.name] = field.value
+      return obj
+    }, {})
+    const newWs = setFields(
+      {
+        hostPort: host,
+        name
+      },
+      workspace
+    )
+
+    try {
+      ctlRef.current = new AbortController()
+      const [cancelled, error] = await dispatch(
+        buildAndAuthenticateWorkspace(newWs, ctlRef.current.signal)
+      )
+      setIsSubmitting(false)
+
+      if (error) {
+        setErrors([error.message])
+        return
+      }
+      setErrors([])
+
+      // user elected to cancel at dialog or mid-login
+      if (cancelled) return
+
+      // success
+      onClose()
+    } catch (e) {
+      console.error(e)
+      setIsSubmitting(false)
+      setErrors([{message: "Failed to add Workspace"}])
+    }
   }
 
   function keyUp(e) {
@@ -174,6 +209,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
             <StyledTextInput
               name={config.name.name}
               defaultValue={defaultName}
+              disabled={isSubmitting}
               autoFocus
             />
           </InputField>
@@ -182,6 +218,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
             <StyledTextInput
               name={config.host.name}
               defaultValue={defaultHost}
+              disabled={isSubmitting}
             />
           </InputField>
         </form>
@@ -189,12 +226,15 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
       <StyledFooter>
         <ToolbarButton
           isPrimary
-          text={isSubmitting ? "" : "Save"}
+          text={isSubmitting ? "" : isNewWorkspace ? "Connect" : "Save"}
           icon={isSubmitting ? <MacSpinner light /> : null}
           disabled={isSubmitting}
           onClick={onSave}
         />
-        <ToolbarButton text="Cancel" onClick={onCancel} />
+        <ToolbarButton
+          text={isSubmitting ? "Cancel" : "Close"}
+          onClick={isSubmitting ? onCancel : onClickClose}
+        />
       </StyledFooter>
     </>
   )

@@ -28,7 +28,8 @@ test("getting the actual workspace", () => {
     id: "myws",
     name: "myws",
     host: "www.myws.com",
-    port: "123"
+    port: "123",
+    authType: "none"
   }
   const state = store.dispatchAll([
     Workspaces.add(ws),
@@ -44,7 +45,8 @@ test("getting the actual space", () => {
     id: "myws",
     name: "myws",
     host: "www.myws.com",
-    port: "123"
+    port: "123",
+    authType: "none"
   }
   const state = store.dispatchAll([
     Workspaces.add(ws),

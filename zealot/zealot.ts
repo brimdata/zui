@@ -33,6 +33,12 @@ export function createZealot(
     version: () => {
       return promise({method: "GET", path: "/version"})
     },
+    authMethod: () => {
+      return promise({method: "GET", path: "/auth/method"})
+    },
+    authIdentity: () => {
+      return promise({method: "GET", path: "/auth/identity"})
+    },
     search: (zql: string, args?: Partial<SearchArgs>) => {
       return stream(search(zql, {...searchArgs, ...args}))
     },

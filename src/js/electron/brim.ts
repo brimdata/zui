@@ -1,15 +1,27 @@
-import windowManager, {$WindowManager} from "./tron/windowManager"
-import isDev from "./isDev"
-import {installExtensions} from "./extensions"
-import formatSessionState from "./tron/formatSessionState"
-import createGlobalStore from "../state/createGlobalStore"
-import {Store} from "redux"
-import tron, {Session} from "./tron"
-import Prefs from "../state/Prefs"
-import {ZQD} from "ppl/zqd/zqd"
 import {app} from "electron"
+import keytar from "keytar"
+import url from "url"
+import os from "os"
 import path from "path"
+import {ZQD} from "ppl/zqd/zqd"
+import {Store} from "redux"
+import {
+  deserializeState,
+  toAccessTokenKey,
+  toRefreshTokenKey
+} from "../auth0/utils"
+import createGlobalStore from "../state/createGlobalStore"
+import {getGlobalPersistable} from "../state/getPersistable"
+import Prefs from "../state/Prefs"
+import Workspaces from "../state/Workspaces"
+import {installExtensions} from "./extensions"
+import ipc from "./ipc"
+import sendTo from "./ipc/sendTo"
+import isDev from "./isDev"
+import tron, {Session} from "./tron"
+import formatSessionState from "./tron/formatSessionState"
 import {sessionStateFile} from "./tron/session"
+import windowManager, {$WindowManager} from "./tron/windowManager"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -64,6 +76,12 @@ export class Brim {
   }
 
   async resetState() {
+    // clear keys from secrets storage
+    Workspaces.all(this.store.getState()).forEach((ws) => {
+      if (ws.authType !== "auth0") return
+      keytar.deletePassword(toRefreshTokenKey(ws.id), os.userInfo().username)
+      keytar.deletePassword(toAccessTokenKey(ws.id), os.userInfo().username)
+    })
     await this.session.delete()
     app.relaunch()
     this.quit({saveSession: false})
@@ -71,7 +89,8 @@ export class Brim {
 
   async saveSession() {
     const windowState = await this.windows.serialize()
-    const mainState = this.store.getState()
+    const mainState = getGlobalPersistable(this.store.getState())
+
     await this.session.save(formatSessionState(windowState, mainState))
   }
 
@@ -92,6 +111,18 @@ export class Brim {
     } else {
       this.isQuitting = false
     }
+  }
+
+  openUrl(uri) {
+    const urlParts = url.parse(uri, true)
+    const code = urlParts.query.code as string
+    const state = urlParts.query.state as string
+    const {workspaceId, windowId} = deserializeState(state)
+    const win = this.windows.getWindow(windowId)
+
+    win.ref.focus()
+
+    sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
   }
 
   isDev() {

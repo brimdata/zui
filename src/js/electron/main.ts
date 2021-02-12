@@ -4,29 +4,32 @@ import userTasks from "./userTasks"
 // app path and log setup should happen before other imports.
 appPathSetup()
 
-import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
-import menu from "./menu"
-import windowsMainHandler from "./ipc/windows/mainHandler"
-
-console.time("init")
-import "regenerator-runtime/runtime"
-
 import {app} from "electron"
+import log from "electron-log"
+import "regenerator-runtime/runtime"
+import {setupAutoUpdater} from "./autoUpdater"
+import {Brim} from "./brim"
+import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
+import windowsMainHandler from "./ipc/windows/mainHandler"
+import secretsMainHandler from "./ipc/secrets/mainHandler"
+import electronIsDev from "./isDev"
+import menu from "./menu"
+import {handleQuit} from "./quitter"
 
 import {handleSquirrelEvent} from "./squirrel"
-import electronIsDev from "./isDev"
-import {setupAutoUpdater} from "./autoUpdater"
-import log from "electron-log"
-import {handleQuit} from "./quitter"
-import {Brim} from "./brim"
+
+console.time("init")
 
 async function main() {
   if (handleSquirrelEvent(app)) return
   userTasks(app)
   const brim = await Brim.boot()
   menu.setMenu(brim)
+
   windowsMainHandler(brim)
   globalStoreMainHandler(brim)
+  secretsMainHandler()
+
   handleQuit(brim)
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed
@@ -51,6 +54,13 @@ async function main() {
 
   app.whenReady().then(() => brim.start())
   app.on("activate", () => brim.activate())
+
+  app.setAsDefaultProtocolClient("brim")
+  app.on("open-url", (event, url) => {
+    // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
+    event.preventDefault()
+    brim.openUrl(url)
+  })
 
   app.on("web-contents-created", (event, contents) => {
     contents.on("will-attach-webview", (e) => {
