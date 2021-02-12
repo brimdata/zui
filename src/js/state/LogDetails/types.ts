@@ -4,7 +4,6 @@ import {SearchStatus} from "../../types/searches"
 export type LogDetailsState = {
   entries: LogDetails[]
   position: number
-  prevPosition: number
 }
 
 export type LogDetails = {

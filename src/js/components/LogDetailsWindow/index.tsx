@@ -11,8 +11,8 @@ import ToolbarAction from "app/toolbar/action-button"
 
 export default function LogDetailsWindow() {
   const dispatch = useDispatch()
-  const prevExists = useSelector(LogDetails.getHistory).prevExists()
-  const nextExists = useSelector(LogDetails.getHistory).nextExists()
+  const prevExists = useSelector(LogDetails.getHistory).canGoBack()
+  const nextExists = useSelector(LogDetails.getHistory).canGoForward()
   const space = useSelector(Current.mustGetSpace)
   return (
     <div className="log-detail-window">

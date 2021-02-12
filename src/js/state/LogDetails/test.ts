@@ -9,6 +9,7 @@ const columns = [
 
 const record = new zng.Record(columns, ["1", "a"])
 const record2 = new zng.Record(columns, ["1", "b"])
+const record3 = new zng.Record(columns, ["1", "c"])
 
 let store
 beforeEach(() => {
@@ -53,6 +54,22 @@ test("going back and then forward", () => {
 
   const log = LogDetails.build(state)
   expect(log && log.get("letter").toString()).toBe("b")
+})
+
+test("going back, then push, then back", () => {
+  const state = store.dispatchAll([
+    LogDetails.push(record),
+    LogDetails.push(record2),
+    LogDetails.back(),
+    LogDetails.push(record3),
+    LogDetails.back()
+  ])
+
+  expect(
+    LogDetails.build(state)
+      .get("letter")
+      .toString()
+  ).toBe("a")
 })
 
 test("updating the current log detail", () => {

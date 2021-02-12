@@ -1,6 +1,5 @@
 import ast from "./ast"
 import dateTuple from "./dateTuple"
-import entries from "./entries"
 import form from "./form"
 import interop from "./interop"
 import program from "./program"
@@ -35,7 +34,6 @@ export default {
   form,
   interop,
   randomHash,
-  entries,
   tab,
   workspace
 }
