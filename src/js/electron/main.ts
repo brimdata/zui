@@ -1,7 +1,12 @@
+import {appPathSetup} from "./appPathSetup"
+import userTasks from "./userTasks"
+
+// app path and log setup should happen before other imports.
+appPathSetup()
+
 import {app} from "electron"
 import log from "electron-log"
 import "regenerator-runtime/runtime"
-import {appPathSetup} from "./appPathSetup"
 import {setupAutoUpdater} from "./autoUpdater"
 import {Brim} from "./brim"
 import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
@@ -12,10 +17,6 @@ import menu from "./menu"
 import {handleQuit} from "./quitter"
 
 import {handleSquirrelEvent} from "./squirrel"
-import userTasks from "./userTasks"
-
-// app path and log setup should happen before other imports.
-appPathSetup()
 
 console.time("init")
 

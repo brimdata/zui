@@ -21,16 +21,22 @@ export const activateWorkspace = (workspaceId: string) => async (
     dispatch(refreshSpaceNames())
   }
 
-  try {
-    // check version to test that zqd is available, update workspace version while doing so
-    const {version} = await zealot.version()
-    ws.version = version
-  } catch (e) {
-    console.error(e)
-    dispatch(WorkspaceStatuses.set(ws.id, "disconnected"))
-    dispatch(Current.setWorkspaceId(ws.id))
-    return
+  const isDown = async () => {
+    try {
+      // check version to test that zqd is available, update workspace version while doing so
+      const {version} = await zealot.version()
+      ws.version = version
+      return false
+    } catch (e) {
+      console.error(e)
+      dispatch(WorkspaceStatuses.set(ws.id, "disconnected"))
+      dispatch(Current.setWorkspaceId(ws.id))
+      return true
+    }
   }
+
+  if (await isDown()) return
+
   // update version
   dispatch(Workspaces.add(ws.serialize()))
   await globalDispatch(Workspaces.add(ws.serialize()))
@@ -41,7 +47,7 @@ export const activateWorkspace = (workspaceId: string) => async (
     return
   }
 
-  // if auth is required, and method is auth0...
+  // auth required, if method is auth0...
   if (ws.authType === "auth0") {
     // ...and we already have the token
     if (validateToken(ws.authData.accessToken)) {

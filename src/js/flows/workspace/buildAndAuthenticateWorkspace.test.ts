@@ -28,7 +28,7 @@ jest.mock("electron", () => ({
   }
 }))
 
-const fxt = {
+const fixtures = {
   secureMethodAuth: {
     kind: "auth0",
     auth0: {
@@ -74,23 +74,23 @@ const expectWorkspace = (ws, status) => {
 describe("success cases", () => {
   beforeEach(() => {
     zealot
-      .stubPromise("version", fxt.version)
+      .stubPromise("version", fixtures.version)
       .stubPromise("spaces.list", [{name: "dataSpace", id: "1"}], "always")
   })
 
   test("new public workspace", async () => {
-    zealot.stubPromise("authMethod", fxt.publicMethodAuth)
+    zealot.stubPromise("authMethod", fixtures.publicMethodAuth)
 
     const [cancelled, error] = await store.dispatch(
-      buildAndAuthenticateWorkspace(fxt.newWorkspace, ctl.signal)
+      buildAndAuthenticateWorkspace(fixtures.newWorkspace, ctl.signal)
     )
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
     expectWorkspace(
       {
-        ...fxt.newWorkspace,
-        ...fxt.version,
+        ...fixtures.newWorkspace,
+        ...fixtures.version,
         authType: "none"
       },
       "connected"
@@ -99,7 +99,7 @@ describe("success cases", () => {
 
   test("existing public workspace, updated version", async () => {
     const existingWs = {
-      ...fxt.newWorkspace,
+      ...fixtures.newWorkspace,
       version: "0",
       authType: "none" as AuthType
     }
@@ -110,10 +110,11 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
+    expect(Workspaces.all(store.getState())).toHaveLength(1)
     expectWorkspace(
       {
         ...existingWs,
-        ...fxt.version
+        ...fixtures.version
       },
       "connected"
     )
@@ -121,18 +122,18 @@ describe("success cases", () => {
 
   test("existing secure workspace -> valid token from secrets", async () => {
     const existingWs = {
-      ...fxt.newWorkspace,
-      ...fxt.version,
+      ...fixtures.newWorkspace,
+      ...fixtures.version,
       authType: "auth0" as AuthType,
       authData: {
-        clientId: fxt.secureMethodAuth.auth0.client_id,
-        domain: fxt.secureMethodAuth.auth0.domain
+        clientId: fixtures.secureMethodAuth.auth0.client_id,
+        domain: fixtures.secureMethodAuth.auth0.domain
       }
     }
     store.dispatch(Workspaces.add(existingWs))
-    ipcRendererMock.invoke.mockReturnValueOnce(fxt.accessToken)
+    ipcRendererMock.invoke.mockReturnValueOnce(fixtures.accessToken)
     jwtDecodeMock.mockReturnValueOnce({
-      exp: fxt.validDate
+      exp: fixtures.validDate
     })
 
     const [cancelled, error] = await store.dispatch(
@@ -141,10 +142,11 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
+    expect(Workspaces.all(store.getState())).toHaveLength(1)
     expectWorkspace(
       {
         ...existingWs,
-        authData: {...existingWs.authData, accessToken: fxt.accessToken}
+        authData: {...existingWs.authData, accessToken: fixtures.accessToken}
       },
       "connected"
     )
@@ -152,21 +154,21 @@ describe("success cases", () => {
 
   test("existing secure workspace -> no token -> succeed refresh", async () => {
     const existingWs = {
-      ...fxt.newWorkspace,
-      ...fxt.version,
+      ...fixtures.newWorkspace,
+      ...fixtures.version,
       authType: "auth0" as AuthType,
       authData: {
-        clientId: fxt.secureMethodAuth.auth0.client_id,
-        domain: fxt.secureMethodAuth.auth0.domain
+        clientId: fixtures.secureMethodAuth.auth0.client_id,
+        domain: fixtures.secureMethodAuth.auth0.domain
       }
     }
     store.dispatch(Workspaces.add(existingWs))
     // no access token in secrets
     ipcRendererMock.invoke.mockReturnValueOnce("")
     // do have refresh token though
-    ipcRendererMock.invoke.mockReturnValueOnce(fxt.refreshToken)
+    ipcRendererMock.invoke.mockReturnValueOnce(fixtures.refreshToken)
     auth0ClientMock.mockImplementationOnce(() => ({
-      refreshAccessToken: jest.fn().mockReturnValueOnce(fxt.accessToken)
+      refreshAccessToken: jest.fn().mockReturnValueOnce(fixtures.accessToken)
     }))
 
     const [cancelled, error] = await store.dispatch(
@@ -178,7 +180,7 @@ describe("success cases", () => {
     expectWorkspace(
       {
         ...existingWs,
-        authData: {...existingWs.authData, accessToken: fxt.accessToken}
+        authData: {...existingWs.authData, accessToken: fixtures.accessToken}
       },
       "connected"
     )
@@ -186,20 +188,20 @@ describe("success cases", () => {
 
   test("existing secure workspace -> expired token -> succeed refresh", async () => {
     const existingWs = {
-      ...fxt.newWorkspace,
-      ...fxt.version,
+      ...fixtures.newWorkspace,
+      ...fixtures.version,
       authType: "auth0" as AuthType,
       authData: {
-        clientId: fxt.secureMethodAuth.auth0.client_id,
-        domain: fxt.secureMethodAuth.auth0.domain
+        clientId: fixtures.secureMethodAuth.auth0.client_id,
+        domain: fixtures.secureMethodAuth.auth0.domain
       }
     }
     store.dispatch(Workspaces.add(existingWs))
     ipcRendererMock.invoke.mockReturnValueOnce("expiredToken")
-    jwtDecodeMock.mockReturnValueOnce({exp: fxt.expiredDate})
-    ipcRendererMock.invoke.mockReturnValueOnce(fxt.refreshToken)
+    jwtDecodeMock.mockReturnValueOnce({exp: fixtures.expiredDate})
+    ipcRendererMock.invoke.mockReturnValueOnce(fixtures.refreshToken)
     auth0ClientMock.mockImplementationOnce(() => ({
-      refreshAccessToken: jest.fn().mockReturnValueOnce(fxt.accessToken)
+      refreshAccessToken: jest.fn().mockReturnValueOnce(fixtures.accessToken)
     }))
 
     const [cancelled, error] = await store.dispatch(
@@ -208,23 +210,24 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
+    expect(Workspaces.all(store.getState())).toHaveLength(1)
     expectWorkspace(
       {
         ...existingWs,
-        authData: {...existingWs.authData, accessToken: fxt.accessToken}
+        authData: {...existingWs.authData, accessToken: fixtures.accessToken}
       },
       "connected"
     )
   })
 
   test("new secure workspace -> login required -> cancel dialog", async () => {
-    zealot.stubPromise("authMethod", fxt.secureMethodAuth)
+    zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 1})
 
     const [cancelled, error] = await store.dispatch(
-      buildAndAuthenticateWorkspace(fxt.newWorkspace, ctl.signal)
+      buildAndAuthenticateWorkspace(fixtures.newWorkspace, ctl.signal)
     )
 
     expect(cancelled).toEqual(true)
@@ -233,14 +236,14 @@ describe("success cases", () => {
   })
 
   test("new secure workspace -> login required -> abort login", async () => {
-    zealot.stubPromise("authMethod", fxt.secureMethodAuth)
+    zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 0})
 
     setTimeout(() => ctl.abort(), 20)
     const [cancelled, error] = await store.dispatch(
-      buildAndAuthenticateWorkspace(fxt.newWorkspace, ctl.signal)
+      buildAndAuthenticateWorkspace(fixtures.newWorkspace, ctl.signal)
     )
 
     expect(cancelled).toEqual(true)
@@ -249,37 +252,37 @@ describe("success cases", () => {
   })
 
   test("new secure workspace -> login required -> succeed login", async () => {
-    zealot.stubPromise("authMethod", fxt.secureMethodAuth)
+    zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 0})
     ipcRendererMock.once = async (_channel, handleAuthCb) => {
       await handleAuthCb("mockEvent", {
-        workspaceId: fxt.newWorkspace.id,
+        workspaceId: fixtures.newWorkspace.id,
         code: "mockCode"
       })
     }
     auth0ClientMock.mockImplementationOnce(() => ({
       openLoginUrl: jest.fn(),
       exchangeCode: jest.fn().mockReturnValueOnce({
-        accessToken: fxt.accessToken,
-        refreshToken: fxt.refreshToken
+        accessToken: fixtures.accessToken,
+        refreshToken: fixtures.refreshToken
       })
     }))
 
     const [cancelled, error] = await store.dispatch(
-      buildAndAuthenticateWorkspace(fxt.newWorkspace, ctl.signal)
+      buildAndAuthenticateWorkspace(fixtures.newWorkspace, ctl.signal)
     )
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
-    const {domain, client_id: clientId} = fxt.secureMethodAuth.auth0
+    const {domain, client_id: clientId} = fixtures.secureMethodAuth.auth0
     expectWorkspace(
       {
-        ...fxt.newWorkspace,
-        ...fxt.version,
-        authType: fxt.secureMethodAuth.kind,
-        authData: {clientId, domain, accessToken: fxt.accessToken}
+        ...fixtures.newWorkspace,
+        ...fixtures.version,
+        authType: fixtures.secureMethodAuth.kind,
+        authData: {clientId, domain, accessToken: fixtures.accessToken}
       },
       "connected"
     )
@@ -290,7 +293,7 @@ describe("failure cases", () => {
   test("new generic workspace -> connection failure", async () => {
     // no version mock setup -> connection error
     const [cancelled, error] = await store.dispatch(
-      buildAndAuthenticateWorkspace(fxt.newWorkspace, ctl.signal)
+      buildAndAuthenticateWorkspace(fixtures.newWorkspace, ctl.signal)
     )
 
     expect(cancelled).toEqual(false)
@@ -299,14 +302,14 @@ describe("failure cases", () => {
   })
 
   test("new secure workspace -> login required -> login failure", async () => {
-    zealot.stubPromise("version", fxt.version)
-    zealot.stubPromise("authMethod", fxt.secureMethodAuth)
+    zealot.stubPromise("version", fixtures.version)
+    zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 0})
     ipcRendererMock.once = async (_channel, handleAuthCb) => {
       await handleAuthCb("mockEvent", {
-        workspaceId: fxt.newWorkspace.id,
+        workspaceId: fixtures.newWorkspace.id,
         // no code, login failed
         code: undefined
       })
@@ -316,7 +319,7 @@ describe("failure cases", () => {
     }))
 
     const [cancelled, error] = await store.dispatch(
-      buildAndAuthenticateWorkspace(fxt.newWorkspace, ctl.signal)
+      buildAndAuthenticateWorkspace(fixtures.newWorkspace, ctl.signal)
     )
 
     expect(cancelled).toEqual(false)
