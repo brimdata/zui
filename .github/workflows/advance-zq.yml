@@ -31,6 +31,11 @@ jobs:
       # minimal git config settings to create commits.
       - uses: actions/checkout@v2
         with:
+          # ref defaults to github.sha, which is fixed at the time a run
+          # is triggered. Using github.ref ensures a run that waits in
+          # the turnstyle action will see any commits pushed by the runs
+          # that caused it to wait, reducing push failures down below.
+          ref: ${{ github.ref }}
           token: ${{ secrets.ZQ_UPDATE_PAT }}
       - run: git config --local user.email 'automation@brimsecurity.com'
       - run: git config --local user.name 'Brim Automation'
