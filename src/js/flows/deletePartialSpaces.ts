@@ -10,11 +10,6 @@ export default (): Thunk<Promise<any[]>> => (dispatch, getState) => {
 
   const zealot = dispatch(getZealot())
   const spaceIds = Handlers.getIngestSpaceIds(getState())
-
-  // if current space id is among ingesting spaces, clear it
-  const currentSpaceId = Current.getSpaceId(getState())
-  if (spaceIds.includes(currentSpaceId)) dispatch(Current.setSpaceId(null))
-
   return Promise.all(
     spaceIds.map((id) => {
       return zealot.spaces.delete(id).catch((e) => {

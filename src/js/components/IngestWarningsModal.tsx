@@ -30,14 +30,19 @@ export default function IngestWarningsModal({onClose}) {
       {warnings.length ? (
         <>
           <p>
+            {
+              "The data you've attempt to import was not recognized as any supported packet capture or log format. The errors returned by each log parser:"
+            }
+          </p>
+          <Scrollable>
+            <Pre>{warnings.join("\n")}</Pre>
+          </Scrollable>
+          <p>
             If you are trying to import JSON logs, please review the{" "}
             <Link href={JSON_TYPE_CONFIG_DOCS}>
               JSON type configuration docs.
             </Link>
           </p>
-          <Scrollable>
-            <Pre>{warnings.join("\n")}</Pre>
-          </Scrollable>
         </>
       ) : (
         <p>Warnings cleared.</p>
