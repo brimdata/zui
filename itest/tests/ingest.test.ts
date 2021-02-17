@@ -25,7 +25,6 @@ describe("Ingest tests", () => {
     "sample.pcapng",
     "sample.tsv",
     "sample.ndjson",
-    "sample.azng",
     "sample.zng"
   ]
 
