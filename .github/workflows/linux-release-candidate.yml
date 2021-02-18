@@ -51,7 +51,7 @@ jobs:
     - run: npm install --no-audit
     - run: npm run build
     - name: build packages
-      run: node ./scripts/release --linux
+      run: npx electron-builder --linux
     - name: Setup Google Cloud Platform
       uses: google-github-actions/setup-gcloud@master
       with:

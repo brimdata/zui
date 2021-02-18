@@ -10,7 +10,10 @@ import * as cmd from "src/js/stdlib/cmd"
 import electronIsDev from "src/js/electron/isDev"
 
 // Paths for the zqd and zeek programs.
-const zdepsDirectory = join(app.getAppPath(), "zdeps")
+const zdepsDirectory = join(
+  app.getAppPath().replace("app.asar", "app.asar.unpacked"),
+  "zdeps"
+)
 
 const platformDefs = {
   darwin: {

@@ -1,0 +1,49 @@
+{
+  "productName": "Brim",
+  "asar": true,
+  "asarUnpack": [
+    "zdeps",
+    "LICENSE.txt",
+    "acknowledgments.txt"
+  ],
+  "directories": {
+    "buildResources": ".",
+    "output": "dist/installers"
+  },
+  "appId": "com.electron.brim",
+  "protocols": [
+    {
+      "name": "brim",
+      "schemes": [
+        "brim"
+      ]
+    }
+  ],
+  "afterSign": "electron-builder-notarize",
+  "mac": {
+    "entitlements": "./scripts/release/entitlements.mac.plist",
+    "icon": "./dist/static/AppIcon.icns",
+    "target": [
+      "dmg",
+      "zip"
+    ],
+    "binaries": [
+      "zdeps/zeek/lib/zeek/plugins/Corelight_CommunityID/lib/Corelight-CommunityID.darwin-x86_64.so"
+    ]
+  },
+  "nsis": {
+    "artifactName": "${productName}-Setup-${version}.${ext}"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "./dist/static/AppIcon.ico"
+  },
+  "linux": {
+    "artifactName": "${productName}.${ext}",
+    "maintainer": "Brim Security, Inc.",
+    "target": [
+      "deb",
+      "rpm"
+    ]
+  }
+}

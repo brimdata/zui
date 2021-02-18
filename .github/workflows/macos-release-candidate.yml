@@ -66,10 +66,10 @@ jobs:
         security find-identity -p codesigning -v
     - name: build signed and notarized package
       run: |
-        node ./scripts/release --darwin --notarize
+        npx electron-builder --mac
       env:
-        APPLEID_USER: ${{ secrets.APPLEID_USER }}
-        APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+        APPLE_ID: ${{ secrets.APPLEID_USER }}
+        APPLE_ID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
     - name: run gatekeeper assessment on notarized package
       run: spctl --assess --type execute --verbose --ignore-cache --no-cache dist/packages/Brim-darwin-x64/Brim.app
     - name: Setup Google Cloud Platform
