@@ -64,10 +64,10 @@ jobs:
         # We just need the name; certutil complains if the dest exists.
         rm -f "${CERT}"
         certutil -decode "${f}" "${CERT}"
-        node ./scripts/release --win32 --windowsCertificateFile "${CERT}" --windowsCertificatePassword "${WINDOWS_SIGNING_PASSPHRASE}"
+        npx electron-builder --win"
       env:
-        WINDOWS_SIGNING_PASSPHRASE: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
-        WINDOWS_SIGNING_PFX_BASE64: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+        CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
+        CSC_LINK: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
     - name: Set up Python (needed for Google Cloud Platform)
       uses: actions/setup-python@v2
       with:

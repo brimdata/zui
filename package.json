@@ -6,9 +6,6 @@
   "version": "0.24.0",
   "main": "dist/src/js/electron/main.js",
   "author": "Brim Security, Inc.",
-  "bin": {
-    "release": "./scripts/release/index.js"
-  },
   "scripts": {
     "build": "node scripts/build",
     "start": "node scripts/start",
@@ -19,7 +16,7 @@
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "tsc": "tsc",
     "format-check": "npm run format && git diff --exit-code -- src itest",
-    "release": "node scripts/release --darwin",
+    "release": "npx electron-builder --mac",
     "prerelease": "npm run build",
     "postinstall": "node scripts/post-install"
   },
@@ -69,10 +66,9 @@
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
     "electron": "^11.2.1",
-    "electron-installer-dmg": "^3.0.0",
+    "electron-builder": "^22.9.1",
+    "electron-builder-notarize": "^1.2.0",
     "electron-notarize": "^0.2.1",
-    "electron-packager": "^14.2.1",
-    "electron-winstaller": "^4.0.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
@@ -116,8 +112,8 @@
     "date-fns": "^2.16.1",
     "electron-devtools-installer": "^3.1.1",
     "electron-dl": "^3.0.1",
-    "electron-installer-zip": "^0.1.2",
     "electron-log": "^4.2.2",
+    "electron-updater": "^4.3.8",
     "extract-zip": "^1.6.7",
     "fs-extra": "^9.0.1",
     "got": "^10.7.0",

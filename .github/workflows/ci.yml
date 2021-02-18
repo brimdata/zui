@@ -59,7 +59,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           set -x
-          node scripts/release --linux
+          npx electron-builder --linux
       - name: Persist Linux packages
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v1
@@ -122,7 +122,7 @@ jobs:
           name: linux-release
       - name: Integration Tests (Centos 8)
         run: |
-          dnf install -y ./linux-release/brim_x86_64.rpm
+          dnf install -y ./linux-release/Brim.rpm
           xvfb-run -d -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
 
   integration_test:
@@ -171,7 +171,7 @@ jobs:
       #        run: |
       #          set -x
       #          source scripts/lib/common.bash
-      #          node scripts/release --darwin
+      #          npx electron-builder --mac
       #          hdiutil attach dist/installers/Brim.dmg
       #          cp -R /Volumes/Brim/Brim.app /Applications
       #          retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
@@ -184,7 +184,7 @@ jobs:
       - name: Integration Tests (Debian Linux)
         if: runner.os == 'Linux'
         run: |
-          sudo apt install -y ./linux-release/brim_amd64.deb
+          sudo apt install -y ./linux-release/Brim.deb
           xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
         env:
           # WORKSPACE represents a top-level place for test infra code to
