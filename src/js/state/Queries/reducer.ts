@@ -15,22 +15,22 @@ const getNodeById = (
 export default produce((draft: QueriesState, action: QueriesAction) => {
   const queriesTree = itemToNode(draft)
   switch (action.type) {
-    case "QUERIES_SET_ALL":
+    case "$QUERIES_SET_ALL":
       return action.rootGroup
-    case "QUERIES_ADD_ITEM":
+    case "$QUERIES_ADD_ITEM":
       getNodeById(queriesTree, action.parentGroup.id).addChild(
         itemToNode(action.item)
       )
       return queriesTree.model
-    case "QUERIES_REMOVE_ITEMS":
+    case "$QUERIES_REMOVE_ITEMS":
       action.items.forEach((item) => {
         getNodeById(queriesTree, item.id).drop()
       })
       return queriesTree.model
-    case "QUERIES_EDIT_ITEM":
+    case "$QUERIES_EDIT_ITEM":
       Object.assign(getNodeById(queriesTree, action.itemId).model, action.item)
       return queriesTree.model
-    case "QUERIES_MOVE_ITEMS":
+    case "$QUERIES_MOVE_ITEMS":
       moveItems(queriesTree, action)
       return queriesTree.model
   }

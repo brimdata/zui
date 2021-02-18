@@ -10,7 +10,7 @@ const init = (): InvestigationState => ({})
 
 export default produce((draft, a: InvestigationAction) => {
   switch (a.type) {
-    case "INVESTIGATION_PUSH":
+    case "$INVESTIGATION_PUSH":
       if (!draft[a.workspaceId]) draft[a.workspaceId] = {}
       if (!draft[a.workspaceId][a.spaceId]) draft[a.workspaceId][a.spaceId] = []
 
@@ -20,7 +20,7 @@ export default produce((draft, a: InvestigationAction) => {
         a.ts
       )
       return
-    case "FINDING_DELETE":
+    case "$FINDING_DELETE":
       if (!draft[a.workspaceId] || !draft[a.workspaceId][a.spaceId]) return
 
       draft[a.workspaceId][a.spaceId] = draft[a.workspaceId][a.spaceId].filter(
@@ -30,12 +30,12 @@ export default produce((draft, a: InvestigationAction) => {
         }
       )
       return
-    case "INVESTIGATION_CLEAR":
+    case "$INVESTIGATION_CLEAR":
       if (!draft[a.workspaceId] || !draft[a.workspaceId][a.spaceId]) return
 
       delete draft[a.workspaceId][a.spaceId]
       return
-    case "INVESTIGATION_WORKSPACE_CLEAR":
+    case "$INVESTIGATION_WORKSPACE_CLEAR":
       delete draft[a.workspaceId]
       return
   }

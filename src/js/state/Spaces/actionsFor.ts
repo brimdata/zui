@@ -13,18 +13,18 @@ export default function actionsFor(workspaceId: string, spaceId: string) {
       return actions.clearIngestWarnings(workspaceId, spaceId)
     },
     setIngestSnapshot: (count: number): SPACES_INGEST_SNAPSHOT => ({
-      type: "SPACES_INGEST_SNAPSHOT",
+      type: "$SPACES_INGEST_SNAPSHOT",
       workspaceId,
       spaceId,
       count
     }),
     remove: (): SPACES_REMOVE => ({
-      type: "SPACES_REMOVE",
+      type: "$SPACES_REMOVE",
       workspaceId,
       spaceId
     }),
     create: (): SPACES_DETAIL => ({
-      type: "SPACES_DETAIL",
+      type: "$SPACES_DETAIL",
       workspaceId,
       space: {id: spaceId}
     })

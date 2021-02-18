@@ -18,24 +18,24 @@ export type Finding = {
 }
 
 export type FINDING_DELETE = {
-  type: "FINDING_DELETE"
+  type: "$FINDING_DELETE"
   workspaceId: string
   spaceId: string
   ts: Ts[]
 }
 export type INVESTIGATION_CLEAR = {
-  type: "INVESTIGATION_CLEAR"
+  type: "$INVESTIGATION_CLEAR"
   workspaceId: string
   spaceId: string
 }
 
 export type INVESTIGATION_WORKSPACE_CLEAR = {
-  type: "INVESTIGATION_WORKSPACE_CLEAR"
+  type: "$INVESTIGATION_WORKSPACE_CLEAR"
   workspaceId: string
 }
 
 export type INVESTIGATION_PUSH = {
-  type: "INVESTIGATION_PUSH"
+  type: "$INVESTIGATION_PUSH"
   workspaceId: string
   spaceId: string
   entry: SearchRecord
