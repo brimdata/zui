@@ -62,7 +62,7 @@ module.exports = {
         ...opts,
         appDirectory: "./dist/packages/Brim-Win32-x64",
         outputDirectory: out,
-        loadingGif: "./src/static/Windows-Install.gif",
+        loadingGif: "./static/Windows-Install.gif",
         authors: "Brim Security, Inc.",
         exe: "Brim.exe",
         setupExe: "Brim-Setup.exe",
