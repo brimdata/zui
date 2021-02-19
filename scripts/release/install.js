@@ -63,7 +63,6 @@ module.exports = {
         appDirectory: "./dist/packages/Brim-Win32-x64",
         outputDirectory: out,
         loadingGif: "./dist/static/Windows-Install.gif",
-        iconUrl: "https://www.brimsecurity.com/favicon.ico",
         setupIcon: "./dist/static/AppIcon.ico",
         authors: "Brim Security, Inc.",
         exe: "Brim.exe",
