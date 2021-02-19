@@ -38,11 +38,11 @@ jobs:
           NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
         shell: bash
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         # Change the cache name any time you want to start with a cleared
         # cache.
         env:
-          cache-name: cache-node-modules-ci-v4
+          cache-name: cache-node-modules-ci-v5
         with:
           path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
@@ -106,15 +106,16 @@ jobs:
         env:
           NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         env:
-          cache-name: cache-node-modules-ci-v4
+          cache-name: cache-node-modules-ci-v5
         with:
           path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-      - run: npm install --no-audit
+      - run: npm install --no-audit --unsafe-perm
+        # Installing zq requires unsafe-perm when running as root.
       - name: Download rpm package
         uses: actions/download-artifact@v1
         with:
@@ -153,9 +154,9 @@ jobs:
           NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
         shell: bash
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         env:
-          cache-name: cache-node-modules-ci-v4
+          cache-name: cache-node-modules-ci-v5
         with:
           path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
