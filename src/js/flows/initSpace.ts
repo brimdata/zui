@@ -1,6 +1,5 @@
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
-import {globalDispatch} from "../state/GlobalContext"
 import {submitSearch} from "./submitSearch/mod"
 import Current from "../state/Current"
 import Search from "../state/Search"
@@ -20,7 +19,7 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
     .then(brim.interop.spacePayloadToSpace)
     .then((data) => {
       const space = brim.space(data)
-      globalDispatch(Spaces.setDetail(workspaceId, data))
+      dispatch(Spaces.setDetail(workspaceId, data))
       dispatch(Current.setSpaceId(space.id))
       dispatch(Search.setSpanArgs(space.everythingSpan()))
       dispatch(SearchBar.removeAllSearchBarPins())

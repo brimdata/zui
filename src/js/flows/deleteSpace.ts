@@ -6,14 +6,13 @@ import Spaces from "../state/Spaces"
 
 const deleteSpace = (id: string): Thunk<Promise<void>> => (
   dispatch,
-  getState,
-  {globalDispatch}
+  getState
 ) => {
   const zealot = dispatch(getZealot())
   const workspaceId = Current.getWorkspaceId(getState())
   return zealot.spaces.delete(id).then(() => {
-    globalDispatch(Investigation.clearSpaceInvestigation(workspaceId, id))
-    globalDispatch(Spaces.remove(workspaceId, id))
+    dispatch(Investigation.clearSpaceInvestigation(workspaceId, id))
+    dispatch(Spaces.remove(workspaceId, id))
   })
 }
 

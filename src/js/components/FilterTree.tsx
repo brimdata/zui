@@ -4,7 +4,6 @@ import React from "react"
 import classNames from "classnames"
 
 import {createInvestigationTree, InvestigationNode} from "./FilterTree/helpers"
-import {globalDispatch} from "../state/GlobalContext"
 import {submitSearch} from "../flows/submitSearch/mod"
 import BookIcon from "../icons/BookSvgIcon"
 import Current from "../state/Current"
@@ -70,9 +69,7 @@ function NodeRow({node, i, workspaceId, spaceId}: Props) {
         const multiTs = node
           .all(() => true)
           .map((node) => node.model.finding.ts)
-        globalDispatch(
-          Investigation.deleteFindingByTs(workspaceId, spaceId, multiTs)
-        )
+        dispatch(Investigation.deleteFindingByTs(workspaceId, spaceId, multiTs))
       }
     },
     {type: "separator"},
@@ -88,7 +85,7 @@ function NodeRow({node, i, workspaceId, spaceId}: Props) {
           })
           .then(({response}) => {
             if (response === 0)
-              globalDispatch(
+              dispatch(
                 Investigation.clearSpaceInvestigation(workspaceId, spaceId)
               )
           })

@@ -4,7 +4,6 @@ import classNames from "classnames"
 import styled from "styled-components"
 
 import {Finding} from "../../state/Investigation/types"
-import {globalDispatch} from "../../state/GlobalContext"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
@@ -40,7 +39,7 @@ export default React.memo<Props>(function FindingCard({
     {
       label: "Delete",
       click: () =>
-        globalDispatch(
+        dispatch(
           Investigation.deleteFindingByTs(workspaceId, spaceId, finding.ts)
         )
     },
@@ -57,7 +56,7 @@ export default React.memo<Props>(function FindingCard({
           })
           .then(({response}) => {
             if (response === 0)
-              globalDispatch(
+              dispatch(
                 Investigation.clearSpaceInvestigation(workspaceId, spaceId)
               )
           })

@@ -7,13 +7,11 @@ import refreshSpaceNames from "../refreshSpaceNames"
 
 export const saveWorkspace = (ws: BrimWorkspace, status: WorkspaceStatus) => (
   dispatch,
-  _gs,
-  {globalDispatch}
+  _gs
 ): void => {
   dispatch(Workspaces.add(ws.serialize()))
   dispatch(WorkspaceStatuses.set(ws.id, status))
-  globalDispatch(Workspaces.add(ws.serialize())).then(() => {
-    dispatch(Current.setWorkspaceId(ws.id))
-    dispatch(refreshSpaceNames())
-  })
+  dispatch(Workspaces.add(ws.serialize()))
+  dispatch(Current.setWorkspaceId(ws.id))
+  dispatch(refreshSpaceNames())
 }

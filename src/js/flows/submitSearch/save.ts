@@ -13,12 +13,12 @@ export function saveToHistory(
   opts: SaveOpts,
   ts: Date
 ): Thunk {
-  return (dispatch, _, {globalDispatch}) => {
+  return (dispatch, _) => {
     if (opts.history) {
       dispatch(History.push(record, brim.time(ts).toTs()))
     }
     if (opts.investigation) {
-      globalDispatch(
+      dispatch(
         Investigation.push(workspaceId, spaceId, record, brim.time(ts).toTs())
       )
     }

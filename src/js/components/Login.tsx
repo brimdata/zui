@@ -5,7 +5,6 @@ import styled from "styled-components"
 import {BrimWorkspace} from "../brim"
 import {activateWorkspace} from "../flows/workspace/activateWorkspace"
 import {login} from "../flows/workspace/login"
-import {globalDispatch} from "../state/GlobalContext"
 import {AppDispatch} from "../state/types"
 import Workspaces from "../state/Workspaces"
 
@@ -54,9 +53,7 @@ const Login = ({workspace}: Props) => {
       const accessToken = await dispatch(
         login(workspace, ctlRef.current.signal)
       )
-      await globalDispatch(
-        Workspaces.setWorkspaceToken(workspace.id, accessToken)
-      )
+      dispatch(Workspaces.setWorkspaceToken(workspace.id, accessToken))
       await dispatch(activateWorkspace(workspace.id))
     } catch {
       toast.error("Login failed")

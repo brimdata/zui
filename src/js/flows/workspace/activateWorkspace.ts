@@ -1,7 +1,6 @@
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
 import Current from "../../state/Current"
-import {globalDispatch} from "../../state/GlobalContext"
 import Workspaces from "../../state/Workspaces"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import refreshSpaceNames from "../refreshSpaceNames"
@@ -39,7 +38,6 @@ export const activateWorkspace = (workspaceId: string) => async (
 
   // update version
   dispatch(Workspaces.add(ws.serialize()))
-  await globalDispatch(Workspaces.add(ws.serialize()))
 
   // no auth required
   if (ws.authType === "none") {
@@ -59,7 +57,6 @@ export const activateWorkspace = (workspaceId: string) => async (
     const accessToken = await dispatch(getAuthCredentials(ws))
     if (accessToken) {
       dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
-      await globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
       activate()
       return
     }
