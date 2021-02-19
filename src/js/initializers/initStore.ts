@@ -1,5 +1,5 @@
 import {createZealot} from "zealot"
-import {globalDispatch} from "../state/GlobalContext"
+import {globalDispatchMiddleware} from "../state/GlobalContext"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
@@ -19,13 +19,15 @@ export default async () => {
   return configureStore({
     reducer: rootReducer,
     preloadedState: initialState,
-    middleware: (getDefaults) =>
-      getDefaults({
+    middleware: (getDefaults) => [
+      ...getDefaults({
         thunk: {
-          extraArgument: {globalDispatch, createZealot}
+          extraArgument: {createZealot}
         },
         serializableCheck: false,
         immutableCheck: false
-      })
+      }),
+      globalDispatchMiddleware
+    ]
   })
 }
