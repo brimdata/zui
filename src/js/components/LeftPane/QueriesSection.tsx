@@ -9,7 +9,6 @@ import DropdownArrow from "../../icons/DropdownArrow"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import lib from "../../lib"
 import Current from "../../state/Current"
-import {globalDispatch} from "../../state/GlobalContext"
 import Modal from "../../state/Modal"
 import Notice from "../../state/Notice"
 import Queries from "../../state/Queries"
@@ -142,9 +141,8 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           .then(({response}) => {
             if (response === 0) {
               const {selections, item} = contextArgs
-              if (hasMultiSelected)
-                globalDispatch(Queries.removeItems(selections))
-              else globalDispatch(Queries.removeItems([item]))
+              if (hasMultiSelected) dispatch(Queries.removeItems(selections))
+              else dispatch(Queries.removeItems([item]))
             }
           })
       }
@@ -164,7 +162,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
 
   function onItemMove(sourceItem, destIndex) {
     if (selectedTag !== "All") return
-    globalDispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
+    dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
   }
 
   function onItemContextMenu(_, item, selections) {

@@ -9,13 +9,13 @@ const spacesReducer = produce((draft, action: SpacesAction): {
   [id: string]: Space
 } => {
   switch (action.type) {
-    case "SPACES_SET":
+    case "$SPACES_SET":
       return action.spaces.reduce<{[id: string]: Space}>((next, space) => {
         next[space.id] = defaults(space, draft[space.id])
         return next
       }, {})
 
-    case "SPACES_DETAIL":
+    case "$SPACES_DETAIL":
       var {id} = action.space // XXX adapter hack to support span payloads from zqd as well as min/max
       // time. In the future brim.Span type should mimic the formatted
       // transmitted over the wire.
@@ -24,27 +24,27 @@ const spacesReducer = produce((draft, action: SpacesAction): {
       draft[id] = defaults(space, draft[id])
       break
 
-    case "SPACES_RENAME":
+    case "$SPACES_RENAME":
       getSpace(draft, action.spaceId).name = action.newName
       break
 
-    case "SPACES_INGEST_PROGRESS":
+    case "$SPACES_INGEST_PROGRESS":
       getSpace(draft, action.spaceId).ingest.progress = action.value
       break
 
-    case "SPACES_INGEST_WARNING_APPEND":
+    case "$SPACES_INGEST_WARNING_APPEND":
       getSpace(draft, action.spaceId).ingest.warnings.push(action.warning)
       break
 
-    case "SPACES_INGEST_WARNING_CLEAR":
+    case "$SPACES_INGEST_WARNING_CLEAR":
       getSpace(draft, action.spaceId).ingest.warnings = []
       break
 
-    case "SPACES_INGEST_SNAPSHOT":
+    case "$SPACES_INGEST_SNAPSHOT":
       getSpace(draft, action.spaceId).ingest.snapshot = action.count
       break
 
-    case "SPACES_REMOVE":
+    case "$SPACES_REMOVE":
       delete draft[action.spaceId]
       break
   }
@@ -54,10 +54,10 @@ export default function reducer(
   state: SpacesState = init,
   action: SpacesAction
 ): SpacesState {
-  if (action.type === "SPACES_WORKSPACE_REMOVE") {
+  if (action.type === "$SPACES_WORKSPACE_REMOVE") {
     delete state[action.workspaceId]
     return state
-  } else if (action.type.startsWith("SPACES_")) {
+  } else if (action.type.startsWith("$SPACES_")) {
     return {
       ...state,
       [action.workspaceId]: spacesReducer(

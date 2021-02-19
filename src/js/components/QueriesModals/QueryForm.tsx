@@ -14,7 +14,6 @@ import useEventListener from "../hooks/useEventListener"
 import {Query} from "../../state/Queries/types"
 import Queries from "../../state/Queries"
 import {cssVar} from "../../lib/cssVar"
-import {globalDispatch} from "../../state/GlobalContext"
 
 const QueryFormWrapper = styled.div`
   width: 100%;
@@ -163,7 +162,7 @@ const QueryForm = ({onClose, query, value}: Props) => {
         )
         // adding query
       } else {
-        globalDispatch(
+        dispatch(
           Queries.addItem(
             {
               id: nanoid(),

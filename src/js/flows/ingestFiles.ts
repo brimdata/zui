@@ -18,8 +18,7 @@ import SystemTest from "../state/SystemTest"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
-  getState,
-  {globalDispatch}
+  getState
 ) => {
   const ws = Current.mustGetWorkspace(getState())
   const workspaceId = ws.id
@@ -35,11 +34,11 @@ export default (files: File[]): Thunk<Promise<void>> => (
     .transaction([
       validateInput(files, dataDir, spaceNames),
       createDir(),
-      createSpace(zealot, globalDispatch, workspaceId),
+      createSpace(zealot, dispatch, workspaceId),
       setSpace(dispatch, tabId),
       registerHandler(dispatch, requestId),
       postFiles(zealot, ws, jsonTypeConfigPath),
-      trackProgress(zealot, globalDispatch, workspaceId),
+      trackProgress(zealot, dispatch, workspaceId),
       unregisterHandler(dispatch, requestId)
     ])
     .then(() => {

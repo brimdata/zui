@@ -1,8 +1,7 @@
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import {JSON_TYPE_CONFIG_DOCS} from "./Preferences/JSONTypeConfig"
-import {globalDispatch} from "../state/GlobalContext"
 import Current from "../state/Current"
 import Link from "./common/Link"
 import Spaces from "../state/Spaces"
@@ -18,11 +17,12 @@ import {
 import ToolbarButton from "../../../app/toolbar/button"
 
 export default function IngestWarningsModal({onClose}) {
+  const dispatch = useDispatch()
   useEnterKey(onClose)
   const id = useSelector(Current.getWorkspaceId)
   const spaceId = useSelector(Current.getSpaceId)
   const warnings = useSelector(Spaces.getIngestWarnings(id, spaceId))
-  const onClear = () => globalDispatch(Spaces.clearIngestWarnings(id, spaceId))
+  const onClear = () => dispatch(Spaces.clearIngestWarnings(id, spaceId))
 
   return (
     <Content width={800}>

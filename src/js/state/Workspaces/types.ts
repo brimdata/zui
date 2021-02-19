@@ -28,17 +28,17 @@ export type WorkspaceAction =
   | WORKSPACE_SET_AUTH0_TOKEN
 
 export type WORKSPACE_REMOVE = {
-  type: "WORKSPACE_REMOVE"
+  type: "$WORKSPACE_REMOVE"
   id: string
 }
 
 export type WORKSPACE_ADD = {
-  type: "WORKSPACE_ADD"
+  type: "$WORKSPACE_ADD"
   workspace: Workspace
 }
 
 export type WORKSPACE_SET_AUTH0_TOKEN = {
-  type: "WORKSPACE_SET_AUTH0_TOKEN"
+  type: "$WORKSPACE_SET_AUTH0_TOKEN"
   workspaceId: string
   accessToken: string
 }

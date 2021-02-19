@@ -15,7 +15,7 @@ export default {
     record: SearchRecord,
     ts: Ts = brim.time().toTs()
   ): INVESTIGATION_PUSH => ({
-    type: "INVESTIGATION_PUSH",
+    type: "$INVESTIGATION_PUSH",
     workspaceId,
     spaceId,
     entry: record,
@@ -27,7 +27,7 @@ export default {
     spaceId: string,
     ts: Ts[] | Ts
   ): FINDING_DELETE => ({
-    type: "FINDING_DELETE",
+    type: "$FINDING_DELETE",
     workspaceId,
     spaceId,
     ts: isArray(ts) ? ts : [ts]
@@ -37,7 +37,7 @@ export default {
     workspaceId: string,
     spaceId: string
   ): INVESTIGATION_CLEAR => ({
-    type: "INVESTIGATION_CLEAR",
+    type: "$INVESTIGATION_CLEAR",
     workspaceId,
     spaceId
   }),
@@ -45,7 +45,7 @@ export default {
   clearWorkspaceInvestigation: (
     workspaceId: string
   ): INVESTIGATION_WORKSPACE_CLEAR => ({
-    type: "INVESTIGATION_WORKSPACE_CLEAR",
+    type: "$INVESTIGATION_WORKSPACE_CLEAR",
     workspaceId
   })
 }

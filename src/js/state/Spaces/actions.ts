@@ -12,13 +12,13 @@ import {
 
 export default {
   setSpaces: (workspaceId: string, spaces: Partial<Space>[]): SPACES_SET => ({
-    type: "SPACES_SET",
+    type: "$SPACES_SET",
     workspaceId,
     spaces: spaces || []
   }),
 
   setDetail: (workspaceId: string, space: any): SPACES_DETAIL => ({
-    type: "SPACES_DETAIL",
+    type: "$SPACES_DETAIL",
     workspaceId,
     space
   }),
@@ -28,20 +28,20 @@ export default {
     spaceId: string,
     newName: string
   ): SPACES_RENAME => ({
-    type: "SPACES_RENAME",
+    type: "$SPACES_RENAME",
     workspaceId,
     spaceId,
     newName
   }),
 
   remove: (workspaceId: string, spaceId: string): SPACES_REMOVE => ({
-    type: "SPACES_REMOVE",
+    type: "$SPACES_REMOVE",
     workspaceId,
     spaceId
   }),
 
   removeForWorkspace: (workspaceId: string): SPACES_WORKSPACE_REMOVE => ({
-    type: "SPACES_WORKSPACE_REMOVE",
+    type: "$SPACES_WORKSPACE_REMOVE",
     workspaceId
   }),
 
@@ -50,7 +50,7 @@ export default {
     spaceId: string,
     value: number | null
   ): SPACES_INGEST_PROGRESS => ({
-    type: "SPACES_INGEST_PROGRESS",
+    type: "$SPACES_INGEST_PROGRESS",
     workspaceId,
     spaceId,
     value
@@ -61,7 +61,7 @@ export default {
     spaceId: string,
     warning: string
   ): SPACES_INGEST_WARNING_APPEND => ({
-    type: "SPACES_INGEST_WARNING_APPEND",
+    type: "$SPACES_INGEST_WARNING_APPEND",
     workspaceId,
     spaceId,
     warning
@@ -71,7 +71,7 @@ export default {
     workspaceId: string,
     spaceId: string
   ): SPACES_INGEST_WARNING_CLEAR => ({
-    type: "SPACES_INGEST_WARNING_CLEAR",
+    type: "$SPACES_INGEST_WARNING_CLEAR",
     workspaceId,
     spaceId
   })

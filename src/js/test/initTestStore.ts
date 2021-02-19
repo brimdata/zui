@@ -13,18 +13,14 @@ export type TestStore = {
 }
 
 export default (zealot?: Zealot): TestStore => {
-  let store
   const client = zealot || createZealotMock().zealot
-  // This is so that tests can use globalDispatch without actually making
-  // electron ipc calls. In the tests, globalDispatch is an alias for dispatch.
-  const globalDispatch = async (...args) => store.dispatch(...args)
   const createZealot = () => client
-  store = configureStore({
+  return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: {
-          extraArgument: {createZealot, globalDispatch}
+          extraArgument: {createZealot}
         },
         serializableCheck: false,
         immutableCheck: false
@@ -34,8 +30,7 @@ export default (zealot?: Zealot): TestStore => {
       ...defaultEnhancers,
       applyActionHistory()
     ]
-  })
-  return store
+  }) as any
 }
 
 function applyDispatchAll() {

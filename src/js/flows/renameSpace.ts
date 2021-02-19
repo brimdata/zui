@@ -8,13 +8,13 @@ export default (
   workspaceId: string,
   spaceId: string,
   name: string
-): Thunk<Promise<void>> => (dispatch, getState, {globalDispatch}) => {
+): Thunk<Promise<void>> => (dispatch, getState) => {
   const state = getState()
   const zealot = dispatch(getZealot())
   const tabs = Tabs.getData(state)
 
   return zealot.spaces.update(spaceId, {name}).then(() => {
-    globalDispatch(Spaces.rename(workspaceId, spaceId, name))
+    dispatch(Spaces.rename(workspaceId, spaceId, name))
     tabs.forEach((t) => {
       if (t.current.spaceId === spaceId)
         dispatch(Current.setSpaceId(spaceId, t.id))

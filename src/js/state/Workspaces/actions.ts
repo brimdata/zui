@@ -7,15 +7,15 @@ import {
 
 export default {
   add(workspace: Workspace): WORKSPACE_ADD {
-    return {type: "WORKSPACE_ADD", workspace}
+    return {type: "$WORKSPACE_ADD", workspace}
   },
   setWorkspaceToken(
     workspaceId: string,
     accessToken: string
   ): WORKSPACE_SET_AUTH0_TOKEN {
-    return {type: "WORKSPACE_SET_AUTH0_TOKEN", workspaceId, accessToken}
+    return {type: "$WORKSPACE_SET_AUTH0_TOKEN", workspaceId, accessToken}
   },
   remove(id: string): WORKSPACE_REMOVE {
-    return {type: "WORKSPACE_REMOVE", id}
+    return {type: "$WORKSPACE_REMOVE", id}
   }
 }

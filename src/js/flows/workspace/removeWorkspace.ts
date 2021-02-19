@@ -11,11 +11,7 @@ import Workspaces from "../../state/Workspaces"
 import {Workspace} from "../../state/Workspaces/types"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 
-const removeWorkspace = (ws: Workspace): Thunk => (
-  dispatch,
-  _getState,
-  {globalDispatch}
-) => {
+const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
   const {name, id, authType} = ws
 
   if (isDefaultWorkspace(ws))
@@ -31,7 +27,7 @@ const removeWorkspace = (ws: Workspace): Thunk => (
   dispatch(Investigation.clearWorkspaceInvestigation(id))
   dispatch(Spaces.removeForWorkspace(id))
   dispatch(WorkspaceStatuses.remove(id))
-  globalDispatch(Workspaces.remove(id))
+  dispatch(Workspaces.remove(id))
   popNotice(`Removed workspace "${name}"`)
 }
 

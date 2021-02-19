@@ -4,7 +4,6 @@ import {validateToken} from "../auth0/utils"
 import {BrimWorkspace} from "../brim"
 import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
-import {globalDispatch} from "../state/GlobalContext"
 import {Thunk} from "../state/types"
 import Workspaces from "../state/Workspaces"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
@@ -32,7 +31,7 @@ const createBrimFetcher = (dispatch, getState) => {
           return args
         }
 
-        await globalDispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+        await dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
       }
 
       const bearerToken = `Bearer ${accessToken}`

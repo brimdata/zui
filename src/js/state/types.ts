@@ -21,7 +21,7 @@ export type GetState = () => State
 export type ThunkExtraArg = {
   zealot: Zealot
   createZealot: typeof createZealot
-  globalDispatch: AppDispatch
+  dispatch: AppDispatch
 }
 
 export type Action = ReduxAction<string>

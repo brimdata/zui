@@ -2,7 +2,6 @@ import {isEmpty} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 
 import {FormConfig, FormCheckResult} from "../../brim/form"
-import {globalDispatch} from "../../state/GlobalContext"
 import Prefs from "../../state/Prefs"
 import View from "../../state/View"
 import lib from "../../lib"
@@ -21,13 +20,13 @@ export default function usePreferencesForm(): FormConfig {
       name: "timeFormat",
       label: "Time Format",
       defaultValue: useSelector(Prefs.getTimeFormat),
-      submit: (value) => globalDispatch(Prefs.setTimeFormat(value))
+      submit: (value) => dispatch(Prefs.setTimeFormat(value))
     },
     suricataRunner: {
       name: "suricataRunner",
       label: "Suricata Runner",
       defaultValue: useSelector(Prefs.getSuricataRunner),
-      submit: (value) => globalDispatch(Prefs.setSuricataRunner(value)),
+      submit: (value) => dispatch(Prefs.setSuricataRunner(value)),
       check: (path) => {
         if (path === "") return [true, ""]
         return lib
@@ -40,7 +39,7 @@ export default function usePreferencesForm(): FormConfig {
       name: "suricataUpdater",
       label: "Suricata Updater",
       defaultValue: useSelector(Prefs.getSuricataUpdater),
-      submit: (value) => globalDispatch(Prefs.setSuricataUpdater(value)),
+      submit: (value) => dispatch(Prefs.setSuricataUpdater(value)),
       check: (path) => {
         if (path === "") return [true, ""]
         return lib
@@ -53,7 +52,7 @@ export default function usePreferencesForm(): FormConfig {
       name: "zeekRunner",
       label: "Zeek Runner",
       defaultValue: useSelector(Prefs.getZeekRunner),
-      submit: (value) => globalDispatch(Prefs.setZeekRunner(value)),
+      submit: (value) => dispatch(Prefs.setZeekRunner(value)),
       check: (path) => {
         if (path === "") return [true, ""]
         return lib
@@ -66,7 +65,7 @@ export default function usePreferencesForm(): FormConfig {
       name: "jsonTypeConfig",
       label: "JSON Type Config",
       defaultValue: useSelector(Prefs.getJSONTypeConfig),
-      submit: (value) => globalDispatch(Prefs.setJSONTypeConfig(value)),
+      submit: (value) => dispatch(Prefs.setJSONTypeConfig(value)),
       check: (path) => {
         if (path === "") return [true, ""]
         return lib
@@ -90,7 +89,7 @@ export default function usePreferencesForm(): FormConfig {
       name: "dataDir",
       label: "Data Directory",
       defaultValue: useSelector(Prefs.getDataDir),
-      submit: (value) => globalDispatch(Prefs.setDataDir(value)),
+      submit: (value) => dispatch(Prefs.setDataDir(value)),
       check: (path) => {
         if (path === "") return [true, ""]
         return lib
