@@ -13,8 +13,13 @@ export default function(brim: Brim) {
   ipcMain.handle("globalStore:dispatch", (e, {action}) => {
     brim.store.dispatch(action)
     for (const win of brim.windows.getWindows()) {
-      if (!win.ref.isDestroyed()) {
-        sendTo(win.ref.webContents, ipc.globalStore.dispatch(action))
+      // Don't send it back to the sender, their store will have already been updated.
+      if (!win.ref.isDestroyed() && e.sender !== win.ref.webContents) {
+        sendTo(
+          win.ref.webContents,
+          // Adding remote: true to prevent infinite loops
+          ipc.globalStore.dispatch({...action, remote: true})
+        )
       }
     }
   })
