@@ -1,6 +1,5 @@
 import {createZealotMock, ZealotMock} from "zealot"
 
-import {initSpace} from "../../flows/initSpace"
 import Workspaces from "../../state/Workspaces"
 import Current from "../../state/Current"
 import Spaces from "../../state/Spaces"
@@ -32,7 +31,5 @@ export default async function loginTo(
   store.dispatch(Workspaces.add(workspace))
   store.dispatch(Current.setWorkspaceId(workspace.id))
   store.dispatch(Spaces.setDetail(workspace.id, space))
-  return store.dispatch(initSpace(space.name)).then(() => {
-    return {store, workspace, zealot: mock}
-  })
+  return {store, workspace, zealot: mock}
 }

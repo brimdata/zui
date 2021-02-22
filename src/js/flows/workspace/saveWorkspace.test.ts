@@ -13,6 +13,8 @@ const workspaceCount = () => select(Workspaces.all).length
 const ws1 = fixtures("workspace1")
 const ws2 = fixtures("workspace2")
 
+global.tabHistory.replace(`/workspaces/${ws1.id}`)
+
 beforeEach(() => {
   mock = createZealotMock()
     .stubPromise("version", "1")

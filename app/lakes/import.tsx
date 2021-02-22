@@ -1,15 +1,15 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
-import ErrorFactory from "../models/ErrorFactory"
-import Link from "./common/Link"
+import ErrorFactory from "../../src/js/models/ErrorFactory"
+import Link from "../../src/js/components/common/Link"
 import LoadFilesInput from "ppl/import/LoadFilesInput"
-import Notice from "../state/Notice"
-import errors from "../errors"
-import ingestFiles from "../flows/ingestFiles"
-import refreshSpaceNames from "../flows/refreshSpaceNames"
-import {AppDispatch} from "../state/types"
-import {popNotice} from "./PopNotice"
+import Notice from "../../src/js/state/Notice"
+import errors from "../../src/js/errors"
+import ingestFiles from "../../src/js/flows/ingestFiles"
+import refreshSpaceNames from "../../src/js/flows/refreshSpaceNames"
+import {AppDispatch} from "../../src/js/state/types"
+import {popNotice} from "../../src/js/components/PopNotice"
 
 export default function TabImport() {
   const dispatch = useDispatch<AppDispatch>()

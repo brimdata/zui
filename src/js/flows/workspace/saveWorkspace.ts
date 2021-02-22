@@ -1,5 +1,4 @@
 import {BrimWorkspace} from "../../brim"
-import Current from "../../state/Current"
 import Workspaces from "../../state/Workspaces"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import {WorkspaceStatus} from "../../state/WorkspaceStatuses/types"
@@ -12,6 +11,6 @@ export const saveWorkspace = (ws: BrimWorkspace, status: WorkspaceStatus) => (
   dispatch(Workspaces.add(ws.serialize()))
   dispatch(WorkspaceStatuses.set(ws.id, status))
   dispatch(Workspaces.add(ws.serialize()))
-  dispatch(Current.setWorkspaceId(ws.id))
+  global.tabHistory.push(`/workspaces/${ws.id}`)
   dispatch(refreshSpaceNames())
 }

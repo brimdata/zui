@@ -3,7 +3,7 @@ import {State} from "../types"
 export type FeatureName = "summary"
 export type FeatureState = {[name: string]: boolean}
 
-function reducer(state = {}, action) {
+function reducer(state = {summary: true}, action) {
   switch (action.type) {
     case "FEATURE_SET":
       return {...state, [action.name]: action.status}

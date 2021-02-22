@@ -1,25 +1,34 @@
-import {useSelector} from "react-redux"
-import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import React, {useLayoutEffect} from "react"
 
-import Last from "../state/Last"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 import brim from "../brim"
+import {useLocation} from "react-router"
+import {histogramSearch} from "app/search/flows/histogram-search"
+import {decodeSearchParams} from "app/search/utils/search-params"
+import {addEveryCountProc} from "../searches/histogramSearch"
+import {mergeDefaultSpanArgs} from "app/search/utils/default-params"
+import Current from "../state/Current"
 
 export default function SearchHeaderChart() {
-  const search = useSelector(Last.getSearch)
-  let chartable = false
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const space = useSelector(Current.mustGetSpace)
+  const {program, spanArgs, pins} = decodeSearchParams(location.search)
+  const brimProgram = brim.program(program, pins)
 
-  if (search) {
-    const {program, pins, target} = search
-    chartable =
-      target === "events" && !brim.program(program, pins).hasAnalytics()
-  }
+  useLayoutEffect(() => {
+    const [from, to] = brim
+      .span(mergeDefaultSpanArgs(spanArgs, space))
+      .toDateTuple()
+    const query = addEveryCountProc(brimProgram.string(), [from, to])
+    dispatch(histogramSearch({query, from, to}))
+  }, [location])
 
-  if (!chartable) return null
-  else
-    return (
-      <div className="search-page-header-charts">
-        <MainHistogramChart />
-      </div>
-    )
+  if (brimProgram.hasAnalytics()) return null
+  return (
+    <div className="search-page-header-charts">
+      <MainHistogramChart />
+    </div>
+  )
 }

@@ -2,7 +2,7 @@ import {isEmpty} from "lodash"
 
 import {Thunk} from "../state/types"
 import {indexOfLastChange} from "../lib/Array"
-import {viewerSearch} from "./searches/viewerSearch"
+import {viewerSearch} from "../../../app/search/flows/viewer-search"
 import Search from "../state/Search"
 import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"

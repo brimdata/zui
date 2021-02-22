@@ -1,5 +1,6 @@
 require("regenerator-runtime/runtime")
 
+import {createHistory} from "app/router/router"
 import initDOM from "../initializers/initDOM"
 
 const Adapter = require("enzyme-adapter-react-16")
@@ -102,4 +103,6 @@ global.SVGElement.prototype.getTotalLength = () => 0
 enzyme.configure({adapter: new Adapter()})
 
 document.execCommand = jest.fn()
+
+global.tabHistory = createHistory()
 initDOM()

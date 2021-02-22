@@ -1,13 +1,12 @@
 import {Thunk} from "../../state/types"
-import {histogramSearch} from "../searches/histogramSearch"
-import {saveToHistory} from "./save"
-import {viewerSearch} from "../searches/viewerSearch"
-import Last from "../../state/Last"
 import Notice from "../../state/Notice"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
 import Current from "../../state/Current"
+import {encodeSearchParams} from "app/search/utils/search-params"
+import brim from "src/js/brim"
+import Investigation from "src/js/state/Investigation"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
@@ -18,39 +17,22 @@ export function submitSearch(
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getCurrentRecord(getState())
+    const search = encodeSearchParams(record)
+    const workspaceId = Current.getWorkspaceId()
+    const spaceId = Current.getSpaceId()
 
     dispatch(SearchBar.submittingSearchBar(ts))
     dispatch(Tab.computeSpan(ts))
 
-    const query = SearchBar.getSearchProgram(getState())
-    const {type, chartProgram, tableProgram, span} = Search.getArgs(getState())
-    const [from, to] = span
+    if (!dispatch(SearchBar.validate())) return Promise.reject()
 
-    if (record.target === "events") {
-      if (!dispatch(SearchBar.validate())) return Promise.reject()
-    }
+    const url = `/workspaces/${workspaceId}/lakes/${spaceId}/search?${search}`
 
-    if (record.target === "index") {
-      if (query === "*") return Promise.resolve()
-    }
-
-    const workspaceId = Current.getWorkspaceId(getState())
-    const spaceId = Current.getSpaceId(getState())
-    dispatch(saveToHistory(workspaceId, spaceId, record, save, ts))
-    if (record.target === "index") {
-      const promise = dispatch(viewerSearch({query, from, to, target: "index"}))
-      dispatch(Last.setSearch(record))
-      return promise
-    } else {
-      if (type === "events") {
-        dispatch(histogramSearch({query: chartProgram, from, to}))
-      }
-
-      const promise = dispatch(
-        viewerSearch({query: tableProgram, from, to, target: "events"})
+    if (save.investigation) {
+      dispatch(
+        Investigation.push(workspaceId, spaceId, record, brim.time(ts).toTs())
       )
-      dispatch(Last.setSearch(record))
-      return promise
     }
+    save.history ? global.tabHistory.push(url) : global.tabHistory.replace(url)
   }
 }

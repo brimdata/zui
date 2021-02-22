@@ -113,7 +113,7 @@ export default function(p = "", pins: string[] = []) {
     },
 
     string() {
-      return p
+      return p.trim() === "" ? "*" : p
     },
 
     hasAnalytics() {

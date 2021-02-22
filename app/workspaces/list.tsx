@@ -1,11 +1,11 @@
 import React from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useHistory} from "react-router"
+import {BrimWorkspace} from "src/js/brim"
+import workspace from "src/js/brim/workspace"
+import DataStoreIcon from "src/js/icons/DataStoreIcon"
+import Workspaces from "src/js/state/Workspaces"
 import styled from "styled-components"
-import {BrimWorkspace} from "../brim"
-import workspace from "../brim/workspace"
-import {activateWorkspace} from "../flows/workspace/activateWorkspace"
-import DataStoreIcon from "../icons/DataStoreIcon"
-import Workspaces from "../state/Workspaces"
 
 const StyledWorkspace = styled.li`
   display: flex;
@@ -75,10 +75,9 @@ const WorkspacesWrapper = styled.ul`
   padding: 0;
 `
 
-const WorkspaceChooserPage = () => {
-  const dispatch = useDispatch()
+const WorkspacesList = () => {
   const workspaces = useSelector(Workspaces.all)
-
+  const history = useHistory()
   return (
     <PageWrap>
       <StyledHeader>Choose a Workspace</StyledHeader>
@@ -87,7 +86,7 @@ const WorkspaceChooserPage = () => {
           <Workspace
             key={w.id}
             workspace={workspace(w)}
-            onClick={() => dispatch(activateWorkspace(w.id))}
+            onClick={() => history.push(`/workspaces/${w.id}`)}
           />
         ))}
       </WorkspacesWrapper>
@@ -95,4 +94,4 @@ const WorkspaceChooserPage = () => {
   )
 }
 
-export default WorkspaceChooserPage
+export default WorkspacesList

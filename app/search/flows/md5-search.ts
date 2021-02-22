@@ -1,14 +1,14 @@
-import {Thunk} from "../../state/types"
+import {Thunk} from "../../../src/js/state/types"
 import {
   filenameCorrelation,
   md5Correlation,
   rxHostsCorrelation,
   txHostsCorrelation
-} from "../../searches/programs"
-import {parallelizeProcs} from "../../lib/Program"
-import {search, BrimSearch} from "../search/mod"
-import Current from "../../state/Current"
-import Tab from "../../state/Tab"
+} from "../../../src/js/searches/programs"
+import {parallelizeProcs} from "../../../src/js/lib/Program"
+import {search, BrimSearch} from "../../../src/js/flows/search/mod"
+import Current from "../../../src/js/state/Current"
+import Tab from "../../../src/js/state/Tab"
 
 const id = "Md5"
 

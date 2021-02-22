@@ -1,6 +1,6 @@
 import {Thunk} from "../state/types"
-import {histogramSearch} from "./searches/histogramSearch"
-import {viewerSearch} from "./searches/viewerSearch"
+import {histogramSearch} from "../../../app/search/flows/histogram-search"
+import {viewerSearch} from "../../../app/search/flows/viewer-search"
 import Search from "../state/Search"
 
 export default function submitAutoRefreshSearch(): Thunk {

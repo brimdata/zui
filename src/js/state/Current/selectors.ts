@@ -5,16 +5,29 @@ import {SpacesState} from "../Spaces/types"
 import {State} from "../types"
 import Workspaces from "../Workspaces"
 import Spaces from "../Spaces"
-import activeTabSelect from "../Tab/activeTabSelect"
 import brim, {BrimWorkspace, BrimSpace} from "../../brim"
+import {matchPath} from "react-router"
 
 type Id = string | null
 
-export const getSpaceId = activeTabSelect((state) => state.current.spaceId)
+export const getSpaceId = (_?: any) => {
+  type Params = {lakeId?: string}
+  const match = matchPath<Params>(
+    global.tabHistory.location.pathname,
+    "/workspaces/:workspaceId/lakes/:lakeId"
+  )
 
-export const getWorkspaceId = activeTabSelect(
-  (state) => state.current.workspaceId
-)
+  return match?.params?.lakeId || null
+}
+
+export const getWorkspaceId = (_?: any) => {
+  type Params = {workspaceId?: string}
+  const match = matchPath<Params>(
+    global.tabHistory.location.pathname,
+    "/workspaces/:workspaceId"
+  )
+  return match?.params?.workspaceId || null
+}
 
 export const mustGetWorkspace = createSelector<
   State,
@@ -37,8 +50,9 @@ export const mustGetSpace = createSelector<
 >(Spaces.raw, getWorkspaceId, getSpaceId, (spaces, workspaceId, spaceId) => {
   if (!workspaceId) throw new Error("Current workspace id is unset")
   if (!spaceId) throw new Error("Current space id is unset")
-  if (!spaces[workspaceId])
+  if (!spaces[workspaceId]) {
     throw new Error(`No spaces in workspace id: ${workspaceId}`)
+  }
   if (!spaces[workspaceId][spaceId])
     throw new Error(`Missing space id: ${spaceId}`)
 

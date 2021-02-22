@@ -1,13 +1,12 @@
 import useSearch from "app/core/hooks/useSearch"
 import React, {forwardRef} from "react"
 import styled from "styled-components"
-import {useSelector} from "react-redux"
-import Current from "src/js/state/Current"
-import Tab from "src/js/state/Tab"
 import MenuButton from "./menu-button"
 import Viz from "./viz"
 import TableSkeleton from "./table-skeleton"
 import {TileFormat} from "ppl/summary/summary"
+import useSearchParams from "app/router/hooks/use-search-params"
+import useLakeId from "app/router/hooks/use-lake-id"
 
 const BG = styled.div`
   width: 100%;
@@ -58,9 +57,9 @@ type Props = {
 }
 
 function Tile({title, query, format, children, ...rest}, ref) {
-  const space = useSelector(Current.getSpace)
-  const span = useSelector(Tab.getSpan)
-  const [records, isFetching] = useSearch(query, [space, span])
+  const lakeId = useLakeId()
+  const {spanArgs} = useSearchParams()
+  const [records, isFetching] = useSearch(query, [lakeId, spanArgs])
   return (
     <div ref={ref} {...rest}>
       <BG>

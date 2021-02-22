@@ -30,6 +30,7 @@ beforeEach(() => {
 const submit = (...args) => dispatch(submitSearch(...args))
 
 test("Validates the zql", () => {
+  global.tabHistory.push(`/workspaces/1/lakes/${space.id}/search`)
   expect(select(SearchBar.getSearchBarError)).toEqual(null)
 
   dispatch(SearchBar.changeSearchBarInput("_ath="))

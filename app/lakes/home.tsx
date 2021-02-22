@@ -2,11 +2,11 @@ import {useDispatch} from "react-redux"
 import React, {useEffect, useState} from "react"
 import styled from "styled-components"
 
-import BrimTextLogo from "./BrimTextLogo"
-import TabCreateSpace from "./TabCreateSpace"
-import TabImport from "./TabImport"
-import electronIsDev from "../electron/isDev"
-import initNewTab from "../flows/initNewTab"
+import BrimTextLogo from "../../src/js/components/BrimTextLogo"
+import TabCreateSpace from "./new"
+import TabImport from "./import"
+import electronIsDev from "../../src/js/electron/isDev"
+import initNewTab from "../../src/js/flows/initNewTab"
 
 const Nav = styled.nav`
   margin-top: auto;
@@ -28,7 +28,7 @@ const Link = ({active, onClick, children}) => {
   else return <a onClick={onClick}>{children}</a>
 }
 
-export default function TabWelcome() {
+export default function Home() {
   const dispatch = useDispatch()
   const [page, setPage] = useState("import")
 

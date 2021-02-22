@@ -37,6 +37,12 @@ export default function space(info: Space) {
         info.max_time.ns === 0
       )
     },
+    minTs() {
+      return info.min_time
+    },
+    maxTs() {
+      return info.max_time
+    },
     everythingSpan(): Span {
       const {min_time, max_time} = info
       const from = brim.time(min_time).toTs()

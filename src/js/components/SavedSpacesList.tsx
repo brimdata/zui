@@ -4,7 +4,6 @@ import classNames from "classnames"
 import styled from "styled-components"
 
 import {Space} from "../state/Spaces/types"
-import {initSpace} from "../flows/initSpace"
 import Current from "../state/Current"
 import EmptySection from "./common/EmptySection"
 import FileFilled from "../icons/FileFilled"
@@ -20,6 +19,7 @@ import deleteSpaces from "../flows/deleteSpaces"
 import {popNotice} from "./PopNotice"
 import {AppDispatch} from "../state/types"
 import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
+import {useHistory} from "react-router"
 
 type Props = {
   spaces: Space[]
@@ -39,10 +39,11 @@ const SpaceListItem = ({space}: {space: Space}) => {
   const currentSpaceId = useSelector(Current.getSpaceId)
   const spaceIds = useSelector(Spaces.ids(workspaceId))
   const s = brim.space(space)
+  const history = useHistory()
 
   const onClick = (e) => {
     e.preventDefault()
-    dispatch(initSpace(s.id))
+    history.push(`/workspaces/${workspaceId}/lakes/${s.id}`)
   }
   const contextMenu = usePopupMenu([
     {

@@ -4,20 +4,20 @@ import classNames from "classnames"
 
 import ClockIcon from "../../icons/ClockIcon"
 import Label from "../../../../app/toolbar/label"
-import Last from "../../state/Last"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
 import tab from "../../state/Tab"
 import usePrevious from "../hooks/usePrevious"
+import {useLocation} from "react-router"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
 export default function SpanControls() {
-  const last = useSelector(Last.getSearch)
-  const [from, to] = useSelector(tab.getSpanArgs)
-  const prev = usePrevious([from, to], [last])
   const dispatch = useDispatch()
+  const location = useLocation()
+  const [from, to] = useSelector(tab.getSpanArgs)
+  const prev = usePrevious([from, to], [location.key])
 
   function fromChange(arg) {
     dispatch(tab.setFrom(arg))

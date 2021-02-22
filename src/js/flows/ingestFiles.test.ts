@@ -10,6 +10,7 @@ import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
 import {itestFile, itestFilePath} from "../test/itestFile"
 import lib from "../lib"
+import {workspacePath} from "app/router/utils/paths"
 
 let store, zealot
 beforeEach(() => {
@@ -28,6 +29,7 @@ beforeEach(() => {
     .stubPromise("spaces.delete", true)
 
   const ws = fixtures("workspace1")
+  global.tabHistory.push(workspacePath(ws.id))
   store = initTestStore(zealot.zealot)
   store.dispatchAll([Workspaces.add(ws), Current.setWorkspaceId(ws.id)])
 })

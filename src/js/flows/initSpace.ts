@@ -1,6 +1,5 @@
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
-import {submitSearch} from "./submitSearch/mod"
 import Current from "../state/Current"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
@@ -12,7 +11,6 @@ import Notice from "../state/Notice"
 export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
   const workspaceId = Current.getWorkspaceId(getState())
   if (!workspaceId) return
-
   const zealot = dispatch(getZealot())
   return zealot.spaces
     .get(spaceId)
@@ -24,10 +22,6 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
       dispatch(Search.setSpanArgs(space.everythingSpan()))
       dispatch(SearchBar.removeAllSearchBarPins())
       dispatch(SearchBar.changeSearchBarInput(""))
-      if (!space.hasIndex()) {
-        dispatch(SearchBar.setTarget("events"))
-      }
-      dispatch(submitSearch({history: true, investigation: false}))
     })
     .catch((error) => {
       console.error(error)

@@ -19,6 +19,8 @@ import BrimToaster from "./BrimToaster"
 import BrimTooltip from "./BrimTooltip"
 import HookLog from "app/system-test/HookLog"
 import ColumnsModal from "app/columns/columns-modal"
+import AppRouter from "app/router/router"
+import {Route, Switch} from "react-router"
 
 export default function App() {
   brim.time.setZone(useSelector(View.getTimeZone))
@@ -26,26 +28,35 @@ export default function App() {
 
   useEffect(() => {
     ipcRenderer.invoke("windows:ready")
+    tabHistory.push(
+      "/workspaces/localhost:9867/lakes/sp_1oOqildljMkbkd4qNg1y5nyWfSz/search"
+    )
   }, [])
 
   return (
-    <div className="app-wrapper">
-      <div className="title-bar-drag-area" />
-      <XLatestError />
-      <SearchPage />
+    <AppRouter>
+      <Switch>
+        <Route path="/">
+          <div className="app-wrapper">
+            <div className="title-bar-drag-area" />
+            <XLatestError />
+            <SearchPage />
 
-      {/* Global Modals */}
-      <ErrorNotice />
-      <Preferences />
-      <Modals />
-      <AboutModal />
-      <SpaceModal />
-      <ColumnsModal />
-      <HTMLContextMenu />
-      <BrimToaster />
-      <PopNotice />
-      <BrimTooltip />
-      {process.env.BRIM_ITEST === "true" && <HookLog />}
-    </div>
+            {/* Global Modals */}
+            <ErrorNotice />
+            <Preferences />
+            <Modals />
+            <AboutModal />
+            <SpaceModal />
+            <ColumnsModal />
+            <HTMLContextMenu />
+            <BrimToaster />
+            <PopNotice />
+            <BrimTooltip />
+            {process.env.BRIM_ITEST === "true" && <HookLog />}
+          </div>
+        </Route>
+      </Switch>
+    </AppRouter>
   )
 }

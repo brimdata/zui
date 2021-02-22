@@ -1,12 +1,10 @@
-import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import styled from "styled-components"
 
 import Back from "../icons/back-arrow.svg"
 import Button from "./Button"
 import Forward from "../icons/forward-arrow.svg"
-import SearchBar from "../../state/SearchBar"
-import Tab from "../../state/Tab"
+import {useHistory} from "react-router"
 
 const Wrap = styled.div`
   display: flex;
@@ -15,11 +13,11 @@ const Wrap = styled.div`
 `
 
 export default function HistoryArrows() {
-  const dispatch = useDispatch()
-  const canGoBack = useSelector(Tab.canGoBack)
-  const canGoForward = useSelector(Tab.canGoForward)
-  const back = () => dispatch(SearchBar.goBack())
-  const forward = () => dispatch(SearchBar.goForward())
+  const history = useHistory()
+  const canGoBack = history.length > 1
+  const canGoForward = history.length - 1 != history.index
+  const back = () => history.goBack()
+  const forward = () => history.goForward()
 
   return (
     <Wrap>
