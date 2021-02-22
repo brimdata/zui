@@ -12,10 +12,14 @@ import initialize from "./initializers/initialize"
 import lib from "./lib"
 import theme from "./style-theme"
 import deletePartialSpaces from "./flows/deletePartialSpaces"
+import TabHistories from "./state/TabHistories"
 
 initialize()
   .then((store) => {
     window.onbeforeunload = () => {
+      // This runs during reload
+      // Visit initIpcListeners.ts#prepareClose for closing window
+      store.dispatch(TabHistories.save(global.tabHistories.serialize()))
       store.dispatch(deletePartialSpaces())
     }
     ReactDOM.render(
