@@ -15,6 +15,7 @@ import Queries from "./Queries"
 import SystemTest from "./SystemTest"
 import Feature from "./Feature"
 import WorkspaceStatuses from "./WorkspaceStatuses"
+import TabHistories from "./TabHistories"
 
 export default combineReducers<any, any>({
   errors: Errors.reducer,
@@ -31,5 +32,6 @@ export default combineReducers<any, any>({
   systemTest: SystemTest.reducer,
   feature: Feature.reducer,
   workspaceStatuses: WorkspaceStatuses.reducer,
-  queries: Queries.reducer
+  queries: Queries.reducer,
+  tabHistories: TabHistories.reducer
 })

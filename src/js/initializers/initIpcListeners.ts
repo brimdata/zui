@@ -9,6 +9,7 @@ import initNewSearchTab from "./initNewSearchTab"
 import confirmUnload from "../flows/confirmUnload"
 import deletePartialSpaces from "../flows/deletePartialSpaces"
 import {getWindowPersistable} from "../state/getPersistable"
+import TabHistories from "../state/TabHistories"
 
 export default (store: Store) => {
   const dispatch = store.dispatch as AppDispatch
@@ -21,6 +22,7 @@ export default (store: Store) => {
   })
 
   ipcRenderer.on("prepareClose", async (e, replyChannel) => {
+    store.dispatch(TabHistories.save(global.tabHistories.serialize()))
     await dispatch(deletePartialSpaces())
     ipcRenderer.send(replyChannel)
   })

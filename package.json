@@ -139,6 +139,7 @@
     "react-hot-toast": "^1.0.1",
     "react-measure": "^2.3.0",
     "react-redux": "^7.2.0",
+    "react-router": "^5.2.0",
     "react-spring": "^8.0.27",
     "react-tooltip": "^4.2.7",
     "react-transition-group": "^2.9.0",
