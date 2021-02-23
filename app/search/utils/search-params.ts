@@ -4,17 +4,19 @@ type Args = {
   program: string
   spanArgs: SpanArgs
   pins: string[]
+  spanArgsFocus: SpanArgs
 }
 
 export const encodeSearchParams = ({
   program,
   pins,
-  spanArgs
+  spanArgs,
+  spanArgsFocus
 }: Partial<Args>) => {
   const p = new URLSearchParams()
   if (program) p.append("q", program)
-  if (spanArgs && spanArgs[0]) p.append("from", encodeSpanArg(spanArgs[0]))
-  if (spanArgs && spanArgs[1]) p.append("to", encodeSpanArg(spanArgs[1]))
+  encodeSpan(p, spanArgs, "from", "to")
+  encodeSpan(p, spanArgsFocus, "focusFrom", "focusTo")
   encodePins(p, pins || [])
   return p.toString()
 }
@@ -23,6 +25,7 @@ type DecodedSearchParams = {
   program: string
   pins: string[]
   spanArgs: Partial<SpanArgs>
+  spanArgsFocus: Partial<SpanArgs>
 }
 
 export const decodeSearchParams = (path: string): DecodedSearchParams => {
@@ -30,8 +33,16 @@ export const decodeSearchParams = (path: string): DecodedSearchParams => {
   return {
     program: url.get("q"),
     spanArgs: [url.get("from"), url.get("to")].map(decodeSpanArg) as SpanArgs,
+    spanArgsFocus: [url.get("focusFrom"), url.get("focusTo")].map(
+      decodeSpanArg
+    ) as SpanArgs,
     pins: decodePins(url)
   }
+}
+
+const encodeSpan = (params, span, from, to) => {
+  if (span && span[0]) params.append(from, encodeSpanArg(span[0]))
+  if (span && span[1]) params.append(to, encodeSpanArg(span[1]))
 }
 
 const encodeSpanArg = (arg) => {

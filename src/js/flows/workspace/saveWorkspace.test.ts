@@ -13,8 +13,6 @@ const workspaceCount = () => select(Workspaces.all).length
 const ws1 = fixtures("workspace1")
 const ws2 = fixtures("workspace2")
 
-global.tabHistory.replace(`/workspaces/${ws1.id}`)
-
 beforeEach(() => {
   mock = createZealotMock()
     .stubPromise("version", "1")
@@ -23,6 +21,7 @@ beforeEach(() => {
     .stubPromise("spaces.list", [])
   store = initTestStore(mock.zealot)
   store.dispatchAll([Workspaces.add(ws1), Current.setWorkspaceId(ws1.id)])
+  global.tabHistory.replace(`/workspaces/${ws1.id}`)
 })
 
 test("Create a new workspace, switch back", async () => {

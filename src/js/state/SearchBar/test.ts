@@ -15,6 +15,11 @@ import Tab from "../Tab"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 import {SearchBarState} from "./types"
+import {lakePath} from "app/router/utils/paths"
+import {decodeSearchParams} from "app/search/utils/search-params"
+import {getSearchParams} from "app/router/hooks/use-search-params"
+import brim from "src/js/brim"
+import {SpanArgs} from "../Search/types"
 
 let store, mock
 beforeEach(() => {
@@ -30,6 +35,7 @@ beforeEach(() => {
     Current.setWorkspaceId(workspace.id),
     Current.setSpaceId(space.id)
   ])
+  global.tabHistory.push(lakePath(space.id, workspace.id))
 })
 
 test("input value changed", () => {
@@ -314,7 +320,7 @@ test("restore", () => {
 })
 
 test("goBack", () => {
-  const state = store.dispatchAll([
+  store.dispatchAll([
     SearchBar.changeSearchBarInput("hello"),
     Search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearch(),
@@ -323,9 +329,12 @@ test("goBack", () => {
     submitSearch(),
     SearchBar.goBack()
   ])
-
-  expect(Tab.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
-  expect(SearchBar.getSearchBarInputValue(state)).toBe("hello")
+  const {spanArgs, program} = getSearchParams()
+  expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
+    new Date(1),
+    new Date(2)
+  ])
+  expect(program).toBe("hello")
 })
 
 test("goForward", () => {
@@ -341,14 +350,14 @@ test("goForward", () => {
     submitSearch(),
     SearchBar.goBack(),
     SearchBar.goBack(),
-    SearchBar.goBack(),
-    SearchBar.goBack(),
-    SearchBar.goBack(),
     SearchBar.goForward()
   ])
-
-  expect(SearchBar.getSearchBarInputValue(state)).toBe("goodbye")
-  expect(Tab.getSpanAsDates(state)).toEqual([new Date(3), new Date(4)])
+  const {spanArgs, program} = getSearchParams()
+  expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
+    new Date(3),
+    new Date(4)
+  ])
+  expect(program).toBe("goodbye")
 })
 
 test("clearSearchBar", () => {

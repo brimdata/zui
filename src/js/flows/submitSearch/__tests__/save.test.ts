@@ -11,6 +11,8 @@ import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
 import Workspaces from "../../../state/Workspaces"
+import {decodeSearchParams} from "app/search/utils/search-params"
+import {lakePath} from "app/router/utils/paths"
 
 const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
@@ -38,31 +40,31 @@ beforeEach(() => {
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
+  global.tabHistory.push(lakePath("1", space.id))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
-test("Always saves search to last search record", async () => {
+test("Always updates url", async () => {
   await submit({history: false, investigation: false})
-  expect(select(Last.getSearch)).toEqual({
+  const record = decodeSearchParams(global.tabHistory.location.search)
+  expect(record).toEqual({
     pins: ["dns"],
     program: "query",
-    spaceId: space.id,
-    spaceName: "default",
     spanArgs: ["now - 5m", "now"],
-    target: "events"
+    spanArgsFocus: [null, null]
   })
 })
 
 test("saves to history", async () => {
-  expect(select(History.count)).toBe(0)
+  const start = global.tabHistory.length
   await submit()
-  expect(select(History.count)).toBe(1)
+  expect(global.tabHistory.length).toBe(start + 1)
 })
 
 test("does not save to history", async () => {
-  expect(select(History.count)).toBe(0)
+  const start = global.tabHistory.length
   await submit({history: false, investigation: true})
-  expect(select(History.count)).toBe(0)
+  expect(global.tabHistory.length).toBe(start)
 })
 
 test("saves to investigation", async () => {

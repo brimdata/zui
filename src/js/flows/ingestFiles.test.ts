@@ -29,9 +29,9 @@ beforeEach(() => {
     .stubPromise("spaces.delete", true)
 
   const ws = fixtures("workspace1")
-  global.tabHistory.push(workspacePath(ws.id))
   store = initTestStore(zealot.zealot)
   store.dispatchAll([Workspaces.add(ws), Current.setWorkspaceId(ws.id)])
+  global.tabHistory.push(workspacePath(ws.id))
 })
 
 describe("success case", () => {

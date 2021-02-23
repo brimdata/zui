@@ -17,7 +17,8 @@ export function submitSearch(
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getCurrentRecord(getState())
-    const search = encodeSearchParams(record)
+    const spanArgsFocus = Tab.getSpanFocus(getState())
+    const search = encodeSearchParams({...record, spanArgsFocus})
     const workspaceId = Current.getWorkspaceId()
     const spaceId = Current.getSpaceId()
 

@@ -15,6 +15,8 @@ import {getZealot} from "./getZealot"
 import {Handler} from "../state/Handlers/types"
 import {IngestParams} from "../brim/ingest/getParams"
 import SystemTest from "../state/SystemTest"
+import TabHistories from "../state/TabHistories"
+import {lakePath, workspacesPath} from "app/router/utils/paths"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -35,7 +37,7 @@ export default (files: File[]): Thunk<Promise<void>> => (
       validateInput(files, dataDir, spaceNames),
       createDir(),
       createSpace(zealot, dispatch, workspaceId),
-      setSpace(dispatch, tabId),
+      setSpace(dispatch, tabId, workspaceId),
       registerHandler(dispatch, requestId),
       postFiles(zealot, ws, jsonTypeConfigPath),
       trackProgress(zealot, dispatch, workspaceId),
@@ -139,12 +141,14 @@ const postFiles = (client, ws, jsonTypesPath) => ({
   }
 })
 
-const setSpace = (dispatch, tabId) => ({
+const setSpace = (dispatch, tabId, workspaceId) => ({
   do({spaceId}) {
-    dispatch(Current.setSpaceId(spaceId, tabId))
+    const url = lakePath(spaceId, workspaceId)
+    global.tabHistories.get(tabId).push(url)
   },
   undo() {
-    dispatch(Current.setSpaceId(null, tabId))
+    const url = workspacesPath()
+    global.tabHistories.get(tabId).replace(url)
   }
 })
 

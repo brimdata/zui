@@ -11,6 +11,8 @@ import fixtures from "../../../test/fixtures"
 import responses from "../../../test/responses"
 import initTestStore from "../../../test/initTestStore"
 import Workspaces from "../../../state/Workspaces"
+import {lakePath} from "app/router/utils/paths"
+import {getSearchParams} from "app/router/hooks/use-search-params"
 
 const dnsResp = responses("dns.txt")
 const countByPathResp = responses("count_by_path.txt")
@@ -38,6 +40,7 @@ beforeEach(() => {
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
+  global.tabHistory.push(lakePath(space.id, "1"))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
@@ -57,13 +60,10 @@ test("Computes the span", async () => {
 test("a zoomed search", async () => {
   const zoom = brim.time.convertToSpan([new Date(0), new Date(1)])
   dispatch(Search.setSpanFocus(zoom))
-  const spy = jest.spyOn(zealot.zealot, "search")
   await submit()
-  expect(spy.mock.calls[0]).toEqual([
-    expect.any(String),
-    expect.objectContaining({
-      from: new Date("1970-01-01T00:00:00.000Z"),
-      to: new Date("1970-01-01T00:00:00.001Z")
-    })
+  const {spanArgsFocus} = getSearchParams()
+  expect(brim.span(spanArgsFocus).toDateTuple()).toEqual([
+    new Date("1970-01-01T00:00:00.000Z"),
+    new Date("1970-01-01T00:00:00.001Z")
   ])
 })

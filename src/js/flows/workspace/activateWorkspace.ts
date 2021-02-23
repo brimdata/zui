@@ -15,9 +15,7 @@ export const activateWorkspace = (workspaceId: string) => async (
   const zealot = createZealot(ws.getAddress())
 
   const activate = async () => {
-    console.log("refreshing the spaces")
     await dispatch(refreshSpaceNames())
-    console.log("setting the connected")
     dispatch(WorkspaceStatuses.set(ws.id, "connected"))
     dispatch(Current.setWorkspaceId(ws.id))
   }

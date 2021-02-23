@@ -10,6 +10,7 @@ import Tabs from "../state/Tabs"
 import Viewer from "../state/Viewer"
 import fixtures from "../test/fixtures"
 import initTestStore from "../test/initTestStore"
+import {lakePath} from "app/router/utils/paths"
 
 const records = zng.createRecords([
   {
@@ -51,6 +52,7 @@ beforeEach(() => {
     Viewer.appendRecords(tabId, records)
   ])
   store.clearActions()
+  global.tabHistory.push(lakePath(space.id, ws.id))
 })
 
 test("#fetchNextPage dispatches splice", () => {

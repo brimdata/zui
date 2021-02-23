@@ -12,8 +12,12 @@ export interface HistoryEntry {
 export interface MemoryHistory {
   push: (string) => void
   replace: (string) => void
+  goBack: () => void
+  goForward: () => void
   entries: HistoryEntry[]
   index: number
+  length: number
+  location: HistoryEntry
 }
 
 export default class Histories {

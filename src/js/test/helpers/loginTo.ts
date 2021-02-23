@@ -6,6 +6,7 @@ import Spaces from "../../state/Spaces"
 import fixtures from "../fixtures"
 import initTestStore, {TestStore} from "../initTestStore"
 import {Workspace} from "../../state/Workspaces/types"
+import {lakePath} from "app/router/utils/paths"
 
 export default async function loginTo(
   workspaceName: string,
@@ -31,5 +32,6 @@ export default async function loginTo(
   store.dispatch(Workspaces.add(workspace))
   store.dispatch(Current.setWorkspaceId(workspace.id))
   store.dispatch(Spaces.setDetail(workspace.id, space))
+  global.tabHistory.push(lakePath(space.id, workspace.id))
   return {store, workspace, zealot: mock}
 }

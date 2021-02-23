@@ -1,18 +1,21 @@
 import {createZealotMock, zng} from "zealot"
 
-import {submitSearch} from "../mod"
-import Columns from "../../../state/Columns"
-import Current from "../../../state/Current"
-import Handlers from "../../../state/Handlers"
-import SearchBar from "../../../state/SearchBar"
-import Spaces from "../../../state/Spaces"
-import Viewer from "../../../state/Viewer"
-import fixtures from "../../../test/fixtures"
-import responses from "../../../test/responses"
-import initTestStore from "../../../test/initTestStore"
-import Workspaces from "../../../state/Workspaces"
+import {lakePath} from "app/router/utils/paths"
+import Chart from "src/js/state/Chart"
+import Columns from "src/js/state/Columns"
+import Current from "src/js/state/Current"
+import Handlers from "src/js/state/Handlers"
+import SearchBar from "src/js/state/SearchBar"
+import Spaces from "src/js/state/Spaces"
+import Viewer from "src/js/state/Viewer"
+import Workspaces from "src/js/state/Workspaces"
+import fixtures from "src/js/test/fixtures"
+import initTestStore from "src/js/test/initTestStore"
+import responses from "src/js/test/responses"
+import {viewerSearch} from "./viewer-search"
 
-const indexResp = responses("index_search.txt")
+const countByPathResp = responses("count_by_path.txt")
+const dnsResp = responses("dns.txt")
 const space = fixtures("space1")
 const warningResp = responses("search_warning.txt")
 
@@ -33,30 +36,28 @@ beforeEach(() => {
     }),
     Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
-    Current.setSpaceId(space.id),
-    SearchBar.changeSearchBarInput(":ip=192.168.0.1"),
-    SearchBar.setTarget("index")
+    Current.setSpaceId(space.id)
   ])
+  global.tabHistory.push(lakePath(space.id, "1"))
 })
-const submit = (...args) => dispatch(submitSearch(...args))
 
-describe("happy response", () => {
+const submit = () => dispatch(viewerSearch({query: "dns query | head 500"}))
+
+describe("a normal response", () => {
   beforeEach(() => {
-    zealot.stubStream("archive.search", indexResp)
+    zealot.stubStream("search", dnsResp)
   })
-  test("zealot sends one request", async () => {
-    await submit()
 
-    const calls = zealot.calls("archive.search")
+  test("zealot gets the request", async () => {
+    await submit()
+    const calls = zealot.calls("search")
     expect(calls.length).toBe(1)
-    expect(calls[0].args).toEqual(
-      expect.objectContaining({patterns: [":ip=192.168.0.1"], spaceId: "1"})
-    )
+    expect(calls[0].args).toEqual("dns query | head 500")
   })
 
   test("the table gets populated", async () => {
     await submit()
-    expect(select(Viewer.getViewerRecords).length).toBe(4)
+    expect(select(Viewer.getViewerRecords).length).toBe(2)
   })
 
   test("the table gets cleared", async () => {
@@ -65,8 +66,10 @@ describe("happy response", () => {
         new zng.Record([{name: "clear", type: "string"}], ["me"])
       ])
     )
-    submit()
-    expect(select(Viewer.getViewerRecords)).toEqual([])
+    await submit()
+    expect(select(Viewer.getViewerRecords)[0]).not.toEqual([
+      {name: "clear", type: "string", value: "me"}
+    ])
   })
 
   test("the table status updates", async () => {
@@ -105,12 +108,10 @@ describe("happy response", () => {
   })
 })
 
-describe("warning response", () => {
-  test("search warnings", async () => {
-    zealot.stubStream("archive.search", warningResp)
-    await submit()
-    expect(select(SearchBar.getSearchBarError)).toBe(
-      "Cut field boo not present in input"
-    )
-  })
+test("a response with a warning", async () => {
+  zealot.stubStream("search", warningResp)
+  await submit()
+  expect(select(SearchBar.getSearchBarError)).toBe(
+    "Cut field boo not present in input"
+  )
 })

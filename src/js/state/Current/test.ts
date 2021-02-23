@@ -4,6 +4,7 @@ import Spaces from "../Spaces"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 import {Workspace} from "../Workspaces/types"
+import {lakePath, workspacePath} from "app/router/utils/paths"
 
 let store
 
@@ -12,13 +13,13 @@ beforeEach(() => {
 })
 
 test("setting the space id", () => {
-  store.dispatch(Current.setSpaceId("1"))
+  global.tabHistory.push(lakePath("1", "1"))
 
   expect(Current.getSpaceId(store.getState())).toBe("1")
 })
 
 test("setting the workspace id", () => {
-  store.dispatch(Current.setWorkspaceId("a"))
+  global.tabHistory.push(workspacePath("a"))
 
   expect(Current.getWorkspaceId(store.getState())).toBe("a")
 })
@@ -31,10 +32,8 @@ test("getting the actual workspace", () => {
     port: "123",
     authType: "none"
   }
-  const state = store.dispatchAll([
-    Workspaces.add(ws),
-    Current.setWorkspaceId("myws")
-  ])
+  const state = store.dispatchAll([Workspaces.add(ws)])
+  global.tabHistory.push(workspacePath(ws.id))
 
   expect(Current.mustGetWorkspace(state).serialize()).toEqual(ws)
 })
@@ -50,10 +49,9 @@ test("getting the actual space", () => {
   }
   const state = store.dispatchAll([
     Workspaces.add(ws),
-    Spaces.setDetail("myws", space),
-    Current.setWorkspaceId("myws"),
-    Current.setSpaceId(space.id)
+    Spaces.setDetail("myws", space)
   ])
+  global.tabHistory.push(lakePath(space.id, ws.id))
 
   expect(Current.mustGetSpace(state)).toEqual(expect.objectContaining(space))
 })

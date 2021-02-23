@@ -7,6 +7,7 @@ import Spaces from "../../../state/Spaces"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
+import {lakePath} from "app/router/utils/paths"
 
 const dnsResp = responses("dns.txt")
 const space = fixtures("space1")
@@ -26,6 +27,7 @@ beforeEach(() => {
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
+  global.tabHistory.push(lakePath(space.id, "1"))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 

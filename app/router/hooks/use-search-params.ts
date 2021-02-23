@@ -6,3 +6,8 @@ export default function useSearchParams() {
   const location = useLocation()
   return useMemo(() => decodeSearchParams(location.search), [location.search])
 }
+
+// For thunks and non-component contexts
+export function getSearchParams() {
+  return decodeSearchParams(global.tabHistory.location.search)
+}

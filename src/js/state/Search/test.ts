@@ -8,6 +8,7 @@ import Tab from "../Tab"
 import brim from "../../brim"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
+import {lakePath} from "app/router/utils/paths"
 
 const ts1 = {sec: 1, ns: 0}
 const ts2 = {sec: 2, ns: 1}
@@ -28,6 +29,8 @@ describe("reducer", () => {
       Current.setWorkspaceId(ws.id),
       Current.setSpaceId(space.id)
     ])
+
+    global.tabHistory.push(lakePath(space.id, ws.id))
   })
 
   test("set span", () => {
@@ -80,6 +83,7 @@ describe("selectors", () => {
       Current.setWorkspaceId(ws.id),
       Current.setSpaceId(space.id)
     ])
+    global.tabHistory.push(lakePath(space.id, ws.id))
   })
 
   test("getArgs", () => {
