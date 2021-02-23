@@ -15,7 +15,6 @@ import {getZealot} from "./getZealot"
 import {Handler} from "../state/Handlers/types"
 import {IngestParams} from "../brim/ingest/getParams"
 import SystemTest from "../state/SystemTest"
-import {lakePath} from "app/router/utils/paths"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
