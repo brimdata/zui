@@ -17,7 +17,6 @@ const setupDefaultWorkspace = () => (dispatch, _) => {
   }
   dispatch(Workspaces.add(ws))
   dispatch(Workspaces.add(ws))
-  dispatch(Current.setWorkspaceId(ws.id))
 }
 
 export const isDefaultWorkspace = (ws: Workspace): boolean => {

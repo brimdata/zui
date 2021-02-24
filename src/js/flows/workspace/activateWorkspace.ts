@@ -1,6 +1,6 @@
+import {workspacePath} from "app/router/utils/paths"
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
-import Current from "../../state/Current"
 import Workspaces from "../../state/Workspaces"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import refreshSpaceNames from "../refreshSpaceNames"
@@ -17,7 +17,7 @@ export const activateWorkspace = (workspaceId: string) => async (
   const activate = async () => {
     await dispatch(refreshSpaceNames())
     dispatch(WorkspaceStatuses.set(ws.id, "connected"))
-    dispatch(Current.setWorkspaceId(ws.id))
+    global.tabHistory.push(workspacePath(ws.id))
   }
 
   const isDown = async () => {
@@ -29,7 +29,7 @@ export const activateWorkspace = (workspaceId: string) => async (
     } catch (e) {
       console.error(e)
       dispatch(WorkspaceStatuses.set(ws.id, "disconnected"))
-      dispatch(Current.setWorkspaceId(ws.id))
+      global.tabHistory.push(workspacePath(ws.id))
       return true
     }
   }
@@ -63,7 +63,7 @@ export const activateWorkspace = (workspaceId: string) => async (
 
     // otherwise login is required, send user to our 'login' page and let them initiate the flow there
     dispatch(WorkspaceStatuses.set(ws.id, "login-required"))
-    dispatch(Current.setWorkspaceId(ws.id))
+    global.tabHistory.push(workspacePath(ws.id))
     return
   }
 

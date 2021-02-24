@@ -1,18 +1,11 @@
 import {TimeArg, SpanArgs} from "src/js/state/Search/types"
 
-type Args = {
-  program: string
-  spanArgs: SpanArgs
-  pins: string[]
-  spanArgsFocus: SpanArgs
-}
-
 export const encodeSearchParams = ({
   program,
   pins,
   spanArgs,
   spanArgsFocus
-}: Partial<Args>) => {
+}: Partial<DecodedSearchParams>) => {
   const p = new URLSearchParams()
   if (program) p.append("q", program)
   encodeSpan(p, spanArgs, "from", "to")
@@ -21,7 +14,7 @@ export const encodeSearchParams = ({
   return p.toString()
 }
 
-type DecodedSearchParams = {
+export type DecodedSearchParams = {
   program: string
   pins: string[]
   spanArgs: Partial<SpanArgs>

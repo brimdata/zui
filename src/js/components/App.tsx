@@ -28,9 +28,6 @@ export default function App() {
 
   useEffect(() => {
     ipcRenderer.invoke("windows:ready")
-    tabHistory.push(
-      "/workspaces/localhost:9867/lakes/sp_1oOqildljMkbkd4qNg1y5nyWfSz/search"
-    )
   }, [])
 
   return (

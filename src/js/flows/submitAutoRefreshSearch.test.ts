@@ -1,6 +1,5 @@
 import {createZealotMock} from "zealot"
 
-import Current from "../state/Current"
 import Spaces from "../state/Spaces"
 import fixtures from "../test/fixtures"
 import responses from "../test/responses"
@@ -27,9 +26,7 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Current.setWorkspaceId("1"),
-    Spaces.setDetail("1", space),
-    Current.setSpaceId(space.id)
+    Spaces.setDetail("1", space)
   ])
   global.tabHistory.push(lakePath(space.id, "1"))
 })

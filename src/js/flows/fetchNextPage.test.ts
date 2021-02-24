@@ -2,7 +2,6 @@ import {createZealotMock, zng} from "zealot"
 
 import {fetchNextPage} from "./fetchNextPage"
 import Workspaces from "../state/Workspaces"
-import Current from "../state/Current"
 import Search from "../state/Search"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
@@ -45,8 +44,6 @@ beforeEach(() => {
   store.dispatchAll([
     Workspaces.add(ws),
     Spaces.setDetail(ws.id, space),
-    Current.setWorkspaceId(ws.id),
-    Current.setSpaceId(space.id),
     Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     Tab.computeSpan(),
     Viewer.appendRecords(tabId, records)

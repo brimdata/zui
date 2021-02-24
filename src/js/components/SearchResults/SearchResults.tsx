@@ -26,7 +26,7 @@ export default function SearchResults() {
       .toDateTuple()
     const perPage = brimProgram.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
     const query = addHeadProc(brimProgram.string(), perPage)
-    dispatch(viewerSearch({query, from, to, target: "events"}))
+    dispatch(viewerSearch({query, from, to}))
   }, [location])
 
   return (

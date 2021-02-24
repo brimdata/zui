@@ -1,10 +1,10 @@
 import {NewTabSearchParams} from "../electron/ipc/windows/messages"
 import {Store} from "../state/types"
 import {submitSearch} from "../flows/submitSearch/mod"
-import Current from "../state/Current"
 import Search from "../state/Search"
 import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
+import {lakeSearchPath} from "app/router/utils/paths"
 
 export default function(store: Store, params: NewTabSearchParams) {
   const {workspaceId, spaceId, span, program, isNewWin} = params
@@ -13,8 +13,10 @@ export default function(store: Store, params: NewTabSearchParams) {
     store.dispatch(Tabs.new())
   }
 
-  store.dispatch(Current.setWorkspaceId(workspaceId))
-  store.dispatch(Current.setSpaceId(spaceId))
+  global.tabHistory.push(
+    lakeSearchPath(spaceId, workspaceId, {program, spanArgs: span})
+  )
+  // Maybe we don't need any of this anymore.... vvv
   store.dispatch(Search.setSpanArgs(span))
   store.dispatch(SearchBar.removeAllSearchBarPins())
   store.dispatch(SearchBar.changeSearchBarInput(program))

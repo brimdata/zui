@@ -23,7 +23,6 @@ export const fetchNextPage = (): Thunk => (dispatch, getState) => {
       query: args.tableProgram,
       from,
       to,
-      target: "events",
       append: true
     })
   )

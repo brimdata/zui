@@ -18,7 +18,6 @@ export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
     .then((data) => {
       const space = brim.space(data)
       dispatch(Spaces.setDetail(workspaceId, data))
-      dispatch(Current.setSpaceId(space.id))
       dispatch(Search.setSpanArgs(space.everythingSpan()))
       dispatch(SearchBar.removeAllSearchBarPins())
       dispatch(SearchBar.changeSearchBarInput(""))

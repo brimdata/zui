@@ -7,16 +7,13 @@ import {
 } from "../../flows/searchBar/actions"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import Workspaces from "../Workspaces"
-import Current from "../Current"
 import Search from "../Search"
 import SearchBar from "./"
 import Spaces from "../Spaces"
-import Tab from "../Tab"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
 import {SearchBarState} from "./types"
 import {lakePath} from "app/router/utils/paths"
-import {decodeSearchParams} from "app/search/utils/search-params"
 import {getSearchParams} from "app/router/hooks/use-search-params"
 import brim from "src/js/brim"
 import {SpanArgs} from "../Search/types"
@@ -31,9 +28,7 @@ beforeEach(() => {
 
   store.dispatchAll([
     Workspaces.add(workspace),
-    Spaces.setDetail(workspace.id, space),
-    Current.setWorkspaceId(workspace.id),
-    Current.setSpaceId(space.id)
+    Spaces.setDetail(workspace.id, space)
   ])
   global.tabHistory.push(lakePath(space.id, workspace.id))
 })

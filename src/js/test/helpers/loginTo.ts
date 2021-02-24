@@ -30,7 +30,6 @@ export default async function loginTo(
   const space = fixtures(spaceName)
 
   store.dispatch(Workspaces.add(workspace))
-  store.dispatch(Current.setWorkspaceId(workspace.id))
   store.dispatch(Spaces.setDetail(workspace.id, space))
   global.tabHistory.push(lakePath(space.id, workspace.id))
   return {store, workspace, zealot: mock}

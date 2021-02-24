@@ -1,7 +1,7 @@
-import {useDispatch} from "react-redux"
+import {workspacePath} from "app/router/utils/paths"
 import React from "react"
 import styled from "styled-components"
-import {setSpaceId} from "../state/Current/actions"
+import Current from "../state/Current"
 
 const StyledAnchor = styled.a`
   margin-left: auto;
@@ -19,8 +19,8 @@ const StyledAnchor = styled.a`
 `
 
 export default function AddSpaceButton() {
-  const dispatch = useDispatch()
-  const onClick = () => dispatch(setSpaceId(null))
+  const onClick = () =>
+    global.tabHistory.push(workspacePath(Current.getWorkspaceId()))
 
   return (
     <StyledAnchor className="add-space" onClick={onClick}>

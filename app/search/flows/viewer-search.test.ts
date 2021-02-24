@@ -1,7 +1,6 @@
 import {createZealotMock, zng} from "zealot"
 
 import {lakePath} from "app/router/utils/paths"
-import Chart from "src/js/state/Chart"
 import Columns from "src/js/state/Columns"
 import Current from "src/js/state/Current"
 import Handlers from "src/js/state/Handlers"
@@ -14,7 +13,6 @@ import initTestStore from "src/js/test/initTestStore"
 import responses from "src/js/test/responses"
 import {viewerSearch} from "./viewer-search"
 
-const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
 const space = fixtures("space1")
 const warningResp = responses("search_warning.txt")
@@ -34,14 +32,19 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Current.setWorkspaceId("1"),
-    Spaces.setDetail("1", space),
-    Current.setSpaceId(space.id)
+    Spaces.setDetail("1", space)
   ])
   global.tabHistory.push(lakePath(space.id, "1"))
 })
 
-const submit = () => dispatch(viewerSearch({query: "dns query | head 500"}))
+const submit = () =>
+  dispatch(
+    viewerSearch({
+      query: "dns query | head 500",
+      from: new Date(),
+      to: new Date(1)
+    })
+  )
 
 describe("a normal response", () => {
   beforeEach(() => {

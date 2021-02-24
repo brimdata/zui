@@ -2,6 +2,7 @@ import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import Tabs from "../state/Tabs"
 import refreshSpaceNames from "./refreshSpaceNames"
+import {workspacePath} from "app/router/utils/paths"
 
 export default (): Thunk => (dispatch, getState) => {
   const state = getState()
@@ -15,7 +16,7 @@ export function resetTab(): Thunk {
   return (dispatch, getState) => {
     const id = Current.getWorkspaceId(getState())
     dispatch(Tabs.clearActive())
-    dispatch(Current.setWorkspaceId(id))
+    global.tabHistory.push(workspacePath(id))
     dispatch(refreshSpaceNames())
   }
 }

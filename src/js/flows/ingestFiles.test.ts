@@ -1,16 +1,15 @@
+import {workspacePath} from "app/router/utils/paths"
 import {createZealotMock} from "zealot"
-
-import Workspaces from "../state/Workspaces"
+import lib from "../lib"
 import Current from "../state/Current"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
+import Workspaces from "../state/Workspaces"
 import fixtures from "../test/fixtures"
-import ingestFiles from "./ingestFiles"
 import initTestStore from "../test/initTestStore"
 import {itestFile, itestFilePath} from "../test/itestFile"
-import lib from "../lib"
-import {workspacePath} from "app/router/utils/paths"
+import ingestFiles from "./ingestFiles"
 
 let store, zealot
 beforeEach(() => {
@@ -27,10 +26,10 @@ beforeEach(() => {
       pcap_support: true
     })
     .stubPromise("spaces.delete", true)
-
   const ws = fixtures("workspace1")
+
   store = initTestStore(zealot.zealot)
-  store.dispatchAll([Workspaces.add(ws), Current.setWorkspaceId(ws.id)])
+  store.dispatchAll([Workspaces.add(ws)])
   global.tabHistory.push(workspacePath(ws.id))
 })
 

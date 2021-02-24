@@ -5,6 +5,7 @@ import Workspaces from "../../state/Workspaces"
 import Current from "../../state/Current"
 import {saveWorkspace} from "./saveWorkspace"
 import brim from "src/js/brim"
+import {workspacePath} from "app/router/utils/paths"
 
 let store, mock
 const select = (selector) => selector(store.getState())
@@ -20,8 +21,8 @@ beforeEach(() => {
     .stubPromise("version", "1")
     .stubPromise("spaces.list", [])
   store = initTestStore(mock.zealot)
-  store.dispatchAll([Workspaces.add(ws1), Current.setWorkspaceId(ws1.id)])
-  global.tabHistory.replace(`/workspaces/${ws1.id}`)
+  store.dispatchAll([Workspaces.add(ws1)])
+  global.tabHistory.replace(workspacePath(ws1.id))
 })
 
 test("Create a new workspace, switch back", async () => {

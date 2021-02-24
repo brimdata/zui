@@ -14,7 +14,6 @@ export default function submitAutoRefreshSearch(): Thunk {
         query: tableProgram,
         from,
         to,
-        target: "events",
         isBlocking: true
       })
     )

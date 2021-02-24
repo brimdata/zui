@@ -1,7 +1,6 @@
 import {createZealotMock} from "zealot"
 
 import Workspaces from "../Workspaces"
-import Current from "../Current"
 import Search from "./"
 import Spaces from "../Spaces"
 import Tab from "../Tab"
@@ -23,12 +22,7 @@ describe("reducer", () => {
     const ws = fixtures("workspace1")
     const space = fixtures("space1")
 
-    store.dispatchAll([
-      Workspaces.add(ws),
-      Spaces.setDetail(ws.id, space),
-      Current.setWorkspaceId(ws.id),
-      Current.setSpaceId(space.id)
-    ])
+    store.dispatchAll([Workspaces.add(ws), Spaces.setDetail(ws.id, space)])
 
     global.tabHistory.push(lakePath(space.id, ws.id))
   })
@@ -77,12 +71,7 @@ describe("selectors", () => {
     const ws = fixtures("workspace1")
     const space = fixtures("space1")
 
-    store.dispatchAll([
-      Workspaces.add(ws),
-      Spaces.setDetail(ws.id, space),
-      Current.setWorkspaceId(ws.id),
-      Current.setSpaceId(space.id)
-    ])
+    store.dispatchAll([Workspaces.add(ws), Spaces.setDetail(ws.id, space)])
     global.tabHistory.push(lakePath(space.id, ws.id))
   })
 

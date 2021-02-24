@@ -1,9 +1,9 @@
+import {workspacesPath} from "app/router/utils/paths"
 import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0/utils"
 import {popNotice} from "../../components/PopNotice"
 import ipc from "../../electron/ipc"
 import invoke from "../../electron/ipc/invoke"
 import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
-import Current from "../../state/Current"
 import Investigation from "../../state/Investigation"
 import Spaces from "../../state/Spaces"
 import {Thunk} from "../../state/types"
@@ -22,12 +22,12 @@ const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
     invoke(ipc.secrets.deleteKey(toAccessTokenKey(id)))
     invoke(ipc.secrets.deleteKey(toRefreshTokenKey(id)))
   }
-  dispatch(Current.setSpaceId(null))
-  dispatch(Current.setWorkspaceId(null))
   dispatch(Investigation.clearWorkspaceInvestigation(id))
   dispatch(Spaces.removeForWorkspace(id))
   dispatch(WorkspaceStatuses.remove(id))
   dispatch(Workspaces.remove(id))
+
+  global.tabHistory.push(workspacesPath())
   popNotice(`Removed workspace "${name}"`)
 }
 

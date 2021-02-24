@@ -1,7 +1,6 @@
 import {createZealotMock} from "zealot"
 
 import {submitSearch} from "../mod"
-import Current from "../../../state/Current"
 import Search from "../../../state/Search"
 import SearchBar from "../../../state/SearchBar"
 import Spaces from "../../../state/Spaces"
@@ -13,6 +12,7 @@ import initTestStore from "../../../test/initTestStore"
 import Workspaces from "../../../state/Workspaces"
 import {lakePath} from "app/router/utils/paths"
 import {getSearchParams} from "app/router/hooks/use-search-params"
+import {SpanArgs} from "src/js/state/Search/types"
 
 const dnsResp = responses("dns.txt")
 const countByPathResp = responses("count_by_path.txt")
@@ -33,9 +33,7 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
-    Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
@@ -62,7 +60,7 @@ test("a zoomed search", async () => {
   dispatch(Search.setSpanFocus(zoom))
   await submit()
   const {spanArgsFocus} = getSearchParams()
-  expect(brim.span(spanArgsFocus).toDateTuple()).toEqual([
+  expect(brim.span(spanArgsFocus as SpanArgs).toDateTuple()).toEqual([
     new Date("1970-01-01T00:00:00.000Z"),
     new Date("1970-01-01T00:00:00.001Z")
   ])

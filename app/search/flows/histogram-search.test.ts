@@ -28,16 +28,20 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Current.setWorkspaceId("1"),
-    Spaces.setDetail("1", space),
-    Current.setSpaceId(space.id)
+    Spaces.setDetail("1", space)
   ])
   global.tabHistory.push(lakePath(space.id, "1"))
   zealot.stubStream("search", countByPathResp)
 })
 
 const submit = () =>
-  dispatch(histogramSearch({query: "dns query | every 1s count() by _path"}))
+  dispatch(
+    histogramSearch({
+      query: "dns query | every 1s count() by _path",
+      from: new Date(),
+      to: new Date()
+    })
+  )
 
 test("zealot gets the request", async () => {
   await submit()

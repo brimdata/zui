@@ -2,6 +2,7 @@ import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import refreshSpaceNames from "./refreshSpaceNames"
 import {getZealot} from "./getZealot"
+import {lakePath} from "app/router/utils/paths"
 
 type Props = {
   name: string
@@ -23,7 +24,7 @@ export const createSpace = ({
     })
     .then((space) => {
       dispatch(refreshSpaceNames()).then(() =>
-        dispatch(Current.setSpaceId(space.id))
+        global.tabHistory.push(lakePath(space.id, Current.getWorkspaceId()))
       )
     })
 }

@@ -17,7 +17,6 @@ type Args = {
   query: string
   from: Date
   to: Date
-  target: SearchTarget
   isBlocking?: boolean
   append?: boolean
 }
@@ -26,12 +25,10 @@ const id = "Table"
 
 export function viewerSearch(args: Args): Thunk<Promise<void>> {
   return (dispatch, getState) => {
-    const {query, from, to, target, isBlocking, append} = args
+    const {query, from, to, isBlocking, append} = args
     const tabId = Tabs.getActive(getState())
     const spaceId = Current.mustGetSpace(getState()).id
-    const {response, promise} = dispatch(
-      search({id, query, from, to, spaceId, target})
-    )
+    const {response, promise} = dispatch(search({id, query, from, to, spaceId}))
     dispatch(handle(response, tabId, isBlocking, append))
     return promise
   }

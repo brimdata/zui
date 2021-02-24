@@ -1,6 +1,5 @@
 import {SearchRecord} from "../../types"
 import {Thunk} from "../types"
-import Current from "../Current"
 import Search from "./"
 import SearchBar from "../SearchBar"
 
@@ -19,7 +18,6 @@ export default {
       )
       dispatch(Search.setSpanArgs(record.spanArgs))
       dispatch(Search.setSpanFocus(null))
-      dispatch(Current.setSpaceId(record.spaceId))
     }
   }
 }

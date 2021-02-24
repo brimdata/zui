@@ -1,7 +1,6 @@
 import {createZealotMock} from "zealot"
 
 import {submitSearch} from "../mod"
-import Current from "../../../state/Current"
 import SearchBar from "../../../state/SearchBar"
 import Spaces from "../../../state/Spaces"
 import fixtures from "../../../test/fixtures"
@@ -20,9 +19,7 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
   zealot.stubStream("search", dnsResp)
   store.dispatchAll([
-    Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
-    Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")

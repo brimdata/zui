@@ -149,10 +149,7 @@ test("reorder tabs does not throw error if invalid", () => {
 })
 
 test("reset tab", () => {
-  const state = store.dispatchAll([
-    Current.setSpaceId("myspaceid"),
-    Tabs.clearActive()
-  ])
+  const state = store.dispatchAll([Tabs.clearActive()])
 
   const tab = Tabs.getActiveTab(state)
   expect(tab.id).toEqual(Tabs.getActive(state))
