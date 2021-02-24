@@ -1,4 +1,5 @@
 import useSearchParams from "app/router/hooks/use-search-params"
+import {dispatch} from "d3"
 import React, {useLayoutEffect} from "react"
 import {useDispatch} from "react-redux"
 import {XDownloadProgress} from "src/js/components/DownloadProgress"
@@ -7,7 +8,7 @@ import SearchResults from "src/js/components/SearchResults/SearchResults"
 import Search from "src/js/state/Search"
 import SearchBar from "src/js/state/SearchBar"
 
-function InitSearchParams({children}) {
+export function InitSearchParams({children}) {
   const dispatch = useDispatch()
   const params = useSearchParams()
   useLayoutEffect(() => {

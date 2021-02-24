@@ -1,12 +1,9 @@
-import {useDispatch} from "react-redux"
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
-
 import BrimTextLogo from "../../src/js/components/BrimTextLogo"
-import TabCreateSpace from "./new"
-import TabImport from "./import"
 import electronIsDev from "../../src/js/electron/isDev"
-import initNewTab from "../../src/js/flows/initNewTab"
+import TabImport from "./import"
+import TabCreateSpace from "./new"
 
 const Nav = styled.nav`
   margin-top: auto;
@@ -29,8 +26,6 @@ const Link = ({active, onClick, children}) => {
 }
 
 export default function Home() {
-  console.log("LakeHome")
-  const dispatch = useDispatch()
   const [page, setPage] = useState("import")
 
   function content() {

@@ -22,7 +22,7 @@ export function submitSearch(
     const workspaceId = Current.getWorkspaceId()
     const spaceId = Current.getSpaceId()
 
-    dispatch(SearchBar.submittingSearchBar(ts))
+    // dispatch(SearchBar.submittingSearchBar(ts))
     dispatch(Tab.computeSpan(ts))
 
     if (!dispatch(SearchBar.validate())) return Promise.reject()

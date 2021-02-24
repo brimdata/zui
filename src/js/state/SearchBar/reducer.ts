@@ -136,10 +136,7 @@ export default function reducer(
     case "SEARCH_BAR_PINS_SET":
       return {
         ...state,
-        pinned: [...action.pinned],
-        previous: "",
-        editing: null,
-        current: ""
+        pinned: [...action.pinned]
       }
 
     case "SEARCH_BAR_PARSE_ERROR":

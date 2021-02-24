@@ -15,9 +15,9 @@ import {
 } from "./types"
 
 export default {
-  clearSearchBar: (): SEARCH_BAR_CLEAR => ({
-    type: "SEARCH_BAR_CLEAR"
-  }),
+  clearSearchBar: (): SEARCH_BAR_CLEAR => {
+    return {type: "SEARCH_BAR_CLEAR"}
+  },
 
   restoreSearchBar: (value: SearchBarState): SEARCH_BAR_RESTORE => ({
     type: "SEARCH_BAR_RESTORE",
@@ -27,7 +27,7 @@ export default {
   changeSearchBarInput: (value: string): SEARCH_BAR_INPUT_CHANGE => {
     return {
       type: "SEARCH_BAR_INPUT_CHANGE",
-      value: value
+      value: value || ""
     }
   },
 

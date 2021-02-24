@@ -1,12 +1,10 @@
-import {Thunk} from "../state/types"
-import {getZealot} from "./getZealot"
-import Current from "../state/Current"
-import Search from "../state/Search"
-import SearchBar from "../state/SearchBar"
-import Spaces from "../state/Spaces"
 import brim from "../brim"
 import ErrorFactory from "../models/ErrorFactory"
+import Current from "../state/Current"
 import Notice from "../state/Notice"
+import Spaces from "../state/Spaces"
+import {Thunk} from "../state/types"
+import {getZealot} from "./getZealot"
 
 export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
   const workspaceId = Current.getWorkspaceId(getState())

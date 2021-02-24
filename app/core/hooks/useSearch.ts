@@ -16,13 +16,10 @@ export default function useSearch(query: string, deps?: any[]): R {
   useEffect(() => {
     if (!space.empty()) {
       setIsFetching(true)
-      console.log(`SEARCH: ${query}`)
       const {response, abort} = dispatch(search({query}))
       response.chan(0, (records) => setRecords(records))
       response.status((status) => setIsFetching(status === "FETCHING"))
       return abort
-    } else {
-      console.log("SEARCH: (space is empty, no search)")
     }
   }, deps)
 
