@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import styled from "styled-components"
 import {initialTiles} from "./flows/initial-state"
 import Grid from "./grid"
@@ -47,6 +47,8 @@ const Title = styled.h2`
 `
 
 const SummaryUI = ({title, tiles, onLayoutChange}) => {
+  tiles = [tiles[0]]
+
   return (
     <BG>
       <Title>{title}</Title>
