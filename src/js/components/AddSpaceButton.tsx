@@ -1,4 +1,4 @@
-import {workspacePath} from "app/router/utils/paths"
+import {lakeImportPath} from "app/router/utils/paths"
 import React from "react"
 import styled from "styled-components"
 import Current from "../state/Current"
@@ -20,7 +20,7 @@ const StyledAnchor = styled.a`
 
 export default function AddSpaceButton() {
   const onClick = () =>
-    global.tabHistory.push(workspacePath(Current.getWorkspaceId()))
+    global.tabHistory.push(lakeImportPath(Current.getWorkspaceId()))
 
   return (
     <StyledAnchor className="add-space" onClick={onClick}>

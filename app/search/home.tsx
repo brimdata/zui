@@ -1,12 +1,14 @@
 import useSearchParams from "app/router/hooks/use-search-params"
-import {dispatch} from "d3"
+import {Toolbar} from "app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
 import {useDispatch} from "react-redux"
 import {XDownloadProgress} from "src/js/components/DownloadProgress"
+import {SearchBar} from "src/js/components/SearchBar/mod"
+import SearchHeaderChart from "src/js/components/SearchHeaderChart"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
 import SearchResults from "src/js/components/SearchResults/SearchResults"
 import Search from "src/js/state/Search"
-import SearchBar from "src/js/state/SearchBar"
+import SearchBarState from "src/js/state/SearchBar"
 
 export function InitSearchParams({children}) {
   const dispatch = useDispatch()
@@ -14,8 +16,8 @@ export function InitSearchParams({children}) {
   useLayoutEffect(() => {
     dispatch(Search.setSpanArgs(params.spanArgs))
     dispatch(Search.setSpanFocus(params.spanArgsFocus))
-    dispatch(SearchBar.changeSearchBarInput(params.program))
-    dispatch(SearchBar.setSearchBarPins(params.pins))
+    dispatch(SearchBarState.changeSearchBarInput(params.program))
+    dispatch(SearchBarState.setSearchBarPins(params.pins))
   }, [params])
 
   return children
@@ -24,7 +26,12 @@ export function InitSearchParams({children}) {
 export default function SearchHome() {
   return (
     <InitSearchParams>
-      <SearchPageHeader />
+      <SearchPageHeader>
+        <Toolbar />
+        <SearchBar />
+        <SearchHeaderChart />
+      </SearchPageHeader>
+
       <SearchResults />
       <XDownloadProgress />
       {/* <IngestRefresh /> */}

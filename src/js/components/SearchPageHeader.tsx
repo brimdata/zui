@@ -17,14 +17,10 @@ const BorderBottom = styled.div`
   box-shadow: inset 0 0.5px 0 0 var(--cloudy);
 `
 
-export default function SearchPageHeader() {
+export default function SearchPageHeader({children}) {
   return (
     <>
-      <Wrap className="search-page-header">
-        <Toolbar />
-        <SearchBar />
-        <SearchHeaderChart />
-      </Wrap>
+      <Wrap>{children}</Wrap>
       <BorderBottom />
     </>
   )
