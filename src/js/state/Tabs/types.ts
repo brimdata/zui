@@ -17,7 +17,7 @@ export type AddTabData = {
 export type TABS_ADD = {
   type: "TABS_ADD"
   id: string
-  data: AddTabData
+  url: string
 }
 export type TABS_REMOVE = {type: "TABS_REMOVE"; id: string}
 export type TABS_ACTIVATE = {type: "TABS_ACTIVATE"; id: string}

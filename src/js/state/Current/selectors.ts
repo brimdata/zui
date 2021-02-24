@@ -59,7 +59,7 @@ export const mustGetSpace = createSelector<
   return brim.space(spaces[workspaceId][spaceId])
 })
 
-export const getSpace = (state: State) => {
+export const getSpace = (state: State): BrimSpace | null => {
   try {
     return mustGetSpace(state)
   } catch {

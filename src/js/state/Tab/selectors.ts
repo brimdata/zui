@@ -1,17 +1,18 @@
+import {mergeDefaultSpanArgs} from "app/search/utils/default-params"
+import {decodeSearchParams} from "app/search/utils/search-params"
 import {createSelector} from "reselect"
-
-import {Workspace} from "../Workspaces/types"
+import brim, {BrimSpace, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
-import {SpanArgs} from "../Search/types"
-import {State} from "../types"
-import {TabState} from "./types"
 import Chart from "../Chart"
 import Current from "../Current"
 import History from "../History"
+import {SpanArgs} from "../Search/types"
 import Tabs from "../Tabs"
+import {State} from "../types"
 import Viewer from "../Viewer"
+import {Workspace} from "../Workspaces/types"
 import activeTabSelect from "./activeTabSelect"
-import brim, {Span} from "../../brim"
+import {TabState} from "./types"
 
 const workspaceUrl = createSelector<State, Workspace | null, string>(
   Current.getWorkspace,
@@ -25,9 +26,13 @@ export function tabIsFetching(tab: TabState) {
   return Viewer.isFetching(tab) || Chart.isFetching(tab)
 }
 
-const getSpan = createSelector<State, TabState, Span>(
-  Tabs.getActiveTab,
-  (tab) => tab.search.span
+const getSpan = createSelector<State, BrimSpace | null, Span>(
+  Current.getSpace,
+  (space) => {
+    const {spanArgs} = decodeSearchParams(global.tabHistory.location.search)
+    if (space) return mergeDefaultSpanArgs(spanArgs, space)
+    else return spanArgs
+  }
 )
 
 const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(

@@ -8,7 +8,6 @@ import {lakeSearchPath} from "app/router/utils/paths"
 
 export default function(store: Store, params: NewTabSearchParams) {
   const {workspaceId, spaceId, span, program, isNewWin} = params
-
   if (!isNewWin) {
     store.dispatch(Tabs.new())
   }

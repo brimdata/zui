@@ -1,14 +1,9 @@
-import React, {useEffect} from "react"
-
-import {Switch, Route, useHistory} from "react-router"
-import WorkspaceShow from "app/workspaces/show"
 import WorkspacesList from "app/workspaces/list"
+import WorkspaceShow from "app/workspaces/show"
+import React from "react"
+import {Route, Switch} from "react-router"
 
 export default function TabContent() {
-  const history = useHistory()
-  useEffect(() => {
-    history.push("/workspaces")
-  }, [])
   return (
     <Switch>
       <Route path="/workspaces/:workspaceId">

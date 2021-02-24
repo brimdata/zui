@@ -33,7 +33,8 @@ export default function reducer(state: TabsState = init, action: TabActions) {
       if (state.data.length === 1) return state
       return removeTab(state, action.id)
     case "TABS_ADD":
-      global.tabHistories.create(action.id)
+      global.tabHistories.create(action.id).push(action.url)
+      global
       return {
         active: state.active,
         data: addTabData(state.data, action)
@@ -59,14 +60,10 @@ export default function reducer(state: TabsState = init, action: TabActions) {
   }
 }
 
-function addTabData(stateData, {id, data}: {id: string; data: AddTabData}) {
+function addTabData(stateData, {id}: {id: string}) {
   const initialState = tabReducer(undefined, {type: "INIT"})
   const tab = produce(initialState, (draft) => {
     draft.id = id
-    if (data) {
-      draft.current.workspaceId = data.workspaceId
-      draft.current.spaceId = data.spaceId
-    }
   })
   return [...stateData, tab]
 }

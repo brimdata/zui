@@ -12,7 +12,6 @@ export default function useSearch(query: string, deps?: any[]): R {
   const [isFetching, setIsFetching] = useState<boolean>(true)
 
   useEffect(() => {
-    console.log("running search ", query)
     setIsFetching(true)
     const {response, abort} = dispatch(search({query}))
     response.chan(0, (records) => setRecords(records))

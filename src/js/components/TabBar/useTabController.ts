@@ -4,6 +4,8 @@ import onIdle from "on-idle"
 
 import Tabs from "../../state/Tabs"
 import {ipcRenderer} from "electron"
+import Current from "src/js/state/Current"
+import {lakeImportPath, workspacesPath} from "app/router/utils/paths"
 
 export default function(count: number, calcWidths: Function) {
   const trueActiveId = useSelector(Tabs.getActive)
@@ -24,7 +26,9 @@ export default function(count: number, calcWidths: Function) {
     activeId,
 
     onAddClick() {
-      dispatch(Tabs.new())
+      const workspaceId = Current.getWorkspaceId()
+      const path = workspaceId ? lakeImportPath(workspaceId) : workspacesPath()
+      dispatch(Tabs.new(path))
     },
 
     onRemoveClick(event: MouseEvent, id: string) {

@@ -11,6 +11,10 @@ export function workspacePath(id: string) {
   return `/workspaces/${id}`
 }
 
+export function lakeImportPath(parentId: string) {
+  return `${workspacePath(parentId)}/lakes/import`
+}
+
 export function lakePath(id: string, parentId: string) {
   return `${workspacePath(parentId)}/lakes/${id}`
 }

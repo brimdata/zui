@@ -11,9 +11,13 @@ export default function MainViewSwitch() {
   const parts = match.url.split("/")
   const [view] = parts.splice(parts.length - 1)
   const value = view === "search" ? "search" : "summary"
-  const onChange = (view) => {
-    const url = parts.join("/") + "/" + view
-    global.tabHistory.push(url)
+  const onChange = (nextView) => {
+    if (nextView !== view) {
+      const url = parts.join("/") + "/" + view
+      if (match.url === url) {
+        // global.tabHistory.push(url)
+      }
+    }
   }
 
   return (

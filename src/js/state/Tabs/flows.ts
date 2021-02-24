@@ -1,16 +1,12 @@
 import {ipcRenderer} from "electron"
-
+import brim from "../../brim"
 import {Thunk} from "../types"
 import Tabs from "./"
-import brim from "../../brim"
 
 export default {
-  new: (spaceId: string | null = null): Thunk => (dispatch, getState) => {
-    const {
-      current: {workspaceId}
-    } = Tabs.getActiveTab(getState())
+  new: (url: string): Thunk => (dispatch) => {
     const id = brim.randomHash()
-    dispatch(Tabs.add(id, {workspaceId, spaceId}))
+    dispatch(Tabs.add(id, url))
     dispatch(Tabs.activate(id))
     const el = document.getElementById("main-search-input")
     if (el) el.focus()

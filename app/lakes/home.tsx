@@ -29,12 +29,9 @@ const Link = ({active, onClick, children}) => {
 }
 
 export default function Home() {
+  console.log("LakeHome")
   const dispatch = useDispatch()
   const [page, setPage] = useState("import")
-
-  useEffect(() => {
-    dispatch(initNewTab())
-  }, [])
 
   function content() {
     if (page === "import") return <TabImport />

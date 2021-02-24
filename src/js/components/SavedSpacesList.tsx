@@ -20,6 +20,7 @@ import {popNotice} from "./PopNotice"
 import {AppDispatch} from "../state/types"
 import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
 import {useHistory} from "react-router"
+import {lakeSummaryPath} from "app/router/utils/paths"
 
 type Props = {
   spaces: Space[]
@@ -43,7 +44,7 @@ const SpaceListItem = ({space}: {space: Space}) => {
 
   const onClick = (e) => {
     e.preventDefault()
-    history.push(`/workspaces/${workspaceId}/lakes/${s.id}`)
+    history.push(lakeSummaryPath(s.id, workspaceId))
   }
   const contextMenu = usePopupMenu([
     {

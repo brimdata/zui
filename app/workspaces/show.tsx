@@ -1,5 +1,6 @@
 import React, {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
+import workspace from "src/js/brim/workspace"
 import ConnectionError from "src/js/components/ConnectionError"
 import Login from "src/js/components/Login"
 import MacSpinner from "src/js/components/MacSpinner"
@@ -18,6 +19,7 @@ const SpinnerWrap = styled.div`
 `
 
 export default function Show() {
+  console.log("WorkspacesShow")
   const dispatch = useDispatch()
   const workspace = useSelector(Current.mustGetWorkspace)
   const status = useSelector(WorkspaceStatuses.get(workspace.id))

@@ -1,5 +1,4 @@
 import {
-  AddTabData,
   TABS_ACTIVATE,
   TABS_ACTIVE_CLEAR,
   TABS_ADD,
@@ -9,10 +8,10 @@ import {
 } from "./types"
 
 export default {
-  add: (id: string, data?: AddTabData): TABS_ADD => ({
+  add: (id: string, url: string): TABS_ADD => ({
     type: "TABS_ADD",
     id,
-    data
+    url
   }),
   remove: (id: string): TABS_REMOVE => ({
     type: "TABS_REMOVE",

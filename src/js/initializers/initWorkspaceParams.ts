@@ -16,7 +16,6 @@ const setupDefaultWorkspace = () => (dispatch, _) => {
     authType: "none"
   }
   dispatch(Workspaces.add(ws))
-  dispatch(Workspaces.add(ws))
 }
 
 export const isDefaultWorkspace = (ws: Workspace): boolean => {
