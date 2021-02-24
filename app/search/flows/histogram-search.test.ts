@@ -1,6 +1,5 @@
 import {lakePath} from "app/router/utils/paths"
 import Chart from "src/js/state/Chart"
-import Current from "src/js/state/Current"
 import Handlers from "src/js/state/Handlers"
 import Spaces from "src/js/state/Spaces"
 import Workspaces from "src/js/state/Workspaces"

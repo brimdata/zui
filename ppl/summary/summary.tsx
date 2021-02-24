@@ -1,8 +1,8 @@
-import React, {useEffect} from "react"
+import Tile from "app/tile/tile"
+import React from "react"
 import styled from "styled-components"
 import {initialTiles} from "./flows/initial-state"
 import Grid from "./grid"
-import Tile from "app/tile/tile"
 
 const BG = styled.div`
   height: 100%;

@@ -1,12 +1,11 @@
-import {isEmpty} from "lodash"
 import produce from "immer"
-
-import {AddTabData, TabActions, TabsState} from "./types"
-import {TabState} from "../Tab/types"
-import {last} from "../../lib/Array"
-import lib from "../../lib"
-import tabReducer from "../Tab/reducer"
+import {isEmpty} from "lodash"
 import {AnyAction} from "redux"
+import lib from "../../lib"
+import {last} from "../../lib/Array"
+import tabReducer from "../Tab/reducer"
+import {TabState} from "../Tab/types"
+import {TabActions, TabsState} from "./types"
 
 const firstTab = tabReducer(undefined, {type: "INIT"})
 const init = {

@@ -1,16 +1,13 @@
-import {useDispatch, useSelector} from "react-redux"
-import React, {useEffect, useLayoutEffect} from "react"
+import useSearchParams from "app/router/hooks/use-search-params"
 import classNames from "classnames"
-
-import ClockIcon from "../../icons/ClockIcon"
+import React from "react"
+import {useDispatch, useSelector} from "react-redux"
 import Label from "../../../../app/toolbar/label"
+import ClockIcon from "../../icons/ClockIcon"
+import tab from "../../state/Tab"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
-import tab from "../../state/Tab"
-import usePrevious from "../hooks/usePrevious"
-import {useLocation} from "react-router"
-import useSearchParams from "app/router/hooks/use-search-params"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 

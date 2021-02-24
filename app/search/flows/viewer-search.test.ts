@@ -1,8 +1,5 @@
-import {createZealotMock, zng} from "zealot"
-
 import {lakePath} from "app/router/utils/paths"
 import Columns from "src/js/state/Columns"
-import Current from "src/js/state/Current"
 import Handlers from "src/js/state/Handlers"
 import SearchBar from "src/js/state/SearchBar"
 import Spaces from "src/js/state/Spaces"
@@ -11,6 +8,7 @@ import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
 import responses from "src/js/test/responses"
+import {createZealotMock, zng} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
 const dnsResp = responses("dns.txt")

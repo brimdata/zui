@@ -1,12 +1,10 @@
+import {lakePath} from "app/router/utils/paths"
 import {createZealotMock, ZealotMock} from "zealot"
-
-import Workspaces from "../../state/Workspaces"
-import Current from "../../state/Current"
 import Spaces from "../../state/Spaces"
+import Workspaces from "../../state/Workspaces"
+import {Workspace} from "../../state/Workspaces/types"
 import fixtures from "../fixtures"
 import initTestStore, {TestStore} from "../initTestStore"
-import {Workspace} from "../../state/Workspaces/types"
-import {lakePath} from "app/router/utils/paths"
 
 export default async function loginTo(
   workspaceName: string,

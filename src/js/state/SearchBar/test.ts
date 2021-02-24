@@ -1,22 +1,21 @@
+import {getSearchParams} from "app/router/hooks/use-search-params"
+import {lakePath} from "app/router/utils/paths"
+import brim from "src/js/brim"
 import {createZealotMock, zng} from "zealot"
-
 import {
   appendQueryCountBy,
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
 import {submitSearch} from "../../flows/submitSearch/mod"
-import Workspaces from "../Workspaces"
-import Search from "../Search"
-import SearchBar from "./"
-import Spaces from "../Spaces"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import {SearchBarState} from "./types"
-import {lakePath} from "app/router/utils/paths"
-import {getSearchParams} from "app/router/hooks/use-search-params"
-import brim from "src/js/brim"
+import Search from "../Search"
 import {SpanArgs} from "../Search/types"
+import Spaces from "../Spaces"
+import Workspaces from "../Workspaces"
+import SearchBar from "./"
+import {SearchBarState} from "./types"
 
 let store, mock
 beforeEach(() => {
@@ -333,7 +332,7 @@ test("goBack", () => {
 })
 
 test("goForward", () => {
-  const state = store.dispatchAll([
+  store.dispatchAll([
     SearchBar.changeSearchBarInput("hello"),
     Search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearch(),
