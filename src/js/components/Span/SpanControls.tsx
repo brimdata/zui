@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {useEffect, useLayoutEffect} from "react"
 import classNames from "classnames"
 
 import ClockIcon from "../../icons/ClockIcon"
@@ -10,14 +10,14 @@ import TimeButton from "./TimeButton"
 import tab from "../../state/Tab"
 import usePrevious from "../hooks/usePrevious"
 import {useLocation} from "react-router"
+import useSearchParams from "app/router/hooks/use-search-params"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
 export default function SpanControls() {
   const dispatch = useDispatch()
-  const location = useLocation()
   const [from, to] = useSelector(tab.getSpanArgs)
-  const prev = usePrevious([from, to], [location.key])
+  const {spanArgs: prev} = useSearchParams()
 
   function fromChange(arg) {
     dispatch(tab.setFrom(arg))

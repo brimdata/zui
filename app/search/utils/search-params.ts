@@ -38,7 +38,7 @@ const encodeSpan = (params, span, from, to) => {
   if (span && span[1]) params.append(to, encodeSpanArg(span[1]))
 }
 
-const encodeSpanArg = (arg) => {
+export const encodeSpanArg = (arg) => {
   return typeof arg === "string" ? arg : `${arg.sec}.${arg.ns}`
 }
 
