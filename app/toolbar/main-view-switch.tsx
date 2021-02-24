@@ -1,23 +1,26 @@
 import Icon from "app/core/Icon"
+import useLakeId from "app/router/hooks/use-lake-id"
+import useWorkspaceId from "app/router/hooks/use-workspace-id"
+import {lakeSearchPath, lakeSummaryPath} from "app/router/utils/paths"
 import {capitalize} from "lodash"
 import React from "react"
+import {useRouteMatch} from "react-router"
 import Label from "./label"
 import SwitchButton from "./switch-button"
 import Option from "./switch-button-option"
-import {useRouteMatch} from "react-router"
 
 export default function MainViewSwitch() {
   const match = useRouteMatch()
   const parts = match.url.split("/")
+  const lakeId = useLakeId()
+  const workspaceId = useWorkspaceId()
   const [view] = parts.splice(parts.length - 1)
-  const value = view === "search" ? "search" : "summary"
-  const onChange = (nextView) => {
-    if (nextView !== view) {
-      const url = parts.join("/") + "/" + view
-      if (match.url === url) {
-        // global.tabHistory.push(url)
-      }
-    }
+  const value = /search/.test(view) ? "search" : "summary"
+  const onChange = (view) => {
+    let url
+    if (view === "search") url = lakeSearchPath(lakeId, workspaceId)
+    if (view === "summary") url = lakeSummaryPath(lakeId, workspaceId)
+    url && global.tabHistory.push(url)
   }
 
   return (

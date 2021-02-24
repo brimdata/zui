@@ -10,7 +10,7 @@ export default function Home() {
       <SearchPageHeader />
       <SearchResults />
       <XDownloadProgress />
-      <IngestRefresh />
+      {/* <IngestRefresh /> */}
     </>
   )
 }

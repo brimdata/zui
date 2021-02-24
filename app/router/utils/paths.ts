@@ -20,7 +20,11 @@ export function lakePath(id: string, parentId: string) {
 }
 
 type Params = Partial<DecodedSearchParams>
-export function lakeSearchPath(id: string, parentId: string, params: Params) {
+export function lakeSearchPath(
+  id: string,
+  parentId: string,
+  params: Params = {}
+) {
   return `${lakePath(id, parentId)}/search?${encodeSearchParams(params)}`
 }
 

@@ -64,7 +64,7 @@ export default function IngestRefresh() {
     ack()
     if (historyCount === 0) {
       dispatch(Search.setSpanArgs(brim.space(space).everythingSpan()))
-      dispatch(submitSearch())
+      dispatch(submitSearch({history: false, investigation: true}))
     }
   }, [historyCount])
 
