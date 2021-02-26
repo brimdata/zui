@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {workspacesPath} from "app/router/utils/paths"
 import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0/utils"
 import {popNotice} from "../../components/PopNotice"
@@ -27,7 +28,7 @@ const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
   dispatch(WorkspaceStatuses.remove(id))
   dispatch(Workspaces.remove(id))
 
-  global.tabHistory.push(workspacesPath())
+  dispatch(tabHistory.push(workspacesPath()))
   popNotice(`Removed workspace "${name}"`)
 }
 

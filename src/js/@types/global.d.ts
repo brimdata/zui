@@ -1,4 +1,4 @@
-import Histories, {MemoryHistory} from "app/core/models/histories"
+import Histories from "app/core/models/histories"
 import {FeatureName} from "../state/Feature"
 
 declare global {
@@ -13,7 +13,6 @@ declare global {
       getState: () => any
       feature: (name: FeatureName, value: boolean) => void
       tabHistories: Histories
-      tabHistory: MemoryHistory
     }
 
     interface Process {

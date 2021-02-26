@@ -1,4 +1,4 @@
-import {getSearchParams} from "app/router/hooks/use-search-params"
+import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import brim from "src/js/brim"
 import {createZealotMock, zng} from "zealot"
@@ -10,6 +10,8 @@ import {
 import {submitSearch} from "../../flows/submitSearch/mod"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
+import Current from "../Current"
+import {getSearchParams} from "../Current/selectors"
 import Search from "../Search"
 import {SpanArgs} from "../Search/types"
 import Spaces from "../Spaces"
@@ -29,7 +31,7 @@ beforeEach(() => {
     Workspaces.add(workspace),
     Spaces.setDetail(workspace.id, space)
   ])
-  global.tabHistory.push(lakePath(space.id, workspace.id))
+  store.dispatch(tabHistory.push(lakePath(space.id, workspace.id)))
 })
 
 test("input value changed", () => {
@@ -323,7 +325,7 @@ test("goBack", () => {
     submitSearch(),
     SearchBar.goBack()
   ])
-  const {spanArgs, program} = getSearchParams()
+  const {spanArgs, program} = Current.getSearchParams(store.getState())
   expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
     new Date(1),
     new Date(2)
@@ -346,7 +348,8 @@ test("goForward", () => {
     SearchBar.goBack(),
     SearchBar.goForward()
   ])
-  const {spanArgs, program} = getSearchParams()
+
+  const {spanArgs, program} = Current.getSearchParams(store.getState())
   expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
     new Date(3),
     new Date(4)

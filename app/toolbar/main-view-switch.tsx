@@ -4,7 +4,7 @@ import useWorkspaceId from "app/router/hooks/use-workspace-id"
 import {lakeSearchPath, lakeSummaryPath} from "app/router/utils/paths"
 import {capitalize} from "lodash"
 import React from "react"
-import {useRouteMatch} from "react-router"
+import {useHistory, useRouteMatch} from "react-router"
 import Label from "./label"
 import SwitchButton from "./switch-button"
 import Option from "./switch-button-option"
@@ -16,11 +16,13 @@ export default function MainViewSwitch() {
   const workspaceId = useWorkspaceId()
   const [view] = parts.splice(parts.length - 1)
   const value = /search/.test(view) ? "search" : "summary"
+  const history = useHistory()
+
   const onChange = (view) => {
     let url
     if (view === "search") url = lakeSearchPath(lakeId, workspaceId)
     if (view === "summary") url = lakeSummaryPath(lakeId, workspaceId)
-    url && global.tabHistory.push(url)
+    url && history.push(url)
   }
 
   return (

@@ -7,6 +7,7 @@ import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
 import {lakePath} from "app/router/utils/paths"
+import tabHistory from "app/router/tab-history"
 
 const dnsResp = responses("dns.txt")
 const space = fixtures("space1")
@@ -24,12 +25,12 @@ beforeEach(() => {
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
-  global.tabHistory.push(lakePath(space.id, "1"))
+  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
 test("Validates the zql", () => {
-  global.tabHistory.push(`/workspaces/1/lakes/${space.id}/search`)
+  store.dispatch(tabHistory.push(`/workspaces/1/lakes/${space.id}/search`))
   expect(select(SearchBar.getSearchBarError)).toEqual(null)
 
   dispatch(SearchBar.changeSearchBarInput("_ath="))

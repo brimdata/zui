@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import {createZealotMock, ZealotMock} from "zealot"
 import Spaces from "../../state/Spaces"
@@ -29,6 +30,6 @@ export default async function loginTo(
 
   store.dispatch(Workspaces.add(workspace))
   store.dispatch(Spaces.setDetail(workspace.id, space))
-  global.tabHistory.push(lakePath(space.id, workspace.id))
+  store.dispatch(tabHistory.push(lakePath(space.id, workspace.id)))
   return {store, workspace, zealot: mock}
 }

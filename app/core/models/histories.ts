@@ -1,46 +1,35 @@
-import {createMemoryHistory} from "history"
+import {
+  createMemoryHistory,
+  LocationListener,
+  MemoryHistory,
+  UnregisterCallback
+} from "history"
 import {SerializedHistory} from "src/js/state/TabHistories/types"
-
-export interface HistoryEntry {
-  hash: string
-  key: string
-  pathname: string
-  search: string
-  state: object | undefined
-}
-
-export interface MemoryHistory {
-  push: (string) => void
-  replace: (string) => void
-  goBack: () => void
-  goForward: () => void
-  entries: HistoryEntry[]
-  index: number
-  length: number
-  location: HistoryEntry
-}
 
 export default class Histories {
   histories = new Map<string, MemoryHistory>()
+  unlistens = new Map<string, UnregisterCallback>()
+  listener: LocationListener = () => {}
 
   constructor(data: SerializedHistory[] = []) {
-    for (const item of data) {
-      this.histories.set(
-        item.id,
-        createMemoryHistory({
-          initialEntries: item.entries,
-          initialIndex: item.index
-        })
-      )
-    }
+    for (const {id, entries, index} of data) this.create(id, entries, index)
   }
 
-  create(id: string) {
-    this.histories.set(id, createMemoryHistory())
-    return this.get(id)
+  listen(listener: LocationListener) {
+    this.listener = listener
+    this.histories.forEach((h, id) => this.listenTo(id, h))
+    return () => this.unlistens.forEach((fn) => fn())
+  }
+
+  create(id: string, initialEntries?, initialIndex?) {
+    const history = createMemoryHistory({initialEntries, initialIndex})
+    this.histories.set(id, history)
+    this.listenTo(id, history)
+    return history
   }
 
   delete(id: string) {
+    this.unListenTo(id)
     this.histories.delete(id)
   }
 
@@ -63,5 +52,17 @@ export default class Histories {
       entries,
       index
     }))
+  }
+
+  private listenTo(id, history) {
+    this.unListenTo(id)
+    const listener: LocationListener = (...a) => this.listener(...a)
+    this.unlistens.set(id, history.listen(listener))
+  }
+
+  private unListenTo(id) {
+    const unlisten = this.unlistens.get(id)
+    if (unlisten) unlisten()
+    this.unlistens.delete(id)
   }
 }

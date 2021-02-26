@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {lakeImportPath, workspacePath} from "app/router/utils/paths"
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
@@ -17,7 +18,7 @@ export const activateWorkspace = (workspaceId: string) => async (
   const activate = async () => {
     await dispatch(refreshSpaceNames())
     dispatch(WorkspaceStatuses.set(ws.id, "connected"))
-    global.tabHistory.replace(lakeImportPath(ws.id))
+    dispatch(tabHistory.replace(lakeImportPath(ws.id)))
   }
 
   const isDown = async () => {
@@ -62,7 +63,7 @@ export const activateWorkspace = (workspaceId: string) => async (
 
     // otherwise login is required, send user to our 'login' page and let them initiate the flow there
     dispatch(WorkspaceStatuses.set(ws.id, "login-required"))
-    global.tabHistory.push(workspacePath(ws.id))
+    dispatch(tabHistory.push(workspacePath(ws.id)))
     return
   }
 

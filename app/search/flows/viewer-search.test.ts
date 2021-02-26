@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import Columns from "src/js/state/Columns"
 import Handlers from "src/js/state/Handlers"
@@ -32,7 +33,7 @@ beforeEach(() => {
     }),
     Spaces.setDetail("1", space)
   ])
-  global.tabHistory.push(lakePath(space.id, "1"))
+  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
 })
 
 const submit = () =>

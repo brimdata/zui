@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import Chart from "src/js/state/Chart"
 import Handlers from "src/js/state/Handlers"
@@ -29,7 +30,7 @@ beforeEach(() => {
     }),
     Spaces.setDetail("1", space)
   ])
-  global.tabHistory.push(lakePath(space.id, "1"))
+  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
   zealot.stubStream("search", countByPathResp)
 })
 

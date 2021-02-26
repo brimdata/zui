@@ -1,29 +1,41 @@
+import {SearchParams} from "app/router/hooks/use-search-params"
+import {mergeDefaultSpanArgs} from "app/search/utils/default-params"
+import {decodeSearchParams} from "app/search/utils/search-params"
+import {matchPath} from "react-router"
 import {createSelector} from "reselect"
-
-import {WorkspacesState} from "../Workspaces/types"
+import brim, {BrimSpace, BrimWorkspace} from "../../brim"
+import Spaces from "../Spaces"
 import {SpacesState} from "../Spaces/types"
+import Tabs from "../Tabs"
 import {State} from "../types"
 import Workspaces from "../Workspaces"
-import Spaces from "../Spaces"
-import brim, {BrimWorkspace, BrimSpace} from "../../brim"
-import {matchPath} from "react-router"
+import {WorkspacesState} from "../Workspaces/types"
+import {LocationDescriptorObject} from "history"
 
 type Id = string | null
 
-export const getSpaceId = (_?: any) => {
+export const getHistory = (state) => {
+  const id = Tabs.getActive(state)
+  return global.tabHistories.getOrCreate(id)
+}
+
+export const getLocation = (state: State) => {
+  return getHistory(state).location
+}
+
+export const getSpaceId = (state) => {
   type Params = {lakeId?: string}
   const match = matchPath<Params>(
-    global.tabHistory.location.pathname,
+    getLocation(state).pathname,
     "/workspaces/:workspaceId/lakes/:lakeId"
   )
-
   return match?.params?.lakeId || null
 }
 
-export const getWorkspaceId = (_?: any) => {
+export const getWorkspaceId = (state: State = undefined) => {
   type Params = {workspaceId?: string}
   const match = matchPath<Params>(
-    global.tabHistory.location.pathname,
+    getLocation(state).pathname,
     "/workspaces/:workspaceId"
   )
   return match?.params?.workspaceId || null
@@ -59,7 +71,7 @@ export const mustGetSpace = createSelector<
   return brim.space(spaces[workspaceId][spaceId])
 })
 
-export const getSpace = (state: State): BrimSpace | null => {
+export const getSpace = (state: State) => {
   try {
     return mustGetSpace(state)
   } catch {
@@ -74,3 +86,18 @@ export const getWorkspace = (state: State) => {
     return null
   }
 }
+
+export const getSearchParams = createSelector<
+  State,
+  LocationDescriptorObject,
+  BrimSpace,
+  SearchParams
+>(getLocation, mustGetSpace, (location, space) => {
+  const params = decodeSearchParams(location.search)
+  const spanArgs = mergeDefaultSpanArgs(params.spanArgs, space)
+  const spanArgsFocus =
+    params.spanArgsFocus[0] && params.spanArgsFocus[1]
+      ? params.spanArgsFocus
+      : null
+  return {...params, spanArgs, spanArgsFocus} as SearchParams
+})

@@ -7,7 +7,7 @@ import {Span} from "src/js/brim"
 import Current from "src/js/state/Current"
 import {SpanArgs} from "src/js/state/Search/types"
 
-type SearchParams = {
+export type SearchParams = {
   program: string
   pins: []
   spanArgs: SpanArgs
@@ -31,10 +31,4 @@ export default function useSearchParams(): SearchParams {
     encodeSpanArg(space.minTs()),
     encodeSpanArg(space.maxTs())
   ])
-}
-
-// For thunks and non-component contexts
-
-export function getSearchParams() {
-  return decodeSearchParams(global.tabHistory.location.search)
 }

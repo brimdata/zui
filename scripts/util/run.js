@@ -10,7 +10,10 @@ function run(program, args, opts = {}) {
       stdio: "inherit",
       cwd: opts.cwd
     })
-    subprocess.on("exit", resolve)
+    subprocess.on("exit", (code) => {
+      if (code !== 0) process.exit(code)
+      else resolve()
+    })
     subprocess.on("error", (e) => process.exit(e.code))
   })
 }

@@ -15,6 +15,7 @@ const Wrap = styled.div`
 export default function HistoryArrows() {
   const history = useHistory()
   const canGoBack = history.length > 1
+  // @ts-ignore history definitely has an index
   const canGoForward = history.length - 1 != history.index
   const back = () => history.goBack()
   const forward = () => history.goForward()

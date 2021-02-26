@@ -20,7 +20,6 @@ export default function reducer(state: TabsState = init, action: TabActions) {
   switch (action.type) {
     case "TABS_ACTIVATE":
       if (state.data.map((t) => t.id).includes(action.id)) {
-        global.tabHistory = global.tabHistories.get(action.id)
         return {
           ...state,
           active: action.id
@@ -32,8 +31,6 @@ export default function reducer(state: TabsState = init, action: TabActions) {
       if (state.data.length === 1) return state
       return removeTab(state, action.id)
     case "TABS_ADD":
-      global.tabHistories.create(action.id).push(action.url)
-      global
       return {
         active: state.active,
         data: addTabData(state.data, action)
@@ -69,13 +66,11 @@ function addTabData(stateData, {id}: {id: string}) {
 
 function removeTab(state: TabsState, id) {
   const data: TabState[] = state.data.filter((t) => t.id !== id)
-  global.tabHistories.delete(id)
+
   if (id === state.active) {
     const index = indexOf(state.data, id)
     const lastTab = index + 1 === state.data.length
     const active = lastTab ? last(data).id : data[index].id
-
-    global.tabHistory = global.tabHistories.get(active)
     return {data, active}
   } else {
     return {data, active: state.active}

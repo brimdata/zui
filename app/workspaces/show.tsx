@@ -17,7 +17,7 @@ const SpinnerWrap = styled.div`
   justify-content: center;
 `
 
-export default function Show() {
+export default function WorkspaceShow() {
   const dispatch = useDispatch()
   const workspace = useSelector(Current.mustGetWorkspace)
   const status = useSelector(WorkspaceStatuses.get(workspace.id))

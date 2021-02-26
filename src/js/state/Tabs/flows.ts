@@ -4,7 +4,7 @@ import {Thunk} from "../types"
 import Tabs from "./"
 
 export default {
-  new: (url: string): Thunk => (dispatch) => {
+  new: (url = "/"): Thunk => (dispatch) => {
     const id = brim.randomHash()
     dispatch(Tabs.add(id, url))
     dispatch(Tabs.activate(id))

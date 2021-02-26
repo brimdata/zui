@@ -7,6 +7,7 @@ import initTestStore from "../test/initTestStore"
 import submitAutoRefreshSearch from "./submitAutoRefreshSearch"
 import Workspaces from "../state/Workspaces"
 import {lakePath} from "app/router/utils/paths"
+import tabHistory from "app/router/tab-history"
 
 const viewer = responses("dns.txt")
 const histogram = responses("count_by_path.txt")
@@ -28,7 +29,7 @@ beforeEach(() => {
     }),
     Spaces.setDetail("1", space)
   ])
-  global.tabHistory.push(lakePath(space.id, "1"))
+  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
 })
 
 test("auto refresh does not clear previous results", async () => {

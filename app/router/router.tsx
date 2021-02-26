@@ -1,11 +1,13 @@
-import React, {useEffect} from "react"
-import {Router} from "react-router"
+import React from "react"
+import {useSelector} from "react-redux"
+import Tabs from "src/js/state/Tabs"
+import TabsRouter from "./tabs-router"
 
 export default function AppRouter({children}) {
-  useEffect(() => {
-    return global.tabHistory.listen((location, action) => {
-      console.log(action, location.pathname + location.search)
-    })
-  }, [global.tabHistory])
-  return <Router history={global.tabHistory}>{children}</Router>
+  const tabId = useSelector(Tabs.getActive)
+  return (
+    <TabsRouter tabId={tabId} histories={global.tabHistories}>
+      {children}
+    </TabsRouter>
+  )
 }

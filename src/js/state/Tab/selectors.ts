@@ -1,7 +1,6 @@
-import {mergeDefaultSpanArgs} from "app/search/utils/default-params"
-import {decodeSearchParams} from "app/search/utils/search-params"
+import {SearchParams} from "app/router/hooks/use-search-params"
 import {createSelector} from "reselect"
-import brim, {BrimSpace, Span} from "../../brim"
+import brim, {Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
 import Chart from "../Chart"
 import Current from "../Current"
@@ -26,12 +25,10 @@ export function tabIsFetching(tab: TabState) {
   return Viewer.isFetching(tab) || Chart.isFetching(tab)
 }
 
-const getSpan = createSelector<State, BrimSpace | null, Span>(
-  Current.getSpace,
-  (space) => {
-    const {spanArgs} = decodeSearchParams(global.tabHistory.location.search)
-    if (space) return mergeDefaultSpanArgs(spanArgs, space)
-    else return spanArgs
+const getSpan = createSelector<State, SearchParams, Span>(
+  Current.getSearchParams,
+  ({spanArgs}) => {
+    return brim.span(spanArgs).toSpan()
   }
 )
 

@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {BrimWorkspace} from "../../brim"
 import Workspaces from "../../state/Workspaces"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
@@ -11,6 +12,6 @@ export const saveWorkspace = (ws: BrimWorkspace, status: WorkspaceStatus) => (
   dispatch(Workspaces.add(ws.serialize()))
   dispatch(WorkspaceStatuses.set(ws.id, status))
   dispatch(Workspaces.add(ws.serialize()))
-  global.tabHistory.push(`/workspaces/${ws.id}`)
+  dispatch(tabHistory.push(`/workspaces/${ws.id}`))
   dispatch(refreshSpaceNames())
 }

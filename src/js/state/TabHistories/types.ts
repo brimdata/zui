@@ -1,10 +1,9 @@
 import {EntityState} from "@reduxjs/toolkit"
-import {HistoryEntry} from "app/core/models/histories"
-
+import {LocationDescriptorObject} from "history"
 export interface SerializedHistory {
   id: string
   index: number
-  entries: HistoryEntry[]
+  entries: LocationDescriptorObject[]
 }
 
 export type TabHistoriesState = EntityState<SerializedHistory>

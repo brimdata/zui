@@ -1,17 +1,18 @@
+import tabHistory from "app/router/tab-history"
+import brim from "../../brim"
 import {PARALLEL_PROC} from "../../brim/ast"
-import {Thunk} from "../types"
 import {parse} from "../../lib/Program"
 import Errors from "../Errors"
 import SearchBar from "../SearchBar"
-import brim from "../../brim"
+import {Thunk} from "../types"
 
 export default {
-  goBack: (): Thunk => () => {
-    global.tabHistory.goBack()
+  goBack: (): Thunk => (dispatch) => {
+    dispatch(tabHistory.goBack())
   },
 
-  goForward: (): Thunk => () => {
-    global.tabHistory.goForward()
+  goForward: (): Thunk => (dispatch) => {
+    dispatch(tabHistory.goForward())
   },
 
   validate: (): Thunk<boolean> => (dispatch, getState) => {

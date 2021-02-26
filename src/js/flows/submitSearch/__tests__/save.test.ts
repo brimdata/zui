@@ -10,6 +10,8 @@ import responses from "../../../test/responses"
 import Workspaces from "../../../state/Workspaces"
 import {decodeSearchParams} from "app/search/utils/search-params"
 import {lakePath} from "app/router/utils/paths"
+import tabHistory from "app/router/tab-history"
+import Current from "src/js/state/Current"
 
 const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
@@ -35,13 +37,15 @@ beforeEach(() => {
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
-  global.tabHistory.push(lakePath("1", space.id))
+  store.dispatch(tabHistory.push(lakePath("1", space.id)))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
 test("Always updates url", async () => {
   await submit({history: false, investigation: false})
-  const record = decodeSearchParams(global.tabHistory.location.search)
+  const record = decodeSearchParams(
+    Current.getHistory(store.getState()).location.search
+  )
   expect(record).toEqual({
     pins: ["dns"],
     program: "query",
@@ -51,15 +55,15 @@ test("Always updates url", async () => {
 })
 
 test("saves to history", async () => {
-  const start = global.tabHistory.length
+  const start = Current.getHistory(store.getState()).length
   await submit()
-  expect(global.tabHistory.length).toBe(start + 1)
+  expect(Current.getHistory(store.getState()).length).toBe(start + 1)
 })
 
 test("does not save to history", async () => {
-  const start = global.tabHistory.length
+  const start = Current.getHistory(store.getState()).length
   await submit({history: false, investigation: true})
-  expect(global.tabHistory.length).toBe(start)
+  expect(Current.getHistory(store.getState()).length).toBe(start)
 })
 
 test("saves to investigation", async () => {

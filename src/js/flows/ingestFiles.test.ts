@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {workspacePath} from "app/router/utils/paths"
 import {createZealotMock} from "zealot"
 import lib from "../lib"
@@ -30,7 +31,7 @@ beforeEach(() => {
 
   store = initTestStore(zealot.zealot)
   store.dispatchAll([Workspaces.add(ws)])
-  global.tabHistory.push(workspacePath(ws.id))
+  store.dispatch(tabHistory.push(workspacePath(ws.id)))
 })
 
 describe("success case", () => {

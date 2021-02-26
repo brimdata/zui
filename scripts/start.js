@@ -9,9 +9,9 @@ async function start() {
   } else {
     console.log(bold("Skipping build step"))
   }
-
   run("npx", `${JS} --watch --skip-initial-build`)
-  run("npx", `${SCSS} --watch --skip-initial`)
+  const ret = run("npx", `${SCSS} --watch --skip-initial`)
+  console.log(ret)
   run("npx", `${STATIC} --watch`)
   run("npx", "livereload dist", {desc: "Watching dist for changes"})
   run("npx", "electron .", {desc: "Starting electron"})

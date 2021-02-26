@@ -1,3 +1,4 @@
+import tabHistory from "app/router/tab-history"
 import {workspacesPath} from "app/router/utils/paths"
 import React from "react"
 import {zng} from "zealot"
@@ -11,7 +12,7 @@ test("no errors if space does not exist", async () => {
   const {store} = await loginTo("workspace1", "space1")
 
   store.dispatch(Layout.showRightSidebar())
-  global.tabHistory.push(workspacesPath())
+  store.dispatch(tabHistory.push(workspacesPath()))
   store.dispatch(LogDetails.push(new zng.Record([], [])))
   const el = provide(store, <XRightPane />)
   expect(el.html()).toBe("")

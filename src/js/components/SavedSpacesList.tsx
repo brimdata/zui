@@ -41,7 +41,6 @@ const SpaceListItem = ({space}: {space: Space}) => {
   const spaceIds = useSelector(Spaces.ids(workspaceId))
   const s = brim.space(space)
   const history = useHistory()
-
   const onClick = (e) => {
     e.preventDefault()
     history.push(lakeSummaryPath(s.id, workspaceId))
