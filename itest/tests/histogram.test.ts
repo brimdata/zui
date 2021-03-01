@@ -28,6 +28,9 @@ describe("Histogram tests", () => {
     appStep
       .ingestFile(app, "sample.pcap")
       .then(async () => {
+        await appStep.search(app, "")
+      })
+      .then(async () => {
         LOG.debug("Checking a histogram appears")
         // Verify that a histogram of at least *partial data* is present.
         await retryUntil(

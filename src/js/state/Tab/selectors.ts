@@ -1,6 +1,6 @@
 import {SearchParams} from "app/router/hooks/use-search-params"
 import {createSelector} from "reselect"
-import brim, {Span} from "../../brim"
+import brim, {BrimSpace, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
 import Chart from "../Chart"
 import Current from "../Current"
@@ -37,9 +37,14 @@ const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(
   (tab) => tab.search.spanFocus
 )
 
-const getSpanArgs = createSelector<State, TabState, SpanArgs>(
+const getSpanArgs = createSelector<State, TabState, BrimSpace, SpanArgs>(
   Tabs.getActiveTab,
-  (tab) => tab.search.spanArgs
+  Current.mustGetSpace,
+  (tab, space) => {
+    const [from, to] = tab.search.spanArgs
+    const [defaultFrom, defaultTo] = space.defaultSpanArgs()
+    return [from || defaultFrom, to || defaultTo]
+  }
 )
 
 const getComputedSpan = createSelector<State, SpanArgs, Span>(

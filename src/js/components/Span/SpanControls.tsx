@@ -1,7 +1,6 @@
 import classNames from "classnames"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
-import brim from "src/js/brim"
 import Current from "src/js/state/Current"
 import Label from "../../../../app/toolbar/label"
 import ClockIcon from "../../icons/ClockIcon"
@@ -20,7 +19,7 @@ export default function SpanControls({submit}: Props) {
   const dispatch = useDispatch()
   const [from, to] = useSelector(Tab.getSpanArgs)
   const prev = useSelector(Current.getSpanParamsWithDefaults)
-  console.log(brim.time(from).toDate(), brim.time(prev && prev[0]).toDate())
+
   function fromChange(arg) {
     dispatch(tab.setFrom(arg))
   }
