@@ -42,7 +42,6 @@ function getGridLayout(tiles) {
 }
 
 const SummaryUI = ({title, tiles, onLayoutChange}) => {
-  tiles = [tiles[0]]
   const locationKey = useLocation().key
   return (
     <BG>
