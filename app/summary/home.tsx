@@ -1,27 +1,30 @@
+import useRefresh from "app/toolbar/hooks/useRefresh"
+import useView from "app/toolbar/hooks/useView"
 import {Toolbar} from "app/toolbar/toolbar"
 import Summary from "ppl/summary/summary"
-import React, {useLayoutEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import React from "react"
+import {useDispatch} from "react-redux"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
-import Current from "src/js/state/Current"
-import Search from "src/js/state/Search"
+import changeSpan from "./flows/change-span"
+import useIngestWatch from "./hooks/use-ingest-watch"
 
 function InitSummaryParams({children}) {
-  const dispatch = useDispatch()
-  const params = useSelector(Current.getSearchParams)
-  useLayoutEffect(() => {
-    dispatch(Search.setSpanArgs(params.spanArgs))
-  }, [])
-
+  useIngestWatch()
   return children
 }
 
 export default function SummaryHome() {
+  const dispatch = useDispatch()
+  const view = useView()
+  const refresh = useRefresh()
   return (
     <InitSummaryParams>
       <SearchPageHeader>
-        <Toolbar />
+        <Toolbar
+          submit={() => dispatch(changeSpan())}
+          actions={[view, refresh]}
+        />
         <SearchBar />
       </SearchPageHeader>
       <Summary />

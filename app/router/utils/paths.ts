@@ -28,6 +28,10 @@ export function lakeSearchPath(
   return `${lakePath(id, parentId)}/search?${encodeSearchParams(params)}`
 }
 
-export function lakeSummaryPath(id: string, parentId: string) {
-  return `${lakePath(id, parentId)}/summary`
+export function lakeSummaryPath(
+  id: string,
+  parentId: string,
+  params: Params = {}
+) {
+  return `${lakePath(id, parentId)}/summary?${encodeSearchParams(params)}`
 }

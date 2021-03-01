@@ -33,9 +33,23 @@ export const decodeSearchParams = (path: string): DecodedSearchParams => {
   }
 }
 
+export function decodeSpanParams(
+  path: string,
+  from: string,
+  to: string
+): Partial<SpanArgs> {
+  return decodeSpan(new URLSearchParams(path), from, to) as Partial<SpanArgs>
+}
+
 const encodeSpan = (params, span, from, to) => {
   if (span && span[0]) params.append(from, encodeSpanArg(span[0]))
   if (span && span[1]) params.append(to, encodeSpanArg(span[1]))
+}
+
+const decodeSpan = (params, from, to) => {
+  const f = decodeSpanArg(params.get(from))
+  const t = decodeSpanArg(params.get(to))
+  return [f, t]
 }
 
 export const encodeSpanArg = (arg) => {

@@ -26,7 +26,7 @@ The snapshot is acknowledged when any of these events happen:
 
 import {isEqual} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 
 import {submitSearch} from "../flows/submitSearch/mod"
 import Current from "../state/Current"
@@ -39,10 +39,12 @@ import useThrottle from "./hooks/useThrottle"
 
 export default function IngestRefresh() {
   const dispatch = useDispatch()
+  const history = useSelector(Current.getHistory)
   const historyCount = useSelector(History.count)
   const firstSearch = useSelector(History.first)
   const nextSearch = useSelector(Search.getCurrentRecord)
   const currentSpace = useSelector(Current.mustGetSpace)
+
   const [space, setSpace] = useState(currentSpace)
   const [snapshot, cancelSnapshot] = useThrottle(space.ingest.snapshot, 3000)
   const [snapshotAck, setSnapshotAck] = useState(snapshot)
@@ -51,6 +53,23 @@ export default function IngestRefresh() {
     historyCount === 1 &&
     isEqual(firstSearch, nextSearch) &&
     snapshot !== snapshotAck
+
+  const url = useRef("")
+  useEffect(() => {
+    if (space.ingesting()) {
+      url.current = history.createHref(history.location)
+      console.log("We are now ingesting")
+      console.log("The url is", url.current)
+    }
+  }, [space.ingesting()])
+  const nextUrl = useSelector(Search.createHref)
+  console.log(nextUrl, url.current)
+  if (url.current === nextUrl) {
+    console.log("The form is pristine")
+  }
+  // Save the url as soon as the ingest begins
+  // if the url has not changed and the form is pristine
+  // and the update has not been acknowledged, autoupdate
 
   useEffect(() => {
     if (currentSpace.id !== space.id) {

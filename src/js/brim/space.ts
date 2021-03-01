@@ -17,16 +17,7 @@ export default function space(info: Space) {
       return "archive"
     },
     defaultSpanArgs() {
-      if (recentDataExists(info.max_time)) {
-        return ["now-30m", "now"]
-      } else {
-        const to = {sec: info.max_time.sec + 1, ns: 0}
-        const from = brim
-          .time(to)
-          .subtract(30, "minutes")
-          .toTs()
-        return [from, to]
-      }
+      return this.everythingSpan()
     },
     empty() {
       if (!info.min_time || !info.max_time) return true

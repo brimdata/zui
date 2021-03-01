@@ -85,7 +85,7 @@ export default class TabsRouter extends React.Component<Props, State> {
     } else {
       location = this.state.location
     }
-    console.log("CONTEXT:", location.pathname)
+    console.log("CONTEXT:", history.createHref(location))
     return (
       <RouterContext.Provider
         value={{

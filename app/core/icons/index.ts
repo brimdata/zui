@@ -8,6 +8,7 @@ import exportIcon from "./export.svg"
 import columns from "./columns.svg"
 import chevronDown from "./chevron-down.svg"
 import doubleChevronRight from "./double-chevron-right.svg"
+import reload from "./reload.svg"
 
 export default {
   chart,
@@ -19,5 +20,6 @@ export default {
   columns,
   "chevron-down": chevronDown,
   "double-chevron-right": doubleChevronRight,
-  "three-dots": threeDots
+  "three-dots": threeDots,
+  reload
 }

@@ -6,7 +6,10 @@ import Spaces from "../state/Spaces"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 
-export const initSpace = (spaceId: string): Thunk => (dispatch, getState) => {
+export const initSpace = (spaceId: string): Thunk<Promise<void>> => (
+  dispatch,
+  getState
+) => {
   const workspaceId = Current.getWorkspaceId(getState())
   if (!workspaceId) return
   const zealot = dispatch(getZealot())

@@ -1,21 +1,26 @@
-import useSearchParams from "app/router/hooks/use-search-params"
 import classNames from "classnames"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
+import brim from "src/js/brim"
+import Current from "src/js/state/Current"
 import Label from "../../../../app/toolbar/label"
 import ClockIcon from "../../icons/ClockIcon"
-import tab from "../../state/Tab"
+import {default as Tab, default as tab} from "../../state/Tab"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
-export default function SpanControls() {
-  const dispatch = useDispatch()
-  const [from, to] = useSelector(tab.getSpanArgs)
-  const {spanArgs: prev} = useSearchParams()
+type Props = {
+  submit: Function
+}
 
+export default function SpanControls({submit}: Props) {
+  const dispatch = useDispatch()
+  const [from, to] = useSelector(Tab.getSpanArgs)
+  const prev = useSelector(Current.getSpanParamsWithDefaults)
+  console.log(brim.time(from).toDate(), brim.time(prev && prev[0]).toDate())
   function fromChange(arg) {
     dispatch(tab.setFrom(arg))
   }
@@ -44,7 +49,7 @@ export default function SpanControls() {
         />
         <Label>To</Label>
       </div>
-      <SpanPicker />
+      <SpanPicker submit={submit} />
     </div>
   )
 }

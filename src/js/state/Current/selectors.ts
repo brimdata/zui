@@ -1,6 +1,9 @@
 import {SearchParams} from "app/router/hooks/use-search-params"
 import {mergeDefaultSpanArgs} from "app/search/utils/default-params"
-import {decodeSearchParams} from "app/search/utils/search-params"
+import {
+  decodeSearchParams,
+  decodeSpanParams
+} from "app/search/utils/search-params"
 import {matchPath} from "react-router"
 import {createSelector} from "reselect"
 import brim, {BrimSpace, BrimWorkspace} from "../../brim"
@@ -101,3 +104,18 @@ export const getSearchParams = createSelector<
       : null
   return {...params, spanArgs, spanArgsFocus} as SearchParams
 })
+
+export const getSpanParams = (state) => {
+  const location = getLocation(state)
+  return decodeSpanParams(location.search, "from", "to")
+}
+
+export const getDefaultSpanArgs = createSelector(mustGetSpace, (space) => {
+  return space.defaultSpanArgs()
+})
+
+export const getSpanParamsWithDefaults = (state) => {
+  const [p1, p2] = getSpanParams(state)
+  const [d1, d2] = getDefaultSpanArgs(state)
+  return [p1 || d1, p2 || d2]
+}

@@ -61,11 +61,11 @@ function useSplitIndex(
 
 type Props = {
   actions: ActionButtonProps[]
-  mainView: string
+  locationKey: string
 }
 
-export default function ResponsiveActions({actions, mainView}: Props) {
-  const [setParent, widths] = useWidthsCache([actions.length, mainView])
+export default function ResponsiveActions({actions, locationKey}: Props) {
+  const [setParent, widths] = useWidthsCache([actions.length, locationKey])
   const [setResize, splitIndex] = useSplitIndex(widths)
   const visible = [...actions]
   const hidden = visible.splice(splitIndex)

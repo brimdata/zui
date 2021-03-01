@@ -1,10 +1,10 @@
 import React from "react"
-import styled from "styled-components"
-
 import SearchPageTitle from "src/js/components/SearchPageTitle"
 import SpanControls from "src/js/components/Span/SpanControls"
-import MainViewSwitch from "./main-view-switch"
+import styled from "styled-components"
+import {ActionButtonProps} from "./action-button"
 import Actions from "./actions"
+import MainViewSwitch from "./main-view-switch"
 
 const Wrap = styled.div`
   margin-bottom: 6px;
@@ -28,7 +28,12 @@ const Row = styled.div`
   }
 `
 
-export function Toolbar() {
+type Props = {
+  submit: () => void
+  actions: ActionButtonProps[]
+}
+
+export function Toolbar({submit, actions}: Props) {
   return (
     <Wrap>
       <SearchPageTitle />
@@ -36,8 +41,8 @@ export function Toolbar() {
         <Group>
           <MainViewSwitch />
         </Group>
-        <Actions />
-        <SpanControls />
+        <Actions actions={actions} />
+        <SpanControls submit={submit} />
       </Row>
     </Wrap>
   )

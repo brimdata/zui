@@ -8,6 +8,32 @@ import Current from "../Current"
 import SearchBar from "../SearchBar"
 import Tab from "../Tab"
 import brim from "../../brim"
+import {lakeSearchPath} from "app/router/utils/paths"
+import Search from "."
+
+const getCurrentRecord = (state: State): SearchRecord => {
+  const space = Current.mustGetSpace(state)
+  const searchBar = SearchBar.getSearchBar(state)
+  if (searchBar.editing === null) {
+    return {
+      program: searchBar.current,
+      pins: SearchBar.getSearchBar(state).pinned,
+      spanArgs: Tab.getSpanArgs(state),
+      spaceName: space.name,
+      spaceId: space.id,
+      target: SearchBar.getTarget(state)
+    }
+  } else {
+    return {
+      program: searchBar.previous,
+      pins: SearchBar.getSearchBar(state).pinned,
+      spanArgs: Tab.getSpanArgs(state),
+      spaceName: space.name,
+      spaceId: space.id,
+      target: SearchBar.getTarget(state)
+    }
+  }
+}
 
 export default {
   getRecord: (state: State): SearchRecord => {
@@ -22,29 +48,7 @@ export default {
     }
   },
 
-  getCurrentRecord: (state: State): SearchRecord => {
-    const space = Current.mustGetSpace(state)
-    const searchBar = SearchBar.getSearchBar(state)
-    if (searchBar.editing === null) {
-      return {
-        program: searchBar.current,
-        pins: SearchBar.getSearchBar(state).pinned,
-        spanArgs: Tab.getSpanArgs(state),
-        spaceName: space.name,
-        spaceId: space.id,
-        target: SearchBar.getTarget(state)
-      }
-    } else {
-      return {
-        program: searchBar.previous,
-        pins: SearchBar.getSearchBar(state).pinned,
-        spanArgs: Tab.getSpanArgs(state),
-        spaceName: space.name,
-        spaceId: space.id,
-        target: SearchBar.getTarget(state)
-      }
-    }
-  },
+  getCurrentRecord,
 
   getArgs: (state: State): SearchArgs => {
     const program = SearchBar.getSearchProgram(state)
@@ -62,6 +66,14 @@ export default {
       spaceName: space.name,
       type
     }
+  },
+
+  createHref: (state) => {
+    const record = getCurrentRecord(state)
+    const spanArgsFocus = Tab.getSpanFocus(state)
+    const workspaceId = Current.getWorkspaceId(state)
+    const spaceId = Current.getSpaceId(state)
+    return lakeSearchPath(spaceId, workspaceId, {...record, spanArgsFocus})
   }
 }
 

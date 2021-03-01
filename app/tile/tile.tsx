@@ -2,6 +2,7 @@ import useSearch from "app/core/hooks/useSearch"
 import {TileFormat} from "ppl/summary/summary"
 import React, {forwardRef} from "react"
 import {useSelector} from "react-redux"
+import Ingest from "src/js/state/Ingest"
 import Tab from "src/js/state/Tab"
 import styled from "styled-components"
 import MenuButton from "./menu-button"
@@ -54,11 +55,17 @@ type Props = {
   title: string
   query: string
   format: TileFormat
+  locationKey: string
 }
 
-function Tile({title, query, format, children, ...rest}, ref) {
+function Tile({title, query, format, locationKey, children, ...rest}, ref) {
   const span = useSelector(Tab.getSpan)
-  const [records, isFetching] = useSearch(query, [JSON.stringify(span)])
+  const snapshot = useSelector(Ingest.getSnapshot)
+  const [records, isFetching] = useSearch(query, [
+    JSON.stringify(span),
+    snapshot,
+    locationKey
+  ])
   return (
     <div ref={ref} {...rest}>
       <BG>
@@ -66,7 +73,7 @@ function Tile({title, query, format, children, ...rest}, ref) {
           <Title>{title}</Title>
           <MenuButton query={query} />
         </Header>
-        {isFetching ? (
+        {isFetching && snapshot === null ? (
           <TableSkeleton />
         ) : (
           <Viz format={format} records={records} />
