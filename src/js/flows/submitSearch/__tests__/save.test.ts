@@ -12,6 +12,7 @@ import {decodeSearchParams} from "app/search/utils/search-params"
 import {lakePath} from "app/router/utils/paths"
 import tabHistory from "app/router/tab-history"
 import Current from "src/js/state/Current"
+import brim from "src/js/brim"
 
 const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
@@ -49,7 +50,7 @@ test("Always updates url", async () => {
   expect(record).toEqual({
     pins: ["dns"],
     program: "query",
-    spanArgs: ["now - 5m", "now"],
+    spanArgs: brim.space(space).defaultSpanArgs(),
     spanArgsFocus: [null, null]
   })
 })

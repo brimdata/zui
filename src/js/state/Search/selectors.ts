@@ -1,15 +1,14 @@
+import {lakeSearchPath} from "app/router/utils/paths"
+import brim from "../../brim"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../../flows/config"
-import {SearchArgs, SearchType} from "./types"
-import {SearchRecord} from "../../types"
-import {State} from "../types"
-import {addEveryCountProc} from "../../searches/histogramSearch"
 import {addHeadProc} from "../../lib/Program"
+import {addEveryCountProc} from "../../searches/histogramSearch"
+import {SearchRecord} from "../../types"
 import Current from "../Current"
 import SearchBar from "../SearchBar"
 import Tab from "../Tab"
-import brim from "../../brim"
-import {lakeSearchPath} from "app/router/utils/paths"
-import Search from "."
+import {State} from "../types"
+import {SearchArgs, SearchType} from "./types"
 
 const getCurrentRecord = (state: State): SearchRecord => {
   const space = Current.mustGetSpace(state)

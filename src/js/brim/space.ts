@@ -1,6 +1,6 @@
-import {Space} from "../state/Spaces/types"
 import {isNumber} from "../lib/is"
-import brim, {Ts, Span} from "./"
+import {Space} from "../state/Spaces/types"
+import brim, {Span} from "./"
 
 export default function space(info: Space) {
   return {
@@ -53,16 +53,4 @@ export default function space(info: Space) {
       return !(this.ingesting() && this.empty())
     }
   }
-}
-
-function recentDataExists(ts: Ts) {
-  const halfHour = 1000 * 60 * 30
-  return (
-    new Date().getTime() -
-      brim
-        .time(ts)
-        .toDate()
-        .getTime() <
-    halfHour
-  )
 }
