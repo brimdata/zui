@@ -23,7 +23,7 @@ const init = (): QueriesState => ({
     {
       id: "3",
       name: "Windows Networking Activity",
-      value: "_path=~smb* OR _path=dce_rpc",
+      value: "_path=smb* OR _path=dce_rpc",
       description:
         "Filters and displays smb_files, smb_mapping and DCE_RPC activity",
       tags: ["windows", "smb", "malware"]
