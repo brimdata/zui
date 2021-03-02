@@ -17,11 +17,11 @@ import {LocationDescriptorObject} from "history"
 
 type Id = string | null
 
-export const getHistory = (state) => {
+export const getHistory = (state, windowName = global.windowName) => {
   const id = Tabs.getActive(state)
-  return global.windowName === "search"
-    ? global.tabHistories.getOrCreate(id)
-    : global.windowHistory
+  if (windowName === "search") return global.tabHistories.getOrCreate(id)
+  if (windowName === "detail") return global.windowHistory
+  throw new Error("Unknown Window Name (must be search or detail)")
 }
 
 export const getLocation = (state: State) => {

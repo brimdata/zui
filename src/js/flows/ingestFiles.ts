@@ -142,11 +142,11 @@ const postFiles = (client, ws, jsonTypesPath) => ({
 const setSpace = (dispatch, tabId, workspaceId) => ({
   do({spaceId}) {
     const url = lakePath(spaceId, workspaceId)
-    global.tabHistories.get(tabId).push(url)
+    global.tabHistories.getOrCreate(tabId).push(url)
   },
   undo() {
     const url = workspacesPath()
-    global.tabHistories.get(tabId).replace(url)
+    global.tabHistories.getOrCreate(tabId).replace(url)
   }
 })
 

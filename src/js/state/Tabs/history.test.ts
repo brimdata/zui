@@ -9,7 +9,7 @@ beforeEach(() => {
 })
 
 const currentPathnames = () =>
-  Current.getHistory(store.getState()).entries.map((e) => e.pathname)
+  Current.getHistory(store.getState(), "search").entries.map((e) => e.pathname)
 
 test("adding a tab creates a history entry", () => {
   expect(global.tabHistories.count()).toBe(0)

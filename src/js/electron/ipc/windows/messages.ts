@@ -1,13 +1,12 @@
-import {SpanArgs} from "../../../state/Search/types"
 import {State} from "../../../state/types"
-import {WindowName} from "../../tron/windowManager"
 import {WindowParams} from "../../tron/window"
+import {WindowName} from "../../tron/windowManager"
 import {
+  WindowsAuthCallbackMsg,
   WindowsInitialStateMsg,
-  WindowsOpenMsg,
   WindowsNewSearchTabMsg,
   WindowsOpenDirectorySelect,
-  WindowsAuthCallbackMsg
+  WindowsOpenMsg
 } from "../types"
 
 export type NewTabSearchParams = {

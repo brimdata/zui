@@ -100,7 +100,5 @@ global.ResizeObserver = class ResizeObserver {
 }
 global.SVGElement.prototype.getTotalLength = () => 0
 enzyme.configure({adapter: new Adapter()})
-
 document.execCommand = jest.fn()
-
 initDOM()

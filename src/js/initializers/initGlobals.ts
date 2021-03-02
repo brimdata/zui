@@ -9,13 +9,18 @@ import {createBrowserHistory} from "history"
 export default function initGlobals(store: Store) {
   global.getState = store.getState
   global.windowId = getUrlSearchParams().id
-  global.windowName = path.basename(window.location.pathname, ".html") as
-    | "search"
-    | "about"
-    | "detail"
-
+  global.windowName = getWindowName()
   global.feature = (name, status) => store.dispatch(Feature.set(name, status))
   global.tabHistories = new Histories(TabHistories.selectAll(store.getState()))
   global.windowHistory = createBrowserHistory()
   global.windowHistory.replace(getUrlSearchParams().href)
+}
+
+function getWindowName() {
+  const name = path.basename(window.location.pathname, ".html") as
+    | "search"
+    | "about"
+    | "detail"
+  if (["search", "about", "detail"].includes(name)) return name
+  throw new Error(`Unregistered window: ${name}`)
 }

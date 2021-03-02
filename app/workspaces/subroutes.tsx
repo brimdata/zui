@@ -1,8 +1,8 @@
-import LakeShow from "app/lakes/show"
 import LakeHome from "app/lakes/home"
-import React from "react"
-import {Route, Switch, useRouteMatch} from "react-router"
+import LakeShow from "app/lakes/show"
 import {lakeImport, lakeShow} from "app/router/routes"
+import React from "react"
+import {Route, Switch} from "react-router"
 
 export default function Subroutes() {
   return (
