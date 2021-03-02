@@ -1,4 +1,5 @@
 import AppRouter from "app/router/router"
+import {root, workspaceShow, workspacesList} from "app/router/routes"
 import AppWrapper from "app/routes/app-wrapper"
 import WorkspacesList from "app/workspaces/list"
 import WorkspaceShow from "app/workspaces/show"
@@ -28,17 +29,17 @@ export default function App() {
   return (
     <AppRouter>
       <Switch>
-        <Route path="/workspaces/:workspaceId">
+        <Route path={workspaceShow.path}>
           <AppWrapper>
             <WorkspaceShow />
           </AppWrapper>
         </Route>
-        <Route path="/workspaces">
+        <Route path={workspacesList.path}>
           <AppWrapper>
             <WorkspacesList />
           </AppWrapper>
         </Route>
-        <Route path="/">
+        <Route path={root.path}>
           <Redirect to="/workspaces/localhost:9867" />
         </Route>
       </Switch>

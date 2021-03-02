@@ -2,16 +2,15 @@ import LakeShow from "app/lakes/show"
 import LakeHome from "app/lakes/home"
 import React from "react"
 import {Route, Switch, useRouteMatch} from "react-router"
+import {lakeImport, lakeShow} from "app/router/routes"
 
 export default function Subroutes() {
-  const match = useRouteMatch()
-
   return (
     <Switch>
-      <Route path={`${match.path}/lakes/import`}>
+      <Route path={lakeImport.path}>
         <LakeHome />
       </Route>
-      <Route path={`${match.path}/lakes/:lakeId`}>
+      <Route path={lakeShow.path}>
         <LakeShow />
       </Route>
     </Switch>

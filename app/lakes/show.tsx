@@ -1,4 +1,5 @@
 import useLakeId from "app/router/hooks/use-lake-id"
+import {lakeSearch, lakeSummary} from "app/router/routes"
 import React, {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
 import {Redirect, Route, Switch, useRouteMatch} from "react-router"
@@ -12,10 +13,10 @@ export default function LakeShow() {
   return (
     <InitLake>
       <Switch>
-        <Route path={`${match.path}/search`}>
+        <Route path={lakeSearch.path}>
           <SearchHome />
         </Route>
-        <Route path={`${match.path}/summary`}>
+        <Route path={lakeSummary.path}>
           <SummaryHome />
         </Route>
         <Route default>
