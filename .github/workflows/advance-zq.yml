@@ -97,11 +97,11 @@ jobs:
           NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
         shell: bash
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         # Change the cache name any time you want to start with a cleared
         # cache.
         env:
-          cache-name: cache-node-modules-ci-v4
+          cache-name: cache-node-modules-ci-v5
         with:
           path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
