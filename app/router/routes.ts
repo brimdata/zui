@@ -1,7 +1,8 @@
 import {matchPath} from "react-router"
 
 export const root = {
-  path: "/brim"
+  path: "/",
+  title: "Brim"
 }
 export const workspacesList = {
   path: "/workspaces",

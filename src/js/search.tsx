@@ -34,5 +34,6 @@ initialize()
     )
   })
   .catch((e) => {
+    console.error(e)
     ReactDOM.render(<StartupError error={e} />, lib.doc.id("app-root"))
   })
