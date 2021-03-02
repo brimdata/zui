@@ -238,6 +238,19 @@ below help you get past the problem, it would be very helpful for you to still
 share the details with us so we can provide guidance to ensure other users
 avoid the problem in the future.
 
+There have been a couple reports from Windows users who experienced these
+symptoms after an upgrade to a newer Brim release. In each case the users
+ultimately resolved the problem via system reboot. We've unfortunately been
+unable to reproduce this problem or study a system "live" that's in this state
+to determine the root cause or why the reboot fixed it. An issue
+[brim/1490](https://github.com/brimsec/brim/issues/1490) is being kept open to
+track this specific case. Even though a reboot might be an effective fix for
+you also, your assistance would be much appreciated in still running
+through the troubleshooting steps below and gathering the debug information.
+If you ultimately find a reboot fixes the symptom for you, please add your logs
+and details to [brim/1490](https://github.com/brimsec/brim/issues/1490).
+In all other cases, please [open a new issue](#opening-an-issue).
+
 To begin troubleshooting this, it helps to understand the "backend" of Brim.
 One essential component is [`zqd`](https://github.com/brimsec/zq/tree/master/ppl/cmd/zqd),
 a server-style process that manages the storage and querying of imported
