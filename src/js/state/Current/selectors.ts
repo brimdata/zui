@@ -19,7 +19,9 @@ type Id = string | null
 
 export const getHistory = (state) => {
   const id = Tabs.getActive(state)
-  return global.tabHistories.getOrCreate(id)
+  return global.windowName === "search"
+    ? global.tabHistories.getOrCreate(id)
+    : global.windowHistory
 }
 
 export const getLocation = (state: State) => {

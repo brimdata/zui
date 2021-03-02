@@ -1,14 +1,14 @@
-import {animated} from "react-spring"
-import {useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
-
+import {useSelector} from "react-redux"
+import {animated} from "react-spring"
+import Workspaces from "src/js/state/Workspaces"
+import brim from "../../brim"
+import lib from "../../lib"
+import Spaces from "../../state/Spaces"
+import Tabs from "../../state/Tabs"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import AddTab from "./AddTab"
 import SearchTab from "./SearchTab"
-import Spaces from "../../state/Spaces"
-import Tabs from "../../state/Tabs"
-import brim from "../../brim"
-import lib from "../../lib"
 import useTabController from "./useTabController"
 import useTabLayout from "./useTabLayout"
 
@@ -18,6 +18,7 @@ const MAX_WIDTH = 240
 export default function TabBar() {
   const tabs = useSelector(Tabs.getData)
   const spaces = useSelector(Spaces.raw)
+  const workspaces = useSelector(Workspaces.raw)
   const count = tabs.length
   const {ref, rect} = useResizeObserver()
   const [width, setWidth] = useState(0)
@@ -38,7 +39,7 @@ export default function TabBar() {
               onChange: (indices) => ctl.onTabMove(indices)
             })}
             key={tab.id}
-            title={brim.tab(tab, spaces).title()}
+            title={brim.tab(tab, workspaces, spaces).title()}
             style={layout.getStyle(tab.id)}
             removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
             active={tab.id === ctl.activeId}

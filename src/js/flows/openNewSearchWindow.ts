@@ -1,24 +1,9 @@
-import Current from "../state/Current"
-import SearchBar from "../state/SearchBar"
-import Tab from "../state/Tab"
-import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
+import invoke from "../electron/ipc/invoke"
+import Search from "../state/Search"
 import {Thunk} from "../state/types"
 
 export const openNewSearchTab = (): Thunk => (dispatch, getState) => {
-  const state = getState()
-
-  const ws = Current.getWorkspace(state)
-  const {host, port, id} = ws
-
-  const params = {
-    host,
-    port,
-    workspaceId: id,
-    spaceId: Current.getSpaceId(state),
-    span: Tab.getSpan(state),
-    program: SearchBar.getSearchBarInputValue(state)
-  }
-
-  invoke(ipc.windows.newSearchTab(params))
+  const href = Search.createHref(getState())
+  invoke(ipc.windows.newSearchTab({href}))
 }

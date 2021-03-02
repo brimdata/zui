@@ -1,18 +1,41 @@
-import {get} from "lodash"
-
+import {whichRoute} from "app/router/routes"
+import {decodeSearchParams} from "app/search/utils/search-params"
 import {SpacesState} from "../state/Spaces/types"
 import {TabState} from "../state/Tab/types"
-import lib from "../lib"
+import {WorkspacesState} from "../state/Workspaces/types"
 
-export default function(tab: TabState, spaces: SpacesState) {
+export default function(
+  tab: TabState,
+  workspaces: WorkspacesState,
+  lakes: SpacesState
+) {
   return {
     title() {
-      const name = get(
-        spaces,
-        [tab.current.workspaceId || "", tab.current.spaceId || "", "name"],
-        "New Tab"
-      )
-      return lib.compact([name, tab.searchBar.previous]).join(": ")
+      const history = global.tabHistories.getOrCreate(tab.id)
+      const route = whichRoute(history.location.pathname)
+      if (route) {
+        return compileTitle(route, history.location, workspaces, lakes)
+      } else {
+        return "Brim"
+      }
     }
   }
+}
+
+/**
+ * Replaces keywords like <workspace> <lake> <program> with the
+ * actual names of the current workspace lake and program.
+ */
+function compileTitle(route, location, workspaces, lakes) {
+  let title = route.title
+  const {workspaceId, lakeId} = route.match.params
+  if (workspaceId) {
+    title = title.replace("<workspace>", workspaces[workspaceId].name)
+    if (lakeId) {
+      title = title.replace("<lake>", lakes[workspaceId][lakeId].name)
+    }
+  }
+  const {program} = decodeSearchParams(location.search)
+  title = title.replace("<program>", program || "Search")
+  return title
 }

@@ -11,12 +11,7 @@ import {
 } from "../types"
 
 export type NewTabSearchParams = {
-  host: string
-  port: string
-  workspaceId: string
-  program: string
-  span: SpanArgs
-  spaceId: string
+  href: string
   isNewWin?: boolean
 }
 
