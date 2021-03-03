@@ -1,5 +1,11 @@
 import {matchPath} from "react-router"
 
+/**
+ * A single place to store all app route information. The title field is
+ * used in the tab title and will have keywords like <workspace> <lake>
+ * and <program> replaced with the actual values.
+ */
+
 export const root = {
   path: "/",
   title: "Brim"

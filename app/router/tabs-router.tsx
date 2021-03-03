@@ -76,16 +76,13 @@ export default class TabsRouter extends React.Component<Props, State> {
 
   render() {
     const history = this.getHistory()
-    let location
-    if (this.state.location.key !== history.location.key) {
-      // This only happens when switching tabs. The listener above does not get called, but the app
-      // gets re-rendered. In this case, the state.location is stale. Use the history location.
-      console.log("Keys don't match")
-      location = history.location
-    } else {
-      location = this.state.location
-    }
-    console.log("CONTEXT:", history.createHref(location))
+    // Always use the history location, not the state. This component will
+    // re-render whenever someone pushes to the current history (which will
+    // be caught in the listen above), or when the tab changes (which is not
+    // caught in the listen above). In the cases when the listener is not fired,
+    // but the location changed (tab switch), the state.location will be stale.
+    // For this reason, we always use the current history's location. Works everytime.
+    const location = history.location
     return (
       <RouterContext.Provider
         value={{
