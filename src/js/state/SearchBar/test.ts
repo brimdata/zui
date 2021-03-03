@@ -10,7 +10,7 @@ import {
 import {submitSearch} from "../../flows/submitSearch/mod"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import Current from "../Current"
+import Url from "../Url"
 import Search from "../Search"
 import {SpanArgs} from "../Search/types"
 import Spaces from "../Spaces"
@@ -324,7 +324,7 @@ test("goBack", () => {
     submitSearch(),
     SearchBar.goBack()
   ])
-  const {spanArgs, program} = Current.getSearchParams(store.getState())
+  const {spanArgs, program} = Url.getSearchParams(store.getState())
   expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
     new Date(1),
     new Date(2)
@@ -348,7 +348,7 @@ test("goForward", () => {
     SearchBar.goForward()
   ])
 
-  const {spanArgs, program} = Current.getSearchParams(store.getState())
+  const {spanArgs, program} = Url.getSearchParams(store.getState())
   expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
     new Date(3),
     new Date(4)
@@ -364,7 +364,7 @@ test("clearSearchBar", () => {
 
   expect(SearchBar.getSearchBar(state)).toEqual(
     expect.objectContaining({
-      current: "",
+      Url: "",
       editing: null,
       error: null,
       pinned: [],

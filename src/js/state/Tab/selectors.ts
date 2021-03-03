@@ -8,6 +8,7 @@ import History from "../History"
 import {SpanArgs} from "../Search/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
+import Url from "../Url"
 import Viewer from "../Viewer"
 import {Workspace} from "../Workspaces/types"
 import activeTabSelect from "./activeTabSelect"
@@ -26,7 +27,7 @@ export function tabIsFetching(tab: TabState) {
 }
 
 const getSpan = createSelector<State, SearchParams, Span>(
-  Current.getSearchParams,
+  Url.getSearchParams,
   ({spanArgs}) => {
     return brim.span(spanArgs).toSpan()
   }

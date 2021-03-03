@@ -4,7 +4,7 @@ import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {indexOfLastChange} from "src/js/lib/Array"
 import {addHeadProc} from "src/js/lib/Program"
 import {DateTuple} from "src/js/lib/TimeWindow"
-import Current from "src/js/state/Current"
+import Url from "src/js/state/Url"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
@@ -12,7 +12,7 @@ import {zng} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
 export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
-  const params = Current.getSearchParams(getState())
+  const params = Url.getSearchParams(getState())
   const program = brim.program(params.program, params.pins)
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
   const query = addHeadProc(program.string(), perPage)

@@ -1,11 +1,11 @@
 import brim from "src/js/brim"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {addHeadProc} from "src/js/lib/Program"
-import Current from "src/js/state/Current"
+import Url from "src/js/state/Url"
 import {viewerSearch} from "./viewer-search"
 
 const initialViewerSearch = () => (dispatch, getState) => {
-  const params = Current.getSearchParams(getState())
+  const params = Url.getSearchParams(getState())
   const program = brim.program(params.program, params.pins)
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
   const query = addHeadProc(program.string(), perPage)

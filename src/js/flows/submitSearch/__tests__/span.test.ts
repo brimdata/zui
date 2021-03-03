@@ -1,6 +1,6 @@
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
-import Current from "src/js/state/Current"
+import Url from "src/js/state/Url"
 import {SpanArgs} from "src/js/state/Search/types"
 import {createZealotMock} from "zealot"
 import brim from "../../../brim"
@@ -44,7 +44,7 @@ test("a zoomed search", async () => {
   const zoom = brim.time.convertToSpan([new Date(0), new Date(1)])
   dispatch(Search.setSpanFocus(zoom))
   await submit()
-  const {spanArgsFocus} = Current.getSearchParams(store.getState())
+  const {spanArgsFocus} = Url.getSearchParams(store.getState())
   expect(brim.span(spanArgsFocus as SpanArgs).toDateTuple()).toEqual([
     new Date("1970-01-01T00:00:00.000Z"),
     new Date("1970-01-01T00:00:00.001Z")

@@ -1,0 +1,41 @@
+import {createSelector} from "@reduxjs/toolkit"
+import {SearchParams} from "app/router/hooks/use-search-params"
+import {mergeDefaultSpanArgs} from "app/search/utils/default-params"
+import {
+  decodeSearchParams,
+  decodeSpanParams
+} from "app/search/utils/search-params"
+import {BrimSpace} from "src/js/brim"
+import {getLocation, mustGetSpace} from "../Current/selectors"
+import {State} from "../types"
+import {LocationDescriptorObject} from "history"
+
+export const getSearchParams = createSelector<
+  State,
+  LocationDescriptorObject,
+  BrimSpace,
+  SearchParams
+>(getLocation, mustGetSpace, (location, space) => {
+  const params = decodeSearchParams(location.search)
+  const spanArgs = mergeDefaultSpanArgs(params.spanArgs, space)
+  const spanArgsFocus =
+    params.spanArgsFocus[0] && params.spanArgsFocus[1]
+      ? params.spanArgsFocus
+      : null
+  return {...params, spanArgs, spanArgsFocus} as SearchParams
+})
+
+export const getSpanParams = (state) => {
+  const location = getLocation(state)
+  return decodeSpanParams(location.search, "from", "to")
+}
+
+export const getSpanParamsWithDefaults = (state) => {
+  const [p1, p2] = getSpanParams(state)
+  const [d1, d2] = getDefaultSpanArgs(state)
+  return [p1 || d1, p2 || d2]
+}
+
+const getDefaultSpanArgs = createSelector(mustGetSpace, (space) => {
+  return space.defaultSpanArgs()
+})

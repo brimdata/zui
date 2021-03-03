@@ -16,13 +16,13 @@ import Search from "src/js/state/Search"
 import SearchBarState from "src/js/state/SearchBar"
 
 export function InitSearchParams({children}) {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const params = useSearchParams()
   useLayoutEffect(() => {
-    dispatch(Search.setSpanArgs(params.spanArgs))
-    dispatch(Search.setSpanFocus(params.spanArgsFocus))
-    dispatch(SearchBarState.changeSearchBarInput(params.program))
-    dispatch(SearchBarState.setSearchBarPins(params.pins))
+    // dispatch(Search.setSpanArgs(params.spanArgs))
+    // dispatch(Search.setSpanFocus(params.spanArgsFocus))
+    // dispatch(SearchBarState.changeSearchBarInput(params.program))
+    // dispatch(SearchBarState.setSearchBarPins(params.pins))
   }, [params])
 
   return children
