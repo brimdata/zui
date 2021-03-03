@@ -1,4 +1,5 @@
 import {getAllStates} from "../../test/helpers/getTestState"
+import isEqual from "lodash/isEqual"
 
 export default function adjustWindowsNetworkingActivityQuery(state: any) {
   const shippedQuery = {
@@ -15,10 +16,7 @@ export default function adjustWindowsNetworkingActivityQuery(state: any) {
     const targetQuery = Object.values(s.queries.items).find(({id}) => {
       return id === "3"
     })
-    if (
-      targetQuery &&
-      JSON.stringify(targetQuery) === JSON.stringify(shippedQuery)
-    ) {
+    if (targetQuery && isEqual(targetQuery, shippedQuery)) {
       // @ts-ignore
       targetQuery.value = "_path=smb* OR _path=dce_rpc"
     }
