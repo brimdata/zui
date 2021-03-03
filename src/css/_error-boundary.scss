@@ -2,6 +2,7 @@
   overflow: auto;
   height: 100%;
   background-color: var(--ivory);
+  background: linear-gradient(to bottom right, #f8eee3, #fae1e0);
   padding: 24px;
   line-height: 1.5;
 
@@ -22,7 +23,8 @@
 
   pre,
   li,
-  code {
+  code, 
+  a {
     overflow: auto;
     font-size: 11px;
   }
