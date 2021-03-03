@@ -4,13 +4,16 @@ import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {indexOfLastChange} from "src/js/lib/Array"
 import {addHeadProc} from "src/js/lib/Program"
 import {DateTuple} from "src/js/lib/TimeWindow"
-import Url from "src/js/state/Url"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
+import Url from "src/js/state/Url"
 import Viewer from "src/js/state/Viewer"
 import {zng} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
+/**
+ * Called for the infinite scroll behavior in the viewer
+ */
 export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const params = Url.getSearchParams(getState())
   const program = brim.program(params.program, params.pins)

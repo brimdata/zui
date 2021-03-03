@@ -63,7 +63,6 @@ function Tile({title, query, format, locationKey, children, ...rest}, ref) {
   const snapshot = useSelector(Ingest.getSnapshot)
   const [records, isFetching] = useSearch(query, [
     JSON.stringify(span),
-    snapshot,
     locationKey
   ])
   return (

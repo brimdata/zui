@@ -25,7 +25,7 @@ const Link = ({active, onClick, children}) => {
   else return <a onClick={onClick}>{children}</a>
 }
 
-export default function Home() {
+export default function LakeHome() {
   const [page, setPage] = useState("import")
 
   function content() {

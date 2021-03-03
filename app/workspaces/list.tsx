@@ -1,3 +1,4 @@
+import {workspacePath} from "app/router/utils/paths"
 import React from "react"
 import {useSelector} from "react-redux"
 import {useHistory} from "react-router"
@@ -86,7 +87,7 @@ const WorkspacesList = () => {
           <Workspace
             key={w.id}
             workspace={workspace(w)}
-            onClick={() => history.push(`/workspaces/${w.id}`)}
+            onClick={() => history.push(workspacePath(w.id))}
           />
         ))}
       </WorkspacesWrapper>

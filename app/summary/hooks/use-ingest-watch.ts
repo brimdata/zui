@@ -10,6 +10,11 @@ export default function useIngestWatch() {
   const history = useHistory()
 
   useEffect(() => {
+    /**
+     * During ingest we show the default span which is everything.
+     * Each time more data comes in (snapshot increments), reload
+     * the current location which will cause the tiles to update.
+     */
     history.replace(history.location)
   }, [snapshot, JSON.stringify(space.everythingSpan())])
 }

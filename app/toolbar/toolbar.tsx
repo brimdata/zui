@@ -1,10 +1,11 @@
 import React from "react"
+import {useLocation} from "react-router"
 import SearchPageTitle from "src/js/components/SearchPageTitle"
 import SpanControls from "src/js/components/Span/SpanControls"
 import styled from "styled-components"
 import {ActionButtonProps} from "./action-button"
-import Actions from "./actions"
 import MainViewSwitch from "./main-view-switch"
+import ResponsiveActions from "./responsive-actions"
 
 const Wrap = styled.div`
   margin-bottom: 6px;
@@ -34,6 +35,7 @@ type Props = {
 }
 
 export function Toolbar({submit, actions}: Props) {
+  const location = useLocation()
   return (
     <Wrap>
       <SearchPageTitle />
@@ -41,7 +43,7 @@ export function Toolbar({submit, actions}: Props) {
         <Group>
           <MainViewSwitch />
         </Group>
-        <Actions actions={actions} />
+        <ResponsiveActions actions={actions} locationKey={location.key} />
         <SpanControls submit={submit} />
       </Row>
     </Wrap>

@@ -4,6 +4,10 @@ import {addHeadProc} from "src/js/lib/Program"
 import Url from "src/js/state/Url"
 import {viewerSearch} from "./viewer-search"
 
+/**
+ * Initial search to fill the viewer, as opposed to the "next-page"
+ * search which allows for the inifinite scroll behavior.
+ */
 const initialViewerSearch = () => (dispatch, getState) => {
   const params = Url.getSearchParams(getState())
   const program = brim.program(params.program, params.pins)

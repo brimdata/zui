@@ -6,8 +6,6 @@ export function mergeDefaultSpanArgs(
   space: BrimSpace
 ): SpanArgs {
   const [from, to] = spanArgs
-  if (!from && !to) return space.everythingSpan()
-  if (!from) return [space.minTs(), to]
-  if (!to) return [from, space.maxTs()]
-  return [from, to]
+  const [d1, d2] = space.defaultSpanArgs() as SpanArgs
+  return [from || d1, to || d2]
 }
