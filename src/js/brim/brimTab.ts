@@ -1,5 +1,6 @@
 import {whichRoute} from "app/router/routes"
 import {decodeSearchParams} from "app/search/utils/search-params"
+import get from "lodash/get"
 import {SpacesState} from "../state/Spaces/types"
 import {TabState} from "../state/Tab/types"
 import {WorkspacesState} from "../state/Workspaces/types"
@@ -30,9 +31,15 @@ function compileTitle(route, location, workspaces, lakes) {
   let title = route.title
   const {workspaceId, lakeId} = route.match.params
   if (workspaceId) {
-    title = title.replace("<workspace>", workspaces[workspaceId].name)
+    title = title.replace(
+      "<workspace>",
+      get(workspaces, [workspaceId, "name"], "")
+    )
     if (lakeId) {
-      title = title.replace("<lake>", lakes[workspaceId][lakeId].name)
+      title = title.replace(
+        "<lake>",
+        get(lakes, [workspaceId, lakeId, "name"], "")
+      )
     }
   }
   const {program} = decodeSearchParams(location.search)

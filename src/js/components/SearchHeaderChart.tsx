@@ -23,7 +23,7 @@ export default function SearchHeaderChart() {
       .toDateTuple()
     const query = addEveryCountProc(brimProgram.string(), [from, to])
     dispatch(histogramSearch({query, from, to}))
-  }, [location])
+  }, [location.key])
 
   if (brimProgram.hasAnalytics()) return null
   return (

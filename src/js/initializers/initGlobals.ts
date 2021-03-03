@@ -4,7 +4,7 @@ import getUrlSearchParams from "../lib/getUrlSearchParams"
 import Feature from "../state/Feature"
 import TabHistories from "../state/TabHistories"
 import {Store} from "../state/types"
-import {createBrowserHistory} from "history"
+import {createMemoryHistory} from "history"
 
 export default function initGlobals(store: Store) {
   global.getState = store.getState
@@ -12,7 +12,7 @@ export default function initGlobals(store: Store) {
   global.windowName = getWindowName()
   global.feature = (name, status) => store.dispatch(Feature.set(name, status))
   global.tabHistories = new Histories(TabHistories.selectAll(store.getState()))
-  global.windowHistory = createBrowserHistory()
+  global.windowHistory = createMemoryHistory()
   global.windowHistory.replace(getUrlSearchParams().href)
 }
 

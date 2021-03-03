@@ -9,6 +9,7 @@ async function start() {
   } else {
     console.log(bold("Skipping build step"))
   }
+
   run("npx", `${JS} --watch --skip-initial-build`)
   run("npx", `${SCSS} --watch --skip-initial`)
   run("npx", `${STATIC} --watch`)

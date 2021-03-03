@@ -13,7 +13,7 @@ const slice = createSlice({
   },
   extraReducers: {
     TABS_ADD: (state, action: TABS_ADD) => {
-      global.tabHistories.create(action.id).replace(action.url)
+      global.tabHistories.create(action.id, [action.url])
       return state
     },
     TABS_REMOVE: (state, action: TABS_REMOVE) => {
