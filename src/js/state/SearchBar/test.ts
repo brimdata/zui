@@ -364,7 +364,7 @@ test("clearSearchBar", () => {
 
   expect(SearchBar.getSearchBar(state)).toEqual(
     expect.objectContaining({
-      Url: "",
+      current: "",
       editing: null,
       error: null,
       pinned: [],
