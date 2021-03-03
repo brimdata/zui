@@ -1,4 +1,4 @@
-import AppRouter from "app/router/router"
+import AppRouter from "app/router/app-router"
 import {root, workspaceShow, workspacesList} from "app/router/routes"
 import AppWrapper from "app/routes/app-wrapper"
 import WorkspacesList from "app/workspaces/list"
