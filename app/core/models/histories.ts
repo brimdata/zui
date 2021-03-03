@@ -6,6 +6,9 @@ import {
 } from "history"
 import {SerializedHistory} from "src/js/state/TabHistories/types"
 
+/**
+ * Class representing a collection of MemoryHistories keyed by a string id
+ */
 export default class Histories {
   histories = new Map<string, MemoryHistory>()
   unlistens = new Map<string, UnregisterCallback>()
