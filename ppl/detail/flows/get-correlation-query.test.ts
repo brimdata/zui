@@ -37,7 +37,14 @@ test("returns conn query if ts and duration are present", () => {
   ]
   const record = new zng.Record(type, value)
 
-  expect(getCorrelationQuery(record)).toBe(connCorrelation(record))
+  expect(getCorrelationQuery(record)).toBe(
+    connCorrelation(
+      record.get("uid") as zng.Primitive,
+      record.get("community_id") as zng.Primitive,
+      record.get("ts") as zng.Primitive,
+      record.get("duration") as zng.Primitive
+    )
+  )
 })
 
 test("returns cid query if only cid present", () => {

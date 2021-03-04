@@ -17,7 +17,7 @@ import BrimTooltip from "./components/BrimTooltip"
 initDetail()
   .then((store) => {
     ReactDOM.render(
-      <AppErrorBoundary dispatch={store.dispatch}>
+      <AppErrorBoundary>
         <div id="modal-dialog-root" />
         <Provider store={store}>
           <ThemeProvider theme={theme}>

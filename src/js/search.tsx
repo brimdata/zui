@@ -19,7 +19,7 @@ initialize()
       store.dispatch(deletePartialSpaces())
     }
     ReactDOM.render(
-      <AppErrorBoundary dispatch={store.dispatch}>
+      <AppErrorBoundary>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
             <App />
