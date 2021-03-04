@@ -19,7 +19,7 @@ export default {
     return {type: "SEARCH_BAR_CLEAR"}
   },
 
-  restoreSearchBar: (value: SearchBarState): SEARCH_BAR_RESTORE => ({
+  restoreSearchBar: (value: Partial<SearchBarState>): SEARCH_BAR_RESTORE => ({
     type: "SEARCH_BAR_RESTORE",
     value
   }),

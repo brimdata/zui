@@ -28,7 +28,7 @@ export type SEARCH_BAR_CLEAR = {
 
 export type SEARCH_BAR_RESTORE = {
   type: "SEARCH_BAR_RESTORE"
-  value: SearchBarState
+  value: Partial<SearchBarState>
 }
 
 export type SEARCH_BAR_INPUT_CHANGE = {

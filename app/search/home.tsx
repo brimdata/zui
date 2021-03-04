@@ -27,9 +27,14 @@ export function InitSearchParams({children}) {
     const url = Url.getSearchParams(store.getState())
     dispatch(Search.setSpanArgs(url.spanArgs))
     dispatch(Search.setSpanFocus(url.spanArgsFocus))
-    dispatch(SearchBarState.changeSearchBarInput(url.program))
-    dispatch(SearchBarState.setSearchBarPins(url.pins))
-    dispatch(SearchBarState.errorSearchBarParse(null))
+    dispatch(
+      SearchBarState.restoreSearchBar({
+        current: url.program,
+        previous: url.program,
+        pinned: url.pins,
+        error: null
+      })
+    )
   }, [location.key])
 
   return children
