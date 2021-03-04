@@ -22,7 +22,7 @@ export function uidFilter(uid: string | zng.Primitive) {
 }
 
 export function cidFilter(cid: string | zng.Primitive) {
-  return zql`community_id="${cid}"`
+  return zql`community_id=${cid}`
 }
 
 export const UID_CORRELATION_LIMIT = 100
