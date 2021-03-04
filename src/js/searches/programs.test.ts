@@ -94,7 +94,14 @@ test("conn correlation", () => {
   }
   const record = zng.Record.deserialize(conn)
 
-  expect(connCorrelation(record)).toBe(
+  expect(
+    connCorrelation(
+      record.get("uid") as zng.Primitive,
+      record.get("community_id") as zng.Primitive,
+      record.get("ts") as zng.Primitive,
+      record.get("duration") as zng.Primitive
+    )
+  ).toBe(
     'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100'
   )
 })

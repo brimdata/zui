@@ -1,27 +1,27 @@
-import {connect} from "react-redux"
+import DetailPane from "app/detail/Pane"
 import React from "react"
-
-import {DispatchProps} from "../state/types"
-import {Space} from "../state/Spaces/types"
-import {XRightPaneExpander} from "./RightPaneExpander"
+import {connect} from "react-redux"
+import {zng} from "zealot"
 import {openLogDetailsWindow} from "../flows/openLogDetailsWindow"
-import CloseButton from "./CloseButton"
-import Current from "../state/Current"
 import ExpandWindow from "../icons/ExpandWindow"
-import HistoryButtons from "./common/HistoryButtons"
+import dispatchToProps from "../lib/dispatchToProps"
+import Current from "../state/Current"
 import Layout from "../state/Layout"
 import LogDetails from "../state/LogDetails"
-import DetailPane from "app/detail/Pane"
+import {Space} from "../state/Spaces/types"
+import {DispatchProps} from "../state/types"
+import AppErrorBoundary from "./AppErrorBoundary"
+import CloseButton from "./CloseButton"
+import HistoryButtons from "./common/HistoryButtons"
 import Pane, {
+  Center,
+  Left,
+  PaneBody,
   PaneHeader,
   PaneTitle,
-  Left,
-  Right,
-  Center,
-  PaneBody
+  Right
 } from "./Pane"
-import dispatchToProps from "../lib/dispatchToProps"
-import {zng} from "zealot"
+import {XRightPaneExpander} from "./RightPaneExpander"
 
 type StateProps = {
   currentLog: zng.Record
@@ -85,7 +85,9 @@ export default class RightPane extends React.Component<Props, S> {
           </PaneHeader>
         )}
         <PaneBody>
-          <DetailPane />
+          <AppErrorBoundary>
+            <DetailPane />
+          </AppErrorBoundary>
         </PaneBody>
       </Pane>
     )

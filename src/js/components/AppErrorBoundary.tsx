@@ -1,11 +1,9 @@
 import React from "react"
-
-import {Dispatch} from "../state/types"
-import {LatestError} from "./LatestError"
 import ErrorFactory from "../models/ErrorFactory"
-import Warn from "./icons/warning-md.svg"
+import Link from "./common/Link"
+import {LatestError} from "./LatestError"
 
-type Props = {children: any; dispatch: Dispatch}
+type Props = {children: any}
 type State = {error: Error | null | undefined}
 
 export default class AppErrorBoundary extends React.Component<Props, State> {
@@ -25,12 +23,10 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
     return (
       <div className="error-boundary">
         <LatestError error={ErrorFactory.create(error)} />
-        <div className="body-content">
-          <h1>
-            <Warn />
-            Error
-          </h1>
+        <div>
+          <h1>Error</h1>
           <pre>{error.stack}</pre>
+          <Link href="mailto:support@brimsecurity.com">Contact Support</Link>
         </div>
       </div>
     )

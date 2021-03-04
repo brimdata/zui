@@ -21,8 +21,8 @@ export function uidFilter(uid: string | zng.Primitive) {
   return zql`uid=${uid} or ${uid} in conn_uids or ${uid} in uids or referenced_file.uid=${uid}`
 }
 
-export function cidFilter(cid: string) {
-  return `community_id="${cid}"`
+export function cidFilter(cid: string | zng.Primitive) {
+  return zql`community_id=${cid}`
 }
 
 export const UID_CORRELATION_LIMIT = 100
@@ -42,22 +42,23 @@ export function correlationIds({uid, cid}: RelatedIds) {
   return [filters.join(" or "), correlationLimit()].join(" | ")
 }
 
-export function uidCorrelation(uid: string) {
+export function uidCorrelation(uid: string | zng.Primitive) {
   return `${uidFilter(uid)} | ${correlationLimit()}`
 }
 
-export function cidCorrelation(cid: string) {
+export function cidCorrelation(cid: string | zng.Primitive) {
   return `${cidFilter(cid)} | ${correlationLimit()}`
 }
 
-export function connCorrelation(conn: zng.Record) {
-  const uid = conn.get("uid") as zng.Primitive
-  const cid = conn.get("community_id") as zng.Primitive
-  const ts = (conn.get("ts") as zng.Primitive).toDate()
-  const dur = (conn.get("duration") as zng.Primitive).toFloat() + 90 // Add a 1.5 minute buffer for events that get logged late
-  const endTs = new Date(new Date(ts).getTime() + dur * 1000)
-
-  const cidFilter = zql`community_id = ${cid} and ts >= ${ts} and ts < ${endTs}`
-
+export function connCorrelation(
+  uid: zng.Primitive,
+  cid: zng.Primitive,
+  ts: zng.Primitive,
+  duration: zng.Primitive
+) {
+  const tsDate = ts.toDate()
+  const dur = duration.toFloat() + 90 // Add a 1.5 minute buffer for events that get logged late
+  const endTsDate = new Date(new Date(tsDate).getTime() + dur * 1000)
+  const cidFilter = zql`community_id = ${cid} and ts >= ${tsDate} and ts < ${endTsDate}`
   return `${uidFilter(uid)} or (${cidFilter}) | ${correlationLimit()}`
 }

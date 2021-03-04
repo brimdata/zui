@@ -13,7 +13,7 @@ import {Data, Name, Value} from "app/core/Data"
 import formatDur from "ppl/detail/util/formatDur"
 import {isEqual} from "lodash"
 import Panel from "app/detail/Panel"
-import {getCorrelationQuery} from "./flows/getCorrelationQuery"
+import {getCorrelationQuery} from "./flows/get-correlation-query"
 import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
 

@@ -1,7 +1,7 @@
 import {zng} from "zealot"
 import {search} from "src/js/flows/search/mod"
 import {Correlation} from "../models/Correlation"
-import {getCorrelationQuery} from "./getCorrelationQuery"
+import {getCorrelationQuery} from "./get-correlation-query"
 
 const id = "RELATED_EVENTS"
 
