@@ -7,11 +7,10 @@ import {Route, Switch} from "react-router"
 import ConnectionError from "src/js/components/ConnectionError"
 import Login from "src/js/components/Login"
 import MacSpinner from "src/js/components/MacSpinner"
-import {activateWorkspace} from "src/js/flows/workspace/activateWorkspace"
+import {updateStatus} from "src/js/flows/workspace/update-status"
 import Current from "src/js/state/Current"
 import WorkspaceStatuses from "src/js/state/WorkspaceStatuses"
 import styled from "styled-components"
-
 const SpinnerWrap = styled.div`
   width: 100%;
   height: 100%;
@@ -26,15 +25,16 @@ function InitWorkspace({children}) {
   const status = useSelector(WorkspaceStatuses.get(workspace.id))
 
   useLayoutEffect(() => {
-    dispatch(activateWorkspace(workspace.id))
+    dispatch(updateStatus(workspace.id))
   }, [workspace.id])
-
+  console.log({status})
   switch (status) {
     case "disconnected":
       return <ConnectionError workspace={workspace} />
     case "login-required":
       return <Login workspace={workspace} />
     case "connected":
+    case "retrying":
       return children
     default:
       return (

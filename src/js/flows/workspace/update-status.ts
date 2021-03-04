@@ -1,5 +1,3 @@
-import tabHistory from "app/router/tab-history"
-import {workspacePath} from "app/router/utils/paths"
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
 import Workspaces from "../../state/Workspaces"
@@ -7,7 +5,11 @@ import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import refreshSpaceNames from "../refreshSpaceNames"
 import {getAuthCredentials} from "./getAuthCredentials"
 
-export const activateWorkspace = (workspaceId: string) => async (
+/**
+ * Updates a workspaces status by trying to connect
+ * @param workspaceId
+ */
+export const updateStatus = (workspaceId: string) => async (
   dispatch,
   getState,
   {createZealot}
@@ -62,7 +64,6 @@ export const activateWorkspace = (workspaceId: string) => async (
 
     // otherwise login is required, send user to our 'login' page and let them initiate the flow there
     dispatch(WorkspaceStatuses.set(ws.id, "login-required"))
-    dispatch(tabHistory.push(workspacePath(ws.id)))
     return
   }
 
