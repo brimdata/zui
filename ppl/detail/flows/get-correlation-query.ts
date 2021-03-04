@@ -9,7 +9,7 @@ import {Correlation} from "../models/Correlation"
 export function getCorrelationQuery(record: zng.Record) {
   const {uid, cid} = new Correlation(record).getIds()
 
-  if (cid && uid) {
+  if (cid && uid && record.has("ts") && record.has("duration")) {
     return connCorrelation(record)
   } else if (uid) {
     return uidCorrelation(uid)

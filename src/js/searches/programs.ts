@@ -21,8 +21,8 @@ export function uidFilter(uid: string | zng.Primitive) {
   return zql`uid=${uid} or ${uid} in conn_uids or ${uid} in uids or referenced_file.uid=${uid}`
 }
 
-export function cidFilter(cid: string) {
-  return `community_id="${cid}"`
+export function cidFilter(cid: string | zng.Primitive) {
+  return zql`community_id="${cid}"`
 }
 
 export const UID_CORRELATION_LIMIT = 100
@@ -42,11 +42,11 @@ export function correlationIds({uid, cid}: RelatedIds) {
   return [filters.join(" or "), correlationLimit()].join(" | ")
 }
 
-export function uidCorrelation(uid: string) {
+export function uidCorrelation(uid: string | zng.Primitive) {
   return `${uidFilter(uid)} | ${correlationLimit()}`
 }
 
-export function cidCorrelation(cid: string) {
+export function cidCorrelation(cid: string | zng.Primitive) {
   return `${cidFilter(cid)} | ${correlationLimit()}`
 }
 
