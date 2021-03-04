@@ -1,5 +1,5 @@
 import tabHistory from "app/router/tab-history"
-import {lakeImportPath, workspacePath} from "app/router/utils/paths"
+import {workspacePath} from "app/router/utils/paths"
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
 import Workspaces from "../../state/Workspaces"
@@ -18,7 +18,6 @@ export const activateWorkspace = (workspaceId: string) => async (
   const activate = async () => {
     await dispatch(refreshSpaceNames())
     dispatch(WorkspaceStatuses.set(ws.id, "connected"))
-    dispatch(tabHistory.replace(lakeImportPath(ws.id)))
   }
 
   const isDown = async () => {
