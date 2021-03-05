@@ -49,9 +49,11 @@ Before diving into the specifics of what's possible, here's an overview of
 some rough edges you may encounter as you work through the configurations
 described in this article.
 
-1. For those familiar with SQL, the current `join` implementation in Z can be
-thought of as similar to a [left outer join](https://en.wikipedia.org/wiki/Join_(SQL)#Left_outer_join)
-and hence applicable to use cases where that approach would apply.
+1. For those familiar with SQL, the current `join` implementation in Z can
+behave similarly to SQL's [inner join](https://www.w3schools.com/sql/sql_join_inner.asp),
+[left join](https://www.w3schools.com/sql/sql_join_left.asp),
+or [right join](https://www.w3schools.com/sql/sql_join_right.asp), and hence is
+applicable to use cases where these approaches would apply.
 
 2. The current `join` implementation is a _merge_-style join that relies on
 each stream of input records being sorted by the field being joined. The Z
@@ -87,7 +89,7 @@ As example input data, we'll use the same publicly-available pcap
 that's used in the [Hunting Emotet with Brim and Zeek](https://medium.com/brim-securitys-knowledge-funnel/hunting-emotet-with-brim-and-zeek-1000c2f5c1ff)
 blog article.
 
-Finally, we'll use a standalone [Zeek v3.2.3](https://github.com/zeek/zeek/releases/tag/v3.2.3)
+Finally, we'll use a standalone [Zeek v4.0.0](https://github.com/zeek/zeek/releases/tag/v4.0.0)
 install to generate logs from our example pcap. Here we've started from a basic
 [binary package](https://github.com/zeek/zeek/wiki/Binary-Packages) install
 on Linux. After also installing the
@@ -113,21 +115,21 @@ Archive:  2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap.zip
 $ cat *.pcap | /opt/zeek/bin/zeek -C -r - spl-spt local
 
 $ ls -l *.log
--rw-rw-r-- 1 phil phil   366 Jan 30 00:38 capture_loss.log
--rw-rw-r-- 1 phil phil 20095 Jan 30 00:38 conn.log
--rw-rw-r-- 1 phil phil 15082 Jan 30 00:38 dns.log
--rw-rw-r-- 1 phil phil   599 Jan 30 00:38 dpd.log
--rw-rw-r-- 1 phil phil 14955 Jan 30 00:38 files.log
--rw-rw-r-- 1 phil phil  6023 Jan 30 00:38 http.log
--rw-rw-r-- 1 phil phil 25744 Jan 30 00:38 loaded_scripts.log
--rw-rw-r-- 1 phil phil  1565 Jan 30 00:38 notice.log
--rw-rw-r-- 1 phil phil   254 Jan 30 00:38 packet_filter.log
--rw-rw-r-- 1 phil phil   566 Jan 30 00:38 pe.log
--rw-rw-r-- 1 phil phil  2818 Jan 30 00:38 spl.log
--rw-rw-r-- 1 phil phil  4891 Jan 30 00:38 ssl.log
--rw-rw-r-- 1 phil phil  1310 Jan 30 00:38 stats.log
--rw-rw-r-- 1 phil phil  1032 Jan 30 00:38 weird.log
--rw-rw-r-- 1 phil phil  5317 Jan 30 00:38 x509.log
+-rw-r--r-- 1 root root   367 Mar  5 17:21 capture_loss.log
+-rw-r--r-- 1 root root 20106 Mar  5 17:21 conn.log
+-rw-r--r-- 1 root root 15088 Mar  5 17:21 dns.log
+-rw-r--r-- 1 root root   599 Mar  5 17:21 dpd.log
+-rw-r--r-- 1 root root 16057 Mar  5 17:21 files.log
+-rw-r--r-- 1 root root  6816 Mar  5 17:21 http.log
+-rw-r--r-- 1 root root 28078 Mar  5 17:21 loaded_scripts.log
+-rw-r--r-- 1 root root  1566 Mar  5 17:21 notice.log
+-rw-r--r-- 1 root root   254 Mar  5 17:21 packet_filter.log
+-rw-r--r-- 1 root root   566 Mar  5 17:21 pe.log
+-rw-r--r-- 1 root root  2821 Mar  5 17:21 spl.log
+-rw-r--r-- 1 root root  4894 Mar  5 17:21 ssl.log
+-rw-r--r-- 1 root root  1309 Mar  5 17:21 stats.log
+-rw-r--r-- 1 root root  1203 Mar  5 17:21 weird.log
+-rw-r--r-- 1 root root  5317 Mar  5 17:21 x509.log
 ```
 
 # Examples
@@ -147,18 +149,17 @@ $ cat ssl.log
 #empty_field	(empty)
 #unset_field	-
 #path	ssl
-#open	2021-02-05-19-26-55
+#open	2021-03-05-17-21-55
 #fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	version	cipher	curve	server_name	resumed	last_alert	next_protocol	established	cert_chain_fuids	client_cert_chain_fuids	subject	issuer	client_subject	client_issuer	validation_status
 #types	time	string	addr	port	addr	port	string	string	string	string	bool	string	string	bool	vector[string]	vector[string]	string	string	string	string	string
-1598992773.193883	CRUIstLprtERqs8c8	10.9.1.101	49816	40.90.22.186	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384	secp256r1	login.live.com	F	-	h2	T	Fxulet2GsFuEn0Uik4,FjJx5d2slh18Zneyg1	(empty)	CN=login.live.com,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US	-	-	ok
-1598992774.249073	COboho3mcULvz2l7yl	10.9.1.101	49819	52.158.208.111	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256	x25519	watson.telemetry.microsoft.com	F	-	h2	T	FAl8Tn2Kndq0KjRLbc,F9VOZg1nhKg0R59mK4	(empty)	CN=*.big.telemetry.microsoft.com,OU=WSE,O=Microsoft,L=Redmond,ST=WA,C=US	CN=Microsoft Secure Server CA 2011,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	-	-	unable to get local issuer certificate
-1598992776.460850	CN1TBv4cMtawH69YB5	10.9.1.101	49820	52.109.8.20	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384	secp384r1	nexusrules.officeapps.live.com	F	-	-	T	Fol3JY2CZzUdiaczAh,Fj3y6C1sNWQCOFGPW6	(empty)	CN=nexusrules.officeapps.live.com	CN=Microsoft IT TLS CA 2,OU=Microsoft IT,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	-	-	ok
-1598992772.249387	CUs6Sq3qciVfv4hbr7	10.9.1.101	49815	52.109.8.20	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384	secp384r1	nexusrules.officeapps.live.com	F	-	-	F	FlOWnD1bpVKj8U6Dnf,FyfwGl3eDHc7yw2Nla	(empty)	-	-	-	-	ok
-1598993440.318372	CDLhMi2tO58cin8BMg	10.9.1.101	49841	45.127.222.8	449	TLSv10	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA	x25519	-	F	-	-	T	F6M76M2wDqQldrfIw4	(empty)	O=Internet Widgits Pty Ltd,ST=Some-State,C=AUO=Internet Widgits Pty Ltd,ST=Some-State,C=AU	-	-	self signed certificate
-1598993441.496934	Ci7d2m2sQ358a9L6ej	10.9.1.101	49842	54.221.234.156	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256	secp256r1	api.ipify.org	F	-	-	T	FZtbib3l8x1ystI3kj,FwcZye35MeWetibizd,FKUAIQ2DxCfmFQPU64	(empty)	CN=*.ipify.org,OU=PositiveSSL Wildcard,OU=Domain Control Validated	CN=COMODO RSA Domain Validation Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB	-	-	ok
-1598993444.468059	CRjp3u3mrdzkKLXgfh	10.9.1.101	49843	62.108.35.9	447	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384	secp256r1	-	F	-	-	T	Fi8GYS3h2Abx3EGXFd	(empty)	CN=example.com,OU=IT Department,O=Global Security,L=London,ST=London,C=GB	CN=example.com,OU=IT Department,O=Global Security,L=London,ST=London,C=GB	-	-	self signed certificate
+1598992773.193883	CrohQs387QUFppjo9	10.9.1.101	49816	40.90.22.186	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384	secp256r1	login.live.com	F	-	h2	T	Fxulet2GsFuEn0Uik4,FjJx5d2slh18Zneyg1	(empty)	CN=login.live.com,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US	-	-	ok
+1598992774.249073	C1EVIz4rTQLYYHKtyc	10.9.1.101	49819	52.158.208.111	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256	x25519	watson.telemetry.microsoft.com	F	h2	T	FAl8Tn2Kndq0KjRLbc,F9VOZg1nhKg0R59mK4	(empty)	CN=*.big.telemetry.microsoft.com,OU=WSE,O=Microsoft,L=Redmond,ST=WA,C=US	CN=Microsoft Secure Server CA 2011,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	-	-	unable to get local issuer certificate
+1598992776.460850	CZT9qf3lju3qjACOyk	10.9.1.101	49820	52.109.8.20	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384	secp384r1	nexusrules.officeapps.live.com	F	-	-	T	Fol3JY2CZzUdiaczAh,Fj3y6C1sNWQCOFGPW6	(empty)	CN=nexusrules.officeapps.live.com	CN=Microsoft IT TLS CA 2,OU=Microsoft IT,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	-	-	ok
+1598992772.249387	CNwRgP1N2P5I3DX9N7	10.9.1.101	49815	52.109.8.20	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384	secp384r1	nexusrules.officeapps.live.com	F	-	-	F	FlOWnD1bpVKj8U6Dnf,FyfwGl3eDHc7yw2Nla	(empty)	-	-	-	-	ok
+1598993440.318372	CVQTys2e8jTjdi2drg	10.9.1.101	49841	45.127.222.8	449	TLSv10	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA	x25519	-	F	-	-	T	F6M76M2wDqQldrfIw4	(empty)	O=Internet Widgits Pty Ltd,ST=Some-State,C=AU	O=Internet Widgits Pty Ltd,ST=Some-State,C=AU	-	-	self signed certificate
+1598993441.496934	CIXdTx4z7maBNnkeEa	10.9.1.101	49842	54.221.234.156	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256	secp256r1	api.ipify.org	F	-	FZtbib3l8x1ystI3kj,FwcZye35MeWetibizd,FKUAIQ2DxCfmFQPU64	(empty)	CN=*.ipify.org,OU=PositiveSSL Wildcard,OU=Domain Control Validated	CN=COMODO RSA Domain Validation Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB	-	-	ok
+1598993444.468059	CABf0z2hSu7gDdlfff	10.9.1.101	49843	62.108.35.9	447	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384	secp256r1	-	F	-	-	Fi8GYS3h2Abx3EGXFd	(empty)	CN=example.com,OU=IT Department,O=Global Security,L=London,ST=London,C=GB	CN=example.com,OU=IT Department,O=Global Security,L=London,ST=London,C=GB	self signed certificate
 ...
-
 
 $ cat spl.log
 #separator \x09
@@ -166,28 +167,33 @@ $ cat spl.log
 #empty_field	(empty)
 #unset_field	-
 #path	spl
-#open	2021-02-05-19-26-55
+#open	2021-03-05-17-21-55
 #fields	uid	orig_spl	resp_spl	orig_spt	resp_spt
 #types	string	vector[count]	vector[count]	vector[double]	vector[double]
-CUs6Sq3qciVfv4hbr7	96	-	0.0	-
-COboho3mcULvz2l7yl	40,82,33,847,4129,925	40,64,33,50,50,50,37,747	0.0,0.010955,0.000084,0.000095,0.000525,0.00001	0.0,0.000582,0.044301,0.037286,0.0,0.000232,0.0,0.07704
-CN1TBv4cMtawH69YB5	96,704	96,16464,16464,8752	0.0,0.003638	0.0,0.081352,0.035947,0.006567
-CRUIstLprtERqs8c8	40,82,33,287,4715	40,64,33,50,50,37,11299,33	0.0,0.003105,0.000176,0.000275,0.00025	0.0,0.0,0.071305,0.066583,0.0,0.0,0.017593,0.0
-Ci7d2m2sQ358a9L6ej	40,124,26	40,211,26	0.0,0.003581,0.00268	0.0,0.067068,59.334662
-CRjp3u3mrdzkKLXgfh	40,191,195,26	40,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408	0.0,0.001702,5.499787,65.32597	0.0,0.494461,0.101639,0.047581,0.128764,0.014464,0.138997,0.004323,0.003257,0.1347,0.003941,0.00431,0.079275,0.059136,0.010274,0.000965,0.005644,0.109902,0.023693,0.000138
-Cwhpf01LpV4ChlWZ59	40,82,287,33,4689	40,64,33,50,50,37,11299,33	0.0,0.001331,0.000164,0.000101,0.000109	0.0,0.0,0.073435,0.066108,0.0,0.000109,0.014119,0.0
+CNwRgP1N2P5I3DX9N7	96	-	0.0	-
+C1EVIz4rTQLYYHKtyc	40,82,33,847,4129,925	40,64,33,50,50,50,37,747	0.0,0.010955,0.000084,0.000095,0.000525,0.00001	0.0,0.000582,0.044301,0.037286,0.0,0.000232,0.0,0.07704
+CZT9qf3lju3qjACOyk	96,704	96,16464,16464,8752	0.0,0.003638	0.0,0.081352,0.035947,0.006567
+CrohQs387QUFppjo9	40,82,33,287,4715	40,64,33,50,50,37,11299,33	0.0,0.003105,0.000176,0.000275,0.00025	0.0,0.0,0.071305,0.066583,0.0,0.0,0.017593,0.0
+CIXdTx4z7maBNnkeEa	40,124,26	40,211,26	0.0,0.003581,0.00268	0.0,0.067068,59.334662
+CABf0z2hSu7gDdlfff	40,191,195,26	40,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408	0.0,0.001702,5.499787,65.32597	0.0,0.494461,0.101639,0.047581,0.128764,0.014464,0.138997,0.004323,0.003257,0.1347,0.003941,0.00431,0.079275,0.059136,0.010274,0.000965,0.005644,0.109902,0.023693,0.000138
+CFfJIX22GtVBeFUTi5	40,82,287,33,4689	40,64,33,50,50,37,11299,33	0.0,0.001331,0.000164,0.000101,0.000109	0.0,0.0,0.073435,0.066108,0.0,0.000109,0.014119,0.0
 ...
 ```
 
-The following Z script can join these together by `uid`.
+We also can see that there's exactly one `spl` event for each `ssl` event,
+making it a good match for an inner join. Therefore, the following Z script can
+join these together by `uid`.
 
 ```
 $ cat join-uid-ssl.zs 
 split (
   => filter _path=ssl | sort uid
   => filter _path=spl | sort uid
-) | join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
+) | inner join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
 ```
+
+* **Note**: The leading `inner` could have been left off, as "inner join" is
+the `join` processor's default behavior.
 
 As the name indicates, the `split` processor _splits_ the input stream into
 two separately-processed branches, with each branch marked by the `=>` inside
@@ -202,7 +208,8 @@ that references fields in the respective left/right data sources to determine
 if a pair of records from each should be joined. In this case, since the field
 we're joining on is named `uid` in both data sources, the simple expression
 `uid=uid` suffices. The next argument is a comma-separated list of field names
-or assignments, similar to how the
+or assignments that specify the fields to copy from the right-hand records
+to the left-hand records, similar to how the
 [`cut`](https://github.com/brimsec/zq/tree/master/zql/docs/processors#cut)
 processor is used.
 
@@ -211,7 +218,7 @@ two or more parallel inputs, with each input being wired up in order to each
 branch in our `split`.
 
 ```
-$ zq -z join-uid-ssl.zs -P ssl.log spl.log > ssl-plus-spl.zng
+$ zq -I join-uid-ssl.zs -P ssl.log spl.log > ssl-plus-spl.zng
 ```
 
 If we import this ZNG into Brim, we can see the additional fields are now
@@ -233,17 +240,18 @@ records with `uid` values that did match any records in our right-side `spl`
 data source.
 
 Using the logs we've already generated, we can see the effects of this by
-instead using the Zeek `conn` records as our left-hand data source, since there
-are many non-SSL flows that would have bypassed the SPL-SPT package.
+instead using the Zeek `conn` records as our left-hand data source. Since there
+are many non-SSL flows that would have bypassed the SPL-SPT package, we'll
+instead perform a "left join".
 
 ```
 $ cat join-uid-conn.zs 
 split (
   => filter _path=conn | sort uid
   => filter _path=spl | sort uid
-) | join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
+) | left join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
 
-$ zq -z join-uid-conn.zs -P conn.log spl.log > conn-plus-spl.zng
+$ zq -I join-uid-conn.zs -P conn.log spl.log > conn-plus-spl.zng
 ```
 
 Once again we can import this ZNG into Brim and see how it looks.
@@ -266,44 +274,18 @@ To understand why, it helps to look at our two example `conn` records in
 [ZSON](https://github.com/brimsec/zq/blob/master/zng/docs/zson.md) format.
 
 ```
-$ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
-{
-    _path: "conn",
-    ts: 2020-09-01T21:09:54.901635Z,
-    uid: "CGFVvl3LGf6Bw3lZBa" (bstring),
-    id: {
-        orig_h: 10.9.1.101,
-        orig_p: 54470 (port=(uint16)),
-        resp_h: 10.9.1.1,
-        resp_p: 53 (port)
-    } (=0),
-    proto: "udp" (=zenum),
-    service: "dns" (bstring),
-    duration: 49.816ms,
-    orig_bytes: 48 (uint64),
-    resp_bytes: 157 (uint64),
-    conn_state: "SF" (bstring),
-    local_orig: null (bool),
-    local_resp: null (bool),
-    missed_bytes: 0 (uint64),
-    history: "Dd" (bstring),
-    orig_pkts: 1 (uint64),
-    orig_ip_bytes: 76 (uint64),
-    resp_pkts: 1 (uint64),
-    resp_ip_bytes: 185 (uint64),
-    tunnel_parents: null (1=(|[bstring]|))
-} (=2)
+$ zq -Z 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
 {
     _path: "conn",
     ts: 2020-09-01T21:09:54.95248Z,
-    uid: "Ch7yQn3PwSMC1WcdC5" (bstring),
+    uid: "C0tqJp3BMHBxT0ddPk" (bstring),
     id: {
         orig_h: 10.9.1.101,
-        orig_p: 49885,
+        orig_p: 49885 (port=(uint16)),
         resp_h: 52.114.158.50,
-        resp_p: 443
-    } (0),
-    proto: "tcp" (zenum),
+        resp_p: 443 (port)
+    } (=0),
+    proto: "tcp" (=zenum),
     service: "ssl" (bstring),
     duration: 376.681ms,
     orig_bytes: 3031 (uint64),
@@ -317,32 +299,59 @@ $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
     orig_ip_bytes: 3563 (uint64),
     resp_pkts: 14 (uint64),
     resp_ip_bytes: 7116 (uint64),
-    tunnel_parents: null (1),
+    tunnel_parents: null (1=(|[bstring]|)),
     orig_spl: [
         40 (uint64),
         853 (uint64),
         1846 (uint64)
-    ] (=3),
+    ] (=2),
     resp_spl: [
         40,
         49,
         352
-    ] (3),
+    ] (2),
     orig_spt: [
-        0e+00,
+        0.,
         1.511e-03,
         1.3e-04
-    ] (=4),
+    ],
     resp_spt: [
-        0e+00,
+        0.,
         7.2188e-02,
         6.3113e-02
-    ] (4)
-} (=5)
+    ]
+} (=3)
+{
+    _path: "conn",
+    ts: 2020-09-01T21:09:54.901635Z,
+    uid: "CkPzNIyue1c9ATGN8" (bstring),
+    id: {
+        orig_h: 10.9.1.101,
+        orig_p: 54470,
+        resp_h: 10.9.1.1,
+        resp_p: 53
+    } (0),
+    proto: "udp" (zenum),
+    service: "dns" (bstring),
+    duration: 49.816ms,
+    orig_bytes: 48 (uint64),
+    resp_bytes: 157 (uint64),
+    conn_state: "SF" (bstring),
+    local_orig: null (bool),
+    local_resp: null (bool),
+    missed_bytes: 0 (uint64),
+    history: "Dd" (bstring),
+    orig_pkts: 1 (uint64),
+    orig_ip_bytes: 76 (uint64),
+    resp_pkts: 1 (uint64),
+    resp_ip_bytes: 185 (uint64),
+    tunnel_parents: null (1)
+} (=4)
+
 ```
 
 The presence of the separate [Type Definitions](https://github.com/brimsec/zq/blob/master/zng/docs/zson.md#321-type-definitions)
-`(=2)` and `(=5)` shows us how separate schemas were generated for the two
+`(=3)` and `(=4)` shows us how separate schemas were generated for the two
 record variations produced by the `join`: The ones that matched on `uid` (and
 hence contained the additional SPL-SPT fields) and the ones that didn't.
 Meanwhile, Brim's ability to automatically populate column headers is
@@ -359,9 +368,9 @@ $ cat join-uid-conn-fused.zs
 split (
   => filter _path=conn | sort uid
   => filter _path=spl | sort uid
-) | join uid=uid orig_spl,resp_spl,orig_spt,resp_spt | fuse
+) | left join uid=uid orig_spl,resp_spl,orig_spt,resp_spt | fuse
 
-$ zq -z join-uid-conn-fused.zs -P conn.log spl.log > conn-plus-spl-fused.zng
+$ zq -I join-uid-conn-fused.zs -P conn.log spl.log > conn-plus-spl-fused.zng
 ```
 
 Now when the ZNG is loaded into Brim, we immediately see the column headers
@@ -393,17 +402,19 @@ different diverse schemas, in this case one per Zeek event type.
 
 Let's assume we've followed the [Zeek Customization](https://github.com/brimsec/brim/wiki/Zeek-Customization)
 article to point our Brim at a customized Zeek that includes the SPL-SPT
-package. After having imported our test pcap to Brim and extracted the ZNG as
-a file `results.zng`, let's look at a count of the different Zeek event types we
-find.
+package. After having imported our test pcap to Brim, we then employed the
+workaround in [zq/2088](https://github.com/brimsec/zq/issues/2088) to include
+the timestamp-lacking `spl` events in the time range. Then we extracted the ZNG
+as a file `results.zng`. Let's look at a count of the different Zeek event
+types we find.
 
 ```
 $ zq -f table 'count() by _path | sort -r' results.zng
 _PATH        COUNT
 conn         168
 dns          99
-files        57
-http         19
+files        62
+http         22
 ssl          15
 spl          15
 x509         12
@@ -426,15 +437,15 @@ $ cat join-uid-many.zs
 split (
   => filter _path!=spl | sort uid
   => filter _path=spl | sort uid
-) | join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
+) | left join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
 
-$ zq -z join-uid-many.zs -P results.zng results.zng > results-plus-spl.zng
+$ zq -I join-uid-many.zs -P results.zng results.zng > results-plus-spl.zng
 
 $ zq -f table 'count() by _path | sort -r' results-plus-spl.zng
 _PATH  COUNT
 conn   168
 dns    99
-http   19
+http   22
 ssl    15
 weird  8
 dpd    3
@@ -455,8 +466,8 @@ $ zq -f table 'count() by _path | sort -r' all-results.zng
 _PATH        COUNT
 conn         168
 dns          99
-files        57
-http         19
+files        62
+http         22
 spl          15
 ssl          15
 x509         12
