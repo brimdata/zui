@@ -1,13 +1,8 @@
 export type SearchBarState = {
   current: string
-  previous: string
   pinned: string[]
-  editing: null | number
   error: null | string
-  target: SearchTarget
 }
-
-export type SearchTarget = "events" | "index"
 
 export type SearchBarAction =
   | SEARCH_BAR_CLEAR
@@ -19,8 +14,6 @@ export type SearchBarAction =
   | SEARCH_BAR_PIN_REMOVE_ALL
   | SEARCH_BAR_PINS_SET
   | SEARCH_BAR_PARSE_ERROR
-  | SEARCH_BAR_SUBMIT
-  | SEARCH_BAR_TARGET_SET
 
 export type SEARCH_BAR_CLEAR = {
   type: "SEARCH_BAR_CLEAR"
@@ -42,7 +35,8 @@ export type SEARCH_BAR_PIN = {
 
 export type SEARCH_BAR_PIN_EDIT = {
   type: "SEARCH_BAR_PIN_EDIT"
-  index: number | null
+  index: number
+  value: string
 }
 
 export type SEARCH_BAR_PIN_REMOVE = {
@@ -62,14 +56,4 @@ export type SEARCH_BAR_PINS_SET = {
 export type SEARCH_BAR_PARSE_ERROR = {
   type: "SEARCH_BAR_PARSE_ERROR"
   error: string
-}
-
-export type SEARCH_BAR_SUBMIT = {
-  type: "SEARCH_BAR_SUBMIT"
-  ts: number
-}
-
-export type SEARCH_BAR_TARGET_SET = {
-  type: "SEARCH_BAR_TARGET_SET"
-  target: SearchTarget
 }

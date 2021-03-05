@@ -17,12 +17,12 @@ export function submitSearch(
 ): Thunk<Promise<void>> {
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
-    const record = Search.getCurrentRecord(getState())
+    const record = Search.getRecord(getState())
+    console.log(record)
     const spanArgsFocus = Tab.getSpanFocus(getState())
     const workspaceId = Current.getWorkspaceId(getState())
     const spaceId = Current.getSpaceId(getState())
 
-    dispatch(SearchBar.submittingSearchBar(ts))
     dispatch(Tab.computeSpan(ts))
 
     if (!dispatch(SearchBar.validate())) return Promise.reject()
@@ -34,6 +34,7 @@ export function submitSearch(
         Investigation.push(workspaceId, spaceId, record, brim.time(ts).toTs())
       )
     }
+
     save.history
       ? dispatch(tabHistory.push(url))
       : dispatch(tabHistory.replace(url))

@@ -24,7 +24,7 @@ export type DecodedSearchParams = {
 export const decodeSearchParams = (path: string): DecodedSearchParams => {
   const url = new URLSearchParams(path)
   return {
-    program: url.get("q"),
+    program: url.get("q") || "",
     spanArgs: [url.get("from"), url.get("to")].map(decodeSpanArg) as SpanArgs,
     spanArgsFocus: [url.get("focusFrom"), url.get("focusTo")].map(
       decodeSpanArg

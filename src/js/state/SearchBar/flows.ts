@@ -32,5 +32,9 @@ export default {
       return false
     }
     return true
+  },
+  focus: () => () => {
+    const el = document.getElementById("main-search-input")
+    if (el) el.focus()
   }
 }

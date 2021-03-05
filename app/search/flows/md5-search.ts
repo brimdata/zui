@@ -26,5 +26,5 @@ export const md5Search = (md5: string): Thunk<BrimSearch> => (
     txHostsCorrelation(md5)
   ])
 
-  return dispatch(search({id, query, from, to, spaceId, target: "events"}))
+  return dispatch(search({id, query, from, to, spaceId}))
 }

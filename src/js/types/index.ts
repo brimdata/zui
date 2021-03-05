@@ -1,4 +1,3 @@
-import {SearchTarget} from "../state/SearchBar/types"
 import {SpanArgs} from "../state/Search/types"
 import {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
@@ -101,5 +100,5 @@ export type SearchRecord = {
   spaceId: string
   spaceName: string
   scrollPos?: ScrollPosition
-  target: SearchTarget
+  target?: string
 }

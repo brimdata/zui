@@ -29,8 +29,7 @@ export function InitSearchParams({children}) {
     dispatch(Search.setSpanFocus(url.spanArgsFocus))
     dispatch(
       SearchBarState.restoreSearchBar({
-        current: url.program,
-        previous: url.program,
+        current: url.program || "",
         pinned: url.pins,
         error: null
       })

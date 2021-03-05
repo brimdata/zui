@@ -1,14 +1,14 @@
-import {Thunk} from "../../../src/js/state/types"
+import Url from "src/js/state/Url"
 import {createSearchEntry} from "../../../src/js/brim/searchEntry"
 import {search} from "../../../src/js/flows/search/mod"
-import Current from "../../../src/js/state/Current"
+import {SearchResponse} from "../../../src/js/flows/search/response"
 import ErrorFactory from "../../../src/js/models/ErrorFactory"
-import Last from "../../../src/js/state/Last"
+import chart from "../../../src/js/state/Chart"
+import Current from "../../../src/js/state/Current"
 import Notice from "../../../src/js/state/Notice"
 import Search from "../../../src/js/state/Search"
 import Tabs from "../../../src/js/state/Tabs"
-import chart from "../../../src/js/state/Chart"
-import {SearchResponse} from "../../../src/js/flows/search/response"
+import {Thunk} from "../../../src/js/state/types"
 
 type Args = {
   query: string
@@ -23,9 +23,7 @@ export function histogramSearch({query, from, to}: Args): Thunk<Promise<void>> {
     const state = getState()
 
     const spaceId = Current.mustGetSpace(state).id
-    const {response, promise} = dispatch(
-      search({id, query, from, to, spaceId, target: "events"})
-    )
+    const {response, promise} = dispatch(search({id, query, from, to, spaceId}))
     dispatch(handle(response))
     return promise
   }
@@ -34,8 +32,8 @@ export function histogramSearch({query, from, to}: Args): Thunk<Promise<void>> {
 function handle(response: SearchResponse): Thunk {
   return function(dispatch, getState) {
     const tabId = Tabs.getActive(getState())
-    const current = Search.getCurrentRecord(getState())
-    const previous = Last.getSearch(getState())
+    const current = Search.getRecord(getState())
+    const previous = Url.getSearchParams(getState())
 
     if (shouldClear(current, previous)) dispatch(chart.clear(tabId))
     dispatch(chart.setStatus(tabId, "FETCHING"))

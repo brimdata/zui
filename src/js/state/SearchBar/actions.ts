@@ -8,10 +8,7 @@ import {
   SEARCH_BAR_PIN_REMOVE,
   SEARCH_BAR_PIN_REMOVE_ALL,
   SEARCH_BAR_RESTORE,
-  SEARCH_BAR_SUBMIT,
-  SEARCH_BAR_TARGET_SET,
-  SearchBarState,
-  SearchTarget
+  SearchBarState
 } from "./types"
 
 export default {
@@ -35,9 +32,10 @@ export default {
     type: "SEARCH_BAR_PIN"
   }),
 
-  editSearchBarPin: (index: number | null): SEARCH_BAR_PIN_EDIT => ({
+  editSearchBarPin: (index: number, value: string): SEARCH_BAR_PIN_EDIT => ({
     type: "SEARCH_BAR_PIN_EDIT",
-    index
+    index,
+    value
   }),
 
   removeSearchBarPin: (index: number): SEARCH_BAR_PIN_REMOVE => ({
@@ -57,15 +55,5 @@ export default {
   errorSearchBarParse: (error: string): SEARCH_BAR_PARSE_ERROR => ({
     type: "SEARCH_BAR_PARSE_ERROR",
     error
-  }),
-
-  submittingSearchBar: (ts: Date = new Date()): SEARCH_BAR_SUBMIT => ({
-    type: "SEARCH_BAR_SUBMIT",
-    ts: ts.getTime()
-  }),
-
-  setTarget: (target: SearchTarget): SEARCH_BAR_TARGET_SET => ({
-    type: "SEARCH_BAR_TARGET_SET",
-    target
   })
 }

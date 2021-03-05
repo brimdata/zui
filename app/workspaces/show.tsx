@@ -11,6 +11,7 @@ import {updateStatus} from "src/js/flows/workspace/update-status"
 import Current from "src/js/state/Current"
 import WorkspaceStatuses from "src/js/state/WorkspaceStatuses"
 import styled from "styled-components"
+
 const SpinnerWrap = styled.div`
   width: 100%;
   height: 100%;
@@ -27,7 +28,7 @@ function InitWorkspace({children}) {
   useLayoutEffect(() => {
     dispatch(updateStatus(workspace.id))
   }, [workspace.id])
-  console.log({status})
+
   switch (status) {
     case "disconnected":
       return <ConnectionError workspace={workspace} />

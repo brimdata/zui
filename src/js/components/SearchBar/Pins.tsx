@@ -1,57 +1,82 @@
+import React, {useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
-
-import {fmtProgram} from "../../lib/Program"
-import FilterNode from "../FilterNode"
-import PinIcon from "../../icons/PinIcon"
+import {submitSearch} from "src/js/flows/submitSearch/mod"
 import SearchBar from "../../state/SearchBar"
+import FilterNode from "../FilterNode"
+import PinEdit from "./PinEdit"
 
-export default function Pins() {
+function Pin({index, value}) {
   const dispatch = useDispatch()
-  const prevProgram = useSelector(SearchBar.getSearchBarPreviousInputValue)
-  const pins = useSelector(SearchBar.getSearchBarPins)
-  const editing = useSelector(SearchBar.getSearchBarEditingIndex)
+  const [isEditing, setIsEditing] = useState(false)
 
-  function renderFilter(filter: string, index: number) {
+  function onEdit() {
+    setIsEditing(true)
+  }
+
+  function onCancel() {
+    setIsEditing(false)
+  }
+
+  function onRemove(e) {
+    e.stopPropagation()
+    dispatch(SearchBar.removeSearchBarPin(index))
+  }
+
+  function onSubmit(value) {
+    dispatch(SearchBar.editSearchBarPin(index, value))
+    setIsEditing(false)
+    dispatch(submitSearch())
+    dispatch(SearchBar.focus())
+  }
+
+  function onBlur(value) {
+    setIsEditing(false)
+    dispatch(SearchBar.editSearchBarPin(index, value))
+  }
+
+  if (isEditing) {
     return (
-      <FilterNode
-        key={index}
-        filter={filter}
-        focused={editing === index}
-        pending={index === -1}
-        onClick={() => {
-          dispatch(SearchBar.editSearchBarPin(index))
-        }}
-        onRemoveClick={(e) => {
-          e.stopPropagation()
-          dispatch(SearchBar.removeSearchBarPin(index))
-        }}
+      <PinEdit
+        onCancel={onCancel}
+        onSubmit={onSubmit}
+        defaultValue={value}
+        onBlur={onBlur}
+      />
+    )
+  } else {
+    return (
+      <PinShow
+        index={index}
+        value={value}
+        onClick={onEdit}
+        onRemoveClick={onRemove}
+        onFocus={onEdit}
       />
     )
   }
+}
 
-  function renderPinButton() {
-    return (
-      <div className="pin-button-wrapper">
-        <span onClick={() => dispatch(SearchBar.editSearchBarPin(null))}>
-          {fmtProgram(prevProgram)}
-        </span>
-        <button
-          className="pin-button"
-          title="⌘K"
-          onClick={() => dispatch(SearchBar.pinSearchBar())}
-        >
-          <PinIcon />
-        </button>
-      </div>
-    )
-  }
+function PinShow({index, value, onClick, onRemoveClick, onFocus}) {
+  return (
+    <FilterNode
+      onFocus={onFocus}
+      key={index}
+      filter={value}
+      onClick={onClick}
+      onRemoveClick={onRemoveClick}
+    />
+  )
+}
+
+export default function Pins() {
+  const pins = useSelector(SearchBar.getSearchBarPins)
 
   if (pins.length === 0) return null
   return (
     <div className="pins">
-      {pins.map(renderFilter)}
-      {renderPinButton()}
+      {pins.map((value, index) => {
+        return <Pin value={value} index={index} key={index} />
+      })}
     </div>
   )
 }

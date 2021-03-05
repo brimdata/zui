@@ -9,11 +9,8 @@ export default {
       dispatch(
         SearchBar.restoreSearchBar({
           current: record.program,
-          previous: "",
           pinned: record.pins,
-          editing: null,
-          error: null,
-          target: record.target
+          error: null
         })
       )
       dispatch(Search.setSpanArgs(record.spanArgs))

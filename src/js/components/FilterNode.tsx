@@ -1,4 +1,4 @@
-import React, {MouseEvent} from "react"
+import React, {MouseEvent, FocusEvent} from "react"
 import styled from "styled-components"
 import {CircleCloseButton} from "./CircleCloseButton"
 
@@ -8,6 +8,7 @@ type Props = {
   pending?: boolean
   onClick?: (e: MouseEvent) => void
   onRemoveClick?: (e: MouseEvent) => void
+  onFocus?: (e: FocusEvent) => void
 }
 
 const ButtonWrap = styled.div`
@@ -25,11 +26,14 @@ export default class FilterNode extends React.PureComponent<Props> {
     const classNames = ["filter-node"]
     if (this.props.focused) classNames.push("focused")
 
-    if (this.props.pending) classNames.push("pending")
-
     return (
       <div className={classNames.join(" ")} onClick={this.props.onClick}>
-        <p>{this.props.filter}</p>
+        <p
+          tabIndex={0}
+          onFocus={(e) => this.props.onFocus && this.props.onFocus(e)}
+        >
+          {this.props.filter}
+        </p>
         {this.props.onRemoveClick && (
           <ButtonWrap>
             <CircleCloseButton

@@ -1,6 +1,6 @@
 import {createSelector} from "reselect"
 
-import {SearchBarState, SearchTarget} from "./types"
+import {SearchBarState} from "./types"
 import {State} from "../types"
 import {TabState} from "../Tab/types"
 import Tabs from "../Tabs"
@@ -22,18 +22,6 @@ export const getSearchBarPins = createSelector<State, SearchBarState, string[]>(
   (searchBar) => searchBar.pinned
 )
 
-export const getSearchBarPreviousInputValue = createSelector<
-  State,
-  SearchBarState,
-  string
->(getSearchBar, (searchBar) => searchBar.previous)
-
-export const getSearchBarEditingIndex = createSelector<
-  State,
-  SearchBarState,
-  number | null
->(getSearchBar, (searchBar) => searchBar.editing)
-
 export const getSearchBarError = createSelector<
   State,
   SearchBarState,
@@ -42,11 +30,6 @@ export const getSearchBarError = createSelector<
 
 export const getSearchProgram = createSelector<State, string[], string, string>(
   getSearchBarPins,
-  getSearchBarPreviousInputValue,
-  (pinned, prev) => brim.program(prev, pinned).string() || "*"
-)
-
-export const getTarget = createSelector<State, SearchBarState, SearchTarget>(
-  getSearchBar,
-  (state) => state.target
+  getSearchBarInputValue,
+  (pinned, program) => brim.program(program, pinned).string() || "*"
 )

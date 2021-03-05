@@ -1,151 +1,81 @@
-import {SearchBarAction, SearchBarState} from "./types"
+import {createReducer} from "@reduxjs/toolkit"
 import {indexInBounds} from "../../lib/Array"
 import {onlyWhitespace} from "../../lib/Str"
+import {
+  SearchBarState,
+  SEARCH_BAR_INPUT_CHANGE,
+  SEARCH_BAR_PARSE_ERROR,
+  SEARCH_BAR_PINS_SET,
+  SEARCH_BAR_PIN_EDIT,
+  SEARCH_BAR_PIN_REMOVE,
+  SEARCH_BAR_RESTORE
+} from "./types"
 
 const init: SearchBarState = {
   current: "",
-  previous: "",
   pinned: [],
-  editing: null,
-  error: null,
-  target: "events"
+  error: null
 }
 
-export default function reducer(
-  state: SearchBarState = init,
-  action: SearchBarAction
-): SearchBarState {
-  switch (action.type) {
-    case "SEARCH_BAR_CLEAR":
-      return {...init}
+const reducer = createReducer(init, (builder) => {
+  builder.addCase("SEARCH_BAR_CLEAR", (_) => {
+    return {...init}
+  })
 
-    case "SEARCH_BAR_RESTORE":
-      return {
-        ...state,
-        ...action.value
-      }
+  builder.addCase("SEARCH_BAR_RESTORE", (state, action: SEARCH_BAR_RESTORE) => {
+    return {...state, ...action.value}
+  })
 
-    case "SEARCH_BAR_TARGET_SET":
-      return {
-        ...state,
-        target: action.target
-      }
+  builder.addCase(
+    "SEARCH_BAR_INPUT_CHANGE",
+    (state, action: SEARCH_BAR_INPUT_CHANGE) => {
+      state.current = action.value
+    }
+  )
 
-    case "SEARCH_BAR_INPUT_CHANGE":
-      if (state.editing === null) {
-        return {
-          ...state,
-          current: action.value
-        }
-      } else {
-        const newPins = [...state.pinned]
-        newPins[state.editing] = action.value
-        return {
-          ...state,
-          current: action.value,
-          pinned: newPins
+  builder.addCase(
+    "SEARCH_BAR_PIN_EDIT",
+    (state, {index, value}: SEARCH_BAR_PIN_EDIT) => {
+      if (indexInBounds(index, state.pinned)) {
+        if (value.trim() === "") {
+          state.pinned.splice(index, 1)
+        } else {
+          state.pinned[index] = value
         }
       }
+    }
+  )
 
-    case "SEARCH_BAR_PIN":
-      if (onlyWhitespace(state.current)) return state
-      else
-        return {
-          ...state,
-          pinned: [...state.pinned, state.current],
-          current: "",
-          previous: "",
-          editing: null
-        }
+  builder.addCase("SEARCH_BAR_PIN", (state) => {
+    if (onlyWhitespace(state.current)) return
+    state.pinned.push(state.current)
+    state.current = ""
+  })
 
-    case "SEARCH_BAR_PIN_EDIT":
-      if (action.index === null) {
-        return {
-          ...state,
-          current: state.previous,
-          editing: null
-        }
-      }
+  builder.addCase(
+    "SEARCH_BAR_PIN_REMOVE",
+    (state, action: SEARCH_BAR_PIN_REMOVE) => {
+      state.pinned.splice(action.index, 1)
+    }
+  )
 
-      if (indexInBounds(action.index, state.pinned)) {
-        return {
-          ...state,
-          current: state.pinned[action.index],
-          editing: action.index
-        }
-      } else {
-        throw new Error(
-          `Trying to edit a pin that does not exist: ${action.index}`
-        )
-      }
+  builder.addCase("SEARCH_BAR_PIN_REMOVE_ALL", (state) => {
+    state.pinned = []
+  })
 
-    case "SEARCH_BAR_PIN_REMOVE":
-      var removeIndex = action.index
+  builder.addCase(
+    "SEARCH_BAR_PINS_SET",
+    (state, {pinned}: SEARCH_BAR_PINS_SET) => {
+      state.pinned = pinned
+    }
+  )
 
-      if (indexInBounds(removeIndex, state.pinned)) {
-        return {
-          ...state,
-          pinned: state.pinned.filter((_e, i) => i != removeIndex),
-          editing: null
-        }
-      } else if (action.index === null) {
-        return {
-          ...state,
-          current: "",
-          editing: null,
-          previous: ""
-        }
-      } else {
-        throw new Error(
-          `Trying to remove a pin that does not exist: ${action.index}`
-        )
-      }
+  builder.addCase(
+    "SEARCH_BAR_PARSE_ERROR",
+    (state, {error}: SEARCH_BAR_PARSE_ERROR) => {
+      state.error = error
+    }
+  )
+})
 
-    case "SEARCH_BAR_PIN_REMOVE_ALL":
-      return {
-        ...state,
-        editing: null,
-        pinned: [],
-        previous: ""
-      }
-
-    case "SEARCH_BAR_SUBMIT":
-      if (state.editing === null) {
-        return {
-          ...state,
-          previous: state.current,
-          pinned: state.pinned.filter((s) => !onlyWhitespace(s)),
-          error: null
-        }
-      } else {
-        if (state.pinned.some(onlyWhitespace)) {
-          return {
-            ...state,
-            editing: null,
-            current: state.previous,
-            pinned: state.pinned.filter((s) => !onlyWhitespace(s)),
-            error: null
-          }
-        }
-        return {
-          ...state,
-          error: null
-        }
-      }
-
-    case "SEARCH_BAR_PINS_SET":
-      return {
-        ...state,
-        pinned: [...action.pinned]
-      }
-
-    case "SEARCH_BAR_PARSE_ERROR":
-      return {
-        ...state,
-        error: action.error
-      }
-
-    default:
-      return state
-  }
-}
+export default reducer
