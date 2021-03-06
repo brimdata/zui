@@ -3,7 +3,6 @@ import brim, {BrimSpace, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
 import Chart from "../Chart"
 import Current from "../Current"
-import History from "../History"
 import {SpanArgs} from "../Search/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
@@ -78,9 +77,6 @@ export default {
     const s = Current.mustGetSpace(state)
     return s ? s.name : ""
   },
-  currentEntry: activeTabSelect(History.current),
-  canGoBack: activeTabSelect(History.canGoBack),
-  canGoForward: activeTabSelect(History.canGoForward),
   isFetching: activeTabSelect<boolean>(tabIsFetching),
   getSpan,
   getSpanAsDates,

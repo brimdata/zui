@@ -100,5 +100,5 @@ export type SearchRecord = {
   spaceId: string
   spaceName: string
   scrollPos?: ScrollPosition
-  target?: string
+  target?: string // deprecated
 }
