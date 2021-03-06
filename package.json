@@ -15,7 +15,7 @@
     "test": "jest",
     "test:api": "node scripts/test/api",
     "itest": "jest --config=itest/config.json --runInBand --verbose",
-    "lint": "eslint .",
+    "lint": "eslint . --cache",
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "tsc": "tsc",
     "format-check": "npm run format && git diff --exit-code -- src itest",
