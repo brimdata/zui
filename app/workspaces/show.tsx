@@ -1,9 +1,10 @@
 import LakeHome from "app/lakes/home"
 import LakeShow from "app/lakes/show"
 import {lakeImport, lakeShow} from "app/router/routes"
+import {lakeImportPath} from "app/router/utils/paths"
 import React, {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {Route, Switch} from "react-router"
+import {Redirect, Route, Switch, useRouteMatch} from "react-router"
 import ConnectionError from "src/js/components/ConnectionError"
 import Login from "src/js/components/Login"
 import MacSpinner from "src/js/components/MacSpinner"
@@ -47,6 +48,7 @@ function InitWorkspace({children}) {
 }
 
 export default function WorkspaceShow() {
+  const match = useRouteMatch<{workspaceId: string}>()
   return (
     <InitWorkspace>
       <Switch>
@@ -56,7 +58,9 @@ export default function WorkspaceShow() {
         <Route path={lakeShow.path}>
           <LakeShow />
         </Route>
-        <Route default>I am here!</Route>
+        <Route default>
+          <Redirect to={lakeImportPath(match.params.workspaceId)} />
+        </Route>
       </Switch>
     </InitWorkspace>
   )
