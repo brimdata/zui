@@ -16,7 +16,7 @@ type Args = {
   query: string
   from: Date
   to: Date
-  isBlocking?: boolean
+  keep?: boolean
   append?: boolean
 }
 
@@ -24,11 +24,11 @@ const id = "Table"
 
 export function viewerSearch(args: Args): Thunk<Promise<void>> {
   return (dispatch, getState) => {
-    const {query, from, to, isBlocking, append} = args
+    const {query, from, to, keep, append} = args
     const tabId = Tabs.getActive(getState())
     const spaceId = Current.mustGetSpace(getState()).id
     const {response, promise} = dispatch(search({id, query, from, to, spaceId}))
-    dispatch(handle(response, tabId, isBlocking, append))
+    dispatch(handle(response, tabId, keep, append))
     return promise
   }
 }
@@ -36,7 +36,7 @@ export function viewerSearch(args: Args): Thunk<Promise<void>> {
 function handle(
   response: SearchResponse,
   tabId: string,
-  isBlocking = false,
+  keep = false,
   append = false
 ): Thunk {
   return function(dispatch) {
@@ -44,7 +44,7 @@ function handle(
     let allRecords = []
     let count = 0
 
-    if (!append && !isBlocking) {
+    if (!keep && !append) {
       dispatch(Viewer.clear(tabId))
     }
 
@@ -61,7 +61,7 @@ function handle(
           columns[hash] = schema
         }
 
-        if (isBlocking) {
+        if (keep) {
           allColumns = columns
           allRecords = records
           return
@@ -81,7 +81,8 @@ function handle(
         dispatch(Notice.set(ErrorFactory.create(error)))
       })
       .end(() => {
-        if (isBlocking) {
+        if (keep) {
+          dispatch(Viewer.clear(tabId))
           dispatch(Viewer.setRecords(tabId, allRecords))
           dispatch(Viewer.setColumns(tabId, allColumns))
           dispatch(Columns.touch(allColumns))

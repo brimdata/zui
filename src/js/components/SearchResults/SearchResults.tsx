@@ -12,7 +12,7 @@ export default function SearchResults() {
 
   useLayoutEffect(() => {
     dispatch(initialViewerSearch())
-  }, [location])
+  }, [location.key])
 
   return (
     <div className="search-results" ref={ref}>

@@ -34,20 +34,13 @@ beforeEach(() => {
   zealot.stubStream("search", countByPathResp)
 })
 
-const submit = () =>
-  dispatch(
-    histogramSearch({
-      query: "dns query | every 1s count() by _path",
-      from: new Date(),
-      to: new Date()
-    })
-  )
+const submit = () => dispatch(histogramSearch())
 
 test("zealot gets the request", async () => {
   await submit()
   const calls = zealot.calls("search")
   expect(calls.length).toBe(1)
-  expect(calls[0].args).toEqual("dns query | every 1s count() by _path")
+  expect(calls[0].args).toEqual("* | every 12hr count() by _path")
 })
 
 test("the chart status updates", async () => {

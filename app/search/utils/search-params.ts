@@ -1,24 +1,32 @@
 import {TimeArg, SpanArgs} from "src/js/state/Search/types"
 
-export const encodeSearchParams = ({
-  program,
-  pins,
-  spanArgs,
-  spanArgsFocus
-}: Partial<DecodedSearchParams>) => {
-  const p = new URLSearchParams()
-  if (program) p.append("q", program)
-  encodeSpan(p, spanArgs, "from", "to")
-  encodeSpan(p, spanArgsFocus, "focusFrom", "focusTo")
-  encodePins(p, pins || [])
-  return p.toString()
-}
+/**
+ * This could be it's own folder now called search-params-encoder
+ * With another file called utils that has all the helper functions
+ */
 
 export type DecodedSearchParams = {
   program: string
   pins: string[]
   spanArgs: Partial<SpanArgs>
   spanArgsFocus: Partial<SpanArgs>
+  keep: boolean
+}
+
+export const encodeSearchParams = ({
+  program,
+  pins,
+  spanArgs,
+  spanArgsFocus,
+  keep
+}: Partial<DecodedSearchParams>) => {
+  const p = new URLSearchParams()
+  if (program) p.append("q", program)
+  encodeSpan(p, spanArgs, "from", "to")
+  encodeSpan(p, spanArgsFocus, "focusFrom", "focusTo")
+  encodePins(p, pins || [])
+  encodeBool(p, keep, "keep")
+  return p.toString()
 }
 
 export const decodeSearchParams = (path: string): DecodedSearchParams => {
@@ -29,8 +37,20 @@ export const decodeSearchParams = (path: string): DecodedSearchParams => {
     spanArgsFocus: [url.get("focusFrom"), url.get("focusTo")].map(
       decodeSpanArg
     ) as SpanArgs,
-    pins: decodePins(url)
+    pins: decodePins(url),
+    keep: decodeBool(url, "keep")
   }
+}
+
+export function encodeBool(params, value, name) {
+  if (value) {
+    params.set(name, "true")
+  }
+}
+
+export function decodeBool(params, name) {
+  const value = params.get(name)
+  return value === "true"
 }
 
 export function decodeSpanParams(

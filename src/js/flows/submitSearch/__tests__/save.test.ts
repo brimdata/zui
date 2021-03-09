@@ -48,6 +48,7 @@ test("Always updates url", async () => {
     Current.getHistory(store.getState()).location.search
   )
   expect(record).toEqual({
+    keep: false,
     pins: ["dns"],
     program: "query",
     spanArgs: brim.space(space).defaultSpanArgs(),

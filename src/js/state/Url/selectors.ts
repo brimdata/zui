@@ -15,6 +15,7 @@ export type SearchParams = {
   pins: []
   spanArgs: SpanArgs
   spanArgsFocus: Span | null
+  keep: boolean
 }
 
 export const getSearchParams = createSelector<

@@ -5,7 +5,9 @@ import {lakeSearch, lakeSummary} from "app/router/routes"
 import {lakeSearchPath, lakeSummaryPath} from "app/router/utils/paths"
 import {capitalize} from "lodash"
 import React from "react"
+import {useSelector} from "react-redux"
 import {useHistory, useRouteMatch} from "react-router"
+import Feature from "src/js/state/Feature"
 import Label from "./label"
 import SwitchButton from "./switch-button"
 import Option from "./switch-button-option"
@@ -26,6 +28,8 @@ export default function MainViewSwitch() {
     if (view === "summary") url = lakeSummaryPath(lakeId, workspaceId)
     url && history.push(url)
   }
+
+  if (!useSelector(Feature.show("summary"))) return null
 
   return (
     <div>

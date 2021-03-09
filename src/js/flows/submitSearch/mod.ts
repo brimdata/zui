@@ -18,7 +18,6 @@ export function submitSearch(
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getRecord(getState())
-    console.log(record)
     const spanArgsFocus = Tab.getSpanFocus(getState())
     const workspaceId = Current.getWorkspaceId(getState())
     const spaceId = Current.getSpaceId(getState())

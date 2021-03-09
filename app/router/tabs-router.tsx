@@ -83,7 +83,6 @@ export default class TabsRouter extends React.Component<Props, State> {
     // but the location changed (tab switch), the state.location will be stale.
     // For this reason, we always use the current history's location. Works everytime.
     const location = history.location
-    console.log("URL:", history.createHref(location))
     return (
       <RouterContext.Provider
         value={{

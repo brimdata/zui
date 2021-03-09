@@ -39,7 +39,7 @@ export class Record implements ZngClass<Type[] | null> {
   }
 
   toString() {
-    return "[Record]"
+    return JSON.stringify(this.value)
   }
 
   getColumns() {
