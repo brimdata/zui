@@ -89,7 +89,7 @@ export default function ResultsTable(props: Props) {
     return (
       <LogRow
         columns={props.tableColumns}
-        key={logs[index].get("ts").toString() + index}
+        key={index}
         index={index}
         log={logs[index]}
         timeZone={props.timeZone}
