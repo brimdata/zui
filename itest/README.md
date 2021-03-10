@@ -28,7 +28,7 @@ You can also run individual files like:
 `npm run itest -- itest/tests/smoke.test.ts`
 
 See `npm run itest -- --help` for more, or see [Jest
-docs](https://jestjs.io/docs/en/24.x/getting-started).
+docs](https://jestjs.io/docs/getting-started).
 
 # Code Layout
 
@@ -72,7 +72,7 @@ The mechanism to do this is:
 
 Don't forget to `git add` any changes to snapshots. You must add
 mikesbrown as a reviewer when changing snapshots. [Jest
-docs](https://jestjs.io/docs/en/24.x/snapshot-testing#1-treat-snapshots-as-code)
+docs](https://jestjs.io/docs/snapshot-testing#1-treat-snapshots-as-code)
 even say to review these as carefully as code.
 
 If you want to patch JSON by hand, you're on your own to make Jest
