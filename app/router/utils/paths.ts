@@ -11,27 +11,27 @@ export function workspacePath(id: string) {
   return `/workspaces/${id}`
 }
 
-export function lakeImportPath(parentId: string) {
-  return `${workspacePath(parentId)}/lakes/import`
+export function lakeImportPath(workspaceId: string) {
+  return `${workspacePath(workspaceId)}/lakes/import`
 }
 
-export function lakePath(id: string, parentId: string) {
-  return `${workspacePath(parentId)}/lakes/${id}`
+export function lakePath(id: string, workspaceId: string) {
+  return `${workspacePath(workspaceId)}/lakes/${id}`
 }
 
 type Params = Partial<DecodedSearchParams>
 export function lakeSearchPath(
   id: string,
-  parentId: string,
+  workspaceId: string,
   params: Params = {}
 ) {
-  return `${lakePath(id, parentId)}/search?${encodeSearchParams(params)}`
+  return `${lakePath(id, workspaceId)}/search?${encodeSearchParams(params)}`
 }
 
 export function lakeSummaryPath(
   id: string,
-  parentId: string,
+  workspaceId: string,
   params: Params = {}
 ) {
-  return `${lakePath(id, parentId)}/summary?${encodeSearchParams(params)}`
+  return `${lakePath(id, workspaceId)}/summary?${encodeSearchParams(params)}`
 }
