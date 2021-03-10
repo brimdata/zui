@@ -2,10 +2,11 @@ import useResizeEffect from "app/core/hooks/useResizeEffect"
 import Icon from "app/core/Icon"
 import MeasureLayer from "app/core/MeasureLayer"
 import React, {RefCallback, useLayoutEffect, useState} from "react"
+import {useLocation} from "react-router"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {showContextMenu} from "src/js/lib/System"
 import styled from "styled-components"
-import {toMenu, ActionButtonProps} from "./action-button"
+import {ActionButtonProps, toMenu} from "./action-button"
 import ActionButtons, {GUTTER} from "./action-buttons"
 import Button from "./button"
 
@@ -61,11 +62,11 @@ function useSplitIndex(
 
 type Props = {
   actions: ActionButtonProps[]
-  locationKey: string
 }
 
-export default function ResponsiveActions({actions, locationKey}: Props) {
-  const [setParent, widths] = useWidthsCache([actions.length, locationKey])
+export default function ResponsiveActions({actions}: Props) {
+  const location = useLocation()
+  const [setParent, widths] = useWidthsCache([actions.length, location.key])
   const [setResize, splitIndex] = useSplitIndex(widths)
   const visible = [...actions]
   const hidden = visible.splice(splitIndex)
