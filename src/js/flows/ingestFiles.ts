@@ -202,12 +202,8 @@ const trackProgress = (client, gDispatch, workspaceId) => {
             break
         }
       }
+      await updateSpaceDetails()
       gDispatch(space.setIngestProgress(1))
-      // The progress bar has a transition of 1 second. I think people are
-      // psychologically comforted when they see the progress bar complete.
-      // That is why we sleep here. It should be moved into the search
-      // progress component
-      await lib.sleep(1500)
       gDispatch(space.setIngestProgress(null))
     }
   }
