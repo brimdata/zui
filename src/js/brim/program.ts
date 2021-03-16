@@ -118,7 +118,7 @@ export default function(p = "", pins: string[] = []) {
 
     hasAnalytics() {
       for (const proc of this.ast().getProcs()) {
-        if (!TUPLE_PROCS.includes(proc.op)) return true
+        if (!TUPLE_PROCS.includes(proc.kind)) return true
       }
       return false
     }

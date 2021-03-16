@@ -47,7 +47,7 @@ export const hasGroupByProc = (program: Program) => {
 }
 
 export const getGroupByProc = (ast: any) => {
-  return brim.ast(ast).proc("GroupByProc")
+  return brim.ast(ast).proc("Summarize")
 }
 
 function joinProcs(procs: string[]) {
