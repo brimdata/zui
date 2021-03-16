@@ -19,13 +19,17 @@ beforeEach(() => {
       name: "sample.pcap.brim",
       id: "spaceId"
     })
-    .stubPromise("spaces.get", {
-      name: "sample.pcap.brim",
-      id: "spaceId",
-      min_time: {ns: 0, sec: 0},
-      max_time: {ns: 1, sec: 1},
-      pcap_support: true
-    })
+    .stubPromise(
+      "spaces.get",
+      {
+        name: "sample.pcap.brim",
+        id: "spaceId",
+        min_time: {ns: 0, sec: 0},
+        max_time: {ns: 1, sec: 1},
+        pcap_support: true
+      },
+      "always"
+    )
     .stubPromise("spaces.delete", true)
   const ws = fixtures("workspace1")
 
