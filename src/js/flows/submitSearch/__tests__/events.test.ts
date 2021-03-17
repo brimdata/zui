@@ -54,7 +54,7 @@ describe("table search", () => {
 
     const calls = zealot.calls("search")
     expect(calls.length).toBe(2)
-    expect(calls[0].args).toEqual("dns query | every 1sec count() by _path")
+    expect(calls[0].args).toEqual("dns query | every 1s count() by _path")
     expect(calls[1].args).toEqual("dns query | head 500")
   })
 
