@@ -77,7 +77,7 @@ jobs:
       # is no different than the normal CI flow.
       - uses: actions/setup-go@v2
         with:
-          go-version: '1.14'
+          go-version: '1.16'
       - uses: denolib/setup-deno@v2
         with:
           deno-version: v1.7.2
