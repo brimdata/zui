@@ -4,11 +4,12 @@ import histogramInterval from "../lib/histogramInterval"
 export function addEveryCountProc(program: string, span: DateSpan) {
   const BOOM_INTERVALS = {
     millisecond: "ms",
-    second: "sec",
-    minute: "min",
-    hour: "hr",
-    day: "day",
-    month: "month"
+    second: "s",
+    minute: "m",
+    hour: "h",
+    day: "d",
+    week: "w",
+    year: "y"
   }
   const {number, unit} = histogramInterval(span)
 
