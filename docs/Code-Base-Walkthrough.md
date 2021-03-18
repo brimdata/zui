@@ -112,7 +112,7 @@ Additionally, we rely heavily on the node modules listed here:
 
 - [Redux](https://redux.js.org/introduction/getting-started)
 - [Redux Thunk](https://github.com/reduxjs/redux-thunk) A small utility to allow for async actions
-- [Immer](https://immerjs.github.io/immer/docs/introduction) Used in reducers to work with immutable state in a more convenient way
+- [Immer](https://immerjs.github.io/immer/) Used in reducers to work with immutable state in a more convenient way
 
 **Testing**
 
