@@ -1,18 +1,15 @@
 import React, {useEffect, useRef, useState} from "react"
-
-import {RowRenderer, ScrollPosition, ViewerDimens} from "../../types"
+import {zng} from "zealot"
+import lib from "../../lib"
+import ScrollHooks from "../../lib/ScrollHooks"
+import TableColumns from "../../models/TableColumns"
 import {reactElementProps} from "../../test/integration"
+import {RowRenderer, ScrollPosition, ViewerDimens} from "../../types"
+import useConst from "../hooks/useConst"
 import Chunk from "./Chunk"
 import Chunker from "./Chunker"
 import Header from "./Header"
-import ScrollHooks from "../../lib/ScrollHooks"
 import * as Styler from "./Styler"
-import TableColumns from "../../models/TableColumns"
-import lib from "../../lib"
-import useConst from "../hooks/useConst"
-import {useDispatch} from "react-redux"
-import History from "../../state/History"
-import {zng} from "zealot"
 
 type Props = {
   chunker: Chunker
@@ -29,7 +26,6 @@ type Props = {
 }
 
 export default function Viewer(props: Props) {
-  const dispatch = useDispatch()
   const [scrollLeft, setScrollLeft] = useState(0)
   const [chunks, setChunks] = useState(props.chunker.visibleChunks(0))
   const ref = useRef<HTMLDivElement>()
@@ -38,9 +34,9 @@ export default function Viewer(props: Props) {
   }
 
   function onScrollStop() {
-    const view = ref.current
     lib.doc.id("tooltip-root").style.display = "block"
-    if (view) dispatch(History.update({x: view.scrollLeft, y: view.scrollTop}))
+    // const view = ref.current
+    // if (view) // Todo, save scroll position in redux using the location key
   }
 
   const scrollHooks = useConst(null, () =>

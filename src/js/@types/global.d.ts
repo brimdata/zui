@@ -1,4 +1,6 @@
+import Histories from "app/core/models/histories"
 import {FeatureName} from "../state/Feature"
+import {BrowserHistory} from "history"
 
 declare global {
   namespace NodeJS {
@@ -11,6 +13,8 @@ declare global {
       windowName: "search" | "detail" | "about"
       getState: () => any
       feature: (name: FeatureName, value: boolean) => void
+      tabHistories: Histories
+      windowHistory: BrowserHistory
     }
 
     interface Process {

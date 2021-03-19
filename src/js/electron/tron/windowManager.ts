@@ -124,8 +124,8 @@ export default function windowManager(
         return
       }
 
-      const {host, port} = searchParams
-      const win = this.openWindow("search", {query: {host, port}})
+      const {href} = searchParams
+      const win = this.openWindow("search", {query: {href}})
       win.ref.webContents.once("did-finish-load", () => {
         sendTo(
           win.ref.webContents,

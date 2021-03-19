@@ -3,6 +3,8 @@ import Handlers from "../state/Handlers"
 import rpc from "../electron/rpc"
 import {getZealot} from "./getZealot"
 import Current from "../state/Current"
+import {workspacePath} from "app/router/utils/paths"
+import tabHistory from "app/router/tab-history"
 
 export default (): Thunk<Promise<any[]>> => (dispatch, getState) => {
   const current = Current.getWorkspace(getState())
@@ -13,7 +15,8 @@ export default (): Thunk<Promise<any[]>> => (dispatch, getState) => {
 
   // if current space id is among ingesting spaces, clear it
   const currentSpaceId = Current.getSpaceId(getState())
-  if (spaceIds.includes(currentSpaceId)) dispatch(Current.setSpaceId(null))
+  if (spaceIds.includes(currentSpaceId))
+    dispatch(tabHistory.replace(workspacePath(current.id)))
 
   return Promise.all(
     spaceIds.map((id) => {

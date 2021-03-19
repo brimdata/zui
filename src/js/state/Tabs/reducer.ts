@@ -1,12 +1,11 @@
-import {isEmpty} from "lodash"
 import produce from "immer"
-
-import {AddTabData, TabActions, TabsState} from "./types"
-import {TabState} from "../Tab/types"
-import {last} from "../../lib/Array"
-import lib from "../../lib"
-import tabReducer from "../Tab/reducer"
+import {isEmpty} from "lodash"
 import {AnyAction} from "redux"
+import lib from "../../lib"
+import {last} from "../../lib/Array"
+import tabReducer from "../Tab/reducer"
+import {TabState} from "../Tab/types"
+import {TabActions, TabsState} from "./types"
 
 const firstTab = tabReducer(undefined, {type: "INIT"})
 const init = {
@@ -20,12 +19,12 @@ export default function reducer(state: TabsState = init, action: TabActions) {
 
   switch (action.type) {
     case "TABS_ACTIVATE":
-      if (state.data.map((t) => t.id).includes(action.id))
+      if (state.data.map((t) => t.id).includes(action.id)) {
         return {
           ...state,
           active: action.id
         }
-      else {
+      } else {
         return state
       }
     case "TABS_REMOVE":
@@ -57,14 +56,10 @@ export default function reducer(state: TabsState = init, action: TabActions) {
   }
 }
 
-function addTabData(stateData, {id, data}: {id: string; data: AddTabData}) {
+function addTabData(stateData, {id}: {id: string}) {
   const initialState = tabReducer(undefined, {type: "INIT"})
   const tab = produce(initialState, (draft) => {
     draft.id = id
-    if (data) {
-      draft.current.workspaceId = data.workspaceId
-      draft.current.spaceId = data.spaceId
-    }
   })
   return [...stateData, tab]
 }
@@ -76,7 +71,6 @@ function removeTab(state: TabsState, id) {
     const index = indexOf(state.data, id)
     const lastTab = index + 1 === state.data.length
     const active = lastTab ? last(data).id : data[index].id
-
     return {data, active}
   } else {
     return {data, active: state.active}

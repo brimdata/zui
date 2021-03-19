@@ -73,6 +73,7 @@ const HeaderRow = styled(Row)`
 const count = cssVar("--havelock") as string
 
 const Bar = styled.div<{top: number; percent: number; opacity: number}>`
+  transition: width 500ms;
   left: 1px;
   top: ${(p) => p.top + 23 + 20}px;
   position: absolute;

@@ -4,6 +4,8 @@ import onIdle from "on-idle"
 
 import Tabs from "../../state/Tabs"
 import {ipcRenderer} from "electron"
+import {lakeImportPath, workspacesPath} from "app/router/utils/paths"
+import useWorkspaceId from "app/router/hooks/use-workspace-id"
 
 export default function(count: number, calcWidths: Function) {
   const trueActiveId = useSelector(Tabs.getActive)
@@ -11,6 +13,7 @@ export default function(count: number, calcWidths: Function) {
   const [activeId, setActive] = useState(trueActiveId)
   const removedByClick = useRef(false)
   const dispatch = useDispatch()
+  const workspaceId = useWorkspaceId()
 
   useEffect(() => {
     if (!removedByClick.current) calcWidths()
@@ -24,7 +27,8 @@ export default function(count: number, calcWidths: Function) {
     activeId,
 
     onAddClick() {
-      dispatch(Tabs.new())
+      const path = workspaceId ? lakeImportPath(workspaceId) : workspacesPath()
+      dispatch(Tabs.new(path))
     },
 
     onRemoveClick(event: MouseEvent, id: string) {

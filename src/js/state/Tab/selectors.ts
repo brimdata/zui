@@ -1,17 +1,17 @@
 import {createSelector} from "reselect"
-
-import {Workspace} from "../Workspaces/types"
+import brim, {BrimSpace, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
-import {SpanArgs} from "../Search/types"
-import {State} from "../types"
-import {TabState} from "./types"
 import Chart from "../Chart"
 import Current from "../Current"
-import History from "../History"
+import {SpanArgs} from "../Search/types"
 import Tabs from "../Tabs"
+import {State} from "../types"
+import Url from "../Url"
+import {SearchParams} from "../Url/selectors"
 import Viewer from "../Viewer"
+import {Workspace} from "../Workspaces/types"
 import activeTabSelect from "./activeTabSelect"
-import brim, {Span} from "../../brim"
+import {TabState} from "./types"
 
 const workspaceUrl = createSelector<State, Workspace | null, string>(
   Current.getWorkspace,
@@ -25,9 +25,11 @@ export function tabIsFetching(tab: TabState) {
   return Viewer.isFetching(tab) || Chart.isFetching(tab)
 }
 
-const getSpan = createSelector<State, TabState, Span>(
-  Tabs.getActiveTab,
-  (tab) => tab.search.span
+const getSpan = createSelector<State, SearchParams, Span>(
+  Url.getSearchParams,
+  ({spanArgs}) => {
+    return brim.span(spanArgs).toSpan()
+  }
 )
 
 const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(
@@ -35,9 +37,14 @@ const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(
   (tab) => tab.search.spanFocus
 )
 
-const getSpanArgs = createSelector<State, TabState, SpanArgs>(
+const getSpanArgs = createSelector<State, TabState, BrimSpace, SpanArgs>(
   Tabs.getActiveTab,
-  (tab) => tab.search.spanArgs
+  Current.mustGetSpace,
+  (tab, space) => {
+    const [from, to] = tab.search.spanArgs
+    const [defaultFrom, defaultTo] = space.defaultSpanArgs()
+    return [from || defaultFrom, to || defaultTo]
+  }
 )
 
 const getComputedSpan = createSelector<State, SpanArgs, Span>(
@@ -70,9 +77,6 @@ export default {
     const s = Current.mustGetSpace(state)
     return s ? s.name : ""
   },
-  currentEntry: activeTabSelect(History.current),
-  canGoBack: activeTabSelect(History.canGoBack),
-  canGoForward: activeTabSelect(History.canGoForward),
   isFetching: activeTabSelect<boolean>(tabIsFetching),
   getSpan,
   getSpanAsDates,

@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import {md5Search} from "../../flows/searches/md5Search"
+import {md5Search} from "../../../../app/search/flows/md5-search"
 import HorizontalTable from "../Tables/HorizontalTable"
 import InlineTableLoading from "../InlineTableLoading"
 import {AppDispatch} from "src/js/state/types"

@@ -1,5 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit"
 import {createZealotMock, Zealot} from "zealot"
+import initGlobals from "../initializers/initGlobals"
 import rootReducer from "../state/rootReducer"
 import {Action, State} from "../state/types"
 
@@ -15,7 +16,7 @@ export type TestStore = {
 export default (zealot?: Zealot): TestStore => {
   const client = zealot || createZealotMock().zealot
   const createZealot = () => client
-  return configureStore({
+  const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
@@ -31,6 +32,8 @@ export default (zealot?: Zealot): TestStore => {
       applyActionHistory()
     ]
   }) as any
+  initGlobals(store)
+  return store
 }
 
 function applyDispatchAll() {

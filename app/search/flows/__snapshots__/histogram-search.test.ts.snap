@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`populates the chart 1`] = `
+Object {
+  "keys": Array [
+    "capture_loss",
+    "conn",
+    "files",
+    "x509",
+    "ssl",
+    "dns",
+    "weird",
+    "stats",
+  ],
+  "table": Object {
+    "1582646585000": Object {
+      "conn": 1,
+      "stats": 1,
+    },
+    "1582646586000": Object {
+      "conn": 1,
+      "weird": 1,
+    },
+    "1582646587000": Object {
+      "conn": 2,
+    },
+    "1582646588000": Object {
+      "conn": 5,
+    },
+    "1582646589000": Object {
+      "conn": 1,
+    },
+    "1582646590000": Object {
+      "conn": 2,
+    },
+    "1582646591000": Object {
+      "conn": 1,
+      "dns": 1,
+    },
+    "1582646592000": Object {
+      "conn": 1,
+    },
+    "1582646593000": Object {
+      "conn": 2,
+      "dns": 1,
+    },
+    "1582646594000": Object {
+      "files": 4,
+      "ssl": 1,
+      "x509": 1,
+    },
+    "1582646595000": Object {
+      "conn": 3,
+    },
+    "1582646597000": Object {
+      "capture_loss": 1,
+    },
+  },
+}
+`;

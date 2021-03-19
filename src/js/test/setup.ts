@@ -95,11 +95,10 @@ jest.mock("electron", function() {
 global.DOMRectReadOnly = class DOMRectReadOnly {}
 global.ResizeObserver = class ResizeObserver {
   observe() {}
-
+  unobserve() {}
   disconnect() {}
 }
 global.SVGElement.prototype.getTotalLength = () => 0
 enzyme.configure({adapter: new Adapter()})
-
 document.execCommand = jest.fn()
 initDOM()

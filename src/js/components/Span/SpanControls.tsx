@@ -1,23 +1,24 @@
-import {useDispatch, useSelector} from "react-redux"
-import React from "react"
 import classNames from "classnames"
-
-import ClockIcon from "../../icons/ClockIcon"
+import React from "react"
+import {useDispatch, useSelector} from "react-redux"
+import Url from "src/js/state/Url"
 import Label from "../../../../app/toolbar/label"
-import Last from "../../state/Last"
+import ClockIcon from "../../icons/ClockIcon"
+import {default as Tab, default as tab} from "../../state/Tab"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
-import tab from "../../state/Tab"
-import usePrevious from "../hooks/usePrevious"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
-export default function SpanControls() {
-  const last = useSelector(Last.getSearch)
-  const [from, to] = useSelector(tab.getSpanArgs)
-  const prev = usePrevious([from, to], [last])
+type Props = {
+  submit: Function
+}
+
+export default function SpanControls({submit}: Props) {
   const dispatch = useDispatch()
+  const [from, to] = useSelector(Tab.getSpanArgs)
+  const prev = useSelector(Url.getSpanParamsWithDefaults)
 
   function fromChange(arg) {
     dispatch(tab.setFrom(arg))
@@ -47,7 +48,7 @@ export default function SpanControls() {
         />
         <Label>To</Label>
       </div>
-      <SpanPicker />
+      <SpanPicker submit={submit} />
     </div>
   )
 }

@@ -7,8 +7,12 @@ import ToolbarButton from "../../../../app/toolbar/button"
 import refreshSpaceInfo from "../../flows/refreshSpaceInfo"
 import useSpanPickerMenu from "../useSpanPickerMenu"
 
-export default function SpanPicker() {
-  const menu = useSpanPickerMenu()
+type Props = {
+  submit: Function
+}
+
+export default function SpanPicker({submit}: Props) {
+  const menu = useSpanPickerMenu(submit)
   const dispatch = useDispatch()
 
   function onClick() {

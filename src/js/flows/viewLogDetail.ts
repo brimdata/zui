@@ -12,7 +12,7 @@ export const viewLogDetail = (record: zng.Record): Thunk => (
   getState
 ) => {
   const current = LogDetails.build(getState())
-  if (!isEqual(record, current)) {
+  if (record && !isEqual(record, current)) {
     dispatch(LogDetails.push(record))
 
     if (!Current.getSpaceId(getState())) return // It is possible for this code to be called without a space

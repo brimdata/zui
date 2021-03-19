@@ -1,4 +1,3 @@
-import {SearchTarget} from "../../state/SearchBar/types"
 import {Thunk} from "../../state/types"
 import {getZealot} from "../getZealot"
 import {handle} from "./handler"
@@ -15,7 +14,6 @@ type Args = {
   to?: Date
   spaceId?: string
   id?: string
-  target?: SearchTarget
 }
 
 export type BrimSearch = {
@@ -29,8 +27,7 @@ export function search({
   from,
   to,
   spaceId,
-  id = randomHash(),
-  target = "events"
+  id = randomHash()
 }: Args): Thunk<BrimSearch> {
   return (dispatch, getState) => {
     const [defaultFrom, defaultTo] = Tab.getSpanAsDates(getState())
@@ -41,14 +38,7 @@ export function search({
     spaceId = spaceId || defaultSpaceId
     to = to || defaultTo
     from = from || defaultFrom
-    const req =
-      target === "index"
-        ? zealot.archive.search({
-            patterns: [query],
-            spaceId,
-            signal: ctl.signal
-          })
-        : zealot.search(query, {from, to, spaceId, signal: ctl.signal})
+    const req = zealot.search(query, {from, to, spaceId, signal: ctl.signal})
 
     dispatch(Handlers.abort(id, false))
     dispatch(Handlers.register(id, searchHandle))

@@ -1,15 +1,22 @@
-import {useEffect} from "react"
+import {useEffect, useRef} from "react"
 
 export default function useListener(
   el: Node | null | undefined,
   event: string,
-  callback: EventListenerOrEventListenerObject,
+  callback: EventListener,
   opts: boolean | Object = false
 ) {
+  const savedCallback = useRef<EventListener>(() => {})
+
   useEffect(() => {
-    el && el.addEventListener(event, callback, opts)
+    savedCallback.current = callback
+  }, [callback])
+
+  useEffect(() => {
+    const listener = (e) => savedCallback.current(e)
+    el && el.addEventListener(event, listener, opts)
     return () => {
-      if (el) el.removeEventListener(event, callback, opts)
+      if (el) el.removeEventListener(event, listener, opts)
     }
-  }, [el])
+  }, [el, event])
 }

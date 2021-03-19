@@ -7,7 +7,7 @@ let started = false
 export default function(brim: Brim) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
     const window = brim.windows.getWindow(id)
-
+    if (!window) return undefined
     return window.initialState
   })
 

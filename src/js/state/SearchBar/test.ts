@@ -1,19 +1,21 @@
+import tabHistory from "app/router/tab-history"
+import {lakePath} from "app/router/utils/paths"
+import brim from "src/js/brim"
 import {createZealotMock, zng} from "zealot"
-
 import {
   appendQueryCountBy,
   appendQueryExclude,
   appendQueryInclude
 } from "../../flows/searchBar/actions"
 import {submitSearch} from "../../flows/submitSearch/mod"
-import Workspaces from "../Workspaces"
-import Current from "../Current"
-import Search from "../Search"
-import SearchBar from "./"
-import Spaces from "../Spaces"
-import Tab from "../Tab"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
+import Url from "../Url"
+import Search from "../Search"
+import {SpanArgs} from "../Search/types"
+import Spaces from "../Spaces"
+import Workspaces from "../Workspaces"
+import SearchBar from "./"
 import {SearchBarState} from "./types"
 
 let store, mock
@@ -26,10 +28,9 @@ beforeEach(() => {
 
   store.dispatchAll([
     Workspaces.add(workspace),
-    Spaces.setDetail(workspace.id, space),
-    Current.setWorkspaceId(workspace.id),
-    Current.setSpaceId(space.id)
+    Spaces.setDetail(workspace.id, space)
   ])
+  store.dispatch(tabHistory.push(lakePath(space.id, workspace.id)))
 })
 
 test("input value changed", () => {
@@ -64,57 +65,29 @@ test("search pin does not work if current is a bunch of white space", () => {
   expect(SearchBar.getSearchBarPins(state)).toEqual([])
 })
 
-test("search pin edit sets the editing index", () => {
+test("search pin edit changes the pin", () => {
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("first pin"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("second pin"),
     SearchBar.pinSearchBar(),
-    SearchBar.editSearchBarPin(1)
+    SearchBar.editSearchBarPin(1, "update")
   ])
 
-  expect(SearchBar.getSearchBarEditingIndex(state)).toBe(1)
+  expect(SearchBar.getSearchBarPins(state)).toEqual(["first pin", "update"])
 })
 
 test("editing a pin to an empty string removes it", () => {
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("first"),
     SearchBar.pinSearchBar(),
-    SearchBar.editSearchBarPin(0),
-    SearchBar.changeSearchBarInput(""),
-    submitSearch()
+    SearchBar.editSearchBarPin(0, "")
   ])
 
   expect(SearchBar.getSearchBar(state)).toEqual(
     expect.objectContaining({
       current: "",
-      previous: "",
-      pinned: [],
-      editing: null
-    })
-  )
-})
-
-test("search pin edit with null removes editing index", () => {
-  const state = store.dispatchAll([
-    SearchBar.changeSearchBarInput("first"),
-    SearchBar.pinSearchBar(),
-    SearchBar.changeSearchBarInput("second"),
-    SearchBar.pinSearchBar(),
-    SearchBar.changeSearchBarInput("third"),
-    submitSearch(),
-    SearchBar.editSearchBarPin(1),
-    SearchBar.changeSearchBarInput("second (edited)"),
-    SearchBar.editSearchBarPin(null),
-    SearchBar.changeSearchBarInput("third (edited)")
-  ])
-
-  expect(SearchBar.getSearchBar(state)).toEqual(
-    expect.objectContaining({
-      pinned: ["first", "second (edited)"],
-      current: "third (edited)",
-      previous: "third",
-      editing: null
+      pinned: []
     })
   )
 })
@@ -126,26 +99,15 @@ test("search pin edit then submiting", () => {
     SearchBar.changeSearchBarInput("second"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("third"),
-    SearchBar.submittingSearchBar(),
-    SearchBar.editSearchBarPin(0),
-    SearchBar.changeSearchBarInput("first (edited)"),
-    SearchBar.submittingSearchBar()
+    SearchBar.editSearchBarPin(0, "first (edited)")
   ])
 
   expect(SearchBar.getSearchBar(state)).toEqual(
     expect.objectContaining({
-      current: "first (edited)",
-      previous: "third",
-      pinned: ["first (edited)", "second"],
-      editing: 0
+      current: "third",
+      pinned: ["first (edited)", "second"]
     })
   )
-})
-
-test("search pin edit does not set index if out of bounds", () => {
-  expect(() => {
-    store.dispatch(SearchBar.editSearchBarPin(100))
-  }).toThrow("Trying to edit a pin that does not exist: 100")
 })
 
 test("search bar pin remove", () => {
@@ -159,20 +121,9 @@ test("search bar pin remove", () => {
 })
 
 test("search bar pin remove when out of bounds", () => {
-  expect(() => store.dispatch(SearchBar.removeSearchBarPin(100))).toThrow(
-    "Trying to remove a pin that does not exist: 100"
-  )
-})
+  store.dispatch(SearchBar.removeSearchBarPin(100))
 
-test("search bar submit", () => {
-  const state = store.dispatchAll([
-    SearchBar.changeSearchBarInput("conn"),
-    SearchBar.submittingSearchBar()
-  ])
-
-  expect(SearchBar.getSearchBarInputValue(state)).toBe("conn")
-  expect(SearchBar.getSearchBarPreviousInputValue(state)).toBe("conn")
-  expect(SearchBar.getSearchBarEditingIndex(state)).toBe(null)
+  expect(SearchBar.getSearchBarPins(store.getState())).toEqual([])
 })
 
 test("append an include field", () => {
@@ -241,13 +192,9 @@ test("append a count to an existing query with a pin", () => {
 test("edit pin then submit search", () => {
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("192.168.0.54"),
-    submitSearch(),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("| count() by _path"),
-    submitSearch(),
-    SearchBar.editSearchBarPin(0),
-    SearchBar.changeSearchBarInput("192.168.0.51"),
-    submitSearch()
+    SearchBar.editSearchBarPin(0, "192.168.0.51")
   ])
   expect(SearchBar.getSearchProgram(state)).toBe(
     "192.168.0.51 | count() by _path"
@@ -286,35 +233,28 @@ test("remove all pins", () => {
     SearchBar.changeSearchBarInput("world"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("keep me"),
-    SearchBar.submittingSearchBar(),
     SearchBar.removeAllSearchBarPins()
   ])
 
   expect(SearchBar.getSearchBarInputValue(state)).toBe("keep me")
-  expect(SearchBar.getSearchBarPreviousInputValue(state)).toBe("")
   expect(SearchBar.getSearchBarPins(state)).toEqual([])
 })
 
 test("restore", () => {
   const slice: SearchBarState = {
     current: "restore",
-    previous: "me",
     pinned: ["real", "quick"],
-    editing: null,
-    error: null,
-    target: "events"
+    error: null
   }
   const state = store.dispatchAll([SearchBar.restoreSearchBar(slice)])
 
   expect(SearchBar.getSearchBarInputValue(state)).toBe("restore")
-  expect(SearchBar.getSearchBarPreviousInputValue(state)).toBe("me")
   expect(SearchBar.getSearchBarPins(state)).toEqual(["real", "quick"])
   expect(SearchBar.getSearchBarError(state)).toBe(null)
-  expect(SearchBar.getSearchBarEditingIndex(state)).toBe(null)
 })
 
 test("goBack", () => {
-  const state = store.dispatchAll([
+  store.dispatchAll([
     SearchBar.changeSearchBarInput("hello"),
     Search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearch(),
@@ -323,13 +263,16 @@ test("goBack", () => {
     submitSearch(),
     SearchBar.goBack()
   ])
-
-  expect(Tab.getSpanAsDates(state)).toEqual([new Date(1), new Date(2)])
-  expect(SearchBar.getSearchBarInputValue(state)).toBe("hello")
+  const {spanArgs, program} = Url.getSearchParams(store.getState())
+  expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
+    new Date(1),
+    new Date(2)
+  ])
+  expect(program).toBe("hello")
 })
 
 test("goForward", () => {
-  const state = store.dispatchAll([
+  store.dispatchAll([
     SearchBar.changeSearchBarInput("hello"),
     Search.setSpanArgsFromDates([new Date(1), new Date(2)]),
     submitSearch(),
@@ -341,14 +284,15 @@ test("goForward", () => {
     submitSearch(),
     SearchBar.goBack(),
     SearchBar.goBack(),
-    SearchBar.goBack(),
-    SearchBar.goBack(),
-    SearchBar.goBack(),
     SearchBar.goForward()
   ])
 
-  expect(SearchBar.getSearchBarInputValue(state)).toBe("goodbye")
-  expect(Tab.getSpanAsDates(state)).toEqual([new Date(3), new Date(4)])
+  const {spanArgs, program} = Url.getSearchParams(store.getState())
+  expect(brim.span(spanArgs as SpanArgs).toDateTuple()).toEqual([
+    new Date(3),
+    new Date(4)
+  ])
+  expect(program).toBe("goodbye")
 })
 
 test("clearSearchBar", () => {
@@ -360,23 +304,8 @@ test("clearSearchBar", () => {
   expect(SearchBar.getSearchBar(state)).toEqual(
     expect.objectContaining({
       current: "",
-      editing: null,
       error: null,
-      pinned: [],
-      previous: ""
+      pinned: []
     })
   )
-})
-
-test("setTarget initial state", () => {
-  const state = store.getState()
-
-  expect(SearchBar.getTarget(state)).toBe("events")
-})
-
-test("setTarget to index", () => {
-  store.dispatch(SearchBar.setTarget("index"))
-  const state = store.getState()
-
-  expect(SearchBar.getTarget(state)).toBe("index")
 })

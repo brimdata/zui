@@ -1,16 +1,17 @@
+import useWorkspaceId from "app/router/hooks/use-workspace-id"
+import tabHistory from "app/router/tab-history"
+import {lakeImportPath} from "app/router/utils/paths"
 import {MenuItemConstructorOptions} from "electron"
 import React, {ComponentType} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
-import {activateWorkspace} from "../flows/workspace/activateWorkspace"
 import DropdownArrow from "../icons/DropdownArrow"
+import {showContextMenu} from "../lib/System"
 import Current from "../state/Current"
 import Modal from "../state/Modal"
 import {AppDispatch} from "../state/types"
-
 import Workspaces from "../state/Workspaces"
 import {Workspace} from "../state/Workspaces/types"
-import usePopupMenu from "./hooks/usePopupMenu"
 
 const WorkspacePickerWrapper = styled.div`
   display: flex;
@@ -32,10 +33,9 @@ const WorkspacePickerWrapper = styled.div`
   }
 ` as ComponentType<any>
 
-export default function WorkspacePicker() {
-  const dispatch = useDispatch<AppDispatch>()
-  const workspaces = useSelector(Workspaces.all)
-  const current = useSelector(Current.getWorkspace)
+const showWorkspaceMenu = () => (dispatch, getState) => {
+  const workspaces = Workspaces.all(getState())
+  const currentId = Current.getWorkspaceId(getState())
 
   const template: MenuItemConstructorOptions[] = [
     {
@@ -46,14 +46,14 @@ export default function WorkspacePicker() {
   ]
 
   workspaces.forEach((w: Workspace) => {
-    const isCurrent = w.id === current.id
+    const isCurrent = w.id === currentId
     template.push({
       type: "checkbox",
       label: w.name,
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(activateWorkspace(w.id))
+        dispatch(tabHistory.push(lakeImportPath(w.id)))
       }
     })
   })
@@ -66,10 +66,15 @@ export default function WorkspacePicker() {
     }
   )
 
-  const menu = usePopupMenu(template)
+  showContextMenu(template)
+}
 
+export default function WorkspacePicker() {
+  const dispatch = useDispatch<AppDispatch>()
+  const workspaceId = useWorkspaceId()
+  const current = useSelector(Workspaces.id(workspaceId))
   return (
-    <WorkspacePickerWrapper onClick={menu.onClick}>
+    <WorkspacePickerWrapper onClick={() => dispatch(showWorkspaceMenu())}>
       <label>{`${current.name}`}</label>
       <DropdownArrow />
     </WorkspacePickerWrapper>

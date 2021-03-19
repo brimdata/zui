@@ -1,8 +1,10 @@
+import Tile from "app/tile/tile"
 import React from "react"
+import {useLocation} from "react-router"
 import styled from "styled-components"
 import {initialTiles} from "./flows/initial-state"
 import Grid from "./grid"
-import Tile from "app/tile/tile"
+import Header from "./header"
 
 const BG = styled.div`
   height: 100%;
@@ -39,20 +41,20 @@ function getGridLayout(tiles) {
   return tiles.map((t) => ({i: t.id, ...t.layout, static: true}))
 }
 
-const Title = styled.h2`
-  ${(p) => p.theme.typography.headingPage}
-  margin: 24px 12px 12px 12px;
-  text-align: center;
-  user-select: none;
-`
-
 const SummaryUI = ({title, tiles, onLayoutChange}) => {
+  const locationKey = useLocation().key
   return (
     <BG>
-      <Title>{title}</Title>
+      <Header title={title} />
       <Grid layout={getGridLayout(tiles)} onLayoutChange={onLayoutChange}>
         {tiles.map((t) => (
-          <Tile key={t.id} title={t.title} format={t.format} query={t.query} />
+          <Tile
+            key={t.id}
+            title={t.title}
+            format={t.format}
+            query={t.query}
+            locationKey={locationKey}
+          />
         ))}
       </Grid>
     </BG>

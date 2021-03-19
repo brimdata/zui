@@ -3,6 +3,7 @@ import {Application} from "spectron"
 import logStep from "../util/logStep"
 import waitForResults from "../util//waitForResults"
 import {selectors} from "../../../../src/js/test/integration"
+import {submitButton} from "src/js/test/locators"
 
 export const runSearch = async (app: Application, searchText: string) => {
   // Run a search and wait for results to appear. Do not return results.
@@ -13,7 +14,8 @@ export const runSearch = async (app: Application, searchText: string) => {
     await input.waitForDisplayed()
     return await input.setValue(searchText)
   })
-  await logStep("click the search button", () => app.client.keys("Enter"))
+  const button = await app.client.$(submitButton.css)
+  await logStep("click the search button", () => button.click())
   return waitForResults(app)
 }
 

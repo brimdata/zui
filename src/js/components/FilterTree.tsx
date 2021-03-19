@@ -1,20 +1,19 @@
-import {isEqual, initial, tail, take, map} from "lodash"
-import {useDispatch, useSelector} from "react-redux"
-import React from "react"
 import classNames from "classnames"
-
-import {createInvestigationTree, InvestigationNode} from "./FilterTree/helpers"
+import {remote} from "electron"
+import {initial, isEqual, map, tail, take} from "lodash"
+import React from "react"
+import {useDispatch, useSelector} from "react-redux"
 import {submitSearch} from "../flows/submitSearch/mod"
 import BookIcon from "../icons/BookSvgIcon"
 import Current from "../state/Current"
-import EmptySection from "./common/EmptySection"
-import FilterNode from "./FilterNode"
 import Investigation from "../state/Investigation"
 import Search from "../state/Search"
-import usePopupMenu from "./hooks/usePopupMenu"
-import {remote} from "electron"
-import Last from "../state/Last"
+import Url from "../state/Url"
 import {SearchRecord} from "../types"
+import EmptySection from "./common/EmptySection"
+import FilterNode from "./FilterNode"
+import {createInvestigationTree, InvestigationNode} from "./FilterTree/helpers"
+import usePopupMenu from "./hooks/usePopupMenu"
 
 const getPins = (node?: InvestigationNode): string[] => {
   const result = map(node?.getPath(), (n) => {
@@ -59,9 +58,9 @@ type Props = {
 
 function NodeRow({node, i, workspaceId, spaceId}: Props) {
   const dispatch = useDispatch()
-  const last = useSelector(Last.getSearch)
-  const prevPins = last?.pins || []
-  const prevProgram = last?.program || ""
+  const last = useSelector(Url.getSearchParams)
+  const prevPins = last.pins
+  const prevProgram = last.program
   const menu = usePopupMenu([
     {
       label: "Delete underlying entry",

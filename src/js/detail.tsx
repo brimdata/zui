@@ -1,32 +1,33 @@
-import "regenerator-runtime/runtime"
-
-import {Provider} from "react-redux"
 import React from "react"
 import ReactDOM from "react-dom"
-
+import {Provider} from "react-redux"
+import {Router} from "react-router"
+import "regenerator-runtime/runtime"
+import {ThemeProvider} from "styled-components"
 import AppErrorBoundary from "./components/AppErrorBoundary"
+import BrimTooltip from "./components/BrimTooltip"
+import LogDetailsWindow from "./components/LogDetailsWindow"
+import {Modals} from "./components/Modals"
+import StartupError from "./components/StartupError"
 import initDetail from "./initializers/initDetail"
 import lib from "./lib"
-import LogDetailsWindow from "./components/LogDetailsWindow"
-import StartupError from "./components/StartupError"
-import {Modals} from "./components/Modals"
-import {ThemeProvider} from "styled-components"
 import theme from "./style-theme"
-import BrimTooltip from "./components/BrimTooltip"
 
 initDetail()
   .then((store) => {
     ReactDOM.render(
-      <AppErrorBoundary>
-        <div id="modal-dialog-root" />
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <LogDetailsWindow />
-            <Modals />
-            <BrimTooltip />
-          </ThemeProvider>
-        </Provider>
-      </AppErrorBoundary>,
+      <Router history={global.windowHistory}>
+        <AppErrorBoundary>
+          <div id="modal-dialog-root" />
+          <Provider store={store}>
+            <ThemeProvider theme={theme}>
+              <LogDetailsWindow />
+              <Modals />
+              <BrimTooltip />
+            </ThemeProvider>
+          </Provider>
+        </AppErrorBoundary>
+      </Router>,
       lib.doc.id("app-root")
     )
   })

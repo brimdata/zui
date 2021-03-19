@@ -1,8 +1,6 @@
 interface BrimSearchParams {
   id: string
-  space?: string
-  host?: string
-  port?: string
+  href
 }
 
 export default function getUrlSearchParams(): BrimSearchParams {

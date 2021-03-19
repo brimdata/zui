@@ -24,7 +24,6 @@ export function getWindowPersistable(state: State) {
     for (const tab of draft.tabs.data) {
       delete tab.viewer
       delete tab.chart
-      delete tab.last
       delete tab.logDetails
     }
 

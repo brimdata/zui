@@ -1,16 +1,18 @@
 import {createZealotMock} from "zealot"
 
 import {submitSearch} from "../mod"
-import Current from "../../../state/Current"
-import History from "../../../state/History"
 import Investigation from "../../../state/Investigation"
-import Last from "../../../state/Last"
 import SearchBar from "../../../state/SearchBar"
 import Spaces from "../../../state/Spaces"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
 import Workspaces from "../../../state/Workspaces"
+import {decodeSearchParams} from "app/search/utils/search-params"
+import {lakePath} from "app/router/utils/paths"
+import tabHistory from "app/router/tab-history"
+import Current from "src/js/state/Current"
+import brim from "src/js/brim"
 
 const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
@@ -31,38 +33,39 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Current.setWorkspaceId("1"),
     Spaces.setDetail("1", space),
-    Current.setSpaceId(space.id),
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
+  store.dispatch(tabHistory.push(lakePath("1", space.id)))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
-test("Always saves search to last search record", async () => {
+test("Always updates url", async () => {
   await submit({history: false, investigation: false})
-  expect(select(Last.getSearch)).toEqual({
+  const record = decodeSearchParams(
+    Current.getHistory(store.getState()).location.search
+  )
+  expect(record).toEqual({
+    keep: false,
     pins: ["dns"],
     program: "query",
-    spaceId: space.id,
-    spaceName: "default",
-    spanArgs: ["now - 5m", "now"],
-    target: "events"
+    spanArgs: brim.space(space).defaultSpanArgs(),
+    spanArgsFocus: [null, null]
   })
 })
 
 test("saves to history", async () => {
-  expect(select(History.count)).toBe(0)
+  const start = Current.getHistory(store.getState()).length
   await submit()
-  expect(select(History.count)).toBe(1)
+  expect(Current.getHistory(store.getState()).length).toBe(start + 1)
 })
 
 test("does not save to history", async () => {
-  expect(select(History.count)).toBe(0)
+  const start = Current.getHistory(store.getState()).length
   await submit({history: false, investigation: true})
-  expect(select(History.count)).toBe(0)
+  expect(Current.getHistory(store.getState()).length).toBe(start)
 })
 
 test("saves to investigation", async () => {

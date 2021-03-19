@@ -3,7 +3,7 @@ import {toast} from "react-hot-toast"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
 import {BrimWorkspace} from "../brim"
-import {activateWorkspace} from "../flows/workspace/activateWorkspace"
+import {updateStatus} from "../flows/workspace/update-status"
 import {login} from "../flows/workspace/login"
 import {AppDispatch} from "../state/types"
 import Workspaces from "../state/Workspaces"
@@ -54,7 +54,7 @@ const Login = ({workspace}: Props) => {
         login(workspace, ctlRef.current.signal)
       )
       dispatch(Workspaces.setWorkspaceToken(workspace.id, accessToken))
-      await dispatch(activateWorkspace(workspace.id))
+      await dispatch(updateStatus(workspace.id))
     } catch {
       toast.error("Login failed")
     }

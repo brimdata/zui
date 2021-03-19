@@ -1,20 +1,43 @@
+import {matchPath} from "react-router"
 import {createSelector} from "reselect"
-
-import {WorkspacesState} from "../Workspaces/types"
+import brim, {BrimSpace, BrimWorkspace} from "../../brim"
+import Spaces from "../Spaces"
 import {SpacesState} from "../Spaces/types"
+import Tabs from "../Tabs"
 import {State} from "../types"
 import Workspaces from "../Workspaces"
-import Spaces from "../Spaces"
-import activeTabSelect from "../Tab/activeTabSelect"
-import brim, {BrimWorkspace, BrimSpace} from "../../brim"
+import {WorkspacesState} from "../Workspaces/types"
 
 type Id = string | null
 
-export const getSpaceId = activeTabSelect((state) => state.current.spaceId)
+export const getHistory = (state, windowName = global.windowName) => {
+  const id = Tabs.getActive(state)
+  if (windowName === "search") return global.tabHistories.getOrCreate(id)
+  if (windowName === "detail") return global.windowHistory
+  throw new Error("Unknown Window Name (must be search or detail)")
+}
 
-export const getWorkspaceId = activeTabSelect(
-  (state) => state.current.workspaceId
-)
+export const getLocation = (state: State) => {
+  return getHistory(state).location
+}
+
+export const getSpaceId = (state) => {
+  type Params = {lakeId?: string}
+  const match = matchPath<Params>(
+    getLocation(state).pathname,
+    "/workspaces/:workspaceId/lakes/:lakeId"
+  )
+  return match?.params?.lakeId || null
+}
+
+export const getWorkspaceId = (state: State = undefined) => {
+  type Params = {workspaceId?: string}
+  const match = matchPath<Params>(
+    getLocation(state).pathname,
+    "/workspaces/:workspaceId"
+  )
+  return match?.params?.workspaceId || null
+}
 
 export const mustGetWorkspace = createSelector<
   State,
@@ -37,8 +60,9 @@ export const mustGetSpace = createSelector<
 >(Spaces.raw, getWorkspaceId, getSpaceId, (spaces, workspaceId, spaceId) => {
   if (!workspaceId) throw new Error("Current workspace id is unset")
   if (!spaceId) throw new Error("Current space id is unset")
-  if (!spaces[workspaceId])
+  if (!spaces[workspaceId]) {
     throw new Error(`No spaces in workspace id: ${workspaceId}`)
+  }
   if (!spaces[workspaceId][spaceId])
     throw new Error(`Missing space id: ${spaceId}`)
 

@@ -1,6 +1,6 @@
-import {Space} from "../state/Spaces/types"
 import {isNumber} from "../lib/is"
-import brim, {Ts, Span} from "./"
+import {Space} from "../state/Spaces/types"
+import brim, {Span} from "./"
 
 export default function space(info: Space) {
   return {
@@ -17,16 +17,7 @@ export default function space(info: Space) {
       return "archive"
     },
     defaultSpanArgs() {
-      if (recentDataExists(info.max_time)) {
-        return ["now-30m", "now"]
-      } else {
-        const to = {sec: info.max_time.sec + 1, ns: 0}
-        const from = brim
-          .time(to)
-          .subtract(30, "minutes")
-          .toTs()
-        return [from, to]
-      }
+      return this.everythingSpan()
     },
     empty() {
       if (!info.min_time || !info.max_time) return true
@@ -36,6 +27,12 @@ export default function space(info: Space) {
         info.max_time.sec === 0 &&
         info.max_time.ns === 0
       )
+    },
+    minTs() {
+      return info.min_time
+    },
+    maxTs() {
+      return info.max_time
     },
     everythingSpan(): Span {
       const {min_time, max_time} = info
@@ -56,16 +53,4 @@ export default function space(info: Space) {
       return !(this.ingesting() && this.empty())
     }
   }
-}
-
-function recentDataExists(ts: Ts) {
-  const halfHour = 1000 * 60 * 30
-  return (
-    new Date().getTime() -
-      brim
-        .time(ts)
-        .toDate()
-        .getTime() <
-    halfHour
-  )
 }

@@ -1,9 +1,7 @@
 import {Application} from "spectron"
-
-import {click} from "./click"
-import logStep from "../util/logStep"
-import waitForResults from "../util/waitForResults"
 import {selectors} from "../../../../src/js/test/integration"
+import logStep from "../util/logStep"
+import {click} from "./click"
 
 export default async (app: Application, span: string) => {
   // Set the span given by "string", like "Whole Space". This waits for
@@ -12,5 +10,4 @@ export default async (app: Application, span: string) => {
   await logStep(`select span ${span}`, () =>
     click(app, selectors.span.menuItem(span))
   )
-  return waitForResults(app)
 }

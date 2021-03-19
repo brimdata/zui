@@ -1,7 +1,8 @@
-import {useDispatch} from "react-redux"
+import useWorkspaceId from "app/router/hooks/use-workspace-id"
+import {lakeImportPath} from "app/router/utils/paths"
 import React from "react"
+import {useHistory} from "react-router"
 import styled from "styled-components"
-import {setSpaceId} from "../state/Current/actions"
 
 const StyledAnchor = styled.a`
   margin-left: auto;
@@ -19,8 +20,9 @@ const StyledAnchor = styled.a`
 `
 
 export default function AddSpaceButton() {
-  const dispatch = useDispatch()
-  const onClick = () => dispatch(setSpaceId(null))
+  const history = useHistory()
+  const workspaceId = useWorkspaceId()
+  const onClick = () => history.push(lakeImportPath(workspaceId))
 
   return (
     <StyledAnchor className="add-space" onClick={onClick}>

@@ -1,25 +1,25 @@
-import {useSelector} from "react-redux"
-import React from "react"
-
-import Last from "../state/Last"
-import MainHistogramChart from "./charts/MainHistogram/Chart"
+import {histogramSearch} from "app/search/flows/histogram-search"
+import React, {useLayoutEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {useLocation} from "react-router"
 import brim from "../brim"
+import Url from "../state/Url"
+import MainHistogramChart from "./charts/MainHistogram/Chart"
 
 export default function SearchHeaderChart() {
-  const search = useSelector(Last.getSearch)
-  let chartable = false
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const {program, pins} = useSelector(Url.getSearchParams)
+  const brimProgram = brim.program(program, pins)
 
-  if (search) {
-    const {program, pins, target} = search
-    chartable =
-      target === "events" && !brim.program(program, pins).hasAnalytics()
-  }
+  useLayoutEffect(() => {
+    dispatch(histogramSearch())
+  }, [location.key])
 
-  if (!chartable) return null
-  else
-    return (
-      <div className="search-page-header-charts">
-        <MainHistogramChart />
-      </div>
-    )
+  if (brimProgram.hasAnalytics()) return null
+  return (
+    <div className="search-page-header-charts">
+      <MainHistogramChart />
+    </div>
+  )
 }

@@ -1,33 +1,32 @@
-import {connect, useDispatch} from "react-redux"
+import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import {isEmpty} from "lodash"
+import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React, {useEffect} from "react"
-
-import {ColumnHeadersViewState} from "../../state/Layout/types"
-import {DispatchProps, State} from "../../state/types"
-import {ScrollPosition, ViewerDimens} from "../../types"
-import {Space} from "../../state/Spaces/types"
-import {endMessage} from "../Viewer/Styler"
-import {fetchNextPage} from "../../flows/fetchNextPage"
+import {connect, useDispatch} from "react-redux"
+import {zng} from "zealot"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
-import {useRowSelection} from "./selection"
 import {viewLogDetail} from "../../flows/viewLogDetail"
-import Chunker from "../Viewer/Chunker"
+import dispatchToProps from "../../lib/dispatchToProps"
+import TableColumns from "../../models/TableColumns"
 import Columns from "../../state/Columns"
 import Current from "../../state/Current"
 import Layout from "../../state/Layout"
-import LogRow from "../LogRow"
-import NoResults from "./NoResults"
+import {ColumnHeadersViewState} from "../../state/Layout/types"
 import Prefs from "../../state/Prefs"
 import SearchBar from "../../state/SearchBar"
-import TableColumns from "../../models/TableColumns"
+import {Space} from "../../state/Spaces/types"
+import {DispatchProps, State} from "../../state/types"
 import View from "../../state/View"
 import Viewer from "../../state/Viewer"
-import ViewerComponent from "../Viewer/Viewer"
+import {ScrollPosition, ViewerDimens} from "../../types"
+import LogRow from "../LogRow"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
-import dispatchToProps from "../../lib/dispatchToProps"
+import Chunker from "../Viewer/Chunker"
+import {endMessage} from "../Viewer/Styler"
+import ViewerComponent from "../Viewer/Viewer"
 import getEndMessage from "./getEndMessage"
-import {zng} from "zealot"
-import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
+import NoResults from "./NoResults"
+import {useRowSelection} from "./selection"
 
 type StateProps = {
   logs: zng.Record[]
@@ -113,7 +112,7 @@ export default function ResultsTable(props: Props) {
 
   function onLastChunk() {
     if (props.isIncomplete && !props.isFetching) {
-      props.dispatch(fetchNextPage())
+      props.dispatch(nextPageViewerSearch())
     }
   }
 

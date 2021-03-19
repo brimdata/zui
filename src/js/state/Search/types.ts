@@ -1,5 +1,4 @@
 import {DateTuple} from "../../lib/TimeWindow"
-import {SEARCH_BAR_SUBMIT} from "../SearchBar/types"
 import {Span, Ts} from "../../brim"
 
 export type SearchState = {
@@ -25,7 +24,6 @@ export type SearchActions =
   | SEARCH_SPAN_ARGS_SET
   | SEARCH_SPAN_FOCUS_SET
   | SEARCH_CLEAR
-  | SEARCH_BAR_SUBMIT
 
 export type SEARCH_SPAN_SET = {
   type: "SEARCH_SPAN_SET"

@@ -1,10 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 
-import {SearchBar} from "./SearchBar/mod"
-import {Toolbar} from "../../../app/toolbar/toolbar"
-import SearchHeaderChart from "./SearchHeaderChart"
-
 const Wrap = styled.div`
   background: var(--ivory);
   z-index: 1;
@@ -17,14 +13,10 @@ const BorderBottom = styled.div`
   box-shadow: inset 0 0.5px 0 0 var(--cloudy);
 `
 
-export default function SearchPageHeader() {
+export default function SearchPageHeader({children}) {
   return (
     <>
-      <Wrap className="search-page-header">
-        <Toolbar />
-        <SearchBar />
-        <SearchHeaderChart />
-      </Wrap>
+      <Wrap>{children}</Wrap>
       <BorderBottom />
     </>
   )

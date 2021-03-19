@@ -6,17 +6,18 @@ import fixtures from "../test/fixtures"
 import deletePartialSpaces from "./deletePartialSpaces"
 import initTestStore from "../test/initTestStore"
 import Handlers from "../state/Handlers"
+import {lakePath} from "app/router/utils/paths"
+import tabHistory from "app/router/tab-history"
 
 const testSpaceId1 = "testSpaceId1"
 const testSpaceId2 = "testSpaceId2"
+const ws = fixtures("workspace1")
 
 let store, zealot
 beforeEach(() => {
   zealot = createZealotMock()
-  const ws = fixtures("workspace1")
   store = initTestStore(zealot.zealot)
   store.dispatch(Workspaces.add(ws))
-  store.dispatch(Current.setWorkspaceId(ws.id))
 })
 
 test("reset current space id if mid-ingest", async () => {
@@ -28,7 +29,7 @@ test("reset current space id if mid-ingest", async () => {
   store.dispatch(
     Handlers.register("id-2", {type: "INGEST", spaceId: testSpaceId2})
   )
-  store.dispatch(Current.setSpaceId(testSpaceId1))
+  store.dispatch(tabHistory.push(lakePath(testSpaceId1, ws.id)))
 
   await store.dispatch(deletePartialSpaces())
 
@@ -41,7 +42,7 @@ test("dont reset current id if not mid-ingest", async () => {
   store.dispatch(
     Handlers.register("id-2", {type: "INGEST", spaceId: testSpaceId2})
   )
-  store.dispatch(Current.setSpaceId(testSpaceId1))
+  store.dispatch(tabHistory.push(lakePath(testSpaceId1, ws.id)))
 
   await store.dispatch(deletePartialSpaces())
 

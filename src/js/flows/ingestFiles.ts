@@ -1,20 +1,20 @@
-import {isEmpty} from "lodash"
+import {lakePath, workspacesPath} from "app/router/utils/paths"
 import fsExtra from "fs-extra"
-
-import {Thunk} from "../state/types"
+import {isEmpty} from "lodash"
+import brim from "../brim"
+import ingest from "../brim/ingest"
+import {IngestParams} from "../brim/ingest/getParams"
+import errors from "../errors"
+import lib from "../lib"
 import Current from "../state/Current"
 import Handlers from "../state/Handlers"
+import {Handler} from "../state/Handlers/types"
 import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
-import Tabs from "../state/Tabs"
-import brim from "../brim"
-import errors from "../errors"
-import ingest from "../brim/ingest"
-import lib from "../lib"
-import {getZealot} from "./getZealot"
-import {Handler} from "../state/Handlers/types"
-import {IngestParams} from "../brim/ingest/getParams"
 import SystemTest from "../state/SystemTest"
+import Tabs from "../state/Tabs"
+import {Thunk} from "../state/types"
+import {getZealot} from "./getZealot"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -35,7 +35,7 @@ export default (files: File[]): Thunk<Promise<void>> => (
       validateInput(files, dataDir, spaceNames),
       createDir(),
       createSpace(zealot, dispatch, workspaceId),
-      setSpace(dispatch, tabId),
+      setSpace(dispatch, tabId, workspaceId),
       registerHandler(dispatch, requestId),
       postFiles(zealot, ws, jsonTypeConfigPath),
       trackProgress(zealot, dispatch, workspaceId),
@@ -139,12 +139,14 @@ const postFiles = (client, ws, jsonTypesPath) => ({
   }
 })
 
-const setSpace = (dispatch, tabId) => ({
+const setSpace = (dispatch, tabId, workspaceId) => ({
   do({spaceId}) {
-    dispatch(Current.setSpaceId(spaceId, tabId))
+    const url = lakePath(spaceId, workspaceId)
+    global.tabHistories.getOrCreate(tabId).push(url)
   },
   undo() {
-    dispatch(Current.setSpaceId(null, tabId))
+    const url = workspacesPath()
+    global.tabHistories.getOrCreate(tabId).replace(url)
   }
 })
 
@@ -200,12 +202,8 @@ const trackProgress = (client, gDispatch, workspaceId) => {
             break
         }
       }
+      await updateSpaceDetails()
       gDispatch(space.setIngestProgress(1))
-      // The progress bar has a transition of 1 second. I think people are
-      // psychologically comforted when they see the progress bar complete.
-      // That is why we sleep here. It should be moved into the search
-      // progress component
-      await lib.sleep(1500)
       gDispatch(space.setIngestProgress(null))
     }
   }

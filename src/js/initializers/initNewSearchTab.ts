@@ -1,22 +1,13 @@
+import tabHistory from "app/router/tab-history"
 import {NewTabSearchParams} from "../electron/ipc/windows/messages"
-import {Store} from "../state/types"
-import {submitSearch} from "../flows/submitSearch/mod"
-import Current from "../state/Current"
-import Search from "../state/Search"
-import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
+import {Store} from "../state/types"
 
 export default function(store: Store, params: NewTabSearchParams) {
-  const {workspaceId, spaceId, span, program, isNewWin} = params
-
+  const {href, isNewWin} = params
   if (!isNewWin) {
-    store.dispatch(Tabs.new())
+    store.dispatch(Tabs.new(href))
+  } else {
+    store.dispatch(tabHistory.replace(href))
   }
-
-  store.dispatch(Current.setWorkspaceId(workspaceId))
-  store.dispatch(Current.setSpaceId(spaceId))
-  store.dispatch(Search.setSpanArgs(span))
-  store.dispatch(SearchBar.removeAllSearchBarPins())
-  store.dispatch(SearchBar.changeSearchBarInput(program))
-  store.dispatch(submitSearch())
 }
