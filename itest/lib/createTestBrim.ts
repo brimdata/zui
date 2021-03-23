@@ -5,6 +5,9 @@ import logStep from "./appStep/util/logStep"
 import newAppInstance from "./newAppInstance"
 import {retryUntil} from "./control"
 import lib from "../../src/js/lib"
+import file from "src/js/lib/file"
+import waitForHook from "./appStep/api/waitForHook"
+import {htmlContextMenu} from "src/js/test/locators"
 
 export default (name: string) => {
   let app
@@ -20,6 +23,14 @@ export default (name: string) => {
   })
 
   return {
+    $(locator: Locator) {
+      return app.client.$(locator.css)
+    },
+
+    hook(name, opts?) {
+      return waitForHook(app, name, opts)
+    },
+
     getApp() {
       return app
     },
@@ -59,12 +70,22 @@ export default (name: string) => {
       return app.mainProcess.emit("spectron:clickAppMenuItem", id)
     },
 
+    async clickContextMenuItem(text: string) {
+      const menu = await this.$(htmlContextMenu)
+      const item = await menu.$(`li=${text}`)
+      return item.click()
+    },
+
     search(input: string) {
       return appStep.search(app, input)
     },
 
     click(locator: Locator) {
       return appStep.click(app, locator.css)
+    },
+
+    rightClick(locator: Locator) {
+      return appStep.rightClick(app, locator.css)
     },
 
     waitForText(locator: string, regex: RegExp) {
