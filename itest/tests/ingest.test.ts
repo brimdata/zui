@@ -1,6 +1,6 @@
 import path from "path"
 
-import {handleError, stdTest} from "../lib/jest"
+import {handleError} from "../lib/jest"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
 
@@ -29,7 +29,7 @@ describe("Ingest tests", () => {
   ]
 
   sampleFiles.forEach((fileName) => {
-    stdTest(`ingest of ${fileName}`, (done) => {
+    test(`ingest of ${fileName}`, (done) => {
       appStep
         .ingestFile(app, fileName)
         .then(async () => {
@@ -44,7 +44,7 @@ describe("Ingest tests", () => {
   })
 
   // Skip for now since it consistently fails in CI
-  // stdTest(`ingest of alerts.pcap (suricata)`, (done) => {
+  // test(`ingest of alerts.pcap (suricata)`, (done) => {
   //   appStep
   //     .ingestFile(app, "alerts.pcap")
   //     .then(async () => {

@@ -3,5 +3,7 @@
   "collectCoverageFrom": ["**/*.ts", "!**/test/**"],
   "globalSetup": "<rootDir>/globalSetup.ts",
   "reporters": ["default", "jest-junit"],
-  "setupFiles": ["<rootDir>/setup.ts"]
+  "setupFiles": ["<rootDir>/setup.ts"],
+  "setupFilesAfterEnv": ["<rootDir>/setup-after-env.ts"],
+  "testTimeout": 300000
 }

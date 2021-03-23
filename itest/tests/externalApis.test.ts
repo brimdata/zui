@@ -1,12 +1,9 @@
 import https from "https"
 
 import {retry} from "../lib/control"
-import {TestTimeout} from "../lib/jest"
 import ZeekLogDescriptions from "ppl/zeek/descriptions"
 import virusTotal from "../../src/js/services/virusTotal"
 import zeekLogInfo from "ppl/zeek/logInfo"
-
-jest.setTimeout(TestTimeout)
 
 test("ping virus total for a success", () => {
   const value = "80.239.217.49"

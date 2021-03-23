@@ -4,7 +4,7 @@ import {sprintf} from "sprintf-js"
 import {getResults, runSearch} from "../lib/appStep/api/search"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
-import {handleError, stdTest} from "../lib/jest"
+import {handleError} from "../lib/jest"
 import {selectors} from "../../src/js/test/integration"
 
 // Fields we can test in types.tsv
@@ -51,7 +51,7 @@ describe("type-wise Filter = value searches", () => {
     }
   })
 
-  stdTest("FilterEq ensure ingest", (done) => {
+  test("FilterEq ensure ingest", (done) => {
     appStep
       .search(app, `* | count() by _path | sort _path`)
       .then((results) => {
@@ -68,7 +68,7 @@ describe("type-wise Filter = value searches", () => {
     FIELDS.forEach((fieldName) => {
       values.forEach((s) => {
         const testId = sprintf("%04d", testIdx++)
-        stdTest(`FilterEq${testId}: ${path} ${fieldName}="${s}"`, (done) => {
+        test(`FilterEq${testId}: ${path} ${fieldName}="${s}"`, (done) => {
           runSearch(
             app,
             `_path=${path} ${fieldName}!=null | cut id, ${fieldName} | sort id`
@@ -94,7 +94,7 @@ describe("type-wise Filter = value searches", () => {
   }
   run("string", STRINGS)
 
-  stdTest(`FilterEq unset/${UNSET} string`, (done) => {
+  test(`FilterEq unset/${UNSET} string`, (done) => {
     runSearch(app, `_path=string | cut id, scalar | sort -r id | head 10`)
       .then(async () => {
         await appStep.rightClick(

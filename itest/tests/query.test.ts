@@ -4,7 +4,7 @@ import {sprintf} from "sprintf-js"
 
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
-import {handleError, stdTest} from "../lib/jest"
+import {handleError} from "../lib/jest"
 
 const simpleQueries = [
   "* | count()",
@@ -36,7 +36,7 @@ describe("Query tests", () => {
   for (let i = 0; i < simpleQueries.length; i++) {
     const zql = simpleQueries[i]
     const testId = sprintf("%03d", i)
-    stdTest(`query${testId}: "${zql}"`, (done) => {
+    test(`query${testId}: "${zql}"`, (done) => {
       appStep
         .search(app, zql)
         .then((results) => {
