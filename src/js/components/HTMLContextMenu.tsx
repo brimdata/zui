@@ -46,7 +46,7 @@ function HTMLMenuItem({item}) {
     return (
       <li
         onClick={() => item.click(item, stubbedBrowserWindow)}
-        className={classNames({disabled: !item.enabled})}
+        className={classNames({disabled: item.enabled === false})}
       >
         {item.label}
       </li>

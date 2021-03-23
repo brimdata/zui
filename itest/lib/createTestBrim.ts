@@ -1,13 +1,12 @@
+import {htmlContextMenu} from "src/js/test/locators"
+import lib from "../../src/js/lib"
 import {Locator} from "../../src/js/test/createLocator"
 import appStep from "./appStep/api"
+import waitForHook from "./appStep/api/waitForHook"
 // TODO in a future PR: remove direct logStep uses here.
 import logStep from "./appStep/util/logStep"
-import newAppInstance from "./newAppInstance"
 import {retryUntil} from "./control"
-import lib from "../../src/js/lib"
-import file from "src/js/lib/file"
-import waitForHook from "./appStep/api/waitForHook"
-import {htmlContextMenu} from "src/js/test/locators"
+import newAppInstance from "./newAppInstance"
 
 export default (name: string) => {
   let app
