@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import ZQL from "zq/zql/zql.js"
+import {parse} from "zealot"
 
 import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
 import {trim} from "../lib/Str"
@@ -87,7 +87,7 @@ export default function(p = "", pins: string[] = []) {
     ast() {
       let tree
       try {
-        tree = ZQL.parse(p)
+        tree = parse(p)
       } catch (error) {
         tree = {error}
       }

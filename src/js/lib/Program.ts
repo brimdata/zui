@@ -1,5 +1,4 @@
-import ZQL from "zq/zql/zql.js"
-
+import {parse as zParse} from "zealot"
 import {HEAD_PROC, TAIL_PROC} from "../brim/ast"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
@@ -11,7 +10,7 @@ export const parse = (string: Program) => {
   let ast = null
   let error = null
   try {
-    ast = ZQL.parse(string)
+    ast = zParse(string)
   } catch (e) {
     error = e
   }
