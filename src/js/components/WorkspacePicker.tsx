@@ -75,7 +75,7 @@ export default function WorkspacePicker() {
   const current = useSelector(Workspaces.id(workspaceId))
   return (
     <WorkspacePickerWrapper onClick={() => dispatch(showWorkspaceMenu())}>
-      <label>{`${current.name}`}</label>
+      <label>{`${current?.name}`}</label>
       <DropdownArrow />
     </WorkspacePickerWrapper>
   )

@@ -2,6 +2,7 @@ import {htmlContextMenu} from "src/js/test/locators"
 import lib from "../../src/js/lib"
 import {Locator} from "../../src/js/test/createLocator"
 import appStep from "./appStep/api"
+import takeScreenshot from "./appStep/api/takeScreenshot"
 import waitForHook from "./appStep/api/waitForHook"
 // TODO in a future PR: remove direct logStep uses here.
 import logStep from "./appStep/util/logStep"
@@ -28,6 +29,11 @@ export default (name: string) => {
 
     hook(name, opts?) {
       return waitForHook(app, name, opts)
+    },
+
+    navTo(path: string) {
+      // @ts-ignore
+      return app.client.execute((path) => navTo(path), path)
     },
 
     getApp() {
@@ -65,6 +71,10 @@ export default (name: string) => {
       })
     },
 
+    takeScreenshot() {
+      return takeScreenshot(app)
+    },
+
     clickAppMenuItem(id: string) {
       return app.mainProcess.emit("spectron:clickAppMenuItem", id)
     },
@@ -87,10 +97,13 @@ export default (name: string) => {
       return appStep.rightClick(app, locator.css)
     },
 
-    waitForText(locator: string, regex: RegExp) {
+    hasText(input: string | RegExp, locator: Locator | string = "body") {
       return retryUntil(
-        async () => (await app.client.$(locator)).getText(),
-        (s) => regex.test(s)
+        () =>
+          app.client
+            .$(typeof locator === "string" ? locator : locator.css)
+            .then((el) => el.getText()),
+        (s) => (typeof input === "string" ? s.includes(input) : input.test(s))
       )
     },
 
