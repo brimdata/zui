@@ -3,6 +3,7 @@ import {getZealot} from "./getZealot"
 import Current from "../state/Current"
 import Investigation from "../state/Investigation"
 import Spaces from "../state/Spaces"
+import SystemTest from "../state/SystemTest"
 
 const deleteSpace = (id: string): Thunk<Promise<void>> => (
   dispatch,
@@ -13,6 +14,7 @@ const deleteSpace = (id: string): Thunk<Promise<void>> => (
   return zealot.spaces.delete(id).then(() => {
     dispatch(Investigation.clearSpaceInvestigation(workspaceId, id))
     dispatch(Spaces.remove(workspaceId, id))
+    dispatch(SystemTest.hook("space-deleted"))
   })
 }
 

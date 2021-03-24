@@ -5,7 +5,6 @@ import {
   jsonTypeConfigInput
 } from "../../src/js/test/locators"
 import {getResults} from "../lib/appStep/api/search"
-import {stdTest} from "../lib/jest"
 import {testDataDir} from "../lib/env"
 import createTestBrim from "../lib/createTestBrim"
 
@@ -14,7 +13,7 @@ const config = path.join(testDataDir(), "custom-schema.json")
 describe("Preferences Modal Tests", () => {
   const brim = createTestBrim("preferences.test")
 
-  stdTest("setting a custom json type config", async (done) => {
+  test("setting a custom json type config", async (done) => {
     brim.clickAppMenuItem("preferences")
     await brim.setValue(jsonTypeConfigInput, config)
     await brim.click(defaultModalButton)

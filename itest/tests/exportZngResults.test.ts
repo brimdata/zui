@@ -3,7 +3,6 @@ import fsExtra from "fs-extra"
 import os from "os"
 import path from "path"
 
-import {stdTest} from "../lib/jest"
 import {
   defaultModalButton,
   toolbarExportButton
@@ -18,7 +17,7 @@ describe("exporting tests", () => {
 
   beforeAll(() => brim.ingest("sample.tsv"))
 
-  stdTest("clicking the export button", async (done) => {
+  test("clicking the export button", async (done) => {
     await brim.mockSaveDialog({canceled: false, filePath})
     await brim.search("")
     await brim.click(toolbarExportButton)
@@ -31,7 +30,7 @@ describe("exporting tests", () => {
     done()
   })
 
-  stdTest("canceling the export", async (done) => {
+  test("canceling the export", async (done) => {
     await brim.mockSaveDialog({canceled: true, filePath: undefined})
     await brim.click(toolbarExportButton)
     await brim.click(defaultModalButton)

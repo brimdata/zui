@@ -8,7 +8,7 @@ import {createZealot} from "zealot"
 
 import {retryUntil} from "../lib/control"
 import {nodeZqDistDir} from "../lib/env"
-import {handleError, stdTest} from "../lib/jest"
+import {handleError} from "../lib/jest"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
 
@@ -28,7 +28,7 @@ describe("Zar tests", () => {
     }
   })
 
-  stdTest(`Brim starts when a Zar space is present`, (done) => {
+  test(`Brim starts when a Zar space is present`, (done) => {
     appStep
       .ingestFile(app, "sample.tsv")
       .then(async () => {

@@ -3,7 +3,7 @@ import {basename} from "path"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
 import {retryUntil} from "../lib/control"
-import {handleError, stdTest} from "../lib/jest"
+import {handleError} from "../lib/jest"
 import {selectors} from "../../src/js/test/integration"
 import {LOG} from "../lib/log"
 
@@ -23,7 +23,7 @@ describe("Histogram tests", () => {
     done()
   })
 
-  stdTest("histogram deep inspection", (done) => {
+  test("histogram deep inspection", (done) => {
     LOG.debug("Pre-login")
     appStep
       .ingestFile(app, "sample.pcap")

@@ -1,7 +1,5 @@
 import brim from "../brim"
-import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
-import Notice from "../state/Notice"
 import Spaces from "../state/Spaces"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
@@ -21,9 +19,5 @@ export const initSpace = (spaceId: string): Thunk<Promise<void>> => (
     })
     .catch((error) => {
       console.error(error)
-      const e = ErrorFactory.create(error)
-      if (e.type === "NetworkError") return
-
-      dispatch(Notice.set(ErrorFactory.create(e)))
     })
 }
