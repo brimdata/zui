@@ -15,6 +15,7 @@ declare global {
       feature: (name: FeatureName, value: boolean) => void
       tabHistories: Histories
       windowHistory: BrowserHistory
+      navTo: (path: string) => void
     }
 
     interface Process {

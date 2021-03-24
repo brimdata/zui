@@ -5,6 +5,7 @@ import Feature from "../state/Feature"
 import TabHistories from "../state/TabHistories"
 import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
+import tabHistory from "app/router/tab-history"
 
 export default function initGlobals(store: Store) {
   global.getState = store.getState
@@ -14,6 +15,7 @@ export default function initGlobals(store: Store) {
   global.tabHistories = new Histories(TabHistories.selectAll(store.getState()))
   global.windowHistory = createMemoryHistory()
   global.windowHistory.replace(getUrlSearchParams().href)
+  global.navTo = (path) => store.dispatch(tabHistory.push(path))
 }
 
 function getWindowName() {

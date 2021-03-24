@@ -21,6 +21,12 @@ const SpinnerWrap = styled.div`
   justify-content: center;
 `
 
+function GetWorkspace({children}) {
+  const workspace = useSelector(Current.getWorkspace)
+  if (!workspace) return <Redirect to="/workspaces" />
+  else return children
+}
+
 function InitWorkspace({children}) {
   const dispatch = useDispatch()
   const workspace = useSelector(Current.mustGetWorkspace)
@@ -50,18 +56,20 @@ function InitWorkspace({children}) {
 export default function WorkspaceShow() {
   const match = useRouteMatch<{workspaceId: string}>()
   return (
-    <InitWorkspace>
-      <Switch>
-        <Route path={lakeImport.path}>
-          <LakeHome />
-        </Route>
-        <Route path={lakeShow.path}>
-          <LakeShow />
-        </Route>
-        <Route default>
-          <Redirect to={lakeImportPath(match.params.workspaceId)} />
-        </Route>
-      </Switch>
-    </InitWorkspace>
+    <GetWorkspace>
+      <InitWorkspace>
+        <Switch>
+          <Route path={lakeImport.path}>
+            <LakeHome />
+          </Route>
+          <Route path={lakeShow.path}>
+            <LakeShow />
+          </Route>
+          <Route default>
+            <Redirect to={lakeImportPath(match.params.workspaceId)} />
+          </Route>
+        </Switch>
+      </InitWorkspace>
+    </GetWorkspace>
   )
 }
