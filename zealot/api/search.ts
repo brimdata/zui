@@ -1,4 +1,4 @@
-import {parse} from "../zql"
+import {parse} from "../parser"
 import {createSpan} from "../util/span"
 import {SearchArgs} from "../types"
 import {FetchArgs} from "../fetcher/fetcher"

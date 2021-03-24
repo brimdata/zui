@@ -1,3 +1,4 @@
+import {parse} from "./parser"
 import {createFetcher, FetchArgs} from "./fetcher/fetcher"
 import {Zealot, ZealotPayload, SearchFormat} from "./types"
 import {createTime} from "./util/time"
@@ -17,5 +18,6 @@ export {
   SearchFormat,
   ZealotMock,
   createFetcher,
-  FetchArgs
+  FetchArgs,
+  parse
 }
