@@ -62,7 +62,7 @@ export default function detailFieldContextMenu(
       }),
       detailMenuActions.countBy.menuItem([fieldData], {enabled: !isGroupBy}),
       menu.separator(),
-      {role: "copy"},
+      detailMenuActions.copy.menuItem([fieldData]),
       menu.separator(),
       detailMenuActions.sortAsc.menuItem([fieldData], {enabled: hasCol}),
       detailMenuActions.sortDesc.menuItem([fieldData], {enabled: hasCol}),

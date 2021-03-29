@@ -64,7 +64,7 @@ export default function searchFieldContextMenu(
       }),
       searchMenuActions.countBy.menuItem([fieldData], {enabled: !isGroupBy}),
       menu.separator(),
-      {role: "copy"},
+      searchMenuActions.copy.menuItem([fieldData]),
       menu.separator(),
       searchMenuActions.sortAsc.menuItem([fieldData], {enabled: hasCol}),
       searchMenuActions.sortDesc.menuItem([fieldData], {enabled: hasCol}),
