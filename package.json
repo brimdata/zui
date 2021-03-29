@@ -154,7 +154,7 @@
     "styled-components": "^5.1.1",
     "tree-model": "^1.0.7",
     "valid-url": "^1.0.9",
-    "zq": "git+https://github.com/brimsec/zq.git#4baa70e05259c73614699fc3232d4666a3b5b9e6"
+    "zq": "git+https://github.com/brimsec/zq.git#a7fca09ab8bf19adc2dec9a2043d3aa20b951d59"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
