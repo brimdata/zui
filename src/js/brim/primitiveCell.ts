@@ -57,7 +57,7 @@ export function createPrimitiveCell({name, data}: PrimitiveField) {
       } else if (value === null) {
         return "⦻"
       } else if (type === "count") {
-        return value.toString()
+        return withCommas(value.toString())
       } else if (type === "time") {
         return brim.time(this.toDate()).format()
       } else if (isEqual(value, {})) {

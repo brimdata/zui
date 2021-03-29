@@ -30,16 +30,6 @@ test("string escapes backslash", () => {
   expect(f.queryableValue()).toBe('"Networks,\\\\"')
 })
 
-describe("#display", () => {
-  const fn = (data: zng.Type) =>
-    createCell(new zng.Field("anything", data)).display()
-
-  test("count", () => {
-    const data = new zng.Primitive("count", "123123123")
-    expect(fn(data)).toBe("123123123")
-  })
-})
-
 describe("#queryableValue", () => {
   const fn = (data: zng.Type) =>
     createCell(new zng.Field("anything", data)).queryableValue()

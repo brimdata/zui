@@ -6,6 +6,7 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../../flows/searchBar/actions"
+import lib from "../../../lib"
 import open from "../../../lib/open"
 import {viewLogDetail} from "../../../flows/viewLogDetail"
 import Modal from "../../../state/Modal"
@@ -21,6 +22,14 @@ import {createCell} from "../../../brim/cell"
 
 function buildDetailActions() {
   return {
+    copy: action({
+      name: "detail-cell-menu-copy",
+      label: "Copy",
+      listener(_dispatch, data: zng.SerializedField) {
+        const f = zng.Field.deserialize(data)
+        lib.doc.copyToClipboard(f.data.toString())
+      }
+    }),
     countBy: action({
       name: "detail-cell-menu-count-by",
       label: "Count by field",

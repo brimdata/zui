@@ -22,9 +22,18 @@ import tab from "../../../state/Tab"
 import virusTotal from "../../../services/virusTotal"
 import {zng} from "zealot"
 import {createCell} from "../../../brim/cell"
+import lib from "src/js/lib"
 
 function buildSearchActions() {
   return {
+    copy: action({
+      name: "search-cell-menu-copy",
+      label: "Copy",
+      listener(_dispatch, data: zng.SerializedField) {
+        const f = zng.Field.deserialize(data)
+        lib.doc.copyToClipboard(f.data.toString())
+      }
+    }),
     countBy: action({
       name: "search-cell-menu-count-by",
       label: "Count by field",
