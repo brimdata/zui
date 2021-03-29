@@ -38,19 +38,18 @@ export default function TabImport() {
         <LoadFilesInput onChange={onChange} />
         <footer>
           <p>
-            <b>Accepted formats:</b> .pcap, .pcapng,{" "}
-            <Link href="https://github.com/brimsec/zq/blob/master/zng/docs/spec.md">
+            <b>Accepted formats:</b> .csv, .json, .parquet, .tsv,{" "}
+            <Link href="https://github.com/brimdata/zq/blob/main/zng/docs/spec.md">
               .zng
             </Link>
-            , and{" "}
-            <Link href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/writers/ascii.zeek.html">
-              Zeek ASCII/JSON
+            ,{" "}
+            <Link href="https://github.com/brimdata/zq/blob/main/zng/docs/zson.md">
+              .zson
             </Link>
-            .
-          </p>
-          <p>
-            <b>Note:</b> Multiple zng and Zeek log files may be imported, but
-            only one pcap.
+            ,{" "}
+            <Link href="https://github.com/brimdata/zq/blob/main/zst/README.md">
+              .zst
+            </Link>
           </p>
         </footer>
       </section>

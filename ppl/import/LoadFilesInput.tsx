@@ -5,8 +5,7 @@ import useDropzone from "src/js/components/hooks/useDropzone"
 import ToolbarButton from "app/toolbar/button"
 import Folder from "src/js/icons/Folder"
 import {reactElementProps} from "src/js/test/integration"
-import PcapFileIcon from "./PcapFileIcon"
-import ZeekFileIcon from "./ZeekFileIcon"
+import DataFileIcon from "./DataFileIcon"
 
 type Props = {
   onChange: (e, files: File[]) => void
@@ -58,11 +57,10 @@ export default function LoadFilesInput({onChange}: Props) {
           <p>Or drag & drop them here.</p>
         </div>
         <div className="file-types">
-          <PcapFileIcon />
-          <div className="zeek-files-stack">
-            <ZeekFileIcon />
-            <ZeekFileIcon />
-            <ZeekFileIcon />
+          <div className="files-stack">
+            <DataFileIcon />
+            <DataFileIcon />
+            <DataFileIcon />
           </div>
         </div>
       </div>
