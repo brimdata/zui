@@ -18,8 +18,8 @@ For a walk through some typical operations in Brim to get started, watch the
 [Brim Demo video](https://www.youtube.com/watch?v=InT-7WZ5Y2Y).
 
 If you hit any problems, you may want to browse the
-[wiki articles](https://github.com/brimsec/brim/wiki), perhaps starting with
-[Troubleshooting](https://github.com/brimsec/brim/wiki/Troubleshooting).
+[wiki articles](https://github.com/brimdata/brim/wiki), perhaps starting with
+[Troubleshooting](https://github.com/brimdata/brim/wiki/Troubleshooting).
 If you get stuck,
 [join our public Slack](https://www.brimsecurity.com/join-slack/) and we'll be
 happy to help.
@@ -28,7 +28,7 @@ happy to help.
 
 * Download the Brim installer via the Windows link at the [Brim download](https://www.brimsecurity.com/download/) page
 * Launch the downloaded file `Brim-Setup.exe` to begin installation
-* Click through the "unrecognized app" pop-up, if presented (see [Microsoft Windows beta limitations](https://github.com/brimsec/brim/wiki/Microsoft-Windows-beta-limitations) for details)
+* Click through the "unrecognized app" pop-up, if presented (see [Microsoft Windows beta limitations](https://github.com/brimdata/brim/wiki/Microsoft-Windows-beta-limitations) for details)
 * A small green animation will play while installation is completing
 * Brim will start automatically when install completes
 * Click the Brim icon on the Desktop or Start menu to relaunch in the future

@@ -72,7 +72,7 @@ function zqdArtifactPaths(version) {
   const plat = platformDefs[process.platform]
 
   const artifactFile = `zq-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://github.com/brimsec/zq/releases/download/${version}/${artifactFile}`
+  const artifactUrl = `https://github.com/brimdata/zq/releases/download/${version}/${artifactFile}`
   const internalTopDir = `zq-${version}.${plat.osarch}`
 
   return {
@@ -122,7 +122,7 @@ async function zeekDownload(version, zdepsPath) {
   const zeekPath = path.join(zdepsPath, "zeek")
 
   const artifactFile = `zeek-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://github.com/brimsec/zeek/releases/download/${version}/${artifactFile}`
+  const artifactUrl = `https://github.com/brimdata/zeek/releases/download/${version}/${artifactFile}`
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {
@@ -149,7 +149,7 @@ async function suricataDownload(version, zdepsPath) {
   const suricataPath = path.join(zdepsPath, "suricata")
 
   const artifactFile = `suricata-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://github.com/brimsec/build-suricata/releases/download/${version}/${artifactFile}`
+  const artifactUrl = `https://github.com/brimdata/build-suricata/releases/download/${version}/${artifactFile}`
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {

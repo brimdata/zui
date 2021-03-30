@@ -1,4 +1,4 @@
-[![Brim CI](https://github.com/brimsec/brim/workflows/Brim%20CI/badge.svg)](https://github.com/brimsec/brim/actions?query=workflow%3A%22Brim+CI%22+branch%3Amaster)
+[![Brim CI](https://github.com/brimdata/brim/workflows/Brim%20CI/badge.svg)](https://github.com/brimdata/brim/actions?query=workflow%3A%22Brim+CI%22+branch%3Amaster)
 
 # Brim
 
@@ -15,19 +15,19 @@ especially those that are cumbersome for Wireshark, tshark, or other packet anal
 
 Brim is built from open source components, including:
 
-- [zq](https://github.com/brimsec/zq), a structured log query engine;
+- [zq](https://github.com/brimdata/zq), a structured log query engine;
 - [Electron](https://www.electronjs.org/) and [React](https://reactjs.org/) for multi-platform UI;
 - [Zeek](https://www.zeek.org), to generate network analysis data from packet capture files.
 
 ## Installing Brim
 
-See the [installation guide](https://github.com/brimsec/brim/wiki/Installation)
-in the [wiki](https://github.com/brimsec/brim/wiki). Release notes are
-available at the [releases](https://github.com/brimsec/brim/releases) page.
+See the [installation guide](https://github.com/brimdata/brim/wiki/Installation)
+in the [wiki](https://github.com/brimdata/brim/wiki). Release notes are
+available at the [releases](https://github.com/brimdata/brim/releases) page.
 
 ## Having a problem?
 
-Please browse the [wiki](https://github.com/brimsec/brim/wiki) to review common problems and helpful tips before [opening an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue).
+Please browse the [wiki](https://github.com/brimdata/brim/wiki) to review common problems and helpful tips before [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue).
 
 ## Development and contributing
 

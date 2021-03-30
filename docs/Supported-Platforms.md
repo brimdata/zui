@@ -83,11 +83,11 @@ our automated tests for macOS run today on Apple hardware that is Intel-based
 but not M1-based. Therefore if you have your choice of Mac hardware platform,
 Intel-based is more strongly recommended. However, as we know the M1-based Macs
 will become more popular in the future, please
-[open issues](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue)
+[open issues](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
 for problems you expereince with Brim on M1-based Macs as you would any other.
 If we should begin to accumulate bugs that are specific to M1-based hardware,
 this will help guide the prioritization of our goal to deliver M1-specific
-builds ([brim/1266](https://github.com/brimsec/brim/issues/1266)).
+builds ([brim/1266](https://github.com/brimdata/brim/issues/1266)).
 
 ## Linux
 
@@ -140,11 +140,11 @@ The most extensive testing of Brim is provided via automation that is run on
 versions of
 [Runners](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners)
 are referenced in the automation for Brim's
-[Continuous Integration tests](https://github.com/brimsec/brim/blob/master/.github/workflows/ci.yml)
+[Continuous Integration tests](https://github.com/brimdata/brim/blob/master/.github/workflows/ci.yml)
 and build workflows for
-[Windows](https://github.com/brimsec/brim/blob/master/.github/workflows/win-release-candidate.yml),
-[macOS](https://github.com/brimsec/brim/blob/master/.github/workflows/macos-release-candidate.yml), and
-[Linux](https://github.com/brimsec/brim/blob/master/.github/workflows/linux-release-candidate.yml).
+[Windows](https://github.com/brimdata/brim/blob/master/.github/workflows/win-release-candidate.yml),
+[macOS](https://github.com/brimdata/brim/blob/master/.github/workflows/macos-release-candidate.yml), and
+[Linux](https://github.com/brimdata/brim/blob/master/.github/workflows/linux-release-candidate.yml).
 
 ## Smoke Testing
 
@@ -160,12 +160,12 @@ confirm basic functionality. Such a smoke test consists of the following:
 
 This exercise was most recently performed in December, 2020 in preparation for
 the GA release `v0.21.0` that introduces Suricata support. For more details on
-the outcome of this exercise, review [brim/1263](https://github.com/brimsec/brim/issues/1263).
+the outcome of this exercise, review [brim/1263](https://github.com/brimdata/brim/issues/1263).
 
 ## Non-Recommended Platforms
 
 While we welcome you to
-[open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue)
+[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
 about any problem you experience with Brim regardless of platform version,
 the priority of the core Brim development team is to maintain stability and
 introduce new features on the modern platforms that are most widely used.
@@ -175,8 +175,8 @@ for platform versions older/different from those recommended above.
 We also understand that certain users may have a strong motivation to make Brim
 work on other platforms. As Brim is open source, community members are welcomed
 to perform their own research regarding such platforms and submit
-[cookbooks](https://github.com/brimsec/brim/wiki#cookbooks) that may be of
+[cookbooks](https://github.com/brimdata/brim/wiki#cookbooks) that may be of
 use to other users seeking to run on the same platform. Before embarking on
 such an effort, we recommend
-[opening an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue)
+[opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
 to check if we're aware of any existing efforts regarding that platform.

@@ -28,7 +28,7 @@ function retry_until_success {
 }
 
 function umount_macos_ci_dimg {
-    # https://github.com/brimsec/brim/issues/690
+    # https://github.com/brimdata/brim/issues/690
     # It's possible for hdiutil to fail with an error code, yet
     # subsequently the volume disappears. This is a function so that
     # its logic can be used with retry_until_success.

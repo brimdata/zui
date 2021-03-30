@@ -51,7 +51,7 @@ jobs:
         # body can be multiline and must be escaped as described here:
         # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
         #
-        # Rewrite bare PR numbers as zq PRs (https://github.com/brimsec/brim/issues/797)
+        # Rewrite bare PR numbers as zq PRs (https://github.com/brimdata/brim/issues/797)
         run: |
           sha="$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")"
           echo "::set-output name=sha::$sha"
@@ -60,10 +60,10 @@ jobs:
           number="$(jq -r '.client_payload.number' "${GITHUB_EVENT_PATH}")"
           echo "::set-output name=number::$number"
           title="$(jq -r '.client_payload.title' "${GITHUB_EVENT_PATH}")"
-          title="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimsec/zq$2$3,g; s,^(#\d+)(\W+),brimsec/zq$1$2,g; s,(\W+)(#\d+),$1brimsec/zq$2,g; s,^(#\d+)$,brimsec/zq$1,g;' <<< "${title}")"
+          title="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zq$2$3,g; s,^(#\d+)(\W+),brimdata/zq$1$2,g; s,(\W+)(#\d+),$1brimdata/zq$2,g; s,^(#\d+)$,brimdata/zq$1,g;' <<< "${title}")"
           echo "::set-output name=title::$title"
           body="$(jq -r '.client_payload.body' "${GITHUB_EVENT_PATH}")"
-          body="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimsec/zq$2$3,g; s,^(#\d+)(\W+),brimsec/zq$1$2,g; s,(\W+)(#\d+),$1brimsec/zq$2,g; s,^(#\d+)$,brimsec/zq$1,g;' <<< "${body}")"
+          body="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zq$2$3,g; s,^(#\d+)(\W+),brimdata/zq$1$2,g; s,(\W+)(#\d+),$1brimdata/zq$2,g; s,^(#\d+)$,brimdata/zq$1,g;' <<< "${body}")"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}"
@@ -90,8 +90,8 @@ jobs:
         run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
       - name: Clear Extraneous Runner Cache
         # Clear on-runner cache before we create our own cache to prevent
-        # slower build times. See https://github.com/brimsec/brim/pull/590
-        # and https://github.com/brimsec/brim/issues/641
+        # slower build times. See https://github.com/brimdata/brim/pull/590
+        # and https://github.com/brimdata/brim/issues/641
         run: rm -rf "${NPM_CACHE:?}"
         env:
           NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
@@ -109,7 +109,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
 
       - name: update zq
-        run: npm install https://github.com/brimsec/zq#${{ steps.zq_pr.outputs.sha }}
+        run: npm install https://github.com/brimdata/zq#${{ steps.zq_pr.outputs.sha }}
 
       - run: npm install --no-audit
       - run: npm run build
@@ -119,7 +119,7 @@ jobs:
         run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
         timeout-minutes: 30
         env:
-          WORKSPACE: /var/tmp/brimsec
+          WORKSPACE: /var/tmp/brimdata
 
       # This push logic is simple. If someone merges a different brim PR
       # while this job is running, this push will fail. I anticipate
@@ -145,7 +145,7 @@ jobs:
         if: failure() && steps.testIntegration.conclusion == 'failure'
         with:
           name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: /var/tmp/brimsec/itest
+          path: /var/tmp/brimdata/itest
 
       - name: Create Pull Request for Manual Inspection
         if: failure()
@@ -155,7 +155,7 @@ jobs:
           commit-message: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
           title: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
           body: |
-            This is an auto-generated PR with a zq dependency update needing manual attention. brimsec/zq#${{ steps.zq_pr.outputs.number }}, authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated automatically. Please see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} for the original failing run. If a Brim update is needed, you may use the branch on this PR to do so.
+            This is an auto-generated PR with a zq dependency update needing manual attention. brimdata/zq#${{ steps.zq_pr.outputs.number }}, authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated automatically. Please see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} for the original failing run. If a Brim update is needed, you may use the branch on this PR to do so.
 
             ----
             #### ${{ steps.zq_pr.outputs.title }}

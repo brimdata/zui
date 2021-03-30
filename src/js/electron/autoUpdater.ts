@@ -6,7 +6,7 @@ import got from "got"
 import open from "../lib/open"
 
 const getFeedURLForPlatform = (platform) => {
-  return `https://update.electronjs.org/brimsec/brim/${platform}/${app.getVersion()}`
+  return `https://update.electronjs.org/brimdata/brim/${platform}/${app.getVersion()}`
 }
 
 const getLatestVersion = async (): Promise<string> => {

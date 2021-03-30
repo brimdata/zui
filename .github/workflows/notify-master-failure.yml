@@ -22,5 +22,5 @@ jobs:
           slack_json: |
             {
               "username": "github-actions",
-              "text": "brimsec/brim workflow \"${{ github.event.workflow_run.name }}\" failed on master.\n${{ github.event.workflow_run.html_url }}"
+              "text": "brimdata/brim workflow \"${{ github.event.workflow_run.name }}\" failed on master.\n${{ github.event.workflow_run.html_url }}"
             }  
