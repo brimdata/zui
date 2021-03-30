@@ -39,6 +39,8 @@ export default function LogDetailsWindow() {
 
 const PacketsButton = () => {
   const packets = usePackets()
+  if (!packets) return null
+
   packets.label = undefined
   return (
     <div>

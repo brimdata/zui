@@ -16,6 +16,7 @@ import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Search from "src/js/state/Search"
 import SearchBarState from "src/js/state/SearchBar"
 import Url from "src/js/state/Url"
+import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 
 function syncReduxWithUrl() {
   return function(dispatch, getState) {
@@ -60,13 +61,14 @@ export default function SearchHome() {
   const packets = usePackets()
   const exportAction = useExport()
   const columns = useColumns()
+  const pluginButtons = usePluginToolbarItems("search")
+
+  const actions = [packets, exportAction, columns, view, ...pluginButtons]
+
   return (
     <InitSearchParams>
       <SearchPageHeader>
-        <Toolbar
-          submit={() => dispatch(submitSearch())}
-          actions={[packets, exportAction, columns, view]}
-        />
+        <Toolbar submit={() => dispatch(submitSearch())} actions={actions} />
         <SearchBar />
         <SearchHeaderChart />
       </SearchPageHeader>

@@ -17,6 +17,7 @@ import Feature from "./Feature"
 import WorkspaceStatuses from "./WorkspaceStatuses"
 import TabHistories from "./TabHistories"
 import Url from "./Url"
+import Toolbars from "./Toolbars"
 
 export default combineReducers<any, any>({
   errors: Errors.reducer,
@@ -35,5 +36,6 @@ export default combineReducers<any, any>({
   workspaceStatuses: WorkspaceStatuses.reducer,
   queries: Queries.reducer,
   tabHistories: TabHistories.reducer,
-  url: Url.reducer
+  url: Url.reducer,
+  toolbars: Toolbars.reducer
 })

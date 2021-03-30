@@ -9,6 +9,7 @@ import {PacketsState} from "./Packets/types"
 import {PrefsState} from "./Prefs/types"
 import {SpacesState} from "./Spaces/types"
 import {TabsState} from "./Tabs/types"
+import {ToolbarsState} from "./Toolbars"
 import {ViewState} from "./View/types"
 import {createZealot, Zealot} from "zealot"
 import {QueriesState} from "./Queries/types"
@@ -49,4 +50,5 @@ export type State = {
   queries: QueriesState
   systemTest: SystemTestState
   feature: FeatureState
+  toolbars: ToolbarsState
 }
