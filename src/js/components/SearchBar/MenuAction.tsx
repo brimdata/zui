@@ -20,7 +20,8 @@ export default function MenuAction() {
     {label: "Copy for zq", click: () => dispatch(Modal.show("zq"))},
     {
       label: "Syntax docs",
-      click: () => open("https://github.com/brimsec/zq/tree/master/docs/language")
+      click: () =>
+        open("https://github.com/brimsec/zq/tree/master/docs/language")
     },
     {
       label: "Kill search",
