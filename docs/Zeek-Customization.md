@@ -9,7 +9,7 @@
 # Summary
 
 Brim uses [Zeek](https://www.zeek.org) to generate Zeek logs from pcaps; the Zeek logs are then combined and stored in
- [ZNG](https://github.com/brimsec/zq/blob/master/zng/docs/spec.md) format. Brim comes with a Zeek bundle
+ [ZNG](https://github.com/brimsec/zq/blob/master/docs/formats/zng.md) format. Brim comes with a Zeek bundle
 it uses just for this process.
 
 Starting with `v0.10.0`, Brim can be configured to use a Zeek setup other than its default. This may be useful for:

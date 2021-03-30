@@ -178,7 +178,7 @@ as usual.
 * Fix an issue where opening/closing a Log Detail window during pcap import canceled the import (#1015)
 * Sort field names in the column chooser alphabetically (#1012)
 * Add a search tool in the column chooser to find field names (#1012)
-* Fix an issue where clicking a link to [ZQL docs](https://github.com/brimsec/zq/tree/master/zql/docs) opened an unusable window (#1030)
+* Fix an issue where clicking a link to [ZQL docs](https://github.com/brimsec/zq/tree/master/docs/language) opened an unusable window (#1030)
 * Expand the [wiki docs](https://github.com/brimsec/brim/wiki/Troubleshooting#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open) for troubleshooting pcap extraction issues (#1020)
 * Fix an issue where the Packets button was not activating after scrolling down in the main events view (#1027)
 * Add the ability to connect Brim to a remote [`zqd`](https://github.com/brimsec/zq/tree/master/ppl/cmd/zqd) (#1007)

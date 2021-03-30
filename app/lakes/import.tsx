@@ -39,15 +39,15 @@ export default function TabImport() {
         <footer>
           <p>
             <b>Accepted formats:</b> .csv, .json, .parquet, .tsv,{" "}
-            <Link href="https://github.com/brimdata/zq/blob/main/zng/docs/spec.md">
+            <Link href="https://github.com/brimdata/zq/blob/main/docs/formats/zng.md">
               .zng
             </Link>
             ,{" "}
-            <Link href="https://github.com/brimdata/zq/blob/main/zng/docs/zson.md">
+            <Link href="https://github.com/brimdata/zq/blob/main/docs/formats/zson.md">
               .zson
             </Link>
             ,{" "}
-            <Link href="https://github.com/brimdata/zq/blob/main/zst/README.md">
+            <Link href="https://github.com/brimdata/zq/blob/main/docs/formats/zst.md">
               .zst
             </Link>
           </p>
