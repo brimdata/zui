@@ -30,8 +30,8 @@ of the geolocation data, see the [README](https://github.com/brimdata/geoip-conn
 There are additional geolocation features in Brim that may be added in the future, depending on demand from the community.
 The following issues are currently being held open to gather interest:
 
-| **Issue**                                              |**Description**                                 |
-|--------------------------------------------------------|------------------------------------------------|
+| **Issue**                                               |**Description**                                 |
+|------------0--------------------------------------------|------------------------------------------------|
 | [brim/936](https://github.com/brimdata/brim/issues/936) | Geolocation map visualization                  |
 | [brim/954](https://github.com/brimdata/brim/issues/954) | Look up Geolocation data on-demand             |
 | [brim/955](https://github.com/brimdata/brim/issues/955) | Allow user to replace the Geolocation database |
