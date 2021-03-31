@@ -13,8 +13,6 @@ export const LOG = createLogger({
     })
   ),
   transports: [
-    new transports.Console({level: "info"}), // No idea how to make this runtime-configurable via command line. This has
-    // mkdir -p semantics so the environment variable seems OK enough.
     new transports.File({
       filename: path.join(itestDir(), "itest.log"),
       level: "debug"

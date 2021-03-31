@@ -2,14 +2,15 @@ import React, {RefCallback} from "react"
 import styled from "styled-components"
 import ActionButton, {ActionButtonProps} from "./action-button"
 
-type Justify = "center" | "flex-end"
-
 export const GUTTER = 8
 
-const BG = styled.div<{justify: Justify}>`
+const BG = styled.div<{size: number}>`
   display: flex;
-  justify-content: ${(p) => p.justify};
-  flex: 1;
+  flex: 0 1 auto;
+  overflow: hidden;
+  justify-content: flex-end;
+  width: ${(p) => p.size}px;
+
   & > * {
     margin-right: ${GUTTER}px;
     &:last-child {
@@ -20,13 +21,13 @@ const BG = styled.div<{justify: Justify}>`
 
 type Props = {
   actions: ActionButtonProps[]
-  justify: Justify
-  innerRef: RefCallback<HTMLDivElement>
+  innerRef?: RefCallback<HTMLElement>
+  width?: number
 }
 
-export default function ActionButtons({actions, justify, innerRef}: Props) {
+export default function ActionButtons({actions, width, innerRef}: Props) {
   return (
-    <BG ref={innerRef} justify={justify}>
+    <BG ref={innerRef} size={width}>
       {actions.map((props, i) => (
         <ActionButton key={i} {...props} />
       ))}
