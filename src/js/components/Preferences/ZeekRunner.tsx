@@ -9,7 +9,7 @@ type Props = {
   config: FormFieldConfig
 }
 
-const DOCS = "https://github.com/brimsec/brim/wiki/Zeek-Customization"
+const DOCS = "https://github.com/brimdata/brim/wiki/Zeek-Customization"
 
 export default function ZeekRunner({config}: Props) {
   const {name, label, defaultValue} = config

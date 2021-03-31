@@ -1,16 +1,15 @@
-[![CircleCI](https://circleci.com/gh/brimsec/brim.svg?style=svg&circle-token=8fb219d4419937d21fb70c99c89157bff05c2ecc)](https://circleci.com/gh/brimsec/brim)
-
+[![Brim CI](https://github.com/brimdata/brim/workflows/Brim%20CI/badge.svg)](https://github.com/brimdata/brim/actions?query=workflow%3A%22Brim+CI%22+branch%3Amaster)
 # Brim Development
 
 Thank you for contributing to Brim!
 
-Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimsecurity.com/join-slack/) as well.
+Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimsecurity.com/join-slack/) as well.
 
 Brim is early in its life cycle and will be expanding quickly. Please star and/or watch the repo so you can follow and track our progress.
 
 ## Code Base Walkthrough
 
-Before you start, review the [Code Base Walkthrough](https://github.com/brimsec/brim/wiki/Code-Base-Walkthrough). This doc provides an overview of the directory structure, libraries used, and other useful details for new developers. A [YouTube video](https://www.youtube.com/watch?v=CPel0iu1pig) is also available that provides a detailed walk-through of the material.
+Before you start, review the [Code Base Walkthrough](https://github.com/brimdata/brim/wiki/Code-Base-Walkthrough). This doc provides an overview of the directory structure, libraries used, and other useful details for new developers. A [YouTube video](https://www.youtube.com/watch?v=CPel0iu1pig) is also available that provides a detailed walk-through of the material.
 
 ## Setup
 
@@ -20,7 +19,7 @@ You should have `node v12.12.0`, `deno v1.2.0`, and `git` installed. You can sta
 [Install Deno](https://deno.land/manual/getting_started/installation)
 
 ```bash
-git clone https://github.com/brimsec/brim
+git clone https://github.com/brimdata/brim
 cd brim
 npm install
 npm start
@@ -32,20 +31,20 @@ On subsequent updates, `git pull` then `npm install`.
 
 ### zqd
 
-`zqd`, from the [zq](https://github.com/brimsec/zq) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
+`zqd`, from the [zq](https://github.com/brimdata/zq) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
 
 When developing features that need a non-released zqd instance, you can:
 
-- change the `brimsec/zq` dependency in package.json to refer to a branch or git commit, either in `brimsec/zq` or some fork. If the dependency doesn't look like an official tagged zq repository, the Brim npm postinstall step will try to build and use zqd from the specified commit.
+- change the `brimdata/zq` dependency in package.json to refer to a branch or git commit, either in `brimdata/zq` or some fork. If the dependency doesn't look like an official tagged zq repository, the Brim npm postinstall step will try to build and use zqd from the specified commit.
 - Or, you can build zqd yourself, and make it accessible via PATH, then run `brim_zqd_from_path=1 npm start`.
 
 ### zeek
 
-Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimsec/zq/blob/master/docs/formats/zng.md) format.
+Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zq/blob/master/docs/formats/zng.md) format.
 
-As an npm postinstall step, a [zeek artifact](https://github.com/brimsec/zeek/releases) is downloaded and expanded into the `./zdeps/zeek` directory. This artifact contains a zeek binary and associated scripts, and a "zeek runner" script or command that is called by zqd. zqd is passed the full path to the zeek runner via the `-zeekrunner` command line option. When a pcap file is ingested, zqd runs the zeek runner with no arguments and its working directory set to an output directory for the zeek TSV logs, and then feeds the pcap data to the zeek runner via stdin. zqd then internally converts the zeek TSV logs into ZNG format.
+As an npm postinstall step, a [zeek artifact](https://github.com/brimdata/zeek/releases) is downloaded and expanded into the `./zdeps/zeek` directory. This artifact contains a zeek binary and associated scripts, and a "zeek runner" script or command that is called by zqd. zqd is passed the full path to the zeek runner via the `-zeekrunner` command line option. When a pcap file is ingested, zqd runs the zeek runner with no arguments and its working directory set to an output directory for the zeek TSV logs, and then feeds the pcap data to the zeek runner via stdin. zqd then internally converts the zeek TSV logs into ZNG format.
 
-An alternate Zeek setup may be used by overriding the zeek runner location. This may be done either by launching Brim with the `BRIM_ZEEK_RUNNER` environment variable set to the absolute path of a zeek runner script or commmand, or by setting the "Zeek Runner" preference in the Brim UI. See the [Zeek Customization](https://github.com/brimsec/brim/wiki/Zeek-Customization) wiki article for additional details.
+An alternate Zeek setup may be used by overriding the zeek runner location. This may be done either by launching Brim with the `BRIM_ZEEK_RUNNER` environment variable set to the absolute path of a zeek runner script or commmand, or by setting the "Zeek Runner" preference in the Brim UI. See the [Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization) wiki article for additional details.
 
 ### suricata
 

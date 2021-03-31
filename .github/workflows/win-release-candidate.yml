@@ -32,8 +32,8 @@ jobs:
       run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
     - name: Clear Extraneous Runner Cache
       # Clear on-runner cache before we create our own cache to prevent
-      # slower build times. See https://github.com/brimsec/brim/pull/590
-      # and https://github.com/brimsec/brim/issues/641
+      # slower build times. See https://github.com/brimdata/brim/pull/590
+      # and https://github.com/brimdata/brim/issues/641
       run: rm -rf "${NPM_CACHE:?}"
       env:
         NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}

@@ -22,19 +22,19 @@ This screenshot shows an example aggregation that uses geolocation data:
 
 # Origin
 
-The data is added by the [geoip-conn](https://github.com/brimsec/geoip-conn) Zeek package. For details on the origin and accuracy
-of the geolocation data, see the [README](https://github.com/brimsec/geoip-conn/blob/master/README.md).
+The data is added by the [geoip-conn](https://github.com/brimdata/geoip-conn) Zeek package. For details on the origin and accuracy
+of the geolocation data, see the [README](https://github.com/brimdata/geoip-conn/blob/master/README.md).
 
 # Future Functionality
 
 There are additional geolocation features in Brim that may be added in the future, depending on demand from the community.
 The following issues are currently being held open to gather interest:
 
-| **Issue**                                              |**Description**                                 |
-|--------------------------------------------------------|------------------------------------------------|
-| [brim/936](https://github.com/brimsec/brim/issues/936) | Geolocation map visualization                  |
-| [brim/954](https://github.com/brimsec/brim/issues/954) | Look up Geolocation data on-demand             |
-| [brim/955](https://github.com/brimsec/brim/issues/955) | Allow user to replace the Geolocation database |
+| **Issue**                                               |**Description**                                 |
+|------------0--------------------------------------------|------------------------------------------------|
+| [brim/936](https://github.com/brimdata/brim/issues/936) | Geolocation map visualization                  |
+| [brim/954](https://github.com/brimdata/brim/issues/954) | Look up Geolocation data on-demand             |
+| [brim/955](https://github.com/brimdata/brim/issues/955) | Allow user to replace the Geolocation database |
 
 If you're interested in additional geolocation features, please follow the links to review these issues and click :+1: below the
 description on any of these features you'd like to see added. If you have additional feedback or ideas on this functionality,

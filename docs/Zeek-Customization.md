@@ -9,7 +9,7 @@
 # Summary
 
 Brim uses [Zeek](https://www.zeek.org) to generate Zeek logs from pcaps; the Zeek logs are then combined and stored in
- [ZNG](https://github.com/brimsec/zq/blob/master/docs/formats/zng.md) format. Brim comes with a Zeek bundle
+ [ZNG](https://github.com/brimdata/zq/blob/master/docs/formats/zng.md) format. Brim comes with a Zeek bundle
 it uses just for this process.
 
 Starting with `v0.10.0`, Brim can be configured to use a Zeek setup other than its default. This may be useful for:
@@ -77,7 +77,7 @@ to add extensions, or even make changes to the core Zeek C++ code if you choose.
 However, situations may arise when this is difficult. Some examples:
 
 1. **Microsoft Windows**. Zeek is not officially supported on Windows, and Brim's
-[fork of Zeek](https://github.com/brimsec/zeek) that includes limited Windows support requires a complex build setup.
+[fork of Zeek](https://github.com/brimdata/zeek) that includes limited Windows support requires a complex build setup.
 2. **Minimal changes**. If you seek to only make minor Zeek script additions/changes, creating a full standalone Zeek install
 may seem like overkill.
 3. **Lack of expertise**. The Zeek install/build process may seem daunting to new users.
@@ -105,10 +105,10 @@ PS C:\> cd \temp\zeek
 ```
 
 2. **Download and unpack a current Brim Zeek artifact** for the platform from the
-[releases](https://github.com/brimsec/zeek/releases) page.
+[releases](https://github.com/brimdata/zeek/releases) page.
 
 ```
-PS C:\temp\zeek> Invoke-WebRequest -Uri "https://github.com/brimsec/zeek/releases/download/v3.2.0-dev-brim6/zeek-v3.2.0-dev-brim6.windows-amd64.zip" -OutFile zeek.zip
+PS C:\temp\zeek> Invoke-WebRequest -Uri "https://github.com/brimdata/zeek/releases/download/v3.2.0-dev-brim6/zeek-v3.2.0-dev-brim6.windows-amd64.zip" -OutFile zeek.zip
 PS C:\temp\zeek> Expand-Archive zeek.zip
 ```
 
@@ -176,4 +176,4 @@ Zeek feature that could be useful to other Brim users, or are generating logs th
 or (especially) if you hit challenges and need help, please join our
 [public Slack](https://www.brimsecurity.com/join-slack/)
 and tell us about it, or
-[open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
+[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

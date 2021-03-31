@@ -196,7 +196,7 @@ export default function(
         label: "ZQL Syntax Docs",
         click() {
           shell.openExternal(
-            "https://github.com/brimsec/zq/tree/master/docs/language"
+            "https://github.com/brimdata/zq/tree/master/docs/language"
           )
         }
       },
@@ -209,14 +209,14 @@ export default function(
       {
         label: "Github Repository",
         click() {
-          shell.openExternal("https://github.com/brimsec/brim")
+          shell.openExternal("https://github.com/brimdata/brim")
         }
       },
       {
         label: "Submit Issue...",
         click() {
           shell.openExternal(
-            "https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue"
+            "https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue"
           )
         }
       }

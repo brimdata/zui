@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const JSON_TYPE_CONFIG_DOCS =
-  "https://github.com/brimsec/brim/wiki/Zeek-JSON-Import"
+  "https://github.com/brimdata/brim/wiki/Zeek-JSON-Import"
 
 export default function JSONTypeConfig({config}: Props) {
   const {name, label, defaultValue} = config

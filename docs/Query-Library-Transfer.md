@@ -9,7 +9,7 @@
 
 # Summary
 
-As of Brim release [v0.22.0](https://github.com/brimsec/brim/releases/tag/v0.22.0),
+As of Brim release [v0.22.0](https://github.com/brimdata/brim/releases/tag/v0.22.0),
 the contents of the Query Library are saved as part of the local app "state"
 alongside other persistent data such as the saved entries in the **History**
 panel and user **Preferences**. There are plans for future enhancements to
@@ -21,7 +21,7 @@ implementation.
 # About Cookbooks
 
 Brim cookbooks provide an opportunity to "test drive" new/experimental
-features in the Brim application and related [zq](https://github.com/brimsec/zq)
+features in the Brim application and related [zq](https://github.com/brimdata/zq)
 tools. They also walk through details of how Brim and zq tools function and
 therefore may inspire other creative configurations.
 
@@ -30,10 +30,10 @@ relevant to the configurations shown. However, due to the potential to
 encounter bugs in evolving functionality, it is recommended that you initially
 follow cookbooks in a non-production, lab-style setting. As such features
 become more complete and stable, cookbooks may be retired and replaced with
-regular [User Documentation](https://github.com/brimsec/brim/wiki#user-documentation).
+regular [User Documentation](https://github.com/brimdata/brim/wiki#user-documentation).
 
 Please report any bugs or usability issues you find when working with cookbooks
-by [opening an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue)
+by [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
 or reaching out on the [Brim public Slack](https://www.brimsecurity.com/join-slack/).
 We'd also love to hear your success stories and variations, so please don't be
 shy!
@@ -100,7 +100,7 @@ $ cat appState.json | jq '.data.globalState.queries'
 # Extracting/Replacing the Query Library
 
 For ease of use, we've created a simple Python script
-[`qlib_util.py`](https://raw.githubusercontent.com/brimsec/brim/master/scripts/util/qlib_util.py)
+[`qlib_util.py`](https://raw.githubusercontent.com/brimdata/brim/master/scripts/util/qlib_util.py)
 that can easily perform this.
 
 ```
@@ -131,7 +131,7 @@ Brim, we download the script to the base config directory where our
 
 ```
 $ cd "$HOME/Library/Application Support/Brim"
-$ curl -O https://raw.githubusercontent.com/brimsec/brim/master/scripts/util/qlib_util.py
+$ curl -O https://raw.githubusercontent.com/brimdata/brim/master/scripts/util/qlib_util.py
 ```
 
 To extract the contents of the Query Library to a separate file `saved.json`:
@@ -170,7 +170,7 @@ exited, and with the script downloaded as before:
 
 ```
 $ cd "$HOME/Library/Application Support/Brim"
-$ curl -O https://raw.githubusercontent.com/brimsec/brim/master/scripts/util/qlib_util.py
+$ curl -O https://raw.githubusercontent.com/brimdata/brim/master/scripts/util/qlib_util.py
 $ python3 qlib_util.py --replace saved.json 
 Backing up ./appState.json to /var/folders/yn/jbkxxkpd4vg142pc3_bd_krc0000gn/T/tmpnnfr164v
 Successfully replaced the Query Library in ./appState.json with the contents of saved.json
@@ -185,4 +185,4 @@ present.
 
 If you have questions or feedback about this cookbook, we'd like to hear from
 you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/) or
-[open an issue](https://github.com/brimsec/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
+[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

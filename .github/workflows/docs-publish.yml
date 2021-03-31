@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Upload Documentation to Wiki
-        uses: brimsec/github-wiki-publish-action@v1
+        uses: brimdata/github-wiki-publish-action@v1
         with:
           path: "docs"
         env:

@@ -10,7 +10,7 @@ const waitForClickable = async (app: Application, selector: string) => {
   // container allows scrolling. However, some Internet searches suggest
   // scrolling to the element before trying to click in order to avoid
   // problems like those described in
-  // https://github.com/brimsec/brim/issues/668
+  // https://github.com/brimdata/brim/issues/668
   const el = await app.client.$(selector)
   await logStep(`wait for element to exist: "${selector}"`, () =>
     el.waitForExist()

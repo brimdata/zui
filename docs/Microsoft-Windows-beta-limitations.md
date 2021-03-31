@@ -5,7 +5,7 @@ note:
 
 1. Due to lack of formal support for Zeek on Windows, generation of Zeek logs
 from pcaps is performed with
-[our own Zeek port](https://github.com/brimsec/zeek). Issue
+[our own Zeek port](https://github.com/brimdata/zeek). Issue
 [zeek/951](https://github.com/zeek/zeek/issues/951) tracks the effort to
 upstream our changes.
 

@@ -46,7 +46,7 @@ export default function AboutWindow() {
             <div className={"octocat-small"}>
               <Octocat />
             </div>
-            <a onClick={() => open("https://github.com/brimsec/brim")}>
+            <a onClick={() => open("https://github.com/brimdata/brim")}>
               Repository
             </a>
           </section>
