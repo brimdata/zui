@@ -12,11 +12,11 @@ import {handleError} from "../lib/jest"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
 
-describe("Zar tests", () => {
+describe("Lake tests", () => {
   let app
   let testIdx = 0
-  const ZAR = path.join(nodeZedDistDir(), "zar")
-  const ZAR_SPACE_NAME = "sample.zar"
+  const ZED = path.join(nodeZedDistDir(), "zed")
+  const LAKE_SPACE_NAME = "sample.zar"
   beforeAll(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
     return appStep.startApp(app)
@@ -28,7 +28,7 @@ describe("Zar tests", () => {
     }
   })
 
-  test(`Brim starts when a Zar space is present`, (done) => {
+  test(`Brim starts when a lake space is present`, (done) => {
     appStep
       .ingestFile(app, "sample.tsv")
       .then(async () => {
@@ -38,13 +38,13 @@ describe("Zar tests", () => {
         const client = createZealot("localhost:9867")
 
         const sampleSpace = (await client.spaces.list())[0]
-        const zarSpace = await client.spaces.create({name: ZAR_SPACE_NAME})
+        const lakeSpace = await client.spaces.create({name: LAKE_SPACE_NAME})
 
         const zngFile = sampleSpace.data_path + "/all.zng"
-        const zarRoot = zarSpace.data_path
+        const lakeRoot = lakeSpace.data_path
 
-        // Create a zar archive inside the space.
-        execSync(`"${ZAR}" import -s 1024B -R "${zarRoot}" "${zngFile}"`)
+        // Create a lake inside the space.
+        execSync(`"${ZED}" lake import -s 1024B -R "${lakeRoot}" "${zngFile}"`)
 
         // Make sure zqd identifies both spaces.
         retryUntil(
@@ -55,7 +55,7 @@ describe("Zar tests", () => {
         // Reload the app so that it reads the new space.
         await appStep.reload(app)
         await appStep.click(app, ".add-tab")
-        await (await app.client.$(`=${ZAR_SPACE_NAME}`)).waitForDisplayed()
+        await (await app.client.$(`=${LAKE_SPACE_NAME}`)).waitForDisplayed()
         done()
       })
       .catch((err) => {
