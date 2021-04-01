@@ -196,7 +196,7 @@ export default function(
         label: "ZQL Syntax Docs",
         click() {
           shell.openExternal(
-            "https://github.com/brimdata/zq/tree/master/docs/language"
+            "https://github.com/brimdata/zed/tree/main/docs/language"
           )
         }
       },

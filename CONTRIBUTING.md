@@ -31,16 +31,16 @@ On subsequent updates, `git pull` then `npm install`.
 
 ### zqd
 
-`zqd`, from the [zq](https://github.com/brimdata/zq) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
+`zqd`, from the [Zed](https://github.com/brimdata/zed) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
 
 When developing features that need a non-released zqd instance, you can:
 
-- change the `brimdata/zq` dependency in package.json to refer to a branch or git commit, either in `brimdata/zq` or some fork. If the dependency doesn't look like an official tagged zq repository, the Brim npm postinstall step will try to build and use zqd from the specified commit.
+- change the `brimdata/zed` dependency in package.json to refer to a branch or git commit, either in `brimdata/zed` or some fork. If the dependency doesn't look like an official tagged Zed repository, the Brim npm postinstall step will try to build and use zqd from the specified commit.
 - Or, you can build zqd yourself, and make it accessible via PATH, then run `brim_zqd_from_path=1 npm start`.
 
 ### zeek
 
-Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zq/blob/master/docs/formats/zng.md) format.
+Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zed/blob/main/docs/formats/zng.md) format.
 
 As an npm postinstall step, a [zeek artifact](https://github.com/brimdata/zeek/releases) is downloaded and expanded into the `./zdeps/zeek` directory. This artifact contains a zeek binary and associated scripts, and a "zeek runner" script or command that is called by zqd. zqd is passed the full path to the zeek runner via the `-zeekrunner` command line option. When a pcap file is ingested, zqd runs the zeek runner with no arguments and its working directory set to an output directory for the zeek TSV logs, and then feeds the pcap data to the zeek runner via stdin. zqd then internally converts the zeek TSV logs into ZNG format.
 

@@ -15,7 +15,7 @@ especially those that are cumbersome for Wireshark, tshark, or other packet anal
 
 Brim is built from open source components, including:
 
-- [zq](https://github.com/brimdata/zq), a structured log query engine;
+- [Zed](https://github.com/brimdata/zed), a structured log query engine;
 - [Electron](https://www.electronjs.org/) and [React](https://reactjs.org/) for multi-platform UI;
 - [Zeek](https://www.zeek.org), to generate network analysis data from packet capture files.
 

@@ -31,7 +31,7 @@ detail.
 To start debugging such problems, it helps to understand how Brim opens flows
 extracted from pcaps. Once the 5-tuple, connection start time, and connection
 duration are isolated from the Zeek `conn` record for the flow, the
-[`zqd`](https://github.com/brimdata/zq/tree/master/ppl/cmd/zqd) process uses an
+[`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd) process uses an
 index to extract the packets for the target flow into a temporary file. Once
 this temporary file has been written to the local filesystem, the application
 on your operating system that's configured to automatically open files ending
@@ -133,7 +133,7 @@ line (your timestamps will differ):
    ```
 
 Brim normally invokes steps similar to those shown above by making API calls
-to the [`zqd`](https://github.com/brimdata/zq/tree/master/ppl/cmd/zqd) process that
+to the [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd) process that
 is launched when Brim starts. Specifically, step #2 is performed when you import
 your pcap into Brim, then information from the generated Zeek `conn` records
 provide timestamps similar to those you gathered in step #3, and then the
@@ -252,7 +252,7 @@ and details to [brim/1490](https://github.com/brimdata/brim/issues/1490).
 In all other cases, please [open a new issue](#opening-an-issue).
 
 To begin troubleshooting this, it helps to understand the "backend" of Brim.
-One essential component is [`zqd`](https://github.com/brimdata/zq/tree/master/ppl/cmd/zqd),
+One essential component is [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd),
 a server-style process that manages the storage and querying of imported
 log/packet data. Operations in `zqd` are invoked via a
 [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)

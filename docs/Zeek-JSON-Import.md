@@ -7,9 +7,9 @@
 # Summary
 
 Starting with `v0.9.0`, Brim allows for direct import of Zeek logs. When such
-imported logs are in JSON format, the [`zq`](https://github.com/brimdata/zq)
+imported logs are in JSON format, the [Zed](https://github.com/brimdata/zed)
 engine inside of Brim applies a
-[JSON type definition](https://github.com/brimdata/zq/tree/master/zeek/README.md)
+[JSON type definition](https://github.com/brimdata/zed/tree/main/zeek/README.md)
 to restore Zeek-compatible rich data types to the events. The article at that
 hyperlink describes the importance of the type definition configuration and
 how to customize it for your environment, if necessary.
@@ -31,16 +31,16 @@ and tell us about it, or
 When working in Brim, you'll know customization of the type definition is
 likely necessary if you see warning messages when importing Zeek JSON logs,
 such as the screenshot below. These warnings are equivalent to those shown in
-the ["Handling exceptions"](https://github.com/brimdata/zq/tree/master/zeek#handling-exceptions)
-section of the `zq` documentation.
+the ["Handling exceptions"](https://github.com/brimdata/zed/tree/main/zeek#handling-exceptions)
+section of the Zed documentation.
 
 ![JSON Import Errors](media/JSON-import-errors.png)
 
 You may find it easiest to complete the customization exercise using `zq`,
 following
-[that documentation](https://github.com/brimdata/zq/tree/master/zeek/README.md).
+[that documentation](https://github.com/brimdata/zed/tree/main/zeek/README.md).
 However, if you prefer to work exclusively within Brim, the same type defintion
-config referenced in the `zq` documentation comes bundled with the Brim
+config referenced in the Zed documentation comes bundled with the Brim
 application and can be located on your filesystem at:
 
 |**OS Platform**|**Location**|
@@ -49,7 +49,7 @@ application and can be located on your filesystem at:
 | **macOS**     | `/Applications/Brim.app/Contents/Resources/app/zealot/config/json_types.ts` |
 | **Linux**     | `/usr/lib/brim/resources/app/zealot/config/json_types.ts` |
 
-Following a similar workflow as described in the `zq` documentation, you can
+Following a similar workflow as described in the Zed documentation, you can
 copy this file to make modifications or generate a new one using the
 [`print-types.zeek`](https://github.com/brimdata/zeek/blob/master/brim/print-types.zeek)
 script. You can point your Brim application at your modified type definition
