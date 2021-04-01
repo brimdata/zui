@@ -100,7 +100,7 @@ $ cat appState.json | jq '.data.globalState.queries'
 # Extracting/Replacing the Query Library
 
 For ease of use, we've created a simple Python script
-[`qlib_util.py`](scripts/util/qlib_util.py) that can easily perform this.
+[`qlib_util.py`](../scripts/util/qlib_util.py) that can easily perform this.
 
 ```
 $ python3 qlib_util.py --help
