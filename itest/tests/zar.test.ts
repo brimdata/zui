@@ -7,7 +7,7 @@ import path from "path"
 import {createZealot} from "zealot"
 
 import {retryUntil} from "../lib/control"
-import {nodeZqDistDir} from "../lib/env"
+import {nodeZedDistDir} from "../lib/env"
 import {handleError} from "../lib/jest"
 import appStep from "../lib/appStep/api"
 import newAppInstance from "../lib/newAppInstance"
@@ -15,7 +15,7 @@ import newAppInstance from "../lib/newAppInstance"
 describe("Zar tests", () => {
   let app
   let testIdx = 0
-  const ZAR = path.join(nodeZqDistDir(), "zar")
+  const ZAR = path.join(nodeZedDistDir(), "zar")
   const ZAR_SPACE_NAME = "sample.zar"
   beforeAll(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
