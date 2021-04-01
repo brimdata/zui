@@ -20,7 +20,7 @@ jobs:
         config-file: .github/workflows/markdown-link-check-config.json
     - name: Inform Slack users of link check failures
       uses: tiloio/slack-webhook-action@v1.1.2
-      if: ${{ failure() && steps.extract_branch.outputs.branch == 'master' }}
+      if: ${{ failure() && steps.extract_branch.outputs.branch == 'main' }}
       with: 
         slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_DOCS }}
         slack_json: |
