@@ -21,7 +21,7 @@ export default function MenuAction() {
     {
       label: "Syntax docs",
       click: () =>
-        open("https://github.com/brimdata/zq/tree/master/docs/language")
+        open("https://github.com/brimdata/zed/tree/main/docs/language")
     },
     {
       label: "Kill search",

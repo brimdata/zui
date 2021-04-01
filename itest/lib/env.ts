@@ -11,5 +11,5 @@ export const itestDir = (): string =>
 export const testDataDir = (): string =>
   path.resolve(path.join(repoDir(), "itest", "testdata"))
 
-export const nodeZqDistDir = (): string =>
-  path.resolve(path.join(repoDir(), "node_modules", "zq", "dist"))
+export const nodeZedDistDir = (): string =>
+  path.resolve(path.join(repoDir(), "node_modules", "zed", "dist"))

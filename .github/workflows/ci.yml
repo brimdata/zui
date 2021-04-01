@@ -115,7 +115,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - run: npm install --no-audit --unsafe-perm
-        # Installing zq requires unsafe-perm when running as root.
+        # Installing Zed requires unsafe-perm when running as root.
       - name: Download rpm package
         uses: actions/download-artifact@v1
         with:

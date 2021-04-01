@@ -13,15 +13,15 @@
 
 By default, the Brim application leverages the local filesystem for holding
 imported logs and packet capture data. However, new features available in Brim
-starting with v0.20.0 and related [zq tools](https://github.com/brimdata/zq)
+starting with v0.20.0 and related [Zed tools](https://github.com/brimdata/zed)
 starting with v0.24.0 enable access to data stored remotely as well. This
 cookbook describes the available options and current limitations.
 
 # About Cookbooks
 
 Brim cookbooks provide an opportunity to "test drive" new/experimental
-features in the Brim application and related zq tools. They also walk through
-details of how Brim and zq tools function and therefore may inspire other
+features in the Brim application and related Zed tools. They also walk through
+details of how Brim and Zed tools function and therefore may inspire other
 creative configurations.
 
 All efforts are made to disclose known caveats and limitations that are
@@ -66,12 +66,12 @@ your desktop, it's easy to think of Brim as a simple standalone application.
 However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
-One essential component is [`zqd`](https://github.com/brimdata/zq/tree/master/ppl/cmd/zqd),
+One essential component is [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd),
 a server-style process that manages the storage and querying of imported
 log/packet data.  Operations in `zqd` are invoked via a
 [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that's utilized by a "client", such as the Brim app. The
-[`zapi`](https://github.com/brimdata/zq/tree/master/cmd/zapi) is also available
+[`zapi`](https://github.com/brimdata/zed/tree/main/cmd/zapi) command is also available
 as a command line client that can perform many of the same operations as the
 Brim app, and therefore may be useful in scripting and automation.
 
@@ -116,7 +116,7 @@ article.
 
 5. The `-brimfd=3` is an option unique to when `zqd` is launched by Brim.
 This helps ensure that if Brim is killed abruptly, the `zqd` process will also
-be terminated (see [zq/1184](https://github.com/brimdata/zq/pull/1184) for
+be terminated (see [brimdata/zed#1184](https://github.com/brimdata/zed/pull/1184) for
 details).
 
 6. We can see the full path to the `zqd` binary that's packaged with Brim. This
@@ -154,9 +154,9 @@ ubuntu# sudo apt install -y ./brim_amd64.deb
 ---
 
 * **Variation:** Rather than the full Brim package, we could instead
-[download a zq package](https://www.brimsecurity.com/download/). The zq
+[download a Zed package](https://www.brimsecurity.com/download/). The Zed
 package includes the `zqd` and `zapi` binaries that could be used to construct
-command lines similar to those shown below. However, as the zq tools are a
+command lines similar to those shown below. However, as the Zed tools are a
 general data platform, they do not include an embedded Zeek. This means such a
 configuration would either lack the ability to import packet data, or would
 require the creation of a separate Zeek installation and runner that could be
@@ -219,11 +219,11 @@ ubuntu# /usr/lib/brim/resources/app/zdeps/zapi -s wrccdc postpcap -f wrccdc.2018
 
 While it's possible to import logs from the Brim app directly into a remote
 `zqd`, we can also use `zapi` on our Linux VM. Here we'll import the Zeek TSV
-logs from our [zq-sample-data](https://github.com/brimdata/zq-sample-data).
+logs from our [zed-sample-data](https://github.com/brimdata/zed-sample-data).
 
 ```
-ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zq-sample-data.git
-ubuntu# /usr/lib/brim/resources/app/zdeps/zapi -s sample postpath -f zq-sample-data/zeek-default/*
+ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zed-sample-data
+ubuntu# /usr/lib/brim/resources/app/zdeps/zapi -s sample postpath -f zed-sample-data/zeek-default/*
 100.0% 44.71MB/44.71MB
 posted 44.71MB in 21.252418033s
 ```

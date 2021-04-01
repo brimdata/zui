@@ -1,14 +1,14 @@
-name: Advance ZQ
-# This type must match the event type from zq.
+name: Advance Zed
+# This type must match the event type from Zed.
 # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
 # These events only trigger on the Github default branch (usually
 # master).
 on:
   repository_dispatch:
-    types: [zq-pr-merged]
+    types: [zed-pr-merged]
 jobs:
-  advance-zq:
-    name: Advance ZQ
+  advance-zed:
+    name: Advance Zed
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -43,15 +43,15 @@ jobs:
       # This section gets event information.
       - run: jq '.' "${GITHUB_EVENT_PATH}"
       - name: process pull request event
-        id: zq_pr
-        # $GITHUB_EVENT_PATH is the JSON we posted from zq.
+        id: zed_pr
+        # $GITHUB_EVENT_PATH is the JSON we posted from Zed.
         # Variables for other steps get set as described here:
         # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
         #
         # body can be multiline and must be escaped as described here:
         # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
         #
-        # Rewrite bare PR numbers as zq PRs (https://github.com/brimdata/brim/issues/797)
+        # Rewrite bare PR numbers as Zed PRs (https://github.com/brimdata/brim/issues/797)
         run: |
           sha="$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")"
           echo "::set-output name=sha::$sha"
@@ -60,10 +60,10 @@ jobs:
           number="$(jq -r '.client_payload.number' "${GITHUB_EVENT_PATH}")"
           echo "::set-output name=number::$number"
           title="$(jq -r '.client_payload.title' "${GITHUB_EVENT_PATH}")"
-          title="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zq$2$3,g; s,^(#\d+)(\W+),brimdata/zq$1$2,g; s,(\W+)(#\d+),$1brimdata/zq$2,g; s,^(#\d+)$,brimdata/zq$1,g;' <<< "${title}")"
+          title="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zed$2$3,g; s,^(#\d+)(\W+),brimdata/zed$1$2,g; s,(\W+)(#\d+),$1brimdata/zed$2,g; s,^(#\d+)$,brimdata/zed$1,g;' <<< "${title}")"
           echo "::set-output name=title::$title"
           body="$(jq -r '.client_payload.body' "${GITHUB_EVENT_PATH}")"
-          body="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zq$2$3,g; s,^(#\d+)(\W+),brimdata/zq$1$2,g; s,(\W+)(#\d+),$1brimdata/zq$2,g; s,^(#\d+)$,brimdata/zq$1,g;' <<< "${body}")"
+          body="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zed$2$3,g; s,^(#\d+)(\W+),brimdata/zed$1$2,g; s,(\W+)(#\d+),$1brimdata/zed$2,g; s,^(#\d+)$,brimdata/zed$1,g;' <<< "${body}")"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}"
@@ -73,7 +73,7 @@ jobs:
           user="$(jq -r '.client_payload.user' "${GITHUB_EVENT_PATH}")"
           echo "::set-output name=user::$user"
 
-      # This section runs typical CI, with an updated zq. Most of this
+      # This section runs typical CI, with an updated Zed. Most of this
       # is no different than the normal CI flow.
       - uses: actions/setup-go@v2
         with:
@@ -108,8 +108,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
 
-      - name: update zq
-        run: npm install https://github.com/brimdata/zq#${{ steps.zq_pr.outputs.sha }}
+      - name: Update Zed
+        run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
 
       - run: npm install --no-audit
       - run: npm run build
@@ -129,15 +129,15 @@ jobs:
         run: |
           git diff
           cat << 'EOF' | git commit -a -F-
-          zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+          Zed update through "${{ steps.zed_pr.outputs.title }}" by ${{ steps.zed_pr.outputs.user }}
 
-          This is an auto-generated commit with a zq dependency update. The zq PR
-          ${{ steps.zq_pr.outputs.url }}, authored by @${{ steps.zq_pr.outputs.user }},
+          This is an auto-generated commit with a Zed dependency update. The Zed PR
+          ${{ steps.zed_pr.outputs.url }}, authored by @${{ steps.zed_pr.outputs.user }},
           has been merged.
 
-          ${{ steps.zq_pr.outputs.title }}
+          ${{ steps.zed_pr.outputs.title }}
 
-          ${{ steps.zq_pr.outputs.body }}
+          ${{ steps.zed_pr.outputs.body }}
           EOF
           git push
 
@@ -152,13 +152,13 @@ jobs:
         uses: peter-evans/create-pull-request@v3.4.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
-          title: zq update through "${{ steps.zq_pr.outputs.title }}" by ${{ steps.zq_pr.outputs.user }}
+          commit-message: Zed update through "${{ steps.zed_pr.outputs.title }}" by ${{ steps.zed_pr.outputs.user }}
+          title: Zed update through "${{ steps.zed_pr.outputs.title }}" by ${{ steps.zed_pr.outputs.user }}
           body: |
-            This is an auto-generated PR with a zq dependency update needing manual attention. brimdata/zq#${{ steps.zq_pr.outputs.number }}, authored by @${{ steps.zq_pr.outputs.user }}, has been merged, however zq could not be updated automatically. Please see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} for the original failing run. If a Brim update is needed, you may use the branch on this PR to do so.
+            This is an auto-generated PR with a Zed dependency update needing manual attention. brimdata/zed#${{ steps.zed_pr.outputs.number }}, authored by @${{ steps.zed_pr.outputs.user }}, has been merged, however Zed could not be updated automatically. Please see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} for the original failing run. If a Brim update is needed, you may use the branch on this PR to do so.
 
             ----
-            #### ${{ steps.zq_pr.outputs.title }}
-            ${{ steps.zq_pr.outputs.body }}
-          branch: zqbot-${{ steps.zq_pr.outputs.branch }}
+            #### ${{ steps.zed_pr.outputs.title }}
+            ${{ steps.zed_pr.outputs.body }}
+          branch: zedbot-${{ steps.zed_pr.outputs.branch }}
           branch-suffix: short-commit-hash

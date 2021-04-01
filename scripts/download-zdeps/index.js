@@ -7,7 +7,7 @@ const path = require("path")
 const tmp = require("tmp")
 const extract = require("extract-zip")
 const brimPackage = require("../../package.json")
-const zqPackage = require("../../node_modules/zq/package.json")
+const zedPackage = require("../../node_modules/zed/package.json")
 
 const zdepsPath = path.resolve("zdeps")
 
@@ -68,12 +68,12 @@ async function unzipTo(zipfile, dir) {
   })
 }
 
-function zqdArtifactPaths(version) {
+function zedArtifactPaths(version) {
   const plat = platformDefs[process.platform]
 
-  const artifactFile = `zq-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://github.com/brimdata/zq/releases/download/${version}/${artifactFile}`
-  const internalTopDir = `zq-${version}.${plat.osarch}`
+  const artifactFile = `zed-${version}.${plat.osarch}.zip`
+  const artifactUrl = `https://github.com/brimdata/zed/releases/download/${version}/${artifactFile}`
+  const internalTopDir = `zed-${version}.${plat.osarch}`
 
   return {
     artifactFile,
@@ -84,9 +84,9 @@ function zqdArtifactPaths(version) {
 
 // Download and extract the zqd binary for this platform to the specified
 // directory. Returns the absolute path of the zqd binary file.
-async function zqArtifactsDownload(version, destPath) {
+async function zedArtifactsDownload(version, destPath) {
   const plat = platformDefs[process.platform]
-  const paths = zqdArtifactPaths(version)
+  const paths = zedArtifactPaths(version)
 
   const tmpdir = tmp.dirSync({unsafeCleanup: true})
   try {
@@ -168,14 +168,13 @@ async function suricataDownload(version, zdepsPath) {
   console.log("suricata " + version + " downloaded to " + suricataPath)
 }
 
-// Build the zqd binary inside the node_modules/zq directory via "make build".
-async function zqDevBuild(destPath) {
+async function zedDevBuild(destPath) {
   if (!(process.platform in platformDefs)) {
     throw new Error("unsupported platform")
   }
   const plat = platformDefs[process.platform]
 
-  const zqPackageDir = path.join(__dirname, "..", "..", "node_modules", "zq")
+  const zedPackageDir = path.join(__dirname, "..", "..", "node_modules", "zed")
 
   for (let f of [
     plat.zqdBin,
@@ -184,7 +183,7 @@ async function zqDevBuild(destPath) {
     plat.zapiBin,
     plat.zarBin
   ]) {
-    fs.copyFileSync(path.join(zqPackageDir, "dist", f), path.join(destPath, f))
+    fs.copyFileSync(path.join(zedPackageDir, "dist", f), path.join(destPath, f))
   }
 }
 
@@ -192,29 +191,28 @@ async function main() {
   try {
     // We encode the versions here for now to avoid the unncessary
     // git clone if it were in package.json.
-    const zeekVersion = zqPackage.brimDependencies.zeekTag
-    const suricataVersion = zqPackage.brimDependencies.suricataTag
+    const zeekVersion = zedPackage.brimDependencies.zeekTag
+    const suricataVersion = zedPackage.brimDependencies.suricataTag
     await zeekDownload(zeekVersion, zdepsPath)
     await suricataDownload(suricataVersion, zdepsPath)
 
-    // The zq dependency should be a git tag or commit. Any tag that
+    // The Zed dependency should be a git tag or commit. Any tag that
     // begins with "v*" is expected to be a released artifact, and will
-    // be downloaded from the zq repo release artifacts. Otherwise,
-    // attempt to build it (via "make build"); this assumes that go tooling
-    // is available.
-    const zqdVersion = brimPackage.dependencies.zq.split("#")[1]
-    if (zqdVersion.startsWith("v")) {
-      await zqArtifactsDownload(zqdVersion, zdepsPath)
-      console.log("downloaded zq artifacts version " + zqdVersion)
+    // be downloaded from the Zed repository. Otherwise, copy Zed
+    // artifacts from node_modules via zedDevBuild.
+    const zedVersion = brimPackage.dependencies.zed.split("#")[1]
+    if (zedVersion.startsWith("v")) {
+      await zedArtifactsDownload(zedVersion, zdepsPath)
+      console.log("downloaded Zed artifacts version " + zedVersion)
     } else {
-      await zqDevBuild(zdepsPath)
+      await zedDevBuild(zdepsPath)
       // Print the version inside zq derived during prepack as
       // opposed to what's in package.json.
       let realZqVersion = child_process
         .execSync(path.join(zdepsPath, "zq") + " -version")
         .toString()
         .trim()
-      console.log("copied zq artifacts " + realZqVersion)
+      console.log("copied Zed artifacts " + realZqVersion)
     }
   } catch (err) {
     console.error("zdeps setup: ", err)

@@ -21,8 +21,8 @@ implementation.
 # About Cookbooks
 
 Brim cookbooks provide an opportunity to "test drive" new/experimental
-features in the Brim application and related [zq](https://github.com/brimdata/zq)
-tools. They also walk through details of how Brim and zq tools function and
+features in the Brim application and related [Zed](https://github.com/brimdata/zed)
+tools. They also walk through details of how Brim and Zed tools function and
 therefore may inspire other creative configurations.
 
 All efforts are made to disclose known caveats and limitations that are

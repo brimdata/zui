@@ -3,7 +3,7 @@
 The purpose of the integration tests is to test Brim and ZQD
 interactions. The test strategy is to focus on these interactions in the
 tests and not exhaustively test the product this way. Note that some
-tests are better suited as Brim unit tests or tests written in zq.git.
+tests are better suited as Brim unit tests or tests in the Zed repository.
 
 The tests use Jest and Spectron.
 
