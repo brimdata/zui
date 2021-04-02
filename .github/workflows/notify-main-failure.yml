@@ -1,9 +1,9 @@
-name: 'Notify master failure'
+name: 'Notify main failure'
 
 on:
   workflow_run:
     branches: 
-      - master
+      - main
     workflows:
       - '**'
       - '!Markdown link check'
@@ -15,12 +15,12 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Brim HQ of failure on master
+      - name: Notify Brim HQ of failure on main
         uses: tiloio/slack-webhook-action@v1.1.2
         with:
           slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_TEST }}
           slack_json: |
             {
               "username": "github-actions",
-              "text": "brimdata/brim workflow \"${{ github.event.workflow_run.name }}\" failed on master.\n${{ github.event.workflow_run.html_url }}"
+              "text": "brimdata/brim workflow \"${{ github.event.workflow_run.name }}\" failed on main.\n${{ github.event.workflow_run.html_url }}"
             }  

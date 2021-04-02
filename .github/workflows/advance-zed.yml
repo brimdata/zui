@@ -1,8 +1,8 @@
 name: Advance Zed
 # This type must match the event type from Zed.
 # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
-# These events only trigger on the Github default branch (usually
-# master).
+# These events only trigger on the GitHub default branch (usually main
+# or master).
 on:
   repository_dispatch:
     types: [zed-pr-merged]

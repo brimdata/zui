@@ -29,8 +29,7 @@ and we need a sustainable business model to continue funding our work. Using
 the source-available Polyform Perimeter license on portions of the source code
 lets us realize both. 
 
-For more detail regarding licensing, see the
-[CONTRIBUTING.md](https://github.com/brimdata/brim/blob/master/CONTRIBUTING.md)
+For more detail regarding licensing, see the [CONTRIBUTING.md](CONTRIBUTING.md)
 doc, and feel free to come talk to us on
 [Slack](https://www.brimsecurity.com/join-slack/) if you have additional
 questions.
@@ -206,7 +205,7 @@ as usual.
 * Add [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
 * Add developer documentation for [adding internal state migrations](https://github.com/brimdata/brim/wiki/Adding-Migrations) (#921)
 * Restore the scroll position when going back to prior search results (#929)
-* Add the [Zealot Client](https://github.com/brimdata/brim/blob/master/zealot/README.md) for communicating with [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd) via the REST API (#934)
+* Add the [Zealot Client](zealot/README.md) for communicating with [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd) via the REST API (#934)
 * Add support documentation explaining where Brim stores debug logs (#939, #943)
 * Fix an issue where records nested more than one level deep were not working correctly in Brim (#937)
 * Improve the Column Chooser (#925, #953)

@@ -140,11 +140,11 @@ The most extensive testing of Brim is provided via automation that is run on
 versions of
 [Runners](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners)
 are referenced in the automation for Brim's
-[Continuous Integration tests](https://github.com/brimdata/brim/blob/master/.github/workflows/ci.yml)
+[Continuous Integration tests](https://github.com/brimdata/brim/blob/main/.github/workflows/ci.yml)
 and build workflows for
-[Windows](https://github.com/brimdata/brim/blob/master/.github/workflows/win-release-candidate.yml),
-[macOS](https://github.com/brimdata/brim/blob/master/.github/workflows/macos-release-candidate.yml), and
-[Linux](https://github.com/brimdata/brim/blob/master/.github/workflows/linux-release-candidate.yml).
+[Windows](https://github.com/brimdata/brim/blob/main/.github/workflows/win-release-candidate.yml),
+[macOS](https://github.com/brimdata/brim/blob/main/.github/workflows/macos-release-candidate.yml), and
+[Linux](https://github.com/brimdata/brim/blob/main/.github/workflows/linux-release-candidate.yml).
 
 ## Smoke Testing
 

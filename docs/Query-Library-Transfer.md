@@ -100,7 +100,7 @@ $ cat appState.json | jq '.data.globalState.queries'
 # Extracting/Replacing the Query Library
 
 For ease of use, we've created a simple Python script
-[`qlib_util.py`](https://raw.githubusercontent.com/brimdata/brim/master/scripts/util/qlib_util.py)
+[`qlib_util.py`](https://raw.githubusercontent.com/brimdata/brim/main/scripts/util/qlib_util.py)
 that can easily perform this.
 
 ```
@@ -131,7 +131,7 @@ Brim, we download the script to the base config directory where our
 
 ```
 $ cd "$HOME/Library/Application Support/Brim"
-$ curl -O https://raw.githubusercontent.com/brimdata/brim/master/scripts/util/qlib_util.py
+$ curl -O https://raw.githubusercontent.com/brimdata/brim/main/scripts/util/qlib_util.py
 ```
 
 To extract the contents of the Query Library to a separate file `saved.json`:
@@ -170,7 +170,7 @@ exited, and with the script downloaded as before:
 
 ```
 $ cd "$HOME/Library/Application Support/Brim"
-$ curl -O https://raw.githubusercontent.com/brimdata/brim/master/scripts/util/qlib_util.py
+$ curl -O https://raw.githubusercontent.com/brimdata/brim/main/scripts/util/qlib_util.py
 $ python3 qlib_util.py --replace saved.json 
 Backing up ./appState.json to /var/folders/yn/jbkxxkpd4vg142pc3_bd_krc0000gn/T/tmpnnfr164v
 Successfully replaced the Query Library in ./appState.json with the contents of saved.json
