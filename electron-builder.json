@@ -32,8 +32,7 @@
     ]
   },
   "nsis": {
-    "artifactName": "${productName}-Setup-${version}.${ext}",
-    "deleteAppDataOnUninstall": true
+    "artifactName": "${productName}-Setup-${version}.${ext}"
   },
   "win": {
     "target": "nsis",
