@@ -39,7 +39,7 @@
     "icon": "./dist/static/AppIcon.ico"
   },
   "linux": {
-    "artifactName": "${productName}.${ext}",
+    "artifactName": "${productName}-${version}.${ext}",
     "maintainer": "Brim Security, Inc.",
     "target": [
       "deb",

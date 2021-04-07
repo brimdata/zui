@@ -64,14 +64,35 @@ jobs:
         rm $f
         security set-key-partition-list -S apple-tool:,apple: -k password build
         security find-identity -p codesigning -v
-    - name: build signed and notarized package
+    - name: build signed and notarized package (failure expected)
+      # We've observed a problem with the new build system where the
+      # notarization consistently fails because of an alleged lack of signing
+      # of the file Corelight-CommunityID.darwin-x86_64.so. After much futile
+      # debug, since these Zeek pieces are not expected to be part of the Brim
+      # build for much longer, for now we're using the workaround of just
+      # running the build step twice, as we've observed that it works
+      # consistently on a retry.
       run: |
+        npx electron-builder --mac || true
+      env:
+        APPLE_ID: ${{ secrets.APPLEID_USER }}
+        APPLE_ID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: build signed and notarized package (success expected)
+      # On the retry we've observed the "hanging" symptom similar to what's
+      # described at https://github.com/electron/electron-packager/issues/701.
+      # As implied there, repeating the "security" commands gets past the
+      # problem.
+      run: |
+        security set-key-partition-list -S apple-tool:,apple: -k password build
+        security find-identity -p codesigning -v
         npx electron-builder --mac
       env:
         APPLE_ID: ${{ secrets.APPLEID_USER }}
         APPLE_ID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: run gatekeeper assessment on notarized package
-      run: spctl --assess --type execute --verbose --ignore-cache --no-cache dist/packages/Brim-darwin-x64/Brim.app
+      run: spctl --assess --type execute --verbose --ignore-cache --no-cache dist/installers/mac/Brim.app
     - name: Setup Google Cloud Platform
       uses: google-github-actions/setup-gcloud@master
       with:
@@ -89,7 +110,7 @@ jobs:
     - name: Upload release artifacts to Google Cloud Storage bucket
       run: |
         gsutil rm -rf ${{ env.BUCKET_PATH }} || true
-        gsutil cp -r dist/installers ${{ env.BUCKET_PATH }}
+        gsutil cp dist/installers/*.dmg* dist/installers/latest-mac.yml ${{ env.BUCKET_PATH }}
     - name: Assemble Slack message that points to multiple artifacts
       run: |
         echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV

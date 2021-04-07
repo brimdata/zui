@@ -122,7 +122,7 @@ jobs:
           name: linux-release
       - name: Integration Tests (Centos 8)
         run: |
-          dnf install -y ./linux-release/Brim.rpm
+          dnf install -y ./linux-release/Brim*.rpm
           xvfb-run -d -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
 
   integration_test:
@@ -184,7 +184,7 @@ jobs:
       - name: Integration Tests (Debian Linux)
         if: runner.os == 'Linux'
         run: |
-          sudo apt install -y ./linux-release/Brim.deb
+          sudo apt install -y ./linux-release/Brim*.deb
           xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
         env:
           # WORKSPACE represents a top-level place for test infra code to
