@@ -110,7 +110,7 @@ jobs:
     - name: Upload release artifacts to Google Cloud Storage bucket
       run: |
         gsutil rm -rf ${{ env.BUCKET_PATH }} || true
-        gsutil cp dist/installers/*.dmg* dist/installers/latest-mac.yml ${{ env.BUCKET_PATH }}
+        gsutil cp dist/installers/Brim-*.dmg* dist/installers/Brim-*-mac.zip dist/installers/latest-mac.yml ${{ env.BUCKET_PATH }}
     - name: Assemble Slack message that points to multiple artifacts
       run: |
         echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
