@@ -39,8 +39,13 @@ async function main() {
     })
   }
 
+  const brimCustomProtocol = "brim"
+  app.setAsDefaultProtocolClient(brimCustomProtocol)
   app.on("second-instance", (e, argv) => {
     for (let arg of argv) {
+      // handle custom protocol url handling for windows here
+      if (arg.startsWith(`${brimCustomProtocol}://`)) return brim.openUrl(arg)
+
       switch (arg) {
         case "--new-window":
           brim.windows.openWindow("search")
@@ -55,7 +60,6 @@ async function main() {
   app.whenReady().then(() => brim.start())
   app.on("activate", () => brim.activate())
 
-  app.setAsDefaultProtocolClient("brim")
   app.on("open-url", (event, url) => {
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()

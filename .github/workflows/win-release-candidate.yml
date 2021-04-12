@@ -58,16 +58,11 @@ jobs:
     - name: Build Signed Release
       shell: bash
       run: |
-        f=$(mktemp)
-        echo -ne "${WINDOWS_SIGNING_PFX_BASE64}" > "${f}"
-        CERT=$(mktemp)
-        # We just need the name; certutil complains if the dest exists.
-        rm -f "${CERT}"
-        certutil -decode "${f}" "${CERT}"
-        node ./scripts/release --win32 --windowsCertificateFile "${CERT}" --windowsCertificatePassword "${WINDOWS_SIGNING_PASSPHRASE}"
+        npx electron-builder --win
       env:
-        WINDOWS_SIGNING_PASSPHRASE: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
-        WINDOWS_SIGNING_PFX_BASE64: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+        CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
+        CSC_LINK: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Set up Python (needed for Google Cloud Platform)
       uses: actions/setup-python@v2
       with:
@@ -96,12 +91,12 @@ jobs:
         CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
       run: |
         gsutil rm -rf ${{ env.BUCKET_path }} || true
-        gsutil cp -r dist\installers\ ${{ env.BUCKET_path }}
+        gsutil cp dist\installers\Brim-Setup*.exe* dist\installers\latest.yml ${{ env.BUCKET_path }}
     - name: Assemble Slack message that points to multiple artifacts
       run: |
         echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
         echo "New Windows release available -" >> $GITHUB_ENV
-        for FILENAME in $(find dist/installers -type f -name \*.exe -exec basename {} \;)
+        for FILENAME in $(find dist/installers -type f -name Brim-Setup\*.exe -exec basename {} \;)
         do
           echo "\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV
         done

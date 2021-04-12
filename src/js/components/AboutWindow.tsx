@@ -20,7 +20,9 @@ export default function AboutWindow() {
     }
   }
   const year = new Date().getFullYear()
-  const pathRoot = remote.app.getAppPath()
+  const pathRoot = remote.app
+    .getAppPath()
+    .replace("app.asar", "app.asar.unpacked")
   const ackFilePath = join(pathRoot, "acknowledgments.txt")
   const licFilePath = join(pathRoot, "LICENSE.txt")
 

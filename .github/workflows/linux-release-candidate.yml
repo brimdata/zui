@@ -51,7 +51,7 @@ jobs:
     - run: npm install --no-audit
     - run: npm run build
     - name: build packages
-      run: node ./scripts/release --linux
+      run: npx electron-builder --linux
     - name: Setup Google Cloud Platform
       uses: google-github-actions/setup-gcloud@master
       with:
@@ -69,12 +69,12 @@ jobs:
     - name: Upload release artifacts to Google Cloud Storage bucket
       run: |
         gsutil rm -rf ${{ env.BUCKET_PATH }} || true
-        gsutil cp -r dist/installers ${{ env.BUCKET_PATH }}
+        gsutil cp dist/installers/Brim-* ${{ env.BUCKET_PATH }}
     - name: Assemble Slack message that points to multiple artifacts
       run: |
         echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
         echo "New Linux release available -" >> $GITHUB_ENV
-        for FILENAME in $(find dist/installers -type f -exec basename {} \;)
+        for FILENAME in $(find dist/installers -type f -name Brim-\* -exec basename {} \;)
         do
           echo "\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV
         done
