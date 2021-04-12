@@ -11,7 +11,7 @@
     "start": "node scripts/start",
     "test": "jest",
     "test:api": "node scripts/test/api",
-    "itest": "jest --config=itest/config.json --runInBand --verbose",
+    "itest": "jest --config=itest/config.json --runInBand",
     "lint": "eslint . --cache",
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "tsc": "tsc",

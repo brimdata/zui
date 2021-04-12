@@ -1,16 +1,11 @@
-import {useSelector} from "react-redux"
 import React from "react"
+import {useSelector} from "react-redux"
 import styled from "styled-components"
-
+import brim from "../brim"
 import {formatBytes} from "../lib/bytes"
 import Current from "../state/Current"
-import SpaceIcon from "./SpaceIcon"
-import brim from "../brim"
 
-const Wrap = styled.div`
-  min-width: 0;
-  height: 42px;
-`
+const Wrap = styled.div``
 
 const Row = styled.div`
   display: flex;
@@ -25,19 +20,10 @@ const StatsRow = styled(Row)``
 
 const Title = styled.h2`
   ${(props) => props.theme.typography.labelBold}
-  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`
-
-const IconWrap = styled.div`
-  margin-right: 6px;
-  svg {
-    height: 13px;
-    width: 13px;
-  }
 `
 
 const Stat = styled.span`
@@ -45,6 +31,7 @@ const Stat = styled.span`
   color: var(--slate);
   margin-right: 12px;
   white-space: nowrap;
+  height: 12px;
 `
 
 export default function SearchPageTitle() {
@@ -57,7 +44,6 @@ export default function SearchPageTitle() {
   return (
     <Wrap>
       <TitleRow>
-        <IconWrap>{<SpaceIcon type={space.getType()} />}</IconWrap>
         <Title>{name}</Title>
       </TitleRow>
       <StatsRow>
