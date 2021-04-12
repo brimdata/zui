@@ -9,7 +9,9 @@ import {spawn, ChildProcess} from "child_process"
 import * as cmd from "src/js/stdlib/cmd"
 import electronIsDev from "src/js/electron/isDev"
 
-// Paths for the zqd and zeek programs.
+// Paths for the zqd and zeek programs. If the app has been built as a release then it will be contained in an asar archive
+// but the zdeps will have been included in the .unpacked directory along side the archived app, hence the replace here. This
+// pattern would apply to any assets under the 'asarUnpack' key of the electron-builder.json config
 const zdepsDirectory = join(
   app.getAppPath().replace("app.asar", "app.asar.unpacked"),
   "zdeps"
