@@ -6,12 +6,12 @@ import {ActionButtonProps} from "../action-button"
 const usePluginToolbarItems = (toolbarId: string): ActionButtonProps[] => {
   const items = useSelector(Toolbars.allToolbarItems(toolbarId))
 
-  return items.map(({label, command, disabled, icon}) => {
+  return items.map(({label, command, disabled, icon, tooltip}) => {
     return {
       label,
       disabled,
       icon: icon as IconName,
-      title: label,
+      title: tooltip,
       click: () => global.executeCommand(command)
     }
   })

@@ -15,8 +15,6 @@ export default class PluginManager {
 
   async load(dir: string) {
     const files = await lib.file(dir).contents()
-    // TODO: Mason, find the files!
-    console.log("files are: ", files)
     this.plugins.push(
       ...files.map((f) => {
         const {activate, deactivate = () => {}} = require(path.join(dir, f))

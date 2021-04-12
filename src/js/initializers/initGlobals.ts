@@ -1,6 +1,5 @@
 import Histories from "app/core/models/histories"
 import path from "path"
-import {Brim} from "../electron/brim"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import Feature from "../state/Feature"
 import TabHistories from "../state/TabHistories"
@@ -9,7 +8,7 @@ import {createMemoryHistory} from "history"
 import tabHistory from "app/router/tab-history"
 import BrimApi from "./brimApi"
 
-export default function initGlobals(store: Store, api: BrimApi) {
+export default function initGlobals(store: Store, api?: BrimApi) {
   global.getState = store.getState
   global.windowId = getUrlSearchParams().id
   global.windowName = getWindowName()
@@ -18,7 +17,12 @@ export default function initGlobals(store: Store, api: BrimApi) {
   global.windowHistory = createMemoryHistory()
   global.windowHistory.replace(getUrlSearchParams().href)
   global.navTo = (path) => store.dispatch(tabHistory.push(path))
-  global.executeCommand = api.commands.execute
+
+  // TODO: create mockApi for tests
+  if (api) {
+    global.executeCommand = (command: string, ...args: any[]) =>
+      api.commands.execute(command, args)
+  }
 }
 
 function getWindowName() {

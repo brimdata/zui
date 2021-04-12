@@ -1,5 +1,4 @@
 import Histories from "app/core/models/histories"
-import BrimApi from "../initializers/brimApi"
 import {FeatureName} from "../state/Feature"
 import {BrowserHistory} from "history"
 

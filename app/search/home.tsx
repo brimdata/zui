@@ -1,7 +1,6 @@
 import useIngestWatch from "app/search/hooks/use-ingest-watch"
 import useColumns from "app/toolbar/hooks/useColumns"
 import useExport from "app/toolbar/hooks/useExport"
-import usePackets from "app/toolbar/hooks/usePackets"
 import useView from "app/toolbar/hooks/useView"
 import {Toolbar} from "app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
@@ -58,12 +57,11 @@ export default function SearchHome() {
   useIngestWatch()
   const dispatch = useDispatch()
   const view = useView()
-  const packets = usePackets()
   const exportAction = useExport()
   const columns = useColumns()
   const pluginButtons = usePluginToolbarItems("search")
 
-  const actions = [packets, exportAction, columns, view, ...pluginButtons]
+  const actions = [exportAction, columns, view, ...pluginButtons]
 
   return (
     <InitSearchParams>

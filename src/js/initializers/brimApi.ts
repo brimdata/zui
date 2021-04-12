@@ -1,13 +1,15 @@
 import Toolbar, {ToolbarItem} from "../state/Toolbars"
 import {Store} from "../state/types"
-import EventEmitter from "events"
+import {EventEmitter} from "events"
 
 type Cleanup = () => any
 
 class CommandRegistry {
-  private commandRegistry = new EventEmitter()
+  commandRegistry: EventEmitter
 
-  constructor() {}
+  constructor() {
+    this.commandRegistry = new EventEmitter()
+  }
 
   add(command: string, listener: (...args: any[]) => void): Cleanup {
     this.commandRegistry.on(command, listener)
@@ -55,7 +57,8 @@ export default class BrimApi {
 
   // public contextMenu: BrimUIContainerApi<ContextMenuItem>
 
-  constructor(private store: Store) {
+  // TODO: store is made public only to make the initial plugin architecture migration easier, it will eventually be private
+  constructor(public store: Store) {
     this.toolbar = new ToolbarApi(store)
     // this.contextMenu = new ContextMenuApi(store)
   }
