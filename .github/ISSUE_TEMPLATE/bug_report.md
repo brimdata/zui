@@ -24,5 +24,5 @@ https://github.com/brimdata/brim/wiki/Troubleshooting
 
 **Desktop Info**
 [Please complete the following information]
- - OS: [e.g. MacOS, Windows]
- - Brim Version [copy from **Help > About Brim** on Windows, or **Brim > About Brim** on MacOS]
+ - OS: [e.g. Windows, Linux, macOS]
+ - Brim Version: [copy from **Help > About Brim** on Windows and Linux, or **Brim > About Brim** on macOS]
