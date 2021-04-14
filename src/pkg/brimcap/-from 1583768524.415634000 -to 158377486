@@ -1,0 +1,11 @@
+-from 1583768524.415634000 -to 1583774869.009422 -p tcp 192.168.10.120:62458 34.232.129.83:443
+
+# Successful brimcap launch
+build/dist/brimcap launch -root ~/work/pcaps/root -ts "2020-03-09T15:42:04.415Z" -duration "6344.593788000s" -proto=tcp -src.ip 192.168.10.120 -src.port 62458 -dst.ip 34.232.129.83 -dst.port 443
+
+
+ts_sec=1583768524
+ts_ns=415634000
+duration_sec=6344
+duration_ns=593788000
+proto=tcp&src_host=192.168.10.120&src_port=62458&dst_host=34.232.129.83&dst_port=443

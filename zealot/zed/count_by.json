@@ -1,0 +1,73 @@
+{
+  "schema": "26",
+  "types": [
+    {
+      "kind": "typedef",
+      "name": "26",
+      "type": {
+        "kind": "record",
+        "fields": [
+          {
+            "name": "typeof",
+            "type": {
+              "kind": "primitive",
+              "name": "type"
+            }
+          },
+          {
+            "name": "count",
+            "type": {
+              "kind": "primitive",
+              "name": "uint64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "typedef",
+      "name": "person_schema",
+      "type": {
+        "kind": "record",
+        "fields": [
+          {
+            "name": "first_name",
+            "type": {
+              "kind": "primitive",
+              "name": "string"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "values": [
+    "24",
+    "1"
+  ]
+}
+{
+  "schema": "26",
+  "types": [
+    {
+      "kind": "typedef",
+      "name": "25",
+      "type": {
+        "kind": "record",
+        "fields": [
+          {
+            "name": "score",
+            "type": {
+              "kind": "primitive",
+              "name": "int64"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "values": [
+    "25",
+    "1"
+  ]
+}

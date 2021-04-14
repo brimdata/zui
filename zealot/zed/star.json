@@ -1,0 +1,48 @@
+{
+  "schema": "person_schema",
+  "types": [
+    {
+      "kind": "typedef",
+      "name": "person_schema",
+      "type": {
+        "kind": "record",
+        "fields": [
+          {
+            "name": "first_name",
+            "type": {
+              "kind": "primitive",
+              "name": "string"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "values": [
+    "James"
+  ]
+}
+{
+  "schema": "25",
+  "types": [
+    {
+      "kind": "typedef",
+      "name": "25",
+      "type": {
+        "kind": "record",
+        "fields": [
+          {
+            "name": "score",
+            "type": {
+              "kind": "primitive",
+              "name": "int64"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "values": [
+    "100"
+  ]
+}

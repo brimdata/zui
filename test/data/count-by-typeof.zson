@@ -1,0 +1,2 @@
+{ first_name: "James" } (=person_schema)
+{ score: 100 }
