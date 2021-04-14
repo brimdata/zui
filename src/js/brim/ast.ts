@@ -56,7 +56,7 @@ function _fieldExprToName(expr) {
         return `${_fieldExprToName(expr.lhs)}.${_fieldExprToName(expr.rhs)}`
       }
       return "<not-a-field>"
-    case "Id":
+    case "ID":
       return expr.name
     case "Root":
       return ""

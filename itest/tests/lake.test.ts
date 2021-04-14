@@ -44,7 +44,10 @@ describe("Lake tests", () => {
         const lakeRoot = lakeSpace.data_path
 
         // Create a lake inside the space.
-        execSync(`"${ZED}" lake import -s 1024B -R "${lakeRoot}" "${zngFile}"`)
+        const options = {env: {...process.env, ZED_LAKE_ROOT: lakeRoot}}
+        execSync(`"${ZED}" lake init `, options)
+        execSync(`"${ZED}" lake create -p default -S 1024B`, options)
+        execSync(`"${ZED}" lake load -p default "${zngFile}"`, options)
 
         // Make sure zqd identifies both spaces.
         retryUntil(
