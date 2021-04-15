@@ -7,8 +7,17 @@ const project = new Project({
 })
 
 project.getSourceFiles().forEach((srcFile, i) => {
-  const name = srcFile.getBaseNameWithoutExtension()
-  const newName = kebabCase(name) + srcFile.getExtension()
-  srcFile.moveImmediatelySync(newName)
-  console.log("moved src file to", newName)
+  // const oldName = srcFile.getBaseName()
+  // const name = srcFile.getBaseNameWithoutExtension()
+  // const newName = kebabCase(name) + srcFile.getExtension()
+  // const newPath = srcFile.getFilePath().replace(oldName, newName)
+  // console.log("--> " + newPath)
+  // srcFile.moveImmediatelySync(newPath)
+  const oldName = srcFile.getBaseName()
+
+  if (oldName.endsWith("-test.ts")) {
+    const newName = oldName.replace("-test.ts", ".test.ts")
+    srcFile.moveImmediatelySync(newName)
+    console.log("==>" + newName)
+  }
 })
