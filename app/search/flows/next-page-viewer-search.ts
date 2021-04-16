@@ -40,12 +40,14 @@ function nextPageArgs(
     const index = indexOfLastChange(logs, (log) => log.try("ts")?.toString())
     if (index >= 0) {
       const ts = logs[index].get("ts") as zng.Primitive
-      const prevTs = ts.toDate()
-      nextSpan[1] = brim
-        .time(prevTs)
-        .add(1, "ms")
-        .toDate()
-      spliceIndex = index + 1
+      if (ts.getType() == "time") {
+        const prevTs = ts.toDate()
+        nextSpan[1] = brim
+          .time(prevTs)
+          .add(1, "ms")
+          .toDate()
+        spliceIndex = index + 1
+      }
     }
   }
   return [spliceIndex, nextSpan]

@@ -1,6 +1,5 @@
 import {
   PREFS_DATA_DIR_SET,
-  PREFS_JSON_TYPES_CONFIG_SET,
   PREFS_TIME_FORMAT_SET,
   PREFS_SURICATA_RUNNER_SET,
   PREFS_SURICATA_UPDATER_SET,
@@ -8,11 +7,6 @@ import {
 } from "./types"
 
 export default {
-  setJSONTypeConfig: (path: string): PREFS_JSON_TYPES_CONFIG_SET => ({
-    type: "$PREFS_JSON_TYPES_CONFIG_SET",
-    path
-  }),
-
   setTimeFormat: (format: string): PREFS_TIME_FORMAT_SET => ({
     type: "$PREFS_TIME_FORMAT_SET",
     format

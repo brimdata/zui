@@ -6,18 +6,6 @@ beforeEach(() => {
   store = initTestStore()
 })
 
-test("the default json type config", () => {
-  const state = store.getState()
-
-  expect(Prefs.getJSONTypeConfig(state)).toBe("")
-})
-
-test("set the json types config", () => {
-  const state = store.dispatchAll([Prefs.setJSONTypeConfig("/my/types.json")])
-
-  expect(Prefs.getJSONTypeConfig(state)).toBe("/my/types.json")
-})
-
 test("set the preferred time format", () => {
   const state = store.dispatchAll([Prefs.setTimeFormat("YYYY")])
 
