@@ -71,7 +71,7 @@ a server-style process that manages the storage and querying of imported
 log/packet data.  Operations in `zqd` are invoked via a
 [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that's utilized by a "client", such as the Brim app. The
-[`zapi`](https://github.com/brimdata/zed/tree/main/cmd/zapi) command is also available
+[`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi) command is also available
 as a command line client that can perform many of the same operations as the
 Brim app, and therefore may be useful in scripting and automation.
 
