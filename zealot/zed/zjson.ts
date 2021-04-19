@@ -1,5 +1,13 @@
-import {construct} from "./construct"
-import {ZedRecord} from "./data-types"
+import {
+  ZedArray,
+  ZedEnum,
+  ZedField,
+  ZedMap,
+  ZedPrimitive,
+  ZedRecord,
+  ZedSet,
+  ZedUnion
+} from "./index"
 import ZedTypeDef from "./type-def"
 
 type ID = string
@@ -77,7 +85,7 @@ export type StreamObject = {
 
 export type TypeName = string
 
-export type TypeContext = Map<TypeName, ZedTypeDef>
+export type TypeContext = {[typeName: string]: ZedTypeDef}
 
 export type DecodedZJSON = {
   rows: ZedRecord[]
@@ -85,23 +93,123 @@ export type DecodedZJSON = {
   context: TypeContext
 }
 
+export function construct(
+  context: TypeContext,
+  type: Type,
+  value: Value,
+  typeName?: TypeName
+) {
+  switch (type.kind) {
+    case "primitive":
+      return new ZedPrimitive({
+        typeName,
+        type: type.name,
+        value: value as string
+      })
+
+    case "array":
+      return new ZedArray({
+        typeName,
+        type: simpleType(type.type),
+        items: (value as Value[]).map((value) =>
+          construct(context, type.type, value)
+        )
+      })
+
+    case "set":
+      return new ZedSet({
+        typeName,
+        type: simpleType(type.type),
+        items: (value as Value[]).map((value) =>
+          construct(context, type.type, value)
+        )
+      })
+
+    case "record":
+      return new ZedRecord({
+        typeName,
+        fields: type.fields.map((field, index) => {
+          return new ZedField({
+            name: field.name,
+            data: construct(context, field.type, value[index])
+          })
+        })
+      })
+
+    case "union":
+      var [index, unionValue] = value as [string, string]
+      return new ZedUnion({
+        typeName,
+        types: type.types.map(simpleType),
+        value: construct(context, type.types[parseInt(index)], unionValue)
+      })
+
+    case "enum":
+      return new ZedEnum({
+        typeName,
+        symbols: type.symbols,
+        value: value as string
+      })
+
+    case "map":
+      return new ZedMap({
+        typeName,
+        keyType: simpleType(type.key_type),
+        valueType: simpleType(type.val_type),
+        value: new Map(
+          createEntries(value as Value[]).map(([key, value]) => {
+            return [
+              construct(context, type.key_type, key),
+              construct(context, type.val_type, value)
+            ]
+          })
+        )
+      })
+
+    case "typename":
+      var def = context[type.name]
+      if (!def) throw new Error("No typedef for: " + type.name)
+      return construct(context, def.innerType, value, type.name)
+
+    case "typedef":
+      var def = new ZedTypeDef({type})
+      context[def.name] = def
+      return construct(context, def.innerType, value, def.name)
+
+    default:
+      throw new Error(`Unknown ZJSON Type: ${JSON.stringify(type)}`)
+  }
+}
+
+function simpleType(type) {
+  return type.kind === "primitive" ? type.name : type.kind
+}
+
+function createEntries(array) {
+  const entries = []
+  for (let i = 0; i < array.length; i += 2) {
+    entries.push([array[i], array[i + 1]])
+  }
+  return entries
+}
+
 export function decode(
   zjson: StreamObject[],
-  context: TypeContext = new Map(),
-  schemas: TypeContext = new Map()
+  context: TypeContext = {},
+  schemas: TypeContext = {}
 ): DecodedZJSON {
   const rows = []
 
   for (const {schema, types, values} of zjson) {
     // Add all the types to the context
     types &&
-      types.forEach((typedef) =>
-        context.set(typedef.name, new ZedTypeDef({type: typedef}))
+      types.forEach(
+        (typedef) => (context[typedef.name] = new ZedTypeDef({type: typedef}))
       )
 
     // Add the root record type to the schemas
-    const typedef = context.get(schema)
-    if (!schemas.has(schema)) schemas.set(schema, typedef)
+    const typedef = context[schema]
+    if (!(schema in schemas)) schemas[schema] = typedef
 
     // Construct the row and save it
     const type = typedef.innerType
