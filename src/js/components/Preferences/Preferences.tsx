@@ -3,7 +3,6 @@ import React, {useCallback, useState} from "react"
 import {reactElementProps} from "../../test/integration"
 import DataDirInput from "./DataDirInput"
 import FormErrors from "./FormErrors"
-import JSONTypeConfig from "./JSONTypeConfig"
 import ModalBox from "../ModalBox/ModalBox"
 import TextContent from "../TextContent"
 import TimeFormat from "./TimeFormat"
@@ -55,7 +54,6 @@ export default function Preferences() {
           <SuricataRunner config={prefsForm.suricataRunner} />
           <SuricataUpdater config={prefsForm.suricataUpdater} />
           <ZeekRunner config={prefsForm.zeekRunner} />
-          <JSONTypeConfig config={prefsForm.jsonTypeConfig} />
           <DataDirInput config={prefsForm.dataDir} />
         </form>
       </TextContent>

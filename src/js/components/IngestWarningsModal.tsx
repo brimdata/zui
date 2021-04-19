@@ -1,9 +1,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
-import {JSON_TYPE_CONFIG_DOCS} from "./Preferences/JSONTypeConfig"
 import Current from "../state/Current"
-import Link from "./common/Link"
 import Spaces from "../state/Spaces"
 import useEnterKey from "./hooks/useEnterKey"
 import {
@@ -37,12 +35,6 @@ export default function IngestWarningsModal({onClose}) {
           <Scrollable>
             <Pre>{warnings.join("\n")}</Pre>
           </Scrollable>
-          <p>
-            If you are trying to import JSON logs, please review the{" "}
-            <Link href={JSON_TYPE_CONFIG_DOCS}>
-              JSON type configuration docs.
-            </Link>
-          </p>
         </>
       ) : (
         <p>Warnings cleared.</p>

@@ -1,6 +1,5 @@
 import {lakePath, workspacesPath} from "app/router/utils/paths"
 import fsExtra from "fs-extra"
-import {isEmpty} from "lodash"
 import brim from "../brim"
 import ingest from "../brim/ingest"
 import {IngestParams} from "../brim/ingest/getParams"
@@ -25,7 +24,6 @@ export default (files: File[]): Thunk<Promise<void>> => (
   const zealot = dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
-  const jsonTypeConfigPath = Prefs.getJSONTypeConfig(getState())
   const dataDir = Prefs.getDataDir(getState())
   const spaceNames = Spaces.getSpaceNames(workspaceId)(getState())
 
@@ -37,7 +35,7 @@ export default (files: File[]): Thunk<Promise<void>> => (
       createSpace(zealot, dispatch, workspaceId),
       setSpace(dispatch, tabId, workspaceId),
       registerHandler(dispatch, requestId),
-      postFiles(zealot, ws, jsonTypeConfigPath),
+      postFiles(zealot, ws),
       trackProgress(zealot, dispatch, workspaceId),
       unregisterHandler(dispatch, requestId)
     ])
@@ -112,7 +110,7 @@ const unregisterHandler = (dispatch, id) => ({
   }
 })
 
-const postFiles = (client, ws, jsonTypesPath) => ({
+const postFiles = (client, ws) => ({
   async do(params: IngestParams & {spaceId: string}) {
     const {spaceId, endpoint, files} = params
     const paths = files.map((f) => f.path)
@@ -127,13 +125,7 @@ const postFiles = (client, ws, jsonTypesPath) => ({
         throw e
       }
     } else {
-      const types = isEmpty(jsonTypesPath)
-        ? undefined
-        : await lib
-            .file(jsonTypesPath)
-            .read()
-            .then(JSON.parse)
-      stream = await client.logs.post({spaceId, files, types})
+      stream = await client.logs.post({spaceId, files})
     }
     return {...params, stream}
   }

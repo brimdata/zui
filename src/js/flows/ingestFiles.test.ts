@@ -1,15 +1,13 @@
 import tabHistory from "app/router/tab-history"
 import {workspacePath} from "app/router/utils/paths"
 import {createZealotMock} from "zealot"
-import lib from "../lib"
 import Current from "../state/Current"
-import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import Tab from "../state/Tab"
 import Workspaces from "../state/Workspaces"
 import fixtures from "../test/fixtures"
 import initTestStore from "../test/initTestStore"
-import {itestFile, itestFilePath} from "../test/itestFile"
+import {itestFile} from "../test/itestFile"
 import ingestFiles from "./ingestFiles"
 
 let store, zealot
@@ -100,18 +98,14 @@ describe("success case", () => {
     expect(Current.getSpaceId(state)).toEqual(null)
   })
 
-  test("a json file with a custom types config", async () => {
+  test("a json file", async () => {
     zealot.stubStream("logs.post", [{type: "LogPostStatus"}, {type: "TaskEnd"}])
-
-    const contents = await lib.file(itestFilePath("sampleTypes.json")).read()
-    store.dispatch(Prefs.setJSONTypeConfig(itestFilePath("sampleTypes.json")))
 
     await store.dispatch(ingestFiles([itestFile("sample.ndjson")]))
 
     expect(zealot.calls("logs.post")[0].args).toEqual({
       files: [itestFile("sample.ndjson")],
-      spaceId: "spaceId",
-      types: JSON.parse(contents)
+      spaceId: "spaceId"
     })
   })
 })

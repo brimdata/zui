@@ -1,7 +1,7 @@
 import {isEmpty} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 
-import {FormConfig, FormCheckResult} from "../../brim/form"
+import {FormConfig} from "../../brim/form"
 import Prefs from "../../state/Prefs"
 import View from "../../state/View"
 import lib from "../../lib"
@@ -59,30 +59,6 @@ export default function usePreferencesForm(): FormConfig {
           .file(path)
           .exists()
           .then((exists) => [exists, "file does not exist."])
-      }
-    },
-    jsonTypeConfig: {
-      name: "jsonTypeConfig",
-      label: "JSON Type Config",
-      defaultValue: useSelector(Prefs.getJSONTypeConfig),
-      submit: (value) => dispatch(Prefs.setJSONTypeConfig(value)),
-      check: (path) => {
-        if (path === "") return [true, ""]
-        return lib
-          .file(path)
-          .read()
-          .then((text) => JSON.parse(text))
-          .then((): FormCheckResult => [true, ""])
-          .catch((e) => {
-            const msg = e.name + ": " + e.message
-            if (/SyntaxError/.test(msg)) {
-              return [false, "file does not contain valid JSON."]
-            } else if (/ENOENT/.test(msg)) {
-              return [false, "file does not exist."]
-            } else {
-              return [false, msg]
-            }
-          })
       }
     },
     dataDir: {
