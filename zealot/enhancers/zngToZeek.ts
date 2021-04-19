@@ -37,9 +37,9 @@ function replaceColumn(c: zjson.Column): zjson.Column {
   if (c.type == "array" || c.type == "set") {
     return {...c, of: replaceTypes(c.of)}
   } else if (c.type == "union") {
-    return {...c, of: c.of.map(replaceTypes)}
+    return {...c, of: (c.of || []).map(replaceTypes)}
   } else if (c.type == "record") {
-    return {...c, of: c.of.map(replaceColumn)}
+    return {...c, of: (c.of || []).map(replaceColumn)}
   } else {
     return {...c, type: getZeekPrimitive(c.type)}
   }
