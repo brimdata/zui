@@ -1,15 +1,28 @@
+import {
+  ZedArray,
+  ZedEnum,
+  ZedMap,
+  ZedRecord,
+  ZedSet,
+  ZedUnion
+} from "zealot/zed/data-types"
 import {createCell} from "./cell"
-import {zng} from "zealot"
 import {ONE_CHAR} from "./primitiveCell"
 
 export const COMPOUND_FIELD_RGX = /^(set|array|union|record)$/
 
 export type ComplexCell = ReturnType<typeof createComplexCell>
 
-export function createComplexCell({name, data}: zng.ContainerField) {
-  const items = (data.getValue() || []).map((v, i) =>
-    createCell({name: name + "." + i, data: v} as zng.Field)
-  )
+type Args = {
+  name: string
+  data: ZedRecord | ZedArray | ZedSet | ZedUnion | ZedEnum | ZedMap
+}
+
+export function createComplexCell({name, data}: Args) {
+  const items =
+    "items" in data
+      ? data.items.map((data, i) => createCell({name: `${name}.${i}`, data}))
+      : []
 
   return {
     name,

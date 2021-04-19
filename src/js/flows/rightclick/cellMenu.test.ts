@@ -1,9 +1,18 @@
 import {MenuItemConstructorOptions} from "electron"
-
-import {conn, dns} from "../../test/mockLogs"
-import fixtures from "../../test/fixtures"
-import {zng} from "zealot"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
+import {COUNT, IP, STRING, TIME} from "test/fixtures/zjson-types"
+import {ZedRecord} from "zealot/zed/data-types"
+import fixtures from "../../test/fixtures"
+
+const conn = ZedRecord.of(
+  [
+    {name: "id", type: {kind: "record", fields: [{name: "orig_h", type: IP}]}},
+    {name: "_path", type: STRING},
+    {name: "ts", type: TIME}
+  ],
+  [["192.168.0.1"], "conn", "1234513"]
+)
+const dns = ZedRecord.of([{name: "query", type: STRING}], ["dns.query.yo"])
 
 function menuText(menu: MenuItemConstructorOptions[]) {
   return menu
@@ -15,16 +24,13 @@ const space = fixtures("space1")
 
 describe("Log Right Click", () => {
   const program = "*"
-  const columnNames = conn()
-    .flatten()
-    .getColumnNames()
+  const columnNames = conn.columns
 
   test("conn log with pcap support", () => {
-    const log = conn()
-    const field = log.getField("id.orig_h")
+    const field = conn.getField("id.orig_h")
     const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
-      log,
+      conn,
       false
     )
 
@@ -34,7 +40,7 @@ describe("Log Right Click", () => {
   test("conn log without pcap support", () => {
     space.pcap_support = false
 
-    const log = conn()
+    const log = conn
     const field = log.getField("id.orig_h")
     const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
@@ -46,7 +52,7 @@ describe("Log Right Click", () => {
   })
 
   test("dns log", () => {
-    const log = dns()
+    const log = dns
     const field = log.getField("query")
     const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
@@ -59,7 +65,7 @@ describe("Log Right Click", () => {
   })
 
   test("time field for conn log", () => {
-    const log = conn()
+    const log = conn
     const field = log.getField("ts")
     const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
@@ -77,10 +83,13 @@ describe("Analysis Right Click", () => {
   const columnNames = ["count", "id.orig_h"]
 
   test("nested field", () => {
-    const log = new zng.Record(
+    const log = ZedRecord.of(
       [
-        {name: "count", type: "count"},
-        {name: "id", type: "record", of: [{name: "orig_h", type: "addr"}]}
+        {name: "count", type: COUNT},
+        {
+          name: "id",
+          type: {kind: "record", fields: [{name: "orig_h", type: IP}]}
+        }
       ],
       ["300", ["192.168.0.51"]]
     )
@@ -95,10 +104,10 @@ describe("Analysis Right Click", () => {
   })
 
   test("non-address field", () => {
-    const log = new zng.Record(
+    const log = ZedRecord.of(
       [
-        {name: "count", type: "count"},
-        {name: "proto", type: "string"}
+        {name: "count", type: COUNT},
+        {name: "proto", type: STRING}
       ],
       ["100", "tcp"]
     )

@@ -1,12 +1,11 @@
 import * as React from "react"
-
+import {ZedField, ZedRecord} from "zealot/zed/data-types"
 import Table, {TableData, TableHeader} from "./Table"
-import {zjson, zng} from "zealot"
 
 type Props = {
-  descriptor: zjson.Column[]
-  logs: zng.Record[]
-  onRightClick?: (f: zng.Field, r: zng.Record) => void
+  descriptor: ZedField[]
+  logs: ZedRecord[]
+  onRightClick?: (f: ZedField, r: ZedRecord) => void
 }
 
 export default function HorizontalTable({
@@ -26,7 +25,7 @@ export default function HorizontalTable({
       <tbody>
         {logs.map((log, index) => (
           <tr key={index}>
-            {log.getFields().map((field, index) => (
+            {log.fields.map((field, index) => (
               <TableData
                 field={field}
                 record={log}

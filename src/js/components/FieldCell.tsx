@@ -1,10 +1,9 @@
-import React from "react"
 import classNames from "classnames"
-
+import React from "react"
+import {ZedField, ZedRecord} from "zealot/zed/data-types"
 import {createCell} from "../brim/cell"
-import {zng} from "zealot"
 
-type Props = {field: zng.Field; record: zng.Record}
+type Props = {field: ZedField; record: ZedRecord}
 
 function getBackground(field, record) {
   if (field.name === "event_type" && field.data.toString() === "alert") {
@@ -23,10 +22,10 @@ export default function FieldCell({field, record}: Props) {
       className={classNames(
         "field-cell",
         field.name,
-        field.data.getType(),
+        field.data.kind,
         getBackground(field, record),
         {
-          null: field.data.value === null
+          null: field.data.isUnset()
         }
       )}
     >

@@ -3,18 +3,39 @@ import Columns from "./"
 import actions from "./actions"
 import initTestStore from "../../test/initTestStore"
 import touch from "./touch"
-import {zng} from "zealot"
+import ZedTypeDef from "zealot/zed/type-def"
+import {STRING, INTERVAL, TIME} from "test/fixtures/zjson-types"
 
-const columns = {
-  "1": new zng.Schema([
-    {name: "_path", type: "string"},
-    {name: "duration", type: "interval"}
-  ]),
-  "2": new zng.Schema([
-    {name: "_path", type: "string"},
-    {name: "ts", type: "time"}
-  ])
-}
+const columns = new Map(
+  Object.entries({
+    "1": new ZedTypeDef({
+      type: {
+        name: "1",
+        kind: "typedef",
+        type: {
+          kind: "record",
+          fields: [
+            {name: "_path", type: STRING},
+            {name: "duration", type: INTERVAL}
+          ]
+        }
+      }
+    }),
+    "2": new ZedTypeDef({
+      type: {
+        name: "2",
+        kind: "typedef",
+        type: {
+          kind: "record",
+          fields: [
+            {name: "_path", type: STRING},
+            {name: "ts", type: TIME}
+          ]
+        }
+      }
+    })
+  })
+)
 
 let store
 beforeEach(() => {
@@ -23,7 +44,7 @@ beforeEach(() => {
 
 test("visibility false when at least one is hidden", () => {
   const prefName = "temp"
-  const col = createColumn({name: "_path", type: "string"})
+  const col = createColumn({name: "_path", type: STRING})
   const update = {[col.key]: {isVisible: false}}
 
   store.dispatch(actions.updateColumns(prefName, update))
@@ -52,8 +73,8 @@ test("visibility true when no preferences exist", () => {
 
 test("visibility true when all are visible", () => {
   const prefName = "temp"
-  const col = createColumn({name: "_path", type: "string"})
-  const col2 = createColumn({name: "duration", type: "interval"})
+  const col = createColumn({name: "_path", type: STRING})
+  const col2 = createColumn({name: "duration", type: INTERVAL})
   const update = {
     [col.key]: {isVisible: true},
     [col2.key]: {isVisible: true}

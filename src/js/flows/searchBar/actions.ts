@@ -1,15 +1,15 @@
-import {Thunk} from "../../state/types"
+import {ZedField} from "zealot/zed/data-types"
+import brim from "../../brim"
+import {Cell, createCell} from "../../brim/cell"
+import {onlyWhitespace} from "../../lib/Str"
+import SearchBar from "../../state/SearchBar"
 import {
   getSearchBar,
   getSearchBarInputValue
 } from "../../state/SearchBar/selectors"
-import {onlyWhitespace} from "../../lib/Str"
-import SearchBar from "../../state/SearchBar"
-import brim from "../../brim"
-import {zng} from "zealot"
-import {Cell, createCell} from "../../brim/cell"
+import {Thunk} from "../../state/types"
 
-export function appendQueryInclude(field: zng.Field): Thunk {
+export function appendQueryInclude(field: ZedField): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -22,7 +22,7 @@ export function appendQueryInclude(field: zng.Field): Thunk {
   }
 }
 
-export function appendQueryExclude(field: zng.Field): Thunk {
+export function appendQueryExclude(field: ZedField): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -35,7 +35,7 @@ export function appendQueryExclude(field: zng.Field): Thunk {
   }
 }
 
-export function appendQueryCountBy(field: zng.Field): Thunk {
+export function appendQueryCountBy(field: ZedField): Thunk {
   return function(dispatch, getState) {
     const {current, pinned} = getSearchBar(getState())
     const query = [...pinned, current].join(" ")

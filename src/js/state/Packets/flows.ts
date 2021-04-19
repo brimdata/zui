@@ -1,26 +1,25 @@
-import {join} from "path"
 import {remote} from "electron"
-
-import {Thunk} from "../types"
+import {join} from "path"
+import {ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
+import {getZealot} from "../../flows/getZealot"
 import {saveToFile} from "../../lib/response"
 import Current from "../Current"
 import Packets from "../Packets"
+import {Thunk} from "../types"
 import View from "../View"
-import {getZealot} from "../../flows/getZealot"
-import {zng} from "zealot"
 
 export default {
-  fetch: (log: zng.Record): Thunk<Promise<string>> => (
+  fetch: (log: ZedRecord): Thunk<Promise<string>> => (
     dispatch: Function,
     getState: Function
   ) => {
-    dispatch(Packets.request(log.get("uid").toString()))
+    dispatch(Packets.request(log["uid"].toString()))
     dispatch(View.showDownloads())
     const state = getState()
     const zealot = dispatch(getZealot())
     const spaceId = Current.getSpaceId(state)
-    const ts = log.get("ts") as zng.Primitive
-    const dur = log.get("duration") as zng.Primitive
+    const ts = log.get("ts") as ZedPrimitive
+    const dur = log.get("duration") as ZedPrimitive
     const args = {
       ts_sec: getSec(ts),
       ts_ns: getNs(ts),
@@ -52,22 +51,21 @@ export default {
   }
 }
 
-function getSec(data: zng.Primitive): number {
-  if (data.isSet()) {
-    return parseInt(data.getValue().split(".")[0])
+function getSec(data: ZedPrimitive): number {
+  if (data.isUnset()) return 0
+
+  return parseInt(data.toString().split(".")[0])
+}
+
+function getNs(data: ZedPrimitive): number {
+  if (data.isUnset()) return 0
+
+  const v = data.toString().split(".")
+  if (v.length === 2) {
+    const frac = v[1]
+    const digits = frac.length
+    return parseInt(frac) * Math.pow(10, 9 - digits)
   } else {
     return 0
   }
-}
-
-function getNs(data: zng.Primitive): number {
-  if (data.isSet()) {
-    const v = data.getValue().split(".")
-    if (v.length === 2) {
-      const frac = v[1]
-      const digits = frac.length
-      return parseInt(frac) * Math.pow(10, 9 - digits)
-    }
-  }
-  return 0
 }

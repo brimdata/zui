@@ -1,7 +1,10 @@
+import {STRING} from "test/fixtures/zjson-types"
+import {ZedRecord} from "zealot/zed/data-types"
+import ZedTypeDef from "zealot/zed/type-def"
+import {RecordType} from "zealot/zed/zjson"
+import initTestStore from "../../test/initTestStore"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
-import initTestStore from "../../test/initTestStore"
-import {zng} from "zealot"
 
 let store
 let tabId
@@ -11,9 +14,21 @@ beforeEach(() => {
   tabId = Tabs.getActive(store.getState())
 })
 
-const conn = new zng.Record([{name: "ts", type: "time"}], ["1"])
-const dns = new zng.Record([{name: "ts", type: "time"}], ["2"])
-const http = new zng.Record([{name: "ts", type: "time"}], ["3"])
+const type = {
+  kind: "record",
+  fields: [
+    {
+      name: "ts",
+      type: {
+        kind: "primitive",
+        name: "time"
+      }
+    }
+  ]
+} as RecordType
+const conn = new ZedRecord({type, value: ["1"]})
+const dns = new ZedRecord({type, value: ["2"]})
+const http = new ZedRecord({type, value: ["3"]})
 
 test("adding logs to the viewer", () => {
   const state = store.dispatchAll([
@@ -64,26 +79,34 @@ test("results limited", () => {
 
 test("update columns with same tds", () => {
   const cols1 = {
-    "9d14c2039a78d76760aae879c7fd2c82": new zng.Schema([
-      {name: "hello", type: "string"}
-    ])
+    "9d14c2039a78d76760aae879c7fd2c82": new ZedTypeDef({
+      type: {kind: "typedef", name: "hello", type: STRING}
+    })
   }
   const cols2 = {
-    "71f1b421963d31952e15edf7e3957a81": new zng.Schema([
-      {name: "world", type: "string"}
-    ])
+    "71f1b421963d31952e15edf7e3957a81": new ZedTypeDef({
+      type: {kind: "typedef", name: "hello", type: STRING}
+    })
   }
   const state = store.dispatchAll([
-    Viewer.updateColumns(tabId, cols1),
-    Viewer.updateColumns(tabId, cols2)
+    Viewer.updateColumns(tabId, new Map(Object.entries(cols1))),
+    Viewer.updateColumns(tabId, new Map(Object.entries(cols2)))
   ])
 
-  expect(Viewer.getColumns(state)).toEqual({
-    "9d14c2039a78d76760aae879c7fd2c82": new zng.Schema([
-      {name: "hello", type: "string"}
-    ]),
-    "71f1b421963d31952e15edf7e3957a81": new zng.Schema([
-      {name: "world", type: "string"}
+  expect(Viewer.getColumns(state)).toEqual(
+    new Map([
+      [
+        "9d14c2039a78d76760aae879c7fd2c82",
+        new ZedTypeDef({
+          type: {kind: "typedef", name: "hello", type: STRING}
+        })
+      ],
+      [
+        "71f1b421963d31952e15edf7e3957a81",
+        new ZedTypeDef({
+          type: {kind: "typedef", name: "hello", type: STRING}
+        })
+      ]
     ])
-  })
+  )
 })

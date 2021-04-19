@@ -1,16 +1,15 @@
-import {useDispatch} from "react-redux"
-import React, {useEffect, useState} from "react"
-
-import {md5Search} from "../../../../app/search/flows/md5-search"
-import HorizontalTable from "../Tables/HorizontalTable"
-import InlineTableLoading from "../InlineTableLoading"
-import {AppDispatch} from "src/js/state/types"
-import {zng} from "zealot"
-import PanelHeading from "app/detail/PanelHeading"
 import contextMenu from "app/detail/flows/contextMenu"
+import PanelHeading from "app/detail/PanelHeading"
+import React, {useEffect, useState} from "react"
+import {useDispatch} from "react-redux"
+import {AppDispatch} from "src/js/state/types"
+import {ZedRecord, ZedField} from "zealot/zed/data-types"
+import {md5Search} from "../../../../app/search/flows/md5-search"
+import InlineTableLoading from "../InlineTableLoading"
+import HorizontalTable from "../Tables/HorizontalTable"
 
 type Props = {
-  record: zng.Record
+  record: ZedRecord
 }
 
 export const Md5Panel = ({record}: Props) => {
@@ -26,10 +25,10 @@ export const Md5Panel = ({record}: Props) => {
     const {response, abort} = dispatch(md5Search(logMd5))
     response
       .status(setStatus)
-      .chan(0, (records) => setFilenames(records))
-      .chan(1, (records) => setMd5(records))
-      .chan(2, (records) => setRx(records))
-      .chan(3, (records) => setTx(records))
+      .chan(0, ({rows}) => setFilenames(rows))
+      .chan(1, ({rows}) => setMd5(rows))
+      .chan(2, ({rows}) => setRx(rows))
+      .chan(3, ({rows}) => setTx(rows))
 
     return abort
   }, [logMd5])
@@ -54,9 +53,9 @@ export const Md5Panel = ({record}: Props) => {
 }
 
 type Props2 = {
-  logs: zng.Record[]
+  logs: ZedRecord[]
   expect: number
-  onRightClick?: (f: zng.Field, r: zng.Record) => void
+  onRightClick?: (f: ZedField, r: ZedRecord) => void
 }
 
 function AsyncTable({logs, expect, onRightClick}: Props2) {
@@ -65,7 +64,7 @@ function AsyncTable({logs, expect, onRightClick}: Props2) {
   } else {
     return (
       <HorizontalTable
-        descriptor={logs[0].getColumns()}
+        descriptor={logs[0].fields}
         logs={logs}
         onRightClick={onRightClick}
       />

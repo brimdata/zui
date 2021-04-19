@@ -1,21 +1,19 @@
 import React from "react"
-
-import {Column} from "../../types"
+import {ZedField, ZedRecord} from "zealot/zed/data-types"
 import FieldCell from "../FieldCell"
-import {zng} from "zealot"
 
 export default function Table({className, ...props}: any) {
   return <table className={`table ${className}`} {...props} />
 }
 
-export function TableHeader({column}: {column: Column}) {
-  return <th className={column.type}>{column.name}</th>
+export function TableHeader({column}: {column: ZedField}) {
+  return <th className={column.data.kind}>{column.name}</th>
 }
 
 type Props = {
-  record: zng.Record
-  field: zng.Field
-  onRightClick?: (f: zng.Field, r: zng.Record) => void
+  record: ZedRecord
+  field: ZedField
+  onRightClick?: (f: ZedField, r: ZedRecord) => void
 }
 
 export function TableData({field, record, onRightClick}: Props) {
@@ -26,7 +24,7 @@ export function TableData({field, record, onRightClick}: Props) {
   }
 
   return (
-    <td onContextMenu={onContextMenu} className={`${data.getType()} ${name}`}>
+    <td onContextMenu={onContextMenu} className={`${data.kind} ${name}`}>
       <FieldCell field={field} record={record} />
     </td>
   )

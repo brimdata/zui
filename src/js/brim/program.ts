@@ -1,11 +1,10 @@
 import {isEqual} from "lodash"
 import {parse} from "zealot"
-
-import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
+import {ZedRecord} from "zealot/zed/data-types"
 import {trim} from "../lib/Str"
-import brim from "./"
 import stdlib from "../stdlib"
-import {zng} from "zealot"
+import brim from "./"
+import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
 import {Cell, createCell} from "./cell"
 
 export default function(p = "", pins: string[] = []) {
@@ -40,7 +39,7 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    drillDown(log: zng.Record) {
+    drillDown(log: ZedRecord) {
       let filter = this.filter()
       const newFilters = this.ast()
         .groupByKeys()

@@ -1,10 +1,22 @@
-import {Column} from "../../../types"
+import {RecordFieldType, Type} from "zealot/zed/zjson"
 
 export type $Column = {name: string; type: string; key: string}
 
-export function createColumn(c: Column) {
+function getType(type: Type) {
+  if (type.kind === "primitive") {
+    return type.name
+  } else if (type.kind === "typename") {
+    return type.name
+  } else if (type.kind === "typedef") {
+    return type.name
+  }
+}
+
+export function createColumn(c: RecordFieldType) {
+  const type = getType(c.type)
   return {
-    ...c,
-    key: `${c.name}:${c.type}`
+    name: c.name,
+    type,
+    key: `${c.name}:${type}`
   }
 }

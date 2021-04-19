@@ -11,9 +11,9 @@ import ConnPanel from "src/js/components/LogDetails/ConnPanel"
 import {Md5Panel} from "src/js/components/LogDetails/Md5Panel"
 import LogDetails from "src/js/state/LogDetails"
 import styled from "styled-components"
-import {zng} from "zealot"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
+import {ZedRecord} from "zealot/zed/data-types"
 
 const BG = styled.div`
   padding: 12px;
@@ -24,7 +24,7 @@ const BG = styled.div`
 `
 
 type Props = {
-  record: zng.Record
+  record: ZedRecord
 }
 
 const Content = memo<Props>(function Content({record}) {
@@ -32,7 +32,7 @@ const Content = memo<Props>(function Content({record}) {
   const isZeek = event instanceof ZeekEvent
   const isSuricata = event instanceof SuricataEvent
   const {uid, cid} = new Correlation(record).getIds()
-  const isConn = isZeek && record.try("_path").toString() === "conn"
+  const isConn = isZeek && record["_path"].toString() === "conn"
   const hasMd5 = isZeek && record.has("md5")
 
   return (

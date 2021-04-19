@@ -1,11 +1,10 @@
-import {isEqual} from "lodash"
-
-import {RightClickBuilder} from "src/js/types"
 import {MenuItemConstructorOptions} from "electron"
-import {zng} from "zealot"
+import {isEqual} from "lodash"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
 import {Space} from "src/js/state/Spaces/types"
+import {RightClickBuilder} from "src/js/types"
+import {ZedField, ZedRecord} from "zealot/zed/data-types"
 
 export default function searchFieldContextMenu(
   program: string,
@@ -13,16 +12,16 @@ export default function searchFieldContextMenu(
   space: Space
 ): RightClickBuilder {
   return function(
-    field: zng.Field,
-    log: zng.Record,
+    field: ZedField,
+    log: ZedRecord,
     compound: boolean
   ): MenuItemConstructorOptions[] {
-    const isTime = field.data.getType() === "time"
+    const isTime = field.data.kind === "time"
     const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
-    const isIp = ["addr", "set[addr]"].includes(field.data.getType())
+    const isIp = ["addr", "ip"].includes(field.data.kind)
     const hasCol = columns.includes(field.name)
-    const flatColNames = log.flatten().getColumnNames()
+    const flatColNames = log.flatten().columns
     const sameCols = isEqual(flatColNames.sort(), columns.sort())
     const hasPackets = space && space.pcap_support
     const virusTotal = [

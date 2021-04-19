@@ -1,17 +1,17 @@
-import {zng} from "zealot"
-import {UnknownEvent} from "./UnknownEvent"
+import {ZedRecord} from "zealot/zed/data-types"
 import {SuricataEvent} from "./SuricataEvent"
+import {UnknownEvent} from "./UnknownEvent"
 import {ZeekEvent} from "./ZeekEvent"
 
 export interface BrimEventInterface {
   getType: () => string
   getTime: () => Date
-  getRecord: () => zng.Record
+  getRecord: () => ZedRecord
   getEndTime: () => Date | null
 }
 
 export class BrimEvent {
-  static build(r: zng.Record) {
+  static build(r: ZedRecord) {
     if (r.has("_path")) {
       return new ZeekEvent(r)
     } else if (r.has("event_type")) {

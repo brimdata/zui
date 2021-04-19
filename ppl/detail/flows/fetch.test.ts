@@ -1,21 +1,26 @@
 import {last} from "lodash"
-import {zng} from "zealot"
 import loginTo from "src/js/test/helpers/loginTo"
+import {ZedRecord} from "zealot/zed/data-types"
 import {fetchCorrelation} from "./fetch"
-import * as stubs from "./stubs"
 
-const zeek = new zng.Record(
-  [
-    {name: "_path", type: "string"},
-    {name: "uid", type: "string"}
-  ],
-  ["dns", "CbOjYpkXn9LfqV51c"]
-)
+const zeek = new ZedRecord({
+  type: {
+    kind: "record",
+    fields: [
+      {name: "_path", type: {kind: "primitive", name: "string"}},
+      {name: "uid", type: {kind: "primitive", name: "string"}}
+    ]
+  },
+  value: ["dns", "CbOjYpkXn9LfqV51c"]
+})
 
-const suricata = new zng.Record(
-  [{name: "community_id", type: "string"}],
-  ["1:N7YGmWjwTmMKNhsZHBR618n3ReA="]
-)
+const suricata = new ZedRecord({
+  type: {
+    fields: [{name: "community_id", type: {kind: "primitive", name: "string"}}],
+    kind: "record"
+  },
+  value: ["1:N7YGmWjwTmMKNhsZHBR618n3ReA="]
+})
 
 const uidOrCommunityIdZql =
   'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100'
@@ -25,12 +30,13 @@ const uidZql =
 
 const cidZql = 'community_id="1:N7YGmWjwTmMKNhsZHBR618n3ReA=" | head 100'
 
+const stubs: any = {}
 describe("zeek log when community_id is found", () => {
   let setup
   beforeEach(async () => {
     setup = await loginTo("workspace1", "space1")
     setup.zealot.stubStream("search", stubs.uidResult)
-    setup.zealot.stubStream("search", stubs.uidAndCommunityResult)
+    setup.zealot.stubStream(" search", stubs.uidAndCommunityResult)
   })
 
   test("runs two queries ", async () => {

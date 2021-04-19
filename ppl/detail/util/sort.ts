@@ -1,11 +1,11 @@
-import {zng} from "zealot"
+import {ZedRecord} from "zealot/zed/data-types"
 
-export const sort = (logs: zng.Record[]) => {
+export const sort = (logs: ZedRecord[]) => {
   const findConn = (log) => log.try("_path")?.toString() === "conn"
   return toFront(sortBy(logs, "ts"), findConn)
 }
 
-function sortBy(logs: zng.Record[], name: string, dir: "asc" | "desc" = "asc") {
+function sortBy(logs: ZedRecord[], name: string, dir: "asc" | "desc" = "asc") {
   const direction = dir === "asc" ? 1 : -1
 
   logs.sort((a, b) =>

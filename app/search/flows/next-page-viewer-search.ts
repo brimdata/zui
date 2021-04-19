@@ -8,7 +8,7 @@ import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Url from "src/js/state/Url"
 import Viewer from "src/js/state/Viewer"
-import {zng} from "zealot"
+import {ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
 import {viewerSearch} from "./viewer-search"
 
 /**
@@ -30,16 +30,13 @@ export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   return dispatch(viewerSearch({query, from, to, append}))
 }
 
-function nextPageArgs(
-  logs: zng.Record[],
-  span: DateTuple
-): [number, DateTuple] {
+function nextPageArgs(logs: ZedRecord[], span: DateTuple): [number, DateTuple] {
   let spliceIndex = 0
   const nextSpan: DateTuple = [...span]
   if (!isEmpty(logs)) {
     const index = indexOfLastChange(logs, (log) => log.try("ts")?.toString())
     if (index >= 0) {
-      const ts = logs[index].get("ts") as zng.Primitive
+      const ts = logs[index].get("ts") as ZedPrimitive
       const prevTs = ts.toDate()
       nextSpan[1] = brim
         .time(prevTs)

@@ -1,12 +1,11 @@
-import React, {memo, MouseEvent} from "react"
 import classNames from "classnames"
 import isEqual from "lodash/isEqual"
-
+import React, {memo, MouseEvent} from "react"
+import {ZedRecord} from "zealot/zed/data-types"
+import TableColumns from "../models/TableColumns"
 import {RightClickBuilder, ViewerDimens} from "../types"
 import LogCell from "./LogCell"
 import * as Styler from "./Viewer/Styler"
-import TableColumns from "../models/TableColumns"
-import {zng} from "zealot"
 
 type Props = {
   dimens: ViewerDimens
@@ -14,7 +13,7 @@ type Props = {
   index: number
   timeZone: string
   timeFormat: string
-  log: zng.Record
+  log: ZedRecord
   columns: TableColumns
   onClick: (e: MouseEvent) => void
   onDoubleClick: (e: MouseEvent) => void
@@ -37,8 +36,7 @@ const LogRow = (props: Props) => {
     const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
     const field = log.tryField(column.name)
     const key = `${index}-${colIndex}`
-
-    if (field && field.data && !(field.data instanceof zng.Record)) {
+    if (field && field.data && !(field.data instanceof ZedRecord)) {
       return (
         <LogCell
           rightClick={rightClick}

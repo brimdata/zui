@@ -1,5 +1,5 @@
-import {zng} from "zealot"
 import {search} from "src/js/flows/search/mod"
+import {ZedRecord} from "zealot/zed/data-types"
 import {Correlation} from "../models/Correlation"
 import {getCorrelationQuery} from "./get-correlation-query"
 
@@ -10,12 +10,12 @@ function findConn(records) {
 }
 
 const collect = ({response, promise}) => {
-  let records: zng.Record[] = []
-  response.chan(0, (r) => (records = r))
+  let records: ZedRecord[] = []
+  response.chan(0, ({rows}) => (records = rows))
   return promise.then(() => records)
 }
 
-export const fetchCorrelation = (record: zng.Record) => async (dispatch) => {
+export const fetchCorrelation = (record: ZedRecord) => async (dispatch) => {
   const query = getCorrelationQuery(record)
   const {uid, cid} = new Correlation(record).getIds()
 

@@ -1,5 +1,3 @@
-import md5 from "md5"
-import {zng} from "zealot"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {search} from "src/js/flows/search/mod"
 import {SearchResponse} from "src/js/flows/search/response"
@@ -11,6 +9,8 @@ import SearchBar from "src/js/state/SearchBar"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
+import {ZedRecord} from "zealot/zed/data-types"
+import {TypeContext} from "zealot/zed/zjson"
 
 type Args = {
   query: string
@@ -40,8 +40,8 @@ function handle(
   append = false
 ): Thunk {
   return function(dispatch) {
-    let allColumns = {}
-    let allRecords = []
+    let allColumns: TypeContext = new Map()
+    let allRecords: ZedRecord[] = []
     let count = 0
 
     if (!keep && !append) {
@@ -53,28 +53,22 @@ function handle(
 
     response
       .status((status) => dispatch(Viewer.setStatus(tabId, status)))
-      .chan(0, (records, schemas: Map<number, zng.Schema>) => {
-        count = records.length
-        const columns = {}
-        for (let schema of schemas.values()) {
-          const hash = md5(JSON.stringify(schema.columns))
-          columns[hash] = schema
-        }
+      .chan(0, ({rows, schemas}) => {
+        count = rows.length
 
         if (keep) {
-          allColumns = columns
-          allRecords = records
+          allColumns = schemas
+          allRecords = rows
           return
         }
 
         if (append) {
-          dispatch(Viewer.appendRecords(tabId, records))
+          dispatch(Viewer.appendRecords(tabId, rows))
         } else {
-          dispatch(Viewer.setRecords(tabId, records))
+          dispatch(Viewer.setRecords(tabId, rows))
         }
-
-        dispatch(Viewer.updateColumns(tabId, columns))
-        dispatch(Columns.touch(columns))
+        dispatch(Viewer.updateColumns(tabId, schemas))
+        dispatch(Columns.touch(schemas))
       })
       .warnings((warning) => dispatch(SearchBar.errorSearchBarParse(warning)))
       .error((error) => {

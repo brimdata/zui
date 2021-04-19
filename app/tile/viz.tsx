@@ -1,12 +1,12 @@
+import {ParentSize} from "@vx/vx"
 import BarChart from "ppl/summary/bar-chart"
 import HorizontalBarChart from "ppl/summary/horizontal-bar-chart"
-import {TileFormat} from "ppl/summary/summary"
-import React, {memo} from "react"
-import Table from "ppl/summary/table"
-import styled from "styled-components"
-import {zng} from "zealot"
-import {ParentSize} from "@vx/vx"
 import Number from "ppl/summary/number"
+import {TileFormat} from "ppl/summary/summary"
+import Table from "ppl/summary/table"
+import React, {memo} from "react"
+import styled from "styled-components"
+import {ZedRecord} from "zealot/zed/data-types"
 
 const BG = styled.div`
   flex: 1;
@@ -56,7 +56,7 @@ function getViz(format, records) {
 
 type Props = {
   format: TileFormat
-  records: zng.Record[]
+  records: ZedRecord[]
 }
 
 function Viz({format, records}: Props) {

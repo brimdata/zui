@@ -10,7 +10,7 @@ export default (columns: ViewerColumns): Thunk => (dispatch, getState) => {
   const name = set.getName()
   const cols = set.getUniqColumns()
   const prefs = createColumnPrefs(selectors.getColumns(getState())[name])
-  const defaults = prefs.getDefaults(cols)
 
-  dispatch(Columns.updateColumns(name, defaults))
+  const defaults = prefs.getDefaults(cols)
+  dispatch(Columns.updateColumns(name.toString(), defaults))
 }

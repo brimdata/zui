@@ -1,15 +1,19 @@
-import LogDetails from "./"
+import {ZedRecord} from "zealot/zed/data-types"
+import {RecordType} from "zealot/zed/zjson"
 import initTestStore from "../../test/initTestStore"
-import {zjson, zng} from "zealot"
+import LogDetails from "./"
 
-const columns = [
-  {name: "_td", type: "count"},
-  {name: "letter", type: "string"}
-] as zjson.Column[]
+const type = {
+  kind: "record",
+  fields: [
+    {name: "_td", type: {kind: "primitive", name: "count"}},
+    {name: "letter", type: {kind: "primitive", name: "string"}}
+  ]
+} as RecordType
 
-const record = new zng.Record(columns, ["1", "a"])
-const record2 = new zng.Record(columns, ["1", "b"])
-const record3 = new zng.Record(columns, ["1", "c"])
+const record = new ZedRecord({type, value: ["1", "a"]})
+const record2 = new ZedRecord({type, value: ["1", "b"]})
+const record3 = new ZedRecord({type, value: ["1", "c"]})
 
 let store
 beforeEach(() => {

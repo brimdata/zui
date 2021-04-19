@@ -1,9 +1,9 @@
-import {Thunk} from "../state/types"
-import Packets from "../state/Packets"
+import {ZedRecord} from "zealot/zed/data-types"
 import open from "../lib/open"
-import {zng} from "zealot"
+import Packets from "../state/Packets"
+import {Thunk} from "../state/types"
 
-export const downloadPcap = (currentLog: zng.Record): Thunk => (dispatch) => {
+export const downloadPcap = (currentLog: ZedRecord): Thunk => (dispatch) => {
   dispatch(Packets.fetch(currentLog)).then((pcapFile) =>
     open(pcapFile, {newWindow: true})
   )

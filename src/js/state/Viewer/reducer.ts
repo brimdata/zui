@@ -8,7 +8,7 @@ const init = (): ViewerState => ({
   records: [],
   endStatus: "INCOMPLETE",
   status: "INIT",
-  columns: {},
+  columns: new Map(),
   scrollPos: {x: 0, y: 0},
   selection: {
     rows: {},
@@ -34,9 +34,9 @@ export default function(
     case "VIEWER_STATUS":
       return {...state, status: action.status}
     case "VIEWER_COLUMNS":
-      return {...state, columns: {...state.columns, ...action.columns}}
+      return {...state, columns: new Map([...state.columns, ...action.columns])}
     case "VIEWER_SET_COLUMNS":
-      return {...state, columns: {...action.columns}}
+      return {...state, columns: action.columns}
     case "VIEWER_SCROLL":
       return {...state, scrollPos: action.scrollPos}
     case "VIEWER_SELECT":

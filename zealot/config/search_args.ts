@@ -1,5 +1,4 @@
 import {SearchArgs} from "../types"
-import {zngToZeek} from "../enhancers/mod"
 
 export function getDefaultSearchArgs(): SearchArgs {
   return {
@@ -8,6 +7,6 @@ export function getDefaultSearchArgs(): SearchArgs {
     spaceId: "default",
     format: "zjson",
     controlMessages: true,
-    enhancers: [zngToZeek]
+    enhancers: []
   }
 }

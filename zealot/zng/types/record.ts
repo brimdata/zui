@@ -10,7 +10,7 @@ class UnknownColumnError extends Error {
   }
 }
 
-export type SerializedRecord = {
+export type SerialiZedRecord = {
   type: zjson.Record
   value: zjson.Value[] | null
 }
@@ -21,7 +21,7 @@ export class Record implements ZngClass<Type[] | null> {
     readonly value: zjson.Value[] | null
   ) {}
 
-  static deserialize({type, value}: SerializedRecord): Record {
+  static deserialize({type, value}: SerialiZedRecord): Record {
     return new Record(type.of, value)
   }
 
@@ -127,7 +127,7 @@ export class Record implements ZngClass<Type[] | null> {
     return new Record(cols, vals)
   }
 
-  serialize(): SerializedRecord {
+  serialize(): SerialiZedRecord {
     return {
       type: {
         type: "record",

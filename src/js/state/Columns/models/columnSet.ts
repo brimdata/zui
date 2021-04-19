@@ -1,26 +1,25 @@
-import {uniqBy, keys} from "lodash"
-
+import {uniqBy} from "lodash"
+import {TypeContext} from "zealot/zed/zjson"
 import {$Column, createColumn} from "./column"
-import {ViewerColumns} from "../../Viewer/types"
 
-export function createColumnSet(c: ViewerColumns) {
+export function createColumnSet(c: TypeContext) {
   return {
     getName() {
-      const types = keys(c)
-      if (types.length === 0) {
+      if (c.size === 0) {
         return "none"
-      } else if (types.length === 1) {
-        return types[0]
+      } else if (c.size === 1) {
+        return Array.from(c.keys())[0]
       } else {
         return "temp"
       }
     },
     getUniqColumns() {
       let allCols = []
-      for (const id in c) {
-        let schema = c[id]
-        let columns = schema.flatten()
-        allCols = [...allCols, ...columns]
+      for (const typedef of c.values()) {
+        let inner = typedef.flatten().innerType
+        if (inner.kind === "record") {
+          allCols = [...allCols, ...inner.fields]
+        }
       }
       return uniqBy<$Column>(allCols.map(createColumn), "key")
     }

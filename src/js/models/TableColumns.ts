@@ -1,8 +1,8 @@
+import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
+import {createCell} from "../brim/cell"
+import columnOrder from "../lib/columnOrder"
 import {$Column} from "../state/Columns/models/column"
 import {ColumnSettingsMap, TableColumn} from "../state/Columns/types"
-import columnOrder from "../lib/columnOrder"
-import {createCell} from "../brim/cell"
-import {zng} from "zealot"
 
 export default class TableColumns {
   cols: TableColumn[]
@@ -31,7 +31,7 @@ export default class TableColumns {
     )
   }
 
-  setWidths(logs: zng.Record[]) {
+  setWidths(logs: ZedRecord[]) {
     const MAX_WIDTH = 500
     const resizeHandle = 5
     const sortIcon = 11
@@ -39,15 +39,20 @@ export default class TableColumns {
     this.cols.forEach((col) => {
       if (col.width) return
       const colName = createCell(
-        new zng.Field("", new zng.Primitive("string", col.name))
+        new ZedField({
+          name: "",
+          data: new ZedPrimitive({
+            type: {kind: "primitive", name: "string"},
+            value: col.name
+          })
+        })
       )
 
       let max = colName.guessWidth() + resizeHandle + sortIcon
-
       logs.forEach((log) => {
         const data = log.try(col.name)
         if (data) {
-          const cell = createCell(new zng.Field(name, data))
+          const cell = createCell(new ZedField({name: col.name, data}))
           const len = cell.guessWidth()
           if (len > max) max = len
         }

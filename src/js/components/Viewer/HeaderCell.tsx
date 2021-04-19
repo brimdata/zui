@@ -67,7 +67,6 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
     dispatch(appendQuerySortBy(column.name, sorted === "asc" ? "desc" : "asc"))
     dispatch(submitSearch())
   }
-
   return (
     <div
       onClick={onClick}

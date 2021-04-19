@@ -1,6 +1,5 @@
 import {isEqual} from "lodash"
-import {zng} from "zealot"
-
+import {ZedPrimitive} from "zealot/zed/data-types"
 import {withCommas} from "../lib/fmt"
 import brim from "./"
 
@@ -17,11 +16,12 @@ const ESCAPED_BACK_SLASH = "\\\\"
 
 interface PrimitiveField {
   name: string
-  data: zng.Primitive
+  data: ZedPrimitive
 }
 
 export function createPrimitiveCell({name, data}: PrimitiveField) {
-  const {type, value} = data
+  const type = data.kind
+  const value = data._value
 
   return {
     name,

@@ -3,8 +3,7 @@ import {isEqual} from "lodash"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
 import {Space} from "src/js/state/Spaces/types"
-
-import {zng} from "zealot"
+import {ZedField, ZedRecord} from "zealot/zed/data-types"
 
 export default function detailFieldContextMenu(
   program: string,
@@ -12,16 +11,16 @@ export default function detailFieldContextMenu(
   space: Space
 ) {
   return function(
-    field: zng.Field,
-    log: zng.Record,
+    field: ZedField,
+    log: ZedRecord,
     compound: boolean
   ): MenuItemConstructorOptions[] {
-    const isTime = field.data.getType() === "time"
+    const isTime = field.data.kind === "time"
     const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
-    const isIp = ["addr", "set[addr]"].includes(field.data.getType())
+    const isIp = ["addr", "set[addr]"].includes(field.data.kind)
     const hasCol = columns.includes(field.name)
-    const sameCols = isEqual(log.getColumnNames().sort(), columns.sort())
+    const sameCols = isEqual(log.columns.sort(), columns.sort())
     const hasPackets = space && space.pcap_support
     const virusTotal = [
       "hassh",

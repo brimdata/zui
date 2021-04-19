@@ -1,9 +1,9 @@
+import {isEqual} from "lodash"
+import {ZedRecord} from "zealot/zed/data-types"
 import {Thunk} from "../state/types"
 import Viewer from "../state/Viewer"
-import {isEqual} from "lodash"
-import {zng} from "zealot"
 
-export default (log: zng.Record): Thunk => (dispatch, getState) => {
+export default (log: ZedRecord): Thunk => (dispatch, getState) => {
   const state = getState()
   const logs = Viewer.getLogs(state)
   const index = logs.findIndex((log2) => isEqual(log2, log))

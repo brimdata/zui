@@ -9,30 +9,24 @@ import Viewer from "src/js/state/Viewer"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
-import {createZealotMock, zng} from "zealot"
+import {STRING, TIME} from "test/fixtures/zjson-types"
+import {createZealotMock} from "zealot"
+import {ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
+import {RecordType} from "zealot/zed/zjson"
 import nextPageViewerSearch from "./next-page-viewer-search"
 
-const records = zng.createRecords([
-  {
-    id: 1,
-    schema: {
-      type: "record",
-      of: [
-        {name: "td", type: "string"},
-        {name: "ts", type: "time"}
-      ]
-    },
-    values: ["1", "100"]
-  },
-  {
-    id: 1,
-    values: ["1", "200"]
-  },
-  {
-    id: 1,
-    values: ["1", "300"]
-  }
-])
+const type = {
+  kind: "record",
+  fields: [
+    {name: "td", type: STRING},
+    {name: "ts", type: TIME}
+  ]
+} as RecordType
+const records = [
+  new ZedRecord({type, value: ["1", "100"]}),
+  new ZedRecord({type, value: ["1", "200"]}),
+  new ZedRecord({type, value: ["1", "300"]})
+]
 
 let store, zealot, tabId
 beforeEach(() => {
@@ -65,16 +59,13 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
   const search = jest.spyOn(zealot.zealot, "search")
   store.dispatch(nextPageViewerSearch())
 
-  const data = records[1].at(1)
-  // This should be fixed so that all data have a value field or getValue method
-  if (!("value" in data)) throw new Error("boom")
-
-  const lastChangeTs = data.value
+  const data = records[1].at(1) as ZedPrimitive
+  const lastChangeTs = data.toDate().getTime()
   expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({
       from: new Date(0),
-      to: new Date(+lastChangeTs * 1000 + 1)
+      to: new Date(lastChangeTs + 1)
     })
   )
 })

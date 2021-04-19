@@ -1,8 +1,8 @@
-import {zng} from "zealot"
 import isString from "lodash/isString"
+import {ZedPrimitive} from "zealot/zed/data-types"
 
 export function toZql(object: unknown): string {
-  if (object instanceof zng.Primitive) return toZqlZngPrimitive(object)
+  if (object instanceof ZedPrimitive) return toZqlZngPrimitive(object)
   if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)
   if (typeof object === "boolean") return toZqlBool(object)
@@ -29,7 +29,8 @@ function toZqlBool(bool: boolean) {
   return bool ? "true" : "false"
 }
 
-function toZqlZngPrimitive(data: zng.Primitive) {
-  if (data.getType() === "string") return toZqlString(data.getValue())
-  throw new Error(`Can't convert Zng Type: ${data.getType()} to zql`)
+function toZqlZngPrimitive(data: ZedPrimitive) {
+  if (data.kind === "string" || data.kind === "bstring")
+    return toZqlString(data.toString())
+  throw new Error(`Can't convert Zng Type: ${data.kind} to zql`)
 }

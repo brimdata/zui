@@ -1,7 +1,6 @@
 import {useDispatch} from "react-redux"
 import React, {memo, useCallback, useMemo, useState} from "react"
 
-import {zng} from "zealot"
 import {Data, Name, Value} from "app/core/Data"
 import {createCell} from "src/js/brim/cell"
 import BrimTooltip from "src/js/components/BrimTooltip"
@@ -10,15 +9,16 @@ import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
 import PanelHeading from "./PanelHeading"
 import Panel from "./Panel"
 import contextMenu from "./flows/contextMenu"
+import {ZedField, ZedRecord} from "zealot/zed/data-types"
 
 type Props = {
-  record: zng.Record
+  record: ZedRecord
 }
 
 type DTProps = {
-  fields: zng.Field[]
-  onRightClick: (f: zng.Field) => void
-  onHover: (f: zng.Field) => void
+  fields: ZedField[]
+  onRightClick: (f: ZedField) => void
+  onHover: (f: ZedField) => void
 }
 
 const DataPanel = React.memo<DTProps>(function DataTable({
@@ -34,7 +34,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
             <TooltipAnchor>{field.name}</TooltipAnchor>
           </Name>
           <Value
-            className={field.data.getType()}
+            className={field.data.kind}
             onContextMenu={() => onRightClick(field)}
           >
             {createCell(field).display()}
@@ -85,7 +85,7 @@ export default memo(function Fields({record}: Props) {
 
   const fields = useMemo(() => {
     if (!record) return []
-    else return record.flatten().getFields()
+    else return record.flatten().fields
   }, [record])
 
   return (

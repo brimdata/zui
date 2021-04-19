@@ -1,22 +1,22 @@
-import {zng} from "zealot"
+import {ZedRecord, ZedPrimitive} from "zealot/zed/data-types"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class ZeekEvent implements BrimEventInterface {
-  constructor(private r: zng.Record) {}
+  constructor(private r: ZedRecord) {}
 
   getRecord() {
     return this.r
   }
 
   getTime() {
-    return (this.r.get("ts") as zng.Primitive).toDate()
+    return (this.r.get("ts") as ZedPrimitive).toDate()
   }
 
   getEndTime() {
     if (this.r.get("_path").toString() !== "conn") return null
-    const dur = (this.r.get("duration") as zng.Primitive).toFloat()
+    const dur = (this.r.get("duration") as ZedPrimitive).toFloat()
     if (!dur) return
-    const ts = (this.r.get("ts") as zng.Primitive).toDate()
+    const ts = (this.r.get("ts") as ZedPrimitive).toDate()
     return new Date(ts.getTime() + dur * 1000)
   }
 

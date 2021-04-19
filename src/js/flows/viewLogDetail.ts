@@ -1,13 +1,13 @@
-import LogDetails from "../state/LogDetails"
-import {Thunk} from "../state/types"
-import {zng} from "zealot"
 import {isEqual} from "lodash"
 import {fetchCorrelation} from "ppl/detail/flows/fetch"
-import Notice from "../state/Notice"
+import {ZedRecord} from "zealot/zed/data-types"
 import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
+import LogDetails from "../state/LogDetails"
+import Notice from "../state/Notice"
+import {Thunk} from "../state/types"
 
-export const viewLogDetail = (record: zng.Record): Thunk => (
+export const viewLogDetail = (record: ZedRecord): Thunk => (
   dispatch,
   getState
 ) => {

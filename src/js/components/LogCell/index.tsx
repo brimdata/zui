@@ -1,15 +1,14 @@
-import React, {useState} from "react"
 import classNames from "classnames"
-
+import React, {useState} from "react"
+import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
 import {RightClickBuilder} from "../../types"
+import Tooltip from "../Tooltip"
 import CompoundField from "./CompoundField"
 import SingleField from "./SingleField"
-import Tooltip from "../Tooltip"
-import {zng} from "zealot"
 
 type Props = {
-  field: zng.Field
-  log: zng.Record
+  field: ZedField
+  log: ZedRecord
   style?: Object
   rightClick: RightClickBuilder
 }
@@ -23,7 +22,8 @@ const getTooltipStyle = (el: Element) => {
 export default function LogCell({field, style, rightClick, log}: Props) {
   const [hover, setHover] = useState(false)
   const [tooltipStyle, setTooltipStyle] = useState({})
-  const {name, data} = field
+  const data = field.data
+  const name = field.name
 
   function handleMouseEnter(e) {
     setHover(true)
@@ -35,7 +35,7 @@ export default function LogCell({field, style, rightClick, log}: Props) {
   }
   return (
     <div
-      className={classNames(`log-cell ${data.getType()}`, {hover})}
+      className={classNames(`log-cell "${data.kind}"`, {hover})}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={style}
@@ -51,22 +51,16 @@ export default function LogCell({field, style, rightClick, log}: Props) {
 }
 
 type FieldSwitchProps = {
-  field: zng.Field
-  log: zng.Record
+  field: ZedField
+  log: ZedRecord
   menuBuilder: RightClickBuilder
 }
 
 function FieldSwitch({field, log, menuBuilder}: FieldSwitchProps) {
-  if (field.data instanceof zng.Primitive) {
+  if (field.data instanceof ZedPrimitive) {
     const menu = menuBuilder(field, log, false)
     return <SingleField field={field} menu={menu} record={log} />
   } else {
-    return (
-      <CompoundField
-        field={field as zng.ContainerField}
-        log={log}
-        menuBuilder={menuBuilder}
-      />
-    )
+    return <CompoundField field={field} log={log} menuBuilder={menuBuilder} />
   }
 }

@@ -1,5 +1,4 @@
-import {zng} from "zealot"
-
+import {ZedData, ZedPrimitive} from "zealot/zed/data-types"
 import {createComplexCell} from "./complexCell"
 import {createPrimitiveCell} from "./primitiveCell"
 
@@ -12,8 +11,13 @@ export interface Cell {
   guessWidth: () => number
 }
 
-export function createCell({name, data}: zng.Field): Cell {
-  if (data instanceof zng.Primitive) {
+type Args = {
+  name: string
+  data: ZedData
+}
+
+export function createCell({name, data}: Args): Cell {
+  if (data instanceof ZedPrimitive) {
     return createPrimitiveCell({name, data})
   } else {
     return createComplexCell({name, data})
