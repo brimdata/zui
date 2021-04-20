@@ -15,15 +15,26 @@ export default class PluginManager {
 
   async load(dir: string) {
     const files = await lib.file(dir).contents()
-    this.plugins.push(
-      ...files.map((f) => {
-        const {activate, deactivate = () => {}} = require(path.join(dir, f))
-        return {
-          activate,
-          deactivate
-        }
-      })
-    )
+
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i]
+      const pluginDir = lib.file(path.join(dir, f))
+      if (!(await pluginDir.isDirectory())) {
+        console.error("Plugin must be contained in a directory.")
+        return
+      }
+
+      const entryPoint = path.join(dir, pluginDir.fileName(), "index.js")
+      if (!lib.file(entryPoint).existsSync()) {
+        console.error(
+          "Plugin directory must contain an index file as the entry point."
+        )
+        return
+      }
+
+      const {activate, deactivate = () => {}} = require(entryPoint)
+      this.plugins.push({activate, deactivate})
+    }
   }
 
   activate() {

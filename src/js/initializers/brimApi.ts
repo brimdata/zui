@@ -1,6 +1,11 @@
+import {remote} from "electron"
+import path from "path"
+import toast from "react-hot-toast"
+import {getZealot} from "../flows/getZealot"
 import Toolbar, {ToolbarItem} from "../state/Toolbars"
 import {Store} from "../state/types"
 import {EventEmitter} from "events"
+import Current from "../state/Current"
 
 type Cleanup = () => any
 
@@ -54,12 +59,36 @@ class ToolbarApi implements BrimUIContainerApi<ToolbarItem> {
 export default class BrimApi {
   public commands = new CommandRegistry()
   public toolbar: BrimUIContainerApi<ToolbarItem>
+  public toast: typeof toast
 
   // public contextMenu: BrimUIContainerApi<ContextMenuItem>
 
   // TODO: store is made public only to make the initial plugin architecture migration easier, it will eventually be private
   constructor(public store: Store) {
     this.toolbar = new ToolbarApi(store)
+    this.toast = toast
     // this.contextMenu = new ContextMenuApi(store)
+  }
+
+  public getCurrent() {
+    const state = this.store.getState()
+    const space = Current.getSpace(state)
+    const ws = Current.getWorkspace(state)
+    return {
+      spaceId: space.id,
+      spaceName: space.name,
+      workspaceId: ws.id,
+      workspaceName: ws.name
+    }
+  }
+
+  public getZealot() {
+    return this.store.dispatch(getZealot())
+  }
+
+  public getAppConfig() {
+    return {
+      spacesRoot: path.join(remote.app.getPath("userData"), "data", "spaces")
+    }
   }
 }
