@@ -104,25 +104,29 @@ export function construct(
       return new ZedPrimitive({
         typeName,
         type: type.name,
-        value: value as string
+        value: value as string | null
       })
 
     case "array":
       return new ZedArray({
         typeName,
         type: simpleType(type.type),
-        items: (value as Value[]).map((value) =>
-          construct(context, type.type, value)
-        )
+        items: value
+          ? (value as Value[]).map((value) =>
+              construct(context, type.type, value)
+            )
+          : null
       })
 
     case "set":
       return new ZedSet({
         typeName,
         type: simpleType(type.type),
-        items: (value as Value[]).map((value) =>
-          construct(context, type.type, value)
-        )
+        items: value
+          ? (value as Value[]).map((value) =>
+              construct(context, type.type, value)
+            )
+          : null
       })
 
     case "record":
@@ -148,7 +152,7 @@ export function construct(
       return new ZedEnum({
         typeName,
         symbols: type.symbols,
-        value: value as string
+        value: value as string | null
       })
 
     case "map":
@@ -156,14 +160,16 @@ export function construct(
         typeName,
         keyType: simpleType(type.key_type),
         valueType: simpleType(type.val_type),
-        value: new Map(
-          createEntries(value as Value[]).map(([key, value]) => {
-            return [
-              construct(context, type.key_type, key),
-              construct(context, type.val_type, value)
-            ]
-          })
-        )
+        value: value
+          ? new Map(
+              createEntries(value as Value[]).map(([key, value]) => {
+                return [
+                  construct(context, type.key_type, key),
+                  construct(context, type.val_type, value)
+                ]
+              })
+            )
+          : null
       })
 
     case "typename":

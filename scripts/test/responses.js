@@ -3,6 +3,7 @@ const fs = require("fs-extra")
 const glob = require("glob")
 const config = require("../../test/responses/config")
 
+// In order for this to work, rollup the zealot module first
 function saveResponse(input, output, query) {
   const deno = spawn(
     "deno",

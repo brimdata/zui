@@ -23,7 +23,7 @@ module.exports = {
     output: "sample.response"
   },
   correlationUid: {
-    query: "_path=dns",
+    query: "*",
     input: "correlation.zson",
     output: "correlation-uid.response"
   },
@@ -31,5 +31,15 @@ module.exports = {
     query: "*",
     input: "correlation.zson",
     output: "correlation-uid-community-id.response"
+  },
+  noCommunityIdInConn: {
+    query: "*",
+    input: "no-community-id-in-conn.zson",
+    output: "no-community-id-in-conn.response"
+  },
+  onlyAlerts: {
+    query: "*",
+    input: "only-alerts.zng",
+    output: "only-alerts.response"
   }
 }

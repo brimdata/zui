@@ -20,7 +20,7 @@ export class ZedSet {
       kind: "set",
       type: this.type,
       typeName: this.typeName,
-      items: this.items.map((item) => item.serialize())
+      items: this.isUnset() ? null : this.items.map((item) => item.serialize())
     }
   }
 }

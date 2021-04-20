@@ -9,7 +9,6 @@ test("conn correlation", () => {
     duration: 0.70995,
     community_id: "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU="
   })
-
   expect(
     connCorrelation(
       record.get("uid") as ZedPrimitive,

@@ -30,7 +30,6 @@ export function handle(request: any) {
         reject(e)
       }
     }
-
     request
       .then((stream) => {
         stream

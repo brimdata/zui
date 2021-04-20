@@ -21,6 +21,7 @@ export const fetchCorrelation = (record: ZedRecord) => async (dispatch) => {
   const query = getCorrelationQuery(record)
   const {uid, cid} = new Correlation(record).getIds()
   const run = () => collect(dispatch(search({query, id})))
+
   if (!uid && !cid) return []
   if (cid && uid) return run()
   if (cid) return run()
@@ -28,7 +29,6 @@ export const fetchCorrelation = (record: ZedRecord) => async (dispatch) => {
   // If there is only a uid and not a cid
   const records = await run()
   const conn = findConn(records)
-  console.log(conn)
   if (conn && conn.has("community_id")) return dispatch(fetchCorrelation(conn))
   else return records
 }

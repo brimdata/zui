@@ -7,7 +7,7 @@
 {"type":"SearchEnd","channel_id":0,"reason":"eof"}
 
 
-{"type":"SearchStats","start_time":{"sec":1618892505,"ns":822464000},"update_time":{"sec":1618892505,"ns":823472000},"bytes_read":3519,"bytes_matched":3519,"records_read":30,"records_matched":30}
+{"type":"SearchStats","start_time":{"sec":1618961328,"ns":357440000},"update_time":{"sec":1618961328,"ns":360568000},"bytes_read":3519,"bytes_matched":3519,"records_read":30,"records_matched":30}
 
 
 {"type":"TaskEnd","task_id":0}

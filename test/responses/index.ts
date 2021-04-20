@@ -7,10 +7,10 @@ const cache = {}
 export function useResponse(name: string) {
   if (name in cache) return cache[name]
 
+  if (!(name in config)) throw new Error(`Unknown response: ${name}`)
   const {output} = config[name]
   const path = join(__dirname, output)
   const data = readFileSync(path, {encoding: "utf-8"})
-
   cache[name] = data.split("\n\n\n").map((json) => JSON.parse(json))
-  return data
+  return cache[name]
 }
