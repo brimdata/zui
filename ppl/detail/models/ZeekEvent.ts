@@ -1,4 +1,4 @@
-import {ZedRecord, ZedPrimitive} from "zealot/zed/data-types"
+import {ZedRecord, ZedPrimitive} from "zealot/zed"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class ZeekEvent implements BrimEventInterface {

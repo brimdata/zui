@@ -1,41 +1,39 @@
-import {createColumn} from "./models/column"
+import {INTERVAL, STRING, TIME} from "test/fixtures/zjson-types"
+import ZedTypeDef from "zealot/zed/type-def"
+import initTestStore from "../../test/initTestStore"
 import Columns from "./"
 import actions from "./actions"
-import initTestStore from "../../test/initTestStore"
+import {createColumn} from "./models/column"
 import touch from "./touch"
-import ZedTypeDef from "zealot/zed/type-def"
-import {STRING, INTERVAL, TIME} from "test/fixtures/zjson-types"
 
-const columns = new Map(
-  Object.entries({
-    "1": new ZedTypeDef({
+const columns = {
+  "1": new ZedTypeDef({
+    type: {
+      name: "1",
+      kind: "typedef",
       type: {
-        name: "1",
-        kind: "typedef",
-        type: {
-          kind: "record",
-          fields: [
-            {name: "_path", type: STRING},
-            {name: "duration", type: INTERVAL}
-          ]
-        }
+        kind: "record",
+        fields: [
+          {name: "_path", type: STRING},
+          {name: "duration", type: INTERVAL}
+        ]
       }
-    }),
-    "2": new ZedTypeDef({
+    }
+  }),
+  "2": new ZedTypeDef({
+    type: {
+      name: "2",
+      kind: "typedef",
       type: {
-        name: "2",
-        kind: "typedef",
-        type: {
-          kind: "record",
-          fields: [
-            {name: "_path", type: STRING},
-            {name: "ts", type: TIME}
-          ]
-        }
+        kind: "record",
+        fields: [
+          {name: "_path", type: STRING},
+          {name: "ts", type: TIME}
+        ]
       }
-    })
+    }
   })
-)
+}
 
 let store
 beforeEach(() => {

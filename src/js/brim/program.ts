@@ -1,6 +1,6 @@
 import {isEqual} from "lodash"
 import {parse} from "zealot"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"

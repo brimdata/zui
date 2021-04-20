@@ -2,14 +2,80 @@ import {
   ZedArray,
   ZedPrimitive,
   ZedEnum,
-  ZedField,
   ZedMap,
   ZedRecord,
   ZedSet,
-  ZedUnion
+  ZedUnion,
+  ZedData,
+  ZedField
 } from "./index"
 
-export function deserialize(data) {
+export type SerializedZed =
+  | SerializedZedPrimitive
+  | SerializedZedArray
+  | SerializedZedSet
+  | SerializedZedRecord
+  | SerializedZedUnion
+  | SerializedZedEnum
+  | SerializedZedMap
+  | SerializedZedField
+
+export type SerializedZedField = {
+  kind: "field"
+  name: string
+  data: SerializedZed
+}
+
+export type SerializedZedPrimitive = {
+  kind: "primitive"
+  value: string | null
+  type: string
+  typeName?: string
+}
+
+export type SerializedZedArray = {
+  kind: "array"
+  type: string
+  items: SerializedZed[]
+  typeName?: string
+}
+
+export type SerializedZedSet = {
+  kind: "set"
+  type: string
+  items: SerializedZed[]
+  typeName?: string
+}
+
+export type SerializedZedRecord = {
+  kind: "record"
+  fields: SerializedZedField[]
+  typeName?: string
+}
+
+export type SerializedZedUnion = {
+  kind: "union"
+  types: string[]
+  value: SerializedZed
+  typeName?: string
+}
+
+export type SerializedZedEnum = {
+  kind: "enum"
+  symbols: string[]
+  value: string
+  typeName?: string
+}
+
+export type SerializedZedMap = {
+  kind: "map"
+  keyType: string
+  valueType: string
+  value: [SerializedZed, SerializedZed][]
+  typeName?: string
+}
+
+export function deserialize(data: SerializedZed) {
   switch (data.kind) {
     case "primitive":
       return new ZedPrimitive({
@@ -29,13 +95,13 @@ export function deserialize(data) {
       return new ZedSet({
         typeName: data.typeName,
         type: data.type,
-        items: data.items.map(deserialize)
+        items: data.items.map(deserialize) as ZedData[]
       })
 
     case "record":
       return new ZedRecord({
         typeName: data.typeName,
-        fields: data.fields.map(deserialize)
+        fields: data.fields.map(deserialize) as ZedField[]
       })
 
     case "field":

@@ -1,4 +1,4 @@
-import {ZedField} from "zealot/zed/data-types"
+import {ZedField} from "zealot/zed"
 import brim from "../../brim"
 import {Cell, createCell} from "../../brim/cell"
 import {onlyWhitespace} from "../../lib/Str"

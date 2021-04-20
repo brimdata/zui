@@ -6,7 +6,7 @@ import {State} from "../types"
 import {LogDetailHistory, toHistory} from "./reducer"
 import {LogDetailsState} from "./types"
 
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 
 const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails

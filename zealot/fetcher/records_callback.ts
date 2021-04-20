@@ -1,4 +1,4 @@
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import {decode, TypeContext} from "zealot/zed/zjson"
 import * as zqd from "../zqd"
 
@@ -19,8 +19,8 @@ function getChannel(id: number, channels: ChannelMap): Channel {
   if (!channels.has(id)) {
     channels.set(id, {
       rows: [],
-      schemas: new Map(),
-      context: new Map()
+      schemas: {},
+      context: {}
     } as Channel)
   }
   return channels.get(id) as Channel

@@ -1,6 +1,5 @@
-import {COUNT, IP, STRING} from "test/fixtures/zjson-types"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
-import {RecordFieldType} from "zealot/zed/zjson"
+import {createData, createField, createRecord} from "test/factories/record"
+import {ZedField, ZedPrimitive} from "zealot/zed"
 import {
   addHeadProc,
   getHeadCount,
@@ -13,12 +12,7 @@ import brim from "./"
 import {createCell} from "./cell"
 
 describe("excluding and including", () => {
-  const field = createCell(
-    new ZedField({
-      name: "uid",
-      data: new ZedPrimitive({type: STRING, value: "123"})
-    })
-  )
+  const field = createCell(createField("uid", "123"))
 
   test("excluding a field", () => {
     const program = brim
@@ -30,7 +24,7 @@ describe("excluding and including", () => {
   })
 
   test("excluding a field with a pipe", () => {
-    const data = new ZedPrimitive({type: STRING, value: "HTTP"})
+    const data = createData("HTTP")
     const program = brim
       .program(
         'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
@@ -63,13 +57,12 @@ describe("excluding and including", () => {
 })
 
 describe("drill down", () => {
-  const columns = [
-    {name: "id", type: {kind: "record", fields: [{name: "orig_h", type: IP}]}},
-    {name: "proto", type: STRING},
-    {name: "query", type: STRING},
-    {name: "count", type: COUNT}
-  ] as RecordFieldType[]
-  const result = ZedRecord.of(columns, [["192.168.0.54"], "udp", "WPAD", "24"])
+  const result = createRecord({
+    id: {orig_h: "192.168.0.54"},
+    proto: "udp",
+    query: "WPAD",
+    count: 24
+  })
 
   test("when there is no leading filter", () => {
     const program = brim
@@ -110,13 +103,7 @@ describe("drill down", () => {
   })
 
   test("count by and filter the same", () => {
-    const result = ZedRecord.of(
-      [
-        {type: STRING, name: "md5"},
-        {type: COUNT, name: "count"}
-      ],
-      ["123", "1"]
-    )
+    const result = createRecord({md5: "123", count: 1})
 
     const program = brim
       .program("md5=123 | count() by md5 | sort -r | head 5")
@@ -127,13 +114,10 @@ describe("drill down", () => {
   })
 
   test("filter query", () => {
-    const result = ZedRecord.of(
-      [
-        {name: "md5", type: STRING},
-        {name: "count", type: COUNT}
-      ],
-      ["9f51ef98c42df4430a978e4157c43dd5", "21"]
-    )
+    const result = createRecord({
+      md5: "9f51ef98c42df4430a978e4157c43dd5",
+      count: 21
+    })
 
     const program = brim
       .program(
@@ -150,7 +134,7 @@ describe("drill down", () => {
 
 describe("count by", () => {
   test("empty program", () => {
-    const data = new ZedPrimitive({type: STRING, value: "heyo"})
+    const data = new ZedPrimitive({type: "string", value: "heyo"})
     const field = createCell(new ZedField({name: "_path", data}))
     const program = brim
       .program()
@@ -161,7 +145,7 @@ describe("count by", () => {
   })
 
   test("append a count to an existing query", () => {
-    const data = new ZedPrimitive({type: STRING, value: "heyo"})
+    const data = new ZedPrimitive({type: "string", value: "heyo"})
     const field = createCell(new ZedField({name: "query", data}))
     const program = brim
       .program("dns")

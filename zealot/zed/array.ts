@@ -11,6 +11,10 @@ export class ZedArray {
     this.items = args.items
   }
 
+  isUnset() {
+    return this.items === null
+  }
+
   serialize() {
     return {
       kind: "array",

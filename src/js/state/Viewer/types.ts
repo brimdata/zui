@@ -1,4 +1,4 @@
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import {TypeContext} from "zealot/zed/zjson"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"

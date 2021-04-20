@@ -5,7 +5,7 @@ import {
   ZedRecord,
   ZedSet,
   ZedUnion
-} from "zealot/zed/data-types"
+} from "zealot/zed"
 import {createCell} from "./cell"
 import {ONE_CHAR} from "./primitiveCell"
 

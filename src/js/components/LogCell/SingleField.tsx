@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import React, {useEffect, useRef, useState} from "react"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedRecord} from "zealot/zed"
 import {$Menu} from "../../electron/menu"
 import lib from "../../lib"
 import {showContextMenu} from "../../lib/System"

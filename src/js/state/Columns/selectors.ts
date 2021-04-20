@@ -1,5 +1,5 @@
 import {createSelector} from "reselect"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import TableColumns from "../../models/TableColumns"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"

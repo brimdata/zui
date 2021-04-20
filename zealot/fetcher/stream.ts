@@ -1,7 +1,7 @@
 import {createCallbacks} from "./callbacks"
 import {ZCallbacks, ZIterator} from "../types"
 import {decode, StreamObject} from "zealot/zed/zjson"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 
 async function emitCallbacks(iterator: ZIterator, callbacks: ZCallbacks) {
   try {

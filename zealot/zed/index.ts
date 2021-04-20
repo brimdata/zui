@@ -7,6 +7,8 @@ import {ZedRecord} from "./record"
 import {ZedSet} from "./set"
 import {ZedUnion} from "./union"
 
+export {SerializedZedRecord, SerializedZedField} from "./json"
+
 export {
   ZedArray,
   ZedEnum,

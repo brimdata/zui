@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import React from "react"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedRecord} from "zealot/zed"
 import {createComplexCell} from "../../brim/complexCell"
 import SingleField from "./SingleField"
 

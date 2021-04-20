@@ -4,7 +4,7 @@ import {showContextMenu} from "src/js/lib/System"
 import Columns from "src/js/state/Columns"
 import Current from "src/js/state/Current"
 import SearchBar from "src/js/state/SearchBar"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedRecord} from "zealot/zed"
 
 const contextMenu = (field: ZedField, record: ZedRecord) => (_, getState) => {
   const space = Current.mustGetSpace(getState())

@@ -1,6 +1,4 @@
-import {COUNT, STRING, TIME} from "test/fixtures/zjson-types"
-import {ZedRecord} from "zealot/zed/data-types"
-import {RecordFieldType} from "zealot/zed/zjson"
+import {createRecord} from "test/factories/record"
 import initTestStore from "../../test/initTestStore"
 import Tabs from "../Tabs"
 import chart from "./"
@@ -11,15 +9,9 @@ beforeEach(() => {
   tabId = Tabs.getActive(store.getState())
 })
 
-const fields = [
-  {name: "ts", type: TIME},
-  {name: "_path", type: STRING},
-  {name: "count", type: COUNT}
-] as RecordFieldType[]
-
 const records = [
-  ZedRecord.of(fields, ["0", "conn", "500"]),
-  ZedRecord.of(fields, ["100", "dns", "300"])
+  createRecord({ts: new Date(0), _path: "conn", count: 500}),
+  createRecord({ts: new Date(100 * 1000), _path: "dns", count: 300})
 ]
 
 test("chart records append", () => {

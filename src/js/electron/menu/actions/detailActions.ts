@@ -1,4 +1,15 @@
 import {
+  ZedField,
+  SerializedZedField,
+  ZedPrimitive,
+  ZedRecord,
+  SerializedZedRecord
+} from "zealot/zed"
+import brim from "../../../brim"
+import {createCell} from "../../../brim/cell"
+import {downloadPcap} from "../../../flows/downloadPcap"
+import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
+import {
   appendQueryCountBy,
   appendQueryExclude,
   appendQueryIn,
@@ -6,32 +17,21 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../../flows/searchBar/actions"
+import {viewLogDetail} from "../../../flows/viewLogDetail"
 import lib from "../../../lib"
 import open from "../../../lib/open"
-import {viewLogDetail} from "../../../flows/viewLogDetail"
+import virusTotal from "../../../services/virusTotal"
 import Modal from "../../../state/Modal"
 import SearchBar from "../../../state/SearchBar"
-import action from "./action"
-import brim from "../../../brim"
 import tab from "../../../state/Tab"
-import virusTotal from "../../../services/virusTotal"
-import {downloadPcap} from "../../../flows/downloadPcap"
-import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
-import {createCell} from "../../../brim/cell"
-import {
-  ZedField,
-  ZedRecordSpec,
-  ZedRecord,
-  ZedPrimitive,
-  ZedFieldSpec
-} from "zealot/zed/data-types"
+import action from "./action"
 
 function buildDetailActions() {
   return {
     copy: action({
       name: "detail-cell-menu-copy",
       label: "Copy",
-      listener(_dispatch, data: ZedFieldSpec) {
+      listener(_dispatch, data: SerializedZedField) {
         const f = ZedField.deserialize(data)
         lib.doc.copyToClipboard(f.data.toString())
       }
@@ -39,7 +39,7 @@ function buildDetailActions() {
     countBy: action({
       name: "detail-cell-menu-count-by",
       label: "Count by field",
-      listener(dispatch, data: ZedFieldSpec) {
+      listener(dispatch, data: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryCountBy(ZedField.deserialize(data)))
         dispatch(openNewSearchTab())
@@ -48,14 +48,14 @@ function buildDetailActions() {
     detail: action({
       name: "detail-cell-menu-detail",
       label: "View details",
-      listener(dispatch, log: ZedRecordSpec) {
+      listener(dispatch, log: SerializedZedRecord) {
         dispatch(viewLogDetail(ZedRecord.deserialize(log)))
       }
     }),
     exclude: action({
       name: "detail-cell-menu-exclude",
       label: "Filter != value in new search",
-      listener(dispatch, field: ZedFieldSpec) {
+      listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryExclude(ZedField.deserialize(field)))
         dispatch(openNewSearchTab())
@@ -64,7 +64,7 @@ function buildDetailActions() {
     freshInclude: action({
       name: "detail-cell-menu-fresh-include",
       label: "New search with this value",
-      listener(dispatch, field: ZedFieldSpec) {
+      listener(dispatch, field: SerializedZedField) {
         const cell = createCell(ZedField.deserialize(field))
         dispatch(SearchBar.clearSearchBar())
         dispatch(SearchBar.changeSearchBarInput(cell.queryableValue()))
@@ -74,13 +74,12 @@ function buildDetailActions() {
     fromTime: action({
       name: "detail-cell-menu-from-time",
       label: 'Use as "start" time in new search',
-      listener(dispatch, data: ZedFieldSpec) {
-        const field = ZedField.deserialize(data)
-        if (field.data.kind === "time") {
+      listener(dispatch, fieldJSON: SerializedZedField) {
+        const field = ZedField.deserialize(fieldJSON)
+        const data = field.data
+        if (data instanceof ZedPrimitive && data.type === "time") {
           dispatch(SearchBar.clearSearchBar())
-          dispatch(
-            tab.setFrom(brim.time((field.data as ZedPrimitive).toDate()).toTs())
-          )
+          dispatch(tab.setFrom(brim.time(data.toDate()).toTs()))
           dispatch(openNewSearchTab())
         }
       }
@@ -88,7 +87,7 @@ function buildDetailActions() {
     groupByDrillDown: action({
       name: "detail-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
-      listener(dispatch, program, log: ZedRecordSpec) {
+      listener(dispatch, program, log: SerializedZedRecord) {
         const newProgram = brim
           .program(program)
           .drillDown(ZedRecord.deserialize(log))
@@ -104,7 +103,7 @@ function buildDetailActions() {
     include: action({
       name: "detail-cell-menu-include",
       label: "Filter = value in new search",
-      listener(dispatch, field: ZedFieldSpec) {
+      listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryInclude(ZedField.deserialize(field)))
         dispatch(openNewSearchTab())
@@ -113,7 +112,7 @@ function buildDetailActions() {
     in: action({
       name: "detail-cell-menu-in",
       label: "Filter in field in new search",
-      listener(dispatch, field: ZedFieldSpec) {
+      listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryIn(createCell(ZedField.deserialize(field))))
         dispatch(openNewSearchTab())
@@ -122,7 +121,7 @@ function buildDetailActions() {
     notIn: action({
       name: "detail-cell-menu-not-in",
       label: "Filter not in field in new search",
-      listener(dispatch, field: ZedFieldSpec) {
+      listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryNotIn(createCell(ZedField.deserialize(field))))
         dispatch(openNewSearchTab())
@@ -139,14 +138,14 @@ function buildDetailActions() {
     pcaps: action({
       name: "detail-cell-menu-pcaps",
       label: "Download PCAPS",
-      listener(dispatch, log: ZedRecordSpec) {
+      listener(dispatch, log: SerializedZedRecord) {
         dispatch(downloadPcap(ZedRecord.deserialize(log)))
       }
     }),
     sortAsc: action({
       name: "detail-cell-menu-sort-asc",
       label: "Sort A...Z",
-      listener(dispatch, field: ZedFieldSpec) {
+      listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(field.name, "asc"))
         dispatch(openNewSearchTab())
@@ -155,7 +154,7 @@ function buildDetailActions() {
     sortDesc: action({
       name: "detail-cell-menu-sort-desc",
       label: "Sort Z...A",
-      listener(dispatch, field: ZedFieldSpec) {
+      listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(field.name, "desc"))
         dispatch(openNewSearchTab())
@@ -164,14 +163,14 @@ function buildDetailActions() {
     toTime: action({
       name: "detail-cell-menu-to-time",
       label: 'Use as "end" time',
-      listener(dispatch, data: ZedFieldSpec) {
+      listener(dispatch, data: SerializedZedField) {
         const field = ZedField.deserialize(data)
-        if (field.data.kind === "time") {
+        if (field.data instanceof ZedPrimitive && field.data.type === "time") {
           dispatch(SearchBar.clearSearchBar())
           dispatch(
             tab.setTo(
               brim
-                .time((field.data as ZedPrimitive).toDate())
+                .time(field.data.toDate())
                 .add(1, "ms")
                 .toTs()
             )
@@ -183,7 +182,7 @@ function buildDetailActions() {
     virusTotalRightclick: action({
       name: "detail-cell-menu-virus-total",
       label: "VirusTotal Lookup",
-      listener(_dispatch, data: ZedFieldSpec) {
+      listener(_dispatch, data: SerializedZedField) {
         const field = ZedField.deserialize(data)
         open(virusTotal.url(field.data.toString()))
       }
@@ -191,7 +190,7 @@ function buildDetailActions() {
     whoisRightclick: action({
       name: "detail-cell-menu-who-is",
       label: "Whois Lookup",
-      listener(dispatch, data: ZedFieldSpec) {
+      listener(dispatch, data: SerializedZedField) {
         const field = ZedField.deserialize(data)
         dispatch(Modal.show("whois", {addr: field.data.toString()}))
       }

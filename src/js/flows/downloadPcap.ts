@@ -1,4 +1,4 @@
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import open from "../lib/open"
 import Packets from "../state/Packets"
 import {Thunk} from "../state/types"

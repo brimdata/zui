@@ -1,4 +1,4 @@
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 
 export const sort = (logs: ZedRecord[]) => {
   const findConn = (log) => log.try("_path")?.toString() === "conn"

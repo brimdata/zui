@@ -2,7 +2,7 @@ import {SpanArgs} from "../state/Search/types"
 import {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import {MenuItemConstructorOptions} from "electron"
-import {ZedRecord, ZedField} from "zealot/zed/data-types"
+import {ZedRecord, ZedField} from "zealot/zed"
 
 export type Notification =
   | AppError

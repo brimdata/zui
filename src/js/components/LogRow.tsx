@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import isEqual from "lodash/isEqual"
 import React, {memo, MouseEvent} from "react"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import TableColumns from "../models/TableColumns"
 import {RightClickBuilder, ViewerDimens} from "../types"
 import LogCell from "./LogCell"

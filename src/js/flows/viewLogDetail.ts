@@ -1,6 +1,6 @@
 import {isEqual} from "lodash"
 import {fetchCorrelation} from "ppl/detail/flows/fetch"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
 import LogDetails from "../state/LogDetails"

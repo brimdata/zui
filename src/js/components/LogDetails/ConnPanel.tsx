@@ -1,6 +1,6 @@
 import PanelHeading from "app/detail/PanelHeading"
 import React from "react"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import ConnVersation from "../ConnVersation"
 
 type Props = {

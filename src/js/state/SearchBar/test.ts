@@ -17,8 +17,7 @@ import Url from "../Url"
 import Workspaces from "../Workspaces"
 import SearchBar from "./"
 import {SearchBarState} from "./types"
-import {ZedPrimitive, ZedField} from "zealot/zed/data-types"
-import {STRING} from "test/fixtures/zjson-types"
+import {ZedPrimitive, ZedField} from "zealot/zed"
 
 let store, mock
 beforeEach(() => {
@@ -129,7 +128,7 @@ test("search bar pin remove when out of bounds", () => {
 })
 
 test("append an include field", () => {
-  const data = new ZedPrimitive({type: STRING, value: "conn"})
+  const data = new ZedPrimitive({type: "string", value: "conn"})
   const field = new ZedField({name: "_path", data})
   const state = store.dispatchAll([appendQueryInclude(field)])
 
@@ -137,7 +136,7 @@ test("append an include field", () => {
 })
 
 test("append an include field when some text already exists", () => {
-  const data = new ZedPrimitive({type: STRING, value: "conn"})
+  const data = new ZedPrimitive({type: "string", value: "conn"})
   const field = new ZedField({name: "_path", data})
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("text"),
@@ -147,14 +146,14 @@ test("append an include field when some text already exists", () => {
 })
 
 test("append an exclude field", () => {
-  const data = new ZedPrimitive({type: STRING, value: "conn"})
+  const data = new ZedPrimitive({type: "string", value: "conn"})
   const field = new ZedField({name: "_path", data})
   const state = store.dispatchAll([appendQueryExclude(field)])
   expect(SearchBar.getSearchBarInputValue(state)).toBe('_path!="conn"')
 })
 
 test("append an exclude field when some text already exists", () => {
-  const data = new ZedPrimitive({type: STRING, value: "conn"})
+  const data = new ZedPrimitive({type: "string", value: "conn"})
   const field = new ZedField({name: "_path", data})
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("text"),
@@ -164,14 +163,14 @@ test("append an exclude field when some text already exists", () => {
 })
 
 test("append a count by field", () => {
-  const data = new ZedPrimitive({type: STRING, value: "conn"})
+  const data = new ZedPrimitive({type: "string", value: "conn"})
   const field = new ZedField({name: "_path", data})
   const state = store.dispatchAll([appendQueryCountBy(field)])
   expect(SearchBar.getSearchBarInputValue(state)).toBe("* | count() by _path")
 })
 
 test("append a count to an existing query", () => {
-  const data = new ZedPrimitive({type: STRING, value: "ho ho"})
+  const data = new ZedPrimitive({type: "string", value: "ho ho"})
   const field = new ZedField({name: "query", data})
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("dns"),
@@ -181,7 +180,7 @@ test("append a count to an existing query", () => {
 })
 
 test("append a count to an existing query with a pin", () => {
-  const data = new ZedPrimitive({type: STRING, value: "heyo"})
+  const data = new ZedPrimitive({type: "string", value: "heyo"})
   const field = new ZedField({name: "query", data})
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("dns"),

@@ -1,6 +1,6 @@
 import {remote} from "electron"
 import {join} from "path"
-import {ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
+import {ZedPrimitive, ZedRecord} from "zealot/zed"
 import {getZealot} from "../../flows/getZealot"
 import {saveToFile} from "../../lib/response"
 import Current from "../Current"

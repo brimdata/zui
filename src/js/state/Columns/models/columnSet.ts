@@ -5,17 +5,19 @@ import {$Column, createColumn} from "./column"
 export function createColumnSet(c: TypeContext) {
   return {
     getName() {
-      if (c.size === 0) {
+      const keys = Object.keys(c)
+      const size = keys.length
+      if (size === 0) {
         return "none"
-      } else if (c.size === 1) {
-        return Array.from(c.keys())[0]
+      } else if (size === 1) {
+        return keys[0]
       } else {
         return "temp"
       }
     },
     getUniqColumns() {
       let allCols = []
-      for (const typedef of c.values()) {
+      for (const typedef of Object.values(c)) {
         let inner = typedef.flatten().innerType
         if (inner.kind === "record") {
           allCols = [...allCols, ...inner.fields]

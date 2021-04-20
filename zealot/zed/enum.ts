@@ -9,6 +9,10 @@ export class ZedEnum {
     this.typeName = args.typeName
   }
 
+  isUnset() {
+    return this.value === null
+  }
+
   serialize() {
     return {
       kind: "enum",

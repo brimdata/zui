@@ -2,7 +2,7 @@ import contextMenu from "app/detail/flows/contextMenu"
 import {every} from "lodash"
 import React from "react"
 import {useDispatch} from "react-redux"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedRecord} from "zealot/zed"
 import connHistoryView from "../lib/connHistoryView"
 import VerticalTable from "./Tables/VerticalTable"
 import {Fieldset} from "./Typography"
@@ -15,16 +15,14 @@ type Props = {
 }
 
 function filter(record: ZedRecord, names: string[]) {
-  const cols = []
-  const vals = []
+  const fields = []
 
   names.forEach((n) => {
-    const i = record.columns.indexOf(n)
-    cols.push(record._type[i])
-    vals.push(record._value[i])
+    const field = record.tryField(n)
+    if (field) fields.push(field)
   })
 
-  return ZedRecord.of(cols, vals)
+  return new ZedRecord({fields})
 }
 
 const ConnVersation = ({record}: Props) => {

@@ -1,0 +1,14 @@
+{"type":"TaskStart","task_id":0}
+
+
+{"type":"SearchRecords","channel_id":0,"records":[{"schema":"23","types":[{"kind":"typedef","name":"23","type":{"kind":"record","fields":[{"name":"count","type":{"kind":"primitive","name":"uint64"}}]}}],"values":["30"]}]}
+
+
+{"type":"SearchEnd","channel_id":0,"reason":"eof"}
+
+
+{"type":"SearchStats","start_time":{"sec":1618892505,"ns":822464000},"update_time":{"sec":1618892505,"ns":823472000},"bytes_read":3519,"bytes_matched":3519,"records_read":30,"records_matched":30}
+
+
+{"type":"TaskEnd","task_id":0}
+

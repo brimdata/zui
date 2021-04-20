@@ -1,4 +1,4 @@
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
 import {createCell} from "../brim/cell"
 import columnOrder from "../lib/columnOrder"
 import {$Column} from "../state/Columns/models/column"
@@ -42,7 +42,7 @@ export default class TableColumns {
         new ZedField({
           name: "",
           data: new ZedPrimitive({
-            type: {kind: "primitive", name: "string"},
+            type: "string",
             value: col.name
           })
         })

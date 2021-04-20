@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {ZedPrimitive} from "zealot/zed/data-types"
+import {ZedPrimitive} from "zealot/zed"
 import {withCommas} from "../lib/fmt"
 import brim from "./"
 
@@ -20,8 +20,8 @@ interface PrimitiveField {
 }
 
 export function createPrimitiveCell({name, data}: PrimitiveField) {
-  const type = data.kind
-  const value = data._value
+  const type = data.type
+  const value = data.value
 
   return {
     name,

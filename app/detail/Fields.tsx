@@ -1,15 +1,14 @@
-import {useDispatch} from "react-redux"
-import React, {memo, useCallback, useMemo, useState} from "react"
-
 import {Data, Name, Value} from "app/core/Data"
+import {typeClassNames} from "app/core/utils/type-class-names"
+import React, {memo, useCallback, useMemo, useState} from "react"
+import {useDispatch} from "react-redux"
 import {createCell} from "src/js/brim/cell"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
-
-import PanelHeading from "./PanelHeading"
-import Panel from "./Panel"
+import {ZedField, ZedRecord} from "zealot/zed"
 import contextMenu from "./flows/contextMenu"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import Panel from "./Panel"
+import PanelHeading from "./PanelHeading"
 
 type Props = {
   record: ZedRecord
@@ -34,7 +33,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
             <TooltipAnchor>{field.name}</TooltipAnchor>
           </Name>
           <Value
-            className={field.data.kind}
+            className={typeClassNames(field.data)}
             onContextMenu={() => onRightClick(field)}
           >
             {createCell(field).display()}

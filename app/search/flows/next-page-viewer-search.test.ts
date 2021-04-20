@@ -9,23 +9,15 @@ import Viewer from "src/js/state/Viewer"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
-import {STRING, TIME} from "test/fixtures/zjson-types"
+import {createRecord} from "test/factories/record"
 import {createZealotMock} from "zealot"
-import {ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
-import {RecordType} from "zealot/zed/zjson"
+import {ZedPrimitive} from "zealot/zed"
 import nextPageViewerSearch from "./next-page-viewer-search"
 
-const type = {
-  kind: "record",
-  fields: [
-    {name: "td", type: STRING},
-    {name: "ts", type: TIME}
-  ]
-} as RecordType
 const records = [
-  new ZedRecord({type, value: ["1", "100"]}),
-  new ZedRecord({type, value: ["1", "200"]}),
-  new ZedRecord({type, value: ["1", "300"]})
+  createRecord({td: "1", ts: new Date(100)}),
+  createRecord({td: "1", ts: new Date(200)}),
+  createRecord({td: "1", ts: new Date(300)})
 ]
 
 let store, zealot, tabId

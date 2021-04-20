@@ -1,6 +1,7 @@
+import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
 import React, {useState} from "react"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
 import {RightClickBuilder} from "../../types"
 import Tooltip from "../Tooltip"
 import CompoundField from "./CompoundField"
@@ -35,7 +36,7 @@ export default function LogCell({field, style, rightClick, log}: Props) {
   }
   return (
     <div
-      className={classNames(`log-cell "${data.kind}"`, {hover})}
+      className={classNames(`log-cell`, typeClassNames(data), {hover})}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={style}

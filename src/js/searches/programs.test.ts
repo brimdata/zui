@@ -1,26 +1,14 @@
-import {INTERVAL, STRING, TIME} from "test/fixtures/zjson-types"
-import {ZedPrimitive, ZedRecord, ZedRecordSpec} from "zealot/zed/data-types"
+import {createRecord} from "test/factories/record"
+import {ZedPrimitive} from "zealot/zed"
 import {connCorrelation} from "./programs"
 
 test("conn correlation", () => {
-  const conn: ZedRecordSpec = {
-    type: {
-      kind: "record",
-      fields: [
-        {name: "ts", type: TIME},
-        {name: "uid", type: STRING},
-        {name: "duration", type: INTERVAL},
-        {name: "community_id", type: STRING}
-      ]
-    },
-    value: [
-      "1425568032.998178",
-      "CbOjYpkXn9LfqV51c",
-      "0.70995",
-      "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU="
-    ]
-  }
-  const record = ZedRecord.deserialize(conn)
+  const record = createRecord({
+    ts: new Date(1425568032.998178 * 1000),
+    uid: "CbOjYpkXn9LfqV51c",
+    duration: 0.70995,
+    community_id: "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU="
+  })
 
   expect(
     connCorrelation(

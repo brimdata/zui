@@ -1,4 +1,5 @@
 import {ZedField} from "./field"
+import {deserialize} from "./json"
 
 export class ZedRecord {
   fields: ZedField[] | null
@@ -7,6 +8,10 @@ export class ZedRecord {
   constructor(args: {fields: ZedField[]; typeName?: string}) {
     this.fields = args.fields
     this.typeName = args.typeName
+  }
+
+  static deserialize(data): ZedRecord {
+    return deserialize(data)
   }
 
   [Symbol.iterator]() {

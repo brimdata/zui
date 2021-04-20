@@ -18,6 +18,10 @@ export class ZedMap {
     this.value = args.value
   }
 
+  isUnset() {
+    return this.value === null
+  }
+
   serialize() {
     return {
       kind: "map",

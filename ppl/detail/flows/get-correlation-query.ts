@@ -3,7 +3,7 @@ import {
   connCorrelation,
   uidCorrelation
 } from "src/js/searches/programs"
-import {ZedRecord, ZedPrimitive} from "zealot/zed/data-types"
+import {ZedRecord, ZedPrimitive} from "zealot/zed"
 import {Correlation} from "../models/Correlation"
 
 export function getCorrelationQuery(record: ZedRecord) {

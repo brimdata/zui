@@ -1,5 +1,6 @@
+import {typeClassNames} from "app/core/utils/type-class-names"
 import React from "react"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedRecord} from "zealot/zed"
 import FieldCell from "../FieldCell"
 
 export default function Table({className, ...props}: any) {
@@ -7,7 +8,7 @@ export default function Table({className, ...props}: any) {
 }
 
 export function TableHeader({column}: {column: ZedField}) {
-  return <th className={column.data.kind}>{column.name}</th>
+  return <th className={typeClassNames(column.data)}>{column.name}</th>
 }
 
 type Props = {
@@ -24,7 +25,10 @@ export function TableData({field, record, onRightClick}: Props) {
   }
 
   return (
-    <td onContextMenu={onContextMenu} className={`${data.kind} ${name}`}>
+    <td
+      onContextMenu={onContextMenu}
+      className={`${typeClassNames(data)} ${name}`}
+    >
       <FieldCell field={field} record={record} />
     </td>
   )

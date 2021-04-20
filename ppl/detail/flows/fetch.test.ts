@@ -1,26 +1,19 @@
 import {last} from "lodash"
 import loginTo from "src/js/test/helpers/loginTo"
-import {ZedRecord} from "zealot/zed/data-types"
+import {recordOf} from "test/factories/record"
+import {useResponse} from "test/responses"
 import {fetchCorrelation} from "./fetch"
 
-const zeek = new ZedRecord({
-  type: {
-    kind: "record",
-    fields: [
-      {name: "_path", type: {kind: "primitive", name: "string"}},
-      {name: "uid", type: {kind: "primitive", name: "string"}}
-    ]
-  },
-  value: ["dns", "CbOjYpkXn9LfqV51c"]
-})
+const zeek = recordOf(
+  ["_path", "string", "dns"],
+  ["uid", "string", "CbOjYpkXn9LfqV51c"]
+)
 
-const suricata = new ZedRecord({
-  type: {
-    fields: [{name: "community_id", type: {kind: "primitive", name: "string"}}],
-    kind: "record"
-  },
-  value: ["1:N7YGmWjwTmMKNhsZHBR618n3ReA="]
-})
+const suricata = recordOf([
+  "community_id",
+  "string",
+  "1:N7YGmWjwTmMKNhsZHBR618n3ReA="
+])
 
 const uidOrCommunityIdZql =
   'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100'
@@ -30,8 +23,14 @@ const uidZql =
 
 const cidZql = 'community_id="1:N7YGmWjwTmMKNhsZHBR618n3ReA=" | head 100'
 
-const stubs: any = {}
-describe("zeek log when community_id is found", () => {
+const stubs = {
+  uidResult: useResponse("correlationUid"),
+  uidAndCommunityResult: useResponse("correlationUidCommunityId"),
+  alertResults: "FILL ME IN",
+  noCommunityIdInConn: "FILL ME IN"
+}
+
+describe.only("zeek log when community_id is found", () => {
   let setup
   beforeEach(async () => {
     setup = await loginTo("workspace1", "space1")

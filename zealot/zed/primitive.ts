@@ -39,6 +39,10 @@ export class ZedPrimitive {
     return int
   }
 
+  toString(): string {
+    return this.value || ""
+  }
+
   serialize() {
     return {
       kind: "primitive",

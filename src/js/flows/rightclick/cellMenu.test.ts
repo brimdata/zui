@@ -1,18 +1,15 @@
 import {MenuItemConstructorOptions} from "electron"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
-import {COUNT, IP, STRING, TIME} from "test/fixtures/zjson-types"
-import {ZedRecord} from "zealot/zed/data-types"
+import {createRecord} from "test/factories/record"
 import fixtures from "../../test/fixtures"
 
-const conn = ZedRecord.of(
-  [
-    {name: "id", type: {kind: "record", fields: [{name: "orig_h", type: IP}]}},
-    {name: "_path", type: STRING},
-    {name: "ts", type: TIME}
-  ],
-  [["192.168.0.1"], "conn", "1234513"]
-)
-const dns = ZedRecord.of([{name: "query", type: STRING}], ["dns.query.yo"])
+const conn = createRecord({
+  _path: "conn",
+  id: {orig_h: "192.168.0.1"},
+  ts: new Date(1234513 * 1000)
+})
+
+const dns = createRecord({query: "dns.query.yo"})
 
 function menuText(menu: MenuItemConstructorOptions[]) {
   return menu
@@ -83,16 +80,10 @@ describe("Analysis Right Click", () => {
   const columnNames = ["count", "id.orig_h"]
 
   test("nested field", () => {
-    const log = ZedRecord.of(
-      [
-        {name: "count", type: COUNT},
-        {
-          name: "id",
-          type: {kind: "record", fields: [{name: "orig_h", type: IP}]}
-        }
-      ],
-      ["300", ["192.168.0.51"]]
-    )
+    const log = createRecord({
+      count: 300,
+      id: {orig_h: "192.168.0.51"}
+    })
     const field = log.getField("id.orig_h")
     const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
       field,
@@ -104,13 +95,7 @@ describe("Analysis Right Click", () => {
   })
 
   test("non-address field", () => {
-    const log = ZedRecord.of(
-      [
-        {name: "count", type: COUNT},
-        {name: "proto", type: STRING}
-      ],
-      ["100", "tcp"]
-    )
+    const log = createRecord({count: 100, proto: "tcp"})
     const field = log.getField("proto")
     const ctxMenu = searchFieldContextMenu(
       "* | count() by proto",

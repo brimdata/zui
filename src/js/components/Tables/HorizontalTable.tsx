@@ -1,5 +1,5 @@
 import * as React from "react"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedRecord} from "zealot/zed"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {

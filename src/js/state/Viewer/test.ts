@@ -1,7 +1,5 @@
-import {STRING} from "test/fixtures/zjson-types"
-import {ZedRecord} from "zealot/zed/data-types"
+import {createRecord} from "test/factories/record"
 import ZedTypeDef from "zealot/zed/type-def"
-import {RecordType} from "zealot/zed/zjson"
 import initTestStore from "../../test/initTestStore"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
@@ -14,21 +12,9 @@ beforeEach(() => {
   tabId = Tabs.getActive(store.getState())
 })
 
-const type = {
-  kind: "record",
-  fields: [
-    {
-      name: "ts",
-      type: {
-        kind: "primitive",
-        name: "time"
-      }
-    }
-  ]
-} as RecordType
-const conn = new ZedRecord({type, value: ["1"]})
-const dns = new ZedRecord({type, value: ["2"]})
-const http = new ZedRecord({type, value: ["3"]})
+const conn = createRecord({ts: new Date(1000)})
+const dns = createRecord({ts: new Date(2000)})
+const http = createRecord({ts: new Date(3000)})
 
 test("adding logs to the viewer", () => {
   const state = store.dispatchAll([
@@ -80,33 +66,41 @@ test("results limited", () => {
 test("update columns with same tds", () => {
   const cols1 = {
     "9d14c2039a78d76760aae879c7fd2c82": new ZedTypeDef({
-      type: {kind: "typedef", name: "hello", type: STRING}
+      type: {
+        kind: "typedef",
+        name: "hello",
+        type: {kind: "primitive", name: "string"}
+      }
     })
   }
   const cols2 = {
     "71f1b421963d31952e15edf7e3957a81": new ZedTypeDef({
-      type: {kind: "typedef", name: "hello", type: STRING}
+      type: {
+        kind: "typedef",
+        name: "hello",
+        type: {kind: "primitive", name: "string"}
+      }
     })
   }
   const state = store.dispatchAll([
-    Viewer.updateColumns(tabId, new Map(Object.entries(cols1))),
-    Viewer.updateColumns(tabId, new Map(Object.entries(cols2)))
+    Viewer.updateColumns(tabId, cols1),
+    Viewer.updateColumns(tabId, cols2)
   ])
 
-  expect(Viewer.getColumns(state)).toEqual(
-    new Map([
-      [
-        "9d14c2039a78d76760aae879c7fd2c82",
-        new ZedTypeDef({
-          type: {kind: "typedef", name: "hello", type: STRING}
-        })
-      ],
-      [
-        "71f1b421963d31952e15edf7e3957a81",
-        new ZedTypeDef({
-          type: {kind: "typedef", name: "hello", type: STRING}
-        })
-      ]
-    ])
-  )
+  expect(Viewer.getColumns(state)).toEqual({
+    "9d14c2039a78d76760aae879c7fd2c82": new ZedTypeDef({
+      type: {
+        kind: "typedef",
+        name: "hello",
+        type: {kind: "primitive", name: "string"}
+      }
+    }),
+    "71f1b421963d31952e15edf7e3957a81": new ZedTypeDef({
+      type: {
+        kind: "typedef",
+        name: "hello",
+        type: {kind: "primitive", name: "string"}
+      }
+    })
+  })
 })

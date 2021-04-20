@@ -1,4 +1,4 @@
-import {ZedPrimitive} from "zealot/zed/data-types"
+import {ZedPrimitive} from "zealot/zed"
 import zql from "../zql"
 
 export function md5Correlation(md5: string) {

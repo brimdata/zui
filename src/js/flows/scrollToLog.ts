@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 import {Thunk} from "../state/types"
 import Viewer from "../state/Viewer"
 

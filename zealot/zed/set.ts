@@ -11,6 +11,10 @@ export class ZedSet {
     this.items = args.items
   }
 
+  isUnset() {
+    return this.items === null
+  }
+
   serialize() {
     return {
       kind: "set",

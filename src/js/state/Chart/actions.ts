@@ -1,4 +1,4 @@
-import {ZedPrimitive, ZedRecord} from "zealot/zed/data-types"
+import {ZedPrimitive, ZedRecord} from "zealot/zed"
 import MergeHash from "../../models/MergeHash"
 import UniqArray from "../../models/UniqArray"
 import {SearchStatus} from "../../types/searches"

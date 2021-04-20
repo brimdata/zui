@@ -1,4 +1,4 @@
-import {ZedRecordSpec} from "zealot/zed/data-types"
+import {SerializedZedRecord} from "zealot/zed"
 import {SearchStatus} from "../../types/searches"
 
 export type LogDetailsState = {
@@ -7,8 +7,8 @@ export type LogDetailsState = {
 }
 
 export type LogDetails = {
-  log: ZedRecordSpec
-  uidLogs: ZedRecordSpec[]
+  log: SerializedZedRecord
+  uidLogs: SerializedZedRecord[]
   uidStatus: SearchStatus
 }
 
@@ -21,7 +21,7 @@ export type LogDetailsAction =
 
 export type LOG_DETAIL_PUSH = {
   type: "LOG_DETAIL_PUSH"
-  record: ZedRecordSpec
+  record: SerializedZedRecord
 }
 
 export type LOG_DETAIL_UPDATE = {

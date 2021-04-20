@@ -1,4 +1,4 @@
-import {ZedData, ZedPrimitive} from "zealot/zed/data-types"
+import {ZedData, ZedPrimitive} from "zealot/zed"
 import {createComplexCell} from "./complexCell"
 import {createPrimitiveCell} from "./primitiveCell"
 

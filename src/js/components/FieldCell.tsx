@@ -1,6 +1,7 @@
+import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
 import React from "react"
-import {ZedField, ZedRecord} from "zealot/zed/data-types"
+import {ZedField, ZedRecord} from "zealot/zed"
 import {createCell} from "../brim/cell"
 
 type Props = {field: ZedField; record: ZedRecord}
@@ -22,11 +23,8 @@ export default function FieldCell({field, record}: Props) {
       className={classNames(
         "field-cell",
         field.name,
-        field.data.kind,
-        getBackground(field, record),
-        {
-          null: field.data.isUnset()
-        }
+        typeClassNames(field.data),
+        getBackground(field, record)
       )}
     >
       {cell.display()}

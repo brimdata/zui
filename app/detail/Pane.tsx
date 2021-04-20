@@ -13,7 +13,7 @@ import LogDetails from "src/js/state/LogDetails"
 import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
-import {ZedRecord} from "zealot/zed/data-types"
+import {ZedRecord} from "zealot/zed"
 
 const BG = styled.div`
   padding: 12px;
