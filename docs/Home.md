@@ -12,7 +12,6 @@ effective use of the Brim desktop application and related tools.
 
 ## User Documentation
 
-- [[Zeek JSON Import]]
 - [[Zeek Customization]]
 - [[Geolocation]]
 
