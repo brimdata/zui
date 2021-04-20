@@ -256,7 +256,7 @@ as usual.
 * **NOTE**: Prior state such as Search History will be lost on upgrade to this version
 * Update zq to [v0.13.0](https://github.com/brimdata/zed/releases/tag/v0.13.0) (#750)
 * Start the [Brim wiki](https://github.com/brimdata/brim/wiki) for documentation (#660)
-* Import of Zeek logs in TSV, JSON, and ZNG formats (see the [wiki](https://github.com/brimdata/brim/wiki/Zeek-JSON-Import) for info on JSON). (#594, #720, #727, #625, #581, #643, #672, #716, #700, #717, #719, #735, #721, #729, #713)
+* Import of Zeek logs in TSV, JSON, and ZNG formats (see the [v0.24.0 docs](https://github.com/brimdata/brim/blob/v0.24.0/docs/Zeek-JSON-Import.md) for info on JSON). (#594, #720, #727, #625, #581, #643, #672, #716, #700, #717, #719, #735, #721, #729, #713)
 * Support for Brim on Linux: `.deb` (#631) and `.rpm` (#636) installer packages
 * Fix an issue where holding down arrow keys could freeze Brim (#670, #692)
 * Allow Log Details to be popped out to a separate window by double-clicking an event or via a control at the top of Log Details panel (#651)
