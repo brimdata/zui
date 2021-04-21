@@ -1,8 +1,8 @@
+import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
 import React from "react"
-import {ZedField, ZedRecord} from "zealot/zed"
-import {createCell} from "../brim/cell"
+import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
 
 type Props = {field: ZedField; record: ZedRecord}
 
@@ -17,7 +17,6 @@ function getBackground(field, record) {
 }
 
 export default function FieldCell({field, record}: Props) {
-  const cell = createCell(field)
   return (
     <div
       className={classNames(
@@ -27,7 +26,7 @@ export default function FieldCell({field, record}: Props) {
         getBackground(field, record)
       )}
     >
-      {cell.display()}
+      {formatPrimitive(field.data as ZedPrimitive)}
     </div>
   )
 }

@@ -1,8 +1,9 @@
-import React from "react"
-import {createCell} from "src/js/brim/cell"
-import styled from "styled-components"
 import {scaleLinear} from "@vx/scale"
+import {formatPrimitive} from "app/core/formatters/format-zed"
 import {cssVar, transparentize} from "polished"
+import React from "react"
+import styled from "styled-components"
+import {ZedPrimitive} from "zealot/zed"
 
 type GridProps = {templateColumns: string | undefined}
 
@@ -127,7 +128,7 @@ export default function Table({records, x}) {
             .getFields()
             .map((field, i) => (
               <Cell key={i} className={field.data.getType()}>
-                {createCell(field).display()}
+                {formatPrimitive(field.data as ZedPrimitive)}
               </Cell>
             ))}
         </Row>

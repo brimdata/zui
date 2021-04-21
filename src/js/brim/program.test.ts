@@ -9,10 +9,9 @@ import {
   splitParts
 } from "../lib/Program"
 import brim from "./"
-import {createCell} from "./cell"
 
 describe("excluding and including", () => {
-  const field = createCell(createField("uid", "123"))
+  const field = createField("uid", "123")
 
   test("excluding a field", () => {
     const program = brim
@@ -29,7 +28,7 @@ describe("excluding and including", () => {
       .program(
         'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
       )
-      .exclude(createCell(new ZedField({name: "source", data})))
+      .exclude(new ZedField({name: "source", data}))
       .string()
 
     expect(program).toEqual(
@@ -135,7 +134,7 @@ describe("drill down", () => {
 describe("count by", () => {
   test("empty program", () => {
     const data = new ZedPrimitive({type: "string", value: "heyo"})
-    const field = createCell(new ZedField({name: "_path", data}))
+    const field = new ZedField({name: "_path", data})
     const program = brim
       .program()
       .countBy(field)
@@ -146,7 +145,7 @@ describe("count by", () => {
 
   test("append a count to an existing query", () => {
     const data = new ZedPrimitive({type: "string", value: "heyo"})
-    const field = createCell(new ZedField({name: "query", data}))
+    const field = new ZedField({name: "query", data})
     const program = brim
       .program("dns")
       .countBy(field)

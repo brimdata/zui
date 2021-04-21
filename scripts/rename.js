@@ -1,12 +1,11 @@
 const {Project} = require("ts-morph")
 const _ = require("lodash")
-const {kebabCase} = require("lodash")
 
 const project = new Project({
   tsConfigFilePath: "./tsconfig.json"
 })
 
-project.getSourceFiles().forEach((srcFile, i) => {
+project.getSourceFiles().forEach((srcFile) => {
   // const oldName = srcFile.getBaseName()
   // const name = srcFile.getBaseNameWithoutExtension()
   // const newName = kebabCase(name) + srcFile.getExtension()

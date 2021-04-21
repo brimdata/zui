@@ -1,8 +1,4 @@
-import {
-  join,
-  fromFileUrl,
-  dirname
-} from "https://deno.land/std@0.70.0/path/mod.ts"
+import {join} from "https://deno.land/std@0.70.0/path/mod.ts"
 import {withZqd} from "../../test/api/helper/test_api.ts"
 
 const FILE = join(Deno.cwd(), Deno.args[0])

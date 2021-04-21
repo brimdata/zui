@@ -1,32 +1,32 @@
 import {isEqual} from "lodash"
 import {parse} from "zealot"
-import {ZedRecord} from "zealot/zed"
+import {ZedField, ZedRecord} from "zealot/zed"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"
 import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
-import {Cell, createCell} from "./cell"
+import {createCell} from "./cell"
 
 export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
 
   return {
-    exclude(field: Cell) {
+    exclude(field: ZedField) {
       p = insertFilter(p, brim.syntax.exclude(field))
       return this
     },
 
-    include(field: Cell) {
+    include(field: ZedField) {
       p = insertFilter(p, brim.syntax.include(field))
       return this
     },
 
-    in(field: Cell) {
+    in(field: ZedField) {
       p = insertFilter(p, brim.syntax.in(field))
       return this
     },
 
-    notIn(field: Cell) {
+    notIn(field: ZedField) {
       p = insertFilter(p, brim.syntax.notIn(field))
       return this
     },
@@ -62,7 +62,7 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    countBy(field: Cell) {
+    countBy(field: ZedField) {
       p = stdlib
         .string(p)
         .append(" | " + brim.syntax.countBy(field))

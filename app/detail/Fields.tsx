@@ -1,11 +1,11 @@
 import {Data, Name, Value} from "app/core/Data"
+import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import React, {memo, useCallback, useMemo, useState} from "react"
 import {useDispatch} from "react-redux"
-import {createCell} from "src/js/brim/cell"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
-import {ZedField, ZedRecord} from "zealot/zed"
+import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
 import contextMenu from "./flows/contextMenu"
 import Panel from "./Panel"
 import PanelHeading from "./PanelHeading"
@@ -36,7 +36,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
             className={typeClassNames(field.data)}
             onContextMenu={() => onRightClick(field)}
           >
-            {createCell(field).display()}
+            {formatPrimitive(field.data as ZedPrimitive)}
           </Value>
         </Data>
       ))}

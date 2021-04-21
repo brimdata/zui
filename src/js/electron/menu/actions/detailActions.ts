@@ -1,12 +1,12 @@
+import {toZql} from "src/js/zql/toZql"
 import {
-  ZedField,
   SerializedZedField,
+  SerializedZedRecord,
+  ZedField,
   ZedPrimitive,
-  ZedRecord,
-  SerializedZedRecord
+  ZedRecord
 } from "zealot/zed"
 import brim from "../../../brim"
-import {createCell} from "../../../brim/cell"
 import {downloadPcap} from "../../../flows/downloadPcap"
 import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
 import {
@@ -65,9 +65,8 @@ function buildDetailActions() {
       name: "detail-cell-menu-fresh-include",
       label: "New search with this value",
       listener(dispatch, field: SerializedZedField) {
-        const cell = createCell(ZedField.deserialize(field))
         dispatch(SearchBar.clearSearchBar())
-        dispatch(SearchBar.changeSearchBarInput(cell.queryableValue()))
+        dispatch(SearchBar.changeSearchBarInput(toZql(field.data)))
         dispatch(openNewSearchTab())
       }
     }),
@@ -114,7 +113,7 @@ function buildDetailActions() {
       label: "Filter in field in new search",
       listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryIn(createCell(ZedField.deserialize(field))))
+        dispatch(appendQueryIn(ZedField.deserialize(field)))
         dispatch(openNewSearchTab())
       }
     }),
@@ -123,7 +122,7 @@ function buildDetailActions() {
       label: "Filter not in field in new search",
       listener(dispatch, field: SerializedZedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryNotIn(createCell(ZedField.deserialize(field))))
+        dispatch(appendQueryNotIn(ZedField.deserialize(field)))
         dispatch(openNewSearchTab())
       }
     }),

@@ -1,6 +1,8 @@
+import {formatPrimitive} from "app/core/formatters/format-zed"
+import {typeClassNames} from "app/core/utils/type-class-names"
 import React from "react"
-import {createCell} from "src/js/brim/cell"
 import styled from "styled-components"
+import {ZedField, ZedPrimitive} from "zealot/zed"
 
 const Num = styled.div`
   font-size: 24px;
@@ -14,9 +16,11 @@ const Num = styled.div`
 `
 
 export default function Number({record}) {
-  const field = record?.getFields()[0]
+  const field = record?.getFields()[0] as ZedField
   if (!field) return null
   return (
-    <Num className={field.data.getType()}>{createCell(field).display()}</Num>
+    <Num className={typeClassNames(field.data)}>
+      {formatPrimitive(field.data as ZedPrimitive)}
+    </Num>
   )
 }

@@ -1,9 +1,8 @@
-import {createZealot} from "./zealot"
 import {FetchArgs} from "./fetcher/fetcher"
 import {createStream} from "./fetcher/stream"
-import {createError} from "./util/error"
 import {Zealot, ZealotPayload} from "./types"
-import {isConstructorDeclaration} from "typescript"
+import {createError} from "./util/error"
+import {createZealot} from "./zealot"
 
 type StubMode = "always" | "once"
 type RespWrap = typeof stream | typeof promise

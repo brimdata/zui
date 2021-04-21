@@ -1,6 +1,5 @@
 import {ZedField} from "zealot/zed"
 import brim from "../../brim"
-import {Cell, createCell} from "../../brim/cell"
 import {onlyWhitespace} from "../../lib/Str"
 import SearchBar from "../../state/SearchBar"
 import {
@@ -15,7 +14,7 @@ export function appendQueryInclude(field: ZedField): Thunk {
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .include(createCell(field))
+          .include(field)
           .string()
       )
     )
@@ -28,7 +27,7 @@ export function appendQueryExclude(field: ZedField): Thunk {
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .exclude(createCell(field))
+          .exclude(field)
           .string()
       )
     )
@@ -45,7 +44,7 @@ export function appendQueryCountBy(field: ZedField): Thunk {
       SearchBar.changeSearchBarInput(
         brim
           .program(program)
-          .countBy(createCell(field))
+          .countBy(field)
           .string()
       )
     )
@@ -72,7 +71,7 @@ export function appendQuerySortBy(
   }
 }
 
-export function appendQueryIn(field: Cell): Thunk {
+export function appendQueryIn(field: ZedField): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -85,7 +84,7 @@ export function appendQueryIn(field: Cell): Thunk {
   }
 }
 
-export function appendQueryNotIn(field: Cell): Thunk {
+export function appendQueryNotIn(field: ZedField): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(

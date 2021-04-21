@@ -29,12 +29,7 @@ export function createComplexCell({name, data}: Args) {
     container: data.constructor.name,
     length: items.length,
     item: (index: number) => items[index],
-    queryableValue() {
-      return items.map((cell) => cell.queryableValue()).join(" ")
-    },
-    display() {
-      return items.map((cell) => cell.display()).join(", ")
-    },
+
     stringValue() {
       return data.toString()
     },
