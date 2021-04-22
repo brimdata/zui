@@ -7,7 +7,6 @@ const path = require("path")
 const tmp = require("tmp")
 const extract = require("extract-zip")
 const brimPackage = require("../../package.json")
-const zedPackage = require("../../node_modules/zed/package.json")
 
 const zdepsPath = path.resolve("zdeps")
 
@@ -114,60 +113,6 @@ async function zedArtifactsDownload(version, destPath) {
   }
 }
 
-async function zeekDownload(version, zdepsPath) {
-  if (!(process.platform in platformDefs)) {
-    throw new Error("unsupported platform")
-  }
-  const plat = platformDefs[process.platform]
-  const zeekPath = path.join(zdepsPath, "zeek")
-
-  const artifactFile = `zeek-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://github.com/brimdata/zeek/releases/download/${version}/${artifactFile}`
-
-  const tmpdir = tmp.dirSync({unsafeCleanup: true})
-  try {
-    const destArchive = path.join(tmpdir.name, artifactFile)
-    await download(artifactUrl, destArchive)
-
-    fs.removeSync(zeekPath)
-    await unzipTo(destArchive, zdepsPath)
-    if (!fs.pathExistsSync(zeekPath)) {
-      throw new Error("zeek artifact zip file has unexpected layout")
-    }
-  } finally {
-    tmpdir.removeCallback()
-  }
-
-  console.log("zeek " + version + " downloaded to " + zeekPath)
-}
-
-async function suricataDownload(version, zdepsPath) {
-  if (!(process.platform in platformDefs)) {
-    throw new Error("unsupported platform")
-  }
-  const plat = platformDefs[process.platform]
-  const suricataPath = path.join(zdepsPath, "suricata")
-
-  const artifactFile = `suricata-${version}.${plat.osarch}.zip`
-  const artifactUrl = `https://github.com/brimdata/build-suricata/releases/download/${version}/${artifactFile}`
-
-  const tmpdir = tmp.dirSync({unsafeCleanup: true})
-  try {
-    const destArchive = path.join(tmpdir.name, artifactFile)
-    await download(artifactUrl, destArchive)
-
-    fs.removeSync(suricataPath)
-    await unzipTo(destArchive, zdepsPath)
-    if (!fs.pathExistsSync(suricataPath)) {
-      throw new Error("suricata artifact zip file has unexpected layout")
-    }
-  } finally {
-    tmpdir.removeCallback()
-  }
-
-  console.log("suricata " + version + " downloaded to " + suricataPath)
-}
-
 async function zedDevBuild(destPath) {
   if (!(process.platform in platformDefs)) {
     throw new Error("unsupported platform")
@@ -189,12 +134,15 @@ async function zedDevBuild(destPath) {
 
 async function main() {
   try {
-    // We encode the versions here for now to avoid the unncessary
-    // git clone if it were in package.json.
-    const zeekVersion = zedPackage.brimDependencies.zeekTag
-    const suricataVersion = zedPackage.brimDependencies.suricataTag
-    await zeekDownload(zeekVersion, zdepsPath)
-    await suricataDownload(suricataVersion, zdepsPath)
+    fs.copySync(
+      path.resolve("node_modules", "brimcap", "build", "dist"),
+      zdepsPath
+    )
+    const brimcapVersion = child_process
+      .execSync(path.join(zdepsPath, "brimcap") + " -version")
+      .toString()
+      .trim()
+    console.log("copied brimcap artifacts " + brimcapVersion)
 
     // The Zed dependency should be a git tag or commit. Any tag that
     // begins with "v*" is expected to be a released artifact, and will
