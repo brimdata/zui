@@ -1,7 +1,7 @@
-import BrimApi from "../../src/js/initializers/brimApi"
 import BrimcapPlugin from "./brimcap-plugin"
+import BrimApi from "../../src/js/api"
 
-let brimcap
+let brimcap: BrimcapPlugin
 
 export const activate = (api: BrimApi) => {
   brimcap = new BrimcapPlugin(api)

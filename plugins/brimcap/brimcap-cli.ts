@@ -1,5 +1,12 @@
-import {execSync} from "child_process"
+import {
+  ChildProcessWithoutNullStreams,
+  SpawnOptions,
+  execSync,
+  spawn,
+  ChildProcess
+} from "child_process"
 import flatMap from "lodash/flatMap"
+import path from "path"
 
 interface packetOptions {
   dstIp?: string
@@ -34,7 +41,7 @@ export interface searchOptions extends packetOptions {
 }
 
 const OPTION_NAME_MAP = {
-  s: "space",
+  space: "s",
   suricataStderr: "suricata.stderr",
   suricataStdout: "suricata.stdout",
   zeekStdout: "zeek.stdout",
@@ -47,34 +54,41 @@ const OPTION_NAME_MAP = {
 }
 
 export default class BrimcapCLI {
-  private rootCmd = "brimcap"
+  private binPath: string
 
-  constructor() {}
-
-  async load(opts: loadOptions) {
-    this.exec("load", opts)
+  constructor(binPath: string) {
+    this.binPath = binPath
   }
 
-  async launch(opts: launchOptions) {
-    this.exec("launch", opts)
+  public load(pcapPath: string, opts: loadOptions): ChildProcess {
+    const subCommandWithArgs = [
+      "load",
+      ...flatMap(
+        Object.entries(opts).map(([k, v]) => [`-${OPTION_NAME_MAP[k] || k}`, v])
+      ),
+      pcapPath
+    ]
+
+    return spawn(this.binPath, subCommandWithArgs)
+  }
+
+  public launch(opts: launchOptions) {
+    return this.exec("launch", opts)
   }
 
   async search(opts: searchOptions) {
-    this.exec("search", opts)
+    return this.exec("search", opts)
   }
 
-  private exec(
-    command: string,
-    opts: searchOptions | launchOptions | loadOptions
-  ) {
-    const commandWithOpts = [
-      this.rootCmd,
-      command,
+  private exec(subCommand: string, opts: searchOptions | launchOptions) {
+    const commandWithArgs = [
+      this.binPath,
+      subCommand,
       ...flatMap(
         Object.entries(opts).map(([k, v]) => [`-${OPTION_NAME_MAP[k] || k}`, v])
       )
     ].join(" ")
 
-    execSync(commandWithOpts)
+    return execSync(commandWithArgs)
   }
 }

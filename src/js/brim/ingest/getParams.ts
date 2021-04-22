@@ -9,8 +9,9 @@ import time from "../time"
 export type IngestParams = {
   name: string
   dataDir: string
-  endpoint: IngestFileType
-  files: File[]
+  fileListData: FileListData
+  // endpoint: IngestFileType
+  // files: File[]
 }
 
 export type IngestParamsError = {
@@ -25,11 +26,11 @@ export default function getParams(
 ): IngestParams | IngestParamsError {
   const files = fileList(data)
 
-  if (files.multiple() && files.any("pcap")) {
-    return {
-      error: "Only one pcap can be opened at a time."
-    }
-  }
+  // if (files.multiple() && files.any("pcap")) {
+  //   return {
+  //     error: "Only one pcap can be opened at a time."
+  //   }
+  // }
 
   function getDataDir() {
     return dataDir ? path.join(dataDir, getSpaceName()) : ""
@@ -47,8 +48,9 @@ export default function getParams(
   return {
     name: getSpaceName(),
     dataDir: getDataDir(),
-    endpoint: files.first().type,
-    files: files.files()
+    fileListData: data
+    // endpoint: files.first().type,
+    // files: files.files()
   }
 }
 

@@ -6,7 +6,7 @@ import TabHistories from "../state/TabHistories"
 import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
 import tabHistory from "app/router/tab-history"
-import BrimApi from "./brimApi"
+import BrimApi from "../api"
 
 export default function initGlobals(store: Store, api?: BrimApi) {
   global.getState = store.getState
@@ -17,12 +17,6 @@ export default function initGlobals(store: Store, api?: BrimApi) {
   global.windowHistory = createMemoryHistory()
   global.windowHistory.replace(getUrlSearchParams().href)
   global.navTo = (path) => store.dispatch(tabHistory.push(path))
-
-  // TODO: create mockApi for tests
-  if (api) {
-    global.executeCommand = (command: string, ...args: any[]) =>
-      api.commands.execute(command, args)
-  }
 }
 
 function getWindowName() {

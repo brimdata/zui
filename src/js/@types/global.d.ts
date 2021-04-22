@@ -16,7 +16,6 @@ declare global {
       tabHistories: Histories
       windowHistory: BrowserHistory
       navTo: (path: string) => void
-      executeCommand: (command: string, ...args: any[]) => boolean
     }
 
     interface Process {

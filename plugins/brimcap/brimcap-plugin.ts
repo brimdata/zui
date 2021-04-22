@@ -1,24 +1,26 @@
 import {DateTimeFormatter, LocalDateTime, ZoneOffset} from "@js-joda/core"
 import os from "os"
 import path, {join} from "path"
-import commandExists from "command-exists"
 import {fetchCorrelation} from "../../ppl/detail/flows/fetch"
-import BrimApi from "../../src/js/initializers/brimApi"
 import open from "../../src/js/lib/open"
 import {AppDispatch} from "../../src/js/state/types"
 import {zng} from "../../zealot"
 import {Record} from "../../zealot/zng"
 import BrimcapCLI, {searchOptions} from "./brimcap-cli"
-import {toast} from "react-hot-toast"
+import BrimApi from "../../src/js/api"
+import {IngestParams} from "../../src/js/brim/ingest/getParams"
+import fsExtra, {pathExistsSync} from "fs-extra"
+import errors from "src/js/errors"
 
 export default class BrimcapPlugin {
-  private cli = new BrimcapCLI()
+  private cli: BrimcapCLI
   // currentData represents the data detail currently seen in the Brim detail pane/window
   private currentConn = null
   // selectedData represents the data detail currently selected and highlighted in the search viewer
   private selectedConn = null
   private cleanupFns: Function[] = []
-  private dataRoot = ""
+  private brimcapDataRoot = ""
+  private brimcapBinPath = ""
   private toastConfig = {
     loading: {
       // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
@@ -35,26 +37,33 @@ export default class BrimcapPlugin {
 
   constructor(private api: BrimApi) {
     // RFC: what interface do we want the app to provide for this sort of data?
-    const {spacesRoot} = api.getAppConfig()
-    this.dataRoot = spacesRoot
+    const {dataRoot, zdepsDirectory} = api.getAppConfig()
+
+    this.brimcapBinPath = path.join(zdepsDirectory, "brimcap")
+    this.cli = new BrimcapCLI(this.brimcapBinPath)
+
+    this.brimcapDataRoot = path.join(dataRoot, "brimcap-root")
   }
 
   public init() {
-    commandExists("brimcap")
-      .then(() => {
-        this.setupBrimcapButtons()
-        // TODO: handle pcap import, contextMenu items, and detail pane/window correlation UI
-      })
-      .catch(() => {
-        console.error(
-          "The brimcap plugin requires the 'brimcap' CLI tool to also be installed. Please download it here: https://github.com/brimdata/brimcap/releases"
-        )
-      })
+    fsExtra.ensureDirSync(this.brimcapDataRoot)
+
+    if (!pathExistsSync(this.brimcapBinPath)) {
+      console.error(
+        "The brimcap plugin requires the 'brimcap' CLI tool to also be installed. Please download it here: https://github.com/brimdata/brimcap/releases"
+      )
+      return
+    }
+
+    this.setupBrimcapButtons()
+    this.setupLoader()
+
+    // TODO: handle contextMenu items, and detail pane/window correlation UI
   }
 
   private async tryConn(detail: zng.Record, eventId: string) {
     // TODO: dispatch is only temporarily public to plugins, so this won't always be needed
-    const dispatch = this.api.store.dispatch as AppDispatch
+    const dispatch = this.api.dispatch as AppDispatch
     const uidRecords = await dispatch(fetchCorrelation(detail, eventId))
 
     return uidRecords.find((log) => log.try("_path")?.toString() === "conn")
@@ -68,13 +77,12 @@ export default class BrimcapPlugin {
 
     const itemOptions = {
       label: "Packets",
-      icon: "sharkfin", // TODO: enable ability for plugins to provide and use their own assets
+      icon: "sharkfin", // TODO: enable plugins to provide their own assets
       disabled: true,
       tooltip: "No connection record found.",
       order: 0
     }
 
-    // TODO: fetchCorrelation should eventually be owned by the brimcap plugin and the dispatch here won't be needed
     const setButtonDetails = (
       toolbarId: string,
       buttonId: string,
@@ -121,8 +129,6 @@ export default class BrimcapPlugin {
     // add click handlers for button's emitted commands
     this.cleanupFns.push(
       this.api.commands.add(brimcapDownloadSelectedCmd, () => {
-        // this.api.toast("brimcapDownloadSelectedCmd!")
-
         this.selectedConn && this.downloadPcap(this.selectedConn)
       }),
       this.api.commands.add(
@@ -160,8 +166,6 @@ export default class BrimcapPlugin {
   }
 
   private logToSearchOpts(log: zng.Record): searchOptions {
-    const {spaceId} = this.api.getCurrent()
-
     const ts = log.get("ts") as zng.Primitive
     // RFC3999nano format with zero timezone offset
     const formatter = DateTimeFormatter.ofPattern(
@@ -177,14 +181,13 @@ export default class BrimcapPlugin {
 
     const dur = log.get("duration") as zng.Primitive
     const dest = join(os.tmpdir(), `packets-${ts.toString()}.pcap`)
-    const root = path.join(this.dataRoot, spaceId)
 
     return {
       dstIp: log.get("id.resp_h").toString(),
       dstPort: log.get("id.resp_p").toString(),
       duration: `${dur.toFloat()}s`,
       proto: log.get("proto").toString(),
-      root,
+      root: this.brimcapDataRoot,
       srcIp: log.get("id.orig_h").toString(),
       srcPort: log.get("id.orig_p").toString(),
       ts: tsString,
@@ -200,7 +203,7 @@ export default class BrimcapPlugin {
       return open(searchOpts.write, {newWindow: true})
     }
 
-    toast.promise(
+    this.api.toast.promise(
       searchAndOpen(),
       {
         loading: "Preparing PCAP...",
@@ -214,9 +217,76 @@ export default class BrimcapPlugin {
     )
   }
 
+  private setupLoader() {
+    const load = async (
+      params: IngestParams & {spaceId: string},
+      onProgressUpdate: (value: number | null) => void,
+      onWarning: (warning: string) => void,
+      onDetailUpdate: () => void
+    ): Promise<void> => {
+      const {fileListData, name} = params
+      if (fileListData.length > 1)
+        throw new Error("Only one pcap can be opened at a time.")
+
+      const paths = fileListData.map((f) => f.file.path)
+
+      const p = this.cli.load(paths[0], {
+        root: this.brimcapDataRoot,
+        space: name
+      })
+
+      let brimcapErr
+      p.on("error", (err) => {
+        brimcapErr = err
+      })
+
+      onProgressUpdate(0)
+      p.stderr.on("data", async (d) => {
+        const msg = JSON.parse(d)
+        const {type, ...status} = msg
+        switch (type) {
+          case "status":
+            onProgressUpdate(statusToPercent(status))
+            await onDetailUpdate()
+            break
+          case "warning":
+            if (status.warning) onWarning(status.warning)
+            break
+          case "error":
+            if (status.error) brimcapErr = status.error
+        }
+      })
+
+      // wait for process to end
+      await new Promise((res) => {
+        p.on("close", async () => {
+          res()
+        })
+      })
+
+      if (brimcapErr) throw errors.pcapIngest(brimcapErr)
+
+      await onDetailUpdate()
+      onProgressUpdate(1)
+      onProgressUpdate(null)
+    }
+
+    this.api.loaders.add({
+      load,
+      match: "pcap"
+    })
+  }
+
   public cleanup() {
     this.cleanupFns.forEach((fn) => fn())
   }
+}
+
+// helpers
+
+function statusToPercent(status): number {
+  if (status.pcap_total_size === 0) return 1
+  else return status.pcap_read_size / status.pcap_total_size || 0
 }
 
 function getSec(data: zng.Primitive): number {

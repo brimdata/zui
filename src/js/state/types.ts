@@ -18,12 +18,14 @@ import {FeatureState} from "./Feature"
 import {WorkspacesState} from "./Workspaces/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 import {TabHistoriesState} from "./TabHistories/types"
+import BrimApi from "../api"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
   zealot: Zealot
   createZealot: typeof createZealot
   dispatch: AppDispatch
+  api: BrimApi
 }
 
 export type Action = ReduxAction<string>

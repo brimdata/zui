@@ -1,6 +1,6 @@
 import path from "path"
 import lib from "../lib"
-import BrimApi from "./brimApi"
+import BrimApi from "../api"
 
 interface Plugin {
   activate(api: BrimApi): void
