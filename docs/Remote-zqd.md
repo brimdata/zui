@@ -206,7 +206,7 @@ However we can use the `zapi` command line tool on our VM to access this `zqd`
 directly via `localhost`.
 
 As sample packet data, we'll import a
-[wrccdc pcap](https://archive.wrccdc.org/pcaps/2018/) from a separate shell on
+[wrccdc pcap](https://wrccdc.org/) from a separate shell on
 our Linux VM:
 
 ```
