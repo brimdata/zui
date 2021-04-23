@@ -1,8 +1,16 @@
-import {ZedRecord} from ".."
+import {Record} from "../values/record"
+import {Value} from "../zjson"
+import {ZedType} from "./types"
 import {typeId} from "./utils"
 
+type TypeField = {
+  name: string
+  type: ZedType
+}
 export class TypeRecord {
   kind = "record"
+  fields: TypeField[]
+
   constructor(fields) {
     this.fields = fields
   }
@@ -18,13 +26,20 @@ export class TypeRecord {
     s += "}"
     return s
   }
-  create(values, typedefs) {
-    return new ZedRecord(
+
+  create(values: Value, typedefs: object) {
+    return new Record(
       this,
-      this.fields.map((field, index) => ({
-        name: field.name,
-        value: field.type.create(values[index])
-      }))
+      this.fields.map((field, index) => {
+        const value = values[index]
+        if (!field.type.create) {
+          console.log(field.type)
+        }
+        return {
+          name: field.name,
+          value: field.type.create(value, typedefs)
+        }
+      })
     )
   }
 }

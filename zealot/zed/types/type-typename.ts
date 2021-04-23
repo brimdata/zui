@@ -1,10 +1,17 @@
-class TypeOfUint16 {
-  name = "uint16"
+import {Typename} from "../values/typename"
+import {PrimitiveTypeInterface} from "./types"
+
+class TypeOfTypename implements PrimitiveTypeInterface<Typename> {
+  name = "typename"
   kind = "primitive"
 
   serialize() {
     return {kind: this.kind, name: this.name}
   }
+
+  create(value: string) {
+    return new Typename(value)
+  }
 }
 
-export const TypeUint16 = new TypeOfUint16()
+export const TypeTypename = new TypeOfTypename()

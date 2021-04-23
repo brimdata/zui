@@ -2,6 +2,11 @@ import {TypeDef} from "./types/type-def"
 import {TypeRecord} from "./types/type-record"
 import {StreamObject, Type} from "./zjson"
 import primitives from "./types/type-primitives"
+import {TypeArray} from "./types/type-array"
+import {TypeSet} from "./types/type-set"
+import {TypeUnion} from "./types/type-union"
+import types from "tree-model/types"
+import {TypeMap} from "./types/type-map"
 
 export class ZedContext {
   id: number
@@ -19,11 +24,11 @@ export class ZedContext {
   }
 
   decode(objects: StreamObject[]) {
-    return objects.map((object) => this.decodeRecord(object))
+    const typedefs = {}
+    return objects.map((object) => this.decodeRecord(object, typedefs))
   }
 
-  decodeRecord({schema, types, values}: StreamObject) {
-    const typedefs = {}
+  decodeRecord({schema, types, values}: StreamObject, typedefs) {
     types && types.forEach((type) => this.decodeType(type, typedefs))
     const type = typedefs[schema] as TypeRecord
     return type.create(values, typedefs)
@@ -39,19 +44,32 @@ export class ZedContext {
           }))
         )
       case "typedef":
-        var type = this.decodeType(obj.type, typedefs)
-        typedefs[obj.name] = type
+        var innerType = this.decodeType(obj.type, typedefs)
+        typedefs[obj.name] = innerType
         if (isNaN(obj.name as any)) {
-          type = new TypeDef(obj.name, type)
-          this.typedefs[obj.name] = type
+          var def = new TypeDef(obj.name, innerType)
+          this.typedefs[obj.name] = def
         }
-        return type
+        return innerType
       case "primitive":
         var type = primitives[obj.name]
         if (!type) throw `Implement primitive: ${obj.name}`
         return type
       case "typename":
         return typedefs[obj.name]
+      case "array":
+        return this.lookupTypeArray(this.decodeType(obj.type, typedefs))
+      case "set":
+        return this.lookupTypeSet(this.decodeType(obj.type, typedefs))
+      case "union":
+        return this.lookupTypeUnion(
+          obj.types.map((t) => this.decodeType(t, typedefs))
+        )
+      case "map":
+        return this.lookupTypeMap(
+          this.decodeType(obj.key_type, typedefs),
+          this.decodeType(obj.val_type, typedefs)
+        )
       default:
         throw `Implement decoding: ${obj.kind}`
     }
@@ -63,6 +81,42 @@ export class ZedContext {
       return this.typeByStringValue[string]
     } else {
       return this.alloc(string, new TypeRecord(fields))
+    }
+  }
+
+  lookupTypeArray(type) {
+    const string = TypeArray.stringify(type)
+    if (string in this.typeByStringValue) {
+      return this.typeByStringValue[string]
+    } else {
+      return this.alloc(string, new TypeArray(type))
+    }
+  }
+
+  lookupTypeSet(type) {
+    const string = TypeSet.stringify(type)
+    if (string in this.typeByStringValue) {
+      return this.typeByStringValue[string]
+    } else {
+      return this.alloc(string, new TypeSet(type))
+    }
+  }
+
+  lookupTypeUnion(types) {
+    const string = TypeUnion.stringify(types)
+    if (string in this.typeByStringValue) {
+      return this.typeByStringValue[string]
+    } else {
+      return this.alloc(string, new TypeUnion(types))
+    }
+  }
+
+  lookupTypeMap(keyType, valType) {
+    const string = TypeMap.stringify(keyType, valType)
+    if (string in this.typeByStringValue) {
+      return this.typeByStringValue[string]
+    } else {
+      return this.alloc(string, new TypeMap(keyType, valType))
     }
   }
 

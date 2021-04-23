@@ -1,7 +1,7 @@
+import {ZedType} from "./types"
+
 export class TypeDef {
-  constructor(name, type) {
-    this.kind = "typedef"
-    this.name = name
-    this.type = type
-  }
+  kind = "typedef"
+
+  constructor(public name: string, public type: ZedType) {}
 }
