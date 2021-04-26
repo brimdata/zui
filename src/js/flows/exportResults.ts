@@ -26,7 +26,7 @@ export default (
   format: SearchFormat
 ): Thunk<Promise<string>> => (dispatch, getState) => {
   const zealot = dispatch(getZealot())
-  const spaceId = Current.getSpaceId(getState())
+  const poolId = Current.getPoolId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())
   const program = cutColumns(baseProgram, columns)
@@ -39,7 +39,7 @@ export default (
     .search(program, {
       from,
       to,
-      spaceId,
+      poolId,
       format,
       controlMessages: false
     })

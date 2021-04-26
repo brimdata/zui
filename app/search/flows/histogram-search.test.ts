@@ -2,7 +2,7 @@ import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import Chart from "src/js/state/Chart"
 import Handlers from "src/js/state/Handlers"
-import Spaces from "src/js/state/Spaces"
+import Pools from "src/js/state/Pools"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
@@ -11,7 +11,7 @@ import {createZealotMock} from "zealot"
 import {histogramSearch} from "./histogram-search"
 
 const countByPathResp = responses("count_by_path.txt")
-const space = fixtures("space1")
+const pool = fixtures("pool1")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
@@ -28,9 +28,9 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Spaces.setDetail("1", space)
+    Pools.setDetail("1", pool)
   ])
-  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
+  store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
   zealot.stubStream("search", countByPathResp)
 })
 

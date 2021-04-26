@@ -27,7 +27,7 @@ const Command = styled(Pre)`
 
 export default function ZQModal({onClose}) {
   const program = useSelector(SearchBar.getSearchProgram)
-  const zng = join(useSelector(Tab.getSpaceName), "all.zng")
+  const zng = join(useSelector(Tab.getPoolName), "all.zng")
   const cmd = ["zq", "-f table", `"${program}"`, zng].join(" ")
   useEnterKey(onClose)
 

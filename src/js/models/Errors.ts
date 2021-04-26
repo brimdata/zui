@@ -37,13 +37,13 @@ export class NetworkError extends AppError {
   }
 }
 
-export class NoSpacesError extends AppError {
+export class NoPoolsError extends AppError {
   static is(e: RawError) {
-    return e === "NoSpaces"
+    return e === "NoPools"
   }
 
   message() {
-    return "No spaces in this workspace."
+    return "No pools in this workspace."
   }
 }
 
@@ -57,7 +57,7 @@ export class NotFoundError extends AppError {
   }
 }
 
-export class SpaceNotFoundError extends AppError {
+export class PoolNotFoundError extends AppError {
   static is(e: RawError) {
     return e.type === "SPACE_NOT_FOUND"
   }
@@ -111,8 +111,8 @@ export const KNOWN_ERRORS = [
   ZqVersionError,
   UnauthorizedError,
   NetworkError,
-  NoSpacesError,
-  SpaceNotFoundError,
+  NoPoolsError,
+  PoolNotFoundError,
   NotFoundError,
   InternalServerError
 ]

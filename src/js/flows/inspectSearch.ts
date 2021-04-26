@@ -18,12 +18,12 @@ export const inspectSearch = (): Thunk<ReturnValue> => (dispatch, getState) => {
   const zealot = dispatch(getZealot())
   const program = SearchBar.getSearchProgram(getState())
   const [from, to] = Tab.getSpan(getState())
-  const spaceId = Current.getSpaceId(getState())
+  const poolId = Current.getPoolId(getState())
   const host = Tab.workspaceUrl(getState())
   let search
 
   try {
-    search = zealot.inspect.search(program, {from, to, spaceId})
+    search = zealot.inspect.search(program, {from, to, poolId})
   } catch (_) {
     // Parsing error
   }

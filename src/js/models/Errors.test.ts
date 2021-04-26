@@ -11,13 +11,11 @@ const TEST_CASES = {
 
   NetworkError: ["Failed to fetch"],
 
-  NoSpacesError: ["NoSpaces"],
+  NoPoolsError: ["NoPools"],
 
   NotFoundError: [{type: "NOT_FOUND"}],
 
-  SpaceNotFoundError: [
-    {type: "SPACE_NOT_FOUND", error: "space james not found"}
-  ],
+  PoolNotFoundError: [{type: "SPACE_NOT_FOUND", error: "pool james not found"}],
 
   InvalidUrlError: ["Failed to parse URL"],
 

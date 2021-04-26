@@ -41,7 +41,7 @@ describe("type-wise Filter = value searches", () => {
     app = newAppInstance(basename(__filename) + "-types", 0)
     await appStep.startApp(app)
     await appStep.ingestFile(app, "types.tsv")
-    await appStep.setSpan(app, "Whole Space")
+    await appStep.setSpan(app, "Whole Pool")
     done()
   })
 

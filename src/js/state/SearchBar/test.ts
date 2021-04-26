@@ -13,7 +13,7 @@ import initTestStore from "../../test/initTestStore"
 import Url from "../Url"
 import Search from "../Search"
 import {SpanArgs} from "../Search/types"
-import Spaces from "../Spaces"
+import Pools from "../Pools"
 import Workspaces from "../Workspaces"
 import SearchBar from "./"
 import {SearchBarState} from "./types"
@@ -24,13 +24,13 @@ beforeEach(() => {
   mock.stubStream("search", [], "always")
   store = initTestStore(mock.zealot)
   const workspace = fixtures("workspace1")
-  const space = fixtures("space1")
+  const pool = fixtures("pool1")
 
   store.dispatchAll([
     Workspaces.add(workspace),
-    Spaces.setDetail(workspace.id, space)
+    Pools.setDetail(workspace.id, pool)
   ])
-  store.dispatch(tabHistory.push(lakePath(space.id, workspace.id)))
+  store.dispatch(tabHistory.push(lakePath(pool.id, workspace.id)))
 })
 
 test("input value changed", () => {
@@ -57,7 +57,7 @@ test("search pin does not work if current is empty", () => {
   expect(SearchBar.getSearchBarPins(state)).toEqual([])
 })
 
-test("search pin does not work if current is a bunch of white space", () => {
+test("search pin does not work if current is a bunch of white pool", () => {
   const state = store.dispatchAll([
     SearchBar.changeSearchBarInput("     "),
     SearchBar.pinSearchBar()

@@ -1,12 +1,12 @@
 import {remote} from "electron"
 
-export default function showIngestWarning(spaces: string[]) {
+export default function showIngestWarning(pools: string[]) {
   return remote.dialog
     .showMessageBox({
       type: "warning",
       title: "Confirm Close Window",
       message: "Are you sure you want to close while ingesting?",
-      detail: `This will delete the partial generated data for: ${spaces.join(
+      detail: `This will delete the partial generated data for: ${pools.join(
         ", "
       )}`,
       buttons: ["OK", "Cancel"]

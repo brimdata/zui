@@ -75,7 +75,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const dispatch = useDispatch()
   const [contextArgs, setContextArgs] = useState(null)
   const [selectedTag, setSelectedTag] = useState("All")
-  const currentSpace = useSelector(Current.getSpace)
+  const currentPool = useSelector(Current.getPool)
   const queriesRoot = useSelector(Queries.getRaw)
   const [queries, setQueries] = useState(queriesRoot)
   const tags = useSelector(Queries.getTags)
@@ -94,7 +94,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Run Query",
-      enabled: !hasMultiSelected && !!currentSpace,
+      enabled: !hasMultiSelected && !!currentPool,
       click: () => {
         const {
           item: {value}
@@ -152,8 +152,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const menu = usePopupMenu(template)
 
   function onItemClick(_, item) {
-    if (!currentSpace)
-      return dispatch(Notice.set(new Error("No space selected")))
+    if (!currentPool) return dispatch(Notice.set(new Error("No pool selected")))
 
     if (!item.value) return
 
@@ -196,7 +195,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <StyledArrow show={isOpen} />
           <Title>Queries</Title>
         </ClickRegion>
-        {currentSpace && (
+        {currentPool && (
           <TagsViewSelect
             selected={selectedTag}
             tags={["All", ...tags]}
@@ -205,7 +204,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
         )}
       </SectionHeader>
       <SectionContents>
-        {currentSpace ? (
+        {currentPool ? (
           <TreeList
             root={queries}
             itemHeight={24}
@@ -218,7 +217,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
         ) : (
           <EmptySection
             icon={<MagnifyingGlass />}
-            message="You must have a space selected to run queries."
+            message="You must have a pool selected to run queries."
           />
         )}
       </SectionContents>

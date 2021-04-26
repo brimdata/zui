@@ -32,8 +32,8 @@ const dataAttrs = {
   search_time: "search_time",
   search_speed: "search_speed",
   settingsModal: "settingsModal",
-  spacesMenu: "spacesMenu",
-  spaces_button: "spaces_button",
+  poolsMenu: "poolsMenu",
+  pools_button: "pools_button",
   span_button: "span_button",
   span_menu: "span_menu",
   useCacheToggle: "useCacheToggle",
@@ -141,10 +141,10 @@ export const selectors = {
     useCacheToggle: dataAttrSelector("useCacheToggle"),
     useIndexToggle: dataAttrSelector("useIndexToggle")
   },
-  spaces: {
-    button: dataAttrSelector("spaces_button"),
-    menu: dataAttrSelector("spacesMenu"),
-    menuItem: genSelectorForTextUnderElement("spacesMenu")
+  pools: {
+    button: dataAttrSelector("pools_button"),
+    menu: dataAttrSelector("poolsMenu"),
+    menuItem: genSelectorForTextUnderElement("poolsMenu")
   },
   span: {
     button: dataAttrSelector("span_button"),

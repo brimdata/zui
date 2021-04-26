@@ -14,7 +14,7 @@ import Layout from "../../state/Layout"
 import {ColumnHeadersViewState} from "../../state/Layout/types"
 import Prefs from "../../state/Prefs"
 import SearchBar from "../../state/SearchBar"
-import {Space} from "../../state/Spaces/types"
+import {Pool} from "../../state/Pools/types"
 import {DispatchProps, State} from "../../state/types"
 import View from "../../state/View"
 import Viewer from "../../state/Viewer"
@@ -37,7 +37,7 @@ type StateProps = {
   tableColumns: TableColumns
   columnHeadersView: ColumnHeadersViewState
   program: string
-  space: Space
+  pool: Pool
   scrollPos: ScrollPosition
 }
 
@@ -155,7 +155,7 @@ function stateToProps(state: State): StateProps {
     timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
-    space: Current.getSpace(state),
+    pool: Current.getPool(state),
     scrollPos: Viewer.getScrollPos(state)
   }
 }

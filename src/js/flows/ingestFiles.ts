@@ -8,7 +8,7 @@ import Current from "../state/Current"
 import Handlers from "../state/Handlers"
 import {Handler} from "../state/Handlers/types"
 import Prefs from "../state/Prefs"
-import Spaces from "../state/Spaces"
+import Pools from "../state/Pools"
 import SystemTest from "../state/SystemTest"
 import Tabs from "../state/Tabs"
 import {Dispatch, Thunk} from "../state/types"
@@ -27,15 +27,15 @@ export default (files: File[]): Thunk<Promise<void>> => (
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
   const dataDir = Prefs.getDataDir(getState())
-  const spaceNames = Spaces.getSpaceNames(workspaceId)(getState())
+  const poolNames = Pools.getPoolNames(workspaceId)(getState())
 
   dispatch(SystemTest.hook("import-start"))
   return lib
     .transaction([
-      validateInput(files, dataDir, spaceNames),
+      validateInput(files, dataDir, poolNames),
       createDir(),
-      createSpace(zealot, dispatch, workspaceId),
-      setSpace(dispatch, tabId, workspaceId),
+      createPool(zealot, dispatch, workspaceId),
+      setPool(dispatch, tabId, workspaceId),
       registerHandler(dispatch, requestId),
       executeLoader(zealot, dispatch, workspaceId, api),
       unregisterHandler(dispatch, requestId)
@@ -45,11 +45,11 @@ export default (files: File[]): Thunk<Promise<void>> => (
     })
 }
 
-const validateInput = (files: File[], dataDir, spaceNames) => ({
+const validateInput = (files: File[], dataDir, poolNames) => ({
   async do() {
     const params = await ingest
       .detectFileTypes(files)
-      .then((data) => ingest.getParams(data, dataDir, spaceNames))
+      .then((data) => ingest.getParams(data, dataDir, poolNames))
       .catch((e) => {
         if (e.message.startsWith("EISDIR"))
           throw new Error(
@@ -71,7 +71,7 @@ const createDir = () => ({
   }
 })
 
-const createSpace = (client, gDispatch, workspaceId) => ({
+const createPool = (client, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
     let createParams
     if (params.dataDir) {
@@ -79,25 +79,25 @@ const createSpace = (client, gDispatch, workspaceId) => ({
     } else {
       createParams = {name: params.name}
     }
-    const space = await client.spaces.create(createParams)
+    const pool = await client.pools.create(createParams)
     gDispatch(
-      Spaces.setDetail(workspaceId, {
-        ...space,
+      Pools.setDetail(workspaceId, {
+        ...pool,
         ingest: {progress: 0, snapshot: 0, warnings: []}
       })
     )
 
-    return {...params, spaceId: space.id}
+    return {...params, poolId: pool.id}
   },
-  async undo({spaceId}: IngestParams & {spaceId: string}) {
-    await client.spaces.delete(spaceId)
-    gDispatch(Spaces.remove(workspaceId, spaceId))
+  async undo({poolId}: IngestParams & {poolId: string}) {
+    await client.pools.delete(poolId)
+    gDispatch(Pools.remove(workspaceId, poolId))
   }
 })
 
 const registerHandler = (dispatch, id) => ({
-  do({spaceId}: IngestParams & {spaceId: string}) {
-    const handle: Handler = {type: "INGEST", spaceId}
+  do({poolId}: IngestParams & {poolId: string}) {
+    const handle: Handler = {type: "INGEST", poolId}
     dispatch(Handlers.register(id, handle))
   },
   undo() {
@@ -117,17 +117,17 @@ const executeLoader = (
   workspaceId: string,
   api: BrimApi
 ) => ({
-  async do(params: IngestParams & {spaceId: string}) {
-    const {spaceId, fileListData = []} = params
+  async do(params: IngestParams & {poolId: string}) {
+    const {poolId, fileListData = []} = params
 
-    const space = Spaces.actionsFor(workspaceId, spaceId)
+    const space = Pools.actionsFor(workspaceId, poolId)
 
     const onProgressUpdate = (value: number | null): void => {
       dispatch(space.setIngestProgress(value))
     }
     const onDetailUpdate = async (): Promise<void> => {
-      const details = await client.spaces.get(spaceId)
-      dispatch(Spaces.setDetail(workspaceId, details))
+      const details = await client.pools.get(poolId)
+      dispatch(Pools.setDetail(workspaceId, details))
     }
     const onWarning = (warning: string): void => {
       dispatch(space.appendIngestWarning(warning))
@@ -154,9 +154,9 @@ const executeLoader = (
   }
 })
 
-const setSpace = (dispatch, tabId, workspaceId) => ({
-  do({spaceId}) {
-    const url = lakePath(spaceId, workspaceId)
+const setPool = (dispatch, tabId, workspaceId) => ({
+  do({poolId}) {
+    const url = lakePath(poolId, workspaceId)
     global.tabHistories.getOrCreate(tabId).push(url)
   },
   undo() {

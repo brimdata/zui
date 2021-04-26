@@ -11,8 +11,8 @@ export type SearchArgs = {
   tableProgram: string
   chartProgram: string
   span: DateTuple
-  spaceName: string
-  spaceId: string
+  poolName: string
+  poolId: string
   type: SearchType
 }
 export type SearchType = "zoom" | "analytics" | "events"

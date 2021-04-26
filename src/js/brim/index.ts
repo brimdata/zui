@@ -5,7 +5,7 @@ import interop from "./interop"
 import program from "./program"
 import randomHash from "./randomHash"
 import relTime from "./relTime"
-import space from "./space"
+import pool from "./pool"
 import span from "./span"
 import syntax from "./syntax"
 import tab from "./brimTab"
@@ -17,7 +17,7 @@ export type Ts = {
   sec: number
 }
 
-export type BrimSpace = ReturnType<typeof space>
+export type BrimPool = ReturnType<typeof pool>
 export type BrimWorkspace = ReturnType<typeof workspace>
 
 export type Span = [Ts, Ts]
@@ -26,7 +26,7 @@ export default {
   program,
   ast,
   syntax,
-  space,
+  pool,
   time,
   relTime,
   span,

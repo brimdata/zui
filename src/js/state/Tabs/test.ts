@@ -152,5 +152,5 @@ test("reset tab", () => {
 
   const tab = Tabs.getActiveTab(state)
   expect(tab.id).toEqual(Tabs.getActive(state))
-  expect(Current.getSpaceId(state)).toEqual(null)
+  expect(Current.getPoolId(state)).toEqual(null)
 })

@@ -4,8 +4,8 @@ import {
   decodeSearchParams,
   decodeSpanParams
 } from "app/search/utils/search-params"
-import {BrimSpace, Span} from "src/js/brim"
-import {getLocation, mustGetSpace} from "../Current/selectors"
+import {BrimPool, Span} from "src/js/brim"
+import {getLocation, mustGetPool} from "../Current/selectors"
 import {State} from "../types"
 import {LocationDescriptorObject} from "history"
 import {SpanArgs} from "../Search/types"
@@ -21,11 +21,11 @@ export type SearchParams = {
 export const getSearchParams = createSelector<
   State,
   LocationDescriptorObject,
-  BrimSpace,
+  BrimPool,
   SearchParams
->(getLocation, mustGetSpace, (location, space) => {
+>(getLocation, mustGetPool, (location, pool) => {
   const params = decodeSearchParams(location.search)
-  const spanArgs = mergeDefaultSpanArgs(params.spanArgs, space)
+  const spanArgs = mergeDefaultSpanArgs(params.spanArgs, pool)
   const spanArgsFocus =
     params.spanArgsFocus[0] && params.spanArgsFocus[1]
       ? params.spanArgsFocus
@@ -44,6 +44,6 @@ export const getSpanParamsWithDefaults = (state) => {
   return [p1 || d1, p2 || d2]
 }
 
-const getDefaultSpanArgs = createSelector(mustGetSpace, (space) => {
-  return space.defaultSpanArgs()
+const getDefaultSpanArgs = createSelector(mustGetPool, (pool) => {
+  return pool.defaultSpanArgs()
 })

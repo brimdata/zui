@@ -15,7 +15,7 @@ export interface loadOptions {
   config?: string
   n?: number
   root: string
-  space: string
+  pool: string
   suricata?: boolean
   suricataStderr?: string
   suricataStdout?: string
@@ -30,7 +30,7 @@ export interface searchOptions extends packetOptions {
 }
 
 const OPTION_NAME_MAP = {
-  space: "s",
+  pool: "p",
   suricataStderr: "suricata.stderr",
   suricataStdout: "suricata.stdout",
   zeekStdout: "zeek.stdout",

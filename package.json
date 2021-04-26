@@ -62,7 +62,7 @@
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-source-map-support": "^2.1.2",
-    "brimcap": "brimdata/brimcap#be382f92fa5822509501825bbaed4c2c1248c332",
+    "brimcap": "brimdata/brimcap#db694a37f7d105542c1f38434df4d5679db1f8ea",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
@@ -128,6 +128,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "mousetrap": "^1.6.5",
+    "node-addon-api": "^3.1.0",
     "on-idle": "^3.1.4",
     "polished": "^3.6.5",
     "prismjs": "^1.20.0",
@@ -152,7 +153,7 @@
     "styled-components": "^5.1.1",
     "tree-model": "^1.0.7",
     "valid-url": "^1.0.9",
-    "zed": "git+https://github.com/brimdata/zed.git#67fc862bdc86510175509d61003e05a6625c04f4"
+    "zed": "git+https://github.com/brimdata/zed.git#095de6cfb777c440ec4871f5eb035c3bb47a9cdd"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",

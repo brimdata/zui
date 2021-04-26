@@ -11,7 +11,7 @@ export type TabActions =
 
 export type AddTabData = {
   workspaceId: string | null
-  spaceId: string | null
+  poolId: string | null
 }
 
 export type TABS_ADD = {

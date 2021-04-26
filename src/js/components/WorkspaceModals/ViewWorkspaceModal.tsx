@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {Content, Title} from "../ModalDialog/ModalDialog"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "../../state/Current"
-import Spaces from "../../state/Spaces"
+import Pools from "../../state/Pools"
 import ToolbarButton from "../../../../app/toolbar/button"
 import styled from "styled-components"
 import StatusLight from "./StatusLight"
@@ -118,7 +118,7 @@ const ViewWorkspace = ({onClose, onEdit}) => {
   const dispatch = useDispatch()
   const workspace = useSelector(Current.getWorkspace)
   const workspaceId = workspace ? workspace.id : null
-  const spaceIds = useSelector(Spaces.ids(workspaceId))
+  const poolIds = useSelector(Pools.ids(workspaceId))
   const wsStatus = useSelector(WorkspaceStatuses.get(workspaceId))
 
   useEnterKey(onClose)
@@ -127,7 +127,7 @@ const ViewWorkspace = ({onClose, onEdit}) => {
 
   const isDefault = workspace.id === "localhost:9867"
 
-  const spaceCount = spaceIds.length
+  const poolCount = poolIds.length
   const {name, host, port, version = "unknown"} = workspace
 
   const onRemove = () => {
@@ -161,7 +161,7 @@ const ViewWorkspace = ({onClose, onEdit}) => {
         <WorkspaceFields>
           <Field label="Host" value={[host, port].join(":")} />
           <Field label="ZQD Version" value={version} />
-          <Field label="Spaces" value={`${spaceCount}`} />
+          <Field label="Pools" value={`${poolCount}`} />
         </WorkspaceFields>
       </StyledWorkspaceDetail>
       <StyledFooter>

@@ -2,7 +2,7 @@ import tabHistory from "app/router/tab-history"
 import {workspacePath} from "app/router/utils/paths"
 import {createZealotMock} from "zealot"
 import Current from "../state/Current"
-import Spaces from "../state/Spaces"
+import Pools from "../state/Pools"
 import Tab from "../state/Tab"
 import Workspaces from "../state/Workspaces"
 import fixtures from "../test/fixtures"
@@ -17,21 +17,21 @@ jest.mock("../api")
 let store, zealot, apiMock
 beforeEach(() => {
   zealot = createZealotMock()
-    .stubPromise("spaces.create", {
+    .stubPromise("pools.create", {
       name: "sample.pcap.brim",
-      id: "spaceId"
+      id: "poolId"
     })
     .stubPromise(
-      "spaces.get",
+      "pools.get",
       {
         name: "sample.pcap.brim",
-        id: "spaceId",
+        id: "poolId",
         min_time: {ns: 0, sec: 0},
         max_time: {ns: 1, sec: 1}
       },
       "always"
     )
-    .stubPromise("spaces.delete", true)
+    .stubPromise("pools.delete", true)
   const ws = fixtures("workspace1")
 
   apiMock = mocked(BrimApi)
@@ -61,11 +61,11 @@ describe("success case", () => {
     await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
 
     const state = store.getState()
-    expect(Tab.getSpaceName(state)).toEqual("sample.pcap.brim")
-    expect(Current.mustGetSpace(state)).toEqual(
+    expect(Tab.getPoolName(state)).toEqual("sample.pcap.brim")
+    expect(Current.mustGetPool(state)).toEqual(
       expect.objectContaining({
         name: "sample.pcap.brim",
-        id: "spaceId",
+        id: "poolId",
         min_time: {ns: 0, sec: 0},
         max_time: {ns: 1, sec: 1},
         ingest: {
@@ -86,7 +86,7 @@ describe("success case", () => {
 
     expect(handler).toEqual({
       type: "HANDLERS_REGISTER",
-      handler: {type: "INGEST", spaceId: "spaceId"},
+      handler: {type: "INGEST", poolId: "poolId"},
       id: expect.any(String)
     })
   })
@@ -107,7 +107,7 @@ describe("success case", () => {
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
-    expect(Current.getSpaceId(state)).toEqual(null)
+    expect(Current.getPoolId(state)).toEqual(null)
   })
 })
 
@@ -127,9 +127,9 @@ describe("error case", () => {
 
     const state = store.getState()
     const workspace = Current.getWorkspaceId(state)
-    expect(Spaces.getSpaces(workspace)(state)).toEqual([])
-    expect(Spaces.getSpaces(workspace)(state)).toEqual([])
-    expect(Current.getSpaceId(state)).toEqual(null)
+    expect(Pools.getPools(workspace)(state)).toEqual([])
+    expect(Pools.getPools(workspace)(state)).toEqual([])
+    expect(Current.getPoolId(state)).toEqual(null)
   })
 
   test("pcap post warning", async () => {
@@ -146,8 +146,8 @@ describe("error case", () => {
 
     const state = store.getState()
     const wsId = Current.getWorkspaceId(state)
-    const spaceId = Current.getSpaceId(state)
-    expect(Spaces.getIngestWarnings(wsId, spaceId)(state)).toEqual([
+    const poolId = Current.getPoolId(state)
+    expect(Pools.getIngestWarnings(wsId, poolId)(state)).toEqual([
       "Some pcap warning"
     ])
   })

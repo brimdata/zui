@@ -15,9 +15,9 @@ Object {
                     "a",
                     "b",
                   ],
+                  "poolId": "defaultId",
+                  "poolName": "default",
                   "program": "c",
-                  "spaceId": "defaultId",
-                  "spaceName": "default",
                   "spanArgs": Array [
                     Object {
                       "ns": 1000000,
@@ -44,9 +44,9 @@ Object {
                     "a",
                     "b",
                   ],
+                  "poolId": "defaultId",
+                  "poolName": "default",
                   "program": "d",
-                  "spaceId": "defaultId",
-                  "spaceName": "default",
                   "spanArgs": Array [
                     Object {
                       "ns": 1000000,
@@ -73,9 +73,9 @@ Object {
                 "a",
                 "b",
               ],
+              "poolId": "defaultId",
+              "poolName": "default",
               "program": "c",
-              "spaceId": "defaultId",
-              "spaceName": "default",
               "spanArgs": Array [
                 Object {
                   "ns": 1000000,
@@ -101,9 +101,9 @@ Object {
               "pins": Array [
                 "a",
               ],
+              "poolId": "defaultId",
+              "poolName": "default",
               "program": "d",
-              "spaceId": "defaultId",
-              "spaceName": "default",
               "spanArgs": Array [
                 Object {
                   "ns": 1000000,
@@ -130,9 +130,9 @@ Object {
             "a",
             "b",
           ],
+          "poolId": "defaultId",
+          "poolName": "default",
           "program": "c",
-          "spaceId": "defaultId",
-          "spaceName": "default",
           "spanArgs": Array [
             Object {
               "ns": 1000000,
@@ -156,9 +156,9 @@ Object {
       "finding": Object {
         "search": Object {
           "pins": Array [],
+          "poolId": "defaultId",
+          "poolName": "default",
           "program": "e",
-          "spaceId": "defaultId",
-          "spaceName": "default",
           "spanArgs": Array [
             Object {
               "ns": 1000000,

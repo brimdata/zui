@@ -4,7 +4,7 @@ import React from "react"
 import {reactElementProps} from "../../test/integration"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
 import ToolbarButton from "../../../../app/toolbar/button"
-import refreshSpaceInfo from "../../flows/refreshSpaceInfo"
+import refreshPoolInfo from "../../flows/refreshPoolInfo"
 import useSpanPickerMenu from "../useSpanPickerMenu"
 
 type Props = {
@@ -16,7 +16,7 @@ export default function SpanPicker({submit}: Props) {
   const dispatch = useDispatch()
 
   function onClick() {
-    dispatch(refreshSpaceInfo())
+    dispatch(refreshPoolInfo())
   }
 
   return (

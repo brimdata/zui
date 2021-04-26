@@ -1,6 +1,6 @@
 import * as zjson from "../zjson"
 import * as zng from "../zng"
-import * as zqd from "../zqd"
+import * as lake from "../lake"
 
 export interface RecordsCallbackArgs {
   channel: number
@@ -12,7 +12,7 @@ type SchemaMap = Map<number, zng.Schema>
 type ChannelMap = Map<number, Channel>
 type Channel = {records: zng.Record[]; schemas: SchemaMap}
 type RecordsCallback = (args: RecordsCallbackArgs) => void
-type PayloadCallback = (payload: zqd.SearchRecords) => void
+type PayloadCallback = (payload: lake.SearchRecords) => void
 
 function getChannel(id: number, channels: ChannelMap): Channel {
   if (!channels.has(id)) {
@@ -44,7 +44,7 @@ function createRecords(
 export function createRecordsCallback(cb: RecordsCallback): PayloadCallback {
   let channels = new Map<number, any>()
 
-  return ({channel_id: id, records}: zqd.SearchRecords) => {
+  return ({channel_id: id, records}: lake.SearchRecords) => {
     const prev = getChannel(id, channels)
     const next = createRecords(records, prev.schemas)
     const chan = {

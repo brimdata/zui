@@ -5,7 +5,7 @@ import {workspacePath} from "app/router/utils/paths"
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Redirect, Route, Switch, useRouteMatch} from "react-router"
-import {initSpace} from "src/js/flows/initSpace"
+import {initPool} from "src/js/flows/initPool"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import SearchHome from "../search/home"
@@ -35,12 +35,12 @@ function InitLake({children}) {
   const lakeId = useLakeId()
   const workspaceId = useWorkspaceId()
   const [fetching, setFetching] = useState(false)
-  const lake = useSelector(Current.getSpace)
+  const lake = useSelector(Current.getPool)
 
   useEffect(() => {
     if (lakeId) {
       setFetching(true)
-      dispatch(initSpace(lakeId)).finally(() => setFetching(false))
+      dispatch(initPool(lakeId)).finally(() => setFetching(false))
     } else {
       setFetching(false)
     }

@@ -26,8 +26,8 @@ export function viewerSearch(args: Args): Thunk<Promise<void>> {
   return (dispatch, getState) => {
     const {query, from, to, keep, append} = args
     const tabId = Tabs.getActive(getState())
-    const spaceId = Current.mustGetSpace(getState()).id
-    const {response, promise} = dispatch(search({id, query, from, to, spaceId}))
+    const poolId = Current.mustGetPool(getState()).id
+    const {response, promise} = dispatch(search({id, query, from, to, poolId}))
     dispatch(handle(response, tabId, keep, append))
     return promise
   }

@@ -12,7 +12,7 @@ import {Modals} from "src/js/components/Modals"
 import {PopNotice} from "src/js/components/PopNotice"
 import Preferences from "src/js/components/Preferences/Preferences"
 import {XRightPane} from "src/js/components/RightPane"
-import SpaceModal from "src/js/components/SpaceModal"
+import PoolModal from "src/js/components/PoolModal"
 import StatusBar from "src/js/components/StatusBar"
 import TabBar from "src/js/components/TabBar/TabBar"
 import styled from "styled-components"
@@ -72,7 +72,7 @@ export default function AppWrapper({children}) {
       <Preferences />
       <Modals />
       <AboutModal />
-      <SpaceModal />
+      <PoolModal />
       <ColumnsModal />
       <HTMLContextMenu />
       <BrimToaster />

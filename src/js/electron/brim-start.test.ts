@@ -1,4 +1,4 @@
-import {ZQD} from "ppl/zqd/zqd"
+import {Lake} from "ppl/lake/lake"
 import {Brim} from "./brim"
 import {installExtensions} from "./extensions"
 
@@ -6,22 +6,22 @@ jest.mock("./extensions", () => ({
   installExtensions: jest.fn()
 }))
 
-function mockZqd() {
-  const zqd = new ZQD("test")
-  jest.spyOn(zqd, "start").mockImplementation(() => {})
-  return zqd
+function mockLake() {
+  const lake = new Lake("test")
+  jest.spyOn(lake, "start").mockImplementation(() => {})
+  return lake
 }
 
 let brim: Brim
 beforeEach(() => {
   brim = new Brim({
-    zqd: mockZqd()
+    lake: mockLake()
   })
 })
 
-test("start is called in zqd", async () => {
+test("start is called in zed lake", async () => {
   await brim.start()
-  expect(brim.zqd.start).toHaveBeenCalledTimes(1)
+  expect(brim.lake.start).toHaveBeenCalledTimes(1)
 })
 
 test("activate when zero windows open", () => {

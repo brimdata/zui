@@ -2,8 +2,8 @@ import {HandlersState, IngestHandler, Handler} from "./types"
 import {State} from "../types"
 
 export default {
-  getIngestSpaceIds: (state: State): string[] => {
-    return getIngestHandlers(state).map((i) => i.spaceId)
+  getIngestPoolIds: (state: State): string[] => {
+    return getIngestHandlers(state).map((i) => i.poolId)
   },
   get: (state: State): HandlersState => state.handlers
 }

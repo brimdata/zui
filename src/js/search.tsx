@@ -11,7 +11,7 @@ import StartupError from "./components/StartupError"
 import initialize from "./initializers/initialize"
 import lib from "./lib"
 import theme from "./style-theme"
-import deletePartialSpaces from "./flows/deletePartialSpaces"
+import deletePartialPools from "./flows/deletePartialPools"
 import TabHistories from "./state/TabHistories"
 
 initialize()
@@ -20,7 +20,7 @@ initialize()
       // This runs during reload
       // Visit initIpcListeners.ts#prepareClose for closing window
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
-      store.dispatch(deletePartialSpaces())
+      store.dispatch(deletePartialPools())
     }
     ReactDOM.render(
       <AppErrorBoundary>

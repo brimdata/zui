@@ -1,13 +1,12 @@
 import {createFetcher} from "./fetcher/fetcher"
-import {spaces, logs, search, archive, subspaces} from "./api/mod"
+import {pools, logs, search, archive} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
 import {
   SearchArgs,
-  SpaceArgs,
+  PoolArgs,
   LogsPostArgs,
   ZealotArgs,
-  SubspaceCreateArgs,
   LogsPostPathsArgs
 } from "./types"
 import {IndexSearchArgs} from "./api/archive"
@@ -48,29 +47,21 @@ export function createZealot(
         })
       }
     },
-    spaces: {
+    pools: {
       list: () => {
-        return promise(spaces.list())
+        return promise(pools.list())
       },
       get: (id: string) => {
-        return promise(spaces.get(id))
+        return promise(pools.get(id))
       },
-      stat: (id: string, args?: Partial<SearchArgs>) => {
-        return stream(spaces.stat(id, {...searchArgs, ...args}))
-      },
-      create: (args: SpaceArgs) => {
-        return promise(spaces.create(args))
+      create: (args: PoolArgs) => {
+        return promise(pools.create(args))
       },
       delete: (id: string) => {
-        return promise(spaces.delete(id))
+        return promise(pools.delete(id))
       },
-      update: (id: string, args: Partial<SpaceArgs>) => {
-        return promise(spaces.update(id, args))
-      }
-    },
-    subspaces: {
-      create: (args: SubspaceCreateArgs) => {
-        return promise(subspaces.create(args))
+      update: (id: string, args: Partial<PoolArgs>) => {
+        return promise(pools.update(id, args))
       }
     },
     logs: {

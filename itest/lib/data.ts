@@ -7,9 +7,9 @@ export const dataSets = {
     histogram: {
       rectAttrMin: 0,
       rectAttrMax: 1000,
-      wholeSpaceDistinctPaths: 8,
-      wholeSpaceRectsPerClass: 11
+      wholePoolDistinctPaths: 8,
+      wholePoolRectsPerClass: 11
     },
-    spaceName: "sample.pcap.brim"
+    poolName: "sample.pcap.brim"
   }
 }

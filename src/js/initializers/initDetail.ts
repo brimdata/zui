@@ -8,8 +8,8 @@ import initialize from "./initialize"
 export default async () => {
   const store = await initialize()
   // Set the span to everything
-  const space = Current.mustGetSpace(store.getState())
-  space && store.dispatch(Search.setSpan(brim.space(space).everythingSpan()))
+  const pool = Current.mustGetPool(store.getState())
+  pool && store.dispatch(Search.setSpan(brim.pool(pool).everythingSpan()))
 
   // View the latest log and clear log detail history
   const log = LogDetails.build(store.getState())

@@ -7,9 +7,9 @@ import Current from "../../state/Current"
 
 export function useFindings() {
   const workspaceId = useSelector(Current.getWorkspaceId)
-  const spaceId = useSelector(Current.getSpaceId)
+  const poolId = useSelector(Current.getPoolId)
   const findings = useSelector(
-    Investigation.getInvestigation(workspaceId, spaceId)
+    Investigation.getInvestigation(workspaceId, poolId)
   )
   return useMemo(() => {
     return [...findings].sort((a, b) =>

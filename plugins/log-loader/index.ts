@@ -5,17 +5,17 @@ import {forEach} from "lodash"
 
 export const activate = (api: BrimApi) => {
   const load = async (
-    params: IngestParams & {spaceId: string},
+    params: IngestParams & {poolId: string},
     onProgressUpdate: (value: number | null) => void,
     onWarning: (warning: string) => void,
     onDetailUpdate: () => Promise<void>
   ): Promise<void> => {
-    const {spaceId, fileListData} = params
+    const {poolId, fileListData} = params
     const client = api.getZealot()
 
     const files = fileListData.map((f) => f.file)
 
-    const stream = await client.logs.post({spaceId, files})
+    const stream = await client.logs.post({poolId, files})
 
     onProgressUpdate(0)
     // @ts-ignore

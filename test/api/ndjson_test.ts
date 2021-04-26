@@ -1,14 +1,14 @@
 import {
   createZealot,
   assertEquals,
-  createFakeZqd,
+  createFakeLake,
   assertThrowsAsync
 } from "./helper/mod.ts"
 
 function setup() {
-  const zqd = createFakeZqd(9999)
+  const lake = createFakeLake(9999)
   const zealot = createZealot("localhost:9999")
-  return {zqd, zealot}
+  return {lake, zealot}
 }
 
 Deno.test("test with valid ndjson", async () => {
@@ -20,13 +20,13 @@ Deno.test("test with valid ndjson", async () => {
 
 {"test": 3}`
 
-  const {zqd, zealot} = setup()
-  zqd.respondWith(VALID_NDJSON)
+  const {lake, zealot} = setup()
+  lake.respondWith(VALID_NDJSON)
   const resp = await zealot.search("*")
   const messages = await resp.array()
 
   assertEquals(messages, [{test: 1}, {test: 2}, {test: 3}])
-  zqd.close()
+  lake.close()
 })
 
 Deno.test("test with invalid ndjson", async () => {
@@ -38,8 +38,8 @@ panic: Major problem here man, no json in sight
   - src/js/components/real.ts
   - src/js/components/this.ts
 `
-  const {zqd, zealot} = setup()
-  zqd.respondWith(INVALID_NDJSON)
+  const {lake, zealot} = setup()
+  lake.respondWith(INVALID_NDJSON)
   const resp = await zealot.search("*")
   const error = await assertThrowsAsync(() => resp.array())
   assertEquals(
@@ -50,5 +50,5 @@ panic: Major problem here man, no json in sight
   - src/js/components/this.ts
 "`
   )
-  zqd.close()
+  lake.close()
 })

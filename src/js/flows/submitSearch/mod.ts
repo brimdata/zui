@@ -20,17 +20,17 @@ export function submitSearch(
     const record = Search.getRecord(getState())
     const spanArgsFocus = Tab.getSpanFocus(getState())
     const workspaceId = Current.getWorkspaceId(getState())
-    const spaceId = Current.getSpaceId(getState())
+    const poolId = Current.getPoolId(getState())
 
     dispatch(Tab.computeSpan(ts))
 
     if (!dispatch(SearchBar.validate())) return Promise.reject()
 
-    const url = lakeSearchPath(spaceId, workspaceId, {...record, spanArgsFocus})
+    const url = lakeSearchPath(poolId, workspaceId, {...record, spanArgsFocus})
 
     if (save.investigation) {
       dispatch(
-        Investigation.push(workspaceId, spaceId, record, brim.time(ts).toTs())
+        Investigation.push(workspaceId, poolId, record, brim.time(ts).toTs())
       )
     }
 

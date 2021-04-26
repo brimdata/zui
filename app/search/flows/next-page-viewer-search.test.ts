@@ -2,7 +2,7 @@ import tabHistory from "app/router/tab-history"
 import {lakeSearchPath} from "app/router/utils/paths"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Search from "src/js/state/Search"
-import Spaces from "src/js/state/Spaces"
+import Pools from "src/js/state/Pools"
 import Tab from "src/js/state/Tab"
 import Tabs from "src/js/state/Tabs"
 import Viewer from "src/js/state/Viewer"
@@ -41,11 +41,11 @@ beforeEach(() => {
   store = initTestStore(zealot.zealot)
   tabId = Tabs.getActive(store.getState())
   const ws = fixtures("workspace1")
-  const space = fixtures("space1")
-  store.dispatch(tabHistory.push(lakeSearchPath(space.id, ws.id)))
+  const pool = fixtures("pool1")
+  store.dispatch(tabHistory.push(lakeSearchPath(pool.id, ws.id)))
   store.dispatchAll([
     Workspaces.add(ws),
-    Spaces.setDetail(ws.id, space),
+    Pools.setDetail(ws.id, pool),
     Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     submitSearch(),
     Viewer.appendRecords(tabId, records)

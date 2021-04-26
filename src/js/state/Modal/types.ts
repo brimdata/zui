@@ -20,7 +20,7 @@ export type ModalName =
   | "new-workspace"
   | "new-query"
   | "settings"
-  | "space"
+  | "pool"
   | "view-workspace"
   | "whois"
   | "zq"
