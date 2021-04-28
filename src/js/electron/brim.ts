@@ -12,7 +12,6 @@ import {
 } from "../auth0/utils"
 import createGlobalStore from "../state/createGlobalStore"
 import {getGlobalPersistable} from "../state/getPersistable"
-import Prefs from "../state/Prefs"
 import Workspaces from "../state/Workspaces"
 import {installExtensions} from "./extensions"
 import ipc from "./ipc"
@@ -49,12 +48,8 @@ export class Brim {
     const data = await session.load()
     const windows = windowManager(data)
     const store = createGlobalStore(data?.globalState)
-    const select = (fn) => fn(store.getState())
-    const suricataRunner = select(Prefs.getSuricataRunner)
-    const suricataUpdater = select(Prefs.getSuricataUpdater)
-    const zeekRunner = select(Prefs.getZeekRunner)
     const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
-    const zqd = new ZQD(spaceDir, suricataRunner, suricataUpdater, zeekRunner)
+    const zqd = new ZQD(spaceDir)
     return new Brim({session, windows, store, zqd})
   }
 
@@ -62,7 +57,7 @@ export class Brim {
     this.windows = args.windows || windowManager()
     this.store = args.store || createGlobalStore(undefined)
     this.session = args.session || tron.session()
-    this.zqd = args.zqd || new ZQD(null, null, null, null)
+    this.zqd = args.zqd || new ZQD(null)
   }
 
   async start() {

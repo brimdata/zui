@@ -14,7 +14,6 @@ const platformDefs = {
   darwin: {
     zqdBin: "zqd",
     zqBin: "zq",
-    pcapBin: "pcap",
     zapiBin: "zapi",
     zedBin: "zed",
     osarch: "darwin-amd64"
@@ -22,7 +21,6 @@ const platformDefs = {
   linux: {
     zqdBin: "zqd",
     zqBin: "zq",
-    pcapBin: "pcap",
     zapiBin: "zapi",
     zedBin: "zed",
     osarch: "linux-amd64"
@@ -30,7 +28,6 @@ const platformDefs = {
   win32: {
     zqdBin: "zqd.exe",
     zqBin: "zq.exe",
-    pcapBin: "pcap.exe",
     zapiBin: "zapi.exe",
     zedBin: "zed.exe",
     osarch: "windows-amd64"
@@ -95,13 +92,7 @@ async function zedArtifactsDownload(version, destPath) {
 
     fs.mkdirpSync(destPath)
 
-    for (let f of [
-      plat.zqdBin,
-      plat.zqBin,
-      plat.pcapBin,
-      plat.zapiBin,
-      plat.zedBin
-    ]) {
+    for (let f of [plat.zqdBin, plat.zqBin, plat.zapiBin, plat.zedBin]) {
       fs.moveSync(
         path.join(tmpdir.name, paths.internalTopDir, f),
         path.join(destPath, f),
@@ -121,13 +112,7 @@ async function zedDevBuild(destPath) {
 
   const zedPackageDir = path.join(__dirname, "..", "..", "node_modules", "zed")
 
-  for (let f of [
-    plat.zqdBin,
-    plat.zqBin,
-    plat.pcapBin,
-    plat.zapiBin,
-    plat.zedBin
-  ]) {
+  for (let f of [plat.zqdBin, plat.zqBin, plat.zapiBin, plat.zedBin]) {
     fs.copyFileSync(path.join(zedPackageDir, "dist", f), path.join(destPath, f))
   }
 }

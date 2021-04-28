@@ -7,7 +7,6 @@ import {
 
 const DIR = dirname(fromFileUrl(import.meta.url))
 const ZQD_ROOT = join(DIR, "../zqd_root")
-const ZEEK_RUNNER = join(DIR, "../../../zdeps/zeek/zeekrunner")
 const ZQD_RUNNER = join(DIR, "../../../zdeps/zqd")
 
 function createDataDir() {
@@ -39,7 +38,7 @@ async function kill(zqd: Deno.Process, client: any) {
 
 async function start() {
   return Deno.run({
-    cmd: [ZQD_RUNNER, "listen", "-zeekrunner", ZEEK_RUNNER],
+    cmd: [ZQD_RUNNER, "listen"],
     cwd: ZQD_ROOT,
     stdout: "null",
     stderr: "null"

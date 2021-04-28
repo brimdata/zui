@@ -5,7 +5,7 @@ import tron from "./tron"
 import windowManager from "./tron/windowManager"
 
 function mockZqd() {
-  const zqd = new ZQD("test", "srun", "supdate", "zrun")
+  const zqd = new ZQD("test")
   jest.spyOn(zqd, "start").mockImplementation(() => {})
   jest.spyOn(zqd, "close").mockImplementation(() => Promise.resolve())
   return zqd
