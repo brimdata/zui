@@ -48,24 +48,6 @@ export interface SubspaceCreateArgs {
   spaceId: string
 }
 
-export interface PcapsPostArgs {
-  spaceId: string
-  path: string
-}
-
-export interface PcapsGetArgs {
-  spaceId: string
-  ts_sec: number
-  ts_ns: number
-  duration_sec: number
-  duration_ns: number
-  proto: string
-  src_host: string
-  src_port: string
-  dst_host: string
-  dst_port: string
-}
-
 export interface LogsPostArgs {
   files: File[] | FileList
   spaceId: string

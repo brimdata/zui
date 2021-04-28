@@ -14,7 +14,6 @@ const space1 = (): Space => ({
     sec: 1428917793,
     ns: 750000000
   },
-  pcap_support: true,
   ingest: {progress: null, warnings: [], snapshot: null}
 })
 

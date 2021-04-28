@@ -239,7 +239,6 @@ sample
   storage_kind: filestore
   span:         2018-03-24T17:15:20Z+21m9.558041001s
   size:         80.05MB
-  pcap_support: false
   pcap_size:    0B
   pcap_path:    
   parent_id:    

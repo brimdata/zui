@@ -6,7 +6,6 @@ import {Toolbar} from "app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
 import {useDispatch} from "react-redux"
 import {useLocation} from "react-router"
-import {XDownloadProgress} from "src/js/components/DownloadProgress"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchHeaderChart from "src/js/components/SearchHeaderChart"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
@@ -72,7 +71,6 @@ export default function SearchHome() {
       </SearchPageHeader>
 
       <SearchResults />
-      <XDownloadProgress />
     </InitSearchParams>
   )
 }

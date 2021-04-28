@@ -6,7 +6,6 @@ import Handlers from "./Handlers"
 import Investigation from "./Investigation"
 import Modal from "./Modal"
 import Notice from "./Notice"
-import Packets from "./Packets"
 import Prefs from "./Prefs"
 import Spaces from "./Spaces"
 import Tabs from "./Tabs"
@@ -29,7 +28,6 @@ export default combineReducers<any, any>({
   investigation: Investigation.reducer,
   view: View.reducer,
   spaces: Spaces.reducer,
-  packets: Packets.reducer,
   prefs: Prefs.reducer,
   systemTest: SystemTest.reducer,
   feature: Feature.reducer,
