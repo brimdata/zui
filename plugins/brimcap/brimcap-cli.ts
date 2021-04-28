@@ -1,12 +1,5 @@
-import {
-  ChildProcessWithoutNullStreams,
-  SpawnOptions,
-  execSync,
-  spawn,
-  ChildProcess
-} from "child_process"
+import {execSync, spawn, ChildProcess} from "child_process"
 import flatMap from "lodash/flatMap"
-import path from "path"
 
 interface packetOptions {
   dstIp?: string

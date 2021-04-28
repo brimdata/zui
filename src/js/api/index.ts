@@ -1,5 +1,5 @@
-import {app, remote} from "electron"
-import path, {join} from "path"
+import {remote} from "electron"
+import path from "path"
 import toast from "react-hot-toast"
 import {getZealot} from "../flows/getZealot"
 import {AppDispatch, State} from "../state/types"

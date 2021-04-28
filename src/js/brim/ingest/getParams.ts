@@ -1,6 +1,5 @@
 import path from "path"
 
-import {IngestFileType} from "./detectFileType"
 import {getUniqName} from "../../lib/uniqName"
 import fileList, {FileListData} from "./fileList"
 import lib from "../../lib"

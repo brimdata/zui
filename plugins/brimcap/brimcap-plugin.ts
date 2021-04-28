@@ -1,5 +1,4 @@
 import {DateTimeFormatter, LocalDateTime, ZoneOffset} from "@js-joda/core"
-import os from "os"
 import path, {join} from "path"
 import {fetchCorrelation} from "../../ppl/detail/flows/fetch"
 import open from "../../src/js/lib/open"

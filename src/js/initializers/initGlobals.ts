@@ -6,7 +6,6 @@ import TabHistories from "../state/TabHistories"
 import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
 import tabHistory from "app/router/tab-history"
-import BrimApi from "../api"
 
 export default function initGlobals(store: Store) {
   global.getState = store.getState

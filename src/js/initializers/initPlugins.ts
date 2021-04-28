@@ -1,6 +1,6 @@
 import path from "path"
-import BrimApi from "./brimApi"
 import PluginManager from "./pluginManager"
+import BrimApi from "../api"
 
 const initPlugins = async (api: BrimApi) => {
   const pluginManager = new PluginManager(api)

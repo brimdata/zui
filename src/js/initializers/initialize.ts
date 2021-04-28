@@ -15,7 +15,7 @@ export default async function initialize() {
   const pluginManager = await initPlugins(api)
 
   initDOM()
-  initGlobals(store, api)
+  initGlobals(store)
   initIpcListeners(store, pluginManager)
   initMenuActionListeners(store)
   initWorkspaceParams(store)
