@@ -1,12 +1,13 @@
 import {Int64} from "../values/int64"
+import {PrimitiveType} from "../../zjson"
 import {PrimitiveTypeInterface} from "./types"
 
 class TypeOfInt64 implements PrimitiveTypeInterface<Int64> {
   name = "int64"
   kind = "primitive"
 
-  serialize() {
-    return {kind: this.kind, name: this.name}
+  serialize(): PrimitiveType {
+    return {kind: "primitive", name: this.name}
   }
 
   create(value) {

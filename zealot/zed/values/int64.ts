@@ -1,18 +1,12 @@
+import {isNull} from "lodash"
 import {TypeInt64} from "../types/type-int64"
-import {ZedValueInterface} from "./types"
+import {Primitive} from "./primitive"
 
-export class Int64 implements ZedValueInterface {
-  constructor(private value: string) {}
+export class Int64 extends Primitive {
+  type = TypeInt64
 
-  get type() {
-    return TypeInt64
-  }
-
-  toString() {
-    return this.value.toString()
-  }
-
-  serialize() {
-    return this.value.toString()
+  toInt() {
+    if (isNull(this.value)) return null
+    return parseInt(this.value)
   }
 }

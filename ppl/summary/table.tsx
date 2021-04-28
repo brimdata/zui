@@ -3,7 +3,7 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {cssVar, transparentize} from "polished"
 import React from "react"
 import styled from "styled-components"
-import {ZedPrimitive} from "zealot/zed"
+import * as zed from "zealot/zed"
 
 type GridProps = {templateColumns: string | undefined}
 
@@ -128,7 +128,7 @@ export default function Table({records, x}) {
             .getFields()
             .map((field, i) => (
               <Cell key={i} className={field.data.getType()}>
-                {formatPrimitive(field.data as ZedPrimitive)}
+                {formatPrimitive(field.data as zed.Primitive)}
               </Cell>
             ))}
         </Row>

@@ -1,16 +1,17 @@
 import {Null} from "../values/null"
+import {PrimitiveType} from "../../zjson"
 import {PrimitiveTypeInterface} from "./types"
 
 class TypeOfNull implements PrimitiveTypeInterface<Null> {
   name = "null"
   kind = "primitive"
 
-  serialize() {
-    return {kind: this.kind, name: this.name}
+  serialize(): PrimitiveType {
+    return {kind: "primitive", name: this.name}
   }
 
   create() {
-    return null
+    return new Null()
   }
 }
 

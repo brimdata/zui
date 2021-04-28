@@ -1,18 +1,12 @@
+import {isNull} from "lodash"
 import {TypeFloat64} from "../types/type-float64"
-import {ZedValueInterface} from "./types"
+import {Primitive} from "./primitive"
 
-export class Float64 implements ZedValueInterface {
-  constructor(private value: string) {}
+export class Float64 extends Primitive {
+  type = TypeFloat64
 
-  get type() {
-    return TypeFloat64
-  }
-
-  toString() {
-    return this.value.toString()
-  }
-
-  serialize() {
-    return this.value.toString()
+  toFloat() {
+    if (isNull(this.value)) return null
+    return parseFloat(this.value)
   }
 }

@@ -2,13 +2,13 @@ import {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
 import {search} from "src/js/flows/search/mod"
 import {AppDispatch} from "src/js/state/types"
-import {ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 
-type R = [ZedRecord[], boolean]
+type R = [zed.Record[], boolean]
 
 export default function useSearch(query: string, deps?: any[]): R {
   const dispatch = useDispatch<AppDispatch>()
-  const [records, setRecords] = useState<ZedRecord[]>([])
+  const [records, setRecords] = useState<zed.Record[]>([])
   const [isFetching, setIsFetching] = useState<boolean>(true)
 
   useEffect(() => {

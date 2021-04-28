@@ -1,48 +1,43 @@
 import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 
 // Convert a js object into a zed record
-export function createRecord(object): ZedRecord {
+export function createRecord(object): zed.Record {
   let fields = []
   for (let name in object) {
     fields.push(createField(name, object[name]))
   }
-  return new ZedRecord({fields})
+  // If the tests need the type, create it.
+  return new zed.Record(null, fields)
 }
 
 export function createField(name, value) {
-  return new ZedField({
-    name,
-    data: createData(value)
-  })
+  return new zed.Field(name, createData(value))
 }
 
 export function createData(value) {
   if (value === null) {
-    return new ZedPrimitive({type: "null", value: null})
+    return new zed.Null()
   }
 
   if (isDate(value)) {
-    return new ZedPrimitive({
-      type: "time",
-      value: (value.getTime() / 1000).toString()
-    })
+    return new zed.Time((value.getTime() / 1000).toString())
   }
 
   if (isInteger(value)) {
-    return new ZedPrimitive({type: "uint64", value: value.toString()})
+    return new zed.Uint64(value.toString())
   }
 
   if (isNumber(value)) {
-    return new ZedPrimitive({type: "float64", value: value.toString()})
+    return new zed.Float64(value.toString())
   }
 
   if (isString(value) && isIp(value)) {
-    return new ZedPrimitive({type: "ip", value})
+    return new zed.Ip(value)
   }
 
   if (isString(value)) {
-    return new ZedPrimitive({type: "string", value})
+    return new zed.String(value)
   }
 
   if (isObject(value)) {

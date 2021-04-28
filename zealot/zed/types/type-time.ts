@@ -1,12 +1,13 @@
 import {Time} from "../values/time"
+import {PrimitiveType} from "../../zjson"
 import {PrimitiveTypeInterface} from "./types"
 
 class TypeOfTime implements PrimitiveTypeInterface<Time> {
   name = "time"
   kind = "primitive"
 
-  serialize() {
-    return {kind: this.kind, name: this.name}
+  serialize(): PrimitiveType {
+    return {kind: "primitive", name: this.name}
   }
 
   create(value: string) {

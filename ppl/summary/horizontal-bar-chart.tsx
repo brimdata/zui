@@ -5,10 +5,10 @@ import {BarRounded} from "@vx/shape"
 import React from "react"
 import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
-import {ZedPrimitive, ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 
 type Props = {
-  records: ZedRecord[]
+  records: zed.Record[]
   width: number
   height: number
   x: string
@@ -33,7 +33,7 @@ export default function HorizontalBarChart({
   const height = outerHeight - margin.top - margin.bottom
   const data = records.map((r) => ({
     name: r.get(y).toString(),
-    count: (r.get(x) as ZedPrimitive).toInt()
+    count: (r.get(x) as zed.Uint64).toInt()
   }))
   const xScale = scaleLinear({
     domain: [0, Math.max(...data.map((d) => d.count))],

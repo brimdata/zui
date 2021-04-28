@@ -2,7 +2,7 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import React from "react"
 import styled from "styled-components"
-import {ZedField, ZedPrimitive} from "zealot/zed"
+import * as zed from "zealot/zed"
 
 const Num = styled.div`
   font-size: 24px;
@@ -16,11 +16,11 @@ const Num = styled.div`
 `
 
 export default function Number({record}) {
-  const field = record?.getFields()[0] as ZedField
+  const field = record?.getFields()[0] as zed.Field
   if (!field) return null
   return (
     <Num className={typeClassNames(field.data)}>
-      {formatPrimitive(field.data as ZedPrimitive)}
+      {formatPrimitive(field.data as zed.Primitive)}
     </Num>
   )
 }

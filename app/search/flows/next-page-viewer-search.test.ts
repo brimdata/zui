@@ -9,9 +9,9 @@ import Viewer from "src/js/state/Viewer"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
-import {createRecord} from "test/factories/record"
+import {createRecord} from "test/factories/zed-factory"
 import {createZealotMock} from "zealot"
-import {ZedPrimitive} from "zealot/zed"
+import * as zed from "zealot/zed"
 import nextPageViewerSearch from "./next-page-viewer-search"
 
 const records = [
@@ -51,7 +51,7 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
   const search = jest.spyOn(zealot.zealot, "search")
   store.dispatch(nextPageViewerSearch())
 
-  const data = records[1].at(1) as ZedPrimitive
+  const data = records[1].at(1) as zed.Primitive
   const lastChangeTs = data.toDate().getTime()
   expect(search).toHaveBeenCalledWith(
     expect.any(String),

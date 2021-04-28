@@ -1,12 +1,13 @@
 import {Typename} from "../values/typename"
+import {PrimitiveType} from "../../zjson"
 import {PrimitiveTypeInterface} from "./types"
 
 class TypeOfTypename implements PrimitiveTypeInterface<Typename> {
   name = "typename"
   kind = "primitive"
 
-  serialize() {
-    return {kind: this.kind, name: this.name}
+  serialize(): PrimitiveType {
+    return {kind: "primitive", name: this.name}
   }
 
   create(value: string) {

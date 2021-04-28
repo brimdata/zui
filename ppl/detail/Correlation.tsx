@@ -15,9 +15,9 @@ import Panel from "app/detail/Panel"
 import {getCorrelationQuery} from "./flows/get-correlation-query"
 import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
-import {ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 
-export default memo(function UidPanel({record}: {record: ZedRecord}) {
+export default memo(function UidPanel({record}: {record: zed.Record}) {
   const query = useMemo(() => getCorrelationQuery(record), [record])
   const isLoading = useSelector(LogDetails.getUidStatus) === "FETCHING"
   const logs = useSelector(LogDetails.getUidLogs)

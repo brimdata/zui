@@ -1,4 +1,4 @@
-import {ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 import {SuricataEvent} from "./SuricataEvent"
 import {UnknownEvent} from "./UnknownEvent"
 import {ZeekEvent} from "./ZeekEvent"
@@ -6,12 +6,12 @@ import {ZeekEvent} from "./ZeekEvent"
 export interface BrimEventInterface {
   getType: () => string
   getTime: () => Date
-  getRecord: () => ZedRecord
+  getRecord: () => zed.Record
   getEndTime: () => Date | null
 }
 
 export class BrimEvent {
-  static build(r: ZedRecord) {
+  static build(r: zed.Record) {
     if (r.has("_path")) {
       return new ZeekEvent(r)
     } else if (r.has("event_type")) {

@@ -11,7 +11,7 @@
 // import responses from "src/js/test/responses"
 // import {STRING} from "test/fixtures/zjson-types"
 // import {createZealotMock} from "zealot"
-// import {ZedRecord} from "zealot/zed"
+// import * as zed from "zealot/zed"
 // import {viewerSearch} from "./viewer-search"
 
 // const dnsResp = responses("dns.txt")
@@ -67,7 +67,7 @@
 //   test("the table gets cleared", async () => {
 //     dispatch(
 //       Viewer.setRecords(undefined, [
-//         ZedRecord.of([{name: "clear", type: STRING}], ["me"])
+//         zed.Record.of([{name: "clear", type: STRING}], ["me"])
 //       ])
 //     )
 //     await submit()

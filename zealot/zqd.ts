@@ -1,5 +1,5 @@
 import {Ts} from "./types"
-import * as zjson from "./zed/zjson"
+import * as zjson from "./zjson"
 
 export type Payload =
   | SearchRecords
@@ -12,7 +12,7 @@ export type Payload =
 
 export type SearchRecords = {
   type: "SearchRecords"
-  records: zjson.StreamObject[]
+  records: zjson.RootRecord[]
   channel_id: number
 }
 

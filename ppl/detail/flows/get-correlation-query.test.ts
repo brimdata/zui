@@ -3,8 +3,8 @@ import {
   connCorrelation,
   uidCorrelation
 } from "src/js/searches/programs"
-import {createRecord} from "test/factories/record"
-import {ZedPrimitive} from "zealot/zed"
+import {createRecord} from "test/factories/zed-factory"
+import * as zed from "zealot/zed"
 import {getCorrelationQuery} from "./get-correlation-query"
 
 test("returns uid query if ts and duration are missing", () => {
@@ -15,7 +15,7 @@ test("returns uid query if ts and duration are missing", () => {
   })
 
   expect(getCorrelationQuery(record)).toBe(
-    uidCorrelation(record.get("uid") as ZedPrimitive)
+    uidCorrelation(record.get("uid") as zed.Primitive)
   )
 })
 
@@ -29,10 +29,10 @@ test("returns conn query if ts and duration are present", () => {
   })
   expect(getCorrelationQuery(record)).toBe(
     connCorrelation(
-      record.get("uid") as ZedPrimitive,
-      record.get("community_id") as ZedPrimitive,
-      record.get("ts") as ZedPrimitive,
-      record.get("duration") as ZedPrimitive
+      record.get("uid") as zed.Primitive,
+      record.get("community_id") as zed.Primitive,
+      record.get("ts") as zed.Primitive,
+      record.get("duration") as zed.Primitive
     )
   )
 })
@@ -46,7 +46,7 @@ test("returns cid query if only cid present", () => {
   })
 
   expect(getCorrelationQuery(record)).toBe(
-    cidCorrelation(record.get("community_id") as ZedPrimitive)
+    cidCorrelation(record.get("community_id") as zed.Primitive)
   )
 })
 

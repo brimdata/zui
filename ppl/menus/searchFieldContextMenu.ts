@@ -4,7 +4,8 @@ import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
 import {Space} from "src/js/state/Spaces/types"
 import {RightClickBuilder} from "src/js/types"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
+import {ZealotContext} from "zealot"
+import * as zed from "zealot/zed"
 
 export default function searchFieldContextMenu(
   program: string,
@@ -12,15 +13,14 @@ export default function searchFieldContextMenu(
   space: Space
 ): RightClickBuilder {
   return function(
-    field: ZedField,
-    log: ZedRecord,
+    field: zed.Field,
+    log: zed.Record,
     compound: boolean
   ): MenuItemConstructorOptions[] {
-    const isTime =
-      field.data instanceof ZedPrimitive && field.data.type === "time"
+    const isTime = field.data instanceof zed.Time
     const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
-    const isIp = field.data instanceof ZedPrimitive && field.data.type === "ip"
+    const isIp = field.data instanceof zed.Ip
     const hasCol = columns.includes(field.name)
     const flatColNames = log.flatten().columns
     const sameCols = isEqual(flatColNames.sort(), columns.sort())
@@ -39,8 +39,8 @@ export default function searchFieldContextMenu(
 
     const searchMenuActions = menu.actions.search
 
-    const fieldData = field.serialize()
-    const recordData = log.serialize()
+    const fieldData = ZealotContext.encodeField(field)
+    const recordData = ZealotContext.encodeRecord(log)
 
     return [
       searchMenuActions.include.menuItem([fieldData], {

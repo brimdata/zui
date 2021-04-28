@@ -1,18 +1,6 @@
 import {TypeIp} from "../types/type-ip"
-import {ZedValueInterface} from "./types"
+import {Primitive} from "./primitive"
 
-export class Ip implements ZedValueInterface {
-  constructor(private value: string) {}
-
-  get type() {
-    return TypeIp
-  }
-
-  toString() {
-    return this.value.toString()
-  }
-
-  serialize() {
-    return this.value.toString()
-  }
+export class Ip extends Primitive {
+  type = TypeIp
 }

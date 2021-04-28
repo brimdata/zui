@@ -1,18 +1,12 @@
-import {TypeUInt16} from "../types/type-uint16"
-import {ZedValueInterface} from "./types"
+import {isNull} from "lodash"
+import {TypeUint16} from "../types/type-uint16"
+import {Primitive} from "./primitive"
 
-export class UInt16 implements ZedValueInterface {
-  constructor(private value: string) {}
+export class Uint16 extends Primitive {
+  type = TypeUint16
 
-  get type() {
-    return TypeUInt16
-  }
-
-  toString() {
-    return this.value.toString()
-  }
-
-  serialize() {
-    return this.value.toString()
+  toInt() {
+    if (isNull(this.value)) return null
+    return parseInt(this.value)
   }
 }

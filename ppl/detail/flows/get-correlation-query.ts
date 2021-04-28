@@ -3,18 +3,18 @@ import {
   connCorrelation,
   uidCorrelation
 } from "src/js/searches/programs"
-import {ZedRecord, ZedPrimitive} from "zealot/zed"
+import * as zed from "zealot/zed"
 import {Correlation} from "../models/Correlation"
 
-export function getCorrelationQuery(record: ZedRecord) {
+export function getCorrelationQuery(record: zed.Record) {
   const {uid, cid} = new Correlation(record).getIds()
 
   if (cid && uid && record.has("ts") && record.has("duration")) {
     return connCorrelation(
-      record.get("uid") as ZedPrimitive,
-      record.get("community_id") as ZedPrimitive,
-      record.get("ts") as ZedPrimitive,
-      record.get("duration") as ZedPrimitive
+      record.get("uid") as zed.Primitive,
+      record.get("community_id") as zed.Primitive,
+      record.get("ts") as zed.Primitive,
+      record.get("duration") as zed.Primitive
     )
   } else if (uid) {
     return uidCorrelation(uid)

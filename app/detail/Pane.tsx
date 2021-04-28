@@ -13,7 +13,7 @@ import LogDetails from "src/js/state/LogDetails"
 import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
-import {ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 
 const BG = styled.div`
   padding: 12px;
@@ -24,7 +24,7 @@ const BG = styled.div`
 `
 
 type Props = {
-  record: ZedRecord
+  record: zed.Record
 }
 
 const Content = memo<Props>(function Content({record}) {

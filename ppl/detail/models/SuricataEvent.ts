@@ -1,15 +1,15 @@
-import {ZedRecord, ZedPrimitive} from "zealot/zed"
+import * as zed from "zealot/zed"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class SuricataEvent implements BrimEventInterface {
-  constructor(private r: ZedRecord) {}
+  constructor(private r: zed.Record) {}
 
   getRecord() {
     return this.r
   }
 
   getTime() {
-    return (this.r.get("ts") as ZedPrimitive).toDate()
+    return (this.r.get("ts") as zed.Primitive).toDate()
   }
 
   getEndTime() {
@@ -21,7 +21,7 @@ export class SuricataEvent implements BrimEventInterface {
   }
 
   getSeverity(): number {
-    const data = this.r.get("alert.severity") as ZedPrimitive
+    const data = this.r.get("alert.severity") as zed.Primitive
     return data.toInt()
   }
 }

@@ -1,11 +1,10 @@
-import {ZedData, ZedPrimitive} from "zealot/zed"
+import * as zed from "zealot/zed"
 
-export function typeClassNames(data: ZedData) {
+export function typeClassNames(data: zed.AnyValue) {
   const classNames = []
-  if (data instanceof ZedPrimitive) {
-    classNames.push(data.type)
+  if (data instanceof zed.Primitive) {
+    classNames.push(data.type.toString())
   }
-  if (data.typeName) classNames.push(data.typeName)
   if (data.isUnset()) classNames.push("null")
   return classNames.join(" ")
 }

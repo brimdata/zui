@@ -1,6 +1,6 @@
 import {last} from "lodash"
 import loginTo from "src/js/test/helpers/loginTo"
-import {createRecord} from "test/factories/record"
+import {createRecord} from "test/factories/zed-factory"
 import {useResponse} from "test/responses"
 import {fetchCorrelation} from "./fetch"
 

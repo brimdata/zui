@@ -1,18 +1,7 @@
 import {TypeTypename} from "../types/type-typename"
-import {ZedValueInterface} from "./types"
+import {Primitive} from "./primitive"
 
-export class Typename implements ZedValueInterface {
-  constructor(private value: string) {}
-
-  get type() {
-    return TypeTypename
-  }
-
-  toString() {
-    return this.value.toString()
-  }
-
-  serialize() {
-    return this.value.toString()
-  }
+// I don't think I ever use this...
+export class Typename extends Primitive {
+  type = TypeTypename
 }

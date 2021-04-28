@@ -1,4 +1,4 @@
-import {PrimitiveType} from "zealot/zed/zjson"
+import {PrimitiveType} from "zealot/zjson"
 
 export const STRING = {kind: "primitive", name: "string"} as PrimitiveType
 export const TIME = {kind: "primitive", name: "time"} as PrimitiveType

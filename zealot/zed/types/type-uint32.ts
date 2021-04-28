@@ -1,17 +1,18 @@
-import {UInt32} from "../values/uint32"
+import {Uint32} from "../values/uint32"
+import {PrimitiveType} from "../../zjson"
 import {PrimitiveTypeInterface} from "./types"
 
-class TypeOfUInt32 implements PrimitiveTypeInterface<UInt32> {
+class TypeOfUint32 implements PrimitiveTypeInterface<Uint32> {
   name = "uint32"
   kind = "primitive"
 
-  serialize() {
-    return {kind: this.kind, name: this.name}
+  serialize(): PrimitiveType {
+    return {kind: "primitive", name: this.name}
   }
 
   create(value) {
-    return new UInt32(value)
+    return new Uint32(value)
   }
 }
 
-export const TypeUInt32 = new TypeOfUInt32()
+export const TypeUint32 = new TypeOfUint32()

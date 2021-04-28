@@ -1,18 +1,27 @@
+import {isNull} from "lodash"
 import {TypeUnion} from "../types/type-union"
+import {ZedType} from "../types/types"
 import {ZedValue, ZedValueInterface} from "./types"
 
 export class Union implements ZedValueInterface {
   constructor(
     public type: TypeUnion,
-    public position: number,
-    public value: ZedValue
+    public innerType: ZedType,
+    public index: number | null,
+    public value: ZedValue | null
   ) {}
 
   toString() {
-    return "TO DO"
+    if (isNull(this.value)) return "null"
+    return this.value.toString()
   }
 
   serialize() {
-    return "TO DO"
+    if (isNull(this.index) || isNull(this.value)) return null
+    return [this.index.toString(), this.value.toString()]
+  }
+
+  isUnset() {
+    return isNull(this.index) || isNull(this.value)
   }
 }

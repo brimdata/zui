@@ -5,19 +5,19 @@ import React, {memo, useCallback, useMemo, useState} from "react"
 import {useDispatch} from "react-redux"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 import contextMenu from "./flows/contextMenu"
 import Panel from "./Panel"
 import PanelHeading from "./PanelHeading"
 
 type Props = {
-  record: ZedRecord
+  record: zed.Record
 }
 
 type DTProps = {
-  fields: ZedField[]
-  onRightClick: (f: ZedField) => void
-  onHover: (f: ZedField) => void
+  fields: zed.Field[]
+  onRightClick: (f: zed.Field) => void
+  onHover: (f: zed.Field) => void
 }
 
 const DataPanel = React.memo<DTProps>(function DataTable({
@@ -36,7 +36,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
             className={typeClassNames(field.data)}
             onContextMenu={() => onRightClick(field)}
           >
-            {formatPrimitive(field.data as ZedPrimitive)}
+            {formatPrimitive(field.data as zed.Primitive)}
           </Value>
         </Data>
       ))}

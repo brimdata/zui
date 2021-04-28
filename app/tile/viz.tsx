@@ -6,7 +6,7 @@ import {TileFormat} from "ppl/summary/summary"
 import Table from "ppl/summary/table"
 import React, {memo} from "react"
 import styled from "styled-components"
-import {ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 
 const BG = styled.div`
   flex: 1;
@@ -56,7 +56,7 @@ function getViz(format, records) {
 
 type Props = {
   format: TileFormat
-  records: ZedRecord[]
+  records: zed.Record[]
 }
 
 function Viz({format, records}: Props) {

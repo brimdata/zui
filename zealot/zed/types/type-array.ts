@@ -1,8 +1,12 @@
-import {ZedType} from "./types"
-import {typeId} from "./utils"
-import {ZedArray} from "../values/array"
+/* eslint-disable @typescript-eslint/no-array-constructor */
+import {isNull} from "lodash"
+import {ZedContext} from "../context"
+import {Array} from "../values/array"
+import {ContainerTypeInterface, ZedType} from "./types"
+import {typeId} from "../utils"
+import * as zjson from "../../zjson"
 
-export class TypeArray {
+export class TypeArray implements ContainerTypeInterface {
   kind = "array"
   type: ZedType
 
@@ -15,9 +19,25 @@ export class TypeArray {
   }
 
   create(values, typedefs) {
-    return new ZedArray(
+    return new Array(
       this,
       values.map((value) => this.type.create(value, typedefs))
     )
+  }
+
+  serialize(typedefs: object) {
+    return {
+      kind: "array",
+      type: this.type.serialize(typedefs)
+    } as zjson.ArrayType
+  }
+
+  hasTypeType(ctx) {
+    return ctx.hasTypeType(this.type)
+  }
+
+  walkTypeValues(ctx: ZedContext, value: zjson.ArrayValue, visit) {
+    if (isNull(value)) return
+    value.map((v) => ctx.walkTypeValues(this.type, v, visit))
   }
 }

@@ -78,3 +78,54 @@
 { metric: "B", ts: 2020-11-24T08:44:20.726057-08:00, value: 0.86 }
 { metric: "A", ts: 2020-11-24T08:44:32.201458-08:00, value: 126 }
 { metric: "C", ts: 2020-11-24T08:44:43.547506-08:00, value: { x:10, y:101 } }
+// a record containing all the primitives
+{
+uint8: 8 (uint8),
+uint16: 16 (uint16),
+uint32: 32 (uint32),
+uint64: 64 (uint64),
+int8: -8 (int8),
+int16: -16 (int16),
+int32: -32 (int32),
+int64: -64 (int64),
+duration: 10.1s (duration),
+time: 1937-01-01T12:00:27.87+00:20 (time),
+// float16: 16.16 (float16),
+// float32: 32.32 (float32),
+float64: 64.64 (float64),
+// decimal: 10.00001 (decimal),
+bool: false (bool),
+bytes: 0xff (bytes),
+string: "Hello world" (string),
+bstring: "Hello world 👋" (bstring),
+ip: 10.10.10.10 (ip),
+net: 10.1.1.0/24 (net),
+type: "access_list" (type),
+error: "fatal error" (error),
+null: null (null)
+} (=every_primitive)
+
+// test when everything is null
+
+{
+uint8:null,
+uint16:null,
+uint32:null,
+uint64:null,
+int8:null,
+int16:null,
+int32:null,
+int64:null,
+duration:null,
+time:null,
+float64:null,
+bool:null,
+bytes:null,
+string:null,
+bstring:null,
+ip:null,
+net:null,
+type:null,
+error:null,
+null:null,
+} (every_primitive)

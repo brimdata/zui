@@ -1,10 +1,10 @@
 import brim from "src/js/brim"
 import {withCommas} from "src/js/lib/fmt"
-import {ZedPrimitive} from "zealot/zed"
+import * as zed from "zealot/zed"
 
-export function formatPrimitive(data: ZedPrimitive) {
+export function formatPrimitive(data: zed.Primitive) {
   if (data.isUnset()) return "⦻"
-  if (data.type.match(/int/)) return withCommas(data.toString())
-  if (data.type === "time") return brim.time(this.toDate()).format()
+  if (zed.isInt(data)) return withCommas(data.toString())
+  if (zed.isTime(data)) return brim.time(this.toDate()).format()
   return data.toString()
 }

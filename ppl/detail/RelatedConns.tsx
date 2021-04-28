@@ -8,18 +8,18 @@ import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
 import {showContextMenu} from "src/js/lib/System"
 import zql from "src/js/zql"
-import {ZedRecord} from "zealot/zed"
+import * as zed from "zealot/zed"
 import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
 
 type Props = {
-  record: ZedRecord
+  record: zed.Record
 }
 
 const LIMIT = 100
-const getQuery = (r: ZedRecord, limit?: number) => {
+const getQuery = (r: zed.Record, limit?: number) => {
   const cid = r.get("community_id")
   const base = zql`_path=conn community_id=${cid} | sort ts`
   return limit ? `${base} | head ${limit}` : base

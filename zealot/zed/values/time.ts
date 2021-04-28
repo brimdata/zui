@@ -1,18 +1,12 @@
+import {isNull} from "lodash"
 import {TypeTime} from "../types/type-time"
-import {ZedValueInterface} from "./types"
+import {Primitive} from "./primitive"
 
-export class Time implements ZedValueInterface {
-  constructor(private value: string) {}
+export class Time extends Primitive {
+  type = TypeTime
 
-  get type() {
-    return TypeTime
-  }
-
-  toString() {
-    return this.value.toString()
-  }
-
-  serialize() {
-    return this.value.toString()
+  toDate() {
+    if (isNull(this.value)) return null
+    return new Date(+this.value * 1000)
   }
 }

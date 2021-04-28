@@ -3,7 +3,8 @@ import {isEqual} from "lodash"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
 import {Space} from "src/js/state/Spaces/types"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
+import {ZealotContext} from "zealot"
+import * as zed from "zealot/zed"
 
 export default function detailFieldContextMenu(
   program: string,
@@ -11,15 +12,14 @@ export default function detailFieldContextMenu(
   space: Space
 ) {
   return function(
-    field: ZedField,
-    log: ZedRecord,
+    field: zed.Field,
+    log: zed.Record,
     compound: boolean
   ): MenuItemConstructorOptions[] {
-    const isTime =
-      field.data instanceof ZedPrimitive && field.data.type === "time"
+    const isTime = field.data instanceof zed.Time
     const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
-    const isIp = field.data instanceof ZedPrimitive && field.data.type === "ip"
+    const isIp = field.data instanceof zed.Ip
     const hasCol = columns.includes(field.name)
     const sameCols = isEqual(log.columns.sort(), columns.sort())
     const hasPackets = space && space.pcap_support
@@ -37,8 +37,8 @@ export default function detailFieldContextMenu(
 
     const detailMenuActions = menu.actions.detail
 
-    const fieldData = field.serialize()
-    const recordData = log.serialize()
+    const fieldData = ZealotContext.encodeField(field)
+    const recordData = ZealotContext.encodeRecord(log)
 
     return [
       detailMenuActions.include.menuItem([fieldData], {
