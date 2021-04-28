@@ -8,13 +8,14 @@ const usePluginToolbarItems = (toolbarId: string): ActionButtonProps[] => {
   const items = useSelector(Toolbars.allToolbarItems(toolbarId))
   const dispatch = useDispatch()
 
-  return items.map(({label, command, disabled, icon, tooltip}) => {
+  return items.map(({label, command, disabled, icon, tooltip, buttonProps}) => {
     return {
       label,
       disabled,
       icon: icon as IconName,
       title: tooltip,
-      click: () => dispatch(executeCommand(command))
+      click: () => dispatch(executeCommand(command)),
+      buttonProps
     }
   })
 }

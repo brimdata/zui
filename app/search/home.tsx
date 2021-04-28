@@ -61,7 +61,7 @@ export default function SearchHome() {
   const columns = useColumns()
   const pluginButtons = usePluginToolbarItems("search")
 
-  const actions = [exportAction, columns, view, ...pluginButtons]
+  const actions = [...pluginButtons, exportAction, columns, view]
 
   return (
     <InitSearchParams>

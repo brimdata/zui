@@ -11,6 +11,7 @@ import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
 import fsExtra, {pathExistsSync} from "fs-extra"
 import errors from "src/js/errors"
+import {reactElementProps} from "../../src/js/test/integration"
 
 export default class BrimcapPlugin {
   private cli: BrimcapCLI
@@ -80,7 +81,8 @@ export default class BrimcapPlugin {
       icon: "sharkfin", // TODO: enable plugins to provide their own assets
       disabled: true,
       tooltip: "No connection record found.",
-      order: 0
+      order: 0,
+      buttonProps: reactElementProps("pcapsButton")
     }
 
     const setButtonDetails = (
@@ -180,7 +182,7 @@ export default class BrimcapPlugin {
       .toString()
 
     const dur = log.get("duration") as zng.Primitive
-    const dest = join(os.tmpdir(), `packets-${ts.toString()}.pcap`)
+    const dest = join(this.api.getTempDir(), `packets-${ts.toString()}.pcap`)
 
     return {
       dstIp: log.get("id.resp_h").toString(),

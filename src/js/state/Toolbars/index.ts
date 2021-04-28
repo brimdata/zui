@@ -13,6 +13,7 @@ export type ToolbarItem = {
   disabled: boolean
   tooltip?: string
   command: string
+  buttonProps?: object
 }
 
 export type ToolbarState = ReturnType<typeof slice.reducer>

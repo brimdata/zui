@@ -46,6 +46,10 @@ export default class BrimApi {
     return this.dispatch(getZealot())
   }
 
+  public getTempDir() {
+    return remote.app.getPath("temp")
+  }
+
   public getAppConfig() {
     return {
       dataRoot: path.join(remote.app.getPath("userData"), "data"),
