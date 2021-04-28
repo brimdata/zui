@@ -39,7 +39,8 @@ export default class BrimcapPlugin {
     // RFC: what interface do we want the app to provide for this sort of data?
     const {dataRoot, zdepsDirectory} = api.getAppConfig()
 
-    this.brimcapBinPath = path.join(zdepsDirectory, "brimcap")
+    const commandName = process.platform === "win32" ? "brimcap.exe" : "brimcap"
+    this.brimcapBinPath = path.join(zdepsDirectory, commandName)
     this.cli = new BrimcapCLI(this.brimcapBinPath)
 
     this.brimcapDataRoot = path.join(dataRoot, "brimcap-root")
