@@ -10,8 +10,6 @@ export type IngestParams = {
   name: string
   dataDir: string
   fileListData: FileListData
-  // endpoint: IngestFileType
-  // files: File[]
 }
 
 export type IngestParamsError = {
@@ -25,12 +23,6 @@ export default function getParams(
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
   const files = fileList(data)
-
-  // if (files.multiple() && files.any("pcap")) {
-  //   return {
-  //     error: "Only one pcap can be opened at a time."
-  //   }
-  // }
 
   function getDataDir() {
     return dataDir ? path.join(dataDir, getSpaceName()) : ""
@@ -49,8 +41,6 @@ export default function getParams(
     name: getSpaceName(),
     dataDir: getDataDir(),
     fileListData: data
-    // endpoint: files.first().type,
-    // files: files.files()
   }
 }
 

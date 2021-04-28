@@ -8,7 +8,7 @@ import {createMemoryHistory} from "history"
 import tabHistory from "app/router/tab-history"
 import BrimApi from "../api"
 
-export default function initGlobals(store: Store, api?: BrimApi) {
+export default function initGlobals(store: Store) {
   global.getState = store.getState
   global.windowId = getUrlSearchParams().id
   global.windowName = getWindowName()
