@@ -11,10 +11,10 @@ test("conn correlation", () => {
   })
   expect(
     connCorrelation(
-      record.get("uid") as zed.Primitive,
-      record.get("community_id") as zed.Primitive,
-      record.get("ts") as zed.Primitive,
-      record.get("duration") as zed.Primitive
+      record.get("uid") as zed.String,
+      record.get("community_id") as zed.String,
+      record.get("ts") as zed.Time,
+      record.get("duration") as zed.Float64
     )
   ).toBe(
     'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100'

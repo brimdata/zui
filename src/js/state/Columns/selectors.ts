@@ -4,7 +4,7 @@ import TableColumns from "../../models/TableColumns"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"
 import Viewer from "../Viewer"
-import {ViewerColumns} from "../Viewer/types"
+import {SchemaMap} from "../Viewer/types"
 import {createColumnSet} from "./models/columnSet"
 import {ColumnsState} from "./types"
 
@@ -12,7 +12,7 @@ const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
 
 const getCurrentTableColumns = createSelector<
   State,
-  ViewerColumns,
+  SchemaMap,
   ColumnsState,
   zed.Record[],
   TableColumns

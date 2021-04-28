@@ -9,8 +9,8 @@ import SearchBar from "src/js/state/SearchBar"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
+import {SchemaMap} from "src/js/state/Viewer/types"
 import {zed} from "zealot"
-import {TypeContext} from "zealot/zjson"
 
 type Args = {
   query: string
@@ -40,7 +40,7 @@ function handle(
   append = false
 ): Thunk {
   return function(dispatch) {
-    let allColumns: TypeContext = {}
+    let allColumns: SchemaMap = {}
     let allRecords: zed.Record[] = []
     let count = 0
 

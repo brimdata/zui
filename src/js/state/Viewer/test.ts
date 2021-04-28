@@ -1,5 +1,5 @@
 import {createRecord} from "test/factories/zed-factory"
-import ZedTypeDef from "zealot/zed/type-def"
+import {zed} from "zealot"
 import initTestStore from "../../test/initTestStore"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
@@ -15,6 +15,7 @@ beforeEach(() => {
 const conn = createRecord({ts: new Date(1000)})
 const dns = createRecord({ts: new Date(2000)})
 const http = createRecord({ts: new Date(3000)})
+const type = new zed.TypeRecord([{name: "a", type: zed.TypeString}])
 
 test("adding logs to the viewer", () => {
   const state = store.dispatchAll([
@@ -65,22 +66,10 @@ test("results limited", () => {
 
 test("update columns with same tds", () => {
   const cols1 = {
-    "9d14c2039a78d76760aae879c7fd2c82": new ZedTypeDef({
-      type: {
-        kind: "typedef",
-        name: "hello",
-        type: {kind: "primitive", name: "string"}
-      }
-    })
+    "9d14c2039a78d76760aae879c7fd2c82": new zed.Schema("1", type)
   }
   const cols2 = {
-    "71f1b421963d31952e15edf7e3957a81": new ZedTypeDef({
-      type: {
-        kind: "typedef",
-        name: "hello",
-        type: {kind: "primitive", name: "string"}
-      }
-    })
+    "71f1b421963d31952e15edf7e3957a81": new zed.Schema("1", type)
   }
   const state = store.dispatchAll([
     Viewer.updateColumns(tabId, cols1),
@@ -88,19 +77,7 @@ test("update columns with same tds", () => {
   ])
 
   expect(Viewer.getColumns(state)).toEqual({
-    "9d14c2039a78d76760aae879c7fd2c82": new ZedTypeDef({
-      type: {
-        kind: "typedef",
-        name: "hello",
-        type: {kind: "primitive", name: "string"}
-      }
-    }),
-    "71f1b421963d31952e15edf7e3957a81": new ZedTypeDef({
-      type: {
-        kind: "typedef",
-        name: "hello",
-        type: {kind: "primitive", name: "string"}
-      }
-    })
+    "9d14c2039a78d76760aae879c7fd2c82": new zed.Schema("1", type),
+    "71f1b421963d31952e15edf7e3957a81": new zed.Schema("1", type)
   })
 })

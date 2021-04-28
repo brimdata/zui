@@ -13,7 +13,7 @@ test("no errors if space does not exist", async () => {
 
   store.dispatch(Layout.showRightSidebar())
   store.dispatch(tabHistory.push(workspacesPath()))
-  store.dispatch(LogDetails.push(new zed.Record({fields: []})))
+  store.dispatch(LogDetails.push(new zed.Record(null, [])))
   const el = provide(store, <XRightPane />)
   expect(el.html()).toBe("")
 })

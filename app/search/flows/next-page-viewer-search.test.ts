@@ -51,7 +51,7 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
   const search = jest.spyOn(zealot.zealot, "search")
   store.dispatch(nextPageViewerSearch())
 
-  const data = records[1].at(1) as zed.Primitive
+  const data = records[1].at(1) as zed.Time
   const lastChangeTs = data.toDate().getTime()
   expect(search).toHaveBeenCalledWith(
     expect.any(String),

@@ -1,5 +1,5 @@
-import {INTERVAL, STRING, TIME} from "test/fixtures/zjson-types"
-import ZedTypeDef from "zealot/zed/type-def"
+import {INTERVAL, STRING} from "test/fixtures/zjson-types"
+import {zed} from "zealot"
 import initTestStore from "../../test/initTestStore"
 import Columns from "./"
 import actions from "./actions"
@@ -7,32 +7,20 @@ import {createColumn} from "./models/column"
 import touch from "./touch"
 
 const columns = {
-  "1": new ZedTypeDef({
-    type: {
-      name: "1",
-      kind: "typedef",
-      type: {
-        kind: "record",
-        fields: [
-          {name: "_path", type: STRING},
-          {name: "duration", type: INTERVAL}
-        ]
-      }
-    }
-  }),
-  "2": new ZedTypeDef({
-    type: {
-      name: "2",
-      kind: "typedef",
-      type: {
-        kind: "record",
-        fields: [
-          {name: "_path", type: STRING},
-          {name: "ts", type: TIME}
-        ]
-      }
-    }
-  })
+  "1": new zed.Schema(
+    "1",
+    new zed.TypeRecord([
+      {name: "_path", type: zed.TypeString},
+      {name: "duration", type: zed.TypeDuration}
+    ])
+  ),
+  "2": new zed.Schema(
+    "2",
+    new zed.TypeRecord([
+      {name: "_path", type: zed.TypeString},
+      {name: "ts", type: zed.TypeTime}
+    ])
+  )
 }
 
 let store

@@ -29,10 +29,10 @@ test("returns conn query if ts and duration are present", () => {
   })
   expect(getCorrelationQuery(record)).toBe(
     connCorrelation(
-      record.get("uid") as zed.Primitive,
-      record.get("community_id") as zed.Primitive,
-      record.get("ts") as zed.Primitive,
-      record.get("duration") as zed.Primitive
+      record.get<zed.String>("uid"),
+      record.get<zed.String>("community_id"),
+      record.get<zed.Time>("ts"),
+      record.get<zed.Float64>("duration")
     )
   )
 })
@@ -46,7 +46,7 @@ test("returns cid query if only cid present", () => {
   })
 
   expect(getCorrelationQuery(record)).toBe(
-    cidCorrelation(record.get("community_id") as zed.Primitive)
+    cidCorrelation(record.get<zed.String>("community_id"))
   )
 })
 

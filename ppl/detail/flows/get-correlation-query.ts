@@ -11,10 +11,10 @@ export function getCorrelationQuery(record: zed.Record) {
 
   if (cid && uid && record.has("ts") && record.has("duration")) {
     return connCorrelation(
-      record.get("uid") as zed.Primitive,
-      record.get("community_id") as zed.Primitive,
-      record.get("ts") as zed.Primitive,
-      record.get("duration") as zed.Primitive
+      record.get("uid") as zed.String,
+      record.get("community_id") as zed.String,
+      record.get("ts") as zed.Time,
+      record.get("duration") as zed.Float64
     )
   } else if (uid) {
     return uidCorrelation(uid)

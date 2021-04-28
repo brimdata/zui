@@ -9,7 +9,7 @@ export class SuricataEvent implements BrimEventInterface {
   }
 
   getTime() {
-    return (this.r.get("ts") as zed.Primitive).toDate()
+    return this.r.get<zed.Time>("ts").toDate()
   }
 
   getEndTime() {
@@ -21,7 +21,6 @@ export class SuricataEvent implements BrimEventInterface {
   }
 
   getSeverity(): number {
-    const data = this.r.get("alert.severity") as zed.Primitive
-    return data.toInt()
+    return this.r.get<zed.Uint64>("alert.severity").toInt()
   }
 }

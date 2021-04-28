@@ -6,7 +6,7 @@ import {TabState} from "../Tab/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import {createSelection, ViewerSelection} from "./helpers/selection"
-import {ViewerColumns, ViewerSelectionData, ViewerState} from "./types"
+import {SchemaMap, ViewerSelectionData, ViewerState} from "./types"
 
 export const getViewer = createSelector<State, TabState, ViewerState>(
   Tabs.getActiveTab,
@@ -35,7 +35,7 @@ export const getEndStatus = createSelector<State, ViewerState, string>(
   (viewer) => viewer.endStatus
 )
 
-export const getColumns = createSelector<State, ViewerState, ViewerColumns>(
+export const getColumns = createSelector<State, ViewerState, SchemaMap>(
   getViewer,
   (viewer) => viewer.columns
 )

@@ -19,7 +19,7 @@ import {
   VIEWER_SET_RECORDS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
-  ViewerColumns,
+  SchemaMap,
   ViewerStatus
 } from "./types"
 
@@ -61,7 +61,7 @@ export const setRecords = (
 
 export const updateColumns = (
   tabId: string,
-  columns: ViewerColumns
+  columns: SchemaMap
 ): VIEWER_COLUMNS => {
   return {
     type: "VIEWER_COLUMNS",
@@ -72,7 +72,7 @@ export const updateColumns = (
 
 export const setColumns = (
   tabId: string,
-  columns: ViewerColumns
+  columns: SchemaMap
 ): VIEWER_SET_COLUMNS => {
   return {
     type: "VIEWER_SET_COLUMNS",

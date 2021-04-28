@@ -1,5 +1,4 @@
 import {zed} from "zealot"
-import {createComplexCell} from "./complexCell"
 import {createPrimitiveCell} from "./primitiveCell"
 
 export interface Cell {
@@ -8,13 +7,13 @@ export interface Cell {
 
 type Args = {
   name: string
-  data: ZedData
+  data: zed.AnyValue
 }
 
 export function createCell({name, data}: Args): Cell {
   if (data instanceof zed.Primitive) {
     return createPrimitiveCell({name, data})
   } else {
-    return createComplexCell({name, data})
+    // return createComplexCell({name, data})
   }
 }

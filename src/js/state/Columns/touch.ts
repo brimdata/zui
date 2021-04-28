@@ -1,11 +1,11 @@
 import {Thunk} from "../types"
-import {ViewerColumns} from "../Viewer/types"
+import {SchemaMap} from "../Viewer/types"
 import {createColumnPrefs} from "./models/columnPrefs"
 import {createColumnSet} from "./models/columnSet"
 import Columns from "./"
 import selectors from "./selectors"
 
-export default (columns: ViewerColumns): Thunk => (dispatch, getState) => {
+export default (columns: SchemaMap): Thunk => (dispatch, getState) => {
   const set = createColumnSet(columns)
   const name = set.getName()
   const cols = set.getUniqColumns()

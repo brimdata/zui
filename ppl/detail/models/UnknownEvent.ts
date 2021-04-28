@@ -10,7 +10,7 @@ export class UnknownEvent implements BrimEventInterface {
 
   getTime() {
     if (this.r.has("ts")) {
-      return (this.r.get("ts") as zed.Primitive).toDate()
+      return this.r.get<zed.Time>("ts").toDate()
     } else {
       return new Date(0)
     }

@@ -51,10 +51,10 @@ export function cidCorrelation(cid: string | zed.Primitive) {
 }
 
 export function connCorrelation(
-  uid: zed.Primitive,
-  cid: zed.Primitive,
-  ts: zed.Primitive,
-  duration: zed.Primitive
+  uid: zed.String,
+  cid: zed.String,
+  ts: zed.Time,
+  duration: zed.Float64
 ) {
   const tsDate = ts.toDate()
   const dur = duration.toFloat() + 90 // Add a 1.5 minute buffer for events that get logged late

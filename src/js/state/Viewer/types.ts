@@ -1,11 +1,10 @@
 import {zed} from "zealot"
-import {TypeContext} from "zealot/zed/zjson"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
-export type ViewerColumns = TypeContext
+export type SchemaMap = {[name: string]: zed.Schema}
 export type ViewerSelectionData = {
   rows: {
     [key: number]: boolean
@@ -14,7 +13,7 @@ export type ViewerSelectionData = {
 }
 export type ViewerState = {
   records: zed.Record[]
-  columns: ViewerColumns
+  columns: SchemaMap
   endStatus: ViewerStatus
   status: SearchStatus
   scrollPos: ScrollPosition
@@ -77,13 +76,13 @@ export type VIEWER_STATUS = {
 
 export type VIEWER_COLUMNS = {
   type: "VIEWER_COLUMNS"
-  columns: ViewerColumns
+  columns: SchemaMap
   tabId: string
 }
 
 export type VIEWER_SET_COLUMNS = {
   type: "VIEWER_SET_COLUMNS"
-  columns: ViewerColumns
+  columns: SchemaMap
   tabId: string
 }
 

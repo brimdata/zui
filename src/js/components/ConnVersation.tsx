@@ -22,7 +22,11 @@ function filter(record: zed.Record, names: string[]) {
     if (field) fields.push(field)
   })
 
-  return new zed.Record({fields})
+  const type = new zed.TypeRecord(
+    fields.map((f) => ({name: f.name, type: f.value.type}))
+  )
+
+  return new zed.Record(type, fields)
 }
 
 const ConnVersation = ({record}: Props) => {

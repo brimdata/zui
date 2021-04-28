@@ -1,4 +1,4 @@
-import {DecodedZJSON} from "zealot/zed/zjson"
+import {RecordsCallbackArgs} from "zealot/fetcher/records_callback"
 import {SearchStats, SearchStatus} from "../../types/searches"
 
 type EventNames =
@@ -18,7 +18,7 @@ export class SearchResponse {
     this.callbacks = new Map<EventNames, Function>()
   }
 
-  chan(num: number, func: (data: DecodedZJSON) => void) {
+  chan(num: number, func: (data: RecordsCallbackArgs) => void) {
     this.callbacks.set(num, func)
     return this
   }

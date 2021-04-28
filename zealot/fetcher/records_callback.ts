@@ -1,15 +1,17 @@
 import {ZealotContext, zed} from "zealot"
 import * as zqd from "../zqd"
 
+type SchemaMap = {[name: string]: zed.Schema}
+
 export interface RecordsCallbackArgs {
   channel: number
-  typedefs: object
+  schemas: SchemaMap
   newRows: zed.Record[]
   rows: zed.Record[]
 }
 
 type ChannelMap = Map<number, Channel>
-type Channel = {rows: zed.Record[]; typedefs: object}
+type Channel = {rows: zed.Record[]; schemas: SchemaMap; typedefs: object}
 type RecordsCallback = (args: RecordsCallbackArgs) => void
 type PayloadCallback = (payload: zqd.SearchRecords) => void
 
@@ -17,6 +19,7 @@ function getChannel(id: number, channels: ChannelMap): Channel {
   if (!channels.has(id)) {
     channels.set(id, {
       rows: [],
+      schemas: {},
       typedefs: {}
     } as Channel)
   }
@@ -31,7 +34,7 @@ export function createRecordsCallback(cb: RecordsCallback): PayloadCallback {
     const next = ZealotContext.decode(records, prev.typedefs)
     const chan = {
       rows: [...prev.rows, ...next],
-      typedefs: prev.typedefs
+      schemas: prev.typedefs
     }
     channels.set(id, chan)
 
@@ -39,7 +42,7 @@ export function createRecordsCallback(cb: RecordsCallback): PayloadCallback {
       channel: id,
       newRows: next,
       rows: chan.rows,
-      typedefs: chan.typedefs
-    })
+      schemas: chan.schemas
+    } as RecordsCallbackArgs)
   }
 }
