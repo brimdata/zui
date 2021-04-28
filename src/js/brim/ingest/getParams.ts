@@ -1,6 +1,5 @@
 import path from "path"
 
-import {IngestFileType} from "./detectFileType"
 import {getUniqName} from "../../lib/uniqName"
 import fileList, {FileListData} from "./fileList"
 import lib from "../../lib"
@@ -9,8 +8,7 @@ import time from "../time"
 export type IngestParams = {
   name: string
   dataDir: string
-  endpoint: IngestFileType
-  files: File[]
+  fileListData: FileListData
 }
 
 export type IngestParamsError = {
@@ -24,12 +22,6 @@ export default function getParams(
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
   const files = fileList(data)
-
-  if (files.multiple() && files.any("pcap")) {
-    return {
-      error: "Only one pcap can be opened at a time."
-    }
-  }
 
   function getDataDir() {
     return dataDir ? path.join(dataDir, getSpaceName()) : ""
@@ -47,8 +39,7 @@ export default function getParams(
   return {
     name: getSpaceName(),
     dataDir: getDataDir(),
-    endpoint: files.first().type,
-    files: files.files()
+    fileListData: data
   }
 }
 

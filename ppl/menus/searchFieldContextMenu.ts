@@ -5,12 +5,10 @@ import {MenuItemConstructorOptions} from "electron"
 import {zng} from "zealot"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
-import {Space} from "src/js/state/Spaces/types"
 
 export default function searchFieldContextMenu(
   program: string,
-  columns: string[],
-  space: Space
+  columns: string[]
 ): RightClickBuilder {
   return function(
     field: zng.Field,
@@ -18,13 +16,11 @@ export default function searchFieldContextMenu(
     compound: boolean
   ): MenuItemConstructorOptions[] {
     const isTime = field.data.getType() === "time"
-    const isConn = log.try("_path")?.toString() === "conn"
     const isGroupBy = hasGroupByProc(program)
     const isIp = ["addr", "set[addr]"].includes(field.data.getType())
     const hasCol = columns.includes(field.name)
     const flatColNames = log.flatten().getColumnNames()
     const sameCols = isEqual(flatColNames.sort(), columns.sort())
-    const hasPackets = space && space.pcap_support
     const virusTotal = [
       "hassh",
       "host",
@@ -75,9 +71,6 @@ export default function searchFieldContextMenu(
         enabled: isTime
       }),
       menu.separator(),
-      searchMenuActions.pcaps.menuItem([recordData], {
-        enabled: isConn && hasPackets
-      }),
       searchMenuActions.detail.menuItem([recordData], {enabled: true}),
       menu.separator(),
       searchMenuActions.whoisRightclick.menuItem([fieldData], {enabled: isIp}),

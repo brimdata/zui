@@ -3,6 +3,7 @@ import {createZealotMock, Zealot} from "zealot"
 import initGlobals from "../initializers/initGlobals"
 import rootReducer from "../state/rootReducer"
 import {Action, State} from "../state/types"
+import BrimApi from "../api"
 
 export type TestStore = {
   dispatch: Function
@@ -13,7 +14,7 @@ export type TestStore = {
   getState: () => State
 }
 
-export default (zealot?: Zealot): TestStore => {
+export default (zealot?: Zealot, api?: BrimApi): TestStore => {
   const client = zealot || createZealotMock().zealot
   const createZealot = () => client
   const store = configureStore({
@@ -21,7 +22,7 @@ export default (zealot?: Zealot): TestStore => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: {
-          extraArgument: {createZealot}
+          extraArgument: {createZealot, api}
         },
         serializableCheck: false,
         immutableCheck: false

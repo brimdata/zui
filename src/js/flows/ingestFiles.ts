@@ -3,7 +3,6 @@ import fsExtra from "fs-extra"
 import brim from "../brim"
 import ingest from "../brim/ingest"
 import {IngestParams} from "../brim/ingest/getParams"
-import errors from "../errors"
 import lib from "../lib"
 import Current from "../state/Current"
 import Handlers from "../state/Handlers"
@@ -12,12 +11,15 @@ import Prefs from "../state/Prefs"
 import Spaces from "../state/Spaces"
 import SystemTest from "../state/SystemTest"
 import Tabs from "../state/Tabs"
-import {Thunk} from "../state/types"
+import {Dispatch, Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
+import BrimApi from "../api"
+import {Zealot} from "../../../zealot"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
-  getState
+  getState,
+  {api}
 ) => {
   const ws = Current.mustGetWorkspace(getState())
   const workspaceId = ws.id
@@ -35,8 +37,7 @@ export default (files: File[]): Thunk<Promise<void>> => (
       createSpace(zealot, dispatch, workspaceId),
       setSpace(dispatch, tabId, workspaceId),
       registerHandler(dispatch, requestId),
-      postFiles(zealot, ws),
-      trackProgress(zealot, dispatch, workspaceId),
+      executeLoader(zealot, dispatch, workspaceId, api),
       unregisterHandler(dispatch, requestId)
     ])
     .then(() => {
@@ -110,24 +111,46 @@ const unregisterHandler = (dispatch, id) => ({
   }
 })
 
-const postFiles = (client, ws) => ({
+const executeLoader = (
+  client: Zealot,
+  dispatch: Dispatch,
+  workspaceId: string,
+  api: BrimApi
+) => ({
   async do(params: IngestParams & {spaceId: string}) {
-    const {spaceId, endpoint, files} = params
-    const paths = files.map((f) => f.path)
-    let stream
-    if (endpoint === "pcap") {
-      try {
-        stream = await client.pcaps.post({spaceId, path: paths[0]})
-      } catch (e) {
-        if (e.name == "item does not exist") {
-          e.message = "File " + e.message + " does not exist on " + ws.name
-        }
-        throw e
-      }
-    } else {
-      stream = await client.logs.post({spaceId, files})
+    const {spaceId, fileListData = []} = params
+
+    const space = Spaces.actionsFor(workspaceId, spaceId)
+
+    const onProgressUpdate = (value: number | null): void => {
+      dispatch(space.setIngestProgress(value))
     }
-    return {...params, stream}
+    const onDetailUpdate = async (): Promise<void> => {
+      const details = await client.spaces.get(spaceId)
+      dispatch(Spaces.setDetail(workspaceId, details))
+    }
+    const onWarning = (warning: string): void => {
+      dispatch(space.appendIngestWarning(warning))
+    }
+
+    // for now, to find a loader match we will assume all files are the same
+    // type
+    const filesType = fileListData[0]?.type
+    const loaders = api.loaders.getMatches(filesType)
+    if (!loaders || loaders.length === 0) {
+      throw new Error(
+        `No registered loaders match the provided file type: ${filesType}`
+      )
+    }
+
+    // only supporting one loader at this time
+    const l = loaders[0]
+    try {
+      await l.load(params, onProgressUpdate, onWarning, onDetailUpdate)
+    } catch (e) {
+      l.unLoad && (await l.unLoad(params))
+      throw e
+    }
   }
 })
 
@@ -141,62 +164,3 @@ const setSpace = (dispatch, tabId, workspaceId) => ({
     global.tabHistories.getOrCreate(tabId).replace(url)
   }
 })
-
-const trackProgress = (client, gDispatch, workspaceId) => {
-  return {
-    async do({spaceId, stream, endpoint}) {
-      const space = Spaces.actionsFor(workspaceId, spaceId)
-
-      async function updateSpaceDetails() {
-        const details = await client.spaces.get(spaceId)
-        gDispatch(Spaces.setDetail(workspaceId, details))
-      }
-
-      function packetPostStatusToPercent(status): number {
-        if (status.pcap_total_size === 0) return 1
-        else return status.pcap_read_size / status.pcap_total_size || 0
-      }
-
-      gDispatch(space.setIngestProgress(0))
-      for await (const {type, ...status} of stream) {
-        switch (type) {
-          case "PcapPostStatus":
-            gDispatch(
-              space.setIngestProgress(packetPostStatusToPercent(status))
-            )
-            gDispatch(space.setIngestSnapshot(status.snapshot_count))
-            if (status.snapshot_count > 0) updateSpaceDetails()
-            break
-          case "UploadProgress":
-            gDispatch(space.setIngestProgress(status.progress))
-            updateSpaceDetails()
-            break
-          case "LogPostResponse":
-            updateSpaceDetails()
-            if (status.warnings) {
-              status.warnings.forEach((warning) => {
-                gDispatch(space.appendIngestWarning(warning))
-              })
-            }
-            break
-          case "LogPostWarning":
-          case "PcapPostWarning":
-            gDispatch(space.appendIngestWarning(status.warning))
-            break
-          case "TaskEnd":
-            if (status.error) {
-              if (endpoint === "pcap") {
-                throw errors.pcapIngest(status.error.error)
-              } else {
-                throw errors.logsIngest(status.error.error)
-              }
-            }
-            break
-        }
-      }
-      await updateSpaceDetails()
-      gDispatch(space.setIngestProgress(1))
-      gDispatch(space.setIngestProgress(null))
-    }
-  }
-}
