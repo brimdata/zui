@@ -14,9 +14,11 @@ import {reactElementProps} from "../../src/js/test/integration"
 
 export default class BrimcapPlugin {
   private cli: BrimcapCLI
-  // currentData represents the data detail currently seen in the Brim detail pane/window
+  // currentConn represents the data detail currently seen in the Brim detail
+  // pane/window
   private currentConn = null
-  // selectedData represents the data detail currently selected and highlighted in the search viewer
+  // selectedConn represents the data detail currently selected and highlighted
+  // in the search viewer
   private selectedConn = null
   private cleanupFns: Function[] = []
   private brimcapDataRoot = ""
@@ -51,7 +53,9 @@ export default class BrimcapPlugin {
 
     if (!pathExistsSync(this.brimcapBinPath)) {
       console.error(
-        "The brimcap plugin requires the 'brimcap' CLI tool to also be installed. Please download it here: https://github.com/brimdata/brimcap/releases"
+        new Error(
+          `Packaging error: brimcap executable could not be found at '${this.brimcapBinPath}', please submit an issue at https://github.com/brimdata/brim/issues/new/choose for assistance`
+        )
       )
       return
     }
@@ -201,8 +205,8 @@ export default class BrimcapPlugin {
     const searchOpts = this.logToSearchOpts(log)
 
     const searchAndOpen = async () => {
-      await this.cli.search(searchOpts)
-      return open(searchOpts.write, {newWindow: true})
+      this.cli.search(searchOpts)
+      return await open(searchOpts.write, {newWindow: true})
     }
 
     this.api.toast.promise(

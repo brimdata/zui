@@ -1,7 +1,6 @@
 import {MenuItemConstructorOptions} from "electron"
 
 import {conn, dns} from "../../test/mockLogs"
-import fixtures from "../../test/fixtures"
 import {zng} from "zealot"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 
@@ -11,7 +10,6 @@ function menuText(menu: MenuItemConstructorOptions[]) {
     .map((item) => item.label)
     .join(", ")
 }
-const space = fixtures("space1")
 
 describe("Log Right Click", () => {
   const program = "*"
@@ -19,36 +17,10 @@ describe("Log Right Click", () => {
     .flatten()
     .getColumnNames()
 
-  test("conn log with pcap support", () => {
-    const log = conn()
-    const field = log.getField("id.orig_h")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
-      field,
-      log,
-      false
-    )
-
-    expect(menuText(ctxMenu)).toMatch(/pcaps/i)
-  })
-
-  test("conn log without pcap support", () => {
-    space.pcap_support = false
-
-    const log = conn()
-    const field = log.getField("id.orig_h")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
-      field,
-      log,
-      false
-    )
-
-    expect(menuText(ctxMenu)).not.toMatch(/pcaps/i)
-  })
-
   test("dns log", () => {
     const log = dns()
     const field = log.getField("query")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames)(
       field,
       log,
       false
@@ -61,7 +33,7 @@ describe("Log Right Click", () => {
   test("time field for conn log", () => {
     const log = conn()
     const field = log.getField("ts")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames)(
       field,
       log,
       false
@@ -85,7 +57,7 @@ describe("Analysis Right Click", () => {
       ["300", ["192.168.0.51"]]
     )
     const field = log.getField("id.orig_h")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames)(
       field,
       log,
       false
@@ -103,11 +75,10 @@ describe("Analysis Right Click", () => {
       ["100", "tcp"]
     )
     const field = log.getField("proto")
-    const ctxMenu = searchFieldContextMenu(
-      "* | count() by proto",
-      ["count", "proto"],
-      space
-    )(field, log, false)
+    const ctxMenu = searchFieldContextMenu("* | count() by proto", [
+      "count",
+      "proto"
+    ])(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/pivot/i)
   })

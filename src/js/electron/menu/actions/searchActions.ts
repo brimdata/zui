@@ -6,7 +6,6 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../../flows/searchBar/actions"
-import {downloadPcap} from "../../../flows/downloadPcap"
 import {submitSearch} from "../../../flows/submitSearch/mod"
 import {viewLogDetail} from "../../../flows/viewLogDetail"
 import ErrorFactory from "../../../models/ErrorFactory"
@@ -162,13 +161,6 @@ function buildSearchActions() {
       ) {
         console.log(JSON.stringify(log))
         console.log(JSON.stringify(field))
-      }
-    }),
-    pcaps: action({
-      name: "search-cell-menu-pcaps",
-      label: "Download PCAPS",
-      listener(dispatch, data: zng.SerializedRecord) {
-        dispatch(downloadPcap(zng.Record.deserialize(data)))
       }
     }),
     sortAsc: action({

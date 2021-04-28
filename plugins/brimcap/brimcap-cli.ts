@@ -24,10 +24,6 @@ export interface loadOptions {
   zeekStderr?: string
 }
 
-export interface launchOptions extends packetOptions {
-  root: string
-}
-
 export interface searchOptions extends packetOptions {
   root: string
   write: string
@@ -47,11 +43,7 @@ const OPTION_NAME_MAP = {
 }
 
 export default class BrimcapCLI {
-  private binPath: string
-
-  constructor(binPath: string) {
-    this.binPath = binPath
-  }
+  constructor(private binPath: string) {}
 
   public load(pcapPath: string, opts: loadOptions): ChildProcess {
     const subCommandWithArgs = [
@@ -65,15 +57,11 @@ export default class BrimcapCLI {
     return spawn(this.binPath, subCommandWithArgs)
   }
 
-  public launch(opts: launchOptions) {
-    return this.exec("launch", opts)
-  }
-
-  async search(opts: searchOptions) {
+  public search(opts: searchOptions) {
     return this.exec("search", opts)
   }
 
-  private exec(subCommand: string, opts: searchOptions | launchOptions) {
+  private exec(subCommand: string, opts: searchOptions) {
     const commandWithArgs = [
       this.binPath,
       subCommand,

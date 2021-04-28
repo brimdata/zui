@@ -15,7 +15,6 @@ import action from "./action"
 import brim from "../../../brim"
 import tab from "../../../state/Tab"
 import virusTotal from "../../../services/virusTotal"
-import {downloadPcap} from "../../../flows/downloadPcap"
 import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
 import {zng} from "zealot"
 import {createCell} from "../../../brim/cell"
@@ -130,13 +129,6 @@ function buildDetailActions() {
       listener(_dispatch, field, log) {
         console.log(JSON.stringify(log))
         console.log(JSON.stringify(field))
-      }
-    }),
-    pcaps: action({
-      name: "detail-cell-menu-pcaps",
-      label: "Download PCAPS",
-      listener(dispatch, log: zng.SerializedRecord) {
-        dispatch(downloadPcap(zng.Record.deserialize(log)))
       }
     }),
     sortAsc: action({
