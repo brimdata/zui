@@ -1,6 +1,6 @@
 import {MenuItemConstructorOptions} from "electron"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
-import {createRecord} from "test/factories/record"
+import {createRecord} from "test/factories/zed-factory"
 import fixtures from "../../test/fixtures"
 
 const conn = createRecord({

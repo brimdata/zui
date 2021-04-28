@@ -1,12 +1,12 @@
 import classNames from "classnames"
 import React from "react"
-import {ZedField, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {createComplexCell} from "../../brim/complexCell"
 import SingleField from "./SingleField"
 
 type Props = {
-  field: ZedField
-  log: ZedRecord
+  field: zed.Field
+  log: zed.Record
   menuBuilder: Function
 }
 
@@ -16,7 +16,7 @@ export default function CompoundField({field, log, menuBuilder}: Props) {
   const render = []
 
   for (let i = 0; i < compound.length; ++i) {
-    const item = new ZedField({
+    const item = new zed.Field({
       name: field.name,
       // @ts-ignore
       data: field.data.items && field.data.items[i]

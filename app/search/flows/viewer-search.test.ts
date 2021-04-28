@@ -11,7 +11,7 @@
 // import responses from "src/js/test/responses"
 // import {STRING} from "test/fixtures/zjson-types"
 // import {createZealotMock} from "zealot"
-// import * as zed from "zealot/zed"
+// import {zed} from "zealot"
 // import {viewerSearch} from "./viewer-search"
 
 // const dnsResp = responses("dns.txt")

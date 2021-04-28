@@ -1,5 +1,5 @@
 import {get} from "lodash"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 const specialUids = {
   files: "conn_uids",
@@ -31,7 +31,7 @@ export class Correlation {
         const data = this.r.get(name)
         if (data instanceof zed.Primitive) {
           return data.toString()
-        } else if (data instanceof ZedArray || data instanceof ZedSet) {
+        } else if (data instanceof zed.Array || data instanceof zed.Set) {
           const uids = data.items.map((item) => {
             if (item instanceof zed.Primitive) return item.toString()
             else return ""

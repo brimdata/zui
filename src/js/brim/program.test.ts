@@ -1,5 +1,4 @@
-import {createData, createField, createRecord} from "test/factories/record"
-import {ZedField, ZedPrimitive} from "zealot/zed"
+import {createField, createRecord} from "test/factories/zed-factory"
 import {
   addHeadProc,
   getHeadCount,
@@ -23,12 +22,11 @@ describe("excluding and including", () => {
   })
 
   test("excluding a field with a pipe", () => {
-    const data = createData("HTTP")
     const program = brim
       .program(
         'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
       )
-      .exclude(new ZedField({name: "source", data}))
+      .exclude(createField("source", "HTTP"))
       .string()
 
     expect(program).toEqual(
@@ -133,8 +131,7 @@ describe("drill down", () => {
 
 describe("count by", () => {
   test("empty program", () => {
-    const data = new ZedPrimitive({type: "string", value: "heyo"})
-    const field = new ZedField({name: "_path", data})
+    const field = createField("_path", "heyo")
     const program = brim
       .program()
       .countBy(field)
@@ -144,8 +141,7 @@ describe("count by", () => {
   })
 
   test("append a count to an existing query", () => {
-    const data = new ZedPrimitive({type: "string", value: "heyo"})
-    const field = new ZedField({name: "query", data})
+    const field = createField("query", "heyo")
     const program = brim
       .program("dns")
       .countBy(field)

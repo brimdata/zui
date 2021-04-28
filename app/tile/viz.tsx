@@ -6,7 +6,7 @@ import {TileFormat} from "ppl/summary/summary"
 import Table from "ppl/summary/table"
 import React, {memo} from "react"
 import styled from "styled-components"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 const BG = styled.div`
   flex: 1;

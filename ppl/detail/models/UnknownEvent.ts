@@ -1,4 +1,4 @@
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class UnknownEvent implements BrimEventInterface {

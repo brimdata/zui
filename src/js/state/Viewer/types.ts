@@ -1,4 +1,4 @@
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {TypeContext} from "zealot/zed/zjson"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
@@ -13,7 +13,7 @@ export type ViewerSelectionData = {
   currentRange: [number, number]
 }
 export type ViewerState = {
-  records: ZedRecord[]
+  records: zed.Record[]
   columns: ViewerColumns
   endStatus: ViewerStatus
   status: SearchStatus
@@ -42,13 +42,13 @@ export type ViewerAction =
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS"
-  records: ZedRecord[]
+  records: zed.Record[]
   tabId: string | null | undefined
 }
 
 export type VIEWER_SET_RECORDS = {
   type: "VIEWER_SET_RECORDS"
-  records: ZedRecord[]
+  records: zed.Record[]
   tabId?: string
 }
 

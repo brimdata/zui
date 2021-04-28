@@ -1,6 +1,6 @@
 import {isEqual} from "lodash"
 import {parse} from "zealot"
-import {ZedField, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"
@@ -11,22 +11,22 @@ export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
 
   return {
-    exclude(field: ZedField) {
+    exclude(field: zed.Field) {
       p = insertFilter(p, brim.syntax.exclude(field))
       return this
     },
 
-    include(field: ZedField) {
+    include(field: zed.Field) {
       p = insertFilter(p, brim.syntax.include(field))
       return this
     },
 
-    in(field: ZedField) {
+    in(field: zed.Field) {
       p = insertFilter(p, brim.syntax.in(field))
       return this
     },
 
-    notIn(field: ZedField) {
+    notIn(field: zed.Field) {
       p = insertFilter(p, brim.syntax.notIn(field))
       return this
     },
@@ -39,7 +39,7 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    drillDown(log: ZedRecord) {
+    drillDown(log: zed.Record) {
       let filter = this.filter()
       const newFilters = this.ast()
         .groupByKeys()
@@ -62,7 +62,7 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    countBy(field: ZedField) {
+    countBy(field: zed.Field) {
       p = stdlib
         .string(p)
         .append(" | " + brim.syntax.countBy(field))

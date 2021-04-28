@@ -1,5 +1,5 @@
 import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 // Convert a js object into a zed record
 export function createRecord(object): zed.Record {

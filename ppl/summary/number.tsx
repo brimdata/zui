@@ -2,7 +2,7 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import React from "react"
 import styled from "styled-components"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 const Num = styled.div`
   font-size: 24px;

@@ -9,7 +9,7 @@ import SearchBar from "src/js/state/SearchBar"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import {TypeContext} from "zealot/zjson"
 
 type Args = {

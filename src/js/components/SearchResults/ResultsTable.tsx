@@ -3,7 +3,7 @@ import {isEmpty} from "lodash"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React, {useEffect} from "react"
 import {connect, useDispatch} from "react-redux"
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import dispatchToProps from "../../lib/dispatchToProps"
@@ -29,7 +29,7 @@ import NoResults from "./NoResults"
 import {useRowSelection} from "./selection"
 
 type StateProps = {
-  logs: ZedRecord[]
+  logs: zed.Record[]
   timeZone: string
   timeFormat: string
   isIncomplete: boolean

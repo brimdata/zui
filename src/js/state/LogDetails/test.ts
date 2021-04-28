@@ -1,4 +1,4 @@
-import {createRecord} from "test/factories/record"
+import {createRecord} from "test/factories/zed-factory"
 import initTestStore from "../../test/initTestStore"
 import LogDetails from "./"
 

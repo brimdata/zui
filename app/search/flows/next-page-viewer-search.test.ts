@@ -11,7 +11,7 @@ import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
 import {createRecord} from "test/factories/zed-factory"
 import {createZealotMock} from "zealot"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import nextPageViewerSearch from "./next-page-viewer-search"
 
 const records = [

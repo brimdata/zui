@@ -3,13 +3,13 @@ import PanelHeading from "app/detail/PanelHeading"
 import React, {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
 import {AppDispatch} from "src/js/state/types"
-import {ZedRecord, ZedField} from "zealot/zed"
+import {zed} from "zealot"
 import {md5Search} from "../../../../app/search/flows/md5-search"
 import InlineTableLoading from "../InlineTableLoading"
 import HorizontalTable from "../Tables/HorizontalTable"
 
 type Props = {
-  record: ZedRecord
+  record: zed.Record
 }
 
 export const Md5Panel = ({record}: Props) => {
@@ -53,9 +53,9 @@ export const Md5Panel = ({record}: Props) => {
 }
 
 type Props2 = {
-  logs: ZedRecord[]
+  logs: zed.Record[]
   expect: number
-  onRightClick?: (f: ZedField, r: ZedRecord) => void
+  onRightClick?: (f: zed.Field, r: zed.Record) => void
 }
 
 function AsyncTable({logs, expect, onRightClick}: Props2) {

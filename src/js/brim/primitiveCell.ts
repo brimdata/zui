@@ -1,4 +1,4 @@
-import {ZedPrimitive} from "zealot/zed"
+import {zed} from "zealot"
 
 export const ONE_CHAR = 7.39
 export const FIELD_PAD = 14
@@ -6,7 +6,7 @@ export const PATH_PAD = 12
 
 interface PrimitiveField {
   name: string
-  data: ZedPrimitive
+  data: zed.Primitive
 }
 
 export function createPrimitiveCell({name, data}: PrimitiveField) {

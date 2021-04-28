@@ -1,6 +1,6 @@
 import brim from "src/js/brim"
 import {withCommas} from "src/js/lib/fmt"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 export function formatPrimitive(data: zed.Primitive) {
   if (data.isUnset()) return "⦻"

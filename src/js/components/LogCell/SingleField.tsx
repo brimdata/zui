@@ -1,14 +1,14 @@
 import classNames from "classnames"
 import React, {useEffect, useRef, useState} from "react"
-import {ZedField, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {$Menu} from "../../electron/menu"
 import lib from "../../lib"
 import {showContextMenu} from "../../lib/System"
 import FieldCell from "../FieldCell"
 
 type Props = {
-  field: ZedField
-  record: ZedRecord
+  field: zed.Field
+  record: zed.Record
   menu: $Menu
 }
 

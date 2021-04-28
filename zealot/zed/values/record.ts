@@ -1,10 +1,9 @@
 import {isNull} from "lodash"
-import {isTypeAlias} from ".."
 import {TypeAlias} from "../types/type-alias"
 import {TypeField, TypeRecord} from "../types/type-record"
 import {Field} from "./field"
 import {ZedValue, ZedValueInterface} from "./types"
-
+import {trueType} from "../utils"
 export class Record implements ZedValueInterface {
   constructor(
     public type: TypeRecord | TypeAlias,
@@ -21,11 +20,7 @@ export class Record implements ZedValueInterface {
   }
 
   get trueType() {
-    let t = this.type
-    while (isTypeAlias(t)) {
-      t = t.type as TypeRecord | TypeAlias
-    }
-    return t as TypeRecord
+    return trueType<TypeRecord>(this.type)
   }
 
   toString() {

@@ -2,9 +2,9 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
 import React from "react"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 
-type Props = {field: ZedField; record: ZedRecord}
+type Props = {field: zed.Field; record: zed.Record}
 
 function getBackground(field, record) {
   if (field.name === "event_type" && field.data.toString() === "alert") {
@@ -26,7 +26,7 @@ export default function FieldCell({field, record}: Props) {
         getBackground(field, record)
       )}
     >
-      {formatPrimitive(field.data as ZedPrimitive)}
+      {formatPrimitive(field.data as zed.Primitive)}
     </div>
   )
 }

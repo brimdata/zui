@@ -3,7 +3,7 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {cssVar, transparentize} from "polished"
 import React from "react"
 import styled from "styled-components"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 type GridProps = {templateColumns: string | undefined}
 

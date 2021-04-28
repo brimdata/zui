@@ -1,12 +1,6 @@
 import lib from "src/js/lib"
 import {toZql} from "src/js/zql/toZql"
-import {
-  SerializedZedField,
-  SerializedZedRecord,
-  ZedField,
-  ZedPrimitive,
-  ZedRecord
-} from "zealot/zed"
+import {ZealotContext, zed, zjson} from "zealot"
 import brim from "../../../brim"
 import {downloadPcap} from "../../../flows/downloadPcap"
 import scrollToLog from "../../../flows/scrollToLog"
@@ -35,16 +29,16 @@ function buildSearchActions() {
     copy: action({
       name: "search-cell-menu-copy",
       label: "Copy",
-      listener(_dispatch, data: SerializedZedField) {
-        const f = ZedField.deserialize(data)
+      listener(_dispatch, data: zjson.FieldRootRecord) {
+        const f = ZealotContext.decodeField(data)
         lib.doc.copyToClipboard(f.data.toString())
       }
     }),
     countBy: action({
       name: "search-cell-menu-count-by",
       label: "Count by field",
-      listener(dispatch, data: SerializedZedField) {
-        const f = ZedField.deserialize(data)
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const f = ZealotContext.decodeField(data)
         dispatch(appendQueryCountBy(f))
         dispatch(submitSearch())
       }
@@ -52,8 +46,8 @@ function buildSearchActions() {
     detail: action({
       name: "search-cell-menu-detail",
       label: "Open details",
-      listener(dispatch, data: SerializedZedRecord) {
-        const record = ZedRecord.deserialize(data)
+      listener(dispatch, data: zjson.RootRecord) {
+        const record = ZealotContext.decodeRecord(data)
         dispatch(Layout.showRightSidebar())
         dispatch(viewLogDetail(record))
       }
@@ -61,16 +55,16 @@ function buildSearchActions() {
     exclude: action({
       name: "search-cell-menu-exclude",
       label: "Filter != value",
-      listener(dispatch, data: SerializedZedField) {
-        dispatch(appendQueryExclude(ZedField.deserialize(data)))
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        dispatch(appendQueryExclude(ZealotContext.decodeField(data)))
         dispatch(submitSearch())
       }
     }),
     freshInclude: action({
       name: "search-cell-menu-fresh-include",
       label: "New search with this value",
-      listener(dispatch, data: SerializedZedField) {
-        const field = ZedField.deserialize(data)
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
         dispatch(SearchBar.clearSearchBar())
         dispatch(SearchBar.changeSearchBarInput(toZql(field.data)))
         dispatch(submitSearch())
@@ -79,9 +73,9 @@ function buildSearchActions() {
     fromTime: action({
       name: "search-cell-menu-from-time",
       label: 'Use as "start" time',
-      listener(dispatch, data: SerializedZedField) {
-        const field = ZedField.deserialize(data)
-        if (field.data instanceof ZedPrimitive && field.data.type === "time") {
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
+        if (field.data instanceof zed.Time) {
           dispatch(tab.setFrom(brim.time(field.data.toDate()).toTs()))
           dispatch(submitSearch())
         }
@@ -90,8 +84,8 @@ function buildSearchActions() {
     groupByDrillDown: action({
       name: "search-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
-      listener(dispatch, program: string, data: SerializedZedRecord) {
-        const record = ZedRecord.deserialize(data)
+      listener(dispatch, program: string, data: zjson.RootRecord) {
+        const record = ZealotContext.decodeRecord(data)
         const newProgram = brim
           .program(program)
           .drillDown(record)
@@ -107,16 +101,16 @@ function buildSearchActions() {
     include: action({
       name: "search-cell-menu-include",
       label: "Filter = value",
-      listener(dispatch, data: SerializedZedField) {
-        dispatch(appendQueryInclude(ZedField.deserialize(data)))
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        dispatch(appendQueryInclude(ZealotContext.decodeField(data)))
         dispatch(submitSearch())
       }
     }),
     in: action({
       name: "search-cell-menu-in",
       label: "Filter in field",
-      listener(dispatch, data: SerializedZedField) {
-        dispatch(appendQueryIn(ZedField.deserialize(data)))
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        dispatch(appendQueryIn(ZealotContext.decodeField(data)))
         dispatch(submitSearch())
       }
     }),
@@ -125,12 +119,12 @@ function buildSearchActions() {
       label: "View in full context",
       listener(
         dispatch,
-        fieldData: SerializedZedField,
-        recordData: SerializedZedRecord
+        fieldData: zjson.FieldRootRecord,
+        recordData: zjson.RootRecord
       ) {
-        const field = ZedField.deserialize(fieldData)
-        const record = ZedRecord.deserialize(recordData)
-        if (field.data instanceof ZedPrimitive && field.data.type === "time") {
+        const field = ZealotContext.decodeField(fieldData)
+        const record = ZealotContext.decodeRecord(recordData)
+        if (field.data instanceof zed.Time) {
           const brimTime = brim.time(field.data.toDate())
           dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))
           dispatch(tab.setTo(brimTime.add(1, "minutes").toTs()))
@@ -149,15 +143,15 @@ function buildSearchActions() {
     notIn: action({
       name: "search-cell-menu-not-in",
       label: "Filter not in field",
-      listener(dispatch, data: SerializedZedField) {
-        dispatch(appendQueryNotIn(ZedField.deserialize(data)))
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        dispatch(appendQueryNotIn(ZealotContext.decodeField(data)))
         dispatch(submitSearch())
       }
     }),
     logResult: action({
       name: "search-cell-menu-log-result",
       label: "Log result to console",
-      listener(_dispatch, field: SerializedZedField, log: SerializedZedRecord) {
+      listener(_dispatch, field: zjson.FieldRootRecord, log: zjson.RootRecord) {
         console.log(JSON.stringify(log))
         console.log(JSON.stringify(field))
       }
@@ -165,15 +159,15 @@ function buildSearchActions() {
     pcaps: action({
       name: "search-cell-menu-pcaps",
       label: "Download PCAPS",
-      listener(dispatch, data: SerializedZedRecord) {
-        dispatch(downloadPcap(ZedRecord.deserialize(data)))
+      listener(dispatch, data: zjson.RootRecord) {
+        dispatch(downloadPcap(ZealotContext.decodeRecord(data)))
       }
     }),
     sortAsc: action({
       name: "search-cell-menu-sort-asc",
       label: "Sort A...Z",
-      listener(dispatch, data: SerializedZedField) {
-        const field = ZedField.deserialize(data)
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
         dispatch(appendQuerySortBy(field.name, "asc"))
         dispatch(submitSearch())
       }
@@ -181,8 +175,8 @@ function buildSearchActions() {
     sortDesc: action({
       name: "search-cell-menu-sort-desc",
       label: "Sort Z...A",
-      listener(dispatch, data: SerializedZedField) {
-        const field = ZedField.deserialize(data)
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
         dispatch(appendQuerySortBy(field.name, "desc"))
         dispatch(submitSearch())
       }
@@ -190,13 +184,13 @@ function buildSearchActions() {
     toTime: action({
       name: "search-cell-menu-to-time",
       label: 'Use as "end" time',
-      listener(dispatch, data: SerializedZedField) {
-        const field = ZedField.deserialize(data)
-        if (field.data instanceof ZedPrimitive && field.data.type === "time") {
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
+        if (field.data instanceof zed.Time) {
           dispatch(
             tab.setTo(
               brim
-                .time((field.data as ZedPrimitive).toDate())
+                .time(field.data.toDate())
                 .add(1, "ms")
                 .toTs()
             )
@@ -208,9 +202,9 @@ function buildSearchActions() {
     virusTotalRightclick: action({
       name: "search-cell-menu-virus-total",
       label: "VirusTotal Lookup",
-      listener(dispatch, data: SerializedZedField) {
-        const field = ZedField.deserialize(data)
-        if (field.data instanceof ZedPrimitive && !field.data.isUnset()) {
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
+        if (field.data instanceof zed.Primitive && !field.data.isUnset()) {
           open(virusTotal.url(field.data.toString() as string))
         }
       }
@@ -218,8 +212,8 @@ function buildSearchActions() {
     whoisRightclick: action({
       name: "search-cell-menu-who-is",
       label: "Whois Lookup",
-      listener(dispatch, data: SerializedZedField) {
-        const field = ZedField.deserialize(data)
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
         dispatch(Modal.show("whois", {addr: field.data.toString()}))
       }
     })

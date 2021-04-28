@@ -1,20 +1,20 @@
-import {ZedField} from "zealot/zed"
+import {zed} from "zealot"
 import {toZql} from "../zql/toZql"
 
 export default {
-  exclude(field: ZedField) {
+  exclude(field: zed.Field) {
     return `${field.name}!=${toZql(field.data)}`
   },
-  include(field: ZedField) {
+  include(field: zed.Field) {
     return `${field.name}=${toZql(field.data)}`
   },
-  in(field: ZedField) {
+  in(field: zed.Field) {
     return `${toZql(field.data)} in ${field.name}`
   },
-  notIn(field: ZedField) {
+  notIn(field: zed.Field) {
     return `!${toZql(field.data)} in ${field.name}`
   },
-  countBy(field: ZedField) {
+  countBy(field: zed.Field) {
     return `count() by ${field.name}`
   },
   sortBy(name: string, direction: "asc" | "desc") {

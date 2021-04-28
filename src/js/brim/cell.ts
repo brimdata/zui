@@ -1,4 +1,4 @@
-import {ZedData, ZedPrimitive} from "zealot/zed"
+import {zed} from "zealot"
 import {createComplexCell} from "./complexCell"
 import {createPrimitiveCell} from "./primitiveCell"
 
@@ -12,7 +12,7 @@ type Args = {
 }
 
 export function createCell({name, data}: Args): Cell {
-  if (data instanceof ZedPrimitive) {
+  if (data instanceof zed.Primitive) {
     return createPrimitiveCell({name, data})
   } else {
     return createComplexCell({name, data})

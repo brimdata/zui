@@ -1,8 +1,10 @@
 import {uniqBy} from "lodash"
-import {TypeContext} from "zealot/zed/zjson"
+import {zed} from "zealot"
 import {$Column, createColumn} from "./column"
 
-export function createColumnSet(c: TypeContext) {
+type Args = {[name: string]: zed.Schema}
+
+export function createColumnSet(c: Args) {
   return {
     getName() {
       const keys = Object.keys(c)
@@ -17,8 +19,8 @@ export function createColumnSet(c: TypeContext) {
     },
     getUniqColumns() {
       let allCols = []
-      for (const typedef of Object.values(c)) {
-        let inner = typedef.flatten().innerType
+      for (const schema of Object.values(c)) {
+        let inner = schema.flatten().type
         if (inner.kind === "record") {
           allCols = [...allCols, ...inner.fields]
         }

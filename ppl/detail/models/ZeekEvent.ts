@@ -1,4 +1,4 @@
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class ZeekEvent implements BrimEventInterface {
@@ -9,14 +9,14 @@ export class ZeekEvent implements BrimEventInterface {
   }
 
   getTime() {
-    return (this.r.get("ts") as zed.Primitive).toDate()
+    return this.r.get<zed.Time>("ts").toDate()
   }
 
   getEndTime() {
     if (this.r.get("_path").toString() !== "conn") return null
-    const dur = (this.r.get("duration") as zed.Primitive).toFloat()
+    const dur = this.r.get<zed.Float64>("duration").toFloat()
     if (!dur) return
-    const ts = (this.r.get("ts") as zed.Primitive).toDate()
+    const ts = this.r.get<zed.Time>("ts").toDate()
     return new Date(ts.getTime() + dur * 1000)
   }
 

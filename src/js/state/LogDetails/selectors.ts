@@ -6,7 +6,7 @@ import {State} from "../types"
 import {LogDetailHistory, toHistory} from "./reducer"
 import {LogDetailsState} from "./types"
 
-import {ZedRecord} from "zealot/zed"
+import {ZealotContext, zed} from "zealot"
 
 const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails
@@ -17,23 +17,25 @@ const getHistory = createSelector<State, LogDetailsState, LogDetailHistory>(
   (logDetails) => toHistory(logDetails)
 )
 
-const build = createSelector<State, LogDetailHistory, ZedRecord | null>(
+const build = createSelector<State, LogDetailHistory, zed.Record | null>(
   getHistory,
   (history) => {
     const entry = history.current()
     if (entry && entry.log) {
-      return ZedRecord.deserialize(entry.log)
+      return ZealotContext.decodeRecord(entry.log)
     } else {
       return null
     }
   }
 )
 
-const getUidLogs = createSelector<State, LogDetailHistory, ZedRecord[]>(
+const getUidLogs = createSelector<State, LogDetailHistory, zed.Record[]>(
   getHistory,
   (history) => {
     const entry = history.current()
-    return entry ? entry.uidLogs.map((data) => ZedRecord.deserialize(data)) : []
+    return entry
+      ? entry.uidLogs.map((data) => ZealotContext.decodeRecord(data))
+      : []
   }
 )
 
@@ -45,7 +47,7 @@ const getUidStatus = createSelector<State, LogDetailHistory, SearchStatus>(
   }
 )
 
-const getConnLog = createSelector<State, ZedRecord[], ZedRecord | null>(
+const getConnLog = createSelector<State, zed.Record[], zed.Record | null>(
   getUidLogs,
   (uids) => {
     return uids.find((log) => log.try("_path")?.toString() === "conn")

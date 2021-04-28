@@ -1,4 +1,4 @@
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import {SuricataEvent} from "./SuricataEvent"
 import {UnknownEvent} from "./UnknownEvent"
 import {ZeekEvent} from "./ZeekEvent"

@@ -5,7 +5,7 @@ import {hasGroupByProc} from "src/js/lib/Program"
 import {Space} from "src/js/state/Spaces/types"
 import {RightClickBuilder} from "src/js/types"
 import {ZealotContext} from "zealot"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 export default function searchFieldContextMenu(
   program: string,

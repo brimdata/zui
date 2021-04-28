@@ -1,15 +1,15 @@
 import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
 import React, {useState} from "react"
-import {ZedField, ZedPrimitive, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {RightClickBuilder} from "../../types"
 import Tooltip from "../Tooltip"
 import CompoundField from "./CompoundField"
 import SingleField from "./SingleField"
 
 type Props = {
-  field: ZedField
-  log: ZedRecord
+  field: zed.Field
+  log: zed.Record
   style?: Object
   rightClick: RightClickBuilder
 }
@@ -52,13 +52,13 @@ export default function LogCell({field, style, rightClick, log}: Props) {
 }
 
 type FieldSwitchProps = {
-  field: ZedField
-  log: ZedRecord
+  field: zed.Field
+  log: zed.Record
   menuBuilder: RightClickBuilder
 }
 
 function FieldSwitch({field, log, menuBuilder}: FieldSwitchProps) {
-  if (field.data instanceof ZedPrimitive) {
+  if (field.data instanceof zed.Primitive) {
     const menu = menuBuilder(field, log, false)
     return <SingleField field={field} menu={menu} record={log} />
   } else {

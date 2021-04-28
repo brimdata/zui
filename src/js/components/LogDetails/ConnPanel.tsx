@@ -1,10 +1,10 @@
 import PanelHeading from "app/detail/PanelHeading"
 import React from "react"
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import ConnVersation from "../ConnVersation"
 
 type Props = {
-  record: ZedRecord
+  record: zed.Record
 }
 
 const ConnPanel = ({record}: Props) => {

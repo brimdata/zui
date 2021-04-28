@@ -5,7 +5,7 @@ import {BarRounded} from "@vx/shape"
 import React from "react"
 import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 type Props = {
   records: zed.Record[]

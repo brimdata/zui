@@ -1,7 +1,7 @@
 import {createSelector} from "reselect"
 import {ScrollPosition} from "src/js/types"
 import {SearchStatus} from "src/js/types/searches"
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {TabState} from "../Tab/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
@@ -13,10 +13,11 @@ export const getViewer = createSelector<State, TabState, ViewerState>(
   (tab) => tab.viewer
 )
 
-export const getViewerRecords = createSelector<State, ViewerState, ZedRecord[]>(
-  getViewer,
-  (viewer) => viewer.records
-)
+export const getViewerRecords = createSelector<
+  State,
+  ViewerState,
+  zed.Record[]
+>(getViewer, (viewer) => viewer.records)
 
 export const isFetching = (state: TabState) =>
   state.viewer.status === "FETCHING"
@@ -59,8 +60,8 @@ export const getSelection = createSelector<
 export const getSelectedRecords = createSelector<
   State,
   ViewerSelection,
-  ZedRecord[],
-  ZedRecord[]
+  zed.Record[],
+  zed.Record[]
 >(getSelection, getRecords, (selection, records) =>
   selection.getIndices().map((index) => records[index])
 )

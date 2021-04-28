@@ -1,13 +1,13 @@
 import {isEqual} from "lodash"
 import {fetchCorrelation} from "ppl/detail/flows/fetch"
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
 import LogDetails from "../state/LogDetails"
 import Notice from "../state/Notice"
 import {Thunk} from "../state/types"
 
-export const viewLogDetail = (record: ZedRecord): Thunk => (
+export const viewLogDetail = (record: zed.Record): Thunk => (
   dispatch,
   getState
 ) => {

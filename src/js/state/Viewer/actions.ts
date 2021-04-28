@@ -1,4 +1,4 @@
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 import {
@@ -47,14 +47,14 @@ export const setEndStatus = (
 
 export const appendRecords = (
   tabId: string | null | undefined,
-  records: ZedRecord[]
+  records: zed.Record[]
 ): VIEWER_RECORDS => {
   return {type: "VIEWER_RECORDS", records, tabId}
 }
 
 export const setRecords = (
   tabId: string | undefined,
-  records: ZedRecord[]
+  records: zed.Record[]
 ): VIEWER_SET_RECORDS => {
   return {type: "VIEWER_SET_RECORDS", records, tabId}
 }

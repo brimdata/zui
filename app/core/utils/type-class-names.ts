@@ -1,4 +1,4 @@
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 export function typeClassNames(data: zed.AnyValue) {
   const classNames = []

@@ -45,3 +45,11 @@ export function isTime(value: unknown): value is Time {
 export function isTypeAlias(type: ZedType): type is TypeAlias {
   return type instanceof TypeAlias
 }
+
+export function trueType<T extends ZedType>(start: ZedType): T {
+  let t = start
+  while (isTypeAlias(t)) {
+    t = t.type
+  }
+  return t as T
+}

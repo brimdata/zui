@@ -8,7 +8,7 @@ import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Url from "src/js/state/Url"
 import Viewer from "src/js/state/Viewer"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
 /**

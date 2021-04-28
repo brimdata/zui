@@ -1,5 +1,5 @@
 import React from "react"
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import TableColumns from "../../models/TableColumns"
 import {RowRenderer, ViewerDimens} from "../../types"
 import * as Styler from "./Styler"
@@ -9,7 +9,7 @@ type Props = {
   columns: TableColumns
   dimens: ViewerDimens
   rows: number[]
-  logs: ZedRecord[]
+  logs: zed.Record[]
 }
 
 export default class Chunk extends React.Component<Props> {

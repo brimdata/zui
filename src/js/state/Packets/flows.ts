@@ -1,6 +1,6 @@
 import {remote} from "electron"
 import {join} from "path"
-import {ZedPrimitive, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {getZealot} from "../../flows/getZealot"
 import {saveToFile} from "../../lib/response"
 import Current from "../Current"
@@ -9,7 +9,7 @@ import {Thunk} from "../types"
 import View from "../View"
 
 export default {
-  fetch: (log: ZedRecord): Thunk<Promise<string>> => (
+  fetch: (log: zed.Record): Thunk<Promise<string>> => (
     dispatch: Function,
     getState: Function
   ) => {
@@ -18,8 +18,8 @@ export default {
     const state = getState()
     const zealot = dispatch(getZealot())
     const spaceId = Current.getSpaceId(state)
-    const ts = log.get("ts") as ZedPrimitive
-    const dur = log.get("duration") as ZedPrimitive
+    const ts = log.get("ts") as zed.Primitive
+    const dur = log.get("duration") as zed.Primitive
     const args = {
       ts_sec: getSec(ts),
       ts_ns: getNs(ts),
@@ -51,13 +51,13 @@ export default {
   }
 }
 
-function getSec(data: ZedPrimitive): number {
+function getSec(data: zed.Primitive): number {
   if (data.isUnset()) return 0
 
   return parseInt(data.toString().split(".")[0])
 }
 
-function getNs(data: ZedPrimitive): number {
+function getNs(data: zed.Primitive): number {
   if (data.isUnset()) return 0
 
   const v = data.toString().split(".")

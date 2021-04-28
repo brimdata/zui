@@ -2,7 +2,7 @@ import {SpanArgs} from "../state/Search/types"
 import {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import {MenuItemConstructorOptions} from "electron"
-import {ZedRecord, ZedField} from "zealot/zed"
+import {zed} from "zealot"
 
 export type Notification =
   | AppError
@@ -60,12 +60,12 @@ export type LogCorrelations = {
 }
 
 export type RelatedLogs = {
-  [key: string]: ZedRecord[]
+  [key: string]: zed.Record[]
 }
 
 export type RightClickBuilder = (
-  field: ZedField,
-  record: ZedRecord,
+  field: zed.Field,
+  record: zed.Record,
   compound: boolean
 ) => MenuItemConstructorOptions[]
 

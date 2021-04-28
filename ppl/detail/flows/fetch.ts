@@ -1,5 +1,5 @@
 import {search} from "src/js/flows/search/mod"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import {Correlation} from "../models/Correlation"
 import {getCorrelationQuery} from "./get-correlation-query"
 

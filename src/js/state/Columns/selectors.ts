@@ -1,5 +1,5 @@
 import {createSelector} from "reselect"
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import TableColumns from "../../models/TableColumns"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"
@@ -14,7 +14,7 @@ const getCurrentTableColumns = createSelector<
   State,
   ViewerColumns,
   ColumnsState,
-  ZedRecord[],
+  zed.Record[],
   TableColumns
 >(
   Viewer.getColumns,

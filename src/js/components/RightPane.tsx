@@ -1,7 +1,7 @@
 import DetailPane from "app/detail/Pane"
 import React from "react"
 import {connect} from "react-redux"
-import {ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import {openLogDetailsWindow} from "../flows/openLogDetailsWindow"
 import ExpandWindow from "../icons/ExpandWindow"
 import dispatchToProps from "../lib/dispatchToProps"
@@ -24,7 +24,7 @@ import Pane, {
 import {XRightPaneExpander} from "./RightPaneExpander"
 
 type StateProps = {
-  currentLog: ZedRecord
+  currentLog: zed.Record
   prevExists: boolean
   nextExists: boolean
   isOpen: boolean

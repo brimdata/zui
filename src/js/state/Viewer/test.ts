@@ -1,4 +1,4 @@
-import {createRecord} from "test/factories/record"
+import {createRecord} from "test/factories/zed-factory"
 import ZedTypeDef from "zealot/zed/type-def"
 import initTestStore from "../../test/initTestStore"
 import Tabs from "../Tabs"

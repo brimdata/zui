@@ -1,11 +1,11 @@
 import * as React from "react"
-import {ZedField, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {
-  descriptor: ZedField[]
-  logs: ZedRecord[]
-  onRightClick?: (f: ZedField, r: ZedRecord) => void
+  descriptor: zed.Field[]
+  logs: zed.Record[]
+  onRightClick?: (f: zed.Field, r: zed.Record) => void
 }
 
 export default function HorizontalTable({

@@ -1,12 +1,12 @@
 import classNames from "classnames"
 import React from "react"
-import {ZedField, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {
-  descriptor: ZedField[]
-  record: ZedRecord
-  onRightClick?: (f: ZedField, r: ZedRecord) => void
+  descriptor: zed.Field[]
+  record: zed.Record
+  onRightClick?: (f: zed.Field, r: zed.Record) => void
   light?: boolean
 }
 

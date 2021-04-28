@@ -1,4 +1,4 @@
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 
 export const sort = (logs: zed.Record[]) => {
   const findConn = (log) => log.try("_path")?.toString() === "conn"

@@ -69,8 +69,3 @@ export interface ZedValueInterface {
   isUnset(): boolean
   type: ZedType
 }
-
-export interface ZedField {
-  name: string
-  value: ZedValue
-}

@@ -2,7 +2,7 @@ import contextMenu from "app/detail/flows/contextMenu"
 import {every} from "lodash"
 import React from "react"
 import {useDispatch} from "react-redux"
-import {ZedField, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import connHistoryView from "../lib/connHistoryView"
 import VerticalTable from "./Tables/VerticalTable"
 import {Fieldset} from "./Typography"
@@ -11,10 +11,10 @@ const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
 const RESP_FIELDS = ["resp_bytes", "resp_pkts", "resp_ip_bytes", "local_resp"]
 
 type Props = {
-  record: ZedRecord
+  record: zed.Record
 }
 
-function filter(record: ZedRecord, names: string[]) {
+function filter(record: zed.Record, names: string[]) {
   const fields = []
 
   names.forEach((n) => {
@@ -22,7 +22,7 @@ function filter(record: ZedRecord, names: string[]) {
     if (field) fields.push(field)
   })
 
-  return new ZedRecord({fields})
+  return new zed.Record({fields})
 }
 
 const ConnVersation = ({record}: Props) => {
@@ -64,9 +64,9 @@ const ConnHistory = ({history = ""}) => (
 type HostProps = {
   className: string
   title: string
-  ip: ZedField
-  port: ZedField
-  record: ZedRecord
+  ip: zed.Field
+  port: zed.Field
+  record: zed.Record
 }
 
 const Host = ({className, title, ip, port, record}: HostProps) => {
@@ -99,7 +99,7 @@ const Host = ({className, title, ip, port, record}: HostProps) => {
   )
 }
 
-ConnVersation.shouldShow = (record: ZedRecord) =>
+ConnVersation.shouldShow = (record: zed.Record) =>
   every(ORIG_FIELDS, (name) => record.has(name))
 
 export default ConnVersation

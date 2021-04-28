@@ -1,5 +1,5 @@
-import {createRecord} from "test/factories/record"
-import {ZedPrimitive} from "zealot/zed"
+import {createRecord} from "test/factories/zed-factory"
+import {zed} from "zealot"
 import {connCorrelation} from "./programs"
 
 test("conn correlation", () => {
@@ -11,10 +11,10 @@ test("conn correlation", () => {
   })
   expect(
     connCorrelation(
-      record.get("uid") as ZedPrimitive,
-      record.get("community_id") as ZedPrimitive,
-      record.get("ts") as ZedPrimitive,
-      record.get("duration") as ZedPrimitive
+      record.get("uid") as zed.Primitive,
+      record.get("community_id") as zed.Primitive,
+      record.get("ts") as zed.Primitive,
+      record.get("duration") as zed.Primitive
     )
   ).toBe(
     'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100'

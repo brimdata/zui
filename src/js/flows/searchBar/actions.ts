@@ -1,4 +1,4 @@
-import {ZedField} from "zealot/zed"
+import {zed} from "zealot"
 import brim from "../../brim"
 import {onlyWhitespace} from "../../lib/Str"
 import SearchBar from "../../state/SearchBar"
@@ -8,7 +8,7 @@ import {
 } from "../../state/SearchBar/selectors"
 import {Thunk} from "../../state/types"
 
-export function appendQueryInclude(field: ZedField): Thunk {
+export function appendQueryInclude(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -21,7 +21,7 @@ export function appendQueryInclude(field: ZedField): Thunk {
   }
 }
 
-export function appendQueryExclude(field: ZedField): Thunk {
+export function appendQueryExclude(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -34,7 +34,7 @@ export function appendQueryExclude(field: ZedField): Thunk {
   }
 }
 
-export function appendQueryCountBy(field: ZedField): Thunk {
+export function appendQueryCountBy(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     const {current, pinned} = getSearchBar(getState())
     const query = [...pinned, current].join(" ")
@@ -71,7 +71,7 @@ export function appendQuerySortBy(
   }
 }
 
-export function appendQueryIn(field: ZedField): Thunk {
+export function appendQueryIn(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -84,7 +84,7 @@ export function appendQueryIn(field: ZedField): Thunk {
   }
 }
 
-export function appendQueryNotIn(field: ZedField): Thunk {
+export function appendQueryNotIn(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(

@@ -3,7 +3,7 @@ import {
   connCorrelation,
   uidCorrelation
 } from "src/js/searches/programs"
-import * as zed from "zealot/zed"
+import {zed} from "zealot"
 import {Correlation} from "../models/Correlation"
 
 export function getCorrelationQuery(record: zed.Record) {

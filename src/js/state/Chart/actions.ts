@@ -1,4 +1,4 @@
-import {ZedPrimitive, ZedRecord} from "zealot/zed"
+import {zed} from "zealot"
 import MergeHash from "../../models/MergeHash"
 import UniqArray from "../../models/UniqArray"
 import {SearchStatus} from "../../types/searches"
@@ -10,7 +10,7 @@ export default {
     status,
     tabId
   }),
-  appendRecords: (tabId: string, records: ZedRecord[]): CHART_RECORDS => ({
+  appendRecords: (tabId: string, records: zed.Record[]): CHART_RECORDS => ({
     type: "CHART_RECORDS",
     data: histogramFormat(records),
     tabId
@@ -18,12 +18,12 @@ export default {
   clear: (tabId?: string): CHART_CLEAR => ({type: "CHART_CLEAR", tabId})
 }
 
-function histogramFormat(records: ZedRecord[]): ChartData {
+function histogramFormat(records: zed.Record[]): ChartData {
   const paths = new UniqArray()
   const table = new MergeHash()
 
   records.forEach((r) => {
-    const [ts, path, count] = r.fields.map((f) => f.data) as ZedPrimitive[]
+    const [ts, path, count] = r.fields.map((f) => f.data) as zed.Primitive[]
 
     try {
       const pathName = path.toString()
