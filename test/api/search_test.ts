@@ -27,11 +27,6 @@ testApi("search#records", async (zealot) => {
   const results = await resp.records()
 
   assertEquals(results.length, 30)
-  assertEquals(results[0].type.splice(0, 2), [
-    {name: "_path", type: "string"},
-    {name: "ts", type: "time"}
-  ])
-  assertEquals(results[0].value.splice(0, 2), ["stats", "1582646585.983635"])
 })
 
 testApi("search#iterator", async (zealot) => {
@@ -87,16 +82,11 @@ testApi("search#callbacks record", async (zealot: any) => {
   })
 
   const args = records.calls[0].args[0]
-  assertEquals(Object.keys(args), [
-    "channel",
-    "schemas",
-    "newRecords",
-    "allRecords"
-  ])
+  assertEquals(Object.keys(args), ["channel", "rows", "newRows", "schemas"])
   assertEquals(args.channel, 0)
-  assertEquals(args.schemas.size, 1)
-  assertEquals(args.newRecords.length, 1)
-  assertEquals(args.allRecords.length, 1)
+  assertEquals(Object.keys(args.schemas).length, 1)
+  assertEquals(args.newRows.length, 1)
+  assertEquals(args.rows.length, 1)
 })
 
 testApi("search#originResponse format=zng", async (zealot: any) => {

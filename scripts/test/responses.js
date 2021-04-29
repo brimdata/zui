@@ -27,6 +27,7 @@ function saveResponse(input, output, query) {
   const out = fs.createWriteStream(output)
   deno.stdout.pipe(out)
   deno.stdout.pipe(process.stdout)
+  deno.stderr.pipe(process.stderr)
   return new Promise((resolve) => {
     deno.on("close", () => {
       resolve()

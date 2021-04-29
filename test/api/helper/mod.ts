@@ -15,7 +15,7 @@ export function test(name: string, fn: () => void | Promise<void>) {
 }
 
 export function testFile(name: string) {
-  return join(Deno.cwd(), "data", name)
+  return join(Deno.cwd(), "..", "data", name)
 }
 
 export function uniq(things: any[]) {
