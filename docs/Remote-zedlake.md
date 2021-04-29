@@ -66,21 +66,23 @@ your desktop, it's easy to think of Brim as a simple standalone application.
 However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
-One essential component is [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd),
+One essential component is [`zed
+lake`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake),
 a server-style process that manages the storage and querying of imported
-log/packet data.  Operations in `zqd` are invoked via a
-[REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
-that's utilized by a "client", such as the Brim app. The
-[`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi) command is also available
-as a command line client that can perform many of the same operations as the
-Brim app, and therefore may be useful in scripting and automation.
+log/packet data. Operations in `zed lake` are invoked via a [REST
+API](https://en.wikipedia.org/wiki/Representational_state_transfer) that's
+utilized by a "client", such as the Brim app. The
+[`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi)
+command is also available as a command line client that can perform many of the
+same operations as the Brim app, and therefore may be useful in scripting and
+automation.
 
 ![Brim zapi and zqd](media/Brim-zapi-zqd.png)
 
-The location where `zqd` stores imported data is known as the
-**Data Directory**. This location can be changed via a setting in Brim's
-**Preferences** menu. The default Data Directory locations on each platform
-are as follows:
+The location where `zed lake` stores imported data is known as the **Data
+Directory**. This location can be changed via a setting in Brim's
+**Preferences** menu. The default Data Directory locations on each platform are
+as follows:
 
 |**OS Platform**|**Location**|
 |---------------|------------|

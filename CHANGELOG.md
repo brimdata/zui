@@ -180,7 +180,7 @@ as usual.
 * Fix an issue where clicking a link to [ZQL docs](https://github.com/brimdata/zed/tree/main/docs/language) opened an unusable window (#1030)
 * Expand the [wiki docs](https://github.com/brimdata/brim/wiki/Troubleshooting#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open) for troubleshooting pcap extraction issues (#1020)
 * Fix an issue where the Packets button was not activating after scrolling down in the main events view (#1027)
-* Add the ability to connect Brim to a remote [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd) (#1007)
+* Add the ability to connect Brim to a remote `zqd` (#1007)
 
 ## v0.15.1
 * Update zq to [v0.19.1](https://github.com/brimdata/zed/releases/tag/v0.19.1) (fixes an issue with excess characters in Space names after upgrade)
@@ -205,7 +205,7 @@ as usual.
 * Add [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
 * Add developer documentation for [adding internal state migrations](https://github.com/brimdata/brim/wiki/Adding-Migrations) (#921)
 * Restore the scroll position when going back to prior search results (#929)
-* Add the [Zealot Client](zealot/README.md) for communicating with [`zqd`](https://github.com/brimdata/zed/tree/main/ppl/cmd/zqd) via the REST API (#934)
+* Add the [Zealot Client](zealot/README.md) for communicating with `zqd` via the REST API (#934)
 * Add support documentation explaining where Brim stores debug logs (#939, #943)
 * Fix an issue where records nested more than one level deep were not working correctly in Brim (#937)
 * Improve the Column Chooser (#925, #953)
