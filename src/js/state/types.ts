@@ -5,7 +5,6 @@ import {HandlersState} from "./Handlers/types"
 import {InvestigationState} from "./Investigation/types"
 import {ModalState} from "./Modal/types"
 import {NoticeState} from "./Notice/types"
-import {PacketsState} from "./Packets/types"
 import {PrefsState} from "./Prefs/types"
 import {SpacesState} from "./Spaces/types"
 import {TabsState} from "./Tabs/types"
@@ -46,7 +45,6 @@ export type State = {
   modal: ModalState
   notice: NoticeState
   tabs: TabsState
-  packets: PacketsState
   prefs: PrefsState
   workspaceStatuses: WorkspaceStatusesState
   queries: QueriesState

@@ -1,12 +1,10 @@
 import {createFetcher} from "./fetcher/fetcher"
-import {spaces, logs, pcaps, search, archive, subspaces} from "./api/mod"
+import {spaces, logs, search, archive, subspaces} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
 import {
   SearchArgs,
   SpaceArgs,
-  PcapsPostArgs,
-  PcapsGetArgs,
   LogsPostArgs,
   ZealotArgs,
   SubspaceCreateArgs,
@@ -73,14 +71,6 @@ export function createZealot(
     subspaces: {
       create: (args: SubspaceCreateArgs) => {
         return promise(subspaces.create(args))
-      }
-    },
-    pcaps: {
-      post: (args: PcapsPostArgs) => {
-        return stream(pcaps.post(args))
-      },
-      get: (args: PcapsGetArgs): Promise<Response> => {
-        return promise(pcaps.get(args))
       }
     },
     logs: {
