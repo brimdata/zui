@@ -13,15 +13,47 @@ Object {
     "stats",
   ],
   "table": Object {
-    "NaN": Object {
-      "capture_loss": 1,
-      "conn": 3,
+    "1582675385000": Object {
+      "conn": 1,
+      "stats": 1,
+    },
+    "1582675386000": Object {
+      "conn": 1,
+      "weird": 1,
+    },
+    "1582675387000": Object {
+      "conn": 2,
+    },
+    "1582675388000": Object {
+      "conn": 5,
+    },
+    "1582675389000": Object {
+      "conn": 1,
+    },
+    "1582675390000": Object {
+      "conn": 2,
+    },
+    "1582675391000": Object {
+      "conn": 1,
       "dns": 1,
+    },
+    "1582675392000": Object {
+      "conn": 1,
+    },
+    "1582675393000": Object {
+      "conn": 2,
+      "dns": 1,
+    },
+    "1582675394000": Object {
       "files": 4,
       "ssl": 1,
-      "stats": 1,
-      "weird": 1,
       "x509": 1,
+    },
+    "1582675395000": Object {
+      "conn": 3,
+    },
+    "1582675397000": Object {
+      "capture_loss": 1,
     },
   },
 }
