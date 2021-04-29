@@ -5,7 +5,7 @@ export type HookName =
   | "export-complete"
   | "modal-entering"
   | "modal-entered"
-  | "space-deleted"
+  | "pool-deleted"
 
 export type SystemTestState = HookName[]
 

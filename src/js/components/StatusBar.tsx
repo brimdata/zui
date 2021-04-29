@@ -9,19 +9,19 @@ import {reactElementProps} from "../test/integration"
 import Current from "../state/Current"
 import Modal from "../state/Modal"
 import ProgressIndicator from "./ProgressIndicator"
-import Spaces from "../state/Spaces"
+import Pools from "../state/Pools"
 import Warning from "./icons/warning-sm.svg"
 import brim from "../brim"
 
 export default function StatusBar() {
   const dispatch = useDispatch()
   const workspaceId = useSelector(Current.getWorkspaceId)
-  const spaceId = useSelector(Current.getSpaceId)
-  const space = useSelector(Current.getSpace)
-  const value = useSelector(Spaces.getIngestProgress(workspaceId, spaceId))
-  const warnings = useSelector(Spaces.getIngestWarnings(workspaceId, spaceId))
+  const poolId = useSelector(Current.getPoolId)
+  const pool = useSelector(Current.getPool)
+  const value = useSelector(Pools.getIngestProgress(workspaceId, poolId))
+  const warnings = useSelector(Pools.getIngestWarnings(workspaceId, poolId))
   if (!isNumber(value) && isEmpty(warnings)) return null
-  const s = brim.space(space)
+  const s = brim.pool(pool)
 
   function onWarningsClick() {
     dispatch(Modal.show("ingest-warnings"))

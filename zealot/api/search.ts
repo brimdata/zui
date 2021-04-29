@@ -24,14 +24,14 @@ function getQueryParams(args: SearchArgs) {
   return p.toString()
 }
 
-export function getSearchBody(zql: string, {spaceId, from, to}: SearchArgs) {
+export function getSearchBody(zql: string, {poolId, from, to}: SearchArgs) {
   const proc = parse(zql)
   const span = createSpan(from, to)
 
   return {
     proc,
     span,
-    space: spaceId,
+    pool: poolId,
     dir: -1
   }
 }

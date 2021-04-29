@@ -31,7 +31,7 @@ test("loading state from release 0.8.0 resets state", async () => {
   const v8 = {
     order: [],
     windows: {},
-    globalState: {investigation: [], spaces: {zqd: {}}, version: "6"}
+    globalState: {investigation: [], pools: {zqd: {}}, version: "6"}
   }
   fsExtra.writeJSONSync(file, v8)
 

@@ -2,27 +2,28 @@ import {join} from "https://deno.land/std@0.70.0/path/mod.ts"
 import {testApi, assertEquals, uniq} from "./helper/mod.ts"
 
 testApi("ingest log", async (zealot) => {
-  const space = await zealot.spaces.create({name: "space1"})
+  const pool = await zealot.pools.create({name: "pool1", order: "desc"})
   const log = join(Deno.cwd(), "data/sample.tsv")
-  const resp = await zealot.logs.postPaths({paths: [log], spaceId: space.id})
+  const resp = await zealot.logs.postPaths({paths: [log], poolId: pool.id})
   const messages = await resp.array()
 
   assertEquals(uniq(messages.map((m: any) => m.type)), [
     "TaskStart",
     "LogPostStatus",
+    "LogPostResponse",
     "TaskEnd"
   ])
 })
 
 testApi("ingest ndjson log", async (zealot) => {
-  const space = await zealot.spaces.create({name: "space1"})
+  const pool = await zealot.pools.create({name: "pool1", order: "desc"})
   const log = join(Deno.cwd(), "data/custom-sample.ndjson")
   const resp = await zealot.logs.postPaths({
     paths: [log],
-    spaceId: space.id
+    poolId: pool.id
   })
   await resp.array()
 
-  const {span} = await zealot.spaces.get(space.id)
-  assertEquals(span, undefined)
+  const {size} = await zealot.pools.get(pool.id)
+  assertEquals(size, 4546)
 })

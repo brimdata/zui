@@ -6,24 +6,24 @@ import {
 } from "https://deno.land/std@0.70.0/path/mod.ts"
 
 const DIR = dirname(fromFileUrl(import.meta.url))
-const ZQD_ROOT = join(DIR, "../zqd_root")
-const ZQD_RUNNER = join(DIR, "../../../zdeps/zqd")
+const ZED_LAKE_ROOT = join(DIR, "../lake_root")
+const ZED_RUNNER = join(DIR, "../../../zdeps/zed")
 
 function createDataDir() {
   try {
-    Deno.mkdirSync(ZQD_ROOT)
+    Deno.mkdirSync(ZED_LAKE_ROOT)
   } catch (_) {}
 }
 
 function removeDataDir() {
   try {
-    Deno.removeSync(ZQD_ROOT, {recursive: true})
+    Deno.removeSync(ZED_LAKE_ROOT, {recursive: true})
   } catch (_) {}
 }
 
-async function kill(zqd: Deno.Process, client: any) {
+async function kill(lake: Deno.Process, client: any) {
   removeDataDir()
-  zqd.close()
+  lake.close()
   await until(
     () =>
       client
@@ -32,14 +32,13 @@ async function kill(zqd: Deno.Process, client: any) {
         .catch(() => true),
     10_000,
     100,
-    "Unable to kill zqd process"
+    "Unable to kill lake process"
   )
 }
 
 async function start() {
   return Deno.run({
-    cmd: [ZQD_RUNNER, "listen"],
-    cwd: ZQD_ROOT,
+    cmd: [ZED_RUNNER, "lake", "serve", "-R", ZED_LAKE_ROOT],
     stdout: "null",
     stderr: "null"
   })
@@ -70,10 +69,10 @@ async function until(
   })
 }
 
-export async function withZqd(fn: (zealot: any) => any) {
+export async function withLake(fn: (zealot: any) => any) {
   removeDataDir()
   createDataDir()
-  const zqd = await start()
+  const lake = await start()
   const zealot = createZealot("localhost:9867")
   await until(
     () =>
@@ -83,12 +82,12 @@ export async function withZqd(fn: (zealot: any) => any) {
         .catch(() => false),
     10_000,
     1,
-    "Unable to start zqd"
+    "Unable to start zed lake"
   )
   try {
     await fn(zealot)
   } finally {
-    await kill(zqd, zealot)
+    await kill(lake, zealot)
   }
 }
 
@@ -96,6 +95,6 @@ export function testApi(name: string, fn: (z: any) => any) {
   return Deno.test({
     name,
     only: name.startsWith("ONLY"),
-    fn: () => withZqd(fn)
+    fn: () => withLake(fn)
   })
 }

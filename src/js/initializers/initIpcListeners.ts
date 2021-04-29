@@ -7,7 +7,7 @@ import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import initNewSearchTab from "./initNewSearchTab"
 import confirmUnload from "../flows/confirmUnload"
-import deletePartialSpaces from "../flows/deletePartialSpaces"
+import deletePartialPools from "../flows/deletePartialPools"
 import {getWindowPersistable} from "../state/getPersistable"
 import TabHistories from "../state/TabHistories"
 import PluginManager from "./pluginManager"
@@ -24,7 +24,7 @@ export default (store: Store, pluginManager: PluginManager) => {
 
   ipcRenderer.on("prepareClose", async (e, replyChannel) => {
     store.dispatch(TabHistories.save(global.tabHistories.serialize()))
-    await dispatch(deletePartialSpaces())
+    await dispatch(deletePartialPools())
     pluginManager.deactivate()
     ipcRenderer.send(replyChannel)
   })

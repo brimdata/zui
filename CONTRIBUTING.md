@@ -29,9 +29,9 @@ npm start
 
 On subsequent updates, `git pull` then `npm install`.
 
-### zqd
+### zed lake
 
-`zqd`, from the [Zed](https://github.com/brimdata/zed) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
+`zed lake`, from the [Zed](https://github.com/brimdata/zed) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
 
 When developing features that need a non-released zqd instance, you can:
 

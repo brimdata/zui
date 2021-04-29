@@ -15,7 +15,7 @@ export const viewLogDetail = (record: zng.Record): Thunk => (
   if (record && !isEqual(record, current)) {
     dispatch(LogDetails.push(record))
 
-    if (!Current.getSpaceId(getState())) return // It is possible for this code to be called without a space
+    if (!Current.getPoolId(getState())) return // It is possible for this code to be called without a pool
 
     dispatch(LogDetails.updateUidStatus("FETCHING"))
     dispatch(fetchCorrelation(record))

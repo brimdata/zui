@@ -15,8 +15,8 @@ beforeEach(async () => {
   // @ts-ignore
   app.quit.mockClear()
   brim = new Brim()
-  jest.spyOn(brim.zqd, "start").mockImplementation(() => {})
-  jest.spyOn(brim.zqd, "close").mockImplementation(() => Promise.resolve())
+  jest.spyOn(brim.lake, "start").mockImplementation(() => {})
+  jest.spyOn(brim.lake, "close").mockImplementation(() => Promise.resolve())
   jest
     .spyOn(brim.session, "load")
     // @ts-ignore
@@ -34,7 +34,7 @@ test("quit and save", async () => {
 
   expect(brim.isQuitting).toBe(true)
   expect(brim.session.save).toHaveBeenCalledTimes(1)
-  expect(brim.zqd.close).toHaveBeenCalledTimes(1)
+  expect(brim.lake.close).toHaveBeenCalledTimes(1)
   expect(app.quit).toHaveBeenCalledTimes(1)
 })
 
@@ -46,6 +46,6 @@ test("quit without saving", async () => {
 
   expect(brim.isQuitting).toBe(true)
   expect(brim.session.save).not.toHaveBeenCalled()
-  expect(brim.zqd.close).toHaveBeenCalledTimes(1)
+  expect(brim.lake.close).toHaveBeenCalledTimes(1)
   expect(app.quit).toHaveBeenCalledTimes(1)
 })

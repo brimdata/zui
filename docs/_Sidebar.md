@@ -12,7 +12,7 @@
 
 **Cookbooks**
 
-- [[Remote zqd]]
+- [[Remote zed lake]]
 - [[Query Library Transfer]]
 - [[Joining Data]]
 

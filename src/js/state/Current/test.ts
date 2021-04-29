@@ -2,7 +2,7 @@ import tabHistory from "app/router/tab-history"
 import {lakePath, workspacePath} from "app/router/utils/paths"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import Spaces from "../Spaces"
+import Pools from "../Pools"
 import Workspaces from "../Workspaces"
 import {Workspace} from "../Workspaces/types"
 import Current from "./"
@@ -13,10 +13,10 @@ beforeEach(() => {
   store = initTestStore()
 })
 
-test("setting the space id", () => {
+test("setting the pool id", () => {
   store.dispatch(tabHistory.push(lakePath("1", "1")))
 
-  expect(Current.getSpaceId(store.getState())).toBe("1")
+  expect(Current.getPoolId(store.getState())).toBe("1")
 })
 
 test("setting the workspace id", () => {
@@ -39,8 +39,8 @@ test("getting the actual workspace", () => {
   expect(Current.mustGetWorkspace(state).serialize()).toEqual(ws)
 })
 
-test("getting the actual space", () => {
-  const space = fixtures("space1")
+test("getting the actual pool", () => {
+  const pool = fixtures("pool1")
   const ws: Workspace = {
     id: "myws",
     name: "myws",
@@ -50,9 +50,9 @@ test("getting the actual space", () => {
   }
   const state = store.dispatchAll([
     Workspaces.add(ws),
-    Spaces.setDetail("myws", space)
+    Pools.setDetail("myws", pool)
   ])
-  store.dispatch(tabHistory.push(lakePath(space.id, ws.id)))
+  store.dispatch(tabHistory.push(lakePath(pool.id, ws.id)))
 
-  expect(Current.mustGetSpace(state)).toEqual(expect.objectContaining(space))
+  expect(Current.mustGetPool(state)).toEqual(expect.objectContaining(pool))
 })

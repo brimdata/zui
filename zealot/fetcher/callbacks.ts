@@ -1,5 +1,5 @@
 import {ZealotPayload} from "../types"
-import * as zqd from "../zqd"
+import * as lake from "../lake"
 import {createRecordsCallback, RecordsCallbackArgs} from "./records_callback"
 
 export function createCallbacks() {
@@ -13,19 +13,19 @@ export function createCallbacks() {
       const cb = callbacks.get(name)
       if (cb) cb(payload)
     },
-    start(cb: (payload: zqd.TaskStart) => void) {
+    start(cb: (payload: lake.TaskStart) => void) {
       return this.add("TaskStart", cb)
     },
-    end(cb: (payload: zqd.TaskEnd) => void) {
+    end(cb: (payload: lake.TaskEnd) => void) {
       return this.add("TaskEnd", cb)
     },
     records(cb: (args: RecordsCallbackArgs) => void) {
       return this.add("SearchRecords", createRecordsCallback(cb))
     },
-    stats(cb: (payload: zqd.SearchStats) => void) {
+    stats(cb: (payload: lake.SearchStats) => void) {
       return this.add("SearchStats", cb)
     },
-    warnings(cb: (payload: zqd.SearchWarnings) => void) {
+    warnings(cb: (payload: lake.SearchWarnings) => void) {
       return this.add("SearchWarning", cb)
     },
     error(cb: (payload: Error) => void) {

@@ -225,7 +225,7 @@ export default class BrimcapPlugin {
 
   private setupLoader() {
     const load = async (
-      params: IngestParams & {spaceId: string},
+      params: IngestParams & {poolId: string},
       onProgressUpdate: (value: number | null) => void,
       onWarning: (warning: string) => void,
       onDetailUpdate: () => void
@@ -238,7 +238,7 @@ export default class BrimcapPlugin {
 
       const p = this.cli.load(paths[0], {
         root: this.brimcapDataRoot,
-        space: name
+        pool: name
       })
 
       let brimcapErr

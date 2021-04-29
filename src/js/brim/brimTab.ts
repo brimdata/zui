@@ -1,21 +1,21 @@
 import {whichRoute} from "app/router/routes"
 import {decodeSearchParams} from "app/search/utils/search-params"
 import get from "lodash/get"
-import {SpacesState} from "../state/Spaces/types"
+import {PoolsState} from "../state/Pools/types"
 import {TabState} from "../state/Tab/types"
 import {WorkspacesState} from "../state/Workspaces/types"
 
 export default function(
   tab: TabState,
   workspaces: WorkspacesState,
-  lakes: SpacesState
+  pools: PoolsState
 ) {
   return {
     title() {
       const history = global.tabHistories.getOrCreate(tab.id)
       const route = whichRoute(history.location.pathname)
       if (route) {
-        return compileTitle(route, history.location, workspaces, lakes)
+        return compileTitle(route, history.location, workspaces, pools)
       } else {
         return "Brim"
       }
@@ -27,7 +27,7 @@ export default function(
  * Replaces keywords like <workspace> <lake> <program> with the
  * actual names of the current workspace lake and program.
  */
-function compileTitle(route, location, workspaces, lakes) {
+function compileTitle(route, location, workspaces, pools) {
   let title = route.title
   const {workspaceId, lakeId} = route.match.params
   if (workspaceId) {
@@ -38,7 +38,7 @@ function compileTitle(route, location, workspaces, lakes) {
     if (lakeId) {
       title = title.replace(
         "<lake>",
-        get(lakes, [workspaceId, lakeId, "name"], "")
+        get(pools, [workspaceId, lakeId, "name"], "")
       )
     }
   }

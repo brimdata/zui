@@ -7,9 +7,9 @@ function search(pins, program): Finding {
     ts: brim.time(new Date(0)).toTs(),
     search: {
       pins,
+      poolName: "default",
+      poolId: "defaultId",
       program,
-      spaceName: "default",
-      spaceId: "defaultId",
       spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpan(),
       target: "events"
     }

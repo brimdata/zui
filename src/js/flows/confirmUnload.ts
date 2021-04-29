@@ -3,20 +3,20 @@ import {isEmpty} from "lodash"
 import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import Handlers from "../state/Handlers"
-import Spaces from "../state/Spaces"
+import Pools from "../state/Pools"
 import showIngestWarning from "./showIngestWarning"
 
 export default (): Thunk<Promise<void>> => (dispatch, getState) => {
-  const spaceIds = Handlers.getIngestSpaceIds(getState())
+  const poolIds = Handlers.getIngestPoolIds(getState())
 
-  if (isEmpty(spaceIds)) {
+  if (isEmpty(poolIds)) {
     return Promise.resolve()
   } else {
     const workspaceId = Current.getWorkspaceId(getState())
     if (!workspaceId) return
-    const names = spaceIds.map((id) => {
-      const space = Spaces.get(workspaceId, id)(getState())
-      if (space) return space.name
+    const names = poolIds.map((id) => {
+      const pool = Pools.get(workspaceId, id)(getState())
+      if (pool) return pool.name
       else return id
     })
     return showIngestWarning(names)

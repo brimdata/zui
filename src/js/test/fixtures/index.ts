@@ -1,10 +1,9 @@
 import {Workspace} from "../../state/Workspaces/types"
-import {Space} from "../../state/Spaces/types"
+import {Pool} from "../../state/Pools/types"
 
-const space1 = (): Space => ({
+const pool1 = (): Pool => ({
   id: "1",
   name: "default",
-  storage_kind: "filestore",
   size: 99,
   min_time: {
     sec: 1425564900,
@@ -14,7 +13,7 @@ const space1 = (): Space => ({
     sec: 1428917793,
     ns: 750000000
   },
-  ingest: {progress: null, warnings: [], snapshot: null}
+  ingest: {progress: null, warnings: []}
 })
 
 const workspace1 = (): Workspace => ({
@@ -36,7 +35,7 @@ const workspace2 = (): Workspace => ({
 const fixtures = () => ({
   workspace1: workspace1(),
   workspace2: workspace2(),
-  space1: space1()
+  pool1: pool1()
 })
 
 export default function(name: string) {

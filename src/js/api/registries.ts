@@ -28,7 +28,7 @@ export class CommandRegistry {
 
 interface Loader {
   load: (
-    params: IngestParams & {spaceId: string},
+    params: IngestParams & {poolId: string},
     onProgress: (value: number | null) => void,
     onWarning: (warning: string) => void,
     onDetailUpdate: () => Promise<void>

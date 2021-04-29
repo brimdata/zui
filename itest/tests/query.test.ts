@@ -24,7 +24,7 @@ describe("Query tests", () => {
     app = newAppInstance(basename(__filename), ++testIdx)
     await appStep.startApp(app)
     await appStep.ingestFile(app, "sample.tsv")
-    await appStep.setSpan(app, "Whole Space")
+    await appStep.setSpan(app, "Whole Pool")
   })
 
   afterAll(async () => {

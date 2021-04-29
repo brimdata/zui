@@ -21,12 +21,12 @@ const StyledMagnifyingGlass = styled(MagnifyingGlass)`
   }
 `
 
-type Props = {finding: Finding; workspaceId: string; spaceId: string}
+type Props = {finding: Finding; workspaceId: string; poolId: string}
 
 export default React.memo<Props>(function FindingCard({
   finding,
   workspaceId,
-  spaceId
+  poolId
 }: Props) {
   const dispatch = useDispatch()
 
@@ -40,7 +40,7 @@ export default React.memo<Props>(function FindingCard({
       label: "Delete",
       click: () =>
         dispatch(
-          Investigation.deleteFindingByTs(workspaceId, spaceId, finding.ts)
+          Investigation.deleteFindingByTs(workspaceId, poolId, finding.ts)
         )
     },
     {type: "separator"},
@@ -51,13 +51,13 @@ export default React.memo<Props>(function FindingCard({
           .showMessageBox({
             type: "warning",
             title: "Delete All History",
-            message: `Are you sure you want to delete all history entries for this space?`,
+            message: `Are you sure you want to delete all history entries for this pool?`,
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
             if (response === 0)
               dispatch(
-                Investigation.clearSpaceInvestigation(workspaceId, spaceId)
+                Investigation.clearPoolInvestigation(workspaceId, poolId)
               )
           })
     }

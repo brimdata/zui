@@ -6,7 +6,7 @@ import {createZealotMock} from "zealot"
 import brim from "../../../brim"
 import Search from "../../../state/Search"
 import SearchBar from "../../../state/SearchBar"
-import Spaces from "../../../state/Spaces"
+import Pools from "../../../state/Pools"
 import Workspaces from "../../../state/Workspaces"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
@@ -15,7 +15,7 @@ import {submitSearch} from "../mod"
 
 const dnsResp = responses("dns.txt")
 const countByPathResp = responses("count_by_path.txt")
-const space = fixtures("space1")
+const pool = fixtures("pool1")
 
 let store, zealot, dispatch
 beforeEach(() => {
@@ -31,12 +31,12 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Spaces.setDetail("1", space),
+    Pools.setDetail("1", pool),
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
-  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
+  store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 

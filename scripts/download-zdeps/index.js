@@ -12,21 +12,18 @@ const zdepsPath = path.resolve("zdeps")
 
 const platformDefs = {
   darwin: {
-    zqdBin: "zqd",
     zqBin: "zq",
     zapiBin: "zapi",
     zedBin: "zed",
     osarch: "darwin-amd64"
   },
   linux: {
-    zqdBin: "zqd",
     zqBin: "zq",
     zapiBin: "zapi",
     zedBin: "zed",
     osarch: "linux-amd64"
   },
   win32: {
-    zqdBin: "zqd.exe",
     zqBin: "zq.exe",
     zapiBin: "zapi.exe",
     zedBin: "zed.exe",
@@ -78,8 +75,8 @@ function zedArtifactPaths(version) {
   }
 }
 
-// Download and extract the zqd binary for this platform to the specified
-// directory. Returns the absolute path of the zqd binary file.
+// Download and extract the zed binary for this platform to the specified
+// directory. Returns the absolute path of the zed binary file.
 async function zedArtifactsDownload(version, destPath) {
   const plat = platformDefs[process.platform]
   const paths = zedArtifactPaths(version)
@@ -92,7 +89,7 @@ async function zedArtifactsDownload(version, destPath) {
 
     fs.mkdirpSync(destPath)
 
-    for (let f of [plat.zqdBin, plat.zqBin, plat.zapiBin, plat.zedBin]) {
+    for (let f of [plat.zqBin, plat.zapiBin, plat.zedBin]) {
       fs.moveSync(
         path.join(tmpdir.name, paths.internalTopDir, f),
         path.join(destPath, f),
@@ -112,7 +109,9 @@ async function zedDevBuild(destPath) {
 
   const zedPackageDir = path.join(__dirname, "..", "..", "node_modules", "zed")
 
-  for (let f of [plat.zqdBin, plat.zqBin, plat.zapiBin, plat.zedBin]) {
+  fs.mkdirpSync(destPath)
+
+  for (let f of [plat.zqBin, plat.zapiBin, plat.zedBin]) {
     fs.copyFileSync(path.join(zedPackageDir, "dist", f), path.join(destPath, f))
   }
 }

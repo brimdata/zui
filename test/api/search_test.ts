@@ -8,13 +8,13 @@ import {
 } from "./helper/mod.ts"
 
 async function setup(zealot: any) {
-  const space = await zealot.spaces.create({name: "space1"})
+  const pool = await zealot.pools.create({name: "pool1", order: "desc"})
   const log = testFile("sample.tsv")
-  const resp = await zealot.logs.postPaths({paths: [log], spaceId: space.id})
+  const resp = await zealot.logs.postPaths({paths: [log], poolId: pool.id})
   await resp.array()
 
   zealot.setSearchOptions({
-    spaceId: space.id,
+    poolId: pool.id,
     from: new Date(0),
     to: new Date(),
     enhancers: []

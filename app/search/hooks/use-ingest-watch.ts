@@ -6,7 +6,6 @@ import {useCallback, useEffect, useRef} from "react"
 import {useSelector} from "react-redux"
 import {useHistory} from "react-router"
 import Current from "src/js/state/Current"
-import Ingest from "src/js/state/Ingest"
 import {createPath} from "history"
 import {throttle} from "lodash"
 import usePrevious from "src/js/components/hooks/usePrevious"
@@ -24,8 +23,7 @@ function useThrottledCallback(cb: Function, delay: number) {
 }
 
 export default function useIngestWatch() {
-  const snapshot = useSelector(Ingest.getSnapshot)
-  const space = useSelector(Current.mustGetSpace)
+  const pool = useSelector(Current.mustGetPool)
   const history = useHistory()
   const replace = () => {
     const params = decodeSearchParams(history.location.search)
@@ -34,7 +32,7 @@ export default function useIngestWatch() {
     history.replace(path)
   }
   const throttled = useThrottledCallback(replace, 5000)
-  const nowIngesting = space.ingesting()
+  const nowIngesting = pool.ingesting()
   const wasIngesting = usePrevious(nowIngesting, [nowIngesting])
 
   useEffect(() => {
@@ -49,10 +47,5 @@ export default function useIngestWatch() {
      * the current location which will cause the tiles to update.
      */
     throttled()
-  }, [
-    snapshot,
-    wasIngesting,
-    nowIngesting,
-    JSON.stringify(space.everythingSpan())
-  ])
+  }, [wasIngesting, nowIngesting, JSON.stringify(pool.everythingSpan())])
 }

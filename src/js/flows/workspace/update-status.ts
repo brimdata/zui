@@ -2,7 +2,7 @@ import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
 import Workspaces from "../../state/Workspaces"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
-import refreshSpaceNames from "../refreshSpaceNames"
+import refreshPoolNames from "../refreshPoolNames"
 import {getAuthCredentials} from "./getAuthCredentials"
 
 /**
@@ -18,7 +18,7 @@ export const updateStatus = (workspaceId: string) => async (
   const zealot = createZealot(ws.getAddress())
 
   const activate = async () => {
-    await dispatch(refreshSpaceNames())
+    await dispatch(refreshPoolNames())
     dispatch(WorkspaceStatuses.set(ws.id, "connected"))
   }
 

@@ -11,35 +11,35 @@ import brim, {Ts} from "../../brim"
 export default {
   push: (
     workspaceId: string,
-    spaceId: string,
+    poolId: string,
     record: SearchRecord,
     ts: Ts = brim.time().toTs()
   ): INVESTIGATION_PUSH => ({
     type: "$INVESTIGATION_PUSH",
     workspaceId,
-    spaceId,
+    poolId,
     entry: record,
     ts: ts
   }),
 
   deleteFindingByTs: (
     workspaceId: string,
-    spaceId: string,
+    poolId: string,
     ts: Ts[] | Ts
   ): FINDING_DELETE => ({
     type: "$FINDING_DELETE",
     workspaceId,
-    spaceId,
+    poolId,
     ts: isArray(ts) ? ts : [ts]
   }),
 
-  clearSpaceInvestigation: (
+  clearPoolInvestigation: (
     workspaceId: string,
-    spaceId: string
+    poolId: string
   ): INVESTIGATION_CLEAR => ({
     type: "$INVESTIGATION_CLEAR",
     workspaceId,
-    spaceId
+    poolId
   }),
 
   clearWorkspaceInvestigation: (

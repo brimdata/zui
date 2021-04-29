@@ -8,7 +8,7 @@ import dispatchToProps from "../lib/dispatchToProps"
 import Current from "../state/Current"
 import Layout from "../state/Layout"
 import LogDetails from "../state/LogDetails"
-import {Space} from "../state/Spaces/types"
+import {Pool} from "../state/Pools/types"
 import {DispatchProps} from "../state/types"
 import AppErrorBoundary from "./AppErrorBoundary"
 import CloseButton from "./CloseButton"
@@ -29,7 +29,7 @@ type StateProps = {
   nextExists: boolean
   isOpen: boolean
   width: number
-  space: Space
+  pool: Pool
 }
 
 type Props = StateProps & DispatchProps
@@ -49,7 +49,7 @@ export default class RightPane extends React.Component<Props, S> {
 
   render() {
     const {prevExists, nextExists, isOpen, width, currentLog} = this.props
-    if (!this.props.space) return null
+    if (!this.props.pool) return null
     if (!isOpen) return <XRightPaneExpander />
     return (
       <Pane
@@ -101,7 +101,7 @@ const stateToProps = (state) => {
     prevExists: LogDetails.getHistory(state).canGoBack(),
     nextExists: LogDetails.getHistory(state).canGoForward(),
     currentLog: LogDetails.build(state),
-    space: Current.getSpace(state)
+    pool: Current.getPool(state)
   }
 }
 

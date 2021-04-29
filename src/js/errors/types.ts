@@ -2,7 +2,7 @@ export type BrimErrorType =
   | "PCAPIngestError"
   | "NetworkError"
   | "LogsIngestError"
-  | "SpaceDeletedError"
+  | "PoolDeletedError"
 
 export type BrimError = {
   type: BrimErrorType
