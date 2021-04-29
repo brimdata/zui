@@ -1,7 +1,6 @@
 import {MenuItemConstructorOptions} from "electron"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import {createRecord} from "test/factories/zed-factory"
-import fixtures from "../../test/fixtures"
 
 const conn = createRecord({
   _path: "conn",
@@ -17,41 +16,15 @@ function menuText(menu: MenuItemConstructorOptions[]) {
     .map((item) => item.label)
     .join(", ")
 }
-const space = fixtures("space1")
 
 describe("Log Right Click", () => {
   const program = "*"
   const columnNames = conn.columns
 
-  test("conn log with pcap support", () => {
-    const field = conn.getField("id.orig_h")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
-      field,
-      conn,
-      false
-    )
-
-    expect(menuText(ctxMenu)).toMatch(/pcaps/i)
-  })
-
-  test("conn log without pcap support", () => {
-    space.pcap_support = false
-
-    const log = conn
-    const field = log.getField("id.orig_h")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
-      field,
-      log,
-      false
-    )
-
-    expect(menuText(ctxMenu)).not.toMatch(/pcaps/i)
-  })
-
   test("dns log", () => {
     const log = dns
     const field = log.getField("query")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames)(
       field,
       log,
       false
@@ -64,7 +37,7 @@ describe("Log Right Click", () => {
   test("time field for conn log", () => {
     const log = conn
     const field = log.getField("ts")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames)(
       field,
       log,
       false
@@ -85,7 +58,7 @@ describe("Analysis Right Click", () => {
       id: {orig_h: "192.168.0.51"}
     })
     const field = log.getField("id.orig_h")
-    const ctxMenu = searchFieldContextMenu(program, columnNames, space)(
+    const ctxMenu = searchFieldContextMenu(program, columnNames)(
       field,
       log,
       false
@@ -97,11 +70,10 @@ describe("Analysis Right Click", () => {
   test("non-address field", () => {
     const log = createRecord({count: 100, proto: "tcp"})
     const field = log.getField("proto")
-    const ctxMenu = searchFieldContextMenu(
-      "* | count() by proto",
-      ["count", "proto"],
-      space
-    )(field, log, false)
+    const ctxMenu = searchFieldContextMenu("* | count() by proto", [
+      "count",
+      "proto"
+    ])(field, log, false)
 
     expect(menuText(ctxMenu)).toMatch(/pivot/i)
   })

@@ -39,13 +39,15 @@ function nextPageArgs(
   if (!isEmpty(logs)) {
     const index = indexOfLastChange(logs, (log) => log.try("ts")?.toString())
     if (index >= 0) {
-      const ts = logs[index].get<zed.Time>("ts")
-      const prevTs = ts.toDate()
-      nextSpan[1] = brim
-        .time(prevTs)
-        .add(1, "ms")
-        .toDate()
-      spliceIndex = index + 1
+      const ts = logs[index].try<zed.Time>("ts")
+      if (ts && ts instanceof zed.Time) {
+        const prevTs = ts.toDate()
+        nextSpan[1] = brim
+          .time(prevTs)
+          .add(1, "ms")
+          .toDate()
+        spliceIndex = index + 1
+      }
     }
   }
   return [spliceIndex, nextSpan]

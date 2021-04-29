@@ -16,7 +16,7 @@ const contextMenu = (field: zed.Field, record: zed.Record) => (_, getState) => {
       ? detailFieldContextMenu
       : searchFieldContextMenu
 
-  showContextMenu(builder(program, columns, space)(field, record, false))
+  showContextMenu(builder(program, columns)(field, record, false))
 }
 
 export default contextMenu

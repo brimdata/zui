@@ -23,7 +23,6 @@ export type Space = {
   id: string
   min_time: Ts
   max_time: Ts
-  pcap_support: boolean
   storage_kind: "filestore" | "archivestore"
   ingest: SpaceIngest
   parent_id?: string

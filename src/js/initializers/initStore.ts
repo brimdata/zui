@@ -5,6 +5,7 @@ import invoke from "../electron/ipc/invoke"
 import ipc from "../electron/ipc"
 import rootReducer from "../state/rootReducer"
 import {configureStore} from "@reduxjs/toolkit"
+import BrimApi from "../api"
 
 function getInitialState(windowId) {
   return Promise.all([
@@ -13,7 +14,7 @@ function getInitialState(windowId) {
   ]).then(([winState, globalState]) => ({...winState, ...globalState}))
 }
 
-export default async () => {
+export default async (api: BrimApi) => {
   const windowId = getUrlSearchParams().id
   const initialState = await getInitialState(windowId)
   return configureStore({
@@ -22,7 +23,7 @@ export default async () => {
     middleware: (getDefaults) => [
       ...getDefaults({
         thunk: {
-          extraArgument: {createZealot}
+          extraArgument: {createZealot, api}
         },
         serializableCheck: false,
         immutableCheck: false

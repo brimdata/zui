@@ -20,6 +20,7 @@ export function getWindowPersistable(state: State) {
     delete draft.handlers
     delete draft.systemTest
     delete draft.workspaceStatuses
+    delete draft.toolbars
 
     for (const tab of draft.tabs.data) {
       delete tab.viewer

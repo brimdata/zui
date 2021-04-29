@@ -71,7 +71,7 @@ a server-style process that manages the storage and querying of imported
 log/packet data.  Operations in `zqd` are invoked via a
 [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that's utilized by a "client", such as the Brim app. The
-[`zapi`](https://github.com/brimdata/zed/tree/main/cmd/zapi) command is also available
+[`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi) command is also available
 as a command line client that can perform many of the same operations as the
 Brim app, and therefore may be useful in scripting and automation.
 
@@ -206,7 +206,7 @@ However we can use the `zapi` command line tool on our VM to access this `zqd`
 directly via `localhost`.
 
 As sample packet data, we'll import a
-[wrccdc pcap](https://archive.wrccdc.org/pcaps/2018/) from a separate shell on
+[wrccdc pcap](https://wrccdc.org/) from a separate shell on
 our Linux VM:
 
 ```
@@ -239,7 +239,6 @@ sample
   storage_kind: filestore
   span:         2018-03-24T17:15:20Z+21m9.558041001s
   size:         80.05MB
-  pcap_support: false
   pcap_size:    0B
   pcap_path:    
   parent_id:    

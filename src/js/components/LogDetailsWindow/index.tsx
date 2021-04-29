@@ -1,19 +1,25 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
+import useStoreExport from "../../../../app/core/hooks/useStoreExport"
+import usePluginToolbarItems from "../../../../app/toolbar/hooks/usePluginToolbarItems"
 
 import {Center, Left, PaneHeader, PaneTitle, Right} from "../Pane"
 import Current from "../../state/Current"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "app/detail/Pane"
-import usePackets from "app/toolbar/hooks/usePackets"
 import ToolbarAction from "app/toolbar/action-button"
 
 export default function LogDetailsWindow() {
+  useStoreExport()
   const dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()
   const space = useSelector(Current.mustGetSpace)
+  const pluginButtons = usePluginToolbarItems("detail").map((button) => (
+    <ToolbarAction key={button.label} {...button} />
+  ))
+
   return (
     <div className="log-detail-window">
       <PaneHeader>
@@ -29,20 +35,10 @@ export default function LogDetailsWindow() {
           <PaneTitle>Log details for space: {space.name}</PaneTitle>
         </Center>
         <Right>
-          <PacketsButton />
+          <div>{pluginButtons}</div>
         </Right>
       </PaneHeader>
       <DetailPane />
-    </div>
-  )
-}
-
-const PacketsButton = () => {
-  const packets = usePackets()
-  packets.label = undefined
-  return (
-    <div>
-      <ToolbarAction {...packets} />
     </div>
   )
 }

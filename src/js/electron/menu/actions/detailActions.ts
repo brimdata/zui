@@ -1,7 +1,6 @@
 import {toZql} from "src/js/zql/toZql"
 import {ZealotContext, zed, zjson} from "zealot"
 import brim from "../../../brim"
-import {downloadPcap} from "../../../flows/downloadPcap"
 import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
 import {
   appendQueryCountBy,
@@ -127,13 +126,6 @@ function buildDetailActions() {
       listener(_dispatch, field, log) {
         console.log(JSON.stringify(log))
         console.log(JSON.stringify(field))
-      }
-    }),
-    pcaps: action({
-      name: "detail-cell-menu-pcaps",
-      label: "Download PCAPS",
-      listener(dispatch, log: zjson.RootRecord) {
-        dispatch(downloadPcap(ZealotContext.decodeRecord(log)))
       }
     }),
     sortAsc: action({

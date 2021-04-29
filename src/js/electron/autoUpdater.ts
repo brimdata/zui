@@ -1,8 +1,9 @@
-import {app, autoUpdater, dialog} from "electron"
+import {app, dialog} from "electron"
+import {autoUpdater} from "electron-updater"
 import log from "electron-log"
 import get from "lodash/get"
-import semver from "semver"
 import got from "got"
+import semver from "semver/preload"
 import open from "../lib/open"
 
 const getFeedURLForPlatform = (platform) => {
@@ -56,11 +57,6 @@ export async function setupAutoUpdater() {
     return
   }
 
-  const feedURL = getFeedURLForPlatform(process.platform)
-
-  // @ts-ignore
-  autoUpdater.setFeedURL(feedURL)
-
   autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
     const dialogOpts = {
       type: "info",
@@ -82,13 +78,7 @@ export async function setupAutoUpdater() {
   })
 
   setUpdateRepeater(() => {
-    getLatestVersion()
-      .then((latestVersion) => {
-        if (semver.gte(app.getVersion(), latestVersion)) return
-
-        autoUpdater.checkForUpdates()
-      })
-      .catch((err) => log.error(err))
+    autoUpdater.checkForUpdates()
   })
 }
 

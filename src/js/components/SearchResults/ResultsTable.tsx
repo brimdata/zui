@@ -103,8 +103,7 @@ export default function ResultsTable(props: Props) {
         }}
         rightClick={searchFieldContextMenu(
           props.program,
-          props.tableColumns.getColumns().map((c) => c.name),
-          props.space
+          props.tableColumns.getColumns().map((c) => c.name)
         )}
       />
     )

@@ -1,13 +1,11 @@
 import useIngestWatch from "app/search/hooks/use-ingest-watch"
 import useColumns from "app/toolbar/hooks/useColumns"
 import useExport from "app/toolbar/hooks/useExport"
-import usePackets from "app/toolbar/hooks/usePackets"
 import useView from "app/toolbar/hooks/useView"
 import {Toolbar} from "app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
 import {useDispatch} from "react-redux"
 import {useLocation} from "react-router"
-import {XDownloadProgress} from "src/js/components/DownloadProgress"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchHeaderChart from "src/js/components/SearchHeaderChart"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
@@ -16,6 +14,7 @@ import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Search from "src/js/state/Search"
 import SearchBarState from "src/js/state/SearchBar"
 import Url from "src/js/state/Url"
+import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 
 function syncReduxWithUrl() {
   return function(dispatch, getState) {
@@ -57,22 +56,21 @@ export default function SearchHome() {
   useIngestWatch()
   const dispatch = useDispatch()
   const view = useView()
-  const packets = usePackets()
   const exportAction = useExport()
   const columns = useColumns()
+  const pluginButtons = usePluginToolbarItems("search")
+
+  const actions = [...pluginButtons, exportAction, columns, view]
+
   return (
     <InitSearchParams>
       <SearchPageHeader>
-        <Toolbar
-          submit={() => dispatch(submitSearch())}
-          actions={[packets, exportAction, columns, view]}
-        />
+        <Toolbar submit={() => dispatch(submitSearch())} actions={actions} />
         <SearchBar />
         <SearchHeaderChart />
       </SearchPageHeader>
 
       <SearchResults />
-      <XDownloadProgress />
     </InitSearchParams>
   )
 }

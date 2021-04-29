@@ -7,7 +7,6 @@
 
 **User Documentation**
 
-- [[Zeek JSON Import]]
 - [[Zeek Customization]]
 - [[Geolocation]]
 

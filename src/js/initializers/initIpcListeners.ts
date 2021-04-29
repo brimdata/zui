@@ -10,8 +10,9 @@ import confirmUnload from "../flows/confirmUnload"
 import deletePartialSpaces from "../flows/deletePartialSpaces"
 import {getWindowPersistable} from "../state/getPersistable"
 import TabHistories from "../state/TabHistories"
+import PluginManager from "./pluginManager"
 
-export default (store: Store) => {
+export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
 
   ipcRenderer.on("confirmClose", async (e, replyChannel) => {
@@ -24,6 +25,7 @@ export default (store: Store) => {
   ipcRenderer.on("prepareClose", async (e, replyChannel) => {
     store.dispatch(TabHistories.save(global.tabHistories.serialize()))
     await dispatch(deletePartialSpaces())
+    pluginManager.deactivate()
     ipcRenderer.send(replyChannel)
   })
 

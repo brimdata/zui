@@ -20,6 +20,7 @@ declare global {
 
     interface Process {
       on(event: "spectron:mock", listener: MessageListener): this
+
       on(event: "spectron:clickAppMenuItem", listener: MessageListener): this
     }
   }

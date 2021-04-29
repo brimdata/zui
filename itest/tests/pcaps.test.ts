@@ -46,8 +46,7 @@ describe("Test PCAPs", () => {
     )
       .then(async () => {
         await appStep.click(app, selectors.viewer.resultCellContaining("ssl"))
-        const downloadText = await appStep.savePcap(app)
-        expect(downloadText).toBe("Download Complete")
+        await appStep.savePcap(app)
         const fileBasename = "packets-1582646593.996366.pcap"
         const pcapAbspath = path.join(await pcapsDir(app), fileBasename)
         expect(md5(readFileSync(pcapAbspath))).toBe(
@@ -64,8 +63,7 @@ describe("Test PCAPs", () => {
     runSearch(app, "duration=null id.orig_p=47783")
       .then(async () => {
         await appStep.click(app, selectors.viewer.resultCellContaining("conn"))
-        const downloadText = await appStep.savePcap(app)
-        expect(downloadText).toBe("Download Complete")
+        await appStep.savePcap(app)
         const fileBasename = "packets-1582646589.440467.pcap"
         const pcapAbspath = path.join(await pcapsDir(app), fileBasename)
         expect(md5(readFileSync(pcapAbspath))).toBe(

@@ -13,8 +13,7 @@ const detail = {
   span: {
     ts: {sec: 1425564900, ns: 0},
     dur: {sec: 3352893, ns: 750000000}
-  },
-  pcap_support: true
+  }
 }
 
 const testSpace1: Space = {
@@ -22,7 +21,6 @@ const testSpace1: Space = {
   name: "testName1",
   max_time: {ns: 0, sec: 0},
   min_time: {ns: 0, sec: 0},
-  pcap_support: false,
   storage_kind: "filestore",
   size: 99,
   ingest: {
@@ -37,7 +35,6 @@ const testSpace2: Space = {
   name: "testName2",
   max_time: {ns: 0, sec: 0},
   min_time: {ns: 0, sec: 0},
-  pcap_support: false,
   storage_kind: "filestore",
   size: 99,
   ingest: {
@@ -74,7 +71,6 @@ test("setting the space detail adds the defaults", () => {
   expect(Spaces.get("workspace1", "defaultId")(state)).toEqual({
     name: "defaultName",
     id: "defaultId",
-    pcap_support: true,
     min_time: {sec: 1425564900, ns: 0},
     max_time: {sec: 1428917793, ns: 750000000},
     ingest: {
@@ -121,7 +117,6 @@ test("getting the spaces with details, others not", () => {
       id: "defaultId",
       max_time: {ns: 750000000, sec: 1428917793},
       min_time: {ns: 0, sec: 1425564900},
-      pcap_support: true,
       ingest: {warnings: [], progress: null, snapshot: null}
     }
   ])

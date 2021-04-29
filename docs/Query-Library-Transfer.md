@@ -66,7 +66,6 @@ change having been made to the presentation of time values in the
 ```
 $ cat appState.json | jq '.data.globalState.prefs'
 {
-  "jsonTypeConfig": "",
   "timeFormat": "dddd, MMMM Do YYYY, h:mm:ss a",
   "suricataRunner": "",
   "suricataUpdater": "",
