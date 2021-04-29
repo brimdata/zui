@@ -10,9 +10,6 @@ test("boot starts zqd with defaults", async () => {
   // @ts-ignore
   const brim = await Brim.boot(file, createSession)
   expect(brim.zqd.root).toBe(path.normalize("/fake/path/data/spaces"))
-  expect(brim.zqd.suricataRunner).toBe("")
-  expect(brim.zqd.suricataUpdater).toBe("")
-  expect(brim.zqd.zeekRunner).toBe("")
 })
 
 test("gets global state from store", async () => {

@@ -1,4 +1,3 @@
-import {isEmpty} from "lodash"
 import {outputFileSync, pathExistsSync, mkdirpSync} from "fs-extra"
 import log from "electron-log"
 
@@ -9,34 +8,13 @@ import {spawn, ChildProcess} from "child_process"
 import * as cmd from "src/js/stdlib/cmd"
 import electronIsDev from "src/js/electron/isDev"
 
-// Paths for the zqd and zeek programs. If the app has been built as a release then it will be contained in an asar archive
+// Directory containing zqd. If the app has been built as a release then it will be contained in an asar archive
 // but the zdeps will have been included in the .unpacked directory along side the archived app, hence the replace here. This
 // pattern would apply to any assets under the 'asarUnpack' key of the electron-builder.json config
 const zdepsDirectory = join(
   app.getAppPath().replace("app.asar", "app.asar.unpacked"),
   "zdeps"
 )
-
-const platformDefs = {
-  darwin: {
-    zqdBin: "zqd",
-    suricataRunnerBin: "suricatarunner",
-    suricataUpdaterBin: "suricataupdater",
-    zeekRunnerBin: "zeekrunner"
-  },
-  linux: {
-    zqdBin: "zqd",
-    suricataRunnerBin: "suricatarunner",
-    suricataUpdaterBin: "suricataupdater",
-    zeekRunnerBin: "zeekrunner"
-  },
-  win32: {
-    zqdBin: "zqd.exe",
-    suricataRunnerBin: "suricatarunner.exe",
-    suricataUpdaterBin: "suricataupdater.exe",
-    zeekRunnerBin: "zeekrunner.exe"
-  }
-}
 
 function writeZqdConfigFile(): string {
   const logDir = app.getPath("logs")
@@ -62,87 +40,28 @@ logger:
 }
 
 function zqdCommand(): string {
-  const plat = platformDefs[process.platform]
-  if (!plat) {
-    throw new Error("unsupported platform for zqd")
-  }
+  const commandName = process.platform === "win32" ? "zqd.exe" : "zqd"
 
   if (electronIsDev && process.env.brim_zqd_from_path) {
     if (cmd.notExists("zqd").length > 0) {
       throw new Error("brim_zqd_from_path is set but zqd not in path")
     }
-    return plat.zqdBin
+    return commandName
   }
 
-  const zqdBin = resolve(join(zdepsDirectory, plat.zqdBin))
+  const zqdBin = resolve(join(zdepsDirectory, commandName))
   if (!pathExistsSync(zqdBin)) {
     throw new Error("zqd binary not present at " + zqdBin)
   }
   return zqdBin
 }
 
-function suricataRunnerCommand(suricataRunnerPref: string): string {
-  const plat = platformDefs[process.platform]
-  if (!plat) {
-    throw new Error("unsupported platform for zqd")
-  }
-
-  const precedence = [
-    process.env.BRIM_SURICATA_RUNNER,
-    suricataRunnerPref,
-    resolve(join(zdepsDirectory, "suricata", plat.suricataRunnerBin))
-  ]
-
-  return precedence.find((path) => !isEmpty(path)) || ""
-}
-
-function suricataUpdaterCommand(suricataUpdaterPref: string): string {
-  const plat = platformDefs[process.platform]
-  if (!plat) {
-    throw new Error("unsupported platform for zqd")
-  }
-
-  const precedence = [
-    process.env.BRIM_SURICATA_UPDATER,
-    suricataUpdaterPref,
-    resolve(join(zdepsDirectory, "suricata", plat.suricataUpdaterBin))
-  ]
-
-  return precedence.find((path) => !isEmpty(path)) || ""
-}
-
-function zeekRunnerCommand(zeekRunnerPref: string): string {
-  const plat = platformDefs[process.platform]
-  if (!plat) {
-    throw new Error("unsupported platform for zqd")
-  }
-
-  const precedence = [
-    process.env.BRIM_ZEEK_RUNNER,
-    zeekRunnerPref,
-    resolve(join(zdepsDirectory, "zeek", plat.zeekRunnerBin))
-  ]
-
-  return precedence.find((path) => !isEmpty(path)) || ""
-}
-
 export class ZQD {
   zqd: ChildProcess
   root: string
-  suricataRunner: string
-  suricataUpdater: string
-  zeekRunner: string
 
-  constructor(
-    rootDir: string,
-    suricataRunner: string,
-    suricataUpdater: string,
-    zeekRunner: string
-  ) {
+  constructor(rootDir: string) {
     this.root = rootDir
-    this.suricataRunner = suricataRunner
-    this.suricataUpdater = suricataUpdater
-    this.zeekRunner = zeekRunner
   }
 
   start() {
@@ -162,13 +81,7 @@ export class ZQD {
       "-data",
       this.root,
       "-config",
-      confFile,
-      "-suricatarunner",
-      suricataRunnerCommand(this.suricataRunner),
-      "-suricataupdater",
-      suricataUpdaterCommand(this.suricataUpdater),
-      "-zeekrunner",
-      zeekRunnerCommand(this.zeekRunner)
+      confFile
     ]
 
     // For unix systems, pass posix pipe read file descriptor into zqd process.
@@ -182,6 +95,7 @@ export class ZQD {
     }
     log.info("spawning zqd:", zqdCommand(), args.join(" "))
 
+    // XXX This belongs in the brimcap plugin.
     const suricataUserDir = join(app.getPath("userData"), "suricata")
     process.env.BRIM_SURICATA_USER_DIR = suricataUserDir
 

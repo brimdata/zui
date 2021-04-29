@@ -7,7 +7,7 @@ jest.mock("./extensions", () => ({
 }))
 
 function mockZqd() {
-  const zqd = new ZQD("test", "srun", "supdate", "zrun")
+  const zqd = new ZQD("test")
   jest.spyOn(zqd, "start").mockImplementation(() => {})
   return zqd
 }
