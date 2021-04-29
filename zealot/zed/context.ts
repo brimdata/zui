@@ -6,7 +6,7 @@ import {TypeRecord} from "./types/type-record"
 import {TypeSet} from "./types/type-set"
 import {TypeUnion} from "./types/type-union"
 import {ContainerTypeInterface, ZedType} from "./types/types"
-import {isAlias, typeId} from "./utils"
+import {isAlias, isNull, typeId} from "./utils"
 import {Record} from "./values/record"
 import * as zjson from "../zjson"
 import {Field} from "./values/field"
@@ -61,12 +61,14 @@ export class ZedContext {
       // Containers
       case "record":
         return this.lookupTypeRecord(
-          obj.fields.map(({name, type}) => {
-            return {
-              name,
-              type: this.decodeType(type, typedefs)
-            }
-          })
+          isNull(obj.fields)
+            ? null
+            : obj.fields.map(({name, type}) => {
+                return {
+                  name,
+                  type: this.decodeType(type, typedefs)
+                }
+              })
         )
       case "array":
         return this.lookupTypeArray(this.decodeType(obj.type, typedefs))

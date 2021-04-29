@@ -1,4 +1,4 @@
-import {TypeAlias, Uint16, Uint32, Uint64, Uint8} from "."
+import {TypeAlias, Uint16, Uint32, Uint64, Uint8} from "./index"
 import {ZedType} from "./types/types"
 import {Int16} from "./values/int16"
 import {Int32} from "./values/int32"

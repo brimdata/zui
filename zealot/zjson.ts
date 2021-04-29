@@ -12,7 +12,7 @@ export type PrimitiveType = {
 
 export type RecordType = {
   kind: "record"
-  fields: RecordFieldType[]
+  fields: RecordFieldType[] | null
 }
 
 export type ArrayType = {

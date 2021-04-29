@@ -1,5 +1,5 @@
+import {estimateCellWidth, estimateHeaderWidth} from "app/viewer/measure"
 import {zed} from "zealot"
-import {createCell} from "../brim/cell"
 import columnOrder from "../lib/columnOrder"
 import {$Column} from "../state/Columns/models/column"
 import {ColumnSettingsMap, TableColumn} from "../state/Columns/types"
@@ -31,26 +31,17 @@ export default class TableColumns {
     )
   }
 
-  setWidths(logs: zed.Record[]) {
-    const MAX_WIDTH = 500
-    const resizeHandle = 5
-    const sortIcon = 11
-
+  setWidths(records: zed.Record[]) {
     this.cols.forEach((col) => {
       if (col.width) return
-      const colName = createCell(new zed.Field("", new zed.String(col.name)))
-
-      let max = colName.guessWidth() + resizeHandle + sortIcon
-      logs.forEach((log) => {
-        const data = log.try(col.name)
-        if (data) {
-          const cell = createCell(new zed.Field(col.name, data))
-          const len = cell.guessWidth()
-          if (len > max) max = len
-        }
+      let max = estimateHeaderWidth(col.name)
+      records.forEach((r) => {
+        const data = r.try(col.name)
+        if (!data) return
+        const width = estimateCellWidth(data)
+        if (width > max) max = width
       })
-
-      col.width = Math.min(max, MAX_WIDTH)
+      col.width = max
     })
   }
 

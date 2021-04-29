@@ -5,6 +5,6 @@ import {zed} from "zealot"
 export function formatPrimitive(data: zed.Primitive) {
   if (data.isUnset()) return "⦻"
   if (zed.isInt(data)) return withCommas(data.toString())
-  if (zed.isTime(data)) return brim.time(this.toDate()).format()
+  if (zed.isTime(data)) return brim.time(data.toDate()).format()
   return data.toString()
 }

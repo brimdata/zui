@@ -1,8 +1,5 @@
+import {ONE_CHAR, FIELD_PAD, PATH_PAD} from "app/viewer/measure"
 import {zed} from "zealot"
-
-export const ONE_CHAR = 7.39
-export const FIELD_PAD = 14
-export const PATH_PAD = 12
 
 interface PrimitiveField {
   name: string

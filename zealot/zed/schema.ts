@@ -1,4 +1,4 @@
-import {trueType} from "."
+import {trueType} from "./index"
 import {TypeField, TypeRecord} from "./types/type-record"
 
 export class Schema {
