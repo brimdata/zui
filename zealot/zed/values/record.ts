@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {TypeAlias} from "../types/type-alias"
 import {TypeField, TypeRecord} from "../types/type-record"
 import {Field} from "./field"

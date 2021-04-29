@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {TypeType} from "../types/type-type"
 import {ZedType} from "../types/types"
 import {typeId} from "../utils"

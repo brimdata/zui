@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {RecordType, Value} from "../../zjson"
 import {ZedContext} from "../context"
 import {typeId} from "../utils"

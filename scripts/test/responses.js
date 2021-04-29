@@ -6,7 +6,7 @@
  *
  * It will use the zqd bundled in zdeps.
  *
- * Before running this, it would be good to:
+ * Before running this, run these commands once:
  *   1. npm install # to install the desired version of zqd
  *   2. npx rollup -c --silent # to bundle the current version of zealot
  *
@@ -26,7 +26,7 @@ function saveResponse(input, output, query) {
   )
   const out = fs.createWriteStream(output)
   deno.stdout.pipe(out)
-
+  deno.stdout.pipe(process.stdout)
   return new Promise((resolve) => {
     deno.on("close", () => {
       resolve()

@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {TypeUnion} from "../types/type-union"
 import {ZedType} from "../types/types"
 import {ZedValue, ZedValueInterface} from "./types"

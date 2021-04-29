@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {TypeValue} from "../values/type"
 import {PrimitiveType} from "../../zjson"
 import {PrimitiveTypeInterface} from "./types"

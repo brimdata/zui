@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {TypeFloat64} from "../types/type-float64"
 import {Primitive} from "./primitive"
 

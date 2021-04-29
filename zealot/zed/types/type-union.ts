@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {Value} from "zealot/zjson"
 import {Union} from "../values/union"
 import {TypeNull} from "./type-null"

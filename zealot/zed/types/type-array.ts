@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-array-constructor */
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {ZedContext} from "../context"
 import {Array} from "../values/array"
 import {ContainerTypeInterface, ZedType} from "./types"

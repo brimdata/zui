@@ -46,7 +46,7 @@ describe("zeek log when community_id is found", () => {
     expect(zealot.calls("search")).toHaveLength(before + 2)
   })
 
-  test("executes uid first, then cid", async () => {
+  test.only("executes uid first, then cid", async () => {
     const {store, zealot} = setup
     await store.dispatch(fetchCorrelation(zeek))
     const searches = zealot.calls("search")

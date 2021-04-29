@@ -53,3 +53,7 @@ export function trueType<T extends ZedType>(start: ZedType): T {
   }
   return t as T
 }
+
+export function isNull(value): value is null {
+  return value === null
+}

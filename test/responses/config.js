@@ -17,6 +17,11 @@ module.exports = {
     input: "sample.tsv",
     output: "count-by-path.response"
   },
+  everyCountByPath: {
+    query: "every 1s count() by _path",
+    input: "sample.tsv",
+    output: "every-count-by-path.response"
+  },
   sample: {
     query: "*",
     input: "sample.tsv",

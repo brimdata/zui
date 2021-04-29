@@ -1,4 +1,3 @@
-import {isEmpty} from "lodash"
 import {TypeAlias} from "./types/type-alias"
 import {TypeArray} from "./types/type-array"
 import {TypeMap} from "./types/type-map"
@@ -175,7 +174,7 @@ export class ZedContext {
       this.encodeTypeDef(typeName, typedefs, types)
     })
 
-    return isEmpty(types) ? {schema, values} : {schema, types, values}
+    return types.length === 0 ? {schema, values} : {schema, types, values}
   }
 
   encodeTypeDef(name, typedefs, types) {

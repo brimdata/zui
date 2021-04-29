@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {Value} from "zealot/zjson"
 import {ZedContext} from "../context"
 import {ZedMap} from "../values/map"

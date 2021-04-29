@@ -1,4 +1,4 @@
-import {isNull} from "lodash"
+import {isNull} from "../utils"
 import {TypeInt16} from "../types/type-int16"
 import {Primitive} from "./primitive"
 
