@@ -10,7 +10,7 @@ class TypeOfNull implements PrimitiveTypeInterface<Null> {
     return {kind: "primitive", name: this.name}
   }
 
-  create() {
+  create(_value: any) {
     return new Null()
   }
 }

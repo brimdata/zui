@@ -30,7 +30,9 @@ function toZqlBool(bool: boolean) {
 }
 
 function toZqlZngPrimitive(data: zed.Primitive) {
-  if (data instanceof zed.String || data instanceof zed.BString)
+  if (data instanceof zed.Ip) {
+    return data.toString()
+  } else {
     return toZqlString(data.toString())
-  throw new Error(`Can't convert Zng Type: ${data.type} to zql`)
+  }
 }

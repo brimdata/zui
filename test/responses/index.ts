@@ -4,6 +4,16 @@ import * as config from "test/responses/config"
 
 const cache = {}
 
+/**
+ *
+ * @param name string key of the object in test/responses/config.ts
+ * @returns An array of server responses from zqd as parsed json
+ *
+ * Example: const response = useResponse("dns")
+ *
+ * To recreate all the responses saved in the config file:
+ *    node scripts/test/responses.js
+ */
 export function useResponse(name: string) {
   if (name in cache) return cache[name]
 

@@ -1,21 +1,31 @@
 import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
-import {zed} from "zealot"
+import {ZealotContext, zed} from "zealot"
 
 // Convert a js object into a zed record
+
 export function createRecord(object): zed.Record {
-  let fields = []
+  let fields: zed.Field[] = []
   for (let name in object) {
     fields.push(createField(name, object[name]))
   }
-  // If the tests need the type, create it.
-  return new zed.Record(null, fields)
+  const typeFields: zed.TypeField[] = fields.map((f) => ({
+    name: f.name,
+    type: f.value.type
+  }))
+
+  const type = ZealotContext.lookupTypeRecord(typeFields)
+  return new zed.Record(type, fields)
 }
 
-export function createField(name, value) {
+export function createField(name, value): zed.Field {
   return new zed.Field(name, createData(value))
 }
 
-export function createData(value) {
+export function createData(value): zed.AnyValue {
+  if (value instanceof zed.Primitive) {
+    return value as zed.AnyValue
+  }
+
   if (value === null) {
     return new zed.Null()
   }

@@ -1,9 +1,9 @@
 import {isNull} from "lodash"
-import {Value} from "zealot/zjson"
+import {SetValue, Value} from "zealot/zjson"
 import {ZedContext} from "../context"
+import {typeId} from "../utils"
 import {Set} from "../values/set"
 import {ContainerTypeInterface, ZedType} from "./types"
-import {typeId} from "../utils"
 
 export class TypeSet implements ContainerTypeInterface {
   kind = "set"
@@ -17,10 +17,10 @@ export class TypeSet implements ContainerTypeInterface {
     return `|[${typeId(type)}]|`
   }
 
-  create(values, typedefs) {
+  create(values: SetValue, typedefs) {
     return new Set(
       this,
-      values.map((v) => this.type.create(v, typedefs))
+      isNull(values) ? null : values.map((v) => this.type.create(v, typedefs))
     )
   }
 

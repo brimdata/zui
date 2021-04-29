@@ -25,14 +25,14 @@ test("returns conn query if ts and duration are present", () => {
     uid: "CHem0e2rJqHiwjhgq7",
     community_id: "1:NYgcI8mLerCC20GwJVV5AftL0uY=",
     ts: new Date(1585852166.003543 * 1000),
-    duration: null
+    duration: new zed.Duration("0")
   })
   expect(getCorrelationQuery(record)).toBe(
     connCorrelation(
       record.get<zed.String>("uid"),
       record.get<zed.String>("community_id"),
       record.get<zed.Time>("ts"),
-      record.get<zed.Float64>("duration")
+      record.get<zed.Duration>("duration")
     )
   )
 })
@@ -42,7 +42,7 @@ test("returns cid query if only cid present", () => {
     _path: "conn",
     community_id: "1:NYgcI8mLerCC20GwJVV5AftL0uY=",
     ts: new Date(1585852166.003543 * 1000),
-    duration: null
+    duration: new zed.Duration("0")
   })
 
   expect(getCorrelationQuery(record)).toBe(
@@ -54,7 +54,7 @@ test("returns null if no cid or uid", () => {
   const record = createRecord({
     _path: "conn",
     ts: new Date(1585852166.003543 * 1000),
-    duration: null
+    duration: new zed.Duration("0")
   })
 
   expect(getCorrelationQuery(record)).toBe(null)

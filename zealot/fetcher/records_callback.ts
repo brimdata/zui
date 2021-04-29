@@ -29,20 +29,18 @@ function getChannel(id: number, channels: ChannelMap): Channel {
 export function createRecordsCallback(cb: RecordsCallback): PayloadCallback {
   let channels = new Map<number, any>()
 
-  return ({channel_id: id, records}: zqd.SearchRecords) => {
-    const prev = getChannel(id, channels)
-    const next = ZealotContext.decode(records, prev.typedefs)
-    const chan = {
-      rows: [...prev.rows, ...next],
-      schemas: prev.typedefs
-    }
-    channels.set(id, chan)
+  return ({channel_id: channel, records}: zqd.SearchRecords) => {
+    const {typedefs, schemas, rows: prevRows} = getChannel(channel, channels)
+    const newRows = records.map((zjson) => {
+      const rec = ZealotContext.decodeRecord(zjson, typedefs)
+      const name = zjson.schema
+      const type = typedefs[name]
+      schemas[name] = new zed.Schema(name, type)
+      return rec
+    })
+    const rows = prevRows.concat(newRows)
+    channels.set(channel, {rows, typedefs, schemas})
 
-    cb({
-      channel: id,
-      newRows: next,
-      rows: chan.rows,
-      schemas: chan.schemas
-    } as RecordsCallbackArgs)
+    cb({channel, rows, newRows, schemas} as RecordsCallbackArgs)
   }
 }

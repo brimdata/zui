@@ -18,10 +18,12 @@ export class TypeArray implements ContainerTypeInterface {
     return `[${typeId(type)}]`
   }
 
-  create(values, typedefs) {
+  create(values: zjson.ArrayValue, typedefs) {
     return new Array(
       this,
-      values.map((value) => this.type.create(value, typedefs))
+      isNull(values)
+        ? null
+        : values.map((value) => this.type.create(value, typedefs))
     )
   }
 

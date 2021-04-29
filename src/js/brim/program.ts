@@ -1,11 +1,9 @@
 import {isEqual} from "lodash"
-import {parse} from "zealot"
-import {zed} from "zealot"
+import {parse, zed} from "zealot"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"
 import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
-import {createCell} from "./cell"
 
 export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
@@ -45,7 +43,6 @@ export default function(p = "", pins: string[] = []) {
         .groupByKeys()
         .map((n) => log.tryField(n))
         .filter((f) => !!f)
-        .map(createCell)
         .map(brim.syntax.include)
         .join(" ")
 

@@ -77,4 +77,6 @@ export type Value = string | null | Value[]
 
 export type ArrayValue = Value[] | null
 
+export type SetValue = Value[] | null
+
 export type TypeContext = object

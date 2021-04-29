@@ -11,6 +11,10 @@ export class Primitive implements ZedValueInterface {
     return isNull(this.value)
   }
 
+  isSet() {
+    return !this.isUnset()
+  }
+
   toString() {
     if (isNull(this.value)) return "null"
     return this.value.toString()

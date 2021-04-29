@@ -1,7 +1,7 @@
 import tabHistory from "app/router/tab-history"
 import {workspacesPath} from "app/router/utils/paths"
 import React from "react"
-import {zed} from "zealot"
+import {createRecord} from "test/factories/zed-factory"
 import Layout from "../state/Layout"
 import LogDetails from "../state/LogDetails"
 import loginTo from "../test/helpers/loginTo"
@@ -13,7 +13,7 @@ test("no errors if space does not exist", async () => {
 
   store.dispatch(Layout.showRightSidebar())
   store.dispatch(tabHistory.push(workspacesPath()))
-  store.dispatch(LogDetails.push(new zed.Record(null, [])))
+  store.dispatch(LogDetails.push(createRecord({})))
   const el = provide(store, <XRightPane />)
   expect(el.html()).toBe("")
 })

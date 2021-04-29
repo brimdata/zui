@@ -14,7 +14,7 @@ export class ZeekEvent implements BrimEventInterface {
 
   getEndTime() {
     if (this.r.get("_path").toString() !== "conn") return null
-    const dur = this.r.get<zed.Float64>("duration").toFloat()
+    const dur = this.r.get<zed.Duration>("duration").asSeconds()
     if (!dur) return
     const ts = this.r.get<zed.Time>("ts").toDate()
     return new Date(ts.getTime() + dur * 1000)

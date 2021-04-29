@@ -54,10 +54,10 @@ export function connCorrelation(
   uid: zed.String,
   cid: zed.String,
   ts: zed.Time,
-  duration: zed.Float64
+  duration: zed.Duration
 ) {
   const tsDate = ts.toDate()
-  const dur = duration.toFloat() + 90 // Add a 1.5 minute buffer for events that get logged late
+  const dur = duration.asSeconds() + 90 // Add a 1.5 minute buffer for events that get logged late
   const endTsDate = new Date(new Date(tsDate).getTime() + dur * 1000)
   const cidFilter = zql`community_id = ${cid} and ts >= ${tsDate} and ts < ${endTsDate}`
   return `${uidFilter(uid)} or (${cidFilter}) | ${correlationLimit()}`

@@ -68,9 +68,9 @@ export class Record implements ZedValueInterface {
     }, new Field("", this))
   }
 
-  try(name: string) {
+  try<T extends ZedValue>(name: string): T | null {
     try {
-      return this.get(name)
+      return this.get(name) as T
     } catch {
       return null
     }
