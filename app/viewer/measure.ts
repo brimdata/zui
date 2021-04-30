@@ -2,7 +2,7 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {zed} from "zealot"
 
 const ONE_CHAR = 7.39
-const FIELD_PAD = 14
+const CELL_PAD = ONE_CHAR * 2
 
 const MAX_WIDTH = 500
 const MIN_WIDTH = 10
@@ -17,7 +17,9 @@ export function estimateHeaderWidth(name: string) {
 export function estimateCellWidth(value: zed.AnyValue) {
   let width = MIN_WIDTH
   if (value instanceof zed.Primitive) {
-    width = Math.ceil(formatPrimitive(value).length * ONE_CHAR + FIELD_PAD)
+    width = Math.ceil(formatPrimitive(value).length * ONE_CHAR + CELL_PAD)
+  } else {
+    width = Math.ceil(value.toString().length * ONE_CHAR + CELL_PAD)
   }
   return Math.min(MAX_WIDTH, width)
 }

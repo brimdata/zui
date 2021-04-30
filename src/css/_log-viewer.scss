@@ -8,6 +8,10 @@
   .using-keyboard &:focus {
     outline: none;
   }
+
+  * {
+    @include type-colors;
+  } 
 }
 
 .viewer .view {
@@ -45,7 +49,7 @@
 
   &.highlight {
     background: var(--havelock);
-    .field-cell {
+    span {
       color: white;
     }
   }
@@ -58,9 +62,18 @@
   line-height: 100px;
 }
 
-.viewer .field-cell {
-  &.count,
-  &.duration {
+.viewer {
+  .count,
+  .duration,
+  .uint8,
+  .uint16,
+  .uint32,
+  .uint64,
+  .int8,
+  .int16,
+  .int32,
+  .int64
+ {
     text-align: right;
   }
 }

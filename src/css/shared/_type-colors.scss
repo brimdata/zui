@@ -37,4 +37,8 @@
   &.null {
     color: var(--cloudy);
   }
+
+  &.time {
+    color: var(--interval)
+  }
 }

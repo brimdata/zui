@@ -1,25 +1,27 @@
-import {MenuItemConstructorOptions} from "electron"
 import {isEqual} from "lodash"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
-import {RightClickBuilder} from "src/js/types"
+import {showContextMenu} from "src/js/lib/System"
+import Columns from "src/js/state/Columns"
+import SearchBar from "src/js/state/SearchBar"
 import {ZealotContext, zed} from "zealot"
 
-export default function searchFieldContextMenu(
-  program: string,
-  columns: string[]
-): RightClickBuilder {
-  return function(
-    field: zed.Field,
-    log: zed.Record,
-    compound: boolean
-  ): MenuItemConstructorOptions[] {
-    const isTime = field.data instanceof zed.Time
+export default function searchFieldContextMenu({field, record, value}) {
+  return (_, getState) => {
+    const columns = Columns.getCurrentTableColumns(getState())
+      .getColumns()
+      .map((c) => c.name)
+    const program = SearchBar.getSearchProgram(getState())
+    const isTime = value instanceof zed.Time
     const isGroupBy = hasGroupByProc(program)
-    const isIp = field.data instanceof zed.Ip
+    const isIp = value instanceof zed.Ip
     const hasCol = columns.includes(field.name)
-    const flatColNames = log.flatten().columns
+    const flatColNames = record.flatten().columns
     const sameCols = isEqual(flatColNames.sort(), columns.sort())
+    const isPrimitive = field.value instanceof zed.Primitive
+    const isArrayish =
+      field.value instanceof zed.Array || field.value instanceof zed.Set
+
     const virusTotal = [
       "hassh",
       "host",
@@ -33,24 +35,25 @@ export default function searchFieldContextMenu(
     ].includes(field.name)
 
     const searchMenuActions = menu.actions.search
-
+    // A bit of a hack
+    field.value = value
     const fieldData = ZealotContext.encodeField(field)
-    const recordData = ZealotContext.encodeRecord(log)
+    const recordData = ZealotContext.encodeRecord(record)
 
-    return [
+    showContextMenu([
       searchMenuActions.include.menuItem([fieldData], {
         enabled: hasCol,
-        visible: !compound
+        visible: isPrimitive
       }),
       searchMenuActions.exclude.menuItem([fieldData], {
         enabled: hasCol,
-        visible: !compound
+        visible: isPrimitive
       }),
       searchMenuActions.in.menuItem([fieldData], {
-        visible: !!compound
+        visible: isArrayish
       }),
       searchMenuActions.notIn.menuItem([fieldData], {
-        visible: !!compound
+        visible: isArrayish
       }),
       searchMenuActions.freshInclude.menuItem([fieldData], {enabled: true}),
       menu.separator(),
@@ -80,6 +83,6 @@ export default function searchFieldContextMenu(
       searchMenuActions.logResult.menuItem([fieldData, recordData], {
         enabled: true
       })
-    ]
+    ])
   }
 }

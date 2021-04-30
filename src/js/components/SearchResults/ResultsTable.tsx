@@ -1,6 +1,5 @@
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import {isEmpty} from "lodash"
-import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React, {useEffect} from "react"
 import {connect, useDispatch} from "react-redux"
 import {zed} from "zealot"
@@ -101,10 +100,6 @@ export default function ResultsTable(props: Props) {
           dispatch(viewLogDetail(logs[index]))
           dispatch(openLogDetailsWindow())
         }}
-        rightClick={searchFieldContextMenu(
-          props.program,
-          props.tableColumns.getColumns().map((c) => c.name)
-        )}
       />
     )
   }

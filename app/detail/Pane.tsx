@@ -32,7 +32,7 @@ const Content = memo<Props>(function Content({record}) {
   const isZeek = event instanceof ZeekEvent
   const isSuricata = event instanceof SuricataEvent
   const {uid, cid} = new Correlation(record).getIds()
-  const isConn = isZeek && record["_path"].toString() === "conn"
+  const isConn = isZeek && record.try("_path")?.toString() === "conn"
   const hasMd5 = isZeek && record.has("md5")
 
   return (
