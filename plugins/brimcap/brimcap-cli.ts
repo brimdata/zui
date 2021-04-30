@@ -1,4 +1,4 @@
-import {execSync, spawn, ChildProcess} from "child_process"
+import {spawnSync, spawn, ChildProcess} from "child_process"
 import flatMap from "lodash/flatMap"
 
 interface packetOptions {
@@ -42,17 +42,16 @@ const OPTION_NAME_MAP = {
   srcPort: "src.port"
 }
 
+const toCliOpts = (opts: loadOptions | searchOptions): string[] =>
+  flatMap(
+    Object.entries(opts).map(([k, v]) => [`-${OPTION_NAME_MAP[k] || k}`, v])
+  )
+
 export default class BrimcapCLI {
   constructor(private binPath: string) {}
 
   public load(pcapPath: string, opts: loadOptions): ChildProcess {
-    const subCommandWithArgs = [
-      "load",
-      ...flatMap(
-        Object.entries(opts).map(([k, v]) => [`-${OPTION_NAME_MAP[k] || k}`, v])
-      ),
-      pcapPath
-    ]
+    const subCommandWithArgs = ["load", ...toCliOpts(opts), pcapPath]
 
     return spawn(this.binPath, subCommandWithArgs)
   }
@@ -62,17 +61,8 @@ export default class BrimcapCLI {
   }
 
   private exec(subCommand: string, opts: searchOptions) {
-    const commandWithArgs = [
-      `"${this.binPath}"`,
-      subCommand,
-      ...flatMap(
-        Object.entries(opts).map(([k, v]) => [
-          `-${OPTION_NAME_MAP[k] || k}`,
-          `"${v}"`
-        ])
-      )
-    ].join(" ")
+    const subCommandWithArgs = [subCommand, ...toCliOpts(opts)]
 
-    return execSync(commandWithArgs)
+    return spawnSync(this.binPath, subCommandWithArgs)
   }
 }
