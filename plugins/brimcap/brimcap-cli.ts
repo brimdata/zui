@@ -63,10 +63,13 @@ export default class BrimcapCLI {
 
   private exec(subCommand: string, opts: searchOptions) {
     const commandWithArgs = [
-      this.binPath,
+      `"${this.binPath}"`,
       subCommand,
       ...flatMap(
-        Object.entries(opts).map(([k, v]) => [`-${OPTION_NAME_MAP[k] || k}`, v])
+        Object.entries(opts).map(([k, v]) => [
+          `-${OPTION_NAME_MAP[k] || k}`,
+          `"${v}"`
+        ])
       )
     ].join(" ")
 
