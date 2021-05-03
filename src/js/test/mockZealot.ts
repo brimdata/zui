@@ -1,10 +1,10 @@
 export default {
-  spaces: {
-    create: () => Promise.resolve({name: "dataSpace"}),
-    list: () => Promise.resolve(["dataSpace"]),
+  pools: {
+    create: () => Promise.resolve({name: "dataPool"}),
+    list: () => Promise.resolve(["dataPool"]),
     get: () =>
       Promise.resolve({
-        name: "dataSpace",
+        name: "dataPool",
         min_time: {ns: 0, sec: 0},
         max_time: {ns: 1, sec: 1}
       })

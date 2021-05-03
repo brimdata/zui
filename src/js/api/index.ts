@@ -32,11 +32,11 @@ export default class BrimApi {
 
   public getCurrent() {
     const state = this.getState()
-    const space = Current.getSpace(state)
+    const pool = Current.getPool(state)
     const ws = Current.getWorkspace(state)
     return {
-      spaceId: space.id,
-      spaceName: space.name,
+      poolId: pool.id,
+      poolName: pool.name,
       workspaceId: ws.id,
       workspaceName: ws.name
     }

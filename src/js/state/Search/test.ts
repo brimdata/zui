@@ -4,7 +4,7 @@ import {createZealotMock} from "zealot"
 import brim from "../../brim"
 import fixtures from "../../test/fixtures"
 import initTestStore from "../../test/initTestStore"
-import Spaces from "../Spaces"
+import Pools from "../Pools"
 import Tab from "../Tab"
 import Workspaces from "../Workspaces"
 import Search from "./"
@@ -16,18 +16,18 @@ const ts4 = {sec: 4, ns: 3}
 describe("reducer", () => {
   let store
   const ws = fixtures("workspace1")
-  const space = brim.space(fixtures("space1"))
+  const pool = brim.pool(fixtures("pool1"))
 
   beforeEach(() => {
     store = initTestStore(createZealotMock().stubStream("search", []).zealot)
 
-    store.dispatchAll([Workspaces.add(ws), Spaces.setDetail(ws.id, space)])
+    store.dispatchAll([Workspaces.add(ws), Pools.setDetail(ws.id, pool)])
 
-    store.dispatch(tabHistory.push(lakePath(space.id, ws.id)))
+    store.dispatch(tabHistory.push(lakePath(pool.id, ws.id)))
   })
 
   test("get span looks at the url", () => {
-    expect(Tab.getSpan(store.getState())).toEqual(space.everythingSpan())
+    expect(Tab.getSpan(store.getState())).toEqual(pool.everythingSpan())
   })
 
   test("set span focus", () => {

@@ -12,7 +12,7 @@ type Args = {
   query: string
   from?: Date
   to?: Date
-  spaceId?: string
+  poolId?: string
   id?: string
 }
 
@@ -26,19 +26,19 @@ export function search({
   query,
   from,
   to,
-  spaceId,
+  poolId,
   id = randomHash()
 }: Args): Thunk<BrimSearch> {
   return (dispatch, getState) => {
     const [defaultFrom, defaultTo] = Tab.getSpanAsDates(getState())
-    const defaultSpaceId = Current.getSpaceId(getState())
+    const defaultPoolId = Current.getPoolId(getState())
     const zealot = dispatch(getZealot())
     const ctl = new AbortController()
     const searchHandle: Handler = {type: "SEARCH", abort: () => ctl.abort()}
-    spaceId = spaceId || defaultSpaceId
+    poolId = poolId || defaultPoolId
     to = to || defaultTo
     from = from || defaultFrom
-    const req = zealot.search(query, {from, to, spaceId, signal: ctl.signal})
+    const req = zealot.search(query, {from, to, poolId, signal: ctl.signal})
     dispatch(Handlers.abort(id, false))
     dispatch(Handlers.register(id, searchHandle))
 

@@ -10,7 +10,7 @@ import Pane from "./../Pane"
 import get from "lodash/get"
 import {Sectional} from "../../../pkg/sectional"
 import HistorySection from "./HistorySection"
-import SpacesSection from "./SpacesSection"
+import PoolsSection from "./PoolsSection"
 import QueriesSection from "./QueriesSection"
 
 const EmptyText = styled.div`
@@ -61,9 +61,9 @@ export function LeftPane() {
           <WorkspacePicker />
           <Sectional sections={sections} onChange={setSections}>
             {(data, provided) => {
-              if (data.id === "spaces")
+              if (data.id === "pools")
                 return (
-                  <SpacesSection
+                  <PoolsSection
                     isOpen={data.isOpen}
                     key={data.id}
                     {...provided}

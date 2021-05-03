@@ -12,7 +12,7 @@ import Current from "../../state/Current"
 export default React.memo<{}>(function InvestigationLinear() {
   const findings = useFindings()
   const workspaceId = useSelector(Current.getWorkspaceId)
-  const spaceId = useSelector(Current.getSpaceId)
+  const poolId = useSelector(Current.getPoolId)
 
   const cards = []
 
@@ -22,7 +22,7 @@ export default React.memo<{}>(function InvestigationLinear() {
         key={getKey(f)}
         finding={f}
         workspaceId={workspaceId}
-        spaceId={spaceId}
+        poolId={poolId}
       />
     )
   })

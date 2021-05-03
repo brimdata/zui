@@ -15,7 +15,7 @@ export default function LogDetailsWindow() {
   const dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()
-  const space = useSelector(Current.mustGetSpace)
+  const pool = useSelector(Current.mustGetPool)
   const pluginButtons = usePluginToolbarItems("detail").map((button) => (
     <ToolbarAction key={button.label} {...button} />
   ))
@@ -32,7 +32,7 @@ export default function LogDetailsWindow() {
           />
         </Left>
         <Center>
-          <PaneTitle>Log details for space: {space.name}</PaneTitle>
+          <PaneTitle>Log details for pool: {pool.name}</PaneTitle>
         </Center>
         <Right>
           <div>{pluginButtons}</div>

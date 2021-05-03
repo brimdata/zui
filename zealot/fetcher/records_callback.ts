@@ -1,5 +1,5 @@
 import {ZealotContext, zed} from "zealot"
-import * as zqd from "../zqd"
+import * as lake from "../lake"
 
 type SchemaMap = {[name: string]: zed.Schema}
 
@@ -13,7 +13,7 @@ export interface RecordsCallbackArgs {
 type ChannelMap = Map<number, Channel>
 type Channel = {rows: zed.Record[]; schemas: SchemaMap; typedefs: object}
 type RecordsCallback = (args: RecordsCallbackArgs) => void
-type PayloadCallback = (payload: zqd.SearchRecords) => void
+type PayloadCallback = (payload: lake.SearchRecords) => void
 
 function getChannel(id: number, channels: ChannelMap): Channel {
   if (!channels.has(id)) {
@@ -29,7 +29,7 @@ function getChannel(id: number, channels: ChannelMap): Channel {
 export function createRecordsCallback(cb: RecordsCallback): PayloadCallback {
   let channels = new Map<number, any>()
 
-  return ({channel_id: channel, records}: zqd.SearchRecords) => {
+  return ({channel_id: channel, records}: lake.SearchRecords) => {
     const {typedefs, schemas, rows: prevRows} = getChannel(channel, channels)
     const newRows = records.map((zjson) => {
       const rec = ZealotContext.decodeRecord(zjson, typedefs)

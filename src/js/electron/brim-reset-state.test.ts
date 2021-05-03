@@ -1,14 +1,14 @@
 import {app} from "electron"
-import {ZQD} from "ppl/zqd/zqd"
+import {Lake} from "ppl/lake/lake"
 import {Brim} from "./brim"
 import tron from "./tron"
 import windowManager from "./tron/windowManager"
 
-function mockZqd() {
-  const zqd = new ZQD("test", "srun", "supdate", "zrun")
-  jest.spyOn(zqd, "start").mockImplementation(() => {})
-  jest.spyOn(zqd, "close").mockImplementation(() => Promise.resolve())
-  return zqd
+function mockLake() {
+  const lake = new Lake("test")
+  jest.spyOn(lake, "start").mockImplementation(() => {})
+  jest.spyOn(lake, "close").mockImplementation(() => Promise.resolve())
+  return lake
 }
 
 function mockSession() {
@@ -32,7 +32,7 @@ function mockWindows() {
 
 test("reset state", async () => {
   const brim = new Brim({
-    zqd: mockZqd(),
+    lake: mockLake(),
     session: mockSession(),
     windows: mockWindows()
   })

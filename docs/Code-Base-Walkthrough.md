@@ -86,9 +86,9 @@ Test helpers and test data. Actual unit tests should go next to the files they e
 
 A place for generic types that are used throughout the app. If you need to create a type that is specific to a component or a class, define and export it from here.
 
-**/zqd**
+**/ppl/lake**
 
-Code that runs the backend zqd process on localhost.
+Code that runs the backend zed lake service process on localhost.
 
 ## Libraries
 

@@ -6,7 +6,7 @@ import ipc from "../../electron/ipc"
 import invoke from "../../electron/ipc/invoke"
 import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
 import Investigation from "../../state/Investigation"
-import Spaces from "../../state/Spaces"
+import Pools from "../../state/Pools"
 import {Thunk} from "../../state/types"
 import Workspaces from "../../state/Workspaces"
 import {Workspace} from "../../state/Workspaces/types"
@@ -24,7 +24,7 @@ const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
     invoke(ipc.secrets.deleteKey(toRefreshTokenKey(id)))
   }
   dispatch(Investigation.clearWorkspaceInvestigation(id))
-  dispatch(Spaces.removeForWorkspace(id))
+  dispatch(Pools.removeForWorkspace(id))
   dispatch(WorkspaceStatuses.remove(id))
   dispatch(Workspaces.remove(id))
 

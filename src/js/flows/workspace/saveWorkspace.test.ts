@@ -18,9 +18,9 @@ const ws2 = fixtures("workspace2")
 beforeEach(() => {
   mock = createZealotMock()
     .stubPromise("version", "1")
-    .stubPromise("spaces.list", [])
+    .stubPromise("pools.list", [])
     .stubPromise("version", "1")
-    .stubPromise("spaces.list", [])
+    .stubPromise("pools.list", [])
   store = initTestStore(mock.zealot)
   store.dispatchAll([
     Workspaces.add(ws1),

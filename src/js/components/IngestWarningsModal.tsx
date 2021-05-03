@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
 import Current from "../state/Current"
-import Spaces from "../state/Spaces"
+import Pools from "../state/Pools"
 import useEnterKey from "./hooks/useEnterKey"
 import {
   ButtonGroup,
@@ -18,9 +18,9 @@ export default function IngestWarningsModal({onClose}) {
   const dispatch = useDispatch()
   useEnterKey(onClose)
   const id = useSelector(Current.getWorkspaceId)
-  const spaceId = useSelector(Current.getSpaceId)
-  const warnings = useSelector(Spaces.getIngestWarnings(id, spaceId))
-  const onClear = () => dispatch(Spaces.clearIngestWarnings(id, spaceId))
+  const poolId = useSelector(Current.getPoolId)
+  const warnings = useSelector(Pools.getIngestWarnings(id, poolId))
+  const onClear = () => dispatch(Pools.clearIngestWarnings(id, poolId))
 
   return (
     <Content width={800}>

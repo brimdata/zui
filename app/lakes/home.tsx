@@ -3,7 +3,7 @@ import styled from "styled-components"
 import BrimTextLogo from "../../src/js/components/BrimTextLogo"
 import electronIsDev from "../../src/js/electron/isDev"
 import TabImport from "./import"
-import TabCreateSpace from "./new"
+import TabCreatePool from "./new"
 
 const Nav = styled.nav`
   margin-top: auto;
@@ -30,7 +30,7 @@ export default function LakeHome() {
 
   function content() {
     if (page === "import") return <TabImport />
-    if (page === "create") return <TabCreateSpace />
+    if (page === "create") return <TabCreatePool />
     return null
   }
 
@@ -47,7 +47,7 @@ export default function LakeHome() {
           </Link>{" "}
           |
           <Link active={page == "create"} onClick={() => setPage("create")}>
-            Create Empty Space
+            Create Empty Pool
           </Link>
         </Nav>
       )}

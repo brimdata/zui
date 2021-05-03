@@ -97,8 +97,8 @@ export type SearchRecord = {
   program: string
   pins: string[]
   spanArgs: SpanArgs
-  spaceId: string
-  spaceName: string
+  poolId: string
+  poolName: string
   scrollPos?: ScrollPosition
   target?: string // deprecated
 }

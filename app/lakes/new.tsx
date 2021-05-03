@@ -2,7 +2,7 @@ import {useDispatch} from "react-redux"
 import React, {useState} from "react"
 import styled from "styled-components"
 
-import {createSpace} from "../../src/js/flows/createSpace"
+import {createPool} from "../../src/js/flows/createPool"
 import ErrorFactory from "../../src/js/models/ErrorFactory"
 import FileInput from "../../src/js/components/common/forms/FileInput"
 import InputField from "../../src/js/components/common/forms/InputField"
@@ -31,14 +31,14 @@ const SubmitWrap = styled.div`
   justify-content: flex-end;
 `
 
-export default function TabCreateSpace() {
+export default function TabCreatePool() {
   const dispatch = useDispatch<AppDispatch>()
   const [name, setName] = useState("")
   const [kind, setKind] = useState<"filestore" | "archivestore">("filestore")
   const [data_path, setDataPath] = useState("")
 
   const onSubmit = (e) => {
-    dispatch(createSpace({name, kind, data_path})).catch((e) => {
+    dispatch(createPool({name, kind, data_path})).catch((e) => {
       dispatch(Notice.set(ErrorFactory.create(e)))
     })
     e.preventDefault()
@@ -46,7 +46,7 @@ export default function TabCreateSpace() {
 
   return (
     <Wrap>
-      <h2>Create Space</h2>
+      <h2>Create Pool</h2>
       <FormWrap onSubmit={onSubmit}>
         <InputField>
           <InputLabel>Name</InputLabel>

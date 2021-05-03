@@ -1,5 +1,5 @@
 import {createSelector} from "reselect"
-import brim, {BrimSpace, Span} from "../../brim"
+import brim, {BrimPool, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
 import Chart from "../Chart"
 import Current from "../Current"
@@ -37,12 +37,12 @@ const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(
   (tab) => tab.search.spanFocus
 )
 
-const getSpanArgs = createSelector<State, TabState, BrimSpace, SpanArgs>(
+const getSpanArgs = createSelector<State, TabState, BrimPool, SpanArgs>(
   Tabs.getActiveTab,
-  Current.mustGetSpace,
-  (tab, space) => {
+  Current.mustGetPool,
+  (tab, pool) => {
     const [from, to] = tab.search.spanArgs
-    const [defaultFrom, defaultTo] = space.defaultSpanArgs()
+    const [defaultFrom, defaultTo] = pool.defaultSpanArgs()
     return [from || defaultFrom, to || defaultTo]
   }
 )
@@ -73,8 +73,8 @@ const getSpanFocusAsDates = createSelector<
 
 export default {
   workspaceUrl,
-  getSpaceName: (state: State) => {
-    const s = Current.mustGetSpace(state)
+  getPoolName: (state: State) => {
+    const s = Current.mustGetPool(state)
     return s ? s.name : ""
   },
   isFetching: activeTabSelect<boolean>(tabIsFetching),

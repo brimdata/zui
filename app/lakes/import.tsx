@@ -7,7 +7,7 @@ import LoadFilesInput from "ppl/import/LoadFilesInput"
 import Notice from "../../src/js/state/Notice"
 import errors from "../../src/js/errors"
 import ingestFiles from "../../src/js/flows/ingestFiles"
-import refreshSpaceNames from "../../src/js/flows/refreshSpaceNames"
+import refreshPoolNames from "../../src/js/flows/refreshPoolNames"
 import {AppDispatch} from "../../src/js/state/types"
 import {popNotice} from "../../src/js/components/PopNotice"
 
@@ -26,7 +26,7 @@ export default function TabImport() {
           ? dispatch(Notice.set(errors.importInterrupt()))
           : dispatch(Notice.set(ErrorFactory.create(e.cause)))
 
-        dispatch(refreshSpaceNames())
+        dispatch(refreshPoolNames())
         console.error(e.message)
       })
   }

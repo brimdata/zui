@@ -8,7 +8,7 @@ import {Finding} from "src/js/state/Investigation/types"
 
 let store
 beforeEach(async () => {
-  const setup = await loginTo("workspace1", "space1")
+  const setup = await loginTo("workspace1", "pool1")
   store = setup.store
 })
 
@@ -18,8 +18,8 @@ const finding: Finding = {
     program: "finding card test",
     pins: [],
     spanArgs: [brim.time().toTs(), brim.time().toTs()],
-    spaceId: "1",
-    spaceName: "space1",
+    poolId: "1",
+    poolName: "pool1",
     target: "events"
   }
 }
@@ -27,7 +27,7 @@ const finding: Finding = {
 test("Clicking the history submits the search", () => {
   const el = provide(
     store,
-    <FindingCard spaceId="1" workspaceId="1" finding={finding} />
+    <FindingCard poolId="1" workspaceId="1" finding={finding} />
   )
   store.clearActions()
   el.simulate("click")

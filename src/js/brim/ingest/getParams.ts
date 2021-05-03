@@ -24,10 +24,10 @@ export default function getParams(
   const files = fileList(data)
 
   function getDataDir() {
-    return dataDir ? path.join(dataDir, getSpaceName()) : ""
+    return dataDir ? path.join(dataDir, getPoolName()) : ""
   }
 
-  function getSpaceName() {
+  function getPoolName() {
     let name
     if (files.oneFile()) name = lib.file(files.first().file.path).fileName()
     else if (files.inSameDir()) name = files.dirName()
@@ -37,7 +37,7 @@ export default function getParams(
   }
 
   return {
-    name: getSpaceName(),
+    name: getPoolName(),
     dataDir: getDataDir(),
     fileListData: data
   }

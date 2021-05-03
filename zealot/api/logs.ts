@@ -1,17 +1,17 @@
 import {LogsPostArgs, LogsPostPathsArgs} from "../types"
 
 export default {
-  post({spaceId, files}: LogsPostArgs) {
+  post({poolId, files}: LogsPostArgs) {
     return {
       method: "POST",
-      path: `/space/${encodeURIComponent(spaceId)}/log`,
+      path: `/pool/${encodeURIComponent(poolId)}/log`,
       body: getBody(files)
     }
   },
-  postPaths({spaceId, paths}: LogsPostPathsArgs) {
+  postPaths({poolId, paths}: LogsPostPathsArgs) {
     return {
       method: "POST",
-      path: `/space/${encodeURIComponent(spaceId)}/log/paths`,
+      path: `/pool/${encodeURIComponent(poolId)}/log/paths`,
       body: getPathsBody(paths)
     }
   }

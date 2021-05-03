@@ -6,6 +6,7 @@ import path from "path"
 
 import {createZealot} from "zealot"
 
+import {testDataDir} from "../lib/env"
 import {retryUntil} from "../lib/control"
 import {nodeZedDistDir} from "../lib/env"
 import {handleError} from "../lib/jest"
@@ -16,7 +17,7 @@ describe("Lake tests", () => {
   let app
   let testIdx = 0
   const ZED = path.join(nodeZedDistDir(), "zed")
-  const LAKE_SPACE_NAME = "sample.zar"
+  const LAKE_POOL_NAME = "sample.zar"
   beforeAll(() => {
     app = newAppInstance(path.basename(__filename), ++testIdx)
     return appStep.startApp(app)
@@ -28,37 +29,34 @@ describe("Lake tests", () => {
     }
   })
 
-  test(`Brim starts when a lake space is present`, (done) => {
+  // XXX (nibs) - skip until https://github.com/brimdata/zed/issues/2547
+  test.skip(`Brim starts when a lake pool is present`, (done) => {
     appStep
       .ingestFile(app, "sample.tsv")
       .then(async () => {
         // Use zealot to
-        // 1. Create a new space
+        // 1. Create a new pool
         // 2. Find the path to sample.tsv.brim's all.zng
         const client = createZealot("localhost:9867")
+        const userDataDir = await app.electron.remote.app.getPath("userData")
+        const lakeRoot = path.join(userDataDir, "data", "lake")
+        const tsvFile = path.normalize(path.join(testDataDir(), "sample.tsv"))
 
-        const sampleSpace = (await client.spaces.list())[0]
-        const lakeSpace = await client.spaces.create({name: LAKE_SPACE_NAME})
-
-        const zngFile = sampleSpace.data_path + "/all.zng"
-        const lakeRoot = lakeSpace.data_path
-
-        // Create a lake inside the space.
+        // Create a pool inside the lake.
         const options = {env: {...process.env, ZED_LAKE_ROOT: lakeRoot}}
-        execSync(`"${ZED}" lake init `, options)
         execSync(`"${ZED}" lake create -p default -S 1024B`, options)
-        execSync(`"${ZED}" lake load -p default "${zngFile}"`, options)
+        execSync(`"${ZED}" lake load -p default "${tsvFile}"`, options)
 
-        // Make sure zqd identifies both spaces.
+        // Make sure zed lake identifies both pools.
         retryUntil(
-          () => client.spaces.list(),
-          (spaces) => spaces.length === 2
+          () => client.pools.list(),
+          (pools) => pools.length === 2
         )
 
-        // Reload the app so that it reads the new space.
+        // Reload the app so that it reads the new pool.
         await appStep.reload(app)
         await appStep.click(app, ".add-tab")
-        await (await app.client.$(`=${LAKE_SPACE_NAME}`)).waitForDisplayed()
+        await (await app.client.$(`=${LAKE_POOL_NAME}`)).waitForDisplayed()
         done()
       })
       .catch((err) => {

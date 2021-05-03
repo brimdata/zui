@@ -3,7 +3,7 @@ import keytar from "keytar"
 import url from "url"
 import os from "os"
 import path from "path"
-import {ZQD} from "ppl/zqd/zqd"
+import {Lake} from "ppl/lake/lake"
 import {Store} from "redux"
 import {
   deserializeState,
@@ -12,7 +12,6 @@ import {
 } from "../auth0/utils"
 import createGlobalStore from "../state/createGlobalStore"
 import {getGlobalPersistable} from "../state/getPersistable"
-import Prefs from "../state/Prefs"
 import Workspaces from "../state/Workspaces"
 import {installExtensions} from "./extensions"
 import ipc from "./ipc"
@@ -31,13 +30,13 @@ type BrimArgs = {
   windows?: $WindowManager
   store?: Store
   session?: Session
-  zqd?: ZQD
+  lake?: Lake
 }
 
 export class Brim {
   readonly windows: $WindowManager
   readonly store: Store
-  readonly zqd: ZQD
+  readonly lake: Lake
   readonly session: Session
   public isQuitting = false
 
@@ -49,24 +48,20 @@ export class Brim {
     const data = await session.load()
     const windows = windowManager(data)
     const store = createGlobalStore(data?.globalState)
-    const select = (fn) => fn(store.getState())
-    const suricataRunner = select(Prefs.getSuricataRunner)
-    const suricataUpdater = select(Prefs.getSuricataUpdater)
-    const zeekRunner = select(Prefs.getZeekRunner)
-    const spaceDir = path.join(app.getPath("userData"), "data", "spaces")
-    const zqd = new ZQD(spaceDir, suricataRunner, suricataUpdater, zeekRunner)
-    return new Brim({session, windows, store, zqd})
+    const lakeroot = path.join(app.getPath("userData"), "data", "lake")
+    const lake = new Lake(lakeroot)
+    return new Brim({session, windows, store, lake})
   }
 
   constructor(args: BrimArgs = {}) {
     this.windows = args.windows || windowManager()
     this.store = args.store || createGlobalStore(undefined)
     this.session = args.session || tron.session()
-    this.zqd = args.zqd || new ZQD(null, null, null, null)
+    this.lake = args.lake || new Lake(null)
   }
 
   async start() {
-    this.zqd.start()
+    this.lake.start()
     if (this.isDev()) await installExtensions()
     this.windows.init()
   }
@@ -106,7 +101,7 @@ export class Brim {
         await this.saveSession()
       }
       this.windows.quit()
-      await this.zqd.close()
+      await this.lake.close()
       app.quit()
     } else {
       this.isQuitting = false

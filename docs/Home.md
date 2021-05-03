@@ -17,7 +17,7 @@ effective use of the Brim desktop application and related tools.
 
 ## Cookbooks
 
-- [[Remote zqd]]
+- [[Remote zed lake]]
 - [[Query Library Transfer]]
 - [[Joining Data]]
 

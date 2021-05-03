@@ -3,7 +3,7 @@ import {lakePath} from "app/router/utils/paths"
 import Columns from "src/js/state/Columns"
 import Handlers from "src/js/state/Handlers"
 import SearchBar from "src/js/state/SearchBar"
-import Spaces from "src/js/state/Spaces"
+import Pools from "src/js/state/Pools"
 import Viewer from "src/js/state/Viewer"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
@@ -15,7 +15,7 @@ import {createZealotMock} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
 const dnsResp = useResponse("dns")
-const space = fixtures("space1")
+const pool = fixtures("pool1")
 const warningResp = responses("search_warning.txt")
 
 let store, zealot, dispatch, select
@@ -33,9 +33,9 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Spaces.setDetail("1", space)
+    Pools.setDetail("1", pool)
   ])
-  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
+  store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
 })
 
 const submit = () =>

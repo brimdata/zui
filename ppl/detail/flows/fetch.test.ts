@@ -34,7 +34,7 @@ const stubs = {
 describe("zeek log when community_id is found", () => {
   let setup
   beforeEach(async () => {
-    setup = await loginTo("workspace1", "space1")
+    setup = await loginTo("workspace1", "pool1")
     setup.zealot.stubStream("search", stubs.uidResult)
     setup.zealot.stubStream("search", stubs.uidAndCommunityResult)
   })
@@ -65,7 +65,7 @@ describe("zeek log when community_id is found", () => {
 describe("zeek log when community_id is not found", () => {
   let setup
   beforeEach(async () => {
-    setup = await loginTo("workspace1", "space1")
+    setup = await loginTo("workspace1", "pool1")
     setup.zealot.stubStream("search", stubs.noCommunityIdInConn)
   })
 
@@ -93,7 +93,7 @@ describe("suricata alert when community_id found", () => {
   let setup
 
   beforeEach(async () => {
-    setup = await loginTo("workspace1", "space1")
+    setup = await loginTo("workspace1", "pool1")
     setup.zealot.stubStream("search", stubs.alertResults)
   })
 

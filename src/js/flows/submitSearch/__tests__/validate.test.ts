@@ -2,7 +2,7 @@ import {createZealotMock} from "zealot"
 
 import {submitSearch} from "../mod"
 import SearchBar from "../../../state/SearchBar"
-import Spaces from "../../../state/Spaces"
+import Pools from "../../../state/Pools"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
@@ -10,7 +10,7 @@ import {lakePath} from "app/router/utils/paths"
 import tabHistory from "app/router/tab-history"
 
 const dnsResp = responses("dns.txt")
-const space = fixtures("space1")
+const pool = fixtures("pool1")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
@@ -20,17 +20,17 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
   zealot.stubStream("search", dnsResp)
   store.dispatchAll([
-    Spaces.setDetail("1", space),
+    Pools.setDetail("1", pool),
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
-  store.dispatch(tabHistory.push(lakePath(space.id, "1")))
+  store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
 test("Validates the zql", () => {
-  store.dispatch(tabHistory.push(`/workspaces/1/lakes/${space.id}/search`))
+  store.dispatch(tabHistory.push(`/workspaces/1/lakes/${pool.id}/search`))
   expect(select(SearchBar.getSearchBarError)).toEqual(null)
 
   dispatch(SearchBar.changeSearchBarInput("_ath="))

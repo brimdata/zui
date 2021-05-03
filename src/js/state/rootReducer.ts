@@ -7,7 +7,7 @@ import Investigation from "./Investigation"
 import Modal from "./Modal"
 import Notice from "./Notice"
 import Prefs from "./Prefs"
-import Spaces from "./Spaces"
+import Pools from "./Pools"
 import Tabs from "./Tabs"
 import View from "./View"
 import Queries from "./Queries"
@@ -27,7 +27,7 @@ export default combineReducers<any, any>({
   tabs: Tabs.reducer,
   investigation: Investigation.reducer,
   view: View.reducer,
-  spaces: Spaces.reducer,
+  pools: Pools.reducer,
   prefs: Prefs.reducer,
   systemTest: SystemTest.reducer,
   feature: Feature.reducer,

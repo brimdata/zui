@@ -19,8 +19,8 @@ export function histogramSearch(): Thunk<Promise<void>> {
     const brimProgram = brim.program(program, pins)
     const [from, to] = brim.span(spanArgs).toDateTuple()
     const query = addEveryCountProc(brimProgram.string(), [from, to])
-    const spaceId = Current.mustGetSpace(state).id
-    const {response, promise} = dispatch(search({id, query, from, to, spaceId}))
+    const poolId = Current.mustGetPool(state).id
+    const {response, promise} = dispatch(search({id, query, from, to, poolId}))
     dispatch(handle(response))
     return promise
   }

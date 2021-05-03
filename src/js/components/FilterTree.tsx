@@ -53,10 +53,10 @@ type Props = {
   node: InvestigationNode
   i: number
   workspaceId: string
-  spaceId: string
+  poolId: string
 }
 
-function NodeRow({node, i, workspaceId, spaceId}: Props) {
+function NodeRow({node, i, workspaceId, poolId}: Props) {
   const dispatch = useDispatch()
   const last = useSelector(Url.getSearchParams)
   const prevPins = last.pins
@@ -68,7 +68,7 @@ function NodeRow({node, i, workspaceId, spaceId}: Props) {
         const multiTs = node
           .all(() => true)
           .map((node) => node.model.finding.ts)
-        dispatch(Investigation.deleteFindingByTs(workspaceId, spaceId, multiTs))
+        dispatch(Investigation.deleteFindingByTs(workspaceId, poolId, multiTs))
       }
     },
     {type: "separator"},
@@ -79,13 +79,13 @@ function NodeRow({node, i, workspaceId, spaceId}: Props) {
           .showMessageBox({
             type: "warning",
             title: "Delete All History",
-            message: `Are you sure you want to delete all history entries for this space?`,
+            message: `Are you sure you want to delete all history entries for this pool?`,
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
             if (response === 0)
               dispatch(
-                Investigation.clearSpaceInvestigation(workspaceId, spaceId)
+                Investigation.clearPoolInvestigation(workspaceId, poolId)
               )
           })
     }
@@ -115,7 +115,7 @@ function NodeRow({node, i, workspaceId, spaceId}: Props) {
           <NodeRow
             node={node}
             workspaceId={workspaceId}
-            spaceId={spaceId}
+            poolId={poolId}
             i={i}
             key={i}
           />
@@ -127,9 +127,9 @@ function NodeRow({node, i, workspaceId, spaceId}: Props) {
 
 export default function FilterTree() {
   const currentWorkspaceId = useSelector(Current.getWorkspaceId)
-  const currentSpaceId = useSelector(Current.getSpaceId)
+  const currentPoolId = useSelector(Current.getPoolId)
   const investigation = useSelector(
-    Investigation.getInvestigation(currentWorkspaceId, currentSpaceId)
+    Investigation.getInvestigation(currentWorkspaceId, currentPoolId)
   )
   const tree = createInvestigationTree(investigation)
 
@@ -146,7 +146,7 @@ export default function FilterTree() {
       {tree.children.map((node, i) => (
         <NodeRow
           workspaceId={currentWorkspaceId}
-          spaceId={currentSpaceId}
+          poolId={currentPoolId}
           node={node}
           i={i}
           key={i}

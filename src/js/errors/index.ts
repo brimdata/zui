@@ -4,9 +4,9 @@ import pcapIngest from "./pcapIngest"
 export default {
   pcapIngest,
   logsIngest,
-  spaceDeleted: (id: string) => ({
-    type: "SpaceDeletedError",
-    message: `The space previously on this tab has been deleted.`,
+  poolDeleted: (id: string) => ({
+    type: "PoolDeletedError",
+    message: `The pool previously on this tab has been deleted.`,
     details: [`id: ${id}`]
   }),
   importInterrupt: () => ({

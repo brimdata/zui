@@ -3,7 +3,7 @@ import {BrimWorkspace} from "../../brim"
 import Workspaces from "../../state/Workspaces"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import {WorkspaceStatus} from "../../state/WorkspaceStatuses/types"
-import refreshSpaceNames from "../refreshSpaceNames"
+import refreshPoolNames from "../refreshPoolNames"
 
 export const saveWorkspace = (ws: BrimWorkspace, status: WorkspaceStatus) => (
   dispatch,
@@ -13,5 +13,5 @@ export const saveWorkspace = (ws: BrimWorkspace, status: WorkspaceStatus) => (
   dispatch(WorkspaceStatuses.set(ws.id, status))
   dispatch(Workspaces.add(ws.serialize()))
   dispatch(tabHistory.push(`/workspaces/${ws.id}`))
-  dispatch(refreshSpaceNames())
+  dispatch(refreshPoolNames())
 }

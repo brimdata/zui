@@ -8,7 +8,7 @@ const init: LayoutState = {
   investigationView: "linear",
   columnHeadersView: "AUTO",
   mainView: "search",
-  sidebarSections: [{id: "spaces"}, {id: "queries"}, {id: "history"}]
+  sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}]
 }
 
 export default function reducer(

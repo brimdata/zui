@@ -1,8 +1,8 @@
 import {matchPath} from "react-router"
 import {createSelector} from "reselect"
-import brim, {BrimSpace, BrimWorkspace} from "../../brim"
-import Spaces from "../Spaces"
-import {SpacesState} from "../Spaces/types"
+import brim, {BrimPool, BrimWorkspace} from "../../brim"
+import Pools from "../Pools"
+import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import Workspaces from "../Workspaces"
@@ -21,7 +21,7 @@ export const getLocation = (state: State) => {
   return getHistory(state).location
 }
 
-export const getSpaceId = (state) => {
+export const getPoolId = (state) => {
   type Params = {lakeId?: string}
   const match = matchPath<Params>(
     getLocation(state).pathname,
@@ -51,27 +51,26 @@ export const mustGetWorkspace = createSelector<
   return brim.workspace(workspaces[id])
 })
 
-export const mustGetSpace = createSelector<
-  State,
-  SpacesState,
-  Id,
-  Id,
-  BrimSpace
->(Spaces.raw, getWorkspaceId, getSpaceId, (spaces, workspaceId, spaceId) => {
-  if (!workspaceId) throw new Error("Current workspace id is unset")
-  if (!spaceId) throw new Error("Current space id is unset")
-  if (!spaces[workspaceId]) {
-    throw new Error(`No spaces in workspace id: ${workspaceId}`)
+export const mustGetPool = createSelector<State, PoolsState, Id, Id, BrimPool>(
+  Pools.raw,
+  getWorkspaceId,
+  getPoolId,
+  (pools, workspaceId, poolId) => {
+    if (!workspaceId) throw new Error("Current workspace id is unset")
+    if (!poolId) throw new Error("Current pool id is unset")
+    if (!pools[workspaceId]) {
+      throw new Error(`No pools in workspace id: ${workspaceId}`)
+    }
+    if (!pools[workspaceId][poolId])
+      throw new Error(`Missing pool id: ${poolId}`)
+
+    return brim.pool(pools[workspaceId][poolId])
   }
-  if (!spaces[workspaceId][spaceId])
-    throw new Error(`Missing space id: ${spaceId}`)
+)
 
-  return brim.space(spaces[workspaceId][spaceId])
-})
-
-export const getSpace = (state: State) => {
+export const getPool = (state: State) => {
   try {
-    return mustGetSpace(state)
+    return mustGetPool(state)
   } catch {
     return null
   }

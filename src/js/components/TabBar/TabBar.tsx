@@ -4,7 +4,7 @@ import {animated} from "react-spring"
 import Workspaces from "src/js/state/Workspaces"
 import brim from "../../brim"
 import lib from "../../lib"
-import Spaces from "../../state/Spaces"
+import Pools from "../../state/Pools"
 import Tabs from "../../state/Tabs"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import AddTab from "./AddTab"
@@ -17,7 +17,7 @@ const MAX_WIDTH = 240
 
 export default function TabBar() {
   const tabs = useSelector(Tabs.getData)
-  const spaces = useSelector(Spaces.raw)
+  const pools = useSelector(Pools.raw)
   const workspaces = useSelector(Workspaces.raw)
   const count = tabs.length
   const {ref, rect} = useResizeObserver()
@@ -39,7 +39,7 @@ export default function TabBar() {
               onChange: (indices) => ctl.onTabMove(indices)
             })}
             key={tab.id}
-            title={brim.tab(tab, workspaces, spaces).title()}
+            title={brim.tab(tab, workspaces, pools).title()}
             style={layout.getStyle(tab.id)}
             removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
             active={tab.id === ctl.activeId}

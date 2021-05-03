@@ -3,7 +3,7 @@ import {createZealotMock} from "zealot"
 import {submitSearch} from "../mod"
 import Investigation from "../../../state/Investigation"
 import SearchBar from "../../../state/SearchBar"
-import Spaces from "../../../state/Spaces"
+import Pools from "../../../state/Pools"
 import fixtures from "../../../test/fixtures"
 import initTestStore from "../../../test/initTestStore"
 import responses from "../../../test/responses"
@@ -16,7 +16,7 @@ import brim from "src/js/brim"
 
 const countByPathResp = responses("count_by_path.txt")
 const dnsResp = responses("dns.txt")
-const space = fixtures("space1")
+const pool = fixtures("pool1")
 
 let store, zealot, dispatch, select
 beforeEach(() => {
@@ -33,12 +33,12 @@ beforeEach(() => {
       port: "9867",
       authType: "none"
     }),
-    Spaces.setDetail("1", space),
+    Pools.setDetail("1", pool),
     SearchBar.changeSearchBarInput("dns"),
     SearchBar.pinSearchBar(),
     SearchBar.changeSearchBarInput("query")
   ])
-  store.dispatch(tabHistory.push(lakePath("1", space.id)))
+  store.dispatch(tabHistory.push(lakePath("1", pool.id)))
 })
 const submit = (...args) => dispatch(submitSearch(...args))
 
@@ -51,7 +51,7 @@ test("Always updates url", async () => {
     keep: false,
     pins: ["dns"],
     program: "query",
-    spanArgs: brim.space(space).defaultSpanArgs(),
+    spanArgs: brim.pool(pool).defaultSpanArgs(),
     spanArgsFocus: [null, null]
   })
 })

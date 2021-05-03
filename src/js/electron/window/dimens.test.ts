@@ -238,7 +238,7 @@ test("moving to current display when display is smaller", () => {
   expect(next).toEqual({x: 1920, y: 77, width: 1600, height: 860})
 })
 
-test("stacking windows that overflow in positive space", () => {
+test("stacking windows that overflow in positive pool", () => {
   const screen = {x: 1000, y: 1000, width: 1000, height: 1000}
   const prev = {width: 800, height: 800, x: 1200, y: 1200}
 
@@ -250,7 +250,7 @@ test("stacking windows that overflow in positive space", () => {
   })
 })
 
-test("stacking windows that overflow in negative space", () => {
+test("stacking windows that overflow in negative pool", () => {
   const screen = {x: -1000, y: -1000, width: 1000, height: 1000}
   const prev = {width: 800, height: 800, x: -800, y: -800}
 

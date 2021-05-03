@@ -4,23 +4,23 @@ import {last} from "../../lib/Array"
 
 type Id = string | null
 
-export const getInvestigation = (workspaceId: Id, spaceId: Id) => (
+export const getInvestigation = (workspaceId: Id, poolId: Id) => (
   state: State
 ): Finding[] => {
   {
     if (
       !state.investigation[workspaceId] ||
-      !state.investigation[workspaceId][spaceId]
+      !state.investigation[workspaceId][poolId]
     )
       return []
 
-    return state.investigation[workspaceId][spaceId]
+    return state.investigation[workspaceId][poolId]
   }
 }
 
-export const getCurrentFinding = (workspaceId: Id, spaceId: Id) => (
+export const getCurrentFinding = (workspaceId: Id, poolId: Id) => (
   state: State
 ) => {
-  if (!workspaceId || !spaceId) return null
-  return last(state.investigation[workspaceId][spaceId])
+  if (!workspaceId || !poolId) return null
+  return last(state.investigation[workspaceId][poolId])
 }

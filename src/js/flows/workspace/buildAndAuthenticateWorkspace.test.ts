@@ -75,7 +75,7 @@ describe("success cases", () => {
   beforeEach(() => {
     zealot
       .stubPromise("version", fixtures.version)
-      .stubPromise("spaces.list", [{name: "dataSpace", id: "1"}], "always")
+      .stubPromise("pools.list", [{name: "dataPool", id: "1"}], "always")
   })
 
   test("new public workspace", async () => {

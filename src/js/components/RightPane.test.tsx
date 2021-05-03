@@ -8,8 +8,8 @@ import loginTo from "../test/helpers/loginTo"
 import provide from "../test/helpers/provide"
 import {XRightPane} from "./RightPane"
 
-test("no errors if space does not exist", async () => {
-  const {store} = await loginTo("workspace1", "space1")
+test("no errors if pool does not exist", async () => {
+  const {store} = await loginTo("workspace1", "pool1")
 
   store.dispatch(Layout.showRightSidebar())
   store.dispatch(tabHistory.push(workspacesPath()))
