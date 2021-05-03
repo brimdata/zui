@@ -17,7 +17,7 @@ const suricata = createRecord({
 })
 
 const uidOrCommunityIdZql =
-  'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:N7YGmWjwTmMKNhsZHBR618n3ReA=" and ts >= 1582675393 and ts < 1582675483.016) | head 100'
+  'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:N7YGmWjwTmMKNhsZHBR618n3ReA=" and ts >= 1582646593.978 and ts < 1582646683.994) | head 100'
 
 const uidZql =
   'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" | head 100'
