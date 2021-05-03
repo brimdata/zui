@@ -8,7 +8,7 @@ import {
 } from "./helper/mod.ts"
 
 async function setup(zealot: any) {
-  const pool = await zealot.pools.create({name: "pool1", order: "desc"})
+  const pool = await zealot.pools.create({name: "pool1"})
   const log = testFile("sample.tsv")
   const resp = await zealot.logs.postPaths({paths: [log], poolId: pool.id})
   await resp.array()

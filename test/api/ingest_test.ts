@@ -3,7 +3,7 @@ import {testFile} from "./helper/mod.ts"
 import {testApi, assertEquals, uniq} from "./helper/mod.ts"
 
 testApi("ingest log", async (zealot) => {
-  const pool = await zealot.pools.create({name: "pool1", order: "desc"})
+  const pool = await zealot.pools.create({name: "pool1"})
   const log = testFile("sample.tsv")
   const resp = await zealot.logs.postPaths({paths: [log], poolId: pool.id})
   const messages = await resp.array()
@@ -17,7 +17,7 @@ testApi("ingest log", async (zealot) => {
 })
 
 testApi("ingest ndjson log", async (zealot) => {
-  const pool = await zealot.pools.create({name: "pool1", order: "desc"})
+  const pool = await zealot.pools.create({name: "pool1"})
   const log = testFile("custom-sample.ndjson")
   const resp = await zealot.logs.postPaths({
     paths: [log],

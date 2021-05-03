@@ -14,6 +14,7 @@ export default {
     }
   },
   create(args: PoolArgs) {
+    args.order = args.order || "desc"
     return {
       path: "/pool",
       method: "POST",
