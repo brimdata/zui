@@ -1,9 +1,11 @@
 import {TypeAlias, Uint16, Uint32, Uint64, Uint8} from "./index"
 import {ZedType} from "./types/types"
+import {BString} from "./values/bstring"
 import {Int16} from "./values/int16"
 import {Int32} from "./values/int32"
 import {Int64} from "./values/int64"
 import {Int8} from "./values/int8"
+import {String} from "./values/string"
 import {Time} from "./values/time"
 import {ZedInt} from "./values/types"
 
@@ -56,4 +58,8 @@ export function trueType<T extends ZedType>(start: ZedType): T {
 
 export function isNull(value): value is null {
   return value === null
+}
+
+export function isStringy(value): value is String | BString {
+  return value instanceof String || value instanceof BString
 }

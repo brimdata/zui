@@ -30,7 +30,9 @@ function toZqlBool(bool: boolean) {
 }
 
 function toZqlZngPrimitive(data: zed.Primitive) {
-  if (data instanceof zed.Ip) {
+  if (data.isUnset()) {
+    return "null"
+  } else if (data instanceof zed.Ip) {
     return data.toString()
   } else {
     return toZqlString(data.toString())

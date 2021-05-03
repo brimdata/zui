@@ -6,5 +6,13 @@ export function formatPrimitive(data: zed.Primitive) {
   if (data.isUnset()) return "⦻"
   if (zed.isInt(data)) return withCommas(data.toString())
   if (zed.isTime(data)) return brim.time(data.toDate()).format()
+  if (zed.isStringy(data)) {
+    // only whitespace
+    if (data.toString().match(/^\s*$/)) {
+      return `"${data.toString()}"`
+    } else {
+      return data.toString()
+    }
+  }
   return data.toString()
 }

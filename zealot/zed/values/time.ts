@@ -1,8 +1,12 @@
 import {
+  ChronoField,
   convert,
   DateTimeFormatter,
+  DateTimeFormatterBuilder,
   LocalDateTime,
-  nativeJs
+  nativeJs,
+  ZonedDateTime,
+  ZoneId
 } from "@js-joda/core"
 import {TypeTime} from "../types/type-time"
 import {isNull} from "../utils"
@@ -40,9 +44,16 @@ export class Time extends Primitive {
 const parseEpochSec = (v) => {
   const d = new Date(+v * 1000)
   if (isNaN(d as any)) throw new Error("Not Epoch Seconds: " + v)
-  return LocalDateTime.from(nativeJs(d))
+  return ZonedDateTime.from(nativeJs(d))
 }
-const NanoFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.n]'Z'")
-const parseNano = (v) => LocalDateTime.parse(v, NanoFormat)
+
+const NanoFormat = new DateTimeFormatterBuilder()
+  .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+  .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true)
+  .appendLiteral("Z")
+  .toFormatter()
+
+const parseNano = (v) =>
+  ZonedDateTime.of(LocalDateTime.parse(v, NanoFormat), ZoneId.of("UTC"))
 
 const PARSERS = [parseNano, parseEpochSec]

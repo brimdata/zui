@@ -13,6 +13,7 @@ const transHavelock = transparentize(0.75, havelock as string)
 const BG = styled.span`
   cursor: default;
   display: inline-block;
+  min-width: 7px;
   &:hover {
     background: ${transHavelock};
     border-radius: 4px;
@@ -30,7 +31,11 @@ type ValueProps = {
   padAfter?: boolean
 }
 
-const pad = (bool) => (bool ? <></> : null)
+const Space = styled.span`
+  display: inline-block;
+  width: 7px;
+`
+const pad = (bool) => (bool ? <Space /> : null)
 
 export default function Value(props: ValueProps) {
   if (props.value.isUnset()) {
