@@ -16,8 +16,8 @@ const FIELDS = ["scalar", "record.scalar"]
 const UNSET = "⦻"
 const STRINGS = [
   "mystr",
-  "\\x2d",
-  "\\x09",
+  "-", //"\\x2d",
+  "\t", // "\\x09",
   '"',
   "'",
   ",",

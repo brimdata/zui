@@ -74,12 +74,66 @@ Array [
 ]
 `;
 
+exports[`type-wise Filter = value searches FilterEq0001: string scalar="-" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "16",
+  "-",
+]
+`;
+
 exports[`type-wise Filter = value searches FilterEq0002: addr scalar="::" 1`] = `
 Array [
   "id",
   "scalar",
   "2",
   "::",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0002: string scalar="	" 1`] = `
+Array [
+  "id",
+  "scalar",
+  "14",
+  "mystr",
+  "15",
+  "(empty)",
+  "16",
+  "-",
+  "17",
+  "\\"	\\"",
+  "18",
+  "\\"",
+  "19",
+  "'",
+  "20",
+  ",",
+  "21",
+  ",",
+  "22",
+  ";",
+  "23",
+  "∫£œßü™",
+  "24",
+  "\\"mystr\\"",
+  "25",
+  "'mystr'",
+  "26",
+  "*",
+  "27",
+  "\\"*\\"",
+  "28",
+  "1.1.1.1",
+  "54",
+  "\\" \\"",
+  "55",
+  "\\" \\"",
+  "56",
+  "⦻",
+  "57",
+  "null",
 ]
 `;
 
@@ -255,6 +309,60 @@ Array [
   "record.scalar",
   "31",
   "\\\\x2d",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0017: string record.scalar="-" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "31",
+  "-",
+]
+`;
+
+exports[`type-wise Filter = value searches FilterEq0018: string record.scalar="	" 1`] = `
+Array [
+  "id",
+  "record.scalar",
+  "29",
+  "mystr",
+  "30",
+  "(empty)",
+  "31",
+  "-",
+  "32",
+  "\\"	\\"",
+  "33",
+  "\\"",
+  "34",
+  "'",
+  "35",
+  ",",
+  "36",
+  ",",
+  "37",
+  ";",
+  "38",
+  "∫£œßü™",
+  "39",
+  "\\"mystr\\"",
+  "40",
+  "'mystr'",
+  "41",
+  "*",
+  "42",
+  "\\"*\\"",
+  "43",
+  "1.1.1.1",
+  "58",
+  "\\"\\"",
+  "59",
+  "\\" \\"",
+  "60",
+  "⦻",
+  "61",
+  "null",
 ]
 `;
 
