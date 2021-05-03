@@ -1,9 +1,10 @@
 import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
-import {cssVar, transparentize} from "polished"
+import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React from "react"
 import {useDispatch} from "react-redux"
+import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
 import {zed} from "zealot"
 

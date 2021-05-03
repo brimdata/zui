@@ -9,9 +9,9 @@ export function formatPrimitive(data: zed.Primitive) {
   if (zed.isStringy(data)) {
     // only whitespace
     if (data.toString().match(/^\s*$/)) {
-      return `"${data.toString()}"`
+      // return `"${data.toString()}"`
     } else {
-      return data.toString()
+      // return data.toString()
     }
   }
   return data.toString()

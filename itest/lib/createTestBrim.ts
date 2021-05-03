@@ -1,7 +1,9 @@
+import {isString} from "lodash"
 import {htmlContextMenu} from "src/js/test/locators"
 import lib from "../../src/js/lib"
 import {Locator} from "../../src/js/test/createLocator"
 import appStep from "./appStep/api"
+import {getResults} from "./appStep/api/search"
 import takeScreenshot from "./appStep/api/takeScreenshot"
 import waitForHook from "./appStep/api/waitForHook"
 // TODO in a future PR: remove direct logStep uses here.
@@ -23,8 +25,9 @@ export default (name: string) => {
   })
 
   return {
-    $(locator: Locator) {
-      return app.client.$(locator.css)
+    $(locator: Locator | string): WebdriverIO.Element {
+      if (isString(locator)) return app.client.$(locator)
+      else return app.client.$(locator.css)
     },
 
     hook(name, opts?) {
@@ -93,8 +96,14 @@ export default (name: string) => {
       return appStep.click(app, locator.css)
     },
 
-    rightClick(locator: Locator) {
-      return appStep.rightClick(app, locator.css)
+    rightClick(locator: Locator | string | WebdriverIO.Element) {
+      if (isString(locator)) {
+        return appStep.rightClick(app, locator)
+      } else if ("css" in locator) {
+        return appStep.rightClick(app, locator.css)
+      } else {
+        return locator.click({button: "right"})
+      }
     },
 
     hasText(input: string | RegExp, locator: Locator | string = "body") {
@@ -125,6 +134,10 @@ export default (name: string) => {
 
     wait(ms: number) {
       return lib.sleep(ms)
+    },
+
+    viewerResults(opts: {headers: boolean} = {headers: true}) {
+      return getResults(app, opts.headers)
     }
   }
 }

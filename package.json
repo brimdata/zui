@@ -18,7 +18,8 @@
     "format-check": "npm run format && git diff --exit-code -- src itest",
     "release": "npx electron-builder --mac",
     "prerelease": "npm run build",
-    "postinstall": "node scripts/post-install"
+    "postinstall": "node scripts/post-install",
+    "watch": "node scripts/watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
