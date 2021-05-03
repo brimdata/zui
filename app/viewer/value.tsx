@@ -2,7 +2,7 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
-import React from "react"
+import React, {Fragment} from "react"
 import {useDispatch} from "react-redux"
 import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
@@ -43,6 +43,8 @@ export default function Value(props: ValueProps) {
     return <PrimitiveValue {...props} />
   } else if (props.value instanceof zed.Set) {
     return <SetValue {...props} />
+  } else if (props.value instanceof zed.Array) {
+    return <ArrayValue {...props} />
   } else {
     return <PrimitiveValue {...props} />
   }
@@ -78,21 +80,43 @@ export function SetValue(props: ValueProps) {
   const firstItem = (i) => i === 0
   return (
     <>
-      {pad(props.padBefore)}
       <Syntax>|[</Syntax>
       {set.items.map((v, i) => (
-        <>
+        <Fragment key={i}>
           <Value
             {...props}
-            key={i}
             value={v}
             padAfter={false}
             padBefore={!firstItem(i)}
           />
-          {lastItem(i) ? null : <Syntax>,</Syntax>}
-        </>
+          {lastItem(i) ? null : <Syntax key={i + ","}>,</Syntax>}
+        </Fragment>
       ))}
       <Syntax>]|</Syntax>
+      {pad(props.padBefore)}
+    </>
+  )
+}
+
+export function ArrayValue(props: ValueProps) {
+  const array = props.value as zed.Array
+  const lastItem = (i) => i === array.items.length - 1
+  const firstItem = (i) => i === 0
+  return (
+    <>
+      <Syntax>[</Syntax>
+      {array.items.map((v, i) => (
+        <Fragment key={i}>
+          <Value
+            {...props}
+            value={v}
+            padAfter={false}
+            padBefore={!firstItem(i)}
+          />
+          {lastItem(i) ? null : <Syntax key={i + ","}>,</Syntax>}
+        </Fragment>
+      ))}
+      <Syntax>]</Syntax>
       {pad(props.padBefore)}
     </>
   )
