@@ -75,4 +75,7 @@
   .int64 {
     text-align: right;
   }
+  .path-tag {
+    @include path-tag;
+  }
 }

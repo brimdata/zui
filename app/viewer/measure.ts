@@ -1,4 +1,6 @@
 import {formatPrimitive} from "app/core/formatters/format-zed"
+import {isEventType} from "ppl/suricata/suricata-plugin"
+import {isPath} from "ppl/zeek/zeek-plugin"
 import {zed} from "zealot"
 
 const ONE_CHAR = 7.39
@@ -14,12 +16,23 @@ export function estimateHeaderWidth(name: string) {
   return Math.min(MAX_WIDTH, width)
 }
 
-export function estimateCellWidth(value: zed.AnyValue) {
+export function estimateCellWidth(value: zed.AnyValue, name: string) {
   let width = MIN_WIDTH
   if (value instanceof zed.Primitive) {
     width = Math.ceil(formatPrimitive(value).length * ONE_CHAR + CELL_PAD)
   } else {
     width = Math.ceil(value.toString().length * ONE_CHAR + CELL_PAD)
   }
+
+  // Move to plugin
+  if (isPath(new zed.Field(name, value))) {
+    width += 12 // padding
+  }
+
+  // Move to plugin
+  if (isEventType(new zed.Field(name, value))) {
+    width += 12 // padding
+  }
+
   return Math.min(MAX_WIDTH, width)
 }

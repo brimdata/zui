@@ -38,7 +38,7 @@ export default class TableColumns {
       records.forEach((r) => {
         const data = r.try(col.name)
         if (!data) return
-        const width = estimateCellWidth(data)
+        const width = estimateCellWidth(data, col.name)
         if (width > max) max = width
       })
       col.width = max

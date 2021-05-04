@@ -2,6 +2,8 @@ import {formatPrimitive} from "app/core/formatters/format-zed"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
+import {isEventType, SuricataEventType} from "ppl/suricata/suricata-plugin"
+import {isPath, ZeekPath} from "ppl/zeek/zeek-plugin"
 import React, {Fragment} from "react"
 import {useDispatch} from "react-redux"
 import {cssVar} from "src/js/lib/cssVar"
@@ -68,10 +70,20 @@ export function PrimitiveValue(props: ValueProps) {
       }
     >
       {pad(props.padBefore)}
-      {formatPrimitive(props.value as zed.Primitive)}
+      {renderValue(props)}
       {pad(props.padAfter)}
     </BG>
   )
+}
+
+function renderValue(props) {
+  if (isPath(props.field)) {
+    return <ZeekPath {...props} />
+  } else if (isEventType(props.field)) {
+    return <SuricataEventType {...props} />
+  } else {
+    return formatPrimitive(props.value as zed.Primitive)
+  }
 }
 
 export function SetValue(props: ValueProps) {
