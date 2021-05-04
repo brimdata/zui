@@ -1,15 +1,15 @@
-import {zng} from "zealot"
+import {zed} from "zealot"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class SuricataEvent implements BrimEventInterface {
-  constructor(private r: zng.Record) {}
+  constructor(private r: zed.Record) {}
 
   getRecord() {
     return this.r
   }
 
   getTime() {
-    return (this.r.get("ts") as zng.Primitive).toDate()
+    return this.r.get<zed.Time>("ts").toDate()
   }
 
   getEndTime() {
@@ -21,7 +21,6 @@ export class SuricataEvent implements BrimEventInterface {
   }
 
   getSeverity(): number {
-    const data = this.r.get("alert.severity") as zng.Primitive
-    return data.toInt()
+    return this.r.get<zed.Uint64>("alert.severity").toInt()
   }
 }

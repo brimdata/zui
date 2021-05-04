@@ -1,4 +1,4 @@
-import {zng} from "zealot"
+import {zjson} from "zealot"
 import {SearchStatus} from "../../types/searches"
 
 export type LogDetailsState = {
@@ -7,8 +7,8 @@ export type LogDetailsState = {
 }
 
 export type LogDetails = {
-  log: zng.SerializedRecord
-  uidLogs: zng.SerializedRecord[]
+  log: zjson.RootRecord
+  uidLogs: zjson.RootRecord[]
   uidStatus: SearchStatus
 }
 
@@ -21,7 +21,7 @@ export type LogDetailsAction =
 
 export type LOG_DETAIL_PUSH = {
   type: "LOG_DETAIL_PUSH"
-  record: zng.SerializedRecord
+  record: zjson.RootRecord
 }
 
 export type LOG_DETAIL_UPDATE = {

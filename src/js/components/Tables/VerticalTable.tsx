@@ -1,13 +1,12 @@
-import React from "react"
 import classNames from "classnames"
-
+import React from "react"
+import {zed} from "zealot"
 import Table, {TableData, TableHeader} from "./Table"
-import {zjson, zng} from "zealot"
 
 type Props = {
-  descriptor: zjson.Column[]
-  record: zng.Record
-  onRightClick?: (f: zng.Field, r: zng.Record) => void
+  descriptor: zed.Field[]
+  record: zed.Record
+  onRightClick?: (f: zed.Field, r: zed.Record) => void
   light?: boolean
 }
 
@@ -20,12 +19,12 @@ export default function VerticalTable({
   return (
     <Table className={classNames("vertical-table", {light})}>
       <tbody>
-        {descriptor.map((column, index) => (
+        {descriptor.map((field, index) => (
           <tr key={index}>
-            <TableHeader column={column} />
+            <TableHeader column={field} />
             <TableData
               record={record}
-              field={new zng.Field(column.name, record.at(index))}
+              field={field}
               onRightClick={onRightClick}
             />
           </tr>

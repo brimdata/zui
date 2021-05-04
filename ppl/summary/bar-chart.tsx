@@ -1,14 +1,14 @@
-import React from "react"
-import {zng} from "zealot"
-import {BarRounded} from "@vx/shape"
-import {AxisLeft, AxisBottom} from "@vx/axis"
-import {scaleLinear, scaleBand} from "@vx/scale"
+import {AxisBottom, AxisLeft} from "@vx/axis"
 import {Group} from "@vx/group"
+import {scaleBand, scaleLinear} from "@vx/scale"
+import {BarRounded} from "@vx/shape"
+import React from "react"
 import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
+import {zed} from "zealot"
 
 type Props = {
-  records: zng.Record[]
+  records: zed.Record[]
   width: number
   height: number
   x: string
@@ -33,7 +33,7 @@ export default function BarChart({
   const height = outerHeight - margin.top - margin.bottom
   const data = records.map((r) => ({
     name: r.get(x).toString(),
-    count: (r.get(y) as zng.Primitive).toInt()
+    count: (r.get(y) as zed.Uint64).toInt()
   }))
   const xScale = scaleBand({
     domain: data.map((d) => d.name),

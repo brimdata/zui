@@ -5,9 +5,9 @@ Object {
   "keys": Array [
     "capture_loss",
     "conn",
-    "files",
     "x509",
     "ssl",
+    "files",
     "dns",
     "weird",
     "stats",

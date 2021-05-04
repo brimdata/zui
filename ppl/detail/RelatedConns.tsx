@@ -1,25 +1,25 @@
 import {Data, Name, Value} from "app/core/Data"
+import useSearch from "app/core/hooks/useSearch"
+import Panel from "app/detail/Panel"
+import PanelHeading from "app/detail/PanelHeading"
+import {Caption, ChartWrap, TableWrap} from "app/detail/Shared"
 import {BrimEvent, BrimEventInterface} from "ppl/detail/models/BrimEvent"
 import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
-import EventTimeline from "./EventTimeline"
-import {TableWrap, ChartWrap, Caption} from "app/detail/Shared"
-import formatDur from "./util/formatDur"
-import PanelHeading from "app/detail/PanelHeading"
-import Panel from "app/detail/Panel"
-import {zng} from "zealot"
-import EventLimit from "./EventLimit"
-import useSearch from "app/core/hooks/useSearch"
-import firstLast from "./util/firstLast"
-import zql from "src/js/zql"
 import {showContextMenu} from "src/js/lib/System"
+import zql from "src/js/zql"
+import {zed} from "zealot"
+import EventLimit from "./EventLimit"
+import EventTimeline from "./EventTimeline"
+import firstLast from "./util/firstLast"
+import formatDur from "./util/formatDur"
 
 type Props = {
-  record: zng.Record
+  record: zed.Record
 }
 
 const LIMIT = 100
-const getQuery = (r: zng.Record, limit?: number) => {
+const getQuery = (r: zed.Record, limit?: number) => {
   const cid = r.get("community_id")
   const base = zql`_path=conn community_id=${cid} | sort ts`
   return limit ? `${base} | head ${limit}` : base

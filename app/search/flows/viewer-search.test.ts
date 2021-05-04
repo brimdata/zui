@@ -9,10 +9,12 @@ import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
 import responses from "src/js/test/responses"
-import {createZealotMock, zng} from "zealot"
+import {createRecord} from "test/factories/zed-factory"
+import {useResponse} from "test/responses"
+import {createZealotMock} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
-const dnsResp = responses("dns.txt")
+const dnsResp = useResponse("dns")
 const pool = fixtures("pool1")
 const warningResp = responses("search_warning.txt")
 
@@ -63,11 +65,7 @@ describe("a normal response", () => {
   })
 
   test("the table gets cleared", async () => {
-    dispatch(
-      Viewer.setRecords(undefined, [
-        new zng.Record([{name: "clear", type: "string"}], ["me"])
-      ])
-    )
+    dispatch(Viewer.setRecords(undefined, [createRecord({clear: "me"})]))
     await submit()
     expect(select(Viewer.getViewerRecords)[0]).not.toEqual([
       {name: "clear", type: "string", value: "me"}

@@ -1,84 +1,82 @@
-export interface Item {
-  id: number
-  schema?: Schema
-  aliases?: PrimitiveColumn[]
-  values: Value[]
+type ID = string
+
+export type RecordFieldType = {
+  name: string
+  type: Type
 }
 
-export type Items = Item[]
-export type Schema = Record
-export type Type = Primitive | Record | Array | Set | Union
-export type Column =
-  | PrimitiveColumn
-  | RecordColumn
-  | ArrayColumn
-  | SetColumn
-  | UnionColumn
+export type PrimitiveType = {
+  kind: "primitive"
+  name: string
+}
+
+export type RecordType = {
+  kind: "record"
+  fields: RecordFieldType[] | null
+}
+
+export type ArrayType = {
+  kind: "array"
+  type: Type
+}
+
+export type SetType = {
+  kind: "set"
+  type: Type
+}
+
+export type UnionType = {
+  kind: "union"
+  types: Type[]
+}
+
+export type EnumType = {
+  kind: "enum"
+  symbols: string[]
+}
+
+export type MapType = {
+  kind: "map"
+  key_type: Type
+  val_type: Type
+}
+
+export type TypeDefType = {
+  kind: "typedef"
+  name: ID
+  type: Type
+}
+
+export type TypeNameType = {
+  kind: "typename"
+  name: ID
+}
+
+export type Type =
+  | PrimitiveType
+  | RecordType
+  | ArrayType
+  | SetType
+  | UnionType
+  | EnumType
+  | MapType
+  | TypeDefType
+  | TypeNameType
+
+export type RootRecord = {
+  schema: ID
+  values: Value[]
+  types?: TypeDefType[]
+}
+// Just to know which decode method to call
+export type FieldRootRecord = RootRecord
+
+export type TypeName = string
 
 export type Value = string | null | Value[]
 
-type RecordColumn = Name & Record
-type ArrayColumn = Name & Array
-type SetColumn = Name & Set
-type UnionColumn = Name & Union
+export type ArrayValue = Value[] | null
 
-interface Name {
-  name: string
-}
+export type SetValue = Value[] | null
 
-interface PrimitiveColumn {
-  name: string
-  type: Primitive
-}
-
-export interface Record {
-  type: "record"
-  of: Column[]
-}
-
-interface Array {
-  type: "array"
-  of: Type
-}
-
-interface Set {
-  type: "set"
-  of: Type
-}
-
-interface Union {
-  type: "union"
-  of: Type[]
-}
-
-export type Primitive =
-  | "string"
-  | "int32"
-  | "byte"
-  | "int16"
-  | "int32"
-  | "int64"
-  | "uint16"
-  | "uint32"
-  | "uint64"
-  | "float64"
-  | "ip"
-  | "net"
-  | "duration"
-  | "bstring"
-  | "zenum"
-  | "bool"
-  // zeek primitives
-  | "int"
-  | "count"
-  | "double"
-  | "addr"
-  | "subnet"
-  | "interval"
-  | "enum"
-  | "port"
-  | "time"
-
-export type Container = "record" | "union" | "array" | "set"
-
-export type TypeName = Primitive | Container
+export type TypeContext = object

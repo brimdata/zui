@@ -1,8 +1,8 @@
-import {ChartData, CHART_CLEAR, CHART_RECORDS, CHART_STATUS} from "./types"
-import {SearchStatus} from "../../types/searches"
+import {zed} from "zealot"
 import MergeHash from "../../models/MergeHash"
 import UniqArray from "../../models/UniqArray"
-import {zng} from "zealot"
+import {SearchStatus} from "../../types/searches"
+import {ChartData, CHART_CLEAR, CHART_RECORDS, CHART_STATUS} from "./types"
 
 export default {
   setStatus: (tabId: string, status: SearchStatus): CHART_STATUS => ({
@@ -10,7 +10,7 @@ export default {
     status,
     tabId
   }),
-  appendRecords: (tabId: string, records: zng.Record[]): CHART_RECORDS => ({
+  appendRecords: (tabId: string, records: zed.Record[]): CHART_RECORDS => ({
     type: "CHART_RECORDS",
     data: histogramFormat(records),
     tabId
@@ -18,12 +18,16 @@ export default {
   clear: (tabId?: string): CHART_CLEAR => ({type: "CHART_CLEAR", tabId})
 }
 
-function histogramFormat(records: zng.Record[]): ChartData {
+function histogramFormat(records: zed.Record[]): ChartData {
   const paths = new UniqArray()
   const table = new MergeHash()
 
   records.forEach((r) => {
-    const [ts, path, count] = r.getValue() as zng.Primitive[]
+    const [ts, path, count] = r.fields.map((f) => f.data) as [
+      zed.Time,
+      zed.String,
+      zed.Uint64
+    ]
 
     try {
       const pathName = path.toString()

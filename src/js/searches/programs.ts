@@ -1,4 +1,4 @@
-import {zng} from "zealot"
+import {zed} from "zealot"
 import zql from "../zql"
 
 export function md5Correlation(md5: string) {
@@ -17,11 +17,11 @@ export function filenameCorrelation(md5: string) {
   return `md5=${md5} | count() by filename, mime_type | sort -r | head 5`
 }
 
-export function uidFilter(uid: string | zng.Primitive) {
+export function uidFilter(uid: string | zed.Primitive) {
   return zql`uid=${uid} or ${uid} in conn_uids or ${uid} in uids or referenced_file.uid=${uid}`
 }
 
-export function cidFilter(cid: string | zng.Primitive) {
+export function cidFilter(cid: string | zed.Primitive) {
   return zql`community_id=${cid}`
 }
 
@@ -42,22 +42,22 @@ export function correlationIds({uid, cid}: RelatedIds) {
   return [filters.join(" or "), correlationLimit()].join(" | ")
 }
 
-export function uidCorrelation(uid: string | zng.Primitive) {
+export function uidCorrelation(uid: string | zed.Primitive) {
   return `${uidFilter(uid)} | ${correlationLimit()}`
 }
 
-export function cidCorrelation(cid: string | zng.Primitive) {
+export function cidCorrelation(cid: string | zed.Primitive) {
   return `${cidFilter(cid)} | ${correlationLimit()}`
 }
 
 export function connCorrelation(
-  uid: zng.Primitive,
-  cid: zng.Primitive,
-  ts: zng.Primitive,
-  duration: zng.Primitive
+  uid: zed.String,
+  cid: zed.String,
+  ts: zed.Time,
+  duration: zed.Duration
 ) {
   const tsDate = ts.toDate()
-  const dur = duration.toFloat() + 90 // Add a 1.5 minute buffer for events that get logged late
+  const dur = duration.asSeconds() + 90 // Add a 1.5 minute buffer for events that get logged late
   const endTsDate = new Date(new Date(tsDate).getTime() + dur * 1000)
   const cidFilter = zql`community_id = ${cid} and ts >= ${tsDate} and ts < ${endTsDate}`
   return `${uidFilter(uid)} or (${cidFilter}) | ${correlationLimit()}`

@@ -1,16 +1,14 @@
-import {DateTimeFormatter, LocalDateTime, ZoneOffset} from "@js-joda/core"
+import fsExtra, {pathExistsSync} from "fs-extra"
 import path, {join} from "path"
+import errors from "src/js/errors"
+import {ZealotContext, zed} from "zealot"
 import {fetchCorrelation} from "../../ppl/detail/flows/fetch"
-import open from "../../src/js/lib/open"
-import {AppDispatch} from "../../src/js/state/types"
-import {zng} from "../../zealot"
-import {Record} from "../../zealot/zng"
-import BrimcapCLI, {searchOptions} from "./brimcap-cli"
 import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
-import fsExtra, {pathExistsSync} from "fs-extra"
-import errors from "src/js/errors"
+import open from "../../src/js/lib/open"
+import {AppDispatch} from "../../src/js/state/types"
 import {reactElementProps} from "../../src/js/test/integration"
+import BrimcapCLI, {searchOptions} from "./brimcap-cli"
 
 export default class BrimcapPlugin {
   private cli: BrimcapCLI
@@ -66,7 +64,7 @@ export default class BrimcapPlugin {
     // TODO: handle contextMenu items, and detail pane/window correlation UI
   }
 
-  private async tryConn(detail: zng.Record, eventId: string) {
+  private async tryConn(detail: zed.Record, eventId: string) {
     // TODO: dispatch is only temporarily public to plugins, so this won't always be needed
     const dispatch = this.api.dispatch as AppDispatch
     const uidRecords = await dispatch(fetchCorrelation(detail, eventId))
@@ -105,8 +103,8 @@ export default class BrimcapPlugin {
     const updateButtonStatus = (
       toolbarId: string,
       buttonId: string,
-      data: zng.Record,
-      setConn: (conn: zng.Record) => {}
+      data: zed.Record,
+      setConn: (conn: zed.Record) => {}
     ) => {
       this.tryConn(data, buttonId)
         .then((conn) => {
@@ -148,7 +146,7 @@ export default class BrimcapPlugin {
       // the detail window's packets button will operate off of the 'current' record
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
-        const data = Record.deserialize(record)
+        const data = ZealotContext.decodeRecord(record)
 
         updateButtonStatus(
           "detail",
@@ -171,27 +169,24 @@ export default class BrimcapPlugin {
     )
   }
 
-  private logToSearchOpts(log: zng.Record): searchOptions {
-    const ts = log.get("ts") as zng.Primitive
+  private logToSearchOpts(log: zed.Record): searchOptions {
+    const ts = log.get("ts") as zed.Time
     // RFC3999nano format with zero timezone offset
-    const formatter = DateTimeFormatter.ofPattern(
-      "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"
-    )
-    const tsString = LocalDateTime.ofEpochSecond(
-      getSec(ts),
-      getNs(ts),
-      ZoneOffset.UTC
-    )
-      .format(formatter)
-      .toString()
+    // const formatter = DateTimeFormatter.ofPattern(
+    //   "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"
+    // )
 
-    const dur = log.get("duration") as zng.Primitive
-    const dest = join(this.api.getTempDir(), `packets-${ts.toString()}.pcap`)
+    const tsString = ts.toString()
+    const dur = log.get("duration") as zed.Duration
+    const dest = join(
+      this.api.getTempDir(),
+      `packets-${ts.toString()}.pcap`.replaceAll(":", "_")
+    )
 
     return {
       dstIp: log.get("id.resp_h").toString(),
       dstPort: log.get("id.resp_p").toString(),
-      duration: `${dur.toFloat()}s`,
+      duration: dur.isSet() ? dur.toString() : "0s",
       proto: log.get("proto").toString(),
       root: this.brimcapDataRoot,
       srcIp: log.get("id.orig_h").toString(),
@@ -201,7 +196,7 @@ export default class BrimcapPlugin {
     }
   }
 
-  private async downloadPcap(log: zng.Record) {
+  private async downloadPcap(log: zed.Record) {
     const searchOpts = this.logToSearchOpts(log)
 
     const searchAndOpen = async () => {
@@ -264,7 +259,7 @@ export default class BrimcapPlugin {
       })
 
       // wait for process to end
-      await new Promise((res) => {
+      await new Promise<void>((res) => {
         p.on("close", async () => {
           res()
         })
@@ -293,24 +288,4 @@ export default class BrimcapPlugin {
 function statusToPercent(status): number {
   if (status.pcap_total_size === 0) return 1
   else return status.pcap_read_size / status.pcap_total_size || 0
-}
-
-function getSec(data: zng.Primitive): number {
-  if (data.isSet()) {
-    return parseInt(data.getValue().split(".")[0])
-  } else {
-    return 0
-  }
-}
-
-function getNs(data: zng.Primitive): number {
-  if (data.isSet()) {
-    const v = data.getValue().split(".")
-    if (v.length === 2) {
-      const frac = v[1]
-      const digits = frac.length
-      return parseInt(frac) * Math.pow(10, 9 - digits)
-    }
-  }
-  return 0
 }

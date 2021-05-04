@@ -1,12 +1,12 @@
-import React, {memo, MouseEvent} from "react"
+import Cell from "app/viewer/cell"
+import Value from "app/viewer/value"
 import classNames from "classnames"
 import isEqual from "lodash/isEqual"
-
-import {RightClickBuilder, ViewerDimens} from "../types"
-import LogCell from "./LogCell"
-import * as Styler from "./Viewer/Styler"
+import React, {memo, MouseEvent} from "react"
+import {zed} from "zealot"
 import TableColumns from "../models/TableColumns"
-import {zng} from "zealot"
+import {ViewerDimens} from "../types"
+import * as Styler from "./Viewer/Styler"
 
 type Props = {
   dimens: ViewerDimens
@@ -14,39 +14,30 @@ type Props = {
   index: number
   timeZone: string
   timeFormat: string
-  log: zng.Record
+  log: zed.Record
   columns: TableColumns
   onClick: (e: MouseEvent) => void
   onDoubleClick: (e: MouseEvent) => void
-  rightClick: RightClickBuilder
 }
 
 const LogRow = (props: Props) => {
-  const {
-    dimens,
-    highlight,
-    index,
-    log,
-    rightClick,
-    columns,
-    onClick,
-    onDoubleClick
-  } = props
+  const {dimens, highlight, index, log, columns, onClick, onDoubleClick} = props
 
   const renderCell = (column, colIndex) => {
     const width = dimens.rowWidth !== "auto" ? column.width || 300 : "auto"
     const field = log.tryField(column.name)
     const key = `${index}-${colIndex}`
-
-    if (field && field.data && !(field.data instanceof zng.Record)) {
+    if (field && field.data && !(field.data instanceof zed.Record)) {
       return (
-        <LogCell
-          rightClick={rightClick}
-          key={key}
-          field={field}
-          log={log}
-          style={{width}}
-        />
+        <Cell width={width} key={key} name={field.name}>
+          <Value
+            value={field.value}
+            field={field}
+            record={log}
+            padBefore
+            padAfter
+          />
+        </Cell>
       )
     }
     if (dimens.rowWidth !== "auto") {

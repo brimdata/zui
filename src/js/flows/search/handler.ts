@@ -1,5 +1,6 @@
 import {SearchResponse} from "./response"
 import whenIdle from "../../lib/whenIdle"
+import {RecordsCallbackArgs} from "zealot/fetcher/records_callback"
 
 function abortError(e) {
   return /user aborted/i.test(e.message)
@@ -7,11 +8,11 @@ function abortError(e) {
 
 export function handle(request: any) {
   const response = new SearchResponse()
-  const channels = new Map<number, any>()
+  const channels = new Map<number, RecordsCallbackArgs>()
   const promise = new Promise<void>((resolve, reject) => {
     function flushBuffer() {
       for (const [id, data] of channels) {
-        response.emit(id, data.allRecords, data.schemas)
+        response.emit(id, data)
       }
       channels.clear()
     }
@@ -28,7 +29,6 @@ export function handle(request: any) {
         reject(e)
       }
     }
-
     request
       .then((stream) => {
         stream
@@ -37,11 +37,8 @@ export function handle(request: any) {
             response.emit("start", task_id)
             response.emit("status", "FETCHING")
           })
-          .records(({channel, allRecords, schemas}) => {
-            channels.set(channel, {
-              allRecords,
-              schemas
-            })
+          .records((args: RecordsCallbackArgs) => {
+            channels.set(args.channel, args)
             flushBufferLazy()
           })
           .end(({id, error}) => {

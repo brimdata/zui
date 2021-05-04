@@ -3,18 +3,20 @@ import {
   connCorrelation,
   uidCorrelation
 } from "src/js/searches/programs"
-import {zng} from "zealot"
+import {zed} from "zealot"
 import {Correlation} from "../models/Correlation"
 
-export function getCorrelationQuery(record: zng.Record) {
+export function getCorrelationQuery(record: zed.Record) {
   const {uid, cid} = new Correlation(record).getIds()
+  const ts = record.try<zed.Time>("ts")
+  const dur = record.try<zed.Duration>("duration")
 
-  if (cid && uid && record.has("ts") && record.has("duration")) {
+  if (cid && uid && ts && ts.isSet() && dur && dur.isSet()) {
     return connCorrelation(
-      record.get("uid") as zng.Primitive,
-      record.get("community_id") as zng.Primitive,
-      record.get("ts") as zng.Primitive,
-      record.get("duration") as zng.Primitive
+      record.get("uid") as zed.String,
+      record.get("community_id") as zed.String,
+      ts,
+      dur
     )
   } else if (uid) {
     return uidCorrelation(uid)

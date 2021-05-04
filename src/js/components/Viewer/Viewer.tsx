@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
-import {zng} from "zealot"
+import {zed} from "zealot"
 import lib from "../../lib"
 import ScrollHooks from "../../lib/ScrollHooks"
 import TableColumns from "../../models/TableColumns"
@@ -16,7 +16,7 @@ type Props = {
   dimens: ViewerDimens
   tableColumns: TableColumns
   renderRow: RowRenderer
-  logs: zng.Record[]
+  logs: zed.Record[]
   onLastChunk?: Function
   renderEnd: () => any
   scrollPos: ScrollPosition

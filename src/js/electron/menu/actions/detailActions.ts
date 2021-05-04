@@ -1,3 +1,7 @@
+import {toZql} from "src/js/zql/toZql"
+import {ZealotContext, zed, zjson} from "zealot"
+import brim from "../../../brim"
+import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -6,76 +10,69 @@ import {
   appendQueryNotIn,
   appendQuerySortBy
 } from "../../../flows/searchBar/actions"
+import {viewLogDetail} from "../../../flows/viewLogDetail"
 import lib from "../../../lib"
 import open from "../../../lib/open"
-import {viewLogDetail} from "../../../flows/viewLogDetail"
+import virusTotal from "../../../services/virusTotal"
 import Modal from "../../../state/Modal"
 import SearchBar from "../../../state/SearchBar"
-import action from "./action"
-import brim from "../../../brim"
 import tab from "../../../state/Tab"
-import virusTotal from "../../../services/virusTotal"
-import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
-import {zng} from "zealot"
-import {createCell} from "../../../brim/cell"
+import action from "./action"
 
 function buildDetailActions() {
   return {
     copy: action({
       name: "detail-cell-menu-copy",
       label: "Copy",
-      listener(_dispatch, data: zng.SerializedField) {
-        const f = zng.Field.deserialize(data)
+      listener(_dispatch, data: zjson.FieldRootRecord) {
+        const f = ZealotContext.decodeField(data)
         lib.doc.copyToClipboard(f.data.toString())
       }
     }),
     countBy: action({
       name: "detail-cell-menu-count-by",
       label: "Count by field",
-      listener(dispatch, data: zng.SerializedField) {
+      listener(dispatch, data: zjson.FieldRootRecord) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryCountBy(zng.Field.deserialize(data)))
+        dispatch(appendQueryCountBy(ZealotContext.decodeField(data)))
         dispatch(openNewSearchTab())
       }
     }),
     detail: action({
       name: "detail-cell-menu-detail",
       label: "View details",
-      listener(dispatch, log: zng.SerializedRecord) {
-        dispatch(viewLogDetail(zng.Record.deserialize(log)))
+      listener(dispatch, log: zjson.RootRecord) {
+        dispatch(viewLogDetail(ZealotContext.decodeRecord(log)))
       }
     }),
     exclude: action({
       name: "detail-cell-menu-exclude",
       label: "Filter != value in new search",
-      listener(dispatch, field: zng.SerializedField) {
+      listener(dispatch, field: zjson.FieldRootRecord) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryExclude(zng.Field.deserialize(field)))
+        dispatch(appendQueryExclude(ZealotContext.decodeField(field)))
         dispatch(openNewSearchTab())
       }
     }),
     freshInclude: action({
       name: "detail-cell-menu-fresh-include",
       label: "New search with this value",
-      listener(dispatch, field: zng.SerializedField) {
-        const cell = createCell(zng.Field.deserialize(field))
+      listener(dispatch, field: zjson.FieldRootRecord) {
+        const f = ZealotContext.decodeField(field)
         dispatch(SearchBar.clearSearchBar())
-        dispatch(SearchBar.changeSearchBarInput(cell.queryableValue()))
+        dispatch(SearchBar.changeSearchBarInput(toZql(f.value)))
         dispatch(openNewSearchTab())
       }
     }),
     fromTime: action({
       name: "detail-cell-menu-from-time",
       label: 'Use as "start" time in new search',
-      listener(dispatch, data: zng.SerializedField) {
-        const field = zng.Field.deserialize(data)
-        if (field.data.type === "time") {
+      listener(dispatch, fieldJSON: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(fieldJSON)
+        const data = field.data
+        if (data instanceof zed.Time) {
           dispatch(SearchBar.clearSearchBar())
-          dispatch(
-            tab.setFrom(
-              brim.time((field.data as zng.Primitive).toDate()).toTs()
-            )
-          )
+          dispatch(tab.setFrom(brim.time(data.toDate()).toTs()))
           dispatch(openNewSearchTab())
         }
       }
@@ -83,10 +80,10 @@ function buildDetailActions() {
     groupByDrillDown: action({
       name: "detail-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
-      listener(dispatch, program, log: zng.SerializedRecord) {
+      listener(dispatch, program, log: zjson.RootRecord) {
         const newProgram = brim
           .program(program)
-          .drillDown(zng.Record.deserialize(log))
+          .drillDown(ZealotContext.decodeRecord(log))
           .string()
 
         if (newProgram) {
@@ -99,27 +96,27 @@ function buildDetailActions() {
     include: action({
       name: "detail-cell-menu-include",
       label: "Filter = value in new search",
-      listener(dispatch, field: zng.SerializedField) {
+      listener(dispatch, field: zjson.FieldRootRecord) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryInclude(zng.Field.deserialize(field)))
+        dispatch(appendQueryInclude(ZealotContext.decodeField(field)))
         dispatch(openNewSearchTab())
       }
     }),
     in: action({
       name: "detail-cell-menu-in",
       label: "Filter in field in new search",
-      listener(dispatch, field: zng.SerializedField) {
+      listener(dispatch, field: zjson.FieldRootRecord) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryIn(createCell(zng.Field.deserialize(field))))
+        dispatch(appendQueryIn(ZealotContext.decodeField(field)))
         dispatch(openNewSearchTab())
       }
     }),
     notIn: action({
       name: "detail-cell-menu-not-in",
       label: "Filter not in field in new search",
-      listener(dispatch, field: zng.SerializedField) {
+      listener(dispatch, field: zjson.FieldRootRecord) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryNotIn(createCell(zng.Field.deserialize(field))))
+        dispatch(appendQueryNotIn(ZealotContext.decodeField(field)))
         dispatch(openNewSearchTab())
       }
     }),
@@ -134,32 +131,34 @@ function buildDetailActions() {
     sortAsc: action({
       name: "detail-cell-menu-sort-asc",
       label: "Sort A...Z",
-      listener(dispatch, field: zng.SerializedField) {
+      listener(dispatch, field: zjson.FieldRootRecord) {
+        const f = ZealotContext.decodeField(field)
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQuerySortBy(field.name, "asc"))
+        dispatch(appendQuerySortBy(f.name, "asc"))
         dispatch(openNewSearchTab())
       }
     }),
     sortDesc: action({
       name: "detail-cell-menu-sort-desc",
       label: "Sort Z...A",
-      listener(dispatch, field: zng.SerializedField) {
+      listener(dispatch, field: zjson.FieldRootRecord) {
+        const f = ZealotContext.decodeField(field)
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQuerySortBy(field.name, "desc"))
+        dispatch(appendQuerySortBy(f.name, "desc"))
         dispatch(openNewSearchTab())
       }
     }),
     toTime: action({
       name: "detail-cell-menu-to-time",
       label: 'Use as "end" time',
-      listener(dispatch, data: zng.SerializedField) {
-        const field = zng.Field.deserialize(data)
-        if (field.data.type === "time") {
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
+        if (field.data instanceof zed.Time) {
           dispatch(SearchBar.clearSearchBar())
           dispatch(
             tab.setTo(
               brim
-                .time((field.data as zng.Primitive).toDate())
+                .time(field.data.toDate())
                 .add(1, "ms")
                 .toTs()
             )
@@ -171,17 +170,17 @@ function buildDetailActions() {
     virusTotalRightclick: action({
       name: "detail-cell-menu-virus-total",
       label: "VirusTotal Lookup",
-      listener(_dispatch, data: zng.SerializedField) {
-        const field = zng.Field.deserialize(data)
+      listener(_dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
         open(virusTotal.url(field.data.toString()))
       }
     }),
     whoisRightclick: action({
       name: "detail-cell-menu-who-is",
       label: "Whois Lookup",
-      listener(dispatch, data: zng.SerializedField) {
-        const field = zng.Field.deserialize(data)
-        dispatch(Modal.show("whois", {addr: field.data.value}))
+      listener(dispatch, data: zjson.FieldRootRecord) {
+        const field = ZealotContext.decodeField(data)
+        dispatch(Modal.show("whois", {addr: field.data.toString()}))
       }
     })
   }

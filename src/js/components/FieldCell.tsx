@@ -1,10 +1,10 @@
-import React from "react"
+import {formatPrimitive} from "app/core/formatters/format-zed"
+import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
+import React from "react"
+import {zed} from "zealot"
 
-import {createCell} from "../brim/cell"
-import {zng} from "zealot"
-
-type Props = {field: zng.Field; record: zng.Record}
+type Props = {field: zed.Field; record: zed.Record}
 
 function getBackground(field, record) {
   if (field.name === "event_type" && field.data.toString() === "alert") {
@@ -17,20 +17,16 @@ function getBackground(field, record) {
 }
 
 export default function FieldCell({field, record}: Props) {
-  const cell = createCell(field)
   return (
     <div
       className={classNames(
         "field-cell",
         field.name,
-        field.data.getType(),
-        getBackground(field, record),
-        {
-          null: field.data.value === null
-        }
+        typeClassNames(field.data),
+        getBackground(field, record)
       )}
     >
-      {cell.display()}
+      {formatPrimitive(field.data as zed.Primitive)}
     </div>
   )
 }

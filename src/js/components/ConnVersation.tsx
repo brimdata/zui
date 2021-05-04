@@ -1,31 +1,32 @@
-import {every} from "lodash"
-import {useDispatch} from "react-redux"
-import React from "react"
-
-import {Fieldset} from "./Typography"
-import VerticalTable from "./Tables/VerticalTable"
-import connHistoryView from "../lib/connHistoryView"
-import {zng} from "zealot"
 import contextMenu from "app/detail/flows/contextMenu"
+import {every} from "lodash"
+import React from "react"
+import {useDispatch} from "react-redux"
+import {zed} from "zealot"
+import connHistoryView from "../lib/connHistoryView"
+import VerticalTable from "./Tables/VerticalTable"
+import {Fieldset} from "./Typography"
 
 const ORIG_FIELDS = ["orig_bytes", "orig_pkts", "orig_ip_bytes", "local_orig"]
 const RESP_FIELDS = ["resp_bytes", "resp_pkts", "resp_ip_bytes", "local_resp"]
 
 type Props = {
-  record: zng.Record
+  record: zed.Record
 }
 
-function filter(record: zng.Record, names: string[]) {
-  const cols = []
-  const vals = []
+function filter(record: zed.Record, names: string[]) {
+  const fields = []
 
   names.forEach((n) => {
-    const i = record.getColumnNames().indexOf(n)
-    cols.push(record.type[i])
-    vals.push(record.value[i])
+    const field = record.tryField(n)
+    if (field) fields.push(field)
   })
 
-  return new zng.Record(cols, vals)
+  const type = new zed.TypeRecord(
+    fields.map((f) => ({name: f.name, type: f.value.type}))
+  )
+
+  return new zed.Record(type, fields)
 }
 
 const ConnVersation = ({record}: Props) => {
@@ -67,9 +68,9 @@ const ConnHistory = ({history = ""}) => (
 type HostProps = {
   className: string
   title: string
-  ip: zng.Field
-  port: zng.Field
-  record: zng.Record
+  ip: zed.Field
+  port: zed.Field
+  record: zed.Record
 }
 
 const Host = ({className, title, ip, port, record}: HostProps) => {
@@ -94,7 +95,7 @@ const Host = ({className, title, ip, port, record}: HostProps) => {
         {port.data.toString()}
       </p>
       <VerticalTable
-        descriptor={record.type}
+        descriptor={record.fields}
         record={record}
         onRightClick={onRightClick}
       />
@@ -102,7 +103,7 @@ const Host = ({className, title, ip, port, record}: HostProps) => {
   )
 }
 
-ConnVersation.shouldShow = (record: zng.Record) =>
+ConnVersation.shouldShow = (record: zed.Record) =>
   every(ORIG_FIELDS, (name) => record.has(name))
 
 export default ConnVersation

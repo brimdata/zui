@@ -1,24 +1,23 @@
-import {useDispatch} from "react-redux"
-import React, {memo, useCallback, useMemo, useState} from "react"
-
-import {zng} from "zealot"
 import {Data, Name, Value} from "app/core/Data"
-import {createCell} from "src/js/brim/cell"
+import {formatPrimitive} from "app/core/formatters/format-zed"
+import {typeClassNames} from "app/core/utils/type-class-names"
+import React, {memo, useCallback, useMemo, useState} from "react"
+import {useDispatch} from "react-redux"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
-
-import PanelHeading from "./PanelHeading"
-import Panel from "./Panel"
+import {zed} from "zealot"
 import contextMenu from "./flows/contextMenu"
+import Panel from "./Panel"
+import PanelHeading from "./PanelHeading"
 
 type Props = {
-  record: zng.Record
+  record: zed.Record
 }
 
 type DTProps = {
-  fields: zng.Field[]
-  onRightClick: (f: zng.Field) => void
-  onHover: (f: zng.Field) => void
+  fields: zed.Field[]
+  onRightClick: (f: zed.Field) => void
+  onHover: (f: zed.Field) => void
 }
 
 const DataPanel = React.memo<DTProps>(function DataTable({
@@ -34,10 +33,10 @@ const DataPanel = React.memo<DTProps>(function DataTable({
             <TooltipAnchor>{field.name}</TooltipAnchor>
           </Name>
           <Value
-            className={field.data.getType()}
+            className={typeClassNames(field.data)}
             onContextMenu={() => onRightClick(field)}
           >
-            {createCell(field).display()}
+            {formatPrimitive(field.data as zed.Primitive)}
           </Value>
         </Data>
       ))}
@@ -85,7 +84,7 @@ export default memo(function Fields({record}: Props) {
 
   const fields = useMemo(() => {
     if (!record) return []
-    else return record.flatten().getFields()
+    else return record.flatten().fields
   }, [record])
 
   return (

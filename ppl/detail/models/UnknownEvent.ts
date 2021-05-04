@@ -1,8 +1,8 @@
-import {zng} from "zealot"
+import {zed} from "zealot"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class UnknownEvent implements BrimEventInterface {
-  constructor(private r: zng.Record) {}
+  constructor(private r: zed.Record) {}
 
   getRecord() {
     return this.r
@@ -10,7 +10,7 @@ export class UnknownEvent implements BrimEventInterface {
 
   getTime() {
     if (this.r.has("ts")) {
-      return (this.r.get("ts") as zng.Primitive).toDate()
+      return this.r.get<zed.Time>("ts").toDate()
     } else {
       return new Date(0)
     }

@@ -6,11 +6,11 @@ import Pools from "src/js/state/Pools"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
-import responses from "src/js/test/responses"
+import {useResponse} from "test/responses"
 import {createZealotMock} from "zealot"
 import {histogramSearch} from "./histogram-search"
 
-const countByPathResp = responses("count_by_path.txt")
+const countByPathResp = useResponse("everyCountByPath")
 const pool = fixtures("pool1")
 
 let store, zealot, dispatch, select

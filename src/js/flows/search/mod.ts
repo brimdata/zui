@@ -39,7 +39,6 @@ export function search({
     to = to || defaultTo
     from = from || defaultFrom
     const req = zealot.search(query, {from, to, poolId, signal: ctl.signal})
-
     dispatch(Handlers.abort(id, false))
     dispatch(Handlers.register(id, searchHandle))
 

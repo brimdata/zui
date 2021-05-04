@@ -18,7 +18,8 @@
     "format-check": "npm run format && git diff --exit-code -- src itest",
     "release": "npx electron-builder --mac",
     "prerelease": "npm run build",
-    "postinstall": "node scripts/post-install"
+    "postinstall": "node scripts/post-install",
+    "watch": "node scripts/watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -32,6 +33,7 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
     "@types/animejs": "^3.1.2",
     "@types/classnames": "^2.2.10",
     "@types/d3": "^5.7.2",
@@ -153,7 +155,7 @@
     "styled-components": "^5.1.1",
     "tree-model": "^1.0.7",
     "valid-url": "^1.0.9",
-    "zed": "git+https://github.com/brimdata/zed.git#4c03dd6352c5fbf8c59f52f32b5c904247602a8b"
+    "zed": "git+https://github.com/brimdata/zed.git#1683914e5ace6cc5621a949dccc5cf12a8818153"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",

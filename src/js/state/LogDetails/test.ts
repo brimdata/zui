@@ -1,15 +1,10 @@
-import LogDetails from "./"
+import {createRecord} from "test/factories/zed-factory"
 import initTestStore from "../../test/initTestStore"
-import {zjson, zng} from "zealot"
+import LogDetails from "./"
 
-const columns = [
-  {name: "_td", type: "count"},
-  {name: "letter", type: "string"}
-] as zjson.Column[]
-
-const record = new zng.Record(columns, ["1", "a"])
-const record2 = new zng.Record(columns, ["1", "b"])
-const record3 = new zng.Record(columns, ["1", "c"])
+const record = createRecord({_td: "1", letter: "a"})
+const record2 = createRecord({_td: "1", letter: "b"})
+const record3 = createRecord({_td: "1", letter: "c"})
 
 let store
 beforeEach(() => {

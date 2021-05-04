@@ -1,12 +1,12 @@
 import {createSelector} from "reselect"
-
-import {State} from "../types"
-import {TabState} from "../Tab/types"
-import {LogDetailHistory, toHistory} from "./reducer"
-import activeTabSelect from "../Tab/activeTabSelect"
-import {LogDetailsState} from "./types"
 import {SearchStatus} from "src/js/types/searches"
-import {zng} from "zealot"
+import activeTabSelect from "../Tab/activeTabSelect"
+import {TabState} from "../Tab/types"
+import {State} from "../types"
+import {LogDetailHistory, toHistory} from "./reducer"
+import {LogDetailsState} from "./types"
+
+import {ZealotContext, zed} from "zealot"
 
 const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails
@@ -17,24 +17,24 @@ const getHistory = createSelector<State, LogDetailsState, LogDetailHistory>(
   (logDetails) => toHistory(logDetails)
 )
 
-const build = createSelector<State, LogDetailHistory, zng.Record | null>(
+const build = createSelector<State, LogDetailHistory, zed.Record | null>(
   getHistory,
   (history) => {
     const entry = history.current()
     if (entry && entry.log) {
-      return zng.Record.deserialize(entry.log)
+      return ZealotContext.decodeRecord(entry.log)
     } else {
       return null
     }
   }
 )
 
-const getUidLogs = createSelector<State, LogDetailHistory, zng.Record[]>(
+const getUidLogs = createSelector<State, LogDetailHistory, zed.Record[]>(
   getHistory,
   (history) => {
     const entry = history.current()
     return entry
-      ? entry.uidLogs.map((data) => zng.Record.deserialize(data))
+      ? entry.uidLogs.map((data) => ZealotContext.decodeRecord(data))
       : []
   }
 )
@@ -47,7 +47,7 @@ const getUidStatus = createSelector<State, LogDetailHistory, SearchStatus>(
   }
 )
 
-const getConnLog = createSelector<State, zng.Record[], zng.Record | null>(
+const getConnLog = createSelector<State, zed.Record[], zed.Record | null>(
   getUidLogs,
   (uids) => {
     return uids.find((log) => log.try("_path")?.toString() === "conn")

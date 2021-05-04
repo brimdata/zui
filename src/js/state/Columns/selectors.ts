@@ -1,21 +1,20 @@
 import {createSelector} from "reselect"
-
-import {ColumnsState} from "./types"
-import {State} from "../types"
-import {ViewerColumns} from "../Viewer/types"
-import {createColumnSet} from "./models/columnSet"
+import {zed} from "zealot"
 import TableColumns from "../../models/TableColumns"
-import Viewer from "../Viewer"
 import activeTabSelect from "../Tab/activeTabSelect"
-import {zng} from "zealot"
+import {State} from "../types"
+import Viewer from "../Viewer"
+import {SchemaMap} from "../Viewer/types"
+import {createColumnSet} from "./models/columnSet"
+import {ColumnsState} from "./types"
 
 const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
 
 const getCurrentTableColumns = createSelector<
   State,
-  ViewerColumns,
+  SchemaMap,
   ColumnsState,
-  zng.Record[],
+  zed.Record[],
   TableColumns
 >(
   Viewer.getColumns,
@@ -24,7 +23,11 @@ const getCurrentTableColumns = createSelector<
   (viewerColumns, columnSettings, logs) => {
     const set = createColumnSet(viewerColumns)
     const prefs = columnSettings[set.getName()]
-    const table = new TableColumns(set.getName(), set.getUniqColumns(), prefs)
+    const table = new TableColumns(
+      set.getName() as string,
+      set.getUniqColumns(),
+      prefs
+    )
     table.setWidths(logs.slice(0, 50))
     return table
   }

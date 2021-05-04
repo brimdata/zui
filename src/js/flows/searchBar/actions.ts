@@ -1,41 +1,40 @@
-import {Thunk} from "../../state/types"
+import {zed} from "zealot"
+import brim from "../../brim"
+import {onlyWhitespace} from "../../lib/Str"
+import SearchBar from "../../state/SearchBar"
 import {
   getSearchBar,
   getSearchBarInputValue
 } from "../../state/SearchBar/selectors"
-import {onlyWhitespace} from "../../lib/Str"
-import SearchBar from "../../state/SearchBar"
-import brim from "../../brim"
-import {zng} from "zealot"
-import {Cell, createCell} from "../../brim/cell"
+import {Thunk} from "../../state/types"
 
-export function appendQueryInclude(field: zng.Field): Thunk {
+export function appendQueryInclude(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .include(createCell(field))
+          .include(field)
           .string()
       )
     )
   }
 }
 
-export function appendQueryExclude(field: zng.Field): Thunk {
+export function appendQueryExclude(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .exclude(createCell(field))
+          .exclude(field)
           .string()
       )
     )
   }
 }
 
-export function appendQueryCountBy(field: zng.Field): Thunk {
+export function appendQueryCountBy(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     const {current, pinned} = getSearchBar(getState())
     const query = [...pinned, current].join(" ")
@@ -45,7 +44,7 @@ export function appendQueryCountBy(field: zng.Field): Thunk {
       SearchBar.changeSearchBarInput(
         brim
           .program(program)
-          .countBy(createCell(field))
+          .countBy(field)
           .string()
       )
     )
@@ -72,7 +71,7 @@ export function appendQuerySortBy(
   }
 }
 
-export function appendQueryIn(field: Cell): Thunk {
+export function appendQueryIn(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -85,7 +84,7 @@ export function appendQueryIn(field: Cell): Thunk {
   }
 }
 
-export function appendQueryNotIn(field: Cell): Thunk {
+export function appendQueryNotIn(field: zed.Field): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(

@@ -1,12 +1,10 @@
-import {zng} from "zealot"
+import {zed} from "zealot"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 
 export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
 
-export type ViewerColumns = {
-  [key: string]: zng.Schema
-}
+export type SchemaMap = {[name: string]: zed.Schema}
 export type ViewerSelectionData = {
   rows: {
     [key: number]: boolean
@@ -14,8 +12,8 @@ export type ViewerSelectionData = {
   currentRange: [number, number]
 }
 export type ViewerState = {
-  records: zng.Record[]
-  columns: ViewerColumns
+  records: zed.Record[]
+  columns: SchemaMap
   endStatus: ViewerStatus
   status: SearchStatus
   scrollPos: ScrollPosition
@@ -43,13 +41,13 @@ export type ViewerAction =
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS"
-  records: zng.Record[]
+  records: zed.Record[]
   tabId: string | null | undefined
 }
 
 export type VIEWER_SET_RECORDS = {
   type: "VIEWER_SET_RECORDS"
-  records: zng.Record[]
+  records: zed.Record[]
   tabId?: string
 }
 
@@ -78,13 +76,13 @@ export type VIEWER_STATUS = {
 
 export type VIEWER_COLUMNS = {
   type: "VIEWER_COLUMNS"
-  columns: ViewerColumns
+  columns: SchemaMap
   tabId: string
 }
 
 export type VIEWER_SET_COLUMNS = {
   type: "VIEWER_SET_COLUMNS"
-  columns: ViewerColumns
+  columns: SchemaMap
   tabId: string
 }
 

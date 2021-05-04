@@ -11,7 +11,7 @@ export type Payload =
 
 export type SearchRecords = {
   type: "SearchRecords"
-  records: zjson.Items
+  records: zjson.RootRecord[]
   channel_id: number
 }
 

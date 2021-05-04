@@ -1,9 +1,8 @@
-import {createZealot} from "./zealot"
 import {FetchArgs} from "./fetcher/fetcher"
 import {createStream} from "./fetcher/stream"
-import {createError} from "./util/error"
 import {Zealot, ZealotPayload} from "./types"
-import {zngToZeek} from "./enhancers/mod"
+import {createError} from "./util/error"
+import {createZealot} from "./zealot"
 
 type StubMode = "always" | "once"
 type RespWrap = typeof stream | typeof promise
@@ -27,10 +26,9 @@ function promise(response: any) {
 }
 
 function stream(response: ZealotPayload[]) {
-  const enhance = zngToZeek()
   async function* iterator() {
     if (response) {
-      for (const payload of response) yield enhance(payload)
+      for (const payload of response) yield payload
     }
   }
 

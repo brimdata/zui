@@ -1,33 +1,30 @@
 import {isEqual} from "lodash"
-import {parse} from "zealot"
-
-import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
+import {parse, zed} from "zealot"
 import {trim} from "../lib/Str"
-import brim from "./"
 import stdlib from "../stdlib"
-import {zng} from "zealot"
-import {Cell, createCell} from "./cell"
+import brim from "./"
+import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
 
 export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
 
   return {
-    exclude(field: Cell) {
+    exclude(field: zed.Field) {
       p = insertFilter(p, brim.syntax.exclude(field))
       return this
     },
 
-    include(field: Cell) {
+    include(field: zed.Field) {
       p = insertFilter(p, brim.syntax.include(field))
       return this
     },
 
-    in(field: Cell) {
+    in(field: zed.Field) {
       p = insertFilter(p, brim.syntax.in(field))
       return this
     },
 
-    notIn(field: Cell) {
+    notIn(field: zed.Field) {
       p = insertFilter(p, brim.syntax.notIn(field))
       return this
     },
@@ -40,13 +37,12 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    drillDown(log: zng.Record) {
+    drillDown(log: zed.Record) {
       let filter = this.filter()
       const newFilters = this.ast()
         .groupByKeys()
         .map((n) => log.tryField(n))
         .filter((f) => !!f)
-        .map(createCell)
         .map(brim.syntax.include)
         .join(" ")
 
@@ -63,7 +59,7 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    countBy(field: Cell) {
+    countBy(field: zed.Field) {
       p = stdlib
         .string(p)
         .append(" | " + brim.syntax.countBy(field))

@@ -1,7 +1,7 @@
+import {createRecord} from "test/factories/zed-factory"
+import initTestStore from "../../test/initTestStore"
 import Tabs from "../Tabs"
 import chart from "./"
-import initTestStore from "../../test/initTestStore"
-import {zjson, zng} from "zealot"
 
 let store, tabId
 beforeEach(() => {
@@ -9,15 +9,9 @@ beforeEach(() => {
   tabId = Tabs.getActive(store.getState())
 })
 
-const columns = [
-  {name: "ts", type: "time"},
-  {name: "_path", type: "string"},
-  {name: "count", type: "count"}
-] as zjson.Column[]
-
 const records = [
-  new zng.Record(columns, ["0", "conn", "500"]),
-  new zng.Record(columns, ["100", "dns", "300"])
+  createRecord({ts: new Date(0), _path: "conn", count: 500}),
+  createRecord({ts: new Date(100 * 1000), _path: "dns", count: 300})
 ]
 
 test("chart records append", () => {

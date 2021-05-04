@@ -1,3 +1,5 @@
+import {SearchStatus} from "src/js/types/searches"
+import {ZealotContext, zed} from "zealot"
 import {
   LOG_DETAIL_BACK,
   LOG_DETAIL_CLEAR,
@@ -5,13 +7,11 @@ import {
   LOG_DETAIL_PUSH,
   LOG_DETAIL_UPDATE
 } from "./types"
-import {zng} from "zealot"
-import {SearchStatus} from "src/js/types/searches"
 
 export default {
-  push: (record: zng.Record): LOG_DETAIL_PUSH => ({
+  push: (record: zed.Record): LOG_DETAIL_PUSH => ({
     type: "LOG_DETAIL_PUSH",
-    record: record.serialize()
+    record: ZealotContext.encodeRecord(record)
   }),
 
   back: (): LOG_DETAIL_BACK => ({
@@ -22,11 +22,11 @@ export default {
     type: "LOG_DETAIL_FORWARD"
   }),
 
-  updateUidLogs: (records: zng.Record[]): LOG_DETAIL_UPDATE => {
+  updateUidLogs: (records: zed.Record[]): LOG_DETAIL_UPDATE => {
     return {
       type: "LOG_DETAIL_UPDATE",
       updates: {
-        uidLogs: records.map((r) => r.serialize())
+        uidLogs: records.map((r) => ZealotContext.encodeRecord(r))
       }
     }
   },

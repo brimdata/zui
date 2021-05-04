@@ -1,11 +1,10 @@
-import React from "react"
-
-import ConnVersation from "../ConnVersation"
-import {zng} from "zealot"
 import PanelHeading from "app/detail/PanelHeading"
+import React from "react"
+import {zed} from "zealot"
+import ConnVersation from "../ConnVersation"
 
 type Props = {
-  record: zng.Record
+  record: zed.Record
 }
 
 const ConnPanel = ({record}: Props) => {

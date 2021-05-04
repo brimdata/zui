@@ -3,7 +3,6 @@ import React, {memo, useCallback, useMemo} from "react"
 
 import {reactElementProps} from "src/js/test/integration"
 import LogDetails from "src/js/state/LogDetails"
-import {zng} from "zealot"
 import {Caption, ChartWrap, TableWrap} from "app/detail/Shared"
 import PanelHeading from "app/detail/PanelHeading"
 import EventTimeline from "ppl/detail/EventTimeline"
@@ -16,8 +15,9 @@ import Panel from "app/detail/Panel"
 import {getCorrelationQuery} from "./flows/get-correlation-query"
 import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
+import {zed} from "zealot"
 
-export default memo(function UidPanel({record}: {record: zng.Record}) {
+export default memo(function UidPanel({record}: {record: zed.Record}) {
   const query = useMemo(() => getCorrelationQuery(record), [record])
   const isLoading = useSelector(LogDetails.getUidStatus) === "FETCHING"
   const logs = useSelector(LogDetails.getUidLogs)

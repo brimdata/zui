@@ -1,5 +1,6 @@
 @mixin type-colors {
   &.addr,
+  &.ip,
   &.set\[addr\] {
     color: var(--ip);
   }
@@ -10,11 +11,20 @@
   }
 
   &.interval,
+  &.duration,
   &.set\[interval\] {
     color: var(--interval);
   }
 
   &.count,
+  &.uint8,
+  &.uint16,
+  &.uint32,
+  &.uint64,
+  &.int8,
+  &.int16,
+  &.int32,
+  &.int64,
   &.set\[count\] {
     color: var(--count);
   }
@@ -26,5 +36,9 @@
 
   &.null {
     color: var(--cloudy);
+  }
+
+  &.time {
+    color: var(--interval);
   }
 }

@@ -1,4 +1,4 @@
-import {zng} from "zealot"
+import {zed} from "zealot"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 import {
@@ -19,7 +19,7 @@ import {
   VIEWER_SET_RECORDS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
-  ViewerColumns,
+  SchemaMap,
   ViewerStatus
 } from "./types"
 
@@ -47,21 +47,21 @@ export const setEndStatus = (
 
 export const appendRecords = (
   tabId: string | null | undefined,
-  records: zng.Record[]
+  records: zed.Record[]
 ): VIEWER_RECORDS => {
   return {type: "VIEWER_RECORDS", records, tabId}
 }
 
 export const setRecords = (
   tabId: string | undefined,
-  records: zng.Record[]
+  records: zed.Record[]
 ): VIEWER_SET_RECORDS => {
   return {type: "VIEWER_SET_RECORDS", records, tabId}
 }
 
 export const updateColumns = (
   tabId: string,
-  columns: ViewerColumns
+  columns: SchemaMap
 ): VIEWER_COLUMNS => {
   return {
     type: "VIEWER_COLUMNS",
@@ -72,7 +72,7 @@ export const updateColumns = (
 
 export const setColumns = (
   tabId: string,
-  columns: ViewerColumns
+  columns: SchemaMap
 ): VIEWER_SET_COLUMNS => {
   return {
     type: "VIEWER_SET_COLUMNS",

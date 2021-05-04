@@ -1,29 +1,35 @@
 import {last} from "lodash"
-import {zng} from "zealot"
 import loginTo from "src/js/test/helpers/loginTo"
+import {createRecord} from "test/factories/zed-factory"
+import {useResponse} from "test/responses"
 import {fetchCorrelation} from "./fetch"
-import * as stubs from "./stubs"
 
-const zeek = new zng.Record(
-  [
-    {name: "_path", type: "string"},
-    {name: "uid", type: "string"}
-  ],
-  ["dns", "CbOjYpkXn9LfqV51c"]
-)
+const zeek = createRecord({
+  _path: "dns",
+  uid: "CbOjYpkXn9LfqV51c",
+  duration: null,
+  ts: new Date(0)
+})
 
-const suricata = new zng.Record(
-  [{name: "community_id", type: "string"}],
-  ["1:N7YGmWjwTmMKNhsZHBR618n3ReA="]
-)
+const suricata = createRecord({
+  ts: new Date(0),
+  community_id: "1:N7YGmWjwTmMKNhsZHBR618n3ReA="
+})
 
 const uidOrCommunityIdZql =
-  'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100'
+  'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:N7YGmWjwTmMKNhsZHBR618n3ReA=" and ts >= 1582646593.978 and ts < 1582646683.994) | head 100'
 
 const uidZql =
   'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" | head 100'
 
 const cidZql = 'community_id="1:N7YGmWjwTmMKNhsZHBR618n3ReA=" | head 100'
+
+const stubs = {
+  uidResult: useResponse("correlationUid"),
+  uidAndCommunityResult: useResponse("correlationUidCommunityId"),
+  alertResults: useResponse("onlyAlerts"),
+  noCommunityIdInConn: useResponse("noCommunityIdInConn")
+}
 
 describe("zeek log when community_id is found", () => {
   let setup
@@ -52,7 +58,7 @@ describe("zeek log when community_id is found", () => {
   test("returns the records", async () => {
     const {store} = setup
     const records = await store.dispatch(fetchCorrelation(zeek))
-    expect(records.length).toBe(10)
+    expect(records.length).toBe(2)
   })
 })
 
@@ -79,7 +85,7 @@ describe("zeek log when community_id is not found", () => {
   test("returns the records", async () => {
     const {store} = setup
     const records = await store.dispatch(fetchCorrelation(zeek))
-    expect(records.length).toBe(8)
+    expect(records.length).toBe(2)
   })
 })
 
@@ -107,6 +113,6 @@ describe("suricata alert when community_id found", () => {
   test("returns the records", async () => {
     const {store} = setup
     const records = await store.dispatch(fetchCorrelation(suricata))
-    expect(records.length).toBe(9)
+    expect(records.length).toBe(11)
   })
 })

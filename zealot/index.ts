@@ -5,11 +5,14 @@ import {createTime} from "./util/time"
 import {createZealot} from "./zealot"
 import {createZealotMock, ZealotMock} from "./zealot_mock"
 import * as zjson from "./zjson"
-import * as zng from "./zng"
+import * as zed from "./zed"
+
+const ZealotContext = new zed.Context()
 
 export {
+  ZealotContext,
   zjson,
-  zng,
+  zed,
   createZealot,
   createZealotMock,
   createTime,

@@ -1,9 +1,10 @@
 import {join} from "https://deno.land/std@0.70.0/path/mod.ts"
+import {testFile} from "./helper/mod.ts"
 import {testApi, assertEquals, uniq} from "./helper/mod.ts"
 
 testApi("ingest log", async (zealot) => {
   const pool = await zealot.pools.create({name: "pool1", order: "desc"})
-  const log = join(Deno.cwd(), "data/sample.tsv")
+  const log = testFile("sample.tsv")
   const resp = await zealot.logs.postPaths({paths: [log], poolId: pool.id})
   const messages = await resp.array()
 
@@ -17,7 +18,7 @@ testApi("ingest log", async (zealot) => {
 
 testApi("ingest ndjson log", async (zealot) => {
   const pool = await zealot.pools.create({name: "pool1", order: "desc"})
-  const log = join(Deno.cwd(), "data/custom-sample.ndjson")
+  const log = testFile("custom-sample.ndjson")
   const resp = await zealot.logs.postPaths({
     paths: [log],
     poolId: pool.id

@@ -36,7 +36,7 @@ function handle(response: SearchResponse): Thunk {
 
     response
       .status((status) => dispatch(Chart.setStatus(tabId, status)))
-      .chan(0, (records) => dispatch(Chart.appendRecords(tabId, records)))
+      .chan(0, ({rows}) => dispatch(Chart.appendRecords(tabId, rows)))
       .error((error) => dispatch(Notice.set(ErrorFactory.create(error))))
   }
 }
