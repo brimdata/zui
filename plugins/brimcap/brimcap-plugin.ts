@@ -178,7 +178,10 @@ export default class BrimcapPlugin {
 
     const tsString = ts.toString()
     const dur = log.get("duration") as zed.Duration
-    const dest = join(this.api.getTempDir(), `packets-${ts.toString()}.pcap`)
+    const dest = join(
+      this.api.getTempDir(),
+      `packets-${ts.toString()}.pcap`.replaceAll(":", "_")
+    )
 
     return {
       dstIp: log.get("id.resp_h").toString(),
