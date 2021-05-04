@@ -7,6 +7,6 @@ export class Int64 extends Primitive {
 
   toInt() {
     if (isNull(this.value)) return null
-    return parseInt(this.value)
+    return BigInt(this.value)
   }
 }
