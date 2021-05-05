@@ -22,6 +22,8 @@ export interface ZealotArgs {
 
 export type SearchFormat = "zjson" | "zng" | "ndjson" | "csv"
 
+export type Order = "desc" | "asc"
+
 export interface SearchArgs {
   from: Date | Ts | bigint
   to: Date | Ts | bigint
@@ -34,6 +36,7 @@ export interface SearchArgs {
 
 export interface PoolArgs {
   name: string
+  order?: Order
 }
 
 export interface LogsPostArgs {

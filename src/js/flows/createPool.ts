@@ -7,8 +7,6 @@ import tabHistory from "app/router/tab-history"
 
 type Props = {
   name: string
-  kind: "archivestore" | "filestore"
-  data_path: string
 }
 
 export const createPool = ({name}: Props): Thunk<Promise<void>> => (
