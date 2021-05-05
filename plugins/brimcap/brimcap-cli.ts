@@ -53,7 +53,7 @@ export default class BrimcapCLI {
   public load(pcapPath: string, opts: loadOptions): ChildProcess {
     const subCommandWithArgs = ["load", ...toCliOpts(opts), pcapPath]
 
-    return spawn(this.binPath, subCommandWithArgs)
+    return spawn(this.binPath, subCommandWithArgs, {detached: true})
   }
 
   public search(opts: searchOptions) {

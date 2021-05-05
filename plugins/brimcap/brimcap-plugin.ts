@@ -9,6 +9,7 @@ import open from "../../src/js/lib/open"
 import {AppDispatch} from "../../src/js/state/types"
 import {reactElementProps} from "../../src/js/test/integration"
 import BrimcapCLI, {searchOptions} from "./brimcap-cli"
+import {ChildProcess} from "child_process"
 
 export default class BrimcapPlugin {
   private cli: BrimcapCLI
@@ -19,6 +20,9 @@ export default class BrimcapPlugin {
   // in the search viewer
   private selectedConn = null
   private cleanupFns: Function[] = []
+  private loadingProcesses: {
+    [pid: number]: ChildProcess
+  } = {}
   private brimcapDataRoot = ""
   private brimcapBinPath = ""
   private toastConfig = {
@@ -235,6 +239,7 @@ export default class BrimcapPlugin {
         root: this.brimcapDataRoot,
         pool: name
       })
+      this.loadingProcesses[p.pid] = p
 
       let brimcapErr
       p.on("error", (err) => {
@@ -259,9 +264,11 @@ export default class BrimcapPlugin {
       })
 
       // wait for process to end
-      await new Promise<void>((res) => {
-        p.on("close", async () => {
-          res()
+      await new Promise((res, rej) => {
+        p.on("close", (code) => {
+          delete this.loadingProcesses[p.pid]
+          if (code != 0) rej()
+          else res()
         })
       })
 
@@ -278,7 +285,24 @@ export default class BrimcapPlugin {
     })
   }
 
-  public cleanup() {
+  public async cleanup() {
+    await Promise.all(
+      Object.values(this.loadingProcesses).map((lp: ChildProcess) => {
+        return new Promise((res) => {
+          if (lp.killed) {
+            res()
+            return
+          }
+
+          lp.on("exit", () => {
+            delete this.loadingProcesses[lp.pid]
+            res()
+          })
+          lp.kill()
+        })
+      })
+    )
+
     this.cleanupFns.forEach((fn) => fn())
   }
 }

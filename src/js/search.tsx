@@ -15,12 +15,13 @@ import deletePartialPools from "./flows/deletePartialPools"
 import TabHistories from "./state/TabHistories"
 
 initialize()
-  .then((store) => {
-    window.onbeforeunload = () => {
+  .then(({store, pluginManager}) => {
+    window.onbeforeunload = async () => {
       // This runs during reload
       // Visit initIpcListeners.ts#prepareClose for closing window
+      await pluginManager.deactivate()
+      await store.dispatch(deletePartialPools())
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
-      store.dispatch(deletePartialPools())
     }
     ReactDOM.render(
       <AppErrorBoundary>

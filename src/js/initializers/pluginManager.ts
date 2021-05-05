@@ -1,15 +1,18 @@
 import path from "path"
 import lib from "../lib"
 import BrimApi from "../api"
+import {forEach} from "lodash"
 
 interface Plugin {
   activate(api: BrimApi): void
 
-  deactivate(): void
+  deactivate(): Promise<void>
 }
 
 export default class PluginManager {
-  private plugins: Plugin[] = []
+  private plugins: {
+    [pluginName: string]: Plugin
+  } = {}
 
   constructor(private api: BrimApi) {}
 
@@ -24,7 +27,8 @@ export default class PluginManager {
         return
       }
 
-      const entryPoint = path.join(dir, pluginDir.fileName(), "index.js")
+      const pluginName = pluginDir.fileName()
+      const entryPoint = path.join(dir, pluginName, "index.js")
       if (!lib.file(entryPoint).existsSync()) {
         console.error(
           "Plugin directory must contain an index file as the entry point."
@@ -33,15 +37,22 @@ export default class PluginManager {
       }
 
       const {activate, deactivate = () => {}} = require(entryPoint)
-      this.plugins.push({activate, deactivate})
+      if (this.plugins[pluginName]) {
+        console.error(
+          new Error(`Duplicate or name collision for '${pluginName}' plugin`)
+        )
+        return
+      }
+
+      this.plugins[pluginName] = {activate, deactivate}
     }
   }
 
   activate() {
-    this.plugins.forEach((p) => p.activate(this.api))
+    forEach(this.plugins, (p) => p.activate(this.api))
   }
 
-  deactivate() {
-    this.plugins.forEach((p) => p.deactivate())
+  async deactivate(): Promise<void> {
+    await Promise.all(Object.values(this.plugins).map((p) => p.deactivate()))
   }
 }

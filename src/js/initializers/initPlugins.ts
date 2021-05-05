@@ -1,6 +1,7 @@
 import path from "path"
 import PluginManager from "./pluginManager"
 import BrimApi from "../api"
+import log from "electron-log"
 
 const initPlugins = async (api: BrimApi) => {
   const pluginManager = new PluginManager(api)
@@ -9,7 +10,6 @@ const initPlugins = async (api: BrimApi) => {
   await pluginManager.load(path.join(__dirname, "../../../plugins"))
   // load native brim plugins
   // await pluginManager.load("native brim plugins")
-
   pluginManager.activate()
 
   return pluginManager

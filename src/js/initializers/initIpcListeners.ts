@@ -23,9 +23,9 @@ export default (store: Store, pluginManager: PluginManager) => {
   })
 
   ipcRenderer.on("prepareClose", async (e, replyChannel) => {
-    store.dispatch(TabHistories.save(global.tabHistories.serialize()))
+    await pluginManager.deactivate()
     await dispatch(deletePartialPools())
-    pluginManager.deactivate()
+    store.dispatch(TabHistories.save(global.tabHistories.serialize()))
     ipcRenderer.send(replyChannel)
   })
 
