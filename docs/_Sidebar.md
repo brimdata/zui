@@ -9,6 +9,7 @@
 
 - [[Zeek Customization]]
 - [[Geolocation]]
+- [[Migration of Spaces]]
 
 **Cookbooks**
 
