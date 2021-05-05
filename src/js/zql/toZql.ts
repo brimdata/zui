@@ -1,5 +1,6 @@
 import isString from "lodash/isString"
 import {zed} from "zealot"
+import {isStringy} from "zealot/zed"
 
 export function toZql(object: unknown): string {
   if (object instanceof zed.Primitive) return toZqlZngPrimitive(object)
@@ -32,9 +33,9 @@ function toZqlBool(bool: boolean) {
 function toZqlZngPrimitive(data: zed.Primitive) {
   if (data.isUnset()) {
     return "null"
-  } else if (data instanceof zed.Ip) {
-    return data.toString()
-  } else {
+  } else if (isStringy(data)) {
     return toZqlString(data.toString())
+  } else {
+    return data.toString()
   }
 }
