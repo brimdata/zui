@@ -64,7 +64,7 @@
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-source-map-support": "^2.1.2",
-    "brimcap": "brimdata/brimcap#a011e281d3a48e0d6b20ccd2be6b3e250d70c59a",
+    "brimcap": "brimdata/brimcap#v0.0.3",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
