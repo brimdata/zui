@@ -61,7 +61,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
-    "babel-plugin-inline-react-svg": "^1.1.1",
+    "babel-plugin-inline-react-svg": "^2.0.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-source-map-support": "^2.1.2",
     "brimcap": "brimdata/brimcap#v0.0.3",
