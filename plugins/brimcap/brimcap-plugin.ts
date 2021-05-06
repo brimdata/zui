@@ -202,7 +202,9 @@ export default class BrimcapPlugin {
       searchOpts = this.logToSearchOpts(log)
     } catch (e) {
       console.error(e)
-      this.api.toast.error("Missing 5-tuple from log")
+      this.api.toast.error(
+        "Flow's 5-tuple and/or time span was not found in the connection record"
+      )
       return
     }
 
@@ -221,11 +223,11 @@ export default class BrimcapPlugin {
     this.api.toast.promise(
       searchAndOpen(),
       {
-        loading: "Preparing PCAP...",
-        success: "Preparation Complete",
+        loading: "Preparing pcap...",
+        success: "Preparation complete",
         error: (err) => {
           console.error(err)
-          return "Error Preparing PCAP: " + err.message
+          return "Error preparing pcap: " + err.message
         }
       },
       this.toastConfig
