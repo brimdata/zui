@@ -110,6 +110,10 @@ export default class BrimcapPlugin {
       data: zed.Record,
       setConn: (conn: zed.Record) => {}
     ) => {
+      if (!data) {
+        setButtonDetails(toolbarId, buttonId, true)
+        return
+      }
       this.tryConn(data, buttonId)
         .then((conn) => {
           setConn(conn)
@@ -162,7 +166,6 @@ export default class BrimcapPlugin {
       // the search window's packets button operates off of the 'selected' record
       // (whatever is highlighted in the viewer/table)
       this.api.commands.add("data-detail:selected", ([data]) => {
-        if (!data) return
         updateButtonStatus(
           "search",
           searchButtonId,
@@ -175,10 +178,6 @@ export default class BrimcapPlugin {
 
   private logToSearchOpts(log: zed.Record): searchOptions {
     const ts = log.get("ts") as zed.Time
-    // RFC3999nano format with zero timezone offset
-    // const formatter = DateTimeFormatter.ofPattern(
-    //   "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"
-    // )
 
     const tsString = ts.toString()
     const dur = log.get("duration") as zed.Duration
@@ -267,8 +266,8 @@ export default class BrimcapPlugin {
       await new Promise((res, rej) => {
         p.on("close", (code) => {
           delete this.loadingProcesses[p.pid]
-          if (code != 0) rej()
-          else res()
+          if (code === 0) res()
+          else rej(new Error("PCAP load was interrupted"))
         })
       })
 
@@ -302,8 +301,6 @@ export default class BrimcapPlugin {
         })
       })
     )
-
-    this.cleanupFns.forEach((fn) => fn())
   }
 }
 
