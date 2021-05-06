@@ -289,6 +289,7 @@ export default class BrimcapPlugin {
       Object.values(this.loadingProcesses).map((lp: ChildProcess) => {
         return new Promise((res) => {
           if (lp.killed) {
+            delete this.loadingProcesses[lp.pid]
             res()
             return
           }
