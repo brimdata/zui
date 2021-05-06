@@ -177,10 +177,10 @@ export default class BrimcapPlugin {
     // )
 
     const tsString = ts.toString()
-    const dur = log.get("duration") as zed.Duration
+    const dur = log.try("duration") as zed.Duration
     const dest = join(
       this.api.getTempDir(),
-      `packets-${ts.toString()}.pcap`.replaceAll(":", "_")
+      `packets-${tsString}.pcap`.replaceAll(":", "_")
     )
 
     return {
@@ -197,10 +197,24 @@ export default class BrimcapPlugin {
   }
 
   private async downloadPcap(log: zed.Record) {
-    const searchOpts = this.logToSearchOpts(log)
+    let searchOpts
+    try {
+      searchOpts = this.logToSearchOpts(log)
+    } catch (e) {
+      console.error(e)
+      this.api.toast.error("Missing 5-tuple from log")
+      return
+    }
 
     const searchAndOpen = async () => {
-      this.cli.search(searchOpts)
+      const res = await this.cli.search(searchOpts)
+      if (res.status > 0) {
+        const err = res.stderr.toString()
+        const msg = JSON.parse(err)?.error || `brimcap search failed: ${err}`
+
+        throw new Error(msg)
+      }
+
       return await open(searchOpts.write, {newWindow: true})
     }
 
@@ -211,7 +225,7 @@ export default class BrimcapPlugin {
         success: "Preparation Complete",
         error: (err) => {
           console.error(err)
-          return "Error Preparing PCAP"
+          return "Error Preparing PCAP: " + err.message
         }
       },
       this.toastConfig
