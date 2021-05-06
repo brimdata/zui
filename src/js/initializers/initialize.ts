@@ -19,5 +19,5 @@ export default async function initialize() {
   initIpcListeners(store, pluginManager)
   initMenuActionListeners(store)
   initWorkspaceParams(store)
-  return store
+  return {store, pluginManager}
 }

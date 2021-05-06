@@ -14,7 +14,10 @@ import lib from "./lib"
 import theme from "./style-theme"
 
 initDetail()
-  .then((store) => {
+  .then(({store, pluginManager}) => {
+    window.onbeforeunload = async () => {
+      await pluginManager.deactivate()
+    }
     ReactDOM.render(
       <Router history={global.windowHistory}>
         <AppErrorBoundary>

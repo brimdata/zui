@@ -8,6 +8,6 @@ export const activate = (api: BrimApi) => {
   brimcap.init()
 }
 
-export const deactivate = () => {
-  brimcap && brimcap.cleanup()
+export const deactivate = async () => {
+  brimcap && (await brimcap.cleanup())
 }

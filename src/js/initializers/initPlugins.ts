@@ -9,7 +9,6 @@ const initPlugins = async (api: BrimApi) => {
   await pluginManager.load(path.join(__dirname, "../../../plugins"))
   // load native brim plugins
   // await pluginManager.load("native brim plugins")
-
   pluginManager.activate()
 
   return pluginManager
