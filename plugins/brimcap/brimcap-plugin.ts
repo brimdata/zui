@@ -180,16 +180,16 @@ export default class BrimcapPlugin {
     const ts = log.get("ts") as zed.Time
 
     const tsString = ts.toString()
-    const dur = log.get("duration") as zed.Duration
+    const dur = log.try("duration") as zed.Duration
     const dest = join(
       this.api.getTempDir(),
-      `packets-${ts.toString()}.pcap`.replaceAll(":", "_")
+      `packets-${tsString}.pcap`.replaceAll(":", "_")
     )
 
     return {
       dstIp: log.get("id.resp_h").toString(),
       dstPort: log.get("id.resp_p").toString(),
-      duration: dur.isSet() ? dur.toString() : "0s",
+      duration: dur?.isSet() ? dur.toString() : "0s",
       proto: log.get("proto").toString(),
       root: this.brimcapDataRoot,
       srcIp: log.get("id.orig_h").toString(),
@@ -200,21 +200,37 @@ export default class BrimcapPlugin {
   }
 
   private async downloadPcap(log: zed.Record) {
-    const searchOpts = this.logToSearchOpts(log)
+    let searchOpts
+    try {
+      searchOpts = this.logToSearchOpts(log)
+    } catch (e) {
+      console.error(e)
+      this.api.toast.error(
+        "Flow's 5-tuple and/or time span was not found in the connection record"
+      )
+      return
+    }
 
     const searchAndOpen = async () => {
-      this.cli.search(searchOpts)
+      const res = await this.cli.search(searchOpts)
+      if (res.status > 0) {
+        const err = res.stderr.toString()
+        const msg = JSON.parse(err)?.error || `brimcap search failed: ${err}`
+
+        throw new Error(msg)
+      }
+
       return await open(searchOpts.write, {newWindow: true})
     }
 
     this.api.toast.promise(
       searchAndOpen(),
       {
-        loading: "Preparing PCAP...",
-        success: "Preparation Complete",
+        loading: "Preparing pcap...",
+        success: "Preparation complete",
         error: (err) => {
           console.error(err)
-          return "Error Preparing PCAP"
+          return "Error preparing pcap: " + err.message
         }
       },
       this.toastConfig
