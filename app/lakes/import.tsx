@@ -10,6 +10,7 @@ import ingestFiles from "../../src/js/flows/ingestFiles"
 import refreshPoolNames from "../../src/js/flows/refreshPoolNames"
 import {AppDispatch} from "../../src/js/state/types"
 import {popNotice} from "../../src/js/components/PopNotice"
+import SpaceMigration from "app/space-migration"
 
 export default function TabImport() {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,6 +34,7 @@ export default function TabImport() {
 
   return (
     <div className="input-methods">
+      <SpaceMigration />
       <section>
         <h2>Import Files</h2>
         <LoadFilesInput onChange={onChange} />
