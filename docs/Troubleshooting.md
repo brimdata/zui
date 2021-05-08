@@ -29,7 +29,7 @@ detail.
 ### Application problems
 
 To start debugging such problems, it helps to understand how Brim opens flows
-extracted from pcaps. Once the 5-tuple, connection start time, and connection
+extracted from pcaps. Once the [5-tuple](https://www.napatech.com/what-is-a-flow/), connection start time, and connection
 duration are isolated from the Zeek `conn` record for the flow, the [`zed
 lake`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake) process uses an
 index to extract the packets for the target flow into a temporary file. Once
@@ -159,7 +159,7 @@ Stream_ or _Follow UDP Stream_, which will apply a filter of the format
 `tcp.stream eq N` or `udp.stream eq N`, where `N` is a number `0`, `1`, etc.
 based on which flow within the pcap is being isolated. When this is done,
 Wireshark appears to treat all packets as part of the same flow if they
-share the same [5-tuple](https://www.caida.org/research/traffic-analysis/flowtypes/),
+share the same [5-tuple](https://www.napatech.com/what-is-a-flow/),
 regardless of how long the flow lasts.
 
 Separately, Brim relies on Zeek's `conn` event, which includes the `id` and
