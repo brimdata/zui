@@ -1,8 +1,6 @@
 import ColumnsModal from "app/columns/columns-modal"
-import SpaceMigration from "app/space-migration"
 import HookLog from "app/system-test/HookLog"
 import React from "react"
-import AboutModal from "src/js/components/AboutModal"
 import BrimToaster from "src/js/components/BrimToaster"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ErrorNotice from "src/js/components/ErrorNotice"
@@ -11,7 +9,6 @@ import {XLatestError} from "src/js/components/LatestError"
 import {LeftPane} from "src/js/components/LeftPane"
 import {Modals} from "src/js/components/Modals"
 import PoolModal from "src/js/components/PoolModal"
-import {PopNotice} from "src/js/components/PopNotice"
 import Preferences from "src/js/components/Preferences/Preferences"
 import {XRightPane} from "src/js/components/RightPane"
 import StatusBar from "src/js/components/StatusBar"
@@ -72,12 +69,10 @@ export default function AppWrapper({children}) {
       <ErrorNotice />
       <Preferences />
       <Modals />
-      <AboutModal />
       <PoolModal />
       <ColumnsModal />
       <HTMLContextMenu />
       <BrimToaster />
-      <PopNotice />
       <BrimTooltip />
 
       {process.env.BRIM_ITEST === "true" && <HookLog />}

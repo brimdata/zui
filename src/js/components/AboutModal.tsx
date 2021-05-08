@@ -1,15 +1,14 @@
+import {execSync} from "child_process"
+import {remote} from "electron"
+import {join} from "path"
 import React from "react"
-
+import electronIsDev from "../electron/isDev"
+import LogoType from "../icons/LogoType"
+import Octocat from "../icons/Octocat"
+import open from "../lib/open"
 import {reactElementProps} from "../test/integration"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
-import LogoType from "../icons/LogoType"
-import Octocat from "../icons/Octocat"
-import {remote} from "electron"
-import {join} from "path"
-import open from "../lib/open"
-import electronIsDev from "../electron/isDev"
-import {execSync} from "child_process"
 
 export default function AboutModal() {
   let appVersion = remote.app.getVersion()

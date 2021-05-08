@@ -1,6 +1,10 @@
+import {remote} from "electron"
+import {join} from "path"
 import React, {useEffect, useState} from "react"
 import toast from "react-hot-toast"
+import {useDispatch} from "react-redux"
 import Link from "src/js/components/common/Link"
+import useListener from "src/js/components/hooks/useListener"
 import {
   ButtonGroup,
   Content,
@@ -8,53 +12,98 @@ import {
   ModalDialog,
   Title
 } from "src/js/components/ModalDialog/ModalDialog"
+import refreshPoolNames from "src/js/flows/refreshPoolNames"
 import ThreeDotsIcon from "src/js/icons/ThreeDotsIcon"
 import {showContextMenu} from "src/js/lib/System"
+import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
+import SpaceMigrator from "./space-migrator"
 import ToolbarButton from "./toolbar/button"
 
+let src
+let dst
+
+async function needsToMigrate() {
+  src = join(await remote.app.getPath("userData"), "data/spaces")
+  dst = join(await remote.app.getPath("userData"), "data/brimcap-root")
+  const spaces = new SpaceMigrator(src, dst)
+  return spaces.needMigration()
+}
+
 export default function SpaceMigration() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    needsToMigrate().then((bool) => {
+      if (bool) setOpen(true)
+    })
+  }, [])
+
   if (open)
     return <ModalDialog onClosed={() => setOpen(false)}>{Modal}</ModalDialog>
   else return null
 }
 
 function Modal({onClose}) {
-  function onCancelMigrate() {}
+  const dispatch = useDispatch<AppDispatch>()
+  const spaces = new SpaceMigrator(src, dst)
+  // @ts-ignore
+  useListener(globalThis, "beforeunload", () => spaces.cancel())
 
   function onMigrate() {
     onClose()
-    toast.loading(
-      (t) => {
-        const onContextMenu = (e) => {
-          const {x, y} = e.currentTarget.getBoundingClientRect()
-          showContextMenu(
-            [
-              {
-                label: "Cancel",
-                click: () => {
-                  onCancelMigrate()
-                  toast.dismiss(t.id)
-                }
-              }
-            ],
-            {
-              x: x - 50, // this will need to change as we add more items
-              y: y - 35 // this too
+
+    let id
+    const onContextMenu = (e) => {
+      const {x, y} = e.currentTarget.getBoundingClientRect()
+      showContextMenu(
+        [
+          {
+            label: "Cancel",
+            click: () => {
+              spaces.cancel()
+              toast.dismiss(id)
             }
-          )
+          }
+        ],
+        {
+          x: x - 50, // this will need to change as we add more items
+          y: y - 35 // this too
         }
-        return (
-          <LoadingToast
-            title="Migrating Spaces"
-            message="1 of 12"
-            onContextMenu={onContextMenu}
-          />
-        )
-      },
+      )
+    }
+    id = toast.loading(
+      <LoadingToast
+        title="Migrating Spaces"
+        message="Starting..."
+        onContextMenu={onContextMenu}
+      />,
       {duration: 99999 * 1000}
     )
+
+    spaces
+      .migrate(({total, count, space}) => {
+        dispatch(refreshPoolNames())
+        toast.loading(
+          <LoadingToast
+            title="Migrating Spaces"
+            message={`${count} of ${total}: ${space}`}
+            onContextMenu={onContextMenu}
+          />,
+          {id, duration: 99999 * 1000}
+        )
+      })
+      .then(() => {
+        toast.dismiss(id)
+        if (spaces.needMigration()) {
+          toast.error("Some spaces not migrated")
+        } else {
+          toast.success("Migration complete")
+        }
+      })
+      .catch((e) => {
+        toast.dismiss(id)
+        toast.error(e)
+      })
   }
 
   return (

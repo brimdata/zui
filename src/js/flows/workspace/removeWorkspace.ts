@@ -1,7 +1,7 @@
 import tabHistory from "app/router/tab-history"
 import {workspacesPath} from "app/router/utils/paths"
+import toast from "react-hot-toast"
 import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0/utils"
-import {popNotice} from "../../components/PopNotice"
 import ipc from "../../electron/ipc"
 import invoke from "../../electron/ipc/invoke"
 import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
@@ -29,7 +29,7 @@ const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
   dispatch(Workspaces.remove(id))
 
   dispatch(tabHistory.push(workspacesPath()))
-  popNotice(`Removed workspace "${name}"`)
+  toast(`Removed workspace "${name}"`)
 }
 
 export default removeWorkspace
