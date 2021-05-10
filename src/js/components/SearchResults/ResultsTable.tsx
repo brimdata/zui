@@ -95,10 +95,7 @@ export default function ResultsTable(props: Props) {
         timeFormat={props.timeFormat}
         highlight={selection.includes(index)}
         dimens={dimens}
-        onClick={(e) => {
-          console.log("Clicked!")
-          clicked(e, index)
-        }}
+        onClick={(e) => clicked(e, index)}
         onDoubleClick={() => {
           dispatch(viewLogDetail(logs[index]))
           dispatch(openLogDetailsWindow())
