@@ -12,9 +12,9 @@ export interface BrimEventInterface {
 
 export class BrimEvent {
   static build(r: zed.Record) {
-    if (r.has("_path")) {
+    if (r.has("_path") && r.has("ts")) {
       return new ZeekEvent(r)
-    } else if (r.has("event_type")) {
+    } else if (r.has("event_type") && r.has("ts")) {
       return new SuricataEvent(r)
     } else {
       return new UnknownEvent(r)
