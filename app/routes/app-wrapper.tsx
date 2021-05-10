@@ -1,7 +1,9 @@
 import ColumnsModal from "app/columns/columns-modal"
+import SpaceMigration from "app/legacy/space-migration/space-migration"
 import HookLog from "app/system-test/HookLog"
 import React from "react"
 import BrimToaster from "src/js/components/BrimToaster"
+import BrimTooltip from "src/js/components/BrimTooltip"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ErrorNotice from "src/js/components/ErrorNotice"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
@@ -74,6 +76,7 @@ export default function AppWrapper({children}) {
       <HTMLContextMenu />
       <BrimToaster />
       <BrimTooltip />
+      <SpaceMigration />
 
       {process.env.BRIM_ITEST === "true" && <HookLog />}
     </div>

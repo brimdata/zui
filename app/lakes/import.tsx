@@ -1,4 +1,3 @@
-import SpaceMigration from "app/space-migration"
 import LoadFilesInput from "ppl/import/LoadFilesInput"
 import React from "react"
 import toast from "react-hot-toast"
@@ -33,7 +32,6 @@ export default function TabImport() {
 
   return (
     <div className="input-methods">
-      <SpaceMigration />
       <section>
         <h2>Import Files</h2>
         <LoadFilesInput onChange={onChange} />

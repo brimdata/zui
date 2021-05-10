@@ -18,7 +18,7 @@ import {showContextMenu} from "src/js/lib/System"
 import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
 import SpaceMigrator from "./space-migrator"
-import ToolbarButton from "./toolbar/button"
+import ToolbarButton from "../../toolbar/button"
 
 let src
 let dst
