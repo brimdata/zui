@@ -37,19 +37,25 @@ export default function TabImport() {
         <LoadFilesInput onChange={onChange} />
         <footer>
           <p>
-            <b>Accepted formats:</b> .csv, .json, .parquet, .tsv,{" "}
+            <b>Accepted formats:</b>{" "}
+            <Link href="http://ndjson.org/">NDJSON</Link>,{" "}
+            <Link href="https://docs.zeek.org/en/current/log-formats.html#zeek-tsv-format-logs">
+              Zeek TSV
+            </Link>
+            ,{" "}
             <Link href="https://github.com/brimdata/zed/blob/main/docs/formats/zng.md">
-              .zng
+              ZNG
             </Link>
             ,{" "}
             <Link href="https://github.com/brimdata/zed/blob/main/docs/formats/zson.md">
-              .zson
-            </Link>
-            ,{" "}
-            <Link href="https://github.com/brimdata/zed/blob/main/docs/formats/zst.md">
-              .zst
+              ZSON
             </Link>
           </p>
+          See docs for Zed platform support of CSV, JSON, Parquet, and{" "}
+          <Link href="https://github.com/brimdata/zed/blob/main/docs/formats/zst.md">
+            ZST
+          </Link>{" "}
+          formats.
         </footer>
       </section>
     </div>
