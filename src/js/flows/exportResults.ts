@@ -1,13 +1,13 @@
-import {Thunk} from "../state/types"
+import {SearchFormat} from "zealot"
+import brim from "../brim"
 import {saveToFile} from "../lib/response"
 import Columns from "../state/Columns"
 import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
-import Tab from "../state/Tab"
-import brim from "../brim"
-import {SearchFormat} from "zealot"
-import {getZealot} from "./getZealot"
 import SystemTest from "../state/SystemTest"
+import Tab from "../state/Tab"
+import {Thunk} from "../state/types"
+import {getZealot} from "./getZealot"
 
 function cutColumns(program, columns) {
   if (columns.allVisible()) {
@@ -21,6 +21,12 @@ function cutColumns(program, columns) {
   }
 }
 
+export function prepareProgram(format, program, columns) {
+  let p = cutColumns(program, columns)
+  if (format === "csv") p += " | fuse"
+  return p
+}
+
 export default (
   filePath: string,
   format: SearchFormat
@@ -29,7 +35,8 @@ export default (
   const poolId = Current.getPoolId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())
-  const program = cutColumns(baseProgram, columns)
+  const program = prepareProgram(format, baseProgram, columns)
+
   const [from, to] = Tab.getSpan(getState())
     .map(brim.time)
     .map((t) => t.toDate())
