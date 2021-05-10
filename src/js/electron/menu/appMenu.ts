@@ -193,7 +193,7 @@ export default function(
   function helpSubmenu() {
     const submenu: MenuItemConstructorOptions[] = [
       {
-        label: "ZQL Syntax Docs",
+        label: "Zed Syntax Docs",
         click() {
           shell.openExternal(
             "https://github.com/brimdata/zed/tree/main/docs/language"
