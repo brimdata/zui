@@ -1,6 +1,6 @@
 import {MenuItemConstructorOptions} from "electron/main"
+import toast from "react-hot-toast"
 import {BrimPool} from "src/js/brim"
-import {popNotice} from "src/js/components/PopNotice"
 import deletePool from "src/js/flows/deletePool"
 import deletePools from "src/js/flows/deletePools"
 import {showContextMenu, showMessageBox} from "src/js/lib/System"
@@ -29,7 +29,7 @@ const showPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
         }).then(({response}) => {
           if (response === 0)
             dispatch(deletePool(pool.id)).then(() => {
-              popNotice(`Deleted pool "${pool.name}"`)
+              toast(`Deleted pool "${pool.name}"`)
             })
         })
       }
@@ -46,7 +46,7 @@ const showPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
         }).then(({response}) => {
           if (response === 0)
             dispatch(deletePools(poolIds)).then(() => {
-              popNotice("Deleted all pools")
+              toast("Deleted all pools")
             })
         })
       }

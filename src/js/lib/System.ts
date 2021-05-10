@@ -2,14 +2,17 @@ import {MenuItemConstructorOptions, remote} from "electron"
 
 const isTest = process.env.BRIM_ITEST === "true"
 
-export function showContextMenu(template: MenuItemConstructorOptions[]) {
+export function showContextMenu(
+  template: MenuItemConstructorOptions[],
+  opts = {}
+) {
   if (isTest) {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})
     )
   } else {
     // @ts-ignore
-    new remote.Menu.buildFromTemplate(template).popup()
+    new remote.Menu.buildFromTemplate(template).popup(opts)
   }
 }
 

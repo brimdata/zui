@@ -1,15 +1,14 @@
-import {useDispatch} from "react-redux"
-import React from "react"
-
-import ErrorFactory from "../../src/js/models/ErrorFactory"
-import Link from "../../src/js/components/common/Link"
 import LoadFilesInput from "ppl/import/LoadFilesInput"
-import Notice from "../../src/js/state/Notice"
+import React from "react"
+import toast from "react-hot-toast"
+import {useDispatch} from "react-redux"
+import Link from "../../src/js/components/common/Link"
 import errors from "../../src/js/errors"
 import ingestFiles from "../../src/js/flows/ingestFiles"
 import refreshPoolNames from "../../src/js/flows/refreshPoolNames"
+import ErrorFactory from "../../src/js/models/ErrorFactory"
+import Notice from "../../src/js/state/Notice"
 import {AppDispatch} from "../../src/js/state/types"
-import {popNotice} from "../../src/js/components/PopNotice"
 
 export default function TabImport() {
   const dispatch = useDispatch<AppDispatch>()
@@ -18,7 +17,7 @@ export default function TabImport() {
     if (!files.length) return
     dispatch(ingestFiles(files))
       .then(() => {
-        popNotice("Import complete.")
+        toast.success("Import complete.")
       })
       .catch((e) => {
         const regex = /(Failed to fetch)|(network error)/

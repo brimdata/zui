@@ -1,6 +1,7 @@
 import {MenuItemConstructorOptions, remote} from "electron"
 import {includes} from "lodash"
 import React, {useEffect, useState} from "react"
+import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
 import TreeModel from "tree-model"
 import {TreeList} from "../../../pkg/tree-list"
@@ -16,7 +17,6 @@ import {Group, Query} from "../../state/Queries/types"
 import SearchBar from "../../state/SearchBar"
 import EmptySection from "../common/EmptySection"
 import usePopupMenu from "../hooks/usePopupMenu"
-import {popNotice} from "../PopNotice"
 import Item from "../SideBar/Item"
 import {
   ClickRegion,
@@ -111,7 +111,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           item: {value}
         } = contextArgs
         lib.doc.copyToClipboard(value)
-        popNotice("Query copied to clipboard")
+        toast("Query copied to clipboard")
       }
     },
     {type: "separator"},

@@ -66,10 +66,10 @@ export const Content = styled.div<{width?: number}>`
   width: ${(p) => (p.width && p.width + "px") || "100%"};
   display: flex;
   flex-direction: column;
-  padding-top: 18px;
+  padding-top: 30px;
   & > * {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 `
 
@@ -88,10 +88,9 @@ export const Scrollable = styled.div`
 `
 
 export const Footer = styled.footer`
-  background: rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: row-reverse;
-  padding: 6px 12px;
+  padding: 12px 24px;
 `
 
 export const Pre = styled.pre`
@@ -104,7 +103,7 @@ export const Pre = styled.pre`
 export const ButtonGroup = styled.div`
   display: flex;
   & > * {
-    margin-right: 8px;
+    margin-right: 12px;
     &:last-child {
       margin-right: 0px;
     }

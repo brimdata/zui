@@ -1,16 +1,15 @@
+import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import React, {useState, useEffect} from "react"
-
+import renamePool from "../flows/renamePool"
+import Modal from "../state/Modal"
+import Pools from "../state/Pools"
+import {AppDispatch} from "../state/types"
 import {reactElementProps} from "../test/integration"
 import InputField from "./common/forms/InputField"
 import InputLabel from "./common/forms/InputLabel"
 import InputLabelError from "./common/forms/InputLabelError"
-import Modal from "../state/Modal"
-import ModalBox from "./ModalBox/ModalBox"
-import Pools from "../state/Pools"
 import TextInput from "./common/forms/TextInput"
-import renamePool from "../flows/renamePool"
-import {AppDispatch} from "../state/types"
+import ModalBox from "./ModalBox/ModalBox"
 
 export default function PoolModal() {
   const args = useSelector(Modal.getArgs) || {}
@@ -27,6 +26,10 @@ export default function PoolModal() {
 
   const onSubmit = () => {
     setError(null)
+    if (pool.name === nameInput) {
+      dispatch(Modal.hide())
+      return
+    }
     dispatch(renamePool(workspaceId, poolId, nameInput))
       .then(() => {
         dispatch(Modal.hide())
