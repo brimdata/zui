@@ -10,8 +10,7 @@ export default class SpaceMigrator {
 
   needMigration() {
     if (fs.existsSync(this.srcDir)) {
-      const files = fs.readdirSync(this.srcDir)
-      return files.some((f) => f.startsWith("sp_"))
+      return true
     } else {
       return false
     }
