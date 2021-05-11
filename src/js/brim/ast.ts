@@ -28,7 +28,7 @@ export default function ast(tree: any) {
     sorts() {
       return this.procs("Sort").reduce((sorts, proc) => {
         lib.array.wrap(proc.args).forEach((field) => {
-          sorts[fieldExprToName(field)] = proc.sortdir === 1 ? "asc" : "desc"
+          sorts[fieldExprToName(field)] = proc.order
         })
         return sorts
       }, {})
