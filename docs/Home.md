@@ -15,7 +15,7 @@ effective use of the Brim desktop application and related tools.
 - [[Zeek Customization]]
 - [[Geolocation]]
 - [[Migration of Spaces]]
-- [Importing CSV, JSON, Parquet, and ZST](Importing-CSV-JSON-Parquet-and-ZST)
+- [[Importing CSV, JSON, Parquet, and ZST]]
 
 ## Cookbooks
 
