@@ -15,8 +15,8 @@ import theme from "./style-theme"
 
 initDetail()
   .then(({store, pluginManager}) => {
-    window.onbeforeunload = async () => {
-      await pluginManager.deactivate()
+    window.onbeforeunload = () => {
+      pluginManager.deactivate()
     }
     ReactDOM.render(
       <Router history={global.windowHistory}>
