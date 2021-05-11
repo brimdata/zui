@@ -7,6 +7,7 @@ import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
 import open from "../../src/js/lib/open"
 import {AppDispatch} from "../../src/js/state/types"
+import {Config} from "../../src/js/state/Configs"
 import {reactElementProps} from "../../src/js/test/integration"
 import BrimcapCLI, {searchOptions} from "./brimcap-cli"
 import {ChildProcess} from "child_process"
@@ -64,7 +65,7 @@ export default class BrimcapPlugin {
 
     this.setupBrimcapButtons()
     this.setupLoader()
-
+    this.setupConfig()
     // TODO: handle contextMenu items, and detail pane/window correlation UI
   }
 
@@ -223,6 +224,10 @@ export default class BrimcapPlugin {
       return await open(searchOpts.write, {newWindow: true})
     }
 
+    const myPluginStorage = ["one"]
+
+    this.api.storage.set("core", myPluginStorage)
+
     this.api.toast.promise(
       searchAndOpen(),
       {
@@ -298,6 +303,42 @@ export default class BrimcapPlugin {
       load,
       match: "pcap"
     })
+  }
+
+  private setupConfig() {
+    const pluginNamespace = "brimcap"
+    const configPropertyName = "yamlConfigPath"
+    const brimcapYamlConfigCmd = "brimcap-yaml-config:updated"
+
+    const {yamlConfigPath: lastValue = ""} = this.api.storage.get(
+      pluginNamespace
+    )
+
+    // when config changes, set it in storage and update config default form value
+    this.api.commands.add(brimcapYamlConfigCmd, ([yamlConfigPath]) => {
+      this.api.storage.set(pluginNamespace, {yamlConfigPath})
+      this.api.configs.updatePropertyDefault(
+        pluginNamespace,
+        configPropertyName,
+        yamlConfigPath
+      )
+    })
+
+    const brimcapConfig: Config = {
+      name: pluginNamespace,
+      title: "Brimcap Settings",
+      properties: {
+        [configPropertyName]: {
+          name: configPropertyName,
+          type: "string",
+          label: "Brimcap YAML Config File",
+          command: brimcapYamlConfigCmd,
+          defaultValue: lastValue
+        }
+      }
+    }
+
+    this.api.configs.add(brimcapConfig)
   }
 
   public async cleanup() {

@@ -17,8 +17,11 @@ import WorkspaceStatuses from "./WorkspaceStatuses"
 import TabHistories from "./TabHistories"
 import Url from "./Url"
 import Toolbars from "./Toolbars"
+import PluginStorage from "./PluginStorage"
+import Configs from "./Configs"
 
 export default combineReducers<any, any>({
+  configs: Configs.reducer,
   errors: Errors.reducer,
   workspaces: Workspaces.reducer,
   modal: Modal.reducer,
@@ -29,6 +32,7 @@ export default combineReducers<any, any>({
   view: View.reducer,
   pools: Pools.reducer,
   prefs: Prefs.reducer,
+  pluginStorage: PluginStorage.reducer,
   systemTest: SystemTest.reducer,
   feature: Feature.reducer,
   workspaceStatuses: WorkspaceStatuses.reducer,

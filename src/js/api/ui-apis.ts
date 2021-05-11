@@ -1,22 +1,9 @@
 import {AppDispatch, State} from "../state/types"
 import Toolbar, {ToolbarItem} from "../state/Toolbars"
+import Configs, {Config} from "../state/Configs"
 
-export interface BrimUIContainerApi<ItemType> {
-  setStoreArgs: (d: AppDispatch, gs: () => State) => void
-  add: (containerId: string, item: ItemType) => void
-  update: (containerId: string, itemId: string, type: Partial<ItemType>) => void
-}
-
-export class ToolbarApi implements BrimUIContainerApi<ToolbarItem> {
-  private dispatch: AppDispatch
-  private getState: () => State
-
-  constructor() {}
-
-  public setStoreArgs(d: AppDispatch, gs: () => State) {
-    this.dispatch = d
-    this.getState = gs
-  }
+export class ToolbarApi {
+  constructor(private dispatch: AppDispatch, private getState: () => State) {}
 
   public add(toolbarId: string, item: ToolbarItem) {
     this.dispatch(Toolbar.createItem({toolbarId, item}))
@@ -27,10 +14,20 @@ export class ToolbarApi implements BrimUIContainerApi<ToolbarItem> {
   }
 }
 
-// export class ContextMenuApi implements BrimUIContainerApi<ContextMenuItem> {
-//   constructor(private store: Store) {}
-//
-//   add() {}
-//
-//   update() {}
-// }
+export class ConfigsApi {
+  constructor(private dispatch: AppDispatch, private getState: () => State) {}
+
+  public add(config: Config) {
+    this.dispatch(Configs.create(config))
+  }
+
+  public updatePropertyDefault(
+    configName: string,
+    propertyName: string,
+    defaultValue: string
+  ) {
+    this.dispatch(
+      Configs.updatePropertyDefault({configName, propertyName, defaultValue})
+    )
+  }
+}

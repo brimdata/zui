@@ -12,21 +12,11 @@ export default {
     format
   }),
 
-  setSuricataRunner: (suricataRunner: string): PREFS_SURICATA_RUNNER_SET => ({
-    type: "$PREFS_SURICATA_RUNNER_SET",
-    suricataRunner
-  }),
-
   setSuricataUpdater: (
     suricataUpdater: string
   ): PREFS_SURICATA_UPDATER_SET => ({
     type: "$PREFS_SURICATA_UPDATER_SET",
     suricataUpdater
-  }),
-
-  setZeekRunner: (zeekRunner: string): PREFS_ZEEK_RUNNER_SET => ({
-    type: "$PREFS_ZEEK_RUNNER_SET",
-    zeekRunner
   }),
 
   setDataDir: (dataDir: string): PREFS_DATA_DIR_SET => ({

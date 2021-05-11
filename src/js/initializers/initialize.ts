@@ -10,7 +10,7 @@ import BrimApi from "../api"
 export default async function initialize() {
   const api = new BrimApi()
   const store = await initStore(api)
-  api.setStoreArgs(store.dispatch, store.getState)
+  api.init(store.dispatch, store.getState)
 
   const pluginManager = await initPlugins(api)
 

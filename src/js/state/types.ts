@@ -18,6 +18,8 @@ import {WorkspacesState} from "./Workspaces/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 import {TabHistoriesState} from "./TabHistories/types"
 import BrimApi from "../api"
+import {PluginStorageState} from "./PluginStorage"
+import {ConfigsState} from "./Configs"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -35,6 +37,7 @@ export type Dispatch = AppDispatch
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
+  configs: ConfigsState
   tabHistories: TabHistoriesState
   handlers: HandlersState
   workspaces: WorkspacesState
@@ -46,6 +49,7 @@ export type State = {
   notice: NoticeState
   tabs: TabsState
   prefs: PrefsState
+  pluginStorage: PluginStorageState
   workspaceStatuses: WorkspaceStatusesState
   queries: QueriesState
   systemTest: SystemTestState

@@ -22,45 +22,45 @@ export default function usePreferencesForm(): FormConfig {
       defaultValue: useSelector(Prefs.getTimeFormat),
       submit: (value) => dispatch(Prefs.setTimeFormat(value))
     },
-    suricataRunner: {
-      name: "suricataRunner",
-      label: "Suricata Runner",
-      defaultValue: useSelector(Prefs.getSuricataRunner),
-      submit: (value) => dispatch(Prefs.setSuricataRunner(value)),
-      check: (path) => {
-        if (path === "") return [true, ""]
-        return lib
-          .file(path)
-          .exists()
-          .then((exists) => [exists, "file does not exist."])
-      }
-    },
-    suricataUpdater: {
-      name: "suricataUpdater",
-      label: "Suricata Updater",
-      defaultValue: useSelector(Prefs.getSuricataUpdater),
-      submit: (value) => dispatch(Prefs.setSuricataUpdater(value)),
-      check: (path) => {
-        if (path === "") return [true, ""]
-        return lib
-          .file(path)
-          .exists()
-          .then((exists) => [exists, "file does not exist."])
-      }
-    },
-    zeekRunner: {
-      name: "zeekRunner",
-      label: "Zeek Runner",
-      defaultValue: useSelector(Prefs.getZeekRunner),
-      submit: (value) => dispatch(Prefs.setZeekRunner(value)),
-      check: (path) => {
-        if (path === "") return [true, ""]
-        return lib
-          .file(path)
-          .exists()
-          .then((exists) => [exists, "file does not exist."])
-      }
-    },
+    // suricataRunner: {
+    //   name: "suricataRunner",
+    //   label: "Suricata Runner",
+    //   defaultValue: useSelector(Prefs.getSuricataRunner),
+    //   submit: (value) => dispatch(Prefs.setSuricataRunner(value)),
+    //   check: (path) => {
+    //     if (path === "") return [true, ""]
+    //     return lib
+    //       .file(path)
+    //       .exists()
+    //       .then((exists) => [exists, "file does not exist."])
+    //   }
+    // },
+    // suricataUpdater: {
+    //   name: "suricataUpdater",
+    //   label: "Suricata Updater",
+    //   defaultValue: useSelector(Prefs.getSuricataUpdater),
+    //   submit: (value) => dispatch(Prefs.setSuricataUpdater(value)),
+    //   check: (path) => {
+    //     if (path === "") return [true, ""]
+    //     return lib
+    //       .file(path)
+    //       .exists()
+    //       .then((exists) => [exists, "file does not exist."])
+    //   }
+    // },
+    // zeekRunner: {
+    //   name: "zeekRunner",
+    //   label: "Zeek Runner",
+    //   defaultValue: useSelector(Prefs.getZeekRunner),
+    //   submit: (value) => dispatch(Prefs.setZeekRunner(value)),
+    //   check: (path) => {
+    //     if (path === "") return [true, ""]
+    //     return lib
+    //       .file(path)
+    //       .exists()
+    //       .then((exists) => [exists, "file does not exist."])
+    //   }
+    // },
     dataDir: {
       name: "dataDir",
       label: "Data Directory",
