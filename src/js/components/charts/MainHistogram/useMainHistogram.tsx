@@ -70,7 +70,7 @@ export default function(width: number, height: number): HistogramChart {
         <EmptyMessage show={!chart.state.isFetching && chart.state.isEmpty} />
       )),
       reactComponent((chart) => (
-        <LoadingMessage show={chart.state.isFetching} message="Chart Loading" />
+        <LoadingMessage show={chart.state.isFetching} message="Loading..." />
       )),
       focusBar({onFocus}),
       xPositionTooltip({

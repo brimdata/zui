@@ -3,6 +3,7 @@ import React, {useLayoutEffect, useMemo} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useLocation} from "react-router"
 import brim from "../brim"
+import Chart from "../state/Chart"
 import Url from "../state/Url"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 
@@ -15,12 +16,16 @@ export default function SearchHeaderChart() {
     () => brim.program(program, pins).hasAnalytics(),
     [program, pins]
   )
+  const data = useSelector(Chart.getData)
+  const status = useSelector(Chart.getStatus)
+
+  const isEmpty = status === "SUCCESS" && data.keys.length === 0
 
   useLayoutEffect(() => {
     dispatch(histogramSearch())
   }, [location.key])
 
-  if (hasAnalytics) return null
+  if (isEmpty || hasAnalytics) return null
   return (
     <div className="search-page-header-charts">
       <MainHistogramChart />
