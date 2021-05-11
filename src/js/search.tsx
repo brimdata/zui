@@ -16,11 +16,11 @@ import TabHistories from "./state/TabHistories"
 
 initialize()
   .then(({store, pluginManager}) => {
-    window.onbeforeunload = async () => {
+    window.onbeforeunload = () => {
       // This runs during reload
       // Visit initIpcListeners.ts#prepareClose for closing window
-      await pluginManager.deactivate()
-      await store.dispatch(deletePartialPools())
+      pluginManager.deactivate()
+      store.dispatch(deletePartialPools())
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
     }
     ReactDOM.render(
