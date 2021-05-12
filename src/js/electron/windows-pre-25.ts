@@ -1,11 +1,11 @@
 import {app, dialog} from "electron"
-import {join} from "path"
 import fs from "fs-extra"
 import os from "os"
+import {join} from "path"
 
 const VAR = "LocalAppData"
 
-function oldVersionPath() {
+function getDir() {
   if (VAR in process.env) {
     const dir = process.env[VAR]
     return join(dir, "Brim")
@@ -14,11 +14,16 @@ function oldVersionPath() {
   }
 }
 
+function getExe() {
+  return join(getDir(), "Brim.exe")
+}
+
 export function windowsPre25Exists() {
   if (os.platform() !== "win32") return false
 
-  const dir = oldVersionPath()
-  if (!fs.existsSync(dir)) return false
+  const dir = getDir()
+  const exe = getExe()
+  if (!fs.existsSync(exe)) return false
 
   dialog.showErrorBox(
     "Previous Brim Version Detected",
