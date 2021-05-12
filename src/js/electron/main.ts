@@ -1,22 +1,22 @@
+import {paths} from "app/ipc/paths"
+import {app} from "electron"
+import log from "electron-log"
+import "regenerator-runtime/runtime"
+import {serve} from "src/pkg/electron-ipc-service"
 import {appPathSetup} from "./appPathSetup"
+import {setupAutoUpdater} from "./autoUpdater"
+import {Brim} from "./brim"
+import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
+import secretsMainHandler from "./ipc/secrets/mainHandler"
+import windowsMainHandler from "./ipc/windows/mainHandler"
+import electronIsDev from "./isDev"
+import menu from "./menu"
+import {handleQuit} from "./quitter"
+import {handleSquirrelEvent} from "./squirrel"
 import userTasks from "./userTasks"
 
 // app path and log setup should happen before other imports.
 appPathSetup()
-
-import {app} from "electron"
-import log from "electron-log"
-import "regenerator-runtime/runtime"
-import {setupAutoUpdater} from "./autoUpdater"
-import {Brim} from "./brim"
-import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
-import windowsMainHandler from "./ipc/windows/mainHandler"
-import secretsMainHandler from "./ipc/secrets/mainHandler"
-import electronIsDev from "./isDev"
-import menu from "./menu"
-import {handleQuit} from "./quitter"
-
-import {handleSquirrelEvent} from "./squirrel"
 
 console.time("init")
 
@@ -29,6 +29,7 @@ async function main() {
   windowsMainHandler(brim)
   globalStoreMainHandler(brim)
   secretsMainHandler()
+  serve(paths)
 
   handleQuit(brim)
 
