@@ -94,15 +94,23 @@ function Modal({onClose}) {
       })
       .then(() => {
         toast.dismiss(id)
-        if (spaces.needMigration()) {
-          toast.error("Some spaces not migrated")
-        } else {
-          toast.success("Migration complete")
-        }
+        // This is a bug in the toast library, these subsequent toasts
+        // were not being displayed without the setTimeout()
+        setTimeout(() => {
+          if (spaces.needMigration()) {
+            toast.error("Some spaces not migrated")
+          } else {
+            toast.success("Migration complete")
+          }
+        })
       })
       .catch((e) => {
         toast.dismiss(id)
-        toast.error(e)
+        // This is a bug in the toast library, these subsequent toasts
+        // were not being displayed without the setTimeout()
+        setTimeout(() => {
+          toast.error(e.toString())
+        })
       })
   }
 
@@ -133,7 +141,7 @@ function Modal({onClose}) {
     </Content>
   )
 }
-const Wrap = styled.div`
+const Wrap = styled.span`
   display: flex;
   margin-left: 10px;
   align-items: center;
@@ -156,19 +164,23 @@ const Menu = styled.button`
   }
 `
 
+const Block = styled.span`
+  display: block;
+`
+
 function LoadingToast({title, message, onContextMenu}) {
   return (
     <Wrap>
-      <div>
+      <Block>
         <b>{title}</b>
         <br />
         {message}
-      </div>
-      <div>
+      </Block>
+      <Block>
         <Menu onClick={onContextMenu}>
           <ThreeDotsIcon />
         </Menu>
-      </div>
+      </Block>
     </Wrap>
   )
 }
