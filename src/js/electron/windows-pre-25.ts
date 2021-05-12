@@ -18,6 +18,16 @@ function getExe() {
   return join(getDir(), "Brim.exe")
 }
 
+/**
+ * Is there a duplicate, older version of Brim on the windows system?
+ * In version 25, we switched our installer. Previous versions placed
+ * the Brim.exe file in /%LocalAppData%/Brim/Brim.exe. It now places
+ * it in /%LocalAppData%/Programs/Brim/Brim.exe.
+ *
+ * If the old version exists, we inform the user to uninstall it first,
+ * then launch the new one.
+ * @returns boolean
+ */
 export function windowsPre25Exists() {
   if (os.platform() !== "win32") return false
 
