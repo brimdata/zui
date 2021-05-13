@@ -19,11 +19,16 @@ import {handleQuit} from "./quitter"
 import {handleSquirrelEvent} from "./squirrel"
 import {serve} from "src/pkg/electron-ipc-service"
 import {paths} from "app/ipc/paths"
+import {windowsPre25Exists} from "./windows-pre-25"
 
 console.time("init")
 
 async function main() {
   if (handleSquirrelEvent(app)) return
+  if (windowsPre25Exists()) {
+    app.quit()
+    return
+  }
   userTasks(app)
   const brim = await Brim.boot()
   menu.setMenu(brim)

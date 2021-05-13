@@ -32,7 +32,7 @@ directory shown below for each platform.
 | **macOS**     | `/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps` |
 | **Linux**     | `/opt/Brim/resources/app.asar.unpacked/zdeps` |
 
-Input file fomat can be specified via the `-i` option.
+Input file format can be specified via the `-i` option.
 
 ```
 $ zq -h
@@ -49,17 +49,17 @@ OPTIONS
 ```
 
 Here's an example `zq` command line on macOS to preprocess the test data
-from [addresses.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv)
+from [testxlsx_converted.csv](https://raw.githubusercontent.com/wireservice/csvkit/master/examples/testxlsx_converted.csv)
 into ZNG.
 
 ```
-$ /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zq -i csv addresses.csv > addresses.zng
+$ /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zq -i csv testxlsx_converted.csv > testxlsx_converted.zng
 ```
 
-**Note:** You may want perform other preprocessing at this phase, such as
+> **Note:** You may want to perform other preprocessing at this phase, such as
 invoking [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/processors#fuse).
 
-Now our `addresses.zng` can be imported in to Brim.
+Now our `testxlsx_converted.zng` can be imported into Brim.
 
 ![Imported CSV](media/Imported-CSV.png)
 
@@ -69,4 +69,3 @@ If you're struggling with importing alternate file formats or just have
 questions, we'd like to hear from you! Please join our
 [public Slack](https://www.brimsecurity.com/join-slack/)
 and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
-
