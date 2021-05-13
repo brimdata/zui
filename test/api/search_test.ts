@@ -70,9 +70,8 @@ testApi("search#callbacks start and end", async (zealot: any) => {
 
 testApi("search#callbacks record", async (zealot: any) => {
   await setup(zealot)
-  const resp = await zealot.search("_path=conn | sort ts | head 1")
+  const resp = await zealot.search('_path=="conn" | sort ts | head 1')
   const records = spy()
-
   await new Promise((resolve, reject) => {
     resp
       .callbacks()

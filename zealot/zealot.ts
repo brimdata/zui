@@ -37,6 +37,7 @@ export function createZealot(
       return promise({method: "GET", path: "/auth/identity"})
     },
     search: (zql: string, args?: Partial<SearchArgs>) => {
+      console.log("zql", zql)
       return stream(search(zql, {...searchArgs, ...args}))
     },
     archive: {

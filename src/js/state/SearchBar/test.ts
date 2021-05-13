@@ -131,7 +131,7 @@ test("append an include field", () => {
   const field = createField("_path", "conn")
   const state = store.dispatchAll([appendQueryInclude(field)])
 
-  expect(SearchBar.getSearchBarInputValue(state)).toBe('_path="conn"')
+  expect(SearchBar.getSearchBarInputValue(state)).toBe('_path=="conn"')
 })
 
 test("append an include field when some text already exists", () => {
@@ -140,7 +140,7 @@ test("append an include field when some text already exists", () => {
     SearchBar.changeSearchBarInput("text"),
     appendQueryInclude(field)
   ])
-  expect(SearchBar.getSearchBarInputValue(state)).toBe('text _path="conn"')
+  expect(SearchBar.getSearchBarInputValue(state)).toBe('text _path=="conn"')
 })
 
 test("append an exclude field", () => {

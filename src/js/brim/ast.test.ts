@@ -54,17 +54,17 @@ describe("#groupByKeys", () => {
       .groupByKeys()
 
   test("no group by", () => {
-    expect(getGroupByKeys("_path=conn")).toEqual([])
+    expect(getGroupByKeys("_path==conn")).toEqual([])
   })
 
   test("one key", () => {
-    expect(getGroupByKeys("_path=conn | count() by duration")).toEqual([
+    expect(getGroupByKeys("_path==conn | count() by duration")).toEqual([
       "duration"
     ])
   })
 
   test("several keys", () => {
-    expect(getGroupByKeys("_path=conn | count() by duration, uid")).toEqual([
+    expect(getGroupByKeys("_path==conn | count() by duration, uid")).toEqual([
       "duration",
       "uid"
     ])
