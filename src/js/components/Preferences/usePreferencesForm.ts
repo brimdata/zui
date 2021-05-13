@@ -5,7 +5,7 @@ import {FormConfig} from "../../brim/form"
 import Prefs from "../../state/Prefs"
 import View from "../../state/View"
 import lib from "../../lib"
-import Configs, {ConfigItem} from "src/js/state/Configs"
+import Configs from "src/js/state/Configs"
 import {executeCommand} from "../../flows/executeCommand"
 
 const checkFile = (path) => {

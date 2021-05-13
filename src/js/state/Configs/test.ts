@@ -5,14 +5,16 @@ const testProperty1: ConfigItem = {
   name: "testProperty1",
   type: "string",
   label: "Test Property 1",
-  defaultValue: "test initial value"
+  defaultValue: "test initial value",
+  command: "testCommand1"
 }
 
 const testProperty2: ConfigItem = {
   name: "testProperty2",
   type: "string",
   label: "Test Property 2",
-  defaultValue: "test initial value 2"
+  defaultValue: "test initial value 2",
+  command: "testCommand2"
 }
 
 const testConfig1: Config = {

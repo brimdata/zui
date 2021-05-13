@@ -226,10 +226,6 @@ export default class BrimcapPlugin {
       return await open(searchOpts.write, {newWindow: true})
     }
 
-    const myPluginStorage = ["one"]
-
-    this.api.storage.set("core", myPluginStorage)
-
     this.api.toast.promise(
       searchAndOpen(),
       {
@@ -316,10 +312,6 @@ export default class BrimcapPlugin {
     const configPropertyName = "yamlConfigPath"
     const brimcapYamlConfigCmd = "brimcap-yaml-config:updated"
 
-    let defaultValue = ""
-    const store = this.api.storage.get(this.pluginNamespace)
-    if (store) defaultValue = store.yamlConfigPath || ""
-
     // when config changes, update in storage and config ui's default form value
     this.api.commands.add(brimcapYamlConfigCmd, ([yamlConfigPath]) => {
       this.api.storage.set(this.pluginNamespace, {
@@ -331,6 +323,9 @@ export default class BrimcapPlugin {
         yamlConfigPath
       )
     })
+
+    const config = this.api.storage.get(this.pluginNamespace)
+    const defaultValue = config?.yamlConfigPath || ""
 
     const brimcapConfig: Config = {
       name: this.pluginNamespace,
