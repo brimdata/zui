@@ -57,12 +57,14 @@ jest.mock("electron", function() {
     ipcMain: {
       on: jest.fn(),
       once: jest.fn(),
-      removeAllListeners: jest.fn()
+      removeAllListeners: jest.fn(),
+      handle: jest.fn(),
+      invoke: jest.fn()
     },
     ipcRenderer: {
       send: jest.fn(),
       on: jest.fn(),
-      invoke: () => Promise.resolve()
+      invoke: jest.fn(() => Promise.resolve())
     },
     screen: {
       getAllDisplays() {

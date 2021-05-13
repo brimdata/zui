@@ -1,8 +1,13 @@
-import {spawn, ChildProcess} from "child_process"
+import {pathsClient} from "app/ipc/paths"
+import {ChildProcess, spawn} from "child_process"
 import fs from "fs-extra"
 import readline from "readline"
 
-// zdeps/brimcap migrate -zqd="run/data/spaces" -root="run/data/brimcap-root"
+/**
+ * Data in the app was stored in a file store in versions before 25.
+ * Now they are stored in a zed lake. This class checks to see if
+ * there are any filestore spaces on the system and migrates them.
+ */
 export default class SpaceMigrator {
   process: ChildProcess | null
 
@@ -24,12 +29,14 @@ export default class SpaceMigrator {
 
   async migrate(onUpdate) {
     await fs.ensureDir(this.destDir)
+    const cmd = await pathsClient.brimcap()
     return new Promise<void>((resolve, reject) => {
-      this.process = spawn("zdeps/brimcap", [
+      this.process = spawn(cmd, [
         "migrate",
         `-zqd=${this.srcDir}`,
         `-root=${this.destDir}`
       ])
+
       const linesErr = readline.createInterface({input: this.process.stderr})
       let total = 0
       let count = 0
@@ -37,6 +44,7 @@ export default class SpaceMigrator {
       let totalRegexp = /^migrating (\d+) spaces$/
 
       linesErr.on("line", (line) => {
+        console.log(line)
         const status = tryJson(line.toString())
         if ("msg" in status) {
           const match = status.msg.match(totalRegexp)
