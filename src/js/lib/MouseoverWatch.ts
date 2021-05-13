@@ -28,6 +28,7 @@ export default class MouseoverWatch {
     document.removeEventListener("mousemove", this.listener)
     const bod = document.body
     bod && bod.removeEventListener("mouseleave", this.startExit)
+    clearTimeout(this.tid)
     return this
   }
 
