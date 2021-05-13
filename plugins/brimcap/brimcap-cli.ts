@@ -1,4 +1,5 @@
 import {spawnSync, spawn, ChildProcess} from "child_process"
+import {compact} from "lodash"
 import flatMap from "lodash/flatMap"
 
 interface packetOptions {
@@ -43,8 +44,13 @@ const OPTION_NAME_MAP = {
 }
 
 const toCliOpts = (opts: loadOptions | searchOptions): string[] =>
-  flatMap(
-    Object.entries(opts).map(([k, v]) => [`-${OPTION_NAME_MAP[k] || k}`, v])
+  compact(
+    flatMap(
+      Object.entries(opts).map(([k, v]) => {
+        if (!v) return
+        return [`-${OPTION_NAME_MAP[k] || k}`, v]
+      })
+    )
   )
 
 export default class BrimcapCLI {

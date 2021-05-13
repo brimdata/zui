@@ -9,10 +9,11 @@ import open from "../../src/js/lib/open"
 import {AppDispatch} from "../../src/js/state/types"
 import {Config} from "../../src/js/state/Configs"
 import {reactElementProps} from "../../src/js/test/integration"
-import BrimcapCLI, {searchOptions} from "./brimcap-cli"
+import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess} from "child_process"
 
 export default class BrimcapPlugin {
+  private pluginNamespace = "brimcap"
   private cli: BrimcapCLI
   // currentConn represents the data detail currently seen in the Brim detail
   // pane/window
@@ -20,6 +21,7 @@ export default class BrimcapPlugin {
   // selectedConn represents the data detail currently selected and highlighted
   // in the search viewer
   private selectedConn = null
+  private yamlConfigPath = ""
   private cleanupFns: Function[] = []
   private loadingProcesses: {
     [pid: number]: ChildProcess
@@ -255,10 +257,15 @@ export default class BrimcapPlugin {
 
       const paths = fileListData.map((f) => f.file.path)
 
-      const p = this.cli.load(paths[0], {
+      const loadOpts: loadOptions = {
         root: this.brimcapDataRoot,
         pool: name
-      })
+      }
+
+      const config = this.api.storage.get(this.pluginNamespace)
+      loadOpts.config = config?.yamlConfigPath || ""
+
+      const p = this.cli.load(paths[0], loadOpts)
       this.loadingProcesses[p.pid] = p
 
       let brimcapErr
@@ -283,12 +290,12 @@ export default class BrimcapPlugin {
         }
       })
 
-      // wait for process to end
-      await new Promise<void>((res, rej) => {
-        p.on("close", (code) => {
+      // wait for process to end, resolve regardless of exit code: error will be
+      // handled below if present
+      await new Promise((res) => {
+        p.on("close", () => {
           delete this.loadingProcesses[p.pid]
-          if (code === 0) res()
-          else rej(new Error("PCAP load was interrupted"))
+          res()
         })
       })
 
@@ -306,29 +313,27 @@ export default class BrimcapPlugin {
   }
 
   private setupConfig() {
-    const pluginNamespace = "brimcap"
     const configPropertyName = "yamlConfigPath"
     const brimcapYamlConfigCmd = "brimcap-yaml-config:updated"
 
     let defaultValue = ""
-    const store = this.api.storage.get(pluginNamespace)
+    const store = this.api.storage.get(this.pluginNamespace)
     if (store) defaultValue = store.yamlConfigPath || ""
 
     // when config changes, update in storage and config ui's default form value
     this.api.commands.add(brimcapYamlConfigCmd, ([yamlConfigPath]) => {
-      console.log("yaml path is: ", yamlConfigPath)
-      this.api.storage.set(pluginNamespace, {
+      this.api.storage.set(this.pluginNamespace, {
         yamlConfigPath: yamlConfigPath || ""
       })
       this.api.configs.updatePropertyDefault(
-        pluginNamespace,
+        this.pluginNamespace,
         configPropertyName,
         yamlConfigPath
       )
     })
 
     const brimcapConfig: Config = {
-      name: pluginNamespace,
+      name: this.pluginNamespace,
       title: "Brimcap Settings",
       properties: {
         [configPropertyName]: {
