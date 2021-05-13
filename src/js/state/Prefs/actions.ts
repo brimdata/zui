@@ -1,9 +1,6 @@
 import {
   PREFS_DATA_DIR_SET,
   PREFS_TIME_FORMAT_SET,
-  PREFS_SURICATA_RUNNER_SET,
-  PREFS_SURICATA_UPDATER_SET,
-  PREFS_ZEEK_RUNNER_SET
 } from "./types"
 
 export default {
@@ -11,14 +8,6 @@ export default {
     type: "$PREFS_TIME_FORMAT_SET",
     format
   }),
-
-  setSuricataUpdater: (
-    suricataUpdater: string
-  ): PREFS_SURICATA_UPDATER_SET => ({
-    type: "$PREFS_SURICATA_UPDATER_SET",
-    suricataUpdater
-  }),
-
   setDataDir: (dataDir: string): PREFS_DATA_DIR_SET => ({
     type: "$PREFS_DATA_DIR_SET",
     dataDir

@@ -1,5 +1,8 @@
+import {ConfigItemType} from "../state/Configs"
+
 export type FormFieldConfig = {
   defaultValue?: string
+  type?: ConfigItemType
   name: string
   label: string
   check?: (arg0: string) => FormCheckResult

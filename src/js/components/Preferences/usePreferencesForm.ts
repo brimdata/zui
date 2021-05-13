@@ -5,9 +5,57 @@ import {FormConfig} from "../../brim/form"
 import Prefs from "../../state/Prefs"
 import View from "../../state/View"
 import lib from "../../lib"
+import Configs, {ConfigItem} from "src/js/state/Configs"
+import {executeCommand} from "../../flows/executeCommand"
+
+const checkFile = (path) => {
+  if (path === "") return [true, ""]
+  return lib
+    .file(path)
+    .exists()
+    .then((exists) => [exists, "file does not exist."])
+}
+
+export const useConfigsForm = (): FormConfig => {
+  const dispatch = useDispatch()
+  const configs = useSelector(Configs.all)
+
+  const formConfig: FormConfig = {}
+  configs.forEach((config) => {
+    Object.values(config.properties).forEach((prop) => {
+      const {name, label, defaultValue, type, command} = prop
+
+      const submit = (value) => dispatch(executeCommand(command, value))
+
+      let check
+      switch (prop.type) {
+        case "file":
+          check = checkFile
+          break
+        case "string":
+          // can validate further if 'pattern' (regex) provided in property here
+          break
+        default:
+          check = () => {}
+      }
+
+      formConfig[prop.name] = {
+        name,
+        type,
+        label,
+        defaultValue,
+        submit,
+        check
+      }
+    })
+  })
+
+  return formConfig
+}
 
 export default function usePreferencesForm(): FormConfig {
   const dispatch = useDispatch()
+
   return {
     timeZone: {
       name: "timeZone",
@@ -22,45 +70,6 @@ export default function usePreferencesForm(): FormConfig {
       defaultValue: useSelector(Prefs.getTimeFormat),
       submit: (value) => dispatch(Prefs.setTimeFormat(value))
     },
-    // suricataRunner: {
-    //   name: "suricataRunner",
-    //   label: "Suricata Runner",
-    //   defaultValue: useSelector(Prefs.getSuricataRunner),
-    //   submit: (value) => dispatch(Prefs.setSuricataRunner(value)),
-    //   check: (path) => {
-    //     if (path === "") return [true, ""]
-    //     return lib
-    //       .file(path)
-    //       .exists()
-    //       .then((exists) => [exists, "file does not exist."])
-    //   }
-    // },
-    // suricataUpdater: {
-    //   name: "suricataUpdater",
-    //   label: "Suricata Updater",
-    //   defaultValue: useSelector(Prefs.getSuricataUpdater),
-    //   submit: (value) => dispatch(Prefs.setSuricataUpdater(value)),
-    //   check: (path) => {
-    //     if (path === "") return [true, ""]
-    //     return lib
-    //       .file(path)
-    //       .exists()
-    //       .then((exists) => [exists, "file does not exist."])
-    //   }
-    // },
-    // zeekRunner: {
-    //   name: "zeekRunner",
-    //   label: "Zeek Runner",
-    //   defaultValue: useSelector(Prefs.getZeekRunner),
-    //   submit: (value) => dispatch(Prefs.setZeekRunner(value)),
-    //   check: (path) => {
-    //     if (path === "") return [true, ""]
-    //     return lib
-    //       .file(path)
-    //       .exists()
-    //       .then((exists) => [exists, "file does not exist."])
-    //   }
-    // },
     dataDir: {
       name: "dataDir",
       label: "Data Directory",

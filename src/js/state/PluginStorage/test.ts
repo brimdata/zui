@@ -17,28 +17,25 @@ beforeEach(() => {
   select = (f) => f(store.getState())
 })
 
-test("Create", () => {
+test("Create or Update (Upsert)", () => {
   // add one
-  dispatch(PluginStorage.create({name: pluginName1, data: data1}))
+  dispatch(PluginStorage.set({name: pluginName1, data: data1}))
   expect(select(PluginStorage.all)).toHaveLength(1)
   expect(select(PluginStorage.getData(pluginName1))).toEqual(data1)
 
   // add second
-  dispatch(PluginStorage.create({name: pluginName2, data: data2}))
+  dispatch(PluginStorage.set({name: pluginName2, data: data2}))
   expect(select(PluginStorage.all)).toHaveLength(2)
   expect(select(PluginStorage.getData(pluginName2))).toEqual(data2)
-})
 
-test("Update", () => {
-  dispatch(PluginStorage.create({name: pluginName1, data: data1}))
-
-  dispatch(PluginStorage.update({name: pluginName1, data: data2}))
-  expect(select(PluginStorage.all)).toHaveLength(1)
+  // update first
+  dispatch(PluginStorage.set({name: pluginName1, data: data2}))
+  expect(select(PluginStorage.all)).toHaveLength(2)
   expect(select(PluginStorage.getData(pluginName1))).toEqual(data2)
 })
 
 test("Delete", () => {
-  dispatch(PluginStorage.create({name: pluginName1, data: data1}))
+  dispatch(PluginStorage.set({name: pluginName1, data: data1}))
 
   dispatch(PluginStorage.delete(pluginName1))
   expect(select(PluginStorage.all)).toHaveLength(0)

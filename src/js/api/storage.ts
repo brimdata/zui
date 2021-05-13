@@ -9,6 +9,6 @@ export class StorageApi {
   }
 
   public set(name: string, data: any) {
-    this.dispatch(PluginStorage.create({name, data}))
+    this.dispatch(PluginStorage.set({name, data}))
   }
 }

@@ -9,7 +9,7 @@ import {QueriesState} from "./Queries/types"
 import Workspaces from "./Workspaces"
 import {WorkspacesState} from "./Workspaces/types"
 import PluginStorage from "./PluginStorage"
-import Config, {ConfigsState} from "./Configs"
+import Configs, {ConfigsState} from "./Configs"
 
 export type GlobalState = {
   workspaces: WorkspacesState
@@ -23,7 +23,7 @@ export default combineReducers<any, any>({
   workspaces: Workspaces.reducer,
   investigation: Investigation.reducer,
   prefs: Prefs.reducer,
-  config: Config.reducer,
+  configs: Configs.reducer,
   pluginStorage: PluginStorage.reducer,
   queries: Queries.reducer
 })

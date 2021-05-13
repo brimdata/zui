@@ -310,13 +310,16 @@ export default class BrimcapPlugin {
     const configPropertyName = "yamlConfigPath"
     const brimcapYamlConfigCmd = "brimcap-yaml-config:updated"
 
-    const {yamlConfigPath: lastValue = ""} = this.api.storage.get(
-      pluginNamespace
-    )
+    let defaultValue = ""
+    const store = this.api.storage.get(pluginNamespace)
+    if (store) defaultValue = store.yamlConfigPath || ""
 
-    // when config changes, set it in storage and update config default form value
+    // when config changes, update in storage and config ui's default form value
     this.api.commands.add(brimcapYamlConfigCmd, ([yamlConfigPath]) => {
-      this.api.storage.set(pluginNamespace, {yamlConfigPath})
+      console.log("yaml path is: ", yamlConfigPath)
+      this.api.storage.set(pluginNamespace, {
+        yamlConfigPath: yamlConfigPath || ""
+      })
       this.api.configs.updatePropertyDefault(
         pluginNamespace,
         configPropertyName,
@@ -330,10 +333,10 @@ export default class BrimcapPlugin {
       properties: {
         [configPropertyName]: {
           name: configPropertyName,
-          type: "string",
+          type: "file",
           label: "Brimcap YAML Config File",
           command: brimcapYamlConfigCmd,
-          defaultValue: lastValue
+          defaultValue
         }
       }
     }

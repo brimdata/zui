@@ -1,18 +1,16 @@
 import {createEntityAdapter, createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {State} from "../types"
 
-type ConfigItemType = "string" // | "number" | "boolean"
-// type ConfigItemFormat = "file" | "date"
+export type ConfigItemType = "file" | "string" // | "number" | "boolean"
 
 export type ConfigItem = {
   name: string
   type: ConfigItemType
   label: string
-  // description?: string
-  command?: string
-  // format?: ConfigItemFormat
-  // pattern?: RegExp
+  command: string
   defaultValue: string
+  // description?: string
+  // pattern?: RegExp
 }
 
 export type Config = {

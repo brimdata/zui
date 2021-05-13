@@ -13,12 +13,8 @@ const slice = createSlice({
   name: "$pluginStorage",
   initialState,
   reducers: {
-    create: adapter.addOne,
-    delete: adapter.removeOne,
-    update: (state, action: PayloadAction<PluginStorage>) => {
-      const {name, data} = action.payload
-      adapter.updateOne(state, {id: name, changes: {data}})
-    }
+    set: adapter.upsertOne,
+    delete: adapter.removeOne
   }
 })
 
