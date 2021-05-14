@@ -84,7 +84,7 @@ but not M1-based. Therefore if you have your choice of Mac hardware platform,
 Intel-based is more strongly recommended. However, as we know the M1-based Macs
 will become more popular in the future, please
 [open issues](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
-for problems you expereince with Brim on M1-based Macs as you would any other.
+for problems you experience with Brim on M1-based Macs as you would any other.
 If we should begin to accumulate bugs that are specific to M1-based hardware,
 this will help guide the prioritization of our goal to deliver M1-specific
 builds ([brim/1266](https://github.com/brimdata/brim/issues/1266)).
@@ -159,8 +159,10 @@ confirm basic functionality. Such a smoke test consists of the following:
 * Import a test pcap into Brim and confirm embedded Zeek and Suricata both produce records from it
 
 This exercise was most recently performed in December, 2020 in preparation for
-the GA release `v0.21.0` that introduces Suricata support. For more details on
-the outcome of this exercise, review [brim/1263](https://github.com/brimdata/brim/issues/1263).
+the GA release [`v0.21.0`](https://github.com/brimdata/brim/releases/tag/v0.21.0)
+that first introduced Suricata support. For more details on the outcome of
+this exercise, review
+[brim/1263](https://github.com/brimdata/brim/issues/1263).
 
 ## Non-Recommended Platforms
 
@@ -169,8 +171,8 @@ While we welcome you to
 about any problem you experience with Brim regardless of platform version,
 the priority of the core Brim development team is to maintain stability and
 introduce new features on the modern platforms that are most widely used.
-Therefore we may be limited in our ability to provide fixes (or any fix at all)
-for platform versions older/different from those recommended above.
+Therefore we may be limited in our ability to provide timely fixes (or any fix
+at all) for platform versions older/different from those recommended above.
 
 We also understand that certain users may have a strong motivation to make Brim
 work on other platforms. As Brim is open source, community members are welcomed
