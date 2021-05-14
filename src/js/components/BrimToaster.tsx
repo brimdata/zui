@@ -28,7 +28,7 @@ const BrimToaster = () => {
     <>
       <HiddenToast {...toastLocator.props}>{lastToast?.message}</HiddenToast>
       <Toaster
-        position="bottom-center"
+        position="bottom-right"
         toastOptions={{className: "brim-toast"}}
       />
     </>
