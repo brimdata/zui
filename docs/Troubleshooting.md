@@ -30,8 +30,8 @@ detail.
 
 To start debugging such problems, it helps to understand how Brim opens flows
 extracted from pcaps. Once the [5-tuple](https://www.napatech.com/what-is-a-flow/), connection start time, and connection
-duration are isolated from the Zeek `conn` record for the flow, the [`zed
-lake`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake) process uses an
+duration are isolated from the Zeek `conn` record for the flow, the
+[`zqd`](https://github.com/brimdata/zed/tree/v0.29.0/ppl/cmd/zqd) process uses an
 index to extract the packets for the target flow into a temporary file. Once
 this temporary file has been written to the local filesystem, the application
 on your operating system that's configured to automatically open files ending
@@ -39,9 +39,11 @@ in `.pcap` will be launched to open this file.
 
 In typical environments, that application will be Wireshark. However, if no
 such application is installed or configured to open `.pcap` files, clicking the
-**Packets** button in Brim will have no effect. The lack of guidance in this
- case is currently lacking on macOS and Linux
-([brim/1379](https://github.com/brimdata/brim/issues/1379)).
+**Packets** button in Brim will have no effect. Windows presents a helpful
+pop-up in this case to notify about the lack of an appropriate installed
+program to handle the file. However, due to an open issue
+([brim/1379](https://github.com/brimdata/brim/issues/1379)) this failure is
+currently "silent" on macOS and Linux.
 
 To fix this problem, ensure Wireshark or a similar utility is installed
 and that you can open `.pcap` files outside of Brim by double-clicking them
@@ -132,13 +134,13 @@ line (your timestamps will differ):
    $ ./pcap slice -x hello.idx -r hello.pcapng -from 1583768523.826851 -to 1583768523.826968 > tmp.pcapng
    ```
 
-Brim normally invokes steps similar to those shown above by making API calls to
-the [`zed lake`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake)
-process that is launched when Brim starts. Specifically, step #2 is performed
-when you import your pcap into Brim, then information from the generated Zeek
-`conn` records provide timestamps similar to those you gathered in step #3, and
-then the extraction performed in step #4 should result in a packet capture file
-that's readable in Wireshark.
+Brim normally invokes steps similar to those shown above by making API calls
+to the [`zqd`](https://github.com/brimdata/zed/tree/v0.29.0/ppl/cmd/zqd) process that
+is launched when Brim starts. Specifically, step #2 is performed when you import
+your pcap into Brim, then information from the generated Zeek `conn` records
+provide timestamps similar to those you gathered in step #3, and then the
+extraction performed in step #4 should result in a packet capture file that's
+readable in Wireshark.
 
 If you run through the above steps using a pcap for which you've successfully
 opened flows in Brim before, the `tmp.pcapng` that's output in the last step
@@ -252,14 +254,13 @@ and details to [brim/1490](https://github.com/brimdata/brim/issues/1490).
 In all other cases, please [open a new issue](#opening-an-issue).
 
 To begin troubleshooting this, it helps to understand the "backend" of Brim.
-One essential component is [`zed
-lake`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake), a server-style
-process that manages the storage and querying of imported log/packet data.
-Operations in `zed lake` are invoked via a [REST
-API](https://en.wikipedia.org/wiki/Representational_state_transfer) that's
-utilized by a "client", such as the Brim app. When run on your desktop, `zqd`
-is launched at startup by Brim and then listens for such API connections on
-local TCP port `9867`.
+One essential component is [`zqd`](https://github.com/brimdata/zed/tree/v0.29.0/ppl/cmd/zqd),
+a server-style process that manages the storage and querying of imported
+log/packet data. Operations in `zqd` are invoked via a
+[REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
+that's utilized by a "client", such as the Brim app. When run on your desktop,
+`zqd` is launched at startup by Brim and then listens for such API connections
+on local TCP port `9867`.
 
 ![Brim connecting to zqd on 9867](media/Brim-zqd-9867.png)
 
