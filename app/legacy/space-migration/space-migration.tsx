@@ -66,8 +66,8 @@ function Modal({onClose}) {
           }
         ],
         {
-          x: x - 50, // this will need to change as we add more items
-          y: y - 35 // this too
+          x: Math.round(x - 50), // this will need to change as we add more items
+          y: Math.round(y - 35) // this too
         }
       )
     }

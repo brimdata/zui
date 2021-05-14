@@ -1,10 +1,10 @@
-import {MenuItemConstructorOptions, remote} from "electron"
+import {MenuItemConstructorOptions, remote, PopupOptions} from "electron"
 
 const isTest = process.env.BRIM_ITEST === "true"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],
-  opts = {}
+  opts: PopupOptions = {}
 ) {
   if (isTest) {
     document.dispatchEvent(
