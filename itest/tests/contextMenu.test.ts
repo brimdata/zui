@@ -23,7 +23,7 @@ describe("context menu tests", () => {
     function scalarString(value: string): () => Promise<void> {
       const path = "string"
       const fieldName = "scalar"
-      const query = `_path=${path} ${fieldName}!=null | cut id, ${fieldName} | sort id`
+      const query = `_path=="${path}" ${fieldName}!=null | cut id, ${fieldName} | sort id`
       const cell = cellContaining(value)
       return () => runTest(query, cell, "Filter = value")
     }
@@ -49,7 +49,7 @@ describe("context menu tests", () => {
     function scalarAddr(value) {
       const path = "addr"
       const fieldName = "scalar"
-      const query = `_path=${path} ${fieldName}!=null | cut id, ${fieldName} | sort id`
+      const query = `_path=="${path}" ${fieldName}!=null | cut id, ${fieldName} | sort id`
       const cell = cellContaining(value)
       return () => runTest(query, cell, "Filter = value")
     }
@@ -61,7 +61,7 @@ describe("context menu tests", () => {
   describe("rightclick scalar unset", () => {
     const UNSET = "⦻"
     function scalarUnset(value) {
-      const query = `_path=string | cut id, scalar | sort -r id | head 10`
+      const query = `_path=="string" | cut id, scalar | sort -r id | head 10`
       const cell = cellContaining(value)
       return () => runTest(query, cell, "Filter = value")
     }

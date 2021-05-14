@@ -33,11 +33,11 @@ test("Validates the zql", () => {
   store.dispatch(tabHistory.push(`/workspaces/1/lakes/${pool.id}/search`))
   expect(select(SearchBar.getSearchBarError)).toEqual(null)
 
-  dispatch(SearchBar.changeSearchBarInput("_ath="))
+  dispatch(SearchBar.changeSearchBarInput("_ath=="))
   submit().catch((e) => e)
 
   expect(select(SearchBar.getSearchBarError)).toMatch(
-    /Expected [\s\S]* but end of input found\./
+    /Expected [\s\S]* found\./
   )
 })
 

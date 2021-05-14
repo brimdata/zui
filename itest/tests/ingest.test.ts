@@ -19,7 +19,7 @@ describe("Ingest tests", () => {
   })
 
   const searchZql =
-    "_path=conn proto=tcp | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts"
+    '_path=="conn" proto=="tcp" | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts'
   const sampleFiles = [
     "sample.pcap",
     "sample.pcapng",

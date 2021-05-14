@@ -6,7 +6,7 @@ export default {
     return `${field.name}!=${toZql(field.value)}`
   },
   include(field: zed.Field) {
-    return `${field.name}=${toZql(field.value)}`
+    return `${field.name}==${toZql(field.value)}`
   },
   in(field: zed.Field) {
     return `${toZql(field.value)} in ${field.name}`
