@@ -1,4 +1,3 @@
-import {parse} from "path"
 import {getAllStates} from "src/js/test/helpers/getTestState"
 
 export const UPDATED_V25_DEFAULT_QUERIES = [
