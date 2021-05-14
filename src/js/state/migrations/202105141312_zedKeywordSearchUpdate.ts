@@ -51,6 +51,7 @@ export const UPDATED_V25_DEFAULT_QUERIES = [
 
 export default function zedKeywordSearchUpdate(state: any) {
   for (const s of getAllStates(state)) {
+    if (!s.queries || !s.queries.items) continue
     s.queries.items.forEach((i) => {
       const newQuery = UPDATED_V25_DEFAULT_QUERIES.find((q) => q.id === i.id)
       if (newQuery) {

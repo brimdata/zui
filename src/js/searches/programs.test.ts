@@ -16,7 +16,7 @@ test("conn correlation", () => {
       record.get("ts") as zed.Time,
       record.get("duration") as zed.Duration
     )
-  ).toBe(
-    'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100'
+  ).toMatchInlineSnapshot(
+    `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" or (community_id == \\"1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=\\" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100"`
   )
 })
