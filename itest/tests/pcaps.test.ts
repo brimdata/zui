@@ -42,7 +42,7 @@ describe("Test PCAPs", () => {
   test("pcap button downloads deterministically-formed pcap file", (done) => {
     runSearch(
       app,
-      "_path=ssl id.orig_h=192.168.1.110 id.resp_h=209.216.230.240 id.resp_p=443"
+      '_path=="ssl" id.orig_h==192.168.1.110 id.resp_h==209.216.230.240 id.resp_p==443'
     )
       .then(async () => {
         await appStep.click(app, selectors.viewer.resultCellContaining("ssl"))
@@ -60,7 +60,7 @@ describe("Test PCAPs", () => {
   })
 
   test("pcap download works for null duration", (done) => {
-    runSearch(app, "duration=null id.orig_p=47783")
+    runSearch(app, "duration==null id.orig_p==47783")
       .then(async () => {
         await appStep.click(app, selectors.viewer.resultCellContaining("conn"))
         await appStep.savePcap(app)

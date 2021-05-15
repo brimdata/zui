@@ -30,14 +30,14 @@ Array [
 ]
 `;
 
-exports[`Query tests query002: "_path=conn | count()" 1`] = `
+exports[`Query tests query002: "_path=="conn" | count()" 1`] = `
 Array [
   "count",
   "19",
 ]
 `;
 
-exports[`Query tests query003: "_path=conn | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts" 1`] = `
+exports[`Query tests query003: "_path=="conn" | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts" 1`] = `
 Array [
   "ts",
   "id.orig_h",
@@ -233,7 +233,7 @@ Array [
 ]
 `;
 
-exports[`Query tests query006: "_path=x509 or _path=ssl | sort _path" 1`] = `
+exports[`Query tests query006: "_path=="x509" or _path=="ssl" | sort _path" 1`] = `
 Array [
   "2020-02-25T16:03:14.021",
   "ssl",

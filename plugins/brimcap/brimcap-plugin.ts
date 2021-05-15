@@ -279,7 +279,7 @@ export default class BrimcapPlugin {
       })
 
       // wait for process to end
-      await new Promise((res, rej) => {
+      await new Promise<void>((res, rej) => {
         p.on("close", (code) => {
           delete this.loadingProcesses[p.pid]
           if (code === 0) res()
@@ -303,7 +303,7 @@ export default class BrimcapPlugin {
   public async cleanup() {
     await Promise.all(
       Object.values(this.loadingProcesses).map((lp: ChildProcess) => {
-        return new Promise((res) => {
+        return new Promise<void>((res) => {
           if (lp.killed) {
             delete this.loadingProcesses[lp.pid]
             res()
