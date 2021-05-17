@@ -7,11 +7,14 @@ import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
 import open from "../../src/js/lib/open"
 import {AppDispatch} from "../../src/js/state/types"
+import {Config} from "../../src/js/state/Configs"
 import {reactElementProps} from "../../src/js/test/integration"
-import BrimcapCLI, {searchOptions} from "./brimcap-cli"
+import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess} from "child_process"
 
 export default class BrimcapPlugin {
+  private pluginNamespace = "brimcap"
+  private yamlConfigPropName = "yamlConfigPath"
   private cli: BrimcapCLI
   // currentConn represents the data detail currently seen in the Brim detail
   // pane/window
@@ -19,6 +22,7 @@ export default class BrimcapPlugin {
   // selectedConn represents the data detail currently selected and highlighted
   // in the search viewer
   private selectedConn = null
+  private yamlConfigPath = ""
   private cleanupFns: Function[] = []
   private loadingProcesses: {
     [pid: number]: ChildProcess
@@ -50,7 +54,7 @@ export default class BrimcapPlugin {
     this.brimcapDataRoot = path.join(dataRoot, "brimcap-root")
   }
 
-  public init() {
+  init() {
     fsExtra.ensureDirSync(this.brimcapDataRoot)
 
     if (!pathExistsSync(this.brimcapBinPath)) {
@@ -64,7 +68,7 @@ export default class BrimcapPlugin {
 
     this.setupBrimcapButtons()
     this.setupLoader()
-
+    this.setupConfig()
     // TODO: handle contextMenu items, and detail pane/window correlation UI
   }
 
@@ -250,10 +254,18 @@ export default class BrimcapPlugin {
 
       const paths = fileListData.map((f) => f.file.path)
 
-      const p = this.cli.load(paths[0], {
+      const loadOpts: loadOptions = {
         root: this.brimcapDataRoot,
         pool: name
-      })
+      }
+
+      const yamlConfig = this.api.configs.get(
+        this.pluginNamespace,
+        this.yamlConfigPropName
+      )
+      loadOpts.config = yamlConfig || ""
+
+      const p = this.cli.load(paths[0], loadOpts)
       this.loadingProcesses[p.pid] = p
 
       let brimcapErr
@@ -278,12 +290,12 @@ export default class BrimcapPlugin {
         }
       })
 
-      // wait for process to end
-      await new Promise<void>((res, rej) => {
-        p.on("close", (code) => {
+      // wait for process to end, resolve regardless of exit code: error will be
+      // handled below if present
+      await new Promise((res) => {
+        p.on("close", () => {
           delete this.loadingProcesses[p.pid]
-          if (code === 0) res()
-          else rej(new Error("PCAP load was interrupted"))
+          res()
         })
       })
 
@@ -300,7 +312,24 @@ export default class BrimcapPlugin {
     })
   }
 
-  public async cleanup() {
+  private setupConfig() {
+    const brimcapConfig: Config = {
+      name: this.pluginNamespace,
+      title: "Brimcap Settings",
+      properties: {
+        [this.yamlConfigPropName]: {
+          name: this.yamlConfigPropName,
+          type: "file",
+          label: "Brimcap YAML Config File",
+          defaultValue: ""
+        }
+      }
+    }
+
+    this.api.configs.add(brimcapConfig)
+  }
+
+  async cleanup() {
     await Promise.all(
       Object.values(this.loadingProcesses).map((lp: ChildProcess) => {
         return new Promise<void>((res) => {

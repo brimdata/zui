@@ -10,6 +10,8 @@ export function getGlobalPersistable(state: GlobalState) {
         delete ws.authData.accessToken
       }
     }
+
+    delete draft.configs
   })
 }
 
@@ -21,6 +23,7 @@ export function getWindowPersistable(state: State) {
     delete draft.systemTest
     delete draft.workspaceStatuses
     delete draft.toolbars
+    delete draft.configs
 
     for (const tab of draft.tabs.data) {
       delete tab.viewer
