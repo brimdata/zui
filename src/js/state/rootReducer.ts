@@ -19,9 +19,11 @@ import Url from "./Url"
 import Toolbars from "./Toolbars"
 import PluginStorage from "./PluginStorage"
 import Configs from "./Configs"
+import ConfigPropValues from "./ConfigPropValues"
 
 export default combineReducers<any, any>({
   configs: Configs.reducer,
+  configPropValues: ConfigPropValues.reducer,
   errors: Errors.reducer,
   workspaces: Workspaces.reducer,
   modal: Modal.reducer,

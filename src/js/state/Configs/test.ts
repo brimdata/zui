@@ -51,30 +51,6 @@ test("Create", () => {
   expect(select(Configs.get(testConfig2.name))).toEqual(testConfig2)
 })
 
-test("Update default value", () => {
-  dispatch(Configs.create(testConfig1))
-
-  const newValue = "updated value"
-  dispatch(
-    Configs.updatePropertyDefault({
-      configName: testConfig1.name,
-      propertyName: testProperty1.name,
-      defaultValue: newValue
-    })
-  )
-  expect(select(Configs.all)).toHaveLength(1)
-  expect(select(Configs.get(testConfig1.name))).toEqual({
-    ...testConfig1,
-    properties: {
-      ...testConfig1.properties,
-      testProperty1: {
-        ...testConfig1.properties.testProperty1,
-        defaultValue: newValue
-      }
-    }
-  })
-})
-
 test("Delete", () => {
   dispatch(Configs.create(testConfig1))
 

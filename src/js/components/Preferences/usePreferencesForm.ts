@@ -7,6 +7,7 @@ import View from "../../state/View"
 import lib from "../../lib"
 import Configs from "src/js/state/Configs"
 import {executeCommand} from "../../flows/executeCommand"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
 
 const checkFile = (path) => {
   if (path === "") return [true, ""]
@@ -25,7 +26,16 @@ export const useConfigsForm = (): FormConfig => {
     Object.values(config.properties).forEach((prop) => {
       const {name, label, defaultValue, type, command} = prop
 
-      const submit = (value) => dispatch(executeCommand(command, value))
+      const submit = (value) => {
+        if (command) dispatch(executeCommand(command, value))
+        dispatch(
+          ConfigPropValues.set({
+            configName: config.name,
+            propName: prop.name,
+            value
+          })
+        )
+      }
 
       let check
       switch (prop.type) {
@@ -40,6 +50,7 @@ export const useConfigsForm = (): FormConfig => {
       }
 
       formConfig[prop.name] = {
+        configName: config.name,
         name,
         type,
         label,

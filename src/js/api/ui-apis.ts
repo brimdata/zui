@@ -1,15 +1,16 @@
 import {AppDispatch, State} from "../state/types"
 import Toolbar, {ToolbarItem} from "../state/Toolbars"
 import Configs, {Config} from "../state/Configs"
+import ConfigPropValues from "../state/ConfigPropValues"
 
 export class ToolbarApi {
   constructor(private dispatch: AppDispatch, private getState: () => State) {}
 
-  public add(toolbarId: string, item: ToolbarItem) {
+  add(toolbarId: string, item: ToolbarItem) {
     this.dispatch(Toolbar.createItem({toolbarId, item}))
   }
 
-  public update(toolbarId: string, itemId: string, item: Partial<ToolbarItem>) {
+  update(toolbarId: string, itemId: string, item: Partial<ToolbarItem>) {
     this.dispatch(Toolbar.updateItem({toolbarId, itemId, item}))
   }
 }
@@ -17,17 +18,11 @@ export class ToolbarApi {
 export class ConfigsApi {
   constructor(private dispatch: AppDispatch, private getState: () => State) {}
 
-  public add(config: Config) {
-    this.dispatch(Configs.create(config))
+  get(configName, propName): any {
+    return ConfigPropValues.get(configName, propName)(this.getState())
   }
 
-  public updatePropertyDefault(
-    configName: string,
-    propertyName: string,
-    defaultValue: string
-  ) {
-    this.dispatch(
-      Configs.updatePropertyDefault({configName, propertyName, defaultValue})
-    )
+  add(config: Config) {
+    this.dispatch(Configs.create(config))
   }
 }

@@ -14,6 +14,7 @@ import {ChildProcess} from "child_process"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
+  private yamlConfigPropName = "yamlConfigPath"
   private cli: BrimcapCLI
   // currentConn represents the data detail currently seen in the Brim detail
   // pane/window
@@ -258,8 +259,13 @@ export default class BrimcapPlugin {
         pool: name
       }
 
-      const config = this.api.storage.get(this.pluginNamespace)
-      loadOpts.config = config?.yamlConfigPath || ""
+      const yamlConfig = this.api.configs.get(
+        this.pluginNamespace,
+        this.yamlConfigPropName
+      )
+      console.log("yamlConfig is: ", yamlConfig)
+
+      loadOpts.config = yamlConfig || ""
 
       const p = this.cli.load(paths[0], loadOpts)
       this.loadingProcesses[p.pid] = p
@@ -309,34 +315,17 @@ export default class BrimcapPlugin {
   }
 
   private setupConfig() {
-    const configPropertyName = "yamlConfigPath"
     const brimcapYamlConfigCmd = "brimcap-yaml-config:updated"
-
-    // when config changes, update in storage and config ui's default form value
-    this.api.commands.add(brimcapYamlConfigCmd, ([yamlConfigPath]) => {
-      this.api.storage.set(this.pluginNamespace, {
-        yamlConfigPath: yamlConfigPath || ""
-      })
-      this.api.configs.updatePropertyDefault(
-        this.pluginNamespace,
-        configPropertyName,
-        yamlConfigPath
-      )
-    })
-
-    const config = this.api.storage.get(this.pluginNamespace)
-    const defaultValue = config?.yamlConfigPath || ""
 
     const brimcapConfig: Config = {
       name: this.pluginNamespace,
       title: "Brimcap Settings",
       properties: {
-        [configPropertyName]: {
-          name: configPropertyName,
+        [this.yamlConfigPropName]: {
+          name: this.yamlConfigPropName,
           type: "file",
           label: "Brimcap YAML Config File",
-          command: brimcapYamlConfigCmd,
-          defaultValue
+          command: brimcapYamlConfigCmd
         }
       }
     }

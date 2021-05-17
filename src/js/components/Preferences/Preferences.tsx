@@ -14,10 +14,15 @@ import {FormConfig} from "../../brim/form"
 import InputLabel from "../common/forms/InputLabel"
 import FileInput from "../common/forms/FileInput"
 import TextInput from "../common/forms/TextInput"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
+import {useSelector} from "react-redux"
+import get from "lodash/get"
 
 function ConfigFormItems(props: {configs: FormConfig}) {
   const {configs} = props
   if (!configs) return null
+
+  const configVals = useSelector(ConfigPropValues.all)
 
   const formInputs = Object.values(configs).map((c) => {
     const {label, defaultValue, name} = c
@@ -29,7 +34,11 @@ function ConfigFormItems(props: {configs: FormConfig}) {
             <InputLabel>{label}</InputLabel>
             <FileInput
               name={name}
-              defaultValue={defaultValue}
+              defaultValue={
+                get(configVals, [c.configName, c.name], "") ||
+                defaultValue ||
+                ""
+              }
               placeholder="default"
             />
           </div>

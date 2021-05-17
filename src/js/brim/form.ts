@@ -1,6 +1,7 @@
 import {ConfigItemType} from "../state/Configs"
 
 export type FormFieldConfig = {
+  configName?: string
   defaultValue?: string
   type?: ConfigItemType
   name: string

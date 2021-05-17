@@ -7,10 +7,8 @@ export type ConfigItem = {
   name: string
   type: ConfigItemType
   label: string
-  command: string
-  defaultValue: string
-  // description?: string
-  // pattern?: RegExp
+  command?: string
+  defaultValue?: string
 }
 
 export type Config = {
@@ -30,26 +28,7 @@ const slice = createSlice({
   initialState: adapter.getInitialState(),
   reducers: {
     create: adapter.addOne,
-    delete: adapter.removeOne,
-    updatePropertyDefault(
-      state,
-      action: PayloadAction<{
-        configName: string
-        propertyName: string
-        defaultValue: string
-      }>
-    ) {
-      const {configName, propertyName, defaultValue} = action.payload
-      const property = state.entities[configName]?.properties[propertyName]
-      if (!property) {
-        console.error(
-          `cannot find property '${propertyName}' for config '${configName}'`
-        )
-        return
-      }
-
-      property.defaultValue = defaultValue
-    }
+    delete: adapter.removeOne
   }
 })
 
