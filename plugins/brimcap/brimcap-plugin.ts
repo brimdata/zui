@@ -54,7 +54,7 @@ export default class BrimcapPlugin {
     this.brimcapDataRoot = path.join(dataRoot, "brimcap-root")
   }
 
-  public init() {
+  init() {
     fsExtra.ensureDirSync(this.brimcapDataRoot)
 
     if (!pathExistsSync(this.brimcapBinPath)) {
@@ -263,8 +263,6 @@ export default class BrimcapPlugin {
         this.pluginNamespace,
         this.yamlConfigPropName
       )
-      console.log("yamlConfig is: ", yamlConfig)
-
       loadOpts.config = yamlConfig || ""
 
       const p = this.cli.load(paths[0], loadOpts)
@@ -315,8 +313,6 @@ export default class BrimcapPlugin {
   }
 
   private setupConfig() {
-    const brimcapYamlConfigCmd = "brimcap-yaml-config:updated"
-
     const brimcapConfig: Config = {
       name: this.pluginNamespace,
       title: "Brimcap Settings",
@@ -325,7 +321,7 @@ export default class BrimcapPlugin {
           name: this.yamlConfigPropName,
           type: "file",
           label: "Brimcap YAML Config File",
-          command: brimcapYamlConfigCmd
+          defaultValue: ""
         }
       }
     }
@@ -333,7 +329,7 @@ export default class BrimcapPlugin {
     this.api.configs.add(brimcapConfig)
   }
 
-  public async cleanup() {
+  async cleanup() {
     await Promise.all(
       Object.values(this.loadingProcesses).map((lp: ChildProcess) => {
         return new Promise<void>((res) => {

@@ -8,7 +8,7 @@ import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
 import Workspaces from "./Workspaces"
 import {WorkspacesState} from "./Workspaces/types"
-import PluginStorage from "./PluginStorage"
+import PluginStorage, {PluginStorageState} from "./PluginStorage"
 import Configs, {ConfigsState} from "./Configs"
 import ConfigPropValues, {ConfigPropValuesState} from "./ConfigPropValues"
 
@@ -18,6 +18,7 @@ export type GlobalState = {
   prefs: PrefsState
   configs: ConfigsState
   configPropValues: ConfigPropValuesState
+  pluginStorage: PluginStorageState
   queries: QueriesState
 }
 
