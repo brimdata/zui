@@ -19,6 +19,14 @@ test("tab histories get ", () => {
   expect(tabHistory.entries.map((e) => e.pathname)).toEqual(["/", "/home"])
 })
 
+test("create with empty entries defaults to root path", () => {
+  const histories = new Histories()
+  histories.create("tab-id-1", [], -1)
+
+  const tabHistory = histories.get("tab-id-1")
+  expect(tabHistory.location.pathname).toEqual("/")
+})
+
 test("serialize", () => {
   const histories = new Histories()
   histories.create("tab-id-1")
