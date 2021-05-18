@@ -35,3 +35,11 @@ export function lakeSummaryPath(
 ) {
   return `${lakePath(id, workspaceId)}/summary?${encodeSearchParams(params)}`
 }
+
+export function releaseNotesPath(workspaceId) {
+  if (workspaceId) {
+    return `${workspacePath(workspaceId)}/release-notes`
+  } else {
+    return "/release-notes"
+  }
+}

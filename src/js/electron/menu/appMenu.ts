@@ -193,6 +193,12 @@ export default function(
   function helpSubmenu() {
     const submenu: MenuItemConstructorOptions[] = [
       {
+        label: "Release Notes",
+        click() {
+          brim.windows.openReleaseNotes()
+        }
+      },
+      {
         label: "Zed Syntax Docs",
         click() {
           shell.openExternal(

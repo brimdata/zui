@@ -1,6 +1,7 @@
 import LakeHome from "app/lakes/home"
 import LakeShow from "app/lakes/show"
-import {lakeImport, lakeShow} from "app/router/routes"
+import ReleaseNotes from "app/release-notes/release-notes"
+import {lakeImport, lakeShow, workspaceReleaseNotes} from "app/router/routes"
 import {lakeImportPath} from "app/router/utils/paths"
 import React, {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
@@ -64,6 +65,9 @@ export default function WorkspaceShow() {
           </Route>
           <Route path={lakeShow.path}>
             <LakeShow />
+          </Route>
+          <Route path={workspaceReleaseNotes.path}>
+            <ReleaseNotes />
           </Route>
           <Route default>
             <Redirect to={lakeImportPath(match.params.workspaceId)} />
