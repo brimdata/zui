@@ -21,6 +21,7 @@ import BrimApi from "../api"
 import {PluginStorageState} from "./PluginStorage"
 import {ConfigsState} from "./Configs"
 import {ConfigPropValuesState} from "./ConfigPropValues"
+import {ContextMenusState} from "./ContextMenus"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -57,4 +58,5 @@ export type State = {
   systemTest: SystemTestState
   feature: FeatureState
   toolbars: ToolbarsState
+  contextMenus: ContextMenusState
 }

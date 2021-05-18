@@ -23,6 +23,7 @@ export function getWindowPersistable(state: State) {
     delete draft.systemTest
     delete draft.workspaceStatuses
     delete draft.toolbars
+    delete draft.contextMenus
     delete draft.configs
 
     for (const tab of draft.tabs.data) {
