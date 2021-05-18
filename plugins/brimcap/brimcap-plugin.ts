@@ -10,7 +10,7 @@ import {AppDispatch} from "../../src/js/state/types"
 import {Config} from "../../src/js/state/Configs"
 import {reactElementProps} from "../../src/js/test/integration"
 import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
-import {ChildProcess} from "child_process"
+import {ChildProcess, spawn} from "child_process"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -24,7 +24,7 @@ export default class BrimcapPlugin {
   private selectedConn = null
   private yamlConfigPath = ""
   private cleanupFns: Function[] = []
-  private loadingProcesses: {
+  private processes: {
     [pid: number]: ChildProcess
   } = {}
   private brimcapDataRoot = ""
@@ -69,6 +69,8 @@ export default class BrimcapPlugin {
     this.setupBrimcapButtons()
     this.setupLoader()
     this.setupConfig()
+    // NOTE: suricata updates async, don't block
+    this.updateSuricata()
     // TODO: handle contextMenu items, and detail pane/window correlation UI
   }
 
@@ -266,7 +268,7 @@ export default class BrimcapPlugin {
       loadOpts.config = yamlConfig || ""
 
       const p = this.cli.load(paths[0], loadOpts)
-      this.loadingProcesses[p.pid] = p
+      this.processes[p.pid] = p
 
       let brimcapErr
       p.on("error", (err) => {
@@ -294,7 +296,7 @@ export default class BrimcapPlugin {
       // handled below if present
       await new Promise((res) => {
         p.on("close", () => {
-          delete this.loadingProcesses[p.pid]
+          delete this.processes[p.pid]
           res()
         })
       })
@@ -329,21 +331,43 @@ export default class BrimcapPlugin {
     this.api.configs.add(brimcapConfig)
   }
 
+  private async updateSuricata() {
+    const {zdepsDirectory} = this.api.getAppConfig()
+    const cmdName =
+      process.platform === "win32" ? "suricataupdater.exe" : "suricataupdater"
+    const cmdPath = path.join(zdepsDirectory, "suricata", cmdName)
+    const proc = spawn(cmdPath)
+    this.processes[proc.pid] = proc
+
+    let err
+    proc.on("error", (e) => (err = e))
+
+    await new Promise((res) =>
+      proc.on("close", () => {
+        delete this.processes[proc.pid]
+        res()
+      })
+    )
+
+    if (err)
+      throw new Error(`Error updating Suricata rules: ${err.message || err}`)
+  }
+
   async cleanup() {
     await Promise.all(
-      Object.values(this.loadingProcesses).map((lp: ChildProcess) => {
+      Object.values(this.processes).map((p: ChildProcess) => {
         return new Promise<void>((res) => {
-          if (lp.killed) {
-            delete this.loadingProcesses[lp.pid]
+          if (p.killed) {
+            delete this.processes[p.pid]
             res()
             return
           }
 
-          lp.on("exit", () => {
-            delete this.loadingProcesses[lp.pid]
+          p.on("exit", () => {
+            delete this.processes[p.pid]
             res()
           })
-          lp.kill()
+          p.kill()
         })
       })
     )
