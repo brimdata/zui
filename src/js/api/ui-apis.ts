@@ -23,6 +23,6 @@ export class ConfigsApi {
   }
 
   add(config: Config) {
-    this.dispatch(Configs.create(config))
+    this.dispatch(Configs.set(config))
   }
 }
