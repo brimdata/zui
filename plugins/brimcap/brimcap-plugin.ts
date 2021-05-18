@@ -69,9 +69,9 @@ export default class BrimcapPlugin {
     this.setupBrimcapButtons()
     this.setupLoader()
     this.setupConfig()
+    // this.setupContextMenu()
     // NOTE: suricata updates async, don't block
     this.updateSuricata()
-    // TODO: handle contextMenu items, and detail pane/window correlation UI
   }
 
   private async tryConn(detail: zed.Record, eventId: string) {
@@ -142,6 +142,72 @@ export default class BrimcapPlugin {
       ...itemOptions,
       id: detailButtonId,
       command: brimcapDownloadCurrentCmd
+    })
+
+    // add click handlers for button's emitted commands
+    this.cleanupFns.push(
+      this.api.commands.add(brimcapDownloadSelectedCmd, () => {
+        this.selectedConn && this.downloadPcap(this.selectedConn)
+      }),
+      this.api.commands.add(
+        brimcapDownloadCurrentCmd,
+        () => this.currentConn && this.downloadPcap(this.currentConn)
+      )
+    )
+
+    // add brim-command listeners to update button statuses
+    this.cleanupFns.push(
+      // TODO: this is a brim event, lets make this a native event like
+      //  api.commands.onCurrentDataDetailSelected(() => {})
+      // the detail window's packets button will operate off of the 'current' record
+      this.api.commands.add("data-detail:current", ([record]) => {
+        if (!record) return
+        const data = ZealotContext.decodeRecord(record)
+
+        updateButtonStatus(
+          "detail",
+          detailButtonId,
+          data,
+          (conn) => (this.currentConn = conn)
+        )
+      }),
+      // the search window's packets button operates off of the 'selected' record
+      // (whatever is highlighted in the viewer/table)
+      this.api.commands.add("data-detail:selected", ([data]) => {
+        updateButtonStatus(
+          "search",
+          searchButtonId,
+          data,
+          (conn) => (this.selectedConn = conn)
+        )
+      })
+    )
+  }
+
+  private setupContextMenu() {
+    const searchCtxMenuId = "brimcap:download-pcaps-search"
+    const detailCtxMenuId = "brimcap:download-pcaps-detail"
+
+    // TODO: handle commands next...
+    // const brimcapDownloadSelectedCmd = "brimcap-download-packets:selected"
+    // const brimcapDownloadCurrentCmd = "brimcap-download-packets:current"
+
+    const itemOptions = {
+      label: "Download Packets",
+      disabled: true,
+      order: 0
+    }
+
+    // add download pcap buttons to search and detail contextMenus
+    this.api.contextMenu.add("search", {
+      ...itemOptions,
+      id: searchCtxMenuId
+      // command: brimcapDownloadSelectedCmd
+    })
+    this.api.toolbar.add("detail", {
+      ...itemOptions,
+      id: detailCtxMenuId
+      // command: brimcapDownloadCurrentCmd
     })
 
     // add click handlers for button's emitted commands
