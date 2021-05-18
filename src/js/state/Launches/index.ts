@@ -6,19 +6,18 @@ export type LaunchesState = {
   [version: string]: string // Date string
 }
 
-const VERSION = getVersion()
 const slice = createSlice({
   name: "$Launches",
   initialState: {},
   reducers: {
     touchVersion: (state, action: PayloadAction<string | undefined>) => {
-      let key = action.payload || VERSION
+      let key = action.payload || getVersion()
       state[key] = new Date().toISOString()
     }
   }
 })
 
-function firstRunOfVersion(state: State, v = VERSION) {
+function firstRunOfVersion(state: State, v = getVersion()) {
   return !(v in state.launches)
 }
 
