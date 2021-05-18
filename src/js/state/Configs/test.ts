@@ -41,18 +41,18 @@ beforeEach(() => {
 
 test("Create", () => {
   // add one
-  dispatch(Configs.create(testConfig1))
+  dispatch(Configs.set(testConfig1))
   expect(select(Configs.all)).toHaveLength(1)
   expect(select(Configs.get(testConfig1.name))).toEqual(testConfig1)
 
   // add second
-  dispatch(Configs.create(testConfig2))
+  dispatch(Configs.set(testConfig2))
   expect(select(Configs.all)).toHaveLength(2)
   expect(select(Configs.get(testConfig2.name))).toEqual(testConfig2)
 })
 
 test("Delete", () => {
-  dispatch(Configs.create(testConfig1))
+  dispatch(Configs.set(testConfig1))
 
   dispatch(Configs.delete(testConfig1.name))
   expect(select(Configs.all)).toHaveLength(0)

@@ -27,8 +27,12 @@ const slice = createSlice({
   name: "$configs",
   initialState: adapter.getInitialState(),
   reducers: {
-    create: adapter.addOne,
-    delete: adapter.removeOne
+    set(state, action) {
+      adapter.upsertOne(state, action.payload)
+    },
+    delete(state, action) {
+      adapter.removeOne(state, action.payload)
+    }
   }
 })
 

@@ -13,8 +13,12 @@ const slice = createSlice({
   name: "$pluginStorage",
   initialState,
   reducers: {
-    set: adapter.upsertOne,
-    delete: adapter.removeOne
+    set(state, action) {
+      adapter.upsertOne(state, action.payload)
+    },
+    delete(state, action) {
+      adapter.removeOne(state, action.payload)
+    }
   }
 })
 
