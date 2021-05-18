@@ -1,9 +1,8 @@
+import {getVersion} from "app/core/utils/get-version"
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import Link from "src/js/components/common/Link"
 import styled from "styled-components"
-// @ts-ignore
-import {version} from "../../../package.json"
 import {useReleaseNotes} from "./use-release-notes"
 
 const Scrollable = styled.div`
@@ -29,6 +28,8 @@ const components = {
     return <Link {...props}>{children}</Link>
   }
 }
+
+const version = getVersion()
 
 export default function ReleaseNotes() {
   const notes = useReleaseNotes(version)

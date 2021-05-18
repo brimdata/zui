@@ -1,3 +1,4 @@
+import {maybeShowReleaseNotes} from "app/release-notes/maybe-show-release-notes"
 import ReleaseNotes from "app/release-notes/release-notes"
 import AppRouter from "app/router/app-router"
 import {
@@ -29,6 +30,7 @@ export default function App() {
   useSearchShortcuts()
   useEffect(() => {
     ipcRenderer.invoke("windows:ready")
+    dispatch(maybeShowReleaseNotes())
     return () => {
       dispatch(Handlers.abortAll())
     }
