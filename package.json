@@ -153,6 +153,7 @@
     "semver": "^7.3.2",
     "source-map-support": "^0.5.19",
     "styled-components": "^5.1.1",
+    "tee-1": "^0.2.0",
     "tree-model": "^1.0.7",
     "valid-url": "^1.0.9",
     "zed": "git+https://github.com/brimdata/zed.git#1d16c1b6ae24c20210683c533905598239d37d80"

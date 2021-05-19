@@ -106,6 +106,7 @@ function Modal({onClose}) {
       })
       .catch((e) => {
         toast.dismiss(id)
+        dispatch(refreshPoolNames())
         // This is a bug in the toast library, these subsequent toasts
         // were not being displayed without the setTimeout()
         setTimeout(() => {
