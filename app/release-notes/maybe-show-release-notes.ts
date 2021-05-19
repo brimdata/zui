@@ -4,9 +4,11 @@ import Current from "src/js/state/Current"
 import Launches from "src/js/state/Launches"
 import Tabs from "src/js/state/Tabs"
 
+const isItest = process.env.BRIM_ITEST === "true"
+
 export function maybeShowReleaseNotes() {
   return (dispatch, getState) => {
-    if (!isDev && Launches.firstRunOfVersion(getState())) {
+    if (!isDev && !isItest && Launches.firstRunOfVersion(getState())) {
       dispatch(showReleaseNotes())
       dispatch(Launches.touchVersion())
     }
