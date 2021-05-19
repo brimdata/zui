@@ -2,6 +2,7 @@ import {pathsClient} from "app/ipc/paths"
 import {ChildProcess, spawn} from "child_process"
 import fs from "fs-extra"
 import readline from "readline"
+import tee from "tee-1"
 
 /**
  * Data in the app was stored in a file store in versions before 25.
@@ -36,8 +37,8 @@ export default class SpaceMigrator {
         `-zqd=${this.srcDir}`,
         `-root=${this.destDir}`
       ])
-
-      const linesErr = readline.createInterface({input: this.process.stderr})
+      let stderr = this.process.stderr.pipe(tee(process.stderr))
+      const linesErr = readline.createInterface({input: stderr})
       let total = 0
       let count = 0
       let space = ""
