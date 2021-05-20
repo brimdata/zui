@@ -36,7 +36,7 @@ export default function ReleaseNotes() {
 
   return (
     <Scrollable>
-      <BG className="release-notes">
+      <BG>
         <h1>Release Notes for Version {version}</h1>
         <ReactMarkdown components={components}>{notes}</ReactMarkdown>
       </BG>
