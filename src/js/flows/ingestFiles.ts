@@ -1,4 +1,4 @@
-import {lakePath, workspacesPath} from "app/router/utils/paths"
+import {lakePath, workspacePath} from "app/router/utils/paths"
 import fsExtra from "fs-extra"
 import brim from "../brim"
 import ingest from "../brim/ingest"
@@ -160,7 +160,7 @@ const setPool = (dispatch, tabId, workspaceId) => ({
     global.tabHistories.getOrCreate(tabId).push(url)
   },
   undo() {
-    const url = workspacesPath()
+    const url = workspacePath(workspaceId)
     global.tabHistories.getOrCreate(tabId).replace(url)
   }
 })

@@ -1,5 +1,5 @@
 import {spawnSync, spawn, ChildProcess} from "child_process"
-import {compact} from "lodash"
+import {compact, isEmpty} from "lodash"
 import flatMap from "lodash/flatMap"
 
 interface packetOptions {
@@ -17,6 +17,7 @@ export interface loadOptions {
   n?: number
   root: string
   pool: string
+  json?: boolean
   suricata?: boolean
   suricataStderr?: string
   suricataStdout?: string
@@ -47,8 +48,13 @@ const toCliOpts = (opts: loadOptions | searchOptions): string[] =>
   compact(
     flatMap(
       Object.entries(opts).map(([k, v]) => {
-        if (!v) return
-        return [`-${OPTION_NAME_MAP[k] || k}`, v]
+        const optKey = `-${OPTION_NAME_MAP[k] || k}`
+        // booleans flags don't use values, if opting in just include the key
+        if (typeof v === "boolean" && v) return [optKey]
+        // otherwise, if no value provided, don't include this option
+        if (isEmpty(v)) return
+
+        return [optKey, v]
       })
     )
   )
