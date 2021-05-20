@@ -11,6 +11,7 @@ import {Config} from "../../src/js/state/Configs"
 import {reactElementProps} from "../../src/js/test/integration"
 import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess, spawn} from "child_process"
+import {MenuItemConstructorOptions} from "electron"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -69,9 +70,9 @@ export default class BrimcapPlugin {
     this.setupBrimcapButtons()
     this.setupLoader()
     this.setupConfig()
+    this.setupContextMenus()
     // NOTE: suricata updates async, don't block
     this.updateSuricata()
-    // TODO: handle contextMenu items, and detail pane/window correlation UI
   }
 
   private async tryConn(detail: zed.Record, eventId: string) {
@@ -180,6 +181,27 @@ export default class BrimcapPlugin {
         )
       })
     )
+  }
+
+  private setupContextMenus() {
+    const itemBuilder = (data: {
+      record: zed.Record
+      field: zed.Field
+    }): MenuItemConstructorOptions => {
+      const {record} = data
+      const isConn = record.try("_path")?.toString() === "conn"
+
+      return {
+        click: () => {
+          this.downloadPcap(record)
+        },
+        enabled: isConn,
+        label: "Download packets"
+      }
+    }
+
+    this.api.contextMenus.search.add(itemBuilder)
+    this.api.contextMenus.detail.add(itemBuilder)
   }
 
   private logToSearchOpts(log: zed.Record): searchOptions {
