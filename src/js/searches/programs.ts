@@ -2,19 +2,19 @@ import {zed} from "zealot"
 import zql from "../zql"
 
 export function md5Correlation(md5: string) {
-  return `md5==${md5} | count() by md5 | sort -r | head 5`
+  return zql`md5==${md5} | count() by md5 | sort -r | head 5`
 }
 
 export function txHostsCorrelation(md5: string) {
-  return `md5==${md5} | count() by tx_hosts | sort -r | head 5`
+  return zql`md5==${md5} | count() by tx_hosts | sort -r | head 5`
 }
 
 export function rxHostsCorrelation(md5: string) {
-  return `md5==${md5} | count() by rx_hosts | sort -r | head 5`
+  return zql`md5==${md5} | count() by rx_hosts | sort -r | head 5`
 }
 
 export function filenameCorrelation(md5: string) {
-  return `md5==${md5} | count() by filename, mime_type | sort -r | head 5`
+  return zql`md5==${md5} | count() by filename, mime_type | sort -r | head 5`
 }
 
 export function uidFilter(uid: string | zed.Primitive) {
@@ -61,4 +61,14 @@ export function connCorrelation(
   const endTsDate = new Date(new Date(tsDate).getTime() + dur * 1000)
   const cidFilter = zql`community_id == ${cid} and ts >= ${tsDate} and ts < ${endTsDate}`
   return `${uidFilter(uid)} or (${cidFilter}) | ${correlationLimit()}`
+}
+
+export function relatedAlerts(cid: string, limit?: number) {
+  const base = zql`event_type=="alert" community_id==${cid} | sort ts`
+  return limit ? `${base} | head ${limit}` : base
+}
+
+export function relatedConns(cid: string, limit?: number) {
+  const base = zql`_path=="conn" community_id==${cid} | sort ts`
+  return limit ? `${base} | head ${limit}` : base
 }
