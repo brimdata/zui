@@ -57,7 +57,7 @@ export default function windowManager(
     },
 
     whenAllClosed() {
-      return new Promise((resolve) => {
+      return new Promise<void>((resolve) => {
         const checkCount = () => {
           if (this.count() === 0) resolve()
           else setTimeout(checkCount, 0)
@@ -212,6 +212,21 @@ export default function windowManager(
 
         newWin.ref.webContents.once("did-finish-load", () => {
           newWin.ref.webContents.send("showPreferences")
+        })
+      }
+    },
+
+    openReleaseNotes() {
+      const win = this.getWindows()
+        .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
+        .find((w) => w.name === "search")
+
+      if (win) {
+        win.ref.webContents.send("showReleaseNotes")
+      } else {
+        const newWin = this.openWindow("search", {})
+        newWin.ref.webContents.once("did-finish-load", () => {
+          newWin.ref.webContents.send("showReleaseNotes")
         })
       }
     },

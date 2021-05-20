@@ -225,6 +225,10 @@ Array [
     "submenu": Array [
       Object {
         "click": [Function],
+        "label": "Release Notes",
+      },
+      Object {
+        "click": [Function],
         "label": "Zed Syntax Docs",
       },
       Object {
@@ -411,6 +415,10 @@ Array [
   Object {
     "role": "help",
     "submenu": Array [
+      Object {
+        "click": [Function],
+        "label": "Release Notes",
+      },
       Object {
         "click": [Function],
         "label": "Zed Syntax Docs",

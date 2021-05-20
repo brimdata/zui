@@ -20,8 +20,10 @@ import Toolbars from "./Toolbars"
 import PluginStorage from "./PluginStorage"
 import Configs from "./Configs"
 import ConfigPropValues from "./ConfigPropValues"
+import Launches from "./Launches"
 
 export default combineReducers<any, any>({
+  launches: Launches.reducer,
   configs: Configs.reducer,
   configPropValues: ConfigPropValues.reducer,
   errors: Errors.reducer,

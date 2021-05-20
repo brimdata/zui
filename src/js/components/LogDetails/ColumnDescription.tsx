@@ -1,9 +1,8 @@
-import MarkdownIt from "markdown-it"
-import React from "react"
-
-import {Column} from "../../types"
-import open from "../../lib/open"
 import zeekLogInfo from "ppl/zeek/logInfo"
+import React from "react"
+import ReactMarkdown from "react-markdown"
+import open from "../../lib/open"
+import {Column} from "../../types"
 
 type Props = {
   column: Column
@@ -12,11 +11,7 @@ type Props = {
 
 export default function ColumnDescription({column, path}: Props) {
   const info = zeekLogInfo(path)
-  const md = new MarkdownIt()
   const col = info.describeColumn(column)
-  const createBody = () => ({
-    __html: md.render(col.desc)
-  })
 
   return (
     <div className="column-description">
@@ -24,7 +19,9 @@ export default function ColumnDescription({column, path}: Props) {
         <p>{column.name}</p> <p>{col.type}</p>
       </div>
       <div className="tip-body">
-        <p dangerouslySetInnerHTML={createBody()}></p>
+        <p>
+          <ReactMarkdown>{col.desc}</ReactMarkdown>
+        </p>
       </div>
       {info.isKnown() && (
         <div className="tip-footer">

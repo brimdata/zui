@@ -1,18 +1,19 @@
 import {combineReducers} from "redux"
-
-import {InvestigationState} from "./Investigation/types"
-import {PrefsState} from "./Prefs/types"
+import ConfigPropValues, {ConfigPropValuesState} from "./ConfigPropValues"
+import Configs, {ConfigsState} from "./Configs"
 import Investigation from "./Investigation"
+import {InvestigationState} from "./Investigation/types"
+import Launches, {LaunchesState} from "./Launches"
+import PluginStorage, {PluginStorageState} from "./PluginStorage"
 import Prefs from "./Prefs"
+import {PrefsState} from "./Prefs/types"
 import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
 import Workspaces from "./Workspaces"
 import {WorkspacesState} from "./Workspaces/types"
-import PluginStorage, {PluginStorageState} from "./PluginStorage"
-import Configs, {ConfigsState} from "./Configs"
-import ConfigPropValues, {ConfigPropValuesState} from "./ConfigPropValues"
 
 export type GlobalState = {
+  launches: LaunchesState
   workspaces: WorkspacesState
   investigation: InvestigationState
   prefs: PrefsState
@@ -23,6 +24,7 @@ export type GlobalState = {
 }
 
 export default combineReducers<any, any>({
+  launches: Launches.reducer,
   workspaces: Workspaces.reducer,
   investigation: Investigation.reducer,
   prefs: Prefs.reducer,

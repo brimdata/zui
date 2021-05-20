@@ -21,6 +21,7 @@ import BrimApi from "../api"
 import {PluginStorageState} from "./PluginStorage"
 import {ConfigsState} from "./Configs"
 import {ConfigPropValuesState} from "./ConfigPropValues"
+import {LaunchesState} from "./Launches"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -38,6 +39,7 @@ export type Dispatch = AppDispatch
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
+  launches: LaunchesState
   configs: ConfigsState
   configPropValues: ConfigPropValuesState
   tabHistories: TabHistoriesState
