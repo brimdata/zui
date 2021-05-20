@@ -112,8 +112,12 @@ jobs:
         run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
 
       - run: npm install --no-audit
+      - run: npm run format-check
       - run: npm run build
+      - run: npm run lint
+      - run: npm run tsc
       - run: npm test -- --maxWorkers=2 --ci
+      - run: npm run test:api
       - name: Integration Tests
         id: testIntegration
         run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
