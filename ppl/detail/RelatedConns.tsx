@@ -7,7 +7,7 @@ import {BrimEvent, BrimEventInterface} from "ppl/detail/models/BrimEvent"
 import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
 import {showContextMenu} from "src/js/lib/System"
-import zql from "src/js/zql"
+import {relatedConns} from "src/js/searches/programs"
 import {zed} from "zealot"
 import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
@@ -19,14 +19,10 @@ type Props = {
 }
 
 const LIMIT = 100
-const getQuery = (r: zed.Record, limit?: number) => {
-  const cid = r.get("community_id")
-  const base = zql`_path=conn community_id=${cid} | sort ts`
-  return limit ? `${base} | head ${limit}` : base
-}
 
 export default memo(function RelatedConns({record}: Props) {
-  const [records, isFetching] = useSearch(getQuery(record, LIMIT), [record])
+  const cid = record.get("community_id").toString()
+  const [records, isFetching] = useSearch(relatedConns(cid, LIMIT), [record])
   const events = useMemo(() => records.map(BrimEvent.build), [records])
   const [first, last] = firstLast<BrimEventInterface>(events)
   const data = [
@@ -46,7 +42,7 @@ export default memo(function RelatedConns({record}: Props) {
       <Panel>
         <ChartWrap>
           <EventTimeline events={events} />
-          <EventLimit query={getQuery(record)} count={events.length} />
+          <EventLimit query={relatedConns(cid)} count={events.length} />
         </ChartWrap>
         <TableWrap>
           {data.map(([name, value]) => (
