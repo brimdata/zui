@@ -3,17 +3,27 @@ import path from "path"
 import toast from "react-hot-toast"
 import {getZealot} from "../flows/getZealot"
 import {AppDispatch, State} from "../state/types"
-import {CommandRegistry, LoaderRegistry} from "./registries"
-import {ConfigsApi, ContextMenuApi, ToolbarApi} from "./ui-apis"
+import {
+  CommandRegistry,
+  ContextMenuRegistry,
+  DetailCtxItemBuilder,
+  LoaderRegistry,
+  SearchCtxItemBuilder
+} from "./registries"
+import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {StorageApi} from "./storage"
 
 export default class BrimApi {
   public commands = new CommandRegistry()
   public loaders = new LoaderRegistry()
+  public contextMenus = {
+    search: new ContextMenuRegistry<SearchCtxItemBuilder>(),
+    detail: new ContextMenuRegistry<DetailCtxItemBuilder>()
+  }
   public toolbar: ToolbarApi
-  public contextMenu: ContextMenuApi
   public configs: ConfigsApi
   public storage: StorageApi
+
   public toast = toast
 
   /*
@@ -32,7 +42,6 @@ export default class BrimApi {
     this.toolbar = new ToolbarApi(d, gs)
     this.configs = new ConfigsApi(d, gs)
     this.storage = new StorageApi(d, gs)
-    this.contextMenu = new ContextMenuApi(d, gs)
   }
 
   public getZealot() {

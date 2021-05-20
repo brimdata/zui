@@ -1,6 +1,8 @@
 import {EventEmitter} from "events"
 import {remove} from "lodash"
 import {IngestParams} from "../brim/ingest/getParams"
+import {zed} from "../../../zealot"
+import {MenuItemConstructorOptions} from "electron"
 
 type Cleanup = () => any
 
@@ -42,15 +44,43 @@ export class LoaderRegistry {
 
   constructor() {}
 
-  public add(l: Loader): void {
+  add(l: Loader): void {
     this.loaders.push(l)
   }
 
-  public remove(l: Loader): void {
+  remove(l: Loader): void {
     if (this.loaders.includes(l)) remove(this.loaders, (l) => l === l)
   }
 
-  public getMatches(loadType: string): Loader[] {
+  getMatches(loadType: string): Loader[] {
     return this.loaders.filter((l) => l.match === loadType)
+  }
+}
+
+export type SearchCtxItemBuilder = (data: {
+  record: zed.Record
+  field: zed.Field
+}) => MenuItemConstructorOptions
+
+export type DetailCtxItemBuilder = (data: {
+  record: zed.Record
+  field: zed.Field
+}) => MenuItemConstructorOptions
+
+export class ContextMenuRegistry<T> {
+  private registry: T[] = []
+
+  constructor() {}
+
+  add(menuItem: T) {
+    this.registry.push(menuItem)
+  }
+
+  remove(menuItem: T): void {
+    if (this.registry.includes(menuItem)) remove(this.registry, (l) => l === l)
+  }
+
+  list() {
+    return [...this.registry]
   }
 }

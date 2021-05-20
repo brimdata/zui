@@ -11,6 +11,7 @@ import {Config} from "../../src/js/state/Configs"
 import {reactElementProps} from "../../src/js/test/integration"
 import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess, spawn} from "child_process"
+import {MenuItemConstructorOptions} from "electron"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -69,7 +70,7 @@ export default class BrimcapPlugin {
     this.setupBrimcapButtons()
     this.setupLoader()
     this.setupConfig()
-    // this.setupContextMenu()
+    this.setupContextMenus()
     // NOTE: suricata updates async, don't block
     this.updateSuricata()
   }
@@ -157,8 +158,6 @@ export default class BrimcapPlugin {
 
     // add brim-command listeners to update button statuses
     this.cleanupFns.push(
-      // TODO: this is a brim event, lets make this a native event like
-      //  api.commands.onCurrentDataDetailSelected(() => {})
       // the detail window's packets button will operate off of the 'current' record
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
@@ -184,68 +183,25 @@ export default class BrimcapPlugin {
     )
   }
 
-  private setupContextMenu() {
-    const searchCtxMenuId = "brimcap:download-pcaps-search"
-    const detailCtxMenuId = "brimcap:download-pcaps-detail"
+  private setupContextMenus() {
+    const itemBuilder = (data: {
+      record: zed.Record
+      field: zed.Field
+    }): MenuItemConstructorOptions => {
+      const {record} = data
+      const isConn = record.try("_path")?.toString() === "conn"
 
-    // TODO: handle commands next...
-    // const brimcapDownloadSelectedCmd = "brimcap-download-packets:selected"
-    // const brimcapDownloadCurrentCmd = "brimcap-download-packets:current"
-
-    const itemOptions = {
-      label: "Download Packets",
-      disabled: true,
-      order: 0
+      return {
+        click: () => {
+          this.downloadPcap(record)
+        },
+        enabled: isConn,
+        label: "Download packets"
+      }
     }
 
-    // add download pcap buttons to search and detail contextMenus
-    this.api.contextMenu.add("search", {
-      ...itemOptions,
-      id: searchCtxMenuId
-      // command: brimcapDownloadSelectedCmd
-    })
-    this.api.toolbar.add("detail", {
-      ...itemOptions,
-      id: detailCtxMenuId
-      // command: brimcapDownloadCurrentCmd
-    })
-
-    // add click handlers for button's emitted commands
-    this.cleanupFns.push(
-      this.api.commands.add(brimcapDownloadSelectedCmd, () => {
-        this.selectedConn && this.downloadPcap(this.selectedConn)
-      }),
-      this.api.commands.add(
-        brimcapDownloadCurrentCmd,
-        () => this.currentConn && this.downloadPcap(this.currentConn)
-      )
-    )
-
-    // add brim-command listeners to update button statuses
-    this.cleanupFns.push(
-      // the detail window's packets button will operate off of the 'current' record
-      this.api.commands.add("data-detail:current", ([record]) => {
-        if (!record) return
-        const data = ZealotContext.decodeRecord(record)
-
-        updateButtonStatus(
-          "detail",
-          detailButtonId,
-          data,
-          (conn) => (this.currentConn = conn)
-        )
-      }),
-      // the search window's packets button operates off of the 'selected' record
-      // (whatever is highlighted in the viewer/table)
-      this.api.commands.add("data-detail:selected", ([data]) => {
-        updateButtonStatus(
-          "search",
-          searchButtonId,
-          data,
-          (conn) => (this.selectedConn = conn)
-        )
-      })
-    )
+    this.api.contextMenus.search.add(itemBuilder)
+    this.api.contextMenus.detail.add(itemBuilder)
   }
 
   private logToSearchOpts(log: zed.Record): searchOptions {

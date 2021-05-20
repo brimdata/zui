@@ -2,7 +2,6 @@ import {AppDispatch, State} from "../state/types"
 import Toolbar, {ToolbarItem} from "../state/Toolbars"
 import Configs, {Config} from "../state/Configs"
 import ConfigPropValues from "../state/ConfigPropValues"
-import ContextMenus, {ContextMenuItem} from "../state/ContextMenus"
 
 export class ToolbarApi {
   constructor(private dispatch: AppDispatch, private getState: () => State) {}
@@ -13,18 +12,6 @@ export class ToolbarApi {
 
   update(toolbarId: string, itemId: string, item: Partial<ToolbarItem>) {
     this.dispatch(Toolbar.updateItem({toolbarId, itemId, item}))
-  }
-}
-
-export class ContextMenuApi {
-  constructor(private dispatch: AppDispatch, private getState: () => State) {}
-
-  add(ctxMenuId: string, item: ContextMenuItem) {
-    this.dispatch(ContextMenus.createItem({ctxMenuId, item}))
-  }
-
-  update(ctxMenuId: string, itemId: string, item: Partial<ContextMenuItem>) {
-    this.dispatch(ContextMenus.updateItem({ctxMenuId, itemId, item}))
   }
 }
 

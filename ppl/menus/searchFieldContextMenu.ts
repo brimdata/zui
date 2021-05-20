@@ -7,7 +7,7 @@ import SearchBar from "src/js/state/SearchBar"
 import {ZealotContext, zed} from "zealot"
 
 export default function searchFieldContextMenu({field, record, value}) {
-  return (_, getState) => {
+  return (_, getState, {api}) => {
     const columns = Columns.getCurrentTableColumns(getState())
       .getColumns()
       .map((c) => c.name)
@@ -39,6 +39,10 @@ export default function searchFieldContextMenu({field, record, value}) {
     field.value = value
     const fieldData = ZealotContext.encodeField(field)
     const recordData = ZealotContext.encodeRecord(record)
+
+    const pluginMenuItems = api.contextMenus.search
+      .list()
+      .map((ctxBuilder) => ctxBuilder({record, field}))
 
     showContextMenu([
       searchMenuActions.include.menuItem([fieldData], {
@@ -82,7 +86,8 @@ export default function searchFieldContextMenu({field, record, value}) {
       menu.separator(),
       searchMenuActions.logResult.menuItem([fieldData, recordData], {
         enabled: true
-      })
+      }),
+      ...pluginMenuItems
     ])
   }
 }

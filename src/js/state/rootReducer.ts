@@ -20,7 +20,6 @@ import Toolbars from "./Toolbars"
 import PluginStorage from "./PluginStorage"
 import Configs from "./Configs"
 import ConfigPropValues from "./ConfigPropValues"
-import ContextMenus from "./ContextMenus"
 
 export default combineReducers<any, any>({
   configs: Configs.reducer,
@@ -42,6 +41,5 @@ export default combineReducers<any, any>({
   queries: Queries.reducer,
   tabHistories: TabHistories.reducer,
   url: Url.reducer,
-  toolbars: Toolbars.reducer,
-  contextMenus: ContextMenus.reducer
+  toolbars: Toolbars.reducer
 })
