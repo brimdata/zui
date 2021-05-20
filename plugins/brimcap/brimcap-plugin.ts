@@ -12,6 +12,7 @@ import {reactElementProps} from "../../src/js/test/integration"
 import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess, spawn} from "child_process"
 import {MenuItemConstructorOptions} from "electron"
+import {compact} from "lodash"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -280,7 +281,8 @@ export default class BrimcapPlugin {
 
       const loadOpts: loadOptions = {
         root: this.brimcapDataRoot,
-        pool: name
+        pool: name,
+        json: true
       }
 
       const yamlConfig = this.api.configs.get(
@@ -297,10 +299,8 @@ export default class BrimcapPlugin {
         brimcapErr = err
       })
 
-      onProgressUpdate(0)
-      p.stderr.on("data", async (d) => {
-        const msg = JSON.parse(d)
-        const {type, ...status} = msg
+      const handleRespMsg = async (jsonMsg) => {
+        const {type, ...status} = jsonMsg
         switch (type) {
           case "status":
             onProgressUpdate(statusToPercent(status))
@@ -311,6 +311,19 @@ export default class BrimcapPlugin {
             break
           case "error":
             if (status.error) brimcapErr = status.error
+            break
+        }
+      }
+
+      onProgressUpdate(0)
+      p.stderr.on("data", async (d) => {
+        try {
+          const msgs: string[] = compact(d.toString().split("\n"))
+          const jsonMsgs = msgs.map((msg) => JSON.parse(msg))
+          jsonMsgs.forEach(handleRespMsg)
+        } catch (e) {
+          console.error(e)
+          brimcapErr = d.toString()
         }
       })
 
