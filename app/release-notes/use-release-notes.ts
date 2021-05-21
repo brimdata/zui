@@ -1,12 +1,13 @@
+import {getRepo} from "app/core/utils/get-repo"
 import {useEffect, useState} from "react"
+
+const REPO = getRepo()
 
 export function useReleaseNotes(version) {
   const [notes, setNotes] = useState("")
 
   useEffect(() => {
-    fetch(
-      `https://api.github.com/repos/brimdata/brim/releases/tags/v${version}`
-    )
+    fetch(`https://api.github.com/repos/${REPO}/releases/tags/v${version}`)
       .then((resp) => {
         if (resp.ok) return resp.json()
         else throw new Error("Not found")
