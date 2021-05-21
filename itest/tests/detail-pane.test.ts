@@ -1,4 +1,3 @@
-import {text} from "d3"
 import itest from "itest/lib/itest"
 import {toLower} from "lodash"
 
