@@ -11,6 +11,7 @@ const Scrollable = styled.div`
 const BG = styled.div`
   margin: 48px auto;
   padding: 24px;
+  width: 100%;
   max-width: 600px;
   line-height: 1.6;
   a {

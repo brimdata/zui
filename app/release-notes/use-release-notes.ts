@@ -5,12 +5,12 @@ const REPO = getRepo()
 
 export function useReleaseNotes(version) {
   const [notes, setNotes] = useState("")
-
+  const url = `https://api.github.com/repos/${REPO}/releases/tags/v${version}`
   useEffect(() => {
-    fetch(`https://api.github.com/repos/${REPO}/releases/tags/v${version}`)
+    fetch(url)
       .then((resp) => {
         if (resp.ok) return resp.json()
-        else throw new Error("Not found")
+        else throw new Error("Not found " + url)
       })
       .then((json) => json.body)
       .then((m) => setNotes(m))
