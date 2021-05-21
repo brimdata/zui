@@ -13,6 +13,9 @@ class Paths {
       exe("brimcap")
     )
   }
+  root() {
+    return app.getAppPath()
+  }
 }
 
 export const paths = new Paths()
