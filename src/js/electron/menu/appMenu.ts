@@ -176,11 +176,13 @@ export default function(
       {role: "zoomOut"},
       __,
       {
+        id: "toggle-left-pane",
         label: "Toggle Left Pane",
         accelerator: "CmdOrCtrl+[",
         click: () => send("toggleLeftSidebar")
       },
       {
+        id: "toggle-right-pane",
         label: "Toggle Right Pane",
         accelerator: "CmdOrCtrl+]",
         click: () => send("toggleRightSidebar")

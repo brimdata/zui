@@ -14,8 +14,7 @@ describe("Detail Pane", () => {
   beforeAll(async () => {
     await brim.ingest("ifconfig.zng")
     await brim.search("")
-    await brim.click($.toolbarView)
-    await brim.clickContextMenuItem("Right Pane")
+    await brim.clickAppMenuItem("toggle-right-pane")
   })
 
   // Helper function to perform the common actions
