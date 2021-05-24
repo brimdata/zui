@@ -53,7 +53,7 @@ export default class SpaceMigrator {
         if ("space" in status && status.space !== space) {
           space = status.space
           count++
-          onUpdate({total, space: space, count})
+          onUpdate({total, space, count})
         }
         if ("pool_id" in status) {
           this.currentPoolID = status.pool_id
