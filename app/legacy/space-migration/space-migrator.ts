@@ -11,6 +11,7 @@ import tee from "tee-1"
  */
 export default class SpaceMigrator {
   process: ChildProcess | null
+  currentPoolID: String | null
 
   constructor(readonly srcDir: string, readonly destDir: string) {}
 
@@ -39,24 +40,23 @@ export default class SpaceMigrator {
       ])
       let stderr = this.process.stderr.pipe(tee(process.stderr))
       const linesErr = readline.createInterface({input: stderr})
+      let space = ""
       let total = 0
       let count = 0
-      let space = ""
-      let totalRegexp = /^migrating (\d+) spaces$/
 
       linesErr.on("line", (line) => {
         console.log(line)
         const status = tryJson(line.toString())
-        if ("msg" in status) {
-          const match = status.msg.match(totalRegexp)
-          if (match) {
-            total = parseInt(match[1])
-          }
+        if (status.msg === "migrating spaces") {
+          total = status.count
         }
         if ("space" in status && status.space !== space) {
           space = status.space
           count++
           onUpdate({total, space, count})
+        }
+        if ("pool_id" in status) {
+          this.currentPoolID = status.pool_id
         }
       })
 
@@ -66,9 +66,15 @@ export default class SpaceMigrator {
 
       this.process.on("exit", (code) => {
         if (this.process.killed) {
-          reject("Migration was cancelled")
+          reject({
+            message: "Migration was cancelled",
+            currentPoolID: this.currentPoolID
+          })
         } else if (code !== 0) {
-          reject("Migration failed")
+          reject({
+            message: "Migration failed",
+            currentPoolID: this.currentPoolID
+          })
         } else resolve()
       })
     }).finally(() => {
