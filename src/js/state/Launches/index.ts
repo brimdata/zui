@@ -10,9 +10,8 @@ const slice = createSlice({
   name: "$Launches",
   initialState: {},
   reducers: {
-    touchVersion: (state, action: PayloadAction<string | undefined>) => {
-      let key = action.payload || getVersion()
-      state[key] = new Date().toISOString()
+    touchVersion: (state, action: PayloadAction<string>) => {
+      state[action.payload] = new Date().toISOString()
     }
   }
 })
