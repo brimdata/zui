@@ -29,10 +29,3 @@ test("first run of version", () => {
   store.dispatch(Launches.touchVersion("v0.2.0"))
   expect(Launches.firstRunOfVersion(store.getState(), "v0.2.0")).toBe(false)
 })
-
-test("works without params", () => {
-  const store = initTestStore()
-  expect(Launches.firstRunOfVersion(store.getState())).toBe(true)
-  store.dispatch(Launches.touchVersion())
-  expect(Launches.firstRunOfVersion(store.getState())).toBe(false)
-})
