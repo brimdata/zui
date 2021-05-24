@@ -8,10 +8,19 @@ export default function refreshPoolInfo(): Thunk {
     const zealot = dispatch(getZealot())
     const id = Current.getPoolId(getState())
 
-    return zealot.pools.get(id).then((data: any) => {
+    let config = {}
+    let stats = {}
+    Promise.all([
+      zealot.pools.get(id).then((data: any) => {
+        config = data
+      }),
+      zealot.pools.stats(id).then((data: any) => {
+        stats = data
+      })
+    ]).then(() => {
       const id = Current.getWorkspaceId(getState())
       if (!id) return
-      dispatch(Pools.setDetail(id, data))
+      dispatch(Pools.setDetail(id, {...config, ...stats}))
     })
   }
 }

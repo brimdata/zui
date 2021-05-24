@@ -25,6 +25,6 @@ testApi("ingest ndjson log", async (zealot) => {
   })
   await resp.array()
 
-  const {size} = await zealot.pools.get(pool.id)
+  const {size} = await zealot.pools.stats(pool.id)
   assertEquals(size, 4467)
 })

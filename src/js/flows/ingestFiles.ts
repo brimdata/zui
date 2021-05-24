@@ -126,8 +126,8 @@ const executeLoader = (
       dispatch(space.setIngestProgress(value))
     }
     const onDetailUpdate = async (): Promise<void> => {
-      const details = await client.pools.get(poolId)
-      dispatch(Pools.setDetail(workspaceId, details))
+      const details = await client.pools.stats(poolId)
+      dispatch(Pools.setDetail(workspaceId, {id: poolId, ...details}))
     }
     const onWarning = (warning: string): void => {
       dispatch(space.appendIngestWarning(warning))

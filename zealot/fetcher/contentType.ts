@@ -1,7 +1,9 @@
 export function parseContentType(resp: Response) {
+  if (resp.status === 204) return null
   const type = resp.headers.get("Content-Type")
   switch (type) {
     case "application/json":
+    case "application/x-zjson":
       try {
         return resp.json()
       } catch {
