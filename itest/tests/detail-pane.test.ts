@@ -12,7 +12,7 @@ describe("Detail Pane", () => {
 
   const [brim, $] = itest("detail-pane")
   beforeAll(async () => {
-    await brim.ingest("ifconfig.pcapng")
+    await brim.ingest("ifconfig.zng")
     await brim.search("")
     await brim.click($.toolbarView)
     await brim.clickContextMenuItem("Right Pane")
