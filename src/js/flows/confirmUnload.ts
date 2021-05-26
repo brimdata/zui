@@ -13,7 +13,7 @@ export default (): Thunk<Promise<void>> => (dispatch, getState) => {
     return Promise.resolve()
   } else {
     const workspaceId = Current.getWorkspaceId(getState())
-    if (!workspaceId) return
+    if (!workspaceId) return Promise.reject()
     const names = poolIds.map((id) => {
       const pool = Pools.get(workspaceId, id)(getState())
       if (pool) return pool.name

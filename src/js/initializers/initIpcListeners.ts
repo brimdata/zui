@@ -16,7 +16,6 @@ import {releaseNotesPath} from "app/router/utils/paths"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
-
   ipcRenderer.on("confirmClose", async (e, replyChannel) => {
     const confirmed = await dispatch(confirmUnload())
       .then(() => true)

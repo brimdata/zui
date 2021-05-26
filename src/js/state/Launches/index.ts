@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {getVersion} from "app/core/utils/get-version"
 import {State} from "../types"
 
 export type LaunchesState = {
@@ -16,8 +15,8 @@ const slice = createSlice({
   }
 })
 
-function firstRunOfVersion(state: State, v = getVersion()) {
-  return !(v in state.launches)
+function firstRunOfVersion(state: State, version: string) {
+  return !(version in state.launches)
 }
 
 function all(state: State) {

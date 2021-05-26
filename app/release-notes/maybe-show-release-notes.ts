@@ -1,4 +1,4 @@
-import {getVersion} from "app/core/utils/get-version"
+import {metaClient} from "app/ipc/meta"
 import {releaseNotesPath} from "app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Launches from "src/js/state/Launches"
@@ -6,11 +6,12 @@ import Tabs from "src/js/state/Tabs"
 
 const isItest = process.env.BRIM_ITEST === "true"
 
-export function maybeShowReleaseNotes() {
+export async function maybeShowReleaseNotes() {
+  const version = await metaClient.version()
   return (dispatch, getState) => {
-    if (!isItest && Launches.firstRunOfVersion(getState())) {
+    if (!isItest && Launches.firstRunOfVersion(getState(), version)) {
       dispatch(showReleaseNotes())
-      dispatch(Launches.touchVersion(getVersion()))
+      dispatch(Launches.touchVersion(version))
     }
   }
 }
