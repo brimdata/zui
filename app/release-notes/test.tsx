@@ -1,11 +1,10 @@
-import "@testing-library/jest-dom"
 import {render, screen} from "@testing-library/react"
 import {rest} from "msw"
-import {setupServer} from "msw/node"
 import React from "react"
+import server from "test/unit/server"
 import ReleaseNotes from "./release-notes"
 
-const server = setupServer(
+server.use(
   rest.get(
     "https://api.github.com/repos/brimdata/brim/releases/tags/*",
     (req, res, ctx) => {
@@ -13,10 +12,6 @@ const server = setupServer(
     }
   )
 )
-
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-afterEach(() => server.resetHandlers())
 
 test("fetches the release notes", async () => {
   render(<ReleaseNotes />)

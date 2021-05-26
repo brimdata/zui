@@ -4,7 +4,7 @@ module.exports = {
       babelConfig: true
     }
   },
-  setupFilesAfterEnv: ["./src/js/test/setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/test/unit/setup-after-env/index.ts"],
   testURL: "http://localhost/search.html",
   // Having the /test/unit as a root allows us to put the __mocks__ folder
   // in there instead of up high next to the node_modules folder.
