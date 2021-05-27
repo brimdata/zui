@@ -51,7 +51,7 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
 
    ![Migrating spaces](media/Migrating-Spaces.png)
 
-   While migration is proceeding, you can use the app as usual (e.g. import new
+   While migration is proceeding, you can use the app as usual (e.g., import new
    data, start querying new Pools or ones that have finished migration, etc.)
    When the last Space has been migrated, the now-empty `spaces` directory
    will be automatically deleted at the filesystem layer and the following
