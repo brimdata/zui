@@ -1,29 +1,23 @@
-import {createZealot} from "./mod.ts"
-import {
-  join,
-  fromFileUrl,
-  dirname
-} from "https://deno.land/std@0.70.0/path/mod.ts"
+import {createZealot} from "zealot"
+import {join} from "path"
+import fs from "fs-extra"
+import {spawn, ChildProcess} from "child_process"
 
-const DIR = dirname(fromFileUrl(import.meta.url))
+const DIR = __dirname
 const ZED_LAKE_ROOT = join(DIR, "../lake_root")
 const ZED_RUNNER = join(DIR, "../../../zdeps/zed")
-
+const ADDR = "localhost:9119"
 function createDataDir() {
-  try {
-    Deno.mkdirSync(ZED_LAKE_ROOT)
-  } catch (_) {}
+  fs.mkdirSync(ZED_LAKE_ROOT)
 }
 
 function removeDataDir() {
-  try {
-    Deno.removeSync(ZED_LAKE_ROOT, {recursive: true})
-  } catch (_) {}
+  fs.removeSync(ZED_LAKE_ROOT)
 }
 
-async function kill(lake: Deno.Process, client: any) {
+async function kill(lake: ChildProcess, client: any) {
   removeDataDir()
-  lake.close()
+  lake.kill()
   await until(
     () =>
       client
@@ -37,10 +31,9 @@ async function kill(lake: Deno.Process, client: any) {
 }
 
 async function start() {
-  return Deno.run({
-    cmd: [ZED_RUNNER, "lake", "serve", "-R", ZED_LAKE_ROOT],
-    stdout: "null",
-    stderr: "null"
+  return spawn(ZED_RUNNER, ["lake", "serve", "-R", ZED_LAKE_ROOT, "-l", ADDR], {
+    stdio: null, // make this "inherit" to debug a problem
+    shell: true
   })
 }
 
@@ -50,7 +43,7 @@ async function until(
   wait: number,
   msg: string
 ) {
-  return new Promise<void>(async (resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const id = setTimeout(() => reject(new Error("Timed out: " + msg)), timeout)
     async function check() {
       try {
@@ -73,13 +66,13 @@ export async function withLake(fn: (zealot: any) => any) {
   removeDataDir()
   createDataDir()
   const lake = await start()
-  const zealot = createZealot("localhost:9867")
+  const zealot = createZealot(ADDR)
   await until(
     () =>
       zealot
         .status()
         .then((ok: string) => ok === "ok")
-        .catch(() => false),
+        .catch((_e) => false),
     10_000,
     1,
     "Unable to start zed lake"
@@ -89,12 +82,4 @@ export async function withLake(fn: (zealot: any) => any) {
   } finally {
     await kill(lake, zealot)
   }
-}
-
-export function testApi(name: string, fn: (z: any) => any) {
-  return Deno.test({
-    name,
-    only: name.startsWith("ONLY"),
-    fn: () => withLake(fn)
-  })
 }

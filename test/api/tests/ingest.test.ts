@@ -1,14 +1,14 @@
 import {uniq} from "lodash"
-import {itestFile} from "src/js/test/itestFile"
-import {withLake} from "./helpers/with-lake"
+import data from "test/shared/data"
+import {withLake} from "../helpers/with-lake"
 
 test("ingest log", () => {
   return withLake(async (zealot) => {
     const pool = await zealot.pools.create({name: "pool1"})
-    const log = itestFile("sample.tsv")
+    const log = data.getPath("sample.tsv")
 
     const resp = await zealot.logs.postPaths({
-      paths: [log.path],
+      paths: [log],
       poolId: pool.id
     })
     const messages = await resp.array()
@@ -24,9 +24,9 @@ test("ingest log", () => {
 test("ingest ndjson", () => {
   return withLake(async (zealot) => {
     const pool = await zealot.pools.create({name: "pool1"})
-    const log = itestFile("custom-sample.ndjson")
+    const log = data.getPath("custom-sample.ndjson")
     const resp = await zealot.logs.postPaths({
-      paths: [log.path],
+      paths: [log],
       poolId: pool.id
     })
     await resp.array()

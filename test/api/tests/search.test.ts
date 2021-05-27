@@ -1,11 +1,11 @@
-import {itestFile} from "src/js/test/itestFile"
-import {uniq} from "zealot/util/utils"
-import {withLake} from "./helpers/with-lake"
+import {uniq} from "lodash"
+import {withLake} from "../helpers/with-lake"
+import data from "test/shared/data"
 
 async function setup(zealot: any) {
   const pool = await zealot.pools.create({name: "pool1"})
-  const log = itestFile("sample.tsv")
-  const resp = await zealot.logs.postPaths({paths: [log.path], poolId: pool.id})
+  const log = data.getPath("sample.tsv")
+  const resp = await zealot.logs.postPaths({paths: [log], poolId: pool.id})
   await resp.array()
 
   zealot.setSearchOptions({
