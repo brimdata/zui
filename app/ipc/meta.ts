@@ -1,6 +1,6 @@
 import {readJSONSync} from "fs-extra"
 import {createClient} from "src/pkg/electron-ipc-service"
-import {app} from "test/unit/__mocks__/electron"
+import {app} from "electron"
 import {paths} from "./paths"
 
 class Meta {
