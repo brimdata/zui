@@ -21,7 +21,7 @@ release, upgrading via RPM packages to future releases newer than `v0.25.0`
 will not require this manual uninstall step.
 
 > **Note:** The procedure described above is _only_ required for Linux
-> distributions that use the RPM-based package format. On distributions that
+> distributions that use the RPM package format. On distributions that
 > use [DEB](https://en.wikipedia.org/wiki/Deb_(file_format)) packaging you
 > should be able to install the new `v0.25.0` release while the older Brim is
 > still present, replacing the older release.
