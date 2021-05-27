@@ -23,7 +23,7 @@ the data migration.
 ![Migration Required](media/Migration-Required.png)
 
 While the process should be seamless, if you're reading this article before
-clicking **Migrate**, here's some tips to help ensure a successful migration.
+clicking **Migrate**, here are some tips to help ensure a successful migration.
 
 1. Before starting migration, you may want to make a backup by zipping or
    copying everything below the following directory, which varies per OS
@@ -102,4 +102,3 @@ If you have questions about Space migration or anything else, we'd like to hear
 from you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/)
 and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue).
 Thanks!
-
