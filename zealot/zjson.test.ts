@@ -1,5 +1,6 @@
 import {execSync} from "child_process"
 import {join} from "path"
+import data from "test/shared/data"
 import {TypeValue} from "./zed"
 import {ZedContext} from "./zed/context"
 
@@ -11,7 +12,7 @@ function zq(q, file) {
     .split("\n")
     .map((s) => JSON.parse(s))
 }
-const file = "test/data/sample.zson"
+const file = data.getPath("sample.zson")
 
 test("decode, then encode", () => {
   const input = zq("*", file)

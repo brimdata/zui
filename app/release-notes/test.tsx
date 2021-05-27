@@ -1,7 +1,7 @@
 import {render, screen} from "@testing-library/react"
 import {rest} from "msw"
 import React from "react"
-import server from "test/unit/server"
+import server from "test/unit/helpers/server"
 import ReleaseNotes from "./release-notes"
 
 server.use(

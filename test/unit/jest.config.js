@@ -1,17 +1,23 @@
+const {join} = require("path")
+
 module.exports = {
   globals: {
     "ts-jest": {
       babelConfig: true
     }
   },
-  setupFilesAfterEnv: ["<rootDir>/test/unit/setup-after-env/index.ts"],
+  rootDir: join(__dirname, "../../"),
+  setupFilesAfterEnv: ["./test/unit/setup/after-env/index.ts"],
   testURL: "http://localhost/search.html",
-  // Having the /test/unit as a root allows us to put the __mocks__ folder
-  // in there instead of up high next to the node_modules folder.
-  roots: [".", "./test/unit"],
+  roots: ["<rootDir>/test/unit", "<rootDir>"],
   snapshotSerializers: ["enzyme-to-json/serializer"],
-  globalSetup: "./src/js/test/globalSetup.ts",
+  globalSetup: "./test/unit/setup/global.ts",
   transformIgnorePatterns: ["node_modules"],
   moduleDirectories: ["node_modules", "<rootDir>"],
-  testPathIgnorePatterns: ["/node_modules/", "/itest/", "/dist/"]
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "/itest/",
+    "/dist/",
+    "<rootDir>/test/api/"
+  ]
 }
