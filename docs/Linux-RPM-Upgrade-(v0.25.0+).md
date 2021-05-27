@@ -9,7 +9,7 @@ still present results in a failure similar to the one shown below.
 
 ![RPM unable to install](media/RPM-unable-to-install.png)
 
-To resolve the issue, simply uninstall the prior Brim release (e.g. by
+To resolve the issue, simply uninstall the prior Brim release (e.g., by
 executing `yum remove brim` or `dnf remove brim` in a Terminal window) before
 re-attempting the install of the new release. All previously-imported data and
 app settings (which are stored in `$HOME/.config/Brim`, separate from the
