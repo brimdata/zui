@@ -25,9 +25,17 @@ beforeEach(() => {
       "pools.get",
       {
         name: "sample.pcap.brim",
-        id: "poolId",
-        min_time: {ns: 0, sec: 0},
-        max_time: {ns: 1, sec: 1}
+        id: "poolId"
+      },
+      "always"
+    )
+    .stubPromise(
+      "pools.stats",
+      {
+        span: {
+          ts: 0n,
+          dur: 1_000_000_001n
+        }
       },
       "always"
     )

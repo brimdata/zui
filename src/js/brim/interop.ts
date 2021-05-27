@@ -1,14 +1,12 @@
-import brim, {Ts} from "./"
+import brim from "./"
 
 export default {
   poolPayloadToPool(pool: any) {
     if (pool.span) {
       const span = pool.span
-      const end = brim
-        .time(span.ts)
-        .addTs(span.dur as Ts)
-        .toTs()
-      pool = {...pool, min_time: span.ts, max_time: end}
+      const start = brim.time(span.ts)
+      const end = start.addTs(brim.time(span.dur).toTs())
+      pool = {...pool, min_time: start.toTs(), max_time: end.toTs()}
       delete pool.span
     }
     return pool

@@ -1,13 +1,19 @@
 import moment from "moment-timezone"
-import bigInt from "big-integer"
 
 import {DateTuple} from "../lib/TimeWindow"
 import {TimeUnit} from "../lib"
-import {isDate} from "../lib/is"
+import {isDate, isBigInt} from "../lib/is"
 import brim, {Ts, Span} from "./"
 
-function time(val: Ts | Date = new Date()) {
-  const ts = isDate(val) ? dateToTs(val) : val
+function time(val: Ts | bigint | Date = new Date()) {
+  let ts: Ts
+  if (isBigInt(val)) {
+    ts = fromBigInt(val)
+  } else if (isDate(val)) {
+    ts = dateToTs(val)
+  } else {
+    ts = val
+  }
 
   return {
     toDate(): Date {
@@ -22,10 +28,8 @@ function time(val: Ts | Date = new Date()) {
       return ts
     },
 
-    toBigInt(): bigInt.BigInteger {
-      return bigInt(ts.sec)
-        .times(1e9)
-        .plus(ts.ns)
+    toBigInt(): bigint {
+      return BigInt(ts.sec) * BigInt(1e9) + BigInt(ts.ns)
     },
 
     add(amount: number, unit: TimeUnit) {
@@ -47,8 +51,8 @@ function time(val: Ts | Date = new Date()) {
     },
 
     addTs(dur: Ts) {
-      const added = this.toBigInt().add(time(dur).toBigInt())
-      return brim.time(fromBigInt(added))
+      const added = this.toBigInt() + time(dur).toBigInt()
+      return brim.time(added)
     },
 
     subTs(diff: Ts) {
@@ -62,10 +66,10 @@ function time(val: Ts | Date = new Date()) {
   }
 }
 
-function fromBigInt(i: bigInt.BigInteger): Ts {
-  const sec = i.over(1e9)
-  const ns = i.minus(sec.times(1e9))
-  return {sec: sec.toJSNumber(), ns: ns.toJSNumber()}
+function fromBigInt(i: bigint): Ts {
+  const sec = i / BigInt(1e9)
+  const ns = i - sec * BigInt(1e9)
+  return {sec: Number(sec), ns: Number(ns)}
 }
 
 function dateToTs(date: Date): Ts {

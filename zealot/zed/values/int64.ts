@@ -9,4 +9,8 @@ export class Int64 extends Primitive {
     if (isNull(this.value)) return null
     return parseInt(this.value)
   }
+
+  toBigInt(): BigInt {
+    return BigInt(this.value)
+  }
 }
