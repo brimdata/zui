@@ -1,7 +1,7 @@
 import {Application} from "spectron"
 
 import logStep from "../util/logStep"
-import {selectors} from "../../../../../src/js/test/integration"
+import {selectors} from "../../integration"
 
 export const waitForNewTab = (app: Application) =>
   logStep("wait for new tab to appear", async () =>

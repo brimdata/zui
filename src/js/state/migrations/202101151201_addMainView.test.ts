@@ -1,5 +1,5 @@
-import {migrate} from "src/js/test/helpers/migrate"
-import {getAllTabs} from "../../test/helpers/getTestState"
+import {migrate} from "test/unit/helpers/migrate"
+import {getAllTabs} from "src/js/state/migrations/utils/getTestState"
 
 test("migrating 202101151201_addMainView", async () => {
   const next = await migrate({state: "v0.21.1", to: "202101151201"})

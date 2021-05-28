@@ -1,7 +1,10 @@
 import * as d3 from "d3"
 
 import {Pen} from "../types"
-import {d3ElementAttr, itestLocator} from "../../../test/integration"
+import {
+  d3ElementAttr,
+  itestLocator
+} from "../../../../../test/integration/helpers/integration"
 import {innerHeight, innerWidth} from "../dimens"
 import brim from "../../../brim"
 

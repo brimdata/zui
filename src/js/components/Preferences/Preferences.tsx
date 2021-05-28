@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react"
 
-import {reactElementProps} from "../../test/integration"
+import {reactElementProps} from "../../../../test/integration/helpers/integration"
 import DataDirInput from "./DataDirInput"
 import FormErrors from "./FormErrors"
 import ModalBox from "../ModalBox/ModalBox"

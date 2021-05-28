@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react"
 import last from "lodash/last"
 import isEmpty from "lodash/isEmpty"
 import styled from "styled-components"
-import {toastLocator} from "../test/locators"
+import {toastLocator} from "../../../test/integration/helpers/locators"
 
 const HiddenToast = styled.p`
   display: none;

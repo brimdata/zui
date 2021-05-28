@@ -4,7 +4,7 @@ import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import useDropzone from "src/js/components/hooks/useDropzone"
 import ToolbarButton from "app/toolbar/button"
 import Folder from "src/js/icons/Folder"
-import {reactElementProps} from "src/js/test/integration"
+import {reactElementProps} from "test/integration/helpers/integration"
 import DataFileIcon from "./DataFileIcon"
 
 type Props = {

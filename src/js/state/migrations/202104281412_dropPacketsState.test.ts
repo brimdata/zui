@@ -1,4 +1,4 @@
-import {migrate} from "src/js/test/helpers/migrate"
+import {migrate} from "test/unit/helpers/migrate"
 
 test("migrating 202104281412_dropPacketsState", async () => {
   const next = await migrate({state: "v0.24.0", to: "202104281412"})

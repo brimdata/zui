@@ -1,5 +1,5 @@
 const JS =
-  'babel . -d dist -x ".ts,.tsx" --ignore "**/*test.ts,**/__mocks__/**,itest,test" --quiet'
+  'babel . -d dist -x ".ts,.tsx" --ignore "**/*test.ts,**/__mocks__/**" --quiet'
 
 const SCSS = "node-sass-chokidar src --output dist --quiet"
 

@@ -1,5 +1,5 @@
-import {Workspace} from "../../state/Workspaces/types"
-import {Pool} from "../../state/Pools/types"
+import {Workspace} from "../../../src/js/state/Workspaces/types"
+import {Pool} from "../../../src/js/state/Pools/types"
 
 const pool1 = (): Pool => ({
   id: "1",

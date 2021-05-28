@@ -7,7 +7,7 @@ import appStep from "../helpers/appStep/api"
 import {pcapsDir} from "../helpers/appStep/api/savePcap"
 import {runSearch} from "../helpers/appStep/api/search"
 import newAppInstance from "../helpers/newAppInstance"
-import {selectors} from "../../../src/js/test/integration"
+import {selectors} from "../helpers/integration"
 import {handleError} from "../helpers/jest"
 
 const clearPcaps = async (app) => {

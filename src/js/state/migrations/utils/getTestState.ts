@@ -1,13 +1,11 @@
 import compact from "lodash/compact"
-
-import path from "path"
-
-import {SessionState} from "../../electron/tron/formatSessionState"
-import lib from "../../lib"
+import states from "test/unit/states"
+import {SessionState} from "../../../electron/tron/formatSessionState"
+import lib from "../../../lib"
 
 export default (version: string) => {
   const name = `${version}.json`
-  const file = path.join(__dirname, "../states", name)
+  const file = states.getPath(name)
   let contents
   try {
     contents = lib.file(file).readSync()

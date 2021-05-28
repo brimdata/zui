@@ -1,15 +1,15 @@
 import {BrowserWindow, screen} from "electron"
 import {last} from "lodash"
-import brim from "../../brim"
 import ipc from "../ipc"
 import sendTo from "../ipc/sendTo"
 import {NewTabSearchParams} from "../ipc/windows/messages"
 import {dimensFromSizePosition, stack} from "../window/dimens"
 import {SearchWindow} from "../window/SearchWindow"
-import tron from "./"
+import tron from "./index"
 import {SessionState} from "./formatSessionState"
 import {WindowParams} from "./window"
 import log from "electron-log"
+import brim from "src/js/brim"
 
 export type WindowName = "search" | "about" | "detail"
 export type $WindowManager = ReturnType<typeof windowManager>

@@ -1,4 +1,4 @@
-import {getAllStates} from "src/js/test/helpers/getTestState"
+import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 
 export const UPDATED_V25_DEFAULT_QUERIES = [
   {id: "1", value: "count() by _path | sort -r"},

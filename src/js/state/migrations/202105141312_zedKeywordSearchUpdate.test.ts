@@ -1,5 +1,5 @@
-import {getAllStates} from "src/js/test/helpers/getTestState"
-import {migrate} from "src/js/test/helpers/migrate"
+import {getAllStates} from "src/js/state/migrations/utils/getTestState"
+import {migrate} from "test/unit/helpers/migrate"
 import {parse} from "zealot"
 import {UPDATED_V25_DEFAULT_QUERIES} from "./202105141312_zedKeywordSearchUpdate"
 

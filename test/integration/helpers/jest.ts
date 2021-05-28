@@ -1,7 +1,7 @@
 import {Application} from "spectron"
 
 import appStep from "./appStep/api"
-import {selectors} from "../../../src/js/test/integration"
+import {selectors} from "./integration"
 import {LOG} from "./log"
 
 export const handleError = async (

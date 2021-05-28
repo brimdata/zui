@@ -1,4 +1,4 @@
-import {getAllStates} from "../../test/helpers/getTestState"
+import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 
 export default function addTargetToSearchRecord(state: any) {
   // Default search records to "events"

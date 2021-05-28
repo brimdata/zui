@@ -36,7 +36,7 @@ export default async function migrations(
 
   const files = await lib.file(dir).contents()
   const migrations = files
-    .filter(excludeTests)
+    .filter(onlyMigrations)
     .map(build)
     .sort((a, b) => a.version - b.version)
 
@@ -74,8 +74,9 @@ export default async function migrations(
   }
 }
 
-function excludeTests(file) {
-  return !/\.test\.(ts|js)/.test(file)
+function onlyMigrations(file) {
+  // only matching number then words then .ts
+  return /\d{12}_\w+\.(ts|js)/.test(file)
 }
 
 function build(file): Migration {

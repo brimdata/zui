@@ -1,5 +1,5 @@
 import createTestBrim from "test/integration/helpers/createTestBrim"
-import {currentPoolItem} from "src/js/test/locators"
+import {currentPoolItem} from "test/integration/helpers/locators"
 
 describe("deleting a pool", () => {
   const brim = createTestBrim("delete-pool.test")

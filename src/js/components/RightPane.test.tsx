@@ -4,8 +4,8 @@ import React from "react"
 import {createRecord} from "test/shared/factories/zed-factory"
 import Layout from "../state/Layout"
 import LogDetails from "../state/LogDetails"
-import loginTo from "../test/helpers/loginTo"
-import provide from "../test/helpers/provide"
+import loginTo from "../../../test/unit/helpers/loginTo"
+import provide from "../../../test/unit/helpers/provide"
 import {XRightPane} from "./RightPane"
 
 test("no errors if pool does not exist", async () => {

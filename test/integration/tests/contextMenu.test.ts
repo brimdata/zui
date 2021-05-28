@@ -1,5 +1,5 @@
 import createTestBrim from "test/integration/helpers/createTestBrim"
-import {viewerResults} from "src/js/test/locators"
+import {viewerResults} from "test/integration/helpers/locators"
 
 describe("context menu tests", () => {
   let brim = createTestBrim("context-menu-test")

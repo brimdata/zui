@@ -1,5 +1,5 @@
-import {getAllTabs} from "src/js/test/helpers/getTestState"
-import {migrate} from "src/js/test/helpers/migrate"
+import {getAllTabs} from "src/js/state/migrations/utils/getTestState"
+import {migrate} from "test/unit/helpers/migrate"
 
 test("migrating 202104291255_dropSpaces", async () => {
   const next = await migrate({state: "v0.24.0", to: "202104291255"})

@@ -1,4 +1,4 @@
-import {migrate} from "src/js/test/helpers/migrate"
+import {migrate} from "test/unit/helpers/migrate"
 
 test("migrating 202007151457_addScrollPosToSearchRecord", async () => {
   const next = await migrate({state: "v0.13.1", to: "202007151457"})

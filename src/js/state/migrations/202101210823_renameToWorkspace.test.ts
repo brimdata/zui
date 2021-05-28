@@ -1,5 +1,5 @@
-import {migrate} from "src/js/test/helpers/migrate"
-import {getAllStates} from "../../test/helpers/getTestState"
+import {migrate} from "test/unit/helpers/migrate"
+import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 
 test("migrating 202101210823_renameToWorkspace", async () => {
   expect.assertions(16)

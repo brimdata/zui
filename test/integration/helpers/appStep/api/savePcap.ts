@@ -3,8 +3,8 @@ import {Application} from "spectron"
 import {retryUntil} from "../../control"
 import {waitForClickableButtonAndClick} from "./click"
 import logStep from "../util/logStep"
-import {selectors} from "../../../../../src/js/test/integration"
-import {toastLocator} from "../../../../../src/js/test/locators"
+import {selectors} from "../../integration"
+import {toastLocator} from "../../locators"
 
 export default async (app: Application) => {
   await waitForClickableButtonAndClick(app, selectors.pcaps.button)

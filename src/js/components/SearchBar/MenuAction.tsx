@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
-import {reactElementProps} from "../../test/integration"
+import {reactElementProps} from "../../../../test/integration/helpers/integration"
 import Handlers from "../../state/Handlers"
 import InputAction from "./InputAction"
 import Modal from "../../state/Modal"

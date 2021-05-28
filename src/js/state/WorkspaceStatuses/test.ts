@@ -1,4 +1,4 @@
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import WorkspaceStatuses from "./"
 
 let store

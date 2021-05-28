@@ -1,6 +1,6 @@
 import {Application} from "spectron"
 import {HookName} from "src/js/state/SystemTest"
-import {hookLogLocator} from "src/js/test/locators"
+import {hookLogLocator} from "test/integration/helpers/locators"
 
 type WaitUntilOptions = {
   timeout?: number

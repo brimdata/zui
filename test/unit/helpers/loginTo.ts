@@ -1,11 +1,11 @@
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import {createZealotMock, ZealotMock} from "zealot"
-import Pools from "../../state/Pools"
-import Workspaces from "../../state/Workspaces"
-import {Workspace} from "../../state/Workspaces/types"
+import Pools from "../../../src/js/state/Pools"
+import Workspaces from "../../../src/js/state/Workspaces"
+import {Workspace} from "../../../src/js/state/Workspaces/types"
 import fixtures from "../fixtures"
-import initTestStore, {TestStore} from "../initTestStore"
+import initTestStore, {TestStore} from "./initTestStore"
 
 export default async function loginTo(
   workspaceName: string,

@@ -1,4 +1,7 @@
-import {getAllStates, getAllTabs} from "../../test/helpers/getTestState"
+import {
+  getAllStates,
+  getAllTabs
+} from "src/js/state/migrations/utils/getTestState"
 
 export default function dropSpaces(state: any) {
   // Default search records to "events"

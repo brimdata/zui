@@ -1,4 +1,4 @@
-import getTestState from "../../test/helpers/getTestState"
+import getTestState from "src/js/state/migrations/utils/getTestState"
 import migrate from "./202005261448_setInvestigationSpaceToNameAndId"
 
 test("migrating 202005261448_setInvestigationSpaceToNameAndId", () => {

@@ -3,7 +3,7 @@ import React, {useRef} from "react"
 import styled from "styled-components"
 
 import {cssVar} from "../../lib/cssVar"
-import {reactElementProps} from "../../test/integration"
+import {reactElementProps} from "../../../../test/integration/helpers/integration"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import SearchBar from "../../state/SearchBar"
 import CmdHistory from "app/core/models/cmd-history"

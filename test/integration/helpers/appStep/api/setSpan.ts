@@ -1,5 +1,5 @@
 import {Application} from "spectron"
-import {selectors} from "../../../../../src/js/test/integration"
+import {selectors} from "../../integration"
 import logStep from "../util/logStep"
 import {click} from "./click"
 

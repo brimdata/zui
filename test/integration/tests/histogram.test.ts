@@ -4,7 +4,7 @@ import appStep from "../helpers/appStep/api"
 import newAppInstance from "../helpers/newAppInstance"
 import {retryUntil} from "../helpers/control"
 import {handleError} from "../helpers/jest"
-import {selectors} from "../../../src/js/test/integration"
+import {selectors} from "../helpers/integration"
 import {LOG} from "../helpers/log"
 
 describe("Histogram tests", () => {

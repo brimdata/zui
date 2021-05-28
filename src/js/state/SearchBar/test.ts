@@ -9,8 +9,8 @@ import {
   appendQueryInclude
 } from "../../flows/searchBar/actions"
 import {submitSearch} from "../../flows/submitSearch/mod"
-import fixtures from "../../test/fixtures"
-import initTestStore from "../../test/initTestStore"
+import fixtures from "../../../../test/unit/fixtures"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Search from "../Search"
 import {SpanArgs} from "../Search/types"
 import Url from "../Url"

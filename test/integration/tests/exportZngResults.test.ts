@@ -3,10 +3,7 @@ import fsExtra from "fs-extra"
 import os from "os"
 import path from "path"
 
-import {
-  defaultModalButton,
-  toolbarExportButton
-} from "../../../src/js/test/locators"
+import {defaultModalButton, toolbarExportButton} from "../helpers/locators"
 import createTestBrim from "../helpers/createTestBrim"
 import waitForHook from "test/integration/helpers/appStep/api/waitForHook"
 

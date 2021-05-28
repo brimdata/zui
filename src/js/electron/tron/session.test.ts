@@ -3,10 +3,11 @@ import fsExtra from "fs-extra"
 import path from "path"
 import os from "os"
 
-import disableLogger from "../../test/helpers/disableLogger"
+import disableLogger from "../../../../test/unit/helpers/disableLogger"
 import formatSessionState from "./formatSessionState"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import tron from "./"
+import states from "test/unit/states"
 
 const dir = path.join(os.tmpdir(), "session.test.ts")
 const file = path.join(dir, "appState.json")
@@ -44,7 +45,7 @@ test("loading state from release 0.8.0 resets state", async () => {
 })
 
 test("loading state from a 0.9.1 release migrates", () => {
-  const testState = path.join(__dirname, "../../test/states/v0.9.1.json")
+  const testState = states.getPath("v0.9.1.json")
   fsExtra.copySync(testState, file)
   const session = tron.session(file)
 

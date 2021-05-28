@@ -1,5 +1,5 @@
 import Workspaces from "./"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import {Workspace} from "./types"
 
 let store

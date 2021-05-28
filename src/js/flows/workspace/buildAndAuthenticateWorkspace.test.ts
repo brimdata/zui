@@ -6,7 +6,7 @@ import {mocked} from "ts-jest/utils"
 import {createZealotMock} from "zealot"
 import Auth0Client from "../../auth0"
 import {AuthType} from "../../state/Workspaces/types"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import {
   buildAndAuthenticateWorkspace,
   ConnectionError,

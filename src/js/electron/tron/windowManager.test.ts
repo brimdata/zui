@@ -1,6 +1,6 @@
 import initIpcListeners from "src/js/initializers/initIpcListeners"
-import initTestStore from "src/js/test/initTestStore"
-import tron from "./"
+import initTestStore from "test/unit/helpers/initTestStore"
+import tron from "."
 
 let store = initTestStore()
 initIpcListeners(store, null)
