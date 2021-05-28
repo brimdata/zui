@@ -1,6 +1,7 @@
 const {join} = require("path")
 
 module.exports = {
+  name: "unit",
   globals: {
     "ts-jest": {
       babelConfig: true
@@ -18,6 +19,7 @@ module.exports = {
     "/node_modules/",
     "/itest/",
     "/dist/",
-    "<rootDir>/test/api/"
+    "<rootDir>/test/api/",
+    "<rootDir>/test/integration/"
   ]
 }

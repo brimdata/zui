@@ -4,7 +4,7 @@ import path from "path"
 import {testDataDir} from "../../env"
 import {click} from "./click"
 import logStep from "../util/logStep"
-import {selectors} from "../../../../src/js/test/integration"
+import {selectors} from "../../../../../src/js/test/integration"
 import waitForHook from "./waitForHook"
 
 export default async (app: Application, file: string) => {

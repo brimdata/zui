@@ -2,9 +2,9 @@ import {basename} from "path"
 
 import {sprintf} from "sprintf-js"
 
-import appStep from "../lib/appStep/api"
-import newAppInstance from "../lib/newAppInstance"
-import {handleError} from "../lib/jest"
+import appStep from "../helpers/appStep/api"
+import newAppInstance from "../helpers/newAppInstance"
+import {handleError} from "../helpers/jest"
 
 const simpleQueries = [
   "* | count()",

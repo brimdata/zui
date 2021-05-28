@@ -1,11 +1,11 @@
 import {basename} from "path"
 
-import appStep from "../lib/appStep/api"
-import newAppInstance from "../lib/newAppInstance"
-import {retryUntil} from "../lib/control"
-import {handleError} from "../lib/jest"
-import {selectors} from "../../src/js/test/integration"
-import {LOG} from "../lib/log"
+import appStep from "../helpers/appStep/api"
+import newAppInstance from "../helpers/newAppInstance"
+import {retryUntil} from "../helpers/control"
+import {handleError} from "../helpers/jest"
+import {selectors} from "../../../src/js/test/integration"
+import {LOG} from "../helpers/log"
 
 describe("Histogram tests", () => {
   let app

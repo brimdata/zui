@@ -1,4 +1,5 @@
 module.exports = {
+  name: "api",
   globals: {
     "ts-jest": {
       babelConfig: true

@@ -1,8 +1,8 @@
 import https from "https"
 
-import {retry} from "../lib/control"
+import {retry} from "../helpers/control"
 import ZeekLogDescriptions from "ppl/zeek/descriptions"
-import virusTotal from "../../src/js/services/virusTotal"
+import virusTotal from "../../../src/js/services/virusTotal"
 import zeekLogInfo from "ppl/zeek/logInfo"
 
 test("ping virus total for a success", () => {

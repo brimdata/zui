@@ -1,7 +1,7 @@
 import {Application} from "spectron"
 
 import logStep from "./logStep"
-import {selectors} from "../../../../src/js/test/integration"
+import {selectors} from "../../../../../src/js/test/integration"
 
 export default (app: Application) =>
   logStep("wait for results viewer to appear", async () =>

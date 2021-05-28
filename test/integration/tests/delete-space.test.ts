@@ -1,4 +1,4 @@
-import createTestBrim from "itest/lib/createTestBrim"
+import createTestBrim from "test/integration/helpers/createTestBrim"
 import {currentPoolItem} from "src/js/test/locators"
 
 describe("deleting a pool", () => {

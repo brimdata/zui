@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime"
 
 import {remove, mkdirp} from "fs-extra"
-import {itestDir} from "./lib/env"
+import {itestDir} from "../helpers/env"
 
 module.exports = async () => {
   await remove(itestDir())

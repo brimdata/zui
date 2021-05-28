@@ -9,9 +9,9 @@
   "scripts": {
     "build": "node scripts/build",
     "start": "node scripts/start",
-    "test": "jest",
-    "test:api": "node scripts/test/api",
-    "itest": "jest --config=itest/config.json --runInBand",
+    "test": "jest --projects test/unit",
+    "test:api": "jest --projects test/api",
+    "itest": "jest --projects test/integration",
     "lint": "eslint . --cache",
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "tsc": "tsc",

@@ -6,7 +6,7 @@ import Pools from "src/js/state/Pools"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "src/js/test/fixtures"
 import initTestStore from "src/js/test/initTestStore"
-import {useResponse} from "test/responses"
+import {useResponse} from "test/shared/responses"
 import {createZealotMock} from "zealot"
 import {histogramSearch} from "./histogram-search"
 

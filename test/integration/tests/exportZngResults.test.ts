@@ -6,9 +6,9 @@ import path from "path"
 import {
   defaultModalButton,
   toolbarExportButton
-} from "../../src/js/test/locators"
-import createTestBrim from "../lib/createTestBrim"
-import waitForHook from "itest/lib/appStep/api/waitForHook"
+} from "../../../src/js/test/locators"
+import createTestBrim from "../helpers/createTestBrim"
+import waitForHook from "test/integration/helpers/appStep/api/waitForHook"
 
 const filePath = path.join(os.tmpdir(), "results.zng")
 

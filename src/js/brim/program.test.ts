@@ -1,4 +1,4 @@
-import {createField, createRecord} from "test/factories/zed-factory"
+import {createField, createRecord} from "test/shared/factories/zed-factory"
 import {
   addHeadProc,
   getHeadCount,

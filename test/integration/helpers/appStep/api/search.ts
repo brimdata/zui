@@ -1,8 +1,8 @@
 import {Application} from "spectron"
 
 import logStep from "../util/logStep"
-import waitForResults from "../util//waitForResults"
-import {selectors} from "../../../../src/js/test/integration"
+import waitForResults from "../util/waitForResults"
+import {selectors} from "../../../../../src/js/test/integration"
 import {submitButton} from "src/js/test/locators"
 
 export const runSearch = async (app: Application, searchText: string) => {

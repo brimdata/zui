@@ -2,13 +2,13 @@ import {readFileSync, readdirSync, unlinkSync} from "fs"
 import md5 from "md5"
 import path from "path"
 
-import {LOG} from "../lib/log"
-import appStep from "../lib/appStep/api"
-import {pcapsDir} from "../lib/appStep/api/savePcap"
-import {runSearch} from "../lib/appStep/api/search"
-import newAppInstance from "../lib/newAppInstance"
-import {selectors} from "../../src/js/test/integration"
-import {handleError} from "../lib/jest"
+import {LOG} from "../helpers/log"
+import appStep from "../helpers/appStep/api"
+import {pcapsDir} from "../helpers/appStep/api/savePcap"
+import {runSearch} from "../helpers/appStep/api/search"
+import newAppInstance from "../helpers/newAppInstance"
+import {selectors} from "../../../src/js/test/integration"
+import {handleError} from "../helpers/jest"
 
 const clearPcaps = async (app) => {
   const dir = await pcapsDir(app)

@@ -1,6 +1,6 @@
 import {readFileSync} from "fs-extra"
 import {join} from "path"
-import * as config from "test/responses/config"
+import * as config from "test/shared/responses/config"
 
 const cache = {}
 

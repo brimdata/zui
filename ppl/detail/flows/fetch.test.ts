@@ -1,7 +1,7 @@
 import {last} from "lodash"
 import loginTo from "src/js/test/helpers/loginTo"
-import {createRecord} from "test/factories/zed-factory"
-import {useResponse} from "test/responses"
+import {createRecord} from "test/shared/factories/zed-factory"
+import {useResponse} from "test/shared/responses"
 import {fetchCorrelation} from "./fetch"
 
 const zeek = createRecord({

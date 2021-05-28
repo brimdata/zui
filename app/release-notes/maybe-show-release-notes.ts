@@ -6,9 +6,9 @@ import Tabs from "src/js/state/Tabs"
 
 const isItest = process.env.BRIM_ITEST === "true"
 
-export async function maybeShowReleaseNotes() {
-  const version = await metaClient.version()
-  return (dispatch, getState) => {
+export function maybeShowReleaseNotes() {
+  return async (dispatch, getState) => {
+    const version = await metaClient.version()
     if (!isItest && Launches.firstRunOfVersion(getState(), version)) {
       dispatch(showReleaseNotes())
       dispatch(Launches.touchVersion(version))
