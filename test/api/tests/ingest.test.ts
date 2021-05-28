@@ -31,7 +31,7 @@ test("ingest ndjson", () => {
     })
     await resp.array()
 
-    const {size} = await zealot.pools.get(pool.id)
+    const {size} = await zealot.pools.stats(pool.id)
     expect(size).toBe(4467)
   })
 })
