@@ -1,8 +1,6 @@
-import {data} from "msw/lib/types/context"
-
 export function pipeText(
   stream: ReadableStream<Uint8Array> | null | NodeJS.ReadableStream
-) {
+): AsyncGenerator<string, void> {
   if (!stream) return noop()
   // @ts-ignore
   if (stream.getReader) {
@@ -31,7 +29,9 @@ async function* browserPipeText(stream: ReadableStream<Uint8Array>) {
   }
 }
 
-function nodePipeText(stream: NodeJS.ReadableStream) {
+function nodePipeText(
+  stream: NodeJS.ReadableStream
+): AsyncGenerator<string, void> {
   let resolves = []
   let pending = []
 
@@ -54,7 +54,13 @@ function nodePipeText(stream: NodeJS.ReadableStream) {
   })
 
   return {
-    next() {
+    return() {
+      return Promise.resolve({done: true, value: null})
+    },
+    throw(e) {
+      return Promise.reject(e)
+    },
+    next(): Promise<IteratorResult<string, void>> {
       if (pending.length) {
         return Promise.resolve(pending.shift())
       } else {

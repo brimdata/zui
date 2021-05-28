@@ -7,7 +7,7 @@ import Tab from "../state/Tab"
 import Workspaces from "../state/Workspaces"
 import fixtures from "../test/fixtures"
 import initTestStore from "../test/initTestStore"
-import {itestFile} from "../test/itestFile"
+import data from "test/shared/data"
 import ingestFiles from "./ingestFiles"
 import BrimApi from "../api"
 import {mocked} from "ts-jest/utils"
@@ -58,7 +58,7 @@ describe("success case", () => {
   })
 
   test("opening a pcap", async () => {
-    await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
 
     const state = store.getState()
     expect(Tab.getPoolName(state)).toEqual("sample.pcap.brim")
@@ -78,7 +78,7 @@ describe("success case", () => {
   })
 
   test("register a handler with a space id", async () => {
-    await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
 
     const handler = store
       .getActions()
@@ -103,7 +103,7 @@ describe("success case", () => {
     ])
 
     await expect(
-      store.dispatch(ingestFiles([itestFile("sample.tsv")]))
+      store.dispatch(ingestFiles([data.getDOMFile("sample.tsv")]))
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
@@ -122,7 +122,7 @@ describe("error case", () => {
       }
     ])
     await expect(
-      store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+      store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
@@ -142,7 +142,7 @@ describe("error case", () => {
       }
     ])
 
-    await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
 
     const state = store.getState()
     const wsId = Current.getWorkspaceId(state)
