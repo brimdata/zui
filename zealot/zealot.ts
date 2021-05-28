@@ -4,11 +4,15 @@ import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
 import {
   SearchArgs,
+  Response,
   PoolArgs,
+  PoolConfig,
+  PoolStats,
   LogsPostArgs,
   ZealotArgs,
   LogsPostPathsArgs
 } from "./types"
+import {Context, Int64, Record, Time} from "./zed"
 import {IndexSearchArgs} from "./api/archive"
 
 export function createZealot(
@@ -48,14 +52,34 @@ export function createZealot(
       }
     },
     pools: {
-      list: () => {
-        return promise(pools.list())
+      list: async (): Promise<PoolConfig[]> => {
+        let values: Response<PoolConfig>[] = await promise(pools.list())
+        if (!values) return []
+        return values.map((res) => res.value)
       },
-      get: (id: string) => {
-        return promise(pools.get(id))
+      get: async (id: string): Promise<PoolConfig> => {
+        let res = await promise(pools.get(id))
+        return res.value
       },
-      create: (args: PoolArgs) => {
-        return promise(pools.create(args))
+      stats: async (id: string): Promise<PoolStats> => {
+        const res = await promise(pools.stats(id))
+        const rec = new Context().decodeRecord(res)
+        const stats: PoolStats = {
+          size: rec.get<Int64>("size").toInt(),
+          span: null
+        }
+        const spanRec = rec.get<Record>("span")
+        if (!spanRec.null) {
+          stats.span = {
+            ts: spanRec.get<Time>("ts").toBigInt(),
+            dur: spanRec.get<Int64>("dur").toBigInt()
+          }
+        }
+        return stats
+      },
+      create: async (args: PoolArgs): Promise<PoolConfig> => {
+        let res = await promise(pools.create(args))
+        return res.value
       },
       delete: (id: string) => {
         return promise(pools.delete(id))

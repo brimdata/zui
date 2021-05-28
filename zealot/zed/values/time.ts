@@ -5,6 +5,7 @@ import {
   LocalDateTime,
   nativeJs,
   ZonedDateTime,
+  ZoneOffset,
   ZoneId
 } from "@js-joda/core"
 import {TypeTime} from "../types/type-time"
@@ -37,6 +38,12 @@ export class Time extends Primitive {
   toDate() {
     if (isNull(this._time)) return null
     return convert(this._time).toDate()
+  }
+
+  toBigInt(): bigint {
+    if (isNull(this._time)) return 0n
+    let secs = this._time.toEpochSecond(ZoneOffset.UTC)
+    return BigInt(secs) * 1_000_000_000n + BigInt(this._time.nano())
   }
 }
 

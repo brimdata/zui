@@ -3,6 +3,7 @@ import {LogsPostArgs, LogsPostPathsArgs} from "../types"
 export default {
   post({poolId, files}: LogsPostArgs) {
     return {
+      headers: new Headers({Accept: "application/json"}),
       method: "POST",
       path: `/pool/${encodeURIComponent(poolId)}/log`,
       body: getBody(files)

@@ -24,6 +24,13 @@ export type SearchFormat = "zjson" | "zng" | "ndjson" | "csv"
 
 export type Order = "desc" | "asc"
 
+export type Key = string[]
+
+export interface Response<T> {
+  kind: string
+  value: T
+}
+
 export interface SearchArgs {
   from: Date | Ts | bigint
   to: Date | Ts | bigint
@@ -36,7 +43,7 @@ export interface SearchArgs {
 
 export interface PoolArgs {
   name: string
-  order?: Order
+  layout?: Layout
 }
 
 export interface LogsPostArgs {
@@ -51,12 +58,28 @@ export interface LogsPostPathsArgs {
   types?: any
 }
 
+export interface Layout {
+  order: Order
+  keys: Key[]
+}
+
 export interface Ts {
   sec: number
   ns: number
 }
 
-export interface Pool {
+export interface Span {
+  ts: BigInt
+  dur: BigInt
+}
+
+export interface PoolConfig {
   name: string
   id: string
+  layout: Layout
+}
+
+export interface PoolStats {
+  size: number
+  span?: Span
 }

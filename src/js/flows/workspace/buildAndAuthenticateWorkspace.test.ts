@@ -76,6 +76,7 @@ describe("success cases", () => {
     zealot
       .stubPromise("version", fixtures.version)
       .stubPromise("pools.list", [{name: "dataPool", id: "1"}], "always")
+      .stubPromise("pools.stats", {}, "always")
   })
 
   test("new public workspace", async () => {
