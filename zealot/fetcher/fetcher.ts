@@ -6,7 +6,6 @@ import {createStream} from "./stream"
 import {createError} from "../util/error"
 import {createPushableIterator} from "./pushable_iterator"
 import {parseLines} from "../ndjson/lines"
-import fetch from "cross-fetch"
 
 export type FetchArgs = {
   path: string

@@ -19,6 +19,7 @@ const fs = require("fs-extra")
 const glob = require("glob")
 const config = require("../../test/shared/responses/config")
 const flags = require("../util/flags")
+const {normalize} = require("path")
 
 function saveResponse(input, output, query) {
   const search = fork("./scripts/test/search", [input, query], {
@@ -46,8 +47,8 @@ async function main() {
 
   for (const key in config) {
     const {input, output, query} = config[key]
-    const inFile = `test/shared/data/${input}`
-    const outFile = `test/shared/responses/${output}`
+    const inFile = normalize(`test/shared/data/${input}`)
+    const outFile = normalize(`test/shared/responses/${output}`)
     await saveResponse(inFile, outFile, query)
   }
 }
