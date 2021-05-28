@@ -7,24 +7,33 @@
  *
  * Before running this, run these commands once:
  *   1. npm install # to install the desired version of zqd
+ *   2. npm run build # to build some test files we need
  *
  *  Then run this script: node scripts/test/responses.js
+ *  To save the responses, use the --save option
+ *  To not print to stdio, use the --silent option
  */
 
 const {fork} = require("child_process")
 const fs = require("fs-extra")
 const glob = require("glob")
 const config = require("../../test/shared/responses/config")
+const flags = require("../util/flags")
 
 function saveResponse(input, output, query) {
   const search = fork("./scripts/test/search", [input, query], {
     shell: true,
     silent: true
   })
-  const out = fs.createWriteStream(output)
-  search.stdout.pipe(out)
-  search.stdout.pipe(process.stdout)
-  search.stderr.pipe(process.stderr)
+
+  if (flags.save) {
+    const out = fs.createWriteStream(output)
+    search.stdout.pipe(out)
+  }
+  if (!flags.silent) {
+    search.stdout.pipe(process.stdout)
+    search.stderr.pipe(process.stderr)
+  }
   return new Promise((resolve) => {
     search.on("close", () => {
       resolve()
@@ -42,5 +51,4 @@ async function main() {
     await saveResponse(inFile, outFile, query)
   }
 }
-
 main()

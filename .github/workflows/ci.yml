@@ -52,6 +52,7 @@ jobs:
       - run: npm run tsc
       - run: npm test -- --maxWorkers=2 --ci
       - run: npm run test:api
+      - run: npm run generate-responses -- --silent
       - name: Build Linux Packages
         if: runner.os == 'Linux'
         run: |

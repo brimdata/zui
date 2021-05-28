@@ -14,6 +14,7 @@
     "itest": "jest --projects test/integration",
     "lint": "eslint . --cache",
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
+    "generate-responses": "node scripts/test/responses",
     "tsc": "tsc",
     "format-check": "npm run format && git diff --exit-code -- src itest",
     "release": "npx electron-builder --mac",
