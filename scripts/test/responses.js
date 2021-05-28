@@ -11,23 +11,22 @@
  *  Then run this script: node scripts/test/responses.js
  */
 
-const {spawn} = require("child_process")
+const {fork} = require("child_process")
 const fs = require("fs-extra")
 const glob = require("glob")
-const config = require("../../test/responses/config")
+const config = require("../../test/shared/responses/config")
 
 function saveResponse(input, output, query) {
-  const deno = spawn(
-    "deno",
-    [`run --allow-all scripts/test/search.deno.ts '${input}' '${query}'`],
-    {shell: true}
-  )
+  const search = fork("./scripts/test/search", [input, query], {
+    shell: true,
+    silent: true
+  })
   const out = fs.createWriteStream(output)
-  deno.stdout.pipe(out)
-  deno.stdout.pipe(process.stdout)
-  deno.stderr.pipe(process.stderr)
+  search.stdout.pipe(out)
+  search.stdout.pipe(process.stdout)
+  search.stderr.pipe(process.stderr)
   return new Promise((resolve) => {
-    deno.on("close", () => {
+    search.on("close", () => {
       resolve()
     })
   })
@@ -38,8 +37,8 @@ async function main() {
 
   for (const key in config) {
     const {input, output, query} = config[key]
-    const inFile = `test/data/${input}`
-    const outFile = `test/responses/${output}`
+    const inFile = `test/shared/data/${input}`
+    const outFile = `test/shared/responses/${output}`
     await saveResponse(inFile, outFile, query)
   }
 }

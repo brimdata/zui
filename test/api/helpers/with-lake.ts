@@ -3,20 +3,15 @@ import {join} from "path"
 import fs from "fs-extra"
 import {spawn, ChildProcess} from "child_process"
 
-const DIR = __dirname
-const ZED_LAKE_ROOT = join(DIR, "../lake_root")
-const ZED_RUNNER = join(DIR, "../../../zdeps/zed")
-const ADDR = "localhost:9119"
-function createDataDir() {
-  fs.mkdirSync(ZED_LAKE_ROOT)
+function createDataDir(root) {
+  fs.mkdirSync(root)
 }
 
-function removeDataDir() {
-  fs.removeSync(ZED_LAKE_ROOT)
+function removeDataDir(root) {
+  fs.removeSync(root)
 }
 
 async function kill(lake: ChildProcess, client: any) {
-  removeDataDir()
   lake.kill()
   await until(
     () =>
@@ -30,8 +25,8 @@ async function kill(lake: ChildProcess, client: any) {
   )
 }
 
-async function start() {
-  return spawn(ZED_RUNNER, ["lake", "serve", "-R", ZED_LAKE_ROOT, "-l", ADDR], {
+async function start(runner, root, addr) {
+  return spawn(runner, ["lake", "serve", "-R", root, "-l", addr], {
     stdio: null, // make this "inherit" to debug a problem
     shell: true
   })
@@ -62,17 +57,38 @@ async function until(
   })
 }
 
-export async function withLake(fn: (zealot: any) => any) {
-  removeDataDir()
-  createDataDir()
-  const lake = await start()
-  const zealot = createZealot(ADDR)
+type Config = {
+  addr?: string
+  root?: string
+  runner?: string
+}
+
+export async function withLake(fn: (zealot: any) => any, config: Config = {}) {
+  const DIR = __dirname
+  const ZED_LAKE_ROOT = join(DIR, "../lake_root")
+  const ZED_RUNNER = join(DIR, "../../../zdeps/zed")
+  const ADDR = "localhost:9119"
+
+  const root = config.root || ZED_LAKE_ROOT
+  const runner = config.runner || ZED_RUNNER
+  const addr = config.addr || ADDR
+
+  removeDataDir(root)
+  createDataDir(root)
+
+  const lake = await start(runner, root, addr)
+  const zealot = createZealot(addr)
   await until(
     () =>
       zealot
         .status()
         .then((ok: string) => ok === "ok")
-        .catch((_e) => false),
+        .catch((e) => {
+          if (!/ECONNREFUSED/.test(e.toString())) {
+            console.log(e)
+          }
+          return false
+        }),
     10_000,
     1,
     "Unable to start zed lake"
@@ -80,6 +96,7 @@ export async function withLake(fn: (zealot: any) => any) {
   try {
     await fn(zealot)
   } finally {
+    removeDataDir(root)
     await kill(lake, zealot)
   }
 }

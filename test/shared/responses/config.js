@@ -3,7 +3,7 @@
 
 module.exports = {
   dns: {
-    query: "_path=dns",
+    query: '_path=="dns"',
     input: "sample.tsv",
     output: "dns.response"
   },
