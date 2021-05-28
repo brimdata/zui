@@ -1,14 +1,12 @@
 /**
  * This will spin up a new instance of zqd for each of the responses
  * saved in the config file, ingest the input file, run the query,
- * and save the response in the output file. It uses Deno to manage
- * the zqd process and the zealot calls. (search.deno.ts)
+ * and save the response in the output file.
  *
  * It will use the zqd bundled in zdeps.
  *
  * Before running this, run these commands once:
  *   1. npm install # to install the desired version of zqd
- *   2. npx rollup -c --silent # to bundle the current version of zealot
  *
  *  Then run this script: node scripts/test/responses.js
  */
