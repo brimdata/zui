@@ -28,8 +28,7 @@ async function kill(lake: ChildProcess, client: any) {
 
 async function start(runner, root, addr) {
   return spawn(runner, ["lake", "serve", "-R", root, "-l", addr], {
-    stdio: null, // make this "inherit" to debug a problem
-    shell: true
+    stdio: null // make this "inherit" to debug a problem
   })
 }
 
