@@ -2,6 +2,7 @@ import {createZealot} from "zealot"
 import {join} from "path"
 import fs from "fs-extra"
 import {spawn, ChildProcess} from "child_process"
+import fkill from "fkill"
 
 function createDataDir(root) {
   fs.mkdirSync(root)
@@ -12,7 +13,7 @@ function removeDataDir(root) {
 }
 
 async function kill(lake: ChildProcess, client: any) {
-  lake.kill()
+  await fkill(lake.pid)
   await until(
     () =>
       client
