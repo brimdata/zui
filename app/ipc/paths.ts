@@ -12,6 +12,7 @@ class Paths {
       exe("brimcap")
     )
   }
+
   root() {
     return app.getAppPath()
   }

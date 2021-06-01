@@ -23,12 +23,16 @@ import {reactElementProps} from "../../../test/integration/helpers/integration"
 export default function HTMLContextMenu() {
   const [template, setTemplate] = useState(null)
   const openMenu = (e) => setTemplate(e.detail)
-  useEventListener(document, "click", () => setTemplate(null), [])
+
   useEventListener(document, "nativeContextMenu", openMenu, [])
 
   if (!template) return null
   return ReactDOM.createPortal(
-    <div className="html-context-menu" {...reactElementProps("contextMenu")}>
+    <div
+      className="html-context-menu"
+      {...reactElementProps("contextMenu")}
+      onClick={() => setTemplate(null)}
+    >
       <ul>
         {template.map((item, i) => (
           <HTMLMenuItem item={item} key={i} />

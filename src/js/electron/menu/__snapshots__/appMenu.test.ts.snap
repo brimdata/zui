@@ -178,11 +178,13 @@ Array [
       Object {
         "accelerator": "CmdOrCtrl+[",
         "click": [Function],
+        "id": "toggle-left-pane",
         "label": "Toggle Left Pane",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
         "click": [Function],
+        "id": "toggle-right-pane",
         "label": "Toggle Right Pane",
       },
       Object {
@@ -385,11 +387,13 @@ Array [
       Object {
         "accelerator": "CmdOrCtrl+[",
         "click": [Function],
+        "id": "toggle-left-pane",
         "label": "Toggle Left Pane",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
         "click": [Function],
+        "id": "toggle-right-pane",
         "label": "Toggle Right Pane",
       },
       Object {

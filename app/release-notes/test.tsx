@@ -6,7 +6,7 @@ import ReleaseNotes from "./release-notes"
 
 server.use(
   rest.get(
-    "https://api.github.com/repos/brimdata/brim/releases/tags/*",
+    "https://api.github.com/repos/brimdata/brim/releases/tags/v0.0.0",
     (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({body: "Testing Release Notes"}))
     }
