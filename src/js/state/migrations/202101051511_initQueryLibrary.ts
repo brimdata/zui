@@ -1,4 +1,4 @@
-import {getAllStates} from "src/js/test/helpers/getTestState"
+import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 
 export default function initQueryLibrary(state: any) {
   // Migrate state here

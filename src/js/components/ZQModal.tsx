@@ -2,7 +2,7 @@ import {useSelector} from "react-redux"
 import React from "react"
 import {join} from "path"
 
-import {reactElementProps} from "../test/integration"
+import {reactElementProps} from "../../../test/integration/helpers/integration"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import clickFeedback from "./clickFeedback"

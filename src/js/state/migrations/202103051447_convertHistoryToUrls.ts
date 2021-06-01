@@ -1,5 +1,8 @@
 import {lakeSearchPath} from "app/router/utils/paths"
-import {getAllStates, getAllTabs} from "src/js/test/helpers/getTestState"
+import {
+  getAllStates,
+  getAllTabs
+} from "src/js/state/migrations/utils/getTestState"
 import {parsePath} from "history"
 
 /**

@@ -1,4 +1,4 @@
-import getTestState from "../../test/helpers/getTestState"
+import getTestState from "src/js/state/migrations/utils/getTestState"
 import migrate from "./202006091248_moveSidebarViewToTabLayout"
 
 test("migrating 202006091248_moveSidebarViewToTabLayout", () => {

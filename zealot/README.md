@@ -1,12 +1,6 @@
 # Zealot Client
 
-The Zealot Client is responsible for communicating with the zqd process via the rest api. It can ingest data, search data, get the list of spaces, and more. This folder is a Deno project written in TypeScript. You'll need to have that installed to run the tests and create the bundle.
-
-### Installation
-
-```
-brew install deno
-```
+The Zealot Client is responsible for communicating with the zqd process via the rest api. It can ingest data, search data, get the list of spaces, and more.
 
 ### Usage
 

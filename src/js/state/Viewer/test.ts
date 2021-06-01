@@ -1,6 +1,6 @@
-import {createRecord} from "test/factories/zed-factory"
+import {createRecord} from "test/shared/factories/zed-factory"
 import {zed} from "zealot"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
 

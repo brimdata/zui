@@ -2,8 +2,8 @@ import React from "react"
 
 import FindingCard from "./FindingCard"
 import brim from "../../brim"
-import loginTo from "../../test/helpers/loginTo"
-import provide from "../../test/helpers/provide"
+import loginTo from "../../../../test/unit/helpers/loginTo"
+import provide from "../../../../test/unit/helpers/provide"
 import {Finding} from "src/js/state/Investigation/types"
 
 let store

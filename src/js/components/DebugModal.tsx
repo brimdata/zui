@@ -2,7 +2,7 @@ import {useSelector} from "react-redux"
 import Prism from "prismjs"
 import React, {useState} from "react"
 
-import {reactElementProps} from "../test/integration"
+import {reactElementProps} from "../../../test/integration/helpers/integration"
 import InputField from "./common/forms/InputField"
 import InputLabel from "./common/forms/InputLabel"
 import SearchBar from "../state/SearchBar"

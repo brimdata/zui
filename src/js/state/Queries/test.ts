@@ -1,4 +1,4 @@
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Queries from "./"
 import {Group} from "./types"
 import get from "lodash/get"

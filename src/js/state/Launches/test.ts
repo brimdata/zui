@@ -1,5 +1,5 @@
 import Launches from "./index"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 
 beforeAll(() => {
   jest.useFakeTimers("modern")

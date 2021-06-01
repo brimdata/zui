@@ -11,7 +11,10 @@ import Current from "../state/Current"
 import {Pool} from "../state/Pools/types"
 import {AppDispatch} from "../state/types"
 import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
-import {currentPoolItem, poolItem} from "../test/locators"
+import {
+  currentPoolItem,
+  poolItem
+} from "../../../test/integration/helpers/locators"
 import EmptySection from "./common/EmptySection"
 import ProgressIndicator from "./ProgressIndicator"
 import PoolIcon from "./PoolIcon"

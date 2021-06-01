@@ -12,7 +12,7 @@ import {ipcRenderer} from "electron"
 import {useDispatch} from "react-redux"
 import {SearchFormat} from "../../../zealot"
 import InputLabel from "./common/forms/InputLabel"
-import {defaultModalButton} from "../test/locators"
+import {defaultModalButton} from "../../../test/integration/helpers/locators"
 import {toast} from "react-hot-toast"
 import {AppDispatch} from "../state/types"
 

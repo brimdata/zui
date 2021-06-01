@@ -1,4 +1,4 @@
-import initTestStore from "src/js/test/initTestStore"
+import initTestStore from "test/unit/helpers/initTestStore"
 import Configs, {Config, ConfigItem} from "./index"
 
 const testProperty1: ConfigItem = {

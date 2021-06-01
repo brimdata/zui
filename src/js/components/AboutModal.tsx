@@ -6,7 +6,7 @@ import electronIsDev from "../electron/isDev"
 import LogoType from "../icons/LogoType"
 import Octocat from "../icons/Octocat"
 import open from "../lib/open"
-import {reactElementProps} from "../test/integration"
+import {reactElementProps} from "../../../test/integration/helpers/integration"
 import ModalBox from "./ModalBox/ModalBox"
 import TextContent from "./TextContent"
 

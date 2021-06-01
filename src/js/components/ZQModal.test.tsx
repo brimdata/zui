@@ -3,8 +3,8 @@ import React from "react"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
 import ZQModal from "./ZQModal"
-import logInto from "../test/helpers/loginTo"
-import provide from "../test/helpers/provide"
+import logInto from "../../../test/unit/helpers/loginTo"
+import provide from "../../../test/unit/helpers/provide"
 
 test("renders with zq get command", async () => {
   const {store} = await logInto("workspace1", "pool1")

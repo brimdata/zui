@@ -8,9 +8,9 @@ import Search from "../../../state/Search"
 import SearchBar from "../../../state/SearchBar"
 import Pools from "../../../state/Pools"
 import Workspaces from "../../../state/Workspaces"
-import fixtures from "../../../test/fixtures"
-import initTestStore from "../../../test/initTestStore"
-import responses from "../../../test/responses"
+import fixtures from "../../../../../test/unit/fixtures"
+import initTestStore from "../../../../../test/unit/helpers/initTestStore"
+import responses from "../../../../../test/unit/responses"
 import {submitSearch} from "../mod"
 
 const dnsResp = responses("dns.txt")

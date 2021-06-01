@@ -3,7 +3,6 @@ import stream from "stream"
 
 function toNodeReadable(reader) {
   return new stream.Readable({
-    // #$FlowFixMe
     read: async function() {
       const {done, value} = await reader.read()
       this.push(done ? null : value)

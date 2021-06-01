@@ -1,5 +1,5 @@
 import {zed} from "zealot"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Columns from "./"
 import actions from "./actions"
 import {createColumn} from "./models/column"
