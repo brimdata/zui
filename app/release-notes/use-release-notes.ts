@@ -1,7 +1,7 @@
 import {metaClient} from "app/ipc/meta"
-import {useEffect, useState, version} from "react"
+import {useEffect, useState} from "react"
 
-async function fetchNotes() {
+async function fetchNotes(version) {
   const repo = await metaClient.repo()
 
   const url = `https://api.github.com/repos/${repo}/releases/tags/v${version}`
@@ -35,7 +35,7 @@ export function useReleaseNotes() {
       .version()
       .then((v) => {
         setVersion(v)
-        return fetchNotes()
+        return fetchNotes(v)
       })
       .then((n) => setNotes(n))
       .catch((e) => setNotes(e.toString()))
