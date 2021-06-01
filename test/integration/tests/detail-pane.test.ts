@@ -24,7 +24,12 @@ maybeSkip("Detail Pane", () => {
     await brim.click($.viewerCellContaining(path))
     const sections = await brim.findAll($.detailPaneSections)
     const headers = await Promise.all(sections.map((s) => s.getText()))
-    expect(headers.map(toLower)).toEqual(expect.arrayContaining(sectionNames))
+    try {
+      expect(headers.map(toLower)).toEqual(expect.arrayContaining(sectionNames))
+    } catch (e) {
+      await brim.takeScreenshot()
+      throw e
+    }
   }
 
   test("for capture loss", () => {
