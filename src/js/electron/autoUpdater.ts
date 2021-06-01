@@ -1,18 +1,20 @@
+import {meta} from "app/ipc/meta"
 import {app, dialog} from "electron"
-import {autoUpdater} from "electron-updater"
 import log from "electron-log"
-import get from "lodash/get"
+import {autoUpdater} from "electron-updater"
 import got from "got"
+import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../lib/open"
 
-const getFeedURLForPlatform = (platform) => {
-  return `https://update.electronjs.org/brimdata/brim/${platform}/${app.getVersion()}`
+const getFeedURLForPlatform = (repo, platform) => {
+  return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
 }
 
-const getLatestVersion = async (): Promise<string> => {
+export const getLatestVersion = async (): Promise<string> => {
   // Check for updates for MacOS and if there are then we assume there is also one for our other supported OSs
-  const url = getFeedURLForPlatform("darwin-x64")
+  const repo = meta.repo()
+  const url = getFeedURLForPlatform(repo, "darwin-x64")
   const resp = await got(url)
 
   // the update server responds with a 204 and no body if the current version is the same as the

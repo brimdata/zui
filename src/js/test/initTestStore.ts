@@ -1,18 +1,16 @@
 import {configureStore} from "@reduxjs/toolkit"
 import {createZealotMock, Zealot} from "zealot"
+import BrimApi from "../api"
 import initGlobals from "../initializers/initGlobals"
 import rootReducer from "../state/rootReducer"
-import {Action, State} from "../state/types"
-import BrimApi from "../api"
+import {Action, State, Store} from "../state/types"
 
 export type TestStore = {
-  dispatch: Function
   dispatchAll: Function
   getActions: Function
   getActionTypes: Function
   clearActions: Function
-  getState: () => State
-}
+} & Store
 
 export default (zealot?: Zealot, api?: BrimApi): TestStore => {
   const client = zealot || createZealotMock().zealot

@@ -4,7 +4,6 @@ import {join} from "path"
 import {createClient} from "src/pkg/electron-ipc-service"
 
 const exe = (name) => (os.platform() === "win32" ? `${name}.exe` : name)
-
 class Paths {
   brimcap() {
     return join(
@@ -13,8 +12,13 @@ class Paths {
       exe("brimcap")
     )
   }
+
   root() {
     return app.getAppPath()
+  }
+
+  packageJSON() {
+    return join(this.root(), "package.json")
   }
 }
 

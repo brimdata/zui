@@ -1,4 +1,3 @@
-import {getVersion} from "app/core/utils/get-version"
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import Link from "src/js/components/common/Link"
@@ -30,10 +29,10 @@ const components = {
   }
 }
 
-const version = getVersion()
-
 export default function ReleaseNotes() {
-  const notes = useReleaseNotes(version)
+  const {notes, version, fetching} = useReleaseNotes()
+
+  if (fetching) return null
 
   return (
     <Scrollable>
