@@ -1,4 +1,4 @@
-import * as locators from "src/js/test/locators"
+import * as locators from "./locators"
 import {quote} from "./utils"
 
 export default class BrimSelectors {

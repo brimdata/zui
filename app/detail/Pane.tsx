@@ -14,7 +14,7 @@ import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
 import {zed} from "zealot"
-import {detailPane} from "src/js/test/locators"
+import {detailPane} from "test/integration/helpers/locators"
 
 const BG = styled.div`
   padding: 12px;

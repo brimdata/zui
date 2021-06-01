@@ -1,4 +1,4 @@
-import itest from "itest/lib/itest"
+import itest from "../helpers/itest"
 import {toLower} from "lodash"
 
 describe("Detail Pane", () => {
