@@ -11,12 +11,12 @@ The tests use Jest and Spectron.
 - https://www.electronjs.org/spectron
 - https://github.com/electron-userland/spectron
 
-# Requirements
+## Requirements
 
 1. `npm install`
 1. `npm run build`
 
-# To Run
+## To Run
 
 `npm run itest`
 
@@ -30,40 +30,93 @@ You can also run individual files like:
 See `npm run itest -- --help` for more, or see [Jest
 docs](https://jestjs.io/docs/getting-started).
 
-# Code Layout
+## Code Layout
 
-- `itest/lib/app.ts`: common tasks for performing actions in Brim
-- `itest/lib/control.ts`: control flow functions
-- `itest/lib/jest.ts`: Jest-specific adjustments to test behavior
-- `itest/lob/log.ts`: System-wide logging setup
-- `itest/tests`: Tests, broken down by general feature/functionality
-- `src/js/test/integration.ts`: Single source of truth to define
-  test and app interactions, like derivation of selectors.
+- `itest/lib/`:  test support code
+- `itest/tests/`: the test cases
+- `itest/testdata/`: sample logs and pcaps to ingest
 
-# Code and Commit Style
+## Adding a New Integration Test
 
-Please use the same commit style as the rest of the code base. Code is
-expected to pass lint/typecheck/format. There is a CI check for this.
+Writing an integration test usually involves performing an action in the UI, 
+finding an element in the DOM, and asserting it contains the expected value.
 
-# Adding a New Integration Test
+For example:
 
-1. If the integration test needs to interact with one or more elements,
-   ensure they are defined
-   1. At `src/js/test/integration.ts`
-   1. In their source. In most cases you can import and use the
-      `reactElementProps()` function.
-1. Add methods to `itest/lib/app.ts` to interact with elements. For now
-   I'm keeping these short. Recently I've begun to wrap them in
-   `appStep()` for better debugging capabilties. The API to work with
-   here is for [WebdriverIO v4](http://v4.webdriver.io/api.html).
-   These tend to return promises, so write your methods accordingly.
-1. Add tests in `itest/test`. Right now there's a lot of copying you
-   must do. I haven't abstracted first-class test steps yet.
-1. Run your tests locally via `npm run itest`.
-1. Make sure your tests pass in CI. Pushing a branch will automatically
-   trigger an execution of the integration tests.
+```js
+import itest from "../lib/itest"
 
-# Updating Snapshots
+describe("ingest and check viewer count", () => {
+   const [brim, $] = itest("ingest-viewer-count")
+
+   beforeAll(() => brim.ingest("sample.tsv"))
+   
+   test("row count", () => {
+      const rows = brim.findAll($.viewerRows)
+      expect(rows.length).toBe(30)
+   })
+})
+```
+
+The helper function `itest()` must be called within a describe block. It takes a string
+name argument that is used for the log file of this test run. It returns an instance of
+ `BrimDriver` (`brim`) and `BrimSelectors` (`$`).
+
+You can think of these classes like this:
+
+1. **BrimDriver**: Performs actions (click, input, ingest...)
+2. **BrimSelectors**: Creates string selectors for known elements (viewer headers, detail pane...)
+
+## Element Locators
+
+When you need to find a known element, tag it in the code with a locator. A locator provides
+a maintainable way to keep track of which elements are needed for integration tests.
+
+```js
+type Locator = {
+   css: string // a css selector
+   xpath: string // an xpath selector
+   props: {data-test-locator: string} // props to pass to the react component
+}
+```
+
+First create one in `src/js/test/locators.ts`.
+
+```js
+// The argument will be the value of the data attribute.
+export const detailPane = createLocator("detail-pane")
+```
+
+Add it to your component.
+
+```js
+import {detailPane} from "../test/locators"
+
+<DetailPane {...detailPane.props}>
+```
+
+Add it to the Brim Selectors class.
+
+```js
+class BrimSelectors {
+   detailPane = detailPane.css
+}
+```
+
+Now you can find the detail pane in the test cases.
+
+```js
+   const [brim, $] = itest()
+
+   test("find the detail pane", () => {
+      brim.find($.detailPane)
+   })
+```
+
+> Selectors in the BrimSelectors class don't need to be locator instances,
+but having a locator will signal to developers that an integration test needs that
+component.
+## Updating Snapshots
 
 You might need to update snapshots for one or more integration tests.
 The mechanism to do this is:

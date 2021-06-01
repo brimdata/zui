@@ -14,6 +14,7 @@ import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
 import {zed} from "zealot"
+import {detailPane} from "src/js/test/locators"
 
 const BG = styled.div`
   padding: 12px;
@@ -36,7 +37,7 @@ const Content = memo<Props>(function Content({record}) {
   const hasMd5 = isZeek && record.has("md5")
 
   return (
-    <BG className="detail-pane-content">
+    <BG className="detail-pane-content" {...detailPane.props}>
       <div className="column">
         <Fields record={record} />
       </div>

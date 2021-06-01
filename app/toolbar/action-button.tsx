@@ -1,8 +1,8 @@
 import Icon, {IconName} from "app/core/Icon"
-import React from "react"
-import Label from "./label"
-import Button from "./button"
 import {MenuItemConstructorOptions} from "electron/main"
+import React from "react"
+import Button from "./button"
+import Label from "./label"
 
 export function toMenu(
   actions: ActionButtonProps[]
@@ -29,6 +29,7 @@ const ActionButton = (props: ActionButtonProps) => {
   return (
     <div title={props.title}>
       <Button
+        aria-label={props.label}
         onClick={props.click}
         icon={<Icon name={props.icon} />}
         disabled={props.disabled}
