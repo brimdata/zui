@@ -118,7 +118,6 @@ Additionally, we rely heavily on the node modules listed here:
 
 - [Jest ](https://jestjs.io/docs/en/getting-started) Unit tests are run with `npm run test`
 - [Spectron](https://www.electronjs.org/spectron) Used for integration testing `npm run itest`
-- [Enzyme](https://enzymejs.github.io/enzyme/docs/api/) Used only a little for testing Components
 
 ## Patterns
 

@@ -15,5 +15,6 @@ test("no errors if pool does not exist", async () => {
   store.dispatch(tabHistory.push(workspacesPath()))
   store.dispatch(LogDetails.push(createRecord({})))
   const el = provide(store, <XRightPane />)
-  expect(el.html()).toBe("")
+
+  expect(el.container.innerHTML).toBe("")
 })
