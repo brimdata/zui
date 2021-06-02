@@ -62,7 +62,7 @@ npx jest Client.test.js -t "increment by one" # Run a single test by name
 npx jest --watch                              # Run all tests on every change
 ```
 
-For integration tests, see [itest/README.md](itest/README.md).
+For integration tests, see [test/integration/README.md](test/integration/README.md).
 
 **Snapshots**
 
