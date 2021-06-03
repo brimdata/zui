@@ -1,9 +1,7 @@
 import {toLower} from "lodash"
 import itest from "../helpers/itest"
 
-const maybeSkip = process.platform === "win32" ? describe.skip : describe
-
-maybeSkip("Detail Pane", () => {
+describe("Detail Pane", () => {
   // Names of the sections to test for
   const FIELDS = "fields"
   const UID = "correlation"
