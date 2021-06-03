@@ -66,7 +66,7 @@ export default class BrimDriver {
   }
 
   async clickContextMenuItem(text: string) {
-    const menu = await this.$(htmlContextMenu)
+    const menu = await this.app.client.$(htmlContextMenu)
     const item = await menu.$(`li=${text}`)
     return item.click()
   }

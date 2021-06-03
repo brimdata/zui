@@ -1,4 +1,3 @@
-import {path} from "animejs"
 import {toLower} from "lodash"
 import itest from "../helpers/itest"
 
