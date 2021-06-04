@@ -63,6 +63,9 @@ export function createZealot(
       },
       stats: async (id: string): Promise<PoolStats> => {
         const res = await promise(pools.stats(id))
+        if (!res) {
+            return null
+        }
         const rec = new Context().decodeRecord(res)
         const stats: PoolStats = {
           size: rec.get<Int64>("size").toInt(),
