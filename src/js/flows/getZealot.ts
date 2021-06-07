@@ -8,7 +8,6 @@ import {Thunk} from "../state/types"
 import Workspaces from "../state/Workspaces"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {getAuthCredentials} from "./workspace/getAuthCredentials"
-import log from "electron-log"
 
 const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
   return (hostPort: string): ZFetcher => {
