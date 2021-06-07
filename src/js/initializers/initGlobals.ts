@@ -23,6 +23,7 @@ function getWindowName() {
     | "search"
     | "about"
     | "detail"
-  if (["search", "about", "detail"].includes(name)) return name
+    | "hidden"
+  if (["search", "about", "detail", "hidden"].includes(name)) return name
   throw new Error(`Unregistered window: ${name}`)
 }

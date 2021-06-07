@@ -13,6 +13,7 @@ import TabHistories from "../state/TabHistories"
 import PluginManager from "./pluginManager"
 import Current from "../state/Current"
 import {releaseNotesPath} from "app/router/utils/paths"
+import log from "electron-log"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
