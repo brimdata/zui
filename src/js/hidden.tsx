@@ -37,7 +37,6 @@ const workspaceSourceMap: workspaceSourceMapType = {}
 const Hidden = () => {
   const workspaces = useSelector(Workspaces.all)
   const dispatch = useDispatch() as AppDispatch
-  log.info("source map: ", workspaceSourceMap)
 
   useEffect(() => {
     workspaces.forEach((w) => {

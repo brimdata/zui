@@ -46,6 +46,9 @@ export default function windowManager(
 
   return {
     init() {
+      // hidden renderer/window is never persisted, so always open it with rest
+      this.openWindow("hidden")
+
       if (!session || (session && session.order.length === 0)) {
         this.openWindow("search")
       } else {
@@ -54,9 +57,6 @@ export default function windowManager(
           this.openWindow(name, {size, position, id}, state)
         }
       }
-
-      // hidden renderer/window is never persisted, so always open it with rest
-      this.openWindow("hidden")
     },
 
     whenAllClosed() {
