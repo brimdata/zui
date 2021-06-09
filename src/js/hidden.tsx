@@ -11,8 +11,8 @@ import {differenceWith, map} from "lodash"
 import log from "electron-log"
 import refreshPoolNames from "./flows/refreshPoolNames"
 import workspace from "./brim/workspace"
-import {subscribe} from "./flows/subscribe"
 import {AppDispatch} from "./state/types"
+import {subscribeEvents} from "./flows/subscribeEvents"
 
 initialize()
   .then(({store}) => {
@@ -42,10 +42,16 @@ const Hidden = () => {
     workspaces.forEach((w) => {
       if (w.id in workspaceSourceMap) return
 
-      const wsSource = dispatch(subscribe(workspace(w)))
+      const wsSource = dispatch(subscribeEvents(workspace(w)))
       workspaceSourceMap[w.id] = wsSource
 
-      wsSource.addEventListener("new-pool", (_e) => {
+      wsSource.addEventListener("pool-new", (_e) => {
+        dispatch(refreshPoolNames(workspace(w)))
+      })
+      wsSource.addEventListener("pool-update", (_e) => {
+        dispatch(refreshPoolNames(workspace(w)))
+      })
+      wsSource.addEventListener("pool-delete", (_e) => {
         dispatch(refreshPoolNames(workspace(w)))
       })
     })
