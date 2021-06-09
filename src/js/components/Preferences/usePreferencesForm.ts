@@ -24,7 +24,7 @@ export const useConfigsForm = (): FormConfig => {
   const formConfig: FormConfig = {}
   configs.forEach((config) => {
     Object.values(config.properties).forEach((prop) => {
-      const {name, label, defaultValue, type, command} = prop
+      const {name, label, defaultValue, type, command, helpLink} = prop
 
       const submit = (value) => {
         if (command) dispatch(executeCommand(command, value))
@@ -56,7 +56,8 @@ export const useConfigsForm = (): FormConfig => {
         label,
         defaultValue,
         submit,
-        check
+        check,
+        helpLink
       }
     })
   })

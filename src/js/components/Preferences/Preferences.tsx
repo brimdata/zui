@@ -17,6 +17,7 @@ import TextInput from "../common/forms/TextInput"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {useSelector} from "react-redux"
 import get from "lodash/get"
+import Link from "../common/Link"
 
 function ConfigFormItems(props: {configs: FormConfig}) {
   const {configs} = props
@@ -25,13 +26,32 @@ function ConfigFormItems(props: {configs: FormConfig}) {
   const configVals = useSelector(ConfigPropValues.all)
 
   const formInputs = Object.values(configs).map((c) => {
-    const {label, defaultValue, name} = c
+    const {label, defaultValue, name, helpLink} = c
     if (!c.type) return
+
+    const maybeHelpLinkLabel = () => {
+      if (!helpLink) return null
+      const {url, label} = helpLink
+      return (
+        <>
+          {" "}
+          <Link href={url}>{label}</Link>
+        </>
+      )
+    }
+
+    const itemLabel = (
+      <InputLabel>
+        {label}
+        {maybeHelpLinkLabel()}
+      </InputLabel>
+    )
+
     switch (c.type) {
       case "file":
         return (
           <div key={name} className="setting-panel">
-            <InputLabel>{label}</InputLabel>
+            {itemLabel}
             <FileInput
               name={name}
               defaultValue={
@@ -46,9 +66,7 @@ function ConfigFormItems(props: {configs: FormConfig}) {
       case "string":
         return (
           <div key={name} className="setting-panel">
-            <div>
-              <InputLabel>{label}</InputLabel>
-            </div>
+            {itemLabel}
             <TextInput
               name={name}
               type="text"

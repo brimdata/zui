@@ -7,6 +7,10 @@ export type ConfigItem = {
   name: string
   type: ConfigItemType
   label: string
+  helpLink?: {
+    label: string
+    url: string
+  }
   command?: string
   defaultValue?: string
 }
