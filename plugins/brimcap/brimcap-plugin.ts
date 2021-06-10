@@ -358,7 +358,12 @@ export default class BrimcapPlugin {
           name: this.yamlConfigPropName,
           type: "file",
           label: "Brimcap YAML Config File",
-          defaultValue: ""
+          defaultValue: "",
+          helpLink: {
+            label: "docs",
+            url:
+              "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config"
+          }
         }
       }
     }

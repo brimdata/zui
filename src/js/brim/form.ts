@@ -8,6 +8,10 @@ export type FormFieldConfig = {
   label: string
   check?: (arg0: string) => FormCheckResult
   submit?: (arg0: string) => void
+  helpLink?: {
+    label: string
+    url: string
+  }
 }
 
 export type FormConfig = {
