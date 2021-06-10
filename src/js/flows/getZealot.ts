@@ -9,7 +9,7 @@ import Workspaces from "../state/Workspaces"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {getAuthCredentials} from "./workspace/getAuthCredentials"
 
-const createBrimFetcher = (dispatch, getState) => {
+const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
   return (hostPort: string): ZFetcher => {
     const {promise, stream, upload} = createFetcher(hostPort)
 
@@ -42,8 +42,7 @@ const createBrimFetcher = (dispatch, getState) => {
     }
 
     const wrappedPromise = async (args: FetchArgs): Promise<any> => {
-      const ws = Current.mustGetWorkspace(getState())
-      return promise(await setWorkspaceAuthArgs(ws, args)).catch((e) => {
+      return promise(await setWorkspaceAuthArgs(workspace, args)).catch((e) => {
         if (ErrorFactory.create(e).type === "NetworkError") {
           dispatch(
             WorkspaceStatuses.set(
@@ -57,13 +56,11 @@ const createBrimFetcher = (dispatch, getState) => {
     }
 
     const wrappedStream = async (args: FetchArgs): Promise<ZReponse> => {
-      const ws = Current.mustGetWorkspace(getState())
-      return stream(await setWorkspaceAuthArgs(ws, args))
+      return stream(await setWorkspaceAuthArgs(workspace, args))
     }
 
     const wrappedUpload = async (args: FetchArgs): Promise<ZReponse> => {
-      const ws = Current.mustGetWorkspace(getState())
-      return upload(await setWorkspaceAuthArgs(ws, args))
+      return upload(await setWorkspaceAuthArgs(workspace, args))
     }
 
     return {
@@ -74,14 +71,14 @@ const createBrimFetcher = (dispatch, getState) => {
   }
 }
 
-export const getZealot = (): Thunk<Zealot> => (
+export const getZealot = (workspace?: BrimWorkspace): Thunk<Zealot> => (
   dispatch,
   getState,
   {createZealot}
 ) => {
-  const ws = Current.mustGetWorkspace(getState())
+  const ws = workspace || Current.mustGetWorkspace(getState())
 
   return createZealot(ws.getAddress(), {
-    fetcher: createBrimFetcher(dispatch, getState)
+    fetcher: createBrimFetcher(dispatch, getState, ws)
   })
 }

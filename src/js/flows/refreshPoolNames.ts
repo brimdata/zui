@@ -2,10 +2,14 @@ import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import Pools from "../state/Pools"
 import {getZealot} from "./getZealot"
+import {BrimWorkspace} from "../brim"
 
-export default function refreshPoolNames(): Thunk<Promise<void>> {
+export default function refreshPoolNames(
+  ws?: BrimWorkspace
+): Thunk<Promise<void>> {
   return (dispatch, getState) => {
-    const zealot = dispatch(getZealot())
+    const zealot = dispatch(getZealot(ws))
+
     let pools = []
     return zealot.pools
       .list()
@@ -19,7 +23,7 @@ export default function refreshPoolNames(): Thunk<Promise<void>> {
         )
       })
       .then(() => {
-        const id = Current.getWorkspaceId(getState())
+        const id = ws?.id || Current.getWorkspaceId(getState())
         if (id) dispatch(Pools.setPools(id, pools))
       })
   }

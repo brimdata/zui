@@ -25,6 +25,9 @@ export function createZealot(
   let searchArgs: SearchArgs = getDefaultSearchArgs()
 
   return {
+    events: () => {
+      return new EventSource(`http://${host}/events`)
+    },
     setSearchOptions: (args: Partial<SearchArgs>) => {
       searchArgs = {...searchArgs, ...args}
     },

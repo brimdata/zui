@@ -11,7 +11,7 @@ import {WindowParams} from "./window"
 import log from "electron-log"
 import brim from "src/js/brim"
 
-export type WindowName = "search" | "about" | "detail"
+export type WindowName = "search" | "about" | "detail" | "hidden"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {
@@ -46,6 +46,9 @@ export default function windowManager(
 
   return {
     init() {
+      // hidden renderer/window is never persisted, so always open it with rest
+      this.openWindow("hidden")
+
       if (!session || (session && session.order.length === 0)) {
         this.openWindow("search")
       } else {
