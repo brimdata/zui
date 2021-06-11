@@ -42,7 +42,6 @@ function aboutWindow() {
 
 function hiddenWindow() {
   const win = new BrowserWindow({
-    closable: false,
     show: false,
     webPreferences: {
       nodeIntegration: true,
