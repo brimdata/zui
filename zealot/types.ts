@@ -69,8 +69,8 @@ export interface Ts {
 }
 
 export interface Span {
-  ts: BigInt
-  dur: BigInt
+  ts: bigint
+  dur: bigint
 }
 
 export interface PoolConfig {

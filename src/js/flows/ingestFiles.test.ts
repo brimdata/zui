@@ -78,8 +78,7 @@ describe("success case", () => {
         max_time: {ns: 1, sec: 1},
         ingest: {
           progress: null,
-          warnings: [],
-          snapshot: 0
+          warnings: []
         }
       })
     )

@@ -17,7 +17,7 @@ export default {
     pools: pools || []
   }),
 
-  setDetail: (workspaceId: string, pool: any): POOLS_DETAIL => ({
+  setDetail: (workspaceId: string, pool: Partial<Pool>): POOLS_DETAIL => ({
     type: "$POOLS_DETAIL",
     workspaceId,
     pool

@@ -10,7 +10,7 @@ export class Int64 extends Primitive {
     return parseInt(this.value)
   }
 
-  toBigInt(): BigInt {
+  toBigInt(): bigint {
     return BigInt(this.value)
   }
 }

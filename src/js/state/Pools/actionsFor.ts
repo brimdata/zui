@@ -1,4 +1,4 @@
-import {POOLS_DETAIL, POOLS_REMOVE} from "./types"
+import {POOLS_REMOVE} from "./types"
 import actions from "./actions"
 
 export default function actionsFor(workspaceId: string, poolId: string) {
@@ -16,11 +16,6 @@ export default function actionsFor(workspaceId: string, poolId: string) {
       type: "$POOLS_REMOVE",
       workspaceId,
       poolId
-    }),
-    create: (): POOLS_DETAIL => ({
-      type: "$POOLS_DETAIL",
-      workspaceId,
-      pool: {id: poolId}
     })
   }
 }

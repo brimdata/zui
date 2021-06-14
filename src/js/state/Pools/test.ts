@@ -1,19 +1,25 @@
 import Pools from "./"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import {Pool} from "./types"
+import interop from "../../brim/interop"
 
 let store
 beforeEach(() => {
   store = initTestStore()
 })
 
-// Assumes RFC3339Nano: 2006-01-02T15:04:05.999999999Z07:00
 const detail = {
-  id: "defaultId",
-  name: "defaultName",
-  span: {
-    ts: 1425564900000000000n,
-    dur: 3352893750000000n
+  stats: {
+    size: 12345,
+    // Assumes RFC3339Nano: 2006-01-02T15:04:05.999999999Z07:00
+    span: {
+      ts: 1425564900000000000n,
+      dur: 3352893750000000n
+    }
+  },
+  config: {
+    id: "defaultId",
+    name: "defaultName"
   }
 }
 
@@ -63,11 +69,17 @@ test("pool names removing", () => {
 })
 
 test("setting the pool detail adds the defaults", () => {
-  const state = store.dispatchAll([Pools.setDetail("workspace1", detail)])
+  const state = store.dispatchAll([
+    Pools.setDetail("workspace1", {
+      ...interop.poolStatsPayloadToPool(detail.stats),
+      ...detail.config
+    })
+  ])
 
   expect(Pools.get("workspace1", "defaultId")(state)).toEqual({
     name: "defaultName",
     id: "defaultId",
+    size: 12345,
     min_time: {sec: 1425564900, ns: 0},
     max_time: {sec: 1428917793, ns: 750000000},
     ingest: {
@@ -79,7 +91,9 @@ test("setting the pool detail adds the defaults", () => {
 
 test("setting the ingest progress throws error if no pool yet", () => {
   expect(() => {
-    store.dispatchAll([Pools.setIngestProgress("workspace1", detail.id, 0.5)])
+    store.dispatchAll([
+      Pools.setIngestProgress("workspace1", detail.config.id, 0.5)
+    ])
   }).toThrow("No pool exists with id: defaultId")
 })
 
@@ -101,8 +115,12 @@ test("setting the ingest progress", () => {
 test("getting the pools with details, others not", () => {
   const state = store.dispatchAll([
     Pools.setPools("workspace1", testPools),
-    Pools.setDetail("workspace1", {...detail})
+    Pools.setDetail("workspace1", {
+      ...detail.config,
+      ...interop.poolStatsPayloadToPool(detail.stats)
+    })
   ])
+
   const pools = Pools.getPools("workspace1")(state)
 
   expect(pools).toEqual([
@@ -111,8 +129,9 @@ test("getting the pools with details, others not", () => {
     {
       name: "defaultName",
       id: "defaultId",
-      max_time: {ns: 750000000, sec: 1428917793},
-      min_time: {ns: 0, sec: 1425564900},
+      size: 12345,
+      min_time: {sec: 1425564900, ns: 0},
+      max_time: {sec: 1428917793, ns: 750000000},
       ingest: {warnings: [], progress: null}
     }
   ])
