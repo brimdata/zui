@@ -3,9 +3,9 @@ import {createZealotMock} from "zealot"
 import {submitSearch} from "../mod"
 import SearchBar from "../../../state/SearchBar"
 import Pools from "../../../state/Pools"
-import fixtures from "../../../test/fixtures"
-import initTestStore from "../../../test/initTestStore"
-import responses from "../../../test/responses"
+import fixtures from "../../../../../test/unit/fixtures"
+import initTestStore from "../../../../../test/unit/helpers/initTestStore"
+import responses from "../../../../../test/unit/responses"
 import {lakePath} from "app/router/utils/paths"
 import tabHistory from "app/router/tab-history"
 
@@ -33,11 +33,11 @@ test("Validates the zql", () => {
   store.dispatch(tabHistory.push(`/workspaces/1/lakes/${pool.id}/search`))
   expect(select(SearchBar.getSearchBarError)).toEqual(null)
 
-  dispatch(SearchBar.changeSearchBarInput("_ath="))
+  dispatch(SearchBar.changeSearchBarInput("_ath=="))
   submit().catch((e) => e)
 
   expect(select(SearchBar.getSearchBarError)).toMatch(
-    /Expected [\s\S]* but end of input found\./
+    /Expected [\s\S]* found\./
   )
 })
 

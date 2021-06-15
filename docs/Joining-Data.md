@@ -17,8 +17,8 @@ useful on its own, you may want to further enrich it with additional data
 sources such as threat intelligence or domain/IP details. A common way to
 leverage multiple sources in data technologies is to "join" them together.
 
-The Z language includes a `join` processor that can be used for this. The
-processor is still new/experimental and represents the first of what will be
+The Zed language includes a `join` operator that can be used for this. The
+operator is still new/experimental and represents the first of what will be
 multiple ways of combining different data sources. This cookbook describes
 introductory use cases that leverage the current `join` implementation while
 discussing its limitations.
@@ -49,20 +49,20 @@ Before diving into the specifics of what's possible, here's an overview of
 some rough edges you may encounter as you work through the configurations
 described in this article.
 
-1. For those familiar with SQL, the current `join` implementation in Z can be
+1. For those familiar with SQL, the current `join` implementation in Zed can be
 thought of as similar to a [left outer join](https://en.wikipedia.org/wiki/Join_(SQL)#Left_outer_join)
 and hence applicable to use cases where that approach would apply.
 
 2. The current `join` implementation is a _merge_-style join that relies on
-each stream of input records being sorted by the field being joined. The Z
-processors referenced in this cookbook employ "spill-to-disk" functionality
+each stream of input records being sorted by the field being joined. The Zed
+operators referenced in this cookbook employ "spill-to-disk" functionality
 that ensure they can perform the sort/join with arbitrarily large amounts of
 data without hitting memory limitations. However, we recognize the approach
 may not be as easy-to-use or performant as in-memory approaches that tools
 often use for smaller-scale joins. We hope that user feedback will help us
 confirm which other approaches to joining we should add next.
 
-3. While the `join` processor is available in the Z language and hence
+3. While the `join` operator is available in the Zed language and hence
 usable from within Brim, the Brim app currently lacks mechanisms to easily
 reference diverse external data sources in the same Space. While these
 mechanisms are planned for future releases, the approach described in this
@@ -180,7 +180,7 @@ Cwhpf01LpV4ChlWZ59	40,82,287,33,4689	40,64,33,50,50,37,11299,33	0.0,0.001331,0.0
 ...
 ```
 
-The following Z script can join these together by `uid`.
+The following Zed script can join these together by `uid`.
 
 ```
 $ cat join-uid-ssl.zs 
@@ -190,22 +190,22 @@ split (
 ) | join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
 ```
 
-As the name indicates, the `split` processor _splits_ the input stream into
+As the name indicates, the `split` operator _splits_ the input stream into
 two separately-processed branches, with each branch marked by the `=>` inside
-the parentheses. The `filter` processor used here on each branch explicitly
+the parentheses. The `filter` operator used here on each branch explicitly
 isolates the subset of events processed by each branch. After the `)` closes
 the split, the multiple branches are _merged_ back into a single stream before
 `join` operates on them.
 
-The first argument to `join` is a Z
+The first argument to `join` is a Zed
 [expression](https://github.com/brimdata/zed/blob/main/docs/language/expressions)
 that references fields in the respective left/right data sources to determine
 if a pair of records from each should be joined. In this case, since the field
 we're joining on is named `uid` in both data sources, the simple expression
 `uid=uid` suffices. The next argument is a comma-separated list of field names
 or assignments, similar to how the
-[`cut`](https://github.com/brimdata/zed/tree/main/docs/language/processors#cut)
-processor is used.
+[`cut`](https://github.com/brimdata/zed/tree/main/docs/language/operators#cut)
+operator is used.
 
 To apply this using `zq`, we employ its `-P` option that allows us to specify
 two or more parallel inputs, with each input being wired up in order to each
@@ -221,8 +221,8 @@ included in the `ssl` events.
 ![Joined Zeek SSL events](media/Joined-Zeek-SSL.png)
 
 This has shown us the "happy path" for data that's best suited for working
-with the `join` processor in its current implementation. The following sections
-describe some variations where additional Z concepts may be applied to
+with the `join` operator in its current implementation. The following sections
+describe some variations where additional Zed concepts may be applied to
 achieve ideal joins and data presentation.
 
 ## Alternate Schemas For Non-Matches
@@ -351,9 +351,9 @@ Meanwhile, Brim's ability to automatically populate column headers is
 predicated on query results all falling under a single schema, since the
 headers need to reflect all fields expected in the output.
 
-Now that we're recognized this, we can make a small change to our Z to address
-it. By adding the [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/processors#fuse)
-processor, we can ensure all the data is captured under a single, unified
+Now that we're recognized this, we can make a small change to our Zed to address
+it. By adding the [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/operators#fuse)
+operator, we can ensure all the data is captured under a single, unified
 schema.
 
 ```

@@ -15,6 +15,8 @@ export default function window(name: WindowName, params: WindowParams) {
       return aboutWindow()
     case "detail":
       return detailWindow(params)
+    case "hidden":
+      return hiddenWindow()
     default:
       throw new Error(`Unknown window name: ${name}`)
   }
@@ -35,6 +37,19 @@ function aboutWindow() {
   win.setMenu(null)
   win.center()
   win.loadFile("about.html")
+  return win
+}
+
+function hiddenWindow() {
+  const win = new BrowserWindow({
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true
+    }
+  })
+  win.setMenu(null)
+  win.loadFile("hidden.html")
   return win
 }
 

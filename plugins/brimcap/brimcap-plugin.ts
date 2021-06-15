@@ -7,11 +7,16 @@ import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
 import open from "../../src/js/lib/open"
 import {AppDispatch} from "../../src/js/state/types"
-import {reactElementProps} from "../../src/js/test/integration"
-import BrimcapCLI, {searchOptions} from "./brimcap-cli"
-import {ChildProcess} from "child_process"
+import {Config} from "../../src/js/state/Configs"
+import {reactElementProps} from "../../test/integration/helpers/integration"
+import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
+import {ChildProcess, spawn} from "child_process"
+import {MenuItemConstructorOptions} from "electron"
+import {compact} from "lodash"
 
 export default class BrimcapPlugin {
+  private pluginNamespace = "brimcap"
+  private yamlConfigPropName = "yamlConfigPath"
   private cli: BrimcapCLI
   // currentConn represents the data detail currently seen in the Brim detail
   // pane/window
@@ -19,8 +24,9 @@ export default class BrimcapPlugin {
   // selectedConn represents the data detail currently selected and highlighted
   // in the search viewer
   private selectedConn = null
+  private yamlConfigPath = ""
   private cleanupFns: Function[] = []
-  private loadingProcesses: {
+  private processes: {
     [pid: number]: ChildProcess
   } = {}
   private brimcapDataRoot = ""
@@ -50,7 +56,7 @@ export default class BrimcapPlugin {
     this.brimcapDataRoot = path.join(dataRoot, "brimcap-root")
   }
 
-  public init() {
+  init() {
     fsExtra.ensureDirSync(this.brimcapDataRoot)
 
     if (!pathExistsSync(this.brimcapBinPath)) {
@@ -64,8 +70,10 @@ export default class BrimcapPlugin {
 
     this.setupBrimcapButtons()
     this.setupLoader()
-
-    // TODO: handle contextMenu items, and detail pane/window correlation UI
+    this.setupConfig()
+    this.setupContextMenus()
+    // NOTE: suricata updates async, don't block
+    this.updateSuricata()
   }
 
   private async tryConn(detail: zed.Record, eventId: string) {
@@ -176,6 +184,27 @@ export default class BrimcapPlugin {
     )
   }
 
+  private setupContextMenus() {
+    const itemBuilder = (data: {
+      record: zed.Record
+      field: zed.Field
+    }): MenuItemConstructorOptions => {
+      const {record} = data
+      const isConn = record.try("_path")?.toString() === "conn"
+
+      return {
+        click: () => {
+          this.downloadPcap(record)
+        },
+        enabled: isConn,
+        label: "Download packets"
+      }
+    }
+
+    this.api.contextMenus.search.add(itemBuilder)
+    this.api.contextMenus.detail.add(itemBuilder)
+  }
+
   private logToSearchOpts(log: zed.Record): searchOptions {
     const ts = log.get("ts") as zed.Time
 
@@ -250,21 +279,28 @@ export default class BrimcapPlugin {
 
       const paths = fileListData.map((f) => f.file.path)
 
-      const p = this.cli.load(paths[0], {
+      const loadOpts: loadOptions = {
         root: this.brimcapDataRoot,
-        pool: name
-      })
-      this.loadingProcesses[p.pid] = p
+        pool: name,
+        json: true
+      }
+
+      const yamlConfig = this.api.configs.get(
+        this.pluginNamespace,
+        this.yamlConfigPropName
+      )
+      loadOpts.config = yamlConfig || ""
+
+      const p = this.cli.load(paths[0], loadOpts)
+      this.processes[p.pid] = p
 
       let brimcapErr
       p.on("error", (err) => {
         brimcapErr = err
       })
 
-      onProgressUpdate(0)
-      p.stderr.on("data", async (d) => {
-        const msg = JSON.parse(d)
-        const {type, ...status} = msg
+      const handleRespMsg = async (jsonMsg) => {
+        const {type, ...status} = jsonMsg
         switch (type) {
           case "status":
             onProgressUpdate(statusToPercent(status))
@@ -275,15 +311,28 @@ export default class BrimcapPlugin {
             break
           case "error":
             if (status.error) brimcapErr = status.error
+            break
+        }
+      }
+
+      onProgressUpdate(0)
+      p.stderr.on("data", async (d) => {
+        try {
+          const msgs: string[] = compact(d.toString().split("\n"))
+          const jsonMsgs = msgs.map((msg) => JSON.parse(msg))
+          jsonMsgs.forEach(handleRespMsg)
+        } catch (e) {
+          console.error(e)
+          brimcapErr = d.toString()
         }
       })
 
-      // wait for process to end
-      await new Promise((res, rej) => {
-        p.on("close", (code) => {
-          delete this.loadingProcesses[p.pid]
-          if (code === 0) res()
-          else rej(new Error("PCAP load was interrupted"))
+      // wait for process to end, resolve regardless of exit code: error will be
+      // handled below if present
+      await new Promise((res) => {
+        p.on("close", () => {
+          delete this.processes[p.pid]
+          res()
         })
       })
 
@@ -300,21 +349,65 @@ export default class BrimcapPlugin {
     })
   }
 
-  public async cleanup() {
+  private setupConfig() {
+    const brimcapConfig: Config = {
+      name: this.pluginNamespace,
+      title: "Brimcap Settings",
+      properties: {
+        [this.yamlConfigPropName]: {
+          name: this.yamlConfigPropName,
+          type: "file",
+          label: "Brimcap YAML Config File",
+          defaultValue: "",
+          helpLink: {
+            label: "docs",
+            url:
+              "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config"
+          }
+        }
+      }
+    }
+
+    this.api.configs.add(brimcapConfig)
+  }
+
+  private async updateSuricata() {
+    const {zdepsDirectory} = this.api.getAppConfig()
+    const cmdName =
+      process.platform === "win32" ? "suricataupdater.exe" : "suricataupdater"
+    const cmdPath = path.join(zdepsDirectory, "suricata", cmdName)
+    const proc = spawn(cmdPath)
+    this.processes[proc.pid] = proc
+
+    let err
+    proc.on("error", (e) => (err = e))
+
+    await new Promise((res) =>
+      proc.on("close", () => {
+        delete this.processes[proc.pid]
+        res()
+      })
+    )
+
+    if (err)
+      throw new Error(`Error updating Suricata rules: ${err.message || err}`)
+  }
+
+  async cleanup() {
     await Promise.all(
-      Object.values(this.loadingProcesses).map((lp: ChildProcess) => {
-        return new Promise((res) => {
-          if (lp.killed) {
-            delete this.loadingProcesses[lp.pid]
+      Object.values(this.processes).map((p: ChildProcess) => {
+        return new Promise<void>((res) => {
+          if (p.killed) {
+            delete this.processes[p.pid]
             res()
             return
           }
 
-          lp.on("exit", () => {
-            delete this.loadingProcesses[lp.pid]
+          p.on("exit", () => {
+            delete this.processes[p.pid]
             res()
           })
-          lp.kill()
+          p.kill()
         })
       })
     )

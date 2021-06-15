@@ -1,4 +1,4 @@
-import initTestStore from "../test/initTestStore"
+import initTestStore from "../../../test/unit/helpers/initTestStore"
 
 test("initTestStore works with thunk and action log", () => {
   const store = initTestStore()

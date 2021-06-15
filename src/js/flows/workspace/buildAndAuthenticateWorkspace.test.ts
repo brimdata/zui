@@ -6,7 +6,7 @@ import {mocked} from "ts-jest/utils"
 import {createZealotMock} from "zealot"
 import Auth0Client from "../../auth0"
 import {AuthType} from "../../state/Workspaces/types"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import {
   buildAndAuthenticateWorkspace,
   ConnectionError,
@@ -76,6 +76,7 @@ describe("success cases", () => {
     zealot
       .stubPromise("version", fixtures.version)
       .stubPromise("pools.list", [{name: "dataPool", id: "1"}], "always")
+      .stubPromise("pools.stats", {}, "always")
   })
 
   test("new public workspace", async () => {

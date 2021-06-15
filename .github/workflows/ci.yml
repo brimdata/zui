@@ -23,9 +23,6 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16'
-      - uses: denolib/setup-deno@v2
-        with:
-          deno-version: v1.7.2
       - name: Set NPM Cache Directory
         id: set-npm-cache-dir
         run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
@@ -55,6 +52,7 @@ jobs:
       - run: npm run tsc
       - run: npm test -- --maxWorkers=2 --ci
       - run: npm run test:api
+      - run: npm run generate-responses -- --silent
       - name: Build Linux Packages
         if: runner.os == 'Linux'
         run: |
@@ -91,9 +89,6 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16'
-      - uses: denolib/setup-deno@v2
-        with:
-          deno-version: v1.7.2
       - name: setup node version ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -138,9 +133,6 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16'
-      - uses: denolib/setup-deno@v2
-        with:
-          deno-version: v1.7.2
       - name: setup node version ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:

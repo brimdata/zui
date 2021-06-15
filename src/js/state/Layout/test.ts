@@ -1,5 +1,5 @@
 import Layout from "./"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 
 let store, reduce
 beforeEach(() => {

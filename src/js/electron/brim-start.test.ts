@@ -27,19 +27,23 @@ test("start is called in zed lake", async () => {
 test("activate when zero windows open", () => {
   expect(brim.windows.count()).toBe(0)
   brim.activate()
-  expect(brim.windows.count()).toBe(1)
+  // default "search" window + "hidden" window (background renderer) === 2
+  expect(brim.windows.count()).toBe(2)
 })
 
-test("actiate when one or more windows open", async () => {
+test("activate when one or more windows open", async () => {
   brim.activate()
-  expect(brim.windows.count()).toBe(1)
+  expect(brim.windows.count()).toBe(2)
   brim.activate()
-  expect(brim.windows.count()).toBe(1)
+  expect(brim.windows.count()).toBe(2)
 })
 
-test("start opens a window", async () => {
+test("start opens default windows and in correct focus order", async () => {
   await brim.start()
-  expect(brim.windows.count()).toBe(1)
+  expect(brim.windows.count()).toBe(2)
+  const windows = brim.windows.getWindows()
+  expect(windows[0].name).toBe("hidden")
+  expect(windows[1].name).toBe("search")
 })
 
 test("start installs dev extensions if is dev", async () => {

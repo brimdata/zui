@@ -1,4 +1,4 @@
-import {migrate} from "src/js/test/helpers/migrate"
+import {migrate} from "test/unit/helpers/migrate"
 
 test("migrating 202010191355_addConnectionNameDefault", async () => {
   const next = await migrate({state: "v0.17.0", to: "202010191355"})

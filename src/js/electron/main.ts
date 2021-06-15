@@ -20,6 +20,7 @@ import {handleSquirrelEvent} from "./squirrel"
 import {serve} from "src/pkg/electron-ipc-service"
 import {paths} from "app/ipc/paths"
 import {windowsPre25Exists} from "./windows-pre-25"
+import {meta} from "app/ipc/meta"
 
 console.time("init")
 
@@ -37,6 +38,7 @@ async function main() {
   globalStoreMainHandler(brim)
   secretsMainHandler()
   serve(paths)
+  serve(meta)
   handleQuit(brim)
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed

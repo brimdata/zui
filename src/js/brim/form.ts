@@ -1,9 +1,17 @@
+import {ConfigItemType} from "../state/Configs"
+
 export type FormFieldConfig = {
+  configName?: string
   defaultValue?: string
+  type?: ConfigItemType
   name: string
   label: string
   check?: (arg0: string) => FormCheckResult
   submit?: (arg0: string) => void
+  helpLink?: {
+    label: string
+    url: string
+  }
 }
 
 export type FormConfig = {

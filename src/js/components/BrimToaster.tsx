@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react"
 import last from "lodash/last"
 import isEmpty from "lodash/isEmpty"
 import styled from "styled-components"
-import {toastLocator} from "../test/locators"
+import {toastLocator} from "../../../test/integration/helpers/locators"
 
 const HiddenToast = styled.p`
   display: none;
@@ -28,7 +28,7 @@ const BrimToaster = () => {
     <>
       <HiddenToast {...toastLocator.props}>{lastToast?.message}</HiddenToast>
       <Toaster
-        position="bottom-center"
+        position="bottom-right"
         toastOptions={{className: "brim-toast"}}
       />
     </>

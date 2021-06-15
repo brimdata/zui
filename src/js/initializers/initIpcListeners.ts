@@ -11,10 +11,11 @@ import deletePartialPools from "../flows/deletePartialPools"
 import {getWindowPersistable} from "../state/getPersistable"
 import TabHistories from "../state/TabHistories"
 import PluginManager from "./pluginManager"
+import Current from "../state/Current"
+import {releaseNotesPath} from "app/router/utils/paths"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
-
   ipcRenderer.on("confirmClose", async (e, replyChannel) => {
     const confirmed = await dispatch(confirmUnload())
       .then(() => true)
@@ -91,4 +92,9 @@ export default (store: Store, pluginManager: PluginManager) => {
   ipcRenderer.on("globalStore:dispatch", (e, {action}) =>
     store.dispatch(action)
   )
+
+  ipcRenderer.on("showReleaseNotes", () => {
+    const id = Current.getWorkspaceId(store.getState())
+    store.dispatch(Tabs.new(releaseNotesPath(id)))
+  })
 }

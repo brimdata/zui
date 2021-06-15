@@ -1,4 +1,4 @@
-import getTestState from "../../test/helpers/getTestState"
+import getTestState from "src/js/state/migrations/utils/getTestState"
 import migrate from "./202005271240_setHistorySpaceToNameAndId"
 import {cloneDeep} from "lodash"
 

@@ -1,9 +1,9 @@
-import {isNull} from "../utils"
 import {TypeAlias} from "../types/type-alias"
 import {TypeField, TypeRecord} from "../types/type-record"
+import {ZedType} from "../types/types"
+import {isNull, trueType} from "../utils"
 import {Field} from "./field"
 import {ZedValue, ZedValueInterface} from "./types"
-import {trueType} from "../utils"
 export class Record implements ZedValueInterface {
   constructor(
     public type: TypeRecord | TypeAlias,
@@ -50,8 +50,11 @@ export class Record implements ZedValueInterface {
     return this.fields[index]
   }
 
-  has(name: string) {
-    return this.columns.includes(name)
+  has(name: string, ...types: ZedType[]) {
+    return (
+      this.columns.includes(name) &&
+      (types.length > 0 ? types.some((t) => this.get(name).type === t) : true)
+    )
   }
 
   get<T extends ZedValue>(name: string): T {

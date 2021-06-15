@@ -1,5 +1,5 @@
 import {Time} from "./time"
-import {createData} from "test/factories/zed-factory"
+import {createData} from "test/shared/factories/zed-factory"
 import {zed} from "zealot"
 
 test("toDate()", () => {

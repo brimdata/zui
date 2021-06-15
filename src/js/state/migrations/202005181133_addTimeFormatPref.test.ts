@@ -1,5 +1,5 @@
 import Prefs from "../Prefs"
-import getTestState from "../../test/helpers/getTestState"
+import getTestState from "src/js/state/migrations/utils/getTestState"
 import migrate from "./202005181133_addTimeFormatPref"
 
 test("migrating 202005181133_addTimeFormatPref", () => {

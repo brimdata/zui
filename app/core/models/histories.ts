@@ -4,6 +4,7 @@ import {
   MemoryHistory,
   UnregisterCallback
 } from "history"
+import {isEmpty} from "lodash"
 import {SerializedHistory} from "src/js/state/TabHistories/types"
 
 /**
@@ -25,6 +26,7 @@ export default class Histories {
   }
 
   create(id: string, initialEntries?, initialIndex?) {
+    if (isEmpty(initialEntries)) initialEntries = undefined
     const history = createMemoryHistory({initialEntries, initialIndex})
     this.histories.set(id, history)
     this.listenTo(id, history)

@@ -1,17 +1,17 @@
 import {BrowserWindow, screen} from "electron"
 import {last} from "lodash"
-import brim from "../../brim"
 import ipc from "../ipc"
 import sendTo from "../ipc/sendTo"
 import {NewTabSearchParams} from "../ipc/windows/messages"
 import {dimensFromSizePosition, stack} from "../window/dimens"
 import {SearchWindow} from "../window/SearchWindow"
-import tron from "./"
+import tron from "./index"
 import {SessionState} from "./formatSessionState"
 import {WindowParams} from "./window"
 import log from "electron-log"
+import brim from "src/js/brim"
 
-export type WindowName = "search" | "about" | "detail"
+export type WindowName = "search" | "about" | "detail" | "hidden"
 export type $WindowManager = ReturnType<typeof windowManager>
 
 export type WindowsState = {
@@ -46,6 +46,9 @@ export default function windowManager(
 
   return {
     init() {
+      // hidden renderer/window is never persisted, so always open it with rest
+      this.openWindow("hidden")
+
       if (!session || (session && session.order.length === 0)) {
         this.openWindow("search")
       } else {
@@ -57,7 +60,7 @@ export default function windowManager(
     },
 
     whenAllClosed() {
-      return new Promise((resolve) => {
+      return new Promise<void>((resolve) => {
         const checkCount = () => {
           if (this.count() === 0) resolve()
           else setTimeout(checkCount, 0)
@@ -212,6 +215,21 @@ export default function windowManager(
 
         newWin.ref.webContents.once("did-finish-load", () => {
           newWin.ref.webContents.send("showPreferences")
+        })
+      }
+    },
+
+    openReleaseNotes() {
+      const win = this.getWindows()
+        .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
+        .find((w) => w.name === "search")
+
+      if (win) {
+        win.ref.webContents.send("showReleaseNotes")
+      } else {
+        const newWin = this.openWindow("search", {})
+        newWin.ref.webContents.once("did-finish-load", () => {
+          newWin.ref.webContents.send("showReleaseNotes")
         })
       }
     },

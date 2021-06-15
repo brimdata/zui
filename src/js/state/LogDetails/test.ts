@@ -1,5 +1,5 @@
-import {createRecord} from "test/factories/zed-factory"
-import initTestStore from "../../test/initTestStore"
+import {createRecord} from "test/shared/factories/zed-factory"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import LogDetails from "./"
 
 const record = createRecord({_td: "1", letter: "a"})

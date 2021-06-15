@@ -178,11 +178,13 @@ Array [
       Object {
         "accelerator": "CmdOrCtrl+[",
         "click": [Function],
+        "id": "toggle-left-pane",
         "label": "Toggle Left Pane",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
         "click": [Function],
+        "id": "toggle-right-pane",
         "label": "Toggle Right Pane",
       },
       Object {
@@ -223,6 +225,10 @@ Array [
   Object {
     "role": "help",
     "submenu": Array [
+      Object {
+        "click": [Function],
+        "label": "Release Notes",
+      },
       Object {
         "click": [Function],
         "label": "Zed Syntax Docs",
@@ -381,11 +387,13 @@ Array [
       Object {
         "accelerator": "CmdOrCtrl+[",
         "click": [Function],
+        "id": "toggle-left-pane",
         "label": "Toggle Left Pane",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
         "click": [Function],
+        "id": "toggle-right-pane",
         "label": "Toggle Right Pane",
       },
       Object {
@@ -411,6 +419,10 @@ Array [
   Object {
     "role": "help",
     "submenu": Array [
+      Object {
+        "click": [Function],
+        "label": "Release Notes",
+      },
       Object {
         "click": [Function],
         "label": "Zed Syntax Docs",

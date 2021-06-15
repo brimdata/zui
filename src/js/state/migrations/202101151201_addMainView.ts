@@ -1,4 +1,4 @@
-import {getAllTabs} from "src/js/test/helpers/getTestState"
+import {getAllTabs} from "src/js/state/migrations/utils/getTestState"
 
 export default function addMainView(state: any) {
   // Migrate state here

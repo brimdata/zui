@@ -1,5 +1,5 @@
 import Pools from "./"
-import initTestStore from "../../test/initTestStore"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import {Pool} from "./types"
 
 let store
@@ -7,12 +7,13 @@ beforeEach(() => {
   store = initTestStore()
 })
 
+// Assumes RFC3339Nano: 2006-01-02T15:04:05.999999999Z07:00
 const detail = {
   id: "defaultId",
   name: "defaultName",
   span: {
-    ts: {sec: 1425564900, ns: 0},
-    dur: {sec: 3352893, ns: 750000000}
+    ts: 1425564900000000000n,
+    dur: 3352893750000000n
   }
 }
 

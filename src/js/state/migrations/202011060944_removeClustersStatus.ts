@@ -1,4 +1,4 @@
-import {getAllStates} from "../../test/helpers/getTestState"
+import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 import {Workspace} from "../Workspaces/types"
 
 export default function removeClustersStatus(state: any) {

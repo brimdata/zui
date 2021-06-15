@@ -13,6 +13,7 @@ import {
   Title
 } from "src/js/components/ModalDialog/ModalDialog"
 import refreshPoolNames from "src/js/flows/refreshPoolNames"
+import deletePool from "src/js/flows/deletePool"
 import ThreeDotsIcon from "src/js/icons/ThreeDotsIcon"
 import {showContextMenu} from "src/js/lib/System"
 import {AppDispatch} from "src/js/state/types"
@@ -66,8 +67,8 @@ function Modal({onClose}) {
           }
         ],
         {
-          x: x - 50, // this will need to change as we add more items
-          y: y - 35 // this too
+          x: Math.round(x - 50), // this will need to change as we add more items
+          y: Math.round(y - 35) // this too
         }
       )
     }
@@ -106,10 +107,13 @@ function Modal({onClose}) {
       })
       .catch((e) => {
         toast.dismiss(id)
+        if ("currentPoolID" in e) {
+          dispatch(deletePool(e.currentPoolID))
+        }
         // This is a bug in the toast library, these subsequent toasts
         // were not being displayed without the setTimeout()
         setTimeout(() => {
-          toast.error(e.toString())
+          toast.error(e.message)
         })
       })
   }

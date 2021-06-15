@@ -9,6 +9,9 @@ import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "app/detail/Pane"
 import ToolbarAction from "app/toolbar/action-button"
+import brim from "src/js/brim"
+import Prefs from "src/js/state/Prefs"
+import View from "src/js/state/View"
 
 export default function LogDetailsWindow() {
   useStoreExport()
@@ -19,6 +22,8 @@ export default function LogDetailsWindow() {
   const pluginButtons = usePluginToolbarItems("detail").map((button) => (
     <ToolbarAction key={button.label} {...button} />
   ))
+  brim.time.setZone(useSelector(View.getTimeZone))
+  brim.time.setDefaultFormat(useSelector(Prefs.getTimeFormat))
 
   return (
     <div className="log-detail-window">

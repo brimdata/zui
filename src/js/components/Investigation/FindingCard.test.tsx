@@ -2,9 +2,10 @@ import React from "react"
 
 import FindingCard from "./FindingCard"
 import brim from "../../brim"
-import loginTo from "../../test/helpers/loginTo"
-import provide from "../../test/helpers/provide"
+import loginTo from "../../../../test/unit/helpers/loginTo"
+import provide from "../../../../test/unit/helpers/provide"
 import {Finding} from "src/js/state/Investigation/types"
+import {fireEvent} from "@testing-library/dom"
 
 let store
 beforeEach(async () => {
@@ -30,5 +31,5 @@ test("Clicking the history submits the search", () => {
     <FindingCard poolId="1" workspaceId="1" finding={finding} />
   )
   store.clearActions()
-  el.simulate("click")
+  fireEvent.click(el.container)
 })

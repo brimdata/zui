@@ -1,5 +1,12 @@
+import {maybeShowReleaseNotes} from "app/release-notes/maybe-show-release-notes"
+import ReleaseNotes from "app/release-notes/release-notes"
 import AppRouter from "app/router/app-router"
-import {root, workspaceShow, workspacesList} from "app/router/routes"
+import {
+  releaseNotes,
+  root,
+  workspaceShow,
+  workspacesList
+} from "app/router/routes"
 import AppWrapper from "app/routes/app-wrapper"
 import WorkspacesList from "app/workspaces/list"
 import WorkspaceShow from "app/workspaces/show"
@@ -23,6 +30,7 @@ export default function App() {
   useSearchShortcuts()
   useEffect(() => {
     ipcRenderer.invoke("windows:ready")
+    dispatch(maybeShowReleaseNotes())
     return () => {
       dispatch(Handlers.abortAll())
     }
@@ -39,6 +47,11 @@ export default function App() {
         <Route path={workspacesList.path}>
           <AppWrapper>
             <WorkspacesList />
+          </AppWrapper>
+        </Route>
+        <Route path={releaseNotes.path}>
+          <AppWrapper>
+            <ReleaseNotes />
           </AppWrapper>
         </Route>
         <Route path={root.path}>

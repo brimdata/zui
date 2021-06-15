@@ -1,7 +1,7 @@
 import {last} from "lodash"
-import loginTo from "src/js/test/helpers/loginTo"
-import {createRecord} from "test/factories/zed-factory"
-import {useResponse} from "test/responses"
+import loginTo from "test/unit/helpers/loginTo"
+import {createRecord} from "test/shared/factories/zed-factory"
+import {useResponse} from "test/shared/responses"
 import {fetchCorrelation} from "./fetch"
 
 const zeek = createRecord({
@@ -15,14 +15,6 @@ const suricata = createRecord({
   ts: new Date(0),
   community_id: "1:N7YGmWjwTmMKNhsZHBR618n3ReA="
 })
-
-const uidOrCommunityIdZql =
-  'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" or (community_id = "1:N7YGmWjwTmMKNhsZHBR618n3ReA=" and ts >= 1582646593.978 and ts < 1582646683.994) | head 100'
-
-const uidZql =
-  'uid="CbOjYpkXn9LfqV51c" or "CbOjYpkXn9LfqV51c" in conn_uids or "CbOjYpkXn9LfqV51c" in uids or referenced_file.uid="CbOjYpkXn9LfqV51c" | head 100'
-
-const cidZql = 'community_id="1:N7YGmWjwTmMKNhsZHBR618n3ReA=" | head 100'
 
 const stubs = {
   uidResult: useResponse("correlationUid"),
@@ -51,8 +43,12 @@ describe("zeek log when community_id is found", () => {
     await store.dispatch(fetchCorrelation(zeek))
     const searches = zealot.calls("search")
     const len = searches.length
-    expect(searches[len - 2].args).toBe(uidZql)
-    expect(searches[len - 1].args).toBe(uidOrCommunityIdZql)
+    expect(searches[len - 2].args).toMatchInlineSnapshot(
+      `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" | head 100"`
+    )
+    expect(searches[len - 1].args).toMatchInlineSnapshot(
+      `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" or (community_id == \\"1:N7YGmWjwTmMKNhsZHBR618n3ReA=\\" and ts >= 1582646593.978 and ts < 1582646683.994) | head 100"`
+    )
   })
 
   test("returns the records", async () => {
@@ -79,7 +75,9 @@ describe("zeek log when community_id is not found", () => {
   test("runs the uid search", async () => {
     const {zealot, store} = setup
     await store.dispatch(fetchCorrelation(zeek))
-    expect(last<any>(zealot.calls("search")).args).toBe(uidZql)
+    expect(last<any>(zealot.calls("search")).args).toMatchInlineSnapshot(
+      `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" | head 100"`
+    )
   })
 
   test("returns the records", async () => {
@@ -107,7 +105,9 @@ describe("suricata alert when community_id found", () => {
   test("issues the community id query", async () => {
     const {zealot, store} = setup
     await store.dispatch(fetchCorrelation(suricata))
-    expect(last<any>(zealot.calls("search")).args).toBe(cidZql)
+    expect(last<any>(zealot.calls("search")).args).toMatchInlineSnapshot(
+      `"community_id==\\"1:N7YGmWjwTmMKNhsZHBR618n3ReA=\\" | head 100"`
+    )
   })
 
   test("returns the records", async () => {

@@ -1,4 +1,4 @@
-import {getAllStates} from "../../test/helpers/getTestState"
+import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 import isEqual from "lodash/isEqual"
 
 export default function adjustWindowsNetworkingActivityQuery(state: any) {

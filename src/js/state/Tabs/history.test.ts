@@ -1,5 +1,5 @@
 import tabHistory from "app/router/tab-history"
-import initTestStore from "src/js/test/initTestStore"
+import initTestStore from "test/unit/helpers/initTestStore"
 import Current from "../Current"
 import Tabs from "./"
 

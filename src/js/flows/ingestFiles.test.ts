@@ -5,9 +5,9 @@ import Current from "../state/Current"
 import Pools from "../state/Pools"
 import Tab from "../state/Tab"
 import Workspaces from "../state/Workspaces"
-import fixtures from "../test/fixtures"
-import initTestStore from "../test/initTestStore"
-import {itestFile} from "../test/itestFile"
+import fixtures from "../../../test/unit/fixtures"
+import initTestStore from "../../../test/unit/helpers/initTestStore"
+import data from "test/shared/data"
 import ingestFiles from "./ingestFiles"
 import BrimApi from "../api"
 import {mocked} from "ts-jest/utils"
@@ -25,9 +25,17 @@ beforeEach(() => {
       "pools.get",
       {
         name: "sample.pcap.brim",
-        id: "poolId",
-        min_time: {ns: 0, sec: 0},
-        max_time: {ns: 1, sec: 1}
+        id: "poolId"
+      },
+      "always"
+    )
+    .stubPromise(
+      "pools.stats",
+      {
+        span: {
+          ts: 0n,
+          dur: 1_000_000_001n
+        }
       },
       "always"
     )
@@ -58,7 +66,7 @@ describe("success case", () => {
   })
 
   test("opening a pcap", async () => {
-    await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
 
     const state = store.getState()
     expect(Tab.getPoolName(state)).toEqual("sample.pcap.brim")
@@ -78,7 +86,7 @@ describe("success case", () => {
   })
 
   test("register a handler with a space id", async () => {
-    await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
 
     const handler = store
       .getActions()
@@ -103,7 +111,7 @@ describe("success case", () => {
     ])
 
     await expect(
-      store.dispatch(ingestFiles([itestFile("sample.tsv")]))
+      store.dispatch(ingestFiles([data.getDOMFile("sample.tsv")]))
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
@@ -122,7 +130,7 @@ describe("error case", () => {
       }
     ])
     await expect(
-      store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+      store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
@@ -142,7 +150,7 @@ describe("error case", () => {
       }
     ])
 
-    await store.dispatch(ingestFiles([itestFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
 
     const state = store.getState()
     const wsId = Current.getWorkspaceId(state)

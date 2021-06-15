@@ -1,4 +1,4 @@
-import {createField, createRecord} from "test/factories/zed-factory"
+import {createField, createRecord} from "test/shared/factories/zed-factory"
 import {
   addHeadProc,
   getHeadCount,
@@ -14,11 +14,11 @@ describe("excluding and including", () => {
 
   test("excluding a field", () => {
     const program = brim
-      .program("_path=weird")
+      .program('_path=="weird"')
       .exclude(field)
       .string()
 
-    expect(program).toEqual('_path=weird uid!="123"')
+    expect(program).toEqual('_path=="weird" uid!="123"')
   })
 
   test("excluding a field with a pipe", () => {
@@ -36,20 +36,20 @@ describe("excluding and including", () => {
 
   test("excluding a field with two pipes", () => {
     const program = brim
-      .program("_path=weird | sort | filter 1")
+      .program('_path=="weird" | sort | filter 1')
       .exclude(field)
       .string()
 
-    expect(program).toEqual('_path=weird uid!="123" | sort | filter 1')
+    expect(program).toEqual('_path=="weird" uid!="123" | sort | filter 1')
   })
 
   test("including a field with two pipes", () => {
     const program = brim
-      .program("_path=weird | sort | filter 1")
+      .program('_path=="weird" | sort | filter 1')
       .include(field)
       .string()
 
-    expect(program).toEqual('_path=weird uid="123" | sort | filter 1')
+    expect(program).toEqual('_path=="weird" uid=="123" | sort | filter 1')
   })
 })
 
@@ -67,17 +67,17 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe("id.orig_h=192.168.0.54")
+    expect(program).toBe("id.orig_h==192.168.0.54")
   })
 
   test("combines keys in the group by proc", () => {
     const program = brim
-      .program("_path=dns | count() by id.orig_h, proto, query | sort -r")
+      .program('_path=="dns" | count() by id.orig_h, proto, query | sort -r')
       .drillDown(result)
       .string()
 
     expect(program).toBe(
-      '_path=dns id.orig_h=192.168.0.54 proto="udp" query="WPAD"'
+      '_path=="dns" id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
     )
   })
 
@@ -87,7 +87,7 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe("id.orig_h=192.168.0.54")
+    expect(program).toBe("id.orig_h==192.168.0.54")
   })
 
   test("easy peasy", () => {
@@ -96,18 +96,18 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe('names james proto="udp"')
+    expect(program).toBe('names james proto=="udp"')
   })
 
   test("count by and filter the same", () => {
     const result = createRecord({md5: "123", count: 1})
 
     const program = brim
-      .program("md5=123 | count() by md5 | sort -r | head 5")
+      .program('md5=="123" | count() by md5 | sort -r | head 5')
       .drillDown(result)
       .string()
 
-    expect(program).toEqual('md5=123 md5="123"')
+    expect(program).toEqual('md5=="123"')
   })
 
   test("filter query", () => {
@@ -118,13 +118,13 @@ describe("drill down", () => {
 
     const program = brim
       .program(
-        '_path=files filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
+        '_path=="files" filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
       )
       .drillDown(result)
       .string()
 
     expect(program).toEqual(
-      '_path=files filename!="-" md5="9f51ef98c42df4430a978e4157c43dd5"'
+      '_path=="files" filename!="-" md5=="9f51ef98c42df4430a978e4157c43dd5"'
     )
   })
 })
@@ -237,28 +237,30 @@ describe("#hasAnalytics()", () => {
   })
 
   test("for filter proc", () => {
-    expect(brim.program("* | filter _path=conn").hasAnalytics()).toBe(false)
+    expect(brim.program('* | filter _path=="conn"').hasAnalytics()).toBe(false)
   })
 })
 
 describe("#addHeadProc", () => {
   test("when no head exists", () => {
-    expect(addHeadProc("_path=dns", 300)).toBe("_path=dns | head 300")
+    expect(addHeadProc('_path=="dns"', 300)).toBe('_path=="dns" | head 300')
   })
 
   test("when head exists", () => {
-    expect(addHeadProc("_path=dns | head 45", 300)).toBe("_path=dns | head 45")
+    expect(addHeadProc('_path=="dns" | head 45', 300)).toBe(
+      '_path=="dns" | head 45'
+    )
   })
 
   test("when sort exists", () => {
-    expect(addHeadProc("_path=dns | sort ts", 300)).toBe(
-      "_path=dns | sort ts | head 300"
+    expect(addHeadProc('_path=="dns" | sort ts', 300)).toBe(
+      '_path=="dns" | sort ts | head 300'
     )
   })
 
   test("when sort and head exists", () => {
-    expect(addHeadProc("_path=dns | head 23 | sort ts", 300)).toBe(
-      "_path=dns | head 23 | sort ts"
+    expect(addHeadProc('_path=="dns" | head 23 | sort ts', 300)).toBe(
+      '_path=="dns" | head 23 | sort ts'
     )
   })
 })
@@ -288,10 +290,11 @@ describe("#hasHeadCount", () => {
 })
 
 describe("Get Parts of Program", () => {
-  const program = "md5=123 _path=files | count() by md5 | sort -r | head 1"
+  const program =
+    'md5=="123" _path=="files" | count() by md5 | sort -r | head 1'
 
   test("get filter part", () => {
-    expect(splitParts(program)[0]).toBe("md5=123 _path=files")
+    expect(splitParts(program)[0]).toBe('md5=="123" _path=="files"')
   })
 
   test("get filter part when none", () => {
@@ -303,16 +306,16 @@ describe("Get Parts of Program", () => {
   })
 
   test("get proc part when none", () => {
-    expect(splitParts("_path=files")[1]).toEqual("")
+    expect(splitParts('_path=="files"')[1]).toEqual("")
   })
 })
 
 describe("Join Parts of Program", () => {
-  const filter = "md5=123"
+  const filter = 'md5=="123"'
   const proc = "count() by _path"
 
   test("#joinParts", () => {
-    expect(joinParts(filter, proc)).toBe("md5=123 | count() by _path")
+    expect(joinParts(filter, proc)).toBe('md5=="123" | count() by _path')
   })
 
   test("#joinParts when empty filter", () => {
@@ -321,21 +324,21 @@ describe("Join Parts of Program", () => {
 })
 
 describe("Parallelizing multiple programs", () => {
-  const a = "md5=123 | count()"
-  const b = "md5=123 | head 5"
-  const c = "md5=123 | count() by _path"
+  const a = 'md5=="123" | count()'
+  const b = 'md5=="123" | head 5'
+  const c = 'md5=="123" | count() by _path'
 
   test("#parallelizeProcs when programs have same filter", () => {
     expect(parallelizeProcs([a, b, c])).toEqual(
-      "md5=123 | split ( => count() => head 5 => count() by _path)"
+      'md5=="123" | split ( => count() => head 5 => count() by _path)'
     )
   })
 
-  test("#parallelizeProcs when programs do no have same filter", () => {
+  test("#parallelizeProcs when programs do not have same filter", () => {
     expect(() => {
-      parallelizeProcs([a, b, c, "_path=conn"])
+      parallelizeProcs([a, b, c, '_path=="conn"'])
     }).toThrow(
-      "Filters must be the same in all programs: md5=123, md5=123, md5=123, _path=conn"
+      'Filters must be the same in all programs: md5=="123", md5=="123", md5=="123", _path=="conn"'
     )
   })
 })
@@ -345,20 +348,22 @@ describe("extracting the first filter", () => {
     expect(brim.program("*").filter()).toEqual("*")
   })
 
-  test("_path=conn", () => {
-    expect(brim.program("_path=conn").filter()).toEqual("_path=conn")
+  test('_path=="conn"', () => {
+    expect(brim.program('_path=="conn"').filter()).toEqual('_path=="conn"')
   })
 
-  test("_path=conn | sum(duration)", () => {
-    expect(brim.program("_path=conn | sum(duration)").filter()).toEqual(
-      "_path=conn"
+  test('_path=="conn" | sum(duration)', () => {
+    expect(brim.program('_path=="conn" | sum(duration)').filter()).toEqual(
+      '_path=="conn"'
     )
   })
 
-  test("_path=conn | filter a", () => {
+  test('_path=="conn" | filter a', () => {
     // This is questionable. We'd need another way to extract the filter if we
-    // want the result of this to be _path=conn | filter a
-    expect(brim.program("_path=conn | filter a").filter()).toEqual("_path=conn")
+    // want the result of this to be _path==\"conn\" | filter a
+    expect(brim.program('_path=="conn" | filter a').filter()).toEqual(
+      '_path=="conn"'
+    )
   })
 
   test("count()", () => {

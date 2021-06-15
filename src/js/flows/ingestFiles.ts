@@ -1,4 +1,4 @@
-import {lakePath, workspacesPath} from "app/router/utils/paths"
+import {lakePath, workspacePath} from "app/router/utils/paths"
 import fsExtra from "fs-extra"
 import brim from "../brim"
 import ingest from "../brim/ingest"
@@ -126,8 +126,8 @@ const executeLoader = (
       dispatch(space.setIngestProgress(value))
     }
     const onDetailUpdate = async (): Promise<void> => {
-      const details = await client.pools.get(poolId)
-      dispatch(Pools.setDetail(workspaceId, details))
+      const details = await client.pools.stats(poolId)
+      dispatch(Pools.setDetail(workspaceId, {id: poolId, ...details}))
     }
     const onWarning = (warning: string): void => {
       dispatch(space.appendIngestWarning(warning))
@@ -160,7 +160,7 @@ const setPool = (dispatch, tabId, workspaceId) => ({
     global.tabHistories.getOrCreate(tabId).push(url)
   },
   undo() {
-    const url = workspacesPath()
+    const url = workspacePath(workspaceId)
     global.tabHistories.getOrCreate(tabId).replace(url)
   }
 })

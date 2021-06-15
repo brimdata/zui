@@ -1,36 +1,28 @@
 import {AppDispatch, State} from "../state/types"
 import Toolbar, {ToolbarItem} from "../state/Toolbars"
+import Configs, {Config} from "../state/Configs"
+import ConfigPropValues from "../state/ConfigPropValues"
 
-export interface BrimUIContainerApi<ItemType> {
-  setStoreArgs: (d: AppDispatch, gs: () => State) => void
-  add: (containerId: string, item: ItemType) => void
-  update: (containerId: string, itemId: string, type: Partial<ItemType>) => void
-}
+export class ToolbarApi {
+  constructor(private dispatch: AppDispatch, private getState: () => State) {}
 
-export class ToolbarApi implements BrimUIContainerApi<ToolbarItem> {
-  private dispatch: AppDispatch
-  private getState: () => State
-
-  constructor() {}
-
-  public setStoreArgs(d: AppDispatch, gs: () => State) {
-    this.dispatch = d
-    this.getState = gs
-  }
-
-  public add(toolbarId: string, item: ToolbarItem) {
+  add(toolbarId: string, item: ToolbarItem) {
     this.dispatch(Toolbar.createItem({toolbarId, item}))
   }
 
-  public update(toolbarId: string, itemId: string, item: Partial<ToolbarItem>) {
+  update(toolbarId: string, itemId: string, item: Partial<ToolbarItem>) {
     this.dispatch(Toolbar.updateItem({toolbarId, itemId, item}))
   }
 }
 
-// export class ContextMenuApi implements BrimUIContainerApi<ContextMenuItem> {
-//   constructor(private store: Store) {}
-//
-//   add() {}
-//
-//   update() {}
-// }
+export class ConfigsApi {
+  constructor(private dispatch: AppDispatch, private getState: () => State) {}
+
+  get(configName, propName): any {
+    return ConfigPropValues.get(configName, propName)(this.getState())
+  }
+
+  add(config: Config) {
+    this.dispatch(Configs.set(config))
+  }
+}

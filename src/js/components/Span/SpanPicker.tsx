@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux"
 import React from "react"
 
-import {reactElementProps} from "../../test/integration"
+import {reactElementProps} from "../../../../test/integration/helpers/integration"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
 import ToolbarButton from "../../../../app/toolbar/button"
 import refreshPoolInfo from "../../flows/refreshPoolInfo"

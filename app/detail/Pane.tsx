@@ -4,7 +4,7 @@ import {SuricataEvent} from "ppl/detail/models/SuricataEvent"
 import {ZeekEvent} from "ppl/detail/models/ZeekEvent"
 import RelatedAlerts from "ppl/detail/RelatedAlerts"
 import RelatedConns from "ppl/detail/RelatedConns"
-import CorrelationPanel from "ppl/detail/Correlation"
+import UidPanel from "ppl/detail/UidPanel"
 import React, {useLayoutEffect, memo, useMemo, useRef} from "react"
 import {useSelector} from "react-redux"
 import ConnPanel from "src/js/components/LogDetails/ConnPanel"
@@ -14,6 +14,7 @@ import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
 import {zed} from "zealot"
+import {detailPane} from "test/integration/helpers/locators"
 
 const BG = styled.div`
   padding: 12px;
@@ -36,12 +37,12 @@ const Content = memo<Props>(function Content({record}) {
   const hasMd5 = isZeek && record.has("md5")
 
   return (
-    <BG className="detail-pane-content">
+    <BG className="detail-pane-content" {...detailPane.props}>
       <div className="column">
         <Fields record={record} />
       </div>
       <div className="column">
-        {isZeek && uid && <CorrelationPanel record={record} />}
+        {isZeek && uid && <UidPanel record={record} />}
         {isSuricata && cid && <RelatedAlerts record={record} />}
         {isSuricata && cid && <RelatedConns record={record} />}
         {isConn && <ConnPanel record={record} />}

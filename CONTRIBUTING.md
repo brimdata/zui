@@ -13,10 +13,9 @@ Before you start, review the [Code Base Walkthrough](https://github.com/brimdata
 
 ## Setup
 
-You should have `node v12.12.0`, `deno v1.2.0`, and `git` installed. You can start a local instance of Brim via:
+You should have `node v12.12.0` and `git` installed. You can start a local instance of Brim via:
 
 [Install Node](https://nodejs.org/en/download/package-manager/)
-[Install Deno](https://deno.land/manual/getting_started/installation)
 
 ```bash
 git clone https://github.com/brimdata/brim
@@ -63,7 +62,7 @@ npx jest Client.test.js -t "increment by one" # Run a single test by name
 npx jest --watch                              # Run all tests on every change
 ```
 
-For integration tests, see [itest/README.md](itest/README.md).
+For integration tests, see [test/integration/README.md](test/integration/README.md).
 
 **Snapshots**
 

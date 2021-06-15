@@ -1,17 +1,17 @@
-import {ipcMain} from "electron"
-import tron from "./"
+import initIpcListeners from "src/js/initializers/initIpcListeners"
+import initTestStore from "test/unit/helpers/initTestStore"
+import tron from "./index"
+
+let store = initTestStore()
+initIpcListeners(store, null)
+
+beforeEach(() => {
+  store = initTestStore()
+})
 
 test("serialize each window", async () => {
   const manager = tron.windowManager()
   manager.openWindow("search")
-  // @ts-ignore
-  ipcMain.once.mockReset()
-  setTimeout(() => {
-    // @ts-ignore
-    const [_replyChan, callback] = ipcMain.once.mock.calls[0]
-    callback("e", "<Mock state from the renderer>")
-  }, 10)
-
   const data = await manager.serialize()
   expect(data).toEqual([
     {
@@ -20,37 +20,14 @@ test("serialize each window", async () => {
       name: "search",
       position: [0, 0],
       size: [100, 100],
-      state: "<Mock state from the renderer>"
+      state: expect.objectContaining({tabs: expect.any(Object)})
     }
   ])
 })
 
-test("confirm quit is false", async () => {
-  const manager = tron.windowManager()
-
-  manager.openWindow("search")
-  // @ts-ignore
-  ipcMain.once.mockReset()
-  setTimeout(() => {
-    // @ts-ignore
-    const [_replyChan, callback] = ipcMain.once.mock.calls[0]
-    callback("e", false)
-  }, 10)
-  const ok = await manager.confirmQuit()
-  expect(ok).toBe(false)
-})
-
 test("confirm quit is true", async () => {
   const manager = tron.windowManager()
-
   manager.openWindow("search")
-  // @ts-ignore
-  ipcMain.once.mockReset()
-  setTimeout(() => {
-    // @ts-ignore
-    const [_replyChan, callback] = ipcMain.once.mock.calls[0]
-    callback("e", true)
-  }, 10)
   const ok = await manager.confirmQuit()
   expect(ok).toBe(true)
 })

@@ -1,7 +1,7 @@
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import brim from "src/js/brim"
-import {createField} from "test/factories/zed-factory"
+import {createField} from "test/shared/factories/zed-factory"
 import {createZealotMock} from "zealot"
 import {
   appendQueryCountBy,
@@ -9,8 +9,8 @@ import {
   appendQueryInclude
 } from "../../flows/searchBar/actions"
 import {submitSearch} from "../../flows/submitSearch/mod"
-import fixtures from "../../test/fixtures"
-import initTestStore from "../../test/initTestStore"
+import fixtures from "../../../../test/unit/fixtures"
+import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Search from "../Search"
 import {SpanArgs} from "../Search/types"
 import Url from "../Url"
@@ -131,7 +131,7 @@ test("append an include field", () => {
   const field = createField("_path", "conn")
   const state = store.dispatchAll([appendQueryInclude(field)])
 
-  expect(SearchBar.getSearchBarInputValue(state)).toBe('_path="conn"')
+  expect(SearchBar.getSearchBarInputValue(state)).toBe('_path=="conn"')
 })
 
 test("append an include field when some text already exists", () => {
@@ -140,7 +140,7 @@ test("append an include field when some text already exists", () => {
     SearchBar.changeSearchBarInput("text"),
     appendQueryInclude(field)
   ])
-  expect(SearchBar.getSearchBarInputValue(state)).toBe('text _path="conn"')
+  expect(SearchBar.getSearchBarInputValue(state)).toBe('text _path=="conn"')
 })
 
 test("append an exclude field", () => {

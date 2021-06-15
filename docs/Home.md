@@ -15,8 +15,8 @@ effective use of the Brim desktop application and related tools.
 > from pcaps) is now handled by [Brimcap](https://github.com/brimdata/brimcap).
 > Brimcap is bundled with Brim to provide a pcap import/extraction workflow
 > similar to what was present in Brim versions `v0.24.0` and older. A separate
-> [Brimcap wiki](https://github.com/brimdata/brimcap/wiki) exists that now
-> contains current docs related to pcap processing.
+> [Brimcap wiki](https://github.com/brimdata/brimcap/wiki) exists that contains
+> current docs related to pcap processing.
 
 ## Support Resources
 
@@ -32,6 +32,7 @@ effective use of the Brim desktop application and related tools.
 - [[Zeek Customization]] (v0.24.0 and older)
 - [[Geolocation]] (v0.24.0 and older)
 - [[Migration of Spaces (v0.25.0+)]] 
+- [[Linux RPM Upgrade (v0.25.0+)]]
 - [[Importing CSV, JSON, Parquet, and ZST (v0.25.0+)]]
 
 ## Cookbooks

@@ -3,15 +3,27 @@ import path from "path"
 import toast from "react-hot-toast"
 import {getZealot} from "../flows/getZealot"
 import {AppDispatch, State} from "../state/types"
-import Current from "../state/Current"
-import {CommandRegistry, LoaderRegistry} from "./registries"
-import {ToolbarApi} from "./ui-apis"
+import {
+  CommandRegistry,
+  ContextMenuRegistry,
+  DetailCtxItemBuilder,
+  LoaderRegistry,
+  SearchCtxItemBuilder
+} from "./registries"
+import {ConfigsApi, ToolbarApi} from "./ui-apis"
+import {StorageApi} from "./storage"
 
 export default class BrimApi {
   public commands = new CommandRegistry()
   public loaders = new LoaderRegistry()
-  public toolbar = new ToolbarApi()
-  // public contextMenu = new ContextMenuApi()
+  public contextMenus = {
+    search: new ContextMenuRegistry<SearchCtxItemBuilder>(),
+    detail: new ContextMenuRegistry<DetailCtxItemBuilder>()
+  }
+  public toolbar: ToolbarApi
+  public configs: ConfigsApi
+  public storage: StorageApi
+
   public toast = toast
 
   /*
@@ -23,23 +35,13 @@ export default class BrimApi {
 
   constructor() {}
 
-  public setStoreArgs(d: AppDispatch, gs: () => State) {
+  public init(d: AppDispatch, gs: () => State) {
     this.dispatch = d
     this.getState = gs
 
-    this.toolbar.setStoreArgs(d, gs)
-  }
-
-  public getCurrent() {
-    const state = this.getState()
-    const pool = Current.getPool(state)
-    const ws = Current.getWorkspace(state)
-    return {
-      poolId: pool.id,
-      poolName: pool.name,
-      workspaceId: ws.id,
-      workspaceName: ws.name
-    }
+    this.toolbar = new ToolbarApi(d, gs)
+    this.configs = new ConfigsApi(d, gs)
+    this.storage = new StorageApi(d, gs)
   }
 
   public getZealot() {

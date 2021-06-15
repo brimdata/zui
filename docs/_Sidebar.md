@@ -10,6 +10,7 @@
 - [[Zeek Customization]]
 - [[Geolocation]]
 - [[Migration of Spaces]]
+- [[Linux RPM Upgrade (v0.25.0+)]]
 - [[Importing CSV, JSON, Parquet, and ZST]]
 
 **Cookbooks**

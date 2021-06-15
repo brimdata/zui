@@ -10,7 +10,7 @@ declare global {
       ResizeObserver: any
       SVGElement: any
       windowId: string
-      windowName: "search" | "detail" | "about"
+      windowName: "search" | "detail" | "about" | "hidden"
       getState: () => any
       feature: (name: FeatureName, value: boolean) => void
       tabHistories: Histories
