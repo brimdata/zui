@@ -1,6 +1,7 @@
 **Support Resources**
 
 - [[Installation]]
+- [[Filesystem Paths]]
 - [[Supported Platforms]]
 - [[Microsoft Windows beta limitations]]
 - [[Troubleshooting]]

@@ -22,6 +22,7 @@ effective use of the Brim desktop application and related tools.
 
 - [[Installation (v0.25.0+)]]
 - [[Installation]] (v0.24.0 and older)
+- [[Filesystem Paths]]
 - [[Supported Platforms]]
 - [[Microsoft Windows beta limitations]]
 - [[Troubleshooting (v0.25.0+)]]
