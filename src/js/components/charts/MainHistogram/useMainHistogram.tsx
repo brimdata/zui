@@ -112,7 +112,7 @@ export default function(width: number, height: number): HistogramChart {
       xScale: d3
         .scaleUtc()
         .range([0, innerWidth(width, margins)])
-        .domain(span),
+        .domain(data.span),
       pens
     }
   }, [chartData, status, span, innerSpan, width, height])
