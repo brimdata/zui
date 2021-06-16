@@ -148,13 +148,26 @@ export default function windowManager(
       const params = defaultWindowParams(winParams, lastWin && lastWin.ref)
       const id = params.id
 
+      const onClosed = (win: BrimWindow) => {
+        delete windows[win.id]
+        // whenever a window is closed in linux check if 'hidden' window is last
+        // open, and if so tell it to close so the rest of the app will shutdown
+        if (
+          process.platform === "linux" &&
+          this.count() === 1 &&
+          this.getWindows()[0].name === "hidden"
+        ) {
+          this.getWindows()[0].ref.close()
+        }
+      }
+
       if (name === "search") {
         const {size, position, query, id} = params
         const dimens = dimensFromSizePosition(size, position)
         const win = new SearchWindow(dimens, query, initialState, id)
         windows[id] = win
         win.ref.on("closed", () => {
-          delete windows[id]
+          onClosed(windows[id])
         })
         return win
       } else {
@@ -164,7 +177,7 @@ export default function windowManager(
             windows[id].lastFocused = new Date().getTime()
           })
           .on("closed", () => {
-            delete windows[id]
+            onClosed(windows[id])
           })
 
         const win = {
