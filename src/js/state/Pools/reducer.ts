@@ -1,7 +1,6 @@
 import produce from "immer"
 
 import {Pool, PoolsAction, PoolsState} from "./types"
-import brim from "../../brim"
 
 const init: PoolsState = {}
 
@@ -20,8 +19,7 @@ const poolsReducer = produce((draft, action: PoolsAction): {
       // time. In the future brim.Span type should mimic the formatted
       // transmitted over the wire.
 
-      var pool = brim.interop.poolPayloadToPool(action.pool)
-      draft[id] = defaults(pool, draft[id])
+      draft[id] = defaults(action.pool, draft[id])
       break
 
     case "$POOLS_RENAME":
@@ -69,18 +67,17 @@ export default function reducer(
 function defaults(next: Partial<Pool>, prev: Pool): Pool {
   // It would be nice to not need to keep this ingest state in the pool
   // object. An separate ingest reducer would be good.
-  const pool = brim.interop.poolPayloadToPool(next)
   const defaults = {min_time: {sec: 0, ns: 0}, max_time: {sec: 0, ns: 0}}
   const defaultIngest = {progress: null, warnings: []}
   const prevIngest = prev && prev.ingest
   return {
     ...defaults,
     ...prev,
-    ...pool,
+    ...next,
     ingest: {
       ...defaultIngest,
       ...prevIngest,
-      ...pool.ingest
+      ...next.ingest
     }
   }
 }

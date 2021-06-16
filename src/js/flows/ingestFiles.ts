@@ -15,6 +15,7 @@ import {Dispatch, Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 import BrimApi from "../api"
 import {Zealot} from "../../../zealot"
+import interop from "../brim/interop"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -71,7 +72,7 @@ const createDir = () => ({
   }
 })
 
-const createPool = (client, gDispatch, workspaceId) => ({
+const createPool = (client: Zealot, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
     let createParams
     if (params.dataDir) {
@@ -83,7 +84,7 @@ const createPool = (client, gDispatch, workspaceId) => ({
     gDispatch(
       Pools.setDetail(workspaceId, {
         ...pool,
-        ingest: {progress: 0, snapshot: 0, warnings: []}
+        ingest: {progress: 0, warnings: []}
       })
     )
 
@@ -126,8 +127,10 @@ const executeLoader = (
       dispatch(space.setIngestProgress(value))
     }
     const onDetailUpdate = async (): Promise<void> => {
-      const details = await client.pools.stats(poolId)
-      dispatch(Pools.setDetail(workspaceId, {id: poolId, ...details}))
+      const stats = interop.poolStatsPayloadToPool(
+        await client.pools.stats(poolId)
+      )
+      dispatch(Pools.setDetail(workspaceId, {id: poolId, ...stats}))
     }
     const onWarning = (warning: string): void => {
       dispatch(space.appendIngestWarning(warning))

@@ -23,7 +23,7 @@ export function isNumber(value: unknown): value is number {
   return typeof value === "number" && isFinite(value)
 }
 
-export function isBigInt(value: unknown): value is BigInt {
+export function isBigInt(value: unknown): value is bigint {
   return typeof value === "bigint"
 }
 

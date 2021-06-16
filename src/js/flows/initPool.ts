@@ -1,4 +1,3 @@
-import brim from "../brim"
 import Current from "../state/Current"
 import Pools from "../state/Pools"
 import {Thunk} from "../state/types"
@@ -13,7 +12,6 @@ export const initPool = (poolId: string): Thunk<Promise<void>> => (
   const zealot = dispatch(getZealot())
   return zealot.pools
     .get(poolId)
-    .then(brim.interop.poolPayloadToPool)
     .then((data) => {
       dispatch(Pools.setDetail(workspaceId, data))
     })
