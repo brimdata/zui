@@ -1,5 +1,9 @@
 # Filesystem Paths
 
+- [Application Binaries (v0.25.0+)](#application-binaries-v0250)
+- [Application Binaries (v0.24.0)](#application-binaries-v0240)
+- [User Data (all versions)](#user-data-all-versions)
+
 Occasionally when using Brim or troubleshooting problems with it, you may need
 to know the location on the filesystem where the application binaries and/or user
 data is stored. Below you'll find these details for each supported platform.
@@ -17,14 +21,15 @@ platform:
 | **Linux**     | `/opt/Brim`                                 |
 
 This filesystem location should be treated as read-only and is typically
-only only modified when a newer version of the app is being installed.
+only modified when a newer version of the app is being installed.
 
 Since Brim is most often launched directly from the GUI environment in your OS,
 you'll typically not need to access the application binaries directly. One
 exception is if you wish to make use of the command line binaries that are
 bundled with the app, such as [`zq`](https://github.com/brimdata/zed/tree/main/cmd/zed#zq),
-[`zapi`](https://github.com/brimdata/zed/tree/main/cmd/zed#zapi), and so forth.
-These can be found in the `zdeps` subdirectory as follows:
+[`zapi`](https://github.com/brimdata/zed/tree/main/cmd/zed#zapi),
+[`brimcap`](https://github.com/brimdata/brimcap), and so forth. These can be
+found in the `zdeps` subdirectory as follows:
 
 |**OS Platform**|**Location**|
 |---------------|------------|
@@ -53,7 +58,7 @@ platform.
 
 
 This filesystem location should be treated as read-only and is typically
-only only modified when a newer version of the app is being installed.
+only modified when a newer version of the app is being installed.
 
 Since Brim is most often launched directly from the GUI environment in your OS,
 you'll typically not need to access the application binaries. One exception is
@@ -101,8 +106,8 @@ categories of interest include:
      in the **History** panel, and so forth.
 
 Generally you should not need to directly access the saved user data, though
-it may prove necessary during [Troubleshooting](https://github.com/brimdata/brim/wiki/Troubleshooting)
-or if you use [Zed](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
+it may prove necessary during [[Troubleshooting]] or if you use
+[Zed](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
 or [Brimcap](https://github.com/brimdata/brimcap/blob/main/README.md) CLI tools
 to perform scripted operations from outside the app against data that's stored
 behind Brim.
