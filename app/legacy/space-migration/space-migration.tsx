@@ -127,7 +127,7 @@ function Modal({onClose}) {
       </p>
       <p>
         Learn more about the{" "}
-        <Link href="https://github.com/brimdata/brim/wiki/Migration-of-Spaces">
+        <Link href="https://github.com/brimdata/brim/wiki/Migration-of-Spaces-%28v0.25.0-%29">
           migration tool
         </Link>{" "}
         and the{" "}

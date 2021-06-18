@@ -1,4 +1,4 @@
-# Migration of Spaces
+# Migration of Spaces (v0.25.0 and newer)
 
 Starting with GA Brim release `v0.25.0`, imported data will now be stored in
 Pools in a Zed Lake rather than in file-based Spaces as they were previously.
@@ -26,14 +26,9 @@ While the process should be seamless, if you're reading this article before
 clicking **Migrate**, here are some tips to help ensure a successful migration.
 
 1. Before starting migration, you may want to make a backup by zipping or
-   copying everything below the following directory, which varies per OS
-   platform:
-
-    |**OS Platform**|**Location**|
-    |---------------|------------|
-    | **Windows**   | `%APPDATA%\Brim\data\spaces` |
-    | **macOS**     | `$HOME/Library/Application Support/Brim/data/spaces` |
-    | **Linux**     | `$HOME/.config/Brim/data/spaces` |
+   copying everything below the `spaces` subdirectory under the Brim
+   [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+   path.
 
 2. If you have a lot of data saved in Spaces, the migration may take some time
    to complete. If you click **Later**, the pop-up will be dismissed and you
