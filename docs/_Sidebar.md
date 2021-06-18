@@ -4,10 +4,12 @@
 - [[Filesystem Paths]]
 - [[Supported Platforms]]
 - [[Microsoft Windows beta limitations]]
-- [[Troubleshooting]]
+- [[Troubleshooting (v0.25.0+)]]
+- [[Troubleshooting]] (v0.24.0 and older)
 
 **User Documentation**
 
+- [[Zeek Customization]] (v0.24.0 and older)
 - [[Zeek Customization]]
 - [[Geolocation]]
 - [[Migration of Spaces]]
