@@ -71,7 +71,7 @@ recommend attempting to run Brim on macOS releases older than macOS Mojave
 The build procedure for Brim's macOS releases creates binaries intended to
 run on the Intel-based Mac hardware that make up the majority of Macs in
 use today. Brim releases are not yet available that are built specifically for
-the recently-announced [M1-based hardware](https://www.apple.com/mac/m1/).
+the recently-released [M1-based hardware](https://en.wikipedia.org/wiki/Apple_M1).
 However, Apple's [Rosetta 2](https://support.apple.com/en-us/HT211861) makes
 it possible to run Intel-targeted binaries on M1-based Macs, and
 [smoke testing](#smoke-testing) has indicated that current Brim releases can
@@ -156,7 +156,7 @@ confirm basic functionality. Such a smoke test consists of the following:
 
 * Install the base platform while accepting the defaults on any offered install-time config options
 * Install the Brim app using the standard package install procedure for the platform
-* Import a test pcap into Brim and confirm embedded Zeek and Suricata both produce records from it
+* Import a test pcap into Brim and confirm the bundled Zeek and Suricata both produce records from it
 
 This exercise was most recently performed in December, 2020 in preparation for
 the GA release [`v0.21.0`](https://github.com/brimdata/brim/releases/tag/v0.21.0)
