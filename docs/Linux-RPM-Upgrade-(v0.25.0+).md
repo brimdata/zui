@@ -1,4 +1,4 @@
-# Linux RPM Upgrade (v0.25.0+)
+# Linux RPM Upgrade (v0.25.0 and newer)
 
 GA Brim release `v0.25.0` uses a new toolkit for packaging and installing the
 app. The [RPM](https://en.wikipedia.org/wiki/RPM_Package_Manager) packages
@@ -12,9 +12,9 @@ still present results in a failure similar to the one shown below.
 To resolve the issue, simply uninstall the prior Brim release (e.g., by
 executing `yum remove brim` or `dnf remove brim` in your shell) before
 re-attempting the install of the new release. All previously-imported data and
-app settings (which are stored in `$HOME/.config/Brim`, separate from the
-Brim binaries) will still be intact when you now proceed with the install of
-the newer release.
+app settings (which are stored below the [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+path, separate from the [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250))
+will still be intact when you now proceed with the install of the newer release.
 
 This is a one-time procedure. Once you successfully install the newer Brim
 release, upgrading via RPM packages to future releases newer than `v0.25.0`
