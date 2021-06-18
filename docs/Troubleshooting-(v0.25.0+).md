@@ -50,7 +50,7 @@ the steps you followed that led up to the crash.
 
 Then to clear the condition, click **Window > Reset State** from the Brim
 pull-down menu. This will clear some cached data from your previous use of Brim
-(e.g. the contents of the **History** panel), but the data in your Pools will
+(e.g., the contents of the **History** panel), but the data in your Pools will
 remain intact.
 
 Before resuming normal work in Brim, this would be a good opportunity to
