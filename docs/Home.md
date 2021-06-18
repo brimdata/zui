@@ -29,11 +29,11 @@ effective use of the Brim desktop application and related tools.
 
 ## User Documentation
 
-- [[Zeek Customization]] (v0.24.0 and older)
-- [[Geolocation]]
 - [[Migration of Spaces (v0.25.0+)]] 
 - [[Linux RPM Upgrade (v0.25.0+)]]
 - [[Importing CSV, JSON, Parquet, and ZST (v0.25.0+)]]
+- [[Geolocation]]
+- [[Zeek Customization]] (v0.24.0 and older)
 
 ## Cookbooks
 
