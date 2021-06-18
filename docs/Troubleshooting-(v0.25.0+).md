@@ -1,4 +1,8 @@
-# Troubleshooting
+# Troubleshooting (v0.25.0 and newer)
+
+> **Note:** The details in this article are specific to Brim release `v0.25.0`
+> and newer. For information regarding release `v0.24.0` and older, review
+> [this article](https://github.com/brimdata/brim/wiki/Troubleshooting).
 
 If you're having a problem with Brim, please browse the following sections
 before you [open an issue](#opening-an-issue).
