@@ -7,12 +7,19 @@
 
 # Summary
 
-Starting with `v0.14.0`, Brim now adds [geolocation](https://en.wikipedia.org/wiki/Geolocation) fields to the `conn` records
-of Zeek logs that are generated from imported pcaps.
+Brim provides limited [geolocation](https://en.wikipedia.org/wiki/Geolocation)
+support by adding fields to the `conn` records of Zeek logs that are generated
+from imported pcaps. Starting with release `v0.25.0`, this functionality is
+provided by the Zeek that's bundled with
+[Brimcap](https://github.com/brimdata/brimcap#usage-with-brim-desktop-app).
+
+Brim doesn't yet have functionality to use a replacement geolocation database
+or leverage geolocation data that might be present in other data sources, but
+interest is being gathered for such possible [future functionality](#future-functionality).
 
 # Examples
 
-The following screenshot shows where the geolocation fields may be found in the Log Detail view:
+The following screenshot shows where the geolocation fields may be found in the Log Detail view for a Zeek `conn` record generated from a pcap:
 
 ![Geolocation in Log Detail](media/Geolocation-Log-Detail.png)
 
@@ -22,8 +29,10 @@ This screenshot shows an example aggregation that uses geolocation data:
 
 # Origin
 
-The data is added by the [geoip-conn](https://github.com/brimdata/geoip-conn) Zeek package. For details on the origin and accuracy
-of the geolocation data, see the [README](https://github.com/brimdata/geoip-conn/blob/master/README.md).
+When added to Zeek `conn` records for imported pcaps, this data is provided
+by the [geoip-conn](https://github.com/brimdata/geoip-conn) Zeek package. For
+details on the origin and accuracy of the geolocation data, see the
+[README](https://github.com/brimdata/geoip-conn/blob/master/README.md).
 
 # Future Functionality
 
