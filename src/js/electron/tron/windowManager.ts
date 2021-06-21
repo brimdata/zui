@@ -150,10 +150,10 @@ export default function windowManager(
 
       const onClosed = (win: BrimWindow) => {
         delete windows[win.id]
-        // whenever a window is closed in linux check if 'hidden' window is last
+        // whenever a window is closed in Linux or Windows check if 'hidden' window is last
         // open, and if so tell it to close so the rest of the app will shutdown
         if (
-          process.platform === "linux" &&
+          process.platform !== "darwin" &&
           this.count() === 1 &&
           this.getWindows()[0].name === "hidden"
         ) {
