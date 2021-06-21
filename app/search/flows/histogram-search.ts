@@ -15,9 +15,11 @@ const id = "Histogram"
 export function histogramSearch(): Thunk<Promise<void>> {
   return (dispatch, getState) => {
     const state = getState()
-    const {program, spanArgs, pins} = Url.getSearchParams(state)
+    const {program, pins} = Url.getSearchParams(state)
+    const span = Url.getSpanParamsWithDefaults(state)
+    const from = brim.time(span[0]).toDate()
+    const to = brim.time(span[1]).toDate()
     const brimProgram = brim.program(program, pins)
-    const [from, to] = brim.span(spanArgs).toDateTuple()
     const query = addEveryCountProc(brimProgram.string(), [from, to])
     const poolId = Current.mustGetPool(state).id
     const {response, promise} = dispatch(search({id, query, from, to, poolId}))

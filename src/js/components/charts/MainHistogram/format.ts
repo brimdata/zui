@@ -19,24 +19,23 @@ export default function(data: ChartData, span: DateTuple): HistogramData {
   } = data.keys.reduce((obj, path) => ({...obj, [path]: 0}), {})
 
   const bins = []
-  Object.keys(data.table).map((ms) => {
-    // Some data might be out of range
-    const ts = new Date(parseInt(ms))
-    if (ts >= span[0] && ts < span[1]) {
-      bins.push({
-        ts,
-        paths: {
-          ...defaults,
-          ...data.table[ms]
-        },
-        count: Object.values(data.table[ms]).reduce((c, sum) => sum + c, 0)
-      })
-    }
+  const times = Object.keys(data.table).map((ms) => {
+    const epochTs = parseInt(ms)
+    const ts = new Date(epochTs)
+    bins.push({
+      ts,
+      paths: {
+        ...defaults,
+        ...data.table[ms]
+      },
+      count: Object.values(data.table[ms]).reduce((c, sum) => sum + c, 0)
+    })
+    return epochTs
   })
-
+  const spanStart = new Date(Math.min(...times, span[0].getTime()))
   return {
     interval,
-    span,
+    span: [spanStart, span[1]],
     points: bins,
     keys: data.keys
   }
