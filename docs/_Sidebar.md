@@ -20,7 +20,6 @@
 - [[Remote zqd]] (v0.24.0 and older)
 - [[Query Library Transfer]]
 - [[Joining Data]] (v0.24.0 and older)
-- [[Joining Data (v0.25.0+)]]
 
 **Developer Resources**
 
