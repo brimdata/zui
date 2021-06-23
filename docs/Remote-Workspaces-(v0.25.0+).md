@@ -1,4 +1,4 @@
-# Remote Zed Lakes (v0.25.0 and newer)
+# Remote Workspaces (v0.25.0 and newer)
 
 > **Note:** The details in this article are specific to Brim release `v0.25.0`
 > and newer. For information regarding release `v0.24.0` and older, review
@@ -7,18 +7,19 @@
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
 - [Limitations](#limitations)
-- [Background: Brim & Zed Lakes](#background-brim--Zed-Lakes)
+- [Background: Brim & Zed Lakes](#background-brim--zed-lakes)
 - [Starting a Remote Zed Lake](#starting-a-remote-zed-lake)
 - [Importing Data](#importing-data)
-- [Accessing Our Remote Zed Lake](#accessing-our-remote-zed-lake)
+- [Accessing Our Remote Workspace](#accessing-our-remote-workspace)
 - [Contact us!](#contact-us)
 
 # Summary
 
-By default, the Brim application leverages a [Zed](https://github.com/brimdata/zed)
-backend on the local filesystem for holding imported logs and packet capture
-data. However, Brim is capable of accessing data stored on a remote Zed backend
-as well. This cookbook describes the available options and current limitations.
+By default, the Brim application connects to a Workspace on the system on which
+it is launched. This Workspace includes [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/design.md)
+storage on the local filesystem for holding imported data. However, Brim is
+capable of accessing data stored in a Zed Lake in a remote Workspace as well.
+This cookbook describes the available options and current limitations.
 
 # About Cookbooks
 
@@ -47,15 +48,12 @@ some rough edges you may encounter as you work through the configurations
 described in this article.
 
 1. While **logs** can be imported from your local Brim app directly to a remote
-Zed Lake, **packet captures** currently cannot. Any packet captures you wish to
-access remotely will need to have been staged at the remote location. The steps
-below show how this is done.
+Workspace, **packet captures** currently cannot.
 
 2. While the configuration potentially allows multiple remote users to access
-the same centrally stored logs and packet captures, there's currently no
-concept of user authentication, individual logins, or roles/permissions. Care
-should be taken to avoid the accidental exposure or loss of centrally-stored
-data.
+the same centrally-stored data, there's currently no concept of user
+authentication, individual logins, or roles/permissions. Care should be taken
+to avoid the accidental exposure or loss of centrally-stored data.
 
 # Background: Brim & Zed Lakes
 
@@ -64,8 +62,8 @@ your desktop, it's easy to think of Brim as a simple standalone application.
 However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
-One essential component is the [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/design.md)
-which is accessed via a [`zed lake serve`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake)
+One essential component is the Zed Lake which is accessed via a
+[`zed lake serve`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake)
 process that manages the storage and querying of imported data. Operations on
 the Zed Lake are invoked via a [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that's utilized by a "client", such as the Brim app. The
@@ -77,8 +75,8 @@ Brim app, and therefore may be useful in scripting and automation.
 
 The location where Zed stores imported data is known as the
 **Data Directory**. This location can be changed via a setting in Brim's
-**Preferences** menu. The default Data Directory is a `lake` subdirectory
-under the Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+**Preferences** menu. The default location is a `lake` subdirectory under the
+Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
 path.
 
 If you examine the process table while Brim is running, you can observe the
@@ -107,12 +105,12 @@ for details).
 
 1. We can see the full path to the `zed` binary that's packaged with Brim. This
 binary and other dependencies that are typically launched by Brim can be found
-in the `zdeps` directory under the Brim [application binaries](Filesystem-Paths#application-binaries-v0250)
+in the `zdeps` directory under Brim's [application binaries](Filesystem-Paths#application-binaries-v0250)
 path.
 
 Now that we know Brim is simply connecting to Zed locally, next we'll vary
 this approach to instead start a remote `zed lake serve` and connect to it to
-access the logs and packet captures stored there.
+access the data stored there.
 
 # Starting a Remote Zed Lake
 
@@ -130,11 +128,11 @@ if we want to import packet capture data.
 ```
 ubuntu# wget --quiet https://github.com/brimdata/brim/releases/download/v0.25.0/Brim-0.25.0.deb
 ubuntu# sudo apt update
-ubuntu# sudo apt install -y ./brim_amd64.deb
+ubuntu# sudo apt install -y ./Brim-0.25.0.deb
 ```
 
-The following additional steps are also currently necessary to work around the
-bug [brim/1701](https://github.com/brimdata/brim/issues/1701).
+The following additional steps are also currently necessary to work around
+issue [brim/1701](https://github.com/brimdata/brim/issues/1701).
 
 ```
 ubuntu# sudo find /opt/Brim/resources/app.asar.unpacked/zdeps/suricata -exec chmod go+w {} \;
@@ -151,9 +149,9 @@ ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/suricata/suricataupdater
 > article in the Brimcap wiki provides relevant guidance for this.
 
 Since there's no desktop environment on this VM, there's no "app" interface to
-see. Therefore we'll use the [application binaries](#application-binaries-v0240)
-path for the Linux platform to start `zed lake serve` manually with a couple
-modifications, as follows:
+see. Therefore we'll start `zed lake serve` manually from the
+[application binaries](#application-binaries-v0240) path for the Linux
+platform as follows:
 
 ```
 ubuntu# mkdir -p ~/.config/Brim/data/lake ~/.config/Brim/data/brimcap-root ~/.config/Brim/logs
@@ -165,7 +163,8 @@ ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/zed lake serve \
           -log.path $HOME/.config/Brim/logs/zlake.log
 ```
 
-Building on what we learned earlier, the two adjustments we made:
+Building on what we learned earlier, we've made two adjustments here compared
+to the command line Brim would have invoked:
 
 1. `localhost` was dropped from the `-l` option. By providing only the port
 `:9867` specification, `zed lake serve` is now prepared to accept remote
@@ -223,7 +222,7 @@ wrccdc 1uMPHXonxiBH1gY6TCCFxBNS99Z key ts order desc
 zed-sample-data 1uMR6rGmrSBRHnB0yqOGnzhQb0b key ts order desc
 ```
 
-# Accessing Our Remote Zed Lake
+# Accessing Our Remote Workspace
 
 Now that we've got data imported into our remote Zed Lake, we'll access it from
 the Brim app that's running on our Mac laptop.
@@ -242,10 +241,12 @@ be included if it's listening on a port other than the default `9867`.
 
 Now the Pools in our remote Zed Lake will appear in the left panel just as we're
 accustomed to seeing when working with local data. We can now enter Zed queries
-and perform normal workflows. For our Pool that was based on the imported
-packet capture, we'll only be able to extract flows into Wireshark via the
-**Packets** button if we have a copy of the same pcap locally and add it to
-the index in our local Brimcap root (see [brimcap/105](https://github.com/brimdata/brimcap/issues/105) for details).
+and perform normal workflows.
+
+For our Pool that was based on the imported packet capture, we'll only be able
+to extract flows into Wireshark via the **Packets** button if we maintain a
+copy of the same pcap locally and add it to the index in our local Brimcap root
+(see [brimcap/105](https://github.com/brimdata/brimcap/issues/105) for details).
 
 ```
 macOS# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
@@ -256,20 +257,20 @@ macOS# /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/brimcap
 ![Opening flow](media/Brimcap-Remote-Flow-Wireshark.png)
 
 You can import logs (but not pcaps) directly from your Brim app to the remote
-Zed Lake in the same manner as you've been doing it locally.
+Zed Lake in the same manner as you've been doing locally.
 
 ![Importing logs to remote Zed Lake](media/Remote-Zed-Lake-Import.gif)
 
-Attempts to import a pcap directly to the remote Workspace results will fail
-with an error message (see [brimcap/106](https://github.com/brimdata/brimcap/issues/106)
+Attempts to import a pcap directly to the remote Workspace will fail with an
+error message (see [brimcap/106](https://github.com/brimdata/brimcap/issues/106)
 for details).
 
 A connection to a remote Workspace can be removed by selecting the **Get Info**
-option in the pull-down and clicking **Logout*. This only removes the config in your Brim
-app that references the remote `zqd`. It does not shutdown the remote `zqd` nor
-does it delete any data stored there.
+option in the pull-down and clicking **Logout**. This only removes the config
+in your Brim app that references the remote Workspace. It does not shutdown the
+remote `zed lake serve` nor does it delete any data stored there.
 
-![Get connection info](media/Connection-Get-Info.png)
+![Get Workspace info](media/Workspace-Get-Info.png)
 
 # Contact us!
 
