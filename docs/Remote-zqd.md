@@ -84,7 +84,7 @@ Brim app, and therefore may be useful in scripting and automation.
 The location where `zqd` stores imported data is known as the
 **Data Directory**. This location can be changed via a setting in Brim's
 **Preferences** menu. The default Data Directory is a `spaces` subdirectory
-under the Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+under the Brim [user data](Filesystem-Paths#user-data-all-versions)
 path.
 
 If you examine the process table while Brim is running, you can observe the
@@ -120,7 +120,7 @@ details).
 
 6. We can see the full path to the `zqd` binary that's packaged with Brim. This
 binary and other dependencies that are typically launched by Brim can be found
-in the `zdeps` directory under the Brim [application binaries](#application-binaries-v0240)
+in the `zdeps` directory under the Brim [application binaries](Filesystem-Paths#application-binaries-v0240)
 path.
 
 Now that we know Brim is simply connecting to `zqd` locally, next we'll vary
