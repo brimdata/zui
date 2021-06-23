@@ -49,13 +49,8 @@ add/delete of entries.
 # Background: `appState.json`
 
 Brim maintains persistent user configuration in a file `appState.json` which
-is located in the following base directory on each platform:
-
-|**OS Platform**|**Location**|
-|---------------|------------|
-| **Windows**   | `%APPDATA%\Brim`                         |
-| **macOS**     | `$HOME/Library/Application Support/Brim` |
-| **Linux**     | `$HOME/.config/Brim`                     |
+is located in Brim's [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+path.
 
 If we peek inside it with a [JSON browser](http://jsonviewer.stack.hu/) or a
 tool like [`jq`](https://stedolan.github.io/jq/), we can see where different
@@ -67,9 +62,6 @@ change having been made to the presentation of time values in the
 $ cat appState.json | jq '.data.globalState.prefs'
 {
   "timeFormat": "dddd, MMMM Do YYYY, h:mm:ss a",
-  "suricataRunner": "",
-  "suricataUpdater": "",
-  "zeekRunner": "",
   "dataDir": ""
 }
 ```
@@ -125,7 +117,7 @@ optional arguments:
 ```
 
 Let's walk through an example of its use on macOS. Once we've completely exited
-Brim, we download the script to the base config directory where our
+Brim, we download the script to the base user data directory where our
 `appState.json` is located.
 
 ```
@@ -150,7 +142,7 @@ $ cat saved.json
 ...
         {
             "description": "My custom query",
-            "id": "0c7cda6670",
+            "id": "9_NZ5OLjXppTQ1ImOjD-X",
             "name": "Super severe alerts",
             "tags": [
                 "suricata"
@@ -162,10 +154,10 @@ $ cat saved.json
 }
 ```
 
-Now let's sey we've got a separate system where another Brim user wants this
+Now let's say we've got a separate system where another Brim user wants this
 to become their Query Library so they'll have this custom query as well. We
-transfer the `saved.json` file to that system, ensure Brim has been completely
-exited, and with the script downloaded as before:
+transfer the `saved.json` file to that system, exit Brim completely, then with
+the script downloaded as before:
 
 ```
 $ cd "$HOME/Library/Application Support/Brim"
