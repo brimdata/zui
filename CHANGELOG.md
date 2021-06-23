@@ -132,7 +132,7 @@ as usual.
 ---
 
 * Update zq to [v0.23.0](https://github.com/brimdata/zed/releases/tag/v0.23.0)
-* Update Zeek to [v3.2.1-brim4](https://github.com/brimdata/zeek/releases/tag/v3.2.1-brim4) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data (#1202)
+* Update Zeek to [v3.2.1-brim4](https://github.com/brimdata/zeek/releases/tag/v3.2.1-brim4) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data (#1202)
 * Binaries for `pcap`, [`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi), and `zar` are now bundled with Brim (#1098)
 * Fix an issue where Brim presented a blank white screen when it failed to initialize (#1035)
 * Improve how Brim handles ZJSON responses from `zqd` (#1108)
@@ -154,7 +154,7 @@ as usual.
 
 ## v0.18.0
 * Update zq to [v0.22.0](https://github.com/brimdata/zed/releases/tag/v0.22.0)
-* Update Zeek to [v3.2.0-dev-brim10](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim10) to take advantage of latest [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data (#1096)
+* Update Zeek to [v3.2.0-dev-brim10](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim10) to take advantage of latest [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data (#1096)
 * Move the code base from Flow to TypeScript (#1075)
 * Point to new Slack community URL https://www.brimsecurity.com/join-slack/ (#1089)
 * Show a spinner if there's delays closing the "new connection" modal (#1084)
@@ -164,7 +164,7 @@ as usual.
 
 ## v0.17.0
 * Update zq to [v0.21.0](https://github.com/brimdata/zed/releases/tag/v0.21.0)
-* Update Zeek to [v3.2.0-dev-brim9](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim9) to take advantage of latest [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data (#1071)
+* Update Zeek to [v3.2.0-dev-brim9](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim9) to take advantage of latest [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data (#1071)
 * Fix an issue where abruptly killing Brim on Linux or macOS would leave behind an orphaned `zqd` process (#1031)
 * Add an option for executing index searches on Archive Spaces (#1024)
 * Fix an issue where right-clicking to delete a Space when the Brim window was not in focus caused an "Uncaught TypeError" (#1066)
@@ -172,7 +172,7 @@ as usual.
 
 ## v0.16.0
 * Update zq to [v0.20.0](https://github.com/brimdata/zed/releases/tag/v0.20.0)
-* Update Zeek to [v3.2.0-dev-brim8](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim8) to take advantage of latest [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data (#1033)
+* Update Zeek to [v3.2.0-dev-brim8](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim8) to take advantage of latest [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data (#1033)
 * Fix an issue where the Back button brought the user to the wrong place (#1011)
 * Fix an issue where opening/closing a Log Detail window during pcap import canceled the import (#1015)
 * Sort field names in the column chooser alphabetically (#1012)
@@ -188,7 +188,7 @@ as usual.
 
 ## v0.15.0
 * Update zq to [v0.19.0](https://github.com/brimdata/zed/releases/tag/v0.19.0)
-* Update Zeek to [v3.2.0-dev-brim7](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim7) to take advantage of latest [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data (#999)
+* Update Zeek to [v3.2.0-dev-brim7](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim7) to take advantage of latest [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data (#999)
 * Use blue background color for clicked rows in main event view (#971)
 * Fix an issue with brief white flashes during import auto-refresh (#972, #995)
 * Fix an issue where double-clicking across two different rows acted like the second row had been double-clicked (#973)
@@ -202,7 +202,7 @@ as usual.
 
 ## v0.14.0
 * Update zq to [v0.18.0](https://github.com/brimdata/zed/releases/tag/v0.18.0)
-* Add [geolocation](https://github.com/brimdata/brim/wiki/Geolocation) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
+* Add [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
 * Add developer documentation for [adding internal state migrations](https://github.com/brimdata/brim/wiki/Adding-Migrations) (#921)
 * Restore the scroll position when going back to prior search results (#929)
 * Add the [Zealot Client](zealot/README.md) for communicating with `zqd` via the REST API (#934)
