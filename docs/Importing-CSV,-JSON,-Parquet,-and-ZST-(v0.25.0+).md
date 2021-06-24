@@ -24,7 +24,7 @@ that can be easily imported into Brim.
 
 Preprocessing can be performed with the [`zq`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zq)
 CLI tool. These Zed CLI tools are included with Brim and can be found in the
-`zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
+`zdeps` directory under the Brim [application binaries](Filesystem-Paths#application-binaries-v0250)
 path.
 
 Input file format can be specified via the `-i` option.
@@ -63,4 +63,4 @@ Now our `testxlsx_converted.zng` can be imported into Brim.
 If you're struggling with importing alternate file formats or just have
 questions, we'd like to hear from you! Please join our
 [public Slack](https://www.brimsecurity.com/join-slack/)
-and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
+and speak up, or [open an issue](Troubleshooting#opening-an-issue). Thanks!

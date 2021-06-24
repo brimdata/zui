@@ -83,7 +83,7 @@ our automated tests for macOS run today on Apple hardware that is Intel-based
 but not M1-based. Therefore if you have your choice of Mac hardware platform,
 Intel-based is more strongly recommended. However, as we know the M1-based Macs
 will become more popular in the future, please
-[open issues](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
+[open issues](Troubleshooting#opening-an-issue)
 for problems you experience with Brim on M1-based Macs as you would any other.
 If we should begin to accumulate bugs that are specific to M1-based hardware,
 this will help guide the prioritization of our goal to deliver M1-specific
@@ -167,7 +167,7 @@ this exercise, review
 ## Non-Recommended Platforms
 
 While we welcome you to
-[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
+[open an issue](Troubleshooting#opening-an-issue)
 about any problem you experience with Brim regardless of platform version,
 the priority of the core Brim development team is to maintain stability and
 introduce new features on the modern platforms that are most widely used.
@@ -180,5 +180,5 @@ to perform their own research regarding such platforms and submit
 [cookbooks](https://github.com/brimdata/brim/wiki#cookbooks) that may be of
 use to other users seeking to run on the same platform. Before embarking on
 such an effort, we recommend
-[opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
+[opening an issue](Troubleshooting#opening-an-issue)
 to check if we're aware of any existing efforts regarding that platform.

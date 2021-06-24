@@ -2,7 +2,7 @@
 
 > **Note:** The details in this article are specific to Brim release `v0.24.0`
 > and older. For information regarding release `v0.25.0` and newer, review
-> [this article](https://github.com/brimdata/brim/wiki/Remote-Zed-Lakes--%28v0.25.0-%29).
+> [this article](Remote-Zed-Lakes--%28v0.25.0-%29).
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
@@ -36,7 +36,7 @@ become more complete and stable, cookbooks may be retired and replaced with
 regular [User Documentation](https://github.com/brimdata/brim/wiki#user-documentation).
 
 Please report any bugs or usability issues you find when working with cookbooks
-by [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
+by [opening an issue](Troubleshooting#opening-an-issue)
 or reaching out on the [Brim public Slack](https://www.brimsecurity.com/join-slack/).
 We'd also love to hear your success stories and variations, so please don't be
 shy!
@@ -110,8 +110,7 @@ location for macOS in this case.
 
 4. The `-zeekrunner` option points to a script that is used to initiate the
 creation of Zeek logs from imported packet captures as described in the
-[Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization)
-article.
+[Zeek Customization](Zeek-Customization) article.
 
 5. The `-brimfd=3` is an option unique to when `zqd` is launched by Brim.
 This helps ensure that if Brim is killed abruptly, the `zqd` process will also
@@ -153,8 +152,7 @@ ubuntu# sudo apt install -y ./brim_amd64.deb
 > configuration would either lack the ability to import packet data, or would
 > require the creation of a separate Zeek installation and runner that could be
 > enabled via the steps described in the
-> [Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization)
-article.
+> [Zeek Customization](Zeek-Customization) article.
 
 Since there's no desktop environment on this VM, there's no "app" interface to
 see. Therefore we'll use the [application binaries](#application-binaries-v0240)
@@ -301,4 +299,4 @@ does it delete any data stored there.
 
 If you have questions or feedback about this cookbook, we'd like to hear from
 you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/) or
-[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
+[open an issue](Troubleshooting#opening-an-issue). Thanks!

@@ -27,7 +27,7 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
 
 1. Before starting migration, you may want to make a backup by zipping or
    copying everything below the `spaces` subdirectory under the Brim
-   [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+   [user data](Filesystem-Paths#user-data-all-versions)
    path.
 
 2. If you have a lot of data saved in Spaces, the migration may take some time
@@ -95,5 +95,5 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
 
 If you have questions about Space migration or anything else, we'd like to hear
 from you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/)
-and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue).
+and speak up, or [open an issue](Troubleshooting#opening-an-issue).
 Thanks!

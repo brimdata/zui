@@ -2,7 +2,7 @@
 
 > **Note:** The details in this article are specific to Brim release `v0.25.0`
 > and newer. For information regarding release `v0.24.0` and older, review
-> [this article](https://github.com/brimdata/brim/wiki/Remote-zqd).
+> [this article](Remote-zqd).
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
@@ -36,7 +36,7 @@ become more complete and stable, cookbooks may be retired and replaced with
 regular [User Documentation](https://github.com/brimdata/brim/wiki#user-documentation).
 
 Please report any bugs or usability issues you find when working with cookbooks
-by [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
+by [opening an issue](Troubleshooting#opening-an-issue)
 or reaching out on the [Brim public Slack](https://www.brimsecurity.com/join-slack/).
 We'd also love to hear your success stories and variations, so please don't be
 shy!
@@ -76,7 +76,7 @@ Brim app, and therefore may be useful in scripting and automation.
 The location where Zed stores imported data is known as the
 **Data Directory**. This location can be changed via a setting in Brim's
 **Preferences** menu. The default location is a `lake` subdirectory under the
-Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+Brim [user data](Filesystem-Paths#user-data-all-versions)
 path.
 
 If you examine the process table while Brim is running, you can observe the
@@ -276,4 +276,4 @@ remote `zed lake serve` nor does it delete any data stored there.
 
 If you have questions or feedback about this cookbook, we'd like to hear from
 you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/) or
-[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
+[open an issue](Troubleshooting#opening-an-issue). Thanks!
