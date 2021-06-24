@@ -20,7 +20,7 @@ binaries and saved user data are stored on each platform.
 Details are provided in each section below about when Brim may "auto-update" to
 newer releases and when manual upgrades are necessary. In all cases,
 updating to a newer version of the app will preserve your existing
-[user data](Filesystem-Paths#user-data-all-versions). As the way user data
+[user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions). As the way user data
 is stored sometimes changes in newer releases, downgrades to older releases are
 _not_ currently supported.
 

@@ -2,7 +2,7 @@
 
 > **Note:** The details in this article are specific to Brim release `v0.25.0`
 > and newer. For information regarding release `v0.24.0` and older, review
-> [this article](Remote-zqd).
+> [this article](https://github.com/brimdata/brim/wiki/Remote-zqd).
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
@@ -36,7 +36,7 @@ become more complete and stable, cookbooks may be retired and replaced with
 regular [User Documentation](https://github.com/brimdata/brim/wiki#user-documentation).
 
 Please report any bugs or usability issues you find when working with cookbooks
-by [opening an issue](Troubleshooting#opening-an-issue)
+by [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
 or reaching out on the [Brim public Slack](https://www.brimsecurity.com/join-slack/).
 We'd also love to hear your success stories and variations, so please don't be
 shy!
@@ -76,7 +76,7 @@ Brim app, and therefore may be useful in scripting and automation.
 The location where Zed stores imported data is known as the
 **Data Directory**. This location can be changed via a setting in Brim's
 **Preferences** menu. The default location is a `lake` subdirectory under the
-Brim [user data](Filesystem-Paths#user-data-all-versions)
+Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
 path.
 
 If you examine the process table while Brim is running, you can observe the
@@ -105,7 +105,7 @@ for details).
 
 1. We can see the full path to the `zed` binary that's packaged with Brim. This
 binary and other dependencies that are typically launched by Brim can be found
-in the `zdeps` directory under Brim's [application binaries](Filesystem-Paths#application-binaries-v0250)
+in the `zdeps` directory under Brim's [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
 path.
 
 Now that we know Brim is simply connecting to Zed locally, next we'll vary
@@ -150,7 +150,7 @@ ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/suricata/suricataupdater
 
 Since there's no desktop environment on this VM, there's no "app" interface to
 see. Therefore we'll start `zed lake serve` manually from the
-[application binaries](Filesystem-Paths#application-binaries-v0250) path for the Linux
+[application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250) path for the Linux
 platform as follows:
 
 ```
@@ -276,4 +276,4 @@ remote `zed lake serve` nor does it delete any data stored there.
 
 If you have questions or feedback about this cookbook, we'd like to hear from
 you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/) or
-[open an issue](Troubleshooting#opening-an-issue). Thanks!
+[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

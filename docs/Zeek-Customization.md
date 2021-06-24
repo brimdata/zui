@@ -182,4 +182,4 @@ Zeek feature that could be useful to other Brim users, or are generating logs th
 or (especially) if you hit challenges and need help, please join our
 [public Slack](https://www.brimsecurity.com/join-slack/)
 and tell us about it, or
-[open an issue](Troubleshooting#opening-an-issue). Thanks!
+[open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

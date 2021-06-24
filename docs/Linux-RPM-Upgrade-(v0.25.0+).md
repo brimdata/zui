@@ -12,8 +12,8 @@ still present results in a failure similar to the one shown below.
 To resolve the issue, simply uninstall the prior Brim release (e.g., by
 executing `yum remove brim` or `dnf remove brim` in your shell) before
 re-attempting the install of the new release. All previously-imported data and
-app settings (which are stored below the [user data](Filesystem-Paths#user-data-all-versions)
-path, separate from the [application binaries](Filesystem-Paths#application-binaries-v0250))
+app settings (which are stored below the [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+path, separate from the [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250))
 will still be intact when you now proceed with the install of the newer release.
 
 This is a one-time procedure. Once you successfully install the newer Brim
@@ -30,4 +30,4 @@ will not require this manual uninstall step.
 
 If you've got questions about upgrades or anything else, we'd like to hear
 from you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/)
-and speak up, or [open an issue](Troubleshooting#opening-an-issue). Thanks!
+and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!
