@@ -7,12 +7,10 @@ import {PoolConfig, PoolStats} from "../../../zealot/types"
 import interop from "../brim/interop"
 import Workspaces from "../state/Workspaces"
 import workspace from "../brim/workspace"
-import log from "electron-log"
 
 type refreshPoolInfoArgs = {
   workspaceId: string
   poolId: string
-  commitId: string
 }
 
 export default function refreshPoolInfo(
@@ -24,7 +22,6 @@ export default function refreshPoolInfo(
       : Current.getWorkspace(getState())
     const zealot: Zealot = dispatch(getZealot(ws))
     const poolId = refreshPoolInfoArgs?.poolId || Current.getPoolId(getState())
-    const commitId = refreshPoolInfoArgs?.poolId
     const workspaceId = ws.id
 
     let config: PoolConfig

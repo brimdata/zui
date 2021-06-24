@@ -1,5 +1,5 @@
 import {createFetcher} from "./fetcher/fetcher"
-import {pools, logs, search, archive} from "./api/mod"
+import {logs, search, archive} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
 import {
@@ -16,8 +16,7 @@ import {
 } from "./types"
 import {Context, Int64, Record, Time} from "./zed"
 import {IndexSearchArgs} from "./api/archive"
-import stream from "stream"
-import {nodeStreamToWebStream} from "./util/utils"
+import pools from "./api/pools"
 
 export function createZealot(
   hostUrl: string,

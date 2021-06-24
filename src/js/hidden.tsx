@@ -13,7 +13,6 @@ import refreshPoolNames from "./flows/refreshPoolNames"
 import workspace from "./brim/workspace"
 import {AppDispatch} from "./state/types"
 import {subscribeEvents} from "./flows/subscribeEvents"
-import get from "lodash/get"
 import refreshPoolInfo from "./flows/refreshPoolInfo"
 
 initialize()

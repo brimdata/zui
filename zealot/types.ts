@@ -3,7 +3,6 @@ import {createCallbacks} from "./fetcher/callbacks"
 import {createStream} from "./fetcher/stream"
 import {createFetcher} from "./fetcher/fetcher"
 import * as lake from "./lake"
-import stream from "stream"
 
 export type Zealot = ReturnType<typeof createZealot>
 export type ZCallbacks = ReturnType<typeof createCallbacks>

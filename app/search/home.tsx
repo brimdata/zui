@@ -15,9 +15,7 @@ import Search from "src/js/state/Search"
 import SearchBarState from "src/js/state/SearchBar"
 import Url from "src/js/state/Url"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
-import useCommitWatch from "./hooks/use-commit-watch"
-import {toast} from "react-hot-toast"
-import CommitNotification from "../../src/js/components/CommitNotification";
+import CommitNotification from "src/js/components/CommitNotification"
 
 function syncReduxWithUrl() {
   return function(dispatch, getState) {
