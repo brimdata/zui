@@ -99,7 +99,8 @@ and pop up a notification offering to restart the app to apply the update.
 > **Note:** If an RPM-based Brim `v0.24.0` or older is already installed, it
 > must be manually uninstalled (such as via `yum` or `dnf`) before a release
 > `v0.25.0` or newer will successfully install. Manual uninstall of older
-> releases is _not_ required for DEB-based Brim installs.
+> releases is _not_ required for DEB-based Brim installs. See
+> [[Linux RPM Upgrade (v0.25.0+)]] for more details.
 
 * Open the downloaded `.deb` or `.rpm` file in the Software Install utility and click "Install"
 * Enter administration credentials, if prompted
