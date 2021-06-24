@@ -100,7 +100,7 @@ string: "Hello world" (string),
 bstring: "Hello world 👋" (bstring),
 ip: 10.10.10.10 (ip),
 net: 10.1.1.0/24 (net),
-type: "access_list" (type),
+type: (access_list=({info:string,nets:[net]})) (type),
 error: "fatal error" (error),
 null: null (null)
 } (=every_primitive)
