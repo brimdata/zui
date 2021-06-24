@@ -155,7 +155,7 @@ ubuntu# sudo apt install -y ./brim_amd64.deb
 > [Zeek Customization](Zeek-Customization) article.
 
 Since there's no desktop environment on this VM, there's no "app" interface to
-see. Therefore we'll use the [application binaries](#application-binaries-v0240)
+see. Therefore we'll use the [application binaries](Filesystem-Paths#application-binaries-v0240)
 path for the Linux platform to start `zqd` manually with a couple
 modifications, as follows:
 

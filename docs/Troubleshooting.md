@@ -95,7 +95,7 @@ allow you to better observe the individual steps so you can report the point at
 which you see a failure. This consists of the following steps:
 
 1. Locate the `pcap` utility that's bundled with Brim. This binary can be
-found in the `zdeps` directory under the Brim [application binaries](#application-binaries-v0240)
+found in the `zdeps` directory under the Brim [application binaries](Filesystem-Paths#application-binaries-v0240)
 path.
 
    ```

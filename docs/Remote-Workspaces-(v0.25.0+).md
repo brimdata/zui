@@ -150,7 +150,7 @@ ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/suricata/suricataupdater
 
 Since there's no desktop environment on this VM, there's no "app" interface to
 see. Therefore we'll start `zed lake serve` manually from the
-[application binaries](#application-binaries-v0240) path for the Linux
+[application binaries](Filesystem-Paths#application-binaries-v0250) path for the Linux
 platform as follows:
 
 ```
