@@ -53,7 +53,8 @@ function zedCommand(): string {
     return plat.zedBin
   }
 
-  const zedBin = resolve(join(zdepsDirectory, plat.zedBin))
+  // const zedBin = resolve(join(zdepsDirectory, plat.zedBin))
+  const zedBin = "/Users/masonfish/go/src/github.com/brimdata/zed/dist/zed"
   if (!pathExistsSync(zedBin)) {
     throw new Error("zed binary not present at " + zedBin)
   }

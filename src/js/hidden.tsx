@@ -13,6 +13,8 @@ import refreshPoolNames from "./flows/refreshPoolNames"
 import workspace from "./brim/workspace"
 import {AppDispatch} from "./state/types"
 import {subscribeEvents} from "./flows/subscribeEvents"
+import get from "lodash/get"
+import refreshPoolInfo from "./flows/refreshPoolInfo"
 
 initialize()
   .then(({store}) => {
@@ -53,6 +55,21 @@ const Hidden = () => {
       })
       wsSource.addEventListener("pool-delete", (_e) => {
         dispatch(refreshPoolNames(workspace(w)))
+      })
+      wsSource.addEventListener("pool-commit", (e) => {
+        let eventData
+        try {
+          eventData = JSON.parse(e["data"])
+        } catch (e) {
+          return log.error(
+            new Error("Cannot parse pool-commit event data: " + e)
+          )
+        }
+        const poolId = eventData && eventData["pool_id"]
+        if (!poolId)
+          return log.error(new Error("No 'pool_id' from pool-commit event"))
+
+        dispatch(refreshPoolInfo({workspaceId: w.id, poolId}))
       })
     })
 

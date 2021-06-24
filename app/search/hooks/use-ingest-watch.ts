@@ -40,7 +40,9 @@ export default function useIngestWatch() {
       throttled.cancel()
       replace()
     }
-    if (!nowIngesting) return
+    if (!nowIngesting) {
+      return
+    }
     /**
      * During ingest we show the default span which is everything.
      * Each time more data comes in (snapshot increments), reload

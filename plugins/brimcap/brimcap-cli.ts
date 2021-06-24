@@ -26,6 +26,26 @@ export interface loadOptions {
   zeekStderr?: string
 }
 
+export interface analyzeOptions {
+  config?: string
+  suricata?: boolean
+  suricataStderr?: string
+  suricataStdout?: string
+  zeek?: boolean
+  zeekStdout?: string
+  zeekStderr?: string
+  utf8?: boolean
+  showTypes?: boolean
+  showFields?: boolean
+  color?: boolean
+  lz4Blocksize?: number
+  pretty?: number
+  columnThresh?: number
+  skewThresh?: number
+  dir?: string
+  out?: string
+}
+
 export interface searchOptions extends packetOptions {
   root: string
   write: string
@@ -41,10 +61,21 @@ const OPTION_NAME_MAP = {
   dstIp: "dst.ip",
   dstPort: "dst.port",
   srcIp: "src.ip",
-  srcPort: "src.port"
+  srcPort: "src.port",
+  utf8: "U",
+  showTypes: "T",
+  showFields: "F",
+  lz4Blocksize: "znglz4blocksize",
+  pretty: "pretty",
+  columnThresh: "coltresh",
+  skewThresh: "skewtresh",
+  dir: "d",
+  out: "o"
 }
 
-const toCliOpts = (opts: loadOptions | searchOptions): string[] =>
+const toCliOpts = (
+  opts: loadOptions | searchOptions | analyzeOptions
+): string[] =>
   compact(
     flatMap(
       Object.entries(opts).map(([k, v]) => {
@@ -62,19 +93,22 @@ const toCliOpts = (opts: loadOptions | searchOptions): string[] =>
 export default class BrimcapCLI {
   constructor(private binPath: string) {}
 
-  public load(pcapPath: string, opts: loadOptions): ChildProcess {
-    const subCommandWithArgs = ["load", ...toCliOpts(opts), pcapPath]
-
+  analyze(pcapPath: string, opts: analyzeOptions): ChildProcess {
+    const subCommandWithArgs = ["analyze", ...toCliOpts(opts), pcapPath]
     return spawn(this.binPath, subCommandWithArgs)
   }
 
-  public search(opts: searchOptions) {
+  load(pcapPath: string, opts: loadOptions): ChildProcess {
+    const subCommandWithArgs = ["load", ...toCliOpts(opts), pcapPath]
+    return spawn(this.binPath, subCommandWithArgs)
+  }
+
+  search(opts: searchOptions) {
     return this.exec("search", opts)
   }
 
   private exec(subCommand: string, opts: searchOptions) {
     const subCommandWithArgs = [subCommand, ...toCliOpts(opts)]
-
     return spawnSync(this.binPath, subCommandWithArgs)
   }
 }

@@ -3,6 +3,7 @@ import {createCallbacks} from "./fetcher/callbacks"
 import {createStream} from "./fetcher/stream"
 import {createFetcher} from "./fetcher/fetcher"
 import * as lake from "./lake"
+import stream from "stream"
 
 export type Zealot = ReturnType<typeof createZealot>
 export type ZCallbacks = ReturnType<typeof createCallbacks>
@@ -39,6 +40,16 @@ export interface SearchArgs {
   controlMessages: boolean
   enhancers: Enhancer[]
   signal?: AbortSignal
+}
+
+export interface PoolAddArgs {
+  data: ReadableStream
+}
+
+export interface PoolCommitArgs {
+  message: string
+  author: string
+  date?: number
 }
 
 export interface PoolArgs {
