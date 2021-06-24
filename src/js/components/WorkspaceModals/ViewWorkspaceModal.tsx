@@ -160,7 +160,7 @@ const ViewWorkspace = ({onClose, onEdit}) => {
         </Status>
         <WorkspaceFields>
           <Field label="Host" value={[host, port].join(":")} />
-          <Field label="ZQD Version" value={version} />
+          <Field label="Zed Version" value={version} />
           <Field label="Pools" value={`${poolCount}`} />
         </WorkspaceFields>
       </StyledWorkspaceDetail>
