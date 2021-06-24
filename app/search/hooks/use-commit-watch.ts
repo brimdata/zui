@@ -3,6 +3,8 @@ import {useEffect, useState} from "react"
 import {useSelector} from "react-redux"
 import {useHistory} from "react-router"
 import Current from "src/js/state/Current"
+import {toast} from "react-hot-toast"
+import IngestUpdateNotice from "src/js/components/IngestUpdateNotice"
 
 export default function useCommitWatch() {
   const pool = useSelector(Current.mustGetPool)
@@ -28,6 +30,9 @@ export default function useCommitWatch() {
           console.log(
             "empty search, prompt for update which will use new full span"
           )
+          // toast((t) => {
+          //   return <IngestUpdateNotice />
+          // } )
 
           return
         }

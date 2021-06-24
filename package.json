@@ -137,7 +137,7 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
     "react-grid-layout": "^1.2.0",
-    "react-hot-toast": "^1.0.1",
+    "react-hot-toast": "^1.0.2",
     "react-input-autosize": "^3.0.0",
     "react-markdown": "^6.0.2",
     "react-measure": "^2.3.0",
