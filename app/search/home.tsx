@@ -16,6 +16,8 @@ import SearchBarState from "src/js/state/SearchBar"
 import Url from "src/js/state/Url"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 import useCommitWatch from "./hooks/use-commit-watch"
+import {toast} from "react-hot-toast"
+import CommitNotification from "../../src/js/components/CommitNotification";
 
 function syncReduxWithUrl() {
   return function(dispatch, getState) {
@@ -55,7 +57,6 @@ export function InitSearchParams({children}) {
 
 export default function SearchHome() {
   useIngestWatch()
-  useCommitWatch()
   const dispatch = useDispatch()
   const view = useView()
   const exportAction = useExport()
@@ -73,6 +74,7 @@ export default function SearchHome() {
       </SearchPageHeader>
 
       <SearchResults />
+      <CommitNotification />
     </InitSearchParams>
   )
 }
