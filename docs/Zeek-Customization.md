@@ -1,4 +1,8 @@
-# Zeek Customization
+# Zeek Customization (v0.24.0 and older)
+
+> **Note:** The details in this article are specific to Brim release `v0.24.0`
+> and older. Customization of Zeek and Suricata in release `v0.25.0` and newer
+> is now performed via a [custom Brimcap configuration](https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config).
 
 - [Summary](#summary)
 - [Zeek Runner Configuration](#zeek-runner-configuration)
@@ -59,9 +63,11 @@ via `./configure --prefix=/usr/local/myzeek`, you could copy the above script to
 specify `/usr/local/myzeek/zeekrunner` in the Brim preferences, restart Brim, and then import pcaps using the Zeek
 setup at `/usr/local/myzeek`.
 
-**Note:** If you change the location of the Zeek runner, you'll need to restart Brim. However, a
-restart is only required if the location of the runner changes, not if the runner itself is updated. If you edit the
-runner without altering its location, any changes will take effect on the next pcap import.
+> **Note:** If you change the location of the Zeek runner, you'll need to
+> restart Brim. However, a restart is only required if the location of the
+> runner changes, not if the runner itself is updated. If you edit the
+> runner without altering its location, any changes will take effect on the
+> next pcap import.
 
 You can specify the location of your Zeek runner via the setting in the **Preferences** menu:
 
@@ -71,7 +77,7 @@ You can specify the location of your Zeek runner via the setting in the **Prefer
 
 If you're experienced at [installing Zeek](https://docs.zeek.org/en/current/install/install.html), you may have the best luck
 by building and testing your Zeek installation via those standard instructions. This will give you the most flexibility in
-terms of being able to to compile plugins, use the [Zeek Package Manager](https://docs.zeek.org/projects/package-manager/en/stable/)
+terms of being able to compile plugins, use the [Zeek Package Manager](https://docs.zeek.org/projects/package-manager/en/stable/)
 to add extensions, or even make changes to the core Zeek C++ code if you choose.
 
 However, situations may arise when this is difficult. Some examples:

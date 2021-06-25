@@ -1,4 +1,4 @@
-# Importing CSV, JSON, Parquet, and ZST
+# Importing CSV, JSON, Parquet, and ZST (v0.25.0 and newer)
 
 - [Summary](#summary)
 - [Example](#example)
@@ -24,13 +24,8 @@ that can be easily imported into Brim.
 
 Preprocessing can be performed with the [`zq`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zq)
 CLI tool. These Zed CLI tools are included with Brim and can be found in the
-directory shown below for each platform.
-
-|**OS Platform**|**Location**|
-|---------------|------------|
-| **Windows**   | `%USERPROFILE%\AppData\Local\Programs\Brim\resources\app.asar.unpacked\zdeps` |
-| **macOS**     | `/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps` |
-| **Linux**     | `/opt/Brim/resources/app.asar.unpacked/zdeps` |
+`zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
+path.
 
 Input file format can be specified via the `-i` option.
 

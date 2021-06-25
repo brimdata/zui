@@ -1,23 +1,25 @@
 **Support Resources**
 
 - [[Installation]]
+- [[Filesystem Paths]]
 - [[Supported Platforms]]
 - [[Microsoft Windows beta limitations]]
-- [[Troubleshooting]]
+- [[Troubleshooting (v0.25.0+)]]
+- [[Troubleshooting]] (v0.24.0 and older)
 
 **User Documentation**
 
-- [[Zeek Customization]]
-- [[Geolocation]]
-- [[Migration of Spaces]]
+- [[Migration of Spaces (v0.25.0+)]]
 - [[Linux RPM Upgrade (v0.25.0+)]]
-- [[Importing CSV, JSON, Parquet, and ZST]]
+- [[Importing CSV, JSON, Parquet, and ZST (v0.25.0+)]]
+- [[Zeek Customization]] (v0.24.0 and older)
 
 **Cookbooks**
 
-- [[Remote zed lake]]
+- [[Remote Workspaces (v0.25.0+)]]
+- [[Remote zqd]] (v0.24.0 and older)
 - [[Query Library Transfer]]
-- [[Joining Data]]
+- [[Joining Data]] (v0.24.0 and older)
 
 **Developer Resources**
 

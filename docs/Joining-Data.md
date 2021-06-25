@@ -1,4 +1,15 @@
-# Joining Data
+# Joining Data (v0.24.0 and older)
+
+> **Note:** The details in this article are specific to Brim release `v0.24.0`
+> and older. Data joins are possible in Brim release `v0.25.0` and newer, but
+> the Zed language and data storage have changed significantly. In brief,
+> joins in `v0.25.0` joins can be performed between multiple Pools in a
+> [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/design.md)
+> from outside of Brim, with the joined data pushed back into a Pool for
+> further querying from inside Brim. Until updated documentation has been
+> completed, [this zed/2482 comment](https://github.com/brimdata/zed/issues/2482#issuecomment-850531562)
+> provides some preliminary `join` examples in the current Zed syntax that's
+> used with Brim `v0.25.0`.
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)

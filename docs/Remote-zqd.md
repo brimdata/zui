@@ -1,12 +1,16 @@
-# Remote `zed lake`
+# Remote `zqd` (v0.24.0 and older)
+
+> **Note:** The details in this article are specific to Brim release `v0.24.0`
+> and older. For information regarding release `v0.25.0` and newer, review
+> [this article](https://github.com/brimdata/brim/wiki/Remote-Workspaces-%28v0.25.0-%29).
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
 - [Limitations](#limitations)
-- [Background: Brim & `lake`](#background-brim--lake)
-- [Starting a Remote `lake`](#starting-a-remote-lake)
+- [Background: Brim & `zqd`](#background-brim--zqd)
+- [Starting a Remote `zqd`](#starting-a-remote-zqd)
 - [Importing Data](#importing-data)
-- [Accessing Our Remote `lake`](#accessing-our-remote-lake)
+- [Accessing Our Remote `zqd`](#accessing-our-remote-zqd)
 - [Contact us!](#contact-us)
 
 # Summary
@@ -44,7 +48,7 @@ some rough edges you may encounter as you work through the configurations
 described in this article.
 
 1. While **logs** can be imported from your local Brim app directly to a remote
-`lake`, **packet captures** currently cannot. Any packet captures you wish to
+`zqd`, **packet captures** currently cannot. Any packet captures you wish to
 access remotely will need to have been staged at the remote location. The steps
 below show how this is done.
 
@@ -59,36 +63,29 @@ new data as soon as it's added to a remote location. The steps below provide
 guidance on how to "refresh" the Brim interface to ensure all remote data is
 visible.
 
-# Background: Brim & `zed lake`
+# Background: Brim & `zqd`
 
 Since it's presented as an icon that can be double-clicked to launch it on
 your desktop, it's easy to think of Brim as a simple standalone application.
 However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
-One essential component is [`zed
-lake`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake),
+One essential component is [`zqd`](https://github.com/brimdata/zed/tree/v0.29.0/ppl/cmd/zqd),
 a server-style process that manages the storage and querying of imported
-log/packet data. Operations in `zed lake` are invoked via a [REST
-API](https://en.wikipedia.org/wiki/Representational_state_transfer) that's
-utilized by a "client", such as the Brim app. The
-[`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi)
-command is also available as a command line client that can perform many of the
-same operations as the Brim app, and therefore may be useful in scripting and
-automation.
+log/packet data.  Operations in `zqd` are invoked via a
+[REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
+that's utilized by a "client", such as the Brim app. The
+[`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi) command is also available
+as a command line client that can perform many of the same operations as the
+Brim app, and therefore may be useful in scripting and automation.
 
 ![Brim zapi and zqd](media/Brim-zapi-zqd.png)
 
-The location where `zed lake` stores imported data is known as the **Data
-Directory**. This location can be changed via a setting in Brim's
-**Preferences** menu. The default Data Directory locations on each platform are
-as follows:
-
-|**OS Platform**|**Location**|
-|---------------|------------|
-| **Windows**   | `%APPDATA%\Brim\data\spaces`                         |
-| **macOS**     | `$HOME/Library/Application Support/Brim/data/spaces` |
-| **Linux**     | `$HOME/.config/Brim/data/spaces`                     |
+The location where `zqd` stores imported data is known as the
+**Data Directory**. This location can be changed via a setting in Brim's
+**Preferences** menu. The default Data Directory is a `spaces` subdirectory
+under the Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+path.
 
 If you examine the process table while Brim is running, you can observe the
 command line that was used to start the backend `zqd` process. For example,
@@ -113,23 +110,17 @@ location for macOS in this case.
 
 4. The `-zeekrunner` option points to a script that is used to initiate the
 creation of Zeek logs from imported packet captures as described in the
-[Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization)
-article.
+[Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization) article.
 
 5. The `-brimfd=3` is an option unique to when `zqd` is launched by Brim.
 This helps ensure that if Brim is killed abruptly, the `zqd` process will also
-be terminated (see [brimdata/zed#1184](https://github.com/brimdata/zed/pull/1184) for
+be terminated (see [zed/1184](https://github.com/brimdata/zed/pull/1184) for
 details).
 
 6. We can see the full path to the `zqd` binary that's packaged with Brim. This
 binary and other dependencies that are typically launched by Brim can be found
-in the following location on each platform:
-
-   |**OS Platform**|**Location**|
-   |---------------|------------|
-   | **Windows**   | `%USERPROFILE%\AppData\Local\Brim\app-<version>\resources\app\zdeps` |
-   | **macOS**     | `/Applications/Brim.app/Contents/Resources/app/zdeps` |
-   | **Linux**     | `/usr/lib/brim/resources/app/zdeps`                   |
+in the `zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0240)
+path.
 
 Now that we know Brim is simply connecting to `zqd` locally, next we'll vary
 this approach to instead start a remote `zqd` and connect to it to access the
@@ -153,25 +144,20 @@ ubuntu# sudo apt update
 ubuntu# sudo apt install -y ./brim_amd64.deb
 ```
 
----
-
-* **Variation:** Rather than the full Brim package, we could instead
-[download a Zed package](https://www.brimsecurity.com/download/). The Zed
-package includes the `zqd` and `zapi` binaries that could be used to construct
-command lines similar to those shown below. However, as the Zed tools are a
-general data platform, they do not include an embedded Zeek. This means such a
-configuration would either lack the ability to import packet data, or would
-require the creation of a separate Zeek installation and runner that could be
-enabled via the steps described in the
-[Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization)
-article.
-
----
+> **Variation:** Rather than the full Brim package, we could instead
+> [download a Zed package](https://www.brimsecurity.com/download/). The Zed
+> package includes the `zqd` and `zapi` binaries that could be used to construct
+> command lines similar to those shown below. However, as the Zed tools are a
+> general data platform, they do not include an embedded Zeek. This means such a
+> configuration would either lack the ability to import packet data, or would
+> require the creation of a separate Zeek installation and runner that could be
+> enabled via the steps described in the
+> [Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization) article.
 
 Since there's no desktop environment on this VM, there's no "app" interface to
-see. Therefore we'll use the path information for the Linux platform shown
-in the table above to start `zqd` manually with a couple modifications, as
-follows:
+see. Therefore we'll use the [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0240)
+path for the Linux platform to start `zqd` manually with a couple
+modifications, as follows:
 
 ```
 ubuntu# mkdir -p ~/.config/Brim/data/spaces
@@ -208,7 +194,7 @@ However we can use the `zapi` command line tool on our VM to access this `zqd`
 directly via `localhost`.
 
 As sample packet data, we'll import a
-[wrccdc pcap](https://archive.wrccdc.org/pcaps/2018/) from a separate shell on
+[wrccdc pcap](https://wrccdc.org/) from a separate shell on
 our Linux VM:
 
 ```
@@ -290,7 +276,7 @@ If you were to attempt to import pcaps directly to the remote `zqd`, you'd see
 an error pop up like the one shown below. This is due to the fact that pcap
 import is currently implemented by posting the local file path from Brim to
 `zqd`, so the import fails when the remote `zqd` doesn't find the pcap at that
-at that path on its filesystem.
+path on its filesystem.
 
 ![Failing pcap import to remote zqd](media/Remote-pcap-Import-Fail.gif)
 
