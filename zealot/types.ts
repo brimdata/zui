@@ -41,6 +41,16 @@ export interface SearchArgs {
   signal?: AbortSignal
 }
 
+export interface PoolAddArgs {
+  data: ReadableStream
+}
+
+export interface PoolCommitArgs {
+  message: string
+  author: string
+  date?: number
+}
+
 export interface PoolArgs {
   name: string
   layout?: Layout

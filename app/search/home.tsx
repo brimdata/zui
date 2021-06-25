@@ -15,6 +15,7 @@ import Search from "src/js/state/Search"
 import SearchBarState from "src/js/state/SearchBar"
 import Url from "src/js/state/Url"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
+import CommitNotification from "src/js/components/CommitNotification"
 
 function syncReduxWithUrl() {
   return function(dispatch, getState) {
@@ -71,6 +72,7 @@ export default function SearchHome() {
       </SearchPageHeader>
 
       <SearchResults />
+      <CommitNotification />
     </InitSearchParams>
   )
 }

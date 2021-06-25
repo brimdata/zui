@@ -1,4 +1,4 @@
-import {PoolArgs} from "../types"
+import {PoolAddArgs, PoolArgs, PoolCommitArgs} from "../types"
 
 export default {
   list() {
@@ -43,6 +43,22 @@ export default {
       headers: new Headers({Accept: "application/json"}),
       path: `/pool/${poolId}`,
       method: "PUT",
+      body: JSON.stringify(args)
+    }
+  },
+  add(poolId: string, args: PoolAddArgs) {
+    return {
+      headers: new Headers({Accept: "application/json"}),
+      path: `/pool/${poolId}/add`,
+      method: "POST",
+      body: args.data
+    }
+  },
+  commit(poolId: string, commitId: string, args: PoolCommitArgs) {
+    return {
+      headers: new Headers({Accept: "application/json"}),
+      path: `/pool/${poolId}/staging/${commitId}`,
+      method: "POST",
       body: JSON.stringify(args)
     }
   }

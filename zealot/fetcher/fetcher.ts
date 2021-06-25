@@ -10,7 +10,7 @@ import {parseLines} from "../ndjson/lines"
 export type FetchArgs = {
   path: string
   method: string
-  body?: string | FormData
+  body?: string | FormData | ReadableStream
   headers?: Headers
   enhancers?: Enhancer[]
   signal?: AbortSignal

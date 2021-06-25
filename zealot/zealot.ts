@@ -1,5 +1,5 @@
 import {createFetcher} from "./fetcher/fetcher"
-import {pools, logs, search, archive} from "./api/mod"
+import {logs, search, archive} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
 import {
@@ -10,10 +10,13 @@ import {
   PoolStats,
   LogsPostArgs,
   ZealotArgs,
-  LogsPostPathsArgs
+  LogsPostPathsArgs,
+  PoolCommitArgs,
+  PoolAddArgs
 } from "./types"
 import {Context, Int64, Record, Time} from "./zed"
 import {IndexSearchArgs} from "./api/archive"
+import pools from "./api/pools"
 
 export function createZealot(
   hostUrl: string,
@@ -92,6 +95,12 @@ export function createZealot(
       },
       update: (id: string, args: Partial<PoolArgs>) => {
         return promise(pools.update(id, args))
+      },
+      add: (id: string, args: PoolAddArgs) => {
+        return promise(pools.add(id, args))
+      },
+      commit: (id: string, commitId: string, args: PoolCommitArgs) => {
+        return promise(pools.commit(id, commitId, args))
       }
     },
     logs: {

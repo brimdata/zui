@@ -5,26 +5,38 @@ import {getZealot} from "./getZealot"
 import {Zealot} from "../../../zealot"
 import {PoolConfig, PoolStats} from "../../../zealot/types"
 import interop from "../brim/interop"
+import Workspaces from "../state/Workspaces"
+import workspace from "../brim/workspace"
 
-export default function refreshPoolInfo(): Thunk {
-  return () => (dispatch, getState) => {
-    const zealot: Zealot = dispatch(getZealot())
-    const id = Current.getPoolId(getState())
+type refreshPoolInfoArgs = {
+  workspaceId: string
+  poolId: string
+}
+
+export default function refreshPoolInfo(
+  refreshPoolInfoArgs?: refreshPoolInfoArgs
+): Thunk {
+  return (dispatch, getState) => {
+    const ws = refreshPoolInfoArgs?.workspaceId
+      ? workspace(Workspaces.id(refreshPoolInfoArgs.workspaceId)(getState()))
+      : Current.getWorkspace(getState())
+    const zealot: Zealot = dispatch(getZealot(ws))
+    const poolId = refreshPoolInfoArgs?.poolId || Current.getPoolId(getState())
+    const workspaceId = ws.id
 
     let config: PoolConfig
     let stats: PoolStats
     Promise.all([
-      zealot.pools.get(id).then((data: PoolConfig) => {
+      zealot.pools.get(poolId).then((data: PoolConfig) => {
         config = data
       }),
-      zealot.pools.stats(id).then((data: PoolStats) => {
+      zealot.pools.stats(poolId).then((data: PoolStats) => {
         stats = data
       })
     ]).then(() => {
-      const id = Current.getWorkspaceId(getState())
-      if (!id) return
+      if (!workspaceId) return
       dispatch(
-        Pools.setDetail(id, {
+        Pools.setDetail(workspaceId, {
           ...config,
           ...interop.poolStatsPayloadToPool(stats)
         })

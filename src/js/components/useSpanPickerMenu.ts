@@ -4,6 +4,7 @@ import {DateTuple, spanOfLast} from "../lib/TimeWindow"
 import Current from "../state/Current"
 import Search from "../state/Search"
 import brim from "../brim"
+import {SpanArgs} from "../state/Search/types"
 
 export default function useSpanPickerMenu(submit: Function) {
   const dispatch = useDispatch()
@@ -11,6 +12,11 @@ export default function useSpanPickerMenu(submit: Function) {
 
   function setSpan(span: DateTuple) {
     dispatch(Search.setSpanArgsFromDates(span))
+    submit()
+  }
+
+  const setSpanFromTs = (span: SpanArgs) => {
+    dispatch(Search.setSpanArgs(span))
     submit()
   }
 
@@ -27,29 +33,26 @@ export default function useSpanPickerMenu(submit: Function) {
 
   const {min_time, max_time} = pool
 
-  const from = brim.time(min_time).toDate()
-  const to = brim
-    .time(max_time)
-    .add(1, "ms")
-    .toDate()
-  const poolSpan: DateTuple = [from, to]
+  const from = brim.time(min_time)
+  const to = brim.time(max_time).add(1, "ms")
+  const poolSpan: SpanArgs = [from.toTs(), to.toTs()]
 
   return [
-    {click: () => setSpan(poolSpan), label: "Whole Pool"},
+    {click: () => setSpanFromTs(poolSpan), label: "Whole Pool"},
     {
-      click: () => setSpan(spanOfLast(30, "minutes", to)),
+      click: () => setSpan(spanOfLast(30, "minutes", to.toDate())),
       label: "Last 30 minutes of pool"
     },
     {
-      click: () => setSpan(spanOfLast(24, "hours", to)),
+      click: () => setSpan(spanOfLast(24, "hours", to.toDate())),
       label: "Last 24 hours of pool"
     },
     {
-      click: () => setSpan(spanOfLast(7, "days", to)),
+      click: () => setSpan(spanOfLast(7, "days", to.toDate())),
       label: "Last 7 days of pool"
     },
     {
-      click: () => setSpan(spanOfLast(30, "days", to)),
+      click: () => setSpan(spanOfLast(30, "days", to.toDate())),
       label: "Last 30 days of pool"
     }
   ]
