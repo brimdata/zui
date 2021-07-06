@@ -74,7 +74,7 @@
     "electron": "^11.2.1",
     "electron-builder": "^22.9.1",
     "electron-builder-notarize": "^1.2.0",
-    "electron-mock-ipc": "^0.3.9",
+    "electron-mock-ipc": "brimdata/electron-mock-ipc#master",
     "electron-notarize": "^0.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
