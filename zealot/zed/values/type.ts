@@ -14,7 +14,7 @@ export class TypeValue {
 
   toString() {
     if (isNull(this.value)) return "null"
-    return this.value.toString()
+    return "(" + this.value.toString() + ")"
   }
 
   serialize() {
