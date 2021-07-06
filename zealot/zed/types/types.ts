@@ -1,6 +1,6 @@
+import {Type, Value} from "../../zjson"
 import {ZedContext} from "../context"
 import {ZedValue} from "../values/types"
-import {PrimitiveType, Type, Value} from "../../zjson"
 import {TypeAlias} from "./type-alias"
 import {TypeArray} from "./type-array"
 import {TypeMap} from "./type-map"
@@ -17,14 +17,6 @@ export type ZedType =
   | TypeUnion
   | TypeMap
   | TypeAlias
-
-export interface PrimitiveTypeInterface<T> {
-  name: string
-  kind: string
-  serialize(): PrimitiveType
-  create(value: Value, typedefs?: object): T
-  toString(): string
-}
 
 export interface ContainerTypeInterface {
   serialize(typedefs: object): Type

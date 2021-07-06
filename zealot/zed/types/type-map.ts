@@ -43,4 +43,8 @@ export class TypeMap implements ContainerTypeInterface {
     ctx.walkTypeValues(this.keyType, key, visit)
     ctx.walkTypeValues(this.valType, val, visit)
   }
+
+  toString() {
+    return "|{" + this.keyType.toString() + "," + this.valType.toString() + "}|"
+  }
 }

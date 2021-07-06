@@ -1,14 +1,8 @@
 import {Int8} from "../values/int8"
-import {PrimitiveType} from "../../zjson"
-import {PrimitiveTypeInterface} from "./types"
+import {BasePrimitive} from "./base-primitive"
 
-class TypeOfInt8 implements PrimitiveTypeInterface<Int8> {
+class TypeOfInt8 extends BasePrimitive<Int8> {
   name = "int8"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value) {
     return new Int8(value)

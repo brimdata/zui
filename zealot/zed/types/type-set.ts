@@ -39,4 +39,8 @@ export class TypeSet implements ContainerTypeInterface {
     if (isNull(value)) return
     value.forEach((v) => ctx.walkTypeValues(this.type, v, visit))
   }
+
+  toString() {
+    return `|[` + this.type.toString() + `]|`
+  }
 }
