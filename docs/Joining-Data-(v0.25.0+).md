@@ -38,7 +38,7 @@ shy!
 
 # Example Usage
 
-By its nature, a join operation requires multiple inputs that will
+By its nature, a join operation requires two inputs that will
 ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/language/operators#join)
 show examples with the [Zed CLI tools](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
 that specify these inputs as named files or Pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/design.md).
