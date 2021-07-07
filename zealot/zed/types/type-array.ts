@@ -42,4 +42,8 @@ export class TypeArray implements ContainerTypeInterface {
     if (isNull(value)) return
     value.map((v) => ctx.walkTypeValues(this.type, v, visit))
   }
+
+  toString() {
+    return "[" + this.type.toString() + "]"
+  }
 }

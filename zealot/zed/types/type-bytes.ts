@@ -1,14 +1,8 @@
 import {Bytes} from "../values/bytes"
-import {PrimitiveType} from "../../zjson"
-import {PrimitiveTypeInterface} from "./types"
+import {BasePrimitive} from "./base-primitive"
 
-class TypeOfBytes implements PrimitiveTypeInterface<Bytes> {
+class TypeOfBytes extends BasePrimitive<Bytes> {
   name = "bytes"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value: string) {
     return new Bytes(value)

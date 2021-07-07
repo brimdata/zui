@@ -1,14 +1,8 @@
 import {BString} from "../values/bstring"
-import {PrimitiveType} from "../../zjson"
-import {PrimitiveTypeInterface} from "./types"
+import {BasePrimitive} from "./base-primitive"
 
-class TypeOfBString implements PrimitiveTypeInterface<BString> {
+class TypeOfBString extends BasePrimitive<BString> {
   name = "bstring"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value: string) {
     return new BString(value)

@@ -1,14 +1,8 @@
 import {Bool} from "../values/bool"
-import {PrimitiveType} from "../../zjson"
-import {PrimitiveTypeInterface} from "./types"
+import {BasePrimitive} from "./base-primitive"
 
-class TypeOfBool implements PrimitiveTypeInterface<Bool> {
+class TypeOfBool extends BasePrimitive<Bool> {
   name = "bool"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value: string) {
     return new Bool(value)

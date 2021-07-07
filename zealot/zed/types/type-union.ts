@@ -46,4 +46,8 @@ export class TypeUnion implements ContainerTypeInterface {
 
     if (value === null) ctx.walkTypeValue(innerType, innerValue, visit)
   }
+
+  toString() {
+    return `(${this.types.map((t) => t.toString()).join(",")})`
+  }
 }

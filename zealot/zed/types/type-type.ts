@@ -1,15 +1,9 @@
 import {isNull} from "../utils"
 import {TypeValue} from "../values/type"
-import {PrimitiveType} from "../../zjson"
-import {PrimitiveTypeInterface} from "./types"
+import {BasePrimitive} from "./base-primitive"
 
-export class TypeOfType implements PrimitiveTypeInterface<TypeValue> {
+export class TypeOfType extends BasePrimitive<TypeValue> {
   name = "type"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value: string | null, typedefs) {
     if (isNull(value)) {

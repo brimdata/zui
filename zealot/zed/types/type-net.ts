@@ -1,14 +1,8 @@
 import {Net} from "../values/net"
-import {PrimitiveType} from "../../zjson"
-import {PrimitiveTypeInterface} from "./types"
+import {BasePrimitive} from "./base-primitive"
 
-class TypeOfNet implements PrimitiveTypeInterface<Net> {
+class TypeOfNet extends BasePrimitive<Net> {
   name = "net"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value: string) {
     return new Net(value)

@@ -1,5 +1,5 @@
 import {isNull} from "../utils"
-import {RecordType, Value} from "../../zjson"
+import {RecordFieldType, RecordType, Value} from "../../zjson"
 import {ZedContext} from "../context"
 import {typeId} from "../utils"
 import {Field} from "../values/field"
@@ -18,13 +18,25 @@ export class TypeRecord implements ContainerTypeInterface {
     this.fields = fields
   }
 
-  static stringify(fields) {
+  static stringify(fields: RecordFieldType[] | null) {
     if (isNull(fields)) return "null"
     let s = "{"
     let sep = ""
     fields.forEach((f) => {
       // XXX need to check if name has funny chars
       s += sep + f.name + ":" + typeId(f.type)
+      sep = ","
+    })
+    s += "}"
+    return s
+  }
+
+  toString() {
+    if (isNull(this.fields)) return "null"
+    let s = "{"
+    let sep = ""
+    this.fields.forEach((f) => {
+      s += sep + f.name + ":" + f.type.toString()
       sep = ","
     })
     s += "}"

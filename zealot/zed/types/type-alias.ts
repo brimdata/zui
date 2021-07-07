@@ -39,4 +39,8 @@ export class TypeAlias implements ContainerTypeInterface {
   walkTypeValues(ctx: ZedContext, value: Value, visit) {
     ctx.walkTypeValues(this.type, value, visit)
   }
+
+  toString() {
+    return this.name + "=(" + this.type.toString() + ")"
+  }
 }

@@ -1,21 +1,11 @@
 import {Uint16} from "../values/uint16"
-import {PrimitiveType} from "../../zjson"
-import {PrimitiveTypeInterface} from "./types"
+import {BasePrimitive} from "./base-primitive"
 
-class TypeOfUint16 implements PrimitiveTypeInterface<Uint16> {
+class TypeOfUint16 extends BasePrimitive<Uint16> {
   name = "uint16"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value) {
     return new Uint16(value)
-  }
-
-  stringify() {
-    return this.name
   }
 }
 

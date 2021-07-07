@@ -1,14 +1,8 @@
-import {PrimitiveTypeInterface} from "./types"
 import {Error} from "../values/error"
-import {PrimitiveType} from "../../zjson"
+import {BasePrimitive} from "./base-primitive"
 
-class TypeOfError implements PrimitiveTypeInterface<Error> {
+class TypeOfError extends BasePrimitive<Error> {
   name = "error"
-  kind = "primitive"
-
-  serialize(): PrimitiveType {
-    return {kind: "primitive", name: this.name}
-  }
 
   create(value: string) {
     return new Error(value)
