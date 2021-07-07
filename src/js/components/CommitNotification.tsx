@@ -8,6 +8,7 @@ import Current from "../state/Current"
 import {useHistory} from "react-router"
 import {SpanArgs} from "../state/Search/types"
 import {decodeSearchParams} from "../../../app/search/utils/search-params"
+import {Span} from "../brim"
 
 export default function CommitNotification() {
   const dispatch = useDispatch()
@@ -34,7 +35,13 @@ export default function CommitNotification() {
         const [from, to] = currentSpan
         const [newFrom, newTo] = JSON.parse(fullSpan)
 
-        if (!from || !to || JSON.stringify(currentSpan) === prevFullSpan) {
+        // if user had not searched at all, searched using the empty pool span
+        // default, or had searched using the previous pool's full span, then
+        // we will load up the 'refresh' button's search with the new full span
+        if (
+          isEmptySpan(currentSpan) ||
+          JSON.stringify(currentSpan) === prevFullSpan
+        ) {
           setNewSpan([newFrom, newTo])
           return
         }
@@ -68,4 +75,11 @@ export default function CommitNotification() {
       <XButton onClick={() => onClick(1)} />
     </InfoNotice>
   )
+}
+
+const isEmptySpan = (span: Partial<SpanArgs>) => {
+  if (!span || span.length !== 2) return true
+  const [from, to] = span as Span
+  if (!from || !to) return true
+  return from.sec === 0 && from.ns === 0 && to.sec === 0 && to.ns === 1000000
 }
