@@ -76,18 +76,18 @@ Because Brim already takes care of initializing the Zed Lake, we pick up the
 example commands with the creation and population of the separate Pools
 
 ```
-$ export ZDEPS="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps"
+$ export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
 
-$ $ZDEPS/zapi create -p fruit -orderby flavor:asc
+$ zapi create -p fruit -orderby flavor:asc
 pool created: fruit
 
-$ $ZDEPS/zapi create -p people -orderby likes:asc
+$ zapi create -p people -orderby likes:asc
 pool created: people
 
-$ $ZDEPS/zapi load -p fruit fruit.ndjson
+$ zapi load -p fruit fruit.ndjson
 1ujTdNNId0s6TmVKd02lFRuwzN2 committed
 
-$ $ZDEPS/zapi load -p people people.ndjson
+$ zapi load -p people people.ndjson
 1ujTeU44ZbqdE5x6DvMoTwSkztS committed
 ```
 
@@ -98,10 +98,10 @@ intend to execute on the data in this Pool, you may wish to specify a different
 `-orderby` setting.
 
 ```
-$ $ZDEPS/zapi create -p joined -orderby name:asc
+$ zapi create -p joined -orderby name:asc
 pool created: joined
 
-$ $ZDEPS/zapi query -I inner-join-pools.zed | $ZDEPS/zapi load -p joined -
+$ zapi query -I inner-join-pools.zed | zapi load -p joined -
 1ujUTZvk5KyAoGlSMSGvzFcUGgy committed
 ```
 
