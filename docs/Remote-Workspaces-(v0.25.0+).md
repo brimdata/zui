@@ -197,15 +197,15 @@ from a separate shell on our Linux VM:
 ```
 ubuntu# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
 ubuntu# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
-ubuntu# export ZDEPS="/opt/Brim/resources/app.asar.unpacked/zdeps"
+ubuntu# export PATH="/opt/Brim/resources/app.asar.unpacked/zdeps:$PATH"
 
-ubuntu# $ZDEPS/zapi create -p wrccdc
+ubuntu# zapi create -p wrccdc
 pool created: wrccdc
 
-ubuntu# $ZDEPS/brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | $ZDEPS/zapi load -p wrccdc -
+ubuntu# brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | zapi load -p wrccdc -
 1ulxiph6bNX4ZgubZFeCIIDaozj committed
 
-ubuntu# $ZDEPS/brimcap index -root ~/.config/Brim/data/brimcap-root -r wrccdc.2018-03-23.010014000000000.pcap
+ubuntu# brimcap index -root ~/.config/Brim/data/brimcap-root -r wrccdc.2018-03-23.010014000000000.pcap
 ```
 
 While it's possible to import logs from the Brim app directly into a remote
@@ -213,17 +213,17 @@ Zed Lake, we can also use `zapi` on our Linux VM. Here we'll import the Zeek
 TSV logs from our [zed-sample-data](https://github.com/brimdata/zed-sample-data).
 ```
 ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zed-sample-data
-ubuntu# $ZDEPS/zapi create -p zed-sample-data
+ubuntu# zapi create -p zed-sample-data
 pool created: zed-sample-data
 
-ubuntu# $ZDEPS/zapi load -p zed-sample-data zed-sample-data/zeek-default/*
+ubuntu# zapi load -p zed-sample-data zed-sample-data/zeek-default/*
 1uMRE9bZnbNAIY8tEOfIXOa8c2w committed
 ```
 
 To see our imported data as Pools in the Zed Lake:
 
 ```
-ubuntu# $ZDEPS/zapi ls
+ubuntu# zapi ls
 wrccdc 1uMPHXonxiBH1gY6TCCFxBNS99Z key ts order desc
 zed-sample-data 1uMR6rGmrSBRHnB0yqOGnzhQb0b key ts order desc
 ```
@@ -257,8 +257,8 @@ copy of the same pcap locally and add it to the index in our local Brimcap root
 ```
 macOS# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
 macOS# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
-macOS# export ZDEPS="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps"
-macOS# $ZDEPS/brimcap index -root "$HOME/Library/Application Support/Brim/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
+macOS# export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
+macOS# brimcap index -root "$HOME/Library/Application Support/Brim/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
 ```	
 
 ![Opening flow](media/Brimcap-Remote-Flow-Wireshark.png)
