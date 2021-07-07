@@ -48,7 +48,7 @@ some rough edges you may encounter as you work through the configurations
 described in this article.
 
 1. While **logs** can be imported from your local Brim app directly to a remote
-Workspace, **packet captures** currently cannot.
+Workspace, **packet captures** currently cannot ([brim/1730](https://github.com/brimdata/brim/issues/1730)).
 
 2. While the configuration potentially allows multiple remote users to access
 the same centrally-stored data, there's currently no concept of user
@@ -191,15 +191,21 @@ Lake. However we can use the bundled `zapi` command line tool to create a Pool
 in the Zed Lake for our data and then use the bundled `brimcap` to load data
 into it.
 
-As sample packet data, we'll import a [wrccdc pcap](https://wrccdc.org/) from a
-separate shell on our Linux VM:
+As sample packet data, we'll import and index a [wrccdc pcap](https://wrccdc.org/)
+from a separate shell on our Linux VM:
 
 ```
 ubuntu# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
 ubuntu# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
-ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/zapi create -p wrccdc
-ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/brimcap load -p wrccdc -root ~/.config/Brim/data/brimcap-root wrccdc.2018-03-23.010014000000000.pcap
-100.0% 476MiB858KiB604B/476MiB858KiB604B records=670822
+ubuntu# export PATH="/opt/Brim/resources/app.asar.unpacked/zdeps:$PATH"
+
+ubuntu# zapi create -p wrccdc
+pool created: wrccdc
+
+ubuntu# brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | zapi load -p wrccdc -
+1ulxiph6bNX4ZgubZFeCIIDaozj committed
+
+ubuntu# brimcap index -root ~/.config/Brim/data/brimcap-root -r wrccdc.2018-03-23.010014000000000.pcap
 ```
 
 While it's possible to import logs from the Brim app directly into a remote
@@ -207,17 +213,17 @@ Zed Lake, we can also use `zapi` on our Linux VM. Here we'll import the Zeek
 TSV logs from our [zed-sample-data](https://github.com/brimdata/zed-sample-data).
 ```
 ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zed-sample-data
-ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/zapi create -p zed-sample-data
+ubuntu# zapi create -p zed-sample-data
 pool created: zed-sample-data
 
-ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/zapi load -p zed-sample-data zed-sample-data/zeek-default/*
+ubuntu# zapi load -p zed-sample-data zed-sample-data/zeek-default/*
 1uMRE9bZnbNAIY8tEOfIXOa8c2w committed
 ```
 
 To see our imported data as Pools in the Zed Lake:
 
 ```
-ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/zapi ls
+ubuntu# zapi ls
 wrccdc 1uMPHXonxiBH1gY6TCCFxBNS99Z key ts order desc
 zed-sample-data 1uMR6rGmrSBRHnB0yqOGnzhQb0b key ts order desc
 ```
@@ -251,7 +257,8 @@ copy of the same pcap locally and add it to the index in our local Brimcap root
 ```
 macOS# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
 macOS# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
-macOS# /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/brimcap index -root "$HOME/Library/Application Support/Brim/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
+macOS# export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
+macOS# brimcap index -root "$HOME/Library/Application Support/Brim/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
 ```	
 
 ![Opening flow](media/Brimcap-Remote-Flow-Wireshark.png)
@@ -262,7 +269,7 @@ Zed Lake in the same manner as you've been doing locally.
 ![Importing logs to remote Zed Lake](media/Remote-Zed-Lake-Import.gif)
 
 Attempts to import a pcap directly to the remote Workspace will fail with an
-error message (see [brimcap/106](https://github.com/brimdata/brimcap/issues/106)
+error message (see [brim/1730](https://github.com/brimdata/brim/issues/1730) 
 for details).
 
 A connection to a remote Workspace can be removed by selecting the **Get Info**
