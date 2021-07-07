@@ -51,7 +51,7 @@ data from whichever Pool is currently selected from the **Pools** list.
 
 Because of this limitation, the [streamed input example](https://github.com/brimdata/zed/tree/main/docs/language/operators#example-5---streamed-input)
 is the only one shown that can currently be executed as is from within Brim.
-If the example `fruit.ndjson` and `people.ndjson` was already present in a
+If the example `fruit.ndjson` and `people.ndjson` are already present in a
 single Pool (such as if concatenated into a single file and dragged into the
 app), we can see the same query output as shown in the doc.
 
