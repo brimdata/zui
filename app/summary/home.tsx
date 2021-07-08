@@ -9,8 +9,10 @@ import Summary from "ppl/summary/summary"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Redirect} from "react-router"
+import pool from "src/js/brim/pool"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
+import {mustGetPool} from "src/js/state/Current/selectors"
 import Feature from "src/js/state/Feature"
 import changeSpan from "./flows/change-span"
 
@@ -26,7 +28,15 @@ export default function SummaryHome() {
   const show = useSelector(Feature.show("summary"))
   const lakeId = useLakeId()
   const workspaceId = useWorkspaceId()
-  if (!show) return <Redirect to={lakeSearchPath(lakeId, workspaceId)} />
+  const pool = useSelector(mustGetPool)
+  if (!show)
+    return (
+      <Redirect
+        to={lakeSearchPath(lakeId, workspaceId, {
+          spanArgs: pool.empty() ? undefined : pool.defaultSpanArgs()
+        })}
+      />
+    )
   return (
     <InitSummaryParams>
       <SearchPageHeader>
