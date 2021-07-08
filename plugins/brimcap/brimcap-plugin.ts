@@ -9,10 +9,10 @@ import open from "../../src/js/lib/open"
 import {AppDispatch} from "../../src/js/state/types"
 import {Config} from "../../src/js/state/Configs"
 import {reactElementProps} from "../../test/integration/helpers/integration"
-import BrimcapCLI, {loadOptions, searchOptions} from "./brimcap-cli"
+import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess, spawn} from "child_process"
 import {MenuItemConstructorOptions} from "electron"
-import {compact} from "lodash"
+import {compact, get} from "lodash"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -273,32 +273,28 @@ export default class BrimcapPlugin {
       onWarning: (warning: string) => void,
       onDetailUpdate: () => void
     ): Promise<void> => {
-      const {fileListData, name} = params
+      const {fileListData} = params
       if (fileListData.length > 1)
         throw new Error("Only one pcap can be opened at a time.")
-
       const paths = fileListData.map((f) => f.file.path)
+      const pcapFilePath = paths[0]
 
-      const loadOpts: loadOptions = {
-        root: this.brimcapDataRoot,
-        pool: name,
+      const cliOpts: analyzeOptions = {
         json: true
       }
-
       const yamlConfig = this.api.configs.get(
         this.pluginNamespace,
         this.yamlConfigPropName
       )
-      loadOpts.config = yamlConfig || ""
+      cliOpts.config = yamlConfig || ""
 
-      const p = this.cli.load(paths[0], loadOpts)
+      onProgressUpdate(0)
+      const p = this.cli.analyze(pcapFilePath, cliOpts)
       this.processes[p.pid] = p
-
       let brimcapErr
       p.on("error", (err) => {
         brimcapErr = err
       })
-
       const handleRespMsg = async (jsonMsg) => {
         const {type, ...status} = jsonMsg
         switch (type) {
@@ -314,9 +310,7 @@ export default class BrimcapPlugin {
             break
         }
       }
-
-      onProgressUpdate(0)
-      p.stderr.on("data", async (d) => {
+      p.stderr.on("data", (d) => {
         try {
           const msgs: string[] = compact(d.toString().split("\n"))
           const jsonMsgs = msgs.map((msg) => JSON.parse(msg))
@@ -326,18 +320,34 @@ export default class BrimcapPlugin {
           brimcapErr = d.toString()
         }
       })
-
-      // wait for process to end, resolve regardless of exit code: error will be
-      // handled below if present
-      await new Promise((res) => {
-        p.on("close", () => {
-          delete this.processes[p.pid]
-          res()
-        })
+      p.on("close", () => {
+        delete this.processes[p.pid]
       })
 
-      if (brimcapErr) throw errors.pcapIngest(brimcapErr)
+      // stream analyze output to pool
+      const zealot = this.api.getZealot()
+      const res = await zealot.pools.add(params.poolId, {
+        data: p.stdout
+      })
+      const commitId = get(res, ["value", "commit"], "")
+      if (!commitId) throw new Error("No commit obtained from lake add")
+      await zealot.pools.commit(params.poolId, commitId, {
+        author: "brim",
+        message: "automatic import with brimcap analyze"
+      })
 
+      // generate pcap index
+      try {
+        await this.cli.index({
+          root: this.brimcapDataRoot,
+          pcap: pcapFilePath
+        })
+      } catch (e) {
+        console.error(e)
+        brimcapErr = e.toString()
+      }
+
+      if (brimcapErr) throw errors.pcapIngest(brimcapErr)
       await onDetailUpdate()
       onProgressUpdate(1)
       onProgressUpdate(null)

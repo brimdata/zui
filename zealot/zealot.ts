@@ -2,6 +2,7 @@ import {createFetcher} from "./fetcher/fetcher"
 import {logs, search, archive} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
+import nodeFetch from "node-fetch"
 import {
   SearchArgs,
   Response,
@@ -17,6 +18,9 @@ import {
 import {Context, Int64, Record, Time} from "./zed"
 import {IndexSearchArgs} from "./api/archive"
 import pools from "./api/pools"
+import {url} from "./util/utils"
+import {parseContentType} from "./fetcher/contentType"
+import {createError} from "./util/error"
 
 export function createZealot(
   hostUrl: string,
@@ -96,8 +100,19 @@ export function createZealot(
       update: (id: string, args: Partial<PoolArgs>) => {
         return promise(pools.update(id, args))
       },
-      add: (id: string, args: PoolAddArgs) => {
-        return promise(pools.add(id, args))
+      /*
+        this cannot run in browser until dom fetch allows attaching streams to
+        request body
+       */
+      add: async (id: string, args: PoolAddArgs) => {
+        const {path, method, body, headers} = pools.add(id, args)
+        const resp = await nodeFetch(url(host, path), {
+          method,
+          body,
+          headers
+        })
+        const content = await parseContentType(resp)
+        return resp.ok ? content : Promise.reject(createError(content))
       },
       commit: (id: string, commitId: string, args: PoolCommitArgs) => {
         return promise(pools.commit(id, commitId, args))

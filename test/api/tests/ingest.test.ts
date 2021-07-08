@@ -11,8 +11,6 @@ test("ingest logs (add + commit)", () => {
     expect(stats).toBeNull()
     const logStream = fs.createReadStream(data.getPath("sample.zng"))
     const addResp = await zealot.pools.add(pool.id, {
-      // in tests, fetch is run in node and do not need to convert to web stream
-      // @ts-ignore
       data: logStream
     })
     await zealot.pools.commit(pool.id, addResp.value.commit, {
