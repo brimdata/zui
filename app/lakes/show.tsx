@@ -1,6 +1,6 @@
 import useLakeId from "app/router/hooks/use-lake-id"
 import useWorkspaceId from "app/router/hooks/use-workspace-id"
-import {lakeSearch, lakeSummary} from "app/router/routes"
+import {lakeSearch} from "app/router/routes"
 import {workspacePath} from "app/router/utils/paths"
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
@@ -9,7 +9,6 @@ import {initPool} from "src/js/flows/initPool"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import SearchHome from "../search/home"
-import SummaryHome from "../summary/home"
 
 export default function LakeShow() {
   const match = useRouteMatch()
@@ -19,11 +18,8 @@ export default function LakeShow() {
         <Route path={lakeSearch.path}>
           <SearchHome />
         </Route>
-        <Route path={lakeSummary.path}>
-          <SummaryHome />
-        </Route>
         <Route default>
-          <Redirect to={`${match.url}/summary`} />
+          <Redirect to={`${match.url}/search`} />
         </Route>
       </Switch>
     </InitLake>

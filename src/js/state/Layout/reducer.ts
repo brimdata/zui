@@ -7,7 +7,6 @@ const init: LayoutState = {
   leftSidebarWidth: 230,
   investigationView: "linear",
   columnHeadersView: "AUTO",
-  mainView: "search",
   sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}]
 }
 
@@ -16,8 +15,6 @@ export default function reducer(
   action: LayoutAction
 ): LayoutState {
   switch (action.type) {
-    case "LAYOUT_MAIN_VIEW_SET":
-      return {...state, mainView: action.view}
     case "LAYOUT_SIDEBAR_SECTIONS_SET":
       return {
         ...state,

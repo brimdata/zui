@@ -26,10 +26,6 @@ export const lakeShow = {
   title: "<lake>",
   path: `${workspaceShow.path}/lakes/:lakeId`
 }
-export const lakeSummary = {
-  title: "<lake>: Security Summary",
-  path: `${lakeShow.path}/summary`
-}
 export const lakeSearch = {
   title: "<lake>: <program>",
   path: `${lakeShow.path}/search`
@@ -46,7 +42,6 @@ export const releaseNotes = {
 export const allRoutes = [
   workspaceReleaseNotes,
   lakeSearch,
-  lakeSummary,
   lakeImport,
   lakeShow,
   workspaceShow,
