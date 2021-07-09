@@ -1,4 +1,4 @@
-import "cross-fetch/polyfill"
+// import "cross-fetch/polyfill"
 import {parse} from "./parser"
 import {createFetcher, FetchArgs} from "./fetcher/fetcher"
 import {Zealot, ZealotPayload, SearchFormat} from "./types"
