@@ -42,7 +42,7 @@ export interface SearchArgs {
 }
 
 export interface PoolAddArgs {
-  data: ReadableStream
+  data: NodeJS.ReadableStream
 }
 
 export interface PoolCommitArgs {

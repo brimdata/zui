@@ -1,5 +1,4 @@
 import {Ts} from "../types"
-import stream from "stream"
 
 function hasOwnProperty<X extends {}, Y extends PropertyKey>(
   obj: X,
@@ -54,24 +53,4 @@ export function uniq(array: any[]) {
     }
   }
   return u
-}
-
-export const nodeStreamToWebStream = (
-  nodeStream: stream.Readable
-): ReadableStream => {
-  return new ReadableStream({
-    start(controller) {
-      const push = () => {
-        nodeStream.read().then(({done, value}) => {
-          if (done) {
-            controller.close()
-            return
-          }
-          controller.enqueue(value)
-          push()
-        })
-      }
-      push()
-    }
-  })
 }

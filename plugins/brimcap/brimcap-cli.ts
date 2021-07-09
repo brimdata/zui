@@ -12,18 +12,9 @@ interface packetOptions {
   ts?: string
 }
 
-export interface loadOptions {
-  config?: string
-  n?: number
+export interface indexOptions {
   root: string
-  pool: string
-  json?: boolean
-  suricata?: boolean
-  suricataStderr?: string
-  suricataStdout?: string
-  zeek?: boolean
-  zeekStdout?: string
-  zeekStderr?: string
+  pcap: string
 }
 
 export interface analyzeOptions {
@@ -44,6 +35,7 @@ export interface analyzeOptions {
   skewThresh?: number
   dir?: string
   out?: string
+  json?: boolean
 }
 
 export interface searchOptions extends packetOptions {
@@ -70,11 +62,12 @@ const OPTION_NAME_MAP = {
   columnThresh: "coltresh",
   skewThresh: "skewtresh",
   dir: "d",
-  out: "o"
+  out: "o",
+  pcap: "r"
 }
 
 const toCliOpts = (
-  opts: loadOptions | searchOptions | analyzeOptions
+  opts: searchOptions | analyzeOptions | indexOptions
 ): string[] =>
   compact(
     flatMap(
@@ -93,13 +86,12 @@ const toCliOpts = (
 export default class BrimcapCLI {
   constructor(private binPath: string) {}
 
-  analyze(pcapPath: string, opts: analyzeOptions): ChildProcess {
-    const subCommandWithArgs = ["analyze", ...toCliOpts(opts), pcapPath]
-    return spawn(this.binPath, subCommandWithArgs)
+  index(opts: indexOptions) {
+    return this.exec("index", opts)
   }
 
-  load(pcapPath: string, opts: loadOptions): ChildProcess {
-    const subCommandWithArgs = ["load", ...toCliOpts(opts), pcapPath]
+  analyze(pcapPath: string, opts: analyzeOptions): ChildProcess {
+    const subCommandWithArgs = ["analyze", ...toCliOpts(opts), pcapPath]
     return spawn(this.binPath, subCommandWithArgs)
   }
 
@@ -107,7 +99,7 @@ export default class BrimcapCLI {
     return this.exec("search", opts)
   }
 
-  private exec(subCommand: string, opts: searchOptions) {
+  private exec(subCommand: string, opts: searchOptions | indexOptions) {
     const subCommandWithArgs = [subCommand, ...toCliOpts(opts)]
     return spawnSync(this.binPath, subCommandWithArgs)
   }
