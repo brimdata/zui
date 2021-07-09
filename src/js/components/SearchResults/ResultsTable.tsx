@@ -1,7 +1,7 @@
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import {isEmpty} from "lodash"
 import React, {useEffect} from "react"
-import {connect, useDispatch} from "react-redux"
+import {connect, useDispatch, useSelector} from "react-redux"
 import {zed} from "zealot"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import {viewLogDetail} from "../../flows/viewLogDetail"
@@ -26,6 +26,7 @@ import ViewerComponent from "../Viewer/Viewer"
 import getEndMessage from "./getEndMessage"
 import NoResults from "./NoResults"
 import {useRowSelection} from "./selection"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
 
 type StateProps = {
   logs: zed.Record[]
@@ -50,6 +51,7 @@ type Props = StateProps & DispatchProps & OwnProps
 
 export default function ResultsTable(props: Props) {
   const dispatch = useDispatch()
+  const displayConfig = useSelector(ConfigPropValues.get("display"))
   const {parentRef, selection, clicked} = useRowSelection({
     multi: props.multiSelect
   })
@@ -87,6 +89,7 @@ export default function ResultsTable(props: Props) {
   function renderRow(index: number, dimens: ViewerDimens) {
     return (
       <LogRow
+        displayConfig={displayConfig}
         columns={props.tableColumns}
         key={index}
         index={index}

@@ -5,8 +5,9 @@ import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import {isEventType, SuricataEventType} from "ppl/suricata/suricata-plugin"
 import {isPath, ZeekPath} from "ppl/zeek/zeek-plugin"
 import React, {Fragment} from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {cssVar} from "src/js/lib/cssVar"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
 import styled from "styled-components"
 import {zed} from "zealot"
 
@@ -32,6 +33,7 @@ type ValueProps = {
   record: zed.Record
   padBefore?: boolean
   padAfter?: boolean
+  displayConfig: object
 }
 
 const Space = styled.span`
@@ -82,7 +84,7 @@ function renderValue(props) {
   } else if (isEventType(props.field)) {
     return <SuricataEventType {...props} />
   } else {
-    return formatPrimitive(props.value as zed.Primitive)
+    return formatPrimitive(props.value as zed.Primitive, props.displayConfig)
   }
 }
 
