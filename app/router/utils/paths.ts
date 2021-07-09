@@ -28,14 +28,6 @@ export function lakeSearchPath(
   return `${lakePath(id, workspaceId)}/search?${encodeSearchParams(params)}`
 }
 
-export function lakeSummaryPath(
-  id: string,
-  workspaceId: string,
-  params: Params = {}
-) {
-  return `${lakePath(id, workspaceId)}/summary?${encodeSearchParams(params)}`
-}
-
 export function releaseNotesPath(workspaceId) {
   if (workspaceId) {
     return `${workspacePath(workspaceId)}/release-notes`
