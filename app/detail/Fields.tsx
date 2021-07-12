@@ -1,5 +1,5 @@
 import {Data, Name, Value} from "app/core/Data"
-import {formatPrimitive} from "app/core/formatters/format-zed"
+import {formatPrimitive} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import React, {memo, useCallback, useMemo, useState} from "react"
 import {useDispatch} from "react-redux"

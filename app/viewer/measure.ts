@@ -1,4 +1,4 @@
-import {formatPrimitive} from "app/core/formatters/format-zed"
+import {formatPrimitive} from "app/core/format"
 import {isEventType} from "ppl/suricata/suricata-plugin"
 import {isPath} from "ppl/zeek/zeek-plugin"
 import {zed} from "zealot"

@@ -1,4 +1,4 @@
-import {formatPrimitive} from "app/core/formatters/format-zed"
+import {formatPrimitive} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
