@@ -1,13 +1,12 @@
-import {formatPrimitive} from "app/core/format"
+import {useZedFormatter} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import {isEventType, SuricataEventType} from "ppl/suricata/suricata-plugin"
 import {isPath, ZeekPath} from "ppl/zeek/zeek-plugin"
 import React, {Fragment} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import {cssVar} from "src/js/lib/cssVar"
-import ConfigPropValues from "src/js/state/ConfigPropValues"
 import styled from "styled-components"
 import {zed} from "zealot"
 
@@ -56,6 +55,7 @@ export default function Value(props: ValueProps) {
 
 export function PrimitiveValue(props: ValueProps) {
   const dispatch = useDispatch()
+  const format = useZedFormatter()
   const fillCell = props.field.value === props.value // This is the only value in the cell
   return (
     <BG
@@ -72,19 +72,19 @@ export function PrimitiveValue(props: ValueProps) {
       }
     >
       {pad(props.padBefore)}
-      {renderValue(props)}
+      {renderValue(props, format)}
       {pad(props.padAfter)}
     </BG>
   )
 }
 
-function renderValue(props) {
+function renderValue(props, format) {
   if (isPath(props.field)) {
     return <ZeekPath {...props} />
   } else if (isEventType(props.field)) {
     return <SuricataEventType {...props} />
   } else {
-    return formatPrimitive(props.value as zed.Primitive, props.displayConfig)
+    return format(props.value as zed.Primitive)
   }
 }
 
