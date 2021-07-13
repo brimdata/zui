@@ -106,5 +106,7 @@ test("Delete", () => {
 
   const all = select(ConfigPropValues.all)
   expect(Object.keys(all)).toHaveLength(0)
-  expect(select(ConfigPropValues.get(configName1, configProperty1))).toBeNull()
+  expect(select(ConfigPropValues.get(configName1, configProperty1))).toBe(
+    undefined
+  )
 })
