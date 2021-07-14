@@ -22,6 +22,7 @@ let context
 beforeEach(async () => {
   context = await setupBrim({page: "detail"})
 })
+afterEach(() => context.plugins.deactivate())
 
 beforeEach(async () => {
   const {dispatch, navTo} = context
@@ -31,10 +32,16 @@ beforeEach(async () => {
   navTo(lakePath(pool.id, workspace.id))
 })
 
-test("right click => new search", async () => {
-  const {store} = context
+test("right click => new search focuses search window", async () => {
+  const {store, main} = context
+
   render(<LogDetailsWindow />, {store})
   fireEvent.contextMenu(screen.getByText("Alice"))
   fireEvent.click(screen.getByText(/new search with this value/i))
   await flushPromises()
+
+  const searchWindow = main.windows
+    .getWindows()
+    .find((w) => w.name === "search")
+  expect(searchWindow.ref.focus).toHaveBeenCalled()
 })

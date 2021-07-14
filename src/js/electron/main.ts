@@ -8,7 +8,7 @@ import {app} from "electron"
 import log from "electron-log"
 import "regenerator-runtime/runtime"
 import {setupAutoUpdater} from "./autoUpdater"
-import {Brim} from "./brim"
+import {BrimMain} from "./brim"
 import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
 import windowsMainHandler from "./ipc/windows/mainHandler"
 import secretsMainHandler from "./ipc/secrets/mainHandler"
@@ -37,7 +37,7 @@ export async function main(opts = mainDefaults()) {
     return
   }
   userTasks(app)
-  const brim = await Brim.boot()
+  const brim = await BrimMain.boot()
   menu.setMenu(brim)
 
   windowsMainHandler(brim)
@@ -98,6 +98,8 @@ export async function main(opts = mainDefaults()) {
       log.error("Security Warning: Prevented new window from renderer")
     })
   })
+
+  return brim
 }
 
 app.disableHardwareAcceleration()

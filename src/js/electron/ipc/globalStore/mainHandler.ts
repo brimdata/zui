@@ -1,9 +1,9 @@
 import {ipcMain} from "electron"
 import ipc from ".."
 import sendTo from "../sendTo"
-import {Brim} from "../../brim"
+import {BrimMain} from "../../brim"
 
-export default function(brim: Brim) {
+export default function(brim: BrimMain) {
   ipcMain.handle("globalStore:init", () => {
     return {
       initialState: brim.store.getState()

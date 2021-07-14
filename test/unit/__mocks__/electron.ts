@@ -13,6 +13,8 @@ class WebContents extends EventEmitter {
 }
 export class BrowserWindow {
   webContents = new WebContents()
+  isDestroyed = jest.fn(() => false)
+  focus = jest.fn()
   center() {}
   setMenu() {}
   on() {

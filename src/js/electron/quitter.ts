@@ -1,7 +1,7 @@
 import {app} from "electron"
-import {Brim} from "./brim"
+import {BrimMain} from "./brim"
 
-export function handleQuit(brim: Brim) {
+export function handleQuit(brim: BrimMain) {
   app.on("before-quit", async (e) => {
     if (brim.isQuitting) return
     e.preventDefault()
