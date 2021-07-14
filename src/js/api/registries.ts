@@ -29,31 +29,45 @@ export class CommandRegistry {
 }
 
 interface Loader {
+  match: string
   load: (
     params: IngestParams & {poolId: string},
     onProgress: (value: number | null) => void,
     onWarning: (warning: string) => void,
-    onDetailUpdate: () => Promise<void>
+    onDetailUpdate: () => Promise<void>,
+    signal?: AbortSignal
   ) => Promise<void>
-  match: string
-  unLoad?: (params: IngestParams) => Promise<void>
+  unload?: (params: IngestParams) => Promise<void>
 }
 
 export class LoaderRegistry {
   private loaders: Loader[] = []
+  private emitter = new EventEmitter()
 
   constructor() {}
 
   add(l: Loader): void {
     this.loaders.push(l)
   }
-
   remove(l: Loader): void {
     if (this.loaders.includes(l)) remove(this.loaders, (l) => l === l)
   }
-
   getMatches(loadType: string): Loader[] {
     return this.loaders.filter((l) => l.match === loadType)
+  }
+  onWillAbort(listener: (...args: any[]) => void): Cleanup {
+    this.emitter.on("will-abort", listener)
+    return () => this.emitter.removeListener("will-abort", listener)
+  }
+  onDidAbort(listener: (...args: any[]) => void): Cleanup {
+    this.emitter.on("did-abort", listener)
+    return () => this.emitter.removeListener("did-abort", listener)
+  }
+  willAbort(handlerId: string): boolean {
+    return this.emitter.emit("will-abort", handlerId)
+  }
+  didAbort(handlerId: string): boolean {
+    return this.emitter.emit("did-abort", handlerId)
   }
 }
 

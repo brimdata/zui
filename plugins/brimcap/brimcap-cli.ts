@@ -86,21 +86,37 @@ const toCliOpts = (
 export default class BrimcapCLI {
   constructor(private binPath: string) {}
 
-  index(opts: indexOptions) {
-    return this.exec("index", opts)
+  index(opts: indexOptions, signal?: AbortSignal) {
+    return this.exec("index", opts, signal)
   }
 
-  analyze(pcapPath: string, opts: analyzeOptions): ChildProcess {
+  analyze(
+    pcapPath: string,
+    opts: analyzeOptions,
+    signal?: AbortSignal
+  ): ChildProcess {
     const subCommandWithArgs = ["analyze", ...toCliOpts(opts), pcapPath]
-    return spawn(this.binPath, subCommandWithArgs)
+    const p = spawn(this.binPath, subCommandWithArgs, {detached: true})
+    signal?.addEventListener("abort", () => {
+      process.kill(-p.pid, "SIGINT")
+    })
+    return p
   }
 
   search(opts: searchOptions) {
     return this.exec("search", opts)
   }
 
-  private exec(subCommand: string, opts: searchOptions | indexOptions) {
+  private exec(
+    subCommand: string,
+    opts: searchOptions | indexOptions,
+    signal?: AbortSignal
+  ) {
     const subCommandWithArgs = [subCommand, ...toCliOpts(opts)]
-    return spawnSync(this.binPath, subCommandWithArgs)
+    const p = spawnSync(this.binPath, subCommandWithArgs)
+    signal?.addEventListener("abort", () => {
+      process.kill(-p.pid, "SIGINT")
+    })
+    return p
   }
 }

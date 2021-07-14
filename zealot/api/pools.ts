@@ -55,11 +55,13 @@ export default {
     }
   },
   commit(poolId: string, commitId: string, args: PoolCommitArgs) {
+    const {signal, ...rest} = args
     return {
       headers: new Headers({Accept: "application/json"}),
       path: `/pool/${poolId}/staging/${commitId}`,
       method: "POST",
-      body: JSON.stringify(args)
+      body: JSON.stringify(rest),
+      signal
     }
   }
 }
