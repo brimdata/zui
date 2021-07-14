@@ -8,6 +8,7 @@ module.exports = {
     }
   },
   rootDir: join(__dirname, "../../"),
+  setupFiles: ["./test/unit/setup/before-env.ts"],
   setupFilesAfterEnv: ["./test/unit/setup/after-env/index.ts"],
   testURL: "http://localhost/search.html",
   roots: ["<rootDir>/test/unit", "<rootDir>"],
