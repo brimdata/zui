@@ -9,5 +9,5 @@ test("boot starts lake with defaults", async () => {
   })
   // @ts-ignore
   const brim = await BrimMain.boot(file, createSession)
-  expect(brim.lake.root).toBe(path.normalize("/fake/path/data/lake"))
+  expect(brim.lake.root).toMatch(path.normalize("data/lake"))
 })
