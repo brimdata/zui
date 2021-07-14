@@ -60,8 +60,10 @@ export class Brim {
     this.lake = args.lake || new Lake(null)
   }
 
-  async start() {
-    this.lake.start()
+  async start(opts) {
+    if (opts.backend) {
+      this.lake.start()
+    }
     if (this.isDev()) await installExtensions()
     this.windows.init()
   }

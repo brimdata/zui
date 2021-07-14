@@ -3,7 +3,7 @@ import {useSelector} from "react-redux"
 import Tabs from "src/js/state/Tabs"
 import TabsRouter from "./tabs-router"
 
-export default function AppRouter({children}) {
+export default function AppTabsRouter({children}) {
   const tabId = useSelector(Tabs.getActive)
   return (
     <TabsRouter tabId={tabId} histories={global.tabHistories}>

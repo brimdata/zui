@@ -24,7 +24,13 @@ import {meta} from "app/ipc/meta"
 
 console.time("init")
 
-async function main() {
+function mainDefaults() {
+  return {
+    backend: true
+  }
+}
+
+export async function main(opts = mainDefaults()) {
   if (handleSquirrelEvent(app)) return
   if (windowsPre25Exists()) {
     app.quit()
@@ -66,7 +72,7 @@ async function main() {
     }
   })
 
-  app.whenReady().then(() => brim.start())
+  app.whenReady().then(() => brim.start(opts))
   app.on("activate", () => brim.activate())
 
   app.on("open-url", (event, url) => {

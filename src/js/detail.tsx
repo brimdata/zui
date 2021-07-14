@@ -1,3 +1,4 @@
+import AppWindowRouter from "app/router/app-window-router"
 import React from "react"
 import ReactDOM from "react-dom"
 import {Provider} from "react-redux"
@@ -19,7 +20,7 @@ initDetail()
       pluginManager.deactivate()
     }
     ReactDOM.render(
-      <Router history={global.windowHistory}>
+      <AppWindowRouter>
         <AppErrorBoundary>
           <div id="modal-dialog-root" />
           <Provider store={store}>
@@ -30,7 +31,7 @@ initDetail()
             </ThemeProvider>
           </Provider>
         </AppErrorBoundary>
-      </Router>,
+      </AppWindowRouter>,
       lib.doc.id("app-root")
     )
   })
