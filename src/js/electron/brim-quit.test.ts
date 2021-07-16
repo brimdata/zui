@@ -1,4 +1,4 @@
-import {Brim} from "./brim"
+import {BrimMain} from "./brim"
 import {app, ipcMain} from "electron"
 
 function mockIpc(response) {
@@ -10,11 +10,11 @@ function mockIpc(response) {
     )
 }
 
-let brim: Brim
+let brim: BrimMain
 beforeEach(async () => {
   // @ts-ignore
   app.quit.mockClear()
-  brim = new Brim()
+  brim = new BrimMain()
   jest.spyOn(brim.lake, "start").mockImplementation(() => {})
   jest.spyOn(brim.lake, "close").mockImplementation(() => Promise.resolve())
   jest

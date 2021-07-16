@@ -1,6 +1,6 @@
 import {app} from "electron"
 import {Lake} from "ppl/lake/lake"
-import {Brim} from "./brim"
+import {BrimMain} from "./brim"
 import tron from "./tron"
 import windowManager from "./tron/windowManager"
 
@@ -31,7 +31,7 @@ function mockWindows() {
 }
 
 test("reset state", async () => {
-  const brim = new Brim({
+  const brim = new BrimMain({
     lake: mockLake(),
     session: mockSession(),
     windows: mockWindows()

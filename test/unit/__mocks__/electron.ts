@@ -1,19 +1,20 @@
 import {join} from "path"
 import createIPCMock from "electron-mock-ipc"
+import EventEmitter from "events"
 
 const mockIpc = createIPCMock()
 export const ipcMain = mockIpc.ipcMain
 export const ipcRenderer = mockIpc.ipcRenderer
 
-export class BrowserWindow {
-  webContents: {send: any}
-  constructor() {
-    this.webContents = {
-      send: (channel, ...args) => {
-        ipcRenderer.emitter.emit("receive-from-main", channel, ...args)
-      }
-    }
+class WebContents extends EventEmitter {
+  send(channel, ...args) {
+    ipcRenderer.emitter.emit("receive-from-main", channel, ...args)
   }
+}
+export class BrowserWindow {
+  webContents = new WebContents()
+  isDestroyed = jest.fn(() => false)
+  focus = jest.fn()
   center() {}
   setMenu() {}
   on() {
@@ -34,13 +35,19 @@ class MockApp {
   isPackaged = true
   quit = jest.fn()
   relaunch = jest.fn()
+  disableHardwareAcceleration = jest.fn()
+  requestSingleInstanceLock = jest.fn()
+  setAsDefaultProtocolClient = jest.fn()
+  on = jest.fn()
+  whenReady = jest.fn(() => Promise.resolve())
 
   getName() {
     return "TestApp"
   }
   getPath() {
-    return "/fake/path"
+    return join(__dirname, "../../../run/unit/data")
   }
+  setPath() {}
   getVersion() {
     return "0.0.0"
   }
@@ -82,6 +89,10 @@ export const screen = {
       }
     ]
   }
+}
+
+export const autoUpdater = {
+  on: jest.fn()
 }
 
 export const remote = {app}

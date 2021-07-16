@@ -1,10 +1,10 @@
 import log from "electron-log"
 import {BrowserWindow, dialog, ipcMain} from "electron"
-import {Brim} from "../../brim"
+import {BrimMain} from "../../brim"
 
 let started = false
 
-export default function(brim: Brim) {
+export default function(brim: BrimMain) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
     const window = brim.windows.getWindow(id)
     if (!window) return undefined

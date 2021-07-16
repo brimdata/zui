@@ -5,11 +5,11 @@ import path from "path"
 
 import electronIsDev from "../isDev"
 import formatSessionState from "../tron/formatSessionState"
-import {Brim} from "../brim"
+import {BrimMain} from "../brim"
 
 export default function(
   send: Function,
-  brim: Brim,
+  brim: BrimMain,
   platform: string = process.platform
 ): MenuItemConstructorOptions[] {
   const mac = platform === "darwin"

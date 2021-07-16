@@ -1,6 +1,6 @@
 import {maybeShowReleaseNotes} from "app/release-notes/maybe-show-release-notes"
 import ReleaseNotes from "app/release-notes/release-notes"
-import AppRouter from "app/router/app-router"
+import AppTabsRouter from "app/router/app-tabs-router"
 import {
   releaseNotes,
   root,
@@ -37,7 +37,7 @@ export default function App() {
   }, [])
 
   return (
-    <AppRouter>
+    <AppTabsRouter>
       <Switch>
         <Route path={workspaceShow.path}>
           <AppWrapper>
@@ -58,6 +58,6 @@ export default function App() {
           <Redirect to="/workspaces/localhost:9867" />
         </Route>
       </Switch>
-    </AppRouter>
+    </AppTabsRouter>
   )
 }

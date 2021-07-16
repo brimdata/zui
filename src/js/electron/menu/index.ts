@@ -1,5 +1,5 @@
 import {BrowserWindow, Menu, MenuItemConstructorOptions} from "electron"
-import {Brim} from "../brim"
+import {BrimMain} from "../brim"
 
 import actions from "./actions"
 import appMenu from "./appMenu"
@@ -7,7 +7,7 @@ import appMenu from "./appMenu"
 export type $MenuItem = MenuItemConstructorOptions
 export type $Menu = $MenuItem[]
 
-function setMenu(brim: Brim) {
+function setMenu(brim: BrimMain) {
   function send(channel, ...args) {
     let win = BrowserWindow.getFocusedWindow()
     if (win && win.webContents) win.webContents.send(channel, ...args)

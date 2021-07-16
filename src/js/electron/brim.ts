@@ -33,7 +33,7 @@ type BrimArgs = {
   lake?: Lake
 }
 
-export class Brim {
+export class BrimMain {
   readonly windows: $WindowManager
   readonly store: Store
   readonly lake: Lake
@@ -50,7 +50,7 @@ export class Brim {
     const store = createGlobalStore(data?.globalState)
     const lakeroot = path.join(app.getPath("userData"), "data", "lake")
     const lake = new Lake(lakeroot)
-    return new Brim({session, windows, store, lake})
+    return new BrimMain({session, windows, store, lake})
   }
 
   constructor(args: BrimArgs = {}) {
@@ -60,8 +60,10 @@ export class Brim {
     this.lake = args.lake || new Lake(null)
   }
 
-  async start() {
-    this.lake.start()
+  async start(opts = {backend: true}) {
+    if (opts.backend) {
+      this.lake.start()
+    }
     if (this.isDev()) await installExtensions()
     this.windows.init()
   }

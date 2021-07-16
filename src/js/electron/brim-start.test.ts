@@ -1,5 +1,5 @@
 import {Lake} from "ppl/lake/lake"
-import {Brim} from "./brim"
+import {BrimMain} from "./brim"
 import {installExtensions} from "./extensions"
 
 jest.mock("./extensions", () => ({
@@ -12,9 +12,9 @@ function mockLake() {
   return lake
 }
 
-let brim: Brim
+let brim: BrimMain
 beforeEach(() => {
-  brim = new Brim({
+  brim = new BrimMain({
     lake: mockLake()
   })
 })

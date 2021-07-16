@@ -8,7 +8,7 @@ import {app} from "electron"
 import log from "electron-log"
 import "regenerator-runtime/runtime"
 import {setupAutoUpdater} from "./autoUpdater"
-import {Brim} from "./brim"
+import {BrimMain} from "./brim"
 import globalStoreMainHandler from "./ipc/globalStore/mainHandler"
 import windowsMainHandler from "./ipc/windows/mainHandler"
 import secretsMainHandler from "./ipc/secrets/mainHandler"
@@ -24,14 +24,20 @@ import {meta} from "app/ipc/meta"
 
 console.time("init")
 
-async function main() {
+function mainDefaults() {
+  return {
+    backend: true
+  }
+}
+
+export async function main(opts = mainDefaults()) {
   if (handleSquirrelEvent(app)) return
   if (windowsPre25Exists()) {
     app.quit()
     return
   }
   userTasks(app)
-  const brim = await Brim.boot()
+  const brim = await BrimMain.boot()
   menu.setMenu(brim)
 
   windowsMainHandler(brim)
@@ -66,7 +72,7 @@ async function main() {
     }
   })
 
-  app.whenReady().then(() => brim.start())
+  app.whenReady().then(() => brim.start(opts))
   app.on("activate", () => brim.activate())
 
   app.on("open-url", (event, url) => {
@@ -92,6 +98,8 @@ async function main() {
       log.error("Security Warning: Prevented new window from renderer")
     })
   })
+
+  return brim
 }
 
 app.disableHardwareAcceleration()
