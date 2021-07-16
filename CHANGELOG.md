@@ -1,3 +1,12 @@
+## v0.25.0
+* Update zq to [v0.30.0](https://github.com/brimdata/zed/releases/tag/v0.30.0)
+* Make the toolbar "responsive" such that buttons hide when the window is made small (#1416)
+* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting-%28v0.25.0-%29#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached) for the case when Brim shows **"Connection Error: The service at localhost:9867 could not be reached"** (#1448)
+* Fix an issue where the "Back" button in the **Log Detail** view was not returning to the previously-viewed record (#1447)
+* Upgrade Electron dependency to 11.2.1 (#1426)
+* Add wiki cookbooks for use of Zed `join` in Brim for releases [`v0.24.0`](https://github.com/brimdata/brim/wiki/Joining-Data) and [`v0.25.0+`](https://github.com/brimdata/brim/wiki/Joining-Data-%28v0.25.0-%29) (#1430, 
+* Improve the error messages shown when imports fail (#1467)
+
 ## v0.24.0
 * Update zq to [v0.29.0](https://github.com/brimdata/zed/releases/tag/v0.29.0)
 * Consolidate the colors used in Brim (#1405)
