@@ -44,7 +44,11 @@ beforeEach(() => {
 
   apiMock = mocked(BrimApi)
   apiMock.loaders = {
-    getMatches: jest.fn()
+    getMatches: jest.fn(),
+    onWillAbort: () => jest.fn(),
+    onDidAbort: () => jest.fn(),
+    willAbort: jest.fn(),
+    didAbort: jest.fn()
   }
 
   store = initTestStore(zealot.zealot, apiMock)
