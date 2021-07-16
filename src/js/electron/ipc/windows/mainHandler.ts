@@ -4,6 +4,7 @@ import {BrimMain} from "../../brim"
 
 let started = false
 
+// Convert this file to the new ipc model
 export default function(brim: BrimMain) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
     const window = brim.windows.getWindow(id)
@@ -44,5 +45,9 @@ export default function(brim: BrimMain) {
   ipcMain.handle("windows:showSaveDialog", async (e, args) => {
     const win = BrowserWindow.fromWebContents(e.sender)
     return dialog.showSaveDialog(win, args)
+  })
+
+  ipcMain.on("windows:updateState", (e, id, state) => {
+    brim.windows.getWindow(id).initialState = state
   })
 }

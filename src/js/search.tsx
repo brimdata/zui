@@ -13,6 +13,8 @@ import lib from "./lib"
 import theme from "./style-theme"
 import deletePartialPools from "./flows/deletePartialPools"
 import TabHistories from "./state/TabHistories"
+import {getWindowPersistable} from "./state/getPersistable"
+import {ipcRenderer} from "electron"
 
 initialize()
   .then(({store, pluginManager}) => {
@@ -22,6 +24,11 @@ initialize()
       pluginManager.deactivate()
       store.dispatch(deletePartialPools())
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
+      ipcRenderer.send(
+        "windows:updateState",
+        global.windowId,
+        getWindowPersistable(store.getState())
+      )
     }
     ReactDOM.render(
       <AppErrorBoundary>
