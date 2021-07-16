@@ -3,9 +3,8 @@ import lib from "../lib"
 import BrimApi from "../api"
 import {forEach} from "lodash"
 
-interface Plugin {
+interface PluginFunctions {
   activate(api: BrimApi): void
-
   deactivate(): Promise<void>
 }
 
@@ -18,34 +17,16 @@ export default class PluginManager {
 
   async load(dir: string) {
     const files = await lib.file(dir).contents()
-
     for (let i = 0; i < files.length; i++) {
-      const f = files[i]
-      const pluginDir = lib.file(path.join(dir, f))
-      if (!(await pluginDir.isDirectory())) {
-        console.error("Plugin must be contained in a directory.")
-        return
+      const folder = path.join(dir, files[i])
+      const plugin = new Plugin(folder)
+      const error = await plugin.validate()
+      if (error) {
+        console.error(error)
+      } else {
+        plugin.load()
+        await this.add(plugin)
       }
-
-      const pluginName = pluginDir.fileName()
-      const index = process.env.NODE_ENV === "test" ? "index.ts" : "index.js"
-      const entryPoint = path.join(dir, pluginName, index)
-      if (!lib.file(entryPoint).existsSync()) {
-        console.error(
-          "Plugin directory must contain an index file as the entry point."
-        )
-        return
-      }
-
-      const {activate, deactivate = () => {}} = require(entryPoint)
-      if (this.plugins[pluginName]) {
-        console.error(
-          new Error(`Duplicate or name collision for '${pluginName}' plugin`)
-        )
-        return
-      }
-
-      this.plugins[pluginName] = {activate, deactivate}
     }
   }
 
@@ -55,5 +36,57 @@ export default class PluginManager {
 
   async deactivate(): Promise<void> {
     await Promise.all(Object.values(this.plugins).map((p) => p.deactivate()))
+  }
+
+  private async add(plugin: Plugin) {
+    if (this.plugins[plugin.name]) {
+      console.error(
+        new Error(`Duplicate or name collision for '${plugin.name}' plugin`)
+      )
+    } else {
+      this.plugins[plugin.name] = plugin
+    }
+  }
+}
+
+class Plugin {
+  name: string
+  entryPoint: string
+  functions: PluginFunctions
+
+  constructor(public folderPath: string) {
+    this.name = path.basename(folderPath)
+    this.entryPoint = path.join(folderPath, this.indexFile())
+  }
+
+  async validate() {
+    const d = lib.file(this.folderPath)
+    if (!(await d.isDirectory())) {
+      return "Plugin must be contained in a directory."
+    }
+    if (!lib.file(this.entryPoint).existsSync()) {
+      return "Plugin directory must contain an index file as the entry point."
+    }
+    return null
+  }
+
+  load() {
+    this.functions = require(this.entryPoint)
+  }
+
+  activate(api: BrimApi) {
+    this.functions.activate(api)
+  }
+
+  deactivate() {
+    if ("deactivate" in this.functions) {
+      this.functions.deactivate()
+    }
+  }
+
+  private indexFile() {
+    if (process.env.BRIM_ITEST === "true") return "index.js"
+    if (process.env.NODE_ENV === "test") return "index.ts"
+    return "index.js"
   }
 }
