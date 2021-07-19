@@ -1,6 +1,5 @@
+import Markdown from "app/core/components/markdown"
 import React from "react"
-import ReactMarkdown from "react-markdown"
-import Link from "src/js/components/common/Link"
 import styled from "styled-components"
 import {useReleaseNotes} from "./use-release-notes"
 
@@ -22,13 +21,6 @@ const BG = styled.div`
   }
 `
 
-const components = {
-  // eslint-disable-next-line
-  a: ({children, ...props}) => {
-    return <Link {...props}>{children}</Link>
-  }
-}
-
 export default function ReleaseNotes() {
   const {notes, version, fetching} = useReleaseNotes()
 
@@ -38,7 +30,7 @@ export default function ReleaseNotes() {
     <Scrollable>
       <BG>
         <h1>Release Notes for Version {version}</h1>
-        <ReactMarkdown components={components}>{notes}</ReactMarkdown>
+        <Markdown>{notes}</Markdown>
       </BG>
     </Scrollable>
   )
