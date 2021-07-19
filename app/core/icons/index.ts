@@ -9,6 +9,7 @@ import columns from "./columns.svg"
 import chevronDown from "./chevron-down.svg"
 import doubleChevronRight from "./double-chevron-right.svg"
 import reload from "./reload.svg"
+import warning from "./warning.svg"
 
 export default {
   chart,
@@ -21,5 +22,6 @@ export default {
   "chevron-down": chevronDown,
   "double-chevron-right": doubleChevronRight,
   "three-dots": threeDots,
-  reload
+  reload,
+  warning
 }
