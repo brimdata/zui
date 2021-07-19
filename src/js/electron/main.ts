@@ -21,6 +21,7 @@ import {serve} from "src/pkg/electron-ipc-service"
 import {paths} from "app/ipc/paths"
 import {windowsPre25Exists} from "./windows-pre-25"
 import {meta} from "app/ipc/meta"
+import secureWebContents from "./secure-web-contents"
 
 console.time("init")
 
@@ -31,6 +32,7 @@ function mainDefaults() {
 }
 
 export async function main(opts = mainDefaults()) {
+  secureWebContents()
   if (handleSquirrelEvent(app)) return
   if (windowsPre25Exists()) {
     app.quit()
@@ -71,34 +73,14 @@ export async function main(opts = mainDefaults()) {
       }
     }
   })
-
-  app.whenReady().then(() => brim.start(opts))
   app.on("activate", () => brim.activate())
-
   app.on("open-url", (event, url) => {
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
     brim.openUrl(url)
   })
 
-  app.on("web-contents-created", (event, contents) => {
-    contents.on("will-attach-webview", (e) => {
-      e.preventDefault()
-      log.error("Security Warning: Prevented creation of webview")
-    })
-
-    contents.on("will-navigate", (e, url) => {
-      if (contents.getURL() === url) return // Allow reloads
-      e.preventDefault()
-      log.error(`Security Warning: Prevented navigation to ${url}`)
-    })
-
-    contents.on("new-window", (e) => {
-      e.preventDefault()
-      log.error("Security Warning: Prevented new window from renderer")
-    })
-  })
-
+  app.whenReady().then(() => brim.start(opts))
   return brim
 }
 
