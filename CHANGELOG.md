@@ -1,11 +1,23 @@
 ## v0.25.0
 * Update zq to [v0.30.0](https://github.com/brimdata/zed/releases/tag/v0.30.0)
-* Make the toolbar "responsive" such that buttons hide when the window is made small (#1416)
-* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting-%28v0.25.0-%29#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached) for the case when Brim shows **"Connection Error: The service at localhost:9867 could not be reached"** (#1448)
+* Make the toolbar "responsive" such that buttons hide when the window is made small (#1416, #1553)
+* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting-%28v0.25.0-%29#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached) for the case when Brim shows **"Connection Error: The service at localhost:9867 could not be reached"** (#1448, #1491)
 * Fix an issue where the "Back" button in the **Log Detail** view was not returning to the previously-viewed record (#1447)
 * Upgrade Electron dependency to 11.2.1 (#1426)
 * Add wiki cookbooks for use of Zed `join` in Brim for releases [`v0.24.0`](https://github.com/brimdata/brim/wiki/Joining-Data) and [`v0.25.0+`](https://github.com/brimdata/brim/wiki/Joining-Data-%28v0.25.0-%29) (#1430, 
 * Improve the error messages shown when imports fail (#1467)
+* Fix an issuew where the Log Detail pane would crash when certain named fields were missing from the target record (#1494)
+* Modify the Query Library entry for **Windows Networking Activity** to reflect `matches` now being used instead of `=~` in the Zed language (#1489)
+* Use URLs to keep track of routing and tab history, which allows for direct edits of pinned (#1473)
+* Fix an issue where deleting a Space that was shown in the active tab would cause a crash (#1527)
+* Fix an issue where navigating to a workspace that does not exist would cause a crash (#1533)
+* Commas are now stripped when a numeric value is copied into the paste buffer via right-click **Copy** (#1535)
+* Adjust the **Accepted Formats** guidance on the **Import Files** page (#1548)
+* Brim is now packaged using [electron-builder](https://www.electron.build/), which streamlines installation and auto-update (#1508)
+* Fix an issue where importing an NDJSON record containing an empty object caused a "Cannot read property 'map' of null" pop-up error (#1581)
+* Remove the legacy approach for applying Zed types to NDJSON input, as this is now done via Zed shapers (#1580, #1582)
+* Brim now invokes [Brimcap](https://github.com/brimdata/brimcap) to generate logs from imported pcaps and to extract flows when **Packets** is clicked, rather than relying on `zqd` (#1584, #1573, #1591, #1590, #1598,
+# Use Pools in Zed Lakes for backend storage rather than Spaces (#1589)
 
 ## v0.24.0
 * Update zq to [v0.29.0](https://github.com/brimdata/zed/releases/tag/v0.29.0)
