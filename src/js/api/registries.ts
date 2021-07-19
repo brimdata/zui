@@ -55,19 +55,30 @@ export class LoaderRegistry {
   getMatches(loadType: string): Loader[] {
     return this.loaders.filter((l) => l.match === loadType)
   }
-  onWillAbort(listener: (...args: any[]) => void): Cleanup {
-    this.emitter.on("will-abort", listener)
-    return () => this.emitter.removeListener("will-abort", listener)
+  setAbortHandler(handlerId: string, handler: () => void): Cleanup {
+    const listener = (abortRequestId) => {
+      if (abortRequestId === handlerId) {
+        handler()
+      }
+    }
+    this.emitter.on("request-abort", listener)
+    return () => this.emitter.removeListener("request-abort", listener)
   }
   onDidAbort(listener: (...args: any[]) => void): Cleanup {
     this.emitter.on("did-abort", listener)
     return () => this.emitter.removeListener("did-abort", listener)
   }
-  willAbort(handlerId: string): boolean {
-    return this.emitter.emit("will-abort", handlerId)
+  requestAbort(handlerId: string): boolean {
+    return this.emitter.emit("request-abort", handlerId)
   }
   didAbort(handlerId: string): boolean {
     return this.emitter.emit("did-abort", handlerId)
+  }
+  async abort(id) {
+    this.requestAbort(id)
+    await new Promise((res) => {
+      this.onDidAbort(res)
+    })
   }
 }
 

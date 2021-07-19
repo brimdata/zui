@@ -151,14 +151,10 @@ const executeLoader = (
     const l = loaders[0]
     const abortCtl = new AbortController()
 
-    let didAbort = false
-    const abortHandler = (id) => {
-      if (id === handlerId) {
-        abortCtl.abort()
-        didAbort = true
-      }
+    const abortHandler = () => {
+      abortCtl.abort()
     }
-    const cleanup = api.loaders.onWillAbort(abortHandler)
+    const cleanup = api.loaders.setAbortHandler(handlerId, abortHandler)
     try {
       await l.load(
         params,
@@ -171,7 +167,7 @@ const executeLoader = (
       l.unload && (await l.unload(params))
       throw e
     } finally {
-      if (didAbort) api.loaders.didAbort(handlerId)
+      if (abortCtl.signal.aborted) api.loaders.didAbort(handlerId)
       cleanup()
     }
   }

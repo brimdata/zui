@@ -21,10 +21,7 @@ const deletePool = (id: string): Thunk<Promise<void>> => async (
 
   // if pool is still loading, use brim api to call abort using its handler id
   if (poolHandler) {
-    api.loaders.willAbort(poolHandler.id)
-    await new Promise((res) => {
-      api.loaders.onDidAbort(res)
-    })
+    await api.loaders.abort(poolHandler.id)
     // upon abort, loader.load() will throw an error triggering a transaction rollback
     // which will handle the actual delete and cleanup
     return Promise.resolve()

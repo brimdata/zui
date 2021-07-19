@@ -45,8 +45,8 @@ beforeEach(() => {
   apiMock = mocked(BrimApi)
   apiMock.loaders = {
     getMatches: jest.fn(),
-    onWillAbort: () => jest.fn(),
-    onDidAbort: () => jest.fn(),
+    abort: jest.fn(),
+    setAbortHandler: () => jest.fn(),
     willAbort: jest.fn(),
     didAbort: jest.fn()
   }
