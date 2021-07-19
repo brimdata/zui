@@ -28,9 +28,9 @@ class BrimTestContext {
 }
 
 type Args = {
-  page: string
-  workspace: Workspace
-  pool: Pool
+  page?: string
+  workspace?: Workspace
+  pool?: Pool
 }
 const defaults = () => ({
   page: "search",
