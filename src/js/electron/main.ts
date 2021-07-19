@@ -34,7 +34,7 @@ function mainDefaults() {
 export async function main(opts = mainDefaults()) {
   secureWebContents()
   if (handleSquirrelEvent(app)) return
-  if (windowsPre25Exists()) {
+  if (await windowsPre25Exists()) {
     app.quit()
     return
   }

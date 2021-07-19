@@ -1,7 +1,8 @@
-import {app, dialog} from "electron"
+import {app} from "electron"
 import fs from "fs-extra"
 import os from "os"
 import {join} from "path"
+import htmlDialog from "./html-dialog"
 
 const VAR = "LocalAppData"
 
@@ -28,16 +29,17 @@ function getExe() {
  * then launch the new one.
  * @returns boolean
  */
-export function windowsPre25Exists() {
+export async function windowsPre25Exists() {
   if (os.platform() !== "win32") return false
-
-  const dir = getDir()
   const exe = getExe()
   if (!fs.existsSync(exe)) return false
 
-  dialog.showErrorBox(
-    "Previous Brim Version Detected",
-    `Please uninstall it before before launching the new version.\n\n${dir}`
+  await app.whenReady()
+  await htmlDialog.showErrorBox(
+    "Previous Version Detected",
+    `Please uninstall it before before launching the new version.
+
+[Show me how...](https://github.com/brimdata/brim/wiki/Installation#windows-installation-v0250)`
   )
   return true
 }
