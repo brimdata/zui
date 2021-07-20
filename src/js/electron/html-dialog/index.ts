@@ -1,5 +1,5 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {BrowserWindow, ipcMain} from "electron"
+import {BrowserWindow, ipcMain, Menu} from "electron"
 import {join} from "path"
 
 const makeChannel = (name) => (id) => [`__html-dialog__`, id, name].join(":")
@@ -25,6 +25,8 @@ class HTMLDialog {
           nodeIntegration: true
         }
       })
+      // This will remove the menu bar on windows and linux from the top of the window.
+      Menu.setApplicationMenu(null)
 
       win.loadFile(join(__dirname, "dialog.html"), {
         query: {title, content, id}
