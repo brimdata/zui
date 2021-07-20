@@ -344,13 +344,10 @@ export default class BrimcapPlugin {
 
       // generate pcap index
       try {
-        await this.cli.index(
-          {
-            root: this.brimcapDataRoot,
-            pcap: pcapFilePath
-          },
-          signal
-        )
+        await this.cli.index({
+          root: this.brimcapDataRoot,
+          pcap: pcapFilePath
+        })
       } catch (e) {
         console.error(e)
         brimcapErr = e.toString()
