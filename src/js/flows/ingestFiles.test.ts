@@ -47,8 +47,8 @@ beforeEach(() => {
     getMatches: jest.fn(),
     abort: jest.fn(),
     setAbortHandler: () => jest.fn(),
-    willAbort: jest.fn(),
-    didAbort: jest.fn()
+    didAbort: jest.fn(),
+    requestAbort: jest.fn()
   }
 
   store = initTestStore(zealot.zealot, apiMock)

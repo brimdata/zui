@@ -116,7 +116,6 @@ export default class BrimcapCLI {
 
   private exec(subCommand: string, opts: searchOptions | indexOptions) {
     const subCommandWithArgs = [subCommand, ...toCliOpts(opts)]
-    const p = spawnSync(this.binPath, subCommandWithArgs)
-    return p
+    return spawnSync(this.binPath, subCommandWithArgs)
   }
 }
