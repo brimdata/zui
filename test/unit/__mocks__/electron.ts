@@ -1,5 +1,5 @@
 import {join} from "path"
-import createIPCMock from "electron-mock-ipc"
+import createIPCMock from "@brimdata/electron-mock-ipc"
 import EventEmitter from "events"
 
 const mockIpc = createIPCMock()

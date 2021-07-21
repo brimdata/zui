@@ -72,7 +72,7 @@
     "electron": "^11.2.1",
     "electron-builder": "^22.9.1",
     "electron-builder-notarize": "^1.2.0",
-    "electron-mock-ipc": "brimdata/electron-mock-ipc#master",
+    "@brimdata/electron-mock-ipc": "^0.0.1",
     "electron-notarize": "^0.2.1",
     "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
