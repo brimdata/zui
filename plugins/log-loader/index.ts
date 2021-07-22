@@ -21,6 +21,8 @@ export const activate = (api: BrimApi) => {
     // @ts-ignore
     for await (const {type, ...status} of stream) {
       switch (type) {
+        case "Error":
+          throw new Error(status.error)
         case "UploadProgress":
           onProgressUpdate(status.progress)
           await onDetailUpdate()
