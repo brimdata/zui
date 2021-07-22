@@ -109,7 +109,8 @@ export function createZealot(
         const resp = await nodeFetch(url(host, path), {
           method,
           body,
-          headers
+          headers,
+          signal: args.signal
         })
         const content = await parseContentType(resp)
         return resp.ok ? content : Promise.reject(createError(content))

@@ -43,12 +43,14 @@ export interface SearchArgs {
 
 export interface PoolAddArgs {
   data: NodeJS.ReadableStream
+  signal?: AbortSignal
 }
 
 export interface PoolCommitArgs {
   message: string
   author: string
   date?: number
+  signal?: AbortSignal
 }
 
 export interface PoolArgs {

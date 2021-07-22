@@ -38,7 +38,7 @@ export default (files: File[]): Thunk<Promise<void>> => (
       createPool(zealot, dispatch, workspaceId),
       setPool(dispatch, tabId, workspaceId),
       registerHandler(dispatch, requestId),
-      executeLoader(zealot, dispatch, workspaceId, api),
+      executeLoader(zealot, dispatch, workspaceId, api, requestId),
       unregisterHandler(dispatch, requestId)
     ])
     .then(() => {
@@ -116,7 +116,8 @@ const executeLoader = (
   client: Zealot,
   dispatch: Dispatch,
   workspaceId: string,
-  api: BrimApi
+  api: BrimApi,
+  handlerId: string
 ) => ({
   async do(params: IngestParams & {poolId: string}) {
     const {poolId, fileListData = []} = params
@@ -148,11 +149,26 @@ const executeLoader = (
 
     // only supporting one loader at this time
     const l = loaders[0]
+    const abortCtl = new AbortController()
+
+    const abortHandler = () => {
+      abortCtl.abort()
+    }
+    const cleanup = api.loaders.setAbortHandler(handlerId, abortHandler)
     try {
-      await l.load(params, onProgressUpdate, onWarning, onDetailUpdate)
+      await l.load(
+        params,
+        onProgressUpdate,
+        onWarning,
+        onDetailUpdate,
+        abortCtl.signal
+      )
     } catch (e) {
-      l.unLoad && (await l.unLoad(params))
+      l.unload && (await l.unload(params))
       throw e
+    } finally {
+      if (abortCtl.signal.aborted) api.loaders.didAbort(handlerId)
+      cleanup()
     }
   }
 })

@@ -28,9 +28,30 @@ const showPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
           buttons: ["OK", "Cancel"]
         }).then(({response}) => {
           if (response === 0)
-            dispatch(deletePool(pool.id)).then(() => {
-              toast(`Deleted pool "${pool.name}"`)
-            })
+            toast.promise(
+              dispatch(deletePool(pool.id)),
+              {
+                loading: `Deleting pool "${pool.name}"`,
+                success: `Deleted pool "${pool.name}"`,
+                error: (err) => {
+                  console.error(err)
+                  return "Error deleting pool: " + err.message
+                }
+              },
+              {
+                loading: {
+                  // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
+                  // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
+                  duration: 2 ** 31 - 1
+                },
+                success: {
+                  duration: 3000
+                },
+                error: {
+                  duration: 5000
+                }
+              }
+            )
         })
       }
     },

@@ -90,9 +90,24 @@ export default class BrimcapCLI {
     return this.exec("index", opts)
   }
 
-  analyze(pcapPath: string, opts: analyzeOptions): ChildProcess {
+  analyze(
+    pcapPath: string,
+    opts: analyzeOptions,
+    signal?: AbortSignal
+  ): ChildProcess {
     const subCommandWithArgs = ["analyze", ...toCliOpts(opts), pcapPath]
-    return spawn(this.binPath, subCommandWithArgs)
+    const isWin = process.platform === "win32"
+    // don't detach if is windows
+    const spawnOpts = isWin ? undefined : {detached: true}
+    const p = spawn(this.binPath, subCommandWithArgs, spawnOpts)
+    signal?.addEventListener("abort", () => {
+      if (isWin) {
+        spawnSync("taskkill", ["/pid", p.pid.toString(), "/f", "/t"])
+      } else {
+        process.kill(-p.pid, "SIGINT")
+      }
+    })
+    return p
   }
 
   search(opts: searchOptions) {

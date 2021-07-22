@@ -271,7 +271,8 @@ export default class BrimcapPlugin {
       params: IngestParams & {poolId: string},
       onProgressUpdate: (value: number | null) => void,
       onWarning: (warning: string) => void,
-      onDetailUpdate: () => void
+      onDetailUpdate: () => void,
+      signal?: AbortSignal
     ): Promise<void> => {
       const {fileListData} = params
       if (fileListData.length > 1)
@@ -289,12 +290,14 @@ export default class BrimcapPlugin {
       cliOpts.config = yamlConfig || ""
 
       onProgressUpdate(0)
-      const p = this.cli.analyze(pcapFilePath, cliOpts)
+      const p = this.cli.analyze(pcapFilePath, cliOpts, signal)
       this.processes[p.pid] = p
+
       let brimcapErr
       p.on("error", (err) => {
         brimcapErr = err
       })
+
       const handleRespMsg = async (jsonMsg) => {
         const {type, ...status} = jsonMsg
         switch (type) {
@@ -327,13 +330,16 @@ export default class BrimcapPlugin {
       // stream analyze output to pool
       const zealot = this.api.getZealot()
       const res = await zealot.pools.add(params.poolId, {
-        data: p.stdout
+        data: p.stdout,
+        signal
       })
       const commitId = get(res, ["value", "commit"], "")
       if (!commitId) throw new Error("No commit obtained from lake add")
+
       await zealot.pools.commit(params.poolId, commitId, {
         author: "brim",
-        message: "automatic import with brimcap analyze"
+        message: "automatic import with brimcap analyze",
+        signal
       })
 
       // generate pcap index
