@@ -9,6 +9,7 @@ import {ViewerDimens} from "../types"
 import * as Styler from "./Viewer/Styler"
 
 type Props = {
+  displayConfig: object
   dimens: ViewerDimens
   highlight: boolean
   index: number
@@ -31,6 +32,7 @@ const LogRow = (props: Props) => {
       return (
         <Cell width={width} key={key} name={field.name}>
           <Value
+            displayConfig={props.displayConfig}
             value={field.value}
             field={field}
             record={log}
@@ -63,6 +65,7 @@ export default memo<Props>(LogRow, (prevProps: Props, nextProps: Props) => {
     prevProps.highlight === nextProps.highlight &&
     prevProps.dimens.rowWidth === nextProps.dimens.rowWidth &&
     prevProps.timeZone === nextProps.timeZone &&
-    prevProps.timeFormat === nextProps.timeFormat
+    prevProps.timeFormat === nextProps.timeFormat &&
+    prevProps.displayConfig === nextProps.displayConfig
   )
 })

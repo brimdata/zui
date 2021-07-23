@@ -1,3 +1,4 @@
+import {FormatConfig} from "app/core/format"
 import {estimateCellWidth, estimateHeaderWidth} from "app/viewer/measure"
 import {zed} from "zealot"
 import columnOrder from "../lib/columnOrder"
@@ -7,13 +8,16 @@ import {ColumnSettingsMap, TableColumn} from "../state/Columns/types"
 export default class TableColumns {
   cols: TableColumn[]
   id: string
+  config: Partial<FormatConfig>
 
   constructor(
     id: string,
     columns: $Column[] = [],
-    tableSetting: ColumnSettingsMap = {}
+    tableSetting: ColumnSettingsMap = {},
+    config: Partial<FormatConfig> = {}
   ) {
     this.id = id
+    this.config = config
     this.cols = columnOrder(columns)
       .map(
         ({name, type, key}, index): TableColumn => ({
@@ -38,7 +42,7 @@ export default class TableColumns {
       records.forEach((r) => {
         const data = r.try(col.name)
         if (!data) return
-        const width = estimateCellWidth(data, col.name)
+        const width = estimateCellWidth(data, col.name, this.config)
         if (width > max) max = width
       })
       col.width = max

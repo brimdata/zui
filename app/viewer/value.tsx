@@ -1,4 +1,4 @@
-import {formatPrimitive} from "app/core/formatters/format-zed"
+import {useZedFormatter} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
@@ -32,6 +32,7 @@ type ValueProps = {
   record: zed.Record
   padBefore?: boolean
   padAfter?: boolean
+  displayConfig: object
 }
 
 const Space = styled.span`
@@ -54,6 +55,7 @@ export default function Value(props: ValueProps) {
 
 export function PrimitiveValue(props: ValueProps) {
   const dispatch = useDispatch()
+  const format = useZedFormatter()
   const fillCell = props.field.value === props.value // This is the only value in the cell
   return (
     <BG
@@ -70,19 +72,19 @@ export function PrimitiveValue(props: ValueProps) {
       }
     >
       {pad(props.padBefore)}
-      {renderValue(props)}
+      {renderValue(props, format)}
       {pad(props.padAfter)}
     </BG>
   )
 }
 
-function renderValue(props) {
+function renderValue(props, format) {
   if (isPath(props.field)) {
     return <ZeekPath {...props} />
   } else if (isEventType(props.field)) {
     return <SuricataEventType {...props} />
   } else {
-    return formatPrimitive(props.value as zed.Primitive)
+    return format(props.value as zed.Primitive)
   }
 }
 
