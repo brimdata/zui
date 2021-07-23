@@ -10,3 +10,4 @@ fs.removeSync("zealot/dist")
 // stat on the broken symlinks and blows up.
 glob.sync("run/**/SingletonCookie").forEach((file) => fs.removeSync(file))
 glob.sync("run/**/SingletonLock").forEach((file) => fs.removeSync(file))
+glob.sync("run/SS").forEach((file) => fs.removeSync(file))
