@@ -12,8 +12,12 @@ export default function DataDirInput({config}: Props) {
   const {name, label, defaultValue} = config
   return (
     <div className="setting-panel">
-      <InputLabel>{label}</InputLabel>
-      <FileInput isDirInput {...{name, defaultValue, placeholder: "default"}} />
+      <InputLabel htmlFor={name}>{label}</InputLabel>
+      <FileInput
+        id={name}
+        isDirInput
+        {...{name, defaultValue, placeholder: "default"}}
+      />
     </div>
   )
 }

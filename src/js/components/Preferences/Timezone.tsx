@@ -11,8 +11,8 @@ export default function Timezone({config}: Props) {
   const {label, name, defaultValue} = config
   return (
     <div className="setting-panel">
-      <InputLabel>{label}</InputLabel>
-      <SelectInput name={name} defaultValue={defaultValue}>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
+      <SelectInput name={name} id={name} defaultValue={defaultValue}>
         {brim.time.getZoneNames().map((name) => (
           <option key={name} value={name}>
             {name}

@@ -1,3 +1,4 @@
+import brim from "src/js/brim"
 import {PrefsAction, PrefsState} from "./types"
 
 const init: PrefsState = {
@@ -11,6 +12,7 @@ export default function reducer(
 ): PrefsState {
   switch (action.type) {
     case "$PREFS_TIME_FORMAT_SET":
+      brim.time.setDefaultFormat(action.format)
       return {
         ...state,
         timeFormat: action.format
