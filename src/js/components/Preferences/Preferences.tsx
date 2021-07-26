@@ -1,23 +1,19 @@
+import get from "lodash/get"
 import React, {useCallback, useState} from "react"
-
+import {useSelector} from "react-redux"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {reactElementProps} from "../../../../test/integration/helpers/integration"
-import DataDirInput from "./DataDirInput"
-import FormErrors from "./FormErrors"
+import brim from "../../brim"
+import {FormConfig} from "../../brim/form"
+import FileInput from "../common/forms/FileInput"
+import InputLabel from "../common/forms/InputLabel"
+import TextInput from "../common/forms/TextInput"
+import Link from "../common/Link"
+import useCallbackRef from "../hooks/useCallbackRef"
 import ModalBox from "../ModalBox/ModalBox"
 import TextContent from "../TextContent"
-import TimeFormat from "./TimeFormat"
-import Timezone from "./Timezone"
-import brim from "../../brim"
-import useCallbackRef from "../hooks/useCallbackRef"
-import usePreferencesForm, {useConfigsForm} from "./usePreferencesForm"
-import {FormConfig} from "../../brim/form"
-import InputLabel from "../common/forms/InputLabel"
-import FileInput from "../common/forms/FileInput"
-import TextInput from "../common/forms/TextInput"
-import ConfigPropValues from "src/js/state/ConfigPropValues"
-import {useSelector} from "react-redux"
-import get from "lodash/get"
-import Link from "../common/Link"
+import FormErrors from "./FormErrors"
+import {useConfigsForm} from "./usePreferencesForm"
 
 function ConfigFormItems(props: {configs: FormConfig}) {
   const {configs} = props
@@ -83,8 +79,6 @@ export default function Preferences() {
   const [f, setForm] = useCallbackRef<HTMLFormElement>()
   const [errors, setErrors] = useState([])
 
-  // TODO: convert remaining prefs into configs via a 'core' plugin
-  const prefsForm = usePreferencesForm()
   const configsForm = useConfigsForm()
 
   const onClose = () => setErrors([])
@@ -92,8 +86,7 @@ export default function Preferences() {
   const onSubmit = useCallback(
     async (closeModal) => {
       if (!f) return
-      const comboForm = Object.assign(prefsForm, configsForm)
-      const form = brim.form(f, comboForm)
+      const form = brim.form(f, configsForm)
 
       if (await form.isValid()) {
         setErrors([])
@@ -103,7 +96,7 @@ export default function Preferences() {
         setErrors(form.getErrors())
       }
     },
-    [f, prefsForm, configsForm]
+    [f, configsForm]
   )
 
   return (
@@ -118,9 +111,6 @@ export default function Preferences() {
       <TextContent>
         <FormErrors errors={errors} />
         <form ref={setForm} className="settings-form">
-          <Timezone config={prefsForm.timeZone} />
-          <TimeFormat config={prefsForm.timeFormat} />
-          <DataDirInput config={prefsForm.dataDir} />
           <ConfigFormItems configs={configsForm} />
         </form>
       </TextContent>

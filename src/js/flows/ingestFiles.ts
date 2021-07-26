@@ -7,7 +7,6 @@ import lib from "../lib"
 import Current from "../state/Current"
 import Handlers from "../state/Handlers"
 import {Handler} from "../state/Handlers/types"
-import Prefs from "../state/Prefs"
 import Pools from "../state/Pools"
 import SystemTest from "../state/SystemTest"
 import Tabs from "../state/Tabs"
@@ -16,6 +15,7 @@ import {getZealot} from "./getZealot"
 import BrimApi from "../api"
 import {Zealot} from "../../../zealot"
 import interop from "../brim/interop"
+import ConfigPropValues from "../state/ConfigPropValues"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -27,7 +27,7 @@ export default (files: File[]): Thunk<Promise<void>> => (
   const zealot = dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
-  const dataDir = Prefs.getDataDir(getState())
+  const dataDir = ConfigPropValues.get("display", "dataDir")(getState())
   const poolNames = Pools.getPoolNames(workspaceId)(getState())
 
   dispatch(SystemTest.hook("import-start"))

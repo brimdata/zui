@@ -1,3 +1,4 @@
+import {useTimeZone} from "app/core/format"
 import {isEqual} from "lodash"
 import * as React from "react"
 import {useState} from "react"
@@ -67,14 +68,15 @@ function ChangedDot({show, onClick}) {
 type TDProps = {ts: Ts}
 function TimeDisplay({ts}: TDProps) {
   const t = brim.time(ts)
+  const zone = useTimeZone()
   return (
     <>
-      <TimePiece data-unit="month">{t.format("MMM")}</TimePiece>
-      <TimePiece data-unit="day">{t.format("DD")}</TimePiece>,
-      <TimePiece data-unit="year">{t.format("YYYY")}</TimePiece>
-      <TimePiece data-unit="hour">{t.format("HH")}</TimePiece>:
-      <TimePiece data-unit="minute">{t.format("mm")}</TimePiece>:
-      <TimePiece data-unit="second">{t.format("ss")}</TimePiece>
+      <TimePiece data-unit="month">{t.format("MMM", zone)}</TimePiece>
+      <TimePiece data-unit="day">{t.format("DD", zone)}</TimePiece>,
+      <TimePiece data-unit="year">{t.format("YYYY", zone)}</TimePiece>
+      <TimePiece data-unit="hour">{t.format("HH", zone)}</TimePiece>:
+      <TimePiece data-unit="minute">{t.format("mm", zone)}</TimePiece>:
+      <TimePiece data-unit="second">{t.format("ss", zone)}</TimePiece>
     </>
   )
 }

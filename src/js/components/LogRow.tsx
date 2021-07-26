@@ -1,3 +1,4 @@
+import {FormatConfig} from "app/core/format"
 import Cell from "app/viewer/cell"
 import Value from "app/viewer/value"
 import classNames from "classnames"
@@ -9,12 +10,10 @@ import {ViewerDimens} from "../types"
 import * as Styler from "./Viewer/Styler"
 
 type Props = {
-  displayConfig: object
+  displayConfig: FormatConfig
   dimens: ViewerDimens
   highlight: boolean
   index: number
-  timeZone: string
-  timeFormat: string
   log: zed.Record
   columns: TableColumns
   onClick: (e: MouseEvent) => void
@@ -64,8 +63,6 @@ export default memo<Props>(LogRow, (prevProps: Props, nextProps: Props) => {
     isEqual(prevProps.columns, nextProps.columns) &&
     prevProps.highlight === nextProps.highlight &&
     prevProps.dimens.rowWidth === nextProps.dimens.rowWidth &&
-    prevProps.timeZone === nextProps.timeZone &&
-    prevProps.timeFormat === nextProps.timeFormat &&
     prevProps.displayConfig === nextProps.displayConfig
   )
 })

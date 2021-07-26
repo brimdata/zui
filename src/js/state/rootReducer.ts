@@ -6,7 +6,6 @@ import Handlers from "./Handlers"
 import Investigation from "./Investigation"
 import Modal from "./Modal"
 import Notice from "./Notice"
-import Prefs from "./Prefs"
 import Pools from "./Pools"
 import Tabs from "./Tabs"
 import View from "./View"
@@ -35,7 +34,6 @@ export default combineReducers<any, any>({
   investigation: Investigation.reducer,
   view: View.reducer,
   pools: Pools.reducer,
-  prefs: Prefs.reducer,
   pluginStorage: PluginStorage.reducer,
   systemTest: SystemTest.reducer,
   feature: Feature.reducer,

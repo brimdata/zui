@@ -1,9 +1,8 @@
 import moment from "moment-timezone"
-
-import {DateTuple} from "../lib/TimeWindow"
 import {TimeUnit} from "../lib"
-import {isDate, isBigInt} from "../lib/is"
-import brim, {Ts, Span} from "./"
+import {isBigInt, isDate} from "../lib/is"
+import {DateTuple} from "../lib/TimeWindow"
+import brim, {Span, Ts} from "./"
 
 function time(val: Ts | bigint | Date = new Date()) {
   let ts: Ts
@@ -60,8 +59,10 @@ function time(val: Ts | bigint | Date = new Date()) {
       return brim.time(fromBigInt(dur))
     },
 
-    format(fmt?: string) {
-      return moment(this.toDate()).format(fmt)
+    format(fmt?: string, zone?: string) {
+      return moment(this.toDate())
+        .tz(zone || "UTC")
+        .format(fmt || "YYYY-MM-DDTHH:mm:ss.SSS")
     }
   }
 }

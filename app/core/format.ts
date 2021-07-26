@@ -12,14 +12,25 @@ import {zed} from "zealot"
  */
 export type FormatConfig = {
   thousands: string
+  timeZone: string
+  timeFormat: string
 }
 
 export const getFormatConfig = createSelector<State, any, FormatConfig>(
   ConfigPropValues.get("display"),
   (values) => ({
-    thousands: values.thousandsSeparator
+    thousands: values.thousandsSeparator,
+    timeZone: values.timeZone,
+    timeFormat: values.timeFormat
   })
 )
+
+const getTimeZone = createSelector<State, FormatConfig, string>(
+  getFormatConfig,
+  (config) => config.timeZone
+)
+
+export const useTimeZone = () => useSelector(getTimeZone)
 
 export function formatPrimitive(
   data: zed.Primitive,
@@ -28,7 +39,8 @@ export function formatPrimitive(
   if (data.isUnset()) return "⦻"
   if (zed.isNamed(data.type, "port")) return data.toString()
   if (zed.isInt(data)) return formatInt(data.toInt(), config)
-  if (zed.isTime(data)) return brim.time(data.toDate()).format()
+  if (zed.isTime(data))
+    return brim.time(data.toDate()).format(config.timeFormat, config.timeZone)
   return data.toString()
 }
 
