@@ -24,9 +24,16 @@ const ModalContents = React.forwardRef<HTMLDivElement, ModalContentsProps>(
 
     return ReactDOM.createPortal(
       <div className="modal-overlay" ref={ref}>
-        <div {...rest} className={classNames("modal-contents", className)}>
+        <div
+          {...rest}
+          className={classNames("modal-contents", className)}
+          role="dialog"
+          aria-labelledby="modal-header"
+        >
           <CloseButton light onClick={closeModal} />
-          <h2 className="modal-header">{title}</h2>
+          <h2 id="modal-header" className="modal-header">
+            {title}
+          </h2>
           <div className="modal-body">{children}</div>
           <Buttons template={buttons} closeModal={closeModal} />
         </div>

@@ -40,7 +40,7 @@ function ConfigFormItems(props: {configs: FormConfig}) {
     }
 
     const itemLabel = (
-      <InputLabel>
+      <InputLabel htmlFor={name}>
         {label}
         {maybeHelpLinkLabel()}
       </InputLabel>
@@ -53,6 +53,7 @@ function ConfigFormItems(props: {configs: FormConfig}) {
           <div key={name} className="setting-panel">
             {itemLabel}
             <FileInput
+              id={name}
               name={name}
               defaultValue={val === undefined ? defaultValue : val}
               placeholder="default"
@@ -64,6 +65,7 @@ function ConfigFormItems(props: {configs: FormConfig}) {
           <div key={name} className="setting-panel">
             {itemLabel}
             <TextInput
+              id={name}
               name={name}
               type="text"
               placeholder=""

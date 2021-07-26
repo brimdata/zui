@@ -13,11 +13,12 @@ export default function TimeFormat({config}: Props) {
   return (
     <div className="setting-panel">
       <div>
-        <InputLabel>
+        <InputLabel htmlFor={config.name}>
           {config.label} <Link href={DOCS}>docs</Link>
         </InputLabel>
       </div>
       <TextInput
+        id={config.name}
         name={config.name}
         type="text"
         placeholder="ISO-8601"

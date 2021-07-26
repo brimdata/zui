@@ -10,6 +10,7 @@ import useDropzone from "../../hooks/useDropzone"
 type Props = {
   defaultValue?: string
   name?: string
+  id?: string
   placeholder?: string
   onChange?: Function
   isDirInput?: boolean
@@ -67,6 +68,7 @@ export default function FileInput(props: Props) {
         Choose...
       </button>
       <TextInput
+        id={props.id}
         name={props.name}
         type="text"
         value={value}

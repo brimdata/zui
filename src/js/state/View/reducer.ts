@@ -1,3 +1,4 @@
+import brim from "src/js/brim"
 import {ViewAction, ViewState} from "./types"
 
 const init: ViewState = {
@@ -11,6 +12,7 @@ export default function reducer(
 ): ViewState {
   switch (action.type) {
     case "TIME_ZONE_SET":
+      brim.time.setZone(action.timeZone)
       return {
         ...state,
         timeZone: action.timeZone
