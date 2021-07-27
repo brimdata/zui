@@ -1,4 +1,5 @@
 import BrimApi from "src/js/api"
+import brim from "src/js/brim"
 
 export function activate(api: BrimApi) {
   api.configs.add({
@@ -9,7 +10,8 @@ export function activate(api: BrimApi) {
         name: "timeZone",
         label: "Timezone",
         type: "string",
-        defaultValue: "UTC"
+        defaultValue: "UTC",
+        enum: brim.time.getZoneNames()
       },
       timeFormat: {
         name: "timeFormat",
@@ -30,7 +32,7 @@ export function activate(api: BrimApi) {
       dataDir: {
         name: "dataDir",
         label: "Data Directory",
-        type: "file",
+        type: "directory",
         defaultValue: ""
       }
     }

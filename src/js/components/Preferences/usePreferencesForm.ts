@@ -42,7 +42,7 @@ export const useConfigsForm = (): FormConfig => {
           // can validate further if 'pattern' (regex) provided in property here
           break
         default:
-          check = () => {}
+          check = () => [true, null]
       }
 
       formConfig[prop.name] = {
@@ -51,6 +51,7 @@ export const useConfigsForm = (): FormConfig => {
         type,
         label,
         defaultValue,
+        enum: prop.enum,
         submit,
         check,
         helpLink

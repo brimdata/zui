@@ -1,7 +1,7 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {State} from "../types"
 
-export type ConfigItemType = "file" | "string" // | "number" | "boolean"
+export type ConfigItemType = "file" | "string" | "directory" // | "number" | "boolean"
 
 export type ConfigItem = {
   name: string
@@ -13,6 +13,7 @@ export type ConfigItem = {
   }
   command?: string
   defaultValue?: string
+  enum?: string[]
 }
 
 export type Config = {

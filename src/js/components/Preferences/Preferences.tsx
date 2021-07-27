@@ -1,12 +1,14 @@
+import {isArray} from "lodash"
 import get from "lodash/get"
 import React, {useCallback, useState} from "react"
 import {useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {reactElementProps} from "../../../../test/integration/helpers/integration"
 import brim from "../../brim"
-import {FormConfig} from "../../brim/form"
+import form, {FormConfig} from "../../brim/form"
 import FileInput from "../common/forms/FileInput"
 import InputLabel from "../common/forms/InputLabel"
+import SelectInput from "../common/forms/SelectInput"
 import TextInput from "../common/forms/TextInput"
 import Link from "../common/Link"
 import useCallbackRef from "../hooks/useCallbackRef"
@@ -56,7 +58,38 @@ function ConfigFormItems(props: {configs: FormConfig}) {
             />
           </div>
         )
+      case "directory":
+        return (
+          <div key={name} className="setting-panel">
+            {itemLabel}
+            <FileInput
+              isDirInput
+              id={name}
+              name={name}
+              defaultValue={val === undefined ? defaultValue : val}
+              placeholder="default"
+            />
+          </div>
+        )
       case "string":
+        if (isArray(c.enum)) {
+          return (
+            <div className="setting-panel" key={name}>
+              {itemLabel}
+              <SelectInput
+                id={name}
+                name={name}
+                defaultValue={val === undefined ? defaultValue : val}
+              >
+                {c.enum.map((e) => (
+                  <option key={e} value={e}>
+                    {e}
+                  </option>
+                ))}
+              </SelectInput>
+            </div>
+          )
+        }
         return (
           <div key={name} className="setting-panel">
             {itemLabel}
