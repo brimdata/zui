@@ -22,6 +22,7 @@ import {paths} from "app/ipc/paths"
 import {windowsPre25Exists} from "./windows-pre-25"
 import {meta} from "app/ipc/meta"
 import secureWebContents from "./secure-web-contents"
+import env from "app/core/env"
 
 console.time("init")
 
@@ -88,7 +89,7 @@ app.disableHardwareAcceleration()
 const gotTheLock = app.requestSingleInstanceLock()
 if (gotTheLock) {
   main().then(() => {
-    if (process.env.BRIM_ITEST === "true") require("./itest")
+    if (env.isIntegrationTest) require("./itest")
   })
 } else {
   app.quit()

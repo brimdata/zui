@@ -1,3 +1,5 @@
+import env from "app/core/env"
+
 export type HookName =
   | "import-start"
   | "import-complete"
@@ -25,7 +27,7 @@ function getHooks(state): SystemTestState {
 }
 
 export default {
-  reducer: process.env.BRIM_ITEST === "true" ? reducer : (s = []) => s,
+  reducer: env.isIntegrationTest ? reducer : (s = []) => s,
   hook,
   getHooks
 }

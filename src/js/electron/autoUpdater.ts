@@ -1,3 +1,4 @@
+import env from "app/core/env"
 import {meta} from "app/ipc/meta"
 import {app, dialog} from "electron"
 import log from "electron-log"
@@ -51,7 +52,7 @@ const autoUpdateLinux = async () => {
 }
 
 export async function setupAutoUpdater() {
-  if (process.platform === "linux") {
+  if (env.isLinux) {
     setUpdateRepeater(() => {
       autoUpdateLinux().catch((err) => log.error(err))
     })
@@ -65,7 +66,7 @@ export async function setupAutoUpdater() {
       buttons: ["Restart", "Later"],
       title: "Application Update",
       // releaseNotes are not available for windows, so use name instead
-      message: process.platform === "win32" ? releaseNotes : releaseName,
+      message: env.isWindows ? releaseNotes : releaseName,
       detail:
         "A new version of Brim has been downloaded. Restart the application to apply the update."
     }

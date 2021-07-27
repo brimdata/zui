@@ -5,8 +5,9 @@ import {mkdirpSync} from "fs-extra"
 import electronPath from "electron"
 import {Application} from "spectron"
 
-import {isCI, itestDir, repoDir} from "./env"
+import {itestDir, repoDir} from "./env"
 import {LOG} from "./log"
+import env from "app/core/env"
 
 export default (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
@@ -46,14 +47,10 @@ export default (name: string, idx: number): Application => {
   // If we are CI, on a platform whose CI is expected to build releases,
   // and a release is installed, point to that. Otherwise run out of
   // dev. In some CI cases, we will not build releases and install them.
-  if (isCI() && process.platform === "darwin" && existsSync(macInstallPath)) {
+  if (env.isCI && env.isMac && existsSync(macInstallPath)) {
     appArgs = {...appArgs, path: macInstallPath}
     LOG.debug("Chose installed MacOS app location", macInstallPath)
-  } else if (
-    isCI() &&
-    process.platform === "linux" &&
-    existsSync(linuxInstallPath)
-  ) {
+  } else if (env.isCI && env.isLinux && existsSync(linuxInstallPath)) {
     appArgs = {...appArgs, path: linuxInstallPath}
     LOG.debug("Chose installed Linux app location", linuxInstallPath)
   } else {
