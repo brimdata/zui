@@ -16,7 +16,7 @@ export function activate(api: BrimApi) {
   })
   api.configs.add({
     name: "display",
-    title: "Number Formats",
+    title: "Display",
     properties: {
       timeZone: {
         name: "timeZone",
@@ -40,6 +40,12 @@ export function activate(api: BrimApi) {
         label: "Thousands Separator",
         type: "string",
         defaultValue: ","
+      },
+      decimal: {
+        name: "decimal",
+        label: "Decimal",
+        type: "string",
+        defaultValue: "."
       }
     }
   })
