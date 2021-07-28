@@ -11,6 +11,11 @@
   pointer-events: none;
   user-select: none;
   box-shadow: $box-shadow;
+
+  .secondary {
+    font-size: 10px;
+    opacity: 0.7;
+  }
 }
 
 .__react_component_tooltip.brim-tooltip {

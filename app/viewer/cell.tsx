@@ -42,9 +42,8 @@ export default function Cell({width, children, name, type}: Props) {
       {children}
       {hover && (
         <Tooltip style={tooltipStyle}>
-          <span className="field-name">
-            {name} ({type})
-          </span>
+          <span>{name} </span>
+          <span className="secondary">{type}</span>
         </Tooltip>
       )}
     </BG>
