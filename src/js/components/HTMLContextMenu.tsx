@@ -19,6 +19,7 @@ import lib from "../lib"
 import useEventListener from "./hooks/useEventListener"
 
 import {reactElementProps} from "../../../test/integration/helpers/integration"
+import env from "app/core/env"
 
 export default function HTMLContextMenu() {
   const [template, setTemplate] = useState(null)
@@ -59,7 +60,7 @@ function HTMLMenuItem({item}) {
 }
 
 function stubIpcSend(name, ...args) {
-  if (process.env.BRIM_ITEST === "true") {
+  if (env.isIntegrationTest) {
     /*
     This is for integration tests when we are testing the real ipc communication
     Since ipcRendere inherits from EventEmitter, we can simply emit this event

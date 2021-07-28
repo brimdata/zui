@@ -1,3 +1,4 @@
+import env from "app/core/env"
 import {spawnSync, spawn, ChildProcess} from "child_process"
 import {compact, isEmpty} from "lodash"
 import flatMap from "lodash/flatMap"
@@ -96,7 +97,7 @@ export default class BrimcapCLI {
     signal?: AbortSignal
   ): ChildProcess {
     const subCommandWithArgs = ["analyze", ...toCliOpts(opts), pcapPath]
-    const isWin = process.platform === "win32"
+    const isWin = env.isWindows
     // don't detach if is windows
     const spawnOpts = isWin ? undefined : {detached: true}
     const p = spawn(this.binPath, subCommandWithArgs, spawnOpts)

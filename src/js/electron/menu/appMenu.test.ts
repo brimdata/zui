@@ -4,13 +4,15 @@ import {BrimMain} from "../brim"
 const mockSend = jest.fn()
 
 test("app menu mac", async () => {
-  const menu = appMenu(mockSend, new BrimMain(), "darwin")
+  Object.defineProperty(process, "platform", {value: "darwin"})
+  const menu = appMenu(mockSend, new BrimMain())
 
   expect(menu).toMatchSnapshot()
 })
 
 test("app menu windows", async () => {
-  const menu = appMenu(mockSend, new BrimMain(), "win32")
+  Object.defineProperty(process, "platform", {value: "win32"})
+  const menu = appMenu(mockSend, new BrimMain())
 
   expect(menu).toMatchSnapshot()
 })

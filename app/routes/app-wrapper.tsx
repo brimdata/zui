@@ -1,4 +1,5 @@
 import ColumnsModal from "app/columns/columns-modal"
+import env from "app/core/env"
 import SpaceMigration from "app/legacy/space-migration/space-migration"
 import HookLog from "app/system-test/HookLog"
 import React from "react"
@@ -77,7 +78,7 @@ export default function AppWrapper({children}) {
       <BrimTooltip />
       <SpaceMigration />
 
-      {process.env.BRIM_ITEST === "true" && <HookLog />}
+      {env.isIntegrationTest && <HookLog />}
     </div>
   )
 }

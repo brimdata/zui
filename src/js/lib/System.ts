@@ -1,13 +1,11 @@
+import env from "app/core/env"
 import {MenuItemConstructorOptions, remote, PopupOptions} from "electron"
-
-const isTest =
-  process.env.BRIM_ITEST === "true" || process.env.NODE_ENV === "test"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],
   opts: PopupOptions = {}
 ) {
-  if (isTest) {
+  if (env.isTest) {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})
     )
@@ -18,7 +16,7 @@ export function showContextMenu(
 }
 
 export function showMessageBox(opts: Electron.MessageBoxOptions) {
-  if (isTest) {
+  if (env.isTest) {
     return Promise.resolve({response: 0})
     // To do, mock the options and give the test case a way to select some
   } else {

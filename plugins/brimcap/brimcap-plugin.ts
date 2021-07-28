@@ -13,6 +13,7 @@ import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess, spawn} from "child_process"
 import {MenuItemConstructorOptions} from "electron"
 import {compact, get} from "lodash"
+import env from "app/core/env"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -49,7 +50,7 @@ export default class BrimcapPlugin {
     // RFC: what interface do we want the app to provide for this sort of data?
     const {dataRoot, zdepsDirectory} = api.getAppConfig()
 
-    const commandName = process.platform === "win32" ? "brimcap.exe" : "brimcap"
+    const commandName = env.isWindows ? "brimcap.exe" : "brimcap"
     this.brimcapBinPath = path.join(zdepsDirectory, commandName)
     this.cli = new BrimcapCLI(this.brimcapBinPath)
 
@@ -389,8 +390,7 @@ export default class BrimcapPlugin {
 
   private async updateSuricata() {
     const {zdepsDirectory} = this.api.getAppConfig()
-    const cmdName =
-      process.platform === "win32" ? "suricataupdater.exe" : "suricataupdater"
+    const cmdName = env.isWindows ? "suricataupdater.exe" : "suricataupdater"
     const cmdPath = path.join(zdepsDirectory, "suricata", cmdName)
     const proc = spawn(cmdPath)
     this.processes[proc.pid] = proc

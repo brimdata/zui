@@ -1,7 +1,8 @@
 import itest from "../helpers/itest"
 import {toLower} from "lodash"
+import env from "app/core/env"
 
-const maybeSkip = process.platform === "win32" ? describe.skip : describe
+const maybeSkip = env.isWindows ? describe.skip : describe
 
 maybeSkip("Detail Pane", () => {
   // Names of the sections to test for

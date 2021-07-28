@@ -1,3 +1,4 @@
+import env from "app/core/env"
 import {app} from "electron"
 import {BrimMain} from "./brim"
 
@@ -9,7 +10,7 @@ export function handleQuit(brim: BrimMain) {
   })
 
   app.on("window-all-closed", async () => {
-    if (process.platform === "darwin") return
+    if (env.isMac) return
     // Strangely, this event fires before the "closed" event on the window is fired,
     // where we dereference the window. Here we check to make sure all the windows
     // have indeed been dereferenced before we quit the app.

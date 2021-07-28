@@ -1,5 +1,7 @@
 "use strict"
 
+import env from "app/core/env"
+
 require("regenerator-runtime/runtime")
 
 const isWsl = require("is-wsl")
@@ -50,7 +52,7 @@ export default async function open(target: string, options?: Opts) {
     options.app = options.app[0]
   }
 
-  if (process.platform === "darwin") {
+  if (env.isMac) {
     command = "open"
 
     if (options.newWindow) {
@@ -64,7 +66,7 @@ export default async function open(target: string, options?: Opts) {
     if (options.app) {
       cliArguments.push("-a", options.app)
     }
-  } else if (process.platform === "win32" || isWsl) {
+  } else if (env.isWindows || isWsl) {
     command = "cmd" + (isWsl ? ".exe" : "")
     cliArguments.push("/c", "start", '""', "/b")
     target = target.replace(/&/g, "^&")
@@ -108,7 +110,7 @@ export default async function open(target: string, options?: Opts) {
 
   cliArguments.push(target)
 
-  if (process.platform === "darwin" && appArguments.length > 0) {
+  if (env.isMac && appArguments.length > 0) {
     cliArguments.push("--args", ...appArguments)
   }
 

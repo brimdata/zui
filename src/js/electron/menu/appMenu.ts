@@ -6,13 +6,13 @@ import path from "path"
 import electronIsDev from "../isDev"
 import formatSessionState from "../tron/formatSessionState"
 import {BrimMain} from "../brim"
+import env from "app/core/env"
 
 export default function(
   send: Function,
-  brim: BrimMain,
-  platform: string = process.platform
+  brim: BrimMain
 ): MenuItemConstructorOptions[] {
-  const mac = platform === "darwin"
+  const mac = env.isMac
   const __: MenuItemConstructorOptions = {type: "separator"}
 
   const newWindow: MenuItemConstructorOptions = {
@@ -45,7 +45,7 @@ export default function(
 
   const preferences: MenuItemConstructorOptions = {
     id: "preferences",
-    label: platform === "darwin" ? "Preferences..." : "Settings",
+    label: env.isMac ? "Preferences..." : "Settings",
     click: () => brim.windows.openPreferences()
   }
 
