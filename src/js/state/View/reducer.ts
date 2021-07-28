@@ -1,9 +1,7 @@
-import brim from "src/js/brim"
 import {ViewAction, ViewState} from "./types"
 
 const init: ViewState = {
-  downloadsIsOpen: false,
-  timeZone: "UTC"
+  downloadsIsOpen: false
 }
 
 export default function reducer(
@@ -11,12 +9,6 @@ export default function reducer(
   action: ViewAction
 ): ViewState {
   switch (action.type) {
-    case "TIME_ZONE_SET":
-      brim.time.setZone(action.timeZone)
-      return {
-        ...state,
-        timeZone: action.timeZone
-      }
     case "DOWNLOADS_SHOW":
       return {
         ...state,
