@@ -29,7 +29,12 @@ const LogRow = (props: Props) => {
     const key = `${index}-${colIndex}`
     if (field && field.data && !(field.data instanceof zed.Record)) {
       return (
-        <Cell width={width} key={key} name={field.name}>
+        <Cell
+          width={width}
+          key={key}
+          name={field.name}
+          type={field.data.type.toString()}
+        >
           <Value
             value={field.value}
             field={field}

@@ -12,7 +12,14 @@ const getTooltipStyle = (el: Element) => {
   return {top: top - 21, left: left + 4}
 }
 
-export default function Cell({width, children, name}) {
+type Props = {
+  width: number
+  children: JSX.Element
+  name: string
+  type: string
+}
+
+export default function Cell({width, children, name, type}: Props) {
   const [hover, setHover] = useState(false)
   const [tooltipStyle, setTooltipStyle] = useState({})
 
@@ -35,7 +42,9 @@ export default function Cell({width, children, name}) {
       {children}
       {hover && (
         <Tooltip style={tooltipStyle}>
-          <span className="field-name">{name}</span>
+          <span className="field-name">
+            {name} ({type})
+          </span>
         </Tooltip>
       )}
     </BG>
