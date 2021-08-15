@@ -1,47 +1,43 @@
 import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
-import errors from "../../src/js/errors"
-import {forEach} from "lodash"
+import {forEach, get} from "lodash"
+import {Readable} from "stream"
 
 export const activate = (api: BrimApi) => {
   const load = async (
     params: IngestParams & {poolId: string},
     onProgressUpdate: (value: number | null) => void,
     onWarning: (warning: string) => void,
-    onDetailUpdate: () => Promise<void>
+    onDetailUpdate: () => Promise<void>,
+    signal?: AbortSignal
   ): Promise<void> => {
-    const {poolId, fileListData} = params
-    const client = api.getZealot()
-
-    const files = fileListData.map((f) => f.file)
-
-    const stream = await client.logs.post({poolId, files})
-
-    onProgressUpdate(0)
-    // @ts-ignore
-    for await (const {type, ...status} of stream) {
-      switch (type) {
-        case "Error":
-          throw new Error(status.error)
-        case "UploadProgress":
-          onProgressUpdate(status.progress)
-          await onDetailUpdate()
-          break
-        case "LogPostResponse":
-          await onDetailUpdate()
-          forEach(status.warnings, onWarning)
-          break
-        case "LogPostWarning":
-          onWarning(status.warning)
-          break
-        case "TaskEnd":
-          if (status.error) {
-            throw errors.logsIngest(status.error.error)
-          }
-          break
+    const files = params.fileListData.map((f) => f.file)
+    const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
+    let readBytes = 0
+    const progressUpdateTransformStream = new TransformStream({
+      transform(chunk, ctrl) {
+        ctrl.enqueue(chunk)
+        readBytes += chunk.byteLength
+        onProgressUpdate(readBytes / totalBytes)
       }
+    })
+    onProgressUpdate(0)
+    const zealot = api.getZealot()
+    for (const file of files) {
+      const stream = file.stream().pipeThrough(progressUpdateTransformStream)
+      const res = await zealot.pools.add(params.poolId, {
+        data: nodeJSReadableStreamFromReadableStream(stream),
+        signal
+      })
+      const commitId = get(res, ["value", "commit"], "")
+      if (!commitId) throw new Error("No commit obtained from lake add")
+      forEach(get(res, ["value", "warnings"], []), onWarning)
+      await zealot.pools.commit(params.poolId, commitId, {
+        author: "brim",
+        message: "automatic import of " + file.path,
+        signal
+      })
     }
-
     await onDetailUpdate()
     onProgressUpdate(1)
     onProgressUpdate(null)
@@ -50,6 +46,19 @@ export const activate = (api: BrimApi) => {
   api.loaders.add({
     load,
     match: "log"
+  })
+}
+
+function nodeJSReadableStreamFromReadableStream(
+  stream: ReadableStream
+): NodeJS.ReadableStream {
+  const reader = stream.getReader()
+  return new Readable({
+    read(_size) {
+      reader.read().then(({done, value}) => {
+        this.push(done ? null : value)
+      })
+    }
   })
 }
 
