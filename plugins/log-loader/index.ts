@@ -13,17 +13,17 @@ export const activate = (api: BrimApi) => {
   ): Promise<void> => {
     const files = params.fileListData.map((f) => f.file)
     const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
-    let readBytes = 0
-    const progressUpdateTransformStream = new TransformStream({
-      transform(chunk, ctrl) {
-        ctrl.enqueue(chunk)
-        readBytes += chunk.byteLength
-        onProgressUpdate(readBytes / totalBytes)
-      }
-    })
-    onProgressUpdate(0)
     const zealot = api.getZealot()
+    let readBytes = 0
+    onProgressUpdate(0)
     for (const file of files) {
+      const progressUpdateTransformStream = new TransformStream({
+        transform(chunk, ctrl) {
+          ctrl.enqueue(chunk)
+          readBytes += chunk.byteLength
+          onProgressUpdate(readBytes / totalBytes)
+        }
+      })
       const stream = file.stream().pipeThrough(progressUpdateTransformStream)
       const res = await zealot.pools.add(params.poolId, {
         data: nodeJSReadableStreamFromReadableStream(stream),
