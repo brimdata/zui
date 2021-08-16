@@ -1,35 +1,52 @@
-import {ZealotPayload} from "../types"
+import {ZealotPayloadValue} from "../types"
 import * as lake from "../lake"
-import {createRecordsCallback, RecordsCallbackArgs} from "./records_callback"
 
-export function createCallbacks() {
-  const callbacks = new Map()
-  return {
-    add: function(name: string, cb: Function) {
-      callbacks.set(name, cb)
-      return this
-    },
-    emit: (name: string, payload: ZealotPayload) => {
-      const cb = callbacks.get(name)
-      if (cb) cb(payload)
-    },
-    start(cb: (payload: lake.TaskStart) => void) {
-      return this.add("TaskStart", cb)
-    },
-    end(cb: (payload: lake.TaskEnd) => void) {
-      return this.add("TaskEnd", cb)
-    },
-    records(cb: (args: RecordsCallbackArgs) => void) {
-      return this.add("SearchRecords", createRecordsCallback(cb))
-    },
-    stats(cb: (payload: lake.SearchStats) => void) {
-      return this.add("SearchStats", cb)
-    },
-    warnings(cb: (payload: lake.SearchWarnings) => void) {
-      return this.add("SearchWarning", cb)
-    },
-    error(cb: (payload: Error) => void) {
-      return this.add("error", cb)
-    }
+type EventName =
+  | "QueryChannelSet"
+  | "QueryChannelEnd"
+  | "QueryRecord"
+  | "QueryStats"
+  | "QueryWarning"
+  | "QueryError"
+  | "error"
+
+export class Callbacks {
+  private callbacks: Map<EventName, (ZealotPayloadValue) => void>
+  constructor() {
+    this.callbacks = new Map()
+  }
+
+  add(name: EventName, cb: (args: ZealotPayloadValue) => void) {
+    this.callbacks.set(name, cb)
+    return this
+  }
+  emit(name: EventName | "Object", payload: ZealotPayloadValue) {
+    // backend sends kind: "Object" for records, swap that name for the more
+    // meaningful "QueryRecord" event name here
+    if (name === "Object") name = "QueryRecord"
+    const cb = this.callbacks.get(name)
+    if (cb) cb(payload)
+  }
+  channelSet(cb: (payload: lake.QueryChannelSetValue) => void) {
+    return this.add("QueryChannelSet", cb)
+  }
+  channelEnd(cb: (payload: lake.QueryChannelEndValue) => void) {
+    return this.add("QueryChannelEnd", cb)
+  }
+  record(cb: (args: lake.QueryRecordValue) => void) {
+    return this.add("QueryRecord", cb)
+  }
+  stats(cb: (payload: lake.QueryStatsValue) => void) {
+    return this.add("QueryStats", cb)
+  }
+  warning(cb: (payload: lake.QueryWarningValue) => void) {
+    return this.add("QueryWarning", cb)
+  }
+  error(cb: (payload: lake.QueryErrorValue) => void) {
+    return this.add("QueryError", cb)
+  }
+  internalError(cb: (err: Error) => void) {
+    this.callbacks.set("error", cb)
+    return this
   }
 }

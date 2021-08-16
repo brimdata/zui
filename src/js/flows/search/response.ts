@@ -1,14 +1,14 @@
-import {RecordsCallbackArgs} from "zealot/fetcher/records_callback"
+import {RecordCallbackRet} from "zealot/fetcher/records-callback"
 import {SearchStats, SearchStatus} from "../../types/searches"
 
 type EventNames =
+  | "start"
   | "stats"
   | "status"
-  | "end"
-  | "start"
+  | "chan-end"
   | "error"
   | "abort"
-  | "warnings"
+  | "warning"
   | number
 
 export class SearchResponse {
@@ -18,7 +18,7 @@ export class SearchResponse {
     this.callbacks = new Map<EventNames, Function>()
   }
 
-  chan(num: number, func: (data: RecordsCallbackArgs) => void) {
+  chan(num: number, func: (data: RecordCallbackRet) => void) {
     this.callbacks.set(num, func)
     return this
   }
@@ -31,10 +31,10 @@ export class SearchResponse {
     return this
   }
   end(func: (id: number) => void) {
-    this.callbacks.set("end", func)
+    this.callbacks.set("chan-end", func)
     return this
   }
-  start(func: (arg0: number) => void) {
+  start(func: () => void) {
     this.callbacks.set("start", func)
     return this
   }
@@ -46,8 +46,8 @@ export class SearchResponse {
     this.callbacks.set("abort", func)
     return this
   }
-  warnings(func: (arg0: string) => void) {
-    this.callbacks.set("warnings", func)
+  warning(func: (arg0: string) => void) {
+    this.callbacks.set("warning", func)
     return this
   }
   emit(event: EventNames, ...data: any) {

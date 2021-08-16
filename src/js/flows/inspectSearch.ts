@@ -23,7 +23,7 @@ export const inspectSearch = (): Thunk<ReturnValue> => (dispatch, getState) => {
   let search
 
   try {
-    search = zealot.inspect.search(program, {from, to, poolId})
+    search = zealot.inspect.query(program, {from, to, poolId})
   } catch (_) {
     // Parsing error
   }

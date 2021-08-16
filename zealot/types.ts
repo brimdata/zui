@@ -1,12 +1,10 @@
 import {createZealot} from "./zealot"
-import {createCallbacks} from "./fetcher/callbacks"
 import {createStream} from "./fetcher/stream"
 import {createFetcher} from "./fetcher/fetcher"
 import * as lake from "./lake"
 
 export type Zealot = ReturnType<typeof createZealot>
-export type ZCallbacks = ReturnType<typeof createCallbacks>
-export type ZReponse = ReturnType<typeof createStream>
+export type ZResponse = ReturnType<typeof createStream>
 export type ZFetcher = ReturnType<typeof createFetcher>
 export type ZIterator = AsyncIterable<ZealotPayload>
 
@@ -20,7 +18,7 @@ export interface ZealotArgs {
   fetcher: (host: string) => ZFetcher
 }
 
-export type SearchFormat = "zjson" | "zng" | "ndjson" | "csv"
+export type QueryFormat = "zjson" | "zng" | "ndjson" | "csv"
 
 export type Order = "desc" | "asc"
 
@@ -31,11 +29,8 @@ export interface Response<T> {
   value: T
 }
 
-export interface SearchArgs {
-  from: Date | Ts | bigint
-  to: Date | Ts | bigint
-  poolId: string
-  format: SearchFormat
+export interface QueryArgs {
+  format: QueryFormat
   controlMessages: boolean
   enhancers: Enhancer[]
   signal?: AbortSignal

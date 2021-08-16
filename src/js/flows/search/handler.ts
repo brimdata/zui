@@ -1,14 +1,19 @@
 import {SearchResponse} from "./response"
 import whenIdle from "../../lib/whenIdle"
-import {RecordsCallbackArgs} from "zealot/fetcher/records_callback"
+import {
+  createRecordCallback,
+  RecordCallbackRet
+} from "zealot/fetcher/records-callback"
+import {ZResponse} from "../../../../zealot/types"
 
 function abortError(e) {
   return /user aborted/i.test(e.message)
 }
 
-export function handle(request: any) {
+export function handle(request: Promise<ZResponse>) {
   const response = new SearchResponse()
-  const channels = new Map<number, RecordsCallbackArgs>()
+  const channels = new Map<number, RecordCallbackRet>()
+  let currentChannel = null
   const promise = new Promise<void>((resolve, reject) => {
     function flushBuffer() {
       for (const [id, data] of channels) {
@@ -19,40 +24,52 @@ export function handle(request: any) {
 
     const flushBufferLazy = whenIdle(flushBuffer)
 
+    let isErrSet = false
     function errored(e) {
       flushBufferLazy.cancel()
       if (abortError(e)) {
         response.emit("status", "ABORTED")
         resolve()
       } else {
+        isErrSet = true
         response.emit("status", "ERROR")
         response.emit("error", e)
         reject(e)
       }
     }
+
+    const recordCb = createRecordCallback()
+
     request
       .then((stream) => {
+        response.emit("start")
+        response.emit("status", "FETCHING")
         stream
           .callbacks()
-          .start(({task_id}) => {
-            response.emit("start", task_id)
-            response.emit("status", "FETCHING")
+          .channelSet(({channel_id}) => {
+            currentChannel = channel_id
           })
-          .records((args: RecordsCallbackArgs) => {
-            channels.set(args.channel, args)
+          .record((rec) => {
+            if (currentChannel === null)
+              throw new Error("record received before channel was set")
+            channels.set(currentChannel, recordCb(rec, currentChannel))
             flushBufferLazy()
           })
-          .end(({id, error}) => {
-            if (error) return errored(error)
+          .channelEnd(({channel_id}) => {
             flushBuffer()
-            response.emit("status", "SUCCESS")
-            response.emit("end", id)
-            setTimeout(resolve)
+            response.emit("chan-end", channel_id)
           })
-          .warnings(({warning}) => response.emit("warnings", warning))
+          .warning(({warning}) => response.emit("warning", warning))
           .error(errored)
+          .internalError(errored)
       })
       .catch(errored)
+      .finally(() => {
+        if (!isErrSet) {
+          response.emit("status", "SUCCESS")
+          setTimeout(resolve)
+        }
+      })
   })
 
   return {response, promise}

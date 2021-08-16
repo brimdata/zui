@@ -76,16 +76,16 @@ test("search#callbacks record", () => {
   return withLake(async (zealot) => {
     await setup(zealot)
     const resp = await zealot.search('_path=="conn" | sort ts | head 1')
-    const records = jest.fn()
+    const recordCb = jest.fn()
     await new Promise((resolve, reject) => {
       resp
         .callbacks()
-        .records(records)
+        .record(recordCb)
         .end(resolve)
         .error(reject)
     })
 
-    const args = records.mock.calls[0][0]
+    const args = recordCb.mock.calls[0][0]
     expect(Object.keys(args)).toEqual(["channel", "rows", "newRows", "schemas"])
     expect(args.channel).toBe(0)
     expect(Object.keys(args.schemas).length).toBe(1)

@@ -1,5 +1,5 @@
 import {createFetcher, FetchArgs, Zealot} from "zealot"
-import {ZFetcher, ZReponse} from "../../../zealot/types"
+import {ZFetcher, ZResponse} from "../../../zealot/types"
 import {validateToken} from "../auth0/utils"
 import {BrimWorkspace} from "../brim"
 import ErrorFactory from "../models/ErrorFactory"
@@ -55,11 +55,11 @@ const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
       })
     }
 
-    const wrappedStream = async (args: FetchArgs): Promise<ZReponse> => {
+    const wrappedStream = async (args: FetchArgs): Promise<ZResponse> => {
       return stream(await setWorkspaceAuthArgs(workspace, args))
     }
 
-    const wrappedUpload = async (args: FetchArgs): Promise<ZReponse> => {
+    const wrappedUpload = async (args: FetchArgs): Promise<ZResponse> => {
       return upload(await setWorkspaceAuthArgs(workspace, args))
     }
 

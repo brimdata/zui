@@ -1,10 +1,10 @@
 import {url} from "../util/utils"
 import {parseContentType} from "./contentType"
-import {Enhancer, ZealotPayload, ZReponse} from "../types"
+import {Enhancer, ZealotPayload, ZResponse} from "../types"
 import {createIterator} from "./iterator"
 import {createStream} from "./stream"
 import {createError} from "../util/error"
-import {createPushableIterator} from "./pushable_iterator"
+import {createPushableIterator} from "./pushable-iterator"
 import {parseLines} from "../ndjson/lines"
 
 export type FetchArgs = {
@@ -24,7 +24,7 @@ export function createFetcher(host: string) {
       const content = await parseContentType(resp)
       return resp.ok ? content : Promise.reject(createError(content))
     },
-    async stream(args: FetchArgs): Promise<ZReponse> {
+    async stream(args: FetchArgs): Promise<ZResponse> {
       const {path, method, body, signal, headers} = args
       const resp = await fetch(url(host, path), {method, body, signal, headers})
       if (!resp.ok) {
@@ -34,7 +34,7 @@ export function createFetcher(host: string) {
       const iterator = createIterator(resp, args)
       return createStream(iterator, resp)
     },
-    async upload(args: FetchArgs): Promise<ZReponse> {
+    async upload(args: FetchArgs): Promise<ZResponse> {
       return new Promise((resolve) => {
         const iterator = createPushableIterator<ZealotPayload>()
         const xhr = new XMLHttpRequest()

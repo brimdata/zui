@@ -55,6 +55,6 @@ stream.callbacks()
   .end(payload => {...})
   .records(payload => {...})
   .stats(payload => {...})
-  .warnings(payload => {...})
+  .warning(payload => {...})
   .error(e => {...})
 ```

@@ -1,16 +1,16 @@
 import {createFetcher} from "./fetcher/fetcher"
-import {search, archive} from "./api/mod"
+import {archive, query} from "./api/mod"
 import {getHost} from "./util/host"
-import {getDefaultSearchArgs} from "./config/search_args"
+import {getDefaultQueryArgs} from "./config/query-args"
 import nodeFetch from "node-fetch"
 import {
   BranchMeta,
-  SearchArgs,
   Response,
   PoolArgs,
   PoolConfig,
   PoolStats,
   ZealotArgs,
+  QueryArgs,
   PoolLoadArgs
 } from "./types"
 import {Context, Int64, Record, Time} from "./zed"
@@ -27,14 +27,14 @@ export function createZealot(
   const host = getHost(hostUrl)
   const {promise, stream} = args.fetcher(host)
 
-  let searchArgs: SearchArgs = getDefaultSearchArgs()
+  let queryArgs: QueryArgs = getDefaultQueryArgs()
 
   return {
     events: () => {
       return new EventSource(`http://${host}/events`)
     },
-    setSearchOptions: (args: Partial<SearchArgs>) => {
-      searchArgs = {...searchArgs, ...args}
+    setQueryOptions: (args: Partial<QueryArgs>) => {
+      queryArgs = {...queryArgs, ...args}
     },
     status: () => {
       return promise({method: "GET", path: "/status"})
@@ -48,14 +48,15 @@ export function createZealot(
     authIdentity: () => {
       return promise({method: "GET", path: "/auth/identity"})
     },
-    search: (zql: string, args?: Partial<SearchArgs>) => {
-      return stream(search(zql, {...searchArgs, ...args}))
+    query: (zql: string, args?: Partial<QueryArgs>) => {
+      return stream(query(zql, {...queryArgs, ...args}))
     },
+    // deprecated
     archive: {
       search: (args: IndexSearchArgs) => {
         return stream({
           ...archive.search(args),
-          enhancers: searchArgs.enhancers
+          enhancers: queryArgs.enhancers
         })
       }
     },
@@ -106,8 +107,8 @@ export function createZealot(
       }
     },
     inspect: {
-      search: (zql: string, args?: Partial<SearchArgs>) => {
-        return search(zql, {...searchArgs, ...args})
+      query: (zql: string, args?: Partial<QueryArgs>) => {
+        return query(zql, {...queryArgs, ...args})
       }
     }
   }

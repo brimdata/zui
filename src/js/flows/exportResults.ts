@@ -1,6 +1,6 @@
 import fs from "fs"
 import http from "http"
-import {SearchFormat} from "zealot"
+import {QueryFormat} from "zealot"
 import brim from "../brim"
 import Columns from "../state/Columns"
 import Current from "../state/Current"
@@ -9,6 +9,7 @@ import SystemTest from "../state/SystemTest"
 import Tab from "../state/Tab"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
+import {annotateQuery} from "./search/mod"
 
 function cutColumns(program, columns) {
   if (columns.allVisible()) {
@@ -30,7 +31,7 @@ export function prepareProgram(format, program, columns) {
 
 export default (
   filePath: string,
-  format: SearchFormat
+  format: QueryFormat
 ): Thunk<Promise<string>> => (dispatch, getState) => {
   const zealot = dispatch(getZealot())
   const poolId = Current.getPoolId(getState())
@@ -44,13 +45,17 @@ export default (
   const {host, port} = Current.mustGetWorkspace(getState())
 
   dispatch(SystemTest.hook("export-start"))
-  const {body, path, method} = zealot.inspect.search(program, {
-    format,
-    from,
-    to,
-    poolId,
-    controlMessages: false
-  })
+  const {body, path, method} = zealot.inspect.query(
+    annotateQuery(program, {
+      from,
+      to,
+      poolId
+    }),
+    {
+      format,
+      controlMessages: false
+    }
+  )
   return new Promise<string>((resolve, reject) => {
     http
       .request(
