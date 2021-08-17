@@ -4,7 +4,7 @@ import data from "test/shared/data"
 import {TypeValue} from "./zed"
 import {ZedContext} from "./zed/context"
 
-function zq(q, file) {
+function zq(q: string, file: string) {
   const zed = join(__dirname, "../zdeps/zed")
   const cmd = `${zed} query -f zjson "${q}" ${file}`
   return execSync(cmd, {encoding: "utf-8"})
@@ -65,6 +65,7 @@ test("encode decode a typeof value", () => {
   const records = ctx.decode(input)
   expect.assertions(36)
 
+<<<<<<< HEAD
   records.forEach((rec) => {
     rec.fields.forEach((field) => {
       const after = ctx.decodeField(ctx.encodeField(field))
@@ -72,4 +73,8 @@ test("encode decode a typeof value", () => {
       expect(field.value.type === after.value.type).toBe(true)
     })
   })
+=======
+  expect(before).toEqual(after)
+  expect(before.value.type === after?.value.type).toBe(true)
+>>>>>>> Found 2169 errors.
 })

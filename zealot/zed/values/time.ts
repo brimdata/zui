@@ -5,7 +5,6 @@ import {
   LocalDateTime,
   nativeJs,
   ZonedDateTime,
-  ZoneOffset,
   ZoneId
 } from "@js-joda/core"
 import {TypeTime} from "../types/type-time"
@@ -14,7 +13,7 @@ import {Primitive} from "./primitive"
 
 export class Time extends Primitive {
   type = TypeTime
-  _time: LocalDateTime | null
+  _time: ZonedDateTime | null
 
   static parse(value: string) {
     let time
@@ -30,7 +29,7 @@ export class Time extends Primitive {
     return time
   }
 
-  constructor(value) {
+  constructor(value: string | null) {
     super(value)
     this._time = isNull(value) ? null : Time.parse(value)
   }
@@ -42,12 +41,12 @@ export class Time extends Primitive {
 
   toBigInt(): bigint {
     if (isNull(this._time)) return 0n
-    let secs = this._time.toEpochSecond(ZoneOffset.UTC)
+    let secs = this._time.toEpochSecond()
     return BigInt(secs) * 1_000_000_000n + BigInt(this._time.nano())
   }
 }
 
-const parseEpochSec = (v) => {
+const parseEpochSec = (v: string) => {
   const d = new Date(+v * 1000)
   if (isNaN(d as any)) throw new Error("Not Epoch Seconds: " + v)
   return ZonedDateTime.from(nativeJs(d))
@@ -59,7 +58,7 @@ const NanoFormat = new DateTimeFormatterBuilder()
   .appendLiteral("Z")
   .toFormatter()
 
-const parseNano = (v) =>
+const parseNano = (v: string) =>
   ZonedDateTime.of(LocalDateTime.parse(v, NanoFormat), ZoneId.of("UTC"))
 
 const PARSERS = [parseNano, parseEpochSec]
