@@ -8,7 +8,6 @@ import {createMemoryHistory} from "history"
 import tabHistory from "app/router/tab-history"
 
 export default function initGlobals(store: Store) {
-  global.getState = store.getState
   global.windowId = getUrlSearchParams().id
   global.windowName = getWindowName()
   global.feature = (name, status) => store.dispatch(Feature.set(name, status))

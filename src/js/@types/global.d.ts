@@ -11,11 +11,11 @@ declare global {
       SVGElement: any
       windowId: string
       windowName: "search" | "detail" | "about" | "hidden"
-      getState: () => any
       feature: (name: FeatureName, value: boolean) => void
       tabHistories: Histories
       windowHistory: BrowserHistory
       navTo: (path: string) => void
+      dev: DevGlobal
     }
 
     interface Process {
