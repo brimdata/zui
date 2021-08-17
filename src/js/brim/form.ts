@@ -8,6 +8,7 @@ export type FormFieldConfig = {
   label: string
   check?: (arg0: string) => FormCheckResult
   submit?: (arg0: string) => void
+  enum?: string[]
   helpLink?: {
     label: string
     url: string

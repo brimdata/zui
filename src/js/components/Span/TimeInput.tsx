@@ -1,13 +1,11 @@
-import {useSelector} from "react-redux"
+import {useTimeZone} from "app/core/format"
 import React, {useEffect, useRef, useState} from "react"
-
-import {SPAN_TIME_FMT} from "./SpanControls"
-import {TimeArg} from "../../state/Search/types"
-import {isString} from "../../lib/is"
-import Form from "../form/Form"
-import View from "../../state/View"
 import brim from "../../brim"
 import lib from "../../lib"
+import {isString} from "../../lib/is"
+import {TimeArg} from "../../state/Search/types"
+import Form from "../form/Form"
+import {SPAN_TIME_FMT} from "./SpanControls"
 
 type Props = {
   timeArg: TimeArg
@@ -16,7 +14,7 @@ type Props = {
 
 export default function TimeInput({timeArg, onSubmit}: Props) {
   const el = useRef<HTMLInputElement>()
-  const zone = useSelector(View.getTimeZone)
+  const zone = useTimeZone()
   const initValue = isString(timeArg)
     ? timeArg
     : brim.time(timeArg).format(SPAN_TIME_FMT)

@@ -1,7 +1,7 @@
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import {isEmpty} from "lodash"
 import React, {useEffect} from "react"
-import {connect, useDispatch} from "react-redux"
+import {connect, useDispatch, useSelector} from "react-redux"
 import {zed} from "zealot"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import {viewLogDetail} from "../../flows/viewLogDetail"
@@ -11,11 +11,9 @@ import Columns from "../../state/Columns"
 import Current from "../../state/Current"
 import Layout from "../../state/Layout"
 import {ColumnHeadersViewState} from "../../state/Layout/types"
-import Prefs from "../../state/Prefs"
 import SearchBar from "../../state/SearchBar"
 import {Pool} from "../../state/Pools/types"
 import {DispatchProps, State} from "../../state/types"
-import View from "../../state/View"
 import Viewer from "../../state/Viewer"
 import {ScrollPosition, ViewerDimens} from "../../types"
 import LogRow from "../LogRow"
@@ -26,11 +24,10 @@ import ViewerComponent from "../Viewer/Viewer"
 import getEndMessage from "./getEndMessage"
 import NoResults from "./NoResults"
 import {useRowSelection} from "./selection"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
 
 type StateProps = {
   logs: zed.Record[]
-  timeZone: string
-  timeFormat: string
   isIncomplete: boolean
   isFetching: boolean
   tableColumns: TableColumns
@@ -50,6 +47,7 @@ type Props = StateProps & DispatchProps & OwnProps
 
 export default function ResultsTable(props: Props) {
   const dispatch = useDispatch()
+  const displayConfig = useSelector(ConfigPropValues.get("display"))
   const {parentRef, selection, clicked} = useRowSelection({
     multi: props.multiSelect
   })
@@ -87,12 +85,11 @@ export default function ResultsTable(props: Props) {
   function renderRow(index: number, dimens: ViewerDimens) {
     return (
       <LogRow
+        displayConfig={displayConfig}
         columns={props.tableColumns}
         key={index}
         index={index}
         log={logs[index]}
-        timeZone={props.timeZone}
-        timeFormat={props.timeFormat}
         highlight={selection.includes(index)}
         dimens={dimens}
         onClick={(e) => clicked(e, index)}
@@ -131,8 +128,6 @@ export default function ResultsTable(props: Props) {
       chunker={chunker}
       dimens={dimens}
       tableColumns={props.tableColumns}
-      timeZone={props.timeZone}
-      timeFormat={props.timeFormat}
       onLastChunk={onLastChunk}
       renderEnd={renderEnd}
       scrollPos={props.scrollPos}
@@ -146,8 +141,6 @@ function stateToProps(state: State): StateProps {
     isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
     tableColumns: Columns.getCurrentTableColumns(state),
     columnHeadersView: Layout.getColumnHeadersView(state),
-    timeZone: View.getTimeZone(state),
-    timeFormat: Prefs.getTimeFormat(state),
     logs: Viewer.getLogs(state),
     program: SearchBar.getSearchProgram(state),
     pool: Current.getPool(state),

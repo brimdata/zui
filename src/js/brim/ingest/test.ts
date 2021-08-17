@@ -1,4 +1,4 @@
-import ingest from "./"
+import ingest from "./index"
 
 const fakeFile = (path: string): File => {
   const f = new File([], "fake")
@@ -58,7 +58,7 @@ test("two zeek logs in different dir default", () => {
   )
 
   expect(data).toEqual({
-    name: "zeek_1969-12-31_16:00:00",
+    name: "zeek_1970-01-01_00:00:00",
     dataDir: "",
     fileListData: [
       {type: "log", file: fakeFile("/work/day-1/zeek.log")},

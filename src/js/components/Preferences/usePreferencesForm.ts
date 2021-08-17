@@ -1,13 +1,9 @@
-import {isEmpty} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
-
-import {FormConfig} from "../../brim/form"
-import Prefs from "../../state/Prefs"
-import View from "../../state/View"
-import lib from "../../lib"
-import Configs from "src/js/state/Configs"
-import {executeCommand} from "../../flows/executeCommand"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
+import Configs from "src/js/state/Configs"
+import {FormConfig} from "../../brim/form"
+import {executeCommand} from "../../flows/executeCommand"
+import lib from "../../lib"
 
 const checkFile = (path) => {
   if (path === "") return [true, ""]
@@ -46,7 +42,7 @@ export const useConfigsForm = (): FormConfig => {
           // can validate further if 'pattern' (regex) provided in property here
           break
         default:
-          check = () => {}
+          check = () => [true, null]
       }
 
       formConfig[prop.name] = {
@@ -55,6 +51,7 @@ export const useConfigsForm = (): FormConfig => {
         type,
         label,
         defaultValue,
+        enum: prop.enum,
         submit,
         check,
         helpLink
@@ -63,43 +60,4 @@ export const useConfigsForm = (): FormConfig => {
   })
 
   return formConfig
-}
-
-export default function usePreferencesForm(): FormConfig {
-  const dispatch = useDispatch()
-
-  return {
-    timeZone: {
-      name: "timeZone",
-      label: "Timezone",
-      defaultValue: useSelector(View.getTimeZone),
-      submit: (value) => dispatch(View.setTimeZone(value)),
-      check: (value) => [!isEmpty(value), "must not be blank"]
-    },
-    timeFormat: {
-      name: "timeFormat",
-      label: "Time Format",
-      defaultValue: useSelector(Prefs.getTimeFormat),
-      submit: (value) => dispatch(Prefs.setTimeFormat(value))
-    },
-    dataDir: {
-      name: "dataDir",
-      label: "Data Directory",
-      defaultValue: useSelector(Prefs.getDataDir),
-      submit: (value) => dispatch(Prefs.setDataDir(value)),
-      check: (path) => {
-        if (path === "") return [true, ""]
-        return lib
-          .file(path)
-          .isDirectory()
-          .then((isDir) => [isDir, "Selection must be a directory"])
-          .catch((e) => {
-            const msg = e.name + ": " + e.message
-            return /ENOENT/.test(msg)
-              ? [false, "Directory does not exist."]
-              : [false, msg]
-          })
-      }
-    }
-  }
 }

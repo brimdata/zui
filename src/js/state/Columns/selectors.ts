@@ -1,3 +1,4 @@
+import {FormatConfig, getFormatConfig} from "app/core/format"
 import {createSelector} from "reselect"
 import {zed} from "zealot"
 import TableColumns from "../../models/TableColumns"
@@ -15,18 +16,21 @@ const getCurrentTableColumns = createSelector<
   SchemaMap,
   ColumnsState,
   zed.Record[],
+  FormatConfig,
   TableColumns
 >(
   Viewer.getColumns,
   getColumns,
   Viewer.getRecords,
-  (viewerColumns, columnSettings, logs) => {
+  getFormatConfig,
+  (viewerColumns, columnSettings, logs, config) => {
     const set = createColumnSet(viewerColumns)
     const prefs = columnSettings[set.getName()]
     const table = new TableColumns(
       set.getName() as string,
       set.getUniqColumns(),
-      prefs
+      prefs,
+      config
     )
     table.setWidths(logs.slice(0, 50))
     return table

@@ -1,4 +1,4 @@
-import {formatPrimitive} from "app/core/formatters/format-zed"
+import {useZedFormatter} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
 import React from "react"
@@ -17,6 +17,7 @@ function getBackground(field, record) {
 }
 
 export default function FieldCell({field, record}: Props) {
+  const format = useZedFormatter()
   return (
     <div
       className={classNames(
@@ -26,7 +27,7 @@ export default function FieldCell({field, record}: Props) {
         getBackground(field, record)
       )}
     >
-      {formatPrimitive(field.data as zed.Primitive)}
+      {format(field.data as zed.Primitive)}
     </div>
   )
 }

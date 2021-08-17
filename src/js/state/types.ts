@@ -5,7 +5,6 @@ import {HandlersState} from "./Handlers/types"
 import {InvestigationState} from "./Investigation/types"
 import {ModalState} from "./Modal/types"
 import {NoticeState} from "./Notice/types"
-import {PrefsState} from "./Prefs/types"
 import {PoolsState} from "./Pools/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
@@ -52,7 +51,6 @@ export type State = {
   modal: ModalState
   notice: NoticeState
   tabs: TabsState
-  prefs: PrefsState
   pluginStorage: PluginStorageState
   workspaceStatuses: WorkspaceStatusesState
   queries: QueriesState

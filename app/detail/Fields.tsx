@@ -1,5 +1,5 @@
 import {Data, Name, Value} from "app/core/Data"
-import {formatPrimitive} from "app/core/formatters/format-zed"
+import {useZedFormatter} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import React, {memo, useCallback, useMemo, useState} from "react"
 import {useDispatch} from "react-redux"
@@ -18,12 +18,14 @@ type DTProps = {
   fields: zed.Field[]
   onRightClick: (f: zed.Field) => void
   onHover: (f: zed.Field) => void
+  format: (f: zed.Primitive) => string
 }
 
 const DataPanel = React.memo<DTProps>(function DataTable({
   fields,
   onRightClick,
-  onHover
+  onHover,
+  format
 }: DTProps) {
   return (
     <Panel>
@@ -36,7 +38,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
             className={typeClassNames(field.data)}
             onContextMenu={() => onRightClick(field)}
           >
-            {formatPrimitive(field.data as zed.Primitive)}
+            {format(field.data as zed.Primitive)}
           </Value>
         </Data>
       ))}
@@ -72,7 +74,7 @@ function Tooltip({field, record}) {
 export default memo(function Fields({record}: Props) {
   const dispatch = useDispatch()
   const [hovered, setHovered] = useState({name: "", type: ""})
-
+  const format = useZedFormatter()
   const onHover = useCallback((field) => {
     setHovered(field)
   }, [])
@@ -91,6 +93,7 @@ export default memo(function Fields({record}: Props) {
     <section>
       <PanelHeading>Fields</PanelHeading>
       <DataPanel
+        format={format}
         fields={fields}
         onRightClick={onRightClick}
         onHover={onHover}

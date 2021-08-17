@@ -1,6 +1,8 @@
 import {TypeAlias, Uint16, Uint32, Uint64, Uint8} from "./index"
 import {ZedType} from "./types/types"
 import {BString} from "./values/bstring"
+import {Duration} from "./values/duration"
+import {Float64} from "./values/float64"
 import {Int16} from "./values/int16"
 import {Int32} from "./values/int32"
 import {Int64} from "./values/int64"
@@ -66,4 +68,12 @@ export function isNull(value): value is null {
 
 export function isStringy(value): value is String | BString {
   return value instanceof String || value instanceof BString
+}
+
+export function isDuration(value: unknown): value is Duration {
+  return value instanceof Duration
+}
+
+export function isFloat64(value): value is Float64 {
+  return value instanceof Float64
 }

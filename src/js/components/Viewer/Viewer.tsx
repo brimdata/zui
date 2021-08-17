@@ -21,8 +21,6 @@ type Props = {
   renderEnd: () => any
   scrollPos: ScrollPosition
   innerRef: any
-  timeZone: string
-  timeFormat: string
 }
 
 export default function Viewer(props: Props) {
