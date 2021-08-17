@@ -1,12 +1,17 @@
+import {createReadStream} from "fs"
 import {uniq} from "lodash"
 import {withLake} from "../helpers/with-lake"
 import data from "test/shared/data"
 
 async function setup(zealot: any) {
   const pool = await zealot.pools.create({name: "pool1"})
-  const log = data.getPath("sample.tsv")
-  const resp = await zealot.logs.postPaths({paths: [log], poolId: pool.id})
-  await resp.array()
+  const add = await zealot.pools.add(pool.id, {
+    data: createReadStream(data.getPath("sample.tsv"))
+  })
+  await zealot.pools.commit(pool.id, add.value.commit, {
+    message: "test message",
+    author: "test author"
+  })
 
   zealot.setSearchOptions({
     poolId: pool.id,

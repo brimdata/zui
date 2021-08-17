@@ -4,7 +4,7 @@ import {withLake} from "../helpers/with-lake"
 import {Zealot} from "../../../zealot"
 import fs from "fs"
 
-test("ingest logs (add + commit)", () => {
+test("ingest ZNG logs", () => {
   return withLake(async (zealot: Zealot) => {
     const pool = await zealot.pools.create({name: "pool1"})
     let stats = await zealot.pools.stats(pool.id)
@@ -22,35 +22,37 @@ test("ingest logs (add + commit)", () => {
   })
 })
 
-test("ingest log", () => {
+test("ingest TSV logs", () => {
   return withLake(async (zealot: Zealot) => {
     const pool = await zealot.pools.create({name: "pool1"})
-    const log = data.getPath("sample.tsv")
-
-    const resp = await zealot.logs.postPaths({
-      paths: [log],
-      poolId: pool.id
+    let stats = await zealot.pools.stats(pool.id)
+    expect(stats).toBeNull()
+    const logStream = fs.createReadStream(data.getPath("sample.tsv"))
+    const addResp = await zealot.pools.add(pool.id, {
+      data: logStream
     })
-    const messages = await resp.array()
-    expect(uniq(messages.map((m: any) => m.type))).toEqual([
-      "TaskStart",
-      "LogPostStatus",
-      "LogPostResponse",
-      "TaskEnd"
-    ])
+    await zealot.pools.commit(pool.id, addResp.value.commit, {
+      message: "test message",
+      author: "test author"
+    })
+    const {size} = await zealot.pools.stats(pool.id)
+    expect(size).toBe(4084)
   })
 })
 
-test("ingest ndjson", () => {
+test("ingest NDJSON logs", () => {
   return withLake(async (zealot: Zealot) => {
     const pool = await zealot.pools.create({name: "pool1"})
-    const log = data.getPath("custom-sample.ndjson")
-    const resp = await zealot.logs.postPaths({
-      paths: [log],
-      poolId: pool.id
+    let stats = await zealot.pools.stats(pool.id)
+    expect(stats).toBeNull()
+    const logStream = fs.createReadStream(data.getPath("custom-sample.ndjson"))
+    const addResp = await zealot.pools.add(pool.id, {
+      data: logStream
     })
-    await resp.array()
-
+    await zealot.pools.commit(pool.id, addResp.value.commit, {
+      message: "test message",
+      author: "test author"
+    })
     const {size} = await zealot.pools.stats(pool.id)
     expect(size).toBe(4467)
   })
