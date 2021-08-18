@@ -1,5 +1,5 @@
 import {createFetcher} from "./fetcher/fetcher"
-import {logs, search, archive} from "./api/mod"
+import {search, archive} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
 import nodeFetch from "node-fetch"
@@ -9,9 +9,7 @@ import {
   PoolArgs,
   PoolConfig,
   PoolStats,
-  LogsPostArgs,
   ZealotArgs,
-  LogsPostPathsArgs,
   PoolCommitArgs,
   PoolAddArgs
 } from "./types"
@@ -27,7 +25,7 @@ export function createZealot(
   args: ZealotArgs = {fetcher: createFetcher}
 ) {
   const host = getHost(hostUrl)
-  const {promise, stream, upload} = args.fetcher(host)
+  const {promise, stream} = args.fetcher(host)
 
   let searchArgs: SearchArgs = getDefaultSearchArgs()
 
@@ -100,10 +98,6 @@ export function createZealot(
       update: (id: string, args: Partial<PoolArgs>) => {
         return promise(pools.update(id, args))
       },
-      /*
-        this cannot run in browser until dom fetch allows attaching streams to
-        request body
-       */
       add: async (id: string, args: PoolAddArgs) => {
         const {path, method, body, headers} = pools.add(id, args)
         const resp = await nodeFetch(url(host, path), {
@@ -117,14 +111,6 @@ export function createZealot(
       },
       commit: (id: string, commitId: string, args: PoolCommitArgs) => {
         return promise(pools.commit(id, commitId, args))
-      }
-    },
-    logs: {
-      post: (args: LogsPostArgs) => {
-        return upload(logs.post(args))
-      },
-      postPaths: (args: LogsPostPathsArgs) => {
-        return stream(logs.postPaths(args))
       }
     },
     inspect: {

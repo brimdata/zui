@@ -58,18 +58,6 @@ export interface PoolArgs {
   layout?: Layout
 }
 
-export interface LogsPostArgs {
-  files: File[] | FileList
-  poolId: string
-  types?: any
-}
-
-export interface LogsPostPathsArgs {
-  paths: string[]
-  poolId: string
-  types?: any
-}
-
 export interface Layout {
   order: Order
   keys: Key[]

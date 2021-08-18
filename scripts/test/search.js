@@ -1,4 +1,5 @@
 require("regenerator-runtime/runtime")
+const {createReadStream} = require("fs")
 const {join} = require("path")
 const {withLake} = require("../../dist/test/api/helpers/with-lake")
 const env = require("../util/env")
@@ -8,8 +9,10 @@ const QUERY = process.argv[3]
 
 async function ingest(zealot) {
   const pool = await zealot.pools.create({name: "gen space"})
-  const ingest = await zealot.logs.postPaths({paths: [FILE], poolId: pool.id})
-  await ingest.origResp.text()
+  const add = await zealot.pools.add(pool.id, {
+    data: createReadStream(FILE)
+  })
+  await zealot.pools.commit(pool.id, add.value.commit, {})
   return pool.id
 }
 
