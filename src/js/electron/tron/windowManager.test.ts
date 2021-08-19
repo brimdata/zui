@@ -52,3 +52,17 @@ test("when all closed waits until windows are done", (done) => {
     done()
   })
 })
+
+test("prevent multiple hidden windows", async () => {
+  const manager = tron.windowManager()
+  manager.openHidden()
+  let windows = manager.getWindows()
+  expect(windows).toHaveLength(1)
+  expect(windows[0].name).toEqual("hidden")
+
+  // try again, still expect only 1
+  manager.openHidden()
+  windows = manager.getWindows()
+  expect(windows).toHaveLength(1)
+  expect(windows[0].name).toEqual("hidden")
+})
