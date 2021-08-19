@@ -78,7 +78,7 @@ export const encodeSpanArg = (arg) => {
 
 const decodeSpanArg = (arg): TimeArg | null => {
   if (!arg) return null
-  if (/^\d+\.\d+$/.test(arg)) {
+  if (/^-?\d+\.\d+$/.test(arg)) {
     const [sec, ns] = arg.split(".").map((i) => parseInt(i))
     return {sec, ns}
   } else {

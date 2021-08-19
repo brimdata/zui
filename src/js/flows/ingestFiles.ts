@@ -76,7 +76,7 @@ const createPool = (client: Zealot, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
     let createParams
     if (params.dataDir) {
-      createParams = {data_path: params.dataDir}
+      createParams = {data_path: params.dataDir, name: params.name}
     } else {
       createParams = {name: params.name}
     }

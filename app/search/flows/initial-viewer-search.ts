@@ -14,9 +14,12 @@ const initialViewerSearch = () => (dispatch, getState) => {
   const program = brim.program(params.program, params.pins)
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
   const query = addHeadProc(program.string(), perPage)
-  const [from, to] = brim.span(params.spanArgs).toDateTuple()
-
-  return dispatch(viewerSearch({query, from, to, keep: params.keep}))
+  try {
+    const [from, to] = brim.span(params.spanArgs).toDateTuple()
+    return dispatch(viewerSearch({query, from, to, keep: params.keep}))
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 export default initialViewerSearch

@@ -1,3 +1,5 @@
+import BrimApi from "../api"
+import initDebugGlobals from "./initDebugGlobals"
 import initDOM from "./initDOM"
 import initGlobals from "./initGlobals"
 import initIpcListeners from "./initIpcListeners"
@@ -5,7 +7,6 @@ import initMenuActionListeners from "./initMenuActionListeners"
 import initPlugins from "./initPlugins"
 import initStore from "./initStore"
 import initWorkspaceParams from "./initWorkspaceParams"
-import BrimApi from "../api"
 
 export default async function initialize() {
   const api = new BrimApi()
@@ -19,5 +20,6 @@ export default async function initialize() {
   initIpcListeners(store, pluginManager)
   initMenuActionListeners(store)
   initWorkspaceParams(store)
+  initDebugGlobals(store)
   return {store, pluginManager}
 }

@@ -34,3 +34,13 @@ test("decode search path", () => {
     keep: false
   })
 })
+
+test("decode with negative time", () => {
+  const path = "from=-1800.1000000&to=0.1000000"
+  const record = decodeSearchParams(path)
+
+  expect(record.spanArgs).toEqual([
+    {sec: -1800, ns: 1000000},
+    {sec: 0, ns: 1000000}
+  ])
+})
