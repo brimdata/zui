@@ -1,5 +1,5 @@
-import {ZealotPayloadValue} from "../types"
 import * as lake from "../lake"
+import {ZealotPayloadValue} from "../types"
 
 type EventName =
   | "QueryChannelSet"

@@ -1,6 +1,6 @@
 import {url} from "../util/utils"
 import {parseContentType} from "./contentType"
-import {Enhancer, ZealotPayload, ZResponse} from "../types"
+import {Enhancer, ZealotUploadPayload, ZResponse} from "../types"
 import {createIterator} from "./iterator"
 import {createStream} from "./stream"
 import {createError} from "../util/error"
@@ -36,7 +36,7 @@ export function createFetcher(host: string) {
     },
     async upload(args: FetchArgs): Promise<ZResponse> {
       return new Promise((resolve) => {
-        const iterator = createPushableIterator<ZealotPayload>()
+        const iterator = createPushableIterator<ZealotUploadPayload>()
         const xhr = new XMLHttpRequest()
 
         xhr.upload.addEventListener("progress", (e) => {

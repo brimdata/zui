@@ -8,9 +8,9 @@ export type ZResponse = ReturnType<typeof createStream>
 export type ZFetcher = ReturnType<typeof createFetcher>
 export type ZIterator = AsyncIterable<ZealotPayload>
 
-export type ZealotPayload =
-  | lake.Payload
-  | {type: "UploadProgress"; progress: number}
+export type ZealotPayload = lake.Payload
+export type ZealotUploadPayload = {type: "UploadProgress"; progress: number}
+export type ZealotPayloadValue = lake.PayloadValue
 
 export type Enhancer = () => (payload: ZealotPayload) => any
 
