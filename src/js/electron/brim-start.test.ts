@@ -41,7 +41,7 @@ test("activate when one or more windows open", async () => {
 test("start opens default windows and in correct focus order", async () => {
   await brim.start()
   expect(brim.windows.count()).toBe(2)
-  const windows = brim.windows.getWindows()
+  const windows = brim.windows.getAll()
   expect(windows[0].name).toBe("hidden")
   expect(windows[1].name).toBe("search")
 })

@@ -47,7 +47,7 @@ export default function windowManager(
   return {
     init() {
       // hidden renderer/window is never persisted, so always open it with rest
-      this.openHidden()
+      this.ensureHiddenRenderer()
 
       if (!session || (session && session.order.length === 0)) {
         this.openWindow("search")
@@ -71,7 +71,7 @@ export default function windowManager(
 
     serialize(): Promise<SerializedWindow[]> {
       return Promise.all(
-        this.getWindows()
+        this.getAll()
           .filter((w) => w.name === "search")
           .map((w: BrimWindow) => w.serialize())
       )
@@ -79,7 +79,7 @@ export default function windowManager(
 
     confirmQuit(): Promise<boolean> {
       return Promise.all<boolean[]>(
-        this.getWindows().map((w: BrimWindow) => w.confirmClose())
+        this.getAll().map((w: BrimWindow) => w.confirmClose())
       )
         .then((oks) => oks.every((ok) => ok))
         .catch((e) => {
@@ -89,19 +89,29 @@ export default function windowManager(
     },
 
     prepareQuit(): Promise<void[]> {
-      return Promise.all(
-        this.getWindows().map((w: BrimWindow) => w.prepareClose())
-      )
+      return Promise.all(this.getAll().map((w: BrimWindow) => w.prepareClose()))
     },
 
     quit() {
-      this.getWindows().forEach((w: BrimWindow) => w.close())
+      this.getAll().forEach((w: BrimWindow) => w.close())
     },
 
-    getWindows(): BrimWindow[] {
+    getAll(): BrimWindow[] {
       return Object.values(windows).sort(
         (a, b) => a.lastFocused - b.lastFocused
       )
+    },
+
+    getVisible(): BrimWindow[] {
+      return Object.values(windows)
+        .sort((a, b) => a.lastFocused - b.lastFocused)
+        .filter((w) => w.name !== "hidden")
+    },
+
+    getHidden(): BrimWindow[] {
+      return Object.values(windows)
+        .sort((a, b) => a.lastFocused - b.lastFocused)
+        .filter((w) => w.name === "hidden")
     },
 
     count(): number {
@@ -114,7 +124,7 @@ export default function windowManager(
 
     openSearchTab(searchParams: NewTabSearchParams) {
       let isNewWin = true
-      const existingWin = this.getWindows()
+      const existingWin = this.getAll()
         .sort((a, b) => b.lastFocused - a.lastFocused)
         .find((w) => w.name === "search")
       if (existingWin) {
@@ -143,7 +153,7 @@ export default function windowManager(
       initialState: any = undefined
     ): BrimWindow {
       const lastWin = last<BrimWindow>(
-        this.getWindows().filter((w) => w.name === name)
+        this.getAll().filter((w) => w.name === name)
       )
       const params = defaultWindowParams(winParams, lastWin && lastWin.ref)
       const id = params.id
@@ -155,9 +165,9 @@ export default function windowManager(
         if (
           process.platform !== "darwin" &&
           this.count() === 1 &&
-          this.getWindows()[0].name === "hidden"
+          this.getAll()[0].name === "hidden"
         ) {
-          this.getWindows()[0].ref.close()
+          this.getAll()[0].ref.close()
         }
       }
 
@@ -207,14 +217,14 @@ export default function windowManager(
       }
     },
 
-    openHidden() {
+    ensureHiddenRenderer() {
       // only open hidden window if one doesn't already exist
-      if (this.getWindows().find((w) => w.name === "hidden")) return
+      if (this.getHidden().length) return
       this.openWindow("hidden")
     },
 
     openAbout() {
-      const about = this.getWindows().find((w) => w.name === "about")
+      const about = this.getAll().find((w) => w.name === "about")
       if (about) {
         about.ref.focus()
       } else {
@@ -223,7 +233,7 @@ export default function windowManager(
     },
 
     openPreferences() {
-      const win = this.getWindows()
+      const win = this.getAll()
         .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
         .find((w) => w.name === "search")
 
@@ -239,7 +249,7 @@ export default function windowManager(
     },
 
     openReleaseNotes() {
-      const win = this.getWindows()
+      const win = this.getAll()
         .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
         .find((w) => w.name === "search")
 
@@ -264,7 +274,7 @@ export default function windowManager(
       const {x, y} = bounds
 
       let prev = [x, y]
-      this.getWindows().forEach(({ref: win}: BrimWindow) => {
+      this.getAll().forEach(({ref: win}: BrimWindow) => {
         const [width, height] = win.getSize()
         const [x, y] = prev
         const next = stack({x, y, width, height}, bounds, 25)

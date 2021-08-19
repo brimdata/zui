@@ -70,9 +70,7 @@ export class BrimMain {
   }
 
   activate() {
-    log.info("activate fired! window count: ", this.windows.count())
-    if (this.windows.count() === 0 || this.windows.count() === 1)
-      this.windows.init()
+    if (!this.windows.getVisible().length) this.windows.init()
   }
 
   async resetState() {
