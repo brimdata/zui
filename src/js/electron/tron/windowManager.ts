@@ -47,7 +47,7 @@ export default function windowManager(
   return {
     init() {
       // hidden renderer/window is never persisted, so always open it with rest
-      this.openWindow("hidden")
+      this.openHidden()
 
       if (!session || (session && session.order.length === 0)) {
         this.openWindow("search")
@@ -205,6 +205,12 @@ export default function windowManager(
         windows[id] = win
         return win
       }
+    },
+
+    openHidden() {
+      // only open hidden window if one doesn't already exist
+      if (this.getWindows().find((w) => w.name === "hidden")) return
+      this.openWindow("hidden")
     },
 
     openAbout() {

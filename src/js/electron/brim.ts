@@ -21,6 +21,7 @@ import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
 import {sessionStateFile} from "./tron/session"
 import windowManager, {$WindowManager} from "./tron/windowManager"
+import log from "electron-log"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -69,7 +70,9 @@ export class BrimMain {
   }
 
   activate() {
-    if (this.windows.count() === 0) this.windows.init()
+    log.info("activate fired! window count: ", this.windows.count())
+    if (this.windows.count() === 0 || this.windows.count() === 1)
+      this.windows.init()
   }
 
   async resetState() {
