@@ -25,8 +25,6 @@ test("right click => new search focuses search window", async () => {
   fireEvent.click(screen.getByText(/new search with this value/i))
   await flushPromises()
 
-  const searchWindow = main.windows
-    .getWindows()
-    .find((w) => w.name === "search")
+  const searchWindow = main.windows.getAll().find((w) => w.name === "search")
   expect(searchWindow.ref.focus).toHaveBeenCalled()
 })

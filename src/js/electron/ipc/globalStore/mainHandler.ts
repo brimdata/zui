@@ -12,7 +12,7 @@ export default function(brim: BrimMain) {
 
   ipcMain.handle("globalStore:dispatch", (e, {action}) => {
     brim.store.dispatch(action)
-    for (const win of brim.windows.getWindows()) {
+    for (const win of brim.windows.getAll()) {
       // Don't send it back to the sender, their store will have already been updated.
       if (!win.ref.isDestroyed() && e.sender !== win.ref.webContents) {
         sendTo(

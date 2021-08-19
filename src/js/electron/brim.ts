@@ -69,7 +69,7 @@ export class BrimMain {
   }
 
   activate() {
-    if (this.windows.count() === 0) this.windows.init()
+    if (!this.windows.getVisible().length) this.windows.init()
   }
 
   async resetState() {
