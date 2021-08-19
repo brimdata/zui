@@ -21,7 +21,6 @@ import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
 import {sessionStateFile} from "./tron/session"
 import windowManager, {$WindowManager} from "./tron/windowManager"
-import log from "electron-log"
 
 type QuitOpts = {
   saveSession?: boolean
