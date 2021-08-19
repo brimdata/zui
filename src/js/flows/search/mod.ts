@@ -32,6 +32,7 @@ export const annotateQuery = (query: string, args: annotateArgs) => {
     from = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000), // 30 days
     to = new Date()
   } = args
+
   const fromTs = dateToNanoTs(from)
   const toTs = dateToNanoTs(to)
   return `from '${poolId}' | ts >= ${fromTs} | ts <= ${toTs} | ${query}`
