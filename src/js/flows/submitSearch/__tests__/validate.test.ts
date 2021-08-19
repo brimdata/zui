@@ -18,7 +18,7 @@ beforeEach(() => {
   store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("search", dnsResp)
+  zealot.stubStream("query", dnsResp)
   store.dispatchAll([
     Pools.setDetail("1", pool),
     SearchBar.changeSearchBarInput("dns"),

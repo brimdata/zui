@@ -27,8 +27,8 @@ describe("zeek log when community_id is found", () => {
   let setup
   beforeEach(async () => {
     setup = await loginTo("workspace1", "pool1")
-    setup.zealot.stubStream("search", stubs.uidResult)
-    setup.zealot.stubStream("search", stubs.uidAndCommunityResult)
+    setup.zealot.stubStream("query", stubs.uidResult)
+    setup.zealot.stubStream("query", stubs.uidAndCommunityResult)
   })
 
   test("runs two queries ", async () => {
@@ -62,7 +62,7 @@ describe("zeek log when community_id is not found", () => {
   let setup
   beforeEach(async () => {
     setup = await loginTo("workspace1", "pool1")
-    setup.zealot.stubStream("search", stubs.noCommunityIdInConn)
+    setup.zealot.stubStream("query", stubs.noCommunityIdInConn)
   })
 
   test("executes only 1 query", async () => {
@@ -92,7 +92,7 @@ describe("suricata alert when community_id found", () => {
 
   beforeEach(async () => {
     setup = await loginTo("workspace1", "pool1")
-    setup.zealot.stubStream("search", stubs.alertResults)
+    setup.zealot.stubStream("query", stubs.alertResults)
   })
 
   test("issues only one search", async () => {

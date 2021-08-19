@@ -22,7 +22,7 @@ import {SearchBarState} from "./types"
 let store, mock
 beforeEach(() => {
   mock = createZealotMock()
-  mock.stubStream("search", [], "always")
+  mock.stubStream("query", [], "always")
   store = initTestStore(mock.zealot)
   const workspace = fixtures("workspace1")
   const pool = fixtures("pool1")

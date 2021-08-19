@@ -1,3 +1,10 @@
+import brim from "../../src/js/brim"
+import {
+  ChronoField,
+  DateTimeFormatterBuilder,
+  LocalDateTime
+} from "@js-joda/core"
+
 require("regenerator-runtime/runtime")
 const {createReadStream} = require("fs")
 const {join} = require("path")
@@ -15,13 +22,36 @@ async function ingest(zealot) {
   return {poolId: pool.id, branch: branch.name}
 }
 
+function annotateQuery(query, args) {
+  const {
+    poolId,
+    from = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000), // 30 days
+    to = new Date()
+  } = args
+  const fromTs = dateToNanoTs(from)
+  const toTs = dateToNanoTs(to)
+  return `from '${poolId}' | ts >= ${fromTs} | ts <= ${toTs} | ${query}`
+}
+
+function dateToNanoTs(date) {
+  const NanoFormat = new DateTimeFormatterBuilder()
+    .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+    .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true)
+    .appendLiteral("Z")
+    .toFormatter()
+
+  return LocalDateTime.parse(brim.time(date).format()).format(NanoFormat)
+}
+
 withLake(
   async (zealot) => {
     try {
       const poolId = await ingest(zealot)
       const from = new Date(0)
       const to = new Date()
-      const search = await zealot.search(QUERY, {poolId, from, to})
+      const search = await zealot.query(
+        annotateQuery(QUERY, {poolId, from, to})
+      )
       const text = await search.origResp.text()
       console.log(text)
     } catch (e) {

@@ -22,7 +22,7 @@ beforeEach(() => {
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
-  zealot.stubStream("search", countByPathResp).stubStream("search", dnsResp)
+  zealot.stubStream("query", countByPathResp).stubStream("query", dnsResp)
   store.dispatchAll([
     Workspaces.add({
       host: "testHost",

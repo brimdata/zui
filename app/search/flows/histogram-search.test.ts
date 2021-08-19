@@ -30,7 +30,7 @@ beforeEach(() => {
     Pools.setDetail("1", pool)
   ])
   store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
-  zealot.stubStream("search", countByPathResp)
+  zealot.stubStream("query", countByPathResp)
 })
 
 const submit = () => dispatch(histogramSearch())

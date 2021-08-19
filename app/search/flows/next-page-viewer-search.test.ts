@@ -23,7 +23,7 @@ const records = [
 let store, zealot, tabId
 beforeEach(() => {
   zealot = createZealotMock()
-  zealot.stubStream("search", [])
+  zealot.stubStream("query", [])
   store = initTestStore(zealot.zealot)
   tabId = Tabs.getActive(store.getState())
   const ws = fixtures("workspace1")

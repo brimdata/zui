@@ -48,7 +48,7 @@ const submit = () =>
 
 describe("a normal response", () => {
   beforeEach(() => {
-    zealot.stubStream("search", dnsResp)
+    zealot.stubStream("query", dnsResp)
   })
 
   test("zealot gets the request", async () => {
@@ -92,7 +92,7 @@ describe("a normal response", () => {
 })
 
 test("a response with a warning", async () => {
-  zealot.stubStream("search", warningResp)
+  zealot.stubStream("query", warningResp)
   await submit()
   expect(select(SearchBar.getSearchBarError)).toBe(
     "Cut field boo not present in input"

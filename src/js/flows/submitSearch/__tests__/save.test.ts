@@ -24,7 +24,7 @@ beforeEach(() => {
   store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("search", countByPathResp).stubStream("search", dnsResp)
+  zealot.stubStream("query", countByPathResp).stubStream("query", dnsResp)
   store.dispatchAll([
     Workspaces.add({
       host: "testHost",
