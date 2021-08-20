@@ -7,7 +7,6 @@ import Viewer from "src/js/state/Viewer"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
-import responses from "test/unit/responses"
 import {createRecord} from "test/shared/factories/zed-factory"
 import {useResponse} from "test/shared/responses"
 import {createZealotMock} from "zealot"
@@ -15,7 +14,7 @@ import {viewerSearch} from "./viewer-search"
 
 const dnsResp = useResponse("dns")
 const pool = fixtures("pool1")
-const warningResp = responses("search_warning.txt")
+const warningResp = useResponse("searchWarning")
 
 let store, zealot, dispatch, select
 beforeEach(() => {

@@ -21,6 +21,9 @@ export function useResponse(name: string) {
   const {output} = config[name]
   const path = join(__dirname, output)
   const data = readFileSync(path, {encoding: "utf-8"})
-  cache[name] = data.split("\n").map((json) => JSON.parse(json))
+  cache[name] = data
+    .trim()
+    .split("\n")
+    .map((json) => JSON.parse(json))
   return cache[name]
 }

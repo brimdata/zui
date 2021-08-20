@@ -11,5 +11,5 @@
 {"kind":"Object","value":{"schema":"28","values":["alert","61.240.144.67","60000","192.168.0.2","80",null,"TCP","http",["3","ET SCAN NETWORK Incoming Masscan detected","Detection of a Network Scan","allowed","2017616","1","6",[null,null,null,null,null,["2013_10_18"],null,["2020_04_27"],null,null]],"1394669771541024","4703729","2015-03-21T02:49:54.903837Z","0",null,null,"1:+3I+tIoxlnE/NIV4M9Wh277sSxI="]}}
 {"kind":"Object","value":{"schema":"28","values":["alert","61.240.144.67","60000","192.168.0.2","80",null,"TCP","http",["3","ET SCAN NETWORK Incoming Masscan detected","Detection of a Network Scan","allowed","2017616","1","6",[null,null,null,null,null,["2013_10_18"],null,["2020_04_27"],null,null]],"1394668624120943","2766977","2015-03-11T19:30:54.635397Z","0",null,null,"1:+3I+tIoxlnE/NIV4M9Wh277sSxI="]}}
 {"kind":"QueryChannelEnd","value":{"channel_id":0}}
-{"kind":"QueryStats","value":{"start_time":{"sec":1629426759,"ns":230613000},"update_time":{"sec":1629426759,"ns":233889000},"bytes_read":2299,"bytes_matched":2299,"records_read":11,"records_matched":11}}
+{"kind":"QueryStats","value":{"start_time":{"sec":1629735663,"ns":564497000},"update_time":{"sec":1629735663,"ns":566841000},"bytes_read":2299,"bytes_matched":2299,"records_read":11,"records_matched":11}}
 

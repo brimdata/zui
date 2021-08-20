@@ -6,16 +6,16 @@ import SearchBar from "../../../state/SearchBar"
 import Pools from "../../../state/Pools"
 import fixtures from "../../../../../test/unit/fixtures"
 import initTestStore from "../../../../../test/unit/helpers/initTestStore"
-import responses from "../../../../../test/unit/responses"
 import Workspaces from "../../../state/Workspaces"
 import {decodeSearchParams} from "app/search/utils/search-params"
 import {lakePath} from "app/router/utils/paths"
 import tabHistory from "app/router/tab-history"
 import Current from "src/js/state/Current"
 import brim from "src/js/brim"
+import {useResponse} from "../../../../../test/shared/responses"
 
-const countByPathResp = responses("count_by_path.txt")
-const dnsResp = responses("dns.txt")
+const countByPathResp = useResponse("countByPath")
+const dnsResp = useResponse("dns")
 const pool = fixtures("pool1")
 
 let store, zealot, dispatch, select

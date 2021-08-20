@@ -1,11 +1,11 @@
 {"kind":"QueryChannelSet","value":{"channel_id":0}}
 {"kind":"Object","value":{"schema":"23","types":[{"kind":"typedef","name":"23","type":{"kind":"record","fields":[{"name":"ts","type":{"kind":"primitive","name":"time"}},{"name":"_path","type":{"kind":"primitive","name":"string"}},{"name":"count","type":{"kind":"primitive","name":"uint64"}}]}}],"values":["2020-02-25T16:03:17Z","capture_loss","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:15Z","conn","3"]}}
-{"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:14Z","x509","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:14Z","files","4"]}}
+{"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:14Z","x509","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:14Z","ssl","1"]}}
-{"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:13Z","dns","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:13Z","conn","2"]}}
+{"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:13Z","dns","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:12Z","conn","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:11Z","conn","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:11Z","dns","1"]}}
@@ -15,8 +15,8 @@
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:07Z","conn","2"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:06Z","conn","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:06Z","weird","1"]}}
-{"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:05Z","conn","1"]}}
 {"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:05Z","stats","1"]}}
+{"kind":"Object","value":{"schema":"23","values":["2020-02-25T16:03:05Z","conn","1"]}}
 {"kind":"QueryChannelEnd","value":{"channel_id":0}}
-{"kind":"QueryStats","value":{"start_time":{"sec":1629426758,"ns":158936000},"update_time":{"sec":1629426758,"ns":165113000},"bytes_read":3519,"bytes_matched":3519,"records_read":30,"records_matched":30}}
+{"kind":"QueryStats","value":{"start_time":{"sec":1629735662,"ns":420637000},"update_time":{"sec":1629735662,"ns":425798000},"bytes_read":3519,"bytes_matched":3519,"records_read":30,"records_matched":30}}
 
