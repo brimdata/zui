@@ -156,7 +156,7 @@
     "tee-1": "^0.2.0",
     "tree-model": "^1.0.7",
     "valid-url": "^1.0.9",
-    "zed": "git+https://github.com/brimdata/zed.git#bbc92a4502c746cc8c8af3ec8ac914c76fb9c6f4"
+    "zed": "git+https://github.com/brimdata/zed.git#9e3960c4f5e052c65528fd90c57a71c397570074"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
