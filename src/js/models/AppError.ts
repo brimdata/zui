@@ -1,6 +1,6 @@
 import startCase from "lodash/startCase"
 
-import {BrimError, BrimErrorType} from "../errors/types"
+import {BrimError} from "../errors/types"
 
 export type RawError = any
 export type ErrorContext = any
@@ -59,7 +59,7 @@ export default class AppError {
 
   toBrimError(): BrimError {
     return {
-      type: this.constructor.name as BrimErrorType,
+      type: this.constructor.name,
       message: this.message(),
       details: this.details()
     }

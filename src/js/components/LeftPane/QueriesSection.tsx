@@ -152,7 +152,10 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const menu = usePopupMenu(template)
 
   function onItemClick(_, item) {
-    if (!currentPool) return dispatch(Notice.set(new Error("No pool selected")))
+    if (!currentPool)
+      return dispatch(
+        Notice.set({type: "NoPoolError", message: "No Pool Selected"})
+      )
 
     if (!item.value) return
 
