@@ -57,7 +57,7 @@ class UndoError extends Error {
   }
 }
 
-class TransactionError extends Error {
+export class TransactionError extends Error {
   cause: Error
   undoErrors: UndoError[]
 
