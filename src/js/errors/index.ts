@@ -13,5 +13,10 @@ export default {
     type: "ImportInterruptError",
     message: "The import was interrupted.",
     details: ["To prevent this, keep your computer awake during the import."]
+  }),
+  formatDetection: (s: string) => ({
+    type: "FormatDetectionError",
+    message: "Format Detection Error",
+    details: [s.replace("format detection error", "").trim()]
   })
 }

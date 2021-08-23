@@ -8,7 +8,13 @@ const deletePools = (ids: string[]): Thunk<Promise<void[] | void>> => (
 ) => {
   return Promise.all(ids.map((id) => dispatch(deletePool(id))))
     .catch((e) => {
-      dispatch(Notice.set(new Error(`Error deleting pools: ${e.message}`)))
+      dispatch(
+        Notice.set({
+          type: "PoolDeleteError",
+          message: "Error Deleting Pools",
+          details: e.message
+        })
+      )
     })
     .finally(() => dispatch(refreshPoolNames()))
 }

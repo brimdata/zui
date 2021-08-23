@@ -32,7 +32,7 @@ const labelSmall = css`
 const labelNormal = css`
   font-family: system-ui, sans-serif;
   font-size: 13px;
-  line-height: 16px;
+  line-height: 18px;
   font-weight: 400;
 `
 

@@ -1,11 +1,5 @@
-export type BrimErrorType =
-  | "PCAPIngestError"
-  | "NetworkError"
-  | "LogsIngestError"
-  | "PoolDeletedError"
-
 export type BrimError = {
-  type: BrimErrorType
+  type: string
   message: string
   details?: string[]
 }
