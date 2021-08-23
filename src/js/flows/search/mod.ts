@@ -33,9 +33,23 @@ export const annotateQuery = (query: string, args: annotateArgs) => {
     to = new Date()
   } = args
 
-  const fromTs = dateToNanoTs(from)
-  const toTs = dateToNanoTs(to)
-  return `from '${poolId}' | ts >= ${fromTs} | ts <= ${toTs} | ${query}`
+  const annotated = [`from '${poolId}'`]
+  if (!isZeroDefaultSpan(from, to)) {
+    annotated.push(`ts >= ${dateToNanoTs(from)}`)
+    annotated.push(`ts <= ${dateToNanoTs(to)}`)
+  }
+  annotated.push(query)
+
+  return annotated.join(" | ")
+}
+
+const isZeroDefaultSpan = (
+  from: Date | Ts | bigint,
+  to: Date | Ts | bigint
+): boolean => {
+  return (
+    brim.time(from).toBigInt() === 0n && brim.time(to).toBigInt() === 1000000n
+  )
 }
 
 const dateToNanoTs = (date: Date | Ts | bigint): string => {

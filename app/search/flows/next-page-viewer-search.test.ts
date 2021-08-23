@@ -48,30 +48,30 @@ test("#fetchNextPage dispatches splice", () => {
 })
 
 test("#fetchNextPage adds 1ms to ts of last change", () => {
-  const search = jest.spyOn(zealot.zealot, "search")
+  const search = jest.spyOn(zealot.zealot, "query")
   store.dispatch(nextPageViewerSearch())
 
   const data = records[1].at(1) as zed.Time
   const lastChangeTs = data.toDate().getTime()
   expect(search).toHaveBeenCalledWith(
-    expect.any(String),
+    expect.stringContaining(
+      `ts <= ${new Date(lastChangeTs + 1).toISOString()}`
+    ),
     expect.objectContaining({
-      from: new Date(0),
-      to: new Date(lastChangeTs + 1)
+      signal: expect.any(Object)
     })
   )
 })
 
 test("#fetchNextPage when there is only 1 event", () => {
-  const search = jest.spyOn(zealot.zealot, "search")
+  const search = jest.spyOn(zealot.zealot, "query")
   store.dispatch(Viewer.splice(tabId, 1))
   store.dispatch(nextPageViewerSearch())
 
   expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({
-      from: new Date(0),
-      to: new Date(10 * 1000)
+      signal: expect.any(Object)
     })
   )
 })

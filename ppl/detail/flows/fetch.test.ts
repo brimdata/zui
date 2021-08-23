@@ -33,21 +33,21 @@ describe("zeek log when community_id is found", () => {
 
   test("runs two queries ", async () => {
     const {zealot, store} = setup
-    const before = zealot.calls("search").length
+    const before = zealot.calls("query").length
     await store.dispatch(fetchCorrelation(zeek))
-    expect(zealot.calls("search")).toHaveLength(before + 2)
+    expect(zealot.calls("query")).toHaveLength(before + 2)
   })
 
   test("executes uid first, then cid", async () => {
     const {store, zealot} = setup
     await store.dispatch(fetchCorrelation(zeek))
-    const searches = zealot.calls("search")
+    const searches = zealot.calls("query")
     const len = searches.length
     expect(searches[len - 2].args).toMatchInlineSnapshot(
-      `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" | head 100"`
+      `"from '1' | ts >= 2015-03-05T14:15:00Z | ts <= 2015-04-13T09:36:33.751Z | uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" | head 100"`
     )
     expect(searches[len - 1].args).toMatchInlineSnapshot(
-      `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" or (community_id == \\"1:N7YGmWjwTmMKNhsZHBR618n3ReA=\\" and ts >= 1582646593.978 and ts < 1582646683.994) | head 100"`
+      `"from '1' | ts >= 2015-03-05T14:15:00Z | ts <= 2015-04-13T09:36:33.751Z | uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" or (community_id == \\"1:N7YGmWjwTmMKNhsZHBR618n3ReA=\\" and ts >= 1582646593.978 and ts < 1582646683.994) | head 100"`
     )
   })
 
@@ -67,16 +67,16 @@ describe("zeek log when community_id is not found", () => {
 
   test("executes only 1 query", async () => {
     const {zealot, store} = setup
-    const before = zealot.calls("search").length
+    const before = zealot.calls("query").length
     await store.dispatch(fetchCorrelation(zeek))
-    expect(zealot.calls("search")).toHaveLength(before + 1)
+    expect(zealot.calls("query")).toHaveLength(before + 1)
   })
 
   test("runs the uid search", async () => {
     const {zealot, store} = setup
     await store.dispatch(fetchCorrelation(zeek))
-    expect(last<any>(zealot.calls("search")).args).toMatchInlineSnapshot(
-      `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" | head 100"`
+    expect(last<any>(zealot.calls("query")).args).toMatchInlineSnapshot(
+      `"from '1' | ts >= 2015-03-05T14:15:00Z | ts <= 2015-04-13T09:36:33.751Z | uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" | head 100"`
     )
   })
 
@@ -97,16 +97,16 @@ describe("suricata alert when community_id found", () => {
 
   test("issues only one search", async () => {
     const {zealot, store} = setup
-    const before = zealot.calls("search").length
+    const before = zealot.calls("query").length
     await store.dispatch(fetchCorrelation(suricata))
-    expect(zealot.calls("search")).toHaveLength(before + 1)
+    expect(zealot.calls("query")).toHaveLength(before + 1)
   })
 
   test("issues the community id query", async () => {
     const {zealot, store} = setup
     await store.dispatch(fetchCorrelation(suricata))
-    expect(last<any>(zealot.calls("search")).args).toMatchInlineSnapshot(
-      `"community_id==\\"1:N7YGmWjwTmMKNhsZHBR618n3ReA=\\" | head 100"`
+    expect(last<any>(zealot.calls("query")).args).toMatchInlineSnapshot(
+      `"from '1' | ts >= 2015-03-05T14:15:00Z | ts <= 2015-04-13T09:36:33.751Z | community_id==\\"1:N7YGmWjwTmMKNhsZHBR618n3ReA=\\" | head 100"`
     )
   })
 

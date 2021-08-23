@@ -59,7 +59,7 @@ export function handle(request: Promise<ZResponse>) {
             flushBuffer()
             response.emit("chan-end", channel_id)
           })
-          .warning(({warning}) => response.emit("warning", warning))
+          .warning((pl) => response.emit("warning", pl.warning))
           .error(errored)
           .internalError(errored)
       })
