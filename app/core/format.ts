@@ -77,7 +77,8 @@ function replaceDecimal(string: string, replacement: string | undefined) {
 
 function formatInt(string: number, config: Partial<FormatConfig> = {}) {
   const locale = getNumberLocale(config)
-  return locale.format(",")(string)
+  // https://github.com/d3/d3-format
+  return locale.format(",.0f")(string)
 }
 
 /**
