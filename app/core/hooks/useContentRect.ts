@@ -7,7 +7,7 @@ export default function useContentRect(): [
   const [contentRect, setContentRect] = useState<DOMRectReadOnly>(
     new DOMRectReadOnly()
   )
-  const [node, setNode] = useState(null)
+  const [node, setNode] = useState<Element | null>(null)
 
   useLayoutEffect(() => {
     const observer = new ResizeObserver(([entry]) => {

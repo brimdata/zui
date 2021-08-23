@@ -1,5 +1,6 @@
 import {
   createMemoryHistory,
+  LocationDescriptorObject,
   LocationListener,
   MemoryHistory,
   UnregisterCallback
@@ -25,9 +26,18 @@ export default class Histories {
     return () => this.unlistens.forEach((fn) => fn())
   }
 
-  create(id: string, initialEntries?, initialIndex?) {
+  create(
+    id: string,
+    initialEntries?: LocationDescriptorObject[],
+    initialIndex?: number
+  ) {
     if (isEmpty(initialEntries)) initialEntries = undefined
-    const history = createMemoryHistory({initialEntries, initialIndex})
+
+    const history = createMemoryHistory({
+      // @ts-ignore types in the history package are incorrect
+      initialEntries,
+      initialIndex
+    })
     this.histories.set(id, history)
     this.listenTo(id, history)
     return history
@@ -59,13 +69,13 @@ export default class Histories {
     }))
   }
 
-  private listenTo(id, history) {
+  private listenTo(id: string, history: MemoryHistory) {
     this.unListenTo(id)
     const listener: LocationListener = (...a) => this.listener(...a)
     this.unlistens.set(id, history.listen(listener))
   }
 
-  private unListenTo(id) {
+  private unListenTo(id: string) {
     const unlisten = this.unlistens.get(id)
     if (unlisten) unlisten()
     this.unlistens.delete(id)

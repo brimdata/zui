@@ -13,7 +13,7 @@ export default (
   handlerCallback: Function,
   evtType?: "keypress" | "keydown" | "keyup"
 ) => {
-  const actionRef = useRef(null)
+  const actionRef = useRef<Function | null>(null)
   actionRef.current = handlerCallback
 
   useEffect(() => {

@@ -46,10 +46,10 @@ export function formatPrimitive(
     return data.toString()
   }
   if (zed.isInt(data)) {
-    return formatInt(data.toInt(), config)
+    return formatInt(data.toInt()!, config)
   }
   if (zed.isTime(data)) {
-    return brim.time(data.toDate()).format(config.timeFormat, config.timeZone)
+    return brim.time(data.toDate()!).format(config.timeFormat, config.timeZone)
   }
   if (zed.isDuration(data)) {
     return replaceDecimal(data.toString(), config.decimal)
@@ -61,7 +61,7 @@ export function formatPrimitive(
   return data.toString()
 }
 
-function getNumberLocale(config) {
+function getNumberLocale(config: Partial<FormatConfig>) {
   return d3.formatLocale({
     decimal: config.decimal || ".",
     thousands: config.thousands === undefined ? "," : config.thousands,
@@ -91,5 +91,8 @@ function formatInt(string: number, config: Partial<FormatConfig> = {}) {
 export function useZedFormatter() {
   const config = useSelector(getFormatConfig)
 
-  return useMemo(() => (value) => formatPrimitive(value, config), [config])
+  return useMemo(
+    () => (value: zed.Primitive) => formatPrimitive(value, config),
+    [config]
+  )
 }

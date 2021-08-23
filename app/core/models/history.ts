@@ -1,7 +1,7 @@
 import {isEqual} from "lodash"
 
 export default class History<Entry> {
-  static parse<T>({entries, position}) {
+  static parse<T>({entries, position}: {entries: T[]; position: number}) {
     return new History<T>([...entries], position)
   }
 

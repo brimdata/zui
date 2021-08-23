@@ -1,6 +1,6 @@
 import {useLayoutEffect} from "react"
 
-type Callback = (DOMRectReadOnly) => void
+type Callback = (rect: DOMRectReadOnly) => void
 
 export default function useResizeEffect<T extends Element>(
   node: T | null,

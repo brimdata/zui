@@ -11,7 +11,7 @@ export class Union implements ZedValueInterface {
     public value: ZedValue | null
   ) {}
 
-  // @ts-expect-error
+  // @ts-ignore
   toString(): string {
     if (isNull(this.value)) return "null"
     return this.value.toString()

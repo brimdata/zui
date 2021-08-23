@@ -5,7 +5,7 @@ export default class CmdHistory {
     private limit: number
   ) {}
 
-  push(cmd) {
+  push(cmd: string) {
     if (this.array.length === this.limit) this.array.shift()
     this.array.push(cmd)
     this.index = this.array.length - 1
